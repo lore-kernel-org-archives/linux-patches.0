@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905413EDE55;
-	Tue, 12 May 2026 18:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541D234405B;
+	Tue, 12 May 2026 18:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609151; cv=none; b=HCgo9aJSWa6oakFjzAMcQnMjyRipHJT06G8X2WMaVtp90ozOLjlC8sW9hQ1sE2SKXgCEen1fnOqKQmgnUh9mc7CKAKyshaPslbbdwhrVu8JjODkUlY2WJPW5qIZlLMaLBLDgZkGOl3BLx2OniMZv8nsd36CqcWboLHbn2ifxc/s=
+	t=1778609154; cv=none; b=HLsmOmmlLQJR7ErmahfI96nL0kdWgf+T6NJlkyw4LEhcYEBgWyvUdGgCEUPgJ8datbmmHe0SRo/4XgAUjS+3eYdBk3fe6N32Gz+SbhapMe7Rd97WKRWVJk1pr7DHVFmr2WSAvfdHJt63Kq8Do7wXZZLUmQ0qanMAiJccjk9duEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609151; c=relaxed/simple;
-	bh=MWSCQdNYzkNyJaCOQiZK0hJs0A8w/1wbczPIvQfqT9E=;
+	s=arc-20240116; t=1778609154; c=relaxed/simple;
+	bh=lrRoHLooTkS5FpufrLQcbv6LuXBB/nhU10LNpPrgSUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6UMswfArLDbCwE03i7cqF9Lqe3qf501yWiKuyG+oul9OXPBvXvtjEeaTkENFVe0cnrR3wuxV7Y9wgieJc68B4Nrn0CFwBpHw5C3+NCdXQAbSDd+7uJ2z/t1qF+BgZSWjJoK8wzHHwDKCZd2Jfa5VZKTTRVy7mxrtKkMy2wUF/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzEc8Nzi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jpzVnc6W8Ac4G1v132M4Cbfxy9bRX8OqnwpPq5OSRCIH1uk3/aReyJy4Km53OryqQpY2g9XPrVO573Y7dVpRpZwX+waIy3jU4NZ3XbpAuOBh6zi6MlXRqWSWQWUiuADeASneHuRGRuXeLvObk3OulIhytkTUn96hCLrDasxQW8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAA7pTE5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzEc8Nzi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F15C2BCB0;
-	Tue, 12 May 2026 18:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAA7pTE5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16F0C4AF0B;
+	Tue, 12 May 2026 18:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609151;
-	bh=MWSCQdNYzkNyJaCOQiZK0hJs0A8w/1wbczPIvQfqT9E=;
+	s=korg; t=1778609154;
+	bh=lrRoHLooTkS5FpufrLQcbv6LuXBB/nhU10LNpPrgSUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zzEc8Nziqwih1bk/6WyTFPHJ2tkdQSIzfRkCqU8bUCZTWuPS0NrdM/YGd4YfB49Z4
-	 TuOtLWIyETQI4XS5VTmNwnPRhfBO9iFpDb8iHLrlJhTTF00NhtjmvzCHz/xTpgXn7m
-	 8rVzrc08EbHoQ1a8+K9a5+4uovVG08dCnYl0TSEU=
+	b=GAA7pTE51DN7tqFnzx0UcLIh3BTvewCAJv4sBf48Chhdb7Ad72mPO3iYFEMcVEaKS
+	 ihGxQpIFc14US+n03KR78iiCv/4iJygv0VaBBVk7uZ4zgjFmwRAXh22mBfUOKLRTLx
+	 RZFYwQEDnxXLqg0GMjJ5lLfcdxU7uZ+bgWiTImrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingoo Han <jg1.han@samsung.com>,
+	Ranjit Waghmode <ranjit.waghmode@xilinx.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 086/307] spi: tegra114: fix controller deregistration
-Date: Tue, 12 May 2026 19:38:01 +0200
-Message-ID: <20260512173941.938473578@linuxfoundation.org>
+Subject: [PATCH 7.0 087/307] spi: zynqmp-gqspi: fix controller deregistration
+Date: Tue, 12 May 2026 19:38:02 +0200
+Message-ID: <20260512173941.962353431@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -53,52 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 9c9c27ff2058142d8f800de3186d6864184958de upstream.
+commit 6895fc4faafc9082e15e4e624b23dd5f0c98feb5 upstream.
 
 Make sure to deregister the controller before disabling underlying
 resources like clocks during driver unbind.
 
-Fixes: 5c8096439600 ("spi: tegra114: use devm_spi_register_master()")
-Cc: stable@vger.kernel.org	# 3.13
-Cc: Jingoo Han <jg1.han@samsung.com>
+Fixes: dfe11a11d523 ("spi: Add support for Zynq Ultrascale+ MPSoC GQSPI controller")
+Cc: stable@vger.kernel.org	# 4.2: 64640f6c972e
+Cc: stable@vger.kernel.org	# 4.2
+Cc: Ranjit Waghmode <ranjit.waghmode@xilinx.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-22-johan@kernel.org
+Link: https://patch.msgid.link/20260410081757.503099-26-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-tegra114.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/spi/spi-zynqmp-gqspi.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -1415,7 +1415,7 @@ static int tegra_spi_probe(struct platfo
- 		goto exit_pm_disable;
- 	}
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -1324,7 +1324,7 @@ static int zynqmp_qspi_probe(struct plat
+ 	ctlr->dev.of_node = np;
+ 	ctlr->auto_runtime_pm = true;
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "can not register to host err %d\n", ret);
- 		goto exit_free_irq;
-@@ -1441,6 +1441,10 @@ static void tegra_spi_remove(struct plat
- 	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct tegra_spi_data	*tspi = spi_controller_get_devdata(host);
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "spi_register_controller failed\n");
+ 		goto clk_dis_all;
+@@ -1362,6 +1362,8 @@ static void zynqmp_qspi_remove(struct pl
  
-+	spi_controller_get(host);
+ 	pm_runtime_get_sync(&pdev->dev);
+ 
++	spi_unregister_controller(xqspi->ctlr);
 +
-+	spi_unregister_controller(host);
-+
- 	free_irq(tspi->irq, tspi);
+ 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
  
- 	if (tspi->tx_dma_chan)
-@@ -1452,6 +1456,8 @@ static void tegra_spi_remove(struct plat
  	pm_runtime_disable(&pdev->dev);
- 	if (!pm_runtime_status_suspended(&pdev->dev))
- 		tegra_spi_runtime_suspend(&pdev->dev);
-+
-+	spi_controller_put(host);
- }
- 
- #ifdef CONFIG_PM_SLEEP
 
 
