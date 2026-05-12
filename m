@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990B43D25D2;
-	Tue, 12 May 2026 17:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DFD3DB99C;
+	Tue, 12 May 2026 17:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607918; cv=none; b=i/JXKSPBD4dTy3rHZiZNcBUcOxbVvG21sSLCJmXd0mhFMWlvRozYERyqFnBGtuP92D/Ay+NkAKsSOyq2ALptSeM4OTPQhX4Tqpl/zf4gfOl9JAU2SZwYc0k5Uu/jaBQ5BDquTzXV4zX0ulIo9aE6mGS+HZIEFMkDSZELGSbajTc=
+	t=1778607921; cv=none; b=WTjV84WHLwLTMEpI/sPixNVIX6ztg+J8/2HYlP71pV9BzdFZzlx8AYym+1mZkwJ1+YET73+INxQul8Sx2pRmqRjzURBh4tOYX2Y3NaJ1vKKZyWyoeC9RRG2auRpzXDELUbtLVgFkzn6YigpklgHeKEmRVoQqlYLlkya4ajMkLsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607918; c=relaxed/simple;
-	bh=sWW+ieBt9EJVkxfpjJhRf1UBrauYDAmDmQi3/S+G3TQ=;
+	s=arc-20240116; t=1778607921; c=relaxed/simple;
+	bh=DXq8rUsLW0IBi4pK0CCvI9OTZvmKBwgK/r99pM0VPPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AiUyPIELav9ZJy+4g6l4onxS2S4MLNVt1loxCgE1ADAvxZuyGm41d/q5XnVJL9zBCjQ0nlXRwr/NkKUg8hOJt3UPBlonucBm0qlpUE82xSqizYlEd1K6xNPnfAeF9TuPtKdIWfu9KW965IvHcIjsMp5eqIVSNKYD3a50HI7yswg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaBUDnwj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cJE54GJauW1I9HRi+1qzjVKpXFC1P7fwx3WPPABCMyzbearJ/9CqSdHtfBkUFUX/nk6wZosz947riD5uZsiRwwlboJg06VX318w0qhsOQhR71UQD+oprbwKJ8bSCc8c5dH4N9pqJcL2Na/+dozfWH3Qr21TxI0eM7a+73O/IUZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BM9U+U1g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaBUDnwj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A767C2BCC7;
-	Tue, 12 May 2026 17:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BM9U+U1g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B272FC2BCB0;
+	Tue, 12 May 2026 17:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607918;
-	bh=sWW+ieBt9EJVkxfpjJhRf1UBrauYDAmDmQi3/S+G3TQ=;
+	s=korg; t=1778607921;
+	bh=DXq8rUsLW0IBi4pK0CCvI9OTZvmKBwgK/r99pM0VPPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SaBUDnwjtvN2AAioKJe67BHWNWtPiePnP41Y5ngEtGtFEWTfjJ7cCZl+Q7fUDl4M/
-	 FJl2edUNoy27s07OCIFm2SNaHPGOePiUdngFr4R3KqY1QxoTUdQVjAlbrOuWvGW9fl
-	 XH3Xwak1wHylsC6AFSfx7Wb3xbz0W+Fp7jNI6iVc=
+	b=BM9U+U1g2ELa8wY2iNWlZE1z8lrSKbclFXi4hu9YkpeajKzWHbPlTGgRZh34CnVKG
+	 YZ4oWSbw/CYbxMip1buoNnEggqmzAl1L5CP8FXyojUJ/z2BFlgxD6MoK5+y/jy2XCp
+	 LMGS5OSdjl8tqmGbTelJ3gLYhuqOaxFkCgzUUNos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 086/206] hwmon: (ltc2992) Fix u32 overflow in power read path
-Date: Tue, 12 May 2026 19:38:58 +0200
-Message-ID: <20260512173934.674766078@linuxfoundation.org>
+	Bibo Mao <maobibo@loongson.cn>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 060/206] LoongArch: KVM: Fix missing EMULATE_FAIL in kvm_emu_mmio_read()
+Date: Tue, 12 May 2026 19:38:32 +0200
+Message-ID: <20260512173934.113278467@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -50,49 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit 2da0c1fd01dbd6b22844e8676585153dfc660cbe upstream.
+commit f26faae96c411a70641e4d21b759475caa6122d5 upstream.
 
-ltc2992_get_power() computes the divisor for mul_u64_u32_div() as
-r_sense_uohm * 1000. This multiplication overflows u32 when
-r_sense_uohm exceeds about 4.29 ohms (4294967 micro-ohms), producing
-a truncated divisor and an incorrect power reading.
+In the ldptr (0x24...0x27) opcode decoding path, the default case only
+breaks out but without setting "ret" value to EMULATE_FAIL. This leaves
+run->mmio.len uninitialized (stale from a previous MMIO operation) while
+"ret" value remains EMULATE_DO_MMIO, causing the code to proceed with an
+incorrect MMIO length.
 
-Cancel the factor of 1000 from both the numerator
-(VADC_UV_LSB * IADC_NANOV_LSB = 312500000) and the divisor
-(r_sense_uohm * 1000), giving (VADC_UV_LSB / 1000) * IADC_NANOV_LSB
-= 312500 as the numerator and plain r_sense_uohm as the divisor.
-The cancellation is exact because LTC2992_VADC_UV_LSB (25000) is
-divisible by 1000.
+Add "ret = EMULATE_FAIL" to match the other default branches in the same
+function (e.g. the 0x28...0x2e and 0x38 cases).
 
-This is the read-path counterpart of the write-path fix applied in
-the preceding patch.
-
-Fixes: b0bd407e94b03 ("hwmon: (ltc2992) Add support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260416215904.101969-3-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/ltc2992.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/loongarch/kvm/exit.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hwmon/ltc2992.c
-+++ b/drivers/hwmon/ltc2992.c
-@@ -627,8 +627,10 @@ static int ltc2992_get_power(struct ltc2
- 	if (reg_val < 0)
- 		return reg_val;
- 
--	*val = mul_u64_u32_div(reg_val, LTC2992_VADC_UV_LSB * LTC2992_IADC_NANOV_LSB,
--			       st->r_sense_uohm[channel] * 1000);
-+	*val = mul_u64_u32_div(reg_val,
-+			       LTC2992_VADC_UV_LSB / 1000 *
-+			       LTC2992_IADC_NANOV_LSB,
-+			       st->r_sense_uohm[channel]);
- 
- 	return 0;
- }
+--- a/arch/loongarch/kvm/exit.c
++++ b/arch/loongarch/kvm/exit.c
+@@ -371,6 +371,7 @@ int kvm_emu_mmio_read(struct kvm_vcpu *v
+ 			run->mmio.len = 8;
+ 			break;
+ 		default:
++			ret = EMULATE_FAIL;
+ 			break;
+ 		}
+ 		break;
 
 
