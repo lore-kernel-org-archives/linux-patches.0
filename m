@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1893EDE5C;
-	Tue, 12 May 2026 18:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A416C34405B;
+	Tue, 12 May 2026 18:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609399; cv=none; b=YzfMxLZnxOrQZ+ussg8ndKlyeqSllS5aWsi+dh6A6YEEsuVZxIe1aK3Un00IeI3QHOoo8sNVNKHif01lqPOLWNo5AwbxCrLwsFmARATNhYieelLupv6HYEucIkGdnmtXGqDz4dhXOZ1SjOoptqKdeKzV7ul7gVytrRYoecMPL8Q=
+	t=1778609401; cv=none; b=V97Hhe7/09syNZv/O/wPCFuEJdGZctBhMPn+GD8dZB+6RtDiKuWwtCnVzN2TkjRNeTr0G6FodQqdmvlZrMG6/+zF2/YpTbT8cvIqCexAdSGrcmSa4hyMem5pY+GkRh4jaPhqPslz5D0Bpb+Z92QHrrSPumG87fmxhciLyZNTCWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609399; c=relaxed/simple;
-	bh=x7u/iZfnrgSdQI6zMc3NkPxQlYeOTQvqTEP2PoHmFrA=;
+	s=arc-20240116; t=1778609401; c=relaxed/simple;
+	bh=G854uHYYAYF+pHInoGbECKPQD6ydTkjzb9NRiDMjz9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKoJSYZa1Gm2qpRS30SSkT7seo3KATqizPG7XZkneKobsr3TRRv2aO6DeXA+KuVqoVoYL55KumQ17nJqKyUO6RAa+cqx4MohZ3zAbVjoJBT4oAQ5fu45pu9AAsplndgTmbQsG+KtR4fzVd6NcvEABhLgcuedvJtBnMQmh9ijLT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0gavwDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=McbA5jNsncwjX8v/BIeHP1MTfURgHAjgCA+X63OuOGNP8xwi9LSHZDUHLom/NvnVUY1JGbnsBl7F0/ZxBigIOjEUtQAiIE9G1du40rdZmOorUC8lyUltQo9VyzHw8cN2XjG9P7Xl5FfhFtAgCPJLjlxc8C9nVp7E2pWYUA1mzsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCtHsv2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0gavwDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A6CC2BCB0;
-	Tue, 12 May 2026 18:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCtHsv2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7C6C2BCB0;
+	Tue, 12 May 2026 18:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609398;
-	bh=x7u/iZfnrgSdQI6zMc3NkPxQlYeOTQvqTEP2PoHmFrA=;
+	s=korg; t=1778609401;
+	bh=G854uHYYAYF+pHInoGbECKPQD6ydTkjzb9NRiDMjz9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l0gavwDHzRJnlLbwlumnIBwZwT6rgxwGSmsjh27xUBC91h5OlfjOn+nnDnMJkpaQ1
-	 XJoMG/UsB89O7/GD/GxBHPdA+Xbm9/AkkxRMjACk5Z+IUhgT2RxlXOXUV4YZm+TGTb
-	 9TRrny29UBRJKJb9UX67AXIZVBJ1EASS5R5QQ2y4=
+	b=LCtHsv2vTrjQ46wkKwzBh5z9tdplYtDkm0F0TlaEc/PTBKzIFgSrTlbAZF91SKOCu
+	 8+BbN4d0jvNEN6oVkL37PwVj2K+qbBBryGe25CuFw+fE0WnOYnBONya8RVg7fvWnkG
+	 1JhuVr69kxeGUU7uq5Tw+4TEdflr1FzTt6ylLniE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 7.0 180/307] dm-thin: fix metadata refcount underflow
-Date: Tue, 12 May 2026 19:39:35 +0200
-Message-ID: <20260512173943.916227939@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Zdenek Kabelac <zkabelac@redhat.com>
+Subject: [PATCH 7.0 181/307] dm: dont report warning when doing deferred remove
+Date: Tue, 12 May 2026 19:39:36 +0200
+Message-ID: <20260512173943.936866236@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,53 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 09a65adc7d8bbfce06392cb6d375468e2728ead5 upstream.
+commit b7cce3e2cca9cd78418f3c3784474b778e7996fe upstream.
 
-There's a bug in dm-thin in the function rebalance_children. If the
-internal btree node has one entry, the code tries to copy all btree
-entries from the node's child to the node itself and then decrement the
-child's reference count.
+If dm_hash_remove_all was called from dm_deferred_remove, it would write
+a warning "remove_all left %d open device(s)" if there are some other
+devices active.
 
-If the child node is shared (it has reference count > 1), we won't free
-it, so there would be two pointers to each of the grandchildren nodes.
-But the reference counts of the grandchildren is not increased, thus the
-reference count doesn't match the number of pointers that point to the
-grandchildren. This results in "device mapper: space map common: unable
-to decrement block" errors.
-
-Fix this bug by incrementing reference counts on the grandchildren if the
-btree node is shared.
+The warning is bogus, so let's disable it in this case.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: 3241b1d3e0aa ("dm: add persistent data library")
+Reported-by: Zdenek Kabelac <zkabelac@redhat.com>
 Cc: stable@vger.kernel.org
+Fixes: 2c140a246dc0 ("dm: allow remove to be deferred")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/persistent-data/dm-btree-remove.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/md/dm-ioctl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/persistent-data/dm-btree-remove.c
-+++ b/drivers/md/persistent-data/dm-btree-remove.c
-@@ -490,12 +490,20 @@ static int rebalance_children(struct sha
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -384,7 +384,7 @@ retry:
  
- 	if (le32_to_cpu(n->header.nr_entries) == 1) {
- 		struct dm_block *child;
-+		int is_shared;
- 		dm_block_t b = value64(n, 0);
+ 	up_write(&_hash_lock);
  
-+		r = dm_tm_block_is_shared(info->tm, b, &is_shared);
-+		if (r)
-+			return r;
-+
- 		r = dm_tm_read_lock(info->tm, b, &btree_node_validator, &child);
- 		if (r)
- 			return r;
- 
-+		if (is_shared)
-+			inc_children(info->tm, dm_block_data(child), vt);
-+
- 		memcpy(n, dm_block_data(child),
- 		       dm_bm_block_size(dm_tm_get_bm(info->tm)));
+-	if (dev_skipped)
++	if (dev_skipped && !only_deferred)
+ 		DMWARN("remove_all left %d open device(s)", dev_skipped);
+ }
  
 
 
