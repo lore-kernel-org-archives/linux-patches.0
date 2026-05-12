@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E533EDE48;
-	Tue, 12 May 2026 18:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9183EDE48;
+	Tue, 12 May 2026 18:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609218; cv=none; b=Ra6rDNvbLirI1PgBYAwoXWr+9Bxeilbde96dH6qiV5F71T1QDrRRNQdU8zIb+lAWTv1KLq/z1JRPnijKAffNJO5QctpQFjImxAuI0gqzzkPCUeAj038KoyPvIPCzobDbQROkPVP89NYagFpPYZNyKObiZzTdI9z6dfvutTxIAYE=
+	t=1778609221; cv=none; b=LbpD/OMVjQFHkcYyPv5+XSm4PBKisRAmK4DfPjFY+hOdf5YJG2Z+E2oyrVXl3d+cEOZckmMDx5lABGKbhpRZD0yO/XcrYZm7CWauV6r1SSF14q1Z+mt9kRXIIIMfaMt3djtqGnfDDPZ0CgXJNRPNxbU0uitHICvwzMS+GRqorSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609218; c=relaxed/simple;
-	bh=WiWV7xT3jihtTFWhk3rGrH8cWELLBwWrgPBCIUniBnA=;
+	s=arc-20240116; t=1778609221; c=relaxed/simple;
+	bh=/SImp8vQ4fpxQiueuu22C7MMjLmJbJ2leTknd+7VN2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BeufgxzbdZNigmiaLL0c5CwOrp4y48f2WoX2YPIfVOjFVkHNtD0q1h6bvSsdFZT/m9Dj1rXF+yT8Qr4SeijZHGPW07CZpqq7FzXagA2M+m+fs+nj8T1tHJcrOIU5bh2KKYHGS00MkP9xqTS484Ke2DWs3/JbWPLajVb1kOo1oJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWbdIpJI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WBtTxccQvrH4wGXpZ7N6q/lBgNtnXvv/RFE3BQlEZeYhWnQ/Gzgpn89gI9vgvzvwj2G5Yyo1xQ/JDC7FJT4yp7rFnsPNgJRuXX5m8Wi7L0XeW93oFBGPFMEz6B0Y44srtJJkev1jaYaXmeeME1Mlk1rrJpC4NMCNi6mRCdC2hyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akaACL3+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWbdIpJI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D70C2BCB0;
-	Tue, 12 May 2026 18:06:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akaACL3+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835A2C2BCB0;
+	Tue, 12 May 2026 18:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609218;
-	bh=WiWV7xT3jihtTFWhk3rGrH8cWELLBwWrgPBCIUniBnA=;
+	s=korg; t=1778609220;
+	bh=/SImp8vQ4fpxQiueuu22C7MMjLmJbJ2leTknd+7VN2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yWbdIpJItjeAioNzULWQND0ctfO2+gRRMsW2VCi5bse3DtqA4EtEZ3AkBQSxxJCMp
-	 /tixgKzL1d+8SnO+W17luhGLDehXKAaq6ppJeGznje0PC0pC10ZrUsdOlRELZejoOM
-	 DxieIEQr5HOnb1dksMGOfrHTzNjhM8Tuno0Dp09M=
+	b=akaACL3+a1Eqbd1JAWxBvgD2fDtvKGrCYiU1x7fO2HCxriHvsUXg/+50AufQua0DK
+	 Zs2xkUOuCPCJ6whO95CKZOsTD+gZjunz+rmXuozKFOhxslsvTRRLkWuxi2JOf/lciu
+	 cnusyTf3bz+NfsiCGmo8zWIUEq6p538+TAR8DYRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Gleixner <tglx@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Dmitry Vyukov <dvyukov@google.com>
-Subject: [PATCH 7.0 108/307] selftests/rseq: Validate legacy behavior
-Date: Tue, 12 May 2026 19:38:23 +0200
-Message-ID: <20260512173942.404727955@linuxfoundation.org>
+Subject: [PATCH 7.0 109/307] selftests/rseq: Expand for optimized RSEQ ABI v2
+Date: Tue, 12 May 2026 19:38:24 +0200
+Message-ID: <20260512173942.425609406@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -53,132 +53,293 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@kernel.org>
 
-commit fdf4eb632683bfc2840acebe62716cb468d43e10 upstream.
+commit e744060076871eebc2647b24420b550ff44b2b65 upstream.
 
-The RSEQ legacy mode behavior requires that the ID fields in the rseq
-region are unconditionally updated on every context switch and before
-signal delivery even if not required by the ABI specification.
+Update the selftests so they are executed for legacy (32 bytes RSEQ region)
+and optimized RSEQ ABI v2 mode.
 
-To ensure that this behavior is preserved for legacy users in the future,
-add a test which validates that with a sleep() and a signal sent to self.
-
-Provide a run script which prevents GLIBC from registering a RSEQ region,
-so that the test can register it's own legacy sized region.
-
-Fixes: 566d8015f7ee ("rseq: Avoid CPU/MM CID updates when no event pending")
+Fixes: d6200245c75e ("rseq: Allow registering RSEQ with slice extension")
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
 Tested-by: Dmitry Vyukov <dvyukov@google.com>
-Link: https://patch.msgid.link/20260428224427.764705536%40kernel.org
+Link: https://patch.msgid.link/20260428224428.009121296%40kernel.org
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/rseq/Makefile         |  5 +-
- tools/testing/selftests/rseq/legacy_check.c   | 65 +++++++++++++++++++
- .../selftests/rseq/run_legacy_check.sh        |  4 ++
- 3 files changed, 72 insertions(+), 2 deletions(-)
- create mode 100644 tools/testing/selftests/rseq/legacy_check.c
- create mode 100755 tools/testing/selftests/rseq/run_legacy_check.sh
+ tools/testing/selftests/rseq/Makefile         | 11 ++++--
+ .../testing/selftests/rseq/check_optimized.c  | 17 ++++++++
+ tools/testing/selftests/rseq/param_test.c     | 25 +++++++-----
+ .../testing/selftests/rseq/run_param_test.sh  | 39 +++++++++++++++++++
+ .../selftests/rseq/run_timeslice_test.sh      | 14 +++++++
+ tools/testing/selftests/rseq/slice_test.c     |  2 +-
+ 6 files changed, 95 insertions(+), 13 deletions(-)
+ create mode 100644 tools/testing/selftests/rseq/check_optimized.c
+ create mode 100755 tools/testing/selftests/rseq/run_timeslice_test.sh
 
 diff --git a/tools/testing/selftests/rseq/Makefile b/tools/testing/selftests/rseq/Makefile
-index 0d1947c0d623..0293a2f17f51 100644
+index 0293a2f17f51..50d69e22ee7a 100644
 --- a/tools/testing/selftests/rseq/Makefile
 +++ b/tools/testing/selftests/rseq/Makefile
-@@ -22,9 +22,10 @@ TEST_GEN_PROGS_EXTENDED = librseq.so \
- 	param_test_compare_twice \
+@@ -15,7 +15,7 @@ LDLIBS += -lpthread -ldl
+ OVERRIDE_TARGETS = 1
+ 
+ TEST_GEN_PROGS = basic_test basic_percpu_ops_test basic_percpu_ops_mm_cid_test \
+-		 param_test_benchmark param_test_mm_cid_benchmark slice_test
++		 param_test_benchmark param_test_mm_cid_benchmark
+ 
+ TEST_GEN_PROGS_EXTENDED = librseq.so \
+ 	param_test \
+@@ -23,9 +23,11 @@ TEST_GEN_PROGS_EXTENDED = librseq.so \
  	param_test_mm_cid \
  	param_test_mm_cid_compare_twice \
--	syscall_errors_test
-+	syscall_errors_test \
-+	legacy_check
+ 	syscall_errors_test \
+-	legacy_check
++	legacy_check \
++	slice_test \
++	check_optimized
  
--TEST_PROGS = run_param_test.sh run_syscall_errors_test.sh
-+TEST_PROGS = run_param_test.sh run_syscall_errors_test.sh run_legacy_check.sh
+-TEST_PROGS = run_param_test.sh run_syscall_errors_test.sh run_legacy_check.sh
++TEST_PROGS = run_param_test.sh run_syscall_errors_test.sh run_legacy_check.sh run_timeslice_test.sh
  
  TEST_FILES := settings
  
-diff --git a/tools/testing/selftests/rseq/legacy_check.c b/tools/testing/selftests/rseq/legacy_check.c
-new file mode 100644
-index 000000000000..3f7de4e28303
---- /dev/null
-+++ b/tools/testing/selftests/rseq/legacy_check.c
-@@ -0,0 +1,65 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#ifndef _GNU_SOURCE
-+#define _GNU_SOURCE
-+#endif
+@@ -66,3 +68,6 @@ $(OUTPUT)/syscall_errors_test: syscall_errors_test.c $(TEST_GEN_PROGS_EXTENDED)
+ 
+ $(OUTPUT)/slice_test: slice_test.c $(TEST_GEN_PROGS_EXTENDED) rseq.h rseq-*.h
+ 	$(CC) $(CFLAGS) $< $(LDLIBS) -lrseq -o $@
 +
-+#include <errno.h>
++$(OUTPUT)/check_optimized: check_optimized.c $(TEST_GEN_PROGS_EXTENDED) rseq.h rseq-*.h
++	$(CC) $(CFLAGS) $< $(LDLIBS) -lrseq -o $@
+diff --git a/tools/testing/selftests/rseq/check_optimized.c b/tools/testing/selftests/rseq/check_optimized.c
+new file mode 100644
+index 000000000000..a13e3f2c8fc6
+--- /dev/null
++++ b/tools/testing/selftests/rseq/check_optimized.c
+@@ -0,0 +1,17 @@
++// SPDX-License-Identifier: LGPL-2.1
++#define _GNU_SOURCE
++#include <assert.h>
++#include <sched.h>
 +#include <signal.h>
-+#include <stdint.h>
-+#include <unistd.h>
++#include <stdio.h>
++#include <string.h>
++#include <sys/time.h>
 +
 +#include "rseq.h"
 +
-+#include "../kselftest_harness.h"
-+
-+FIXTURE(legacy)
++int main(int argc, char **argv)
 +{
-+};
++	if (__rseq_register_current_thread(true, false))
++		return -1;
++	return 0;
++}
+diff --git a/tools/testing/selftests/rseq/param_test.c b/tools/testing/selftests/rseq/param_test.c
+index 05d03e679e06..e1e98dbabe4b 100644
+--- a/tools/testing/selftests/rseq/param_test.c
++++ b/tools/testing/selftests/rseq/param_test.c
+@@ -38,7 +38,7 @@ static int opt_modulo, verbose;
+ static int opt_yield, opt_signal, opt_sleep,
+ 		opt_disable_rseq, opt_threads = 200,
+ 		opt_disable_mod = 0, opt_test = 's';
+-
++static bool opt_rseq_legacy;
+ static long long opt_reps = 5000;
+ 
+ static __thread __attribute__((tls_model("initial-exec")))
+@@ -281,9 +281,12 @@ unsigned int yield_mod_cnt, nr_abort;
+ 	} \
+ }
+ 
++#define rseq_no_glibc			true
 +
-+static int cpu_id_in_sigfn = -1;
+ #else
+ 
+ #define printf_verbose(fmt, ...)
++#define rseq_no_glibc			false
+ 
+ #endif /* BENCHMARK */
+ 
+@@ -481,7 +484,7 @@ void *test_percpu_spinlock_thread(void *arg)
+ 	long long i, reps;
+ 
+ 	if (!opt_disable_rseq && thread_data->reg &&
+-	    rseq_register_current_thread())
++	    __rseq_register_current_thread(rseq_no_glibc, opt_rseq_legacy))
+ 		abort();
+ 	reps = thread_data->reps;
+ 	for (i = 0; i < reps; i++) {
+@@ -558,7 +561,7 @@ void *test_percpu_inc_thread(void *arg)
+ 	long long i, reps;
+ 
+ 	if (!opt_disable_rseq && thread_data->reg &&
+-	    rseq_register_current_thread())
++	    __rseq_register_current_thread(rseq_no_glibc, opt_rseq_legacy))
+ 		abort();
+ 	reps = thread_data->reps;
+ 	for (i = 0; i < reps; i++) {
+@@ -712,7 +715,7 @@ void *test_percpu_list_thread(void *arg)
+ 	long long i, reps;
+ 	struct percpu_list *list = (struct percpu_list *)arg;
+ 
+-	if (!opt_disable_rseq && rseq_register_current_thread())
++	if (!opt_disable_rseq && __rseq_register_current_thread(rseq_no_glibc, opt_rseq_legacy))
+ 		abort();
+ 
+ 	reps = opt_reps;
+@@ -895,7 +898,7 @@ void *test_percpu_buffer_thread(void *arg)
+ 	long long i, reps;
+ 	struct percpu_buffer *buffer = (struct percpu_buffer *)arg;
+ 
+-	if (!opt_disable_rseq && rseq_register_current_thread())
++	if (!opt_disable_rseq && __rseq_register_current_thread(rseq_no_glibc, opt_rseq_legacy))
+ 		abort();
+ 
+ 	reps = opt_reps;
+@@ -1105,7 +1108,7 @@ void *test_percpu_memcpy_buffer_thread(void *arg)
+ 	long long i, reps;
+ 	struct percpu_memcpy_buffer *buffer = (struct percpu_memcpy_buffer *)arg;
+ 
+-	if (!opt_disable_rseq && rseq_register_current_thread())
++	if (!opt_disable_rseq && __rseq_register_current_thread(rseq_no_glibc, opt_rseq_legacy))
+ 		abort();
+ 
+ 	reps = opt_reps;
+@@ -1258,7 +1261,7 @@ void *test_membarrier_worker_thread(void *arg)
+ 	const int iters = opt_reps;
+ 	int i;
+ 
+-	if (rseq_register_current_thread()) {
++	if (__rseq_register_current_thread(rseq_no_glibc, opt_rseq_legacy)) {
+ 		fprintf(stderr, "Error: rseq_register_current_thread(...) failed(%d): %s\n",
+ 			errno, strerror(errno));
+ 		abort();
+@@ -1323,7 +1326,7 @@ void *test_membarrier_manager_thread(void *arg)
+ 	intptr_t expect_a = 0, expect_b = 0;
+ 	int cpu_a = 0, cpu_b = 0;
+ 
+-	if (rseq_register_current_thread()) {
++	if (__rseq_register_current_thread(rseq_no_glibc, opt_rseq_legacy)) {
+ 		fprintf(stderr, "Error: rseq_register_current_thread(...) failed(%d): %s\n",
+ 			errno, strerror(errno));
+ 		abort();
+@@ -1475,6 +1478,7 @@ static void show_usage(int argc, char **argv)
+ 	printf("	[-D M] Disable rseq for each M threads\n");
+ 	printf("	[-T test] Choose test: (s)pinlock, (l)ist, (b)uffer, (m)emcpy, (i)ncrement, membarrie(r)\n");
+ 	printf("	[-M] Push into buffer and memcpy buffer with memory barriers.\n");
++	printf("	[-O] Test with optimized RSEQ\n");
+ 	printf("	[-v] Verbose output.\n");
+ 	printf("	[-h] Show this help.\n");
+ 	printf("\n");
+@@ -1602,6 +1606,9 @@ int main(int argc, char **argv)
+ 		case 'M':
+ 			opt_mo = RSEQ_MO_RELEASE;
+ 			break;
++		case 'L':
++			opt_rseq_legacy = true;
++			break;
+ 		default:
+ 			show_usage(argc, argv);
+ 			goto error;
+@@ -1618,7 +1625,7 @@ int main(int argc, char **argv)
+ 	if (set_signal_handler())
+ 		goto error;
+ 
+-	if (!opt_disable_rseq && rseq_register_current_thread())
++	if (!opt_disable_rseq && __rseq_register_current_thread(rseq_no_glibc, opt_rseq_legacy))
+ 		goto error;
+ 	if (!opt_disable_rseq && !rseq_validate_cpu_id()) {
+ 		fprintf(stderr, "Error: cpu id getter unavailable\n");
+diff --git a/tools/testing/selftests/rseq/run_param_test.sh b/tools/testing/selftests/rseq/run_param_test.sh
+index 8d31426ab41f..69a3fa049929 100755
+--- a/tools/testing/selftests/rseq/run_param_test.sh
++++ b/tools/testing/selftests/rseq/run_param_test.sh
+@@ -34,6 +34,11 @@ REPS=1000
+ SLOW_REPS=100
+ NR_THREADS=$((6*${NR_CPUS}))
+ 
++# Prevent GLIBC from registering RSEQ so the selftest can run in legacy and
++# performance optimized mode.
++GLIBC_TUNABLES="${GLIBC_TUNABLES:-}:glibc.pthread.rseq=0"
++export GLIBC_TUNABLES
 +
-+static void sigfn(int sig)
-+{
-+	struct rseq_abi *rs = rseq_get_abi();
+ function do_tests()
+ {
+ 	local i=0
+@@ -103,6 +108,40 @@ function inject_blocking()
+ 	NR_LOOPS=
+ }
+ 
++echo "Testing in legacy RSEQ mode"
++echo "Yield injection (25%)"
++inject_blocking -m 4 -y -L
 +
-+	cpu_id_in_sigfn = rs->cpu_id_start;
++echo "Yield injection (50%)"
++inject_blocking -m 2 -y -L
++
++echo "Yield injection (100%)"
++inject_blocking -m 1 -y -L
++
++echo "Kill injection (25%)"
++inject_blocking -m 4 -k -L
++
++echo "Kill injection (50%)"
++inject_blocking -m 2 -k -L
++
++echo "Kill injection (100%)"
++inject_blocking -m 1 -k -L
++
++echo "Sleep injection (1ms, 25%)"
++inject_blocking -m 4 -s 1 -L
++
++echo "Sleep injection (1ms, 50%)"
++inject_blocking -m 2 -s 1 -L
++
++echo "Sleep injection (1ms, 100%)"
++inject_blocking -m 1 -s 1 -L
++
++./check_optimized || {
++    echo "Skipping optimized RSEQ mode test. Not supported";
++    exit 0
 +}
 +
-+FIXTURE_SETUP(legacy)
-+{
-+	int res = __rseq_register_current_thread(true, true);
-+
-+	switch (res) {
-+	case -ENOSYS:
-+		SKIP(return, "RSEQ not enabled\n");
-+	case -EBUSY:
-+		SKIP(return, "GLIBC owns RSEQ. Disable GLIBC RSEQ registration\n");
-+	default:
-+		ASSERT_EQ(res, 0);
-+	}
-+
-+	ASSERT_NE(signal(SIGUSR1, sigfn), SIG_ERR);
-+}
-+
-+FIXTURE_TEARDOWN(legacy)
-+{
-+}
-+
-+TEST_F(legacy, legacy_test)
-+{
-+	struct rseq_abi *rs = rseq_get_abi();
-+
-+	ASSERT_NE(rs, NULL);
-+
-+	/* Overwrite rs::cpu_id_start */
-+	rs->cpu_id_start = -1;
-+	sleep(1);
-+	ASSERT_NE(rs->cpu_id_start, -1);
-+
-+	rs->cpu_id_start = -1;
-+	ASSERT_EQ(raise(SIGUSR1), 0);
-+	ASSERT_NE(rs->cpu_id_start, -1);
-+	ASSERT_NE(cpu_id_in_sigfn, -1);
-+}
-+
-+TEST_HARNESS_MAIN
-diff --git a/tools/testing/selftests/rseq/run_legacy_check.sh b/tools/testing/selftests/rseq/run_legacy_check.sh
++echo "Testing in optimized RSEQ mode"
+ echo "Yield injection (25%)"
+ inject_blocking -m 4 -y
+ 
+diff --git a/tools/testing/selftests/rseq/run_timeslice_test.sh b/tools/testing/selftests/rseq/run_timeslice_test.sh
 new file mode 100755
-index 000000000000..5577b46ea092
+index 000000000000..551ebed71ec6
 --- /dev/null
-+++ b/tools/testing/selftests/rseq/run_legacy_check.sh
-@@ -0,0 +1,4 @@
++++ b/tools/testing/selftests/rseq/run_timeslice_test.sh
+@@ -0,0 +1,14 @@
 +#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0
++# SPDX-License-Identifier: GPL-2.0+
 +
-+GLIBC_TUNABLES="${GLIBC_TUNABLES:-}:glibc.pthread.rseq=0" ./legacy_check
++# Prevent GLIBC from registering RSEQ so the selftest can run in legacy
++# and performance optimized mode.
++GLIBC_TUNABLES="${GLIBC_TUNABLES:-}:glibc.pthread.rseq=0"
++export GLIBC_TUNABLES
++
++./check_optimized || {
++    echo "Skipping optimized RSEQ mode test. Not supported";
++    exit 0
++}
++
++./slice_test
+diff --git a/tools/testing/selftests/rseq/slice_test.c b/tools/testing/selftests/rseq/slice_test.c
+index 77e668ff74d7..e402d4440bc2 100644
+--- a/tools/testing/selftests/rseq/slice_test.c
++++ b/tools/testing/selftests/rseq/slice_test.c
+@@ -124,7 +124,7 @@ FIXTURE_SETUP(slice_ext)
+ {
+ 	cpu_set_t affinity;
+ 
+-	if (rseq_register_current_thread())
++	if (__rseq_register_current_thread(true, false))
+ 		SKIP(return, "RSEQ not supported\n");
+ 
+ 	if (prctl(PR_RSEQ_SLICE_EXTENSION, PR_RSEQ_SLICE_EXTENSION_SET,
 -- 
 2.54.0
 
