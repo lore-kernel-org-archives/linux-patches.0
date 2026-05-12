@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DE33EDE44;
-	Tue, 12 May 2026 17:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2643EDE66;
+	Tue, 12 May 2026 17:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608291; cv=none; b=VsXNx9BHvnCIlNV6cryGurWyfzyylguiGKd6647d+8fZ8orooBCf5QdwuzZpVTU7aMXq3q1WfgDqQb5ocxduqPnqktKLskq6bUUwoyWdVocx2gkTOLu0nDhY6Xq59MdzTb95xWTG44DLkW9D3skMXsS6SBNMtUWte3sZQb3BQLE=
+	t=1778608293; cv=none; b=nTvw9F57EU2EifYYKbYUA5PcWObLWXLnm4yuCG+x2P70/SwsbVyveDP7aw7XIeB3V3ElmUeq4GGec3tKdbp6eNZJEySeV8trjsRCbtr8W32JttINqc9xXfA5/jXQ5nOywhi7Xo8o+cQdCNxyXAx7cu3lAjf2l5NQ3nUdP6ea4OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608291; c=relaxed/simple;
-	bh=kwckheeuVwRKsdQMIqoAYK43WdH3vbwbo+ckrQsvEv8=;
+	s=arc-20240116; t=1778608293; c=relaxed/simple;
+	bh=G2Qx1036Izpf7jow8YppGl8AZ1ooQQ5ccTXWLqajoHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHYVqs+3P+MnV+r3R9Mfi39ZcLbDgtxLY6tXOikmvYTd9YlwFtC0E/q1EWldMbtEF2v5isf+TTMJd7/uRfgxY90a85vCe98e+lPi5Znwy3VU0WezSr9GQVyxoxG8UM1pwx4OU7ZDcvUfXO+v7QIGqLa06XYW+zg2dbxL9ym2tlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePqG9K4l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FjkH4u5w0oypZ7nYqJTHdvHEDzKXOQ+IAek0TXnZtxooejbbdVft/yVhM3a2Jvg/+RoOHPwgIJHHr+pVGnZrwrzmrTaH6Q18fq5Nb/myDdOYtPt9wGCaVPImXiwEnDqu9xZkaCVIHAZDHUbNIwgPwzZxNmIq3hZgbsw52qCVDKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQUBhIJ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePqG9K4l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AB8C2BCB0;
-	Tue, 12 May 2026 17:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQUBhIJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5426EC2BCB0;
+	Tue, 12 May 2026 17:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608291;
-	bh=kwckheeuVwRKsdQMIqoAYK43WdH3vbwbo+ckrQsvEv8=;
+	s=korg; t=1778608293;
+	bh=G2Qx1036Izpf7jow8YppGl8AZ1ooQQ5ccTXWLqajoHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ePqG9K4lJm2HN5JTZN84K1hPuEkyg03ZT5fbVxOhnUTDK+PEFj68uSyHgZ5RX48jN
-	 YStPp04fl66vKJkfoA3Nbco4t+uIqiqxhn7kbAkgaPFU4n36JAMQiOh9cDxGcxphjR
-	 oDxGOvDFJXaOgBOaOuaHicR0xB4g5olKB03VWvLI=
+	b=dQUBhIJ9gZcBu0ia8JtZvwKiSSgJ/vRd4pm3CkLjtOB4DEbSPJsxV1rBngSmOjsY6
+	 ZY+ZO2zhPUwNNzOUr5mPkQmOwEK+ZPxlkwTofnrcF0yMDBoW0mIbF9yS/llGa/+Eac
+	 7iy5P1Pp2HCuT+MgifLsSzhn8Y0FnmI8xO/PftDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 022/270] KVM: SVM: check validity of VMCB controls when returning from SMM
-Date: Tue, 12 May 2026 19:37:03 +0200
-Message-ID: <20260512173938.925077719@linuxfoundation.org>
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 023/270] net: stmmac: Disable EEE RX clock stop when VLAN is enabled
+Date: Tue, 12 May 2026 19:37:04 +0200
+Message-ID: <20260512173938.945368624@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -49,76 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-commit be5fa8737d42c5ba16d2ea72c23681f8abbb07e8 upstream.
+commit c171e679ee66d7c0e2b58db9531af96797a76bca upstream.
 
-The VMCB12 is stored in guest memory and can be mangled while in SMM; it
-is then reloaded by svm_leave_smm(), but it is not checked again for
-validity.
+On the Renesas RZ/V2H EVK platform, where the stmmac MAC is connected to a
+Microchip KSZ9131RNXI PHY, creating or deleting VLAN interfaces may fail
+with timeouts:
 
-Move the cached vmcb12 control and save consistency checks out of
-svm_set_nested_state() and into a helper, and reuse it in
-svm_leave_smm().
+    # ip link add link end1 name end1.5 type vlan id 5
+    15c40000.ethernet end1: Timeout accessing MAC_VLAN_Tag_Filter
+    RTNETLINK answers: Device or resource busy
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Disabling EEE at runtime avoids the problem:
+
+    # ethtool --set-eee end1 eee off
+    # ip link add link end1 name end1.5 type vlan id 5
+    # ip link del end1.5
+
+The stmmac hardware requires the receive clock to be running when writing
+certain registers, such as those used for MAC address configuration or
+VLAN filtering. However, by default the driver enables Energy Efficient
+Ethernet (EEE) and allows the PHY to stop the receive clock when the link
+is idle. As a result, the RX clock might be stopped when attempting to
+access these registers, leading to timeouts and other issues.
+
+Commit dd557266cf5fb ("net: stmmac: block PHY RXC clock-stop")
+addressed this issue for most register accesses by wrapping them in
+phylink_rx_clk_stop_block()/phylink_rx_clk_stop_unblock() calls.
+However, VLAN add/delete operations may be invoked with bottom halves
+disabled, where sleeping is not allowed, so using these helpers is not
+possible.
+
+Therefore, to fix this, disable the RX clock stop feature in the phylink
+configuration if VLAN features are set. This ensures the RX clock remains
+active and register accesses succeed during VLAN operations.
+
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20251113112721.70500-3-ovidiu.panait.rb@renesas.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |   12 ++++++++++--
- arch/x86/kvm/svm/svm.c    |    4 ++++
- arch/x86/kvm/svm/svm.h    |    1 +
- 3 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -484,6 +484,15 @@ void nested_copy_vmcb_save_to_cache(stru
- 	__nested_copy_vmcb_save_to_cache(&svm->nested.save, save);
- }
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1204,7 +1204,11 @@ static int stmmac_phy_setup(struct stmma
+ 	/* Stmmac always requires an RX clock for hardware initialization */
+ 	config->mac_requires_rxc = true;
  
-+int nested_svm_check_cached_vmcb12(struct kvm_vcpu *vcpu)
-+{
-+	if (!nested_vmcb_check_save(vcpu) ||
-+	    !nested_vmcb_check_controls(vcpu))
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- /*
-  * Synchronize fields that are written by the processor, so that
-  * they can be copied back into the vmcb12.
-@@ -990,8 +999,7 @@ int nested_svm_vmrun(struct kvm_vcpu *vc
- 	nested_copy_vmcb_control_to_cache(svm, &vmcb12->control);
- 	nested_copy_vmcb_save_to_cache(svm, &vmcb12->save);
+-	if (!(priv->plat->flags & STMMAC_FLAG_RX_CLK_RUNS_IN_LPI))
++	/* Disable EEE RX clock stop to ensure VLAN register access works
++	 * correctly.
++	 */
++	if (!(priv->plat->flags & STMMAC_FLAG_RX_CLK_RUNS_IN_LPI) &&
++	    !(priv->dev->features & NETIF_F_VLAN_FEATURES))
+ 		config->eee_rx_clk_stop_enable = true;
  
--	if (!nested_vmcb_check_save(vcpu) ||
--	    !nested_vmcb_check_controls(vcpu)) {
-+	if (nested_svm_check_cached_vmcb12(vcpu) < 0) {
- 		vmcb12->control.exit_code    = SVM_EXIT_ERR;
- 		vmcb12->control.exit_code_hi = -1u;
- 		vmcb12->control.exit_info_1  = 0;
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4885,6 +4885,10 @@ static int svm_leave_smm(struct kvm_vcpu
- 	vmcb12 = map.hva;
- 	nested_copy_vmcb_control_to_cache(svm, &vmcb12->control);
- 	nested_copy_vmcb_save_to_cache(svm, &vmcb12->save);
-+
-+	if (nested_svm_check_cached_vmcb12(vcpu) < 0)
-+		goto unmap_save;
-+
- 	ret = enter_svm_guest_mode(vcpu, smram64->svm_guest_vmcb_gpa, vmcb12, false);
- 
- 	if (ret)
---- a/arch/x86/kvm/svm/svm.h
-+++ b/arch/x86/kvm/svm/svm.h
-@@ -782,6 +782,7 @@ static inline int nested_svm_simple_vmex
- 
- int nested_svm_exit_handled(struct vcpu_svm *svm);
- int nested_svm_check_permissions(struct kvm_vcpu *vcpu);
-+int nested_svm_check_cached_vmcb12(struct kvm_vcpu *vcpu);
- int nested_svm_check_exception(struct vcpu_svm *svm, unsigned nr,
- 			       bool has_error_code, u32 error_code);
- int nested_svm_exit_special(struct vcpu_svm *svm);
+ 	/* Set the default transmit clock stop bit based on the platform glue */
 
 
