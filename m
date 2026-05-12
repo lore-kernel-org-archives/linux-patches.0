@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2439336891;
-	Tue, 12 May 2026 18:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F80723E356;
+	Tue, 12 May 2026 18:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609489; cv=none; b=MOd8RPb3uMH2gk33YxuZ3VauSH51LCjDVWla7EaV339+2wVwr8bAtLA15Spfqsf+0UAimkcxk6u05HqEOaho+uRTOY6dN/HoOQs6wSD0aXL6hM3Zx6MWQlQYDVxEu2uq+221rxQlETPKzGXVRQPhCmAXinBuP5sa+4zDelAUn3s=
+	t=1778609492; cv=none; b=n7VJGjZRKpSC8xOFUnw5QfQdAyXMdS2//0d5RxR+/E2dB6TQ/gfh1+GvskxJXH8rD0XfdcC29FlNitaf8KCiR6R8Nz+YAGlBStDkAaZ9n9LKbftudErLA7fAMHo+9TgVLIvvzXQKcvabk+2pIxAzC3vcZiWX7pmMFCSFnwc7A9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609489; c=relaxed/simple;
-	bh=s+FFLoxTZyV4KfClqb7sSGrduV7aMfsyttxhQ3UKPT8=;
+	s=arc-20240116; t=1778609492; c=relaxed/simple;
+	bh=hCHjGJattFAmhYVy1cXXXgsw4Z7Llegi870eXHZF1TI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4RokHhUNwElpmsGhN7V8g9bmPVxqDzU1rY92PSdW5Eeo8T5Uue4tl7DeH3Y7eIcCpw4KEIanj+SMZbOOQL27mTl0WHpTWueZqBzzVmNb55vGBcxF9cMpBah67CRPDXsUQ9wRBrhS0S0nzI0Hex7Je33V2DCduofkc1w2LgUObo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDeNJZ8t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WnHtexOpJEVeKredXb/WqVV7wv0jiSoLHj/C1Wz5neUtuZy7JBvEcv/sPthBbM9eJYwTgl9Tgs4y+pJCGu3ZmZj876cBqcxXeuM5T3qOsxLxw4AYf9XwyGu2tQgdflKOXaWmCPzc9W7bQ2pYm52dKVxfuBHRgkcvgoIo8E7gFYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGa8qSRj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDeNJZ8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F60C2BCB0;
-	Tue, 12 May 2026 18:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGa8qSRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F10CC2BCB0;
+	Tue, 12 May 2026 18:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609489;
-	bh=s+FFLoxTZyV4KfClqb7sSGrduV7aMfsyttxhQ3UKPT8=;
+	s=korg; t=1778609491;
+	bh=hCHjGJattFAmhYVy1cXXXgsw4Z7Llegi870eXHZF1TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDeNJZ8tKUANYMEaet8yJYLXtnOSZk9JMt+nq/rQ9dNSbI1hNAQVwNTy0yWXao3yY
-	 HLLw569UZ/nsStIYzn/KvQFS3LkcuiWPVAMzzqXBtNe1H3+fD4iYg1+dMrKndE4iEQ
-	 E9G3zHSLBme3lFbOMTbPRo3mNreoBYqS01OWh1oY=
+	b=KGa8qSRjujTyRiEWLvF4q+L3yREPnaezQLWXhqm/mbawc2aF/LKhyjbtndlNz3fGe
+	 STbMNJm0gItgchx2MqMSdou8zn/gAxpLbioxSgljfrJWRBCQkVu+3nvAYr2uoAGu0Q
+	 BEjDdfAIjzxhzhqN9RxvtpTynd/sRjKK5C08xMko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farrah Chen <farrah.chen@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH 7.0 216/307] KVM: x86: Do IRR scan in __kvm_apic_update_irr even if PIR is empty
-Date: Tue, 12 May 2026 19:40:11 +0200
-Message-ID: <20260512173944.674439833@linuxfoundation.org>
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 217/307] mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid values
+Date: Tue, 12 May 2026 19:40:12 +0200
+Message-ID: <20260512173944.696174235@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,91 +51,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 33fd0ccd2590b470b65adcca288615ad3b5e3e06 upstream.
+commit b98b7ff6025ae82570d4915e083f0cbd8d48b3cf upstream.
 
-Fall back to apic_find_highest_vector() when PID.ON is set but PIR
-turns out to be empty, to correctly report the highest pending interrupt
-from the existing IRR.
+DAMON_LRU_SORT updates 'enabled' and 'kdamond_pid' parameter values, which
+represents the running status of its kdamond, when the user explicitly
+requests start/stop of the kdamond.  The kdamond can, however, be stopped
+in events other than the explicit user request in the following three
+events.
 
-In a nested VM stress test, the following WARNING fires in
-vmx_check_nested_events() when kvm_cpu_has_interrupt() reports a pending
-interrupt but the subsequent kvm_apic_has_interrupt() (which invokes
-vmx_sync_pir_to_irr() again) returns -1:
+1. ctx->regions_score_histogram allocation failure at beginning of the
+   execution,
+2. damon_commit_ctx() failure due to invalid user input, and
+3. damon_commit_ctx() failure due to its internal allocation failures.
 
-  WARNING: CPU: 99 PID: 57767 at arch/x86/kvm/vmx/nested.c:4449 vmx_check_nested_events+0x6bf/0x6e0 [kvm_intel]
-  Call Trace:
-   kvm_check_and_inject_events
-   vcpu_enter_guest.constprop.0
-   vcpu_run
-   kvm_arch_vcpu_ioctl_run
-   kvm_vcpu_ioctl
-   __x64_sys_ioctl
-   do_syscall_64
-   entry_SYSCALL_64_after_hwframe
+Hence, if the kdamond is stopped by the above three events, the values of
+the status parameters can be stale.  Users could show the stale values and
+be confused.  This is already bad, but the real consequence is worse.
+DAMON_LRU_SORT avoids unnecessary damon_start() and damon_stop() calls
+based on the 'enabled' parameter value.  And the update of 'enabled'
+parameter value depends on the damon_start() and damon_stop() call
+results.  Hence, once the kdamond has stopped by the unintentional events,
+the user cannot restart the kdamond before the system reboot.  For
+example, the issue can be reproduced via below steps.
 
-The root cause is a race between vmx_sync_pir_to_irr() on the target vCPU
-and __vmx_deliver_posted_interrupt() on a sender vCPU.  The sender
-performs two individually-atomic operations that are not a single
-transaction:
+    # cd /sys/module/damon_lru_sort/parameters
+    #
+    # # start DAMON_LRU_SORT
+    # echo Y > enabled
+    # ps -ef | grep kdamond
+    root         806       2  0 17:53 ?        00:00:00 [kdamond.0]
+    root         808     803  0 17:53 pts/4    00:00:00 grep kdamond
+    #
+    # # commit wrong input to stop kdamond withou explicit stop request
+    # echo 3 > addr_unit
+    # echo Y > commit_inputs
+    bash: echo: write error: Invalid argument
+    #
+    # # confirm kdamond is stopped
+    # ps -ef | grep kdamond
+    root         811     803  0 17:53 pts/4    00:00:00 grep kdamond
+    #
+    # # users casn now show stable status
+    # cat enabled
+    Y
+    # cat kdamond_pid
+    806
+    #
+    # # even after fixing the wrong parameter,
+    # # kdamond cannot be restarted.
+    # echo 1 > addr_unit
+    # echo Y > enabled
+    # ps -ef | grep kdamond
+    root         815     803  0 17:54 pts/4    00:00:00 grep kdamond
 
-  1. pi_test_and_set_pir(vector)  -- sets the PIR bit
-  2. pi_test_and_set_on()         -- sets PID.ON
+The problem will only rarely happen in real and common setups for the
+following reasons.  The allocation failures are unlikely in such setups
+since those allocations are arguably too small to fail.  Also sane users
+on real production environments may not commit wrong input parameters.
+But once it happens, the consequence is quite bad.  And the bug is a bug.
 
-The following interleaving triggers the bug:
+The issue stems from the fact that there are multiple events that can
+change the status, and following all the events is challenging.
+Dynamically detect and use the fresh status for the parameters when those
+are requested.
 
-  Sender vCPU (IPI):              Target vCPU (1st sync_pir_to_irr):
-  B1: set PIR[vector]
-                                  A1: pi_clear_on()
-                                  A2: pi_harvest_pir() -> sees B1 bit
-                                  A3: xchg() -> consumes bit, PIR=0
-                                      (1st sync returns correct max_irr)
-  B2: set PID.ON = 1
-
-                                  Target vCPU (2nd sync_pir_to_irr):
-                                  C1: pi_test_on() -> TRUE (from B2)
-                                  C2: pi_clear_on() -> ON=0
-                                  C3: pi_harvest_pir() -> PIR empty
-                                  C4: *max_irr = -1, early return
-                                      IRR NOT SCANNED
-
-The interrupt is not lost (it resides in the IRR from the first sync and
-is recovered on the next vcpu_enter_guest() iteration), but the incorrect
-max_irr causes a spurious WARNING and a wasted L2 VM-Enter/VM-Exit cycle.
-
-Fixes: b41f8638b9d3 ("KVM: VMX: Isolate pure loads from atomic XCHG when processing PIR")
-Reported-by: Farrah Chen <farrah.chen@intel.com>
-Analyzed-by: Chenyi Qiang <chenyi.qiang@intel.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/kvm/20260428070349.1633238-1-chenyi.qiang@intel.com/T/
-Link: https://patch.msgid.link/20260503201703.108231-2-pbonzini@redhat.com/
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/20260419161003.79176-3-sj@kernel.org
+Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
+Co-developed-by: Liew Rui Yan <aethernet65535@gmail.com>
+Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.0.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ mm/damon/lru_sort.c |   85 +++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 55 insertions(+), 30 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -669,12 +669,14 @@ bool __kvm_apic_update_irr(unsigned long
- 	u32 irr_val, prev_irr_val;
- 	int max_updated_irr;
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -161,15 +161,6 @@ module_param(monitor_region_end, ulong,
+  */
+ static unsigned long addr_unit __read_mostly = 1;
  
-+	if (!pi_harvest_pir(pir, pir_vals)) {
-+		*max_irr = apic_find_highest_vector(regs + APIC_IRR);
-+		return false;
-+	}
-+
- 	max_updated_irr = -1;
- 	*max_irr = -1;
- 
--	if (!pi_harvest_pir(pir, pir_vals))
--		return false;
+-/*
+- * PID of the DAMON thread
+- *
+- * If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.
+- * Else, -1.
+- */
+-static int kdamond_pid __read_mostly = -1;
+-module_param(kdamond_pid, int, 0400);
 -
- 	for (i = vec = 0; i <= 7; i++, vec += 32) {
- 		u32 *p_irr = (u32 *)(regs + APIC_IRR + i * 0x10);
+ static struct damos_stat damon_lru_sort_hot_stat;
+ DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_lru_sort_hot_stat,
+ 		lru_sort_tried_hot_regions, lru_sorted_hot_regions,
+@@ -391,12 +382,8 @@ static int damon_lru_sort_turn(bool on)
+ {
+ 	int err;
  
+-	if (!on) {
+-		err = damon_stop(&ctx, 1);
+-		if (!err)
+-			kdamond_pid = -1;
+-		return err;
+-	}
++	if (!on)
++		return damon_stop(&ctx, 1);
+ 
+ 	err = damon_lru_sort_apply_parameters();
+ 	if (err)
+@@ -405,9 +392,6 @@ static int damon_lru_sort_turn(bool on)
+ 	err = damon_start(&ctx, 1, true);
+ 	if (err)
+ 		return err;
+-	kdamond_pid = damon_kdamond_pid(ctx);
+-	if (kdamond_pid < 0)
+-		return kdamond_pid;
+ 	return damon_call(ctx, &call_control);
+ }
+ 
+@@ -435,42 +419,83 @@ module_param_cb(addr_unit, &addr_unit_pa
+ MODULE_PARM_DESC(addr_unit,
+ 	"Scale factor for DAMON_LRU_SORT to ops address conversion (default: 1)");
+ 
++static bool damon_lru_sort_enabled(void)
++{
++	if (!ctx)
++		return false;
++	return damon_is_running(ctx);
++}
++
+ static int damon_lru_sort_enabled_store(const char *val,
+ 		const struct kernel_param *kp)
+ {
+-	bool is_enabled = enabled;
+-	bool enable;
+ 	int err;
+ 
+-	err = kstrtobool(val, &enable);
++	err = kstrtobool(val, &enabled);
+ 	if (err)
+ 		return err;
+ 
+-	if (is_enabled == enable)
++	if (damon_lru_sort_enabled() == enabled)
+ 		return 0;
+ 
+ 	/* Called before init function.  The function will handle this. */
+ 	if (!damon_initialized())
+-		goto set_param_out;
++		return 0;
+ 
+-	err = damon_lru_sort_turn(enable);
+-	if (err)
+-		return err;
++	return damon_lru_sort_turn(enabled);
++}
+ 
+-set_param_out:
+-	enabled = enable;
+-	return err;
++static int damon_lru_sort_enabled_load(char *buffer,
++		const struct kernel_param *kp)
++{
++	return sprintf(buffer, "%c\n", damon_lru_sort_enabled() ? 'Y' : 'N');
+ }
+ 
+ static const struct kernel_param_ops enabled_param_ops = {
+ 	.set = damon_lru_sort_enabled_store,
+-	.get = param_get_bool,
++	.get = damon_lru_sort_enabled_load,
+ };
+ 
+ module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
+ MODULE_PARM_DESC(enabled,
+ 	"Enable or disable DAMON_LRU_SORT (default: disabled)");
+ 
++static int damon_lru_sort_kdamond_pid_store(const char *val,
++		const struct kernel_param *kp)
++{
++	/*
++	 * kdamond_pid is read-only, but kernel command line could write it.
++	 * Do nothing here.
++	 */
++	return 0;
++}
++
++static int damon_lru_sort_kdamond_pid_load(char *buffer,
++		const struct kernel_param *kp)
++{
++	int kdamond_pid = -1;
++
++	if (ctx) {
++		kdamond_pid = damon_kdamond_pid(ctx);
++		if (kdamond_pid < 0)
++			kdamond_pid = -1;
++	}
++	return sprintf(buffer, "%d\n", kdamond_pid);
++}
++
++static const struct kernel_param_ops kdamond_pid_param_ops = {
++	.set = damon_lru_sort_kdamond_pid_store,
++	.get = damon_lru_sort_kdamond_pid_load,
++};
++
++/*
++ * PID of the DAMON thread
++ *
++ * If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.
++ * Else, -1.
++ */
++module_param_cb(kdamond_pid, &kdamond_pid_param_ops, NULL, 0400);
++
+ static int __init damon_lru_sort_init(void)
+ {
+ 	int err;
 
 
