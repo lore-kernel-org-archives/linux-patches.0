@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A7F3EDE53;
-	Tue, 12 May 2026 17:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932383EDE53;
+	Tue, 12 May 2026 17:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608768; cv=none; b=XvKoixFpQNPcGnovVvrF1ZH0gz8hhqmxmLyrJkI2cqQMRk3S3PkQukmek/z42jI6DvID8bbxXYpBlm7FfrHaoBq/zdYwPguVXaU3sBS+Th9wnxw8onNWBrRefPHdA+8b4YFrnhKIuzBYHBHGE+V9v6h8ajzIx0miB236i3ZLt38=
+	t=1778608770; cv=none; b=Re3MoWgWEN+bwQqAMzd1QuGccRGRVG2Scbng4J51JgKQV8OGa+kXmmGRqZh23mzADMZ6pnSaphG4YXkWbcV3Ua6+aAZjdKq5V22/l2lg+EkXc9ra+TujvSrKD2WnzlxkoIVxMcCsALuRA8dROOtQpmlUCq5/1QgV9ViN4wdaOSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608768; c=relaxed/simple;
-	bh=zEOd1SNMzFoE9/0RgMeoL4hT4hcI8HmM/xLAx6Z/ujs=;
+	s=arc-20240116; t=1778608770; c=relaxed/simple;
+	bh=VHjHrH5bG5kDhxSfjWFsIux5Eefj5yG/o+vsnWdJgJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpKxceggYEDTzwMq1tqQpzdNk2NePsPla7QcvlK0vfIojLE9rS3Kkpw9uKkn8S06Bihgmdg8wrBkD/NJZZ/kAp7Bj/osCpGMaTYtmWfh1M3mo/hvf5d08r8P3lm+DoBzySo8JYztCxbrac5PDagaFrWXwv5Rb2RRxz4Gijrx8ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byEytRD9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lWc2MOCIJGewgMFZzmEOgKWzZLR4vFH2VyIMjnYn9KVP5w5hGzz42TkOhzRutI/1qTMqzSODYvHyFhZRBxvIHYDGRW0Bm0U+HD2xoYIR4ms9GCCaI2XTro2eYYvT8dgutR53OuwBRbRvYuN8nPQ3h0p07UosuronYY5TZbEnPnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jY/+jopX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byEytRD9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A4BC2BCB0;
-	Tue, 12 May 2026 17:59:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jY/+jopX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DCCC2BCB0;
+	Tue, 12 May 2026 17:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608767;
-	bh=zEOd1SNMzFoE9/0RgMeoL4hT4hcI8HmM/xLAx6Z/ujs=;
+	s=korg; t=1778608770;
+	bh=VHjHrH5bG5kDhxSfjWFsIux5Eefj5yG/o+vsnWdJgJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byEytRD9f1ln29Dk44bCaXNvXPuWSaIbgGJrUwwZTeBLYIPFgBi+BI2IFvI0w7dec
-	 lR7aqloMOaN8LR9IEY/i4SpMGgUsJfxLtIerrP7ScshcrP2mfOjWcfVxbVTCzRVHsy
-	 qSxJEEyEfFPfhlyPrUPtZFiH5PFVhZSvUwvQpIMk=
+	b=jY/+jopXmj7w6kmnQCSqbSMiB8jRKx9HVZLHxZBwnTC1+HH2LQJ75KAjbYyCa2x0i
+	 6EY8AMvY1TCEnUCFGinA6a162Z1KaUde0NlwpZWd8YPnRF3QLGupyS+KpXw8f8+Iuy
+	 5dERDv+wuB+O3u2VUAqPo9YxAFTI8IAHVhe8jclc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
-	Claude <noreply@anthropic.com>
-Subject: [PATCH 6.18 205/270] sched_ext: idle: Recheck prev_cpu after narrowing allowed mask
-Date: Tue, 12 May 2026 19:40:06 +0200
-Message-ID: <20260512173942.766336095@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 206/270] selftests: mptcp: check output: catch cmd errors
+Date: Tue, 12 May 2026 19:40:07 +0200
+Message-ID: <20260512173942.786851928@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -52,61 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit b34c82777a2c0648ee053595f4b290fd5249b093 upstream.
+commit 65db7b27b90e2ea8d4966935aa9a50b6a60c31ac upstream.
 
-scx_select_cpu_dfl() narrows @allowed to @cpus_allowed & @p->cpus_ptr
-when the BPF caller supplies a @cpus_allowed that differs from
-@p->cpus_ptr and @p doesn't have full affinity. However,
-@is_prev_allowed was computed against the original (wider)
-@cpus_allowed, so the prev_cpu fast paths could pick a @prev_cpu that
-is in @cpus_allowed but not in @p->cpus_ptr, violating the intended
-invariant that the returned CPU is always usable by @p. The kernel
-masks this via the SCX_EV_SELECT_CPU_FALLBACK fallback, but the
-behavior contradicts the documented contract.
+Using '${?}' inside the if-statement to check the returned value from
+the command that was evaluated as part of the if-statement is not
+correct: here, '${?}' will be linked to the previous instruction, not
+the one that is expected here (${cmd}).
 
-Move the @is_prev_allowed evaluation past the narrowing block so it
-tests against the final @allowed mask.
+Instead, simply mark the error, except if an error is expected. If
+that's the case, 1 can be passed as the 4th argument of this helper.
+Three checks from pm_netlink.sh expect an error.
 
-Fixes: ee9a4e92799d ("sched_ext: idle: Properly handle invalid prev_cpu during idle selection")
-Cc: stable@vger.kernel.org # v6.16+
-Assisted-by: Claude <noreply@anthropic.com>
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+While at it, improve the error message when the command unexpectedly
+fails or succeeds.
+
+Note that we could expect a specific returned value, but the checks
+currently expecting an error can be used with 'ip mptcp' or 'pm_nl_ctl',
+and these two tools don't return the same error code.
+
+Fixes: 2d0c1d27ea4e ("selftests: mptcp: add mptcp_lib_check_output helper")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-10-fca8091060a4@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext_idle.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_lib.sh  |   16 ++++++++++------
+ tools/testing/selftests/net/mptcp/pm_netlink.sh |   10 ++++++----
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
---- a/kernel/sched/ext_idle.c
-+++ b/kernel/sched/ext_idle.c
-@@ -460,12 +460,6 @@ s32 scx_select_cpu_dfl(struct task_struc
- 	preempt_disable();
+--- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
+@@ -430,20 +430,24 @@ mptcp_lib_wait_local_port_listen() {
+ 	wait_local_port_listen "${@}" "tcp"
+ }
  
- 	/*
--	 * Check whether @prev_cpu is still within the allowed set. If not,
--	 * we can still try selecting a nearby CPU.
--	 */
--	is_prev_allowed = cpumask_test_cpu(prev_cpu, allowed);
--
--	/*
- 	 * Determine the subset of CPUs usable by @p within @cpus_allowed.
- 	 */
- 	if (allowed != p->cpus_ptr) {
-@@ -482,6 +476,12 @@ s32 scx_select_cpu_dfl(struct task_struc
- 	}
++# $1: error file, $2: cmd, $3: expected msg, [$4: expected error]
+ mptcp_lib_check_output() {
+ 	local err="${1}"
+ 	local cmd="${2}"
+ 	local expected="${3}"
++	local exp_error="${4:-0}"
+ 	local cmd_ret=0
+ 	local out
  
- 	/*
-+	 * Check whether @prev_cpu is still within the allowed set. If not,
-+	 * we can still try selecting a nearby CPU.
-+	 */
-+	is_prev_allowed = cpumask_test_cpu(prev_cpu, allowed);
-+
-+	/*
- 	 * This is necessary to protect llc_cpus.
- 	 */
- 	rcu_read_lock();
+-	if ! out=$(${cmd} 2>"${err}"); then
+-		cmd_ret=${?}
+-	fi
++	out=$(${cmd} 2>"${err}") || cmd_ret=1
+ 
+-	if [ ${cmd_ret} -ne 0 ]; then
+-		mptcp_lib_pr_fail "command execution '${cmd}' stderr"
+-		cat "${err}"
++	if [ "${cmd_ret}" != "${exp_error}" ]; then
++		mptcp_lib_pr_fail "unexpected returned code for '${cmd}', info:"
++		if [ "${exp_error}" = 0 ]; then
++			cat "${err}"
++		else
++			echo "${out}"
++		fi
+ 		return 2
+ 	elif [ "${out}" = "${expected}" ]; then
+ 		return 0
+--- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
++++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
+@@ -122,10 +122,12 @@ check()
+ 	local cmd="$1"
+ 	local expected="$2"
+ 	local msg="$3"
++	local exp_error="$4"
+ 	local rc=0
+ 
+ 	mptcp_lib_print_title "$msg"
+-	mptcp_lib_check_output "${err}" "${cmd}" "${expected}" || rc=${?}
++	mptcp_lib_check_output "${err}" "${cmd}" "${expected}" "${exp_error}" ||
++		rc=${?}
+ 	if [ ${rc} -eq 2 ]; then
+ 		mptcp_lib_result_fail "${msg} # error ${rc}"
+ 		ret=${KSFT_FAIL}
+@@ -158,13 +160,13 @@ check "show_endpoints" \
+ 			    "3,10.0.1.3,signal backup")" "dump addrs"
+ 
+ del_endpoint 2
+-check "get_endpoint 2" "" "simple del addr"
++check "get_endpoint 2" "" "simple del addr" 1
+ check "show_endpoints" \
+ 	"$(format_endpoints "1,10.0.1.1" \
+ 			    "3,10.0.1.3,signal backup")" "dump addrs after del"
+ 
+ add_endpoint 10.0.1.3 2>/dev/null
+-check "get_endpoint 4" "" "duplicate addr"
++check "get_endpoint 4" "" "duplicate addr" 1
+ 
+ add_endpoint 10.0.1.4 flags signal
+ check "get_endpoint 4" "$(format_endpoints "4,10.0.1.4,signal")" "id addr increment"
+@@ -173,7 +175,7 @@ for i in $(seq 5 9); do
+ 	add_endpoint "10.0.1.${i}" flags signal >/dev/null 2>&1
+ done
+ check "get_endpoint 9" "$(format_endpoints "9,10.0.1.9,signal")" "hard addr limit"
+-check "get_endpoint 10" "" "above hard addr limit"
++check "get_endpoint 10" "" "above hard addr limit" 1
+ 
+ del_endpoint 9
+ for i in $(seq 10 255); do
 
 
