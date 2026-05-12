@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AA73EDE43;
-	Tue, 12 May 2026 17:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C974F3EDE5F;
+	Tue, 12 May 2026 17:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608778; cv=none; b=uMg6cG4wsH9C8tjEZ9A5IbpChLEFClCeSBvs2/8OZDoGXp2M4cIOhzi3/wrxglrZZ2oPTv4ifjc4SryP1jQNyxPVSAGMXHD1YfWtWi0BaPdsa7xNhbdtnH11P/FioU/MVZziKBGYswKGLNaTZmnM8uipqaPwj+6sZulptEOrG3c=
+	t=1778608780; cv=none; b=D1jZODfoUE1pZCn5iCvJaEQX6YnGOlK2zcAyP0whrazEdnBRWVhBEPvcV8LV6QW+RD1BjOQ1NJYPEB/NRqcijWlzCZ252SvIYb4dq1d+rAKgCc4tthaz5HREMYCAP7XIIXGN65XbMI6Hq5h9xWLb/ch+IN/xzDSIPtILoqcpIfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608778; c=relaxed/simple;
-	bh=yfgMRPvqUQdJBpag187+Xap4cJLWHSNo7Xzqr2xZ/DY=;
+	s=arc-20240116; t=1778608780; c=relaxed/simple;
+	bh=RxQNBOsfaLniRISl/UW2DQMvNXqQfI31BXoB3eTqlt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7VD1zBtuG+xhB/u4hO2SSVQ+H9SPWOQNKfYjLGTgeudm+znHFi5RYZAH7cUF0mn4CLEqU0sHsNPMkNBb8WOzyFDbNV5+r5fag76g6gVTR7Iur11M9F40iqUqLG3h5OzSKoKWnoSvyeP1/8g6jRpb1639eKDuENqfAHglI82QIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMf0JZFI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p//3/y8RIHK+49qnKwB+GkkfjJMlC6jRE/ToR+SbUVfflMa2M3KhHpK3LZVwQDGCyq8i/X5Z4L6yyaOuo3vTU2glxBl3djSePLzdsnwo26EcFYDfTuMeyMrQeuH5qT4Fg++OjtUrwhGecJxAP35zwn2LUFsGHI32EnXV+n0sTkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USfnG+1X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMf0JZFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A9AC2BCB0;
-	Tue, 12 May 2026 17:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USfnG+1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F170C2BCB0;
+	Tue, 12 May 2026 17:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608778;
-	bh=yfgMRPvqUQdJBpag187+Xap4cJLWHSNo7Xzqr2xZ/DY=;
+	s=korg; t=1778608780;
+	bh=RxQNBOsfaLniRISl/UW2DQMvNXqQfI31BXoB3eTqlt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rMf0JZFIAoXcQk2jmnCPyWj/vxH2HTvFKs3BoB/fc4kHWn5Ta+hiLMAqHlYyNzr1l
-	 NK5U+zlB4x9tBp5LslP8pU1d/jiS8TnCAr+y6wtMCPz16q6qm/J5hup0hWa+xK6o7r
-	 0ePSIxWnq0duHQlFmjBk5nZQi1MTvpZv1LtdLB1Y=
+	b=USfnG+1XiElKBuDcvPHg7y+t+obtMhpCW50xAalOFBznvECOVaK25kzxyWO0vc2Yx
+	 tuMA1C4077uI2cIYqKnkd71MQ/A8XHlftALyy0oC4SDN1WnF/ydf9CNsJ4Y/qarYBc
+	 Hzh+2NsQtJXdd6khWZYB4sVCL1Aoj8g6sYYIFekg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 209/270] mptcp: use MPJoinSynAckHMacFailure for SynAck HMAC failure
-Date: Tue, 12 May 2026 19:40:10 +0200
-Message-ID: <20260512173942.848068549@linuxfoundation.org>
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.18 170/270] pmdomain: core: Fix detach procedure for virtual devices in genpd
+Date: Tue, 12 May 2026 19:39:31 +0200
+Message-ID: <20260512173942.028143609@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,45 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-commit c4a99a921949cddc590b22bb14eeb23dffcc3ba6 upstream.
+commit 26735dfdd8930d9ef1fa92e590a9bf77726efdf6 upstream.
 
-In subflow_finish_connect(), HMAC validation of the server's HMAC
-in SYN/ACK + MP_JOIN increments MPTCP_MIB_JOINACKMAC ("HMAC was
-wrong on ACK + MP_JOIN") on failure. The function processes the
-SYN/ACK, not the ACK; the matching MPTCP_MIB_JOINSYNACKMAC counter
-("HMAC was wrong on SYN/ACK + MP_JOIN") exists but is not
-incremented anywhere in the tree.
+If a device is attached to a PM domain through genpd_dev_pm_attach_by_id(),
+genpd calls pm_runtime_enable() for the corresponding virtual device that
+it registers. While this avoids boilerplate code in drivers, there is no
+corresponding call to pm_runtime_disable() in genpd_dev_pm_detach().
 
-The mirror site on the server, subflow_syn_recv_sock(), already
-uses JOINACKMAC correctly for ACK HMAC failure. Use JOINSYNACKMAC
-at the SYN/ACK validation site so each counter reflects the packet
-whose HMAC actually failed.
+This means these virtual devices are typically detached from its genpd,
+while runtime PM remains enabled for them, which is not how things are
+designed to work. In worst cases it may lead to critical errors, like a
+NULL pointer dereference bug in genpd_runtime_suspend(), which was recently
+reported. For another case, we may end up keeping an unnecessary vote for a
+performance state for the device.
 
-Suggested-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Fixes: fc518953bc9c ("mptcp: add and use MIB counter infrastructure")
+To fix these problems, let's add this missing call to pm_runtime_disable()
+in genpd_dev_pm_detach().
+
+Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Closes: https://lore.kernel.org/all/CAMuHMdWapT40hV3c+CSBqFOW05aWcV1a6v_NiJYgoYi0i9_PDQ@mail.gmail.com/
+Fixes: 3c095f32a92b ("PM / Domains: Add support for multi PM domains per device to genpd")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-1-b70118df778e@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pmdomain/core.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -580,7 +580,7 @@ static void subflow_finish_connect(struc
- 			 subflow->backup);
+--- a/drivers/pmdomain/core.c
++++ b/drivers/pmdomain/core.c
+@@ -3074,6 +3074,7 @@ static const struct bus_type genpd_bus_t
+ static void genpd_dev_pm_detach(struct device *dev, bool power_off)
+ {
+ 	struct generic_pm_domain *pd;
++	bool is_virt_dev;
+ 	unsigned int i;
+ 	int ret = 0;
  
- 		if (!subflow_thmac_valid(subflow)) {
--			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINACKMAC);
-+			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINSYNACKMAC);
- 			subflow->reset_reason = MPTCP_RST_EMPTCP;
- 			goto do_reset;
- 		}
+@@ -3083,6 +3084,13 @@ static void genpd_dev_pm_detach(struct d
+ 
+ 	dev_dbg(dev, "removing from PM domain %s\n", pd->name);
+ 
++	/* Check if the device was created by genpd at attach. */
++	is_virt_dev = dev->bus == &genpd_bus_type;
++
++	/* Disable runtime PM if we enabled it at attach. */
++	if (is_virt_dev)
++		pm_runtime_disable(dev);
++
+ 	/* Drop the default performance state */
+ 	if (dev_gpd_data(dev)->default_pstate) {
+ 		dev_pm_genpd_set_performance_state(dev, 0);
+@@ -3108,7 +3116,7 @@ static void genpd_dev_pm_detach(struct d
+ 	genpd_queue_power_off_work(pd);
+ 
+ 	/* Unregister the device if it was created by genpd. */
+-	if (dev->bus == &genpd_bus_type)
++	if (is_virt_dev)
+ 		device_unregister(dev);
+ }
+ 
 
 
