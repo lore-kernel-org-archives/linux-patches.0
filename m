@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5D13EDE55;
-	Tue, 12 May 2026 17:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B0C3EDE49;
+	Tue, 12 May 2026 17:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608458; cv=none; b=EgffLTfbS4LO6DqT8fkWx8LAs94ZtSlZ9en5bv2HNzPI1M0z4+1A0MwCnawsfIkTKi3jvc7rF9KFGdCwb0h8tzJa4CjM1gp9UNxx0hnSxpaf3VxRsqRURTlyQKSJdfXLOUZQsd352SvM9N+/Mobo8zEZUQVRDnXVf3vQsGfPkUs=
+	t=1778608461; cv=none; b=armdKu0YAYcN32/OyL7uu1iLTjJwY36/TxPGxbbwv/yfSq60PheMAjmq84e++VvIqD+1xneM3Nn2NihQxNb8fqADJH+9F4M1a/zACbAo2AtvLw3JpaURBmAiSrl5TLk7Qn/A0jhuZFmPvvk++2sJDmi4L6BIgvxKyBtDYH48ljU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608458; c=relaxed/simple;
-	bh=9+IijUFgcAI1WKHWO05FnHyqNzck6LlLsFiszreB5D0=;
+	s=arc-20240116; t=1778608461; c=relaxed/simple;
+	bh=W+rxMPl2G3rPPYFg/LG6FL9tbekM4KEMMP+s64JS8XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CA8LX5P9LH5ae1eBOnes3cyMnLTMZ3/QuPyvob0qU7HMFa7j+NzYd9Dd8vBJaqUTJycfUcpsohGXgvjbyRXGh2At7l5tZ1p8kJHmWMRadRfgo5nLqKsnVK/h5xowP9lpwgUNAzJ0iLz9I/cxfm3rZmybxxLl9KrKVB/asVwkzsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tayMtano; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XBdpuf7B/5A5nP3FymNk6S2O1WhubsQabnuLIoEAnlgOwHZRnFJg7DfR3bJ92AIKKUZqF0nt3MTNNgm9otP5tAit7wp6QFfukB7rCCYjd0ZU2zdLQsqAxuTMdJeQOvty3IdxlEjsdeY7jPi1IJlzb/HlYP+67vxgBURVu/bzykc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X65y8gef; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tayMtano"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43773C2BCB0;
-	Tue, 12 May 2026 17:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X65y8gef"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF90AC2BCB0;
+	Tue, 12 May 2026 17:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608458;
-	bh=9+IijUFgcAI1WKHWO05FnHyqNzck6LlLsFiszreB5D0=;
+	s=korg; t=1778608461;
+	bh=W+rxMPl2G3rPPYFg/LG6FL9tbekM4KEMMP+s64JS8XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tayMtanoDIKpMDYbT0nDGzK3wK0prvwUUmL35GBM4/w//tWAOEymLVXVzD1wU6m29
-	 gBb6gxB/gD6fxETiO6ZmbxgcJRRiFjquyLS78s4ZsdA1G5CPGc8mvlMTJOT0XcVlM4
-	 24RLWHSiLBKX5EHCk1zcuv46DS7rgjxeG+n5CbEo=
+	b=X65y8gefFP+TKMhoZFgCPbYQGO4BlqLvkVR13eoupXfmVHHMrNVf1DkvGI1lMywqF
+	 PcIGmL1KJnXG6ODgWHN2zLfTA7AO2gGEqkhOHs2pkQT3OWf/xjbkdNozm/mBIHsfhU
+	 Lh+Lf1Lqlo8ijpP8DNdrEChTX19MnVCU03mBlBuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Kevin Brodsky <kevin.brodsky@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.18 088/270] arm64: signal: Preserve POR_EL0 if poe_context is missing
-Date: Tue, 12 May 2026 19:38:09 +0200
-Message-ID: <20260512173940.313323589@linuxfoundation.org>
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 089/270] mm/hugetlb_cma: round up per_node before logging it
+Date: Tue, 12 May 2026 19:38:10 +0200
+Message-ID: <20260512173940.334694986@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,158 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Brodsky <kevin.brodsky@arm.com>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
 
-commit 030e8a40fff65ca6ac1c04a4d3c08afe72438922 upstream.
+commit 8f5ce56b76303c55b78a87af996e2e0f8535f979 upstream.
 
-Commit 2e8a1acea859 ("arm64: signal: Improve POR_EL0 handling to
-avoid uaccess failures") delayed the write to POR_EL0 in
-rt_sigreturn to avoid spurious uaccess failures. This change however
-relies on the poe_context frame record being present: on a system
-supporting POE, calling sigreturn without a poe_context record now
-results in writing arbitrary data from the kernel stack into POR_EL0.
+When the user requests a total hugetlb CMA size without per-node
+specification, hugetlb_cma_reserve() computes per_node from
+hugetlb_cma_size and the number of nodes that have memory
 
-Fix this by adding a __valid_fields member to struct
-user_access_state, and zeroing the struct on allocation.
-restore_poe_context() then indicates that the por_el0 field is valid
-by setting the corresponding bit in __valid_fields, and
-restore_user_access_state() only touches POR_EL0 if there is a valid
-value to set it to. This is in line with how POR_EL0 was originally
-handled; all frame records are currently optional, except
-fpsimd_context.
+        per_node = DIV_ROUND_UP(hugetlb_cma_size,
+                                nodes_weight(hugetlb_bootmem_nodes));
 
-To ensure that __valid_fields is kept in sync, fields (currently
-just por_el0) are now accessed via accessors and prefixed with __ to
-discourage direct access.
+The reservation loop later computes
 
-Fixes: 2e8a1acea859 ("arm64: signal: Improve POR_EL0 handling to avoid uaccess failures")
+        size = round_up(min(per_node, hugetlb_cma_size - reserved),
+                          PAGE_SIZE << order);
+
+So the actually reserved per_node size is multiple of (PAGE_SIZE <<
+order), but the logged per_node is not rounded up, so it may be smaller
+than the actual reserved size.
+
+For example, as the existing comment describes, if a 3 GB area is
+requested on a machine with 4 NUMA nodes that have memory, 1 GB is
+allocated on the first three nodes, but the printed log is
+
+        hugetlb_cma: reserve 3072 MiB, up to 768 MiB per node
+
+Round per_node up to (PAGE_SIZE << order) before logging so that the
+printed log always matches the actual reserved size.  No functional change
+to the actual reservation size, as the following case analysis shows
+
+1. remaining (hugetlb_cma_size - reserved) >= rounded per_node
+ - AS-IS: min() picks unrounded per_node;
+    round_up() returns rounded per_node
+ - TO-BE: min() picks rounded per_node;
+    round_up() returns rounded per_node (no-op)
+2. remaining < unrounded per_node
+ - AS-IS: min() picks remaining;
+    round_up() returns round_up(remaining)
+ - TO-BE: min() picks remaining;
+    round_up() returns round_up(remaining)
+3. unrounded per_node <= remaining < rounded per_node
+ - AS-IS: min() picks unrounded per_node;
+    round_up() returns rounded per_node
+ - TO-BE: min() picks remaining;
+    round_up() returns round_up(remaining) equals rounded per_node
+
+Link: https://lore.kernel.org/20260422143353.852257-1-ekffu200098@gmail.com
+Fixes: cf11e85fc08c ("mm: hugetlb: optionally allocate gigantic hugepages using cma") # 5.7
+Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
 Cc: <stable@vger.kernel.org>
-Reported-by: Will Deacon <will@kernel.org>
-Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/signal.c |   54 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 43 insertions(+), 11 deletions(-)
+ mm/hugetlb_cma.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/kernel/signal.c
-+++ b/arch/arm64/kernel/signal.c
-@@ -67,6 +67,9 @@ struct rt_sigframe_user_layout {
- 	unsigned long end_offset;
- };
- 
-+#define TERMINATOR_SIZE round_up(sizeof(struct _aarch64_ctx), 16)
-+#define EXTRA_CONTEXT_SIZE round_up(sizeof(struct extra_context), 16)
-+
- /*
-  * Holds any EL0-controlled state that influences unprivileged memory accesses.
-  * This includes both accesses done in userspace and uaccess done in the kernel.
-@@ -74,13 +77,35 @@ struct rt_sigframe_user_layout {
-  * This state needs to be carefully managed to ensure that it doesn't cause
-  * uaccess to fail when setting up the signal frame, and the signal handler
-  * itself also expects a well-defined state when entered.
-+ *
-+ * The struct should be zero-initialised. Its members should only be accessed
-+ * via the accessors below. __valid_fields tracks which of the fields are valid
-+ * (have been set to some value).
-  */
- struct user_access_state {
--	u64 por_el0;
-+	unsigned int __valid_fields;
-+	u64 __por_el0;
- };
- 
--#define TERMINATOR_SIZE round_up(sizeof(struct _aarch64_ctx), 16)
--#define EXTRA_CONTEXT_SIZE round_up(sizeof(struct extra_context), 16)
-+#define UA_STATE_HAS_POR_EL0	BIT(0)
-+
-+static void set_ua_state_por_el0(struct user_access_state *ua_state,
-+				 u64 por_el0)
-+{
-+	ua_state->__por_el0 = por_el0;
-+	ua_state->__valid_fields |= UA_STATE_HAS_POR_EL0;
-+}
-+
-+static int get_ua_state_por_el0(const struct user_access_state *ua_state,
-+				u64 *por_el0)
-+{
-+	if (ua_state->__valid_fields & UA_STATE_HAS_POR_EL0) {
-+		*por_el0 = ua_state->__por_el0;
-+		return 0;
-+	}
-+
-+	return -ENOENT;
-+}
- 
- /*
-  * Save the user access state into ua_state and reset it to disable any
-@@ -94,7 +119,7 @@ static void save_reset_user_access_state
- 		for (int pkey = 0; pkey < arch_max_pkey(); pkey++)
- 			por_enable_all |= POR_ELx_PERM_PREP(pkey, POE_RWX);
- 
--		ua_state->por_el0 = read_sysreg_s(SYS_POR_EL0);
-+		set_ua_state_por_el0(ua_state, read_sysreg_s(SYS_POR_EL0));
- 		write_sysreg_s(por_enable_all, SYS_POR_EL0);
- 		/*
- 		 * No ISB required as we can tolerate spurious Overlay faults -
-@@ -122,8 +147,10 @@ static void set_handler_user_access_stat
-  */
- static void restore_user_access_state(const struct user_access_state *ua_state)
- {
--	if (system_supports_poe())
--		write_sysreg_s(ua_state->por_el0, SYS_POR_EL0);
-+	u64 por_el0;
-+
-+	if (get_ua_state_por_el0(ua_state, &por_el0) == 0)
-+		write_sysreg_s(por_el0, SYS_POR_EL0);
- }
- 
- static void init_user_layout(struct rt_sigframe_user_layout *user)
-@@ -333,11 +360,16 @@ static int restore_fpmr_context(struct u
- static int preserve_poe_context(struct poe_context __user *ctx,
- 				const struct user_access_state *ua_state)
- {
--	int err = 0;
-+	int err;
-+	u64 por_el0;
-+
-+	err = get_ua_state_por_el0(ua_state, &por_el0);
-+	if (WARN_ON_ONCE(err))
-+		return err;
- 
- 	__put_user_error(POE_MAGIC, &ctx->head.magic, err);
- 	__put_user_error(sizeof(*ctx), &ctx->head.size, err);
--	__put_user_error(ua_state->por_el0, &ctx->por_el0, err);
-+	__put_user_error(por_el0, &ctx->por_el0, err);
- 
- 	return err;
- }
-@@ -353,7 +385,7 @@ static int restore_poe_context(struct us
- 
- 	__get_user_error(por_el0, &(user->poe->por_el0), err);
- 	if (!err)
--		ua_state->por_el0 = por_el0;
-+		set_ua_state_por_el0(ua_state, por_el0);
- 
- 	return err;
- }
-@@ -1095,7 +1127,7 @@ SYSCALL_DEFINE0(rt_sigreturn)
- {
- 	struct pt_regs *regs = current_pt_regs();
- 	struct rt_sigframe __user *frame;
--	struct user_access_state ua_state;
-+	struct user_access_state ua_state = {};
- 
- 	/* Always make any pending restarted system calls return -EINTR */
- 	current->restart_block.fn = do_no_restart_syscall;
-@@ -1507,7 +1539,7 @@ static int setup_rt_frame(int usig, stru
- {
- 	struct rt_sigframe_user_layout user;
- 	struct rt_sigframe __user *frame;
--	struct user_access_state ua_state;
-+	struct user_access_state ua_state = {};
- 	int err = 0;
- 
- 	fpsimd_save_and_flush_current_state();
+--- a/mm/hugetlb_cma.c
++++ b/mm/hugetlb_cma.c
+@@ -193,6 +193,7 @@ void __init hugetlb_cma_reserve(int orde
+ 		 */
+ 		per_node = DIV_ROUND_UP(hugetlb_cma_size,
+ 					nodes_weight(hugetlb_bootmem_nodes));
++		per_node = round_up(per_node, PAGE_SIZE << order);
+ 		pr_info("hugetlb_cma: reserve %lu MiB, up to %lu MiB per node\n",
+ 			hugetlb_cma_size / SZ_1M, per_node / SZ_1M);
+ 	}
 
 
