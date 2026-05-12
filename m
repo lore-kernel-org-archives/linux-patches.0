@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F703C0A08;
-	Tue, 12 May 2026 17:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CEA73955CF;
+	Tue, 12 May 2026 17:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608453; cv=none; b=mEopc5YCNa4pMm3MCNG1OTt02xV+/wUTMNOCYXjb8u2JYgTYdlFyh6HeRItt9iouITkOmZItp0yvwLzJda8GMhvN9VnC41dYVNZZsG4qaqWGVivkbIrPpESImpkvo76Jw1X29igMrURDBHsd2U9IwlBO8OZjLKoYTEOF13FzMxk=
+	t=1778608456; cv=none; b=NBU9vC0dttADBBsZR/QgCN37TuMS67qXJCzSijQoz+y0G2mXm5+Q50Mr2+VZbCl6mtBFMbVTFE3HXBqC5lV5dSb8CbIaS36FaVkzbVy0sydSnQoVp/EXskbML3IuoKLfndvKFHCpeuLa9Ird8oTOw8VMOcBXkDtRRjyeqhKCrgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608453; c=relaxed/simple;
-	bh=kYmGEHClSLH8Rp9szG7Haa90BpBn1CUSsDA5iQnqHxo=;
+	s=arc-20240116; t=1778608456; c=relaxed/simple;
+	bh=uIVLo1n9l6/r0k9F16xuSqGz+ONy0ne/gRg9YCuOmLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ka0q3fBFWmi777EEvFvShi6Iqhgfi04mUSvPizCSab2YhhFyxut+W+tWCF6smg5J8mUjLEVZ2w3fBLntfIVXEm7UEIEIjcASX4PBrUrpOM0qHnce+yVwylvLIjobDULsL8E9G5f4LVZ/JNomWaj7XwSxn32ob5bFg3aZw0noWf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRTUCDA5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qhcU9nIKhpvVubo02vfcKD/ReA/WnTjY3UJBwvPce6OkrVm3Z5cBkv+nlIcWjArt7Rt7eNyE9BgbtsdaFFNrD8O0rwKU4rUgUYBAcFz7dbCH6BuufRRHjDJYsYRJFf2IlPrTZnXLrTFNg5HvYtYOQPTrnoV2iGfLSfvYrSRfdAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TA49ZP3G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRTUCDA5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F47FC2BCC7;
-	Tue, 12 May 2026 17:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TA49ZP3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A82C4C2BCB0;
+	Tue, 12 May 2026 17:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608453;
-	bh=kYmGEHClSLH8Rp9szG7Haa90BpBn1CUSsDA5iQnqHxo=;
+	s=korg; t=1778608456;
+	bh=uIVLo1n9l6/r0k9F16xuSqGz+ONy0ne/gRg9YCuOmLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mRTUCDA5DlTm4V0FNwxV9Fo8/3o7PSUlXqjc67o5HFV6IAzpaclhHoTb2pLDmClZW
-	 kmwu9mkGL5IBkNaauUFdLaqTtGXqkWULseb5oEnoPoW2CTi1FA+slCuri8hVvNb7z2
-	 Unfyy1jhpS+YUQ1EKqM+QoTh0lMthvZrzzZfYdUg=
+	b=TA49ZP3GJtgrIrgZVZoHbKrvi7vgt01QWzQVu1ecajCJT65xqJFf+wHq72s+bqiMf
+	 +mzA9/4enRtpPvCPU00T/fsOzJoiV8kfNuAv0ga5eMdNrCLTKaINh8eqE3TC+XDaQ3
+	 L09ejbrt/OnX7hg7g6lMp+EJ3kRN5m8bbg84+dwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <tabba@google.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.18 086/270] KVM: arm64: Fix kvm_vcpu_initialized() macro parameter
-Date: Tue, 12 May 2026 19:38:07 +0200
-Message-ID: <20260512173940.270912423@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Takahiro Kuwano <takahiro.kuwano@infineon.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.18 087/270] mtd: spi-nor: debugfs: fix out-of-bounds read in spi_nor_params_show()
+Date: Tue, 12 May 2026 19:38:08 +0200
+Message-ID: <20260512173940.291719072@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,36 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <tabba@google.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-commit d89fdda7dd8a488f922e1175e6782f781ba8a23b upstream.
+commit e47029b977e747cb3a9174308fd55762cce70147 upstream.
 
-The macro is defined with parameter 'v' but the body references the
-literal token 'vcpu' instead, causing it to silently operate on whatever
-'vcpu' resolves to in the caller's scope rather than the value passed by
-the caller. All current call sites happen to use a variable named 'vcpu',
-so the bug is latent.
+Sashiko noticed an out-of-bounds read [1].
 
-Fixes: e016333745c7 ("KVM: arm64: Only reset vCPU-scoped feature ID regs once")
-Signed-off-by: Fuad Tabba <tabba@google.com>
-Link: https://patch.msgid.link/20260424084908.370776-5-tabba@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+In spi_nor_params_show(), the snor_f_names array is passed to
+spi_nor_print_flags() using sizeof(snor_f_names).
+
+Since snor_f_names is an array of pointers, sizeof() returns the total
+number of bytes occupied by the pointers
+	(element_count * sizeof(void *))
+rather than the element count itself. On 64-bit systems, this makes the
+passed length 8x larger than intended.
+
+Inside spi_nor_print_flags(), the 'names_len' argument is used to
+bounds-check the 'names' array access. An out-of-bounds read occurs
+if a flag bit is set that exceeds the array's actual element count
+but is within the inflated byte-size count.
+
+Correct this by using ARRAY_SIZE() to pass the actual number of
+string pointers in the array.
+
 Cc: stable@vger.kernel.org
+Fixes: 0257be79fc4a ("mtd: spi-nor: expose internal parameters via debugfs")
+Closes: https://sashiko.dev/#/patchset/20260417-die-erase-fix-v2-1-73bb7004ebad%40infineon.com [1]
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Takahiro Kuwano <takahiro.kuwano@infineon.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/spi-nor/debugfs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -1476,7 +1476,7 @@ static inline bool __vcpu_has_feature(co
- #define kvm_vcpu_has_feature(k, f)	__vcpu_has_feature(&(k)->arch, (f))
- #define vcpu_has_feature(v, f)	__vcpu_has_feature(&(v)->kvm->arch, (f))
+--- a/drivers/mtd/spi-nor/debugfs.c
++++ b/drivers/mtd/spi-nor/debugfs.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
  
--#define kvm_vcpu_initialized(v) vcpu_get_flag(vcpu, VCPU_INITIALIZED)
-+#define kvm_vcpu_initialized(v) vcpu_get_flag(v, VCPU_INITIALIZED)
++#include <linux/array_size.h>
+ #include <linux/debugfs.h>
+ #include <linux/mtd/spi-nor.h>
+ #include <linux/spi/spi.h>
+@@ -92,7 +93,8 @@ static int spi_nor_params_show(struct se
+ 	seq_printf(s, "address nbytes\t%u\n", nor->addr_nbytes);
  
- int kvm_trng_call(struct kvm_vcpu *vcpu);
- #ifdef CONFIG_KVM
+ 	seq_puts(s, "flags\t\t");
+-	spi_nor_print_flags(s, nor->flags, snor_f_names, sizeof(snor_f_names));
++	spi_nor_print_flags(s, nor->flags, snor_f_names,
++			    ARRAY_SIZE(snor_f_names));
+ 	seq_puts(s, "\n");
+ 
+ 	seq_puts(s, "\nopcodes\n");
 
 
