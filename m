@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74113EDE68;
-	Tue, 12 May 2026 18:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B2934405B;
+	Tue, 12 May 2026 18:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609223; cv=none; b=bft5LodO0Q/tKDaarMceCXzcRN8TfRnBYag02oUEUZ8Rdp0O+MMgPNgQHAiR1AHhgdIox3JJQonR8Fd3JDRATH4jks5Wc+ivZchOaiz09otgzeZ7xYOpHhcNNWlv1aUhvPpHOqSznAR0T509EOLwS5PU1ZYWy19em4wwHxaCojE=
+	t=1778609226; cv=none; b=mAn8LN0HheQ5UCxE5DMpc2ljZ87vZGoYFxE2l9kjaaR4ZtCp9Xa/CDeFOzUowK5XNUgx7QiAE+1oqo1P/mJBvqERMqSfLvhP/wycxlVGApeVkS/Cq0ZBAfDLj/1W/DWL6ibkXyyWkO1rjDhlS/rLIYUwgXV7u4g+C6UfeoKmx8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609223; c=relaxed/simple;
-	bh=OF6aZdluqDOBB9hXJzpXJ44pldrtpIr8zL09yusxy6U=;
+	s=arc-20240116; t=1778609226; c=relaxed/simple;
+	bh=LnfivkAJPvp6138QAu1ivyD2eXi4j4wfvO8R0d90S2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6KcXyOXHNfTclgL5Wt84t0b3caNgakSs1cTrJCuIkJTncBnlHULWUXWmuVMkAPjWJMxZdSY+VGR2G0NYrxFhZmrx/ufNLbRgoVjnPDcxLxch5T37s5WYNSb19GnhYFGAboNEdFOeXZlBJoUMfM9uiQ6C4M2ifIEYy/sI7IAjg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBFrXBa2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LfIoSMReG0QOk4NvoZIEcCCPOr4olQgzPXwYEl5dHZt0EgFi/ue9RKICUOw9WPXHY9uXylmwsX4KTpXL4yuyptuGtGoFrL13Owbm7TT/wMSMlLT7KtFH18lfCSn64JB1r77/0uTBrp/yJfjL5cLd+3qOz8WaL5prDjVr2vQEBKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GktIjiP+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBFrXBa2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E10DC2BCB0;
-	Tue, 12 May 2026 18:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GktIjiP+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A194BC2BCB0;
+	Tue, 12 May 2026 18:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609223;
-	bh=OF6aZdluqDOBB9hXJzpXJ44pldrtpIr8zL09yusxy6U=;
+	s=korg; t=1778609226;
+	bh=LnfivkAJPvp6138QAu1ivyD2eXi4j4wfvO8R0d90S2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBFrXBa2vSFi887S/k3r9ILWmGJdAEBGOnnh6IkzAv2cgDB9tPMtysMBdWlJvxBEv
-	 u7KuDeugEkJkEF4SB65DAAMeqmNpLYHKqMF8HrzJlKdPCLTyhrPqP5WFUkp/CJKd+3
-	 bjhRd3ZbwCyZwGbFPlTuCfWioSErrGpWBH8iAPJk=
+	b=GktIjiP+9G70y8VBl89F7KpA32MMMXUCWIxV8FoYgrOMSMLM1fmmDd7yf8UHnGX5s
+	 BM4aj+dipBScAMwiizOmuBBtCqTNtwqgUagwc1ilEC/RiHrvNKZa51wjk+pTPCBgxr
+	 NysZo+m+6K/xzBGjoZq1TPFCMNgYPI2dG9aXUJls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yametsu <yam3tsu@gmail.com>,
-	Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>
-Subject: [PATCH 7.0 110/307] accel/ivpu: Disallow re-exporting imported GEM objects
-Date: Tue, 12 May 2026 19:38:25 +0200
-Message-ID: <20260512173942.445935254@linuxfoundation.org>
+	SeungJu Cheon <suunj1331@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.0 111/307] sound: ua101: fix division by zero at probe
+Date: Tue, 12 May 2026 19:38:26 +0200
+Message-ID: <20260512173942.466702103@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,63 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Wachowski <karol.wachowski@linux.intel.com>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-commit 7dd57d7a6350770dfc283287125c409e995200e0 upstream.
+commit d1f73f169c1014463b5060e3f60813e13ddc7b87 upstream.
 
-Prevent re-exporting of imported GEM buffers by adding a custom
-prime_handle_to_fd callback that checks if the object is imported
-and returns -EOPNOTSUPP if so.
+Add a missing sanity check for bNrChannels in detect_usb_format()
+to prevent a division by zero in playback_urb_complete() and
+capture_urb_complete().
 
-Re-exporting imported GEM buffers causes loss of buffer flags settings,
-leading to incorrect device access and data corruption.
+USB core does not validate class-specific descriptor fields such
+as bNrChannels, so drivers must verify them before use. If a
+device provides bNrChannels = 0, frame_bytes becomes zero and is
+later used as a divisor in the URB completion handlers, leading
+to a kernel crash.
 
-Reported-by: Yametsu <yam3tsu@gmail.com>
-Fixes: 57557964b582 ("accel/ivpu: Add support for userptr buffer objects")
-Reviewed-by: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v6.19+
+Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
+Cc: stable@vger.kernel.org
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Link: https://patch.msgid.link/20260426111239.103296-1-suunj1331@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_drv.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ sound/usb/misc/ua101.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/accel/ivpu/ivpu_drv.c
-+++ b/drivers/accel/ivpu/ivpu_drv.c
-@@ -460,6 +460,26 @@ static const struct file_operations ivpu
- #endif
- };
+--- a/sound/usb/misc/ua101.c
++++ b/sound/usb/misc/ua101.c
+@@ -974,6 +974,13 @@ static int detect_usb_format(struct ua10
  
-+static int ivpu_gem_prime_handle_to_fd(struct drm_device *dev, struct drm_file *file_priv,
-+				       u32 handle, u32 flags, int *prime_fd)
-+{
-+	struct drm_gem_object *obj;
-+
-+	obj = drm_gem_object_lookup(file_priv, handle);
-+	if (!obj)
-+		return -ENOENT;
-+
-+	if (drm_gem_is_imported(obj)) {
-+		/* Do not allow re-exporting */
-+		drm_gem_object_put(obj);
-+		return -EOPNOTSUPP;
+ 	ua->capture.channels = fmt_capture->bNrChannels;
+ 	ua->playback.channels = fmt_playback->bNrChannels;
++	if (!ua->capture.channels || !ua->playback.channels) {
++		dev_err(&ua->dev->dev,
++			"invalid channel count: capture %u, playback %u\n",
++			ua->capture.channels, ua->playback.channels);
++		return -EINVAL;
 +	}
 +
-+	drm_gem_object_put(obj);
-+
-+	return drm_gem_prime_handle_to_fd(dev, file_priv, handle, flags, prime_fd);
-+}
-+
- static const struct drm_driver driver = {
- 	.driver_features = DRIVER_GEM | DRIVER_COMPUTE_ACCEL,
- 
-@@ -468,6 +488,7 @@ static const struct drm_driver driver =
- 
- 	.gem_create_object = ivpu_gem_create_object,
- 	.gem_prime_import = ivpu_gem_prime_import,
-+	.prime_handle_to_fd = ivpu_gem_prime_handle_to_fd,
- 
- 	.ioctls = ivpu_drm_ioctls,
- 	.num_ioctls = ARRAY_SIZE(ivpu_drm_ioctls),
+ 	ua->capture.frame_bytes =
+ 		fmt_capture->bSubframeSize * ua->capture.channels;
+ 	ua->playback.frame_bytes =
 
 
