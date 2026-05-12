@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFBA21FF21;
-	Tue, 12 May 2026 17:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676C3355803;
+	Tue, 12 May 2026 17:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607942; cv=none; b=VcaWGCsmb6nB8E+21LHa8iMkbILkIM57guUvl2eXGHjND6hLNZtfXpTc8VEl1wlkJUcI65rBqXl12Ezjx+w785KFla04Zl0P2Uo6is9co8Ypc70/J8zz4zyz9VIsq1jQK9otSiBd/3G2LQ7kTKLvBqB1XzS6X+jb+t2dT9jT1mg=
+	t=1778607944; cv=none; b=tGKsMLY0hSs5/37p2WmrC+QoaAZyv6o3bPub8YZemxvENrJy9Ledpx2HO2MuHd5qEPxWtqggWp9unkqztG19c0tIi47N6kfyP5pSpSccWzWFPuPoZkWOvNykuqn8jJRLJ6W7mOE7+XHg9N0Bbv3alEb5rVq2PXmSGsgIjlVfb5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607942; c=relaxed/simple;
-	bh=DKhhVZNT4bVPB5ayPF9Rlo14H0AdHaH6YtsJeGoYe1A=;
+	s=arc-20240116; t=1778607944; c=relaxed/simple;
+	bh=6p3FoaWV6IVRU3EDVgk4/v9zHNpt1URZ9yhyCtj7HSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IqRf3r9LM7miHP0jprBu1CwLZP1OEPtvvo9YGVskkVcmuXuxB1FPMfGl7U7yaD7pDZXR2oR72epKV+HSEuNxmmhCC4q+24EsOokgkDerf5N1XRxA2tXkp1Am+V8aWypktsemUm2okHCZUSlAx0WAXfSY5/WnsX/rNDNt2ZBDDMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVnCbzms; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SauMc+gUNIqxWaIBxiURWBu5Axf6vR18e/1j9ytm6jrLZnY2AaW4pRZnpLi0oAHvJ5Btdba7wKnB2VlQ5xMRSlt5QlC/5ZVkB90mRBOQJuj4a+ciEEbMJLNf/rIISgJzE/UquNRNp98TS/O9cEdsza1uraKK3dJIhXkfcZnF8gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0TBmFcp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVnCbzms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4C8C2BCB0;
-	Tue, 12 May 2026 17:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0TBmFcp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89E9C2BCB0;
+	Tue, 12 May 2026 17:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607941;
-	bh=DKhhVZNT4bVPB5ayPF9Rlo14H0AdHaH6YtsJeGoYe1A=;
+	s=korg; t=1778607944;
+	bh=6p3FoaWV6IVRU3EDVgk4/v9zHNpt1URZ9yhyCtj7HSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lVnCbzmsvkyottnAKItd92a9jKN3m0aY/ZX5zplN2fa0Kg2xg2Qx/LNRFxEZrSolA
-	 t2BbJmpCilZ2tZallrdeFCa0PCQoix6U58YOykS4M4NXMEBPrr/fJfxtGaWoTm253r
-	 hk8p1q3E6hx6nnu2+qC2zk3Pv5tgcgfl3C5mQFGQ=
+	b=b0TBmFcpV2AdJERq6aGmYJzlqlg11c7v+0kXyQxLUXA0acfODzGrNWvM6RqhJ5ZDy
+	 96B2eMPKiG16pSGhHjPMorPhtFvVrDV2r7gbW4DFzMJy9A62atSQyQPw9LkZft+7sE
+	 MZScleJplNSdBw0JFnD6cDVFy93iTdZHFr7uaFek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.12 094/206] gpio: of: clear OF_POPULATED on hog nodes in remove path
-Date: Tue, 12 May 2026 19:39:06 +0200
-Message-ID: <20260512173934.847687723@linuxfoundation.org>
+	Dexuan Cui <decui@microsoft.com>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 095/206] hv_sock: fix ARM64 support
+Date: Tue, 12 May 2026 19:39:07 +0200
+Message-ID: <20260512173934.868937889@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,39 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
 
-commit bbee90e750262bfb406d66dc65c46d616d2b6673 upstream.
+commit b31681206e3f527970a7c7ed807fbf6a028fc25b upstream.
 
-The previously set OF_POPULATED flag should be cleared on the hog nodes
-when removing the chip.
+VMBUS ring buffers must be page aligned. Therefore, the current value of
+24K presents a challenge on ARM64 kernels (with 64K pages). So, use
+VMBUS_RING_SIZE() to ensure they are always aligned and large enough to
+hold all of the relevant data.
 
 Cc: stable@vger.kernel.org
-Fixes: 63636d956c455 ("gpio: of: Add DT overlay support for GPIO hogs")
-Acked-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260309-gpio-hog-fwnode-v2-1-4e61f3dbf06a@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 77ffe33363c0 ("hv_sock: use HV_HYP_PAGE_SIZE for Hyper-V communication")
+Tested-by: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260428125339.13963-1-hamzamahfooz@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-of.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/vmw_vsock/hyperv_transport.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -1196,5 +1196,12 @@ int of_gpiochip_add(struct gpio_chip *ch
+--- a/net/vmw_vsock/hyperv_transport.c
++++ b/net/vmw_vsock/hyperv_transport.c
+@@ -375,10 +375,10 @@ static void hvs_open_connection(struct v
+ 	} else {
+ 		sndbuf = max_t(int, sk->sk_sndbuf, RINGBUFFER_HVS_SND_SIZE);
+ 		sndbuf = min_t(int, sndbuf, RINGBUFFER_HVS_MAX_SIZE);
+-		sndbuf = ALIGN(sndbuf, HV_HYP_PAGE_SIZE);
++		sndbuf = VMBUS_RING_SIZE(sndbuf);
+ 		rcvbuf = max_t(int, sk->sk_rcvbuf, RINGBUFFER_HVS_RCV_SIZE);
+ 		rcvbuf = min_t(int, rcvbuf, RINGBUFFER_HVS_MAX_SIZE);
+-		rcvbuf = ALIGN(rcvbuf, HV_HYP_PAGE_SIZE);
++		rcvbuf = VMBUS_RING_SIZE(rcvbuf);
+ 	}
  
- void of_gpiochip_remove(struct gpio_chip *chip)
- {
--	of_node_put(dev_of_node(&chip->gpiodev->dev));
-+	struct device_node *np = dev_of_node(&chip->gpiodev->dev);
-+
-+	for_each_child_of_node_scoped(np, child) {
-+		if (of_property_present(child, "gpio-hog"))
-+			of_node_clear_flag(child, OF_POPULATED);
-+	}
-+
-+	of_node_put(np);
- }
+ 	chan->max_pkt_size = HVS_MAX_PKT_SIZE;
 
 
