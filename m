@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B023EDE48;
-	Tue, 12 May 2026 18:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBAF3EDE4A;
+	Tue, 12 May 2026 18:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608894; cv=none; b=f/Yubke5ta8mdRX6AtyUK++mTgPf5sJBS5X8saNzNG7fL53QaKYU+zvLinXY8PcnvN52h0BIN/oYqBY9FsgSTHY428O2BQOyPmVvGGGYXYFrF7aWfwrozcm5zstLnCHvdwX1yxv57XEOdRCJMppcafMKHsbvPpasmvT2XeZlBLQ=
+	t=1778608897; cv=none; b=V7r3DjCfZaYw1559RcXw5WsVG0BIp/F2DL17VuP2QjxxAu6J7ZstD2W5AHn5JGIg5ct/2LE9QOpwFaAPRMBOMjEEmo5NTtj4fFhwU4HV/ZuARQWrA3hVM4pusVGFS2sJ8DrmdmEx/DIfVdoQrTcorhTRdJqBABECzVJzb36BYIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608894; c=relaxed/simple;
-	bh=DnIhuzFIBaOMQJuH/DJW/cACocbPZeSXSnKyHMf56uc=;
+	s=arc-20240116; t=1778608897; c=relaxed/simple;
+	bh=kRCCVQvoPnMwNhLAWnEfADcSKB9bzXOlsHnKIf3PhCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjbhDchf4Iew8qauk12WlGuyB8//AOM9J/0dUA2SQS94ZQPldfWGqF/b2us3X1dn60pBZs1MWePVPJIyr03sZyUD7i9yzU2HpLJnsrzW4DApX9ebB5LAH942W0Oe4gurL7p4YIPm9IdGW5vS9I5PGU6f6s650g9Mku2qHC0RXXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OG/8wuj8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SAQIyHxd2ulSHVLADu1EDPtBk40L9lp4VCMGuWl8VWbpvyio1/M9jgU7fLmtWFb0Y+E/pdGdW0TbUzdNHq8qo9EVzK0bp0Apqv44Nx8wJrpSD9pPJG0u4Fj8I1QLSEJBaG7jni5dBrICfYS7oTuXS/Y8HpEArvO1MXHdXgWf3Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAjtG+gA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OG/8wuj8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C707C2BCB0;
-	Tue, 12 May 2026 18:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAjtG+gA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79DCC2BCF5;
+	Tue, 12 May 2026 18:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608894;
-	bh=DnIhuzFIBaOMQJuH/DJW/cACocbPZeSXSnKyHMf56uc=;
+	s=korg; t=1778608897;
+	bh=kRCCVQvoPnMwNhLAWnEfADcSKB9bzXOlsHnKIf3PhCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OG/8wuj8Ls5q0+0SwYbOB2DNlMNA4R887TCA+Ti9QZYsv8JsF5FRJTb8qfb5aHPwc
-	 4OX9+4Y9fZIh7hIGHqfLv2aAyjNYWcC3Ks9yQCZCTxVWbqrT8U9lDjBOhsi387/Qqs
-	 cuZQ2UQGnMa/kKa5E33KG3HGImwkeNYV7CO3xlVo=
+	b=qAjtG+gA13lwNH1TqI5iy7Vx/D5axg+MqE9t6PCX+jfzIpytoOKDR9QhK6UxDdN6i
+	 eJygcp2HCu7vHTJnugWPmnXZS5nYANHcwSDIa5CR7VUGI0PC6Pw05mcwC4ZR1brZSt
+	 sIOVi9Oq1qrR9X7K26B8uJbuL2ZIvx9A+OJsb5/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 215/270] mptcp: pm: prio: skip closed subflows
-Date: Tue, 12 May 2026 19:40:16 +0200
-Message-ID: <20260512173942.972636696@linuxfoundation.org>
+Subject: [PATCH 6.18 216/270] mptcp: pm: kernel: correctly retransmit ADD_ADDR ID 0
+Date: Tue, 12 May 2026 19:40:17 +0200
+Message-ID: <20260512173942.992995193@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -53,39 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 166b78344031bf7ac9f55cb5282776cfd85f220e upstream.
+commit b12014d2d36eaed4e4bec5f1ac7e91110eeb100d upstream.
 
-When sending an MP_PRIO, closed subflows need to be skipped.
+When adding the ADD_ADDR to the list, the address including the IP, port
+and ID are copied. On the other hand, when the endpoint corresponds to
+the one from the initial subflow, the ID is set to 0, as specified by
+the MPTCP protocol.
 
-This fixes the case where the initial subflow got closed, re-opened
-later, then an MP_PRIO is needed for the same local address.
+The issue is that the ID was reset after having copied the ID in the
+ADD_ADDR entry. So the retransmission was done, but using a different ID
+than the initial one.
 
-Note that explicit MP_PRIO cannot be sent during the 3WHS, so it is fine
-to use __mptcp_subflow_active().
-
-Fixes: 067065422fcd ("mptcp: add the outgoing MP_PRIO support")
+Fixes: 8b8ed1b429f8 ("mptcp: pm: reuse ID 0 after delete and re-add")
 Cc: stable@vger.kernel.org
-Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-9-fca8091060a4@kernel.org
+Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-1-fca8091060a4@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mptcp/pm_kernel.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -283,6 +283,9 @@ int mptcp_pm_mp_prio_send_ack(struct mpt
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 		struct mptcp_addr_info local, remote;
+--- a/net/mptcp/pm_kernel.c
++++ b/net/mptcp/pm_kernel.c
+@@ -336,6 +336,8 @@ static void mptcp_pm_create_subflow_or_s
  
-+		if (!__mptcp_subflow_active(subflow))
-+			continue;
+ 	/* check first for announce */
+ 	if (msk->pm.add_addr_signaled < endp_signal_max) {
++		u8 endp_id;
 +
- 		mptcp_local_address((struct sock_common *)ssk, &local);
- 		if (!mptcp_addresses_equal(&local, addr, addr->port))
- 			continue;
+ 		/* due to racing events on both ends we can reach here while
+ 		 * previous add address is still running: if we invoke now
+ 		 * mptcp_pm_announce_addr(), that will fail and the
+@@ -349,19 +351,20 @@ static void mptcp_pm_create_subflow_or_s
+ 		if (!select_signal_address(pernet, msk, &local))
+ 			goto subflow;
+ 
++		/* Special case for ID0: set the correct ID */
++		endp_id = local.addr.id;
++		if (endp_id == msk->mpc_endpoint_id)
++			local.addr.id = 0;
++
+ 		/* If the alloc fails, we are on memory pressure, not worth
+ 		 * continuing, and trying to create subflows.
+ 		 */
+ 		if (!mptcp_pm_alloc_anno_list(msk, &local.addr))
+ 			return;
+ 
+-		__clear_bit(local.addr.id, msk->pm.id_avail_bitmap);
++		__clear_bit(endp_id, msk->pm.id_avail_bitmap);
+ 		msk->pm.add_addr_signaled++;
+ 
+-		/* Special case for ID0: set the correct ID */
+-		if (local.addr.id == msk->mpc_endpoint_id)
+-			local.addr.id = 0;
+-
+ 		mptcp_pm_announce_addr(msk, &local.addr, false);
+ 		mptcp_pm_addr_send_ack(msk);
+ 
 
 
