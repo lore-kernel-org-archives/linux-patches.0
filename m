@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4833EDE55;
-	Tue, 12 May 2026 18:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6806950276;
+	Tue, 12 May 2026 18:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609125; cv=none; b=jXo6vBfRyk7ypGfzJDmzypyhWHFSl9hGxVimwoW9Zn9BnOU3HWFApGL8cmXDE/AUqtSJosSVvmIXvjj8vYktone4m/+406L9yDPn/GTtV1LVLka4DTOBfgPEZQlkAH+fWm5yensX1bxhY/gQ98QjD+INQKQeuI3xwWLvhNDORPk=
+	t=1778609128; cv=none; b=Waale4D7s9H91XnClvqxC7/XPaCXXjaiiItscy9BH2S6BGQEw7c9BkzVdiiqsfheMSO+AB34qXQeRaDidB3eubEK40RpYm7wF793UhY3N763eFKV2WASvpnjmp/MPWJMZAtAP4N40tKh0mQ+R4eyORFU55KbYH5QBnRoWVAMq1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609125; c=relaxed/simple;
-	bh=g8UkUuH3Tshb4iLpF9B4B7YHUEDz3P6/hwRFdyEMsvk=;
+	s=arc-20240116; t=1778609128; c=relaxed/simple;
+	bh=4i0Hj5z+FrTX88gjTWIm0vhH0tT3bqK5ivtt4/EqJJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u6AqSRuDkWP8avPlVbAyDLy87i7Sh6o0+AFHibQgnjLst0xooDaYaYXLeBrRnl5KKQVq3gad8NH2oxXtCk04ifEG7sWjvokhRuX87B+ju+Vq1DdWWXDSnHgpLTo3Vrs9/LIlpEsD0l7VkGCCKex8wenfYaNtSgRQBfDNTdwp0Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ui1z67Y5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BoDhL9C/XyZernD4WGr2npD771JfK57bPGbHAud8WIF8imjCAjY3mUtA/vka1o+auFZR32DPMULsgz4lXAdelqGFw2DwsROG6sz61LUgYLi0qr+urfAYg4SD5UXn9zohQezyrRqWLQk9RfI1HILBf6wvWF35oupomLcYogcDMWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GYhdZtap; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ui1z67Y5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFE8C2BCB0;
-	Tue, 12 May 2026 18:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYhdZtap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0109EC2BCB0;
+	Tue, 12 May 2026 18:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609125;
-	bh=g8UkUuH3Tshb4iLpF9B4B7YHUEDz3P6/hwRFdyEMsvk=;
+	s=korg; t=1778609128;
+	bh=4i0Hj5z+FrTX88gjTWIm0vhH0tT3bqK5ivtt4/EqJJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ui1z67Y5aqpLhQYf/BSnM2Bd4z1Bv0ZY2juNfYoc4J+3+IiFNnkagyw1Vd8283h9a
-	 SNM8/yV2ld+XtkHm57wxng+mkhGyJ0aVmTYO3eqEr9FqFj1AzIfWxwGLGP2P7PyXZn
-	 CmZU13u5VHhg/WsWfN6BTq+Q1IxlxIU/Mc2CxxeE=
+	b=GYhdZtapGt14kC1IsmYJHhyBwlpogRQKPr2Ub06viVu5DS2rIbeARX3SDUzoc4/xW
+	 Xoklp5d63MdavOFsNlvayOgwB4JA1kz3n1rdVeI6RvYiPlzUBMqSJv2C82LyijYcPp
+	 jwMGKL7AWxQyHYHyfE/BYtJS+ufCMVejKj7q0C1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 7.0 023/307] wifi: mt76: mt7925: fix incorrect length field in txpower command
-Date: Tue, 12 May 2026 19:36:58 +0200
-Message-ID: <20260512173940.617004647@linuxfoundation.org>
+	Soenke Huster <soenke.huster@eknoes.de>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.0 069/307] Bluetooth: virtio_bt: clamp rx length before skb_put
+Date: Tue, 12 May 2026 19:37:44 +0200
+Message-ID: <20260512173941.577813301@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,33 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit ccb186326bb6b7f20d77982f855568e7087ad0d7 upstream.
+commit 21bd244b6de5d2fe1063c23acc93fbdd2b20d112 upstream.
 
-Set `tx_power_tlv->len` to `msg_len` instead of `sizeof(*tx_power_tlv)`
-to ensure the correct message length is sent to firmware.
+virtbt_rx_work() calls skb_put(skb, len) where len comes directly
+from virtqueue_get_buf() with no validation against the buffer we
+posted to the device. The RX skb is allocated in virtbt_add_inbuf()
+and exposed to virtio as exactly 1000 bytes via sg_init_one().
 
+Checking len against skb_tailroom(skb) is not sufficient because
+alloc_skb() can leave more tailroom than the 1000 bytes actually
+handed to the device. A malicious or buggy backend can therefore
+report used.len between 1001 and skb_tailroom(skb), causing skb_put()
+to include uninitialized kernel heap bytes that were never written by
+the device.
+
+The same path also accepts len == 0, in which case skb_put(skb, 0)
+leaves the skb empty but virtbt_rx_handle() still reads the pkt_type
+byte from skb->data, consuming uninitialized memory.
+
+Define VIRTBT_RX_BUF_SIZE once and reuse it in alloc_skb() and
+sg_init_one(), and gate virtbt_rx_work() on that same constant so
+the bound checked matches the buffer actually exposed to the device.
+Reject used.len == 0 in the same gate so an empty completion can
+no longer reach virtbt_rx_handle().
+
+Use bt_dev_err_ratelimited() because the length value comes from an
+untrusted backend that can otherwise flood the kernel log.
+
+Same class of bug as commit c04db81cd028 ("net/9p: Fix buffer
+overflow in USB transport layer"), which hardened the USB 9p
+transport against unchecked device-reported length.
+
+Fixes: 160fbcf3bfb9 ("Bluetooth: virtio_bt: Use skb_put to set length")
 Cc: stable@vger.kernel.org
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250908072526.1833938-1-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Cc: Soenke Huster <soenke.huster@eknoes.de>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/virtio_bt.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -3727,7 +3727,7 @@ mt7925_mcu_rate_txpower_band(struct mt76
- 		memcpy(tx_power_tlv->alpha2, dev->alpha2, sizeof(dev->alpha2));
- 		tx_power_tlv->n_chan = num_ch;
- 		tx_power_tlv->tag = cpu_to_le16(0x1);
--		tx_power_tlv->len = cpu_to_le16(sizeof(*tx_power_tlv));
-+		tx_power_tlv->len = cpu_to_le16(msg_len);
+--- a/drivers/bluetooth/virtio_bt.c
++++ b/drivers/bluetooth/virtio_bt.c
+@@ -12,6 +12,7 @@
+ #include <net/bluetooth/hci_core.h>
  
- 		switch (band) {
- 		case NL80211_BAND_2GHZ:
+ #define VERSION "0.1"
++#define VIRTBT_RX_BUF_SIZE 1000
+ 
+ enum {
+ 	VIRTBT_VQ_TX,
+@@ -33,11 +34,11 @@ static int virtbt_add_inbuf(struct virti
+ 	struct sk_buff *skb;
+ 	int err;
+ 
+-	skb = alloc_skb(1000, GFP_KERNEL);
++	skb = alloc_skb(VIRTBT_RX_BUF_SIZE, GFP_KERNEL);
+ 	if (!skb)
+ 		return -ENOMEM;
+ 
+-	sg_init_one(sg, skb->data, 1000);
++	sg_init_one(sg, skb->data, VIRTBT_RX_BUF_SIZE);
+ 
+ 	err = virtqueue_add_inbuf(vq, sg, 1, skb, GFP_KERNEL);
+ 	if (err < 0) {
+@@ -227,8 +228,15 @@ static void virtbt_rx_work(struct work_s
+ 	if (!skb)
+ 		return;
+ 
+-	skb_put(skb, len);
+-	virtbt_rx_handle(vbt, skb);
++	if (!len || len > VIRTBT_RX_BUF_SIZE) {
++		bt_dev_err_ratelimited(vbt->hdev,
++				       "rx reply len %u outside [1, %u]\n",
++				       len, VIRTBT_RX_BUF_SIZE);
++		kfree_skb(skb);
++	} else {
++		skb_put(skb, len);
++		virtbt_rx_handle(vbt, skb);
++	}
+ 
+ 	if (virtbt_add_inbuf(vbt) < 0)
+ 		return;
 
 
