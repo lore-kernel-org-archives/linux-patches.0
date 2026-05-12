@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83E634405B;
-	Tue, 12 May 2026 18:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379C336C5A1;
+	Tue, 12 May 2026 18:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609643; cv=none; b=KTOQ7AIX076iik3uYtWUiNHViSCtZNUCNBwSrBKi0Jdc50ElYg11U31wm/hTgY2LBRXPNnjCjdJAq+3TXIGCZcg21R0995xooZI8ueuN9WM0w4LUuTlnGOFryiHdcyJE3a4eVujhFUaPXdjO6ixA0DANu3qcDw+EwiNPF5Uv7kw=
+	t=1778609646; cv=none; b=J4XD3loAdfkdWzIoLbMKWDqEchHTUQwLECyNbOP8DeoeJQ67WMHA6ef5GUF4luLt2Iu5PRwnOwyFegv9CNMRx8TY4FPfI2wmLHCKEacXPYmlzmqPDzN3Zo5HHCvNm6mAFv2ev0qq3vwBisuNG5tZDOB0WlouuLvZL4h9MkTi1tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609643; c=relaxed/simple;
-	bh=FtOdT7WoiA3KLOVYslWDAgrohCDES2RVqOzcxsQzanc=;
+	s=arc-20240116; t=1778609646; c=relaxed/simple;
+	bh=YepdpDBpacIihxBLUfprzlYjmbcXJtkEeaeqc2GgXEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmqCD3RtyoiQ3HimlrDVvrpLm0TgPQ6dGbJoYEIxhCOv2p+E8MLbuK8ix+HJWbmpKeDrCW4uTMBblnZuAvpoXy94L0HPC1dWKtSKCvTfSf0BxDig682kE1rZ/ucJBsKFJXUKRJDgRn/F7Gv27Q0TgDggxijy7xE1nfImarnGPqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lnbn/PAk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pli74G7JVITrduqW13VxBFP3pBIQid69VcBE/Bt0mE/CfeCQD7kfiDQhBqYgwTUqXIfc5pWZ35sOvKEsHc/4VVGzFFIC/OSVF83x34K+tHzS7pCGFgDCBUTtWUmlYKhkFeFVzOU4MURWmY5zbKhPjn4yIdt5r/h2tFG6ordMWZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azrcqSzw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lnbn/PAk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1D8C2BCB0;
-	Tue, 12 May 2026 18:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azrcqSzw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C433BC2BCB0;
+	Tue, 12 May 2026 18:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609643;
-	bh=FtOdT7WoiA3KLOVYslWDAgrohCDES2RVqOzcxsQzanc=;
+	s=korg; t=1778609646;
+	bh=YepdpDBpacIihxBLUfprzlYjmbcXJtkEeaeqc2GgXEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lnbn/PAkaG1wJla9ktgsvUIm6W37AaiiB3takBk/0sCguJ2K9MiYSfx1PlfQjnVKK
-	 W1CpzNLn+d/UoizUVS3WQ+/XXxCI60SRazT7u3x2i/MstHM2yE4/qpB2On33iWLVDT
-	 cg4NYSpsEQkA7icH9/Ea9sjVNjAHIyTIuvsI7Daw=
+	b=azrcqSzwaZTL++xelkwvhvyiNBTantqNMKPe/mW+pw/Q6llHe60r4mEtZij2BtUEK
+	 +F3/LZ5NFlmArNjqrMQl32dZrpW6EBHx0BWWI5nAvyrVQdB8RaUKhH7Po8wUFWYSk5
+	 5OPNujfBSwiz9xuaMI3V0kLMkKAioTJSzg4HtXlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.0 275/307] f2fs: refactor f2fs_move_node_folio function
-Date: Tue, 12 May 2026 19:41:10 +0200
-Message-ID: <20260512173945.929190763@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 249/307] selftests: mptcp: check output: catch cmd errors
+Date: Tue, 12 May 2026 19:40:44 +0200
+Message-ID: <20260512173945.381896783@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,97 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 92c20989366e023b74fa0c1028af9436c1917dbf upstream.
+commit 65db7b27b90e2ea8d4966935aa9a50b6a60c31ac upstream.
 
-This patch refactor the f2fs_move_node_folio() function. No logical
-changes.
+Using '${?}' inside the if-statement to check the returned value from
+the command that was evaluated as part of the if-statement is not
+correct: here, '${?}' will be linked to the previous instruction, not
+the one that is expected here (${cmd}).
 
-Cc: stable@kernel.org
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Instead, simply mark the error, except if an error is expected. If
+that's the case, 1 can be passed as the 4th argument of this helper.
+Three checks from pm_netlink.sh expect an error.
+
+While at it, improve the error message when the command unexpectedly
+fails or succeeds.
+
+Note that we could expect a specific returned value, but the checks
+currently expecting an error can be used with 'ip mptcp' or 'pm_nl_ctl',
+and these two tools don't return the same error code.
+
+Fixes: 2d0c1d27ea4e ("selftests: mptcp: add mptcp_lib_check_output helper")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-10-fca8091060a4@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/node.c |   54 ++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 32 insertions(+), 22 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_lib.sh  |   16 ++++++++++------
+ tools/testing/selftests/net/mptcp/pm_netlink.sh |   10 ++++++----
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -1842,41 +1842,51 @@ redirty_out:
- 	return false;
+--- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
+@@ -474,20 +474,24 @@ mptcp_lib_wait_local_port_listen() {
+ 	wait_local_port_listen "${@}" "tcp"
  }
  
--int f2fs_move_node_folio(struct folio *node_folio, int gc_type)
-+static int f2fs_write_single_node_folio(struct folio *node_folio, int sync_mode,
-+			bool mark_dirty, enum iostat_type io_type)
- {
- 	int err = 0;
-+	struct writeback_control wbc = {
-+		.sync_mode = WB_SYNC_ALL,
-+		.nr_to_write = 1,
-+	};
++# $1: error file, $2: cmd, $3: expected msg, [$4: expected error]
+ mptcp_lib_check_output() {
+ 	local err="${1}"
+ 	local cmd="${2}"
+ 	local expected="${3}"
++	local exp_error="${4:-0}"
+ 	local cmd_ret=0
+ 	local out
  
--	if (gc_type == FG_GC) {
--		struct writeback_control wbc = {
--			.sync_mode = WB_SYNC_ALL,
--			.nr_to_write = 1,
--		};
-+	if (!sync_mode) {
-+		/* set page dirty and write it */
-+		if (!folio_test_writeback(node_folio))
-+			folio_mark_dirty(node_folio);
-+		goto out_folio;
-+	}
+-	if ! out=$(${cmd} 2>"${err}"); then
+-		cmd_ret=${?}
+-	fi
++	out=$(${cmd} 2>"${err}") || cmd_ret=1
  
--		f2fs_folio_wait_writeback(node_folio, NODE, true, true);
-+	f2fs_folio_wait_writeback(node_folio, NODE, true, true);
+-	if [ ${cmd_ret} -ne 0 ]; then
+-		mptcp_lib_pr_fail "command execution '${cmd}' stderr"
+-		cat "${err}"
++	if [ "${cmd_ret}" != "${exp_error}" ]; then
++		mptcp_lib_pr_fail "unexpected returned code for '${cmd}', info:"
++		if [ "${exp_error}" = 0 ]; then
++			cat "${err}"
++		else
++			echo "${out}"
++		fi
+ 		return 2
+ 	elif [ "${out}" = "${expected}" ]; then
+ 		return 0
+--- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
++++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
+@@ -122,10 +122,12 @@ check()
+ 	local cmd="$1"
+ 	local expected="$2"
+ 	local msg="$3"
++	local exp_error="$4"
+ 	local rc=0
  
-+	if (mark_dirty)
- 		folio_mark_dirty(node_folio);
-+	else if (!folio_test_dirty(node_folio))
-+		goto out_folio;
+ 	mptcp_lib_print_title "$msg"
+-	mptcp_lib_check_output "${err}" "${cmd}" "${expected}" || rc=${?}
++	mptcp_lib_check_output "${err}" "${cmd}" "${expected}" "${exp_error}" ||
++		rc=${?}
+ 	if [ ${rc} -eq 2 ]; then
+ 		mptcp_lib_result_fail "${msg} # error ${rc}"
+ 		ret=${KSFT_FAIL}
+@@ -158,13 +160,13 @@ check "show_endpoints" \
+ 			    "3,10.0.1.3,signal backup")" "dump addrs"
  
--		if (!folio_clear_dirty_for_io(node_folio)) {
--			err = -EAGAIN;
--			goto out_page;
--		}
--
--		if (!__write_node_folio(node_folio, false, NULL,
--					&wbc, false, FS_GC_NODE_IO, NULL))
--			err = -EAGAIN;
--		goto release_page;
--	} else {
--		/* set page dirty and write it */
--		if (!folio_test_writeback(node_folio))
--			folio_mark_dirty(node_folio);
-+	if (!folio_clear_dirty_for_io(node_folio)) {
-+		err = -EAGAIN;
-+		goto out_folio;
- 	}
--out_page:
-+
-+	if (!__write_node_folio(node_folio, false, NULL,
-+				&wbc, false, FS_GC_NODE_IO, NULL))
-+		err = -EAGAIN;
-+	goto release_folio;
-+out_folio:
- 	folio_unlock(node_folio);
--release_page:
-+release_folio:
- 	f2fs_folio_put(node_folio, false);
- 	return err;
- }
+ del_endpoint 2
+-check "get_endpoint 2" "" "simple del addr"
++check "get_endpoint 2" "" "simple del addr" 1
+ check "show_endpoints" \
+ 	"$(format_endpoints "1,10.0.1.1" \
+ 			    "3,10.0.1.3,signal backup")" "dump addrs after del"
  
-+int f2fs_move_node_folio(struct folio *node_folio, int gc_type)
-+{
-+	return f2fs_write_single_node_folio(node_folio, gc_type == FG_GC,
-+			true, FS_GC_NODE_IO);
-+}
-+
- int f2fs_fsync_node_pages(struct f2fs_sb_info *sbi, struct inode *inode,
- 			struct writeback_control *wbc, bool atomic,
- 			unsigned int *seq_id)
+ add_endpoint 10.0.1.3 2>/dev/null
+-check "get_endpoint 4" "" "duplicate addr"
++check "get_endpoint 4" "" "duplicate addr" 1
+ 
+ add_endpoint 10.0.1.4 flags signal
+ check "get_endpoint 4" "$(format_endpoints "4,10.0.1.4,signal")" "id addr increment"
+@@ -173,7 +175,7 @@ for i in $(seq 5 9); do
+ 	add_endpoint "10.0.1.${i}" flags signal >/dev/null 2>&1
+ done
+ check "get_endpoint 9" "$(format_endpoints "9,10.0.1.9,signal")" "hard addr limit"
+-check "get_endpoint 10" "" "above hard addr limit"
++check "get_endpoint 10" "" "above hard addr limit" 1
+ 
+ del_endpoint 9
+ for i in $(seq 10 255); do
 
 
