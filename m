@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3E93EDE4F;
-	Tue, 12 May 2026 17:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730FA3955CF;
+	Tue, 12 May 2026 17:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608067; cv=none; b=Y0rKyrw7L062Mppbn8fPIahRpyTPdE2q2hBFp7mFBx2h8o7mE7Lnbtlrx32/E1nbLUQOjDAjmQU5D7fBJtQHe8yHJMJY4EJxcdzpcGb+JuW9pztXhfEW0yEX2wg9f9Hn1sjMf9Pnt/aQ60EEFJoB5lBAFokAXokmRHNzOT837G4=
+	t=1778608069; cv=none; b=ZokV2to1UF2sPNlMZzUukJZvgNwUgpqT+wncpBBFzBXR/ste4e2bfurQrEntb5D0mqZvPMdTEP5fUwRbB4wwLszKUjzIIFQvWXt7Q05KE3X8NEuP+lgcdGPgAO5VlWm8ciB8P/mPyqjGa3MP7rq1dkbQ30nw2sxNPBT/xvPa3iQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608067; c=relaxed/simple;
-	bh=GLgvA5C8PXmJmqsN5424rjtZK8s2O0tEHWSzt0R4OSw=;
+	s=arc-20240116; t=1778608069; c=relaxed/simple;
+	bh=I44x3pAgrX2HlJyIzX5nMNEDFiHJHULKnsGCEc8uN2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tw4QvB39FLti2EXr6GxJRp8e/usqPepHltmn+krWId2B5cp7AFRKQBNbx2gz5N3giUZ8RxBEKiWUCZCBMUjrE5HIL/7iCkL2iaxpQP+cb/vjJa4uq01V0r8EnCUQf2nbr1iPDQ0onyWovekkRzlEPNhg9HIVhuN5IM4rVNEYVLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F01FfwXt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BGAJR/WoaVoVTicVhzb/yv4+FQHhXHPjuAvWW9EK4VG4tsEhIsQw3FRbpDPkeB7li95Q0gpk0PAsG5KMV3/edfjWAEkkYn2vndTfzb/7lzHlFUZOkFoUy2gtOJaWKvE2+S27irkJY8mBI8Yr4BpNoBJNExs/ihtGxmY1urn/5ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsBZiguT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F01FfwXt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79CEAC2BCB0;
-	Tue, 12 May 2026 17:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsBZiguT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A543C2BCB0;
+	Tue, 12 May 2026 17:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608066;
-	bh=GLgvA5C8PXmJmqsN5424rjtZK8s2O0tEHWSzt0R4OSw=;
+	s=korg; t=1778608069;
+	bh=I44x3pAgrX2HlJyIzX5nMNEDFiHJHULKnsGCEc8uN2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F01FfwXtJdrr9+qTMEXjZ3++OzVuv/l+vlmCPEQdIlMa+KvGrPK1JvpB4hibDmu3z
-	 rH8CNUFGdzoVI0+iRWT3YtYEoESWYQ8WmX7LWd+0wGiAYQtW+aBsZ/Tu+dhtkaXTEq
-	 te7Fsx4nmTqvSeoKrR3N6hs1ABysvI4WdFBwDPCk=
+	b=hsBZiguTFGKn8K1p0cRL3d2aMN6rehODE2c9TJWpE+5g5pV3yfB64yG7b8myhIJac
+	 lPoGoxZNTTnJZGiygntQN4lqT4vW7gde8VPUPhymbRpC3YvQoW/sbU0Ar1x5UdcsTg
+	 XXcz5zLjo6G9q325TbiR7YP6L5864jA2yu3TYPRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 141/206] KVM: x86: check for nEPT/nNPT in slow flush hypercalls
-Date: Tue, 12 May 2026 19:39:53 +0200
-Message-ID: <20260512173935.847148099@linuxfoundation.org>
+	Junxi Qian <qjx1298677004@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 142/206] mm/damon/sysfs-schemes: protect memcg_path kfree() with damon_sysfs_lock
+Date: Tue, 12 May 2026 19:39:54 +0200
+Message-ID: <20260512173935.869081299@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -50,34 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 464af6fc2b1dcc74005b7f58ee3812b17777efee upstream.
+commit 1e68eb96e8beb1abefd12dd22c5637795d8a877e upstream.
 
-Checking is_guest_mode(vcpu) is incorrect, because translate_nested_gpa()
-is only valid if an L2 guest is running *with nested EPT/NPT enabled*.
-Instead use the same condition as translate_nested_gpa() itself.
+Patch series "mm/damon/sysfs-schemes: fix use-after-free for [memcg_]path".
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Fixes: aee738236dca ("KVM: x86: Prepare kvm_hv_flush_tlb() to handle L2's GPAs", 2022-11-18)
-Link: https://patch.msgid.link/20260503200905.106077-1-pbonzini@redhat.com/
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reads of 'memcg_path' and 'path' files in DAMON sysfs interface could race
+with their writes, results in use-after-free.  Fix those.
+
+
+This patch (of 2):
+
+damon_sysfs_scheme_filter->mmecg_path can be read and written by users,
+via DAMON sysfs memcg_path file.  It can also be indirectly read, for the
+parameters {on,off}line committing to DAMON.  The reads for parameters
+committing are protected by damon_sysfs_lock to avoid the sysfs files
+being destroyed while any of the parameters are being read.  But the
+user-driven direct reads and writes are not protected by any lock, while
+the write is deallocating the memcg_path-pointing buffer.  As a result,
+the readers could read the already freed buffer (user-after-free).  Note
+that the user-reads don't race when the same open file is used by the
+writer, due to kernfs's open file locking.  Nonetheless, doing the reads
+and writes with separate open files would be common.  Fix it by protecting
+both the user-direct reads and writes with damon_sysfs_lock.
+
+Link: https://lore.kernel.org/20260423150253.111520-1-sj@kernel.org
+Link: https://lore.kernel.org/20260423150253.111520-2-sj@kernel.org
+Fixes: 4f489fe6afb3 ("mm/damon/sysfs-schemes: free old damon_sysfs_scheme_filter->memcg_path on write")
+Co-developed-by: Junxi Qian <qjx1298677004@gmail.com>
+Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.16.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/hyperv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/damon/sysfs-schemes.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/hyperv.c
-+++ b/arch/x86/kvm/hyperv.c
-@@ -2038,7 +2038,7 @@ static u64 kvm_hv_flush_tlb(struct kvm_v
- 	 * flush).  Translate the address here so the memory can be uniformly
- 	 * read with kvm_read_guest().
- 	 */
--	if (!hc->fast && is_guest_mode(vcpu)) {
-+	if (!hc->fast && mmu_is_nested(vcpu)) {
- 		hc->ingpa = translate_nested_gpa(vcpu, hc->ingpa, 0, NULL);
- 		if (unlikely(hc->ingpa == INVALID_GPA))
- 			return HV_STATUS_INVALID_HYPERCALL_INPUT;
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -407,9 +407,14 @@ static ssize_t memcg_path_show(struct ko
+ {
+ 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
+ 			struct damon_sysfs_scheme_filter, kobj);
++	int len;
+ 
+-	return sysfs_emit(buf, "%s\n",
++	if (!mutex_trylock(&damon_sysfs_lock))
++		return -EBUSY;
++	len = sysfs_emit(buf, "%s\n",
+ 			filter->memcg_path ? filter->memcg_path : "");
++	mutex_unlock(&damon_sysfs_lock);
++	return len;
+ }
+ 
+ static ssize_t memcg_path_store(struct kobject *kobj,
+@@ -423,8 +428,13 @@ static ssize_t memcg_path_store(struct k
+ 		return -ENOMEM;
+ 
+ 	strscpy(path, buf, count + 1);
++	if (!mutex_trylock(&damon_sysfs_lock)) {
++		kfree(path);
++		return -EBUSY;
++	}
+ 	kfree(filter->memcg_path);
+ 	filter->memcg_path = path;
++	mutex_unlock(&damon_sysfs_lock);
+ 	return count;
+ }
+ 
 
 
