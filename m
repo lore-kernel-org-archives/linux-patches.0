@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238763EDE5B;
-	Tue, 12 May 2026 18:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0573EDE47;
+	Tue, 12 May 2026 18:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608951; cv=none; b=oKfE/Cy2ptuSaIjSnilodRRw4Mg+mtilLyK7ShLWQEfcAMHhAlDMwePSsAvEKKtZfq09VST7CrlephdGVG4S8kEj3LquDzFgxDSuRbASISUQblkTch6WJggvgMzc7cK2KOventzyCu5L72hzdohGMJCfyx1OzrpSiOn0+Tejto8=
+	t=1778608953; cv=none; b=oH1EJnWBJKv/MOnluU4rO5bOwESB9DmeU5y3+Cr7W7zlgmA7/8wU05hv6A45ONKjeDI6NlvUsHyc2ul3nT5u2cJABVDzGJpACg68jkcptQoBnpunvQpULTF2oDB+AKY1ALrVtwNG00H83ENrSMa6+xMvo+2InkpC8YQWlpOZyxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608951; c=relaxed/simple;
-	bh=vNAE4b7rdRfv3cl4W4Lcl7gBOg94/RlVSDMp93oBTFc=;
+	s=arc-20240116; t=1778608953; c=relaxed/simple;
+	bh=VfuOOsZlcsglSRMrKoQR4flhL1DBpm3VX13FUNE85Hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L1bij+XJtEUGusnTPBaaifsBPyxBnR8DmQP2X+PhM3W90bu2vvCvO2FStv4chjyStzd+jFU8/sgjH5kE7Lk6E2O/ZCtdcPXGvHg/+wHsjWPQDyOnrJ07PPtwK0PakO2V5YTK6EidB2q4YRgPiHO/3Jh2ihz3KLXDcn/EsesONF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDUMaBpH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pGs8rmYd3v3MZlWK/A2px9SwNtFQfZKC3Pn0L8+QuiT/eytM5mxyoYzwSWqCvHPFr4FZFXve/F/k++5Ut/nossabzdFYgOXNBD3yJ1WZmBNX84UeaCNljTLwaNR3f7SJ+AYohAnLnDZwr+Yk2zsnWProZ3BfQ5zSDUq0mM1/bpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5V60hIx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDUMaBpH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA6BC2BCF6;
-	Tue, 12 May 2026 18:02:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5V60hIx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524E4C2BCB0;
+	Tue, 12 May 2026 18:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608951;
-	bh=vNAE4b7rdRfv3cl4W4Lcl7gBOg94/RlVSDMp93oBTFc=;
+	s=korg; t=1778608953;
+	bh=VfuOOsZlcsglSRMrKoQR4flhL1DBpm3VX13FUNE85Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDUMaBpHIMQMz0DIyErdUP2VYR+A1rpW6eHtXZgUMEUg0CfyhWxseoue6KSKR6hIg
-	 BShgrWFkzMUJZoAo0Wa0/GuhH1eziIt0C+vyCmqkqzGfu324aRZ/xixs5HyO0i6Lyb
-	 uFDuh7O+Dj9kvaqTmURspQL3sk9RV/JRc5avWdL4=
+	b=Q5V60hIxWVGeuxeMYxJ7yv8hd5z+LU3u5Xb7HkK2nGAvvPrA+qUhTf8JAuTNMx0Os
+	 7pmXv4u0GYOO31dX9dpWi1ndauWyCB0krC2ztZyI7msRSQcFUBwWzCO+Fa9X4WNqFD
+	 y/vzt3kjT+dwCCWYtgfj1nDNZiqz1deSPYOCW0Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@sandisk.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 254/270] mmc: core: Adjust MDT beyond 2025
-Date: Tue, 12 May 2026 19:40:55 +0200
-Message-ID: <20260512173943.791246311@linuxfoundation.org>
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 7.0 001/307] scsi: target: configfs: Bound snprintf() return in tg_pt_gp_members_show()
+Date: Tue, 12 May 2026 19:36:36 +0200
+Message-ID: <20260512173940.151076220@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
-References: <20260512173938.452574370@linuxfoundation.org>
+In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
+References: <20260512173940.117428952@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,70 +43,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Avri Altman <avri.altman@sandisk.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 3e487a634bc019166e452ea276f7522710eda9f4 ]
+commit 772a896a56e0e3ef9424a025cec9176f9d8f4552 upstream.
 
-JEDEC JESD84-B51B which was released in September 2025, increases the
-manufacturing year limit for eMMC devices. The eMMC manufacturing year
-is stored in a 4-bit field in the CID register. Originally, it covered
-1997–2012. Later, with EXT_CSD_REV=8, it was extended up to 2025. Now,
-with EXT_CSD_REV=9, the range is rolled over by another 16 years, up to
-2038.
+target_tg_pt_gp_members_show() formats LUN paths with snprintf() into a
+256-byte stack buffer, then will memcpy() cur_len bytes from that
+buffer.  snprintf() returns the length the output would have had, which
+can exceed the buffer size when the fabric WWN is long because iSCSI IQN
+names can be up to 223 bytes.  The check at the memcpy() site only
+guards the destination page write, not the source read, so memcpy() will
+read past the stack buffer and copy adjacent stack contents to the sysfs
+reader, which when CONFIG_FORTIFY_SOURCE is enabled, fortify_panic()
+will be triggered.
 
-The mapping is as follows:
-cid[8..11] | rev ≤ 4 | 8 ≥ rev > 4 | rev > 8
----------------------------------------------
-0          | 1997    | 2013        | 2029
-1          | 1998    | 2014        | 2030
-2          | 1999    | 2015        | 2031
-3          | 2000    | 2016        | 2032
-4          | 2001    | 2017        | 2033
-5          | 2002    | 2018        | 2034
-6          | 2003    | 2019        | 2035
-7          | 2004    | 2020        | 2036
-8          | 2005    | 2021        | 2037
-9          | 2006    | 2022        | 2038
-10         | 2007    | 2023        |
-11         | 2008    | 2024        |
-12         | 2009    | 2025        |
-13         | 2010    |             | 2026
-14         | 2011    |             | 2027
-15         | 2012    |             | 2028
+Commit 27e06650a5ea ("scsi: target: target_core_configfs: Add length
+check to avoid buffer overflow") added the same bound to the
+target_lu_gp_members_show() but the tg_pt_gp variant was missed so
+resolve that here.
 
-Signed-off-by: Avri Altman <avri.altman@sandisk.com>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: d6bf2e64dec8 ("mmc: core: Optimize time for secure erase/trim for some Kingston eMMCs")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026041159-garter-theft-3be0@gregkh
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/mmc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/target/target_core_configfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -671,7 +671,14 @@ static int mmc_decode_ext_csd(struct mmc
- 		card->ext_csd.enhanced_rpmb_supported =
- 					(card->ext_csd.rel_param &
- 					 EXT_CSD_WR_REL_PARAM_EN_RPMB_REL_WR);
-+
-+		if (card->ext_csd.rev >= 9) {
-+			/* Adjust production date as per JEDEC JESD84-B51B September 2025 */
-+			if (card->cid.year < 2023)
-+				card->cid.year += 16;
-+		}
- 	}
-+
- out:
- 	return err;
- }
+--- a/drivers/target/target_core_configfs.c
++++ b/drivers/target/target_core_configfs.c
+@@ -3227,7 +3227,7 @@ static ssize_t target_tg_pt_gp_members_s
+ 			config_item_name(&lun->lun_group.cg_item));
+ 		cur_len++; /* Extra byte for NULL terminator */
+ 
+-		if ((cur_len + len) > PAGE_SIZE) {
++		if (cur_len > TG_PT_GROUP_NAME_BUF || (cur_len + len) > PAGE_SIZE) {
+ 			pr_warn("Ran out of lu_gp_show_attr"
+ 				"_members buffer\n");
+ 			break;
 
 
