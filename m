@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7BA3EDE70;
-	Tue, 12 May 2026 17:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5DB3955CE;
+	Tue, 12 May 2026 17:55:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608551; cv=none; b=uMBPipXyepwednmgmNMCbmGzeFl25PrTY37kLLnn0LaK8yy3tX+Zo+Tuo6VXRmAQm6PAyesABp8pXr0f0u/GnaGj0dkGfho5eXvy3loi0oJpJf/NrAg0Dxj3nvR7cNIQB7siy5IC8Wi6QjfYBQavl3WNZJrafd/SIoFf6GlMTqw=
+	t=1778608554; cv=none; b=Fe8lq/JDyIVOF9hMAbdlnMf8eM9+FEsmbiUVVT3hfC5xqShB026iQqqYd6S2TSTi7gAROnJIuSD3q5wgnIVRpw0uCCXAw3dB4Px4+Qy3R7QZ6oYceo2l96hkm8p8uz552DLLuUNw9WlCsm4S1pNezPSLyrq9bT+lNAZRJ4uEr2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608551; c=relaxed/simple;
-	bh=VW22apXuoGghhVhKwhJA3kQvwTCcmmKra76IPvlPTsM=;
+	s=arc-20240116; t=1778608554; c=relaxed/simple;
+	bh=SpqhYc7Nrm+FqKXqijFK1tJrDlhgHdf6Xes+FM5qjlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEkytx8qI/tgZTMxpRwTmulDQXklUh0NXBaMVw8WCZCNA4FLt3Gc6cDKhHqTFoUtxgYcS03HIetBkcG0Ef/dfFpjeVYAIOZ1mSz4pgz8SBV6nfF1ZTVgHFUi0OhhGNzKT/tDSH2N1bE4lJ+Uo9ssmu6TGVHh43LKIyAlBWFydJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hwXVyZU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EfPyXqxhFpS2NEIWbdqlY+O7ftEQ24VfEx8OcKnjlkKtLwybu0ANYrYPtZPFo4+NS+XaziFNgdExmFeLu/c9kv1qZy14RxlQ6yVOVOTA9UFXU7KoEUB3WoSLMSYKU6asF0nHa50xofVhfM5poMauXxmiGceCoZrLr0sKXTf+gbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cn+Nix6c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hwXVyZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0350C2BD05;
-	Tue, 12 May 2026 17:55:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cn+Nix6c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCEFC2BCB0;
+	Tue, 12 May 2026 17:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608551;
-	bh=VW22apXuoGghhVhKwhJA3kQvwTCcmmKra76IPvlPTsM=;
+	s=korg; t=1778608553;
+	bh=SpqhYc7Nrm+FqKXqijFK1tJrDlhgHdf6Xes+FM5qjlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0hwXVyZUjGE77D0WfpNsuA/4jw4o9K81rokMgT69n7MSZkp6AX3hQJnkaqxX2AZ10
-	 hqIKd1Z8CF6EV08BfXZn/+58pgL/0dThJ868qD6KsX3ZEEFHEiNWxAzB8CK4Tsl9qM
-	 U89y0wvL8XopBnK9shYSEzCrZ8hqht5ncnrfjGpg=
+	b=cn+Nix6cCE49HR6EAe8V4/yV3AfdTy+6sn4Ulax6ugBSV1+JXaVX/MyQG+C1/PDh0
+	 39Pc90K29jnhjYdceFAbS9w8jXsdQPxdPjUqoSMxWQ4gbRLRfdQ7zlId6OgbyFnB3S
+	 SJnEALfZGtiP0bjVcFp9yxE8/epzgxNaru1/645U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
+	Ranjit Waghmode <ranjit.waghmode@xilinx.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 081/270] spi: sun6i: fix controller deregistration
-Date: Tue, 12 May 2026 19:38:02 +0200
-Message-ID: <20260512173940.162478960@linuxfoundation.org>
+Subject: [PATCH 6.18 082/270] spi: zynqmp-gqspi: fix controller deregistration
+Date: Tue, 12 May 2026 19:38:03 +0200
+Message-ID: <20260512173940.184353392@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -53,51 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit d874a1c33aee0d88fb4ba2f8aeadaa9f1965209a upstream.
+commit 6895fc4faafc9082e15e4e624b23dd5f0c98feb5 upstream.
 
 Make sure to deregister the controller before disabling underlying
 resources like clocks during driver unbind.
 
-Fixes: 3558fe900e8a ("spi: sunxi: Add Allwinner A31 SPI controller driver")
-Cc: stable@vger.kernel.org	# 3.15
-Cc: Maxime Ripard <mripard@kernel.org>
+Fixes: dfe11a11d523 ("spi: Add support for Zynq Ultrascale+ MPSoC GQSPI controller")
+Cc: stable@vger.kernel.org	# 4.2: 64640f6c972e
+Cc: stable@vger.kernel.org	# 4.2
+Cc: Ranjit Waghmode <ranjit.waghmode@xilinx.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-20-johan@kernel.org
+Link: https://patch.msgid.link/20260410081757.503099-26-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-sun6i.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/spi/spi-zynqmp-gqspi.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-sun6i.c
-+++ b/drivers/spi/spi-sun6i.c
-@@ -743,7 +743,7 @@ static int sun6i_spi_probe(struct platfo
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -1324,7 +1324,7 @@ static int zynqmp_qspi_probe(struct plat
+ 	ctlr->dev.of_node = np;
+ 	ctlr->auto_runtime_pm = true;
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
  	if (ret) {
- 		dev_err(&pdev->dev, "cannot register SPI host\n");
- 		goto err_pm_disable;
-@@ -769,12 +769,18 @@ static void sun6i_spi_remove(struct plat
- {
- 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 		dev_err(&pdev->dev, "spi_register_controller failed\n");
+ 		goto clk_dis_all;
+@@ -1362,6 +1362,8 @@ static void zynqmp_qspi_remove(struct pl
  
-+	spi_controller_get(host);
-+
-+	spi_unregister_controller(host);
-+
- 	pm_runtime_force_suspend(&pdev->dev);
+ 	pm_runtime_get_sync(&pdev->dev);
  
- 	if (host->dma_tx)
- 		dma_release_channel(host->dma_tx);
- 	if (host->dma_rx)
- 		dma_release_channel(host->dma_rx);
++	spi_unregister_controller(xqspi->ctlr);
 +
-+	spi_controller_put(host);
- }
+ 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
  
- static const struct sun6i_spi_cfg sun6i_a31_spi_cfg = {
+ 	pm_runtime_disable(&pdev->dev);
 
 
