@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE173C0A18;
-	Tue, 12 May 2026 17:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81EA3C0A18;
+	Tue, 12 May 2026 17:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608111; cv=none; b=tvUwHnzb+rUwspGz4bsMiZgujLl22oZtGNTrxh4LTDDrToa08NfgMtwQz8TbwqxpqNlKPtxuRiYR5jTUvBuzzIXWlkDF6aCK2MGGFs4r3/LiDwl7Ka35z8pPUdJbN5yHmywhy2eNkf8WRCJgTIzOOBCBpLHJftZOV1/hXrzgC3o=
+	t=1778608113; cv=none; b=QOrVv5aUzolPFQOu/ek5vPbaVW3CKQxYX+5k5roaCrJlKDwiK93+uCWgMTHAiN5DpWna3BEDVWkZp45+io8skOYIiGn2e18g/eAoGM17bJTC+pk5/DS9YQXIA7kxz5Yy9f5m0GolgqZNVHT6keSin8DFoYQTLcQ+dRLAIjmBlC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608111; c=relaxed/simple;
-	bh=k/b7EF/08vjqjbjhCmYOTfvsscRibhNY3dNFANJcYyA=;
+	s=arc-20240116; t=1778608113; c=relaxed/simple;
+	bh=Y2tOlAi1fhniCfbTAwndBGBVjU/Xj//rjX8MdKZxP3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXl3+6Ap5uCI0REta5G9BYYi/fvat/JUdiBulFEhcCkokolF+1aG3ZS7QNa9nvKvYnDc1CW26P3O1DoVR9Pya5r2c/5J/f/C/45xLsXNX/4za/yTxdgrsKRuQnPyYMRAilr7+U316qrdDbBhZjbm6QOI9fNxaOAq7p0pGS2lrN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCbaX1To; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HWLNiFtz6dBkTzEHlOMZyY7zdiyWHHQckEq44pDyB/Q7tmM4AY1pttnB535UproxRtIrAlY+6YIt7n8LZchGMwzxMQpMnw1gaCTmHXEmMXy/MzceUjsPPxLbAu4eaDdvyFkd0doTiNU36QvxIkU5aR5BJhCJzS+wFqfYdrlS3PI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMSTwvR0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCbaX1To"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E90C2BCB0;
-	Tue, 12 May 2026 17:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMSTwvR0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B79FC2BCFA;
+	Tue, 12 May 2026 17:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608111;
-	bh=k/b7EF/08vjqjbjhCmYOTfvsscRibhNY3dNFANJcYyA=;
+	s=korg; t=1778608113;
+	bh=Y2tOlAi1fhniCfbTAwndBGBVjU/Xj//rjX8MdKZxP3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QCbaX1To/0mXeTOByHPirbuRGiZgZLrRVoqwyiRU9BmI2lYpezWS+CXJOXiJYzvE4
-	 eJUDZrRCl9mlGQnxPfW/4QHl9H2G/AzoUprweZDGd0Rrql0d7SWOQzTRLonzMNUkR6
-	 JRLwqgBvx76XqumJMQc5AslHZBzP3+X+eU/AHl8U=
+	b=bMSTwvR0TFt213I9S8oHLaDDvKvyJ1rYWaXmgsLzjOudBhNtWz9a3YNT5u3IsLar5
+	 /slkN3rOlzkAoV3aMIOcELadTL3JQd73W3UXO/LNvDFDcbXRlJsWMhsmaf4VLG0Mi+
+	 4/CUGtlC4DkjP/FHWD3oGRWJmilfk6Uz2KwFmeWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Shardul Bankar <shardul.b@mpiricsoftware.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 160/206] mptcp: use MPJoinSynAckHMacFailure for SynAck HMAC failure
-Date: Tue, 12 May 2026 19:40:12 +0200
-Message-ID: <20260512173936.252109259@linuxfoundation.org>
+Subject: [PATCH 6.12 161/206] mptcp: use MPTCP_RST_EMPTCP for ACK HMAC validation failure
+Date: Tue, 12 May 2026 19:40:13 +0200
+Message-ID: <20260512173936.273335789@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -53,27 +53,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 
-commit c4a99a921949cddc590b22bb14eeb23dffcc3ba6 upstream.
+commit a6da02d4c00fdda2417e42ad2b762a9209e6cc49 upstream.
 
-In subflow_finish_connect(), HMAC validation of the server's HMAC
-in SYN/ACK + MP_JOIN increments MPTCP_MIB_JOINACKMAC ("HMAC was
-wrong on ACK + MP_JOIN") on failure. The function processes the
-SYN/ACK, not the ACK; the matching MPTCP_MIB_JOINSYNACKMAC counter
-("HMAC was wrong on SYN/ACK + MP_JOIN") exists but is not
-incremented anywhere in the tree.
+When HMAC validation fails on a received ACK + MP_JOIN in
+subflow_syn_recv_sock(), the subflow is reset with reason
+MPTCP_RST_EPROHIBIT ("Administratively prohibited"). This is
+incorrect: HMAC validation failure is an MPTCP protocol-level
+error, not an administrative policy denial.
 
-The mirror site on the server, subflow_syn_recv_sock(), already
-uses JOINACKMAC correctly for ACK HMAC failure. Use JOINSYNACKMAC
-at the SYN/ACK validation site so each counter reflects the packet
-whose HMAC actually failed.
+The mirror site on the client, in subflow_finish_connect(), already
+uses MPTCP_RST_EMPTCP ("MPTCP-specific error") for the same kind of
+HMAC failure on the SYN/ACK + MP_JOIN. Use the same reason on the
+server side for symmetry and accuracy.
 
 Suggested-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Fixes: fc518953bc9c ("mptcp: add and use MIB counter infrastructure")
+Fixes: 443041deb5ef ("mptcp: fix NULL pointer in can_accept_new_subflow")
 Cc: stable@vger.kernel.org
 Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-1-b70118df778e@kernel.org
+Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-2-b70118df778e@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -82,14 +81,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/mptcp/subflow.c
 +++ b/net/mptcp/subflow.c
-@@ -578,7 +578,7 @@ static void subflow_finish_connect(struc
- 			 subflow->backup);
+@@ -910,7 +910,7 @@ create_child:
  
- 		if (!subflow_thmac_valid(subflow)) {
--			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINACKMAC);
-+			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINSYNACKMAC);
- 			subflow->reset_reason = MPTCP_RST_EMPTCP;
- 			goto do_reset;
- 		}
+ 			if (!subflow_hmac_valid(req, &mp_opt)) {
+ 				SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_JOINACKMAC);
+-				subflow_add_reset_reason(skb, MPTCP_RST_EPROHIBIT);
++				subflow_add_reset_reason(skb, MPTCP_RST_EMPTCP);
+ 				goto dispose_child;
+ 			}
+ 
 
 
