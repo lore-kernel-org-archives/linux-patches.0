@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C81E33ADBA;
-	Tue, 12 May 2026 18:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88EF349AF5;
+	Tue, 12 May 2026 18:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608848; cv=none; b=QIHg+nzSfbk0jjA6ZA14Zv//kssz4UKSPHnF1z0QTV+fo52/Bag38fq8iTo/NGh2QE5OSHXbg4YV+gY5xvbXz4z5PNJiQhexY1SyER8LUWC1eHCje3hEsqDzx4x3TWk+IXEhq7BotPnvmPaPQ3xK71+kaPEU6cz6nPC7XDHUo8M=
+	t=1778608850; cv=none; b=W3CsVO7BK2uRZftdq6WqCccVU1K5+tVS8GXkBHMBcour2Mv69zWVIw63JFYe3SA8SR8kApNikTj6UU4H7RLTtEdpVPFW5mfTqVST6m8OhoUGikOsUc7TFoAiCwGNK7zSOxL0ukCDyoSaHDl8OzhXCW4CXQmMhSG2zLs8epRlQOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608848; c=relaxed/simple;
-	bh=FSOlUrXiTYqQgWhlK+4L0C51H7sBoH3cOVhx9jReK30=;
+	s=arc-20240116; t=1778608850; c=relaxed/simple;
+	bh=gkM7TBVwzdpYvz4N5cU8xH8RzZRDAFmlqi5SsyxVozs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NeI1Bwqf4C7bhQeshU3wxNcvK6roOK1vJr6tGtGrDKF6AQihYrmZ/Ziu/TpzBI9nxC/UxFP9RKegKVdJw0nJdTgU4m9BCKY3cQuYzpqU5YDggHsZJGzwIHgGaHAAecpejPxsZEncBnoCvOF0wRJIrEi5QrnnwwkHKcdKNEFBcB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LyZ4L2DU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=de+P2NUXC5n1n0UDWUotUB5Ehzy0FjXGSOk69uAxD/g7C+ZvTzW+4JO/qnBDfwJylVqtImr2WnG1HOuV+r6kvkL+L8GNv5PSCpTr0HpXPfjzHAFzND8T7PeDKaJMwqpvsnHzILkgWVHkV/RjZujMXG5XiyNXltSRugOtJMRYHGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wicRD3EG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LyZ4L2DU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38FEC2BCB0;
-	Tue, 12 May 2026 18:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wicRD3EG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66112C2BCB0;
+	Tue, 12 May 2026 18:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608848;
-	bh=FSOlUrXiTYqQgWhlK+4L0C51H7sBoH3cOVhx9jReK30=;
+	s=korg; t=1778608850;
+	bh=gkM7TBVwzdpYvz4N5cU8xH8RzZRDAFmlqi5SsyxVozs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LyZ4L2DUjPQ3YnHfcoC09cyLP/aoDnjulPNtj+Rcrc6D79sAPeu/zne1fTdQyqeXR
-	 vRToqzvzJ9OtvXt05svOAUjRbpECgm4Vpv2U00CxRTHDqknQ3VQFJ6Rj/4j8qeA8pM
-	 E+TCk2EweEagMOvv+CSn/F2YK0K8MZT/hg0s5tRg=
+	b=wicRD3EGskYwhzkLs1XW+NtiyhS3FYux/8Obh/5wssKoHKS6MrEfCtV8xVocI3lLv
+	 moAEOjstbhobY44x+uV3rYSjF/7Ktsm7GqGGstMvqd1BToeK7mkDOWGwnVuE0262XM
+	 2+ykerwbJAdAwPEbs4CTYkTApuQKlytcs6X5KauU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Simner <ben.simner@cl.cam.ac.uk>,
-	Will Deacon <willdeacon@google.com>,
-	Fuad Tabba <tabba@google.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.18 238/270] KVM: arm64: Fix pin leak and publication ordering in __pkvm_init_vcpu()
-Date: Tue, 12 May 2026 19:40:39 +0200
-Message-ID: <20260512173943.452329249@linuxfoundation.org>
+	Wentao Guan <guanwentao@uniontech.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 239/270] LoongArch: Fix potential ADE in loongson_gpu_fixup_dma_hang()
+Date: Tue, 12 May 2026 19:40:40 +0200
+Message-ID: <20260512173943.472893995@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -52,113 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <tabba@google.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-commit 73b9c1e5da84cd69b1a86e374e450817cd051371 upstream.
+commit 8dfa2f8780e486d05b9a0ffce70b8f5fbd62053e upstream.
 
-Two bugs exist in the vCPU initialisation path:
+The switch case in loongson_gpu_fixup_dma_hang() may not DC2 or DC3, and
+readl(crtc_reg) will access with random address, because the "device" is
+from "base+PCI_DEVICE_ID", "base" is from "pdev->devfn+1". This is wrong
+when my platform inserts a discrete GPU:
 
-1. If a check fails after hyp_pin_shared_mem() succeeds, the cleanup
-   path jumps to 'unlock' without calling unpin_host_vcpu() or
-   unpin_host_sve_state(), permanently leaking pin references on the
-   host vCPU and SVE state pages.
+lspci -tv
+-[0000:00]-+-00.0  Loongson Technology LLC Hyper Transport Bridge Controller
+...
+           +-06.0  Loongson Technology LLC LG100 GPU
+           +-06.2  Loongson Technology LLC Device 7a37
+...
 
-   Extract a register_hyp_vcpu() helper that performs the checks and
-   the store. When register_hyp_vcpu() returns an error, call
-   unpin_host_vcpu() and unpin_host_sve_state() inline before falling
-   through to the existing 'unlock' label.
+Add a default switch case to fix the panic as below:
 
-2. register_hyp_vcpu() publishes the new vCPU pointer into
-   'hyp_vm->vcpus[]' with a bare store, allowing a concurrent caller
-   of pkvm_load_hyp_vcpu() to observe a partially initialised vCPU
-   object.
+ Kernel ade access[#1]:
+ CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.6.136-loong64-desktop-hwe+ #4
+ pc 90000000017e5534 ra 90000000017e54c0 tp 90000001002f8000 sp 90000001002fb6c0
+ a0 80000efe00003100 a1 0000000000003100 a2 0000000000000000 a3 0000000000000002
+ a4 90000001002fb6b4 a5 900000087cdb58fd a6 90000000027af000 a7 0000000000000001
+ t0 00000000000085b9 t1 000000000000ffff t2 0000000000000000 t3 0000000000000000
+ t4 fffffffffffffffd t5 00000000fffb6d9c t6 0000000000083b00 t7 00000000000070c0
+ t8 900000087cdb4d94 u0 900000087cdb58fd s9 90000001002fb826 s0 90000000031c12c8
+ s1 7fffffffffffff00 s2 90000000031c12d0 s3 0000000000002710 s4 0000000000000000
+ s5 0000000000000000 s6 9000000100053000 s7 7fffffffffffff00 s8 90000000030d4000
+    ra: 90000000017e54c0 loongson_gpu_fixup_dma_hang+0x40/0x210
+   ERA: 90000000017e5534 loongson_gpu_fixup_dma_hang+0xb4/0x210
+  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+  PRMD: 00000004 (PPLV0 +PIE -PWE)
+  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
+  ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
+ ESTAT: 00480000 [ADEM] (IS= ECode=8 EsubCode=1)
+  BADV: 7fffffffffffff00
+  PRID: 0014d000 (Loongson-64bit, Loongson-3A6000-HV)
+ Modules linked in:
+ Process swapper/0 (pid: 1, threadinfo=(____ptrval____), task=(____ptrval____))
+ Stack : 0000000000000006 90000001002fb778 90000001002fb704 0000000000000007
+         0000000016a65700 90000000017e5690 000000000000ffff ffffffffffffffff
+         900000000209f7c0 9000000100053000 900000000209f7a8 9000000000eebc08
+         0000000000000000 0000000000000000 0000000000000006 90000001002fb778
+         90000001000530b8 90000000027af000 0000000000000000 9000000100054000
+         9000000100053000 9000000000ebb70c 9000000100004c00 9000000004000001
+         90000001002fb7e4 bae765461f31cb12 0000000000000000 0000000000000000
+         0000000000000006 90000000027af000 0000000000000030 90000000027af000
+         900000087cd6f800 9000000100053000 0000000000000000 9000000000ebc560
+         7a2500147cdaf720 bae765461f31cb12 0000000000000001 0000000000000030
+         ...
+ Call Trace:
+ [<90000000017e5534>] loongson_gpu_fixup_dma_hang+0xb4/0x210
+ [<9000000000eebc08>] pci_fixup_device+0x108/0x280
+ [<9000000000ebb70c>] pci_setup_device+0x24c/0x690
+ [<9000000000ebc560>] pci_scan_single_device+0xe0/0x140
+ [<9000000000ebc684>] pci_scan_slot+0xc4/0x280
+ [<9000000000ebdd00>] pci_scan_child_bus_extend+0x60/0x3f0
+ [<9000000000f5bc94>] acpi_pci_root_create+0x2b4/0x420
+ [<90000000017e5e74>] pci_acpi_scan_root+0x2d4/0x440
+ [<9000000000f5b02c>] acpi_pci_root_add+0x21c/0x3a0
+ [<9000000000f4ee54>] acpi_bus_attach+0x1a4/0x3c0
+ [<90000000010e200c>] device_for_each_child+0x6c/0xe0
+ [<9000000000f4bbf4>] acpi_dev_for_each_child+0x44/0x70
+ [<9000000000f4ef40>] acpi_bus_attach+0x290/0x3c0
+ [<90000000010e200c>] device_for_each_child+0x6c/0xe0
+ [<9000000000f4bbf4>] acpi_dev_for_each_child+0x44/0x70
+ [<9000000000f4ef40>] acpi_bus_attach+0x290/0x3c0
+ [<9000000000f5211c>] acpi_bus_scan+0x6c/0x280
+ [<900000000189c028>] acpi_scan_init+0x194/0x310
+ [<900000000189bc6c>] acpi_init+0xcc/0x140
+ [<9000000000220cdc>] do_one_initcall+0x4c/0x310
+ [<90000000018618fc>] kernel_init_freeable+0x258/0x2d4
+ [<900000000184326c>] kernel_init+0x28/0x13c
+ [<9000000000222008>] ret_from_kernel_thread+0xc/0xa4
 
-   Ensure the store uses smp_store_release() and the load uses
-   smp_load_acquire(). While 'vm_table_lock' currently serialises the
-   store and the load, these barriers ensure the reader sees the fully
-   initialised 'hyp_vcpu' object even if there were a lockless path or
-   if the lock's own ordering guarantees were insufficient for nested
-   object initialization.
-
-Fixes: 49af6ddb8e5c ("KVM: arm64: Add infrastructure to create and track pKVM instances at EL2")
-Reported-by: Ben Simner <ben.simner@cl.cam.ac.uk>
-Co-developed-by: Will Deacon <willdeacon@google.com>
-Signed-off-by: Will Deacon <willdeacon@google.com>
-Signed-off-by: Fuad Tabba <tabba@google.com>
-Link: https://patch.msgid.link/20260424084908.370776-6-tabba@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
+Fixes: 95db0c9f526d ("LoongArch: Workaround LS2K/LS7A GPU DMA hang bug")
+Link: https://gist.github.com/opsiff/ebf2dac51b4013d22462f2124c55f807
+Link: https://gist.github.com/opsiff/a62f2a73db0492b3c49bf223a339b133
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/nvhe/pkvm.c |   38 +++++++++++++++++++++++++-------------
- 1 file changed, 25 insertions(+), 13 deletions(-)
+ arch/loongarch/pci/pci.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
-+++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
-@@ -259,7 +259,8 @@ struct pkvm_hyp_vcpu *pkvm_load_hyp_vcpu
- 	if (!hyp_vm || hyp_vm->kvm.created_vcpus <= vcpu_idx)
- 		goto unlock;
- 
--	hyp_vcpu = hyp_vm->vcpus[vcpu_idx];
-+	/* Pairs with smp_store_release() in register_hyp_vcpu(). */
-+	hyp_vcpu = smp_load_acquire(&hyp_vm->vcpus[vcpu_idx]);
- 	if (!hyp_vcpu)
- 		goto unlock;
- 
-@@ -801,12 +802,30 @@ err_unpin_kvm:
-  *	     the page-aligned size of 'struct pkvm_hyp_vcpu'.
-  * Return 0 on success, negative error code on failure.
-  */
-+static int register_hyp_vcpu(struct pkvm_hyp_vm *hyp_vm,
-+			      struct pkvm_hyp_vcpu *hyp_vcpu)
-+{
-+	unsigned int idx = hyp_vcpu->vcpu.vcpu_idx;
-+
-+	if (idx >= hyp_vm->kvm.created_vcpus)
-+		return -EINVAL;
-+
-+	if (hyp_vm->vcpus[idx])
-+		return -EINVAL;
-+
-+	/*
-+	 * Ensure the hyp_vcpu is initialised before publishing it to
-+	 * the vCPU-load path via 'hyp_vm->vcpus[]'.
-+	 */
-+	smp_store_release(&hyp_vm->vcpus[idx], hyp_vcpu);
-+	return 0;
-+}
-+
- int __pkvm_init_vcpu(pkvm_handle_t handle, struct kvm_vcpu *host_vcpu,
- 		     unsigned long vcpu_hva)
- {
- 	struct pkvm_hyp_vcpu *hyp_vcpu;
- 	struct pkvm_hyp_vm *hyp_vm;
--	unsigned int idx;
- 	int ret;
- 
- 	hyp_vcpu = map_donated_memory(vcpu_hva, sizeof(*hyp_vcpu));
-@@ -825,18 +844,11 @@ int __pkvm_init_vcpu(pkvm_handle_t handl
- 	if (ret)
- 		goto unlock;
- 
--	idx = hyp_vcpu->vcpu.vcpu_idx;
--	if (idx >= hyp_vm->kvm.created_vcpus) {
--		ret = -EINVAL;
--		goto unlock;
--	}
--
--	if (hyp_vm->vcpus[idx]) {
--		ret = -EINVAL;
--		goto unlock;
-+	ret = register_hyp_vcpu(hyp_vm, hyp_vcpu);
-+	if (ret) {
-+		unpin_host_vcpu(host_vcpu);
-+		unpin_host_sve_state(hyp_vcpu);
+--- a/arch/loongarch/pci/pci.c
++++ b/arch/loongarch/pci/pci.c
+@@ -132,6 +132,9 @@ static void loongson_gpu_fixup_dma_hang(
+ 		crtc_reg = regbase;
+ 		crtc_offset = 0x400;
+ 		break;
++	default:
++		iounmap(regbase);
++		return;
  	}
--
--	hyp_vm->vcpus[idx] = hyp_vcpu;
- unlock:
- 	hyp_spin_unlock(&vm_table_lock);
  
+ 	for (i = 0; i < CRTC_NUM_MAX; i++, crtc_reg += crtc_offset) {
 
 
