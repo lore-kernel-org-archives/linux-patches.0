@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682973EDE44;
-	Tue, 12 May 2026 17:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C283EDE4B;
+	Tue, 12 May 2026 17:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608278; cv=none; b=IYseQ5UqL3tIMiWbyQr3IQSp0PKADlX8HykWhR6Ob9r/CXHH5189+9e8hpPK3vFeLxgf/STL7+9k4FBA5/fZh6DMFbIHhUMav9VOlUD/8eoMFcuMoo6kHbZ2FMzMK9ANd5Lcfv7b8EhHieTaH+4GLqzFuybnWJ2KAH/2YCcxI2g=
+	t=1778608281; cv=none; b=rilYHQlrGylhZaOmTBvEuDUJ6aDsJjhfQjN2pCDjV7iovY0dZbvFdtfMfdvi1NPVPUkP0knk/tt8SWWPkLEW1nhav2m7Mwb/Szv2MIJHFVzzh0ngZRpHviuwsG7umXVGAqJUsQeXc4oXaYTIA0HygmdmMk7gCIYUfWvgH+hs0qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608278; c=relaxed/simple;
-	bh=sguU4cfkB6mg7ZVlrrFA5Givh9eP1quAPa+US3yk7N4=;
+	s=arc-20240116; t=1778608281; c=relaxed/simple;
+	bh=r6iGfvEkABTRsQCaOzhJ+9EtOFpe0/NJFhEL5nlRTQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qaqarzgoQinQtl5v9IfgcpYpVFXypZy4BMgeOxd86RdGLr1hOTV8YVzPCoi3s9mh9jP6y39QEwQtQ4IXmre/yhXp7+xD+BJ0WvPRRsH/SCSu1raLLL9tyki2xvqkAi1yqSnMBGCHW/+cavgKZfHj6cxYWP2dDbI9N0Wyfc8X1bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwqkZcSh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ge9mHbxIcp7gFvnUfdFwcZJ2c0wI+Z1eR8xZCl8weM5cbOnpSg+xly8J18BC7dzWrreGc6S/v99jr3xKEHMHId/dMvt1umj5lf02dbncd9c3umZfkcWChFLMl5/heHOUSKD7jBh+ZNiqFprPsmBRnNCq6/7O21Zs1wv1++DGDaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eo7wZ/VR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwqkZcSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2261C2BCB0;
-	Tue, 12 May 2026 17:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eo7wZ/VR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF20C2BCC7;
+	Tue, 12 May 2026 17:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608278;
-	bh=sguU4cfkB6mg7ZVlrrFA5Givh9eP1quAPa+US3yk7N4=;
+	s=korg; t=1778608280;
+	bh=r6iGfvEkABTRsQCaOzhJ+9EtOFpe0/NJFhEL5nlRTQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwqkZcShDYmgz2cRYNfazPksM3QjX3Cb0AtmzhE7gv2GgCEdvLcXncRzdF5vwQD16
-	 3JQ49+yIl6oTL22/mZgNp/ECoGdqbbOzUpx6V380nwFVRaDrt/wKpBSq+H3oj8Iegj
-	 KhhtmGrSAH/vBCZBdcfEMTGzrCRB6g+5soSQjOsA=
+	b=Eo7wZ/VR5URPMkOS0IAjEqdIPUZCYoDIttH79EGmofXA6X7KKPP6Vn/S1+mRycMLq
+	 0hsiFr1Y9MoXnlCh80iKlc9XF2EriM/Qw62vAzbyW344ZmwRdezpvJE41QN3WuVO7r
+	 AOvTppe/YjEQTtLnjAa4mlliHmR7BFD4ZHwRBxgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gang Yan <yangang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 018/270] flow_dissector: do not dissect PPPoE PFC frames
-Date: Tue, 12 May 2026 19:36:59 +0200
-Message-ID: <20260512173938.840598782@linuxfoundation.org>
+Subject: [PATCH 6.18 019/270] mptcp: sync the msk->sndbuf at accept() time
+Date: Tue, 12 May 2026 19:37:00 +0200
+Message-ID: <20260512173938.861898101@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,95 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Gang Yan <yangang@kylinos.cn>
 
-[ Upstream commit d6c19b31a3c1d519fabdcf0aa239e6b6109b9473 ]
+commit fcf04b14334641f4b0b8647824480935e9416d52 upstream.
 
-RFC 2516 Section 7 states that Protocol Field Compression (PFC) is NOT
-RECOMMENDED for PPPoE. In practice, pppd does not support negotiating
-PFC for PPPoE sessions, and the flow dissector driver has assumed an
-uncompressed frame until the blamed commit.
+On passive MPTCP connections, the msk sndbuf is not updated correctly.
 
-During the review process of that commit [1], support for PFC is
-suggested. However, having a compressed (1-byte) protocol field means
-the subsequent PPP payload is shifted by one byte, causing 4-byte
-misalignment for the network header and an unaligned access exception
-on some architectures.
+The root cause is an order issue in the accept path:
 
-The exception can be reproduced by sending a PPPoE PFC frame to an
-ethernet interface of a MIPS board, with RPS enabled, even if no PPPoE
-session is active on that interface:
+- tcp_check_req() -> subflow_syn_recv_sock() -> mptcp_sk_clone_init()
+  calls __mptcp_propagate_sndbuf() to copy the ssk sndbuf into msk
 
-$ 0   : 00000000 80c40000 00000000 85144817
-$ 4   : 00000008 00000100 80a75758 81dc9bb8
-$ 8   : 00000010 8087ae2c 0000003d 00000000
-$12   : 000000e0 00000039 00000000 00000000
-$16   : 85043240 80a75758 81dc9bb8 00006488
-$20   : 0000002f 00000007 85144810 80a70000
-$24   : 81d1bda0 00000000
-$28   : 81dc8000 81dc9aa8 00000000 805ead08
-Hi    : 00009d51
-Lo    : 2163358a
-epc   : 805e91f0 __skb_flow_dissect+0x1b0/0x1b50
-ra    : 805ead08 __skb_get_hash_net+0x74/0x12c
-Status: 11000403        KERNEL EXL IE
-Cause : 40800010 (ExcCode 04)
-BadVA : 85144817
-PrId  : 0001992f (MIPS 1004Kc)
-Call Trace:
-[<805e91f0>] __skb_flow_dissect+0x1b0/0x1b50
-[<805ead08>] __skb_get_hash_net+0x74/0x12c
-[<805ef330>] get_rps_cpu+0x1b8/0x3fc
-[<805fca70>] netif_receive_skb_list_internal+0x324/0x364
-[<805fd120>] napi_complete_done+0x68/0x2a4
-[<8058de5c>] mtk_napi_rx+0x228/0xfec
-[<805fd398>] __napi_poll+0x3c/0x1c4
-[<805fd754>] napi_threaded_poll_loop+0x234/0x29c
-[<805fd848>] napi_threaded_poll+0x8c/0xb0
-[<80053544>] kthread+0x104/0x12c
-[<80002bd8>] ret_from_kernel_thread+0x14/0x1c
+- Later, tcp_child_process() -> tcp_init_transfer() ->
+  tcp_sndbuf_expand() grows the ssk sndbuf.
 
-Code: 02d51821  1060045b  00000000 <8c640000> 3084000f  2c820005  144001a2  00042080  8e220000
+So __mptcp_propagate_sndbuf() runs before the ssk sndbuf has been
+expanded and the msk ends up with a much smaller sndbuf than the
+subflow:
 
-To reduce the attack surface and maintain performance, do not process
-PPPoE PFC frames.
+  MPTCP: msk->sndbuf:20480, msk->first->sndbuf:2626560
 
-[1] https://lore.kernel.org/r/20220630231016.GA392@debian.home
-Fixes: 46126db9c861 ("flow_dissector: Add PPPoE dissectors")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Link: https://patch.msgid.link/20260415022456.141758-1-qingfang.deng@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by moving the __mptcp_propagate_sndbuf() call from
+mptcp_sk_clone_init() -- the ssk sndbuf is not yet finalized there -- to
+__mptcp_propagate_sndbuf() at accept() time, when the ssk sndbuf has
+been fully expanded by tcp_sndbuf_expand().
+
+Fixes: 8005184fd1ca ("mptcp: refactor sndbuf auto-tuning")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/602
+Signed-off-by: Gang Yan <yangang@kylinos.cn>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260420-net-mptcp-sync-sndbuf-accept-v1-1-e3523e3aeb44@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ No conflicts, but move __mptcp_propagate_sndbuf() above the for-loop
+  (mptcp_for_each_subflow()) present in this version, which will modify
+  'subflow' used by __mptcp_propagate_sndbuf() in this new patch. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ net/mptcp/protocol.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 1b61bb25ba0e5..2a98f5fa74eb0 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1374,16 +1374,13 @@ bool __skb_flow_dissect(const struct net *net,
- 			break;
- 		}
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 09e1a93b7daab..c805d36fe50d5 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3428,7 +3428,6 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
+ 	 * uses the correct data
+ 	 */
+ 	mptcp_copy_inaddrs(nsk, ssk);
+-	__mptcp_propagate_sndbuf(nsk, ssk);
  
--		/* least significant bit of the most significant octet
--		 * indicates if protocol field was compressed
-+		/* PFC (compressed 1-byte protocol) frames are not processed.
-+		 * A compressed protocol field has the least significant bit of
-+		 * the most significant octet set, which will fail the following
-+		 * ppp_proto_is_valid(), returning FLOW_DISSECT_RET_OUT_BAD.
+ 	mptcp_rcv_space_init(msk, ssk);
+ 	msk->rcvq_space.time = mptcp_stamp();
+@@ -4027,6 +4026,8 @@ static int mptcp_stream_accept(struct socket *sock, struct socket *newsock,
+ 		msk = mptcp_sk(newsk);
+ 		msk->in_accept_queue = 0;
+ 
++		__mptcp_propagate_sndbuf(newsk, mptcp_subflow_tcp_sock(subflow));
++
+ 		/* set ssk->sk_socket of accept()ed flows to mptcp socket.
+ 		 * This is needed so NOSPACE flag can be set from tcp stack.
  		 */
- 		ppp_proto = ntohs(hdr->proto);
--		if (ppp_proto & 0x0100) {
--			ppp_proto = ppp_proto >> 8;
--			nhoff += PPPOE_SES_HLEN - 1;
--		} else {
--			nhoff += PPPOE_SES_HLEN;
--		}
-+		nhoff += PPPOE_SES_HLEN;
- 
- 		if (ppp_proto == PPP_IP) {
- 			proto = htons(ETH_P_IP);
 -- 
 2.53.0
 
