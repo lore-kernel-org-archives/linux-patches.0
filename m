@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBEB3EDE67;
-	Tue, 12 May 2026 18:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764903EDE55;
+	Tue, 12 May 2026 18:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609089; cv=none; b=nt+JZIrOQumf2ZPf/UZr2/LBbBM2aDHIPiAPLByk7rPWf3Wmo7hpZMeozYC9o8p4B3t215KCG4oR/J99DqICSeP8Mx3IDBUkCKmKqLb6f7Aci7pd23i3GlZEn+uOQ4X9rXWfagAzVKQU1XMUCmDxaLps9EzkhIE/BVeLvjPpxCg=
+	t=1778609092; cv=none; b=AZ2hsQg+O/TLyjEAotZnTIVICj8GEtFzAe6YMHBhP1oObfiayc0GQDdI1AhIb9eVx3idsK2NDf73qNrlhlMwXKYDmRUfEzX9fOTYKV3CeAgv8JQ/G44A3euEle1kHkW1DESzCw3bygd/TRgBmy+hNor9VrvykgYWufeOXJ8u2q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609089; c=relaxed/simple;
-	bh=17znin8c8+ritrrVBoLRPt9QBKhTjJzcxE2PqWjkroU=;
+	s=arc-20240116; t=1778609092; c=relaxed/simple;
+	bh=PDMjbAdfgWK3vmzlS5egVHUZiaubCqMlUk7kdt+/nDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBV+K12LiM1bwsjMbRo6qa8bTj9LWcdbhXnpeymIP7ANpJQILLxK/elxhKulhnCNilv0hLOVniScQBZP8XKF7dUQMN4uDDQflj+uZJ/5m/jWEJ/g7mzlDJfOO8y14e7rHuOF6A3cX3/8sl3zu4fFAsFZ3CqJ+YE6m+DKQeOrRAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciC6gGpM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tVYodrZNASOxCtRq7DVUUzWEHqhMvliWRI2ztSjuOiy5w3LfWrJGs/nx60EnvjjrH2uyUTPtB8NcjjwpA2hxAgxz17cDBe0zVgegn30G1p3YIDGerJp9TjfL1CZ0j28Wc9P4DKt7DiG7eSVAEyGpt3V1DP6bpGl5K7gDt1mNrfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bajxXwo1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciC6gGpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EB0C2BCB0;
-	Tue, 12 May 2026 18:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bajxXwo1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D248C2BCB0;
+	Tue, 12 May 2026 18:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609089;
-	bh=17znin8c8+ritrrVBoLRPt9QBKhTjJzcxE2PqWjkroU=;
+	s=korg; t=1778609092;
+	bh=PDMjbAdfgWK3vmzlS5egVHUZiaubCqMlUk7kdt+/nDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ciC6gGpMe46ByBvjTXWzmh8CaieILf+WrOCxvcrxjrzL4sH4p8v41bmAIJv0RfnJT
-	 kysyev+J+hiKR64+MBj9uMlc5c3cTsmoZeeLIrpkUEJ1FSGnTw/+LDQ9nLEx1h19r6
-	 /h2LJa9iNtr/KhIGQvNB4wZ6sBWFZz+IK/Zji/Wk=
+	b=bajxXwo1PNGHYF/Vj8cr2CWCSQ2gvgsX1TjYkNAPLek20iTT/Qhtgdhsavu3ZMf60
+	 sTregSzEyCrOdS69AUckUiKZvVdntVPGkLTK/G8z5xP4fO5MMBDhd7vsYbdTtH6JiL
+	 2ywRo7ivE9vBYBhI3jVFurTuGiba4gKsw2aSQrNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Windsor <dwindsor@gmail.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
 	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.0 060/307] selinux: dont reserve xattr slot when we wont fill it
-Date: Tue, 12 May 2026 19:37:35 +0200
-Message-ID: <20260512173941.389935720@linuxfoundation.org>
+Subject: [PATCH 7.0 061/307] selinux: shrink critical section in sel_write_load()
+Date: Tue, 12 May 2026 19:37:36 +0200
+Message-ID: <20260512173941.410254447@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,41 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Windsor <dwindsor@gmail.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-commit 1e5a8eed7821e7a43a31b4c1b3675a91be6bc6f6 upstream.
+commit 868f31e4061eca8c3cd607d79d954d5e54f204aa upstream.
 
-Move lsm_get_xattr_slot() below the SBLABEL_MNT check so we don't leave
-a NULL-named slot in the array when returning -EOPNOTSUPP; filesystem
-initxattrs() callbacks stop iterating at the first NULL ->name, silently
-dropping xattrs installed by later LSMs.
+Currently sel_write_load() takes the policy mutex earlier than
+necessary. Move the taking of the mutex later. This avoids
+holding it unnecessarily across the vmalloc() and copy_from_user()
+of the policy data.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: David Windsor <dwindsor@gmail.com>
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
 Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ security/selinux/selinuxfs.c |   18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -2965,7 +2965,7 @@ static int selinux_inode_init_security(s
- {
- 	const struct cred_security_struct *crsec = selinux_cred(current_cred());
- 	struct superblock_security_struct *sbsec;
--	struct xattr *xattr = lsm_get_xattr_slot(xattrs, xattr_count);
-+	struct xattr *xattr;
- 	u32 newsid, clen;
- 	u16 newsclass;
- 	int rc;
-@@ -2991,6 +2991,7 @@ static int selinux_inode_init_security(s
- 	    !(sbsec->flags & SBLABEL_MNT))
- 		return -EOPNOTSUPP;
+--- a/security/selinux/selinuxfs.c
++++ b/security/selinux/selinuxfs.c
+@@ -594,34 +594,31 @@ static ssize_t sel_write_load(struct fil
+ 	if (!count)
+ 		return -EINVAL;
  
-+	xattr = lsm_get_xattr_slot(xattrs, xattr_count);
- 	if (xattr) {
- 		rc = security_sid_to_context_force(newsid,
- 						   &context, &clen);
+-	mutex_lock(&selinux_state.policy_mutex);
+-
+ 	length = avc_has_perm(current_sid(), SECINITSID_SECURITY,
+ 			      SECCLASS_SECURITY, SECURITY__LOAD_POLICY, NULL);
+ 	if (length)
+-		goto out;
++		return length;
+ 
+ 	data = vmalloc(count);
+-	if (!data) {
+-		length = -ENOMEM;
+-		goto out;
+-	}
++	if (!data)
++		return -ENOMEM;
+ 	if (copy_from_user(data, buf, count) != 0) {
+ 		length = -EFAULT;
+ 		goto out;
+ 	}
+ 
++	mutex_lock(&selinux_state.policy_mutex);
+ 	length = security_load_policy(data, count, &load_state);
+ 	if (length) {
+ 		pr_warn_ratelimited("SELinux: failed to load policy\n");
+-		goto out;
++		goto out_unlock;
+ 	}
+ 	fsi = file_inode(file)->i_sb->s_fs_info;
+ 	length = sel_make_policy_nodes(fsi, load_state.policy);
+ 	if (length) {
+ 		pr_warn_ratelimited("SELinux: failed to initialize selinuxfs\n");
+ 		selinux_policy_cancel(&load_state);
+-		goto out;
++		goto out_unlock;
+ 	}
+ 
+ 	selinux_policy_commit(&load_state);
+@@ -631,8 +628,9 @@ static ssize_t sel_write_load(struct fil
+ 		from_kuid(&init_user_ns, audit_get_loginuid(current)),
+ 		audit_get_sessionid(current));
+ 
+-out:
++out_unlock:
+ 	mutex_unlock(&selinux_state.policy_mutex);
++out:
+ 	vfree(data);
+ 	return length;
+ }
 
 
