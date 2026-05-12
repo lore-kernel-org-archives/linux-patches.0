@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2803EDE45;
-	Tue, 12 May 2026 18:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E182D060B;
+	Tue, 12 May 2026 18:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609316; cv=none; b=DSu0KXag7iiFd3FEus3vAjr+BXvuK73bPW36yNqbHqV+jap4aGiWnmsAEFnyZYy/Yz349BjR5SPbn+J+imTc4vn7jFinGeYejixH/vOs1uAuYyIhaQ1Ica46vqyZNGs8evIsJDam7QG6HmGZAvpuVCk7emoVG0/UX59cabOaQkI=
+	t=1778609318; cv=none; b=r6QytMnJiV0qIRw26F+sYAFmwIrdkUIsQU2mw8rXz5nFjltSdYkHnlhMXPIuKaOAVujBnLgFz7hDVvoY89Q8ioPBEAKYxiYeUKdnIzpifx74okjaqIaat5PuzanGgF2dOXtGp6v8CpkzsFCk5eGr/iGkW8KAKuxXPZlow5bErkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609316; c=relaxed/simple;
-	bh=C07oDMnoJ5QdxueNTTaSLoD5SexD8PJ1n4tpT0O0Czc=;
+	s=arc-20240116; t=1778609318; c=relaxed/simple;
+	bh=di+MxCzR1DMLr4kCzfmlAjMOAlcvceRzSLlMl9zMtZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WR/QqBW27Pnm0/vvu22+8Pvl29dx8mBYQaYP+gQUJfOnYnJ085wRa3sGADtLCffd6Fxvjf15RH47xiLtyaWdFz8lE0rki7wUz834fMy9gQ8KCOYqkUwRjJ56FT9rzb6bw0Aucbc4tNON1Eq36DQ8VK+tug7KO0q+CypQBlP41ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFLtb9DD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F7h5nQ74vGh2kmJhDL7S11tRBkuCoVKhOu1zkIZ3fTjR9jQUE02erXd1yHc8Wi/t8PoHPoz5fSPf2wV/5U2G43+6AbzYJEZGvPu7pCC0Y2ULHFjyxqO3lUfdf7h0vfcGqY5mNjgxjlHC1bkCExY3VaVEEkOSNIj1vv0ER/81pQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LU2r5lIE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFLtb9DD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD05C2BCB0;
-	Tue, 12 May 2026 18:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LU2r5lIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BAAC2BCC7;
+	Tue, 12 May 2026 18:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609315;
-	bh=C07oDMnoJ5QdxueNTTaSLoD5SexD8PJ1n4tpT0O0Czc=;
+	s=korg; t=1778609318;
+	bh=di+MxCzR1DMLr4kCzfmlAjMOAlcvceRzSLlMl9zMtZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFLtb9DDxZNBXuGXzLDwOsF4VMIpM37Tx403F2wI0G2GWEagpagoTGZ6l/Y87ZQkT
-	 cTRTC5H2A3r8jWYMMJ5zhYBpbHCd8qPgHTq6pkg9Q4ZVoJkPla8gv3TzcnZFBQ6bQ1
-	 IN1BPYsyNbY1eRpx8gouzKQC30GfZQjB5PXNXSfw=
+	b=LU2r5lIERMPfnkcylefQKYozDmu6Us+mGwP6teo4Wae4gLeVRZCw4KLVlCrLProsb
+	 Lx7M0PYVfX278sYshalEB7vCnzzXm6QF/p5oyBIIIcIROtqmwEbr87mPD+DEcHexMv
+	 /NI8pir4O5wTzU9tWgheJvVYjTBlJwcoj0KfV1/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 147/307] ice: fix double free in ice_sf_eth_activate() error path
-Date: Tue, 12 May 2026 19:39:02 +0200
-Message-ID: <20260512173943.230053303@linuxfoundation.org>
+	Naga Sureshkumar Relli <nagasuresh.relli@microchip.com>,
+	Johan Hovold <johan@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.0 148/307] spi: microchip-core-qspi: fix controller deregistration
+Date: Tue, 12 May 2026 19:39:03 +0200
+Message-ID: <20260512173943.251009316@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -53,43 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 9aab1c3d7299285e2569cbc0ed5892d631a241b2 upstream.
+commit e6464140d439f2d42f072eb422a5b1fec470c5a6 upstream.
 
-When auxiliary_device_add() fails, ice_sf_eth_activate() jumps to
-aux_dev_uninit and calls auxiliary_device_uninit(&sf_dev->adev).
+Make sure to deregister the controller before disabling underlying
+resources like interrupts during driver unbind.
 
-The device release callback ice_sf_dev_release() frees sf_dev, but
-the current error path falls through to sf_dev_free and calls
-kfree(sf_dev) again, causing a double free.
-
-Keep kfree(sf_dev) for the auxiliary_device_init() failure path, but
-avoid falling through to sf_dev_free after auxiliary_device_uninit().
-
-Fixes: 13acc5c4cdbe ("ice: subfunction activation and base devlink ops")
-Cc: stable@vger.kernel.org
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-3-686c33c9828d@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8596124c4c1b ("spi: microchip-core-qspi: Add support for microchip fpga qspi controllers")
+Cc: stable@vger.kernel.org	# 6.1
+Cc: Naga Sureshkumar Relli <nagasuresh.relli@microchip.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20260409120419.388546-19-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_sf_eth.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-microchip-core-qspi.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_sf_eth.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sf_eth.c
-@@ -305,6 +305,8 @@ ice_sf_eth_activate(struct ice_dynamic_p
+--- a/drivers/spi/spi-microchip-core-qspi.c
++++ b/drivers/spi/spi-microchip-core-qspi.c
+@@ -692,7 +692,7 @@ static int mchp_coreqspi_probe(struct pl
+ 		return -ENOMEM;
  
- aux_dev_uninit:
- 	auxiliary_device_uninit(&sf_dev->adev);
-+	return err;
+ 	qspi = spi_controller_get_devdata(ctlr);
+-	platform_set_drvdata(pdev, qspi);
++	platform_set_drvdata(pdev, ctlr);
+ 
+ 	qspi->regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(qspi->regs))
+@@ -732,7 +732,7 @@ static int mchp_coreqspi_probe(struct pl
+ 	ctlr->num_chipselect = 2;
+ 	ctlr->use_gpio_descriptors = true;
+ 
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret,
+ 				     "spi_register_controller failed\n");
+@@ -742,9 +742,13 @@ static int mchp_coreqspi_probe(struct pl
+ 
+ static void mchp_coreqspi_remove(struct platform_device *pdev)
+ {
+-	struct mchp_coreqspi *qspi = platform_get_drvdata(pdev);
+-	u32 control = readl_relaxed(qspi->regs + REG_CONTROL);
++	struct spi_controller *ctlr = platform_get_drvdata(pdev);
++	struct mchp_coreqspi *qspi = spi_controller_get_devdata(ctlr);
++	u32 control;
+ 
++	spi_unregister_controller(ctlr);
 +
- sf_dev_free:
- 	kfree(sf_dev);
- xa_erase:
++	control = readl_relaxed(qspi->regs + REG_CONTROL);
+ 	mchp_coreqspi_disable_ints(qspi);
+ 	control &= ~CONTROL_ENABLE;
+ 	writel_relaxed(control, qspi->regs + REG_CONTROL);
 
 
