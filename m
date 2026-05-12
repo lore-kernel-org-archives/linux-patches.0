@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C023EDE4E;
-	Tue, 12 May 2026 17:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DB63EDE43;
+	Tue, 12 May 2026 17:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608693; cv=none; b=RDOO7HRR0loN/NpeQjY3wY1Lk5NIfVnS3cL5Kzvh7EdbTw9RcV3v6N6GQKzWtyCF9MHa9fbn1zCgI9T0Nm6gtSXlSSADcy4uy4xAl42botSrrp1ZteJTohWuRq93wdNqS2kMlteYAV/F3vnHdKV9wK0lYPhCspTSQoGmylJ5J6g=
+	t=1778608696; cv=none; b=HT3iBLmNZhsyvo57TAlMiAEnwrX2fR488eTLyOMCUNmY4hajHDIbMEyp6t+YEG1csOYguIAP2zep/0O4IiDOCe4d5cmfzYVASPt0MqOayWs/iyGpde8rJsNTo+qojM/oYF7KQ4Jx/cCccZQT5AJth3Icxo9vg20rnvk9KoRHrqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608693; c=relaxed/simple;
-	bh=IjKyAXcZ0SG/qh0kglMsJTGfAqqKYD/KkEs03AiVEQg=;
+	s=arc-20240116; t=1778608696; c=relaxed/simple;
+	bh=bwqrtumsju9GVnLIYXqBb7d7M9Qa8TWurUJveLyjfms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEajuNZ1n5zTpzZHW4/GSeJ3aM3MhyPBYi47QoJnwveFaHi6wKHS39cj6xT4MIhZFBEAUfcB9VDIuSLd28QGmuYC4zmm+PWdpxR/zkouCUFuOEQfqNVw2qEwPWg+CA2K5m9ywn9tJxRcvXSaK1D65lOHewlF/7YyAlfkeX/HDiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWqaXUx/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rS5D6GgP3PRD06u78E60JUPCoPsSVCgcApyUEbnm7BWjIVk2Zob1Ta1HvzxlIXlypMxBCtvYY7rS29h5TYKRLpx2FNVP/dVRfngnQ3aIUVkhExaqDAVX0wnmRbiAd9fMDMSz7xQyPbY69V3YMDcEYpscqq59BfQ8ywC+984Mc1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M78IJuGo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWqaXUx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25965C2BCC7;
-	Tue, 12 May 2026 17:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M78IJuGo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7E1C2BCC7;
+	Tue, 12 May 2026 17:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608693;
-	bh=IjKyAXcZ0SG/qh0kglMsJTGfAqqKYD/KkEs03AiVEQg=;
+	s=korg; t=1778608696;
+	bh=bwqrtumsju9GVnLIYXqBb7d7M9Qa8TWurUJveLyjfms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dWqaXUx/AnyitLmk4xYC7TxfBDj8CziDu5cXWyNqzPRGcTlwtvaIERanQCaehpRsd
-	 pXRFwyoP3yagE51popEZJNGmkr+bbDGKf2ffYdQP372WNHjp958oSBOoLyzi6DlAdu
-	 GTXttiVcxMznewMS6aLpRf0/i53NZhG4kfrgcSAI=
+	b=M78IJuGoxD+k4/i693f2PBJWf8DH4HZg/2Vt+xfmYgRU5qUF7/MgeEIiQlrPQNtlx
+	 zQfiuvkY+XcvBou5nGbufLeygu69Nt1wU987lXgFvqZSv9rNnmnarPsJ0dEHfQMPZS
+	 37nXJjoPH9toBdNd5BihtQFYtogW6gZ9brQu0Kfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjoern Doebel <doebel@amazon.de>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 179/270] smb: client: use kzalloc to zero-initialize security descriptor buffer
-Date: Tue, 12 May 2026 19:39:40 +0200
-Message-ID: <20260512173942.217359689@linuxfoundation.org>
+Subject: [PATCH 6.18 180/270] smb: client: validate dacloffset before building DACL pointers
+Date: Tue, 12 May 2026 19:39:41 +0200
+Message-ID: <20260512173942.238251256@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,49 +50,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjoern Doebel <doebel@amazon.de>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 5e489c6c47a2ac15edbaca153b9348e42c1eacab upstream.
+commit f98b48151cc502ada59d9778f0112d21f2586ca3 upstream.
 
-Commit 62e7dd0a39c2d ("smb: common: change the data type of num_aces
-to le16") split struct smb_acl's __le32 num_aces field into __le16
-num_aces and __le16 reserved. The reserved field corresponds to Sbz2
-in the MS-DTYP ACL wire format, which must be zero [1].
+parse_sec_desc(), build_sec_desc(), and the chown path in
+id_mode_to_cifs_acl() all add the server-supplied dacloffset to pntsd
+before proving a DACL header fits inside the returned security
+descriptor.
 
-When building an ACL descriptor in build_sec_desc(), we are using a
-kmalloc()'ed descriptor buffer and writing the fields explicitly using
-le16() writes now. This never writes to the 2 byte reserved field,
-leaving it as uninitialized heap data.
+On 32-bit builds a malicious server can return dacloffset near
+U32_MAX, wrap the derived DACL pointer below end_of_acl, and then slip
+past the later pointer-based bounds checks. build_sec_desc() and
+id_mode_to_cifs_acl() can then dereference DACL fields from the wrapped
+pointer in the chmod/chown rewrite paths.
 
-When the reserved field happens to contain non-zero slab garbage,
-Samba rejects the security descriptor with "ndr_pull_security_descriptor
-failed: Range Error", causing chmod to fail with EINVAL.
+Validate dacloffset numerically before building any DACL pointer and
+reuse the same helper at the three DACL entry points.
 
-Change kmalloc() to kzalloc() to ensure the entire buffer is
-zero-initialized.
-
-Fixes: 62e7dd0a39c2d ("smb: common: change the data type of num_aces to le16")
+Fixes: bc3e9dd9d104 ("cifs: Change SIDs in ACEs while transferring file ownership.")
 Cc: stable@vger.kernel.org
-
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
-Assisted-by: Kiro:claude-opus-4.6
-[1] https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/20233ed8-a6c6-4097-aafa-dd545ed24428
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsacl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/cifsacl.c |   35 ++++++++++++++++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 3 deletions(-)
 
 --- a/fs/smb/client/cifsacl.c
 +++ b/fs/smb/client/cifsacl.c
-@@ -1685,7 +1685,7 @@ id_mode_to_cifs_acl(struct inode *inode,
- 	 * descriptor parameters, and security descriptor itself
- 	 */
- 	nsecdesclen = max_t(u32, nsecdesclen, DEFAULT_SEC_DESC_LEN);
--	pnntsd = kmalloc(nsecdesclen, GFP_KERNEL);
-+	pnntsd = kzalloc(nsecdesclen, GFP_KERNEL);
- 	if (!pnntsd) {
- 		kfree(pntsd);
- 		cifs_put_tlink(tlink);
+@@ -1215,6 +1215,17 @@ static int parse_sid(struct smb_sid *psi
+ 	return 0;
+ }
+ 
++static bool dacl_offset_valid(unsigned int acl_len, __u32 dacloffset)
++{
++	if (acl_len < sizeof(struct smb_acl))
++		return false;
++
++	if (dacloffset < sizeof(struct smb_ntsd))
++		return false;
++
++	return dacloffset <= acl_len - sizeof(struct smb_acl);
++}
++
+ 
+ /* Convert CIFS ACL to POSIX form */
+ static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
+@@ -1235,7 +1246,6 @@ static int parse_sec_desc(struct cifs_sb
+ 	group_sid_ptr = (struct smb_sid *)((char *)pntsd +
+ 				le32_to_cpu(pntsd->gsidoffset));
+ 	dacloffset = le32_to_cpu(pntsd->dacloffset);
+-	dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
+ 	cifs_dbg(NOISY, "revision %d type 0x%x ooffset 0x%x goffset 0x%x sacloffset 0x%x dacloffset 0x%x\n",
+ 		 pntsd->revision, pntsd->type, le32_to_cpu(pntsd->osidoffset),
+ 		 le32_to_cpu(pntsd->gsidoffset),
+@@ -1266,11 +1276,18 @@ static int parse_sec_desc(struct cifs_sb
+ 		return rc;
+ 	}
+ 
+-	if (dacloffset)
++	if (dacloffset) {
++		if (!dacl_offset_valid(acl_len, dacloffset)) {
++			cifs_dbg(VFS, "Server returned illegal DACL offset\n");
++			return -EINVAL;
++		}
++
++		dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
+ 		parse_dacl(dacl_ptr, end_of_acl, owner_sid_ptr,
+ 			   group_sid_ptr, fattr, get_mode_from_special_sid);
+-	else
++	} else {
+ 		cifs_dbg(FYI, "no ACL\n"); /* BB grant all or default perms? */
++	}
+ 
+ 	return rc;
+ }
+@@ -1293,6 +1310,11 @@ static int build_sec_desc(struct smb_nts
+ 
+ 	dacloffset = le32_to_cpu(pntsd->dacloffset);
+ 	if (dacloffset) {
++		if (!dacl_offset_valid(secdesclen, dacloffset)) {
++			cifs_dbg(VFS, "Server returned illegal DACL offset\n");
++			return -EINVAL;
++		}
++
+ 		dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
+ 		if (end_of_acl < (char *)dacl_ptr + le16_to_cpu(dacl_ptr->size)) {
+ 			cifs_dbg(VFS, "Server returned illegal ACL size\n");
+@@ -1669,6 +1691,12 @@ id_mode_to_cifs_acl(struct inode *inode,
+ 		nsecdesclen = sizeof(struct smb_ntsd) + (sizeof(struct smb_sid) * 2);
+ 		dacloffset = le32_to_cpu(pntsd->dacloffset);
+ 		if (dacloffset) {
++			if (!dacl_offset_valid(secdesclen, dacloffset)) {
++				cifs_dbg(VFS, "Server returned illegal DACL offset\n");
++				rc = -EINVAL;
++				goto id_mode_to_cifs_acl_exit;
++			}
++
+ 			dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
+ 			if (mode_from_sid)
+ 				nsecdesclen +=
+@@ -1705,6 +1733,7 @@ id_mode_to_cifs_acl(struct inode *inode,
+ 		rc = ops->set_acl(pnntsd, nsecdesclen, inode, path, aclflag);
+ 		cifs_dbg(NOISY, "set_cifs_acl rc: %d\n", rc);
+ 	}
++id_mode_to_cifs_acl_exit:
+ 	cifs_put_tlink(tlink);
+ 
+ 	kfree(pnntsd);
 
 
