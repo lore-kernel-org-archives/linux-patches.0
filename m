@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52CC385D85;
-	Tue, 12 May 2026 17:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAB3385D85;
+	Tue, 12 May 2026 17:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607851; cv=none; b=Zxy6Fgj7saLyESn6xSJuQNZLM5RlJX4uAXdJCW6dIthUwgbkKsaZoJUi265Bo0fTzXeSeS9nLXtcUC0NTHnBK5xGgzertKMrGWwnVrK1YScOB4VbHpyserBPY6PxD4LjgAMZKB4N19ej2FC2B3NFxFooFKXF27qM+9boSlVNaRs=
+	t=1778607854; cv=none; b=BCJg0gKN1HgPgz5VV6bcoEQxQy/8/NHowl1Z26I0c8FNE7lCWYUmTMbstti4fHH676+BjcX42fgGvTQEncfzrS1WG+C5oqvqlahcZlfspaJYGP3tSCS0kCRLLNuoJffCJm5KGy+E3ehAn0LskSFFqO+7euOQXXSWsM11KN84uZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607851; c=relaxed/simple;
-	bh=a7pnDQBddgO+VlUoE4BD0uai40YUmqRxGh4G9ueWWU4=;
+	s=arc-20240116; t=1778607854; c=relaxed/simple;
+	bh=hN3L+Fy2bSnT6BSEwJNd+1Mh+h6odVsqpwh6oic4ppU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XopZmgswIVEy9EbYY93Q5LsEStDnirCsY/8jbBwXtzMvFY7SJ16BCLnDjhiJ/JWL6TRo4Kt75Z3bFwugeo9jHujgsohEToInZJEt6xSpOr5wU+DZFzzpxtqRydVBs0VHAh+3iFldi4xqKMqStG5Ist3NcKxGXFMTRImeLHE1Caw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXXgDJ8j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uvCp3AE6VQqz4KuBXd26R/2XomtZSzkAvQq8d3euYDivMsWtesESBDSUsvi1PWNRAn6GwA6KASkIvBZcA8pbFQC91PBj5wMUvCTXJNfjPLXDbCLH1utlseJAEGZMOXhZWFa2Hu4k8X1tkH8Q/1mLHfHSlYWihRmPowaMY9t/zes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZHutEDG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXXgDJ8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3F5C2BCB0;
-	Tue, 12 May 2026 17:44:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZHutEDG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7308C2BCB0;
+	Tue, 12 May 2026 17:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607851;
-	bh=a7pnDQBddgO+VlUoE4BD0uai40YUmqRxGh4G9ueWWU4=;
+	s=korg; t=1778607854;
+	bh=hN3L+Fy2bSnT6BSEwJNd+1Mh+h6odVsqpwh6oic4ppU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mXXgDJ8jMUkyJ5hzqP3YXqoQN/0gHl7z6iLji5lyyZ4RJN2COXuIFqcSamVE84u9y
-	 xBXQ1gsxPv5FCaIdnKMcIagT+oEfzdG4hpLtqVCBW4ykQcvlvp7hxT+QtmGoMNaE/7
-	 39br/vRxREB7jS0m2LPrL9o1sho5EFWjcyj3it+k=
+	b=AZHutEDGhWExVBN9hkRfh0hbGHAzv4oAJXZiE+ZWzip63wmaX3kOq2E5RAsql+y6x
+	 gAZ8s6LecasiuqHRa0UjQMqSMoCS/MUMJPvGJUX02PPjkUg/Fa/IeYRa/YretvlCZZ
+	 UNLCZnhSuT+Vhlf6T9rCj1sVLMMCqzHIwbDmCsOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Alexander Bulekov <bkov@amazon.com>,
+	Fred Griffoul <fgriffo@amazon.co.uk>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 016/206] x86/shstk: Prevent deadlock during shstk sigreturn
-Date: Tue, 12 May 2026 19:37:48 +0200
-Message-ID: <20260512173933.164829250@linuxfoundation.org>
+Subject: [PATCH 6.12 017/206] KVM: x86: Fix shadow paging use-after-free due to unexpected GFN
+Date: Tue, 12 May 2026 19:37:49 +0200
+Message-ID: <20260512173933.186710313@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -50,134 +53,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rick Edgecombe <rick.p.edgecombe@intel.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 9874b2917b9fbc30956fee209d3c4aa47201c64e ]
+commit 0cb2af2ea66ad8ff195c156ea690f11216285bdf upstream.
 
-During sigreturn the shadow stack signal frame is popped. The kernel does
-this by reading the shadow stack using normal read accesses. When it can't
-assume the memory is shadow stack, it takes extra steps to makes sure it is
-reading actual shadow stack memory and not other normal readable memory. It
-does this by holding the mmap read lock while doing the access and checking
-the flags of the VMA.
+The shadow MMU computes GFNs for direct shadow pages using sp->gfn plus
+the SPTE index. This assumption breaks for shadow paging if the guest
+page tables are modified between VM entries (similar to commit
+aad885e77496, "KVM: x86/mmu: Drop/zap existing present SPTE even
+when creating an MMIO SPTE", 2026-03-27).  The flow is as follows:
 
-Unfortunately that is not safe. If the read of the shadow stack sigframe
-hits a page fault, the fault handler will try to recursively grab another
-mmap read lock. This normally works ok, but if a writer on another CPU is
-also waiting, the second read lock could fail and cause a deadlock.
+- a PDE is installed for a 2MB mapping, and a page in that area is
+  accessed.  KVM creates a kvm_mmu_page consisting of 512 4KB pages;
+  the kvm_mmu_page is marked by FNAME(fetch) as direct-mapped because
+  the guest's mapping is a huge page (and thus contiguous).
 
-Fix this by doing the read of the userspace memory via gup. Embed it in the
-get_shstk_data() helper.
+- the PDE mapping is changed from outside the guest.
 
-Currently there is a check that skips the lookup work when the SSP can be
-assumed to be on a shadow stack. While reorganizing the function, remove
-the optimization to make the tricky code flows more common, such that
-issues like this cannot escape detection for so long.
+- the guest accesses another page in the same 2MB area.  KVM installs
+  a new leaf SPTE and rmap entry; the SPTE uses the "correct" GFN
+  (i.e. based on the new mapping, as changed in the previous step) but
+  that GFN is outside of the [sp->gfn, sp->gfn + 511] range; therefore
+  the rmap entry cannot be found and removed when the kvm_mmu_page
+  is zapped.
 
-[Due to missing per-vma MM sequence counter, use a simpler GUP based
-solution for the backport]
-Cc: <stable@vger.kernel.org> # Depends on https://lore.kernel.org/all/20260504205856.536296-1-rick.p.edgecombe@intel.com/
-Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+- the memslot that covers the first 2MB mapping is deleted, and the
+  kvm_mmu_page for the now-invalid GPA is zapped.  However, rmap_remove()
+  only looks at the [sp->gfn, sp->gfn + 511] range established in step 1,
+  and fails to find the rmap entry that was recorded by step 3.
+
+- any operation that causes an rmap walk for the same page accessed
+  by step 3 then walks a stale rmap and dereferences a freed kvm_mmu_page.
+  This includes dirty logging or MMU notifier invalidations (e.g., from
+  MADV_DONTNEED).
+
+The underlying issue is that KVM's walking of shadow PTEs assumes that
+if a SPTE is present when KVM wants to install a non-leaf SPTE, then the
+existing kvm_mmu_page must be for the correct gfn.  Because the only way
+for the gfn to be wrong is if KVM messed up and failed to zap a SPTE...
+which shouldn't happen, but *actually* only happens in response to a
+guest write.
+
+That bug dates back literally forever, as even the first version of KVM
+assumes that the GFN matches and walks into the "wrong" shadow page.
+However, that was only an imprecision until 2032a93d66fa ("KVM: MMU:
+Don't allocate gfns page for direct mmu pages") came along.
+
+Fix it by checking for a target gfn mismatch and zapping the existing
+SPTE.  That way the old SP and rmap entries are gone, KVM installs
+the rmap in the right location, and everyone is happy.
+
+Fixes: 2032a93d66fa ("KVM: MMU: Don't allocate gfns page for direct mmu pages")
+Fixes: 6aa8b732ca01 ("kvm: userspace interface")
+Reported-by: Alexander Bulekov <bkov@amazon.com>
+Reported-by: Fred Griffoul <fgriffo@amazon.co.uk>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20260503201029.106481-1-pbonzini@redhat.com/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/shstk.c | 46 ++++++++++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ arch/x86/kvm/mmu/mmu.c | 35 ++++++++++++++---------------------
+ 1 file changed, 14 insertions(+), 21 deletions(-)
 
-diff --git a/arch/x86/kernel/shstk.c b/arch/x86/kernel/shstk.c
-index 0dc983b33b003..373a44a5c478f 100644
---- a/arch/x86/kernel/shstk.c
-+++ b/arch/x86/kernel/shstk.c
-@@ -18,6 +18,7 @@
- #include <linux/sizes.h>
- #include <linux/user.h>
- #include <linux/syscalls.h>
-+#include <linux/highmem.h>
- #include <asm/msr.h>
- #include <asm/fpu/xstate.h>
- #include <asm/fpu/types.h>
-@@ -262,11 +263,29 @@ static int put_shstk_data(u64 __user *addr, u64 data)
- 	return 0;
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 2c11819bd216c..d288c60ae200b 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -182,6 +182,8 @@ struct kmem_cache *mmu_page_header_cache;
+ static struct percpu_counter kvm_total_used_mmu_pages;
+ 
+ static void mmu_spte_set(u64 *sptep, u64 spte);
++static int mmu_page_zap_pte(struct kvm *kvm, struct kvm_mmu_page *sp,
++			    u64 *spte, struct list_head *invalid_list);
+ 
+ struct kvm_mmu_role_regs {
+ 	const unsigned long cr0;
+@@ -1187,19 +1189,6 @@ static void drop_spte(struct kvm *kvm, u64 *sptep)
+ 		rmap_remove(kvm, sptep);
  }
  
-+/* Copy from aligned address in userspace without risk of page fault. */
-+static int shstk_copy_user_gup(unsigned long *ldata, unsigned long __user *addr)
-+{
-+	struct page *page;
-+	void *kaddr;
-+
-+	mmap_assert_locked(current->mm);
-+	if (get_user_pages((unsigned long)addr, 1, 0, &page) != 1)
-+		return -EFAULT;
-+
-+	kaddr = kmap_local_page(page);
-+	*ldata = *(unsigned long *)(kaddr + offset_in_page(addr));
-+	kunmap_local(kaddr);
-+	put_page(page);
-+
-+	return 0;
-+}
-+
- static int get_shstk_data(unsigned long *data, unsigned long __user *addr)
- {
- 	unsigned long ldata;
- 
--	if (unlikely(get_user(ldata, addr)))
-+	if (shstk_copy_user_gup(&ldata, addr))
- 		return -EFAULT;
- 
- 	if (!(ldata & SHSTK_DATA_BIT))
-@@ -296,7 +315,6 @@ static int shstk_pop_sigframe(unsigned long *ssp)
- {
- 	struct vm_area_struct *vma;
- 	unsigned long token_addr;
--	bool need_to_check_vma;
- 	int err = 1;
- 
- 	/*
-@@ -308,26 +326,21 @@ static int shstk_pop_sigframe(unsigned long *ssp)
- 	if (!IS_ALIGNED(*ssp, 8))
- 		return -EINVAL;
- 
--	need_to_check_vma = PAGE_ALIGN(*ssp) == *ssp;
+-static void drop_large_spte(struct kvm *kvm, u64 *sptep, bool flush)
+-{
+-	struct kvm_mmu_page *sp;
 -
--	if (need_to_check_vma)
--		if (mmap_read_lock_killable(current->mm))
--			return -EINTR;
-+	if (mmap_read_lock_killable(current->mm))
-+		return -EINTR;
- 
- 	err = get_shstk_data(&token_addr, (unsigned long __user *)*ssp);
- 	if (unlikely(err))
- 		goto out_err;
- 
--	if (need_to_check_vma) {
--		vma = find_vma(current->mm, *ssp);
--		if (!vma || !(vma->vm_flags & VM_SHADOW_STACK)) {
--			err = -EFAULT;
--			goto out_err;
--		}
+-	sp = sptep_to_sp(sptep);
+-	WARN_ON_ONCE(sp->role.level == PG_LEVEL_4K);
 -
--		mmap_read_unlock(current->mm);
-+	vma = find_vma(current->mm, *ssp);
-+	if (!vma || !(vma->vm_flags & VM_SHADOW_STACK)) {
-+		err = -EFAULT;
-+		goto out_err;
- 	}
+-	drop_spte(kvm, sptep);
+-
+-	if (flush)
+-		kvm_flush_remote_tlbs_sptep(kvm, sptep);
+-}
+-
+ /*
+  * Write-protect on the specified @sptep, @pt_protect indicates whether
+  * spte write-protection is caused by protecting shadow page table.
+@@ -2342,7 +2331,8 @@ static struct kvm_mmu_page *kvm_mmu_get_child_sp(struct kvm_vcpu *vcpu,
+ {
+ 	union kvm_mmu_page_role role;
  
-+	mmap_read_unlock(current->mm);
+-	if (is_shadow_present_pte(*sptep) && !is_large_pte(*sptep))
++	if (is_shadow_present_pte(*sptep) && !is_large_pte(*sptep) &&
++	    spte_to_child_sp(*sptep) && spte_to_child_sp(*sptep)->gfn == gfn)
+ 		return ERR_PTR(-EEXIST);
+ 
+ 	role = kvm_mmu_child_role(sptep, direct, access);
+@@ -2420,13 +2410,16 @@ static void __link_shadow_page(struct kvm *kvm,
+ 
+ 	BUILD_BUG_ON(VMX_EPT_WRITABLE_MASK != PT_WRITABLE_MASK);
+ 
+-	/*
+-	 * If an SPTE is present already, it must be a leaf and therefore
+-	 * a large one.  Drop it, and flush the TLB if needed, before
+-	 * installing sp.
+-	 */
+-	if (is_shadow_present_pte(*sptep))
+-		drop_large_spte(kvm, sptep, flush);
++	if (is_shadow_present_pte(*sptep)) {
++		struct kvm_mmu_page *parent_sp;
++		LIST_HEAD(invalid_list);
 +
- 	/* Restore SSP aligned? */
- 	if (unlikely(!IS_ALIGNED(token_addr, 8)))
- 		return -EINVAL;
-@@ -340,8 +353,7 @@ static int shstk_pop_sigframe(unsigned long *ssp)
++		parent_sp = sptep_to_sp(sptep);
++		WARN_ON_ONCE(parent_sp->role.level == PG_LEVEL_4K);
++
++		mmu_page_zap_pte(kvm, parent_sp, sptep, &invalid_list);
++		kvm_mmu_remote_flush_or_zap(kvm, &invalid_list, true);
++	}
  
- 	return 0;
- out_err:
--	if (need_to_check_vma)
--		mmap_read_unlock(current->mm);
-+	mmap_read_unlock(current->mm);
- 	return err;
- }
+ 	spte = make_nonleaf_spte(sp->spt, sp_ad_disabled(sp));
  
 -- 
 2.53.0
