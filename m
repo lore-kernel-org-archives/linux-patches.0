@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC92374187;
-	Tue, 12 May 2026 18:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE8837C0E3;
+	Tue, 12 May 2026 18:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609653; cv=none; b=q7IESVrXkLd9c+el0zR+vzZAAdfvKUiAddgVF2BbyRsqyknwKCLFfO5glZEhoZqAeqG+cG6qb5AFIDaNPpHQ/CtXtLSTXGdWlzU/krtL08gaFtjmWEoCldWAYufTdziOa7jl8pjTHSyPjURIvPVGFzQ5HA1p35h2VplCJINCx5M=
+	t=1778609656; cv=none; b=HngzfjBDPMChpo/o0D6/vgwJR5GM6XnQCFYsecY3wxLML5u+iidqi7/aaHuQKKiG/oW4TGgVR4PIld72YqM3wpnG8+H/a8qFzq1tPiX07xOhSoyzl2lZQj0xLVzmXOZbwc4Fy6p/kJVIp8RkJq6Bz7ihxkO0dBRwjJaqC/O3aEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609653; c=relaxed/simple;
-	bh=WkGujt5aU8l0c3VwyYcXRtbn5IqgSLaadENxFd02UEs=;
+	s=arc-20240116; t=1778609656; c=relaxed/simple;
+	bh=oG1vofbbggqxQZ3ycyeJ8VguIMTiyfyytjehiGa0hjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AYpSO0EDWxO6Qj9ELP2+2PpFfVCiYA20f1yxNvpbtHQFk4w4m//6x+K9IL8+OTz3Rf2TMQrJKYv4xTRjLgvY9eJUhUOV/wTu6Er7eAA0vw25ygNOYqFmA99t36pNsH+Jck7Pu/v2MgnOaokybtAm5E+Eu6SrCVMoMtwo1xH2QYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGVP0SlG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pLcQZmGGlTKNvRGaZns97/t6qzK6Vqu8WPmHOMEBrpe7QOqJ0gs3iA+KKcWB3BNHiy1PGUUqFJVH5nS2KjYafMALHPxPMs0+CyWEGE23G1XT4Fi1h/hzbdGoZQ8QY6bM/V0Laos4QAPIILOABFFWIVO5ZmGBGLKCYYQEUbNECLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJn9rxY6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGVP0SlG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74131C2BCB0;
-	Tue, 12 May 2026 18:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJn9rxY6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146FBC2BCC7;
+	Tue, 12 May 2026 18:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609653;
-	bh=WkGujt5aU8l0c3VwyYcXRtbn5IqgSLaadENxFd02UEs=;
+	s=korg; t=1778609656;
+	bh=oG1vofbbggqxQZ3ycyeJ8VguIMTiyfyytjehiGa0hjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGVP0SlG9dabgEX/SZWsrHd2uNW6gXobeEkRVcFgJHz5Meyti4XMfde/KwcoKyVF5
-	 ixP0I3Tq1J8SesK8n8K8Qym/BST9q+sM4Q1+nRuAlEAgLpVsx+sZ36DbqAqTq7Rl6n
-	 wzmqVvOKYhudGdOnENIkQqSLap8C0ha1W3Lbe3Bg=
+	b=yJn9rxY68DlzNu+M31JPivG2H0a10hmB+P9MuL+aNSAbIEJcNoAEExlCBMuPJiBbb
+	 pu4jz0s92dj/vQREP2QHe+BR+phZuw/iNBxWx5IKmpQHt26fCY2gWadC6x10xh8trc
+	 W0n8ndG2yqxIfh1zw7Dz6toMKDmwJSAP/uFcbBQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Woodhouse <dwmw@amazon.co.uk>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 7.0 278/307] KVM: arm64: Wake-up from WFI when iqrchip is in userspace
-Date: Tue, 12 May 2026 19:41:13 +0200
-Message-ID: <20260512173945.993705345@linuxfoundation.org>
+Subject: [PATCH 7.0 279/307] KVM: arm64: vgic: Fix IIDR revision field extracted from wrong value
+Date: Tue, 12 May 2026 19:41:14 +0200
+Message-ID: <20260512173946.016404336@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -43,48 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit 4ce98bf0865c349e7026ad9c14f48da264920953 upstream.
+commit a0e6ae45af17e8b27958830595799c702ffbab8d upstream.
 
-It appears that there is nothing in the wake-up path that
-evaluates whether the in-kernel interrupts are pending unless
-we have a vgic.
+The uaccess write handlers for GICD_IIDR in both GICv2 and GICv3
+extract the revision field from 'reg' (the current IIDR value read back
+from the emulated distributor) instead of 'val' (the value userspace is
+trying to write). This means userspace can never actually change the
+implementation revision — the extracted value is always the current one.
 
-This means that the userspace irqchip support has been broken for
-about four years, and nobody noticed. It was also broken before
-as we wouldn't wake-up on a PMU interrupt, but hey, who cares...
+Fix the FIELD_GET to use 'val' so that userspace can select a different
+revision for migration compatibility.
 
-It is probably time to remove the feature altogether, because it
-was a terrible idea 10 years ago, and it still is.
-
-Fixes: b57de4ffd7c6d ("KVM: arm64: Simplify kvm_cpu_has_pending_timer()")
-Link: https://patch.msgid.link/20260423163607.486345-1-maz@kernel.org
+Fixes: 49a1a2c70a7f ("KVM: arm64: vgic-v3: Advertise GICR_CTLR.{IR, CES} as a new GICD_IIDR revision")
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Link: https://patch.msgid.link/20260407210949.2076251-2-dwmw2@infradead.org
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/arm.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/kvm/vgic/vgic-mmio-v2.c |    2 +-
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -805,6 +805,10 @@ int kvm_arch_vcpu_runnable(struct kvm_vc
- {
- 	bool irq_lines = *vcpu_hcr(v) & (HCR_VI | HCR_VF | HCR_VSE);
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v2.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v2.c
+@@ -91,7 +91,7 @@ static int vgic_mmio_uaccess_write_v2_mi
+ 		 * migration from old kernels to new kernels with legacy
+ 		 * userspace.
+ 		 */
+-		reg = FIELD_GET(GICD_IIDR_REVISION_MASK, reg);
++		reg = FIELD_GET(GICD_IIDR_REVISION_MASK, val);
+ 		switch (reg) {
+ 		case KVM_VGIC_IMP_REV_2:
+ 		case KVM_VGIC_IMP_REV_3:
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -194,7 +194,7 @@ static int vgic_mmio_uaccess_write_v3_mi
+ 		if ((reg ^ val) & ~GICD_IIDR_REVISION_MASK)
+ 			return -EINVAL;
  
-+	irq_lines |= (!irqchip_in_kernel(v->kvm) &&
-+		      (kvm_timer_should_notify_user(v) ||
-+		       kvm_pmu_should_notify_user(v)));
-+
- 	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v))
- 		&& !kvm_arm_vcpu_stopped(v) && !v->arch.pause);
- }
+-		reg = FIELD_GET(GICD_IIDR_REVISION_MASK, reg);
++		reg = FIELD_GET(GICD_IIDR_REVISION_MASK, val);
+ 		switch (reg) {
+ 		case KVM_VGIC_IMP_REV_2:
+ 		case KVM_VGIC_IMP_REV_3:
 
 
