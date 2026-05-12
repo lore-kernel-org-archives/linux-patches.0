@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBD03BB114;
-	Tue, 12 May 2026 17:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFF63BB11C;
+	Tue, 12 May 2026 17:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608098; cv=none; b=AL9eYhwWerSctNK4VC/1grG259Fn3h1W2OxHrlL6N7C+gnMd6fBiCPyOzrfSvFmGvoZFBxhLWgA/uU/SSq/cnmYaPgzjJGfz7xY5GFJXmkXmCSDdIF5OhO44U7o/35Sk91T7gAOAowK/ZscM6/ezprVmuKJlUAE8n5x07c4HuKk=
+	t=1778608101; cv=none; b=ID0/XWZ5LSj6V6YMSRJdWccOJLiTqH69lehxY96aNjGwK31yEYTGLRQzte1hEfVA79zx3bLv9XBi7xLba8ufCZeIsXEBfvcTr3MOS9f4OEy+GJSm1buJCOI3yJSKpXewdV3hWfTEn0wo67DPOKDsI0YpAwBiDgjmkMVAp0QjR00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608098; c=relaxed/simple;
-	bh=0hZ+xhB3dMhcNcF5yBCam75mTrJQrLXCDJLEZJLphF4=;
+	s=arc-20240116; t=1778608101; c=relaxed/simple;
+	bh=D99teqa9gI/3hn+L/KXz0FPh+Z75G1IZohSPhMNp/s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X6xvvIC9d4PS5ry9Jx8ACddqNKy/u2j+nFIMyh7JjXjx/AEtCPSv5e1BbTzrbsObk3E1muQjP3qhCJWM8GRPIjisZypFF0E4xoerjMPYsLsosFbuIR1pBUVGUDFT1iVYFzV1cDQp/2s72q7ADntLr1i78NunPhIOefebHG/D90w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T83Ypwrh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c1toM3RoCZEqNkmfZ/p/RYbOEcRZI/U/7j34CUvX6EEl1MJ6U5mkXGuci2ImIrsKXC4WF/qVUyByyYVtQQBWORTGCvmfLX26RxE84kw8B2FQSkqnkjmm6OgeXNt85+Z8cTbfMgZA3K+WXoT52e0tCRfQC3pIfyO1ssqhTSNCwZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCdBP5Ur; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T83Ypwrh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BA3C2BCB0;
-	Tue, 12 May 2026 17:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCdBP5Ur"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED1AC2BCB0;
+	Tue, 12 May 2026 17:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608098;
-	bh=0hZ+xhB3dMhcNcF5yBCam75mTrJQrLXCDJLEZJLphF4=;
+	s=korg; t=1778608100;
+	bh=D99teqa9gI/3hn+L/KXz0FPh+Z75G1IZohSPhMNp/s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T83YpwrhlkXx26Gf2F5ZKtC5JoSDjuFvYz6kFBKq3i5cMgzyqoJ4LCAUjcNUZ4lt5
-	 0pytpL9N0UOyM3XNvFT1XEBMy3GuTtAPp1GXxq48DevF+3arrLdYYzP5Qz10J6Fb+s
-	 6l1w6EeR0j0V+SQpGU0yQz6/BicxAysGZyemiUCY=
+	b=rCdBP5Urx78ubbJPDIsZNqwWz1w9MA2vfXtEea0FP1CABlL3QLL95R/kaog5C8zsW
+	 zUQaEbZaw0l/gfaSSXGYwp8Ct1Y0Ie7DKFV9wrEeilUsZ+M4Ozl5owV8ZNITxZx/KY
+	 w1+0iTignnZv80kkDABW6DIYbB/213hReV8IpRos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stable@vger.kernel.org,
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 111/206] ASoC: qcom: q6apm-dai: reset queue ptr on trigger stop
-Date: Tue, 12 May 2026 19:39:23 +0200
-Message-ID: <20260512173935.205552794@linuxfoundation.org>
+Subject: [PATCH 6.12 112/206] ASoC: qcom: q6apm-lpass-dai: Fix multiple graph opens
+Date: Tue, 12 May 2026 19:39:24 +0200
+Message-ID: <20260512173935.226756539@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -53,45 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit cab45ab95ce7600fc0ff84585c77fd45b7b0d67c upstream.
+commit 69acc488aaf39d0ddf6c3cf0e47c1873d39919a2 upstream.
 
-Reset queue pointer on SNDRV_PCM_TRIGGER_STOP event to be inline
-with resetting appl_ptr. Without this we will end up with a queue_ptr
-out of sync and driver could try to send data that is not ready yet.
+As prepare can be called mulitple times, this can result in multiple
+graph opens for playback path.
 
-Fix this by resetting the queue_ptr.
+This will result in a memory leaks, fix this by adding a check before
+opening.
 
-Fixes: 3d4a4411aa8bb ("ASoC: q6apm-dai: schedule all available frames to avoid dsp under-runs")
+Fixes: be1fae62cf25 ("ASoC: q6apm-lpass-dai: close graph on prepare errors")
 Cc: Stable@vger.kernel.org
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260402081118.348071-6-srinivas.kandagatla@oss.qualcomm.com
+Link: https://patch.msgid.link/20260402081118.348071-5-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-dai.c |    1 +
- sound/soc/qcom/qdsp6/q6apm.c     |    2 ++
- 2 files changed, 3 insertions(+)
+ sound/soc/qcom/qdsp6/q6apm-lpass-dais.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -322,6 +322,7 @@ static int q6apm_dai_trigger(struct snd_
- 	case SNDRV_PCM_TRIGGER_STOP:
- 		/* TODO support be handled via SoftPause Module */
- 		prtd->state = Q6APM_STREAM_STOPPED;
-+		prtd->queue_ptr = 0;
- 		break;
- 	case SNDRV_PCM_TRIGGER_SUSPEND:
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -225,6 +225,8 @@ int q6apm_map_memory_regions(struct q6ap
- 
- 	mutex_lock(&graph->lock);
- 
-+	data->dsp_buf = 0;
-+
- 	if (data->buf) {
- 		mutex_unlock(&graph->lock);
- 		return 0;
+--- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
++++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
+@@ -181,7 +181,7 @@ static int q6apm_lpass_dai_prepare(struc
+ 	 * It is recommend to load DSP with source graph first and then sink
+ 	 * graph, so sequence for playback and capture will be different
+ 	 */
+-	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
++	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK && dai_data->graph[dai->id] == NULL) {
+ 		graph = q6apm_graph_open(dai->dev, NULL, dai->dev, graph_id);
+ 		if (IS_ERR(graph)) {
+ 			dev_err(dai->dev, "Failed to open graph (%d)\n", graph_id);
 
 
