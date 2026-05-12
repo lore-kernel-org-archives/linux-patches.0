@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DDE34E744;
-	Tue, 12 May 2026 18:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC4234E744;
+	Tue, 12 May 2026 18:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609540; cv=none; b=YKFZqZusSJxjCYVKA0Hx1QqaAEmbwPtdV1zBRvcGwHxW6ycGn3wVwtozo+8nPnlqLlI8UJI/106VxYFwZvYoyhkiSelhw+4xyIkOllLegeu0AY4aW1ULqKP+UQdFYfx6abjX2D7jGu64IocwRNLHUpuXGQzzUAc4JNncVJJpqUI=
+	t=1778609543; cv=none; b=B2WlKK1EpiLMj9M+Ys7/sT9Q8Iy2FjTHcma9TLNxB82Lkz5/GmbafFcz1qq6c1nzMX+ptoQyBzxRIFAD9VZAB4FKZj8WAqNFMN5zF/hbxeGGbfUePccL478FPua47UIJpjaFt16F4wFzclDbFVEZUY4rt+VnSzoArfzSY9smnSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609540; c=relaxed/simple;
-	bh=0F4g7JSXPj+biescB8wB9GE0OBs/9hzcSI+b/3dg4iE=;
+	s=arc-20240116; t=1778609543; c=relaxed/simple;
+	bh=8GKLkrW0Y7VUmiGIqVmT1a15ZTjB/Y57Ak//B9mbToA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9MQAmLhabUhu/YOYSCTbsVtMk+9fD/4wInxjlGeTSJ13t0HQCAjB+7kIH82+iDb+Abc0CLObzfWsD4cE1411/3850gd9bPLTNPZ76MlOvm1oSbpA/+jh46zMib12YUr8jU9/x5XElxdDMJr08jz6xFFkYgAP2E4cVhuehcJviI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S46EYfnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HDRT8mG3RryMXTqV+G6pZ8v1DpMMjSvlijWXYXVbuAkNp+WuGcpQHoGW00FXnKpnxTwnPRYKcojeOPiL0idSxQVcLNvdL6T01mhc33mnX3HZDgctSb09O/okGs0fzxUHSDN1EZv+xW2AHLok1EiABxl/ZNEOI1mSl41hAXMM+kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4Q4sbTn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S46EYfnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CF6C2BCB0;
-	Tue, 12 May 2026 18:12:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4Q4sbTn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1964C2BCB0;
+	Tue, 12 May 2026 18:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609540;
-	bh=0F4g7JSXPj+biescB8wB9GE0OBs/9hzcSI+b/3dg4iE=;
+	s=korg; t=1778609543;
+	bh=8GKLkrW0Y7VUmiGIqVmT1a15ZTjB/Y57Ak//B9mbToA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S46EYfnIu9G5LhPhth3mP6CB8RnxzuZCoJaBk5N8JFiWYmhwl53AgxJYefBhVTdPx
-	 faU5kPIJcZOnJVF+6rW7a8sm14W4UmPrkGFfzMMt5MVcU6zGBJNCm7sSlVmINjjrDS
-	 oDkO8W58hUmwoDAH1d7XyC2bxanKkNV9Hltr5gIA=
+	b=z4Q4sbTnW7mBCKyylfGCG0DjlgB2MUHMBp5+hy2Rjqj/iGdec9azlFaZN/5O1Yj+9
+	 Obf22GiV/Fg1y3k4xblFOpAPC6ljFNP8M0vtMLlpzqqPc7cqhLlVKVzZTMgB5zItnr
+	 SkXVALH/MlaRqzm5AlKgd8Xf4snsr2RCmEqxPTb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Long Li <longli@microsoft.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 7.0 234/307] RDMA/mana: Fix mana_destroy_wq_obj() cleanup in mana_ib_create_qp_rss()
-Date: Tue, 12 May 2026 19:40:29 +0200
-Message-ID: <20260512173945.059848137@linuxfoundation.org>
+Subject: [PATCH 7.0 235/307] RDMA/mana: Remove user triggerable WARN_ON() in mana_ib_create_qp_rss()
+Date: Tue, 12 May 2026 19:40:30 +0200
+Message-ID: <20260512173945.081072253@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,54 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 34ecf795692ee57c393109f4a24ccc313091e137 upstream.
+commit 159f2efabc89d3f931d38f2d35876535d4abf0a3 upstream.
 
-Sashiko points out there are two bugs here in the error unwind flow, both
-related to how the WQ table is unwound.
+Sashiko points out that the user can specify WQs sharing the same CQ as a
+part of the uAPI and this will trigger the WARN_ON() then go on to corrupt
+the kernel.
 
-First there is a double i-- on the first failure path due to the while loop
-having a i--, remove it.
-
-Second if mana_ib_install_cq_cb() fails then mana_create_wq_obj() is not
-undone due to the above i--.
+Just reject it outright and fail the QP creation.
 
 Cc: stable@vger.kernel.org
 Fixes: c15d7802a424 ("RDMA/mana_ib: Add CQ interrupt support for RAW QP")
 Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=1
-Link: https://patch.msgid.link/r/6-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
+Link: https://patch.msgid.link/r/5-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
 Reviewed-by: Long Li <longli@microsoft.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mana/qp.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/mana/cq.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/hw/mana/qp.c
-+++ b/drivers/infiniband/hw/mana/qp.c
-@@ -193,11 +193,8 @@ static int mana_ib_create_qp_rss(struct
+--- a/drivers/infiniband/hw/mana/cq.c
++++ b/drivers/infiniband/hw/mana/cq.c
+@@ -142,8 +142,9 @@ int mana_ib_install_cq_cb(struct mana_ib
  
- 		ret = mana_create_wq_obj(mpc, mpc->port_handle, GDMA_RQ,
- 					 &wq_spec, &cq_spec, &wq->rx_object);
--		if (ret) {
--			/* Do cleanup starting with index i-1 */
--			i--;
-+		if (ret)
- 			goto fail;
--		}
- 
- 		/* The GDMA regions are now owned by the WQ object */
- 		wq->queue.gdma_region = GDMA_INVALID_DMA_REGION;
-@@ -217,8 +214,10 @@ static int mana_ib_create_qp_rss(struct
- 
- 		/* Create CQ table entry */
- 		ret = mana_ib_install_cq_cb(mdev, cq);
--		if (ret)
-+		if (ret) {
-+			mana_destroy_wq_obj(mpc, GDMA_RQ, wq->rx_object);
- 			goto fail;
-+		}
- 	}
- 	resp.num_entries = i;
- 
+ 	if (cq->queue.id >= gc->max_num_cqs)
+ 		return -EINVAL;
+-	/* Create CQ table entry */
+-	WARN_ON(gc->cq_table[cq->queue.id]);
++	/* Create CQ table entry, sharing a CQ between WQs is not supported */
++	if (gc->cq_table[cq->queue.id])
++		return -EINVAL;
+ 	if (cq->queue.kmem)
+ 		gdma_cq = cq->queue.kmem;
+ 	else
 
 
