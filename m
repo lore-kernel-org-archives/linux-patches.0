@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5443EDE7F;
-	Tue, 12 May 2026 17:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7BA3EDE70;
+	Tue, 12 May 2026 17:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608548; cv=none; b=UGEmCarnSwEaRN7zD1SR5JeZd3skSQ6ksDtqdF7oqFAU7wal+B+x4HTyfSZVN/xmElY9pXYd5cfrGpOzgpKRUvY77Td2t1hUtdBmUEhlFB30DOATS3iLj305nUWtZswAoktmpvMug9pdpBKdLbKjP38R2rTvfiDhJIzPE5HCuPI=
+	t=1778608551; cv=none; b=uMBPipXyepwednmgmNMCbmGzeFl25PrTY37kLLnn0LaK8yy3tX+Zo+Tuo6VXRmAQm6PAyesABp8pXr0f0u/GnaGj0dkGfho5eXvy3loi0oJpJf/NrAg0Dxj3nvR7cNIQB7siy5IC8Wi6QjfYBQavl3WNZJrafd/SIoFf6GlMTqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608548; c=relaxed/simple;
-	bh=t3PSzCHvALzTp7M2eVlSvx0P5h531GY/Oi24G3K2qao=;
+	s=arc-20240116; t=1778608551; c=relaxed/simple;
+	bh=VW22apXuoGghhVhKwhJA3kQvwTCcmmKra76IPvlPTsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzCKZ/w9Wd1Z6lwJvb/0+aK0ivqJCK6/7sShmRYA8c9PtYR6FsNY5SVRju4BPN/vASEO2Fgw8HUROH2+934P8DxnALJu4FzdyZGL5PvwzK/cJ6WSBTfXA99Oxvh7ZbAvsPgp6ioVxDRL8DPfg+E/vVCvuiysNTbwQ/y68njqndM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqkRBBRC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vEkytx8qI/tgZTMxpRwTmulDQXklUh0NXBaMVw8WCZCNA4FLt3Gc6cDKhHqTFoUtxgYcS03HIetBkcG0Ef/dfFpjeVYAIOZ1mSz4pgz8SBV6nfF1ZTVgHFUi0OhhGNzKT/tDSH2N1bE4lJ+Uo9ssmu6TGVHh43LKIyAlBWFydJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hwXVyZU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqkRBBRC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0ABC2BCF5;
-	Tue, 12 May 2026 17:55:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hwXVyZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0350C2BD05;
+	Tue, 12 May 2026 17:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608548;
-	bh=t3PSzCHvALzTp7M2eVlSvx0P5h531GY/Oi24G3K2qao=;
+	s=korg; t=1778608551;
+	bh=VW22apXuoGghhVhKwhJA3kQvwTCcmmKra76IPvlPTsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hqkRBBRC+aHQiO70vT/Lxw3dfStxID28jVn4mEVxUgpWFUAu2fZDRX1MqORpOPUie
-	 ndU5j/qSwXQGiOMf00irZo3sZ/3+vFpFwpNpo12+51oXF5zck3/iD9INfIA5lTfLFF
-	 m+mYyTSbOv6Y+VMzWz3Cg+/JDxJ4gkN91WQxMP2k=
+	b=0hwXVyZUjGE77D0WfpNsuA/4jw4o9K81rokMgT69n7MSZkp6AX3hQJnkaqxX2AZ10
+	 hqIKd1Z8CF6EV08BfXZn/+58pgL/0dThJ868qD6KsX3ZEEFHEiNWxAzB8CK4Tsl9qM
+	 U89y0wvL8XopBnK9shYSEzCrZ8hqht5ncnrfjGpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 120/270] gpio: of: clear OF_POPULATED on hog nodes in remove path
-Date: Tue, 12 May 2026 19:38:41 +0200
-Message-ID: <20260512173940.983232374@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 081/270] spi: sun6i: fix controller deregistration
+Date: Tue, 12 May 2026 19:38:02 +0200
+Message-ID: <20260512173940.162478960@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,41 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit bbee90e750262bfb406d66dc65c46d616d2b6673 upstream.
+commit d874a1c33aee0d88fb4ba2f8aeadaa9f1965209a upstream.
 
-The previously set OF_POPULATED flag should be cleared on the hog nodes
-when removing the chip.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-Cc: stable@vger.kernel.org
-Fixes: 63636d956c455 ("gpio: of: Add DT overlay support for GPIO hogs")
-Acked-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260309-gpio-hog-fwnode-v2-1-4e61f3dbf06a@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 3558fe900e8a ("spi: sunxi: Add Allwinner A31 SPI controller driver")
+Cc: stable@vger.kernel.org	# 3.15
+Cc: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-20-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-of.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/spi/spi-sun6i.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -1285,7 +1285,14 @@ int of_gpiochip_add(struct gpio_chip *ch
+--- a/drivers/spi/spi-sun6i.c
++++ b/drivers/spi/spi-sun6i.c
+@@ -743,7 +743,7 @@ static int sun6i_spi_probe(struct platfo
+ 	pm_runtime_set_active(&pdev->dev);
+ 	pm_runtime_enable(&pdev->dev);
  
- void of_gpiochip_remove(struct gpio_chip *chip)
+-	ret = devm_spi_register_controller(&pdev->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "cannot register SPI host\n");
+ 		goto err_pm_disable;
+@@ -769,12 +769,18 @@ static void sun6i_spi_remove(struct plat
  {
--	of_node_put(dev_of_node(&chip->gpiodev->dev));
-+	struct device_node *np = dev_of_node(&chip->gpiodev->dev);
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 
++	spi_controller_get(host);
 +
-+	for_each_child_of_node_scoped(np, child) {
-+		if (of_property_present(child, "gpio-hog"))
-+			of_node_clear_flag(child, OF_POPULATED);
-+	}
++	spi_unregister_controller(host);
 +
-+	of_node_put(np);
+ 	pm_runtime_force_suspend(&pdev->dev);
+ 
+ 	if (host->dma_tx)
+ 		dma_release_channel(host->dma_tx);
+ 	if (host->dma_rx)
+ 		dma_release_channel(host->dma_rx);
++
++	spi_controller_put(host);
  }
  
- bool of_gpiochip_instance_match(struct gpio_chip *gc, unsigned int index)
+ static const struct sun6i_spi_cfg sun6i_a31_spi_cfg = {
 
 
