@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66C83EDE4A;
-	Tue, 12 May 2026 17:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D763EDE41;
+	Tue, 12 May 2026 17:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608685; cv=none; b=nr72IVyyuwHWJijcSKFnFsjn1dMEK/G5nOndnb2B2c3hiiDAx9NJ6dILnzskUW77xsFz1qsWxEK24zDDIyEkpEik97+RWzPCwQAp6PX0ugjiMAqNSxXrsMS/PoEQKjKr6moE8/dRdSl1aZhjKvLlILZ4LLfmt1PlBi3BRYlYEH0=
+	t=1778608688; cv=none; b=kPWx1L80U3fa4xnpjheOhWsP19BJ6XwdwbIiZHCp3m4SgoJqhyxUr/Vvrsnfer+TFIgOrdO27UsPIVddrfij4+qqaZZ0OFZz4BPoRXaqqhQxvT/nZsKztPNk2rGUffgvCF6EZU8q/j9xRgkGoSsVjgqYtkhnZWdwHVHUp4L8+S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608685; c=relaxed/simple;
-	bh=a+3hrl9ErQc3GDe2svqnlSMGuCqW6TYrldfEO+7l7FE=;
+	s=arc-20240116; t=1778608688; c=relaxed/simple;
+	bh=0pSSHxZRqEZSNjujKhk+aFsUEFfVwCyGnoq/jotgwfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TAtJ4Ho8xHfqhxCjKT0gaLX6r08m7z+t/iPQpRsC4lpKOEUIOnAex1AezkXx6DDbSHnCYjyWoJGj2MwfKb7JrFmOGr9ctYMll12CQl7kXdO9m4RAI7As7XCU7WATXJJCL0Vq4v6qOHAnCOK6OgLjDSuoRvPaitQCySLumrNS+Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ywe6V7Eq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RJE+6K/kyTbv0VP/j1n6k/JsVLojVUOyPkbMm5N6vG/bW5+kAVr3/UrBbdAW/tHriD+UpKEKoH0ZSOd/6ZPv10r50MbBWKYr9ykDJA0ueF0XS8V5GflyTAGuDm/C1Kgvfn2+BRC3Lb88mTweZo7BP4Orbgssxuehbw8RjZrEc2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xorNv9Jj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ywe6V7Eq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D07AC2BCB0;
-	Tue, 12 May 2026 17:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xorNv9Jj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC0CC2BCB0;
+	Tue, 12 May 2026 17:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608685;
-	bh=a+3hrl9ErQc3GDe2svqnlSMGuCqW6TYrldfEO+7l7FE=;
+	s=korg; t=1778608688;
+	bh=0pSSHxZRqEZSNjujKhk+aFsUEFfVwCyGnoq/jotgwfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ywe6V7EqgBG2OWhfNL6aYg1ivX68Dgk3ielfpG61+wq35F4bfcGgLDua3gdCcy8CD
-	 gBPctQBazr50pe6pDGodZ7k8GtF5ZC7GrSoBmYMkxE3PzP2gNmR+bnFBRbRGEyaISZ
-	 USZ/LuXdSe7iKxv/L0qA/KBHM+hf1+mFPCpnw5+8=
+	b=xorNv9Jj6h3tKiZtPojqfp9LHvgOR/Y5w+kXCCUsXrgNOZ9oe68ra90Kwb6l+zh/7
+	 U1Wu5PCd8vXB+LK+yCTyg1L9TEHzs3q0TYubXyBiwcNQO40EhmUJoXN+RWPW48ko0x
+	 u3ycKRXjMN5XA1EulrEsQbEyFP9ykcyb5uDXtbAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mira Limbeck <m.limbeck@proxmox.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.18 176/270] scsi: mpt3sas: Limit NVMe request size to 2 MiB
-Date: Tue, 12 May 2026 19:39:37 +0200
-Message-ID: <20260512173942.153449414@linuxfoundation.org>
+	Zisen Ye <zisenye@stu.xidian.edu.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 177/270] smb/client: fix out-of-bounds read in smb2_compound_op()
+Date: Tue, 12 May 2026 19:39:38 +0200
+Message-ID: <20260512173942.174497476@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -52,57 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Zisen Ye <zisenye@stu.xidian.edu.cn>
 
-commit 04631f55afc543d5431a2bdee7f6cc0f2c0debe7 upstream.
+commit 8d09328dfda089675e4c049f3f256064a1d1996b upstream.
 
-The HBA firmware reports NVMe MDTS values based on the underlying drive
-capability. However, because the driver allocates a fixed 4K buffer for
-the PRP list, accommodating at most 512 entries, the driver supports a
-maximum I/O transfer size of 2 MiB.
+If a server sends a truncated response but a large OutputBufferLength, and
+terminates the EA list early, check_wsl_eas() returns success without
+validating that the entire OutputBufferLength fits within iov_len.
 
-Limit max_hw_sectors to the smaller of the reported MDTS and the 2 MiB
-driver limit to prevent issuing oversized I/O that may lead to a kernel
-oops.
+Then smb2_compound_op() does:
+    memcpy(idata->wsl.eas, data[0], size[0]);
 
+Where size[0] is OutputBufferLength. If iov_len is smaller than size[0],
+memcpy can read beyond the end of the rsp_iov allocation and leak adjacent
+kernel heap memory.
+
+Link: https://lore.kernel.org/linux-cifs/d998240c-aca9-420d-9dbd-f5ba24af19e0@chenxiaosong.com/
+Fixes: ea41367b2a60 ("smb: client: introduce SMB2_OP_QUERY_WSL_EA")
 Cc: stable@vger.kernel.org
-Fixes: 9b8b84879d4a ("block: Increase BLK_DEF_MAX_SECTORS_CAP")
-Reported-by: Mira Limbeck <m.limbeck@proxmox.com>
-Closes: https://lore.kernel.org/r/291f78bf-4b4a-40dd-867d-053b36c564b3@proxmox.com
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9b8b84879d4a
-Suggested-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Tested-by: Mira Limbeck <m.limbeck@proxmox.com>
-Link: https://patch.msgid.link/20260414110811.85156-1-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Zisen Ye <zisenye@stu.xidian.edu.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_scsih.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2inode.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-@@ -2681,8 +2681,20 @@ scsih_sdev_configure(struct scsi_device
- 				pcie_device->enclosure_level,
- 				pcie_device->connector_name);
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -108,7 +108,7 @@ static int check_wsl_eas(struct kvec *rs
+ 	u32 outlen, next;
+ 	u16 vlen;
+ 	u8 nlen;
+-	u8 *end;
++	u8 *ea_end, *iov_end;
  
-+		/*
-+		 * The HBA firmware passes the NVMe drive's MDTS
-+		 * (Maximum Data Transfer Size) up to the driver. However,
-+		 * the driver hardcodes a 4K buffer size for the PRP list,
-+		 * accommodating at most 512 entries. This strictly limits
-+		 * the maximum supported NVMe I/O transfer to 2 MiB.
-+		 *
-+		 * Cap max_hw_sectors to the smaller of the drive's reported
-+		 * MDTS or the 2 MiB driver limit to prevent kernel oopses.
-+		 */
-+		lim->max_hw_sectors = SZ_2M >> SECTOR_SHIFT;
- 		if (pcie_device->nvme_mdts)
--			lim->max_hw_sectors = pcie_device->nvme_mdts / 512;
-+			lim->max_hw_sectors = min(lim->max_hw_sectors,
-+					pcie_device->nvme_mdts >> SECTOR_SHIFT);
+ 	outlen = le32_to_cpu(rsp->OutputBufferLength);
+ 	if (outlen < SMB2_WSL_MIN_QUERY_EA_RESP_SIZE ||
+@@ -117,15 +117,19 @@ static int check_wsl_eas(struct kvec *rs
  
- 		pcie_device_put(pcie_device);
- 		spin_unlock_irqrestore(&ioc->pcie_device_lock, flags);
+ 	ea = (void *)((u8 *)rsp_iov->iov_base +
+ 		      le16_to_cpu(rsp->OutputBufferOffset));
+-	end = (u8 *)rsp_iov->iov_base + rsp_iov->iov_len;
++	ea_end = (u8 *)ea + outlen;
++	iov_end = (u8 *)rsp_iov->iov_base + rsp_iov->iov_len;
++	if (ea_end > iov_end)
++		return -EINVAL;
++
+ 	for (;;) {
+-		if ((u8 *)ea > end - sizeof(*ea))
++		if ((u8 *)ea > ea_end - sizeof(*ea))
+ 			return -EINVAL;
+ 
+ 		nlen = ea->ea_name_length;
+ 		vlen = le16_to_cpu(ea->ea_value_length);
+ 		if (nlen != SMB2_WSL_XATTR_NAME_LEN ||
+-		    (u8 *)ea->ea_data + nlen + 1 + vlen > end)
++		    (u8 *)ea->ea_data + nlen + 1 + vlen > ea_end)
+ 			return -EINVAL;
+ 
+ 		switch (vlen) {
 
 
