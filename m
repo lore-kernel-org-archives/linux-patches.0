@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6033EDE5E;
-	Tue, 12 May 2026 18:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C0E3EDE41;
+	Tue, 12 May 2026 18:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608935; cv=none; b=J8saE+68IE0/I7KAazu0jrXCudcxETKLO9oZj95cd1PEoHknxw0MLaRnBa1Vt7DOe77kALIxGboOYwgycIH99QEoi9mA0Y114fTMltovvFoPXsulRCxn32ENPPqavFiNpTgmsSAonvmJDBSwHZEG/vqftvKBY0hm5C0+uTXZCZs=
+	t=1778608938; cv=none; b=D0j5xvhMUj5kV6QNshcOYZ3Brlhwa94fXdlrc2crQyh+NKrUri+n8vhw+Bt7Uebf4d1x5g43+FNmXLoNt6FSVEJCrW1icpMJS/iWOqVb+9JSmNInpnUfKYoDGhzgq6kiXeES5Sx645KG2NjiiPhUy8q9XQukbBVnHcNvHzY0HQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608935; c=relaxed/simple;
-	bh=MhIy/U5jDMRaouqaSPbT3jRFIno/Nqbnbn/WDmxBcgs=;
+	s=arc-20240116; t=1778608938; c=relaxed/simple;
+	bh=zyaRo6/HQ9B/fXekTyyTN9DgP2b2XtxoeQRRQd5L+38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VlDOAwKgv88tuLKdGLJwfkChnAekCddPPeL8vCHxlNDEzYqOi0XfL3vkO0K9HpynY+6jKLquLMJmroiQLytQAngRg6sfFDHE2j1rISOgOejwGD9MPM5Gi2ssYxfC1iMQ0HJkq6o5nHYGoKl6A0TwlbZzx+Rlkmii7ze2IgoNvN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pj509nE2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u9YMQKN8gwnHFZ1i6iK0yKo03wmdbN3+LEwFc4jVpRwPIoWzoUGfM5EYW/mVf+4LrrA4HM7Zo6Iq7MJIwJw7ec4ZvnNZkJYYEDiVdXPhx/QgMglEAdozSyP91ASB7zyR0+gczI8qcTU5SrZXDwNzneq2o8lv38hIetYz15kZSqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldy3t/Cn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pj509nE2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46786C2BCB0;
-	Tue, 12 May 2026 18:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldy3t/Cn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E15C2BCB0;
+	Tue, 12 May 2026 18:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608935;
-	bh=MhIy/U5jDMRaouqaSPbT3jRFIno/Nqbnbn/WDmxBcgs=;
+	s=korg; t=1778608938;
+	bh=zyaRo6/HQ9B/fXekTyyTN9DgP2b2XtxoeQRRQd5L+38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pj509nE2eZ7dO0IQG5ztY+TZZorojeR85zncQUhsTImXTMj6Gzofbgs2xI8Kv8pDr
-	 ZNWyhCaIukgtrR81WI99d3tUQ8hrkWW17GUX2vK425qLht3DkIUTX1WxLazd8wfOA2
-	 rbhTx/9JZMzjMay5KG8bTCWe+FXNg/lsTjWVpXZA=
+	b=ldy3t/CnSH2v9n83rrH9BeMHMytUF4Pzq1mi4j5n+kIMobcla05r8HPPwlzuVf2sN
+	 mlthYaziuMee0E3KUj7T1E0/uGwz+d6XwxGUitvu4C9pWwM0iPX6pBrWB5wz0NGDLA
+	 sZaNDuGbpkh+x/xXdFfLY+2sRLTVdHnqooJzyAi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Kairui Song <kasong@tencent.com>,
+	Carsten Grohmann <mail@carstengrohmann.de>,
+	Baoquan He <bhe@redhat.com>,
+	Barry Song <baohua@kernel.org>,
+	Chris Li <chrisl@kernel.org>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 258/270] crypto: qat - fix firmware loading failure for GEN6 devices
-Date: Tue, 12 May 2026 19:40:59 +0200
-Message-ID: <20260512173943.878744482@linuxfoundation.org>
+Subject: [PATCH 6.18 259/270] mm, swap: speed up hibernation allocation and writeout
+Date: Tue, 12 May 2026 19:41:00 +0200
+Message-ID: <20260512173943.900366575@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -47,94 +51,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
+From: Kairui Song <kasong@tencent.com>
 
-[ Upstream commit e7dcb722bb75bb3f3992f580a8728a794732fd7a ]
+[ Upstream commit 396f57b5720024638dbb503f6a4abd988a49d815 ]
 
-QAT GEN6 hardware requires a minimum 3 us delay during the acceleration
-engine reset sequence to ensure the hardware fully settles.
-Without this delay, the firmware load may fail intermittently.
+Since commit 0ff67f990bd4 ("mm, swap: remove swap slot cache"),
+hibernation has been using the swap slot slow allocation path for
+simplification, which turns out might cause regression for some devices
+because the allocator now rotates clusters too often, leading to slower
+allocation and more random distribution of data.
 
-Add a delay after placing the AE into reset and before clearing the reset,
-matching the hardware requirements and ensuring stable firmware loading.
-Earlier generations remain unaffected.
+Fast allocation is not complex, so implement hibernation support as well.
 
-Fixes: 17fd7514ae68 ("crypto: qat - add qat_6xxx driver")
-Signed-off-by: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Test result with Samsung SSD 830 Series (SATA II, 3.0 Gbps) shows the
+performance is several times better [1]:
+6.19:               324 seconds
+After this series:  35 seconds
+
+Link: https://lkml.kernel.org/r/20260216-hibernate-perf-v4-1-1ba9f0bf1ec9@tencent.com
+Link: https://lore.kernel.org/linux-mm/8b4bdcfa-ce3f-4e23-839f-31367df7c18f@gmx.de/ [1]
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Fixes: 0ff67f990bd4 ("mm, swap: remove swap slot cache")
+Reported-by: Carsten Grohmann <mail@carstengrohmann.de>
+Closes: https://lore.kernel.org/linux-mm/20260206121151.dea3633d1f0ded7bbf49c22e@linux-foundation.org/
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ adjusted helper signatures ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_accel_engine.c         |    7 +++++++
- drivers/crypto/intel/qat/qat_common/icp_qat_fw_loader_handle.h |    1 +
- drivers/crypto/intel/qat/qat_common/qat_hal.c                  |    5 ++++-
- 3 files changed, 12 insertions(+), 1 deletion(-)
+ mm/swapfile.c |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/drivers/crypto/intel/qat/qat_common/adf_accel_engine.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_accel_engine.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: (BSD-3-Clause OR GPL-2.0-only)
- /* Copyright(c) 2014 - 2020 Intel Corporation */
-+#include <linux/delay.h>
- #include <linux/firmware.h>
- #include <linux/pci.h>
- #include "adf_cfg.h"
-@@ -162,8 +163,14 @@ int adf_ae_stop(struct adf_accel_dev *ac
- static int adf_ae_reset(struct adf_accel_dev *accel_dev, int ae)
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -2014,8 +2014,9 @@ out:
+ 
+ swp_entry_t get_swap_page_of_type(int type)
  {
- 	struct adf_fw_loader_data *loader_data = accel_dev->fw_loader;
-+	unsigned long reset_delay;
+-	struct swap_info_struct *si = swap_type_to_info(type);
+-	unsigned long offset;
++	struct swap_info_struct *pcp_si, *si = swap_type_to_info(type);
++	unsigned long pcp_offset, offset = SWAP_ENTRY_INVALID;
++	struct swap_cluster_info *ci;
+ 	swp_entry_t entry = {0};
  
- 	qat_hal_reset(loader_data->fw_loader);
-+
-+	reset_delay = loader_data->fw_loader->chip_info->reset_delay_us;
-+	if (reset_delay)
-+		fsleep(reset_delay);
-+
- 	if (qat_hal_clr_reset(loader_data->fw_loader))
- 		return -EFAULT;
- 
---- a/drivers/crypto/intel/qat/qat_common/icp_qat_fw_loader_handle.h
-+++ b/drivers/crypto/intel/qat/qat_common/icp_qat_fw_loader_handle.h
-@@ -27,6 +27,7 @@ struct icp_qat_fw_loader_chip_info {
- 	int mmp_sram_size;
- 	bool nn;
- 	bool lm2lm3;
-+	u16 reset_delay_us;
- 	u32 lm_size;
- 	u32 icp_rst_csr;
- 	u32 icp_rst_mask;
---- a/drivers/crypto/intel/qat/qat_common/qat_hal.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_hal.c
-@@ -20,6 +20,7 @@
- #define RST_CSR_QAT_LSB			20
- #define RST_CSR_AE_LSB			0
- #define MC_TIMESTAMP_ENABLE		(0x1 << 7)
-+#define MIN_RESET_DELAY_US		3
- 
- #define IGNORE_W1C_MASK ((~(1 << CE_BREAKPOINT_BITPOS)) & \
- 	(~(1 << CE_CNTL_STORE_PARITY_ERROR_BITPOS)) & \
-@@ -713,8 +714,10 @@ static int qat_hal_chip_init(struct icp_
- 		handle->chip_info->wakeup_event_val = 0x80000000;
- 		handle->chip_info->fw_auth = true;
- 		handle->chip_info->css_3k = true;
--		if (handle->pci_dev->device == PCI_DEVICE_ID_INTEL_QAT_6XXX)
-+		if (handle->pci_dev->device == PCI_DEVICE_ID_INTEL_QAT_6XXX) {
- 			handle->chip_info->dual_sign = true;
-+			handle->chip_info->reset_delay_us = MIN_RESET_DELAY_US;
-+		}
- 		handle->chip_info->tgroup_share_ustore = true;
- 		handle->chip_info->fcu_ctl_csr = FCU_CONTROL_4XXX;
- 		handle->chip_info->fcu_sts_csr = FCU_STATUS_4XXX;
+ 	if (!si)
+@@ -2025,11 +2026,21 @@ swp_entry_t get_swap_page_of_type(int ty
+ 	if (get_swap_device_info(si)) {
+ 		if (si->flags & SWP_WRITEOK) {
+ 			/*
+-			 * Grab the local lock to be complaint
+-			 * with swap table allocation.
++			 * Try the local cluster first if it matches the device. If
++			 * not, try grab a new cluster and override local cluster.
+ 			 */
+ 			local_lock(&percpu_swap_cluster.lock);
+-			offset = cluster_alloc_swap_entry(si, 0, 1);
++			pcp_si = this_cpu_read(percpu_swap_cluster.si[0]);
++			pcp_offset = this_cpu_read(percpu_swap_cluster.offset[0]);
++			if (pcp_si == si && pcp_offset) {
++				ci = swap_cluster_lock(si, pcp_offset);
++				if (cluster_is_usable(ci, 0))
++					offset = alloc_swap_scan_cluster(si, ci, pcp_offset, 0, 1);
++				else
++					swap_cluster_unlock(ci);
++			}
++			if (!offset)
++				offset = cluster_alloc_swap_entry(si, 0, 1);
+ 			local_unlock(&percpu_swap_cluster.lock);
+ 			if (offset)
+ 				entry = swp_entry(si->type, offset);
 
 
