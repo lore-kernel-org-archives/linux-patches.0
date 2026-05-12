@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73541368972;
-	Tue, 12 May 2026 18:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AB1368D56;
+	Tue, 12 May 2026 18:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609566; cv=none; b=pX3qH6tBq5IkOyaN7CKQeeaTDEPzFYeyIOScDqfQF5auMesY1lC/Iw1kv5wCqXMyPL6vZbxmorzv8rcKmJf5z5L00DcMe5MNPZx/QeknAI65id356AHevsJd8zAsSIPtsT6tUjW5NWl4HSKAnQIrus/bEiNG2CejUaQCI8LdpoI=
+	t=1778609569; cv=none; b=SliIGT2MmH9e1H8N0uEuSjWmQrFi/mHInJibYhxSFa6ZkPDuI22G6AlJEOrM5KDnkovzwnpBk6xBrLYqjDrAU+CCujOBbzRCPJrjdUAtETr+zcLkS9WNSJ8wHFv3zfQLXJIR3poNomeA9X2F5GMs4MOqS+11cFXQsP/WLBEcUMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609566; c=relaxed/simple;
-	bh=teGZlQvM1TIvSSQFwk26Mx8nnkjzOid8NjVEksjh+4M=;
+	s=arc-20240116; t=1778609569; c=relaxed/simple;
+	bh=fmiYJlwM0ihFw1o0AbrOopFWPvXHzqW347Ovmwobuj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a304cgssMSijYYC5UmGmHUAstklRDrBIi/kYhaMMvOLpyg2xFqNiZ3izQRhcXH8Ww+lpY+kd3R8Y9PJfymIt1WjUEFnvQfjb06y5nf/N+MF5G7pTKt3VSYIT5HzAvYO4szlqr0DK+XyrnasSvUdsRUkK74aJmSoH1rDSH9pGV3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJ6gi3Ve; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P9r/Oan9drvYYhSh6oimhRMlHjoAgW6wPOXSqZAtwSV9s6h2nyukA9m62L/i7D5UPWY76bSdhu0HZT8s7TI/aftQ0V42kUnZMa6K0ySghEZoewoyUbsE2I+DGBHMUu0fKzCKh4dPmlhV5pZCultUzHlod0smbQBDSo6LDDWhyQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+HQi4qm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJ6gi3Ve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004BAC2BCB0;
-	Tue, 12 May 2026 18:12:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+HQi4qm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE53C2BCB0;
+	Tue, 12 May 2026 18:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609566;
-	bh=teGZlQvM1TIvSSQFwk26Mx8nnkjzOid8NjVEksjh+4M=;
+	s=korg; t=1778609568;
+	bh=fmiYJlwM0ihFw1o0AbrOopFWPvXHzqW347Ovmwobuj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SJ6gi3Ve8RPLGHq7P1Pr9g/xq/56KgDamUmcH4QtFuR0HuONKWcef9FczdJlk1+nr
-	 I549ba+v78rs2Ygge6yrcwvCzdNvA7PgWnACZdeZjvVQvc+JUBqc5eRW5VYUxrEptS
-	 FTtDD5rZpA3Ik1Ot/la5d3NWefWiI9FiWdiodwFo=
+	b=v+HQi4qmi0lM4gkkJlTGg19UugsUNPHY03otykH43NnABeIgkLQgZZ/0X82pE85Xp
+	 HVir/7t4yow3Z421Dau2g/qGrSrsZ0vLS90qL3DT1G4Dwauy15zQYH4mTFL2sdQJKd
+	 Mf43ktncfzCMq/NaCAvIi/nvY00gFIv9v2MErGt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 7.0 243/307] RDMA/vmw_pvrdma: Fix double free on pvrdma_alloc_ucontext() error path
-Date: Tue, 12 May 2026 19:40:38 +0200
-Message-ID: <20260512173945.251457470@linuxfoundation.org>
+	Chen Ni <nichen@iscas.ac.cn>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 7.0 244/307] remoteproc: imx_rproc: Fix NULL vs IS_ERR() bug in imx_rproc_addr_init()
+Date: Tue, 12 May 2026 19:40:39 +0200
+Message-ID: <20260512173945.272694756@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -49,33 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-commit e38e86995df27f1f854063dab1f0c6a513db3faf upstream.
+commit 665eebebb029690a5b2f92e481020877cc6c8d36 upstream.
 
-Sashiko points out that pvrdma_uar_free() is already called within
-pvrdma_dealloc_ucontext(), so calling it before triggers a double free.
+The devm_ioremap_resource_wc() function never returns NULL, it returns
+error pointers.  Update the error checking to match.
 
+Fixes: 67a7bc7f0358 ("remoteproc: Use of_reserved_mem_region_* functions for "memory-region"")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Cc: stable@vger.kernel.org
-Fixes: 29c8d9eba550 ("IB: Add vmw_pvrdma driver")
-Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=4
-Link: https://patch.msgid.link/r/10-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20260227091546.4044246-1-nichen@iscas.ac.cn
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c |    2 +-
+ drivers/remoteproc/imx_rproc.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c
-+++ b/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c
-@@ -322,7 +322,7 @@ int pvrdma_alloc_ucontext(struct ib_ucon
- 	uresp.qp_tab_size = vdev->dsr->caps.max_qp;
- 	ret = ib_copy_to_udata(udata, &uresp, sizeof(uresp));
- 	if (ret) {
--		pvrdma_uar_free(vdev, &context->uar);
-+		/* pvrdma_dealloc_ucontext() also frees the UAR */
- 		pvrdma_dealloc_ucontext(&context->ibucontext);
- 		return -EFAULT;
- 	}
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -812,7 +812,7 @@ static int imx_rproc_addr_init(struct im
+ 
+ 		/* Not use resource version, because we might share region */
+ 		priv->mem[b].cpu_addr = devm_ioremap_resource_wc(&pdev->dev, &res);
+-		if (!priv->mem[b].cpu_addr) {
++		if (IS_ERR(priv->mem[b].cpu_addr)) {
+ 			dev_err(dev, "failed to remap %pr\n", &res);
+ 			return -ENOMEM;
+ 		}
 
 
