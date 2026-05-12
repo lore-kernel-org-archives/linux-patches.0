@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BCC23E356;
-	Tue, 12 May 2026 18:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9FF36896D;
+	Tue, 12 May 2026 18:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609279; cv=none; b=T4t/OhNeP+czpOp7rMnzSLA/XdR8HNTccfFY0pINreahRaN5j3eO+CbL3i9QbfGvuhnSqIQ7jUY2oK0JaPVAUE4qB9uVxC0TEa7CGW0AtUANkDmGtuGwlbXsfvHiQQrQJiqXvfeYDKpzKmNP25aLymuoEihXyGwfOk9KCWzq5dw=
+	t=1778609282; cv=none; b=VmSWyoQ26LarvhaXZ7HfNuhO9EnCWtUrKb8EhCtKRXgxZg1iDvwxDlubHuwLiQ1NBaegFkcla0CNZEDrZMqr1K96Z0E4x5oCpcTrO5R5iiiRIIYNrt+5mzwK+SYTH28402On5xJC4yGXSk+iYJkIhmF/+wFDjIPNl5xGCSscJnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609279; c=relaxed/simple;
-	bh=R1++CtntCiXSS6aLA1ZgqWX0YouQhUqyd4ChWm/psos=;
+	s=arc-20240116; t=1778609282; c=relaxed/simple;
+	bh=HSOfB/GjoANSzA8CR2M5pDg5GI9AUQ7jo6I/CKk4Eqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I6YFrvB6gWBpv+1V/hLhx1Xcuk67ypLocfCkix6kVpLI7WSbrbAGbhdjyEksj5P5RlXtPk+NCo4yZbWOzmipYvCBye43MEua4vIHpELROfTMnkFMaP9NLwUVsDjWhm8Zsl7E2TlQbriwGx6W1wuy+ooyQVkR5VWpkfV2ytXyaDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+Z8N5n9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RudRo506i0Mody9lO6ndaAi46MG6kbtO9o0q8zNwzPK3IKapKPhSVmBnGlfpDjt6iu0PMFCtH9wO5/WVEi41xUaJcdV+zJ0h7pRe2bQ2pGYhq0PEXspSN0xv1LFNf4eu8A/5+SP+M6GSd99aNlCIjI5jo2u06oiG7BGg4ceA/KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fR17cShP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+Z8N5n9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D65C2BCB0;
-	Tue, 12 May 2026 18:07:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fR17cShP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0CCEC2BCC7;
+	Tue, 12 May 2026 18:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609279;
-	bh=R1++CtntCiXSS6aLA1ZgqWX0YouQhUqyd4ChWm/psos=;
+	s=korg; t=1778609282;
+	bh=HSOfB/GjoANSzA8CR2M5pDg5GI9AUQ7jo6I/CKk4Eqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+Z8N5n9HR6dwhAwJFbeoJb1zODQd8KxlOBGQ+AoG2/jm3ZGTAvMOBv5ak3sj1Llr
-	 GdMaXR/4etneXidBABKpVWV8Syt9OehXaJU98wjIXpnyZuACvBA22HWY+Jr8oPXsYF
-	 z0cZTHJapWo29JqL+IeU78CVfIGSh/b2SPybJXHc=
+	b=fR17cShPxNbEc9npfcwbnFEBHL4g40d3pIe80jfrpMGT3dBgp9RpkiFSG3MHQhVyq
+	 RDtYW3gy+waUyN21Sk7tSaQnHbNu8H0wwBe15o/ev3Bh5IV6dPR4E1Unq+HDu5V+A3
+	 wsOOcnLUAsMeZboYU6MWdF+8tXXzRjnT3l3XhErw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Naman Jain <namjain@linux.microsoft.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.0 134/307] block: add pgmap check to biovec_phys_mergeable
-Date: Tue, 12 May 2026 19:38:49 +0200
-Message-ID: <20260512173942.957061031@linuxfoundation.org>
+Subject: [PATCH 7.0 135/307] block: fix zone write plug removal
+Date: Tue, 12 May 2026 19:38:50 +0200
+Message-ID: <20260512173942.977563744@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,48 +52,295 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 13920e4b7b784b40cf4519ff1f0f3e513476a499 upstream.
+commit b7d4ffb510373cc6ecf16022dd0e510a023034fb upstream.
 
-biovec_phys_mergeable() is used by the request merge, DMA mapping,
-and integrity merge paths to decide if two physically contiguous
-bvec segments can be coalesced into one. It currently has no check
-for whether the segments belong to different dev_pagemaps.
+Commit 7b295187287e ("block: Do not remove zone write plugs still in
+use") modified disk_should_remove_zone_wplug() to add a check on the
+reference count of a zone write plug to prevent removing zone write
+plugs from a disk hash table when the plugs are still being referenced
+by BIOs or requests in-flight. However, this check does not take into
+account that a BIO completion may happen right after its submission by
+a zone write plug BIO work, and before the zone write plug BIO work
+releases the zone write plug reference count. This situation leads to
+disk_should_remove_zone_wplug() returning false as in this case the zone
+write plug reference count is at least equal to 3. If the BIO that
+completes in such manner transitioned the zone to the FULL condition,
+the zone write plug for the FULL zone will remain in the disk hash
+table.
 
-When zone device memory is registered in multiple chunks, each chunk
-gets its own dev_pagemap. A single bio can legitimately contain
-bvecs from different pgmaps -- iov_iter_extract_bvecs() breaks at
-pgmap boundaries but the outer loop in bio_iov_iter_get_pages()
-continues filling the same bio. If such bvecs are physically
-contiguous, biovec_phys_mergeable() will coalesce them, making it
-impossible to recover the correct pgmap for the merged segment
-via page_pgmap().
+Furthermore, relying on a particular value of a zone write plug
+reference count to set the BLK_ZONE_WPLUG_UNHASHED flag is fragile as
+reading the atomic reference count and doing a comparison with some
+value is not overall atomic at all.
 
-Add a zone_device_pages_have_same_pgmap() check to prevent merging
-bvec segments that span different pgmaps.
+Address these issues by reworking the reference counting of zone write
+plugs so that removing plugs from a disk hash table can be done
+directly from disk_put_zone_wplug() when the last reference on a plug
+is dropped.
 
-Fixes: 49580e690755 ("block: add check when merging zone device pages")
+To do so, replace the function disk_remove_zone_wplug() with
+disk_mark_zone_wplug_dead(). This new function sets the zone write plug
+flag BLK_ZONE_WPLUG_DEAD (which replaces BLK_ZONE_WPLUG_UNHASHED) and
+drops the initial reference on the zone write plug taken when the plug
+was added to the disk hash table. This function is called either for
+zones that are empty or full, or directly in the case of a forced plug
+removal (e.g. when the disk hash table is being destroyed on disk
+removal). With this change, disk_should_remove_zone_wplug() is also
+removed.
+
+disk_put_zone_wplug() is modified to call the function
+disk_free_zone_wplug() to remove a zone write plug from a disk hash
+table and free the plug structure (with a call_rcu()), when the last
+reference on a zone write plug is dropped. disk_free_zone_wplug()
+always checks that the BLK_ZONE_WPLUG_DEAD flag is set.
+
+In order to avoid having multiple zone write plugs for the same zone in
+the disk hash table, disk_get_and_lock_zone_wplug() checked for the
+BLK_ZONE_WPLUG_UNHASHED flag. This check is removed and a check for
+the new BLK_ZONE_WPLUG_DEAD flag is added to
+blk_zone_wplug_handle_write(). With this change, we continue preventing
+adding multiple zone write plugs for the same zone and at the same time
+re-inforce checks on the user behavior by failing new incoming write
+BIOs targeting a zone that is marked as dead. This case can happen only
+if the user erroneously issues write BIOs to zones that are full, or to
+zones that are currently being reset or finished.
+
+Fixes: 7b295187287e ("block: Do not remove zone write plugs still in use")
 Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Link: https://patch.msgid.link/20260410153414.4159050-2-namjain@linux.microsoft.com
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk.h |    2 ++
- 1 file changed, 2 insertions(+)
+ block/blk-zoned.c |  151 ++++++++++++++++++++----------------------------------
+ 1 file changed, 57 insertions(+), 94 deletions(-)
 
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -132,6 +132,8 @@ static inline bool biovec_phys_mergeable
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -99,17 +99,17 @@ static inline unsigned int disk_zone_wpl
+  *    being executed or the zone write plug bio list is not empty.
+  *  - BLK_ZONE_WPLUG_NEED_WP_UPDATE: Indicates that we lost track of a zone
+  *    write pointer offset and need to update it.
+- *  - BLK_ZONE_WPLUG_UNHASHED: Indicates that the zone write plug was removed
+- *    from the disk hash table and that the initial reference to the zone
+- *    write plug set when the plug was first added to the hash table has been
+- *    dropped. This flag is set when a zone is reset, finished or become full,
+- *    to prevent new references to the zone write plug to be taken for
+- *    newly incoming BIOs. A zone write plug flagged with this flag will be
+- *    freed once all remaining references from BIOs or functions are dropped.
++ *  - BLK_ZONE_WPLUG_DEAD: Indicates that the zone write plug will be
++ *    removed from the disk hash table of zone write plugs when the last
++ *    reference on the zone write plug is dropped. If set, this flag also
++ *    indicates that the initial extra reference on the zone write plug was
++ *    dropped, meaning that the reference count indicates the current number of
++ *    active users (code context or BIOs and requests in flight). This flag is
++ *    set when a zone is reset, finished or becomes full.
+  */
+ #define BLK_ZONE_WPLUG_PLUGGED		(1U << 0)
+ #define BLK_ZONE_WPLUG_NEED_WP_UPDATE	(1U << 1)
+-#define BLK_ZONE_WPLUG_UNHASHED		(1U << 2)
++#define BLK_ZONE_WPLUG_DEAD		(1U << 2)
  
- 	if (addr1 + vec1->bv_len != addr2)
- 		return false;
-+	if (!zone_device_pages_have_same_pgmap(vec1->bv_page, vec2->bv_page))
-+		return false;
- 	if (xen_domain() && !xen_biovec_phys_mergeable(vec1, vec2->bv_page))
- 		return false;
- 	if ((addr1 | mask) != ((addr2 + vec2->bv_len - 1) | mask))
+ /**
+  * blk_zone_cond_str - Return a zone condition name string
+@@ -587,64 +587,15 @@ static void disk_free_zone_wplug_rcu(str
+ 	mempool_free(zwplug, zwplug->disk->zone_wplugs_pool);
+ }
+ 
+-static inline void disk_put_zone_wplug(struct blk_zone_wplug *zwplug)
+-{
+-	if (refcount_dec_and_test(&zwplug->ref)) {
+-		WARN_ON_ONCE(!bio_list_empty(&zwplug->bio_list));
+-		WARN_ON_ONCE(zwplug->flags & BLK_ZONE_WPLUG_PLUGGED);
+-		WARN_ON_ONCE(!(zwplug->flags & BLK_ZONE_WPLUG_UNHASHED));
+-
+-		call_rcu(&zwplug->rcu_head, disk_free_zone_wplug_rcu);
+-	}
+-}
+-
+-static inline bool disk_should_remove_zone_wplug(struct gendisk *disk,
+-						 struct blk_zone_wplug *zwplug)
+-{
+-	lockdep_assert_held(&zwplug->lock);
+-
+-	/* If the zone write plug was already removed, we are done. */
+-	if (zwplug->flags & BLK_ZONE_WPLUG_UNHASHED)
+-		return false;
+-
+-	/* If the zone write plug is still plugged, it cannot be removed. */
+-	if (zwplug->flags & BLK_ZONE_WPLUG_PLUGGED)
+-		return false;
+-
+-	/*
+-	 * Completions of BIOs with blk_zone_write_plug_bio_endio() may
+-	 * happen after handling a request completion with
+-	 * blk_zone_write_plug_finish_request() (e.g. with split BIOs
+-	 * that are chained). In such case, disk_zone_wplug_unplug_bio()
+-	 * should not attempt to remove the zone write plug until all BIO
+-	 * completions are seen. Check by looking at the zone write plug
+-	 * reference count, which is 2 when the plug is unused (one reference
+-	 * taken when the plug was allocated and another reference taken by the
+-	 * caller context).
+-	 */
+-	if (refcount_read(&zwplug->ref) > 2)
+-		return false;
+-
+-	/* We can remove zone write plugs for zones that are empty or full. */
+-	return !zwplug->wp_offset || disk_zone_wplug_is_full(disk, zwplug);
+-}
+-
+-static void disk_remove_zone_wplug(struct gendisk *disk,
+-				   struct blk_zone_wplug *zwplug)
++static void disk_free_zone_wplug(struct blk_zone_wplug *zwplug)
+ {
++	struct gendisk *disk = zwplug->disk;
+ 	unsigned long flags;
+ 
+-	/* If the zone write plug was already removed, we have nothing to do. */
+-	if (zwplug->flags & BLK_ZONE_WPLUG_UNHASHED)
+-		return;
++	WARN_ON_ONCE(!(zwplug->flags & BLK_ZONE_WPLUG_DEAD));
++	WARN_ON_ONCE(zwplug->flags & BLK_ZONE_WPLUG_PLUGGED);
++	WARN_ON_ONCE(!bio_list_empty(&zwplug->bio_list));
+ 
+-	/*
+-	 * Mark the zone write plug as unhashed and drop the extra reference we
+-	 * took when the plug was inserted in the hash table. Also update the
+-	 * disk zone condition array with the current condition of the zone
+-	 * write plug.
+-	 */
+-	zwplug->flags |= BLK_ZONE_WPLUG_UNHASHED;
+ 	spin_lock_irqsave(&disk->zone_wplugs_lock, flags);
+ 	blk_zone_set_cond(rcu_dereference_check(disk->zones_cond,
+ 				lockdep_is_held(&disk->zone_wplugs_lock)),
+@@ -652,7 +603,29 @@ static void disk_remove_zone_wplug(struc
+ 	hlist_del_init_rcu(&zwplug->node);
+ 	atomic_dec(&disk->nr_zone_wplugs);
+ 	spin_unlock_irqrestore(&disk->zone_wplugs_lock, flags);
+-	disk_put_zone_wplug(zwplug);
++
++	call_rcu(&zwplug->rcu_head, disk_free_zone_wplug_rcu);
++}
++
++static inline void disk_put_zone_wplug(struct blk_zone_wplug *zwplug)
++{
++	if (refcount_dec_and_test(&zwplug->ref))
++		disk_free_zone_wplug(zwplug);
++}
++
++/*
++ * Flag the zone write plug as dead and drop the initial reference we got when
++ * the zone write plug was added to the hash table. The zone write plug will be
++ * unhashed when its last reference is dropped.
++ */
++static void disk_mark_zone_wplug_dead(struct blk_zone_wplug *zwplug)
++{
++	lockdep_assert_held(&zwplug->lock);
++
++	if (!(zwplug->flags & BLK_ZONE_WPLUG_DEAD)) {
++		zwplug->flags |= BLK_ZONE_WPLUG_DEAD;
++		disk_put_zone_wplug(zwplug);
++	}
+ }
+ 
+ static void blk_zone_wplug_bio_work(struct work_struct *work);
+@@ -672,18 +645,7 @@ static struct blk_zone_wplug *disk_get_a
+ again:
+ 	zwplug = disk_get_zone_wplug(disk, sector);
+ 	if (zwplug) {
+-		/*
+-		 * Check that a BIO completion or a zone reset or finish
+-		 * operation has not already removed the zone write plug from
+-		 * the hash table and dropped its reference count. In such case,
+-		 * we need to get a new plug so start over from the beginning.
+-		 */
+ 		spin_lock_irqsave(&zwplug->lock, *flags);
+-		if (zwplug->flags & BLK_ZONE_WPLUG_UNHASHED) {
+-			spin_unlock_irqrestore(&zwplug->lock, *flags);
+-			disk_put_zone_wplug(zwplug);
+-			goto again;
+-		}
+ 		return zwplug;
+ 	}
+ 
+@@ -788,14 +750,8 @@ static void disk_zone_wplug_set_wp_offse
+ 	disk_zone_wplug_update_cond(disk, zwplug);
+ 
+ 	disk_zone_wplug_abort(zwplug);
+-
+-	/*
+-	 * The zone write plug now has no BIO plugged: remove it from the
+-	 * hash table so that it cannot be seen. The plug will be freed
+-	 * when the last reference is dropped.
+-	 */
+-	if (disk_should_remove_zone_wplug(disk, zwplug))
+-		disk_remove_zone_wplug(disk, zwplug);
++	if (!zwplug->wp_offset || disk_zone_wplug_is_full(disk, zwplug))
++		disk_mark_zone_wplug_dead(zwplug);
+ }
+ 
+ static unsigned int blk_zone_wp_offset(struct blk_zone *zone)
+@@ -1451,6 +1407,19 @@ static bool blk_zone_wplug_handle_write(
+ 		return true;
+ 	}
+ 
++	/*
++	 * If we got a zone write plug marked as dead, then the user is issuing
++	 * writes to a full zone, or without synchronizing with zone reset or
++	 * zone finish operations. In such case, fail the BIO to signal this
++	 * invalid usage.
++	 */
++	if (zwplug->flags & BLK_ZONE_WPLUG_DEAD) {
++		spin_unlock_irqrestore(&zwplug->lock, flags);
++		disk_put_zone_wplug(zwplug);
++		bio_io_error(bio);
++		return true;
++	}
++
+ 	/* Indicate that this BIO is being handled using zone write plugging. */
+ 	bio_set_flag(bio, BIO_ZONE_WRITE_PLUGGING);
+ 
+@@ -1531,7 +1500,7 @@ static void blk_zone_wplug_handle_native
+ 				    disk->disk_name, zwplug->zone_no);
+ 		disk_zone_wplug_abort(zwplug);
+ 	}
+-	disk_remove_zone_wplug(disk, zwplug);
++	disk_mark_zone_wplug_dead(zwplug);
+ 	spin_unlock_irqrestore(&zwplug->lock, flags);
+ 
+ 	disk_put_zone_wplug(zwplug);
+@@ -1634,14 +1603,8 @@ static void disk_zone_wplug_unplug_bio(s
+ 	}
+ 
+ 	zwplug->flags &= ~BLK_ZONE_WPLUG_PLUGGED;
+-
+-	/*
+-	 * If the zone is full (it was fully written or finished, or empty
+-	 * (it was reset), remove its zone write plug from the hash table.
+-	 */
+-	if (disk_should_remove_zone_wplug(disk, zwplug))
+-		disk_remove_zone_wplug(disk, zwplug);
+-
++	if (!zwplug->wp_offset || disk_zone_wplug_is_full(disk, zwplug))
++		disk_mark_zone_wplug_dead(zwplug);
+ 	spin_unlock_irqrestore(&zwplug->lock, flags);
+ }
+ 
+@@ -1852,9 +1815,9 @@ static void disk_destroy_zone_wplugs_has
+ 		while (!hlist_empty(&disk->zone_wplugs_hash[i])) {
+ 			zwplug = hlist_entry(disk->zone_wplugs_hash[i].first,
+ 					     struct blk_zone_wplug, node);
+-			refcount_inc(&zwplug->ref);
+-			disk_remove_zone_wplug(disk, zwplug);
+-			disk_put_zone_wplug(zwplug);
++			spin_lock_irq(&zwplug->lock);
++			disk_mark_zone_wplug_dead(zwplug);
++			spin_unlock_irq(&zwplug->lock);
+ 		}
+ 	}
+ 
 
 
