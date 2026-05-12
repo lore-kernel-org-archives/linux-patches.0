@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC913EDE45;
-	Tue, 12 May 2026 18:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80D723E356;
+	Tue, 12 May 2026 18:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609272; cv=none; b=a6Pix9j+yyUyzoxLT3+8hW2TNciCzWNd4Z5vbd2LJQg2xIiSkYhvICl9x4EpBPsysTOUD+KQ8zKN4gA2mfJFPuoi8rWYNJgywOLJ/ugvxMC2SXcjA4dom/+V+/kdgBtVKStD7i9zumuvGiEKGVTRFmY0v/KfKtotxPBsBSUYVzc=
+	t=1778609274; cv=none; b=k/ccdG/hrgE3Q++q14XDTx/GRgy+MBKdJKQk2Z8vV0aUJXgcJNDxB+O4VGg0kcwccidsJ+wU34hE5amsPDJS2NW9ptrHj0cr4/QBDYZuS6E3y4XKkpBEGe6nCXwEs3LBpHcL+xKudT+UYUMoJvUntwFoZW9WVGX9d0n+JvWEZSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609272; c=relaxed/simple;
-	bh=6x1UTeNCUVtPAL9whcCrZc4LZm6+JYjSo1icYSOls2M=;
+	s=arc-20240116; t=1778609274; c=relaxed/simple;
+	bh=0daZjdfDnjQGVrpCL6PdqjpdO/ilNPtfgDnzumYYU8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZGIphNsBCwkssRAIPdc9AckNOUkwfuen7NWcou1dJJGxguRWFKL0LE2tCkZDIlZfJhwMspiWT9lrKOkL9r24aqxSHWbKjY3ig8cQGslaeWhnmYQD8YuoC2klOCOgSZrr8jmiicVqa17Eofrcon9+o1U++0PThP9lx7WpRrUWUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwAZ9kFl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gl4MTix81plD21X5ET+7oXE9+ky6OeXB+9p4jsLUJAa8ynKeHc8Nvblur2hFYUOvdlE7whvMOakXUzasO8VEueOcp0eKvwjCXQbiYPFRAFmDDASRkNHqqTpmc1o5/MuJPqfjcuTSfy7oCz43t+ha929CxFxD3cCZO/0qqDECxa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqh6Uukd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwAZ9kFl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75F8C2BCB0;
-	Tue, 12 May 2026 18:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqh6Uukd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369CCC2BCB0;
+	Tue, 12 May 2026 18:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609272;
-	bh=6x1UTeNCUVtPAL9whcCrZc4LZm6+JYjSo1icYSOls2M=;
+	s=korg; t=1778609274;
+	bh=0daZjdfDnjQGVrpCL6PdqjpdO/ilNPtfgDnzumYYU8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HwAZ9kFlcIsLhxd+AiaGdlW7Wk9woZutHTmVqe0ECwdOyqxX8Tm7xBjJ1/MBF/ddS
-	 0UeD5mGBErqSpBJmsYZhl3zzBPvRK9ui1BQc+dmh3R5EbMGmXDu1Y64xintFmciFPd
-	 YAz6sY7sgs/49Zg7Ggjnp1khS7fc+IkvBM8K5aiU=
+	b=oqh6UukdTxF/ASoVBvKBGeWQKCrNpYcuhF9PoO5UH3pHFuN0fVo4kaSVxZn4/9XvP
+	 M+7QdVmCEyL5BYWWCt9PXE7W6QdojOzWhHGxzpKJ2YW3UsNoJqdZd1q2Xrouon92+1
+	 7CDiWialBh6NpkLduCaaYC2BkzGOjUx2BkxYMxtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haren Myneni <haren@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 7.0 114/307] pseries/papr-hvpipe: Fix null ptr deref in papr_hvpipe_dev_create_handle()
-Date: Tue, 12 May 2026 19:38:29 +0200
-Message-ID: <20260512173942.529406478@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 7.0 132/307] arm64/fpsimd: ptrace: zero targets fpsimd_state, not the tracers
+Date: Tue, 12 May 2026 19:38:47 +0200
+Message-ID: <20260512173942.913988942@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,136 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 1b9f7aafa44f5ce852c00509104d10fd9eb0f402 upstream.
+commit 5cbb61bf4168859d97c068d88d364f4f1f440325 upstream.
 
-commit 6d3789d347a7 ("papr-hvpipe: convert papr_hvpipe_dev_create_handle() to FD_PREPARE()"),
-changed the create handle to FD_PREPARE(), but it caused kernel
-null-ptr-deref because after call to retain_and_null_ptr(src_info),
-src_info is re-used for adding it to the global list.
+sve_set_common() is the backend for PTRACE_SETREGSET(NT_ARM_SVE) and
+PTRACE_SETREGSET(NT_ARM_SSVE). Every write in the function operates on
+the tracee (target) - except a single memset that uses current instead,
+zeroing the tracer's saved V0-V31 / FPSR / FPCR shadow on every ptrace
+SETREGSET call.
 
-Getting the following kernel panic in papr_hvpipe_dev_create_handle()
-when trying to add src_info to the list.
- Kernel attempted to write user page (0) - exploit attempt? (uid: 0)
- BUG: Kernel NULL pointer dereference on write at 0x00000000
- Faulting instruction address: 0xc0000000001b44a0
- Oops: Kernel access of bad area, sig: 11 [#1]
- ...
- Call Trace:
- papr_hvpipe_dev_ioctl+0x1f4/0x48c (unreliable)
- sys_ioctl+0x528/0x1064
- system_call_exception+0x128/0x360
- system_call_vectored_common+0x15c/0x2ec
+The memset is meant to give the tracee a defined zero register image
+before the user-supplied payload is copied in (for partial writes,
+header-only writes, and FPSIMD<->SVE format switches). Aiming it at
+current both denies the tracee that clean slate and silently corrupts
+the tracer.
 
-Now, the error handling with FD_PREPARE's file cleanup and __free(kfree) auto
-cleanup is getting too convoluted. This is mainly because we need to
-ensure only 1 user get the srcID handle. To simplify this, we allocate
-prepare the src_info in the beginning and add it to the global list
-under a spinlock after checking that no duplicates exist.
+The corruption of the tracer's saved FPSIMD state is not always
+observable. Where the tracer's state is live on a CPU, this may be
+reused without loading the corrupted state from memory, and will
+eventually be written back over the corrupted state. Where the tracer's
+state is saved in SVE_PT_REGS_SVE format, only the FPSR and FPCR are
+clobbered, and the effective copy of the vectors is in the task's
+sve_state.
 
-This simplify the error handling where if the FD_ADD fails, we can
-simply remove the src_info from the list and consume any pending msg in
-hvpipe to be cleared, after src_info became visible in the global list.
+Reproducible on an arm64 kernel with SVE: a single-threaded tracer that
+loads a known pattern into V0-V31, issues PTRACE_SETREGSET(NT_ARM_SVE)
+on a child, and reads V0-V31 back observes them all zeroed within tens
+of thousands of iterations when a sibling thread keeps stealing the
+FPSIMD CPU binding.
 
-Cc: stable@vger.kernel.org
-Fixes: 6d3789d347a7 ("papr-hvpipe: convert papr_hvpipe_dev_create_handle() to FD_PREPARE()")
-Reported-by: Haren Myneni <haren@linux.ibm.com>
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/31ad94bc89d44156ee700c5bd006cb47a748e3cb.1777606826.git.ritesh.list@gmail.com
+Fixes: 316283f276eb ("arm64/fpsimd: ptrace: Consistently handle partial writes to NT_ARM_(S)SVE")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/papr-hvpipe.c | 57 ++++++++++----------
- 1 file changed, 30 insertions(+), 27 deletions(-)
+ arch/arm64/kernel/ptrace.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/papr-hvpipe.c b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-index 3392874ebdf6..402781299497 100644
---- a/arch/powerpc/platforms/pseries/papr-hvpipe.c
-+++ b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-@@ -480,23 +480,10 @@ static const struct file_operations papr_hvpipe_handle_ops = {
- 
- static int papr_hvpipe_dev_create_handle(u32 srcID)
- {
--	struct hvpipe_source_info *src_info __free(kfree) = NULL;
-+	struct hvpipe_source_info *src_info;
-+	int fd;
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&hvpipe_src_list_lock, flags);
--	/*
--	 * Do not allow more than one process communicates with
--	 * each source.
--	 */
--	src_info = hvpipe_find_source(srcID);
--	if (src_info) {
--		spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
--		pr_err("pid(%d) is already using the source(%d)\n",
--				src_info->tsk->pid, srcID);
--		return -EALREADY;
--	}
--	spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
--
- 	src_info = kzalloc_obj(*src_info, GFP_KERNEL_ACCOUNT);
- 	if (!src_info)
- 		return -ENOMEM;
-@@ -505,26 +492,42 @@ static int papr_hvpipe_dev_create_handle(u32 srcID)
- 	src_info->tsk = current;
- 	init_waitqueue_head(&src_info->recv_wqh);
- 
--	FD_PREPARE(fdf, O_RDONLY | O_CLOEXEC,
--		   anon_inode_getfile("[papr-hvpipe]", &papr_hvpipe_handle_ops,
--				      (void *)src_info, O_RDWR));
--	if (fdf.err)
--		return fdf.err;
--
--	retain_and_null_ptr(src_info);
--	spin_lock_irqsave(&hvpipe_src_list_lock, flags);
- 	/*
--	 * If two processes are executing ioctl() for the same
--	 * source ID concurrently, prevent the second process to
--	 * acquire FD.
-+	 * Do not allow more than one process communicates with
-+	 * each source.
- 	 */
-+	spin_lock_irqsave(&hvpipe_src_list_lock, flags);
- 	if (hvpipe_find_source(srcID)) {
- 		spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
-+		pr_err("pid(%d) could not get the source(%d)\n",
-+				src_info->tsk->pid, srcID);
-+		kfree(src_info);
- 		return -EALREADY;
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -983,8 +983,8 @@ static int sve_set_common(struct task_st
  	}
- 	list_add(&src_info->list, &hvpipe_src_list);
- 	spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
--	return fd_publish(fdf);
-+
-+	fd = FD_ADD(O_RDONLY | O_CLOEXEC,
-+		   anon_inode_getfile("[papr-hvpipe]", &papr_hvpipe_handle_ops,
-+				      (void *)src_info, O_RDWR));
-+	if (fd < 0) {
-+		spin_lock_irqsave(&hvpipe_src_list_lock, flags);
-+		list_del(&src_info->list);
-+		spin_unlock_irqrestore(&hvpipe_src_list_lock, flags);
-+		/*
-+		 * if we fail to add FD, that means no userspace program is
-+		 * polling. In that case if there is a msg pending because the
-+		 * interrupt was fired after the src_info was added to the
-+		 * global list, then let's consume it here, to unblock the
-+		 * hvpipe
-+		 */
-+		if (src_info->hvpipe_status & HVPIPE_MSG_AVAILABLE)
-+			hvpipe_rtas_recv_msg(NULL, 0);
-+		kfree(src_info);
-+		return fd;
-+	}
-+
-+	return fd;
- }
  
- /*
--- 
-2.54.0
-
+ 	/* Always zero V regs, FPSR, and FPCR */
+-	memset(&current->thread.uw.fpsimd_state, 0,
+-	       sizeof(current->thread.uw.fpsimd_state));
++	memset(&target->thread.uw.fpsimd_state, 0,
++	       sizeof(target->thread.uw.fpsimd_state));
+ 
+ 	/* Registers: FPSIMD-only case */
+ 
 
 
