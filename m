@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640343B1EE2;
-	Tue, 12 May 2026 17:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC2F3CDBDD;
+	Tue, 12 May 2026 17:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607836; cv=none; b=Q5ylmsP2uRLQRge8CChIdwZP78ivLwrGEaNPrWSZB9cuc3z49g+H+Jp8pHnJuTrARKGttbEeRTeZWWSP46tdQL3ZiyKDjY3sCPZumNifLxojSCpKYX78Zhsno6B0AGM2BupJLLXtnUP4s1MT//87v0wWOqdHFah7MnYcrDSAaNI=
+	t=1778607838; cv=none; b=LnS4LAs1yAjDOzWf7tOrwgOs9qTwJVF3t+e6aiTA7qjsshfNjRqvEoIrLqP7kRhc5PwiZ8c+G+yBEjOVjmNyXfMqbp2BRFM4WGeeXDU69V9xqtv9HCR05LbF3FwUWzhmCtxLUb84Hb3lvQz2VdVKNOFrw+y3iyFT5hjKIF26oOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607836; c=relaxed/simple;
-	bh=SvfylUR7yQtb3Zxqbd9OPQZh11M2Wsolmm9JG26/pVA=;
+	s=arc-20240116; t=1778607838; c=relaxed/simple;
+	bh=epf33vq+e3xD4WR8TOL+pL1wltqnuKg8EXFyWXpbbAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QSjXSRki9qcKLcGQgIZSkdLwhPgJI4ajpvBqfscywKiKl2bD9k6VptoVWehWLINQm/j0HBIJ99tjWXAp1QC/lHXA99c8ETry3GtUPD+SGz1RRN5gUswG8K/yIuc9tsEr5+VDluOwMsTyZxNyK0snrzeiIoQmj04rQmiowRdr22Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCQj4TDV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sMz89/xhMaGgW7JcbT+w5wkSYRSO6i77B7b35JZ00yAgowKDMHscyUD+V1VPIjWDcuUPGt/S6ejAsnK1wva5Vpk8BfNQRO+MnzIu23y33aISo0mbZ9lVqFOnQwS347V0xER2+wj1qwTtNqR6eFpbFBLcyNi/nnr4WET5RCtmtYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NRndWoae; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCQj4TDV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C34C2BCB0;
-	Tue, 12 May 2026 17:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRndWoae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749D7C2BCB0;
+	Tue, 12 May 2026 17:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607836;
-	bh=SvfylUR7yQtb3Zxqbd9OPQZh11M2Wsolmm9JG26/pVA=;
+	s=korg; t=1778607838;
+	bh=epf33vq+e3xD4WR8TOL+pL1wltqnuKg8EXFyWXpbbAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCQj4TDVN2YwM0DN6sAowcNgs3brbm5BhHTJiD8j/qvLKztm0CVUY7wdQ6JNxy+Yg
-	 pw/00x39Sm66og2m3N1P5zQMDKCkSG81urraLvyndWkm3whRSBQxkvvzchX5195v83
-	 l67q7qyBzRzUFHzrnENCGQl08w/H9e+ujJQ1N3IM=
+	b=NRndWoae9PLhCdoDhCuezupAsH71Ze9aU60BFh68UYWEfGz+pM144FqiLfPGYAwRf
+	 EMvjPhVlYylPKIdgEFDkEhrtEEIFbejI+SjXNlPVGW34euJ3rLHgl86gASTl2PRpxv
+	 I+55YxEHZGvDWcicPorLmV/gu+pW4TYsIML/zspI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.12 052/206] powerpc/kdump: fix KASAN sanitization flag for core_$(BITS).o
-Date: Tue, 12 May 2026 19:38:24 +0200
-Message-ID: <20260512173933.939302659@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ruijie Li <ruijieli51@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.12 053/206] xfrm: provide message size for XFRM_MSG_MAPPING
+Date: Tue, 12 May 2026 19:38:25 +0200
+Message-ID: <20260512173933.960595128@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -48,56 +50,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Ruijie Li <ruijieli51@gmail.com>
 
-commit b3a97f9484080c6e71db9e803e3cc1bb372a9bc7 upstream.
+commit 28465227c80fe417b4013c432be1f3737cb9f9a3 upstream.
 
-KASAN instrumentation is intended to be disabled for the kexec core
-code, but the existing Makefile entry misses the object suffix. As a
-result, the flag is not applied correctly to core_$(BITS).o.
+The compat 64=>32 translation path handles XFRM_MSG_MAPPING, but
+xfrm_msg_min[] does not provide the native payload size for this
+message type.
 
-So when KASAN is enabled, kexec_copy_flush and copy_segments in
-kexec/core_64.c are instrumented, which can result in accesses to
-shadow memory via normal address translation paths. Since these run
-with the MMU disabled, such accesses may trigger page faults
-(bad_page_fault) that cannot be handled in the kdump path, ultimately
-causing a hang and preventing the kdump kernel from booting. The same
-is true for kexec as well, since the same functions are used there.
+Add the missing XFRM_MSG_MAPPING entry so compat translation can size
+and translate mapping notifications correctly.
 
-Update the entry to include the “.o” suffix so that KASAN
-instrumentation is properly disabled for this object file.
-
-Fixes: 2ab2d5794f14 ("powerpc/kasan: Disable address sanitization in kexec paths")
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Closes: https://lore.kernel.org/all/1dee8891-8bcc-46b4-93f3-fc3a774abd5b@linux.ibm.com/
-Cc: stable@vger.kernel.org
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260407124349.1698552-1-sourabhjain@linux.ibm.com
+Fixes: 5461fc0c8d9f ("xfrm/compat: Add 64=>32-bit messages translator")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kexec/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/xfrm/xfrm_user.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/powerpc/kexec/Makefile
-+++ b/arch/powerpc/kexec/Makefile
-@@ -16,4 +16,4 @@ GCOV_PROFILE_core_$(BITS).o := n
- KCOV_INSTRUMENT_core_$(BITS).o := n
- UBSAN_SANITIZE_core_$(BITS).o := n
- KASAN_SANITIZE_core.o := n
--KASAN_SANITIZE_core_$(BITS) := n
-+KASAN_SANITIZE_core_$(BITS).o := n
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -3235,6 +3235,7 @@ const int xfrm_msg_min[XFRM_NR_MSGTYPES]
+ 	[XFRM_MSG_GETSADINFO  - XFRM_MSG_BASE] = sizeof(u32),
+ 	[XFRM_MSG_NEWSPDINFO  - XFRM_MSG_BASE] = sizeof(u32),
+ 	[XFRM_MSG_GETSPDINFO  - XFRM_MSG_BASE] = sizeof(u32),
++	[XFRM_MSG_MAPPING     - XFRM_MSG_BASE] = XMSGSIZE(xfrm_user_mapping),
+ 	[XFRM_MSG_SETDEFAULT  - XFRM_MSG_BASE] = XMSGSIZE(xfrm_userpolicy_default),
+ 	[XFRM_MSG_GETDEFAULT  - XFRM_MSG_BASE] = XMSGSIZE(xfrm_userpolicy_default),
+ };
 
 
