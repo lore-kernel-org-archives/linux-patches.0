@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0DF3DC86D;
-	Tue, 12 May 2026 17:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB1E3E0721;
+	Tue, 12 May 2026 17:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607748; cv=none; b=nEK04Z2ZuUajkJgj2V9TPSMCwwKd+9rD9q6wwPh1zm7eCg5PVXBLcIxD1ngrhwb1hfXxsIeM5H5wCWVgLtRA2kzqVQ9+7g8vUdn2um+g0sx4Y7iiMXntyl8NQ3tqPwep0gphEzsvsBMzYGtl5cx3rPMw9uKW1a+H2UAjnwz80xU=
+	t=1778607751; cv=none; b=eyUSvHpZL3UUcM4tSNtjbfR04wvMf6j2wm3ClFm9lqb589IQatYBwD0zP6AVaM5A8jSHA5ZAJflfIE2AJVtX4vskNx0uNyRM4Z0m8y+uIVoGC2g2nBR1t1vjfMRHxV8t/2kSi0m7BwF+kZwjH2QzR+l1WSjNxTyoHUDTwR1BYVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607748; c=relaxed/simple;
-	bh=FXETLR0Co3jI32hXKQY6900KyQpOFr3tmmZT7aiL4FU=;
+	s=arc-20240116; t=1778607751; c=relaxed/simple;
+	bh=3YwVeolPQbdDFxaEiR5dM1Q6cWfzMQntRh9zu8BSosE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PNsum6lGcDCSUdPfR2Qr45eAZcvdzYtwXGReOj7S9aH2M212z2p8I+Mt+nXX32y3AokVmFRoeD7hmljvxZVCpaEgD/nXRpKOXgCEYONB8UMmEJ2BTByKmvHFJlbnC33dWbDdrALYNkpctAEAEyLAtm8AMs5PqR2C82YExf29KVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnzuNx3h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fpNnKKtr5effIR77yKVI1KpEnJjmsS7Bt7e5PfgkKVtfpkcgivTaHH/0QgU/MKbSMXqvYrKfB92Vzw/HUyBN94nojpevS9/+riJ4Qh6eR/6sTA0gnadMp+PkvL17Is5D19mPLl7GG8p67CRU3Zrnt2Ah4++nBvgsMkLp2E223Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXyFUO4L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnzuNx3h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EA0C2BCB0;
-	Tue, 12 May 2026 17:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXyFUO4L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9F5C2BCB0;
+	Tue, 12 May 2026 17:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607748;
-	bh=FXETLR0Co3jI32hXKQY6900KyQpOFr3tmmZT7aiL4FU=;
+	s=korg; t=1778607751;
+	bh=3YwVeolPQbdDFxaEiR5dM1Q6cWfzMQntRh9zu8BSosE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xnzuNx3hqje5fvLVH2WSHMcx2Yoy+6HJnEZySmJ/EAQs8wQAxqaCzmRvcnSvpbl6c
-	 9khLZqw/lP5s5EyjGFDp5LLXSlaKLnL/ocCtg1Qo3VtJCHG7l1TqIMNGt+8i0Z3f7+
-	 Njj4hYn+Dii9GUPfEX6Yii16M4bJ6PBQ+rIrrVGU=
+	b=EXyFUO4LAhOd6YU8AakXdIU1E691cXqE/qPhLlg3Dfk492kcxLI7iZqaoJb2KZK1H
+	 BFSJ5W86Nm08h6iK3+2oqfXbeprH/M6ki21Ox7LLnvjeKMetrng6d5gpjOdQ4O/Q7J
+	 M+5sI4l2YRiFgL7DSggVHoY8PZojLQ1GyPehDg7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Xiao Liu <lx24@stu.ynu.edu.cn>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 021/206] net: txgbe: fix RTNL assertion warning when remove module
-Date: Tue, 12 May 2026 19:37:53 +0200
-Message-ID: <20260512173933.271945155@linuxfoundation.org>
+Subject: [PATCH 6.12 022/206] net: af_key: zero aligned sockaddr tail in PF_KEY exports
+Date: Tue, 12 May 2026 19:37:54 +0200
+Message-ID: <20260512173933.293827760@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -52,100 +56,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-[ Upstream commit e159f05e12cc1111a3103b99375ddf0dfd0e7d63 ]
+[ Upstream commit 426c355742f02cf743b347d9d7dbdc1bfbfa31ef ]
 
-For the copper NIC with external PHY, the driver called
-phylink_connect_phy() during probe and phylink_disconnect_phy() during
-remove. It caused an RTNL assertion warning in phylink_disconnect_phy()
-upon module remove.
+PF_KEY export paths use `pfkey_sockaddr_size()` when reserving sockaddr
+payload space, so IPv6 addresses occupy 32 bytes on the wire. However,
+`pfkey_sockaddr_fill()` initializes only the first 28 bytes of
+`struct sockaddr_in6`, leaving the final 4 aligned bytes uninitialized.
 
-To fix this, add rtnl_lock() and rtnl_unlock() around the
-phylink_disconnect_phy() in remove function.
+Not every PF_KEY message is affected. The state and policy dump builders
+already zero the whole message buffer before filling the sockaddr
+payloads. Keep the fix to the export paths that still append aligned
+sockaddr payloads with plain `skb_put()`:
 
- ------------[ cut here ]------------
- RTNL: assertion failed at drivers/net/phy/phylink.c (2351)
- WARNING: drivers/net/phy/phylink.c:2351 at
-phylink_disconnect_phy+0xd8/0xf0 [phylink], CPU#0: rmmod/4464
- Modules linked in: ...
- CPU: 0 UID: 0 PID: 4464 Comm: rmmod Kdump: loaded Not tainted 7.0.0-rc4+
- Hardware name: Micro-Star International Co., Ltd. MS-7E16/X670E GAMING
-PLUS WIFI (MS-7E16), BIOS 1.90 12/31/2024
- RIP: 0010:phylink_disconnect_phy+0xe4/0xf0 [phylink]
- Code: 5b 41 5c 41 5d 41 5e 41 5f 5d 31 c0 31 d2 31 f6 31 ff e9 3a 38 8f e7
-48 8d 3d 48 87 e2 ff ba 2f 09 00 00 48 c7 c6 c1 22 24 c0 <67> 48 0f b9 3a
-e9 34 ff ff ff 66 90 90 90 90 90 90 90 90 90 90 90
- RSP: 0018:ffffce7288363ac0 EFLAGS: 00010246
- RAX: 0000000000000000 RBX: ffff89654b2a1a00 RCX: 0000000000000000
- RDX: 000000000000092f RSI: ffffffffc02422c1 RDI: ffffffffc0239020
- RBP: ffffce7288363ae8 R08: 0000000000000000 R09: 0000000000000000
- R10: 0000000000000000 R11: 0000000000000000 R12: ffff8964c4022000
- R13: ffff89654fce3028 R14: ffff89654ebb4000 R15: ffffffffc0226348
- FS:  0000795e80d93780(0000) GS:ffff896c52857000(0000)
-knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00005b528b592000 CR3: 0000000170d0f000 CR4: 0000000000f50ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  txgbe_remove_phy+0xbb/0xd0 [txgbe]
-  txgbe_remove+0x4c/0xb0 [txgbe]
-  pci_device_remove+0x41/0xb0
-  device_remove+0x43/0x80
-  device_release_driver_internal+0x206/0x270
-  driver_detach+0x4a/0xa0
-  bus_remove_driver+0x83/0x120
-  driver_unregister+0x2f/0x60
-  pci_unregister_driver+0x40/0x90
-  txgbe_driver_exit+0x10/0x850 [txgbe]
-  __do_sys_delete_module.isra.0+0x1c3/0x2f0
-  __x64_sys_delete_module+0x12/0x20
-  x64_sys_call+0x20c3/0x2390
-  do_syscall_64+0x11c/0x1500
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? do_syscall_64+0x15a/0x1500
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? do_fault+0x312/0x580
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? __handle_mm_fault+0x9d5/0x1040
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? count_memcg_events+0x101/0x1d0
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? handle_mm_fault+0x1e8/0x2f0
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? do_user_addr_fault+0x2f8/0x820
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? irqentry_exit+0xb2/0x600
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? exc_page_fault+0x92/0x1c0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  - `SADB_ACQUIRE`
+  - `SADB_X_NAT_T_NEW_MAPPING`
+  - `SADB_X_MIGRATE`
 
-Fixes: 02b2a6f91b90 ("net: txgbe: support copper NIC with external PHY")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/8B47A5872884147D+20260407094041.4646-1-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix those paths by clearing only the aligned sockaddr tail after
+`pfkey_sockaddr_fill()`.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 08de61beab8a ("[PFKEYV2]: Extension for dynamic update of endpoint address(es)")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/key/af_key.c | 52 +++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 34 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
-index f26946198a2fb..9726622a96bfb 100644
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
-@@ -622,7 +622,9 @@ int txgbe_init_phy(struct txgbe *txgbe)
- void txgbe_remove_phy(struct txgbe *txgbe)
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index 6d7848b824d9b..f4ad0239b7209 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -757,6 +757,22 @@ static unsigned int pfkey_sockaddr_fill(const xfrm_address_t *xaddr, __be16 port
+ 	return 0;
+ }
+ 
++static unsigned int pfkey_sockaddr_fill_zero_tail(const xfrm_address_t *xaddr,
++						  __be16 port,
++						  struct sockaddr *sa,
++						  unsigned short family)
++{
++	unsigned int prefixlen;
++	int sockaddr_len = pfkey_sockaddr_len(family);
++	int sockaddr_size = pfkey_sockaddr_size(family);
++
++	prefixlen = pfkey_sockaddr_fill(xaddr, port, sa, family);
++	if (sockaddr_size > sockaddr_len)
++		memset((u8 *)sa + sockaddr_len, 0, sockaddr_size - sockaddr_len);
++
++	return prefixlen;
++}
++
+ static struct sk_buff *__pfkey_xfrm_state2msg(const struct xfrm_state *x,
+ 					      int add_keys, int hsc)
  {
- 	if (txgbe->wx->media_type == sp_media_copper) {
-+		rtnl_lock();
- 		phylink_disconnect_phy(txgbe->wx->phylink);
-+		rtnl_unlock();
- 		phylink_destroy(txgbe->wx->phylink);
- 		return;
- 	}
+@@ -3206,9 +3222,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->props.saddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
+ 
+@@ -3221,9 +3237,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->id.daddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->id.daddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
+ 
+@@ -3421,9 +3437,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->props.saddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
+ 
+@@ -3443,9 +3459,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(ipaddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(ipaddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
+ 
+@@ -3474,15 +3490,15 @@ static int set_sadb_address(struct sk_buff *skb, int sasize, int type,
+ 	switch (type) {
+ 	case SADB_EXT_ADDRESS_SRC:
+ 		addr->sadb_address_prefixlen = sel->prefixlen_s;
+-		pfkey_sockaddr_fill(&sel->saddr, 0,
+-				    (struct sockaddr *)(addr + 1),
+-				    sel->family);
++		pfkey_sockaddr_fill_zero_tail(&sel->saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      sel->family);
+ 		break;
+ 	case SADB_EXT_ADDRESS_DST:
+ 		addr->sadb_address_prefixlen = sel->prefixlen_d;
+-		pfkey_sockaddr_fill(&sel->daddr, 0,
+-				    (struct sockaddr *)(addr + 1),
+-				    sel->family);
++		pfkey_sockaddr_fill_zero_tail(&sel->daddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      sel->family);
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.53.0
 
