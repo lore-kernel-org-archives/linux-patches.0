@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849303955E1;
-	Tue, 12 May 2026 17:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628DE3955D0;
+	Tue, 12 May 2026 17:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608224; cv=none; b=e/AKhFiL6Xo2jVZxDMEXsJVt4SwiNqTwbKfI80XSIjnOG3Tdjc5jL878nz1qXQkXoMkstgyUrymDSG58zDm3/SNtON3gjIkiaE0f5QlGVTr1BGnBZQKD9F3XuUjPG5u/lryfaqXC73D1DTETX4Ff2aixAp5PzJKJzTdJ4A+78x0=
+	t=1778608227; cv=none; b=T45IxofeX1FIDmaWExE8pYbyjE+/u2g+KsuS2EKyFuZkvWf7xlB+wMVtaXMFObC6vIQRE/OsC/P32kW4JOGOylOpFG6h3EdJUOlPDThXui+vbkDH/OBCPSOllgqug4OLHDBwR2cX3MYUxvajMVq3wWxEcbRllWMk+59pNTRwVh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608224; c=relaxed/simple;
-	bh=x+evND+hXLIq/hm+fVoZraLTLkBS8pLrTEDSNG5dhrE=;
+	s=arc-20240116; t=1778608227; c=relaxed/simple;
+	bh=NpREYZLX1YAOn2fh4tttvCfwdUycwYXMxxiyG2flXq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FvpcNnFD+Q+tdb2O3KlB7TX9qV/qwStFOfPRx19bBn+MFdnb1WLT6FyQ0hiAxWT0NYDOqJNHozSPtOGZ/2pUSbV/nlvr87DTDC0X9iqIDTj1czY0rW5e32mZrcobrOGwSi6rZTTo0SL1QiPxiq3A9GZYTgNjG8UBiqYBcV8v+FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mh0EBIe5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nHr5PiqOrHws0XaEK8FA++1wZX6z0Xzt52j5YVdMA4OgibxHM1aYP96rLgFLoWl/seZKUyjIa623/zUDmRwLglNxQiec029o7im1JCKG9X01kBshsygN+gOKDp10R50yfrvyBOsZadIQ3KMZ+EFbrtn3NwbrIgx9zAN0znfQnKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ss+Do952; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mh0EBIe5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AD8C2BCB0;
-	Tue, 12 May 2026 17:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ss+Do952"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35AEC2BCB0;
+	Tue, 12 May 2026 17:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608224;
-	bh=x+evND+hXLIq/hm+fVoZraLTLkBS8pLrTEDSNG5dhrE=;
+	s=korg; t=1778608227;
+	bh=NpREYZLX1YAOn2fh4tttvCfwdUycwYXMxxiyG2flXq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mh0EBIe5MJ9rhKxLh6zaXN+DCvQEEMmIAue5B/iIwlfZUKESGfqzSw10FLIZfrgQ2
-	 ZoyXsg0AaHOQQvN4ClQxJR4xBcFVxQtl9Gko5cJFhSgyGr3sQpnF5Yq91jpmeHHLYD
-	 ho4CziSoxtn9+k4yogekqQ5EEXc2Lo807WNQKXMM=
+	b=ss+Do952srpVsZBbRm+EuITdRGaCxff/67kkeQmXrA/3ItmeHv4gWUw/p1nTrf9p+
+	 zKezJAkaC/f3jorbKLNr3gXU7FzSMNhnKtOXxPqu1QekwxwmHiLiWi1hyLtLlkm1pU
+	 liqQhHbi7WgVnmWfvcsD8Ll94w2vQuzyXHXx/pKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	John Ogness <john.ogness@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 196/206] printk: add print_hex_dump_devel()
-Date: Tue, 12 May 2026 19:40:48 +0200
-Message-ID: <20260512173937.024533201@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.12 205/206] KVM: arm64: Wake-up from WFI when iqrchip is in userspace
+Date: Tue, 12 May 2026 19:40:57 +0200
+Message-ID: <20260512173937.217612722@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -52,46 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit d134feeb5df33fbf77f482f52a366a44642dba09 ]
+commit 4ce98bf0865c349e7026ad9c14f48da264920953 upstream
 
-Add print_hex_dump_devel() as the hex dump equivalent of pr_devel(),
-which emits output only when DEBUG is enabled, but keeps call sites
-compiled otherwise.
+It appears that there is nothing in the wake-up path that
+evaluates whether the in-kernel interrupts are pending unless
+we have a vgic.
 
-Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 177730a273b1 ("crypto: caam - guard HMAC key hex dumps in hash_digest_key")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This means that the userspace irqchip support has been broken for
+about four years, and nobody noticed. It was also broken before
+as we wouldn't wake-up on a PMU interrupt, but hey, who cares...
+
+It is probably time to remove the feature altogether, because it
+was a terrible idea 10 years ago, and it still is.
+
+Fixes: b57de4ffd7c6d ("KVM: arm64: Simplify kvm_cpu_has_pending_timer()")
+Link: https://patch.msgid.link/20260423163607.486345-1-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/printk.h |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/arm64/kvm/arm.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/include/linux/printk.h
-+++ b/include/linux/printk.h
-@@ -786,6 +786,19 @@ static inline void print_hex_dump_debug(
- }
- #endif
- 
-+#if defined(DEBUG)
-+#define print_hex_dump_devel(prefix_str, prefix_type, rowsize,		\
-+			     groupsize, buf, len, ascii)		\
-+	print_hex_dump(KERN_DEBUG, prefix_str, prefix_type, rowsize,	\
-+		       groupsize, buf, len, ascii)
-+#else
-+static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
-+					int rowsize, int groupsize,
-+					const void *buf, size_t len, bool ascii)
-+{
-+}
-+#endif
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -729,6 +729,11 @@ int kvm_arch_vcpu_ioctl_set_mpstate(stru
+ int kvm_arch_vcpu_runnable(struct kvm_vcpu *v)
+ {
+ 	bool irq_lines = *vcpu_hcr(v) & (HCR_VI | HCR_VF);
 +
- /**
-  * print_hex_dump_bytes - shorthand form of print_hex_dump() with default params
-  * @prefix_str: string to prefix each line with;
++	irq_lines |= (!irqchip_in_kernel(v->kvm) &&
++		      (kvm_timer_should_notify_user(v) ||
++		       kvm_pmu_should_notify_user(v)));
++
+ 	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v))
+ 		&& !kvm_arm_vcpu_stopped(v) && !v->arch.pause);
+ }
 
 
