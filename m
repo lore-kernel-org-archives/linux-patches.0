@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69743955DC;
-	Tue, 12 May 2026 17:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849303955E1;
+	Tue, 12 May 2026 17:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608222; cv=none; b=SlrCEOhy0jHCgzT4yAvwP4/Tbv5z1wRIZk9TpZH4ILN4TQLaKYi+XCQgsqXDsUenFL78V8Y/Sp1b05VZQoZLMmM+Cz47Psr7t+FcsZ4UweFLpwhzo8QxAbWJ4KzRvw0Les5O8gX3aWS/Vhlqzo9haxgatEdt12A0p7QL0e3x0ng=
+	t=1778608224; cv=none; b=e/AKhFiL6Xo2jVZxDMEXsJVt4SwiNqTwbKfI80XSIjnOG3Tdjc5jL878nz1qXQkXoMkstgyUrymDSG58zDm3/SNtON3gjIkiaE0f5QlGVTr1BGnBZQKD9F3XuUjPG5u/lryfaqXC73D1DTETX4Ff2aixAp5PzJKJzTdJ4A+78x0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608222; c=relaxed/simple;
-	bh=gqwqurhEIot5LbjwJ5XTTkDAMzNtI7kLIFuBGzfok88=;
+	s=arc-20240116; t=1778608224; c=relaxed/simple;
+	bh=x+evND+hXLIq/hm+fVoZraLTLkBS8pLrTEDSNG5dhrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d050Fjfe4NSvqxC7ev9tb8IW7jwjPJm/GaY9iQXLSXxhf9Bxe5cZK0trQxUwi2uXIzbTEdxdT5MhDrehJ2NdiUmAS5g/CteimM+b08tC2gtsfAvaN51ugS+wSYeHZpFSuAjoPU/+SXWt7LVD6oBEAKWzXPpoRTifKvTowTfx2w0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWjMIh4n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FvpcNnFD+Q+tdb2O3KlB7TX9qV/qwStFOfPRx19bBn+MFdnb1WLT6FyQ0hiAxWT0NYDOqJNHozSPtOGZ/2pUSbV/nlvr87DTDC0X9iqIDTj1czY0rW5e32mZrcobrOGwSi6rZTTo0SL1QiPxiq3A9GZYTgNjG8UBiqYBcV8v+FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mh0EBIe5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWjMIh4n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E936C2BCB0;
-	Tue, 12 May 2026 17:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mh0EBIe5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AD8C2BCB0;
+	Tue, 12 May 2026 17:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608221;
-	bh=gqwqurhEIot5LbjwJ5XTTkDAMzNtI7kLIFuBGzfok88=;
+	s=korg; t=1778608224;
+	bh=x+evND+hXLIq/hm+fVoZraLTLkBS8pLrTEDSNG5dhrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWjMIh4nT8hi0bmtdSEwMKIsyTt1kM3qi20tEqD/6mOmQkWfi3R+155O2gsRI/b/C
-	 AazcXwh7Of3mV46r+cPscReIf3KfvTgjLcnqnFx9AmVI68zwcmfU3HHANKrnqJ7mmG
-	 FI0LXVRhKG5egpWCp7mdPWXRm3N+QYx8sVn7o+A4=
+	b=mh0EBIe5MJ9rhKxLh6zaXN+DCvQEEMmIAue5B/iIwlfZUKESGfqzSw10FLIZfrgQ2
+	 ZoyXsg0AaHOQQvN4ClQxJR4xBcFVxQtl9Gko5cJFhSgyGr3sQpnF5Yq91jpmeHHLYD
+	 ho4CziSoxtn9+k4yogekqQ5EEXc2Lo807WNQKXMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.12 149/206] RDMA/mana: Fix mana_destroy_wq_obj() cleanup in mana_ib_create_qp_rss()
-Date: Tue, 12 May 2026 19:40:01 +0200
-Message-ID: <20260512173936.018113848@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	John Ogness <john.ogness@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 196/206] printk: add print_hex_dump_devel()
+Date: Tue, 12 May 2026 19:40:48 +0200
+Message-ID: <20260512173937.024533201@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -50,56 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 34ecf795692ee57c393109f4a24ccc313091e137 upstream.
+[ Upstream commit d134feeb5df33fbf77f482f52a366a44642dba09 ]
 
-Sashiko points out there are two bugs here in the error unwind flow, both
-related to how the WQ table is unwound.
+Add print_hex_dump_devel() as the hex dump equivalent of pr_devel(),
+which emits output only when DEBUG is enabled, but keeps call sites
+compiled otherwise.
 
-First there is a double i-- on the first failure path due to the while loop
-having a i--, remove it.
-
-Second if mana_ib_install_cq_cb() fails then mana_create_wq_obj() is not
-undone due to the above i--.
-
-Cc: stable@vger.kernel.org
-Fixes: c15d7802a424 ("RDMA/mana_ib: Add CQ interrupt support for RAW QP")
-Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=1
-Link: https://patch.msgid.link/r/6-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 177730a273b1 ("crypto: caam - guard HMAC key hex dumps in hash_digest_key")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mana/qp.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ include/linux/printk.h |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/infiniband/hw/mana/qp.c
-+++ b/drivers/infiniband/hw/mana/qp.c
-@@ -194,11 +194,8 @@ static int mana_ib_create_qp_rss(struct
+--- a/include/linux/printk.h
++++ b/include/linux/printk.h
+@@ -786,6 +786,19 @@ static inline void print_hex_dump_debug(
+ }
+ #endif
  
- 		ret = mana_create_wq_obj(mpc, mpc->port_handle, GDMA_RQ,
- 					 &wq_spec, &cq_spec, &wq->rx_object);
--		if (ret) {
--			/* Do cleanup starting with index i-1 */
--			i--;
-+		if (ret)
- 			goto fail;
--		}
- 
- 		/* The GDMA regions are now owned by the WQ object */
- 		wq->queue.gdma_region = GDMA_INVALID_DMA_REGION;
-@@ -218,8 +215,10 @@ static int mana_ib_create_qp_rss(struct
- 
- 		/* Create CQ table entry */
- 		ret = mana_ib_install_cq_cb(mdev, cq);
--		if (ret)
-+		if (ret) {
-+			mana_destroy_wq_obj(mpc, GDMA_RQ, wq->rx_object);
- 			goto fail;
-+		}
- 	}
- 	resp.num_entries = i;
- 
++#if defined(DEBUG)
++#define print_hex_dump_devel(prefix_str, prefix_type, rowsize,		\
++			     groupsize, buf, len, ascii)		\
++	print_hex_dump(KERN_DEBUG, prefix_str, prefix_type, rowsize,	\
++		       groupsize, buf, len, ascii)
++#else
++static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
++					int rowsize, int groupsize,
++					const void *buf, size_t len, bool ascii)
++{
++}
++#endif
++
+ /**
+  * print_hex_dump_bytes - shorthand form of print_hex_dump() with default params
+  * @prefix_str: string to prefix each line with;
 
 
