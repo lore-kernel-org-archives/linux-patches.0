@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDA93C0A1A;
-	Tue, 12 May 2026 17:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBD73C0A1A;
+	Tue, 12 May 2026 17:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608132; cv=none; b=YwBHtbzvhGH4CNy/Ll1ROBEV8+mAT+W50fSGu0sFHV1DyKDhIaQVKGIjjA0doqHhsTMDF1WVu+IS0I0i+miHSu2lbLXIxn1MaGKBPmIF/EVXjVSK6znDa0eNGC8lsIg2ClacVPOosoT5xAyUHXnko+he+Ffs147OnQiS03GejBU=
+	t=1778608134; cv=none; b=PQTx8H4B5WaL/WKt2Spsqkv9lR9swEp87fn3Qbk1HT6aHpeQrTHZodRxG3nN92xgXn7OEMq12ACJ7pGLJvauCIxb1kwNTmRGOVNYo5pIleg1LJmTcaNi/FFV0NSbg5KbPzojCssPMPURExVIeqeXyE59qNWrbVVjVr/PC3cJlT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608132; c=relaxed/simple;
-	bh=3fC73MDVvI3gGAtLCSPhWkvzJORwqv+QlVarAH2UmSs=;
+	s=arc-20240116; t=1778608134; c=relaxed/simple;
+	bh=jVunKvZc7ykfce374DElfu3dGnb2i/d+HOuJaTuSAaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b56lApmqaXiGqHGi7nTbkTN7ocOjriInwaWqZfkC7Jlk0aOS8WHucoMX0jCoNrJYcynwiMnmELaG0nVux4RpF5C34ZsTS+HbBgbfshmx6BawdsAUbkas7GML6REu7Y7+clqmQoOonTfROPtBSUMNva7FzMmbtqvu9Llp8WZi7Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZywL6LI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ugKmKlCiYG7ZpW9gR3SEbvYQCK7EZeikiwZem3PcGO8odutYaEvSDze1AbszND4EFWAfF86MlVG2KQyrOBEzsR9ZxSYL6Eya6bwwuhbWpRYxG7S/SMZOdEWrm2t6y0gZBBA3X6Za9DPA1gQ6vmOJVeU7MVMe61W1M1ZKJejUTXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPIrcQk/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZywL6LI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B99C2BCB0;
-	Tue, 12 May 2026 17:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPIrcQk/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33C0C2BCB0;
+	Tue, 12 May 2026 17:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608131;
-	bh=3fC73MDVvI3gGAtLCSPhWkvzJORwqv+QlVarAH2UmSs=;
+	s=korg; t=1778608134;
+	bh=jVunKvZc7ykfce374DElfu3dGnb2i/d+HOuJaTuSAaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZywL6LIl/IFp0ZoUwGo+fRY5lQnlYsewjAQEB2Nx0zDzm61ETQvOUpwlkABgAENf
-	 gOJjNqbQTmXl15AgQ3fPmZnn6Ib1tmgviv895NxGOqjC3l4iEJxD/tpkE7LU1iVjc0
-	 WunyRTYDmXFl4201bEkeWud1jtdTQs6v1x6SQyAY=
+	b=mPIrcQk/1/snhSlgDYYFwcKvvibhxTrX5SVoOEIaN0JKtcadl/b477vnCzxdlEm4c
+	 CPNtNMm5EWfQLoqXY9vTSmaJOLiKlD7r4/NJlPBvCXYH5kbuI04TvNPkvlp5q5MOIN
+	 DIajWVMmgzhoggHWvDF0pC++UJlC22VosTeKCoJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 168/206] f2fs: fix uninitialized kobject put in f2fs_init_sysfs()
-Date: Tue, 12 May 2026 19:40:20 +0200
-Message-ID: <20260512173936.420719081@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.12 151/206] RDMA/mlx4: Fix resource leak on error in mlx4_ib_create_srq()
+Date: Tue, 12 May 2026 19:40:03 +0200
+Message-ID: <20260512173936.060050732@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,62 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit b635f2ecdb5ad34f9c967cabb704d6bed9382fd0 upstream.
+commit c54c7e4cb679c0aaa1cb489b9c3f2cd98e63a44c upstream.
 
-In f2fs_init_sysfs(), all failure paths after kset_register() jump to
-put_kobject, which unconditionally releases both f2fs_tune and
-f2fs_feat.
+Sashiko points out that mlx4_srq_alloc() was not undone during error
+unwind, add the missing call to mlx4_srq_free().
 
-If kobject_init_and_add(&f2fs_feat, ...) fails, f2fs_tune has not been
-initialized yet, so calling kobject_put(&f2fs_tune) is invalid.
-
-Fix this by splitting the unwind path so each error path only releases
-objects that were successfully initialized.
-
-Fixes: a907f3a68ee26ba4 ("f2fs: add a sysfs entry to reclaim POSIX_FADV_NOREUSE pages")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 225c7b1feef1 ("IB/mlx4: Add a driver Mellanox ConnectX InfiniBand adapters")
+Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=8
+Link: https://patch.msgid.link/r/11-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/sysfs.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/mlx4/srq.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -1795,24 +1795,26 @@ int __init f2fs_init_sysfs(void)
- 	ret = kobject_init_and_add(&f2fs_feat, &f2fs_feat_ktype,
- 				   NULL, "features");
- 	if (ret)
--		goto put_kobject;
-+		goto unregister_kset;
+--- a/drivers/infiniband/hw/mlx4/srq.c
++++ b/drivers/infiniband/hw/mlx4/srq.c
+@@ -193,13 +193,15 @@ int mlx4_ib_create_srq(struct ib_srq *ib
+ 	if (udata)
+ 		if (ib_copy_to_udata(udata, &srq->msrq.srqn, sizeof (__u32))) {
+ 			err = -EFAULT;
+-			goto err_wrid;
++			goto err_srq;
+ 		}
  
- 	ret = kobject_init_and_add(&f2fs_tune, &f2fs_tune_ktype,
- 				   NULL, "tuning");
- 	if (ret)
--		goto put_kobject;
-+		goto put_feat;
- 
- 	f2fs_proc_root = proc_mkdir("fs/f2fs", NULL);
- 	if (!f2fs_proc_root) {
- 		ret = -ENOMEM;
--		goto put_kobject;
-+		goto put_tune;
- 	}
+ 	init_attr->attr.max_wr = srq->msrq.max - 1;
  
  	return 0;
  
--put_kobject:
-+put_tune:
- 	kobject_put(&f2fs_tune);
-+put_feat:
- 	kobject_put(&f2fs_feat);
-+unregister_kset:
- 	kset_unregister(&f2fs_kset);
- 	return ret;
- }
++err_srq:
++	mlx4_srq_free(dev->dev, &srq->msrq);
+ err_wrid:
+ 	if (udata)
+ 		mlx4_ib_db_unmap_user(ucontext, &srq->db);
 
 
