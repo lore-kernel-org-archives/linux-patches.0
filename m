@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C8E3EDE4A;
-	Tue, 12 May 2026 18:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE6B33ADBA;
+	Tue, 12 May 2026 18:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608853; cv=none; b=saCV+j/sqNwaWTURgVyWKPNJGAnivQsst8NeV7dK2vonF7NB/YX7tbHHn5rDX+8E3f8kZfjbekb1cpqxFgPu32Z/BpV3DOQ7TSrY9tg+1R4nrmXKxeP8VwH9ysSkw5sfNJCOHr+UjWWdTEW3iIyXEmOufyRnnfNu6YLQIK/Y2Lw=
+	t=1778608856; cv=none; b=ZwuXCi9shiOkYERKWkqIfSDGRGhaBMYrFMgzJdGqLH1eSmgvVj/TiBamIwDWoCvSBpyEh86xHu0zhqnHBwyldz1vHjL+5FXcNjJ4EG+cy4e7aF3UcvBLg0Wa97qs/cHP9eJnpLB5OQ46RtsJrm+PD5sG947GgZT+Gc2TPMDthAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608853; c=relaxed/simple;
-	bh=i4vMjvCu7wUNmy1FVJvm21H5QnBX1c2fWGuLUBGoXk4=;
+	s=arc-20240116; t=1778608856; c=relaxed/simple;
+	bh=fQg2KNtcyVzRQzqq/MNcu8Sgp5R//rXwrVZWgkokPNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K98cIO7K3wImmIF5pMHdL4mZh1e/32wQdvO5jTW0xbUWPTGQuzq7YgBywIuFHPOP6T9sylSN73IY+ZclN5Z0eez8oInylfqGSne0+w8bs4iS91+eKV7PgXqyPeCeKutcLb6Ji1Evg42qeQEilWRANtO/0R6udfyvmlddxEB2Gsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3c33DgO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JkkL2S9XUukoERPUAJ7dsniUbtHyOyE1LX0fQnVtPXSlNkLgkOou3PXRE3HdqqlhBVwSq0pdi6Eb6M+mIKashWyyxcmtO/dPBi7vBpAIYxqfigRJhomZzMATYd8Gcro8Ym1XR0OJvjDvUVVwnugzq8ccoQxrOiE3JZubmIr1OlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrCTbepA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3c33DgO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5B8C2BCB0;
-	Tue, 12 May 2026 18:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrCTbepA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D5EC2BCF5;
+	Tue, 12 May 2026 18:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608853;
-	bh=i4vMjvCu7wUNmy1FVJvm21H5QnBX1c2fWGuLUBGoXk4=;
+	s=korg; t=1778608855;
+	bh=fQg2KNtcyVzRQzqq/MNcu8Sgp5R//rXwrVZWgkokPNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3c33DgO+PF5bOJRnKS3vDn+5MD+3vmopemyJpyUPm1ljcch+19fkbi8PHJ0e5Zp6
-	 A1JfVntKTY1noXjrQPLSDam86gN6lgGWMNXDQMRHK0l4J/7IiVZFjMk0g2n+/tFo60
-	 6B2m6k8baLGC7vceVYbecEHQ4VUpejO9bCdgroME=
+	b=MrCTbepAtTQ3wIy5ZaIsKdMaa39ea/QFe8pXlJ6XUpgvU8qui3rwFYrLgFR2JJ1BI
+	 n6KJR12gQshRce3XOafKVWZO/Ur/3hyQq0SdAZ42QXovP0Z4LV3Tm+efdezW7bKlSR
+	 MYjRv5JOF0G4rpTsGBh+ixDllccxSqIzhWIdTA7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 213/270] mptcp: fix rx timestamp corruption on fastopen
-Date: Tue, 12 May 2026 19:40:14 +0200
-Message-ID: <20260512173942.930841214@linuxfoundation.org>
+	Bibo Mao <maobibo@loongson.cn>,
+	Qiang Ma <maqianga@uniontech.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 240/270] LoongArch: KVM: Cap KVM_CAP_NR_VCPUS by KVM_CAP_MAX_VCPUS
+Date: Tue, 12 May 2026 19:40:41 +0200
+Message-ID: <20260512173943.493327765@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,50 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Qiang Ma <maqianga@uniontech.com>
 
-commit 6254a16d6f0c672e3809ca5d7c9a28a55d71f764 upstream.
+commit b3e31a6650d4cab63f0814c37c0b360372c6ee9e upstream.
 
-The skb cb offset containing the timestamp presence flag is cleared
-before loading such information. Cache such value before MPTCP CB
-initialization.
+It doesn't make sense to return the recommended maximum number of vCPUs
+which exceeds the maximum possible number of vCPUs.
 
-Fixes: 36b122baf6a8 ("mptcp: add subflow_v(4,6)_send_synack()")
+Other architectures have already done this, such as commit 57a2e13ebdda
+("KVM: MIPS: Cap KVM_CAP_NR_VCPUS by KVM_CAP_MAX_VCPUS")
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-3-b70118df778e@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/fastopen.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/loongarch/kvm/vm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/fastopen.c
-+++ b/net/mptcp/fastopen.c
-@@ -12,6 +12,7 @@ void mptcp_fastopen_subflow_synack_set_p
- 	struct sock *sk, *ssk;
- 	struct sk_buff *skb;
- 	struct tcp_sock *tp;
-+	bool has_rxtstamp;
- 
- 	/* on early fallback the subflow context is deleted by
- 	 * subflow_syn_recv_sock()
-@@ -39,12 +40,13 @@ void mptcp_fastopen_subflow_synack_set_p
- 	 */
- 	tp->copied_seq += skb->len;
- 	subflow->ssn_offset += skb->len;
-+	has_rxtstamp = TCP_SKB_CB(skb)->has_rxtstamp;
- 
- 	/* Only the sequence delta is relevant */
- 	MPTCP_SKB_CB(skb)->map_seq = -skb->len;
- 	MPTCP_SKB_CB(skb)->end_seq = 0;
- 	MPTCP_SKB_CB(skb)->offset = 0;
--	MPTCP_SKB_CB(skb)->has_rxtstamp = TCP_SKB_CB(skb)->has_rxtstamp;
-+	MPTCP_SKB_CB(skb)->has_rxtstamp = has_rxtstamp;
- 	MPTCP_SKB_CB(skb)->cant_coalesce = 1;
- 
- 	mptcp_data_lock(sk);
+--- a/arch/loongarch/kvm/vm.c
++++ b/arch/loongarch/kvm/vm.c
+@@ -94,7 +94,7 @@ int kvm_vm_ioctl_check_extension(struct
+ 		r = 1;
+ 		break;
+ 	case KVM_CAP_NR_VCPUS:
+-		r = num_online_cpus();
++		r = min_t(unsigned int, num_online_cpus(), KVM_MAX_VCPUS);
+ 		break;
+ 	case KVM_CAP_MAX_VCPUS:
+ 		r = KVM_MAX_VCPUS;
 
 
