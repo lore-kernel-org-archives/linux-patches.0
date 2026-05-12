@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894DD3C09F7;
-	Tue, 12 May 2026 17:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBD43C09ED;
+	Tue, 12 May 2026 17:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608489; cv=none; b=s1E1rnu1xnxK49jMlDyqh29Bznk44/16U6qIIFGC6PD++tzZvMII9Dng/O4iMArX93cDxoUCkESYanOiyErqxATbHnxKEy8ZocXL5KHe35QUbSYwV04IZMWIfnwlrfBjcX0crs21UxxHr5giCujy902C7UXW4zYYfsy2ML8Qh3w=
+	t=1778608492; cv=none; b=Kz15uic1aT2JgwmlrQPWbHmG1rZv06cacR7FPJK6Udt7iHq0V5glpEwcCPGB9n1fagvehJMCvzx2QHoygxXSzrsDsa3IGS4kzfEoifl8owRU6QznzHZvaZck5qPuE6VTjhQ0gyfOLeVsEa/I9bUpBxsFFPbeZGdCnrAhzU/OV5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608489; c=relaxed/simple;
-	bh=ZOT4LRbWsTMQbpw2MQvr/XaFNTi/95/ClteFSMwBelw=;
+	s=arc-20240116; t=1778608492; c=relaxed/simple;
+	bh=cWaNFMIg5yS0lW7ovG4+YwfTlnCoMxRuStJUbGPsAbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hOPrDkN6Tm20uiO0teCPpenQt7N2sSQDC2ertnVRbkaAzpDWycqrcyH8mLjdK6odH+hEOVZfgUc6z6EhPh3i7uLNBU1SwJCzAKzh+Qf1IrTc1Ep2j0XX351NGG5W8ypyv0KNJ4zMPDj/lxsZnXHveJDLFxjJTncc742xB9+LL10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fYnheHC/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bE4oiULHUtqunKkr3xRORbQ6wNssKPPIO7GJLuVQqWHQgFhgvMmEPXhlb8z6wnDBgk5DYPAufjcnWoF2phZ8xHGyPgiViiFXxgh6pM+9MwdBaz+TIobQ0VU7uQ98DWhABySuHhMfIxO5h+SzGdRF5nr21Z1Ww0xKefTalkHeVOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+iVMa/l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fYnheHC/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDBCC2BCB0;
-	Tue, 12 May 2026 17:54:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+iVMa/l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7004C2BCB0;
+	Tue, 12 May 2026 17:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608489;
-	bh=ZOT4LRbWsTMQbpw2MQvr/XaFNTi/95/ClteFSMwBelw=;
+	s=korg; t=1778608492;
+	bh=cWaNFMIg5yS0lW7ovG4+YwfTlnCoMxRuStJUbGPsAbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fYnheHC/nxhgFn4JaQNXIF+I7k6pFTdJzxUsWH8fxVuLwG5KEfKjiAL+XdFmg+Ldm
-	 2bG7oB4aQ7Z2Jgg3YMPqChux1oDl7GGDcyUzsB8MhrPXvTzPyeB67ds/CxuO/wBeMd
-	 v/8pwrvNJpQG+A+ujL5Fhah6p/98R5xL1+iJyARY=
+	b=L+iVMa/lDCPAYIQSUftGSYel3dlhy8vTTs0EVAJI5SJ3yZ/JfBCa7+fUmdhdp1ER7
+	 BTRn+b38NE2CH/xJ2n7F2zzvb1n3rSU2jqL18sXYie+pimHwtsodXXVPWbaWh7N+97
+	 eB2plw7ITKfWx07YGsD3XIim7FczOlM/bXLWjcbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 099/270] net: libwx: fix VF illegal register access
-Date: Tue, 12 May 2026 19:38:20 +0200
-Message-ID: <20260512173940.543658175@linuxfoundation.org>
+Subject: [PATCH 6.18 100/270] ip6_gre: Use cached t->net in ip6erspan_changelink().
+Date: Tue, 12 May 2026 19:38:21 +0200
+Message-ID: <20260512173940.564546266@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,42 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 694de316f607fe2473d52ca0707e3918e72c1562 upstream.
+commit 1d324c2f43f70c965f25c58cc3611c779adbe47e upstream.
 
-Register WX_CFG_PORT_ST is a PF restricted register. When a VF is
-initialized, attempting to read this register triggers an illegal
-register access, which lead to a system hang.
+After commit 5e72ce3e3980 ("net: ipv6: Use link netns in newlink() of
+rtnl_link_ops"), ip6erspan_newlink() correctly resolves the per-netns
+ip6gre hash via link_net. ip6erspan_changelink() was not converted in
+that series and still uses dev_net(dev), which diverges from the
+device's creation netns after IFLA_NET_NS_FD migration.
 
-When the device is VF, the bus function ID can be obtained directly from
-the PCI_FUNC(pdev->devfn).
+This re-inserts the tunnel into the wrong per-netns hash. The
+original netns keeps a stale entry. When that netns is later
+destroyed, ip6gre_exit_rtnl_net() walks the stale entry, producing a
+slab-use-after-free reported by KASAN, followed by a kernel BUG at
+net/core/dev.c (LIST_POISON1) in unregister_netdevice_many_notify().
 
-Fixes: a04ea57aae37 ("net: libwx: fix device bus LAN ID")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/4D1F4452D21DE107+20260429083743.88961-1-jiawenwu@trustnetic.com
+Reachable from an unprivileged user namespace (unshare --user
+--map-root-user --net).
+
+ip6gre_changelink() earlier in the same file already uses the cached
+t->net; only ip6erspan_changelink() has the wrong shape.
+
+Fixes: 2d665034f239 ("net: ip6_gre: Fix ip6erspan hlen calculation")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260430103318.3206018-1-maoyi.xie@ntu.edu.sg
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_hw.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/ipv6/ip6_gre.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/wangxun/libwx/wx_hw.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
-@@ -2427,8 +2427,11 @@ int wx_sw_init(struct wx *wx)
- 	wx->oem_svid = pdev->subsystem_vendor;
- 	wx->oem_ssid = pdev->subsystem_device;
- 	wx->bus.device = PCI_SLOT(pdev->devfn);
--	wx->bus.func = FIELD_GET(WX_CFG_PORT_ST_LANID,
--				 rd32(wx, WX_CFG_PORT_ST));
-+	if (pdev->is_virtfn)
-+		wx->bus.func = PCI_FUNC(pdev->devfn);
-+	else
-+		wx->bus.func = FIELD_GET(WX_CFG_PORT_ST_LANID,
-+					 rd32(wx, WX_CFG_PORT_ST));
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -2261,10 +2261,11 @@ static int ip6erspan_changelink(struct n
+ 				struct nlattr *data[],
+ 				struct netlink_ext_ack *extack)
+ {
+-	struct ip6gre_net *ign = net_generic(dev_net(dev), ip6gre_net_id);
++	struct ip6_tnl *t = netdev_priv(dev);
+ 	struct __ip6_tnl_parm p;
+-	struct ip6_tnl *t;
++	struct ip6gre_net *ign;
  
- 	if (wx->oem_svid == PCI_VENDOR_ID_WANGXUN ||
- 	    pdev->is_virtfn) {
++	ign = net_generic(t->net, ip6gre_net_id);
+ 	t = ip6gre_changelink_common(dev, tb, data, &p, extack);
+ 	if (IS_ERR(t))
+ 		return PTR_ERR(t);
 
 
