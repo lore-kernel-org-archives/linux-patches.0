@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A673002A9;
-	Tue, 12 May 2026 17:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091E43BB100;
+	Tue, 12 May 2026 17:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608569; cv=none; b=Aha9SMP9M9j3qJ6BhkdwEU/lv5I0pLc89urUWgZu4XCqC9ZlvjfBgPlfiJH25UUHrFG4AhH/dPGqZkEUjYe8tb5hxh23PNhRKPH4f/bwUXGG4i2f72lyWcC5m8z4ouw4iMzSKtgG9Om67C2L9RiltQiTd5K2pIwdTYA6kDMTfQ0=
+	t=1778608572; cv=none; b=pzFojm0wIo/yAcywq7rNtp+t/S7i/XmngjppgOWu5JxluzqL6VFE+Ttg+65MQb7L1pPjl0lhnx0DTw3LYvRJBDecFKrtHU9KNrMOPsrouWUxkCbk20LYMMgGwRc+aPDUFhkw4Ze0QfsfbRUnvONXN9Kxfk5QdwvnehBC2eXRG3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608569; c=relaxed/simple;
-	bh=EKeVV2k0JvFOTGkbyy0PK6XTmUeZqTkWaZkkXd1rbpQ=;
+	s=arc-20240116; t=1778608572; c=relaxed/simple;
+	bh=OojMH6UBtMgdrKqXahQE3FfZXejDsS2J1Bmn5xU7WWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fYnvO77NL5hUcUed4PPXbPLiih2evZ/e1uTD0l0WqRS2MXNTeB5VTY91yEc6DpCvxxgUqiYG+fmIr+AzYY36wcQfVBw+xk/0kIdasqmPjV9etMB1BYJWGDAzBPAoQwGPY40MaVKQrY5DjpT8GKIJDCiFtVww2vDlifGhKUAri48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoKTCp+4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VaUNeKAikj0AKX6mNWQ5rBPZ4R6PF4yr0qRR6gUMYkLFn+Xmj4A0Zxv02AZamUopMPvesNvZN51K07wCzemqBVOaCoVdEUvSjuu0550WRNIGu/cA0flOPDX53nyeJfx4ik9k1ZwJGoB9/QIHClOwCuZzNvGBa1ubvCaq4wPOpw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSuYOGKd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoKTCp+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F378FC2BCB0;
-	Tue, 12 May 2026 17:56:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSuYOGKd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF6FC2BCB0;
+	Tue, 12 May 2026 17:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608569;
-	bh=EKeVV2k0JvFOTGkbyy0PK6XTmUeZqTkWaZkkXd1rbpQ=;
+	s=korg; t=1778608571;
+	bh=OojMH6UBtMgdrKqXahQE3FfZXejDsS2J1Bmn5xU7WWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GoKTCp+4mY9BNziyUd/3yIHS11mGALu35sZCcS1fV7sVAgUepnHzsRjVa3a5fwuit
-	 +CBvSTMsXm+gM6QV2fDYdmxVbtoRC8wYEPK2bDdgMv1J48WJEDmatqVG4jwjf/rrHP
-	 AUvefS/qEwYXfVQPxKU3DZbzIOF9/cDtk2SbTYdA=
+	b=fSuYOGKd3MmvM0RwEDnPRBSkvE/gj5oDDSJ8yjcvk6nE5dpnm1KOsXUgXpJcJDmuN
+	 Mqcwd3OWeiDjjSrkwy9uP5adl8ePrV1LvXttuAX9SuaBXPxBfyFGAy1tGVldDQ32O3
+	 lLOLRJLCvcS1qlmLaAMZ3TeVhiCWTbXBfnLznIts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.18 131/270] udf: reject descriptors with oversized CRC length
-Date: Tue, 12 May 2026 19:38:52 +0200
-Message-ID: <20260512173941.211346065@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.18 132/270] thermal: core: Free thermal zone ID later during removal
+Date: Tue, 12 May 2026 19:38:53 +0200
+Message-ID: <20260512173941.232299685@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,48 +49,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 55d41b0a20128e86b9e960dd2e3f0a2d69a18df7 upstream.
+commit daae9c18feec74566e023fc88cfb0ce26e39d868 upstream.
 
-udf_read_tagged() skips CRC verification when descCRCLength +
-sizeof(struct tag) exceeds the block size.  A crafted UDF image can
-set descCRCLength to an oversized value to bypass CRC validation
-entirely; the descriptor is then accepted based solely on the 8-bit
-tag checksum, which is trivially recomputable.
+The thermal zone removal ordering is different from the thermal zone
+registration rollback path ordering and the former is arguably
+problematic because freeing a thermal zone ID prematurely may cause
+it to be used during the registration of another thermal zone which
+may fail as a result.
 
-Reject such descriptors instead of silently accepting them.  A
-legitimate single-block descriptor should never have a CRC length that
-exceeds the block.
+Prevent that from occurring by changing the thermal zone removal
+ordering to reflect the thermal zone registration rollback path
+ordering.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260413211240.853662-1-michael.bommarito@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Also more the ida_destroy() call from thermal_zone_device_unregister()
+to thermal_release() for consistency.
+
+Fixes: b31ef8285b19 ("thermal core: convert ID allocation to IDA")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5063934.GXAFRqVoOG@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/misc.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/thermal/thermal_core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/udf/misc.c
-+++ b/fs/udf/misc.c
-@@ -230,8 +230,12 @@ struct buffer_head *udf_read_tagged(stru
- 	}
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -965,6 +965,7 @@ static void thermal_release(struct devic
+ 		tz = to_thermal_zone(dev);
+ 		thermal_zone_destroy_device_groups(tz);
+ 		thermal_set_governor(tz, NULL);
++		ida_destroy(&tz->ida);
+ 		mutex_destroy(&tz->lock);
+ 		complete(&tz->removal);
+ 	} else if (!strncmp(dev_name(dev), "cooling_device",
+@@ -1726,8 +1727,6 @@ void thermal_zone_device_unregister(stru
  
- 	/* Verify the descriptor CRC */
--	if (le16_to_cpu(tag_p->descCRCLength) + sizeof(struct tag) > sb->s_blocksize ||
--	    le16_to_cpu(tag_p->descCRC) == crc_itu_t(0,
-+	if (le16_to_cpu(tag_p->descCRCLength) + sizeof(struct tag) > sb->s_blocksize) {
-+		udf_err(sb, "block %u: CRC length %u exceeds block size\n",
-+			block, le16_to_cpu(tag_p->descCRCLength));
-+		goto error_out;
-+	}
-+	if (le16_to_cpu(tag_p->descCRC) == crc_itu_t(0,
- 					bh->b_data + sizeof(struct tag),
- 					le16_to_cpu(tag_p->descCRCLength)))
- 		return bh;
+ 	thermal_thresholds_exit(tz);
+ 	thermal_remove_hwmon_sysfs(tz);
+-	ida_free(&thermal_tz_ida, tz->id);
+-	ida_destroy(&tz->ida);
+ 
+ 	device_del(&tz->device);
+ 	put_device(&tz->device);
+@@ -1735,6 +1734,9 @@ void thermal_zone_device_unregister(stru
+ 	thermal_notify_tz_delete(tz);
+ 
+ 	wait_for_completion(&tz->removal);
++
++	ida_free(&thermal_tz_ida, tz->id);
++
+ 	kfree(tz->tzp);
+ 	kfree(tz);
+ }
 
 
