@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B983EDE5B;
-	Tue, 12 May 2026 18:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6755A34A773;
+	Tue, 12 May 2026 18:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608959; cv=none; b=jnZEkxSkNgwEAkXusc3PL7h/5YjX81wtEpaCJNzb/ynJPGbHUCtWeX8uDVy9jvhrSqd4qmKQtipHF266s4yvpPG70fWifXTxJesLhR36DmHHS0UmMQb93eMBL8P7NBgIvLJ1ZJXn9CoTPoIFsJj1Hd48Zap4lGQ6mJR5QRjnwvw=
+	t=1778608961; cv=none; b=Qm1Cri4mKzt9wmplctkIGvjQMRZEi2dEjpKRWHqD9FZtkwIwrFGuXjaSbdudAHfyHL6sWR4yodxlWGCXgsieO1JuBv2xcx0YU3ofb+gi82Xx0gq8jCDL7Klj9WCtgZXfimSrS7qX3wkRaojVL7939L+eDrZqVMYcqDgJB3Re8qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608959; c=relaxed/simple;
-	bh=DT2BGnXSoxgHjJGqGWdmOb80UIDb90stQ4CS4rzhdgE=;
+	s=arc-20240116; t=1778608961; c=relaxed/simple;
+	bh=tRrl4Rd14N3xKFGjXVIoQIUlfeiaR0qYMqn6Wza+RVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcqAKi+BEwq0Mq4hFp5t/Tkd53/PVU5+96gb6g2Uhx2xiz8d0e11fbYQfVnlsaYNDS3t6+En9a2ZHISmCU5Xc2LFjNyW/8M+XLAZzEc4IVS9BJbWKff7Wkk6kW9r2/Ml0p4rAKTKNf6vZLov4GMxjEJmrM/J4Hy/niMs/BcvKcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jay6Olya; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ahyv/Sd9OFeE98SNbxaLOAoX7Ybtnr2VXGD6MKpopzusxTC6a1IkVhzLpKiUx3Vl4d1wYWwA+5Yp8/ica5l+q0Vkd9QTB0oD9K9B/lbTEt8qe1+T/VawY+7UaXB34zPGj7n8WmTpdO4gkiLnxZqyBwOeX4SPXNKop6b0FnI8OqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feVe62+R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jay6Olya"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE75C2BCC7;
-	Tue, 12 May 2026 18:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feVe62+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AA4C2BCB0;
+	Tue, 12 May 2026 18:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608958;
-	bh=DT2BGnXSoxgHjJGqGWdmOb80UIDb90stQ4CS4rzhdgE=;
+	s=korg; t=1778608961;
+	bh=tRrl4Rd14N3xKFGjXVIoQIUlfeiaR0qYMqn6Wza+RVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jay6OlyasqxEg1MMeVgtrdbk3q+eZZ9X+mlpn5sW0F1UorUsHDJasODt7qPOXpku+
-	 ZS7vFVnzCaLshv5vv0WN1OR9zpQsh2izBSuvtpoqPC/Ui0+vfqeN6XH7Sbh1DC1eVE
-	 4uTtNeimmIl+/YrVoGuX6YawcATsSFcXqiVoHzGQ=
+	b=feVe62+Rc+f/bTI2e95MUW002iLhKxGDeVUl1cg1M/p1smMHz2/iaGyQ/FErjdY90
+	 A2f6iYsoXfj5oXLQPaw3ehEY7sRBOHjqdrdp95D5ktlPMmxqEuIHLg7i3WgcrdfzhH
+	 JWYPbFmxHsU7nnmCqgXgHcDQdIQRDQOMBGXBB8KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	David Carlier <devnexen@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 7.0 011/307] tracepoint: balance regfunc() on func_add() failure in tracepoint_add_func()
-Date: Tue, 12 May 2026 19:36:46 +0200
-Message-ID: <20260512173940.362821475@linuxfoundation.org>
+	Sina Hassani <sina@openai.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 7.0 012/307] iommufd: Fix a race with concurrent allocation and unmap
+Date: Tue, 12 May 2026 19:36:47 +0200
+Message-ID: <20260512173940.384716940@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,51 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Sina Hassani <sina@openai.com>
 
-commit fad217e16fded7f3c09f8637b0f6a224d58b5f2e upstream.
+commit 8602018b1f17fbdaa5e5d79f4c8603ad20640c12 upstream.
 
-When a tracepoint goes through the 0 -> 1 transition, tracepoint_add_func()
-invokes the subsystem's ext->regfunc() before attempting to install the
-new probe via func_add(). If func_add() then fails (for example, when
-allocate_probes() cannot allocate a new probe array under memory pressure
-and returns -ENOMEM), the function returns the error without calling the
-matching ext->unregfunc(), leaving the side effects of regfunc() behind
-with no installed probe to justify them.
+iopt_unmap_iova_range() releases the lock on iova_rwsem inside the loop
+body when getting to the more expensive unmap operations. This is fine on
+its own, except the loop condition is based on the first area that matches
+the unmap address range. If a concurrent call to map picks an area that
+was unmapped in previous iterations, the loop mistakenly tries to unmap
+it.
 
-For syscall tracepoints this is particularly unpleasant: syscall_regfunc()
-bumps sys_tracepoint_refcount and sets SYSCALL_TRACEPOINT on every task.
-After a leaked failure, the refcount is stuck at a non-zero value with no
-consumer, and every task continues paying the syscall trace entry/exit
-overhead until reboot. Other subsystems providing regfunc()/unregfunc()
-pairs exhibit similarly scoped persistent state.
+This is reproducible by having one userspace thread map buffers and pass
+them to another thread that unmaps them. The problem manifests as EBUSY
+errors with single page mappings.
 
-Mirror the existing 1 -> 0 cleanup and call ext->unregfunc() in the
-func_add() error path, gated on the same condition used there so the
-unwind is symmetric with the registration.
+Fix this by advancing the start pointer after unmapping an area. This
+ensures each iteration only examines the IOVA range that remains mapped,
+which is guaranteed not to have overlaps.
 
-Fixes: 8cf868affdc4 ("tracing: Have the reg function allow to fail")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20260413190601.21993-1-devnexen@gmail.com
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 51fe6141f0f6 ("iommufd: Data structure to provide IOVA to PFN mapping")
+Link: https://patch.msgid.link/r/CAAJpGJSR4r_ds1JOjmkqHtsBPyxu8GntoeW08Sk5RNQPmgi+tg@mail.gmail.com
+Signed-off-by: Sina Hassani <sina@openai.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/tracepoint.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/iommufd/io_pagetable.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/kernel/tracepoint.c
-+++ b/kernel/tracepoint.c
-@@ -300,6 +300,8 @@ static int tracepoint_add_func(struct tr
- 			lockdep_is_held(&tracepoints_mutex));
- 	old = func_add(&tp_funcs, func, prio);
- 	if (IS_ERR(old)) {
-+		if (tp->ext && tp->ext->unregfunc && !static_key_enabled(&tp->key))
-+			tp->ext->unregfunc();
- 		WARN_ON_ONCE(warn && PTR_ERR(old) != -ENOMEM);
- 		return PTR_ERR(old);
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -814,6 +814,16 @@ again:
+ 		unmapped_bytes += area_last - area_first + 1;
+ 
+ 		down_write(&iopt->iova_rwsem);
++
++		/*
++		 * After releasing the iova_rwsem concurrent allocation could
++		 * place new areas at IOVAs we have already unmapped. Keep
++		 * moving the start of the search forward to ignore the area
++		 * already unmapped.
++		 */
++		if (area_last >= last)
++			break;
++		start = area_last + 1;
  	}
+ 
+ out_unlock_iova:
 
 
