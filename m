@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5B13EDE46;
-	Tue, 12 May 2026 17:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88FF3E172E;
+	Tue, 12 May 2026 17:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608178; cv=none; b=lKXfYTXo6PGj/jOVZKYb8lSS7eoz0RDtdAAd8y00Qnv7ljMj3n+WK5FTDTOY8t6aHD7nuALJPhJCKdmbL+FVKMhOg6UcahXaQeOqy1hBjpltyNzQfr1jYUFTNrzeK8y06OmCBWZ9EKmQyaLasCt6LPUXvJZr1ir8oCPwYnSsztE=
+	t=1778608180; cv=none; b=bt2Dw0jOrvvTNE9Rl1jcXoxef2rPyTVhiQWlom2vUsKbpaAF44gKJ2WnKbFaG/29Uz70K1IMo3YjKehbojql4dAaKgpPIrnSU4omPuDgxUlGySptskqTvptlSxDBpU9KayKBh9gctBUk2Xl+cJ5GtxVPqqDlyFdlj8O3LzY5S2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608178; c=relaxed/simple;
-	bh=FkoISWk1+sXjaBEmdnFtgW+ouTm6WvJfgJOdcgXQ5Zc=;
+	s=arc-20240116; t=1778608180; c=relaxed/simple;
+	bh=05V4f/2J/NNKy7EqA2GlwGMc1cU6L3ElYXUaAk8XAe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpbKyhJCgCYhAfEDPKq25dpFzD4OAGlI+L/kf4ZehVnXbbnHgNEoPvYrwM+gjlSHy8K2+x92c1U9f31xAJEeJ6y4pr1wXP2uyWWVZWyYICjZN6XeG3AsUBcFZN0K2mLwocx9JwfO2Z0Bcbp+EFDzY7CJ7mVhOYHmoLAYiVoScGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HN2bztN5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dcwv+6Kc10wWVpzuefxR8/CMrjdWruqpMYsdceAuqR74VTgkD0gNERWgnYbFhByQxUPZZ3K2/28XewPB1trhoGClGpDZnV3jehmDrpXYVAusGvh0lznLy/4Pw5Xc9/iKn8BhgACkYre9Qa7Z66OtT6LbsPc3NIkMetMDNca9Bis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XcRSSZsf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HN2bztN5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D8BC2BCF6;
-	Tue, 12 May 2026 17:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XcRSSZsf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7032EC2BCB0;
+	Tue, 12 May 2026 17:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608178;
-	bh=FkoISWk1+sXjaBEmdnFtgW+ouTm6WvJfgJOdcgXQ5Zc=;
+	s=korg; t=1778608180;
+	bh=05V4f/2J/NNKy7EqA2GlwGMc1cU6L3ElYXUaAk8XAe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HN2bztN5r0j6XdGMQFMV4eTEpCjt35mTUmOFTFWY04XvAbcNSnEVI6dODBJGc4a+a
-	 +X95ijdhQEeqEw4mh/LCTzQEy4QdvN3mTnIWFpa0FTkyjojX1uUlyOqechXctvCcPC
-	 sr6tdwLiT1c2+FW5Y4GoyJdTkTWt3reiwBAWQ4dU=
+	b=XcRSSZsf6JH/QYI1OAvh7V64+mrkO5M+fBbRUCRe260Q0nD7Lp5FeMiSMDadTL7oK
+	 8Ejp8McvSfHy1/TWoOwe5xznd8vrtmrzutEk5fPygEjLNzUDbRtKFrrA8SSsTWllxT
+	 67kotG0VF3Froa070byCRiR0o+e1UfJm4aKcZpYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luke Wang <ziniu.wang_1@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 184/206] octeon_ep_vf: add NULL check for napi_build_skb()
-Date: Tue, 12 May 2026 19:40:36 +0200
-Message-ID: <20260512173936.760178307@linuxfoundation.org>
+Subject: [PATCH 6.12 185/206] mmc: core: Optimize time for secure erase/trim for some Kingston eMMCs
+Date: Tue, 12 May 2026 19:40:37 +0200
+Message-ID: <20260512173936.782325048@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,83 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Luke Wang <ziniu.wang_1@nxp.com>
 
-[ Upstream commit dd66b42854705e4e4ee7f14d260f86c578bed3e3 ]
+[ Upstream commit d6bf2e64dec87322f2b11565ddb59c0e967f96e3 ]
 
-napi_build_skb() can return NULL on allocation failure. In
-__octep_vf_oq_process_rx(), the result is used directly without a NULL
-check in both the single-buffer and multi-fragment paths, leading to a
-NULL pointer dereference.
+Kingston eMMC IY2964 and IB2932 takes a fixed ~2 seconds for each secure
+erase/trim operation regardless of size - that is, a single secure
+erase/trim operation of 1MB takes the same time as 1GB. With default
+calculated 3.5MB max discard size, secure erase 1GB requires ~300 separate
+operations taking ~10 minutes total.
 
-Add NULL checks after both napi_build_skb() calls, properly advancing
-descriptors and consuming remaining fragments on failure.
+Add a card quirk, MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME, to set maximum
+secure erase size for those devices. This allows 1GB secure erase to
+complete in a single operation, reducing time from 10 minutes to just 2
+seconds.
 
-Fixes: 1cd3b407977c ("octeon_ep_vf: add Tx/Rx processing and interrupt support")
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Link: https://patch.msgid.link/20260409184009.930359-3-devnexen@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ inlined missing octep_vf_oq_next_idx() helper as read_idx++ with wraparound ]
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+[ adapted to use mmc_can_secure_erase_trim()/mmc_can_trim() and placed helper after mmc_card_no_uhs_ddr50_tuning() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.c |   36 +++++++++++++++-
- 1 file changed, 34 insertions(+), 2 deletions(-)
+ drivers/mmc/core/card.h   |    5 +++++
+ drivers/mmc/core/queue.c  |    9 +++++++--
+ drivers/mmc/core/quirks.h |    9 +++++++++
+ include/linux/mmc/card.h  |    1 +
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.c
-@@ -409,10 +409,17 @@ static int __octep_vf_oq_process_rx(stru
- 			data_offset = OCTEP_VF_OQ_RESP_HW_SIZE;
- 			rx_ol_flags = 0;
- 		}
--		rx_bytes += buff_info->len;
--
- 		if (buff_info->len <= oq->max_single_buffer_size) {
- 			skb = napi_build_skb((void *)resp_hw, PAGE_SIZE);
-+			if (!skb) {
-+				oq->stats->alloc_failures++;
-+				desc_used++;
-+				read_idx++;
-+				if (read_idx == oq->max_count)
-+					read_idx = 0;
-+				continue;
-+			}
-+			rx_bytes += buff_info->len;
- 			skb_reserve(skb, data_offset);
- 			skb_put(skb, buff_info->len);
- 			read_idx++;
-@@ -424,6 +431,31 @@ static int __octep_vf_oq_process_rx(stru
- 			u16 data_len;
+--- a/drivers/mmc/core/card.h
++++ b/drivers/mmc/core/card.h
+@@ -300,4 +300,9 @@ static inline int mmc_card_no_uhs_ddr50_
+ 	return c->quirks & MMC_QUIRK_NO_UHS_DDR50_TUNING;
+ }
  
- 			skb = napi_build_skb((void *)resp_hw, PAGE_SIZE);
-+			if (!skb) {
-+				oq->stats->alloc_failures++;
-+				desc_used++;
-+				read_idx++;
-+				if (read_idx == oq->max_count)
-+					read_idx = 0;
-+				data_len = buff_info->len - oq->max_single_buffer_size;
-+				while (data_len) {
-+					dma_unmap_page(oq->dev, oq->desc_ring[read_idx].buffer_ptr,
-+						       PAGE_SIZE, DMA_FROM_DEVICE);
-+					buff_info = (struct octep_vf_rx_buffer *)
-+						    &oq->buff_info[read_idx];
-+					buff_info->page = NULL;
-+					if (data_len < oq->buffer_size)
-+						data_len = 0;
-+					else
-+						data_len -= oq->buffer_size;
-+					desc_used++;
-+					read_idx++;
-+					if (read_idx == oq->max_count)
-+						read_idx = 0;
-+				}
-+				continue;
-+			}
-+			rx_bytes += buff_info->len;
- 			skb_reserve(skb, data_offset);
- 			/* Head fragment includes response header(s);
- 			 * subsequent fragments contains only data.
++static inline int mmc_card_fixed_secure_erase_trim_time(const struct mmc_card *c)
++{
++	return c->quirks & MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME;
++}
++
+ #endif
+--- a/drivers/mmc/core/queue.c
++++ b/drivers/mmc/core/queue.c
+@@ -184,8 +184,13 @@ static void mmc_queue_setup_discard(stru
+ 		return;
+ 
+ 	lim->max_hw_discard_sectors = max_discard;
+-	if (mmc_can_secure_erase_trim(card))
+-		lim->max_secure_erase_sectors = max_discard;
++	if (mmc_can_secure_erase_trim(card)) {
++		if (mmc_card_fixed_secure_erase_trim_time(card))
++			lim->max_secure_erase_sectors = UINT_MAX >> card->erase_shift;
++		else
++			lim->max_secure_erase_sectors = max_discard;
++	}
++
+ 	if (mmc_can_trim(card) && card->erased_byte == 0)
+ 		lim->max_write_zeroes_sectors = max_discard;
+ 
+--- a/drivers/mmc/core/quirks.h
++++ b/drivers/mmc/core/quirks.h
+@@ -153,6 +153,15 @@ static const struct mmc_fixup __maybe_un
+ 	MMC_FIXUP("M62704", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
+ 		  MMC_QUIRK_TRIM_BROKEN),
+ 
++	/*
++	 * On Some Kingston eMMCs, secure erase/trim time is independent
++	 * of erase size, fixed at approximately 2 seconds.
++	 */
++	MMC_FIXUP("IY2964", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
++		  MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME),
++	MMC_FIXUP("IB2932", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
++		  MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME),
++
+ 	END_FIXUP
+ };
+ 
+--- a/include/linux/mmc/card.h
++++ b/include/linux/mmc/card.h
+@@ -296,6 +296,7 @@ struct mmc_card {
+ #define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
+ #define MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY	(1<<17) /* Disable broken SD poweroff notify support */
+ #define MMC_QUIRK_NO_UHS_DDR50_TUNING	(1<<18) /* Disable DDR50 tuning */
++#define MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME	(1<<20) /* Secure erase/trim time is fixed regardless of size */
+ 
+ 	bool			written_flag;	/* Indicates eMMC has been written since power on */
+ 	bool			reenable_cmdq;	/* Re-enable Command Queue */
 
 
