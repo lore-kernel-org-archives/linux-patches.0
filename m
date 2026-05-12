@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326BB3955DE;
-	Tue, 12 May 2026 17:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5443EDE7F;
+	Tue, 12 May 2026 17:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608546; cv=none; b=VVSn0Np5/iP2TPQONYXaS2Zi86jZpyqLIP2nh8zEbt+a2lP1xozolgVuintiT4qYx0pUMxjhre5mKYS1oltPdEV1wNhjzcQPrMXyTOmIyvbCKldzc4jyBAWtryYHeO3IZmXJwp4HH23S4ywnaJMh/yWQkvuYEohETFV8L9dSpc8=
+	t=1778608548; cv=none; b=UGEmCarnSwEaRN7zD1SR5JeZd3skSQ6ksDtqdF7oqFAU7wal+B+x4HTyfSZVN/xmElY9pXYd5cfrGpOzgpKRUvY77Td2t1hUtdBmUEhlFB30DOATS3iLj305nUWtZswAoktmpvMug9pdpBKdLbKjP38R2rTvfiDhJIzPE5HCuPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608546; c=relaxed/simple;
-	bh=Q6Ac0XWcMnF24b9xL5OLmOwgOeSK3SXhzebpZ+8eO/w=;
+	s=arc-20240116; t=1778608548; c=relaxed/simple;
+	bh=t3PSzCHvALzTp7M2eVlSvx0P5h531GY/Oi24G3K2qao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EbAk47bdOXnM+E897JeQ7Cawys1Ue4Xb7/AkWaJg/HWhbOpXKcAzrApyq2EeOWxnTPYsKt8eiqyspg9EwkKh/bsEmtz672dYuHEmInOrUYK8aq9C31nvRhDVC5Dvqk3lgKYgkqXKj32CEq1xxzhLf/u0a4bs0wnEg3l2GcRYlvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8feL6Wq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hzCKZ/w9Wd1Z6lwJvb/0+aK0ivqJCK6/7sShmRYA8c9PtYR6FsNY5SVRju4BPN/vASEO2Fgw8HUROH2+934P8DxnALJu4FzdyZGL5PvwzK/cJ6WSBTfXA99Oxvh7ZbAvsPgp6ioVxDRL8DPfg+E/vVCvuiysNTbwQ/y68njqndM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqkRBBRC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8feL6Wq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2318C2BCB0;
-	Tue, 12 May 2026 17:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqkRBBRC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0ABC2BCF5;
+	Tue, 12 May 2026 17:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608546;
-	bh=Q6Ac0XWcMnF24b9xL5OLmOwgOeSK3SXhzebpZ+8eO/w=;
+	s=korg; t=1778608548;
+	bh=t3PSzCHvALzTp7M2eVlSvx0P5h531GY/Oi24G3K2qao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8feL6WqS4lYlEaSdn6G28cUA443oMqOgTGO52E3L5jBgnmj3HxWMFEu2YBmpY45b
-	 m3bWD8yaPIAvqxoBNPKmZYlQ3T15liLX0mh4Gp8wApta4jliG5yR12uA8A+Zaer+R+
-	 dfX+9kIKtuU1dEy53LsfS+vwzQusuCn6o86mdDPA=
+	b=hqkRBBRC+aHQiO70vT/Lxw3dfStxID28jVn4mEVxUgpWFUAu2fZDRX1MqORpOPUie
+	 ndU5j/qSwXQGiOMf00irZo3sZ/3+vFpFwpNpo12+51oXF5zck3/iD9INfIA5lTfLFF
+	 m+mYyTSbOv6Y+VMzWz3Cg+/JDxJ4gkN91WQxMP2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	MyungJoo Ham <myungjoo.ham@samsung.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>
-Subject: [PATCH 6.18 119/270] extcon: ptn5150: handle pending IRQ events during system resume
-Date: Tue, 12 May 2026 19:38:40 +0200
-Message-ID: <20260512173940.962682770@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.18 120/270] gpio: of: clear OF_POPULATED on hog nodes in remove path
+Date: Tue, 12 May 2026 19:38:41 +0200
+Message-ID: <20260512173940.983232374@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -52,58 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 4652fefcda3c604c83d1ae28ede94544e2142f06 upstream.
+commit bbee90e750262bfb406d66dc65c46d616d2b6673 upstream.
 
-When the system is suspended and ptn5150 wakeup interrupt is disabled,
-any changes on ptn5150 will only be record in interrupt status
-registers and won't fire an IRQ since its trigger type is falling
-edge. So the HW interrupt line will keep at low state and any further
-changes won't trigger IRQ anymore. To fix it, this will schedule a
-work to check whether any IRQ are pending and handle it accordingly.
+The previously set OF_POPULATED flag should be cleared on the hog nodes
+when removing the chip.
 
-Fixes: 4ed754de2d66 ("extcon: Add support for ptn5150 extcon driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
-Link: https://lore.kernel.org/lkml/20251115025905.1395347-1-xu.yang_2@nxp.com/
+Fixes: 63636d956c455 ("gpio: of: Add DT overlay support for GPIO hogs")
+Acked-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260309-gpio-hog-fwnode-v2-1-4e61f3dbf06a@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/extcon/extcon-ptn5150.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpio/gpiolib-of.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/extcon/extcon-ptn5150.c
-+++ b/drivers/extcon/extcon-ptn5150.c
-@@ -331,6 +331,19 @@ static int ptn5150_i2c_probe(struct i2c_
- 	return 0;
+--- a/drivers/gpio/gpiolib-of.c
++++ b/drivers/gpio/gpiolib-of.c
+@@ -1285,7 +1285,14 @@ int of_gpiochip_add(struct gpio_chip *ch
+ 
+ void of_gpiochip_remove(struct gpio_chip *chip)
+ {
+-	of_node_put(dev_of_node(&chip->gpiodev->dev));
++	struct device_node *np = dev_of_node(&chip->gpiodev->dev);
++
++	for_each_child_of_node_scoped(np, child) {
++		if (of_property_present(child, "gpio-hog"))
++			of_node_clear_flag(child, OF_POPULATED);
++	}
++
++	of_node_put(np);
  }
  
-+static int ptn5150_resume(struct device *dev)
-+{
-+	struct i2c_client *i2c = to_i2c_client(dev);
-+	struct ptn5150_info *info = i2c_get_clientdata(i2c);
-+
-+	/* Need to check possible pending interrupt events */
-+	schedule_work(&info->irq_work);
-+
-+	return 0;
-+}
-+
-+static DEFINE_SIMPLE_DEV_PM_OPS(ptn5150_pm_ops, NULL, ptn5150_resume);
-+
- static const struct of_device_id ptn5150_dt_match[] = {
- 	{ .compatible = "nxp,ptn5150" },
- 	{ },
-@@ -346,6 +359,7 @@ MODULE_DEVICE_TABLE(i2c, ptn5150_i2c_id)
- static struct i2c_driver ptn5150_i2c_driver = {
- 	.driver		= {
- 		.name	= "ptn5150",
-+		.pm = pm_sleep_ptr(&ptn5150_pm_ops),
- 		.of_match_table = ptn5150_dt_match,
- 	},
- 	.probe		= ptn5150_i2c_probe,
+ bool of_gpiochip_instance_match(struct gpio_chip *gc, unsigned int index)
 
 
