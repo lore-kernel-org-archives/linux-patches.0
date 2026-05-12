@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DB63EDE43;
-	Tue, 12 May 2026 17:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5173EDE42;
+	Tue, 12 May 2026 17:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608696; cv=none; b=HT3iBLmNZhsyvo57TAlMiAEnwrX2fR488eTLyOMCUNmY4hajHDIbMEyp6t+YEG1csOYguIAP2zep/0O4IiDOCe4d5cmfzYVASPt0MqOayWs/iyGpde8rJsNTo+qojM/oYF7KQ4Jx/cCccZQT5AJth3Icxo9vg20rnvk9KoRHrqU=
+	t=1778608699; cv=none; b=DAqLizCyaRV40CqhMMFPGtA2c07dqCqzP3n/TaBEqI+3L7nVp6wpIW8k1FrpJY3GxX5Z0m/ysuH1AOxUqvYBnKaeKlI7S7x+2fcpALaBKxW1c4nWiBavTl8pEaMut/zKknnb6T8AitArc1YMQk6Yiq2qqRxp6/yDfUn8/MiMnes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608696; c=relaxed/simple;
-	bh=bwqrtumsju9GVnLIYXqBb7d7M9Qa8TWurUJveLyjfms=;
+	s=arc-20240116; t=1778608699; c=relaxed/simple;
+	bh=fu4ocS/b4alawIsdpqDyRk3H7r9IUTOcGuW0hE52P5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rS5D6GgP3PRD06u78E60JUPCoPsSVCgcApyUEbnm7BWjIVk2Zob1Ta1HvzxlIXlypMxBCtvYY7rS29h5TYKRLpx2FNVP/dVRfngnQ3aIUVkhExaqDAVX0wnmRbiAd9fMDMSz7xQyPbY69V3YMDcEYpscqq59BfQ8ywC+984Mc1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M78IJuGo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nN0SDhtFrxyyz+nsmqJWA44t2Jghop4lA0TdW6FsMaMDraDrM4m8P1IPMZwmr9yb3u0Q287nEPHjpHcowJEBTGOm6jFl4ASpym3BZyeaDr5FDfeC2bcRjHFLoTaAjB8DXQPk0aDRPHcWucWrO+/4wmpWYaOLCnIhujq7TBLCVKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QB/znXHk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M78IJuGo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7E1C2BCC7;
-	Tue, 12 May 2026 17:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QB/znXHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3905EC2BCB0;
+	Tue, 12 May 2026 17:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608696;
-	bh=bwqrtumsju9GVnLIYXqBb7d7M9Qa8TWurUJveLyjfms=;
+	s=korg; t=1778608698;
+	bh=fu4ocS/b4alawIsdpqDyRk3H7r9IUTOcGuW0hE52P5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M78IJuGoxD+k4/i693f2PBJWf8DH4HZg/2Vt+xfmYgRU5qUF7/MgeEIiQlrPQNtlx
-	 zQfiuvkY+XcvBou5nGbufLeygu69Nt1wU987lXgFvqZSv9rNnmnarPsJ0dEHfQMPZS
-	 37nXJjoPH9toBdNd5BihtQFYtogW6gZ9brQu0Kfc=
+	b=QB/znXHkxRNvHiSLSpwQIk9o9n014y7JheBmutmMpiOeXzFx5UHDHD3ZIDtx59dQe
+	 4f+bbdRskEnL/jK9NGPkhqlFHc7I8gaukK30ekVURrkGCZDxGXNk6z8ptMBD73cLky
+	 FFDHjfDBMGNjEidquEUGMPWAcpX+AgkYwxazq7/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 180/270] smb: client: validate dacloffset before building DACL pointers
-Date: Tue, 12 May 2026 19:39:41 +0200
-Message-ID: <20260512173942.238251256@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 181/270] KVM: x86: check for nEPT/nNPT in slow flush hypercalls
+Date: Tue, 12 May 2026 19:39:42 +0200
+Message-ID: <20260512173942.259550515@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,115 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit f98b48151cc502ada59d9778f0112d21f2586ca3 upstream.
+commit 464af6fc2b1dcc74005b7f58ee3812b17777efee upstream.
 
-parse_sec_desc(), build_sec_desc(), and the chown path in
-id_mode_to_cifs_acl() all add the server-supplied dacloffset to pntsd
-before proving a DACL header fits inside the returned security
-descriptor.
+Checking is_guest_mode(vcpu) is incorrect, because translate_nested_gpa()
+is only valid if an L2 guest is running *with nested EPT/NPT enabled*.
+Instead use the same condition as translate_nested_gpa() itself.
 
-On 32-bit builds a malicious server can return dacloffset near
-U32_MAX, wrap the derived DACL pointer below end_of_acl, and then slip
-past the later pointer-based bounds checks. build_sec_desc() and
-id_mode_to_cifs_acl() can then dereference DACL fields from the wrapped
-pointer in the chmod/chown rewrite paths.
-
-Validate dacloffset numerically before building any DACL pointer and
-reuse the same helper at the three DACL entry points.
-
-Fixes: bc3e9dd9d104 ("cifs: Change SIDs in ACEs while transferring file ownership.")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Fixes: aee738236dca ("KVM: x86: Prepare kvm_hv_flush_tlb() to handle L2's GPAs", 2022-11-18)
+Link: https://patch.msgid.link/20260503200905.106077-1-pbonzini@redhat.com/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsacl.c |   35 ++++++++++++++++++++++++++++++++---
- 1 file changed, 32 insertions(+), 3 deletions(-)
+ arch/x86/kvm/hyperv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -1215,6 +1215,17 @@ static int parse_sid(struct smb_sid *psi
- 	return 0;
- }
- 
-+static bool dacl_offset_valid(unsigned int acl_len, __u32 dacloffset)
-+{
-+	if (acl_len < sizeof(struct smb_acl))
-+		return false;
-+
-+	if (dacloffset < sizeof(struct smb_ntsd))
-+		return false;
-+
-+	return dacloffset <= acl_len - sizeof(struct smb_acl);
-+}
-+
- 
- /* Convert CIFS ACL to POSIX form */
- static int parse_sec_desc(struct cifs_sb_info *cifs_sb,
-@@ -1235,7 +1246,6 @@ static int parse_sec_desc(struct cifs_sb
- 	group_sid_ptr = (struct smb_sid *)((char *)pntsd +
- 				le32_to_cpu(pntsd->gsidoffset));
- 	dacloffset = le32_to_cpu(pntsd->dacloffset);
--	dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
- 	cifs_dbg(NOISY, "revision %d type 0x%x ooffset 0x%x goffset 0x%x sacloffset 0x%x dacloffset 0x%x\n",
- 		 pntsd->revision, pntsd->type, le32_to_cpu(pntsd->osidoffset),
- 		 le32_to_cpu(pntsd->gsidoffset),
-@@ -1266,11 +1276,18 @@ static int parse_sec_desc(struct cifs_sb
- 		return rc;
- 	}
- 
--	if (dacloffset)
-+	if (dacloffset) {
-+		if (!dacl_offset_valid(acl_len, dacloffset)) {
-+			cifs_dbg(VFS, "Server returned illegal DACL offset\n");
-+			return -EINVAL;
-+		}
-+
-+		dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
- 		parse_dacl(dacl_ptr, end_of_acl, owner_sid_ptr,
- 			   group_sid_ptr, fattr, get_mode_from_special_sid);
--	else
-+	} else {
- 		cifs_dbg(FYI, "no ACL\n"); /* BB grant all or default perms? */
-+	}
- 
- 	return rc;
- }
-@@ -1293,6 +1310,11 @@ static int build_sec_desc(struct smb_nts
- 
- 	dacloffset = le32_to_cpu(pntsd->dacloffset);
- 	if (dacloffset) {
-+		if (!dacl_offset_valid(secdesclen, dacloffset)) {
-+			cifs_dbg(VFS, "Server returned illegal DACL offset\n");
-+			return -EINVAL;
-+		}
-+
- 		dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
- 		if (end_of_acl < (char *)dacl_ptr + le16_to_cpu(dacl_ptr->size)) {
- 			cifs_dbg(VFS, "Server returned illegal ACL size\n");
-@@ -1669,6 +1691,12 @@ id_mode_to_cifs_acl(struct inode *inode,
- 		nsecdesclen = sizeof(struct smb_ntsd) + (sizeof(struct smb_sid) * 2);
- 		dacloffset = le32_to_cpu(pntsd->dacloffset);
- 		if (dacloffset) {
-+			if (!dacl_offset_valid(secdesclen, dacloffset)) {
-+				cifs_dbg(VFS, "Server returned illegal DACL offset\n");
-+				rc = -EINVAL;
-+				goto id_mode_to_cifs_acl_exit;
-+			}
-+
- 			dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
- 			if (mode_from_sid)
- 				nsecdesclen +=
-@@ -1705,6 +1733,7 @@ id_mode_to_cifs_acl(struct inode *inode,
- 		rc = ops->set_acl(pnntsd, nsecdesclen, inode, path, aclflag);
- 		cifs_dbg(NOISY, "set_cifs_acl rc: %d\n", rc);
- 	}
-+id_mode_to_cifs_acl_exit:
- 	cifs_put_tlink(tlink);
- 
- 	kfree(pnntsd);
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -2039,7 +2039,7 @@ static u64 kvm_hv_flush_tlb(struct kvm_v
+ 	 * flush).  Translate the address here so the memory can be uniformly
+ 	 * read with kvm_read_guest().
+ 	 */
+-	if (!hc->fast && is_guest_mode(vcpu)) {
++	if (!hc->fast && mmu_is_nested(vcpu)) {
+ 		hc->ingpa = translate_nested_gpa(vcpu, hc->ingpa, 0, NULL);
+ 		if (unlikely(hc->ingpa == INVALID_GPA))
+ 			return HV_STATUS_INVALID_HYPERCALL_INPUT;
 
 
