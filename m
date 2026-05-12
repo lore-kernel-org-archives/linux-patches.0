@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E769A3EDE49;
-	Tue, 12 May 2026 17:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DC93EDE49;
+	Tue, 12 May 2026 17:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608168; cv=none; b=S7cZ12tqf83Y5Q92Rm03aUFf5YcrPySx4Ea7ypkJvZUlPOtgQZZqIKbyg6gU5y3BD5vEJKBxAmVuCrPFLowx0shmkx3RQeBm5q02sIr0FOrhfmjSF5yywmfGoGmt77nOKWyiCFWIUqgQXAW6DSNUuJPJXxPeqFMkOm/qpsue5Ug=
+	t=1778608170; cv=none; b=SRtwZpqejcPhnPSYu3ruWADyZ5JbXtlVy0M9dFkA4Y46zKR8Jd0t9JtfKkc6q8XI1ndRQ8jUNQ9G/44BRB6D67G8QjWxRB75FmxbGGN9ENVYVSVkQRL0VM60KruC6IrUNgMVNjLlY+Ucr64UFvgPnETe8SGSUftfVQttmQzR1fM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608168; c=relaxed/simple;
-	bh=kWtPhROQqPhgoX3k0skKuZmLauLRMJdtRbw6LdrvqoM=;
+	s=arc-20240116; t=1778608170; c=relaxed/simple;
+	bh=VrT9Aj9I+rq4TBk30mzH21keLP7D1swrLroH4Jei730=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zpo669t0Cc9+yFe6iw89J2K+LQqwzbTQT0Qldond106LfDc4i4XFp39rf8k8NC/bVeq46NHXXf+Mp63bsFtsu7yDE357UU0GJKV7TOkbaEVUrceFu9ACYNJNpM9ZAn/YK/owlJEdfuBIv3WveHqhwFIjLcNiyG4d/Gw/S0eecZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAo7GGzb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BtPPQiDQanpsk6e8cS0QusOL9XJEfRz5M85QS3+p2fz2hfVokz08X745pduBDfel7TEnoZw/aQ8gYqAtFHa/4SHRi1LwFQIGPZEMcCz7f4tthkerJPMfz70Z1vpb03GdjFkTWyTKKk56UvgqD2oCItI+52UAiCG+AZjrZPDpty4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrDeAck7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAo7GGzb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E6C1C2BCB0;
-	Tue, 12 May 2026 17:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrDeAck7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0DAC2BCC7;
+	Tue, 12 May 2026 17:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608167;
-	bh=kWtPhROQqPhgoX3k0skKuZmLauLRMJdtRbw6LdrvqoM=;
+	s=korg; t=1778608170;
+	bh=VrT9Aj9I+rq4TBk30mzH21keLP7D1swrLroH4Jei730=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAo7GGzbW6tm2Y0FCwrSa8In5SHBjj1nb705/70h7atPe8vP79CFXgn04InnyenHI
-	 khwrl9Dm4ejH+ITWzNdgbGHgL2Q2UlQm0Tulwxi6lBfFxVvpZJGUaLOQ43UMgsp4vh
-	 VGg0z0mgLbLlWBbta93/4W97tau/LwT5GXmXyduw=
+	b=PrDeAck7I8uNJdzGB6Jsrz74kgFQYC5FBraA2Vh6THRY3G8yWQt28fDSwl8xh5i/g
+	 kG8TpTJZL5Ht45aIprFtI4yyhGhz7iCN3QSCwBAH+nxSagqyIxhx2B1dLf0W+4GqAY
+	 ED6I90AHssYnngnap2rXqKIMl6tD/v0jLyK1bOVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	linux-unionfs@vger.kernel.org,
-	linux-erofs@lists.ozlabs.org,
-	Amir Goldstein <amir73il@gmail.com>,
-	Serge Hallyn <serge@hallyn.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 180/206] fs: prepare for adding LSM blob to backing_file
-Date: Tue, 12 May 2026 19:40:32 +0200
-Message-ID: <20260512173936.672348670@linuxfoundation.org>
+Subject: [PATCH 6.12 181/206] dma-mapping: drop unneeded includes from dma-mapping.h
+Date: Tue, 12 May 2026 19:40:33 +0200
+Message-ID: <20260512173936.694186737@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -55,80 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 880bd496ec72a6dcb00cb70c430ef752ba242ae7 ]
+[ Upstream commit be164349e173a8e71cd76f17c7ed720813b8d69b ]
 
-In preparation to adding LSM blob to backing_file struct, factor out
-helpers init_backing_file() and backing_file_free().
+Back in the day a lot of logic was implemented inline in dma-mapping.h and
+needed various includes.  Move of this has long been moved out of line,
+so we can drop various includes to improve kernel rebuild times.
 
-Cc: stable@vger.kernel.org
-Cc: linux-fsdevel@vger.kernel.org
-Cc: linux-unionfs@vger.kernel.org
-Cc: linux-erofs@lists.ozlabs.org
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Serge Hallyn <serge@hallyn.com>
-[PM: use the term "LSM blob", fix comment style to match file]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-[ Used kfree() instead of kmem_cache_free(bfilp_cachep, ff) ]
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: 3023c050af36 ("hwmon: (powerz) Avoid cacheline sharing for DMA buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file_table.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ arch/powerpc/platforms/pseries/svm.c |    1 +
+ include/linux/dma-mapping.h          |    4 ----
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
---- a/fs/file_table.c
-+++ b/fs/file_table.c
-@@ -60,6 +60,12 @@ struct path *backing_file_user_path(stru
- }
- EXPORT_SYMBOL_GPL(backing_file_user_path);
+--- a/arch/powerpc/platforms/pseries/svm.c
++++ b/arch/powerpc/platforms/pseries/svm.c
+@@ -8,6 +8,7 @@
  
-+static inline void backing_file_free(struct backing_file *ff)
-+{
-+	path_put(&ff->user_path);
-+	kfree(ff);
-+}
-+
- static inline void file_free(struct file *f)
- {
- 	security_file_free(f);
-@@ -67,8 +73,7 @@ static inline void file_free(struct file
- 		percpu_counter_dec(&nr_files);
- 	put_cred(f->f_cred);
- 	if (unlikely(f->f_mode & FMODE_BACKING)) {
--		path_put(backing_file_user_path(f));
--		kfree(backing_file(f));
-+		backing_file_free(backing_file(f));
- 	} else {
- 		kmem_cache_free(filp_cachep, f);
- 	}
-@@ -255,6 +260,12 @@ struct file *alloc_empty_file_noaccount(
- 	return f;
- }
+ #include <linux/mm.h>
+ #include <linux/memblock.h>
++#include <linux/mem_encrypt.h>
+ #include <linux/cc_platform.h>
+ #include <asm/machdep.h>
+ #include <asm/svm.h>
+--- a/include/linux/dma-mapping.h
++++ b/include/linux/dma-mapping.h
+@@ -2,15 +2,11 @@
+ #ifndef _LINUX_DMA_MAPPING_H
+ #define _LINUX_DMA_MAPPING_H
  
-+static int init_backing_file(struct backing_file *ff)
-+{
-+	memset(&ff->user_path, 0, sizeof(ff->user_path));
-+	return 0;
-+}
-+
- /*
-  * Variant of alloc_empty_file() that allocates a backing_file container
-  * and doesn't check and modify nr_files.
-@@ -277,7 +288,14 @@ struct file *alloc_empty_backing_file(in
- 		return ERR_PTR(error);
- 	}
+-#include <linux/cache.h>
+-#include <linux/sizes.h>
+-#include <linux/string.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/dma-direction.h>
+ #include <linux/scatterlist.h>
+ #include <linux/bug.h>
+-#include <linux/mem_encrypt.h>
  
-+	/* The f_mode flags must be set before fput(). */
- 	ff->file.f_mode |= FMODE_BACKING | FMODE_NOACCOUNT;
-+	error = init_backing_file(ff);
-+	if (unlikely(error)) {
-+		fput(&ff->file);
-+		return ERR_PTR(error);
-+	}
-+
- 	return &ff->file;
- }
- 
+ /**
+  * List of possible attributes associated with a DMA mapping. The semantics
 
 
