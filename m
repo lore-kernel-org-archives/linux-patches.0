@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F5E3EDE42;
-	Tue, 12 May 2026 17:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFDA3EDE59;
+	Tue, 12 May 2026 17:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608371; cv=none; b=SunE+czgfqP8vgqzExJnSq3+RpLEafrLWgtEed+SMNjNNYy9jL56Bx/qhixrm1MPnEGmbJk/HWf9pYY+HWVJN9VzwORijqqAXyX0kMSqwotYFRshHTZWOeF25OVY2jFnP+XtdQe8J2uqZUGLpf64no5MQTx2aG/wWbbJ7k4vOiU=
+	t=1778608373; cv=none; b=iuKxHyvlQiMX1x+Rnzg3I3jSY9qWM0Y4/3sOMHr8UDEh/ze01MI6cZ3DtlJuluCLxKUt0jjQiTpIXoXT1lXdk6P1yDeRdNvIylgOKQaZAmCdTdyxUI+rgGn50Eh8gNY9SZCIkDts9RpJw6FLd6Rtt7JkvI9fwr4f2fjpg1k2vrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608371; c=relaxed/simple;
-	bh=bscEAaDAI7ny1CAzBIzg8SRgtKEsxk/fbkBMzenPHaI=;
+	s=arc-20240116; t=1778608373; c=relaxed/simple;
+	bh=pwfvXt552AoZxGMjy4PyQSYEcOkPrfbtuE1HRLRcrfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qm409+yDGIqGp4fESVQXxoFgGMzYwN+brUAHcCzeDs9MpmjNyVh1UXWmRdFnuLPvP9GxXQWoqDWJlX+8TsofGnHRJpr+lFH7hItFC6YoK3X81HMjR8WpDp5ymjAbmSoPNlTPQlKkGN7rnLVzTRJlHOpD2afzmqgxCeyLN77P8BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/z3z8qx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gTDBDGsg5f7aki4tmMaqKZPLNDpVQJKGAxUijrzaOVi6Xesjtoz27NpMft9OR15+c/OTyahI8BT+3wmX6TgHRYY1TBlC0cWzC0Sdc+uCqZ4WLEGcq4rzfSU8JDsvumxYoBi/Z39TaWJmVrDB9FERFikIEA2p5rsc7t+Qyczi9HA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjY0HZkD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/z3z8qx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E308C2BCB0;
-	Tue, 12 May 2026 17:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjY0HZkD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7C3C2BCB0;
+	Tue, 12 May 2026 17:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608371;
-	bh=bscEAaDAI7ny1CAzBIzg8SRgtKEsxk/fbkBMzenPHaI=;
+	s=korg; t=1778608373;
+	bh=pwfvXt552AoZxGMjy4PyQSYEcOkPrfbtuE1HRLRcrfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/z3z8qxRo+QBLhIovOhqbEVyY3088f1IqJk61JPbpxYPjcbr8N4OQSUdjWbYjLb1
-	 aMDFgJLkkoFCiAbeI+t6FWDf38evKsGKmq4FOlruqcT26DNEPqgf+xWuCHblKXfUJV
-	 VqXZJf8UCeNpEwdq6uTEbnM2G+4zTCO6RvDhQxVU=
+	b=DjY0HZkDUQ/3fh908jWZW4nzTSXNbzZzTROdeZ+iyW4OiQnWtpczW+F5EN9l+yvjA
+	 ASeLfMCbYMp/EBlF/+CNTiy1DXGhpDp9KXEsry1l+gjYPxpEV256X1gNulJA8MsvvN
+	 rYbj4ivpWfxgxpmc/YBxubEG/yibDhkW6qJMm++w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 053/270] ALSA: seq: Fix UMP group 16 filtering
-Date: Tue, 12 May 2026 19:37:34 +0200
-Message-ID: <20260512173939.567818013@linuxfoundation.org>
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 054/270] powerpc/kdump: fix KASAN sanitization flag for core_$(BITS).o
+Date: Tue, 12 May 2026 19:37:35 +0200
+Message-ID: <20260512173939.587950089@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,75 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-commit 92429ca999db99febced82f23362a71b2ba4c1d8 upstream.
+commit b3a97f9484080c6e71db9e803e3cc1bb372a9bc7 upstream.
 
-The sequencer UAPI defines group_filter as an unsigned int bitmap.
-Bit 0 filters groupless messages and bits 1-16 filter UMP groups 1-16.
+KASAN instrumentation is intended to be disabled for the kexec core
+code, but the existing Makefile entry misses the object suffix. As a
+result, the flag is not applied correctly to core_$(BITS).o.
 
-The internal snd_seq_client storage is only unsigned short, so bit 16
-is truncated when userspace sets the filter. The same truncation affects
-the automatic UMP client filter used to avoid delivery to inactive
-groups, so events for group 16 cannot be filtered.
+So when KASAN is enabled, kexec_copy_flush and copy_segments in
+kexec/core_64.c are instrumented, which can result in accesses to
+shadow memory via normal address translation paths. Since these run
+with the MMU disabled, such accesses may trigger page faults
+(bad_page_fault) that cannot be handled in the kdump path, ultimately
+causing a hang and preventing the kdump kernel from booting. The same
+is true for kexec as well, since the same functions are used there.
 
-Store the internal bitmap as unsigned int and keep both userspace-provided
-and automatically generated values limited to the defined UAPI bits.
+Update the entry to include the “.o” suffix so that KASAN
+instrumentation is properly disabled for this object file.
 
-Fixes: d2b706077792 ("ALSA: seq: Add UMP group filter")
+Fixes: 2ab2d5794f14 ("powerpc/kasan: Disable address sanitization in kexec paths")
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Closes: https://lore.kernel.org/all/1dee8891-8bcc-46b4-93f3-fc3a774abd5b@linux.ibm.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260506-alsa-seq-ump-group16-filter-v1-1-b75160bf6993@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260407124349.1698552-1-sourabhjain@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_clientmgr.c  |    2 +-
- sound/core/seq/seq_clientmgr.h  |    5 ++++-
- sound/core/seq/seq_ump_client.c |    2 +-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ arch/powerpc/kexec/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -1252,7 +1252,7 @@ static int snd_seq_ioctl_set_client_info
- 	if (client->user_pversion >= SNDRV_PROTOCOL_VERSION(1, 0, 3))
- 		client->midi_version = client_info->midi_version;
- 	memcpy(client->event_filter, client_info->event_filter, 32);
--	client->group_filter = client_info->group_filter;
-+	client->group_filter = client_info->group_filter & SND_SEQ_GROUP_FILTER_MASK;
- 
- 	/* notify the change */
- 	snd_seq_system_client_ev_client_change(client->number);
---- a/sound/core/seq/seq_clientmgr.h
-+++ b/sound/core/seq/seq_clientmgr.h
-@@ -14,6 +14,9 @@
- 
- /* client manager */
- 
-+#define SND_SEQ_GROUP_FILTER_MASK	GENMASK(SNDRV_UMP_MAX_GROUPS, 0)
-+#define SND_SEQ_GROUP_FILTER_GROUPS	GENMASK(SNDRV_UMP_MAX_GROUPS, 1)
-+
- struct snd_seq_user_client {
- 	struct file *file;	/* file struct of client */
- 	/* ... */
-@@ -40,7 +43,7 @@ struct snd_seq_client {
- 	int number;		/* client number */
- 	unsigned int filter;	/* filter flags */
- 	DECLARE_BITMAP(event_filter, 256);
--	unsigned short group_filter;
-+	unsigned int group_filter;
- 	snd_use_lock_t use_lock;
- 	int event_lost;
- 	/* ports */
---- a/sound/core/seq/seq_ump_client.c
-+++ b/sound/core/seq/seq_ump_client.c
-@@ -369,7 +369,7 @@ static void setup_client_group_filter(st
- 	cptr = snd_seq_kernel_client_get(client->seq_client);
- 	if (!cptr)
- 		return;
--	filter = ~(1U << 0); /* always allow groupless messages */
-+	filter = SND_SEQ_GROUP_FILTER_GROUPS; /* always allow groupless messages */
- 	for (p = 0; p < SNDRV_UMP_MAX_GROUPS; p++) {
- 		if (client->ump->groups[p].active)
- 			filter &= ~(1U << (p + 1));
+--- a/arch/powerpc/kexec/Makefile
++++ b/arch/powerpc/kexec/Makefile
+@@ -16,4 +16,4 @@ GCOV_PROFILE_core_$(BITS).o := n
+ KCOV_INSTRUMENT_core_$(BITS).o := n
+ UBSAN_SANITIZE_core_$(BITS).o := n
+ KASAN_SANITIZE_core.o := n
+-KASAN_SANITIZE_core_$(BITS) := n
++KASAN_SANITIZE_core_$(BITS).o := n
 
 
