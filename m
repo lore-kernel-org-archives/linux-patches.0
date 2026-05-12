@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6976536A378;
-	Tue, 12 May 2026 17:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34763C09F9;
+	Tue, 12 May 2026 17:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608260; cv=none; b=noONy0LMoT+7UCkToHscbEoz+7ZkZx40nUpQIgN/KuyYVJi5Ir5NZt24eqcj8KqeMMjAmB1nw4+xgtVLrT4BBU7nCt9rcTPNyfRczUWrmZuRmmfPwlozweiXvYHH1cvCGCKaD0EaACT9St0RAPm6uvB0/gmGtPP51/2ZDGQ1Kco=
+	t=1778608263; cv=none; b=USB+9YcoDXsMWIwCsAX64S1meXzRxwfAvP+sGU5qlC2geLUupgGjtvC4L92K5OddpyGsr4p1t3deQBQkmqD4HrkdRJFg1mr6SKWlxD65Vk6nRb3ieVmvxIVulHu6h/wArmDMlju4eDyDGAWQislm9l9na8zoEe/B5RKNHPdwg0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608260; c=relaxed/simple;
-	bh=L2/JZ3+07AAfHYvDHG5n8dW7mPFWYBlj0RbjGFHAt2c=;
+	s=arc-20240116; t=1778608263; c=relaxed/simple;
+	bh=8apsZ7SP2gNusPyjY19YkcSsF3BfoYYXW9FOtG9g6JI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pa2ChdsJSZMRA9XGFMbnqeO0ls72YCRKwXwWVLFMU0scUQLbsbNR26D0XcYkBi3Zp0FEIc6Y5bMPaC09EFkwVWEmLuYvqmRxRSlrM6T4w4hoVK6pnPLDlNb/tyPQtZJyxgf3bF9pM6zMg81AAJ8BYFsCr+7zRPbqARHA0gfLgLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQ5KYvxn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ikG35r9HekOvFihU8AIhtVtn/0Z7bj4Za/iKaXtt5FTi1V7C4kDEYeyvRO3iSMbGrOHtx2Yu6/Jy2VvH3rZw1ayEHbhwo6Zuj57SjUW1nh0RjqNLb+HPw6JMkHIrQF2RFwqCMpDONnmqrhII2jwnY+RfB/VDNQQl7MnWJ1Brd5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c61C12Oa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQ5KYvxn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F340CC2BCB0;
-	Tue, 12 May 2026 17:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c61C12Oa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A75DC2BCF5;
+	Tue, 12 May 2026 17:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608260;
-	bh=L2/JZ3+07AAfHYvDHG5n8dW7mPFWYBlj0RbjGFHAt2c=;
+	s=korg; t=1778608262;
+	bh=8apsZ7SP2gNusPyjY19YkcSsF3BfoYYXW9FOtG9g6JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQ5KYvxnTnTxSaNPuLkPtJaxBAgx3We27A+rhRUEXBG6Oj3DHie4gucHgdcpP5/iu
-	 jPEEVP7pV6EgtDTKqt91aa9yqOUsMKoYWPVgJCm4LcQVPB5X3cMNVJnLsOHIaUauY0
-	 CN5yaY66M7dtPL+5Ow08QYhi+RQd4n/GUNKfLCI8=
+	b=c61C12OapXJBKjWi8C81gfqRPGUeOiNen9myt4+crwYStS1BcA+uSFadHT6APoBn3
+	 l652wvdHBmi7q9DS5fPhg9CyMTlyfRyBud4Qf+uf/8BclsLemjpBFoWhs7/QqlvfuF
+	 ZSv9FS6W+YLOcF3WVVwncSmZrattiLncmoNQwxrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sina Hassani <sina@openai.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.18 011/270] iommufd: Fix a race with concurrent allocation and unmap
-Date: Tue, 12 May 2026 19:36:52 +0200
-Message-ID: <20260512173938.692378023@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 012/270] ASoC: SOF: Dont allow pointer operations on unconfigured streams
+Date: Tue, 12 May 2026 19:36:53 +0200
+Message-ID: <20260512173938.713822530@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,54 +49,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sina Hassani <sina@openai.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 8602018b1f17fbdaa5e5d79f4c8603ad20640c12 upstream.
+commit c5b6285aae050ff1c3ea824ca3d88ac4be1e69c8 upstream.
 
-iopt_unmap_iova_range() releases the lock on iova_rwsem inside the loop
-body when getting to the more expensive unmap operations. This is fine on
-its own, except the loop condition is based on the first area that matches
-the unmap address range. If a concurrent call to map picks an area that
-was unmapped in previous iterations, the loop mistakenly tries to unmap
-it.
+When reporting the pointer for a compressed stream we report the current
+I/O frame position by dividing the position by the number of channels
+multiplied by the number of container bytes. These values default to 0 and
+are only configured as part of setting the stream parameters so this allows
+a divide by zero to be configured. Validate that they are non zero,
+returning an error if not
 
-This is reproducible by having one userspace thread map buffers and pass
-them to another thread that unmaps them. The problem manifests as EBUSY
-errors with single page mappings.
-
-Fix this by advancing the start pointer after unmapping an area. This
-ensures each iteration only examines the IOVA range that remains mapped,
-which is guaranteed not to have overlaps.
-
+Fixes: c1a731c71359 ("ASoC: SOF: compress: Add support for computing timestamps")
 Cc: stable@vger.kernel.org
-Fixes: 51fe6141f0f6 ("iommufd: Data structure to provide IOVA to PFN mapping")
-Link: https://patch.msgid.link/r/CAAJpGJSR4r_ds1JOjmkqHtsBPyxu8GntoeW08Sk5RNQPmgi+tg@mail.gmail.com
-Signed-off-by: Sina Hassani <sina@openai.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://patch.msgid.link/20260326-asoc-compress-tstamp-params-v1-1-3dc735b3d599@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/io_pagetable.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/soc/sof/compress.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iommu/iommufd/io_pagetable.c
-+++ b/drivers/iommu/iommufd/io_pagetable.c
-@@ -777,6 +777,16 @@ again:
- 		unmapped_bytes += area_last - area_first + 1;
+--- a/sound/soc/sof/compress.c
++++ b/sound/soc/sof/compress.c
+@@ -371,6 +371,9 @@ static int sof_compr_pointer(struct snd_
+ 	if (!spcm)
+ 		return -EINVAL;
  
- 		down_write(&iopt->iova_rwsem);
++	if (!sstream->channels || !sstream->sample_container_bytes)
++		return -EBUSY;
 +
-+		/*
-+		 * After releasing the iova_rwsem concurrent allocation could
-+		 * place new areas at IOVAs we have already unmapped. Keep
-+		 * moving the start of the search forward to ignore the area
-+		 * already unmapped.
-+		 */
-+		if (area_last >= last)
-+			break;
-+		start = area_last + 1;
- 	}
- 
- out_unlock_iova:
+ 	tstamp->sampling_rate = sstream->sampling_rate;
+ 	tstamp->copied_total = sstream->copied_total;
+ 	tstamp->pcm_io_frames = div_u64(spcm->stream[cstream->direction].posn.dai_posn,
 
 
