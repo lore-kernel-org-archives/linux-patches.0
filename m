@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F213E5A2A;
-	Tue, 12 May 2026 17:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAA53E5A28;
+	Tue, 12 May 2026 17:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608157; cv=none; b=ZPBYAho7NgqfM4ayTAiklLlOBUljogj4wg8rtwPgBFCrj33f0V4HD9yKti1HEJvi6p5gNR+mYL0MBAXu1sbgP/PC697Py+A1X7shh2fjtezb5D4PIk/ryzODfQnPR4sHLK45RonsWO/Ai46vv1KGn/zY+JdLBfynGruXsWlzNDE=
+	t=1778608160; cv=none; b=MitG2kQVJXfuBNX1SMy/EvW50c594rd/Am91DcVh01qS9kv/j42LG17SAEJdNDlh8521puYNu/WQFgCW9kcDENfv+loFfFAS2qxCCJwSO/tfSie/2yPZdc5YbB90lLsiiHJLhrNCN7NLGIaKtekIs/ikUQheGaH2rLO7pEoDnNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608157; c=relaxed/simple;
-	bh=nSUVsWgzdZohcXrzJJch+CQEBAyCc0APCP77GmMQdTw=;
+	s=arc-20240116; t=1778608160; c=relaxed/simple;
+	bh=T+hutaSDD8PYRhfrq3CdM6/7ni4qytKP3vpYug8ztsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qcsD97Nm0cvUC3PjR3HWoOFwtpX1mek2Ne69rYyGyZVXClG5NixMWz05cnGWXDdKAa1Y+IwSzY68Il3gP7XVhicgcfBlwdBytJeYoyiXwgncq5EQJ5la34vvyKpC9UEXsnuvByVOhE5BcY82QTkjJk3WLxg2b0nHCDuTjEjRwMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c3C57L6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W+weYSMeqtMP5D4U014qi84xuoMuzPzqPR2FDltG9XCAvUHrrMgVhZY8zJZS6gL6S1QnVlkK2Z/RkZd2o3NBuOf1L47klqCLBGPU4ZjN4t2LYHxNTN8zeQs1kzTcNnyGY7by7rlglHLWZSVP/cGpYgNsVp7Ym+GowVSrdNKrVk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vboIhCb6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c3C57L6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3C8C2BCC7;
-	Tue, 12 May 2026 17:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vboIhCb6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF6DC2BCB0;
+	Tue, 12 May 2026 17:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608157;
-	bh=nSUVsWgzdZohcXrzJJch+CQEBAyCc0APCP77GmMQdTw=;
+	s=korg; t=1778608160;
+	bh=T+hutaSDD8PYRhfrq3CdM6/7ni4qytKP3vpYug8ztsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2c3C57L6OX4wpLV9LwmDW4TqOCiNNCkZ9bhp24hcTluV7nNEXRS5x2PtBpeKc2u6J
-	 CCWHeDI8HIbC46NG7Bk+C2CDPuiz2EhZiCyY1LoVe8H7MT2+X/i0ZbKcTHNFOg0voL
-	 niLU4UwL88xLL5g78gkxQUHW4rI0rhFpB155MqTw=
+	b=vboIhCb6lIOr2bdKtzj/doF/O263ZTVvef24V2MedoxGufOUf0ZGFDM5Ed274hE9g
+	 YLoyzZUUkxZRG0Hb39TpX1W26W7/6axHy9I4NGCzHB8/vC51oFQZQXYb6Q/7kfjPxr
+	 zt4MssJCv3YJKkSPi2e+6gj6hfrlw9F4k7+14ZEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Li <lichao@loongson.cn>,
-	Dongyan Qian <qiandongyan@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 177/206] LoongArch: Use per-root-bridge PCIH flag to skip mem resource fixup
-Date: Tue, 12 May 2026 19:40:29 +0200
-Message-ID: <20260512173936.609258085@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.12 178/206] bpf: Fix use-after-free in arena_vm_close on fork
+Date: Tue, 12 May 2026 19:40:30 +0200
+Message-ID: <20260512173936.630017533@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,58 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Alexei Starovoitov <ast@kernel.org>
 
-commit 49f33840dcc907d21313d369e34872880846b61c upstream.
+commit 4fddde2a732de60bb97e3307d4eb69ac5f1d2b74 upstream.
 
-When firmware enables 64-bit PCI host bridge support, some root bridges
-already provide valid 64-bit mem resource windows through ACPI.
+arena_vm_open() only bumps vml->mmap_count but never registers the
+child VMA in arena->vma_list. The vml->vma always points at the
+parent VMA, so after parent munmap the pointer dangles. If the child
+then calls bpf_arena_free_pages(), zap_pages() reads the stale
+vml->vma triggering use-after-free.
 
-In this case, the LoongArch-specific mem resource high-bits fixup in
-acpi_prepare_root_resources() should not be applied unconditionally.
-Otherwise, the kernel may override the native resource layout derived
-from firmware, and later BAR assignment can fail to place device BARs
-into the intended 64-bit address space correctly.
+Fix this by preventing the arena VMA from being inherited across
+fork with VM_DONTCOPY, and preventing VMA splits via the may_split
+callback.
 
-Add a per-root-bridge ACPI flag, PCIH, and evaluate it from the current
-root bridge device scope. When PCIH is set, skip the mem resource high-
-bits fixup path and let the kernel use the firmware-provided resource
-description directly. When PCIH is absent or cleared, keep the existing
-behavior and continue filling the high address bits from the host bridge
-address.
+Also reject mremap with a .mremap callback returning -EINVAL. A
+same-size mremap(MREMAP_FIXED) on the full arena VMA reaches
+copy_vma() through the following path:
 
-This makes the behavior per-root-bridge configurable and avoids breaking
-valid 64-bit BAR space allocation on bridges whose 64-bit windows have
-already been fully described by firmware.
+  check_prep_vma()       - returns 0 early: new_len == old_len
+                           skips VM_DONTEXPAND check
+  prep_move_vma()        - vm_start == old_addr and
+                           vm_end == old_addr + old_len
+                           so may_split is never called
+  move_vma()
+    copy_vma_and_data()
+      copy_vma()
+        vm_area_dup()    - copies vm_private_data (vml pointer)
+        vm_ops->open()   - bumps vml->mmap_count
+      vm_ops->mremap()   - returns -EINVAL, rollback unmaps new VMA
 
-Cc: stable@vger.kernel.org
-Suggested-by: Chao Li <lichao@loongson.cn>
-Tested-by: Dongyan Qian <qiandongyan@loongson.cn>
-Signed-off-by: Dongyan Qian <qiandongyan@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+The refcount ensures the rollback's arena_vm_close does not free
+the vml shared with the original VMA.
+
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Fixes: 317460317a02 ("bpf: Introduce bpf_arena.")
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/r/20260413194245.21449-1-alexei.starovoitov@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/pci/acpi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/bpf/arena.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/arch/loongarch/pci/acpi.c
-+++ b/arch/loongarch/pci/acpi.c
-@@ -61,11 +61,16 @@ static void acpi_release_root_info(struc
- static int acpi_prepare_root_resources(struct acpi_pci_root_info *ci)
- {
- 	int status;
-+	unsigned long long pci_h = 0;
- 	struct resource_entry *entry, *tmp;
- 	struct acpi_device *device = ci->bridge;
+--- a/kernel/bpf/arena.c
++++ b/kernel/bpf/arena.c
+@@ -236,6 +236,16 @@ static void arena_vm_open(struct vm_area
+ 	refcount_inc(&vml->mmap_count);
+ }
  
- 	status = acpi_pci_probe_root_resources(ci);
- 	if (status > 0) {
-+		acpi_evaluate_integer(device->handle, "PCIH", NULL, &pci_h);
-+		if (pci_h)
-+			return status;
++static int arena_vm_may_split(struct vm_area_struct *vma, unsigned long addr)
++{
++	return -EINVAL;
++}
 +
- 		resource_list_for_each_entry_safe(entry, tmp, &ci->resources) {
- 			if (entry->res->flags & IORESOURCE_MEM) {
- 				entry->offset = ci->root->mcfg_addr & GENMASK_ULL(63, 40);
++static int arena_vm_mremap(struct vm_area_struct *vma)
++{
++	return -EINVAL;
++}
++
+ static void arena_vm_close(struct vm_area_struct *vma)
+ {
+ 	struct bpf_map *map = vma->vm_file->private_data;
+@@ -299,6 +309,8 @@ out:
+ 
+ static const struct vm_operations_struct arena_vm_ops = {
+ 	.open		= arena_vm_open,
++	.may_split	= arena_vm_may_split,
++	.mremap		= arena_vm_mremap,
+ 	.close		= arena_vm_close,
+ 	.fault          = arena_vm_fault,
+ };
+@@ -368,10 +380,11 @@ static int arena_map_mmap(struct bpf_map
+ 	arena->user_vm_end = vma->vm_end;
+ 	/*
+ 	 * bpf_map_mmap() checks that it's being mmaped as VM_SHARED and
+-	 * clears VM_MAYEXEC. Set VM_DONTEXPAND as well to avoid
+-	 * potential change of user_vm_start.
++	 * clears VM_MAYEXEC. Set VM_DONTEXPAND to avoid potential change
++	 * of user_vm_start. Set VM_DONTCOPY to prevent arena VMA from
++	 * being copied into the child process on fork.
+ 	 */
+-	vm_flags_set(vma, VM_DONTEXPAND);
++	vm_flags_set(vma, VM_DONTEXPAND | VM_DONTCOPY);
+ 	vma->vm_ops = &arena_vm_ops;
+ 	return 0;
+ }
 
 
