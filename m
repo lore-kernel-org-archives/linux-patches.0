@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2393E5A1A;
-	Tue, 12 May 2026 17:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A8C3EDE70;
+	Tue, 12 May 2026 17:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608538; cv=none; b=qdwFfz0UPWleYzM/1J8r0jnCeIBuqsSLInrzT0urlZR+hs3oPW56Mi8tkllt92kjd4HNcop9iKS9z86TylCd6rjlKHrm1SzvDuiZODMDwwO8Z2ENklPB7tqTqN4NIc6MjkH4hVHTERo0WCuwba0ZhsbBnDnAi6avA+HjNoTqTQU=
+	t=1778608541; cv=none; b=KSkMDcigjNYXTi4U+zxcSqGC0Gw64i01ijwxQSys7YsZdkYC+SuC0z1ZW33HewfXGG92+20rfpEq6Rj1goj23jxgALIl7ESiyC6Cp0mZR2mrkd7LbXJxI4u7pOT724uEJuOB5f1t4N4yBpn4WOYlAgUoszy+heD8qkuIctbBTHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608538; c=relaxed/simple;
-	bh=QpLagqGTOm2jsiI8ktN/GTkvYhpYqDT96vT3HIhdtyk=;
+	s=arc-20240116; t=1778608541; c=relaxed/simple;
+	bh=T70OtSjLYze/rtizp7YN/4Pa8NV77BvGkfFsY/2UoOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZSX9ROqwsAoM8m+Cc87K7R/ZhrTtDDNQpyGX2miEjhCt97qdPZ5WsmqYfI63JdmI3/sxZR/BWHCGOXmUqwZLM8CbvwGEx6T4j64waw2NzEKGNzi0//WLXNGCDx9XSjcRwvdGHgCxL1jfK4Dj1ON/DInPge4iCL4Czgmt7q+aBJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWs2qBD+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIhQ1U7QGs6BcPB38LaSOzh0DytdV+wu6ZM+Bs1bBwXqqjaVuTomcLBNu5MhwwW8FN84ktUjneQ7Rqfw4+fRMbM17wdcsyTj5Xd/Ony6ajRjvdzFUWE/aDyW0spFU6yFmZ65wDIg0H1l1pB6Y2YAD5YQr9fvyeppuWi+RU11oV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ElG25ji7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWs2qBD+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044D9C2BCC7;
-	Tue, 12 May 2026 17:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ElG25ji7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACAAC2BCF5;
+	Tue, 12 May 2026 17:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608538;
-	bh=QpLagqGTOm2jsiI8ktN/GTkvYhpYqDT96vT3HIhdtyk=;
+	s=korg; t=1778608540;
+	bh=T70OtSjLYze/rtizp7YN/4Pa8NV77BvGkfFsY/2UoOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWs2qBD+AUjPo04q2j2zacdEZJahEkn5BTAeDSAd+HLXUQRR1sWtNbsAAiR/wZpOh
-	 4G6vJebgMtR7kAnX/ieO/rWQ6SEduxZbIG7spKJuoQJDOeDDQMUTI9Mv0bqk1uEhhO
-	 FPNr6shXaWYIOnaz4ne7n2fM4XYcbexDzInxKEYM=
+	b=ElG25ji727VY/9FAqOFzSZw3319xhqf9PlZhEdmN8Xfjk8/WbTEgiWqweQrVBnjL5
+	 7TJWd969fIrWykZ3lNKRRpth/KKLBTu6OgkaWpWIwXmgXWfMdFMcTbueJv/pck5Oyc
+	 aodKH3cvCsy5cVNsCkQr2+GEdGsHLqKwP79IfFIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 116/270] block: only read from sqe on initial invocation of blkdev_uring_cmd()
-Date: Tue, 12 May 2026 19:38:37 +0200
-Message-ID: <20260512173940.900207500@linuxfoundation.org>
+	Bharath SM <bharathsm@microsoft.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 117/270] cifs: abort open_cached_dir if we dont request leases
+Date: Tue, 12 May 2026 19:38:38 +0200
+Message-ID: <20260512173940.921580119@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -49,71 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit 212ec34e4e726e8cd4af7bea4740db24de8a9dab upstream.
+commit d68ce834f8cf6cb2e77f3331df65166b35466b53 upstream.
 
-This passthrough helper currently only supports discards. Part of that
-command is the start and length, which is read from the SQE. It does
-so on every invocation, where it really should just make it stable
-on the first invocation. This avoids needing to copy the SQE upfront,
-as we only really need those two 8b values stored in our per-req
-payload.
+It is possible that SMB2_open_init may not set lease context based
+on the requested oplock level. This can happen when leases have been
+temporarily or permanently disabled. When this happens, we will have
+open_cached_dir making an open without lease context and the response
+will anyway be rejected by open_cached_dir (thereby forcing a close to
+discard this open). That's unnecessary two round-trips to the server.
 
-Cc: stable@vger.kernel.org # 6.17+
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This change adds a check before making the open request to the server
+to make sure that SMB2_open_init did add the expected lease context
+to the open in open_cached_dir.
+
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/ioctl.c |   24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ fs/smb/client/cached_dir.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -765,6 +765,8 @@ long compat_blkdev_ioctl(struct file *fi
- #endif
- 
- struct blk_iou_cmd {
-+	u64 start;
-+	u64 len;
- 	int res;
- 	bool nowait;
- };
-@@ -852,23 +854,27 @@ int blkdev_uring_cmd(struct io_uring_cmd
- {
- 	struct block_device *bdev = I_BDEV(cmd->file->f_mapping->host);
- 	struct blk_iou_cmd *bic = io_uring_cmd_to_pdu(cmd, struct blk_iou_cmd);
--	const struct io_uring_sqe *sqe = cmd->sqe;
- 	u32 cmd_op = cmd->cmd_op;
--	uint64_t start, len;
- 
--	if (unlikely(sqe->ioprio || sqe->__pad1 || sqe->len ||
--		     sqe->rw_flags || sqe->file_index))
--		return -EINVAL;
-+	/* Read what we need from the SQE on the first issue */
-+	if (!(issue_flags & IORING_URING_CMD_REISSUE)) {
-+		const struct io_uring_sqe *sqe = cmd->sqe;
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -286,6 +286,14 @@ replay_again:
+ 			    &rqst[0], &oplock, &oparms, utf16_path);
+ 	if (rc)
+ 		goto oshr_free;
 +
-+		if (unlikely(sqe->ioprio || sqe->__pad1 || sqe->len ||
-+			     sqe->rw_flags || sqe->file_index))
-+			return -EINVAL;
-+
-+		bic->start = READ_ONCE(sqe->addr);
-+		bic->len = READ_ONCE(sqe->addr3);
++	if (oplock != SMB2_OPLOCK_LEVEL_II) {
++		rc = -EINVAL;
++		cifs_dbg(FYI, "%s: Oplock level %d not suitable for cached directory\n",
++			 __func__, oplock);
++		goto oshr_free;
 +	}
++
+ 	smb2_set_next_command(tcon, &rqst[0]);
  
- 	bic->res = 0;
- 	bic->nowait = issue_flags & IO_URING_F_NONBLOCK;
- 
--	start = READ_ONCE(sqe->addr);
--	len = READ_ONCE(sqe->addr3);
--
- 	switch (cmd_op) {
- 	case BLOCK_URING_CMD_DISCARD:
--		return blkdev_cmd_discard(cmd, bdev, start, len, bic->nowait);
-+		return blkdev_cmd_discard(cmd, bdev, bic->start, bic->len,
-+					  bic->nowait);
- 	}
- 	return -EINVAL;
- }
+ 	memset(&qi_iov, 0, sizeof(qi_iov));
 
 
