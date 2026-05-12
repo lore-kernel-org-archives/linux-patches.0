@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC973EDE45;
-	Tue, 12 May 2026 18:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380D823E356;
+	Tue, 12 May 2026 18:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609332; cv=none; b=KgCdzekgfrUrCKb+vk9ycw0K9LxxeOGGa57t8plEFEA3KpTQR2bX6WhIlLI+W0R/0J3sarqGpSj2M4zGChPTbKqwdqUr6QtMQPy3+e/DGQp7EWI5ZQAcu4A1AM/f3LYgvZNaZIi/Ahx8QzFR+KvwbeeJXOH1+Hwbso1pnIZyrbQ=
+	t=1778609334; cv=none; b=MAZBGLT7Xg9c1pPWNrpbxWKM9Wtr/PtzjUQHR9B9RfD5gj4ZnjH0/YAl6kai1us7U1Mj11tMd3zkrzg2M92xRsieRrdwI/bWHeDDA6cj7OCT9e0W+5wIWYAH6FtO3B6RZiJdDKUWnVuOkcvyFAVxbM51YRxJc1pHKy3jtuFVpK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609332; c=relaxed/simple;
-	bh=yPmwlCgJlBlyxuzcWuWJSMD9UJhU2uA+ungm+WYeYig=;
+	s=arc-20240116; t=1778609334; c=relaxed/simple;
+	bh=FzYCulwLy6PHZwJVVAi/lq7BnpIds/ZjPenmXdFrlTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aaswtiC6t0Nv02g//7fdxBijVnpFexObNeUdAF13KtYV87ZkWeOg2Fo3QHw91EaW9x0w0tLOLkAbBTZ/+xClXCGtTz1mhy85WPBonEcDTpcqSguHL2qbpwp00dQebN7PqToEg1sPdlEIjvtK9zDs+4GaP53hSF6D6OhGyScqt1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbpje1EN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WC+x4XgC1l+KzS/mMIIut7xM0NVHyoLiSa9+pZ27CfWtnceiu57c/zWUii2vI5X4TYeX28aAqsjTjfEofBbOanRM1j5Ox2c9P2/ChfAqst00JBj9oJ72kOjn3lQzHIAn/RIMj8xIqy8km96SQt0xe9Yq+vLDrYT43wvr/vDSz/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/fWuBZT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbpje1EN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12462C4AF12;
-	Tue, 12 May 2026 18:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/fWuBZT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46F8C2BCB0;
+	Tue, 12 May 2026 18:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609331;
-	bh=yPmwlCgJlBlyxuzcWuWJSMD9UJhU2uA+ungm+WYeYig=;
+	s=korg; t=1778609334;
+	bh=FzYCulwLy6PHZwJVVAi/lq7BnpIds/ZjPenmXdFrlTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hbpje1ENqoK2Ae52Fial/5Wkm3stchC/eRxLiwz1H6ikcczBGouWjMprrs+/Joapn
-	 BxwHlAa87phPU6duV3+c6kmgJOl3k8V7u5cnDUGSH7O4stkamI4k/uMOqV1F8oC9Fr
-	 rUmd5jDp6YxhZ/27HMdmfsK3yEEzmyfZQSXupSa4=
+	b=b/fWuBZThFf3+JSWgzwBk16YxtZPX+tIwlAaMVWdNVYtWSuZQFWzBQN/qEyudYd0Z
+	 O0yl24hnakz1o7qqJCZ6KgLNKaN6RnbcUb/9Vu4AaeIKYJrE7DYDSZ9GMxwbpRuzuW
+	 TAlQ+VObuWsomdYTP2g44MF57RN4xf7p1VysMVcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 7.0 152/307] tracefs: Fix default permissions not being applied on initial mount
-Date: Tue, 12 May 2026 19:39:07 +0200
-Message-ID: <20260512173943.334776625@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 7.0 153/307] udf: reject descriptors with oversized CRC length
+Date: Tue, 12 May 2026 19:39:08 +0200
+Message-ID: <20260512173943.355362162@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,51 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit e8368d1f4bedbb0cce4cfe33a1d2664bb0fd4f27 upstream.
+commit 55d41b0a20128e86b9e960dd2e3f0a2d69a18df7 upstream.
 
-Commit e4d32142d1de ("tracing: Fix tracefs mount options") moved the
-option application from tracefs_fill_super() to tracefs_reconfigure()
-called from tracefs_get_tree(). This fixed mount options being ignored
-on user-space mounts when the superblock already exists, but introduced
-a regression for the initial kernel-internal mount.
+udf_read_tagged() skips CRC verification when descCRCLength +
+sizeof(struct tag) exceeds the block size.  A crafted UDF image can
+set descCRCLength to an oversized value to bypass CRC validation
+entirely; the descriptor is then accepted based solely on the 8-bit
+tag checksum, which is trivially recomputable.
 
-On the first mount (via simple_pin_fs during init), sget_fc() transfers
-fc->s_fs_info to sb->s_fs_info and sets fc->s_fs_info to NULL. When
-tracefs_get_tree() then calls tracefs_reconfigure(), it sees a NULL
-fc->s_fs_info and returns early without applying any options. The root
-inode keeps mode 0755 from simple_fill_super() instead of the intended
-TRACEFS_DEFAULT_MODE (0700).
+Reject such descriptors instead of silently accepting them.  A
+legitimate single-block descriptor should never have a CRC length that
+exceeds the block.
 
-Furthermore, even on subsequent user-space mounts without an explicit
-mode= option, tracefs_apply_options(sb, true) gates the mode behind
-fsi->opts & BIT(Opt_mode), which is unset for the defaults. So the
-mode is never corrected unless the user explicitly passes mode=0700.
-
-Restore the tracefs_apply_options(sb, false) call in tracefs_fill_super()
-to apply default permissions on initial superblock creation, matching
-what debugfs does in debugfs_fill_super().
-
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: e4d32142d1de ("tracing: Fix tracefs mount options")
-Link: https://patch.msgid.link/20260404134747.98867-1-devnexen@gmail.com
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260413211240.853662-1-michael.bommarito@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/inode.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/udf/misc.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/tracefs/inode.c
-+++ b/fs/tracefs/inode.c
-@@ -491,6 +491,7 @@ static int tracefs_fill_super(struct sup
- 		return err;
+--- a/fs/udf/misc.c
++++ b/fs/udf/misc.c
+@@ -230,8 +230,12 @@ struct buffer_head *udf_read_tagged(stru
+ 	}
  
- 	sb->s_op = &tracefs_super_operations;
-+	tracefs_apply_options(sb, false);
- 	set_default_d_op(sb, &tracefs_dentry_operations);
- 
- 	return 0;
+ 	/* Verify the descriptor CRC */
+-	if (le16_to_cpu(tag_p->descCRCLength) + sizeof(struct tag) > sb->s_blocksize ||
+-	    le16_to_cpu(tag_p->descCRC) == crc_itu_t(0,
++	if (le16_to_cpu(tag_p->descCRCLength) + sizeof(struct tag) > sb->s_blocksize) {
++		udf_err(sb, "block %u: CRC length %u exceeds block size\n",
++			block, le16_to_cpu(tag_p->descCRCLength));
++		goto error_out;
++	}
++	if (le16_to_cpu(tag_p->descCRC) == crc_itu_t(0,
+ 					bh->b_data + sizeof(struct tag),
+ 					le16_to_cpu(tag_p->descCRCLength)))
+ 		return bh;
 
 
