@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4773955DD;
-	Tue, 12 May 2026 17:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9463A3955C1;
+	Tue, 12 May 2026 17:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608085; cv=none; b=bm7kAwQb8hhZmXCJBwjOhEstBh9IGbhAyO0AZjlTqabtb58HvjzYCAfA11M9huYdO5/d11ztcpDaNgpmRi0NpehakHnrjF6TVW+NrPtJG0/vHtPSx3jjf3fgJZMqPGZfz11Wn7NG7m8p1iV3cvunPGJYL/vgAmyL6MgAX8ZpGmY=
+	t=1778608087; cv=none; b=iZneUOWsCMBKgtdmonLtGLvwWn5NRkLgz4nJTW7u1yjlHotmx5PgAUTFa55npG2R4VqdUsG/0pnkyBh5nZC600IZUc9iHwESsUWA64Ov0P4QyxxMEc4rKKEE/qgEt4A88nf4zGauPirmg+k7x+4BSvIM8OgpN7LlKXsyEj/B9Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608085; c=relaxed/simple;
-	bh=FawG/ahdDaF3AaiKE/xws2NQSDdQ1N1WBkQGGueONZ8=;
+	s=arc-20240116; t=1778608087; c=relaxed/simple;
+	bh=vzfDWyuVMbaC9EamXFrz222EQyzijZ1AqaDwSayO3gU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uGkjfASf2TMjfboVRJhtYN29BIEPvyjgJv5JqRVcu6Y2erxD7ZorVPaYBl4UY8CmYjVu4LtISoGBJRnxMm1VMnu9LJSbM35jRTt7YuQu4VSy25WxoHHPvjodFGozo0YXcHcZQXQ8l1PvMDGskZpvUzJG9CKWV1a7uM/h/Y5reXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IviJv95L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NcBnkc7WMCoBpt4sE8mhVkbmqVP8AVUvevW+M0ZVzvsz7qTEjzi3b40nwTvgYY3VI0CrVj/9/r4qFMJ2lIJKNYFRNSHcwA6DdEawVcy9ha8r7FElSF7Gsq1JNKHvbmtqMAeXnuUw4vOgFOwSgXe/9/RHRACliy4aGcyGZfna6iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M36VdqY0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IviJv95L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95747C2BCB0;
-	Tue, 12 May 2026 17:48:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M36VdqY0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29223C2BCB0;
+	Tue, 12 May 2026 17:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608084;
-	bh=FawG/ahdDaF3AaiKE/xws2NQSDdQ1N1WBkQGGueONZ8=;
+	s=korg; t=1778608087;
+	bh=vzfDWyuVMbaC9EamXFrz222EQyzijZ1AqaDwSayO3gU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IviJv95L3lPmgKIi/Yeeu7LHS1x2YI0n8HDFFEYd5baxW87ZRW/zxR2eJjerRZ1lR
-	 QUasqUhKAvwHXMkTQ7Bd2ei9xNSUPHx7N+tNX340+89tCRkXeE7cwZSluoB1uJeAO0
-	 /AsGeQwziLmJqBiftitOrC0HsDYtzCxDLOa1yih8=
+	b=M36VdqY05+PfN0efIAop/i5bAj7dnzstb9ApraYUdi9GAjDxoMywNZUaIt2ngw/ne
+	 bUwV2IDyXnP3JAVUwAjBE1j9SJUg8sC6uUCC1osB1gcZScjsDqQX+VwKdplHJ3rOmA
+	 67aVqq80s1Bv/SR2BzVv5eQWP/a+dtcAGP0eo+ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.12 147/206] power: supply: max17042: avoid overflow when determining health
-Date: Tue, 12 May 2026 19:39:59 +0200
-Message-ID: <20260512173935.976461310@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.12 148/206] RDMA/mana: Fix error unwind in mana_ib_create_qp_rss()
+Date: Tue, 12 May 2026 19:40:00 +0200
+Message-ID: <20260512173935.996891014@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -44,45 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 9a44949da669708f19d29141e65b3ac774d08f5a upstream.
+commit 6aaa978c6b6218cfac15fe1dab17c76fe229ce3f upstream.
 
-If vmax has the default value of INT_MAX (e.g. because not specified in
-DT), battery health is reported as over-voltage. This is because adding
-any value to vmax (the vmax tolerance in this case) causes it to wrap
-around, making it negative and smaller than the measured battery
-voltage.
+Sashiko points out that mana_ib_cfg_vport_steering() is leaked, the normal
+destroy path cleans it up.
 
-Avoid that by using size_add().
-
-Fixes: edd4ab055931 ("power: max17042_battery: add HEALTH and TEMP_* properties support")
 Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Link: https://patch.msgid.link/20260302-max77759-fg-v3-6-3c5f01dbda23@linaro.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
+Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=4
+Link: https://patch.msgid.link/r/7-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/max17042_battery.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mana/qp.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/max17042_battery.c
-+++ b/drivers/power/supply/max17042_battery.c
-@@ -199,7 +199,7 @@ static int max17042_get_battery_health(s
- 		goto out;
+--- a/drivers/infiniband/hw/mana/qp.c
++++ b/drivers/infiniband/hw/mana/qp.c
+@@ -236,13 +236,15 @@ static int mana_ib_create_qp_rss(struct
+ 		ibdev_dbg(&mdev->ib_dev,
+ 			  "Failed to copy to udata create rss-qp, %d\n",
+ 			  ret);
+-		goto fail;
++		goto err_disable_vport_rx;
  	}
  
--	if (vbatt > chip->pdata->vmax + MAX17042_VMAX_TOLERANCE) {
-+	if (vbatt > size_add(chip->pdata->vmax, MAX17042_VMAX_TOLERANCE)) {
- 		*health = POWER_SUPPLY_HEALTH_OVERVOLTAGE;
- 		goto out;
- 	}
+ 	kfree(mana_ind_table);
+ 
+ 	return 0;
+ 
++err_disable_vport_rx:
++	mana_disable_vport_rx(mpc);
+ fail:
+ 	while (i-- > 0) {
+ 		ibwq = ind_tbl->ind_tbl[i];
 
 
