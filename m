@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B0C3EDE49;
-	Tue, 12 May 2026 17:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAEC3EDE4B;
+	Tue, 12 May 2026 17:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608461; cv=none; b=armdKu0YAYcN32/OyL7uu1iLTjJwY36/TxPGxbbwv/yfSq60PheMAjmq84e++VvIqD+1xneM3Nn2NihQxNb8fqADJH+9F4M1a/zACbAo2AtvLw3JpaURBmAiSrl5TLk7Qn/A0jhuZFmPvvk++2sJDmi4L6BIgvxKyBtDYH48ljU=
+	t=1778608463; cv=none; b=oJY/Hk6ZFziVvBkTYOJ+CojQrL1xCucNa8itX4gEDp1j5q6Pl1m487upXsbvR4l9dy0JsH86Tk/jSV14HPhL4XPIfGwRvDEBt0mwz2FWgQK5qOpd+oF8Df+9rFE/RXUN107P6M5alwZhOF1vFspACmBSe38B0H1cdAxEKuWcRy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608461; c=relaxed/simple;
-	bh=W+rxMPl2G3rPPYFg/LG6FL9tbekM4KEMMP+s64JS8XA=;
+	s=arc-20240116; t=1778608463; c=relaxed/simple;
+	bh=N0sETkCNcr3hzhu0tAEYcHyunkCcaqXPmWLe1RZXFIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBdpuf7B/5A5nP3FymNk6S2O1WhubsQabnuLIoEAnlgOwHZRnFJg7DfR3bJ92AIKKUZqF0nt3MTNNgm9otP5tAit7wp6QFfukB7rCCYjd0ZU2zdLQsqAxuTMdJeQOvty3IdxlEjsdeY7jPi1IJlzb/HlYP+67vxgBURVu/bzykc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X65y8gef; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oDAGBfPvpgbS+YJdG97pj0d9o1fMzJ2/kK21P1FruaTJE5p910U1BSGH9nq8GJI9h6Th6YB7rg+1N9ofia4ubryxTNwVu8bnktV1zad95KGZ1MDJg/o1UMOwlXN1TDehT5WQbBytsZkVB7Pf2KHOORXvLH1recGgWSU22KBSR0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lL4GIexM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X65y8gef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF90AC2BCB0;
-	Tue, 12 May 2026 17:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lL4GIexM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6499CC2BCB0;
+	Tue, 12 May 2026 17:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608461;
-	bh=W+rxMPl2G3rPPYFg/LG6FL9tbekM4KEMMP+s64JS8XA=;
+	s=korg; t=1778608463;
+	bh=N0sETkCNcr3hzhu0tAEYcHyunkCcaqXPmWLe1RZXFIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X65y8gefFP+TKMhoZFgCPbYQGO4BlqLvkVR13eoupXfmVHHMrNVf1DkvGI1lMywqF
-	 PcIGmL1KJnXG6ODgWHN2zLfTA7AO2gGEqkhOHs2pkQT3OWf/xjbkdNozm/mBIHsfhU
-	 Lh+Lf1Lqlo8ijpP8DNdrEChTX19MnVCU03mBlBuE=
+	b=lL4GIexM806dCQ+tUpeLraTgs++nZAGmeK/WTceX62HpmhtpsYYyi2ysjPMjQDpVr
+	 peEc2WC0pxhPeobIURVedRjRYsfDS9EeRbVV/K6kERF2zmG/yKGhjwroFScnXq2QTh
+	 MOa565znFZ3qAhM8LhcwhDMyAjjuk4Tw9BVGGm+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 089/270] mm/hugetlb_cma: round up per_node before logging it
-Date: Tue, 12 May 2026 19:38:10 +0200
-Message-ID: <20260512173940.334694986@linuxfoundation.org>
+	Xi Ruoyao <xry111@xry111.site>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 090/270] LoongArch: Fix SYM_SIGFUNC_START definition for 32BIT
+Date: Tue, 12 May 2026 19:38:11 +0200
+Message-ID: <20260512173940.355853083@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -53,74 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 8f5ce56b76303c55b78a87af996e2e0f8535f979 upstream.
+commit 98b8aebb14fdc0133939fd8fe07d0d98333dc976 upstream.
 
-When the user requests a total hugetlb CMA size without per-node
-specification, hugetlb_cma_reserve() computes per_node from
-hugetlb_cma_size and the number of nodes that have memory
+The SYM_SIGFUNC_START definition should match sigcontext that the length
+of GPRs are 8 bytes for both 32BIT and 64BIT. So replace SZREG with 8 to
+fix it.
 
-        per_node = DIV_ROUND_UP(hugetlb_cma_size,
-                                nodes_weight(hugetlb_bootmem_nodes));
-
-The reservation loop later computes
-
-        size = round_up(min(per_node, hugetlb_cma_size - reserved),
-                          PAGE_SIZE << order);
-
-So the actually reserved per_node size is multiple of (PAGE_SIZE <<
-order), but the logged per_node is not rounded up, so it may be smaller
-than the actual reserved size.
-
-For example, as the existing comment describes, if a 3 GB area is
-requested on a machine with 4 NUMA nodes that have memory, 1 GB is
-allocated on the first three nodes, but the printed log is
-
-        hugetlb_cma: reserve 3072 MiB, up to 768 MiB per node
-
-Round per_node up to (PAGE_SIZE << order) before logging so that the
-printed log always matches the actual reserved size.  No functional change
-to the actual reservation size, as the following case analysis shows
-
-1. remaining (hugetlb_cma_size - reserved) >= rounded per_node
- - AS-IS: min() picks unrounded per_node;
-    round_up() returns rounded per_node
- - TO-BE: min() picks rounded per_node;
-    round_up() returns rounded per_node (no-op)
-2. remaining < unrounded per_node
- - AS-IS: min() picks remaining;
-    round_up() returns round_up(remaining)
- - TO-BE: min() picks remaining;
-    round_up() returns round_up(remaining)
-3. unrounded per_node <= remaining < rounded per_node
- - AS-IS: min() picks unrounded per_node;
-    round_up() returns rounded per_node
- - TO-BE: min() picks remaining;
-    round_up() returns round_up(remaining) equals rounded per_node
-
-Link: https://lore.kernel.org/20260422143353.852257-1-ekffu200098@gmail.com
-Fixes: cf11e85fc08c ("mm: hugetlb: optionally allocate gigantic hugepages using cma") # 5.7
-Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: e4878c37f6679fde ("LoongArch: vDSO: Emit GNU_EH_FRAME correctly")
+Suggested-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb_cma.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/loongarch/include/asm/linkage.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/hugetlb_cma.c
-+++ b/mm/hugetlb_cma.c
-@@ -193,6 +193,7 @@ void __init hugetlb_cma_reserve(int orde
- 		 */
- 		per_node = DIV_ROUND_UP(hugetlb_cma_size,
- 					nodes_weight(hugetlb_bootmem_nodes));
-+		per_node = round_up(per_node, PAGE_SIZE << order);
- 		pr_info("hugetlb_cma: reserve %lu MiB, up to %lu MiB per node\n",
- 			hugetlb_cma_size / SZ_1M, per_node / SZ_1M);
- 	}
+--- a/arch/loongarch/include/asm/linkage.h
++++ b/arch/loongarch/include/asm/linkage.h
+@@ -69,7 +69,7 @@
+ 		  9,  10, 11, 12, 13, 14, 15, 16,	\
+ 		  17, 18, 19, 20, 21, 22, 23, 24,	\
+ 		  25, 26, 27, 28, 29, 30, 31;		\
+-	.cfi_offset \num, SC_REGS + \num * SZREG;	\
++	.cfi_offset \num, SC_REGS + \num * 8;		\
+ 	.endr;						\
+ 							\
+ 	nop;						\
 
 
