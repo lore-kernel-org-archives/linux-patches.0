@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5DB3955CE;
-	Tue, 12 May 2026 17:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945B13955EA;
+	Tue, 12 May 2026 17:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608554; cv=none; b=Fe8lq/JDyIVOF9hMAbdlnMf8eM9+FEsmbiUVVT3hfC5xqShB026iQqqYd6S2TSTi7gAROnJIuSD3q5wgnIVRpw0uCCXAw3dB4Px4+Qy3R7QZ6oYceo2l96hkm8p8uz552DLLuUNw9WlCsm4S1pNezPSLyrq9bT+lNAZRJ4uEr2I=
+	t=1778608556; cv=none; b=ohwnW8erZe6PYCJ8/ONE7AAlVu/Rb1RLYNocxjwOSD9DKeT53HePyDPGNoK8NOzX5CzeF1SaTd0LTumitTGUwUNyZ+UjQYshB+0KHC0YVFMMESfxjwT1A8ecPxr3gqAqPfMN2GfbP5vxqVpL9EiWCaHCxwBd8q0b071CKkPux4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608554; c=relaxed/simple;
-	bh=SpqhYc7Nrm+FqKXqijFK1tJrDlhgHdf6Xes+FM5qjlk=;
+	s=arc-20240116; t=1778608556; c=relaxed/simple;
+	bh=OOnYEchHNIjfK28UJX8Sgt5iDafGO5cTZY3N6n/G7NM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EfPyXqxhFpS2NEIWbdqlY+O7ftEQ24VfEx8OcKnjlkKtLwybu0ANYrYPtZPFo4+NS+XaziFNgdExmFeLu/c9kv1qZy14RxlQ6yVOVOTA9UFXU7KoEUB3WoSLMSYKU6asF0nHa50xofVhfM5poMauXxmiGceCoZrLr0sKXTf+gbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cn+Nix6c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cfZDHrRRCxDXQEo0V0n9vc7G6EfjUXCSrvHLDpGwfNEP8sznNyu2+5gLhsdZeFEYQn1HCAt7bXca0pCrNTe9rfEFAMVZcLUxlT+LsAahRmTOXEevgzWEaj0JCYfR4WstohG9i6mIYHSKcxeTkyeryAkVszqU0ITgxxqG1syFYGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hY0MDj+S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cn+Nix6c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCEFC2BCB0;
-	Tue, 12 May 2026 17:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hY0MDj+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2201FC2BCF5;
+	Tue, 12 May 2026 17:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608553;
-	bh=SpqhYc7Nrm+FqKXqijFK1tJrDlhgHdf6Xes+FM5qjlk=;
+	s=korg; t=1778608556;
+	bh=OOnYEchHNIjfK28UJX8Sgt5iDafGO5cTZY3N6n/G7NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cn+Nix6cCE49HR6EAe8V4/yV3AfdTy+6sn4Ulax6ugBSV1+JXaVX/MyQG+C1/PDh0
-	 39Pc90K29jnhjYdceFAbS9w8jXsdQPxdPjUqoSMxWQ4gbRLRfdQ7zlId6OgbyFnB3S
-	 SJnEALfZGtiP0bjVcFp9yxE8/epzgxNaru1/645U=
+	b=hY0MDj+SOoFpkQ3qqa5GrkFmn6vI0woU4qQ9D8VFfzSOCFjIgpAIdle8NCr0BRZpj
+	 2yiwwsJKBDs6QpeOviAmtIzQHvAbZ+4KeEtOHwCxVf+ujQtsb/HC5wYF38YwQ5aBSQ
+	 gz8cpA72fuICHBe5/mnxwpMgUee0ElnRVAV3BZ+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjit Waghmode <ranjit.waghmode@xilinx.com>,
+	Adithya K V <adithya.kv@samsung.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 082/270] spi: zynqmp-gqspi: fix controller deregistration
-Date: Tue, 12 May 2026 19:38:03 +0200
-Message-ID: <20260512173940.184353392@linuxfoundation.org>
+Subject: [PATCH 6.18 083/270] spi: s3c64xx: fix NULL-deref on driver unbind
+Date: Tue, 12 May 2026 19:38:04 +0200
+Message-ID: <20260512173940.206247114@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -53,42 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 6895fc4faafc9082e15e4e624b23dd5f0c98feb5 upstream.
+commit 45daacbead8a009844bd5dba6cfa731332184d17 upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+A change moving DMA channel allocation from probe() back to
+s3c64xx_spi_prepare_transfer() failed to remove the corresponding
+deallocation from remove().
 
-Fixes: dfe11a11d523 ("spi: Add support for Zynq Ultrascale+ MPSoC GQSPI controller")
-Cc: stable@vger.kernel.org	# 4.2: 64640f6c972e
-Cc: stable@vger.kernel.org	# 4.2
-Cc: Ranjit Waghmode <ranjit.waghmode@xilinx.com>
+Drop the bogus DMA channel release from remove() to avoid triggering a
+NULL-pointer dereference on driver unbind.
+
+This issue was flagged by Sashiko when reviewing a controller
+deregistration fix.
+
+Fixes: f52b03c70744 ("spi: s3c64xx: requests spi-dma channel only during data transfer")
+Cc: stable@vger.kernel.org	# 6.0
+Cc: Adithya K V <adithya.kv@samsung.com>
+Link: https://sashiko.dev/#/patchset/20260410081757.503099-1-johan%40kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-26-johan@kernel.org
+Link: https://patch.msgid.link/20260410094925.518343-1-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-s3c64xx.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -1324,7 +1324,7 @@ static int zynqmp_qspi_probe(struct plat
- 	ctlr->dev.of_node = np;
- 	ctlr->auto_runtime_pm = true;
+--- a/drivers/spi/spi-s3c64xx.c
++++ b/drivers/spi/spi-s3c64xx.c
+@@ -1402,11 +1402,6 @@ static void s3c64xx_spi_remove(struct pl
  
--	ret = devm_spi_register_controller(&pdev->dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	if (ret) {
- 		dev_err(&pdev->dev, "spi_register_controller failed\n");
- 		goto clk_dis_all;
-@@ -1362,6 +1362,8 @@ static void zynqmp_qspi_remove(struct pl
+ 	writel(0, sdd->regs + S3C64XX_SPI_INT_EN);
  
- 	pm_runtime_get_sync(&pdev->dev);
- 
-+	spi_unregister_controller(xqspi->ctlr);
-+
- 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
- 
+-	if (!is_polling(sdd)) {
+-		dma_release_channel(sdd->rx_dma.ch);
+-		dma_release_channel(sdd->tx_dma.ch);
+-	}
+-
+ 	pm_runtime_put_noidle(&pdev->dev);
  	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
 
 
