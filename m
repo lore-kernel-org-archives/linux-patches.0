@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D5C3EDE55;
-	Tue, 12 May 2026 18:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F6850276;
+	Tue, 12 May 2026 18:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608987; cv=none; b=f9RBywGdvkVZFw1TaT3jCTm8i/tkSjYaYJ7rSx4J9x2qfTFjHRzaD9awY9EordMaMBUqcgBTxcQu0KwId9PyyUNTmiJhje9CMqzof65n+99QUYDVGBSZWaRceTjNDY9m9su52OVxX3TMmdXFvDyBwkvdq/6k5POqYCm6VDm7gYI=
+	t=1778608989; cv=none; b=BO5i3EZ+pJiKzeWa8R660mRgqXYf2QvAjh8WTVPZUnQOuM6FqA+Uluhs2INzb362LSWGEvdfHthSi282j/KARn85zpnlttZe1MWHAjWO7DFZ7zHCDhQGDGysujljatM0+4XCJstbhJyc7U/OVMqborAf6E/uC+tLN3oebEu3HOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608987; c=relaxed/simple;
-	bh=oPDgg95MjejITJsii1sS+CeS3CWuLGmwzeTZatriyEI=;
+	s=arc-20240116; t=1778608989; c=relaxed/simple;
+	bh=Kvp+rxm86rkLoYphZHI6dojFqZ+hniCh4Y3N6NNlr4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMdA6ptI8wy9wfMBUZaLx5w7ZBPNBKfxdQlE0kcZhyMuaq0FJEYOphWwPx1CWAJrrGc2BZ4vOqe02mFppVs59OOyG+td7NCHYhrYb92CYsQ04EvpLrBylQggSw7sP1vgJBH74+MLayRHRNeubYqSAW+/xPL6sv6Whj6GXA73xxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2K04Tja; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ky8/UOUN1KF6phLClQfPWwt9qqBbIn91TZlp47YM82u0tleIFPknXX3f0YyUcGm1AVwA6N8V4d9D6SHKgira4I6P0MQLhV1G5xDxhCTgFqIg/vi4HG0KESLR4AJj++SuRoCz4SenI6vwvC9neNQYJe7Rz5AN1m3tULrcBfYDS6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvPAMzu2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2K04Tja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E2DC2BCB0;
-	Tue, 12 May 2026 18:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvPAMzu2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57708C2BCB0;
+	Tue, 12 May 2026 18:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608987;
-	bh=oPDgg95MjejITJsii1sS+CeS3CWuLGmwzeTZatriyEI=;
+	s=korg; t=1778608989;
+	bh=Kvp+rxm86rkLoYphZHI6dojFqZ+hniCh4Y3N6NNlr4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2K04TjamzL0vJPPlObdReNb6wEeWbLJOoi4bdL9hqo6HALhbSQicdl262+iZsD0b
-	 s8zcwuJRlkXhiLU9LMgHXaDiSsLK/tOsktuS2Eq1bDFN6CIhok4dks+X8d4Y/CJt1N
-	 Ive/u/5IdpNrX3ryhup/G5OhVLbOcfWM+nxRHpiY=
+	b=AvPAMzu2zGefJ8sQmhQzP8Gp52Vi4oQkQw2d8VvfIkhxSPWMTtjHWb5x8uRl0NFiT
+	 RAJ3GfCnaCLZQaWvGRCT0iQgSj9j6Nyz9w4imkfSYldOOAie9CfQ/NA2+gNhNK2Yvr
+	 J6S89blAKPummW2YLSEYkDm080m0jVPLKFOe2QfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jann Horn <jannh@google.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 7.0 021/307] exit: prevent preemption of oopsing TASK_DEAD task
-Date: Tue, 12 May 2026 19:36:56 +0200
-Message-ID: <20260512173940.574641463@linuxfoundation.org>
+	Quan Zhou <quan.zhou@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 7.0 022/307] wifi: mt76: mt7925: fix AMPDU state handling in mt7925_tx_check_aggr
+Date: Tue, 12 May 2026 19:36:57 +0200
+Message-ID: <20260512173940.595941163@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,50 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-commit c1fa0bb633e4a6b11e83ffc57fa5abe8ebb87891 upstream.
+commit bb8e38fcdbf7290d7f0cd572d2d8fdb2b641b492 upstream.
 
-When an already-exiting task oopses, make_task_dead() currently calls
-do_task_dead() with preemption enabled.  That is forbidden:
-do_task_dead() calls __schedule(), which has a comment saying "WARNING:
-must be called with preemption disabled!".
+Previously, the AMPDU state bit for a given TID was set before attempting
+to start a BA session, which could result in the AMPDU state being marked
+active even if ieee80211_start_tx_ba_session() failed. This patch changes
+the logic to only set the AMPDU state bit after successfully starting a BA
+session, ensuring proper synchronization between AMPDU state and BA session
+status.
 
-If an oopsing task is preempted in do_task_dead(), between becoming
-TASK_DEAD and entering the scheduler explicitly, bad things happen:
-finish_task_switch() assumes that once the scheduler has switched away
-from a TASK_DEAD task, the task can never run again and its stack is no
-longer needed; but that assumption apparently doesn't hold if the dead
-task was preempted (the SM_PREEMPT case).
+This fixes potential issues with aggregation state tracking and improves
+compatibility with mac80211 BA session management.
 
-This means that the scheduler ends up repeatedly dropping references on
-the dead task's stack, which can lead to use-after-free or double-free
-of the entire task stack; in other words, two tasks can end up running
-on the same stack, resulting in various kinds of memory corruption.
+Fixes: 44eb173bdd4f ("wifi: mt76: mt7925: add link handling in mt7925_txwi_free")
+Cc: stable@vger.kernel.org
 
-(This does not just affect "recursively oopsing" tasks; it is enough to
-oops once during task exit, for example in a file_operations::release
-handler)
-
-Fixes: 7f80a2fd7db9 ("exit: Stop poorly open coding do_task_dead in make_task_dead")
-Cc: stable@kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Acked-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Reviewed-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/d5960fbced0beaf33c30203f7f8fb91d0899c87b.1764228973.git.quan.zhou@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/exit.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mt7925/mac.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -1074,6 +1074,7 @@ void __noreturn make_task_dead(int signr
- 		futex_exit_recursive(tsk);
- 		tsk->exit_state = EXIT_DEAD;
- 		refcount_inc(&tsk->rcu_users);
-+		preempt_disable();
- 		do_task_dead();
- 	}
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+@@ -882,8 +882,10 @@ static void mt7925_tx_check_aggr(struct
+ 	else
+ 		mlink = &msta->deflink;
  
+-	if (!test_and_set_bit(tid, &mlink->wcid.ampdu_state))
+-		ieee80211_start_tx_ba_session(sta, tid, 0);
++	if (!test_and_set_bit(tid, &mlink->wcid.ampdu_state)) {
++		if (ieee80211_start_tx_ba_session(sta, tid, 0))
++			clear_bit(tid, &mlink->wcid.ampdu_state);
++	}
+ }
+ 
+ static bool
 
 
