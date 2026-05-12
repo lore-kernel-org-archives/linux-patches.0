@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380D823E356;
-	Tue, 12 May 2026 18:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DB43EDE45;
+	Tue, 12 May 2026 18:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609334; cv=none; b=MAZBGLT7Xg9c1pPWNrpbxWKM9Wtr/PtzjUQHR9B9RfD5gj4ZnjH0/YAl6kai1us7U1Mj11tMd3zkrzg2M92xRsieRrdwI/bWHeDDA6cj7OCT9e0W+5wIWYAH6FtO3B6RZiJdDKUWnVuOkcvyFAVxbM51YRxJc1pHKy3jtuFVpK0=
+	t=1778609337; cv=none; b=ir3vkgw8FkPdKnCglRVN6jRdJ7yNCnLuHvNIF19L08m2hTb3i7NHSAnmQimdqjCwYVEBvE0U+AKqYAekeTK/8osjgI6Mbe9G8D8d924D7T4kbdi062ZQrgC6yqk+PuKmSbSMM01vqXs/eIXOmIeetZJ93NquoFI3lZApZZj47IY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609334; c=relaxed/simple;
-	bh=FzYCulwLy6PHZwJVVAi/lq7BnpIds/ZjPenmXdFrlTw=;
+	s=arc-20240116; t=1778609337; c=relaxed/simple;
+	bh=nVQFPcWVXoyYWwjUTJV+gTi9OqnYwho+Ik8zH1mXxqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WC+x4XgC1l+KzS/mMIIut7xM0NVHyoLiSa9+pZ27CfWtnceiu57c/zWUii2vI5X4TYeX28aAqsjTjfEofBbOanRM1j5Ox2c9P2/ChfAqst00JBj9oJ72kOjn3lQzHIAn/RIMj8xIqy8km96SQt0xe9Yq+vLDrYT43wvr/vDSz/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/fWuBZT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BZIyOxFrQmNlNaRiIqdVFhhyKyz4pPaJu0mSvTdGN03yky5VgncnYXTwZCVmEyY8/p6os4oVtIQXdCqkbjfy80qNZnfjesxoPSQObGla8ERATQqIBm3uMyH3bKIibYulW82aeGIhZEpALFelNNsOpI7j7pnla7CqWffVx/D7O5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwxFRZgN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/fWuBZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46F8C2BCB0;
-	Tue, 12 May 2026 18:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwxFRZgN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57DB2C2BCB0;
+	Tue, 12 May 2026 18:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609334;
-	bh=FzYCulwLy6PHZwJVVAi/lq7BnpIds/ZjPenmXdFrlTw=;
+	s=korg; t=1778609336;
+	bh=nVQFPcWVXoyYWwjUTJV+gTi9OqnYwho+Ik8zH1mXxqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b/fWuBZThFf3+JSWgzwBk16YxtZPX+tIwlAaMVWdNVYtWSuZQFWzBQN/qEyudYd0Z
-	 O0yl24hnakz1o7qqJCZ6KgLNKaN6RnbcUb/9Vu4AaeIKYJrE7DYDSZ9GMxwbpRuzuW
-	 TAlQ+VObuWsomdYTP2g44MF57RN4xf7p1VysMVcs=
+	b=uwxFRZgNodOdasaty2vEtisj5k9rak4cwBLoFwhOuScvIcxfT48U6lWCHDptfGSq3
+	 8PP9ZEFpY3nV3oo9zH8QuNvwu506wfMGqxCJrkc7xoIPeRJUGNBGJPuBkIES2FFy+9
+	 bsO7dBBcVRZ69ZC9qUP3WghMt+sYLXgYH6wnHaVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 7.0 153/307] udf: reject descriptors with oversized CRC length
-Date: Tue, 12 May 2026 19:39:08 +0200
-Message-ID: <20260512173943.355362162@linuxfoundation.org>
+	David Gow <david@davidgow.net>,
+	Ingo Molnar <mingo@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Arnd Bergmann <arnd@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>
+Subject: [PATCH 7.0 154/307] x86/boot/e820: Re-enable BIOS fallback if e820 table is empty
+Date: Tue, 12 May 2026 19:39:09 +0200
+Message-ID: <20260512173943.376420109@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,48 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: David Gow <david@davidgow.net>
 
-commit 55d41b0a20128e86b9e960dd2e3f0a2d69a18df7 upstream.
+commit 5772f6535227ebd104065d80afa8ed3478d34c5c upstream.
 
-udf_read_tagged() skips CRC verification when descCRCLength +
-sizeof(struct tag) exceeds the block size.  A crafted UDF image can
-set descCRCLength to an oversized value to bypass CRC validation
-entirely; the descriptor is then accepted based solely on the 8-bit
-tag checksum, which is trivially recomputable.
+In commit:
 
-Reject such descriptors instead of silently accepting them.  A
-legitimate single-block descriptor should never have a CRC length that
-exceeds the block.
+  157266edcc56 ("x86/boot/e820: Simplify append_e820_table() and remove restriction on single-entry tables")
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+the check on the number of entries in the e820 table was removed. The intention
+was to support single-entry maps, but by removing the check entirely, we also
+skip the fallback (to, e.g., the BIOS 88h function).
+
+This means that if no E820 map is passed in from the bootloader (which is the
+case on some bootloaders, like linld), we end up with an empty memory map, and
+the kernel fails to boot (either by deadlocking on OOM, or by failing to
+allocate the real mode trampoline, or similar).
+
+Re-instate the check in append_e820_table(), but only check that nr_entries is
+non-zero. This allows e820__memory_setup_default() to fall back to other memory
+size sources, and doesn't affect e820__memory_setup_extended(), as the latter
+ignores the return value from append_e820_table().
+
+In doing so, we also update the return values to be proper error codes, with
+-ENOENT for this case (there are no entries), and -EINVAL for the case where an
+entry appears invalid. Given none of the callers check the actual value -- just
+whether it's nonzero -- this is largely aesthetic in practice.
+
+Tested against linld, and the kernel boots again fine.
+
+[ mingo: Readability edits to the comment and the changelog. ]
+
+Fixes: 157266edcc56 ("x86/boot/e820: Simplify append_e820_table() and remove restriction on single-entry tables")
+Signed-off-by: David Gow <david@davidgow.net>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260413211240.853662-1-michael.bommarito@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Cc: Arnd Bergmann <arnd@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Link: https://patch.msgid.link/20260416065746.1896647-1-david@davidgow.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/misc.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/x86/kernel/e820.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/udf/misc.c
-+++ b/fs/udf/misc.c
-@@ -230,8 +230,12 @@ struct buffer_head *udf_read_tagged(stru
- 	}
+diff --git a/arch/x86/kernel/e820.c b/arch/x86/kernel/e820.c
+index 2a9992758933..eb72537bc0b1 100644
+--- a/arch/x86/kernel/e820.c
++++ b/arch/x86/kernel/e820.c
+@@ -450,6 +450,10 @@ __init static int append_e820_table(struct boot_e820_entry *entries, u32 nr_entr
+ {
+ 	struct boot_e820_entry *entry = entries;
  
- 	/* Verify the descriptor CRC */
--	if (le16_to_cpu(tag_p->descCRCLength) + sizeof(struct tag) > sb->s_blocksize ||
--	    le16_to_cpu(tag_p->descCRC) == crc_itu_t(0,
-+	if (le16_to_cpu(tag_p->descCRCLength) + sizeof(struct tag) > sb->s_blocksize) {
-+		udf_err(sb, "block %u: CRC length %u exceeds block size\n",
-+			block, le16_to_cpu(tag_p->descCRCLength));
-+		goto error_out;
-+	}
-+	if (le16_to_cpu(tag_p->descCRC) == crc_itu_t(0,
- 					bh->b_data + sizeof(struct tag),
- 					le16_to_cpu(tag_p->descCRCLength)))
- 		return bh;
++	/* If there aren't any entries, we'll want to fall back to another source: */
++	if (!nr_entries)
++		return -ENOENT;
++
+ 	while (nr_entries) {
+ 		u64 start = entry->addr;
+ 		u64 size  = entry->size;
+@@ -458,7 +462,7 @@ __init static int append_e820_table(struct boot_e820_entry *entries, u32 nr_entr
+ 
+ 		/* Ignore the remaining entries on 64-bit overflow: */
+ 		if (start > end && likely(size))
+-			return -1;
++			return -EINVAL;
+ 
+ 		e820__range_add(start, size, type);
+ 
+-- 
+2.54.0
+
 
 
