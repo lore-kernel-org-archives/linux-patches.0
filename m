@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6917734B410;
-	Tue, 12 May 2026 18:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000953537D0;
+	Tue, 12 May 2026 18:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609378; cv=none; b=sgdfWPpy3Kf3vLBPAS2QNTGOyNEsXsVGdsVaIsEF2F1sYwf81LaL9S8q+kMaDClx+XBddg3OGa9yZiKRIGw090DbzBYeGyCRQdtHaEpogUcB02flPh5xqGpFKl2yr+8F6/wd7Hsj2PdC8CjpnrT5XaEMg1YHuwWNMaqgJ340esU=
+	t=1778609381; cv=none; b=W460IVWUDmOGd+GuOUUtDQwX975EeAC/g+2lML3ZBAIQATlmbbxQDyDAR0wpwzOU/Jtbj6cWTddjZi+231naAgYkv+qJTeu8WDnvt7pikv7iuRo7S/mKl0p/ub7JuLcQXSwPIpY2DevGddwY+qjtPGp+5+HFACYwXoLvGn5WYbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609378; c=relaxed/simple;
-	bh=ky0MeBNSlDZpT084uLhYPNXa0cMkQEr8yZflwCatrmI=;
+	s=arc-20240116; t=1778609381; c=relaxed/simple;
+	bh=NYIBzE7IHGujvOuOWHxOA9q0ZytjvIyg7QCPirC3pRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K6Hx2NLA8dbnHOu5b8Lby9wpcggrU/OPy5WQsXiBvjApxR2uytFwaD84lLtGz94xT2sgQluNdq98VDVQG63UTPb8QIsMy4GSw6gUeRpGcOS1k4LEimkZTW1ujO1fxr730D9C1t+65u6tZBQ/1TrIuuLahRVJHVyKk+VGC4Q+RYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LF/uR3eQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mmLamVgMqJTZIS75kPMB9IekempQEkjWlWX7Bf4h+h9zeAUL9kkueKRxul2CzQCzyJ4zZ4uXCLfLFC994g/Q83zMx9KhkXfCMHvY4ZbNLuGYSH5hZQ+7apZixXBTbmB/C52II97HMk0o5TvHNEkchZj0DrGAORRpCOIcKRhNT8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AigZDkP9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LF/uR3eQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41B3C2BCB0;
-	Tue, 12 May 2026 18:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AigZDkP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8C4C2BCB0;
+	Tue, 12 May 2026 18:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609378;
-	bh=ky0MeBNSlDZpT084uLhYPNXa0cMkQEr8yZflwCatrmI=;
+	s=korg; t=1778609380;
+	bh=NYIBzE7IHGujvOuOWHxOA9q0ZytjvIyg7QCPirC3pRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LF/uR3eQYW41bfF+UjmAMO9zxfFMZRG+XQicrf9IbWYgH7H0tNFfqqfireswav1iD
-	 snKTle6E/6pqcd+lz65F79x2l2Z3h7nZ6thJj1RWx6c3MNVJ1whn8FuwzNWUuNSlfk
-	 z6mtTtyowjMmY5i286kEJ6ES1SzGOlg2JnvEu3w0=
+	b=AigZDkP9Oxz73GfB0ZfCOZNoWwmFhC3QAJA4qryHGVmng9FPfydBIrlOXYJxiRFWb
+	 d+X/dCCwM9fqAMYbhHQb7KXyKEJIeB/YyZsMl0WgMNcoZx5posAfVUm6+0GQNRPeY0
+	 YXYV/I/O804U7H1p1knY/bU4fsVpU8D5DHvBXK1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stable@vger.kernel.org,
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 173/307] ASoC: qcom: q6apm-lpass-dai: Fix multiple graph opens
-Date: Tue, 12 May 2026 19:39:28 +0200
-Message-ID: <20260512173943.769531749@linuxfoundation.org>
+Subject: [PATCH 7.0 174/307] ASoC: qcom: q6apm: remove child devices when apm is removed
+Date: Tue, 12 May 2026 19:39:29 +0200
+Message-ID: <20260512173943.790040801@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -53,34 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit 69acc488aaf39d0ddf6c3cf0e47c1873d39919a2 upstream.
+commit 4a0e1bcc98f7281d1605768bd2fe71eacc34f9b7 upstream.
 
-As prepare can be called mulitple times, this can result in multiple
-graph opens for playback path.
+looks like q6apm driver does not remove the child driver q6apm-dai and
+q6apm-bedais when the this driver is removed.
 
-This will result in a memory leaks, fix this by adding a check before
-opening.
+Fix this by depopulating them in remove callback.
 
-Fixes: be1fae62cf25 ("ASoC: q6apm-lpass-dai: close graph on prepare errors")
+With this change when the dsp is shutdown all the devices associated with
+q6apm will now be removed.
+
+Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
 Cc: Stable@vger.kernel.org
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260402081118.348071-5-srinivas.kandagatla@oss.qualcomm.com
+Link: https://patch.msgid.link/20260402081118.348071-3-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-lpass-dais.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6apm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-@@ -181,7 +181,7 @@ static int q6apm_lpass_dai_prepare(struc
- 	 * It is recommend to load DSP with source graph first and then sink
- 	 * graph, so sequence for playback and capture will be different
- 	 */
--	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK && dai_data->graph[dai->id] == NULL) {
- 		graph = q6apm_graph_open(dai->dev, NULL, dai->dev, graph_id);
- 		if (IS_ERR(graph)) {
- 			dev_err(dai->dev, "Failed to open graph (%d)\n", graph_id);
+--- a/sound/soc/qcom/qdsp6/q6apm.c
++++ b/sound/soc/qcom/qdsp6/q6apm.c
+@@ -764,6 +764,7 @@ static int apm_probe(gpr_device_t *gdev)
+ 
+ static void apm_remove(gpr_device_t *gdev)
+ {
++	of_platform_depopulate(&gdev->dev);
+ 	snd_soc_unregister_component(&gdev->dev);
+ }
+ 
 
 
