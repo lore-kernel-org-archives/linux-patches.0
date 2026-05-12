@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155EB3EDE6F;
-	Tue, 12 May 2026 17:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3013C09ED;
+	Tue, 12 May 2026 17:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608474; cv=none; b=DsBuSCL2YqMB2t4rS/1v0K8iCdNchMFkR9I89T7IKsOdrL6kNyr7lPMAemBHYLhT/4Fm8bcce0yXBxZVbJUcu8YbnSIGGNDRA47QMPmb/MIzAsfBJ9K6U375rjBCtn+gem6QbprmO36GzlVd8sapGrVIlKvSkY0daSMuBl7MuqU=
+	t=1778608476; cv=none; b=MufX0vd9bd4L7ksNESzSx5zr6ytimIKchj1fjxwPIjJCEjej+hTo6isn/2kIHXI3PT1X9Kw/bFzjbWkAsIQ+M1Udby/QLsik2g1I/n+vQGe9eroPn8H6MA2o2trpu29FvicFyL3KMQuK5niXgvcvlwA5qlKbv5+FT+9GA8NNOuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608474; c=relaxed/simple;
-	bh=j64D9aJHw6VqGgg1rl7Yr4iOK2lG04SYuCB01bzhh8U=;
+	s=arc-20240116; t=1778608476; c=relaxed/simple;
+	bh=Y3xMXFxj6WQkq8diArAWpdmci2Ejq7hvpqo7ltpx3ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p11zZerB+jZ4v6jGUkUaaYMYR2hCkaw+7c1P6dxlku/BsTn7lBVTzjXMuOPbjkG7Tzj4yWZi0Fow8/oeCrL/9uwXPoNXZj1vrTG0adPAbZtazupY26GTNDedbqTntYEabKVkXUcoM2/7Lac37gBeAG2kK0b+xvLp5p33mHI8rW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cI0md0BO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c7AJa8Xk5ZjKuuNGFeCz1OQKz50w5VhzZFBAQT6/4itqMMX1hH2Jo9aeg8UaVJhgNwkfkt9ZEJJJI4dlP20evPr0bbwfMuZyDnmm8S8A9UX7jTQbwdY7FOuQwJkP88v0TZ3/h4jYV30s5zxnMHoF5W/utLmHP1zwJ1ub3prLOOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwlwAk04; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cI0md0BO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A160DC2BCB0;
-	Tue, 12 May 2026 17:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwlwAk04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32240C2BCB0;
+	Tue, 12 May 2026 17:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608474;
-	bh=j64D9aJHw6VqGgg1rl7Yr4iOK2lG04SYuCB01bzhh8U=;
+	s=korg; t=1778608476;
+	bh=Y3xMXFxj6WQkq8diArAWpdmci2Ejq7hvpqo7ltpx3ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cI0md0BOUto2lnpzpEsQqzwxQ1O27kn9kNMln1g8A499cEQ3uDerjYhpc1BC26FHY
-	 FyZDmucE0/D96h4csO8v6sjgLAXwB/3XVyPBIqh1hsxVgKYDEQD6ATukOBLZa2uHQ2
-	 p2aklbA/ZhegPawzQD7pGbsPH+0fH2qFF1he9as4=
+	b=VwlwAk04S0NuWLzxgvj6gDgJqmpkk0xc4Afp39aAxHmokIq4lsfOqh2g4dySDaYWI
+	 8+cQUdfRCBQQ2qfiwNDn5pIbna2SklOX7EyS7qEye7wEu8rynSzoIOdaUrvLN/mKmW
+	 +mGRnihLAtoOMcEikh3J3MPBPN18ZU4ejz/Tu5pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.18 094/270] perf/x86/intel: Improve validation and configuration of ACR masks
-Date: Tue, 12 May 2026 19:38:15 +0200
-Message-ID: <20260512173940.440136256@linuxfoundation.org>
+	SeungJu Cheon <suunj1331@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 095/270] sound: ua101: fix division by zero at probe
+Date: Tue, 12 May 2026 19:38:16 +0200
+Message-ID: <20260512173940.461048725@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,95 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-commit 5ad732a56be46aabf158c16aa0c095291727aaef upstream.
+commit d1f73f169c1014463b5060e3f60813e13ddc7b87 upstream.
 
-Currently there are several issues on the user space ACR mask validation
-and configuration.
-- The validation for user space ACR mask (attr.config2) is incomplete,
-  e.g., the ACR mask could include the index which belongs to another
-  ACR events group, but it's not validated.
-- An early return on an invalid ACR mask caused all subsequent ACR groups
-  to be skipped.
-- The stale hardware ACR mask (hw.config1) is not cleared before setting
-  new hardware ACR mask.
+Add a missing sanity check for bNrChannels in detect_usb_format()
+to prevent a division by zero in playback_urb_complete() and
+capture_urb_complete().
 
-The following changes address all of the above issues.
-- Figure out the event index group of an ACR group. Any bits in the
-  user-space mask not present in the index group are now dropped.
-- Instead of an early return on invalid bits, drop only the invalid
-  portions and continue iterating through all ACR events to ensure full
-  configuration.
-- Explicitly clear the stale hardware ACR mask for each event prior to
-  writing the new configuration.
+USB core does not validate class-specific descriptor fields such
+as bNrChannels, so drivers must verify them before use. If a
+device provides bNrChannels = 0, frame_bytes becomes zero and is
+later used as a divisor in the URB completion handlers, leading
+to a kernel crash.
 
-Besides, a non-leader event member of ACR group could be disabled in
-theory. This could cause bit-shifting errors in the acr_mask of remaining
-group members. But since ACR sampling requires all events to be active,
-this should not be a big concern in real use case. Add a "FIXME" comment
-to notice this risk.
-
-Fixes: ec980e4facef ("perf/x86/intel: Support auto counter reload")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260430002558.712334-2-dapeng1.mi@linux.intel.com
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Link: https://patch.msgid.link/20260426111239.103296-1-suunj1331@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |   32 +++++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+ sound/usb/misc/ua101.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -2980,23 +2980,41 @@ static void intel_pmu_enable_event(struc
- static void intel_pmu_acr_late_setup(struct cpu_hw_events *cpuc)
- {
- 	struct perf_event *event, *leader;
--	int i, j, idx;
-+	int i, j, k, bit, idx;
+--- a/sound/usb/misc/ua101.c
++++ b/sound/usb/misc/ua101.c
+@@ -974,6 +974,13 @@ static int detect_usb_format(struct ua10
  
-+	/*
-+	 * FIXME: ACR mask parsing relies on cpuc->event_list[] (active events only).
-+	 * Disabling an ACR event causes bit-shifting errors in the acr_mask of
-+	 * remaining group members. As ACR sampling requires all events to be active,
-+	 * this limitation is acceptable for now. Revisit if independent event toggling
-+	 * is required.
-+	 */
- 	for (i = 0; i < cpuc->n_events; i++) {
- 		leader = cpuc->event_list[i];
- 		if (!is_acr_event_group(leader))
- 			continue;
- 
--		/* The ACR events must be contiguous. */
-+		/* Find the last event of the ACR group. */
- 		for (j = i; j < cpuc->n_events; j++) {
- 			event = cpuc->event_list[j];
- 			if (event->group_leader != leader->group_leader)
- 				break;
--			for_each_set_bit(idx, (unsigned long *)&event->attr.config2, X86_PMC_IDX_MAX) {
--				if (i + idx >= cpuc->n_events ||
--				    !is_acr_event_group(cpuc->event_list[i + idx]))
--					return;
--				__set_bit(cpuc->assign[i + idx], (unsigned long *)&event->hw.config1);
-+		}
+ 	ua->capture.channels = fmt_capture->bNrChannels;
+ 	ua->playback.channels = fmt_playback->bNrChannels;
++	if (!ua->capture.channels || !ua->playback.channels) {
++		dev_err(&ua->dev->dev,
++			"invalid channel count: capture %u, playback %u\n",
++			ua->capture.channels, ua->playback.channels);
++		return -EINVAL;
++	}
 +
-+		/*
-+		 * Translate the user-space ACR mask (attr.config2) into the physical
-+		 * counter bitmask (hw.config1) for each ACR event in the group.
-+		 * NOTE: ACR event contiguity is guaranteed by intel_pmu_hw_config().
-+		 */
-+		for (k = i; k < j; k++) {
-+			event = cpuc->event_list[k];
-+			event->hw.config1 = 0;
-+			for_each_set_bit(bit, (unsigned long *)&event->attr.config2, X86_PMC_IDX_MAX) {
-+				idx = i + bit;
-+				/* Event index of ACR group must locate in [i, j). */
-+				if (idx >= j || !is_acr_event_group(cpuc->event_list[idx]))
-+					continue;
-+				__set_bit(cpuc->assign[idx], (unsigned long *)&event->hw.config1);
- 			}
- 		}
- 		i = j - 1;
+ 	ua->capture.frame_bytes =
+ 		fmt_capture->bSubframeSize * ua->capture.channels;
+ 	ua->playback.frame_bytes =
 
 
