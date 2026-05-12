@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64F23EDE68;
-	Tue, 12 May 2026 18:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2439336891;
+	Tue, 12 May 2026 18:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609486; cv=none; b=fn7DzbRrUZGHfPzgPG0WFADfbL98E1lSHSbTDeLHERBuE074LVL/pp5Fo/XSbCUYsdtgYCqliTS3/+eoZ9IFCrqJTNA0VzKWUUJUnugBmzoERQJyrdNirDdw0++vKNLzaUix7t2gDvRoO38gOKC3vT33quHi0JHTwrc3/1ENqU8=
+	t=1778609489; cv=none; b=MOd8RPb3uMH2gk33YxuZ3VauSH51LCjDVWla7EaV339+2wVwr8bAtLA15Spfqsf+0UAimkcxk6u05HqEOaho+uRTOY6dN/HoOQs6wSD0aXL6hM3Zx6MWQlQYDVxEu2uq+221rxQlETPKzGXVRQPhCmAXinBuP5sa+4zDelAUn3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609486; c=relaxed/simple;
-	bh=BH7nrwUaz73ygRv8Xs49j0NuzQRP8PXT+o6B3YWkaDQ=;
+	s=arc-20240116; t=1778609489; c=relaxed/simple;
+	bh=s+FFLoxTZyV4KfClqb7sSGrduV7aMfsyttxhQ3UKPT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Euj4NuTb1OX6Puo+vCZ4cDnI0cn43ywB1EI3QAspLPTAUC+xIR2kW6FgnwqCywQMhHm772+tFQ+q6IE7VSVwi+hN30gZVl70lb3+SUEwA1DPqGrQAgPbS6ndi+O2AxKDTmVzLCjkxtgOQQwvJ3E1F99bIclpQGM6IrV0ybenpDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ns8yaYq1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4RokHhUNwElpmsGhN7V8g9bmPVxqDzU1rY92PSdW5Eeo8T5Uue4tl7DeH3Y7eIcCpw4KEIanj+SMZbOOQL27mTl0WHpTWueZqBzzVmNb55vGBcxF9cMpBah67CRPDXsUQ9wRBrhS0S0nzI0Hex7Je33V2DCduofkc1w2LgUObo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDeNJZ8t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ns8yaYq1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CCB6C2BCB0;
-	Tue, 12 May 2026 18:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDeNJZ8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F60C2BCB0;
+	Tue, 12 May 2026 18:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609486;
-	bh=BH7nrwUaz73ygRv8Xs49j0NuzQRP8PXT+o6B3YWkaDQ=;
+	s=korg; t=1778609489;
+	bh=s+FFLoxTZyV4KfClqb7sSGrduV7aMfsyttxhQ3UKPT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ns8yaYq12VHJNYqlo7PzChHZZBQ7TYZD7KSOJRm6Six3C4x3IloYLBxcxcey+5r1x
-	 Z7oyGZYzxZ77Wz+2JbPInlesO4BoguLqbmiLJ1IeQtEM/E0rKov7eVjsUW6NzuSDIr
-	 Bo3W4fmSZ72bbNhlsh77t3U5oVQwapZ5JJezfT/4=
+	b=eDeNJZ8tKUANYMEaet8yJYLXtnOSZk9JMt+nq/rQ9dNSbI1hNAQVwNTy0yWXao3yY
+	 HLLw569UZ/nsStIYzn/KvQFS3LkcuiWPVAMzzqXBtNe1H3+fD4iYg1+dMrKndE4iEQ
+	 E9G3zHSLBme3lFbOMTbPRo3mNreoBYqS01OWh1oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Farrah Chen <farrah.chen@intel.com>,
 	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 7.0 215/307] KVM: x86: check for nEPT/nNPT in slow flush hypercalls
-Date: Tue, 12 May 2026 19:40:10 +0200
-Message-ID: <20260512173944.653279402@linuxfoundation.org>
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Chenyi Qiang <chenyi.qiang@intel.com>
+Subject: [PATCH 7.0 216/307] KVM: x86: Do IRR scan in __kvm_apic_update_irr even if PIR is empty
+Date: Tue, 12 May 2026 19:40:11 +0200
+Message-ID: <20260512173944.674439833@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,32 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit 464af6fc2b1dcc74005b7f58ee3812b17777efee upstream.
+commit 33fd0ccd2590b470b65adcca288615ad3b5e3e06 upstream.
 
-Checking is_guest_mode(vcpu) is incorrect, because translate_nested_gpa()
-is only valid if an L2 guest is running *with nested EPT/NPT enabled*.
-Instead use the same condition as translate_nested_gpa() itself.
+Fall back to apic_find_highest_vector() when PID.ON is set but PIR
+turns out to be empty, to correctly report the highest pending interrupt
+from the existing IRR.
 
+In a nested VM stress test, the following WARNING fires in
+vmx_check_nested_events() when kvm_cpu_has_interrupt() reports a pending
+interrupt but the subsequent kvm_apic_has_interrupt() (which invokes
+vmx_sync_pir_to_irr() again) returns -1:
+
+  WARNING: CPU: 99 PID: 57767 at arch/x86/kvm/vmx/nested.c:4449 vmx_check_nested_events+0x6bf/0x6e0 [kvm_intel]
+  Call Trace:
+   kvm_check_and_inject_events
+   vcpu_enter_guest.constprop.0
+   vcpu_run
+   kvm_arch_vcpu_ioctl_run
+   kvm_vcpu_ioctl
+   __x64_sys_ioctl
+   do_syscall_64
+   entry_SYSCALL_64_after_hwframe
+
+The root cause is a race between vmx_sync_pir_to_irr() on the target vCPU
+and __vmx_deliver_posted_interrupt() on a sender vCPU.  The sender
+performs two individually-atomic operations that are not a single
+transaction:
+
+  1. pi_test_and_set_pir(vector)  -- sets the PIR bit
+  2. pi_test_and_set_on()         -- sets PID.ON
+
+The following interleaving triggers the bug:
+
+  Sender vCPU (IPI):              Target vCPU (1st sync_pir_to_irr):
+  B1: set PIR[vector]
+                                  A1: pi_clear_on()
+                                  A2: pi_harvest_pir() -> sees B1 bit
+                                  A3: xchg() -> consumes bit, PIR=0
+                                      (1st sync returns correct max_irr)
+  B2: set PID.ON = 1
+
+                                  Target vCPU (2nd sync_pir_to_irr):
+                                  C1: pi_test_on() -> TRUE (from B2)
+                                  C2: pi_clear_on() -> ON=0
+                                  C3: pi_harvest_pir() -> PIR empty
+                                  C4: *max_irr = -1, early return
+                                      IRR NOT SCANNED
+
+The interrupt is not lost (it resides in the IRR from the first sync and
+is recovered on the next vcpu_enter_guest() iteration), but the incorrect
+max_irr causes a spurious WARNING and a wasted L2 VM-Enter/VM-Exit cycle.
+
+Fixes: b41f8638b9d3 ("KVM: VMX: Isolate pure loads from atomic XCHG when processing PIR")
+Reported-by: Farrah Chen <farrah.chen@intel.com>
+Analyzed-by: Chenyi Qiang <chenyi.qiang@intel.com>
 Cc: stable@vger.kernel.org
 Reviewed-by: Sean Christopherson <seanjc@google.com>
-Fixes: aee738236dca ("KVM: x86: Prepare kvm_hv_flush_tlb() to handle L2's GPAs", 2022-11-18)
-Link: https://patch.msgid.link/20260503200905.106077-1-pbonzini@redhat.com/
+Link: https://lore.kernel.org/kvm/20260428070349.1633238-1-chenyi.qiang@intel.com/T/
+Link: https://patch.msgid.link/20260503201703.108231-2-pbonzini@redhat.com/
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/hyperv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/lapic.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/hyperv.c
-+++ b/arch/x86/kvm/hyperv.c
-@@ -2040,7 +2040,7 @@ static u64 kvm_hv_flush_tlb(struct kvm_v
- 	 * flush).  Translate the address here so the memory can be uniformly
- 	 * read with kvm_read_guest().
- 	 */
--	if (!hc->fast && is_guest_mode(vcpu)) {
-+	if (!hc->fast && mmu_is_nested(vcpu)) {
- 		hc->ingpa = translate_nested_gpa(vcpu, hc->ingpa, 0, NULL);
- 		if (unlikely(hc->ingpa == INVALID_GPA))
- 			return HV_STATUS_INVALID_HYPERCALL_INPUT;
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -669,12 +669,14 @@ bool __kvm_apic_update_irr(unsigned long
+ 	u32 irr_val, prev_irr_val;
+ 	int max_updated_irr;
+ 
++	if (!pi_harvest_pir(pir, pir_vals)) {
++		*max_irr = apic_find_highest_vector(regs + APIC_IRR);
++		return false;
++	}
++
+ 	max_updated_irr = -1;
+ 	*max_irr = -1;
+ 
+-	if (!pi_harvest_pir(pir, pir_vals))
+-		return false;
+-
+ 	for (i = vec = 0; i <= 7; i++, vec += 32) {
+ 		u32 *p_irr = (u32 *)(regs + APIC_IRR + i * 0x10);
+ 
 
 
