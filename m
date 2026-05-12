@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DC836AB54;
-	Tue, 12 May 2026 18:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1182E366831;
+	Tue, 12 May 2026 18:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609530; cv=none; b=aicweK+acedActEPlqypFRZJJ5AHuAtDoWhCIXgWgPETarSksGdk6JooEIypkIOZCABbjmN9oKfO1sGk5vlZ7gSL8wy2mqANOjQSZIhCUQzMxNT9b+pdn2waqWmctGfFpDCTx/Hb8oYcOMPfCxO827Ts0QOFGrFOQA6S2duQyVY=
+	t=1778609533; cv=none; b=YKdfZBOD2DvzZ+xIRUwW7zAs8xTiQDDHuUmhrzIsD8kir3Z3Lrq23abZJYhMM/a+qOxfoXVB8PIDbbOeuVUiMTPFvkEV0rnHdm74rvSn2QW83T778UB9S6poanq/mq20mMNq6gmuA9xwnM0NYZFKY+81rGtnZ0zSzSSnBb35+B0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609530; c=relaxed/simple;
-	bh=XPwHOZkZg1mFN0X2pg5/o5ztFv+I/eF8SIhfaT+Voa8=;
+	s=arc-20240116; t=1778609533; c=relaxed/simple;
+	bh=NZH3C4qoJh86SpVsUEEq/83wWHOgTyHQjvwnw1KGBgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WPYgCLY7qKvL57CTLTi30Gp1bBgZhBnBc4EoX87LCfXe+x+OomVH+bUGR35+QsOz7Y47heMfDtoCMDU0yWcwIhzXdXvZwUTVRR0Nw4ylqiYlWb0AXh/Mp+7NgTl3yyIFHVjP4Ow9qxzHNnjxtXaffGa94hSYPHG/a4jqKHIvaao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJxGgmIz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MysBbQJQQil6SZ7DsgRl7NQuI7L6G3jZDE77SX8LsZ2FJUeS+Zid/tpJ7CAy3M0FsvUa4bRaUjcZ3Y6es7m998HGQqXaeedcWaXtSRR+JpheWoQRs6/ZiLzyLEqXqyMaPdovQ0NCkG7m6o+w2pdMRvlRotLCXKVpnZp7NLaRkuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWpwfBJ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJxGgmIz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11856C2BCC7;
-	Tue, 12 May 2026 18:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWpwfBJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D317C2BCC7;
+	Tue, 12 May 2026 18:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609530;
-	bh=XPwHOZkZg1mFN0X2pg5/o5ztFv+I/eF8SIhfaT+Voa8=;
+	s=korg; t=1778609533;
+	bh=NZH3C4qoJh86SpVsUEEq/83wWHOgTyHQjvwnw1KGBgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJxGgmIza1gieYJA1fIDlpbSbI5tTyub3Yv2drCZzHUA/w8ieY5uJZuank8NEpqtk
-	 FR7Va5+bIlVyoHgZszaRigM4dkV5TILr+l5ulX3wC0JDdz/cb5p41tUET6m3eCtYkL
-	 Qz7Z0stVxRgkzU+VJV8ZdW1srrCjzfm1TpVf/vp8=
+	b=SWpwfBJ0359Cc80N9POJRgGE1d6VYw/Ps++/pK61Q0j4fJEGFUJ9YY1ZHHwUfWj1L
+	 M3Ec21f+fTtk46tyaWhWG8qB1c5Sl4blxO1CFWjL9KQLr/L3RNHbZZUYD03x9xsWMO
+	 WdcW1A4RhbL6+1ycLD0+8YZICBMYiJXcn9KHw8XI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 7.0 204/307] pmdomain: core: Fix detach procedure for virtual devices in genpd
-Date: Tue, 12 May 2026 19:39:59 +0200
-Message-ID: <20260512173944.423349164@linuxfoundation.org>
+	Kai Aizen <kai.aizen.dev@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 7.0 231/307] RDMA/ionic: bound node_desc sysfs read with %.64s
+Date: Tue, 12 May 2026 19:40:26 +0200
+Message-ID: <20260512173944.994826403@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,68 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Kai Zen <kai.aizen.dev@gmail.com>
 
-commit 26735dfdd8930d9ef1fa92e590a9bf77726efdf6 upstream.
+commit 654a27f25530d052eeedf086e6c3e2d585c203bd upstream.
 
-If a device is attached to a PM domain through genpd_dev_pm_attach_by_id(),
-genpd calls pm_runtime_enable() for the corresponding virtual device that
-it registers. While this avoids boilerplate code in drivers, there is no
-corresponding call to pm_runtime_disable() in genpd_dev_pm_detach().
+node_desc[64] in struct ib_device is not guaranteed to be NUL-
+terminated. The core IB sysfs handler uses "%.64s" for exactly this
+reason (drivers/infiniband/core/sysfs.c:1307), since node_desc_store()
+performs a raw memcpy of up to IB_DEVICE_NODE_DESC_MAX bytes with no NUL
+termination:
 
-This means these virtual devices are typically detached from its genpd,
-while runtime PM remains enabled for them, which is not how things are
-designed to work. In worst cases it may lead to critical errors, like a
-NULL pointer dereference bug in genpd_runtime_suspend(), which was recently
-reported. For another case, we may end up keeping an unnecessary vote for a
-performance state for the device.
+  memcpy(desc.node_desc, buf, min_t(int, count, IB_DEVICE_NODE_DESC_MAX));
 
-To fix these problems, let's add this missing call to pm_runtime_disable()
-in genpd_dev_pm_detach().
+If exactly 64 bytes are written via the node_desc sysfs file, the array
+contains no NUL byte. The ionic hca_type_show() handler uses unbounded
+"%s" and will read past the end of node_desc into adjacent fields of
+struct ib_device until it encounters a NUL.
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/all/CAMuHMdWapT40hV3c+CSBqFOW05aWcV1a6v_NiJYgoYi0i9_PDQ@mail.gmail.com/
-Fixes: 3c095f32a92b ("PM / Domains: Add support for multi PM domains per device to genpd")
+ionic supports IB_DEVICE_MODIFY_NODE_DESC, so this is triggerable by
+userspace.
+
+Match the core handler and bound the format specifier.
+
 Cc: stable@vger.kernel.org
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 2075bbe8ef03 ("RDMA/ionic: Register device ops for miscellaneous functionality")
+Link: https://patch.msgid.link/r/CALynFi7NAbhDCt1tdaDbf6TnLvAqbaHa6-Wqf6OkzREbA_PAfg@mail.gmail.com
+Signed-off-by: Kai Aizen <kai.aizen.dev@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/core.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/ionic/ionic_ibdev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pmdomain/core.c
-+++ b/drivers/pmdomain/core.c
-@@ -3082,6 +3082,7 @@ static const struct bus_type genpd_bus_t
- static void genpd_dev_pm_detach(struct device *dev, bool power_off)
- {
- 	struct generic_pm_domain *pd;
-+	bool is_virt_dev;
- 	unsigned int i;
- 	int ret = 0;
+--- a/drivers/infiniband/hw/ionic/ionic_ibdev.c
++++ b/drivers/infiniband/hw/ionic/ionic_ibdev.c
+@@ -185,7 +185,7 @@ static ssize_t hca_type_show(struct devi
+ 	struct ionic_ibdev *dev =
+ 		rdma_device_to_drv_device(device, struct ionic_ibdev, ibdev);
  
-@@ -3091,6 +3092,13 @@ static void genpd_dev_pm_detach(struct d
- 
- 	dev_dbg(dev, "removing from PM domain %s\n", pd->name);
- 
-+	/* Check if the device was created by genpd at attach. */
-+	is_virt_dev = dev->bus == &genpd_bus_type;
-+
-+	/* Disable runtime PM if we enabled it at attach. */
-+	if (is_virt_dev)
-+		pm_runtime_disable(dev);
-+
- 	/* Drop the default performance state */
- 	if (dev_gpd_data(dev)->default_pstate) {
- 		dev_pm_genpd_set_performance_state(dev, 0);
-@@ -3116,7 +3124,7 @@ static void genpd_dev_pm_detach(struct d
- 	genpd_queue_power_off_work(pd);
- 
- 	/* Unregister the device if it was created by genpd. */
--	if (dev->bus == &genpd_bus_type)
-+	if (is_virt_dev)
- 		device_unregister(dev);
+-	return sysfs_emit(buf, "%s\n", dev->ibdev.node_desc);
++	return sysfs_emit(buf, "%s.64\n", dev->ibdev.node_desc);
  }
+ static DEVICE_ATTR_RO(hca_type);
  
 
 
