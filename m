@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC0B365A19;
-	Tue, 12 May 2026 18:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87DF370D71;
+	Tue, 12 May 2026 18:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609592; cv=none; b=ny69yFwTqaXh3FuIfmx7DkF41phpfZP5i6CpiHu1QWACVwE+Xr0mRIM5WQ503TJMvHfo1owKAzQDGnP2ztHK/Vkth0ILrrXXsq71wuTUraHfWAxsD4DKgbCM+FLxqmnZQhMz1TIsk1b7YaZmMXiOTp1RgFaGE6xtoZvXPxL6rAE=
+	t=1778609594; cv=none; b=U0YVorGp1QXUU+eoy/YpuQl7bQvJLYuqCUt9sAMRJDm/J5I8Zk4TLVdSDtczxWR2w/2kmtB66B56CiIjVmBAiRZAFOV1VHZja7B4bKUao9CJAes4uVQn8WaMrSpk1rzms9cA5UiybksRgw/qaFRZWWHsfJKIjK8zJD8oULr0JE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609592; c=relaxed/simple;
-	bh=Ip7e00kDKRS5sVA/eg4zfTFmpqUlrgo1R06wkI8aQV4=;
+	s=arc-20240116; t=1778609594; c=relaxed/simple;
+	bh=vt9NNC5qczxp4b5zU/p0EYOMqEfIq4+gaqlqE6v+miU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dukPRz/iwDkqQ6LFGKWYu/jMV5diFvAvKIv2Zg5jdXQd1tG8hAew8Y99DBe2DfrME49huacDvKI++LqPKwkBwlRz8ASae1v32fv2ZlNrr9SzAGt7cXquSQOceXaGw/P5grvmmFZk7s8dp89fKITsjnL9FzwskQdWzzP51wUy8lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kzGP4eas; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A61JwHqL8UR4KvItr+PNcswNJM1rXu0OWn2PhXLYPY6sWZfuGA0KF+EDg9wgWBIf6OtKb/aQMz1rr+BShs5yjIgR31UZJ5v2T1OIKwoohjp2XBK2wHvTT+e7Vd4q2E6vw+WD9z/fewH7sqfPDWwXdhErOWidYOuMl5toU6H3Cn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8sPE5yC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzGP4eas"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA4FC2BCB0;
-	Tue, 12 May 2026 18:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8sPE5yC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5C7C2BCB0;
+	Tue, 12 May 2026 18:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609592;
-	bh=Ip7e00kDKRS5sVA/eg4zfTFmpqUlrgo1R06wkI8aQV4=;
+	s=korg; t=1778609594;
+	bh=vt9NNC5qczxp4b5zU/p0EYOMqEfIq4+gaqlqE6v+miU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kzGP4easUSNEJJwG3n8yuoVMMMn8zlcei2xIBrrXf2wVHYimKmEdSWSOu9Qj7n5qX
-	 rx1sdJeoFIo6q/VhvByuYdupixk0Yi8V0QSqzkChLtl1SITSjsCsEOTYX7EsmBZYTW
-	 SBGAaiN9IvrubNnodB4huDXxAurJVcLBqRDTAE0M=
+	b=r8sPE5yCt/WlbJtONdtVIgnPuAJM19Y+gZLNmXVDUUlih820QDDYAj4X974W3wpAe
+	 MQwNQeYiqKGSeQtjbPUvMP5mKvVtK1CAvkD0bm5HUHJVR0Ot/W6FFmioe8sNt6fz1V
+	 jsdOOmplyf9iK0k5KK9GRALnFFDGBoe0StmKbzEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Gang Yan <yangang@kylinos.cn>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 256/307] mptcp: fix rx timestamp corruption on fastopen
-Date: Tue, 12 May 2026 19:40:51 +0200
-Message-ID: <20260512173945.529717622@linuxfoundation.org>
+Subject: [PATCH 7.0 257/307] mptcp: fix scheduling with atomic in timestamp sockopt
+Date: Tue, 12 May 2026 19:40:52 +0200
+Message-ID: <20260512173945.550886885@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,50 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Gang Yan <yangang@kylinos.cn>
 
-commit 6254a16d6f0c672e3809ca5d7c9a28a55d71f764 upstream.
+commit b5c52908d52c6c8eb8933264aa6087a0600fd892 upstream.
 
-The skb cb offset containing the timestamp presence flag is cleared
-before loading such information. Cache such value before MPTCP CB
-initialization.
+Using lock_sock_fast() (atomic context) around sock_set_timestamp()
+and sock_set_timestamping() is unsafe, as both helpers can sleep.
 
-Fixes: 36b122baf6a8 ("mptcp: add subflow_v(4,6)_send_synack()")
+Replace lock_sock_fast() with sleepable lock_sock()/release_sock()
+to avoid scheduling while atomic panic.
+
+Fixes: 9061f24bf82e ("mptcp: sockopt: propagate timestamp request to subflows")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260420093343.16443-1-gang.yan@linux.dev
+Signed-off-by: Gang Yan <yangang@kylinos.cn>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-3-b70118df778e@kernel.org
+Link: https://patch.msgid.link/20260427-net-mptcp-misc-fixes-7-1-rc2-v1-2-7432b7f279fa@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/fastopen.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/mptcp/sockopt.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/fastopen.c
-+++ b/net/mptcp/fastopen.c
-@@ -12,6 +12,7 @@ void mptcp_fastopen_subflow_synack_set_p
- 	struct sock *sk, *ssk;
- 	struct sk_buff *skb;
- 	struct tcp_sock *tp;
-+	bool has_rxtstamp;
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -159,10 +159,10 @@ static int mptcp_setsockopt_sol_socket_t
+ 	lock_sock(sk);
+ 	mptcp_for_each_subflow(msk, subflow) {
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+-		bool slow = lock_sock_fast(ssk);
  
- 	/* on early fallback the subflow context is deleted by
- 	 * subflow_syn_recv_sock()
-@@ -40,12 +41,13 @@ void mptcp_fastopen_subflow_synack_set_p
- 	 */
- 	tp->copied_seq += skb->len;
- 	subflow->ssn_offset += skb->len;
-+	has_rxtstamp = TCP_SKB_CB(skb)->has_rxtstamp;
++		lock_sock(ssk);
+ 		sock_set_timestamp(ssk, optname, !!val);
+-		unlock_sock_fast(ssk, slow);
++		release_sock(ssk);
+ 	}
  
- 	/* Only the sequence delta is relevant */
- 	MPTCP_SKB_CB(skb)->map_seq = -skb->len;
- 	MPTCP_SKB_CB(skb)->end_seq = 0;
- 	MPTCP_SKB_CB(skb)->offset = 0;
--	MPTCP_SKB_CB(skb)->has_rxtstamp = TCP_SKB_CB(skb)->has_rxtstamp;
-+	MPTCP_SKB_CB(skb)->has_rxtstamp = has_rxtstamp;
- 	MPTCP_SKB_CB(skb)->cant_coalesce = 1;
+ 	release_sock(sk);
+@@ -235,10 +235,10 @@ static int mptcp_setsockopt_sol_socket_t
  
- 	mptcp_data_lock(sk);
+ 	mptcp_for_each_subflow(msk, subflow) {
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+-		bool slow = lock_sock_fast(ssk);
+ 
++		lock_sock(ssk);
+ 		sock_set_timestamping(ssk, optname, timestamping);
+-		unlock_sock_fast(ssk, slow);
++		release_sock(ssk);
+ 	}
+ 
+ 	release_sock(sk);
 
 
