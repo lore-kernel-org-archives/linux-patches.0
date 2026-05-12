@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B2934405B;
-	Tue, 12 May 2026 18:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECEF2DE6E3;
+	Tue, 12 May 2026 18:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609226; cv=none; b=mAn8LN0HheQ5UCxE5DMpc2ljZ87vZGoYFxE2l9kjaaR4ZtCp9Xa/CDeFOzUowK5XNUgx7QiAE+1oqo1P/mJBvqERMqSfLvhP/wycxlVGApeVkS/Cq0ZBAfDLj/1W/DWL6ibkXyyWkO1rjDhlS/rLIYUwgXV7u4g+C6UfeoKmx8w=
+	t=1778609228; cv=none; b=O3NPK0k2YWrm+dNrz6MjT3o+G9nReT2tlyJzzX35oWOiIxQgPll5eGaRKjFgFozYMePOIOt2DYYQNE2GlmjRLAr8tYYFD/6AnmrOivNRWW+jnujp37FMPY5Xlp/mIb2WpQNWHWybXv8Oab5kdbbOSPQfjXfodoyx3cr/OKs/xNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609226; c=relaxed/simple;
-	bh=LnfivkAJPvp6138QAu1ivyD2eXi4j4wfvO8R0d90S2w=;
+	s=arc-20240116; t=1778609228; c=relaxed/simple;
+	bh=mga2/kU+JmQjnw4T8XXPWZU2mOXVBtNVtCbg7oFttnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LfIoSMReG0QOk4NvoZIEcCCPOr4olQgzPXwYEl5dHZt0EgFi/ue9RKICUOw9WPXHY9uXylmwsX4KTpXL4yuyptuGtGoFrL13Owbm7TT/wMSMlLT7KtFH18lfCSn64JB1r77/0uTBrp/yJfjL5cLd+3qOz8WaL5prDjVr2vQEBKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GktIjiP+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jqW619Z9l9eMDi5F53ZR/6ev262wOnzd6huvsBlPfWHujiukdWEU2hh7iZpcjP6XmcUFnHZk4doPiPzeMNWMpcSFaYrHTNUQnBi7HWoxSnlvES9GNRQ6enxaMdubvJX1mXuY6K1hnFFgzerKa8M3rx/zwHMtG/2a5jJcaZEEVSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ehilg97a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GktIjiP+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A194BC2BCB0;
-	Tue, 12 May 2026 18:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ehilg97a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CCD0C2BCB0;
+	Tue, 12 May 2026 18:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609226;
-	bh=LnfivkAJPvp6138QAu1ivyD2eXi4j4wfvO8R0d90S2w=;
+	s=korg; t=1778609228;
+	bh=mga2/kU+JmQjnw4T8XXPWZU2mOXVBtNVtCbg7oFttnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GktIjiP+9G70y8VBl89F7KpA32MMMXUCWIxV8FoYgrOMSMLM1fmmDd7yf8UHnGX5s
-	 BM4aj+dipBScAMwiizOmuBBtCqTNtwqgUagwc1ilEC/RiHrvNKZa51wjk+pTPCBgxr
-	 NysZo+m+6K/xzBGjoZq1TPFCMNgYPI2dG9aXUJls=
+	b=Ehilg97agYhKFWYiKrSL6U2xL5PSpZjWztAq5Zzyo5tZS+cTOKR1ngG8K/culNBpa
+	 4hzec8/8BBdKFS7m8Xgugv/nGb6PaQy1B2jxXYmzXSr8AZVm2Ms+YTFX8ZDYKojbWW
+	 42g8r/158vnsR+Dxl0PovXP/DJ5FJjYQQcGS3CiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeungJu Cheon <suunj1331@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 111/307] sound: ua101: fix division by zero at probe
-Date: Tue, 12 May 2026 19:38:26 +0200
-Message-ID: <20260512173942.466702103@linuxfoundation.org>
+	ZhiTao Ou <hkbinbinbin@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.0 073/307] Bluetooth: hci_event: Fix OOB read and infinite loop in hci_le_create_big_complete_evt
+Date: Tue, 12 May 2026 19:37:48 +0200
+Message-ID: <20260512173941.662971167@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,45 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeungJu Cheon <suunj1331@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit d1f73f169c1014463b5060e3f60813e13ddc7b87 upstream.
+commit 5ddb8014261137cadaf83ab5617a588d80a22586 upstream.
 
-Add a missing sanity check for bNrChannels in detect_usb_format()
-to prevent a division by zero in playback_urb_complete() and
-capture_urb_complete().
+hci_le_create_big_complete_evt() iterates over BT_BOUND connections for
+a BIG handle using a while loop, accessing ev->bis_handle[i++] on each
+iteration.  However, there is no check that i stays within ev->num_bis
+before the array access.
 
-USB core does not validate class-specific descriptor fields such
-as bNrChannels, so drivers must verify them before use. If a
-device provides bNrChannels = 0, frame_bytes becomes zero and is
-later used as a divisor in the URB completion handlers, leading
-to a kernel crash.
+When a controller sends a LE_Create_BIG_Complete event with fewer
+bis_handle entries than there are BT_BOUND connections for that BIG,
+or with num_bis=0, the loop reads beyond the valid bis_handle[] flex
+array into adjacent heap memory.  Since the out-of-bounds values
+typically exceed HCI_CONN_HANDLE_MAX (0x0EFF), hci_conn_set_handle()
+rejects them and the connection remains in BT_BOUND state.  The same
+connection is then found again by hci_conn_hash_lookup_big_state(),
+creating an infinite loop with hci_dev_lock held.
 
-Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
+Fix this by terminating the BIG if in case not all BIS could be setup
+properly.
+
+Fixes: a0bfde167b50 ("Bluetooth: ISO: Add support for connecting multiple BISes")
 Cc: stable@vger.kernel.org
-Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
-Link: https://patch.msgid.link/20260426111239.103296-1-suunj1331@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: ZhiTao Ou <hkbinbinbin@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/misc/ua101.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bluetooth/hci_event.c |   27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
---- a/sound/usb/misc/ua101.c
-+++ b/sound/usb/misc/ua101.c
-@@ -974,6 +974,13 @@ static int detect_usb_format(struct ua10
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -7121,9 +7121,29 @@ static void hci_le_create_big_complete_e
+ 			continue;
+ 		}
  
- 	ua->capture.channels = fmt_capture->bNrChannels;
- 	ua->playback.channels = fmt_playback->bNrChannels;
-+	if (!ua->capture.channels || !ua->playback.channels) {
-+		dev_err(&ua->dev->dev,
-+			"invalid channel count: capture %u, playback %u\n",
-+			ua->capture.channels, ua->playback.channels);
-+		return -EINVAL;
-+	}
++		if (ev->num_bis <= i) {
++			bt_dev_err(hdev,
++				   "Not enough BIS handles for BIG 0x%2.2x",
++				   ev->handle);
++			ev->status = HCI_ERROR_UNSPECIFIED;
++			hci_connect_cfm(conn, ev->status);
++			hci_conn_del(conn);
++			continue;
++		}
 +
- 	ua->capture.frame_bytes =
- 		fmt_capture->bSubframeSize * ua->capture.channels;
- 	ua->playback.frame_bytes =
+ 		if (hci_conn_set_handle(conn,
+-					__le16_to_cpu(ev->bis_handle[i++])))
++					__le16_to_cpu(ev->bis_handle[i++]))) {
++			bt_dev_err(hdev,
++				   "Failed to set BIS handle for BIG 0x%2.2x",
++				   ev->handle);
++			/* Force error so BIG gets terminated as not all BIS
++			 * could be connected.
++			 */
++			ev->status = HCI_ERROR_UNSPECIFIED;
++			hci_connect_cfm(conn, ev->status);
++			hci_conn_del(conn);
+ 			continue;
++		}
+ 
+ 		conn->state = BT_CONNECTED;
+ 		set_bit(HCI_CONN_BIG_CREATED, &conn->flags);
+@@ -7132,7 +7152,10 @@ static void hci_le_create_big_complete_e
+ 		hci_iso_setup_path(conn);
+ 	}
+ 
+-	if (!ev->status && !i)
++	/* If there is an unexpected error or if no BISes have been connected
++	 * for the BIG, terminate it.
++	 */
++	if (ev->status == HCI_ERROR_UNSPECIFIED || (!ev->status && !i))
+ 		/* If no BISes have been connected for the BIG,
+ 		 * terminate. This is in case all bound connections
+ 		 * have been closed before the BIG creation
 
 
