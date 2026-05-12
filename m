@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C9133B6CC;
-	Tue, 12 May 2026 18:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D6133B6CC;
+	Tue, 12 May 2026 18:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608843; cv=none; b=qg+yRiS+/M2ral6RG64vjl0iWBzpxXHYcFI3FAQifm+dJtJMNyrCuf2N1wEJdKheI2vopGelGNOa/ixYSaFA4vDTBmSXjd5tI7/UteV7FLA0fJSaOCFOebJpwTEBcxx925Abwacb4zlKgLiAd+FEaEuA5HMvSH97tNdjBWpSLLQ=
+	t=1778608846; cv=none; b=kGZIIs16vSHJInZxPznqby9US1Jg8esnN6a24PmdxSULpHE+xFogvKSfGTEIFL51uKpgFTaCGun0Q+4Suz6Durc8b4+4qEGRuXgb69mHbJbh0Q4kHcFMtFgPOgLdwQZC7WOZcPRN11FnG33rSJ91nbNyoJjU1y0v2RrkKbB9kl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608843; c=relaxed/simple;
-	bh=JgVcc5/jROLQ1hbcnMYDvV/EmRiXl5UYIjX8H4sFqiM=;
+	s=arc-20240116; t=1778608846; c=relaxed/simple;
+	bh=M8TcCDsUZO0qXswYU/Uo3wEgii17Sm1N3IklJOvFSvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bU7/NPJ5/M+4QwgBTGyWKUjvhJ0OMTbd5v7wjfkq3GkXNh14qt2GkSUZ18afhtFjDc5bMJenlHfjubGKGeiP9qF0Hp1sYH2w/Ufq7/dmIGSBe7f/GrxLaVVz6ho1FRo5X/1Xns91+PQwPos40J/ArypGFYbU3U+9fxqMcUScl2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaWkI4bi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PDzhD8Fj6ZwkUb0nn2QMX0hKly1+ThKc1vlrJTFuE3ATH01KIk4NecNgGjYx9x0KWRHRFhk7W5dHOlnWi4VU+a1b7+aHp/MoMjCsQYiM9NDgsXururC26J56RX9f5FPyvhFFIHMgbUcFheaL6fYKwAHTqbRbBs2/Iowv3ZXObDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFZDMALA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaWkI4bi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46D8C2BCB0;
-	Tue, 12 May 2026 18:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFZDMALA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9C8C2BCB0;
+	Tue, 12 May 2026 18:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608843;
-	bh=JgVcc5/jROLQ1hbcnMYDvV/EmRiXl5UYIjX8H4sFqiM=;
+	s=korg; t=1778608845;
+	bh=M8TcCDsUZO0qXswYU/Uo3wEgii17Sm1N3IklJOvFSvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaWkI4biRE0KUoLytZxatxlbSgLr3xX0dyTCao3qSL+pa0t0x6PI73fwLU3wJdJE7
-	 H25y7c1OY9UQAuQ4sMFOq7CSkC0qA9kK2yRUDZ0XRX64UeZeBOi7d/+uloTkB3EXNw
-	 4iBJuTopZUh+542/5f74Vf/AJWTIbjHap3iOHD9I=
+	b=vFZDMALAUJKxbxt8/Xj5uIiB4aRqYP+KIzaHQpdI2N8ojRCcuzPSZimgRHoZZN6MB
+	 PCRO09FzjgIJBYWMtCoijgwl8CbXnF91sh0UDpK9/UkwjraPaaoubEf2LfuOTIX60D
+	 ayHanEwhTC9sHoKjyCSMkmRfRiqC4zuxlpzcSWFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fuad Tabba <tabba@google.com>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.18 236/270] KVM: arm64: Fix FEAT_SPE_FnE to use PMSIDR_EL1.FnE, not PMSVer
-Date: Tue, 12 May 2026 19:40:37 +0200
-Message-ID: <20260512173943.411321550@linuxfoundation.org>
+Subject: [PATCH 6.18 237/270] KVM: arm64: Fix FEAT_Debugv8p9 to check DebugVer, not PMUVer
+Date: Tue, 12 May 2026 19:40:38 +0200
+Message-ID: <20260512173943.432249571@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -52,75 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Fuad Tabba <tabba@google.com>
 
-commit 08d715338287a1affb4c7ad5733decef4558a5c8 upstream.
+commit 7fe2cd4e1a3ad230d8fcc00cc99c4bcce4412a75 upstream.
 
-FEAT_SPE_FnE is architecturally detected via PMSIDR_EL1.FnE [6], not
-ID_AA64DFR0_EL1.PMSVer. The FEAT_X macro form (register, field, value)
-cannot encode a PMSIDR_EL1-based feature, so FEAT_SPE_FnE was defined
-identically to FEAT_SPEv1p2 (ID_AA64DFR0_EL1, PMSVer, V1P2), producing
-a duplicate that used PMSVer >= V1P2 as a proxy.
+FEAT_Debugv8p9 is incorrectly defined against ID_AA64DFR0_EL1.PMUVer
+instead of ID_AA64DFR0_EL1.DebugVer.  All three consumers of the macro
+gate features that are architecturally tied to FEAT_Debugv8p9
+(DebugVer = 0b1011, DDI0487 M.b A2.2.10):
 
-Replace the macro with feat_spe_fne(), following the same pattern as
-the sibling feat_spe_fds(): guard on FEAT_SPEv1p2 and read
-PMSIDR_EL1.FnE [6] directly. Wire the two NEEDS_FEAT consumers to use
-the new function.
+  - HDFGRTR2_EL2.nMDSELR_EL1, HDFGWTR2_EL2.nMDSELR_EL1: MDSELR_EL1
+    is present only when FEAT_Debugv8p9 is implemented (D24.3.21).
 
-Remove the now-unused FEAT_SPE_FnE macro.
+  - MDCR_EL2.EBWE: the Extended Breakpoint and Watchpoint Enable bit
+    is RES0 unless FEAT_Debugv8p9 is implemented (D24.3.17).
 
-Fixes: 63d423a7635b ("KVM: arm64: Switch to table-driven FGU configuration")
+Neither register has any dependency on PMUVer.
+
+FEAT_Debugv8p9 and FEAT_PMUv3p9 are independent.  Per DDI0487 M.b
+A2.2.10, FEAT_Debugv8p9 is unconditionally mandatory from Armv8.9,
+whereas FEAT_PMUv3p9 is mandatory only when FEAT_PMUv3 is implemented.
+An Armv8.9 CPU without a PMU has DebugVer = 0b1011 but PMUVer = 0b0000,
+so the wrong field check would cause KVM to incorrectly treat EBWE and
+MDSELR_EL1 as RES0 on such hardware.
+
+Fixes: 4bc0fe089840 ("KVM: arm64: Add sanitisation for FEAT_FGT2 registers")
 Signed-off-by: Fuad Tabba <tabba@google.com>
-Link: https://patch.msgid.link/20260424084908.370776-4-tabba@google.com
+Link: https://patch.msgid.link/20260424084908.370776-2-tabba@google.com
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/config.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/config.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/arch/arm64/kvm/config.c
 +++ b/arch/arm64/kvm/config.c
-@@ -127,7 +127,6 @@ struct reg_feat_map_desc {
- 	}
- 
- #define FEAT_SPE		ID_AA64DFR0_EL1, PMSVer, IMP
--#define FEAT_SPE_FnE		ID_AA64DFR0_EL1, PMSVer, V1P2
- #define FEAT_BRBE		ID_AA64DFR0_EL1, BRBE, IMP
- #define FEAT_TRC_SR		ID_AA64DFR0_EL1, TraceVer, IMP
- #define FEAT_PMUv3		ID_AA64DFR0_EL1, PMUVer, IMP
-@@ -294,6 +293,16 @@ static bool feat_spe_fds(struct kvm *kvm
- 		(read_sysreg_s(SYS_PMSIDR_EL1) & PMSIDR_EL1_FDS));
- }
- 
-+static bool feat_spe_fne(struct kvm *kvm)
-+{
-+	/*
-+	 * Revisit this if KVM ever supports SPE -- this really should
-+	 * look at the guest's view of PMSIDR_EL1.
-+	 */
-+	return (kvm_has_feat(kvm, FEAT_SPEv1p2) &&
-+		(read_sysreg_s(SYS_PMSIDR_EL1) & PMSIDR_EL1_FnE));
-+}
-+
- static bool feat_trbe_mpam(struct kvm *kvm)
- {
- 	/*
-@@ -547,7 +556,7 @@ static const struct reg_bits_to_feat_map
- 		   HDFGRTR_EL2_PMBPTR_EL1	|
- 		   HDFGRTR_EL2_PMBLIMITR_EL1,
- 		   FEAT_SPE),
--	NEEDS_FEAT(HDFGRTR_EL2_nPMSNEVFR_EL1, FEAT_SPE_FnE),
-+	NEEDS_FEAT(HDFGRTR_EL2_nPMSNEVFR_EL1, feat_spe_fne),
- 	NEEDS_FEAT(HDFGRTR_EL2_nBRBDATA		|
- 		   HDFGRTR_EL2_nBRBCTL		|
- 		   HDFGRTR_EL2_nBRBIDR,
-@@ -615,7 +624,7 @@ static const struct reg_bits_to_feat_map
- 		   HDFGWTR_EL2_PMBPTR_EL1	|
- 		   HDFGWTR_EL2_PMBLIMITR_EL1,
- 		   FEAT_SPE),
--	NEEDS_FEAT(HDFGWTR_EL2_nPMSNEVFR_EL1, FEAT_SPE_FnE),
-+	NEEDS_FEAT(HDFGWTR_EL2_nPMSNEVFR_EL1, feat_spe_fne),
- 	NEEDS_FEAT(HDFGWTR_EL2_nBRBDATA		|
- 		   HDFGWTR_EL2_nBRBCTL,
- 		   FEAT_BRBE),
+@@ -187,7 +187,7 @@ struct reg_feat_map_desc {
+ #define FEAT_SRMASK		ID_AA64MMFR4_EL1, SRMASK, IMP
+ #define FEAT_PoPS		ID_AA64MMFR4_EL1, PoPS, IMP
+ #define FEAT_PFAR		ID_AA64PFR1_EL1, PFAR, IMP
+-#define FEAT_Debugv8p9		ID_AA64DFR0_EL1, PMUVer, V3P9
++#define FEAT_Debugv8p9		ID_AA64DFR0_EL1, DebugVer, V8P9
+ #define FEAT_PMUv3_SS		ID_AA64DFR0_EL1, PMSS, IMP
+ #define FEAT_SEBEP		ID_AA64DFR0_EL1, SEBEP, IMP
+ #define FEAT_EBEP		ID_AA64DFR1_EL1, EBEP, IMP
 
 
