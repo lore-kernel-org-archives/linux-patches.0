@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B850523E356;
-	Tue, 12 May 2026 18:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0083EDE55;
+	Tue, 12 May 2026 18:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609066; cv=none; b=JBR1YOsc7u9pU2bdvOcYSUn50tI1rfUSIcoHyjaJjQy5hZWJG8+Ad7jO4grpU/iraoql40mBtuZyLnBH7+XWUDr+Qu89R+BDj/I15V0VTEuIIpW0JqcFBSZd65Tm60+db3jZamVoxPg5f2h6KvSyunA5ThPjLhmjA9+WOhejlR8=
+	t=1778609069; cv=none; b=uUyHRxFdFudC9htsZyg0eZucBcbrA9zmTNzXTXBEHjf7AVNuGKq4bsQoBjLN91sU2ZvGuwxUpj5ouUB7mx65Z0cX9BRYuFTRNPU9J4fxt4PMvOgiXeavC3PJAf6E/fMkRJuLdMvZOOQ91Z7XOdjEWp+7GEvSsDpg5ZqScI1l1Xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609066; c=relaxed/simple;
-	bh=xbTyiqvdcXReqJ5+RXw3yLgXqnCtTlJC/tN96LRz83U=;
+	s=arc-20240116; t=1778609069; c=relaxed/simple;
+	bh=Ky0sEBLiwrPooJzxP22px/7qWQd19cQiZg/gSDAZveE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXyibSqeWnrovscsThp7r+11NFKH2LSHZTxO/8G9dr47HFtSQoajAJ4x3TeKevf6onySbTfkJAt6+0nuWEePQmD7YEg30W2Gqim75wuKGzBaOGYl92QQoDSWPzYDnMGldVNOoWrdTxa/I3hOGODLq2NOMram1eWs7WEDPlevteE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HlpGHVDG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iAduuESDx5xd+A5dzFiaSUg/4qe3lOAFE1vgWGBKqdKGe7WGsY3aPdSlSaWJYvJ2QERnm3VHXinP3nK5oraCF2YJiaiNrzwlCUX17Ua/c0brVQNFGLjdzajVZdS3YtrszdAWDF/+8bc8UT29HqIPQtKy4+eKWgcNwz1iseZmbgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+vQTiw1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlpGHVDG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D78AC2BCB0;
-	Tue, 12 May 2026 18:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+vQTiw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DF0C2BCB0;
+	Tue, 12 May 2026 18:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609066;
-	bh=xbTyiqvdcXReqJ5+RXw3yLgXqnCtTlJC/tN96LRz83U=;
+	s=korg; t=1778609069;
+	bh=Ky0sEBLiwrPooJzxP22px/7qWQd19cQiZg/gSDAZveE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HlpGHVDG3YlZvhccO440aR7mtz+K3LO+wrIO3//8dt9FOkhtUk5zp1U32HiaWzcHs
-	 l64b3FIIyzKKHnP2OyO0aalD+qSgbH8m7/pnnnnZ9Tjy3JApDIidVrdJKa1F9ORsnM
-	 MNvcPS3syRHKO+7FIgQn9OLkjRB5tSDD3zpwsLZI=
+	b=Y+vQTiw1qcRLu6DIAMkyvDrpYrgv443xBszEJY31AyLSOjHpmcJUY7X50mNn50zmv
+	 TNX/Q2HrhjoTWaOexSRAe6Z8EjNIXmzGrxd+gf30JaN7QtfDss6pq+J2L05xMVTO08
+	 WdCuvH4q5RQmg7mHaWlzXXcSHc9r+LhwzH+EJ47A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Ivan Hu <ivan.hu@canonical.com>,
-	x86@kernel.org,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 7.0 052/307] x86/efi: Restore IRQ state in EFI page fault handler
-Date: Tue, 12 May 2026 19:37:27 +0200
-Message-ID: <20260512173941.221879650@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 7.0 026/307] wifi: b43legacy: enforce bounds check on firmware key index in RX path
+Date: Tue, 12 May 2026 19:37:01 +0200
+Message-ID: <20260512173940.677371002@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,100 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 2c340aab5485ebe9e33c01437dd4815ef33c8df5 upstream.
+commit a035766f970bde2d4298346a31a80685be5c0205 upstream.
 
-The kernel's softirq API does not permit re-enabling softirqs while IRQs
-are disabled. The reason for this is that local_bh_enable() will not
-only re-enable delivery of softirqs over the back of IRQs, it will also
-handle any pending softirqs immediately, regardless of whether IRQs are
-enabled at that point.
+Same fix as b43: the firmware-controlled key index in b43legacy_rx()
+can exceed dev->max_nr_keys. The existing B43legacy_WARN_ON is
+non-enforcing in production builds, allowing an out-of-bounds read of
+dev->key[].
 
-For this reason, commit
+Make the check enforcing by dropping the frame for invalid indices.
 
-  d02198550423 ("x86/fpu: Improve crypto performance by making kernel-mode FPU reliably usable in softirqs")
-
-disables softirqs only when IRQs are enabled, as it is not permitted
-otherwise, but also unnecessary, given that asynchronous softirq
-delivery never happens to begin with while IRQs are disabled.
-
-However, this does mean that entering a kernel mode FPU section with
-IRQs enabled and leaving it with IRQs disabled leads to problems, as
-identified by Sashiko [0]: the EFI page fault handler is called from
-page_fault_oops() with IRQs disabled, and thus ends the kernel mode FPU
-section with IRQs disabled as well, regardless of whether IRQs were
-enabled when it was started. This may result in schedule() being called
-with a non-zero preempt_count, causing a BUG().
-
-So take care to re-enable IRQs when handling any EFI page faults if they
-were taken with IRQs enabled.
-
-[0] https://sashiko.dev/#/patchset/20260430074107.27051-1-ivan.hu%40canonical.com
-
-Cc: Eric Biggers <ebiggers@kernel.org>
-Cc: Ivan Hu <ivan.hu@canonical.com>
-Cc: x86@kernel.org
-Cc: <stable@vger.kernel.org>
-Fixes: d02198550423 ("x86/fpu: Improve crypto performance by making kernel-mode FPU reliably usable in softirqs")
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 75388acd0cd8 ("[B43LEGACY]: add mac80211-based driver for legacy BCM43xx devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260417111145.2694196-2-tristmd@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/efi.h     |    3 ++-
- arch/x86/mm/fault.c            |    2 +-
- arch/x86/platform/efi/quirks.c |   11 ++++++++++-
- 3 files changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/wireless/broadcom/b43legacy/xmit.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/efi.h
-+++ b/arch/x86/include/asm/efi.h
-@@ -137,7 +137,8 @@ extern void __init efi_dump_pagetable(vo
- extern void __init efi_apply_memmap_quirks(void);
- extern int __init efi_reuse_config(u64 tables, int nr_tables);
- extern void efi_delete_dummy_variable(void);
--extern void efi_crash_gracefully_on_page_fault(unsigned long phys_addr);
-+extern void efi_crash_gracefully_on_page_fault(unsigned long phys_addr,
-+					       const struct pt_regs *regs);
- extern void efi_unmap_boot_services(void);
+--- a/drivers/net/wireless/broadcom/b43legacy/xmit.c
++++ b/drivers/net/wireless/broadcom/b43legacy/xmit.c
+@@ -476,7 +476,8 @@ void b43legacy_rx(struct b43legacy_wldev
+ 		 * key index, but the ucode passed it slightly different.
+ 		 */
+ 		keyidx = b43legacy_kidx_to_raw(dev, keyidx);
+-		B43legacy_WARN_ON(keyidx >= dev->max_nr_keys);
++		if (B43legacy_WARN_ON(keyidx >= dev->max_nr_keys))
++			goto drop;
  
- void arch_efi_call_virt_setup(void);
---- a/arch/x86/mm/fault.c
-+++ b/arch/x86/mm/fault.c
-@@ -686,7 +686,7 @@ page_fault_oops(struct pt_regs *regs, un
- 	 * avoid hanging the system.
- 	 */
- 	if (IS_ENABLED(CONFIG_EFI))
--		efi_crash_gracefully_on_page_fault(address);
-+		efi_crash_gracefully_on_page_fault(address, regs);
- 
- 	/* Only not-present faults should be handled by KFENCE. */
- 	if (!(error_code & X86_PF_PROT) &&
---- a/arch/x86/platform/efi/quirks.c
-+++ b/arch/x86/platform/efi/quirks.c
-@@ -761,7 +761,8 @@ int efi_capsule_setup_info(struct capsul
-  * @return: Returns, if the page fault is not handled. This function
-  * will never return if the page fault is handled successfully.
-  */
--void efi_crash_gracefully_on_page_fault(unsigned long phys_addr)
-+void efi_crash_gracefully_on_page_fault(unsigned long phys_addr,
-+					const struct pt_regs *regs)
- {
- 	if (!IS_ENABLED(CONFIG_X86_64))
- 		return;
-@@ -811,6 +812,14 @@ void efi_crash_gracefully_on_page_fault(
- 	}
- 
- 	/*
-+	 * The API does not permit entering a kernel mode FPU section with
-+	 * interrupts enabled and leaving it with interrupts disabled.  So
-+	 * re-enable interrupts now if they were enabled when the page fault
-+	 * occurred.
-+	 */
-+	local_irq_restore(regs->flags);
-+
-+	/*
- 	 * Before calling EFI Runtime Service, the kernel has switched the
- 	 * calling process to efi_mm. Hence, switch back to task_mm.
- 	 */
+ 		if (dev->key[keyidx].algorithm != B43legacy_SEC_ALGO_NONE) {
+ 			/* Remove PROTECTED flag to mark it as decrypted. */
 
 
