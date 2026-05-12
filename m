@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B353EDE55;
-	Tue, 12 May 2026 18:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7443EDE55;
+	Tue, 12 May 2026 18:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609197; cv=none; b=GIj9nkr2fpG3si3Ebnnmautfn9KP6DOjZhDzEH2+Nr5HP0CZSUMIqmhJKfzSB+SvlPxYEEzMCbUfriE0oqq9GSXAUgw17pRB4wGq4nZr9GiUbvkpgMVL6t9OgPzuupTah6/Bjad6pJ/Yg6yXM6G/yHlfwHfRVsrz/ER1a5R3+Zk=
+	t=1778609200; cv=none; b=cUsFVzOZioWopDpB7czX4py9N2UGddKJcxFGvdGsmNC/YMEguMvMnPfvLBvwc+gN69uOcgzI7S0JrrOoc7hyWXIj+jNoyyXt8s5Eopl6uJsnpmMmcV6MEZXyioNI+njd9agZnhlRp0UwG0edlSM42Iz2VbBcvDx0yB6WgQNuUvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609197; c=relaxed/simple;
-	bh=Kz5ekOfRx7TI/4uHeiVq9xZ5kEJrkVQ4pP+qgDNFAdg=;
+	s=arc-20240116; t=1778609200; c=relaxed/simple;
+	bh=gSlcBN/8L9kqV9B9ShjacLpnAf7sEdf5Flxmf9E36PU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSMuAmLY2grzTOirIoeoNGzijTV7QDWUejsedUTdbKNnJ68NOkHHnOrVzHYhILi7R611GTnVyrHZaOpGJs5HvzojNvxnWH5SY69dzbWyo4CIOkFYtaikUTb/z8YI3xuu/aDZC+CJ9n2E/yKRake1W9BB5GcyGpxscWCEjv69Epc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoK97fnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LEFkhYlVZf/2Bs2k/jUwRMNeMB8+tHjBtM9RAdJAwI9sq8M9djReXloxHTIpDN1kOpKzyFbjyzWfeHLNbBCzVXKOAGQ9m0ZmC7jRLp+KrJg6T7Deami69SiYq8A2UnJLk0eKDZ2pBv+zGBI2yukNLF7BCcno6XyS3uN/9p1ApmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3ghane6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoK97fnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C157C2BCB0;
-	Tue, 12 May 2026 18:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3ghane6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06F6C2BCB0;
+	Tue, 12 May 2026 18:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609197;
-	bh=Kz5ekOfRx7TI/4uHeiVq9xZ5kEJrkVQ4pP+qgDNFAdg=;
+	s=korg; t=1778609200;
+	bh=gSlcBN/8L9kqV9B9ShjacLpnAf7sEdf5Flxmf9E36PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MoK97fnIzrqH7HrXEwspFb3Rtmk1Q0cmuBMtZEH1gA1NWycQhGVLJr+dgklIih4/G
-	 FnfY4MsPi7/41yP/aHlldd3Oe6/atSlR1N1A9D3MZrpvfRfy67Ld2zj8qaydp2FV8A
-	 QvQz6IiUrfIpJN0IGbccapJz362GB4VOelXDknmk=
+	b=K3ghane6e3iFPj0U3Z38yNT+yIwu92mVdmbCdd6oFugyeSaK+BcNZ7n0bnh5/ypGr
+	 bPPEtDUZVB9VIrzd1zq9zplfeKnlk7XCyXJ/2QhdSsGO70enyVXoXFqI84cQv6KhZ6
+	 oxgRb2r3EEl3yEaER6r3fStOE1kz/aVAGhZ61rGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.0 101/307] perf/x86/intel: Improve validation and configuration of ACR masks
-Date: Tue, 12 May 2026 19:38:16 +0200
-Message-ID: <20260512173942.256583300@linuxfoundation.org>
+Subject: [PATCH 7.0 102/307] selftests/rseq: Dont run tests with runner scripts outside of the scripts
+Date: Tue, 12 May 2026 19:38:17 +0200
+Message-ID: <20260512173942.278083420@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,95 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 5ad732a56be46aabf158c16aa0c095291727aaef upstream.
+commit cb48828f06afa232cc330f0f4d6be101067810b3 upstream.
 
-Currently there are several issues on the user space ACR mask validation
-and configuration.
-- The validation for user space ACR mask (attr.config2) is incomplete,
-  e.g., the ACR mask could include the index which belongs to another
-  ACR events group, but it's not validated.
-- An early return on an invalid ACR mask caused all subsequent ACR groups
-  to be skipped.
-- The stale hardware ACR mask (hw.config1) is not cleared before setting
-  new hardware ACR mask.
+The rseq selftests include two runner scripts run_param_test.sh and
+run_syscall_errors_test.sh which set up the environment for test binaries
+and run them with various parameters. Currently we list these test binaries
+in TEST_GEN_PROGS but this results in the kselftest framework running them
+directly as well as via the runners, resulting in duplication and spurious
+failures when the environment is not correctly set up (eg, if glibc tries
+to use rseq).
 
-The following changes address all of the above issues.
-- Figure out the event index group of an ACR group. Any bits in the
-  user-space mask not present in the index group are now dropped.
-- Instead of an early return on invalid bits, drop only the invalid
-  portions and continue iterating through all ACR events to ensure full
-  configuration.
-- Explicitly clear the stale hardware ACR mask for each event prior to
-  writing the new configuration.
+Move the binaries the runners invoke to TEST_GEN_PROGS_EXTENDED, binaries
+listed there are built but not run by the framework.  The param_test
+benchmarks are not moved since they are not run by run_param_test.sh.
 
-Besides, a non-leader event member of ACR group could be disabled in
-theory. This could cause bit-shifting errors in the acr_mask of remaining
-group members. But since ACR sampling requires all events to be active,
-this should not be a big concern in real use case. Add a "FIXME" comment
-to notice this risk.
+Fixes: 830969e7821a ("selftests/rseq: Implement time slice extension test")
 
-Fixes: ec980e4facef ("perf/x86/intel: Support auto counter reload")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260423-selftests-rseq-use-runner-v1-1-e13a133754c1@kernel.org
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260430002558.712334-2-dapeng1.mi@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |   32 +++++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+ tools/testing/selftests/rseq/Makefile | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -3332,23 +3332,41 @@ static void intel_pmu_enable_event(struc
- static void intel_pmu_acr_late_setup(struct cpu_hw_events *cpuc)
- {
- 	struct perf_event *event, *leader;
--	int i, j, idx;
-+	int i, j, k, bit, idx;
+diff --git a/tools/testing/selftests/rseq/Makefile b/tools/testing/selftests/rseq/Makefile
+index 4ef90823b652..0d1947c0d623 100644
+--- a/tools/testing/selftests/rseq/Makefile
++++ b/tools/testing/selftests/rseq/Makefile
+@@ -14,12 +14,15 @@ LDLIBS += -lpthread -ldl
+ # still track changes to header files and depend on shared object.
+ OVERRIDE_TARGETS = 1
  
-+	/*
-+	 * FIXME: ACR mask parsing relies on cpuc->event_list[] (active events only).
-+	 * Disabling an ACR event causes bit-shifting errors in the acr_mask of
-+	 * remaining group members. As ACR sampling requires all events to be active,
-+	 * this limitation is acceptable for now. Revisit if independent event toggling
-+	 * is required.
-+	 */
- 	for (i = 0; i < cpuc->n_events; i++) {
- 		leader = cpuc->event_list[i];
- 		if (!is_acr_event_group(leader))
- 			continue;
+-TEST_GEN_PROGS = basic_test basic_percpu_ops_test basic_percpu_ops_mm_cid_test param_test \
+-		param_test_benchmark param_test_compare_twice param_test_mm_cid \
+-		param_test_mm_cid_benchmark param_test_mm_cid_compare_twice \
+-		syscall_errors_test slice_test
++TEST_GEN_PROGS = basic_test basic_percpu_ops_test basic_percpu_ops_mm_cid_test \
++		 param_test_benchmark param_test_mm_cid_benchmark slice_test
  
--		/* The ACR events must be contiguous. */
-+		/* Find the last event of the ACR group. */
- 		for (j = i; j < cpuc->n_events; j++) {
- 			event = cpuc->event_list[j];
- 			if (event->group_leader != leader->group_leader)
- 				break;
--			for_each_set_bit(idx, (unsigned long *)&event->attr.config2, X86_PMC_IDX_MAX) {
--				if (i + idx >= cpuc->n_events ||
--				    !is_acr_event_group(cpuc->event_list[i + idx]))
--					return;
--				__set_bit(cpuc->assign[i + idx], (unsigned long *)&event->hw.config1);
-+		}
-+
-+		/*
-+		 * Translate the user-space ACR mask (attr.config2) into the physical
-+		 * counter bitmask (hw.config1) for each ACR event in the group.
-+		 * NOTE: ACR event contiguity is guaranteed by intel_pmu_hw_config().
-+		 */
-+		for (k = i; k < j; k++) {
-+			event = cpuc->event_list[k];
-+			event->hw.config1 = 0;
-+			for_each_set_bit(bit, (unsigned long *)&event->attr.config2, X86_PMC_IDX_MAX) {
-+				idx = i + bit;
-+				/* Event index of ACR group must locate in [i, j). */
-+				if (idx >= j || !is_acr_event_group(cpuc->event_list[idx]))
-+					continue;
-+				__set_bit(cpuc->assign[idx], (unsigned long *)&event->hw.config1);
- 			}
- 		}
- 		i = j - 1;
+-TEST_GEN_PROGS_EXTENDED = librseq.so
++TEST_GEN_PROGS_EXTENDED = librseq.so \
++	param_test \
++	param_test_compare_twice \
++	param_test_mm_cid \
++	param_test_mm_cid_compare_twice \
++	syscall_errors_test
+ 
+ TEST_PROGS = run_param_test.sh run_syscall_errors_test.sh
+ 
+-- 
+2.54.0
+
 
 
