@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123423EDE52;
-	Tue, 12 May 2026 17:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBC43EDE41;
+	Tue, 12 May 2026 17:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608595; cv=none; b=n7LSdkr/vYagETnTiE3v8KKHpY3703XdMy2xNyHgCI7FTGUPYOe/RdF8iv9HeMiO2KXMqkNu1lCJFIfYmCn0w+Y5mnQ1kvTFQnP8x4HLOoo1WmSn2sPx+G6ShRq2+YZ950YGLU4Skznj4lgPlfKKJxonezoA0rkKvNlzIcXhG7M=
+	t=1778608598; cv=none; b=VS7Gvrf90A7iUQ5ztgDtim2ZdffZWeP3+WF5mZt7q89p5W4sXoJssb4rgyLpZtltFaRkCcIGqH62ED7LGhUIouQ2jv7E8ULOO/K7mGsuHvydIqLdfpqF1m58/M528agQvDznHxxV8jLA7kf/5YXcudNp3WOcTT7chgZDqHnMhns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608595; c=relaxed/simple;
-	bh=RZYMRUlSXTMUgujfV2bBWnvuzxZgjz+sxSJrajCh4bI=;
+	s=arc-20240116; t=1778608598; c=relaxed/simple;
+	bh=MGcbVKOZLbjKRze1FCAT3wHRkJpYFC06AfXMb8/xTGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2VApV6hHxgssOxRHvQpY/EFX2DB8VWzyafszblVUtBdzg1/rd6ys1hFJ3lcp2g/GWQWUCHtVz2bhH/gblQUOJAUdk6P9mYU84il3IzSpOiA02VZoq1NOwD9b1Lk6Ix76omNt0SpNrptrcoUJ/xNPjByObqVQeyWDMGy3XGwi0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDbnsW+4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ftmi/zF2y6IO9F1lVtYHI/uAmf+SsHjgCxtaCehwg5+s7Z8xGYykuj/bi8jL2KANmxaihojbifLFmzE2kPTuQ11HmLLScFrUjRzrYan2LSCmBYSSyqWm4TPlvzFU5g4ibxafM7dz3jiUlprRWjWswqosrMRXfBXvT5gXGaIDF10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpaJ5Dk5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDbnsW+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D823C2BCB0;
-	Tue, 12 May 2026 17:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpaJ5Dk5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5481EC2BCB0;
+	Tue, 12 May 2026 17:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608595;
-	bh=RZYMRUlSXTMUgujfV2bBWnvuzxZgjz+sxSJrajCh4bI=;
+	s=korg; t=1778608597;
+	bh=MGcbVKOZLbjKRze1FCAT3wHRkJpYFC06AfXMb8/xTGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FDbnsW+4fuuocb+QL8S9SEcpvU/eqCL9G61KuuO336WUj7DiR8bdzK+b8QoK97VMj
-	 RMXxjb7U5Ek7rUE/BUV8tpqo4b/o0fRzvXZYFvShi5EndN7sxJ++iR/llzClLOQDXa
-	 xbh8VdQUE/BwEjAIfh/Hi3h9cSNqEi6Gq5UoLS8c=
+	b=XpaJ5Dk5Y3bInf9/6zGGiz5y3bGuChfZS9+u9tSaDvIbNceYe7OVOa3uvyqtyHxJ0
+	 B4AsOp7bzIR3W/+rjg+pLuvUwvNrSfXTlWhG6+rlnzzKakgW/WkD5LydSw8snCXNLz
+	 dyl482YzWZftDGXqhf045f/xVObHUtZ479MGahSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hillis <Ben.Hillis@microsoft.com>,
-	Mitchell Levy <levymitchell0@gmail.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 123/270] hv_sock: Report EOF instead of -EIO for FIN
-Date: Tue, 12 May 2026 19:38:44 +0200
-Message-ID: <20260512173941.045478431@linuxfoundation.org>
+	Tommaso Soncin <soncintommaso@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 141/270] ASoC: amd: yc: Add HP OMEN Gaming Laptop 16-ap0xxx product line in quirk table
+Date: Tue, 12 May 2026 19:39:02 +0200
+Message-ID: <20260512173941.420098347@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -53,73 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Tommaso Soncin <soncintommaso@gmail.com>
 
-commit f6315295899415f1ddcf39f7c9cb46d25e2c6c6a upstream.
+commit d63c219b7ff39f897da10c160a2edef76320f16c upstream.
 
-Commit f0c5827d07cb unluckily causes a regression for the FIN packet,
-and the final read syscall gets an error rather than 0.
+Add a DMI quirk for the HP OMEN Gaming Laptop 16-ap0xxx line fixing the
+issue where the internal microphone was not detected.
 
-Ideally, we would want to fix hvs_channel_readable_payload() so that it
-could return 0 in the FIN scenario, but it's not good for the hv_sock
-driver to use the VMBus ringbuffer's cached priv_read_index, which is
-internal data in the VMBus driver.
-
-Fix the regression in hv_sock by returning 0 rather than -EIO.
-
-Fixes: f0c5827d07cb ("hv_sock: Return the readable bytes in hvs_stream_has_data()")
 Cc: stable@vger.kernel.org
-Reported-by: Ben Hillis <Ben.Hillis@microsoft.com>
-Reported-by: Mitchell Levy <levymitchell0@gmail.com>
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260416191433.840637-1-decui@microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tommaso Soncin <soncintommaso@gmail.com>
+Link: https://patch.msgid.link/20260429160858.538986-1-soncintommaso@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/hyperv_transport.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/vmw_vsock/hyperv_transport.c b/net/vmw_vsock/hyperv_transport.c
-index 2b7c0b5896ed..76e78c83fdbc 100644
---- a/net/vmw_vsock/hyperv_transport.c
-+++ b/net/vmw_vsock/hyperv_transport.c
-@@ -694,7 +694,6 @@ static ssize_t hvs_stream_enqueue(struct vsock_sock *vsk, struct msghdr *msg,
- static s64 hvs_stream_has_data(struct vsock_sock *vsk)
- {
- 	struct hvsock *hvs = vsk->trans;
--	bool need_refill;
- 	s64 ret;
- 
- 	if (hvs->recv_data_len > 0)
-@@ -702,9 +701,22 @@ static s64 hvs_stream_has_data(struct vsock_sock *vsk)
- 
- 	switch (hvs_channel_readable_payload(hvs->chan)) {
- 	case 1:
--		need_refill = !hvs->recv_desc;
--		if (!need_refill)
--			return -EIO;
-+		if (hvs->recv_desc) {
-+			/* Here hvs->recv_data_len is 0, so hvs->recv_desc must
-+			 * be NULL unless it points to the 0-byte-payload FIN
-+			 * packet: see hvs_update_recv_data().
-+			 *
-+			 * Here all the payload has been dequeued, but
-+			 * hvs_channel_readable_payload() still returns 1,
-+			 * because the VMBus ringbuffer's read_index is not
-+			 * updated for the FIN packet: hvs_stream_dequeue() ->
-+			 * hv_pkt_iter_next() updates the cached priv_read_index
-+			 * but has no opportunity to update the read_index in
-+			 * hv_pkt_iter_close() as hvs_stream_has_data() returns
-+			 * 0 for the FIN packet, so it won't get dequeued.
-+			 */
-+			return 0;
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -55,6 +55,13 @@ static const struct dmi_system_id yc_acp
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN Gaming Laptop 16-ap0xxx"),
 +		}
- 
- 		hvs->recv_desc = hv_pkt_iter_first(hvs->chan);
- 		if (!hvs->recv_desc)
--- 
-2.54.0
-
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "Dell Inc."),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Dell G15 5525"),
+ 		}
+@@ -655,6 +662,13 @@ static const struct dmi_system_id yc_acp
+ 		}
+ 	},
+ 	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_BOARD_NAME, "8E35"),
++		}
++	},
++	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "MECHREVO"),
 
 
