@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFF63BB11C;
-	Tue, 12 May 2026 17:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815793C0A13;
+	Tue, 12 May 2026 17:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608101; cv=none; b=ID0/XWZ5LSj6V6YMSRJdWccOJLiTqH69lehxY96aNjGwK31yEYTGLRQzte1hEfVA79zx3bLv9XBi7xLba8ufCZeIsXEBfvcTr3MOS9f4OEy+GJSm1buJCOI3yJSKpXewdV3hWfTEn0wo67DPOKDsI0YpAwBiDgjmkMVAp0QjR00=
+	t=1778608103; cv=none; b=ZTriJQiKqTlWcLzLmMMNIGY7kNag8hGwDwlaVq5LEp92UvtVmOr9BYV4H6y1fxquRUjYyuw6vzoUc187wJK2o0ptcnel9kQsXTX/pLWw19Wwuc7ysF38yoKDuyX7rieMoGYgFCvf9i2TncC25SlnQLXrhuUbU7c7pm3jIxt38UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608101; c=relaxed/simple;
-	bh=D99teqa9gI/3hn+L/KXz0FPh+Z75G1IZohSPhMNp/s4=;
+	s=arc-20240116; t=1778608103; c=relaxed/simple;
+	bh=YKqk3EFKN+917GklLsEjtzqWAMFVt17gWH5J5k1tj2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1toM3RoCZEqNkmfZ/p/RYbOEcRZI/U/7j34CUvX6EEl1MJ6U5mkXGuci2ImIrsKXC4WF/qVUyByyYVtQQBWORTGCvmfLX26RxE84kw8B2FQSkqnkjmm6OgeXNt85+Z8cTbfMgZA3K+WXoT52e0tCRfQC3pIfyO1ssqhTSNCwZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCdBP5Ur; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=os9ulo5fvpDdl7WkkuMTeAg3Bdzvn839NGgBY1PkkALNbwz1fUdeVS/OpJBztDWXnksenpA8NvMKJBY3/2eTo9JUiSl9DzqcATt8HLHYR9JiyKGuHrrh9CzBOUHh4N36JTU0T1TnuayNHW42WmlSdjkNGK5L2wEaBJO2hIamkdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbLF3/Z3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCdBP5Ur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED1AC2BCB0;
-	Tue, 12 May 2026 17:48:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbLF3/Z3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18405C2BCB0;
+	Tue, 12 May 2026 17:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608100;
-	bh=D99teqa9gI/3hn+L/KXz0FPh+Z75G1IZohSPhMNp/s4=;
+	s=korg; t=1778608103;
+	bh=YKqk3EFKN+917GklLsEjtzqWAMFVt17gWH5J5k1tj2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rCdBP5Urx78ubbJPDIsZNqwWz1w9MA2vfXtEea0FP1CABlL3QLL95R/kaog5C8zsW
-	 zUQaEbZaw0l/gfaSSXGYwp8Ct1Y0Ie7DKFV9wrEeilUsZ+M4Ozl5owV8ZNITxZx/KY
-	 w1+0iTignnZv80kkDABW6DIYbB/213hReV8IpRos=
+	b=LbLF3/Z3KMchjYKdpC7o/tn+Q+A48eE9gHJC3waexWd8XFzLWjS1docqjbjvOOcAS
+	 XsKwF1FPE/q1ons8RvyPSh7Y1jZe7+t8SYONC39uI5WO9XwEjE4XtX+o33r15O+RTI
+	 1yHM1nDCvsxgtKs55vtK/UUafQv0Y9sEOLMILaok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Masayuki Ohtake <masa-korg@dsn.okisemi.com>,
+	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 112/206] ASoC: qcom: q6apm-lpass-dai: Fix multiple graph opens
-Date: Tue, 12 May 2026 19:39:24 +0200
-Message-ID: <20260512173935.226756539@linuxfoundation.org>
+Subject: [PATCH 6.12 103/206] spi: topcliff-pch: fix controller deregistration
+Date: Tue, 12 May 2026 19:39:15 +0200
+Message-ID: <20260512173935.038689925@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,36 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 69acc488aaf39d0ddf6c3cf0e47c1873d39919a2 upstream.
+commit 5d6f477d6fc0767c57c5e1e6f55a1662820eef87 upstream.
 
-As prepare can be called mulitple times, this can result in multiple
-graph opens for playback path.
+Make sure to deregister the controller before disabling and releasing
+underlying resources like interrupts and DMA during driver unbind.
 
-This will result in a memory leaks, fix this by adding a check before
-opening.
-
-Fixes: be1fae62cf25 ("ASoC: q6apm-lpass-dai: close graph on prepare errors")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260402081118.348071-5-srinivas.kandagatla@oss.qualcomm.com
+Fixes: e8b17b5b3f30 ("spi/topcliff: Add topcliff platform controller hub (PCH) spi bus driver")
+Cc: stable@vger.kernel.org	# 2.6.37
+Cc: Masayuki Ohtake <masa-korg@dsn.okisemi.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260414134319.978196-8-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-lpass-dais.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-topcliff-pch.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-@@ -181,7 +181,7 @@ static int q6apm_lpass_dai_prepare(struc
- 	 * It is recommend to load DSP with source graph first and then sink
- 	 * graph, so sequence for playback and capture will be different
- 	 */
--	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK && dai_data->graph[dai->id] == NULL) {
- 		graph = q6apm_graph_open(dai->dev, NULL, dai->dev, graph_id);
- 		if (IS_ERR(graph)) {
- 			dev_err(dai->dev, "Failed to open graph (%d)\n", graph_id);
+--- a/drivers/spi/spi-topcliff-pch.c
++++ b/drivers/spi/spi-topcliff-pch.c
+@@ -1406,6 +1406,10 @@ static void pch_spi_pd_remove(struct pla
+ 	dev_dbg(&plat_dev->dev, "%s:[ch%d] irq=%d\n",
+ 		__func__, plat_dev->id, board_dat->pdev->irq);
+ 
++	spi_controller_get(data->host);
++
++	spi_unregister_controller(data->host);
++
+ 	if (use_dma)
+ 		pch_free_dma_buf(board_dat, data);
+ 
+@@ -1433,7 +1437,8 @@ static void pch_spi_pd_remove(struct pla
+ 	}
+ 
+ 	pci_iounmap(board_dat->pdev, data->io_remap_addr);
+-	spi_unregister_controller(data->host);
++
++	spi_controller_put(data->host);
+ }
+ #ifdef CONFIG_PM
+ static int pch_spi_pd_suspend(struct platform_device *pd_dev,
 
 
