@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FA23EDE48;
-	Tue, 12 May 2026 18:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE1F23E356;
+	Tue, 12 May 2026 18:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608889; cv=none; b=qeiDTlQODhN2+70fJLr+/AvzzKWVazGj6cAa0Wz82fP+Sc6l5es4O9sPrzNTgo7vnHI2md2cVDRbZuqj5n6xzdLmbmnLTBEVVnNoSX6CIanGbJjWj+6xNbT9qG/UBljgsR1INkaXuH72tLIZ7d94ZJdtZyRC599lkX2kTbDFGec=
+	t=1778608892; cv=none; b=pscHfMV2HtDy1RvXkszlTuj9gtOpQk0T4q5NBSyvISHF2J+ez89a9nssfFMdvsL3H3sZ6QHQawIluwhMY6wL45GXw6NluyNOn5ZdXzEgnN2uDkid+ylQG/AwCjWGqbWEmrfSUFCFWOk6KDIb5jr+25HqldzZ0xpCiZ2arfztZxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608889; c=relaxed/simple;
-	bh=Bs11X0jCgq6oyH6sqXwezVOi6M3eS1Kgnv8rtgv+4yM=;
+	s=arc-20240116; t=1778608892; c=relaxed/simple;
+	bh=54DObUGOvAR9vQ9duWHc7VKGpZnC9xGUmJrTmfm/kyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lFqt4hBPJWT+gjLoSvzUPedNnCOomhE+UHA9Mh1LMlMqvflFBt/bwdT+9i8Nh0A0aoWo5CbHVNTIp/KuXLsskeVAwz6OfnUx4EqrMIy1DFtnc5z41h3kVm8/Yq4HpygmKcfz0aDnPBfwB999NuPgmvsJaUml8aj719j3OFp83uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r61Eslgh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZSrbzYG04sU4LwP7GltAxCkpVPBPDL97WGRJT1MzNsLtAQn2hdpt0oJRv0On8JUf4wZ0qbn4AcbVKjed2tNnzlRP3AS9ik9Gt+7/oM+13FiNm+LxFNKCUEVELsLIJm5w7wUUG5b3pylAmkTld1POLvIup6rdst76abQp1T7b80A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pb9GrQmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r61Eslgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E9AC2BCB0;
-	Tue, 12 May 2026 18:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pb9GrQmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F63C2BCB0;
+	Tue, 12 May 2026 18:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608889;
-	bh=Bs11X0jCgq6oyH6sqXwezVOi6M3eS1Kgnv8rtgv+4yM=;
+	s=korg; t=1778608891;
+	bh=54DObUGOvAR9vQ9duWHc7VKGpZnC9xGUmJrTmfm/kyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r61EslghmhBswK4Jpnr1JLi8W5hGgxk8ZB/NejM0ih/GIUS5u5JlH0ixvPQFcr6Eb
-	 siMoaEmy8kvbl4IHvSnMLD4AtNWbUtWxt7omRcl58RuWNwRlgAuguPZvyrphCQn61M
-	 ZWFtoJyiN7i8rz/oehIJur30G3FyiQi/SlzccofE=
+	b=Pb9GrQmdA19/bxnyWkN1AKdYAN5cZAxaB3gl5DBbzxb6CpAMp1uukc0bEkUoGph+t
+	 LXoedrKTyzgYG2tZREN1rTivqqiVSH3an1YG1viOZDYPPCYtdDn6Lw5MXm1U0YnQlf
+	 Apnx6/+Bjsv3nNcIryWO1lDlao453F1uNXjTxvYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	David Carlier <devnexen@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 252/270] hwmon: (powerz) Avoid cacheline sharing for DMA buffer
-Date: Tue, 12 May 2026 19:40:53 +0200
-Message-ID: <20260512173943.746936825@linuxfoundation.org>
+Subject: [PATCH 6.18 253/270] octeon_ep_vf: add NULL check for napi_build_skb()
+Date: Tue, 12 May 2026 19:40:54 +0200
+Message-ID: <20260512173943.768990747@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -45,59 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 3023c050af3600bf451153335dea5e073c9a3088 ]
+[ Upstream commit dd66b42854705e4e4ee7f14d260f86c578bed3e3 ]
 
-Depending on the architecture the transfer buffer may share a cacheline
-with the following mutex. As the buffer may be used for DMA, that is
-problematic.
+napi_build_skb() can return NULL on allocation failure. In
+__octep_vf_oq_process_rx(), the result is used directly without a NULL
+check in both the single-buffer and multi-fragment paths, leading to a
+NULL pointer dereference.
 
-Use the high-level DMA helpers to make sure that cacheline sharing can
-not happen.
+Add NULL checks after both napi_build_skb() calls, properly advancing
+descriptors and consuming remaining fragments on failure.
 
-Also drop the comment, as the helpers are documentation enough.
-
-https://sashiko.dev/#/message/20260408175814.934BFC19421%40smtp.kernel.org
-
-Fixes: 4381a36abdf1c ("hwmon: add POWER-Z driver")
-Cc: stable@vger.kernel.org # ca085faabb42: dma-mapping: add __dma_from_device_group_begin()/end()
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20260408-powerz-cacheline-alias-v1-1-1254891be0dd@weissschuh.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 1cd3b407977c ("octeon_ep_vf: add Tx/Rx processing and interrupt support")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Link: https://patch.msgid.link/20260409184009.930359-3-devnexen@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ inlined missing octep_vf_oq_next_idx() helper as read_idx++ with wraparound ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/powerz.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.c |   36 +++++++++++++++-
+ 1 file changed, 34 insertions(+), 2 deletions(-)
 
---- a/drivers/hwmon/powerz.c
-+++ b/drivers/hwmon/powerz.c
-@@ -6,6 +6,7 @@
+--- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.c
++++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_rx.c
+@@ -409,10 +409,17 @@ static int __octep_vf_oq_process_rx(stru
+ 			data_offset = OCTEP_VF_OQ_RESP_HW_SIZE;
+ 			rx_ol_flags = 0;
+ 		}
+-		rx_bytes += buff_info->len;
+-
+ 		if (buff_info->len <= oq->max_single_buffer_size) {
+ 			skb = napi_build_skb((void *)resp_hw, PAGE_SIZE);
++			if (!skb) {
++				oq->stats->alloc_failures++;
++				desc_used++;
++				read_idx++;
++				if (read_idx == oq->max_count)
++					read_idx = 0;
++				continue;
++			}
++			rx_bytes += buff_info->len;
+ 			skb_reserve(skb, data_offset);
+ 			skb_put(skb, buff_info->len);
+ 			read_idx++;
+@@ -424,6 +431,31 @@ static int __octep_vf_oq_process_rx(stru
+ 			u16 data_len;
  
- #include <linux/completion.h>
- #include <linux/device.h>
-+#include <linux/dma-mapping.h>
- #include <linux/hwmon.h>
- #include <linux/module.h>
- #include <linux/mutex.h>
-@@ -33,7 +34,9 @@ struct powerz_sensor_data {
- } __packed;
- 
- struct powerz_priv {
--	char transfer_buffer[64];	/* first member to satisfy DMA alignment */
-+	__dma_from_device_group_begin();
-+	char transfer_buffer[64];
-+	__dma_from_device_group_end();
- 	struct mutex mutex;
- 	struct completion completion;
- 	struct urb *urb;
+ 			skb = napi_build_skb((void *)resp_hw, PAGE_SIZE);
++			if (!skb) {
++				oq->stats->alloc_failures++;
++				desc_used++;
++				read_idx++;
++				if (read_idx == oq->max_count)
++					read_idx = 0;
++				data_len = buff_info->len - oq->max_single_buffer_size;
++				while (data_len) {
++					dma_unmap_page(oq->dev, oq->desc_ring[read_idx].buffer_ptr,
++						       PAGE_SIZE, DMA_FROM_DEVICE);
++					buff_info = (struct octep_vf_rx_buffer *)
++						    &oq->buff_info[read_idx];
++					buff_info->page = NULL;
++					if (data_len < oq->buffer_size)
++						data_len = 0;
++					else
++						data_len -= oq->buffer_size;
++					desc_used++;
++					read_idx++;
++					if (read_idx == oq->max_count)
++						read_idx = 0;
++				}
++				continue;
++			}
++			rx_bytes += buff_info->len;
+ 			skb_reserve(skb, data_offset);
+ 			/* Head fragment includes response header(s);
+ 			 * subsequent fragments contains only data.
 
 
