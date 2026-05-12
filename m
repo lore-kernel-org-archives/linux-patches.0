@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85083EDE45;
-	Tue, 12 May 2026 18:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E533EDE48;
+	Tue, 12 May 2026 18:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609216; cv=none; b=frGuXlj8dDQRkQLKWMpy5oTu3dsSM8gr7LmouDBkig/Mk1JylIMBrCB2EfvBdx57tsglzCggTMq5nsiAkg1N608kjK+hdzuoa+MFPFOWt1GDKqVnMxEbEJWtq300asEQTvbD5toFhO+0rGEXwX6f7dZya7oaXglpgSIKldEs3Ok=
+	t=1778609218; cv=none; b=Ra6rDNvbLirI1PgBYAwoXWr+9Bxeilbde96dH6qiV5F71T1QDrRRNQdU8zIb+lAWTv1KLq/z1JRPnijKAffNJO5QctpQFjImxAuI0gqzzkPCUeAj038KoyPvIPCzobDbQROkPVP89NYagFpPYZNyKObiZzTdI9z6dfvutTxIAYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609216; c=relaxed/simple;
-	bh=OAGghbs0fzwfGVjHmAu+aPkR5EqF63NQXegM6F9WzNs=;
+	s=arc-20240116; t=1778609218; c=relaxed/simple;
+	bh=WiWV7xT3jihtTFWhk3rGrH8cWELLBwWrgPBCIUniBnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XSjGZNsW32w3F5ErQYWkop08aEioeVErlsFjVeKGYvuzFJh/xVt+Q4Pyu9vnseVwIvhpw78n89QABn43diG9Du4OJCj0qb0KFtAGN5t4NbMmVts0jdf7nPZbtTyX+S8jVPu2WK0gv3gimQxZ+TvVfsM5eXdWes73ottjhDwtZwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgpA/ySX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BeufgxzbdZNigmiaLL0c5CwOrp4y48f2WoX2YPIfVOjFVkHNtD0q1h6bvSsdFZT/m9Dj1rXF+yT8Qr4SeijZHGPW07CZpqq7FzXagA2M+m+fs+nj8T1tHJcrOIU5bh2KKYHGS00MkP9xqTS484Ke2DWs3/JbWPLajVb1kOo1oJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWbdIpJI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgpA/ySX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42300C2BCB0;
-	Tue, 12 May 2026 18:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWbdIpJI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D70C2BCB0;
+	Tue, 12 May 2026 18:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609215;
-	bh=OAGghbs0fzwfGVjHmAu+aPkR5EqF63NQXegM6F9WzNs=;
+	s=korg; t=1778609218;
+	bh=WiWV7xT3jihtTFWhk3rGrH8cWELLBwWrgPBCIUniBnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgpA/ySXBHv149X3I01OO+3oHEEzkE2cCFhulXV2ykPZFN1b/2uvcDgytrOndFuiH
-	 01hjG0N1u9vdoYB85cQL8FXZOSWrHka4qLbVfDj/TkiSBCAEgdXr+ME0weyu75+sZM
-	 sohVwGWTyrzSiBYeg7kxTHqODShbQr8Ony96PVCE=
+	b=yWbdIpJItjeAioNzULWQND0ctfO2+gRRMsW2VCi5bse3DtqA4EtEZ3AkBQSxxJCMp
+	 /tixgKzL1d+8SnO+W17luhGLDehXKAaq6ppJeGznje0PC0pC10ZrUsdOlRELZejoOM
+	 DxieIEQr5HOnb1dksMGOfrHTzNjhM8Tuno0Dp09M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	David Carlier <devnexen@gmail.com>
-Subject: [PATCH 7.0 072/307] Bluetooth: hci_conn: fix potential UAF in create_big_sync
-Date: Tue, 12 May 2026 19:37:47 +0200
-Message-ID: <20260512173941.641940452@linuxfoundation.org>
+	Thomas Gleixner <tglx@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dmitry Vyukov <dvyukov@google.com>
+Subject: [PATCH 7.0 108/307] selftests/rseq: Validate legacy behavior
+Date: Tue, 12 May 2026 19:38:23 +0200
+Message-ID: <20260512173942.404727955@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,91 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Thomas Gleixner <tglx@kernel.org>
 
-commit 0beddb0c380bed5f5b8e61ddbe14635bb73d0b41 upstream.
+commit fdf4eb632683bfc2840acebe62716cb468d43e10 upstream.
 
-Add hci_conn_valid() check in create_big_sync() to detect stale
-connections before proceeding with BIG creation. Handle the
-resulting -ECANCELED in create_big_complete() and re-validate the
-connection under hci_dev_lock() before dereferencing, matching the
-pattern used by create_le_conn_complete() and create_pa_complete().
+The RSEQ legacy mode behavior requires that the ID fields in the rseq
+region are unconditionally updated on every context switch and before
+signal delivery even if not required by the ABI specification.
 
-Keep the hci_conn object alive across the async boundary by taking
-a reference via hci_conn_get() when queueing create_big_sync(), and
-dropping it in the completion callback. The refcount and the lock
-are complementary: the refcount keeps the object allocated, while
-hci_dev_lock() serializes hci_conn_hash_del()'s list_del_rcu() on
-hdev->conn_hash, as required by hci_conn_del().
+To ensure that this behavior is preserved for legacy users in the future,
+add a test which validates that with a sleep() and a signal sent to self.
 
-hci_conn_put() is called outside hci_dev_unlock() so the final put
-(which resolves to kfree() via bt_link_release) does not run under
-hdev->lock, though the release path would be safe either way.
+Provide a run script which prevents GLIBC from registering a RSEQ region,
+so that the test can register it's own legacy sized region.
 
-Without this, create_big_complete() would unconditionally
-dereference the conn pointer on error, causing a use-after-free
-via hci_connect_cfm() and hci_conn_del().
-
-Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
+Fixes: 566d8015f7ee ("rseq: Avoid CPU/MM CID updates when no event pending")
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
+Tested-by: Dmitry Vyukov <dvyukov@google.com>
+Link: https://patch.msgid.link/20260428224427.764705536%40kernel.org
 Cc: stable@vger.kernel.org
-Co-developed-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ tools/testing/selftests/rseq/Makefile         |  5 +-
+ tools/testing/selftests/rseq/legacy_check.c   | 65 +++++++++++++++++++
+ .../selftests/rseq/run_legacy_check.sh        |  4 ++
+ 3 files changed, 72 insertions(+), 2 deletions(-)
+ create mode 100644 tools/testing/selftests/rseq/legacy_check.c
+ create mode 100755 tools/testing/selftests/rseq/run_legacy_check.sh
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2130,6 +2130,9 @@ static int create_big_sync(struct hci_de
- 	u32 flags = 0;
- 	int err;
+diff --git a/tools/testing/selftests/rseq/Makefile b/tools/testing/selftests/rseq/Makefile
+index 0d1947c0d623..0293a2f17f51 100644
+--- a/tools/testing/selftests/rseq/Makefile
++++ b/tools/testing/selftests/rseq/Makefile
+@@ -22,9 +22,10 @@ TEST_GEN_PROGS_EXTENDED = librseq.so \
+ 	param_test_compare_twice \
+ 	param_test_mm_cid \
+ 	param_test_mm_cid_compare_twice \
+-	syscall_errors_test
++	syscall_errors_test \
++	legacy_check
  
-+	if (!hci_conn_valid(hdev, conn))
-+		return -ECANCELED;
+-TEST_PROGS = run_param_test.sh run_syscall_errors_test.sh
++TEST_PROGS = run_param_test.sh run_syscall_errors_test.sh run_legacy_check.sh
+ 
+ TEST_FILES := settings
+ 
+diff --git a/tools/testing/selftests/rseq/legacy_check.c b/tools/testing/selftests/rseq/legacy_check.c
+new file mode 100644
+index 000000000000..3f7de4e28303
+--- /dev/null
++++ b/tools/testing/selftests/rseq/legacy_check.c
+@@ -0,0 +1,65 @@
++// SPDX-License-Identifier: GPL-2.0
++#ifndef _GNU_SOURCE
++#define _GNU_SOURCE
++#endif
 +
- 	if (qos->bcast.out.phys == BIT(1))
- 		flags |= MGMT_ADV_FLAG_SEC_2M;
- 
-@@ -2204,11 +2207,24 @@ static void create_big_complete(struct h
- 
- 	bt_dev_dbg(hdev, "conn %p", conn);
- 
-+	if (err == -ECANCELED)
-+		goto done;
++#include <errno.h>
++#include <signal.h>
++#include <stdint.h>
++#include <unistd.h>
 +
-+	hci_dev_lock(hdev);
++#include "rseq.h"
 +
-+	if (!hci_conn_valid(hdev, conn))
-+		goto unlock;
++#include "../kselftest_harness.h"
 +
- 	if (err) {
- 		bt_dev_err(hdev, "Unable to create BIG: %d", err);
- 		hci_connect_cfm(conn, err);
- 		hci_conn_del(conn);
- 	}
++FIXTURE(legacy)
++{
++};
 +
-+unlock:
-+	hci_dev_unlock(hdev);
-+done:
-+	hci_conn_put(conn);
- }
- 
- struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
-@@ -2336,10 +2352,11 @@ struct hci_conn *hci_connect_bis(struct
- 				 BT_BOUND, &data);
- 
- 	/* Queue start periodic advertising and create BIG */
--	err = hci_cmd_sync_queue(hdev, create_big_sync, conn,
-+	err = hci_cmd_sync_queue(hdev, create_big_sync, hci_conn_get(conn),
- 				 create_big_complete);
- 	if (err < 0) {
- 		hci_conn_drop(conn);
-+		hci_conn_put(conn);
- 		return ERR_PTR(err);
- 	}
- 
++static int cpu_id_in_sigfn = -1;
++
++static void sigfn(int sig)
++{
++	struct rseq_abi *rs = rseq_get_abi();
++
++	cpu_id_in_sigfn = rs->cpu_id_start;
++}
++
++FIXTURE_SETUP(legacy)
++{
++	int res = __rseq_register_current_thread(true, true);
++
++	switch (res) {
++	case -ENOSYS:
++		SKIP(return, "RSEQ not enabled\n");
++	case -EBUSY:
++		SKIP(return, "GLIBC owns RSEQ. Disable GLIBC RSEQ registration\n");
++	default:
++		ASSERT_EQ(res, 0);
++	}
++
++	ASSERT_NE(signal(SIGUSR1, sigfn), SIG_ERR);
++}
++
++FIXTURE_TEARDOWN(legacy)
++{
++}
++
++TEST_F(legacy, legacy_test)
++{
++	struct rseq_abi *rs = rseq_get_abi();
++
++	ASSERT_NE(rs, NULL);
++
++	/* Overwrite rs::cpu_id_start */
++	rs->cpu_id_start = -1;
++	sleep(1);
++	ASSERT_NE(rs->cpu_id_start, -1);
++
++	rs->cpu_id_start = -1;
++	ASSERT_EQ(raise(SIGUSR1), 0);
++	ASSERT_NE(rs->cpu_id_start, -1);
++	ASSERT_NE(cpu_id_in_sigfn, -1);
++}
++
++TEST_HARNESS_MAIN
+diff --git a/tools/testing/selftests/rseq/run_legacy_check.sh b/tools/testing/selftests/rseq/run_legacy_check.sh
+new file mode 100755
+index 000000000000..5577b46ea092
+--- /dev/null
++++ b/tools/testing/selftests/rseq/run_legacy_check.sh
+@@ -0,0 +1,4 @@
++#!/bin/bash
++# SPDX-License-Identifier: GPL-2.0
++
++GLIBC_TUNABLES="${GLIBC_TUNABLES:-}:glibc.pthread.rseq=0" ./legacy_check
+-- 
+2.54.0
+
 
 
