@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DB73C0A16;
-	Tue, 12 May 2026 17:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B233DD869;
+	Tue, 12 May 2026 17:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608034; cv=none; b=gw+ZkGAikiOmf6TsWwHglYhNvM/JHKCq9tejOD+PcVdT8J1mKNDWkMeczu/JVsJVuLf3j6SAGOtJ/rk/xg0IfH93sK5c5qeQeIO6OqikjBGqiorQ4nYm4p32lVudkDeWo31zEwkQQmKzPBhLBmPGlZDEoZ8dOqlnh3eexcArEGA=
+	t=1778608036; cv=none; b=LNZo76g/5dfCK51Z4TwcZs6D8YSPa4kZSzt5hFPsUPdMTjTWRecttrbxtef93lUEaA+mS5JO0REKYf/rC3h6hEJXwhrkLyFCvLTs0lpokhsa7ehWX2PkXBqOjK18gcakDnD/+SCVddw6PpjZxPXvu7LrGu02cYoIKEgODQeLktA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608034; c=relaxed/simple;
-	bh=zJIR4OBQM7L1NC4VtHyE1Mu0EvCodpy8McqACrNlzHQ=;
+	s=arc-20240116; t=1778608036; c=relaxed/simple;
+	bh=zfiOkxM4JrazmgbB3f51GPdmuLBQByDpHHj4n+voan0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKIfiYRMacomE0YTR/2FbQQ5JQRSGi/KHIvEd5A890cYy0P2j5a4JAQ5HiNtNns55YamDTB5upUbLaxzPqfQJi2M9f+Lp3hzAPihLB/6mf02pJUy/UYIAbsF2AyCfDi0Iii2UMtlkdziTHPG8ZW03LVfAQBsijx/fF1jaZAhW90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOb1XRDY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=El6Ln0j9Os4gtBiI0gaoVEfSyV7ZXSzjtrjEF9YM+8nNaL9qARXOIBs3HGCcpaA1Oi6NHjjB15Cm+bZDKoZrGBoUgmJhhdU1mnTAdzkb3Euar2qpKF5cIglMsvA1YOPNPa89txpLa374k1YIAzEzj8xpjtYf5ydt+cifE+h9C2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l67BWit+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOb1XRDY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AAD8C4AF18;
-	Tue, 12 May 2026 17:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l67BWit+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BF8C4AF52;
+	Tue, 12 May 2026 17:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608033;
-	bh=zJIR4OBQM7L1NC4VtHyE1Mu0EvCodpy8McqACrNlzHQ=;
+	s=korg; t=1778608036;
+	bh=zfiOkxM4JrazmgbB3f51GPdmuLBQByDpHHj4n+voan0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOb1XRDYTwDU/GCD9z/EaC/kvJ4UL14dHFiyS0RqBJCtN6Jt859Qe9tHoo6UUeZEA
-	 IhAQJQ2ev4n5q4HoqG3ULFFnprsygx1Tp+296E5n8s8Ilz6r7B7lT1c1b3+NgBmUb4
-	 HG93iJtaIP869odhzsyPfQy3Xl3TwltyNu/bZSDs=
+	b=l67BWit+ldwC7LTKEbfJz++xKWLRArvN2okZMa/FODAJpQQ9rCGQdyPV7byTFde6G
+	 VcM61+R3JL5kwoRkF0ToQcoKSkV2q5L8rLVBY+GDUu+H3hvhRqAYKBB+0CkB8kLkMb
+	 tcCH315NI4nDCu3fszPtWRJqJIwC8lDVfkTNDnuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivam Kumar <skumar47@syr.edu>,
-	Shivam Kumar <kumar.shivam43666@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
 	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.12 130/206] nvmet-tcp: fix race between ICReq handling and queue teardown
-Date: Tue, 12 May 2026 19:39:42 +0200
-Message-ID: <20260512173935.611224652@linuxfoundation.org>
+Subject: [PATCH 6.12 131/206] nvmet: avoid recursive nvmet-wq flush in nvmet_ctrl_free
+Date: Tue, 12 May 2026 19:39:43 +0200
+Message-ID: <20260512173935.632350521@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -54,96 +53,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Chaitanya Kulkarni <kch@nvidia.com>
 
-commit 5293a8882c549fab4a878bc76b0b6c951f980a61 upstream.
+commit aade8abd8b868b6ffa9697aadaea28ec7f65bee6 upstream.
 
-nvmet_tcp_handle_icreq() updates queue->state after sending an
-Initialization Connection Response (ICResp), but it does so without
-serializing against target-side queue teardown.
+nvmet_tcp_release_queue_work() runs on nvmet-wq and can drop the
+final controller reference through nvmet_cq_put(). If that triggers
+nvmet_ctrl_free(), the teardown path flushes ctrl->async_event_work on
+the same nvmet-wq.
 
-If an NVMe/TCP host sends an Initialization Connection Request
-(ICReq) and immediately closes the connection, target-side teardown
-may start in softirq context before io_work drains the already
-buffered ICReq. In that case, nvmet_tcp_schedule_release_queue()
-sets queue->state to NVMET_TCP_Q_DISCONNECTING and drops the queue
-reference under state_lock.
+Call chain:
 
-If io_work later processes that ICReq, nvmet_tcp_handle_icreq() can
-still overwrite the state back to NVMET_TCP_Q_LIVE. That defeats the
-DISCONNECTING-state guard in nvmet_tcp_schedule_release_queue() and
-allows a later socket state change to re-enter teardown and issue a
-second kref_put() on an already released queue.
+ nvmet_tcp_schedule_release_queue()
+   kref_put(&queue->kref, nvmet_tcp_release_queue)
+     nvmet_tcp_release_queue()
+       queue_work(nvmet_wq, &queue->release_work) <--- nvmet_wq
+         process_one_work()
+           nvmet_tcp_release_queue_work()
+             nvmet_cq_put(&queue->nvme_cq)
+               nvmet_cq_destroy()
+                 nvmet_ctrl_put(cq->ctrl)
+                   nvmet_ctrl_free()
+                     flush_work(&ctrl->async_event_work) <--- nvmet_wq
 
-The ICResp send failure path has the same problem. If teardown has
-already moved the queue to DISCONNECTING, a send error can still
-overwrite the state with NVMET_TCP_Q_FAILED, again reopening the
-window for a second teardown path to drop the queue reference.
+                      Previously Scheduled by :-
+		        nvmet_add_async_event
+		          queue_work(nvmet_wq, &ctrl->async_event_work);
 
-Fix this by serializing both post-send state transitions with
-state_lock and bailing out if teardown has already started.
+This trips lockdep with a possible recursive locking warning.
 
-Use -ESHUTDOWN as an internal sentinel for that bail-out path rather
-than propagating it as a transport error like -ECONNRESET. Keep
-nvmet_tcp_socket_error() setting rcv_state to NVMET_TCP_RECV_ERR before
-honoring that sentinel so receive-side parsing stays quiesced until the
-existing release path completes.
+[ 5223.015876] run blktests nvme/003 at 2026-04-07 20:53:55
+[ 5223.061801] loop0: detected capacity change from 0 to 2097152
+[ 5223.072206] nvmet: adding nsid 1 to subsystem blktests-subsystem-1
+[ 5223.088368] nvmet_tcp: enabling port 0 (127.0.0.1:4420)
+[ 5223.126086] nvmet: Created discovery controller 1 for subsystem nqn.2014-08.org.nvmexpress.discovery for NQN nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349.
+[ 5223.128453] nvme nvme1: new ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery", addr 127.0.0.1:4420, hostnqn: nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349
+[ 5233.199447] nvme nvme1: Removing ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery"
 
-Fixes: c46a6465bac2 ("nvmet-tcp: add NVMe over TCP target driver")
+[ 5233.227718] ============================================
+[ 5233.231283] WARNING: possible recursive locking detected
+[ 5233.234696] 7.0.0-rc3nvme+ #20 Tainted: G           O     N
+[ 5233.238434] --------------------------------------------
+[ 5233.241852] kworker/u192:6/2413 is trying to acquire lock:
+[ 5233.245429] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x26/0x90
+[ 5233.251438]
+               but task is already holding lock:
+[ 5233.255254] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
+[ 5233.261125]
+               other info that might help us debug this:
+[ 5233.265333]  Possible unsafe locking scenario:
+
+[ 5233.269217]        CPU0
+[ 5233.270795]        ----
+[ 5233.272436]   lock((wq_completion)nvmet-wq);
+[ 5233.275241]   lock((wq_completion)nvmet-wq);
+[ 5233.278020]
+                *** DEADLOCK ***
+
+[ 5233.281793]  May be due to missing lock nesting notation
+
+[ 5233.286195] 3 locks held by kworker/u192:6/2413:
+[ 5233.289192]  #0: ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
+[ 5233.294569]  #1: ffffc9000e2a7e40 ((work_completion)(&queue->release_work)){+.+.}-{0:0}, at: process_one_work+0x1c5/0x6e0
+[ 5233.300128]  #2: ffffffff82d7dc40 (rcu_read_lock){....}-{1:3}, at: __flush_work+0x62/0x530
+[ 5233.304290]
+               stack backtrace:
+[ 5233.306520] CPU: 4 UID: 0 PID: 2413 Comm: kworker/u192:6 Tainted: G           O     N  7.0.0-rc3nvme+ #20 PREEMPT(full)
+[ 5233.306524] Tainted: [O]=OOT_MODULE, [N]=TEST
+[ 5233.306525] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+[ 5233.306527] Workqueue: nvmet-wq nvmet_tcp_release_queue_work [nvmet_tcp]
+[ 5233.306532] Call Trace:
+[ 5233.306534]  <TASK>
+[ 5233.306536]  dump_stack_lvl+0x73/0xb0
+[ 5233.306552]  print_deadlock_bug+0x225/0x2f0
+[ 5233.306556]  __lock_acquire+0x13f0/0x2290
+[ 5233.306563]  lock_acquire+0xd0/0x300
+[ 5233.306565]  ? touch_wq_lockdep_map+0x26/0x90
+[ 5233.306571]  ? __flush_work+0x20b/0x530
+[ 5233.306573]  ? touch_wq_lockdep_map+0x26/0x90
+[ 5233.306577]  touch_wq_lockdep_map+0x3b/0x90
+[ 5233.306580]  ? touch_wq_lockdep_map+0x26/0x90
+[ 5233.306583]  ? __flush_work+0x20b/0x530
+[ 5233.306585]  __flush_work+0x268/0x530
+[ 5233.306588]  ? __pfx_wq_barrier_func+0x10/0x10
+[ 5233.306594]  ? xen_error_entry+0x30/0x60
+[ 5233.306600]  nvmet_ctrl_free+0x140/0x310 [nvmet]
+[ 5233.306617]  nvmet_cq_put+0x74/0x90 [nvmet]
+[ 5233.306629]  nvmet_tcp_release_queue_work+0x19f/0x360 [nvmet_tcp]
+[ 5233.306634]  process_one_work+0x206/0x6e0
+[ 5233.306640]  worker_thread+0x184/0x320
+[ 5233.306643]  ? __pfx_worker_thread+0x10/0x10
+[ 5233.306646]  kthread+0xf1/0x130
+[ 5233.306648]  ? __pfx_kthread+0x10/0x10
+[ 5233.306651]  ret_from_fork+0x355/0x450
+[ 5233.306653]  ? __pfx_kthread+0x10/0x10
+[ 5233.306656]  ret_from_fork_asm+0x1a/0x30
+[ 5233.306664]  </TASK>
+
+There is also no need to flush async_event_work from controller
+teardown. The admin queue teardown already fails outstanding AER
+requests before the final controller put :-
+
+ nvmet_sq_destroy(admin sq)
+    nvmet_async_events_failall(ctrl)
+
+The controller has already been removed from the subsystem list before
+nvmet_ctrl_free() quiesces outstanding work.
+
+Replace flush_work() with cancel_work_sync() so a pending
+async_event_work item is canceled and a running instance is waited on
+without recursing into the same workqueue.
+
+Fixes: 06406d81a2d7 ("nvmet: cancel fatal error and flush async work before free controller")
 Cc: stable@vger.kernel.org
-Reported-by: Shivam Kumar <skumar47@syr.edu>
-Tested-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |   26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/nvme/target/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -406,6 +406,19 @@ static void nvmet_tcp_build_pdu_iovec(st
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -1505,7 +1505,7 @@ static void nvmet_ctrl_free(struct kref
  
- static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue)
- {
-+	/*
-+	 * Keep rcv_state at RECV_ERR even for the internal -ESHUTDOWN path.
-+	 * nvmet_tcp_handle_icreq() can return -ESHUTDOWN after the ICReq has
-+	 * already been consumed and queue teardown has started.
-+	 *
-+	 * If nvmet_tcp_data_ready() or nvmet_tcp_write_space() queues
-+	 * nvmet_tcp_io_work() again before nvmet_tcp_release_queue_work()
-+	 * cancels it, the queue must not keep that old receive state.
-+	 * Otherwise the next nvmet_tcp_io_work() run can reach
-+	 * nvmet_tcp_done_recv_pdu() and try to handle the same ICReq again.
-+	 *
-+	 * That is why queue->rcv_state needs to be updated before we return.
-+	 */
- 	queue->rcv_state = NVMET_TCP_RECV_ERR;
- 	if (queue->nvme_sq.ctrl)
- 		nvmet_ctrl_fatal_error(queue->nvme_sq.ctrl);
-@@ -962,11 +975,24 @@ static int nvmet_tcp_handle_icreq(struct
- 	iov.iov_len = sizeof(*icresp);
- 	ret = kernel_sendmsg(queue->sock, &msg, &iov, 1, iov.iov_len);
- 	if (ret < 0) {
-+		spin_lock_bh(&queue->state_lock);
-+		if (queue->state == NVMET_TCP_Q_DISCONNECTING) {
-+			spin_unlock_bh(&queue->state_lock);
-+			return -ESHUTDOWN;
-+		}
- 		queue->state = NVMET_TCP_Q_FAILED;
-+		spin_unlock_bh(&queue->state_lock);
- 		return ret; /* queue removal will cleanup */
- 	}
+ 	nvmet_stop_keep_alive_timer(ctrl);
  
-+	spin_lock_bh(&queue->state_lock);
-+	if (queue->state == NVMET_TCP_Q_DISCONNECTING) {
-+		spin_unlock_bh(&queue->state_lock);
-+		/* Tell nvmet_tcp_socket_error() teardown is in progress. */
-+		return -ESHUTDOWN;
-+	}
- 	queue->state = NVMET_TCP_Q_LIVE;
-+	spin_unlock_bh(&queue->state_lock);
- 	nvmet_prepare_receive_pdu(queue);
- 	return 0;
- }
+-	flush_work(&ctrl->async_event_work);
++	cancel_work_sync(&ctrl->async_event_work);
+ 	cancel_work_sync(&ctrl->fatal_err_work);
+ 
+ 	nvmet_destroy_auth(ctrl);
 
 
