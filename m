@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCAE3955E1;
-	Tue, 12 May 2026 17:50:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E263955DC;
+	Tue, 12 May 2026 17:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608204; cv=none; b=HO5AunDl24B9lR2xV9MiilQGuocsfY80c3iroFuXbh7wqXZXd2qPGVJ8Diuqe/f84tBlx4D7UMNKjgqTSCcv/wSjWnTn2aHcl+okXeDFDv05NGIu1bHJihoI4H6cUJeIyDBUKxs+vhIc9s/gc/M+hNi2kCfiZCokd0bUuwI3TRQ=
+	t=1778608206; cv=none; b=oBFmn1Jtv8PEqM0l+hFt41RLiSN/Gwi5EaTUkYkrEeg8pAagMcPm1o/dfUeGHAeVZw1RpBgt2cHNn1j+v7x4Feq2z9Y+4SJk9AbRNDZS/afqAJTkPhM2o+Dz3jM24N1+IdH27Qv5cHZXD/lqOCW7a+Psl5VofN4FuEzKCnHmi20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608204; c=relaxed/simple;
-	bh=8sdu/3PiTpod2yTmPeW8s2QjwGmV0QzaNgstVGLoVdM=;
+	s=arc-20240116; t=1778608206; c=relaxed/simple;
+	bh=idLBVUBklCttT20jFIysP4AKCGmlIgsdhme2w32T0VM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPOxGkNg7OWRAXY5qhwEUzahJ7TSmQ2lBcTCJrm7Q1vTNz4s8mV/SsYXC5drQCcl35ldSOqu5Pmf5PtmRvaMPQxUf7rUcnE0H1hfzJJDXKEEMLe5jSw0yok1ZteXdRqiUEqIgxucjWalExXz1caSq8vP0LHgcc/rQI6T4VsCRl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DC4RoS64; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aT/XwXBDY1feRnbIFfuEwrUiHVcvD196g7CO7/UyDOsnA4aJ2po3JU/rg70AmuJYV1+6A3jXh0DUf0CqCOFbERITVy+kotIq4Aimd4jKbdIAQniFBVuydW3RivkXf77QRtjOznQcAwXnH/qXe+GI3EbFZJwQCXADQbM+Q3QaLyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MC/hdCwR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DC4RoS64"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C487C2BCB0;
-	Tue, 12 May 2026 17:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MC/hdCwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187A6C2BCB0;
+	Tue, 12 May 2026 17:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608203;
-	bh=8sdu/3PiTpod2yTmPeW8s2QjwGmV0QzaNgstVGLoVdM=;
+	s=korg; t=1778608206;
+	bh=idLBVUBklCttT20jFIysP4AKCGmlIgsdhme2w32T0VM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DC4RoS64+4vpBiEyYBsVFyUVF4GHfOIg2bv96aCOycU9bPQ1ASVKElnu3+3f1Xhtm
-	 XTm+sWiNrnfADSrTin2OQ79hcsuP87dqKvaerkbSQToIZH6QfITdG/ho2vWOurcBkl
-	 xLqZhDILJFXWbzMfNxL+wfDgEeQkjx6/1k8k0kIo=
+	b=MC/hdCwRZ0FtNP4bG8m4e2vFzAKzMTJEEcvYUkEw6UcbsVDwkY4MhYD6k/Ha0ga/g
+	 D1ZEIarGfrDmcw8s1jfsXcKOO+FAyB+6EcfTDvteswaeStmUzhLfO73EVI/fSOU6jL
+	 bJjEhOUZyEf+/4udaDM6uQ7BCw1Q/EK56G4fhAaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 193/206] erofs: tidy up z_erofs_lz4_handle_overlap()
-Date: Tue, 12 May 2026 19:40:45 +0200
-Message-ID: <20260512173936.957302631@linuxfoundation.org>
+Subject: [PATCH 6.12 194/206] erofs: fix unsigned underflow in z_erofs_lz4_handle_overlap()
+Date: Tue, 12 May 2026 19:40:46 +0200
+Message-ID: <20260512173936.979307148@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,136 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 9ae77198d4815c63fc8ebacc659c71d150d1e51b ]
+[ Upstream commit 21e161de2dc660b1bb70ef5b156ab8e6e1cca3ab ]
 
- - Add some useful comments to explain inplace I/Os and decompression;
+Some crafted images can have illegal (!partial_decoding &&
+m_llen < m_plen) extents, and the LZ4 inplace decompression path
+can be wrongly hit, but it cannot handle (outpages < inpages)
+properly: "outpages - inpages" wraps to a large value and
+the subsequent rq->out[] access reads past the decompressed_pages
+array.
 
- - Rearrange the code to get rid of one unnecessary goto.
+However, such crafted cases can correctly result in a corruption
+report in the normal LZ4 non-inplace path.
 
-Reviewed-by: Chao Yu <chao@kernel.org>
+Let's add an additional check to fix this for backporting.
+
+Reproducible image (base64-encoded gzipped blob):
+
+H4sIAJGR12kCA+3SPUoDQRgG4MkmkkZk8QRbRFIIi9hbpEjrHQI5ghfwCN5BLCzTGtLbBI+g
+dilSJo1CnIm7GEXFxhT6PDDwfrs73/ywIQD/1ePD4r7Ou6ETsrq4mu7XcWfj++Pb58nJU/9i
+PNtbjhan04/9GtX4qVYc814WDqt6FaX5s+ZwXXeq52lndT6IuVvlblytLMvh4Gzwaf90nsvz
+2DF/21+20T/ldgp5s1jXRaN4t/8izsy/OUB6e/Qa79r+JwAAAAAAAL52vQVuGQAAAP6+my1w
+ywAAAAAAAADwu14ATsEYtgBQAAA=
+
+$ mount -t erofs -o cache_strategy=disabled foo.erofs /mnt
+$ dd if=/mnt/data of=/dev/null bs=4096 count=1
+
+Fixes: 598162d05080 ("erofs: support decompress big pcluster for lz4 backend")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Stable-dep-of: 21e161de2dc6 ("erofs: fix unsigned underflow in z_erofs_lz4_handle_overlap()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/decompressor.c |   85 +++++++++++++++++++++++++-----------------------
- 1 file changed, 46 insertions(+), 39 deletions(-)
+ fs/erofs/decompressor.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/fs/erofs/decompressor.c
 +++ b/fs/erofs/decompressor.c
-@@ -112,44 +112,58 @@ static int z_erofs_lz4_prepare_dstpages(
- 	return kaddr ? 1 : 0;
- }
- 
--static void *z_erofs_lz4_handle_overlap(struct z_erofs_decompress_req *rq,
-+static void *z_erofs_lz4_handle_overlap(const struct z_erofs_decompress_req *rq,
- 			void *inpage, void *out, unsigned int *inputmargin,
- 			int *maptype, bool may_inplace)
- {
--	unsigned int oend, omargin, total, i;
-+	unsigned int oend, omargin, cnt, i;
- 	struct page **in;
--	void *src, *tmp;
--
--	if (rq->inplace_io) {
--		oend = rq->pageofs_out + rq->outputsize;
--		omargin = PAGE_ALIGN(oend) - oend;
--		if (rq->partial_decoding || !may_inplace ||
--		    omargin < LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize))
--			goto docopy;
-+	void *src;
- 
-+	/*
-+	 * If in-place I/O isn't used, for example, the bounce compressed cache
-+	 * can hold data for incomplete read requests. Just map the compressed
-+	 * buffer as well and decompress directly.
-+	 */
-+	if (!rq->inplace_io) {
-+		if (rq->inpages <= 1) {
-+			*maptype = 0;
-+			return inpage;
-+		}
-+		kunmap_local(inpage);
-+		src = erofs_vm_map_ram(rq->in, rq->inpages);
-+		if (!src)
-+			return ERR_PTR(-ENOMEM);
-+		*maptype = 1;
-+		return src;
-+	}
-+	/*
-+	 * Then, deal with in-place I/Os. The reasons why in-place I/O is useful
-+	 * are: (1) It minimizes memory footprint during the I/O submission,
-+	 * which is useful for slow storage (including network devices and
-+	 * low-end HDDs/eMMCs) but with a lot inflight I/Os; (2) If in-place
-+	 * decompression can also be applied, it will reuse the unique buffer so
-+	 * that no extra CPU D-cache is polluted with temporary compressed data
-+	 * for extreme performance.
-+	 */
-+	oend = rq->pageofs_out + rq->outputsize;
-+	omargin = PAGE_ALIGN(oend) - oend;
-+	if (!rq->partial_decoding && may_inplace &&
-+	    omargin >= LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize)) {
+@@ -149,6 +149,7 @@ static void *z_erofs_lz4_handle_overlap(
+ 	oend = rq->pageofs_out + rq->outputsize;
+ 	omargin = PAGE_ALIGN(oend) - oend;
+ 	if (!rq->partial_decoding && may_inplace &&
++	    rq->outpages >= rq->inpages &&
+ 	    omargin >= LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize)) {
  		for (i = 0; i < rq->inpages; ++i)
  			if (rq->out[rq->outpages - rq->inpages + i] !=
- 			    rq->in[i])
--				goto docopy;
--		kunmap_local(inpage);
--		*maptype = 3;
--		return out + ((rq->outpages - rq->inpages) << PAGE_SHIFT);
-+				break;
-+		if (i >= rq->inpages) {
-+			kunmap_local(inpage);
-+			*maptype = 3;
-+			return out + ((rq->outpages - rq->inpages) << PAGE_SHIFT);
-+		}
- 	}
--
--	if (rq->inpages <= 1) {
--		*maptype = 0;
--		return inpage;
--	}
--	kunmap_local(inpage);
--	src = erofs_vm_map_ram(rq->in, rq->inpages);
--	if (!src)
--		return ERR_PTR(-ENOMEM);
--	*maptype = 1;
--	return src;
--
--docopy:
--	/* Or copy compressed data which can be overlapped to per-CPU buffer */
--	in = rq->in;
-+	/*
-+	 * If in-place decompression can't be applied, copy compressed data that
-+	 * may potentially overlap during decompression to a per-CPU buffer.
-+	 */
- 	src = z_erofs_get_gbuf(rq->inpages);
- 	if (!src) {
- 		DBG_BUGON(1);
-@@ -157,20 +171,13 @@ docopy:
- 		return ERR_PTR(-EFAULT);
- 	}
- 
--	tmp = src;
--	total = rq->inputsize;
--	while (total) {
--		unsigned int page_copycnt =
--			min_t(unsigned int, total, PAGE_SIZE - *inputmargin);
--
-+	for (i = 0, in = rq->in; i < rq->inputsize; i += cnt, ++in) {
-+		cnt = min_t(u32, rq->inputsize - i, PAGE_SIZE - *inputmargin);
- 		if (!inpage)
- 			inpage = kmap_local_page(*in);
--		memcpy(tmp, inpage + *inputmargin, page_copycnt);
-+		memcpy(src + i, inpage + *inputmargin, cnt);
- 		kunmap_local(inpage);
- 		inpage = NULL;
--		tmp += page_copycnt;
--		total -= page_copycnt;
--		++in;
- 		*inputmargin = 0;
- 	}
- 	*maptype = 2;
 
 
