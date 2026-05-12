@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C323EDE4E;
-	Tue, 12 May 2026 17:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152DE3EDE4E;
+	Tue, 12 May 2026 17:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608319; cv=none; b=i4qhR9/AhP1bvj/plIXf8CX2HDTMbZbTE6mk/5+8ozqJnXg1qYWPY2gCJ/C0Ry8EpiXQigYDs4RmoOkdjPou5OCmjTBgPixskXd6W73Vf5X8qx0bagt031z+Bbs3m+NF+hP0to3ivHPycm1rLD0EOUVhUJBnir4qIgNID8G7CgI=
+	t=1778608322; cv=none; b=oNkGFg/+em9MBdm3a5G9+3EjumfwXw+3nFgs+X08ZqpAaq7L+htJeUCznhotkuKpunpkZVuR/a0Ya/SHdxROoE/HJ+qAs9u9FNsI29N35YJShExLdjRjKJ/kDDT5wQ1XEUvod6O5B5YX9mOI3JWT34TMWFAfrxf3vrF3BfDpcxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608319; c=relaxed/simple;
-	bh=3P73eVuHnq3wNZhPFYRXCrGk5B3XUfo7uSchJj4LtLA=;
+	s=arc-20240116; t=1778608322; c=relaxed/simple;
+	bh=Rnvb7Op1kLg5MNqO0KtQ2n+jnVJ1GZevjBZeEFjdOBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQznqq4o1yIlNfrx42ZBA8eZEz7fbqlNrZsaFsrvZIJ3XyM/UbQ5Y9XHWRraDMKn1uoTNA0Q1XvrqJfJvi5VHhb5JgLsIyyUC0cJQDDBJd6GYoA1xN+m/8xMEh2PHshaHtncWIIsnoe6rRtkYrtoYijDROPsjvptq700WoX8h6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsYWU84H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cETHjdqYtw9kS+sgDxZVSddyiVj2H+7iMj0c1iuKiMNuOEPljyon2M6b42bqw+yT3VFbwR0iHlrNBVXpGdYpe3deupuZW8pbjOVq6PF+Sa2P7LwYqUlY1aIqNbr5bE/T+11InMt1bHpNdNMYUBjrva/w19KMZahB5RBHzRP3eq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQKBJDT9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsYWU84H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6FFC2BCB0;
-	Tue, 12 May 2026 17:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQKBJDT9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBB2C2BCC7;
+	Tue, 12 May 2026 17:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608319;
-	bh=3P73eVuHnq3wNZhPFYRXCrGk5B3XUfo7uSchJj4LtLA=;
+	s=korg; t=1778608322;
+	bh=Rnvb7Op1kLg5MNqO0KtQ2n+jnVJ1GZevjBZeEFjdOBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GsYWU84Ho1BHtojXDUtFqkKLYeLdievt5SOhe3Cj4Huiqy00ONlYap2WylnZQz3sS
-	 IdXcY38L2fLneEX1D/FnYVugF03A/bORts9CuGmWnN3GmvIuS+LlqQBYM8boYUz03Q
-	 cGVLXcHlLHZSU8Ey3G0/D/tHwwngxUPN9R1QDpwM=
+	b=SQKBJDT9p99Oya7Qd091dHluQpeZFSi4oXA88MFm2wY8TUfQ3KYyPvasFBEQp8hTR
+	 eH7I+Ji6rtTg3c57lKC8a/fjozqVQnAjiMLHa9ttwEnGh9U2uNTaX8WfkcNCe+VaLE
+	 pM0QVgdBLo28t6ehsxEdhVe6LiZ62O8k2rfhF10o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Gupta <rajgupt@qti.qualcomm.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.18 005/270] fbdev: udlfb: add vm_ops to dlfb_ops_mmap to prevent use-after-free
-Date: Tue, 12 May 2026 19:36:46 +0200
-Message-ID: <20260512173938.568859000@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	"Rafael J. Wysocki" <rjw@rjwysocki.net>
+Subject: [PATCH 6.18 006/270] ACPI: scan: Use acpi_dev_put() in object add error paths
+Date: Tue, 12 May 2026 19:36:47 +0200
+Message-ID: <20260512173938.589539550@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,111 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rajat Gupta <rajgupt@qti.qualcomm.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 8de779dc40d35d39fa07387b6f921eb11df0f511 upstream.
+commit 9c0acc169ac71535477caedea8315f7041c5f07c upstream.
 
-dlfb_ops_mmap() uses remap_pfn_range() to map vmalloc framebuffer pages
-to userspace but sets no vm_ops on the VMA. This means the kernel cannot
-track active mmaps. When dlfb_realloc_framebuffer() replaces the backing
-buffer via FBIOPUT_VSCREENINFO, existing mmap PTEs are not invalidated.
-On USB disconnect, dlfb_ops_destroy() calls vfree() on the old pages
-while userspace PTEs still reference them, resulting in a use-after-free:
-the process retains read/write access to freed kernel pages.
+After acpi_init_device_object(), the lifetime of struct acpi_device is
+managed by the driver core through reference counting.
 
-Add vm_operations_struct with open/close callbacks that maintain an
-atomic mmap_count on struct dlfb_data. In dlfb_realloc_framebuffer(),
-check mmap_count and return -EBUSY if the buffer is currently mapped,
-preventing buffer replacement while userspace holds stale PTEs.
+Both acpi_add_power_resource() and acpi_add_single_object() call
+acpi_init_device_object() and then invoke acpi_device_add(). If that
+fails, their error paths call the release callback directly instead of
+dropping the device reference through acpi_dev_put().
 
-Tested with PoC using dummy_hcd + raw_gadget USB device emulation.
+This bypasses the normal device lifetime rules and frees the object
+without releasing the reference acquired by device_initialize(), which
+may lead to a refcount leak.
 
-Signed-off-by: Rajat Gupta <rajgupt@qti.qualcomm.com>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fix both error paths by using acpi_dev_put() and let the release
+callback handle the final cleanup.
+
+Fixes: 781d737c7466 ("ACPI: Drop power resources driver")
+Fixes: 718fb0de8ff88 ("ACPI: fix NULL bug for HID/UID string")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260413135343.2884481-1-lgs201920130244@gmail.com
+Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/udlfb.c |   31 ++++++++++++++++++++++++++++++-
- include/video/udlfb.h       |    1 +
- 2 files changed, 31 insertions(+), 1 deletion(-)
+ drivers/acpi/power.c |    2 +-
+ drivers/acpi/scan.c  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -321,12 +321,32 @@ static int dlfb_set_video_mode(struct dl
- 	return retval;
+--- a/drivers/acpi/power.c
++++ b/drivers/acpi/power.c
+@@ -991,7 +991,7 @@ struct acpi_device *acpi_add_power_resou
+ 	return device;
+ 
+  err:
+-	acpi_release_power_resource(&device->dev);
++	acpi_dev_put(device);
+ 	return NULL;
  }
  
-+static void dlfb_vm_open(struct vm_area_struct *vma)
-+{
-+	struct dlfb_data *dlfb = vma->vm_private_data;
-+
-+	atomic_inc(&dlfb->mmap_count);
-+}
-+
-+static void dlfb_vm_close(struct vm_area_struct *vma)
-+{
-+	struct dlfb_data *dlfb = vma->vm_private_data;
-+
-+	atomic_dec(&dlfb->mmap_count);
-+}
-+
-+static const struct vm_operations_struct dlfb_vm_ops = {
-+	.open  = dlfb_vm_open,
-+	.close = dlfb_vm_close,
-+};
-+
- static int dlfb_ops_mmap(struct fb_info *info, struct vm_area_struct *vma)
- {
- 	unsigned long start = vma->vm_start;
- 	unsigned long size = vma->vm_end - vma->vm_start;
- 	unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
- 	unsigned long page, pos;
-+	struct dlfb_data *dlfb = info->par;
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -1910,7 +1910,7 @@ static int acpi_add_single_object(struct
+ 		result = acpi_device_add(device);
  
- 	if (info->fbdefio)
- 		return fb_deferred_io_mmap(info, vma);
-@@ -358,6 +378,9 @@ static int dlfb_ops_mmap(struct fb_info
- 			size = 0;
+ 	if (result) {
+-		acpi_device_release(&device->dev);
++		acpi_dev_put(device);
+ 		return result;
  	}
  
-+	vma->vm_ops = &dlfb_vm_ops;
-+	vma->vm_private_data = dlfb;
-+	atomic_inc(&dlfb->mmap_count);
- 	return 0;
- }
- 
-@@ -1176,7 +1199,6 @@ static void dlfb_deferred_vfree(struct d
- 
- /*
-  * Assumes &info->lock held by caller
-- * Assumes no active clients have framebuffer open
-  */
- static int dlfb_realloc_framebuffer(struct dlfb_data *dlfb, struct fb_info *info, u32 new_len)
- {
-@@ -1188,6 +1210,13 @@ static int dlfb_realloc_framebuffer(stru
- 	new_len = PAGE_ALIGN(new_len);
- 
- 	if (new_len > old_len) {
-+		if (atomic_read(&dlfb->mmap_count) > 0) {
-+			dev_warn(info->dev,
-+				"refusing realloc: %d active mmaps\n",
-+				atomic_read(&dlfb->mmap_count));
-+			return -EBUSY;
-+		}
-+
- 		/*
- 		 * Alloc system memory for virtual framebuffer
- 		 */
---- a/include/video/udlfb.h
-+++ b/include/video/udlfb.h
-@@ -56,6 +56,7 @@ struct dlfb_data {
- 	spinlock_t damage_lock;
- 	struct work_struct damage_work;
- 	struct fb_ops ops;
-+	atomic_t mmap_count;
- 	/* blit-only rendering path metrics, exposed through sysfs */
- 	atomic_t bytes_rendered; /* raw pixel-bytes driver asked to render */
- 	atomic_t bytes_identical; /* saved effort with backbuffer comparison */
 
 
