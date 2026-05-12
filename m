@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374E739060B;
-	Tue, 12 May 2026 17:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDA93C0A1A;
+	Tue, 12 May 2026 17:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608129; cv=none; b=MiB0VQfCWzehXSVMiCPzDwQAJNz+A90EUXELXGDmp76MeJgLVqKE5B0KQg0LVMBcq9Hzo8r7AKABy+RXElfsbjgBv5K323jP/9eQ/FpOIb4MutFZdhNEKLJpcyKDnvmvpgGpWz4FnHK//LKslo1aQRZvxzK/qFePKkSHjeO9mGM=
+	t=1778608132; cv=none; b=YwBHtbzvhGH4CNy/Ll1ROBEV8+mAT+W50fSGu0sFHV1DyKDhIaQVKGIjjA0doqHhsTMDF1WVu+IS0I0i+miHSu2lbLXIxn1MaGKBPmIF/EVXjVSK6znDa0eNGC8lsIg2ClacVPOosoT5xAyUHXnko+he+Ffs147OnQiS03GejBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608129; c=relaxed/simple;
-	bh=sp94E3ak3R3963PJrVQGj1oJZqBEk/F6PlklPpJ2iNw=;
+	s=arc-20240116; t=1778608132; c=relaxed/simple;
+	bh=3fC73MDVvI3gGAtLCSPhWkvzJORwqv+QlVarAH2UmSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTr10nofRV9qN7KC3x0uryd+Au7jvhHgRFYqMHaLvMixuwYyPOjjfd+Qa2qZ8EWm+CAs9LDK8XnzDrkJA6fIFNKS9UCDDhAkHEylHcsbEZprjgHef7wSKdlEal6Hk0lDjLFSh80wUTzOXMQyJEdfiw5ybeiPD5bvCMKLUjjY4g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAu9fCXy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b56lApmqaXiGqHGi7nTbkTN7ocOjriInwaWqZfkC7Jlk0aOS8WHucoMX0jCoNrJYcynwiMnmELaG0nVux4RpF5C34ZsTS+HbBgbfshmx6BawdsAUbkas7GML6REu7Y7+clqmQoOonTfROPtBSUMNva7FzMmbtqvu9Llp8WZi7Ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZywL6LI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAu9fCXy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C228BC2BCB0;
-	Tue, 12 May 2026 17:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZywL6LI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B99C2BCB0;
+	Tue, 12 May 2026 17:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608129;
-	bh=sp94E3ak3R3963PJrVQGj1oJZqBEk/F6PlklPpJ2iNw=;
+	s=korg; t=1778608131;
+	bh=3fC73MDVvI3gGAtLCSPhWkvzJORwqv+QlVarAH2UmSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAu9fCXytXYh0cFjeW7m6ag5M6DHIP5X1BGLDmOZYNNYP+PTk6bMcnKmi4p66yMEx
-	 pm6D5xpOIMdrRRV2KAPXT8cdq0YPirv5T21kxzMq5WxiMi+yUode/FoV3xo8khdVNK
-	 0oAIVsBSBfLFes3ydA7gjpMKJkntVUQLmVoLuodc=
+	b=iZywL6LIl/IFp0ZoUwGo+fRY5lQnlYsewjAQEB2Nx0zDzm61ETQvOUpwlkABgAENf
+	 gOJjNqbQTmXl15AgQ3fPmZnn6Ib1tmgviv895NxGOqjC3l4iEJxD/tpkE7LU1iVjc0
+	 WunyRTYDmXFl4201bEkeWud1jtdTQs6v1x6SQyAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 167/206] f2fs: fix node_cnt race between extent node destroy and writeback
-Date: Tue, 12 May 2026 19:40:19 +0200
-Message-ID: <20260512173936.399758151@linuxfoundation.org>
+Subject: [PATCH 6.12 168/206] f2fs: fix uninitialized kobject put in f2fs_init_sysfs()
+Date: Tue, 12 May 2026 19:40:20 +0200
+Message-ID: <20260512173936.420719081@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,93 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit ed78aeebef05212ef7dca93bd931e4eff67c113f upstream.
+commit b635f2ecdb5ad34f9c967cabb704d6bed9382fd0 upstream.
 
-f2fs_destroy_extent_node() does not set FI_NO_EXTENT before clearing
-extent nodes. When called from f2fs_drop_inode() with I_SYNC set,
-concurrent kworker writeback can insert new extent nodes into the same
-extent tree, racing with the destroy and triggering f2fs_bug_on() in
-__destroy_extent_node(). The scenario is as follows:
+In f2fs_init_sysfs(), all failure paths after kset_register() jump to
+put_kobject, which unconditionally releases both f2fs_tune and
+f2fs_feat.
 
-drop inode                            writeback
- - iput
-  - f2fs_drop_inode  // I_SYNC set
-   - f2fs_destroy_extent_node
-    - __destroy_extent_node
-     - while (node_cnt) {
-        write_lock(&et->lock)
-        __free_extent_tree
-        write_unlock(&et->lock)
-                                       - __writeback_single_inode
-                                        - f2fs_outplace_write_data
-                                         - f2fs_update_read_extent_cache
-                                          - __update_extent_tree_range
-                                           // FI_NO_EXTENT not set,
-                                           // insert new extent node
-       } // node_cnt == 0, exit while
-     - f2fs_bug_on(node_cnt)  // node_cnt > 0
+If kobject_init_and_add(&f2fs_feat, ...) fails, f2fs_tune has not been
+initialized yet, so calling kobject_put(&f2fs_tune) is invalid.
 
-Additionally, __update_extent_tree_range() only checks FI_NO_EXTENT for
-EX_READ type, leaving EX_BLOCK_AGE updates completely unprotected.
+Fix this by splitting the unwind path so each error path only releases
+objects that were successfully initialized.
 
-This patch set FI_NO_EXTENT under et->lock in __destroy_extent_node(),
-consistent with other callers (__update_extent_tree_range and
-__drop_extent_tree) and check FI_NO_EXTENT for both EX_READ and
-EX_BLOCK_AGE tree.
-
-Fixes: 3fc5d5a182f6 ("f2fs: fix to shrink read extent node in batches")
+Fixes: a907f3a68ee26ba4 ("f2fs: add a sysfs entry to reclaim POSIX_FADV_NOREUSE pages")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/extent_cache.c |   17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ fs/f2fs/sysfs.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -86,9 +86,10 @@ static bool __may_extent_tree(struct ino
- 	if (!__init_may_extent_tree(inode, type))
- 		return false;
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -1795,24 +1795,26 @@ int __init f2fs_init_sysfs(void)
+ 	ret = kobject_init_and_add(&f2fs_feat, &f2fs_feat_ktype,
+ 				   NULL, "features");
+ 	if (ret)
+-		goto put_kobject;
++		goto unregister_kset;
  
-+	if (is_inode_flag_set(inode, FI_NO_EXTENT))
-+		return false;
-+
- 	if (type == EX_READ) {
--		if (is_inode_flag_set(inode, FI_NO_EXTENT))
--			return false;
- 		if (is_inode_flag_set(inode, FI_COMPRESSED_FILE) &&
- 				 !f2fs_sb_has_readonly(F2FS_I_SB(inode)))
- 			return false;
-@@ -601,6 +602,8 @@ static unsigned int __destroy_extent_nod
+ 	ret = kobject_init_and_add(&f2fs_tune, &f2fs_tune_ktype,
+ 				   NULL, "tuning");
+ 	if (ret)
+-		goto put_kobject;
++		goto put_feat;
  
- 	while (atomic_read(&et->node_cnt)) {
- 		write_lock(&et->lock);
-+		if (!is_inode_flag_set(inode, FI_NO_EXTENT))
-+			set_inode_flag(inode, FI_NO_EXTENT);
- 		node_cnt += __free_extent_tree(sbi, et, nr_shrink);
- 		write_unlock(&et->lock);
+ 	f2fs_proc_root = proc_mkdir("fs/f2fs", NULL);
+ 	if (!f2fs_proc_root) {
+ 		ret = -ENOMEM;
+-		goto put_kobject;
++		goto put_tune;
  	}
-@@ -636,12 +639,12 @@ static void __update_extent_tree_range(s
  
- 	write_lock(&et->lock);
+ 	return 0;
  
--	if (type == EX_READ) {
--		if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
--			write_unlock(&et->lock);
--			return;
--		}
-+	if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
-+		write_unlock(&et->lock);
-+		return;
-+	}
- 
-+	if (type == EX_READ) {
- 		prev = et->largest;
- 		dei.len = 0;
- 
+-put_kobject:
++put_tune:
+ 	kobject_put(&f2fs_tune);
++put_feat:
+ 	kobject_put(&f2fs_feat);
++unregister_kset:
+ 	kset_unregister(&f2fs_kset);
+ 	return ret;
+ }
 
 
