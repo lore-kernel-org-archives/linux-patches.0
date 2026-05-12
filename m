@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE243C09F2;
-	Tue, 12 May 2026 17:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968753C09E0;
+	Tue, 12 May 2026 17:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608106; cv=none; b=g7pAm0oF4N2iUJwUHhhi0b4rX7IuwRzN5rXsLPhGR8d3DZBUqXIjiMVOVhmUVySQnVWAcozLyDcxdt2LPdTQnt2/EutPYAdLt36phc2zoi76GSEuaJ4xhZGPUAZoJycSF0g2RxTl3HinCiijkTnIGiu+1BrLuFcpWfBfsLv6mkw=
+	t=1778608108; cv=none; b=nsc5vfnNxhamxYl1O0hemTsZ7ieR1NwV4xORCcoOSD4Db2MXkjz0JNA/RE1bVTYtfKSC15fMxFtMHZuAzG4TtNsWZYlS3AXLFTUwPxREn7Mb2JEpf2hcD0PRl4ygbjfxthxf29CpqiHcW/o7tM7feBuWxVcg5atO7Mk4VJmCjJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608106; c=relaxed/simple;
-	bh=waDQCS6xOXmI2qPCLBdEaQfEw5rBYIHMFpKjFIwco2I=;
+	s=arc-20240116; t=1778608108; c=relaxed/simple;
+	bh=wez/caaltFpaZolBDJ2yPxZdtFADzcqSpqW8ErzW33c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVMULiILA9lT537vLX9kaApiHGSns0j+3frt0c8XMXC3UzMpbewwxwIQ6Jjvpp13P81AGfdrc/w/qoTRQMOuQjbDJjWfa5oCYAn1OdZdv7BLk3Llva6jGok4ChDlBy8M+Ytv/1RIloo6O97Npi1AmpgGBG+qPWAMXSqHBeIYq6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rqk21C9f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gy58YMJ5e7w5XVRxu3dNp4yDO0tC4xKETqBhnE5JHzfkQbgQ/vXT7ilKLUHe5AYLyFPD12o2VL6EO3lhHtZjfQNOVscT7BqZDOTF0oY9mU8Vae6WW9af9X5urnawOKt4gw2SB1qSAY7B5p92kazc9opEJXMgM6IK9xsFCcbMIQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGdHiYNg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rqk21C9f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F802C2BCFF;
-	Tue, 12 May 2026 17:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGdHiYNg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D55DC2BCB0;
+	Tue, 12 May 2026 17:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608106;
-	bh=waDQCS6xOXmI2qPCLBdEaQfEw5rBYIHMFpKjFIwco2I=;
+	s=korg; t=1778608108;
+	bh=wez/caaltFpaZolBDJ2yPxZdtFADzcqSpqW8ErzW33c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rqk21C9fYp6bd9iEW4mvEqghf0eI2QPZ3hCMPCs+2dyimoRNDUz9wUdYpgYNznLpz
-	 d+xZfHN3m/cRhFNDd9OVHTzSWM/gwSfl4p1GN2YzWIcqCuoLOsiLyg1OX0z7r3NWQG
-	 OYl6u20HNCSavMnE9Eay4zsbsml/cs3I5uaaPKxY=
+	b=JGdHiYNgtt4J6wK4LOaeu/4RMf5FImp4O6ygrPENRBslXa+bUt5AWfHaAF74pxMqM
+	 LwfwVJckaM33/4F5HE4mjsdt7K/Ke8wFUjg3lLLLtgfzns0m1TaRRA5oStlHPsGg42
+	 5fNAOyA3ZFvAhDumgb/wrEtnYnSTs8TpGe4sQoaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.12 150/206] RDMA/mana: Validate rx_hash_key_len
-Date: Tue, 12 May 2026 19:40:02 +0200
-Message-ID: <20260512173936.039709541@linuxfoundation.org>
+	Lance Tuller <lance@lance0.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 159/206] mptcp: fastclose msk when linger time is 0
+Date: Tue, 12 May 2026 19:40:11 +0200
+Message-ID: <20260512173936.230616460@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -50,36 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 6dd2d4ad9c8429523b1c220c5132bd551c006425 upstream.
+commit f14d6e9c3678a067f304abba561e0c5446c7e845 upstream.
 
-Sashiko points out that rx_hash_key_len comes from a uAPI structure and is
-blindly passed to memcpy, allowing the userspace to trash kernel
-memory. Bounds check it so the memcpy cannot overflow.
+The SO_LINGER socket option has been supported for a while with MPTCP
+sockets [1], but it didn't cause the equivalent of a TCP reset as
+expected when enabled and its time was set to 0. This was causing some
+behavioural differences with TCP where some connections were not
+promptly stopped as expected.
 
+To fix that, an extra condition is checked at close() time before
+sending an MP_FASTCLOSE, the MPTCP equivalent of a TCP reset.
+
+Note that backporting up to [1] will be difficult as more changes are
+needed to be able to send MP_FASTCLOSE. It seems better to stop at [2],
+which was supposed to already imitate TCP.
+
+Validated with MPTCP packetdrill tests [3].
+
+Fixes: 268b12387460 ("mptcp: setsockopt: support SO_LINGER") [1]
+Fixes: d21f83485518 ("mptcp: use fastclose on more edge scenarios") [2]
 Cc: stable@vger.kernel.org
-Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
-Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=1
-Link: https://patch.msgid.link/r/4-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
-Reviewed-by: Long Li <longli@microsoft.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reported-by: Lance Tuller <lance@lance0.com>
+Closes: https://github.com/lance0/xfr/pull/67
+Link: https://github.com/multipath-tcp/packetdrill/pull/196 [3]
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260427-net-mptcp-misc-fixes-7-1-rc2-v1-3-7432b7f279fa@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mana/qp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mptcp/protocol.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/mana/qp.c
-+++ b/drivers/infiniband/hw/mana/qp.c
-@@ -21,6 +21,9 @@ static int mana_ib_cfg_vport_steering(st
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3219,7 +3219,8 @@ bool __mptcp_close(struct sock *sk, long
+ 		goto cleanup;
+ 	}
  
- 	gc = mdev_to_gc(dev);
- 
-+	if (rx_hash_key_len > sizeof(req->hashkey))
-+		return -EINVAL;
-+
- 	req_buf_size = struct_size(req, indir_tab, MANA_INDIRECT_TABLE_DEF_SIZE);
- 	req = kzalloc(req_buf_size, GFP_KERNEL);
- 	if (!req)
+-	if (mptcp_data_avail(msk) || timeout < 0) {
++	if (mptcp_data_avail(msk) || timeout < 0 ||
++	    (sock_flag(sk, SOCK_LINGER) && !sk->sk_lingertime)) {
+ 		/* If the msk has read data, or the caller explicitly ask it,
+ 		 * do the MPTCP equivalent of TCP reset, aka MPTCP fastclose
+ 		 */
 
 
