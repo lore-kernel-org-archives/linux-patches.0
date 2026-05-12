@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080782D060B;
-	Tue, 12 May 2026 18:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422362D060B;
+	Tue, 12 May 2026 18:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609288; cv=none; b=lNMpWN+4jBmXLHBOQ/BcEat1TGvbXLAnQZzMG8gAMH+IR2aEy+snvHPnIQ2mgoyUrZBuuwAXV/O44jRGMFAQ19a8VEiKcw+nzRUJNVxIiwVyrLQqhL2N3bN8bh9ccsYv/1eD4hFVoXA1/LBKNKWItvGOTfDW2nOio1J7gcJ2SRQ=
+	t=1778609290; cv=none; b=a8ruR3qW9dlurqNJQn3M3/xYm6Rei0npIR/24d54/4rI2imwzMmhMwz7vjMdqlRnuB7P+26BPvgf5vvQhzT1w1W8a9uEaxglztf9GPg13AUsTie91lZJPmvEeqQbstYYwNo9GcE5idsubW3UvmzFISIUtfVmjQ+87+IL9M7JF+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609288; c=relaxed/simple;
-	bh=veFHlU/4nLs/cp9l7eJptQ8cPlmyH3Ye08NOCBMkbgs=;
+	s=arc-20240116; t=1778609290; c=relaxed/simple;
+	bh=Fx9OCxhZHkLYgp57x3LfXfXsU9qdHq3CAw1m3rtSK2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsTOA/AJTBRnQhcNMcsaDgjfbs4yVdTiWm5vjHNnNJ8NubGJ1AHMx2+vWfYOg9fP/XUiu2wWcFnCxjRnqsqpSqIVK9D9uz4Q/I1SmsBTeDq5oH6zICCutXnibxMTRoURLotGxFkMg/WPftwN5aQ9dF0vxeW2+ENXzECZ8tpABVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDPX6ijz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SETeAbdM33RDIhq8Pj14nEavdN5+kenyv+0dTnEqc/qvrQgAgu31I12P16z1pZbinLTaAqPvLh21MsGbSzOYTxOXvmNB46wbPPsoO9NL7a5xWqpN0kYL55BNbp46Y1NE+NWPQbctPwtViopjqYaKtHZnROf4E6V4BSotpbNri2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2uvUHNL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDPX6ijz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE03C2BCB0;
-	Tue, 12 May 2026 18:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2uvUHNL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC147C2BCC7;
+	Tue, 12 May 2026 18:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609287;
-	bh=veFHlU/4nLs/cp9l7eJptQ8cPlmyH3Ye08NOCBMkbgs=;
+	s=korg; t=1778609290;
+	bh=Fx9OCxhZHkLYgp57x3LfXfXsU9qdHq3CAw1m3rtSK2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZDPX6ijz/b4yuIy/Wt7wxNg+geDSDNcoF/uuKTDB2kI59Fju0kZdQvGiUjU7/PdAN
-	 EEfdBDKRqB4e0vEARtlksER66C1//nujtD8RVL0cAjPIPrAvJcyOVS+r3Qw+PToQsW
-	 rVgGMd6op+CBVDtTfv/Zki0yrAdbCE0LiJr+4l5A=
+	b=f2uvUHNLlaBi02G5zXolOEQrt3lY74JId79qaVvLk7FnXVCkI9ZHhriM2/Zy4X0z/
+	 Yjqg+s90MrAYt6KbLRlnIEB3l7Hfc/ei5WOLCKgxPm+sFuCaiNBkUZXFJjXrWQFS1b
+	 zGZlB2jCidIVBh1LfBc9UwJhZ5NTQMGPggt2I3vY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bharath SM <bharathsm@microsoft.com>,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.0 137/307] cifs: abort open_cached_dir if we dont request leases
-Date: Tue, 12 May 2026 19:38:52 +0200
-Message-ID: <20260512173943.020453699@linuxfoundation.org>
+Subject: [PATCH 7.0 138/307] cifs: change_conf needs to be called for session setup
+Date: Tue, 12 May 2026 19:38:53 +0200
+Message-ID: <20260512173943.041055681@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -53,18 +53,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit d68ce834f8cf6cb2e77f3331df65166b35466b53 upstream.
+commit c208a2b95811d6e1ebae65d0d2fc13f73707f8e7 upstream.
 
-It is possible that SMB2_open_init may not set lease context based
-on the requested oplock level. This can happen when leases have been
-temporarily or permanently disabled. When this happens, we will have
-open_cached_dir making an open without lease context and the response
-will anyway be rejected by open_cached_dir (thereby forcing a close to
-discard this open). That's unnecessary two round-trips to the server.
+Today we skip calling change_conf for negotiates and session setup
+requests. This can be a problem for mchan as the immediate next call
+after session setup could be due to an I/O that is made on the
+mount point. For single channel, this is not a problem as
+there will be several calls after setting up session.
 
-This change adds a check before making the open request to the server
-to make sure that SMB2_open_init did add the expected lease context
-to the open in open_cached_dir.
+This change enforces calling change_conf when the total credits contain
+enough for reservations for echoes and oplocks. We expect this to happen
+during the last session setup response. This way, echoes and oplocks are
+not disabled before the first request to the server. So if that first
+request is an open, it does not need to disable requesting leases.
 
 Cc: <stable@vger.kernel.org>
 Reviewed-by: Bharath SM <bharathsm@microsoft.com>
@@ -72,25 +73,32 @@ Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cached_dir.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/smb/client/smb2ops.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -286,6 +286,14 @@ replay_again:
- 			    &rqst[0], &oplock, &oparms, utf16_path);
- 	if (rc)
- 		goto oshr_free;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -111,10 +111,21 @@ smb2_add_credits(struct TCP_Server_Info
+ 				      cifs_trace_rw_credits_zero_in_flight);
+ 	}
+ 	server->in_flight--;
 +
-+	if (oplock != SMB2_OPLOCK_LEVEL_II) {
-+		rc = -EINVAL;
-+		cifs_dbg(FYI, "%s: Oplock level %d not suitable for cached directory\n",
-+			 __func__, oplock);
-+		goto oshr_free;
-+	}
-+
- 	smb2_set_next_command(tcon, &rqst[0]);
- 
- 	memset(&qi_iov, 0, sizeof(qi_iov));
++	/*
++	 * Rebalance credits when an op drains in_flight. For session setup,
++	 * do this only when the total accumulated credits are high enough (>2)
++	 * so that a newly established secondary channel can reserve credits for
++	 * echoes and oplocks. We expect this to happen at the end of the final
++	 * session setup response.
++	 */
+ 	if (server->in_flight == 0 &&
+ 	   ((optype & CIFS_OP_MASK) != CIFS_NEG_OP) &&
+ 	   ((optype & CIFS_OP_MASK) != CIFS_SESS_OP))
+ 		rc = change_conf(server);
++	else if (server->in_flight == 0 &&
++		 ((optype & CIFS_OP_MASK) == CIFS_SESS_OP) && *val > 2)
++		rc = change_conf(server);
+ 	/*
+ 	 * Sometimes server returns 0 credits on oplock break ack - we need to
+ 	 * rebalance credits in this case.
 
 
