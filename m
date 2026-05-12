@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FF03EDE43;
-	Tue, 12 May 2026 17:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123423EDE52;
+	Tue, 12 May 2026 17:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608592; cv=none; b=O8VaBDX0aOgKeAR0aqYBeOeWncm6RWFy7+ub2guvu3TX1G32ADPUy8VRLA1EkKtTj3Fcn/7RTgr8UrDEDBy/jvdEIiM9DYxwDyPxyx2o6Zb7rTmZVU/YcLmsJRfKH1sSm9orovXJ3Yzhu5H5/t8DI0g3/6BZYcAXGSZ0M8LkZTo=
+	t=1778608595; cv=none; b=n7LSdkr/vYagETnTiE3v8KKHpY3703XdMy2xNyHgCI7FTGUPYOe/RdF8iv9HeMiO2KXMqkNu1lCJFIfYmCn0w+Y5mnQ1kvTFQnP8x4HLOoo1WmSn2sPx+G6ShRq2+YZ950YGLU4Skznj4lgPlfKKJxonezoA0rkKvNlzIcXhG7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608592; c=relaxed/simple;
-	bh=CeHgZQ0sp7z5kaC3FghAt+HWLattitru/AXAz/2cOjY=;
+	s=arc-20240116; t=1778608595; c=relaxed/simple;
+	bh=RZYMRUlSXTMUgujfV2bBWnvuzxZgjz+sxSJrajCh4bI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QwpvDtO1trYcwRfoXt1rR1y0GQ+F37qim4zJ6KTlIDzCt/a5VpK0/+M9fKOma5nAozC/xlRpLkw2KeuGekOgCnI3/QZ9LzhoF8HH/X4V726ElRWKw0PUUSnAYWZiByb8kOAUqmbUKQZKxLD6RvyUt5327sCYQP08Udh+U2r8d4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lz0bCHhp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X2VApV6hHxgssOxRHvQpY/EFX2DB8VWzyafszblVUtBdzg1/rd6ys1hFJ3lcp2g/GWQWUCHtVz2bhH/gblQUOJAUdk6P9mYU84il3IzSpOiA02VZoq1NOwD9b1Lk6Ix76omNt0SpNrptrcoUJ/xNPjByObqVQeyWDMGy3XGwi0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDbnsW+4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lz0bCHhp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD56C2BCB0;
-	Tue, 12 May 2026 17:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDbnsW+4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D823C2BCB0;
+	Tue, 12 May 2026 17:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608592;
-	bh=CeHgZQ0sp7z5kaC3FghAt+HWLattitru/AXAz/2cOjY=;
+	s=korg; t=1778608595;
+	bh=RZYMRUlSXTMUgujfV2bBWnvuzxZgjz+sxSJrajCh4bI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lz0bCHhp9c4PJKq8wYPhh8OZTlgLQWtlaDg98gPzIUaoISbzXKQXQZld+02lg4d2M
-	 okVeTDRJryPXvUAW+1LVAQpGaaFGFzVLQ/RQMR9zKcZMxph831YEXOLODRAcyCzXgj
-	 6aOWRqSFIoq7a3AJNTU9RUpW5OALEs4q7A+NqCYU=
+	b=FDbnsW+4fuuocb+QL8S9SEcpvU/eqCL9G61KuuO336WUj7DiR8bdzK+b8QoK97VMj
+	 RMXxjb7U5Ek7rUE/BUV8tpqo4b/o0fRzvXZYFvShi5EndN7sxJ++iR/llzClLOQDXa
+	 xbh8VdQUE/BwEjAIfh/Hi3h9cSNqEi6Gq5UoLS8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 140/270] cpuidle: powerpc: avoid double clear when breaking snooze
-Date: Tue, 12 May 2026 19:39:01 +0200
-Message-ID: <20260512173941.398629323@linuxfoundation.org>
+	Ben Hillis <Ben.Hillis@microsoft.com>,
+	Mitchell Levy <levymitchell0@gmail.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 123/270] hv_sock: Report EOF instead of -EIO for FIN
+Date: Tue, 12 May 2026 19:38:44 +0200
+Message-ID: <20260512173941.045478431@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,59 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Dexuan Cui <decui@microsoft.com>
 
-commit 64ed1e3e728afb57ba9acb59e69de930ead847d9 upstream.
+commit f6315295899415f1ddcf39f7c9cb46d25e2c6c6a upstream.
 
-snooze_loop is done often in any system which has fair bit of
-idle time. So it qualifies for even micro-optimizations.
+Commit f0c5827d07cb unluckily causes a regression for the FIN packet,
+and the final read syscall gets an error rather than 0.
 
-When breaking the snooze due to timeout, TIF_POLLING_NRFLAG is cleared
-twice. Clearing the bit invokes atomics. Avoid double clear and thereby
-avoid one atomic write.
+Ideally, we would want to fix hvs_channel_readable_payload() so that it
+could return 0 in the FIN scenario, but it's not good for the hv_sock
+driver to use the VMBus ringbuffer's cached priv_read_index, which is
+internal data in the VMBus driver.
 
-dev->poll_time_limit indicates whether the loop was broken due to
-timeout. Use that instead of defining a new variable.
+Fix the regression in hv_sock by returning 0 rather than -EIO.
 
-Fixes: 7ded429152e8 ("cpuidle: powerpc: no memory barrier after break from idle")
+Fixes: f0c5827d07cb ("hv_sock: Return the readable bytes in hvs_stream_has_data()")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260311061709.1230440-1-sshegde@linux.ibm.com
+Reported-by: Ben Hillis <Ben.Hillis@microsoft.com>
+Reported-by: Mitchell Levy <levymitchell0@gmail.com>
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260416191433.840637-1-decui@microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/cpuidle-powernv.c |    5 ++++-
- drivers/cpuidle/cpuidle-pseries.c |    5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ net/vmw_vsock/hyperv_transport.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/drivers/cpuidle/cpuidle-powernv.c
-+++ b/drivers/cpuidle/cpuidle-powernv.c
-@@ -95,7 +95,10 @@ static int snooze_loop(struct cpuidle_de
+diff --git a/net/vmw_vsock/hyperv_transport.c b/net/vmw_vsock/hyperv_transport.c
+index 2b7c0b5896ed..76e78c83fdbc 100644
+--- a/net/vmw_vsock/hyperv_transport.c
++++ b/net/vmw_vsock/hyperv_transport.c
+@@ -694,7 +694,6 @@ static ssize_t hvs_stream_enqueue(struct vsock_sock *vsk, struct msghdr *msg,
+ static s64 hvs_stream_has_data(struct vsock_sock *vsk)
+ {
+ 	struct hvsock *hvs = vsk->trans;
+-	bool need_refill;
+ 	s64 ret;
  
- 	HMT_medium();
- 	ppc64_runlatch_on();
--	clear_thread_flag(TIF_POLLING_NRFLAG);
-+
-+	/* Avoid double clear when breaking */
-+	if (!dev->poll_time_limit)
-+		clear_thread_flag(TIF_POLLING_NRFLAG);
+ 	if (hvs->recv_data_len > 0)
+@@ -702,9 +701,22 @@ static s64 hvs_stream_has_data(struct vsock_sock *vsk)
  
- 	local_irq_disable();
+ 	switch (hvs_channel_readable_payload(hvs->chan)) {
+ 	case 1:
+-		need_refill = !hvs->recv_desc;
+-		if (!need_refill)
+-			return -EIO;
++		if (hvs->recv_desc) {
++			/* Here hvs->recv_data_len is 0, so hvs->recv_desc must
++			 * be NULL unless it points to the 0-byte-payload FIN
++			 * packet: see hvs_update_recv_data().
++			 *
++			 * Here all the payload has been dequeued, but
++			 * hvs_channel_readable_payload() still returns 1,
++			 * because the VMBus ringbuffer's read_index is not
++			 * updated for the FIN packet: hvs_stream_dequeue() ->
++			 * hv_pkt_iter_next() updates the cached priv_read_index
++			 * but has no opportunity to update the read_index in
++			 * hv_pkt_iter_close() as hvs_stream_has_data() returns
++			 * 0 for the FIN packet, so it won't get dequeued.
++			 */
++			return 0;
++		}
  
---- a/drivers/cpuidle/cpuidle-pseries.c
-+++ b/drivers/cpuidle/cpuidle-pseries.c
-@@ -64,7 +64,10 @@ int snooze_loop(struct cpuidle_device *d
- 	}
- 
- 	HMT_medium();
--	clear_thread_flag(TIF_POLLING_NRFLAG);
-+
-+       /* Avoid double clear when breaking */
-+	if (!dev->poll_time_limit)
-+		clear_thread_flag(TIF_POLLING_NRFLAG);
- 
- 	raw_local_irq_disable();
- 
+ 		hvs->recv_desc = hv_pkt_iter_first(hvs->chan);
+ 		if (!hvs->recv_desc)
+-- 
+2.54.0
+
 
 
