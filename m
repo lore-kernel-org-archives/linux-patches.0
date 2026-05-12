@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139803EDE4A;
-	Tue, 12 May 2026 18:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950EC33B6CC;
+	Tue, 12 May 2026 18:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608910; cv=none; b=XA1U5vbyLIujp1ARRFj0OVRTnkEQCQ2ScBgx1sr05T/4PKku+O2TyBe2IgRdNCCUBp4Q6uwIt79KCbVeSjhZPtqivtmEPbaAq73FQ5vc3kg0zs/BihKFGLnCtgvAEvRPP/m3XAvj77tFDN16cJapkLXdcJ0i4P3p32/rH3/Q/mE=
+	t=1778608912; cv=none; b=ez4QWKHQwx0cTJSHcE9a3PdGEU/TgPmxBWMAeP/Za61Gkd77cWq2vXxjYdMJcnJJYdsmv8bMYgMUf4cM+B5RhQgtyFe2f8f0Nwyku88W5TS/kNo5GIKlzcQbOcemiR1+4Y7FbpgxP0Jn6qc75FX2aDq82dyNb0MwxvFEztrfwos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608910; c=relaxed/simple;
-	bh=VTmT0I7Rf3FqvZlU14/dbz6Zz8ZkLf5G4h3D8tTaYlU=;
+	s=arc-20240116; t=1778608912; c=relaxed/simple;
+	bh=VTAagBqcSDMS1Roolhsuq0DwJLIsYS+uEo+gSIy14i4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FqS2K69bUkaBOdjwNfle9eXuq/a43wjbHpyiejHZOD2HLwRhTRaqWYZgXYOquxuQn+ZFEgYfvl5ip5gl/fAQJsfRh+sOXXHKRuTrGt25fci1oTec/lSKmJcWitOn8zdeyzR+Z3jj2l7oIV37u7EZgzOqJZC/8EasUlTwGgndLGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdaixcXn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fb1ACzfPy3dazdEk6HAc5HnWl+KGogBsztPteoNC1Tn3CuJLGH/VCdaIAgN5BqCsXaqi6ItyOCk67NoeLie2BscsCAOu/ozS/gJtwXlY/4oNTchgtkBnLckfX/+71+3AjAB8KCnHnuKP3zlDZXjXsANoC3wk8sIjb1f6Xmj2PDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTkIZ9hH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdaixcXn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A124DC2BCB0;
-	Tue, 12 May 2026 18:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTkIZ9hH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C328C2BCB0;
+	Tue, 12 May 2026 18:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608910;
-	bh=VTmT0I7Rf3FqvZlU14/dbz6Zz8ZkLf5G4h3D8tTaYlU=;
+	s=korg; t=1778608912;
+	bh=VTAagBqcSDMS1Roolhsuq0DwJLIsYS+uEo+gSIy14i4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdaixcXntdZRtBjNE9/HmtAUEO3LYMyZeea8TOW6aDk+svXMUbNvVd1MUqhiwPFTn
-	 JCiqwxz2HYKxYkJ/rpYEk27pbF/grkKYBcnI/hTeeXPczHkzj57cCiaXyLeaZoK2PC
-	 uBXtPJxpGa0k0Pi/+OvgKu32Qy8ohpVmlSccviaE=
+	b=cTkIZ9hHcl5gPwH8spjstoqT3OFWF5es8k25u+AF0oEmv2NTcOOAzAvIZC/nPtp1l
+	 SV9pDHGWzTDRLGRKBrAKE8c1iVWD27JqnHeyzmYHlixa6cy2zo8/5a9AVgnG9xZb74
+	 mmm3XR21HVBKMDGGPehjhP/HALv5vK454lti9mwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@sandisk.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 255/270] mmc: core: Add quirk for incorrect manufacturing date
-Date: Tue, 12 May 2026 19:40:56 +0200
-Message-ID: <20260512173943.813076046@linuxfoundation.org>
+Subject: [PATCH 6.18 264/270] erofs: fix unsigned underflow in z_erofs_lz4_handle_overlap()
+Date: Tue, 12 May 2026 19:41:05 +0200
+Message-ID: <20260512173944.007812675@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,94 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avri Altman <avri.altman@sandisk.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 263ff314cc5602599d481b0912a381555fcbad28 ]
+[ Upstream commit 21e161de2dc660b1bb70ef5b156ab8e6e1cca3ab ]
 
-Some eMMC vendors need to report manufacturing dates beyond 2025 but are
-reluctant to update the EXT_CSD revision from 8 to 9. Changing the
-Updating the EXT_CSD revision may involve additional testing or
-qualification steps with customers. To ease this transition and avoid a
-full re-qualification process, a workaround is needed. This
-patch introduces a temporary quirk that re-purposes the year codes
-corresponding to 2010, 2011, and 2012 to represent the years 2026, 2027,
-and 2028, respectively. This solution is only valid for this three-year
-period.
+Some crafted images can have illegal (!partial_decoding &&
+m_llen < m_plen) extents, and the LZ4 inplace decompression path
+can be wrongly hit, but it cannot handle (outpages < inpages)
+properly: "outpages - inpages" wraps to a large value and
+the subsequent rq->out[] access reads past the decompressed_pages
+array.
 
-After 2028, vendors must update their firmware to set EXT_CSD_REV=9 to
-continue reporting the correct manufacturing date in compliance with the
-JEDEC standard.
+However, such crafted cases can correctly result in a corruption
+report in the normal LZ4 non-inplace path.
 
-The `MMC_QUIRK_BROKEN_MDT` is introduced and enabled for all Sandisk
-devices to handle this behavior.
+Let's add an additional check to fix this for backporting.
 
-Signed-off-by: Avri Altman <avri.altman@sandisk.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: d6bf2e64dec8 ("mmc: core: Optimize time for secure erase/trim for some Kingston eMMCs")
+Reproducible image (base64-encoded gzipped blob):
+
+H4sIAJGR12kCA+3SPUoDQRgG4MkmkkZk8QRbRFIIi9hbpEjrHQI5ghfwCN5BLCzTGtLbBI+g
+dilSJo1CnIm7GEXFxhT6PDDwfrs73/ywIQD/1ePD4r7Ou6ETsrq4mu7XcWfj++Pb58nJU/9i
+PNtbjhan04/9GtX4qVYc814WDqt6FaX5s+ZwXXeq52lndT6IuVvlblytLMvh4Gzwaf90nsvz
+2DF/21+20T/ldgp5s1jXRaN4t/8izsy/OUB6e/Qa79r+JwAAAAAAAL52vQVuGQAAAP6+my1w
+ywAAAAAAAADwu14ATsEYtgBQAAA=
+
+$ mount -t erofs -o cache_strategy=disabled foo.erofs /mnt
+$ dd if=/mnt/data of=/dev/null bs=4096 count=1
+
+Fixes: 598162d05080 ("erofs: support decompress big pcluster for lz4 backend")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/card.h   |    6 ++++++
- drivers/mmc/core/mmc.c    |    5 +++++
- drivers/mmc/core/quirks.h |    3 +++
- include/linux/mmc/card.h  |    1 +
- 4 files changed, 15 insertions(+)
+ fs/erofs/decompressor.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/core/card.h
-+++ b/drivers/mmc/core/card.h
-@@ -89,6 +89,7 @@ struct mmc_fixup {
- #define CID_MANFID_MICRON       0x13
- #define CID_MANFID_SAMSUNG      0x15
- #define CID_MANFID_APACER       0x27
-+#define CID_MANFID_SANDISK_MMC  0x45
- #define CID_MANFID_SWISSBIT     0x5D
- #define CID_MANFID_KINGSTON     0x70
- #define CID_MANFID_HYNIX	0x90
-@@ -305,4 +306,9 @@ static inline int mmc_card_no_uhs_ddr50_
- 	return c->quirks & MMC_QUIRK_NO_UHS_DDR50_TUNING;
- }
- 
-+static inline int mmc_card_broken_mdt(const struct mmc_card *c)
-+{
-+	return c->quirks & MMC_QUIRK_BROKEN_MDT;
-+}
-+
- #endif
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -676,6 +676,11 @@ static int mmc_decode_ext_csd(struct mmc
- 			/* Adjust production date as per JEDEC JESD84-B51B September 2025 */
- 			if (card->cid.year < 2023)
- 				card->cid.year += 16;
-+		} else {
-+			/* Handle vendors with broken MDT reporting */
-+			if (mmc_card_broken_mdt(card) && card->cid.year >= 2010 &&
-+			    card->cid.year <= 2012)
-+				card->cid.year += 16;
- 		}
- 	}
- 
---- a/drivers/mmc/core/quirks.h
-+++ b/drivers/mmc/core/quirks.h
-@@ -170,6 +170,9 @@ static const struct mmc_fixup __maybe_un
- 	MMC_FIXUP_EXT_CSD_REV(CID_NAME_ANY, CID_MANFID_NUMONYX,
- 			      0x014e, add_quirk, MMC_QUIRK_BROKEN_HPI, 6),
- 
-+	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_SANDISK_MMC, CID_OEMID_ANY, add_quirk_mmc,
-+		  MMC_QUIRK_BROKEN_MDT),
-+
- 	END_FIXUP
- };
- 
---- a/include/linux/mmc/card.h
-+++ b/include/linux/mmc/card.h
-@@ -330,6 +330,7 @@ struct mmc_card {
- #define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
- #define MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY	(1<<17) /* Disable broken SD poweroff notify support */
- #define MMC_QUIRK_NO_UHS_DDR50_TUNING	(1<<18) /* Disable DDR50 tuning */
-+#define MMC_QUIRK_BROKEN_MDT    (1<<19) /* Wrong manufacturing year */
- 
- 	bool			written_flag;	/* Indicates eMMC has been written since power on */
- 	bool			reenable_cmdq;	/* Re-enable Command Queue */
+--- a/fs/erofs/decompressor.c
++++ b/fs/erofs/decompressor.c
+@@ -142,6 +142,7 @@ static void *z_erofs_lz4_handle_overlap(
+ 	oend = rq->pageofs_out + rq->outputsize;
+ 	omargin = PAGE_ALIGN(oend) - oend;
+ 	if (!rq->partial_decoding && may_inplace &&
++	    rq->outpages >= rq->inpages &&
+ 	    omargin >= LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize)) {
+ 		for (i = 0; i < rq->inpages; ++i)
+ 			if (rq->out[rq->outpages - rq->inpages + i] !=
 
 
