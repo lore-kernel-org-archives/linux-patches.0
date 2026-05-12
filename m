@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628653BB108;
-	Tue, 12 May 2026 17:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E183C0A1A;
+	Tue, 12 May 2026 17:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608484; cv=none; b=jV2/WnxAoyHUqw7fpkWLLQ5A9a99RgUl6QHgAnMIZlsuBLXia1+grjl+CJBY6SnHG2Vw7aApr20NDuy7Q4Mcdh+xipfqMuudOTPYE26TVTojusYTVJaj8Xe6Cx2kBYWm1aqxjK9VG9nkmb4K9oTl0RrKbxLyBhVsdCC170yIaTA=
+	t=1778608487; cv=none; b=c8KQtuL1xvThTlleoaKYjRHBgeLtbuvl0B4wCvCIeJwo66BG40bbGefU0omBKnucpeWG3PE0j6ZihqkAKe4w7Uc3yyN5bcwpDo85Zk62+skp4iGyeR/+/Q7DBuxDVcnczXNtaZwEsnjykJG8s8mJm7JKRjVwakc98+NnFv3stz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608484; c=relaxed/simple;
-	bh=S6MasRi51/Nz7DGB37ffF4D5C/r78E71aog2a8C4KXE=;
+	s=arc-20240116; t=1778608487; c=relaxed/simple;
+	bh=b/Ib7usvQ9SkhPO2h4atVdNilaEtaw/QguPlt8z7U4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yz1zI+QjnSm+cc/W3EtFyvu9xfgOuUzEu1rRTaWssnkhBtJh5ogXI/PPRSyajrYS7VNR9R6iXs7TI4Sf2/8mTWROYxQt8DEejqFYnLPc9pLm6TP8Nq5ICXYQJQbzz1DxYwLr2IrpVCedoO8idiJU/+Rtcap5kXoX215e8pNOJak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaIusU8K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eKgIw07xuuns4AiQsq0NC0C77ojCkPjBTv3+c5sRdACUbUiCC2fymUMsPS2gbdjzvHJBvpP4amooJssjBowsLV1kfBKSIDX2kCnrjg4WkyrjJSo8dTVEppzytOQ7YpFIhrFPJhBFy/RK//G/2AYOz4UNXJmJzojpJm9QfCt1fGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZwThPK7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaIusU8K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAD3C2BCB0;
-	Tue, 12 May 2026 17:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZwThPK7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886BEC2BCC7;
+	Tue, 12 May 2026 17:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608484;
-	bh=S6MasRi51/Nz7DGB37ffF4D5C/r78E71aog2a8C4KXE=;
+	s=korg; t=1778608486;
+	bh=b/Ib7usvQ9SkhPO2h4atVdNilaEtaw/QguPlt8z7U4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eaIusU8KlMH9F5NxIq2kKsptr2QeswaHOjngTgd8UW28Ld1MeOAXFvvJ7z53p996U
-	 WTADqx5DhGo+M4XtXuFlBIlCFrZhHJf4xZHWmX9XKo6voL5WYh5crgg7OdV9JYdq0d
-	 9PeJukvPLwE/3wwCt8JSYPAxh/2zxxgl7TdaVXU4=
+	b=aZwThPK7aQOrYwTKrnA0riqZlAAQPUNJo+VN6jD42nqa/OOoI6dY/uNT7RzBn0Lye
+	 aGoN+2ueTVOITOR/NQnw1oliAz5VoUVlW/BBHlluEjyhbC7BfETh9RD2yWWDmulWsB
+	 gXJn2OvrakijYafhotTpexyD5W+CqKTcwPg9jcPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 097/270] pseries/papr-hvpipe: Fix & simplify error handling in papr_hvpipe_init()
-Date: Tue, 12 May 2026 19:38:18 +0200
-Message-ID: <20260512173940.502292187@linuxfoundation.org>
+Subject: [PATCH 6.18 098/270] pseries/papr-hvpipe: Fix the usage of copy_to_user()
+Date: Tue, 12 May 2026 19:38:19 +0200
+Message-ID: <20260512173940.522184814@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -52,82 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-commit 713e468cdbc2277db6ce949c32c1acbd83501733 upstream.
+commit d48654bd8b1a75f662e224d257db54de475120dc upstream.
 
-Remove such 3 levels of nesting patterns to check success return values
-from function calls.
+copy_to_user() return bytes_not_copied to the user buffer. If there was
+an error writing bytes into the user buffer, i.e. if copy_to_user
+returns a non-zero value, then we should simply return -EFAULT from the
+->read() call.
 
-ret = enable_hvpipe_IRQ()
-    if (!ret)
-	    ret = set_hvpipe_sys_param(1)
-	        if (!ret)
-		    ret = misc_register()
+Otherwise, in the non-patched version, we may end up mixing
+"bytes_not_copied + bytes_copied (HVPIPE_HDR_LEN)" as the return value
+to the user in ->read() call
 
-Instead just bail out to "out*:" labels, in case of any error. This
-simplifies the init flow.
-
-While at it let's also fix the following error handling logic:
-We have already enabled interrupt sources and enabled hvpipe to received
-interrupts, if misc_register() fails, we will destroy the workqueue, but
-the HMC might send us a msg via hvpipe which will call, queue work on
-the workqueue which might be destroyed.
-
-So instead, let's reverse the order of enabling set_hvpipe_sys_param(1)
-and in case of an error let's remove the misc dev by calling
-misc_deregister().
+Also let's make sure we clear the hvpipe_status flag, if we have
+consumed the hvpipe msg by making the rtas call. ret = -EFAULT means
+copy_to_user has failed but that still means that the msg was read from
+the hvpipe, hence for both cases, success & -EFAULT, we should clear the
+HVPIPE_MSG_AVAILABLE flag in hvpipe_status.
 
 Cc: stable@vger.kernel.org
-Fixes: 39a08a4f94980 ("powerpc/pseries: Enable hvpipe with ibm,set-system-parameter RTAS")
+Fixes: cebdb522fd3edd1 ("powerpc/pseries: Receive payload with ibm,receive-hvpipe-msg RTAS")
 Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/f2141eafb80e7780395e03aa9a22e8a37be80513.1777606826.git.ritesh.list@gmail.com
+Link: https://patch.msgid.link/8fda3212a1ad48879c174e92f67472d9b9f1c3b7.1777606826.git.ritesh.list@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/papr-hvpipe.c |   28 ++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ arch/powerpc/platforms/pseries/papr-hvpipe.c | 23 ++++++++++++--------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
+diff --git a/arch/powerpc/platforms/pseries/papr-hvpipe.c b/arch/powerpc/platforms/pseries/papr-hvpipe.c
+index 800649f309a5..c007560d2d8c 100644
 --- a/arch/powerpc/platforms/pseries/papr-hvpipe.c
 +++ b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-@@ -796,23 +796,29 @@ static int __init papr_hvpipe_init(void)
+@@ -206,10 +206,11 @@ static int hvpipe_rtas_recv_msg(char __user *buf, int size)
+ 					bytes_written, size);
+ 				bytes_written = size;
+ 			}
+-			ret = copy_to_user(buf,
++			if (copy_to_user(buf,
+ 					rtas_work_area_raw_buf(work_area),
+-					bytes_written);
+-			if (!ret)
++					bytes_written))
++				ret = -EFAULT;
++			else
+ 				ret = bytes_written;
+ 		}
+ 	} else {
+@@ -328,7 +329,7 @@ static ssize_t papr_hvpipe_handle_read(struct file *file,
+ 
+ 	struct hvpipe_source_info *src_info = file->private_data;
+ 	struct papr_hvpipe_hdr hdr = {};
+-	long ret;
++	ssize_t ret = 0;
+ 
+ 	/*
+ 	 * Return -ENXIO during migration
+@@ -376,7 +377,7 @@ static ssize_t papr_hvpipe_handle_read(struct file *file,
+ 
+ 	ret = copy_to_user(buf, &hdr, HVPIPE_HDR_LEN);
+ 	if (ret)
+-		return ret;
++		return -EFAULT;
+ 
+ 	/*
+ 	 * Message event has payload, so get the payload with
+@@ -385,19 +386,23 @@ static ssize_t papr_hvpipe_handle_read(struct file *file,
+ 	if (hdr.flags & HVPIPE_MSG_AVAILABLE) {
+ 		ret = hvpipe_rtas_recv_msg(buf + HVPIPE_HDR_LEN,
+ 				size - HVPIPE_HDR_LEN);
+-		if (ret > 0) {
++		/*
++		 * Always clear MSG_AVAILABLE once the RTAS call has drained
++		 * the message, regardless of whether copy_to_user succeeded.
++		 */
++		if (ret >= 0 || ret == -EFAULT)
+ 			src_info->hvpipe_status &= ~HVPIPE_MSG_AVAILABLE;
+-			ret += HVPIPE_HDR_LEN;
+-		}
+ 	} else if (hdr.flags & HVPIPE_LOST_CONNECTION) {
+ 		/*
+ 		 * Hypervisor is closing the pipe for the specific
+ 		 * source. So notify user space.
+ 		 */
+ 		src_info->hvpipe_status &= ~HVPIPE_LOST_CONNECTION;
+-		ret = HVPIPE_HDR_LEN;
  	}
  
- 	ret = enable_hvpipe_IRQ();
--	if (!ret) {
--		ret = set_hvpipe_sys_param(1);
--		if (!ret)
--			ret = misc_register(&papr_hvpipe_dev);
--	}
-+	if (ret)
-+		goto out_wq;
- 
--	if (!ret) {
--		pr_info("hvpipe feature is enabled\n");
--		hvpipe_feature = true;
--		return 0;
--	}
-+	ret = misc_register(&papr_hvpipe_dev);
-+	if (ret)
-+		goto out_wq;
- 
--	pr_err("hvpipe feature is not enabled %d\n", ret);
-+	ret = set_hvpipe_sys_param(1);
-+	if (ret)
-+		goto out_misc;
++	if (ret >= 0)
++		ret += HVPIPE_HDR_LEN;
 +
-+	pr_info("hvpipe feature is enabled\n");
-+	hvpipe_feature = true;
-+	return 0;
-+
-+out_misc:
-+	misc_deregister(&papr_hvpipe_dev);
-+out_wq:
- 	destroy_workqueue(papr_hvpipe_wq);
- out:
- 	kfree(papr_hvpipe_work);
- 	papr_hvpipe_work = NULL;
-+	pr_err("hvpipe feature is not enabled %d\n", ret);
  	return ret;
  }
- machine_device_initcall(pseries, papr_hvpipe_init);
+ 
+-- 
+2.54.0
+
 
 
