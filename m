@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6A03002A9;
-	Tue, 12 May 2026 17:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F733BB102;
+	Tue, 12 May 2026 17:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608422; cv=none; b=FH/cROPq9st0DJpwp0FvVjl2hRjxOWybD9mw2QVCuw87Y2elYOcwNhFLVoMRKzDFpn1ER+jGuafERbTct+s6qT5+VfGrwfKefQHggOB181gxvb0cOPVv1lomAS5EP49Kai8Zg/7TRzcSvG3hjd3T5atYuC5O8i8Uf/l3NhTU4Eg=
+	t=1778608425; cv=none; b=H89SG3XzfHjW6+48eHfKy4hx0pAihJzpaMqjkDGM377Kworq7GKlLJe3nyr5jk4PeqtoW/UG4StJE5PrIpnIjLEU9lnYHCgBDOz4dj6YoZUAW9ojm7nPQwuQrIyTMOyA448QMnKMGhI93e0qNs6wdzR24IfowGPXJh+lTEeXqKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608422; c=relaxed/simple;
-	bh=THtRRrOR9mTj0amylZjcyNTP4AxjnfVcNOBKhKIm0s4=;
+	s=arc-20240116; t=1778608425; c=relaxed/simple;
+	bh=Zxl/gOy1DllY3HGlmOgHL6oAy4Eqrz7sT3u7yFa0x70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VR5QRlmTx+TWKm8BxQFrj/qdN1Wd/H4tJa452zIX8W5o4XyqthlUwbKKrIthQORmD+NO9a+oKXuqfHM1OSV12EP6b7Fe/xxns6h6qlNlN0uNZUrNUmr3GqHwNXJW3bMPaxcN0/jh8VWnZ3TLgZc8nRU8PMJj5Mqq3tOHkEaBHF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvtbPKaC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rMlA7QCKw53jNug4vowszHOGMa+BQJGhvuLDj5S6cPYZy9sgbV/ih3pOgCJuOnmEkLbqz6GJSDbvadvxIcqYfRpPunmymGecTEyrY6ijal4wW/3vT3rHrRxpkcYGwJ8FtfZjTPtbEH0Npu3+XLqPE6FYqMXQzhMTUmTNxgnXHSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3SHQpc0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvtbPKaC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1175EC2BCB0;
-	Tue, 12 May 2026 17:53:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3SHQpc0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2C6C2BCB0;
+	Tue, 12 May 2026 17:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608422;
-	bh=THtRRrOR9mTj0amylZjcyNTP4AxjnfVcNOBKhKIm0s4=;
+	s=korg; t=1778608425;
+	bh=Zxl/gOy1DllY3HGlmOgHL6oAy4Eqrz7sT3u7yFa0x70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CvtbPKaC2/mYBbgM9FXa8q26/NR55SNwOgJaDZzvcxNg6N1xHMmVtVnApLN/5wlbo
-	 Ey+R4Zak+k5MOX0ZvJwgwIWc3nuRjTaJGDMT48ySf1+Y4UGiZrYtz5ka9xpDAJncCl
-	 QxagcmJatCp7m3ck6fak+sTKQLyAk14vCkmSlSrY=
+	b=j3SHQpc00xWK25Art2MsC46f90YJRumTwYAhXbRpuAT1x4l1kz2BFmLDIDAh9JmmP
+	 onLeamwzbfEsz45Vj1D8oIo5ugeHKOOrV7LViyGi9UKpQgnJzNY5A7g3jG4hiVeLWE
+	 Oo226nh46vVSCyY4i8Ik6Y+nO/0Lkbx5G9Li5pKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhiTao Ou <hkbinbinbin@gmail.com>,
+	stable@kernel.org,
+	Siwei Zhang <oss@fourdim.xyz>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 071/270] Bluetooth: hci_event: Fix OOB read and infinite loop in hci_le_create_big_complete_evt
-Date: Tue, 12 May 2026 19:37:52 +0200
-Message-ID: <20260512173939.945991755@linuxfoundation.org>
+Subject: [PATCH 6.18 072/270] Bluetooth: L2CAP: Fix null-ptr-deref in l2cap_sock_new_connection_cb()
+Date: Tue, 12 May 2026 19:37:53 +0200
+Message-ID: <20260512173939.967109411@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,80 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-commit 5ddb8014261137cadaf83ab5617a588d80a22586 upstream.
+commit 0a120d96166301d7a95be75b52f843837dbd1219 upstream.
 
-hci_le_create_big_complete_evt() iterates over BT_BOUND connections for
-a BIG handle using a while loop, accessing ev->bis_handle[i++] on each
-iteration.  However, there is no check that i stays within ev->num_bis
-before the array access.
+Add the same NULL guard already present in
+l2cap_sock_resume_cb() and l2cap_sock_ready_cb().
 
-When a controller sends a LE_Create_BIG_Complete event with fewer
-bis_handle entries than there are BT_BOUND connections for that BIG,
-or with num_bis=0, the loop reads beyond the valid bis_handle[] flex
-array into adjacent heap memory.  Since the out-of-bounds values
-typically exceed HCI_CONN_HANDLE_MAX (0x0EFF), hci_conn_set_handle()
-rejects them and the connection remains in BT_BOUND state.  The same
-connection is then found again by hci_conn_hash_lookup_big_state(),
-creating an infinite loop with hci_dev_lock held.
-
-Fix this by terminating the BIG if in case not all BIS could be setup
-properly.
-
-Fixes: a0bfde167b50 ("Bluetooth: ISO: Add support for connecting multiple BISes")
-Cc: stable@vger.kernel.org
-Signed-off-by: ZhiTao Ou <hkbinbinbin@gmail.com>
+Fixes: 80808e431e1e ("Bluetooth: Add l2cap_chan_ops abstraction")
+Cc: stable@kernel.org
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |   27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_sock.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6973,9 +6973,29 @@ static void hci_le_create_big_complete_e
- 			continue;
- 		}
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1480,6 +1480,9 @@ static struct l2cap_chan *l2cap_sock_new
+ {
+ 	struct sock *sk, *parent = chan->data;
  
-+		if (ev->num_bis <= i) {
-+			bt_dev_err(hdev,
-+				   "Not enough BIS handles for BIG 0x%2.2x",
-+				   ev->handle);
-+			ev->status = HCI_ERROR_UNSPECIFIED;
-+			hci_connect_cfm(conn, ev->status);
-+			hci_conn_del(conn);
-+			continue;
-+		}
++	if (!parent)
++		return NULL;
 +
- 		if (hci_conn_set_handle(conn,
--					__le16_to_cpu(ev->bis_handle[i++])))
-+					__le16_to_cpu(ev->bis_handle[i++]))) {
-+			bt_dev_err(hdev,
-+				   "Failed to set BIS handle for BIG 0x%2.2x",
-+				   ev->handle);
-+			/* Force error so BIG gets terminated as not all BIS
-+			 * could be connected.
-+			 */
-+			ev->status = HCI_ERROR_UNSPECIFIED;
-+			hci_connect_cfm(conn, ev->status);
-+			hci_conn_del(conn);
- 			continue;
-+		}
+ 	lock_sock(parent);
  
- 		conn->state = BT_CONNECTED;
- 		set_bit(HCI_CONN_BIG_CREATED, &conn->flags);
-@@ -6984,7 +7004,10 @@ static void hci_le_create_big_complete_e
- 		hci_iso_setup_path(conn);
- 	}
- 
--	if (!ev->status && !i)
-+	/* If there is an unexpected error or if no BISes have been connected
-+	 * for the BIG, terminate it.
-+	 */
-+	if (ev->status == HCI_ERROR_UNSPECIFIED || (!ev->status && !i))
- 		/* If no BISes have been connected for the BIG,
- 		 * terminate. This is in case all bound connections
- 		 * have been closed before the BIG creation
+ 	/* Check for backlog size */
 
 
