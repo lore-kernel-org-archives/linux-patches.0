@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19D234405B;
-	Tue, 12 May 2026 18:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7223EDE67;
+	Tue, 12 May 2026 18:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609056; cv=none; b=S46pECBX9F3ZISWQGDjpgHR6Ah56IUpGKaMXF9wgGK2P/7/pYpU3jn5UBairOjWYXynwjdLlCmLKG5Z3wpSldZytV46M8DYERc6+SBIHctO7wZGpCSHEIXvg6dkr2Pt94O4pita45SJej2qah6g/GCFw1dz51P4y0/JJKsSqHGg=
+	t=1778609059; cv=none; b=ofAzpLPrd06kORcmRERUxVu+eq8T6qAIDJv3BhLNocrsZ9OD/FGmurd5nawVhiXcXe7jf6ZhL23RwaNLb1CfWCv9gsgLjoL7+Ukcf1c8i70I9wR4L3q8unRgQFpCLuW7fs5CHx1CQ4jGrmgZZN9UOjKLekoy1BXb8wP3ScOFucs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609056; c=relaxed/simple;
-	bh=oOuD0ombJY0BGu9muqEg3RmV2i7lwdtRXJpkxYflpIo=;
+	s=arc-20240116; t=1778609059; c=relaxed/simple;
+	bh=a9PEQTegKRhOL17JPoKgReR0qyvAiaPo6NpEBhcD0LI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZA7qP4L6sXFljJaKYaTo7bawo5aLh6v4wMJtg1NJQ6o/kJ8jnxuGEBXlVUf6jLBJYE8nB0Xfb87fxhJIXQ7ks9l0R3/LKrFCu0ecECIP/d5V8JJ3WfKEIc2NLU8vb0c5RB9h2SkYzwOw/Qr+5zmYga6sXZ80hvaV/GgR8rJXcO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yo95q/nH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Gk+uZE5VKYHTfjgwWFKqZjn8iM01GM47abAhFKkQY/Fb923P3xFeH2NxezeioSoPzNIqa5kJ1Q4sCBCcYgnmmmB/61lXnTDbFG/Qp5XVBsU1LptPAsvVbqUm/U7qMHfZhYHa0Ax9yOTokZyUJmS3MSfNW9PDllJTXb06NpuOXmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Of+k08T4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yo95q/nH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AB7C2BCB0;
-	Tue, 12 May 2026 18:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Of+k08T4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9667C2BCB0;
+	Tue, 12 May 2026 18:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609056;
-	bh=oOuD0ombJY0BGu9muqEg3RmV2i7lwdtRXJpkxYflpIo=;
+	s=korg; t=1778609059;
+	bh=a9PEQTegKRhOL17JPoKgReR0qyvAiaPo6NpEBhcD0LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yo95q/nHoNsEOlE3PGAWHB7mD4TFOEjyi3UKhMrhcs2KF9qkSlNJbR6ZOECxuVC9h
-	 ATPwX4iOOHuDxU9XuzCWUxHxqnGHQ7/zWMMqNo+xdBB8HKUiMxiQ3J08qgWekr9Eby
-	 VVdWd7IfVsOJC8kUL9wnffnwZNlkuMVgzmiqmrJ8=
+	b=Of+k08T4bc2yAeaEZbV+S8dc6drHmMJOHoy0WFI0RTeAgzEdcP4A3jpjFoOLiZWYG
+	 F3a8+iRhk1Ctr9ORT0Sdhd1xgOuBsOFjfz3Lj56kbBkVvCrAQJqm+tMm0q1hUDWRrP
+	 Upir9TWer1Vum48lo2nlfF49wwOkh79bnQ6+9b3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 048/307] ALSA: firewire-tascam: Do not drop unread control events
-Date: Tue, 12 May 2026 19:37:23 +0200
-Message-ID: <20260512173941.137984760@linuxfoundation.org>
+Subject: [PATCH 7.0 049/307] ALSA: core: Serialize deferred fasync state checks
+Date: Tue, 12 May 2026 19:37:24 +0200
+Message-ID: <20260512173941.158794253@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -54,45 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 0749daa8eb5ab90334aaad3b0671efd7150d43b1 upstream.
+commit 5337213381df578058e2e41da93cbd0e4639935f upstream.
 
-tscm_hwdep_read_queue() copies as many queued control events as fit in
-the userspace buffer. When the buffer is smaller than the current
-contiguous queue segment, length is rounded down to the number of bytes
-that can be copied.
+snd_fasync_helper() updates fasync->on under snd_fasync_lock, and
+snd_fasync_work_fn() now also evaluates fasync->on under the same
+lock. snd_kill_fasync() still tests the flag before taking the lock,
+leaving an unsynchronized read against FASYNC enable/disable updates.
 
-However, after copying that shortened length, the code advances pull_pos
-to the original tail_pos, marking the whole contiguous segment as
-consumed. Any events between the copied portion and tail_pos are lost.
+Move the enabled-state check into the locked section.
 
-Limit tail_pos to the position after the entries actually copied before
-updating pull_pos. When the whole segment fits, this is equivalent to the
-old tail_pos update; when the buffer is smaller, the remaining events
-stay queued for the next read.
+Also clear fasync->on under snd_fasync_lock in snd_fasync_free()
+before unlinking the pending entry. Together with the locked sender-side
+check, this publishes teardown before flushing the deferred work and
+prevents a racing sender from requeueing the entry after free has
+started.
 
-Fixes: a8c0d13267a4 ("ALSA: firewire-tascam: notify events of change of state for userspace applications")
+Fixes: ef34a0ae7a26 ("ALSA: core: Add async signal helpers")
+Fixes: 8146cd333d23 ("ALSA: core: Fix potential data race at fasync handling")
 Cc: stable@vger.kernel.org
-Suggested-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Co-developed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://patch.msgid.link/20260506-alsa-core-fasync-on-lock-v1-1-ea48c77d6ca4@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260503-alsa-firewire-tascam-read-queue-v2-1-126c6efd7642@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/tascam/tascam-hwdep.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/core/misc.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/sound/firewire/tascam/tascam-hwdep.c
-+++ b/sound/firewire/tascam/tascam-hwdep.c
-@@ -73,6 +73,7 @@ static long tscm_hwdep_read_queue(struct
- 			length = rounddown(remained, sizeof(*entries));
- 		if (length == 0)
- 			break;
-+		tail_pos = head_pos + length / sizeof(*entries);
+--- a/sound/core/misc.c
++++ b/sound/core/misc.c
+@@ -148,9 +148,11 @@ EXPORT_SYMBOL_GPL(snd_fasync_helper);
  
- 		spin_unlock_irq(&tscm->lock);
- 		if (copy_to_user(pos, &entries[head_pos], length))
+ void snd_kill_fasync(struct snd_fasync *fasync, int signal, int poll)
+ {
+-	if (!fasync || !fasync->on)
++	if (!fasync)
+ 		return;
+ 	guard(spinlock_irqsave)(&snd_fasync_lock);
++	if (!fasync->on)
++		return;
+ 	fasync->signal = signal;
+ 	fasync->poll = poll;
+ 	list_move(&fasync->list, &snd_fasync_list);
+@@ -163,8 +165,10 @@ void snd_fasync_free(struct snd_fasync *
+ 	if (!fasync)
+ 		return;
+ 
+-	scoped_guard(spinlock_irq, &snd_fasync_lock)
++	scoped_guard(spinlock_irq, &snd_fasync_lock) {
++		fasync->on = 0;
+ 		list_del_init(&fasync->list);
++	}
+ 
+ 	flush_work(&snd_fasync_work);
+ 	kfree(fasync);
 
 
