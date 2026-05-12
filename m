@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F203EDE68;
-	Tue, 12 May 2026 18:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85083EDE45;
+	Tue, 12 May 2026 18:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609213; cv=none; b=cauxJ62O+M94U8TlKQ9V/3WJoZ6XdN0WaTzcbqw6PenpvZ5qAJQ5Pej5Fy8N8CH1/LsxYEVubRKLx3j/GnjRjLJLVOQcSZR/AC02uVuMoo+P0SAEBrOu5fJKna2r6hyzu/1qWikiajU0Jjf/NpQ7z3SxeuT03J9YNUsrNYTflV0=
+	t=1778609216; cv=none; b=frGuXlj8dDQRkQLKWMpy5oTu3dsSM8gr7LmouDBkig/Mk1JylIMBrCB2EfvBdx57tsglzCggTMq5nsiAkg1N608kjK+hdzuoa+MFPFOWt1GDKqVnMxEbEJWtq300asEQTvbD5toFhO+0rGEXwX6f7dZya7oaXglpgSIKldEs3Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609213; c=relaxed/simple;
-	bh=GeHMOXG2bbfrNACNEL3l+KgYb3D0t7nn0HmwDeKtnVE=;
+	s=arc-20240116; t=1778609216; c=relaxed/simple;
+	bh=OAGghbs0fzwfGVjHmAu+aPkR5EqF63NQXegM6F9WzNs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ah6HmnL5AhMhPmUw/m3w85+AiCaxWz+YRnD0yPuPWlp+aUvcurgxaq86y9odTBBLqEvKfFEvSngo5Q6Ps//bA4Jplk1UK0BYn0DPt7kSdVFX1Xoa9JDQTIWaNhxR0evVLhsfz5B9384j61BcQKv+ue+cAzl1DfmwICC7bVBbu2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKCdjKAe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XSjGZNsW32w3F5ErQYWkop08aEioeVErlsFjVeKGYvuzFJh/xVt+Q4Pyu9vnseVwIvhpw78n89QABn43diG9Du4OJCj0qb0KFtAGN5t4NbMmVts0jdf7nPZbtTyX+S8jVPu2WK0gv3gimQxZ+TvVfsM5eXdWes73ottjhDwtZwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgpA/ySX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKCdjKAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF952C2BCB0;
-	Tue, 12 May 2026 18:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgpA/ySX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42300C2BCB0;
+	Tue, 12 May 2026 18:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609213;
-	bh=GeHMOXG2bbfrNACNEL3l+KgYb3D0t7nn0HmwDeKtnVE=;
+	s=korg; t=1778609215;
+	bh=OAGghbs0fzwfGVjHmAu+aPkR5EqF63NQXegM6F9WzNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKCdjKAeMX3IV/UBvAjEEmtHF7IVbMo+PamRAy/qU48VwSe1e5co8Eue2QzoguzuW
-	 x7OCJqJofBOZLA+jHB1yM+zgF9BBGXoJg25B9LktDzNsAcluwIeoNT/zlcQjM9aQzI
-	 stvq98pDYfgc/IGwqhzWc3lHkWCpQAxq+/AKC6fc=
+	b=VgpA/ySXBHv149X3I01OO+3oHEEzkE2cCFhulXV2ykPZFN1b/2uvcDgytrOndFuiH
+	 01hjG0N1u9vdoYB85cQL8FXZOSWrHka4qLbVfDj/TkiSBCAEgdXr+ME0weyu75+sZM
+	 sohVwGWTyrzSiBYeg7kxTHqODShbQr8Ony96PVCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dmitry Vyukov <dvyukov@google.com>
-Subject: [PATCH 7.0 107/307] selftests/rseq: Skip tests if time slice extensions are not available
-Date: Tue, 12 May 2026 19:38:22 +0200
-Message-ID: <20260512173942.383729808@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	David Carlier <devnexen@gmail.com>
+Subject: [PATCH 7.0 072/307] Bluetooth: hci_conn: fix potential UAF in create_big_sync
+Date: Tue, 12 May 2026 19:37:47 +0200
+Message-ID: <20260512173941.641940452@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,52 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: David Carlier <devnexen@gmail.com>
 
-commit 02b44d943b3adddc3a15c1da97045e205b7d14c1 upstream.
+commit 0beddb0c380bed5f5b8e61ddbe14635bb73d0b41 upstream.
 
-Don't fail, skip the test if the extensions are not enabled at compile or
-runtime.
+Add hci_conn_valid() check in create_big_sync() to detect stale
+connections before proceeding with BIG creation. Handle the
+resulting -ECANCELED in create_big_complete() and re-validate the
+connection under hci_dev_lock() before dereferencing, matching the
+pattern used by create_le_conn_complete() and create_pa_complete().
 
-Fixes: 830969e7821a ("selftests/rseq: Implement time slice extension test")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
-Tested-by: Dmitry Vyukov <dvyukov@google.com>
-Link: https://patch.msgid.link/20260428224427.597838491%40kernel.org
+Keep the hci_conn object alive across the async boundary by taking
+a reference via hci_conn_get() when queueing create_big_sync(), and
+dropping it in the completion callback. The refcount and the lock
+are complementary: the refcount keeps the object allocated, while
+hci_dev_lock() serializes hci_conn_hash_del()'s list_del_rcu() on
+hdev->conn_hash, as required by hci_conn_del().
+
+hci_conn_put() is called outside hci_dev_unlock() so the final put
+(which resolves to kfree() via bt_link_release) does not run under
+hdev->lock, though the release path would be safe either way.
+
+Without this, create_big_complete() would unconditionally
+dereference the conn pointer on error, causing a use-after-free
+via hci_connect_cfm() and hci_conn_del().
+
+Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
 Cc: stable@vger.kernel.org
+Co-developed-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/rseq/slice_test.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_conn.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/rseq/slice_test.c
-+++ b/tools/testing/selftests/rseq/slice_test.c
-@@ -124,6 +124,13 @@ FIXTURE_SETUP(slice_ext)
- {
- 	cpu_set_t affinity;
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2130,6 +2130,9 @@ static int create_big_sync(struct hci_de
+ 	u32 flags = 0;
+ 	int err;
  
-+	if (rseq_register_current_thread())
-+		SKIP(return, "RSEQ not supported\n");
++	if (!hci_conn_valid(hdev, conn))
++		return -ECANCELED;
 +
-+	if (prctl(PR_RSEQ_SLICE_EXTENSION, PR_RSEQ_SLICE_EXTENSION_SET,
-+		  PR_RSEQ_SLICE_EXT_ENABLE, 0, 0))
-+		SKIP(return, "Time slice extension not supported\n");
-+
- 	ASSERT_EQ(sched_getaffinity(0, sizeof(affinity), &affinity), 0);
+ 	if (qos->bcast.out.phys == BIT(1))
+ 		flags |= MGMT_ADV_FLAG_SEC_2M;
  
- 	/* Pin it on a single CPU. Avoid CPU 0 */
-@@ -137,11 +144,6 @@ FIXTURE_SETUP(slice_ext)
- 		break;
+@@ -2204,11 +2207,24 @@ static void create_big_complete(struct h
+ 
+ 	bt_dev_dbg(hdev, "conn %p", conn);
+ 
++	if (err == -ECANCELED)
++		goto done;
++
++	hci_dev_lock(hdev);
++
++	if (!hci_conn_valid(hdev, conn))
++		goto unlock;
++
+ 	if (err) {
+ 		bt_dev_err(hdev, "Unable to create BIG: %d", err);
+ 		hci_connect_cfm(conn, err);
+ 		hci_conn_del(conn);
+ 	}
++
++unlock:
++	hci_dev_unlock(hdev);
++done:
++	hci_conn_put(conn);
+ }
+ 
+ struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
+@@ -2336,10 +2352,11 @@ struct hci_conn *hci_connect_bis(struct
+ 				 BT_BOUND, &data);
+ 
+ 	/* Queue start periodic advertising and create BIG */
+-	err = hci_cmd_sync_queue(hdev, create_big_sync, conn,
++	err = hci_cmd_sync_queue(hdev, create_big_sync, hci_conn_get(conn),
+ 				 create_big_complete);
+ 	if (err < 0) {
+ 		hci_conn_drop(conn);
++		hci_conn_put(conn);
+ 		return ERR_PTR(err);
  	}
  
--	ASSERT_EQ(rseq_register_current_thread(), 0);
--
--	ASSERT_EQ(prctl(PR_RSEQ_SLICE_EXTENSION, PR_RSEQ_SLICE_EXTENSION_SET,
--			PR_RSEQ_SLICE_EXT_ENABLE, 0, 0), 0);
--
- 	self->noise_params.noise_nsecs = variant->noise_nsecs;
- 	self->noise_params.sleep_nsecs = variant->sleep_nsecs;
- 	self->noise_params.run = 1;
 
 
