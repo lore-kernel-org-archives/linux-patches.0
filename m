@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F67F36EAB2;
-	Tue, 12 May 2026 18:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66F03EDE61;
+	Tue, 12 May 2026 18:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609162; cv=none; b=Ydd3NL/IoOH2sgpWpFAbR95Ms8FEKobH50ZqjiCszx5oGNOUNLmj3R4Y1ZsC+QE1cMj5TOXwTzPZG/9oRJnm+q3gllTDq659WxsNnh3EqfMqDq5fV2MjM0DXmF87IKGw16QiFg/JJJ66arNSCufGSeDFULDDAgbskv7gSfAcDfM=
+	t=1778609164; cv=none; b=hzK/Yq7yciYVqBvnDqSYdXTVpq8szXLQ65HazeZmFJzzWYdXHt8walZOQsgVF65gVNuP5SPGMcNQRFClLg6w7CGcH04wwg3EtcR2o+iljnMParwFwCLMULJ3mpUQ0OQi2ELC8x5r5je4tYqZ+ivOZeGCeNj1SperzjvsqGuK2f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609162; c=relaxed/simple;
-	bh=Zd10WfvvfQftuAYHoUdbN8nsywPyql9ygTU+LiA8fUg=;
+	s=arc-20240116; t=1778609164; c=relaxed/simple;
+	bh=1iAQoajF7xrksM1E45jAnQpzcRpQ9qUrXAD0hC5rX10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cf7r+Lx0Vz0jKCa0oqIBwNjXqlAYyO0WBpy/88+jfKKerexoBGw3nrLbdCxIQ4S5BPaecdyCqnehqN0iQ/x48b441Uw4Q0O5e7IWoK2JO16EflosHT7JSV2kfEzssKpAXLI0YU0NkOFj3SuGZycCbrii/lqFBD8Yl5xOOApGW78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsGtMiWE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y9JmuLeDqHQPzaHJKGOOO2Wuu4WbMo+EFd5lA8bNJf+SA7gNQI0Ns2Oypvx5mi8b+85Q/92O5pj+2nGklyrCvg2alpfvK1TqATd81Uo082ni5x9fUFApjCrIXG1pGerGM0LWpgnurb3V3zAlldXQnsdWIdRtDHRiJxqcybzmOA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrUJ6yS6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsGtMiWE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FDB6C2BCC7;
-	Tue, 12 May 2026 18:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrUJ6yS6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3440EC2BCB0;
+	Tue, 12 May 2026 18:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609162;
-	bh=Zd10WfvvfQftuAYHoUdbN8nsywPyql9ygTU+LiA8fUg=;
+	s=korg; t=1778609164;
+	bh=1iAQoajF7xrksM1E45jAnQpzcRpQ9qUrXAD0hC5rX10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qsGtMiWEDU6nE/RTAWgecJ19X9vvK49ZAqzKFrkJ3hHn39M5NOerJdur+DT2GHAw9
-	 6PAoFMF3SRc/Np7jch1zGxWeFL2n0HiqtQGQM7ek08OvgBfRD42awRHhlx3tSLJCk9
-	 K5t19LdIocmjWni2jBtQic9OfU6xITMtU4LsAp70=
+	b=TrUJ6yS6fv+QXmNfsGkRH+mOxgi6VPJCaOPAukaoFolSPE57G/wk+7WBkB5ly3SW0
+	 oEZ2tpzvpLpv6homtLCJZeumxrZYsnkKnnAA+h49I8wHQxIxP7YArB2eV20Vfsqcbq
+	 QzY0xdJrkVNlHXRC7iRj3+qxdZsIcgVqZPFp6Drw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adithya K V <adithya.kv@samsung.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 089/307] spi: s3c64xx: fix NULL-deref on driver unbind
-Date: Tue, 12 May 2026 19:38:04 +0200
-Message-ID: <20260512173942.007764101@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Shyam Sunder Reddy Padira <shyamsunderreddypadira@gmail.com>,
+	Dan Carpenter <error27@gmail.com>
+Subject: [PATCH 7.0 090/307] staging: rtl8723bs: os_dep: avoid NULL pointer dereference in rtw_cbuf_alloc
+Date: Tue, 12 May 2026 19:38:05 +0200
+Message-ID: <20260512173942.028508216@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,45 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Shyam Sunder Reddy Padira <shyamsunderreddypadira@gmail.com>
 
-commit 45daacbead8a009844bd5dba6cfa731332184d17 upstream.
+commit bc851db06045a40c18233dd76ef0562d7f8bb6db upstream.
 
-A change moving DMA channel allocation from probe() back to
-s3c64xx_spi_prepare_transfer() failed to remove the corresponding
-deallocation from remove().
+The return value of kzalloc_flex() is used without
+ensuring that the allocation succeeded, and the
+pointer is dereferenced unconditionally.
 
-Drop the bogus DMA channel release from remove() to avoid triggering a
-NULL-pointer dereference on driver unbind.
+Guard the access to the allocated structure to
+avoid a potential NULL pointer dereference if the
+allocation fails.
 
-This issue was flagged by Sashiko when reviewing a controller
-deregistration fix.
-
-Fixes: f52b03c70744 ("spi: s3c64xx: requests spi-dma channel only during data transfer")
-Cc: stable@vger.kernel.org	# 6.0
-Cc: Adithya K V <adithya.kv@samsung.com>
-Link: https://sashiko.dev/#/patchset/20260410081757.503099-1-johan%40kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410094925.518343-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 980cd426a257 ("staging: rtl8723bs: replace rtw_zmalloc() with kzalloc()")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Shyam Sunder Reddy Padira <shyamsunderreddypadira@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/20260414071308.4781-2-shyamsunderreddypadira@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-s3c64xx.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/staging/rtl8723bs/os_dep/osdep_service.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-s3c64xx.c
-+++ b/drivers/spi/spi-s3c64xx.c
-@@ -1401,11 +1401,6 @@ static void s3c64xx_spi_remove(struct pl
+--- a/drivers/staging/rtl8723bs/os_dep/osdep_service.c
++++ b/drivers/staging/rtl8723bs/os_dep/osdep_service.c
+@@ -194,7 +194,8 @@ struct rtw_cbuf *rtw_cbuf_alloc(u32 size
+ 	struct rtw_cbuf *cbuf;
  
- 	writel(0, sdd->regs + S3C64XX_SPI_INT_EN);
+ 	cbuf = kzalloc_flex(*cbuf, bufs, size);
+-	cbuf->size = size;
++	if (cbuf)
++		cbuf->size = size;
  
--	if (!is_polling(sdd)) {
--		dma_release_channel(sdd->rx_dma.ch);
--		dma_release_channel(sdd->tx_dma.ch);
--	}
--
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
+ 	return cbuf;
+ }
 
 
