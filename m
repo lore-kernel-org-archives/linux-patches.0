@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE85F3446C7;
-	Tue, 12 May 2026 18:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533633502A7;
+	Tue, 12 May 2026 18:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609728; cv=none; b=DmwD1LdoF7xZ8XHcDd7iPAZ2W4F0HyfoYB+gwrrqKhNMN0kvxkCSJS+xjEOQlAPdTlvKTvI3vu1tTSneJEY1FUxO4N6ndHyjX5R/F7bKZqpByxGNYfUnDVT6Jvqi8Nl/LV2blDv8rm+XMJBVhHPPPC9m3oZmqt4jGiJXwmbP2vA=
+	t=1778609731; cv=none; b=VHqBs9rKPrtzfeDGe0p2XVF+KJfkVpd7b+FyFnDLMnM5/I+gyCu91zpISZAr2m2X08hDNMBdK14ljPx08ROxwrYJD+a2eMVphFk1s39AdpjyI7/bhAsQUrnrsMbSWssP11C57nKuh+1tgzx/SbfcIOT+YCxJycPFocvPuk9djGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609728; c=relaxed/simple;
-	bh=yLbNwzRMSFp8+j4jxqj8mw8NJT0TeaRPnOVc195xb00=;
+	s=arc-20240116; t=1778609731; c=relaxed/simple;
+	bh=1/bferi5Gvu3mk/nz8kJkioY2OivZTSuY1EPs8GqdHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ob+/Bxbu50itMPO3vB8ydGpNKtT+adKOSvYzNGJ3wwGMtR0k/PNaODq2ydTcLKXyKdBRLcnf27hlheJ03u5GtrwcVPG23JHY2YS++JuDD9xK3x0v7f2vGQXhZb61epxYCTorG5k1TMMU+XTmWXp7TTmoVOo3LP+chZ49ay31bu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9sF9o/f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mRq1AxHnqLcDNpO+QVaK332eCXlfLJFrIRRZrHoVW7624hOJf1dZygc192oM6wF4R5/Rw4sRsSxDnRIwiwh2hX+O+7wxFGFBxnIhbYUL/3r8p63IAT6iLKDnHjYEkYbturi/pIpqTccuHKsHjUX5NpE2W9nlIy67n/dRJMNfXRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7cNK2VE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9sF9o/f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CB1C2BCF5;
-	Tue, 12 May 2026 18:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7cNK2VE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAAEC2BCB0;
+	Tue, 12 May 2026 18:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609728;
-	bh=yLbNwzRMSFp8+j4jxqj8mw8NJT0TeaRPnOVc195xb00=;
+	s=korg; t=1778609731;
+	bh=1/bferi5Gvu3mk/nz8kJkioY2OivZTSuY1EPs8GqdHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9sF9o/fLA4Sv/0oii08hVAYuu/K69bZUHmiWdFZTPI0pZZwls9h7yu8835AXTKXj
-	 1tNSet0VWjtB4CxxBzEhTzBUh8OE7S2KmPoLwPJZO1Ay/9cesqQ8NoANWGjd9UWTLt
-	 VqGBxNOx507wBw+9lBQoV6K99bVsX3cyMmdusSgo=
+	b=f7cNK2VEXTpT6+/ossZqUl7aWJ3S4HqsfAO8/otOrCLHBmTkAKjc8VOOQ1YTahsAK
+	 3Db/tUAqChvSJqsQ8G7A6MQmqlzDSbCmQkS972G6pMAKcZXqFy4Y4IeIxaugIgKbW2
+	 AtTBS0sUxYlv0H3UeMmKfdq3CXpXz5QnULUvc9i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Avri Altman <avri.altman@sandisk.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 293/307] mmc: core: Adjust MDT beyond 2025
-Date: Tue, 12 May 2026 19:41:28 +0200
-Message-ID: <20260512173946.309995645@linuxfoundation.org>
+Subject: [PATCH 7.0 294/307] mmc: core: Add quirk for incorrect manufacturing date
+Date: Tue, 12 May 2026 19:41:29 +0200
+Message-ID: <20260512173946.331671269@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -46,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
@@ -55,61 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Avri Altman <avri.altman@sandisk.com>
 
-[ Upstream commit 3e487a634bc019166e452ea276f7522710eda9f4 ]
+[ Upstream commit 263ff314cc5602599d481b0912a381555fcbad28 ]
 
-JEDEC JESD84-B51B which was released in September 2025, increases the
-manufacturing year limit for eMMC devices. The eMMC manufacturing year
-is stored in a 4-bit field in the CID register. Originally, it covered
-1997–2012. Later, with EXT_CSD_REV=8, it was extended up to 2025. Now,
-with EXT_CSD_REV=9, the range is rolled over by another 16 years, up to
-2038.
+Some eMMC vendors need to report manufacturing dates beyond 2025 but are
+reluctant to update the EXT_CSD revision from 8 to 9. Changing the
+Updating the EXT_CSD revision may involve additional testing or
+qualification steps with customers. To ease this transition and avoid a
+full re-qualification process, a workaround is needed. This
+patch introduces a temporary quirk that re-purposes the year codes
+corresponding to 2010, 2011, and 2012 to represent the years 2026, 2027,
+and 2028, respectively. This solution is only valid for this three-year
+period.
 
-The mapping is as follows:
-cid[8..11] | rev ≤ 4 | 8 ≥ rev > 4 | rev > 8
----------------------------------------------
-0          | 1997    | 2013        | 2029
-1          | 1998    | 2014        | 2030
-2          | 1999    | 2015        | 2031
-3          | 2000    | 2016        | 2032
-4          | 2001    | 2017        | 2033
-5          | 2002    | 2018        | 2034
-6          | 2003    | 2019        | 2035
-7          | 2004    | 2020        | 2036
-8          | 2005    | 2021        | 2037
-9          | 2006    | 2022        | 2038
-10         | 2007    | 2023        |
-11         | 2008    | 2024        |
-12         | 2009    | 2025        |
-13         | 2010    |             | 2026
-14         | 2011    |             | 2027
-15         | 2012    |             | 2028
+After 2028, vendors must update their firmware to set EXT_CSD_REV=9 to
+continue reporting the correct manufacturing date in compliance with the
+JEDEC standard.
+
+The `MMC_QUIRK_BROKEN_MDT` is introduced and enabled for all Sandisk
+devices to handle this behavior.
 
 Signed-off-by: Avri Altman <avri.altman@sandisk.com>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Stable-dep-of: d6bf2e64dec8 ("mmc: core: Optimize time for secure erase/trim for some Kingston eMMCs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/mmc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mmc/core/card.h   |    6 ++++++
+ drivers/mmc/core/mmc.c    |    5 +++++
+ drivers/mmc/core/quirks.h |    3 +++
+ include/linux/mmc/card.h  |    1 +
+ 4 files changed, 15 insertions(+)
 
+--- a/drivers/mmc/core/card.h
++++ b/drivers/mmc/core/card.h
+@@ -89,6 +89,7 @@ struct mmc_fixup {
+ #define CID_MANFID_MICRON       0x13
+ #define CID_MANFID_SAMSUNG      0x15
+ #define CID_MANFID_APACER       0x27
++#define CID_MANFID_SANDISK_MMC  0x45
+ #define CID_MANFID_SWISSBIT     0x5D
+ #define CID_MANFID_KINGSTON     0x70
+ #define CID_MANFID_HYNIX	0x90
+@@ -305,4 +306,9 @@ static inline int mmc_card_no_uhs_ddr50_
+ 	return c->quirks & MMC_QUIRK_NO_UHS_DDR50_TUNING;
+ }
+ 
++static inline int mmc_card_broken_mdt(const struct mmc_card *c)
++{
++	return c->quirks & MMC_QUIRK_BROKEN_MDT;
++}
++
+ #endif
 --- a/drivers/mmc/core/mmc.c
 +++ b/drivers/mmc/core/mmc.c
-@@ -671,7 +671,14 @@ static int mmc_decode_ext_csd(struct mmc
- 		card->ext_csd.enhanced_rpmb_supported =
- 					(card->ext_csd.rel_param &
- 					 EXT_CSD_WR_REL_PARAM_EN_RPMB_REL_WR);
-+
-+		if (card->ext_csd.rev >= 9) {
-+			/* Adjust production date as per JEDEC JESD84-B51B September 2025 */
-+			if (card->cid.year < 2023)
+@@ -676,6 +676,11 @@ static int mmc_decode_ext_csd(struct mmc
+ 			/* Adjust production date as per JEDEC JESD84-B51B September 2025 */
+ 			if (card->cid.year < 2023)
+ 				card->cid.year += 16;
++		} else {
++			/* Handle vendors with broken MDT reporting */
++			if (mmc_card_broken_mdt(card) && card->cid.year >= 2010 &&
++			    card->cid.year <= 2012)
 +				card->cid.year += 16;
-+		}
+ 		}
  	}
+ 
+--- a/drivers/mmc/core/quirks.h
++++ b/drivers/mmc/core/quirks.h
+@@ -170,6 +170,9 @@ static const struct mmc_fixup __maybe_un
+ 	MMC_FIXUP_EXT_CSD_REV(CID_NAME_ANY, CID_MANFID_NUMONYX,
+ 			      0x014e, add_quirk, MMC_QUIRK_BROKEN_HPI, 6),
+ 
++	MMC_FIXUP(CID_NAME_ANY, CID_MANFID_SANDISK_MMC, CID_OEMID_ANY, add_quirk_mmc,
++		  MMC_QUIRK_BROKEN_MDT),
 +
- out:
- 	return err;
- }
+ 	END_FIXUP
+ };
+ 
+--- a/include/linux/mmc/card.h
++++ b/include/linux/mmc/card.h
+@@ -329,6 +329,7 @@ struct mmc_card {
+ #define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
+ #define MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY	(1<<17) /* Disable broken SD poweroff notify support */
+ #define MMC_QUIRK_NO_UHS_DDR50_TUNING	(1<<18) /* Disable DDR50 tuning */
++#define MMC_QUIRK_BROKEN_MDT    (1<<19) /* Wrong manufacturing year */
+ 
+ 	bool			written_flag;	/* Indicates eMMC has been written since power on */
+ 	bool			reenable_cmdq;	/* Re-enable Command Queue */
 
 
