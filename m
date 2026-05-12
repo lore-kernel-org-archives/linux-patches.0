@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E0E3EDE61;
-	Tue, 12 May 2026 18:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56D03EDE45;
+	Tue, 12 May 2026 18:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609254; cv=none; b=EqqlVTRuk0UzAhinMNlcrQQ4r3izzshNGKzK+co8ETuNp2ewC82l6Wp9VP9Q4L2zmtP+5INVf1gy26sSZ//6PBjlBkbOZbQ+vmIyiJ8/DvzyRolFH3EwDeewY5DkxEkDLoGhpwnZS+uu0eGIG0I4VeTFAI8C9mkqPdatBTE0pjg=
+	t=1778609256; cv=none; b=HxQz6lEjo4rWw0apLs534LxmYxsXUzZmBPm9ST7yTu6BMNoxXSVF0Kw/hbaFtmRd5F6fgRqDmOB+92eYOjWojwoSt1g+v52jIAsSk1SWHHG1oKiGfT++C8jTOTUFTG6BTGi23WDAuzj341jwtAnkQhS+IBJgk7HnGtSAlMJmuQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609254; c=relaxed/simple;
-	bh=MZSNimJ5l7x6fvxMxEx7bQm8ymrpiiEbMa23o5JBfyk=;
+	s=arc-20240116; t=1778609256; c=relaxed/simple;
+	bh=C+v71hdQin6KItS7BeYdVxPUNM7TSpUBh0j/RQdRjrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cJkU6TODu05/hAIFPIyVnFqDd7FifojHePsqSy2lFgvmyq6ZhWWJxAABa4BoamOQG9g7v1Txt4fnmm9JObakjnKpts4+lAdb8KkVEWVmbjr+brmCKAoPpUSY1dP49gGrM8BHuYSbXi3tRHs+nOgcd269dXhXfbY+JsI79zfyO1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cL78Aj91; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cB7x1N9g/EQgrmBjcHwzmQvm9eJQyw3+UBzbYVZyRLHelLEzYgIhHkRmRqDKn99NgCH8HzzNF74tLBbVolZEmb+bm7AR8rg7BGUbS6pZ8ZoZYGTbVbErLT0tZ007TgbM6+IdEpKqsDpaQ0geucsVSojCcOmQNkfA+1PAu0mtphU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxP9BQpc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cL78Aj91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD086C2BCB0;
-	Tue, 12 May 2026 18:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxP9BQpc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D466C2BCB0;
+	Tue, 12 May 2026 18:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609254;
-	bh=MZSNimJ5l7x6fvxMxEx7bQm8ymrpiiEbMa23o5JBfyk=;
+	s=korg; t=1778609256;
+	bh=C+v71hdQin6KItS7BeYdVxPUNM7TSpUBh0j/RQdRjrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cL78Aj91EbwOvGY7T+wlS85r+MGLaSvYCfGGDHz4x83HD/y8IEafLdCGQ/31pHWsW
-	 nPPc9J981G0jOvk7wNuZGuu9ukSogMccuYbUQiCF1D4evSzx9gCtHuASl7DckwRENF
-	 0wWpmLiG9QP1m5xUNWy4P+PSQpNLXYKbn6i/ESSk=
+	b=VxP9BQpcqDeVHI87j4xxiEBdPPRuRBxVG84amHxJ4hr9UHSb7hUHIY8XgHt5R/H/+
+	 mETW9pCZPcEBlHFIqTLjkjU6UPIfoNzbH1UtIvdHpO26nUAm2ocnc0tRbDXL3TdlHD
+	 EJbCiiiTMWN5/K7Wr7pErn/NYAMFwpzScTWvDlCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.0 125/307] parisc: Fix IRQ leak in LASI driver
-Date: Tue, 12 May 2026 19:38:40 +0200
-Message-ID: <20260512173942.767330939@linuxfoundation.org>
+	Ivan Hu <ivan.hu@canonical.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 7.0 126/307] x86/efi: Fix graceful fault handling after FPU softirq changes
+Date: Tue, 12 May 2026 19:38:41 +0200
+Message-ID: <20260512173942.788387824@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,63 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Ivan Hu <ivan.hu@canonical.com>
 
-commit 37b0dc5e279f35036fb638d1e187197b6c05a76d upstream.
+commit 088f65e206087bf903743bd18417261d7a4c9644 upstream.
 
-When request_irq() succeeds but gsc_common_setup() fails later,
-the IRQ is never released. Fix this by adding proper error handling
-with goto labels to ensure resources are released in LIFO order.
+Since commit d02198550423 ("x86/fpu: Improve crypto performance by
+making kernel-mode FPU reliably usable in softirqs"), kernel_fpu_begin()
+calls fpregs_lock() which uses local_bh_disable() instead of the
+previous preempt_disable(). This sets SOFTIRQ_OFFSET in preempt_count
+during the entire EFI runtime service call, causing in_interrupt() to
+return true in normal task context.
 
-Detected by Smatch:
-  drivers/parisc/lasi.c:216 lasi_init_chip() warn: 'lasi->gsc_irq.irq'
-from request_irq() not released on lines: 207.
+The graceful page fault handler efi_crash_gracefully_on_page_fault()
+uses in_interrupt() to bail out for faults in real interrupt context.
+With SOFTIRQ_OFFSET now set, the handler always bails out, leaving EFI
+firmware page faults unhandled. This escalates to die() which also sees
+in_interrupt() as true and calls panic("Fatal exception in interrupt"),
+resulting in a hard system freeze. On systems with buggy firmware that
+triggers page faults during EFI runtime calls (e.g., accessing unmapped
+memory in GetTime()), this causes an unrecoverable hang instead of the
+expected graceful EFI_ABORTED recovery.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202604180957.4QdAIxP6-lkp@intel.com/
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fix by replacing in_interrupt() with !in_task(). This preserves the
+original intent of bailing for interrupts or NMI faults, while no longer
+falsely triggering from the FPU code path's local_bh_disable().
+
+Fixes: d02198550423 ("x86/fpu: Improve crypto performance by making kernel-mode FPU reliably usable in softirqs")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ivan Hu <ivan.hu@canonical.com>
+[ardb: Sashiko spotted that using 'in_hardirq() || in_nmi()' leaves a
+       window where a softirq may be taken before fpregs_lock() is
+       called, but after efi_rts_work.efi_rts_id has been assigned,
+       and any page faults occurring in that window will then be
+       misidentified as having been caused by the firmware. Instead,
+       use !in_task(), which incorporates in_serving_softirq(). ]
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/lasi.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ arch/x86/platform/efi/quirks.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/parisc/lasi.c
-+++ b/drivers/parisc/lasi.c
-@@ -193,8 +193,7 @@ static int __init lasi_init_chip(struct
+--- a/arch/x86/platform/efi/quirks.c
++++ b/arch/x86/platform/efi/quirks.c
+@@ -771,7 +771,7 @@ void efi_crash_gracefully_on_page_fault(
+ 	 * If we get an interrupt/NMI while processing an EFI runtime service
+ 	 * then this is a regular OOPS, not an EFI failure.
+ 	 */
+-	if (in_interrupt())
++	if (!in_task())
+ 		return;
  
- 	ret = request_irq(lasi->gsc_irq.irq, gsc_asic_intr, 0, "lasi", lasi);
- 	if (ret < 0) {
--		kfree(lasi);
--		return ret;
-+		goto err_free;
- 	}
- 
- 	/* enable IRQ's for devices below LASI */
-@@ -203,8 +202,7 @@ static int __init lasi_init_chip(struct
- 	/* Done init'ing, register this driver */
- 	ret = gsc_common_setup(dev, lasi);
- 	if (ret) {
--		kfree(lasi);
--		return ret;
-+		goto err_irq;
- 	}    
- 
- 	gsc_fixup_irqs(dev, lasi, lasi_choose_irq);
-@@ -214,6 +212,12 @@ static int __init lasi_init_chip(struct
- 		SYS_OFF_PRIO_DEFAULT, lasi_power_off, lasi);
- 
- 	return ret;
-+
-+err_irq:
-+	free_irq(lasi->gsc_irq.irq, lasi);
-+err_free:
-+	kfree(lasi);
-+	return ret;
- }
- 
- static struct parisc_device_id lasi_tbl[] __initdata = {
+ 	/*
 
 
