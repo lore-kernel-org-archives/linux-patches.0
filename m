@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE08385D69;
-	Tue, 12 May 2026 17:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF11F2EBB84;
+	Tue, 12 May 2026 17:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607926; cv=none; b=dLj1sxoyJCceGQqnA3SUduDwrk5ygQ/m8u7JIE5DhhOec+FiLI+RPXdOvdrwruMaqw+bB05XG63I6uilF3mFH7fqNZquqWVpwdAI3h4A5gHnaJLsRaMBArWPaffuICdw797ZFr3BgeX2sBCdiS4U1JQeZMoqRLxDYYR5JByfzx0=
+	t=1778607928; cv=none; b=khMVIBlIfIYVnsHV02EGffOL/6ldOWkJAlnasqVY1uFSfwfQTgtDAsQMK5kuP70Rxh0DerY8Sk+9VEgVR+7EB48+hi69QyQmo5iZJb0UqjloUADMaa55twFAliP7xQQ95hbH4Pxv+FqqIG28TCfBlu8VZgMmt++szDwKRnEXx+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607926; c=relaxed/simple;
-	bh=gRr8PjKBuzIT4lfrze00QPUOYFtF4iXt0/BymI3kFc0=;
+	s=arc-20240116; t=1778607928; c=relaxed/simple;
+	bh=gxOCf0AtcqLSjTqzaN7iWlyzCK79kJdiBAmdnRjxCLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M/MR26UpHDzvTwpCbwEi8FFIwE/065UPKNK7k6s4h630izMy39zAxkRUWA+wC5YInfWzEqhNmAM8VOiAHsMwLPjgbaSxJzrXlHQTE8AV2Lbrv9W52cb7uFNvtcwhdDqOa61GzLSd/ArQmPM4c8TNiBkPNNubIBVCpPg9fMPv0YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kt5u0u6n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uaS5n/+JowKg1lfgAYezdPGaAbitdMzssqhg5f/gcjuAvwCT+GUlQ5R6SX8X3HPno0LpJoj9hYUyIeqGpFmffkXfzABDEL6W05EqwuSMtCuF3Lt1ZDZOQhezRrYVUoVsswJeGTeWRiGKRGfW8hz5cCbx+9FOu/mjzFZ8X7FipE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhlJFgGR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kt5u0u6n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AB5C2BCF5;
-	Tue, 12 May 2026 17:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhlJFgGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666C1C2BCC7;
+	Tue, 12 May 2026 17:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607926;
-	bh=gRr8PjKBuzIT4lfrze00QPUOYFtF4iXt0/BymI3kFc0=;
+	s=korg; t=1778607928;
+	bh=gxOCf0AtcqLSjTqzaN7iWlyzCK79kJdiBAmdnRjxCLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kt5u0u6nEDPa2XXqg9hF4/GeOYPyvOINLgKSgsU1ztNzrkI4+56kgRFu2RZ4qw3Ll
-	 CK3Xbd8mSGRm0HShvsiTbfoig08dZErXkzpK2lG7rSewgAlzEaI5ItMSaZorGFV9CK
-	 WTxs0mHc7LrmKnaWusI0XNfRDBEihGjZ6BiZ8cqo=
+	b=KhlJFgGR5KTgF55UQlKJ6GxzJJt/TRAUstG2aPjqa8jvd+Jk+DPOWMITXWDDjnwxH
+	 zsb8bTcot/05OVDgbdGShn2RQ3AM1krbyhSGVp3M141Jt7UYPwvBkV7m9EWixi16IF
+	 kKaEqiu0Ut/U9F/CzjtXDehPcFPd3uoEWXOyMYtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 088/206] hwmon: (corsair-psu) Close HID device on probe errors
-Date: Tue, 12 May 2026 19:39:00 +0200
-Message-ID: <20260512173934.719571579@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jiexun Wang <wangjiexun2025@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 089/206] af_unix: Reject SIOCATMARK on non-stream sockets
+Date: Tue, 12 May 2026 19:39:01 +0200
+Message-ID: <20260512173934.741678391@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,45 +57,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-commit 174606451fbb17db506ebaacdd5e203e57773d5f upstream.
+commit d119775f2bad827edc28071c061fdd4a91f889a5 upstream.
 
-corsairpsu_probe() opens the HID device before sending the device init
-and firmware-info commands. If either command fails, the error path jumps
-directly to fail_and_stop and skips hid_hw_close().
+SIOCATMARK reports whether the receive queue is at the urgent mark for
+MSG_OOB.
 
-Use the existing fail_and_close label for those post-open failures so the
-open count and low-level close callback are balanced before hid_hw_stop().
+In AF_UNIX, MSG_OOB is supported only for SOCK_STREAM sockets.
+SOCK_DGRAM and SOCK_SEQPACKET reject MSG_OOB in sendmsg() and recvmsg(),
+so they should not support SIOCATMARK either.
 
-Fixes: d115b51e0e56 ("hwmon: add Corsair PSU HID controller driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Link: https://lore.kernel.org/r/20260424135107.13720-1-mhun512@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Return -EOPNOTSUPP for non-stream sockets before checking the receive
+queue.
+
+Fixes: 314001f0bf92 ("af_unix: Add OOB support")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260506140825.2987635-1-n05ec@lzu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/corsair-psu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/unix/af_unix.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -805,13 +805,13 @@ static int corsairpsu_probe(struct hid_d
- 	ret = corsairpsu_init(priv);
- 	if (ret < 0) {
- 		dev_err(&hdev->dev, "unable to initialize device (%d)\n", ret);
--		goto fail_and_stop;
-+		goto fail_and_close;
- 	}
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -3187,6 +3187,9 @@ static int unix_ioctl(struct socket *soc
+ 			struct sk_buff *skb;
+ 			int answ = 0;
  
- 	ret = corsairpsu_fwinfo(priv);
- 	if (ret < 0) {
- 		dev_err(&hdev->dev, "unable to query firmware (%d)\n", ret);
--		goto fail_and_stop;
-+		goto fail_and_close;
- 	}
++			if (sk->sk_type != SOCK_STREAM)
++				return -EOPNOTSUPP;
++
+ 			mutex_lock(&u->iolock);
  
- 	corsairpsu_get_criticals(priv);
+ 			skb = skb_peek(&sk->sk_receive_queue);
 
 
