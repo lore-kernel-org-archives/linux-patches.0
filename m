@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6C23955E3;
-	Tue, 12 May 2026 17:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6C03955EE;
+	Tue, 12 May 2026 17:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608194; cv=none; b=dawRnN/ioHW+5tvrRJO2/48onzVR3g55loXX6w+snJzc5OTSOUuZ9X2MUZlWCjoFwzLrsbn695c+rTHkuT8+Fjd3uL+F5pnXONeBm2qWZ97f5igJbDx4FoF4MFKo5AfkiaF4sxqw8nsQyfMfC5nskyoUJ/gfOXM82nmRFyRLiug=
+	t=1778608196; cv=none; b=eFvpewu0pXOb6T9IYf5jOpqnnlQh9kFXSF/P3GO43AC6SHlmmIF491ZuPRkJwz19U1PCk5y+Puw/0rTyj1j8lwtSyyteHNuM1azCp0HmhwKpAHN9HKU+BkBiE/Ea8jDg+2CC1IgePEjWufgEnu3SmJ9oFswIu1Z/iIrRSQRLJQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608194; c=relaxed/simple;
-	bh=EbXWPzZjMJ9U1Jk3ANHxuTqRVCVQmJVfqSQ4AWqZ96I=;
+	s=arc-20240116; t=1778608196; c=relaxed/simple;
+	bh=h6tkzISE2Rnjja42YygtGLfNG0cSX4GoK8a1B9hsJQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QuzoXqqxKiinir0QkdBiQvLTGzpeAHOX9opUKDsjXCdzdQxPBEzzgch2NgSjaPkq6+pCod8erBh1dca/cl4c0MH2Dz84TtN7++eI3x+cTh+Zq36ToroDQitwYj86sT/orWfxl2mrRo+t/H/YueQtDxGTfN78i/gI1grzUs0lIhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFPIu6t3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LmD06H9jRTEhQ1s1uprl88oNZlqWuz+pmlRrOks41gY4gWs+CQib80J2ZVY6CJD1IxnI5jYbGH4dD8YwtmSfRBLW/bopOG2Ber5wIKFm1xFvJHCa/SLIGoGEKHOrxv+6HXeBOGddxTS1gAixCnGCixK7FeOfsJPy8VtyM193dRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8fWeuaE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFPIu6t3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B1EC2BCB0;
-	Tue, 12 May 2026 17:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8fWeuaE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C998CC2BCB0;
+	Tue, 12 May 2026 17:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608193;
-	bh=EbXWPzZjMJ9U1Jk3ANHxuTqRVCVQmJVfqSQ4AWqZ96I=;
+	s=korg; t=1778608196;
+	bh=h6tkzISE2Rnjja42YygtGLfNG0cSX4GoK8a1B9hsJQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFPIu6t3JjCd4nKw8QbJLH1Rp8DgSyLDic7JwXoZEUHYPwPi5twdMRjjzGLx8SatE
-	 3/Hn8jO8dYeDCTTQsZEaYmn5N4U4mLvpoTJgsZcdnH3hN5vNLGzoF1xjgoFSmfELfJ
-	 Ts80FFR1gj6ZT740uIILarl5NF0dl18Z5XHuCjkE=
+	b=A8fWeuaE1v/2oDEhk+Ax7g9vKE2PpEPtQtFcagXYD1/N511AAOm9FEqxsIumXpJGT
+	 mZA8bceoXLupj472bV2jGG09TrrreVr3OTFuUrWSexiCV/M5vyBqGdBHB3NLReV68g
+	 JTR5fj2Q1L/QAsEVIOVo7EawW2uhhJ+Hi77QiSKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 189/206] hfsplus: fix held lock freed on hfsplus_fill_super()
-Date: Tue, 12 May 2026 19:40:41 +0200
-Message-ID: <20260512173936.869885432@linuxfoundation.org>
+Subject: [PATCH 6.12 190/206] crypto: nx - Migrate to scomp API
+Date: Tue, 12 May 2026 19:40:42 +0200
+Message-ID: <20260512173936.892132003@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,139 +51,284 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 90c500e4fd83fa33c09bc7ee23b6d9cc487ac733 ]
+[ Upstream commit 980b5705f4e73f567e405cd18337cc32fd51cf79 ]
 
-hfsplus_fill_super() calls hfs_find_init() to initialize a search
-structure, which acquires tree->tree_lock. If the subsequent call to
-hfsplus_cat_build_key() fails, the function jumps to the out_put_root
-error label without releasing the lock. The later cleanup path then
-frees the tree data structure with the lock still held, triggering a
-held lock freed warning.
+The only remaining user of 842 compression has been migrated to the
+acomp compression API, and so the NX hardware driver has to follow suit,
+given that no users of the obsolete 'comp' API remain, and it is going
+to be removed.
 
-Fix this by adding the missing hfs_find_exit(&fd) call before jumping
-to the out_put_root error label. This ensures that tree->tree_lock is
-properly released on the error path.
+So migrate the NX driver code to scomp. These will be wrapped and
+exposed as acomp implementation via the crypto subsystem's
+acomp-to-scomp adaptation layer.
 
-The bug was originally detected on v6.13-rc1 using an experimental
-static analysis tool we are developing, and we have verified that the
-issue persists in the latest mainline kernel. The tool is specifically
-designed to detect memory management issues. It is currently under active
-development and not yet publicly available.
-
-We confirmed the bug by runtime testing under QEMU with x86_64 defconfig,
-lockdep enabled, and CONFIG_HFSPLUS_FS=y. To trigger the error path, we
-used GDB to dynamically shrink the max_unistr_len parameter to 1 before
-hfsplus_asc2uni() is called. This forces hfsplus_asc2uni() to naturally
-return -ENAMETOOLONG, which propagates to hfsplus_cat_build_key() and
-exercises the faulty error path. The following warning was observed
-during mount:
-
-	=========================
-	WARNING: held lock freed!
-	7.0.0-rc3-00016-gb4f0dd314b39 #4 Not tainted
-	-------------------------
-	mount/174 is freeing memory ffff888103f92000-ffff888103f92fff, with a lock still held there!
-	ffff888103f920b0 (&tree->tree_lock){+.+.}-{4:4}, at: hfsplus_find_init+0x154/0x1e0
-	2 locks held by mount/174:
-	#0: ffff888103f960e0 (&type->s_umount_key#42/1){+.+.}-{4:4}, at: alloc_super.constprop.0+0x167/0xa40
-	#1: ffff888103f920b0 (&tree->tree_lock){+.+.}-{4:4}, at: hfsplus_find_init+0x154/0x1e0
-
-	stack backtrace:
-	CPU: 2 UID: 0 PID: 174 Comm: mount Not tainted 7.0.0-rc3-00016-gb4f0dd314b39 #4 PREEMPT(lazy)
-	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-	Call Trace:
-	<TASK>
-	dump_stack_lvl+0x82/0xd0
-	debug_check_no_locks_freed+0x13a/0x180
-	kfree+0x16b/0x510
-	? hfsplus_fill_super+0xcb4/0x18a0
-	hfsplus_fill_super+0xcb4/0x18a0
-	? __pfx_hfsplus_fill_super+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? bdev_open+0x65f/0xc30
-	? srso_return_thunk+0x5/0x5f
-	? pointer+0x4ce/0xbf0
-	? trace_contention_end+0x11c/0x150
-	? __pfx_pointer+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? bdev_open+0x79b/0xc30
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? vsnprintf+0x6da/0x1270
-	? srso_return_thunk+0x5/0x5f
-	? __mutex_unlock_slowpath+0x157/0x740
-	? __pfx_vsnprintf+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? mark_held_locks+0x49/0x80
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? irqentry_exit+0x17b/0x5e0
-	? trace_irq_disable.constprop.0+0x116/0x150
-	? __pfx_hfsplus_fill_super+0x10/0x10
-	? __pfx_hfsplus_fill_super+0x10/0x10
-	get_tree_bdev_flags+0x302/0x580
-	? __pfx_get_tree_bdev_flags+0x10/0x10
-	? vfs_parse_fs_qstr+0x129/0x1a0
-	? __pfx_vfs_parse_fs_qstr+0x3/0x10
-	vfs_get_tree+0x89/0x320
-	fc_mount+0x10/0x1d0
-	path_mount+0x5c5/0x21c0
-	? __pfx_path_mount+0x10/0x10
-	? trace_irq_enable.constprop.0+0x116/0x150
-	? trace_irq_enable.constprop.0+0x116/0x150
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? kmem_cache_free+0x307/0x540
-	? user_path_at+0x51/0x60
-	? __x64_sys_mount+0x212/0x280
-	? srso_return_thunk+0x5/0x5f
-	__x64_sys_mount+0x212/0x280
-	? __pfx___x64_sys_mount+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? trace_irq_enable.constprop.0+0x116/0x150
-	? srso_return_thunk+0x5/0x5f
-	do_syscall_64+0x111/0x680
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-	RIP: 0033:0x7ffacad55eae
-	Code: 48 8b 0d 85 1f 0f 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 49 89 ca b8 a5 00 00 8
-	RSP: 002b:00007fff1ab55718 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
-	RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffacad55eae
-	RDX: 000055740c64e5b0 RSI: 000055740c64e630 RDI: 000055740c651ab0
-	RBP: 000055740c64e380 R08: 0000000000000000 R09: 0000000000000001
-	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-	R13: 000055740c64e5b0 R14: 000055740c651ab0 R15: 000055740c64e380
-	</TASK>
-
-After applying this patch, the warning no longer appears.
-
-Fixes: 89ac9b4d3d1a ("hfsplus: fix longname handling")
-CC: stable@vger.kernel.org
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Tested-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: adb3faf2db1a ("crypto: nx - fix bounce buffer leaks in nx842_crypto_{alloc,free}_ctx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/super.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/nx/nx-842.c            |   33 +++++++++++++++++++--------------
+ drivers/crypto/nx/nx-842.h            |   15 ++++++++-------
+ drivers/crypto/nx/nx-common-powernv.c |   31 +++++++++++++++----------------
+ drivers/crypto/nx/nx-common-pseries.c |   33 ++++++++++++++++-----------------
+ 4 files changed, 58 insertions(+), 54 deletions(-)
 
---- a/fs/hfsplus/super.c
-+++ b/fs/hfsplus/super.c
-@@ -545,8 +545,10 @@ static int hfsplus_fill_super(struct sup
- 	if (err)
- 		goto out_put_root;
- 	err = hfsplus_cat_build_key(sb, fd.search_key, HFSPLUS_ROOT_CNID, &str);
--	if (unlikely(err < 0))
-+	if (unlikely(err < 0)) {
-+		hfs_find_exit(&fd);
- 		goto out_put_root;
-+	}
- 	if (!hfsplus_brec_read_cat(&fd, &entry)) {
- 		hfs_find_exit(&fd);
- 		if (entry.type != cpu_to_be16(HFSPLUS_FOLDER)) {
+--- a/drivers/crypto/nx/nx-842.c
++++ b/drivers/crypto/nx/nx-842.c
+@@ -101,9 +101,13 @@ static int update_param(struct nx842_cry
+ 	return 0;
+ }
+ 
+-int nx842_crypto_init(struct crypto_tfm *tfm, struct nx842_driver *driver)
++void *nx842_crypto_alloc_ctx(struct nx842_driver *driver)
+ {
+-	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
++	struct nx842_crypto_ctx *ctx;
++
++	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
++	if (!ctx)
++		return ERR_PTR(-ENOMEM);
+ 
+ 	spin_lock_init(&ctx->lock);
+ 	ctx->driver = driver;
+@@ -114,22 +118,23 @@ int nx842_crypto_init(struct crypto_tfm
+ 		kfree(ctx->wmem);
+ 		free_page((unsigned long)ctx->sbounce);
+ 		free_page((unsigned long)ctx->dbounce);
+-		return -ENOMEM;
++		kfree(ctx);
++		return ERR_PTR(-ENOMEM);
+ 	}
+ 
+-	return 0;
++	return ctx;
+ }
+-EXPORT_SYMBOL_GPL(nx842_crypto_init);
++EXPORT_SYMBOL_GPL(nx842_crypto_alloc_ctx);
+ 
+-void nx842_crypto_exit(struct crypto_tfm *tfm)
++void nx842_crypto_free_ctx(void *p)
+ {
+-	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
++	struct nx842_crypto_ctx *ctx = p;
+ 
+ 	kfree(ctx->wmem);
+ 	free_page((unsigned long)ctx->sbounce);
+ 	free_page((unsigned long)ctx->dbounce);
+ }
+-EXPORT_SYMBOL_GPL(nx842_crypto_exit);
++EXPORT_SYMBOL_GPL(nx842_crypto_free_ctx);
+ 
+ static void check_constraints(struct nx842_constraints *c)
+ {
+@@ -246,11 +251,11 @@ nospc:
+ 	return update_param(p, slen, dskip + dlen);
+ }
+ 
+-int nx842_crypto_compress(struct crypto_tfm *tfm,
++int nx842_crypto_compress(struct crypto_scomp *tfm,
+ 			  const u8 *src, unsigned int slen,
+-			  u8 *dst, unsigned int *dlen)
++			  u8 *dst, unsigned int *dlen, void *pctx)
+ {
+-	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
++	struct nx842_crypto_ctx *ctx = pctx;
+ 	struct nx842_crypto_header *hdr =
+ 				container_of(&ctx->header,
+ 					     struct nx842_crypto_header, hdr);
+@@ -431,11 +436,11 @@ usesw:
+ 	return update_param(p, slen + padding, dlen);
+ }
+ 
+-int nx842_crypto_decompress(struct crypto_tfm *tfm,
++int nx842_crypto_decompress(struct crypto_scomp *tfm,
+ 			    const u8 *src, unsigned int slen,
+-			    u8 *dst, unsigned int *dlen)
++			    u8 *dst, unsigned int *dlen, void *pctx)
+ {
+-	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
++	struct nx842_crypto_ctx *ctx = pctx;
+ 	struct nx842_crypto_header *hdr;
+ 	struct nx842_crypto_param p;
+ 	struct nx842_constraints c = *ctx->driver->constraints;
+--- a/drivers/crypto/nx/nx-842.h
++++ b/drivers/crypto/nx/nx-842.h
+@@ -3,7 +3,6 @@
+ #ifndef __NX_842_H__
+ #define __NX_842_H__
+ 
+-#include <crypto/algapi.h>
+ #include <linux/kernel.h>
+ #include <linux/init.h>
+ #include <linux/module.h>
+@@ -101,6 +100,8 @@
+ #define LEN_ON_SIZE(pa, size)	((size) - ((pa) & ((size) - 1)))
+ #define LEN_ON_PAGE(pa)		LEN_ON_SIZE(pa, PAGE_SIZE)
+ 
++struct crypto_scomp;
++
+ static inline unsigned long nx842_get_pa(void *addr)
+ {
+ 	if (!is_vmalloc_addr(addr))
+@@ -182,13 +183,13 @@ struct nx842_crypto_ctx {
+ 	struct nx842_driver *driver;
+ };
+ 
+-int nx842_crypto_init(struct crypto_tfm *tfm, struct nx842_driver *driver);
+-void nx842_crypto_exit(struct crypto_tfm *tfm);
+-int nx842_crypto_compress(struct crypto_tfm *tfm,
++void *nx842_crypto_alloc_ctx(struct nx842_driver *driver);
++void nx842_crypto_free_ctx(void *ctx);
++int nx842_crypto_compress(struct crypto_scomp *tfm,
+ 			  const u8 *src, unsigned int slen,
+-			  u8 *dst, unsigned int *dlen);
+-int nx842_crypto_decompress(struct crypto_tfm *tfm,
++			  u8 *dst, unsigned int *dlen, void *ctx);
++int nx842_crypto_decompress(struct crypto_scomp *tfm,
+ 			    const u8 *src, unsigned int slen,
+-			    u8 *dst, unsigned int *dlen);
++			    u8 *dst, unsigned int *dlen, void *ctx);
+ 
+ #endif /* __NX_842_H__ */
+--- a/drivers/crypto/nx/nx-common-powernv.c
++++ b/drivers/crypto/nx/nx-common-powernv.c
+@@ -9,6 +9,7 @@
+ 
+ #include "nx-842.h"
+ 
++#include <crypto/internal/scompress.h>
+ #include <linux/timer.h>
+ 
+ #include <asm/prom.h>
+@@ -1031,23 +1032,21 @@ static struct nx842_driver nx842_powernv
+ 	.decompress =	nx842_powernv_decompress,
+ };
+ 
+-static int nx842_powernv_crypto_init(struct crypto_tfm *tfm)
++static void *nx842_powernv_crypto_alloc_ctx(void)
+ {
+-	return nx842_crypto_init(tfm, &nx842_powernv_driver);
++	return nx842_crypto_alloc_ctx(&nx842_powernv_driver);
+ }
+ 
+-static struct crypto_alg nx842_powernv_alg = {
+-	.cra_name		= "842",
+-	.cra_driver_name	= "842-nx",
+-	.cra_priority		= 300,
+-	.cra_flags		= CRYPTO_ALG_TYPE_COMPRESS,
+-	.cra_ctxsize		= sizeof(struct nx842_crypto_ctx),
+-	.cra_module		= THIS_MODULE,
+-	.cra_init		= nx842_powernv_crypto_init,
+-	.cra_exit		= nx842_crypto_exit,
+-	.cra_u			= { .compress = {
+-	.coa_compress		= nx842_crypto_compress,
+-	.coa_decompress		= nx842_crypto_decompress } }
++static struct scomp_alg nx842_powernv_alg = {
++	.base.cra_name		= "842",
++	.base.cra_driver_name	= "842-nx",
++	.base.cra_priority	= 300,
++	.base.cra_module	= THIS_MODULE,
++
++	.alloc_ctx		= nx842_powernv_crypto_alloc_ctx,
++	.free_ctx		= nx842_crypto_free_ctx,
++	.compress		= nx842_crypto_compress,
++	.decompress		= nx842_crypto_decompress,
+ };
+ 
+ static __init int nx_compress_powernv_init(void)
+@@ -1107,7 +1106,7 @@ static __init int nx_compress_powernv_in
+ 		nx842_powernv_exec = nx842_exec_vas;
+ 	}
+ 
+-	ret = crypto_register_alg(&nx842_powernv_alg);
++	ret = crypto_register_scomp(&nx842_powernv_alg);
+ 	if (ret) {
+ 		nx_delete_coprocs();
+ 		return ret;
+@@ -1128,7 +1127,7 @@ static void __exit nx_compress_powernv_e
+ 	if (!nx842_ct)
+ 		vas_unregister_api_powernv();
+ 
+-	crypto_unregister_alg(&nx842_powernv_alg);
++	crypto_unregister_scomp(&nx842_powernv_alg);
+ 
+ 	nx_delete_coprocs();
+ }
+--- a/drivers/crypto/nx/nx-common-pseries.c
++++ b/drivers/crypto/nx/nx-common-pseries.c
+@@ -11,6 +11,7 @@
+ #include <asm/vio.h>
+ #include <asm/hvcall.h>
+ #include <asm/vas.h>
++#include <crypto/internal/scompress.h>
+ 
+ #include "nx-842.h"
+ #include "nx_csbcpb.h" /* struct nx_csbcpb */
+@@ -1008,23 +1009,21 @@ static struct nx842_driver nx842_pseries
+ 	.decompress =	nx842_pseries_decompress,
+ };
+ 
+-static int nx842_pseries_crypto_init(struct crypto_tfm *tfm)
++static void *nx842_pseries_crypto_alloc_ctx(void)
+ {
+-	return nx842_crypto_init(tfm, &nx842_pseries_driver);
++	return nx842_crypto_alloc_ctx(&nx842_pseries_driver);
+ }
+ 
+-static struct crypto_alg nx842_pseries_alg = {
+-	.cra_name		= "842",
+-	.cra_driver_name	= "842-nx",
+-	.cra_priority		= 300,
+-	.cra_flags		= CRYPTO_ALG_TYPE_COMPRESS,
+-	.cra_ctxsize		= sizeof(struct nx842_crypto_ctx),
+-	.cra_module		= THIS_MODULE,
+-	.cra_init		= nx842_pseries_crypto_init,
+-	.cra_exit		= nx842_crypto_exit,
+-	.cra_u			= { .compress = {
+-	.coa_compress		= nx842_crypto_compress,
+-	.coa_decompress		= nx842_crypto_decompress } }
++static struct scomp_alg nx842_pseries_alg = {
++	.base.cra_name		= "842",
++	.base.cra_driver_name	= "842-nx",
++	.base.cra_priority	= 300,
++	.base.cra_module	= THIS_MODULE,
++
++	.alloc_ctx		= nx842_pseries_crypto_alloc_ctx,
++	.free_ctx		= nx842_crypto_free_ctx,
++	.compress		= nx842_crypto_compress,
++	.decompress		= nx842_crypto_decompress,
+ };
+ 
+ static int nx842_probe(struct vio_dev *viodev,
+@@ -1072,7 +1071,7 @@ static int nx842_probe(struct vio_dev *v
+ 	if (ret)
+ 		goto error;
+ 
+-	ret = crypto_register_alg(&nx842_pseries_alg);
++	ret = crypto_register_scomp(&nx842_pseries_alg);
+ 	if (ret) {
+ 		dev_err(&viodev->dev, "could not register comp alg: %d\n", ret);
+ 		goto error;
+@@ -1120,7 +1119,7 @@ static void nx842_remove(struct vio_dev
+ 	if (caps_feat)
+ 		sysfs_remove_group(&viodev->dev.kobj, &nxcop_caps_attr_group);
+ 
+-	crypto_unregister_alg(&nx842_pseries_alg);
++	crypto_unregister_scomp(&nx842_pseries_alg);
+ 
+ 	spin_lock_irqsave(&devdata_mutex, flags);
+ 	old_devdata = rcu_dereference_check(devdata,
+@@ -1252,7 +1251,7 @@ static void __exit nx842_pseries_exit(vo
+ 
+ 	vas_unregister_api_pseries();
+ 
+-	crypto_unregister_alg(&nx842_pseries_alg);
++	crypto_unregister_scomp(&nx842_pseries_alg);
+ 
+ 	spin_lock_irqsave(&devdata_mutex, flags);
+ 	old_devdata = rcu_dereference_check(devdata,
 
 
