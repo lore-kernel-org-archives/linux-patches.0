@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E263955DC;
-	Tue, 12 May 2026 17:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A563955F8;
+	Tue, 12 May 2026 17:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608206; cv=none; b=oBFmn1Jtv8PEqM0l+hFt41RLiSN/Gwi5EaTUkYkrEeg8pAagMcPm1o/dfUeGHAeVZw1RpBgt2cHNn1j+v7x4Feq2z9Y+4SJk9AbRNDZS/afqAJTkPhM2o+Dz3jM24N1+IdH27Qv5cHZXD/lqOCW7a+Psl5VofN4FuEzKCnHmi20=
+	t=1778608209; cv=none; b=L8aObTGk+MNmxN1MbOwRnVUgkQkaqlEyY2pVH2LLK6N1S/2OXHOmQ0h9+0KcFX0XTgWvAJzO9bbhOUXmlArOuS38DMkexcBT3Km2Mk6+hmg0LN1cyQN0vz22j3fEScNFhjCJiPdHgRs4sxthBvK63kHzcZ7MWtS47wagxwxHtjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608206; c=relaxed/simple;
-	bh=idLBVUBklCttT20jFIysP4AKCGmlIgsdhme2w32T0VM=;
+	s=arc-20240116; t=1778608209; c=relaxed/simple;
+	bh=+mTX0GL/ZYYU2Lszrjx13K9eEwjWLn3h8cgUJpNL2T4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aT/XwXBDY1feRnbIFfuEwrUiHVcvD196g7CO7/UyDOsnA4aJ2po3JU/rg70AmuJYV1+6A3jXh0DUf0CqCOFbERITVy+kotIq4Aimd4jKbdIAQniFBVuydW3RivkXf77QRtjOznQcAwXnH/qXe+GI3EbFZJwQCXADQbM+Q3QaLyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MC/hdCwR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=driFN+RefZ/buib1WVbV/j41Ln4Bg1tpYmeyrqGE3SPOfT4QA+nMC9XuejZRLigTAaGbm8JcG99j/MSpTvczsbva1RVerDzhFGjVbQIsDzYSHLu9d7ZE/Hp8PIGcZYG5GfdOkPYsBEX9P8OI6XYgFwansnCzEiR3MLLBIXax7lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9C4GO/x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MC/hdCwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187A6C2BCB0;
-	Tue, 12 May 2026 17:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9C4GO/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C8EC2BCB0;
+	Tue, 12 May 2026 17:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608206;
-	bh=idLBVUBklCttT20jFIysP4AKCGmlIgsdhme2w32T0VM=;
+	s=korg; t=1778608209;
+	bh=+mTX0GL/ZYYU2Lszrjx13K9eEwjWLn3h8cgUJpNL2T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MC/hdCwRZ0FtNP4bG8m4e2vFzAKzMTJEEcvYUkEw6UcbsVDwkY4MhYD6k/Ha0ga/g
-	 D1ZEIarGfrDmcw8s1jfsXcKOO+FAyB+6EcfTDvteswaeStmUzhLfO73EVI/fSOU6jL
-	 bJjEhOUZyEf+/4udaDM6uQ7BCw1Q/EK56G4fhAaI=
+	b=i9C4GO/xK5TA+Xy9nQQT620jPyOiC1ujOiSZ0pIl0hylnKngWQnL8LtrrrACpOoPa
+	 2iny5G21dft8srFsecYmMTZxUn/zfidahq68hstDA5Jplk+T/6m0TdPeLkBWlOJ9tX
+	 0F3utDFj21rpZNJ56eLschf6kKNBNU79/JhnvSBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 194/206] erofs: fix unsigned underflow in z_erofs_lz4_handle_overlap()
-Date: Tue, 12 May 2026 19:40:46 +0200
-Message-ID: <20260512173936.979307148@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.12 154/206] RDMA/rxe: Reject non-8-byte ATOMIC_WRITE payloads
+Date: Tue, 12 May 2026 19:40:06 +0200
+Message-ID: <20260512173936.125266337@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -52,54 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 21e161de2dc660b1bb70ef5b156ab8e6e1cca3ab ]
+commit 1114c87aa6f195cf07da55a27b2122ae26557b26 upstream.
 
-Some crafted images can have illegal (!partial_decoding &&
-m_llen < m_plen) extents, and the LZ4 inplace decompression path
-can be wrongly hit, but it cannot handle (outpages < inpages)
-properly: "outpages - inpages" wraps to a large value and
-the subsequent rq->out[] access reads past the decompressed_pages
-array.
+atomic_write_reply() at drivers/infiniband/sw/rxe/rxe_resp.c
+unconditionally dereferences 8 bytes at payload_addr(pkt):
 
-However, such crafted cases can correctly result in a corruption
-report in the normal LZ4 non-inplace path.
+    value = *(u64 *)payload_addr(pkt);
 
-Let's add an additional check to fix this for backporting.
+check_rkey() previously accepted an ATOMIC_WRITE request with pktlen ==
+resid == 0 because the length validation only compared pktlen against
+resid. A remote initiator that sets the RETH length to 0 therefore reaches
+atomic_write_reply() with a zero-byte logical payload, and the responder
+reads sizeof(u64) bytes from past the logical end of the packet into
+skb->head tailroom, then writes those 8 bytes into the attacker's MR via
+rxe_mr_do_atomic_write(). That is a remote disclosure of 4 bytes of kernel
+tailroom per probe (the other 4 bytes are the packet's own trailing ICRC).
 
-Reproducible image (base64-encoded gzipped blob):
+IBA oA19-28 defines ATOMIC_WRITE as exactly 8 bytes. Anything else is
+protocol-invalid. Hoist a strict length check into check_rkey() so the
+responder never reaches the unchecked dereference, and keep the existing
+WRITE-family length logic for the normal RDMA WRITE path.
 
-H4sIAJGR12kCA+3SPUoDQRgG4MkmkkZk8QRbRFIIi9hbpEjrHQI5ghfwCN5BLCzTGtLbBI+g
-dilSJo1CnIm7GEXFxhT6PDDwfrs73/ywIQD/1ePD4r7Ou6ETsrq4mu7XcWfj++Pb58nJU/9i
-PNtbjhan04/9GtX4qVYc814WDqt6FaX5s+ZwXXeq52lndT6IuVvlblytLMvh4Gzwaf90nsvz
-2DF/21+20T/ldgp5s1jXRaN4t/8izsy/OUB6e/Qa79r+JwAAAAAAAL52vQVuGQAAAP6+my1w
-ywAAAAAAAADwu14ATsEYtgBQAAA=
+Reproduced on mainline with an unmodified rxe driver: a sustained
+zero-length ATOMIC_WRITE probe repeatedly leaks adjacent skb head-buffer
+bytes into the attacker's MR, including recognisable kernel strings and
+partial kernel-direct-map pointer words.  With this patch applied the
+responder rejects the PDU and the MR stays all-zero.
 
-$ mount -t erofs -o cache_strategy=disabled foo.erofs /mnt
-$ dd if=/mnt/data of=/dev/null bs=4096 count=1
-
-Fixes: 598162d05080 ("erofs: support decompress big pcluster for lz4 backend")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 034e285f8b99 ("RDMA/rxe: Make responder support atomic write on RC service")
+Link: https://patch.msgid.link/r/20260418162141.3610201-1-michael.bommarito@gmail.com
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/decompressor.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/sw/rxe/rxe_resp.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -149,6 +149,7 @@ static void *z_erofs_lz4_handle_overlap(
- 	oend = rq->pageofs_out + rq->outputsize;
- 	omargin = PAGE_ALIGN(oend) - oend;
- 	if (!rq->partial_decoding && may_inplace &&
-+	    rq->outpages >= rq->inpages &&
- 	    omargin >= LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize)) {
- 		for (i = 0; i < rq->inpages; ++i)
- 			if (rq->out[rq->outpages - rq->inpages + i] !=
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -526,7 +526,19 @@ static enum resp_states check_rkey(struc
+ 	}
+ 
+ skip_check_range:
+-	if (pkt->mask & (RXE_WRITE_MASK | RXE_ATOMIC_WRITE_MASK)) {
++	if (pkt->mask & RXE_ATOMIC_WRITE_MASK) {
++		/* IBA oA19-28: ATOMIC_WRITE payload is exactly 8 bytes.
++		 * Reject any other length before the responder reads
++		 * sizeof(u64) bytes from payload_addr(pkt); a shorter
++		 * payload would read past the logical end of the packet
++		 * into skb->head tailroom.
++		 */
++		if (resid != sizeof(u64) || pktlen != sizeof(u64) ||
++		    bth_pad(pkt)) {
++			state = RESPST_ERR_LENGTH;
++			goto err;
++		}
++	} else if (pkt->mask & RXE_WRITE_MASK) {
+ 		if (resid > mtu) {
+ 			if (pktlen != mtu || bth_pad(pkt)) {
+ 				state = RESPST_ERR_LENGTH;
 
 
