@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BBF32ED32;
-	Tue, 12 May 2026 17:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461853EDE52;
+	Tue, 12 May 2026 17:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608270; cv=none; b=Fne+fJp4jxi2y4Z8zOtTe6d8OCjfnGLItLf2oHgbVHoth9lseVXVUysKr52pX/OnwIGlpLfuDWB317wbTRPSQr0p1lTw59IZ3eqvzj3m5eW/RtJjhblzvHO6zMRWDMTPyIEt5oGGWP7JxPZnoFaEs8d7U7aopyYkDQC6d1tJx/A=
+	t=1778608273; cv=none; b=eyHUxfkqwZMo7AQImmpXBBryVz6mFJLWpMIAGXraKZNxQ1ZCocYt4E8A+taoPPbTK+FXCzdEVEln2R3ajeGKQiVNOdejnzQY0sTp5zhd1JwNvBmreVwgPQkpQlryDPjHdD9oxkWP6wK7waSx6uRDy6Any/KBVmTNaCxSc7nyh3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608270; c=relaxed/simple;
-	bh=xcpNzpVBVWJy9Wqh/X16hX5C+XDs84UJKJFlrFvVim8=;
+	s=arc-20240116; t=1778608273; c=relaxed/simple;
+	bh=Vk2G+TdxPPS75yZcnZOWVwWBsP5Kl8vTxf/oaMlGpjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mwhYB771BJK3QKJXLTnUAIVjYCBT+Bxx/urtemwP5YxZQ+bsYaTn24MsglS5kKZ2UQkJ59QUFc4WnCYDFiaVmW/1pxYqTONqk80sQN1LEfzyfNzlFsx1/Z6+ORaeaJeY383tLHDrQYbVQpf0tq+xHb5fYx6rqBYdxr0Vq+8oYWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYjFKZmw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dRmJhvXnVoWmhLphzTWD76iYa/FA2tcZKUIz2SnEyPkbj8YzVGqtM5kdu+Q3cQBmWZoav2K6+TBWxGxQueo4KwhTURbWx66DnFDJfHqx991Qxzq1AvyDwY0I0Rvzgm3r8Hexy21KCyDmm9zWJqhM7iY1FGuAFfrlL9OO9r+IsG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yktA+39u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYjFKZmw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395F0C2BCB0;
-	Tue, 12 May 2026 17:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yktA+39u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE14AC2BCB0;
+	Tue, 12 May 2026 17:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608270;
-	bh=xcpNzpVBVWJy9Wqh/X16hX5C+XDs84UJKJFlrFvVim8=;
+	s=korg; t=1778608273;
+	bh=Vk2G+TdxPPS75yZcnZOWVwWBsP5Kl8vTxf/oaMlGpjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BYjFKZmwzxmjWSYeQ0jjG9MmhNer/dnojLd8f1+vhnMCA1Ex0pnAsSbMgFpjZDOEP
-	 MPTSr5bzQs07hVxWfCBVO/N9fu/CJQT5RUBVvQWP9c9iF5VlTaGfAV3/sRdvpodfiJ
-	 j6SZ+InOcU1kYwJpXJiL6tlolIThfzCPzwjXzYmc=
+	b=yktA+39urIdwNHrO98DwcRw1AWrQMj4XGYyZDGRN8y7PJUBU1X4T8q9dwuYt0zu41
+	 4nDmqUdXBB13M/q2Dn+FGvdYq/c0mPYkcWg8A425NfMw/I4NmPaGXBVielsv6buSQU
+	 um8Jgr3UjqQv9vypMxtYPCZvCUzveEM7zfb+RNYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 015/270] ksmbd: rewrite stop_sessions() with restartable iteration
-Date: Tue, 12 May 2026 19:36:56 +0200
-Message-ID: <20260512173938.777061306@linuxfoundation.org>
+	Alexander Bulekov <bkov@amazon.com>,
+	Fred Griffoul <fgriffo@amazon.co.uk>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 016/270] KVM: x86: Fix shadow paging use-after-free due to unexpected GFN
+Date: Tue, 12 May 2026 19:36:57 +0200
+Message-ID: <20260512173938.798144000@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,190 +53,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit c444139cb747bf6de1922b39900fdf02281490f4 upstream.
+commit 0cb2af2ea66ad8ff195c156ea690f11216285bdf upstream.
 
-stop_sessions() walks conn_list with hash_for_each() and, for every
-entry, drops conn_list_lock across the transport ->shutdown() call
-before re-acquiring the read lock to continue the loop.  The hash
-walk relies on cross-iteration state (the current bucket and the
-hlist position), which is not preserved across unlock/relock: if
-another thread performs a list mutation during the unlocked window,
-the ongoing iteration becomes unreliable and can re-visit
-connections that have already been handled or skip connections that
-have not.  The outer `if (!hash_empty(conn_list)) goto again;` retry
-masks the symptom in the common case but does not address the
-unsafe iteration itself.
+The shadow MMU computes GFNs for direct shadow pages using sp->gfn plus
+the SPTE index. This assumption breaks for shadow paging if the guest
+page tables are modified between VM entries (similar to commit
+aad885e77496, "KVM: x86/mmu: Drop/zap existing present SPTE even
+when creating an MMIO SPTE", 2026-03-27).  The flow is as follows:
 
-Reframe the loop so it never relies on iterator state across
-unlock/relock.  Under conn_list_lock held for read, pick the first
-connection whose ->shutdown() has not yet been issued by this path,
-pin it by taking an extra reference, record that fact on the
-connection and mark it EXITING while still inside the locked walk,
-then drop the lock.  Then call ->shutdown() outside the lock, drop
-the pin (freeing the connection if the handler already released its
-reference), and restart from the top.
+- a PDE is installed for a 2MB mapping, and a page in that area is
+  accessed.  KVM creates a kvm_mmu_page consisting of 512 4KB pages;
+  the kvm_mmu_page is marked by FNAME(fetch) as direct-mapped because
+  the guest's mapping is a huge page (and thus contiguous).
 
-Use a new per-connection flag, conn->stop_called, as the "shutdown
-issued from stop_sessions()" marker rather than reusing the status
-state.  ksmbd_conn_set_exiting() is also invoked by
-ksmbd_sessions_deregister() on sibling channels of a multichannel
-session without issuing a transport shutdown, so treating
-KSMBD_SESS_EXITING as "already handled here" would skip connections
-that still need shutdown() to wake their handler out of recv(),
-leaving the outer retry waiting indefinitely for the hash to drain.
-stop_sessions() is serialised by init_lock in
-ksmbd_conn_transport_destroy(), so writing stop_called under the
-read lock has no other writer.
+- the PDE mapping is changed from outside the guest.
 
-Set EXITING inside the locked walk so the selection, the stop_called
-marker, and the status transition all happen together, and guard
-against regressing a connection that has already advanced to
-KSMBD_SESS_RELEASING on its own (for example, if the handler exited
-its receive loop for an unrelated reason between teardown steps).
+- the guest accesses another page in the same 2MB area.  KVM installs
+  a new leaf SPTE and rmap entry; the SPTE uses the "correct" GFN
+  (i.e. based on the new mapping, as changed in the previous step) but
+  that GFN is outside of the [sp->gfn, sp->gfn + 511] range; therefore
+  the rmap entry cannot be found and removed when the kvm_mmu_page
+  is zapped.
 
-When the pin drop is the last put, release the transport and pair
-ida_destroy(&target->async_ida) with the ida_init() done in
-ksmbd_conn_alloc(), so stop_sessions() retiring a connection on its
-own does not leak the xarray backing of the embedded async_ida.
+- the memslot that covers the first 2MB mapping is deleted, and the
+  kvm_mmu_page for the now-invalid GPA is zapped.  However, rmap_remove()
+  only looks at the [sp->gfn, sp->gfn + 511] range established in step 1,
+  and fails to find the rmap entry that was recorded by step 3.
 
-The outer retry with msleep() is kept to wait for handler threads to
-reach ksmbd_conn_free() and drain the hash.
+- any operation that causes an rmap walk for the same page accessed
+  by step 3 then walks a stale rmap and dereferences a freed kvm_mmu_page.
+  This includes dirty logging or MMU notifier invalidations (e.g., from
+  MADV_DONTNEED).
 
-Observed with an instrumented build that logs one line per visit and
-widens the unlocked window before ->shutdown() by 200 ms, under
-five concurrent cifs mounts (nosharesock, one connection each):
+The underlying issue is that KVM's walking of shadow PTEs assumes that
+if a SPTE is present when KVM wants to install a non-leaf SPTE, then the
+existing kvm_mmu_page must be for the correct gfn.  Because the only way
+for the gfn to be wrong is if KVM messed up and failed to zap a SPTE...
+which shouldn't happen, but *actually* only happens in response to a
+guest write.
 
-  * Current code: the same connection address is revisited many
-    times during a single stop_sessions() call and ->shutdown() is
-    invoked well beyond the number of live connections before the
-    hash finally drains.
+That bug dates back literally forever, as even the first version of KVM
+assumes that the GFN matches and walks into the "wrong" shadow page.
+However, that was only an imprecision until 2032a93d66fa ("KVM: MMU:
+Don't allocate gfns page for direct mmu pages") came along.
 
-  * Rewritten code: each live connection produces exactly one
-    ->shutdown() call; the function returns as soon as the hash is
-    empty.
+Fix it by checking for a target gfn mismatch and zapping the existing
+SPTE.  That way the old SP and rmap entries are gone, KVM installs
+the rmap in the right location, and everyone is happy.
 
-Functional teardown via `ksmbd.control --shutdown` with the same
-five mounts completes cleanly on the rewritten path.
-
-Performance is observably unchanged.  Tearing down N concurrent
-nosharesock cifs connections with `ksmbd.control --shutdown` +
-`rmmod ksmbd` takes essentially the same wall time before and after
-the rewrite:
-
-    N        before        after
-    10       4.93s         5.34s
-    30       7.34s         7.03s
-    50       7.31s         7.01s     (3-run avg: 7.04s vs 7.25s)
-   100       6.98s         6.78s
-   200       6.77s         6.89s
-
-and the number of ->shutdown() calls equals the number of live
-connections on both paths when the race is not widened.  The
-teardown is dominated by the msleep(100)-based outer retry waiting
-for handler threads to run ksmbd_conn_free(), not by the iteration
-itself; the restartable loop's worst-case O(N^2) visit cost is in
-the microseconds even at N=200 and sits far below the msleep(100)
-granularity.
-
-Applied alone on top of ksmbd-for-next-next, this patch does not
-introduce a new leak site.  Under the same reproducer (10x
-concurrent-holders + ss -K + ksmbd.control --shutdown + rmmod), the
-tree still shows the pre-existing per-connection transport leak
-count that arises when the last refcount drop lands in one of
-ksmbd_conn_r_count_dec(), __free_opinfo() or session_fd_check() -
-all of which end with a bare kfree() today.  kmemleak backtraces
-for the unreferenced objects point into the TCP accept path
-(sk_clone -> inet_csk_clone_lock, sock_alloc_inode) and none
-involve stop_sessions().  Plugging those bare-kfree sites is the
-responsibility of the follow-up patch.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: 2032a93d66fa ("KVM: MMU: Don't allocate gfns page for direct mmu pages")
+Fixes: 6aa8b732ca01 ("kvm: userspace interface")
+Reported-by: Alexander Bulekov <bkov@amazon.com>
+Reported-by: Fred Griffoul <fgriffo@amazon.co.uk>
 Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20260503201029.106481-1-pbonzini@redhat.com/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c |   46 +++++++++++++++++++++++++++++++++++++--------
- fs/smb/server/connection.h |    1 
- 2 files changed, 39 insertions(+), 8 deletions(-)
+ arch/x86/kvm/mmu/mmu.c | 35 ++++++++++++++---------------------
+ 1 file changed, 14 insertions(+), 21 deletions(-)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -476,24 +476,54 @@ out:
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index dad7abb1112b7..0bd0cb8992c9f 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -182,6 +182,8 @@ static struct kmem_cache *pte_list_desc_cache;
+ struct kmem_cache *mmu_page_header_cache;
  
- static void stop_sessions(void)
+ static void mmu_spte_set(u64 *sptep, u64 spte);
++static int mmu_page_zap_pte(struct kvm *kvm, struct kvm_mmu_page *sp,
++			    u64 *spte, struct list_head *invalid_list);
+ 
+ struct kvm_mmu_role_regs {
+ 	const unsigned long cr0;
+@@ -1287,19 +1289,6 @@ static void drop_spte(struct kvm *kvm, u64 *sptep)
+ 		rmap_remove(kvm, sptep);
+ }
+ 
+-static void drop_large_spte(struct kvm *kvm, u64 *sptep, bool flush)
+-{
+-	struct kvm_mmu_page *sp;
+-
+-	sp = sptep_to_sp(sptep);
+-	WARN_ON_ONCE(sp->role.level == PG_LEVEL_4K);
+-
+-	drop_spte(kvm, sptep);
+-
+-	if (flush)
+-		kvm_flush_remote_tlbs_sptep(kvm, sptep);
+-}
+-
+ /*
+  * Write-protect on the specified @sptep, @pt_protect indicates whether
+  * spte write-protection is caused by protecting shadow page table.
+@@ -2466,7 +2455,8 @@ static struct kvm_mmu_page *kvm_mmu_get_child_sp(struct kvm_vcpu *vcpu,
  {
--	struct ksmbd_conn *conn;
-+	struct ksmbd_conn *conn, *target;
- 	struct ksmbd_transport *t;
-+	bool any;
- 	int bkt;
+ 	union kvm_mmu_page_role role;
  
-+	/*
-+	 * Serialised via init_lock; no concurrent stop_sessions() can
-+	 * touch conn->stop_called, so writing it under the read lock is
-+	 * safe.
-+	 */
- again:
-+	target = NULL;
-+	any = false;
- 	down_read(&conn_list_lock);
- 	hash_for_each(conn_list, bkt, conn, hlist) {
--		t = conn->transport;
--		ksmbd_conn_set_exiting(conn);
--		if (t->ops->shutdown) {
--			up_read(&conn_list_lock);
-+		any = true;
-+		if (conn->stop_called)
-+			continue;
-+		atomic_inc(&conn->refcnt);
-+		conn->stop_called = true;
-+		/*
-+		 * Mark the connection EXITING while still holding the
-+		 * read lock so the selection and the status transition
-+		 * happen together.  Do not regress a connection that has
-+		 * already advanced to RELEASING on its own (e.g. the
-+		 * handler exited its receive loop for an unrelated
-+		 * reason).
-+		 */
-+		if (READ_ONCE(conn->status) != KSMBD_SESS_RELEASING)
-+			ksmbd_conn_set_exiting(conn);
-+		target = conn;
-+		break;
-+	}
-+	up_read(&conn_list_lock);
+-	if (is_shadow_present_pte(*sptep) && !is_large_pte(*sptep))
++	if (is_shadow_present_pte(*sptep) && !is_large_pte(*sptep) &&
++	    spte_to_child_sp(*sptep) && spte_to_child_sp(*sptep)->gfn == gfn)
+ 		return ERR_PTR(-EEXIST);
+ 
+ 	role = kvm_mmu_child_role(sptep, direct, access);
+@@ -2544,13 +2534,16 @@ static void __link_shadow_page(struct kvm *kvm,
+ 
+ 	BUILD_BUG_ON(VMX_EPT_WRITABLE_MASK != PT_WRITABLE_MASK);
+ 
+-	/*
+-	 * If an SPTE is present already, it must be a leaf and therefore
+-	 * a large one.  Drop it, and flush the TLB if needed, before
+-	 * installing sp.
+-	 */
+-	if (is_shadow_present_pte(*sptep))
+-		drop_large_spte(kvm, sptep, flush);
++	if (is_shadow_present_pte(*sptep)) {
++		struct kvm_mmu_page *parent_sp;
++		LIST_HEAD(invalid_list);
 +
-+	if (target) {
-+		t = target->transport;
-+		if (t->ops->shutdown)
- 			t->ops->shutdown(t);
--			down_read(&conn_list_lock);
-+		if (atomic_dec_and_test(&target->refcnt)) {
-+			ida_destroy(&target->async_ida);
-+			t->ops->free_transport(t);
-+			kfree(target);
- 		}
-+		goto again;
- 	}
--	up_read(&conn_list_lock);
++		parent_sp = sptep_to_sp(sptep);
++		WARN_ON_ONCE(parent_sp->role.level == PG_LEVEL_4K);
++
++		mmu_page_zap_pte(kvm, parent_sp, sptep, &invalid_list);
++		kvm_mmu_remote_flush_or_zap(kvm, &invalid_list, true);
++	}
  
--	if (!hash_empty(conn_list)) {
-+	if (any) {
- 		msleep(100);
- 		goto again;
- 	}
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -48,6 +48,7 @@ struct ksmbd_conn {
- 	struct mutex			srv_mutex;
- 	int				status;
- 	unsigned int			cli_cap;
-+	bool				stop_called;
- 	union {
- 		__be32			inet_addr;
- #if IS_ENABLED(CONFIG_IPV6)
+ 	spte = make_nonleaf_spte(sp->spt, sp_ad_disabled(sp));
+ 
+-- 
+2.53.0
+
 
 
