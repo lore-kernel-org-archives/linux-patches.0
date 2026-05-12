@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7DF3EDE5D;
-	Tue, 12 May 2026 18:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66B93EDE55;
+	Tue, 12 May 2026 18:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609041; cv=none; b=k6Sa3UFE7mr7rZ9VY0lQO9tMzfaFxKd5eULgCa23Wc+gcGt6iYalO87b3dHRdi6j2+Hk5FtXRaJtIYcYNIdgYzyg2mCWuFb2nZZjzcgib5RoK27Ws/Jp86heu7FGoMbpaR+a+k5YAeqSu0bOdVR8nDz5SnTuk51gJb/eCJ23JQI=
+	t=1778609043; cv=none; b=VLoq+1dZEvFGgFBfoBkVZORDMCyc63hix8xWlq7bxzUAZ+SbtaozM75agPgDkL8KjcjfwFPqE0j/87oQ+wMM1Yyk2TsMm61aA7oBg67aMRMWTKGug/oKu1wxZRbwVfZfySi+bgC8jMXNQFPkdC+AyEuq4QwmEM/V347qYcrs6Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609041; c=relaxed/simple;
-	bh=j1kqhjg/VQbavXrYRepnNIbGPMBXSJLSN25JFAXi75Q=;
+	s=arc-20240116; t=1778609043; c=relaxed/simple;
+	bh=bv1A5udFxk/IzUBe9oV/PzWZakYkCqZV9WTpT+GZx04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVWPDHk97HFdoyuzBM2M6IuDyt3XsDlBXB+VlJLp7xVPYsU10J7XYGB7KlvwhkLU5q2tJAJ0MWcpJlQnvttXkHriXwQmTNh5nyvL2cOj+z/01KgmVSrzbP4Zo80aoypVXDJi3pywQZdD0taKP0BXn0gXIRx0uYg82xpmph9xsDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDYVuUPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yyz9Tt0ron+TUsTgdxo0Mmk/ewqS2kWmWRkJVc15VsPe0Aeoqq9b+DPyThjeUXKIaaCKbZrt+zPSoq1BCEjwuspPwvxKkFdOnqDuzs+sLBoVqTAfWH9JTLOTa3FWlDVPZ/huRQ27kTjbRlX3PAHCZG+AMc21JpaUf0RUhkFzkyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmQy+wR+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDYVuUPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D854BC2BCB0;
-	Tue, 12 May 2026 18:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmQy+wR+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D02DC2BCB0;
+	Tue, 12 May 2026 18:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609041;
-	bh=j1kqhjg/VQbavXrYRepnNIbGPMBXSJLSN25JFAXi75Q=;
+	s=korg; t=1778609043;
+	bh=bv1A5udFxk/IzUBe9oV/PzWZakYkCqZV9WTpT+GZx04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZDYVuUPE/L3dh7gBYZoATm49lyueEE4GjTFp6EyzRxVyJDsJondDP2vZBZ72nvPV5
-	 8kvLijdEUDphApWTFLTmKUbDItZpgJ+7AIVey6lxxEcDahAfgkFK5LW/ECPmc578f+
-	 Q3ePMepSulAdgxgqWlnO/kzuCealpWJPVf82AQgM=
+	b=jmQy+wR+akwCuOyTup4ifCu3o3Yd9tQggrc4yRZqHqOrlVXWBZFSWJMJcKMycJn7a
+	 ScLbrQGNhQ0ZHgBrxrkW40/hziiHWkhJW2Q09d8FH80a2nhWZrLb9Pxa9IMXElScuS
+	 +3CVwTIotoy47ggy8Tq5+x0E6qMxlmLloJ9o7Oaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Zhou <quan.zhou@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 7.0 025/307] wifi: mt76: mt7921: fix ROC abort flow interruption in mt7921_roc_work
-Date: Tue, 12 May 2026 19:37:00 +0200
-Message-ID: <20260512173940.656622079@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 7.0 043/307] usb: ulpi: fix memory leak on ulpi_register() error paths
+Date: Tue, 12 May 2026 19:37:18 +0200
+Message-ID: <20260512173941.033676320@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,54 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit fdfa39f9f4fbae532b162da913a67b2410caf38f upstream.
+commit 0b9fcab1b8608d429e5f239afb197de928d4de7d upstream.
 
-The mt7921_set_roc API may be executed concurrently with mt7921_roc_work,
-specifically between the following code paths:
+Commit 01af542392b5 ("usb: ulpi: fix double free in
+ulpi_register_interface() error path") removed kfree(ulpi) from
+ulpi_register_interface() to fix a double-free when device_register()
+fails.
 
-- The check and clear of MT76_STATE_ROC in mt7921_roc_work:
-    if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
-        return;
+But when ulpi_of_register() or ulpi_read_id() fail before
+device_register() is called, the ulpi allocation is leaked.
 
-- The execution of ieee80211_iterate_active_interfaces.
+Add kfree(ulpi) on both error paths to properly clean up the allocation.
 
-This race condition can interrupt the ROC abort flow, resulting in
-the ROC process failing to abort as expected.
-
-To address this defect, the modification of MT76_STATE_ROC is now
-protected by mt792x_mutex_acquire(phy->dev). This ensures that
-changes to the ROC state are properly synchronized, preventing
-race conditions and ensuring the ROC abort flow is not interrupted.
-
-Fixes: 034ae28b56f1 ("wifi: mt76: mt7921: introduce remain_on_channel support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Reviewed-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/2568ece8b557e5dda79391414c834ef3233049b6.1769133724.git.quan.zhou@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 01af542392b5 ("usb: ulpi: fix double free in ulpi_register_interface() error path")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260407-ulpi-v1-1-f3fafe53f7b2@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/common/ulpi.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -387,10 +387,11 @@ void mt7921_roc_work(struct work_struct
- 	phy = (struct mt792x_phy *)container_of(work, struct mt792x_phy,
- 						roc_work);
+--- a/drivers/usb/common/ulpi.c
++++ b/drivers/usb/common/ulpi.c
+@@ -286,12 +286,15 @@ static int ulpi_register(struct device *
+ 	ACPI_COMPANION_SET(&ulpi->dev, ACPI_COMPANION(dev));
  
--	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
--		return;
--
- 	mt792x_mutex_acquire(phy->dev);
-+	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state)) {
-+		mt792x_mutex_release(phy->dev);
-+		return;
+ 	ret = ulpi_of_register(ulpi);
+-	if (ret)
++	if (ret) {
++		kfree(ulpi);
+ 		return ret;
 +	}
- 	ieee80211_iterate_active_interfaces(phy->mt76->hw,
- 					    IEEE80211_IFACE_ITER_RESUME_ALL,
- 					    mt7921_roc_iter, phy);
+ 
+ 	ret = ulpi_read_id(ulpi);
+ 	if (ret) {
+ 		of_node_put(ulpi->dev.of_node);
++		kfree(ulpi);
+ 		return ret;
+ 	}
+ 
 
 
