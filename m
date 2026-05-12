@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B114657CA;
-	Tue, 12 May 2026 17:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1A63E172F;
+	Tue, 12 May 2026 17:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608009; cv=none; b=rlG0KtMdvHvvLNtg7mEK2IcMWYiikBfCvU6ewg7p4+16Zgns1nEkexqpDBsIpl1yrKIyVt8chSE+5ax4ZgImOJw6Yqxu+/8Yf1qwGKCNi2fkrXiphbANby6J6bD3zmy9gmfy2iXycRqPKrS1rAcpmdgv0v8zDSSXJlYgjNMszoQ=
+	t=1778608011; cv=none; b=SZPHyGnJ6uB2FiI48b2pG8cmRoPcnMhNijQiaTvsNz3fsH8InauAJYK6N3x5Ahrl8ltI2oe8Uh4tjb3sdBVSTUgLhaLHNodRMG5W2CraFvgcpFqXijpOrqzbUDJyHsfKua636sSMwFt8aaU2TyfWUdjPOn/Mupf1iQV4WEDpLcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608009; c=relaxed/simple;
-	bh=A4R9SvpOIVCkb9KWJBP2VwUDyTBnKnjey+O6hJLgH6I=;
+	s=arc-20240116; t=1778608011; c=relaxed/simple;
+	bh=7nBBYfqz7SdruFsVKUFWBpQ7Te/u19dzmdw2q6JD0Zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idoX3jy9pBfo7NGXvUO7ctc10ZcZr0dJiVGmqSZy9Vcs3CoWRJ/Cxoev4ul7rhuYDxv2H+Ltas71tDPRvkVebSpEinJtr1b6Un7ZJ68Hykd1gM63BtLXXGPqtbIFUO+RID+OaFTqccHQkd4WOMcg9odFef+s3sDoBY7aeKJXZkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6wSAKuH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ALOhkR8pNdJtR8mEcPHAqmv3ciIYhVxqf7rncVgXLYitPv1WJ4JjT09C1S9JuLNEf6M2n69QNV8l3hhiVxbXQX5/f39YEEx0X2sqMEB+h//DwKQ6BvYwu0MOACuFy6oNdXyiXbzZLJxdAbmMvUIsJsvALMVo8A66+2VED4ZysXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TmGO+LXk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6wSAKuH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D08C2BCFC;
-	Tue, 12 May 2026 17:46:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TmGO+LXk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DD6C4AF09;
+	Tue, 12 May 2026 17:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608008;
-	bh=A4R9SvpOIVCkb9KWJBP2VwUDyTBnKnjey+O6hJLgH6I=;
+	s=korg; t=1778608011;
+	bh=7nBBYfqz7SdruFsVKUFWBpQ7Te/u19dzmdw2q6JD0Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6wSAKuHEp2NmUsQD/3vOk1rG8UDBYAPcbib4Y9znp6Fm3GfPjzGNyeJ0juY7zCnU
-	 uLX93+7p0Bh/qaztKD60tOoDVTyajRjMqmFB4XDaVU/36fwgPjBVrHGfWBEleFF67V
-	 ox+3Px08GyVerNz9iteYr/UWzprGAagTzA53nim4=
+	b=TmGO+LXkL1njJwGh8kTMuAw+6fuMsrKU7Ij8Nv8WZo5Ok55hINPmPEmUtoFJI66o3
+	 nRP2qHxvZ0BTTiHGbuHQcp7DpbP57PuNFR1/WUOL7BWvzXjFrCtwXGaDv/dO+MgIjD
+	 /6unZExQcL53Z8PjrL32W7mIkDd88e9s1o/MmdTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.12 122/206] isofs: validate block number from NFS file handle in isofs_export_iget
-Date: Tue, 12 May 2026 19:39:34 +0200
-Message-ID: <20260512173935.439893404@linuxfoundation.org>
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>
+Subject: [PATCH 6.12 105/206] clk: imx: imx8-acm: fix flags for acm clocks
+Date: Tue, 12 May 2026 19:39:17 +0200
+Message-ID: <20260512173935.081185819@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -50,54 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-commit 24376458138387fb251e782e624c7776e9826796 upstream.
+commit f2c2fc93b4a3efdfcf3805ab74741826d343ff2c upstream.
 
-isofs_fh_to_dentry() and isofs_fh_to_parent() pass an attacker-
-controlled block number (ifid->block or ifid->parent_block) from
-the NFS file handle to isofs_export_iget(), which only rejects
-block == 0 before calling isofs_iget() and ultimately sb_bread().
-A crafted file handle with fh_len sufficient to pass the check
-added by commit 0405d4b63d08 ("isofs: Prevent the use of too small
-fid") can still drive the server to read any in-range block on the
-backing device as if it were an iso_directory_record.  That earlier
-fix was assigned CVE-2025-37780.
+Currently, the flags for the ACM clocks are set to 0. This configuration
+causes the fsl-sai audio driver to fail when attempting to set the
+sysclk, returning an EINVAL error. The following error messages
+highlight the issue:
+fsl-sai 59090000.sai: ASoC: error at snd_soc_dai_set_sysclk on 59090000.sai: -22
+imx-hdmi sound-hdmi: failed to set cpu sysclk: -22
 
-sb_bread() on an out-of-range block returns NULL cleanly via the
-EIO path, so there is no memory-safety violation.  For in-range
-reads of adjacent-partition data on the same block device, the
-unrelated bytes end up in iso_inode_info fields that reach the NFS
-client as dentry metadata.  The deployment surface (isofs exported
-over NFS from loop-mounted images) is narrow and requires an
-authenticated NFS peer, but the malformed-file-handle class is
-reportable as hardening next to the existing CVE-2025-37780 fix.
+By setting the flag CLK_SET_RATE_NO_REPARENT, we signal that the ACM
+driver does not support reparenting and instead relies on the clock tree
+as defined in the device tree. This change resolves the issue with the
+fsl-sai audio driver.
 
-Reject block >= ISOFS_SB(sb)->s_nzones in isofs_export_iget() so
-the check covers both isofs_fh_to_dentry() and isofs_fh_to_parent()
-call sites with a single line.
-
-Fixes: 0405d4b63d08 ("isofs: Prevent the use of too small fid")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260419212155.2169382-3-michael.bommarito@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+CC: stable@vger.kernel.org
+Fixes: d3a0946d7ac9 ("clk: imx: imx8: add audio clock mux driver")
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20260212085750.3253187-1-shengjiu.wang@nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/isofs/export.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/imx/clk-imx8-acm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/isofs/export.c
-+++ b/fs/isofs/export.c
-@@ -24,7 +24,7 @@ isofs_export_iget(struct super_block *sb
- {
- 	struct inode *inode;
- 
--	if (block == 0)
-+	if (block == 0 || block >= ISOFS_SB(sb)->s_nzones)
- 		return ERR_PTR(-ESTALE);
- 	inode = isofs_iget(sb, block, offset);
- 	if (IS_ERR(inode))
+--- a/drivers/clk/imx/clk-imx8-acm.c
++++ b/drivers/clk/imx/clk-imx8-acm.c
+@@ -371,7 +371,8 @@ static int imx8_acm_clk_probe(struct pla
+ 	for (i = 0; i < priv->soc_data->num_sels; i++) {
+ 		hws[sels[i].clkid] = devm_clk_hw_register_mux_parent_data_table(dev,
+ 										sels[i].name, sels[i].parents,
+-										sels[i].num_parents, 0,
++										sels[i].num_parents,
++										CLK_SET_RATE_NO_REPARENT,
+ 										base + sels[i].reg,
+ 										sels[i].shift, sels[i].width,
+ 										0, NULL, NULL);
 
 
