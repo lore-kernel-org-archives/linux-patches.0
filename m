@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4BF3EDE41;
-	Tue, 12 May 2026 17:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C0D3EDE78;
+	Tue, 12 May 2026 17:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608603; cv=none; b=E9zIF3JiaVsISa8WwHf3XzYc+MxH3UbrMhpskyqESkYG9KA1+lGx9yUiJzHR4u3j4w5EtW8U19p4LXNnS+cbkqrbnvV/hG1RkNjGxBgSAqSnFyAtc+HGYgu05xO0dtpEaX1gtiqroZAEUpnuatkvmTrFRUawIhzAvlCWtE0d148=
+	t=1778608605; cv=none; b=YyIOG9Lxf3zz2e9nj/YUxG9e97cISmSdaBpsvt6yBYozUoIKm/iVNdavm4zWkBwm4DU7ezM8LjWpWDVjypEX7vOIXhf/L1yHn7FtvQP5WnHqhlm0ieT4MVu962sdOdMiMrR2KCAkkRDX+sykp41gRNWKfLE9J/WHlPLOw10H73Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608603; c=relaxed/simple;
-	bh=YT9ll4aB7iaklVy8LZrzZGpcttXVwVbm56wecNG/OIY=;
+	s=arc-20240116; t=1778608605; c=relaxed/simple;
+	bh=N8vvAgx+AUMqeNFrh/aD2Hr1ZAN7qQIq03Qt3AETqMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+oql79MRqACloIvavEK1CVV+U+65zoRmZ25WXr1bczFJFflC0BkhmfYdrRU2jkXW5xKmbch+5/cujoRvZOrzx/fhNX8fYtOPmEqO0MZ0EKgltQoz9/N6VJNX4CLFV8NB5fvardPtzqnH9NQXEOddzDi/CR46uG/svcKPaUMJ8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9qTnYi3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E2+hnvRbUCegO2ZiVZPgPso1SGF+20XNgg77jEG5YmIN4EjmVpGoeMOVNYZMwIMe8WALJ9AqkXRVtGbxFBrISF19mRaBrsnh5fW0iMVG7/pTs+iGzfct3stl4jUIG2CU3WWiy6XvyRNAD6l1C2VSDB+UcvOhFtbDtOYGqQooj6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8p3+viM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9qTnYi3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94F6C2BCB0;
-	Tue, 12 May 2026 17:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8p3+viM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D867C2BCB0;
+	Tue, 12 May 2026 17:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608603;
-	bh=YT9ll4aB7iaklVy8LZrzZGpcttXVwVbm56wecNG/OIY=;
+	s=korg; t=1778608605;
+	bh=N8vvAgx+AUMqeNFrh/aD2Hr1ZAN7qQIq03Qt3AETqMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9qTnYi38x9dV65zNW/KWbP7RgsHsHyIuJjCPh0RTEJJg4LAGL+C4YQLjBwlbxaxa
-	 91jaJU9rfUG9JqjvRLAGQblKHCvxChc6bRvwZqFaxySZXL5ykGYPTqVOo4YmwT71FK
-	 R8wa1aZQBaZLtVpOwx6UUIf0hqLa7gNX6KO6xlT8=
+	b=J8p3+viMF1PA55097SiCsfD9lm3VengR7zzNKwHIp+KyCazJkqBU2rZuKPhkrZ21L
+	 9XkXGWyK9M5X6JAwvAS6ldIjc5IkJjxo/MDC5D6drdpxF8pdhqcTGKrivhramuFzgU
+	 4mAWY2+ZnnGix2px3G58hNdnq8pyUynsKaJ6a3pM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Salisbury <joseph.salisbury@oracle.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 143/270] ASoC: fsl_easrc: fix comment typo
-Date: Tue, 12 May 2026 19:39:04 +0200
-Message-ID: <20260512173941.460873607@linuxfoundation.org>
+Subject: [PATCH 6.18 144/270] ASoC: Intel: bytcr_wm5102: Fix MCLK leak on platform_clock_control error
+Date: Tue, 12 May 2026 19:39:05 +0200
+Message-ID: <20260512173941.481301728@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -44,44 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joseph Salisbury <joseph.salisbury@oracle.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 804dce6c73fdfa44184ee4e8b09abad7f5da408f upstream.
+commit 13d30682e8dee191ac04e93642f0372a723e8b0c upstream.
 
-The file contains a spelling error in a source comment (funciton).
+If byt_wm5102_prepare_and_enable_pll1() fails in the
+SND_SOC_DAPM_EVENT_ON() path, platform_clock_control() returns after
+clk_prepare_enable(priv->mclk) without disabling the clock again.
 
-Typos in comments reduce readability and make text searches less reliable
-for developers and maintainers.
+This leaks an MCLK enable reference on failed power-up attempts. Add the
+missing clk_disable_unprepare() on the error path, matching the unwind
+used by the other Intel platform_clock_control() implementations.
 
-Replace 'funciton' with 'function' in the affected comment. This is a
-comment-only cleanup and does not change behavior.
-
-Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
+Fixes: 9a87fc1e0619 ("ASoC: Intel: bytcr_wm5102: Add machine driver for BYT/WM5102")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
-Link: https://patch.msgid.link/20260316180545.144032-1-joseph.salisbury@oracle.com
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260427-bytcr-wm5102-mclk-leak-v1-1-02b96d08e99c@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_easrc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/boards/bytcr_wm5102.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -1286,7 +1286,7 @@ static int fsl_easrc_request_context(int
- /*
-  * Release the context
-  *
-- * This funciton is mainly doing the revert thing in request context
-+ * This function is mainly doing the revert thing in request context
-  */
- static void fsl_easrc_release_context(struct fsl_asrc_pair *ctx)
- {
+--- a/sound/soc/intel/boards/bytcr_wm5102.c
++++ b/sound/soc/intel/boards/bytcr_wm5102.c
+@@ -171,6 +171,7 @@ static int platform_clock_control(struct
+ 		ret = byt_wm5102_prepare_and_enable_pll1(codec_dai, 48000);
+ 		if (ret) {
+ 			dev_err(card->dev, "Error setting codec sysclk: %d\n", ret);
++			clk_disable_unprepare(priv->mclk);
+ 			return ret;
+ 		}
+ 	} else {
 
 
