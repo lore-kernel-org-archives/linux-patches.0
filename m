@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F7A3955DD;
-	Tue, 12 May 2026 17:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D383955FC;
+	Tue, 12 May 2026 17:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608309; cv=none; b=Ks4AFJTKmsDJtFHxG0q1jF3iNLdI0D8m8lFBmPrKX3lGvUDwgyS7OHakBeisDg6oCn6A2CZmR+xQM2CbuUObZCxOHnH284RZLcG4lZ9f8RSCE36b94CwwlWS6RaTF8guJ7URwlGk1nWGhV3MdRzAr3xqTlBuwDa1RKr+YYOEP4A=
+	t=1778608312; cv=none; b=GFMIjxzHX8FcMZ67R37loApNXwStuDsvhvdK0kvfG7hzJ5u+tqCiiO4SXQrgquMsFyZZxJd5epIqNKoDqY5xlKT9kEaGUDrBMQcHYvEH3Qq4iVsJzqkAO1bO7UvyAS3YU7ham+lPfQZ4wksb7vKDCW5mUvNGTX7J/oQmDL9Zxmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608309; c=relaxed/simple;
-	bh=o5b5frwb3u0MwSPRkhW5WlwCubQzXLmMXaTXRap+JPs=;
+	s=arc-20240116; t=1778608312; c=relaxed/simple;
+	bh=0pDBjri7ucX3mW3CgexSsJb2pZgV9Ix3LYTsFlgwZ+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LrGZwqIOZ1y5RfQoyZCjDaP7Q1/cezFqoGJl2uWjeqRp2ftyOM489MiZJ609Z2kYLTtYN6Nn8lJ0E7MloxeNsYYXZBCaHdLBmUb3iODIkCVBON7WE5e1GNOebwoAGwAS+Wg+ya9Lu5rSMsP6cDOI9D2TXVtpVp7ZLUOOy7YQzHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlXAbIPF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qPUV3PjxSWhxd/rOMOHDRLol/5DmMc5BXLhQz2y5P93LN3C/Ly4NuI/horZJg/kwn/0I/Q4tutZwpks77lnNry+9vhAFL152u9dPBWV82cyWdd27F4CYPT3lHwckou0uG+4WE02aewyeDROzOHmfOqlEDep06egE3rdhRLq3ynI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1hDJNoB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlXAbIPF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C072EC2BCF6;
-	Tue, 12 May 2026 17:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1hDJNoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7E4C2BCB0;
+	Tue, 12 May 2026 17:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608309;
-	bh=o5b5frwb3u0MwSPRkhW5WlwCubQzXLmMXaTXRap+JPs=;
+	s=korg; t=1778608311;
+	bh=0pDBjri7ucX3mW3CgexSsJb2pZgV9Ix3LYTsFlgwZ+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FlXAbIPFYhyOKXWoyFG98y4dn5Ev6h8CAbHxt6NKGdnkr1YQHpOLWbDXm6tBEF2G2
-	 q2mGp1uHBZXT568hUig3PmSIln0do3Eg3ciQAb5X8P2BT+1Tg3q5+HsZauddmPXIye
-	 SpkUMMM9SO1R6LMwB/HxNF6Rnx52+YaEmsOxt3ew=
+	b=Z1hDJNoBysvFo9wIsh2nwJ1r1A/Faupn/7Y6mBYNJo/hkf1l4RicbepWVjz+SR2vs
+	 kXB3uXrEpXYPjjCjhHOEcTyw1BVHYUgEagO9F8xS/xSVTa1uMFdYgMveno4IJOwZfk
+	 GlxB2HQsnUZ7JVx6T492HPnt/YIKH0Fd9QK6tRnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Zhou <quan.zhou@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.18 029/270] wifi: mt76: mt7921: fix ROC abort flow interruption in mt7921_roc_work
-Date: Tue, 12 May 2026 19:37:10 +0200
-Message-ID: <20260512173939.071081380@linuxfoundation.org>
+	Matt Fleming <mfleming@cloudflare.com>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 6.18 003/270] ipmi: Check event message buffer response for bad data
+Date: Tue, 12 May 2026 19:36:44 +0200
+Message-ID: <20260512173938.527429678@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,54 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Corey Minyard <corey@minyard.net>
 
-commit fdfa39f9f4fbae532b162da913a67b2410caf38f upstream.
+commit 36920f30e78e69df01f9691c470b6f3ba8aebf98 upstream.
 
-The mt7921_set_roc API may be executed concurrently with mt7921_roc_work,
-specifically between the following code paths:
+The event message buffer response data size got checked later when
+processing, but check it right after the response comes back.  It
+appears some BMCs may return an empty message instead of an error
+when fetching events.
 
-- The check and clear of MT76_STATE_ROC in mt7921_roc_work:
-    if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
-        return;
+There are apparently some new BMCs that make this error, so we need to
+compensate.
 
-- The execution of ieee80211_iterate_active_interfaces.
-
-This race condition can interrupt the ROC abort flow, resulting in
-the ROC process failing to abort as expected.
-
-To address this defect, the modification of MT76_STATE_ROC is now
-protected by mt792x_mutex_acquire(phy->dev). This ensures that
-changes to the ROC state are properly synchronized, preventing
-race conditions and ensuring the ROC abort flow is not interrupted.
-
-Fixes: 034ae28b56f1 ("wifi: mt76: mt7921: introduce remain_on_channel support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Reviewed-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/2568ece8b557e5dda79391414c834ef3233049b6.1769133724.git.quan.zhou@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reported-by: Matt Fleming <mfleming@cloudflare.com>
+Closes: https://lore.kernel.org/lkml/20260415115930.3428942-1-matt@readmodwrite.com/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/char/ipmi/ipmi_si_intf.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -387,10 +387,11 @@ void mt7921_roc_work(struct work_struct
- 	phy = (struct mt792x_phy *)container_of(work, struct mt792x_phy,
- 						roc_work);
+--- a/drivers/char/ipmi/ipmi_si_intf.c
++++ b/drivers/char/ipmi/ipmi_si_intf.c
+@@ -642,7 +642,13 @@ static void handle_transaction_done(stru
+ 		 */
+ 		msg = smi_info->curr_msg;
+ 		smi_info->curr_msg = NULL;
+-		if (msg->rsp[2] != 0) {
++		/*
++		 * It appears some BMCs, with no event data, return no
++		 * data in the message and not a 0x80 error as the
++		 * spec says they should.  Shut down processing if
++		 * the data is not the right length.
++		 */
++		if (msg->rsp[2] != 0 || msg->rsp_size != 19) {
+ 			/* Error getting event, probably done. */
+ 			msg->done(msg);
  
--	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
--		return;
--
- 	mt792x_mutex_acquire(phy->dev);
-+	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state)) {
-+		mt792x_mutex_release(phy->dev);
-+		return;
-+	}
- 	ieee80211_iterate_active_interfaces(phy->mt76->hw,
- 					    IEEE80211_IFACE_ITER_RESUME_ALL,
- 					    mt7921_roc_iter, phy);
 
 
