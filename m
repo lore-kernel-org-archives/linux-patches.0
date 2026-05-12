@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20CB3EDE66;
-	Tue, 12 May 2026 17:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE0C3EDE66;
+	Tue, 12 May 2026 17:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608183; cv=none; b=dQvBTjXplXvk4o4P16eb6pA6LZElcIif3HRdjMeFG6n/IlsofyBQpp1dntIl1+U0mOnfPRmSPVwoTB0pqRZehQ9VlQ4+bnEvM7ix6zVJuTCpC/D/ybAMFFVIesAzUwmTyDmcVasH5b2jbOLHtJ0/F8oeJIfoiVkyzoIW5wQgvhg=
+	t=1778608186; cv=none; b=BU20xfzA4KqskRNDrdvBl+CPsmFHliwofJrdgSZxn7iUO5QS7ArN0272mlxytPXs/M+rM2bDj9pQXCYr/oebbUchN+YAIm/xBHzwFv/5S5I21VZm0DoBgo8zZ7Fq6ey7KmGPOxUSpY9c2a0ST3kCV2U9L++wUSuIYBQoCQgRWaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608183; c=relaxed/simple;
-	bh=IuzuK1tBceha3v6paOx/DA6qcahn7kF3kEiaLOhAmcM=;
+	s=arc-20240116; t=1778608186; c=relaxed/simple;
+	bh=gzlw+KUuTmaJWJ1Vk1WouWVM9+5PX2PPiTwSG0sVKzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=inRqWrxJk//x5jVdSz7gb1L8PxmIauNXjE05rr8DzMfVGFv2b0FryHCg0rCZbY977S7M8MeatG2ZvkZSUefYuQtjrLbyuudjMIGesa85hCkSkwXKmOi/PpdjgHnQvmqEcTNvh9vApemN16rO94r1dV3twR3poxS6xdeDoqtCdMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfM35gGB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3NDTYkTBB4O2FGd6Sg/E0JQXlOk8ypDBNVz68VYRotmKHV1vz3yBGRjWoF5Ak1xKEFiU/3Xf+fmu3KPE8q1NuVMQqlNa5mu0JjiNMyyFSNswbVW14SXNB+4bzvtzRxa+Ekq3RqRe7qxFQTsWiW5rc+bcZw8ucoPGIhsE0jKUOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Una/zLJ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfM35gGB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0818FC2BCB0;
-	Tue, 12 May 2026 17:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Una/zLJ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E88C2BCB0;
+	Tue, 12 May 2026 17:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608183;
-	bh=IuzuK1tBceha3v6paOx/DA6qcahn7kF3kEiaLOhAmcM=;
+	s=korg; t=1778608185;
+	bh=gzlw+KUuTmaJWJ1Vk1WouWVM9+5PX2PPiTwSG0sVKzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfM35gGB6sagN9EyKh5UfW1FuNWdCx+uu5KAZXj6oMs4qEeO0QYujgYAZTLDVPPVx
-	 hIn47syCyV56onxkvkd9Nq080boJvaNDubj/RL/wGY4+rAztnYi56/ZI9pM+0XikwE
-	 rm90SKH5w+KRqEUCjQm3CFJOwoZ6SSmiSlQiTgJM=
+	b=Una/zLJ4jZp9wB9BLPbVY9YJm+wpj9a0gDqvHyz+ttCZrR+7fF/5myirgQ1+bi+eL
+	 eoTv1zyacPNR4NTwfMouUyPP9tZnMD6MCYj6JMGiB4I1bBrT9TC0iLZpfbGuIMVD/g
+	 BI78Y5IoSkfqsNFIGUkWCyDboGHhN5ff19g0p1jM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seohyeon Maeng <bioloidgp@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 186/206] udf: fix partition descriptor append bookkeeping
-Date: Tue, 12 May 2026 19:40:38 +0200
-Message-ID: <20260512173936.804317068@linuxfoundation.org>
+Subject: [PATCH 6.12 187/206] mtd: spinand: winbond: Declare the QE bit on W25NxxJW
+Date: Tue, 12 May 2026 19:40:39 +0200
+Message-ID: <20260512173936.826184970@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,58 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seohyeon Maeng <bioloidgp@gmail.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 08841b06fa64d8edbd1a21ca6e613420c90cc4b8 ]
+[ Upstream commit 7866ce992cf0d3c3b50fe8bf4acb1dbb173a2304 ]
 
-Mounting a crafted UDF image with repeated partition descriptors can
-trigger a heap out-of-bounds write in part_descs_loc[].
+Factory default for this bit is "set" (at least on the chips I have),
+but we must make sure it is actually set by Linux explicitly, as the
+bit is writable by an earlier stage.
 
-handle_partition_descriptor() deduplicates entries by partition number,
-but appended slots never record partnum. As a result duplicate
-Partition Descriptors are appended repeatedly and num_part_descs keeps
-growing.
-
-Once the table is full, the growth path still sizes the allocation from
-partnum even though inserts are indexed by num_part_descs. If partnum is
-already aligned to PART_DESC_ALLOC_STEP, ALIGN(partnum, step) can keep
-the old capacity and the next append writes past the end of the table.
-
-Store partnum in the appended slot and size growth from the next append
-count so deduplication and capacity tracking follow the same model.
-
-Fixes: ee4af50ca94f ("udf: Fix mounting of Win7 created UDF filesystems")
+Fixes: 6a804fb72de5 ("mtd: spinand: winbond: add support for serial NAND flash")
 Cc: stable@vger.kernel.org
-Signed-off-by: Seohyeon Maeng <bioloidgp@gmail.com>
-Link: https://patch.msgid.link/20260310081652.21220-1-bioloidgp@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
-[ replaced kzalloc_objs() helper with equivalent kcalloc() ]
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+[ adapted chip name W25N02JW to W25N02JWZEIF and applied flag change via read_cache_variants context instead of read_cache_dual_quad_dtr_variants ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/super.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/spi/winbond.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1695,8 +1695,9 @@ static struct udf_vds_record *handle_par
- 			return &(data->part_descs_loc[i].rec);
- 	if (data->num_part_descs >= data->size_part_descs) {
- 		struct part_desc_seq_scan_data *new_loc;
--		unsigned int new_size = ALIGN(partnum, PART_DESC_ALLOC_STEP);
-+		unsigned int new_size;
- 
-+		new_size = data->num_part_descs + PART_DESC_ALLOC_STEP;
- 		new_loc = kcalloc(new_size, sizeof(*new_loc), GFP_KERNEL);
- 		if (!new_loc)
- 			return ERR_PTR(-ENOMEM);
-@@ -1706,6 +1707,7 @@ static struct udf_vds_record *handle_par
- 		data->part_descs_loc = new_loc;
- 		data->size_part_descs = new_size;
- 	}
-+	data->part_descs_loc[data->num_part_descs].partnum = partnum;
- 	return &(data->part_descs_loc[data->num_part_descs++].rec);
- }
- 
+--- a/drivers/mtd/nand/spi/winbond.c
++++ b/drivers/mtd/nand/spi/winbond.c
+@@ -240,7 +240,7 @@ static const struct spinand_info winbond
+ 		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
+ 					      &write_cache_variants,
+ 					      &update_cache_variants),
+-		     0,
++		     SPINAND_HAS_QE_BIT,
+ 		     SPINAND_ECCINFO(&w25n01jw_ooblayout, NULL)),
+ 	SPINAND_INFO("W25N02JWZEIF",
+ 		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xbf, 0x22),
+@@ -249,7 +249,7 @@ static const struct spinand_info winbond
+ 		     SPINAND_INFO_OP_VARIANTS(&read_cache_variants,
+ 					      &write_cache_variants,
+ 					      &update_cache_variants),
+-		     0,
++		     SPINAND_HAS_QE_BIT,
+ 		     SPINAND_ECCINFO(&w25m02gv_ooblayout, NULL)),
+ 	SPINAND_INFO("W25N512GW",
+ 		     SPINAND_ID(SPINAND_READID_METHOD_OPCODE_DUMMY, 0xba, 0x20),
 
 
