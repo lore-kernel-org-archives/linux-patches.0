@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE7621FF21;
-	Tue, 12 May 2026 17:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E3121FF21;
+	Tue, 12 May 2026 17:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607947; cv=none; b=s1+kB3vg6pKe+pySXXeXIxk5xgbP1iTzEskiAGe8GvrWjbQEszS/KHqaEmq1Ev03tf8+34GFtYGFgpBWJuu2PZzdLc+8FrwOUeHvhQQGLSd4TrTNoPBhaEaXvnnnI1T0AOzl6E/tKESyRJDw4kPSbyooaoplFx1QINYmtBNThTY=
+	t=1778607949; cv=none; b=lEMZhFpULDvD3Sy5w+064vbRNEuYNOwHs/tjiIjoR1HLQCi7l0KHwFyE9TXuMKu2MAu1x0mA3/Jx1yHhT0jVi9JVXRb8XIYrXHM/TVQHSgYoOrFOIq1A51LI16VGYyVPjNZ7Oqs9R2f8hrsRMO2q4IE0N2vouob5ld5wxIu3eT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607947; c=relaxed/simple;
-	bh=N+ylIJGOKtLY2Fhr7OqgzZI3iMvnn3K1Oqby2wy35UU=;
+	s=arc-20240116; t=1778607949; c=relaxed/simple;
+	bh=jt9WE8hqJcQ2JaUCYjrWAd+vYyjevRuZW98ubAEuCfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RiPqTlwFxlDeQCWbfG7pRjeazGSg6x5LXjqk8K6Nzri0i8hML0f1+2TMlyN8TuO6/y40nFGAfo0+c//q9cy6haQ0QB+VDbCnqxK2a9jqh+ovhy1RuPoitO/wkXEosA/a7pCGrnU+q5Pw8I5qbKLVRN9egh0T1i/qcl75qrlYTws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPI9/XLP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KHRLSDcLNMC/BuJzqbIuXtL/1Uu/VAA7iCuZa+mq3BwzzqvnlZVPS2fGtimI0INhUFK52hloM6yxy9LoB1vZgwG6zlblq8tXPM412BSCy1P4C4ZWATvWAdEUN4wnJ0HtYUAMZcvf9TKzKyeCsvn6rMS6HIdrRF05v//c+pX7Wa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16Jh5Md8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPI9/XLP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BB5C2BCB0;
-	Tue, 12 May 2026 17:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16Jh5Md8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBD3C2BCC7;
+	Tue, 12 May 2026 17:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607946;
-	bh=N+ylIJGOKtLY2Fhr7OqgzZI3iMvnn3K1Oqby2wy35UU=;
+	s=korg; t=1778607949;
+	bh=jt9WE8hqJcQ2JaUCYjrWAd+vYyjevRuZW98ubAEuCfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pPI9/XLPnlMkBwiSz+u0gTv2rK5lsuXuc+4mcB1JfUHU8/Ue3X6AgNwJZ/SnPZujG
-	 zmPYkrSBojNXvzXe7M5vHzXPfWhQjzdFBp3Ggt8U7xUTeI1ekWeSqUNQa6R/tWo3T3
-	 ECrdqlJzl0/r0klc91SUP+YtnYYOrinDqlxzs4EM=
+	b=16Jh5Md8Jd3+tTULV8AhbBQrFPMSj6BmGY+UPWhF+0SnJxoch/ZUYB7ZLmC7+JNM3
+	 9EUnluTK5nDGNOVHAgTZqMlXtwh+3ryPAN3gePB7kp6Q7QYzhq6cmp/VzFPA4aio+j
+	 5TTdQstKdi6C8jaYWuflBG+ZVpCowpfMXFzGm3mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian King <bjking1@linux.ibm.com>,
-	Shaik Abdulla <shaik.abdulla1@ibm.com>,
-	Naveed Ahmed <naveedaus@in.ibm.com>,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 096/206] ibmveth: Disable GSO for packets with small MSS
-Date: Tue, 12 May 2026 19:39:08 +0200
-Message-ID: <20260512173934.890433142@linuxfoundation.org>
+	Soenke Huster <soenke.huster@eknoes.de>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 061/206] Bluetooth: virtio_bt: clamp rx length before skb_put
+Date: Tue, 12 May 2026 19:38:33 +0200
+Message-ID: <20260512173934.134128842@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -53,99 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit cc427d24ac6442ffdeafd157a63c7c5b73ed4de4 upstream.
+commit 21bd244b6de5d2fe1063c23acc93fbdd2b20d112 upstream.
 
-Some physical adapters on Power systems do not support segmentation
-offload when the MSS is less than 224 bytes. Attempting to send such
-packets causes the adapter to freeze, stopping all traffic until
-manually reset.
+virtbt_rx_work() calls skb_put(skb, len) where len comes directly
+from virtqueue_get_buf() with no validation against the buffer we
+posted to the device. The RX skb is allocated in virtbt_add_inbuf()
+and exposed to virtio as exactly 1000 bytes via sg_init_one().
 
-Implement ndo_features_check to disable GSO for packets with small MSS
-values. The network stack will perform software segmentation instead.
+Checking len against skb_tailroom(skb) is not sufficient because
+alloc_skb() can leave more tailroom than the 1000 bytes actually
+handed to the device. A malicious or buggy backend can therefore
+report used.len between 1001 and skb_tailroom(skb), causing skb_put()
+to include uninitialized kernel heap bytes that were never written by
+the device.
 
-The 224-byte minimum matches ibmvnic
-commit <f10b09ef687f> ("ibmvnic: Enforce stronger sanity checks
-on GSO packets")
-which uses the same physical adapters in SEA configurations.
+The same path also accepts len == 0, in which case skb_put(skb, 0)
+leaves the skb empty but virtbt_rx_handle() still reads the pkt_type
+byte from skb->data, consuming uninitialized memory.
 
-The issue occurs specifically when the hardware attempts to perform
-segmentation (gso_segs > 1) with a small MSS. Single-segment GSO packets
-(gso_segs == 1) do not trigger the problematic LSO code path and are
-transmitted normally without segmentation.
+Define VIRTBT_RX_BUF_SIZE once and reuse it in alloc_skb() and
+sg_init_one(), and gate virtbt_rx_work() on that same constant so
+the bound checked matches the buffer actually exposed to the device.
+Reject used.len == 0 in the same gate so an empty completion can
+no longer reach virtbt_rx_handle().
 
-Add an ndo_features_check callback to disable GSO when MSS < 224 bytes.
-Also call vlan_features_check() to ensure proper handling of VLAN packets,
-particularly QinQ (802.1ad) configurations where the hardware parser may
-not support certain offload features.
+Use bt_dev_err_ratelimited() because the length value comes from an
+untrusted backend that can otherwise flood the kernel log.
 
-Validated using iptables to force small MSS values. Without the fix,
-the adapter freezes. With the fix, packets are segmented in software
-and transmission succeeds. Comprehensive regression testing completedd
-(MSS tests, performance, stability).
+Same class of bug as commit c04db81cd028 ("net/9p: Fix buffer
+overflow in USB transport layer"), which hardened the USB 9p
+transport against unchecked device-reported length.
 
-Fixes: 8641dd85799f ("ibmveth: Add support for TSO")
+Fixes: 160fbcf3bfb9 ("Bluetooth: virtio_bt: Use skb_put to set length")
 Cc: stable@vger.kernel.org
-Reviewed-by: Brian King <bjking1@linux.ibm.com>
-Tested-by: Shaik Abdulla <shaik.abdulla1@ibm.com>
-Tested-by: Naveed Ahmed <naveedaus@in.ibm.com>
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20260424162917.65725-1-mmc@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Soenke Huster <soenke.huster@eknoes.de>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c |   22 ++++++++++++++++++++++
- drivers/net/ethernet/ibm/ibmveth.h |    1 +
- 2 files changed, 23 insertions(+)
+ drivers/bluetooth/virtio_bt.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -1608,6 +1608,27 @@ static int ibmveth_set_mac_addr(struct n
- 	return 0;
- }
+--- a/drivers/bluetooth/virtio_bt.c
++++ b/drivers/bluetooth/virtio_bt.c
+@@ -12,6 +12,7 @@
+ #include <net/bluetooth/hci_core.h>
  
-+static netdev_features_t ibmveth_features_check(struct sk_buff *skb,
-+						struct net_device *dev,
-+						netdev_features_t features)
-+{
-+	/* Some physical adapters do not support segmentation offload with
-+	 * MSS < 224. Disable GSO for such packets to avoid adapter freeze.
-+	 * Note: Single-segment packets (gso_segs == 1) don't need this check
-+	 * as they bypass the LSO path and are transmitted without segmentation.
-+	 */
-+	if (skb_is_gso(skb)) {
-+		if (skb_shinfo(skb)->gso_size < IBMVETH_MIN_LSO_MSS) {
-+			netdev_warn_once(dev,
-+					 "MSS %u too small for LSO, disabling GSO\n",
-+					 skb_shinfo(skb)->gso_size);
-+			features &= ~NETIF_F_GSO_MASK;
-+		}
+ #define VERSION "0.1"
++#define VIRTBT_RX_BUF_SIZE 1000
+ 
+ enum {
+ 	VIRTBT_VQ_TX,
+@@ -33,11 +34,11 @@ static int virtbt_add_inbuf(struct virti
+ 	struct sk_buff *skb;
+ 	int err;
+ 
+-	skb = alloc_skb(1000, GFP_KERNEL);
++	skb = alloc_skb(VIRTBT_RX_BUF_SIZE, GFP_KERNEL);
+ 	if (!skb)
+ 		return -ENOMEM;
+ 
+-	sg_init_one(sg, skb->data, 1000);
++	sg_init_one(sg, skb->data, VIRTBT_RX_BUF_SIZE);
+ 
+ 	err = virtqueue_add_inbuf(vq, sg, 1, skb, GFP_KERNEL);
+ 	if (err < 0) {
+@@ -227,8 +228,15 @@ static void virtbt_rx_work(struct work_s
+ 	if (!skb)
+ 		return;
+ 
+-	skb_put(skb, len);
+-	virtbt_rx_handle(vbt, skb);
++	if (!len || len > VIRTBT_RX_BUF_SIZE) {
++		bt_dev_err_ratelimited(vbt->hdev,
++				       "rx reply len %u outside [1, %u]\n",
++				       len, VIRTBT_RX_BUF_SIZE);
++		kfree_skb(skb);
++	} else {
++		skb_put(skb, len);
++		virtbt_rx_handle(vbt, skb);
 +	}
-+
-+	return vlan_features_check(skb, features);
-+}
-+
- static const struct net_device_ops ibmveth_netdev_ops = {
- 	.ndo_open		= ibmveth_open,
- 	.ndo_stop		= ibmveth_close,
-@@ -1619,6 +1640,7 @@ static const struct net_device_ops ibmve
- 	.ndo_set_features	= ibmveth_set_features,
- 	.ndo_validate_addr	= eth_validate_addr,
- 	.ndo_set_mac_address    = ibmveth_set_mac_addr,
-+	.ndo_features_check	= ibmveth_features_check,
- #ifdef CONFIG_NET_POLL_CONTROLLER
- 	.ndo_poll_controller	= ibmveth_poll_controller,
- #endif
---- a/drivers/net/ethernet/ibm/ibmveth.h
-+++ b/drivers/net/ethernet/ibm/ibmveth.h
-@@ -36,6 +36,7 @@
- #define IBMVETH_ILLAN_IPV4_TCP_CSUM		0x0000000000000002UL
- #define IBMVETH_ILLAN_ACTIVE_TRUNK		0x0000000000000001UL
  
-+#define IBMVETH_MIN_LSO_MSS		224	/* Minimum MSS for LSO */
- /* hcall macros */
- #define h_register_logical_lan(ua, buflst, rxq, fltlst, mac) \
-   plpar_hcall_norets(H_REGISTER_LOGICAL_LAN, ua, buflst, rxq, fltlst, mac)
+ 	if (virtbt_add_inbuf(vbt) < 0)
+ 		return;
 
 
