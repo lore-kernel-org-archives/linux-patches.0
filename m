@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7443EDE55;
-	Tue, 12 May 2026 18:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0181436604C;
+	Tue, 12 May 2026 18:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609200; cv=none; b=cUsFVzOZioWopDpB7czX4py9N2UGddKJcxFGvdGsmNC/YMEguMvMnPfvLBvwc+gN69uOcgzI7S0JrrOoc7hyWXIj+jNoyyXt8s5Eopl6uJsnpmMmcV6MEZXyioNI+njd9agZnhlRp0UwG0edlSM42Iz2VbBcvDx0yB6WgQNuUvU=
+	t=1778609203; cv=none; b=TpIQnY7Lyxz8bBvs4+NyqvZnDzHzUPL5bb3BKzP6W4fIJA2XLPllH+MADR0v4nLOUYMciGhCX4a6c2qZxh0vNOg18y9KxFxwBcuWJvbvZKQtMIkOF5+4RpsBt/WRYTyfwEHrBEkjTeb/Sud3f/9Tiz8bq5sJ01t1uXmir5xwwGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609200; c=relaxed/simple;
-	bh=gSlcBN/8L9kqV9B9ShjacLpnAf7sEdf5Flxmf9E36PU=;
+	s=arc-20240116; t=1778609203; c=relaxed/simple;
+	bh=/uYWQ8uoBdnMWY5yBto8bMp089qb8mnHsgQG9t2BPSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LEFkhYlVZf/2Bs2k/jUwRMNeMB8+tHjBtM9RAdJAwI9sq8M9djReXloxHTIpDN1kOpKzyFbjyzWfeHLNbBCzVXKOAGQ9m0ZmC7jRLp+KrJg6T7Deami69SiYq8A2UnJLk0eKDZ2pBv+zGBI2yukNLF7BCcno6XyS3uN/9p1ApmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3ghane6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qLksmwsi99cTlLcvx9YJ5QhZjv9TJc4+3Cu+ks3t3R2CqMXMOAx0mMQWLFu7JkFpfk/c2RZRiLTB0OMjjKkYuqKm/kHR3YsS/fbI99ylLeeppaubUPFXpGXIiHcugNOSrxKuX+RfgqSNukbGZpnsGJ6iFgr/6bHtWjaxCzs5Y3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBUba2bF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3ghane6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06F6C2BCB0;
-	Tue, 12 May 2026 18:06:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBUba2bF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E40C2BCFB;
+	Tue, 12 May 2026 18:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609200;
-	bh=gSlcBN/8L9kqV9B9ShjacLpnAf7sEdf5Flxmf9E36PU=;
+	s=korg; t=1778609202;
+	bh=/uYWQ8uoBdnMWY5yBto8bMp089qb8mnHsgQG9t2BPSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K3ghane6e3iFPj0U3Z38yNT+yIwu92mVdmbCdd6oFugyeSaK+BcNZ7n0bnh5/ypGr
-	 bPPEtDUZVB9VIrzd1zq9zplfeKnlk7XCyXJ/2QhdSsGO70enyVXoXFqI84cQv6KhZ6
-	 oxgRb2r3EEl3yEaER6r3fStOE1kz/aVAGhZ61rGU=
+	b=aBUba2bF3Cdjg4VXZOBUZ4Kzn52+85y1O23hDhOFg5XAfjLx/yMXv7M3FzHF8WS/p
+	 Sm0GoQaZvH7VakHfkCXlTL3l7ctruDhaEmgGxAULyenZxGr97LtkSkotJdhPVK4BLC
+	 2omUaVYIQXjGacX66mJNrIesIOkEu2RoseeFEu4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Dmitry Vyukov <dvyukov@google.com>,
 	Thomas Gleixner <tglx@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.0 102/307] selftests/rseq: Dont run tests with runner scripts outside of the scripts
-Date: Tue, 12 May 2026 19:38:17 +0200
-Message-ID: <20260512173942.278083420@linuxfoundation.org>
+Subject: [PATCH 7.0 103/307] rseq: Set rseq::cpu_id_start to 0 on unregistration
+Date: Tue, 12 May 2026 19:38:18 +0200
+Message-ID: <20260512173942.299789359@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,61 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Thomas Gleixner <tglx@kernel.org>
 
-commit cb48828f06afa232cc330f0f4d6be101067810b3 upstream.
+commit 2cb68e45120dfc66404c7547d95b8ac6ff0b25ce upstream.
 
-The rseq selftests include two runner scripts run_param_test.sh and
-run_syscall_errors_test.sh which set up the environment for test binaries
-and run them with various parameters. Currently we list these test binaries
-in TEST_GEN_PROGS but this results in the kselftest framework running them
-directly as well as via the runners, resulting in duplication and spurious
-failures when the environment is not correctly set up (eg, if glibc tries
-to use rseq).
+The RSEQ rework changed that to RSEQ_CPU_UNINITILIZED, which is obviously
+incompatible. Revert back to the original behavior.
 
-Move the binaries the runners invoke to TEST_GEN_PROGS_EXTENDED, binaries
-listed there are built but not run by the framework.  The param_test
-benchmarks are not moved since they are not run by run_param_test.sh.
-
-Fixes: 830969e7821a ("selftests/rseq: Implement time slice extension test")
-
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0f085b41880e ("rseq: Provide and use rseq_set_ids()")
+Reported-by: Dmitry Vyukov <dvyukov@google.com>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260423-selftests-rseq-use-runner-v1-1-e13a133754c1@kernel.org
+Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
+Tested-by: Dmitry Vyukov <dvyukov@google.com>
+Link: https://patch.msgid.link/20260428224427.271566313%40kernel.org
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/rseq/Makefile | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ kernel/rseq.c |   20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/rseq/Makefile b/tools/testing/selftests/rseq/Makefile
-index 4ef90823b652..0d1947c0d623 100644
---- a/tools/testing/selftests/rseq/Makefile
-+++ b/tools/testing/selftests/rseq/Makefile
-@@ -14,12 +14,15 @@ LDLIBS += -lpthread -ldl
- # still track changes to header files and depend on shared object.
- OVERRIDE_TARGETS = 1
+--- a/kernel/rseq.c
++++ b/kernel/rseq.c
+@@ -236,11 +236,6 @@ static int __init rseq_debugfs_init(void
+ }
+ __initcall(rseq_debugfs_init);
  
--TEST_GEN_PROGS = basic_test basic_percpu_ops_test basic_percpu_ops_mm_cid_test param_test \
--		param_test_benchmark param_test_compare_twice param_test_mm_cid \
--		param_test_mm_cid_benchmark param_test_mm_cid_compare_twice \
--		syscall_errors_test slice_test
-+TEST_GEN_PROGS = basic_test basic_percpu_ops_test basic_percpu_ops_mm_cid_test \
-+		 param_test_benchmark param_test_mm_cid_benchmark slice_test
+-static bool rseq_set_ids(struct task_struct *t, struct rseq_ids *ids, u32 node_id)
+-{
+-	return rseq_set_ids_get_csaddr(t, ids, node_id, NULL);
+-}
+-
+ static bool rseq_handle_cs(struct task_struct *t, struct pt_regs *regs)
+ {
+ 	struct rseq __user *urseq = t->rseq.usrptr;
+@@ -384,19 +379,22 @@ void rseq_syscall(struct pt_regs *regs)
  
--TEST_GEN_PROGS_EXTENDED = librseq.so
-+TEST_GEN_PROGS_EXTENDED = librseq.so \
-+	param_test \
-+	param_test_compare_twice \
-+	param_test_mm_cid \
-+	param_test_mm_cid_compare_twice \
-+	syscall_errors_test
+ static bool rseq_reset_ids(void)
+ {
+-	struct rseq_ids ids = {
+-		.cpu_id		= RSEQ_CPU_ID_UNINITIALIZED,
+-		.mm_cid		= 0,
+-	};
++	struct rseq __user *rseq = current->rseq.usrptr;
  
- TEST_PROGS = run_param_test.sh run_syscall_errors_test.sh
+ 	/*
+ 	 * If this fails, terminate it because this leaves the kernel in
+ 	 * stupid state as exit to user space will try to fixup the ids
+ 	 * again.
+ 	 */
+-	if (rseq_set_ids(current, &ids, 0))
+-		return true;
++	scoped_user_rw_access(rseq, efault) {
++		unsafe_put_user(0, &rseq->cpu_id_start, efault);
++		unsafe_put_user(RSEQ_CPU_ID_UNINITIALIZED, &rseq->cpu_id, efault);
++		unsafe_put_user(0, &rseq->node_id, efault);
++		unsafe_put_user(0, &rseq->mm_cid, efault);
++	}
++	return true;
  
--- 
-2.54.0
-
++efault:
+ 	force_sig(SIGSEGV);
+ 	return false;
+ }
 
 
