@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3033B1EE2;
-	Tue, 12 May 2026 17:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8463D9693;
+	Tue, 12 May 2026 17:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607761; cv=none; b=QNz99Txeh60SGwsvCalLXI7ua9eqz/9aqwAVM6ifgwVPF3a2cdEmmFt+OAtGuaewfRamTEpUtmUSNCO9701RMFP++YF276aHmQ8mBp7GmsGqmPhEzkfhUAuAx9Q3byeo31H42eNb2TSQ37zoPlZAkw0YeDcn9slOK5S1Nn4vDAc=
+	t=1778607764; cv=none; b=XAuSVYPTHVd1JU9eY0HZrEnBDGYyeRrEM5VH69g0RRiWmSH1JYqoEUqN7IydCZXFVZzi61PDuwXv2IHqlY9dIy0oMbzJFpo1GFsqSgWw4Pbw2WLq6sKG0HrI5xr5nDgWJJldoiKPMN6gp72ox0K98HB5LBD4Spb/yhW+f2kei4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607761; c=relaxed/simple;
-	bh=8UoSB76PEeOOzuX9KrFIbqYSlUZy7CMSdDiwdFpre/Q=;
+	s=arc-20240116; t=1778607764; c=relaxed/simple;
+	bh=Fag4b6r+Xa1IXmnQApHF5Pt4PR/5S3loRnaFztR2omY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ER0wLECvEuQI65hwn8LfGXScn00qgltc0PZ2E53DQ9EOxaroYeU8d6e+dTParzS1dfJ8QdtZ76fAh5vPxRDstU9DF4w3hyoOStoeqq/IsUPiEOfpwUei75DT2dCODhpVrSwQihpo1kPAW4MLgJT4ycwzhXMPyPKlHZXpC1OvYdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGxMYeld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uyQoFVjibSr6jI7+rLUiEIa/8ZHWr1nLbUJ0z/OxawuHMvIdpwc/kLexuPFnG6s62ZxhnLBhQN7clao5liKe8Buyopj/o+HtLNIojdfZJf5DrzylD8v76REAVFTiTMvLwlygkCGAdMPerq0Y8++BrbqRBTW3fmIuJghnVNBZRP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cnhpMK8N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGxMYeld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018DCC2BCB0;
-	Tue, 12 May 2026 17:42:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cnhpMK8N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9207C2BCB0;
+	Tue, 12 May 2026 17:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607761;
-	bh=8UoSB76PEeOOzuX9KrFIbqYSlUZy7CMSdDiwdFpre/Q=;
+	s=korg; t=1778607764;
+	bh=Fag4b6r+Xa1IXmnQApHF5Pt4PR/5S3loRnaFztR2omY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xGxMYeldTDl23u8Zw3nKfEZWzNIkaUZ1xQgUdn1ZcuAg/JzxB6PxomoAfji7zgSGt
-	 wBlo7F+toPVQRZfdDGRGn+4cNUuI5Z2ATJmfdBShQmfqZwaDQz2n87a2GbP/qpTUNB
-	 lO2FWcDlb+mdfa8tHGzEfqEEyk3Vm+kRzKaSDjhE=
+	b=cnhpMK8NLNEX05JngbZAeFh4QkPV2VzDxLZFNMOVymK45QlRrecFKXf0nn9HM+ExT
+	 vtDIVIJlpm8bfavPgGVRCw+eSJWyFMbtKc6f20Nk6zrFPZ2oeeURp/XSrOfPtzMc/M
+	 BWEIkyiI15D59OXvUWiHcPUTDkZDe+z0SGKfwMEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/206] rxrpc: Fix conn-level packet handling to unshare RESPONSE packets
-Date: Tue, 12 May 2026 19:37:58 +0200
-Message-ID: <20260512173933.381706230@linuxfoundation.org>
+Subject: [PATCH 6.12 027/206] rxrpc: Also unshare DATA/RESPONSE packets when paged frags are present
+Date: Tue, 12 May 2026 19:37:59 +0200
+Message-ID: <20260512173933.403193051@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -57,97 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 24481a7f573305706054c59e275371f8d0fe919f upstream.
+commit aa54b1d27fe0c2b78e664a34fd0fdf7cd1960d71 upstream.
 
-The security operations that verify the RESPONSE packets decrypt bits of it
-in place - however, the sk_buff may be shared with a packet sniffer, which
-would lead to the sniffer seeing an apparently corrupt packet (actually
-decrypted).
+The DATA-packet handler in rxrpc_input_call_event() and the RESPONSE
+handler in rxrpc_verify_response() copy the skb to a linear one before
+calling into the security ops only when skb_cloned() is true.  An skb
+that is not cloned but still carries externally-owned paged fragments
+(e.g. SKBFL_SHARED_FRAG set by splice() into a UDP socket via
+__ip_append_data, or a chained skb_has_frag_list()) falls through to
+the in-place decryption path, which binds the frag pages directly into
+the AEAD/skcipher SGL via skb_to_sgvec().
 
-Fix this by handing a copy of the packet off to the specific security
-handler if the packet was cloned.
+Extend the gate to also unshare when skb_has_frag_list() or
+skb_has_shared_frag() is true.  This catches the splice-loopback vector
+and other externally-shared frag sources while preserving the
+zero-copy fast path for skbs whose frags are kernel-private (e.g. NIC
+page_pool RX, GRO).  The OOM/trace handling already in place is reused.
 
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-5-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[Readd rxrpc_skb_put_response_copy which missed in bf20f46d94f1 in v6.12.86]
-Stable-dep-of: aa54b1d27fe0 ("rxrpc: Also unshare DATA/RESPONSE packets when
-paged frags are present")
+Fixes: d0d5c0cd1e71 ("rxrpc: Use skb_unshare() rather than skb_cow_data()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/rxrpc.h |  1 +
- net/rxrpc/conn_event.c       | 29 ++++++++++++++++++++++++++++-
- 2 files changed, 29 insertions(+), 1 deletion(-)
+ net/rxrpc/call_event.c | 4 +++-
+ net/rxrpc/conn_event.c | 3 ++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
-index 9377acad0c5f9..63efc9e4e4102 100644
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -146,6 +146,7 @@
- 	EM(rxrpc_skb_put_jumbo_subpacket,	"PUT jumbo-sub") \
- 	EM(rxrpc_skb_put_last_nack,		"PUT last-nack") \
- 	EM(rxrpc_skb_put_purge,			"PUT purge    ") \
-+	EM(rxrpc_skb_put_response_copy,		"PUT resp-cpy ") \
- 	EM(rxrpc_skb_put_rotate,		"PUT rotate   ") \
- 	EM(rxrpc_skb_put_unknown,		"PUT unknown  ") \
- 	EM(rxrpc_skb_see_conn_work,		"SEE conn-work") \
+diff --git a/net/rxrpc/call_event.c b/net/rxrpc/call_event.c
+index 62ddaa129ce5a..fda16b39e8e73 100644
+--- a/net/rxrpc/call_event.c
++++ b/net/rxrpc/call_event.c
+@@ -347,7 +347,9 @@ bool rxrpc_input_call_event(struct rxrpc_call *call, struct sk_buff *skb)
+ 
+ 		if (sp->hdr.type == RXRPC_PACKET_TYPE_DATA &&
+ 		    sp->hdr.securityIndex != 0 &&
+-		    skb_cloned(skb)) {
++		    (skb_cloned(skb) ||
++		     skb_has_frag_list(skb) ||
++		     skb_has_shared_frag(skb))) {
+ 			/* Unshare the packet so that it can be modified for
+ 			 * in-place decryption.
+ 			 */
 diff --git a/net/rxrpc/conn_event.c b/net/rxrpc/conn_event.c
-index 82cc72123c9c9..6dcfaed1f7485 100644
+index 6dcfaed1f7485..3a58fb9210383 100644
 --- a/net/rxrpc/conn_event.c
 +++ b/net/rxrpc/conn_event.c
-@@ -226,6 +226,33 @@ static void rxrpc_call_is_secure(struct rxrpc_call *call)
- 		rxrpc_notify_socket(call);
- }
+@@ -231,7 +231,8 @@ static int rxrpc_verify_response(struct rxrpc_connection *conn,
+ {
+ 	int ret;
  
-+static int rxrpc_verify_response(struct rxrpc_connection *conn,
-+				 struct sk_buff *skb)
-+{
-+	int ret;
-+
-+	if (skb_cloned(skb)) {
-+		/* Copy the packet if shared so that we can do in-place
-+		 * decryption.
-+		 */
-+		struct sk_buff *nskb = skb_copy(skb, GFP_NOFS);
-+
-+		if (nskb) {
-+			rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
-+			ret = conn->security->verify_response(conn, nskb);
-+			rxrpc_free_skb(nskb, rxrpc_skb_put_response_copy);
-+		} else {
-+			/* OOM - Drop the packet. */
-+			rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
-+			ret = -ENOMEM;
-+		}
-+	} else {
-+		ret = conn->security->verify_response(conn, skb);
-+	}
-+
-+	return ret;
-+}
-+
- /*
-  * connection-level Rx packet processor
-  */
-@@ -253,7 +280,7 @@ static int rxrpc_process_event(struct rxrpc_connection *conn,
- 		}
- 		spin_unlock(&conn->state_lock);
- 
--		ret = conn->security->verify_response(conn, skb);
-+		ret = rxrpc_verify_response(conn, skb);
- 		if (ret < 0)
- 			return ret;
- 
+-	if (skb_cloned(skb)) {
++	if (skb_cloned(skb) || skb_has_frag_list(skb) ||
++	    skb_has_shared_frag(skb)) {
+ 		/* Copy the packet if shared so that we can do in-place
+ 		 * decryption.
+ 		 */
 -- 
 2.53.0
 
