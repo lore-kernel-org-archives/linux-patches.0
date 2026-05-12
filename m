@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19D93EDE5C;
-	Tue, 12 May 2026 18:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096CE36C9E4;
+	Tue, 12 May 2026 18:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609584; cv=none; b=f7HHaWBkDI5Br31myQE5h3+04JStLvu1ETicqLOuB7EK7enDVZEy3D14z0bYgPv/Qumz/bCBBLzvV7UuVLBXFDT+fQ/fHTOfjNnO3Gu9InDhJnvgXbVQ8aZpSxAQRAtC+AMIyNZBkzlBksgfg7gHV8I1XOlF6pEsLv4G2GswPLA=
+	t=1778609587; cv=none; b=ZoiUNxDoUckwwOhfOj7iltkq1wgm/ap2nTSF0s5Wpw9dLjyJW0s3zFUVy3Af39C+YgwaOEdYLKEwIKbUFYA59yDGFHLM2RRIkXLFRb8HBrVeZuxjUW9DCzG2g3Be/NqqeRZTUAiIjCmak+PwcsEnjgZCfNFq0nUVT9quIVfwUZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609584; c=relaxed/simple;
-	bh=7DZcl84/yGf+EuPr/yq0MnbjJLCnzRETXo18zF4vCPU=;
+	s=arc-20240116; t=1778609587; c=relaxed/simple;
+	bh=OHEPTOwYxo8jvRiqvOjUrPJZj1wjVwMbDOorHD39o10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMC8OHvr8HP5l3fBmxPKYmzlQGfDzJRsCDBiu0aWboShkpS/PO77CIxllpEsaXAkydx8I4tiGaNBpRteLQyTiqtQ8L2fmGkvd6DxAcWrjWlna12ufWIoJ9ZZHPFy/4/lytUyX6zcpr4ANS5M8Ygpt+URd1yq23IoAUGr06s0b1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQ4NAsa0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kp6zX7djje3DfJsRZ9brb9vFgD6CiOS9/kgzy3yhLHy3YGv6tmDoFAVzEZnAu8upfyMz/nUgL3bnnwYzzx0ZJFsSGt53yFbcQAc010nMm7j/BYpmKjeTgp4tyY9fUvciyDmU8tRIU8FOmOb5uXcuMTJm6sPONvRjkU2XNZmnyLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMnUONKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQ4NAsa0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6C5C2BCB0;
-	Tue, 12 May 2026 18:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMnUONKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9453DC2BCB0;
+	Tue, 12 May 2026 18:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609584;
-	bh=7DZcl84/yGf+EuPr/yq0MnbjJLCnzRETXo18zF4vCPU=;
+	s=korg; t=1778609586;
+	bh=OHEPTOwYxo8jvRiqvOjUrPJZj1wjVwMbDOorHD39o10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQ4NAsa0M4kO1T43nfSUsd81ZdnvipUUpukTUnA9Cnznf3gWkPzcmJoZYWCE0+A/H
-	 nYRXzx9ihuXCrvIrIY3hUSOMToIaoyliT0dwl6RdS12wIFxjcmkh2qy8uE0GhaENdg
-	 bJluIiLBBB94CrqXB2TZw5j4fiBdZI6aQ9HxOHzE=
+	b=xMnUONKQD46i6USZJGpe1HoLUwJSC7xZCNAHFoB/78G63OyPDR1frNqJgBib629KI
+	 BUx49jIFzMWMTdeCJYyNNHUCDMAnoA4YyrTRDVOKYmeCMLOn0U9ibb+PXix5xptxLK
+	 sCIYHZtonPxJqwFpmJKGxragHfuqwhIk+s/3ssU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mira Limbeck <m.limbeck@proxmox.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 7.0 210/307] scsi: mpt3sas: Limit NVMe request size to 2 MiB
-Date: Tue, 12 May 2026 19:40:05 +0200
-Message-ID: <20260512173944.548792255@linuxfoundation.org>
+	Shivam Kumar <skumar47@syr.edu>,
+	Shivam Kumar <kumar.shivam43666@gmail.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 7.0 201/307] nvmet-tcp: fix race between ICReq handling and queue teardown
+Date: Tue, 12 May 2026 19:39:56 +0200
+Message-ID: <20260512173944.362976120@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,57 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-commit 04631f55afc543d5431a2bdee7f6cc0f2c0debe7 upstream.
+commit 5293a8882c549fab4a878bc76b0b6c951f980a61 upstream.
 
-The HBA firmware reports NVMe MDTS values based on the underlying drive
-capability. However, because the driver allocates a fixed 4K buffer for
-the PRP list, accommodating at most 512 entries, the driver supports a
-maximum I/O transfer size of 2 MiB.
+nvmet_tcp_handle_icreq() updates queue->state after sending an
+Initialization Connection Response (ICResp), but it does so without
+serializing against target-side queue teardown.
 
-Limit max_hw_sectors to the smaller of the reported MDTS and the 2 MiB
-driver limit to prevent issuing oversized I/O that may lead to a kernel
-oops.
+If an NVMe/TCP host sends an Initialization Connection Request
+(ICReq) and immediately closes the connection, target-side teardown
+may start in softirq context before io_work drains the already
+buffered ICReq. In that case, nvmet_tcp_schedule_release_queue()
+sets queue->state to NVMET_TCP_Q_DISCONNECTING and drops the queue
+reference under state_lock.
 
+If io_work later processes that ICReq, nvmet_tcp_handle_icreq() can
+still overwrite the state back to NVMET_TCP_Q_LIVE. That defeats the
+DISCONNECTING-state guard in nvmet_tcp_schedule_release_queue() and
+allows a later socket state change to re-enter teardown and issue a
+second kref_put() on an already released queue.
+
+The ICResp send failure path has the same problem. If teardown has
+already moved the queue to DISCONNECTING, a send error can still
+overwrite the state with NVMET_TCP_Q_FAILED, again reopening the
+window for a second teardown path to drop the queue reference.
+
+Fix this by serializing both post-send state transitions with
+state_lock and bailing out if teardown has already started.
+
+Use -ESHUTDOWN as an internal sentinel for that bail-out path rather
+than propagating it as a transport error like -ECONNRESET. Keep
+nvmet_tcp_socket_error() setting rcv_state to NVMET_TCP_RECV_ERR before
+honoring that sentinel so receive-side parsing stays quiesced until the
+existing release path completes.
+
+Fixes: c46a6465bac2 ("nvmet-tcp: add NVMe over TCP target driver")
 Cc: stable@vger.kernel.org
-Fixes: 9b8b84879d4a ("block: Increase BLK_DEF_MAX_SECTORS_CAP")
-Reported-by: Mira Limbeck <m.limbeck@proxmox.com>
-Closes: https://lore.kernel.org/r/291f78bf-4b4a-40dd-867d-053b36c564b3@proxmox.com
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9b8b84879d4a
-Suggested-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Tested-by: Mira Limbeck <m.limbeck@proxmox.com>
-Link: https://patch.msgid.link/20260414110811.85156-1-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Shivam Kumar <skumar47@syr.edu>
+Tested-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_scsih.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c |   26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
---- a/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_scsih.c
-@@ -2738,8 +2738,20 @@ scsih_sdev_configure(struct scsi_device
- 				pcie_device->enclosure_level,
- 				pcie_device->connector_name);
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -398,6 +398,19 @@ static void nvmet_tcp_build_pdu_iovec(st
  
-+		/*
-+		 * The HBA firmware passes the NVMe drive's MDTS
-+		 * (Maximum Data Transfer Size) up to the driver. However,
-+		 * the driver hardcodes a 4K buffer size for the PRP list,
-+		 * accommodating at most 512 entries. This strictly limits
-+		 * the maximum supported NVMe I/O transfer to 2 MiB.
-+		 *
-+		 * Cap max_hw_sectors to the smaller of the drive's reported
-+		 * MDTS or the 2 MiB driver limit to prevent kernel oopses.
-+		 */
-+		lim->max_hw_sectors = SZ_2M >> SECTOR_SHIFT;
- 		if (pcie_device->nvme_mdts)
--			lim->max_hw_sectors = pcie_device->nvme_mdts / 512;
-+			lim->max_hw_sectors = min(lim->max_hw_sectors,
-+					pcie_device->nvme_mdts >> SECTOR_SHIFT);
+ static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue)
+ {
++	/*
++	 * Keep rcv_state at RECV_ERR even for the internal -ESHUTDOWN path.
++	 * nvmet_tcp_handle_icreq() can return -ESHUTDOWN after the ICReq has
++	 * already been consumed and queue teardown has started.
++	 *
++	 * If nvmet_tcp_data_ready() or nvmet_tcp_write_space() queues
++	 * nvmet_tcp_io_work() again before nvmet_tcp_release_queue_work()
++	 * cancels it, the queue must not keep that old receive state.
++	 * Otherwise the next nvmet_tcp_io_work() run can reach
++	 * nvmet_tcp_done_recv_pdu() and try to handle the same ICReq again.
++	 *
++	 * That is why queue->rcv_state needs to be updated before we return.
++	 */
+ 	queue->rcv_state = NVMET_TCP_RECV_ERR;
+ 	if (queue->nvme_sq.ctrl)
+ 		nvmet_ctrl_fatal_error(queue->nvme_sq.ctrl);
+@@ -922,11 +935,24 @@ static int nvmet_tcp_handle_icreq(struct
+ 	iov.iov_len = sizeof(*icresp);
+ 	ret = kernel_sendmsg(queue->sock, &msg, &iov, 1, iov.iov_len);
+ 	if (ret < 0) {
++		spin_lock_bh(&queue->state_lock);
++		if (queue->state == NVMET_TCP_Q_DISCONNECTING) {
++			spin_unlock_bh(&queue->state_lock);
++			return -ESHUTDOWN;
++		}
+ 		queue->state = NVMET_TCP_Q_FAILED;
++		spin_unlock_bh(&queue->state_lock);
+ 		return ret; /* queue removal will cleanup */
+ 	}
  
- 		pcie_device_put(pcie_device);
- 		spin_unlock_irqrestore(&ioc->pcie_device_lock, flags);
++	spin_lock_bh(&queue->state_lock);
++	if (queue->state == NVMET_TCP_Q_DISCONNECTING) {
++		spin_unlock_bh(&queue->state_lock);
++		/* Tell nvmet_tcp_socket_error() teardown is in progress. */
++		return -ESHUTDOWN;
++	}
+ 	queue->state = NVMET_TCP_Q_LIVE;
++	spin_unlock_bh(&queue->state_lock);
+ 	nvmet_prepare_receive_pdu(queue);
+ 	return 0;
+ }
 
 
