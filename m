@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50EE3DD874;
-	Tue, 12 May 2026 17:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3391D3DD87C;
+	Tue, 12 May 2026 17:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608507; cv=none; b=jnT0R+Q3yyyQ3jXXQRuzFFdFauzbWqFM5CUsLnGQ7/tTHR7WEjrhnrLj5XA2nNeHiYDhRptlLybneJhqOAkgpgjX4Iw/DhEXWSitVJ11DBeRR+JaxWK0QFNgxZgaGDltA8eJFWtTUZjN3mKQ9hJ4BiYWq3j36Fl+92EcTJMnmq4=
+	t=1778608510; cv=none; b=mNlf1myE0bIMKbvjTuRkmXmvXndfOOxegiTzzdw56PrRGKvrTsJRpSruyAM7JgtIyTLgJewqzgg8VhN6lZjLZFl5AnRUhKjELuGaoE0AQ6sIoYUOWGZ/ZiyZ4Q0IhZ9nQRQsQEivxUinboyL8XEvjT0myxt3f6PRGB5JM6VmkeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608507; c=relaxed/simple;
-	bh=hDzoSndjmrPrMazsf6O9CcXNm8lbpu9mfyLMry4jXZk=;
+	s=arc-20240116; t=1778608510; c=relaxed/simple;
+	bh=icm01Kk5K+RdajgPj3m0DDVCHJwr+ja3p1+JtorTE3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YatD/7m00rDGsLlu2JCAtASBXse460HwH1boXYEpv3rTMTI9gGByRExQ7i9jzZs+3QX6iHd3jH2NEnDyKPrHdloa9gNxGPqC1SLFkwK13tDBmKX3S7r82NGY8XLEHn2jWkFgDRzktMQQWGTD1tKheW0MRahN/LsSi4cbIu/0SJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhSG7oP5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GHcG56LFZYSDDqbmSBZMidIHbFbhWjbFExtK0eMiqj9BtoMwIj1ho+S6DvNXbzCd7PXgW0U70Q59Ojco8MzPXVOV4rqCsFoCffjSplpOCM0u0q8hwx8hx5dcFWSMrnr9oh8fzG3fEG2KTVpuATSeeVF2qI7DdjhGZjGHi6KnWjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMVPh/8r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhSG7oP5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399E4C2BCB0;
-	Tue, 12 May 2026 17:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMVPh/8r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFADBC2BCB0;
+	Tue, 12 May 2026 17:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608507;
-	bh=hDzoSndjmrPrMazsf6O9CcXNm8lbpu9mfyLMry4jXZk=;
+	s=korg; t=1778608510;
+	bh=icm01Kk5K+RdajgPj3m0DDVCHJwr+ja3p1+JtorTE3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vhSG7oP57Dh1pEnm1z2A67GPS1cjqPCCc2pqzt/ZqWPFbPg9IV6Y3nXZibYXIh3KG
-	 d1pDpbdBTkJpjXhbcgTnl5p16P/ErbkfiuzdYKfFJNDJyBOVz+miWEc7+YFzGl6adG
-	 cI1EFXMCGEYW0KS32+eJvjxVOq2TDtxF54lvkk3Y=
+	b=EMVPh/8rco13DlaYLCspTQqkIkX2Lml6ySI5ifBpniP9OZfKvbFWTbKdDnU1fW4Tb
+	 K6COWxIWTE9MoccXwSj85h+w9U63OYPp+GabMZr4YHbFmy9PPVzqnl0smezZJfQOFv
+	 u0uxdCfZ+GxIhBeH0d9taK7mpVDCY9Oj8II2xjd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 079/270] spi: sun4i: fix controller deregistration
-Date: Tue, 12 May 2026 19:38:00 +0200
-Message-ID: <20260512173940.118676545@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.18 106/270] parisc: Fix IRQ leak in LASI driver
+Date: Tue, 12 May 2026 19:38:27 +0200
+Message-ID: <20260512173940.689863688@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,50 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-commit 42108a2f03e0fdeabe9d02d085bdb058baa1189f upstream.
+commit 37b0dc5e279f35036fb638d1e187197b6c05a76d upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+When request_irq() succeeds but gsc_common_setup() fails later,
+the IRQ is never released. Fix this by adding proper error handling
+with goto labels to ensure resources are released in LIFO order.
 
-Fixes: b5f6517948cc ("spi: sunxi: Add Allwinner A10 SPI controller driver")
-Cc: stable@vger.kernel.org	# 3.15
-Cc: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-19-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Detected by Smatch:
+  drivers/parisc/lasi.c:216 lasi_init_chip() warn: 'lasi->gsc_irq.irq'
+from request_irq() not released on lines: 207.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202604180957.4QdAIxP6-lkp@intel.com/
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-sun4i.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/parisc/lasi.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/spi/spi-sun4i.c
-+++ b/drivers/spi/spi-sun4i.c
-@@ -505,7 +505,7 @@ static int sun4i_spi_probe(struct platfo
- 	pm_runtime_enable(&pdev->dev);
- 	pm_runtime_idle(&pdev->dev);
+--- a/drivers/parisc/lasi.c
++++ b/drivers/parisc/lasi.c
+@@ -193,8 +193,7 @@ static int __init lasi_init_chip(struct
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
+ 	ret = request_irq(lasi->gsc_irq.irq, gsc_asic_intr, 0, "lasi", lasi);
+ 	if (ret < 0) {
+-		kfree(lasi);
+-		return ret;
++		goto err_free;
+ 	}
+ 
+ 	/* enable IRQ's for devices below LASI */
+@@ -203,8 +202,7 @@ static int __init lasi_init_chip(struct
+ 	/* Done init'ing, register this driver */
+ 	ret = gsc_common_setup(dev, lasi);
  	if (ret) {
- 		dev_err(&pdev->dev, "cannot register SPI host\n");
- 		goto err_pm_disable;
-@@ -523,7 +523,15 @@ err_free_host:
+-		kfree(lasi);
+-		return ret;
++		goto err_irq;
+ 	}    
  
- static void sun4i_spi_remove(struct platform_device *pdev)
- {
-+	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	gsc_fixup_irqs(dev, lasi, lasi_choose_irq);
+@@ -214,6 +212,12 @@ static int __init lasi_init_chip(struct
+ 		SYS_OFF_PRIO_DEFAULT, lasi_power_off, lasi);
+ 
+ 	return ret;
 +
-+	spi_controller_get(host);
-+
-+	spi_unregister_controller(host);
-+
- 	pm_runtime_force_suspend(&pdev->dev);
-+
-+	spi_controller_put(host);
++err_irq:
++	free_irq(lasi->gsc_irq.irq, lasi);
++err_free:
++	kfree(lasi);
++	return ret;
  }
  
- static const struct of_device_id sun4i_spi_match[] = {
+ static struct parisc_device_id lasi_tbl[] __initdata = {
 
 
