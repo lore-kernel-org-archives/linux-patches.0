@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F93C3EDE7B;
-	Tue, 12 May 2026 17:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3F03EDE44;
+	Tue, 12 May 2026 17:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608286; cv=none; b=pBQjc4XX6I4oUOCFzUmiMUGFXda+qn1hb1q33icGIrhkADXTVGALsokgqLePrhpYAuziEdkCetqV0pJTkPik9+wGG7yBougJGGqhLdFmVF2UihpEKlJq/DTONzE8Le12ktV1oDzf17GtoPwkgM41a5EyKEbC+WN9XJtoik6ru9U=
+	t=1778608289; cv=none; b=TTm3qlV42EHZfk7ecLxlTxcpX90ZXoaOL5/95FJUuLyDtRCEPF1y8YsaZBchPuXMsLlsnY4B2bAo0aHk7zUhuTXTBn8HNRlOB18UsC1kg7wmRDW3zvTfxSKNzwXxkJYzfKI60AU4ZqRQ3UTYKmd/g7sy4oZiZ2P5b9r9ybL4nWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608286; c=relaxed/simple;
-	bh=+bb8TxnSxIhe6iqSt/n07ufhMbZn0/7krSTTLIvhOSU=;
+	s=arc-20240116; t=1778608289; c=relaxed/simple;
+	bh=mdWcHS321seFRXAw8DD1FPFT4+zz4YLPIEwrRJ9QncY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jxkxp8FzNA4MPY7mIw12UP/Z9OuUE3Tue+xB24pHd5Nx6f7ZVhoLAHQP43N6fUcpFvucSNDM3gCm8Nb2MayKBsvY77DYCoEi7ljpxAXZ2GlfRS8l/o0o/65rJCB/2QPzphls44ZXJaUWvTLGngiArncuc1GvvXfvh3Su76BuuAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8y8z4jf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hhj0R0uuUM1bNf5UKkobWUfE3jPbh+d7HNgdWgPvXEoaKJBfsncMS6OLs7MEGODRBJFxYNtCkbUkjyFry4B6Nbr9ovqW1wpq7VNOcIaVvaK6v+82cxKP+oPzsH2G7XhbbikBY8G4h3aMYb1n1fHq7FFh96IuOLA58PUCLQr081s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGI+mm0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8y8z4jf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90B7C2BCB0;
-	Tue, 12 May 2026 17:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGI+mm0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C811C2BCB0;
+	Tue, 12 May 2026 17:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608286;
-	bh=+bb8TxnSxIhe6iqSt/n07ufhMbZn0/7krSTTLIvhOSU=;
+	s=korg; t=1778608288;
+	bh=mdWcHS321seFRXAw8DD1FPFT4+zz4YLPIEwrRJ9QncY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8y8z4jfVwyfNra8zy14eL/Ej5oKgjHJloX3aaUrMVcgeod6Gk0UCMsq/Rq+CQqBj
-	 5Wq1WooG3uxk616gbPym8o4qMUbZ4LDAhSeod0WMVIqxcsj6Hfe7G5zJt0pjAo7eWT
-	 jXcgM6fwFb5hLR761xkCxCR3lqmvfn+syUxxKwvM=
+	b=AGI+mm0/MRPt2ceH7RkEu25mDPvkvgKrrLQoOsHpwsmZPumOoUrhpIfM+oytaRuIz
+	 kwxsCazoglSruBQgGOQKXWWgs0K4gZrQX3qPb3W1CbqxWM8JCs87SPS80KBkTzVhqB
+	 9FiILGnD/nQYhf8lPBsW+e4ekpuyOmj7q4WymnMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Metzmacher <metze@samba.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Yi Kuo <yi@yikuo.dev>,
-	Steve French <stfrench@microsoft.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Xiao Liu <lx24@stu.ynu.edu.cn>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 020/270] smb: client/smbdirect: fix MR registration for coalesced SG lists
-Date: Tue, 12 May 2026 19:37:01 +0200
-Message-ID: <20260512173938.883135006@linuxfoundation.org>
+Subject: [PATCH 6.18 021/270] net: af_key: zero aligned sockaddr tail in PF_KEY exports
+Date: Tue, 12 May 2026 19:37:02 +0200
+Message-ID: <20260512173938.904263388@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -53,84 +56,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Kuo <yi@yikuo.dev>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-commit 9900b9fee5a0e0f72d7c744b37c7c851d5785ac6 upstream.
-The stable backport to < 7.1 patches a different file. Also
-the Fixes tag below is adjusted for the old code path.
+[ Upstream commit 426c355742f02cf743b347d9d7dbdc1bfbfa31ef ]
 
-ib_dma_map_sg() modifies the provided scatterlist and returns the
-number of mapped entries, which can be fewer than the requested
-mr->sgt.nents if the DMA controller coalesces contiguous memory
-segments. Passing the original, uncoalesced count to ib_map_mr_sg()
-causes memory registration failures if coalescing actually occurs.
+PF_KEY export paths use `pfkey_sockaddr_size()` when reserving sockaddr
+payload space, so IPv6 addresses occupy 32 bytes on the wire. However,
+`pfkey_sockaddr_fill()` initializes only the first 28 bytes of
+`struct sockaddr_in6`, leaving the final 4 aligned bytes uninitialized.
 
-Capture the actual mapped count returned by ib_dma_map_sg() and pass it
-to ib_map_mr_sg() to ensure correct MR registration.
+Not every PF_KEY message is affected. The state and policy dump builders
+already zero the whole message buffer before filling the sockaddr
+payloads. Keep the fix to the export paths that still append aligned
+sockaddr payloads with plain `skb_put()`:
 
-Also update the ib_dma_map_sg() error logging to drop the error
-pointer formatting, since the return value is an integer count
-rather than an error code.
+  - `SADB_ACQUIRE`
+  - `SADB_X_NAT_T_NEW_MAPPING`
+  - `SADB_X_MIGRATE`
 
-Ensure a proper error code (-EIO) is assigned when DMA mapping or
-MR registration fails.
+Fix those paths by clearing only the aligned sockaddr tail after
+`pfkey_sockaddr_fill()`.
 
-Fixes: c7398583340a ("CIFS: SMBD: Implement RDMA memory registration")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221408
-Reviewed-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Yi Kuo <yi@yikuo.dev>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 08de61beab8a ("[PFKEYV2]: Extension for dynamic update of endpoint address(es)")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ net/key/af_key.c | 52 +++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 34 insertions(+), 18 deletions(-)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index ff44a2dc49938..e2b20219ba2c7 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -2895,7 +2895,7 @@ struct smbdirect_mr_io *smbd_register_mr(struct smbd_connection *info,
- 	struct smbdirect_socket *sc = &info->socket;
- 	struct smbdirect_socket_parameters *sp = &sc->parameters;
- 	struct smbdirect_mr_io *mr;
--	int rc, num_pages;
-+	int rc, num_pages, num_mapped;
- 	struct ib_reg_wr *reg_wr;
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index ceaa82bc78acc..e01939ab81039 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -757,6 +757,22 @@ static unsigned int pfkey_sockaddr_fill(const xfrm_address_t *xaddr, __be16 port
+ 	return 0;
+ }
  
- 	num_pages = iov_iter_npages(iter, sp->max_frmr_depth + 1);
-@@ -2923,18 +2923,21 @@ struct smbdirect_mr_io *smbd_register_mr(struct smbd_connection *info,
- 		    num_pages, iov_iter_count(iter), sp->max_frmr_depth);
- 	smbd_iter_to_mr(iter, &mr->sgt, sp->max_frmr_depth);
++static unsigned int pfkey_sockaddr_fill_zero_tail(const xfrm_address_t *xaddr,
++						  __be16 port,
++						  struct sockaddr *sa,
++						  unsigned short family)
++{
++	unsigned int prefixlen;
++	int sockaddr_len = pfkey_sockaddr_len(family);
++	int sockaddr_size = pfkey_sockaddr_size(family);
++
++	prefixlen = pfkey_sockaddr_fill(xaddr, port, sa, family);
++	if (sockaddr_size > sockaddr_len)
++		memset((u8 *)sa + sockaddr_len, 0, sockaddr_size - sockaddr_len);
++
++	return prefixlen;
++}
++
+ static struct sk_buff *__pfkey_xfrm_state2msg(const struct xfrm_state *x,
+ 					      int add_keys, int hsc)
+ {
+@@ -3206,9 +3222,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->props.saddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
  
--	rc = ib_dma_map_sg(sc->ib.dev, mr->sgt.sgl, mr->sgt.nents, mr->dir);
--	if (!rc) {
--		log_rdma_mr(ERR, "ib_dma_map_sg num_pages=%x dir=%x rc=%x\n",
--			    num_pages, mr->dir, rc);
-+	num_mapped = ib_dma_map_sg(sc->ib.dev, mr->sgt.sgl, mr->sgt.nents, mr->dir);
-+	if (!num_mapped) {
-+		log_rdma_mr(ERR, "ib_dma_map_sg num_pages=%x dir=%x num_mapped=%x\n",
-+			    num_pages, mr->dir, num_mapped);
-+		rc = -EIO;
- 		goto dma_map_error;
- 	}
+@@ -3221,9 +3237,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->id.daddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->id.daddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
  
--	rc = ib_map_mr_sg(mr->mr, mr->sgt.sgl, mr->sgt.nents, NULL, PAGE_SIZE);
--	if (rc != mr->sgt.nents) {
-+	rc = ib_map_mr_sg(mr->mr, mr->sgt.sgl, num_mapped, NULL, PAGE_SIZE);
-+	if (rc != num_mapped) {
- 		log_rdma_mr(ERR,
--			    "ib_map_mr_sg failed rc = %d nents = %x\n",
--			    rc, mr->sgt.nents);
-+			    "ib_map_mr_sg failed rc = %d num_mapped = %x\n",
-+			    rc, num_mapped);
-+		if (rc >= 0)
-+			rc = -EIO;
- 		goto map_mr_error;
- 	}
+@@ -3421,9 +3437,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->props.saddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
  
+@@ -3443,9 +3459,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(ipaddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(ipaddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
+ 
+@@ -3474,15 +3490,15 @@ static int set_sadb_address(struct sk_buff *skb, int sasize, int type,
+ 	switch (type) {
+ 	case SADB_EXT_ADDRESS_SRC:
+ 		addr->sadb_address_prefixlen = sel->prefixlen_s;
+-		pfkey_sockaddr_fill(&sel->saddr, 0,
+-				    (struct sockaddr *)(addr + 1),
+-				    sel->family);
++		pfkey_sockaddr_fill_zero_tail(&sel->saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      sel->family);
+ 		break;
+ 	case SADB_EXT_ADDRESS_DST:
+ 		addr->sadb_address_prefixlen = sel->prefixlen_d;
+-		pfkey_sockaddr_fill(&sel->daddr, 0,
+-				    (struct sockaddr *)(addr + 1),
+-				    sel->family);
++		pfkey_sockaddr_fill_zero_tail(&sel->daddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      sel->family);
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.53.0
 
