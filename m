@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30383EDE41;
-	Tue, 12 May 2026 17:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567163EDE41;
+	Tue, 12 May 2026 17:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608726; cv=none; b=eMWy2SD9DjfJwAOIg9sFjPAArsklAI+9hgetxlxFtPDJMs0nz/waP3BFzfIfCvlm6Rtn3fm8FQ0GP3KeRrdayIMQI25K5ezj+xyE8gCXvoYJHam39VxXCKoM3VLlCuO18kjomQ1MFV0dQ57A+8AM5FeB4OtnOz/X9TtNZFbFl3A=
+	t=1778608729; cv=none; b=qOVFTIN8541xwJa49W6mTOymroZJK1fM3Az0/dFFFp6v/jrHm43ZHedPRKrJqteqalG1sfXsAdpkMMR1LvclD8tL35R78jFdjfbelqQh7ox5uVsxSEqgIkgAQLoBhksRdK6IsScBqOS1KNxUaQbDdGRk6Q8Sh99JueFkX1yf8CA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608726; c=relaxed/simple;
-	bh=oIkj7PieIMqmHyTJ0S3itbH77NiCZ6cO4X/lKgv0PLg=;
+	s=arc-20240116; t=1778608729; c=relaxed/simple;
+	bh=IAgHFtwG7oElHZtgxMi76Y9pr4C8WucO6wPlXg8zAn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JVfmd9CXAONtsftPjhEEdJ5sYnIBPOwf3UGOF6fYybR6WAl3lZ6tqYCkdv5gMfdFdpF99bOxVVbD1XdZx+m7hqE4Pw063jNQEsF/a4GFVHqpkH1azCgBf8ufgj4o8/SClVV2jUyf4rE9INK/AeMZx9BlZZ+dWL3+a1G7y6VStxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFJtrN7B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J3436OzAIFcOFqgjg8no8Pkaw17b9mEgshkbVZDfP6saMmDr+ss/ZIigU+BL99PfxZz9bqIrvXq4KZId4Q81G+suousqs3BrrAsyc2Z5D6bFg/M9hSpLUE3ZnV/GXzCqIEYQUWG23d7Ak7F5q+iXVwT7IOYREo2z/D5FKmJJHZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnQpLEAv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFJtrN7B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A806C2BCB0;
-	Tue, 12 May 2026 17:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnQpLEAv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BB5C2BCB0;
+	Tue, 12 May 2026 17:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608726;
-	bh=oIkj7PieIMqmHyTJ0S3itbH77NiCZ6cO4X/lKgv0PLg=;
+	s=korg; t=1778608729;
+	bh=IAgHFtwG7oElHZtgxMi76Y9pr4C8WucO6wPlXg8zAn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFJtrN7BAaH5QYTWK8yha59jSFSgh626PVxjWoHIzS472Pah1IA1+SUyCldE+ZXwn
-	 nyIy+kKEBoAVX22p94v0qPdNM24Oc1Reb0t3+hqnYZwcJUP3+s3rbcczZtneCRoFrs
-	 SGDJ8TwYkwmKQusjHZL2VAZqKgNpN7s47fPaR0ko=
+	b=EnQpLEAvE2FXsOMl9jvi7jdtpJTEXLWTAUBfekkAr0vCyGq/EagqYttIes2IRZ9aC
+	 UMlnjofb3wlHxmS64hJA7PUd+JuUwy+7LlRuuE0qIYLd4+o2zaXmpL0WI8DzfaXrUZ
+	 fVPpFdu7zKj5zksY+ppwX/FkNZg7cshm0p2MJrVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.18 191/270] perf/x86/intel: Always reprogram ACR events to prevent stale masks
-Date: Tue, 12 May 2026 19:39:52 +0200
-Message-ID: <20260512173942.470016199@linuxfoundation.org>
+	Kai Aizen <kai.aizen.dev@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.18 192/270] RDMA/ionic: bound node_desc sysfs read with %.64s
+Date: Tue, 12 May 2026 19:39:53 +0200
+Message-ID: <20260512173942.491565383@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,69 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Kai Zen <kai.aizen.dev@gmail.com>
 
-commit 8ba0b706a485b1e607594cf4210786d517ad1611 upstream.
+commit 654a27f25530d052eeedf086e6c3e2d585c203bd upstream.
 
-Members of an ACR group are logically linked via a bitmask of their
-hardware counter indices. If some members of the group are assigned new
-hardware counters during rescheduling, even events that keep their
-original counter index must be updated with a new mask.
+node_desc[64] in struct ib_device is not guaranteed to be NUL-
+terminated. The core IB sysfs handler uses "%.64s" for exactly this
+reason (drivers/infiniband/core/sysfs.c:1307), since node_desc_store()
+performs a raw memcpy of up to IB_DEVICE_NODE_DESC_MAX bytes with no NUL
+termination:
 
-Without this, an event will continue to use a stale acr_mask that
-references the old indices of its group peers. Ensure all ACR events are
-reprogrammed during the scheduling path to maintain consistency across
-the group.
+  memcpy(desc.node_desc, buf, min_t(int, count, IB_DEVICE_NODE_DESC_MAX));
 
-Fixes: ec980e4facef ("perf/x86/intel: Support auto counter reload")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+If exactly 64 bytes are written via the node_desc sysfs file, the array
+contains no NUL byte. The ionic hca_type_show() handler uses unbounded
+"%s" and will read past the end of node_desc into adjacent fields of
+struct ib_device until it encounters a NUL.
+
+ionic supports IB_DEVICE_MODIFY_NODE_DESC, so this is triggerable by
+userspace.
+
+Match the core handler and bound the format specifier.
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260430002558.712334-3-dapeng1.mi@linux.intel.com
+Fixes: 2075bbe8ef03 ("RDMA/ionic: Register device ops for miscellaneous functionality")
+Link: https://patch.msgid.link/r/CALynFi7NAbhDCt1tdaDbf6TnLvAqbaHa6-Wqf6OkzREbA_PAfg@mail.gmail.com
+Signed-off-by: Kai Aizen <kai.aizen.dev@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/core.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/ionic/ionic_ibdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -1281,13 +1281,16 @@ int x86_perf_rdpmc_index(struct perf_eve
- 	return event->hw.event_base_rdpmc;
+diff --git a/drivers/infiniband/hw/ionic/ionic_ibdev.c b/drivers/infiniband/hw/ionic/ionic_ibdev.c
+index bd4c73e530d0..0382a64839d2 100644
+--- a/drivers/infiniband/hw/ionic/ionic_ibdev.c
++++ b/drivers/infiniband/hw/ionic/ionic_ibdev.c
+@@ -185,7 +185,7 @@ static ssize_t hca_type_show(struct device *device,
+ 	struct ionic_ibdev *dev =
+ 		rdma_device_to_drv_device(device, struct ionic_ibdev, ibdev);
+ 
+-	return sysfs_emit(buf, "%s\n", dev->ibdev.node_desc);
++	return sysfs_emit(buf, "%s.64\n", dev->ibdev.node_desc);
  }
+ static DEVICE_ATTR_RO(hca_type);
  
--static inline int match_prev_assignment(struct hw_perf_event *hwc,
-+static inline int match_prev_assignment(struct perf_event *event,
- 					struct cpu_hw_events *cpuc,
- 					int i)
- {
-+	struct hw_perf_event *hwc = &event->hw;
-+
- 	return hwc->idx == cpuc->assign[i] &&
--		hwc->last_cpu == smp_processor_id() &&
--		hwc->last_tag == cpuc->tags[i];
-+	       hwc->last_cpu == smp_processor_id() &&
-+	       hwc->last_tag == cpuc->tags[i] &&
-+	       !is_acr_event_group(event);
- }
- 
- static void x86_pmu_start(struct perf_event *event, int flags);
-@@ -1333,7 +1336,7 @@ static void x86_pmu_enable(struct pmu *p
- 			 * - no other event has used the counter since
- 			 */
- 			if (hwc->idx == -1 ||
--			    match_prev_assignment(hwc, cpuc, i))
-+			    match_prev_assignment(event, cpuc, i))
- 				continue;
- 
- 			/*
-@@ -1354,7 +1357,7 @@ static void x86_pmu_enable(struct pmu *p
- 			event = cpuc->event_list[i];
- 			hwc = &event->hw;
- 
--			if (!match_prev_assignment(hwc, cpuc, i))
-+			if (!match_prev_assignment(event, cpuc, i))
- 				x86_assign_hw_event(event, cpuc, i);
- 			else if (i < n_running)
- 				continue;
+-- 
+2.54.0
+
 
 
