@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCD3342501;
-	Tue, 12 May 2026 18:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B678342501;
+	Tue, 12 May 2026 18:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609708; cv=none; b=m5dOTIbmgq3cozzUh4iwcdaWWmYmor5BzLYI+OLJN7tY9QhLolD+eIhVcelAcg6KaEfQYtnCE0aPxzlovjEkf/jpOMMx1qIc8CgF37QYrDhT9JSAWOgplM2Oq/yJjxKUWSBednrufGBlmmyKknUSDDCdeJ1kDEaEweyF3pHHeq4=
+	t=1778609710; cv=none; b=mWWqyyiXiL/+tjvyRg8RS5ADuW9WdXteJLXNYQ09DPmYWU/rwJPPx5WhPAaNnERVn1qqZKaww2uZfBL/eCsVks/l/7siFmhMNV45aQarbKpHRh0MjAiPjz4YwlsynrGP2oiOUhR1ZyHWdUB6YzMTaNpTgzb9icjpe5U3cIztf7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609708; c=relaxed/simple;
-	bh=1+0iHQ+QdAZNaZE1cSyzsP+XA/V8k+cf9AGhZyVPDvY=;
+	s=arc-20240116; t=1778609710; c=relaxed/simple;
+	bh=5UPApT0dws36Qmua9/up88lv/1U6UPjj+n9/XrR2ZdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sj3jQIKEHbtaClrZE8Od8ArrrEe99WBk+/DPR2gY90wGKZtJUUUYetOdkyOAz8yaWKotS5VsNaG5OPUWg3RHGM4FoMTlhR7GjKp+/DWK6L7f/0pN2YQQl3cKR8uGtlaV0/M0Gm+3GmFYTzPeFFw8/t2/eQlRKsc/XQoYn0kGoNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8IUAWG8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rOsXvTROqwUHqdZjMuz2kpWw0OzF7B1lvJpCOnv4I0xKW3PdIgktb0n5YVqoy7Xi3NXYb0AshoYZgckfQxo8xMWfNWTsHyP3XkrXysWlyYU/Yme2MqVsWGadoDmHh7pucRe4JEENY/Jhwhar6G47qOowOxegZHCW4nV4w3dNkiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqQVsEVY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8IUAWG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A3FC2BCB0;
-	Tue, 12 May 2026 18:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqQVsEVY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3306CC2BCC7;
+	Tue, 12 May 2026 18:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609707;
-	bh=1+0iHQ+QdAZNaZE1cSyzsP+XA/V8k+cf9AGhZyVPDvY=;
+	s=korg; t=1778609710;
+	bh=5UPApT0dws36Qmua9/up88lv/1U6UPjj+n9/XrR2ZdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8IUAWG8IJAJ4w81WdGP8uEgzy+2Jsogum5tUC4FFcZIFBTP1duQHIebEGKDgHT0C
-	 lFYisCmdVF8bkGZ8FSExmi6lRMqIqGQa54IGUTFKEh4X59l2Ht6BNRHfopGyrfFKp9
-	 14ss62zKVA34Gf8iGFNv868er0OmgtopX7DZ5Qpg=
+	b=LqQVsEVYmdqn7k6dLvN6In6s37HLpKWGPE0S2SGhkMFJaRdVocm0ZQRT8iEIkYTBx
+	 2wqy3mlKw2GCNYUhRks5CmUaORYnhVK2ElX1s6OoIqiZgN6J2haDoxWC8wd+zUIKOu
+	 7FN87Z3fo72MJAbmrAMoxsgKAbXFICvnjV1yQMdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Longxuan Yu <ylong030@ucr.edu>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	John Ogness <john.ogness@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 301/307] 8021q: delete cleared egress QoS mappings
-Date: Tue, 12 May 2026 19:41:36 +0200
-Message-ID: <20260512173946.486024055@linuxfoundation.org>
+Subject: [PATCH 7.0 302/307] printk: add print_hex_dump_devel()
+Date: Tue, 12 May 2026 19:41:37 +0200
+Message-ID: <20260512173946.507673520@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -57,92 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longxuan Yu <ylong030@ucr.edu>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 7dddc74af369478ba7f9bc136d0fc1dc4570cb66 ]
+[ Upstream commit d134feeb5df33fbf77f482f52a366a44642dba09 ]
 
-vlan_dev_set_egress_priority() currently keeps cleared egress
-priority mappings in the hash as tombstones. Repeated set/clear cycles
-with distinct skb priorities therefore accumulate mapping nodes until
-device teardown and leak memory.
+Add print_hex_dump_devel() as the hex dump equivalent of pr_devel(),
+which emits output only when DEBUG is enabled, but keeps call sites
+compiled otherwise.
 
-Delete mappings when vlan_prio is cleared instead of keeping tombstones.
-Now that the egress mapping lists are RCU protected, the node can be
-unlinked safely and freed after a grace period.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Longxuan Yu <ylong030@ucr.edu>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/ecfa6f6ce2467a42647ff4c5221238ae85b79a59.1776647968.git.yuantan098@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 177730a273b1 ("crypto: caam - guard HMAC key hex dumps in hash_digest_key")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/8021q/vlan_dev.c     |   20 ++++++++++++++------
- net/8021q/vlan_netlink.c |    4 ----
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ include/linux/printk.h |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -172,26 +172,34 @@ int vlan_dev_set_egress_priority(const s
- 				 u32 skb_prio, u16 vlan_prio)
- {
- 	struct vlan_dev_priv *vlan = vlan_dev_priv(dev);
-+	struct vlan_priority_tci_mapping __rcu **mpp;
- 	struct vlan_priority_tci_mapping *mp;
- 	struct vlan_priority_tci_mapping *np;
- 	u32 bucket = skb_prio & 0xF;
- 	u32 vlan_qos = (vlan_prio << VLAN_PRIO_SHIFT) & VLAN_PRIO_MASK;
+--- a/include/linux/printk.h
++++ b/include/linux/printk.h
+@@ -801,6 +801,19 @@ static inline void print_hex_dump_debug(
+ }
+ #endif
  
- 	/* See if a priority mapping exists.. */
--	mp = rtnl_dereference(vlan->egress_priority_map[bucket]);
-+	mpp = &vlan->egress_priority_map[bucket];
-+	mp = rtnl_dereference(*mpp);
- 	while (mp) {
- 		if (mp->priority == skb_prio) {
--			if (mp->vlan_qos && !vlan_qos)
-+			if (!vlan_qos) {
-+				rcu_assign_pointer(*mpp, rtnl_dereference(mp->next));
- 				vlan->nr_egress_mappings--;
--			else if (!mp->vlan_qos && vlan_qos)
--				vlan->nr_egress_mappings++;
--			WRITE_ONCE(mp->vlan_qos, vlan_qos);
-+				kfree_rcu(mp, rcu);
-+			} else {
-+				WRITE_ONCE(mp->vlan_qos, vlan_qos);
-+			}
- 			return 0;
- 		}
--		mp = rtnl_dereference(mp->next);
-+		mpp = &mp->next;
-+		mp = rtnl_dereference(*mpp);
- 	}
- 
- 	/* Create a new mapping then. */
-+	if (!vlan_qos)
-+		return 0;
++#if defined(DEBUG)
++#define print_hex_dump_devel(prefix_str, prefix_type, rowsize,		\
++			     groupsize, buf, len, ascii)		\
++	print_hex_dump(KERN_DEBUG, prefix_str, prefix_type, rowsize,	\
++		       groupsize, buf, len, ascii)
++#else
++static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
++					int rowsize, int groupsize,
++					const void *buf, size_t len, bool ascii)
++{
++}
++#endif
 +
- 	np = kmalloc_obj(struct vlan_priority_tci_mapping);
- 	if (!np)
- 		return -ENOBUFS;
---- a/net/8021q/vlan_netlink.c
-+++ b/net/8021q/vlan_netlink.c
-@@ -263,10 +263,6 @@ static int vlan_fill_info(struct sk_buff
- 			for (pm = rcu_dereference_rtnl(vlan->egress_priority_map[i]); pm;
- 			     pm = rcu_dereference_rtnl(pm->next)) {
- 				u16 vlan_qos = READ_ONCE(pm->vlan_qos);
--
--				if (!vlan_qos)
--					continue;
--
- 				m.from = pm->priority;
- 				m.to   = (vlan_qos >> 13) & 0x7;
- 				if (nla_put(skb, IFLA_VLAN_QOS_MAPPING,
+ /**
+  * print_hex_dump_bytes - shorthand form of print_hex_dump() with default params
+  * @prefix_str: string to prefix each line with;
 
 
