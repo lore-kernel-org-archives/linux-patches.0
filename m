@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5BE3EDE72;
-	Tue, 12 May 2026 17:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BFF3E5A0F;
+	Tue, 12 May 2026 17:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608533; cv=none; b=lEobpWEzX6Hix320QzWjq7MQVqytuKtgqTI94ZvhU9fYg8AnYlgLFQ2EoZiWX99y7kKRbhrzNKENAz/vrHegj91uqMZVTPTSCe/gsdUkMtvKa8Dlqe9GPUM0jdHRPriJ+MoktJfN0mHtnHeXI4PMHpsKfMaDPIAG2+wwfeUhHgc=
+	t=1778608536; cv=none; b=R36wuEXFfjM+ZrrgGr2OFuW40jkSX5OMEIfrvRWXUg/DGeXXoqEtetf/7wiRiBiX3M86d7CdrHVmyE+LrZkYDtcjDDdlRrLuCJkL2+dc0lh+ouNqQLeyiZghwCciy5ph+kSEhW81fjOZTnBf4Llu7wtMd7r+uwNtCyHTpEdWvgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608533; c=relaxed/simple;
-	bh=5kXNYNUiEltnZ436MJVLqC4l4vwdkKyg4RMjmLlz3Q8=;
+	s=arc-20240116; t=1778608536; c=relaxed/simple;
+	bh=XJwEb0O3AqjfKwqjlQzOUSU9OIg2v0R0uc9suyj2JMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1yjEab94SxBWZKobAt4bdWJfZznwG0c+4Jf3C8Ti4g0z51Ubarh+n8Gg3cKU/x/RRAmkO+CDkZU2PqDRXl5zGD6LbGmHgcow3sWgzMFpeOFrUOh0a35i+RgYifI2tkHc4qLqjOMqPbs0h5DeqsdLB3GBXA8FImwLNYAKXNUDY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lFJU6sj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=opipBJrUmzYozY2bGgBD06brw/g3R40qOS5Na/0Y3eo36sjrtFyVlIqUKSahv64Z9J4vBh5XbS2jbTt7Av/mU8YmH6f5zLyhfwUDq/IBQh3TnArqrunc0isZJeZB796ANpb2/ucOs+r9nowNjP/XLaRsRCcbEW2KTNn0Q55LHqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mI2PUDSI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lFJU6sj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8F4C2BCB0;
-	Tue, 12 May 2026 17:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mI2PUDSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D54C2BCB0;
+	Tue, 12 May 2026 17:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608533;
-	bh=5kXNYNUiEltnZ436MJVLqC4l4vwdkKyg4RMjmLlz3Q8=;
+	s=korg; t=1778608535;
+	bh=XJwEb0O3AqjfKwqjlQzOUSU9OIg2v0R0uc9suyj2JMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1lFJU6sjQ/QHK0OExvnkZRtfD4ct7lzPvD71LXdlkLG1knSYdoGA4i6E+Uv6QQSYL
-	 s7iBsrw00KXUsIYSCC1aqRdxvVciceYVW1UnYMVT1X+etn//RQfnFizA/TJFOoO1fG
-	 qeGvNVsKmILkkkawSadEJXfZgp7+wYFEWDGi71ns=
+	b=mI2PUDSIfA8ikdkRZ9FyC5XsQD8mzzYXLnBYyOJ7UIXxqEf/L9VpsEbl3rxKh9LeP
+	 EaTT/XSAY1fH4ZqfWsDy7Vpv2Pr1sIrj9/1y8rHJjdh8QUZbj7hiGJ/OsvlAyOaG4G
+	 taeUSU46nmTLtBPE9lo58MUEQ0FsNJxNN6tcSeJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 115/270] block: add pgmap check to biovec_phys_mergeable
-Date: Tue, 12 May 2026 19:38:36 +0200
-Message-ID: <20260512173940.879292117@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 080/270] spi: ti-qspi: fix controller deregistration
+Date: Tue, 12 May 2026 19:38:01 +0200
+Message-ID: <20260512173940.141162555@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,48 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 13920e4b7b784b40cf4519ff1f0f3e513476a499 upstream.
+commit 0c18a1bacbb1d8b8aa34d3d004a2cb8226c8b1ea upstream.
 
-biovec_phys_mergeable() is used by the request merge, DMA mapping,
-and integrity merge paths to decide if two physically contiguous
-bvec segments can be coalesced into one. It currently has no check
-for whether the segments belong to different dev_pagemaps.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-When zone device memory is registered in multiple chunks, each chunk
-gets its own dev_pagemap. A single bio can legitimately contain
-bvecs from different pgmaps -- iov_iter_extract_bvecs() breaks at
-pgmap boundaries but the outer loop in bio_iov_iter_get_pages()
-continues filling the same bio. If such bvecs are physically
-contiguous, biovec_phys_mergeable() will coalesce them, making it
-impossible to recover the correct pgmap for the merged segment
-via page_pgmap().
+Note that the controller is suspended before disabling and releasing
+resources since commit 3ac066e2227c ("spi: spi-ti-qspi: Suspend the
+queue before removing the device") which avoids issues like unclocked
+accesses but prevents SPI device drivers from doing I/O during
+deregistration.
 
-Add a zone_device_pages_have_same_pgmap() check to prevent merging
-bvec segments that span different pgmaps.
-
-Fixes: 49580e690755 ("block: add check when merging zone device pages")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Link: https://patch.msgid.link/20260410153414.4159050-2-namjain@linux.microsoft.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 3b3a80019ff1 ("spi: ti-qspi: one only one interrupt handler")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-24-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-ti-qspi.c |   14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -132,6 +132,8 @@ static inline bool biovec_phys_mergeable
+--- a/drivers/spi/spi-ti-qspi.c
++++ b/drivers/spi/spi-ti-qspi.c
+@@ -889,7 +889,7 @@ no_dma:
+ 	qspi->mmap_enabled = false;
+ 	qspi->current_cs = -1;
  
- 	if (addr1 + vec1->bv_len != addr2)
- 		return false;
-+	if (!zone_device_pages_have_same_pgmap(vec1->bv_page, vec2->bv_page))
-+		return false;
- 	if (xen_domain() && !xen_biovec_phys_mergeable(vec1, vec2->bv_page))
- 		return false;
- 	if ((addr1 | mask) != ((addr2 + vec2->bv_len - 1) | mask))
+-	ret = devm_spi_register_controller(&pdev->dev, host);
++	ret = spi_register_controller(host);
+ 	if (!ret)
+ 		return 0;
+ 
+@@ -904,19 +904,17 @@ free_host:
+ static void ti_qspi_remove(struct platform_device *pdev)
+ {
+ 	struct ti_qspi *qspi = platform_get_drvdata(pdev);
+-	int rc;
+ 
+-	rc = spi_controller_suspend(qspi->host);
+-	if (rc) {
+-		dev_alert(&pdev->dev, "spi_controller_suspend() failed (%pe)\n",
+-			  ERR_PTR(rc));
+-		return;
+-	}
++	spi_controller_get(qspi->host);
++
++	spi_unregister_controller(qspi->host);
+ 
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	ti_qspi_dma_cleanup(qspi);
++
++	spi_controller_put(qspi->host);
+ }
+ 
+ static const struct dev_pm_ops ti_qspi_pm_ops = {
 
 
