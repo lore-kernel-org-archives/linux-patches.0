@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541D234405B;
-	Tue, 12 May 2026 18:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A2236896D;
+	Tue, 12 May 2026 18:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609154; cv=none; b=HLsmOmmlLQJR7ErmahfI96nL0kdWgf+T6NJlkyw4LEhcYEBgWyvUdGgCEUPgJ8datbmmHe0SRo/4XgAUjS+3eYdBk3fe6N32Gz+SbhapMe7Rd97WKRWVJk1pr7DHVFmr2WSAvfdHJt63Kq8Do7wXZZLUmQ0qanMAiJccjk9duEw=
+	t=1778609156; cv=none; b=E/Wj0gWoQMggqT5Iz6nlYR8A36ZlRGvgLC5NdR47DewaiM3/UUfV/4BQ73onIG22/GRNL3MxK77zUxWnehAr2HiCcdZed9luExCD4AZ4MYZzTvttJDiQyHV0xwxh02YB5QC/JI40Prfo44NpAUdcKH1NvbanZdEGBdnHMJ4XKSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609154; c=relaxed/simple;
-	bh=lrRoHLooTkS5FpufrLQcbv6LuXBB/nhU10LNpPrgSUQ=;
+	s=arc-20240116; t=1778609156; c=relaxed/simple;
+	bh=L+3d7OkG30sXvp3vL7OHKxfjTUx//A8tB9EVRCdO/6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jpzVnc6W8Ac4G1v132M4Cbfxy9bRX8OqnwpPq5OSRCIH1uk3/aReyJy4Km53OryqQpY2g9XPrVO573Y7dVpRpZwX+waIy3jU4NZ3XbpAuOBh6zi6MlXRqWSWQWUiuADeASneHuRGRuXeLvObk3OulIhytkTUn96hCLrDasxQW8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAA7pTE5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IyxuDnlkCeImSlIuurdxj8GZ7ALEpu0pVMfA2zQUc/p/Sz90xrsn3WEfWAUK/S1QIp8MHimjB8Mj0nqPwqzqcHg9NIz2H1rhaPfaAtJJZH71AZizFrCj0/DoKJY8y+fRGoAw2EwHg98vCea1D73Vnn12ZtmPKWhSirWu/N6GrzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Te+xGNHw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAA7pTE5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16F0C4AF0B;
-	Tue, 12 May 2026 18:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Te+xGNHw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669D0C2BCC7;
+	Tue, 12 May 2026 18:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609154;
-	bh=lrRoHLooTkS5FpufrLQcbv6LuXBB/nhU10LNpPrgSUQ=;
+	s=korg; t=1778609156;
+	bh=L+3d7OkG30sXvp3vL7OHKxfjTUx//A8tB9EVRCdO/6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GAA7pTE51DN7tqFnzx0UcLIh3BTvewCAJv4sBf48Chhdb7Ad72mPO3iYFEMcVEaKS
-	 ihGxQpIFc14US+n03KR78iiCv/4iJygv0VaBBVk7uZ4zgjFmwRAXh22mBfUOKLRTLx
-	 RZFYwQEDnxXLqg0GMjJ5lLfcdxU7uZ+bgWiTImrI=
+	b=Te+xGNHwsojtFbPFodSN/au6vPze6xfZGt0D/zCdgBbuPPm7IDCMYKw1xtGXub4WK
+	 jqNAsDoBpvBXy8Q2gL84BbNRBrvshFvNAnxicWxi0ihFsJYbFthDUhCxaDxyH9C/h8
+	 aofsNli6YDRthsX1pvZQt8soF4s/Ua6rV8vR/SKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjit Waghmode <ranjit.waghmode@xilinx.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 087/307] spi: zynqmp-gqspi: fix controller deregistration
-Date: Tue, 12 May 2026 19:38:02 +0200
-Message-ID: <20260512173941.962353431@linuxfoundation.org>
+	Soenke Huster <soenke.huster@eknoes.de>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.0 070/307] Bluetooth: virtio_bt: validate rx pkt_type header length
+Date: Tue, 12 May 2026 19:37:45 +0200
+Message-ID: <20260512173941.600615827@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,44 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 6895fc4faafc9082e15e4e624b23dd5f0c98feb5 upstream.
+commit daf23014e5d975e72ea9c02b5160d3fcf070ea47 upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+virtbt_rx_handle() reads the leading pkt_type byte from the RX skb
+and forwards the remainder to hci_recv_frame() for every
+event/ACL/SCO/ISO type, without checking that the remaining payload
+is at least the fixed HCI header for that type.
 
-Fixes: dfe11a11d523 ("spi: Add support for Zynq Ultrascale+ MPSoC GQSPI controller")
-Cc: stable@vger.kernel.org	# 4.2: 64640f6c972e
-Cc: stable@vger.kernel.org	# 4.2
-Cc: Ranjit Waghmode <ranjit.waghmode@xilinx.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-26-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+After the preceding patch bounds the backend-supplied used.len to
+[1, VIRTBT_RX_BUF_SIZE], a one-byte completion still reaches
+hci_recv_frame() with skb->len already pulled to 0. If the byte
+happened to be HCI_ACLDATA_PKT, the ACL-vs-ISO classification
+fast-path in hci_dev_classify_pkt_type() dereferences
+hci_acl_hdr(skb)->handle whenever the HCI device has an active
+CIS_LINK, BIS_LINK, or PA_LINK connection, reading two bytes of
+uninitialized RX-buffer data. The same hazard exists for every
+packet type the driver accepts because none of the switch cases in
+virtbt_rx_handle() check skb->len against the per-type minimum HCI
+header size before handing the frame to the core.
+
+After stripping pkt_type, require skb->len to cover the fixed
+header size for the selected type (event 2, ACL 4, SCO 3, ISO 4)
+before calling hci_recv_frame(); drop ratelimited otherwise.
+Unknown pkt_type values still take the original kfree_skb() default
+path.
+
+Use bt_dev_err_ratelimited() because both the length and pkt_type
+values come from an untrusted backend that can otherwise flood the
+kernel log.
+
+Fixes: 160fbcf3bfb9 ("Bluetooth: virtio_bt: Use skb_put to set length")
+Cc: stable@vger.kernel.org
+Cc: Soenke Huster <soenke.huster@eknoes.de>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-zynqmp-gqspi.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/bluetooth/virtio_bt.c |   23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi-zynqmp-gqspi.c
-+++ b/drivers/spi/spi-zynqmp-gqspi.c
-@@ -1324,7 +1324,7 @@ static int zynqmp_qspi_probe(struct plat
- 	ctlr->dev.of_node = np;
- 	ctlr->auto_runtime_pm = true;
+--- a/drivers/bluetooth/virtio_bt.c
++++ b/drivers/bluetooth/virtio_bt.c
+@@ -198,6 +198,7 @@ static int virtbt_shutdown_generic(struc
  
--	ret = devm_spi_register_controller(&pdev->dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	if (ret) {
- 		dev_err(&pdev->dev, "spi_register_controller failed\n");
- 		goto clk_dis_all;
-@@ -1362,6 +1362,8 @@ static void zynqmp_qspi_remove(struct pl
+ static void virtbt_rx_handle(struct virtio_bluetooth *vbt, struct sk_buff *skb)
+ {
++	size_t min_hdr;
+ 	__u8 pkt_type;
  
- 	pm_runtime_get_sync(&pdev->dev);
+ 	pkt_type = *((__u8 *) skb->data);
+@@ -205,16 +206,32 @@ static void virtbt_rx_handle(struct virt
  
-+	spi_unregister_controller(xqspi->ctlr);
+ 	switch (pkt_type) {
+ 	case HCI_EVENT_PKT:
++		min_hdr = sizeof(struct hci_event_hdr);
++		break;
+ 	case HCI_ACLDATA_PKT:
++		min_hdr = sizeof(struct hci_acl_hdr);
++		break;
+ 	case HCI_SCODATA_PKT:
++		min_hdr = sizeof(struct hci_sco_hdr);
++		break;
+ 	case HCI_ISODATA_PKT:
+-		hci_skb_pkt_type(skb) = pkt_type;
+-		hci_recv_frame(vbt->hdev, skb);
++		min_hdr = sizeof(struct hci_iso_hdr);
+ 		break;
+ 	default:
+ 		kfree_skb(skb);
+-		break;
++		return;
+ 	}
 +
- 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
++	if (skb->len < min_hdr) {
++		bt_dev_err_ratelimited(vbt->hdev,
++				       "rx pkt_type 0x%02x payload %u < hdr %zu\n",
++				       pkt_type, skb->len, min_hdr);
++		kfree_skb(skb);
++		return;
++	}
++
++	hci_skb_pkt_type(skb) = pkt_type;
++	hci_recv_frame(vbt->hdev, skb);
+ }
  
- 	pm_runtime_disable(&pdev->dev);
+ static void virtbt_rx_work(struct work_struct *work)
 
 
