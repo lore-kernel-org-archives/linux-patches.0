@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC5635F185;
-	Tue, 12 May 2026 18:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4BF34E744;
+	Tue, 12 May 2026 18:10:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609440; cv=none; b=qGP5Z2k21bUSGxZ9LQAFzQwxCOU9HkbuddUq0gnx/g5h3leRM1TkFwSBKer1RL3UgJVMfgzmRrdHkKg7kHQWeZZsgsR9XmYUAgy5l8zXAPEhnR6yz1bOdmDvx5imOEPzioh0rIzbYLC2r1+VZ0+bONKHeiuJO/VfFlOrAIA0yfE=
+	t=1778609442; cv=none; b=j6Z1p4DYcEAD5W0CcliDbYyHNpXWZSJJYowNcKBJ/zhVBnsrdJ5Objj5gPHcO6Rkgq7A9KsmGiAqp/A7ZdXzYApoPaaZ2quTOuknLCF5iaKTbIMTGhXt2HgY6q5xbfijm55cieRWaVlE2W44BXqwWuGg3RwVdVbhrVHVDjvpwag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609440; c=relaxed/simple;
-	bh=QP0Y9TK+VcFGhSoI+9f16p9rvnwkwHS3kp8cxLHRyO8=;
+	s=arc-20240116; t=1778609442; c=relaxed/simple;
+	bh=1dLTiI/pS1vvrujpwvoJy8SOGCtMrVWSo5hx6fk0KSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l5BAtt9M0YdRn2JoU+NqePkRcz8qu4flZSNcQSwKaMij6a3yIna7gnUOOOczAC5XOs5Y/RUohLZ17luEhFrdweL4aI7JnfV5cCLstG+uI4pVRVXwe3NDx9VQ27tzYGcJKP05Ogtq2wAuB2ErdEoM4HAs09qERFIx9vn5PeqIqMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Himo/o4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ufctHb+d2zQCJGejJwnacz4k0HEeNjhoGykTYkwinEya3y1y+/sWY9CqBKLRVf7yUsUUKmmf0oQzatJJLBjFsobCuVyUyIVagVgbfduA3TjJRfUSsz1MR22L0Tot6S2A5F9MZAEtqYWNenRGKRWI68PUqPFsEHEvKJ1hsNCw6eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkDOABuF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Himo/o4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D5FC2BCB0;
-	Tue, 12 May 2026 18:10:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkDOABuF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E6EC2BCB0;
+	Tue, 12 May 2026 18:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609440;
-	bh=QP0Y9TK+VcFGhSoI+9f16p9rvnwkwHS3kp8cxLHRyO8=;
+	s=korg; t=1778609442;
+	bh=1dLTiI/pS1vvrujpwvoJy8SOGCtMrVWSo5hx6fk0KSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Himo/o4GyEIUmrDHEhu/PXw6c+2EECDKgHypzO9UFGAJdGeIULr4TDHX0bTymbYm
-	 bDJ8yfRZrg6iSJzR0jh/VPBhxUC1iUPOEE2PAjRzGGmXAIwcycqTswTpHgzho9qnUW
-	 ZqiKKkoDzLMHHlinxtPJdlnnvywctYb8qjbCmOds=
+	b=xkDOABuFHKRWONVn14CYxE1heKA8ywFknxC42Cml7w9C+byTxd6eLlUvEQtZsKsRd
+	 m3914Yws8Or6aVctTjhQkH+wVrOk6qb2shtp8U9nHsszjMWmFQ4fORnO+uoLjYw5Zm
+	 JlgtxLWZ7wnnC9ZmfgDDy2MOGk7YLTbGTdbgWUfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 7.0 195/307] lib/crc: tests: Make crc_kunit test only the enabled CRC variants
-Date: Tue, 12 May 2026 19:39:50 +0200
-Message-ID: <20260512173944.233582047@linuxfoundation.org>
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	David Gow <davidgow@google.com>,
+	David Howells <dhowells@redhat.com>,
+	Kees Cook <kees@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 196/307] lib/scatterlist: fix length calculations in extract_kvec_to_sg
+Date: Tue, 12 May 2026 19:39:51 +0200
+Message-ID: <20260512173944.255010990@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -49,144 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 85c9f3a2b805eb96d899da7bcc38a16459aa3c16 upstream.
+commit 07b7d66e65d9cfe6b9c2c34aa22cfcaac37a5c45 upstream.
 
-Like commit 4478e8eeb871 ("lib/crypto: tests: Depend on library options
-rather than selecting them") did with the crypto library tests, make
-crc_kunit depend on the code it tests rather than selecting it.  This
-follows the standard convention for KUnit and fixes an issue where
-enabling KUNIT_ALL_TESTS enabled non-test code.
+Patch series "Fix bugs in extract_iter_to_sg()", v3.
 
-crc_kunit does differ from the crypto library tests in that it
-consolidates the tests for multiple CRC variants, with 5 kconfig
-options, into one KUnit suite.  Since depending on *all* of these
-kconfig options would greatly restrict the ability to enable crc_kunit,
-instead just depend on *any* of these options.  Update crc_kunit
-accordingly to test only the reachable code.
+Fix bugs in the kvec and user variants of extract_iter_to_sg.  This series
+is growing due to useful remarks made by sashiko.dev.
 
-Alternatively we could split crc_kunit into 5 test suites.  But keeping
-it as one is simpler for now.
+The main bugs are:
+- The length for an sglist entry when extracting from
+  a kvec can exceed the number of bytes in the page. This
+  is obviously not intended.
+- When extracting a user buffer the sglist is temporarily
+  used as a scratch buffer for extracted page pointers.
+  If the sglist already contains some elements this scratch
+  buffer could overlap with existing entries in the sglist.
 
-Fixes: e47d9b1a76ed ("lib/crc_kunit.c: add KUnit test suite for CRC library functions")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20260306033557.250499-2-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+The series adds test cases to the kunit_iov_iter test that demonstrate all
+of these bugs.  Additionally, there is a memory leak fix for the test
+itself.
+
+The bugs were orignally introduced into kernel v6.3 where the function
+lived in fs/netfs/iterator.c.  It was later moved to lib/scatterlist.c in
+v6.5.  Thus the actual fix is only marked for backports to v6.5+.
+
+
+This patch (of 5):
+
+When extracting from a kvec to a scatterlist, do not cross page
+boundaries.  The required length was already calculated but not used as
+intended.
+
+Adjust the copied length if the loop runs out of sglist entries without
+extracting everything.
+
+While there, return immediately from extract_iter_to_sg if there are no
+sglist entries at all.
+
+A subsequent commit will add kunit test cases that demonstrate that the
+patch is necessary.
+
+Link: https://lkml.kernel.org/r/20260326214905.818170-1-lk@c--e.de
+Link: https://lkml.kernel.org/r/20260326214905.818170-2-lk@c--e.de
+Fixes: 018584697533 ("netfs: Add a function to extract an iterator into a scatterlist")
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Cc: David Gow <davidgow@google.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: <stable@vger.kernel.org>	[v6.5+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crc/Kconfig           |    7 +------
- lib/crc/tests/crc_kunit.c |   28 ++++++++++++++++++++++------
- 2 files changed, 23 insertions(+), 12 deletions(-)
+ lib/scatterlist.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/lib/crc/Kconfig
-+++ b/lib/crc/Kconfig
-@@ -99,13 +99,8 @@ config CRC_OPTIMIZATIONS
+--- a/lib/scatterlist.c
++++ b/lib/scatterlist.c
+@@ -1247,7 +1247,7 @@ static ssize_t extract_kvec_to_sg(struct
+ 			else
+ 				page = virt_to_page((void *)kaddr);
  
- config CRC_KUNIT_TEST
- 	tristate "KUnit tests for CRC functions" if !KUNIT_ALL_TESTS
--	depends on KUNIT
-+	depends on KUNIT && (CRC7 || CRC16 || CRC_T10DIF || CRC32 || CRC64)
- 	default KUNIT_ALL_TESTS
--	select CRC7
--	select CRC16
--	select CRC_T10DIF
--	select CRC32
--	select CRC64
- 	help
- 	  Unit tests for the CRC library functions.
+-			sg_set_page(sg, page, len, off);
++			sg_set_page(sg, page, seg, off);
+ 			sgtable->nents++;
+ 			sg++;
+ 			sg_max--;
+@@ -1256,6 +1256,7 @@ static ssize_t extract_kvec_to_sg(struct
+ 			kaddr += PAGE_SIZE;
+ 			off = 0;
+ 		} while (len > 0 && sg_max > 0);
++		ret -= len;
  
---- a/lib/crc/tests/crc_kunit.c
-+++ b/lib/crc/tests/crc_kunit.c
-@@ -268,8 +268,7 @@ crc_benchmark(struct kunit *test,
- 	}
- }
- 
--/* crc7_be */
--
-+#if IS_REACHABLE(CONFIG_CRC7)
- static u64 crc7_be_wrapper(u64 crc, const u8 *p, size_t len)
+ 		if (maxsize <= 0 || sg_max == 0)
+ 			break;
+@@ -1409,7 +1410,7 @@ ssize_t extract_iter_to_sg(struct iov_it
+ 			   struct sg_table *sgtable, unsigned int sg_max,
+ 			   iov_iter_extraction_t extraction_flags)
  {
- 	/*
-@@ -294,9 +293,9 @@ static void crc7_be_benchmark(struct kun
- {
- 	crc_benchmark(test, crc7_be_wrapper);
- }
-+#endif /* CONFIG_CRC7 */
+-	if (maxsize == 0)
++	if (maxsize == 0 || sg_max == 0)
+ 		return 0;
  
--/* crc16 */
--
-+#if IS_REACHABLE(CONFIG_CRC16)
- static u64 crc16_wrapper(u64 crc, const u8 *p, size_t len)
- {
- 	return crc16(crc, p, len);
-@@ -318,9 +317,9 @@ static void crc16_benchmark(struct kunit
- {
- 	crc_benchmark(test, crc16_wrapper);
- }
-+#endif /* CONFIG_CRC16 */
- 
--/* crc_t10dif */
--
-+#if IS_REACHABLE(CONFIG_CRC_T10DIF)
- static u64 crc_t10dif_wrapper(u64 crc, const u8 *p, size_t len)
- {
- 	return crc_t10dif_update(crc, p, len);
-@@ -342,6 +341,9 @@ static void crc_t10dif_benchmark(struct
- {
- 	crc_benchmark(test, crc_t10dif_wrapper);
- }
-+#endif /* CONFIG_CRC_T10DIF */
-+
-+#if IS_REACHABLE(CONFIG_CRC32)
- 
- /* crc32_le */
- 
-@@ -414,6 +416,9 @@ static void crc32c_benchmark(struct kuni
- {
- 	crc_benchmark(test, crc32c_wrapper);
- }
-+#endif /* CONFIG_CRC32 */
-+
-+#if IS_REACHABLE(CONFIG_CRC64)
- 
- /* crc64_be */
- 
-@@ -463,24 +468,35 @@ static void crc64_nvme_benchmark(struct
- {
- 	crc_benchmark(test, crc64_nvme_wrapper);
- }
-+#endif /* CONFIG_CRC64 */
- 
- static struct kunit_case crc_test_cases[] = {
-+#if IS_REACHABLE(CONFIG_CRC7)
- 	KUNIT_CASE(crc7_be_test),
- 	KUNIT_CASE(crc7_be_benchmark),
-+#endif
-+#if IS_REACHABLE(CONFIG_CRC16)
- 	KUNIT_CASE(crc16_test),
- 	KUNIT_CASE(crc16_benchmark),
-+#endif
-+#if IS_REACHABLE(CONFIG_CRC_T10DIF)
- 	KUNIT_CASE(crc_t10dif_test),
- 	KUNIT_CASE(crc_t10dif_benchmark),
-+#endif
-+#if IS_REACHABLE(CONFIG_CRC32)
- 	KUNIT_CASE(crc32_le_test),
- 	KUNIT_CASE(crc32_le_benchmark),
- 	KUNIT_CASE(crc32_be_test),
- 	KUNIT_CASE(crc32_be_benchmark),
- 	KUNIT_CASE(crc32c_test),
- 	KUNIT_CASE(crc32c_benchmark),
-+#endif
-+#if IS_REACHABLE(CONFIG_CRC64)
- 	KUNIT_CASE(crc64_be_test),
- 	KUNIT_CASE(crc64_be_benchmark),
- 	KUNIT_CASE(crc64_nvme_test),
- 	KUNIT_CASE(crc64_nvme_benchmark),
-+#endif
- 	{},
- };
- 
+ 	switch (iov_iter_type(iter)) {
 
 
