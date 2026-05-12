@@ -1,43 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3F03EDE44;
-	Tue, 12 May 2026 17:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DE33EDE44;
+	Tue, 12 May 2026 17:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608289; cv=none; b=TTm3qlV42EHZfk7ecLxlTxcpX90ZXoaOL5/95FJUuLyDtRCEPF1y8YsaZBchPuXMsLlsnY4B2bAo0aHk7zUhuTXTBn8HNRlOB18UsC1kg7wmRDW3zvTfxSKNzwXxkJYzfKI60AU4ZqRQ3UTYKmd/g7sy4oZiZ2P5b9r9ybL4nWE=
+	t=1778608291; cv=none; b=VsXNx9BHvnCIlNV6cryGurWyfzyylguiGKd6647d+8fZ8orooBCf5QdwuzZpVTU7aMXq3q1WfgDqQb5ocxduqPnqktKLskq6bUUwoyWdVocx2gkTOLu0nDhY6Xq59MdzTb95xWTG44DLkW9D3skMXsS6SBNMtUWte3sZQb3BQLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608289; c=relaxed/simple;
-	bh=mdWcHS321seFRXAw8DD1FPFT4+zz4YLPIEwrRJ9QncY=;
+	s=arc-20240116; t=1778608291; c=relaxed/simple;
+	bh=kwckheeuVwRKsdQMIqoAYK43WdH3vbwbo+ckrQsvEv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hhj0R0uuUM1bNf5UKkobWUfE3jPbh+d7HNgdWgPvXEoaKJBfsncMS6OLs7MEGODRBJFxYNtCkbUkjyFry4B6Nbr9ovqW1wpq7VNOcIaVvaK6v+82cxKP+oPzsH2G7XhbbikBY8G4h3aMYb1n1fHq7FFh96IuOLA58PUCLQr081s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGI+mm0/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHYVqs+3P+MnV+r3R9Mfi39ZcLbDgtxLY6tXOikmvYTd9YlwFtC0E/q1EWldMbtEF2v5isf+TTMJd7/uRfgxY90a85vCe98e+lPi5Znwy3VU0WezSr9GQVyxoxG8UM1pwx4OU7ZDcvUfXO+v7QIGqLa06XYW+zg2dbxL9ym2tlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePqG9K4l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGI+mm0/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C811C2BCB0;
-	Tue, 12 May 2026 17:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePqG9K4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AB8C2BCB0;
+	Tue, 12 May 2026 17:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608288;
-	bh=mdWcHS321seFRXAw8DD1FPFT4+zz4YLPIEwrRJ9QncY=;
+	s=korg; t=1778608291;
+	bh=kwckheeuVwRKsdQMIqoAYK43WdH3vbwbo+ckrQsvEv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGI+mm0/MRPt2ceH7RkEu25mDPvkvgKrrLQoOsHpwsmZPumOoUrhpIfM+oytaRuIz
-	 kwxsCazoglSruBQgGOQKXWWgs0K4gZrQX3qPb3W1CbqxWM8JCs87SPS80KBkTzVhqB
-	 9FiILGnD/nQYhf8lPBsW+e4ekpuyOmj7q4WymnMs=
+	b=ePqG9K4lJm2HN5JTZN84K1hPuEkyg03ZT5fbVxOhnUTDK+PEFj68uSyHgZ5RX48jN
+	 YStPp04fl66vKJkfoA3Nbco4t+uIqiqxhn7kbAkgaPFU4n36JAMQiOh9cDxGcxphjR
+	 oDxGOvDFJXaOgBOaOuaHicR0xB4g5olKB03VWvLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Xiao Liu <lx24@stu.ynu.edu.cn>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 021/270] net: af_key: zero aligned sockaddr tail in PF_KEY exports
-Date: Tue, 12 May 2026 19:37:02 +0200
-Message-ID: <20260512173938.904263388@linuxfoundation.org>
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 022/270] KVM: SVM: check validity of VMCB controls when returning from SMM
+Date: Tue, 12 May 2026 19:37:03 +0200
+Message-ID: <20260512173938.925077719@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -56,145 +49,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit 426c355742f02cf743b347d9d7dbdc1bfbfa31ef ]
+commit be5fa8737d42c5ba16d2ea72c23681f8abbb07e8 upstream.
 
-PF_KEY export paths use `pfkey_sockaddr_size()` when reserving sockaddr
-payload space, so IPv6 addresses occupy 32 bytes on the wire. However,
-`pfkey_sockaddr_fill()` initializes only the first 28 bytes of
-`struct sockaddr_in6`, leaving the final 4 aligned bytes uninitialized.
+The VMCB12 is stored in guest memory and can be mangled while in SMM; it
+is then reloaded by svm_leave_smm(), but it is not checked again for
+validity.
 
-Not every PF_KEY message is affected. The state and policy dump builders
-already zero the whole message buffer before filling the sockaddr
-payloads. Keep the fix to the export paths that still append aligned
-sockaddr payloads with plain `skb_put()`:
+Move the cached vmcb12 control and save consistency checks out of
+svm_set_nested_state() and into a helper, and reuse it in
+svm_leave_smm().
 
-  - `SADB_ACQUIRE`
-  - `SADB_X_NAT_T_NEW_MAPPING`
-  - `SADB_X_MIGRATE`
-
-Fix those paths by clearing only the aligned sockaddr tail after
-`pfkey_sockaddr_fill()`.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 08de61beab8a ("[PFKEYV2]: Extension for dynamic update of endpoint address(es)")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Xiao Liu <lx24@stu.ynu.edu.cn>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/key/af_key.c | 52 +++++++++++++++++++++++++++++++-----------------
- 1 file changed, 34 insertions(+), 18 deletions(-)
+ arch/x86/kvm/svm/nested.c |   12 ++++++++++--
+ arch/x86/kvm/svm/svm.c    |    4 ++++
+ arch/x86/kvm/svm/svm.h    |    1 +
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index ceaa82bc78acc..e01939ab81039 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -757,6 +757,22 @@ static unsigned int pfkey_sockaddr_fill(const xfrm_address_t *xaddr, __be16 port
- 	return 0;
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -484,6 +484,15 @@ void nested_copy_vmcb_save_to_cache(stru
+ 	__nested_copy_vmcb_save_to_cache(&svm->nested.save, save);
  }
  
-+static unsigned int pfkey_sockaddr_fill_zero_tail(const xfrm_address_t *xaddr,
-+						  __be16 port,
-+						  struct sockaddr *sa,
-+						  unsigned short family)
++int nested_svm_check_cached_vmcb12(struct kvm_vcpu *vcpu)
 +{
-+	unsigned int prefixlen;
-+	int sockaddr_len = pfkey_sockaddr_len(family);
-+	int sockaddr_size = pfkey_sockaddr_size(family);
++	if (!nested_vmcb_check_save(vcpu) ||
++	    !nested_vmcb_check_controls(vcpu))
++		return -EINVAL;
 +
-+	prefixlen = pfkey_sockaddr_fill(xaddr, port, sa, family);
-+	if (sockaddr_size > sockaddr_len)
-+		memset((u8 *)sa + sockaddr_len, 0, sockaddr_size - sockaddr_len);
-+
-+	return prefixlen;
++	return 0;
 +}
 +
- static struct sk_buff *__pfkey_xfrm_state2msg(const struct xfrm_state *x,
- 					      int add_keys, int hsc)
- {
-@@ -3206,9 +3222,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
- 	addr->sadb_address_proto = 0;
- 	addr->sadb_address_reserved = 0;
- 	addr->sadb_address_prefixlen =
--		pfkey_sockaddr_fill(&x->props.saddr, 0,
--				    (struct sockaddr *) (addr + 1),
--				    x->props.family);
-+		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      x->props.family);
- 	if (!addr->sadb_address_prefixlen)
- 		BUG();
+ /*
+  * Synchronize fields that are written by the processor, so that
+  * they can be copied back into the vmcb12.
+@@ -990,8 +999,7 @@ int nested_svm_vmrun(struct kvm_vcpu *vc
+ 	nested_copy_vmcb_control_to_cache(svm, &vmcb12->control);
+ 	nested_copy_vmcb_save_to_cache(svm, &vmcb12->save);
  
-@@ -3221,9 +3237,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
- 	addr->sadb_address_proto = 0;
- 	addr->sadb_address_reserved = 0;
- 	addr->sadb_address_prefixlen =
--		pfkey_sockaddr_fill(&x->id.daddr, 0,
--				    (struct sockaddr *) (addr + 1),
--				    x->props.family);
-+		pfkey_sockaddr_fill_zero_tail(&x->id.daddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      x->props.family);
- 	if (!addr->sadb_address_prefixlen)
- 		BUG();
+-	if (!nested_vmcb_check_save(vcpu) ||
+-	    !nested_vmcb_check_controls(vcpu)) {
++	if (nested_svm_check_cached_vmcb12(vcpu) < 0) {
+ 		vmcb12->control.exit_code    = SVM_EXIT_ERR;
+ 		vmcb12->control.exit_code_hi = -1u;
+ 		vmcb12->control.exit_info_1  = 0;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4885,6 +4885,10 @@ static int svm_leave_smm(struct kvm_vcpu
+ 	vmcb12 = map.hva;
+ 	nested_copy_vmcb_control_to_cache(svm, &vmcb12->control);
+ 	nested_copy_vmcb_save_to_cache(svm, &vmcb12->save);
++
++	if (nested_svm_check_cached_vmcb12(vcpu) < 0)
++		goto unmap_save;
++
+ 	ret = enter_svm_guest_mode(vcpu, smram64->svm_guest_vmcb_gpa, vmcb12, false);
  
-@@ -3421,9 +3437,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
- 	addr->sadb_address_proto = 0;
- 	addr->sadb_address_reserved = 0;
- 	addr->sadb_address_prefixlen =
--		pfkey_sockaddr_fill(&x->props.saddr, 0,
--				    (struct sockaddr *) (addr + 1),
--				    x->props.family);
-+		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      x->props.family);
- 	if (!addr->sadb_address_prefixlen)
- 		BUG();
+ 	if (ret)
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -782,6 +782,7 @@ static inline int nested_svm_simple_vmex
  
-@@ -3443,9 +3459,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
- 	addr->sadb_address_proto = 0;
- 	addr->sadb_address_reserved = 0;
- 	addr->sadb_address_prefixlen =
--		pfkey_sockaddr_fill(ipaddr, 0,
--				    (struct sockaddr *) (addr + 1),
--				    x->props.family);
-+		pfkey_sockaddr_fill_zero_tail(ipaddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      x->props.family);
- 	if (!addr->sadb_address_prefixlen)
- 		BUG();
- 
-@@ -3474,15 +3490,15 @@ static int set_sadb_address(struct sk_buff *skb, int sasize, int type,
- 	switch (type) {
- 	case SADB_EXT_ADDRESS_SRC:
- 		addr->sadb_address_prefixlen = sel->prefixlen_s;
--		pfkey_sockaddr_fill(&sel->saddr, 0,
--				    (struct sockaddr *)(addr + 1),
--				    sel->family);
-+		pfkey_sockaddr_fill_zero_tail(&sel->saddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      sel->family);
- 		break;
- 	case SADB_EXT_ADDRESS_DST:
- 		addr->sadb_address_prefixlen = sel->prefixlen_d;
--		pfkey_sockaddr_fill(&sel->daddr, 0,
--				    (struct sockaddr *)(addr + 1),
--				    sel->family);
-+		pfkey_sockaddr_fill_zero_tail(&sel->daddr, 0,
-+					      (struct sockaddr *)(addr + 1),
-+					      sel->family);
- 		break;
- 	default:
- 		return -EINVAL;
--- 
-2.53.0
-
+ int nested_svm_exit_handled(struct vcpu_svm *svm);
+ int nested_svm_check_permissions(struct kvm_vcpu *vcpu);
++int nested_svm_check_cached_vmcb12(struct kvm_vcpu *vcpu);
+ int nested_svm_check_exception(struct vcpu_svm *svm, unsigned nr,
+ 			       bool has_error_code, u32 error_code);
+ int nested_svm_exit_special(struct vcpu_svm *svm);
 
 
