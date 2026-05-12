@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72B03002A9;
-	Tue, 12 May 2026 17:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D583C09EE;
+	Tue, 12 May 2026 17:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608252; cv=none; b=OvA3YwU0lWWeNKAy32cR+Vel3DqwwSLp6sWj2eMAy813yutFV4BBIAXyocIChs49CYaQ8Qpq5qgahrFPT4agAuFcpvAecqxeVD8wum/iycOItmvmNrSCP4bIJJx1Ix9YEpwS+8gNEpn4ijM5UosqxW7YuP2CMzZeKLXuICmJ3wI=
+	t=1778608255; cv=none; b=JDpc/5cilva03+2FoSYJ0z/m15pV/DWr4ctlMffR8TJI5lYLlaWGBfouvxyHq8tPojZwx/TpF/MjqEescD51IuxMekUb782ECcDhFFHS6x20lncSlNG+W/nAVLeldeRqoUbNN7nZ4Qqzc08V8/NdD5NsCrxgsntUdGbyIamywis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608252; c=relaxed/simple;
-	bh=v0W4w2KA51UhdNP1B0n/L9T5/ENRUlebrQB03IeETzQ=;
+	s=arc-20240116; t=1778608255; c=relaxed/simple;
+	bh=uif1OnIz9QorRggJjCPrF52EdkQECJE8au8z/SZR+U0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CvKYvmKAqkJjfJcna7ffa4KpeDE8XQzciMdaZ9OxHG4v53VCCqa1a62tyvxR7gkp34ZggrNwz3dp+CrY6usR0/8mk+IDWvWfYPf17zNmygHWIwVFpMO1jLCqm7ieRnQ/DAJt91HoGrUHirrrrsUG+tsPRy/pz58EHipnHCI4t6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4lyflkp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qdQ2Y6udHtv2hEi2r2ISQKT2AowQjc+H9oR//NrYFk8Cid8YTExB+oR/tOWZb7da9BN3gHh8oTUUzE90AywQFoW14Rv/fkyQN+75R6k2Q7xvuYOS9S1CZdpUEv3pCeCsaOMH83dhCBScCXr3rtp1sv18b2Sp2Yc9KVXg4znZUMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSvS4Qn+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4lyflkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC91C2BCB0;
-	Tue, 12 May 2026 17:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSvS4Qn+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8160C2BCB0;
+	Tue, 12 May 2026 17:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608252;
-	bh=v0W4w2KA51UhdNP1B0n/L9T5/ENRUlebrQB03IeETzQ=;
+	s=korg; t=1778608255;
+	bh=uif1OnIz9QorRggJjCPrF52EdkQECJE8au8z/SZR+U0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C4lyflkppPTf6C8dSftMBT+Hz8WUnsamzvOLvzTLfa4Gy9zxnyjVd5b2ZUuHdo8NS
-	 zHKpkyfMkht50LrxaF8uFoUqqCLY23Zu3V5WgBxucXkACWtYQ5HXqO+5KzedLvW4hi
-	 JULPkeOr1Z+DnOnwzz/lbd5ltGF53cujBdNABIZI=
+	b=fSvS4Qn+WsNMbtQTCSfl1A23s7ZcVfcktlDx5MTvEjGydoLSQdkGHvNC2wno2RSVF
+	 Kc1FcrARkr2V9NyoDzb9PaNKOdKUld1EB+fwQD89PNqXI/PlJL7Q3dfGldf/h5QMxY
+	 MPC6BNM5f/s+ldyQY9DmeMHWjpuBMPfD+G31XZYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 195/206] gtp: disable BH before calling udp_tunnel_xmit_skb()
-Date: Tue, 12 May 2026 19:40:47 +0200
-Message-ID: <20260512173937.001054450@linuxfoundation.org>
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.18 001/270] scsi: target: configfs: Bound snprintf() return in tg_pt_gp_members_show()
+Date: Tue, 12 May 2026 19:36:42 +0200
+Message-ID: <20260512173938.486024762@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
-References: <20260512173932.810559588@linuxfoundation.org>
+In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
+References: <20260512173938.452574370@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,65 +43,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 5638504a2aa9e1b9d72af9060df1a160cce2d379 ]
+commit 772a896a56e0e3ef9424a025cec9176f9d8f4552 upstream.
 
-gtp_genl_send_echo_req() runs as a generic netlink doit handler in
-process context with BH not disabled. It calls udp_tunnel_xmit_skb(),
-which eventually invokes iptunnel_xmit() — that uses __this_cpu_inc/dec
-on softnet_data.xmit.recursion to track the tunnel xmit recursion level.
+target_tg_pt_gp_members_show() formats LUN paths with snprintf() into a
+256-byte stack buffer, then will memcpy() cur_len bytes from that
+buffer.  snprintf() returns the length the output would have had, which
+can exceed the buffer size when the fabric WWN is long because iSCSI IQN
+names can be up to 223 bytes.  The check at the memcpy() site only
+guards the destination page write, not the source read, so memcpy() will
+read past the stack buffer and copy adjacent stack contents to the sysfs
+reader, which when CONFIG_FORTIFY_SOURCE is enabled, fortify_panic()
+will be triggered.
 
-Without local_bh_disable(), the task may migrate between
-dev_xmit_recursion_inc() and dev_xmit_recursion_dec(), breaking the
-per-CPU counter pairing. The result is stale or negative recursion
-levels that can later produce false-positive
-SKB_DROP_REASON_RECURSION_LIMIT drops on either CPU.
+Commit 27e06650a5ea ("scsi: target: target_core_configfs: Add length
+check to avoid buffer overflow") added the same bound to the
+target_lu_gp_members_show() but the tg_pt_gp variant was missed so
+resolve that here.
 
-The other udp_tunnel_xmit_skb() call sites in gtp.c are unaffected:
-the data path runs under ndo_start_xmit and the echo response handlers
-run from the UDP encap rx softirq, both with BH already disabled.
-
-Fix it by disabling BH around the udp_tunnel_xmit_skb() call, mirroring
-commit 2cd7e6971fc2 ("sctp: disable BH before calling
-udp_tunnel_xmit_skb()").
-
-Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Link: https://patch.msgid.link/20260417055408.4667-1-devnexen@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026041159-garter-theft-3be0@gregkh
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/gtp.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/target/target_core_configfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -2401,6 +2401,7 @@ static int gtp_genl_send_echo_req(struct
- 		return -ENODEV;
- 	}
+--- a/drivers/target/target_core_configfs.c
++++ b/drivers/target/target_core_configfs.c
+@@ -3170,7 +3170,7 @@ static ssize_t target_tg_pt_gp_members_s
+ 			config_item_name(&lun->lun_group.cg_item));
+ 		cur_len++; /* Extra byte for NULL terminator */
  
-+	local_bh_disable();
- 	udp_tunnel_xmit_skb(rt, sk, skb_to_send,
- 			    fl4.saddr, fl4.daddr,
- 			    fl4.flowi4_tos,
-@@ -2410,6 +2411,7 @@ static int gtp_genl_send_echo_req(struct
- 			    !net_eq(sock_net(sk),
- 				    dev_net(gtp->dev)),
- 			    false);
-+	local_bh_enable();
- 	return 0;
- }
- 
+-		if ((cur_len + len) > PAGE_SIZE) {
++		if (cur_len > TG_PT_GROUP_NAME_BUF || (cur_len + len) > PAGE_SIZE) {
+ 			pr_warn("Ran out of lu_gp_show_attr"
+ 				"_members buffer\n");
+ 			break;
 
 
