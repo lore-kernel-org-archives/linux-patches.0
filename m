@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AB1368D56;
-	Tue, 12 May 2026 18:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAD5349AF5;
+	Tue, 12 May 2026 18:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609569; cv=none; b=SliIGT2MmH9e1H8N0uEuSjWmQrFi/mHInJibYhxSFa6ZkPDuI22G6AlJEOrM5KDnkovzwnpBk6xBrLYqjDrAU+CCujOBbzRCPJrjdUAtETr+zcLkS9WNSJ8wHFv3zfQLXJIR3poNomeA9X2F5GMs4MOqS+11cFXQsP/WLBEcUMg=
+	t=1778609571; cv=none; b=PYv1SLE6bst7fmvVmo5PHP+BPbkEE8cMkQuLZMOhovt4fm8MP1kn8lkgUJEvy6wiz+D5vjAHeHnf2z32D3mPcyhIUvZXhRwdD7a3FDG44Q2FFGyo+1vGfQl/bqau+KG+JerAvICajB1YOY4xLSaaHXlGHx4Pl+GGvpazhILpGko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609569; c=relaxed/simple;
-	bh=fmiYJlwM0ihFw1o0AbrOopFWPvXHzqW347Ovmwobuj4=;
+	s=arc-20240116; t=1778609571; c=relaxed/simple;
+	bh=4rEd6XAwQ5WXmSd5AtBvTk9MHjVjBdO4vHbH/V8ArEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9r/Oan9drvYYhSh6oimhRMlHjoAgW6wPOXSqZAtwSV9s6h2nyukA9m62L/i7D5UPWY76bSdhu0HZT8s7TI/aftQ0V42kUnZMa6K0ySghEZoewoyUbsE2I+DGBHMUu0fKzCKh4dPmlhV5pZCultUzHlod0smbQBDSo6LDDWhyQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+HQi4qm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ezWcp10Lp5KSbn7c4Sgbylzixm6zARLf/UcI+/k5lF02TL4MBghR8zNY6dsAN9Ig+MhqoMHrx+e4LL0OEuz0dF0VxKuTanJjmZQNEnHJC4Sk2KL6iYrkaV/72u8IF0WaC8dobwXQ3IyW+NW5n/XCwG8vVhsXjQPiPj3E+XTmWCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZ0Qkabn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+HQi4qm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE53C2BCB0;
-	Tue, 12 May 2026 18:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZ0Qkabn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D42C2BCC7;
+	Tue, 12 May 2026 18:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609568;
-	bh=fmiYJlwM0ihFw1o0AbrOopFWPvXHzqW347Ovmwobuj4=;
+	s=korg; t=1778609571;
+	bh=4rEd6XAwQ5WXmSd5AtBvTk9MHjVjBdO4vHbH/V8ArEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v+HQi4qmi0lM4gkkJlTGg19UugsUNPHY03otykH43NnABeIgkLQgZZ/0X82pE85Xp
-	 HVir/7t4yow3Z421Dau2g/qGrSrsZ0vLS90qL3DT1G4Dwauy15zQYH4mTFL2sdQJKd
-	 Mf43ktncfzCMq/NaCAvIi/nvY00gFIv9v2MErGt0=
+	b=zZ0QkabnDIWlouPv95uHxaMztI1dCYjfjXM7sfnGuwoFKBHiPcKOw9BQT32mxnjfq
+	 ABzXNzbMUa2UCviXNwETCa2dUBiANh2fzfPmQubkPlNnk1s6ytJ3qbhDJziRT+xAZU
+	 2Eby4peMJsjKWOhlbgGE0jcZeehi8qEVCQeZNriM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chen Ni <nichen@iscas.ac.cn>,
 	Peng Fan <peng.fan@nxp.com>,
 	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 7.0 244/307] remoteproc: imx_rproc: Fix NULL vs IS_ERR() bug in imx_rproc_addr_init()
-Date: Tue, 12 May 2026 19:40:39 +0200
-Message-ID: <20260512173945.272694756@linuxfoundation.org>
+Subject: [PATCH 7.0 245/307] remoteproc: k3: Fix NULL vs IS_ERR() bug in k3_reserved_mem_init()
+Date: Tue, 12 May 2026 19:40:40 +0200
+Message-ID: <20260512173945.295405965@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen Ni <nichen@iscas.ac.cn>
 
-commit 665eebebb029690a5b2f92e481020877cc6c8d36 upstream.
+commit 5b1f4b5c72cc40e676293b8609cacef7e1545beb upstream.
 
 The devm_ioremap_resource_wc() function never returns NULL, it returns
 error pointers.  Update the error checking to match.
@@ -62,23 +62,28 @@ Fixes: 67a7bc7f0358 ("remoteproc: Use of_reserved_mem_region_* functions for "me
 Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
 Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20260227091546.4044246-1-nichen@iscas.ac.cn
+Link: https://lore.kernel.org/r/20260227092110.4044313-1-nichen@iscas.ac.cn
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/imx_rproc.c |    2 +-
+ drivers/remoteproc/ti_k3_common.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -812,7 +812,7 @@ static int imx_rproc_addr_init(struct im
- 
- 		/* Not use resource version, because we might share region */
- 		priv->mem[b].cpu_addr = devm_ioremap_resource_wc(&pdev->dev, &res);
--		if (!priv->mem[b].cpu_addr) {
-+		if (IS_ERR(priv->mem[b].cpu_addr)) {
- 			dev_err(dev, "failed to remap %pr\n", &res);
+diff --git a/drivers/remoteproc/ti_k3_common.c b/drivers/remoteproc/ti_k3_common.c
+index 32aa954dc5be..3cb8ae5d72f6 100644
+--- a/drivers/remoteproc/ti_k3_common.c
++++ b/drivers/remoteproc/ti_k3_common.c
+@@ -513,7 +513,7 @@ int k3_reserved_mem_init(struct k3_rproc *kproc)
+ 		kproc->rmem[i].dev_addr = (u32)res.start;
+ 		kproc->rmem[i].size = resource_size(&res);
+ 		kproc->rmem[i].cpu_addr = devm_ioremap_resource_wc(dev, &res);
+-		if (!kproc->rmem[i].cpu_addr) {
++		if (IS_ERR(kproc->rmem[i].cpu_addr)) {
+ 			dev_err(dev, "failed to map reserved memory#%d at %pR\n",
+ 				i + 1, &res);
  			return -ENOMEM;
- 		}
+-- 
+2.54.0
+
 
 
