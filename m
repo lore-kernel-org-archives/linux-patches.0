@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C45343D9D;
-	Tue, 12 May 2026 18:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493DD3EDE51;
+	Tue, 12 May 2026 18:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609625; cv=none; b=b5chiA3vtfVmk/Gec3fy91wesS3hMm24O/YezT7QfFYIC2MVOy3hrY3cgI9ZK259czozL8NVC8zZG6F4kZ3qtNlgZuutOz23K8K9Q5yr47Vpsjx+astV45UCcClVAxXwWO6JF9GgPzZ3WEfrsob3DBqrVaaX7TyleCcDjbjiXVo=
+	t=1778609628; cv=none; b=gSA2sdOZ0amhNkREuwX2xhy6/TsmQ8HD8scvS9Z0A7W3JVCDqpnRkkaaJNVhDWVp9BmF9F8N860u4sgrtyqR4pFpNdThD5OuaS3dRqM6Uv/mJFm8KUktfLd/zgQ78TeyGbF2caIVN/yLM1sGvg4rMKzkLR58SlpuOzapTUKECxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609625; c=relaxed/simple;
-	bh=p7FySz3AHoTMIl8MGGUePt5ao+MXfB23oaH1mBXZSGo=;
+	s=arc-20240116; t=1778609628; c=relaxed/simple;
+	bh=bw/fwYpmJQWu3INXpQCsMLAkAkgdX4curCwMiVEFj6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Az3zoiigp5vgsRumWXnvXalHIe5P2N/Y6us12lAGQW9TEUvdgf9jO8ZWECGJgX2Z3UkZjDtWTGG/m2CpkOLUnIFsDHWa6Ow8v/f6PU8TjVb7qB1k2dDgRNaGT6dBA3oSb1Q3HzJtuDcf5QJAG+yjnDKhfxByKvBKM+c4xN+3n30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbgDtpjg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FULe+G3H8USBB/vw1CcEu94XKYkvG01GRnqSQzX69W4BSYU5JEmNU2Prk1UoqMcasDsmGjGdj+Ml5XF2lgrjePpsJwVVHG16g7PPsKoyRp71xIGmI8OBcujm47FD6c97RccJZM0f7//6Tcp7wbUAO5EZLgc0SBthB2QiOiL947g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLLF9y9b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbgDtpjg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D258C2BCC7;
-	Tue, 12 May 2026 18:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLLF9y9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D332FC2BCB0;
+	Tue, 12 May 2026 18:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609625;
-	bh=p7FySz3AHoTMIl8MGGUePt5ao+MXfB23oaH1mBXZSGo=;
+	s=korg; t=1778609628;
+	bh=bw/fwYpmJQWu3INXpQCsMLAkAkgdX4curCwMiVEFj6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbgDtpjgeEZ89UmY2aoaDnBwpX3BRNUfuEIYf1RXGHKv0uOBaU49CMp79tI05EXTm
-	 DXkhj5zMhFPuySZmiFQKLpE6w+4/NRuVyHp/l23pelF7LX6/iSXXRuz3tIQ3+h6oU0
-	 86M4iyrMNeeybuDRIAsvJZfDiAJry9T/4xxkBnWA=
+	b=PLLF9y9bP0m/EeoKqEEiohPeRE21/5VbeQGPSYX6QJcErz9rFgraZLUS7Kn+iaE1w
+	 w6hDMiRyTBorM9B1uKRrusEUeQJ5y+OfWJeFjKgilaI0X4rQAY0GuAagSi2lKo2dfU
+	 lN8fsAGpWpKsuDZgWvmzHoYr1K3C6bx9R+YyyvfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 7.0 268/307] f2fs: fix false alarm of lockdep on cp_global_sem lock
-Date: Tue, 12 May 2026 19:41:03 +0200
-Message-ID: <20260512173945.783926031@linuxfoundation.org>
+Subject: [PATCH 7.0 269/307] f2fs: fix fiemap boundary handling when read extent cache is incomplete
+Date: Tue, 12 May 2026 19:41:04 +0200
+Message-ID: <20260512173945.804417938@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -46,103 +46,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-commit 6a5e3de9c2bb0b691d16789a5d19e9276a09b308 upstream.
+commit 95e159ad3e52f7478cfd22e44ec37c9f334f8993 upstream.
 
-lockdep reported a potential deadlock:
+f2fs_fiemap() calls f2fs_map_blocks() to obtain the block mapping a
+file, and then merges contiguous mappings into extents. If the mapping
+is found in the read extent cache, node blocks do not need to be read.
+However, in the following scenario, a contiguous extent can be split
+into two extents:
 
-a) TCMU device removal context:
- - call del_gendisk() to get q->q_usage_counter
- - call start_flush_work() to get work_completion of wb->dwork
-b) f2fs writeback context:
- - in wb_workfn(), which holds work_completion of wb->dwork
- - call f2fs_balance_fs() to get sbi->gc_lock
-c) f2fs vfs_write context:
- - call f2fs_gc() to get sbi->gc_lock
- - call f2fs_write_checkpoint() to get sbi->cp_global_sem
-d) f2fs mount context:
- - call recover_fsync_data() to get sbi->cp_global_sem
- - call f2fs_check_and_fix_write_pointer() to call blkdev_report_zones()
-   that goes down to blk_mq_alloc_request and get q->q_usage_counter
+$ dd if=/dev/zero of=data.128M bs=1M count=128
+$ losetup -f data.128M
+$ mkfs.f2fs /dev/loop0 -f
+$ mount -o mode=lfs /dev/loop0 /mnt/f2fs/
+$ cd /mnt/f2fs/
+$ dd if=/dev/zero of=data.72M bs=1M count=72 && sync
+$ dd if=/dev/zero of=data.4M bs=1M count=4 && sync
+$ dd if=/dev/zero of=data.4M bs=1M count=2 seek=2 conv=notrunc && sync
+$ echo 3 > /proc/sys/vm/drop_caches
+$ dd if=/dev/zero of=data.4M bs=1M count=2 seek=0 conv=notrunc && sync
+$ dd if=/dev/zero of=data.4M bs=1M count=2 seek=0 conv=notrunc && sync
+$ f2fs_io fiemap 0 1024 data.4M
+Fiemap: offset = 0 len = 1024
+logical addr.    physical addr.   length           flags
+0	0000000000000000 0000000006400000 0000000000200000 00001000
+1	0000000000200000 0000000006600000 0000000000200000 00001001
 
-Original callstack is in Closes tag.
+Although the physical addresses of the ranges 0～2MB and 2M～4MB are
+contiguous, the mapping for the 2M～4MB range is not present in memory.
+When the physical addresses for the 0～2MB range are updated, no merge
+happens because the adjacent mapping is missing from the in-memory
+cache. As a result, fiemap reports two separate extents instead of a
+single contiguous one.
 
-However, I think this is a false alarm due to before mount returns
-successfully (context d), we can not access file therein via vfs_write
-(context c).
+The root cause is that the read extent cache does not guarantee that all
+blocks of an extent are present in memory. Therefore, when the extent
+length returned by f2fs_map_blocks_cached() is smaller than maxblocks,
+the remaining mappings are retrieved via f2fs_get_dnode_of_data() to
+ensure correct fiemap extent boundary handling.
 
-Let's introduce per-sb cp_global_sem_key, and assign the key for
-cp_global_sem, so that lockdep can recognize cp_global_sem from
-different super block correctly.
-
-A lot of work are done by Shin'ichiro Kawasaki, thanks a lot for
-the work.
-
-Fixes: c426d99127b1 ("f2fs: Check write pointer consistency of open zones")
 Cc: stable@kernel.org
-Reported-and-tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Closes: https://lore.kernel.org/linux-f2fs-devel/20260218125237.3340441-1-shinichiro.kawasaki@wdc.com
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
+Fixes: cd8fc5226bef ("f2fs: remove the create argument to f2fs_map_blocks")
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/f2fs.h  |    3 +++
- fs/f2fs/super.c |   11 +++++++++++
- 2 files changed, 14 insertions(+)
+ fs/f2fs/data.c |   25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -2042,6 +2042,9 @@ struct f2fs_sb_info {
- 	spinlock_t iostat_lat_lock;
- 	struct iostat_lat_info *iostat_io_lat;
- #endif
-+#ifdef CONFIG_DEBUG_LOCK_ALLOC
-+	struct lock_class_key cp_global_sem_key;
-+#endif
- };
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -1636,8 +1636,26 @@ int f2fs_map_blocks(struct inode *inode,
+ 	lfs_dio_write = (flag == F2FS_GET_BLOCK_DIO && f2fs_lfs_mode(sbi) &&
+ 				map->m_may_create);
  
- /* Definitions to access f2fs_sb_info */
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -4953,6 +4953,11 @@ try_onemore:
- 	init_f2fs_rwsem_trace(&sbi->gc_lock, sbi, LOCK_NAME_GC_LOCK);
- 	mutex_init(&sbi->writepages);
- 	init_f2fs_rwsem_trace(&sbi->cp_global_sem, sbi, LOCK_NAME_CP_GLOBAL);
-+#ifdef CONFIG_DEBUG_LOCK_ALLOC
-+	lockdep_register_key(&sbi->cp_global_sem_key);
-+	lockdep_set_class(&sbi->cp_global_sem.internal_rwsem,
-+					&sbi->cp_global_sem_key);
-+#endif
- 	init_f2fs_rwsem_trace(&sbi->node_write, sbi, LOCK_NAME_NODE_WRITE);
- 	init_f2fs_rwsem_trace(&sbi->node_change, sbi, LOCK_NAME_NODE_CHANGE);
- 	spin_lock_init(&sbi->stat_lock);
-@@ -5424,6 +5429,9 @@ free_options:
- free_sb_buf:
- 	kfree(raw_super);
- free_sbi:
-+#ifdef CONFIG_DEBUG_LOCK_ALLOC
-+	lockdep_unregister_key(&sbi->cp_global_sem_key);
-+#endif
- 	kfree(sbi);
- 	sb->s_fs_info = NULL;
+-	if (!map->m_may_create && f2fs_map_blocks_cached(inode, map, flag))
+-		goto out;
++	if (!map->m_may_create && f2fs_map_blocks_cached(inode, map, flag)) {
++		struct extent_info ei;
++
++		/*
++		 * 1. If map->m_multidev_dio is true, map->m_pblk cannot be
++		 * waitted by f2fs_wait_on_block_writeback_range() and are not
++		 * mergeable.
++		 * 2. If pgofs hits the read extent cache, it means the mapping
++		 * is already cached in the extent cache, but it is not
++		 * mergeable, and there is no need to query the mapping again
++		 * via f2fs_get_dnode_of_data().
++		 */
++		pgofs =	(pgoff_t)map->m_lblk + map->m_len;
++		if (map->m_len == maxblocks ||
++			map->m_multidev_dio ||
++			f2fs_lookup_read_extent_cache(inode, pgofs, &ei))
++			goto out;
++		ofs = map->m_len;
++		goto map_more;
++	}
  
-@@ -5505,6 +5513,9 @@ static void kill_f2fs_super(struct super
- 	/* Release block devices last, after fscrypt_destroy_keyring(). */
- 	if (sbi) {
- 		destroy_device_list(sbi);
-+#ifdef CONFIG_DEBUG_LOCK_ALLOC
-+		lockdep_unregister_key(&sbi->cp_global_sem_key);
-+#endif
- 		kfree(sbi);
- 		sb->s_fs_info = NULL;
- 	}
+ 	map->m_bdev = inode->i_sb->s_bdev;
+ 	map->m_multidev_dio =
+@@ -1648,7 +1666,8 @@ int f2fs_map_blocks(struct inode *inode,
+ 
+ 	/* it only supports block size == page size */
+ 	pgofs =	(pgoff_t)map->m_lblk;
+-	end = pgofs + maxblocks;
++map_more:
++	end = (pgoff_t)map->m_lblk + maxblocks;
+ 
+ 	if (flag == F2FS_GET_BLOCK_PRECACHE)
+ 		mode = LOOKUP_NODE_RA;
 
 
