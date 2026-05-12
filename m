@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567483EDE55;
-	Tue, 12 May 2026 18:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF2E3EDE55;
+	Tue, 12 May 2026 18:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609136; cv=none; b=fzdu0gTjSYH67jeCzzkWCDQCK9vyuNNXopL1uwBUezEktzAncbj2G6jVjVHNOHvKbfbnaZUYvyaMkPJXgAyvU81qBxYml9tQNc0PEtpysDgRyNsVKXNtUJaQ6f0tEnepBhgJZCOETgPd1+3xzS/Wbs+ClwNYK2U5qkyr8TysNf8=
+	t=1778609138; cv=none; b=hFoTlf/sZ//pMvw2EXDw1NJaGvUgKlTvE4e3qvuRDU4W4WnZhchzv2ziAWa4OdjyzlTbuwH3RPDX3g963kzAWA0kzFOcLa4j29wTjaQkGHwOPiD9M3d5MpaFZNca2nIUM6kj5XNLwVXDcHMjuD+yl+NpAYWHPM1Auf8q/CV+e24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609136; c=relaxed/simple;
-	bh=0XAPkYQSYj722Ty3jKtlON2EFJ0TK/1a392RRX/+hM0=;
+	s=arc-20240116; t=1778609138; c=relaxed/simple;
+	bh=lc0lQVdLNpp5DbhSqSS3L69E2SUOW+VSW8vMJHBxijo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2gMFqt2P+MU04w3yvSH2ctBQtaD8MJ+lHz1tL5PKzupdXiR1TymlG/KMCpxPGZrCqJJ7cOxUIiulwwri65BqWXD16X19dOZzUe9n2LwoWuwFhXfZWD6jly24pNlZC4P9Ajlyy+7Qvoh6MFyR9jLQT2rVhUD3gNJuVG5qwItupk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zOYrSaM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nMIwtboZ2lu0GfSSbwx9/IUI2cknkHDK8TVpjJYo0JsY0VXEKUSxtjtoG+yQk9Jd4ZZMfB3RAdgLHdlx1YouxTrQjr35EqlNQgZCSkDL8MACOsc91+YUujGUbb/VfebxgNcKC5VNLmw1af+9MS+/0FqPSobMgRWru2FbTEtiPWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeQbOPN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zOYrSaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66AAC2BCB0;
-	Tue, 12 May 2026 18:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeQbOPN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CB7C2BCB0;
+	Tue, 12 May 2026 18:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609136;
-	bh=0XAPkYQSYj722Ty3jKtlON2EFJ0TK/1a392RRX/+hM0=;
+	s=korg; t=1778609138;
+	bh=lc0lQVdLNpp5DbhSqSS3L69E2SUOW+VSW8vMJHBxijo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1zOYrSaMyrIcqi0HphmaZ8ihCF4OI+PuXyAbxFrrC3KeDgf8sjN7F7q6xxklW+zJA
-	 lz4EUkocwJ7x+aXoWy95Xr2cYnVKrj5RueYkXTtjRjsbs561sYa0jmJTdE2DT+AL9o
-	 Dtu/EftgQViQSXoWUQngxLWPfqbwSk1IEJLrYp0E=
+	b=JeQbOPN+otmQ9s/zSGxpKZgTfUPhwHxUNiD/LX06vfuRCIUzAc/KT42BPhq/POJLs
+	 tCr+GroS4cFtaRs5E7D4R3hSookIHT4B0qs3lOCa8wsdK34P7EQ6iBfKKnFtIsunlA
+	 QD83vfUUvpUjTYyWAcF7CjhYzdb/++xkX4/nynrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.0 080/307] rust: pin-init: internal: move alignment check to `make_field_check`
-Date: Tue, 12 May 2026 19:37:55 +0200
-Message-ID: <20260512173941.808964663@linuxfoundation.org>
+	Masahisa Kojima <masahisa.kojima@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.0 081/307] spi: syncuacer: fix controller deregistration
+Date: Tue, 12 May 2026 19:37:56 +0200
+Message-ID: <20260512173941.829062808@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,125 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Johan Hovold <johan@kernel.org>
 
-commit 83ac2870310b694775ab7e8f0244fdd94fc21926 upstream.
+commit 75d849c3452e9611de031db45b3149ba9a99035f upstream.
 
-Instead of having the reference creation serving dual-purpose as both for
-let bindings and alignment check, detangle them so that the alignment check
-is done explicitly in `make_field_check`. This is more robust against
-refactors that may change the way let bindings are created.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260427-pin-init-fix-v3-1-496a699674dd@garyguo.net
-[ Reworded for typo. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: b0823ee35cf9 ("spi: Add spi driver for Socionext SynQuacer platform")
+Cc: stable@vger.kernel.org	# 5.3
+Cc: Masahisa Kojima <masahisa.kojima@linaro.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-21-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/pin-init/internal/src/init.rs |   78 +++++++++++++++++--------------------
- 1 file changed, 37 insertions(+), 41 deletions(-)
+ drivers/spi/spi-synquacer.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/rust/pin-init/internal/src/init.rs
-+++ b/rust/pin-init/internal/src/init.rs
-@@ -243,10 +243,6 @@ fn init_fields(
-                 });
-                 // Again span for better diagnostics
-                 let write = quote_spanned!(ident.span()=> ::core::ptr::write);
--                // NOTE: the field accessor ensures that the initialized field is properly aligned.
--                // Unaligned fields will cause the compiler to emit E0793. We do not support
--                // unaligned fields since `Init::__init` requires an aligned pointer; the call to
--                // `ptr::write` below has the same requirement.
-                 let accessor = if pinned {
-                     let project_ident = format_ident!("__project_{ident}");
-                     quote! {
-@@ -361,49 +357,49 @@ fn init_fields(
-     }
- }
+--- a/drivers/spi/spi-synquacer.c
++++ b/drivers/spi/spi-synquacer.c
+@@ -716,7 +716,7 @@ static int synquacer_spi_probe(struct pl
+ 	pm_runtime_set_active(sspi->dev);
+ 	pm_runtime_enable(sspi->dev);
  
--/// Generate the check for ensuring that every field has been initialized.
-+/// Generate the check for ensuring that every field has been initialized and aligned.
- fn make_field_check(
-     fields: &Punctuated<InitializerField, Token![,]>,
-     init_kind: InitKind,
-     path: &Path,
- ) -> TokenStream {
--    let field_attrs = fields
-+    let field_attrs: Vec<_> = fields
-         .iter()
--        .filter_map(|f| f.kind.ident().map(|_| &f.attrs));
--    let field_name = fields.iter().filter_map(|f| f.kind.ident());
--    match init_kind {
--        InitKind::Normal => quote! {
--            // We use unreachable code to ensure that all fields have been mentioned exactly once,
--            // this struct initializer will still be type-checked and complain with a very natural
--            // error message if a field is forgotten/mentioned more than once.
--            #[allow(unreachable_code, clippy::diverging_sub_expression)]
--            // SAFETY: this code is never executed.
--            let _ = || unsafe {
--                ::core::ptr::write(slot, #path {
--                    #(
--                        #(#field_attrs)*
--                        #field_name: ::core::panic!(),
--                    )*
--                })
--            };
--        },
--        InitKind::Zeroing => quote! {
--            // We use unreachable code to ensure that all fields have been mentioned at most once.
--            // Since the user specified `..Zeroable::zeroed()` at the end, all missing fields will
--            // be zeroed. This struct initializer will still be type-checked and complain with a
--            // very natural error message if a field is mentioned more than once, or doesn't exist.
--            #[allow(unreachable_code, clippy::diverging_sub_expression, unused_assignments)]
--            // SAFETY: this code is never executed.
--            let _ = || unsafe {
--                ::core::ptr::write(slot, #path {
--                    #(
--                        #(#field_attrs)*
--                        #field_name: ::core::panic!(),
--                    )*
--                    ..::core::mem::zeroed()
--                })
--            };
--        },
-+        .filter_map(|f| f.kind.ident().map(|_| &f.attrs))
-+        .collect();
-+    let field_name: Vec<_> = fields.iter().filter_map(|f| f.kind.ident()).collect();
-+    let zeroing_trailer = match init_kind {
-+        InitKind::Normal => None,
-+        InitKind::Zeroing => Some(quote! {
-+            ..::core::mem::zeroed()
-+        }),
-+    };
-+    quote! {
-+        #[allow(unreachable_code, clippy::diverging_sub_expression)]
-+        // We use unreachable code to perform field checks. They're still checked by the compiler.
-+        // SAFETY: this code is never executed.
-+        let _ = || unsafe {
-+            // Create references to ensure that the initialized field is properly aligned.
-+            // Unaligned fields will cause the compiler to emit E0793. We do not support
-+            // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-+            // `ptr::write` for value-initialization case has the same requirement.
-+            #(
-+                #(#field_attrs)*
-+                let _ = &(*slot).#field_name;
-+            )*
+-	ret = devm_spi_register_controller(sspi->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret)
+ 		goto disable_pm;
+ 
+@@ -737,9 +737,15 @@ static void synquacer_spi_remove(struct
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct synquacer_spi *sspi = spi_controller_get_devdata(host);
+ 
++	spi_controller_get(host);
 +
-+            // If the zeroing trailer is not present, this checks that all fields have been
-+            // mentioned exactly once. If the zeroing trailer is present, all missing fields will be
-+            // zeroed, so this checks that all fields have been mentioned at most once. The use of
-+            // struct initializer will still generate very natural error messages for any misuse.
-+            ::core::ptr::write(slot, #path {
-+                #(
-+                    #(#field_attrs)*
-+                    #field_name: ::core::panic!(),
-+                )*
-+                #zeroing_trailer
-+            })
-+        };
-     }
++	spi_unregister_controller(host);
++
+ 	pm_runtime_disable(sspi->dev);
+ 
+ 	clk_disable_unprepare(sspi->clk);
++
++	spi_controller_put(host);
  }
  
+ static int __maybe_unused synquacer_spi_suspend(struct device *dev)
 
 
