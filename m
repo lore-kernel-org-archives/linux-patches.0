@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AE83B1EE2;
-	Tue, 12 May 2026 17:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD2A3D966A;
+	Tue, 12 May 2026 17:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607795; cv=none; b=LdTltYZeZEJpi2Gq0xg7MHfV7kV3P4SYawcQivjeOJw0NgbIlOexoMojMVCCBqD8zHyxdKB40B1yTNu9yJ5KgjigcWPjw3alaX+gGPGm+3unL+pOKhkoq9axjXiJvV9P2qXMsAzudlPuyD2UZMUDv9zRxC3h57vhNT3xttAZNv8=
+	t=1778607797; cv=none; b=D0IjqkDKjQSO2V3umlvQhPx2UYMPsgnuldPIVb38CViLodlZk3+kd6npzaiYt1FKa4UOhhtz80U9ubQgiBe6iQNn/VG/VM9G9FlNrttk6ZOe1W/nxwmbnBErvWB3/kUTy5vyl4lIYzll5luHYgRwsF3jHZ9vxu3g1uO1IcfvDmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607795; c=relaxed/simple;
-	bh=XeTZ6t5wUMM+wt1f+WOoJLr7gYMkhx5IA+zt5eZW8z4=;
+	s=arc-20240116; t=1778607797; c=relaxed/simple;
+	bh=C1SpqpTFvkf0YSn8jhvAIjE4hHNJDwzBB8pJzPe33NU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OkEjz0eotSGnb6mVtAFOEQDQgeffN5trrF2mTDNiEYx0z1w0JGpqxYr57BiCbJkHAD/zJx9aokdLb0xiwr9TLFsx6BptQ+WIgr4XQ3ju9IKcjKnyFWOz9Ggx0KTQOY1+XY4a6LP1orJKI87u9bKc99HZiVVzgchyxXbAUc1aYRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBdLU7u3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qVZ48d3JaWi5EJZVpH6tEwDFtJJkZjnbDp4X1iqTgYXTkXKl6JMy4ktRJhUjbYmt+iav3Rlm0iUFZe4A3Y33vGCtZhH8o7b5ICts0XkgQJd0a5Mtx0DRfnvl9OpKu8dETte2n8/fpyu4pDvDjZAj9AcT3FQX+WV9th7irno2CcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/aVNv8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBdLU7u3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC857C2BCB0;
-	Tue, 12 May 2026 17:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/aVNv8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42185C2BCB0;
+	Tue, 12 May 2026 17:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607795;
-	bh=XeTZ6t5wUMM+wt1f+WOoJLr7gYMkhx5IA+zt5eZW8z4=;
+	s=korg; t=1778607797;
+	bh=C1SpqpTFvkf0YSn8jhvAIjE4hHNJDwzBB8pJzPe33NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBdLU7u3IORMH+xAr8YzHej9mcgHRHzotqf3+AJivxIoYsqbq/+EFQmJ/fTS/dl9L
-	 E+86i7JOMMMkMtLJj55ouqPaebSe+8w+20b67dy7CIVqUHSe+GxVvLyQhynWk3T9nR
-	 MVNd2C2e/n15OYa2uUzfUcVkq/cQqAlH9XUygNPU=
+	b=n/aVNv8uWh8krn5lH9ZQrcrsuhwxO0eWNTZqk5iIkZexETp728/o9MAB87c0DNSIY
+	 SUcHEbfnp+3N637glRHC1g2tpkmVcKh9D6xx9Kx5kowLxqxSDZoytgZGKiBT0zVJ3q
+	 tQNiQzV3mWebUvA7bxzlCFpNmCh8aJo7mVen0CEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	=?UTF-8?q?Michael=20B=C3=BCsch?= <m@bues.ch>,
+	Tristan Madani <tristan@talencesecurity.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 038/206] wifi: mac80211: remove station if connection prep fails
-Date: Tue, 12 May 2026 19:38:10 +0200
-Message-ID: <20260512173933.638973704@linuxfoundation.org>
+Subject: [PATCH 6.12 039/206] wifi: b43: enforce bounds check on firmware key index in b43_rx()
+Date: Tue, 12 May 2026 19:38:11 +0200
+Message-ID: <20260512173933.660669988@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -44,68 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 283fc9e44ff5b5ac967439b4951b80bd4299f4e4 upstream.
+commit 1f4f78bf8549e6ac4f04fba4176854f3a6e0c332 upstream.
 
-If connection preparation fails for MLO connections, then the
-interface is completely reset to non-MLD. In this case, we must
-not keep the station since it's related to the link of the vif
-being removed. Delete an existing station. Any "new_sta" is
-already being removed, so that doesn't need changes.
+The firmware-controlled key index in b43_rx() can exceed the dev->key[]
+array size (58 entries). The existing B43_WARN_ON is non-enforcing in
+production builds, allowing an out-of-bounds read.
 
-This fixes a use-after-free/double-free in debugfs if that's
-enabled, because a vif going from MLD (and to MLD, but that's
-not relevant here) recreates its entire debugfs.
+Make the B43_WARN_ON check enforcing by dropping the frame when the
+firmware returns an invalid key index.
 
+Suggested-by: Jonas Gorski <jonas.gorski@gmail.com>
+Acked-by: Michael Büsch <m@bues.ch>
+Fixes: e4d6b7951812 ("[B43]: add mac80211-based driver for modern BCM43xx devices")
 Cc: stable@vger.kernel.org
-Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260505151533.c4e52deb06ad.Iafe56cec7de8512626169496b134bce3a6c17010@changeid
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260417111145.2694196-1-tristmd@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mlme.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/wireless/broadcom/b43/xmit.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -8177,7 +8177,7 @@ static int ieee80211_prep_connection(str
- 	struct ieee80211_bss *bss = (void *)cbss->priv;
- 	struct sta_info *new_sta = NULL;
- 	struct ieee80211_link_data *link;
--	bool have_sta = false;
-+	struct sta_info *have_sta = NULL;
- 	bool mlo;
- 	int err;
+--- a/drivers/net/wireless/broadcom/b43/xmit.c
++++ b/drivers/net/wireless/broadcom/b43/xmit.c
+@@ -702,7 +702,8 @@ void b43_rx(struct b43_wldev *dev, struc
+ 		 * key index, but the ucode passed it slightly different.
+ 		 */
+ 		keyidx = b43_kidx_to_raw(dev, keyidx);
+-		B43_WARN_ON(keyidx >= ARRAY_SIZE(dev->key));
++		if (B43_WARN_ON(keyidx >= ARRAY_SIZE(dev->key)))
++			goto drop;
  
-@@ -8215,11 +8215,8 @@ static int ieee80211_prep_connection(str
- 		goto out_err;
- 	}
- 
--	if (assoc) {
--		rcu_read_lock();
-+	if (assoc)
- 		have_sta = sta_info_get(sdata, ap_mld_addr);
--		rcu_read_unlock();
--	}
- 
- 	if (!have_sta) {
- 		if (mlo)
-@@ -8352,6 +8349,8 @@ static int ieee80211_prep_connection(str
- out_release_chan:
- 	ieee80211_link_release_channel(link);
- out_err:
-+	if (mlo && have_sta)
-+		WARN_ON(__sta_info_destroy(have_sta));
- 	ieee80211_vif_set_links(sdata, 0, 0);
- 	return err;
- }
+ 		if (dev->key[keyidx].algorithm != B43_SEC_ALGO_NONE) {
+ 			wlhdr_len = ieee80211_hdrlen(fctl);
 
 
