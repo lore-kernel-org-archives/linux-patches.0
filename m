@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E7A3E9C14;
-	Tue, 12 May 2026 17:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72983EDE4F;
+	Tue, 12 May 2026 17:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608053; cv=none; b=Tei2aFrmGKhQBtMsSFBIE+guywKhrncCwEqUndwx91u/QgvlDp2BXKdTDqJbBPBc2ZbyVekCXJtUrQI5BaYekofpu223GVNLJ10lt8L9ySmw4MTaUR7BafCf1hf2Fawd1PyCYQVfo/YNw4aSW4uFO/SsiHGuNrnObqcooYdkwrI=
+	t=1778608056; cv=none; b=edk8l08qNBnusX8musI2bxxslTPA7VHRs6AHpHK+2E6qCj/nxmk/8PbmMFZUZldCVk62ocNF5DBt9J796xzScCrUMSQplXryUZi2gqj3dAJoWa6NPmcQsvqwFyse5pGSrAZstU7l0yf66a7ZFm6wCRYy9f8+0IZdcN5g8w1LEec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608053; c=relaxed/simple;
-	bh=bN8bL2G62fFXSsI/ZAXK66OP8QadpxuVBweQ6elsQmc=;
+	s=arc-20240116; t=1778608056; c=relaxed/simple;
+	bh=E5LxsWrCzlPbzSLa4YajLZS/SK/B0vs6ntzj9KTl0nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpzkC7K9lwlwX2DuLOmcxgGD7jsbk7Z3pe+HaYYqYDWK3sOD5qrU1qsja6rigJVKjfzR1cpz7iecaJOGk1MpvbnStr1YNeOsPgVp7O4nog3kZRl+ocXdgLcsty1tA34cbdmtFZmaoCEe7tWC28Yq4TYFR1999+A37XOhPCTCHlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcA/qDFo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aYAcBUixMAi94POQaNk4ukJqEWEL6ZEmhFL1pdJUlxWze44io5G1C7BJ2YayOKIdeV5TWE5cLhrML1VtdEYvZGSudG2YQN10R3d1zOKD7heBhp7NHc6d4MCi7JBgFoKlZIMxssT4ZEFtJsQf2Ptg7akv3cPW8heuMeWm68b5yDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXzVgEec; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcA/qDFo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E324C2BCB0;
-	Tue, 12 May 2026 17:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXzVgEec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF55DC2BCB0;
+	Tue, 12 May 2026 17:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608053;
-	bh=bN8bL2G62fFXSsI/ZAXK66OP8QadpxuVBweQ6elsQmc=;
+	s=korg; t=1778608056;
+	bh=E5LxsWrCzlPbzSLa4YajLZS/SK/B0vs6ntzj9KTl0nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CcA/qDFo+th4BQs2dBzmpzAtc2qVYXuAwXPwxOqpOugCjrtsHzV88unDTVTxMyWXV
-	 w2HHJjNwlJMtPC6PV1B7lii9AUepXqtwluyF1y92QiuuWu6tLQiXfoeXxrXc+zmTeq
-	 D7MF+9xqgIuKJmBAn2b/DWf3kLq+uzHLHC0B5DnI=
+	b=fXzVgEecJYrCdmFqet9qVNlgY3cJIOOlh5CNNWHuDOHhvB/i0oOm/Rtw0uZhEbmgA
+	 wZQ5jkv5h5nz7oiapI1200Vt0+XqVE4WfAs2ahlzNqAapgZK4v4M8rukmti7cd4An4
+	 2JBSkv66XlMOl5XgSs+GX5pEuDCv+Qk9gnYfBsRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.12 136/206] s390/debug: Reject zero-length input in debug_input_flush_fn()
-Date: Tue, 12 May 2026 19:39:48 +0200
-Message-ID: <20260512173935.739820236@linuxfoundation.org>
+	Zisen Ye <zisenye@stu.xidian.edu.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 137/206] smb/client: fix out-of-bounds read in smb2_compound_op()
+Date: Tue, 12 May 2026 19:39:49 +0200
+Message-ID: <20260512173935.762670263@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,40 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Zisen Ye <zisenye@stu.xidian.edu.cn>
 
-commit e14622a7584f9608927c59a7d6ae4a0999dc545e upstream.
+commit 8d09328dfda089675e4c049f3f256064a1d1996b upstream.
 
-debug_input_flush_fn() always copies one byte from the userspace buffer
-with copy_from_user() regardless of the supplied write length. A
-zero-length write therefore reads one byte beyond the caller's buffer.
-If the stale byte happens to be '-' or a digit the debug log is
-silently flushed. With an unmapped buffer the call returns -EFAULT.
+If a server sends a truncated response but a large OutputBufferLength, and
+terminates the EA list early, check_wsl_eas() returns success without
+validating that the entire OutputBufferLength fits within iov_len.
 
-Reject zero-length writes before copying from userspace.
+Then smb2_compound_op() does:
+    memcpy(idata->wsl.eas, data[0], size[0]);
 
-Cc: stable@vger.kernel.org # v5.10+
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Where size[0] is OutputBufferLength. If iov_len is smaller than size[0],
+memcpy can read beyond the end of the rsp_iov allocation and leak adjacent
+kernel heap memory.
+
+Link: https://lore.kernel.org/linux-cifs/d998240c-aca9-420d-9dbd-f5ba24af19e0@chenxiaosong.com/
+Fixes: ea41367b2a60 ("smb: client: introduce SMB2_OP_QUERY_WSL_EA")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zisen Ye <zisenye@stu.xidian.edu.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/debug.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/smb/client/smb2inode.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/arch/s390/kernel/debug.c
-+++ b/arch/s390/kernel/debug.c
-@@ -1432,6 +1432,11 @@ static int debug_input_flush_fn(debug_in
- 	char input_buf[1];
- 	int rc = user_len;
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -108,7 +108,7 @@ static int check_wsl_eas(struct kvec *rs
+ 	u32 outlen, next;
+ 	u16 vlen;
+ 	u8 nlen;
+-	u8 *end;
++	u8 *ea_end, *iov_end;
  
-+	if (!user_len) {
-+		rc = -EINVAL;
-+		goto out;
-+	}
+ 	outlen = le32_to_cpu(rsp->OutputBufferLength);
+ 	if (outlen < SMB2_WSL_MIN_QUERY_EA_RESP_SIZE ||
+@@ -117,15 +117,19 @@ static int check_wsl_eas(struct kvec *rs
+ 
+ 	ea = (void *)((u8 *)rsp_iov->iov_base +
+ 		      le16_to_cpu(rsp->OutputBufferOffset));
+-	end = (u8 *)rsp_iov->iov_base + rsp_iov->iov_len;
++	ea_end = (u8 *)ea + outlen;
++	iov_end = (u8 *)rsp_iov->iov_base + rsp_iov->iov_len;
++	if (ea_end > iov_end)
++		return -EINVAL;
 +
- 	if (user_len > 0x10000)
- 		user_len = 0x10000;
- 	if (*offset != 0) {
+ 	for (;;) {
+-		if ((u8 *)ea > end - sizeof(*ea))
++		if ((u8 *)ea > ea_end - sizeof(*ea))
+ 			return -EINVAL;
+ 
+ 		nlen = ea->ea_name_length;
+ 		vlen = le16_to_cpu(ea->ea_value_length);
+ 		if (nlen != SMB2_WSL_XATTR_NAME_LEN ||
+-		    (u8 *)ea->ea_data + nlen + 1 + vlen > end)
++		    (u8 *)ea->ea_data + nlen + 1 + vlen > ea_end)
+ 			return -EINVAL;
+ 
+ 		switch (vlen) {
 
 
