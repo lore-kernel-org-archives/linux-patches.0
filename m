@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A383ADB9A;
-	Tue, 12 May 2026 17:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7152EBB84;
+	Tue, 12 May 2026 17:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607975; cv=none; b=mRqp87e35nNpg63ORdQM6YFMchwBImFnA9uj1/psM5Cot7+ASs2yU/CjiZao7VDXvhCLVOnxt3PmM2Ite34wrP1BlCaakz25+vzLwO2mOZa+R9WW1uCRIpu2CVrE6PAvvFbEREh9BeRr3XNwHRpUu0G/SbfrghTyfqVoAZizSKQ=
+	t=1778607977; cv=none; b=IB6nZfjmcFPiNRTjarB0AFiONfBLUyI1XzL0B/J12OFq23MrMsLDTT6nujZQuOYSHkc72GC+K7y/Ju9lMgiJP9iYu0XmEe2XWmBaisL5xisz+vTgY+GJ3yVUq8UjGfJD+nvnq3WKgq/KDRLq3nn8FCEYx+sCo8Y9bzU7n8t1baw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607975; c=relaxed/simple;
-	bh=KqOf0mL9zQ6XIAGbD+pYuOkOXcTnLQAjjH2HHGjBHIk=;
+	s=arc-20240116; t=1778607977; c=relaxed/simple;
+	bh=GJcP4HyWDJ50vXRfHY0t5OIVPYbDtpcRrSo6TvUORRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TA+Yeai1zDE+br2P24QjVX7d6w89e1BQDLHU+9p8T/TK/zQiZyA+/mLV00/v4RqGljji8P4aAFndhxzuE7rL8qm7V0qtQJNMQTY9qyCSrRFoA9y7nfghHjx6LsmWktPFQZ37GyX+jsNltdafsDalyyqCFgMuoTHssL9r0YwsxbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBpLS8lD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SDJh+9RHLyuiCH1o1FcP7az0+/jhdWQ0jTAze9AR5YR6zEfUDk1nP+0AXpCgVABQpq/La046fuQTr1wom/Y84I+UrVE0524lcsoVFU3w/2l/IoCICqPLSgHT0zjLfJmllyJ75gnBBaSJP85se65ETH9prM+JN8fTg8K9XG5Vu6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEAWBGkh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBpLS8lD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0E3C2BCB0;
-	Tue, 12 May 2026 17:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEAWBGkh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701DBC2BCB0;
+	Tue, 12 May 2026 17:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607975;
-	bh=KqOf0mL9zQ6XIAGbD+pYuOkOXcTnLQAjjH2HHGjBHIk=;
+	s=korg; t=1778607977;
+	bh=GJcP4HyWDJ50vXRfHY0t5OIVPYbDtpcRrSo6TvUORRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBpLS8lDnvTCce6Cn+GJuU0qaB+su5gcvxNQ6UZPsbM1FeT7/8RmFfGSboyXw7xyD
-	 UZL2gd6K4fNO8iU3QnRjLVMDnP7niacFfOYQNj9vEiybv4BQInjWLWoz2FjObQzozw
-	 B+ia5M6dPN95VJ3LO3iH9hXHhpcyULorD++B83Ho=
+	b=QEAWBGkh6NaR2Pu1G20uWXN0a8GKGJXOnofRQGQdV2NZLBitQD0WO0JsocIkEUmTo
+	 g2PW6pxMm6GZkGxzM11DGG3GfEbtojZWpbG4GgT+peKxiQk7ts41nywNzPlM40lpk4
+	 zJM9plBPeHMoQoBQbzn8jOTe1EiaHIwu0Mq/9YHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Siwei Zhang <oss@fourdim.xyz>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 065/206] Bluetooth: L2CAP: Fix null-ptr-deref in l2cap_sock_new_connection_cb()
-Date: Tue, 12 May 2026 19:38:37 +0200
-Message-ID: <20260512173934.221056386@linuxfoundation.org>
+Subject: [PATCH 6.12 066/206] Bluetooth: L2CAP: Fix null-ptr-deref in l2cap_sock_state_change_cb()
+Date: Tue, 12 May 2026 19:38:38 +0200
+Message-ID: <20260512173934.241452348@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -53,12 +53,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Siwei Zhang <oss@fourdim.xyz>
 
-commit 0a120d96166301d7a95be75b52f843837dbd1219 upstream.
+commit 2ff1a41a912de8517b4482e946dd951b7d80edbf upstream.
 
 Add the same NULL guard already present in
 l2cap_sock_resume_cb() and l2cap_sock_ready_cb().
 
-Fixes: 80808e431e1e ("Bluetooth: Add l2cap_chan_ops abstraction")
+Fixes: 89bc500e41fc ("Bluetooth: Add state tracking to struct l2cap_chan")
 Cc: stable@kernel.org
 Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
@@ -69,15 +69,15 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/bluetooth/l2cap_sock.c
 +++ b/net/bluetooth/l2cap_sock.c
-@@ -1467,6 +1467,9 @@ static struct l2cap_chan *l2cap_sock_new
+@@ -1630,6 +1630,9 @@ static void l2cap_sock_state_change_cb(s
  {
- 	struct sock *sk, *parent = chan->data;
+ 	struct sock *sk = chan->data;
  
-+	if (!parent)
-+		return NULL;
++	if (!sk)
++		return;
 +
- 	lock_sock(parent);
+ 	sk->sk_state = state;
  
- 	/* Check for backlog size */
+ 	if (err)
 
 
