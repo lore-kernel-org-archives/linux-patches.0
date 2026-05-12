@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DA13EDE41;
-	Tue, 12 May 2026 18:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF2A17557E;
+	Tue, 12 May 2026 18:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608994; cv=none; b=Jx0DDyBd08z4ZguhV9qbPr+C5JmdwyZLLQaiqg9io378gk6TbVU9wnGT6rrEopBJIbBiK1J+l9kIDPhpsaA7T31nE/YZoIQO1C7DuUBB8lkiHngIjajjTnge0cw5Wg1tuVfzGz88DRFxsr1GcnQ9qEgVoiPOLdjGDbcecIokptc=
+	t=1778608997; cv=none; b=PSPgUl5D5YA6XUwcbJ3lS3CZLEJseWYIDS5FBxvxLNgHPSbw6BCKiea4cUimMxbOFfFrisI72KlR3MK4BO2cDN/69NxQ6hySsSB9pagE5e2eWflS21Ctr67tIVRmuV1ExaYOSfoeGKA/hz6CN6MIs/U9XnJIU5mslo/SB/k6PRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608994; c=relaxed/simple;
-	bh=pDYkTDJGhEozPCFRbsZXjgH2v/BdX6WdwqB81A60nrE=;
+	s=arc-20240116; t=1778608997; c=relaxed/simple;
+	bh=7G13ZTGXvgFQQzF89UyJAyweozpNPGhw0VKCiiaN6Zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nf3fSa85SpbHN7gbkvdukNkPnt1/0NhrOABuf/oxss6S4hCd2VKRw9GoSa9UahnqjwbJZuig2bw8T+JcKNDOcrYd4ygLh0OuFIuUVX6gPpYQaBFFU+IrYx98wMtARRvoeAJOfEWunMv7XpB3BPJEYT/oyJPYgB0o1mcgj26Nxoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxTLLzzF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ek1tV1T7sbtbWel2I5XV0a3O/jKT7E578cFXb9cgMsluNKJtoX/ANR906BcqB+opiabXF+rzyY5jVE+d7ljt0qit7x79YPFERTpbyhhifq3cXkjbWDOAI39tbUwrScT7LgQDPDbo4WehT+YHFgLub96naa6kwsfgEdvR3svApMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyskU+uW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxTLLzzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEB6C2BCB0;
-	Tue, 12 May 2026 18:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyskU+uW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A86C2BCB0;
+	Tue, 12 May 2026 18:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608994;
-	bh=pDYkTDJGhEozPCFRbsZXjgH2v/BdX6WdwqB81A60nrE=;
+	s=korg; t=1778608997;
+	bh=7G13ZTGXvgFQQzF89UyJAyweozpNPGhw0VKCiiaN6Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wxTLLzzF+xPoFGW3zQ7TgGoiHfAQ9kB2oDZoLBz5SicB1rmMKxqBpDubb6E5mqgP0
-	 Pmp4sECzs1RvMHbiPCQ/fj3omE7jR/tbbD3Oz1axKktPeUDuTPeE/LJ0qHNEOqwLqR
-	 t5R4lLzgqcy9H8AH3S4G3DXL3A0o48j0cJ0QDzyM=
+	b=uyskU+uWhjKlhN7hTo9wPS+3lmRU7VI7gOiI6YgpIyxWtnV7k94Q1uqG2F8p+p2Xv
+	 3QGh8RzE+Tq/D51iAQETzzINeuFJ5Lph4LuhdTWFkEJPMImr/g/g6Ii+jfJMkCfl/2
+	 4ZP1xxdb/VtMBS9xd3z2oC07p5mOrULa2DYDOAWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 7.0 004/307] ipmi:si: Return state to normal if message allocation fails
-Date: Tue, 12 May 2026 19:36:39 +0200
-Message-ID: <20260512173940.214354977@linuxfoundation.org>
+	Rajat Gupta <rajgupt@qti.qualcomm.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 7.0 005/307] fbdev: udlfb: add vm_ops to dlfb_ops_mmap to prevent use-after-free
+Date: Tue, 12 May 2026 19:36:40 +0200
+Message-ID: <20260512173940.234772953@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -49,44 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Rajat Gupta <rajgupt@qti.qualcomm.com>
 
-commit 09dd798270ff582d7309f285d4aaf5dbebae01cb upstream.
+commit 8de779dc40d35d39fa07387b6f921eb11df0f511 upstream.
 
-There were places where nothing would get started if a message
-allocation failed, so the driver needs to return to normal state.
+dlfb_ops_mmap() uses remap_pfn_range() to map vmalloc framebuffer pages
+to userspace but sets no vm_ops on the VMA. This means the kernel cannot
+track active mmaps. When dlfb_realloc_framebuffer() replaces the backing
+buffer via FBIOPUT_VSCREENINFO, existing mmap PTEs are not invalidated.
+On USB disconnect, dlfb_ops_destroy() calls vfree() on the old pages
+while userspace PTEs still reference them, resulting in a use-after-free:
+the process retains read/write access to freed kernel pages.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Add vm_operations_struct with open/close callbacks that maintain an
+atomic mmap_count on struct dlfb_data. In dlfb_realloc_framebuffer(),
+check mmap_count and return -EBUSY if the buffer is currently mapped,
+preventing buffer replacement while userspace holds stale PTEs.
+
+Tested with PoC using dummy_hcd + raw_gadget USB device emulation.
+
+Signed-off-by: Rajat Gupta <rajgupt@qti.qualcomm.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_si_intf.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/udlfb.c |   31 ++++++++++++++++++++++++++++++-
+ include/video/udlfb.h       |    1 +
+ 2 files changed, 31 insertions(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_si_intf.c
-+++ b/drivers/char/ipmi/ipmi_si_intf.c
-@@ -497,15 +497,19 @@ retry:
- 	} else if (smi_info->msg_flags & RECEIVE_MSG_AVAIL) {
- 		/* Messages available. */
- 		smi_info->curr_msg = alloc_msg_handle_irq(smi_info);
--		if (!smi_info->curr_msg)
-+		if (!smi_info->curr_msg) {
-+			smi_info->si_state = SI_NORMAL;
- 			return;
-+		}
+--- a/drivers/video/fbdev/udlfb.c
++++ b/drivers/video/fbdev/udlfb.c
+@@ -321,12 +321,32 @@ static int dlfb_set_video_mode(struct dl
+ 	return retval;
+ }
  
- 		start_getting_msg_queue(smi_info);
- 	} else if (smi_info->msg_flags & EVENT_MSG_BUFFER_FULL) {
- 		/* Events available. */
- 		smi_info->curr_msg = alloc_msg_handle_irq(smi_info);
--		if (!smi_info->curr_msg)
-+		if (!smi_info->curr_msg) {
-+			smi_info->si_state = SI_NORMAL;
- 			return;
-+		}
++static void dlfb_vm_open(struct vm_area_struct *vma)
++{
++	struct dlfb_data *dlfb = vma->vm_private_data;
++
++	atomic_inc(&dlfb->mmap_count);
++}
++
++static void dlfb_vm_close(struct vm_area_struct *vma)
++{
++	struct dlfb_data *dlfb = vma->vm_private_data;
++
++	atomic_dec(&dlfb->mmap_count);
++}
++
++static const struct vm_operations_struct dlfb_vm_ops = {
++	.open  = dlfb_vm_open,
++	.close = dlfb_vm_close,
++};
++
+ static int dlfb_ops_mmap(struct fb_info *info, struct vm_area_struct *vma)
+ {
+ 	unsigned long start = vma->vm_start;
+ 	unsigned long size = vma->vm_end - vma->vm_start;
+ 	unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
+ 	unsigned long page, pos;
++	struct dlfb_data *dlfb = info->par;
  
- 		start_getting_events(smi_info);
- 	} else if (smi_info->msg_flags & OEM_DATA_AVAIL &&
+ 	if (info->fbdefio)
+ 		return fb_deferred_io_mmap(info, vma);
+@@ -358,6 +378,9 @@ static int dlfb_ops_mmap(struct fb_info
+ 			size = 0;
+ 	}
+ 
++	vma->vm_ops = &dlfb_vm_ops;
++	vma->vm_private_data = dlfb;
++	atomic_inc(&dlfb->mmap_count);
+ 	return 0;
+ }
+ 
+@@ -1176,7 +1199,6 @@ static void dlfb_deferred_vfree(struct d
+ 
+ /*
+  * Assumes &info->lock held by caller
+- * Assumes no active clients have framebuffer open
+  */
+ static int dlfb_realloc_framebuffer(struct dlfb_data *dlfb, struct fb_info *info, u32 new_len)
+ {
+@@ -1188,6 +1210,13 @@ static int dlfb_realloc_framebuffer(stru
+ 	new_len = PAGE_ALIGN(new_len);
+ 
+ 	if (new_len > old_len) {
++		if (atomic_read(&dlfb->mmap_count) > 0) {
++			dev_warn(info->dev,
++				"refusing realloc: %d active mmaps\n",
++				atomic_read(&dlfb->mmap_count));
++			return -EBUSY;
++		}
++
+ 		/*
+ 		 * Alloc system memory for virtual framebuffer
+ 		 */
+--- a/include/video/udlfb.h
++++ b/include/video/udlfb.h
+@@ -56,6 +56,7 @@ struct dlfb_data {
+ 	spinlock_t damage_lock;
+ 	struct work_struct damage_work;
+ 	struct fb_ops ops;
++	atomic_t mmap_count;
+ 	/* blit-only rendering path metrics, exposed through sysfs */
+ 	atomic_t bytes_rendered; /* raw pixel-bytes driver asked to render */
+ 	atomic_t bytes_identical; /* saved effort with backbuffer comparison */
 
 
