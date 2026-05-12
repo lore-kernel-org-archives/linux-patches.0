@@ -1,66 +1,66 @@
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
+Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DEA357CFF
-	for <patches@lists.linux.dev>; Tue, 12 May 2026 20:43:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C243B2FD0
+	for <patches@lists.linux.dev>; Tue, 12 May 2026 20:44:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778618596; cv=none; b=dx9QnsAmCihm9Dk4/yuEkUdl7XMyTwnPSX26IlV2aa3ajXzKK7hnqgSJTRd3P6/KYVJI/lLzWw064HXrePZmqAWeNn9Nk9hUg/8V9OGrZWT3MAc4tShsA+ScqXTD0JsXsmS5vjV5eFsOpBcHCGG3BIEBgbF82MiAUYhez/ZiSnQ=
+	t=1778618647; cv=none; b=b4jk9toYkgS2iEYCyVXN8EFRsdRdJtetiAic2QrFAYJmS+h6oAotm9MDnYhfrfLzK/K8AL+WBD8dwH3Si0CkrytLeJJ8qryj38qesPSxQ+JL+aLTrIq++CKpQAJuTsDOPy394BCfRZXYruQ/JbBdwcRxshlafwhNRS6GN1IgWJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778618596; c=relaxed/simple;
-	bh=kg4NlVLFvpcet+/cj6Ad8BEvgEVUqQ5ua+TsGgeN3Rs=;
+	s=arc-20240116; t=1778618647; c=relaxed/simple;
+	bh=QZbJexH7roQz9CTKUMXawNyoKnHRwN0ff8bY6zYjaJg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tUxZXf5n/AcYP2cxFGT09HHYkkv2txYDXxtuJ5XJx0EHiF+PXN3wxY2HuAanAYIVAqKKmuOXGH1hn4jmviGkxaaEtQdsGjMQULM/HfUbmWcmjgP6X/+sjVG/cYSkKqKBXNjD7BSGHbzzs3zFYwhLLtzPlWO00ewmWMb5EhvJS44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YDuvwxWK; arc=none smtp.client-ip=74.125.82.180
+	 In-Reply-To:Content-Type; b=IymHDx4eCMyFZlVSTTFgPfA1lD82JOIK09teHqqz88FKKexOtP2OApdSiWsZt4l/1Nu6qMx+ysG8Lg9iHcRb8XJmgba9GFFRgxvpFVWEQK8DMqgM6wZKij4iF/0WOMaKwHVbAwUUfuYYP1zCeXk88L+akP1XMM4e0KU/e2KH9is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AHnhlJUa; arc=none smtp.client-ip=74.125.82.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YDuvwxWK"
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-2f03d6cf77bso6788081eec.0
-        for <patches@lists.linux.dev>; Tue, 12 May 2026 13:43:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AHnhlJUa"
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-13317450f83so988048c88.0
+        for <patches@lists.linux.dev>; Tue, 12 May 2026 13:44:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778618595; x=1779223395; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1778618645; x=1779223445; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=C9lR0A9k7VO7RFKQ4e5f3LHHZHyRUjtt/Q+YXL4+DFc=;
-        b=YDuvwxWKYvc4lNM2yuOBmlyV4WmE4UGgskshNLnIDzCwrQGSyzzXBgX6uMhMv+tfCi
-         +oF/sJFz9SPRssBZzzqN1IYj2eOYqPmbsX69wdMKWUMw4RLyiZGqEIYgiR5WENvv9y3e
-         724vm/DeAoli57jevtwRW1LNUgL6UlAijyeMr3gkFH+Qs6F/b0TLKkl4UmhNhWGNShzg
-         cuZfVuDBl5CgEMA/fIiMEN9kwJH0FCX6eR7vYOLiHKuFNHKHnz+MSL955CcGuuEhdB+P
-         5vpzedUW8uOMoSAMkPH3AG8a/vsf7pA2kdZVv5d9DiT63GOjBLsnNYNPMNQqVHq2bX1M
-         tbHQ==
+        bh=HOTVoVYKuXInZTCg9uFW7YHTqL8MrCZvgH2OHC0a8Po=;
+        b=AHnhlJUadlcphVym3plr6rDPx49m+hNYewPxUTrBOD1hR/1gAta25ofRAQ7f4NCMoS
+         LOrnFddru66Bk5+KXuCaySN9kHFUVzH5mAVrdJPe2v3LVHrSWn48N1sc4uQ0oT21sPLp
+         NcBe2eOaUR89Q+JcXDhNC0pknYQny6Q/3cn9u40gdsuI8JjxUuCSE5rFScAPmY7wAmMH
+         SF08TtLMNYROuCDPa+INllVXTWKD3m9h59kHm4uCr4wMCzVXgs7eHOIm//jC5rqD5o2+
+         OX69c4Xkt1GaNDEJUx4+WJEcCw6JI7KjA/7+/2S7nSceao+ZljqBle1zjs3jlyhsP1oS
+         upCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778618595; x=1779223395;
+        d=1e100.net; s=20251104; t=1778618645; x=1779223445;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=C9lR0A9k7VO7RFKQ4e5f3LHHZHyRUjtt/Q+YXL4+DFc=;
-        b=pgBnIBxlsXno5MmrnvpWZuhFV1HWLznWc6vW9tIDxFJDKEhrPGPR/GOorq4C6fnq6A
-         Wwju8LYzVZW6GTj5zHfovrFfcMfgr8tPcqOtsPmyIXsUe73wI+fqZA3/7rJ5M+5uE+nX
-         2vCHrlvr2QzC5ZTJluMQlGnLN/Tb74/vhJseyBaa2CNOGlxXjQ5gNHofkOmeHcB4sQ7H
-         rTTKuB12qjzN9lI640nJriJGfx1bjT9I3z7Ll4iOhTTS1HzesDvt0bHiBJh5TNAO6qWB
-         Z1J6dqwF11GsyLfJvH90WrHpUL6QjcZgUff3JZ/6k8vJhr4hdvsteu/pN2GYOCfgN2eV
-         +hzg==
-X-Gm-Message-State: AOJu0Yzrq1cO/P1nodZ9CR6/XE+YfnVOleczSvJEiL6I+LO3eAq0Cb+D
-	hgPiow1op5qANAmN/EcAZ2UAz+IXjO5L3708sySQBXL2LjjLk/M0NLXu9byOyA64og==
-X-Gm-Gg: Acq92OFoF7qPe4SkGEe732ymsIveKZkBPK70fpWp/xUzwN98VY73lYqnzskADTeTVPP
-	OIvfo8P7sqWv7ePIlynmP1wX2pdHsd1sf0tU05elUot+zwBUrJ1WXAYsbAXTPcs1pmSKXr/tqC4
-	bmQYfS6ik+gO4KZwGyjKrkGVec3r4my4TbwsD93NoNrdXMruyOQuPw+y0AZl772o4nU+7CU3CYF
-	nsg1683YQiWgwdZf/i4DpEYlsbjbXkK60SzMvFX+Nna6SSLgJREKwPiC6MuAsEioODRU0n5W1/q
-	aTHXJLzp1LDuAlgFr22kKEKsZn9/b3+zRMymFDdwkbbsJcu124EjoY/PjgTHbxhQaulp1DjDRH8
-	BM1/2uo1Q9ljBgdlqgPvqGwFv/iMyc4HN2mjqdWX+pGTFHBUnKwwp8H7HWwma6N56/q7NDTsIHc
-	99LY7bDB0IV8sUtcUpmuIjgsbd05vn4RUlJlaJ5yhEWTejGnETIRFYlD3Us6zp84TKXu1tixifn
-	8K5yv42860Zm7F9O6KBIJy+5hytm3QMbP2y
-X-Received: by 2002:a05:7301:6783:b0:2de:aafb:feff with SMTP id 5a478bee46e88-30117c73cddmr372091eec.2.1778618593919;
-        Tue, 12 May 2026 13:43:13 -0700 (PDT)
+        bh=HOTVoVYKuXInZTCg9uFW7YHTqL8MrCZvgH2OHC0a8Po=;
+        b=X204KlIGctGllvtTv8P57+tQw65SbAxVCJ/qlHbgA7+i0a0Y2sREDLL8T7r6iuiQc9
+         02NmJsoKy2pwm+dwnK/ZN1EfXU6hcjCgRmrrI8Vr7A85iaSA6XTQJq2YEFp3j8Ys/GV5
+         Qftx5kM5DjRjSpMBxIZTLtCiXoq6D0akY13KFHRTQCxMD+sL3xyK3DOX3C5BbaaSyrv6
+         a4UbFHEBcfCWXl/xFOidavdnUgfg7gSvGm1hPCvMnc1WPbkq1//Hq+9P51A8HTNkWlH6
+         TvgZpr9FXxjouzJHdZvK+EpDu8C4fg5otc2UXFqUR02plPMeOEwjmEPfDGCqjMRSUyNn
+         DH9Q==
+X-Gm-Message-State: AOJu0YzSJ6+O777wueu6e9s3bTysK/SqK5W5/HF2bApEIFSSdM2rF4CL
+	nEWXIbgQn/ypo7inWIX+K1VK+8xejskwOCbBfJmhu4OsnzOWi3dLkU5atHpgSObiCw==
+X-Gm-Gg: Acq92OFPVGO1YUDo+vSrOjcradIjVMby4ebrdEkjrW6SqvhXpssSdm+FNjUZaAaePox
+	GoAcyTNTksE2pOXFhXB9P5OzuBc2bJ7BmDR6fltilV5novnH3dYU9lCjmvyj9O4oSZbswvqmblc
+	vUmmYIzWflHQGBDoRVlzZK0Wi8R4roo5OhpwCgruCtwxnH0SiW3rPFz+ai0PbO4HDh3JrW8IzbA
+	r0WuHu3O9OXoC5roG8anXkHwitKemBO6EFldt80J/pdEdMw642vx8ixQoQJeeiZTScecTwljjQ1
+	XZakv/KVUUCSnsskpIUFBFfYJuqhePKmoQ7bVxUXc83bINiwf/JK1Ds8DoK4N7OJqTReNS+Qa8L
+	pNyiqKhslzn0e2vksK+dgMm2hhdi61pVAitmh3qCiDTJIFO/IycULgryYlhePz6LWYL9+XSQFy7
+	iNJyAFRnF8s1Vg5aLkUrGUvu3fLmVQQWQENAt8qFBDJ9L5ROdlzmH+L90NGmS7DwHc7UsRnCbUi
+	esKWeafIsV7KXRhj4FlKiXQChRoCClEYwY4
+X-Received: by 2002:a05:7022:6997:b0:12d:de3e:86a7 with SMTP id a92af1059eb24-13436bb1815mr297018c88.37.1778618644810;
+        Tue, 12 May 2026 13:44:04 -0700 (PDT)
 Received: from ?IPV6:2a00:79e0:2e7c:8:839b:f905:79b7:838f? ([2a00:79e0:2e7c:8:839b:f905:79b7:838f])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f8859eafc2sm24437991eec.4.2026.05.12.13.43.12
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1327810ffb9sm27852209c88.2.2026.05.12.13.44.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 May 2026 13:43:13 -0700 (PDT)
-Message-ID: <4b812fea-fd3f-45e0-a377-3ded43fba700@google.com>
-Date: Tue, 12 May 2026 13:43:11 -0700
+        Tue, 12 May 2026 13:44:04 -0700 (PDT)
+Message-ID: <7eb599f5-b5dc-43d5-be49-bf4997bee3dd@google.com>
+Date: Tue, 12 May 2026 13:44:02 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,24 +68,24 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 043/270] usb: typec: tcpm: reset internal port states
+Subject: Re: [PATCH 7.0 040/307] usb: typec: tcpm: reset internal port states
  on soft reset AMS
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, stable <stable@kernel.org>,
  Badhri Jagan Sridharan <badhri@google.com>,
  Heikki Krogerus <heikki.krogerus@linux.intel.com>
-References: <20260512173938.452574370@linuxfoundation.org>
- <20260512173939.360401506@linuxfoundation.org>
+References: <20260512173940.117428952@linuxfoundation.org>
+ <20260512173940.970675491@linuxfoundation.org>
 Content-Language: en-US
 From: Amit Sunil Dhamne <amitsd@google.com>
-In-Reply-To: <20260512173939.360401506@linuxfoundation.org>
+In-Reply-To: <20260512173940.970675491@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Greg,
 
 On 5/12/26 10:37 AM, Greg Kroah-Hartman wrote:
-> 6.18-stable review patch.  If anyone has any objections, please let me know.
+> 7.0-stable review patch.  If anyone has any objections, please let me know.
 >
 > ------------------
 >
@@ -160,7 +160,7 @@ On 5/12/26 10:37 AM, Greg Kroah-Hartman wrote:
 >
 > --- a/drivers/usb/typec/tcpm/tcpm.c
 > +++ b/drivers/usb/typec/tcpm/tcpm.c
-> @@ -5728,6 +5728,8 @@ static void run_state_machine(struct tcp
+> @@ -5741,6 +5741,8 @@ static void run_state_machine(struct tcp
 >   
 >   	case VCONN_SWAP_ACCEPT:
 >   		tcpm_pd_send_control(port, PD_CTRL_ACCEPT, TCPC_TX_SOP);
@@ -169,8 +169,7 @@ On 5/12/26 10:37 AM, Greg Kroah-Hartman wrote:
 
 Please drop this patch from the queue. It was incorrectly applied to the 
 VCONN_SWAP_ACCEPT case instead of the soft reset handling due to context 
-fuzz. I will send a proper rebased backport for the 6.18 stable tree 
-shortly.
+fuzz. I will send a proper rebased backport for the 7.0 stable tree shortly.
 
 
 Thanks,
