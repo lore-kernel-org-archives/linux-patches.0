@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68EA3EDE48;
-	Tue, 12 May 2026 18:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813663EDE41;
+	Tue, 12 May 2026 18:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608869; cv=none; b=J9TyvUnDbpoYzxLQNo0tKs6smAK+MCV8obwAducPQLxVTRVboUH0sGjP344S6naH1RJ2YmFLBGuXcVOjIyqVN7614ls/cmgs53NkYRXUL+lKdJ8x/Fvao4eqo+U0Ii/N7Xv8WSSqOSxRS2nWLk6Sfu2D21HYjuB9ouoRW3/D2qQ=
+	t=1778608871; cv=none; b=RKSajSUe9+LGj+TMjQBBT4NPfCxnFvk0cMLeO0vaP2/WAPeU49rM3nDACu7uOu9W+j54JVWVpNelBI/eq5ubZZhc86t8HRsDRfeOe0CXTc8Fpo1PGSnkakPsf5h5W5Z8CwAs2b4tw2mdAI8G4bM6FoGcXDiOXr/C7Pw6moFAuEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608869; c=relaxed/simple;
-	bh=aSypBrGsJkDKlMIXCEap6hOcoWJKvEtmSNJ5euEtlFo=;
+	s=arc-20240116; t=1778608871; c=relaxed/simple;
+	bh=J/ge+W46mKGibAKo2RByEWzmYwR/KK692KAaysP/p5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfT4Q7Jnujf7XZjzKpo0JuvVB+YDKxy40Xq08H5RaGiiUaPMvb8+/9+Gin3HhCZtd+5faMwWPJB3dsYJXz6/VjbVxAbmDsz6GoNa+3LYEhvHB1ng866n9s1ofOTSFOin8S0gXB/CVfoDFPrfkQIcJJ1S3imDxdu1vPBMgC7JwAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RA0QXdCQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0ViwrHZbxNZ9V4Xx7DKY95V2zWgEpXZeewLRItdf2K3fBRIWwNyL8a806Bcg+DxkDl+G/s9la0fkrpoKydeOYgl0zzqyxfMGSCvBipKsRxU/2zfu3xsqTA2zaNkRSlp2bhPaX7x0tYVRi37vOWgCJTbmUJ7saMrit2QtpfAMGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ny7SyRmv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RA0QXdCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9BFC2BCB0;
-	Tue, 12 May 2026 18:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ny7SyRmv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA7DC2BCB0;
+	Tue, 12 May 2026 18:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608868;
-	bh=aSypBrGsJkDKlMIXCEap6hOcoWJKvEtmSNJ5euEtlFo=;
+	s=korg; t=1778608871;
+	bh=J/ge+W46mKGibAKo2RByEWzmYwR/KK692KAaysP/p5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RA0QXdCQK60Sn0v2wMZFKOdQ75NonffztBOlqEliXDNdlpfzDQ5N62MIAAHQ52e4s
-	 e+QRYMxA5HGW68mwS7SgF24cF5O5vtQ1fAd521DlI4QSTwzESnXW/F48g9nn0rl+xX
-	 ypIq1yurN8FoFMqaBQhONlpAVWmeVvi8O/9U3lgo=
+	b=Ny7SyRmvYdYFuzWoid8qSgxN9GpQNhQGtmYuz5kW3mGRqruhiv062PbIKHBTolLHD
+	 MFyOrDXgdmf9WPV01f77eJZINpiPQelMdL9qVAFxgb6K7WmqjGXI839iC4Wzpo+jW3
+	 MiAIYii1ZGZt+xvWtTuLCyZ6cDnYSV7KIRw9j5fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Li <lichao@loongson.cn>,
-	Dongyan Qian <qiandongyan@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 245/270] LoongArch: Use per-root-bridge PCIH flag to skip mem resource fixup
-Date: Tue, 12 May 2026 19:40:46 +0200
-Message-ID: <20260512173943.597585318@linuxfoundation.org>
+	Martin Michaelis <code@mgjm.de>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 246/270] io_uring/kbuf: support min length left for incremental buffers
+Date: Tue, 12 May 2026 19:40:47 +0200
+Message-ID: <20260512173943.618767671@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,58 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Martin Michaelis <code@mgjm.de>
 
-commit 49f33840dcc907d21313d369e34872880846b61c upstream.
+Commit 7deba791ad495ce1d7921683f4f7d1190fa210d1 upstream.
 
-When firmware enables 64-bit PCI host bridge support, some root bridges
-already provide valid 64-bit mem resource windows through ACPI.
+Incrementally consumed buffer rings are generally fully consumed, but
+it's quite possible that the application has a minimum size it needs to
+meet to avoid truncation. Currently that minimum limit is 1 byte, but
+this should be a setting that is the hands of the application. For
+recvmsg multishot, a prime use case for incrementally consumed buffers,
+the application may get spurious -EFAULT returned at the end of an
+incrementally consumed buffer, as less space is available than the
+headers need.
 
-In this case, the LoongArch-specific mem resource high-bits fixup in
-acpi_prepare_root_resources() should not be applied unconditionally.
-Otherwise, the kernel may override the native resource layout derived
-from firmware, and later BAR assignment can fail to place device BARs
-into the intended 64-bit address space correctly.
-
-Add a per-root-bridge ACPI flag, PCIH, and evaluate it from the current
-root bridge device scope. When PCIH is set, skip the mem resource high-
-bits fixup path and let the kernel use the firmware-provided resource
-description directly. When PCIH is absent or cleared, keep the existing
-behavior and continue filling the high address bits from the host bridge
-address.
-
-This makes the behavior per-root-bridge configurable and avoids breaking
-valid 64-bit BAR space allocation on bridges whose 64-bit windows have
-already been fully described by firmware.
+Grab a u32 field in struct io_uring_buf_reg, which the application can
+use to inform the kernel of the minimum size that should be available
+in an incrementally consumed buffer. If less than that is available,
+the current buffer is fully processed and the next one will be picked.
 
 Cc: stable@vger.kernel.org
-Suggested-by: Chao Li <lichao@loongson.cn>
-Tested-by: Dongyan Qian <qiandongyan@loongson.cn>
-Signed-off-by: Dongyan Qian <qiandongyan@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: ae98dbf43d75 ("io_uring/kbuf: add support for incremental buffer consumption")
+Link: https://github.com/axboe/liburing/issues/1433
+Signed-off-by: Martin Michaelis <code@mgjm.de>
+[axboe: write commit message, change io_buffer_list member name]
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/pci/acpi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/uapi/linux/io_uring.h |    3 ++-
+ io_uring/kbuf.c               |   12 +++++++++---
+ io_uring/kbuf.h               |    7 +++++++
+ 3 files changed, 18 insertions(+), 4 deletions(-)
 
---- a/arch/loongarch/pci/acpi.c
-+++ b/arch/loongarch/pci/acpi.c
-@@ -61,11 +61,16 @@ static void acpi_release_root_info(struc
- static int acpi_prepare_root_resources(struct acpi_pci_root_info *ci)
- {
- 	int status;
-+	unsigned long long pci_h = 0;
- 	struct resource_entry *entry, *tmp;
- 	struct acpi_device *device = ci->bridge;
+--- a/include/uapi/linux/io_uring.h
++++ b/include/uapi/linux/io_uring.h
+@@ -864,7 +864,8 @@ struct io_uring_buf_reg {
+ 	__u32	ring_entries;
+ 	__u16	bgid;
+ 	__u16	flags;
+-	__u64	resv[3];
++	__u32	min_left;
++	__u32	resv[5];
+ };
  
- 	status = acpi_pci_probe_root_resources(ci);
- 	if (status > 0) {
-+		acpi_evaluate_integer(device->handle, "PCIH", NULL, &pci_h);
-+		if (pci_h)
-+			return status;
+ /* argument for IORING_REGISTER_PBUF_STATUS */
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -47,9 +47,9 @@ static bool io_kbuf_inc_commit(struct io
+ 		this_len = min_t(u32, len, buf_len);
+ 		buf_len -= this_len;
+ 		/* Stop looping for invalid buffer length of 0 */
+-		if (buf_len || !this_len) {
+-			buf->addr = READ_ONCE(buf->addr) + this_len;
+-			buf->len = buf_len;
++		if (buf_len > bl->min_left_sub_one || !this_len) {
++			WRITE_ONCE(buf->addr, READ_ONCE(buf->addr) + this_len);
++			WRITE_ONCE(buf->len, buf_len);
+ 			return false;
+ 		}
+ 		buf->len = 0;
+@@ -637,6 +637,10 @@ int io_register_pbuf_ring(struct io_ring
+ 	if (reg.ring_entries >= 65536)
+ 		return -EINVAL;
+ 
++	/* minimum left byte count is a property of incremental buffers */
++	if (!(reg.flags & IOU_PBUF_RING_INC) && reg.min_left)
++		return -EINVAL;
 +
- 		resource_list_for_each_entry_safe(entry, tmp, &ci->resources) {
- 			if (entry->res->flags & IORESOURCE_MEM) {
- 				entry->offset = ci->root->mcfg_addr & GENMASK_ULL(63, 40);
+ 	bl = io_buffer_get_list(ctx, reg.bgid);
+ 	if (bl) {
+ 		/* if mapped buffer ring OR classic exists, don't allow */
+@@ -684,6 +688,8 @@ int io_register_pbuf_ring(struct io_ring
+ 	bl->mask = reg.ring_entries - 1;
+ 	bl->flags |= IOBL_BUF_RING;
+ 	bl->buf_ring = br;
++	if (reg.min_left)
++		bl->min_left_sub_one = reg.min_left - 1;
+ 	if (reg.flags & IOU_PBUF_RING_INC)
+ 		bl->flags |= IOBL_INC;
+ 	ret = io_buffer_add_list(ctx, bl, reg.bgid);
+--- a/io_uring/kbuf.h
++++ b/io_uring/kbuf.h
+@@ -34,6 +34,13 @@ struct io_buffer_list {
+ 
+ 	__u16 flags;
+ 
++	/*
++	 * minimum required amount to be left to reuse an incrementally
++	 * consumed buffer. If less than this is left at consumption time,
++	 * buffer is done and head is incremented to the next buffer.
++	 */
++	__u32 min_left_sub_one;
++
+ 	struct io_mapped_region region;
+ };
+ 
 
 
