@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4746750276;
-	Tue, 12 May 2026 18:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69E63EDE55;
+	Tue, 12 May 2026 18:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609105; cv=none; b=cLkGFIcVBxIys2uvVS0LoIgFj0JMF6gwVQx6E1obSc3lToMMGqH4fMpHQjvtpOouznAfuSjIOWQF3/H1x5/rtZxl856wAeuDEsfVU18mtycuXFajK6X85A5MivttKKnqZGR2wF3A172HOu9RUITblphoplxjgA8lR4YPTpPQ7hs=
+	t=1778609107; cv=none; b=ZSdG5MZUA/vv1K+YRQjo2oQroo9WA3t2a4H69I14PXO2sDJMmDZG5lLOzNnq5EIlhpQcv5vFDw3Kek/XPBc+IsjcomAwA693hgzBqrKoaZcvuPDLrdpyoUAHveQ2WTuZmox1DwTwDS9R9fNQknm7dQFNZ24Z07MQcdxqMCoXRuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609105; c=relaxed/simple;
-	bh=44CKPZ5nw9xjJne8E6Tas39x4i8eBC3fdo4U3jj7S84=;
+	s=arc-20240116; t=1778609107; c=relaxed/simple;
+	bh=sIkspz4YWRVP8nMfA6kjGTz9VwRvGYsxGS4JZgbv2AE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ewrTHo1iuCbXMAB+JAcu7N/T2hSyUhipKgS5m/CqvPs3Az9rT/K8JI6fXgQ9E7umQwFvC0ETzoT2QITojFoJtxBWT39+VVR4xR/KmWKDmHzQ7m+EIYT8+3QLiWAkheWHhSC/REXpuK5BF8dcK8rCrOO20NR8SLfsX79jOub+UHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHUCveg5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=morJBwBOBoeVPW7Fry4R6VoS9WXSh7nzUZk2DlDf82Ms6OM3dOrh9nhETsS7E23ps838hJtC791ahCRp8a2/QNr6j6/uIIfyA3AzX1XhBQruHdCVvVv2AJpuzNWcH2k1zBhOR1VoiekGURScBuDUAu+BYepsu613CcsPOp9nYnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npz0AXLg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHUCveg5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EFFC2BCB0;
-	Tue, 12 May 2026 18:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npz0AXLg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF69C2BCB0;
+	Tue, 12 May 2026 18:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609105;
-	bh=44CKPZ5nw9xjJne8E6Tas39x4i8eBC3fdo4U3jj7S84=;
+	s=korg; t=1778609107;
+	bh=sIkspz4YWRVP8nMfA6kjGTz9VwRvGYsxGS4JZgbv2AE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CHUCveg5COwuiNRFZgojANbqJMcf0M13/Urwxpcfp4UXm8yKMJboyPlUiRzyyHiSq
-	 haC7jYVUMUfzvviQ90wCk9/BGz7TK+oiAO/RKBfrYd6UXPE3eOUsOcjhXmfRoLswVu
-	 N4HwH8bltlAPfARMgKgqkKVqKeqwNJm+8VnL7L7M=
+	b=npz0AXLg8ZtE7u80zAQAF+r7W1Id0zzaSGCQHkTwMLFZC2Z/gMoyeGP1cx6vndsLM
+	 npICFRbyo5uJZcem0sqkRS0Y3cmgqhIbgLTmLtGItER6nSCKkp4qETDuyfFB9K4AXB
+	 5vl0YpV4BAYJT6HLZ922tfrTb3uAt2CmGEMF9lgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.0 065/307] selinux: allow multiple opens of /sys/fs/selinux/policy
-Date: Tue, 12 May 2026 19:37:40 +0200
-Message-ID: <20260512173941.493184298@linuxfoundation.org>
+	Martin Michaelis <code@mgjm.de>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.0 066/307] io_uring/kbuf: support min length left for incremental buffers
+Date: Tue, 12 May 2026 19:37:41 +0200
+Message-ID: <20260512173941.514817409@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,100 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Martin Michaelis <code@mgjm.de>
 
-commit a02cd6805562305f936e807da83e253b719dd965 upstream.
+commit 7deba791ad495ce1d7921683f4f7d1190fa210d1 upstream.
 
-Currently there can only be a single open of /sys/fs/selinux/policy at
-any time. This allows any process to block any other process from
-reading the kernel policy. The original motivation seems to have been
-a mix of preventing an inconsistent view of the policy size and
-preventing userspace from allocating kernel memory without bound, but
-this is arguably equally bad. Eliminate the policy_opened flag and
-shrink the critical section that the policy mutex is held. While we
-are making changes here, drop a couple of extraneous BUG_ONs.
+Incrementally consumed buffer rings are generally fully consumed, but
+it's quite possible that the application has a minimum size it needs to
+meet to avoid truncation. Currently that minimum limit is 1 byte, but
+this should be a setting that is the hands of the application. For
+recvmsg multishot, a prime use case for incrementally consumed buffers,
+the application may get spurious -EFAULT returned at the end of an
+incrementally consumed buffer, as less space is available than the
+headers need.
+
+Grab a u32 field in struct io_uring_buf_reg, which the application can
+use to inform the kernel of the minimum size that should be available
+in an incrementally consumed buffer. If less than that is available,
+the current buffer is fully processed and the next one will be picked.
 
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/selinux/20100726193414.19538.64028.stgit@paris.rdu.redhat.com/
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: ae98dbf43d75 ("io_uring/kbuf: add support for incremental buffer consumption")
+Link: https://github.com/axboe/liburing/issues/1433
+Signed-off-by: Martin Michaelis <code@mgjm.de>
+[axboe: write commit message, change io_buffer_list member name]
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/selinuxfs.c |   27 ++++-----------------------
- 1 file changed, 4 insertions(+), 23 deletions(-)
+ include/uapi/linux/io_uring.h |    3 ++-
+ io_uring/kbuf.c               |    8 +++++++-
+ io_uring/kbuf.h               |    7 +++++++
+ 3 files changed, 16 insertions(+), 2 deletions(-)
 
---- a/security/selinux/selinuxfs.c
-+++ b/security/selinux/selinuxfs.c
-@@ -76,7 +76,6 @@ struct selinux_fs_info {
- 	int *bool_pending_values;
- 	struct dentry *class_dir;
- 	unsigned long last_class_ino;
--	bool policy_opened;
- 	unsigned long last_ino;
- 	struct super_block *sb;
+--- a/include/uapi/linux/io_uring.h
++++ b/include/uapi/linux/io_uring.h
+@@ -898,7 +898,8 @@ struct io_uring_buf_reg {
+ 	__u32	ring_entries;
+ 	__u16	bgid;
+ 	__u16	flags;
+-	__u64	resv[3];
++	__u32	min_left;
++	__u32	resv[5];
  };
-@@ -340,44 +339,31 @@ struct policy_load_memory {
  
- static int sel_open_policy(struct inode *inode, struct file *filp)
- {
--	struct selinux_fs_info *fsi = inode->i_sb->s_fs_info;
- 	struct policy_load_memory *plm = NULL;
- 	int rc;
+ /* argument for IORING_REGISTER_PBUF_STATUS */
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -47,7 +47,7 @@ static bool io_kbuf_inc_commit(struct io
+ 		this_len = min_t(u32, len, buf_len);
+ 		buf_len -= this_len;
+ 		/* Stop looping for invalid buffer length of 0 */
+-		if (buf_len || !this_len) {
++		if (buf_len > bl->min_left_sub_one || !this_len) {
+ 			WRITE_ONCE(buf->addr, READ_ONCE(buf->addr) + this_len);
+ 			WRITE_ONCE(buf->len, buf_len);
+ 			return false;
+@@ -637,6 +637,10 @@ int io_register_pbuf_ring(struct io_ring
+ 	if (reg.ring_entries >= 65536)
+ 		return -EINVAL;
  
--	BUG_ON(filp->private_data);
--
--	mutex_lock(&selinux_state.policy_mutex);
--
- 	rc = avc_has_perm(current_sid(), SECINITSID_SECURITY,
- 			  SECCLASS_SECURITY, SECURITY__READ_POLICY, NULL);
- 	if (rc)
--		goto err;
-+		return rc;
++	/* minimum left byte count is a property of incremental buffers */
++	if (!(reg.flags & IOU_PBUF_RING_INC) && reg.min_left)
++		return -EINVAL;
++
+ 	bl = io_buffer_get_list(ctx, reg.bgid);
+ 	if (bl) {
+ 		/* if mapped buffer ring OR classic exists, don't allow */
+@@ -684,6 +688,8 @@ int io_register_pbuf_ring(struct io_ring
+ 	bl->mask = reg.ring_entries - 1;
+ 	bl->flags |= IOBL_BUF_RING;
+ 	bl->buf_ring = br;
++	if (reg.min_left)
++		bl->min_left_sub_one = reg.min_left - 1;
+ 	if (reg.flags & IOU_PBUF_RING_INC)
+ 		bl->flags |= IOBL_INC;
+ 	ret = io_buffer_add_list(ctx, bl, reg.bgid);
+--- a/io_uring/kbuf.h
++++ b/io_uring/kbuf.h
+@@ -33,6 +33,13 @@ struct io_buffer_list {
  
--	rc = -EBUSY;
--	if (fsi->policy_opened)
--		goto err;
--
--	rc = -ENOMEM;
- 	plm = kzalloc_obj(*plm);
- 	if (!plm)
--		goto err;
-+		return -ENOMEM;
+ 	__u16 flags;
  
-+	mutex_lock(&selinux_state.policy_mutex);
- 	rc = security_read_policy(&plm->data, &plm->len);
- 	if (rc)
- 		goto err;
--
- 	if ((size_t)i_size_read(inode) != plm->len) {
- 		inode_lock(inode);
- 		i_size_write(inode, plm->len);
- 		inode_unlock(inode);
- 	}
--
--	fsi->policy_opened = 1;
-+	mutex_unlock(&selinux_state.policy_mutex);
- 
- 	filp->private_data = plm;
- 
--	mutex_unlock(&selinux_state.policy_mutex);
--
- 	return 0;
- err:
- 	mutex_unlock(&selinux_state.policy_mutex);
-@@ -390,13 +376,8 @@ err:
- 
- static int sel_release_policy(struct inode *inode, struct file *filp)
- {
--	struct selinux_fs_info *fsi = inode->i_sb->s_fs_info;
- 	struct policy_load_memory *plm = filp->private_data;
- 
--	BUG_ON(!plm);
--
--	fsi->policy_opened = 0;
--
- 	vfree(plm->data);
- 	kfree(plm);
++	/*
++	 * minimum required amount to be left to reuse an incrementally
++	 * consumed buffer. If less than this is left at consumption time,
++	 * buffer is done and head is incremented to the next buffer.
++	 */
++	__u32 min_left_sub_one;
++
+ 	struct io_mapped_region region;
+ };
  
 
 
