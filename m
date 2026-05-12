@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815793C0A13;
-	Tue, 12 May 2026 17:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE243C09F2;
+	Tue, 12 May 2026 17:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608103; cv=none; b=ZTriJQiKqTlWcLzLmMMNIGY7kNag8hGwDwlaVq5LEp92UvtVmOr9BYV4H6y1fxquRUjYyuw6vzoUc187wJK2o0ptcnel9kQsXTX/pLWw19Wwuc7ysF38yoKDuyX7rieMoGYgFCvf9i2TncC25SlnQLXrhuUbU7c7pm3jIxt38UI=
+	t=1778608106; cv=none; b=g7pAm0oF4N2iUJwUHhhi0b4rX7IuwRzN5rXsLPhGR8d3DZBUqXIjiMVOVhmUVySQnVWAcozLyDcxdt2LPdTQnt2/EutPYAdLt36phc2zoi76GSEuaJ4xhZGPUAZoJycSF0g2RxTl3HinCiijkTnIGiu+1BrLuFcpWfBfsLv6mkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608103; c=relaxed/simple;
-	bh=YKqk3EFKN+917GklLsEjtzqWAMFVt17gWH5J5k1tj2k=;
+	s=arc-20240116; t=1778608106; c=relaxed/simple;
+	bh=waDQCS6xOXmI2qPCLBdEaQfEw5rBYIHMFpKjFIwco2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=os9ulo5fvpDdl7WkkuMTeAg3Bdzvn839NGgBY1PkkALNbwz1fUdeVS/OpJBztDWXnksenpA8NvMKJBY3/2eTo9JUiSl9DzqcATt8HLHYR9JiyKGuHrrh9CzBOUHh4N36JTU0T1TnuayNHW42WmlSdjkNGK5L2wEaBJO2hIamkdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbLF3/Z3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lVMULiILA9lT537vLX9kaApiHGSns0j+3frt0c8XMXC3UzMpbewwxwIQ6Jjvpp13P81AGfdrc/w/qoTRQMOuQjbDJjWfa5oCYAn1OdZdv7BLk3Llva6jGok4ChDlBy8M+Ytv/1RIloo6O97Npi1AmpgGBG+qPWAMXSqHBeIYq6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rqk21C9f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbLF3/Z3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18405C2BCB0;
-	Tue, 12 May 2026 17:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rqk21C9f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F802C2BCFF;
+	Tue, 12 May 2026 17:48:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608103;
-	bh=YKqk3EFKN+917GklLsEjtzqWAMFVt17gWH5J5k1tj2k=;
+	s=korg; t=1778608106;
+	bh=waDQCS6xOXmI2qPCLBdEaQfEw5rBYIHMFpKjFIwco2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LbLF3/Z3KMchjYKdpC7o/tn+Q+A48eE9gHJC3waexWd8XFzLWjS1docqjbjvOOcAS
-	 XsKwF1FPE/q1ons8RvyPSh7Y1jZe7+t8SYONC39uI5WO9XwEjE4XtX+o33r15O+RTI
-	 1yHM1nDCvsxgtKs55vtK/UUafQv0Y9sEOLMILaok=
+	b=Rqk21C9fYp6bd9iEW4mvEqghf0eI2QPZ3hCMPCs+2dyimoRNDUz9wUdYpgYNznLpz
+	 d+xZfHN3m/cRhFNDd9OVHTzSWM/gwSfl4p1GN2YzWIcqCuoLOsiLyg1OX0z7r3NWQG
+	 OYl6u20HNCSavMnE9Eay4zsbsml/cs3I5uaaPKxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masayuki Ohtake <masa-korg@dsn.okisemi.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 103/206] spi: topcliff-pch: fix controller deregistration
-Date: Tue, 12 May 2026 19:39:15 +0200
-Message-ID: <20260512173935.038689925@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.12 150/206] RDMA/mana: Validate rx_hash_key_len
+Date: Tue, 12 May 2026 19:40:02 +0200
+Message-ID: <20260512173936.039709541@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,46 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 5d6f477d6fc0767c57c5e1e6f55a1662820eef87 upstream.
+commit 6dd2d4ad9c8429523b1c220c5132bd551c006425 upstream.
 
-Make sure to deregister the controller before disabling and releasing
-underlying resources like interrupts and DMA during driver unbind.
+Sashiko points out that rx_hash_key_len comes from a uAPI structure and is
+blindly passed to memcpy, allowing the userspace to trash kernel
+memory. Bounds check it so the memcpy cannot overflow.
 
-Fixes: e8b17b5b3f30 ("spi/topcliff: Add topcliff platform controller hub (PCH) spi bus driver")
-Cc: stable@vger.kernel.org	# 2.6.37
-Cc: Masayuki Ohtake <masa-korg@dsn.okisemi.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260414134319.978196-8-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
+Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=1
+Link: https://patch.msgid.link/r/4-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-topcliff-pch.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mana/qp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/spi/spi-topcliff-pch.c
-+++ b/drivers/spi/spi-topcliff-pch.c
-@@ -1406,6 +1406,10 @@ static void pch_spi_pd_remove(struct pla
- 	dev_dbg(&plat_dev->dev, "%s:[ch%d] irq=%d\n",
- 		__func__, plat_dev->id, board_dat->pdev->irq);
+--- a/drivers/infiniband/hw/mana/qp.c
++++ b/drivers/infiniband/hw/mana/qp.c
+@@ -21,6 +21,9 @@ static int mana_ib_cfg_vport_steering(st
  
-+	spi_controller_get(data->host);
-+
-+	spi_unregister_controller(data->host);
-+
- 	if (use_dma)
- 		pch_free_dma_buf(board_dat, data);
+ 	gc = mdev_to_gc(dev);
  
-@@ -1433,7 +1437,8 @@ static void pch_spi_pd_remove(struct pla
- 	}
- 
- 	pci_iounmap(board_dat->pdev, data->io_remap_addr);
--	spi_unregister_controller(data->host);
++	if (rx_hash_key_len > sizeof(req->hashkey))
++		return -EINVAL;
 +
-+	spi_controller_put(data->host);
- }
- #ifdef CONFIG_PM
- static int pch_spi_pd_suspend(struct platform_device *pd_dev,
+ 	req_buf_size = struct_size(req, indir_tab, MANA_INDIRECT_TABLE_DEF_SIZE);
+ 	req = kzalloc(req_buf_size, GFP_KERNEL);
+ 	if (!req)
 
 
