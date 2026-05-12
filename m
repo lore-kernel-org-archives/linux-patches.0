@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22B023E356;
-	Tue, 12 May 2026 18:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC973EDE45;
+	Tue, 12 May 2026 18:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609329; cv=none; b=Ii4o0yfpogTLXJfuBf/DN3ndUxVS4dY3jAKezqM/BH/GNi9Ixkl8gEOxSPKkXvycOYpnAYw2bSFYF49gcpxTYOF22/7SSUZN0YZ6lqsqNV+Q06U4dstjTWed/WvC5wiO/hQ2K39RvQ64GI5XnIr0lWztsXihaFtVQVuW1MqiRF8=
+	t=1778609332; cv=none; b=KgCdzekgfrUrCKb+vk9ycw0K9LxxeOGGa57t8plEFEA3KpTQR2bX6WhIlLI+W0R/0J3sarqGpSj2M4zGChPTbKqwdqUr6QtMQPy3+e/DGQp7EWI5ZQAcu4A1AM/f3LYgvZNaZIi/Ahx8QzFR+KvwbeeJXOH1+Hwbso1pnIZyrbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609329; c=relaxed/simple;
-	bh=3PkyPpF7UZIrWh551sgJK+lNxYJ+I95I/NQMvkBmYvw=;
+	s=arc-20240116; t=1778609332; c=relaxed/simple;
+	bh=yPmwlCgJlBlyxuzcWuWJSMD9UJhU2uA+ungm+WYeYig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IUAB3cPpeApemn9b7KUaDHPZtTonZrZP89J86tdY+xYKKTbvsRFh2tmmWfnK+e3u6wAL6Qk9z4dgiiK2fvfvPcipZ/PQk2a+mV1fR+xDudpgCTjbzp66EZRz+kU3Y/rtHwgjpR4csRetfV87pXwS0Poa5dSxsruuNecwSvyqng0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OBI0xjo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aaswtiC6t0Nv02g//7fdxBijVnpFexObNeUdAF13KtYV87ZkWeOg2Fo3QHw91EaW9x0w0tLOLkAbBTZ/+xClXCGtTz1mhy85WPBonEcDTpcqSguHL2qbpwp00dQebN7PqToEg1sPdlEIjvtK9zDs+4GaP53hSF6D6OhGyScqt1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbpje1EN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OBI0xjo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D26C2BCB0;
-	Tue, 12 May 2026 18:08:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbpje1EN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12462C4AF12;
+	Tue, 12 May 2026 18:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609328;
-	bh=3PkyPpF7UZIrWh551sgJK+lNxYJ+I95I/NQMvkBmYvw=;
+	s=korg; t=1778609331;
+	bh=yPmwlCgJlBlyxuzcWuWJSMD9UJhU2uA+ungm+WYeYig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2OBI0xjomJXGOlW9ygVGaCU6LqJXe5dsekqlyVfDxSRDzaSfEc1vYkorh5zTe8jQ9
-	 spuzYf1uO3KvHtHwNucH8rzCWbGc9ybklRfezGxT0fb81Rm3dMfh0IhgYT/jpoxq+F
-	 UKvFvUl+5g/682D7wPlQjhVALedNRTNhnZw4qnO8=
+	b=hbpje1ENqoK2Ae52Fial/5Wkm3stchC/eRxLiwz1H6ikcczBGouWjMprrs+/Joapn
+	 BxwHlAa87phPU6duV3+c6kmgJOl3k8V7u5cnDUGSH7O4stkamI4k/uMOqV1F8oC9Fr
+	 rUmd5jDp6YxhZ/27HMdmfsK3yEEzmyfZQSXupSa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 7.0 116/307] pseries/papr-hvpipe: Fix the usage of copy_to_user()
-Date: Tue, 12 May 2026 19:38:31 +0200
-Message-ID: <20260512173942.574080232@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 7.0 152/307] tracefs: Fix default permissions not being applied on initial mount
+Date: Tue, 12 May 2026 19:39:07 +0200
+Message-ID: <20260512173943.334776625@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,97 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit d48654bd8b1a75f662e224d257db54de475120dc upstream.
+commit e8368d1f4bedbb0cce4cfe33a1d2664bb0fd4f27 upstream.
 
-copy_to_user() return bytes_not_copied to the user buffer. If there was
-an error writing bytes into the user buffer, i.e. if copy_to_user
-returns a non-zero value, then we should simply return -EFAULT from the
-->read() call.
+Commit e4d32142d1de ("tracing: Fix tracefs mount options") moved the
+option application from tracefs_fill_super() to tracefs_reconfigure()
+called from tracefs_get_tree(). This fixed mount options being ignored
+on user-space mounts when the superblock already exists, but introduced
+a regression for the initial kernel-internal mount.
 
-Otherwise, in the non-patched version, we may end up mixing
-"bytes_not_copied + bytes_copied (HVPIPE_HDR_LEN)" as the return value
-to the user in ->read() call
+On the first mount (via simple_pin_fs during init), sget_fc() transfers
+fc->s_fs_info to sb->s_fs_info and sets fc->s_fs_info to NULL. When
+tracefs_get_tree() then calls tracefs_reconfigure(), it sees a NULL
+fc->s_fs_info and returns early without applying any options. The root
+inode keeps mode 0755 from simple_fill_super() instead of the intended
+TRACEFS_DEFAULT_MODE (0700).
 
-Also let's make sure we clear the hvpipe_status flag, if we have
-consumed the hvpipe msg by making the rtas call. ret = -EFAULT means
-copy_to_user has failed but that still means that the msg was read from
-the hvpipe, hence for both cases, success & -EFAULT, we should clear the
-HVPIPE_MSG_AVAILABLE flag in hvpipe_status.
+Furthermore, even on subsequent user-space mounts without an explicit
+mode= option, tracefs_apply_options(sb, true) gates the mode behind
+fsi->opts & BIT(Opt_mode), which is unset for the defaults. So the
+mode is never corrected unless the user explicitly passes mode=0700.
+
+Restore the tracefs_apply_options(sb, false) call in tracefs_fill_super()
+to apply default permissions on initial superblock creation, matching
+what debugfs does in debugfs_fill_super().
 
 Cc: stable@vger.kernel.org
-Fixes: cebdb522fd3edd1 ("powerpc/pseries: Receive payload with ibm,receive-hvpipe-msg RTAS")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/8fda3212a1ad48879c174e92f67472d9b9f1c3b7.1777606826.git.ritesh.list@gmail.com
+Fixes: e4d32142d1de ("tracing: Fix tracefs mount options")
+Link: https://patch.msgid.link/20260404134747.98867-1-devnexen@gmail.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/papr-hvpipe.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ fs/tracefs/inode.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/powerpc/platforms/pseries/papr-hvpipe.c
-+++ b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-@@ -206,10 +206,11 @@ static int hvpipe_rtas_recv_msg(char __u
- 					bytes_written, size);
- 				bytes_written = size;
- 			}
--			ret = copy_to_user(buf,
-+			if (copy_to_user(buf,
- 					rtas_work_area_raw_buf(work_area),
--					bytes_written);
--			if (!ret)
-+					bytes_written))
-+				ret = -EFAULT;
-+			else
- 				ret = bytes_written;
- 		}
- 	} else {
-@@ -328,7 +329,7 @@ static ssize_t papr_hvpipe_handle_read(s
+--- a/fs/tracefs/inode.c
++++ b/fs/tracefs/inode.c
+@@ -491,6 +491,7 @@ static int tracefs_fill_super(struct sup
+ 		return err;
  
- 	struct hvpipe_source_info *src_info = file->private_data;
- 	struct papr_hvpipe_hdr hdr = {};
--	long ret;
-+	ssize_t ret = 0;
+ 	sb->s_op = &tracefs_super_operations;
++	tracefs_apply_options(sb, false);
+ 	set_default_d_op(sb, &tracefs_dentry_operations);
  
- 	/*
- 	 * Return -ENXIO during migration
-@@ -376,7 +377,7 @@ static ssize_t papr_hvpipe_handle_read(s
- 
- 	ret = copy_to_user(buf, &hdr, HVPIPE_HDR_LEN);
- 	if (ret)
--		return ret;
-+		return -EFAULT;
- 
- 	/*
- 	 * Message event has payload, so get the payload with
-@@ -385,19 +386,23 @@ static ssize_t papr_hvpipe_handle_read(s
- 	if (hdr.flags & HVPIPE_MSG_AVAILABLE) {
- 		ret = hvpipe_rtas_recv_msg(buf + HVPIPE_HDR_LEN,
- 				size - HVPIPE_HDR_LEN);
--		if (ret > 0) {
-+		/*
-+		 * Always clear MSG_AVAILABLE once the RTAS call has drained
-+		 * the message, regardless of whether copy_to_user succeeded.
-+		 */
-+		if (ret >= 0 || ret == -EFAULT)
- 			src_info->hvpipe_status &= ~HVPIPE_MSG_AVAILABLE;
--			ret += HVPIPE_HDR_LEN;
--		}
- 	} else if (hdr.flags & HVPIPE_LOST_CONNECTION) {
- 		/*
- 		 * Hypervisor is closing the pipe for the specific
- 		 * source. So notify user space.
- 		 */
- 		src_info->hvpipe_status &= ~HVPIPE_LOST_CONNECTION;
--		ret = HVPIPE_HDR_LEN;
- 	}
- 
-+	if (ret >= 0)
-+		ret += HVPIPE_HDR_LEN;
-+
- 	return ret;
- }
- 
+ 	return 0;
 
 
