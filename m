@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D0C23E356;
-	Tue, 12 May 2026 18:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F6B3EDE45;
+	Tue, 12 May 2026 18:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609308; cv=none; b=eYa7vo5bCu5Mw0xIJgQyS07WvavC11o298zWH+ypFytupiUzmDTM+EjdO+veTSjE8ZeKnxncw3Tta24bltL5WprIDJ7oOBoCv1E/U5GHsdYbbJeqrVeH8k04vGWJXjbJbpzrIDI7bi11+hEgOV0YIZeaufMMhGknuBjvQx78D1Q=
+	t=1778609311; cv=none; b=FhRyucv+q0uQ7sk1m8bk709G6A+MLtErqCQt9m4rcaMf57I5ZmtzgHEyd6iKQUQCCKBSf05cJ5/VMbXdIiRdP3CiA+/Vrd3+iKWDhIzgpW7KJEXwV8R+8AeAIr9g1cbSivyJXNM8DUI73YTTNTjh0uo8hYygV8L2UUQwG/YMGFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609308; c=relaxed/simple;
-	bh=QxFjrbQ+/hXgH8ZJRefonVLfpS8PDn8IRYStgAAUtnw=;
+	s=arc-20240116; t=1778609311; c=relaxed/simple;
+	bh=ncR1COdeWTOuTAg6qF9NbMt1EQoqzsnaxSwv8MGSEic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZMNIM+FEUFtAiNDlt44wNuL/2I+NzTU7mDmIHaA6F4GKGzaHipl9fgb/bMWEZVM0FCtWBI3vXqJvACtBljjZSGaGbR/7O1vGtgdRzIFKZu/Z5Ll+eb+Pjhhg0vdS7zG2v1Y1K+AbDRgicVwukCX4O7sLUM49hbh+VzHCeulge4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWBYNm8a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ldIw5i3a1PzpvoxiTql9T8zdV3S+kJllqYZKzJeIr1qufzAqxJXfMHEiztumOXNTapp0XLLWGqwBfDn5CSorjxH1XAJYDf+RkHfaHrB1W//IzSJN+GYk2uStxlYQG6eM0ySushdkI8QMAh8ajWFYQQv6nemBDwS3YpWZb0gw38c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wx4jGXyC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWBYNm8a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEBEC2BCB0;
-	Tue, 12 May 2026 18:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wx4jGXyC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFD2C2BCB0;
+	Tue, 12 May 2026 18:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609308;
-	bh=QxFjrbQ+/hXgH8ZJRefonVLfpS8PDn8IRYStgAAUtnw=;
+	s=korg; t=1778609310;
+	bh=ncR1COdeWTOuTAg6qF9NbMt1EQoqzsnaxSwv8MGSEic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWBYNm8aCI3KYoR0msGc6EsmuMzjkgEQODxAD5L/cVvQCb6kgPpHZN2AdVCxi/k4C
-	 KpltqfE4fyV0sdwirmoeUKIQLvF2aQrLmLBVmaV0mEagYqgY8IQVxpTp56eNfH0ahX
-	 5rCbtV8Zo7MlKUfN+psIm7n18QjUcShmKOEECNiw=
+	b=Wx4jGXyCOC2BUx8/vQLcxF16Vj5hSVIfZt173gmOVTZuu8kAvQBDsFoim2p5uFvoh
+	 HOT9AKcgiFQQRG1KF7/w0Nzni+aLPBa3StxNvT6erwzb4EFH9uYq+ZzGZK0RIsFbrP
+	 xXf9IFHK30cCq0jsT0ta//Dywoyhjetu3hh4MW/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hillis <Ben.Hillis@microsoft.com>,
-	Mitchell Levy <levymitchell0@gmail.com>,
 	Dexuan Cui <decui@microsoft.com>,
 	Stefano Garzarella <sgarzare@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 144/307] hv_sock: Report EOF instead of -EIO for FIN
-Date: Tue, 12 May 2026 19:38:59 +0200
-Message-ID: <20260512173943.168319726@linuxfoundation.org>
+Subject: [PATCH 7.0 145/307] hv_sock: Return -EIO for malformed/short packets
+Date: Tue, 12 May 2026 19:39:00 +0200
+Message-ID: <20260512173943.188370049@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -55,66 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Dexuan Cui <decui@microsoft.com>
 
-commit f6315295899415f1ddcf39f7c9cb46d25e2c6c6a upstream.
+commit 3d1f20727a635811f6b77801a7b57b8995268abd upstream.
 
-Commit f0c5827d07cb unluckily causes a regression for the FIN packet,
-and the final read syscall gets an error rather than 0.
+Commit f63152958994 fixes a regression, however it fails to report an
+error for malformed/short packets -- normally we should never see such
+packets, but let's report an error for them just in case.
 
-Ideally, we would want to fix hvs_channel_readable_payload() so that it
-could return 0 in the FIN scenario, but it's not good for the hv_sock
-driver to use the VMBus ringbuffer's cached priv_read_index, which is
-internal data in the VMBus driver.
-
-Fix the regression in hv_sock by returning 0 rather than -EIO.
-
-Fixes: f0c5827d07cb ("hv_sock: Return the readable bytes in hvs_stream_has_data()")
+Fixes: f63152958994 ("hv_sock: Report EOF instead of -EIO for FIN")
 Cc: stable@vger.kernel.org
-Reported-by: Ben Hillis <Ben.Hillis@microsoft.com>
-Reported-by: Mitchell Levy <levymitchell0@gmail.com>
 Signed-off-by: Dexuan Cui <decui@microsoft.com>
 Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260416191433.840637-1-decui@microsoft.com
+Link: https://patch.msgid.link/20260423064811.1371749-1-decui@microsoft.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/hyperv_transport.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ net/vmw_vsock/hyperv_transport.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
+diff --git a/net/vmw_vsock/hyperv_transport.c b/net/vmw_vsock/hyperv_transport.c
+index 76e78c83fdbc..f862988c1e86 100644
 --- a/net/vmw_vsock/hyperv_transport.c
 +++ b/net/vmw_vsock/hyperv_transport.c
-@@ -694,7 +694,6 @@ out:
- static s64 hvs_stream_has_data(struct vsock_sock *vsk)
- {
- 	struct hvsock *hvs = vsk->trans;
--	bool need_refill;
- 	s64 ret;
- 
- 	if (hvs->recv_data_len > 0)
-@@ -702,9 +701,22 @@ static s64 hvs_stream_has_data(struct vs
- 
- 	switch (hvs_channel_readable_payload(hvs->chan)) {
- 	case 1:
--		need_refill = !hvs->recv_desc;
--		if (!need_refill)
--			return -EIO;
-+		if (hvs->recv_desc) {
-+			/* Here hvs->recv_data_len is 0, so hvs->recv_desc must
-+			 * be NULL unless it points to the 0-byte-payload FIN
-+			 * packet: see hvs_update_recv_data().
+@@ -704,17 +704,26 @@ static s64 hvs_stream_has_data(struct vsock_sock *vsk)
+ 		if (hvs->recv_desc) {
+ 			/* Here hvs->recv_data_len is 0, so hvs->recv_desc must
+ 			 * be NULL unless it points to the 0-byte-payload FIN
+-			 * packet: see hvs_update_recv_data().
++			 * packet or a malformed/short packet: see
++			 * hvs_update_recv_data().
+ 			 *
+-			 * Here all the payload has been dequeued, but
+-			 * hvs_channel_readable_payload() still returns 1,
+-			 * because the VMBus ringbuffer's read_index is not
+-			 * updated for the FIN packet: hvs_stream_dequeue() ->
+-			 * hv_pkt_iter_next() updates the cached priv_read_index
+-			 * but has no opportunity to update the read_index in
+-			 * hv_pkt_iter_close() as hvs_stream_has_data() returns
+-			 * 0 for the FIN packet, so it won't get dequeued.
++			 * If hvs->recv_desc points to the FIN packet, here all
++			 * the payload has been dequeued and the peer_shutdown
++			 * flag is set, but hvs_channel_readable_payload() still
++			 * returns 1, because the VMBus ringbuffer's read_index
++			 * is not updated for the FIN packet:
++			 * hvs_stream_dequeue() -> hv_pkt_iter_next() updates
++			 * the cached priv_read_index but has no opportunity to
++			 * update the read_index in hv_pkt_iter_close() as
++			 * hvs_stream_has_data() returns 0 for the FIN packet,
++			 * so it won't get dequeued.
 +			 *
-+			 * Here all the payload has been dequeued, but
-+			 * hvs_channel_readable_payload() still returns 1,
-+			 * because the VMBus ringbuffer's read_index is not
-+			 * updated for the FIN packet: hvs_stream_dequeue() ->
-+			 * hv_pkt_iter_next() updates the cached priv_read_index
-+			 * but has no opportunity to update the read_index in
-+			 * hv_pkt_iter_close() as hvs_stream_has_data() returns
-+			 * 0 for the FIN packet, so it won't get dequeued.
-+			 */
-+			return 0;
-+		}
++			 * In case hvs->recv_desc points to a malformed/short
++			 * packet, return -EIO.
+ 			 */
++			if (!(vsk->peer_shutdown & SEND_SHUTDOWN))
++				return -EIO;
++
+ 			return 0;
+ 		}
  
- 		hvs->recv_desc = hv_pkt_iter_first(hvs->chan);
- 		if (!hvs->recv_desc)
+-- 
+2.54.0
+
 
 
