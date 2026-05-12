@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDAF3EDE41;
-	Tue, 12 May 2026 18:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6B86FC5;
+	Tue, 12 May 2026 18:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609002; cv=none; b=A+jcSFqKiQO8fFs9epNgIGWd7pCQNHqqmvz2pBXtFXMxxiOVKMsCCgVN22ejlZajpt+VwtvnnqLgKROduV1dzpeK3uqz+LF0oeMXZr8TT7LMJHLDqcuSJ/5SMk2QdAeHTVPM00B3lszHLkD44Th08xXOt4HtUPPkg+lxKXmv+AU=
+	t=1778609005; cv=none; b=l3ZEYfqtxLwtnKiWhLVk6s9dDZu20rDvCnml87i7z0yqvQ8pVN/ryAxF+Ok2gv3NUhQSCiPB84DECYvvUbzvCvuwtEfolxqoIbtkVqnjXUulpmQzMAj6CF1KBSrWo2Mq9o8S9ph/qn5vs6Py2Ky6PUtyO84Qia1vAixt0engOgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609002; c=relaxed/simple;
-	bh=LhB1XdgpfGcex9nEFYLOBek0wIMQLrgifJpgSGGxxjI=;
+	s=arc-20240116; t=1778609005; c=relaxed/simple;
+	bh=DHHD97u+kHp5vCOyCJ0FZ+u+d+0CDOxuftdPATwCya0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtoEphAGDHFFqk3JFjmubYUl4u4E/Ummslm8VaKAscV2R5Nb9/stM7YKQnLa4TiaXb3nuJ/ALSp4ryJS9ThHG+gvz5+tya3SCm4ntI4V51MEyUGa83iYky0voOic9U/sY0RgelGGAEG03wkPnNO1re6r0MXsOf/V4hLjHxyZyeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EVy1gfGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aHuavcjtMVLfLpwB4OGms1hM2WtPeYYbU7cDH8LQHq10Vn41bK/+luFb7rscXU9uc745veHVjjIoBCjat8ygVQQbWRoHTsD5VdEfSb0oywCD0urmto3fILuLvrkOLJPxGF6EVgFVHU5I3inq+hyHsRWsK6rTEFKKB/BKEcrEdXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcxC0veh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EVy1gfGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2483EC2BCB0;
-	Tue, 12 May 2026 18:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcxC0veh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8783C2BCB0;
+	Tue, 12 May 2026 18:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609002;
-	bh=LhB1XdgpfGcex9nEFYLOBek0wIMQLrgifJpgSGGxxjI=;
+	s=korg; t=1778609005;
+	bh=DHHD97u+kHp5vCOyCJ0FZ+u+d+0CDOxuftdPATwCya0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EVy1gfGxCtHRAwWGKNohiMwP54Eknp6ohIYUvRARINF1VudVR6mcvYnQL1yN4QVXQ
-	 Y8xyCwAgo4FybmIqUQ0cN9JbbU478VJm13DhvIRr8eHQ/1eL+WzKGFYwEiVFEwk7Sq
-	 Yd5DdVf2/1Dby1Q8+A9iS8w438Ytse/Zh6uvYzic=
+	b=bcxC0vehjDLM7Jvhfn4Fpsvt03vdBcDtwsN7wRhE3vF2bV6/0qcL/QyyK3bNKsDpD
+	 m4+jsKhr5oxSzsjMusuggzYQTJkku5wfLyz5/Q2AhJWZUq/6KuXKCHQTqAJNCuYI7r
+	 Wf3De0HHykdBf1r1t4O1WDgJKjKY5P/r8cYs5NP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	=?UTF-8?q?Jan=20Sch=C3=A4r?= <jan@jschaer.ch>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	"Rafael J. Wysocki" <rjw@rjwysocki.net>
-Subject: [PATCH 7.0 007/307] ACPI: scan: Use acpi_dev_put() in object add error paths
-Date: Tue, 12 May 2026 19:36:42 +0200
-Message-ID: <20260512173940.277082336@linuxfoundation.org>
+Subject: [PATCH 7.0 008/307] ACPI: video: Add backlight=native quirk for Dell OptiPlex 7770 AIO
+Date: Tue, 12 May 2026 19:36:43 +0200
+Message-ID: <20260512173940.299797361@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -44,67 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Jan Schär <jan@jschaer.ch>
 
-commit 9c0acc169ac71535477caedea8315f7041c5f07c upstream.
+commit ad7997f5a01af6f711fe6b6a2df578b964109d49 upstream.
 
-After acpi_init_device_object(), the lifetime of struct acpi_device is
-managed by the driver core through reference counting.
+The Dell OptiPlex 7770 AIO needs the same quirk as the 7760 AIO. The
+backlight can be controlled with the native controller, intel_backlight,
+but not with dell_uart_backlight.
 
-Both acpi_add_power_resource() and acpi_add_single_object() call
-acpi_init_device_object() and then invoke acpi_device_add(). If that
-fails, their error paths call the release callback directly instead of
-dropping the device reference through acpi_dev_put().
+I dumped the DSDT using acpidump, acpixtract and iasl, and confirmed
+that it contains the DELL0501 device. When loading the
+dell_uart_backlight driver with `rmmod dell_uart_backlight`, `modprobe
+dell_uart_backlight dyndbg`, it reports "Firmware version: GL_Re_V18".
 
-This bypasses the normal device lifetime rules and frees the object
-without releasing the reference acquired by device_initialize(), which
-may lead to a refcount leak.
-
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fix both error paths by using acpi_dev_put() and let the release
-callback handle the final cleanup.
-
-Fixes: 781d737c7466 ("ACPI: Drop power resources driver")
-Fixes: 718fb0de8ff88 ("ACPI: fix NULL bug for HID/UID string")
+Fixes: cd8e468efb4f ("ACPI: video: Add Dell UART backlight controller detection")
 Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260413135343.2884481-1-lgs201920130244@gmail.com
+Signed-off-by: Jan Schär <jan@jschaer.ch>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260411092606.47925-1-jan@jschaer.ch
 Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/power.c |    2 +-
- drivers/acpi/scan.c  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/video_detect.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/acpi/power.c
-+++ b/drivers/acpi/power.c
-@@ -991,7 +991,7 @@ struct acpi_device *acpi_add_power_resou
- 	return device;
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -878,6 +878,14 @@ static const struct dmi_system_id video_
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7760 AIO"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_native,
++	 /* Dell OptiPlex 7770 AIO */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++		DMI_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7770 AIO"),
++		},
++	},
  
-  err:
--	acpi_release_power_resource(&device->dev);
-+	acpi_dev_put(device);
- 	return NULL;
- }
- 
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -1900,7 +1900,7 @@ static int acpi_add_single_object(struct
- 		result = acpi_device_add(device);
- 
- 	if (result) {
--		acpi_device_release(&device->dev);
-+		acpi_dev_put(device);
- 		return result;
- 	}
- 
+ 	/*
+ 	 * Models which have nvidia-ec-wmi support, but should not use it.
 
 
