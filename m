@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E691E3EDE68;
-	Tue, 12 May 2026 18:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B408A366831;
+	Tue, 12 May 2026 18:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609474; cv=none; b=RC/05u4q2ILBNWX6pflWaQypAXv6gDeEc3w1fkATZVezFgjPxgw+WfmZ+MwkGiXj+XCrgt6by+CraEdN+bEGrvDHtlSqweMOa6b1wglqNnHbctpLCwGCDgqS584F/3WUPriOFgK0kYjH8bq2NgJ54YLy3pNvhjcpt3EPCVKnQaU=
+	t=1778609476; cv=none; b=ExtnSUsvb1J5boLpb9DKmw5WM3NM/qVyYG4y2V23NwvMjZ24FlpwgRZaMoywTS9MGS5xV7quhMklnvdPgdf3d/VLJJ0YLtREixR1T45e8o7u26G9LonMTKnWdrA9Cq4P30onzqs1D0a93+dT0A11vP3zJo2m0scZ8ILnXxC0ZZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609474; c=relaxed/simple;
-	bh=EeNoVxDYVWS0ONDojtQqp1it9jLL33FlFXfln+PiCsA=;
+	s=arc-20240116; t=1778609476; c=relaxed/simple;
+	bh=usFQSHTRmciTN9PMjEAbQzNwnyJBVlGuA6JnZIuCz0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FT71Bu83YtPXcrx9k86H/59rVeoWrP9I/y3JztfRtXA0VPZ9UciajGPUnMJlYGTlwC3UN1ca6tqfNfzvsJEO/d0qRFegzQIoGiG4AaiU8yHgPrcu2tc8sw/eIkulCwnJMVNljFjFCR2H47tDwhLMsE8XcJaf9fwCrAxJ3INUhno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thm/+r+T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pdSViHj4Rx/FJB9iTl9+1ax43HRGCURTXe4b9kVvrcF4+OBKt4ED1vIJR4FTc4Y9rtV3bVxEXiq82F9jtuJtAyOWoquutC9EGq9+Psl0jj2VugpyYyiltTU/CL8v6rlCKD9rzJpzQV+MNQ9mBYx6gP7ZQGdD6vpfeiSCIbBnlx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBJDfnpX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thm/+r+T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB3DC2BCB0;
-	Tue, 12 May 2026 18:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBJDfnpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2ECC2BCB0;
+	Tue, 12 May 2026 18:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609473;
-	bh=EeNoVxDYVWS0ONDojtQqp1it9jLL33FlFXfln+PiCsA=;
+	s=korg; t=1778609476;
+	bh=usFQSHTRmciTN9PMjEAbQzNwnyJBVlGuA6JnZIuCz0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=thm/+r+TFZvhRPM+oImrpFXjjiUVcJjdr7gxIA6XszKzQL3CGNiqxSmKLVJ2O33wX
-	 LGsitblSuS/fkdUlyklB5QTL0ykgokaSeDkL9c4GBmdxwHcUJN12R0Hnzp+HiqYo90
-	 iBixnKl5dGGiNhw3BGUZrgNFWNl+RyuUkE8J20Ho=
+	b=IBJDfnpXCQmvVLwzt4cojX1qdQQjQqrQq9+rvNi6RkzEvZ7WNAQwFygQp9byUNZ9A
+	 kbZfMxKzAXs4/wEjcDe0Gk4d2an90ErEfDSyAHUV+HY+0lPaDg+L5nxakf78EPZMI4
+	 h5kEuiVMBKgbm1Uq5kdymraxFjIIqt+gD3zmoADw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.0 202/307] nvmet: avoid recursive nvmet-wq flush in nvmet_ctrl_free
-Date: Tue, 12 May 2026 19:39:57 +0200
-Message-ID: <20260512173944.383205722@linuxfoundation.org>
+	Zisen Ye <zisenye@stu.xidian.edu.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.0 211/307] smb/client: fix out-of-bounds read in smb2_compound_op()
+Date: Tue, 12 May 2026 19:40:06 +0200
+Message-ID: <20260512173944.569134817@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,137 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Zisen Ye <zisenye@stu.xidian.edu.cn>
 
-commit aade8abd8b868b6ffa9697aadaea28ec7f65bee6 upstream.
+commit 8d09328dfda089675e4c049f3f256064a1d1996b upstream.
 
-nvmet_tcp_release_queue_work() runs on nvmet-wq and can drop the
-final controller reference through nvmet_cq_put(). If that triggers
-nvmet_ctrl_free(), the teardown path flushes ctrl->async_event_work on
-the same nvmet-wq.
+If a server sends a truncated response but a large OutputBufferLength, and
+terminates the EA list early, check_wsl_eas() returns success without
+validating that the entire OutputBufferLength fits within iov_len.
 
-Call chain:
+Then smb2_compound_op() does:
+    memcpy(idata->wsl.eas, data[0], size[0]);
 
- nvmet_tcp_schedule_release_queue()
-   kref_put(&queue->kref, nvmet_tcp_release_queue)
-     nvmet_tcp_release_queue()
-       queue_work(nvmet_wq, &queue->release_work) <--- nvmet_wq
-         process_one_work()
-           nvmet_tcp_release_queue_work()
-             nvmet_cq_put(&queue->nvme_cq)
-               nvmet_cq_destroy()
-                 nvmet_ctrl_put(cq->ctrl)
-                   nvmet_ctrl_free()
-                     flush_work(&ctrl->async_event_work) <--- nvmet_wq
+Where size[0] is OutputBufferLength. If iov_len is smaller than size[0],
+memcpy can read beyond the end of the rsp_iov allocation and leak adjacent
+kernel heap memory.
 
-                      Previously Scheduled by :-
-		        nvmet_add_async_event
-		          queue_work(nvmet_wq, &ctrl->async_event_work);
-
-This trips lockdep with a possible recursive locking warning.
-
-[ 5223.015876] run blktests nvme/003 at 2026-04-07 20:53:55
-[ 5223.061801] loop0: detected capacity change from 0 to 2097152
-[ 5223.072206] nvmet: adding nsid 1 to subsystem blktests-subsystem-1
-[ 5223.088368] nvmet_tcp: enabling port 0 (127.0.0.1:4420)
-[ 5223.126086] nvmet: Created discovery controller 1 for subsystem nqn.2014-08.org.nvmexpress.discovery for NQN nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349.
-[ 5223.128453] nvme nvme1: new ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery", addr 127.0.0.1:4420, hostnqn: nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349
-[ 5233.199447] nvme nvme1: Removing ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery"
-
-[ 5233.227718] ============================================
-[ 5233.231283] WARNING: possible recursive locking detected
-[ 5233.234696] 7.0.0-rc3nvme+ #20 Tainted: G           O     N
-[ 5233.238434] --------------------------------------------
-[ 5233.241852] kworker/u192:6/2413 is trying to acquire lock:
-[ 5233.245429] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x26/0x90
-[ 5233.251438]
-               but task is already holding lock:
-[ 5233.255254] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
-[ 5233.261125]
-               other info that might help us debug this:
-[ 5233.265333]  Possible unsafe locking scenario:
-
-[ 5233.269217]        CPU0
-[ 5233.270795]        ----
-[ 5233.272436]   lock((wq_completion)nvmet-wq);
-[ 5233.275241]   lock((wq_completion)nvmet-wq);
-[ 5233.278020]
-                *** DEADLOCK ***
-
-[ 5233.281793]  May be due to missing lock nesting notation
-
-[ 5233.286195] 3 locks held by kworker/u192:6/2413:
-[ 5233.289192]  #0: ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
-[ 5233.294569]  #1: ffffc9000e2a7e40 ((work_completion)(&queue->release_work)){+.+.}-{0:0}, at: process_one_work+0x1c5/0x6e0
-[ 5233.300128]  #2: ffffffff82d7dc40 (rcu_read_lock){....}-{1:3}, at: __flush_work+0x62/0x530
-[ 5233.304290]
-               stack backtrace:
-[ 5233.306520] CPU: 4 UID: 0 PID: 2413 Comm: kworker/u192:6 Tainted: G           O     N  7.0.0-rc3nvme+ #20 PREEMPT(full)
-[ 5233.306524] Tainted: [O]=OOT_MODULE, [N]=TEST
-[ 5233.306525] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-[ 5233.306527] Workqueue: nvmet-wq nvmet_tcp_release_queue_work [nvmet_tcp]
-[ 5233.306532] Call Trace:
-[ 5233.306534]  <TASK>
-[ 5233.306536]  dump_stack_lvl+0x73/0xb0
-[ 5233.306552]  print_deadlock_bug+0x225/0x2f0
-[ 5233.306556]  __lock_acquire+0x13f0/0x2290
-[ 5233.306563]  lock_acquire+0xd0/0x300
-[ 5233.306565]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306571]  ? __flush_work+0x20b/0x530
-[ 5233.306573]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306577]  touch_wq_lockdep_map+0x3b/0x90
-[ 5233.306580]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306583]  ? __flush_work+0x20b/0x530
-[ 5233.306585]  __flush_work+0x268/0x530
-[ 5233.306588]  ? __pfx_wq_barrier_func+0x10/0x10
-[ 5233.306594]  ? xen_error_entry+0x30/0x60
-[ 5233.306600]  nvmet_ctrl_free+0x140/0x310 [nvmet]
-[ 5233.306617]  nvmet_cq_put+0x74/0x90 [nvmet]
-[ 5233.306629]  nvmet_tcp_release_queue_work+0x19f/0x360 [nvmet_tcp]
-[ 5233.306634]  process_one_work+0x206/0x6e0
-[ 5233.306640]  worker_thread+0x184/0x320
-[ 5233.306643]  ? __pfx_worker_thread+0x10/0x10
-[ 5233.306646]  kthread+0xf1/0x130
-[ 5233.306648]  ? __pfx_kthread+0x10/0x10
-[ 5233.306651]  ret_from_fork+0x355/0x450
-[ 5233.306653]  ? __pfx_kthread+0x10/0x10
-[ 5233.306656]  ret_from_fork_asm+0x1a/0x30
-[ 5233.306664]  </TASK>
-
-There is also no need to flush async_event_work from controller
-teardown. The admin queue teardown already fails outstanding AER
-requests before the final controller put :-
-
- nvmet_sq_destroy(admin sq)
-    nvmet_async_events_failall(ctrl)
-
-The controller has already been removed from the subsystem list before
-nvmet_ctrl_free() quiesces outstanding work.
-
-Replace flush_work() with cancel_work_sync() so a pending
-async_event_work item is canceled and a running instance is waited on
-without recursing into the same workqueue.
-
-Fixes: 06406d81a2d7 ("nvmet: cancel fatal error and flush async work before free controller")
+Link: https://lore.kernel.org/linux-cifs/d998240c-aca9-420d-9dbd-f5ba24af19e0@chenxiaosong.com/
+Fixes: ea41367b2a60 ("smb: client: introduce SMB2_OP_QUERY_WSL_EA")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Zisen Ye <zisenye@stu.xidian.edu.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/smb2inode.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1743,7 +1743,7 @@ static void nvmet_ctrl_free(struct kref
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -111,7 +111,7 @@ static int check_wsl_eas(struct kvec *rs
+ 	u32 outlen, next;
+ 	u16 vlen;
+ 	u8 nlen;
+-	u8 *end;
++	u8 *ea_end, *iov_end;
  
- 	nvmet_stop_keep_alive_timer(ctrl);
+ 	outlen = le32_to_cpu(rsp->OutputBufferLength);
+ 	if (outlen < SMB2_WSL_MIN_QUERY_EA_RESP_SIZE ||
+@@ -120,15 +120,19 @@ static int check_wsl_eas(struct kvec *rs
  
--	flush_work(&ctrl->async_event_work);
-+	cancel_work_sync(&ctrl->async_event_work);
- 	cancel_work_sync(&ctrl->fatal_err_work);
+ 	ea = (void *)((u8 *)rsp_iov->iov_base +
+ 		      le16_to_cpu(rsp->OutputBufferOffset));
+-	end = (u8 *)rsp_iov->iov_base + rsp_iov->iov_len;
++	ea_end = (u8 *)ea + outlen;
++	iov_end = (u8 *)rsp_iov->iov_base + rsp_iov->iov_len;
++	if (ea_end > iov_end)
++		return -EINVAL;
++
+ 	for (;;) {
+-		if ((u8 *)ea > end - sizeof(*ea))
++		if ((u8 *)ea > ea_end - sizeof(*ea))
+ 			return -EINVAL;
  
- 	nvmet_destroy_auth(ctrl);
+ 		nlen = ea->ea_name_length;
+ 		vlen = le16_to_cpu(ea->ea_value_length);
+ 		if (nlen != SMB2_WSL_XATTR_NAME_LEN ||
+-		    (u8 *)ea->ea_data + nlen + 1 + vlen > end)
++		    (u8 *)ea->ea_data + nlen + 1 + vlen > ea_end)
+ 			return -EINVAL;
+ 
+ 		switch (vlen) {
 
 
