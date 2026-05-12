@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CA834DB52;
-	Tue, 12 May 2026 18:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238763EDE5B;
+	Tue, 12 May 2026 18:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608948; cv=none; b=pL+yFTlpFSJuZ5NxpjtKTPS2mgVfntDY9yX/gKaE1WVTHk8McN0ufkjOZCKk+p/hpjaC3mBchf47VfCRu1HyjmXMR1Wbq8jbF4vk2yoTu4gZPNi+AcCnnA5wx5wWaV0FYuTv1ksMX/KsGkt4OjJ3KGFFIR1Leant6K9OtvaPuTA=
+	t=1778608951; cv=none; b=oKfE/Cy2ptuSaIjSnilodRRw4Mg+mtilLyK7ShLWQEfcAMHhAlDMwePSsAvEKKtZfq09VST7CrlephdGVG4S8kEj3LquDzFgxDSuRbASISUQblkTch6WJggvgMzc7cK2KOventzyCu5L72hzdohGMJCfyx1OzrpSiOn0+Tejto8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608948; c=relaxed/simple;
-	bh=MUtJA5uwOHUo7ssmVgx4x+8cDs1z+dz0EDSFYc3GTI8=;
+	s=arc-20240116; t=1778608951; c=relaxed/simple;
+	bh=vNAE4b7rdRfv3cl4W4Lcl7gBOg94/RlVSDMp93oBTFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPhpDXSayULv/tmbUaSTGW86kg4cz2e4nOoPTsPcT56gIoX7lou2BYeBrTfBQBCJC5cxIVNrpEyxul6qQUtmgVjpgNuwmcnpXq4KkK42nmZYrStza8b3Qt/6SHrg3oHVpHNWRIKxxoww1kS5AGbWaxfIlmaq7nRgtQDsE2oiQnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFsqc49d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=L1bij+XJtEUGusnTPBaaifsBPyxBnR8DmQP2X+PhM3W90bu2vvCvO2FStv4chjyStzd+jFU8/sgjH5kE7Lk6E2O/ZCtdcPXGvHg/+wHsjWPQDyOnrJ07PPtwK0PakO2V5YTK6EidB2q4YRgPiHO/3Jh2ihz3KLXDcn/EsesONF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDUMaBpH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFsqc49d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B76DC2BCB0;
-	Tue, 12 May 2026 18:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDUMaBpH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA6BC2BCF6;
+	Tue, 12 May 2026 18:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608948;
-	bh=MUtJA5uwOHUo7ssmVgx4x+8cDs1z+dz0EDSFYc3GTI8=;
+	s=korg; t=1778608951;
+	bh=vNAE4b7rdRfv3cl4W4Lcl7gBOg94/RlVSDMp93oBTFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BFsqc49dJg7gxwnb95UfNrQRYfOp70yvbDT0n9dL9ZkdG2bveLyPbDIVAFxYXfAHl
-	 0AMg5hcsm/+wKZtQAgDqFRcWoSasODbfu5F/zABMlR8qV5JiHsukyMFkfjEz4c2g3i
-	 uLUuvdigvw+0dc/5OhGoTIyypTMwieretc1zqNk0=
+	b=LDUMaBpHIMQMz0DIyErdUP2VYR+A1rpW6eHtXZgUMEUg0CfyhWxseoue6KSKR6hIg
+	 BShgrWFkzMUJZoAo0Wa0/GuhH1eziIt0C+vyCmqkqzGfu324aRZ/xixs5HyO0i6Lyb
+	 uFDuh7O+Dj9kvaqTmURspQL3sk9RV/JRc5avWdL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 263/270] erofs: tidy up z_erofs_lz4_handle_overlap()
-Date: Tue, 12 May 2026 19:41:04 +0200
-Message-ID: <20260512173943.986338404@linuxfoundation.org>
+Subject: [PATCH 6.18 254/270] mmc: core: Adjust MDT beyond 2025
+Date: Tue, 12 May 2026 19:40:55 +0200
+Message-ID: <20260512173943.791246311@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -45,142 +46,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Avri Altman <avri.altman@sandisk.com>
 
-[ Upstream commit 9ae77198d4815c63fc8ebacc659c71d150d1e51b ]
+[ Upstream commit 3e487a634bc019166e452ea276f7522710eda9f4 ]
 
- - Add some useful comments to explain inplace I/Os and decompression;
+JEDEC JESD84-B51B which was released in September 2025, increases the
+manufacturing year limit for eMMC devices. The eMMC manufacturing year
+is stored in a 4-bit field in the CID register. Originally, it covered
+1997–2012. Later, with EXT_CSD_REV=8, it was extended up to 2025. Now,
+with EXT_CSD_REV=9, the range is rolled over by another 16 years, up to
+2038.
 
- - Rearrange the code to get rid of one unnecessary goto.
+The mapping is as follows:
+cid[8..11] | rev ≤ 4 | 8 ≥ rev > 4 | rev > 8
+---------------------------------------------
+0          | 1997    | 2013        | 2029
+1          | 1998    | 2014        | 2030
+2          | 1999    | 2015        | 2031
+3          | 2000    | 2016        | 2032
+4          | 2001    | 2017        | 2033
+5          | 2002    | 2018        | 2034
+6          | 2003    | 2019        | 2035
+7          | 2004    | 2020        | 2036
+8          | 2005    | 2021        | 2037
+9          | 2006    | 2022        | 2038
+10         | 2007    | 2023        |
+11         | 2008    | 2024        |
+12         | 2009    | 2025        |
+13         | 2010    |             | 2026
+14         | 2011    |             | 2027
+15         | 2012    |             | 2028
 
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Stable-dep-of: 21e161de2dc6 ("erofs: fix unsigned underflow in z_erofs_lz4_handle_overlap()")
+Signed-off-by: Avri Altman <avri.altman@sandisk.com>
+Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: d6bf2e64dec8 ("mmc: core: Optimize time for secure erase/trim for some Kingston eMMCs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/decompressor.c |   85 +++++++++++++++++++++++++-----------------------
- 1 file changed, 46 insertions(+), 39 deletions(-)
+ drivers/mmc/core/mmc.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -105,44 +105,58 @@ static int z_erofs_lz4_prepare_dstpages(
- 	return kaddr ? 1 : 0;
+--- a/drivers/mmc/core/mmc.c
++++ b/drivers/mmc/core/mmc.c
+@@ -671,7 +671,14 @@ static int mmc_decode_ext_csd(struct mmc
+ 		card->ext_csd.enhanced_rpmb_supported =
+ 					(card->ext_csd.rel_param &
+ 					 EXT_CSD_WR_REL_PARAM_EN_RPMB_REL_WR);
++
++		if (card->ext_csd.rev >= 9) {
++			/* Adjust production date as per JEDEC JESD84-B51B September 2025 */
++			if (card->cid.year < 2023)
++				card->cid.year += 16;
++		}
+ 	}
++
+ out:
+ 	return err;
  }
- 
--static void *z_erofs_lz4_handle_overlap(struct z_erofs_decompress_req *rq,
-+static void *z_erofs_lz4_handle_overlap(const struct z_erofs_decompress_req *rq,
- 			void *inpage, void *out, unsigned int *inputmargin,
- 			int *maptype, bool may_inplace)
- {
--	unsigned int oend, omargin, total, i;
-+	unsigned int oend, omargin, cnt, i;
- 	struct page **in;
--	void *src, *tmp;
--
--	if (rq->inplace_io) {
--		oend = rq->pageofs_out + rq->outputsize;
--		omargin = PAGE_ALIGN(oend) - oend;
--		if (rq->partial_decoding || !may_inplace ||
--		    omargin < LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize))
--			goto docopy;
-+	void *src;
- 
-+	/*
-+	 * If in-place I/O isn't used, for example, the bounce compressed cache
-+	 * can hold data for incomplete read requests. Just map the compressed
-+	 * buffer as well and decompress directly.
-+	 */
-+	if (!rq->inplace_io) {
-+		if (rq->inpages <= 1) {
-+			*maptype = 0;
-+			return inpage;
-+		}
-+		kunmap_local(inpage);
-+		src = erofs_vm_map_ram(rq->in, rq->inpages);
-+		if (!src)
-+			return ERR_PTR(-ENOMEM);
-+		*maptype = 1;
-+		return src;
-+	}
-+	/*
-+	 * Then, deal with in-place I/Os. The reasons why in-place I/O is useful
-+	 * are: (1) It minimizes memory footprint during the I/O submission,
-+	 * which is useful for slow storage (including network devices and
-+	 * low-end HDDs/eMMCs) but with a lot inflight I/Os; (2) If in-place
-+	 * decompression can also be applied, it will reuse the unique buffer so
-+	 * that no extra CPU D-cache is polluted with temporary compressed data
-+	 * for extreme performance.
-+	 */
-+	oend = rq->pageofs_out + rq->outputsize;
-+	omargin = PAGE_ALIGN(oend) - oend;
-+	if (!rq->partial_decoding && may_inplace &&
-+	    omargin >= LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize)) {
- 		for (i = 0; i < rq->inpages; ++i)
- 			if (rq->out[rq->outpages - rq->inpages + i] !=
- 			    rq->in[i])
--				goto docopy;
--		kunmap_local(inpage);
--		*maptype = 3;
--		return out + ((rq->outpages - rq->inpages) << PAGE_SHIFT);
-+				break;
-+		if (i >= rq->inpages) {
-+			kunmap_local(inpage);
-+			*maptype = 3;
-+			return out + ((rq->outpages - rq->inpages) << PAGE_SHIFT);
-+		}
- 	}
--
--	if (rq->inpages <= 1) {
--		*maptype = 0;
--		return inpage;
--	}
--	kunmap_local(inpage);
--	src = erofs_vm_map_ram(rq->in, rq->inpages);
--	if (!src)
--		return ERR_PTR(-ENOMEM);
--	*maptype = 1;
--	return src;
--
--docopy:
--	/* Or copy compressed data which can be overlapped to per-CPU buffer */
--	in = rq->in;
-+	/*
-+	 * If in-place decompression can't be applied, copy compressed data that
-+	 * may potentially overlap during decompression to a per-CPU buffer.
-+	 */
- 	src = z_erofs_get_gbuf(rq->inpages);
- 	if (!src) {
- 		DBG_BUGON(1);
-@@ -150,20 +164,13 @@ docopy:
- 		return ERR_PTR(-EFAULT);
- 	}
- 
--	tmp = src;
--	total = rq->inputsize;
--	while (total) {
--		unsigned int page_copycnt =
--			min_t(unsigned int, total, PAGE_SIZE - *inputmargin);
--
-+	for (i = 0, in = rq->in; i < rq->inputsize; i += cnt, ++in) {
-+		cnt = min_t(u32, rq->inputsize - i, PAGE_SIZE - *inputmargin);
- 		if (!inpage)
- 			inpage = kmap_local_page(*in);
--		memcpy(tmp, inpage + *inputmargin, page_copycnt);
-+		memcpy(src + i, inpage + *inputmargin, cnt);
- 		kunmap_local(inpage);
- 		inpage = NULL;
--		tmp += page_copycnt;
--		total -= page_copycnt;
--		++in;
- 		*inputmargin = 0;
- 	}
- 	*maptype = 2;
 
 
