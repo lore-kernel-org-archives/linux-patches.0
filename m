@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112223955D6;
-	Tue, 12 May 2026 17:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AAA3955D3;
+	Tue, 12 May 2026 17:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608072; cv=none; b=WBmBhWGY/puO3hT45ceKpVD4RD2/8tVFaq7Oc2mx5zqIHxlRhhLooPHoOH4vvLZOeHl5KDJIWS73OKfvdNmtUGpCcsF46PXfgNU0mzVzaobod3Dj8XvI4inaHbBFOV6PechH1kfF8m8ZYM5HkDQb8kFv385JoOUWFGyVSQG4qXo=
+	t=1778608074; cv=none; b=UPAln7ogPIxv3OI8WhUrsvnzF/62VUiAosRbNofAEUnKoEoS73SyTLk4PaXjFg8CBd5Qejt2r1WrN2lTlSoTTg3y67M3Rkv+Wazep2K5dEWb56Kkj+9kKs8cUSe6WutdZU2oZcPM34i9wSWkcTcrZquPiq3/E+Mm3bULKtqUnhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608072; c=relaxed/simple;
-	bh=5ulScWftFuDiFkgOq4ezjh061B5ECvJpb0h9kyWvHGo=;
+	s=arc-20240116; t=1778608074; c=relaxed/simple;
+	bh=HBQjzgKheesxOpD6+l9zebO1Aw07mqI+Pvca2+Yu0qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qsKvGmKzhBsBPB5f3TtR5x7Pb+5xA7sPiaTPEhmUQ/YShcogAG6TIUJJGgTwXnCzYdDOROsyuzoCh+eRauuhIwwX6hJkczW3z3S7uUT9liuN0QlfgvxbPwZaUxFUpr0I1MjRi3DaClvpU5xbb7mHbJ5XPuwDZynQldfB3gSyWHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tGN4B4HN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UkrOeB6zTXOlEcLjqIsjXiqtKLD5wvcI/y00Qe3djeWa23taDFGDm06f16kDlizu0dvgWncDVTMLxUx6k5Z7YE3DxWJbecJ8OYw84KFVghKguDfQlm2nJrEnycpAOPKdr8NWfohyITlM9/Mc74yE2pOgL5Rq1/msdH8kVDwHyn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlGbYfNo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tGN4B4HN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA64C2BCB0;
-	Tue, 12 May 2026 17:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlGbYfNo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E573C2BCB0;
+	Tue, 12 May 2026 17:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608072;
-	bh=5ulScWftFuDiFkgOq4ezjh061B5ECvJpb0h9kyWvHGo=;
+	s=korg; t=1778608074;
+	bh=HBQjzgKheesxOpD6+l9zebO1Aw07mqI+Pvca2+Yu0qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tGN4B4HNLjSeGvFRqs506QpnxaWcK0oH+mzSBOTRptw41ZagmYzUEc9w4vzv0IQWw
-	 ysyDSXmx4QQvjUSwyNLtn3on7Ve+smJIvP8XJpFbrO+D+xOnmMCwIFeacjSaLbLSN+
-	 B0RhDopY9RAAJbSXdR8QgvwcSMaCOYNOov9THLMQ=
+	b=TlGbYfNoM34qUED3NZPhb5c42zL+7GSY43ULon0cZ2xFdALVdTrSFKd4lMGwfoEMM
+	 f/9OeYVLddw9aekllBqKpmNIGBV27Kbw4jg8DfSYUXmhZM9qi6iErypm5mj+TnncQn
+	 kY/NltzGflpxpgKTWtIH9nRkJrEN3vVZiybwpYHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.12 107/206] cpuidle: powerpc: avoid double clear when breaking snooze
-Date: Tue, 12 May 2026 19:39:19 +0200
-Message-ID: <20260512173935.122832607@linuxfoundation.org>
+	Bernd Schumacher <bernd@bschu.de>,
+	"Alexandre N." <an.tech@mailo.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.12 143/206] PCI: Update saved_config_space upon resource assignment
+Date: Tue, 12 May 2026 19:39:55 +0200
+Message-ID: <20260512173935.890728481@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,59 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 64ed1e3e728afb57ba9acb59e69de930ead847d9 upstream.
+commit 909f7bf9b080c10df3c3b38533906dbf09ff1d8b upstream.
 
-snooze_loop is done often in any system which has fair bit of
-idle time. So it qualifies for even micro-optimizations.
+Bernd reports passthrough failure of a Digital Devices Cine S2 V6 DVB
+adapter plugged into an ASRock X570S PG Riptide board with BIOS version
+P5.41 (09/07/2023):
 
-When breaking the snooze due to timeout, TIF_POLLING_NRFLAG is cleared
-twice. Clearing the bit invokes atomics. Avoid double clear and thereby
-avoid one atomic write.
+  ddbridge 0000:05:00.0: detected Digital Devices Cine S2 V6 DVB adapter
+  ddbridge 0000:05:00.0: cannot read registers
+  ddbridge 0000:05:00.0: fail
 
-dev->poll_time_limit indicates whether the loop was broken due to
-timeout. Use that instead of defining a new variable.
+BIOS assigns an incorrect BAR to the DVB adapter which doesn't fit into the
+upstream bridge window.  The kernel corrects the BAR assignment:
 
-Fixes: 7ded429152e8 ("cpuidle: powerpc: no memory barrier after break from idle")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260311061709.1230440-1-sshegde@linux.ibm.com
+  pci 0000:07:00.0: BAR 0 [mem 0xfffffffffc500000-0xfffffffffc50ffff 64bit]: can't claim; no compatible bridge window
+  pci 0000:07:00.0: BAR 0 [mem 0xfc500000-0xfc50ffff 64bit]: assigned
+
+Correction of the BAR assignment happens in an x86-specific fs_initcall,
+pcibios_assign_resources(), after device enumeration in a subsys_initcall.
+This order was introduced at the behest of Linus in 2004:
+
+  https://git.kernel.org/tglx/history/c/a06a30144bbc
+
+No other architecture performs such a late BAR correction.
+
+Bernd bisected the issue to commit a2f1e22390ac ("PCI/ERR: Ensure error
+recoverability at all times"), but it only occurs in the absence of commit
+4d4c10f763d7 ("PCI: Explicitly put devices into D0 when initializing").
+This combination exists in stable kernel v6.12.70, but not in mainline,
+hence Bernd cannot reproduce the issue with mainline.
+
+Since a2f1e22390ac, config space is saved on enumeration, prior to BAR
+correction.  Upon passthrough, the corrected BAR is overwritten with the
+incorrect saved value by:
+
+  vfio_pci_core_register_device()
+    vfio_pci_set_power_state()
+      pci_restore_state()
+
+But only if the device's current_state is PCI_UNKNOWN, as it was prior to
+commit 4d4c10f763d7.  Since the commit, it is PCI_D0, which changes the
+behavior of vfio_pci_set_power_state() to no longer restore the state
+without saving it first.
+
+Alexandre is reporting the same issue as Bernd, but in his case, mainline
+is affected as well.  The difference is that on Alexandre's system, the
+host kernel binds a driver to the device which is unbound prior to
+passthrough, whereas on Bernd's system no driver gets bound by the host
+kernel.
+
+Unbinding sets current_state to PCI_UNKNOWN in pci_device_remove(), so when
+vfio-pci is subsequently bound to the device, pci_restore_state() is once
+again called without invoking pci_save_state() first.
+
+To robustly fix the issue, always update saved_config_space upon resource
+assignment.
+
+Reported-by: Bernd Schumacher <bernd@bschu.de>
+Closes: https://lore.kernel.org/r/acfZrlP0Ua_5D3U4@eldamar.lan/
+Reported-by: Alexandre N. <an.tech@mailo.com>
+Closes: https://lore.kernel.org/r/dd3c3358-de0f-4a56-9c81-04aceaab4058@mailo.com/
+Fixes: a2f1e22390ac ("PCI/ERR: Ensure error recoverability at all times")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Bernd Schumacher <bernd@bschu.de>
+Tested-by: Alexandre N. <an.tech@mailo.com>
+Cc: stable@vger.kernel.org # v6.12+
+Link: https://patch.msgid.link/febc3f354e0c1f5a9f5b3ee9ffddaa44caccf651.1776268054.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/cpuidle-powernv.c |    5 ++++-
- drivers/cpuidle/cpuidle-pseries.c |    5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/pci/setup-res.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/cpuidle/cpuidle-powernv.c
-+++ b/drivers/cpuidle/cpuidle-powernv.c
-@@ -95,7 +95,10 @@ static int snooze_loop(struct cpuidle_de
- 
- 	HMT_medium();
- 	ppc64_runlatch_on();
--	clear_thread_flag(TIF_POLLING_NRFLAG);
-+
-+	/* Avoid double clear when breaking */
-+	if (!dev->poll_time_limit)
-+		clear_thread_flag(TIF_POLLING_NRFLAG);
- 
- 	local_irq_disable();
- 
---- a/drivers/cpuidle/cpuidle-pseries.c
-+++ b/drivers/cpuidle/cpuidle-pseries.c
-@@ -63,7 +63,10 @@ int snooze_loop(struct cpuidle_device *d
+--- a/drivers/pci/setup-res.c
++++ b/drivers/pci/setup-res.c
+@@ -102,6 +102,7 @@ static void pci_std_update_resource(stru
  	}
  
- 	HMT_medium();
--	clear_thread_flag(TIF_POLLING_NRFLAG);
-+
-+       /* Avoid double clear when breaking */
-+	if (!dev->poll_time_limit)
-+		clear_thread_flag(TIF_POLLING_NRFLAG);
+ 	pci_write_config_dword(dev, reg, new);
++	dev->saved_config_space[reg / 4] = new;
+ 	pci_read_config_dword(dev, reg, &check);
  
- 	raw_local_irq_disable();
- 
+ 	if ((new ^ check) & mask) {
+@@ -112,6 +113,7 @@ static void pci_std_update_resource(stru
+ 	if (res->flags & IORESOURCE_MEM_64) {
+ 		new = region.start >> 16 >> 16;
+ 		pci_write_config_dword(dev, reg + 4, new);
++		dev->saved_config_space[(reg + 4) / 4] = new;
+ 		pci_read_config_dword(dev, reg + 4, &check);
+ 		if (check != new) {
+ 			pci_err(dev, "%s: error updating (high %#010x != %#010x)\n",
 
 
