@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF2A17557E;
-	Tue, 12 May 2026 18:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0879A3EDE51;
+	Tue, 12 May 2026 18:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608997; cv=none; b=PSPgUl5D5YA6XUwcbJ3lS3CZLEJseWYIDS5FBxvxLNgHPSbw6BCKiea4cUimMxbOFfFrisI72KlR3MK4BO2cDN/69NxQ6hySsSB9pagE5e2eWflS21Ctr67tIVRmuV1ExaYOSfoeGKA/hz6CN6MIs/U9XnJIU5mslo/SB/k6PRQ=
+	t=1778609000; cv=none; b=J1SxRKYY0RqahVgu8scwbGGWXe+b+eVrRlc/NrPcIWq3ikPi3S0/OBJRpOjM+UxnzLNU2Fs9oFBKfp67jHzGPdtmGWAwZVDQj9O1ufY3HG5x6IcM4hK2YqIgmsyMKzmXYDyNT/GmTjQ04WvjxRS+v7p/e8UV3rCeed3elgYCRzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608997; c=relaxed/simple;
-	bh=7G13ZTGXvgFQQzF89UyJAyweozpNPGhw0VKCiiaN6Zc=;
+	s=arc-20240116; t=1778609000; c=relaxed/simple;
+	bh=QsXOWGpcyb9hsQYC+y55BSR5QwxeTw1mUSeRzdYM2eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ek1tV1T7sbtbWel2I5XV0a3O/jKT7E578cFXb9cgMsluNKJtoX/ANR906BcqB+opiabXF+rzyY5jVE+d7ljt0qit7x79YPFERTpbyhhifq3cXkjbWDOAI39tbUwrScT7LgQDPDbo4WehT+YHFgLub96naa6kwsfgEdvR3svApMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyskU+uW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XqYCiMe/zmEQcn95M1UFoBY4Ree3knkyYuoS9AD6fCNhefsioiXPnW89DDXDdI3UX0wJkOKkXsiyL9VN2BEdGSaQl7pTJ5cHzUYsdnXCYxMd8cJb1th5irXd6v0wT/KXlbZaPpnZjZacz7bT3C9EJIej4BHyMLY106JkTNEnENU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZwmjCb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyskU+uW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A86C2BCB0;
-	Tue, 12 May 2026 18:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZwmjCb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94804C2BCB0;
+	Tue, 12 May 2026 18:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608997;
-	bh=7G13ZTGXvgFQQzF89UyJAyweozpNPGhw0VKCiiaN6Zc=;
+	s=korg; t=1778608999;
+	bh=QsXOWGpcyb9hsQYC+y55BSR5QwxeTw1mUSeRzdYM2eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uyskU+uWhjKlhN7hTo9wPS+3lmRU7VI7gOiI6YgpIyxWtnV7k94Q1uqG2F8p+p2Xv
-	 3QGh8RzE+Tq/D51iAQETzzINeuFJ5Lph4LuhdTWFkEJPMImr/g/g6Ii+jfJMkCfl/2
-	 4ZP1xxdb/VtMBS9xd3z2oC07p5mOrULa2DYDOAWk=
+	b=sZwmjCb7rO7yJFp6aFC3Lhe+V2Op1yS9nHydf49g9A32tYHUnwbu7L2BvPKm5H2vS
+	 XL6AIVBNC6WwyTTd/Fekrnw0oIc3Wx5XYGZHSk9C7hZDfof2kDkGINX+1jzd6hiX0P
+	 UWRKDh3AmC9FpOOE44CrxLaICFKQmDVklpPy8Bq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Gupta <rajgupt@qti.qualcomm.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.0 005/307] fbdev: udlfb: add vm_ops to dlfb_ops_mmap to prevent use-after-free
-Date: Tue, 12 May 2026 19:36:40 +0200
-Message-ID: <20260512173940.234772953@linuxfoundation.org>
+	Huisong Li <lihuisong@huawei.com>,
+	Breno Leitao <leitao@debian.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 7.0 006/307] ACPI: arm64: cpuidle: Tolerate platforms with no deep PSCI idle states
+Date: Tue, 12 May 2026 19:36:41 +0200
+Message-ID: <20260512173940.257075688@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,111 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rajat Gupta <rajgupt@qti.qualcomm.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 8de779dc40d35d39fa07387b6f921eb11df0f511 upstream.
+commit 3ea4415015d690a51a3fb1f98dfc9a02f88f7bc4 upstream.
 
-dlfb_ops_mmap() uses remap_pfn_range() to map vmalloc framebuffer pages
-to userspace but sets no vm_ops on the VMA. This means the kernel cannot
-track active mmaps. When dlfb_realloc_framebuffer() replaces the backing
-buffer via FBIOPUT_VSCREENINFO, existing mmap PTEs are not invalidated.
-On USB disconnect, dlfb_ops_destroy() calls vfree() on the old pages
-while userspace PTEs still reference them, resulting in a use-after-free:
-the process retains read/write access to freed kernel pages.
+Commit cac173bea57d ("ACPI: processor: idle: Rework the handling of
+acpi_processor_ffh_lpi_probe()") moved the acpi_processor_ffh_lpi_probe()
+call from acpi_processor_setup_cpuidle_dev(), where its return value was
+ignored, to acpi_processor_get_power_info(), where it is now treated as
+a hard failure. As a result, platforms where psci_acpi_cpu_init_idle()
+returned -ENODEV stopped registering any cpuidle states, forcing CPUs to
+busy-poll when idle.
 
-Add vm_operations_struct with open/close callbacks that maintain an
-atomic mmap_count on struct dlfb_data. In dlfb_realloc_framebuffer(),
-check mmap_count and return -EBUSY if the buffer is currently mapped,
-preventing buffer replacement while userspace holds stale PTEs.
+On NVIDIA Grace (aarch64) systems with PSCIv1.1, pr->power.count is 1
+(only WFI, no deep PSCI states beyond it), so the previous
+"count = pr->power.count - 1; if (count <= 0) return -ENODEV;" check
+returned -ENODEV for all 72 CPUs and disabled cpuidle entirely.
 
-Tested with PoC using dummy_hcd + raw_gadget USB device emulation.
+The lpi_states count is already validated in acpi_processor_get_lpi_info(),
+so the check here is redundant. Simplify the loop to iterate over
+lpi_states[1..power.count). When only WFI is present, the loop body
+simply does not execute and the function returns 0, which is the correct
+outcome: there is nothing to validate for FFH and no error to report.
 
-Signed-off-by: Rajat Gupta <rajgupt@qti.qualcomm.com>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Huisong Li <lihuisong@huawei.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: cac173bea57d ("ACPI: processor: idle: Rework the handling of acpi_processor_ffh_lpi_probe()")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/udlfb.c |   31 ++++++++++++++++++++++++++++++-
- include/video/udlfb.h       |    1 +
- 2 files changed, 31 insertions(+), 1 deletion(-)
+ drivers/acpi/arm64/cpuidle.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -321,12 +321,32 @@ static int dlfb_set_video_mode(struct dl
- 	return retval;
- }
+diff --git a/drivers/acpi/arm64/cpuidle.c b/drivers/acpi/arm64/cpuidle.c
+index 801f9c450142..c68a5db8ebba 100644
+--- a/drivers/acpi/arm64/cpuidle.c
++++ b/drivers/acpi/arm64/cpuidle.c
+@@ -16,7 +16,7 @@
  
-+static void dlfb_vm_open(struct vm_area_struct *vma)
-+{
-+	struct dlfb_data *dlfb = vma->vm_private_data;
-+
-+	atomic_inc(&dlfb->mmap_count);
-+}
-+
-+static void dlfb_vm_close(struct vm_area_struct *vma)
-+{
-+	struct dlfb_data *dlfb = vma->vm_private_data;
-+
-+	atomic_dec(&dlfb->mmap_count);
-+}
-+
-+static const struct vm_operations_struct dlfb_vm_ops = {
-+	.open  = dlfb_vm_open,
-+	.close = dlfb_vm_close,
-+};
-+
- static int dlfb_ops_mmap(struct fb_info *info, struct vm_area_struct *vma)
+ static int psci_acpi_cpu_init_idle(unsigned int cpu)
  {
- 	unsigned long start = vma->vm_start;
- 	unsigned long size = vma->vm_end - vma->vm_start;
- 	unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
- 	unsigned long page, pos;
-+	struct dlfb_data *dlfb = info->par;
+-	int i, count;
++	int i;
+ 	struct acpi_lpi_state *lpi;
+ 	struct acpi_processor *pr = per_cpu(processors, cpu);
  
- 	if (info->fbdefio)
- 		return fb_deferred_io_mmap(info, vma);
-@@ -358,6 +378,9 @@ static int dlfb_ops_mmap(struct fb_info
- 			size = 0;
- 	}
+@@ -30,14 +30,10 @@ static int psci_acpi_cpu_init_idle(unsigned int cpu)
+ 	if (!psci_ops.cpu_suspend)
+ 		return -EOPNOTSUPP;
  
-+	vma->vm_ops = &dlfb_vm_ops;
-+	vma->vm_private_data = dlfb;
-+	atomic_inc(&dlfb->mmap_count);
- 	return 0;
- }
+-	count = pr->power.count - 1;
+-	if (count <= 0)
+-		return -ENODEV;
+-
+-	for (i = 0; i < count; i++) {
++	for (i = 1; i < pr->power.count; i++) {
+ 		u32 state;
  
-@@ -1176,7 +1199,6 @@ static void dlfb_deferred_vfree(struct d
- 
- /*
-  * Assumes &info->lock held by caller
-- * Assumes no active clients have framebuffer open
-  */
- static int dlfb_realloc_framebuffer(struct dlfb_data *dlfb, struct fb_info *info, u32 new_len)
- {
-@@ -1188,6 +1210,13 @@ static int dlfb_realloc_framebuffer(stru
- 	new_len = PAGE_ALIGN(new_len);
- 
- 	if (new_len > old_len) {
-+		if (atomic_read(&dlfb->mmap_count) > 0) {
-+			dev_warn(info->dev,
-+				"refusing realloc: %d active mmaps\n",
-+				atomic_read(&dlfb->mmap_count));
-+			return -EBUSY;
-+		}
-+
+-		lpi = &pr->power.lpi_states[i + 1];
++		lpi = &pr->power.lpi_states[i];
  		/*
- 		 * Alloc system memory for virtual framebuffer
- 		 */
---- a/include/video/udlfb.h
-+++ b/include/video/udlfb.h
-@@ -56,6 +56,7 @@ struct dlfb_data {
- 	spinlock_t damage_lock;
- 	struct work_struct damage_work;
- 	struct fb_ops ops;
-+	atomic_t mmap_count;
- 	/* blit-only rendering path metrics, exposed through sysfs */
- 	atomic_t bytes_rendered; /* raw pixel-bytes driver asked to render */
- 	atomic_t bytes_identical; /* saved effort with backbuffer comparison */
+ 		 * Only bits[31:0] represent a PSCI power_state while
+ 		 * bits[63:32] must be 0x0 as per ARM ACPI FFH Specification
+-- 
+2.54.0
+
 
 
