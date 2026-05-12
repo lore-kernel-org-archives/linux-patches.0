@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE5C2D060B;
-	Tue, 12 May 2026 18:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2803EDE45;
+	Tue, 12 May 2026 18:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609313; cv=none; b=NmvAJFNEuih7Jj9pSTNv22yiYBiLJyJy1xAfol0hj/KVc7Bvhz2stPxReAgpsRBKajC4YOkiBxTqb7W3MdWTsyT6yKuEH8ujViq2VJjxbpyHFzNYU/lMQjbuPf8/NXOTzIbrcubQglqOzJOP/V9B3jKrnXpHAgyIcTubfyJpzO8=
+	t=1778609316; cv=none; b=DSu0KXag7iiFd3FEus3vAjr+BXvuK73bPW36yNqbHqV+jap4aGiWnmsAEFnyZYy/Yz349BjR5SPbn+J+imTc4vn7jFinGeYejixH/vOs1uAuYyIhaQ1Ica46vqyZNGs8evIsJDam7QG6HmGZAvpuVCk7emoVG0/UX59cabOaQkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609313; c=relaxed/simple;
-	bh=1wXDQmpHT0KWnPLdF8BfFqWqTWZAsdh+KChYLpRDaf4=;
+	s=arc-20240116; t=1778609316; c=relaxed/simple;
+	bh=C07oDMnoJ5QdxueNTTaSLoD5SexD8PJ1n4tpT0O0Czc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7Q2A4sCTfl1EE7f+h4XP8SabaDO5qOp3vfSO2XZh/kXlgBVXNV+IQ/SZi4w9atJfRVhGlapuHixeVGLVdq/CFSncDPUBHL/hOK54CFAoDb1UK1ryI2ec3pMSTCXKsDOvJbVkmdmpbZ53qydbL1SWhnlIDJMva2TTHsk0EwjcDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzMniXSJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WR/QqBW27Pnm0/vvu22+8Pvl29dx8mBYQaYP+gQUJfOnYnJ085wRa3sGADtLCffd6Fxvjf15RH47xiLtyaWdFz8lE0rki7wUz834fMy9gQ8KCOYqkUwRjJ56FT9rzb6bw0Aucbc4tNON1Eq36DQ8VK+tug7KO0q+CypQBlP41ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFLtb9DD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzMniXSJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8587C2BCB0;
-	Tue, 12 May 2026 18:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFLtb9DD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD05C2BCB0;
+	Tue, 12 May 2026 18:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609313;
-	bh=1wXDQmpHT0KWnPLdF8BfFqWqTWZAsdh+KChYLpRDaf4=;
+	s=korg; t=1778609315;
+	bh=C07oDMnoJ5QdxueNTTaSLoD5SexD8PJ1n4tpT0O0Czc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzMniXSJ66vkTgT2wVgkw/+gf8J5GTV9GJ91GlgkbW3N3Vn4/z/eL3MRz+eI+A6ma
-	 Mcm6X30VafZmfH29UA+Ygg6iNXimE6Z64peAup7zI5dOTSuM5CwyAXvz9DDuNnelKP
-	 tnB+7bsDLxgFS21lolZNb1t1xvU6aAc3BX/1dI88=
+	b=EFLtb9DDxZNBXuGXzLDwOsF4VMIpM37Tx403F2wI0G2GWEagpagoTGZ6l/Y87ZQkT
+	 cTRTC5H2A3r8jWYMMJ5zhYBpbHCd8qPgHTq6pkg9Q4ZVoJkPla8gv3TzcnZFBQ6bQ1
+	 IN1BPYsyNbY1eRpx8gouzKQC30GfZQjB5PXNXSfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian King <bjking1@linux.ibm.com>,
-	Shaik Abdulla <shaik.abdulla1@ibm.com>,
-	Naveed Ahmed <naveedaus@in.ibm.com>,
-	Mingming Cao <mmc@linux.ibm.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 146/307] ibmveth: Disable GSO for packets with small MSS
-Date: Tue, 12 May 2026 19:39:01 +0200
-Message-ID: <20260512173943.209959584@linuxfoundation.org>
+Subject: [PATCH 7.0 147/307] ice: fix double free in ice_sf_eth_activate() error path
+Date: Tue, 12 May 2026 19:39:02 +0200
+Message-ID: <20260512173943.230053303@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -53,99 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit cc427d24ac6442ffdeafd157a63c7c5b73ed4de4 upstream.
+commit 9aab1c3d7299285e2569cbc0ed5892d631a241b2 upstream.
 
-Some physical adapters on Power systems do not support segmentation
-offload when the MSS is less than 224 bytes. Attempting to send such
-packets causes the adapter to freeze, stopping all traffic until
-manually reset.
+When auxiliary_device_add() fails, ice_sf_eth_activate() jumps to
+aux_dev_uninit and calls auxiliary_device_uninit(&sf_dev->adev).
 
-Implement ndo_features_check to disable GSO for packets with small MSS
-values. The network stack will perform software segmentation instead.
+The device release callback ice_sf_dev_release() frees sf_dev, but
+the current error path falls through to sf_dev_free and calls
+kfree(sf_dev) again, causing a double free.
 
-The 224-byte minimum matches ibmvnic
-commit <f10b09ef687f> ("ibmvnic: Enforce stronger sanity checks
-on GSO packets")
-which uses the same physical adapters in SEA configurations.
+Keep kfree(sf_dev) for the auxiliary_device_init() failure path, but
+avoid falling through to sf_dev_free after auxiliary_device_uninit().
 
-The issue occurs specifically when the hardware attempts to perform
-segmentation (gso_segs > 1) with a small MSS. Single-segment GSO packets
-(gso_segs == 1) do not trigger the problematic LSO code path and are
-transmitted normally without segmentation.
-
-Add an ndo_features_check callback to disable GSO when MSS < 224 bytes.
-Also call vlan_features_check() to ensure proper handling of VLAN packets,
-particularly QinQ (802.1ad) configurations where the hardware parser may
-not support certain offload features.
-
-Validated using iptables to force small MSS values. Without the fix,
-the adapter freezes. With the fix, packets are segmented in software
-and transmission succeeds. Comprehensive regression testing completedd
-(MSS tests, performance, stability).
-
-Fixes: 8641dd85799f ("ibmveth: Add support for TSO")
+Fixes: 13acc5c4cdbe ("ice: subfunction activation and base devlink ops")
 Cc: stable@vger.kernel.org
-Reviewed-by: Brian King <bjking1@linux.ibm.com>
-Tested-by: Shaik Abdulla <shaik.abdulla1@ibm.com>
-Tested-by: Naveed Ahmed <naveedaus@in.ibm.com>
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20260424162917.65725-1-mmc@linux.ibm.com
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-3-686c33c9828d@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c |   22 ++++++++++++++++++++++
- drivers/net/ethernet/ibm/ibmveth.h |    1 +
- 2 files changed, 23 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_sf_eth.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -1756,6 +1756,27 @@ static int ibmveth_set_mac_addr(struct n
- 	return 0;
- }
+--- a/drivers/net/ethernet/intel/ice/ice_sf_eth.c
++++ b/drivers/net/ethernet/intel/ice/ice_sf_eth.c
+@@ -305,6 +305,8 @@ ice_sf_eth_activate(struct ice_dynamic_p
  
-+static netdev_features_t ibmveth_features_check(struct sk_buff *skb,
-+						struct net_device *dev,
-+						netdev_features_t features)
-+{
-+	/* Some physical adapters do not support segmentation offload with
-+	 * MSS < 224. Disable GSO for such packets to avoid adapter freeze.
-+	 * Note: Single-segment packets (gso_segs == 1) don't need this check
-+	 * as they bypass the LSO path and are transmitted without segmentation.
-+	 */
-+	if (skb_is_gso(skb)) {
-+		if (skb_shinfo(skb)->gso_size < IBMVETH_MIN_LSO_MSS) {
-+			netdev_warn_once(dev,
-+					 "MSS %u too small for LSO, disabling GSO\n",
-+					 skb_shinfo(skb)->gso_size);
-+			features &= ~NETIF_F_GSO_MASK;
-+		}
-+	}
+ aux_dev_uninit:
+ 	auxiliary_device_uninit(&sf_dev->adev);
++	return err;
 +
-+	return vlan_features_check(skb, features);
-+}
-+
- static const struct net_device_ops ibmveth_netdev_ops = {
- 	.ndo_open		= ibmveth_open,
- 	.ndo_stop		= ibmveth_close,
-@@ -1767,6 +1788,7 @@ static const struct net_device_ops ibmve
- 	.ndo_set_features	= ibmveth_set_features,
- 	.ndo_validate_addr	= eth_validate_addr,
- 	.ndo_set_mac_address    = ibmveth_set_mac_addr,
-+	.ndo_features_check	= ibmveth_features_check,
- #ifdef CONFIG_NET_POLL_CONTROLLER
- 	.ndo_poll_controller	= ibmveth_poll_controller,
- #endif
---- a/drivers/net/ethernet/ibm/ibmveth.h
-+++ b/drivers/net/ethernet/ibm/ibmveth.h
-@@ -37,6 +37,7 @@
- #define IBMVETH_ILLAN_IPV4_TCP_CSUM		0x0000000000000002UL
- #define IBMVETH_ILLAN_ACTIVE_TRUNK		0x0000000000000001UL
- 
-+#define IBMVETH_MIN_LSO_MSS		224	/* Minimum MSS for LSO */
- /* hcall macros */
- #define h_register_logical_lan(ua, buflst, rxq, fltlst, mac) \
-   plpar_hcall_norets(H_REGISTER_LOGICAL_LAN, ua, buflst, rxq, fltlst, mac)
+ sf_dev_free:
+ 	kfree(sf_dev);
+ xa_erase:
 
 
