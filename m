@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E5647AF65;
-	Tue, 12 May 2026 17:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDED328B77;
+	Tue, 12 May 2026 17:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608387; cv=none; b=IbrKZWjorMUWFbKupXAuwOnEHzcF1f5HKrPl2M7YTU2z1jxvudlHBildmAIjPgC4L9I3GAlk5WJOgLLYL/Gbyv9knBST4mgMmpEkQ9SRmuIT60Cs9yYMhTS+7zTdQI1L4TKMLpfwLRQ2JM3glTsyRCHDnoffRNRVirsA9vV5tSg=
+	t=1778608389; cv=none; b=oRNKGG77eNozZLpKIsOZSbuu73FhvYVM8G2ctW0nCOEwUavb1t1KZ7K0JQgwuYiyZfqeQEPVVS4QzthlqTDq5Q+ws9FOSJDQUx3fNIr2wuUKLVVB7/rvUsAOrTrqlUKuWYEI8aeFiY2AjPkUxCwpJyMWq3313M6f/lnc2Vy67Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608387; c=relaxed/simple;
-	bh=qRd6dLPgdQvZiLF8gk7v3k/o6IL9SK9U9q4QeGvD5R8=;
+	s=arc-20240116; t=1778608389; c=relaxed/simple;
+	bh=jH5IBB4hB9QpUoEs4bFcCMGYq2ttLxtk8oCjJxoVOGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBeDlse7UxdSwhfwAUrDWnNsOX2WOZMk/kj4OlRDxXRMwwIwHN2RwP6eWr2OmE5OmdNNXVI99Hv30zZ5+x+6MFmIb5Lz8xUf3bPha0wnmogY/fOV6JxlkbLxiwpF/uMiiagxPZFsZ5ZOeSM5g9yCmMO4qFf459uZeSavihrFDqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1k5Oe93; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D9hr6v02780inwUN6tZThRF/If92yRWp/2kwn5O4MaBWQj0FGpiVNx0WbKj1Ud8pCnYewuFdV6I39fzRWnj0qvrZJpOIuyVPX7ob3VB/kmC3aYTfPpdf6qVKjzj1ZDafgrRE0qmY6QbAkX+ndMp2whJdCsdmddg3ERArl2aBBz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjjKiwO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1k5Oe93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311E6C2BCC7;
-	Tue, 12 May 2026 17:53:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjjKiwO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1619C2BCB0;
+	Tue, 12 May 2026 17:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608386;
-	bh=qRd6dLPgdQvZiLF8gk7v3k/o6IL9SK9U9q4QeGvD5R8=;
+	s=korg; t=1778608389;
+	bh=jH5IBB4hB9QpUoEs4bFcCMGYq2ttLxtk8oCjJxoVOGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1k5Oe93euGlvmwsWUAWEUI6pcoe1od2v0TaGnhd3tGGEUxYlFwZUm/dqNf2/PyJG
-	 4gE6C7tIWNJpyOoO+H0kY3IhPr+2zcbim0SK0Qu2BnRqKI9DqmzQKqlXJr7s9/hwk3
-	 Fqub77fE2nfa6aQ+G+9lZbkiYiR1L/VrIsVC30FM=
+	b=YjjKiwO7ybVZsjBbqUigV+NRyIwM2UIf8gkIcOiflSMqigSbfQzsLAjz4EpMKTwEK
+	 Kue3dNxCp4pVZt8C9B1BCOBhl5b9liS7l+crVQCz51iNLewJwcy+Kbk9xMaR0CkRl3
+	 5w3ShhrYCJ8wkdWUJ/IPQJxUUfwE5+aelxoR8lpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.18 059/270] xfrm: ah: account for ESN high bits in async callbacks
-Date: Tue, 12 May 2026 19:37:40 +0200
-Message-ID: <20260512173939.694860305@linuxfoundation.org>
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.18 060/270] selinux: fix avdcache auditing
+Date: Tue, 12 May 2026 19:37:41 +0200
+Message-ID: <20260512173939.715505071@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,128 +50,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-commit ec54093e6a8f87e800bb6aa15eb7fc1e33faa524 upstream.
+commit f92d542577db878acfd21cc18dab23d03023b217 upstream.
 
-AH allocates its temporary auth/ICV layout differently when ESN is enabled:
-the async ahash setup appends a 4-byte seqhi slot before the ICV or
-auth_data area, but the async completion callbacks still reconstruct the
-temporary layout as if seqhi were absent.
+The per-task avdcache was incorrectly saving and reusing the
+audited vector computed by avc_audit_required() rather than
+recomputing based on the currently requested permissions and
+distinguishing the denied versus allowed cases. As a result,
+some permission checks were not being audited, e.g.
+directory write checks after a previously cached directory
+search check.
 
-With an async AH implementation selected, that makes AH copy or compare
-the wrong bytes on both the IPv4 and IPv6 paths. In UML repro on IPv4 AH
-with ESN and forced async hmac(sha1), ping fails with 100% packet loss,
-and the callback logs show the pre-fix drift:
-
-  ah4 output_done: esn=1 err=0 icv_off=20 expected_off=24
-  ah4 input_done: esn=1 auth_off=20 expected_auth_off=24 icv_off=32 expected_icv_off=36
-
-Reconstruct the callback-side layout the same way the setup path built it
-by skipping the ESN seqhi slot before locating the saved auth_data or ICV.
-Per RFC 4302, the ESN high-order 32 bits participate in the AH ICV
-computation, so the async callbacks must account for the seqhi slot.
-
-Post-fix, the same IPv4 AH+ESN+forced-async-hmac(sha1) UML repro shows
-the corrected offset (ah4 output_done: esn=1 err=0 icv_off=24
-expected_off=24) and ping succeeds; net/ipv4/ah4.o and net/ipv6/ah6.o
-build clean at W=1. IPv6 AH+ESN was not exercised at runtime, and the
-change has not been tested against a real async hardware AH engine.
-
-Fixes: d4d573d0334d ("{IPv4,xfrm} Add ESN support for AH egress part")
-Fixes: d8b2a8600b0e ("{IPv4,xfrm} Add ESN support for AH ingress part")
-Fixes: 26dd70c3fad3 ("{IPv6,xfrm} Add ESN support for AH egress part")
-Fixes: 8d6da6f32557 ("{IPv6,xfrm} Add ESN support for AH ingress part")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5-4
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: dde3a5d0f4dce ("selinux: move avdcache to per-task security struct")
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+[PM: line wrap tweaks]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/ah4.c |   14 ++++++++++++--
- net/ipv6/ah6.c |   14 ++++++++++++--
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ security/selinux/hooks.c          |   31 +++++++++++++------------------
+ security/selinux/include/objsec.h |    4 +---
+ 2 files changed, 14 insertions(+), 21 deletions(-)
 
---- a/net/ipv4/ah4.c
-+++ b/net/ipv4/ah4.c
-@@ -124,9 +124,14 @@ static void ah_output_done(void *data, i
- 	struct iphdr *top_iph = ip_hdr(skb);
- 	struct ip_auth_hdr *ah = ip_auth_hdr(skb);
- 	int ihl = ip_hdrlen(skb);
-+	int seqhi_len = 0;
-+	__be32 *seqhi;
+--- a/security/selinux/hooks.c
++++ b/security/selinux/hooks.c
+@@ -3162,15 +3162,13 @@ static inline int task_avdcache_search(s
+  * @tsec: the task's security state
+  * @isec: the inode associated with the cache entry
+  * @avd: the AVD to cache
+- * @audited: the permission audit bitmask to cache
+  *
+- * Update the AVD cache in @tsec with the @avdc and @audited info associated
++ * Update the AVD cache in @tsec with the @avd info associated
+  * with @isec.
+  */
+ static inline void task_avdcache_update(struct task_security_struct *tsec,
+ 					struct inode_security_struct *isec,
+-					struct av_decision *avd,
+-					u32 audited)
++					struct av_decision *avd)
+ {
+ 	int spot;
  
-+	if (x->props.flags & XFRM_STATE_ESN)
-+		seqhi_len = sizeof(*seqhi);
- 	iph = AH_SKB_CB(skb)->tmp;
--	icv = ah_tmp_icv(iph, ihl);
-+	seqhi = (__be32 *)((char *)iph + ihl);
-+	icv = ah_tmp_icv(seqhi, seqhi_len);
- 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
+@@ -3182,9 +3180,7 @@ static inline void task_avdcache_update(
+ 	spot = (tsec->avdcache.dir_spot + 1) & (TSEC_AVDC_DIR_SIZE - 1);
+ 	tsec->avdcache.dir_spot = spot;
+ 	tsec->avdcache.dir[spot].isid = isec->sid;
+-	tsec->avdcache.dir[spot].audited = audited;
+-	tsec->avdcache.dir[spot].allowed = avd->allowed;
+-	tsec->avdcache.dir[spot].permissive = avd->flags & AVD_FLAGS_PERMISSIVE;
++	tsec->avdcache.dir[spot].avd = *avd;
+ 	tsec->avdcache.permissive_neveraudit =
+ 		(avd->flags == (AVD_FLAGS_PERMISSIVE|AVD_FLAGS_NEVERAUDIT));
+ }
+@@ -3205,6 +3201,7 @@ static int selinux_inode_permission(stru
+ 	struct task_security_struct *tsec;
+ 	struct inode_security_struct *isec;
+ 	struct avdc_entry *avdc;
++	struct av_decision avd, *avdp = &avd;
+ 	int rc, rc2;
+ 	u32 audited, denied;
  
- 	top_iph->tos = iph->tos;
-@@ -270,12 +275,17 @@ static void ah_input_done(void *data, in
- 	struct ip_auth_hdr *ah = ip_auth_hdr(skb);
- 	int ihl = ip_hdrlen(skb);
- 	int ah_hlen = (ah->hdrlen + 2) << 2;
-+	int seqhi_len = 0;
-+	__be32 *seqhi;
+@@ -3226,23 +3223,21 @@ static int selinux_inode_permission(stru
+ 	rc = task_avdcache_search(tsec, isec, &avdc);
+ 	if (likely(!rc)) {
+ 		/* Cache hit. */
+-		audited = perms & avdc->audited;
+-		denied = perms & ~avdc->allowed;
+-		if (unlikely(denied && enforcing_enabled() &&
+-			     !avdc->permissive))
++		avdp = &avdc->avd;
++		denied = perms & ~avdp->allowed;
++		if (unlikely(denied) && enforcing_enabled() &&
++			!(avdp->flags & AVD_FLAGS_PERMISSIVE))
+ 			rc = -EACCES;
+ 	} else {
+-		struct av_decision avd;
+-
+ 		/* Cache miss. */
+ 		rc = avc_has_perm_noaudit(sid, isec->sid, isec->sclass,
+-					  perms, 0, &avd);
+-		audited = avc_audit_required(perms, &avd, rc,
+-			(requested & MAY_ACCESS) ? FILE__AUDIT_ACCESS : 0,
+-			&denied);
+-		task_avdcache_update(tsec, isec, &avd, audited);
++					  perms, 0, avdp);
++		task_avdcache_update(tsec, isec, avdp);
+ 	}
  
- 	if (err)
- 		goto out;
++	audited = avc_audit_required(perms, avdp, rc,
++				     (requested & MAY_ACCESS) ?
++				     FILE__AUDIT_ACCESS : 0, &denied);
+ 	if (likely(!audited))
+ 		return rc;
  
-+	if (x->props.flags & XFRM_STATE_ESN)
-+		seqhi_len = sizeof(*seqhi);
- 	work_iph = AH_SKB_CB(skb)->tmp;
--	auth_data = ah_tmp_auth(work_iph, ihl);
-+	seqhi = (__be32 *)((char *)work_iph + ihl);
-+	auth_data = ah_tmp_auth(seqhi, seqhi_len);
- 	icv = ah_tmp_icv(auth_data, ahp->icv_trunc_len);
+--- a/security/selinux/include/objsec.h
++++ b/security/selinux/include/objsec.h
+@@ -32,9 +32,7 @@
  
- 	err = crypto_memneq(icv, auth_data, ahp->icv_trunc_len) ? -EBADMSG : 0;
---- a/net/ipv6/ah6.c
-+++ b/net/ipv6/ah6.c
-@@ -317,14 +317,19 @@ static void ah6_output_done(void *data,
- 	struct ipv6hdr *top_iph = ipv6_hdr(skb);
- 	struct ip_auth_hdr *ah = ip_auth_hdr(skb);
- 	struct tmp_ext *iph_ext;
-+	int seqhi_len = 0;
-+	__be32 *seqhi;
+ struct avdc_entry {
+ 	u32 isid; /* inode SID */
+-	u32 allowed; /* allowed permission bitmask */
+-	u32 audited; /* audited permission bitmask */
+-	bool permissive; /* AVC permissive flag */
++	struct av_decision avd; /* av decision */
+ };
  
- 	extlen = skb_network_header_len(skb) - sizeof(struct ipv6hdr);
- 	if (extlen)
- 		extlen += sizeof(*iph_ext);
- 
-+	if (x->props.flags & XFRM_STATE_ESN)
-+		seqhi_len = sizeof(*seqhi);
- 	iph_base = AH_SKB_CB(skb)->tmp;
- 	iph_ext = ah_tmp_ext(iph_base);
--	icv = ah_tmp_icv(iph_ext, extlen);
-+	seqhi = (__be32 *)((char *)iph_ext + extlen);
-+	icv = ah_tmp_icv(seqhi, seqhi_len);
- 
- 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
- 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
-@@ -471,13 +476,18 @@ static void ah6_input_done(void *data, i
- 	struct ip_auth_hdr *ah = ip_auth_hdr(skb);
- 	int hdr_len = skb_network_header_len(skb);
- 	int ah_hlen = ipv6_authlen(ah);
-+	int seqhi_len = 0;
-+	__be32 *seqhi;
- 
- 	if (err)
- 		goto out;
- 
-+	if (x->props.flags & XFRM_STATE_ESN)
-+		seqhi_len = sizeof(*seqhi);
- 	work_iph = AH_SKB_CB(skb)->tmp;
- 	auth_data = ah_tmp_auth(work_iph, hdr_len);
--	icv = ah_tmp_icv(auth_data, ahp->icv_trunc_len);
-+	seqhi = (__be32 *)(auth_data + ahp->icv_trunc_len);
-+	icv = ah_tmp_icv(seqhi, seqhi_len);
- 
- 	err = crypto_memneq(icv, auth_data, ahp->icv_trunc_len) ? -EBADMSG : 0;
- 	if (err)
+ struct cred_security_struct {
 
 
