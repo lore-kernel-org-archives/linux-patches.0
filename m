@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4BF34E744;
-	Tue, 12 May 2026 18:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472C3365A19;
+	Tue, 12 May 2026 18:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609442; cv=none; b=j6Z1p4DYcEAD5W0CcliDbYyHNpXWZSJJYowNcKBJ/zhVBnsrdJ5Objj5gPHcO6Rkgq7A9KsmGiAqp/A7ZdXzYApoPaaZ2quTOuknLCF5iaKTbIMTGhXt2HgY6q5xbfijm55cieRWaVlE2W44BXqwWuGg3RwVdVbhrVHVDjvpwag=
+	t=1778609445; cv=none; b=g9Jn9d1UjP1OAQSGP73VBgJdFJbmd524XWufVrXmcLI0xhuRzN7gAkGWnpHqdptg3b5TDX9prWYufdO/pRTbOIlmGs59zHAQD2kgL8/0bgQaGfldpqbxtug1IAmbNWm+zYwZUqYAZ7gpVkBLRJ9VTAyS031OZ40miUb95P1YlgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609442; c=relaxed/simple;
-	bh=1dLTiI/pS1vvrujpwvoJy8SOGCtMrVWSo5hx6fk0KSQ=;
+	s=arc-20240116; t=1778609445; c=relaxed/simple;
+	bh=irruQICVob6U5EVWdLIBSaU6k9mJy6rvFNWbfgJwhz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ufctHb+d2zQCJGejJwnacz4k0HEeNjhoGykTYkwinEya3y1y+/sWY9CqBKLRVf7yUsUUKmmf0oQzatJJLBjFsobCuVyUyIVagVgbfduA3TjJRfUSsz1MR22L0Tot6S2A5F9MZAEtqYWNenRGKRWI68PUqPFsEHEvKJ1hsNCw6eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkDOABuF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c+HXJSh/v31o55iCfULqdhltBGlEwu/AsxawEgtRDTL7EKdfGuRG6UAIhOyuQkyysuSmxxxjKHaFP42osJ1Ye41YfVpMkxHzNDJ8tuYGRez5E8+ckcuLq3jYBeQpAt/klZA+PTsANbA+gaaIoMr39HUW5T9SMpn4JKszIewnac0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMFJwZ3o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkDOABuF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E6EC2BCB0;
-	Tue, 12 May 2026 18:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMFJwZ3o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18AEC2BCB0;
+	Tue, 12 May 2026 18:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609442;
-	bh=1dLTiI/pS1vvrujpwvoJy8SOGCtMrVWSo5hx6fk0KSQ=;
+	s=korg; t=1778609445;
+	bh=irruQICVob6U5EVWdLIBSaU6k9mJy6rvFNWbfgJwhz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkDOABuFHKRWONVn14CYxE1heKA8ywFknxC42Cml7w9C+byTxd6eLlUvEQtZsKsRd
-	 m3914Yws8Or6aVctTjhQkH+wVrOk6qb2shtp8U9nHsszjMWmFQ4fORnO+uoLjYw5Zm
-	 JlgtxLWZ7wnnC9ZmfgDDy2MOGk7YLTbGTdbgWUfs=
+	b=aMFJwZ3oBnlJuALv4jUOLwxQV+/II6ltxFMlDTz675AbGdJ2JbXCXMFBg4V8QJels
+	 c/RlIpZ0+enYR3fJtMNpOH347ylCUY95xhGiUrf64akfAZfRHmwHkEDx/MQRDLNH0c
+	 NYNiRi67cjyDlaocjokCEZA/p3fw0wfYcOx8M9ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	David Gow <davidgow@google.com>,
-	David Howells <dhowells@redhat.com>,
-	Kees Cook <kees@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 196/307] lib/scatterlist: fix length calculations in extract_kvec_to_sg
-Date: Tue, 12 May 2026 19:39:51 +0200
-Message-ID: <20260512173944.255010990@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.0 161/307] tracing/fprobe: Remove fprobe from hash in failure path
+Date: Tue, 12 May 2026 19:39:16 +0200
+Message-ID: <20260512173943.521380133@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -54,90 +49,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 07b7d66e65d9cfe6b9c2c34aa22cfcaac37a5c45 upstream.
+commit 845947aca6814f5723ed65e556eb5ee09493f05b upstream.
 
-Patch series "Fix bugs in extract_iter_to_sg()", v3.
+When register_fprobe_ips() fails, it tries to remove a list of
+fprobe_hash_node from fprobe_ip_table, but it missed to remove
+fprobe itself from fprobe_table. Moreover, when removing
+the fprobe_hash_node which is added to rhltable once, it must
+use kfree_rcu() after removing from rhltable.
 
-Fix bugs in the kvec and user variants of extract_iter_to_sg.  This series
-is growing due to useful remarks made by sashiko.dev.
+To fix these issues, this reuses unregister_fprobe() internal
+code to rollback the half-way registered fprobe.
 
-The main bugs are:
-- The length for an sglist entry when extracting from
-  a kvec can exceed the number of bytes in the page. This
-  is obviously not intended.
-- When extracting a user buffer the sglist is temporarily
-  used as a scratch buffer for extracted page pointers.
-  If the sglist already contains some elements this scratch
-  buffer could overlap with existing entries in the sglist.
+Link: https://lore.kernel.org/all/177669366417.132053.17874946321744910456.stgit@mhiramat.tok.corp.google.com/
 
-The series adds test cases to the kunit_iov_iter test that demonstrate all
-of these bugs.  Additionally, there is a memory leak fix for the test
-itself.
-
-The bugs were orignally introduced into kernel v6.3 where the function
-lived in fs/netfs/iterator.c.  It was later moved to lib/scatterlist.c in
-v6.5.  Thus the actual fix is only marked for backports to v6.5+.
-
-
-This patch (of 5):
-
-When extracting from a kvec to a scatterlist, do not cross page
-boundaries.  The required length was already calculated but not used as
-intended.
-
-Adjust the copied length if the loop runs out of sglist entries without
-extracting everything.
-
-While there, return immediately from extract_iter_to_sg if there are no
-sglist entries at all.
-
-A subsequent commit will add kunit test cases that demonstrate that the
-patch is necessary.
-
-Link: https://lkml.kernel.org/r/20260326214905.818170-1-lk@c--e.de
-Link: https://lkml.kernel.org/r/20260326214905.818170-2-lk@c--e.de
-Fixes: 018584697533 ("netfs: Add a function to extract an iterator into a scatterlist")
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Cc: David Gow <davidgow@google.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: <stable@vger.kernel.org>	[v6.5+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4346ba160409 ("fprobe: Rewrite fprobe on function-graph tracer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/scatterlist.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/trace/fprobe.c |   90 ++++++++++++++++++++++++++------------------------
+ 1 file changed, 47 insertions(+), 43 deletions(-)
 
---- a/lib/scatterlist.c
-+++ b/lib/scatterlist.c
-@@ -1247,7 +1247,7 @@ static ssize_t extract_kvec_to_sg(struct
- 			else
- 				page = virt_to_page((void *)kaddr);
+--- a/kernel/trace/fprobe.c
++++ b/kernel/trace/fprobe.c
+@@ -79,20 +79,27 @@ static const struct rhashtable_params fp
+ };
  
--			sg_set_page(sg, page, len, off);
-+			sg_set_page(sg, page, seg, off);
- 			sgtable->nents++;
- 			sg++;
- 			sg_max--;
-@@ -1256,6 +1256,7 @@ static ssize_t extract_kvec_to_sg(struct
- 			kaddr += PAGE_SIZE;
- 			off = 0;
- 		} while (len > 0 && sg_max > 0);
-+		ret -= len;
- 
- 		if (maxsize <= 0 || sg_max == 0)
- 			break;
-@@ -1409,7 +1410,7 @@ ssize_t extract_iter_to_sg(struct iov_it
- 			   struct sg_table *sgtable, unsigned int sg_max,
- 			   iov_iter_extraction_t extraction_flags)
+ /* Node insertion and deletion requires the fprobe_mutex */
+-static int insert_fprobe_node(struct fprobe_hlist_node *node)
++static int insert_fprobe_node(struct fprobe_hlist_node *node, struct fprobe *fp)
  {
--	if (maxsize == 0)
-+	if (maxsize == 0 || sg_max == 0)
- 		return 0;
++	int ret;
++
+ 	lockdep_assert_held(&fprobe_mutex);
  
- 	switch (iov_iter_type(iter)) {
+-	return rhltable_insert(&fprobe_ip_table, &node->hlist, fprobe_rht_params);
++	ret = rhltable_insert(&fprobe_ip_table, &node->hlist, fprobe_rht_params);
++	/* Set the fprobe pointer if insertion was successful. */
++	if (!ret)
++		WRITE_ONCE(node->fp, fp);
++	return ret;
+ }
+ 
+ /* Return true if there are synonims */
+ static bool delete_fprobe_node(struct fprobe_hlist_node *node)
+ {
+-	lockdep_assert_held(&fprobe_mutex);
+ 	bool ret;
+ 
+-	/* Avoid double deleting */
++	lockdep_assert_held(&fprobe_mutex);
++
++	/* Avoid double deleting and non-inserted nodes */
+ 	if (READ_ONCE(node->fp) != NULL) {
+ 		WRITE_ONCE(node->fp, NULL);
+ 		rhltable_remove(&fprobe_ip_table, &node->hlist,
+@@ -755,7 +762,6 @@ static int fprobe_init(struct fprobe *fp
+ 	fp->hlist_array = hlist_array;
+ 	hlist_array->fp = fp;
+ 	for (i = 0; i < num; i++) {
+-		hlist_array->array[i].fp = fp;
+ 		addr = ftrace_location(addrs[i]);
+ 		if (!addr) {
+ 			fprobe_fail_cleanup(fp);
+@@ -819,6 +825,8 @@ int register_fprobe(struct fprobe *fp, c
+ }
+ EXPORT_SYMBOL_GPL(register_fprobe);
+ 
++static int unregister_fprobe_nolock(struct fprobe *fp);
++
+ /**
+  * register_fprobe_ips() - Register fprobe to ftrace by address.
+  * @fp: A fprobe data structure to be registered.
+@@ -845,28 +853,25 @@ int register_fprobe_ips(struct fprobe *f
+ 	if (ret)
+ 		return ret;
+ 
+-	hlist_array = fp->hlist_array;
+ 	if (fprobe_is_ftrace(fp))
+ 		ret = fprobe_ftrace_add_ips(addrs, num);
+ 	else
+ 		ret = fprobe_graph_add_ips(addrs, num);
+-
+-	if (!ret) {
+-		add_fprobe_hash(fp);
+-		for (i = 0; i < hlist_array->size; i++) {
+-			ret = insert_fprobe_node(&hlist_array->array[i]);
+-			if (ret)
+-				break;
+-		}
+-		/* fallback on insert error */
+-		if (ret) {
+-			for (i--; i >= 0; i--)
+-				delete_fprobe_node(&hlist_array->array[i]);
+-		}
++	if (ret) {
++		fprobe_fail_cleanup(fp);
++		return ret;
+ 	}
+ 
+-	if (ret)
+-		fprobe_fail_cleanup(fp);
++	hlist_array = fp->hlist_array;
++	ret = add_fprobe_hash(fp);
++	for (i = 0; i < hlist_array->size && !ret; i++)
++		ret = insert_fprobe_node(&hlist_array->array[i], fp);
++
++	if (ret) {
++		unregister_fprobe_nolock(fp);
++		/* In error case, wait for clean up safely. */
++		synchronize_rcu();
++	}
+ 
+ 	return ret;
+ }
+@@ -910,27 +915,12 @@ bool fprobe_is_registered(struct fprobe
+ 	return true;
+ }
+ 
+-/**
+- * unregister_fprobe() - Unregister fprobe.
+- * @fp: A fprobe data structure to be unregistered.
+- *
+- * Unregister fprobe (and remove ftrace hooks from the function entries).
+- *
+- * Return 0 if @fp is unregistered successfully, -errno if not.
+- */
+-int unregister_fprobe(struct fprobe *fp)
++static int unregister_fprobe_nolock(struct fprobe *fp)
+ {
+-	struct fprobe_hlist *hlist_array;
++	struct fprobe_hlist *hlist_array = fp->hlist_array;
+ 	unsigned long *addrs = NULL;
+-	int ret = 0, i, count;
++	int i, count;
+ 
+-	mutex_lock(&fprobe_mutex);
+-	if (!fp || !fprobe_registered(fp)) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
+-
+-	hlist_array = fp->hlist_array;
+ 	addrs = kcalloc(hlist_array->size, sizeof(unsigned long), GFP_KERNEL);
+ 	if (!addrs) {
+ 		ret = -ENOMEM;	/* TODO: Fallback to one-by-one loop */
+@@ -952,12 +942,26 @@ int unregister_fprobe(struct fprobe *fp)
+ 
+ 	kfree_rcu(hlist_array, rcu);
+ 	fp->hlist_array = NULL;
++	kfree(addrs);
+ 
+-out:
+-	mutex_unlock(&fprobe_mutex);
++	return 0;
++}
+ 
+-	kfree(addrs);
+-	return ret;
++/**
++ * unregister_fprobe() - Unregister fprobe.
++ * @fp: A fprobe data structure to be unregistered.
++ *
++ * Unregister fprobe (and remove ftrace hooks from the function entries).
++ *
++ * Return 0 if @fp is unregistered successfully, -errno if not.
++ */
++int unregister_fprobe(struct fprobe *fp)
++{
++	guard(mutex)(&fprobe_mutex);
++	if (!fp || !fprobe_registered(fp))
++		return -EINVAL;
++
++	return unregister_fprobe_nolock(fp);
+ }
+ EXPORT_SYMBOL_GPL(unregister_fprobe);
+ 
 
 
