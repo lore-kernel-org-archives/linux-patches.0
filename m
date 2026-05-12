@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A80B3B1EE2;
-	Tue, 12 May 2026 17:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD2E3D9693;
+	Tue, 12 May 2026 17:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607756; cv=none; b=JJC1hux+CSPxIpm+CkYEqFdM4oacDqnJU4OkLRuSY9W/13AFD/b3dUqWoaunEV1IFHIBBco6IsyMkv1WUpbpokVOl5AQWboaBmIk+Ol39i6r2kcasXfsxEWhmSBEwNWsdCX34LDrwBj4AD8WNeW7XD3GERqX/v1MyZNMeqzsnVg=
+	t=1778607758; cv=none; b=d8iZ6wSlvwJ+JRQzjUZnFORG6JtlnkUXyzIzcH5PniVcDI+lxJBsxS9CVRI2shEEFwDHR743pQMpOJgQWiF7Pqql7MbdXUhDruBn6Tx9WoaUkzaSCWMYTCWt0sp9kWNDCdypCcGUW9d5ZJx9AcXREG2k832wyk9E8acl7x71lYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607756; c=relaxed/simple;
-	bh=hpWGnowBmTJiAEub2sXY6wJYWvyPmlkSubxKI/lxhwg=;
+	s=arc-20240116; t=1778607758; c=relaxed/simple;
+	bh=eSclj1cBiU7/J070P9oqN0h/1TmEEwmCofVd5XOJmms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmM9VjlwaIcIY5nTEiaRlURh+09e2n/TCQ6rmXBS0mUHFG/uUWmctORZOUxVtWklhfkiiVKSVzHNnnO5DCuMlVS81Ixie1MiMhCZQ6xW3pjderLYHkA8ay1p5pWgaKP/ZC+csy9emsMBFcYLbiUWOH8NoB4Wukk8tIiu6bAEr5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ku9NXfd2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FqnRfnqH5MlnPhcsTxQ9U/VJMLEOOY4TfnYLfqMXxxXz1g3iwGSCbSPhVrmSBeO55K5bCmiacfJabVFAT13U+do1yOufOaHLaZWBfaWvJhZMESqn1HsdPHBJng5bJo170McrzEDIOIc6yoQTTWcTS3Tzgexd39WVEMIzINlrYdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvryOTV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ku9NXfd2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D41C2BCB0;
-	Tue, 12 May 2026 17:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvryOTV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73DA5C2BCB0;
+	Tue, 12 May 2026 17:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607756;
-	bh=hpWGnowBmTJiAEub2sXY6wJYWvyPmlkSubxKI/lxhwg=;
+	s=korg; t=1778607758;
+	bh=eSclj1cBiU7/J070P9oqN0h/1TmEEwmCofVd5XOJmms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ku9NXfd28VnfwgfdZtBoxUcAoKGfJuOKKagFZa8u4qBWV9hUDpfnoAWmguyp6WX47
-	 9D6Hr+h+ejn8OYpaL1mwcXx0KImd95s+BgoL/8t4KmojZlIV2S4H6KWTH1pqsTKhTz
-	 XUNzLUo7z5LqVucji/Hn19TjQUEhnnbLMAnuX8q8=
+	b=LvryOTV7LEmfuzQKof6XrYm/HL8cCqWw42hYbOqnJouns5T6VWpR0p7kYHMiM/KUt
+	 MrjHIJoaKCxW+ikzx0tX+Nr6KNpAHynHZue7exHpvfRRzY58sYBioN2ztpKyo2Bqaw
+	 e9e6nQqwhvnk/9+WZ52VnDOGvgVw23cUviQZKbs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manas <ghandatmanas@gmail.com>,
-	Rakshit Awasthi <rakshitawasthi17@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 024/206] net/sched: sch_red: Replace direct dequeue call with peek and qdisc_dequeue_peeked
-Date: Tue, 12 May 2026 19:37:56 +0200
-Message-ID: <20260512173933.338706721@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Wenshan Lan <jetlan9@163.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 025/206] Bluetooth: L2CAP: Fix deadlock in l2cap_conn_del()
+Date: Tue, 12 May 2026 19:37:57 +0200
+Message-ID: <20260512173933.360876907@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -53,76 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 458d5615272d3de535748342eb68ca492343048c upstream.
+[ Upstream commit 00fdebbbc557a2fc21321ff2eaa22fd70c078608 ]
 
-When red qdisc has children (eg qfq qdisc) whose peek() callback is
-qdisc_peek_dequeued(), we could get a kernel panic. When the parent of such
-qdiscs (eg illustrated in patch #3 as tbf) wants to retrieve an skb from
-its child (red in this case), it will do the following:
- 1a. do a peek() - and when sensing there's an skb the child can offer, then
-     - the child in this case(red) calls its child's (qfq) peek.
-        qfq does the right thing and will return the gso_skb queue packet.
-        Note: if there wasnt a gso_skb entry then qfq will store it there.
- 1b. invoke a dequeue() on the child (red). And herein lies the problem.
-     - red will call the child's dequeue() which will essentially just
-       try to grab something of qfq's queue.
+l2cap_conn_del() calls cancel_delayed_work_sync() for both info_timer
+and id_addr_timer while holding conn->lock. However, the work functions
+l2cap_info_timeout() and l2cap_conn_update_id_addr() both acquire
+conn->lock, creating a potential AB-BA deadlock if the work is already
+executing when l2cap_conn_del() takes the lock.
 
-[   78.667668][  T363] KASAN: null-ptr-deref in range [0x0000000000000048-0x000000000000004f]
-[   78.667927][  T363] CPU: 1 UID: 0 PID: 363 Comm: ping Not tainted 7.1.0-rc1-00033-g46f74a3f7d57-dirty #790 PREEMPT(full)
-[   78.668263][  T363] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
-[   78.668486][  T363] RIP: 0010:qfq_dequeue+0x446/0xc90 [sch_qfq]
-[   78.668718][  T363] Code: 54 c0 e8 dd 90 00 f1 48 c7 c7 e0 03 54 c0 48 89 de e8 ce 90 00 f1 48 8d 7b 48 b8 ff ff 37 00 48 89 fa 48 c1 e0 2a 48 c1 ea 03 <80> 3c 02 00 74 05 e8 ef a1 e1 f1 48 8b 7b 48 48 8d 54 24 58 48 8d
-[   78.669312][  T363] RSP: 0018:ffff88810de573e0 EFLAGS: 00010216
-[   78.669533][  T363] RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-[   78.669790][  T363] RDX: 0000000000000009 RSI: 0000000000000004 RDI: 0000000000000048
-[   78.670044][  T363] RBP: ffff888110dc4000 R08: ffffffffb1b0885a R09: fffffbfff6ba9078
-[   78.670297][  T363] R10: 0000000000000003 R11: ffff888110e31c80 R12: 0000001880000000
-[   78.670560][  T363] R13: ffff888110dc4150 R14: ffff888110dc42b8 R15: 0000000000000200
-[   78.670814][  T363] FS:  00007f66a8f09c40(0000) GS:ffff888163428000(0000) knlGS:0000000000000000
-[   78.671110][  T363] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   78.671324][  T363] CR2: 000055db4c6a30a8 CR3: 000000010da67000 CR4: 0000000000750ef0
-[   78.671585][  T363] PKRU: 55555554
-[   78.671713][  T363] Call Trace:
-[   78.671843][  T363]  <TASK>
-[   78.671936][  T363]  ? __pfx_qfq_dequeue+0x10/0x10 [sch_qfq]
-[   78.672148][  T363]  ? __pfx__printk+0x10/0x10
-[   78.672322][  T363]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   78.672496][  T363]  ? lockdep_hardirqs_on_prepare+0xa8/0x1a0
-[   78.672706][  T363]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   78.672875][  T363]  ? trace_hardirqs_on+0x19/0x1a0
-[   78.673047][  T363]  red_dequeue+0x65/0x270 [sch_red]
-[   78.673217][  T363]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   78.673385][  T363]  tbf_dequeue.cold+0xb0/0x70c [sch_tbf]
-[   78.673566][  T363]  __qdisc_run+0x169/0x1900
+Move the work cancellations before acquiring conn->lock and use
+disable_delayed_work_sync() to additionally prevent the works from
+being rearmed after cancellation, consistent with the pattern used in
+hci_conn_del().
 
-The right thing to do in #1b is to grab the skb off gso_skb queue.
-This patchset fixes that issue by changing #1b to use qdisc_dequeue_peeked()
-method instead.
-
-Fixes: 77be155cba4e ("pkt_sched: Add peek emulation for non-work-conserving qdiscs.")
-Reported-by: Manas <ghandatmanas@gmail.com>
-Reported-by: Rakshit Awasthi <rakshitawasthi17@gmail.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260430152957.194015-2-jhs@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ Minor context conflict resolved. ]
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_red.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/net/sched/sch_red.c
-+++ b/net/sched/sch_red.c
-@@ -153,7 +153,7 @@ static struct sk_buff *red_dequeue(struc
- 	struct red_sched_data *q = qdisc_priv(sch);
- 	struct Qdisc *child = q->qdisc;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 128f5701efb46..307f7fe975b59 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1756,6 +1756,9 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
  
--	skb = child->dequeue(child);
-+	skb = qdisc_dequeue_peeked(child);
- 	if (skb) {
- 		qdisc_bstats_update(sch, skb);
- 		qdisc_qstats_backlog_dec(sch, skb);
+ 	BT_DBG("hcon %p conn %p, err %d", hcon, conn, err);
+ 
++	disable_delayed_work_sync(&conn->info_timer);
++	disable_delayed_work_sync(&conn->id_addr_timer);
++
+ 	mutex_lock(&conn->lock);
+ 
+ 	kfree_skb(conn->rx_skb);
+@@ -1769,8 +1772,6 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+ 	if (work_pending(&conn->pending_rx_work))
+ 		cancel_work_sync(&conn->pending_rx_work);
+ 
+-	cancel_delayed_work_sync(&conn->id_addr_timer);
+-
+ 	l2cap_unregister_all_users(conn);
+ 
+ 	/* Force the connection to be immediately dropped */
+@@ -1789,9 +1790,6 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+ 		l2cap_chan_put(chan);
+ 	}
+ 
+-	if (conn->info_state & L2CAP_INFO_FEAT_MASK_REQ_SENT)
+-		cancel_delayed_work_sync(&conn->info_timer);
+-
+ 	hci_chan_del(conn->hchan);
+ 	conn->hchan = NULL;
+ 
+-- 
+2.53.0
+
 
 
