@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A133955C1;
-	Tue, 12 May 2026 17:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DF03955C1;
+	Tue, 12 May 2026 17:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608090; cv=none; b=CeO5iDNul6KLpJqCDQF0+0KG36UhJlvvOO1cC1UWOOuRqTqVD35H7oHWHATQGRrHstFL0pUxnVxM+/MhwLrsOVZgPh/csVeBVSoslHcIHtASiYVpYj0rv4xb7OCVtUXg0C/9Uy/xWRnldgpdP6/Nc1nQpSvrFqTTs9FRdK66DFs=
+	t=1778608093; cv=none; b=A7deAd8vKCGhBhVAJ5Nf5jiwV8LI6OHTtI08wj6ZQIGtRVAyiZpc347lANg0jpHszkRUhYsyJJmLFdeWFm/coCcENC9hq2m42rsijIf13OOqdGjNoWDAUnYL4ethwJq7WPXwvZmOL7yPrpkVQTeT7fXtlfLEhpF2KUeTfrk04gQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608090; c=relaxed/simple;
-	bh=IiJR58ZDvjSfhU/wqJ/v0tUloY4Q9N3tUDFLOAR4qdg=;
+	s=arc-20240116; t=1778608093; c=relaxed/simple;
+	bh=HIKkYfRJpG7cN+0ooBzm7G+XugF/a0idy/Udc71b85I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eN2vh7M7I3Fq123q+IolVdPpGphGwuwjsLHSQCer/1CZtHcYPCR3BChReB15YuYgfXZpYqkDH/bETeUvE+LBiu9/+bgm98bzkHKAo/3LkrRSFzF1awr5/ihi2X5Z4A6+dYeXxY/Xphh6wuaH0SqdJiW1q5WwBppr+BG6x+69AXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoB0lgF5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ryiEM3h17pWlD/5TQ8iETBgj+NvADbnx0/rmuq7nd610C6O9mUAR5BPzWYjYQ0jjuseyb2sows3tezOSWKss0iU1PJWividht2HWq7sFP6a5jNKvpdfJb05CoddMwwSGRieZAaaMRB3krpff+yBN5h89GEsD+hTbLh5t5/FKsgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3KgonU9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoB0lgF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B192EC2BCB0;
-	Tue, 12 May 2026 17:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3KgonU9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77625C2BCB0;
+	Tue, 12 May 2026 17:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608090;
-	bh=IiJR58ZDvjSfhU/wqJ/v0tUloY4Q9N3tUDFLOAR4qdg=;
+	s=korg; t=1778608093;
+	bh=HIKkYfRJpG7cN+0ooBzm7G+XugF/a0idy/Udc71b85I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BoB0lgF5SG78VrlSmbg7lxpKP2WksIeSsDoVVlJw80kNS9n66bgJAdC+2zULz7ezn
-	 VyjrONYDdA5RwK54XA0jxz8LDtpabQl8HqltgDWwuKDyOcEPtb6kaY1jMod/Cp9NV6
-	 7ZoQ2IW5UCglwIc4kwqEC+7oBzzLY46w9nXWxiaQ=
+	b=A3KgonU9DgKvI5LRarN/0+U5qKLYGwWV4+Q3cwciJpaAHva4SKK7QbdTyUrA7Yhlh
+	 L0lp+OmnppWRXl+6SC5sGUlDIzj4zW8Fq8q2mvh8BwzuIYbn2jjLBJcfiM394494h5
+	 pMgAgbbutd8jFd9s0QkTwHl3TSxWrJVSA5cSZGq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommaso Soncin <soncintommaso@gmail.com>,
+	Joseph Salisbury <joseph.salisbury@oracle.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 108/206] ASoC: amd: yc: Add HP OMEN Gaming Laptop 16-ap0xxx product line in quirk table
-Date: Tue, 12 May 2026 19:39:20 +0200
-Message-ID: <20260512173935.143608831@linuxfoundation.org>
+Subject: [PATCH 6.12 109/206] ASoC: fsl_easrc: fix comment typo
+Date: Tue, 12 May 2026 19:39:21 +0200
+Message-ID: <20260512173935.164000096@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -50,51 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommaso Soncin <soncintommaso@gmail.com>
+From: Joseph Salisbury <joseph.salisbury@oracle.com>
 
-commit d63c219b7ff39f897da10c160a2edef76320f16c upstream.
+commit 804dce6c73fdfa44184ee4e8b09abad7f5da408f upstream.
 
-Add a DMI quirk for the HP OMEN Gaming Laptop 16-ap0xxx line fixing the
-issue where the internal microphone was not detected.
+The file contains a spelling error in a source comment (funciton).
 
+Typos in comments reduce readability and make text searches less reliable
+for developers and maintainers.
+
+Replace 'funciton' with 'function' in the affected comment. This is a
+comment-only cleanup and does not change behavior.
+
+Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tommaso Soncin <soncintommaso@gmail.com>
-Link: https://patch.msgid.link/20260429160858.538986-1-soncintommaso@gmail.com
+Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
+Link: https://patch.msgid.link/20260316180545.144032-1-joseph.salisbury@oracle.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ sound/soc/fsl/fsl_easrc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -55,6 +55,13 @@ static const struct dmi_system_id yc_acp
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN Gaming Laptop 16-ap0xxx"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "Dell Inc."),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Dell G15 5525"),
- 		}
-@@ -648,6 +655,13 @@ static const struct dmi_system_id yc_acp
- 		}
- 	},
- 	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_BOARD_NAME, "8E35"),
-+		}
-+	},
-+	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "MECHREVO"),
+--- a/sound/soc/fsl/fsl_easrc.c
++++ b/sound/soc/fsl/fsl_easrc.c
+@@ -1286,7 +1286,7 @@ static int fsl_easrc_request_context(int
+ /*
+  * Release the context
+  *
+- * This funciton is mainly doing the revert thing in request context
++ * This function is mainly doing the revert thing in request context
+  */
+ static void fsl_easrc_release_context(struct fsl_asrc_pair *ctx)
+ {
 
 
