@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730FA3955CF;
-	Tue, 12 May 2026 17:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112223955D6;
+	Tue, 12 May 2026 17:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608069; cv=none; b=ZokV2to1UF2sPNlMZzUukJZvgNwUgpqT+wncpBBFzBXR/ste4e2bfurQrEntb5D0mqZvPMdTEP5fUwRbB4wwLszKUjzIIFQvWXt7Q05KE3X8NEuP+lgcdGPgAO5VlWm8ciB8P/mPyqjGa3MP7rq1dkbQ30nw2sxNPBT/xvPa3iQ=
+	t=1778608072; cv=none; b=WBmBhWGY/puO3hT45ceKpVD4RD2/8tVFaq7Oc2mx5zqIHxlRhhLooPHoOH4vvLZOeHl5KDJIWS73OKfvdNmtUGpCcsF46PXfgNU0mzVzaobod3Dj8XvI4inaHbBFOV6PechH1kfF8m8ZYM5HkDQb8kFv385JoOUWFGyVSQG4qXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608069; c=relaxed/simple;
-	bh=I44x3pAgrX2HlJyIzX5nMNEDFiHJHULKnsGCEc8uN2A=;
+	s=arc-20240116; t=1778608072; c=relaxed/simple;
+	bh=5ulScWftFuDiFkgOq4ezjh061B5ECvJpb0h9kyWvHGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BGAJR/WoaVoVTicVhzb/yv4+FQHhXHPjuAvWW9EK4VG4tsEhIsQw3FRbpDPkeB7li95Q0gpk0PAsG5KMV3/edfjWAEkkYn2vndTfzb/7lzHlFUZOkFoUy2gtOJaWKvE2+S27irkJY8mBI8Yr4BpNoBJNExs/ihtGxmY1urn/5ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsBZiguT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qsKvGmKzhBsBPB5f3TtR5x7Pb+5xA7sPiaTPEhmUQ/YShcogAG6TIUJJGgTwXnCzYdDOROsyuzoCh+eRauuhIwwX6hJkczW3z3S7uUT9liuN0QlfgvxbPwZaUxFUpr0I1MjRi3DaClvpU5xbb7mHbJ5XPuwDZynQldfB3gSyWHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tGN4B4HN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsBZiguT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A543C2BCB0;
-	Tue, 12 May 2026 17:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tGN4B4HN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA64C2BCB0;
+	Tue, 12 May 2026 17:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608069;
-	bh=I44x3pAgrX2HlJyIzX5nMNEDFiHJHULKnsGCEc8uN2A=;
+	s=korg; t=1778608072;
+	bh=5ulScWftFuDiFkgOq4ezjh061B5ECvJpb0h9kyWvHGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hsBZiguTFGKn8K1p0cRL3d2aMN6rehODE2c9TJWpE+5g5pV3yfB64yG7b8myhIJac
-	 lPoGoxZNTTnJZGiygntQN4lqT4vW7gde8VPUPhymbRpC3YvQoW/sbU0Ar1x5UdcsTg
-	 XXcz5zLjo6G9q325TbiR7YP6L5864jA2yu3TYPRA=
+	b=tGN4B4HNLjSeGvFRqs506QpnxaWcK0oH+mzSBOTRptw41ZagmYzUEc9w4vzv0IQWw
+	 ysyDSXmx4QQvjUSwyNLtn3on7Ve+smJIvP8XJpFbrO+D+xOnmMCwIFeacjSaLbLSN+
+	 B0RhDopY9RAAJbSXdR8QgvwcSMaCOYNOov9THLMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 142/206] mm/damon/sysfs-schemes: protect memcg_path kfree() with damon_sysfs_lock
-Date: Tue, 12 May 2026 19:39:54 +0200
-Message-ID: <20260512173935.869081299@linuxfoundation.org>
+	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.12 107/206] cpuidle: powerpc: avoid double clear when breaking snooze
+Date: Tue, 12 May 2026 19:39:19 +0200
+Message-ID: <20260512173935.122832607@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,75 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Shrikanth Hegde <sshegde@linux.ibm.com>
 
-commit 1e68eb96e8beb1abefd12dd22c5637795d8a877e upstream.
+commit 64ed1e3e728afb57ba9acb59e69de930ead847d9 upstream.
 
-Patch series "mm/damon/sysfs-schemes: fix use-after-free for [memcg_]path".
+snooze_loop is done often in any system which has fair bit of
+idle time. So it qualifies for even micro-optimizations.
 
-Reads of 'memcg_path' and 'path' files in DAMON sysfs interface could race
-with their writes, results in use-after-free.  Fix those.
+When breaking the snooze due to timeout, TIF_POLLING_NRFLAG is cleared
+twice. Clearing the bit invokes atomics. Avoid double clear and thereby
+avoid one atomic write.
 
+dev->poll_time_limit indicates whether the loop was broken due to
+timeout. Use that instead of defining a new variable.
 
-This patch (of 2):
-
-damon_sysfs_scheme_filter->mmecg_path can be read and written by users,
-via DAMON sysfs memcg_path file.  It can also be indirectly read, for the
-parameters {on,off}line committing to DAMON.  The reads for parameters
-committing are protected by damon_sysfs_lock to avoid the sysfs files
-being destroyed while any of the parameters are being read.  But the
-user-driven direct reads and writes are not protected by any lock, while
-the write is deallocating the memcg_path-pointing buffer.  As a result,
-the readers could read the already freed buffer (user-after-free).  Note
-that the user-reads don't race when the same open file is used by the
-writer, due to kernfs's open file locking.  Nonetheless, doing the reads
-and writes with separate open files would be common.  Fix it by protecting
-both the user-direct reads and writes with damon_sysfs_lock.
-
-Link: https://lore.kernel.org/20260423150253.111520-1-sj@kernel.org
-Link: https://lore.kernel.org/20260423150253.111520-2-sj@kernel.org
-Fixes: 4f489fe6afb3 ("mm/damon/sysfs-schemes: free old damon_sysfs_scheme_filter->memcg_path on write")
-Co-developed-by: Junxi Qian <qjx1298677004@gmail.com>
-Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 7ded429152e8 ("cpuidle: powerpc: no memory barrier after break from idle")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260311061709.1230440-1-sshegde@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs-schemes.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/cpuidle/cpuidle-powernv.c |    5 ++++-
+ drivers/cpuidle/cpuidle-pseries.c |    5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -407,9 +407,14 @@ static ssize_t memcg_path_show(struct ko
- {
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
-+	int len;
+--- a/drivers/cpuidle/cpuidle-powernv.c
++++ b/drivers/cpuidle/cpuidle-powernv.c
+@@ -95,7 +95,10 @@ static int snooze_loop(struct cpuidle_de
  
--	return sysfs_emit(buf, "%s\n",
-+	if (!mutex_trylock(&damon_sysfs_lock))
-+		return -EBUSY;
-+	len = sysfs_emit(buf, "%s\n",
- 			filter->memcg_path ? filter->memcg_path : "");
-+	mutex_unlock(&damon_sysfs_lock);
-+	return len;
- }
+ 	HMT_medium();
+ 	ppc64_runlatch_on();
+-	clear_thread_flag(TIF_POLLING_NRFLAG);
++
++	/* Avoid double clear when breaking */
++	if (!dev->poll_time_limit)
++		clear_thread_flag(TIF_POLLING_NRFLAG);
  
- static ssize_t memcg_path_store(struct kobject *kobj,
-@@ -423,8 +428,13 @@ static ssize_t memcg_path_store(struct k
- 		return -ENOMEM;
+ 	local_irq_disable();
  
- 	strscpy(path, buf, count + 1);
-+	if (!mutex_trylock(&damon_sysfs_lock)) {
-+		kfree(path);
-+		return -EBUSY;
-+	}
- 	kfree(filter->memcg_path);
- 	filter->memcg_path = path;
-+	mutex_unlock(&damon_sysfs_lock);
- 	return count;
- }
+--- a/drivers/cpuidle/cpuidle-pseries.c
++++ b/drivers/cpuidle/cpuidle-pseries.c
+@@ -63,7 +63,10 @@ int snooze_loop(struct cpuidle_device *d
+ 	}
+ 
+ 	HMT_medium();
+-	clear_thread_flag(TIF_POLLING_NRFLAG);
++
++       /* Avoid double clear when breaking */
++	if (!dev->poll_time_limit)
++		clear_thread_flag(TIF_POLLING_NRFLAG);
+ 
+ 	raw_local_irq_disable();
  
 
 
