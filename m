@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AF8385D85;
-	Tue, 12 May 2026 17:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8493D966A;
+	Tue, 12 May 2026 17:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607823; cv=none; b=MOvjgMAzJwMI71iews8Yh6zaflsPik52rd5vyI2Rns8vPC24TZAfhSKPe1OYE6Gibila2hU8hSKRCDLhO8LY+B3tN2iD70GED2RjlJDopunW1mcpdBF5FpjIRXbrEor8OeiLAuPlrjoQy+aLdLX+iESE54PB0BS8OAPpEQxzBiw=
+	t=1778607826; cv=none; b=fYCZdCUuuw62KuLcJz08DloaCQSnGy1zJwwPQA9SmeuGVmXooCKDqpRMTCKj8s2CRT0nS3tpfwwg2R2WiyjSw4oLgrhVU/ORf4CIn0j9QvP6KT/zKrBPqXwNJZSA/HUlQELTrcdDLzEBwKImgRVh+ZgobjjIRxSiK9/nggn0vTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607823; c=relaxed/simple;
-	bh=9JHJQH+uwGO/OAmvLpTruCbaJYyPb1r4TOXdmEOO9cE=;
+	s=arc-20240116; t=1778607826; c=relaxed/simple;
+	bh=4WcwqHkNqtrcOoyzBE2cOcATZijTMqnodxWA2Skln3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tMBcv98pQvqtUYpOvA/uCw5Dc+c7KZxIzfTnuK2kZtqq6zg4wg38B1I7Utui2oE6rVyWbPV19dJqUjsS3fA1U7mDSM7r/Cn09dpiHkv6svb/RpEFGeUL6NjzFOoTmrHjr8u5jz74DohsdvD70d8dKsVZL/6MnHdkwguUEiVwB+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiDnnnaN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CSKSPPK7P0QpZ3E96NLrgLv+mqTSJcZzQwWrsIfsinFpdo8umqVyFx9LKFgxIjAC91iC7S27NcZQRiCBlDPUiBqs9zjJHt5bzv1/m0J+J8RPfIoDV9syHEIoT+SAt76vaTgZa+TYGzFgSfsWOrreOWH2jBP1toaZhWu/gx5jr4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnTMCM4/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiDnnnaN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B68C2BCB0;
-	Tue, 12 May 2026 17:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnTMCM4/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97BBC2BCB0;
+	Tue, 12 May 2026 17:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607823;
-	bh=9JHJQH+uwGO/OAmvLpTruCbaJYyPb1r4TOXdmEOO9cE=;
+	s=korg; t=1778607826;
+	bh=4WcwqHkNqtrcOoyzBE2cOcATZijTMqnodxWA2Skln3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jiDnnnaNII+2J9Yp23TjKcl8hBvfmTwRb6gvrcLVM2IwoUBwwexKNFG1N4golTTMP
-	 zb1o0Cnd5+lL+cJWqBKUuY+fy7ztNF4Ch9/c8AfiMCoTXilZL5EMSaG5pkhnzoOkuu
-	 QfpkYi0Jy/zSFJIhPzZa83FXXpAqS+o1xOGa0TMo=
+	b=SnTMCM4/YirDVTsRq1/x9BaiMObJHfK6QUsXbqNtrb5Bf8l/Mvgvd7uvr4J7qPcsc
+	 lIXyXv03ZAtAh/vQbtodGi6TdXxkY4uBzU6A/qCMdmhznf5auzdRl7bbzgsd/yvvFm
+	 +r1a7hjytaHcLuYtulVI4UavAuD4YCZbNR5/+8Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 048/206] USB: serial: option: add Telit Cinterion LE910Cx compositions
-Date: Tue, 12 May 2026 19:38:20 +0200
-Message-ID: <20260512173933.854398604@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.12 049/206] usb: ulpi: fix memory leak on ulpi_register() error paths
+Date: Tue, 12 May 2026 19:38:21 +0200
+Message-ID: <20260512173933.875738624@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -50,135 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit 100201d349edd226ca3470c894c92dccc67ee7a8 upstream.
+commit 0b9fcab1b8608d429e5f239afb197de928d4de7d upstream.
 
-Add the following Telit Cinterion LE910Cx compositions:
+Commit 01af542392b5 ("usb: ulpi: fix double free in
+ulpi_register_interface() error path") removed kfree(ulpi) from
+ulpi_register_interface() to fix a double-free when device_register()
+fails.
 
-0x1251: RNDIS + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
-T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=108 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1251 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=02 Prot=ff Driver=rndis_host
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+But when ulpi_of_register() or ulpi_read_id() fail before
+device_register() is called, the ulpi allocation is leaked.
 
-0x1253: ECM + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
-T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=121 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1253 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+Add kfree(ulpi) on both error paths to properly clean up the allocation.
 
-0x1254: tty (AT) + tty (AT)
-T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=122 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1254 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 2 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-0x1255: tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
-T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=123 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1255 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 01af542392b5 ("usb: ulpi: fix double free in ulpi_register_interface() error path")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260407-ulpi-v1-1-f3fafe53f7b2@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/common/ulpi.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1513,7 +1513,11 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1231, 0xff),	/* Telit LE910Cx (RNDIS) */
- 	  .driver_info = NCTRL(2) | RSVD(3) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x1250, 0xff, 0x00, 0x00) },	/* Telit LE910Cx (rmnet) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1251, 0xff) },	/* Telit LE910Cx (RNDIS) */
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1252, 0xff) },	/* Telit LE910Cx (MBIM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1253, 0xff) },	/* Telit LE910Cx (ECM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1254, 0xff) },	/* Telit LE910Cx */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1255, 0xff) },	/* Telit LE910Cx */
- 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1260),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1261),
+--- a/drivers/usb/common/ulpi.c
++++ b/drivers/usb/common/ulpi.c
+@@ -286,12 +286,15 @@ static int ulpi_register(struct device *
+ 	ACPI_COMPANION_SET(&ulpi->dev, ACPI_COMPANION(dev));
+ 
+ 	ret = ulpi_of_register(ulpi);
+-	if (ret)
++	if (ret) {
++		kfree(ulpi);
+ 		return ret;
++	}
+ 
+ 	ret = ulpi_read_id(ulpi);
+ 	if (ret) {
+ 		of_node_put(ulpi->dev.of_node);
++		kfree(ulpi);
+ 		return ret;
+ 	}
+ 
 
 
