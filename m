@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCDB336891;
-	Tue, 12 May 2026 18:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8497342509;
+	Tue, 12 May 2026 18:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609497; cv=none; b=oZX4hmBNk4BQXEXZVGw9JWjkEf3a5xN8FmJ6QjHDS58ZMxaK6UGu9r04Mk3dmSvUryT27jBgvPYbO9nqV/jYLnOZOldBbS6vx3B0gJb/tnrDG+WJME8T4h+gt89LgUenRS/VkRRy6GDjIyRRHiJ8aLPV3KTX/6+kEpWWwp0hk4A=
+	t=1778609499; cv=none; b=NpNv5xyphukPkpmKiM9Vd+miR3f9AW6b3CJIYl15Jii58qmVBObeKg/e7jmsKQH2tLcR5cs3eDMDCHU4zJoWHYT3gpJraExMNdthSZoH9c72tpI08YzFQuOX5aVHSqbQxytgALYikI1mnU0qLRt/vaBX6zwKDL4gmP5e4wgH8gE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609497; c=relaxed/simple;
-	bh=2F4nI40DFkUMCQ6e5aFfCFNUGnv1VKwg1SnUKP/1ZsM=;
+	s=arc-20240116; t=1778609499; c=relaxed/simple;
+	bh=Y4iH4ObgExJ3xARiwLEMqC1s5SbjqYK+ebEicaEK7XI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaWtZ0BMoSyZVNKLRL67r4szvOqQtKtdGQwfrGPgBgUoLIRW8DMlbNcSpTukuv5i9I9nh14hb+RwvfkdTKLEN3znPzS0HopYvBNZiId6apZkHYwY9qsr/PTWMj/ZVYmJlliSU3gJbvrKkL/7jdtFUGiObOrK0linNiipXJiVWLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KygW2WRJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T8/hapzSNscJO+PhSLy47P3UwsHaX3L3dxNS6L71QaCgcVm7f1derw5A+P8QjVgTMqLVhBP5eP+h+FBgaZ2Jbd48rTEfBlTTIvzsYqmMhMyWCM180KAKPCmUcbqdCKEG/g3G+b8W+bSM4McscE3rTVVAvOD8w4AhitTmjIEeFOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dufzb/Ci; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KygW2WRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F0EC2BCB0;
-	Tue, 12 May 2026 18:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dufzb/Ci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3818DC2BCB0;
+	Tue, 12 May 2026 18:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609497;
-	bh=2F4nI40DFkUMCQ6e5aFfCFNUGnv1VKwg1SnUKP/1ZsM=;
+	s=korg; t=1778609499;
+	bh=Y4iH4ObgExJ3xARiwLEMqC1s5SbjqYK+ebEicaEK7XI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KygW2WRJNJcTbhNlqaGMoSECAvynHX9XDfmVIuMx8BdBASrYKHDJcS9AMQ8Zi2kaF
-	 uaqSEwVFzjV1afeJSEe+HKronF2fXY9hUCbJ1U//WyPLes7AiU0OCLh3Iu0K/+n7+h
-	 fQ+Dgh35I8VhyiV51soy26IooSes3if2ed8p1iks=
+	b=dufzb/Ci5IzaFIjxzPFBr/0jRYPZ9NaD1bLLS08tTi5y4IsJV5qU7upTScsTsZ7bd
+	 4LqWhBfY8luqlWnP07pBmgRFsWwT4Y/2D5hinc1irrsszNC/7wDLipW3mKNYzF+juS
+	 jJOsnetJsIh9g31xdbgNNfX8A3Wwt36c60O0dUvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Junxi Qian <qjx1298677004@gmail.com>,
 	SeongJae Park <sj@kernel.org>,
-	Liew Rui Yan <aethernet65535@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 219/307] mm/damon/stat: detect and use fresh enabled value
-Date: Tue, 12 May 2026 19:40:14 +0200
-Message-ID: <20260512173944.738269146@linuxfoundation.org>
+Subject: [PATCH 7.0 220/307] mm/damon/sysfs-schemes: protect memcg_path kfree() with damon_sysfs_lock
+Date: Tue, 12 May 2026 19:40:15 +0200
+Message-ID: <20260512173944.760682768@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -53,113 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit f98590bc08d4aea435e1c2213e38bae0d9e9a7bb upstream.
+commit 1e68eb96e8beb1abefd12dd22c5637795d8a877e upstream.
 
-DAMON_STAT updates 'enabled' parameter value, which represents the running
-status of its kdamond, when the user explicitly requests start/stop of the
-kdamond.  The kdamond can, however, be stopped even if the user explicitly
-requested the stop, if ctx->regions_score_histogram allocation failure at
-beginning of the execution of the kdamond.  Hence, if the kdamond is
-stopped by the allocation failure, the value of the parameter can be
-stale.
+Patch series "mm/damon/sysfs-schemes: fix use-after-free for [memcg_]path".
 
-Users could show the stale value and be confused.  The problem will only
-rarely happen in real and common setups because the allocation is arguably
-too small to fail.  Also, unlike the similar bugs that are now fixed in
-DAMON_RECLAIM and DAMON_LRU_SORT, kdamond can be restarted in this case,
-because DAMON_STAT force-updates the enabled parameter value for user
-inputs.  The bug is a bug, though.
+Reads of 'memcg_path' and 'path' files in DAMON sysfs interface could race
+with their writes, results in use-after-free.  Fix those.
 
-The issue stems from the fact that there are multiple events that can
-change the status, and following all the events is challenging.
-Dynamically detect and use the fresh status for the parameters when those
-are requested.
 
-The issue was dicovered [1] by Sashiko.
+This patch (of 2):
 
-Link: https://lore.kernel.org/20260419161003.79176-4-sj@kernel.org
-Link: https://lore.kernel.org/20260416040602.88665-1-sj@kernel.org [1]
-Fixes: 369c415e6073 ("mm/damon: introduce DAMON_STAT module")
+damon_sysfs_scheme_filter->mmecg_path can be read and written by users,
+via DAMON sysfs memcg_path file.  It can also be indirectly read, for the
+parameters {on,off}line committing to DAMON.  The reads for parameters
+committing are protected by damon_sysfs_lock to avoid the sysfs files
+being destroyed while any of the parameters are being read.  But the
+user-driven direct reads and writes are not protected by any lock, while
+the write is deallocating the memcg_path-pointing buffer.  As a result,
+the readers could read the already freed buffer (user-after-free).  Note
+that the user-reads don't race when the same open file is used by the
+writer, due to kernfs's open file locking.  Nonetheless, doing the reads
+and writes with separate open files would be common.  Fix it by protecting
+both the user-direct reads and writes with damon_sysfs_lock.
+
+Link: https://lore.kernel.org/20260423150253.111520-1-sj@kernel.org
+Link: https://lore.kernel.org/20260423150253.111520-2-sj@kernel.org
+Fixes: 4f489fe6afb3 ("mm/damon/sysfs-schemes: free old damon_sysfs_scheme_filter->memcg_path on write")
+Co-developed-by: Junxi Qian <qjx1298677004@gmail.com>
+Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Liew Rui Yan <aethernet65535@gmail.com>
-Cc: <stable@vger.kernel.org> # 6.17.x
+Cc: <stable@vger.kernel.org> # 6.16.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/stat.c |   30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ mm/damon/sysfs-schemes.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/mm/damon/stat.c
-+++ b/mm/damon/stat.c
-@@ -19,14 +19,17 @@
- static int damon_stat_enabled_store(
- 		const char *val, const struct kernel_param *kp);
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -533,9 +533,14 @@ static ssize_t memcg_path_show(struct ko
+ {
+ 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
+ 			struct damon_sysfs_scheme_filter, kobj);
++	int len;
  
-+static int damon_stat_enabled_load(char *buffer,
-+		const struct kernel_param *kp);
-+
- static const struct kernel_param_ops enabled_param_ops = {
- 	.set = damon_stat_enabled_store,
--	.get = param_get_bool,
-+	.get = damon_stat_enabled_load,
- };
- 
- static bool enabled __read_mostly = IS_ENABLED(
- 	CONFIG_DAMON_STAT_ENABLED_DEFAULT);
--module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
-+module_param_cb(enabled, &enabled_param_ops, NULL, 0600);
- MODULE_PARM_DESC(enabled, "Enable of disable DAMON_STAT");
- 
- static unsigned long estimated_memory_bandwidth __read_mostly;
-@@ -273,17 +276,23 @@ static void damon_stat_stop(void)
- 	damon_stat_context = NULL;
+-	return sysfs_emit(buf, "%s\n",
++	if (!mutex_trylock(&damon_sysfs_lock))
++		return -EBUSY;
++	len = sysfs_emit(buf, "%s\n",
+ 			filter->memcg_path ? filter->memcg_path : "");
++	mutex_unlock(&damon_sysfs_lock);
++	return len;
  }
  
-+static bool damon_stat_enabled(void)
-+{
-+	if (!damon_stat_context)
-+		return false;
-+	return damon_is_running(damon_stat_context);
-+}
-+
- static int damon_stat_enabled_store(
- 		const char *val, const struct kernel_param *kp)
- {
--	bool is_enabled = enabled;
- 	int err;
+ static ssize_t memcg_path_store(struct kobject *kobj,
+@@ -550,8 +555,13 @@ static ssize_t memcg_path_store(struct k
+ 		return -ENOMEM;
  
- 	err = kstrtobool(val, &enabled);
- 	if (err)
- 		return err;
- 
--	if (is_enabled == enabled)
-+	if (damon_stat_enabled() == enabled)
- 		return 0;
- 
- 	if (!damon_initialized())
-@@ -293,16 +302,17 @@ static int damon_stat_enabled_store(
- 		 */
- 		return 0;
- 
--	if (enabled) {
--		err = damon_stat_start();
--		if (err)
--			enabled = false;
--		return err;
--	}
-+	if (enabled)
-+		return damon_stat_start();
- 	damon_stat_stop();
- 	return 0;
+ 	strscpy(path, buf, count + 1);
++	if (!mutex_trylock(&damon_sysfs_lock)) {
++		kfree(path);
++		return -EBUSY;
++	}
+ 	kfree(filter->memcg_path);
+ 	filter->memcg_path = path;
++	mutex_unlock(&damon_sysfs_lock);
+ 	return count;
  }
  
-+static int damon_stat_enabled_load(char *buffer, const struct kernel_param *kp)
-+{
-+	return sprintf(buffer, "%c\n", damon_stat_enabled() ? 'Y' : 'N');
-+}
-+
- static int __init damon_stat_init(void)
- {
- 	int err = 0;
 
 
