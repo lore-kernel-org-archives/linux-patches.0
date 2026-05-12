@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091E43BB100;
-	Tue, 12 May 2026 17:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF613955F9;
+	Tue, 12 May 2026 17:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608572; cv=none; b=pzFojm0wIo/yAcywq7rNtp+t/S7i/XmngjppgOWu5JxluzqL6VFE+Ttg+65MQb7L1pPjl0lhnx0DTw3LYvRJBDecFKrtHU9KNrMOPsrouWUxkCbk20LYMMgGwRc+aPDUFhkw4Ze0QfsfbRUnvONXN9Kxfk5QdwvnehBC2eXRG3E=
+	t=1778608574; cv=none; b=Y1aYzRcKBUCfCkOnavCAH80h3K31cGTbvR6zE+e+ELTP1xOwTCDfeDZVHkJLVbBMJrChZ2TBppBWX09WVuRP9g/1vrlZV3fItbkLohQrsj86qAvOX/NuvKCqf4OcSlt6LQtygz1mHu/32iI4DYrXc3sCCoesewO5CClnm91Fwmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608572; c=relaxed/simple;
-	bh=OojMH6UBtMgdrKqXahQE3FfZXejDsS2J1Bmn5xU7WWk=;
+	s=arc-20240116; t=1778608574; c=relaxed/simple;
+	bh=mEsn27ScPzfElfOfbhLpfjx/HdtxgRh3QrmIn1v6BCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VaUNeKAikj0AKX6mNWQ5rBPZ4R6PF4yr0qRR6gUMYkLFn+Xmj4A0Zxv02AZamUopMPvesNvZN51K07wCzemqBVOaCoVdEUvSjuu0550WRNIGu/cA0flOPDX53nyeJfx4ik9k1ZwJGoB9/QIHClOwCuZzNvGBa1ubvCaq4wPOpw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSuYOGKd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qTLwFCwv8uioN9CbqZHPDLU+zWjp8Z3Fk+gG+ctkuKwHAfhpPq3j6Z8l3zzyANoPiS/ChJ+4ECPXvwt7GtJ8/qMZBuaauFhnv/F1mLfDviiJYoNKkI79Pbm+wcj5hTCxWPH9whojKu4JdhZztSGIH1f88N/4jR+9ijRYe0f2RQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BmJqA/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSuYOGKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF6FC2BCB0;
-	Tue, 12 May 2026 17:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BmJqA/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD9AC2BCB0;
+	Tue, 12 May 2026 17:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608571;
-	bh=OojMH6UBtMgdrKqXahQE3FfZXejDsS2J1Bmn5xU7WWk=;
+	s=korg; t=1778608574;
+	bh=mEsn27ScPzfElfOfbhLpfjx/HdtxgRh3QrmIn1v6BCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fSuYOGKd3MmvM0RwEDnPRBSkvE/gj5oDDSJ8yjcvk6nE5dpnm1KOsXUgXpJcJDmuN
-	 Mqcwd3OWeiDjjSrkwy9uP5adl8ePrV1LvXttuAX9SuaBXPxBfyFGAy1tGVldDQ32O3
-	 lLOLRJLCvcS1qlmLaAMZ3TeVhiCWTbXBfnLznIts=
+	b=1BmJqA/UruD+1ATOd6e9imT0Tw5u7UGsvwMae3AV/FWYQ0HLjyy6rZWUAo/36NiLd
+	 6mj0EZnwqogvZo3QEArm7JjOF+pSV5ZDBTCO9mAU3KBeMzgN3BZJFBg5iATnl+jfq6
+	 DRFZEMG4XfgVfYx73hhnvKMLrEcYj473Rbesb9Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 132/270] thermal: core: Free thermal zone ID later during removal
-Date: Tue, 12 May 2026 19:38:53 +0200
-Message-ID: <20260512173941.232299685@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>
+Subject: [PATCH 6.18 133/270] thermal/drivers/sprd: Fix temperature clamping in sprd_thm_temp_to_rawdata
+Date: Tue, 12 May 2026 19:38:54 +0200
+Message-ID: <20260512173941.252058070@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -49,60 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit daae9c18feec74566e023fc88cfb0ce26e39d868 upstream.
+commit 83c0f9a5d679a6f8d84fc49b2f62ea434ccab4b6 upstream.
 
-The thermal zone removal ordering is different from the thermal zone
-registration rollback path ordering and the former is arguably
-problematic because freeing a thermal zone ID prematurely may cause
-it to be used during the registration of another thermal zone which
-may fail as a result.
+The temperature was never clamped to SPRD_THM_TEMP_LOW or
+SPRD_THM_TEMP_HIGH because the return value of clamp() was not used. Fix
+this by assigning the clamped value to 'temp'.
 
-Prevent that from occurring by changing the thermal zone removal
-ordering to reflect the thermal zone registration rollback path
-ordering.
+Casting SPRD_THM_TEMP_LOW and SPRD_THM_TEMP_HIGH to int is also
+redundant and can be removed.
 
-Also more the ida_destroy() call from thermal_zone_device_unregister()
-to thermal_release() for consistency.
-
-Fixes: b31ef8285b19 ("thermal core: convert ID allocation to IDA")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5063934.GXAFRqVoOG@rafael.j.wysocki
+Fixes: 554fdbaf19b1 ("thermal: sprd: Add Spreadtrum thermal driver support")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260307102422.306055-1-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/thermal_core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/thermal/sprd_thermal.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -965,6 +965,7 @@ static void thermal_release(struct devic
- 		tz = to_thermal_zone(dev);
- 		thermal_zone_destroy_device_groups(tz);
- 		thermal_set_governor(tz, NULL);
-+		ida_destroy(&tz->ida);
- 		mutex_destroy(&tz->lock);
- 		complete(&tz->removal);
- 	} else if (!strncmp(dev_name(dev), "cooling_device",
-@@ -1726,8 +1727,6 @@ void thermal_zone_device_unregister(stru
+--- a/drivers/thermal/sprd_thermal.c
++++ b/drivers/thermal/sprd_thermal.c
+@@ -192,7 +192,7 @@ static int sprd_thm_temp_to_rawdata(int
+ {
+ 	u32 val;
  
- 	thermal_thresholds_exit(tz);
- 	thermal_remove_hwmon_sysfs(tz);
--	ida_free(&thermal_tz_ida, tz->id);
--	ida_destroy(&tz->ida);
+-	clamp(temp, (int)SPRD_THM_TEMP_LOW, (int)SPRD_THM_TEMP_HIGH);
++	temp = clamp(temp, SPRD_THM_TEMP_LOW, SPRD_THM_TEMP_HIGH);
  
- 	device_del(&tz->device);
- 	put_device(&tz->device);
-@@ -1735,6 +1734,9 @@ void thermal_zone_device_unregister(stru
- 	thermal_notify_tz_delete(tz);
- 
- 	wait_for_completion(&tz->removal);
-+
-+	ida_free(&thermal_tz_ida, tz->id);
-+
- 	kfree(tz->tzp);
- 	kfree(tz);
- }
+ 	/*
+ 	 * According to the thermal datasheet, the formula of converting
 
 
