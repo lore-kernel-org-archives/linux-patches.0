@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1835034DB52;
-	Tue, 12 May 2026 18:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55F03EDE55;
+	Tue, 12 May 2026 18:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608982; cv=none; b=gjA0HuJrCtIJVOfnRYmhheKr2ykVa9qjia8W2RHE6RlnSnH+aBfjwCXZN8rQ4/OpZjn1dqV7bndgBiHTV/DPlzBh81yzQVW6Ma7TCcIZBVGYKvSGBQS7mRf5EREdC/nwUQRaGwtE+9bpJYHpRvP/kCOyYhDLh14Ljk+3KN2U10M=
+	t=1778608984; cv=none; b=ioYfvndOrQmEWOWlO0ZlZlqh0c7GhSABr5gtL1y4WCz2OFiOPhUVZJHEHAzg4kTOkfL1yEJMuXgSx0V9fzCGBORzAOJbfpq6Lqhj9Y7TnUslrNsST0n0ABKH2KfdXVdcBcw4Db8FBELcZ4y1NW7t74m4COHGcevFYn2UB0Bf3pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608982; c=relaxed/simple;
-	bh=IOLl9LZZnpHhBHn2iO5BRdpsk5PaK49bjeqnbL+NQ4I=;
+	s=arc-20240116; t=1778608984; c=relaxed/simple;
+	bh=LDI8UqjqKJ6meNubwE4wc/R3b7aLxFCynp0sGSrp6zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eX8URZA5ri1tGrFuTAklRHVjmGkHR+0Gi42Y7/jXTq7nHILcwyck/cwwXJOV7YOdjWX1GQzvXV87RJCnTR5G3NfCojx5Pw+RR9M7zvfokvo1PcEkG/9v7/cyAhySBzevHadK8owjhr0Sas1GQ0NUGI3nh9QbAYxJICCiQ4iiblg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdE/Y1ko; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vE/t1IWmmdPK7e3DBAUa0k1Vf5M+ji4WbuVxmte9/WjaCqHvs0v+EAnBTahCOZihBs2FRx1tIrBQzthpZFqUYGMOA858DmWaN+l+mBJTzZin/gVkT7oNf1Lxw7j+SjM7NLX7xb2NZytnmLVdBpiWzUEWUP55DFlkqNNi1zXzJBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8TD02Km; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdE/Y1ko"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C2EC2BCB0;
-	Tue, 12 May 2026 18:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8TD02Km"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D128C2BCB0;
+	Tue, 12 May 2026 18:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608982;
-	bh=IOLl9LZZnpHhBHn2iO5BRdpsk5PaK49bjeqnbL+NQ4I=;
+	s=korg; t=1778608984;
+	bh=LDI8UqjqKJ6meNubwE4wc/R3b7aLxFCynp0sGSrp6zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdE/Y1koyZJzLA/l/1dNgeB53tkih16Swj0TD2M18wMRQGnxOiYNnkgwKzUDoPbPz
-	 FHcjdGc8oEk9a5vsrux83SPGHbs4U9XkJ0PvQ8myLmDBbj1ogbZfqZzHjdzcnPjixV
-	 7lHMZrxENJDaoBbZKFn+q7knbY73Tpt+ORpcBVNo=
+	b=w8TD02KmpPN+veNhCsneDDz0FSHMHzTfeXIZO0wPvVFCa+cJPZv6EBxQ1asbjsr8K
+	 zgiMCBS9xzm6NptRJYOqmf9GMkbWTVcOpqbEV40zY9Sn0B6iR/xOz6JaScFlW4jReJ
+	 tKoLvnS9gxAbCaUdhTKJLM3r3+Z3fWnDUzOGdjJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 7.0 002/307] ipmi: Add limits to event and receive message requests
-Date: Tue, 12 May 2026 19:36:37 +0200
-Message-ID: <20260512173940.172124161@linuxfoundation.org>
+	Manas <ghandatmanas@gmail.com>,
+	Rakshit Awasthi <rakshitawasthi17@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 020/307] net/sched: sch_red: Replace direct dequeue call with peek and qdisc_dequeue_peeked
+Date: Tue, 12 May 2026 19:36:55 +0200
+Message-ID: <20260512173940.552908523@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,209 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit c4cca236968683eb0d59abfb12d5c7e4d8514227 upstream.
+commit 458d5615272d3de535748342eb68ca492343048c upstream.
 
-The driver would just fetch events and receive messages until the
-BMC said it was done.  To avoid issues with BMCs that never say they are
-done, add a limit of 10 fetches at a time.
+When red qdisc has children (eg qfq qdisc) whose peek() callback is
+qdisc_peek_dequeued(), we could get a kernel panic. When the parent of such
+qdiscs (eg illustrated in patch #3 as tbf) wants to retrieve an skb from
+its child (red in this case), it will do the following:
+ 1a. do a peek() - and when sensing there's an skb the child can offer, then
+     - the child in this case(red) calls its child's (qfq) peek.
+        qfq does the right thing and will return the gso_skb queue packet.
+        Note: if there wasnt a gso_skb entry then qfq will store it there.
+ 1b. invoke a dequeue() on the child (red). And herein lies the problem.
+     - red will call the child's dequeue() which will essentially just
+       try to grab something of qfq's queue.
 
-In addition, an si interface has an attn state it can return from the
-hardware which is supposed to cause a flag fetch to see if the driver
-needs to fetch events or message or a few other things.  If the attn
-bit gets stuck, it's a similar problem.  So allow messages in between
-flag fetches so the driver itself doesn't get stuck.
+[   78.667668][  T363] KASAN: null-ptr-deref in range [0x0000000000000048-0x000000000000004f]
+[   78.667927][  T363] CPU: 1 UID: 0 PID: 363 Comm: ping Not tainted 7.1.0-rc1-00033-g46f74a3f7d57-dirty #790 PREEMPT(full)
+[   78.668263][  T363] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+[   78.668486][  T363] RIP: 0010:qfq_dequeue+0x446/0xc90 [sch_qfq]
+[   78.668718][  T363] Code: 54 c0 e8 dd 90 00 f1 48 c7 c7 e0 03 54 c0 48 89 de e8 ce 90 00 f1 48 8d 7b 48 b8 ff ff 37 00 48 89 fa 48 c1 e0 2a 48 c1 ea 03 <80> 3c 02 00 74 05 e8 ef a1 e1 f1 48 8b 7b 48 48 8d 54 24 58 48 8d
+[   78.669312][  T363] RSP: 0018:ffff88810de573e0 EFLAGS: 00010216
+[   78.669533][  T363] RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+[   78.669790][  T363] RDX: 0000000000000009 RSI: 0000000000000004 RDI: 0000000000000048
+[   78.670044][  T363] RBP: ffff888110dc4000 R08: ffffffffb1b0885a R09: fffffbfff6ba9078
+[   78.670297][  T363] R10: 0000000000000003 R11: ffff888110e31c80 R12: 0000001880000000
+[   78.670560][  T363] R13: ffff888110dc4150 R14: ffff888110dc42b8 R15: 0000000000000200
+[   78.670814][  T363] FS:  00007f66a8f09c40(0000) GS:ffff888163428000(0000) knlGS:0000000000000000
+[   78.671110][  T363] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   78.671324][  T363] CR2: 000055db4c6a30a8 CR3: 000000010da67000 CR4: 0000000000750ef0
+[   78.671585][  T363] PKRU: 55555554
+[   78.671713][  T363] Call Trace:
+[   78.671843][  T363]  <TASK>
+[   78.671936][  T363]  ? __pfx_qfq_dequeue+0x10/0x10 [sch_qfq]
+[   78.672148][  T363]  ? __pfx__printk+0x10/0x10
+[   78.672322][  T363]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   78.672496][  T363]  ? lockdep_hardirqs_on_prepare+0xa8/0x1a0
+[   78.672706][  T363]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   78.672875][  T363]  ? trace_hardirqs_on+0x19/0x1a0
+[   78.673047][  T363]  red_dequeue+0x65/0x270 [sch_red]
+[   78.673217][  T363]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   78.673385][  T363]  tbf_dequeue.cold+0xb0/0x70c [sch_tbf]
+[   78.673566][  T363]  __qdisc_run+0x169/0x1900
 
-This is a more general fix than the previous fix for the specific bad
-BMC, but should fix the more general issue of a BMC that won't stop
-saying it has data.
+The right thing to do in #1b is to grab the skb off gso_skb queue.
+This patchset fixes that issue by changing #1b to use qdisc_dequeue_peeked()
+method instead.
 
-This has been there from the beginning of the driver.  It's not a bug
-per-se, but it is accounting for bugs in BMCs.
-
-Reported-by: Matt Fleming <mfleming@cloudflare.com>
-Closes: https://lore.kernel.org/lkml/20260415115930.3428942-1-matt@readmodwrite.com/
-Fixes: <1da177e4c3f4> ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Fixes: 77be155cba4e ("pkt_sched: Add peek emulation for non-work-conserving qdiscs.")
+Reported-by: Manas <ghandatmanas@gmail.com>
+Reported-by: Rakshit Awasthi <rakshitawasthi17@gmail.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260430152957.194015-2-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_si_intf.c |   54 +++++++++++++++++++++++++++++++--------
- drivers/char/ipmi/ipmi_ssif.c    |   23 +++++++++++++++-
- 2 files changed, 64 insertions(+), 13 deletions(-)
+ net/sched/sch_red.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_si_intf.c
-+++ b/drivers/char/ipmi/ipmi_si_intf.c
-@@ -168,6 +168,10 @@ struct smi_info {
- 			     OEM2_DATA_AVAIL)
- 	unsigned char       msg_flags;
+--- a/net/sched/sch_red.c
++++ b/net/sched/sch_red.c
+@@ -155,7 +155,7 @@ static struct sk_buff *red_dequeue(struc
+ 	struct red_sched_data *q = qdisc_priv(sch);
+ 	struct Qdisc *child = q->qdisc;
  
-+	/* When requesting events and messages, don't do it forever. */
-+	unsigned int        num_requests_in_a_row;
-+	bool		    last_was_flag_fetch;
-+
- 	/* Does the BMC have an event buffer? */
- 	bool		    has_event_buffer;
- 
-@@ -410,7 +414,10 @@ static void start_getting_msg_queue(stru
- 
- 	start_new_msg(smi_info, smi_info->curr_msg->data,
- 		      smi_info->curr_msg->data_size);
--	smi_info->si_state = SI_GETTING_MESSAGES;
-+	if (smi_info->si_state != SI_GETTING_MESSAGES) {
-+		smi_info->num_requests_in_a_row = 0;
-+		smi_info->si_state = SI_GETTING_MESSAGES;
-+	}
- }
- 
- static void start_getting_events(struct smi_info *smi_info)
-@@ -421,7 +428,10 @@ static void start_getting_events(struct
- 
- 	start_new_msg(smi_info, smi_info->curr_msg->data,
- 		      smi_info->curr_msg->data_size);
--	smi_info->si_state = SI_GETTING_EVENTS;
-+	if (smi_info->si_state != SI_GETTING_EVENTS) {
-+		smi_info->num_requests_in_a_row = 0;
-+		smi_info->si_state = SI_GETTING_EVENTS;
-+	}
- }
- 
- /*
-@@ -595,6 +605,7 @@ static void handle_transaction_done(stru
- 			smi_info->si_state = SI_NORMAL;
- 		} else {
- 			smi_info->msg_flags = msg[3];
-+			smi_info->last_was_flag_fetch = true;
- 			handle_flags(smi_info);
- 		}
- 		break;
-@@ -640,6 +651,11 @@ static void handle_transaction_done(stru
- 		} else {
- 			smi_inc_stat(smi_info, events);
- 
-+			smi_info->num_requests_in_a_row++;
-+			if (smi_info->num_requests_in_a_row > 10)
-+				/* Stop if we do this too many times. */
-+				smi_info->msg_flags &= ~EVENT_MSG_BUFFER_FULL;
-+
- 			/*
- 			 * Do this before we deliver the message
- 			 * because delivering the message releases the
-@@ -678,6 +694,11 @@ static void handle_transaction_done(stru
- 		} else {
- 			smi_inc_stat(smi_info, incoming_messages);
- 
-+			smi_info->num_requests_in_a_row++;
-+			if (smi_info->num_requests_in_a_row > 10)
-+				/* Stop if we do this too many times. */
-+				smi_info->msg_flags &= ~RECEIVE_MSG_AVAIL;
-+
- 			/*
- 			 * Do this before we deliver the message
- 			 * because delivering the message releases the
-@@ -820,6 +841,26 @@ restart:
- 	}
- 
- 	/*
-+	 * If we are currently idle, or if the last thing that was
-+	 * done was a flag fetch and there is a message pending, try
-+	 * to start the next message.
-+	 *
-+	 * We do the waiting message check to avoid a stuck flag
-+	 * completely wedging the driver.  Let a message through
-+	 * in between flag operations if that happens.
-+	 */
-+	if (si_sm_result == SI_SM_IDLE ||
-+	    (si_sm_result == SI_SM_ATTN && smi_info->waiting_msg &&
-+	     smi_info->last_was_flag_fetch)) {
-+		smi_info->last_was_flag_fetch = false;
-+		smi_inc_stat(smi_info, idles);
-+
-+		si_sm_result = start_next_msg(smi_info);
-+		if (si_sm_result != SI_SM_IDLE)
-+			goto restart;
-+	}
-+
-+	/*
- 	 * We prefer handling attn over new messages.  But don't do
- 	 * this if there is not yet an upper layer to handle anything.
- 	 */
-@@ -846,15 +887,6 @@ restart:
- 		}
- 	}
- 
--	/* If we are currently idle, try to start the next message. */
--	if (si_sm_result == SI_SM_IDLE) {
--		smi_inc_stat(smi_info, idles);
--
--		si_sm_result = start_next_msg(smi_info);
--		if (si_sm_result != SI_SM_IDLE)
--			goto restart;
--	}
--
- 	if ((si_sm_result == SI_SM_IDLE)
- 	    && (atomic_read(&smi_info->req_events))) {
- 		/*
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -225,6 +225,9 @@ struct ssif_info {
- 	bool		    has_event_buffer;
- 	bool		    supports_alert;
- 
-+	/* When requesting events and messages, don't do it forever. */
-+	unsigned int        num_requests_in_a_row;
-+
- 	/*
- 	 * Used to tell what we should do with alerts.  If we are
- 	 * waiting on a response, read the data immediately.
-@@ -413,7 +416,10 @@ static void start_event_fetch(struct ssi
- 	}
- 
- 	ssif_info->curr_msg = msg;
--	ssif_info->ssif_state = SSIF_GETTING_EVENTS;
-+	if (ssif_info->ssif_state != SSIF_GETTING_EVENTS) {
-+		ssif_info->num_requests_in_a_row = 0;
-+		ssif_info->ssif_state = SSIF_GETTING_EVENTS;
-+	}
- 	ipmi_ssif_unlock_cond(ssif_info, flags);
- 
- 	msg->data[0] = (IPMI_NETFN_APP_REQUEST << 2);
-@@ -436,7 +442,10 @@ static void start_recv_msg_fetch(struct
- 	}
- 
- 	ssif_info->curr_msg = msg;
--	ssif_info->ssif_state = SSIF_GETTING_MESSAGES;
-+	if (ssif_info->ssif_state != SSIF_GETTING_MESSAGES) {
-+		ssif_info->num_requests_in_a_row = 0;
-+		ssif_info->ssif_state = SSIF_GETTING_MESSAGES;
-+	}
- 	ipmi_ssif_unlock_cond(ssif_info, flags);
- 
- 	msg->data[0] = (IPMI_NETFN_APP_REQUEST << 2);
-@@ -843,6 +852,11 @@ static void msg_done_handler(struct ssif
- 			ssif_info->msg_flags &= ~EVENT_MSG_BUFFER_FULL;
- 			handle_flags(ssif_info, flags);
- 		} else {
-+			ssif_info->num_requests_in_a_row++;
-+			if (ssif_info->num_requests_in_a_row > 10)
-+				/* Stop if we do this too many times. */
-+				ssif_info->msg_flags &= ~EVENT_MSG_BUFFER_FULL;
-+
- 			handle_flags(ssif_info, flags);
- 			ssif_inc_stat(ssif_info, events);
- 			deliver_recv_msg(ssif_info, msg);
-@@ -876,6 +890,11 @@ static void msg_done_handler(struct ssif
- 			ssif_info->msg_flags &= ~RECEIVE_MSG_AVAIL;
- 			handle_flags(ssif_info, flags);
- 		} else {
-+			ssif_info->num_requests_in_a_row++;
-+			if (ssif_info->num_requests_in_a_row > 10)
-+				/* Stop if we do this too many times. */
-+				ssif_info->msg_flags &= ~RECEIVE_MSG_AVAIL;
-+
- 			ssif_inc_stat(ssif_info, incoming_messages);
- 			handle_flags(ssif_info, flags);
- 			deliver_recv_msg(ssif_info, msg);
+-	skb = child->dequeue(child);
++	skb = qdisc_dequeue_peeked(child);
+ 	if (skb) {
+ 		qdisc_bstats_update(sch, skb);
+ 		qdisc_qstats_backlog_dec(sch, skb);
 
 
