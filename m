@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2B3284883;
-	Tue, 12 May 2026 18:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7DF3EDE5D;
+	Tue, 12 May 2026 18:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609038; cv=none; b=fFTgm/Ddlo/i0Esv+gilKWCxCpFTrKPbS+Qt/crxfEra4XMx9BR60FJ+X6sixdG/GimLH8maFSEoYVfSA5x/xA6YJ0duYNSM4LgeneD3cEiJe3Nt4VqwubRA3ZGIpyCrnWZLVaZiHjKtD699YlJ38QJcoVAx17fr5hrzxj1lMJk=
+	t=1778609041; cv=none; b=k6Sa3UFE7mr7rZ9VY0lQO9tMzfaFxKd5eULgCa23Wc+gcGt6iYalO87b3dHRdi6j2+Hk5FtXRaJtIYcYNIdgYzyg2mCWuFb2nZZjzcgib5RoK27Ws/Jp86heu7FGoMbpaR+a+k5YAeqSu0bOdVR8nDz5SnTuk51gJb/eCJ23JQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609038; c=relaxed/simple;
-	bh=XHklFYj+LNRezlTuu9CSO4dB9A/kUG76E8qu3dRmdHA=;
+	s=arc-20240116; t=1778609041; c=relaxed/simple;
+	bh=j1kqhjg/VQbavXrYRepnNIbGPMBXSJLSN25JFAXi75Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tahfCWN18wr91EM55cWdfXxtdlC/dg890UHw6n3KtoPsXWsfznLJm8Lh0lvIuGz/dM1b8DfUQ8FZosKZxS3rcjpTgw+ijBwlpltSaXHGNRFnBhCJlrg1fZt1wyTydu+31Pvol0VGrYeUzVYFdKKJw8ZwR6p8iBY2A1Wz+cEhm28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZK5h1xB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HVWPDHk97HFdoyuzBM2M6IuDyt3XsDlBXB+VlJLp7xVPYsU10J7XYGB7KlvwhkLU5q2tJAJ0MWcpJlQnvttXkHriXwQmTNh5nyvL2cOj+z/01KgmVSrzbP4Zo80aoypVXDJi3pywQZdD0taKP0BXn0gXIRx0uYg82xpmph9xsDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDYVuUPE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZK5h1xB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53460C2BCB0;
-	Tue, 12 May 2026 18:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDYVuUPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D854BC2BCB0;
+	Tue, 12 May 2026 18:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609038;
-	bh=XHklFYj+LNRezlTuu9CSO4dB9A/kUG76E8qu3dRmdHA=;
+	s=korg; t=1778609041;
+	bh=j1kqhjg/VQbavXrYRepnNIbGPMBXSJLSN25JFAXi75Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZK5h1xBHMwlwvR+jNcntX6b3Wh3oxqkuPyh4ECTYCKcCFKVqlfFoYgK4rQ4GMQc3
-	 85WwqwxO3d+L4eOm2ob7IHLFO/6fJ9DTxhMINmPMUppCHKWBDWFxgBtguJLVPNp9e2
-	 KjBPr69nlqU6CjInd0YtWIqqBAKJZzZGQfQXNd+4=
+	b=ZDYVuUPE/L3dh7gBYZoATm49lyueEE4GjTFp6EyzRxVyJDsJondDP2vZBZ72nvPV5
+	 8kvLijdEUDphApWTFLTmKUbDItZpgJ+7AIVey6lxxEcDahAfgkFK5LW/ECPmc578f+
+	 Q3ePMepSulAdgxgqWlnO/kzuCealpWJPVf82AQgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Porcedda <fabio.porcedda@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.0 042/307] USB: serial: option: add Telit Cinterion LE910Cx compositions
-Date: Tue, 12 May 2026 19:37:17 +0200
-Message-ID: <20260512173941.012159745@linuxfoundation.org>
+	Quan Zhou <quan.zhou@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 7.0 025/307] wifi: mt76: mt7921: fix ROC abort flow interruption in mt7921_roc_work
+Date: Tue, 12 May 2026 19:37:00 +0200
+Message-ID: <20260512173940.656622079@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,135 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Porcedda <fabio.porcedda@gmail.com>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-commit 100201d349edd226ca3470c894c92dccc67ee7a8 upstream.
+commit fdfa39f9f4fbae532b162da913a67b2410caf38f upstream.
 
-Add the following Telit Cinterion LE910Cx compositions:
+The mt7921_set_roc API may be executed concurrently with mt7921_roc_work,
+specifically between the following code paths:
 
-0x1251: RNDIS + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
-T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=108 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1251 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=02 Prot=ff Driver=rndis_host
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+- The check and clear of MT76_STATE_ROC in mt7921_roc_work:
+    if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
+        return;
 
-0x1253: ECM + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
-T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=121 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1253 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+- The execution of ieee80211_iterate_active_interfaces.
 
-0x1254: tty (AT) + tty (AT)
-T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=122 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1254 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 2 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+This race condition can interrupt the ROC abort flow, resulting in
+the ROC process failing to abort as expected.
 
-0x1255: tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
-T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=123 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1255 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+To address this defect, the modification of MT76_STATE_ROC is now
+protected by mt792x_mutex_acquire(phy->dev). This ensures that
+changes to the ROC state are properly synchronized, preventing
+race conditions and ensuring the ROC abort flow is not interrupted.
 
+Fixes: 034ae28b56f1 ("wifi: mt76: mt7921: introduce remain_on_channel support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Reviewed-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/2568ece8b557e5dda79391414c834ef3233049b6.1769133724.git.quan.zhou@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1513,7 +1513,11 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1231, 0xff),	/* Telit LE910Cx (RNDIS) */
- 	  .driver_info = NCTRL(2) | RSVD(3) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x1250, 0xff, 0x00, 0x00) },	/* Telit LE910Cx (rmnet) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1251, 0xff) },	/* Telit LE910Cx (RNDIS) */
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1252, 0xff) },	/* Telit LE910Cx (MBIM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1253, 0xff) },	/* Telit LE910Cx (ECM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1254, 0xff) },	/* Telit LE910Cx */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1255, 0xff) },	/* Telit LE910Cx */
- 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1260),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1261),
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -387,10 +387,11 @@ void mt7921_roc_work(struct work_struct
+ 	phy = (struct mt792x_phy *)container_of(work, struct mt792x_phy,
+ 						roc_work);
+ 
+-	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
+-		return;
+-
+ 	mt792x_mutex_acquire(phy->dev);
++	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state)) {
++		mt792x_mutex_release(phy->dev);
++		return;
++	}
+ 	ieee80211_iterate_active_interfaces(phy->mt76->hw,
+ 					    IEEE80211_IFACE_ITER_RESUME_ALL,
+ 					    mt7921_roc_iter, phy);
 
 
