@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E3121FF21;
-	Tue, 12 May 2026 17:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210A62EBB84;
+	Tue, 12 May 2026 17:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607949; cv=none; b=lEMZhFpULDvD3Sy5w+064vbRNEuYNOwHs/tjiIjoR1HLQCi7l0KHwFyE9TXuMKu2MAu1x0mA3/Jx1yHhT0jVi9JVXRb8XIYrXHM/TVQHSgYoOrFOIq1A51LI16VGYyVPjNZ7Oqs9R2f8hrsRMO2q4IE0N2vouob5ld5wxIu3eT8=
+	t=1778607952; cv=none; b=EJXXXPdVa69x9cKaEeSxrj0HfEettVb8RbUtl5xXtxkLWSIkEfRrTqkANXOlD0kNJLP2GM4OGH8vLr0LFJH43QSx6spW0Al8348GIZr2aUs9Q8TzIocG/fpMd+QfC1CPLOW8HjBROH9Kd6iLR/j++ZpFLKVI/aqwOxVKNWwQD2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607949; c=relaxed/simple;
-	bh=jt9WE8hqJcQ2JaUCYjrWAd+vYyjevRuZW98ubAEuCfg=;
+	s=arc-20240116; t=1778607952; c=relaxed/simple;
+	bh=E6rn2Bm7Wq00vfEEmvRcph0cgl77Gtufa3WpuaItghg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHRLSDcLNMC/BuJzqbIuXtL/1Uu/VAA7iCuZa+mq3BwzzqvnlZVPS2fGtimI0INhUFK52hloM6yxy9LoB1vZgwG6zlblq8tXPM412BSCy1P4C4ZWATvWAdEUN4wnJ0HtYUAMZcvf9TKzKyeCsvn6rMS6HIdrRF05v//c+pX7Wa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16Jh5Md8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jd6WFcQF58lUaPIcdah6tajUhTkv8v/Tb6nRsNbaA559u1a3uLd66mBq+rCtmXLTFXIGYm8WKIuRhek3zrhasTcuZO/I63+M+SFMUQLJi7iwB8yFSTxwBAg40koYINy2MBN/fFp6nMXwsX6S/fG9DoDoFRweiAlMaP6R42Mfh2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sN2G4AUZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16Jh5Md8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBD3C2BCC7;
-	Tue, 12 May 2026 17:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sN2G4AUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC127C2BCB0;
+	Tue, 12 May 2026 17:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607949;
-	bh=jt9WE8hqJcQ2JaUCYjrWAd+vYyjevRuZW98ubAEuCfg=;
+	s=korg; t=1778607952;
+	bh=E6rn2Bm7Wq00vfEEmvRcph0cgl77Gtufa3WpuaItghg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16Jh5Md8Jd3+tTULV8AhbBQrFPMSj6BmGY+UPWhF+0SnJxoch/ZUYB7ZLmC7+JNM3
-	 9EUnluTK5nDGNOVHAgTZqMlXtwh+3ryPAN3gePB7kp6Q7QYzhq6cmp/VzFPA4aio+j
-	 5TTdQstKdi6C8jaYWuflBG+ZVpCowpfMXFzGm3mA=
+	b=sN2G4AUZ17lmaru1h/F9Uk4wsE59xHAndy5dixYAL41XcM3FKFiIs9Xf33V3+lGG9
+	 OuWBYS8LWMabFOpG+6VuZWp1CctPLF1AvRFPv04HoM594AbD5zwBYSgssYxJmtWcjj
+	 Vc4scNaKd3gbaHHmGT7Xcd0Bj4r1BOJ316/804IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Soenke Huster <soenke.huster@eknoes.de>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 061/206] Bluetooth: virtio_bt: clamp rx length before skb_put
-Date: Tue, 12 May 2026 19:38:33 +0200
-Message-ID: <20260512173934.134128842@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 097/206] ice: fix double free in ice_sf_eth_activate() error path
+Date: Tue, 12 May 2026 19:39:09 +0200
+Message-ID: <20260512173934.911766101@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,91 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 21bd244b6de5d2fe1063c23acc93fbdd2b20d112 upstream.
+commit 9aab1c3d7299285e2569cbc0ed5892d631a241b2 upstream.
 
-virtbt_rx_work() calls skb_put(skb, len) where len comes directly
-from virtqueue_get_buf() with no validation against the buffer we
-posted to the device. The RX skb is allocated in virtbt_add_inbuf()
-and exposed to virtio as exactly 1000 bytes via sg_init_one().
+When auxiliary_device_add() fails, ice_sf_eth_activate() jumps to
+aux_dev_uninit and calls auxiliary_device_uninit(&sf_dev->adev).
 
-Checking len against skb_tailroom(skb) is not sufficient because
-alloc_skb() can leave more tailroom than the 1000 bytes actually
-handed to the device. A malicious or buggy backend can therefore
-report used.len between 1001 and skb_tailroom(skb), causing skb_put()
-to include uninitialized kernel heap bytes that were never written by
-the device.
+The device release callback ice_sf_dev_release() frees sf_dev, but
+the current error path falls through to sf_dev_free and calls
+kfree(sf_dev) again, causing a double free.
 
-The same path also accepts len == 0, in which case skb_put(skb, 0)
-leaves the skb empty but virtbt_rx_handle() still reads the pkt_type
-byte from skb->data, consuming uninitialized memory.
+Keep kfree(sf_dev) for the auxiliary_device_init() failure path, but
+avoid falling through to sf_dev_free after auxiliary_device_uninit().
 
-Define VIRTBT_RX_BUF_SIZE once and reuse it in alloc_skb() and
-sg_init_one(), and gate virtbt_rx_work() on that same constant so
-the bound checked matches the buffer actually exposed to the device.
-Reject used.len == 0 in the same gate so an empty completion can
-no longer reach virtbt_rx_handle().
-
-Use bt_dev_err_ratelimited() because the length value comes from an
-untrusted backend that can otherwise flood the kernel log.
-
-Same class of bug as commit c04db81cd028 ("net/9p: Fix buffer
-overflow in USB transport layer"), which hardened the USB 9p
-transport against unchecked device-reported length.
-
-Fixes: 160fbcf3bfb9 ("Bluetooth: virtio_bt: Use skb_put to set length")
+Fixes: 13acc5c4cdbe ("ice: subfunction activation and base devlink ops")
 Cc: stable@vger.kernel.org
-Cc: Soenke Huster <soenke.huster@eknoes.de>
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-3-686c33c9828d@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/virtio_bt.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_sf_eth.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/bluetooth/virtio_bt.c
-+++ b/drivers/bluetooth/virtio_bt.c
-@@ -12,6 +12,7 @@
- #include <net/bluetooth/hci_core.h>
+diff --git a/drivers/net/ethernet/intel/ice/ice_sf_eth.c b/drivers/net/ethernet/intel/ice/ice_sf_eth.c
+index 2cf04bc6edce..a730aa368c92 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sf_eth.c
++++ b/drivers/net/ethernet/intel/ice/ice_sf_eth.c
+@@ -305,6 +305,8 @@ ice_sf_eth_activate(struct ice_dynamic_port *dyn_port,
  
- #define VERSION "0.1"
-+#define VIRTBT_RX_BUF_SIZE 1000
- 
- enum {
- 	VIRTBT_VQ_TX,
-@@ -33,11 +34,11 @@ static int virtbt_add_inbuf(struct virti
- 	struct sk_buff *skb;
- 	int err;
- 
--	skb = alloc_skb(1000, GFP_KERNEL);
-+	skb = alloc_skb(VIRTBT_RX_BUF_SIZE, GFP_KERNEL);
- 	if (!skb)
- 		return -ENOMEM;
- 
--	sg_init_one(sg, skb->data, 1000);
-+	sg_init_one(sg, skb->data, VIRTBT_RX_BUF_SIZE);
- 
- 	err = virtqueue_add_inbuf(vq, sg, 1, skb, GFP_KERNEL);
- 	if (err < 0) {
-@@ -227,8 +228,15 @@ static void virtbt_rx_work(struct work_s
- 	if (!skb)
- 		return;
- 
--	skb_put(skb, len);
--	virtbt_rx_handle(vbt, skb);
-+	if (!len || len > VIRTBT_RX_BUF_SIZE) {
-+		bt_dev_err_ratelimited(vbt->hdev,
-+				       "rx reply len %u outside [1, %u]\n",
-+				       len, VIRTBT_RX_BUF_SIZE);
-+		kfree_skb(skb);
-+	} else {
-+		skb_put(skb, len);
-+		virtbt_rx_handle(vbt, skb);
-+	}
- 
- 	if (virtbt_add_inbuf(vbt) < 0)
- 		return;
+ aux_dev_uninit:
+ 	auxiliary_device_uninit(&sf_dev->adev);
++	return err;
++
+ sf_dev_free:
+ 	kfree(sf_dev);
+ xa_erase:
+-- 
+2.54.0
+
 
 
