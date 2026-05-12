@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128763DB980;
-	Tue, 12 May 2026 17:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BC3385D85;
+	Tue, 12 May 2026 17:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607816; cv=none; b=n078jV3YYgi1qNb2vy/jKV2KvPIp3qI/nEvmjAkicrwE9DsSc3aihKMc5a511eIetByEgDdaW8N3aQV4NGDA6IjrnuuLYozLBa6Tin5us8+uWSJUR8+I+M1UGsMQNZpc4cajo+Dg5Ckf+Wu9C6naepj8fLUJzQl/o04frxp8wBY=
+	t=1778607818; cv=none; b=snxYfTex5oJfn2NUJ44QFnZ6X4xvsZiZx2f9eMl5r78M1sMG+nXrSaj42NFPiR2cDvdrwoPfVkAAUduQ4VbLkynSkxEj0TzrLRtit1YGhgID8gL82hgiUGOAbF0andyzoFZ12nzhk+8ln8V9KXOhjWll2LMkXNgaVx4qnQsyops=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607816; c=relaxed/simple;
-	bh=Y6Nqp1YkX1gaHbWZeggzwQt1JbEfXDCScyJ6PAv3h00=;
+	s=arc-20240116; t=1778607818; c=relaxed/simple;
+	bh=DCkXkQsLnjSIV+GQBBkdzA+SeWTZWH0amXGnUxW6FFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pedESdsjR26kkSW1yIxs3fynmE80+tT04vSTTfal0O9HG8Xz3oLpGPy+zLyGqmgmX24EszKlF124fJeuotmPoNbBcWTNjgWUOuoRAkGmzoLCa2Rt4YcvfzqfWPiDSJJ33GdBDZXh0eqO7X2MRLRv4H8o1kDDQPtYuN/7j4vnm9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijz088VT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GFfhq5G1vyy4Q/lkgs+tynSk3b+SO0Oi+uOsroAaFhIf3T/56I3eeCCwD4DXx1L9YWKJyJ4gFzNUzQZZzgr4ZnS+S7zdybJBdBVspV+XLp24t+/Z9VhQeADfIDhKZgPv85PvdHO4oGzwrW68egobBLqFyAvYnE6cai6Cr0MGLrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAp+4fJS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijz088VT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614BAC2BCB0;
-	Tue, 12 May 2026 17:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAp+4fJS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF498C2BCB0;
+	Tue, 12 May 2026 17:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607815;
-	bh=Y6Nqp1YkX1gaHbWZeggzwQt1JbEfXDCScyJ6PAv3h00=;
+	s=korg; t=1778607818;
+	bh=DCkXkQsLnjSIV+GQBBkdzA+SeWTZWH0amXGnUxW6FFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ijz088VTWcXh7Wc9AMzt1BwRyhvfAakkKoMoSMzP4W7NRVxPWxgGfDtuE6Ef8SnQU
-	 IHGS7nl+XFaR/88jJH/nfu1pYUPBHP+QvVedKtmpn3eY5LCWnE1gW4LTu5l/RJXaYJ
-	 8TUsqnoa4nmXLIIiO4bPOsd3nDlEvxuieU8Vb5XU=
+	b=ZAp+4fJSmWv0K8+5cPzCRHT+LqqeeQGxutdrikWV/aj2sdryfWUpnEkoiBs0UdhOi
+	 rLyXjnpu3Bj42JQp4LUsXqjTPPBWNK+wSD+SZZ1HK3GbSgrPLzLUij1TxN6/mIGFZT
+	 vCcweRYeQtzQ8whwovj0ZKaRouF+9oqWv1LwUpK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 045/206] ALSA: usb-audio: Fix UAC3 cluster descriptor size check
-Date: Tue, 12 May 2026 19:38:17 +0200
-Message-ID: <20260512173933.789516459@linuxfoundation.org>
+	Amit Sunil Dhamne <amitsd@google.com>,
+	stable <stable@kernel.org>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.12 046/206] usb: typec: tcpm: reset internal port states on soft reset AMS
+Date: Tue, 12 May 2026 19:38:18 +0200
+Message-ID: <20260512173933.811124271@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -44,50 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Amit Sunil Dhamne <amitsd@google.com>
 
-commit 26265dd69da32d88a88d21987853cec899d9e21f upstream.
+commit 2909f0d4994fb4306bf116df5ccee797791fce2c upstream.
 
-The UAC3 cluster descriptor length check in
-snd_usb_get_audioformat_uac3()was added to
-make sure that the buffer is large enough for
-a struct uac3_cluster_header_descriptor before the
-returned data is cast and used.
+Reset internal port states (such as vdm_sm_running and
+explicit_contract) on soft reset AMS as the port needs to negotiate a
+new contract. The consequence of leaving the states in as-is cond are as
+follows:
+  * port is in SRC power role and an explicit contract is negotiated
+    with the port partner (in sink role)
+  * port partner sends a Soft Reset AMS while VDM State Machine is
+    running
+  * port accepts the Soft Reset request and the port advertises src caps
+  * port partner sends a Request message but since the explicit_contract
+    and vdm_sm_running are true from previous negotiation, the port ends
+    up sending Soft Reset instead of Accept msg.
 
-However, the check uses sizeof(cluster), where cluster
-is a pointer, not the size of the descriptor header.
-This makes the validation depend on the architecture
-pointer size and does not match the intended object size.
+Stub Log:
+[  203.653942] AMS DISCOVER_IDENTITY start
+[  203.653947] PD TX, header: 0x176f
+[  203.655901] PD TX complete, status: 0
+[  203.657470] PD RX, header: 0x124f [1]
+[  203.657477] Rx VDM cmd 0xff008081 type 2 cmd 1 len 1
+[  203.657482] AMS DISCOVER_IDENTITY finished
+[  203.657484] cc:=4
+[  204.155698] PD RX, header: 0x144f [1]
+[  204.155718] Rx VDM cmd 0xeeee8001 type 0 cmd 1 len 1
+[  204.155741] PD TX, header: 0x196f
+[  204.157622] PD TX complete, status: 0
+[  204.160060] PD RX, header: 0x4d [1]
+[  204.160066] state change SRC_READY -> SOFT_RESET [rev2 SOFT_RESET_AMS]
+[  204.160076] PD TX, header: 0x163
+[  204.162486] PD TX complete, status: 0
+[  204.162832] AMS SOFT_RESET_AMS finished
+[  204.162840] cc:=4
+[  204.162891] AMS POWER_NEGOTIATION start
+[  204.162896] state change SOFT_RESET -> AMS_START [rev2 POWER_NEGOTIATION]
+[  204.162908] state change AMS_START -> SRC_SEND_CAPABILITIES [rev2 POWER_NEGOTIATION]
+[  204.162913] PD TX, header: 0x1361
+[  204.165529] PD TX complete, status: 0
+[  204.165571] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES_TIMEOUT @ 60 ms [rev2 POWER_NEGOTIATION]
+[  204.166996] PD RX, header: 0x1242 [1]
+[  204.167009] state change SRC_SEND_CAPABILITIES -> SRC_SOFT_RESET_WAIT_SNK_TX [rev2 POWER_NEGOTIATION]
+[  204.167019] AMS POWER_NEGOTIATION finished
+[  204.167020] cc:=4
+[  204.167083] AMS SOFT_RESET_AMS start
+[  204.167086] state change SRC_SOFT_RESET_WAIT_SNK_TX -> SOFT_RESET_SEND [rev2 SOFT_RESET_AMS]
+[  204.167092] PD TX, header: 0x16d
+[  204.168824] PD TX complete, status: 0
+[  204.168854] pending state change SOFT_RESET_SEND -> HARD_RESET_SEND @ 60 ms [rev2 SOFT_RESET_AMS]
+[  204.171876] PD RX, header: 0x43 [1]
+[  204.171879] AMS SOFT_RESET_AMS finished
 
-Check against sizeof(*cluster) instead.
+This causes COMMON.PROC.PD.11.2 check failure for
+TEST.PD.VDM.SRC.2_Rev2Src test on the PD compliance tester.
 
-Fixes: fb4e2a6e8f28 ("ALSA: usb-audio: Fix out-of-bounds read in snd_usb_get_audioformat_uac3()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260424-alsa-usb-uac3-cluster-size-v1-1-99a5808898a3@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Fixes: 8d3a0578ad1a ("usb: typec: tcpm: Respond Wait if VDM state machine is running")
+Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260414-fix-soft-reset-v1-1-01d7cb9764e2@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/stream.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/tcpm/tcpm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -998,7 +998,7 @@ snd_usb_get_audioformat_uac3(struct snd_
- 	 * and request Cluster Descriptor
- 	 */
- 	wLength = le16_to_cpu(hc_header.wLength);
--	if (wLength < sizeof(cluster))
-+	if (wLength < sizeof(*cluster))
- 		return NULL;
- 	cluster = kzalloc(wLength, GFP_KERNEL);
- 	if (!cluster)
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -5614,6 +5614,8 @@ static void run_state_machine(struct tcp
+ 
+ 	case VCONN_SWAP_ACCEPT:
+ 		tcpm_pd_send_control(port, PD_CTRL_ACCEPT, TCPC_TX_SOP);
++		port->vdm_sm_running = false;
++		port->explicit_contract = false;
+ 		tcpm_ams_finish(port);
+ 		tcpm_set_state(port, VCONN_SWAP_START, 0);
+ 		break;
 
 
