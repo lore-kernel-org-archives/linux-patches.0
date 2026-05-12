@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5539B3955C1;
-	Tue, 12 May 2026 17:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E688A33B6CC;
+	Tue, 12 May 2026 17:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608657; cv=none; b=dnv6lBsMrahuXEkZbINOdLdagQSPA0f9vyaC/0r7tRaiindfSK/OHAlUHPVAJ7xBreNxrVWmfh+40gbd7BnHf90DyLDLlA4cvSqvSERxkI9Aa8wWj6n8hOahNdBQAZ4V1rThX6+DP4P2Bj4d0zHBfS6I95+IjmvAbEYMUjHRjfw=
+	t=1778608660; cv=none; b=UpS7cqKiixhExKY+MxAfHuV61ctg9sEOmHKdOm/0Oq7STIN8R8NnVnDKMhuY8s0xGHsTkRTcvYt8X14lfTn1pyum0ywAJQhfTdC5DnZJsjK9H456FmlPe/qidB8j32aCWvKf2aJ0izEmDQ7WqHAUChZdIWXOtRZzmXgLv1b2uvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608657; c=relaxed/simple;
-	bh=w+e6KyIIqv3FeP98c6rrtMN0BFz4xtwNIIcpJTR2aBI=;
+	s=arc-20240116; t=1778608660; c=relaxed/simple;
+	bh=DMFqJuiAPaaXXVWVZQKldhYogYVEAA0LHjIe68MOPL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSu1Y9KQMiDuJD3lgDPasBIoOd3ur1kAI6onkE5crMcB2oivpx2L4AecrlBg9ENe8K3YTGH4lBnuLHcGBotB9J/8ral4jnHcRn32c8wdrApiqSB5HdPh5GDtXJsVPtt9zMH1/UNRoYjuKyUNA4SHx4OSFA2AAqMkNHvFp/Nfkzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFRzJDG0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u6prykuSKqHq7TCcYVWzrm3R5CKj+2dVW18+VKZmMoAbv6VfiGxVQ9kHdfCnkChY5aG1wwr/djNCZNIvcfsJ1q4TBEkTt/LNs7Y8U1DpvZicnxrY7ocILSvGggY2ARkUiv0Y3vRC9MC7NjojlL5OxLUVcjFrbYxaG92H2mb4cPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBlzS2jw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFRzJDG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0113C2BCB0;
-	Tue, 12 May 2026 17:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBlzS2jw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C62EC2BCB0;
+	Tue, 12 May 2026 17:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608657;
-	bh=w+e6KyIIqv3FeP98c6rrtMN0BFz4xtwNIIcpJTR2aBI=;
+	s=korg; t=1778608659;
+	bh=DMFqJuiAPaaXXVWVZQKldhYogYVEAA0LHjIe68MOPL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CFRzJDG0LA4SvI3bpys1xmUOvXwhry0wMWG2Q2jED5XcHWoM/N/N2zsc3S0IOkFpD
-	 5Dbe/5AcyN7zvdgz6sfR+Cyc/QpGfPP+qDIZiCniZ+aEBCsVsGqysfjwFmIIm6mEZ5
-	 uca7X4N+Hlw81NDuLe9miEpQFpazb9BeTYPPBGv8=
+	b=uBlzS2jwixeo/kppIOdSWsD/XQYF+vboCAhUkLIgbPXxpcaiq2ataFDHl4eMvZB8e
+	 9YUkfMAPs+LRItvxqNkuV95IZDdN7LITl/AhftoP+i3LteO8XAok/TEBW32zSOo0Lb
+	 ovinCJkTfHq/9w+GxWE6P0YuceU3NfUez5M1/pZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian A. Ehrhardt" <lk@c--e.de>,
-	David Gow <davidgow@google.com>,
 	David Howells <dhowells@redhat.com>,
+	David Gow <davidgow@google.com>,
 	Kees Cook <kees@kernel.org>,
 	Petr Mladek <pmladek@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 162/270] lib/scatterlist: fix length calculations in extract_kvec_to_sg
-Date: Tue, 12 May 2026 19:39:23 +0200
-Message-ID: <20260512173941.857323960@linuxfoundation.org>
+Subject: [PATCH 6.18 163/270] lib/scatterlist: fix temp buffer in extract_user_to_sg()
+Date: Tue, 12 May 2026 19:39:24 +0200
+Message-ID: <20260512173941.879074897@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -56,88 +56,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 07b7d66e65d9cfe6b9c2c34aa22cfcaac37a5c45 upstream.
+commit 118cf3f55975352ac357fb194405031458186819 upstream.
 
-Patch series "Fix bugs in extract_iter_to_sg()", v3.
+Instead of allocating a temporary buffer for extracted user pages
+extract_user_to_sg() uses the end of the to be filled scatterlist as a
+temporary buffer.
 
-Fix bugs in the kvec and user variants of extract_iter_to_sg.  This series
-is growing due to useful remarks made by sashiko.dev.
-
-The main bugs are:
-- The length for an sglist entry when extracting from
-  a kvec can exceed the number of bytes in the page. This
-  is obviously not intended.
-- When extracting a user buffer the sglist is temporarily
-  used as a scratch buffer for extracted page pointers.
-  If the sglist already contains some elements this scratch
-  buffer could overlap with existing entries in the sglist.
-
-The series adds test cases to the kunit_iov_iter test that demonstrate all
-of these bugs.  Additionally, there is a memory leak fix for the test
-itself.
-
-The bugs were orignally introduced into kernel v6.3 where the function
-lived in fs/netfs/iterator.c.  It was later moved to lib/scatterlist.c in
-v6.5.  Thus the actual fix is only marked for backports to v6.5+.
-
-
-This patch (of 5):
-
-When extracting from a kvec to a scatterlist, do not cross page
-boundaries.  The required length was already calculated but not used as
-intended.
-
-Adjust the copied length if the loop runs out of sglist entries without
-extracting everything.
-
-While there, return immediately from extract_iter_to_sg if there are no
-sglist entries at all.
+Fix the calculation of the start address if the scatterlist already
+contains elements.  The unused space starts at sgtable->sgl +
+sgtable->nents not directly at sgtable->nents and the temporary buffer is
+placed at the end of this unused space.
 
 A subsequent commit will add kunit test cases that demonstrate that the
 patch is necessary.
 
-Link: https://lkml.kernel.org/r/20260326214905.818170-1-lk@c--e.de
-Link: https://lkml.kernel.org/r/20260326214905.818170-2-lk@c--e.de
+Pointed out by sashiko.dev on a previous iteration of this series.
+
+Link: https://lkml.kernel.org/r/20260326214905.818170-3-lk@c--e.de
 Fixes: 018584697533 ("netfs: Add a function to extract an iterator into a scatterlist")
 Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Cc: David Gow <davidgow@google.com>
 Cc: David Howells <dhowells@redhat.com>
+Cc: David Gow <davidgow@google.com>
 Cc: Kees Cook <kees@kernel.org>
 Cc: Petr Mladek <pmladek@suse.com>
 Cc: <stable@vger.kernel.org>	[v6.5+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/scatterlist.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ lib/scatterlist.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 --- a/lib/scatterlist.c
 +++ b/lib/scatterlist.c
-@@ -1223,7 +1223,7 @@ static ssize_t extract_kvec_to_sg(struct
- 			else
- 				page = virt_to_page((void *)kaddr);
+@@ -1099,8 +1099,7 @@ static ssize_t extract_user_to_sg(struct
+ 	size_t len, off;
  
--			sg_set_page(sg, page, len, off);
-+			sg_set_page(sg, page, seg, off);
- 			sgtable->nents++;
- 			sg++;
- 			sg_max--;
-@@ -1232,6 +1232,7 @@ static ssize_t extract_kvec_to_sg(struct
- 			kaddr += PAGE_SIZE;
- 			off = 0;
- 		} while (len > 0 && sg_max > 0);
-+		ret -= len;
+ 	/* We decant the page list into the tail of the scatterlist */
+-	pages = (void *)sgtable->sgl +
+-		array_size(sg_max, sizeof(struct scatterlist));
++	pages = (void *)sg + array_size(sg_max, sizeof(struct scatterlist));
+ 	pages -= sg_max;
  
- 		if (maxsize <= 0 || sg_max == 0)
- 			break;
-@@ -1385,7 +1386,7 @@ ssize_t extract_iter_to_sg(struct iov_it
- 			   struct sg_table *sgtable, unsigned int sg_max,
- 			   iov_iter_extraction_t extraction_flags)
- {
--	if (maxsize == 0)
-+	if (maxsize == 0 || sg_max == 0)
- 		return 0;
- 
- 	switch (iov_iter_type(iter)) {
+ 	do {
 
 
