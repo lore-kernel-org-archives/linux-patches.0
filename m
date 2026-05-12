@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4923EDE55;
-	Tue, 12 May 2026 18:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7F025FA29;
+	Tue, 12 May 2026 18:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609072; cv=none; b=BFsYekuefTe015aLz3OssWe0cx98ED6276YSPl1ZstSJLNcKLRTTu/j+9LzZfLVRoixYfAKKV1p11Vna2V/koaM6IoNgnJmqkzAvV7K5/RW2JSZUm2sGrHcx+Hm20jom6ndRWceqEqs023zZRECm9I5C5ajImuwJbqGr8xNxAR0=
+	t=1778609074; cv=none; b=jZgSIfaCJywHcRHL6vWe1kDW2bHqPVmf5yN/fZO5Vsm3sO/IWbwcl1v4Z+755cuJy0zExUdE85n6FkY6RdJHt+56/gsrm9mZBHnfjfWUcDud0JZqlXn8jNYOr9DE5hhO7XvBEKyx49fN49H+/DuK2A7a1o67FJFHTTS3BpVK028=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609072; c=relaxed/simple;
-	bh=YVFX2J7Max5X+qXLUQXPQw+JPh+5VFQaLflGodOuwsw=;
+	s=arc-20240116; t=1778609074; c=relaxed/simple;
+	bh=b85WADjDoHNG9ooMNpzP1iljGTge+miHVLECqU3LaN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Of9ODIzsPvczB0nTMvasTA2KjneLk8nQZoLSbDxnQHxTb8/DzeuVK2NHPBkdMTv8Pj1BXMqa3buMpIvv0SQ3qu2RoulotTNYHWQ9mVSRDQfRQgV/k/r3Iy/iswgZ1Ib4gYusuTdlAWBHc9jaOYlJO5H4iibNN+Ay5IutDSv2nxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/BBvbgo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U+sPz2M0ZiHjmtQOuFCi0IKQZopHI+hzr9G3N90f8gGH2qbK+qz2hSZ/PSRmJSuunEkJDT0JkgEQc7e6WBx75gosVbij5KWWdq/dTC8Q+aT87L8qdLLjrhwDL/rV40pXkwFZykz97z2TfVGVTLjk74sxBYdGMMmQFjWUX394bs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQInTyA/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/BBvbgo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFF4C2BCB0;
-	Tue, 12 May 2026 18:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQInTyA/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0176AC2BCB0;
+	Tue, 12 May 2026 18:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609071;
-	bh=YVFX2J7Max5X+qXLUQXPQw+JPh+5VFQaLflGodOuwsw=;
+	s=korg; t=1778609074;
+	bh=b85WADjDoHNG9ooMNpzP1iljGTge+miHVLECqU3LaN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/BBvbgoLDA1n+PviDTx03Z24xVC0bVg0SBaBsyy+ygfXXs2N4Peld+Q0huO9S7cj
-	 z4T5rX1z1Ig4YX8WKaDIw4Y8n37tw4GazE4h2Mo9Bsk/Ww1gUHj/+0uWn62jPRazow
-	 /OXbgm2reXtorAqNZDuXmb3+3in12eO1//6CX03c=
+	b=tQInTyA/OEDXl8kuSVbPyuR1YahdLO1zg+10apqaQskOrKK1XBqMZrnD0h6SycPWL
+	 /P2kboJuPpe3uNsxGvkueAzq4vmfDvB9LbykUnrEhWkKkYZq4+fwgCQnJAuL29Gzj7
+	 7kylX2mY9mxSCaeKpOh0IOawLVlWNnjH1PpCsbHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>
-Subject: [PATCH 7.0 053/307] sched_ext: Read scx_root under scx_cgroup_ops_rwsem in cgroup setters
-Date: Tue, 12 May 2026 19:37:28 +0200
-Message-ID: <20260512173941.242946370@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ruijie Li <ruijieli51@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 7.0 054/307] xfrm: provide message size for XFRM_MSG_MAPPING
+Date: Tue, 12 May 2026 19:37:29 +0200
+Message-ID: <20260512173941.264950156@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,68 +56,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Ruijie Li <ruijieli51@gmail.com>
 
-commit 80afd4c84bc8f5e80145ce35279f5ce53f6043db upstream.
+commit 28465227c80fe417b4013c432be1f3737cb9f9a3 upstream.
 
-scx_group_set_{weight,idle,bandwidth}() cache scx_root before acquiring
-scx_cgroup_ops_rwsem, so the pointer can be stale by the time the op runs.
-If the loaded scheduler is disabled and freed (via RCU work) and another is
-enabled between the naked load and the rwsem acquire, the reader sees
-scx_cgroup_enabled=true (the new scheduler's) but dereferences the freed one
-- UAF on SCX_HAS_OP(sch, ...) / SCX_CALL_OP(sch, ...).
+The compat 64=>32 translation path handles XFRM_MSG_MAPPING, but
+xfrm_msg_min[] does not provide the native payload size for this
+message type.
 
-scx_cgroup_enabled is toggled only under scx_cgroup_ops_rwsem write
-(scx_cgroup_{init,exit}), so reading scx_root inside the rwsem read section
-correlates @sch with the enabled snapshot.
+Add the missing XFRM_MSG_MAPPING entry so compat translation can size
+and translate mapping notifications correctly.
 
-Fixes: a5bd6ba30b33 ("sched_ext: Use cgroup_lock/unlock() to synchronize against cgroup operations")
-Cc: stable@vger.kernel.org # v6.18+
-Reported-by: Chris Mason <clm@meta.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Fixes: 5461fc0c8d9f ("xfrm/compat: Add 64=>32-bit messages translator")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/xfrm/xfrm_user.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3430,9 +3430,10 @@ void scx_cgroup_cancel_attach(struct cgr
- 
- void scx_group_set_weight(struct task_group *tg, unsigned long weight)
- {
--	struct scx_sched *sch = scx_root;
-+	struct scx_sched *sch;
- 
- 	percpu_down_read(&scx_cgroup_ops_rwsem);
-+	sch = scx_root;
- 
- 	if (scx_cgroup_enabled && SCX_HAS_OP(sch, cgroup_set_weight) &&
- 	    tg->scx.weight != weight)
-@@ -3446,9 +3447,10 @@ void scx_group_set_weight(struct task_gr
- 
- void scx_group_set_idle(struct task_group *tg, bool idle)
- {
--	struct scx_sched *sch = scx_root;
-+	struct scx_sched *sch;
- 
- 	percpu_down_read(&scx_cgroup_ops_rwsem);
-+	sch = scx_root;
- 
- 	if (scx_cgroup_enabled && SCX_HAS_OP(sch, cgroup_set_idle))
- 		SCX_CALL_OP(sch, SCX_KF_UNLOCKED, cgroup_set_idle, NULL,
-@@ -3463,9 +3465,10 @@ void scx_group_set_idle(struct task_grou
- void scx_group_set_bandwidth(struct task_group *tg,
- 			     u64 period_us, u64 quota_us, u64 burst_us)
- {
--	struct scx_sched *sch = scx_root;
-+	struct scx_sched *sch;
- 
- 	percpu_down_read(&scx_cgroup_ops_rwsem);
-+	sch = scx_root;
- 
- 	if (scx_cgroup_enabled && SCX_HAS_OP(sch, cgroup_set_bandwidth) &&
- 	    (tg->scx.bw_period_us != period_us ||
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -3323,6 +3323,7 @@ const int xfrm_msg_min[XFRM_NR_MSGTYPES]
+ 	[XFRM_MSG_GETSADINFO  - XFRM_MSG_BASE] = sizeof(u32),
+ 	[XFRM_MSG_NEWSPDINFO  - XFRM_MSG_BASE] = sizeof(u32),
+ 	[XFRM_MSG_GETSPDINFO  - XFRM_MSG_BASE] = sizeof(u32),
++	[XFRM_MSG_MAPPING     - XFRM_MSG_BASE] = XMSGSIZE(xfrm_user_mapping),
+ 	[XFRM_MSG_SETDEFAULT  - XFRM_MSG_BASE] = XMSGSIZE(xfrm_userpolicy_default),
+ 	[XFRM_MSG_GETDEFAULT  - XFRM_MSG_BASE] = XMSGSIZE(xfrm_userpolicy_default),
+ };
 
 
