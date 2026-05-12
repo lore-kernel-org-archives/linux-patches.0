@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE7B342509;
-	Tue, 12 May 2026 18:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE463EDE45;
+	Tue, 12 May 2026 18:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609292; cv=none; b=EouJ6It7CwaRdGJ8+QCQBEYhXKUMw+8zgmP1A0Jk7C9YXv8QzZJXyivVAQHSa/PMLLkojpahTI5w4k8IjY6y69QASwxLg43BeB+0QKW/+jk6weolCVy7kIaPYFlErKBMUnuz4L2DQFfwWZCX0jCsBanBo2EvlGFBMAeDERLSvQc=
+	t=1778609295; cv=none; b=KRwi6CAy6HzvjCExqbNxehaBVo5DcF8kVWhlZruqKQZ5FdTzXXtWMNY4+k4vzYP8s5j3q0/uktU5TKeM5Zejh8KHMPPLbTiB8vyqZWT3lyK3PJWP7Gz5lkm9CmS74xvlDWIFwQC3EMjYnt/aJ8s4AaZzabcGGstSevr7y0UGR0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609292; c=relaxed/simple;
-	bh=kpzf2Z5vntsqbOUvEK4b+dnaYNvXuWjd3/0xgRTLckA=;
+	s=arc-20240116; t=1778609295; c=relaxed/simple;
+	bh=OC2GBWM7/5aSVMlMapBsG37wnvo+qde+cn+jkHG7CFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lrir4cVOSCQrAo7NeAdHsyJjxlmfAhgS8OukELYmmjCcE2E4M4xxunSNEa3KRaMAqffeUvBd2VCJFCap90BjId8nmRqEE9HhEZAjgQ23DFnGiKFTbR4PTyNnEyRfM1Dn5Z4ZVtaJ74wpo0Djvwx5DbCSn1w+C9gDA5ZnodHrLP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVH7BPJL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nk+VqgfgtrI+he0eK2NHxN7oX4G8jbWPJdnQIU0vq7mTFCPLpqDa0VWV26XDybiCk0AKD3fNfMlrmHZ6n9D8ni4iPwGimuuAkwZvo85LAeWTYe+DZkwgXtXWGoHslmNGOwawo+0CCZz2n+UR8HF5w9hM4d2iFH4m91ttFK/7LSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z030Jfrv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVH7BPJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F59C2BCB0;
-	Tue, 12 May 2026 18:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z030Jfrv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3A4C2BCB0;
+	Tue, 12 May 2026 18:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609292;
-	bh=kpzf2Z5vntsqbOUvEK4b+dnaYNvXuWjd3/0xgRTLckA=;
+	s=korg; t=1778609295;
+	bh=OC2GBWM7/5aSVMlMapBsG37wnvo+qde+cn+jkHG7CFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tVH7BPJLILEwWnAifkORszfOdwqsUkzaYeOXcFDt27IxWaUw9T+Zl3n3yNI+y93io
-	 Jfqi3Clq1jCICWI5nvRmlp0TRGqae6jdOBp9b3WGNg9R+quQnuq1LpMYh6uChX3ysP
-	 Y85QdpVE1l9QkbiKLHQU/kCjzYkOKAApZP5GF+a4=
+	b=z030JfrvXcmUG8sKv5LDoP7YFIoG3dgDSN/TtB4R3jD5UTfbFP5emjEO32rNpQtGn
+	 Q2BgRQRdqW9XrO/W+PcsGaHROggEEdgb3iDZWgo4/nFltsPa+f+llnHtKMoxnas6Cc
+	 il81zJZz7peuklbdQ+XE4gSkgTmRM60z0ixAcH5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	MyungJoo Ham <myungjoo.ham@samsung.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>
-Subject: [PATCH 7.0 139/307] extcon: ptn5150: handle pending IRQ events during system resume
-Date: Tue, 12 May 2026 19:38:54 +0200
-Message-ID: <20260512173943.061549090@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 7.0 140/307] fbcon: Avoid OOB font access if console rotation fails
+Date: Tue, 12 May 2026 19:38:55 +0200
+Message-ID: <20260512173943.082034296@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,58 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 4652fefcda3c604c83d1ae28ede94544e2142f06 upstream.
+commit e4ef723d8975a2694cc90733a6b888a5e2841842 upstream.
 
-When the system is suspended and ptn5150 wakeup interrupt is disabled,
-any changes on ptn5150 will only be record in interrupt status
-registers and won't fire an IRQ since its trigger type is falling
-edge. So the HW interrupt line will keep at low state and any further
-changes won't trigger IRQ anymore. To fix it, this will schedule a
-work to check whether any IRQ are pending and handle it accordingly.
+Clear the font buffer if the reallocation during console rotation fails
+in fbcon_rotate_font(). The putcs implementations for the rotated buffer
+will return early in this case. See [1] for an example.
 
-Fixes: 4ed754de2d66 ("extcon: Add support for ptn5150 extcon driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
-Link: https://lore.kernel.org/lkml/20251115025905.1395347-1-xu.yang_2@nxp.com/
+Currently, fbcon_rotate_font() keeps the old buffer, which is too small
+for the rotated font. Printing to the rotated console with a high-enough
+character code will overflow the font buffer.
+
+v2:
+- fix typos in commit message
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
+Cc: stable@vger.kernel.org # v2.6.15+
+Link: https://elixir.bootlin.com/linux/v6.19/source/drivers/video/fbdev/core/fbcon_ccw.c#L144 # [1]
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/extcon/extcon-ptn5150.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/video/fbdev/core/fbcon_rotate.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/extcon/extcon-ptn5150.c
-+++ b/drivers/extcon/extcon-ptn5150.c
-@@ -331,6 +331,19 @@ static int ptn5150_i2c_probe(struct i2c_
- 	return 0;
- }
+--- a/drivers/video/fbdev/core/fbcon_rotate.c
++++ b/drivers/video/fbdev/core/fbcon_rotate.c
+@@ -46,6 +46,10 @@ int fbcon_rotate_font(struct fb_info *in
+ 		info->fbops->fb_sync(info);
  
-+static int ptn5150_resume(struct device *dev)
-+{
-+	struct i2c_client *i2c = to_i2c_client(dev);
-+	struct ptn5150_info *info = i2c_get_clientdata(i2c);
+ 	if (par->fd_size < d_cellsize * len) {
++		kfree(par->fontbuffer);
++		par->fontbuffer = NULL;
++		par->fd_size = 0;
 +
-+	/* Need to check possible pending interrupt events */
-+	schedule_work(&info->irq_work);
-+
-+	return 0;
-+}
-+
-+static DEFINE_SIMPLE_DEV_PM_OPS(ptn5150_pm_ops, NULL, ptn5150_resume);
-+
- static const struct of_device_id ptn5150_dt_match[] = {
- 	{ .compatible = "nxp,ptn5150" },
- 	{ },
-@@ -346,6 +359,7 @@ MODULE_DEVICE_TABLE(i2c, ptn5150_i2c_id)
- static struct i2c_driver ptn5150_i2c_driver = {
- 	.driver		= {
- 		.name	= "ptn5150",
-+		.pm = pm_sleep_ptr(&ptn5150_pm_ops),
- 		.of_match_table = ptn5150_dt_match,
- 	},
- 	.probe		= ptn5150_i2c_probe,
+ 		dst = kmalloc_array(len, d_cellsize, GFP_KERNEL);
+ 
+ 		if (dst == NULL) {
+@@ -54,7 +58,6 @@ int fbcon_rotate_font(struct fb_info *in
+ 		}
+ 
+ 		par->fd_size = d_cellsize * len;
+-		kfree(par->fontbuffer);
+ 		par->fontbuffer = dst;
+ 	}
+ 
 
 
