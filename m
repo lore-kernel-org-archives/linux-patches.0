@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7BB3DC87F;
-	Tue, 12 May 2026 17:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0DF3DC86D;
+	Tue, 12 May 2026 17:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607746; cv=none; b=PpJoDfNDb9AudWP8/u7IK50qqCcSPjDXcNuRMA8eEIgh69PCQ4cXTjv3iyLQcfyBTYtamF9KRuL4zRnM7hcgYNpK5YG2InnOQeXBE/qbskThU0ZZaSdRMi4T1TsZSg0WBRTp5STH+skYQf89f4iQPGaCg1Vkho3iaK80YRvJPnM=
+	t=1778607748; cv=none; b=nEK04Z2ZuUajkJgj2V9TPSMCwwKd+9rD9q6wwPh1zm7eCg5PVXBLcIxD1ngrhwb1hfXxsIeM5H5wCWVgLtRA2kzqVQ9+7g8vUdn2um+g0sx4Y7iiMXntyl8NQ3tqPwep0gphEzsvsBMzYGtl5cx3rPMw9uKW1a+H2UAjnwz80xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607746; c=relaxed/simple;
-	bh=TcxL94Gqy4KnLdm7LsPCf0FeJm/ZG7F+YCeCUoYYUso=;
+	s=arc-20240116; t=1778607748; c=relaxed/simple;
+	bh=FXETLR0Co3jI32hXKQY6900KyQpOFr3tmmZT7aiL4FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RFhCkD10DHPLXtIPx+KnZEjMMRbYDO0H65evJTG0hMtXMGpemUzlQCKBF1d3ZaR69v7yezp+jk7D1QSPJmFqyMEENZOMzrxTWq1Iiwm9tiREPbsbutX4oaJ+UvdFwKKhmRnXPMD+b0IRd3YteGUhYhbEYM/rwKOz0Lz2xmRr7xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPWFPWLh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PNsum6lGcDCSUdPfR2Qr45eAZcvdzYtwXGReOj7S9aH2M212z2p8I+Mt+nXX32y3AokVmFRoeD7hmljvxZVCpaEgD/nXRpKOXgCEYONB8UMmEJ2BTByKmvHFJlbnC33dWbDdrALYNkpctAEAEyLAtm8AMs5PqR2C82YExf29KVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnzuNx3h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPWFPWLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1B6C2BCB0;
-	Tue, 12 May 2026 17:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnzuNx3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23EA0C2BCB0;
+	Tue, 12 May 2026 17:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607745;
-	bh=TcxL94Gqy4KnLdm7LsPCf0FeJm/ZG7F+YCeCUoYYUso=;
+	s=korg; t=1778607748;
+	bh=FXETLR0Co3jI32hXKQY6900KyQpOFr3tmmZT7aiL4FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPWFPWLh2R2Akly5nnrNpqN6yPFgY/a82mb5WXRJcHpiB6M79TRo0ymTflczvz/k5
-	 ttOsqPb8lxl03wZbcjH3k+kF/DCfChT1GhpAW3O3Oss+ovqkE5Dw6xx1M80UpAsb2N
-	 ReyatVlxNyICwpoMClknOPCT6lCLNCPNH3MiHfz8=
+	b=xnzuNx3hqje5fvLVH2WSHMcx2Yoy+6HJnEZySmJ/EAQs8wQAxqaCzmRvcnSvpbl6c
+	 9khLZqw/lP5s5EyjGFDp5LLXSlaKLnL/ocCtg1Qo3VtJCHG7l1TqIMNGt+8i0Z3f7+
+	 Njj4hYn+Dii9GUPfEX6Yii16M4bJ6PBQ+rIrrVGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/206] flow_dissector: do not dissect PPPoE PFC frames
-Date: Tue, 12 May 2026 19:37:52 +0200
-Message-ID: <20260512173933.250998656@linuxfoundation.org>
+Subject: [PATCH 6.12 021/206] net: txgbe: fix RTNL assertion warning when remove module
+Date: Tue, 12 May 2026 19:37:53 +0200
+Message-ID: <20260512173933.271945155@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,95 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit d6c19b31a3c1d519fabdcf0aa239e6b6109b9473 ]
+[ Upstream commit e159f05e12cc1111a3103b99375ddf0dfd0e7d63 ]
 
-RFC 2516 Section 7 states that Protocol Field Compression (PFC) is NOT
-RECOMMENDED for PPPoE. In practice, pppd does not support negotiating
-PFC for PPPoE sessions, and the flow dissector driver has assumed an
-uncompressed frame until the blamed commit.
+For the copper NIC with external PHY, the driver called
+phylink_connect_phy() during probe and phylink_disconnect_phy() during
+remove. It caused an RTNL assertion warning in phylink_disconnect_phy()
+upon module remove.
 
-During the review process of that commit [1], support for PFC is
-suggested. However, having a compressed (1-byte) protocol field means
-the subsequent PPP payload is shifted by one byte, causing 4-byte
-misalignment for the network header and an unaligned access exception
-on some architectures.
+To fix this, add rtnl_lock() and rtnl_unlock() around the
+phylink_disconnect_phy() in remove function.
 
-The exception can be reproduced by sending a PPPoE PFC frame to an
-ethernet interface of a MIPS board, with RPS enabled, even if no PPPoE
-session is active on that interface:
+ ------------[ cut here ]------------
+ RTNL: assertion failed at drivers/net/phy/phylink.c (2351)
+ WARNING: drivers/net/phy/phylink.c:2351 at
+phylink_disconnect_phy+0xd8/0xf0 [phylink], CPU#0: rmmod/4464
+ Modules linked in: ...
+ CPU: 0 UID: 0 PID: 4464 Comm: rmmod Kdump: loaded Not tainted 7.0.0-rc4+
+ Hardware name: Micro-Star International Co., Ltd. MS-7E16/X670E GAMING
+PLUS WIFI (MS-7E16), BIOS 1.90 12/31/2024
+ RIP: 0010:phylink_disconnect_phy+0xe4/0xf0 [phylink]
+ Code: 5b 41 5c 41 5d 41 5e 41 5f 5d 31 c0 31 d2 31 f6 31 ff e9 3a 38 8f e7
+48 8d 3d 48 87 e2 ff ba 2f 09 00 00 48 c7 c6 c1 22 24 c0 <67> 48 0f b9 3a
+e9 34 ff ff ff 66 90 90 90 90 90 90 90 90 90 90 90
+ RSP: 0018:ffffce7288363ac0 EFLAGS: 00010246
+ RAX: 0000000000000000 RBX: ffff89654b2a1a00 RCX: 0000000000000000
+ RDX: 000000000000092f RSI: ffffffffc02422c1 RDI: ffffffffc0239020
+ RBP: ffffce7288363ae8 R08: 0000000000000000 R09: 0000000000000000
+ R10: 0000000000000000 R11: 0000000000000000 R12: ffff8964c4022000
+ R13: ffff89654fce3028 R14: ffff89654ebb4000 R15: ffffffffc0226348
+ FS:  0000795e80d93780(0000) GS:ffff896c52857000(0000)
+knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00005b528b592000 CR3: 0000000170d0f000 CR4: 0000000000f50ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  txgbe_remove_phy+0xbb/0xd0 [txgbe]
+  txgbe_remove+0x4c/0xb0 [txgbe]
+  pci_device_remove+0x41/0xb0
+  device_remove+0x43/0x80
+  device_release_driver_internal+0x206/0x270
+  driver_detach+0x4a/0xa0
+  bus_remove_driver+0x83/0x120
+  driver_unregister+0x2f/0x60
+  pci_unregister_driver+0x40/0x90
+  txgbe_driver_exit+0x10/0x850 [txgbe]
+  __do_sys_delete_module.isra.0+0x1c3/0x2f0
+  __x64_sys_delete_module+0x12/0x20
+  x64_sys_call+0x20c3/0x2390
+  do_syscall_64+0x11c/0x1500
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? do_syscall_64+0x15a/0x1500
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? do_fault+0x312/0x580
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? __handle_mm_fault+0x9d5/0x1040
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? count_memcg_events+0x101/0x1d0
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? handle_mm_fault+0x1e8/0x2f0
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? do_user_addr_fault+0x2f8/0x820
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? irqentry_exit+0xb2/0x600
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? exc_page_fault+0x92/0x1c0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-$ 0   : 00000000 80c40000 00000000 85144817
-$ 4   : 00000008 00000100 80a75758 81dc9bb8
-$ 8   : 00000010 8087ae2c 0000003d 00000000
-$12   : 000000e0 00000039 00000000 00000000
-$16   : 85043240 80a75758 81dc9bb8 00006488
-$20   : 0000002f 00000007 85144810 80a70000
-$24   : 81d1bda0 00000000
-$28   : 81dc8000 81dc9aa8 00000000 805ead08
-Hi    : 00009d51
-Lo    : 2163358a
-epc   : 805e91f0 __skb_flow_dissect+0x1b0/0x1b50
-ra    : 805ead08 __skb_get_hash_net+0x74/0x12c
-Status: 11000403        KERNEL EXL IE
-Cause : 40800010 (ExcCode 04)
-BadVA : 85144817
-PrId  : 0001992f (MIPS 1004Kc)
-Call Trace:
-[<805e91f0>] __skb_flow_dissect+0x1b0/0x1b50
-[<805ead08>] __skb_get_hash_net+0x74/0x12c
-[<805ef330>] get_rps_cpu+0x1b8/0x3fc
-[<805fca70>] netif_receive_skb_list_internal+0x324/0x364
-[<805fd120>] napi_complete_done+0x68/0x2a4
-[<8058de5c>] mtk_napi_rx+0x228/0xfec
-[<805fd398>] __napi_poll+0x3c/0x1c4
-[<805fd754>] napi_threaded_poll_loop+0x234/0x29c
-[<805fd848>] napi_threaded_poll+0x8c/0xb0
-[<80053544>] kthread+0x104/0x12c
-[<80002bd8>] ret_from_kernel_thread+0x14/0x1c
-
-Code: 02d51821  1060045b  00000000 <8c640000> 3084000f  2c820005  144001a2  00042080  8e220000
-
-To reduce the attack surface and maintain performance, do not process
-PPPoE PFC frames.
-
-[1] https://lore.kernel.org/r/20220630231016.GA392@debian.home
-Fixes: 46126db9c861 ("flow_dissector: Add PPPoE dissectors")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Link: https://patch.msgid.link/20260415022456.141758-1-qingfang.deng@linux.dev
+Fixes: 02b2a6f91b90 ("net: txgbe: support copper NIC with external PHY")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/8B47A5872884147D+20260407094041.4646-1-jiawenwu@trustnetic.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/flow_dissector.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/flow_dissector.c b/net/core/flow_dissector.c
-index 9cd8de6bebb54..8be2ef8088be2 100644
---- a/net/core/flow_dissector.c
-+++ b/net/core/flow_dissector.c
-@@ -1374,16 +1374,13 @@ bool __skb_flow_dissect(const struct net *net,
- 			break;
- 		}
- 
--		/* least significant bit of the most significant octet
--		 * indicates if protocol field was compressed
-+		/* PFC (compressed 1-byte protocol) frames are not processed.
-+		 * A compressed protocol field has the least significant bit of
-+		 * the most significant octet set, which will fail the following
-+		 * ppp_proto_is_valid(), returning FLOW_DISSECT_RET_OUT_BAD.
- 		 */
- 		ppp_proto = ntohs(hdr->proto);
--		if (ppp_proto & 0x0100) {
--			ppp_proto = ppp_proto >> 8;
--			nhoff += PPPOE_SES_HLEN - 1;
--		} else {
--			nhoff += PPPOE_SES_HLEN;
--		}
-+		nhoff += PPPOE_SES_HLEN;
- 
- 		if (ppp_proto == PPP_IP) {
- 			proto = htons(ETH_P_IP);
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
+index f26946198a2fb..9726622a96bfb 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_phy.c
+@@ -622,7 +622,9 @@ int txgbe_init_phy(struct txgbe *txgbe)
+ void txgbe_remove_phy(struct txgbe *txgbe)
+ {
+ 	if (txgbe->wx->media_type == sp_media_copper) {
++		rtnl_lock();
+ 		phylink_disconnect_phy(txgbe->wx->phylink);
++		rtnl_unlock();
+ 		phylink_destroy(txgbe->wx->phylink);
+ 		return;
+ 	}
 -- 
 2.53.0
 
