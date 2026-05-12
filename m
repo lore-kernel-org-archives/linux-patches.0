@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252B13955D3;
-	Tue, 12 May 2026 17:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6C23955E3;
+	Tue, 12 May 2026 17:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608191; cv=none; b=BjZBoMls+kHSiY7cnP5uCtW7+OYN7C6eGjdvQ7HYreEFZorPFJcGHHk6otAMYA+78NOD1A1YtxXGrhZ+dpGwNCqGBam9uEq+llnC2TvWYZFmGV+gDJxwHVZ1CYOQ2cz1Lprw9TQtmByE7tYQDHQ9lG5CSt2Jh+lX7x4oDIJ6MT0=
+	t=1778608194; cv=none; b=dawRnN/ioHW+5tvrRJO2/48onzVR3g55loXX6w+snJzc5OTSOUuZ9X2MUZlWCjoFwzLrsbn695c+rTHkuT8+Fjd3uL+F5pnXONeBm2qWZ97f5igJbDx4FoF4MFKo5AfkiaF4sxqw8nsQyfMfC5nskyoUJ/gfOXM82nmRFyRLiug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608191; c=relaxed/simple;
-	bh=45UwNRNK7vHaVCTVPrQAm3wQXmvNC6JoGZJrQqCrC7U=;
+	s=arc-20240116; t=1778608194; c=relaxed/simple;
+	bh=EbXWPzZjMJ9U1Jk3ANHxuTqRVCVQmJVfqSQ4AWqZ96I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIMDNfdmqF89siXjJnRxZ4AapqpvIo6KbZ2jo83EBxrnaU02ZvSe1n/XMHaJ3z7LtJRvVo08dIxmnnmtem0Yu1J5lUf8vFkc22IeFDNFFWF1BJeT1bRwdyDxujOuF7GZq3dN0JO+dq8FP1uuLo+HRB3vHIm1wREuo0xv2Dn5WcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FhDstj6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QuzoXqqxKiinir0QkdBiQvLTGzpeAHOX9opUKDsjXCdzdQxPBEzzgch2NgSjaPkq6+pCod8erBh1dca/cl4c0MH2Dz84TtN7++eI3x+cTh+Zq36ToroDQitwYj86sT/orWfxl2mrRo+t/H/YueQtDxGTfN78i/gI1grzUs0lIhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFPIu6t3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FhDstj6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFFAC2BCB0;
-	Tue, 12 May 2026 17:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFPIu6t3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B1EC2BCB0;
+	Tue, 12 May 2026 17:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608191;
-	bh=45UwNRNK7vHaVCTVPrQAm3wQXmvNC6JoGZJrQqCrC7U=;
+	s=korg; t=1778608193;
+	bh=EbXWPzZjMJ9U1Jk3ANHxuTqRVCVQmJVfqSQ4AWqZ96I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FhDstj6W54Om8t9/KjfZksGT4godOGYQnfeKEvk9BjASyToBWO4JAU8xXL0sgae0
-	 avXH8UpUPWAhrIOf4coNWqCVrJCrTgfkS13QSFsGKXYY+sFG4wwBBf7VJn0mA6PetB
-	 DWcvXMWeqKF/wMkvk0M7Tp3UTf/SMvlaNtfXx7NM=
+	b=dFPIu6t3JjCd4nKw8QbJLH1Rp8DgSyLDic7JwXoZEUHYPwPi5twdMRjjzGLx8SatE
+	 3/Hn8jO8dYeDCTTQsZEaYmn5N4U4mLvpoTJgsZcdnH3hN5vNLGzoF1xjgoFSmfELfJ
+	 Ts80FFR1gj6ZT740uIILarl5NF0dl18Z5XHuCjkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.12 153/206] RDMA/ocrdma: Dont NULL deref uctx on errors in ocrdma_copy_pd_uresp()
-Date: Tue, 12 May 2026 19:40:05 +0200
-Message-ID: <20260512173936.104310353@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 189/206] hfsplus: fix held lock freed on hfsplus_fill_super()
+Date: Tue, 12 May 2026 19:40:41 +0200
+Message-ID: <20260512173936.869885432@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -49,37 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-commit 34fbf48cf3b410d2a6e8c586fa952a36331ca5ba upstream.
+[ Upstream commit 90c500e4fd83fa33c09bc7ee23b6d9cc487ac733 ]
 
-Sashiko points out that pd->uctx isn't initialized until late in the
-function so all these error flow references are NULL and will crash. Use
-the uctx that isn't NULL.
+hfsplus_fill_super() calls hfs_find_init() to initialize a search
+structure, which acquires tree->tree_lock. If the subsequent call to
+hfsplus_cat_build_key() fails, the function jumps to the out_put_root
+error label without releasing the lock. The later cleanup path then
+frees the tree data structure with the lock still held, triggering a
+held lock freed warning.
 
-Cc: stable@vger.kernel.org
-Fixes: fe2caefcdf58 ("RDMA/ocrdma: Add driver for Emulex OneConnect IBoE RDMA adapter")
-Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=4
-Link: https://patch.msgid.link/r/9-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fix this by adding the missing hfs_find_exit(&fd) call before jumping
+to the out_put_root error label. This ensures that tree->tree_lock is
+properly released on the error path.
+
+The bug was originally detected on v6.13-rc1 using an experimental
+static analysis tool we are developing, and we have verified that the
+issue persists in the latest mainline kernel. The tool is specifically
+designed to detect memory management issues. It is currently under active
+development and not yet publicly available.
+
+We confirmed the bug by runtime testing under QEMU with x86_64 defconfig,
+lockdep enabled, and CONFIG_HFSPLUS_FS=y. To trigger the error path, we
+used GDB to dynamically shrink the max_unistr_len parameter to 1 before
+hfsplus_asc2uni() is called. This forces hfsplus_asc2uni() to naturally
+return -ENAMETOOLONG, which propagates to hfsplus_cat_build_key() and
+exercises the faulty error path. The following warning was observed
+during mount:
+
+	=========================
+	WARNING: held lock freed!
+	7.0.0-rc3-00016-gb4f0dd314b39 #4 Not tainted
+	-------------------------
+	mount/174 is freeing memory ffff888103f92000-ffff888103f92fff, with a lock still held there!
+	ffff888103f920b0 (&tree->tree_lock){+.+.}-{4:4}, at: hfsplus_find_init+0x154/0x1e0
+	2 locks held by mount/174:
+	#0: ffff888103f960e0 (&type->s_umount_key#42/1){+.+.}-{4:4}, at: alloc_super.constprop.0+0x167/0xa40
+	#1: ffff888103f920b0 (&tree->tree_lock){+.+.}-{4:4}, at: hfsplus_find_init+0x154/0x1e0
+
+	stack backtrace:
+	CPU: 2 UID: 0 PID: 174 Comm: mount Not tainted 7.0.0-rc3-00016-gb4f0dd314b39 #4 PREEMPT(lazy)
+	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+	Call Trace:
+	<TASK>
+	dump_stack_lvl+0x82/0xd0
+	debug_check_no_locks_freed+0x13a/0x180
+	kfree+0x16b/0x510
+	? hfsplus_fill_super+0xcb4/0x18a0
+	hfsplus_fill_super+0xcb4/0x18a0
+	? __pfx_hfsplus_fill_super+0x10/0x10
+	? srso_return_thunk+0x5/0x5f
+	? bdev_open+0x65f/0xc30
+	? srso_return_thunk+0x5/0x5f
+	? pointer+0x4ce/0xbf0
+	? trace_contention_end+0x11c/0x150
+	? __pfx_pointer+0x10/0x10
+	? srso_return_thunk+0x5/0x5f
+	? bdev_open+0x79b/0xc30
+	? srso_return_thunk+0x5/0x5f
+	? srso_return_thunk+0x5/0x5f
+	? vsnprintf+0x6da/0x1270
+	? srso_return_thunk+0x5/0x5f
+	? __mutex_unlock_slowpath+0x157/0x740
+	? __pfx_vsnprintf+0x10/0x10
+	? srso_return_thunk+0x5/0x5f
+	? srso_return_thunk+0x5/0x5f
+	? mark_held_locks+0x49/0x80
+	? srso_return_thunk+0x5/0x5f
+	? srso_return_thunk+0x5/0x5f
+	? irqentry_exit+0x17b/0x5e0
+	? trace_irq_disable.constprop.0+0x116/0x150
+	? __pfx_hfsplus_fill_super+0x10/0x10
+	? __pfx_hfsplus_fill_super+0x10/0x10
+	get_tree_bdev_flags+0x302/0x580
+	? __pfx_get_tree_bdev_flags+0x10/0x10
+	? vfs_parse_fs_qstr+0x129/0x1a0
+	? __pfx_vfs_parse_fs_qstr+0x3/0x10
+	vfs_get_tree+0x89/0x320
+	fc_mount+0x10/0x1d0
+	path_mount+0x5c5/0x21c0
+	? __pfx_path_mount+0x10/0x10
+	? trace_irq_enable.constprop.0+0x116/0x150
+	? trace_irq_enable.constprop.0+0x116/0x150
+	? srso_return_thunk+0x5/0x5f
+	? srso_return_thunk+0x5/0x5f
+	? kmem_cache_free+0x307/0x540
+	? user_path_at+0x51/0x60
+	? __x64_sys_mount+0x212/0x280
+	? srso_return_thunk+0x5/0x5f
+	__x64_sys_mount+0x212/0x280
+	? __pfx___x64_sys_mount+0x10/0x10
+	? srso_return_thunk+0x5/0x5f
+	? trace_irq_enable.constprop.0+0x116/0x150
+	? srso_return_thunk+0x5/0x5f
+	do_syscall_64+0x111/0x680
+	entry_SYSCALL_64_after_hwframe+0x77/0x7f
+	RIP: 0033:0x7ffacad55eae
+	Code: 48 8b 0d 85 1f 0f 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 49 89 ca b8 a5 00 00 8
+	RSP: 002b:00007fff1ab55718 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+	RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffacad55eae
+	RDX: 000055740c64e5b0 RSI: 000055740c64e630 RDI: 000055740c651ab0
+	RBP: 000055740c64e380 R08: 0000000000000000 R09: 0000000000000001
+	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+	R13: 000055740c64e5b0 R14: 000055740c651ab0 R15: 000055740c64e380
+	</TASK>
+
+After applying this patch, the warning no longer appears.
+
+Fixes: 89ac9b4d3d1a ("hfsplus: fix longname handling")
+CC: stable@vger.kernel.org
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Tested-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/ocrdma/ocrdma_verbs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/hfsplus/super.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/ocrdma/ocrdma_verbs.c
-+++ b/drivers/infiniband/hw/ocrdma/ocrdma_verbs.c
-@@ -620,9 +620,9 @@ static int ocrdma_copy_pd_uresp(struct o
- 
- ucopy_err:
- 	if (pd->dpp_enabled)
--		ocrdma_del_mmap(pd->uctx, dpp_page_addr, PAGE_SIZE);
-+		ocrdma_del_mmap(uctx, dpp_page_addr, PAGE_SIZE);
- dpp_map_err:
--	ocrdma_del_mmap(pd->uctx, db_page_addr, db_page_size);
-+	ocrdma_del_mmap(uctx, db_page_addr, db_page_size);
- 	return status;
- }
- 
+--- a/fs/hfsplus/super.c
++++ b/fs/hfsplus/super.c
+@@ -545,8 +545,10 @@ static int hfsplus_fill_super(struct sup
+ 	if (err)
+ 		goto out_put_root;
+ 	err = hfsplus_cat_build_key(sb, fd.search_key, HFSPLUS_ROOT_CNID, &str);
+-	if (unlikely(err < 0))
++	if (unlikely(err < 0)) {
++		hfs_find_exit(&fd);
+ 		goto out_put_root;
++	}
+ 	if (!hfsplus_brec_read_cat(&fd, &entry)) {
+ 		hfs_find_exit(&fd);
+ 		if (entry.type != cpu_to_be16(HFSPLUS_FOLDER)) {
 
 
