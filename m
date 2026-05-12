@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D0C377567;
-	Tue, 12 May 2026 17:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858B93EDE74;
+	Tue, 12 May 2026 17:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608642; cv=none; b=tqOh3Gy9dOsCetCvZhIFalIdzkLh+fjYjmKuyB7g9zUjC+a5dqU7DgFdD9uyxXNBtzSQI1vauyi8qXb8LpXl3w+Y4N7G3cltUA9OMz3ORyF0yW0ZV7WtWRWJAvPoZxnY36oJGPHrMU0TWYNv8duuQFuqMHS75iS1GWP9PKlLOWQ=
+	t=1778608644; cv=none; b=eWL19yTwLZMB+QiKI5dTSKiLhltnq4Aj5dBdfV6SooZLYtMxfjpVnu3Rht6wzdco6fIXhKIITvFnN7xKX89jNGQ4FXhPKs7YSv82PNz72+za0Rwy8P82NOUcIGwRU4Khl/5RXXntwJfL8bfim8w/CyJqlUzQijVKVHCeVM8i+04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608642; c=relaxed/simple;
-	bh=3xdMN296sD/Vd/xOANQuQXBLy5xOhp6CSHBwPltMOSc=;
+	s=arc-20240116; t=1778608644; c=relaxed/simple;
+	bh=+/DgjqEBnZTxGRvUVZ1yU5djRShv2RVOP/9fOo4aobQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jev0EnHLPDbNoyx5s0kpzkqFY/dGovl6ZQJ+uTV2zp7lJRNpgn75hw7nOk0/j53PA3yFt6EvLQpZFfO0RtuN0FJHpazXRZYDTgRiprAJD0cwnB/ZIYFNtRVljTNLwLC5VB62AZNif13K5mKjcsuiRKK+QU9VgwC0qjx/Pv+Udz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zetH97Lv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JbjfVx8g3tNkLtC0YnCqASgYE4Jp9DkSJgTEt/ypRPbMNEsoXALBNy/pWbsZb0of+4MXY7iFvcg97BRNKboTC+eX3nHJqNit9YRRMhAiGza7uSqM8bHxpd5BL84FSKSfm0fVbMtJewDvGi9iYX+UwGiWToQcZzdoxZH2/2GEWWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2OvzHUX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zetH97Lv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C21DC2BCB0;
-	Tue, 12 May 2026 17:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2OvzHUX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C30EC2BCB0;
+	Tue, 12 May 2026 17:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608641;
-	bh=3xdMN296sD/Vd/xOANQuQXBLy5xOhp6CSHBwPltMOSc=;
+	s=korg; t=1778608644;
+	bh=+/DgjqEBnZTxGRvUVZ1yU5djRShv2RVOP/9fOo4aobQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zetH97LvH6yLStHhD5PkbYMrJilLZywhd2PZoa1S9MCRaLW+iy8o83H/doTIEm8MB
-	 mQHTwfeTvPCLIo6nSctP7QVQdaiT+ezxBoDhyfeksVLzTP9vZdP0syDouDKY1+sDEA
-	 EwwOOHbuZIyWQCXFpbhlZduR85xQhWusFsc7l0tY=
+	b=a2OvzHUXr7C0kdxKdGobLEHw89FHZ/h191ai5ebWUpITxN8SBumycJLqOJ5iWrrs7
+	 tx0lZXmOe0vLkp+Genr/AxCgQIzUGfOqoDa1h7A+4gsF+X+sgh2S9bno9I3t0UjVO9
+	 CFVAVLhADuTRmRelmcqchrCqczRzPDV5pUQhk63U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.18 157/270] isofs: validate block number from NFS file handle in isofs_export_iget
-Date: Tue, 12 May 2026 19:39:18 +0200
-Message-ID: <20260512173941.753524144@linuxfoundation.org>
+	Zhenzhong Duan <zhenzhong.duan@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.18 158/270] iommufd: Fix return value of iommufd_fault_fops_write()
+Date: Tue, 12 May 2026 19:39:19 +0200
+Message-ID: <20260512173941.773617773@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,54 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-commit 24376458138387fb251e782e624c7776e9826796 upstream.
+commit aaca2aa92785a6ab8e3183e7184bca447a99cd76 upstream.
 
-isofs_fh_to_dentry() and isofs_fh_to_parent() pass an attacker-
-controlled block number (ifid->block or ifid->parent_block) from
-the NFS file handle to isofs_export_iget(), which only rejects
-block == 0 before calling isofs_iget() and ultimately sb_bread().
-A crafted file handle with fh_len sufficient to pass the check
-added by commit 0405d4b63d08 ("isofs: Prevent the use of too small
-fid") can still drive the server to read any in-range block on the
-backing device as if it were an iso_directory_record.  That earlier
-fix was assigned CVE-2025-37780.
+copy_from_user() may return number of bytes failed to copy, we should
+not pass over this number to user space to cheat that write() succeed.
+Instead, -EFAULT should be returned.
 
-sb_bread() on an out-of-range block returns NULL cleanly via the
-EIO path, so there is no memory-safety violation.  For in-range
-reads of adjacent-partition data on the same block device, the
-unrelated bytes end up in iso_inode_info fields that reach the NFS
-client as dentry metadata.  The deployment surface (isofs exported
-over NFS from loop-mounted images) is narrow and requires an
-authenticated NFS peer, but the malformed-file-handle class is
-reportable as hardening next to the existing CVE-2025-37780 fix.
-
-Reject block >= ISOFS_SB(sb)->s_nzones in isofs_export_iget() so
-the check covers both isofs_fh_to_dentry() and isofs_fh_to_parent()
-call sites with a single line.
-
-Fixes: 0405d4b63d08 ("isofs: Prevent the use of too small fid")
+Link: https://patch.msgid.link/r/20260330030755.12856-1-zhenzhong.duan@intel.com
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260419212155.2169382-3-michael.bommarito@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 07838f7fd529 ("iommufd: Add iommufd fault object")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/isofs/export.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/iommufd/eventq.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/isofs/export.c
-+++ b/fs/isofs/export.c
-@@ -24,7 +24,7 @@ isofs_export_iget(struct super_block *sb
- {
- 	struct inode *inode;
+--- a/drivers/iommu/iommufd/eventq.c
++++ b/drivers/iommu/iommufd/eventq.c
+@@ -187,9 +187,10 @@ static ssize_t iommufd_fault_fops_write(
  
--	if (block == 0)
-+	if (block == 0 || block >= ISOFS_SB(sb)->s_nzones)
- 		return ERR_PTR(-ESTALE);
- 	inode = isofs_iget(sb, block, offset);
- 	if (IS_ERR(inode))
+ 	mutex_lock(&fault->mutex);
+ 	while (count > done) {
+-		rc = copy_from_user(&response, buf + done, response_size);
+-		if (rc)
++		if (copy_from_user(&response, buf + done, response_size)) {
++			rc = -EFAULT;
+ 			break;
++		}
+ 
+ 		static_assert((int)IOMMUFD_PAGE_RESP_SUCCESS ==
+ 			      (int)IOMMU_PAGE_RESP_SUCCESS);
 
 
