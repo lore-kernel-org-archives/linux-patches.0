@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE463EDE45;
-	Tue, 12 May 2026 18:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FD9366548;
+	Tue, 12 May 2026 18:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609295; cv=none; b=KRwi6CAy6HzvjCExqbNxehaBVo5DcF8kVWhlZruqKQZ5FdTzXXtWMNY4+k4vzYP8s5j3q0/uktU5TKeM5Zejh8KHMPPLbTiB8vyqZWT3lyK3PJWP7Gz5lkm9CmS74xvlDWIFwQC3EMjYnt/aJ8s4AaZzabcGGstSevr7y0UGR0s=
+	t=1778609298; cv=none; b=Q9+Pfbjk9Ew6k8t+D0yrcwOsY23v7cXOHqT98l79wJtBpWr+BjUrA95mnebzdATF7GIxxhhZvkaAW4LZk3ukvtc6hYCx/xfE+0AIloHyNzCHp34Rc4yAOENFvp/5OAE8HwPEPGIISHeGwVJlPZW+fqI0iwXl1i+QuQbWiM7O9yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609295; c=relaxed/simple;
-	bh=OC2GBWM7/5aSVMlMapBsG37wnvo+qde+cn+jkHG7CFk=;
+	s=arc-20240116; t=1778609298; c=relaxed/simple;
+	bh=p2SLF3r7DNx3cwcKeuFwnj/5H3LkEiCwvCEtH/jlKbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nk+VqgfgtrI+he0eK2NHxN7oX4G8jbWPJdnQIU0vq7mTFCPLpqDa0VWV26XDybiCk0AKD3fNfMlrmHZ6n9D8ni4iPwGimuuAkwZvo85LAeWTYe+DZkwgXtXWGoHslmNGOwawo+0CCZz2n+UR8HF5w9hM4d2iFH4m91ttFK/7LSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z030Jfrv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GI8YjcsWSDEueUwATteYUuS1Ewxe6KckAsZHvKWLAN1Zv4+YTI+IVhJjW0ja0sirEkcTypsATKm8CuAAaOwrljxSUd+5lks/Xj6qq2pgths2qtQ2we4nwGj+7/S4XAznoBezSerHFc/JL9Y28x0ZHULlInY5CKzvHTtiKWu7dF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKH+g21u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z030Jfrv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3A4C2BCB0;
-	Tue, 12 May 2026 18:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKH+g21u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D89CC2BCB0;
+	Tue, 12 May 2026 18:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609295;
-	bh=OC2GBWM7/5aSVMlMapBsG37wnvo+qde+cn+jkHG7CFk=;
+	s=korg; t=1778609297;
+	bh=p2SLF3r7DNx3cwcKeuFwnj/5H3LkEiCwvCEtH/jlKbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z030JfrvXcmUG8sKv5LDoP7YFIoG3dgDSN/TtB4R3jD5UTfbFP5emjEO32rNpQtGn
-	 Q2BgRQRdqW9XrO/W+PcsGaHROggEEdgb3iDZWgo4/nFltsPa+f+llnHtKMoxnas6Cc
-	 il81zJZz7peuklbdQ+XE4gSkgTmRM60z0ixAcH5U=
+	b=cKH+g21uWEMz04FvdBrAUPzYmpbICQ7SPGfhcF+ql5EB2JvHEGgkIwnGhXQjS1UuX
+	 gspekUMuRZg758tzORgRm3xb8aFT85OiaFkb6XBp2OZkv37V1eXr5CMJq7lhH5+uqr
+	 UC+2Mvi1Jeh/47vNSt6eqSMFZDLD5Qgv9YpXzFPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.0 140/307] fbcon: Avoid OOB font access if console rotation fails
-Date: Tue, 12 May 2026 19:38:55 +0200
-Message-ID: <20260512173943.082034296@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 7.0 141/307] gpio: of: clear OF_POPULATED on hog nodes in remove path
+Date: Tue, 12 May 2026 19:38:56 +0200
+Message-ID: <20260512173943.102715217@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,51 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit e4ef723d8975a2694cc90733a6b888a5e2841842 upstream.
+commit bbee90e750262bfb406d66dc65c46d616d2b6673 upstream.
 
-Clear the font buffer if the reallocation during console rotation fails
-in fbcon_rotate_font(). The putcs implementations for the rotated buffer
-will return early in this case. See [1] for an example.
+The previously set OF_POPULATED flag should be cleared on the hog nodes
+when removing the chip.
 
-Currently, fbcon_rotate_font() keeps the old buffer, which is too small
-for the rotated font. Printing to the rotated console with a high-enough
-character code will overflow the font buffer.
-
-v2:
-- fix typos in commit message
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
-Cc: stable@vger.kernel.org # v2.6.15+
-Link: https://elixir.bootlin.com/linux/v6.19/source/drivers/video/fbdev/core/fbcon_ccw.c#L144 # [1]
-Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
+Fixes: 63636d956c455 ("gpio: of: Add DT overlay support for GPIO hogs")
+Acked-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260309-gpio-hog-fwnode-v2-1-4e61f3dbf06a@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon_rotate.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpio/gpiolib-of.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/fbcon_rotate.c
-+++ b/drivers/video/fbdev/core/fbcon_rotate.c
-@@ -46,6 +46,10 @@ int fbcon_rotate_font(struct fb_info *in
- 		info->fbops->fb_sync(info);
+--- a/drivers/gpio/gpiolib-of.c
++++ b/drivers/gpio/gpiolib-of.c
+@@ -1210,7 +1210,14 @@ int of_gpiochip_add(struct gpio_chip *ch
  
- 	if (par->fd_size < d_cellsize * len) {
-+		kfree(par->fontbuffer);
-+		par->fontbuffer = NULL;
-+		par->fd_size = 0;
+ void of_gpiochip_remove(struct gpio_chip *chip)
+ {
+-	of_node_put(dev_of_node(&chip->gpiodev->dev));
++	struct device_node *np = dev_of_node(&chip->gpiodev->dev);
 +
- 		dst = kmalloc_array(len, d_cellsize, GFP_KERNEL);
++	for_each_child_of_node_scoped(np, child) {
++		if (of_property_present(child, "gpio-hog"))
++			of_node_clear_flag(child, OF_POPULATED);
++	}
++
++	of_node_put(np);
+ }
  
- 		if (dst == NULL) {
-@@ -54,7 +58,6 @@ int fbcon_rotate_font(struct fb_info *in
- 		}
- 
- 		par->fd_size = d_cellsize * len;
--		kfree(par->fontbuffer);
- 		par->fontbuffer = dst;
- 	}
- 
+ bool of_gpiochip_instance_match(struct gpio_chip *gc, unsigned int index)
 
 
