@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40D93DC86D;
-	Tue, 12 May 2026 17:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F833DD858;
+	Tue, 12 May 2026 17:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608494; cv=none; b=oB0W/6MVvZzjoTu0YkB8FOw9lHsVkQq9J4QhP9GR9FWRoV7BLtuGmDDfYiCC4YlJGpkQQjy+CQYmEpYczYpREKaMHmX8gDetwXnIv8YjaKmp88q8xLcDia8NZsXLA4V/WW4GOni6aI6DVbPqzmSbaRNiSM3D3ltSTqft+gAhlVU=
+	t=1778608497; cv=none; b=U5E0nmjPiYcMWXZb9evuObIymnGzdzzSIiXc4ssMC8qdWR8XG/TseD8Dqvm4RWeYedh5dNAVDdsvq85mj+7UKnMCqTwwxHAStKlDephD9L/eSQmfLOMmgoLF/dAnsBy7EkMIOiT2noxXIMXBYqs6qoAGKXJ8ktxYxZmYCsk1Liw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608494; c=relaxed/simple;
-	bh=0hVj12dwTpCRZBm9c8QNGv/r3a3Au1V3oieUSJv3Ybs=;
+	s=arc-20240116; t=1778608497; c=relaxed/simple;
+	bh=PyYm+Y3e0cwcZ8dUCvFfAqWvZZaKpJXRdHaxiWyjJIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rE+wDiwrsfGTg33Lf0yTB4Gj8kLsIFTezKmgiajvR7ni1hxP1Hd3KwfSbgNfyTN78BEqrDE2Ar7kEDzDJLGfaOSvqrsg59upe2yi3O3OR6gIkGzCR6/1z+e89rGX0F++FIs+TgvDHUZom74jjHApicwrj5KHHLVR4k7gIUCbzJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RS0g6LOl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T6nPSrVW7I6WSGXe4xwFs16u3EC3FaCcbFa/lyFUCLW5ho0aY5G2OL9m5GWydEURuxPNqD23VIsoaL6r643lUGwAt/g28F9ZBDcJwCoeP919ZUuL/D6ZDgTm9IBmDdQ5RARV94l+KxIYDDsXzGJSgiOxLIoPTwzTNwOPalMZ0Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSJ45QH3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RS0g6LOl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439A2C2BCFB;
-	Tue, 12 May 2026 17:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSJ45QH3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E003AC2BCF5;
+	Tue, 12 May 2026 17:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608494;
-	bh=0hVj12dwTpCRZBm9c8QNGv/r3a3Au1V3oieUSJv3Ybs=;
+	s=korg; t=1778608497;
+	bh=PyYm+Y3e0cwcZ8dUCvFfAqWvZZaKpJXRdHaxiWyjJIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RS0g6LOlVaTIEX/+YimJr+2Xwhuvc4801U0JTGQ5Q7NlghJBXb5hdayHA1frw2qz9
-	 2K/NAJcoORRpJhS8M7m/Kx7Es3QiF/gKbBOsKhZ4RxWOGtWX/cS2hy+SFBNd/3lsn+
-	 g6nHi6u4hsM9MkDpJD7iUV5MVHccmjqHh21VCtko=
+	b=nSJ45QH3N1ViDfhP/3fWcb7WQln8itEWZjCyQnTJCtOOdz1eYVen148qGDWx4h7ku
+	 EqyaWZ+t+tzYfFRSEQ18azRQDfHqCrIKdpvQE8rLiVM3adepwaKSiHWQ4eslHeLldz
+	 m/oTqbgsP9u4w1QJZdL34EyqunL3PCnW1Hki8NxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Breno Leitao <leitao@debian.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 101/270] net: libwx: use request_irq for VF misc interrupt
-Date: Tue, 12 May 2026 19:38:22 +0200
-Message-ID: <20260512173940.585622280@linuxfoundation.org>
+Subject: [PATCH 6.18 102/270] netpoll: pass buffer size to egress_dev() to avoid MAC truncation
+Date: Tue, 12 May 2026 19:38:23 +0200
+Message-ID: <20260512173940.606021397@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,43 +50,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 7a33345153eeeda195c55f15be27074e4c3b5109 upstream.
+commit 76b93a8107574006b25495664304ea9237494d70 upstream.
 
-Currently, request_threaded_irq() is used with a primary handler but a
-NULL threaded handler, while also setting the IRQF_ONESHOT flag. This
-specific combination triggers a WARNING since the commit aef30c8d569c
-("genirq: Warn about using IRQF_ONESHOT without a threaded handler").
+egress_dev() formats np->dev_mac via snprintf() but receives buf as
+a bare char *, so it cannot derive the buffer size from the pointer. The
+size argument was hardcoded to MAC_ADDR_STR_LEN (3 * ETH_ALEN - 1 = 17),
+which is silly wrong in two ways:
 
-WARNING: kernel/irq/manage.c:1502 at __setup_irq+0x4fa/0x760
+ 1) misleading kernel log output on the MAC-selected target path
+    (np->dev_name[0] == '\0'); for example "aa:bb:cc:dd:ee:ff doesn't
+    exist, aborting" was logged as "aa:bb:cc:dd:ee:f doesn't exist,
+    aborting".
 
-Fix the issue by switching to request_irq(), which is the appropriate
-interface or a non-threaded interrupt handler, and removing the
-unnecessary IRQF_ONESHOT flag.
+ 2) the second argument of snprintf is the size of the buffer, not the
+    size of what you want to write.
 
-Fixes: eb4898fde1de ("net: libwx: add wangxun vf common api")
+Add a bufsz parameter to egress_dev() and pass sizeof(buf) from each
+caller, matching the standard snprintf() idiom and removing the
+hardcoded size from the helper.
+
+Every caller already declares "char buf[MAC_ADDR_STR_LEN + 1]" so the
+formatted MAC continues to fit.
+
+Tested by booting with
+  netconsole=6665@/aa:bb:cc:dd:ee:ff,6666@10.0.0.1/00:11:22:33:44:55
+on a kernel without a matching device. Pre-fix dmesg shows
+"aa:bb:cc:dd:ee:f doesn't exist, aborting"; post-fix shows the full
+"aa:bb:cc:dd:ee:ff doesn't exist, aborting".
+
+Fixes: f8a10bed32f5 ("netconsole: allow selection of egress interface via MAC address")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/786DDC7D5CCA6D0A+20260429083743.88961-2-jiawenwu@trustnetic.com
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260501-netpoll_snprintf_fix-v1-1-84b0566e6597@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_vf_common.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/netpoll.c |   23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
---- a/drivers/net/ethernet/wangxun/libwx/wx_vf_common.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_vf_common.c
-@@ -98,8 +98,8 @@ int wx_request_msix_irqs_vf(struct wx *w
- 		}
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -608,14 +608,16 @@ EXPORT_SYMBOL_GPL(__netpoll_setup);
+ /*
+  * Returns a pointer to a string representation of the identifier used
+  * to select the egress interface for the given netpoll instance. buf
+- * must be a buffer of length at least MAC_ADDR_STR_LEN + 1.
++ * is used to format np->dev_mac when np->dev_name is empty; bufsz must
++ * be at least MAC_ADDR_STR_LEN + 1 to fit the formatted MAC address
++ * and its NUL terminator.
+  */
+-static char *egress_dev(struct netpoll *np, char *buf)
++static char *egress_dev(struct netpoll *np, char *buf, size_t bufsz)
+ {
+ 	if (np->dev_name[0])
+ 		return np->dev_name;
+ 
+-	snprintf(buf, MAC_ADDR_STR_LEN, "%pM", np->dev_mac);
++	snprintf(buf, bufsz, "%pM", np->dev_mac);
+ 	return buf;
+ }
+ 
+@@ -645,7 +647,7 @@ static int netpoll_take_ipv6(struct netp
+ 
+ 	if (!IS_ENABLED(CONFIG_IPV6)) {
+ 		np_err(np, "IPv6 is not supported %s, aborting\n",
+-		       egress_dev(np, buf));
++		       egress_dev(np, buf, sizeof(buf)));
+ 		return -EINVAL;
  	}
  
--	err = request_threaded_irq(wx->msix_entry->vector, wx_msix_misc_vf,
--				   NULL, IRQF_ONESHOT, netdev->name, wx);
-+	err = request_irq(wx->msix_entry->vector, wx_msix_misc_vf,
-+			  0, netdev->name, wx);
+@@ -667,7 +669,7 @@ static int netpoll_take_ipv6(struct netp
+ 	}
  	if (err) {
- 		wx_err(wx, "request_irq for msix_other failed: %d\n", err);
- 		goto free_queue_irqs;
+ 		np_err(np, "no IPv6 address for %s, aborting\n",
+-		       egress_dev(np, buf));
++		       egress_dev(np, buf, sizeof(buf)));
+ 		return err;
+ 	}
+ 
+@@ -687,14 +689,14 @@ static int netpoll_take_ipv4(struct netp
+ 	in_dev = __in_dev_get_rtnl(ndev);
+ 	if (!in_dev) {
+ 		np_err(np, "no IP address for %s, aborting\n",
+-		       egress_dev(np, buf));
++		       egress_dev(np, buf, sizeof(buf)));
+ 		return -EDESTADDRREQ;
+ 	}
+ 
+ 	ifa = rtnl_dereference(in_dev->ifa_list);
+ 	if (!ifa) {
+ 		np_err(np, "no IP address for %s, aborting\n",
+-		       egress_dev(np, buf));
++		       egress_dev(np, buf, sizeof(buf)));
+ 		return -EDESTADDRREQ;
+ 	}
+ 
+@@ -719,7 +721,8 @@ int netpoll_setup(struct netpoll *np)
+ 		ndev = dev_getbyhwaddr(net, ARPHRD_ETHER, np->dev_mac);
+ 
+ 	if (!ndev) {
+-		np_err(np, "%s doesn't exist, aborting\n", egress_dev(np, buf));
++		np_err(np, "%s doesn't exist, aborting\n",
++		       egress_dev(np, buf, sizeof(buf)));
+ 		err = -ENODEV;
+ 		goto unlock;
+ 	}
+@@ -727,14 +730,14 @@ int netpoll_setup(struct netpoll *np)
+ 
+ 	if (netdev_master_upper_dev_get(ndev)) {
+ 		np_err(np, "%s is a slave device, aborting\n",
+-		       egress_dev(np, buf));
++		       egress_dev(np, buf, sizeof(buf)));
+ 		err = -EBUSY;
+ 		goto put;
+ 	}
+ 
+ 	if (!netif_running(ndev)) {
+ 		np_info(np, "device %s not up yet, forcing it\n",
+-			egress_dev(np, buf));
++			egress_dev(np, buf, sizeof(buf)));
+ 
+ 		err = dev_open(ndev, NULL);
+ 		if (err) {
 
 
