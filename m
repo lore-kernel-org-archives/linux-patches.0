@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379C336C5A1;
-	Tue, 12 May 2026 18:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5AFF375AB1;
+	Tue, 12 May 2026 18:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609646; cv=none; b=J4XD3loAdfkdWzIoLbMKWDqEchHTUQwLECyNbOP8DeoeJQ67WMHA6ef5GUF4luLt2Iu5PRwnOwyFegv9CNMRx8TY4FPfI2wmLHCKEacXPYmlzmqPDzN3Zo5HHCvNm6mAFv2ev0qq3vwBisuNG5tZDOB0WlouuLvZL4h9MkTi1tw=
+	t=1778609648; cv=none; b=EQsUzn8Z/GGCDmowtfRY0CzQdb8fYvdln7YQZkvGyxmThK5Df4KN0qyN83Bvo9COorjVY3oaqXffwrCh2d/Nt8cqChKQglPNcTb/87sncJBSHcNvm+Djobvxfj7bcl9BzvS1oHRfzjwEBub/f188aDrjzLfCAMXBwgan92kXZf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609646; c=relaxed/simple;
-	bh=YepdpDBpacIihxBLUfprzlYjmbcXJtkEeaeqc2GgXEM=;
+	s=arc-20240116; t=1778609648; c=relaxed/simple;
+	bh=qiurB8yIymldwSP2bZkeo6tBnAIPeCkoI4K9QZIZ140=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pli74G7JVITrduqW13VxBFP3pBIQid69VcBE/Bt0mE/CfeCQD7kfiDQhBqYgwTUqXIfc5pWZ35sOvKEsHc/4VVGzFFIC/OSVF83x34K+tHzS7pCGFgDCBUTtWUmlYKhkFeFVzOU4MURWmY5zbKhPjn4yIdt5r/h2tFG6ordMWZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azrcqSzw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c7+RrP35ZxRitt9ode1bkhaDVGcEtU7pXAhNHoH//V+RX/0aDrVrTDPBd/SIS/yf1z6Z8YhVTPDw2c28Q6PRT4xzLp2XyfCyTWEdabJ/lIaa+l2XWbkmzJRVioCO9Sw1mlEWyfm32qfLSJJrcGm0zqMafTJIZi6WqQ/uDs1Z/nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POF5N4Ka; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azrcqSzw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C433BC2BCB0;
-	Tue, 12 May 2026 18:14:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POF5N4Ka"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD25C2BCF5;
+	Tue, 12 May 2026 18:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609646;
-	bh=YepdpDBpacIihxBLUfprzlYjmbcXJtkEeaeqc2GgXEM=;
+	s=korg; t=1778609648;
+	bh=qiurB8yIymldwSP2bZkeo6tBnAIPeCkoI4K9QZIZ140=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azrcqSzwaZTL++xelkwvhvyiNBTantqNMKPe/mW+pw/Q6llHe60r4mEtZij2BtUEK
-	 +F3/LZ5NFlmArNjqrMQl32dZrpW6EBHx0BWWI5nAvyrVQdB8RaUKhH7Po8wUFWYSk5
-	 5OPNujfBSwiz9xuaMI3V0kLMkKAioTJSzg4HtXlw=
+	b=POF5N4KakgTledcOoLsAnRoUYV6O3UitdlL4zVoq48xUAHakBWNid5ebDfuv/bcSK
+	 Bei4tZa7WyiPDLZJSnrFWtsN8nSSeuqGpdlo08agUwfVfcN2w+AGtWrPJd0ZVPBvb5
+	 Qt8WFbHCircofcT3N6lqtWnZTNVLjNWm4M94IF0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 249/307] selftests: mptcp: check output: catch cmd errors
-Date: Tue, 12 May 2026 19:40:44 +0200
-Message-ID: <20260512173945.381896783@linuxfoundation.org>
+	stable@kernel.org,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 7.0 276/307] f2fs: fix inline data not being written to disk in writeback path
+Date: Tue, 12 May 2026 19:41:11 +0200
+Message-ID: <20260512173945.950170782@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,111 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-commit 65db7b27b90e2ea8d4966935aa9a50b6a60c31ac upstream.
+commit fe9b8b30b97102859a9102be7bd2a09803bd90bd upstream.
 
-Using '${?}' inside the if-statement to check the returned value from
-the command that was evaluated as part of the if-statement is not
-correct: here, '${?}' will be linked to the previous instruction, not
-the one that is expected here (${cmd}).
+When f2fs_fiemap() is called with `fileinfo->fi_flags` containing the
+FIEMAP_FLAG_SYNC flag, it attempts to write data to disk before
+retrieving file mappings via filemap_write_and_wait(). However, there is
+an issue where the file does not get mapped as expected. The following
+scenario can occur:
 
-Instead, simply mark the error, except if an error is expected. If
-that's the case, 1 can be passed as the 4th argument of this helper.
-Three checks from pm_netlink.sh expect an error.
+root@vm:/mnt/f2fs# dd if=/dev/zero of=data.3k bs=3k count=1
+root@vm:/mnt/f2fs# xfs_io data.3k -c "fiemap -v 0 4096"
+data.3k:
+ EXT: FILE-OFFSET      BLOCK-RANGE      TOTAL FLAGS
+   0: [0..5]:          0..5                 6 0x307
 
-While at it, improve the error message when the command unexpectedly
-fails or succeeds.
+The root cause of this issue is that f2fs_write_single_data_page() only
+calls f2fs_write_inline_data() to copy data from the data folio to the
+inode folio, and it clears the dirty flag on the data folio. However, it
+does not mark the data folio as writeback. When
+__filemap_fdatawait_range() checks for folios with the writeback flag,
+it returns early, causing f2fs_fiemap() to report that the file has no
+mapping.
 
-Note that we could expect a specific returned value, but the checks
-currently expecting an error can be used with 'ip mptcp' or 'pm_nl_ctl',
-and these two tools don't return the same error code.
+To fix this issue, the solution is to call
+f2fs_write_single_node_folio() in f2fs_inline_data_fiemap() when
+getting fiemap with FIEMAP_FLAG_SYNC flags. This patch ensures that the
+inode folio is written back and the writeback process completes before
+proceeding.
 
-Fixes: 2d0c1d27ea4e ("selftests: mptcp: add mptcp_lib_check_output helper")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-10-fca8091060a4@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@kernel.org
+Fixes: 9ffe0fb5f3bb ("f2fs: handle inline data operations")
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_lib.sh  |   16 ++++++++++------
- tools/testing/selftests/net/mptcp/pm_netlink.sh |   10 ++++++----
- 2 files changed, 16 insertions(+), 10 deletions(-)
+ fs/f2fs/f2fs.h   |    2 ++
+ fs/f2fs/inline.c |    9 +++++++++
+ fs/f2fs/node.c   |    2 +-
+ 3 files changed, 12 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-@@ -474,20 +474,24 @@ mptcp_lib_wait_local_port_listen() {
- 	wait_local_port_listen "${@}" "tcp"
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3950,6 +3950,8 @@ int f2fs_sanity_check_node_footer(struct
+ 					enum node_type ntype, bool in_irq);
+ struct folio *f2fs_get_inode_folio(struct f2fs_sb_info *sbi, pgoff_t ino);
+ struct folio *f2fs_get_xnode_folio(struct f2fs_sb_info *sbi, pgoff_t xnid);
++int f2fs_write_single_node_folio(struct folio *node_folio, int sync_mode,
++			bool mark_dirty, enum iostat_type io_type);
+ int f2fs_move_node_folio(struct folio *node_folio, int gc_type);
+ void f2fs_flush_inline_data(struct f2fs_sb_info *sbi);
+ int f2fs_fsync_node_pages(struct f2fs_sb_info *sbi, struct inode *inode,
+--- a/fs/f2fs/inline.c
++++ b/fs/f2fs/inline.c
+@@ -814,6 +814,15 @@ int f2fs_inline_data_fiemap(struct inode
+ 		goto out;
+ 	}
+ 
++	if (fieinfo->fi_flags & FIEMAP_FLAG_SYNC) {
++		err = f2fs_write_single_node_folio(ifolio, true, false, FS_NODE_IO);
++		if (err)
++			return err;
++		ifolio = f2fs_get_inode_folio(F2FS_I_SB(inode), inode->i_ino);
++		if (IS_ERR(ifolio))
++			return PTR_ERR(ifolio);
++		f2fs_folio_wait_writeback(ifolio, NODE, true, true);
++	}
+ 	ilen = min_t(size_t, MAX_INLINE_DATA(inode), i_size_read(inode));
+ 	if (start >= ilen)
+ 		goto out;
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1842,7 +1842,7 @@ redirty_out:
+ 	return false;
  }
  
-+# $1: error file, $2: cmd, $3: expected msg, [$4: expected error]
- mptcp_lib_check_output() {
- 	local err="${1}"
- 	local cmd="${2}"
- 	local expected="${3}"
-+	local exp_error="${4:-0}"
- 	local cmd_ret=0
- 	local out
- 
--	if ! out=$(${cmd} 2>"${err}"); then
--		cmd_ret=${?}
--	fi
-+	out=$(${cmd} 2>"${err}") || cmd_ret=1
- 
--	if [ ${cmd_ret} -ne 0 ]; then
--		mptcp_lib_pr_fail "command execution '${cmd}' stderr"
--		cat "${err}"
-+	if [ "${cmd_ret}" != "${exp_error}" ]; then
-+		mptcp_lib_pr_fail "unexpected returned code for '${cmd}', info:"
-+		if [ "${exp_error}" = 0 ]; then
-+			cat "${err}"
-+		else
-+			echo "${out}"
-+		fi
- 		return 2
- 	elif [ "${out}" = "${expected}" ]; then
- 		return 0
---- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
-+++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
-@@ -122,10 +122,12 @@ check()
- 	local cmd="$1"
- 	local expected="$2"
- 	local msg="$3"
-+	local exp_error="$4"
- 	local rc=0
- 
- 	mptcp_lib_print_title "$msg"
--	mptcp_lib_check_output "${err}" "${cmd}" "${expected}" || rc=${?}
-+	mptcp_lib_check_output "${err}" "${cmd}" "${expected}" "${exp_error}" ||
-+		rc=${?}
- 	if [ ${rc} -eq 2 ]; then
- 		mptcp_lib_result_fail "${msg} # error ${rc}"
- 		ret=${KSFT_FAIL}
-@@ -158,13 +160,13 @@ check "show_endpoints" \
- 			    "3,10.0.1.3,signal backup")" "dump addrs"
- 
- del_endpoint 2
--check "get_endpoint 2" "" "simple del addr"
-+check "get_endpoint 2" "" "simple del addr" 1
- check "show_endpoints" \
- 	"$(format_endpoints "1,10.0.1.1" \
- 			    "3,10.0.1.3,signal backup")" "dump addrs after del"
- 
- add_endpoint 10.0.1.3 2>/dev/null
--check "get_endpoint 4" "" "duplicate addr"
-+check "get_endpoint 4" "" "duplicate addr" 1
- 
- add_endpoint 10.0.1.4 flags signal
- check "get_endpoint 4" "$(format_endpoints "4,10.0.1.4,signal")" "id addr increment"
-@@ -173,7 +175,7 @@ for i in $(seq 5 9); do
- 	add_endpoint "10.0.1.${i}" flags signal >/dev/null 2>&1
- done
- check "get_endpoint 9" "$(format_endpoints "9,10.0.1.9,signal")" "hard addr limit"
--check "get_endpoint 10" "" "above hard addr limit"
-+check "get_endpoint 10" "" "above hard addr limit" 1
- 
- del_endpoint 9
- for i in $(seq 10 255); do
+-static int f2fs_write_single_node_folio(struct folio *node_folio, int sync_mode,
++int f2fs_write_single_node_folio(struct folio *node_folio, int sync_mode,
+ 			bool mark_dirty, enum iostat_type io_type)
+ {
+ 	int err = 0;
 
 
