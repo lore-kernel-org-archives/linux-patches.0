@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E2633ADBA;
-	Tue, 12 May 2026 18:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19618349AF5;
+	Tue, 12 May 2026 18:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609300; cv=none; b=SZjsTfp2lUv/wlCXL8TG6DZMVh/eFU1YzjLhlUguFZPdh0KCw4m39C+/h8O6JEtjNrOIeuW3fgxJn+y1Gp1RpaAc70yNTEkCDteISt5X7PMHPZjrDCnhGNPn+07+VHxDnKv+HSI2S4fsha6FP7CDkTj7/5MbRrMzQ9PAJ3O3BpQ=
+	t=1778609303; cv=none; b=i1XVWmBNH+G5SYSw2Jb+LgXTwWf3BkqjS5e2JvJuxwIfTrPncfKRIRXpxvH9nLMRlSOR0m0pW8deWR+b2BE0OFqnCU75ZtoxWVP8ds7rm7LUQxVsSXjgC03r+XxXbKhfvvcjHzrWxCLAMYC0acvJtxeE6k702jq2zJpxsDtTQfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609300; c=relaxed/simple;
-	bh=TRd5d6HZIgzDbzU68AArNTMFWVop0zjUAhMPZ9my/Nk=;
+	s=arc-20240116; t=1778609303; c=relaxed/simple;
+	bh=GDCs8izwjVjaIQgsAzOQC1PLBBb47MPU6AsrUhc0Fq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WZ0AqgnHEVjxSVRdjd9dZozqx0XMLIH0FRRrmv90rhc1k6b4hXvOdk3eBYiT3RzVrXvoXanjrNxOW9GYNRvXYryufBBIOerEfts1trz4o4zfz7feWtQibB0gUw71qZQshs/G2K63ptWMHecEoK4r7cZMPefKV7yJeLACxUh9W8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZ2EC7lK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nl6iA/n1uTsNX4K0SlV+AzSTcDEydbl1RqJzP09VidtSe/4+/E4NGqnPVmTZMxrHMvzZOZdi3QPfts3n+tgm1+CbG3sU+hHTCqQ8C2h+7TtngPvK2dLh1+hti9LJjy+3CLP63MFij0N7auguXBDUj8kh/ocu6b8WI4p9cNOqO/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOhaaKYo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZ2EC7lK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B44CC2BCB0;
-	Tue, 12 May 2026 18:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOhaaKYo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3098C2BCB0;
+	Tue, 12 May 2026 18:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609300;
-	bh=TRd5d6HZIgzDbzU68AArNTMFWVop0zjUAhMPZ9my/Nk=;
+	s=korg; t=1778609303;
+	bh=GDCs8izwjVjaIQgsAzOQC1PLBBb47MPU6AsrUhc0Fq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZ2EC7lK2tTtdxqKmfwa634M7mFzphzLXnygN2EIwZbi0SSHeqD0/o58G9NLpMyXI
-	 tgTlnyOAJI500oVTX8mJzps6DAgY5XbVAqRVT5N1ToJHqK2Q0viS0ao9hw+NnSYnYA
-	 jIJFyQBgPK8UJQ+IA0sJM6E0q+UxQ80NJ0ieIdgk=
+	b=KOhaaKYo+A3y81RaX8ng4lYE/uGc2cZmsYtEhzrwKsSDTZKWKvPMTlLjFiCe6CBT1
+	 LDrR3l4Sp0kUmr+o+Buv3OO6nnmKw+pYx5A/98P1CWoEixQVbsRQ1TQvc2lp0cKSg8
+	 F0roxIZtifj/Zep7P4pVziV9NDVSeNh5J3yT4Lbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 7.0 115/307] pseries/papr-hvpipe: Fix & simplify error handling in papr_hvpipe_init()
-Date: Tue, 12 May 2026 19:38:30 +0200
-Message-ID: <20260512173942.550141610@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	linux-hyperv@vger.kernel.org
+Subject: [PATCH 7.0 142/307] hv: Select CONFIG_SYSFB only for CONFIG_HYPERV_VMBUS
+Date: Tue, 12 May 2026 19:38:57 +0200
+Message-ID: <20260512173943.124738342@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,84 +57,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 713e468cdbc2277db6ce949c32c1acbd83501733 upstream.
+commit d33db956c9618e7cb08c2520ce708437914214ec upstream.
 
-Remove such 3 levels of nesting patterns to check success return values
-from function calls.
+Hyperv's sysfb access only exists in the VMBUS support. Therefore
+only select CONFIG_SYSFB for CONFIG_HYPERV_VMBUS. Avoids sysfb code
+on systems that don't need it.
 
-ret = enable_hvpipe_IRQ()
-    if (!ret)
-	    ret = set_hvpipe_sys_param(1)
-	        if (!ret)
-		    ret = misc_register()
-
-Instead just bail out to "out*:" labels, in case of any error. This
-simplifies the init flow.
-
-While at it let's also fix the following error handling logic:
-We have already enabled interrupt sources and enabled hvpipe to received
-interrupts, if misc_register() fails, we will destroy the workqueue, but
-the HMC might send us a msg via hvpipe which will call, queue work on
-the workqueue which might be destroyed.
-
-So instead, let's reverse the order of enabling set_hvpipe_sys_param(1)
-and in case of an error let's remove the misc dev by calling
-misc_deregister().
-
-Cc: stable@vger.kernel.org
-Fixes: 39a08a4f94980 ("powerpc/pseries: Enable hvpipe with ibm,set-system-parameter RTAS")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/f2141eafb80e7780395e03aa9a22e8a37be80513.1777606826.git.ritesh.list@gmail.com
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 96959283a58d ("Drivers: hv: Always select CONFIG_SYSFB for Hyper-V guests")
+Cc: Michael Kelley <mhklinux@outlook.com>
+Cc: Saurabh Sengar <ssengar@linux.microsoft.com>
+Cc: Wei Liu <wei.liu@kernel.org>
+Cc: "K. Y. Srinivasan" <kys@microsoft.com>
+Cc: Haiyang Zhang <haiyangz@microsoft.com>
+Cc: Dexuan Cui <decui@microsoft.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: linux-hyperv@vger.kernel.org
+Cc: <stable@vger.kernel.org> # v6.16+
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://patch.msgid.link/20260402092305.208728-2-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/papr-hvpipe.c |   28 ++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ drivers/hv/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/platforms/pseries/papr-hvpipe.c
-+++ b/arch/powerpc/platforms/pseries/papr-hvpipe.c
-@@ -780,23 +780,29 @@ static int __init papr_hvpipe_init(void)
- 	}
+--- a/drivers/hv/Kconfig
++++ b/drivers/hv/Kconfig
+@@ -9,7 +9,6 @@ config HYPERV
+ 	select PARAVIRT
+ 	select X86_HV_CALLBACK_VECTOR if X86
+ 	select OF_EARLY_FLATTREE if OF
+-	select SYSFB if EFI && !HYPERV_VTL_MODE
+ 	select IRQ_MSI_LIB if X86
+ 	help
+ 	  Select this option to run Linux as a Hyper-V client operating
+@@ -62,6 +61,7 @@ config HYPERV_VMBUS
+ 	tristate "Microsoft Hyper-V VMBus driver"
+ 	depends on HYPERV
+ 	default HYPERV
++	select SYSFB if EFI && !HYPERV_VTL_MODE
+ 	help
+ 	  Select this option to enable Hyper-V Vmbus driver.
  
- 	ret = enable_hvpipe_IRQ();
--	if (!ret) {
--		ret = set_hvpipe_sys_param(1);
--		if (!ret)
--			ret = misc_register(&papr_hvpipe_dev);
--	}
-+	if (ret)
-+		goto out_wq;
- 
--	if (!ret) {
--		pr_info("hvpipe feature is enabled\n");
--		hvpipe_feature = true;
--		return 0;
--	}
-+	ret = misc_register(&papr_hvpipe_dev);
-+	if (ret)
-+		goto out_wq;
- 
--	pr_err("hvpipe feature is not enabled %d\n", ret);
-+	ret = set_hvpipe_sys_param(1);
-+	if (ret)
-+		goto out_misc;
-+
-+	pr_info("hvpipe feature is enabled\n");
-+	hvpipe_feature = true;
-+	return 0;
-+
-+out_misc:
-+	misc_deregister(&papr_hvpipe_dev);
-+out_wq:
- 	destroy_workqueue(papr_hvpipe_wq);
- out:
- 	kfree(papr_hvpipe_work);
- 	papr_hvpipe_work = NULL;
-+	pr_err("hvpipe feature is not enabled %d\n", ret);
- 	return ret;
- }
- machine_device_initcall(pseries, papr_hvpipe_init);
 
 
