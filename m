@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48AA3955F8;
-	Tue, 12 May 2026 17:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BEB3955DC;
+	Tue, 12 May 2026 17:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608211; cv=none; b=elDM5JlMRUCnEmh3kLn7stUgDdJDILOABZSAZwymSfYsduhRi35gRQEhRJQVb+2ajuBHSp/dEA6LW4gEpBmWQ0ja9Jje1dv80Xciq3/2SxNiI6SY6dbdOv67U1aQXOw0nY8zCkSYq3mcbFSHBJ8iirBarjpr8LFpWVcXEWqRWro=
+	t=1778608214; cv=none; b=VlmbUk0yRbjQ9aKFF9Bt/9vVKCEoTcnTB4Djkwa2wTCwN4Uj8w2SaCf5DNch6NzMg/f7YSNYjY0flQjAnjdBHedZ4nCKswouLHBrdYsoMhJe01oWI0OcGwnvVOPkE+kIn3PJmAaHvQMldtE+mweBZGJE2VI8vr06+e9gVhH3IVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608211; c=relaxed/simple;
-	bh=oZ9se9HknSI5fxmm3mOEsKDaS9628J5BGvhWhsJO+EY=;
+	s=arc-20240116; t=1778608214; c=relaxed/simple;
+	bh=1yBLGyuc16bV5iDTylUcH4xv5Ap0xIhNuRo4dDlZjdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8/NYbOlmA1442BGElOC2ZJtpRtH37R0jSiOGjbvIOBy8dB1rhS4TGo/lLgJPfYPKvIe8/0TozBE5MOuUFZPL3QYMfx05CXvMKnDSgBwukvYzCRa8Hm1XJXFNBEvGb5G4qlfCHkwttMlyN6uupR4qAyNAuNp3LcPSeQ9Evor2gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AA4SaEUx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b5jasI249X/veRTEg8zX3mWIEY+3+Jt8vcDnroRjzMAmzGTCjOaqreMh7Kav0HwXBBw5ZzTzFvWCadsc+EuAis2VFiMJ391e7iqz0kCtxF2TdIbyCxLJVzKZDoPOQrwkEpWGxVbo0zOUnfad8wvuBZ/pPjLHFR5OfrWlI3LD3lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K84NWB0f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AA4SaEUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D394C2BCB0;
-	Tue, 12 May 2026 17:50:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K84NWB0f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3457C2BCB0;
+	Tue, 12 May 2026 17:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608211;
-	bh=oZ9se9HknSI5fxmm3mOEsKDaS9628J5BGvhWhsJO+EY=;
+	s=korg; t=1778608214;
+	bh=1yBLGyuc16bV5iDTylUcH4xv5Ap0xIhNuRo4dDlZjdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AA4SaEUxphx+iXQazqSvsYzuJdM7AHQU4dmjg2USDUIXIg4hvKytyttJHTZ61SfLP
-	 xnCdEv+90AM37K/+HhBfpesq7cD3zu1+USG2ozSyfoFTAAR4rzffI8smNILhXB9v6E
-	 OZKVAuueOViRB6J6tzm6H1Hg7ieDtCc0JiwYl9AY=
+	b=K84NWB0fsseqNW75DA4GqXipmKrhjErPUCXY5KhUmwG3YM50KQkQaBU55CKz54/Cq
+	 P+8tXLmiNq70Iey6MBgiqAIOxMLNx2G2TK43aEd4/TXSqwAz99sYaMls+mh9ptos0K
+	 9cwpk/uy0Li9YX/a/vVL1KoqpTZEXWRDEak44lGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.12 155/206] RDMA/rxe: Reject unknown opcodes before ICRC processing
-Date: Tue, 12 May 2026 19:40:07 +0200
-Message-ID: <20260512173936.145278854@linuxfoundation.org>
+Subject: [PATCH 6.12 156/206] RDMA/vmw_pvrdma: Fix double free on pvrdma_alloc_ucontext() error path
+Date: Tue, 12 May 2026 19:40:08 +0200
+Message-ID: <20260512173936.166574607@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,94 +49,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 4c6f86d85d03cdb33addce86aa69aa795ca6c47a upstream.
+commit e38e86995df27f1f854063dab1f0c6a513db3faf upstream.
 
-Even after applying commit 7244491dab34 ("RDMA/rxe: Validate pad and ICRC
-before payload_size() in rxe_rcv"), a single unauthenticated UDP packet
-can still trigger panic.  That patch handled payload_size() underflow only
-for valid opcodes with short packets, not for packets carrying an unknown
-opcode.  The unknown-opcode OOB read described below predates that commit
-and reaches back to the initial Soft RoCE driver.
-
-The check added there reads
-
-    pkt->paylen < header_size(pkt) + bth_pad(pkt) + RXE_ICRC_SIZE
-
-where header_size(pkt) expands to rxe_opcode[pkt->opcode].length.  The
-rxe_opcode[] array has 256 entries but is only populated for defined IB
-opcodes; any other entry (for example opcode 0xff) is zero-initialized, so
-length == 0 and the check degenerates to
-
-    pkt->paylen < 0 + bth_pad(pkt) + RXE_ICRC_SIZE
-
-which does not constrain pkt->paylen enough.  rxe_icrc_hdr() then computes
-
-    rxe_opcode[pkt->opcode].length - RXE_BTH_BYTES
-
-which underflows when length == 0 and passes a huge value to rxe_crc32(),
-causing an out-of-bounds read of the skb payload.
-
-Reproduced on v7.0-rc7 with that fix applied, QEMU/KVM with
-CONFIG_RDMA_RXE=y and CONFIG_KASAN=y, after
-
-    rdma link add rxe0 type rxe netdev eth0
-
-A single 48-byte UDP packet to port 4791 with BTH opcode=0xff and
-QPN=IB_MULTICAST_QPN triggers:
-
-    BUG: KASAN: slab-out-of-bounds in crc32_le+0x115/0x170
-    Read of size 1 at addr ...
-    The buggy address is located 0 bytes to the right of
-     allocated 704-byte region
-    Call Trace:
-     crc32_le+0x115/0x170
-     rxe_icrc_hdr.isra.0+0x226/0x300
-     rxe_icrc_check+0x13f/0x3a0
-     rxe_rcv+0x6e1/0x16e0
-     rxe_udp_encap_recv+0x20a/0x320
-     udp_queue_rcv_one_skb+0x7ed/0x12c0
-
-Subsequent packets with the same shape fault on unmapped memory and panic
-the kernel.  The trigger requires only module load and "rdma link add"; no
-QP, no connection, and no authentication.
-
-Fix this by rejecting packets whose opcode has no rxe_opcode[] entry,
-detected via the zero mask or zero length, before any length arithmetic
-runs.
+Sashiko points out that pvrdma_uar_free() is already called within
+pvrdma_dealloc_ucontext(), so calling it before triggers a double free.
 
 Cc: stable@vger.kernel.org
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://patch.msgid.link/r/20260414111555.3386793-1-michael.bommarito@gmail.com
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Fixes: 29c8d9eba550 ("IB: Add vmw_pvrdma driver")
+Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=4
+Link: https://patch.msgid.link/r/10-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/rxe/rxe_recv.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/sw/rxe/rxe_recv.c
-+++ b/drivers/infiniband/sw/rxe/rxe_recv.c
-@@ -330,6 +330,17 @@ void rxe_rcv(struct sk_buff *skb)
- 	pkt->qp = NULL;
- 	pkt->mask |= rxe_opcode[pkt->opcode].mask;
- 
-+	/*
-+	 * Unknown opcodes have a zero-initialized rxe_opcode[] entry, so
-+	 * both mask and length are 0.  Reject them before any length math:
-+	 * rxe_icrc_hdr() would otherwise compute length - RXE_BTH_BYTES
-+	 * and pass the underflowed value to rxe_crc32(), producing an
-+	 * out-of-bounds read.
-+	 */
-+	if (unlikely(!rxe_opcode[pkt->opcode].mask ||
-+		     !rxe_opcode[pkt->opcode].length))
-+		goto drop;
-+
- 	if (unlikely(pkt->paylen < header_size(pkt) + bth_pad(pkt) +
- 		       RXE_ICRC_SIZE))
- 		goto drop;
+--- a/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c
++++ b/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.c
+@@ -350,7 +350,7 @@ int pvrdma_alloc_ucontext(struct ib_ucon
+ 	uresp.qp_tab_size = vdev->dsr->caps.max_qp;
+ 	ret = ib_copy_to_udata(udata, &uresp, sizeof(uresp));
+ 	if (ret) {
+-		pvrdma_uar_free(vdev, &context->uar);
++		/* pvrdma_dealloc_ucontext() also frees the UAR */
+ 		pvrdma_dealloc_ucontext(&context->ibucontext);
+ 		return -EFAULT;
+ 	}
 
 
