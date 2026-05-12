@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9863D36A378;
-	Tue, 12 May 2026 18:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B88C36A378;
+	Tue, 12 May 2026 18:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609697; cv=none; b=gy08uaHOMbkS5BA5/nQE22+GMl23ju6mhJLq+46ik6k//svc01kCW0RsnpxA1cAs7jHGh1zYXXJyqAS/nQ7ga+ipEaqU/6a1j2FB5LJtplpesHZ7ATKjxFKuKOeog7s62VDhD7h/J2CNXSikCwDnz4Sk/jieoaO/ECFIynyGJM8=
+	t=1778609700; cv=none; b=UaRM7aVNGHQabVeGzcrF4hNs8Q2u4mgi4dBzu4Vy/EVmS+FcX2PG63gynM9xdURS4/8jdoBtaBY7FVh7RO9j1YFQ+rA+2IXaP2VVrEZ3pOZmd56XgZKatbxzHEGeWI6t1rZF2vvTid/wEBoSG1NqvUL8YPMOI7BFOu5fgrPlcO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609697; c=relaxed/simple;
-	bh=DaxzpXWFaTXdBHKNnmpzZxzQvS2OznJGnwgJx4C8g2M=;
+	s=arc-20240116; t=1778609700; c=relaxed/simple;
+	bh=WuJh379SYp25U28FDRfe7/Lop0KzRFt45zESNgYxhXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tXh7ZvpoTa5uIq1krZ3LC+TDl0vRyidHjgEsrcjR5Rr5cjMEwBYF+KxXNMm1b6ACj7XmBWPAdbxG8j68jXKCogusIBKzzJxB0O/8nGqV8Ls+VZ9qRHisov3oHNbk9P3teH1GKY7kGBfY9L18Lae4OQDJomu8h2BledSDsCQ8VPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EtSlAl56; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QduMDAV/W0EseT8akyo63PuaekekLc0w8ylFXHftb5mzrf2nO0NGB1PUSiW/MGDbHY2Y/zRb/BRI1YepnRGovgm0GOPH7zfFIFgmKTlipreZ2GKlidcoE4d1A3X5X5D2vW6nEGqSBjOOxQ7ixXIgkKzcPlhW8MBVg6Y0frDlYgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUcL0i+n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EtSlAl56"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281D3C2BCB0;
-	Tue, 12 May 2026 18:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUcL0i+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B639BC2BCB0;
+	Tue, 12 May 2026 18:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609697;
-	bh=DaxzpXWFaTXdBHKNnmpzZxzQvS2OznJGnwgJx4C8g2M=;
+	s=korg; t=1778609700;
+	bh=WuJh379SYp25U28FDRfe7/Lop0KzRFt45zESNgYxhXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EtSlAl56MlytEsd50jaQbMJjo2dpDLAkRoe+vvZZ6UN3AupJnCQ5odYJtcXx4cTgG
-	 A+o8UiGF0QI48qvcHcinPxKqurm2zAs9MAMmagx5sI163uTRWVpKUAqCbgK0fyiSAM
-	 yCPSJvBnSmeMNPTKEbxFj8EePwibDsM3hKMmHuKI=
+	b=CUcL0i+nYkhvs4NdwPK7jUDxJe/hQfU69k43EJUvEDdtOpaGhV7rf3kAgQNu8gmUA
+	 889u2QelaSjzJPQ7DezYjNJkKAJj9GXaC9tt7HjeXE7HD36cypDq/mYtjaFE/penps
+	 IVnaj607O9HRn0dK4xumtDkCjA27r6Xz2kjaKtiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 255/307] mptcp: sockopt: increase seq in mptcp_setsockopt_all_sf
-Date: Tue, 12 May 2026 19:40:50 +0200
-Message-ID: <20260512173945.508274717@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
+	Claude <noreply@anthropic.com>
+Subject: [PATCH 7.0 246/307] sched_ext: idle: Recheck prev_cpu after narrowing allowed mask
+Date: Tue, 12 May 2026 19:40:41 +0200
+Message-ID: <20260512173945.316733075@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -52,41 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: David Carlier <devnexen@gmail.com>
 
-commit 70ece9d7021c54cf40c72b31b066e9088f5f75f5 upstream.
+commit b34c82777a2c0648ee053595f4b290fd5249b093 upstream.
 
-mptcp_setsockopt_all_sf() was missing a call to sockopt_seq_inc(). This
-is required not to cause missing synchronization for newer subflows
-created later on.
+scx_select_cpu_dfl() narrows @allowed to @cpus_allowed & @p->cpus_ptr
+when the BPF caller supplies a @cpus_allowed that differs from
+@p->cpus_ptr and @p doesn't have full affinity. However,
+@is_prev_allowed was computed against the original (wider)
+@cpus_allowed, so the prev_cpu fast paths could pick a @prev_cpu that
+is in @cpus_allowed but not in @p->cpus_ptr, violating the intended
+invariant that the returned CPU is always usable by @p. The kernel
+masks this via the SCX_EV_SELECT_CPU_FALLBACK fallback, but the
+behavior contradicts the documented contract.
 
-This helper is called each time a socket option is set on subflows, and
-future ones will need to inherit this option after their creation.
+Move the @is_prev_allowed evaluation past the narrowing block so it
+tests against the final @allowed mask.
 
-Fixes: 51c5fd09e1b4 ("mptcp: add TCP_MAXSEG sockopt support")
-Cc: stable@vger.kernel.org
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260501-net-mptcp-misc-fixes-7-1-rc3-v1-4-b70118df778e@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ee9a4e92799d ("sched_ext: idle: Properly handle invalid prev_cpu during idle selection")
+Cc: stable@vger.kernel.org # v6.16+
+Assisted-by: Claude <noreply@anthropic.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/sched/ext_idle.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -812,6 +812,10 @@ static int mptcp_setsockopt_all_sf(struc
- 		if (ret)
- 			break;
- 	}
-+
-+	if (!ret)
-+		sockopt_seq_inc(msk);
-+
- 	return ret;
- }
+--- a/kernel/sched/ext_idle.c
++++ b/kernel/sched/ext_idle.c
+@@ -460,12 +460,6 @@ s32 scx_select_cpu_dfl(struct task_struc
+ 	preempt_disable();
  
+ 	/*
+-	 * Check whether @prev_cpu is still within the allowed set. If not,
+-	 * we can still try selecting a nearby CPU.
+-	 */
+-	is_prev_allowed = cpumask_test_cpu(prev_cpu, allowed);
+-
+-	/*
+ 	 * Determine the subset of CPUs usable by @p within @cpus_allowed.
+ 	 */
+ 	if (allowed != p->cpus_ptr) {
+@@ -482,6 +476,12 @@ s32 scx_select_cpu_dfl(struct task_struc
+ 	}
+ 
+ 	/*
++	 * Check whether @prev_cpu is still within the allowed set. If not,
++	 * we can still try selecting a nearby CPU.
++	 */
++	is_prev_allowed = cpumask_test_cpu(prev_cpu, allowed);
++
++	/*
+ 	 * This is necessary to protect llc_cpus.
+ 	 */
+ 	rcu_read_lock();
 
 
