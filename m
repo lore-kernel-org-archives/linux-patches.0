@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E113EDE5B;
-	Tue, 12 May 2026 18:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CA834DB52;
+	Tue, 12 May 2026 18:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608946; cv=none; b=GO8kK36lQcykD7slzodS+9QjnH3PCoDSlpaiToyUePZNK8vJ88F6UTv4xmVRK/ovkfRtJvPnQlA63heuCTjxn7Zk3+fLwyd2WpoYRjvj4JxqniZHK7lQQuf3oltVvMNdfbrzIe1M8913aterlSuu9JhOAB2yLY2+YJRdnMsmfyE=
+	t=1778608948; cv=none; b=pL+yFTlpFSJuZ5NxpjtKTPS2mgVfntDY9yX/gKaE1WVTHk8McN0ufkjOZCKk+p/hpjaC3mBchf47VfCRu1HyjmXMR1Wbq8jbF4vk2yoTu4gZPNi+AcCnnA5wx5wWaV0FYuTv1ksMX/KsGkt4OjJ3KGFFIR1Leant6K9OtvaPuTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608946; c=relaxed/simple;
-	bh=jwVf139gsJR2eHI34I35kqK0H2EVbQWvD1HrdeybIa4=;
+	s=arc-20240116; t=1778608948; c=relaxed/simple;
+	bh=MUtJA5uwOHUo7ssmVgx4x+8cDs1z+dz0EDSFYc3GTI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dwah9gY/dj6gZNA1/sHV7emP+KnZx8dF+r5blD76dtg/S0ASnMzcjGK8C+sT/A3jNKHZrJjLgCBWY84K0wySdspK5kRS9ffFeQ6kLYpq4zAgoKjnigdFWg7i+jYFAXi31B8ZbJLF5XiXJgvO0+oCVaOhvN3fHKahGw+mo85qAH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFrGOpUU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QPhpDXSayULv/tmbUaSTGW86kg4cz2e4nOoPTsPcT56gIoX7lou2BYeBrTfBQBCJC5cxIVNrpEyxul6qQUtmgVjpgNuwmcnpXq4KkK42nmZYrStza8b3Qt/6SHrg3oHVpHNWRIKxxoww1kS5AGbWaxfIlmaq7nRgtQDsE2oiQnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFsqc49d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFrGOpUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E06C2BCB0;
-	Tue, 12 May 2026 18:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFsqc49d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B76DC2BCB0;
+	Tue, 12 May 2026 18:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608945;
-	bh=jwVf139gsJR2eHI34I35kqK0H2EVbQWvD1HrdeybIa4=;
+	s=korg; t=1778608948;
+	bh=MUtJA5uwOHUo7ssmVgx4x+8cDs1z+dz0EDSFYc3GTI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFrGOpUU8ULe0syLDzCgCmgNR1aDMa7kWJuau0yucmI+T0RuwY2xpEfp1ZQ8RUgKQ
-	 7By7rA+3/kQnx3M7yNjHZPDi4ysFu0qrXw723rFVRCnHcpGbw34HbsoMMJ07dJOKsv
-	 XtDPM0wx3eivkhPMMndOL6s46I/57H27lcTqu7ZU=
+	b=BFsqc49dJg7gxwnb95UfNrQRYfOp70yvbDT0n9dL9ZkdG2bveLyPbDIVAFxYXfAHl
+	 0AMg5hcsm/+wKZtQAgDqFRcWoSasODbfu5F/zABMlR8qV5JiHsukyMFkfjEz4c2g3i
+	 uLUuvdigvw+0dc/5OhGoTIyypTMwieretc1zqNk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 262/270] hfsplus: fix held lock freed on hfsplus_fill_super()
-Date: Tue, 12 May 2026 19:41:03 +0200
-Message-ID: <20260512173943.965196751@linuxfoundation.org>
+Subject: [PATCH 6.18 263/270] erofs: tidy up z_erofs_lz4_handle_overlap()
+Date: Tue, 12 May 2026 19:41:04 +0200
+Message-ID: <20260512173943.986338404@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -51,139 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 90c500e4fd83fa33c09bc7ee23b6d9cc487ac733 ]
+[ Upstream commit 9ae77198d4815c63fc8ebacc659c71d150d1e51b ]
 
-hfsplus_fill_super() calls hfs_find_init() to initialize a search
-structure, which acquires tree->tree_lock. If the subsequent call to
-hfsplus_cat_build_key() fails, the function jumps to the out_put_root
-error label without releasing the lock. The later cleanup path then
-frees the tree data structure with the lock still held, triggering a
-held lock freed warning.
+ - Add some useful comments to explain inplace I/Os and decompression;
 
-Fix this by adding the missing hfs_find_exit(&fd) call before jumping
-to the out_put_root error label. This ensures that tree->tree_lock is
-properly released on the error path.
+ - Rearrange the code to get rid of one unnecessary goto.
 
-The bug was originally detected on v6.13-rc1 using an experimental
-static analysis tool we are developing, and we have verified that the
-issue persists in the latest mainline kernel. The tool is specifically
-designed to detect memory management issues. It is currently under active
-development and not yet publicly available.
-
-We confirmed the bug by runtime testing under QEMU with x86_64 defconfig,
-lockdep enabled, and CONFIG_HFSPLUS_FS=y. To trigger the error path, we
-used GDB to dynamically shrink the max_unistr_len parameter to 1 before
-hfsplus_asc2uni() is called. This forces hfsplus_asc2uni() to naturally
-return -ENAMETOOLONG, which propagates to hfsplus_cat_build_key() and
-exercises the faulty error path. The following warning was observed
-during mount:
-
-	=========================
-	WARNING: held lock freed!
-	7.0.0-rc3-00016-gb4f0dd314b39 #4 Not tainted
-	-------------------------
-	mount/174 is freeing memory ffff888103f92000-ffff888103f92fff, with a lock still held there!
-	ffff888103f920b0 (&tree->tree_lock){+.+.}-{4:4}, at: hfsplus_find_init+0x154/0x1e0
-	2 locks held by mount/174:
-	#0: ffff888103f960e0 (&type->s_umount_key#42/1){+.+.}-{4:4}, at: alloc_super.constprop.0+0x167/0xa40
-	#1: ffff888103f920b0 (&tree->tree_lock){+.+.}-{4:4}, at: hfsplus_find_init+0x154/0x1e0
-
-	stack backtrace:
-	CPU: 2 UID: 0 PID: 174 Comm: mount Not tainted 7.0.0-rc3-00016-gb4f0dd314b39 #4 PREEMPT(lazy)
-	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-	Call Trace:
-	<TASK>
-	dump_stack_lvl+0x82/0xd0
-	debug_check_no_locks_freed+0x13a/0x180
-	kfree+0x16b/0x510
-	? hfsplus_fill_super+0xcb4/0x18a0
-	hfsplus_fill_super+0xcb4/0x18a0
-	? __pfx_hfsplus_fill_super+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? bdev_open+0x65f/0xc30
-	? srso_return_thunk+0x5/0x5f
-	? pointer+0x4ce/0xbf0
-	? trace_contention_end+0x11c/0x150
-	? __pfx_pointer+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? bdev_open+0x79b/0xc30
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? vsnprintf+0x6da/0x1270
-	? srso_return_thunk+0x5/0x5f
-	? __mutex_unlock_slowpath+0x157/0x740
-	? __pfx_vsnprintf+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? mark_held_locks+0x49/0x80
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? irqentry_exit+0x17b/0x5e0
-	? trace_irq_disable.constprop.0+0x116/0x150
-	? __pfx_hfsplus_fill_super+0x10/0x10
-	? __pfx_hfsplus_fill_super+0x10/0x10
-	get_tree_bdev_flags+0x302/0x580
-	? __pfx_get_tree_bdev_flags+0x10/0x10
-	? vfs_parse_fs_qstr+0x129/0x1a0
-	? __pfx_vfs_parse_fs_qstr+0x3/0x10
-	vfs_get_tree+0x89/0x320
-	fc_mount+0x10/0x1d0
-	path_mount+0x5c5/0x21c0
-	? __pfx_path_mount+0x10/0x10
-	? trace_irq_enable.constprop.0+0x116/0x150
-	? trace_irq_enable.constprop.0+0x116/0x150
-	? srso_return_thunk+0x5/0x5f
-	? srso_return_thunk+0x5/0x5f
-	? kmem_cache_free+0x307/0x540
-	? user_path_at+0x51/0x60
-	? __x64_sys_mount+0x212/0x280
-	? srso_return_thunk+0x5/0x5f
-	__x64_sys_mount+0x212/0x280
-	? __pfx___x64_sys_mount+0x10/0x10
-	? srso_return_thunk+0x5/0x5f
-	? trace_irq_enable.constprop.0+0x116/0x150
-	? srso_return_thunk+0x5/0x5f
-	do_syscall_64+0x111/0x680
-	entry_SYSCALL_64_after_hwframe+0x77/0x7f
-	RIP: 0033:0x7ffacad55eae
-	Code: 48 8b 0d 85 1f 0f 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 49 89 ca b8 a5 00 00 8
-	RSP: 002b:00007fff1ab55718 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
-	RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffacad55eae
-	RDX: 000055740c64e5b0 RSI: 000055740c64e630 RDI: 000055740c651ab0
-	RBP: 000055740c64e380 R08: 0000000000000000 R09: 0000000000000001
-	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-	R13: 000055740c64e5b0 R14: 000055740c651ab0 R15: 000055740c64e380
-	</TASK>
-
-After applying this patch, the warning no longer appears.
-
-Fixes: 89ac9b4d3d1a ("hfsplus: fix longname handling")
-CC: stable@vger.kernel.org
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Tested-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Stable-dep-of: 21e161de2dc6 ("erofs: fix unsigned underflow in z_erofs_lz4_handle_overlap()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/super.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/erofs/decompressor.c |   85 +++++++++++++++++++++++++-----------------------
+ 1 file changed, 46 insertions(+), 39 deletions(-)
 
---- a/fs/hfsplus/super.c
-+++ b/fs/hfsplus/super.c
-@@ -569,8 +569,10 @@ static int hfsplus_fill_super(struct sup
- 	if (err)
- 		goto out_put_root;
- 	err = hfsplus_cat_build_key(sb, fd.search_key, HFSPLUS_ROOT_CNID, &str);
--	if (unlikely(err < 0))
-+	if (unlikely(err < 0)) {
-+		hfs_find_exit(&fd);
- 		goto out_put_root;
+--- a/fs/erofs/decompressor.c
++++ b/fs/erofs/decompressor.c
+@@ -105,44 +105,58 @@ static int z_erofs_lz4_prepare_dstpages(
+ 	return kaddr ? 1 : 0;
+ }
+ 
+-static void *z_erofs_lz4_handle_overlap(struct z_erofs_decompress_req *rq,
++static void *z_erofs_lz4_handle_overlap(const struct z_erofs_decompress_req *rq,
+ 			void *inpage, void *out, unsigned int *inputmargin,
+ 			int *maptype, bool may_inplace)
+ {
+-	unsigned int oend, omargin, total, i;
++	unsigned int oend, omargin, cnt, i;
+ 	struct page **in;
+-	void *src, *tmp;
+-
+-	if (rq->inplace_io) {
+-		oend = rq->pageofs_out + rq->outputsize;
+-		omargin = PAGE_ALIGN(oend) - oend;
+-		if (rq->partial_decoding || !may_inplace ||
+-		    omargin < LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize))
+-			goto docopy;
++	void *src;
+ 
++	/*
++	 * If in-place I/O isn't used, for example, the bounce compressed cache
++	 * can hold data for incomplete read requests. Just map the compressed
++	 * buffer as well and decompress directly.
++	 */
++	if (!rq->inplace_io) {
++		if (rq->inpages <= 1) {
++			*maptype = 0;
++			return inpage;
++		}
++		kunmap_local(inpage);
++		src = erofs_vm_map_ram(rq->in, rq->inpages);
++		if (!src)
++			return ERR_PTR(-ENOMEM);
++		*maptype = 1;
++		return src;
 +	}
- 	if (!hfsplus_brec_read_cat(&fd, &entry)) {
- 		hfs_find_exit(&fd);
- 		if (entry.type != cpu_to_be16(HFSPLUS_FOLDER)) {
++	/*
++	 * Then, deal with in-place I/Os. The reasons why in-place I/O is useful
++	 * are: (1) It minimizes memory footprint during the I/O submission,
++	 * which is useful for slow storage (including network devices and
++	 * low-end HDDs/eMMCs) but with a lot inflight I/Os; (2) If in-place
++	 * decompression can also be applied, it will reuse the unique buffer so
++	 * that no extra CPU D-cache is polluted with temporary compressed data
++	 * for extreme performance.
++	 */
++	oend = rq->pageofs_out + rq->outputsize;
++	omargin = PAGE_ALIGN(oend) - oend;
++	if (!rq->partial_decoding && may_inplace &&
++	    omargin >= LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize)) {
+ 		for (i = 0; i < rq->inpages; ++i)
+ 			if (rq->out[rq->outpages - rq->inpages + i] !=
+ 			    rq->in[i])
+-				goto docopy;
+-		kunmap_local(inpage);
+-		*maptype = 3;
+-		return out + ((rq->outpages - rq->inpages) << PAGE_SHIFT);
++				break;
++		if (i >= rq->inpages) {
++			kunmap_local(inpage);
++			*maptype = 3;
++			return out + ((rq->outpages - rq->inpages) << PAGE_SHIFT);
++		}
+ 	}
+-
+-	if (rq->inpages <= 1) {
+-		*maptype = 0;
+-		return inpage;
+-	}
+-	kunmap_local(inpage);
+-	src = erofs_vm_map_ram(rq->in, rq->inpages);
+-	if (!src)
+-		return ERR_PTR(-ENOMEM);
+-	*maptype = 1;
+-	return src;
+-
+-docopy:
+-	/* Or copy compressed data which can be overlapped to per-CPU buffer */
+-	in = rq->in;
++	/*
++	 * If in-place decompression can't be applied, copy compressed data that
++	 * may potentially overlap during decompression to a per-CPU buffer.
++	 */
+ 	src = z_erofs_get_gbuf(rq->inpages);
+ 	if (!src) {
+ 		DBG_BUGON(1);
+@@ -150,20 +164,13 @@ docopy:
+ 		return ERR_PTR(-EFAULT);
+ 	}
+ 
+-	tmp = src;
+-	total = rq->inputsize;
+-	while (total) {
+-		unsigned int page_copycnt =
+-			min_t(unsigned int, total, PAGE_SIZE - *inputmargin);
+-
++	for (i = 0, in = rq->in; i < rq->inputsize; i += cnt, ++in) {
++		cnt = min_t(u32, rq->inputsize - i, PAGE_SIZE - *inputmargin);
+ 		if (!inpage)
+ 			inpage = kmap_local_page(*in);
+-		memcpy(tmp, inpage + *inputmargin, page_copycnt);
++		memcpy(src + i, inpage + *inputmargin, cnt);
+ 		kunmap_local(inpage);
+ 		inpage = NULL;
+-		tmp += page_copycnt;
+-		total -= page_copycnt;
+-		++in;
+ 		*inputmargin = 0;
+ 	}
+ 	*maptype = 2;
 
 
