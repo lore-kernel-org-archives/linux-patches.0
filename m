@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D32B3EDE42;
-	Tue, 12 May 2026 17:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD18B3EDE42;
+	Tue, 12 May 2026 17:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608701; cv=none; b=J1WFBLsABZVLtMSyQznWlz+LP6jknEUMA/I9j+eDrelJ87gk8pUUbatgbKxN7AsYIpI1mYwZDrm8psBf12ePlnnKc3onJ9eTRSge0U8ogl2b+E0reLUEpg6wNhGpZqCr/mJQQmB7Q9BL6QGOFy8f7FNR6dF9cbXAJTQJAfJ3EaQ=
+	t=1778608703; cv=none; b=uucCVRSP8n3KaEZx3bxYPAAMXKW16yT//P3KqreeUcRAGteyCNqRgR4ZxT8McdwH1afdLNCOTPrdLr+47S/+POVDRwWGcSzK4Va3ZG8Bf9ILR4qjRp8QvOG4H/fj3pyOvnbDnWnX4GUAEiJYIaOxDHvh86787+wt8geVDKB+EEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608701; c=relaxed/simple;
-	bh=2m0Rg4yJuxja4OyQ9o3oTOSEKns9IHRD1wl+Ynwil5A=;
+	s=arc-20240116; t=1778608703; c=relaxed/simple;
+	bh=iloBqmujaEWSWP6JnZ0xx4XUmAxW0KpZj/MNa+O3EOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qyBXIW/r8HUzG7clmilNNB91X+KeznRirZJ7YONdETnU7wLCv55TmpTbgSlqBvQ4c+vuKfXFuLT2FGd+V+n5T2fFKXJNBw5JQQNeoKNFi9Cch+VYe48RD8CZxEQFzFlftUfJC18Vmmapw8e40cYCohgPXgF4ZkARHvpELLP0EgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zERf4h1P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n5VrEfLRame2GRcx2cAlgLDYPtD3U9xMLVOxnYlA9bdJWSiUs0Fu8Py9MB0lqYdGvU41OIoU5+8opDPaOOkgy8mJswmzM0RsifK80ricAhjZfjWA3fLqeXUMnrv/UvEjVpQL2c44rXj/seuoV+pyHKvmxctMzfWGPjVLs+GMRb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7ZZLlHA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zERf4h1P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7909C2BCB0;
-	Tue, 12 May 2026 17:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7ZZLlHA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BE9C2BCB0;
+	Tue, 12 May 2026 17:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608701;
-	bh=2m0Rg4yJuxja4OyQ9o3oTOSEKns9IHRD1wl+Ynwil5A=;
+	s=korg; t=1778608703;
+	bh=iloBqmujaEWSWP6JnZ0xx4XUmAxW0KpZj/MNa+O3EOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zERf4h1PGBT+Vaeg8NV9Sde4TZ+sWlzDtTpNNT1kgBQWrsvc2dx1KcfM0TXAQWd0k
-	 gFWy+N26aldZpbelM0+BLOqOdopTfxrlPwxG9FDeWBeFojYmkeV8DTqYYZgDwZgc2B
-	 xDEasc+BIyZ5/R/YvPVuR3vdcpKown86uCqiDLyk=
+	b=F7ZZLlHA61rJBmNZ4XmNOw0OCRxZfkvlelH/7AaT5azIBa7UP7bHBZ1YYth70Ezw+
+	 zw3Jx6PFcJO8HfBZZb0ojD+UIcmVa5JI8ojZYloXFTc7kwyKvFfF4nUnBGFoCRdADx
+	 1f//bgYoGSXXLNkFCA0mKZ0oCFyXENDE0Rx0mTk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farrah Chen <farrah.chen@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: [PATCH 6.18 182/270] KVM: x86: Do IRR scan in __kvm_apic_update_irr even if PIR is empty
-Date: Tue, 12 May 2026 19:39:43 +0200
-Message-ID: <20260512173942.279964534@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Liew Rui Yan <aethernet65535@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 183/270] mm/damon/stat: detect and use fresh enabled value
+Date: Tue, 12 May 2026 19:39:44 +0200
+Message-ID: <20260512173942.299851733@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -52,91 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 33fd0ccd2590b470b65adcca288615ad3b5e3e06 upstream.
+commit f98590bc08d4aea435e1c2213e38bae0d9e9a7bb upstream.
 
-Fall back to apic_find_highest_vector() when PID.ON is set but PIR
-turns out to be empty, to correctly report the highest pending interrupt
-from the existing IRR.
+DAMON_STAT updates 'enabled' parameter value, which represents the running
+status of its kdamond, when the user explicitly requests start/stop of the
+kdamond.  The kdamond can, however, be stopped even if the user explicitly
+requested the stop, if ctx->regions_score_histogram allocation failure at
+beginning of the execution of the kdamond.  Hence, if the kdamond is
+stopped by the allocation failure, the value of the parameter can be
+stale.
 
-In a nested VM stress test, the following WARNING fires in
-vmx_check_nested_events() when kvm_cpu_has_interrupt() reports a pending
-interrupt but the subsequent kvm_apic_has_interrupt() (which invokes
-vmx_sync_pir_to_irr() again) returns -1:
+Users could show the stale value and be confused.  The problem will only
+rarely happen in real and common setups because the allocation is arguably
+too small to fail.  Also, unlike the similar bugs that are now fixed in
+DAMON_RECLAIM and DAMON_LRU_SORT, kdamond can be restarted in this case,
+because DAMON_STAT force-updates the enabled parameter value for user
+inputs.  The bug is a bug, though.
 
-  WARNING: CPU: 99 PID: 57767 at arch/x86/kvm/vmx/nested.c:4449 vmx_check_nested_events+0x6bf/0x6e0 [kvm_intel]
-  Call Trace:
-   kvm_check_and_inject_events
-   vcpu_enter_guest.constprop.0
-   vcpu_run
-   kvm_arch_vcpu_ioctl_run
-   kvm_vcpu_ioctl
-   __x64_sys_ioctl
-   do_syscall_64
-   entry_SYSCALL_64_after_hwframe
+The issue stems from the fact that there are multiple events that can
+change the status, and following all the events is challenging.
+Dynamically detect and use the fresh status for the parameters when those
+are requested.
 
-The root cause is a race between vmx_sync_pir_to_irr() on the target vCPU
-and __vmx_deliver_posted_interrupt() on a sender vCPU.  The sender
-performs two individually-atomic operations that are not a single
-transaction:
+The issue was dicovered [1] by Sashiko.
 
-  1. pi_test_and_set_pir(vector)  -- sets the PIR bit
-  2. pi_test_and_set_on()         -- sets PID.ON
-
-The following interleaving triggers the bug:
-
-  Sender vCPU (IPI):              Target vCPU (1st sync_pir_to_irr):
-  B1: set PIR[vector]
-                                  A1: pi_clear_on()
-                                  A2: pi_harvest_pir() -> sees B1 bit
-                                  A3: xchg() -> consumes bit, PIR=0
-                                      (1st sync returns correct max_irr)
-  B2: set PID.ON = 1
-
-                                  Target vCPU (2nd sync_pir_to_irr):
-                                  C1: pi_test_on() -> TRUE (from B2)
-                                  C2: pi_clear_on() -> ON=0
-                                  C3: pi_harvest_pir() -> PIR empty
-                                  C4: *max_irr = -1, early return
-                                      IRR NOT SCANNED
-
-The interrupt is not lost (it resides in the IRR from the first sync and
-is recovered on the next vcpu_enter_guest() iteration), but the incorrect
-max_irr causes a spurious WARNING and a wasted L2 VM-Enter/VM-Exit cycle.
-
-Fixes: b41f8638b9d3 ("KVM: VMX: Isolate pure loads from atomic XCHG when processing PIR")
-Reported-by: Farrah Chen <farrah.chen@intel.com>
-Analyzed-by: Chenyi Qiang <chenyi.qiang@intel.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/kvm/20260428070349.1633238-1-chenyi.qiang@intel.com/T/
-Link: https://patch.msgid.link/20260503201703.108231-2-pbonzini@redhat.com/
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/20260419161003.79176-4-sj@kernel.org
+Link: https://lore.kernel.org/20260416040602.88665-1-sj@kernel.org [1]
+Fixes: 369c415e6073 ("mm/damon: introduce DAMON_STAT module")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Liew Rui Yan <aethernet65535@gmail.com>
+Cc: <stable@vger.kernel.org> # 6.17.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/lapic.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ mm/damon/stat.c |   30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -669,12 +669,14 @@ bool __kvm_apic_update_irr(unsigned long
- 	u32 irr_val, prev_irr_val;
- 	int max_updated_irr;
+--- a/mm/damon/stat.c
++++ b/mm/damon/stat.c
+@@ -19,14 +19,17 @@
+ static int damon_stat_enabled_store(
+ 		const char *val, const struct kernel_param *kp);
  
-+	if (!pi_harvest_pir(pir, pir_vals)) {
-+		*max_irr = apic_find_highest_vector(regs + APIC_IRR);
-+		return false;
-+	}
++static int damon_stat_enabled_load(char *buffer,
++		const struct kernel_param *kp);
 +
- 	max_updated_irr = -1;
- 	*max_irr = -1;
+ static const struct kernel_param_ops enabled_param_ops = {
+ 	.set = damon_stat_enabled_store,
+-	.get = param_get_bool,
++	.get = damon_stat_enabled_load,
+ };
  
--	if (!pi_harvest_pir(pir, pir_vals))
--		return false;
--
- 	for (i = vec = 0; i <= 7; i++, vec += 32) {
- 		u32 *p_irr = (u32 *)(regs + APIC_IRR + i * 0x10);
+ static bool enabled __read_mostly = IS_ENABLED(
+ 	CONFIG_DAMON_STAT_ENABLED_DEFAULT);
+-module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
++module_param_cb(enabled, &enabled_param_ops, NULL, 0600);
+ MODULE_PARM_DESC(enabled, "Enable of disable DAMON_STAT");
  
+ static unsigned long estimated_memory_bandwidth __read_mostly;
+@@ -265,17 +268,23 @@ static void damon_stat_stop(void)
+ 	damon_stat_context = NULL;
+ }
+ 
++static bool damon_stat_enabled(void)
++{
++	if (!damon_stat_context)
++		return false;
++	return damon_is_running(damon_stat_context);
++}
++
+ static int damon_stat_enabled_store(
+ 		const char *val, const struct kernel_param *kp)
+ {
+-	bool is_enabled = enabled;
+ 	int err;
+ 
+ 	err = kstrtobool(val, &enabled);
+ 	if (err)
+ 		return err;
+ 
+-	if (is_enabled == enabled)
++	if (damon_stat_enabled() == enabled)
+ 		return 0;
+ 
+ 	if (!damon_initialized())
+@@ -285,16 +294,17 @@ static int damon_stat_enabled_store(
+ 		 */
+ 		return 0;
+ 
+-	if (enabled) {
+-		err = damon_stat_start();
+-		if (err)
+-			enabled = false;
+-		return err;
+-	}
++	if (enabled)
++		return damon_stat_start();
+ 	damon_stat_stop();
+ 	return 0;
+ }
+ 
++static int damon_stat_enabled_load(char *buffer, const struct kernel_param *kp)
++{
++	return sprintf(buffer, "%c\n", damon_stat_enabled() ? 'Y' : 'N');
++}
++
+ static int __init damon_stat_init(void)
+ {
+ 	int err = 0;
 
 
