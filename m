@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8446D385D85;
-	Tue, 12 May 2026 17:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25523B1EE2;
+	Tue, 12 May 2026 17:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778607803; cv=none; b=aBEOUQD7Rk7vSvXJGte1Tw7HCQj4iC2howCvYuQGqswAV2Foc2F0xcZgZbfX4ZtlXCwdQYxMAIzmAih9baglR/PBG/P2D4sQaAulohHZXDUSWUG9U4d+zDu6BlWzWmPJGUZ1HFGX4ZSWJmFepBtGt8l0XxZfBbfYRfGmFAd5p6k=
+	t=1778607805; cv=none; b=f+Ufq+TwTb9w4KrAqTZZIKu5Kf7P//7dHlyN/tH2JpdJvKuVrSeF933qwXXaaqH9INOe0m2NleM5R3LhK7AGUDPeFgx8oH1LAfI4oJJ+5+TBxBzHSCwR434C/+Vbk14Itsrac7rTU8mfR5b8TzWZRoprT6/lzHjYRjGH5HrF/rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778607803; c=relaxed/simple;
-	bh=p7L2ILFS8v1nirILhGlhUMqh7YxOvX8k3V4rSRQ3crA=;
+	s=arc-20240116; t=1778607805; c=relaxed/simple;
+	bh=IwilgftpdgSXQMN4iDERFIdqsFf0Bw+GPGdcjhRq6Yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WZZPCPozXeJ/mnalgk2dv0B2Bv6Po+IR0n7KTSK95NOzuTkUk2oR483iLpyN9owjrcj+lBOzYlPNzNgzl83HD7GCnhuq2n2WtDmkOtuRuAWf3HYdXt9Qt1k9yV3M9Az3HhGdjZ4ejwrawiHnsba1ONi+gqSZO0KD/ZPz4dRTtZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m23DM8IN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e5xadsFVL6jTJZnQrH5smaysqe0pZrpg8DAItMOYJsXmtCoWJJVn57NIeb+pKlcAoYgNvNcjqtqVRuOFF8fqYHbta145eCt87JlrcHOF4BFQrnkWEvSxLfe6ffs79DQ9U7uCiEEfsaCTqq3ooiDu9/3rCcKHuyAp4jShHzsf3ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvJDi5Ah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m23DM8IN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E459C2BCB0;
-	Tue, 12 May 2026 17:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvJDi5Ah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C07EC2BCB0;
+	Tue, 12 May 2026 17:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778607802;
-	bh=p7L2ILFS8v1nirILhGlhUMqh7YxOvX8k3V4rSRQ3crA=;
+	s=korg; t=1778607805;
+	bh=IwilgftpdgSXQMN4iDERFIdqsFf0Bw+GPGdcjhRq6Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m23DM8INR1MRE914wq1wA2O6SIRlxyZMMtQUkV0PZHz4k0dUjv8Gxvco/IcAAi2q9
-	 Ek7G7y3rcn9eAC3a62EuB9G5Jd4Zy/Cnk9fO4rAot+7Wy0/sZNcHe9r90KF9wVBwAp
-	 4nL7ea8/iVeV2EUXmJMzuBXhblJUEk/QNM1uTDr4=
+	b=UvJDi5AhTxm8wN++3v3XoO6aQdVg0SkQryIUkiD3wE3MYzCE4qkhGapLTgCYxMIoZ
+	 LyKIjLRiQ9Wq/xmujey1H5QqCeW3o9cnfVF1z+933XtwrzlsMFNhXAkI1EwVMqCi+4
+	 LQj2Y98Bz9tBcgacl7os/kOqtGOZ1VA5Cs5fHN5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 040/206] wifi: brcmfmac: Fix potential use-after-free issue when stopping watchdog task
-Date: Tue, 12 May 2026 19:38:12 +0200
-Message-ID: <20260512173933.682066053@linuxfoundation.org>
+	Pete Zaitcev <zaitcev@redhat.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.12 041/206] usb: usblp: fix heap leak in IEEE 1284 device ID via short response
+Date: Tue, 12 May 2026 19:38:13 +0200
+Message-ID: <20260512173933.705639115@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,50 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit c623b63580880cc742255eaed3d79804c1b91143 upstream.
+commit 7a400c6fe3617e31e690e3f7ca37bb335e0498f3 upstream.
 
-Watchdog task might end between send_sig() and kthread_stop() calls, what
-results in the use-after-free issue. Fix this by increasing watchdog task
-reference count before calling send_sig() and dropping it by switching to
-kthread_stop_put().
+usblp_ctrl_msg() collapses the usb_control_msg() return value to
+0/-errno, discarding the actual number of bytes transferred.  A broken
+printer can complete the GET_DEVICE_ID control transfer short and the
+driver has no way to know.
 
-Cc: stable@vger.kernel.org
-Fixes: 373c83a801f1 ("brcmfmac: stop watchdog before detach and free everything")
-Fixes: a9ffda88be74 ("brcm80211: fmac: abstract bus_stop interface function pointer")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260416093339.2066829-1-m.szyprowski@samsung.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+usblp_cache_device_id_string() reads the 2-byte big-endian length prefix
+from the response and trusts it (clamped only to the buffer bounds).
+The buffer is kmalloc(1024) at probe time. A device that sends exactly
+two bytes (e.g. 0x03 0xFF, claiming a 1023-byte ID) leaves
+device_id_string[2..1022] holding stale kmalloc heap.
+
+That stale data is then exposed:
+  - via the ieee1284_id sysfs attribute (sprintf("%s", buf+2), truncated
+    at the first NUL in the stale heap), and
+  - via the IOCNR_GET_DEVICE_ID ioctl, which copy_to_user()s the full
+    claimed length regardless of NULs, up to 1021 bytes of uninitialized
+    heap, with the leak size chosen by the device.
+
+Fix this up by just zapping the buffer with zeros before each request
+sent to the device.
+
+Cc: Pete Zaitcev <zaitcev@redhat.com>
+Assisted-by: gkh_clanker_t1000
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/2026042002-unicorn-greedily-3c63@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/class/usblp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -2475,8 +2475,9 @@ static void brcmf_sdio_bus_stop(struct d
- 	brcmf_dbg(TRACE, "Enter\n");
+--- a/drivers/usb/class/usblp.c
++++ b/drivers/usb/class/usblp.c
+@@ -1365,6 +1365,7 @@ static int usblp_cache_device_id_string(
+ {
+ 	int err, length;
  
- 	if (bus->watchdog_tsk) {
-+		get_task_struct(bus->watchdog_tsk);
- 		send_sig(SIGTERM, bus->watchdog_tsk, 1);
--		kthread_stop(bus->watchdog_tsk);
-+		kthread_stop_put(bus->watchdog_tsk);
- 		bus->watchdog_tsk = NULL;
- 	}
- 
-@@ -4557,8 +4558,9 @@ void brcmf_sdio_remove(struct brcmf_sdio
- 	if (bus) {
- 		/* Stop watchdog task */
- 		if (bus->watchdog_tsk) {
-+			get_task_struct(bus->watchdog_tsk);
- 			send_sig(SIGTERM, bus->watchdog_tsk, 1);
--			kthread_stop(bus->watchdog_tsk);
-+			kthread_stop_put(bus->watchdog_tsk);
- 			bus->watchdog_tsk = NULL;
- 		}
- 
++	memset(usblp->device_id_string, 0, USBLP_DEVICE_ID_SIZE);
+ 	err = usblp_get_id(usblp, 0, usblp->device_id_string, USBLP_DEVICE_ID_SIZE - 1);
+ 	if (err < 0) {
+ 		dev_dbg(&usblp->intf->dev,
 
 
