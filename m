@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C21E25FA29;
-	Tue, 12 May 2026 18:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567483EDE55;
+	Tue, 12 May 2026 18:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609133; cv=none; b=jqIkH8VykXTRnpSQRyXfySFcgl15NmjNu8l7Vlpq+1W0csa6KQhw/6g2W55IIl2aC4bjVQxH32DEtDjvFCsMF9Q76vEbWBSCtaL1Tzo28MlGv+0xfBY1jLD0cZYujT2wOsPHMQh53B5jxHtPFMT8R9pEOuXlnCARCJlwYdKIb78=
+	t=1778609136; cv=none; b=fzdu0gTjSYH67jeCzzkWCDQCK9vyuNNXopL1uwBUezEktzAncbj2G6jVjVHNOHvKbfbnaZUYvyaMkPJXgAyvU81qBxYml9tQNc0PEtpysDgRyNsVKXNtUJaQ6f0tEnepBhgJZCOETgPd1+3xzS/Wbs+ClwNYK2U5qkyr8TysNf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609133; c=relaxed/simple;
-	bh=M6ydTwUiWTUG0tE0KbD/szBE402y6/fuzWJBjK5uglo=;
+	s=arc-20240116; t=1778609136; c=relaxed/simple;
+	bh=0XAPkYQSYj722Ty3jKtlON2EFJ0TK/1a392RRX/+hM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYPcQF7Cv2QLcAEfQ4RPDFIbsE38QM0OyCyO1osKh3Lyeq6Gdx2c/MI0KJRh3FSkif3Lp7Hcy4If7BPErAJZ/Unnv0fuGMR+nN5Oqmm0T1BnyzfNC3IM797ZzfdLNlXc/GCuNJOG3w7vbwcNgv/UHw9ZkC2Z4FSGuc6jTFfmU1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjjsZt64; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C2gMFqt2P+MU04w3yvSH2ctBQtaD8MJ+lHz1tL5PKzupdXiR1TymlG/KMCpxPGZrCqJJ7cOxUIiulwwri65BqWXD16X19dOZzUe9n2LwoWuwFhXfZWD6jly24pNlZC4P9Ajlyy+7Qvoh6MFyR9jLQT2rVhUD3gNJuVG5qwItupk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zOYrSaM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjjsZt64"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243B2C2BCB0;
-	Tue, 12 May 2026 18:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zOYrSaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66AAC2BCB0;
+	Tue, 12 May 2026 18:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609133;
-	bh=M6ydTwUiWTUG0tE0KbD/szBE402y6/fuzWJBjK5uglo=;
+	s=korg; t=1778609136;
+	bh=0XAPkYQSYj722Ty3jKtlON2EFJ0TK/1a392RRX/+hM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EjjsZt64v+Z8nCB9wp9OYy32pIjVEl2k9ZDny0MWPKIIK4g41V1qP9F7JM6vrne8Z
-	 kl8pbqnhkm0XWcQy0Db/ZmuK1cWii6UC39AdrHJ8C120Au2OwbqKkglYxjVYDlmDGt
-	 FvUSO0k9lGswSlc1101dkYGsdR5faStrXm54J0/I=
+	b=1zOYrSaMyrIcqi0HphmaZ8ihCF4OI+PuXyAbxFrrC3KeDgf8sjN7F7q6xxklW+zJA
+	 lz4EUkocwJ7x+aXoWy95Xr2cYnVKrj5RueYkXTtjRjsbs561sYa0jmJTdE2DT+AL9o
+	 Dtu/EftgQViQSXoWUQngxLWPfqbwSk1IEJLrYp0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alice Ryhl <aliceryhl@google.com>,
 	Gary Guo <gary@garyguo.net>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.0 079/307] rust: allow `clippy::collapsible_if` globally
-Date: Tue, 12 May 2026 19:37:54 +0200
-Message-ID: <20260512173941.787692975@linuxfoundation.org>
+Subject: [PATCH 7.0 080/307] rust: pin-init: internal: move alignment check to `make_field_check`
+Date: Tue, 12 May 2026 19:37:55 +0200
+Message-ID: <20260512173941.808964663@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -50,50 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Gary Guo <gary@garyguo.net>
 
-commit 2adc8664018c1cc595c7c0c98474a33c7fe32a85 upstream.
+commit 83ac2870310b694775ab7e8f0244fdd94fc21926 upstream.
 
-Similar to `clippy::collapsible_match` (globally allowed in the previous
-commit), the `clippy::collapsible_if` lint [1] can make code harder to
-read in certain cases.
+Instead of having the reference creation serving dual-purpose as both for
+let bindings and alignment check, detangle them so that the alignment check
+is done explicitly in `make_field_check`. This is more robust against
+refactors that may change the way let bindings are created.
 
-Thus just let developers decide on their own.
-
-In addition, remove the existing `expect` we had.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Suggested-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/rust-for-linux/DGROP5CHU1QZ.1OKJRAUZXE9WC@garyguo.net/
-Link: https://rust-lang.github.io/rust-clippy/master/index.html#collapsible_if [1]
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260426144201.227108-2-ojeda@kernel.org
+Cc: stable@vger.kernel.org
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20260427-pin-init-fix-v3-1-496a699674dd@garyguo.net
+[ Reworded for typo. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile                                    |    1 +
- drivers/android/binder/range_alloc/array.rs |    1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ rust/pin-init/internal/src/init.rs |   78 +++++++++++++++++--------------------
+ 1 file changed, 37 insertions(+), 41 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -486,6 +486,7 @@ export rust_common_flags := --edition=20
- 			    -Wclippy::as_ptr_cast_mut \
- 			    -Wclippy::as_underscore \
- 			    -Wclippy::cast_lossless \
-+			    -Aclippy::collapsible_if \
- 			    -Aclippy::collapsible_match \
- 			    -Wclippy::ignored_unit_patterns \
- 			    -Wclippy::mut_mut \
---- a/drivers/android/binder/range_alloc/array.rs
-+++ b/drivers/android/binder/range_alloc/array.rs
-@@ -204,7 +204,6 @@ impl<T> ArrayRangeAllocator<T> {
-         // caller will mark them as unused, which means that they can be freed if the system comes
-         // under memory pressure.
-         let mut freed_range = FreedRange::interior_pages(offset, size);
--        #[expect(clippy::collapsible_if)] // reads better like this
-         if offset % PAGE_SIZE != 0 {
-             if i == 0 || self.ranges[i - 1].endpoint() <= (offset & PAGE_MASK) {
-                 freed_range.start_page_idx -= 1;
+--- a/rust/pin-init/internal/src/init.rs
++++ b/rust/pin-init/internal/src/init.rs
+@@ -243,10 +243,6 @@ fn init_fields(
+                 });
+                 // Again span for better diagnostics
+                 let write = quote_spanned!(ident.span()=> ::core::ptr::write);
+-                // NOTE: the field accessor ensures that the initialized field is properly aligned.
+-                // Unaligned fields will cause the compiler to emit E0793. We do not support
+-                // unaligned fields since `Init::__init` requires an aligned pointer; the call to
+-                // `ptr::write` below has the same requirement.
+                 let accessor = if pinned {
+                     let project_ident = format_ident!("__project_{ident}");
+                     quote! {
+@@ -361,49 +357,49 @@ fn init_fields(
+     }
+ }
+ 
+-/// Generate the check for ensuring that every field has been initialized.
++/// Generate the check for ensuring that every field has been initialized and aligned.
+ fn make_field_check(
+     fields: &Punctuated<InitializerField, Token![,]>,
+     init_kind: InitKind,
+     path: &Path,
+ ) -> TokenStream {
+-    let field_attrs = fields
++    let field_attrs: Vec<_> = fields
+         .iter()
+-        .filter_map(|f| f.kind.ident().map(|_| &f.attrs));
+-    let field_name = fields.iter().filter_map(|f| f.kind.ident());
+-    match init_kind {
+-        InitKind::Normal => quote! {
+-            // We use unreachable code to ensure that all fields have been mentioned exactly once,
+-            // this struct initializer will still be type-checked and complain with a very natural
+-            // error message if a field is forgotten/mentioned more than once.
+-            #[allow(unreachable_code, clippy::diverging_sub_expression)]
+-            // SAFETY: this code is never executed.
+-            let _ = || unsafe {
+-                ::core::ptr::write(slot, #path {
+-                    #(
+-                        #(#field_attrs)*
+-                        #field_name: ::core::panic!(),
+-                    )*
+-                })
+-            };
+-        },
+-        InitKind::Zeroing => quote! {
+-            // We use unreachable code to ensure that all fields have been mentioned at most once.
+-            // Since the user specified `..Zeroable::zeroed()` at the end, all missing fields will
+-            // be zeroed. This struct initializer will still be type-checked and complain with a
+-            // very natural error message if a field is mentioned more than once, or doesn't exist.
+-            #[allow(unreachable_code, clippy::diverging_sub_expression, unused_assignments)]
+-            // SAFETY: this code is never executed.
+-            let _ = || unsafe {
+-                ::core::ptr::write(slot, #path {
+-                    #(
+-                        #(#field_attrs)*
+-                        #field_name: ::core::panic!(),
+-                    )*
+-                    ..::core::mem::zeroed()
+-                })
+-            };
+-        },
++        .filter_map(|f| f.kind.ident().map(|_| &f.attrs))
++        .collect();
++    let field_name: Vec<_> = fields.iter().filter_map(|f| f.kind.ident()).collect();
++    let zeroing_trailer = match init_kind {
++        InitKind::Normal => None,
++        InitKind::Zeroing => Some(quote! {
++            ..::core::mem::zeroed()
++        }),
++    };
++    quote! {
++        #[allow(unreachable_code, clippy::diverging_sub_expression)]
++        // We use unreachable code to perform field checks. They're still checked by the compiler.
++        // SAFETY: this code is never executed.
++        let _ = || unsafe {
++            // Create references to ensure that the initialized field is properly aligned.
++            // Unaligned fields will cause the compiler to emit E0793. We do not support
++            // unaligned fields since `Init::__init` requires an aligned pointer; the call to
++            // `ptr::write` for value-initialization case has the same requirement.
++            #(
++                #(#field_attrs)*
++                let _ = &(*slot).#field_name;
++            )*
++
++            // If the zeroing trailer is not present, this checks that all fields have been
++            // mentioned exactly once. If the zeroing trailer is present, all missing fields will be
++            // zeroed, so this checks that all fields have been mentioned at most once. The use of
++            // struct initializer will still generate very natural error messages for any misuse.
++            ::core::ptr::write(slot, #path {
++                #(
++                    #(#field_attrs)*
++                    #field_name: ::core::panic!(),
++                )*
++                #zeroing_trailer
++            })
++        };
+     }
+ }
+ 
 
 
