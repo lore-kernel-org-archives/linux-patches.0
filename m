@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866E6343D9D;
-	Tue, 12 May 2026 18:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC5635F185;
+	Tue, 12 May 2026 18:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609437; cv=none; b=iPo3NcqKTY4vqiV27goiUXXFIWl8VHlhB0zlX3IGgZWREc3joWIFQwE028I2TY0yv4iIiisj9xAyHAjZVzSf8CaYxjXrwjR9GRQAFNcBExgGZRaKdAqwOXYO7c5b0MHVrcxFZsRhbcqD2NRPz4B9leLDotszwbHoyznCyXMG0M4=
+	t=1778609440; cv=none; b=qGP5Z2k21bUSGxZ9LQAFzQwxCOU9HkbuddUq0gnx/g5h3leRM1TkFwSBKer1RL3UgJVMfgzmRrdHkKg7kHQWeZZsgsR9XmYUAgy5l8zXAPEhnR6yz1bOdmDvx5imOEPzioh0rIzbYLC2r1+VZ0+bONKHeiuJO/VfFlOrAIA0yfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609437; c=relaxed/simple;
-	bh=8GKWydZTiqjN70TgYZ/AUFPgEDrSB3OGrWweqDyWNII=;
+	s=arc-20240116; t=1778609440; c=relaxed/simple;
+	bh=QP0Y9TK+VcFGhSoI+9f16p9rvnwkwHS3kp8cxLHRyO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VB9WC7kS8Z6KyKcfsAIPigayJ4JWi505ftU/4FwNeJ51rUf1mtbkH99HcuW8ZzcCWBlDgXAiEWyk6ezRRrcksaht94JlMBGa86WxH+Xstff0EVqPviiDEYS0VzEQD4drEPACJqpIqRwKt+rrmFQMOssUczQuqnyWG+VKIx/s/pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dM6vWnie; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l5BAtt9M0YdRn2JoU+NqePkRcz8qu4flZSNcQSwKaMij6a3yIna7gnUOOOczAC5XOs5Y/RUohLZ17luEhFrdweL4aI7JnfV5cCLstG+uI4pVRVXwe3NDx9VQ27tzYGcJKP05Ogtq2wAuB2ErdEoM4HAs09qERFIx9vn5PeqIqMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Himo/o4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dM6vWnie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BEDEC2BCB0;
-	Tue, 12 May 2026 18:10:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Himo/o4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D5FC2BCB0;
+	Tue, 12 May 2026 18:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609437;
-	bh=8GKWydZTiqjN70TgYZ/AUFPgEDrSB3OGrWweqDyWNII=;
+	s=korg; t=1778609440;
+	bh=QP0Y9TK+VcFGhSoI+9f16p9rvnwkwHS3kp8cxLHRyO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dM6vWniefo24+BCwBC/0rr3+EN1vO7Wi4rqLys7O1w6mVPNvQl+31UKZYk6tNg4VV
-	 VlCslhbIPU3TP0Y3nG0EgKUjZ6OLNBA5tHZ191K2YxWu2hB+Wj1N+uyxd6kGCXlzbz
-	 5FhOfbxK1qwG+24nCNPOb1BGghZgQwSpKNzV6M5o=
+	b=0Himo/o4GyEIUmrDHEhu/PXw6c+2EECDKgHypzO9UFGAJdGeIULr4TDHX0bTymbYm
+	 bDJ8yfRZrg6iSJzR0jh/VPBhxUC1iUPOEE2PAjRzGGmXAIwcycqTswTpHgzho9qnUW
+	 ZqiKKkoDzLMHHlinxtPJdlnnvywctYb8qjbCmOds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Ignat Korchagin <ignat@linux.win>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Yiming Qian <yimingqian591@gmail.com>
-Subject: [PATCH 7.0 194/307] lib/crypto: mpi: Fix integer underflow in mpi_read_raw_from_sgl()
-Date: Tue, 12 May 2026 19:39:49 +0200
-Message-ID: <20260512173944.210645579@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 7.0 195/307] lib/crc: tests: Make crc_kunit test only the enabled CRC variants
+Date: Tue, 12 May 2026 19:39:50 +0200
+Message-ID: <20260512173944.233582047@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -53,70 +49,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 8c2f1288250a90a4b5cabed5d888d7e3aeed4035 upstream.
+commit 85c9f3a2b805eb96d899da7bcc38a16459aa3c16 upstream.
 
-Yiming reports an integer underflow in mpi_read_raw_from_sgl() when
-subtracting "lzeros" from the unsigned "nbytes".
+Like commit 4478e8eeb871 ("lib/crypto: tests: Depend on library options
+rather than selecting them") did with the crypto library tests, make
+crc_kunit depend on the code it tests rather than selecting it.  This
+follows the standard convention for KUnit and fixes an issue where
+enabling KUNIT_ALL_TESTS enabled non-test code.
 
-For this to happen, the scatterlist "sgl" needs to occupy more bytes
-than the "nbytes" parameter and the first "nbytes + 1" bytes of the
-scatterlist must be zero.  Under these conditions, the while loop
-iterating over the scatterlist will count more zeroes than "nbytes",
-subtract the number of zeroes from "nbytes" and cause the underflow.
+crc_kunit does differ from the crypto library tests in that it
+consolidates the tests for multiple CRC variants, with 5 kconfig
+options, into one KUnit suite.  Since depending on *all* of these
+kconfig options would greatly restrict the ability to enable crc_kunit,
+instead just depend on *any* of these options.  Update crc_kunit
+accordingly to test only the reachable code.
 
-When commit 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers") originally
-introduced the bug, it couldn't be triggered because all callers of
-mpi_read_raw_from_sgl() passed a scatterlist whose length was equal to
-"nbytes".
+Alternatively we could split crc_kunit into 5 test suites.  But keeping
+it as one is simpler for now.
 
-However since commit 63ba4d67594a ("KEYS: asymmetric: Use new crypto
-interface without scatterlists"), the underflow can now actually be
-triggered.  When invoking a KEYCTL_PKEY_ENCRYPT system call with a
-larger "out_len" than "in_len" and filling the "in" buffer with zeroes,
-crypto_akcipher_sync_prep() will create an all-zero scatterlist used for
-both the "src" and "dst" member of struct akcipher_request and thereby
-fulfil the conditions to trigger the bug:
-
-  sys_keyctl()
-    keyctl_pkey_e_d_s()
-      asymmetric_key_eds_op()
-        software_key_eds_op()
-          crypto_akcipher_sync_encrypt()
-            crypto_akcipher_sync_prep()
-              crypto_akcipher_encrypt()
-                rsa_enc()
-                  mpi_read_raw_from_sgl()
-
-To the user this will be visible as a DoS as the kernel spins forever,
-causing soft lockup splats as a side effect.
-
-Fix it.
-
-Reported-by: Yiming Qian <yimingqian591@gmail.com> # off-list
-Fixes: 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v4.4+
-Reviewed-by: Ignat Korchagin <ignat@linux.win>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/59eca92ff4f87e2081777f1423a0efaaadcfdb39.1776003111.git.lukas@wunner.de
+Fixes: e47d9b1a76ed ("lib/crc_kunit.c: add KUnit test suite for CRC library functions")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20260306033557.250499-2-ebiggers@kernel.org
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crypto/mpi/mpicoder.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/crc/Kconfig           |    7 +------
+ lib/crc/tests/crc_kunit.c |   28 ++++++++++++++++++++++------
+ 2 files changed, 23 insertions(+), 12 deletions(-)
 
---- a/lib/crypto/mpi/mpicoder.c
-+++ b/lib/crypto/mpi/mpicoder.c
-@@ -347,7 +347,7 @@ MPI mpi_read_raw_from_sgl(struct scatter
- 	lzeros = 0;
- 	len = 0;
- 	while (nbytes > 0) {
--		while (len && !*buff) {
-+		while (len && !*buff && lzeros < nbytes) {
- 			lzeros++;
- 			len--;
- 			buff++;
+--- a/lib/crc/Kconfig
++++ b/lib/crc/Kconfig
+@@ -99,13 +99,8 @@ config CRC_OPTIMIZATIONS
+ 
+ config CRC_KUNIT_TEST
+ 	tristate "KUnit tests for CRC functions" if !KUNIT_ALL_TESTS
+-	depends on KUNIT
++	depends on KUNIT && (CRC7 || CRC16 || CRC_T10DIF || CRC32 || CRC64)
+ 	default KUNIT_ALL_TESTS
+-	select CRC7
+-	select CRC16
+-	select CRC_T10DIF
+-	select CRC32
+-	select CRC64
+ 	help
+ 	  Unit tests for the CRC library functions.
+ 
+--- a/lib/crc/tests/crc_kunit.c
++++ b/lib/crc/tests/crc_kunit.c
+@@ -268,8 +268,7 @@ crc_benchmark(struct kunit *test,
+ 	}
+ }
+ 
+-/* crc7_be */
+-
++#if IS_REACHABLE(CONFIG_CRC7)
+ static u64 crc7_be_wrapper(u64 crc, const u8 *p, size_t len)
+ {
+ 	/*
+@@ -294,9 +293,9 @@ static void crc7_be_benchmark(struct kun
+ {
+ 	crc_benchmark(test, crc7_be_wrapper);
+ }
++#endif /* CONFIG_CRC7 */
+ 
+-/* crc16 */
+-
++#if IS_REACHABLE(CONFIG_CRC16)
+ static u64 crc16_wrapper(u64 crc, const u8 *p, size_t len)
+ {
+ 	return crc16(crc, p, len);
+@@ -318,9 +317,9 @@ static void crc16_benchmark(struct kunit
+ {
+ 	crc_benchmark(test, crc16_wrapper);
+ }
++#endif /* CONFIG_CRC16 */
+ 
+-/* crc_t10dif */
+-
++#if IS_REACHABLE(CONFIG_CRC_T10DIF)
+ static u64 crc_t10dif_wrapper(u64 crc, const u8 *p, size_t len)
+ {
+ 	return crc_t10dif_update(crc, p, len);
+@@ -342,6 +341,9 @@ static void crc_t10dif_benchmark(struct
+ {
+ 	crc_benchmark(test, crc_t10dif_wrapper);
+ }
++#endif /* CONFIG_CRC_T10DIF */
++
++#if IS_REACHABLE(CONFIG_CRC32)
+ 
+ /* crc32_le */
+ 
+@@ -414,6 +416,9 @@ static void crc32c_benchmark(struct kuni
+ {
+ 	crc_benchmark(test, crc32c_wrapper);
+ }
++#endif /* CONFIG_CRC32 */
++
++#if IS_REACHABLE(CONFIG_CRC64)
+ 
+ /* crc64_be */
+ 
+@@ -463,24 +468,35 @@ static void crc64_nvme_benchmark(struct
+ {
+ 	crc_benchmark(test, crc64_nvme_wrapper);
+ }
++#endif /* CONFIG_CRC64 */
+ 
+ static struct kunit_case crc_test_cases[] = {
++#if IS_REACHABLE(CONFIG_CRC7)
+ 	KUNIT_CASE(crc7_be_test),
+ 	KUNIT_CASE(crc7_be_benchmark),
++#endif
++#if IS_REACHABLE(CONFIG_CRC16)
+ 	KUNIT_CASE(crc16_test),
+ 	KUNIT_CASE(crc16_benchmark),
++#endif
++#if IS_REACHABLE(CONFIG_CRC_T10DIF)
+ 	KUNIT_CASE(crc_t10dif_test),
+ 	KUNIT_CASE(crc_t10dif_benchmark),
++#endif
++#if IS_REACHABLE(CONFIG_CRC32)
+ 	KUNIT_CASE(crc32_le_test),
+ 	KUNIT_CASE(crc32_le_benchmark),
+ 	KUNIT_CASE(crc32_be_test),
+ 	KUNIT_CASE(crc32_be_benchmark),
+ 	KUNIT_CASE(crc32c_test),
+ 	KUNIT_CASE(crc32c_benchmark),
++#endif
++#if IS_REACHABLE(CONFIG_CRC64)
+ 	KUNIT_CASE(crc64_be_test),
+ 	KUNIT_CASE(crc64_be_benchmark),
+ 	KUNIT_CASE(crc64_nvme_test),
+ 	KUNIT_CASE(crc64_nvme_benchmark),
++#endif
+ 	{},
+ };
+ 
 
 
