@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99A3BB119;
-	Tue, 12 May 2026 17:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CF936A378;
+	Tue, 12 May 2026 17:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608242; cv=none; b=lteWCDfaA/XIcfxHZbZei1wQkJ0TrYiZ7xoWmH0ZrKU7wM4o08I2QFND6WVy05eJlFvS/PQr5oLrsm+/EKD0VsXNqTOzFe5zqmhR1HRer9cDNXQ12LWTUoGElsVULWWskIo+LBOjP5FM4RprEdZg0bJ4b6oyIgAyfVL9qN9s28c=
+	t=1778608245; cv=none; b=uBBcC4BMw6TMfOB/yEzkgrcFxpaijvTNFdWA3E+C4llH1l2YzBNz0IMbSRBzJ1TSPGc8OsGkwSOEyndCrECSculp0cNAU2NXh/Tb3iEc20bvU13ZX2qhDA8KmVlHEtPqJnQf0gtcDNYoVZj+jWrL4ZWVVPeGQnBWJLNoho0qVTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608242; c=relaxed/simple;
-	bh=wx/cldMJiQokNitJRNn6dZdtmCpEgHxJUgC64eM7QCg=;
+	s=arc-20240116; t=1778608245; c=relaxed/simple;
+	bh=rr8TcxGrlP8VomFFTKDaNHigpO/+ZajIfdo+iCOjdFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cAbPoXrrO23M9rHSgFF9aaxC4trI5Xz4iirqCi8apIiB38akJ+4YGazF+rv1V0cbXYhpLW/5GaksqViRdg/QjYQPRzkTIqrDSrU55yXxp7wOoaPP0JXhYqwRYbrTTCMVjJEkBX0dqM09/MdE7uqNutaosMelYuxOj5+Z1F98rLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJZDZZCN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=goiyMeMOAVAcSNjFDWa/5RWTNSsqskRr2jHqzqeVJ7NBmeKou+8ucHzdIjYjoKEVvNTRbs1Mlsfm0o60g6ARs6rRnpQ7sVkRb6GwUHqA3EnEbvfuSSJlhwjTYSpwUIPXSHynROrJh8soOiZd+9C8AuXDtTULCtnzYmkVIJf3DqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4j7WsIV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJZDZZCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C22C2BCF5;
-	Tue, 12 May 2026 17:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4j7WsIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13EEC2BCB0;
+	Tue, 12 May 2026 17:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608242;
-	bh=wx/cldMJiQokNitJRNn6dZdtmCpEgHxJUgC64eM7QCg=;
+	s=korg; t=1778608245;
+	bh=rr8TcxGrlP8VomFFTKDaNHigpO/+ZajIfdo+iCOjdFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJZDZZCNPfl6MEFinPclcTzyZu3zMewa6o1eXAz/2jvSg+yMcYHIgo1bHHTb9SCWO
-	 YUJ6ewO6OimlGldUIyllqAh5Ztpd7U9XCOJQ+PGZ5/EZ9AU3xL8o9vd259j5Mg3U6m
-	 4PXau2K/7Y63DMI8zLJ6wfzd0tzm1Znxijesxmjs=
+	b=V4j7WsIVlsRLhg/9r1jHS1GHaykpBDjmuUaFJaenI35II7o/oUdKmaq6AuVj2Jo0Q
+	 tpkCpwjRDyau1/MCigqLv59FOfrgkeXXDVSUvk1xMu2ZLBRNKeGBOsAbD8rZOkwuHK
+	 LfwhPQHriNBBmUHehLJvHc5JIoZz6wG8hL/Gxjzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <linux@armlinux.org.uk>,
-	Sam Edwards <CFSworks@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Quan Zhou <quan.zhou@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 201/206] net: stmmac: Prevent NULL deref when RX memory exhausted
-Date: Tue, 12 May 2026 19:40:53 +0200
-Message-ID: <20260512173937.132300704@linuxfoundation.org>
+Subject: [PATCH 6.12 202/206] wifi: mt76: mt7925: fix incorrect TLV length in CLC command
+Date: Tue, 12 May 2026 19:40:54 +0200
+Message-ID: <20260512173937.154014806@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -52,117 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Edwards <cfsworks@gmail.com>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-[ Upstream commit 0bb05e6adfa99a2ea1fee1125cc0953409f83ed8 ]
+[ Upstream commit 62e037aa8cf5a69b7ea63336705a35c897b9db2b ]
 
-The CPU receives frames from the MAC through conventional DMA: the CPU
-allocates buffers for the MAC, then the MAC fills them and returns
-ownership to the CPU. For each hardware RX queue, the CPU and MAC
-coordinate through a shared ring array of DMA descriptors: one
-descriptor per DMA buffer. Each descriptor includes the buffer's
-physical address and a status flag ("OWN") indicating which side owns
-the buffer: OWN=0 for CPU, OWN=1 for MAC. The CPU is only allowed to set
-the flag and the MAC is only allowed to clear it, and both must move
-through the ring in sequence: thus the ring is used for both
-"submissions" and "completions."
+The previous implementation of __mt7925_mcu_set_clc() set the TLV length
+field (.len) incorrectly during CLC command construction. The length was
+initialized as sizeof(req) - 4, regardless of the actual segment length.
+This could cause the WiFi firmware to misinterpret the command payload,
+resulting in command execution errors.
 
-In the stmmac driver, stmmac_rx() bookmarks its position in the ring
-with the `cur_rx` index. The main receive loop in that function checks
-for rx_descs[cur_rx].own=0, gives the corresponding buffer to the
-network stack (NULLing the pointer), and increments `cur_rx` modulo the
-ring size. After the loop exits, stmmac_rx_refill(), which bookmarks its
-position with `dirty_rx`, allocates fresh buffers and rearms the
-descriptors (setting OWN=1). If it fails any allocation, it simply stops
-early (leaving OWN=0) and will retry where it left off when next called.
+This patch moves the TLV length assignment to after the segment is
+selected, and sets .len to sizeof(req) + seg->len - 4, matching the
+actual command content. This ensures the firmware receives the
+correct TLV length and parses the command properly.
 
-This means descriptors have a three-stage lifecycle (terms my own):
-- `empty` (OWN=1, buffer valid)
-- `full` (OWN=0, buffer valid and populated)
-- `dirty` (OWN=0, buffer NULL)
-
-But because stmmac_rx() only checks OWN, it confuses `full`/`dirty`. In
-the past (see 'Fixes:'), there was a bug where the loop could cycle
-`cur_rx` all the way back to the first descriptor it dirtied, resulting
-in a NULL dereference when mistaken for `full`. The aforementioned
-commit resolved that *specific* failure by capping the loop's iteration
-limit at `dma_rx_size - 1`, but this is only a partial fix: if the
-previous stmmac_rx_refill() didn't complete, then there are leftover
-`dirty` descriptors that the loop might encounter without needing to
-cycle fully around. The current code therefore panics (see 'Closes:')
-when stmmac_rx_refill() is memory-starved long enough for `cur_rx` to
-catch up to `dirty_rx`.
-
-Fix this by explicitly checking, before advancing `cur_rx`, if the next
-entry is dirty; exit the loop if so. This prevents processing of the
-final, used descriptor until stmmac_rx_refill() succeeds, but
-fully prevents the `cur_rx == dirty_rx` ambiguity as the previous bugfix
-intended: so remove the clamp as well. Since stmmac_rx_zc() is a
-copy-paste-and-tweak of stmmac_rx() and the code structure is identical,
-any fix to stmmac_rx() will also need a corresponding fix for
-stmmac_rx_zc(). Therefore, apply the same check there.
-
-In stmmac_rx() (not stmmac_rx_zc()), a related bug remains: after the
-MAC sets OWN=0 on the final descriptor, it will be unable to send any
-further DMA-complete IRQs until it's given more `empty` descriptors.
-Currently, the driver simply *hopes* that the next stmmac_rx_refill()
-succeeds, risking an indefinite stall of the receive process if not. But
-this is not a regression, so it can be addressed in a future change.
-
-Fixes: b6cb4541853c7 ("net: stmmac: avoid rx queue overrun")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221010
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
 Cc: stable@vger.kernel.org
-Suggested-by: Russell King <linux@armlinux.org.uk>
-Signed-off-by: Sam Edwards <CFSworks@gmail.com>
-Link: https://patch.msgid.link/20260422044503.5349-1-CFSworks@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Acked-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/f56ae0e705774dfa8aab3b99e5bbdc92cd93523e.1772011204.git.quan.zhou@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5270,9 +5270,12 @@ read_again:
- 			break;
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -3261,7 +3261,6 @@ __mt7925_mcu_set_clc(struct mt792x_dev *
+ 		u8 rsvd[64];
+ 	} __packed req = {
+ 		.tag = cpu_to_le16(0x3),
+-		.len = cpu_to_le16(sizeof(req) - 4),
  
- 		/* Prefetch the next RX descriptor */
--		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
--						priv->dma_conf.dma_rx_size);
--		next_entry = rx_q->cur_rx;
-+		next_entry = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
-+					       priv->dma_conf.dma_rx_size);
-+		if (unlikely(next_entry == rx_q->dirty_rx))
-+			break;
-+
-+		rx_q->cur_rx = next_entry;
+ 		.idx = idx,
+ 		.env = env_cap,
+@@ -3289,6 +3288,7 @@ __mt7925_mcu_set_clc(struct mt792x_dev *
+ 		memcpy(req.type, rule->type, 2);
  
- 		if (priv->extend_desc)
- 			np = (struct dma_desc *)(rx_q->dma_erx + next_entry);
-@@ -5410,7 +5413,6 @@ static int stmmac_rx(struct stmmac_priv
- 
- 	dma_dir = page_pool_get_dma_dir(rx_q->page_pool);
- 	bufsz = DIV_ROUND_UP(priv->dma_conf.dma_buf_sz, PAGE_SIZE) * PAGE_SIZE;
--	limit = min(priv->dma_conf.dma_rx_size - 1, (unsigned int)limit);
- 
- 	if (netif_msg_rx_status(priv)) {
- 		void *rx_head;
-@@ -5466,9 +5468,12 @@ read_again:
- 		if (unlikely(status & dma_own))
- 			break;
- 
--		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
--						priv->dma_conf.dma_rx_size);
--		next_entry = rx_q->cur_rx;
-+		next_entry = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
-+					       priv->dma_conf.dma_rx_size);
-+		if (unlikely(next_entry == rx_q->dirty_rx))
-+			break;
-+
-+		rx_q->cur_rx = next_entry;
- 
- 		if (priv->extend_desc)
- 			np = (struct dma_desc *)(rx_q->dma_erx + next_entry);
+ 		req.size = cpu_to_le16(seg->len);
++		req.len = cpu_to_le16(sizeof(req) + seg->len - 4);
+ 		skb = __mt76_mcu_msg_alloc(&dev->mt76, &req,
+ 					   le16_to_cpu(req.size) + sizeof(req),
+ 					   sizeof(req), GFP_KERNEL);
 
 
