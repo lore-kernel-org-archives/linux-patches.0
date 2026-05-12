@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF41D3955D4;
-	Tue, 12 May 2026 17:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9BA3955DC;
+	Tue, 12 May 2026 17:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608198; cv=none; b=oy9TqZI41/8dHkVx6SApZLW3i8ayjNs6BUTXCp5SHvxt4U9mpsT8GptbSZM2vcB3cY1idw9iBxTDwYdT2klhewZ2dVdMLsU5oFYzYIyyGE0QLeycaKYsuMxXuWA9KoVWsrCKNS18ypZoPYXOAU7HoIPFCsM2c+XptUFR1P/fQBI=
+	t=1778608201; cv=none; b=lcgHqMu93Ny3J4A2K6rSTCOSA9Tb+COP0lOoy+amq8oZG0cmMeIzHk3HU+kD+Gy/gxoJ232C/eNQc8KmGG7zh6uRLC194rUrpmzNingg3h5wXdbYv7llBmY0t9t48Wx7nFprsLsHJdkz+uAJ2nC8CuB962s/d5Pm+nm7sebxEU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608198; c=relaxed/simple;
-	bh=uKjMed4wp9CihK8TQOtiLYm7/mxwZz01sdZyh1Pnx6M=;
+	s=arc-20240116; t=1778608201; c=relaxed/simple;
+	bh=pGWuPv720m1vccsOM3p4Avuh5eDw2sFQlxdavHFdINs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xh1nUTHgWWmPKY9j6f36q9RAiUTWRgZueZBLFml6RSqybI9W+/Nlc1BmNxzj7BQ6dsVtHsUI3dbwQ9AgGLvd6hy4bw7yWGQA8j2pAv/KbjCzPlblMppB7LE3v1BKpm9ILJL5bHcxQnGUC68f4mzX7ZJPQodWyvBY3fJySSf6h8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yE0FAP6u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNKOeSZyrpONqBDuhdKRZUGwteFez1RO5reJ3uGDop/hoTj23S2ZkVYsppvhjGKh/nBsRqjiFI2aQhi4h4qLXVGnpIZUT5TZaue2mA61lVvwMGNZHhk3ebvxow60c6HdnDtf6PojbohUxt2Za7kQNyYopvjNkwFRv+XP2gJVaLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGF4s+lX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yE0FAP6u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D48C2BCF5;
-	Tue, 12 May 2026 17:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGF4s+lX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE55AC2BCB0;
+	Tue, 12 May 2026 17:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608198;
-	bh=uKjMed4wp9CihK8TQOtiLYm7/mxwZz01sdZyh1Pnx6M=;
+	s=korg; t=1778608201;
+	bh=pGWuPv720m1vccsOM3p4Avuh5eDw2sFQlxdavHFdINs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yE0FAP6uY8VvqKDE6Fcn7WicwkT10kSbYcVI69GrM+dC+yfjA5oMIen+xw0Kzimj1
-	 vZqdYz/zr6/3LrdZdjIMVQIFpeOJ+NtxWqq/cumgOy7SeF3kXwlIWVlycHOPF1BjKy
-	 Reb9RZVXDQJ+o8wF7odzcsEwh9O3N8ztBNBnvNFg=
+	b=YGF4s+lXvvHXCnkncw1eD67/45vLExvynMEHePlSKtj/WeQ0KzOz/hLWYlPfZ1d6r
+	 IHaJ2ykYT3oDGop/ysmBAJ5vQNskFqwQCIBXB4tjpYS+OwrXEyREMqz3jFuD4snq24
+	 P4Pkyf5Od/61d+qZofRbZnJ2bPuEk3xvjYuK19bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 191/206] crypto: nx - fix bounce buffer leaks in nx842_crypto_{alloc,free}_ctx
-Date: Tue, 12 May 2026 19:40:43 +0200
-Message-ID: <20260512173936.913713646@linuxfoundation.org>
+Subject: [PATCH 6.12 192/206] erofs: move {in,out}pages into struct z_erofs_decompress_req
+Date: Tue, 12 May 2026 19:40:44 +0200
+Message-ID: <20260512173936.935918364@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -51,48 +51,331 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit adb3faf2db1a66d0f015b44ac909a32dfc7f2f9c ]
+[ Upstream commit 0243cc257ffa6d8cb210a3070b687fb510f113c7 ]
 
-The bounce buffers are allocated with __get_free_pages() using
-BOUNCE_BUFFER_ORDER (order 2 = 4 pages), but both the allocation error
-path and nx842_crypto_free_ctx() release the buffers with free_page().
-Use free_pages() with the matching order instead.
+It seems that all compressors need those two values, so just move
+them into the common structure.
 
-Fixes: ed70b479c2c0 ("crypto: nx - add hardware 842 crypto comp alg")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+`struct z_erofs_lz4_decompress_ctx` can be dropped too.
+
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250305124007.1810731-1-hsiangkao@linux.alibaba.com
+Stable-dep-of: 21e161de2dc6 ("erofs: fix unsigned underflow in z_erofs_lz4_handle_overlap()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/nx/nx-842.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/erofs/compress.h             |    2 
+ fs/erofs/decompressor.c         |   93 +++++++++++++++-------------------------
+ fs/erofs/decompressor_deflate.c |    8 ---
+ fs/erofs/decompressor_lzma.c    |    8 ---
+ fs/erofs/decompressor_zstd.c    |    8 ---
+ fs/erofs/zdata.c                |    2 
+ 6 files changed, 41 insertions(+), 80 deletions(-)
 
---- a/drivers/crypto/nx/nx-842.c
-+++ b/drivers/crypto/nx/nx-842.c
-@@ -116,8 +116,8 @@ void *nx842_crypto_alloc_ctx(struct nx84
- 	ctx->dbounce = (u8 *)__get_free_pages(GFP_KERNEL, BOUNCE_BUFFER_ORDER);
- 	if (!ctx->wmem || !ctx->sbounce || !ctx->dbounce) {
- 		kfree(ctx->wmem);
--		free_page((unsigned long)ctx->sbounce);
--		free_page((unsigned long)ctx->dbounce);
-+		free_pages((unsigned long)ctx->sbounce, BOUNCE_BUFFER_ORDER);
-+		free_pages((unsigned long)ctx->dbounce, BOUNCE_BUFFER_ORDER);
- 		kfree(ctx);
- 		return ERR_PTR(-ENOMEM);
- 	}
-@@ -131,8 +131,8 @@ void nx842_crypto_free_ctx(void *p)
- 	struct nx842_crypto_ctx *ctx = p;
+--- a/fs/erofs/compress.h
++++ b/fs/erofs/compress.h
+@@ -11,6 +11,7 @@
+ struct z_erofs_decompress_req {
+ 	struct super_block *sb;
+ 	struct page **in, **out;
++	unsigned int inpages, outpages;
+ 	unsigned short pageofs_in, pageofs_out;
+ 	unsigned int inputsize, outputsize;
  
- 	kfree(ctx->wmem);
--	free_page((unsigned long)ctx->sbounce);
--	free_page((unsigned long)ctx->dbounce);
-+	free_pages((unsigned long)ctx->sbounce, BOUNCE_BUFFER_ORDER);
-+	free_pages((unsigned long)ctx->dbounce, BOUNCE_BUFFER_ORDER);
+@@ -80,7 +81,6 @@ extern const struct z_erofs_decompressor
+ 
+ struct z_erofs_stream_dctx {
+ 	struct z_erofs_decompress_req *rq;
+-	unsigned int inpages, outpages;	/* # of {en,de}coded pages */
+ 	int no, ni;			/* the current {en,de}coded page # */
+ 
+ 	unsigned int avail_out;		/* remaining bytes in the decoded buffer */
+--- a/fs/erofs/decompressor.c
++++ b/fs/erofs/decompressor.c
+@@ -16,14 +16,6 @@
+ #define LZ4_DECOMPRESS_INPLACE_MARGIN(srcsize)  (((srcsize) >> 8) + 32)
+ #endif
+ 
+-struct z_erofs_lz4_decompress_ctx {
+-	struct z_erofs_decompress_req *rq;
+-	/* # of encoded, decoded pages */
+-	unsigned int inpages, outpages;
+-	/* decoded block total length (used for in-place decompression) */
+-	unsigned int oend;
+-};
+-
+ static int z_erofs_load_lz4_config(struct super_block *sb,
+ 			    struct erofs_super_block *dsb, void *data, int size)
+ {
+@@ -62,10 +54,9 @@ static int z_erofs_load_lz4_config(struc
+  * Fill all gaps with bounce pages if it's a sparse page list. Also check if
+  * all physical pages are consecutive, which can be seen for moderate CR.
+  */
+-static int z_erofs_lz4_prepare_dstpages(struct z_erofs_lz4_decompress_ctx *ctx,
++static int z_erofs_lz4_prepare_dstpages(struct z_erofs_decompress_req *rq,
+ 					struct page **pagepool)
+ {
+-	struct z_erofs_decompress_req *rq = ctx->rq;
+ 	struct page *availables[LZ4_MAX_DISTANCE_PAGES] = { NULL };
+ 	unsigned long bounced[DIV_ROUND_UP(LZ4_MAX_DISTANCE_PAGES,
+ 					   BITS_PER_LONG)] = { 0 };
+@@ -75,7 +66,7 @@ static int z_erofs_lz4_prepare_dstpages(
+ 	unsigned int i, j, top;
+ 
+ 	top = 0;
+-	for (i = j = 0; i < ctx->outpages; ++i, ++j) {
++	for (i = j = 0; i < rq->outpages; ++i, ++j) {
+ 		struct page *const page = rq->out[i];
+ 		struct page *victim;
+ 
+@@ -121,36 +112,36 @@ static int z_erofs_lz4_prepare_dstpages(
+ 	return kaddr ? 1 : 0;
  }
- EXPORT_SYMBOL_GPL(nx842_crypto_free_ctx);
  
+-static void *z_erofs_lz4_handle_overlap(struct z_erofs_lz4_decompress_ctx *ctx,
++static void *z_erofs_lz4_handle_overlap(struct z_erofs_decompress_req *rq,
+ 			void *inpage, void *out, unsigned int *inputmargin,
+ 			int *maptype, bool may_inplace)
+ {
+-	struct z_erofs_decompress_req *rq = ctx->rq;
+-	unsigned int omargin, total, i;
++	unsigned int oend, omargin, total, i;
+ 	struct page **in;
+ 	void *src, *tmp;
+ 
+ 	if (rq->inplace_io) {
+-		omargin = PAGE_ALIGN(ctx->oend) - ctx->oend;
++		oend = rq->pageofs_out + rq->outputsize;
++		omargin = PAGE_ALIGN(oend) - oend;
+ 		if (rq->partial_decoding || !may_inplace ||
+ 		    omargin < LZ4_DECOMPRESS_INPLACE_MARGIN(rq->inputsize))
+ 			goto docopy;
+ 
+-		for (i = 0; i < ctx->inpages; ++i)
+-			if (rq->out[ctx->outpages - ctx->inpages + i] !=
++		for (i = 0; i < rq->inpages; ++i)
++			if (rq->out[rq->outpages - rq->inpages + i] !=
+ 			    rq->in[i])
+ 				goto docopy;
+ 		kunmap_local(inpage);
+ 		*maptype = 3;
+-		return out + ((ctx->outpages - ctx->inpages) << PAGE_SHIFT);
++		return out + ((rq->outpages - rq->inpages) << PAGE_SHIFT);
+ 	}
+ 
+-	if (ctx->inpages <= 1) {
++	if (rq->inpages <= 1) {
+ 		*maptype = 0;
+ 		return inpage;
+ 	}
+ 	kunmap_local(inpage);
+-	src = erofs_vm_map_ram(rq->in, ctx->inpages);
++	src = erofs_vm_map_ram(rq->in, rq->inpages);
+ 	if (!src)
+ 		return ERR_PTR(-ENOMEM);
+ 	*maptype = 1;
+@@ -159,7 +150,7 @@ static void *z_erofs_lz4_handle_overlap(
+ docopy:
+ 	/* Or copy compressed data which can be overlapped to per-CPU buffer */
+ 	in = rq->in;
+-	src = z_erofs_get_gbuf(ctx->inpages);
++	src = z_erofs_get_gbuf(rq->inpages);
+ 	if (!src) {
+ 		DBG_BUGON(1);
+ 		kunmap_local(inpage);
+@@ -204,10 +195,8 @@ int z_erofs_fixup_insize(struct z_erofs_
+ 	return 0;
+ }
+ 
+-static int z_erofs_lz4_decompress_mem(struct z_erofs_lz4_decompress_ctx *ctx,
+-				      u8 *dst)
++static int z_erofs_lz4_decompress_mem(struct z_erofs_decompress_req *rq, u8 *dst)
+ {
+-	struct z_erofs_decompress_req *rq = ctx->rq;
+ 	bool support_0padding = false, may_inplace = false;
+ 	unsigned int inputmargin;
+ 	u8 *out, *headpage, *src;
+@@ -231,7 +220,7 @@ static int z_erofs_lz4_decompress_mem(st
+ 	}
+ 
+ 	inputmargin = rq->pageofs_in;
+-	src = z_erofs_lz4_handle_overlap(ctx, headpage, dst, &inputmargin,
++	src = z_erofs_lz4_handle_overlap(rq, headpage, dst, &inputmargin,
+ 					 &maptype, may_inplace);
+ 	if (IS_ERR(src))
+ 		return PTR_ERR(src);
+@@ -258,7 +247,7 @@ static int z_erofs_lz4_decompress_mem(st
+ 	if (maptype == 0) {
+ 		kunmap_local(headpage);
+ 	} else if (maptype == 1) {
+-		vm_unmap_ram(src, ctx->inpages);
++		vm_unmap_ram(src, rq->inpages);
+ 	} else if (maptype == 2) {
+ 		z_erofs_put_gbuf(src);
+ 	} else if (maptype != 3) {
+@@ -271,54 +260,42 @@ static int z_erofs_lz4_decompress_mem(st
+ static int z_erofs_lz4_decompress(struct z_erofs_decompress_req *rq,
+ 				  struct page **pagepool)
+ {
+-	struct z_erofs_lz4_decompress_ctx ctx;
+ 	unsigned int dst_maptype;
+ 	void *dst;
+ 	int ret;
+ 
+-	ctx.rq = rq;
+-	ctx.oend = rq->pageofs_out + rq->outputsize;
+-	ctx.outpages = PAGE_ALIGN(ctx.oend) >> PAGE_SHIFT;
+-	ctx.inpages = PAGE_ALIGN(rq->inputsize) >> PAGE_SHIFT;
+-
+ 	/* one optimized fast path only for non bigpcluster cases yet */
+-	if (ctx.inpages == 1 && ctx.outpages == 1 && !rq->inplace_io) {
++	if (rq->inpages == 1 && rq->outpages == 1 && !rq->inplace_io) {
+ 		DBG_BUGON(!*rq->out);
+ 		dst = kmap_local_page(*rq->out);
+ 		dst_maptype = 0;
+-		goto dstmap_out;
+-	}
+-
+-	/* general decoding path which can be used for all cases */
+-	ret = z_erofs_lz4_prepare_dstpages(&ctx, pagepool);
+-	if (ret < 0) {
+-		return ret;
+-	} else if (ret > 0) {
+-		dst = page_address(*rq->out);
+-		dst_maptype = 1;
+ 	} else {
+-		dst = erofs_vm_map_ram(rq->out, ctx.outpages);
+-		if (!dst)
+-			return -ENOMEM;
+-		dst_maptype = 2;
++		/* general decoding path which can be used for all cases */
++		ret = z_erofs_lz4_prepare_dstpages(rq, pagepool);
++		if (ret < 0)
++			return ret;
++		if (ret > 0) {
++			dst = page_address(*rq->out);
++			dst_maptype = 1;
++		} else {
++			dst = erofs_vm_map_ram(rq->out, rq->outpages);
++			if (!dst)
++				return -ENOMEM;
++			dst_maptype = 2;
++		}
+ 	}
+-
+-dstmap_out:
+-	ret = z_erofs_lz4_decompress_mem(&ctx, dst);
++	ret = z_erofs_lz4_decompress_mem(rq, dst);
+ 	if (!dst_maptype)
+ 		kunmap_local(dst);
+ 	else if (dst_maptype == 2)
+-		vm_unmap_ram(dst, ctx.outpages);
++		vm_unmap_ram(dst, rq->outpages);
+ 	return ret;
+ }
+ 
+ static int z_erofs_transform_plain(struct z_erofs_decompress_req *rq,
+ 				   struct page **pagepool)
+ {
+-	const unsigned int nrpages_in =
+-		PAGE_ALIGN(rq->pageofs_in + rq->inputsize) >> PAGE_SHIFT;
+-	const unsigned int nrpages_out =
+-		PAGE_ALIGN(rq->pageofs_out + rq->outputsize) >> PAGE_SHIFT;
++	const unsigned int nrpages_in = rq->inpages, nrpages_out = rq->outpages;
+ 	const unsigned int bs = rq->sb->s_blocksize;
+ 	unsigned int cur = 0, ni = 0, no, pi, po, insz, cnt;
+ 	u8 *kin;
+@@ -376,7 +353,7 @@ int z_erofs_stream_switch_bufs(struct z_
+ 	unsigned int j;
+ 
+ 	if (!dctx->avail_out) {
+-		if (++dctx->no >= dctx->outpages || !rq->outputsize) {
++		if (++dctx->no >= rq->outpages || !rq->outputsize) {
+ 			erofs_err(sb, "insufficient space for decompressed data");
+ 			return -EFSCORRUPTED;
+ 		}
+@@ -404,7 +381,7 @@ int z_erofs_stream_switch_bufs(struct z_
+ 	}
+ 
+ 	if (dctx->inbuf_pos == dctx->inbuf_sz && rq->inputsize) {
+-		if (++dctx->ni >= dctx->inpages) {
++		if (++dctx->ni >= rq->inpages) {
+ 			erofs_err(sb, "invalid compressed data");
+ 			return -EFSCORRUPTED;
+ 		}
+@@ -437,7 +414,7 @@ int z_erofs_stream_switch_bufs(struct z_
+ 		dctx->bounced = true;
+ 	}
+ 
+-	for (j = dctx->ni + 1; j < dctx->inpages; ++j) {
++	for (j = dctx->ni + 1; j < rq->inpages; ++j) {
+ 		if (rq->out[dctx->no] != rq->in[j])
+ 			continue;
+ 		tmppage = erofs_allocpage(pgpl, rq->gfp);
+--- a/fs/erofs/decompressor_deflate.c
++++ b/fs/erofs/decompressor_deflate.c
+@@ -101,13 +101,7 @@ static int z_erofs_deflate_decompress(st
+ 				      struct page **pgpl)
+ {
+ 	struct super_block *sb = rq->sb;
+-	struct z_erofs_stream_dctx dctx = {
+-		.rq = rq,
+-		.inpages = PAGE_ALIGN(rq->inputsize) >> PAGE_SHIFT,
+-		.outpages = PAGE_ALIGN(rq->pageofs_out + rq->outputsize)
+-				>> PAGE_SHIFT,
+-		.no = -1, .ni = 0,
+-	};
++	struct z_erofs_stream_dctx dctx = { .rq = rq, .no = -1, .ni = 0 };
+ 	struct z_erofs_deflate *strm;
+ 	int zerr, err;
+ 
+--- a/fs/erofs/decompressor_lzma.c
++++ b/fs/erofs/decompressor_lzma.c
+@@ -150,13 +150,7 @@ static int z_erofs_lzma_decompress(struc
+ 				   struct page **pgpl)
+ {
+ 	struct super_block *sb = rq->sb;
+-	struct z_erofs_stream_dctx dctx = {
+-		.rq = rq,
+-		.inpages = PAGE_ALIGN(rq->inputsize) >> PAGE_SHIFT,
+-		.outpages = PAGE_ALIGN(rq->pageofs_out + rq->outputsize)
+-				>> PAGE_SHIFT,
+-		.no = -1, .ni = 0,
+-	};
++	struct z_erofs_stream_dctx dctx = { .rq = rq, .no = -1, .ni = 0 };
+ 	struct xz_buf buf = {};
+ 	struct z_erofs_lzma *strm;
+ 	enum xz_ret xz_err;
+--- a/fs/erofs/decompressor_zstd.c
++++ b/fs/erofs/decompressor_zstd.c
+@@ -139,13 +139,7 @@ static int z_erofs_zstd_decompress(struc
+ 				   struct page **pgpl)
+ {
+ 	struct super_block *sb = rq->sb;
+-	struct z_erofs_stream_dctx dctx = {
+-		.rq = rq,
+-		.inpages = PAGE_ALIGN(rq->inputsize) >> PAGE_SHIFT,
+-		.outpages = PAGE_ALIGN(rq->pageofs_out + rq->outputsize)
+-				>> PAGE_SHIFT,
+-		.no = -1, .ni = 0,
+-	};
++	struct z_erofs_stream_dctx dctx = { .rq = rq, .no = -1, .ni = 0 };
+ 	zstd_in_buffer in_buf = { NULL, 0, 0 };
+ 	zstd_out_buffer out_buf = { NULL, 0, 0 };
+ 	struct z_erofs_zstd *strm;
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1292,6 +1292,8 @@ static int z_erofs_decompress_pcluster(s
+ 					.sb = be->sb,
+ 					.in = be->compressed_pages,
+ 					.out = be->decompressed_pages,
++					.inpages = pclusterpages,
++					.outpages = be->nr_pages,
+ 					.pageofs_in = pcl->pageofs_in,
+ 					.pageofs_out = pcl->pageofs_out,
+ 					.inputsize = pcl->pclustersize,
 
 
