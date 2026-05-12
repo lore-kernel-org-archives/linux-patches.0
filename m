@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBC43EDE41;
-	Tue, 12 May 2026 17:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43243EDE41;
+	Tue, 12 May 2026 17:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608598; cv=none; b=VS7Gvrf90A7iUQ5ztgDtim2ZdffZWeP3+WF5mZt7q89p5W4sXoJssb4rgyLpZtltFaRkCcIGqH62ED7LGhUIouQ2jv7E8ULOO/K7mGsuHvydIqLdfpqF1m58/M528agQvDznHxxV8jLA7kf/5YXcudNp3WOcTT7chgZDqHnMhns=
+	t=1778608600; cv=none; b=m32tU6SElMliEwMpuYmR03Hjkwfjkwps6jR/FKAFI9J0GhjXpLYGiP+9M8vSrJ1MYsk5QanpFFZytWdQebYSAXWPkax2rmJALYU5Hq2VZBGof6JK6KeScvu6wERiZxvKj6IEvaQwtMUvZ1IQlzdeFMtnsZP4EhPeg4xnSH8RlHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608598; c=relaxed/simple;
-	bh=MGcbVKOZLbjKRze1FCAT3wHRkJpYFC06AfXMb8/xTGE=;
+	s=arc-20240116; t=1778608600; c=relaxed/simple;
+	bh=qcH6nmXS8EEy+E44lmVRQji33Hndw2AAY5ZU9qx8+DM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ftmi/zF2y6IO9F1lVtYHI/uAmf+SsHjgCxtaCehwg5+s7Z8xGYykuj/bi8jL2KANmxaihojbifLFmzE2kPTuQ11HmLLScFrUjRzrYan2LSCmBYSSyqWm4TPlvzFU5g4ibxafM7dz3jiUlprRWjWswqosrMRXfBXvT5gXGaIDF10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpaJ5Dk5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y65kiPHlyfFXxYxZtHLRVDwXrku9gzT8CvTi92T8R+zoSm4D0zHA+QACYfF32Wb+ToEEzOj2J2sWjA2xcWq/C31jJVAXQKKDWMFQvYYzEKb/W2Gf6gYMFQPUJTALt8Me/vjuJwNMnwqvMTiPbR/azs/hBXX91GK/Q+jPXkuWHLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCkG8PSc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpaJ5Dk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5481EC2BCB0;
-	Tue, 12 May 2026 17:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCkG8PSc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30791C2BCC7;
+	Tue, 12 May 2026 17:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608597;
-	bh=MGcbVKOZLbjKRze1FCAT3wHRkJpYFC06AfXMb8/xTGE=;
+	s=korg; t=1778608600;
+	bh=qcH6nmXS8EEy+E44lmVRQji33Hndw2AAY5ZU9qx8+DM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpaJ5Dk5Y3bInf9/6zGGiz5y3bGuChfZS9+u9tSaDvIbNceYe7OVOa3uvyqtyHxJ0
-	 B4AsOp7bzIR3W/+rjg+pLuvUwvNrSfXTlWhG6+rlnzzKakgW/WkD5LydSw8snCXNLz
-	 dyl482YzWZftDGXqhf045f/xVObHUtZ479MGahSM=
+	b=oCkG8PSc8VcjWdadol5mBYaWladzS7MwDahtEF/MDMYJ7cWq7FWhP8iSp+jfG4CNv
+	 dBOE5TSxVhKsxI4OVuotNoTz/5qEOtak4SbthgX2Rh3UQqGKb+0f4zggUuvT8a+mNn
+	 KlugIY0P20HWDSl5TjKyYKQru754hHl+L2qvmLJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommaso Soncin <soncintommaso@gmail.com>,
+	Li Jian <lazycat-xiao@foxmail.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 141/270] ASoC: amd: yc: Add HP OMEN Gaming Laptop 16-ap0xxx product line in quirk table
-Date: Tue, 12 May 2026 19:39:02 +0200
-Message-ID: <20260512173941.420098347@linuxfoundation.org>
+Subject: [PATCH 6.18 142/270] ASoC: ES8389: convert to devm_clk_get_optional() to get clock
+Date: Tue, 12 May 2026 19:39:03 +0200
+Message-ID: <20260512173941.440081529@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,51 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommaso Soncin <soncintommaso@gmail.com>
+From: Li Jian <lazycat-xiao@foxmail.com>
 
-commit d63c219b7ff39f897da10c160a2edef76320f16c upstream.
+commit 8ed3311131077712cdd0b3afec6909b9388ad3e4 upstream.
 
-Add a DMI quirk for the HP OMEN Gaming Laptop 16-ap0xxx line fixing the
-issue where the internal microphone was not detected.
+When enabling ES8390 via ACPI description, es8389 would fail to
+obtain a clock source, causing the driver to fail to initialize.
+This was not an issue with older kernels, but since commit
+abae8e57e49a ("clk: generalize devm_clk_get() a bit"),
+devm_clk_get() would return an error pointer when a clock source
+was not detected (instead of falling back to a static clock),
+causing the driver to fail early.
+
+Use devm_clk_get_optional() instead to return to the previous
+behaviour, allowing the use of a static clock source.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Tommaso Soncin <soncintommaso@gmail.com>
-Link: https://patch.msgid.link/20260429160858.538986-1-soncintommaso@gmail.com
+Signed-off-by: Li Jian <lazycat-xiao@foxmail.com>
+Link: https://patch.msgid.link/tencent_7C78374FB9F4B3A37101E5C719715D8BC40A@qq.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ sound/soc/codecs/es8389.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -55,6 +55,13 @@ static const struct dmi_system_id yc_acp
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN Gaming Laptop 16-ap0xxx"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "Dell Inc."),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Dell G15 5525"),
- 		}
-@@ -655,6 +662,13 @@ static const struct dmi_system_id yc_acp
- 		}
- 	},
- 	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_BOARD_NAME, "8E35"),
-+		}
-+	},
-+	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "MECHREVO"),
+--- a/sound/soc/codecs/es8389.c
++++ b/sound/soc/codecs/es8389.c
+@@ -827,7 +827,7 @@ static int es8389_probe(struct snd_soc_c
+ 		es8389->mclk_src = ES8389_MCLK_SOURCE;
+ 	}
+ 
+-	es8389->mclk = devm_clk_get(component->dev, "mclk");
++	es8389->mclk = devm_clk_get_optional(component->dev, "mclk");
+ 	if (IS_ERR(es8389->mclk))
+ 		return dev_err_probe(component->dev, PTR_ERR(es8389->mclk),
+ 			"ES8389 is unable to get mclk\n");
 
 
