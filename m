@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6813EDE59;
-	Tue, 12 May 2026 18:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113E33EDE5D;
+	Tue, 12 May 2026 18:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609028; cv=none; b=OROgoJfsf8YD5nRmDaS0B6x9FUWthFK2ah56eCIJClfVYOFJ5A0MO7h6lgXLunq4MeLnzJJ1MyFASICHcTf7d8E64mcz7uo3bd9TADAtenRawOMx751rt8rAT7tShNL5Bu64CTN9QEikBgwWxCFVHdIWkNHPI+/v9Ph9+oNR6DA=
+	t=1778609031; cv=none; b=n9kdo5QcmZ7fVYoy+gHV01CkMRAQqeDJ/Bpd2DR5FpWRfZrnPllAODOYrjGmz2x37qs/a43FKj6DuFDpQyrHDFU5eUBkdP6V92fJfHsMNmbfD/UAgBH4Vft0ftC+HQjddbEm+yQlHTnoMkuDf+6woe9qXvY5C3o54TBwGpQmMgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609028; c=relaxed/simple;
-	bh=c1l6JyEkaiQbPNIVQdR6DS9eoLnZ/n6oaYjdORhJ6Jk=;
+	s=arc-20240116; t=1778609031; c=relaxed/simple;
+	bh=5N7DWDH+yHSBG3qJ7LR+Mp9E4PkjolhIMWhGuyOEVc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r7rhSbTb5bxGr9iWmvnfwXd9l47VUxvOQXaQbYNnEPT45LYGuzW8vI3kvpLRrHueve0esvB27Z3zZg1gb7p4/TNmJIy6kweh9TOVELZXDQ95n7YI2EylThaBEvvPCyZCqbNC93FLJZZXc7mQlP7Pv8OPFxZQdqPhY7M6oDqr8o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqEbTaT5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UH0yRXmWw8DJ4bKz8yl5l1gywguYfDT/lm+IlQz91SemzrbP8wCamzzDm+N2g/sJ0Lui0AeAhAUKH6606p+wNUx4vLpp9RVd+3It/wWdxn2HPyZvdyVE5iSZv3l9SL+6jYM5oJ3uf6oGXjLYdexRg2iHW0OKfHrtRUQtWbn1Lgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XA0bImZL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqEbTaT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3A2C2BCB0;
-	Tue, 12 May 2026 18:03:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XA0bImZL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98267C2BCB0;
+	Tue, 12 May 2026 18:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609028;
-	bh=c1l6JyEkaiQbPNIVQdR6DS9eoLnZ/n6oaYjdORhJ6Jk=;
+	s=korg; t=1778609030;
+	bh=5N7DWDH+yHSBG3qJ7LR+Mp9E4PkjolhIMWhGuyOEVc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PqEbTaT5vz2SJcvC9e//n93GDLbiOzvMT8Bm/ixcuiztgn3XLHHqGFuCg0mmJ9/da
-	 i3aOXOYnevsP1qSMt2X47sULAR6TMXqZQF8eTH8QI0ENyPERXK9pPxuXjiKpxSXra8
-	 K+C8eI6P/9ilfSqph5g2aqDsaTQUPmq4R5BTD/os=
+	b=XA0bImZL8DxBm5+kcVfrHuS/y7r5ThtdTn3TgFg448lAivmL7kKa4GTe8hMBErDd0
+	 oSiNMYdtAi+CHj0dGpkOGgQc11scttHIooh8s8ecFGy+rmnHD1wGnWXft2CZaYh2jJ
+	 UN5KMdapaIpUljPibwDFs3niUNS3g43UwxFBBCQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 038/307] ALSA: usb-audio: Fix UAC3 cluster descriptor size check
-Date: Tue, 12 May 2026 19:37:13 +0200
-Message-ID: <20260512173940.929359639@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Pritam Manohar Sutar <pritam.sutar@samsung.com>,
+	Selvarasu Ganesan <selvarasu.g@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 7.0 039/307] usb: dwc3: Move GUID programming after PHY initialization
+Date: Tue, 12 May 2026 19:37:14 +0200
+Message-ID: <20260512173940.949720990@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -44,50 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Selvarasu Ganesan <selvarasu.g@samsung.com>
 
-commit 26265dd69da32d88a88d21987853cec899d9e21f upstream.
+commit aad35f9c926ec220b0742af1ada45666ae667956 upstream.
 
-The UAC3 cluster descriptor length check in
-snd_usb_get_audioformat_uac3()was added to
-make sure that the buffer is large enough for
-a struct uac3_cluster_header_descriptor before the
-returned data is cast and used.
+The Linux Version Code is currently written to the GUID register before
+PHY initialization. Certain PHY implementations (such as Synopsys eUSB
+PHY performing link_sw_reset) clear the GUID register to its default
+value during initialization, causing the kernel version information to
+be lost.
 
-However, the check uses sizeof(cluster), where cluster
-is a pointer, not the size of the descriptor header.
-This makes the validation depend on the architecture
-pointer size and does not match the intended object size.
+Move the GUID register programming to occur after PHY initialization
+completes to ensure the Linux version information persists.
 
-Check against sizeof(*cluster) instead.
-
-Fixes: fb4e2a6e8f28 ("ALSA: usb-audio: Fix out-of-bounds read in snd_usb_get_audioformat_uac3()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260424-alsa-usb-uac3-cluster-size-v1-1-99a5808898a3@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: fa0ea13e9f1c ("usb: dwc3: core: write LINUX_VERSION_CODE to our GUID register")
+Cc: stable <stable@kernel.org>
+Reported-by: Pritam Manohar Sutar <pritam.sutar@samsung.com>
+Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260417063314.2359-1-selvarasu.g@samsung.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/stream.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/core.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -997,7 +997,7 @@ snd_usb_get_audioformat_uac3(struct snd_
- 	 * and request Cluster Descriptor
- 	 */
- 	wLength = le16_to_cpu(hc_header.wLength);
--	if (wLength < sizeof(cluster))
-+	if (wLength < sizeof(*cluster))
- 		return NULL;
- 	cluster = kzalloc(wLength, GFP_KERNEL);
- 	if (!cluster)
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1341,12 +1341,6 @@ int dwc3_core_init(struct dwc3 *dwc)
+ 
+ 	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
+ 
+-	/*
+-	 * Write Linux Version Code to our GUID register so it's easy to figure
+-	 * out which kernel version a bug was found.
+-	 */
+-	dwc3_writel(dwc, DWC3_GUID, LINUX_VERSION_CODE);
+-
+ 	ret = dwc3_phy_setup(dwc);
+ 	if (ret)
+ 		return ret;
+@@ -1378,6 +1372,12 @@ int dwc3_core_init(struct dwc3 *dwc)
+ 	if (ret)
+ 		goto err_exit_phy;
+ 
++	/*
++	 * Write Linux Version Code to our GUID register so it's easy to figure
++	 * out which kernel version a bug was found.
++	 */
++	dwc3_writel(dwc, DWC3_GUID, LINUX_VERSION_CODE);
++
+ 	dwc3_core_setup_global_control(dwc);
+ 	dwc3_core_num_eps(dwc);
+ 
 
 
