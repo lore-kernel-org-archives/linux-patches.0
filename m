@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDED328B77;
-	Tue, 12 May 2026 17:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6052EB5A6;
+	Tue, 12 May 2026 17:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608389; cv=none; b=oRNKGG77eNozZLpKIsOZSbuu73FhvYVM8G2ctW0nCOEwUavb1t1KZ7K0JQgwuYiyZfqeQEPVVS4QzthlqTDq5Q+ws9FOSJDQUx3fNIr2wuUKLVVB7/rvUsAOrTrqlUKuWYEI8aeFiY2AjPkUxCwpJyMWq3313M6f/lnc2Vy67Us=
+	t=1778608391; cv=none; b=lLkNt/M9sJMrXrNgrONqgWK4Kwcqz+iTBNz3EePU7CaeObFnIB/RM3FBs0mVBhufXX/sMA7Ci8unk7LoErSoSL4nup1m6VUX+PVRh1ksWXQzjEI9xoxbAu+6CEKtrKwXgvB+s65qwJQc0WMgPZu46LDtsJM9yv4kqUa5KcvQQYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608389; c=relaxed/simple;
-	bh=jH5IBB4hB9QpUoEs4bFcCMGYq2ttLxtk8oCjJxoVOGg=;
+	s=arc-20240116; t=1778608391; c=relaxed/simple;
+	bh=Nw4dpsvHqbwUjVKYT5UtrCa5lqMxkMZCXIXCfkVjcvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9hr6v02780inwUN6tZThRF/If92yRWp/2kwn5O4MaBWQj0FGpiVNx0WbKj1Ud8pCnYewuFdV6I39fzRWnj0qvrZJpOIuyVPX7ob3VB/kmC3aYTfPpdf6qVKjzj1ZDafgrRE0qmY6QbAkX+ndMp2whJdCsdmddg3ERArl2aBBz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjjKiwO7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oemeFK8SGk+JhRXafDbTj8W+gjMOiMzrkUUt0gnCBbci36MgH9I2Be4AoHf3w1FhSXjhpVEGrua1UFprTN7EQIJCLkkGegfhSJDrXbdlDhn5jQUjGeewGciXA6Th2ZOs2fv1vy6QW0wpLiiEK+tE7JY9zyC0Z13VJekMk1Nq8Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leF5i3Mk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjjKiwO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1619C2BCB0;
-	Tue, 12 May 2026 17:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leF5i3Mk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51980C2BCB0;
+	Tue, 12 May 2026 17:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608389;
-	bh=jH5IBB4hB9QpUoEs4bFcCMGYq2ttLxtk8oCjJxoVOGg=;
+	s=korg; t=1778608391;
+	bh=Nw4dpsvHqbwUjVKYT5UtrCa5lqMxkMZCXIXCfkVjcvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YjjKiwO7ybVZsjBbqUigV+NRyIwM2UIf8gkIcOiflSMqigSbfQzsLAjz4EpMKTwEK
-	 Kue3dNxCp4pVZt8C9B1BCOBhl5b9liS7l+crVQCz51iNLewJwcy+Kbk9xMaR0CkRl3
-	 5w3ShhrYCJ8wkdWUJ/IPQJxUUfwE5+aelxoR8lpg=
+	b=leF5i3MkWGyff1I3hoBwDTbp8E7u63BDmwQbKQM4rUM8WS9bQjQomYqedUed6Z4v0
+	 USBdgWXDLwU23Wrv0tUPg1XKtOGGuYLIEIlPSPdIDZlo5p2scCHkt7MwiwEQvzZFjT
+	 iA0y3KY9Hh1wd6fAGxkId5sdKS7v5yqFcnGVJ0bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.18 060/270] selinux: fix avdcache auditing
-Date: Tue, 12 May 2026 19:37:41 +0200
-Message-ID: <20260512173939.715505071@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Vincent Danjean <vdanjean@debian.org>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.18 034/270] wifi: ath5k: do not access array OOB
+Date: Tue, 12 May 2026 19:37:15 +0200
+Message-ID: <20260512173939.173655175@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
 References: <20260512173938.452574370@linuxfoundation.org>
@@ -50,113 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit f92d542577db878acfd21cc18dab23d03023b217 upstream.
+commit d748603f12baff112caa3ab7d39f50100f010dbd upstream.
 
-The per-task avdcache was incorrectly saving and reusing the
-audited vector computed by avc_audit_required() rather than
-recomputing based on the currently requested permissions and
-distinguishing the denied versus allowed cases. As a result,
-some permission checks were not being audited, e.g.
-directory write checks after a previously cached directory
-search check.
+Vincent reports:
+> The ath5k driver seems to do an array-index-out-of-bounds access as
+> shown by the UBSAN kernel message:
+> UBSAN: array-index-out-of-bounds in drivers/net/wireless/ath/ath5k/base.c:1741:20
+> index 4 is out of range for type 'ieee80211_tx_rate [4]'
+> ...
+> Call Trace:
+>  <TASK>
+>  dump_stack_lvl+0x5d/0x80
+>  ubsan_epilogue+0x5/0x2b
+>  __ubsan_handle_out_of_bounds.cold+0x46/0x4b
+>  ath5k_tasklet_tx+0x4e0/0x560 [ath5k]
+>  tasklet_action_common+0xb5/0x1c0
 
+It is real. 'ts->ts_final_idx' can be 3 on 5212, so:
+   info->status.rates[ts->ts_final_idx + 1].idx = -1;
+with the array defined as:
+   struct ieee80211_tx_rate rates[IEEE80211_TX_MAX_RATES];
+while the size is:
+   #define IEEE80211_TX_MAX_RATES  4
+is indeed bogus.
+
+Set this 'idx = -1' sentinel only if the array index is less than the
+array size. As mac80211 will not look at rates beyond the size
+(IEEE80211_TX_MAX_RATES).
+
+Note: The effect of the OOB write is negligible. It just overwrites the
+next member of info->status, i.e. ack_signal.
+
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Reported-by: Vincent Danjean <vdanjean@debian.org>
+Link: https://lore.kernel.org/all/aQYUkIaT87ccDCin@eldamar.lan
+Closes: https://bugs.debian.org/1119093
+Fixes: 6d7b97b23e11 ("ath5k: fix tx status reporting issues")
 Cc: stable@vger.kernel.org
-Fixes: dde3a5d0f4dce ("selinux: move avdcache to per-task security struct")
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: line wrap tweaks]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20251209100459.2253198-1-jirislaby@kernel.org
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c          |   31 +++++++++++++------------------
- security/selinux/include/objsec.h |    4 +---
- 2 files changed, 14 insertions(+), 21 deletions(-)
+ drivers/net/wireless/ath/ath5k/base.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -3162,15 +3162,13 @@ static inline int task_avdcache_search(s
-  * @tsec: the task's security state
-  * @isec: the inode associated with the cache entry
-  * @avd: the AVD to cache
-- * @audited: the permission audit bitmask to cache
-  *
-- * Update the AVD cache in @tsec with the @avdc and @audited info associated
-+ * Update the AVD cache in @tsec with the @avd info associated
-  * with @isec.
-  */
- static inline void task_avdcache_update(struct task_security_struct *tsec,
- 					struct inode_security_struct *isec,
--					struct av_decision *avd,
--					u32 audited)
-+					struct av_decision *avd)
- {
- 	int spot;
- 
-@@ -3182,9 +3180,7 @@ static inline void task_avdcache_update(
- 	spot = (tsec->avdcache.dir_spot + 1) & (TSEC_AVDC_DIR_SIZE - 1);
- 	tsec->avdcache.dir_spot = spot;
- 	tsec->avdcache.dir[spot].isid = isec->sid;
--	tsec->avdcache.dir[spot].audited = audited;
--	tsec->avdcache.dir[spot].allowed = avd->allowed;
--	tsec->avdcache.dir[spot].permissive = avd->flags & AVD_FLAGS_PERMISSIVE;
-+	tsec->avdcache.dir[spot].avd = *avd;
- 	tsec->avdcache.permissive_neveraudit =
- 		(avd->flags == (AVD_FLAGS_PERMISSIVE|AVD_FLAGS_NEVERAUDIT));
- }
-@@ -3205,6 +3201,7 @@ static int selinux_inode_permission(stru
- 	struct task_security_struct *tsec;
- 	struct inode_security_struct *isec;
- 	struct avdc_entry *avdc;
-+	struct av_decision avd, *avdp = &avd;
- 	int rc, rc2;
- 	u32 audited, denied;
- 
-@@ -3226,23 +3223,21 @@ static int selinux_inode_permission(stru
- 	rc = task_avdcache_search(tsec, isec, &avdc);
- 	if (likely(!rc)) {
- 		/* Cache hit. */
--		audited = perms & avdc->audited;
--		denied = perms & ~avdc->allowed;
--		if (unlikely(denied && enforcing_enabled() &&
--			     !avdc->permissive))
-+		avdp = &avdc->avd;
-+		denied = perms & ~avdp->allowed;
-+		if (unlikely(denied) && enforcing_enabled() &&
-+			!(avdp->flags & AVD_FLAGS_PERMISSIVE))
- 			rc = -EACCES;
- 	} else {
--		struct av_decision avd;
--
- 		/* Cache miss. */
- 		rc = avc_has_perm_noaudit(sid, isec->sid, isec->sclass,
--					  perms, 0, &avd);
--		audited = avc_audit_required(perms, &avd, rc,
--			(requested & MAY_ACCESS) ? FILE__AUDIT_ACCESS : 0,
--			&denied);
--		task_avdcache_update(tsec, isec, &avd, audited);
-+					  perms, 0, avdp);
-+		task_avdcache_update(tsec, isec, avdp);
+--- a/drivers/net/wireless/ath/ath5k/base.c
++++ b/drivers/net/wireless/ath/ath5k/base.c
+@@ -1738,7 +1738,8 @@ ath5k_tx_frame_completed(struct ath5k_hw
  	}
  
-+	audited = avc_audit_required(perms, avdp, rc,
-+				     (requested & MAY_ACCESS) ?
-+				     FILE__AUDIT_ACCESS : 0, &denied);
- 	if (likely(!audited))
- 		return rc;
+ 	info->status.rates[ts->ts_final_idx].count = ts->ts_final_retry;
+-	info->status.rates[ts->ts_final_idx + 1].idx = -1;
++	if (ts->ts_final_idx + 1 < IEEE80211_TX_MAX_RATES)
++		info->status.rates[ts->ts_final_idx + 1].idx = -1;
  
---- a/security/selinux/include/objsec.h
-+++ b/security/selinux/include/objsec.h
-@@ -32,9 +32,7 @@
- 
- struct avdc_entry {
- 	u32 isid; /* inode SID */
--	u32 allowed; /* allowed permission bitmask */
--	u32 audited; /* audited permission bitmask */
--	bool permissive; /* AVC permissive flag */
-+	struct av_decision avd; /* av decision */
- };
- 
- struct cred_security_struct {
+ 	if (unlikely(ts->ts_status)) {
+ 		ah->stats.ack_fail++;
 
 
