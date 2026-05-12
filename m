@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE18B37F012;
-	Tue, 12 May 2026 18:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70536375AB1;
+	Tue, 12 May 2026 18:14:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778609671; cv=none; b=qqMwfEU86vUyHRhKgfmS8sy3ZivIPDPA9mr5ns6bQZzAzkY7SPB3jPVtPGJHaLdw2K5xP2/Me3LUUxy4r6YJgcSE/OEnxLDAR+Z/RJ/F79VU6qBjkbOIRHVnYV09bhmVT8/HmJU5IuaJDI4PKjbl/3IjKVKr33pLRBVIrdQae3E=
+	t=1778609674; cv=none; b=i5svxR2HpLgJoSU107i5fXTEJDW+X/Tn7gcNOdHvPxbv3MVEkWDq1fG1NwO9BeCN+T6BQSRHzSGgjA2MaXMSqrGG9jIo74x/XTx4N7a0vs+GtCqGbj1QQqwo6xKiitgfiWA4sqwjRwzqzLMu7jrzPxF8JzepYt5S0U2q+PpaKwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778609671; c=relaxed/simple;
-	bh=vJ8Pd+nZngrjR99dA9bl3KVZ859gAWgLki0NhCyIndg=;
+	s=arc-20240116; t=1778609674; c=relaxed/simple;
+	bh=nj5X58eI7LDAEiR1jocpfg5X8uLDj7HdBE4oqHXlXTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfZANtVRZ3k9rFaaQkfCFEyTP8GoRxK93QtEjlORuJaEuamDuM63f0eqQAfz+2B2I5XkApTIID/QIcRwmjloZRmThWHKlfbKXeRSn89ihgFSt5VZVjXoKMtd1LGCt3dfJD406AYELsyzuCwe0hRVpOoCui4KGkpN0rAWGxzrMl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIiYEaCv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eN6786ylIf3q5yfOowjQD6O7nGRSHzJnxeIyx/+aIMhuBLQ6WzvIRFk0vlmqOpSJ+SA/TGjVScGvfcG3NkgMBpPVGPlzzfJpZBIOjEGIR+HBQc8rA133GAk3sLswTKLEjv82Idn2Lui6sVQCFKX2JdG4DELPVGAKVxRzKzJUxv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIUHqfpH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIiYEaCv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676CFC2BCC7;
-	Tue, 12 May 2026 18:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIUHqfpH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DBEC2BCB0;
+	Tue, 12 May 2026 18:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778609671;
-	bh=vJ8Pd+nZngrjR99dA9bl3KVZ859gAWgLki0NhCyIndg=;
+	s=korg; t=1778609674;
+	bh=nj5X58eI7LDAEiR1jocpfg5X8uLDj7HdBE4oqHXlXTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIiYEaCvWH6JyZGkakHafv7S5JBVJg1x+R7dVYyHb7LP6thaWbA5N1jZzApkjIOaP
-	 eGInRZnWp0nWD872jSdkay0s1aoDneIiZlT9LKOx2FFuzHRB180RdLlqHIFDlsbnGN
-	 32CDoApFowFSRodDQMKLQg7AqIov+IC9V2dJ2BQ0=
+	b=rIUHqfpH7QKivRh23OEsRGK/MNZap7PUgJ2FbbGIWyMN1pnNmTliCUM5CQW+Dqc0T
+	 6pRaiPj3rtS4tZPMnYNt+PPTcZbM0a1hxILRr6t71vCmIYnfYQBsf49mHPIQ2EkQTe
+	 nIFw789rxD9rDPOFSvp2VZeUPruUnX2NrSBMn0/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Qiang Ma <maqianga@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.0 285/307] LoongArch: KVM: Cap KVM_CAP_NR_VCPUS by KVM_CAP_MAX_VCPUS
-Date: Tue, 12 May 2026 19:41:20 +0200
-Message-ID: <20260512173946.140559613@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 250/307] selftests: mptcp: pm: restrict unknown check to pm_nl_ctl
+Date: Tue, 12 May 2026 19:40:45 +0200
+Message-ID: <20260512173945.402817623@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
 References: <20260512173940.117428952@linuxfoundation.org>
@@ -51,35 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit b3e31a6650d4cab63f0814c37c0b360372c6ee9e upstream.
+commit 53705ddfa18408f8e1f064331b6387509fa19f7f upstream.
 
-It doesn't make sense to return the recommended maximum number of vCPUs
-which exceeds the maximum possible number of vCPUs.
+When pm_netlink.sh is executed with '-i', 'ip mptcp' is used instead of
+'pm_nl_ctl'. IPRoute2 doesn't support the 'unknown' flag, which has only
+been added to 'pm_nl_ctl' for this specific check: to ensure that the
+kernel ignores such unsupported flag.
 
-Other architectures have already done this, such as commit 57a2e13ebdda
-("KVM: MIPS: Cap KVM_CAP_NR_VCPUS by KVM_CAP_MAX_VCPUS")
+No reason to add this flag to 'ip mptcp'. Then, this check should be
+skipped when 'ip mptcp' is used.
 
+Fixes: 0cef6fcac24d ("selftests: mptcp: ip_mptcp option for more scripts")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-11-fca8091060a4@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/vm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/pm_netlink.sh |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/arch/loongarch/kvm/vm.c
-+++ b/arch/loongarch/kvm/vm.c
-@@ -125,7 +125,7 @@ int kvm_vm_ioctl_check_extension(struct
- 		r = 1;
- 		break;
- 	case KVM_CAP_NR_VCPUS:
--		r = num_online_cpus();
-+		r = min_t(unsigned int, num_online_cpus(), KVM_MAX_VCPUS);
- 		break;
- 	case KVM_CAP_MAX_VCPUS:
- 		r = KVM_MAX_VCPUS;
+--- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
++++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
+@@ -194,9 +194,13 @@ check "show_endpoints" \
+ flush_endpoint
+ check "show_endpoints" "" "flush addrs"
+ 
+-add_endpoint 10.0.1.1 flags unknown
+-check "show_endpoints" "$(format_endpoints "1,10.0.1.1")" "ignore unknown flags"
+-flush_endpoint
++# "unknown" flag is only supported by pm_nl_ctl
++if ! mptcp_lib_is_ip_mptcp; then
++	add_endpoint 10.0.1.1 flags unknown
++	check "show_endpoints" "$(format_endpoints "1,10.0.1.1")" \
++	      "ignore unknown flags"
++	flush_endpoint
++fi
+ 
+ set_limits 9 1 2>/dev/null
+ check "get_limits" "${default_limits}" "rcv addrs above hard limit"
 
 
