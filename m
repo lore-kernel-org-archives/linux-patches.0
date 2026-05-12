@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F0D3955CD;
-	Tue, 12 May 2026 17:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51B53BB12D;
+	Tue, 12 May 2026 17:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778608232; cv=none; b=JcNgU2p6/hzwnm5ORtFukuXR8fVbkL1vWupH3VXvbCKAwlZ9AOalwew4nHqUhup2YjaxoLUSVUe9wPfNo55Z0LJqm5JpeXuKlL6Es7YjjssahWwlkY7QjkEwty66tlYxvOySMl3lm35fTPtL0QnafJK6egvlVXsa7mY+KLq9/Ro=
+	t=1778608234; cv=none; b=ozEyIXBI/SKpQiMQzzNuCGryjC0j5EswAoK3bgiO1TPc54LjJngD3Ktrmx36QUL0q92dZxEFkLzfUDt7eZ7gZXgXQUPlDg+jzahTf+ZzUeiWQZyA9izocxfIfPZSBjzmwCFIr9rXyzD3HYW7N+OBfxuB7Zr16wPoWxSONnUl1WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778608232; c=relaxed/simple;
-	bh=AR3oFoX8ntuCTaEPjg61TTaGpYnPXd5zSaNAK7ml2I0=;
+	s=arc-20240116; t=1778608234; c=relaxed/simple;
+	bh=vzA2tKibxGRLAqv8nWmIsw+Qn3cHh5PodtyPOlC+LqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ikR+YEglrn6GBTvvrr7EMdMGWhmfpax2JlXwf8JkttTILvBwAyRDdvy0waoACb6cvyHk8vYyHFO8CYMnzz9n92A3mXWPE4fD0M36skk28vujr/+Q2JSYXDAFw6g6eO8X6yUERdBF5caBHfW8KEX0crVRKRRk6SSUUyWR+hZMrOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wdj+0DrE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=r7xiGHgBeftzBo3stbp+1cwbwFS0woYy5iSRxzWdWhnfhQgBCxZddldcwwPdAQR+3CnbwMUUe4goRvM1/gb++DOP30KSjXEmX/8rJsXNR3LnouV6bRm+Fqm3PbyY1+laPgjTifY8LovX48m3LgpP/8t9GM/9wErPKG1KUWk5yeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzZIridH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wdj+0DrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DC3C2BCC7;
-	Tue, 12 May 2026 17:50:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzZIridH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD2DC2BCB0;
+	Tue, 12 May 2026 17:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778608232;
-	bh=AR3oFoX8ntuCTaEPjg61TTaGpYnPXd5zSaNAK7ml2I0=;
+	s=korg; t=1778608234;
+	bh=vzA2tKibxGRLAqv8nWmIsw+Qn3cHh5PodtyPOlC+LqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wdj+0DrEY5pT9WNE00iOB9cczvAbp0ulxTrFLkf/TOJZa6S8y/abXF4ShFynUm4uq
-	 W0c5hpXcAKk8waoiczjRlUAO9zF2gMu5I86+w+gQBxKaN6GuWOp+jRZj1VhBJ4MH7l
-	 6v0MWc/RJKV1lKEM4WRUTUgQbyFpZ/c0aKHI10NU=
+	b=mzZIridHuqD8XmUDLfBCxOQ7A00/DAJyFv0I7z0xQKy9OkHyvGn3Fotzru02XeeXS
+	 QEbfkuqkUZezze86kpDEtug0Ii5ZkJZcaSwY/ai+6oQJvKn8iJX2EZvfq48hinK/Q+
+	 Lvw0DKmmABPvgIe7Zio+I68SKcZAvF3GbUEnRDHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot+8fa95c41eafbc9d2ff6f@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 197/206] crypto: caam - guard HMAC key hex dumps in hash_digest_key
-Date: Tue, 12 May 2026 19:40:49 +0200
-Message-ID: <20260512173937.045668403@linuxfoundation.org>
+Subject: [PATCH 6.12 198/206] ALSA: aloop: Fix peer runtime UAF during format-change stop
+Date: Tue, 12 May 2026 19:40:50 +0200
+Message-ID: <20260512173937.067135915@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260512173932.810559588@linuxfoundation.org>
 References: <20260512173932.810559588@linuxfoundation.org>
@@ -45,71 +47,135 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 177730a273b18e195263ed953853273e901b5064 ]
+[ Upstream commit e5c33cdc6f402eab8abd36ecf436b22c9d3a8aff ]
 
-Use print_hex_dump_devel() for dumping sensitive HMAC key bytes in
-hash_digest_key() to avoid leaking secrets at runtime when
-CONFIG_DYNAMIC_DEBUG is enabled.
+loopback_check_format() may stop the capture side when playback starts
+with parameters that no longer match a running capture stream. Commit
+826af7fa62e3 ("ALSA: aloop: Fix racy access at PCM trigger") moved
+the peer lookup under cable->lock, but the actual snd_pcm_stop() still
+runs after dropping that lock.
 
-Fixes: 045e36780f11 ("crypto: caam - ahash hmac support")
-Fixes: 3f16f6c9d632 ("crypto: caam/qi2 - add support for ahash algorithms")
+A concurrent close can clear the capture entry from cable->streams[] and
+detach or free its runtime while the playback trigger path still holds a
+stale peer substream pointer.
+
+Keep a per-cable count of in-flight peer stops before dropping
+cable->lock, and make free_cable() wait for those stops before
+detaching the runtime. This preserves the existing behavior while
+making the peer runtime lifetime explicit.
+
+Reported-by: syzbot+8fa95c41eafbc9d2ff6f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8fa95c41eafbc9d2ff6f
+Fixes: 597603d615d2 ("ALSA: introduce the snd-aloop module for the PCM loopback")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Suggested-by: Takashi Iwai <tiwai@suse.com>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260424-alsa-aloop-peer-stop-uaf-v2-1-94e68101db8a@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ used scoped_guard(spinlock_irq) instead of guard(spinlock_irq) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/caam/caamalg_qi2.c |    4 ++--
- drivers/crypto/caam/caamhash.c    |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ sound/drivers/aloop.c |   44 ++++++++++++++++++++++++++++++--------------
+ 1 file changed, 30 insertions(+), 14 deletions(-)
 
---- a/drivers/crypto/caam/caamalg_qi2.c
-+++ b/drivers/crypto/caam/caamalg_qi2.c
-@@ -3268,7 +3268,7 @@ static int hash_digest_key(struct caam_h
- 	dpaa2_fl_set_addr(out_fle, key_dma);
- 	dpaa2_fl_set_len(out_fle, digestsize);
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -98,6 +98,9 @@ struct loopback_ops {
+ struct loopback_cable {
+ 	spinlock_t lock;
+ 	struct loopback_pcm *streams[2];
++	/* in-flight peer stops running outside cable->lock */
++	atomic_t stop_count;
++	wait_queue_head_t stop_wait;
+ 	struct snd_pcm_hardware hw;
+ 	/* flags */
+ 	unsigned int valid;
+@@ -365,8 +368,11 @@ static int loopback_check_format(struct
+ 				return 0;
+ 			if (stream == SNDRV_PCM_STREAM_CAPTURE)
+ 				return -EIO;
+-			else if (cruntime->state == SNDRV_PCM_STATE_RUNNING)
++			else if (cruntime->state == SNDRV_PCM_STATE_RUNNING) {
++				/* close must not free the peer runtime below */
++				atomic_inc(&cable->stop_count);
+ 				stop_capture = true;
++			}
+ 		}
  
--	print_hex_dump_debug("key_in@" __stringify(__LINE__)": ",
-+	print_hex_dump_devel("key_in@" __stringify(__LINE__)": ",
- 			     DUMP_PREFIX_ADDRESS, 16, 4, key, *keylen, 1);
- 	print_hex_dump_debug("shdesc@" __stringify(__LINE__)": ",
- 			     DUMP_PREFIX_ADDRESS, 16, 4, desc, desc_bytes(desc),
-@@ -3288,7 +3288,7 @@ static int hash_digest_key(struct caam_h
- 		/* in progress */
- 		wait_for_completion(&result.completion);
- 		ret = result.err;
--		print_hex_dump_debug("digested key@" __stringify(__LINE__)": ",
-+		print_hex_dump_devel("digested key@" __stringify(__LINE__)": ",
- 				     DUMP_PREFIX_ADDRESS, 16, 4, key,
- 				     digestsize, 1);
+ 		setup = get_setup(dpcm_play);
+@@ -395,8 +401,11 @@ static int loopback_check_format(struct
+ 		}
  	}
---- a/drivers/crypto/caam/caamhash.c
-+++ b/drivers/crypto/caam/caamhash.c
-@@ -393,7 +393,7 @@ static int hash_digest_key(struct caam_h
- 	append_seq_store(desc, digestsize, LDST_CLASS_2_CCB |
- 			 LDST_SRCDST_BYTE_CONTEXT);
  
--	print_hex_dump_debug("key_in@"__stringify(__LINE__)": ",
-+	print_hex_dump_devel("key_in@"__stringify(__LINE__)": ",
- 			     DUMP_PREFIX_ADDRESS, 16, 4, key, *keylen, 1);
- 	print_hex_dump_debug("jobdesc@"__stringify(__LINE__)": ",
- 			     DUMP_PREFIX_ADDRESS, 16, 4, desc, desc_bytes(desc),
-@@ -408,7 +408,7 @@ static int hash_digest_key(struct caam_h
- 		wait_for_completion(&result.completion);
- 		ret = result.err;
+-	if (stop_capture)
++	if (stop_capture) {
+ 		snd_pcm_stop(dpcm_capt->substream, SNDRV_PCM_STATE_DRAINING);
++		if (atomic_dec_and_test(&cable->stop_count))
++			wake_up(&cable->stop_wait);
++	}
  
--		print_hex_dump_debug("digested key@"__stringify(__LINE__)": ",
-+		print_hex_dump_devel("digested key@"__stringify(__LINE__)": ",
- 				     DUMP_PREFIX_ADDRESS, 16, 4, key,
- 				     digestsize, 1);
+ 	return 0;
+ }
+@@ -1050,24 +1059,29 @@ static void free_cable(struct snd_pcm_su
+ 	struct loopback *loopback = substream->private_data;
+ 	int dev = get_cable_index(substream);
+ 	struct loopback_cable *cable;
++	struct loopback_pcm *dpcm;
++	bool other_alive;
+ 
+ 	cable = loopback->cables[substream->number][dev];
+ 	if (!cable)
+ 		return;
+-	if (cable->streams[!substream->stream]) {
+-		/* other stream is still alive */
+-		spin_lock_irq(&cable->lock);
+-		cable->streams[substream->stream] = NULL;
+-		spin_unlock_irq(&cable->lock);
+-	} else {
+-		struct loopback_pcm *dpcm = substream->runtime->private_data;
+ 
+-		if (cable->ops && cable->ops->close_cable && dpcm)
+-			cable->ops->close_cable(dpcm);
+-		/* free the cable */
+-		loopback->cables[substream->number][dev] = NULL;
+-		kfree(cable);
++	scoped_guard(spinlock_irq, &cable->lock) {
++		cable->streams[substream->stream] = NULL;
++		other_alive = cable->streams[!substream->stream];
  	}
++
++	/* Pair with the stop_count increment in loopback_check_format(). */
++	wait_event(cable->stop_wait, !atomic_read(&cable->stop_count));
++	if (other_alive)
++		return;
++
++	dpcm = substream->runtime->private_data;
++	if (cable->ops && cable->ops->close_cable && dpcm)
++		cable->ops->close_cable(dpcm);
++	/* free the cable */
++	loopback->cables[substream->number][dev] = NULL;
++	kfree(cable);
+ }
+ 
+ static int loopback_jiffies_timer_open(struct loopback_pcm *dpcm)
+@@ -1264,6 +1278,8 @@ static int loopback_open(struct snd_pcm_
+ 			goto unlock;
+ 		}
+ 		spin_lock_init(&cable->lock);
++		atomic_set(&cable->stop_count, 0);
++		init_waitqueue_head(&cable->stop_wait);
+ 		cable->hw = loopback_pcm_hardware;
+ 		if (loopback->timer_source)
+ 			cable->ops = &loopback_snd_timer_ops;
 
 
