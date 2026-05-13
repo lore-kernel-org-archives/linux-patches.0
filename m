@@ -1,155 +1,128 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395753630A4;
-	Wed, 13 May 2026 04:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B1F369981
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 05:03:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778648400; cv=none; b=tYFjq1BPVJTG4OY96EgfT1D27MJ04oJKCvewAX7oDGAphAbudO2bMiMEHJMON+bFE+4Ror7dPBYfCke0ZMz0EnE5EJIKXdMStiSL7mvKvMJDlMwAQ3uiwHlT1wBtxMubG+RHDf3ESxL7KdH4V0o+nVsi20QOeUCaSMiaXTzprKQ=
+	t=1778648593; cv=none; b=p4Ox2VNgL93I70Yu9iOIDktQR++Wd24G94w7C1m2uSMjmoqdc+Igivj8+Zc9WbcfBL+jko/ZqtH0qJEkkjK7dDc8LtNbpyTjUJwvPZRF9Xpbqg4sXpjU4DXhtkfR25o48QU4oH1qn0ywoF8rnWj1Vq5mDrSYAIBWOLVFZqXH8F4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778648400; c=relaxed/simple;
-	bh=OcJJur5kBVC2vJOyBNxR6/x/CsmZAaJam6oljgn6EmI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RMJBw2jV6UKkq5w5A/tdFwu7zjuMhwqjfBk72aVOVRHu7ysUJSmFNepUmsZH1USKM1+k50xYwOOtxFvMMzOXzm+2Buy0JG0A/vHwKXhp7lfOPDD2Hju5K7cQmUs9MsAVptJNThUoSWsNPLiu8DvIub7y5Z9kEJTUFh31lbo8Fow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X04Su6Sg; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778648593; c=relaxed/simple;
+	bh=4gA3q7ciiRF0G7m7fxZ8P/NxjZ9s4UGA3W7/Enpq65Y=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=tRY/Qu4eIM2hvlx2NdLl6T5xbBMjwcOgivoGD4SZD3QF8jj0ZNX1FznRbOf6cAqk2vIsDefUoUqTRz0UA/h8ziGumKV2tIx6SOaqnsbWrMVXQUmzomgHK9asJiMPLhkEzDQxXGDTOBp0RcI9d4tzl9E3OZLGyUtmq54ygtQ/9Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=l29Llnwh; arc=none smtp.client-ip=54.204.34.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X04Su6Sg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CBDC2BCB7;
-	Wed, 13 May 2026 04:59:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778648399;
-	bh=OcJJur5kBVC2vJOyBNxR6/x/CsmZAaJam6oljgn6EmI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=X04Su6Sgc1dbaeIKVYmHwgNYmIZEqHsSPsCyhWnXDOgVmZSEmCJFofKHfkXrQxA7U
-	 ib34zXgWBvDhi2nVrK+YXGIBQ4b+iQ4scMqCA9W4R95iX16ZJMEIAEmoGtksqnmPFu
-	 RFIsk+qnYvWAoT73D95GQ8MCwvUOnxVqPhR1ppAnEvoTwYNfVOyGZiPGdapwbxsVF5
-	 ZU8qxn3FYsQNbYDatXV1aaylNPefLZ4JaSBGapHQGKjvaZsh8BkNCecWGPhkbiTdQG
-	 LNjlXJQK+XILyuxydSe8GdyxjJARiBr98l2uQxplpFTHhI3RxvMTomjwPeXDoV/S+Y
-	 SICHl7EKxOPEQ==
-Message-ID: <2f509cbf-f14f-4dfc-8ba9-d53dc10e0aad@kernel.org>
-Date: Wed, 13 May 2026 06:59:56 +0200
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="l29Llnwh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1778648564;
+	bh=js7vJo7lJk8HTu2JKoIX7l/r+93jcMtNo+BV2oKjclw=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version;
+	b=l29Llnwh/XgnxIvyU86QrY/wDozqW3kHdXu/Q/EY9m4AFBp9GUtsWD3cGu+TCtPSr
+	 hiHUz9pMynHNAkLbb7pZqf3BeF6Z6h5Q2UqRwgk7L+E3bx1gJhDDQ7hOzX+4EL4vA5
+	 1WrTuUdhk8LKaGJtdyIafrwvc2xpdisi9jmUApXA=
+X-QQ-mid: zesmtpip3t1778648558t25114775
+X-QQ-Originating-IP: zR/qqHym9rnNIT9raZXIYsiMwad9BsQ+qo3BlBg3P60=
+Received: from localhost.localdomain ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 13 May 2026 13:02:35 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 17889130103613528545
+EX-QQ-RecipientCnt: 21
+From: Wentao Guan <guanwentao@uniontech.com>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@nabladev.com,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Wentao Guan <guanwentao@uniontech.com>
+Subject: Re: [PATCH 6.18 000/270] 6.18.30-rc1 review 
+Date: Wed, 13 May 2026 13:01:15 +0800
+Message-Id: <20260513050115.290871-1-guanwentao@uniontech.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
+References: <20260512173938.452574370@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.0 247/307] sched_ext: Skip tasks with stale task_rq in
- bypass_lb_cpu()
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Chris Mason <clm@meta.com>,
- Tejun Heo <tj@kernel.org>, Andrea Righi <arighi@nvidia.com>
-References: <20260512173940.117428952@linuxfoundation.org>
- <20260512173945.338221208@linuxfoundation.org>
-Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- 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
-In-Reply-To: <20260512173945.338221208@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: OASTJNHpK0Kvsci50tkOY3edaVcn9lzop+iibm0bvlTXMJXLxZkrwSxc
+	M11Df2SgmMWALQ+qzWgKS04t+XIk8XKVQ2zRxsuKzqaGJuzyr3ur3Tc7gCgqbZC+GuoG9vS
+	TPXlTV/+03Z6C6XjWNdv6c5ai3dWOS+/ht4cJuRVUwrJhfJ2h4CkiBOMSgVqTBF4BqfB9fs
+	ZXIPTfdVm4mFfYkHv8XTMYe/nK7poXTVYYVpfPWJr4HG1JI0HcgthNlT9CYGIzvuY5Rstoy
+	UNIceAFyCkHqwQdVoi/NxMFzXNgOiF+WKISTc0aT+qw1Gh9TpA3C++UtMPhdqRLWOBodtgB
+	XLKAqBtGY89Hn3n7P/cHrTSfnSMggiHz6k8n8zy30G/RZtiMoFcc1KZsF6SPq7ClgektZ/c
+	ehRDsI6JsVr8CtC5m5blY2J0V23ufSoeIpobg/I40I4FTZe99cdUIVaioFfzMypImBG/wHa
+	H2GcaY6PxLb/9hIss+wF/+nGuhUWCIQG+GQhDDnWKGm4TGj2Krl53CGJo91kOcWLmlG+v6g
+	e59qla3OlVIYPvfcpSn881wL3G39vnWYhhoH1qHlP6C0eDFzYXzOTm58h8REeYfxYwGV7df
+	qsLGp7thER4pIMwaBatfi1Q/4b28mQEQDFyiLT/VN0APFS/BB12mFEzOvfcqY/S9LB3Y1Tg
+	cCWvohAFCrsMKuHEjecKvskap/dY5d1rZnvHvGm9tfrbTwsfVS3ttZ5pYA1ucB8T1FhxVKy
+	KWyhelxhtUUKPeUf/yZ69iVQ5e8YXGpfTbu9hKsT4guIid6UbI+gngNjDxvKZBkhNlcxLs+
+	Y3OsXkuIo5EfsT+sRzSKT96hRZdgplZvHC9oXmrwy+xu9ZhTbsrBYMPtLl3Q9WoZoKm+xw/
+	zHbl0lDXYWVDgveF3YIbtd+kgdFWVY/oqaQXg6NR3A9xahP55c8SNpEplQ465Fzbe2AVn7n
+	k8/FpdhtxePXtbLyHAlE4Lb6WVcZhOnSY7cm1vYYLPtl7enfocV5iQ+tuym9hiTiPsAp3X+
+	TBDS5GDrOhxkXkDb/X22FszaNxHlTHByQfx+J/w9UM7wUurGZofgMs8dgYFII=
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
 
-On 12. 05. 26, 19:40, Greg Kroah-Hartman wrote:
-> 7.0-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Tejun Heo <tj@kernel.org>
-> 
-> commit da2d81b4118a74e65d2335e221a38d665902a98c upstream.
-> 
-> bypass_lb_cpu() transfers tasks between per-CPU bypass DSQs without
-> migrating them - task_cpu() only updates when the donee later consumes the
-> task via move_remote_task_to_local_dsq(). If the LB timer fires again before
-> consumption and the new DSQ becomes a donor, @p is still on the previous CPU
-> and task_rq(@p) != donor_rq. @p can't be moved without its own rq locked.
-> 
-> Skip such tasks.
-> 
-> Fixes: 95d1df610cdc ("sched_ext: Implement load balancer for bypass mode")
-> Cc: stable@vger.kernel.org # v6.19+
-> Reported-by: Chris Mason <clm@meta.com>
-> Signed-off-by: Tejun Heo <tj@kernel.org>
-> Reviewed-by: Andrea Righi <arighi@nvidia.com>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->   kernel/sched/ext.c |    9 +++++++++
->   1 file changed, 9 insertions(+)
-> 
-> --- a/kernel/sched/ext.c
-> +++ b/kernel/sched/ext.c
-> @@ -4008,6 +4008,15 @@ resume:
->   		if (cpumask_empty(donee_mask))
->   			break;
->   
-> +		/*
-> +		 * If an earlier pass placed @p on @donor_dsq from a different
-> +		 * CPU and the donee hasn't consumed it yet, @p is still on the
-> +		 * previous CPU and task_rq(@p) != @donor_rq. @p can't be moved
-> +		 * without its rq locked. Skip.
-> +		 */
-> +		if (task_rq(p) != donor_rq)
-> +			continue;
+Build tested in our x86,arm64,riscv config successfully without error.
 
-As others pointed out already:
-[   75s] In file included from ../kernel/sched/build_policy.c:62:
-[   75s] ../kernel/sched/ext.c: In function ‘bypass_lb_cpu’:
-[   75s] ../kernel/sched/ext.c:4019:35: error: ‘donor_rq’ undeclared 
-(first use in this function); did you mean ‘donee_rq’?
-[   75s]  4019 |                 if (task_rq(p) != donor_rq)
-[   75s]       |                                   ^~~~~~~~
-[   75s]       |                                   donee_rq
+Tested-by: Wentao Guan <guanwentao@uniontech.com>
 
-Donor and donor_rq were introduced in:
-commit ff06f727a9412b3c9f2f13f1441a5a0d2a31366b
-Author: Tejun Heo <tj@kernel.org>
-Date:   Fri Mar 6 07:58:03 2026 -1000
+LoongArch build failed, you can drop the commit to build ok:
+git revert a45361144d5a65dd3b7183fd7b511d9cdc143503
+Revert "LoongArch: KVM: Compile switch.S directly into the kernel"
 
-     sched_ext: Move bypass_dsq into scx_sched_pcpu
+BRs
+Wentao Guan
 
-thanks,
--- 
-js
-suse labs
+LoongArch fail log before revert:
+arch/loongarch/kvm/switch.S: Assembler messages:
+arch/loongarch/kvm/switch.S:201: Error: no match insn: export_symbol_for_kvm(kvm_exc_entry)
+arch/loongarch/kvm/switch.S:226: Error: no match insn: export_symbol_for_kvm(kvm_enter_guest)
+arch/loongarch/kvm/switch.S:234: Error: no match insn: export_symbol_for_kvm(kvm_save_fpu)
+arch/loongarch/kvm/switch.S:242: Error: no match insn: export_symbol_for_kvm(kvm_restore_fpu)
+arch/loongarch/kvm/switch.S:251: Error: no match insn: export_symbol_for_kvm(kvm_save_lsx)
+arch/loongarch/kvm/switch.S:259: Error: no match insn: export_symbol_for_kvm(kvm_restore_lsx)
+arch/loongarch/kvm/switch.S:269: Error: no match insn: export_symbol_for_kvm(kvm_save_lasx)
+arch/loongarch/kvm/switch.S:277: Error: no match insn: export_symbol_for_kvm(kvm_restore_lasx)
+make[4]: *** [scripts/Makefile.build:430: arch/loongarch/kvm/switch.o] Error 1
+make[3]: *** [scripts/Makefile.build:544: arch/loongarch/kvm] Error 2
+make[3]: *** Waiting for unfinished jobs....
+make[2]: *** [scripts/Makefile.build:544: arch/loongarch] Error 2
+make[2]: *** Waiting for unfinished jobs....
+
+defconfigs:
+https://gist.github.com/opsiff/a840ae9e3d6857f5b7bacb9cdc49f8e9
+
+Log:
+Linux version 6.18.30-rc1-g6a57bf31ed20 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
+Linux version 6.18.30-rc1-g6a57bf31ed20 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT_DYNAMIC Wed May 13 11:15:19 CST 2026
+Linux version 6.18.30-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT 
+Linux version 6.18.30-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #3 SMP PREEMPT Wed May 13 11:40:11 CST 2026
+Linux version 6.18.30-rc1-g6a57bf31ed20 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
+Linux version 6.18.30-rc1-g6a57bf31ed20 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Wed May 13 10:57:44 CST 2026
 
