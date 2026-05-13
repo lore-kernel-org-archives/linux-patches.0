@@ -1,120 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4717429800;
-	Wed, 13 May 2026 15:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A869B48C8C1
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 16:13:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778686175; cv=none; b=tdopI2yIWzh7hzeuyKpF3q0uu+aJ4tWHhlQSQLjpvYv7TQH/fjg9/u/oH0T4WjsbCiqvOzIgcIlWWqizsx8VbRPJfV2mV4nkGlrebUpuBFct1eW3hxU0TJAD40NLkIxPW60aci+a246aY2v6r/PpFlaLEMD0JqO8dwkm/c9fpD8=
+	t=1778688816; cv=none; b=C/p26GsFEGWHXxGraVEX6kmGq2zLmWdho6Jvg1vYJLD95S6y/wfFrLsyJm6MgqRThTVpUqFwzEO04PvEw9fB0oNJ7Wji3aQkA82Yh4AX6zWUAuU6Opj0QLE+LNAxA3WHfslSiEvxDfI0fxOtKZSB6nfHMaPQvLWfpDfxDyXR/gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778686175; c=relaxed/simple;
-	bh=+GTyIVYo4BpoFl3JfjZgmVQ0TxTdr6v5vKx444qp0oM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mDMeAIXrjtu9mad8DCQ71HFs5d/eUh5zMolY0cby2QDGZKz2LfHkwDeDLbWclMpl9I65zirGw7hEm+8JE3sEmtoErLTFJxp41P4FI++6HxzrLiBOtyvMER11SCP/dK64RO5IShNAw9FEexqNEwqEKDnwj+kJUaWp9pjwnO+RbHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yprRugyj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778688816; c=relaxed/simple;
+	bh=YhBS2gglZpgBUTd3EN3gtxxcVc9j5kl99TM1RKqNIT4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FalXvgzVb54ttl3qFf4kTxl+K/LUZKesE9jl6rDm/jz1jv1r6epx0OPL1KBbHUj++Rf7M+aW+cLfinP+qK0JbyGoGQgS/vDE70E8po1a+WEOoZ4UU7nIqqStfulAfvtzbH+Ym9qPFstaKW2Wv7NDqwlMZ1U5BjH3dpqO5IIsg60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSYCNm5L; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yprRugyj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F1AC2BCB3;
-	Wed, 13 May 2026 15:29:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778686175;
-	bh=+GTyIVYo4BpoFl3JfjZgmVQ0TxTdr6v5vKx444qp0oM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=yprRugyjWyD7Np2aCMHVnxx9Ro+o2+2DV1/A2AIMWWTO7j3s21pMJWt4r9XOu5Jts
-	 L8dvn5iP4JIPl3D/8vSUxJ2Co0RKTdjmRXrfXd9u/PhbfpfYI9SHkqCvKeKBW7TYOK
-	 wFODeG+QWl5jL9gYeXq5cLANetTgr2Ntwa684lt0=
-Date: Wed, 13 May 2026 17:29:40 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Wentao Guan <guanwentao@uniontech.com>
-Cc: chenhuacai@kernel.org, chenhuacai@loongson.cn,
-	dave.hansen@linux.intel.com, kvm@vger.kernel.org,
-	lixianglai@loongson.cn, loongarch@lists.linux.dev,
-	maobibo@loongson.cn, ojeda@kernel.org, patches@lists.linux.dev,
-	seanjc@google.com, stable@vger.kernel.org, zhaotianrui@loongson.cn
-Subject: Re: Re: [PATCH 6.18 091/270] LoongArch: KVM: Compile switch.S
- directly into the kernel
-Message-ID: <2026051357-unmasked-economic-2a46@gregkh>
-References: <2026051311-lullaby-wrecker-7d23@gregkh>
- <20260513120808.339792-1-guanwentao@uniontech.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSYCNm5L"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7dca4debedaso6585747a34.2
+        for <patches@lists.linux.dev>; Wed, 13 May 2026 09:13:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1778688813; x=1779293613; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UbrAmocTy/GZasxYN3SuUtJFFgRGxP9XV3hZlSRDuZY=;
+        b=FSYCNm5LBi7A7WZKphfYBTylyF/mNI7NnGGBR/USPPj9TlnR0PThgK9laxS6EiJZMt
+         Te/PwRWCi8wPVTV/jdSveWUCPPSXCViISl2t6qoA3NMdzhigvkudAt9enSvHAPxIVX1U
+         TgLOizOKB/WgHSyBsP+ik0zKr/2Jc2CCtZ3NY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778688813; x=1779293613;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UbrAmocTy/GZasxYN3SuUtJFFgRGxP9XV3hZlSRDuZY=;
+        b=MWp0E2v/F1xcYaMQBrTScOimhbQ0S/4g3uszfhD01XTUVZv910lLq79IGflmgbOD6y
+         wpDqnzEdtdOD+kxObX8U2+jCGHEydFO4iKBbk6u10yxTnSGGIx3hZbnFaG/8hptixoD0
+         seYBYfptjrPXh7KIuk4REjXtUOTwI0PMFiCWV+QvYr9SLAJWVOX6e0oXU+9PNj8ZH5p+
+         fqQbwSRAAVDJuito5bheYmA6sxnbNuvjJ6jIrsxXzrmDfS3smrnJeLde1M+3padWn5pH
+         +UfyCw2L+9TNParasDIsmbYT13H3RGHAdQxF/cE7R+6SwOcYabOiHWpUinpNXy9TRvIK
+         wguQ==
+X-Gm-Message-State: AOJu0YwBMx1O/Ys134HrZL63wC+leK6/DKlH/Q0a0XnrQx79QSYa7/ET
+	k/digrb//PNB7QzikYpkSiO34LSWB87a6LDoJPfvQl8UayL4j1PCvj+luMTMY0J1m3Q=
+X-Gm-Gg: Acq92OGCFA3FazntOI67rd6y1sLtZn4b7wSxLArO/l5OQ4i+OAzdYhRWEl8BIAtayxb
+	5rYX+B+l4kw3XLAKE9wXST1O1wFQAFpDhHvAfL5CqJ1qw+9TWZWlHG7Do4+k9nI2TC7VuEws6a3
+	4l3B6ggbESB/IbdTvED8zpC4bKkkpiweMH6V74Fl+fvsOE4yhrJ5OkCGbdh/v03uZTu52YDO29U
+	e/WZVReTx+27i1vQMy2pb36T51T4qaGlRexcQ4oTnTCwY5xG5Kb4wa1HKeQF1CFN/lWmhBdePv1
+	624CL6b+G3HydhyV7TYdR/N1oaxDFEKMA2vVYJARKv7e9gEWyhyu6La/DDaeMffiWIn/mPfLyXa
+	QdG5KVUVQRHcMUwaEnnm8lIdcDR7LOCTEmSXTsd2uKdIeAfNcr/Jmq2iJZm4Ka2DPLVFLTNz6/5
+	gF971jhWt34QbdvsaiUbsp9AIM0n768bE=
+X-Received: by 2002:a05:6830:44ab:b0:7d7:f5d4:ef5b with SMTP id 46e09a7af769-7e3da0973fcmr2213993a34.7.1778688813613;
+        Wed, 13 May 2026 09:13:33 -0700 (PDT)
+Received: from [192.168.1.14] ([38.15.57.99])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e367c04e00sm11251548a34.7.2026.05.13.09.13.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 May 2026 09:13:32 -0700 (PDT)
+Message-ID: <73cd1ca3-ee3f-43fd-97fc-b1fc3fb4cca5@linuxfoundation.org>
+Date: Wed, 13 May 2026 10:13:30 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260513120808.339792-1-guanwentao@uniontech.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.0 000/307] 7.0.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20260512173940.117428952@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20260512173940.117428952@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 13, 2026 at 08:08:08PM +0800, Wentao Guan wrote:
-> > On Wed, May 13, 2026 at 07:58:10PM +0800, Wentao Guan wrote:
-> > > Hello,
-> > > 
-> > > > On Wed, May 13, 2026 at 11:06:20AM +0800, Huacai Chen wrote:
-> > > > > On Wed, May 13, 2026 at 5:53 AM Sean Christopherson <seanjc@google.com> wrote:
-> > > > > >
-> > > > > > On Tue, May 12, 2026, Miguel Ojeda wrote:
-> > > > > > > On Tue, 12 May 2026 19:38:12 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> > > > > > > >
-> > > > > > > > 6.18-stable review patch.  If anyone has any objections, please let me know.
-> > > > > > > >
-> > > > > > > > ------------------
-> > > > > > > >
-> > > > > > > > From: Xianglai Li <lixianglai@loongson.cn>
-> > > > > > > >
-> > > > > > > > commit 5203012fa6045aac4b69d4e7c212e16dcf38ef10 upstream.
-> > > > > > > >
-> > > > > > > > If we directly compile the switch.S file into the kernel, the address of
-> > > > > > > > the kvm_exc_entry function will definitely be within the DMW memory area.
-> > > > > > > > Therefore, we will no longer need to perform a copy relocation of the
-> > > > > > > > kvm_exc_entry.
-> > > > > > > >
-> > > > > > > > So this patch compiles switch.S directly into the kernel, and then remove
-> > > > > > > > the copy relocation execution logic for the kvm_exc_entry function.
-> > > > > > > >
-> > > > > > > > Cc: stable@vger.kernel.org
-> > > > > > > > Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> > > > > > > > Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-> > > > > > > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > > > > >
-> > > > > > > For loongarch64, I am seeing a bunch of errors like:
-> > > > > > >
-> > > > > > >     arch/loongarch/kvm/switch.S:201:1: error: unrecognized instruction mnemonic
-> > > > > > >     EXPORT_SYMBOL_FOR_KVM(kvm_exc_entry)
-> > > > > > >     ^
-> > > > > > >
-> > > > > > > `EXPORT_SYMBOL_FOR_KVM` does not exist in 6.18. Does this need a subset
-> > > > > > > of commit 6276c67f2bc4 ("x86: Restrict KVM-induced symbol exports to KVM
-> > > > > > > modules where obvious/possible")?
-> > > > > >
-> > > > > > Either that or just convert EXPORT_SYMBOL_FOR_KVM() => EXPORT_SYMBOL_GPL().  If
-> > > > > > that's somewhat scriptable for ongoing LTS backports, that's probably the best
-> > > > > > option.  EXPORT_SYMBOL_FOR_KVM() will only work for 6.18, and the list of backports
-> > > > > > needed to get EXPORT_SYMBOL_FOR_MODULES() working on older LTS kernels looks to
-> > > > > > be non-trivial
-> > > > > >
-> > > > > > If we do end up backporting EXPORT_SYMBOL_FOR_KVM() and others, we might as well
-> > > > > > also grab a subset of 01122b89361e ("perf: Use EXPORT_SYMBOL_FOR_KVM() for the
-> > > > > > mediated APIs") to ensure a kvm_types.h stub is present on all archs.  That way
-> > > > > > EXPORT_SYMBOL_FOR_KVM() usage in arch-neutral code will also work.
-> > > > > I have already noticed Greg about this before.
-> > > > 
-> > > > You did?  Where?
-> > > 
-> > > Small problem, I guess where he means is 'stable-commits@vger.kernel.org', is a
-> > > not public maillist? I want to find it in 'lore.kernel.org' but not found... 
-> > 
-> > It's a public list, anyone can sign up for it.  Don't know if lore
-> > archives it, but I'm sure that someone does...
+On 5/12/26 11:36, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.0.7 release.
+> There are 307 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Thanks for your reply. It is interesting that now i found them in
-> https://marc.info/?l=linux-stable-commits&m=177859589029820&w=2,
-> and https://marc.info/?l=linux-stable-commits&m=177859840800303
+> Responses should be made by Thu, 14 May 2026 17:38:03 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.7-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-Ah, yeah, I had to delete that message due to that footer, and didn't
-even look at it on request of the sender as it was confidental
-information which is not allowed here.
+Compiled and booted on my test system. No dmesg regressions.
+
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
 thanks,
-
-greg k-h
+-- Shuah
