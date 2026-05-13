@@ -1,106 +1,149 @@
-Received: from n169-110.mail.139.com (n169-110.mail.139.com [120.232.169.110])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDFB349CFC
-	for <patches@lists.linux.dev>; Wed, 13 May 2026 02:54:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.110
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706FE3911CD
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 03:06:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778640846; cv=none; b=UraRJ5AojdL/DF0PR7o8NLvg5nyGz2OePprLFH9h/f1bLzx83wvHNBfw7OJ6De21WQ5Hi6t5M1p+sfjFih3STvfFxkmLzhaAWHWqaasdZXa7rE9IdM+xWNLOFcjLi0rdfSVwt1tL3wmhVv+NxzX/JWwPde6pNZTNXIVMnFkuRDc=
+	t=1778641594; cv=none; b=TtqWgfbgRslpxbcpIOjPwZkcikEiQbpEOawqDyZzGSzPUZsqHKJBPTEGQAgwshfGhzqUtaLfq2ZsVDay+ivqZg1O2pr7YEQPp9x4jhX+GKpwTdNYBDphu/3YVJYuQk4I+CX9/KJvWJBBnWq92jfqjXjLeGlc4ycaezimlVmrN14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778640846; c=relaxed/simple;
-	bh=h81wKV3WHFoCuwtNrhGiVPTt55Ja70Wq+uFWGB7Lg4k=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VQtCWTZZNn+it2ykmDe1lKg4mDgbcQA0wqQSQK+R5hON98WqejUX8+n5GUVREdZ5VUZD66CKcAuo6DNntjW6xugM9IDiONXw3lGwTnLbxHZiLkzl/yT3fYNQ92yjhKIOqh4woxMLKLUS5Als0LYUo+NBhJQZTTzg2ET6XRPcSjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=BFn8QPB1; arc=none smtp.client-ip=120.232.169.110
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
+	s=arc-20240116; t=1778641594; c=relaxed/simple;
+	bh=2FYu66EO6vVTIr4kxrE0IOHu6oZkI5WGpQMrpxngQ/k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qPFiZ7KADr6oEJ0JGV4OwOZIEshVC4IRyu0kDXP8W9JxsVK8YYqm7GvdjmGhdE73eAvvrly5a06CmrEonO3RlALc8F0ezEsUMj806cC4va5ZVkznZYa87grN/fTA37MmVqnReFB5JqzVaSL9uRQtAOhUv+rcUpfZOS4L5zefjsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qKH/ADQU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="BFn8QPB1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=139.com; s=dkim; l=0;
-	h=from:subject:message-id:to:cc:mime-version;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=BFn8QPB1NlEX3gA4eJ5OAU6A9CCZggwhk4LlxmqkwDgvKEZbU04UjQNK/0kU968oylIVXvtAZoeys
-	 o51hj65Jc2avY5RzHve0rybXCSErSxnmZdkq/wUdIVnNMeV1f8EYIDSVjLmzeA20KeshxnkKcKu+vC
-	 A2YqUqi7TsRrZ1oI=
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM:                                                                                        
-X-RM-SPAM-FLAG:00000000
-Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-07-12085 (RichMail) with SMTP id 2f356a03e7c24b0-04504;
-	Wed, 13 May 2026 10:53:58 +0800 (CST)
-X-RM-TRANSID:2f356a03e7c24b0-04504
-From: Li hongliang <1468888505@139.com>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	pengpeng@iscas.ac.cn
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	davem@davemloft.net,
-	yoshfuji@linux-ipv6.org,
-	dsahern@kernel.org,
-	kuba@kernel.org,
-	justin.iurman@uliege.be,
-	netdev@vger.kernel.org,
-	justin.iurman@gmail.com
-Subject: [PATCH 5.15.y] net/ipv6: ioam6: prevent schema length wraparound in trace fill
-Date: Wed, 13 May 2026 10:53:57 +0800
-Message-Id: <20260513025357.3161377-1-1468888505@139.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qKH/ADQU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49AD3C2BCFC
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 03:06:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778641594;
+	bh=2FYu66EO6vVTIr4kxrE0IOHu6oZkI5WGpQMrpxngQ/k=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=qKH/ADQUWT4OpC0s44qwsKkp9Q+rL4BS1brg1sSt0mC27D+9BKV/hR+ZcfJM2Z4YX
+	 60zE9GbP5P1IO9oo08IOYFnkpmiKapp1ifo1eqQkawI/14P2ty80e1d3YeP37bBGE/
+	 MDiLeGW1/mElUaB7VOxBb704iMEpkJ/pBIqL/sTLQaab//0HnpQ8OIwSoTmBx/sJ1i
+	 YHtev/4v2a8YaQ606ePAdfGek3Fny4WQBttb1rjAYUVibM8KpA1Cdmw3ts4vnxEaIE
+	 b7lLmBJJmJmnIMaBY7+voM6DjD4+EkXFBajFPJCwxteWdVrRLCH41Xa3cYW5ozlxuV
+	 tmegyxYbj8XJA==
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-67c1e0229acso9617989a12.1
+        for <patches@lists.linux.dev>; Tue, 12 May 2026 20:06:34 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ/JNwKZcG9EOlSVae1ArWkT/hNnDa3R4o7kKYnx9QYrOxsQf2TCVMem/xc3TMh3kp1RlM2xEpPe@lists.linux.dev
+X-Gm-Message-State: AOJu0YyfUxsJIlPj/ObOnyqRGcZi9xrJTGdvI44Xo8ICVRPIH5IrXo4B
+	/UZwa47o4CTpRNTtBbbEMdMOZh4qNi/+VyRkTkuE/XJtP5bF2ENehqfeGcDxHWYL35H3tB1gUFc
+	2ea5wdD4Rhuy/9SR9M14kGJodrHrWzw0=
+X-Received: by 2002:a17:906:4786:b0:bd3:2b8a:2164 with SMTP id
+ a640c23a62f3a-bd3bfb9f635mr84611266b.16.1778641592860; Tue, 12 May 2026
+ 20:06:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260512173940.376401154@linuxfoundation.org> <20260512205250.313933-1-ojeda@kernel.org>
+ <agOhSMXZGSv0bPhX@google.com>
+In-Reply-To: <agOhSMXZGSv0bPhX@google.com>
+From: Huacai Chen <chenhuacai@kernel.org>
+Date: Wed, 13 May 2026 11:06:20 +0800
+X-Gmail-Original-Message-ID: <CAAhV-H6GFmKrJpVgaShCzUigZByvQkXQy_2qGcyaJ089Q6chWg@mail.gmail.com>
+X-Gm-Features: AVHnY4JhLdvfmwJivpMfBvuNwmW2QV0KoWSoIRaMnLuYY6_EF5PB2geRX9XhU-I
+Message-ID: <CAAhV-H6GFmKrJpVgaShCzUigZByvQkXQy_2qGcyaJ089Q6chWg@mail.gmail.com>
+Subject: Re: [PATCH 6.18 091/270] LoongArch: KVM: Compile switch.S directly
+ into the kernel
+To: Sean Christopherson <seanjc@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, gregkh@linuxfoundation.org, 
+	Tianrui Zhao <zhaotianrui@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, kvm@vger.kernel.org, 
+	loongarch@lists.linux.dev, Dave Hansen <dave.hansen@linux.intel.com>, 
+	chenhuacai@loongson.cn, lixianglai@loongson.cn, patches@lists.linux.dev, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+On Wed, May 13, 2026 at 5:53=E2=80=AFAM Sean Christopherson <seanjc@google.=
+com> wrote:
+>
+> On Tue, May 12, 2026, Miguel Ojeda wrote:
+> > On Tue, 12 May 2026 19:38:12 +0200 Greg Kroah-Hartman <gregkh@linuxfoun=
+dation.org> wrote:
+> > >
+> > > 6.18-stable review patch.  If anyone has any objections, please let m=
+e know.
+> > >
+> > > ------------------
+> > >
+> > > From: Xianglai Li <lixianglai@loongson.cn>
+> > >
+> > > commit 5203012fa6045aac4b69d4e7c212e16dcf38ef10 upstream.
+> > >
+> > > If we directly compile the switch.S file into the kernel, the address=
+ of
+> > > the kvm_exc_entry function will definitely be within the DMW memory a=
+rea.
+> > > Therefore, we will no longer need to perform a copy relocation of the
+> > > kvm_exc_entry.
+> > >
+> > > So this patch compiles switch.S directly into the kernel, and then re=
+move
+> > > the copy relocation execution logic for the kvm_exc_entry function.
+> > >
+> > > Cc: stable@vger.kernel.org
+> > > Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> > > Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+> > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> >
+> > For loongarch64, I am seeing a bunch of errors like:
+> >
+> >     arch/loongarch/kvm/switch.S:201:1: error: unrecognized instruction =
+mnemonic
+> >     EXPORT_SYMBOL_FOR_KVM(kvm_exc_entry)
+> >     ^
+> >
+> > `EXPORT_SYMBOL_FOR_KVM` does not exist in 6.18. Does this need a subset
+> > of commit 6276c67f2bc4 ("x86: Restrict KVM-induced symbol exports to KV=
+M
+> > modules where obvious/possible")?
+>
+> Either that or just convert EXPORT_SYMBOL_FOR_KVM() =3D> EXPORT_SYMBOL_GP=
+L().  If
+> that's somewhat scriptable for ongoing LTS backports, that's probably the=
+ best
+> option.  EXPORT_SYMBOL_FOR_KVM() will only work for 6.18, and the list of=
+ backports
+> needed to get EXPORT_SYMBOL_FOR_MODULES() working on older LTS kernels lo=
+oks to
+> be non-trivial
+>
+> If we do end up backporting EXPORT_SYMBOL_FOR_KVM() and others, we might =
+as well
+> also grab a subset of 01122b89361e ("perf: Use EXPORT_SYMBOL_FOR_KVM() fo=
+r the
+> mediated APIs") to ensure a kvm_types.h stub is present on all archs.  Th=
+at way
+> EXPORT_SYMBOL_FOR_KVM() usage in arch-neutral code will also work.
+I have already noticed Greg about this before.
 
-[ Upstream commit 5e67ba9bb531e1ec6599a82a065dea9040b9ce50 ]
+And I think the best solution is to use EXPORT_SYMBOL_GPL().
 
-ioam6_fill_trace_data() stores the schema contribution to the trace
-length in a u8. With bit 22 enabled and the largest schema payload,
-sclen becomes 1 + 1020 / 4, wraps from 256 to 0, and bypasses the
-remaining-space check. __ioam6_fill_trace_data() then positions the
-write cursor without reserving the schema area but still copies the
-4-byte schema header and the full schema payload, overrunning the trace
-buffer.
-
-Keep sclen in an unsigned int so the remaining-space check and the write
-cursor calculation both see the full schema length.
-
-Fixes: 8c6f6fa67726 ("ipv6: ioam: IOAM Generic Netlink API")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Li hongliang <1468888505@139.com>
----
- net/ipv6/ioam6.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/net/ipv6/ioam6.c b/net/ipv6/ioam6.c
-index bb7ad0d1cacf..765b87c18a4c 100644
---- a/net/ipv6/ioam6.c
-+++ b/net/ipv6/ioam6.c
-@@ -645,7 +645,7 @@ static void __ioam6_fill_trace_data(struct sk_buff *skb,
- 				    struct ioam6_namespace *ns,
- 				    struct ioam6_trace_hdr *trace,
- 				    struct ioam6_schema *sc,
--				    u8 sclen)
-+				    unsigned int sclen)
- {
- 	struct __kernel_sock_timeval ts;
- 	u64 raw64;
-@@ -863,7 +863,7 @@ void ioam6_fill_trace_data(struct sk_buff *skb,
- 			   struct ioam6_trace_hdr *trace)
- {
- 	struct ioam6_schema *sc;
--	u8 sclen = 0;
-+	unsigned int sclen = 0;
- 
- 	/* Skip if Overflow flag is set
- 	 */
--- 
-2.34.1
+If Greg doesn't want to adjust manually, please drop this patch and I
+will send one.
 
 
+
+Huacai
+
+>
+> diff --git include/asm-generic/Kbuild include/asm-generic/Kbuild
+> index 295c94a3ccc1..9aff61e7b8f2 100644
+> --- include/asm-generic/Kbuild
+> +++ include/asm-generic/Kbuild
+> @@ -32,6 +32,7 @@ mandatory-y +=3D irq_work.h
+>  mandatory-y +=3D kdebug.h
+>  mandatory-y +=3D kmap_size.h
+>  mandatory-y +=3D kprobes.h
+> +mandatory-y +=3D kvm_types.h
+>  mandatory-y +=3D linkage.h
+>  mandatory-y +=3D local.h
+>  mandatory-y +=3D local64.h
+>
+>
