@@ -1,128 +1,202 @@
-Received: from smtpbguseast1.qq.com (smtpbguseast1.qq.com [54.204.34.129])
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010022.outbound.protection.outlook.com [52.101.61.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B1F369981
-	for <patches@lists.linux.dev>; Wed, 13 May 2026 05:03:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.129
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778648593; cv=none; b=p4Ox2VNgL93I70Yu9iOIDktQR++Wd24G94w7C1m2uSMjmoqdc+Igivj8+Zc9WbcfBL+jko/ZqtH0qJEkkjK7dDc8LtNbpyTjUJwvPZRF9Xpbqg4sXpjU4DXhtkfR25o48QU4oH1qn0ywoF8rnWj1Vq5mDrSYAIBWOLVFZqXH8F4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778648593; c=relaxed/simple;
-	bh=4gA3q7ciiRF0G7m7fxZ8P/NxjZ9s4UGA3W7/Enpq65Y=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=tRY/Qu4eIM2hvlx2NdLl6T5xbBMjwcOgivoGD4SZD3QF8jj0ZNX1FznRbOf6cAqk2vIsDefUoUqTRz0UA/h8ziGumKV2tIx6SOaqnsbWrMVXQUmzomgHK9asJiMPLhkEzDQxXGDTOBp0RcI9d4tzl9E3OZLGyUtmq54ygtQ/9Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=l29Llnwh; arc=none smtp.client-ip=54.204.34.129
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2AB3D301D
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 06:06:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.22
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778652362; cv=fail; b=CgLThqXYufoqgnl3yZqNTfYb+YAZ9HFo4lS1VLd3n0PxkKPm51u/8kvpbhyeFoZwTQwhVm9/s9jPNC+CXvgY87iW9asw6Q3rWoIk5FhruGfN3m+J4pCHC2RmdPk84eWTgZgLRoc7LsVo7twgtRLuwV5m+efYHgy4erwijDO9FDk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778652362; c=relaxed/simple;
+	bh=tZCg59DUlIxV/CPcRmWPIAmILpXX4Jgg5JlzcNxxsM4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=DN7cueDDhMLKcqFuxBSP/DVwRPLdh26kur30xp/pObMepZ1ib7GSGFWvsZHtmu0/d5Xu8RbwF3Ie+KL5y8YW0LTHMd00LTqzOMmAdHKdwYrjxoJBeFHgKO9P5UHEDNamyik65Sf8rLFYEy0CuNdXm4cpl0aoVq3v165XQqqgpBk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=IXjwnqKy; arc=fail smtp.client-ip=52.101.61.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="l29Llnwh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1778648564;
-	bh=js7vJo7lJk8HTu2JKoIX7l/r+93jcMtNo+BV2oKjclw=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=l29Llnwh/XgnxIvyU86QrY/wDozqW3kHdXu/Q/EY9m4AFBp9GUtsWD3cGu+TCtPSr
-	 hiHUz9pMynHNAkLbb7pZqf3BeF6Z6h5Q2UqRwgk7L+E3bx1gJhDDQ7hOzX+4EL4vA5
-	 1WrTuUdhk8LKaGJtdyIafrwvc2xpdisi9jmUApXA=
-X-QQ-mid: zesmtpip3t1778648558t25114775
-X-QQ-Originating-IP: zR/qqHym9rnNIT9raZXIYsiMwad9BsQ+qo3BlBg3P60=
-Received: from localhost.localdomain ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 13 May 2026 13:02:35 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 17889130103613528545
-EX-QQ-RecipientCnt: 21
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: Re: [PATCH 6.18 000/270] 6.18.30-rc1 review 
-Date: Wed, 13 May 2026 13:01:15 +0800
-Message-Id: <20260513050115.290871-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260512173938.452574370@linuxfoundation.org>
-References: <20260512173938.452574370@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="IXjwnqKy"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=njRi0kh3bkjrYcQlXM/0s24k4NDbPK3P/FJ7KIS4C54/0MzWUDW8KYtLIxqf1W/LuYD+PbcWAaVpCkeAdofKYmzw/+zENj3Xa+BinjI4NyI6etn7dXsqc+mk6D1zpDTch7HGojJrcVKpMPy5A3IYTDaXDS85coN9m00OFkjBANJCFPS2dJKdC7tt9/kHh2XAfqe79KWPtg9/XnZDLw0v+AKAFkt4M14v9DER6107MeYzfEWB0MYku+t4/WsCuOrRGAibglDt4dKuacAzaoLtm4s8LcTCfDh6VNItYHMQ6LflZedBUu6dPg91HgBszhDAOdAAh3sRALtFSpZIw2hr8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8UZq1Nr9WvlPyxu/jXS9/ItZlm2gKQ0wHw8GqT9xpOQ=;
+ b=diG1d5jit8zkY7P8QSlRFNMobV5Aj7vF0HCw6nmkX9cPvzsZmPNQekReGrox1AtCd2b83tH634Qhw67kVQVpPJLcsNMyBGTeGf4ud3szi5eL31mIEvSmQVCjvQ4NVSCwHYuSMzAFDDktpQd3JwhhFHwHedU3BiuOMqwETnOp4Wg0gt14aWaQVvh8Jaezu2RVMAc26Z81GZHMwtuPViHY+ePfEHNR8+uhh43P0953NpidtWQOew8qQkZviJM3P2Gbuc+zFk/xRCxhPhdYcob8OlrpxxnZ6mthxZ9OL9sH4htLp+WxZnK4eThOtG8uDQGaozbQHCHU/ofU8FYt8jtr0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8UZq1Nr9WvlPyxu/jXS9/ItZlm2gKQ0wHw8GqT9xpOQ=;
+ b=IXjwnqKyjQfx+mPcIWWBNEeXJ003ptwhIsWfdNf7stC3RTU8sBaKH3JGzj3xF0YcBv6pCYeyU/pivoE9u7/Y2gehKrYELex1596TYnpBAY85PFbznU8s52ew6y9sASpPpQD7IOMV9s30gjugjx7vMiJFEr7V/hm2NCF7TDZy/+Ep0Qo1Tek6Z0HxIIQYQhi6Bv4WLoRFyRNRuVCgqADdOPzjkSyah2AmzqBAJ45ZGCLQsC09Y+P0mlt0eX7wNta5m2ncEmrQfCdn2v3LRgk9ZCOfMxT/3FIaIl9JGUsLYt7PS1C3zrg3fc3TrDb/aPVzkIHYMbMG8Qbf+lLj6GNTcQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by DM6PR12MB4314.namprd12.prod.outlook.com (2603:10b6:5:211::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Wed, 13 May
+ 2026 06:05:54 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9913.009; Wed, 13 May 2026
+ 06:05:54 +0000
+Date: Wed, 13 May 2026 08:05:45 +0200
+From: Andrea Righi <arighi@nvidia.com>
+To: Peter Schneider <pschneider1968@googlemail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@nabladev.com,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com, Tejun Heo <tj@kernel.org>
+Subject: Re: [PATCH 7.0 000/307] 7.0.7-rc1 review
+Message-ID: <agQUuUpJ2fu1JfVG@gpd4>
+References: <20260512173940.117428952@linuxfoundation.org>
+ <90116a48-a75d-48c9-b09f-97f541c0031c@googlemail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <90116a48-a75d-48c9-b09f-97f541c0031c@googlemail.com>
+X-ClientProxiedBy: MI2P293CA0014.ITAP293.PROD.OUTLOOK.COM
+ (2603:10a6:290:45::13) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OASTJNHpK0Kvsci50tkOY3edaVcn9lzop+iibm0bvlTXMJXLxZkrwSxc
-	M11Df2SgmMWALQ+qzWgKS04t+XIk8XKVQ2zRxsuKzqaGJuzyr3ur3Tc7gCgqbZC+GuoG9vS
-	TPXlTV/+03Z6C6XjWNdv6c5ai3dWOS+/ht4cJuRVUwrJhfJ2h4CkiBOMSgVqTBF4BqfB9fs
-	ZXIPTfdVm4mFfYkHv8XTMYe/nK7poXTVYYVpfPWJr4HG1JI0HcgthNlT9CYGIzvuY5Rstoy
-	UNIceAFyCkHqwQdVoi/NxMFzXNgOiF+WKISTc0aT+qw1Gh9TpA3C++UtMPhdqRLWOBodtgB
-	XLKAqBtGY89Hn3n7P/cHrTSfnSMggiHz6k8n8zy30G/RZtiMoFcc1KZsF6SPq7ClgektZ/c
-	ehRDsI6JsVr8CtC5m5blY2J0V23ufSoeIpobg/I40I4FTZe99cdUIVaioFfzMypImBG/wHa
-	H2GcaY6PxLb/9hIss+wF/+nGuhUWCIQG+GQhDDnWKGm4TGj2Krl53CGJo91kOcWLmlG+v6g
-	e59qla3OlVIYPvfcpSn881wL3G39vnWYhhoH1qHlP6C0eDFzYXzOTm58h8REeYfxYwGV7df
-	qsLGp7thER4pIMwaBatfi1Q/4b28mQEQDFyiLT/VN0APFS/BB12mFEzOvfcqY/S9LB3Y1Tg
-	cCWvohAFCrsMKuHEjecKvskap/dY5d1rZnvHvGm9tfrbTwsfVS3ttZ5pYA1ucB8T1FhxVKy
-	KWyhelxhtUUKPeUf/yZ69iVQ5e8YXGpfTbu9hKsT4guIid6UbI+gngNjDxvKZBkhNlcxLs+
-	Y3OsXkuIo5EfsT+sRzSKT96hRZdgplZvHC9oXmrwy+xu9ZhTbsrBYMPtLl3Q9WoZoKm+xw/
-	zHbl0lDXYWVDgveF3YIbtd+kgdFWVY/oqaQXg6NR3A9xahP55c8SNpEplQ465Fzbe2AVn7n
-	k8/FpdhtxePXtbLyHAlE4Lb6WVcZhOnSY7cm1vYYLPtl7enfocV5iQ+tuym9hiTiPsAp3X+
-	TBDS5GDrOhxkXkDb/X22FszaNxHlTHByQfx+J/w9UM7wUurGZofgMs8dgYFII=
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-RECHKSPAM: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM6PR12MB4314:EE_
+X-MS-Office365-Filtering-Correlation-Id: afa1ad2a-c22f-490b-00b9-08deb0b5b16e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|7416014|376014|1800799024|56012099003|22082099003|18002099003|11063799003;
+X-Microsoft-Antispam-Message-Info:
+	JTdKOJdgGNtsEYcpcpcNl1gA9RY3UgOdXUJE4kke+4wus/AaGd3dkrN4QB7NzbwR0arZn7xdrvn2o0PlpY9flv0cskGWGS8KWXWMosS7M/H1beEGuVHM16P0EbUvp1QQ0HsvmbP0u0fkhFyHHVAJfYB4+uLnW7+CB0VARUxVLOIIRqwJ5yrin2T5KqpEZwo+pMIeeVQ3I3OyHtKxeUqgT+UDIGLlp3ddbCNACBjeI2NFFWc+thjKahEHL0oMQqM7mzLnxrjcirnUuGhHPJAL3WBOOAUfcGZN+kQkO2q+4XDWNPEkX7rnST5IK0YlhTBT4PjLeDWqVdPTjd7++Cj8nEwZhCgathUQILen9x/1MrK6XHyCiNEn05a2lVNjh4ciBLhbhlGVnzdawuE7A8/hTkHSPPiHkM7fjX0MbZ88TPwb+xhSqkKJxpNvT4AS8uIcb10Sr9cnuop8ooefmRmUPNR9irEk9GWc/mYiKGBYTvXYdxf0jmE+pTBC78ctA/YRPcY6Lpq+qoQJHavCPhcJ6QH0ajCjjl3nqIhBnnBLZfWwo7vRVn73Hd2fjJsO8ZiCe0PaaddIJmKvTJwlhWPTlndnjBg7thDt3H34Ko4kWA9BP3QDnoHv045H2NpSGtYV4+/ZhKG1mBmiVqpAW0MVWgalJOgtCnZsAVShlXgUDbblTijJi0j/wKaR8qn9lEOK
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024)(56012099003)(22082099003)(18002099003)(11063799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dVVVaHBpdWM3Ky9NRW9JbWQ3N3p6V1BLVzlJN2ZveCtqWHBnZWhqOVRIQytq?=
+ =?utf-8?B?cngrV1dtVE81bTdYOUJOYVN0aU1teHduVWhuZ21LT0kvcm0wbXhKc1FqVUp6?=
+ =?utf-8?B?YWRLdVZpMGZ6emRyWXRiWVZLTUt6RDI0QnRTY050cFQzT29yTWEzbUUzUXA3?=
+ =?utf-8?B?a3hFRVo2eGU0bnlJclg0WXpVUEFDWEVyd0l3elRTQmhTQXFFTW45d21pVFdY?=
+ =?utf-8?B?QUl3ZkhsbGZ1Z1lMNzhBbDY0MWFEU0hhRWo3SUY1QzF2cDJkNm9XRWo5cklS?=
+ =?utf-8?B?aVlJbnl4WlJWd2dMc1ZuZHRpODhaZ01rRndKMGs2NGx0ZlJjNHU4Z2JiUlU5?=
+ =?utf-8?B?Z1VBYllNU05Ja1V6S2Ezc1l2dGZka0RvRC9xVFNLYUlwTVIxdTRnemNUVEtw?=
+ =?utf-8?B?aFh3Sm9CakQ2OHVhUHN0Qm05SE4wMlQzdHZiSmUwaGZKNFRmc09GUDR1WEx4?=
+ =?utf-8?B?OHpTbXJjRHR3R3FoQzBUa2hBRVdLNUpmOFdOS2RPK3ZseVNNb3NYbnNPOE1Q?=
+ =?utf-8?B?aEEyMVA2bENDYUNRK2x2WFREajZxZ1ZiSXBPSVpGYUxHNW5zcVBsc1BNNXNE?=
+ =?utf-8?B?a2VjdnEwUSt4YittNENyTUlnQ2FmT2hpWmIvQ2VjLzU4enNzejFGTC9KNWhk?=
+ =?utf-8?B?ajNTaUlwUjRpdlAyY2ZMdFRCVFQxd05TRFhYV3Yrc1VqY21KZXQrTkFVZUha?=
+ =?utf-8?B?SjJ1TjZnT1pLbHk4UHRlako5QmZVenhoNHVOSTVPNkpIcWRFSk5yUW1ab0Ur?=
+ =?utf-8?B?M21ZcmpHU0ZjY3ZnWGRra0xtNWphWERuOG5iOEtaRDZiNDdTM05TcldNemo5?=
+ =?utf-8?B?clhOOEJkWFdiV3FzY05ocUtydUo2QkoweFREVlpzK0xsTnp2VUNZdlhCb3lD?=
+ =?utf-8?B?YVgxcWltWElXWi92YTVVRDRxQ0ZBeUs4V0VidmVSL0JpZy8yVW0zaXhIMmhE?=
+ =?utf-8?B?NDl1Y2RCenNXREdPa2Z1NUkxL1V5SG9GN21TL0hZaTUyaERZNGtZZHRXK2c5?=
+ =?utf-8?B?ME1xVWlVZEd5d1N5L1ZhSlFxWWZoZHZiQkt5Z0h5TUJYSzV3ajdnUm1lUkw3?=
+ =?utf-8?B?R0dMejE3QVdXeWxBOUM3T2x5VGRaQWF3c3lQMmlFNEZ3ODVVWmJabEFlTWp6?=
+ =?utf-8?B?VWRvQTdlV2NSa1I1eEpNalBrS1Z1aEcwT2xoc2NzUEErMTMxMnd5TVE4UU9T?=
+ =?utf-8?B?aC82UXFheThvTUhod0RZd1FDYTZXTGhOZ1VTaTNtM2RMUTRDcDJ4cXZRaSs5?=
+ =?utf-8?B?UnBDT1hNeEdGK0YvUm1wWmk5MUFPVTlOZUdlbGc4SVBydUJKZDUwNnR3NGo3?=
+ =?utf-8?B?SXRCMnh3dkFxNjN1MWtOdlRqQUZ1Mmh1YkpjRTJNWEhLRHdzaUZIQWt1THZo?=
+ =?utf-8?B?dUNNanVTNGdLTmxCdkxreFo3UjhwUmwybG9TeHc0QXQwLytGZWc1a2R0MjFG?=
+ =?utf-8?B?ZnR1L2R5aXNpenhuaWIwM1JvdENINXZkcDg4Vy91L0poZlJjWE5VbWExaHJD?=
+ =?utf-8?B?QmxwdmlrVS9zNG1kQzkvbloycEQwWmdyTmI3d3VhM0Z5MGVuVTVqYkR3ZzNi?=
+ =?utf-8?B?MEg5MU5vMmxPOXhKRlZFSTliYkFQYk9OcHBXTEgxb3ZKdDdzWUFpRitjOEZT?=
+ =?utf-8?B?cHpYRGZSVFp2TFF6NXZRMWFoRXBKOUNVdzdOYldPYmFNOHI3ZmJ4VHFlMlZh?=
+ =?utf-8?B?VVQ4WWhzNm51Qk4rcE52V05ZanpiRlRKYTdlYXJkcjJFSmtHNFBxQ1h5Z0tv?=
+ =?utf-8?B?K2ExVjNwYWxld1IxdTU3N0k4OVNQYmpzWHFPZUJkQVAwZVJCYlFybjlxWFhv?=
+ =?utf-8?B?MDNNR3JpMWhnK3VQNzFmd3NVbFhjYTJKOWhzV0NQeHBGV3FhU1hUVzhmU1NO?=
+ =?utf-8?B?bTNTSWRIdWh3Vnh5S3FYZ0VEQ3RGejg3TVZOTHhFcjcxRkc5b1BOT0dZZDBz?=
+ =?utf-8?B?R3k5a1VyUGw0WnJheUQxVkNSL29ocUN0Um82SnIvQ25hei93blAyemdDa204?=
+ =?utf-8?B?Qnp0SU9tUFdEMjF3WlBweDVSWm1JMkJ5Z2hkMFRNcHNTN0dsZHNPZnZ3OU8z?=
+ =?utf-8?B?UVd0VXV3Q0xzdERUd1phUEJCb3dNTWFqbEtTSUtpTXVQTjM1MFNwSE1qWGdl?=
+ =?utf-8?B?cEgxeWJKZDRVNy8yV3lqTDIwSGdlNVluQ211MWhBVnQ3RU1BaDdHUDZVNmIv?=
+ =?utf-8?B?NWhQVXJVY1paYUlTN3NmcGw0eExUdzFRVXcvZ3cvV0dlNHJKNzNyNnNhdHpr?=
+ =?utf-8?B?UVgwVEczTGFxZkw1VG5WRFJ3SHp0MDg2Z1ZNNW9YWTRnVC93TCswTGxIRnR2?=
+ =?utf-8?Q?qEkhfmksbg9uRvCRDA?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: afa1ad2a-c22f-490b-00b9-08deb0b5b16e
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 06:05:54.7641
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: EXOyYUVq+n5hECCyZaBhVrOvW/QUeym5uXpz/Zx8TSI7oVO2W4C97KsO9FZ7AMMAqgkN70BRKuvrFBL6EZTv+A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4314
 
-Build tested in our x86,arm64,riscv config successfully without error.
+Hello,
 
-Tested-by: Wentao Guan <guanwentao@uniontech.com>
+On Wed, May 13, 2026 at 01:31:00AM +0200, Peter Schneider wrote:
+> Hi Greg,
+> 
+> Am 12.05.2026 um 19:36 schrieb Greg Kroah-Hartman:
+> > This is the start of the stable review cycle for the 7.0.7 release.
+> > There are 307 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> 
+> Trying to build 7.0.7-rc1, I get this build error.
+> 
+> In file included from kernel/sched/build_policy.c:62:
+> kernel/sched/ext.c: In function ‘bypass_lb_cpu’:
+> kernel/sched/ext.c:4019:35: error: ‘donor_rq’ undeclared (first use in this function); did you mean ‘donee_rq’?
+>  4019 |                 if (task_rq(p) != donor_rq)
+>       |                                   ^~~~~~~~
+>       |                                   donee_rq
+> kernel/sched/ext.c:4019:35: note: each undeclared identifier is reported only once for each function it appears in
+> make[4]: *** [scripts/Makefile.build:289: kernel/sched/build_policy.o] Fehler 1
+> make[3]: *** [scripts/Makefile.build:548: kernel/sched] Fehler 2
+> make[2]: *** [scripts/Makefile.build:548: kernel] Fehler 2
+> make[1]: *** [/usr/src/linux-stable-rc/Makefile:2108: .] Fehler 2
+> make: *** [Makefile:248: __sub-make] Fehler 2
+> root@linus:/usr/src/linux-stable-rc#
+> 
+> The offending line seems to be part of eb5b997dadc517 (sched_ext: Skip tasks with stale task_rq in bypass_lb_cpu())
+> Adding Tejun and Andrea to CC.
 
-LoongArch build failed, you can drop the commit to build ok:
-git revert a45361144d5a65dd3b7183fd7b511d9cdc143503
-Revert "LoongArch: KVM: Compile switch.S directly into the kernel"
+The upstream commit (da2d81b4118a) was written on top of ff06f727a941
+("sched_ext: Move bypass_dsq into scx_sched_pcpu"), which renamed @rq to
+@donor_rq (among other things). That refactor is not in 7.0.y and it's not
+stable material.
 
-BRs
-Wentao Guan
+I think The minimal fix is to rename donor_rq -> rq in the backported hunk, in
+7.0.y the function still takes struct rq *rq directly, and that is the donor rq.
 
-LoongArch fail log before revert:
-arch/loongarch/kvm/switch.S: Assembler messages:
-arch/loongarch/kvm/switch.S:201: Error: no match insn: export_symbol_for_kvm(kvm_exc_entry)
-arch/loongarch/kvm/switch.S:226: Error: no match insn: export_symbol_for_kvm(kvm_enter_guest)
-arch/loongarch/kvm/switch.S:234: Error: no match insn: export_symbol_for_kvm(kvm_save_fpu)
-arch/loongarch/kvm/switch.S:242: Error: no match insn: export_symbol_for_kvm(kvm_restore_fpu)
-arch/loongarch/kvm/switch.S:251: Error: no match insn: export_symbol_for_kvm(kvm_save_lsx)
-arch/loongarch/kvm/switch.S:259: Error: no match insn: export_symbol_for_kvm(kvm_restore_lsx)
-arch/loongarch/kvm/switch.S:269: Error: no match insn: export_symbol_for_kvm(kvm_save_lasx)
-arch/loongarch/kvm/switch.S:277: Error: no match insn: export_symbol_for_kvm(kvm_restore_lasx)
-make[4]: *** [scripts/Makefile.build:430: arch/loongarch/kvm/switch.o] Error 1
-make[3]: *** [scripts/Makefile.build:544: arch/loongarch/kvm] Error 2
-make[3]: *** Waiting for unfinished jobs....
-make[2]: *** [scripts/Makefile.build:544: arch/loongarch] Error 2
-make[2]: *** Waiting for unfinished jobs....
+Greg, can you fold the following into the queued patch? Do you prefer a
+separate/updated patch?
 
-defconfigs:
-https://gist.github.com/opsiff/a840ae9e3d6857f5b7bacb9cdc49f8e9
+Thanks,
+-Andrea
 
-Log:
-Linux version 6.18.30-rc1-g6a57bf31ed20 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
-Linux version 6.18.30-rc1-g6a57bf31ed20 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT_DYNAMIC Wed May 13 11:15:19 CST 2026
-Linux version 6.18.30-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT 
-Linux version 6.18.30-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #3 SMP PREEMPT Wed May 13 11:40:11 CST 2026
-Linux version 6.18.30-rc1-g6a57bf31ed20 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
-Linux version 6.18.30-rc1-g6a57bf31ed20 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Wed May 13 10:57:44 CST 2026
+ kernel/sched/ext.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 3cb8025b433e0..2bb7c7a902679 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4013,10 +4013,10 @@ static u32 bypass_lb_cpu(struct scx_sched *sch, struct rq *rq,
+ 		/*
+ 		 * If an earlier pass placed @p on @donor_dsq from a different
+ 		 * CPU and the donee hasn't consumed it yet, @p is still on the
+-		 * previous CPU and task_rq(@p) != @donor_rq. @p can't be moved
++		 * previous CPU and task_rq(@p) != @rq. @p can't be moved
+ 		 * without its rq locked. Skip.
+ 		 */
+-		if (task_rq(p) != donor_rq)
++		if (task_rq(p) != rq)
+ 			continue;
+ 
+ 		donee = cpumask_any_and_distribute(donee_mask, p->cpus_ptr);
 
