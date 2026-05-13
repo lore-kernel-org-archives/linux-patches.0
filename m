@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49833A1A59;
-	Wed, 13 May 2026 12:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085DA3FE641;
+	Wed, 13 May 2026 12:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778673873; cv=none; b=K6XcH5jvxuFI1jrO6oTn8tlCsYy6+VTbMT5YYsI7tOCs1/wXMKHX2ZUZPOFTLXXJH9+5O8duh9rtJxJ363cxdL4DiO0p43pWQK8X9kREbHtLD/PNDCJEMkArsNP2ouCH3/QN/oAkE0TgNjd4Hd24wEg7jQjYVxK6Vq+V+BTv3Io=
+	t=1778673951; cv=none; b=rbeHXJLgxLHA4PFa7LTM6kJNJxL/e5zXbYCmo1smZk8DYtz4NQ/6bKVaPXnXFdNFyXN6Fu8EyjLmU93XS6SIFWps61D3JNZ2b+pY4IFZgPAGzcjT36d1OXxEWPuDv6uaE4rlwIfZ/2pmSS1K2A/Ry0T5Kxsf/WFzzVgUGRWq/vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778673873; c=relaxed/simple;
-	bh=1ddwlB8sBgk+Z8C7863SUHrkHPXOJ80ReQ2d/6gtlDU=;
+	s=arc-20240116; t=1778673951; c=relaxed/simple;
+	bh=1a9Ix2FvJpGGH8eCZfGnN2XAdxXZtKT+5yzua4lqaaE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TwLdIf2/QnyVPF9c9jpoClfII+QWztwNEfYnnZDPp+waBl5ZOGH5EdXvwk8SORMjC939E36odct47TpNrp6XXi9LQZdaNo5xyE+OykeY8nfrU8CPAUQYzrKOrYOojNSZDRZgEI3MSihtzm6dGOBx3Dbe3Y5R5EM4bgN6SC+ad/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwajN5YK; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=KnOQLb8e65c4UUtisIiEJOb3a/lR5ZA+kxQ02pHCam9uws9yMvljlwt1Xe3klEacjntrv7l2HPbMlMCB3ZA7pn1sR/qHpO0mmyiDlia49gFsk/R8b36Ty3uEbIpdDGz794bGTL0rwf23bsMX0vS4AqiJRXVjeC2/13fp2K5L5/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bmlgTd1z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwajN5YK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD244C2BCB7;
-	Wed, 13 May 2026 12:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bmlgTd1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47172C2BCB7;
+	Wed, 13 May 2026 12:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778673873;
-	bh=1ddwlB8sBgk+Z8C7863SUHrkHPXOJ80ReQ2d/6gtlDU=;
+	s=korg; t=1778673950;
+	bh=1a9Ix2FvJpGGH8eCZfGnN2XAdxXZtKT+5yzua4lqaaE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nwajN5YKBO46MKPhdppuvS88h0DCrvRdPJPzFH4BVJuQNxtWxBR3CRtTyzNrbU3iH
-	 9QcAEkB2ljybVxm70yy3Rs/4xUxzJlvAMDz9Yz564e5CQ1WyqFkC9PogaFafOxsUwm
-	 yoeBmrtY00hMMuDr8bksz4wHoQu6+lrCDZoM5L80=
-Date: Wed, 13 May 2026 14:04:38 +0200
+	b=bmlgTd1zoQBjDiaFx/1lzIsv/b0PJQmyEN6GbVO91Kf3Eh9lQVCCCl9cGJPGt8uaP
+	 S5DQaqhQLXAiQr13aRLJrHsr1SybM0lcKBFVpBOQi8cjv81itUhsA6tb+BSnfwFfa1
+	 Pbb2ok7z8QKmHyjNK0XLgQI+XMXYlHjqO6hoNwe0=
+Date: Wed, 13 May 2026 14:05:55 +0200
 From: Greg KH <gregkh@linuxfoundation.org>
-To: Wentao Guan <guanwentao@uniontech.com>
-Cc: chenhuacai@kernel.org, chenhuacai@loongson.cn,
-	dave.hansen@linux.intel.com, kvm@vger.kernel.org,
-	lixianglai@loongson.cn, loongarch@lists.linux.dev,
-	maobibo@loongson.cn, ojeda@kernel.org, patches@lists.linux.dev,
-	seanjc@google.com, stable@vger.kernel.org, zhaotianrui@loongson.cn
-Subject: Re: Re: [PATCH 6.18 091/270] LoongArch: KVM: Compile switch.S
- directly into the kernel
-Message-ID: <2026051311-lullaby-wrecker-7d23@gregkh>
-References: <2026051319-lazily-machine-5ab3@gregkh>
- <20260513115810.338478-1-guanwentao@uniontech.com>
+To: Gary Guo <gary@garyguo.net>
+Cc: Miguel Ojeda <ojeda@kernel.org>, patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: Re: [PATCH 6.12 204/206] rust: pin-init: fix incorrect accessor
+ reference lifetime
+Message-ID: <2026051333-fiction-plug-9076@gregkh>
+References: <20260512173937.196814135@linuxfoundation.org>
+ <20260512211325.316158-1-ojeda@kernel.org>
+ <DIH0S88MYNRZ.2J6YW6S3CONAX@garyguo.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,67 +42,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260513115810.338478-1-guanwentao@uniontech.com>
+In-Reply-To: <DIH0S88MYNRZ.2J6YW6S3CONAX@garyguo.net>
 
-On Wed, May 13, 2026 at 07:58:10PM +0800, Wentao Guan wrote:
-> Hello,
+On Tue, May 12, 2026 at 10:35:33PM +0100, Gary Guo wrote:
+> On Tue May 12, 2026 at 10:13 PM BST, Miguel Ojeda wrote:
+> > On Tue, 12 May 2026 19:40:56 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> >>
+> >> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> >>
+> >> ------------------
+> >>
+> >> From: Gary Guo <gary@garyguo.net>
+> >>
+> >> commit 68bf102226cf2199dc609b67c1e847cad4de4b57 upstream
+> >>
+> >> When a field has been initialized, `init!`/`pin_init!` create a reference
+> >> or pinned reference to the field so it can be accessed later during the
+> >> initialization of other fields. However, the reference it created is
+> >> incorrectly `&'static` rather than just the scope of the initializer.
+> >>
+> >> This means that you can do
+> >>
+> >>     init!(Foo {
+> >>         a: 1,
+> >>         _: {
+> >>             let b: &'static u32 = a;
+> >>         }
+> >>     })
+> >>
+> >> which is unsound.
+> >>
+> >> This is caused by `&mut (*$slot).$ident`, which actually allows arbitrary
+> >> lifetime, so this is effectively `'static`.
+> >>
+> >> Fix it by adding `let_binding` method on `DropGuard` to shorten lifetime.
+> >> This results in exactly what we want for these accessors. The safety and
+> >> invariant comments of `DropGuard` have been reworked; instead of reasoning
+> >> about what caller can do with the guard, express it in a way that the
+> >> ownership is transferred to the guard and `forget` takes it back, so the
+> >> unsafe operations within the `DropGuard` can be more easily justified.
+> >>
+> >> Assisted-by: Claude:claude-3-opus
+> >> Signed-off-by: Gary Guo <gary@garyguo.net>
+> >> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> >
+> > I am seeing a few Clippy warnings:
+> >
+> >     warning: value assigned to `inner` is never read
+> >         --> rust/kernel/init/macros.rs:1234:18
+> >          |
+> >     1234 |           unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field), init)? };
+> >          |  __________________^
+> >     ...    |
+> >     1260 | |             let $field = unsafe { $data.[< __project_ $field >]([< __ $field _guard >].let_binding()) };
+> >          | |_____________________________________________________________________________________________________^
+> >          |
+> >         ::: rust/kernel/block/mq/tag_set.rs:62:9
+> >          |
+> >       62 | /         try_pin_init!(TagSet {
+> >       63 | |             inner <- PinInit::<_, error::Error>::pin_chain(Opaque::new(tag_set?), |tag_set| {
+> >       64 | |                 // SAFETY: we do not move out of `tag_set`.
+> >       65 | |                 let tag_set = unsafe { Pin::get_unchecked_mut(tag_set) };
+> >     ...    |
+> >       69 | |             _p: PhantomData,
+> >       70 | |         })
+> >          | |__________- in this macro invocation
+> >          |
+> >          = help: maybe it is overwritten before being read?
+> >          = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+> >          = note: this warning originates in the macro `$crate::__init_internal` which comes from the expansion of the macro `try_pin_init` (in Nightly builds, run with -Z macro-backtrace for more info)
 > 
-> > On Wed, May 13, 2026 at 11:06:20AM +0800, Huacai Chen wrote:
-> > > On Wed, May 13, 2026 at 5:53 AM Sean Christopherson <seanjc@google.com> wrote:
-> > > >
-> > > > On Tue, May 12, 2026, Miguel Ojeda wrote:
-> > > > > On Tue, 12 May 2026 19:38:12 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> > > > > >
-> > > > > > 6.18-stable review patch.  If anyone has any objections, please let me know.
-> > > > > >
-> > > > > > ------------------
-> > > > > >
-> > > > > > From: Xianglai Li <lixianglai@loongson.cn>
-> > > > > >
-> > > > > > commit 5203012fa6045aac4b69d4e7c212e16dcf38ef10 upstream.
-> > > > > >
-> > > > > > If we directly compile the switch.S file into the kernel, the address of
-> > > > > > the kvm_exc_entry function will definitely be within the DMW memory area.
-> > > > > > Therefore, we will no longer need to perform a copy relocation of the
-> > > > > > kvm_exc_entry.
-> > > > > >
-> > > > > > So this patch compiles switch.S directly into the kernel, and then remove
-> > > > > > the copy relocation execution logic for the kvm_exc_entry function.
-> > > > > >
-> > > > > > Cc: stable@vger.kernel.org
-> > > > > > Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> > > > > > Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-> > > > > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > > >
-> > > > > For loongarch64, I am seeing a bunch of errors like:
-> > > > >
-> > > > >     arch/loongarch/kvm/switch.S:201:1: error: unrecognized instruction mnemonic
-> > > > >     EXPORT_SYMBOL_FOR_KVM(kvm_exc_entry)
-> > > > >     ^
-> > > > >
-> > > > > `EXPORT_SYMBOL_FOR_KVM` does not exist in 6.18. Does this need a subset
-> > > > > of commit 6276c67f2bc4 ("x86: Restrict KVM-induced symbol exports to KVM
-> > > > > modules where obvious/possible")?
-> > > >
-> > > > Either that or just convert EXPORT_SYMBOL_FOR_KVM() => EXPORT_SYMBOL_GPL().  If
-> > > > that's somewhat scriptable for ongoing LTS backports, that's probably the best
-> > > > option.  EXPORT_SYMBOL_FOR_KVM() will only work for 6.18, and the list of backports
-> > > > needed to get EXPORT_SYMBOL_FOR_MODULES() working on older LTS kernels looks to
-> > > > be non-trivial
-> > > >
-> > > > If we do end up backporting EXPORT_SYMBOL_FOR_KVM() and others, we might as well
-> > > > also grab a subset of 01122b89361e ("perf: Use EXPORT_SYMBOL_FOR_KVM() for the
-> > > > mediated APIs") to ensure a kvm_types.h stub is present on all archs.  That way
-> > > > EXPORT_SYMBOL_FOR_KVM() usage in arch-neutral code will also work.
-> > > I have already noticed Greg about this before.
-> > 
-> > You did?  Where?
+> I didn't hit this during local testing. Just figured out that this warning is
+> appearing on Rust 1.82 but not Rust 1.85, as I have updated my environment when
+> the MSRV is bumped. So it looks like this is a false positive that was already
+> fixed, but we still need to workaround this for stable kernels.
 > 
-> Small problem, I guess where he means is 'stable-commits@vger.kernel.org', is a
-> not public maillist? I want to find it in 'lore.kernel.org' but not found... 
+> (It is also puzzling because there weren't any extra assignments to the
+> variable).
+> 
+> >
+> > It seems the backport dropped the `allow`s for `unused_assignments`:
+> >
+> >> -        #[allow(unused_variables, unused_assignments)]
+> 
+> The dropped allows are for `let _ = ` which shouldn't need them.
+> 
+> The newly added `let $field` did only have `#[allow(unused_variables)]`.
+> Changing them to `unused_assignments` fixd them.
+> 
+> The diff is below which is quite trivial. Greg, is this something that you
+> could fix up or do you want to re-send a new version?
 
-It's a public list, anyone can sign up for it.  Don't know if lore
-archives it, but I'm sure that someone does...
+I will drop this one, can you send a new one for the next round of
+releases?
 
 thanks,
 
