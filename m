@@ -1,118 +1,102 @@
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD284DC552
-	for <patches@lists.linux.dev>; Wed, 13 May 2026 17:46:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464FA4968E2
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 17:47:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778694390; cv=none; b=Z0W2GvGjnb56fZ4OSNY1aSFjRdnSkMUcVAmqVsIow82U8mIHjcNojbp2y8VlEm9ooiFMYMaL1/1Lvhwrg321/BHjCl+lcPXCa43GhHe07EICWgSi4yJxzY3VgtJh2qZ+/p7Aj+w17unXMgIF045aIrLslLNgSkbzJDhV8cWxTD4=
+	t=1778694462; cv=none; b=d/P9sWXC0lGFpM1nO/g6BpuGR9Thdr4x9djhFsvgCNscABJBTPp7mEhop2S5gwsCrJoacE8sYHv34aEiXC7Zjj664oXQ4jFo7TleNM8w9gNRvoxroIovk74Ru85L5VVwLng6jUxFthAmZcU7xx3wbjEPuw57wNaYwC4fouiZ8tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778694390; c=relaxed/simple;
-	bh=RJSvlSo8b3eU3kArKQ0tDZIFebTEAfI2/bt/cNgtTGI=;
+	s=arc-20240116; t=1778694462; c=relaxed/simple;
+	bh=/d7ugw8j3llT+i0xpw6oKwmdDsEr5lQSNXVbHHx7Bbc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c2ozwiWaOqxM3GgBJ1wLnVKE3MzZgWdWfTHvK8Vwuu9EmCsUS0R0NjW5bU5aByx6XQkryO0aotQ+Qypz9/Pnk4uBkoAlBot/NC6jfkc2kiZ8T47xzEfAU6NDF+dbqSDousMn89tKXsJcTuK0BwZTImYKwLXfqM5cKPQ9v3xRyhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fKpngkg6; arc=none smtp.client-ip=74.125.82.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=WTXIWU8PRChXHrpJiUyfz0TAR1qzL7fNQmlPJHQuLx1Bid9opJPTldDH5NB/G9ffoW9vM8OV81wSFK7HJsLdXqUxySMnfCSgChkhzPH0U4hkwtDC8QS+78E2FXqj4/H/uv2h+akCuBlvugbE+p+CZABxrmesNOE93jj/tA5vKM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=HIbRyatq; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fKpngkg6"
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-132cccd3d77so781c88.1
-        for <patches@lists.linux.dev>; Wed, 13 May 2026 10:46:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HIbRyatq"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2b46da8c48eso4575ad.1
+        for <patches@lists.linux.dev>; Wed, 13 May 2026 10:47:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778694388; x=1779299188; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1778694460; x=1779299260; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XeNgdwwD024w74BNPer9lil+jH8BVZwrPlFbFGxZTFc=;
-        b=fKpngkg6rBN/SDQrFRUJaC9to8jByeL/RZLdLqn8x65Wtsi7HRE/LmkQsXuv2LB5ND
-         bgABCuH04jDIiCkWnZp2jHY5lPRSGNL21ML0D3NPe8CCTq1LSLSS0O09F7XG6kfGrYow
-         XPF4KIRCdTfIqPTI0e8P45tosruykxxFCjTmEN0/RXh62xoNuYdRVuy5Rhd+r5AB382K
-         K1bXOcy2EGf97C5bKc/TdPZo7T6pGZH8A8ghInrp4x21LbC58vo6zK81HSlkA+LmHAPF
-         rCMlS0PlrwQ8YUHwL61ZJxWebUUKxRRXIqnOKwOekOqaL4Ogx2roT1VaLwIz/CqwsOgF
-         uiQQ==
+        bh=UD9g7VTOeXYFNZR2QR68/VBGy1DjrVre8yBvcooH1jI=;
+        b=HIbRyatqt3mooVc7FGe7b61HMev9AaRpWXyNyt3yu56mb63qrWR24RHss4KtrPdXn8
+         P7MR4ymLpth2iQjLhzLoURbaqApvGLiMFCUBLgh4MnY60hMVQqmOFVyqrcdWXAJzvVvS
+         OwONnkIY9vZsvvkfNtYx6eNaMPUfWyvA5Wywef7ifrdKNxXnxBGJwefhiSfo33dDNIDD
+         pTMPNkuJnVK+4mHJjHFfhXF5ohBt20j5wr0wEV1+PLWtTrU8ykHw6MfGgZ432C8g3unI
+         wSJdNldtl1mhkn9JQNd5fzV1NOZE2DBOq4UmgrvL6kWkyHBdaDVs02a4NAma4vvTG3bw
+         Apnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778694388; x=1779299188;
+        d=1e100.net; s=20251104; t=1778694460; x=1779299260;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XeNgdwwD024w74BNPer9lil+jH8BVZwrPlFbFGxZTFc=;
-        b=Dpr86M/dQXrfGOY26pAcmXBAP27n6H5J+Y/AQ1ZyEGJ9iuK+lm0KptmTQoFdEEb+I0
-         z1gI47rMzjuqrTgguay6fwznm92ReSA6eqw1SP7Y0S0yPGz5MNO9AcjoGmo71BfQZjAl
-         OTJ2k3CLnZxMuWjBONJGeWhT5kJ3f2cagsKH38jS2515AO6rwu6/FxD5rVQh4l/ltIMN
-         Fp8M9gKu5uwaN0jV5hesaQTRmy5AeBlT6DHQ9iWHKFRFCQ2+fJ6hzBrN77SyL5je0cfp
-         1whi+9qIIMuetXZ7VRla6+qQ87NICwcQb9NimHtNGKEHBbwW6odq2dO8c/ox5QDzLgfu
-         0krQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/UM5oYjPN4rNatUOP/vHa2rgcb9+in1tHqleeDE7EebVfBadzSNnsDRUCWo0AeUk0xJMFUhgR4@lists.linux.dev
-X-Gm-Message-State: AOJu0YxHh/rARwUJ1Diz2EMD2ImsQi6KWuQoz1CmQ8RolrVs9sbCTMy8
-	pb4hmhP4rLqcjW5F2G0e22VqBWIV1P2cNGUaOt1kuFmzMq2e0NPKIi9EJ/rp1Fm5Hw==
-X-Gm-Gg: Acq92OECvf/pPmZY6mmw6/kTJc73PpNFmmoEkCgBuEGH4eWPvG8F7HhUCtzFycHkS+e
-	ZWpqoXIkNE7dTV7WWxN56hZ3dT7O4dUN9/5UkYDBJ4iS1dDpCiODvhcbTA7bbDFp+TrTNYB5tt3
-	UccIlT1Bff+q32oN3QsnNzwzkzZs2F3YIkRWk+T4Wpw4Da/wMHRjbTUxpF+A5WSFfDk/Eq4abA3
-	fjwgx4DVvOK5Lu8yMtA6JLnz5hpnlruOwZDESLBlc7ZarVZdVcO2ER0r04X7Int9//YPigTupig
-	J0h2LtoGNHcnqOZdmkAdW9Y7x+orzwPObCcqaMSHCMd6eb5bGf1507jWi+BgDfsR7pCCRgNMX+R
-	jxUW9cMF43BTsSGqQaP5u+SeP7wFzv8y6Nxba0akJ0mGKFIXNwjb2u956mzLYyOxrZ6yjXM63Ug
-	R2Llkf9N1wBfuMcCk/+5FRULNXbn1h05YPSD9I0wFNFa2CW5te9oyjods0GcF0QlcGfWDpWA==
-X-Received: by 2002:a05:7022:69a5:b0:12c:8f55:cd0d with SMTP id a92af1059eb24-134cb46941fmr20666c88.8.1778694386986;
-        Wed, 13 May 2026 10:46:26 -0700 (PDT)
-Received: from google.com (153.46.83.34.bc.googleusercontent.com. [34.83.46.153])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f8859eafc2sm29059095eec.4.2026.05.13.10.46.26
+        bh=UD9g7VTOeXYFNZR2QR68/VBGy1DjrVre8yBvcooH1jI=;
+        b=Tz4wZm1Or4U+6Ids9Ci9vTAa6V6SAdhHGq+0OgS23OiMuOQy6V4ZGc2/GLG34oAeH2
+         mSNbJmwnP9hmFOLELhRj584Rg9t7FhiQ/OyJx5b9EFX7uyShRKYWSwu581Jw8lcr1dVO
+         jzfvXmn4kTuBwWx9gv+mz1epJUbGwievaKaMyBYJhPLYTxIGN0PqAb7KXoy/SyuKVY7b
+         JhGjvBZjqDDNXdX5vZ3BjAzlkQg8pu9Lqjw00u7/xy3Nqsd4jPKlBAhK8Yzh59VkgXkc
+         Lm6G7MBhzLIznFElYpQi7DZ36RAYu3P7N9+0RqyRqluUFxEX6MtVyz66sBkWEdMjNsXd
+         F9Bg==
+X-Forwarded-Encrypted: i=1; AFNElJ9J+XDmhKBGF2dPFu2beshxRJ6uLHpVVH0ykDf2s+GaBdG19JzLVQdu48sKEMenrgE7Dv73WvTQ@lists.linux.dev
+X-Gm-Message-State: AOJu0YzFVJWG0yXJUs13LBPhBpPpngZZyxF9IzhN9FhXhtQoyO+relo8
+	6Wu5rIuCPWCapplkAR97AhEQZ3O7Urpp2eBCL4dCpd2rtrJ6oQH4U4kYGdq9FmJRRA==
+X-Gm-Gg: Acq92OE0/Iqw9OPXLeZOvIGky+VNHdEdqIVRqanCzaDQHJ67mnTDiYtCiku+LWUNmoE
+	PTaYcg8Tcou96HFbtepzWnYfZbLPjMdjbuKbRMieZtjrvoB8iHgTaM5H4qU20N/UEuMkP333K8r
+	Q6WOXL0axjiuXZfJ9aYpFPqHx71uCww9reCucoNK2GUBuuidNBWwHCxzmQxy3adGYEGLWA8ibB8
+	ajuOadOI3hyea6imIayM6CL7Y4ilIt/2rKjCTTKQKMv+KYXtl+/Kc+jgF5UQHCzKc3eE4wLvHyl
+	Y0QeqgtDSm4z5Nn5mqj1YlTxt/eh9YI+UgBHoN+teMyB9l6KXK2qzE8YMM8SyynRCeCnqwHg5y1
+	xOQ2ycHt9lExDyKXtl8HGzM4njwIu0ObIBNsQ5MRLw9f8ZnXYtNcbe+LwVDF4EQG3XFpxox3ZLi
+	bBRwoISvQQygf27vBW7iOoZgsWKA8NwrJMhYWJU6a3SenDwtPRhD19jPw5CVLnkcJDb4Iw
+X-Received: by 2002:a17:902:db09:b0:2b4:58ad:e987 with SMTP id d9443c01a7336-2bd568f44a7mr144265ad.17.1778694460069;
+        Wed, 13 May 2026 10:47:40 -0700 (PDT)
+Received: from google.com (44.234.124.34.bc.googleusercontent.com. [34.124.234.44])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19f7cc8bsm117708b3a.55.2026.05.13.10.47.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2026 10:46:26 -0700 (PDT)
-Date: Wed, 13 May 2026 17:46:22 +0000
-From: Samiullah Khawaja <skhawaja@google.com>
+        Wed, 13 May 2026 10:47:39 -0700 (PDT)
+Date: Wed, 13 May 2026 17:47:32 +0000
+From: Pranjal Shrivastava <praan@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>, 
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, Lu Baolu <baolu.lu@linux.intel.com>, 
-	Joerg Roedel <joerg.roedel@amd.com>, Josua Mayer <josua@solid-run.com>, 
-	Kevin Tian <kevin.tian@intel.com>, Pasha Tatashin <pasha.tatashin@soleen.com>, 
-	patches@lists.linux.dev, Pranjal Shrivastava <praan@google.com>, 
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Josua Mayer <josua@solid-run.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Samiullah Khawaja <skhawaja@google.com>,
 	Mostafa Saleh <smostafa@google.com>, stable@vger.kernel.org
-Subject: Re: [PATCH rc 4/5] iommupt: Check for missing PAGE_SIZE in the
- pgsize_bitmap
-Message-ID: <agS04F8UmZwWZNao@google.com>
+Subject: Re: [PATCH rc 3/5] iommu: Handle unmap error when iommu_debug is
+ enabled
+Message-ID: <agS5NHNCAwmTesf2@google.com>
 References: <0-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
- <4-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
+ <3-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <4-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
+In-Reply-To: <3-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
 
-On Tue, May 12, 2026 at 01:46:16PM -0300, Jason Gunthorpe wrote:
->Sashiko pointed out that the driver could drop PAGE_SIZE from the
->pgsize_bitmap. That is technically allowed but nothing does it, and
->such an iommu_domain would not be used with the DMA API today.
->
->Still, it is against the design and it is trivial to fix up. Lift
->the PT_WARN_ON to the if branch and just skip the fast path.
->
->Fixes: dcd6a011a8d5 ("iommupt: Add map_pages op")
->Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
->---
-> drivers/iommu/generic_pt/iommu_pt.h | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
->
->diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
->index 19b6daf88f2ab1..4877b05291c9d4 100644
->--- a/drivers/iommu/generic_pt/iommu_pt.h
->+++ b/drivers/iommu/generic_pt/iommu_pt.h
->@@ -920,8 +920,8 @@ static int NS(map_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
-> 		return ret;
->
-> 	/* Calculate target page size and level for the leaves */
->-	if (pt_has_system_page_size(common) && len == PAGE_SIZE) {
->-		PT_WARN_ON(!(pgsize_bitmap & PAGE_SIZE));
->+	if (pt_has_system_page_size(common) && len == PAGE_SIZE &&
->+		likely(pgsize_bitmap & PAGE_SIZE)) {
-> 		if (log2_mod(iova | paddr, PAGE_SHIFT))
-> 			return -ENXIO;
-> 		map.leaf_pgsize_lg2 = PAGE_SHIFT;
->-- 
->2.43.0
->
+On Tue, May 12, 2026 at 01:46:15PM -0300, Jason Gunthorpe wrote:
+> Sashiko noticed a latent bug where the map error flow called iommu_unmap()
+> which calls iommu_debug_unmap_begin()/iommu_debug_unmap_end() however
+> since this is an error path the map flow never actually established the
+> original iommu_debug_map() it will malfunction.
+> 
+> Lift the unmap error handling into iommu_map_nosync() and reorder it so
+> the trace_map()/iommu_debug_map() records the partial mapping and then
+> immediately unmaps it. This avoid creating the unbalanced tracking and
+> provides saner tracing instead of a unmap unmatched to any map.
+> 
+> Fixes: ccc21213f013 ("iommu: Add calls for IOMMU_DEBUG_PAGEALLOC")
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
