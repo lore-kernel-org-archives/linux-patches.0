@@ -1,113 +1,109 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2894DBD62
-	for <patches@lists.linux.dev>; Wed, 13 May 2026 17:35:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74874D98EB
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 17:42:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778693745; cv=none; b=b6sHy+sr61qNpmNxs6OJeWiIXsQ7ShO1F63G1UeYwlblA4bGliAxVIE1e6YkKzo64sgzoWbSdVFEP8SfS6Wzx3n8+7z0Sn6Lqji/4kXiByPVOCsOgQ0yJaJKtIvEY3rIfGGHknnjdocgDWR/S90wO+gdB0ooRNvqqJBdzjO/iRM=
+	t=1778694153; cv=none; b=nh0CEJC9cRB4f9BzLKwJUd7I65eibRvXc5+lInr0NY0VboKx9nSdr7+pfGIKncwtTF7SLIfK6ppDGbJGmAh7i6cX0pGX3b5dE82qnaVk4jBXy1tnsUebhxX+qW+BSTggmTr/XQlM6wrjDhqzFZMD4fJ+qg/eV2b8UFuXEJZBG84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778693745; c=relaxed/simple;
-	bh=KCal7kzqZI8+0VK4uQJCVOmFtclj032kNAYQovwtFr4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xjq0qGDhspuuepT2UYo3Oj6EQDpSYrhpYUmbLs8inDSXqigZk1umxf+Ml64v/OfHxeQ74eCMyylUIDi6Db/KFrBe1Zy2XVolWUiFVrcH1zpGyWWEdPKd7MUfwYfui+RJQzWGrXQRHfHGohTXBGeNg6lQldLGQMUTAgbIq9Rd9j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SHh1tgjW; arc=none smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1778694153; c=relaxed/simple;
+	bh=Z4DQx2lSeg373FycVPY8LgB/ufohedZhPA83y4EaBOQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pVSV3OdAE9XF2Bq/K+y2xSaO89KYkO/LEU6KJg7nNVA98SvkNLWAaBKmP7xys3OgRiwY7qoUidKXdIQFcME8WdD81UMjiDu24L2MRQ9yGijF6v1OuUA4SQNmMPXXRh4/ZWxYUyAiO8AneQ3ex6stBudxGpmuWNl3eiND+I0gwR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nBqZDYlF; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHh1tgjW"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-12c8f9846c8so10521260c88.0
-        for <patches@lists.linux.dev>; Wed, 13 May 2026 10:35:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nBqZDYlF"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2ba3b9bcf69so505ad.0
+        for <patches@lists.linux.dev>; Wed, 13 May 2026 10:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778693744; x=1779298544; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ul0Nd+LldB2hhhsaIn510nAc6p+u/VtWN9+3RBSesGw=;
-        b=SHh1tgjW/Xq4SZ03AOm5K6my6DJ+p1jR43uXc25PsTJWP9O2AZyF/h4UO4p6FBUNuE
-         OGUru7j+sU+7fv5A44qnAMMDkzq/He+IMcC6xLuEWioJzCxUsxvdo0qFulAdvkShPT1C
-         cL8XbuhNixQlxLvTXDkpst5zvXCsavCxFxOM1MqMIxlpERJbC8QAg38iEAxDnldTBYYf
-         AT3gajkH73lQfZx96R9ep01cXQa6cWs/puVxxdzv+YltcKeEDIuInZaVZCglmUn3LP1X
-         Aspq0yocSFvlR5Ht1v9frKv3Hq6uGTJAqblXvFmoMIUJx5RXEE5LHmXHf7Bmtg6lUEdS
-         1BRA==
+        d=google.com; s=20251104; t=1778694151; x=1779298951; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pcBA9DAGtJkPWnf5c2GL3hdpA6y9KY9keSOmEQ3FPfc=;
+        b=nBqZDYlFyDJm8tYq2bqX75tLDhhGXjV1WgZeIzqbjFRm/Mu3oGZjiKvstoMN7bjHwe
+         OS21eYMi6Bg9NmE6cLKXADxY8DloBfgQq19EKy5BhszyeiT5kAoo86OLRsEafoqDaxpF
+         RB6C1X379BHZVnrRdx3HLUzaCR23zTQSYab+nLu5S5xzxkopecqEkuOOH5JTt2XdREdl
+         8oz0MJAa8+mxU3UiBjcWdhpqmUDNg/TCGoaL8y0NHgRZV4BNniAUgkoKHTyIWTHMz5UX
+         IBh8JNvAmK3amwZPW9Qhkdwksyz9ifdAwSK99aOZggl9MwZHk1IJc066S94D79RBLd59
+         8mfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778693744; x=1779298544;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ul0Nd+LldB2hhhsaIn510nAc6p+u/VtWN9+3RBSesGw=;
-        b=EwLo0yj0Ckuu/0nf+3csNTlnp0G6V8yC71B4JyiCu9bDznmvhLdhGLwIvPiP9/btKt
-         /RBsLt1fLYT3fb7JdSM7j7XO1Oo342DX6gy8I883tiGGGYv483lbyqYCyRUfe0KCr3Yj
-         bWbIddddq2in7c6LQDdEm3FSA45EF9EzKunKdTbCN5UJq+TSxp07Ey376R3S5yCsl5Hf
-         eud4QaISEgkYq7xfzCszfBLn4KMFhD1yjSWVGRhm2/jdntsymVoJ5fHZzHn3M28GsXsJ
-         JVYkx16SorDi/QZdDRV1etO0BkirGJIbuLHXhTv7jQNzxSAzs6ZvKVr2DmlgYijsVzUd
-         CFcQ==
-X-Gm-Message-State: AOJu0Yw9L2w87RrncPxVGD1P5Lecf2Lh6rlwJ/7tcI1ynge/PS1HZcqB
-	BFPU4qzq2z0PhXBC9dBcNi0egW1ijn+CyVmb4Gl5IcJF9px/p0bBr8Rl
-X-Gm-Gg: Acq92OFlQcYKjxuBHtSe+3ffMU4ps4j9SWpL8b437VpYIKKTZqvxoeog4Q4cBUWMxCz
-	+jEsmvMhkj8PFZ47Gja5Pq2fCR4Uwqa1ePman8TKcoQv80NbEFcN62ZVNVuhah9ysjscDphwshk
-	hgGhqRdETXSdc8IhdHXvYYrh8vD2oxOj1ITYaaEQP8zu6nJMMDC0gyDqJSJ+slfxCx/tReJzwFM
-	bqdLu1R2fC0w61vjGv5OtrDYYXvA0DByxrCjTNeeecldq1Ge9O4drkutuvA5gJ35ASmdLGt1pfN
-	DfG6oxpi1GP8Uv2dQtPbl2hHfpMo68LcL/d8WiEky06pC6bI50GfhLgreZ4/ex5kk9xZvMzKi9b
-	vQ5vPDKqxAI82XviLKQV8Yubrpd+QIVV/G7i+MOH4BgJynd2CNqS+sZyloHaMTMXH4tIaY2Yai0
-	TFcaG/68qjdd2yqXfz3qmrzK1INIUmO/GTJyfubHkJZF3vnflPjUjavtZT6S4tuGFE
-X-Received: by 2002:a05:7022:21e:b0:12c:34b9:61bc with SMTP id a92af1059eb24-1342ee3a02emr2676237c88.5.1778693743835;
-        Wed, 13 May 2026 10:35:43 -0700 (PDT)
-Received: from [192.168.1.3] (ip68-4-215-93.oc.oc.cox.net. [68.4.215.93])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cc33aac9sm51967c88.14.2026.05.13.10.35.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 May 2026 10:35:43 -0700 (PDT)
-Message-ID: <199abc0a-e5b0-44c4-a0f2-11d1f959e606@gmail.com>
-Date: Wed, 13 May 2026 10:35:42 -0700
+        d=1e100.net; s=20251104; t=1778694151; x=1779298951;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pcBA9DAGtJkPWnf5c2GL3hdpA6y9KY9keSOmEQ3FPfc=;
+        b=TCE0QGkQRHvOOy0XdaCO2nf2MeZ4TzZcPyY3UstcHeF/xOQFwbgKs4z4JWQqX7slnB
+         31bjcYDquk16ZqlylImIdVBVnZ7tmIzdVG47SllrpOIlCcxdvu5s8ZuNGHuHV0QoUiVh
+         ztMJc0a7z0sxsTFesegsr1IGX8BJKlTBdMl8rMznSSXJKPN1D8lHuU+oEcFHYtB1Elhf
+         Ze5OIA0CjHdENpLJEeOc6DTDEZSNZ5fQhjUbKQTTO+kBm2typGD2gYefO1GIiwET7qPa
+         Ok2EDJYDKQTfWhvGmub+kTC35f5uSG1YoPEICJ2vMrzn+HcHPFuu5zESyVC9XJnD66C2
+         hI9A==
+X-Forwarded-Encrypted: i=1; AFNElJ8N8JEfGoRtN2KyFx1gPw/T1Owq381Z1ME0lOj4G8Nfq5AoD5XIUQxvpj33Amvyd1diDE1DU3uG@lists.linux.dev
+X-Gm-Message-State: AOJu0YxJ8zOj7g/D9ZvTl9vDKzFxsf2dr4qR/FfEF357pu3rHwt8tADc
+	0KHUibxPQxtMmGhGHQx2dH6iPQh00Yq7D5xjD3xCzNt80VlRe8yN2UwcW0iFoT1JvQ==
+X-Gm-Gg: Acq92OEmCuwsjpQyDN8QhlfTjzZZGBHdCDUGQrfaG4WlkYhbGUe9S0gm/1Z76qIAqcx
+	jnF4i8EFTVAte+TcA4U/hpT8t0nn6QEveQoMM1w2730u3Ii2x31HXumYRMfe8lneahCMepL/U0D
+	3WTg799O4Ryf8nB38gZgYMNKITQBK7UO6iKzCrshgu9HiHvhNbSEm4c0hrcjbmQv6ai7WB5uYEc
+	TGWSJ1OSE2dNYEGogss/D6rJk+Oq8fOvluhzhFa9vEnfPcvRFvOoQ+eQikZNNHv0NZRSnU0cWGh
+	v+rdF1dk6Je+AIMmsnCIMobYKls025FcxHS+8t8YVY8IodSBDxAYaqyNQD0XDUTzpVUy6hzJy7e
+	btOA7Gttw7nPE5zzlfoZmbEauJuBGssJKLCep/8ssNcOWNMJIhU/T6jknobqVW393hRKBlp+g6l
+	lES21fflJLMahz7NaGu/CLxPZRkDf410qdFVgMfHKRAPqgL0PXjbiupe0dAtbxgSx5UA+H
+X-Received: by 2002:a17:903:3c2e:b0:2ba:3b89:c3a5 with SMTP id d9443c01a7336-2bd55e46765mr226415ad.12.1778694150405;
+        Wed, 13 May 2026 10:42:30 -0700 (PDT)
+Received: from google.com (44.234.124.34.bc.googleusercontent.com. [34.124.234.44])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-369224d2f4csm151787a91.0.2026.05.13.10.42.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 May 2026 10:42:29 -0700 (PDT)
+Date: Wed, 13 May 2026 17:42:22 +0000
+From: Pranjal Shrivastava <praan@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Josua Mayer <josua@solid-run.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Mostafa Saleh <smostafa@google.com>, stable@vger.kernel.org
+Subject: Re: [PATCH rc 1/5] iommu: Fix loss of errno on map failure for
+ classic ops
+Message-ID: <agS3_gZOW3AjAAhL@google.com>
+References: <0-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
+ <1-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 000/268] 6.18.30-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260513153744.746440810@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260513153744.746440810@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
 
-
-
-On 5/13/2026 9:17 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.18.30 release.
-> There are 268 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, May 12, 2026 at 01:46:13PM -0300, Jason Gunthorpe wrote:
+> A typo, likely from a rebase, inverted the condition and caused
+> errors to be lost. Fix it to be "if (ret)".
 > 
-> Responses should be made by Fri, 15 May 2026 15:37:20 +0000.
-> Anything received after that time might be too late.
+> This was breaking iommu_create_device_direct_mappings() on drivers
+> that don't use iommupt and don't fully set up their domain in
+> alloc_pages() (i.e., SMMUv2). In this case the first call of
+> iommu_create_device_direct_mappings() should fail due to the
+> incompletely initialized domain. Since it wrongly returns success,
+> the second call to iommu_create_device_direct_mappings() doesn't
+> happen and IOMMU_RESV_DIRECT is never set up.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.30-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> Cc: stable@vger.kernel.org
+> Fixes: d6c65b0fd621 ("iommupt: Avoid rewalking during map")
+> Reported-by: Josua Mayer <josua@solid-run.com>
+> Closes: https://lore.kernel.org/all/321c2e57-6a17-4aef-ba42-d2ebd577e472@solid-run.com/
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels build tested on 
-BMIPS_GENERIC:
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
-
+Thanks,
+Praan
