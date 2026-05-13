@@ -1,141 +1,165 @@
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010021.outbound.protection.outlook.com [52.101.61.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FD2399895
-	for <patches@lists.linux.dev>; Wed, 13 May 2026 17:16:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778692588; cv=none; b=r3OsEbBsPFIO41r1X2gKh2Bqe5XFBOXpSLMtuvirxS60rlev6aclhwUDPaUFBk93z5g7erQX+av9zLAHxDMYnXV0ixT2RGiGYXU/5VrBkg8T9nbehonr2lhHVv16SEjm1DctaxcBHfceBPbabRoeKlNFw3pU6WQuNvRNnkxq5FA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778692588; c=relaxed/simple;
-	bh=K90sbdV+ulm99KUT0SeI9AT5YPATm3JEyQ27ovWRo9o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VnwGfgII8bV5lGaQ/hcOOdwaae2ll8Eirro9Keh7Phktp4jrJ3zRwLciwQKjS0eVxu+/d0XzsC6cZQTplK+N5ABGgpYJjDEj0JWSH7+bglKcNU7nm3M5+fc913XyciHoXTf6i7trTUpe9I2vrnUnFQnqOiSptISYAdlntELWwZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tFeDPDZx; arc=none smtp.client-ip=74.125.82.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F29D4A13A1
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 17:33:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.21
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778693618; cv=fail; b=l1agLpD9so1iDhEENiktD5TXDQ8Yy87vLW/NeKia176t6xne3S2okmHFaMu4iTT2rDsZRZj2Iwd0dmPvSp1OH+IyngBj7J5pbkzSdRICIWjYs/ehYohCqU0chLSL0Rup2bbd6M2yv8z0Hk+JIy3sAsOrOyHMRgVagxGzTqAriz4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778693618; c=relaxed/simple;
+	bh=uretPZ9QUOL2OFKzScWZ4b2aU/Zz4/4C2KX4iV2EQ68=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=sG8rPotl5jvx9vj3LrQbhhk3taTFcCFpWlrfsVgl5u/JKz/gW3f8Q/xEtWqO55o5ei0NTiFmsW/csq9rNeMcLQhNW6QggeyhpupCZmcym1VJ2+ihrdN7c5ckAFF0QO/EePspNBPQzbCzApXicE7cugLWYYmdMmxwy2ljL1beF3I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=pf1UpGpi; arc=fail smtp.client-ip=52.101.61.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tFeDPDZx"
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-2f30a4601bbso7650912eec.1
-        for <patches@lists.linux.dev>; Wed, 13 May 2026 10:16:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778692581; x=1779297381; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/bMevHUpxvHgmnggs8mtB8OZjWsvTBxv6UxHli9n5VM=;
-        b=tFeDPDZxi+sGO2BF5HgtC1QNFGqXO7e2zhGCljsWXleCpASVcwxQmVNBYCgXzj9PYZ
-         3AOYcSdX0P6UtK71ir/ovmmdRHKvnk38CvfZ8sSHydOXM7EefgLCOF9kUB18yO2WCdAY
-         NRBYxy7MDcfPOqugHA98mT2ySZ2zd0t68u7BblmeoRY2ILZpPYJd+iqQ9ENRHp4L8stE
-         u9AiW4LeYwQzhVtF56bULHHzNBGRSzlCo7lRa6neZVnZVtFqXi0EAeRWLhJEjav5ivlH
-         76cepo3/8Ld6cLsnHSe7k5vsAZzTKwbx9k5pXCgtOzYTAk3T1TKNvPXyO/HdrX9tPv8h
-         0Lsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778692581; x=1779297381;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/bMevHUpxvHgmnggs8mtB8OZjWsvTBxv6UxHli9n5VM=;
-        b=tLsX3LGKGmK0+yvf6yMuo6OfnNVP6fkkec5D2j8k4RCkOPciSTO3Dea3x9nCtnswaU
-         1Hs5QemSBG7fA4KGyy3luczGA6YdKQDdaziCaJuhPBtyYbhxhqOx0JvcgAz8VAHWToCr
-         AhnrR+HcNGZjWWPxkQrV8u5slcjsDwsF19Jafs3iGVXfNtO/wOve7g0D9yPmkYqtC57b
-         suIGVWeynkIyKovULYlydPipeKcVh38rTW3b3I0rJo/eGef0+JkxCD+WD5HiA6EL+NIn
-         uBddlhUvzo//6EL1DDcm1FQLdBhpyrMPdN4Bll1RrC2TJokcR8vg3LXlo5NQPHZog4OX
-         Yb6g==
-X-Gm-Message-State: AOJu0YzYFElVsZXW6SGLEjL5n1uWcX0MAcJCB98bZLC4cL0SeTY2o+h/
-	Zlc5E1nl/rbxfo2H9vi4mdqPtC3lKZOE1JmkkJFlE9SMF8MeNcoSFl1J
-X-Gm-Gg: Acq92OFjXpk9+Ob0F3Tgl5GrBZ1A54WLhz/bPRvo1iiylInSsLoOwXKrtgJ/N04sHZJ
-	mFjgpQ1jygtaAAcNQKGpX4VmnDx1mGjcRyR8aMkUCq9eHF26Zce14bc9QcY06UAiImtvSrAvcZi
-	05zwLUIlpsy/MfNeNfp7lv6fFXWBRkMdU4xrku5uAU1i1DdcjGPPlryKBut6Gbsd/T++RGIPVyJ
-	tt9amBzpsQUKzQiXV3f0ZSmX5nYxNM9Fbqh5+KcF5x/jyq6/STuj9hrzXi8U7v3fFDMqXVZxD4W
-	n0i82hQmfEi1vzJZG0q323L6gmND6xlCv8KI6cOcJOKE3gr1q8b2PA5hInNH5ZI8TSwzVlKBsvH
-	b2KWWx1pOC/aaeS4R0xN87uPyoUXCRMkG6Bt37xzHNb+rd1JkplHymcjHm5zlKYA8Rx7KV5RHHL
-	g/wWwuvZU6voa9sXkjkJ5UhusZ76acYe9FtPDyMaav41ppkt0p8ic5DASi9LYaYy25
-X-Received: by 2002:a05:7300:a984:b0:2dd:5641:f01 with SMTP id 5a478bee46e88-30155b4d27bmr1922956eec.28.1778692580578;
-        Wed, 13 May 2026 10:16:20 -0700 (PDT)
-Received: from [192.168.1.3] (ip68-4-215-93.oc.oc.cox.net. [68.4.215.93])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f8859eafc2sm28901475eec.4.2026.05.13.10.16.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 May 2026 10:16:19 -0700 (PDT)
-Message-ID: <481cee2b-1deb-4093-8b9c-b3f1e982ff6d@gmail.com>
-Date: Wed, 13 May 2026 10:16:17 -0700
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="pf1UpGpi"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Tsx4Epzr1zDizoSDEAGQyG+nHChwMQh50uNqNLxEg2rjuCT72dFu4JWyd2iDBk/yLNcbH5Qi8dMBQwRzyQIxE61xJNK/N5Op8z5HqN3gPx4qqYfx/eDh41NiL98VZHuITq7pDE1dyDMosF7Tp8FEulVKMC/Rl3OTxSCtlY8Io09Z6Ebp5GGLqeRbt4KUiCJH9+n1R+4at7FN5fQw+4v7Gw4GhKjQ+LkflrBkNuTW8fo+vl3PGbYN+ec8pj79qY2YMzHFjuEzJnRrIZh9DtCLbjuinli8FwgyrR83Qf9KqFi0Ev/ksb2A7FyUMsn4R/WK30XKR8TpDdKhu3gi4sjuFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Sr1z4VJ3JH2JrqpziiHpDSEPlpXXbORkueB+LkZWDLc=;
+ b=rXKIwgzgNFfXWzITeoE62LVmx/dbypc+uJwxmGynt9Idduisqp9eNy8zljeJHnmXzf1sd/Y7JQk1h/cTZtvNE0BtiGQYfaWztljF73G8S4DtwQa/bGzL+ZL9QJCKc6lEssZob9LKLlU4Bo/jW9XGaso3/isqRcphhUIqE05oU3rtzZdvSyDBDs2RaFtRqFj1lkPASlVbOTg2Ly7fQdyHbMQIoSCZFzfFGqiZKpi68QQoKaWsVNODA29VtSzovTXGftn9K986quf2XE5TnpclGXAdDlxTllU26RrqkgrTKVCvMixNoLw1DqPaUYijCmP5hI4YS7xseMmtNOnbfnQkdw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Sr1z4VJ3JH2JrqpziiHpDSEPlpXXbORkueB+LkZWDLc=;
+ b=pf1UpGpiXKSxx9P9lihZv1q62b6T4StLZq6VFGSi7Qb7m6+wyYgiPHp8qtD+8e+w5mFfvfwSenMmBXkfQV9tPdCLKtFN2QGirwTSskJJS0NlanD9MsEWlg350izgeB7D7q1CT9+cQcLKxpM42dMoxBRJ0agV0nGuhuI+vTwUt0Ufnot2kvriVF/AWCrClNBD+3Kefp4ks8KDJO6/hUkAdl2CAq3CBJtYvGlxdbNTi2zLJdJx9voXqY6tYSigcuswFbj+KHPX8+BEFyZiAJDswvJRmVcSo1dY9HhnrYhfd2Fh8HEL6fRLX1pTeCi7x0iejSaNym0n03I3PLT9eQkGwg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by BL1PR12MB5852.namprd12.prod.outlook.com (2603:10b6:208:397::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Wed, 13 May
+ 2026 17:33:30 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9913.009; Wed, 13 May 2026
+ 17:33:29 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Leon Romanovsky <leon@kernel.org>,
+	linux-rdma@vger.kernel.org
+Cc: Jiri Pirko <jiri@resnulli.us>,
+	patches@lists.linux.dev,
+	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
+Subject: [PATCH 0/6] Remove driver dependencies on ib_uverbs.ko
+Date: Wed, 13 May 2026 14:33:22 -0300
+Message-ID: <0-v1-045258567bd6+9fe-ib_uverbs_support_ko_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MN0P222CA0004.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:208:531::11) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/202] 6.12.88-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260513153743.326058350@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260513153743.326058350@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|BL1PR12MB5852:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0e4405d0-9b4d-48ee-7bd3-08deb115bf54
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|376014|1800799024|18002099003|11063799003|56012099003;
+X-Microsoft-Antispam-Message-Info:
+	Y0Y/cnahSsGjjE3CROf9LnBWsrtv64enlH2Lnu+GJMTk1VK1T1gw9NuSgSsrK3GZucpvi63YjI2fHaRuzT17ICkAPTljZXkP5vXuhG8sTYAsIHBZRKyvtAxBiv4Z2+xzmyR5YxQgAb6Oz3Zm0EETYhLiGo5Cu8kjK1LmHeLEpMYD1x1UF731F92KJIN46b5GPmFbX9wqXMZ5kSBt4prLnND71ujpuvp7ju63BWH0ao3UnikJO5Jc9/+AvBnlsMTB41ytfvFFlisU39vNZg7q3O4v6D9t/HMpkmUuD54Y2RKYZbikzxp9G4MjFX+C7UhED1T69QgahgzgAv2asdb7lLhn7sSarn/osJNJvQFsHZWeeCJov0SVQDFCQ11agWZgXibh3Ys5GyUc3mNjpxtJmzgkKmFa6EDmxbuJBaQCrhqnXyYs8JeBVmKlEH0TptSW0md8p29j4FU77Ls2ABPyyqrFSFGC+tdbp3/Z1D+gnM0nUfa+/nA8fRuEmMyteLxzIVZQRaW6Gcr87j1kCasqFh9RfpFjaztET0RHUd0eFygh6Z8b6rrQfSykNqUdPmVh+FPZK9XbQm2/JM/hy5BMPv9AZ7sIOQ42ZOzobxmOJDB9MlWeL5lzB5TI5fmknNB9DJmuvje+cLfDZl8S69x2GmgjCyll1ptcXsU0qz+Vu0alxYsCHg9jBD+EfigFLmRZ
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(18002099003)(11063799003)(56012099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?GfkzP/PJNFuQ4E/BBYgRPe8MM7lOqzkg7ziBHIOcGxapcbr3hZ3kSGGF55zn?=
+ =?us-ascii?Q?tWM/jVat6H6bfkg/nNvqXMgaOdj1uNQTbKj+2AqSpcvegtZxzfILeGS1b7NF?=
+ =?us-ascii?Q?h41N2nwhH6Sl9GnAY7ZA1x0OEKI/jkF/agpure34Q4B9CQALSLlq5AG5cshV?=
+ =?us-ascii?Q?sms5BcrekFIPW1BO/0iXPTYCdUKO/70mHsrGr8pcWB/BhaUKOil8JAhEGC/y?=
+ =?us-ascii?Q?9zDqMXv2uurShImb231icaNGULem6FkF0DgWmrWPfCMvzzRfn9iX78TZ491r?=
+ =?us-ascii?Q?x7Tbun67SoX6ZprWYBe45Xw+WTSRtTHJOpJ0zpxbEGiW7zjgyorI1hi6a6wi?=
+ =?us-ascii?Q?P88sMVUH0spv9NOohQl3KPtjXIgghXAaYW1cDnpqQq1YVHVd3khW+6N4jg92?=
+ =?us-ascii?Q?Zj++h5o7EPnnlDnuFW6012rQZG2qF1aqq4xjPCG1IUxVTizGYkxmTtnz6FWz?=
+ =?us-ascii?Q?LfstdB9bPfCvNHczhJixuw6kJUIIWSrZEbcJDcIXsjuGdYyJNik1koabdu8B?=
+ =?us-ascii?Q?mzTDwcrc5RY0fC+VU16Q09oEB/KszMjyFbqIQxQQFPcb8rkC+jfRid526mK4?=
+ =?us-ascii?Q?B7Z23F9MarYK/pUS8x6OQrjRxPYUEK0xENGG/ZFh++1hbdJ5gFiw8PwapzGc?=
+ =?us-ascii?Q?a4Q+y07aWOdk/yO6jUSqG8dr/kVNGMQ/1AdCMjFZfbYQD2coQDrSLNc2yhFY?=
+ =?us-ascii?Q?k7cx6+n2O6FPI/AIb+cXCXZ3uDdB70J0ozU2Ze4TV0YyfG6FCYktcBTDBTF/?=
+ =?us-ascii?Q?fWha5r6+duLDMvgajHkYbA/6Phl8/RFK/Juwgs6V1kujO1YE7YJDKMdydGJH?=
+ =?us-ascii?Q?HpvtY/zyOJdyPNyNLBvgXFKIRea4pdRw/h9E8xtbudMbJuux5Z4SAqqkeLMm?=
+ =?us-ascii?Q?CYACon5UiAVoSereA0YEK+1HdCZKOV17/sojFAy9CRbQ2uxbWpijpOZNRxfc?=
+ =?us-ascii?Q?5RVEJG1F+zKcjChNjCDUiVcwUUxpOvDYrZNnsOMH2bWKdJo0ABDs9ewPjz2x?=
+ =?us-ascii?Q?SBNH4So9KEzx0WnnYQGH/foJidQx6Ef0V5yUdcBEwdm3o8kCfwCeBSIvSjOl?=
+ =?us-ascii?Q?GyJrDFjjVL3jlut5Qf3KMF/S1Wz6yMQyh0xktY3HzlZ37O4vS7JDGgVHA6qI?=
+ =?us-ascii?Q?OAHejJjQE3Z5NslqzIiiDqRkanPP5ALVtOJtKOoTw8V+wKb2WspR/iZ+H9hc?=
+ =?us-ascii?Q?gUA4y1a0RrzbEDMPKSWr3T3GnByv1RiaEWQE9h6mtd33wy0kk4v3niNdpb0s?=
+ =?us-ascii?Q?8+kqNo4ZgKBvf0dqQgtrw6Pu20eNVzDUNUUviGlta+MJQQ4P1+Q/b0fyqjGT?=
+ =?us-ascii?Q?Spm4WV8N6r/kLSqJCl4q/puwtYp1lG9CU/FLbqn5mXOpDSr6zct/xNncSSre?=
+ =?us-ascii?Q?GK77rv0ezg5VtpQtbVqvpqjoSTztzZCuUENQbjnhPd4zMuRhhbXO7bxiAq1j?=
+ =?us-ascii?Q?d9QBHYRdtzcZEXwMv2WSlVEoouiZ8ML5aDKGPGr17rHwH05tQMyIwUA1WR3Q?=
+ =?us-ascii?Q?iQj1x80NLVwiG+KFr+iEdwNB1l4gRcJ7tuAb3sqQDq9wxSYrr2fNUqBpG3sb?=
+ =?us-ascii?Q?lnEjxWcaRx71xao1MIZo2fV8BO/nd40/u8eiLeZA9JrasdFTokoUQzdPNL9b?=
+ =?us-ascii?Q?e3uUQbXnan3BERXFd67vR9X3VXhbK8MlJHGgH+uYduFeflv/V3/xY05MSFVn?=
+ =?us-ascii?Q?TQ/qABXqxcJtFPG79bSZpbkXratDVlpRwaznpGu9/1UkI7rb?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0e4405d0-9b4d-48ee-7bd3-08deb115bf54
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 17:33:29.9202
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jc2Nt06vM1+1e6fXLPweCYauzKBvoLGE4kOeitWVnciWnbkFTA7DApbA7LoiRXl6
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5852
+
+The original design was for user facing modules like ib_uverbs to be
+independently loadable, if the user didn't want to have those char devs
+then they could block the module.
+
+This has slowly gotten degraded over time and right now every driver is
+depending on ib_uverbs.ko. Fixup everything except
+rdma_user_mmap_disassociate() in hns by moving coding around and adding a
+new module ib_uverbs_support.ko to hold the dirver functions without any
+of the uverbs cdev code.
+
+After this series mlx5_ib and bnxt_re will use ib_uverbs_support.ko.
+
+The first patch should go to rc
+
+Jason Gunthorpe (6):
+  RDMA/core: Move the _ib_copy_validate_udata* functions to
+    ib_core_uverbs
+  RDMA/core: Move many of the little EXPORTs from uverbs_ioctl into
+    ib_core_uverbs
+  RDMA/core: Remove uverbs_async_event_release()
+  RDMA/core: Make a new module for the uverbs components needed by
+    drivers
+  RDMA/core: Move ucaps into ib_uverbs_support.ko
+  RDMA/core: Move flow related functions to ib_uverbs_support.ko
+
+ drivers/infiniband/core/Makefile              |  13 +-
+ drivers/infiniband/core/ib_core_uverbs.c      | 305 ++++++++++++++++
+ drivers/infiniband/core/rdma_core.c           | 150 ++++----
+ drivers/infiniband/core/rdma_core.h           |   1 -
+ drivers/infiniband/core/ucaps.c               |   6 +-
+ drivers/infiniband/core/uverbs.h              |  60 +++-
+ drivers/infiniband/core/uverbs_cmd.c          |  76 ----
+ drivers/infiniband/core/uverbs_flow.c         |  78 +++++
+ drivers/infiniband/core/uverbs_ioctl.c        | 326 ------------------
+ drivers/infiniband/core/uverbs_main.c         | 127 +++----
+ drivers/infiniband/core/uverbs_std_types.c    |   6 -
+ .../core/uverbs_std_types_async_fd.c          |  22 +-
+ drivers/infiniband/core/uverbs_uapi.c         |  13 +
+ include/rdma/ib_ucaps.h                       |   1 -
+ include/rdma/uverbs_types.h                   |   8 +-
+ 15 files changed, 628 insertions(+), 564 deletions(-)
+ create mode 100644 drivers/infiniband/core/uverbs_flow.c
 
 
-
-On 5/13/2026 9:17 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.88 release.
-> There are 202 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 15 May 2026 15:37:24 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.88-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels:
-
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-
-perf for MIPS fails, largely due because it assumes newer toolchain 
-kernel headers than what I am building with, which we hit with the 
-following build error:
-
-trace/beauty/fcntl.c: In function 'syscall_arg__scnprintf_fcntl_arg':
-trace/beauty/fcntl.c:96:13: error: 'F_GET_RW_HINT' undeclared (first use 
-in this function); did you mean 'F_GETOWN'?
-       cmd == F_GET_RW_HINT || cmd == F_SET_RW_HINT ||
-              ^~~~~~~~~~~~~
-              F_GETOWN
-trace/beauty/fcntl.c:96:13: note: each undeclared identifier is reported 
-only once for each function it appears in
-trace/beauty/fcntl.c:96:37: error: 'F_SET_RW_HINT' undeclared (first use 
-in this function); did you mean 'F_SETOWN'?
-       cmd == F_GET_RW_HINT || cmd == F_SET_RW_HINT ||
-                                      ^~~~~~~~~~~~~
-                                      F_SETOWN
-trace/beauty/fcntl.c:97:13: error: 'F_GET_FILE_RW_HINT' undeclared 
-(first use in this function); did you mean 'F_GETOWNER_UIDS'?
-       cmd == F_GET_FILE_RW_HINT || cmd == F_SET_FILE_RW_HINT)
-              ^~~~~~~~~~~~~~~~~~
-              F_GETOWNER_UIDS
-trace/beauty/fcntl.c:97:42: error: 'F_SET_FILE_RW_HINT' undeclared 
-(first use in this function)
-       cmd == F_GET_FILE_RW_HINT || cmd == F_SET_FILE_RW_HINT)
-                                           ^~~~~~~~~~~~~~~~~~
-
-I will submit a fix upstream for this.
+base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
 -- 
-Florian
+2.43.0
 
