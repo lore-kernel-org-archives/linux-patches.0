@@ -1,166 +1,117 @@
-Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6783F4112
-	for <patches@lists.linux.dev>; Wed, 13 May 2026 18:53:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFE13B19BB
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 19:09:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778698429; cv=none; b=qxGJl35lmThU7LmzK3f7t09rVIcQHl0q3Sjx3cJWDIdMb4pGFXA5xwktyP4DUt0KNGxpb84CGeaXkMwhUmuRJZm3KsEW7omH97bYZK3AB8CN3thlQc+byvIXlibvfVD0fvJRpu5WaGq/yV/gSGX3Zs+dusA0E9Bl2q8Gw3ED2jo=
+	t=1778699352; cv=none; b=a3Jna+GO23zQQiq6BPSRtyRcbx6DVB/OTsAoG0tsr6EXdq6XcR0C/Gn6g07xEKhZnn8+47fEZ2lUk29sUWd+xl22c405ESeOvR7H2jhn+gCFCqiifhb1s49+Sz6RZH61A1RSwXfo2bab9BkwiT9kf641rkP5bmsIhLujeb4NX9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778698429; c=relaxed/simple;
-	bh=1T+8gtW07YW1Q2hsQQ/eNWlwxVUQfk7M7+0pK1hZj3A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OANuKo1sstHPqdo/V0s3yz3hFjKyF+sv45ANyzqUghxXvYyXO3tlPG19vvy8KfFTHozAz2xlz1QWqRfziZBlicCQ5LOw98xAnCVt2yicrSS3upM54ig+MSfyhiG96vXNvRf6WZpv4pUHiTq+qzKT74DF/+QFoCOuyKOIFkSEYoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fsqY3tmR; arc=none smtp.client-ip=74.125.82.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1778699352; c=relaxed/simple;
+	bh=QX5G2rB7ifXMkwPdHvgF7zs1jKDfOFey5yX8c24qomQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=HFTqS5EzepUJqa8vhRezJuKoE51RZfLfCMuS5v0oVjn7mwIsugXj+X9Unfj2AsZj4PB9FuPsU3RKcHjavFZMtyq7oVoG5D2gEA2SWSbTp2VTi9wETbahRrSj/aCIbtJ8Ml3DO0AdHmSUQvJtBybEOHT6wVW3d2vGDy+yR+JBXL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gTlYCIbZ; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fsqY3tmR"
-Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-132cccd3d77so254c88.1
-        for <patches@lists.linux.dev>; Wed, 13 May 2026 11:53:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gTlYCIbZ"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-50d876329bbso67071831cf.2
+        for <patches@lists.linux.dev>; Wed, 13 May 2026 12:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778698426; x=1779303226; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=F5FAcCWafjYrA9kZBinQj9N8tnqNIZ+FA0Q4wW5bFp4=;
-        b=fsqY3tmRp9JaLE1nGjI5ozFmmqnPtNQXOZROiPtNQzg0tBBvgBNNEI9coWMyFnlQrr
-         19eceAZC0RsSpCTequ+y7O+ZKsT1wjL2973lI5FVVeYuQNpPFyO5l8sUhUW4LvA0feA2
-         VUANOauG9grPY2u4+HFlRmcBZFATGIbyp98+fwQQZL4rrtBVLsX4PYW0IoT7EtS+xgeC
-         SnQBGkqqoTKaPZEjtN1uWursIqmdTO7FQ4krKmS8r3ICecusnj++KPBllOk8as2TUJSs
-         ejFSiNLlMbsZw+WpG2jLmARzu48rUjxBB7M7swB56g5UOLyKVrIM/vxevRhsY96332W0
-         kE6Q==
+        d=gmail.com; s=20251104; t=1778699349; x=1779304149; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UtNWbA0oJC/4NfkSFTFtpG8npNpENo6PjEJYah1z9Iw=;
+        b=gTlYCIbZkty7tgCy1VeKx8h5rKE8x4uSEAr+EkArBLGT2qswaTgCaIxIJ0N2ECLCif
+         26VwNFmzylQXAfpHEvgBl3cP9inhlULBzUuVhphMCaOKV/lBQaYR0pyDe/ywTdu9jn03
+         +WfsW1XTeuSCHnzY3yKJvKvZCNL/GqH7MX+F0EyDEow22sOznnEJl77a8A3lx94WLKTI
+         DQ9wzQNNa/zQm1YBw4G9mrmzdky8bUKEkOEPYLhL83eRGefcuVn5GpjMUVGn9H5zJmAs
+         tsHaBQ9afi4LN0TxQadPxe+6DF+LE7pr8gyvY4HDSqrJfJZauK9RIlF6HiYZ2XW94E31
+         Ax7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778698426; x=1779303226;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=F5FAcCWafjYrA9kZBinQj9N8tnqNIZ+FA0Q4wW5bFp4=;
-        b=kazknnlXjEtdG6r31j0DFYiirz/VnwU5mrfRAD42KA5M+aT1KKobxwlUS32tq4P7aL
-         S4INbAmrA3Vs7gwPxNlW94ZxSVmH58MzwhQS0uTVRjDXeHfKwZmva41BR5+zmUcgJQMQ
-         LqTcb2BInNubVg/d0jl+rQMEFuZBXkeWfNBUBU6/krIRKpAQ9JgLXiSXOK4rukeJan4H
-         45PjunNDlMlomO2Pb1kgELo/vRRvee4hQnVaqvdcJienU5WWw+FcjAy5ftnLwx77Scf2
-         OhQ/7XFOlwAmF6bvwkvoZejuUgthFlOqnHs5L4+M/clWQEExRLNvTeKQtxfsnX0a+FWf
-         DXCA==
-X-Forwarded-Encrypted: i=1; AFNElJ+WERAM+g9pb9jR/HE+dvtFcVTEqqIsiCS3POHvhp3S3gqrIrUkS4mWoiTF3Xa9ro83bRVRpHwz@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx4vffFUj3oH3PIQL+AEPMUjYntoYPPoXN4oEgSp/1vfjRmf5uo
-	6TV0y6ymd1pC3jMcVX2LaR5gCkNuG96ik1rxDswGAHt3vDH/Q043ai5Q1aMdejn9bI/C1QKjWEr
-	YEN14bw==
-X-Gm-Gg: Acq92OF4vwLIIup5BOZQ7YO6cRlFBULvCMrOfESz4C3NkxIakAWHBkzI5BCr2OPpGBo
-	Sr+dd+sRPYn43/Vfo85L3WR+1jLT2Typpmp6HnR0SIH+TaWzDyftEO4puS8BSgSf4lDATm7ZgCx
-	lQDzteIHCjD8ZVbtDmHu2PCxMgB13n41MECDFgUUZDyE7oSuysC5o1F3as/weO92UuwZze2UHQH
-	uh3nyunr+nBGWLVlUOgOgrHq6e/jOENadbeJlEvm8BGr2hqTDjFb7gQru4zXODtob6udyaqDiBq
-	/MwyhmGihMMd+85GVoCy8gdobUV9Pbji7wpYFAViNMhIwIKdObC2XnOs4p/QReh4lE7rsYgVgYI
-	Mwlj2K0WAzVa0Hx3FFsHl9Z+fGyiFHpzXXFUwlaRs6MZBxJ1J+vFUMlFJzC8P/mgokzC5+AnoeW
-	nGaMwDLVM9Pwidkzx68k4zNmUs626qDucvM0l863xeWM/XVIUIt6cIsdi/kpJVJf9dmmaLqtLHg
-	V8QNANE
-X-Received: by 2002:a05:7022:f9c:b0:130:c9cc:2919 with SMTP id a92af1059eb24-134cc1108bbmr38022c88.19.1778698425009;
-        Wed, 13 May 2026 11:53:45 -0700 (PDT)
-Received: from google.com (153.46.83.34.bc.googleusercontent.com. [34.83.46.153])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f8884752ccsm22785382eec.17.2026.05.13.11.53.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2026 11:53:44 -0700 (PDT)
-Date: Wed, 13 May 2026 18:53:40 +0000
-From: Samiullah Khawaja <skhawaja@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>, 
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, Lu Baolu <baolu.lu@linux.intel.com>, 
-	Joerg Roedel <joerg.roedel@amd.com>, Josua Mayer <josua@solid-run.com>, 
-	Kevin Tian <kevin.tian@intel.com>, Pasha Tatashin <pasha.tatashin@soleen.com>, 
-	patches@lists.linux.dev, Pranjal Shrivastava <praan@google.com>, 
-	Mostafa Saleh <smostafa@google.com>, stable@vger.kernel.org
-Subject: Re: [PATCH rc 5/5] iommupt: Fix the end_index calculation in
- __map_range_leaf()
-Message-ID: <agTHzU3KYofnszp4@google.com>
-References: <0-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
- <5-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
+        d=1e100.net; s=20251104; t=1778699349; x=1779304149;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UtNWbA0oJC/4NfkSFTFtpG8npNpENo6PjEJYah1z9Iw=;
+        b=HLJFMGYANuPyowJ5WgQKUe3xQJL1RcPjqfn57JVKkrhFGJxASvhgBEGQbZ3aHvyrKq
+         TX0GN2xqYpPC5lVF46+Pe5tELcghyNZKIpbbkJiyRTcPunKc7f2Vi/Hbrwwp/pgWkrSl
+         XtG0WGx01MUFMbWheNnqyX6lAe4v5gIRNVy3fjF4nLXf0XMvAVWjgfLfn8dmogXN+tdW
+         6xbOxE132bkWMWrt3o5WtCt1Vl5RL9oKOFRogsReK1MhBkBhdWGbZez0+dgHHYyBW1N9
+         UcgBL3kwLzBjq+EGlSon/zcF0dN5+IsmNxgmBujozujcocZHVER+nw16+JMSO8qWJa9z
+         jgpQ==
+X-Gm-Message-State: AOJu0YzfsFsI0K+Z2HBS/BHOm1WTwqTPmiCx7FzAsrRwlVsgZ+ofrhUn
+	uz3/+SsJMwWY7U5nUtWC+iFnwyj5WXwuAD5yfTzIMr8LYqmxjhtKNuEi
+X-Gm-Gg: Acq92OGqStCfDLynz4TUzd8yq4WPS3XiISj2XmxfH4tHqnYng5hn/d5tU01fL+DNwNc
+	GTrDPKObHvI5v29kyZ8wV+Ms1eOmAL7tRRal6X4YCieEd3CyRJ0AVg00sj56dJCqeL5H8mxtan5
+	VOpAeJmW+yf7AgnjIpC+GEzBap21WdC3k5svZHQr1Yz9W2iofmnv9tHimzmqh0TnM9xP6PX1zl3
+	neLh9QJMuB5QGT6hN1jhotmCXrUi5SgsqyQ3vf7adjWHevbI1jMjV3lUadfMzDMlGaGVeYzOlHC
+	ST7jzze6Yu2kZi1vncuCreWyoM/8fvpxd0UYTnBDLQ8fJAXbT6s0MSXYowbRn1d+7TPKPRsN2Jy
+	DFckhrBygVdVQqAil6C867mGNa6P1f5wFvBBdA1E8tKH2kS3rybmAXWxVlh3M5UTA/BzrluQMnt
+	UkN1VVa9B6t+tJiuNO6t9kZCt0y8PDk4k0zV7JuDGMJUzI3hvv2zhClbaghHXy
+X-Received: by 2002:a05:622a:64c:b0:50f:b81e:c655 with SMTP id d75a77b69052e-5162f68d146mr63497791cf.57.1778699348501;
+        Wed, 13 May 2026 12:09:08 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5148e830ddfsm153785331cf.27.2026.05.13.12.09.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 May 2026 12:09:07 -0700 (PDT)
+Message-ID: <268c8519-84d4-4795-b06c-4159d8bf48f4@gmail.com>
+Date: Wed, 13 May 2026 12:09:04 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <5-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
+User-Agent: Mozilla Thunderbird
+From: Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH 7.0 000/305] 7.0.7-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260513153754.934923793@linuxfoundation.org>
+Content-Language: en-US
+In-Reply-To: <20260513153754.934923793@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 12, 2026 at 01:46:17PM -0300, Jason Gunthorpe wrote:
->Sashiko noticed a mismatch of units in this math: num_leaves is
->actually the number of leaf *entries* (so a 16-item contiguous leaf
->is one num_leaves), while index is in items. The mismatch in maths
->causes __map_range_leaf() to exit early instead of efficiently
->filling a larger range of contiguous PTEs.
->
->The early exit is caught by the functions above and then
->__map_range_leaf() is re-invoked, so there is no functional issue.
->
->Correct the misuse of units by adjusting num_leaves with the leaf
->size and avoid the performance cost of looping externally.
->
->There are also some mismatched types for num_leaves; simplify
->things to remove the duplicated calculations.
->
->Fixes: d6c65b0fd621 ("iommupt: Avoid rewalking during map")
->Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
->---
-> drivers/iommu/generic_pt/iommu_pt.h | 20 +++++++++++++-------
-> 1 file changed, 13 insertions(+), 7 deletions(-)
->
->diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
->index 4877b05291c9d4..dc91fb4e2f61cb 100644
->--- a/drivers/iommu/generic_pt/iommu_pt.h
->+++ b/drivers/iommu/generic_pt/iommu_pt.h
->@@ -534,10 +534,12 @@ static int __map_range_leaf(struct pt_range *range, void *arg,
-> 	struct pt_state pts = pt_init(range, level, table);
-> 	struct pt_iommu_map_args *map = arg;
-> 	unsigned int leaf_pgsize_lg2 = map->leaf_pgsize_lg2;
->+	unsigned int leaves_avail;
-> 	unsigned int start_index;
-> 	pt_oaddr_t oa = map->oa;
->-	unsigned int num_leaves;
->+	pt_vaddr_t num_leaves;
-> 	unsigned int orig_end;
->+	unsigned int step_lg2;
-> 	pt_vaddr_t last_va;
-> 	unsigned int step;
-> 	bool need_contig;
->@@ -546,21 +548,25 @@ static int __map_range_leaf(struct pt_range *range, void *arg,
-> 	PT_WARN_ON(map->leaf_level != level);
-> 	PT_WARN_ON(!pt_can_have_leaf(&pts));
->
->-	step = log2_to_int_t(unsigned int,
->-			     leaf_pgsize_lg2 - pt_table_item_lg2sz(&pts));
->-	need_contig = leaf_pgsize_lg2 != pt_table_item_lg2sz(&pts);
->+	step_lg2 = leaf_pgsize_lg2 - pt_table_item_lg2sz(&pts);
->+	step = log2_to_int_t(unsigned int, step_lg2);
->+	need_contig = step_lg2 != 0;
->
-> 	_pt_iter_first(&pts);
-> 	start_index = pts.index;
-> 	orig_end = pts.end_index;
->-	if (pts.index + map->num_leaves < pts.end_index) {
->+	leaves_avail =
->+		log2_div_t(unsigned int, pts.end_index - pts.index, step_lg2);
->+	if (map->num_leaves <= leaves_avail) {
-> 		/* Need to stop in the middle of the table to change sizes */
->-		pts.end_index = pts.index + map->num_leaves;
->+		pts.end_index = pts.index + log2_mul(map->num_leaves, step_lg2);
-> 		num_leaves = 0;
-> 	} else {
->-		num_leaves = map->num_leaves - (pts.end_index - pts.index);
->+		num_leaves = map->num_leaves - leaves_avail;
-> 	}
->
->+	PT_WARN_ON(
->+		log2_mod_t(unsigned int, pts.end_index - pts.index, step_lg2));
-> 	do {
-> 		pts.type = pt_load_entry_raw(&pts);
-> 		if (pts.type != PT_ENTRY_EMPTY || need_contig) {
->-- 
->2.43.0
->
 
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
 
-Thanks,
-Sami
+On 5/13/2026 9:17 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.0.7 release.
+> There are 305 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 15 May 2026 15:37:27 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.7-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+
+Same perf build issue as reported for 6.12.y (and 6.18.y FWIW) due to 
+older kernel headers with our toolchain.
+
+Thanks!
+-- 
+Florian
+
