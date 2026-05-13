@@ -1,112 +1,137 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D468A2BF3F4
-	for <patches@lists.linux.dev>; Wed, 13 May 2026 22:22:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE68184
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 22:40:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778710965; cv=none; b=OOej1h1+JEQ+vPRX+YuiaEmKmMlF0wrKIU4/6GB2UFZspvdjkb9+zmNfh6qSTSzMbDBnhL7oheQyyR18SyWZwz8VX2LLVnmDvdM4OB85SnJPwmFifJDkHVFFUBgUM+YvZCttghf8rhHdvmzEkuUK88slaURwcIzEXld4fl2biYM=
+	t=1778712057; cv=none; b=hxirG9brj6NVG8UguH0dJrpq8v88irC7bnjGBSy9Ft3JuppiDXBXonlESwh/8M1YY3QDvmxdvhG7JY6/1tulRpy45qEsnoI/i6iKV25Q1tfbrkqAnwEEpUCSoC4gGl0QZxWysko57VZZro831tltuZgCTgx/kgjVQBkCBurObd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778710965; c=relaxed/simple;
-	bh=+H/yxd5K9nn+nhvqGlw8mcNM/DpbIwwmMzUSEH+Y6Zg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m/ufhfwQamgKJAcBnW0QcKs//Nw19sI9d0WSzPYyq6L38q5k9oR1T5/MEV1Xr14EkpLXmski2HU7qd4pzt3h2Kesmx4L+0D2IkLSC6WZwy17VftKkamFrOz6QHaCqsmbnb8JNL+Iu/HSHN6rlpX2Qoxzy/t1MZQHuhYweTEJnBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=oeJfrjV4; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1778712057; c=relaxed/simple;
+	bh=Y5RIrXog4qurIC0+jIWOAu9O5muVdejdJtcAbubIcfM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mO2x7fXJGczHx9cvcJaYqCTcOM5W0afN2Te8Dl2vmiHkz9Hd9xl1acOglX8urLPc7c2GVEH1KxVVMxxWyBYybu2nViwNsh+lEhYoUh8V8vsqvYq6zGoil2NlMK3wFKgV5wwdBbXy5IFU2p8+67WF8T9iuxFTGbUp3qf7waCnAUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AfJCtquB; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="oeJfrjV4"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-48a7fe4f40bso83197675e9.0
-        for <patches@lists.linux.dev>; Wed, 13 May 2026 15:22:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1778710962; x=1779315762; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Nc7PdcjPTXGOgaYBtgkZdnvKNVmZOTErVou+sL6n29c=;
-        b=oeJfrjV4/OhRFoDrHsb2kbuG0NjvH0UDztWLoh+tg4MWZymwrEEy5U3bHLWzzPbU2D
-         W3c7nDxArEq9bk93M/tRMKi5b4QJUKNVVdyDEYo+q0gudIM38ki1nPJJedZix7OT8LLn
-         7bWCRxV2O3Rou+s1htK7+bFFA2unJANRX/4qD7ZK93YTH1bb1kk8ee4zbi0AU3C4SMPs
-         LFihS2ROpHfs2HDGXQSDXbGOcYyJ/5B8PNZ/Ukyf5OejxRZosdLa55V4m/seCVH+SkR5
-         L8aHocDZxPJJRwCrHnwgrASavYhQ+/knTEhUsPz70cbBgGjESrm+kxqBbuY4LxrNcrj7
-         23+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778710962; x=1779315762;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Nc7PdcjPTXGOgaYBtgkZdnvKNVmZOTErVou+sL6n29c=;
-        b=bmEjL0WBVAdjlowq/E0XV4MQ/g4eboOzRISssBGXC8UGUZJbZKZ7c6ZblhOa1OJV6Y
-         gvdt+DRNkoy5ohRThS5sniSQjkhtoSvWaASoWLKRDuFxXblYi/uy0c4w4igSDEsKH0s4
-         sB33qIwzY0KujBI+3Ol/QwB8N9Hy1xjDrpZE3AMSycW/g5v4C9BrroRcJ8Zn2Q1LMi2L
-         aNmNh3ZCmK0UX1mhDH6deco6QkIigFBijhiDRzTW4vVQCWreADfiQi6g7KbQVgGA9GHt
-         e9KyjQCRfsyVsTqBY51sY1wsp3/tHiaGkifxtoIBFK2oL7+DWuJOf1da8xzTQsmhQCLJ
-         n/JA==
-X-Gm-Message-State: AOJu0YxbvY1AQoG1OCyn8GuDKoOHTG53y/A2wONuEzEAx0y2lhSwAOxt
-	8PlRBIo5KUjAsC+wyyQzS9oVYq/9CINcDqEtbvmDimZMpK665l53RAY=
-X-Gm-Gg: Acq92OFcrvOdlXWJNwvAnb5RwHESWuXtt+sFXpTwgkSU5MuieibyNYe3CxmRw/V2Zlk
-	VKRRpwgrbBp40IQQqTwi/g2rp/IPgn87iXIV+FEjIZTv7QLEt7VignWvH2KEuPjiUX25aBxqF4Y
-	Llm5VqW1rORWgajz7ca+falRL+xmtV9GjBptn3Aq4qsIKYyo9Gt8efmpOM/bjPuBmduAOvyPv/4
-	rU5FyTh0HbP4HjbLMPr8oO4hU21nn88FqNvSEO0q8iqjk1+6OyJlTjv36tcEAZMphSlF52+dlv/
-	gbixkPz9TloN54u4nojfj5fX5mQyFSh60VgVRk907pdXPv2kQ+03I898AaXZzfM51e2tpTuAfOy
-	0GveScHqm68N7LsntN1KMbWUs1uzr6BRP/Yt9790NaFq3LdYb9PlsSZ16TfUobJDJFSNw3XFVth
-	zzq7lyDQc8uHye2eZlWhkF61yNORHaeRfxmeiI229KI9sw+tvEbtesdJzzI8IzWNIYqUP7sPhZC
-	Q==
-X-Received: by 2002:a05:600c:19cd:b0:48f:be94:d82c with SMTP id 5b1f17b1804b1-48fce9e1a34mr73514725e9.19.1778710962051;
-        Wed, 13 May 2026 15:22:42 -0700 (PDT)
-Received: from [192.168.1.3] (p5b057262.dip0.t-ipconnect.de. [91.5.114.98])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45da0fe0f72sm1926137f8f.25.2026.05.13.15.22.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 May 2026 15:22:41 -0700 (PDT)
-Message-ID: <f8262ddf-050c-454b-b8e3-94a63bec4d4d@googlemail.com>
-Date: Thu, 14 May 2026 00:22:40 +0200
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AfJCtquB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1778712055; x=1810248055;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Y5RIrXog4qurIC0+jIWOAu9O5muVdejdJtcAbubIcfM=;
+  b=AfJCtquBD2P+aFJSLDQvGZYMBUojT7LD4k1b8Jbk3mz26Acpg81GBkGX
+   dFqzowKCgjcaV/gyM9R6idj4ULcOxrZhyus2we+TeZyG+1YUocjScJak3
+   k1gobLfbw92FFgJ8rsOHT7IRBkvCyOk2mFheV6s0p93jl/YZmRTAzdphA
+   T27PsLHyBId9XPHbYW8T6xgNty6ap04h2EMzh6sf+EQW2/13lQ1fjRSYw
+   qqrRZ8PnB/EpcV76hoKkEOfzI1bvYfJtQ9ueAS9o5DrEZCYFBLEaQrsdi
+   XmGCdzD1jjtaEfqhzPisvaYT9j7p8YNJH9UaGZJ1pix3VZGD/hFB55Phv
+   Q==;
+X-CSE-ConnectionGUID: IlmWwm5NRUeJ/e6F6ckYiw==
+X-CSE-MsgGUID: B6HAZWDLRG6eqhaaEsNGmA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11785"; a="78794451"
+X-IronPort-AV: E=Sophos;i="6.23,233,1770624000"; 
+   d="scan'208";a="78794451"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2026 15:40:54 -0700
+X-CSE-ConnectionGUID: c36fJNXuSneE1FtQz0kibA==
+X-CSE-MsgGUID: amUaQGrwT8uXrm52hxfouA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,233,1770624000"; 
+   d="scan'208";a="276309673"
+Received: from inaky-mobl1.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.221.114])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2026 15:40:54 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>,
+	x86@kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [RFC PATCH] fs/resctrl: Fix use-after-free during unmount
+Date: Wed, 13 May 2026 15:40:44 -0700
+Message-ID: <20260513224044.17167-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 7.0 000/305] 7.0.7-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260513153754.934923793@linuxfoundation.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260513153754.934923793@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Greg,
+Sashiko reported[1] this issue:
 
-Am 13.05.2026 um 18:17 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 7.0.7 release.
-> There are 305 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+  During unmount or failure teardown, resctrl_fs_teardown() calls
+  mon_put_kn_priv() (which frees all mon_data structures) followed
+  by rdtgroup_destroy_root() (which destroys kernfs nodes). However, the
+  RDT_DELETED flag is never set for rdtgroup_default.
 
-RC2 now builds without error, boots and works fine on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities 
-or regressions found.
+  If a concurrent reader (e.g., rdtgroup_mondata_show()) invokes
+  rdtgroup_kn_lock_live(), it drops kernfs active protection and blocks on
+  rdtgroup_mutex. resctrl_fs_teardown() (holding the mutex) proceeds to free
+  the private data and destroy the nodes without waiting for the reader.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+  When the mutex is released, the reader wakes up, observes that RDT_DELETED is
+  not set for the default group, and dereferences the already-freed of->kn->priv
+  pointer.
 
+Set RDT_DELETED for the default group (if there are any tasks waiting).
 
-Beste Grüße,
-Peter Schneider
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://sashiko.dev/#/patchset/20260508182143.14592-1-tony.luck%40intel.com?part=2 [1]
+---
 
+Yet another side-quest from Sashiko. RFC for some human eyes before I
+add to my series and post a new version;
+
+1) Is this real? It looks like it is to me.
+2) Is my fix reasonable?
+3) Better way to fix it?
+
+ fs/resctrl/rdtgroup.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index eac7e4f8574d..668ebe0b0ec6 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -594,7 +594,8 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
+ static void rdtgroup_remove(struct rdtgroup *rdtgrp)
+ {
+ 	kernfs_put(rdtgrp->kn);
+-	kfree(rdtgrp);
++	if (rdtgrp != &rdtgroup_default)
++		kfree(rdtgrp);
+ }
+ 
+ static void _update_task_closid_rmid(void *task)
+@@ -2965,6 +2966,8 @@ static void resctrl_fs_teardown(void)
+ 	mon_put_kn_priv();
+ 	rdt_pseudo_lock_release();
+ 	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
++	if (atomic_read(&rdtgroup_default.waitcount) != 0)
++		rdtgroup_default.flags = RDT_DELETED;
+ 	closid_exit();
+ 	schemata_list_destroy();
+ 	rdtgroup_destroy_root();
+@@ -4291,6 +4294,7 @@ static int rdtgroup_setup_root(struct rdt_fs_context *ctx)
+ 
+ 	ctx->kfc.root = rdt_root;
+ 	rdtgroup_default.kn = kernfs_root_to_node(rdt_root);
++	rdtgroup_default.flags = 0;
+ 
+ 	return 0;
+ }
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+2.54.0
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
