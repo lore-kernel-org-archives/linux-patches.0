@@ -1,155 +1,219 @@
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011070.outbound.protection.outlook.com [52.101.57.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F122429800
-	for <patches@lists.linux.dev>; Wed, 13 May 2026 15:11:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.70
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778685092; cv=fail; b=sVeJUYJb9x3Tweux1yDUa9TNwX6g151+iHfmnP61LQDA7CLKrwNI1d/Qwj32wRcR4+VVeweKqYeSD4yeughAC65+LnbA+PpoFrEdiakh9WV7E8neuBsAlLHvc3uL7XLZ6jj9IHyLF2SC140ZqjOboOy2xrCTerfvJcvTnvdRRqg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778685092; c=relaxed/simple;
-	bh=6Xd2Im1c3U5e0TcmML3lbgGVEuzo4D6h0fVlKukuBEk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Sh6pxyk/9cCxH4w3fFPKVYm1+N3+Spt67zPyUoaKSCouv3wvwrL92DCgDQ+BT6XHnWpd4sghXCP+aRmu1F4Aopos1FXhq/2Z68KswCtmIKDvi2to79T+4LMH5XJhU3EejY+LyRYDr5FLlYLareZUmt04M8/kt27aXenfJabaXdE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=b7j7xYmQ reason="signature verification failed"; arc=fail smtp.client-ip=52.101.57.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2097A4CA265
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 15:11:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778685116; cv=none; b=aBji5tr84Fr1iyuIbLnrIOVy0Ws5XHNG7ezrfnfvYuYYgzVF2M+7CF1Lc7ui1D6bz47FoinSbdKLXkQr9FpNarwtAvBuQDWJnxh97GtpRzQW8l9xMz1YNarfhwNNbkIajEVKPL90pGOrz5bUB2JwidtDCQLsznudWbZ/buRPOWg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778685116; c=relaxed/simple;
+	bh=Lfm5qwtvKGVGvwVglM1WEBRrmbR9xt1BsC+h44z8tCg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AByXZXpvJFTCev0WvO0TsX2r4RBebcutlVO6TQIi8o4fniBWdjD941l/dgZtzEpiQt9HeY5Yp84vhSnJBiUN4D0iSCl04+PWIUQYqQ9P5loVyl0yATuSR6hX6YqV9kMqRQVaiOVmfH5ZaC2/sY87IADdgjQIEufg/zqa+NKMwbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MOKZYydo; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="b7j7xYmQ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cw07fsuKqgnnKBOu1ojaIXPqftfRQXQywKPXeCGsqIJ896FW65upXuAvroz/7cojoneh22EJrrJueKtMwhwwISLd7rGU1OKGjZCCXuP8MtRRaEMr9kOAm2fTzjPhXpg/mSj7Z72SaNu6XVcd7n48/sN+budTlZ0UqmX2bk2CIzQf73pHU6UKuzNy402Kav8ZL0xi2v+kW+X/RujX3Y5XcKlQVMfpF/iQOycTAsN9HLQeR8pcffjvvwm2dT5HKvgwGImh+YbpoAzcNU8eWl47HvxZ/bX7HfQHDHRJmxfWwxxCohjcR51rVwijuwCLv4QoAXx+roY1FnScf8mVwKQ23Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aZCdZtWDaVoJJKe9vYb/v8du9sah+etyYTG5G4wy5tE=;
- b=ypb4EhktzXn6Qiu5+pHqrwiulkU9pwXhVGwFOXHayNtdXaHDTddYPA4GO/Ucg+mgTqzw0b+vTiTr+mmkQnY6PnDmsFCB3B+X0z09Rex5rrKd2lOshiURC09GR4jf8X4BFfayLf4rNJ1YZ+Rzvd8g6+MAChnc9sJfOWq4GvXcGrbSfD0VS6uC6XUaji85q9Yea+Ngthf7tLgafUCNfdidxXaLN4oHApYO12t+QO7h0OPGsnCU2kBrZqZUilXnp6pNoeIc7YQbGW+rExu/BOeQoTztKhqesAHJEgTUqq+bNWQttdVIia95xsyxmdJGtMO6pcZrrGphPcOU0fetcQXu3g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aZCdZtWDaVoJJKe9vYb/v8du9sah+etyYTG5G4wy5tE=;
- b=b7j7xYmQw/23R0b5B4rObAF3tBVaTXKm0forkRZB9XaGqHY9Ry0Y7LEa809gAH/bdX4zK54Hi44r7Og47CL7uEgM5/LlYeb/c2x0YX6/j+oA71ct+0ivuzOMFcvNWA/xc+VONDqUDMGK5g/Z9WZChtikheshE+ZKCuWSpIjfO+qWrl10ZF5/K4OSaoNg0CS6a8NR9iEu3zvntep2awlNoi/1utnmUBSczWhbUt1K853wzi1It42MMwqktprSGgbX2G9EVSYdVy6koNMujTeXHKOYkOGvu1DBwvnm7b+d9zuugg40R5ImoV81izhZxqpzRgCO99NpM5Wl5ZybCyubeA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DS4PR12MB999077.namprd12.prod.outlook.com (2603:10b6:8:2f9::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.23; Wed, 13 May
- 2026 15:11:28 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9913.009; Wed, 13 May 2026
- 15:11:27 +0000
-Date: Wed, 13 May 2026 17:11:20 +0200
-From: Andrea Righi <arighi@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Stephano Cetola <stephano@cetola.net>,
-	Jiri Slaby <jirislaby@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Chris Mason <clm@meta.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: Re: [PATCH 7.0 247/307] sched_ext: Skip tasks with stale task_rq in
- bypass_lb_cpu()
-Message-ID: <agSUmB_A7tECRrtp@gpd4>
-References: <20260512173940.117428952@linuxfoundation.org>
- <20260512173945.338221208@linuxfoundation.org>
- <2f509cbf-f14f-4dfc-8ba9-d53dc10e0aad@kernel.org>
- <2026051301-tusk-parcel-15ee@gregkh>
- <67725402aaddb935a94d2cd751f317e6bb844654.camel@cetola.net>
- <2026051342-canon-apply-bf42@gregkh>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2026051342-canon-apply-bf42@gregkh>
-X-ClientProxiedBy: ZR2P278CA0050.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:53::10) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MOKZYydo"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-50e61648f10so12891cf.1
+        for <patches@lists.linux.dev>; Wed, 13 May 2026 08:11:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1778685114; x=1779289914; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fWAe8c+ElCoD6sU6NETEOpCBbfD46C5Crtt3s27wLQM=;
+        b=MOKZYydo2K7xUxqe0x/jRAwioPUBE9Irdf9BrAq5l+Oyi0B7ETRFe8t3/iaK0ZcijK
+         yR5d+KlH8UHBoDlfy29b6vVkw4THq3nFaOtzF52Z12JiQ0bww2U2w0mC42Ff7foAICGJ
+         vU92r1XI6R/4OjKFlLDPxN1kV2QyYZRBZ0XL3FIsGxh9ssICwPPnNQjzgHTnMuKI6t+o
+         s76lzQxJv36sABq71u0hcimGlwp/pJHqk4TtHSbKv0XRhy73QIiT9iRsRGtPYvJHINjm
+         Z2oaKNeZTNyflIePVbWE3MeFWi1qlBpISQdrQ4RKCcwnvqgDlHD8bvC487TkduosyFXC
+         qNNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778685114; x=1779289914;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fWAe8c+ElCoD6sU6NETEOpCBbfD46C5Crtt3s27wLQM=;
+        b=OJjuXWdXvE4Qyh91ke8I29guUi70Cg4SFcmwEERx/LhcFdL8TlUwQGP3oJ+AJt13Vg
+         G1JGAohTPLeBmFy5MRYx//wQvE5a1KNbPNGCmfpGOwBrqZrJ+jbcBaKU3wkUj5F9fbDP
+         iPJq5jBiHICbe3cHF0ExVd2KAadRXX/JA8R4GVYANA2f+1btVAQFOviH4M/sOO/I41K8
+         GrPna7Yl+1GfocBtvrqkeOF5YuH6Se3Zex60t+zkawiL2kiQPv8vqWEW3uLVTI1R8BQ1
+         V63jZvn5nCKq5E169RxxCRhd6GqwOe7d3FP2rZkG2TgW9zYfhzJSmXSJAHoj/Fl13kJ4
+         WcAw==
+X-Forwarded-Encrypted: i=1; AFNElJ8ULd0OwqtKr6J75TpTQCpE+rQUi5ww6UkpDNgCGki2gbg4a6fn82usn1BnxY8oykrPRrusW8s2@lists.linux.dev
+X-Gm-Message-State: AOJu0YxPlKE4aTkB/G+Gqxv0wy1p/qnbw4dQauN5031IJejAsZ5nmxRD
+	CerRYOEo40CFVKfg6gGI7N5dNUP7UKH/sGa/ctXFRJx4Pn3jic+sci/EAmJOH6gxxw==
+X-Gm-Gg: Acq92OHBOnrkKpjYAJDkTJOr3pZqkWPZZk08YYufxcYlR1nxc4cttjnNkdHDTG1H+I5
+	1s0OLOgJXNk80fV4ZQgbNLv8XWEQeCZsz3Z9n1QAh5bg0i9R9LR2aHU6v1MeXVJu7KCpLnD57Dy
+	jq/vVilxk2Q/KaMSiDZUPmy1vwHhUyYH3Q4pqiQ1A+KryNsR+Ra//NvXO0x380bVWDrWb2RGww4
+	yrTTjfWjsj3pF+M9YiGg0xx62UJoIJ+wOvv6OD2SK+EcTgHSkpMlK/Xr6h5cMq1T8WV9fP2Pf2g
+	fjLZ5GJF9xUjeox04Yld/R/TCCD0fGQQmDLCQtAx3m2V2Qp8amy++Mx2sd47ELuGCs8IGHH5l1E
+	KmtSuawBYtigRKoY/jlmvUfIru8HO7xCsE1P9/1nUOeeKyENptKk+ib4I9rJa/eTsjRagcyr8hW
+	pSRYmzD56AZ44H5kuolZhSOClUSfKD32vyFSf2+ONEAmffzRiaUJ9OxCtgVq42a1T/rIo=
+X-Received: by 2002:ac8:5996:0:b0:509:1d4b:f86f with SMTP id d75a77b69052e-5162b156ecemr16742311cf.14.1778685113161;
+        Wed, 13 May 2026 08:11:53 -0700 (PDT)
+Received: from google.com (8.181.38.34.bc.googleusercontent.com. [34.38.181.8])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b53d450dcbsm376655416d6.45.2026.05.13.08.11.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 May 2026 08:11:52 -0700 (PDT)
+Date: Wed, 13 May 2026 15:11:44 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Josua Mayer <josua@solid-run.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Pranjal Shrivastava <praan@google.com>,
+	Samiullah Khawaja <skhawaja@google.com>, stable@vger.kernel.org
+Subject: Re: [PATCH rc 2/5] iommu: Fix up map/unmap debugging for iommupt
+ domains
+Message-ID: <agSUsGB2MabPq_qm@google.com>
+References: <0-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
+ <2-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS4PR12MB999077:EE_
-X-MS-Office365-Filtering-Correlation-Id: 29b6b0f4-d339-4b9d-478c-08deb101e7c6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|56012099003|11063799003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	ZqxV00rykxxfULzP4tN9n0gq+eENV2uUj+0driMzXNPkInCe5ul9xJEwOYNvyIj8u4dIV4scgpsgEJC7XjZWMgLVF8KefQAQVm/ms/Zsa04J9Khdj7BS+wCr/rVIhP3SE2iWaB2t1MZ0Gdtld/N6bxoCf3xQiI3pTjTANN36C2NGqIaNax6eYsE8fp1JvkZBrPC+IiTdgrLwUqopA+XrL366Be+W/BFlADnObRXUgUjou8VLlKQsBLbvNtv9R5ZB0oeKuMXbTaD/VK0bLOnIaQuZ8staJhMPWSAOUZrOhzLmBXN+ExhzMysYPJ+ZFJ36Zms5oK7W0tUNjravtSBIqG9x7Vnl3jdix08I4ve5gsP6iddhw0CvklYUhU2BDLAcGI1MnBn1g2oTCK5EigOJ4tr6vverV6GNU7iuBGsIDmO8y7MOuXipVrA/BQ8zVNxwgBurzBbYozMVfPILLB6D1ap6C4RGeMf3TYx5I7/Ju1kVXXuSy1Og+W7GY75gWxn94dcSDBc2OG3J61rtWnJYaNKRYXF8Y/Fq4fb5rQpmdBncfADQkMvzbGRFx42JSqiYc0AOiP0UoBBg2RYuFZVxoeNIu93f6XYRHtMwDDGQja/PyMV4fmUBRCmQRNsrrc8d1+IJr9n5Sssdv9ijBUphbfMAimvcWbQePiiKQy4bxjuskS/eFg0rY5ArstzSKaTc
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(56012099003)(11063799003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?iso-8859-1?Q?B4LQ/za+qiUw0bwgpGEbvlRYRtmPr4aa6ZB7f3VGfOUWHIgMOV3Sn8iP4V?=
- =?iso-8859-1?Q?38EUvyYF1oqHSJhN0ZpFRir+dKQGXF2D/FLFJYd0QqsXSbcxr2D7OGDQma?=
- =?iso-8859-1?Q?ijULqXRu/vRbmVMQxAcFhw6CfxJhhQQzF45W8ZaqpHf9trqf5pSwTIh3pA?=
- =?iso-8859-1?Q?fsE+1CD4+MCPwdW8uEuM07p+mrZRC4JnWhiiiKDF5ZIGXgHXFyG3SXKwK5?=
- =?iso-8859-1?Q?uZENU8OAvZTW9F6T/8wLaLr4h8QrR5Nma/DuTrP8r7rPSCy4LHRwCV8YrI?=
- =?iso-8859-1?Q?k8/soRm1au1ejPul6uB952wo4e8iz23uC2wp/9nWx4xa5jNpeQCJ1cMxgl?=
- =?iso-8859-1?Q?kfyaiweXF4zVic999N5FWqZcFbZcP8LO0lHFAAwFfoS+kkREgR+vWcYvv7?=
- =?iso-8859-1?Q?8Dd/h0EEUl15Cy4MD2UUcxtMFmetOkRuirNlze2MuZwJ/MF9UwPthMWmyN?=
- =?iso-8859-1?Q?8sMTP1HL+mLUQwdDTM0dyClkiGjluPFk8bCsIumZd1pvvMhm65zjiQVMCi?=
- =?iso-8859-1?Q?Yd8+WtIdAuM09cQirpoZSsFxv6gqTbx3lgUKgXU08wd8ZSzr0EUPPx3B9h?=
- =?iso-8859-1?Q?iXSMoq2atd87XQfoUDMv+cUGpI+y193eJHrqMMfNk4RV6jLoMg3TV2moSQ?=
- =?iso-8859-1?Q?vGkpqta6fa6WeLVKV8npUQlNOwGTEb5VAyFlPkOGuE0hGP8e/mDCbHqdEI?=
- =?iso-8859-1?Q?zkbbM/72ixY3ZTZjCCxCJaM2jTqMHaE0evtpsoo/l3BRhorunrwtX722gl?=
- =?iso-8859-1?Q?CfRnE4GHfLSnES53LRdlT8TNyXFdqs+ciLcVa3n52CfJn6xl+BdnVxAn2f?=
- =?iso-8859-1?Q?5CvwU1kp0iioEPFCv1q4jQp8yzQtzdCSBlz45YZayrvq5jLBV80A//02H2?=
- =?iso-8859-1?Q?m7szI5H+eZ44fekLh3kEQqESaaTMo9VQm2nu9hMI5S5MEo5fTkF9Xamt7S?=
- =?iso-8859-1?Q?2bojf0B5Cb7UQwrWdIj5gEobZuHt1h9sBITE++0dXSRZFlC8qZlvfQ0rnq?=
- =?iso-8859-1?Q?B0ML7q202wmgdbfsb7VSf5pjxGfrjntEL4J6TxQ0j2O8dZBNjuWzAkqDK+?=
- =?iso-8859-1?Q?0RbbD2p2+L0a4TcJ+u+zUTbCSfDxhavbv4llb48kcZyvx8mpn0WRdOwqTr?=
- =?iso-8859-1?Q?CrZg51r0oJvZXWqQnoQ8t9siHa1fo88bz9xsllTL2QKO0NNbnZ5o8QR3Kk?=
- =?iso-8859-1?Q?cQSQRYlbOeAggl3kHQ5D0UibITtEXlfww2adTXpj0GThUvIgftW42WniC0?=
- =?iso-8859-1?Q?kvgxeGMSjrfS1pXYzT3g/ZcTjpoun7bYVd4EoPMEo8tsfL/Qec1fwfBKpo?=
- =?iso-8859-1?Q?emdxCOlOlrbw8AdU5tiXbmwV7sNth6Ak+YLbTtdnLC3ytvpdtHWggX+GXS?=
- =?iso-8859-1?Q?ZFXqkSm1/pPXlznuqOY4aL3UcNpjptKD1FcUPLqU6pOrP5MPv0wBhCoHEF?=
- =?iso-8859-1?Q?/xvqcC5nidqOoadiYeBpHjXV0iQ9dN+jjYXczl0Ctx+xnlqG3UoXYSsNTG?=
- =?iso-8859-1?Q?1gm/x52dYdR+Ae/ybSe1nxf/JX0xU5k+adFRpYi1OK8g6eLzhShatPUOJ1?=
- =?iso-8859-1?Q?T+roXve2D9HvEDkGxfVdvXq/TUDWopJKXTlvtp4l16MD0EmR+ZUVKvRzsv?=
- =?iso-8859-1?Q?4sNZHoba2Z5vp6VI1lPxeUItmwnsAragw+/hgOQrus24jvWbRcEp9m6HcR?=
- =?iso-8859-1?Q?yCP7bmnk2jaDTm5JEyC9SSHPDhg73vNWBYAo5ZKt53ZG1qotnG6FGNkiCd?=
- =?iso-8859-1?Q?zxQ5hgGKrrjvQiyq9rqQ1Gsrh/3RDL2YPsMMm+5N5nT+xy?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 29b6b0f4-d339-4b9d-478c-08deb101e7c6
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 15:11:27.6484
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PexeZKCDMNutQWhvQp/8ScsVxWKQe+/jZeMvCtzdYCA+V+ajGiGasPWbcTLUlVd1AlsVgzkx6jagA015d2aO3w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB999077
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
 
-Hi Greg,
-
-On Wed, May 13, 2026 at 04:56:56PM +0200, Greg Kroah-Hartman wrote:
-> On Wed, May 13, 2026 at 07:39:22AM -0700, Stephano Cetola wrote:
-> > On Wed, 2026-05-13 at 13:58 +0200, Greg Kroah-Hartman wrote:
-> > > 
-> > > This is odd that it doesn't show up in my test builds/runs.  I'll go
-> > > drop this now, and push out a -rc2, thanks!
-> > > 
-> > > greg k-h
-> > 
-> > One of my build machines was able to build 7.0.7_rc1 successfully. The
-> > only difference I see is that it does not have:
-> > CONFIG_SCHED_CLASS_EXT=y
+On Tue, May 12, 2026 at 01:46:14PM -0300, Jason Gunthorpe wrote:
+> Sashiko noticed a few issues in this path, and a few more were
+> found on review. Tidy them up further. These are intertwined
+> because the debug code depends on some of the WARN_ONs to function
+> right:
 > 
-> Which somehow doesn't get enabled with `make allmodconfig` :(
+> Lift into iommu_map_nosync():
+> - The might_sleep_if()
+> - 0 pgsize_bitmap WARN_ON
+> - Promote the illegal domain->type to a WARN_ON
+> - WARN_ON for illegal gfp flags
+> 
+> Then remove the return 0 since it is now safe to call
+> iommu_debug_map().
+> 
+> Lift into __iommu_unmap():
+> - 0 pgsize_bitmap WARN_ON
+> - Promote the illegal domain->type to a WARN_ON
+> - iommu_debug_unmap_begin()
+> 
+> This now pairs with the unconditional iommu_debug_map() on the
+> mapping side. Thus iommu debugging now works for iommupt along
+> with some of the other debugging features.
+> 
+> Fixes: 99fb8afa16ad ("iommupt: Directly call iommupt's unmap_range()")
+> Fixes: d6c65b0fd621 ("iommupt: Avoid rewalking during map")
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Do you have DEBUG_INFO_BTF disabled?
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
 
-I think allmodconfig selects CONFIG_DEBUG_INFO_NONE=y => CONFIG_DEBUG_INFO_BTF=n
-=> CONFIG_SCHED_CLASS_EXT=n, because:
+Thanks,
+Mostafa
 
-config SCHED_CLASS_EXT
-...
-        depends on BPF_SYSCALL && BPF_JIT && DEBUG_INFO_BTF
-
--Andrea
+> ---
+>  drivers/iommu/iommu.c | 43 ++++++++++++++++++++++---------------------
+>  1 file changed, 22 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 6e53cfad5dc001..e334588a2476b4 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -2583,19 +2583,9 @@ static int __iommu_map_domain_pgtbl(struct iommu_domain *domain,
+>  	size_t orig_size = size;
+>  	int ret = 0;
+>  
+> -	might_sleep_if(gfpflags_allow_blocking(gfp));
+> -
+> -	if (unlikely(!(domain->type & __IOMMU_DOMAIN_PAGING)))
+> -		return -EINVAL;
+> -
+> -	if (WARN_ON(!ops->map_pages || domain->pgsize_bitmap == 0UL))
+> +	if (WARN_ON(!ops->map_pages))
+>  		return -ENODEV;
+>  
+> -	/* Discourage passing strange GFP flags */
+> -	if (WARN_ON_ONCE(gfp & (__GFP_COMP | __GFP_DMA | __GFP_DMA32 |
+> -				__GFP_HIGHMEM)))
+> -		return -EINVAL;
+> -
+>  	/* find out the minimum page size supported */
+>  	min_pagesz = 1 << __ffs(domain->pgsize_bitmap);
+>  
+> @@ -2657,6 +2647,15 @@ int iommu_map_nosync(struct iommu_domain *domain, unsigned long iova,
+>  	struct pt_iommu *pt = iommupt_from_domain(domain);
+>  	int ret;
+>  
+> +	might_sleep_if(gfpflags_allow_blocking(gfp));
+> +
+> +	/* Discourage passing strange GFP flags or illegal domains */
+> +	if (WARN_ON_ONCE(!(domain->type & __IOMMU_DOMAIN_PAGING) ||
+> +			 !domain->pgsize_bitmap ||
+> +			 (gfp & (__GFP_COMP | __GFP_DMA | __GFP_DMA32 |
+> +				 __GFP_HIGHMEM))))
+> +		return -EINVAL;
+> +
+>  	if (pt) {
+>  		size_t mapped = 0;
+>  
+> @@ -2666,11 +2665,12 @@ int iommu_map_nosync(struct iommu_domain *domain, unsigned long iova,
+>  			iommu_unmap(domain, iova, mapped);
+>  			return ret;
+>  		}
+> -		return 0;
+> +	} else {
+> +		ret = __iommu_map_domain_pgtbl(domain, iova, paddr, size, prot,
+> +					       gfp);
+> +		if (ret)
+> +			return ret;
+>  	}
+> -	ret = __iommu_map_domain_pgtbl(domain, iova, paddr, size, prot, gfp);
+> -	if (ret)
+> -		return ret;
+>  
+>  	trace_map(iova, paddr, size);
+>  	iommu_debug_map(domain, paddr, size);
+> @@ -2702,10 +2702,7 @@ __iommu_unmap_domain_pgtbl(struct iommu_domain *domain, unsigned long iova,
+>  	size_t unmapped_page, unmapped = 0;
+>  	unsigned int min_pagesz;
+>  
+> -	if (unlikely(!(domain->type & __IOMMU_DOMAIN_PAGING)))
+> -		return 0;
+> -
+> -	if (WARN_ON(!ops->unmap_pages || domain->pgsize_bitmap == 0UL))
+> +	if (WARN_ON(!ops->unmap_pages))
+>  		return 0;
+>  
+>  	/* find out the minimum page size supported */
+> @@ -2724,8 +2721,6 @@ __iommu_unmap_domain_pgtbl(struct iommu_domain *domain, unsigned long iova,
+>  
+>  	pr_debug("unmap this: iova 0x%lx size 0x%zx\n", iova, size);
+>  
+> -	iommu_debug_unmap_begin(domain, iova, size);
+> -
+>  	/*
+>  	 * Keep iterating until we either unmap 'size' bytes (or more)
+>  	 * or we hit an area that isn't mapped.
+> @@ -2761,6 +2756,12 @@ static size_t __iommu_unmap(struct iommu_domain *domain, unsigned long iova,
+>  	struct pt_iommu *pt = iommupt_from_domain(domain);
+>  	size_t unmapped;
+>  
+> +	if (WARN_ON_ONCE(!(domain->type & __IOMMU_DOMAIN_PAGING) ||
+> +			 !domain->pgsize_bitmap))
+> +		return 0;
+> +
+> +	iommu_debug_unmap_begin(domain, iova, size);
+> +
+>  	if (pt)
+>  		unmapped = pt->ops->unmap_range(pt, iova, size, iotlb_gather);
+>  	else
+> -- 
+> 2.43.0
+> 
