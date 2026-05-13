@@ -1,63 +1,65 @@
-Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
+Received: from mail-dl1-f42.google.com (mail-dl1-f42.google.com [74.125.82.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B1E21A457
-	for <patches@lists.linux.dev>; Wed, 13 May 2026 18:48:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6783F4112
+	for <patches@lists.linux.dev>; Wed, 13 May 2026 18:53:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778698114; cv=none; b=JZT6kOzsqH0WnQfbfd/BeX2yczS3BZO/Wi252hIFdwNiZW5XWIh60PZUAKFFThEfeWl3MjcxBzwbrWGEzNhl6lOEHNCVZI1wk0brpg/HFHQAcNafcUIxiUeM9UR5TWlKcfd/feQYW8LozI5uxGT3gDtTFFlXKQ/7Yu/wJPRi18k=
+	t=1778698429; cv=none; b=qxGJl35lmThU7LmzK3f7t09rVIcQHl0q3Sjx3cJWDIdMb4pGFXA5xwktyP4DUt0KNGxpb84CGeaXkMwhUmuRJZm3KsEW7omH97bYZK3AB8CN3thlQc+byvIXlibvfVD0fvJRpu5WaGq/yV/gSGX3Zs+dusA0E9Bl2q8Gw3ED2jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778698114; c=relaxed/simple;
-	bh=aL2zYD6QLERED7wzbI8gk+iTUinoqfJpuO7sHvvFO88=;
+	s=arc-20240116; t=1778698429; c=relaxed/simple;
+	bh=1T+8gtW07YW1Q2hsQQ/eNWlwxVUQfk7M7+0pK1hZj3A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZgLblOHc74jJgWiLYSeCQVw0a4ah6/M/LVgCvFQKFBYLmgwDizEyuQpUSEXs1eWbsj0EvBbkz1RBOjR/79sa9BL204LIUMA9gYojgMZQbQ6yqgzx6cHajjFXvG7Z4pr6S6UmWomRw+0v27IEs+UfDTnDEIf4v6yAqqus0vqk3ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eqf1T+t0; arc=none smtp.client-ip=74.125.82.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=OANuKo1sstHPqdo/V0s3yz3hFjKyF+sv45ANyzqUghxXvYyXO3tlPG19vvy8KfFTHozAz2xlz1QWqRfziZBlicCQ5LOw98xAnCVt2yicrSS3upM54ig+MSfyhiG96vXNvRf6WZpv4pUHiTq+qzKT74DF/+QFoCOuyKOIFkSEYoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fsqY3tmR; arc=none smtp.client-ip=74.125.82.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eqf1T+t0"
-Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-12c8d0945b3so22c88.0
-        for <patches@lists.linux.dev>; Wed, 13 May 2026 11:48:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fsqY3tmR"
+Received: by mail-dl1-f42.google.com with SMTP id a92af1059eb24-132cccd3d77so254c88.1
+        for <patches@lists.linux.dev>; Wed, 13 May 2026 11:53:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778698111; x=1779302911; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1778698426; x=1779303226; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fWJJS5PcKWqo9rQpzbwkNgjxbs/zQ0FlBBDO0W0FHcE=;
-        b=eqf1T+t05kfu8JCbDkonfZ9XFIfGCR3Ad7e4diohRlBl6zJDue3Vgq7DoM3tPVGAoT
-         1I1ta037RYmDcoMRlMKxIf7MBESM2rFXUAU2OUQYgUgeNjklZzNxSEKjAVWX35lsGvTx
-         6dVRPhLZ5a0ua7xurTtIA+CK7CK0Hf8+nl6Npqo8OOzd5y/hHMgbIo33/IDJzrSi2OnJ
-         BE4tLgaPykKo7LLjCtbUDYUByKne2v323q50FcXlV3oOtnk2Qhm3Ntp32RLEIN7oLK2j
-         FoDFEpwn4AHpzboEpOkkM5zTUkycjPCwAm2RnD/jx3Se7+ast0sRceMLgQwK6kVu5gmz
-         cI6g==
+        bh=F5FAcCWafjYrA9kZBinQj9N8tnqNIZ+FA0Q4wW5bFp4=;
+        b=fsqY3tmRp9JaLE1nGjI5ozFmmqnPtNQXOZROiPtNQzg0tBBvgBNNEI9coWMyFnlQrr
+         19eceAZC0RsSpCTequ+y7O+ZKsT1wjL2973lI5FVVeYuQNpPFyO5l8sUhUW4LvA0feA2
+         VUANOauG9grPY2u4+HFlRmcBZFATGIbyp98+fwQQZL4rrtBVLsX4PYW0IoT7EtS+xgeC
+         SnQBGkqqoTKaPZEjtN1uWursIqmdTO7FQ4krKmS8r3ICecusnj++KPBllOk8as2TUJSs
+         ejFSiNLlMbsZw+WpG2jLmARzu48rUjxBB7M7swB56g5UOLyKVrIM/vxevRhsY96332W0
+         kE6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778698111; x=1779302911;
+        d=1e100.net; s=20251104; t=1778698426; x=1779303226;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fWJJS5PcKWqo9rQpzbwkNgjxbs/zQ0FlBBDO0W0FHcE=;
-        b=RvAvy8D5uL4MdgkZbpBZ0B7oJMG7Gbpes8tHgHzVo5atZIHPrJEejjt3VNi2DGuOr/
-         hQp0g4zHOv/CpEoL0vAPgpI3bAD4EowehsK432RSaN5r0DZ1/RFnTDp07kxERBEC7QI6
-         LREAUlwkBFIPscpgp7ZGBMlirEunpnmpbh3NK3vXRsR2Pj/ZBCDIn28y+pqxXS9Wt9Gx
-         XpoybmDucLjdNGMgf9m8Sz2mdBbXqwE900fhWe5U3wEwcRaNjVS1Q2UPyePeygbAgupF
-         AapW00TBvafXUadGyuKfG1+rssk4yohweAGaR7Ppc5g4kZC1G7UqZlJENtUQYQHDQkcX
-         l0Nw==
-X-Forwarded-Encrypted: i=1; AFNElJ/2ki781HYrNWLfwbgCbcR/Z4ooSgV5/Ni+BN/Ic1OAiRFaJA6nR+jywvJvPk77Fx0IIOJk6v3R@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw54K5PwDMohXmws9J3W++xpKdwqvc1gxgvgyinicf94F9xCK60
-	GgnDyOsGisjt8Zl425yM2s+H2a0PbDnjzmEfCYeQH3gQ1ExxqujWoJXNj5SKWqPqpw==
-X-Gm-Gg: Acq92OG9Ygs1jPiQzJALgeaeFvX7WbTNjMm+85IyCxNVNpq2uhvfmtSOPHNRpYJQvSM
-	o5oP5r8yvw/X4m6vQGCJ9V6YuC9Ib8pRFRi1/3u3Er5t8QqzUUmy8N927o+SBYMUWuIbLoB4At5
-	SzELju55Z524kYMgXyfHgDP1t5vopvqB7Vit/YSJVMjVdUmF7xRgCMpe9/QL0TG80pcFHRLaPYA
-	p5sBqpgv5oyPinjtc2KjWRKWnFtXOd9Ur9csVIDIREnY5Uw6dWSq5JY+4Tu0gW0zd5MsXnTmJI6
-	ZrhrPI7bFQtyCXhJ658Ao6Ee8ysn7LUABwz7QxpKa99kta1GP0lSbECfr+iA+BGUgkDSKJqmd72
-	UXq5jMLR+HZHAWarNO1xIEb5GoZaJ+iwLkqj73wOTe1UBqq2fjMNcBRUV2gKhC3deiZbB71a1bH
-	pp4Nep0D2ZjGoEh+oR6ztyZCZvSPkrxWM4+MtWiV5VAF6vQmS0xPwwPbZ0tEucDhADrvcmyg==
-X-Received: by 2002:a05:7023:b8a:b0:12a:8cf4:6506 with SMTP id a92af1059eb24-134cb45845fmr51331c88.4.1778698110450;
-        Wed, 13 May 2026 11:48:30 -0700 (PDT)
+        bh=F5FAcCWafjYrA9kZBinQj9N8tnqNIZ+FA0Q4wW5bFp4=;
+        b=kazknnlXjEtdG6r31j0DFYiirz/VnwU5mrfRAD42KA5M+aT1KKobxwlUS32tq4P7aL
+         S4INbAmrA3Vs7gwPxNlW94ZxSVmH58MzwhQS0uTVRjDXeHfKwZmva41BR5+zmUcgJQMQ
+         LqTcb2BInNubVg/d0jl+rQMEFuZBXkeWfNBUBU6/krIRKpAQ9JgLXiSXOK4rukeJan4H
+         45PjunNDlMlomO2Pb1kgELo/vRRvee4hQnVaqvdcJienU5WWw+FcjAy5ftnLwx77Scf2
+         OhQ/7XFOlwAmF6bvwkvoZejuUgthFlOqnHs5L4+M/clWQEExRLNvTeKQtxfsnX0a+FWf
+         DXCA==
+X-Forwarded-Encrypted: i=1; AFNElJ+WERAM+g9pb9jR/HE+dvtFcVTEqqIsiCS3POHvhp3S3gqrIrUkS4mWoiTF3Xa9ro83bRVRpHwz@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx4vffFUj3oH3PIQL+AEPMUjYntoYPPoXN4oEgSp/1vfjRmf5uo
+	6TV0y6ymd1pC3jMcVX2LaR5gCkNuG96ik1rxDswGAHt3vDH/Q043ai5Q1aMdejn9bI/C1QKjWEr
+	YEN14bw==
+X-Gm-Gg: Acq92OF4vwLIIup5BOZQ7YO6cRlFBULvCMrOfESz4C3NkxIakAWHBkzI5BCr2OPpGBo
+	Sr+dd+sRPYn43/Vfo85L3WR+1jLT2Typpmp6HnR0SIH+TaWzDyftEO4puS8BSgSf4lDATm7ZgCx
+	lQDzteIHCjD8ZVbtDmHu2PCxMgB13n41MECDFgUUZDyE7oSuysC5o1F3as/weO92UuwZze2UHQH
+	uh3nyunr+nBGWLVlUOgOgrHq6e/jOENadbeJlEvm8BGr2hqTDjFb7gQru4zXODtob6udyaqDiBq
+	/MwyhmGihMMd+85GVoCy8gdobUV9Pbji7wpYFAViNMhIwIKdObC2XnOs4p/QReh4lE7rsYgVgYI
+	Mwlj2K0WAzVa0Hx3FFsHl9Z+fGyiFHpzXXFUwlaRs6MZBxJ1J+vFUMlFJzC8P/mgokzC5+AnoeW
+	nGaMwDLVM9Pwidkzx68k4zNmUs626qDucvM0l863xeWM/XVIUIt6cIsdi/kpJVJf9dmmaLqtLHg
+	V8QNANE
+X-Received: by 2002:a05:7022:f9c:b0:130:c9cc:2919 with SMTP id a92af1059eb24-134cc1108bbmr38022c88.19.1778698425009;
+        Wed, 13 May 2026 11:53:45 -0700 (PDT)
 Received: from google.com (153.46.83.34.bc.googleusercontent.com. [34.83.46.153])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f88847502fsm28400768eec.14.2026.05.13.11.48.29
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f8884752ccsm22785382eec.17.2026.05.13.11.53.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2026 11:48:30 -0700 (PDT)
-Date: Wed, 13 May 2026 18:48:26 +0000
+        Wed, 13 May 2026 11:53:44 -0700 (PDT)
+Date: Wed, 13 May 2026 18:53:40 +0000
 From: Samiullah Khawaja <skhawaja@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
@@ -67,14 +69,11 @@ Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
 	Kevin Tian <kevin.tian@intel.com>, Pasha Tatashin <pasha.tatashin@soleen.com>, 
 	patches@lists.linux.dev, Pranjal Shrivastava <praan@google.com>, 
 	Mostafa Saleh <smostafa@google.com>, stable@vger.kernel.org
-Subject: Re: [PATCH rc 4/5] iommupt: Check for missing PAGE_SIZE in the
- pgsize_bitmap
-Message-ID: <agS-MDCnoofhsBEe@google.com>
+Subject: Re: [PATCH rc 5/5] iommupt: Fix the end_index calculation in
+ __map_range_leaf()
+Message-ID: <agTHzU3KYofnszp4@google.com>
 References: <0-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
- <4-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
- <agS04F8UmZwWZNao@google.com>
- <agS6jQII_2PsAuZh@google.com>
- <20260513180607.GC787748@nvidia.com>
+ <5-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -83,69 +82,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260513180607.GC787748@nvidia.com>
+In-Reply-To: <5-v1-44b2fef88b25+d3-iommupt_map_rc_jgg@nvidia.com>
 
-On Wed, May 13, 2026 at 03:06:07PM -0300, Jason Gunthorpe wrote:
->On Wed, May 13, 2026 at 05:57:13PM +0000, Samiullah Khawaja wrote:
->> On Wed, May 13, 2026 at 05:46:22PM +0000, Samiullah Khawaja wrote:
->> > On Tue, May 12, 2026 at 01:46:16PM -0300, Jason Gunthorpe wrote:
->> > > Sashiko pointed out that the driver could drop PAGE_SIZE from the
->> > > pgsize_bitmap. That is technically allowed but nothing does it, and
->> > > such an iommu_domain would not be used with the DMA API today.
->> > >
->> > > Still, it is against the design and it is trivial to fix up. Lift
->> > > the PT_WARN_ON to the if branch and just skip the fast path.
->> > >
->> > > Fixes: dcd6a011a8d5 ("iommupt: Add map_pages op")
->> > > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
->> > > ---
->> > > drivers/iommu/generic_pt/iommu_pt.h | 4 ++--
->> > > 1 file changed, 2 insertions(+), 2 deletions(-)
->> > >
->> > > diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
->> > > index 19b6daf88f2ab1..4877b05291c9d4 100644
->> > > --- a/drivers/iommu/generic_pt/iommu_pt.h
->> > > +++ b/drivers/iommu/generic_pt/iommu_pt.h
->> > > @@ -920,8 +920,8 @@ static int NS(map_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
->> > > 		return ret;
->> > >
->> > > 	/* Calculate target page size and level for the leaves */
->> > > -	if (pt_has_system_page_size(common) && len == PAGE_SIZE) {
->> > > -		PT_WARN_ON(!(pgsize_bitmap & PAGE_SIZE));
->> > > +	if (pt_has_system_page_size(common) && len == PAGE_SIZE &&
->> > > +		likely(pgsize_bitmap & PAGE_SIZE)) {
->> > > 		if (log2_mod(iova | paddr, PAGE_SHIFT))
->> > > 			return -ENXIO;
->>
->> After thought nit:
->>
->> I wonder if the error handling of iova and paddr alignment should also
->> be deferred to non-fast path? Basically lift the iova and paddr check
->> in the parent if?
+On Tue, May 12, 2026 at 01:46:17PM -0300, Jason Gunthorpe wrote:
+>Sashiko noticed a mismatch of units in this math: num_leaves is
+>actually the number of leaf *entries* (so a 16-item contiguous leaf
+>is one num_leaves), while index is in items. The mismatch in maths
+>causes __map_range_leaf() to exit early instead of efficiently
+>filling a larger range of contiguous PTEs.
 >
->That would break support for < PAGE_SIZE tables which I've tried to
-
-I was also thinking about support of < PAGE_SIZE tables and wondering
-whether the < PAGE_SIZE tables support is already broken. For examples
-consider following:
-
-iova = 0x12341800
-paddr = 0x56781800
-len = PAGE_SIZE (4k)
-
-But pt_has_system_page_size() will be false in such a system.
->keep generic support for. Similar checks already exist in the generic
->code in a more general way, probably the first is
->pt_compute_best_pgsize().
-
-I was suggesting to rely on the already existing checks in
-pt_compute_best_pgsize() to do error handling, by only entering fast
-path if iova and paddr are also aligned.
+>The early exit is caught by the functions above and then
+>__map_range_leaf() is re-invoked, so there is no functional issue.
 >
->Thanks,
->Jason
-
-No change needed. Putting this here again:
+>Correct the misuse of units by adjusting num_leaves with the leaf
+>size and avoid the performance cost of looping externally.
+>
+>There are also some mismatched types for num_leaves; simplify
+>things to remove the duplicated calculations.
+>
+>Fixes: d6c65b0fd621 ("iommupt: Avoid rewalking during map")
+>Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+>---
+> drivers/iommu/generic_pt/iommu_pt.h | 20 +++++++++++++-------
+> 1 file changed, 13 insertions(+), 7 deletions(-)
+>
+>diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
+>index 4877b05291c9d4..dc91fb4e2f61cb 100644
+>--- a/drivers/iommu/generic_pt/iommu_pt.h
+>+++ b/drivers/iommu/generic_pt/iommu_pt.h
+>@@ -534,10 +534,12 @@ static int __map_range_leaf(struct pt_range *range, void *arg,
+> 	struct pt_state pts = pt_init(range, level, table);
+> 	struct pt_iommu_map_args *map = arg;
+> 	unsigned int leaf_pgsize_lg2 = map->leaf_pgsize_lg2;
+>+	unsigned int leaves_avail;
+> 	unsigned int start_index;
+> 	pt_oaddr_t oa = map->oa;
+>-	unsigned int num_leaves;
+>+	pt_vaddr_t num_leaves;
+> 	unsigned int orig_end;
+>+	unsigned int step_lg2;
+> 	pt_vaddr_t last_va;
+> 	unsigned int step;
+> 	bool need_contig;
+>@@ -546,21 +548,25 @@ static int __map_range_leaf(struct pt_range *range, void *arg,
+> 	PT_WARN_ON(map->leaf_level != level);
+> 	PT_WARN_ON(!pt_can_have_leaf(&pts));
+>
+>-	step = log2_to_int_t(unsigned int,
+>-			     leaf_pgsize_lg2 - pt_table_item_lg2sz(&pts));
+>-	need_contig = leaf_pgsize_lg2 != pt_table_item_lg2sz(&pts);
+>+	step_lg2 = leaf_pgsize_lg2 - pt_table_item_lg2sz(&pts);
+>+	step = log2_to_int_t(unsigned int, step_lg2);
+>+	need_contig = step_lg2 != 0;
+>
+> 	_pt_iter_first(&pts);
+> 	start_index = pts.index;
+> 	orig_end = pts.end_index;
+>-	if (pts.index + map->num_leaves < pts.end_index) {
+>+	leaves_avail =
+>+		log2_div_t(unsigned int, pts.end_index - pts.index, step_lg2);
+>+	if (map->num_leaves <= leaves_avail) {
+> 		/* Need to stop in the middle of the table to change sizes */
+>-		pts.end_index = pts.index + map->num_leaves;
+>+		pts.end_index = pts.index + log2_mul(map->num_leaves, step_lg2);
+> 		num_leaves = 0;
+> 	} else {
+>-		num_leaves = map->num_leaves - (pts.end_index - pts.index);
+>+		num_leaves = map->num_leaves - leaves_avail;
+> 	}
+>
+>+	PT_WARN_ON(
+>+		log2_mod_t(unsigned int, pts.end_index - pts.index, step_lg2));
+> 	do {
+> 		pts.type = pt_load_entry_raw(&pts);
+> 		if (pts.type != PT_ENTRY_EMPTY || need_contig) {
+>-- 
+>2.43.0
+>
 
 Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
 
