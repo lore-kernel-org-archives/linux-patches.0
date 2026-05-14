@@ -1,150 +1,378 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013068.outbound.protection.outlook.com [40.107.201.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6CE43A2574
-	for <patches@lists.linux.dev>; Thu, 14 May 2026 19:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8273386553
+	for <patches@lists.linux.dev>; Thu, 14 May 2026 20:04:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.49
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778785440; cv=fail; b=pExPAEI32+f8A9JeiB/bJi1z1oCaxOq05woeYHKrd+AA8PeLZvuDb9Z28TS9F2kz5MLYg/XhiN6skNDp3r/f+J3UZx5/fC1tUIubnGXE1ssWibJ7P7Terr7A6kOFWyO7B5K5nbvrMLeGb+78lJMUPvtaTo5/zq75r9s0xc4hf+o=
+	t=1778789066; cv=pass; b=DTaKJ1b9OTJLcwcPxekrSY3M42R2Tdb+xG/VkZgXBsQZIghdUCxXHGKK/j/0wUcMcZ4qHA1BUsRkttMQBTJVeDWgs/mkLKQqC6dWr3mVRlxh459WE4O2jhMyvg2rqEXt28HtRxTsCFQxK3X0oVuKR8Xv1JleG449zk4kLtYLltc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778785440; c=relaxed/simple;
-	bh=jFNH7aRK6lo8YzI7AnsxW5bzmTA513xcL0wNmnZ8WJs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=t8Xn0m9GdOveFDU5cLR+xzEjhmJqA3cQ0GIlQKIy10JbDTn+49luQt6iWjQl1pnvSZwLPsrfpSY+E9gCcZ74iHpJ5Ww8KLSAEFXjIkfBA4gUtsd84BX0k58tEE2CX3Qn/thXJjrocPa7JGHnSSrI1uhej5S5ta9/luVd/MFgqVU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=BucN69rl; arc=fail smtp.client-ip=40.107.201.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1778789066; c=relaxed/simple;
+	bh=XAwG/G3iDHkyBn0YCjcah8x0gmHTRYddR2yWgMaEkVI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X15w3BG4WTvwY7LW0rs0xPGMDoWw6df8qMvvN8cRM2NlDRNtQ6iszXtfGXYsHJemyrU0C9ZXE2kDcnYiy/eePxqjpHRFM4ANNV+GjTT+scFxlSarCCBF0rvN05xCJ5fMT9zziLxlBG53QK1FYB4bE0LBN/Ns5KSkizbgYKPqZDM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b=MxkdwFEH; arc=pass smtp.client-ip=209.85.210.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rivosinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BucN69rl"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qDpjb6ZSeaxZqyIk77SFH/ziAkE4YY4QCc7NJrlgrzRSZfwDDA+fkwsGwQklIIh1gXuI3qwfVsosMeTcRtImZPNlXAwzg3MrlyG+pVhbn5n1BMFE+xIOP/xBTxClZrB3gTXPtVzx0ERiRjOPk7sAyu+HpDU4s44z1NTKf+VMjWnp7MmJ2EsOgTkte1Lk9bSzJwmI3scUeBhpCKPEMteeO+5H6arRcS/irGLi3GROPaJoPXMbXED/3oCvn0ETtP2DulXqPQbMTQcMHkfB52tP+Hjh0lGYV4CA4YB+m9P2yv23m4+oa5N5Gqd3DTmozjMk5U0qUJJwkGLt2vkkouw8xw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oxwhw/j/EX2XAgsmJC82WEb1uqovdzgSsoVg2vAdvnE=;
- b=Bw35Be12AGNuDmWvCOoPdGKCwqO57Rlx2Fbwl5N4o4Re6Gd4LdlBKutZxmSVsa0LVfSL3VXpvU68HMKge6tku/UINmVOXt5IWWwn1R949aeqP6r9OcTOmqDSWoRECGFO86pp0HAdD4+tzmDweBWUlXI/lPsqLKHAsNrCXxw7rBdvKh8WcwwgfAbLD9wlcW8ITnrHEvUEc78Jcv8sWi9V+z3D9y7TzIkijIWzeg4NthlpbEn+VfNq+93H5FvX6Gk9sSO3oFgGlOmWPhTC8nFbpIQToPb7HAMRveKdpozIVY2riqRHJkZhIbhIts2AwGjk82W1Qm04x7q3JGutIQaaAg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oxwhw/j/EX2XAgsmJC82WEb1uqovdzgSsoVg2vAdvnE=;
- b=BucN69rlZjetN47I/MjuFuMs+j493DmvSrxIYPazYrTyTaSX46drbOC8Zy/ioTaCqYNF2+O1T132vRNZCnfg+K/f666ffKFUODvFkXO7HHbddFoCaGC/NbAJnpsp88xBqgLDtHXGYAeVAN3xCHq8v94AI25h6hWWUKkT+2XbUM3TQHwgeW4sNCOcLISTIa/x/Ycq9dfJye/8kC4ZQA+sUa/CV7OZWAIkmQZBA1ODuAW0UwLDXWBUXGMUHPXvokUqczqyTe0qD2wIuH3FuaZae+sMdp4OwpV+I9pzREXpEZVL7bcnNVxCK8MzpbOFYO8pJuPf15XUjW7jrf6a43JoBQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by LV2PR12MB5751.namprd12.prod.outlook.com (2603:10b6:408:17d::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Thu, 14 May
- 2026 19:03:54 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.21.0025.012; Thu, 14 May 2026
- 19:03:54 +0000
-Date: Thu, 14 May 2026 16:03:53 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: David Matlack <dmatlack@google.com>
-Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
-	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
-	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
-	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
-	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 05/11] selftests: Add additional kernel functions to
- tools/include/
-Message-ID: <20260514190353.GA1394801@nvidia.com>
-References: <0-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
- <5-v1-dc5fa250ca1d+3213-mlx5st_jgg@nvidia.com>
- <afkUO56H6KPy5afA@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <afkUO56H6KPy5afA@google.com>
-X-ClientProxiedBy: MN0PR02CA0015.namprd02.prod.outlook.com
- (2603:10b6:208:530::16) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b="MxkdwFEH"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7dcc9b506d9so6898869a34.1
+        for <patches@lists.linux.dev>; Thu, 14 May 2026 13:04:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778789063; cv=none;
+        d=google.com; s=arc-20240605;
+        b=eqZyKChofWXK4btZOB2PNxWxm6vd3mt0mGB3eCE3QeK0MZofBIjOz5pD4UC8w4J/hV
+         WY0QnNgAuaxtdBu7Drr8LvEgWjJwo4C379sZph5Qw9HsnxmALoX98vsZYro1nf/G6fMb
+         ve/OVpO2Ns1g91sgiUE5E7arGbDmpQ4yBFlZwr6OvNXDVQfMrRMWcYQcVDTzeZ2zEc+X
+         0Q8A1woiBp6Rgra7ZDYtM2Nzs/IhkPETae2yKH5t4MLMNfHq4AlPWNb4DKzHRURhc4j+
+         djFuuQHI3AfA/+s8i+pKrsz4RRByJaTgv74uCEGT1vC6b7pZCzbJtvgdeLLwMDTT2j4b
+         QfJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=BmrYvBS4e5yQgiQJc9bw4b0Yvv5PakgHG3Rw+9EZ0Lg=;
+        fh=Q4uR067AKoAwNosJf3dK4aIQqyspY3mHCTw0QN9O7EA=;
+        b=LLHTGGz+TkSuchstjx2khA2edI4ctoD1xPpADKwDfh4YK7UXFVMzrrKLEneReg6IR4
+         /so0eIkAbvqAGKD1SL2NOTdY7H7h8wWrSkKCl6heonKkNuaFGM3SevNckDkEO1JS1GpR
+         /+tHCXlCFWDYz+0UXPRiC2b/HT/q5S0unFTIgggtqa6/WZlx+DcfDjIB5Blw1cTxQOeT
+         sHxcbDYZrQmSmt4My/JTPihtPApM/M21v1Xk0M31gU8gCwAqB9689zwaJF0LmvFzcapv
+         GClAP7BSTpCJt9/fx5/6eBPhLwiOXmCsVMWGr9XEFi2pJoXA7lpUdnS+mnwnYtMxJfoX
+         zaJg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rivosinc.com; s=google; t=1778789063; x=1779393863; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BmrYvBS4e5yQgiQJc9bw4b0Yvv5PakgHG3Rw+9EZ0Lg=;
+        b=MxkdwFEH3v7+rAYzDUYCbW7Et3dDsZqd/NVwLKyPBphGdWn9N3CQWTsC+2ctXzC3H6
+         8iiKDsEQjrOjo3w7rIi74KKNyDnZdlrCz6W5Gg8EMU0QuhvdMbxrqZpLygpqTMV433Ss
+         z+zQ1KaQh7jMUgYl5Z2sFTbCQabrcTEiWR9QG43E33SJKZcgKBNqVdUku07uHf4Fw1yt
+         DAQHc1Pbmarwhu07DqIwcrBA1SYRMXjQ3yqo95gMU3AOBJPWoHTnPvv7Z4D3mYTVxE7p
+         6BHK56Q2PxRQ0+bxG73X+oBEAiBHwAHpcGp8CR5K/3QHH93ssqwgI6/4UK5e1KJcOqTV
+         gR4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778789063; x=1779393863;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=BmrYvBS4e5yQgiQJc9bw4b0Yvv5PakgHG3Rw+9EZ0Lg=;
+        b=B2CYEUCLwo2LmhxTdEQgRaNtTcPT1EbOSlKGUq54AnXOFXc9ltK0vbF0WKlPGThA6e
+         3RND8durMIRf6vRoZhJSk9I7oT2ktB3/R569/XgKMC1PuBXYE6JY4B1+2Y6A02+K+F96
+         753fNIc1Fyrw7Cvz7QP1rVRgE03QM0+zVHoJlj3OX+wQQGIZ696z0L1yGTIhptw4tl/9
+         rpHsGxGvaAKKZeTzHQ0QBm81IkhIifWOtf5mBzMGXDHhIqCuHqiuXTwfQSkKBFbQcUzn
+         6XmYUi9CzjeZnt+QUvs9XpCWXCvTCckgr2D5THsDp2XkVucoOBebMqyCiIaghqNO8uzB
+         dKTw==
+X-Forwarded-Encrypted: i=1; AFNElJ+M6oE8XsSe/nhqkgRzVkfJPFfWW7pUwAD0OoosAbCicoiZrKJL3VCenBpDSkxSbx9mETmHFruz@lists.linux.dev
+X-Gm-Message-State: AOJu0YxcDaG66m9MTsCzCE2Y3ZpkqfIiPS+TcxuykGyYAdyRw5eW4hc0
+	iKbBnM5WiTAuguBwG1Lpg5YUdSj8Dl3A0Us+zGmR4B61/5LSd+e8AVo2rlsX0OVICx5QUaUFIMJ
+	C2nFmhXhc5jdMhgPthUgvbdYL0d9cmGBgMblUoHa/5g==
+X-Gm-Gg: Acq92OEu0pxZVpz2ytaTJkqHBv3sF5y6rPR/XCeSDY3xGUTNFVDAUlGiORWbm8ianfw
+	p8JI+pROSbhK/dF1mjRXcUV1QY9vTNtQsmfSWDZb+YNc3S72jDTVV11gqLCYVH3DzWwXPVQ5Ti8
+	sNFyg/YN7FJjHA55lTOLOe8x22ungf6m+oP9oRhjHqqc4+eMiw8vzJjLdgDwBjWwrFGPx/dIKFd
+	Fw6Fad5fOx+T49g7h51JjDcEtu5pI7IJ2yDIm31GQsK4ghLh2j27LS59gEUEodYB5TKFKH5QUF+
+	g2jBMkY9Bn/9YJ436Q==
+X-Received: by 2002:a05:6820:1515:b0:694:6acf:a42d with SMTP id
+ 006d021491bc7-69c9438d904mr619190eaf.39.1778789063465; Thu, 14 May 2026
+ 13:04:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|LV2PR12MB5751:EE_
-X-MS-Office365-Filtering-Correlation-Id: 14d959c4-e315-4f9c-b287-08deb1eb8af5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|1800799024|366016|11063799003|4143699003|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info:
-	8ronLshH2w0+haHswjLW/eFQAqm/MxO1aCa9nw0i6JBXGPqM2p5zxgFcuzbLwDltEgzuKg1mJejEwgEDcsptKoDxJh68Js/97H5/9jy7TfFssJZmxpHlAn1wsXiGcUW/DfhxE3UazZ78xY/o8IRwH6NfczIhJYIXbA19E6zN98OEjL+7NyP6I1hZoznNx2iNPUS16N4f8vGwoznLpl08Ubtbp4MtM8GNjVCgIFK77ZPo1pepteULYk1ggR3Bv9xdhPxIPfNPkPUIx6bSwlzMzzjzNIoC9pnEy/i1Kyy6E0flXXAUPerT0qhTLWz7ObA+pMmdAfqaWkoIUxa3Ft+sBUuR2AkA68k154fVm2lQxDuB48A4Abw/B4FOAoV91DhVVKdWhvPMN0YdD0v1RfV/MW/60OZXIBto3TbmgjHFRyOzs6IaEPxGKTTwiO4phF8kdZC6MA/I9TYG0ILshhBGs0AbVtOeiY337rBa/UkKuW14Hb94PJ5yHenVzxbG2tItuT0FE99UTdSGxQkuZCNur1FegWveQWdw1arHkAF++TIkuPJDUCt97mndHm0FmxOwmbL0dxEl0uBLNE7/MXga4zaHymzUKgdHsMpOZwnUqUXew0O0tM+avr/CqrOKJpcQBrHWHnFSn0biVHFcJhd3/zilJ9KdkJ4le9T2e5VQT3DRDF2T7KXiRuzxvHMxR9p3
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(11063799003)(4143699003)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?GzEStwcX8eWpBixoBczQeswPfZWeXGiZGadbb1T/o5P7OrYnr+nRU0/1CVha?=
- =?us-ascii?Q?iOJWPBuC/PWVnUrje1ykO+cync9yHOJomY3LhVng88942Qvjk3gVokoNej6M?=
- =?us-ascii?Q?WUYQTJrJp1Fzq/jrMkljD/5Adjoao4KNWQMeibuAVmbwpeK4MKvyHuLMoeTV?=
- =?us-ascii?Q?clXPRc1CM7ap9fBae1OoXxTASEzWe3o0AFDR7vq5mpgiow6MJoLiVYeiqo6/?=
- =?us-ascii?Q?mWbLawtnX2qab/j8n7bPH3AVb6bP7nSAgHWMeqhjm5bDFycqnsc+fV8YK5Wp?=
- =?us-ascii?Q?Vr3aGzOsSk8hEfH7x7QTEm9LtUs/9TnX5i2YfaifjQpyFLsVZ2hk2AX9VdDk?=
- =?us-ascii?Q?iEyLWOy1rt73Gb5m20S5b8ahq3sf95kEaI1mJDuE6bS59IqPbpE7VrENwXZS?=
- =?us-ascii?Q?zq35F0qbNTXlClzjo/v5n8hGGe38/OPMOm5vDE2pvp2EOLRsh+6gxsVZ8DkH?=
- =?us-ascii?Q?BY9V77XiJMijqJeimVvgCMnjk7ixG8fNaXirsxY63JEacqeTgEAhguCMSUMm?=
- =?us-ascii?Q?CaAg+PBMThghqv/3qWNvyCK1Izn6vNiqldCrUiIuktVsrrk/Y1hHtzqXghuI?=
- =?us-ascii?Q?9yZpS+LaKjfmoJoCqr/cocrEByW9V/XRO0DD2p6IDBdBlLQWrEBF6XQVJ5UH?=
- =?us-ascii?Q?glEElv2jaPlzWQKdlcQo/ch/CDU8kKOmw5LeAarMJLVbo3x6UIaN+2u2eu4J?=
- =?us-ascii?Q?XDTWjk7VMOJIU084TSGg5wQl9I7xvhbVex7C1SRLzOyIpVvPSuuWW6nbuhXn?=
- =?us-ascii?Q?U0XIezhh2qNr+W25yB4iZIZLd9FecobxQ0oyYqCQVyVhkyjBjNZDJ6zeSxsN?=
- =?us-ascii?Q?zDKwLUE9mMgTKMOL3odZG25cnh9UkxBHdCmPCfpFgce5YstdcIQ8O4rr/1ZT?=
- =?us-ascii?Q?zKu3p9fm2X0o6wcboxgirj+m7e7jeFVRpTSWtSPHMs0k5yMFylFn07An+ghr?=
- =?us-ascii?Q?Y4qTMhmErWinP7NJ3Y39ZYo6porp+L9oFOYivAUen8c+XE5AGCFEafJpIblx?=
- =?us-ascii?Q?7nIK7LRPcOX8ruXM62TU9H+MzaLK7lLOS3SFbzob2hiiR0FAd+jVV/FyPoZ4?=
- =?us-ascii?Q?zWRFTQOXAw0XY2VozzQ/vBOpON+x7DbHaHj52aQPbCfFIGLjbOLjp0NvjMK0?=
- =?us-ascii?Q?yglSboWb3lPDwjVSCsYJwx4NEYEjd5qRPR+v8Ot/diOuv2UzdCAsqLlmf+aO?=
- =?us-ascii?Q?YuXbN9p/OdxEEDuAPqC7pIK56OdvgWKoRU0fk4gn4J+mZY/gsrDJZ6dqOzbW?=
- =?us-ascii?Q?QQnfCuJNSqA19gfr6JstO6HcB42TlLZQEDkP2jL/nvkYiP55AizuQkttVRpc?=
- =?us-ascii?Q?Uq2cY80mBnZRDC3UwkVe4h32oJI+HK0DDHJkHcn6q7k6ie8c91x/D95Luehd?=
- =?us-ascii?Q?S+c4leJXcY++APCMhC43OrDtCKgqLCdUZLu4vT4ZKXMjudL1m4V7Z7OM+VHy?=
- =?us-ascii?Q?wWO9BjPzNqs1Kb1IHfnDL9Lc2ZddXGhzdWmL+31b8QlaMF/CfG0UXY/7Jft/?=
- =?us-ascii?Q?6tOp50HnuE4GzrDKwdMjtLM05tj/d5IAXClTjJcccaFBX3k/ptQA3KRHTWUU?=
- =?us-ascii?Q?ivO9LzZBzS8SJGwfhteD+sYkTZNyDZR3hn488xrCOw7Iw/CA2+MW2XmGB/gW?=
- =?us-ascii?Q?q5ofK1oCln9B/UAUCi06wnB9tmQzRu2Sbf15XVr831OR+6nzGu1oy7STQ1JJ?=
- =?us-ascii?Q?dzS1/huBfeR3T+Ar3gW2LW1+WQnwm3Psa090q+3V2J6WptDR?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 14d959c4-e315-4f9c-b287-08deb1eb8af5
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 May 2026 19:03:54.2758
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: yEHBRZzglpCyUgQdTJ3TNFq1/5pou6AzywU47O7sWxY5if/8AE38SHrAVsf3fakL
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5751
+References: <0-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com> <7-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com>
+In-Reply-To: <7-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com>
+From: Tomasz Jeznach <tjeznach@rivosinc.com>
+Date: Thu, 14 May 2026 13:04:11 -0700
+X-Gm-Features: AVHnY4JqzUN5fb812OBcqjCgX_4bBXAuXGB2_vgh_Ze0FsamHQUFofj3i2u3Hgk
+Message-ID: <CAH2o1u4ur16NQd8ZMgs3ch6BNcvQcuNP51_Y6UBwCRkgykoKUQ@mail.gmail.com>
+Subject: Re: [PATCH v2 7/8] iommu/riscv: Include the dword number in
+ RISCV_IOMMU_CMD macros
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>, iommu@lists.linux.dev, 
+	Joerg Roedel <joro@8bytes.org>, linux-riscv@lists.infradead.org, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Will Deacon <will@kernel.org>, Andrew Jones <andrew.jones@oss.qualcomm.com>, 
+	Fangyu Yu <fangyu.yu@linux.alibaba.com>, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 04, 2026 at 09:48:43PM +0000, David Matlack wrote:
-> On 2026-04-30 09:08 PM, Jason Gunthorpe wrote:
-> > These are needed by the VFIO mlx5 selftest in the following patches,
-> > which includes some headers from mlx5 and also needs a few more
-> > MMIO-related features.
-> > 
-> > - DECLARE_FLEX_ARRAY in new tools/include/linux/stddef.h (wraps
-> >   existing __DECLARE_FLEX_ARRAY from uapi/linux/stddef.h)
-> 
-> Is this needed? I don't see it used anywhere.
-> 
->   $ git grep DECLARE_FLEX_ARRAY tools/testing/selftests/vfio
+On Fri, May 8, 2026 at 7:53=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wro=
+te:
+>
+> The command queue entry format is 128 bits. Follow the pattern of the
+> other drivers and encode the 64 bit dword number in the macro
+> itself. RISC-V further has similarly named macros that are not field
+> layout macros, but field content macros which won't get a new number.
+>
+> Overall this is clearer to understand the code and check for errors like
+> using the wrong macro in the wrong spot.
+>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/riscv/iommu-bits.h | 102 +++++++++++++++----------------
+>  1 file changed, 51 insertions(+), 51 deletions(-)
+>
+> diff --git a/drivers/iommu/riscv/iommu-bits.h b/drivers/iommu/riscv/iommu=
+-bits.h
+> index f01b49ac815586..8c60780363da72 100644
+> --- a/drivers/iommu/riscv/iommu-bits.h
+> +++ b/drivers/iommu/riscv/iommu-bits.h
+> @@ -461,32 +461,32 @@ struct riscv_iommu_command {
+>  };
+>
+>  /* Fields on dword0, common for all commands */
+> -#define RISCV_IOMMU_CMD_OPCODE GENMASK_ULL(6, 0)
+> -#define        RISCV_IOMMU_CMD_FUNC    GENMASK_ULL(9, 7)
+> +#define RISCV_IOMMU_CMD0_OPCODE        GENMASK_ULL(6, 0)
+> +#define RISCV_IOMMU_CMD0_FUNC  GENMASK_ULL(9, 7)
+>
+>  /* 3.1.1 IOMMU Page-table cache invalidation */
+>  /* Fields on dword0 */
+>  #define RISCV_IOMMU_CMD_IOTINVAL_OPCODE                1
+>  #define RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA      0
+>  #define RISCV_IOMMU_CMD_IOTINVAL_FUNC_GVMA     1
+> -#define RISCV_IOMMU_CMD_IOTINVAL_AV            BIT_ULL(10)
+> -#define RISCV_IOMMU_CMD_IOTINVAL_PSCID         GENMASK_ULL(31, 12)
+> -#define RISCV_IOMMU_CMD_IOTINVAL_PSCV          BIT_ULL(32)
+> -#define RISCV_IOMMU_CMD_IOTINVAL_GV            BIT_ULL(33)
+> -#define RISCV_IOMMU_CMD_IOTINVAL_GSCID         GENMASK_ULL(59, 44)
+> -#define RISCV_IOMMU_CMD_IOTINVAL_NL            BIT_ULL(34)
+> +#define RISCV_IOMMU_CMD0_IOTINVAL_AV           BIT_ULL(10)
+> +#define RISCV_IOMMU_CMD0_IOTINVAL_PSCID                GENMASK_ULL(31, 1=
+2)
+> +#define RISCV_IOMMU_CMD0_IOTINVAL_PSCV         BIT_ULL(32)
+> +#define RISCV_IOMMU_CMD0_IOTINVAL_GV           BIT_ULL(33)
+> +#define RISCV_IOMMU_CMD0_IOTINVAL_GSCID                GENMASK_ULL(59, 4=
+4)
+> +#define RISCV_IOMMU_CMD0_IOTINVAL_NL           BIT_ULL(34)
+>  /* dword1[61:10] is the 4K-aligned page address */
+> -#define RISCV_IOMMU_CMD_IOTINVAL_ADDR          GENMASK_ULL(61, 10)
+> +#define RISCV_IOMMU_CMD1_IOTINVAL_ADDR         GENMASK_ULL(61, 10)
+>
+>  /* 3.1.2 IOMMU Command Queue Fences */
+>  /* Fields on dword0 */
+>  #define RISCV_IOMMU_CMD_IOFENCE_OPCODE         2
+>  #define RISCV_IOMMU_CMD_IOFENCE_FUNC_C         0
+> -#define RISCV_IOMMU_CMD_IOFENCE_AV             BIT_ULL(10)
+> -#define RISCV_IOMMU_CMD_IOFENCE_WSI            BIT_ULL(11)
+> -#define RISCV_IOMMU_CMD_IOFENCE_PR             BIT_ULL(12)
+> -#define RISCV_IOMMU_CMD_IOFENCE_PW             BIT_ULL(13)
+> -#define RISCV_IOMMU_CMD_IOFENCE_DATA           GENMASK_ULL(63, 32)
+> +#define RISCV_IOMMU_CMD0_IOFENCE_AV            BIT_ULL(10)
+> +#define RISCV_IOMMU_CMD0_IOFENCE_WSI           BIT_ULL(11)
+> +#define RISCV_IOMMU_CMD0_IOFENCE_PR            BIT_ULL(12)
+> +#define RISCV_IOMMU_CMD0_IOFENCE_PW            BIT_ULL(13)
+> +#define RISCV_IOMMU_CMD0_IOFENCE_DATA          GENMASK_ULL(63, 32)
+>  /* dword1 is the address, word-size aligned and shifted to the right by =
+two bits. */
+>
+>  /* 3.1.3 IOMMU Directory cache invalidation */
+> @@ -494,9 +494,9 @@ struct riscv_iommu_command {
+>  #define RISCV_IOMMU_CMD_IODIR_OPCODE           3
+>  #define RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT   0
+>  #define RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_PDT   1
+> -#define RISCV_IOMMU_CMD_IODIR_PID              GENMASK_ULL(31, 12)
+> -#define RISCV_IOMMU_CMD_IODIR_DV               BIT_ULL(33)
+> -#define RISCV_IOMMU_CMD_IODIR_DID              GENMASK_ULL(63, 40)
+> +#define RISCV_IOMMU_CMD0_IODIR_PID             GENMASK_ULL(31, 12)
+> +#define RISCV_IOMMU_CMD0_IODIR_DV              BIT_ULL(33)
+> +#define RISCV_IOMMU_CMD0_IODIR_DID             GENMASK_ULL(63, 40)
+>  /* dword1 is reserved for standard use */
+>
+>  /* 3.1.4 IOMMU PCIe ATS */
+> @@ -504,25 +504,25 @@ struct riscv_iommu_command {
+>  #define RISCV_IOMMU_CMD_ATS_OPCODE             4
+>  #define RISCV_IOMMU_CMD_ATS_FUNC_INVAL         0
+>  #define RISCV_IOMMU_CMD_ATS_FUNC_PRGR          1
+> -#define RISCV_IOMMU_CMD_ATS_PID                        GENMASK_ULL(31, 1=
+2)
+> -#define RISCV_IOMMU_CMD_ATS_PV                 BIT_ULL(32)
+> -#define RISCV_IOMMU_CMD_ATS_DSV                        BIT_ULL(33)
+> -#define RISCV_IOMMU_CMD_ATS_RID                        GENMASK_ULL(55, 4=
+0)
+> -#define RISCV_IOMMU_CMD_ATS_DSEG               GENMASK_ULL(63, 56)
+> +#define RISCV_IOMMU_CMD0_ATS_PID               GENMASK_ULL(31, 12)
+> +#define RISCV_IOMMU_CMD0_ATS_PV                        BIT_ULL(32)
+> +#define RISCV_IOMMU_CMD0_ATS_DSV               BIT_ULL(33)
+> +#define RISCV_IOMMU_CMD0_ATS_RID               GENMASK_ULL(55, 40)
+> +#define RISCV_IOMMU_CMD0_ATS_DSEG              GENMASK_ULL(63, 56)
+>  /* dword1 is the ATS payload, two different payload types for INVAL and =
+PRGR */
+>
+>  /* ATS.INVAL payload*/
+> -#define RISCV_IOMMU_CMD_ATS_INVAL_G            BIT_ULL(0)
+> +#define RISCV_IOMMU_CMD1_ATS_INVAL_G           BIT_ULL(0)
+>  /* Bits 1 - 10 are zeroed */
+> -#define RISCV_IOMMU_CMD_ATS_INVAL_S            BIT_ULL(11)
+> -#define RISCV_IOMMU_CMD_ATS_INVAL_UADDR                GENMASK_ULL(63, 1=
+2)
+> +#define RISCV_IOMMU_CMD1_ATS_INVAL_S           BIT_ULL(11)
+> +#define RISCV_IOMMU_CMD1_ATS_INVAL_UADDR       GENMASK_ULL(63, 12)
+>
+>  /* ATS.PRGR payload */
+>  /* Bits 0 - 31 are zeroed */
+> -#define RISCV_IOMMU_CMD_ATS_PRGR_PRG_INDEX     GENMASK_ULL(40, 32)
+> +#define RISCV_IOMMU_CMD1_ATS_PRGR_PRG_INDEX    GENMASK_ULL(40, 32)
+>  /* Bits 41 - 43 are zeroed */
+> -#define RISCV_IOMMU_CMD_ATS_PRGR_RESP_CODE     GENMASK_ULL(47, 44)
+> -#define RISCV_IOMMU_CMD_ATS_PRGR_DST_ID                GENMASK_ULL(63, 4=
+8)
+> +#define RISCV_IOMMU_CMD1_ATS_PRGR_RESP_CODE    GENMASK_ULL(47, 44)
+> +#define RISCV_IOMMU_CMD1_ATS_PRGR_DST_ID       GENMASK_ULL(63, 48)
+>
+>  /**
+>   * struct riscv_iommu_fq_record - Fault/Event Queue Record
+> @@ -713,8 +713,8 @@ struct riscv_iommu_msipte {
+>
+>  static inline void riscv_iommu_cmd_inval_vma(struct riscv_iommu_command =
+*cmd)
+>  {
+> -       cmd->dword0 =3D FIELD_PREP(RISCV_IOMMU_CMD_OPCODE, RISCV_IOMMU_CM=
+D_IOTINVAL_OPCODE) |
+> -                     FIELD_PREP(RISCV_IOMMU_CMD_FUNC, RISCV_IOMMU_CMD_IO=
+TINVAL_FUNC_VMA);
+> +       cmd->dword0 =3D FIELD_PREP(RISCV_IOMMU_CMD0_OPCODE, RISCV_IOMMU_C=
+MD_IOTINVAL_OPCODE) |
+> +                     FIELD_PREP(RISCV_IOMMU_CMD0_FUNC, RISCV_IOMMU_CMD_I=
+OTINVAL_FUNC_VMA);
+>         cmd->dword1 =3D 0;
+>  }
+>
+> @@ -722,72 +722,72 @@ static inline void riscv_iommu_cmd_inval_set_addr(s=
+truct riscv_iommu_command *cm
+>                                                   u64 addr)
+>  {
+>         cmd->dword1 =3D
+> -               FIELD_PREP(RISCV_IOMMU_CMD_IOTINVAL_ADDR, PHYS_PFN(addr))=
+;
+> -       cmd->dword0 |=3D RISCV_IOMMU_CMD_IOTINVAL_AV;
+> +               FIELD_PREP(RISCV_IOMMU_CMD1_IOTINVAL_ADDR, PHYS_PFN(addr)=
+);
+> +       cmd->dword0 |=3D RISCV_IOMMU_CMD0_IOTINVAL_AV;
+>  }
+>
+>  static inline void riscv_iommu_cmd_inval_set_nl(struct riscv_iommu_comma=
+nd *cmd)
+>  {
+> -       cmd->dword0 |=3D RISCV_IOMMU_CMD_IOTINVAL_NL;
+> +       cmd->dword0 |=3D RISCV_IOMMU_CMD0_IOTINVAL_NL;
+>  }
+>
+>  static inline void riscv_iommu_cmd_inval_set_pscid(struct riscv_iommu_co=
+mmand *cmd,
+>                                                    int pscid)
+>  {
+> -       cmd->dword0 |=3D FIELD_PREP(RISCV_IOMMU_CMD_IOTINVAL_PSCID, pscid=
+) |
+> -                      RISCV_IOMMU_CMD_IOTINVAL_PSCV;
+> +       cmd->dword0 |=3D FIELD_PREP(RISCV_IOMMU_CMD0_IOTINVAL_PSCID, psci=
+d) |
+> +                      RISCV_IOMMU_CMD0_IOTINVAL_PSCV;
+>  }
+>
+>  static inline void riscv_iommu_cmd_inval_set_gscid(struct riscv_iommu_co=
+mmand *cmd,
+>                                                    int gscid)
+>  {
+> -       cmd->dword0 |=3D FIELD_PREP(RISCV_IOMMU_CMD_IOTINVAL_GSCID, gscid=
+) |
+> -                      RISCV_IOMMU_CMD_IOTINVAL_GV;
+> +       cmd->dword0 |=3D FIELD_PREP(RISCV_IOMMU_CMD0_IOTINVAL_GSCID, gsci=
+d) |
+> +                      RISCV_IOMMU_CMD0_IOTINVAL_GV;
+>  }
+>
+>  static inline void riscv_iommu_cmd_iofence(struct riscv_iommu_command *c=
+md)
+>  {
+> -       cmd->dword0 =3D FIELD_PREP(RISCV_IOMMU_CMD_OPCODE, RISCV_IOMMU_CM=
+D_IOFENCE_OPCODE) |
+> -                     FIELD_PREP(RISCV_IOMMU_CMD_FUNC, RISCV_IOMMU_CMD_IO=
+FENCE_FUNC_C) |
+> -                     RISCV_IOMMU_CMD_IOFENCE_PR | RISCV_IOMMU_CMD_IOFENC=
+E_PW;
+> +       cmd->dword0 =3D FIELD_PREP(RISCV_IOMMU_CMD0_OPCODE, RISCV_IOMMU_C=
+MD_IOFENCE_OPCODE) |
+> +                     FIELD_PREP(RISCV_IOMMU_CMD0_FUNC, RISCV_IOMMU_CMD_I=
+OFENCE_FUNC_C) |
+> +                     RISCV_IOMMU_CMD0_IOFENCE_PR | RISCV_IOMMU_CMD0_IOFE=
+NCE_PW;
+>         cmd->dword1 =3D 0;
+>  }
+>
+>  static inline void riscv_iommu_cmd_iofence_set_av(struct riscv_iommu_com=
+mand *cmd,
+>                                                   u64 addr, u32 data)
+>  {
+> -       cmd->dword0 =3D FIELD_PREP(RISCV_IOMMU_CMD_OPCODE, RISCV_IOMMU_CM=
+D_IOFENCE_OPCODE) |
+> -                     FIELD_PREP(RISCV_IOMMU_CMD_FUNC, RISCV_IOMMU_CMD_IO=
+FENCE_FUNC_C) |
+> -                     FIELD_PREP(RISCV_IOMMU_CMD_IOFENCE_DATA, data) |
+> -                     RISCV_IOMMU_CMD_IOFENCE_AV;
+> +       cmd->dword0 =3D FIELD_PREP(RISCV_IOMMU_CMD0_OPCODE, RISCV_IOMMU_C=
+MD_IOFENCE_OPCODE) |
+> +                     FIELD_PREP(RISCV_IOMMU_CMD0_FUNC, RISCV_IOMMU_CMD_I=
+OFENCE_FUNC_C) |
+> +                     FIELD_PREP(RISCV_IOMMU_CMD0_IOFENCE_DATA, data) |
+> +                     RISCV_IOMMU_CMD0_IOFENCE_AV;
+>         cmd->dword1 =3D addr >> 2;
+>  }
+>
+>  static inline void riscv_iommu_cmd_iodir_inval_ddt(struct riscv_iommu_co=
+mmand *cmd)
+>  {
+> -       cmd->dword0 =3D FIELD_PREP(RISCV_IOMMU_CMD_OPCODE, RISCV_IOMMU_CM=
+D_IODIR_OPCODE) |
+> -                     FIELD_PREP(RISCV_IOMMU_CMD_FUNC, RISCV_IOMMU_CMD_IO=
+DIR_FUNC_INVAL_DDT);
+> +       cmd->dword0 =3D FIELD_PREP(RISCV_IOMMU_CMD0_OPCODE, RISCV_IOMMU_C=
+MD_IODIR_OPCODE) |
+> +                     FIELD_PREP(RISCV_IOMMU_CMD0_FUNC, RISCV_IOMMU_CMD_I=
+ODIR_FUNC_INVAL_DDT);
+>         cmd->dword1 =3D 0;
+>  }
+>
+>  static inline void riscv_iommu_cmd_iodir_inval_pdt(struct riscv_iommu_co=
+mmand *cmd)
+>  {
+> -       cmd->dword0 =3D FIELD_PREP(RISCV_IOMMU_CMD_OPCODE, RISCV_IOMMU_CM=
+D_IODIR_OPCODE) |
+> -                     FIELD_PREP(RISCV_IOMMU_CMD_FUNC, RISCV_IOMMU_CMD_IO=
+DIR_FUNC_INVAL_PDT);
+> +       cmd->dword0 =3D FIELD_PREP(RISCV_IOMMU_CMD0_OPCODE, RISCV_IOMMU_C=
+MD_IODIR_OPCODE) |
+> +                     FIELD_PREP(RISCV_IOMMU_CMD0_FUNC, RISCV_IOMMU_CMD_I=
+ODIR_FUNC_INVAL_PDT);
+>         cmd->dword1 =3D 0;
+>  }
+>
+>  static inline void riscv_iommu_cmd_iodir_set_did(struct riscv_iommu_comm=
+and *cmd,
+>                                                  unsigned int devid)
+>  {
+> -       cmd->dword0 |=3D FIELD_PREP(RISCV_IOMMU_CMD_IODIR_DID, devid) |
+> -                      RISCV_IOMMU_CMD_IODIR_DV;
+> +       cmd->dword0 |=3D FIELD_PREP(RISCV_IOMMU_CMD0_IODIR_DID, devid) |
+> +                      RISCV_IOMMU_CMD0_IODIR_DV;
+>  }
+>
+>  static inline void riscv_iommu_cmd_iodir_set_pid(struct riscv_iommu_comm=
+and *cmd,
+>                                                  unsigned int pasid)
+>  {
+> -       cmd->dword0 |=3D FIELD_PREP(RISCV_IOMMU_CMD_IODIR_PID, pasid);
+> +       cmd->dword0 |=3D FIELD_PREP(RISCV_IOMMU_CMD0_IODIR_PID, pasid);
+>  }
+>
+>  #endif /* _RISCV_IOMMU_BITS_H_ */
+> --
+> 2.43.0
+>
 
-Turns out it is needed implicitly in existing headers:
+Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
 
-In file included from /home/jgg/oss/wip/mlx5st/tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_hw.h:16:
-/home/jgg/oss/wip/mlx5st/tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_ifc.h:4352:3: error: type name requires a
-      specifier or qualifier
- 4352 |                 DECLARE_FLEX_ARRAY(struct mlx5_ifc_rq_num_bits, rq_num);
-      |                 ^
-/home/jgg/oss/wip/mlx5st/tools/testing/selftests/vfio/lib/drivers/mlx5/mlx5_ifc.h:4352:51: error: type specifier missing,
-      defaults to 'int'; ISO C99 and later do not support implicit int [-Wimplicit-int]
- 4352 |                 DECLARE_FLEX_ARRAY(struct mlx5_ifc_rq_num_bits, rq_num);
-
-Jason
+Thank you,
+- Tomasz
