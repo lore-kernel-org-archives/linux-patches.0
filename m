@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C5F222599;
-	Thu, 14 May 2026 12:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1C226D4CA;
+	Thu, 14 May 2026 12:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778761441; cv=none; b=mDEKwjJQW4HHdbhk9Z9XF1H5RqV9MEU1ettZdKXVKW0RSQzvlZw5wugsjzgoyM59uhvUTeWI9TS5EDLSHnJlICBvBl8PduTGM/nQi81iIRcWLmK0EaWMmDUb6eJevwBbEEyyFegxp27izApWyqcUHWkChO03t2F96ax0vEmvHgs=
+	t=1778761910; cv=none; b=QwhKyUGcxTbQh2oF5CkqpTcZmGsWyjTPnDzJa87n8wC+GcKGjFrk9oCveBZPO4uPCkTQN//zR9oNssJakcalYg6TqcCjVttxYUH9r4xBVxRWLEWYafuAC3pRKbF7L/447+/nfivFhqkvDXLr6cMwTxaaRFplWf74Q0yEAlS9S+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778761441; c=relaxed/simple;
-	bh=eYPvZD2nMWqRD77mnw5Izc/oyN6hnhYzeWl7s5aNGmY=;
+	s=arc-20240116; t=1778761910; c=relaxed/simple;
+	bh=Kdy4Mftwo1hwWK6xhLBVe9sc+CM809ZEf01+zkfD+l8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WK4Rf6+oF6i+gmSSMaIjCZuMl6+PNDozu/hy0Oxhlpp3WZWnwqZvOk/RZU3subureOCQTmUHrITMGYWwMoREek9JusFrl132y02Orxn9vkFaaR5qiAUteQv6fX1aN0ZyVJgwkVUVdXdDTtejlUANham4xo+jf4o7b9R9JK6DshU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IWQSeUOi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TwN1E++YJT6YGrVUH05oo0+emAFX4ESqU2RCK2VbAdAhxKB+gkTywCASt/HNaU4Ml2PiDXQBtZiTiaDRO0tM1OVGtVkPJzN2mmuJ0+PN0i3mqOwVtbTyM0/NYKSOEoAA8SPPl0BscgHDBOc7WlpWw1G2cLv00tWV6JhHY1XRDnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ll5KPs8E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IWQSeUOi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A81C2BCB3;
-	Thu, 14 May 2026 12:23:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ll5KPs8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39900C2BCB3;
+	Thu, 14 May 2026 12:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778761441;
-	bh=eYPvZD2nMWqRD77mnw5Izc/oyN6hnhYzeWl7s5aNGmY=;
+	s=k20201202; t=1778761910;
+	bh=Kdy4Mftwo1hwWK6xhLBVe9sc+CM809ZEf01+zkfD+l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWQSeUOiZtB28Vmor2NUVR+ypgGgt8xTcNPFTVaDItIZaeIembYdgF3wUo0nQQdII
-	 6u+A9961AVeX2pCou4l0RNm2XZiaosnwsJAZuV0Dk+ECHn/7omjTXF7vDBOwQtQ7uY
-	 b++kjhhEVld0dCJ6O+NqcrOGozVjMFNzGZIRaXS1jy2EzdJKdIDZ3Pomv5WhRYMKVs
-	 YjZTmc1/qtyLzgoCc71xSIzxdZAvYNP0XUDOkqnAwANcxFaBQ8tht5y0tWZkA9IbEr
-	 oogHDikeew9/ZBK2sQgCMZmsWzBCnv5xo3aUZd89NfoMZAemv68XX6nf1AZo+Bo+ln
-	 UISRueyunlQrw==
+	b=Ll5KPs8EigMKyfqLr5aJO1zLLI5YxDq8sO+s9E9e3SyEZ0LiyiKO0RQHrBMr9+G/7
+	 9dN4UiSK49VQOE/wyhDLOeWOAzPW0vWDda7ia8mDV6kewJsO77ciY2dNDJ7ztCyqL/
+	 qaMKLOgwe7oL7rROSfnjIbFHBszCOs6Ump/4HdM5eaZ1SD1fLUqyyIIkJ+9vT0U1/c
+	 CNRpS4KYNyVZ06G6eiWgm9MiICAT95Bv0IuUxIZ6QzHTi4H1+WRe9iAhGn/4ZfBFh4
+	 KQzrVTBusdfdbYPpzqbi9HiXMkzyQ2NKcsOm8u/2R/n+VKTn8nqnSK1MspCBcVe8Cr
+	 iLoLLDP3njWMg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
 Cc: achill@achill.org,
@@ -48,11 +48,11 @@ Cc: achill@achill.org,
 	sudipm.mukherjee@gmail.com,
 	torvalds@linux-foundation.org,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.18 000/268] 6.18.30-rc2 review
-Date: Thu, 14 May 2026 14:23:48 +0200
-Message-ID: <20260514122348.416061-1-ojeda@kernel.org>
-In-Reply-To: <20260513153744.746440810@linuxfoundation.org>
-References: <20260513153744.746440810@linuxfoundation.org>
+Subject: Re: [PATCH 6.12 000/202] 6.12.88-rc2 review
+Date: Thu, 14 May 2026 14:31:39 +0200
+Message-ID: <20260514123139.417098-1-ojeda@kernel.org>
+In-Reply-To: <20260513153743.326058350@linuxfoundation.org>
+References: <20260513153743.326058350@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,22 +61,26 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 13 May 2026 18:17:26 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Wed, 13 May 2026 18:17:18 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.18.30 release.
-> There are 268 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.12.88 release.
+> There are 202 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
-> Responses should be made by Fri, 15 May 2026 15:37:20 +0000.
+> Responses should be made by Fri, 15 May 2026 15:37:24 +0000.
 > Anything received after that time might be too late.
 
 Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64 and arm32:
+for loongarch64:
 
 Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-The loongarch64 issue I reported for -rc1 is fixed now.
+The pin-init Clippy warnings I reported for -rc1 are gone, as expected.
+
+There is another warning that will go away if these are applied:
+
+  https://lore.kernel.org/stable/20260512201618.304954-1-ojeda@kernel.org/
 
 Thanks!
 
