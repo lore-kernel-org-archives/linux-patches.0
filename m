@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C18122FF22;
-	Fri, 15 May 2026 15:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BEE3FF1A2;
+	Fri, 15 May 2026 15:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860330; cv=none; b=T1xQvemRdaHkgJTbDl4CwA5bC0K8u8DQ8praIJDJIXUyOZ91XuqxYozYhEOR8vYXQ0UmjOZ5M3pYYMvyiF8bu+zYxazU1hTlGBlzuWGQFhrAJy2wcdNEgDPqkeFq+27RAZ/9OeOphfuseoF0A+fH+i6tCRGTwye9yJny16/HmI8=
+	t=1778860333; cv=none; b=OZLnAZFZjBAYyfGSG82/gJY79SJs5zyAvLk5LoHYvnOhBxdaMQt3jG98DOrZIRuM+3xJqDq9FNvyLTZmlv8AG1dNALN2BNHvu2jva3MsKjeAd3QgJaSjP2z10qV7yVWM5Na01vIJFR0jakOcuPzkrmRMagSbwM/omYIw/1GCUbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860330; c=relaxed/simple;
-	bh=m4XrzqWZVbAx1mPVa35/IaqdWhDFxVhFZKHP6isTx9M=;
+	s=arc-20240116; t=1778860333; c=relaxed/simple;
+	bh=wZeMndgOnQJDzUc4ktcVgHxBaAExXCPl42xvdSd3fW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UAVue1zrQa44VoCVWjlfME5ajVvDHX6KYQhhUlhYh+jk4+vL3K0wQkSI9trKKEHu9zNuChVJ2p8cFHN7YRlmi4HSqJ/7m/Bmc8basdbl/UwoopEOciSoYZVxWyNhfgZ/ZvrRs8B4ycLCkmIqG1Chfd4lG6slDFFRTeIgwPGlPlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKJTQVhh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VHnqS0Nd33DikXWNd4nzDojbaTP76gVg5qmC4rbEROyvqUK6thOXk6hEYt00tcktP3WxXIT6O99DupEQo/GCdl93qEDkSu3masOOQhXyqZ32/QClc31oLkqPobbI0muTEWMzEYb0ecUMgHzmyXCV75aPVUZVBKCHTiqNRsUcIiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vx+M2sxc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKJTQVhh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3984C2BCB0;
-	Fri, 15 May 2026 15:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vx+M2sxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672C4C2BCB0;
+	Fri, 15 May 2026 15:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860330;
-	bh=m4XrzqWZVbAx1mPVa35/IaqdWhDFxVhFZKHP6isTx9M=;
+	s=korg; t=1778860332;
+	bh=wZeMndgOnQJDzUc4ktcVgHxBaAExXCPl42xvdSd3fW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKJTQVhhDzShL3ffoRok4SwgOVrHUSwgkSFmQF4UX0iRSB6FI5+G5XeGGDI35O/g5
-	 D3UgynJOyJuQN/hjDy+rIwGT8aalqFV7LENNqfmEIdcxaZBh3DYVfOOfEVUs+t6SuW
-	 vLOqblX5wjF2hy7ZtHy6I5fAKswiRc80Kfo7yflg=
+	b=Vx+M2sxcxak7iyZcJvIl8WwZnH+iDTvMs4+kN9vTH86brfVAPQ8E5CL6y8DdWh6bi
+	 4ZdjwOA8J+FBInoS/dGxZ0ay7ajglIPwzFF3inDFx4dXgSN7s9puHHS3sZb1GMEnTm
+	 8mmK762KVA8OGznjDUlkq1A3K+zs92E84HW9sPdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 046/144] spi: sh-hspi: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:52 +0200
-Message-ID: <20260515154654.600998595@linuxfoundation.org>
+Subject: [PATCH 6.12 047/144] spi: fsl: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:53 +0200
+Message-ID: <20260515154654.625666562@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -52,50 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit e63982e6392e45a6ecd68d6c317a081cc8e70143 upstream.
+commit 9b7abfed4c3754062d1f3ffd452e65a38667f586 upstream.
 
 Make sure to deregister the controller before releasing underlying
-resources like clocks during driver unbind.
+resources like DMA during driver unbind.
 
-Fixes: 49e599b8595f ("spi: sh-hspi: control spi clock more correctly")
-Cc: stable@vger.kernel.org	# 3.4
+Fixes: 4178b6b1b595 ("spi: fsl-(e)spi: migrate to using devm_ functions to simplify cleanup")
+Cc: stable@vger.kernel.org	# 4.3
+Cc: Heiner Kallweit <hkallweit1@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-13-johan@kernel.org
+Link: https://patch.msgid.link/20260410064749.496888-1-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-sh-hspi.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/spi/spi-fsl-spi.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-sh-hspi.c
-+++ b/drivers/spi/spi-sh-hspi.c
-@@ -258,9 +258,9 @@ static int hspi_probe(struct platform_de
- 	ctlr->transfer_one_message = hspi_transfer_one_message;
- 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -614,7 +614,7 @@ static struct spi_controller *fsl_spi_pr
  
--	ret = devm_spi_register_controller(&pdev->dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	if (ret < 0) {
--		dev_err(&pdev->dev, "devm_spi_register_controller error.\n");
-+		dev_err(&pdev->dev, "failed to register controller\n");
- 		goto error2;
- 	}
+ 	mpc8xxx_spi_write_reg(&reg_base->mode, regval);
  
-@@ -280,9 +280,15 @@ static void hspi_remove(struct platform_
- {
- 	struct hspi_priv *hspi = platform_get_drvdata(pdev);
+-	ret = devm_spi_register_controller(dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret < 0)
+ 		goto err_probe;
  
-+	spi_controller_get(hspi->ctlr);
+@@ -705,7 +705,13 @@ static void of_fsl_spi_remove(struct pla
+ 	struct spi_controller *host = platform_get_drvdata(ofdev);
+ 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
+ 
++	spi_controller_get(host);
 +
-+	spi_unregister_controller(hspi->ctlr);
++	spi_unregister_controller(host);
 +
- 	pm_runtime_disable(&pdev->dev);
- 
- 	clk_put(hspi->clk);
+ 	fsl_spi_cpm_free(mpc8xxx_spi);
 +
-+	spi_controller_put(hspi->ctlr);
++	spi_controller_put(host);
  }
  
- static const struct of_device_id hspi_of_match[] = {
+ static struct platform_driver of_fsl_spi_driver = {
+@@ -751,7 +757,13 @@ static void plat_mpc8xxx_spi_remove(stru
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
+ 
++	spi_controller_get(host);
++
++	spi_unregister_controller(host);
++
+ 	fsl_spi_cpm_free(mpc8xxx_spi);
++
++	spi_controller_put(host);
+ }
+ 
+ MODULE_ALIAS("platform:mpc8xxx_spi");
 
 
