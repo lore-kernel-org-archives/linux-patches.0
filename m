@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374F33BFE4C;
-	Fri, 15 May 2026 16:14:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC56D3B6354;
+	Fri, 15 May 2026 16:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861686; cv=none; b=tVHHuzZXivkgg+buRWBiR8kFniD2DM0B3wuC9KBkt5WtiDOB2Tv6mdJm31+QaU9oOfIQDgeCcnq0d+5yXMGFPqbhwIXALYghl3jw9QHcxAIoR9o1SgCqSvYOdn93FH7cAkK9rJokTdLIyPV6UFQFioAbKEph1xJGfSHuiNdOZUo=
+	t=1778861689; cv=none; b=n968lQsOI/Uqzwd2v2w8rj4jDbJQ9DustqldvPpyERo25/lgIgurqwP03n6NLPLPg+Tlx2YnY62VvwbPJQOOvsCZmDy+zkG4gTYA9ugcP9jd7YCU1pfoC5Kq4hSYFoi0w/bjg2gBHbI1jpzLLb5Y9qhYnwygo++QFLCkgOTLd04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861686; c=relaxed/simple;
-	bh=EHfSpHLEUpn2iigdyb3fncMeMOEO2BSloqLj+3PojzY=;
+	s=arc-20240116; t=1778861689; c=relaxed/simple;
+	bh=EYB3wKvFX4IFpL76lPcwQ1fkxbHVacE5+7hCFlWX9Vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YUHxEg1SV6QEoGM3eJ/Y2yCX7Gfv2gbSx0C8ynQYSLmnkR9dqIFzQhNvkKBh6u2047/LMM2skkz9HYTEpCZjMNwoLzKqpZKw5ZlMkJB07QiNEbYjQhLAyIegd5Yp3c4fu1KOCrq+0gH9e3zje5Xk2TcZghoeWtqZ6wutGG4qJsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Dba8B3R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M4vuhlQ8RFQUcWwDnxgxHXQPMthOifIujPOSB8M8rY3JzN4zc884BdW61B6+tU4FYtCdtiWohKYJq1HCFNSf9XG0xbr2qBOPjSHYL70AtnP3EPK7LqFza4HnnMEJyIjvBYZqopH8Ybk2Li7vcwBnbuBsWkiO/hLmk79oWHqqxnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/7hxx3O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Dba8B3R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D85C2BCB0;
-	Fri, 15 May 2026 16:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/7hxx3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40A72C2BCB0;
+	Fri, 15 May 2026 16:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861686;
-	bh=EHfSpHLEUpn2iigdyb3fncMeMOEO2BSloqLj+3PojzY=;
+	s=korg; t=1778861688;
+	bh=EYB3wKvFX4IFpL76lPcwQ1fkxbHVacE5+7hCFlWX9Vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Dba8B3RVbx0B6App0bm9WzszqlxbgHJNui9UMoBWoIypijfEIcgy4ASVS6MknSp/
-	 hs246XtsyMsbIH3Ad7j4T63RhEIP+15I5aMBllXqs7xgJIReKe1NDQSIPCJP7yVACq
-	 msXXQFqxJp7+nfRLHPsmx09NKvOr40HHr7rGwubw=
+	b=x/7hxx3OhoOaSTGxawTzgYzIpjZARRbR9i6H4fiig+fMbHleTmbIExKnI6QTrmaRh
+	 YdRTXRBzqEbghSG11J/cy8NrVdo/B6odQ07jVDKFiJOD00emTZEnUq4NSzQAi7qUOn
+	 XD37FO1UhlI/qrOJ0tbM0C3u+H4bpOlZr1tuFMDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	David Carlier <devnexen@gmail.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 422/474] Bluetooth: hci_conn: fix potential UAF in create_big_sync
-Date: Fri, 15 May 2026 17:48:51 +0200
-Message-ID: <20260515154724.195237237@linuxfoundation.org>
+Subject: [PATCH 6.6 383/474] ALSA: aoa: Skip devices with no codecs in i2sbus_resume()
+Date: Fri, 15 May 2026 17:48:12 +0200
+Message-ID: <20260515154723.323133896@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,93 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 0beddb0c380bed5f5b8e61ddbe14635bb73d0b41 ]
+[ Upstream commit fd7df93013c5118812e63a52635dc6c3a805a1de ]
 
-Add hci_conn_valid() check in create_big_sync() to detect stale
-connections before proceeding with BIG creation. Handle the
-resulting -ECANCELED in create_big_complete() and re-validate the
-connection under hci_dev_lock() before dereferencing, matching the
-pattern used by create_le_conn_complete() and create_pa_complete().
+In i2sbus_resume(), skip devices with an empty codec list, which avoids
+using an uninitialized 'sysclock_factor' in the 32-bit format path in
+i2sbus_pcm_prepare().
 
-Keep the hci_conn object alive across the async boundary by taking
-a reference via hci_conn_get() when queueing create_big_sync(), and
-dropping it in the completion callback. The refcount and the lock
-are complementary: the refcount keeps the object allocated, while
-hci_dev_lock() serializes hci_conn_hash_del()'s list_del_rcu() on
-hdev->conn_hash, as required by hci_conn_del().
+In i2sbus_pcm_prepare(), replace two list_for_each_entry() loops with a
+single list_first_entry() now that the codec list is guaranteed to be
+non-empty by all callers.
 
-hci_conn_put() is called outside hci_dev_unlock() so the final put
-(which resolves to kfree() via bt_link_release) does not run under
-hdev->lock, though the release path would be safe either way.
-
-Without this, create_big_complete() would unconditionally
-dereference the conn pointer on error, causing a use-after-free
-via hci_connect_cfm() and hci_conn_del().
-
-Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
+Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
 Cc: stable@vger.kernel.org
-Co-developed-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ kept stable's `qos->bcast.out.phy == 0x02` context line instead of upstream's renamed `qos->bcast.out.phys == BIT(1)` ]
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20260310102921.210109-3-thorsten.blum@linux.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ sound/aoa/soundbus/i2sbus/core.c |    3 +++
+ sound/aoa/soundbus/i2sbus/pcm.c  |   16 +++++-----------
+ 2 files changed, 8 insertions(+), 11 deletions(-)
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2014,6 +2014,9 @@ static int create_big_sync(struct hci_de
- 	u32 flags = 0;
- 	int err;
+--- a/sound/aoa/soundbus/i2sbus/core.c
++++ b/sound/aoa/soundbus/i2sbus/core.c
+@@ -411,6 +411,9 @@ static int i2sbus_resume(struct macio_de
+ 	int err, ret = 0;
  
-+	if (!hci_conn_valid(hdev, conn))
-+		return -ECANCELED;
+ 	list_for_each_entry(i2sdev, &control->list, item) {
++		if (list_empty(&i2sdev->sound.codec_list))
++			continue;
 +
- 	if (qos->bcast.out.phy == 0x02)
- 		flags |= MGMT_ADV_FLAG_SEC_2M;
+ 		/* reset i2s bus format etc. */
+ 		i2sbus_pcm_prepare_both(i2sdev);
  
-@@ -2125,11 +2128,24 @@ static void create_big_complete(struct h
+--- a/sound/aoa/soundbus/i2sbus/pcm.c
++++ b/sound/aoa/soundbus/i2sbus/pcm.c
+@@ -411,6 +411,9 @@ static int i2sbus_pcm_prepare(struct i2s
+ 	/* set stop command */
+ 	command->command = cpu_to_le16(DBDMA_STOP);
  
- 	bt_dev_dbg(hdev, "conn %p", conn);
- 
-+	if (err == -ECANCELED)
-+		goto done;
++	cii = list_first_entry(&i2sdev->sound.codec_list,
++			       struct codec_info_item, list);
 +
-+	hci_dev_lock(hdev);
-+
-+	if (!hci_conn_valid(hdev, conn))
-+		goto unlock;
-+
- 	if (err) {
- 		bt_dev_err(hdev, "Unable to create BIG: %d", err);
- 		hci_connect_cfm(conn, err);
- 		hci_conn_del(conn);
+ 	/* ok, let's set the serial format and stuff */
+ 	switch (runtime->format) {
+ 	/* 16 bit formats */
+@@ -418,13 +421,7 @@ static int i2sbus_pcm_prepare(struct i2s
+ 	case SNDRV_PCM_FORMAT_U16_BE:
+ 		/* FIXME: if we add different bus factors we need to
+ 		 * do more here!! */
+-		bi.bus_factor = 0;
+-		list_for_each_entry(cii, &i2sdev->sound.codec_list, list) {
+-			bi.bus_factor = cii->codec->bus_factor;
+-			break;
+-		}
+-		if (!bi.bus_factor)
+-			return -ENODEV;
++		bi.bus_factor = cii->codec->bus_factor;
+ 		input_16bit = 1;
+ 		break;
+ 	case SNDRV_PCM_FORMAT_S32_BE:
+@@ -438,10 +435,7 @@ static int i2sbus_pcm_prepare(struct i2s
+ 		return -EINVAL;
  	}
-+
-+unlock:
-+	hci_dev_unlock(hdev);
-+done:
-+	hci_conn_put(conn);
- }
+ 	/* we assume all sysclocks are the same! */
+-	list_for_each_entry(cii, &i2sdev->sound.codec_list, list) {
+-		bi.sysclock_factor = cii->codec->sysclock_factor;
+-		break;
+-	}
++	bi.sysclock_factor = cii->codec->sysclock_factor;
  
- struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst,
-@@ -2230,10 +2246,11 @@ struct hci_conn *hci_connect_bis(struct
- 				 BT_BOUND, &data);
- 
- 	/* Queue start periodic advertising and create BIG */
--	err = hci_cmd_sync_queue(hdev, create_big_sync, conn,
-+	err = hci_cmd_sync_queue(hdev, create_big_sync, hci_conn_get(conn),
- 				 create_big_complete);
- 	if (err < 0) {
- 		hci_conn_drop(conn);
-+		hci_conn_put(conn);
- 		return ERR_PTR(err);
- 	}
- 
+ 	if (clock_and_divisors(bi.sysclock_factor,
+ 			       bi.bus_factor,
 
 
