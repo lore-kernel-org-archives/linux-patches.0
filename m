@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB2431D757;
-	Fri, 15 May 2026 15:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A50617C220;
+	Fri, 15 May 2026 15:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860699; cv=none; b=c/8SiVDUxHQ0ElIxlvZINtBKYNP9nB00opQgnDKT3v1p2jV/NBAjwj89t/7z6zmkls7M1/HfAjpzhI8Zvk/otVQCvSp0Pq29kgX+d9k9pgogHkoF2HSv1+OZokzfBkGH5nMIpcezettp6YWlUC2vt6ybkhaEwDPEavNYsDTRXFQ=
+	t=1778860702; cv=none; b=XsFi2taHc9Bd9ne0ncmhaKUk+hM7C3R+eWoyC9dLK2LSxIiCVlnWb3emNViZYW2d3hvAyzf5CEuFLosA2BwM6KYKMQcTTSKddbHEDY+R4MrlCtoF+nCKC9AymyELIUFqZlLG9aW9VlYZ+gCe0YZyGr26GOJ1Vu8TLQwxSx6GeFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860699; c=relaxed/simple;
-	bh=V+Vl9tfcEjxolgmguPUXkTKT0kBO7XAQL5FGLFHFmho=;
+	s=arc-20240116; t=1778860702; c=relaxed/simple;
+	bh=tYy1Akax3Fz7d39qPTMHr0rLCYYHzaOxXQZ9JzhCAmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UcVMvuzwLugGUpHTEmFyeUOBSq0Id8aqcwiho9yuMf8t5mZ07PbPHCx/DqUrXhvnMcxI/bdRsR9WmBL5jrI9t90zQnfjBqf6u7qhpDmeE+gTrCkJ8YcS24KYWYgTFTyUY74LBx26jusQuLp0OwJd+YK2OvfhYb3cgG7ILEx68ZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSBupRh4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cBQI0AoiNftQ32ZgQf4nLPCmyXw7tlsfNwJOBaoY0vyL2IGdbzOzkbyyTm3KC0K/OxT/Ig0m78RriYAAiv6hrRw1G+B25/zrgQ6QbQhIhdks2Ayg+eYfmafRENEsUvZnrIvCI42S/Swku20qZx+JRnpKDy8QZfM+cJ6h4jgTTPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaJbLjm1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSBupRh4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFC5C2BCC7;
-	Fri, 15 May 2026 15:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaJbLjm1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95120C2BCB3;
+	Fri, 15 May 2026 15:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860699;
-	bh=V+Vl9tfcEjxolgmguPUXkTKT0kBO7XAQL5FGLFHFmho=;
+	s=korg; t=1778860701;
+	bh=tYy1Akax3Fz7d39qPTMHr0rLCYYHzaOxXQZ9JzhCAmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSBupRh4r4bqX7OySKh8MCEeG1lO3xbh70X8IoZ0wqXHUB9Bvc8MkrTpqbF2jP7wY
-	 F41kuFp6LCnQ4NHlwgqLotf6NFYlxX9oHi8F3THO1Pbrq7WJgHp/ALm/cKip5xDzyU
-	 FCfauLV3sF4mA/N5M9GlChlog4DETHIxIQ5jOniA=
+	b=LaJbLjm1cpKjyM1bDQIb2V7eg3drsTVtFvNDwA0QCLrSSFe/XxSh8ZdxzmiM8JDkY
+	 KWeRruEKFZ+JazdYlEhkdjTY4irmqxDHAnTXuIJLtRIASTrRAemoZaeHEl/8sOYhnZ
+	 OpWYCRP1QhXs/wpO5RQ2dn+63Jj1bjIriTR9g5/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>
-Subject: [PATCH 6.6 045/474] erofs: fix the out-of-bounds nameoff handling for trailing dirents
-Date: Fri, 15 May 2026 17:42:34 +0200
-Message-ID: <20260515154716.022019203@linuxfoundation.org>
+	Josh Hunt <johunt@akamai.com>,
+	Yu Kuai <yukuai@fnnas.com>
+Subject: [PATCH 6.6 046/474] md/raid10: fix deadlock with check operation and nowait requests
+Date: Fri, 15 May 2026 17:42:35 +0200
+Message-ID: <20260515154716.043905373@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,88 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Josh Hunt <johunt@akamai.com>
 
-commit d18a3b5d337fa412a38e776e6b4b857a58836575 upstream.
+commit 7d96f3120a7fb7210d21b520c5b6f495da6ba436 upstream.
 
-Currently we already have boundary-checks for nameoffs, but the trailing
-dirents are special since the namelens are calculated with strnlen()
-with unchecked nameoffs.
+When an array check is running it will raise the barrier at which point
+normal requests will become blocked and increment the nr_pending value to
+signal there is work pending inside of wait_barrier(). NOWAIT requests
+do not block and so will return immediately with an error, and additionally
+do not increment nr_pending in wait_barrier(). Upstream change commit
+43806c3d5b9b ("raid10: cleanup memleak at raid10_make_request") added a
+call to raid_end_bio_io() to fix a memory leak when NOWAIT requests hit
+this condition. raid_end_bio_io() eventually calls allow_barrier() and
+it will unconditionally do an atomic_dec_and_test(&conf->nr_pending) even
+though the corresponding increment on nr_pending didn't happen in the
+NOWAIT case.
 
-If a crafted EROFS has a trailing dirent with nameoff >= maxsize,
-maxsize - nameoff can underflow, causing strnlen() to read past the
-directory block.
+This can be easily seen by starting a check operation while an application
+is doing nowait IO on the same array. This results in a deadlocked state
+due to nr_pending value underflowing and so the md resync thread gets stuck
+waiting for nr_pending to == 0.
 
-nameoff0 should also be verified to be a multiple of
-`sizeof(struct erofs_dirent)` as well [1].
+Output of r10conf state of the array when we hit this condition:
 
-[1] https://sashiko.dev/#/patchset/20260416063511.3173774-1-hsiangkao%40linux.alibaba.com
+crash> struct r10conf
+	barrier = 1,
+        nr_pending = {
+          counter = -41
+        },
+        nr_waiting = 15,
+        nr_queued = 0,
 
-Fixes: 3aa8ec716e52 ("staging: erofs: add directory operations")
-Fixes: 33bac912840f ("staging: erofs: keep corrupted fs from crashing kernel in erofs_readdir()")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Closes: https://lore.kernel.org/r/A0FD7E0F-7558-49B0-8BC8-EB1ECDB2479A@outlook.com
+Example of md_sync thread stuck waiting on raise_barrier() and other
+requests stuck in wait_barrier():
+
+md1_resync
+[<0>] raise_barrier+0xce/0x1c0
+[<0>] raid10_sync_request+0x1ca/0x1ed0
+[<0>] md_do_sync+0x779/0x1110
+[<0>] md_thread+0x90/0x160
+[<0>] kthread+0xbe/0xf0
+[<0>] ret_from_fork+0x34/0x50
+[<0>] ret_from_fork_asm+0x1a/0x30
+
+kworker/u1040:2+flush-253:4
+[<0>] wait_barrier+0x1de/0x220
+[<0>] regular_request_wait+0x30/0x180
+[<0>] raid10_make_request+0x261/0x1000
+[<0>] md_handle_request+0x13b/0x230
+[<0>] __submit_bio+0x107/0x1f0
+[<0>] submit_bio_noacct_nocheck+0x16f/0x390
+[<0>] ext4_io_submit+0x24/0x40
+[<0>] ext4_do_writepages+0x254/0xc80
+[<0>] ext4_writepages+0x84/0x120
+[<0>] do_writepages+0x7a/0x260
+[<0>] __writeback_single_inode+0x3d/0x300
+[<0>] writeback_sb_inodes+0x1dd/0x470
+[<0>] __writeback_inodes_wb+0x4c/0xe0
+[<0>] wb_writeback+0x18b/0x2d0
+[<0>] wb_workfn+0x2a1/0x400
+[<0>] process_one_work+0x149/0x330
+[<0>] worker_thread+0x2d2/0x410
+[<0>] kthread+0xbe/0xf0
+[<0>] ret_from_fork+0x34/0x50
+[<0>] ret_from_fork_asm+0x1a/0x30
+
+Fixes: 43806c3d5b9b ("raid10: cleanup memleak at raid10_make_request")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Josh Hunt <johunt@akamai.com>
+Link: https://lore.kernel.org/linux-raid/20260303005619.1352958-1-johunt@akamai.com
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/dir.c |   28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/md/raid10.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/erofs/dir.c
-+++ b/fs/erofs/dir.c
-@@ -22,20 +22,18 @@ static int erofs_fill_dentries(struct in
- 		nameoff = le16_to_cpu(de->nameoff);
- 		de_name = (char *)dentry_blk + nameoff;
- 
--		/* the last dirent in the block? */
--		if (de + 1 >= end)
--			de_namelen = strnlen(de_name, maxsize - nameoff);
--		else
-+		/* non-trailing dirent in the directory block? */
-+		if (de + 1 < end)
- 			de_namelen = le16_to_cpu(de[1].nameoff) - nameoff;
-+		else if (maxsize <= nameoff)
-+			goto err_bogus;
-+		else
-+			de_namelen = strnlen(de_name, maxsize - nameoff);
- 
--		/* a corrupted entry is found */
--		if (nameoff + de_namelen > maxsize ||
--		    de_namelen > EROFS_NAME_LEN) {
--			erofs_err(dir->i_sb, "bogus dirent @ nid %llu",
--				  EROFS_I(dir)->nid);
--			DBG_BUGON(1);
--			return -EFSCORRUPTED;
--		}
-+		/* a corrupted entry is found (including negative namelen) */
-+		if (!in_range32(de_namelen, 1, EROFS_NAME_LEN) ||
-+		    nameoff + de_namelen > maxsize)
-+			goto err_bogus;
- 
- 		if (!dir_emit(ctx, de_name, de_namelen,
- 			      le64_to_cpu(de->nid), d_type))
-@@ -44,6 +42,10 @@ static int erofs_fill_dentries(struct in
- 		ctx->pos += sizeof(struct erofs_dirent);
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -1204,7 +1204,7 @@ static void raid10_read_request(struct m
  	}
- 	return 0;
-+err_bogus:
-+	erofs_err(dir->i_sb, "bogus dirent @ nid %llu", EROFS_I(dir)->nid);
-+	DBG_BUGON(1);
-+	return -EFSCORRUPTED;
- }
  
- static int erofs_readdir(struct file *f, struct dir_context *ctx)
-@@ -72,7 +74,7 @@ static int erofs_readdir(struct file *f,
- 		}
+ 	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors)) {
+-		raid_end_bio_io(r10_bio);
++		free_r10bio(r10_bio);
+ 		return;
+ 	}
  
- 		nameoff = le16_to_cpu(de->nameoff);
--		if (nameoff < sizeof(struct erofs_dirent) || nameoff >= bsz) {
-+		if (!nameoff || nameoff >= bsz || (nameoff % sizeof(*de))) {
- 			erofs_err(sb, "invalid de[0].nameoff %u @ nid %llu",
- 				  nameoff, EROFS_I(dir)->nid);
- 			err = -EFSCORRUPTED;
+@@ -1425,7 +1425,7 @@ static void raid10_write_request(struct
+ 
+ 	sectors = r10_bio->sectors;
+ 	if (!regular_request_wait(mddev, conf, bio, sectors)) {
+-		raid_end_bio_io(r10_bio);
++		free_r10bio(r10_bio);
+ 		return;
+ 	}
+ 
 
 
