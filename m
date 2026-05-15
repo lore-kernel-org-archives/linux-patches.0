@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF833FF1BD;
-	Fri, 15 May 2026 16:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E24E3EFFA0;
+	Fri, 15 May 2026 16:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861971; cv=none; b=fk+WMkiGzmNqx+HMLfEi27fWlJsd5nVkGa3twHNPBAW5Nd3FZqvYCI7ItpmVrtcMToJ3Uv2v1jBwyBM2twxGHbos7mkxsF1Wx+Um2xlrKIeDQpxHvAcL7dGwv7Wvut6BKhThTGd+e8CZ2Od7sRPOWjyNwpAceq8jDaMK0FcypBA=
+	t=1778861973; cv=none; b=XoOyqn4E/zh2J7rTB2nGwgxGjQrfHYJXGY5XhQwjlTynAdNM6c+ka5yRwPR6QqgWgJgY/TCX4RIFfzahCx455a/AK+w1JQAUomp+ZiLNRxxFi8jQhH1N9Q/wxBRzCRIEQ4of9rww6dzL88ObIZu3Nlv98cxMIFD4Mpb1VnYNm60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861971; c=relaxed/simple;
-	bh=E9ZMFXU/empI8QWU869agazVk1loX88Gi+tb0jmkwu4=;
+	s=arc-20240116; t=1778861973; c=relaxed/simple;
+	bh=gdOdXciiYQgXqQpjL9wp74JwjZq3CzGTn7QOU3op4Lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WTEOmVF78KqCgOZOgr3h9XR6jeYAgDDrKVOZZf4+CK2EhLlfR2/RMBKZtQXN36sATkHqJU9b3AKgGQQb59UYPJUfGj76+VPEZIzWHYzPgTuoB4PZogzGEdcdae5D6psY2YlMYDeUcObcvmtCUb/N9QRpPDgz83UUGwqh4Q+bM+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlnIH6pO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WSayRlAQqZ81ZR5yUUMgpwHs7w4Uuvqht8Zfl7EVE/6o8etv0841DqY8EIcVd/7+qctLTfhpBNnYCKqHspa87CJYbIgCqownMYLvZH7p8nvjABXq7luXIzGrOP1TG4gs/HsCdss29hZu/PIX4KuWJeZcgXvA0mjI40NK4FMzfwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+nFxwaV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlnIH6pO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88358C2BCB0;
-	Fri, 15 May 2026 16:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+nFxwaV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E04C2BCB0;
+	Fri, 15 May 2026 16:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861970;
-	bh=E9ZMFXU/empI8QWU869agazVk1loX88Gi+tb0jmkwu4=;
+	s=korg; t=1778861973;
+	bh=gdOdXciiYQgXqQpjL9wp74JwjZq3CzGTn7QOU3op4Lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlnIH6pO8oYnoiShS0ay7qLMr2H5JOUyhRJVvSxCcZDHv3xNqpNjstG/wFmXQ8WfK
-	 NnBwgQ7w/3Ttyd+AfVjzSHgUsswgOXo0NrKIkYDiAd+l+a5QHIUMSv/hvVHDDhjXlx
-	 t+mK37h9VA3SLBFBCBJG+DHYt2ZQgPLSf6Tf/T+A=
+	b=X+nFxwaVIuODpBjvNevtotmqfI2PPTextdth6Fs9sFikrEZn/LDvDVuBf2/GMSW3F
+	 2ui/Iv9VXntlS2+RJSu2nsd4qMIgOvhXNC6/0TPUAvXeA7wj8NpNJ6+3yGd7eOW3hI
+	 JFWI9Sc+gbrr40OMdso+htcjESrjhEQIAVsQkti8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.18 021/188] arm64: dts: lx2160a-cex7/lx2162a-sr-som: fix usd-cd & gpio pinmux
-Date: Fri, 15 May 2026 17:47:18 +0200
-Message-ID: <20260515154657.767329011@linuxfoundation.org>
+	Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bryan ODonoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 057/188] media: qcom: camss: Fix csid clock configuration for sa8775p
+Date: Fri, 15 May 2026 17:47:54 +0200
+Message-ID: <20260515154658.551745328@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -50,157 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
 
-commit 70008aee892bbb5c2969bbe9e5778fc081b14bd2 upstream.
+commit fe56c674118aa46da1a3e65aa22ca709ebd7d812 upstream.
 
-Commit 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to
-support bus recovery") introduced pinmux nodes for lx2160 i2c
-interfaces, allowing runtime change between i2c and gpio functions
-implementing bus recovery.
+Fix the mismatch between clock list and clock rate table for CSID lite
+instances. The current implementation has 5 clocks defined but only 2
+are actually needed (vfe_lite_csid and vfe_lite_cphy_rx), while the
+clock rate table doesn't match this configuration.
 
-However, the dynamic configuration area (overwrite MUX) used by the
-pinctrl-single driver initially reads as zero and does not reflect the
-actual hardware state set by the Reset Configuration Word (RCW) at
-power-on.
+Update both clock list and rate table to maintain consistency:
+- Remove unused clocks: cpas_vfe_lite, vfe_lite_ahb, vfe_lite
+- Update clock rate table to match the remaining two clocks
 
-Because multiple groups of pins are configured from a single 32-bit
-register, the first write from the pinctrl driver unintentionally clears
-all other bits to zero.
-
-For example, on the LX2162A Clearfog, RCWSR12 is initialized to
-0x08000006. When any i2c pinmux is applied, it clears all other fields.
-This inadvertently disables SD card-detect (IIC2_PMUX) and some GPIOs
-(SDHC1_DIR_PMUX):
-
-LX2162-CF RCWSR12: 0b0000100000000000 0000000000000110
-IIC2_PMUX              |||   |||   || |   |||   |||XXX : I2C/GPIO/CD-WP
-SDHC1_DIR_PMUX         XXX   |||   || |   |||   |||    : SDHC/GPIO/SPI
-
-Reverting the commit in question was considered but bus recovery is an
-important feature.
-
-Instead add pinmux nodes for those pins that were unintentionally
-reconfigured on SolidRun LX2160A Clearfog-CX and LX2162A Clearfog
-boards.
-
-Fixes: 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to support bus recovery")
+Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Fixes: ed03e99de0fa ("media: qcom: camss: Add support for CSID 690")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi         |    7 +++
- arch/arm64/boot/dts/freescale/fsl-lx2160a-clearfog-itx.dtsi |    2 +
- arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi              |   24 ++++++++++++
- arch/arm64/boot/dts/freescale/fsl-lx2162a-clearfog.dts      |    2 +
- arch/arm64/boot/dts/freescale/fsl-lx2162a-sr-som.dtsi       |    7 +++
- 5 files changed, 42 insertions(+)
+ drivers/media/platform/qcom/camss/camss.c |   40 +++++++++++-------------------
+ 1 file changed, 15 insertions(+), 25 deletions(-)
 
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi
-@@ -162,6 +162,8 @@
- };
- 
- &fspi {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&fspi_data74_pins>, <&fspi_data30_pins>, <&fspi_dqs_sck_cs10_pins>;
- 	status = "okay";
- 
- 	flash@0 {
-@@ -177,6 +179,11 @@
- 	};
- };
- 
-+&pinmux_i2crv {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gpio0_14_12_pins>;
-+};
-+
- &usb0 {
- 	status = "okay";
- };
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a-clearfog-itx.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a-clearfog-itx.dtsi
-@@ -89,6 +89,8 @@
- };
- 
- &esdhc0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&esdhc0_cd_wp_pins>, <&esdhc0_cmd_data30_clk_vsel_pins>;
- 	sd-uhs-sdr104;
- 	sd-uhs-sdr50;
- 	sd-uhs-sdr25;
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-@@ -1717,6 +1717,10 @@
- 				pinctrl-single,bits = <0x0 0x1 0x7>;
- 			};
- 
-+			esdhc0_cd_wp_pins: iic2-sdhc-pins {
-+				pinctrl-single,bits = <0x0 0x6 0x7>;
-+			};
-+
- 			i2c2_scl: i2c2-scl-pins {
- 				pinctrl-single,bits = <0x0 0 (0x7 << 3)>;
- 			};
-@@ -1749,6 +1753,26 @@
- 				pinctrl-single,bits = <0x0 (0x1 << 12) (0x7 << 12)>;
- 			};
- 
-+			fspi_data74_pins: xspi1-data74-pins {
-+				pinctrl-single,bits = <0x0 0x0 (0x7 << 15)>;
-+			};
-+
-+			fspi_data30_pins: xspi1-data30-pins {
-+				pinctrl-single,bits = <0x0 0x0 (0x7 << 18)>;
-+			};
-+
-+			fspi_dqs_sck_cs10_pins: xspi1-base-pins {
-+				pinctrl-single,bits = <0x0 0x0 (0x7 << 21)>;
-+			};
-+
-+			esdhc0_cmd_data30_clk_vsel_pins: sdhc1-base-sdhc-vsel-pins {
-+				pinctrl-single,bits = <0x0 0x0 (0x7 << 24)>;
-+			};
-+
-+			gpio0_14_12_pins: sdhc1-dir-gpio-pins {
-+				pinctrl-single,bits = <0x0 (0x1 << 27) (0x7 << 27)>;
-+			};
-+
- 			i2c6_scl: i2c6-scl-pins {
- 				pinctrl-single,bits = <0x4 0x2 0x7>;
- 			};
---- a/arch/arm64/boot/dts/freescale/fsl-lx2162a-clearfog.dts
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2162a-clearfog.dts
-@@ -223,6 +223,8 @@
- };
- 
- &esdhc0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&esdhc0_cd_wp_pins>, <&esdhc0_cmd_data30_clk_vsel_pins>;
- 	sd-uhs-sdr104;
- 	sd-uhs-sdr50;
- 	sd-uhs-sdr25;
---- a/arch/arm64/boot/dts/freescale/fsl-lx2162a-sr-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2162a-sr-som.dtsi
-@@ -30,6 +30,8 @@
- };
- 
- &fspi {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&fspi_data74_pins>, <&fspi_data30_pins>, <&fspi_dqs_sck_cs10_pins>;
- 	status = "okay";
- 
- 	flash@0 {
-@@ -80,3 +82,8 @@
- 		reg = <0x6f>;
- 	};
- };
-+
-+&pinmux_i2crv {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gpio0_14_12_pins>;
-+};
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -2782,12 +2782,10 @@ static const struct camss_subdev_resourc
+ 	/* CSID2 (lite) */
+ 	{
+ 		.regulators = {},
+-		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
+-			   "vfe_lite_csid", "vfe_lite_cphy_rx",
+-			   "vfe_lite"},
++		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx" },
+ 		.clock_rate = {
+-			{ 0, 0, 400000000, 400000000, 0},
+-			{ 0, 0, 400000000, 480000000, 0}
++			{ 400000000, 480000000 },
++			{ 400000000, 480000000 }
+ 		},
+ 		.reg = { "csid_lite0" },
+ 		.interrupt = { "csid_lite0" },
+@@ -2801,12 +2799,10 @@ static const struct camss_subdev_resourc
+ 	/* CSID3 (lite) */
+ 	{
+ 		.regulators = {},
+-		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
+-			   "vfe_lite_csid", "vfe_lite_cphy_rx",
+-			   "vfe_lite"},
++		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx" },
+ 		.clock_rate = {
+-			{ 0, 0, 400000000, 400000000, 0},
+-			{ 0, 0, 400000000, 480000000, 0}
++			{ 400000000, 480000000 },
++			{ 400000000, 480000000 }
+ 		},
+ 		.reg = { "csid_lite1" },
+ 		.interrupt = { "csid_lite1" },
+@@ -2820,12 +2816,10 @@ static const struct camss_subdev_resourc
+ 	/* CSID4 (lite) */
+ 	{
+ 		.regulators = {},
+-		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
+-			   "vfe_lite_csid", "vfe_lite_cphy_rx",
+-			   "vfe_lite"},
++		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx" },
+ 		.clock_rate = {
+-			{ 0, 0, 400000000, 400000000, 0},
+-			{ 0, 0, 400000000, 480000000, 0}
++			{ 400000000, 480000000 },
++			{ 400000000, 480000000 }
+ 		},
+ 		.reg = { "csid_lite2" },
+ 		.interrupt = { "csid_lite2" },
+@@ -2839,12 +2833,10 @@ static const struct camss_subdev_resourc
+ 	/* CSID5 (lite) */
+ 	{
+ 		.regulators = {},
+-		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
+-			   "vfe_lite_csid", "vfe_lite_cphy_rx",
+-			   "vfe_lite"},
++		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx" },
+ 		.clock_rate = {
+-			{ 0, 0, 400000000, 400000000, 0},
+-			{ 0, 0, 400000000, 480000000, 0}
++			{ 400000000, 480000000 },
++			{ 400000000, 480000000 }
+ 		},
+ 		.reg = { "csid_lite3" },
+ 		.interrupt = { "csid_lite3" },
+@@ -2858,12 +2850,10 @@ static const struct camss_subdev_resourc
+ 	/* CSID6 (lite) */
+ 	{
+ 		.regulators = {},
+-		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
+-			   "vfe_lite_csid", "vfe_lite_cphy_rx",
+-			   "vfe_lite"},
++		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx" },
+ 		.clock_rate = {
+-			{ 0, 0, 400000000, 400000000, 0},
+-			{ 0, 0, 400000000, 480000000, 0}
++			{ 400000000, 480000000 },
++			{ 400000000, 480000000 }
+ 		},
+ 		.reg = { "csid_lite4" },
+ 		.interrupt = { "csid_lite4" },
 
 
