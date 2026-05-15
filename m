@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C2530566A;
-	Fri, 15 May 2026 15:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACBA17C220;
+	Fri, 15 May 2026 15:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860547; cv=none; b=Ok1pkczNG4t1dIA05+5Iqp7dPN8X2xWVopXe9nMfQNWsGesyJ5lREExQVjp6ZsYZBKHui1qCKApIZeqbflbgUS8LV2TH25q5dJHFvaFk7vb8BnwStRbL7P5+9RHrP6zsXNUdtD5IC94CEM2Rc2rVwllJYI1VZMng33jFbtq7yYA=
+	t=1778860549; cv=none; b=auzVbR2OAEFvwcBO2xm9GnLXYwI38bN1HQkoPrX7CAkoiY9YE80YViAPfJxKAZFS8E8G61C/XN0opMpujFTst+wAF5Tc8Vx6HGKeK4o0kDVBIBf+jbPYozP8vk5HmG+//u8+HNSGrejwLTi8rOB4ZlQhhLVmEoryhrXMaT6VsnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860547; c=relaxed/simple;
-	bh=Eb81/pL7jL3MbFStJK9FagbkM75gITUbZy1Wol0KC1U=;
+	s=arc-20240116; t=1778860549; c=relaxed/simple;
+	bh=fnYHGYmVW/cedA+41LynG5CvS5Q84bKOEQ6XOb4lWYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JVFNgOMDK+U4/6rQCo6TaoyJU86j2A2hdC36WeAo4oGlZdPZfkwNDcomEF3SX/4/LJNc70k6HqVHdJq/fSvcc3gxlsyvEWV/2ba4xfpkrIzHEKIvhTaoGtj09e9xmSFkR3t3pKpmPKbk0Y+2thTUFHtCgvejvh1IXkwjHdwKOoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ej28Eww+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KpAke3Fv+gwjBsheUy8IWje6+dOv5N/liCZu5jhDImFbWymOD8DcABgcSdwePvWJhB0wCnAAnIk8jajgbJf9ZDu20zQ1yDS+wSL+elYQl825aZYyZt3DyuVtIj1b3ANUpJpXFlt5pfGY9t36zLy95FAIh9XfNqRXx80wM+eIyJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFxSrumh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ej28Eww+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEF6C2BCC7;
-	Fri, 15 May 2026 15:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFxSrumh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED4CC2BCC7;
+	Fri, 15 May 2026 15:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860547;
-	bh=Eb81/pL7jL3MbFStJK9FagbkM75gITUbZy1Wol0KC1U=;
+	s=korg; t=1778860549;
+	bh=fnYHGYmVW/cedA+41LynG5CvS5Q84bKOEQ6XOb4lWYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ej28Eww+xkve/IgSlCB79//saOSUEC10VqTF1OsPyGyK3eN3iEjoOJJEZtlRdpbnE
-	 V7bg6uSjR9iYjroDxB229gqIRdbjbuMqB0MXOY2eoJUBgOhf6+5iLtExFUuLA1npay
-	 4TEaGWK1OhO1J5o9TmdM1dZ2jDWH9B1KksnMUFJM=
+	b=qFxSrumhkhad6fobXdrijQhlElZQL1FoWZNt7gtnP/E5zgcwdIxvDDgMl8CTftC0c
+	 e1M7bcLLs0aujFDyRlTaKI3r8+Cypd4q7s3lRNz0Z6m1Zvj7ZV7WjMW+Lx0nMgaED/
+	 BqEglhSDAqPJrbbvjDUfD5t09KRiUYsV9BFSkKHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 131/144] Bluetooth: L2CAP: Fix null-ptr-deref in l2cap_sock_get_sndtimeo_cb()
-Date: Fri, 15 May 2026 17:49:17 +0200
-Message-ID: <20260515154656.553015715@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 132/144] btrfs: remove fs_info argument from btrfs_sysfs_add_space_info_type()
+Date: Fri, 15 May 2026 17:49:18 +0200
+Message-ID: <20260515154656.577025122@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -51,33 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 78a88d43dab8d23aeef934ed8ce34d40e6b3d613 upstream.
+[ Upstream commit 771af6ff72e0ed0eb8bf97e5ae4fa5094e0c5d1d ]
 
-Add the same NULL guard already present in
-l2cap_sock_resume_cb() and l2cap_sock_ready_cb().
+We don't need it since we can grab fs_info from the given space_info.
+So remove the fs_info argument.
 
-Fixes: 8d836d71e222 ("Bluetooth: Access sk_sndtimeo indirectly in l2cap_core.c")
-Cc: stable@kernel.org
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: a7449edf9614 ("btrfs: fix double free in create_space_info_sub_group() error path")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_sock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/space-info.c |    4 ++--
+ fs/btrfs/sysfs.c      |    5 ++---
+ fs/btrfs/sysfs.h      |    3 +--
+ 3 files changed, 5 insertions(+), 7 deletions(-)
 
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1734,6 +1734,9 @@ static long l2cap_sock_get_sndtimeo_cb(s
- {
- 	struct sock *sk = chan->data;
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -265,7 +265,7 @@ static int create_space_info_sub_group(s
+ 	sub_group->parent = parent;
+ 	sub_group->subgroup_id = id;
  
-+	if (!sk)
-+		return 0;
-+
- 	return sk->sk_sndtimeo;
- }
+-	ret = btrfs_sysfs_add_space_info_type(fs_info, sub_group);
++	ret = btrfs_sysfs_add_space_info_type(sub_group);
+ 	if (ret) {
+ 		kfree(sub_group);
+ 		parent->sub_group[index] = NULL;
+@@ -294,7 +294,7 @@ static int create_space_info(struct btrf
+ 			goto out_free;
+ 	}
+ 
+-	ret = btrfs_sysfs_add_space_info_type(info, space_info);
++	ret = btrfs_sysfs_add_space_info_type(space_info);
+ 	if (ret)
+ 		return ret;
+ 
+--- a/fs/btrfs/sysfs.c
++++ b/fs/btrfs/sysfs.c
+@@ -1825,13 +1825,12 @@ static const char *alloc_name(struct btr
+  * Create a sysfs entry for a space info type at path
+  * /sys/fs/btrfs/UUID/allocation/TYPE
+  */
+-int btrfs_sysfs_add_space_info_type(struct btrfs_fs_info *fs_info,
+-				    struct btrfs_space_info *space_info)
++int btrfs_sysfs_add_space_info_type(struct btrfs_space_info *space_info)
+ {
+ 	int ret;
+ 
+ 	ret = kobject_init_and_add(&space_info->kobj, &space_info_ktype,
+-				   fs_info->space_info_kobj, "%s",
++				   space_info->fs_info->space_info_kobj, "%s",
+ 				   alloc_name(space_info));
+ 	if (ret) {
+ 		kobject_put(&space_info->kobj);
+--- a/fs/btrfs/sysfs.h
++++ b/fs/btrfs/sysfs.h
+@@ -36,8 +36,7 @@ void __cold btrfs_exit_sysfs(void);
+ int btrfs_sysfs_add_mounted(struct btrfs_fs_info *fs_info);
+ void btrfs_sysfs_remove_mounted(struct btrfs_fs_info *fs_info);
+ void btrfs_sysfs_add_block_group_type(struct btrfs_block_group *cache);
+-int btrfs_sysfs_add_space_info_type(struct btrfs_fs_info *fs_info,
+-				    struct btrfs_space_info *space_info);
++int btrfs_sysfs_add_space_info_type(struct btrfs_space_info *space_info);
+ void btrfs_sysfs_remove_space_info(struct btrfs_space_info *space_info);
+ void btrfs_sysfs_update_devid(struct btrfs_device *device);
  
 
 
