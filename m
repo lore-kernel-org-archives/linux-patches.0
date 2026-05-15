@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3713F9293;
-	Fri, 15 May 2026 16:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A2A3E008D;
+	Fri, 15 May 2026 16:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862445; cv=none; b=AwYaQSGtJJN2QReLXKCgv4GwqduY5sXeU3ESjBuupHqTE3KeIl/bBbgU4YBF01/5vg86kxOUwQmrJmV+a3sUzjAomvfCMui2doHyXjo2U53vBz2aCPwnVrSCohZF1y/UwkMre1Ga6FSUV0T8nIFrd+T8ql+5K+r4yEfstDSDo4w=
+	t=1778862448; cv=none; b=ajfxYgQyQKNZZYBDte5BTPqgCMdN/O/cLFXt6JJj9a+pSJ20v8RMs672X4C9mrZMDzGtirhXPtYFkAdLdecWTza4brVxLRO7h5yk3mM74Wl+XqRu2/+//+TnnlgLpm/ojyb9KxWztikAtliDGft+C2w6Zhyn/gZqg9zd+ex7WBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862445; c=relaxed/simple;
-	bh=9Xs90yG3CjkCHcZntF0dXBEfD+edt0XQJtBxcaeN5vw=;
+	s=arc-20240116; t=1778862448; c=relaxed/simple;
+	bh=jcoM6jbxXPsMf+MEqiYBul6bm29htgADRvrz5U+0LyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XnPWVHoW42eQn9JmMGO+9MWocmYhZQA/wKPf9SC5pjlDJzVwx0Erh1/7CbRcixMbzofJl/eGI+pLxP5IsQeDBLGTOLF6HA3mkzF4eSBM16zSGHKR6ANM7m49npmBUThgtNW8Fpa7bDIIIca5+xgHC/GH9N/PYgSXfIXpD/tAT40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxWXjiks; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CCBQ7JW7nBRLIvDt6eSlJFSmXjLDqiS3jGozb6z7g1UfNYtH3LSLjoEC+biTWUJo8nfNS1yy5SLkqkMFhruh2dPQpyjxZIeuv0MROOS9ApA5cjShbQoGg7PsnykMKe0qxOY3fe5k2Zt44L4Fc37VUQgY2RAyOPNuhhJ4cpmyNbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sgm7Q41M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxWXjiks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48AA0C2BCB0;
-	Fri, 15 May 2026 16:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sgm7Q41M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D2BC2BCB0;
+	Fri, 15 May 2026 16:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862445;
-	bh=9Xs90yG3CjkCHcZntF0dXBEfD+edt0XQJtBxcaeN5vw=;
+	s=korg; t=1778862448;
+	bh=jcoM6jbxXPsMf+MEqiYBul6bm29htgADRvrz5U+0LyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxWXjiks0yVMitg7LGwor5zrZK+XSVZwRV/86zxiG/rXFLVtLrS9MgoJTg6k49IFD
-	 mMOv767Wzt7BHz1nyXkP9QZ/3YF3UsqkzwMi7gO/ienwB23zM5VLmeR+6eR2UjW8Uu
-	 xWLwUdxNGDlng3NuHlpKmxnDrKA+9+WfWWganzTg=
+	b=Sgm7Q41MJoou8xfJYo1CHV3mXmVzFaRZHdSrn8j5KE9Fa1bfld09vo9k0CbSigPzJ
+	 B5qzLHyFZS+s0jY2SIrVXDLBljQOztA+PO3QZxZFt6r5PBhGChsnmyWq3xjMbz+2s7
+	 D1MYfBgVNQm1/aQWPNp3Y/uGBZcs8ekvwLDTc+Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 052/201] spi: qup: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:50 +0200
-Message-ID: <20260515154659.662636706@linuxfoundation.org>
+	Franz Schnyder <franz.schnyder@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH 7.0 053/201] arm64: dts: ti: k3-am69-aquila-clover: Fix DP regulator enable GPIO
+Date: Fri, 15 May 2026 17:47:51 +0200
+Message-ID: <20260515154659.685177870@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -50,53 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Franz Schnyder <franz.schnyder@toradex.com>
 
-commit 443e3a0005a4342b218b6dbd4c6387d3c7fed85a upstream.
+commit 8cfb2e517113543e0de9e8df5754d5e09cb3627e upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+Correct the DP regulator enable GPIO to index 21.
+The 3.3V DP regulator was not being enabled by the assigned GPIO, as it
+is routed to GPIO index 21 and not 37, which was causing instability
+with displays connected over DP or via an active DP-to-HDMI adapter.
 
-Fixes: 64ff247a978f ("spi: Add Qualcomm QUP SPI controller support")
-Cc: stable@vger.kernel.org	# 3.15
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-10-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 9f748a6177e1 ("arm64: dts: ti: am69-aquila: Add Clover")
+Cc: stable@vger.kernel.org
+Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260202083604.325060-3-fra.schnyder@gmail.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-qup.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am69-aquila-clover.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -1193,7 +1193,7 @@ static int spi_qup_probe(struct platform
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
- 
--	ret = devm_spi_register_controller(dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret)
- 		goto disable_pm;
- 
-@@ -1320,6 +1320,10 @@ static void spi_qup_remove(struct platfo
- 	struct spi_qup *controller = spi_controller_get_devdata(host);
- 	int ret;
- 
-+	spi_controller_get(host);
-+
-+	spi_unregister_controller(host);
-+
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 
- 	if (ret >= 0) {
-@@ -1339,6 +1343,8 @@ static void spi_qup_remove(struct platfo
- 
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-+
-+	spi_controller_put(host);
- }
- 
- static const struct of_device_id spi_qup_dt_match[] = {
+diff --git a/arch/arm64/boot/dts/ti/k3-am69-aquila-clover.dts b/arch/arm64/boot/dts/ti/k3-am69-aquila-clover.dts
+index ec8ff4587715..dc0d3cf2f985 100644
+--- a/arch/arm64/boot/dts/ti/k3-am69-aquila-clover.dts
++++ b/arch/arm64/boot/dts/ti/k3-am69-aquila-clover.dts
+@@ -26,7 +26,7 @@ reg_3v3_dp: regulator-3v3-dp {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_gpio_21_dp>;
+ 		/* Aquila GPIO_21_DP (AQUILA B57) */
+-		gpio = <&main_gpio0 37 GPIO_ACTIVE_HIGH>;
++		gpio = <&main_gpio0 21 GPIO_ACTIVE_HIGH>;
+ 		enable-active-high;
+ 		regulator-max-microvolt = <3300000>;
+ 		regulator-min-microvolt = <3300000>;
+-- 
+2.54.0
+
 
 
