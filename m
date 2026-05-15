@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DA33FF1DE;
-	Fri, 15 May 2026 15:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F786282F1A;
+	Fri, 15 May 2026 15:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860601; cv=none; b=idk04kfA7snRnncFUYsOFdSpflw2tm+tBcS58UYIb3LPMG4cYt45KD2t3zvOTe4lDrDSsjBTxYplp9B3wlqynDU3s0TYEFYqgWhgfvBtXx00oL7O3G79tN/HsGcMvYGRTefsjxkR0cJWpbADzCF1MXjzpFWJs5o3KTvLhhTxOpA=
+	t=1778860603; cv=none; b=bZjXMAQLApt0CTbLCzxnNUz1IyJYVsDUPLuf+0Zez/7Xj+J2kjcfKiOVkjmLAXd4lGbL/es2aPtOZMIExlppNCm3OA3aLMdbn68qzy8dBNrjw3b0crRbo/MXq94Jr7I3w3gJ8lhUBPxSTfL3w7gGoxNm3vIoNgdF8KUijII2X74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860601; c=relaxed/simple;
-	bh=qt6B1dpvEAwuYv7fDrZl769kP47yTjZG+JLu0/OIh94=;
+	s=arc-20240116; t=1778860603; c=relaxed/simple;
+	bh=Ei2f41D+rzkA/Zf1noMsHsee4z955UN1y0dJoF4bMDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C7uOH+2k9AXRXwROGk4qctBW9uMfsIAGnvIcxkwR1hc4rnNiDWFt7Ol+w4kC2/mGQuZjuhq1heYJtanWYORek7yT+nfRoM4zztzmcKCw8+GnFMybHc/9Rdq0+ndHpnTZp4aW+UqEbNTjS0jRSlJ60IHgVEoWl3XrUCt9aF1ETlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xb3d2caR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZPHdebMp+1jLi/NhF6GWepwGZUAaxZv55fTzSbj0OLp5C0+VR4Hz+cVelLmjJ9QOgUzDrvFblh4n5iFTrtRgPjRZGtr9yX6+MiUu7YNbpIdzITd4vNaG8fn7iHogcD6I1jmBai7I4KeSG3FIVVJC8zULG7+e68sTrxlgZMJZTB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNV713eT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xb3d2caR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA97C2BCB0;
-	Fri, 15 May 2026 15:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNV713eT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E22C2BCB0;
+	Fri, 15 May 2026 15:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860600;
-	bh=qt6B1dpvEAwuYv7fDrZl769kP47yTjZG+JLu0/OIh94=;
+	s=korg; t=1778860603;
+	bh=Ei2f41D+rzkA/Zf1noMsHsee4z955UN1y0dJoF4bMDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xb3d2caRKKf0x0SU1KCow1GpHC0bYSvXPHuHme7ui4TRyl/nQ0sozOdhhn3FYgUk6
-	 amDc/XF1/6R6P0lBKoyOuPqIVfciySXF7jHA0xHzpK1r9L4QN4/OPwwQvWS9PjFiJ8
-	 D3bJmeuRsUbjdNuMhG3y1JcF2TKUJSFVV6X9qkns=
+	b=PNV713eTBPZuBVHKjL2p8OJ+Ign3gAYKDJ+ZKfW7OMe3xR9OFuGdhp7+ZPymwmOWj
+	 DdMlGm2qasMb6ZCnYLWXyyVBecxHoAwrVyi5ahgvK8IvusygeSK301ug0N68DreTIT
+	 J+g1t/9oSlB1WHaUhJ1OPC1qNVX83tg0+vxA4Bjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+d56178c27a4710960820@syzkaller.appspotmail.com,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 104/144] ALSA: hda: cs35l56: Propagate ASP TX source control errors
-Date: Fri, 15 May 2026 17:48:50 +0200
-Message-ID: <20260515154655.908305503@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 001/474] ALSA: usb-audio: stop parsing UAC2 rates at MAX_NR_RATES
+Date: Fri, 15 May 2026 17:41:50 +0200
+Message-ID: <20260515154715.087937838@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
-References: <20260515154653.469907118@linuxfoundation.org>
+In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
+References: <20260515154715.053014143@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,80 +48,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 0faacc0841d66f3cf51989c10a83f3a82d52ff2c ]
+commit 3c318f97dcc50b2e0556a1813bd6958678e881fd upstream.
 
-cs35l56_hda_mixer_get() ignores regmap_read() and
-cs35l56_hda_mixer_put() ignores regmap_update_bits_check().
+parse_uac2_sample_rate_range() caps the number of enumerated
+rates at MAX_NR_RATES, but it only breaks out of the current
+rate loop. A malformed UAC2 RANGE response with additional
+triplets continues parsing the remaining triplets and repeatedly
+prints "invalid uac2 rates" while probe still holds
+register_mutex.
 
-This makes the ASP TX source controls report success when a regmap
-access fails. The write path returns no change instead of an error,
-and the read path continues after a failed read instead of aborting
-the control callback.
+Stop the whole parse once the cap is reached and return the
+number of rates collected so far.
 
-Propagate the regmap errors, matching the posture and volume controls
-in this driver.
-
-Fixes: 73cfbfa9caea ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
+Fixes: 4fa0e81b8350 ("ALSA: usb-audio: fix possible hang and overflow in parse_uac2_sample_rate_range()")
 Cc: stable@vger.kernel.org
+Reported-by: syzbot+d56178c27a4710960820@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d56178c27a4710960820
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260415-usb-audio-uac2-rate-cap-v1-1-5ecbafc120d8@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260423-alsa-cs35l56-asp-tx-source-errors-v1-1-17ea7c62ec31@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/cs35l56_hda.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ sound/usb/format.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -182,11 +182,15 @@ static int cs35l56_hda_mixer_get(struct
- {
- 	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
- 	unsigned int reg_val;
--	int i;
-+	int i, ret;
+--- a/sound/usb/format.c
++++ b/sound/usb/format.c
+@@ -461,7 +461,7 @@ static int parse_uac2_sample_rate_range(
+ 			nr_rates++;
+ 			if (nr_rates >= MAX_NR_RATES) {
+ 				usb_audio_err(chip, "invalid uac2 rates\n");
+-				break;
++				return nr_rates;
+ 			}
  
- 	cs35l56_hda_wait_dsp_ready(cs35l56);
- 
--	regmap_read(cs35l56->base.regmap, kcontrol->private_value, &reg_val);
-+	ret = regmap_read(cs35l56->base.regmap, kcontrol->private_value,
-+			  &reg_val);
-+	if (ret)
-+		return ret;
-+
- 	reg_val &= CS35L56_ASP_TXn_SRC_MASK;
- 
- 	for (i = 0; i < CS35L56_NUM_INPUT_SRC; ++i) {
-@@ -205,15 +209,20 @@ static int cs35l56_hda_mixer_put(struct
- 	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
- 	unsigned int item = ucontrol->value.enumerated.item[0];
- 	bool changed;
-+	int ret;
- 
- 	if (item >= CS35L56_NUM_INPUT_SRC)
- 		return -EINVAL;
- 
- 	cs35l56_hda_wait_dsp_ready(cs35l56);
- 
--	regmap_update_bits_check(cs35l56->base.regmap, kcontrol->private_value,
--				 CS35L56_INPUT_MASK, cs35l56_tx_input_values[item],
--				 &changed);
-+	ret = regmap_update_bits_check(cs35l56->base.regmap,
-+				       kcontrol->private_value,
-+				       CS35L56_INPUT_MASK,
-+				       cs35l56_tx_input_values[item],
-+				       &changed);
-+	if (ret)
-+		return ret;
- 
- 	return changed;
- }
+ skip_rate:
 
 
