@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361443E0097;
-	Fri, 15 May 2026 16:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B101339734B;
+	Fri, 15 May 2026 16:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861627; cv=none; b=a8paNUUCASzcrJY60Z9aa2LqJOR9/wn7ffdpTHlEmwWXpG5kv2avHPlMJFjBnMpOv38hhotDoXwh1ml1+xivVF/SLtGMD2Q2nZOU0YRH2A1Erh5+t9hhHlrxIbVfo6jIpNsvcPiABSmRCmpDcqYI9C3L+yVRQJA/EiMYnCqxhFo=
+	t=1778861629; cv=none; b=kL96Q+KdZIdCTguM+HBuJJEZnoqftE4VOoeAFwwCzNn219kFGJWFCgmu60Vr7/UVQ45J32bBYQgQdqDmimPV8t78c6l5YYxTcdcYKvn5m6pJd3ab8uBsYdq9WAS0MU6VY+IJTqjnc3R+Yt8xj/6H9Udz0P8raaNiCx2iJiuHLrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861627; c=relaxed/simple;
-	bh=wRsKkyfS/w9BLQT6UjrO+iKwtraII8Lxqar5G+xvZ6w=;
+	s=arc-20240116; t=1778861629; c=relaxed/simple;
+	bh=r3zuWAqiIiT/05B6sUYFx0kvJb7JZA8zkyr2H0ZIlZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mzgow8BX4o4/vULm7kI7mLc6IrxthUCxhOstUMniLAMYvtJESTdoCI+1+l2+GKHzVBL3eF2trATNxOQx6T10EOCP38PAHg9xH8Sigv2vgzWivNGTFiryL2Kqavdn8HrmV0mQD5dIH1/UGxvX+h1CK/eZZel7fFA63s0mZwYJBLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7Jc/+F0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=obk+e/SOVl5xguuBuzzp1MZFVqh2XtYeM4T0MOTE58RVtUqdcBKzUkl8aOaUxAtl3zoFn5S4zn9q3pRYDEpc284LxduYdBjbqaPMdX8b1B+FUSfPZO+mebKYcl5i0mJxk/unRFcdqpr5HbBLX5P+V0QXmUI1nUNcSiLWkIBqk4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1/vojAs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7Jc/+F0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDEDC2BCB0;
-	Fri, 15 May 2026 16:13:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1/vojAs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D1FC2BCB0;
+	Fri, 15 May 2026 16:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861627;
-	bh=wRsKkyfS/w9BLQT6UjrO+iKwtraII8Lxqar5G+xvZ6w=;
+	s=korg; t=1778861629;
+	bh=r3zuWAqiIiT/05B6sUYFx0kvJb7JZA8zkyr2H0ZIlZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7Jc/+F0rtaF2t1slH7D1srMiOMk/lFbh4ZFoTVdBAlOmHZTGkOCia3H/cQ6Us8LH
-	 zX9cSua7xd9G4HJWypkiRPV7UyX7pQes36kDR7Ea0CClKzQSCkSQsm4ZY5uLau5vIh
-	 xGrZjDrdwCJkoVKlBrTwUsvD0DnBkCjW/QG+f1kk=
+	b=U1/vojAslIFVDpje4by/V8JBIDP+9V5lIsSc4yXBkxL1fgxTsaB3S3mZBXL+ozieO
+	 OKnDqdie9GNC//V9gp1Tf8CheHqK1cw6up0Ylt3975Va5INZ4+dB4tgjMeMUYT7w06
+	 UOQaxSA5Vxw8Qt/JTiuUM/C0V6RmJaZIeWncdCsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Yi Cong <yicong@kylinos.cn>,
+	DaeMyung Kang <charsyam@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 401/474] wifi: rtl8xxxu: fix potential use of uninitialized value
-Date: Fri, 15 May 2026 17:48:30 +0200
-Message-ID: <20260515154723.724606449@linuxfoundation.org>
+Subject: [PATCH 6.6 402/474] ksmbd: reset rcount per connection in ksmbd_conn_wait_idle_sess_id()
+Date: Fri, 15 May 2026 17:48:31 +0200
+Message-ID: <20260515154723.747737508@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,91 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Cong <yicong@kylinos.cn>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-[ Upstream commit f8a2fc809bfeb49130709b31a4d357a049f28547 ]
+[ Upstream commit def036ef87f8641c1c525d5ae17438d7a1006491 ]
 
-The local variables 'mcs' and 'nss' in rtl8xxxu_update_ra_report() are
-passed to rtl8xxxu_desc_to_mcsrate() as output parameters. If the helper
-function encounters an unhandled rate index, it may return without setting
-these values, leading to the use of uninitialized stack data.
+rcount is intended to be connection-specific: 2 for curr_conn, 1 for
+every other connection sharing the same session.  However, it is
+initialised only once before the hash iteration and is never reset.
+After the loop visits curr_conn, later sibling connections are also
+checked against rcount == 2, so a sibling with req_running == 1 is
+incorrectly treated as idle.  This makes the outcome depend on the
+hash iteration order: whether a given sibling is checked against the
+loose (< 2) or the strict (< 1) threshold is decided by whether it
+happens to be visited before or after curr_conn.
 
-Remove the helper rtl8xxxu_desc_to_mcsrate() and inline the logic into
-rtl8xxxu_update_ra_report(). This fixes the use of uninitialized 'mcs'
-and 'nss' variables for legacy rates.
+The function's contract is "wait until every connection sharing this
+session is idle" so that destroy_previous_session() can safely tear
+the session down.  The latched rcount violates that contract and
+reopens the teardown race window the wait logic was meant to close:
+destroy_previous_session() may proceed before sibling channels have
+actually quiesced, overlapping session teardown with in-flight work
+on those connections.
 
-The new implementation explicitly handles:
-- Legacy rates: Set bitrate only.
-- HT rates (MCS0-15): Set MCS flags, index, and NSS (1 or 2) directly.
-- Invalid rates: Return early.
+Recompute rcount inside the loop so each connection is compared
+against its own threshold regardless of iteration order.
 
-Fixes: 7de16123d9e2 ("wifi: rtl8xxxu: Introduce rtl8xxxu_update_ra_report")
+This is a code-inspection fix for an iteration-order-dependent logic
+error; a targeted reproducer would require SMB3 multichannel with
+in-flight work on a sibling channel landing after curr_conn in hash
+order, which is not something that can be triggered reliably.
+
+Fixes: 76e98a158b20 ("ksmbd: fix race condition between destroy_previous_session() and smb2 operations()")
 Cc: stable@vger.kernel.org
-Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Yi Cong <yicong@kylinos.cn>
-Link: https://lore.kernel.org/all/96e31963da0c42dcb52ce44f818963d7@realtek.com/
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260306071627.56501-1-cong.yi@linux.dev
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c |   28 +++++-------------
- 1 file changed, 8 insertions(+), 20 deletions(-)
+ fs/smb/server/connection.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -4809,20 +4809,6 @@ static const struct ieee80211_rate rtl8x
- 	{.bitrate = 540, .hw_value = 0x0b,},
- };
- 
--static void rtl8xxxu_desc_to_mcsrate(u16 rate, u8 *mcs, u8 *nss)
--{
--	if (rate <= DESC_RATE_54M)
--		return;
--
--	if (rate >= DESC_RATE_MCS0 && rate <= DESC_RATE_MCS15) {
--		if (rate < DESC_RATE_MCS8)
--			*nss = 1;
--		else
--			*nss = 2;
--		*mcs = rate - DESC_RATE_MCS0;
--	}
--}
--
- static void rtl8xxxu_set_basic_rates(struct rtl8xxxu_priv *priv, u32 rate_cfg)
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -180,7 +180,7 @@ int ksmbd_conn_wait_idle_sess_id(struct
  {
- 	struct ieee80211_hw *hw = priv->hw;
-@@ -4927,23 +4913,25 @@ static void rtl8xxxu_set_aifs(struct rtl
- void rtl8xxxu_update_ra_report(struct rtl8xxxu_ra_report *rarpt,
- 			       u8 rate, u8 sgi, u8 bw)
- {
--	u8 mcs, nss;
--
- 	rarpt->txrate.flags = 0;
+ 	struct ksmbd_conn *conn;
+ 	int rc, retry_count = 0, max_timeout = 120;
+-	int rcount = 1, bkt;
++	int rcount, bkt;
  
- 	if (rate <= DESC_RATE_54M) {
- 		rarpt->txrate.legacy = rtl8xxxu_legacy_ratetable[rate].bitrate;
--	} else {
--		rtl8xxxu_desc_to_mcsrate(rate, &mcs, &nss);
-+	} else if (rate >= DESC_RATE_MCS0 && rate <= DESC_RATE_MCS15) {
- 		rarpt->txrate.flags |= RATE_INFO_FLAGS_MCS;
-+		if (rate < DESC_RATE_MCS8)
-+			rarpt->txrate.nss = 1;
-+		else
-+			rarpt->txrate.nss = 2;
- 
--		rarpt->txrate.mcs = mcs;
--		rarpt->txrate.nss = nss;
-+		rarpt->txrate.mcs = rate - DESC_RATE_MCS0;
- 
- 		if (sgi)
- 			rarpt->txrate.flags |= RATE_INFO_FLAGS_SHORT_GI;
- 
- 		rarpt->txrate.bw = bw;
-+	} else {
-+		return;
- 	}
- 
- 	rarpt->bit_rate = cfg80211_calculate_bitrate(&rarpt->txrate);
+ retry_idle:
+ 	if (retry_count >= max_timeout)
+@@ -189,8 +189,7 @@ retry_idle:
+ 	down_read(&conn_list_lock);
+ 	hash_for_each(conn_list, bkt, conn, hlist) {
+ 		if (conn->binding || xa_load(&conn->sessions, sess_id)) {
+-			if (conn == curr_conn)
+-				rcount = 2;
++			rcount = (conn == curr_conn) ? 2 : 1;
+ 			if (atomic_read(&conn->req_running) >= rcount) {
+ 				rc = wait_event_timeout(conn->req_running_q,
+ 					atomic_read(&conn->req_running) < rcount,
 
 
