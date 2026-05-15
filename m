@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FF43FF1D5;
-	Fri, 15 May 2026 15:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8A1305672;
+	Fri, 15 May 2026 15:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860784; cv=none; b=qWXHZUs4FRXBNv44A5S5q7UkbbUHYmyH9Ry/VhObCT4yuvOhSmpixvYDrcLP4/cVqiVsYnba60Cq8u1lJlI/wGn/i64ojrnmUigjKoeYmEj5wtDFSuVX1gymIFI4574JSM58xMKXTY2ptvSVUcqhUdgG5ZdBCBrqGDtBVHU8WaA=
+	t=1778860787; cv=none; b=YI2lzvGIM0drkXY/OS5NqHaBh/cCr1TJF41hgpi+zlWW0EMIMybTzUyGrhI8mm0s5Apnf60rF5l64KbMw+el9DU516GD63b/PBE7baJLfh7C0nv0zWYS4wi0/XkY/qL2ZHjV47Oe2lbFxa6urU+BxPHRtdQDx1RQ1FR/6xaZLIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860784; c=relaxed/simple;
-	bh=XwtpgNGQ6Yc1q29X17wX0IP+eOzEL116KUT+XKcubEU=;
+	s=arc-20240116; t=1778860787; c=relaxed/simple;
+	bh=OP5g0NU9qQoTuz1wlvEaHzVf2k7JqpNwrxPQj9m+zag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/seKohASw+s1yc1g19Y3rcFScYnOf9/V01Ebuk/r/ZqY1DVwYKu6C57gAOZInUIsDdiM8WbqLCC8cNUJPOWQV9bJP7IMs7WxSQvnsxvvmWh377jDnTXt03xe9yJZM3w6rg5UNu5n/cfXB7Ed4+c/Kfiq0Ffa8x5iLNqU7NLEr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bo5sc9Q8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M0p6dL2+/sW6PBTzH6CjeAWYRMHSoYu9LC485g6YhweFsRDVwNm/ZKdi5YwkW1a1fOP79BIOxiJi04QxsygZPIA1yuPMP3Ce6lZfKC0DhsPh+t9HBrG/Ir8KeiOGRwked/8yg19z+qy2OSnkj2uJ2Ag/rGgQM5l4kfn9p300Ru8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEl+BgHe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bo5sc9Q8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C8CC2BCB0;
-	Fri, 15 May 2026 15:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEl+BgHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D877EC2BCB0;
+	Fri, 15 May 2026 15:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860784;
-	bh=XwtpgNGQ6Yc1q29X17wX0IP+eOzEL116KUT+XKcubEU=;
+	s=korg; t=1778860787;
+	bh=OP5g0NU9qQoTuz1wlvEaHzVf2k7JqpNwrxPQj9m+zag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bo5sc9Q8nPN6vNy1PoeLeAiueHt4nP5qrHMAJXiuqLTb82GTnHbLTtQ8kYHeuug4p
-	 K/Q9y/hIqNOoBDPHDgKnXceG/iUt7SDHfm24sQ3CXfUBjubD8KPj7XdHBUckeqEt2z
-	 xjYmUgSPnOvQ7wMAbchuRNEGI9qKRJ3wfuUWcNhE=
+	b=gEl+BgHemR4g8qi8DOpzWg0itm6nKomHD5nMmUJgrKI4uTL12Nwkot5yYrVPXWEym
+	 Yk7AFaHBewScT3LQIL1GBN3IUv6hyYWyUdSgF0VtwrdiRUh/5XM9BlPYwk3yIr47vX
+	 UUWecwwiNnvR+5HKZTjZ3yVSCKQK0DoCMQBmpJug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.6 079/474] extract-cert: Wrap key_pass with #ifdef USE_PKCS11_ENGINE
-Date: Fri, 15 May 2026 17:43:08 +0200
-Message-ID: <20260515154716.748348778@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.6 080/474] tpm: avoid -Wunused-but-set-variable
+Date: Fri, 15 May 2026 17:43:09 +0200
+Message-ID: <20260515154716.769605483@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,61 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 4f96b7c68a9904e01049ef610d701b382dca9574 upstream.
+commit 6f1d4d2ecfcd1b577dc87350ea965fe81f272e83 upstream.
 
-A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
-in clang under a new subwarning, -Wunused-but-set-global, points out an
-unused static global variable in certs/extract-cert.c:
+Outside of the EFI tpm code, the TPM_MEMREMAP()/TPM_MEMUNMAP functions are
+defined as trivial macros, leading to the mapping_size variable ending
+up unused:
 
-  certs/extract-cert.c:46:20: error: variable 'key_pass' set but not used [-Werror,-Wunused-but-set-global]
-     46 | static const char *key_pass;
-        |                    ^
+In file included from drivers/char/tpm/tpm-sysfs.c:16:
+In file included from drivers/char/tpm/tpm.h:28:
+include/linux/tpm_eventlog.h:167:6: error: variable 'mapping_size' set but not used [-Werror,-Wunused-but-set-variable]
+  167 |         int mapping_size;
 
-After commit 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider
-for OPENSSL MAJOR >= 3"), key_pass is only used with the OpenSSL engine
-API, not the new provider API. Wrap key_pass's declaration and
-assignment with '#ifdef USE_PKCS11_ENGINE' so that it is only included
-with its use to clear up the warning. While this is a little uglier than
-just marking key_pass with the unused attribute, this will make it
-easier to clean up all code associated with the use of the engine API if
-it were ever removed in the future. While in the area, use a tab for
-the key_pass assignment line to match the rest of the file.
+Turn the stubs into inline functions to avoid this warning.
 
-Cc: stable@vger.kernel.org
-Fixes: 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider for OPENSSL MAJOR >= 3")
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://patch.msgid.link/20260325-certs-extract-cert-key_pass-unused-but-set-global-v1-1-ecf94326d532@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Cc: stable@vger.kernel.org # v5.3+
+Fixes: c46f3405692d ("tpm: Reserve the TPM final events table")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- certs/extract-cert.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/linux/tpm_eventlog.h |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/certs/extract-cert.c
-+++ b/certs/extract-cert.c
-@@ -43,7 +43,9 @@ void format(void)
- 	exit(2);
- }
+--- a/include/linux/tpm_eventlog.h
++++ b/include/linux/tpm_eventlog.h
+@@ -131,11 +131,16 @@ struct tcg_algorithm_info {
+ };
  
-+#ifdef USE_PKCS11_ENGINE
- static const char *key_pass;
-+#endif
- static BIO *wb;
- static char *cert_dst;
- static bool verbose;
-@@ -135,7 +137,9 @@ int main(int argc, char **argv)
- 	if (verbose_env && strchr(verbose_env, '1'))
- 		verbose = true;
+ #ifndef TPM_MEMREMAP
+-#define TPM_MEMREMAP(start, size) NULL
++static inline void *TPM_MEMREMAP(unsigned long start, size_t size)
++{
++	return NULL;
++}
+ #endif
  
--        key_pass = getenv("KBUILD_SIGN_PIN");
-+#ifdef USE_PKCS11_ENGINE
-+	key_pass = getenv("KBUILD_SIGN_PIN");
-+#endif
+ #ifndef TPM_MEMUNMAP
+-#define TPM_MEMUNMAP(start, size) do{} while(0)
++static inline void TPM_MEMUNMAP(void *mapping, size_t size)
++{
++}
+ #endif
  
- 	if (argc != 3)
- 		format();
+ /**
 
 
