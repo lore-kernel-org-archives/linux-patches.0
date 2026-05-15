@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCEA3FF1DA;
-	Fri, 15 May 2026 15:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA573FF1D1;
+	Fri, 15 May 2026 15:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860242; cv=none; b=dauskRCm3aG0AzMFBd90mDUH+rMTALdZqtQeVuOGmwHwL9fm88z7olKt88GJeLJXp1/D3sPH/dJ8ccVd365F4Lpo/HiqIZ3fZaNb1XkQsIH6SSa0Z/35v1//FTVGfNvJVzcrwJbFJFdWcdJbyPr68N1AK8+GqlJtBMUnJZ8gTwo=
+	t=1778860245; cv=none; b=Ytat31AcbTh6OcY953bU6NovrhkhRoSZVCT/0ep7AhmM+tQ48xQQPCCjSfek7rlDPC2yL+KAichMLThIp7WC89UlRosKyyn8W0c8EHlC+879jEDgXipvxJ08Z374uPJelu1iPI2Qd3ln6IHXLBmhmX35TGGSPs+sIrX6W1V0hMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860242; c=relaxed/simple;
-	bh=axg92FLX0j6zo7tXKD1VGbNEics6H8W9ohHOmUuni54=;
+	s=arc-20240116; t=1778860245; c=relaxed/simple;
+	bh=YQ69Gp1ahuela7vBIf2o3miE7qq3XcKWC3oKEamnlH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rx0DGMt5Ykmlz3uqe/K3A/QARLXNxJxNl8YXNZJnVjvKfq4JY6FRUxg0jqGyvONof+JUzwiTnqa0IMLeOnHJ0oDFti9bBD7YCbOcvG311agsY99zWgI1PQ9p1W7Qjnk12PpRqEaDMdtZNy14ataf9wYe+oGaFSeJef29sgZqcfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUpg1bIJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sZ1Odo/rtjE3M+JiC4Q7IGg+tefSwQKvOdXmEbPk3tAEvTvMb3cjtLZkfNTlTBoPbfr9pPfB9e3YpyUvM+r2VPzvAm9qHf/v9i2Rlda3k5BHMw5NfTlSxOFze2kszOwMQV7grkA+iJ1y4SmwXKxbQW0//ITXKuA/rl4j5mcsTYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6sz3ScA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUpg1bIJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF88C2BCB0;
-	Fri, 15 May 2026 15:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6sz3ScA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780F1C2BCB0;
+	Fri, 15 May 2026 15:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860242;
-	bh=axg92FLX0j6zo7tXKD1VGbNEics6H8W9ohHOmUuni54=;
+	s=korg; t=1778860244;
+	bh=YQ69Gp1ahuela7vBIf2o3miE7qq3XcKWC3oKEamnlH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUpg1bIJ8vPJZX8rEoa3SHDE5eUF0vOWVF4rUOgu9SH0XFHNq3kVMn9+Do/xWGlI/
-	 C7qhF1PX9w2R2JWX5T6gf2r4Y10rmgh2vSvS6sTvxqnfEBEIjbaypCIUQ16Bqo3dDI
-	 VIYbXPIKoFTgMposT3Uh8wsPVRGm6vhK3aSkZvSc=
+	b=b6sz3ScA31fezjozw57B6gyc+4ETvJxcKQNqU02M0WHAKQbd6itySlGfjUVfC8Dhc
+	 48sNtCAA9iezA3L0MfgVGT49RvpnztybaaxNWLXPyBEShe+5j0hRTG+w2C4Vc46h4Q
+	 MzmnN5jtjsDgRGni0IzMorA+auCLwQ3+p0FQIReE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Guoniu Zhou <guoniu.zhou@nxp.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 002/144] media: uvcvideo: Enable VB2_DMABUF for metadata stream
-Date: Fri, 15 May 2026 17:47:08 +0200
-Message-ID: <20260515154653.531876920@linuxfoundation.org>
+Subject: [PATCH 6.12 003/144] media: nxp: imx8-isi: Reduce minimum queued buffers from 2 to 0
+Date: Fri, 15 May 2026 17:47:09 +0200
+Message-ID: <20260515154653.554783112@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -52,51 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Guoniu Zhou <guoniu.zhou@nxp.com>
 
-commit fbac03467e53d8d72e5099c03df26d9adae11416 upstream.
+commit 2f38622d0f85f317be9e6b131da6cd511db94fd2 upstream.
 
-The UVC driver has two video streams, one for the frames and another one
-for the metadata. Both streams share most of the codebase, but only the
-data stream declares support for DMABUF transfer mode.
+Fix a hang issue when capturing a single frame with applications like cam
+in libcamera. It would hang waiting for the driver to complete the buffer,
+but streaming never starts because min_queued_buffers was set to 2.
 
-I have tried the DMABUF transfer mode with CONFIG_DMABUF_HEAPS_SYSTEM
-and the frames looked correct.
+The ISI module uses a ping-pong buffer mechanism that requires two buffers
+to be programmed at all times. However, when fewer than 2 user buffers are
+available, the driver use internal discard buffers to fill the remaining
+slot(s). Reduce minimum queued buffers from 2 to 0 allows streaming to
+start without any queued buffers.
 
-This patch announces the support for DMABUF for the metadata stream.
-This is useful for apps/HALs that only want to support DMABUF.
-
+Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
 Cc: stable@vger.kernel.org
-Fixes: 088ead2552458 ("media: uvcvideo: Add a metadata device node")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Guoniu Zhou <guoniu.zhou@nxp.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260309-uvc-metadata-dmabuf-v1-1-fc8b87bd29c5@chromium.org
+Link: https://patch.msgid.link/20260312-isi_min_buffers-v2-1-d5ea1c79ad81@nxp.com
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_queue.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/usb/uvc/uvc_queue.c
-+++ b/drivers/media/usb/uvc/uvc_queue.c
-@@ -218,7 +218,7 @@ int uvc_queue_init(struct uvc_video_queu
- 	int ret;
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+@@ -1416,7 +1416,7 @@ int mxc_isi_video_register(struct mxc_is
+ 	q->mem_ops = &vb2_dma_contig_memops;
+ 	q->buf_struct_size = sizeof(struct mxc_isi_buffer);
+ 	q->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
+-	q->min_queued_buffers = 2;
++	q->min_queued_buffers = 0;
+ 	q->lock = &video->lock;
+ 	q->dev = pipe->isi->dev;
  
- 	queue->queue.type = type;
--	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR;
-+	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
- 	queue->queue.drv_priv = queue;
- 	queue->queue.buf_struct_size = sizeof(struct uvc_buffer);
- 	queue->queue.mem_ops = &vb2_vmalloc_memops;
-@@ -231,7 +231,6 @@ int uvc_queue_init(struct uvc_video_queu
- 		queue->queue.ops = &uvc_meta_queue_qops;
- 		break;
- 	default:
--		queue->queue.io_modes |= VB2_DMABUF;
- 		queue->queue.ops = &uvc_queue_qops;
- 		break;
- 	}
 
 
