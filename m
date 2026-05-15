@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569E34C0429;
-	Fri, 15 May 2026 16:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD743F8716;
+	Fri, 15 May 2026 16:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862544; cv=none; b=Y/USyQ6+Tk+TzL2WZ9vZrZEaekJnov2ghjvsKWvegTha8kWC8z6nJoibNVWZXPE1Ksbw6U0dtwoijgDE1/2n262RXIGbxdWGmXFgSwGLLjVrKT6zLNc0p0PslYeOvOKJbFsfQVrP7C1c8Bo9Ta8qS9/DYNcA6k4+ATpcLYcQCdA=
+	t=1778862546; cv=none; b=IcghfPQJl5gvs6/3njEihcwtJDuAsz1ANgPgoMel/ah73Dmw82WgMYrIxu6JxyBMdmpPvhQ5LFPoOgob7ZRrN8dg6qKKThug/umkRqGMLa9xp7HkP57rU8SZHwSwf0uGotAPZwT4M7VALcgMx9tZIoXoqWoT0j8af+jnOXoCXDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862544; c=relaxed/simple;
-	bh=gMqqiIuS6t0q2z+6eXXn7dh9cO9j25Zv5vNUfAXFyL4=;
+	s=arc-20240116; t=1778862546; c=relaxed/simple;
+	bh=bXMuFgFJNwAHY4CZbjK4S0MxJurFoquBGmz4RSq2Yao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AsAUWOsaDV7ezf1vnY5Opqotqy3DkzLKoRiSmW4r5jh0K+ovH5yjBKWR/sTEoZhyfba0BXHD3XsKjbMw2xy3HSQF2oI1ojlZfzyRT/UQN1ps9Fec1h/gQ4gf0tslNCMAATUH4bNd5j4DlHfB1eWN9nBYzRxmRJxtZuoCkkFlGdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebritOtN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j9H7pLdG5zXJRi/qYPYUNp1yWZx6Gw22jVdh/wrUzIWMYXoKAcrJetLOaAgguZHnxhwGEEXRNpZL5w0H/4L7Hyw7G8HA2/DWardCSdOfRc2pBxIr/f2aMF1cLgjdP6xVy3FDjR6yz7LoZsUJ9y1ssif2Bv40G2/4uFpsNwkBnc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKh+PFLS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebritOtN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F2CC2BCB0;
-	Fri, 15 May 2026 16:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKh+PFLS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7214BC2BCB0;
+	Fri, 15 May 2026 16:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862544;
-	bh=gMqqiIuS6t0q2z+6eXXn7dh9cO9j25Zv5vNUfAXFyL4=;
+	s=korg; t=1778862546;
+	bh=bXMuFgFJNwAHY4CZbjK4S0MxJurFoquBGmz4RSq2Yao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ebritOtNCcG+d8p5puvdkCFes5cLUm564qmD/GaEPGbadkQCCjlytNGec4AlxWH7B
-	 d7jLiDtgZtzd9Tle0LjTBdbrwQqeQ5Gb3RbWpDhNPLmFIRBf6mnmU4DuaK/B5ocJ12
-	 cDAUZ9daOVZ8nq97yrJZRow6OsQvbkO9Jyiurhqw=
+	b=hKh+PFLSiWXJYkqTAutq221uXnzW3Gnbz5PDGkhv8RG8icTfwuCfipa/nWnGUjkNf
+	 vhApvvc3Cin7CVdY+doMu5SBkNHmH4rFaUN/mgChgM5P8CWFMRnVd4ahFs24NonlIt
+	 6N5PIC6mdzEpSpu80VKjw0S471r3ve1pyq2zdmE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenyou Yang <wenyou.yang@atmel.com>,
+	Dzmitry Sankouski <dsankouski@gmail.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 047/201] regulator: act8945a: fix OF node reference imbalance
-Date: Fri, 15 May 2026 17:47:45 +0200
-Message-ID: <20260515154659.553847329@linuxfoundation.org>
+Subject: [PATCH 7.0 048/201] regulator: s2dos05: fix OF node reference imbalance
+Date: Fri, 15 May 2026 17:47:46 +0200
+Message-ID: <20260515154659.575552307@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 0d15ce31375ccef4162f960b34547a821b7619d2 upstream.
+commit ebe694d67f159899b063eee61bacda4cb825ed7b upstream.
 
 The driver reuses the OF node of the parent multi-function device but
 fails to take another reference to balance the one dropped by the
@@ -62,29 +62,27 @@ devices.
 
 Fix this by using the intended helper for reusing OF nodes.
 
-Fixes: 38c09961048b ("regulator: act8945a: add regulator driver for ACT8945A")
-Cc: stable@vger.kernel.org	# 4.6
-Cc: Wenyou Yang <wenyou.yang@atmel.com>
+Fixes: bb2441402392 ("regulator: add s2dos05 regulator support")
+Cc: stable@vger.kernel.org	# 6.18
+Cc: Dzmitry Sankouski <dsankouski@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260408073055.5183-7-johan@kernel.org
+Link: https://patch.msgid.link/20260408073055.5183-6-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/act8945a-regulator.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/regulator/s2dos05-regulator.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/regulator/act8945a-regulator.c
-+++ b/drivers/regulator/act8945a-regulator.c
-@@ -302,8 +302,9 @@ static int act8945a_pmic_probe(struct pl
- 		num_regulators = ARRAY_SIZE(act8945a_regulators);
- 	}
+--- a/drivers/regulator/s2dos05-regulator.c
++++ b/drivers/regulator/s2dos05-regulator.c
+@@ -126,7 +126,7 @@ static int s2dos05_pmic_probe(struct pla
+ 	s2dos05->regmap = iodev->regmap_pmic;
+ 	s2dos05->dev = dev;
+ 	if (!dev->of_node)
+-		dev->of_node = dev->parent->of_node;
++		device_set_of_node_from_dev(dev, dev->parent);
  
-+	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
-+
- 	config.dev = &pdev->dev;
--	config.dev->of_node = pdev->dev.parent->of_node;
- 	config.driver_data = act8945a;
- 	for (i = 0; i < num_regulators; i++) {
- 		rdev = devm_regulator_register(&pdev->dev, &regulators[i],
+ 	config.dev = dev;
+ 	config.driver_data = s2dos05;
 
 
