@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6733FF1D5;
-	Fri, 15 May 2026 15:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE0B3FF1D5;
+	Fri, 15 May 2026 15:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860766; cv=none; b=Y23q+u73ZL4F0kdkIWaXkq6INMmJKE1DBFsa0VkigU5DA6TrGXQIfjovZ3aSLbJe2qhp7U/rRunqzJqXvZdmcFZoHRaaNcXl14ChXXe2GjIFFfaftwNfzeTWeKWUaG0ZIdKDd/AZ+qFXZkg7KPx+ldFF3Vlfp8T/qNFkRGZQD+U=
+	t=1778860769; cv=none; b=aT8e/4D/i57eIzF4YdIZDs0X+AUaOY55KL/C+hvSwGJ6hkNoO3DFNeDY4Vhtk+6EotNwfGhUNR5EBcdzFPY8coBqFWjEp2mC/dl1BsULMQSdmhvdz4bXGSAF/GwxmYQkJGzkhpUcmQhHUG1VEisjzGdp5gjGSCb/S0CiPmUQjMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860766; c=relaxed/simple;
-	bh=pF+ed7oH6pV/N31G98E6yFMHYON6ldfOKgPdj1bpbcU=;
+	s=arc-20240116; t=1778860769; c=relaxed/simple;
+	bh=02vMmJvAqY97f5CTzhQ/Ytf/koaWxzB6BpHmmg56Vm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lXi2SrFzmtBTPVVJLdtLkRKVdD27DlAVL1y9dDcG35Q3oVfghaORyd5XyYQsFexD0oiywqw/zIQ4KenphtrcLjqOSnE3iEsTK3jkKjvDIoSh3tSmXoAM6cfEJuHetqQNUlavt2FfJMZd0Rsdzex8W5MkMFL7HPGgI/0vgd/EC2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HU2vnFUI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g28oo3jsRs5NttBsWwxy8YdfgoKxfkE5j+8TE0M1eATMe/EwAW2qrrisdktnJsGR+ZfmXI0HPOI6jnGmKPE01R/IlEZ4adKSNJ4Cgu6fVolp8kYn9TimF5ukvZQ+/SfV0Amg7jowHh1TRMOSZhCInib/ZshI0OAUfukOEkp8iyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GUV/Oh/K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HU2vnFUI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459C6C2BCB3;
-	Fri, 15 May 2026 15:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GUV/Oh/K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77ECC2BCB0;
+	Fri, 15 May 2026 15:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860766;
-	bh=pF+ed7oH6pV/N31G98E6yFMHYON6ldfOKgPdj1bpbcU=;
+	s=korg; t=1778860769;
+	bh=02vMmJvAqY97f5CTzhQ/Ytf/koaWxzB6BpHmmg56Vm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HU2vnFUINmhREGtVb1Cb/OJfBGRusUOvH197Zb1X6TnWk+tVKWeLzEh5yczKIWwXE
-	 LyrV2xyau8Qa8S77tISpl4fDgf9f4RpktwwSWF7UeQfcAEur7QeRRzjPY9Amq1mE6f
-	 LcL6ogHh1h6IqBm2SfVpKPLk+xSEhMos8hodpvBU=
+	b=GUV/Oh/KOum9QUppGsum0pRJsf7/3KABFhn4P0Q++wduhOiJJkM5awAm4ymgNn5Pc
+	 C2yhvBRaoMHWSLG4iaPrnhb5RzgMqXylU82fVGpyTLvTUyTMb55IoYCwZNpC+DgaDn
+	 s4uzVh8AGmqzpIe7tdJZEHxNOm333Cg5Rf8Q3Iq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.6 029/474] crypto: pcrypt - Fix handling of MAY_BACKLOG requests
-Date: Fri, 15 May 2026 17:42:18 +0200
-Message-ID: <20260515154715.681019214@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.6 020/474] device property: Make modifications of fwnode "flags" thread safe
+Date: Fri, 15 May 2026 17:42:09 +0200
+Message-ID: <20260515154715.491623333@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,51 +55,313 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Douglas Anderson <dianders@chromium.org>
 
-commit 915b692e6cb723aac658c25eb82c58fd81235110 upstream.
+commit f72e77c33e4b5657af35125e75bab249256030f3 upstream.
 
-MAY_BACKLOG requests can return EBUSY.  Handle them by checking
-for that value and filtering out EINPROGRESS notifications.
+In various places in the kernel, we modify the fwnode "flags" member
+by doing either:
+  fwnode->flags |= SOME_FLAG;
+  fwnode->flags &= ~SOME_FLAG;
 
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Fixes: 5a1436beec57 ("crypto: pcrypt - call the complete function on error")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Eric Biggers <ebiggers@kernel.org>
+This type of modification is not thread-safe. If two threads are both
+mucking with the flags at the same time then one can clobber the
+other.
+
+While flags are often modified while under the "fwnode_link_lock",
+this is not universally true.
+
+Create some accessor functions for setting, clearing, and testing the
+FWNODE flags and move all users to these accessor functions. New
+accessor functions use set_bit() and clear_bit(), which are
+thread-safe.
+
+Cc: stable@vger.kernel.org
+Fixes: c2c724c868c4 ("driver core: Add fw_devlink_parse_fwtree()")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Saravana Kannan <saravanak@kernel.org>
+Link: https://patch.msgid.link/20260317090112.v2.1.I0a4d03104ecd5103df3d76f66c8d21b1d15a2e38@changeid
+[ Fix fwnode_clear_flag() argument alignment, restore dropped blank
+  line in fwnode_dev_initialized(), and remove unnecessary parentheses
+  around fwnode_test_flag() calls. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/pcrypt.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/base/core.c        |   24 ++++++++++++------------
+ drivers/bus/imx-weim.c     |    2 +-
+ drivers/i2c/i2c-core-of.c  |    2 +-
+ drivers/net/phy/mdio_bus.c |    4 ++--
+ drivers/of/base.c          |    2 +-
+ drivers/of/dynamic.c       |    2 +-
+ drivers/of/platform.c      |    2 +-
+ drivers/spi/spi.c          |    2 +-
+ include/linux/fwnode.h     |   44 +++++++++++++++++++++++++++++++++-----------
+ 9 files changed, 53 insertions(+), 31 deletions(-)
 
---- a/crypto/pcrypt.c
-+++ b/crypto/pcrypt.c
-@@ -69,6 +69,9 @@ static void pcrypt_aead_done(void *data,
- 	struct pcrypt_request *preq = aead_request_ctx(req);
- 	struct padata_priv *padata = pcrypt_request_padata(preq);
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -182,7 +182,7 @@ void fw_devlink_purge_absent_suppliers(s
+ 	if (fwnode->dev)
+ 		return;
  
-+	if (err == -EINPROGRESS)
-+		return;
+-	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 	fwnode_links_purge_consumers(fwnode);
+ 
+ 	fwnode_for_each_available_child_node(fwnode, child)
+@@ -228,7 +228,7 @@ static void __fw_devlink_pickup_dangling
+ 	if (fwnode->dev && fwnode->dev->bus)
+ 		return;
+ 
+-	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 	__fwnode_links_move_consumers(fwnode, new_sup);
+ 
+ 	fwnode_for_each_available_child_node(fwnode, child)
+@@ -1013,7 +1013,7 @@ static void device_links_missing_supplie
+ static bool dev_is_best_effort(struct device *dev)
+ {
+ 	return (fw_devlink_best_effort && dev->can_match) ||
+-		(dev->fwnode && (dev->fwnode->flags & FWNODE_FLAG_BEST_EFFORT));
++		(dev->fwnode && fwnode_test_flag(dev->fwnode, FWNODE_FLAG_BEST_EFFORT));
+ }
+ 
+ static struct fwnode_handle *fwnode_links_check_suppliers(
+@@ -1729,11 +1729,11 @@ bool fw_devlink_is_strict(void)
+ 
+ static void fw_devlink_parse_fwnode(struct fwnode_handle *fwnode)
+ {
+-	if (fwnode->flags & FWNODE_FLAG_LINKS_ADDED)
++	if (fwnode_test_flag(fwnode, FWNODE_FLAG_LINKS_ADDED))
+ 		return;
+ 
+ 	fwnode_call_int_op(fwnode, add_links);
+-	fwnode->flags |= FWNODE_FLAG_LINKS_ADDED;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_LINKS_ADDED);
+ }
+ 
+ static void fw_devlink_parse_fwtree(struct fwnode_handle *fwnode)
+@@ -1892,7 +1892,7 @@ static bool fwnode_init_without_drv(stru
+ 	struct device *dev;
+ 	bool ret;
+ 
+-	if (!(fwnode->flags & FWNODE_FLAG_INITIALIZED))
++	if (!fwnode_test_flag(fwnode, FWNODE_FLAG_INITIALIZED))
+ 		return false;
+ 
+ 	dev = get_dev_from_fwnode(fwnode);
+@@ -1951,10 +1951,10 @@ static bool __fw_devlink_relax_cycles(st
+ 	 * We aren't trying to find all cycles. Just a cycle between con and
+ 	 * sup_handle.
+ 	 */
+-	if (sup_handle->flags & FWNODE_FLAG_VISITED)
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_VISITED))
+ 		return false;
+ 
+-	sup_handle->flags |= FWNODE_FLAG_VISITED;
++	fwnode_set_flag(sup_handle, FWNODE_FLAG_VISITED);
+ 
+ 	/* Termination condition. */
+ 	if (sup_handle == con_handle) {
+@@ -2024,7 +2024,7 @@ static bool __fw_devlink_relax_cycles(st
+ 	}
+ 
+ out:
+-	sup_handle->flags &= ~FWNODE_FLAG_VISITED;
++	fwnode_clear_flag(sup_handle, FWNODE_FLAG_VISITED);
+ 	put_device(sup_dev);
+ 	put_device(con_dev);
+ 	put_device(par_dev);
+@@ -2077,7 +2077,7 @@ static int fw_devlink_create_devlink(str
+ 	 * When such a flag is set, we can't create device links where P is the
+ 	 * supplier of C as that would delay the probe of C.
+ 	 */
+-	if (sup_handle->flags & FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD &&
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD) &&
+ 	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
+ 		return -EINVAL;
+ 
+@@ -2100,7 +2100,7 @@ static int fw_devlink_create_devlink(str
+ 	else
+ 		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
+ 
+-	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_NOT_DEVICE))
+ 		sup_dev = fwnode_get_next_parent_dev(sup_handle);
+ 	else
+ 		sup_dev = get_dev_from_fwnode(sup_handle);
+@@ -2112,7 +2112,7 @@ static int fw_devlink_create_devlink(str
+ 		 * supplier device indefinitely.
+ 		 */
+ 		if (sup_dev->links.status == DL_DEV_NO_DRIVER &&
+-		    sup_handle->flags & FWNODE_FLAG_INITIALIZED) {
++		    fwnode_test_flag(sup_handle, FWNODE_FLAG_INITIALIZED)) {
+ 			dev_dbg(con,
+ 				"Not linking %pfwf - dev might never probe\n",
+ 				sup_handle);
+--- a/drivers/bus/imx-weim.c
++++ b/drivers/bus/imx-weim.c
+@@ -335,7 +335,7 @@ static int of_weim_notify(struct notifie
+ 			 * fw_devlink doesn't skip adding consumers to this
+ 			 * device.
+ 			 */
+-			rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++			fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 			if (!of_platform_device_create(rd->dn, NULL, &pdev->dev)) {
+ 				dev_err(&pdev->dev,
+ 					"Failed to create child device '%pOF'\n",
+--- a/drivers/i2c/i2c-core-of.c
++++ b/drivers/i2c/i2c-core-of.c
+@@ -182,7 +182,7 @@ static int of_i2c_notify(struct notifier
+ 		 * Clear the flag before adding the device so that fw_devlink
+ 		 * doesn't skip adding consumers to this device.
+ 		 */
+-		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		client = of_i2c_register_device(adap, rd->dn);
+ 		if (IS_ERR(client)) {
+ 			dev_err(&adap->dev, "failed to create client for '%pOF'\n",
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -675,8 +675,8 @@ int __mdiobus_register(struct mii_bus *b
+ 		return -EINVAL;
+ 
+ 	if (bus->parent && bus->parent->of_node)
+-		bus->parent->of_node->fwnode.flags |=
+-					FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD;
++		fwnode_set_flag(&bus->parent->of_node->fwnode,
++				FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD);
+ 
+ 	WARN(bus->state != MDIOBUS_ALLOCATED &&
+ 	     bus->state != MDIOBUS_UNREGISTERED,
+--- a/drivers/of/base.c
++++ b/drivers/of/base.c
+@@ -1759,7 +1759,7 @@ void of_alias_scan(void * (*dt_alloc)(u6
+ 		if (name)
+ 			of_stdout = of_find_node_opts_by_path(name, &of_stdout_options);
+ 		if (of_stdout)
+-			of_stdout->fwnode.flags |= FWNODE_FLAG_BEST_EFFORT;
++			fwnode_set_flag(&of_stdout->fwnode, FWNODE_FLAG_BEST_EFFORT);
+ 	}
+ 
+ 	if (!of_aliases)
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -224,7 +224,7 @@ static void __of_attach_node(struct devi
+ 	np->sibling = np->parent->child;
+ 	np->parent->child = np;
+ 	of_node_clear_flag(np, OF_DETACHED);
+-	np->fwnode.flags |= FWNODE_FLAG_NOT_DEVICE;
++	fwnode_set_flag(&np->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 
+ 	raw_spin_unlock_irqrestore(&devtree_lock, flags);
+ 
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -774,7 +774,7 @@ static int of_platform_notify(struct not
+ 		 * Clear the flag before adding the device so that fw_devlink
+ 		 * doesn't skip adding consumers to this device.
+ 		 */
+-		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		/* pdev_parent may be NULL when no bus platform device */
+ 		pdev_parent = of_find_device_by_node(rd->dn->parent);
+ 		pdev = of_platform_device_create(rd->dn, NULL,
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -4532,7 +4532,7 @@ static int of_spi_notify(struct notifier
+ 		 * Clear the flag before adding the device so that fw_devlink
+ 		 * doesn't skip adding consumers to this device.
+ 		 */
+-		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		spi = of_register_spi_device(ctlr, rd->dn);
+ 		put_device(&ctlr->dev);
+ 
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -12,6 +12,7 @@
+ #include <linux/types.h>
+ #include <linux/list.h>
+ #include <linux/bits.h>
++#include <linux/bitops.h>
+ #include <linux/err.h>
+ 
+ struct fwnode_operations;
+@@ -31,12 +32,12 @@ struct device;
+  *		suppliers. Only enforce ordering with suppliers that have
+  *		drivers.
+  */
+-#define FWNODE_FLAG_LINKS_ADDED			BIT(0)
+-#define FWNODE_FLAG_NOT_DEVICE			BIT(1)
+-#define FWNODE_FLAG_INITIALIZED			BIT(2)
+-#define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	BIT(3)
+-#define FWNODE_FLAG_BEST_EFFORT			BIT(4)
+-#define FWNODE_FLAG_VISITED			BIT(5)
++#define FWNODE_FLAG_LINKS_ADDED			0
++#define FWNODE_FLAG_NOT_DEVICE			1
++#define FWNODE_FLAG_INITIALIZED			2
++#define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	3
++#define FWNODE_FLAG_BEST_EFFORT			4
++#define FWNODE_FLAG_VISITED			5
+ 
+ struct fwnode_handle {
+ 	struct fwnode_handle *secondary;
+@@ -44,7 +45,7 @@ struct fwnode_handle {
+ 	struct device *dev;
+ 	struct list_head suppliers;
+ 	struct list_head consumers;
+-	u8 flags;
++	unsigned long flags;
+ };
+ 
+ /*
+@@ -197,16 +198,37 @@ static inline void fwnode_init(struct fw
+ 	INIT_LIST_HEAD(&fwnode->suppliers);
+ }
+ 
++static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
++				   unsigned int bit)
++{
++	set_bit(bit, &fwnode->flags);
++}
 +
- 	padata->info = err;
- 
- 	padata_do_serial(padata);
-@@ -82,7 +85,7 @@ static void pcrypt_aead_enc(struct padat
- 
- 	ret = crypto_aead_encrypt(req);
- 
--	if (ret == -EINPROGRESS)
-+	if (ret == -EINPROGRESS || ret == -EBUSY)
++static inline void fwnode_clear_flag(struct fwnode_handle *fwnode,
++				     unsigned int bit)
++{
++	clear_bit(bit, &fwnode->flags);
++}
++
++static inline void fwnode_assign_flag(struct fwnode_handle *fwnode,
++				      unsigned int bit, bool value)
++{
++	assign_bit(bit, &fwnode->flags, value);
++}
++
++static inline bool fwnode_test_flag(struct fwnode_handle *fwnode,
++				    unsigned int bit)
++{
++	return test_bit(bit, &fwnode->flags);
++}
++
+ static inline void fwnode_dev_initialized(struct fwnode_handle *fwnode,
+ 					  bool initialized)
+ {
+ 	if (IS_ERR_OR_NULL(fwnode))
  		return;
  
- 	padata->info = ret;
-@@ -133,7 +136,7 @@ static void pcrypt_aead_dec(struct padat
+-	if (initialized)
+-		fwnode->flags |= FWNODE_FLAG_INITIALIZED;
+-	else
+-		fwnode->flags &= ~FWNODE_FLAG_INITIALIZED;
++	fwnode_assign_flag(fwnode, FWNODE_FLAG_INITIALIZED, initialized);
+ }
  
- 	ret = crypto_aead_decrypt(req);
- 
--	if (ret == -EINPROGRESS)
-+	if (ret == -EINPROGRESS || ret == -EBUSY)
- 		return;
- 
- 	padata->info = ret;
+ extern bool fw_devlink_is_strict(void);
 
 
