@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C573F928D;
-	Fri, 15 May 2026 16:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DBE30568A;
+	Fri, 15 May 2026 16:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861216; cv=none; b=S3u1HkFxDRt7xY/6b2TwJQNbIJQGEqW5C2HBQ3WuhVrGJ3Frz5U7YidL7Ba0U1SqhNxuq79Fh3vNloQa4jpOOBOa+G/IkU+Tr5PWWe3Gk0TXykWEa6AsrjtqRHWX53qvFf768nfYjlmtD7HtYnS2svMuL4ArORVWoGFMxuRrAgI=
+	t=1778861219; cv=none; b=DtCaEf/vLmkC5vsTBAxLdhd59P9ZT/W+Anic8h5xPlQhBp/hfKef5GbLL0zxCNDuuYjplPMS5BlSlzfp3XeYYwiY9AVeXTYgUQEgnrGoxVvhJlabZnoisTyslCH/dBf1R/AOjr+xgYDqXfoUjSHpBPkoxPe6qPnZFp8wlG5Z4+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861216; c=relaxed/simple;
-	bh=eUTM+/7Et1ES062NU8UuQA7Yjycklbh4qDyX7Nc5Gjw=;
+	s=arc-20240116; t=1778861219; c=relaxed/simple;
+	bh=7yGZ7wOUW+2lwqs55o8o3m1WvjJBtYUwiEiK8M/oGhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5uQ/70adUctawB9w3e88byuwTsnLJo1zJssQhJwWxjdabWAeZ1UlMovP254zOKX7qXiq/47dh/UGesjCiWXWn6JEsG5qn+LQxKbuafgHo1ou0RMSyuU7wTZ4N2REE218XYEj2ReE1l3pcvDixA0MrlaCaOcCwz5AwT3jJwfDTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lzaEwHo/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QNxTQP4Qpa02inm1Ct1/cA8MYqo9lyBBEpj7/pTnWOwC/9lk7TuhhtS1IocXT9q1Y79Q7EFig/RhT0x+aorIEcrgQso4EBlDjQ1NAHtnfrx84EyZ9zqFDRiLBobUAjty0qQ10tQzYdlGnVbMSB3Oy3HPbntx5kgVPjYw/TKNV6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gymcvn/B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lzaEwHo/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EB3C2BCFA;
-	Fri, 15 May 2026 16:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gymcvn/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F8EC2BCB0;
+	Fri, 15 May 2026 16:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861216;
-	bh=eUTM+/7Et1ES062NU8UuQA7Yjycklbh4qDyX7Nc5Gjw=;
+	s=korg; t=1778861218;
+	bh=7yGZ7wOUW+2lwqs55o8o3m1WvjJBtYUwiEiK8M/oGhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzaEwHo/zqXUA600DUlQxpQWcMauXUzDPYt4gAC76++0t2cPBt7Dg6nnFjdvhm+fC
-	 UGFDYpyl8k9KLrjlnYa/YHgmgH9RTsaStD9cnh1qGBVMyNhOcJlc4i+scr/QfwU12F
-	 LqUahzqPzC272FB4LUli9dhbDlGAz/t5MkzndY70=
+	b=Gymcvn/Bthdpd1JEd4B1rnGfwwTiVqQbdXIHVus1Z2NcxuJpWh9gG10caRVW1AcW0
+	 AuItTH6+UeK0lCKqeJTr0KLcWuxmHimUhH7hTB6a+1xRUWvj8uhLPsQiPMUMyURZ4r
+	 gGLpR45172DZdEapW+mKYhsNk0ZgYUvQUrSmJSfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>
-Subject: [PATCH 6.6 241/474] clk: imx: imx8-acm: fix flags for acm clocks
-Date: Fri, 15 May 2026 17:45:50 +0200
-Message-ID: <20260515154720.216578286@linuxfoundation.org>
+	Brian Masney <bmasney@redhat.com>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH 6.6 242/474] clk: microchip: mpfs-ccc: fix out of bounds access during output registration
+Date: Fri, 15 May 2026 17:45:51 +0200
+Message-ID: <20260515154720.238333039@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,45 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-commit f2c2fc93b4a3efdfcf3805ab74741826d343ff2c upstream.
+commit 2f7ae8ab6aa73daaf080d5332110357c29df9c36 upstream.
 
-Currently, the flags for the ACM clocks are set to 0. This configuration
-causes the fsl-sai audio driver to fail when attempting to set the
-sysclk, returning an EINVAL error. The following error messages
-highlight the issue:
-fsl-sai 59090000.sai: ASoC: error at snd_soc_dai_set_sysclk on 59090000.sai: -22
-imx-hdmi sound-hdmi: failed to set cpu sysclk: -22
+UBSAN reported an out of bounds access during registration of the last
+two outputs. This out of bounds access occurs because space is only
+allocated in the hws array for two PLLs and the four output dividers
+that each has, but the defined IDs contain two DLLS and their two
+outputs each, which are not supported by the driver. The ID order is
+PLLs -> DLLs -> PLL outputs -> DLL outputs. Decrement the PLL output IDs
+by two while adding them to the array to avoid the problem.
 
-By setting the flag CLK_SET_RATE_NO_REPARENT, we signal that the ACM
-driver does not support reparenting and instead relies on the clock tree
-as defined in the device tree. This change resolves the issue with the
-fsl-sai audio driver.
-
+Fixes: d39fb172760e ("clk: microchip: add PolarFire SoC fabric clock support")
 CC: stable@vger.kernel.org
-Fixes: d3a0946d7ac9 ("clk: imx: imx8: add audio clock mux driver")
-Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20260212085750.3253187-1-shengjiu.wang@nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/imx/clk-imx8-acm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/microchip/clk-mpfs-ccc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/clk/imx/clk-imx8-acm.c
-+++ b/drivers/clk/imx/clk-imx8-acm.c
-@@ -368,7 +368,8 @@ static int imx8_acm_clk_probe(struct pla
- 	for (i = 0; i < priv->soc_data->num_sels; i++) {
- 		hws[sels[i].clkid] = devm_clk_hw_register_mux_parent_data_table(dev,
- 										sels[i].name, sels[i].parents,
--										sels[i].num_parents, 0,
-+										sels[i].num_parents,
-+										CLK_SET_RATE_NO_REPARENT,
- 										base + sels[i].reg,
- 										sels[i].shift, sels[i].width,
- 										0, NULL, NULL);
+--- a/drivers/clk/microchip/clk-mpfs-ccc.c
++++ b/drivers/clk/microchip/clk-mpfs-ccc.c
+@@ -178,7 +178,7 @@ static int mpfs_ccc_register_outputs(str
+ 			return dev_err_probe(dev, ret, "failed to register clock id: %d\n",
+ 					     out_hw->id);
+ 
+-		data->hw_data.hws[out_hw->id] = &out_hw->divider.hw;
++		data->hw_data.hws[out_hw->id - 2] = &out_hw->divider.hw;
+ 	}
+ 
+ 	return 0;
+@@ -234,6 +234,10 @@ static int mpfs_ccc_probe(struct platfor
+ 	unsigned int num_clks;
+ 	int ret;
+ 
++	/*
++	 * If DLLs get added here, mpfs_ccc_register_outputs() currently packs
++	 * sparse clock IDs in the hws array
++	 */
+ 	num_clks = ARRAY_SIZE(mpfs_ccc_pll_clks) + ARRAY_SIZE(mpfs_ccc_pll0out_clks) +
+ 		   ARRAY_SIZE(mpfs_ccc_pll1out_clks);
+ 
 
 
