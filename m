@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06713B9D84;
-	Fri, 15 May 2026 16:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F803E0089;
+	Fri, 15 May 2026 16:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861275; cv=none; b=Ry2jQJp8LxCAz0eJBFaw/04Sf7V8vjNtu5D0zdbCv4/v1e2Muotxu8/S6EHYdripAikFa5p0mqVqMn52+1joMZo3r3QPS5CyqM43GM0X48NnD20r/o7f8D5tYl+PMTb3JchGxUEwl0QvQE3CRrOvKq58tPVlKsGkqZdg9pbzg+k=
+	t=1778861278; cv=none; b=AWf2YjRw1AC6Su2B2ilanomrjxXQ11bW4z6Xys03GCQ6P5gpN5mpVoTstpNdaKnMdBwX3wQaZBjcWLeHkoBd4cdR9V2pM8JMhnjGcb6fvpKaqeVXVNVb7IWTeHDrazSjeF9nlxh1qH/1RCy1+d8zpZxUmkx4yGN0v/e+vYDQoB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861275; c=relaxed/simple;
-	bh=iAyDTbXNICyVj2NpQ45FzgprqeRGZH2nO9xMXUT1qYs=;
+	s=arc-20240116; t=1778861278; c=relaxed/simple;
+	bh=Sa8y0EUcWacKEXHAklDHyL95i0GcjYlkDIP8FavF2Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gz5dHRDpZMevhkWVP4DtMUMqwJBJJrBN20dN0/WaWfpSmp/wcuyRnOg7IR/Cs9IkFamxJ4BoK2avdtKiorqTPJjZfK1imhgTUmWTQrmh/u0x54lqYbrPquSTs8DSO4zeVPf4YA5Wac6bRljhOcPgg4vLlKJAuOk5ysmxpo5U40s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hde4RdhJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DJAWUYpOuR403Cq0AXNmktLBhkixibIaDc4oJVSn3nXAF5sJqCtv5eDaMg3OBjZCtOFT/y7Q82SdivqPqh6XSBRCI7HIoBQQbxycUcQx17UvV45zpFU7mVX6mQdP1wF5jis/GLHtT91nlstGnr439vNu157zwZRI9l5xNl08JfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzmX6y/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hde4RdhJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66089C2BCB0;
-	Fri, 15 May 2026 16:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzmX6y/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF86C2BCB0;
+	Fri, 15 May 2026 16:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861275;
-	bh=iAyDTbXNICyVj2NpQ45FzgprqeRGZH2nO9xMXUT1qYs=;
+	s=korg; t=1778861278;
+	bh=Sa8y0EUcWacKEXHAklDHyL95i0GcjYlkDIP8FavF2Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hde4RdhJnVR5MAR3wuYDqcZVmlunoStUHPVMbha7Ywk8iyJEDJWPQR4pigJYTCjOt
-	 oNXNJ6dYMyW3UjyXBa7VXAHTdkoGS9fO8Q0hRPaTf6/MSfctB4ROAV1jrNdrmcxcBH
-	 n2hj1qtrCrWCLpie1SfJHrfCmL8rDvZBIlgjAj4c=
+	b=MzmX6y/TSurLDQVrLdgeyDL1aahh3+vbXJ8+geXxMNYc1TGIlMok9eDW1FHx80Zxr
+	 coVRK8E2z6MaxvAjbtQB9QVp5YlUJhkPIa/mC8jhWuyJs8M3TLzC9NhBGXBbUSv0d2
+	 RuHGaxv5gCJ8a2/EyTqIYDdR0U2kic4e0BNMyc64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 266/474] openvswitch: vport: fix self-deadlock on release of tunnel ports
-Date: Fri, 15 May 2026 17:46:15 +0200
-Message-ID: <20260515154720.757314941@linuxfoundation.org>
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.6 267/474] RDMA/hns: Fix unlocked call to hns_roce_qp_remove()
+Date: Fri, 15 May 2026 17:46:16 +0200
+Message-ID: <20260515154720.778786299@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,58 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit aa69918bd418e700309fdd08509dba324fb24296 upstream.
+commit 0c99acbc8b6c6dd526ae475a48ee1897b61072fb upstream.
 
-vports are used concurrently and protected by RCU, so netdev_put()
-must happen after the RCU grace period.  So, either in an RCU call or
-after the synchronize_net().  The rtnl_delete_link() must happen under
-RTNL and so can't be executed in RCU context.  Calling synchronize_net()
-while holding RTNL is not a good idea for performance and system
-stability under load in general, so calling netdev_put() in RCU call
-is the right solution here.
+Sashiko points out that hns_roce_qp_remove() requires the caller to hold
+locks.  The error flow in hns_roce_create_qp_common() doesn't hold those
+locks for the error unwind so it risks corrupting memory.
 
-However,
-when the device is deleted, rtnl_unlock() will call netdev_run_todo()
-and block until all the references are gone.  In the current code this
-means that we never reach the call_rcu() and the vport is never freed
-and the reference is never released, causing a self-deadlock on device
-removal.
+Grab the same locks the other two callers use.
 
-Fix that by moving the rcu_call() before the rtnl_unlock(), so the
-scheduled RCU callback will be executed when synchronize_net() is
-called from the rtnl_unlock()->netdev_run_todo() while the RTNL itself
-is already released.
-
-Fixes: 6931d21f87bc ("openvswitch: defer tunnel netdev_put to RCU release")
 Cc: stable@vger.kernel.org
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260430233848.440994-2-i.maximets@ovn.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e088a685eae9 ("RDMA/hns: Support rq record doorbell for the user space")
+Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=9
+Link: https://patch.msgid.link/r/15-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
+Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/vport-netdev.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_qp.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/openvswitch/vport-netdev.c
-+++ b/net/openvswitch/vport-netdev.c
-@@ -189,9 +189,13 @@ void ovs_netdev_tunnel_destroy(struct vp
- 	 */
- 	if (vport->dev->reg_state == NETREG_REGISTERED)
- 		rtnl_delete_link(vport->dev, 0, NULL);
--	rtnl_unlock();
+--- a/drivers/infiniband/hw/hns/hns_roce_qp.c
++++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
+@@ -1082,6 +1082,7 @@ static int hns_roce_create_qp_common(str
+ 	struct hns_roce_ib_create_qp_resp resp = {};
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 	struct hns_roce_ib_create_qp ucmd = {};
++	unsigned long flags;
+ 	int ret;
  
-+	/* We can't put the device reference yet, since it can still be in
-+	 * use, but rtnl_unlock()->netdev_run_todo() will block until all
-+	 * the references are released, so the RCU call must be before it.
-+	 */
- 	call_rcu(&vport->rcu, vport_netdev_free);
-+	rtnl_unlock();
- }
- EXPORT_SYMBOL_GPL(ovs_netdev_tunnel_destroy);
+ 	mutex_init(&hr_qp->mutex);
+@@ -1165,7 +1166,13 @@ static int hns_roce_create_qp_common(str
+ 	return 0;
  
+ err_flow_ctrl:
++	spin_lock_irqsave(&hr_dev->qp_list_lock, flags);
++	hns_roce_lock_cqs(init_attr->send_cq ? to_hr_cq(init_attr->send_cq) : NULL,
++			  init_attr->recv_cq ? to_hr_cq(init_attr->recv_cq) : NULL);
+ 	hns_roce_qp_remove(hr_dev, hr_qp);
++	hns_roce_unlock_cqs(init_attr->send_cq ? to_hr_cq(init_attr->send_cq) : NULL,
++			    init_attr->recv_cq ? to_hr_cq(init_attr->recv_cq) : NULL);
++	spin_unlock_irqrestore(&hr_dev->qp_list_lock, flags);
+ err_store:
+ 	free_qpc(hr_dev, hr_qp);
+ err_qpc:
 
 
