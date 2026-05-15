@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD743F8716;
-	Fri, 15 May 2026 16:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C850E3F8716;
+	Fri, 15 May 2026 16:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862546; cv=none; b=IcghfPQJl5gvs6/3njEihcwtJDuAsz1ANgPgoMel/ah73Dmw82WgMYrIxu6JxyBMdmpPvhQ5LFPoOgob7ZRrN8dg6qKKThug/umkRqGMLa9xp7HkP57rU8SZHwSwf0uGotAPZwT4M7VALcgMx9tZIoXoqWoT0j8af+jnOXoCXDY=
+	t=1778862549; cv=none; b=ZTxwx82G15+vZIJWxGzHy5ns5XGLo0csutQTYumMAx8PnVg39iLcluhWRcfD0gTyronnn6Efoptm2yti3ct2FNjiTCV/2SAkPOOR2qWDK4SQ5v5TSJLD3atCfjA60KXK217dwv7jib9Ql21h83XH7BVjy7cQ7cPlSLFXCWwCMoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862546; c=relaxed/simple;
-	bh=bXMuFgFJNwAHY4CZbjK4S0MxJurFoquBGmz4RSq2Yao=;
+	s=arc-20240116; t=1778862549; c=relaxed/simple;
+	bh=/9PdCli8yAvTVCrHx9KIyHYznlVqd6Z44dJVrcGrTmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9H7pLdG5zXJRi/qYPYUNp1yWZx6Gw22jVdh/wrUzIWMYXoKAcrJetLOaAgguZHnxhwGEEXRNpZL5w0H/4L7Hyw7G8HA2/DWardCSdOfRc2pBxIr/f2aMF1cLgjdP6xVy3FDjR6yz7LoZsUJ9y1ssif2Bv40G2/4uFpsNwkBnc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKh+PFLS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DplBm/30WpRAVfURoMBRA8BupKqAKn0l3Jh6nu9oQ1Lp3XvGSCN3zFX59nHyPNO0kup2QJRRPEKdvw5sW5EbjTWmDSdD2+HmzeJce9W45T8cSZKiaHL/e1eBlEBMsaa+M4pgcIW7pty8iB+fwoI30L/GVuJOva/ltAOicFu2rkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/4slO4x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKh+PFLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7214BC2BCB0;
-	Fri, 15 May 2026 16:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/4slO4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA0DC2BCB0;
+	Fri, 15 May 2026 16:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862546;
-	bh=bXMuFgFJNwAHY4CZbjK4S0MxJurFoquBGmz4RSq2Yao=;
+	s=korg; t=1778862549;
+	bh=/9PdCli8yAvTVCrHx9KIyHYznlVqd6Z44dJVrcGrTmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKh+PFLSiWXJYkqTAutq221uXnzW3Gnbz5PDGkhv8RG8icTfwuCfipa/nWnGUjkNf
-	 vhApvvc3Cin7CVdY+doMu5SBkNHmH4rFaUN/mgChgM5P8CWFMRnVd4ahFs24NonlIt
-	 6N5PIC6mdzEpSpu80VKjw0S471r3ve1pyq2zdmE4=
+	b=S/4slO4xoi7xHgkLB9RiFy9MHUzDqoxp2WPGZ8F5VyjF9mBk+IHpIP7qRTcriWIFC
+	 lFQzm+Oqq9194vyaiTslx+tfKHqFO0uMwfxQrDxpNR/5FOZlFLC8AKBrDySLLOHvzo
+	 0mQolNM3BLb+MVd25wD2Kyi4JE04WhQE+TVEpytk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 048/201] regulator: s2dos05: fix OF node reference imbalance
-Date: Fri, 15 May 2026 17:47:46 +0200
-Message-ID: <20260515154659.575552307@linuxfoundation.org>
+	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 7.0 039/201] media: i2c: imx283: Enter full standby when stopping streaming
+Date: Fri, 15 May 2026 17:47:37 +0200
+Message-ID: <20260515154659.380925484@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -51,38 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jai Luthra <jai.luthra@ideasonboard.com>
 
-commit ebe694d67f159899b063eee61bacda4cb825ed7b upstream.
+commit bce1349dbf6348ddee47308e2ed08878356de317 upstream.
 
-The driver reuses the OF node of the parent multi-function device but
-fails to take another reference to balance the one dropped by the
-platform bus code when unbinding the MFD and deregistering the child
-devices.
+Use IMX283_STANDBY (bit 0) instead of IMX283_STBLOGIC (bit 1) when
+stopping streaming. STBLOGIC only puts the sensor logic into standby but
+leaves the MIPI interface (along with other components) in an
+indeterminate state.
 
-Fix this by using the intended helper for reusing OF nodes.
+This (presumably) causes the CSI receiver (e.g. Raspberry Pi's CFE) to
+miss the LP-11 to HS transition when streaming restarts, resulting in a
+hang of 10+ seconds. The issue is most visible when immediately
+restarting a full-resolution stream after stopping a 3x3 binned one, so
+that runtime suspend hasn't yet been triggered.
 
-Fixes: bb2441402392 ("regulator: add s2dos05 regulator support")
-Cc: stable@vger.kernel.org	# 6.18
-Cc: Dzmitry Sankouski <dsankouski@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260408073055.5183-6-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Writing IMX283_STANDBY puts the entire sensor into standby. The
+imx283_standby_cancel() sequence already handles the full wakeup from
+this suspended state.
+
+Cc: stable@vger.kernel.org
+Link: https://github.com/raspberrypi/linux/issues/7153
+Link: https://github.com/will127534/OneInchEye/issues/12
+Fixes: ccb4eb4496fa ("media: i2c: Add imx283 camera sensor driver")
+Signed-off-by: Jai Luthra <jai.luthra@ideasonboard.com>
+Tested-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/s2dos05-regulator.c |    2 +-
+ drivers/media/i2c/imx283.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/regulator/s2dos05-regulator.c
-+++ b/drivers/regulator/s2dos05-regulator.c
-@@ -126,7 +126,7 @@ static int s2dos05_pmic_probe(struct pla
- 	s2dos05->regmap = iodev->regmap_pmic;
- 	s2dos05->dev = dev;
- 	if (!dev->of_node)
--		dev->of_node = dev->parent->of_node;
-+		device_set_of_node_from_dev(dev, dev->parent);
+--- a/drivers/media/i2c/imx283.c
++++ b/drivers/media/i2c/imx283.c
+@@ -1158,7 +1158,7 @@ static int imx283_disable_streams(struct
+ 	if (pad != IMAGE_PAD)
+ 		return -EINVAL;
  
- 	config.dev = dev;
- 	config.driver_data = s2dos05;
+-	ret = cci_write(imx283->cci, IMX283_REG_STANDBY, IMX283_STBLOGIC, NULL);
++	ret = cci_write(imx283->cci, IMX283_REG_STANDBY, IMX283_STANDBY, NULL);
+ 	if (ret)
+ 		dev_err(imx283->dev, "Failed to stop stream\n");
+ 
 
 
