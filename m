@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557E830568A;
-	Fri, 15 May 2026 16:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073663E009A;
+	Fri, 15 May 2026 16:11:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861465; cv=none; b=ikqCxNDbanjJydtUk5PyiQvT/+IXku54VC3nZvM+If30LMVaHcum0squnRcActkzbCqB741M4lpmWEr0dAkx6UM5nkHLIm6WxNdkgcc9gcVwy5M1vh9RTKvF1akIZt7y1X20y8YD1Zt4t8FRysFfkNPuAj+4enWsrBrXUQtb244=
+	t=1778861468; cv=none; b=ShJg47TXiU+DNhi3N7fzibbFbySOxp9IW1GgvMJXxd/LNlQAeL5sJ8YiNJTdF45jjzWCVGpt72jUxiTcOnMQqZqLgk/Uz3ZrvTPgERtf36Bds7y8T77h/GfHuQ7nX3+OiE6AIRrQVTgd57k09958ej6FYPqfqLX02Mcws+/6mQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861465; c=relaxed/simple;
-	bh=MDs4iIQSS4wQ6u6oV8t4TIB2Eqw5mCIdJANisDYMz/g=;
+	s=arc-20240116; t=1778861468; c=relaxed/simple;
+	bh=r6LSGnWqEy8QF7ornnIFUEFSw0JT8Fhmda4SlyD1PZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y3vAvGX6h7WhFWqg1IQuTRwPtjHBFBxxec+wFKNSC2UNDdVSKTg+muqh/69Sk6Ib2aYcvy9k5IMd1Liydsglw1cwFgIB48MStA686EYkrBhq8sn5s9m1PM0h9UPWYdRpNjofOD/lx/qFH0EpqDKHzKYF3z7zxmPLUy2jZIFHIx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHzjeukF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O4e8FcbkX+jStICHxH6flaXxSN0WAmYorac42IFYWP37DcTKJQeguIeCKakQfB1CCtimIcJQUx5VfT8C8TvPKWHzv+xWgvx5t+o+NzuR553aDMlzMt7gGYbPaSlw+QQ5j3QmFgOvdROTlvF069PJ4jXc+HfAMEJR0ZzTntZALdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdY7w0n0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHzjeukF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF594C2BCB3;
-	Fri, 15 May 2026 16:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdY7w0n0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB73C2BCB0;
+	Fri, 15 May 2026 16:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861465;
-	bh=MDs4iIQSS4wQ6u6oV8t4TIB2Eqw5mCIdJANisDYMz/g=;
+	s=korg; t=1778861467;
+	bh=r6LSGnWqEy8QF7ornnIFUEFSw0JT8Fhmda4SlyD1PZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHzjeukFxsj54x9D6EmuAwo03f3tdglLS7wSTtExE6hjVvr+k1Yt5Pxx7FDwRYm5L
-	 2OdLrIcK0uotEnQNLLHUuL8qfhkOuWh+q9wi0xn4IjpnjROeeXtM4HFfTbSXY7RGi6
-	 mAOyTHVlBQnF2dUkYMteIQAymmspK1+cQowTKfo8=
+	b=IdY7w0n0W2zoiOFFQIeNF7yXQm+Iy1eS4IsStbakKOq3E7LQSdkZGsn6y4+dCHDev
+	 BM5NXDq0vCCmt3mUovRcNKI/o2eggFMb4Lfgau2rlq6d36OzDKjGTdrFic/porlawy
+	 mzoat3S8PfPnKenV2VVsVL5FMjlw5ksyG2bYRIuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 297/474] HID: playstation: Clamp num_touch_reports
-Date: Fri, 15 May 2026 17:46:46 +0200
-Message-ID: <20260515154721.428771330@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 298/474] media: uvcvideo: Enable VB2_DMABUF for metadata stream
+Date: Fri, 15 May 2026 17:46:47 +0200
+Message-ID: <20260515154721.450329858@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,50 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit cac61b58a3b6340c52afa06bb15eac033158db2f upstream.
+commit fbac03467e53d8d72e5099c03df26d9adae11416 upstream.
 
-A device would never lie about the number of touch reports would it?
+The UVC driver has two video streams, one for the frames and another one
+for the metadata. Both streams share most of the codebase, but only the
+data stream declares support for DMABUF transfer mode.
 
-If it does the loop in dualshock4_parse_report will read off the end of
-the touch_reports array, up to about 2 KiB for the maximum number of 256
-loop iteraions. The data that is read is emitted via evdev if the
-DS4_TOUCH_POINT_INACTIVE bit happens to be set. Protect against this by
-clamping the num_touch_reports value provided by the device to the
-maximum size of the touch_reports array.
+I have tried the DMABUF transfer mode with CONFIG_DMABUF_HEAPS_SYSTEM
+and the frames looked correct.
 
-Fixes: 752038248808 ("HID: playstation: add DualShock4 touchpad support.")
+This patch announces the support for DMABUF for the metadata stream.
+This is useful for apps/HALs that only want to support DMABUF.
+
 Cc: stable@vger.kernel.org
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 088ead2552458 ("media: uvcvideo: Add a metadata device node")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260309-uvc-metadata-dmabuf-v1-1-fc8b87bd29c5@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-playstation.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_queue.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -2200,7 +2200,8 @@ static int dualshock4_parse_report(struc
- 		struct dualshock4_input_report_usb *usb = (struct dualshock4_input_report_usb *)data;
+--- a/drivers/media/usb/uvc/uvc_queue.c
++++ b/drivers/media/usb/uvc/uvc_queue.c
+@@ -218,7 +218,7 @@ int uvc_queue_init(struct uvc_video_queu
+ 	int ret;
  
- 		ds4_report = &usb->common;
--		num_touch_reports = usb->num_touch_reports;
-+		num_touch_reports = min_t(u8, usb->num_touch_reports,
-+					  ARRAY_SIZE(usb->touch_reports));
- 		touch_reports = usb->touch_reports;
- 	} else if (hdev->bus == BUS_BLUETOOTH && report->id == DS4_INPUT_REPORT_BT &&
- 			size == DS4_INPUT_REPORT_BT_SIZE) {
-@@ -2214,7 +2215,8 @@ static int dualshock4_parse_report(struc
- 		}
- 
- 		ds4_report = &bt->common;
--		num_touch_reports = bt->num_touch_reports;
-+		num_touch_reports = min_t(u8, bt->num_touch_reports,
-+					  ARRAY_SIZE(bt->touch_reports));
- 		touch_reports = bt->touch_reports;
- 	} else {
- 		hid_err(hdev, "Unhandled reportID=%d\n", report->id);
+ 	queue->queue.type = type;
+-	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR;
++	queue->queue.io_modes = VB2_MMAP | VB2_USERPTR | VB2_DMABUF;
+ 	queue->queue.drv_priv = queue;
+ 	queue->queue.buf_struct_size = sizeof(struct uvc_buffer);
+ 	queue->queue.mem_ops = &vb2_vmalloc_memops;
+@@ -231,7 +231,6 @@ int uvc_queue_init(struct uvc_video_queu
+ 		queue->queue.ops = &uvc_meta_queue_qops;
+ 		break;
+ 	default:
+-		queue->queue.io_modes |= VB2_DMABUF;
+ 		queue->queue.ops = &uvc_queue_qops;
+ 		break;
+ 	}
 
 
