@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0BB3E714A;
-	Fri, 15 May 2026 16:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70313B9D91;
+	Fri, 15 May 2026 16:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862393; cv=none; b=L7c6xRBdBcVQuAoPNfuMLtXSUOiSi66WxkYfW9kKnBBsVjhSnSDe151uR408Zf9K+W60ZAPlBPG+6mCthQh1kyPNmP03QV6SFs+kmMmytWxzxFCo3X/o93Cxyu0NoBG4sB7MJZQmfXDEAYsIgkb5fWgytOCi4jYQx25nGrTecek=
+	t=1778862395; cv=none; b=UpR9zqWb/hOjTswoFOooYdzriUG/6WMIVPt5DZaff35/8TIVbNKZqFsOWJTxOGLL05121wCjnZsgodAyYHHEKrGbi72GXUjp+tmT3A9CujE3wJiVcjFllu2j8nGc7rR7lxpMAFx9R1+y9GyAGwHktBSm9rt2ey9bZNQrLbZO9fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862393; c=relaxed/simple;
-	bh=Iw2eA9eprtdaWJO+46ArJ8W8HkBbcxHw2lovzPkYkfI=;
+	s=arc-20240116; t=1778862395; c=relaxed/simple;
+	bh=eVZCS8HtDIhbdBFxUctAn2QNipdvIzdxOYgGxWdiIC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rNzQLfPQ33DM3cWFy/rkcpfoV95pTwkuAplMNdVSMcdeJ3KHJ9XNi8DTck1x/Savi1c2/JQqtgBxTG7JroJtClBCnaF1NAV1F4oQLruc/kwypsdpMV5bTcQtmBfJ64gVjjfMIw0ucIgHDNLo8UyG8bh0k97yetjaRjbVezBXTd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbYvbKgR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OjTEgImuQuvI58hoxL/59Aae3Greb9zh2g1fz0pty7ppqOJthhvWtM9MY3MxojNZRltWDadwl+QxRZ9DPWljC/PG+p2b+grbhpJzwETfBxSI5Ca2RDVFUjj+i7g7ivx0PhFSdjP4vLNmRA3pEYVDblYex728J44U3bK2wdEJyEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKYB4gFQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbYvbKgR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CF8C2BCB0;
-	Fri, 15 May 2026 16:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKYB4gFQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F347C2BCB0;
+	Fri, 15 May 2026 16:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862393;
-	bh=Iw2eA9eprtdaWJO+46ArJ8W8HkBbcxHw2lovzPkYkfI=;
+	s=korg; t=1778862395;
+	bh=eVZCS8HtDIhbdBFxUctAn2QNipdvIzdxOYgGxWdiIC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NbYvbKgRB16WRf8WywxmumPJp1DJw/ZdhomOKDqGwt4okFR7UIAhkKlkdXmi0DGZ6
-	 EJbz5orBFl4nTy6pVB83JogfsKUO7wGEhdM7iuIv4JeIjd7yn2N6CW5cMXq34npPwH
-	 vcIkbStz/Oa9qxlPkAEPD/+bn99SAlq5WRpy6p3Y=
+	b=CKYB4gFQNXxSUass0rRz1v9xC0+fVbCHoJ3JW0oPSZwZqlQ8nkwISlD8j08XW+xZO
+	 qfvpRZ/0HXnkR7/QKDJPsc+98s3lRWTIoH9A6J+Bors6UoJCGx/dj5DsZfuXGI+KEJ
+	 UjPiP7phmvqNtwQcU3QtR4VIdFCrXpaDMy/oGjVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 7.0 030/201] arm64: dts: lx2160a-cex7/lx2162a-sr-som: fix usd-cd & gpio pinmux
-Date: Fri, 15 May 2026 17:47:28 +0200
-Message-ID: <20260515154659.187193343@linuxfoundation.org>
+	Soufiane Dani <soufianeda@tutanota.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 7.0 031/201] staging: media: atomisp: Disallow all private IOCTLs
+Date: Fri, 15 May 2026 17:47:29 +0200
+Message-ID: <20260515154659.207387803@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -50,157 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 70008aee892bbb5c2969bbe9e5778fc081b14bd2 upstream.
+commit 2b7eb2c5dc72f0fc954ac4aa155f9e285e937f7c upstream.
 
-Commit 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to
-support bus recovery") introduced pinmux nodes for lx2160 i2c
-interfaces, allowing runtime change between i2c and gpio functions
-implementing bus recovery.
+Disallow all private IOCTLs. These aren't quite as safe as one could
+assume of IOCTL handlers; disable them for now. Instead of removing the
+code, return in the beginning of the function if cmd is non-zero in order
+to keep static checkers happy.
 
-However, the dynamic configuration area (overwrite MUX) used by the
-pinctrl-single driver initially reads as zero and does not reflect the
-actual hardware state set by the Reset Configuration Word (RCW) at
-power-on.
-
-Because multiple groups of pins are configured from a single 32-bit
-register, the first write from the pinctrl driver unintentionally clears
-all other bits to zero.
-
-For example, on the LX2162A Clearfog, RCWSR12 is initialized to
-0x08000006. When any i2c pinmux is applied, it clears all other fields.
-This inadvertently disables SD card-detect (IIC2_PMUX) and some GPIOs
-(SDHC1_DIR_PMUX):
-
-LX2162-CF RCWSR12: 0b0000100000000000 0000000000000110
-IIC2_PMUX              |||   |||   || |   |||   |||XXX : I2C/GPIO/CD-WP
-SDHC1_DIR_PMUX         XXX   |||   || |   |||   |||    : SDHC/GPIO/SPI
-
-Reverting the commit in question was considered but bus recovery is an
-important feature.
-
-Instead add pinmux nodes for those pins that were unintentionally
-reconfigured on SolidRun LX2160A Clearfog-CX and LX2162A Clearfog
-boards.
-
-Fixes: 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to support bus recovery")
+Reported-by: Soufiane Dani <soufianeda@tutanota.com>
+Closes: https://lore.kernel.org/linux-staging/20260210-atomisp-fix-v1-1-024429cbff31@tutanota.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
+Fixes: ad85094b293e ("Revert "media: staging: atomisp: Remove driver"")
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi         |    7 +++
- arch/arm64/boot/dts/freescale/fsl-lx2160a-clearfog-itx.dtsi |    2 +
- arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi              |   24 ++++++++++++
- arch/arm64/boot/dts/freescale/fsl-lx2162a-clearfog.dts      |    2 +
- arch/arm64/boot/dts/freescale/fsl-lx2162a-sr-som.dtsi       |    7 +++
- 5 files changed, 42 insertions(+)
+ drivers/staging/media/atomisp/pci/atomisp_ioctl.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi
-@@ -162,6 +162,8 @@
- };
- 
- &fspi {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&fspi_data74_pins>, <&fspi_data30_pins>, <&fspi_dqs_sck_cs10_pins>;
- 	status = "okay";
- 
- 	flash@0 {
-@@ -177,6 +179,11 @@
- 	};
- };
- 
-+&pinmux_i2crv {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gpio0_14_12_pins>;
-+};
+--- a/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+@@ -1356,6 +1356,10 @@ static int atomisp_s_parm(struct file *f
+ static long atomisp_vidioc_default(struct file *file, void *fh,
+ 				   bool valid_prio, unsigned int cmd, void *arg)
+ {
++	/* Disable all private IOCTLs for now! */
++	if (cmd)
++		return -EINVAL;
 +
- &usb0 {
- 	status = "okay";
- };
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a-clearfog-itx.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a-clearfog-itx.dtsi
-@@ -89,6 +89,8 @@
- };
- 
- &esdhc0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&esdhc0_cd_wp_pins>, <&esdhc0_cmd_data30_clk_vsel_pins>;
- 	sd-uhs-sdr104;
- 	sd-uhs-sdr50;
- 	sd-uhs-sdr25;
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-@@ -1721,6 +1721,10 @@
- 				pinctrl-single,bits = <0x0 0x1 0x7>;
- 			};
- 
-+			esdhc0_cd_wp_pins: iic2-sdhc-pins {
-+				pinctrl-single,bits = <0x0 0x6 0x7>;
-+			};
-+
- 			i2c2_scl: i2c2-scl-pins {
- 				pinctrl-single,bits = <0x0 0 (0x7 << 3)>;
- 			};
-@@ -1753,6 +1757,26 @@
- 				pinctrl-single,bits = <0x0 (0x1 << 12) (0x7 << 12)>;
- 			};
- 
-+			fspi_data74_pins: xspi1-data74-pins {
-+				pinctrl-single,bits = <0x0 0x0 (0x7 << 15)>;
-+			};
-+
-+			fspi_data30_pins: xspi1-data30-pins {
-+				pinctrl-single,bits = <0x0 0x0 (0x7 << 18)>;
-+			};
-+
-+			fspi_dqs_sck_cs10_pins: xspi1-base-pins {
-+				pinctrl-single,bits = <0x0 0x0 (0x7 << 21)>;
-+			};
-+
-+			esdhc0_cmd_data30_clk_vsel_pins: sdhc1-base-sdhc-vsel-pins {
-+				pinctrl-single,bits = <0x0 0x0 (0x7 << 24)>;
-+			};
-+
-+			gpio0_14_12_pins: sdhc1-dir-gpio-pins {
-+				pinctrl-single,bits = <0x0 (0x1 << 27) (0x7 << 27)>;
-+			};
-+
- 			i2c6_scl: i2c6-scl-pins {
- 				pinctrl-single,bits = <0x4 0x2 0x7>;
- 			};
---- a/arch/arm64/boot/dts/freescale/fsl-lx2162a-clearfog.dts
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2162a-clearfog.dts
-@@ -223,6 +223,8 @@
- };
- 
- &esdhc0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&esdhc0_cd_wp_pins>, <&esdhc0_cmd_data30_clk_vsel_pins>;
- 	sd-uhs-sdr104;
- 	sd-uhs-sdr50;
- 	sd-uhs-sdr25;
---- a/arch/arm64/boot/dts/freescale/fsl-lx2162a-sr-som.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2162a-sr-som.dtsi
-@@ -30,6 +30,8 @@
- };
- 
- &fspi {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&fspi_data74_pins>, <&fspi_data30_pins>, <&fspi_dqs_sck_cs10_pins>;
- 	status = "okay";
- 
- 	flash@0 {
-@@ -80,3 +82,8 @@
- 		reg = <0x6f>;
- 	};
- };
-+
-+&pinmux_i2crv {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&gpio0_14_12_pins>;
-+};
+ 	struct video_device *vdev = video_devdata(file);
+ 	struct atomisp_sub_device *asd = atomisp_to_video_pipe(vdev)->asd;
+ 	int err;
 
 
