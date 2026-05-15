@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682293C9896;
-	Fri, 15 May 2026 16:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AD33C9896;
+	Fri, 15 May 2026 16:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861788; cv=none; b=awY5XZKQ+hEW3vXP0Gx8L9ey8U4yb7aUd0kQpDoBUhPCQfajM+tmR4cbBkGTK9rLA+EuacOfAyiSUavmNdbOij3Hln+AtsPiW7PFxF3mf/7biR8xDFhZOIkeOtK8yq2sttIYeSQJCbT7xLL+P2S48Wj6xJ27WrxA3u+OxYeyt08=
+	t=1778861791; cv=none; b=s6+dmmdP7M18/ggnIwGSO2XPr0/W/ABIZTpaEdOCTE9a66xewxGGrhxRWZBCetZEYBEe/8i+X32MfOaDQYPEApxQjjepOIPIllSCSvtOsgtumHEr1IQU+XZpEkaW6ddOVw9yEPcIESE59q7Xzr97n2IEp2r4R3/PMuRi5kRSOg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861788; c=relaxed/simple;
-	bh=yvFNxlUL9RruHtBAwNoCRx4vUxkJ20R/clW81oLvCsQ=;
+	s=arc-20240116; t=1778861791; c=relaxed/simple;
+	bh=WVrYicOAfKA5JYnAcyJYUwdaqqip5gyKPADwrtRW7eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YbFsGSCgqvsz0GGJ3xNwCOM629jB/Ti9KIOvHwUz2QcfqqopNUdIrfbyMt9zowfzYsKk96SMebv1gyvMe/6wwiJgdslDZeIeuehOZ3mCchEfinwGGYmju3WdOWyDVOqA8gT17gHlI2HEauDrH7QIsYY6ON6WAwTloy6LPVIxiAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tj2eTept; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iE8iTXeb5n1PQNDPeMxbZqo7kMAWdJ3ktatnhVqBMXVATjpQny8e5NC/kW41q8oHsRqFTIg5tm2fJC9NHfGpKSzCGTpCO3VK02ytChJTa0mDIQrS36p3+HEo3TXD6ijK3Jk/pV/Auq4v8jg9QlYDm1o4pkBx0etnUBd06e2EKHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlgvESJ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tj2eTept"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F370EC2BCC7;
-	Fri, 15 May 2026 16:16:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlgvESJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC81C2BCB0;
+	Fri, 15 May 2026 16:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861788;
-	bh=yvFNxlUL9RruHtBAwNoCRx4vUxkJ20R/clW81oLvCsQ=;
+	s=korg; t=1778861790;
+	bh=WVrYicOAfKA5JYnAcyJYUwdaqqip5gyKPADwrtRW7eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tj2eTeptC2PHhgIFL3QZk0bZmLXk39C5qjy68zbOoC0X369+985jRIDLSWlg0TsRF
-	 ksMy5BOJ6VYX7IQFqg4pfuUSHiFXBLqZ+y8CR0rCRUxb8yjOh8DAwogRCsTkbd/+Rs
-	 5W2WOjYNhQgz6QumDDuRf1TC081racjpZ9aZsel8=
+	b=FlgvESJ/V7BISJp6j76Orm666YTMmQu8hikfTgNGxxvaZyneZWXdxnQto9cgmcXi5
+	 h3Ky+tMzdLAlziSHtDdjF0btSNbVPOe78W9gNdplIF/9pokgKvVAeP1nbzVUlpBNKt
+	 1ZfKGDeq974F9IHHxnt7aW1ZlKFjLoVF4Alm8Izc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 462/474] ceph: only d_add() negative dentries when they are unhashed
-Date: Fri, 15 May 2026 17:49:31 +0200
-Message-ID: <20260515154725.099115605@linuxfoundation.org>
+Subject: [PATCH 6.6 427/474] spi: spi-ti-qspi: Convert to platform remove callback returning void
+Date: Fri, 15 May 2026 17:48:56 +0200
+Message-ID: <20260515154724.307390435@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -46,116 +45,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 803447f93d75ab6e40c85e6d12b5630d281d70d6 ]
+[ Upstream commit 2f2802d1a59d79a3d00cb429841db502c2bbc3df ]
 
-Ceph can call d_add(dentry, NULL) on a negative dentry that is already
-present in the primary dcache hash.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-In the current VFS that is not safe.  d_add() goes through __d_add()
-to __d_rehash(), which unconditionally reinserts dentry->d_hash into
-the hlist_bl bucket.  If the dentry is already hashed, reinserting the
-same node can corrupt the bucket, including creating a self-loop.
-Once that happens, __d_lookup() can spin forever in the hlist_bl walk,
-typically looping only on the d_name.hash mismatch check and
-eventually triggering RCU stall reports like this one:
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
- rcu: INFO: rcu_sched self-detected stall on CPU
- rcu:         87-....: (2100 ticks this GP) idle=3a4c/1/0x4000000000000000 softirq=25003319/25003319 fqs=829
- rcu:         (t=2101 jiffies g=79058445 q=698988 ncpus=192)
- CPU: 87 UID: 2952868916 PID: 3933303 Comm: php-cgi8.3 Not tainted 6.18.17-i1-amd #950 NONE
- Hardware name: Dell Inc. PowerEdge R7615/0G9DHV, BIOS 1.6.6 09/22/2023
- RIP: 0010:__d_lookup+0x46/0xb0
- Code: c1 e8 07 48 8d 04 c2 48 8b 00 49 89 fc 49 89 f5 48 89 c3 48 83 e3 fe 48 83 f8 01 77 0f eb 2d 0f 1f 44 00 00 48 8b 1b 48 85 db <74> 20 39 6b 18 75 f3 48 8d 7b 78 e8 ba 85 d0 00 4c 39 63 10 74 1f
- RSP: 0018:ff745a70c8253898 EFLAGS: 00000282
- RAX: ff26e470054cb208 RBX: ff26e470054cb208 RCX: 000000006e958966
- RDX: ff26e48267340000 RSI: ff745a70c82539b0 RDI: ff26e458f74655c0
- RBP: 000000006e958966 R08: 0000000000000180 R09: 9cd08d909b919a89
- R10: ff26e458f74655c0 R11: 0000000000000000 R12: ff26e458f74655c0
- R13: ff745a70c82539b0 R14: d0d0d0d0d0d0d0d0 R15: 2f2f2f2f2f2f2f2f
- FS:  00007f5770896980(0000) GS:ff26e482c5d88000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007f5764de50c0 CR3: 000000a72abb5001 CR4: 0000000000771ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  lookup_fast+0x9f/0x100
-  walk_component+0x1f/0x150
-  link_path_walk+0x20e/0x3d0
-  path_lookupat+0x68/0x180
-  filename_lookup+0xdc/0x1e0
-  vfs_statx+0x6c/0x140
-  vfs_fstatat+0x67/0xa0
-  __do_sys_newfstatat+0x24/0x60
-  do_syscall_64+0x6a/0x230
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Add an error message to the error path that returned an error before to
+replace the core's error message with more information. Apart from the
+different wording of the error message, this patch doesn't introduce a
+semantic difference.
 
-This is reachable with reused cached negative dentries.  A Ceph lookup
-or atomic_open can be handed a negative dentry that is already hashed,
-and fs/ceph/dir.c then hits one of two paths that incorrectly assume
-"negative" also means "unhashed":
-
-  - ceph_finish_lookup():
-      MDS reply is -ENOENT with no trace
-      -> d_add(dentry, NULL)
-
-  - ceph_lookup():
-      local ENOENT fast path for a complete directory with shared caps
-      -> d_add(dentry, NULL)
-
-Both paths can therefore re-add an already-hashed negative dentry.
-
-Ceph already uses the correct pattern elsewhere: ceph_fill_trace() only
-calls d_add(dn, NULL) for a negative null-dentry reply when d_unhashed(dn)
-is true.
-
-Fix both fs/ceph/dir.c sites the same way: only call d_add() for a
-negative dentry when it is actually unhashed.  If the negative dentry
-is already hashed, leave it in place and reuse it as-is.
-
-This preserves the existing behavior for unhashed dentries while
-avoiding d_hash list corruption for reused hashed negatives.
-
-Cc: stable@vger.kernel.org
-Fixes: 2817b000b02c ("ceph: directory operations")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[ kept existing dout() debug call instead of upstream's doutc() form when adding the d_unhashed() guard around d_add() ]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231105172649.3738556-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 0c18a1bacbb1 ("spi: ti-qspi: fix controller deregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/dir.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/spi/spi-ti-qspi.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -745,7 +745,8 @@ struct dentry *ceph_finish_lookup(struct
- 				d_drop(dentry);
- 				err = -ENOENT;
- 			} else {
--				d_add(dentry, NULL);
-+				if (d_unhashed(dentry))
-+					d_add(dentry, NULL);
- 			}
- 		}
- 	}
-@@ -813,7 +814,8 @@ static struct dentry *ceph_lookup(struct
- 			__ceph_touch_fmode(ci, mdsc, CEPH_FILE_MODE_RD);
- 			spin_unlock(&ci->i_ceph_lock);
- 			dout(" dir %p complete, -ENOENT\n", dir);
--			d_add(dentry, NULL);
-+			if (d_unhashed(dentry))
-+				d_add(dentry, NULL);
- 			di->lease_shared_gen = atomic_read(&ci->i_shared_gen);
- 			return NULL;
- 		}
+--- a/drivers/spi/spi-ti-qspi.c
++++ b/drivers/spi/spi-ti-qspi.c
+@@ -907,21 +907,22 @@ free_master:
+ 	return ret;
+ }
+ 
+-static int ti_qspi_remove(struct platform_device *pdev)
++static void ti_qspi_remove(struct platform_device *pdev)
+ {
+ 	struct ti_qspi *qspi = platform_get_drvdata(pdev);
+ 	int rc;
+ 
+ 	rc = spi_master_suspend(qspi->master);
+-	if (rc)
+-		return rc;
++	if (rc) {
++		dev_alert(&pdev->dev, "spi_master_suspend() failed (%pe)\n",
++			  ERR_PTR(rc));
++		return;
++	}
+ 
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	ti_qspi_dma_cleanup(qspi);
+-
+-	return 0;
+ }
+ 
+ static const struct dev_pm_ops ti_qspi_pm_ops = {
+@@ -930,7 +931,7 @@ static const struct dev_pm_ops ti_qspi_p
+ 
+ static struct platform_driver ti_qspi_driver = {
+ 	.probe	= ti_qspi_probe,
+-	.remove = ti_qspi_remove,
++	.remove_new = ti_qspi_remove,
+ 	.driver = {
+ 		.name	= "ti-qspi",
+ 		.pm =   &ti_qspi_pm_ops,
 
 
