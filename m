@@ -1,50 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E42305668;
-	Fri, 15 May 2026 15:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9FB282F1A;
+	Fri, 15 May 2026 15:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860629; cv=none; b=T5CDZMw2QFAq0lMPXf4rUdZtauQWh9vH+8ty5ddB0m7Fo1q/sFTLSUyHkmh3eBJahK5ZllZYfHZlYSyG70KzHMWOQ+99xYyW5MNA9qmL2X9450khzkeGzTeSCtl9rs1j7t7Ck1GKNKbZut1GSNk9wWjZsHFvbrP+3/bgaioK+Yc=
+	t=1778860632; cv=none; b=WwQ5p2jMczyveyIjn4qx5A43YRlD2gFbnI+KrT/PA5psNRGiBFpUBB8l4NC0hPLmmrQxXxp6sMHLmVA2JKO9P10X8PZH807xyX938NmKPRhXUDEbmcarhFk+fDBzDQ1aK9jgemJZ+HQI1xOsSFpYcj+HCY2+HrsTX4mNK7bECRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860629; c=relaxed/simple;
-	bh=EO4qzNLkyCyUVyLQbWWGcRXvj6Ge6Slwusq4wQzipn0=;
+	s=arc-20240116; t=1778860632; c=relaxed/simple;
+	bh=wTQy9TjGH1F2TpW0MG8Z0K/cw/01UERjyi1Ujp4jvCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J6+3pCek98bV8xC8mBkV8nvZMCXKT7FXMA/ZQiPteqq561Zhhfx6VCCO9zakUqLzA5LL1dqvdXCGfbML5C3ITB45m5HjAYrzlUViCM/RtsukBq1dokdlQGw+hfWQENVi39sJqtBswnMID0vurN8M3KprfFskXyjrLEOuVvLNdp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YZFdb4h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nWN4A/Qgo44BTY6CVTPEKP8+cZTM7HaQZbWJK5uRIfcVBSKdHtH4sTP7UsxzhrUWNHiQPjPylPGvYYMTGet3fMBcADD/4AUsk+UQC4kx1iD+K58QgK9h2S15zZHeFRgiHRmwHF3SE45zXgqM9GFxJppDk7JWPhRbTnYb/O+iICE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROnbo5lb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YZFdb4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB320C2BCB0;
-	Fri, 15 May 2026 15:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROnbo5lb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E66C2BCB0;
+	Fri, 15 May 2026 15:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860629;
-	bh=EO4qzNLkyCyUVyLQbWWGcRXvj6Ge6Slwusq4wQzipn0=;
+	s=korg; t=1778860631;
+	bh=wTQy9TjGH1F2TpW0MG8Z0K/cw/01UERjyi1Ujp4jvCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1YZFdb4h34RxlSAPHXboQkCQUe+MJ36UlON0wIABoas0OFqS1TYBEO7DaEjnnXcGI
-	 lqZBUKNVHSiZetQl3lt4Erx096d6knDQBlTu1hHxAPK3s2NSB8X3XeS2bAXEsZM7iT
-	 ucMNjcbpN54XDS7VzUakyAxnpYbYIKe5kZeNJDt4=
+	b=ROnbo5lb98Kwa7EbCkIaOYDLQ7ltEloToAPFxvaPTojyIhSqFf89moPAtMxUhNKOs
+	 T3UPT+Bafdihv2UPbKzPIj0RTIi+y77sePN9eX1EcCsVm9lF87FHtHRC0Q55OgQ7d8
+	 nJfeFTJI9bjOQsc5tdCoX7YXLH3f1mpWtvvJYLmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Al Viro <viro@ZenIV.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Jan Kara <jack@suse.cz>,
-	Kees Cook <keescook@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Wen Yang <wen.yang@linux.dev>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/474] regset: use kvzalloc() for regset_get_alloc()
-Date: Fri, 15 May 2026 17:42:08 +0200
-Message-ID: <20260515154715.468366786@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 002/474] ALSA: usb-audio: Avoid false E-MU sample-rate notifications
+Date: Fri, 15 May 2026 17:41:51 +0200
+Message-ID: <20260515154715.109214683@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -57,130 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 6b839b3b76cf17296ebd4a893841f32cae08229c upstream.
+commit fca9c850042a7ab4828ce3a9caa8bc40ea09856a upstream.
 
-While browsing through ChromeOS crash reports, I found one with an
-allocation failure that looked like this:
+snd_emuusb_set_samplerate() unconditionally notifies the E-MU
+SampleRate Extension Unit control after issuing SET_CUR.
 
-  chrome: page allocation failure: order:7,
-          mode:0x40dc0(GFP_KERNEL|__GFP_COMP|__GFP_ZERO),
-	  nodemask=(null),cpuset=urgent,mems_allowed=0
-  CPU: 7 PID: 3295 Comm: chrome Not tainted
-          5.15.133-20574-g8044615ac35c #1 (HASH:1162 1)
-  Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
-  Call trace:
-  ...
-  warn_alloc+0x104/0x174
-  __alloc_pages+0x5f0/0x6e4
-  kmalloc_order+0x44/0x98
-  kmalloc_order_trace+0x34/0x124
-  __kmalloc+0x228/0x36c
-  __regset_get+0x68/0xcc
-  regset_get_alloc+0x1c/0x28
-  elf_core_dump+0x3d8/0xd8c
-  do_coredump+0xeb8/0x1378
-  get_signal+0x14c/0x804
-  ...
+If snd_usb_mixer_set_ctl_value() fails, the control value has not
+changed, yet snd_usb_mixer_notify_id() still invalidates the cache and
+emits a value-change event to userspace.
 
-An order 7 allocation is (1 << 7) contiguous pages, or 512K. It's not
-a surprise that this allocation failed on a system that's been running
-for a while.
+Notify the control only after a successful write.
 
-More digging showed that it was fairly easy to see the order 7
-allocation by just sending a SIGQUIT to chrome (or other processes) to
-generate a core dump. The actual amount being allocated was 279,584
-bytes and it was for "core_note_type" NT_ARM_SVE.
-
-There was quite a bit of discussion [1] on the mailing lists in
-response to my v1 patch attempting to switch to vmalloc. The overall
-conclusion was that we could likely reduce the 279,584 byte allocation
-by quite a bit and Mark Brown has sent a patch to that effect [2].
-However even with the 279,584 byte allocation gone there are still
-65,552 byte allocations. These are just barely more than the 65,536
-bytes and thus would require an order 5 allocation.
-
-An order 5 allocation is still something to avoid unless necessary and
-nothing needs the memory here to be contiguous. Change the allocation
-to kvzalloc() which should still be efficient for small allocations
-but doesn't force the memory subsystem to work hard (and maybe fail)
-at getting a large contiguous chunk.
-
-[1] https://lore.kernel.org/r/20240201171159.1.Id9ad163b60d21c9e56c2d686b0cc9083a8ba7924@changeid
-[2] https://lore.kernel.org/r/20240203-arm64-sve-ptrace-regset-size-v1-1-2c3ba1386b9e@kernel.org
-
-Link: https://lkml.kernel.org/r/20240205092626.v2.1.Id9ad163b60d21c9e56c2d686b0cc9083a8ba7924@changeid
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Al Viro <viro@ZenIV.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Dave Martin <Dave.Martin@arm.com>
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Wen Yang <wen.yang@linux.dev>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7d2b451e65d2 ("ALSA: usb-audio - Added functionality for E-mu 0404USB/0202USB/TrackerPre")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260421-alsa-emuusb-samplerate-notify-v1-1-8b63bbc1d7f1@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_elf.c | 2 +-
- kernel/regset.c | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ sound/usb/mixer_quirks.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/binfmt_elf.c b/fs/binfmt_elf.c
-index 3ff7d2e47c7e9..e4348dd76658e 100644
---- a/fs/binfmt_elf.c
-+++ b/fs/binfmt_elf.c
-@@ -2035,7 +2035,7 @@ static void free_note_info(struct elf_note_info *info)
- 		threads = t->next;
- 		WARN_ON(t->notes[0].data && t->notes[0].data != &t->prstatus);
- 		for (i = 1; i < info->thread_notes; ++i)
--			kfree(t->notes[i].data);
-+			kvfree(t->notes[i].data);
- 		kfree(t);
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -1561,15 +1561,17 @@ void snd_emuusb_set_samplerate(struct sn
+ {
+ 	struct usb_mixer_interface *mixer;
+ 	struct usb_mixer_elem_info *cval;
++	int err;
+ 	int unitid = 12; /* SampleRate ExtensionUnit ID */
+ 
+ 	list_for_each_entry(mixer, &chip->mixer_list, list) {
+ 		if (mixer->id_elems[unitid]) {
+ 			cval = mixer_elem_list_to_info(mixer->id_elems[unitid]);
+-			snd_usb_mixer_set_ctl_value(cval, UAC_SET_CUR,
+-						    cval->control << 8,
+-						    samplerate_id);
+-			snd_usb_mixer_notify_id(mixer, unitid);
++			err = snd_usb_mixer_set_ctl_value(cval, UAC_SET_CUR,
++							  cval->control << 8,
++							  samplerate_id);
++			if (!err)
++				snd_usb_mixer_notify_id(mixer, unitid);
+ 			break;
+ 		}
  	}
- 	kfree(info->psinfo.data);
-diff --git a/kernel/regset.c b/kernel/regset.c
-index 586823786f397..b2871fa68b2a7 100644
---- a/kernel/regset.c
-+++ b/kernel/regset.c
-@@ -16,14 +16,14 @@ static int __regset_get(struct task_struct *target,
- 	if (size > regset->n * regset->size)
- 		size = regset->n * regset->size;
- 	if (!p) {
--		to_free = p = kzalloc(size, GFP_KERNEL);
-+		to_free = p = kvzalloc(size, GFP_KERNEL);
- 		if (!p)
- 			return -ENOMEM;
- 	}
- 	res = regset->regset_get(target, regset,
- 			   (struct membuf){.p = p, .left = size});
- 	if (res < 0) {
--		kfree(to_free);
-+		kvfree(to_free);
- 		return res;
- 	}
- 	*data = p;
-@@ -71,6 +71,6 @@ int copy_regset_to_user(struct task_struct *target,
- 	ret = regset_get_alloc(target, regset, size, &buf);
- 	if (ret > 0)
- 		ret = copy_to_user(data, buf, ret) ? -EFAULT : 0;
--	kfree(buf);
-+	kvfree(buf);
- 	return ret;
- }
--- 
-2.53.0
-
 
 
