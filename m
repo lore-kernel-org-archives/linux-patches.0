@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDAF3EFFD8;
-	Fri, 15 May 2026 16:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83AB3F58CD;
+	Fri, 15 May 2026 16:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862495; cv=none; b=Lx99yuwFgdbHe/aHcyyiYM22CZmQOFDn3xbGB/r4wFMR6PtolssOhCXIIoeX8jqmkdpDPiQzmYAVj4pE2LgF8of81sCfOgFH0/baRRldT/QWvJ0bKVWCWdBamY/IVE99uwsnG9mzSVY5Z8w07YBHLYkJuPBvVwlC9K34ZimM8dk=
+	t=1778862497; cv=none; b=MEOL185GYV89Uiqokyy9yELIvkl/ebp0sgU1dl0Ow2bXyFyrALypbAhvW+NOc9WHXBGXiePqdpSoMJkvnhXpI4EHoW0fUhWryfaX/vHDgW+zqgL2e8vqAhEBBM38TSUAFnxd5u3EC56narIWMJirBkcwSbPD6Wk4xHjDJOrB5AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862495; c=relaxed/simple;
-	bh=IJFKZHG3a0yZWjtg4+2nhW8tykEHdDucB4q5FUiEZug=;
+	s=arc-20240116; t=1778862497; c=relaxed/simple;
+	bh=Iv3aE4PDFcj6+GVRYDGqCX22qKWW8qN49Jxj7MZhv5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lpxUS6ISv8ZeXYGF5uD1AdDf2H8lO2pSC+IpfKfAlw4eR4YSBqvyKdtNvXvA1BfwzXBrU0G5i22IaJGUvTAu/GaP4JgjaOk71p6CtNLtV0F0cgU+d/ea+nA2cBKLpyt0E44jKTqHatXkGir3/pTwL5Q5mvwV/oJm97Qs1jZ21Co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gd45LgrC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0wWYRwUjMWhZ9O0E4G+cNC5wqOJjNzkBAF88TDhBVCwYpLWjidUwgz2KYDPXF95JKIRTvOcI10DRAnFeTCymbuSlw9aQ0zZP/FfSW7QGHwZsOyCzmUXRifZd9IEiovGw82htLtKASLS69GF/wKmT6GOTbLEHG9LuiE8fOpzm74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+QpFIOY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gd45LgrC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF61C2BCB0;
-	Fri, 15 May 2026 16:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+QpFIOY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8AFC2BCB3;
+	Fri, 15 May 2026 16:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862495;
-	bh=IJFKZHG3a0yZWjtg4+2nhW8tykEHdDucB4q5FUiEZug=;
+	s=korg; t=1778862497;
+	bh=Iv3aE4PDFcj6+GVRYDGqCX22qKWW8qN49Jxj7MZhv5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gd45LgrCdlFOYmEg1jnwm51xMg7Ynf1IvdeGE/fB4OqttENCspgRFh+3xWv8f9f4G
-	 GfAizwVubSNExnUokuIECw7UxDqtLuT5YWV5jBuiTodiDxtz44vlqGICeKixDfjJLC
-	 Ki5B7b5H/94WTBThrCg6iNRk2CB9nDv56wVeFXRk=
+	b=Z+QpFIOYVbvR0t8ohaM0ra+zAsVNF18Ua8Qm1U96gxcJOZftiD3d3EQe3EOIJp1rj
+	 K8tA0MlzYWbgIXwfY81c6z4YxlGQ9KMUbAb3zsBAEFezVbc3TQve08HEl+dQNOpzXH
+	 tPIP9z/dcJnz5h+WrGpkbVjmZcewtuOR7vEelZpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Matthias Fend <matthias.fend@emfend.at>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 069/201] media: i2c: ov08d10: fix image vertical start setting
-Date: Fri, 15 May 2026 17:48:07 +0200
-Message-ID: <20260515154700.028703381@linuxfoundation.org>
+Subject: [PATCH 7.0 070/201] media: i2c: ov08d10: fix runtime PM handling in probe
+Date: Fri, 15 May 2026 17:48:08 +0200
+Message-ID: <20260515154700.049422769@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,65 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthias Fend <matthias.fend@emfend.at>
 
-commit 5d150fa0f16096d736bd24d13e04495da5116fab upstream.
+commit 35c7046be2be5e60be8128facb359a47f39e99cd upstream.
 
-The current settings for the "image vertical start" register appear to be
-incorrect. While this only results in an incorrect start line for native
-modes, this faulty setting causes actual problems in binning mode. At least
-on an i.MX8MP test system, only corrupted frames could be received.
-To correct this, the recommended settings from the reference register sets
-are used for all modes. Since this shifts the start by one line, the Bayer
-pattern also changes, which has also been corrected.
+Set the device's runtime PM status and enable runtime PM before registering
+the async sub-device. This is needed to avoid the case where the device is
+runtime PM resumed while runtime PM has not been enabled yet.
+
+Remove the related, non-driver-specific comment while at it.
 
 Fixes: 7be91e02ed57 ("media: i2c: Add ov08d10 camera sensor driver")
 Cc: stable@vger.kernel.org
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Matthias Fend <matthias.fend@emfend.at>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov08d10.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/media/i2c/ov08d10.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 --- a/drivers/media/i2c/ov08d10.c
 +++ b/drivers/media/i2c/ov08d10.c
-@@ -217,7 +217,7 @@ static const struct ov08d10_reg lane_2_m
- 	{0x9a, 0x30},
- 	{0xa8, 0x02},
- 	{0xfd, 0x02},
--	{0xa1, 0x01},
-+	{0xa1, 0x00},
- 	{0xa2, 0x09},
- 	{0xa3, 0x9c},
- 	{0xa5, 0x00},
-@@ -335,7 +335,7 @@ static const struct ov08d10_reg lane_2_m
- 	{0x9a, 0x30},
- 	{0xa8, 0x02},
- 	{0xfd, 0x02},
--	{0xa1, 0x09},
-+	{0xa1, 0x08},
- 	{0xa2, 0x09},
- 	{0xa3, 0x90},
- 	{0xa5, 0x08},
-@@ -467,7 +467,7 @@ static const struct ov08d10_reg lane_2_m
- 	{0xaa, 0xd0},
- 	{0xab, 0x06},
- 	{0xac, 0x68},
--	{0xa1, 0x09},
-+	{0xa1, 0x04},
- 	{0xa2, 0x04},
- 	{0xa3, 0xc8},
- 	{0xa5, 0x04},
-@@ -613,8 +613,8 @@ static const struct ov08d10_lane_cfg lan
- static u32 ov08d10_get_format_code(struct ov08d10 *ov08d10)
- {
- 	static const u32 codes[2][2] = {
--		{ MEDIA_BUS_FMT_SGRBG10_1X10, MEDIA_BUS_FMT_SRGGB10_1X10},
--		{ MEDIA_BUS_FMT_SBGGR10_1X10, MEDIA_BUS_FMT_SGBRG10_1X10},
-+		{ MEDIA_BUS_FMT_SBGGR10_1X10, MEDIA_BUS_FMT_SGBRG10_1X10 },
-+		{ MEDIA_BUS_FMT_SGRBG10_1X10, MEDIA_BUS_FMT_SRGGB10_1X10 },
- 	};
+@@ -1430,6 +1430,9 @@ static int ov08d10_probe(struct i2c_clie
+ 		goto probe_error_v4l2_ctrl_handler_free;
+ 	}
  
- 	return codes[ov08d10->vflip->val][ov08d10->hflip->val];
++	pm_runtime_set_active(ov08d10->dev);
++	pm_runtime_enable(ov08d10->dev);
++
+ 	ret = v4l2_async_register_subdev_sensor(&ov08d10->sd);
+ 	if (ret < 0) {
+ 		dev_err(ov08d10->dev, "failed to register V4L2 subdev: %d",
+@@ -1437,17 +1440,13 @@ static int ov08d10_probe(struct i2c_clie
+ 		goto probe_error_media_entity_cleanup;
+ 	}
+ 
+-	/*
+-	 * Device is already turned on by i2c-core with ACPI domain PM.
+-	 * Enable runtime PM and turn off the device.
+-	 */
+-	pm_runtime_set_active(ov08d10->dev);
+-	pm_runtime_enable(ov08d10->dev);
+ 	pm_runtime_idle(ov08d10->dev);
+ 
+ 	return 0;
+ 
+ probe_error_media_entity_cleanup:
++	pm_runtime_disable(ov08d10->dev);
++	pm_runtime_set_suspended(ov08d10->dev);
+ 	media_entity_cleanup(&ov08d10->sd.entity);
+ 
+ probe_error_v4l2_ctrl_handler_free:
 
 
