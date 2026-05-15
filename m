@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31664BCAD9;
-	Fri, 15 May 2026 16:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409A03FBB53;
+	Fri, 15 May 2026 16:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861762; cv=none; b=TfKHUm5OWc9eTnjM3pV4+2cISLRbjzEnF5qLyIMnwDIueEx+8qWMgCj7Q1PAqS8ahfUXhHpc7eSsJ8UVNWUjNyxo1wPKtwl7QiKnlaSu6OB4uU+N+J/b5YjY2lcogx+06b+wnOru+ESnYwwvkUoyUc6AUr0k92+3WzH/zNZcpSE=
+	t=1778861765; cv=none; b=oZrLfUIYEL89130CJnaWfdjfBPOJKKe9mltf0UBZ6lNGC5SkMjXC0yRQe2d9h8YZY+5rEuGamXA6AzWJY0G5uN3rvT4OynqCm5vTYOwYEJA8UjJkXtCPkobzezRV+FcFM5wpcwdRRs7Iv2t6Ojo3dPNZ0XNaOI54mUYHXrR46LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861762; c=relaxed/simple;
-	bh=TJyDG1OIWqifD9naWXdvyQjlJw5vaLqv41YEctncu8E=;
+	s=arc-20240116; t=1778861765; c=relaxed/simple;
+	bh=fnfGsauvpqQD1/PqwjE84FGuhDOOAGpCYN2TtKfW4x4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bBc+OKtsWSPP27LprCtvwKPxkRJkGEStw4bThVUDDU2npMW2aF/yKdy/L50+smPe98hlseDMLvJm1bmlABBTxKd1mOcR0n9rbkcuFz4avur5kN8JbYa/18Vj5Jop0fdNg3v7HtB5A/OqTpmIh6RkC0gXCpV07ZRGt7AbK5hXV8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U85NrnEQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FUHAqVg+Im7XIHP9DBOVhXd97ebemmoZgUmdf/QnKBFniy6lg8YoMqv43PgwWVgOchS0HIuFKd+JXUcTa6TEsherRruQwHMaYu2hHPNk3YhaKM0rA6I1SmHeofzAZcthhRafNMlbE/gnRvgfAjV6xtdto5WD8qkWbnopqdYCNp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7Am80nI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U85NrnEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18746C2BCB0;
-	Fri, 15 May 2026 16:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7Am80nI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D6DC2BCB0;
+	Fri, 15 May 2026 16:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861762;
-	bh=TJyDG1OIWqifD9naWXdvyQjlJw5vaLqv41YEctncu8E=;
+	s=korg; t=1778861765;
+	bh=fnfGsauvpqQD1/PqwjE84FGuhDOOAGpCYN2TtKfW4x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U85NrnEQqGn9XU/ZEIU3a1m5FqkdP0BvqxxXh/1imEAnW+C+jaFZFJellrFWVo6IG
-	 laqc1fES31ez+4EKiAuH4SUfBqjM4o4J33P10ZcD1R4tHTjOisL8VPggZPvu4tksw/
-	 jHHoybgrrElulIrjj61kJ8Bse/qBvVy40EeZ2B6c=
+	b=A7Am80nIlqi/4U2iu4/2tJXKwjUCt3noX3KJVcaRmjcbDJfoWTuQ5oT5DKRDu63dT
+	 so576SGGr/dEpx4yluMO4xX7QxEYyveUFugrgkY8RzOLiQqhJ6I+De3h6QYbRTCedo
+	 35pfeLKAxs0XmFYDHYMKEFPrivH1/wIjf9gFHLUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 426/474] spi: sun4i: fix controller deregistration
-Date: Fri, 15 May 2026 17:48:55 +0200
-Message-ID: <20260515154724.284735871@linuxfoundation.org>
+	munan Huang <munanevil@gmail.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.6 453/474] ksmbd: fix use-after-free in __ksmbd_close_fd() via durable scavenger
+Date: Fri, 15 May 2026 17:49:22 +0200
+Message-ID: <20260515154724.894928968@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,51 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 42108a2f03e0fdeabe9d02d085bdb058baa1189f ]
+commit 235e32320a470fcd3998fb3774f2290a0eb302a1 upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+When a durable file handle survives session disconnect (TCP close without
+SMB2_LOGOFF), session_fd_check() sets fp->conn = NULL to preserve the
+handle for later reconnection. However, it did not clean up the byte-range
+locks on fp->lock_list.
 
-Fixes: b5f6517948cc ("spi: sunxi: Add Allwinner A10 SPI controller driver")
-Cc: stable@vger.kernel.org	# 3.15
-Cc: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-19-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Later, when the durable scavenger thread times out and calls
+__ksmbd_close_fd(NULL, fp), the lock cleanup loop did:
+
+    spin_lock(&fp->conn->llist_lock);
+
+This caused a slab use-after-free because fp->conn was NULL and the
+original connection object had already been freed by
+ksmbd_tcp_disconnect().
+
+The root cause is asymmetric cleanup: lock entries (smb_lock->clist) were
+left dangling on the freed conn->lock_list while fp->conn was nulled out.
+
+To fix this issue properly, we need to handle the lifetime of
+smb_lock->clist across three paths:
+ - Safely skip clist deletion when list is empty and fp->conn is NULL.
+ - Remove the lock from the old connection's lock_list in
+   session_fd_check()
+ - Re-add the lock to the new connection's lock_list in
+   ksmbd_reopen_durable_fd().
+
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Co-developed-by: munan Huang <munanevil@gmail.com>
+Signed-off-by: munan Huang <munanevil@gmail.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Minor context conflict resolved. ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-sun4i.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/smb/server/vfs_cache.c |   40 ++++++++++++++++++++++++++++++----------
+ 1 file changed, 30 insertions(+), 10 deletions(-)
 
---- a/drivers/spi/spi-sun4i.c
-+++ b/drivers/spi/spi-sun4i.c
-@@ -503,7 +503,7 @@ static int sun4i_spi_probe(struct platfo
- 	pm_runtime_enable(&pdev->dev);
- 	pm_runtime_idle(&pdev->dev);
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -356,9 +356,11 @@ static void __ksmbd_close_fd(struct ksmb
+ 	 * there are not accesses to fp->lock_list.
+ 	 */
+ 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
+-		spin_lock(&fp->conn->llist_lock);
+-		list_del(&smb_lock->clist);
+-		spin_unlock(&fp->conn->llist_lock);
++		if (!list_empty(&smb_lock->clist) && fp->conn) {
++			spin_lock(&fp->conn->llist_lock);
++			list_del(&smb_lock->clist);
++			spin_unlock(&fp->conn->llist_lock);
++		}
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret) {
- 		dev_err(&pdev->dev, "cannot register SPI host\n");
- 		goto err_pm_disable;
-@@ -521,7 +521,15 @@ err_free_host:
+ 		list_del(&smb_lock->flist);
+ 		locks_free_lock(smb_lock->fl);
+@@ -755,6 +757,7 @@ static bool session_fd_check(struct ksmb
+ 	struct ksmbd_inode *ci;
+ 	struct oplock_info *op;
+ 	struct ksmbd_conn *conn;
++	struct ksmbd_lock *smb_lock, *tmp_lock;
  
- static void sun4i_spi_remove(struct platform_device *pdev)
+ 	if (!is_reconnectable(fp))
+ 		return false;
+@@ -771,6 +774,12 @@ static bool session_fd_check(struct ksmb
+ 	}
+ 	up_write(&ci->m_lock);
+ 
++	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
++		spin_lock(&fp->conn->llist_lock);
++		list_del_init(&smb_lock->clist);
++		spin_unlock(&fp->conn->llist_lock);
++	}
++
+ 	fp->conn = NULL;
+ 	fp->tcon = NULL;
+ 	fp->volatile_id = KSMBD_NO_FID;
+@@ -844,6 +853,9 @@ int ksmbd_reopen_durable_fd(struct ksmbd
  {
-+	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct ksmbd_inode *ci;
+ 	struct oplock_info *op;
++	struct ksmbd_conn *conn = work->conn;
++	struct ksmbd_lock *smb_lock;
++	unsigned int old_f_state;
+ 
+ 	if (!fp->is_durable || fp->conn || fp->tcon) {
+ 		pr_err("Invalid durable fd [%p:%p]\n", fp->conn, fp->tcon);
+@@ -855,9 +867,23 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 		return -EBADF;
+ 	}
+ 
+-	fp->conn = work->conn;
++	old_f_state = fp->f_state;
++	fp->f_state = FP_NEW;
++	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
++	if (!has_file_id(fp->volatile_id)) {
++		fp->f_state = old_f_state;
++		return -EBADF;
++	}
 +
-+	spi_controller_get(host);
++	fp->conn = conn;
+ 	fp->tcon = work->tcon;
+ 
++	list_for_each_entry(smb_lock, &fp->lock_list, flist) {
++		spin_lock(&conn->llist_lock);
++		list_add_tail(&smb_lock->clist, &conn->lock_list);
++		spin_unlock(&conn->llist_lock);
++	}
 +
-+	spi_unregister_controller(host);
-+
- 	pm_runtime_force_suspend(&pdev->dev);
-+
-+	spi_controller_put(host);
+ 	ci = fp->f_ci;
+ 	down_write(&ci->m_lock);
+ 	list_for_each_entry_rcu(op, &ci->m_op_list, op_entry) {
+@@ -868,12 +894,6 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 	}
+ 	up_write(&ci->m_lock);
+ 
+-	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
+-	if (!has_file_id(fp->volatile_id)) {
+-		fp->conn = NULL;
+-		fp->tcon = NULL;
+-		return -EBADF;
+-	}
+ 	return 0;
  }
  
- static const struct of_device_id sun4i_spi_match[] = {
 
 
