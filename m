@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163CD3E5EEA;
-	Fri, 15 May 2026 16:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9347C374722;
+	Fri, 15 May 2026 16:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861473; cv=none; b=Xs6mKHwh0SXEee0QI+fG0uGhSN8TzC+f8MlCuW1VyPEUGseYw3GXt1uUrQyYv1bSCyBbEfT+obRx7syA5/JRKCcUh0/9KvjcI6u7YLdPsZvNbwZtpMbuNibtfRRhF41y5zcM4XdHpBWpTQv7qLMVDm+PiDQuUFBLa2TM2pO4Km8=
+	t=1778861475; cv=none; b=Ui3gGYXIwzkS0WtZqjBvfTmYLtmttgv9tgp1DLUIkmelX2rN9gcrXd/y5oFM+n8wmv7DtGeS9JtafgxiDcxikh8i/RbK+mtBdBOJ0ErkyaPJVgUfEwKl9+8ueDY/g1RWaFFgmKLIV6HzK9EwobGvpXulbT1Sy64jZu4vuz4OBMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861473; c=relaxed/simple;
-	bh=o3i18aSTjtTDaKIeee7OyBnk6ArKDdT/5u7rS8oqTHg=;
+	s=arc-20240116; t=1778861475; c=relaxed/simple;
+	bh=/3ZamfzBiJick07J7vI4TLjtXuYrOF+G0FD65QzTIFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Llw99qDucU81MNg1OmLoTAZO1J1PU6FgWgwe2Z2jvp+L6m8FDdp6aXLCRyvQ3N3y2vkxzF1cXPbrHkJE8h1NQaoZtXGUOdCMlD9rKy85jppvoCR1BmgyMPPvUFR2ZDUzLvBKwOchI4l6VAMQVL6m1n3ZgEtr9DMQIT/AbYzpjxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPvRZXDu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0WCcinym6X/OuScapQOM5dS48TLhucMPsIMfZ9lX0AE3HOTkEpX6E0WIXn2DSBUkrGfZTXmtidXmCYzMAsuvYpkI+BasoapQzaX+WjUOOcc1YbbXo8bDEgou1jlahEh0pGYX5miw7m7AcCkiXzsyjVIpOSgrmh+Ds4m4DBUtfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXfnpSZQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPvRZXDu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E54C2BCB0;
-	Fri, 15 May 2026 16:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXfnpSZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290F1C2BCB0;
+	Fri, 15 May 2026 16:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861472;
-	bh=o3i18aSTjtTDaKIeee7OyBnk6ArKDdT/5u7rS8oqTHg=;
+	s=korg; t=1778861475;
+	bh=/3ZamfzBiJick07J7vI4TLjtXuYrOF+G0FD65QzTIFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BPvRZXDuTZ5T/MFjDp1ckBldFzRDB2mDl7EW76tNFAnfhjmwqjJWJBfDcFY/jy0JX
-	 BE+QXTTVY5wAsJHvlOLECCoPzWB7teN0eqR9YG0pmr4hkCYSx+aeiy8QXigU5wLn85
-	 dcTUjnAhE/Fin0XzSNNVJNn3RJ+vv+6OBn9rpCxk=
+	b=QXfnpSZQKLA1381e2rZq9NBcXzf5JGf5bvNa81xCTJVD1okyQ0/GnLU3+8H9VeJ57
+	 1TNsWRYROgc35i9Ftp8hlsmgtYTATAc3iVkPjZAUOnXFTBiwVkk8annGwsRs76Qq3J
+	 HZ2OxXtLmeYg3tafv9pE4gsq5RsLRrYUWjejkkkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <rmk+kernel@arm.linux.org.uk>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 335/474] spi: orion: fix runtime pm leak on unbind
-Date: Fri, 15 May 2026 17:47:24 +0200
-Message-ID: <20260515154722.264525826@linuxfoundation.org>
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 344/474] drm/amdgpu/vce: Prevent partial address patches
+Date: Fri, 15 May 2026 17:47:33 +0200
+Message-ID: <20260515154722.458824047@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,41 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Benjamin Cheng <benjamin.cheng@amd.com>
 
-commit 97b17dd8266d2e26d9ee3c75a0fa34ecde6944f0 upstream.
+commit de2a02cc28d6d5d37db07d00a9a684c754a5fd74 upstream.
 
-Make sure to balance the runtime PM usage count on driver unbind so that
-the controller can be suspended when a driver is rebound.
+In the case that only one of lo/hi is valid, the patching could result
+in a bad address written to in FW.
 
-Also restore the autosuspend setting.
-
-This issue was flagged by Sashiko when reviewing a controller
-deregistration fix.
-
-Fixes: 5c6786945b4e ("spi: spi-orion: add runtime PM support")
-Cc: stable@vger.kernel.org	# 3.17
-Cc: Russell King <rmk+kernel@arm.linux.org.uk>
-Link: https://sashiko.dev/#/patchset/20260414134319.978196-1-johan%40kernel.org?part=6
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421130211.1537628-2-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-orion.c |    3 +++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/spi/spi-orion.c
-+++ b/drivers/spi/spi-orion.c
-@@ -814,6 +814,9 @@ static void orion_spi_remove(struct plat
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
+@@ -654,6 +654,9 @@ static int amdgpu_vce_cs_reloc(struct am
+ 	uint64_t addr;
+ 	int r;
  
- 	spi_unregister_controller(host);
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
-+	pm_runtime_dont_use_autosuspend(&pdev->dev);
- }
++	if (lo >= ib->length_dw || hi >= ib->length_dw)
++		return -EINVAL;
++
+ 	if (index == 0xffffffff)
+ 		index = 0;
  
- MODULE_ALIAS("platform:" DRIVER_NAME);
 
 
