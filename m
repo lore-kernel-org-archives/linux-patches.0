@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC3C22FF22;
-	Fri, 15 May 2026 15:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D793FF1BE;
+	Fri, 15 May 2026 15:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860683; cv=none; b=Bh7Kb8+Y6shYTaUn2vYWJlFEfrzsCSn7+L2LoYKxvagipgDs335Ea4w6GRFwO3RsFkPMS8xtPZhtQrOpY56Pc5SgFY8G2LgaD9o0NqiLMsdAsk6fTveSunDBo7cueFD7JFK13kf3eIpG8vQs4KtOIltBvBZCAZc2WPLHf96k5x4=
+	t=1778860686; cv=none; b=G1QVfcDAeZ4fxWeowo5BYNy+ygEpB1axEmvhD2l/5rTUPHkvMG3z+kMUBKzrJBrujTuyxb2c2l+ZyZ62sT96e+a5a86jGcguPaY+raoPaNJZY3OqREypQLsDPyQMzF7PYssIP+jD0YATd2mOv5c3lENCjjxSAfmUQg7fUHEvHtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860683; c=relaxed/simple;
-	bh=xq8ZFaZjo3SPHPHxMYTBAp/ChavWx+Thhar82crnwFs=;
+	s=arc-20240116; t=1778860686; c=relaxed/simple;
+	bh=YogRWmp5DyaJmzWM7jVI+rdnR44qYZcQkNrMFpMN4yA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNZmGA+ERUhpFsA2GYVU6r3JVyaEw4+t34og+H8UumSkT+11SqGzlq3ljpOXoDGt5dfmaP/n4mOpyEIKPBwpggULwaiNHgJe29BJ48y0wm7/I5K2XkPRmxbku5u6DmN6SjOIzcG6vhMTkysTVEWz9L2sZ9O6PBeIh1o64/Q3GQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pi0UZiQR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MOmlLtLXQL5NChQBICjSwY635DsSLJRbK4oCwIzocCWX6CmrXD43DbJhfRo0PHm9T6fOoxcYXmWOF9hhRiAzma/V4de6qAM8BsN/9g8DyhHSNwvShJ+rdIV1w7uhUdsBhgM5+P4IoBTci6BIHcJIRxSzjdwlMZPVKt83b2TsiRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZJUwKT3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pi0UZiQR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763EBC2BCB0;
-	Fri, 15 May 2026 15:58:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZJUwKT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A50FC2BCB0;
+	Fri, 15 May 2026 15:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860683;
-	bh=xq8ZFaZjo3SPHPHxMYTBAp/ChavWx+Thhar82crnwFs=;
+	s=korg; t=1778860686;
+	bh=YogRWmp5DyaJmzWM7jVI+rdnR44qYZcQkNrMFpMN4yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pi0UZiQRnycRBVgUX54hl9IUW53+5vUJrEE5aRASeHXxUPafPeh8DV9hVW+H8o8zn
-	 NA7jeKiq07/Iapy2Km94Lht0qj1Tldncqy4zbvo4nuNK/Q7+uP6dKy9bUplRrdVGO2
-	 +wkyPKPKA/EUXsYGoPuYH9Nn5FSlnOULjoyluPyU=
+	b=nZJUwKT3zI83gj+5fB6hpDSPh6IjXN/SWngvlqNSMTsMX9Ofud1vmqNKHcjIW6oYp
+	 89ogky3uctIock4rkiH0C1p861TAhWgx0LtC6c0rlnuVoaraBYyEBQhIR3ry0VRwJQ
+	 lvuttnbUTGke0Yxjt3WGnp2cVxDpiCKmJHQqKB8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/474] driver core: Dont let a device probe until its ready
-Date: Fri, 15 May 2026 17:42:11 +0200
-Message-ID: <20260515154715.533782381@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 040/474] net: qrtr: ns: Fix use-after-free in driver remove()
+Date: Fri, 15 May 2026 17:42:29 +0200
+Message-ID: <20260515154715.916866275@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -54,224 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit a2225b6e834a838ae3c93709760edc0a169eb2f2 ]
+commit 7809fea20c9404bfcfa6112ec08d1fe1d3520beb upstream.
 
-The moment we link a "struct device" into the list of devices for the
-bus, it's possible probe can happen. This is because another thread
-can load the driver at any time and that can cause the device to
-probe. This has been seen in practice with a stack crawl that looks
-like this [1]:
+In the remove callback, if a packet arrives after destroy_workqueue() is
+called, but before sock_release(), the qrtr_ns_data_ready() callback will
+try to queue the work, causing use-after-free issue.
 
-  really_probe()
-  __driver_probe_device()
-  driver_probe_device()
-  __driver_attach()
-  bus_for_each_dev()
-  driver_attach()
-  bus_add_driver()
-  driver_register()
-  __platform_driver_register()
-  init_module() [some module]
-  do_one_initcall()
-  do_init_module()
-  load_module()
-  __arm64_sys_finit_module()
-  invoke_syscall()
+Fix this issue by saving the default 'sk_data_ready' callback during
+qrtr_ns_init() and use it to replace the qrtr_ns_data_ready() callback at
+the start of remove(). This ensures that even if a packet arrives after
+destroy_workqueue(), the work struct will not be dereferenced.
 
-As a result of the above, it was seen that device_links_driver_bound()
-could be called for the device before "dev->fwnode->dev" was
-assigned. This prevented __fw_devlink_pickup_dangling_consumers() from
-being called which meant that other devices waiting on our driver's
-sub-nodes were stuck deferring forever.
-
-It's believed that this problem is showing up suddenly for two
-reasons:
-1. Android has recently (last ~1 year) implemented an optimization to
-   the order it loads modules [2]. When devices opt-in to this faster
-   loading, modules are loaded one-after-the-other very quickly. This
-   is unlike how other distributions do it. The reproduction of this
-   problem has only been seen on devices that opt-in to Android's
-   "parallel module loading".
-2. Android devices typically opt-in to fw_devlink, and the most
-   noticeable issue is the NULL "dev->fwnode->dev" in
-   device_links_driver_bound(). fw_devlink is somewhat new code and
-   also not in use by all Linux devices.
-
-Even though the specific symptom where "dev->fwnode->dev" wasn't
-assigned could be fixed by moving that assignment higher in
-device_add(), other parts of device_add() (like the call to
-device_pm_add()) are also important to run before probe. Only moving
-the "dev->fwnode->dev" assignment would likely fix the current
-symptoms but lead to difficult-to-debug problems in the future.
-
-Fix the problem by preventing probe until device_add() has run far
-enough that the device is ready to probe. If somehow we end up trying
-to probe before we're allowed, __driver_probe_device() will return
--EPROBE_DEFER which will make certain the device is noticed.
-
-In the race condition that was seen with Android's faster module
-loading, we will temporarily add the device to the deferred list and
-then take it off immediately when device_add() probes the device.
-
-Instead of adding another flag to the bitfields already in "struct
-device", instead add a new "flags" field and use that. This allows us
-to freely change the bit from different thread without worrying about
-corrupting nearby bits (and means threads changing other bit won't
-corrupt us).
-
-[1] Captured on a machine running a downstream 6.6 kernel
-[2] https://cs.android.com/android/platform/superproject/main/+/main:system/core/libmodprobe/libmodprobe.cpp?q=LoadModulesParallel
+Note that it is also required to ensure that the RX threads are completed
+before destroying the workqueue, because the threads could be using the
+qrtr_ns_data_ready() callback.
 
 Cc: stable@vger.kernel.org
-Fixes: 2023c610dc54 ("Driver core: add new device to bus's list before probing")
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260406162231.v5.1.Id750b0fbcc94f23ed04b7aecabcead688d0d8c17@changeid
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260409-qrtr-fix-v3-5-00a8a5ff2b51@oss.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c    | 15 ++++++++++++++
- drivers/base/dd.c      | 20 +++++++++++++++++++
- include/linux/device.h | 44 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 79 insertions(+)
+ net/qrtr/ns.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index a7033e11e38f3..3c172e6d3fe0d 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -3680,6 +3680,21 @@ int device_add(struct device *dev)
- 		fw_devlink_link_device(dev);
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -24,6 +24,7 @@ static struct {
+ 	struct list_head lookups;
+ 	struct workqueue_struct *workqueue;
+ 	struct work_struct work;
++	void (*saved_data_ready)(struct sock *sk);
+ 	int local_node;
+ } qrtr_ns;
+ 
+@@ -706,6 +707,7 @@ int qrtr_ns_init(void)
+ 		goto err_sock;
  	}
  
-+	/*
-+	 * The moment the device was linked into the bus's "klist_devices" in
-+	 * bus_add_device() then it's possible that probe could have been
-+	 * attempted in a different thread via userspace loading a driver
-+	 * matching the device. "ready_to_probe" being unset would have
-+	 * blocked those attempts. Now that all of the above initialization has
-+	 * happened, unblock probe. If probe happens through another thread
-+	 * after this point but before bus_probe_device() runs then it's fine.
-+	 * bus_probe_device() -> device_initial_probe() -> __device_attach()
-+	 * will notice (under device_lock) that the device is already bound.
-+	 */
-+	device_lock(dev);
-+	dev_set_ready_to_probe(dev);
-+	device_unlock(dev);
-+
- 	bus_probe_device(dev);
++	qrtr_ns.saved_data_ready = qrtr_ns.sock->sk->sk_data_ready;
+ 	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns_data_ready;
  
- 	/*
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index 7e2fb159bb895..d371c3437dc6b 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -785,6 +785,26 @@ static int __driver_probe_device(struct device_driver *drv, struct device *dev)
- 	if (dev->driver)
- 		return -EBUSY;
+ 	sq.sq_port = QRTR_PORT_CTRL;
+@@ -746,6 +748,10 @@ int qrtr_ns_init(void)
+ 	return 0;
  
-+	/*
-+	 * In device_add(), the "struct device" gets linked into the subsystem's
-+	 * list of devices and broadcast to userspace (via uevent) before we're
-+	 * quite ready to probe. Those open pathways to driver probe before
-+	 * we've finished enough of device_add() to reliably support probe.
-+	 * Detect this and tell other pathways to try again later. device_add()
-+	 * itself will also try to probe immediately after setting
-+	 * "ready_to_probe".
-+	 */
-+	if (!dev_ready_to_probe(dev))
-+		return dev_err_probe(dev, -EPROBE_DEFER, "Device not ready to probe\n");
+ err_wq:
++	write_lock_bh(&qrtr_ns.sock->sk->sk_callback_lock);
++	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns.saved_data_ready;
++	write_unlock_bh(&qrtr_ns.sock->sk->sk_callback_lock);
 +
-+	/*
-+	 * Set can_match = true after calling dev_ready_to_probe(), so
-+	 * driver_deferred_probe_add() won't actually add the device to the
-+	 * deferred probe list when dev_ready_to_probe() returns false.
-+	 *
-+	 * When dev_ready_to_probe() returns false, it means that device_add()
-+	 * will do another probe() attempt for us.
-+	 */
- 	dev->can_match = true;
- 	pr_debug("bus: '%s': %s: matched device %s with driver %s\n",
- 		 drv->bus->name, __func__, dev_name(dev), drv->name);
-diff --git a/include/linux/device.h b/include/linux/device.h
-index e5f1a773dc547..34a327f5797c7 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -602,6 +602,21 @@ struct device_physical_location {
- 	bool lid;
- };
+ 	destroy_workqueue(qrtr_ns.workqueue);
+ err_sock:
+ 	sock_release(qrtr_ns.sock);
+@@ -755,7 +761,12 @@ EXPORT_SYMBOL_GPL(qrtr_ns_init);
  
-+/**
-+ * enum struct_device_flags - Flags in struct device
-+ *
-+ * Each flag should have a set of accessor functions created via
-+ * __create_dev_flag_accessors() for each access.
-+ *
-+ * @DEV_FLAG_READY_TO_PROBE: If set then device_add() has finished enough
-+ *		initialization that probe could be called.
-+ */
-+enum struct_device_flags {
-+	DEV_FLAG_READY_TO_PROBE = 0,
+ void qrtr_ns_remove(void)
+ {
++	write_lock_bh(&qrtr_ns.sock->sk->sk_callback_lock);
++	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns.saved_data_ready;
++	write_unlock_bh(&qrtr_ns.sock->sk->sk_callback_lock);
 +
-+	DEV_FLAG_COUNT
-+};
-+
- /**
-  * struct device - The basic device structure
-  * @parent:	The device's "parent" device, the device to which it is attached.
-@@ -693,6 +708,7 @@ struct device_physical_location {
-  *		and optionall (if the coherent mask is large enough) also
-  *		for dma allocations.  This flag is managed by the dma ops
-  *		instance from ->dma_supported.
-+ * @flags:	DEV_FLAG_XXX flags. Use atomic bitfield operations to modify.
-  *
-  * At the lowest level, every device in a Linux system is represented by an
-  * instance of struct device. The device structure contains the information
-@@ -805,8 +821,36 @@ struct device {
- #ifdef CONFIG_DMA_OPS_BYPASS
- 	bool			dma_ops_bypass : 1;
- #endif
-+
-+	DECLARE_BITMAP(flags, DEV_FLAG_COUNT);
- };
+ 	cancel_work_sync(&qrtr_ns.work);
++	synchronize_net();
+ 	destroy_workqueue(qrtr_ns.workqueue);
  
-+#define __create_dev_flag_accessors(accessor_name, flag_name) \
-+static inline bool dev_##accessor_name(const struct device *dev) \
-+{ \
-+	return test_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_set_##accessor_name(struct device *dev) \
-+{ \
-+	set_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_clear_##accessor_name(struct device *dev) \
-+{ \
-+	clear_bit(flag_name, dev->flags); \
-+} \
-+static inline void dev_assign_##accessor_name(struct device *dev, bool value) \
-+{ \
-+	assign_bit(flag_name, dev->flags, value); \
-+} \
-+static inline bool dev_test_and_set_##accessor_name(struct device *dev) \
-+{ \
-+	return test_and_set_bit(flag_name, dev->flags); \
-+}
-+
-+__create_dev_flag_accessors(ready_to_probe, DEV_FLAG_READY_TO_PROBE);
-+
-+#undef __create_dev_flag_accessors
-+
- /**
-  * struct device_link - Device link representation.
-  * @supplier: The device on the supplier end of the link.
--- 
-2.53.0
-
+ 	/* sock_release() expects the two references that were put during
 
 
