@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AFD3F926E;
-	Fri, 15 May 2026 16:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB193FBB4D;
+	Fri, 15 May 2026 16:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862168; cv=none; b=eJfuskleN+RDBx6CGwOw6Gma4w3SM0yBjUUqVFfa95B3HSSCh0WDaqVue5qmJZQ56a5m+jSA3j0vWR52Mq+++oQmRJ53XhVNc4Iehrb+NLr+CRmU3AGSWV24LZ9u6GRFfpSoBZoVuZmHECHRwQsoc8x/GM41qeAYK9hbWq5wpKY=
+	t=1778862170; cv=none; b=M2oMk6fLDRF2EhbwClvZazGz5NSzA/aJALkby3t+Jp/Mr//R2SinWfvcYM56yzJTnMGzt3F+1Je51ggZCbUBz7nySu3ZpeMK3N2iguc0VLIw9rWyri0ihSUD2/wnNfhLYZ7R0sr5TeHD7ddQG8WU5dv5VnP2vHM3/62YSq8eLvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862168; c=relaxed/simple;
-	bh=YsrxYZMRXPK+Ryn6yjo63W42sg/TzEfumVi/hqHyxsY=;
+	s=arc-20240116; t=1778862170; c=relaxed/simple;
+	bh=mzMMfAactXXrpZ95RxdpijML86SmkTTlkhvJBt7ZFns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSWVIR6JSJajBgeFEYYE1KI+zGQbd42k0QDFKu1lsjeTtSwrtYlNB/WtB7OqERVDfeYVRIsKhNi/TWlwCP/xMIoDECzz76savcNUZM1XBy6viCJCWFy5PcLranxdL7Ne6rZUnluzVrO7L+s5ZhtuwnunswxSwP6zVy1gW8Q+fjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6MIZ1qG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OtyWi5RGJ443T/mxbJrF0M2RkqJKLgb0CQoT+X8bDY578qmq43uU2S+ROEOHCCxNRn8jbWLmDvc/umJrZmwH0JAvd23PT9+bXd/gV2fea2gUxkiMLpC4wcJFqMutAm8KkARFizYLxyImnV3ZwyTBiifCUzpczjXsfqAn+Ah9E9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBbHeqCG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6MIZ1qG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7611BC2BCB0;
-	Fri, 15 May 2026 16:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBbHeqCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2DBC2BCB0;
+	Fri, 15 May 2026 16:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862167;
-	bh=YsrxYZMRXPK+Ryn6yjo63W42sg/TzEfumVi/hqHyxsY=;
+	s=korg; t=1778862170;
+	bh=mzMMfAactXXrpZ95RxdpijML86SmkTTlkhvJBt7ZFns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w6MIZ1qGE6zeSm5ESWuaJAg/TfQVQl1yef2IMoC8yTyzCZjqd8c4yHlo9IuyUY/iu
-	 PzXaGp/ToLcEAS/DAg97oH2y6IZNlenSlzvZRkiZyug9oJjNvAKb4vEy6QUYVMIOzK
-	 57Zv+oJylX7Z9o7+NxWuVZIrP1FuWOThpZhLxof8=
+	b=ZBbHeqCGk2yohtF30t7G6P+B8i0bJaly+vWP7DhANclmgPGXKuv8Rx08JHZXJPf8Y
+	 1FAsxSFc3q4yqU2odqEpVmDWovJsyOKmIXiBSf2DWR17fQnv37Q0xNVLYJp/+h/p9L
+	 Dldn5+onnu+qDizbqE70tZFnEuyIkYWX9v/0CyHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Andrew Davis <afd@ti.com>,
-	Bryan Brattlof <bb@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>
-Subject: [PATCH 6.18 134/188] arm64: dts: ti: k3-am62a7-sk: Fix pin name in comment from M19 to N22
-Date: Fri, 15 May 2026 17:49:11 +0200
-Message-ID: <20260515154700.236594780@linuxfoundation.org>
+	Ben Morris <bmorris@anthropic.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 135/188] sctp: revalidate list cursor after sctp_sendmsg_to_asoc() in SCTP_SENDALL
+Date: Fri, 15 May 2026 17:49:12 +0200
+Message-ID: <20260515154700.257584104@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -52,35 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Ben Morris <bmorris@anthropic.com>
 
-commit 6ee0792d83d5c690205c350825a4c30746c0e0a2 upstream.
+commit abb5f36771cc4c05899b34000829a787572a8817 upstream.
 
-The pin for GPMC0_CLK.GPIO0_31 at address 0x000F407C is N22 and not M19.
-Hence, fix the pin name in the comment to avoid confusion.
+The SCTP_SENDALL path in sctp_sendmsg() iterates ep->asocs with
+list_for_each_entry_safe(), which caches the next entry in @tmp before
+the loop body runs.  The body calls sctp_sendmsg_to_asoc(), which may
+drop the socket lock inside sctp_wait_for_sndbuf().
 
-Fixes: 8f023012eb4a ("arm64: dts: ti: k3-am62a: Enable UHS mode support for SD cards")
+While the lock is dropped, another thread can SCTP_SOCKOPT_PEELOFF the
+association cached in @tmp, migrating it to a new endpoint via
+sctp_sock_migrate() (list_del_init() + list_add_tail() to
+newep->asocs), and optionally close the new socket which frees the
+association via kfree_rcu().  The cached @tmp can also be freed by a
+network ABORT for that association, processed in softirq while the
+lock is dropped.
+
+sctp_wait_for_sndbuf() revalidates @asoc (the current entry) on re-lock
+via the "sk != asoc->base.sk" and "asoc->base.dead" checks, but nothing
+revalidates @tmp.  After a successful return, the iterator advances to
+the stale @tmp, yielding either a use-after-free (if the peeled socket
+was closed) or a list-walk onto the new endpoint's list head (type
+confusion of &newep->asocs as a struct sctp_association *).
+
+Both are reachable from CapEff=0; the type-confusion path gives
+controlled indirect call via the outqueue.sched->init_sid pointer.
+
+Fix by re-deriving @tmp from @asoc after sctp_sendmsg_to_asoc()
+returns.  @asoc is known to still be on ep->asocs at that point: the
+only callers that list_del an association from ep->asocs are
+sctp_association_free() (which sets asoc->base.dead) and
+sctp_assoc_migrate() (which changes asoc->base.sk), and
+sctp_wait_for_sndbuf() checks both under the lock before any
+successful return; a tripped check propagates as err < 0 and the loop
+bails before the re-derive.
+
+The SCTP_ABORT path in sctp_sendmsg_check_sflags() returns 0 and the
+loop hits 'continue' before sctp_sendmsg_to_asoc() is ever called, so
+the @tmp cached by list_for_each_entry_safe() still covers the
+lock-held free that ba59fb027307 ("sctp: walk the list of asoc
+safely") was added for.
+
+Fixes: 4910280503f3 ("sctp: add support for snd flag SCTP_SENDALL process in sendmsg")
 Cc: stable@vger.kernel.org
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Andrew Davis <afd@ti.com>
-Reviewed-by: Bryan Brattlof <bb@ti.com>
-Link: https://patch.msgid.link/20260309045539.2070793-1-s-vadapalli@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Signed-off-by: Ben Morris <bmorris@anthropic.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260508001455.3137-1-joycathacker@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62a7-sk.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/socket.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-@@ -394,7 +394,7 @@
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -1985,6 +1985,15 @@ static int sctp_sendmsg(struct sock *sk,
+ 				goto out_unlock;
  
- 	vddshv_sdio_pins_default: vddshv-sdio-default-pins {
- 		pinctrl-single,pins = <
--			AM62AX_IOPAD(0x07c, PIN_OUTPUT, 7) /* (M19) GPMC0_CLK.GPIO0_31 */
-+			AM62AX_IOPAD(0x07c, PIN_OUTPUT, 7) /* (N22) GPMC0_CLK.GPIO0_31 */
- 		>;
- 	};
+ 			iov_iter_revert(&msg->msg_iter, err);
++
++			/* sctp_sendmsg_to_asoc() may have released the socket
++			 * lock (sctp_wait_for_sndbuf), during which other
++			 * associations on ep->asocs could have been peeled
++			 * off or freed.  @asoc itself is revalidated by the
++			 * base.dead and base.sk checks in sctp_wait_for_sndbuf,
++			 * so re-derive the cached cursor from it.
++			 */
++			tmp = list_next_entry(asoc, asocs);
+ 		}
  
+ 		goto out_unlock;
 
 
