@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350B13FF1DE;
-	Fri, 15 May 2026 15:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC433FF1DA;
+	Fri, 15 May 2026 15:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860281; cv=none; b=RElZ9M8ci4NLMiiN93kl/PUr0xfrXtzS6Nhr5tFxa2lpa8pROyUN7RauMym0DprK8P7vj+B8Obd5lsekh3VgNo8ZVIY5NtGkqFLj8bkVjd4e/25rsEBbAWbChHqpHhBGXNH8DgP9LqCNxqeXyEdAB8Z9TikMjGEF51qXw6AJpHs=
+	t=1778860283; cv=none; b=XgV5aigtbn254vKGE4CHOhomIFY9IuRFdypSzqhBTyOEwkQ0si0d4nBQcNn5MBu9/HZVPMjOcv031WJMPl16Bj7g9xlwJ/Dk0FYc7t9C6BMhnL0qr+YY/YBBDdZJ7C7v/9+WXq2K7bqQPNjclviKaElrAnnOltQ0JZsgYQCiYkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860281; c=relaxed/simple;
-	bh=WjafgHJW0zut6JgazDykr9ewT6VKrROIq5Nc0MSY4Ts=;
+	s=arc-20240116; t=1778860283; c=relaxed/simple;
+	bh=5HCZF10zD2sFI/Exk5w3QK6uT/fbjpJ6kI5xNnOJ6Gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jm8cAbYHUaYUlJ7dllE8486FUXiXoxIoaKl6YeKjV8b4VF0wESSLpXyOii88vQlMk/+Dy5+1qY5mUAi3N7kwPpjDeW3lsqqizIqZH+0mf9l4t8CR8PZztr1CE95uLCQ2TPjUQmgbK1rZ1c2fUa0bc+bpU0y4XUcMb149xE1Hqqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K74Xw0vX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uICzDKFdBN0UcVM/gdaYfaajSUPL2GFIL9cbVUolmapxvHRmfoTlRRAWHwoiG2u4KW0kqEHjiu64vxWDCqUkdl9knUh6TOGT8Zhla8O6RlBx9x7Sbh7G5cXcW92CBsPtjKRFkj8zLxIDfI59aiiHgeiMj2CQjKoh+R8qPTwTEUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0iyCv4V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K74Xw0vX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3B1C2BCB0;
-	Fri, 15 May 2026 15:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0iyCv4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5669DC2BCB0;
+	Fri, 15 May 2026 15:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860281;
-	bh=WjafgHJW0zut6JgazDykr9ewT6VKrROIq5Nc0MSY4Ts=;
+	s=korg; t=1778860283;
+	bh=5HCZF10zD2sFI/Exk5w3QK6uT/fbjpJ6kI5xNnOJ6Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K74Xw0vXwubCUhgq8vLe3B7js2J1qC8U59030GhQlGQf+wk8dMNzHJtndQbU7qbn1
-	 W0EM1N1JGZQA07MWJyuYsoJ0p5k/IKjrJ/IDeFenXIltsM0W3Z/qv5/7MPf4P/F8o2
-	 WLp/g2Fy1y3/ElDwCMxJGS+EGfZLJyIq8FnZUeJI=
+	b=C0iyCv4VQb7SBizSW6E18849/2JNb/iCSyGd/gSgcRT89UevFYvLv837xwlTzdGA7
+	 Vk/5tZKDkyu0VoL72x2ggREbq2HD6YbPcO9sk4QU5Isd7axmUCauyHn3lqANE2YF2k
+	 APA5ODhocfw4wawQEuJHbeyTIhsz078ptq2mhUoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 029/144] spi: aspeed-smc: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:35 +0200
-Message-ID: <20260515154654.184157578@linuxfoundation.org>
+	"Artem S. Tashkinov" <aros@gmx.com>,
+	Krishna Chomal <krishna.chomal108@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.12 030/144] platform/x86: hp-wmi: Ignore backlight and FnLock events
+Date: Fri, 15 May 2026 17:47:36 +0200
+Message-ID: <20260515154654.208844583@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -52,55 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Krishna Chomal <krishna.chomal108@gmail.com>
 
-commit 1044e5a4ccd57bf5a64f90100a321b498e0267a2 upstream.
+commit e8c597368b8500a824c639bfb5ed0044068c6870 upstream.
 
-Make sure to deregister the controller before disabling it to allow
-SPI device drivers to do I/O during deregistration.
+On HP OmniBook 7 the keyboard backlight and FnLock keys are handled
+directly by the firmware. However, they still trigger WMI events which
+results in "Unknown key code" warnings in dmesg.
 
-Fixes: e3228ed92893 ("spi: spi-mem: Convert Aspeed SMC driver to spi-mem")
-Cc: stable@vger.kernel.org	# 5.19
-Cc: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260409120419.388546-3-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Add these key codes to the keymap with KE_IGNORE to silence the warnings
+since no software action is needed.
+
+Tested-by: Artem S. Tashkinov <aros@gmx.com>
+Reported-by: Artem S. Tashkinov <aros@gmx.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221181
+Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
+Link: https://patch.msgid.link/20260403080155.169653-1-krishna.chomal108@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-aspeed-smc.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/spi/spi-aspeed-smc.c
-+++ b/drivers/spi/spi-aspeed-smc.c
-@@ -733,7 +733,7 @@ static int aspeed_spi_probe(struct platf
- 		return -ENOMEM;
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -261,6 +261,11 @@ static const struct key_entry hp_wmi_key
+ 	{ KE_KEY, 0x21a9,  { KEY_TOUCHPAD_OFF } },
+ 	{ KE_KEY, 0x121a9, { KEY_TOUCHPAD_ON } },
+ 	{ KE_KEY, 0x231b,  { KEY_HELP } },
++	{ KE_IGNORE, 0x21ab, }, /* FnLock on */
++	{ KE_IGNORE, 0x121ab, }, /* FnLock off */
++	{ KE_IGNORE, 0x30021aa, }, /* kbd backlight: level 2 -> off */
++	{ KE_IGNORE, 0x33221aa, }, /* kbd backlight: off -> level 1 */
++	{ KE_IGNORE, 0x36421aa, }, /* kbd backlight: level 1 -> level 2*/
+ 	{ KE_END, 0 }
+ };
  
- 	aspi = spi_controller_get_devdata(ctlr);
--	platform_set_drvdata(pdev, aspi);
-+	platform_set_drvdata(pdev, ctlr);
- 	aspi->data = data;
- 	aspi->dev = dev;
- 
-@@ -772,7 +772,7 @@ static int aspeed_spi_probe(struct platf
- 	ctlr->num_chipselect = data->max_cs;
- 	ctlr->dev.of_node = dev->of_node;
- 
--	ret = devm_spi_register_controller(dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	if (ret)
- 		dev_err(&pdev->dev, "spi_register_controller failed\n");
- 
-@@ -781,7 +781,10 @@ static int aspeed_spi_probe(struct platf
- 
- static void aspeed_spi_remove(struct platform_device *pdev)
- {
--	struct aspeed_spi *aspi = platform_get_drvdata(pdev);
-+	struct spi_controller *ctlr = platform_get_drvdata(pdev);
-+	struct aspeed_spi *aspi = spi_controller_get_devdata(ctlr);
-+
-+	spi_unregister_controller(ctlr);
- 
- 	aspeed_spi_enable(aspi, false);
- }
 
 
