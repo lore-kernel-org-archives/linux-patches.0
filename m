@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5261F3E0092;
-	Fri, 15 May 2026 16:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83A63E0092;
+	Fri, 15 May 2026 16:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862521; cv=none; b=ZmfKyDa/yiAFaH5n7gSlC+agBM59EhLN8np8AUgKa0NySgBDSwB1rUHJ3f2DOB5GbFJdwJjlbxSgWHDY3M4p+SYXL0y1vyZS1dFdZ14dEpzdyCeog5DEG/BzW/1Nx20+3UNQ3Kw/9rD9c5qw0ZYW6Nf83/jdFVe9gOHRJ3JjrCE=
+	t=1778862524; cv=none; b=DGVoZj2V3erYoBfKqZsUQ46wIvykbxvvm+FayVtW2/xqRltytgJABVJKIbglbRkOK/t3IEJ1geDCzmRVQ1UfQczkm/JSox+8mcnhV0ajNX6i7jM+NZ6n9BBuj9/q5GsXmnVzl6cfypaLFNJc3RSe8X4Dj2maTU88srf21rM3g1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862521; c=relaxed/simple;
-	bh=iya9lXVba/XJk8r0KnLcoUsx8rqSvwhjtlhjvS/OgjQ=;
+	s=arc-20240116; t=1778862524; c=relaxed/simple;
+	bh=5Ydec4jVfZflJ9BMnefuWdvBDNKx6ZJKfjKbj3dC8Io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9wZGkh5F9aBWXbAeVhjPFn0QzIlKzH3aERNPvbxuOGrJUC5U1GP7G8W3xnNO5ayLoK1qLP+jRnlyi8jsUubbnTceKf+igCo0Uc2u70C8BgnO8vnJF/Ac+QdCDbdEMQC6Gon0OZs4DVll8KNMxvwLTyrIiIYQwKMO9WQRfEevtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVQ74j52; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oeMFiNatblfWwB9DpiQgQ6uQjvqRnCacGAx3X0Qb5YPj7wRXZb1vHkMXES7qAm4/kB63C9CYLk8S8W9DToluUbu3LFQlgNZlkMNA2TTmY31I/nD0zmmfs4hYkVsVERi+w0jqISQDgwc6t7cqX3hMVg8YuL1jACfh+yuhuJePzVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVT93bpj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVQ74j52"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB3BC2BCB0;
-	Fri, 15 May 2026 16:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVT93bpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D720C2BCB0;
+	Fri, 15 May 2026 16:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862521;
-	bh=iya9lXVba/XJk8r0KnLcoUsx8rqSvwhjtlhjvS/OgjQ=;
+	s=korg; t=1778862523;
+	bh=5Ydec4jVfZflJ9BMnefuWdvBDNKx6ZJKfjKbj3dC8Io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sVQ74j52Xhm7alnqGE7WW5zCwC1JF+Vu//IO+2GWPOz65MIatWS3r2+e9Z29llTWq
-	 wBUAY/RYtFJ0bWS0ILVj9GlG5M62A2WVHY9pKABTuOpmT86Y/s91wvU3QcdMW0ktJZ
-	 ZC9gB19GJMKxqDiSFQ7S8NLWYovqhXrKTNNC6Tkg=
+	b=GVT93bpjBKlHjn0gR24fbcLTv7svGHmV6/f2hwlHVbJBwHbUgRPkm/2f+jHfPlYib
+	 pmd4DqQktJi4dmZA77hgiu/ADRgzkobtsjvYs5orWg5XJca0pltHPdXlmB5AJLi2E1
+	 1oUl6s/IAu0YObmNRhJlnh2HWZU58EWSAenUeZ8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dang Huynh <dang.huynh@mainlining.org>,
-	Michael Riesch <michael.riesch@collabora.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 7.0 043/201] media: rockchip: rkcif: Add missing MUST_CONNECT flag to pads
-Date: Fri, 15 May 2026 17:47:41 +0200
-Message-ID: <20260515154659.467329201@linuxfoundation.org>
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.0 079/201] media: iris: fix use-after-free of fmt_src during MBPF check
+Date: Fri, 15 May 2026 17:48:17 +0200
+Message-ID: <20260515154700.243844154@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,73 +53,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dang Huynh <dang.huynh@mainlining.org>
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 
-commit 8e3c751259dc2d1325838eff26f41032523c7b57 upstream.
+commit 3d9593ad1a58c5acc3e5fa2a48222bb7632e6812 upstream.
 
-The pads missed checks for connected devices which may a null dereference
-when the stream is enabled.
+During concurrency testing, multiple instances can run in parallel, and
+each instance uses its own inst->lock while the core->lock protects the
+list of active instances. The race happens because these locks cover
+different scopes, inst->lock protects only the internals of a single
+instance, while the Macro Blocks Per Frame (MBPF) checker walks the
+core list under core->lock and reads fields like fmt_src->width and
+fmt_src->height. At the same time, iris_close() may free fmt_src and
+fmt_dst under inst->lock while the instance is still present in the core
+list. This allows a situation where the MBPF checker, still iterating
+through the core list, reaches an instance whose fmt_src was already
+freed by another thread and ends up dereferencing a dangling pointer,
+resulting in a use-after-free. This happens because the MBPF checker
+assumes that any instance in the core list is fully valid, but the
+freeing of fmt_src and fmt_dst without removing the instance from the
+core list is not correct.
 
-Unable to handle kernel NULL pointer dereference at virtual address
-0000000000000020
-pc : rkcif_interface_enable_streams+0x48/0xf0
-lr : rkcif_interface_enable_streams+0x44/0xf0
-Call trace:
- rkcif_interface_enable_streams+0x48/0xf0
- v4l2_subdev_enable_streams+0x26c/0x3f0
- rkcif_stream_start_streaming+0x140/0x278
- vb2_start_streaming+0x74/0x188
- vb2_core_streamon+0xe0/0x1d8
- vb2_ioctl_streamon+0x60/0xa8
- v4l_streamon+0x2c/0x40
- __video_do_ioctl+0x34c/0x400
- video_usercopy+0x2d0/0x800
- video_ioctl2+0x20/0x60
- v4l2_ioctl+0x48/0x78
+The correct ordering is to defer freeing fmt_src and fmt_dst until after
+the instance has been removed from the core list and all teardown under
+the core lock has completed, ensuring that no dangling pointers are ever
+exposed during MBPF checks.
 
-Fixes: 501802e2ad51 ("media: rockchip: rkcif: add abstraction for dma blocks")
-Fixes: 85411d17bee9 ("media: rockchip: rkcif: add abstraction for interface and crop blocks")
+Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Fixes: 5ad964ad5656 ("media: iris: Initialize and deinitialize encoder instance structure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dang Huynh <dang.huynh@mainlining.org>
-Reviewed-by: Michael Riesch <michael.riesch@collabora.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/rockchip/rkcif/rkcif-interface.c | 3 ++-
- drivers/media/platform/rockchip/rkcif/rkcif-stream.c    | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/iris/iris_vdec.c |    6 ------
+ drivers/media/platform/qcom/iris/iris_vdec.h |    1 -
+ drivers/media/platform/qcom/iris/iris_venc.c |    6 ------
+ drivers/media/platform/qcom/iris/iris_venc.h |    1 -
+ drivers/media/platform/qcom/iris/iris_vidc.c |    6 ++----
+ 5 files changed, 2 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/media/platform/rockchip/rkcif/rkcif-interface.c b/drivers/media/platform/rockchip/rkcif/rkcif-interface.c
-index 523103872b7a..414a9980cf2e 100644
---- a/drivers/media/platform/rockchip/rkcif/rkcif-interface.c
-+++ b/drivers/media/platform/rockchip/rkcif/rkcif-interface.c
-@@ -378,7 +378,8 @@ int rkcif_interface_register(struct rkcif_device *rkcif,
- 		snprintf(sd->name, sizeof(sd->name), "rkcif-mipi%d",
- 			 interface->index - RKCIF_MIPI_BASE);
+--- a/drivers/media/platform/qcom/iris/iris_vdec.c
++++ b/drivers/media/platform/qcom/iris/iris_vdec.c
+@@ -61,12 +61,6 @@ int iris_vdec_inst_init(struct iris_inst
+ 	return iris_ctrls_init(inst);
+ }
  
--	pads[RKCIF_IF_PAD_SINK].flags = MEDIA_PAD_FL_SINK;
-+	pads[RKCIF_IF_PAD_SINK].flags = MEDIA_PAD_FL_SINK |
-+					MEDIA_PAD_FL_MUST_CONNECT;
- 	pads[RKCIF_IF_PAD_SRC].flags = MEDIA_PAD_FL_SOURCE;
- 	ret = media_entity_pads_init(&sd->entity, RKCIF_IF_PAD_MAX, pads);
- 	if (ret)
-diff --git a/drivers/media/platform/rockchip/rkcif/rkcif-stream.c b/drivers/media/platform/rockchip/rkcif/rkcif-stream.c
-index f15bee4f7cd7..3130d420ad55 100644
---- a/drivers/media/platform/rockchip/rkcif/rkcif-stream.c
-+++ b/drivers/media/platform/rockchip/rkcif/rkcif-stream.c
-@@ -555,7 +555,7 @@ int rkcif_stream_register(struct rkcif_device *rkcif,
- 	vdev->vfl_dir = VFL_DIR_RX;
- 	video_set_drvdata(vdev, stream);
+-void iris_vdec_inst_deinit(struct iris_inst *inst)
+-{
+-	kfree(inst->fmt_dst);
+-	kfree(inst->fmt_src);
+-}
+-
+ static const struct iris_fmt iris_vdec_formats_cap[] = {
+ 	[IRIS_FMT_NV12] = {
+ 		.pixfmt = V4L2_PIX_FMT_NV12,
+--- a/drivers/media/platform/qcom/iris/iris_vdec.h
++++ b/drivers/media/platform/qcom/iris/iris_vdec.h
+@@ -9,7 +9,6 @@
+ struct iris_inst;
  
--	stream->pad.flags = MEDIA_PAD_FL_SINK;
-+	stream->pad.flags = MEDIA_PAD_FL_SINK | MEDIA_PAD_FL_MUST_CONNECT;
+ int iris_vdec_inst_init(struct iris_inst *inst);
+-void iris_vdec_inst_deinit(struct iris_inst *inst);
+ int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f);
+ int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f);
+ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
+--- a/drivers/media/platform/qcom/iris/iris_venc.c
++++ b/drivers/media/platform/qcom/iris/iris_venc.c
+@@ -79,12 +79,6 @@ int iris_venc_inst_init(struct iris_inst
+ 	return iris_ctrls_init(inst);
+ }
  
- 	stream->pix.height = CIF_MIN_HEIGHT;
- 	stream->pix.width = CIF_MIN_WIDTH;
--- 
-2.54.0
-
+-void iris_venc_inst_deinit(struct iris_inst *inst)
+-{
+-	kfree(inst->fmt_dst);
+-	kfree(inst->fmt_src);
+-}
+-
+ static const struct iris_fmt iris_venc_formats_cap[] = {
+ 	[IRIS_FMT_H264] = {
+ 		.pixfmt = V4L2_PIX_FMT_H264,
+--- a/drivers/media/platform/qcom/iris/iris_venc.h
++++ b/drivers/media/platform/qcom/iris/iris_venc.h
+@@ -9,7 +9,6 @@
+ struct iris_inst;
+ 
+ int iris_venc_inst_init(struct iris_inst *inst);
+-void iris_venc_inst_deinit(struct iris_inst *inst);
+ int iris_venc_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f);
+ int iris_venc_try_fmt(struct iris_inst *inst, struct v4l2_format *f);
+ int iris_venc_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
+--- a/drivers/media/platform/qcom/iris/iris_vidc.c
++++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+@@ -289,10 +289,6 @@ int iris_close(struct file *filp)
+ 	v4l2_m2m_ctx_release(inst->m2m_ctx);
+ 	v4l2_m2m_release(inst->m2m_dev);
+ 	mutex_lock(&inst->lock);
+-	if (inst->domain == DECODER)
+-		iris_vdec_inst_deinit(inst);
+-	else if (inst->domain == ENCODER)
+-		iris_venc_inst_deinit(inst);
+ 	iris_session_close(inst);
+ 	iris_inst_change_state(inst, IRIS_INST_DEINIT);
+ 	iris_v4l2_fh_deinit(inst, filp);
+@@ -304,6 +300,8 @@ int iris_close(struct file *filp)
+ 	mutex_unlock(&inst->lock);
+ 	mutex_destroy(&inst->ctx_q_lock);
+ 	mutex_destroy(&inst->lock);
++	kfree(inst->fmt_src);
++	kfree(inst->fmt_dst);
+ 	kfree(inst);
+ 
+ 	return 0;
 
 
