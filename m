@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E97481A90;
-	Fri, 15 May 2026 16:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A309B3E0094;
+	Fri, 15 May 2026 16:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861999; cv=none; b=YvSjEJXOYL0rkdG+4yxChrQprUl7jSLD84yjDq17pFQH9+Vmoshl8IyfkDfM0tpvqkeeErB44KYUdFoDmADoAYEyHKY7PW/AQtSYLKe8BVnVMgkj1MSlY5Qn8wrlhkyX082laPrMByclhimZqcnCO5f9usYo0muxvPKonHkfBeI=
+	t=1778862002; cv=none; b=PlLLlJbNGAhwoIkxSjaICoHzXeR8CvWa/X7d5GXXR6D/x1DtPh/OAiMt6Xk1Ggjr+5cdr8C4JTkqeYArHI/GktESvw4bI4chfaeue9XBpnpUdzUBMBlAUV5vSaR1wK82NDY577l4yjR449vCptqoSQe834ozzexKDD/Bp0G+dP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861999; c=relaxed/simple;
-	bh=JurM1rOrAjTNBEJGWt6Albf8JRRegE2Ktoz4Nwd2JF4=;
+	s=arc-20240116; t=1778862002; c=relaxed/simple;
+	bh=S6QoCc9UpZTTJYOurtPSMQbG6jysaGtKLaLEH5wTdGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iDkQ/51NGtrC/Wh+PhsEIdaAQzZ+/vKKeY0w/eUCgduSWBR/JPLJDciE/QvojEx94UdxqswSDyWosDa0D8nP6AtwJWV29izDPGQb+baFgeQvjFMOQQEXI4ka+33sI2JRlH5tw9C4jKOG+/+gCdzqiDasIMx/Qh3VaDDePHwusf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNxAwgdO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SOsY2OreISuzN5QGJ4ome0SYmWXVsGGa+S5341hbRxYpcafSo4RktM1GyHIx+yUu2pTTRQX7h76Z+CFIzDDg82PTGuS14vdU7fsd6u1lnDMMpwUoeJZ8WAcxjmJG+J7NtgeQxVkjCF+gH/WkvWlTL5N0TwIFfLW43hmJYvL06vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ni5jmm/y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNxAwgdO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D62C2BCB0;
-	Fri, 15 May 2026 16:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ni5jmm/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECEC5C2BCB0;
+	Fri, 15 May 2026 16:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861999;
-	bh=JurM1rOrAjTNBEJGWt6Albf8JRRegE2Ktoz4Nwd2JF4=;
+	s=korg; t=1778862002;
+	bh=S6QoCc9UpZTTJYOurtPSMQbG6jysaGtKLaLEH5wTdGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BNxAwgdOpxtB8MN6Y4nHw7Nma3kvRwrEm3L1s8ilgP87rhhNMriCPcZEJ0uEjNkpf
-	 TGuMBr0IwA/G9MwbtR8cue3vqKZCO6GRtbq72NunOsX0LzhoaaJgUKO3Y/EPetmKso
-	 nFytWK3lcMLdKTpLDPavkqORJJLcM15yMvOzEzdA=
+	b=ni5jmm/yxqvxQghxYlfVnk99dMs3OlfG9TuETKG4ssPL9jKuKZ8ZkqZoHCqPSfEhq
+	 A9nrqLJFCOgrig6uuP/XMSQQbrEs0fuv1S1vAp7q2spNAzejx8xemZ1JAW/JxHBaGG
+	 gt8avFRsLmFEdyUa43kFslZafVfZoYTzySbatgFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Sean Young <sean@mess.org>,
+	Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 026/188] media: rc: xbox_remote: heed DMA restrictions
-Date: Fri, 15 May 2026 17:47:23 +0200
-Message-ID: <20260515154657.876322254@linuxfoundation.org>
+Subject: [PATCH 6.18 017/188] media: chips-media: wave5: add missing spinlock protection for handle_dynamic_resolution_change()
+Date: Fri, 15 May 2026 17:47:14 +0200
+Message-ID: <20260515154657.680953216@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -51,61 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-commit e280d1e5e3f2595bbb43fe6e1bce00c59a43c0ff upstream.
+commit cb8bdd3ffca280d014311ab395651d33f58a8708 upstream.
 
-The buffer for IO must not be part of the device structure
-because that violates the DMA coherency rules.
+Add spin_lock_irqsave()/spin_unlock_irqrestore() around the
+handle_dynamic_resolution_change() call in initialize_sequence() to fix
+the missing lock protection.
 
-Fixes: 02d32bdad3123 ("media: rc: add driver for Xbox DVD Movie Playback Kit")
+initialize_sequence() calls handle_dynamic_resolution_change() without
+holding inst->state_spinlock. However, handle_dynamic_resolution_change()
+has lockdep_assert_held(&inst->state_spinlock) indicating that callers
+must hold this lock.
+
+Other callers of handle_dynamic_resolution_change() properly acquire the
+spinlock:
+- wave5_vpu_dec_finish_decode()
+- wave5_vpu_dec_device_run()
+
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Fixes: 9707a6254a8a6b ("media: chips-media: wave5: Add the v4l2 layer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/xbox_remote.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/rc/xbox_remote.c
-+++ b/drivers/media/rc/xbox_remote.c
-@@ -55,7 +55,7 @@ struct xbox_remote {
- 	struct usb_interface *interface;
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -1544,6 +1544,7 @@ static int initialize_sequence(struct vp
+ {
+ 	struct dec_initial_info initial_info;
+ 	int ret = 0;
++	unsigned long flags;
  
- 	struct urb *irq_urb;
--	unsigned char inbuf[DATA_BUFSIZE] __aligned(sizeof(u16));
-+	u8 *inbuf;
+ 	memset(&initial_info, 0, sizeof(struct dec_initial_info));
  
- 	char rc_name[NAME_BUFSIZE];
- 	char rc_phys[NAME_BUFSIZE];
-@@ -218,6 +218,10 @@ static int xbox_remote_probe(struct usb_
- 	if (!xbox_remote || !rc_dev)
- 		goto exit_free_dev_rdev;
+@@ -1565,7 +1566,9 @@ static int initialize_sequence(struct vp
+ 		return ret;
+ 	}
  
-+	xbox_remote->inbuf = kzalloc(DATA_BUFSIZE, GFP_KERNEL);
-+	if (!xbox_remote->inbuf)
-+		goto exit_free_inbuf;
-+
- 	/* Allocate URB buffer */
- 	xbox_remote->irq_urb = usb_alloc_urb(0, GFP_KERNEL);
- 	if (!xbox_remote->irq_urb)
-@@ -262,6 +266,8 @@ exit_kill_urbs:
- 	usb_kill_urb(xbox_remote->irq_urb);
- exit_free_buffers:
- 	usb_free_urb(xbox_remote->irq_urb);
-+exit_free_inbuf:
-+	kfree(xbox_remote->inbuf);
- exit_free_dev_rdev:
- 	rc_free_device(rc_dev);
- 	kfree(xbox_remote);
-@@ -286,6 +292,7 @@ static void xbox_remote_disconnect(struc
- 	usb_kill_urb(xbox_remote->irq_urb);
- 	rc_unregister_device(xbox_remote->rdev);
- 	usb_free_urb(xbox_remote->irq_urb);
-+	kfree(xbox_remote->inbuf);
- 	kfree(xbox_remote);
++	spin_lock_irqsave(&inst->state_spinlock, flags);
+ 	handle_dynamic_resolution_change(inst);
++	spin_unlock_irqrestore(&inst->state_spinlock, flags);
+ 
+ 	return 0;
  }
- 
 
 
