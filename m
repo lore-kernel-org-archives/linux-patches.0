@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0643E00A0;
-	Fri, 15 May 2026 16:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE74C39734B;
+	Fri, 15 May 2026 16:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861743; cv=none; b=JXcyyxJOfiDlTWtyElTGZjzdKwQo1sLCL1RXR2JxOXrqk3K9nKbnz+q6aINKHvnq9MhRpqIEpNoX1SYEVPFwOh9kw0HLcZ7HHWp303H+KtMU8gnkxJ5Dvo/01ZqRNjBnVFtRdcUDiovDGG1cnFFPNpcbBGDWt3s0nnJrS9/5cus=
+	t=1778861745; cv=none; b=Qedc+Rpf20rnrpgOmNsy087sNmXdhFfoZphtaWmisrEM44SMvx1ObuJA/twl6qmiRZ68y+zy9q0rbi7MCmazT37Bzu5vHeYd6nu3/RzBlhxhjUVkDR0lMc9nBvweAavWtqjRERQuyVl1je4k3XrJ3cA7gxguvyWHlvoRMcEtG/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861743; c=relaxed/simple;
-	bh=vRfDyZllHUjJU6Hzz+gEVLxIKjPWyO5MTzoxV/aEABs=;
+	s=arc-20240116; t=1778861745; c=relaxed/simple;
+	bh=PkpPcdJp+PW2aQUlY+VXysxftd0Zf+PUeJic4AspTJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d5knp+J/3PlqbVRequkGQQggQpSLyYLxj5uj+lyvcOR+sjtAvMnX2jfRE3kbx+RIaO0I+JtT1meM2RVpcbEvaLeSKTYuRCctP5CO7uYzOknNyOBdN8nXn/j4VjPIPGG6ghk7ky9lg0qL9i7xThIAoUxmPkg4hhEdu0E8tJY6TB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iR+oR5R0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E9zvVgx8GUrKBCFg5uY2KRDdY70AWHkwvzOXqpIcFXYqPNmpd1E9FYj17W/gaiSWfYubpx6kiQGHhV2TzNnI2CUz2DZqj27TSe+jwuNztQ0Vs3Xc967SHiuU0oebQdqpjYcGRKhGsoZ5wEEnQ06Lnu/f0DTo3VbMpjvzYl82d0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kacPf5nV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iR+oR5R0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969F3C2BCB0;
-	Fri, 15 May 2026 16:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kacPf5nV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24374C2BCFA;
+	Fri, 15 May 2026 16:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861742;
-	bh=vRfDyZllHUjJU6Hzz+gEVLxIKjPWyO5MTzoxV/aEABs=;
+	s=korg; t=1778861745;
+	bh=PkpPcdJp+PW2aQUlY+VXysxftd0Zf+PUeJic4AspTJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iR+oR5R061tgK3ekWAA3BuWYSQ9AF70HFA/1zoIScD4eAFSH+IsNixtGiN2fInpMu
-	 +Rswj4H3UgIK/C5F7A0nun9NpliDlnE0sY0MF5sk1m0uXhppHOKLcwdITNJ/BDhGnr
-	 o4dSw4QxZPs7HTiHC/RMN1HvE53+PeLrTHwqPnls=
+	b=kacPf5nVCzK/grEF5gA/2F6TnfvefS6EsXpTrwXBiNVh4/dMS8c/drop33pmbaHkJ
+	 2fVMiN2szkarr8LJz4MIFYH5QblbkTtW1aGO8FEM8+pv9Fg2SlXVzTTIYYFxazifnM
+	 Qo8ipXIp8Iin37UMHApsVpy5Cr+WlPUgFqIhvlKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Chen Zhen <chenzhen126@huawei.com>,
-	Jussi Maki <joamaki@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Yunseong Kim <yunseong.kim@est.tech>
-Subject: [PATCH 6.6 446/474] bonding: fix use-after-free due to enslave fail after slave array update
-Date: Fri, 15 May 2026 17:49:15 +0200
-Message-ID: <20260515154724.739242209@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 447/474] mm/damon/core: disallow time-quota setting zero esz
+Date: Fri, 15 May 2026 17:49:16 +0200
+Message-ID: <20260515154724.761334549@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -55,98 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: SeongJae Park <sj@kernel.org>
 
-commit e9acda52fd2ee0cdca332f996da7a95c5fd25294 upstream.
+commit 8bbde987c2b84f80da0853f739f0a920386f8b99 upstream.
 
-Fix a use-after-free which happens due to enslave failure after the new
-slave has been added to the array. Since the new slave can be used for Tx
-immediately, we can use it after it has been freed by the enslave error
-cleanup path which frees the allocated slave memory. Slave update array is
-supposed to be called last when further enslave failures are not expected.
-Move it after xdp setup to avoid any problems.
+When the throughput of a DAMOS scheme is very slow, DAMOS time quota can
+make the effective size quota smaller than damon_ctx->min_region_sz.  In
+the case, damos_apply_scheme() will skip applying the action, because the
+action is tried at region level, which requires >=min_region_sz size.
+That is, the quota is effectively exceeded for the quota charge window.
 
-It is very easy to reproduce the problem with a simple xdp_pass prog:
- ip l add bond1 type bond mode balance-xor
- ip l set bond1 up
- ip l set dev bond1 xdp object xdp_pass.o sec xdp_pass
- ip l add dumdum type dummy
+Because no action will be applied, the total_charged_sz and
+total_charged_ns are also not updated.  damos_set_effective_quota() will
+try to update the effective size quota before starting the next charge
+window.  However, because the total_charged_sz and total_charged_ns have
+not updated, the throughput and effective size quota are also not changed.
+Since effective size quota can only be decreased, other effective size
+quota update factors including DAMOS quota goals and size quota cannot
+make any change, either.
 
-Then run in parallel:
- while :; do ip l set dumdum master bond1 1>/dev/null 2>&1; done;
- mausezahn bond1 -a own -b rand -A rand -B 1.1.1.1 -c 0 -t tcp "dp=1-1023, flags=syn"
+As a result, the scheme is unexpectedly deactivated until the user notices
+and mitigates the situation.  The users can mitigate this situation by
+changing the time quota online or re-install the scheme.  While the
+mitigation is somewhat straightforward, finding the situation would be
+challenging, because DAMON is not providing good observabilities for that.
+Even if such observability is provided, doing the additional monitoring
+and the mitigation is somewhat cumbersome and not aligned to the intention
+of the time quota.  The time quota was intended to help reduce the user's
+administration overhead.
 
-The crash happens almost immediately:
- [  605.602850] Oops: general protection fault, probably for non-canonical address 0xe0e6fc2460000137: 0000 [#1] SMP KASAN NOPTI
- [  605.602916] KASAN: maybe wild-memory-access in range [0x07380123000009b8-0x07380123000009bf]
- [  605.602946] CPU: 0 UID: 0 PID: 2445 Comm: mausezahn Kdump: loaded Tainted: G    B               6.19.0-rc6+ #21 PREEMPT(voluntary)
- [  605.602979] Tainted: [B]=BAD_PAGE
- [  605.602998] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
- [  605.603032] RIP: 0010:netdev_core_pick_tx+0xcd/0x210
- [  605.603063] Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 3e 01 00 00 48 b8 00 00 00 00 00 fc ff df 4c 8b 6b 08 49 8d 7d 30 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 25 01 00 00 49 8b 45 30 4c 89 e2 48 89 ee 48 89
- [  605.603111] RSP: 0018:ffff88817b9af348 EFLAGS: 00010213
- [  605.603145] RAX: dffffc0000000000 RBX: ffff88817d28b420 RCX: 0000000000000000
- [  605.603172] RDX: 00e7002460000137 RSI: 0000000000000008 RDI: 07380123000009be
- [  605.603199] RBP: ffff88817b541a00 R08: 0000000000000001 R09: fffffbfff3ed8c0c
- [  605.603226] R10: ffffffff9f6c6067 R11: 0000000000000001 R12: 0000000000000000
- [  605.603253] R13: 073801230000098e R14: ffff88817d28b448 R15: ffff88817b541a84
- [  605.603286] FS:  00007f6570ef67c0(0000) GS:ffff888221dfa000(0000) knlGS:0000000000000000
- [  605.603319] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- [  605.603343] CR2: 00007f65712fae40 CR3: 000000011371b000 CR4: 0000000000350ef0
- [  605.603373] Call Trace:
- [  605.603392]  <TASK>
- [  605.603410]  __dev_queue_xmit+0x448/0x32a0
- [  605.603434]  ? __pfx_vprintk_emit+0x10/0x10
- [  605.603461]  ? __pfx_vprintk_emit+0x10/0x10
- [  605.603484]  ? __pfx___dev_queue_xmit+0x10/0x10
- [  605.603507]  ? bond_start_xmit+0xbfb/0xc20 [bonding]
- [  605.603546]  ? _printk+0xcb/0x100
- [  605.603566]  ? __pfx__printk+0x10/0x10
- [  605.603589]  ? bond_start_xmit+0xbfb/0xc20 [bonding]
- [  605.603627]  ? add_taint+0x5e/0x70
- [  605.603648]  ? add_taint+0x2a/0x70
- [  605.603670]  ? end_report.cold+0x51/0x75
- [  605.603693]  ? bond_start_xmit+0xbfb/0xc20 [bonding]
- [  605.603731]  bond_start_xmit+0x623/0xc20 [bonding]
+Fix the problem by setting time quota-modified effective size quota be at
+least min_region_sz always.
 
-Fixes: 9e2ee5c7e7c3 ("net, bonding: Add XDP support to the bonding driver")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reported-by: Chen Zhen <chenzhen126@huawei.com>
-Closes: https://lore.kernel.org/netdev/fae17c21-4940-5605-85b2-1d5e17342358@huawei.com/
-CC: Jussi Maki <joamaki@gmail.com>
-CC: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://patch.msgid.link/20260123120659.571187-1-razor@blackwall.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Tested-by: Yunseong Kim <yunseong.kim@est.tech>
-Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
+The issue was discovered [1] by sashiko.
+
+Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
+Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
+Fixes: 1cd243030059 ("mm/damon/schemes: implement time quota")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/damon/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2309,9 +2309,6 @@ skip_mac_set:
- 		unblock_netpoll_tx();
- 	}
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1026,6 +1026,7 @@ static void damos_set_effective_quota(st
+ 	else
+ 		throughput = PAGE_SIZE * 1024;
+ 	esz = throughput * quota->ms;
++	esz = max(DAMON_MIN_REGION, esz);
  
--	if (bond_mode_can_use_xmit_hash(bond))
--		bond_update_slave_arr(bond, NULL);
--
- 	if (!slave_dev->netdev_ops->ndo_bpf ||
- 	    !slave_dev->netdev_ops->ndo_xdp_xmit) {
- 		if (bond->xdp_prog) {
-@@ -2345,6 +2342,9 @@ skip_mac_set:
- 			bpf_prog_inc(bond->xdp_prog);
- 	}
- 
-+	if (bond_mode_can_use_xmit_hash(bond))
-+		bond_update_slave_arr(bond, NULL);
-+
- 	bond_xdp_set_features(bond_dev);
- 
- 	slave_info(bond_dev, slave_dev, "Enslaving as %s interface with %s link\n",
+ 	if (quota->sz && quota->sz < esz)
+ 		esz = quota->sz;
 
 
