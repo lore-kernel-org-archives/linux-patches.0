@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B187A3CB2FD;
-	Fri, 15 May 2026 16:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495093CD8C1;
+	Fri, 15 May 2026 16:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862345; cv=none; b=pQUE8P/TAaiHR9WGNyF5u1w+BK1VBuRjSzd0LNoA+af7tvt5eHmQD7w5mQV3paS8o3PwdwHU+x84KNdURU2e+ehH+jFrHnTqAbpzoyjotH21tRH8zue5QYVPn9vKaBas9tlY0X82ujsTN5+yd7YucwQvs/5kacszh1KABZVT+9A=
+	t=1778862348; cv=none; b=YBMj/xcuerGxP1gc3zdEyOG0RqwBFa+FiC3AG/J2Ceg3HOTsCYfEgTcipSVxUmzyrnugEp4DfyxF8F1mbqGkp6QjSeGVwEzJEokgUhtlHu6NJGBp2l3xYA10j4YdmkiF5lrbzyP9kGCgQvh3lAXl+Qj9wgCeWwo+leIcawn8G3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862345; c=relaxed/simple;
-	bh=WQvT/8ZJ+DEqTUJ2/pw/1Bwr+NbqckeWD7HaNvXYi2o=;
+	s=arc-20240116; t=1778862348; c=relaxed/simple;
+	bh=B8ov53LBO3gmmOJENPQh0hwbe5VaNanFnYGSfnbC5Do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PRmBcOpj6uPbitBzILVehlguz6j9cayK2wCAKvuhtCxTW0k6h8DdYPTVtaH4rJoUy7dYAR/geEmx4Yo9cJTRlCZNEaIeQzDSZmrzcXhNKNRrljQQDWeRyepp2jaIMfec/K9hROWK9y5zG4BHxgEvi9xjwKyVE5xxiT5AXyv4DeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/SQMFUo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JhwspWhp82UEtYNaQJT9wuzgaN24ja0rEOkEL8aKzD5wLOidpf/+jIS5IOFeAvmjEbE5U/nxU2ckwm8GB4svIbA6A3aRJPAo5oiLJsNTbJgWAotPtn+W4/ZL3J9Fnm9+nR+3m6n7gWynwI6wMejXPp3WXqDNLU3Me+8VGQ13GQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyiy/tEX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/SQMFUo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461D3C2BCB0;
-	Fri, 15 May 2026 16:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyiy/tEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F1FC2BCB0;
+	Fri, 15 May 2026 16:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862345;
-	bh=WQvT/8ZJ+DEqTUJ2/pw/1Bwr+NbqckeWD7HaNvXYi2o=;
+	s=korg; t=1778862348;
+	bh=B8ov53LBO3gmmOJENPQh0hwbe5VaNanFnYGSfnbC5Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/SQMFUoxjQy4+A1QvoVTZyNhyk1RASPBGxX3oHIl1E5daqE32NVp7OHW6u9QF0v3
-	 hDprSPXvE8S1qOphiXJOnI5ojQy0xBFs+IQYSqeYiqDoPQbDSoh70JVK/KzBWcIRfi
-	 h1kKvUGgq2voraeB60BMYgsUBpu2zso0rBIC7tRs=
+	b=hyiy/tEX18uLM/S7XuCxc7CXomHp4p8oYIafu8ijl8+P3RMA8qwn6PTBfd+zJxT4F
+	 b5y5xwhoq9fDzdPg+kNurIuwhvmLJu867hfOg1rbLPygwH277PDKZGkACSLuSZOTgy
+	 uw5orOaN/pxbl8IqOMj7+wc4JpemWHR3QFpZcyZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Daniel Scally <dan.scally@ideasonboard.com>,
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <barnabas.pocze@ideasonboard.com>,
 	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 014/201] media: mali-c55: Initialize the ISP in enable_streams()
-Date: Fri, 15 May 2026 17:47:12 +0200
-Message-ID: <20260515154658.845386613@linuxfoundation.org>
+Subject: [PATCH 7.0 015/201] media: mali-c55: Fix Iridix bypass macros
+Date: Fri, 15 May 2026 17:47:13 +0200
+Message-ID: <20260515154658.866104458@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -45,233 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+From: Daniel Scally <dan.scally@ideasonboard.com>
 
-commit d5c24b71da547fdb5bea51a69d62f9e2a609431d upstream.
+commit db7faf488ecf846c46884310ff1bf28daf2ad39a upstream.
 
-The Mali C55 driver initializes the ISP in two points:
+The Mali C55 Iridix block has a digital gain function and tone mapping
+function, whose enablement is controlled by two different bits
+in the BYPASS_3 register.
 
-1) At probe time it disables ISP blocks by configuring them in bypass
-   mode
-2) At enable_streams() it initializes the crop rectangles and the image
-   processing pipeline using the current image format
-
-However, as ISP blocks are configured by userspace, if their
-configuration is not reset, from the second enable_streams() call
-onwards the ISP configuration will depend on the previous streaming
-session configuration.
-
-To re-initialize the ISP completely at enable_streams() time consolidate
-the ISP block bypass configuration and the image processing path
-configuration in a single function to be called at enabled_streams()
-time.
+Unfortunately, the "Gain" and "Tonemap" bypass bit definitions are the
+wrong way around. Swap them.
 
 Cc: stable@vger.kernel.org
 Fixes: d5f281f3dd29 ("media: mali-c55: Add Mali-C55 ISP driver")
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
+Reviewed-by: Barnabás Pőcze <barnabas.pocze@ideasonboard.com>
 Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/arm/mali-c55/mali-c55-common.h |    2 
- drivers/media/platform/arm/mali-c55/mali-c55-core.c   |   35 --------
- drivers/media/platform/arm/mali-c55/mali-c55-isp.c    |   37 +--------
- drivers/media/platform/arm/mali-c55/mali-c55-params.c |   72 ++++++++++++++++++
- 4 files changed, 79 insertions(+), 67 deletions(-)
+ drivers/media/platform/arm/mali-c55/mali-c55-registers.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/arm/mali-c55/mali-c55-common.h
-+++ b/drivers/media/platform/arm/mali-c55/mali-c55-common.h
-@@ -306,5 +306,7 @@ bool mali_c55_pipeline_ready(struct mali
- void mali_c55_stats_fill_buffer(struct mali_c55 *mali_c55,
- 				enum mali_c55_config_spaces cfg_space);
- void mali_c55_params_write_config(struct mali_c55 *mali_c55);
-+void mali_c55_params_init_isp_config(struct mali_c55 *mali_c55,
-+				     const struct v4l2_subdev_state *state);
- 
- #endif /* _MALI_C55_COMMON_H */
---- a/drivers/media/platform/arm/mali-c55/mali-c55-core.c
-+++ b/drivers/media/platform/arm/mali-c55/mali-c55-core.c
-@@ -663,41 +663,6 @@ static int mali_c55_init_context(struct
- 		      mali_c55->base + config_space_addrs[MALI_C55_CONFIG_PING],
- 		      MALI_C55_CONFIG_SPACE_SIZE);
- 
--	/*
--	 * Some features of the ISP need to be disabled by default and only
--	 * enabled at the same time as they're configured by a parameters buffer
--	 */
--
--	/* Bypass the sqrt and square compression and expansion modules */
--	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BYPASS_1,
--				 MALI_C55_REG_BYPASS_1_FE_SQRT,
--				 MALI_C55_REG_BYPASS_1_FE_SQRT);
--	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BYPASS_3,
--				 MALI_C55_REG_BYPASS_3_SQUARE_BE,
--				 MALI_C55_REG_BYPASS_3_SQUARE_BE);
--
--	/* Bypass the temper module */
--	mali_c55_ctx_write(mali_c55, MALI_C55_REG_BYPASS_2,
--			   MALI_C55_REG_BYPASS_2_TEMPER);
--
--	/* Disable the temper module's DMA read/write */
--	mali_c55_ctx_write(mali_c55, MALI_C55_REG_TEMPER_DMA_IO, 0x0);
--
--	/* Bypass the colour noise reduction  */
--	mali_c55_ctx_write(mali_c55, MALI_C55_REG_BYPASS_4,
--			   MALI_C55_REG_BYPASS_4_CNR);
--
--	/* Disable the sinter module */
--	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_SINTER_CONFIG,
--				 MALI_C55_SINTER_ENABLE_MASK, 0);
--
--	/* Disable the RGB Gamma module for each output */
--	mali_c55_ctx_write(mali_c55, MALI_C55_REG_FR_GAMMA_RGB_ENABLE, 0);
--	mali_c55_ctx_write(mali_c55, MALI_C55_REG_DS_GAMMA_RGB_ENABLE, 0);
--
--	/* Disable the colour correction matrix */
--	mali_c55_ctx_write(mali_c55, MALI_C55_REG_CCM_ENABLE, 0);
--
- 	return 0;
- }
- 
---- a/drivers/media/platform/arm/mali-c55/mali-c55-isp.c
-+++ b/drivers/media/platform/arm/mali-c55/mali-c55-isp.c
-@@ -112,9 +112,6 @@ static int mali_c55_isp_start(struct mal
- 			      const struct v4l2_subdev_state *state)
- {
- 	struct mali_c55_context *ctx = mali_c55_get_active_context(mali_c55);
--	const struct mali_c55_isp_format_info *cfg;
--	const struct v4l2_mbus_framefmt *format;
--	const struct v4l2_rect *crop;
- 	u32 val;
- 	int ret;
- 
-@@ -122,35 +119,11 @@ static int mali_c55_isp_start(struct mal
- 			     MALI_C55_REG_MCU_CONFIG_WRITE_MASK,
- 			     MALI_C55_REG_MCU_CONFIG_WRITE_PING);
- 
--	/* Apply input windowing */
--	crop = v4l2_subdev_state_get_crop(state, MALI_C55_ISP_PAD_SINK_VIDEO);
--	format = v4l2_subdev_state_get_format(state,
--					      MALI_C55_ISP_PAD_SINK_VIDEO);
--	cfg = mali_c55_isp_get_mbus_config_by_code(format->code);
--
--	mali_c55_write(mali_c55, MALI_C55_REG_HC_START,
--		       MALI_C55_HC_START(crop->left));
--	mali_c55_write(mali_c55, MALI_C55_REG_HC_SIZE,
--		       MALI_C55_HC_SIZE(crop->width));
--	mali_c55_write(mali_c55, MALI_C55_REG_VC_START_SIZE,
--		       MALI_C55_VC_START(crop->top) |
--		       MALI_C55_VC_SIZE(crop->height));
--	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BASE_ADDR,
--				 MALI_C55_REG_ACTIVE_WIDTH_MASK, format->width);
--	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BASE_ADDR,
--				 MALI_C55_REG_ACTIVE_HEIGHT_MASK,
--				 format->height << 16);
--	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BAYER_ORDER,
--				 MALI_C55_BAYER_ORDER_MASK, cfg->order);
--	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_INPUT_WIDTH,
--				 MALI_C55_INPUT_WIDTH_MASK,
--				 MALI_C55_INPUT_WIDTH_20BIT);
--
--	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_ISP_RAW_BYPASS,
--				 MALI_C55_ISP_RAW_BYPASS_BYPASS_MASK,
--				 cfg->bypass ? MALI_C55_ISP_RAW_BYPASS_BYPASS_MASK :
--					     0x00);
--
-+	/*
-+	 * Apply default ISP configuration and the apply configurations from
-+	 * the first available parameters buffer.
-+	 */
-+	mali_c55_params_init_isp_config(mali_c55, state);
- 	mali_c55_params_write_config(mali_c55);
- 	ret = mali_c55_config_write(ctx, MALI_C55_CONFIG_PING, true);
- 	if (ret) {
---- a/drivers/media/platform/arm/mali-c55/mali-c55-params.c
-+++ b/drivers/media/platform/arm/mali-c55/mali-c55-params.c
-@@ -732,6 +732,78 @@ void mali_c55_params_write_config(struct
- 	vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_DONE);
- }
- 
-+void mali_c55_params_init_isp_config(struct mali_c55 *mali_c55,
-+				     const struct v4l2_subdev_state *state)
-+{
-+	const struct mali_c55_isp_format_info *cfg;
-+	const struct v4l2_mbus_framefmt *format;
-+	const struct v4l2_rect *crop;
-+
-+	/* Apply input windowing */
-+	crop = v4l2_subdev_state_get_crop(state, MALI_C55_ISP_PAD_SINK_VIDEO);
-+	format = v4l2_subdev_state_get_format(state,
-+					      MALI_C55_ISP_PAD_SINK_VIDEO);
-+	cfg = mali_c55_isp_get_mbus_config_by_code(format->code);
-+
-+	mali_c55_write(mali_c55, MALI_C55_REG_HC_START,
-+		       MALI_C55_HC_START(crop->left));
-+	mali_c55_write(mali_c55, MALI_C55_REG_HC_SIZE,
-+		       MALI_C55_HC_SIZE(crop->width));
-+	mali_c55_write(mali_c55, MALI_C55_REG_VC_START_SIZE,
-+		       MALI_C55_VC_START(crop->top) |
-+		       MALI_C55_VC_SIZE(crop->height));
-+	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BASE_ADDR,
-+				 MALI_C55_REG_ACTIVE_WIDTH_MASK, format->width);
-+	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BASE_ADDR,
-+				 MALI_C55_REG_ACTIVE_HEIGHT_MASK,
-+				 format->height << 16);
-+	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BAYER_ORDER,
-+				 MALI_C55_BAYER_ORDER_MASK, cfg->order);
-+	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_INPUT_WIDTH,
-+				 MALI_C55_INPUT_WIDTH_MASK,
-+				 MALI_C55_INPUT_WIDTH_20BIT);
-+
-+	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_ISP_RAW_BYPASS,
-+				 MALI_C55_ISP_RAW_BYPASS_BYPASS_MASK,
-+				 cfg->bypass ? MALI_C55_ISP_RAW_BYPASS_BYPASS_MASK :
-+					     0x00);
-+
-+	/*
-+	 * Some features of the ISP need to be disabled by default and only
-+	 * enabled at the same time as they're configured by a parameters buffer
-+	 */
-+
-+	/* Bypass the sqrt and square compression and expansion modules */
-+	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BYPASS_1,
-+				 MALI_C55_REG_BYPASS_1_FE_SQRT,
-+				 MALI_C55_REG_BYPASS_1_FE_SQRT);
-+	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BYPASS_3,
-+				 MALI_C55_REG_BYPASS_3_SQUARE_BE,
-+				 MALI_C55_REG_BYPASS_3_SQUARE_BE);
-+
-+	/* Bypass the temper module */
-+	mali_c55_ctx_write(mali_c55, MALI_C55_REG_BYPASS_2,
-+			   MALI_C55_REG_BYPASS_2_TEMPER);
-+
-+	/* Disable the temper module's DMA read/write */
-+	mali_c55_ctx_write(mali_c55, MALI_C55_REG_TEMPER_DMA_IO, 0x0);
-+
-+	/* Bypass the colour noise reduction  */
-+	mali_c55_ctx_write(mali_c55, MALI_C55_REG_BYPASS_4,
-+			   MALI_C55_REG_BYPASS_4_CNR);
-+
-+	/* Disable the sinter module */
-+	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_SINTER_CONFIG,
-+				 MALI_C55_SINTER_ENABLE_MASK, 0);
-+
-+	/* Disable the RGB Gamma module for each output */
-+	mali_c55_ctx_write(mali_c55, MALI_C55_REG_FR_GAMMA_RGB_ENABLE, 0);
-+	mali_c55_ctx_write(mali_c55, MALI_C55_REG_DS_GAMMA_RGB_ENABLE, 0);
-+
-+	/* Disable the colour correction matrix */
-+	mali_c55_ctx_write(mali_c55, MALI_C55_REG_CCM_ENABLE, 0);
-+}
-+
- void mali_c55_unregister_params(struct mali_c55 *mali_c55)
- {
- 	struct mali_c55_params *params = &mali_c55->params;
+--- a/drivers/media/platform/arm/mali-c55/mali-c55-registers.h
++++ b/drivers/media/platform/arm/mali-c55/mali-c55-registers.h
+@@ -128,8 +128,8 @@ enum mali_c55_interrupts {
+ #define MALI_C55_REG_BYPASS_3_SENSOR_OFFSET_PRE_SH	BIT(1)
+ #define MALI_C55_REG_BYPASS_3_MESH_SHADING		BIT(3)
+ #define MALI_C55_REG_BYPASS_3_WHITE_BALANCE		BIT(4)
+-#define MALI_C55_REG_BYPASS_3_IRIDIX			BIT(5)
+-#define MALI_C55_REG_BYPASS_3_IRIDIX_GAIN		BIT(6)
++#define MALI_C55_REG_BYPASS_3_IRIDIX_GAIN		BIT(5)
++#define MALI_C55_REG_BYPASS_3_IRIDIX			BIT(6)
+ #define MALI_C55_REG_BYPASS_4				0x18ec0
+ #define MALI_C55_REG_BYPASS_4_DEMOSAIC_RGB		BIT(1)
+ #define MALI_C55_REG_BYPASS_4_PF_CORRECTION		BIT(3)
 
 
