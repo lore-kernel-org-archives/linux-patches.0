@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F370630569A;
-	Fri, 15 May 2026 16:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6A8305670;
+	Fri, 15 May 2026 16:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860803; cv=none; b=OZYJ/uH66ymIblhhWv1MaxV9G2OlzTD41+b/lY8JCgdd8Yj5M1Npea8QOyLEVylesw6JC3iVi2LxPbVIzXdDWuVfKE38pb9zNDYoCzC5gLExXqKcl1b5+LLNTTjSY/r5eQlQaHWCtO9EMe4AtHgGq47Rnft3p+iRcwHTO36IJg8=
+	t=1778860805; cv=none; b=mvRiHtf1wcDex3JEyyA5A/bQmsMG6QuBONZISVdnxF02aYMhcFWEKuW9IhK60uCos8WiaJRPLLRq829qYnewgAGLCvJKcroUCl/l0SBk0+814Pghrk/R/El72SDabHfVP5MhgHa02pbaDtwTRMYVqN4pooNmx1jH52Vpp6VbZd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860803; c=relaxed/simple;
-	bh=zrREpSnPOSBz510rN+bfyehzlBJwHUszH/tuNS3P4yY=;
+	s=arc-20240116; t=1778860805; c=relaxed/simple;
+	bh=WOu8lDHboO+Z/8Fe4XRkm7mw7dhGR6IEWY9ZREllflo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JvcDcJVXaGAXZ85C/dNngNhmWHXDp4i2wMYuceZ0QfwSaTgeyiyAOhpIY60rqefDwg6uSvaCEE/EubhkOb4dakKkH1lUPqwzZ1NdTb9lIFYStr03wIzeeLwHGIGkqQLRRQcP8W4uHbWjyKVX5rMjQ+PFEXH8MRNHgitOt6yDgaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=atVX0aCO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U34HMJUMi6fPZxyxkD6xeB+G+/8iYBvl3UWb0EpxGGrlVeBU5yE9BHaC8vSTOLFD6qeDYSx0+prg2rXMNBETBHxuow2ccHkOMJZfbqzXW3CRq7AqbwU/s/k/dxTawFFsA/KoINM7BRTDK1UTgHN7127kZX/SKNvYWD9Y8ZkEL/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dajfb8At; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="atVX0aCO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C43C2BCB3;
-	Fri, 15 May 2026 16:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dajfb8At"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC23C2BCB3;
+	Fri, 15 May 2026 16:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860802;
-	bh=zrREpSnPOSBz510rN+bfyehzlBJwHUszH/tuNS3P4yY=;
+	s=korg; t=1778860805;
+	bh=WOu8lDHboO+Z/8Fe4XRkm7mw7dhGR6IEWY9ZREllflo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=atVX0aCOkzavk2HpQDB2Q0hAj7N6/ppdHIrppbf4L5bc5Wt3Q30d6OEC3UKVL7FIR
-	 cxQZCgnQ20rpe6vf5/CyE7Ip/uP6Z3UKki2wIYYzg73NEPmacHhH3kk2PyNx5or+bA
-	 ifdgapaz47ZaA1l5EZJxdU5o7qZWjRwW3PuktvWs=
+	b=Dajfb8Athf1sYNn+ba3QpbmNb96Kj4D5NMX98Aj556y172avUAiu6cXB1TBG8YY4/
+	 tIyTB4yP3qpIk+5B1MdOp5wQJBbXnksrZlurj/3PUs5oVYj/g/NZRJz0atCm89iqLz
+	 HxvqsJ0y54Ux52enLgtATD8rU4f9oUpphJXZuFlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 085/474] mmc: sdhci-of-dwcmshc: Disable clock before DLL configuration
-Date: Fri, 15 May 2026 17:43:14 +0200
-Message-ID: <20260515154716.877679896@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH 6.6 086/474] arm64: dts: ti: am62-verdin: Enable pullup for eMMC data pins
+Date: Fri, 15 May 2026 17:43:15 +0200
+Message-ID: <20260515154716.899095971@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,81 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-commit 6546a49bbe656981d99a389195560999058c89c4 upstream.
+commit d5325810814ee995debfa0b6c4a22e0391598bef upstream.
 
-According to the ASIC design recommendations, the clock must be
-disabled before operating the DLL to prevent glitches that could
-affect the internal digital logic. In extreme cases, failing to
-do so may cause the controller to malfunction completely.
+Verdin AM62 board does not have external pullups on eMMC DAT1-DAT7 pins.
+Enable internal pullups on DAT1-DAT7 considering:
 
-Adds a step to disable the clock before DLL configuration and
-re-enables it at the end.
+ - without a host-side pullup, these lines rely solely on the eMMC
+   device's internal pullup (R_int, 10kohm-150kohm per JEDEC), which may
+   exceed the recommended 50kohm max for 1.8V VCCQ
+ - JEDEC JESD84-B51 Table 200 requires host-side pullups (R_DAT,
+   10kohm-100kohm) on all data lines to prevent bus floating
 
-Fixes: 08f3dff799d4 ("mmc: sdhci-of-dwcmshc: add rockchip platform support")
+Fixes: 316b80246b16 ("arm64: dts: ti: add verdin am62")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260320073032.10427-1-francesco@dolcini.it
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-of-dwcmshc.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/mmc/host/sdhci-of-dwcmshc.c
-+++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
-@@ -243,12 +243,15 @@ static void dwcmshc_rk3568_set_clock(str
- 	extra &= ~BIT(0);
- 	sdhci_writel(host, extra, reg);
+--- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
+@@ -507,16 +507,16 @@
+ 	/* On-module eMMC */
+ 	pinctrl_sdhci0: main-mmc0-default-pins {
+ 		pinctrl-single,pins = <
+-			AM62X_IOPAD(0x220, PIN_INPUT, 0) /*  (Y3) MMC0_CMD  */
+-			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLK  */
+-			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (AA2) MMC0_DAT0 */
+-			AM62X_IOPAD(0x210, PIN_INPUT, 0) /* (AA1) MMC0_DAT1 */
+-			AM62X_IOPAD(0x20c, PIN_INPUT, 0) /* (AA3) MMC0_DAT2 */
+-			AM62X_IOPAD(0x208, PIN_INPUT, 0) /*  (Y4) MMC0_DAT3 */
+-			AM62X_IOPAD(0x204, PIN_INPUT, 0) /* (AB2) MMC0_DAT4 */
+-			AM62X_IOPAD(0x200, PIN_INPUT, 0) /* (AC1) MMC0_DAT5 */
+-			AM62X_IOPAD(0x1fc, PIN_INPUT, 0) /* (AD2) MMC0_DAT6 */
+-			AM62X_IOPAD(0x1f8, PIN_INPUT, 0) /* (AC2) MMC0_DAT7 */
++			AM62X_IOPAD(0x220, PIN_INPUT,        0) /*  (Y3) MMC0_CMD  */
++			AM62X_IOPAD(0x218, PIN_INPUT,        0) /* (AB1) MMC0_CLK  */
++			AM62X_IOPAD(0x214, PIN_INPUT,        0) /* (AA2) MMC0_DAT0 */
++			AM62X_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
++			AM62X_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
++			AM62X_IOPAD(0x208, PIN_INPUT_PULLUP, 0) /*  (Y4) MMC0_DAT3 */
++			AM62X_IOPAD(0x204, PIN_INPUT_PULLUP, 0) /* (AB2) MMC0_DAT4 */
++			AM62X_IOPAD(0x200, PIN_INPUT_PULLUP, 0) /* (AC1) MMC0_DAT5 */
++			AM62X_IOPAD(0x1fc, PIN_INPUT_PULLUP, 0) /* (AD2) MMC0_DAT6 */
++			AM62X_IOPAD(0x1f8, PIN_INPUT_PULLUP, 0) /* (AC2) MMC0_DAT7 */
+ 		>;
+ 	};
  
-+	/* Disable clock while config DLL */
-+	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
-+
- 	if (clock <= 52000000) {
- 		if (host->mmc->ios.timing == MMC_TIMING_MMC_HS200 ||
- 		    host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
- 			dev_err(mmc_dev(host->mmc),
- 				"Can't reduce the clock below 52MHz in HS200/HS400 mode");
--			return;
-+			goto enable_clk;
- 		}
- 
- 		/*
-@@ -268,7 +271,7 @@ static void dwcmshc_rk3568_set_clock(str
- 			DLL_STRBIN_DELAY_NUM_SEL |
- 			DLL_STRBIN_DELAY_NUM_DEFAULT << DLL_STRBIN_DELAY_NUM_OFFSET;
- 		sdhci_writel(host, extra, DWCMSHC_EMMC_DLL_STRBIN);
--		return;
-+		goto enable_clk;
- 	}
- 
- 	/* Reset DLL */
-@@ -295,7 +298,7 @@ static void dwcmshc_rk3568_set_clock(str
- 				 500 * USEC_PER_MSEC);
- 	if (err) {
- 		dev_err(mmc_dev(host->mmc), "DLL lock timeout!\n");
--		return;
-+		goto enable_clk;
- 	}
- 
- 	extra = 0x1 << 16 | /* tune clock stop en */
-@@ -328,6 +331,16 @@ static void dwcmshc_rk3568_set_clock(str
- 		DLL_STRBIN_TAPNUM_DEFAULT |
- 		DLL_STRBIN_TAPNUM_FROM_SW;
- 	sdhci_writel(host, extra, DWCMSHC_EMMC_DLL_STRBIN);
-+
-+enable_clk:
-+	/*
-+	 * The sdclk frequency select bits in SDHCI_CLOCK_CONTROL are not functional
-+	 * on Rockchip's SDHCI implementation. Instead, the clock frequency is fully
-+	 * controlled via external clk provider by calling clk_set_rate(). Consequently,
-+	 * passing 0 to sdhci_enable_clk() only re-enables the already-configured clock,
-+	 * which matches the hardware's actual behavior.
-+	 */
-+	sdhci_enable_clk(host, 0);
- }
- 
- static void rk35xx_sdhci_reset(struct sdhci_host *host, u8 mask)
 
 
