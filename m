@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FE82010EE;
-	Fri, 15 May 2026 16:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D253B9D84;
+	Fri, 15 May 2026 16:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861491; cv=none; b=Znr4eNkcle7VzGXp8WbiVXTZHXOTlSMqnBjUu7Rks2C/W3NX/lz4WJBT7p7HorSyT0cUIFkNLzqvnxhIkId3c4fv0SxQFAvEaXpSzthdMTUQ3Iu0hgFG6q7DZ8PYaVPH7trgcHBui15RN+0wD/dJK5QC1LkDu4ffxU4GnAmQH9g=
+	t=1778861493; cv=none; b=YHkoRitI1j6y2OXWhqUu9L2xkX8pAbOveT1LjjDa2eGDceovVsogw3dPuo+XeciX8GavJ9jR4Mz3VM4Ouya8KcskZJgeMqmSe3YEu0lVjSfYjRx7H/hXjF6JNuLrvgJ1mmjTfmTTg1930z5jEPw4B6vS1NA2t15/bjZigQUKvkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861491; c=relaxed/simple;
-	bh=8UqSdEUN60tk+/Vx0onQuyPBZvY3JuwydIQWi53TqzE=;
+	s=arc-20240116; t=1778861493; c=relaxed/simple;
+	bh=7PTKJdzKpF9/22g0Z7eznewFSQ8GxfB5WoNQlwIcGfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DFwFyOacGr0K1LM5DgHVsA0WZcbploiB0csq5CWf5rtEk/17jpWX/o92LGQtxFd22waubbOv0Z7lDU/4wcxjS/Q6p3djqkMyc6fmeRmO85M+GJdi6I8r3j3/7x4+cKAIaNocE5geYX4dBC7Q0M4D2l8fRWqknfULdKzWnG1twIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Btxo112H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NIIxE+7OJvTvmFFGgJyVz4AgBaM76njD9iygvLiHLt0b26vE9NSHK3WACA+Ny8gNoLGUufkBnGRAEk8KT8FVoj36MB7wyUpjZhupn7DhJtxtuIbnl2VFMvK96tZ6iYA2KniWaW/3je0UFyz2BrO8hYKMsmk5jOowmuFcjNDRWaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pva3U/v+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Btxo112H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A002C2BCB0;
-	Fri, 15 May 2026 16:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pva3U/v+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1AEC2BCB0;
+	Fri, 15 May 2026 16:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861490;
-	bh=8UqSdEUN60tk+/Vx0onQuyPBZvY3JuwydIQWi53TqzE=;
+	s=korg; t=1778861493;
+	bh=7PTKJdzKpF9/22g0Z7eznewFSQ8GxfB5WoNQlwIcGfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Btxo112Hnuguj/L2yKAZpG1eJODW/CIzRcdpvba6qacdyS9E7dHgtroJ2NpXFayS6
-	 /g1PTmnRtQhGiaAtqIkkskq/Nc6iHTcZlw8qZ4yHTal3SEo2GuOVYsme2sjplNltHR
-	 OaSAvD/HkkFU53vF2WT9mTcquTOPQWgvw/zdvu+Y=
+	b=Pva3U/v+/xrlPB5i7ZRm/OP4eqG9yo+g4GpP/TCt6PZprk+eeqRGPqPr0TbfcWHbs
+	 DqXnon9O8f8rYb1EpAUZU/+f0MXVkPXyFMLg61RONJLw+c6cZUuxt0Vk2DZWLUGXR3
+	 VOs15zG+N3DLCsbG0sh2DlScy1to/d6OeDrBnUUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Philip Yang <Philip.Yang@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"John B. Moore" <jbmoore61@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 350/474] drm/amdgpu: zero-initialize GART table on allocation
-Date: Fri, 15 May 2026 17:47:39 +0200
-Message-ID: <20260515154722.590525504@linuxfoundation.org>
+Subject: [PATCH 6.6 351/474] drm/amdgpu/gfx9: drop unnecessary 64-bit fence flag check in KIQ
+Date: Fri, 15 May 2026 17:47:40 +0200
+Message-ID: <20260515154722.611684352@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -53,58 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: John B. Moore <jbmoore61@gmail.com>
 
-commit e6c2e6c2e1fa066968a16aca1cb66cd1bdde7741 upstream.
+commit 7bbfb2559bcec39d1a4e1182d931a2046112c352 upstream.
 
-GART TLB is flushed after unmapping but not after mapping. Since
-amdgpu_bo_create_kernel() does not zero-initialize the buffer, when a
-single PTE is written the TLB may speculatively load other uninitialized
-entries from the same cacheline. Those garbage entries can appear valid,
-and a subsequent write to another PTE in the same cacheline may cause the
-GPU to use a stale garbage PTE from the TLB.
+Remove the BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT) assertion from
+gfx_v9_0_ring_emit_fence_kiq().  The KIQ hardware supports 64-bit
+fence writes; the 32-bit writeback address constraint is an
+upper-layer convention, not a hardware limitation.  The check serves
+no purpose and should not be present.
 
-Fix this by calling memset_io() to zero-initialize the GART table with
-gart_pte_flags immediately after allocation.
+Found by code inspection while investigating related BUG_ON
+assertions in the GFX and compute ring emission paths.
 
-Using AMDGPU_GEM_CREATE_VRAM_CLEARED, SDMA-based clear will not work
-since SDMA needs GART to be initialized to work.
-
-Suggested-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: John B. Moore <jbmoore61@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d9af8263b82b6eaa60c5718e0c6631c5037e4b24)
+(cherry picked from commit 1b1101a46a426bb4328116bb5273c326a2780389)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
-@@ -252,12 +252,19 @@ void amdgpu_gart_table_ram_free(struct a
-  */
- int amdgpu_gart_table_vram_alloc(struct amdgpu_device *adev)
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -5388,9 +5388,6 @@ static void gfx_v9_0_ring_emit_fence_kiq
  {
-+	int r;
-+
- 	if (adev->gart.bo != NULL)
- 		return 0;
+ 	struct amdgpu_device *adev = ring->adev;
  
--	return amdgpu_bo_create_kernel(adev,  adev->gart.table_size, PAGE_SIZE,
--				       AMDGPU_GEM_DOMAIN_VRAM, &adev->gart.bo,
--				       NULL, (void *)&adev->gart.ptr);
-+	r = amdgpu_bo_create_kernel(adev,  adev->gart.table_size, PAGE_SIZE,
-+				    AMDGPU_GEM_DOMAIN_VRAM, &adev->gart.bo,
-+				    NULL, (void *)&adev->gart.ptr);
-+	if (r)
-+		return r;
-+
-+	memset_io(adev->gart.ptr, adev->gart.gart_pte_flags, adev->gart.table_size);
-+	return 0;
- }
- 
- /**
+-	/* we only allocate 32bit for each seq wb address */
+-	BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
+-
+ 	/* write fence seq to the "addr" */
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
+ 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(0) |
 
 
