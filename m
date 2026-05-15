@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FD23FF1DD;
-	Fri, 15 May 2026 15:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55B23FF1CD;
+	Fri, 15 May 2026 15:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860467; cv=none; b=B/oLZOXb0SZNzHWWHBbgdairM9yTKHHlZaRo0rWUwDFVzkzn6eOh3K8pM9V4vIBroutxG2cK8lpQLc/ECS0qwg3+fIgvlnduaIXpx/qwr2c3VB8uMOYNpru9WtQ94TmjFG3gTQFnG6ZgZBylg6wLfgPV2GX7xU5XgK2kREHhBv4=
+	t=1778860469; cv=none; b=CjGxdlFEbcT+7E9PxuDHT0zYFg2OPL9Q+k/McHt66339lxnjRN1Q+vPU9w+sdyc4M4x9Oc84+tjyVUjCGGaTvi2ln5m66Q8AQhRfYpU46KA0mE11gp8yj7XzsFdrinuOVrk+6Tcrmax2P2bjKH+PTEFud4ndqZ9Uvka1LdW6g9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860467; c=relaxed/simple;
-	bh=TAT8u8GG4xnpUAHzRjiCXdmJ4jduDZo3ZQGGcrDth6E=;
+	s=arc-20240116; t=1778860469; c=relaxed/simple;
+	bh=85LcsC+LB9739e+Ybuz5L6KH1ga7cl/9Gf1wcEN6+sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPxqZd1yzJqCpPnP65+o1bQnrwZxu/Ib2l4Vg+63vH6L5wIfcUXwIyrlSEG6C7fSn6a73lHjrZqL3rRW5+FjmAprQvIr/+d2Fvt94+1txRpmdd1FxNPSRbPMitk2K+5PRCshya6PR51kFHGxnGQkMTAOInFAi738DZuTlZNVZdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SO4WEl1s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YfCHil1HnCi8c5+y14CAMKS+qGmHVgok4BL7zScZlWrg87xUIgxTSLQOk2QderpOq6XVbgzvs9bPPA9ipIUdB5J78LVPZZFWuda0THcqiuocVLBydybWer2nLtZiYAfsSD7ejtacL4LJDhXOXSBnFWhubVjfJvgVwKkOncB4pHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDSk0Rct; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SO4WEl1s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764BAC2BCB0;
-	Fri, 15 May 2026 15:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDSk0Rct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0491DC2BCB0;
+	Fri, 15 May 2026 15:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860466;
-	bh=TAT8u8GG4xnpUAHzRjiCXdmJ4jduDZo3ZQGGcrDth6E=;
+	s=korg; t=1778860469;
+	bh=85LcsC+LB9739e+Ybuz5L6KH1ga7cl/9Gf1wcEN6+sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SO4WEl1sqC3XWlMb86EXhbFG+zQrzesCeourObhsZ+tF54QJaomQO772DByiMAdHJ
-	 ICvawIYgeRsVaKEHtqJTKy3aEFSBAjb2F4x6slYvgrmxNvIqwA8tgnQR7JzfCTgyXX
-	 EUL7pGb7mOl36TGqNdVYqts58BDQ+7ItF+3LwLj8=
+	b=xDSk0Rct/aDBrTNpLxnhgGv4L0QNpvEZ9z0+bxX1KBEwBPabhVaNdCil2ZiUG3mRj
+	 mk1jvyklpxkYrrpsKJzGOPjl1SZlViIfRNCktT7ZAfaLYVGekNKBmIs7gq0KsOvtNQ
+	 R55z/joUnzMHdxMTjQeLp9fpd0Yik6yg0TU3qxFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harini Katakam <harinik@xilinx.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 063/144] spi: cadence: fix controller deregistration
-Date: Fri, 15 May 2026 17:48:09 +0200
-Message-ID: <20260515154655.007976043@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.12 099/144] batman-adv: bla: only purge non-released claims
+Date: Fri, 15 May 2026 17:48:45 +0200
+Message-ID: <20260515154655.798631558@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -51,45 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 666fa7e9ca98e71c880086ca24147ae843f1ed6e upstream.
+commit cf6b604011591865ae39ac82de8978c1120d17af upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+When batadv_bla_purge_claims() goes through the list of claims, it is only
+traversing the hash list with an rcu_read_lock(). Due to a potential
+parallel batadv_claim_put(), it can happen that it encounters a claim which
+was actually in the process of being released+freed by
+batadv_claim_release(). In this case, backbone_gw is set to NULL before the
+delayed RCU kfree is started. Calling batadv_bla_claim_get_backbone_gw() is
+then no longer allowed because it would cause a NULL-ptr derefence.
 
-Fixes: c474b3866546 ("spi: Add driver for Cadence SPI controller")
-Cc: stable@vger.kernel.org	# 3.16
-Cc: Harini Katakam <harinik@xilinx.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260414134319.978196-2-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+To avoid this, only claims with a valid reference counter must be purged.
+All others are already taken care of.
+
+Cc: stable@kernel.org
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/batman-adv/bridge_loop_avoidance.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/spi/spi-cadence.c
-+++ b/drivers/spi/spi-cadence.c
-@@ -699,6 +699,10 @@ static void cdns_spi_remove(struct platf
- 	struct spi_controller *ctlr = platform_get_drvdata(pdev);
- 	struct cdns_spi *xspi = spi_controller_get_devdata(ctlr);
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -1288,6 +1288,13 @@ static void batadv_bla_purge_claims(stru
  
-+	spi_controller_get(ctlr);
+ 		rcu_read_lock();
+ 		hlist_for_each_entry_rcu(claim, head, hash_entry) {
++			/* only purge claims not currently in the process of being released.
++			 * Such claims could otherwise have a NULL-ptr backbone_gw set because
++			 * they already went through batadv_claim_release()
++			 */
++			if (!kref_get_unless_zero(&claim->refcount))
++				continue;
 +
-+	spi_unregister_controller(ctlr);
-+
- 	cdns_spi_write(xspi, CDNS_SPI_ER, CDNS_SPI_ER_DISABLE);
- 
- 	if (!spi_controller_is_target(ctlr)) {
-@@ -706,7 +710,7 @@ static void cdns_spi_remove(struct platf
- 		pm_runtime_set_suspended(&pdev->dev);
+ 			backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
+ 			if (now)
+ 				goto purge_now;
+@@ -1313,6 +1320,7 @@ purge_now:
+ 					      claim->addr, claim->vid);
+ skip:
+ 			batadv_backbone_gw_put(backbone_gw);
++			batadv_claim_put(claim);
+ 		}
+ 		rcu_read_unlock();
  	}
- 
--	spi_unregister_controller(ctlr);
-+	spi_controller_put(ctlr);
- }
- 
- /**
 
 
