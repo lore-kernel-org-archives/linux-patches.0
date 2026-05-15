@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F60A3F58D7;
-	Fri, 15 May 2026 16:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764AC3FF1D8;
+	Fri, 15 May 2026 16:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862056; cv=none; b=ER2zcNleL/YxJ25JKocw0qIfGWuaOOfai79m2MJal9nRJ5NEYJhM7cGKQ9D3ZBhsHz1ZMWJTM7IiAb9bh8Mr3dnXeJKIlpmW9sCZ8seEmXqTIDk/f93UKmMzdLptXRRuob+TQSyxkfXQXOJD1A6cVyKGItVeJ9RrJPnj7aVWFYQ=
+	t=1778862059; cv=none; b=QoOiXOwuNXjNr2AwhlC4Mgic0xZejOZdxhri2m4OR7qQjnLxzSR/V6gw/dnglJDbS2/RNOColMXZvg9sYZCsKzPlXCGpkCcGLhTKQXBtC09+8smZ9DvGictZH3rkMI/6w1qWhgQ0n19AkJLhOJKH1FFZ2yZMxQ5+14UR5EM7UUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862056; c=relaxed/simple;
-	bh=QIFW6hJ0O6OamG3yf45z8llAXMaLN4rRR96X9Hys2xk=;
+	s=arc-20240116; t=1778862059; c=relaxed/simple;
+	bh=2HKzQeYl5m3di659Rn0veOEq7IJevCsqwaFHjYlJc3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bsAeMIzleNqFHEEY+OlwF6nzlisqvmCOvkK3T9OcQYtbpHHrRO6PC41RkKxUqUBfl88T6PRXX4fMUClXGu7UFtQAlQHm58ls4NFuWcyNNRNVzfYZOD/4RX5W9qGJ+JEv1YcFNCrqukNujoWLngWrasNcTt6WwNYzrbZoM6BLlOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=foB15lPr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qSb5HwcFlCOAFXlJoUugJ1+oHPmJfk7IkfQZ0hI9wWXSg9+T318f43nHY871zUvfYUhq8wuoz+SDDBqKziIOyjwx1sc3aZp8W5PclXc0b4+Pcq0ns9s4v0ey9CIJoKZkS7lHOsw2Sa1jdpuT5xc2c2mKPud9HatK4+cHRkr7AqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrCYWtUN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="foB15lPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361A2C2BCB0;
-	Fri, 15 May 2026 16:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrCYWtUN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BDAC2BCF7;
+	Fri, 15 May 2026 16:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862056;
-	bh=QIFW6hJ0O6OamG3yf45z8llAXMaLN4rRR96X9Hys2xk=;
+	s=korg; t=1778862059;
+	bh=2HKzQeYl5m3di659Rn0veOEq7IJevCsqwaFHjYlJc3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=foB15lPr4JMnltJv3rlA4DtOzBTmTpENCyZEqHWx/3U3gw/TpYKz0QKjag8R202vV
-	 OyMsQ/S7Fiu1xqqzqq9LG2XRU15Q0Vo0hI7Q7hgCEvxLUX8/cCVpLrqk0GqWTSWRYa
-	 igDsp5OpCCvICuMc4jeO5rxQUY0YogLVMT1QsjVU=
+	b=WrCYWtUN7gfoJNySABA8R6zfBPSCH+B+AZEXk1/g12KuhnOMqNlywYdsa37XfviSV
+	 OnPmOcId4dpt7u2IEM6AkSqM7qhLPaGd1oHGwRdAJ25oY0B0gwNYDJQj+zMJ9apGs/
+	 qeRWjlwpcjq63pU/QGURi+Q6WPg5G24AxXp7/N7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Grant Likely <grant.likely@secretlab.ca>,
+	Luotao Fu <l.fu@pengutronix.de>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 091/188] spi: mpc52xx: fix use-after-free on registration failure
-Date: Fri, 15 May 2026 17:48:28 +0200
-Message-ID: <20260515154659.302610231@linuxfoundation.org>
+Subject: [PATCH 6.18 092/188] spi: mpc52xx: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:29 +0200
+Message-ID: <20260515154659.325071074@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -53,38 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit f62c060272b9d7423b1650b844e8e4e7b8f9f925 upstream.
+commit 0f997fdae819a8c2cc83bd4ff7d935ad76c727c9 upstream.
 
-Make sure to disable and free the interrupts in case controller
-registration fails to avoid a potential use-after-free and resource
-leak.
-
-This issue was flagged by Sashiko when reviewing a controller
-deregistration fix.
+Make sure to deregister the controller before disabling and releasing
+underlying resources like interrupts and gpios during driver unbind.
 
 Fixes: 42bbb70980f3 ("powerpc/5200: Add mpc5200-spi (non-PSC) device driver")
+Fixes: b8d4e2ce60b6 ("mpc52xx_spi: add gpio chipselect")
 Cc: stable@vger.kernel.org	# 2.6.33
 Cc: Grant Likely <grant.likely@secretlab.ca>
-Link: https://sashiko.dev/#/patchset/20260414134319.978196-1-johan%40kernel.org?part=3
+Cc: Luotao Fu <l.fu@pengutronix.de>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421125800.1537361-1-johan@kernel.org
+Link: https://patch.msgid.link/20260414134319.978196-4-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-mpc52xx.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-mpc52xx.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/spi/spi-mpc52xx.c
 +++ b/drivers/spi/spi-mpc52xx.c
-@@ -501,6 +501,9 @@ static int mpc52xx_spi_probe(struct plat
+@@ -523,6 +523,8 @@ static void mpc52xx_spi_remove(struct pl
+ 	struct mpc52xx_spi *ms = spi_controller_get_devdata(host);
+ 	int i;
  
-  err_register:
- 	dev_err(&ms->host->dev, "initialization failed\n");
-+	free_irq(ms->irq0, ms);
-+	free_irq(ms->irq1, ms);
-+	cancel_work_sync(&ms->work);
-  err_gpio:
- 	while (i-- > 0)
++	spi_unregister_controller(host);
++
+ 	cancel_work_sync(&ms->work);
+ 	free_irq(ms->irq0, ms);
+ 	free_irq(ms->irq1, ms);
+@@ -531,7 +533,6 @@ static void mpc52xx_spi_remove(struct pl
  		gpiod_put(ms->gpio_cs[i]);
+ 
+ 	kfree(ms->gpio_cs);
+-	spi_unregister_controller(host);
+ 	iounmap(ms->regs);
+ 	spi_controller_put(host);
+ }
 
 
