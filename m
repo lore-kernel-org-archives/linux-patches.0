@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AEB30566F;
-	Fri, 15 May 2026 15:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB2431D757;
+	Fri, 15 May 2026 15:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860696; cv=none; b=L12+oh0mHGRdc0FvYlv11I6cXYrNvGXe8EXKaIXaMf6/utHqla7CcJgamAxkiDcYAT0Pru54S/2rKgNpFzLewpQ4Nzo3GvY8xvVeO9Y15k9Th3qKwqEvgOqhnt+FrtakY2IGrEAQ8WwJxa5iQRoXujL7KnYmO72Jmrlw0IxUi7o=
+	t=1778860699; cv=none; b=c/8SiVDUxHQ0ElIxlvZINtBKYNP9nB00opQgnDKT3v1p2jV/NBAjwj89t/7z6zmkls7M1/HfAjpzhI8Zvk/otVQCvSp0Pq29kgX+d9k9pgogHkoF2HSv1+OZokzfBkGH5nMIpcezettp6YWlUC2vt6ybkhaEwDPEavNYsDTRXFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860696; c=relaxed/simple;
-	bh=qU2sUSJhC1hEWOVr2c06TW+VtzlhWFWyvM6Fe3h/x10=;
+	s=arc-20240116; t=1778860699; c=relaxed/simple;
+	bh=V+Vl9tfcEjxolgmguPUXkTKT0kBO7XAQL5FGLFHFmho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JlTU24Yj/dwIx5rx2NF2WbD9fjiK0I4rkIATS1g0KMW61OvFMl+eQReQmUMLjBo5vfH/2bwW1lMBlJjm1BV0peYWOqv+J6HYx95nCwShBBSSpWnXvI5dRfMlYKpJjYDR+GbGp6trCV//v9Y5VNEefCKf+panMDrriBXzzuS18is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3+SiSFx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UcVMvuzwLugGUpHTEmFyeUOBSq0Id8aqcwiho9yuMf8t5mZ07PbPHCx/DqUrXhvnMcxI/bdRsR9WmBL5jrI9t90zQnfjBqf6u7qhpDmeE+gTrCkJ8YcS24KYWYgTFTyUY74LBx26jusQuLp0OwJd+YK2OvfhYb3cgG7ILEx68ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSBupRh4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3+SiSFx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708A7C2BCB3;
-	Fri, 15 May 2026 15:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSBupRh4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFC5C2BCC7;
+	Fri, 15 May 2026 15:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860696;
-	bh=qU2sUSJhC1hEWOVr2c06TW+VtzlhWFWyvM6Fe3h/x10=;
+	s=korg; t=1778860699;
+	bh=V+Vl9tfcEjxolgmguPUXkTKT0kBO7XAQL5FGLFHFmho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E3+SiSFxFHYceE+rxVfo8k1wII/W+b93B1+/Hg6DIE3WeRH2L0eXoMSs0LMU+XKhY
-	 ccCL+W3xuF86XAQhlsGFfWjRdrBEeE9HWs4ws8PHLBb7M7z4BxMNhvKTlcVWdcS8tk
-	 5eaNXswxlBYck+qAagZBnNAgdQe7zD6eHFGv6DKk=
+	b=wSBupRh4r4bqX7OySKh8MCEeG1lO3xbh70X8IoZ0wqXHUB9Bvc8MkrTpqbF2jP7wY
+	 F41kuFp6LCnQ4NHlwgqLotf6NFYlxX9oHi8F3THO1Pbrq7WJgHp/ALm/cKip5xDzyU
+	 FCfauLV3sF4mA/N5M9GlChlog4DETHIxIQ5jOniA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 044/474] ALSA: seq_oss: return full count for successful SEQ_FULLSIZE writes
-Date: Fri, 15 May 2026 17:42:33 +0200
-Message-ID: <20260515154716.001242769@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>
+Subject: [PATCH 6.6 045/474] erofs: fix the out-of-bounds nameoff handling for trailing dirents
+Date: Fri, 15 May 2026 17:42:34 +0200
+Message-ID: <20260515154716.022019203@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -44,53 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit bbc6c0dda54fc0ad8f8aed0b796c23e186e1a188 upstream.
+commit d18a3b5d337fa412a38e776e6b4b857a58836575 upstream.
 
-snd_seq_oss_write() currently returns the raw load_patch() callback
-result for SEQ_FULLSIZE events.
+Currently we already have boundary-checks for nameoffs, but the trailing
+dirents are special since the namelens are calculated with strnlen()
+with unchecked nameoffs.
 
-That callback is documented as returning 0 on success and -errno on
-failure, but snd_seq_oss_write() is the file write path and should
-report the number of user bytes consumed on success. Some in-tree
-backends also return backend-specific positive values, which can still
-be shorter than the original write size.
+If a crafted EROFS has a trailing dirent with nameoff >= maxsize,
+maxsize - nameoff can underflow, causing strnlen() to read past the
+directory block.
 
-Return the full byte count for successful SEQ_FULLSIZE writes.
-Preserve negative errors and convert any nonnegative completion to the
-original count.
+nameoff0 should also be verified to be a multiple of
+`sizeof(struct erofs_dirent)` as well [1].
 
+[1] https://sashiko.dev/#/patchset/20260416063511.3173774-1-hsiangkao%40linux.alibaba.com
+
+Fixes: 3aa8ec716e52 ("staging: erofs: add directory operations")
+Fixes: 33bac912840f ("staging: erofs: keep corrupted fs from crashing kernel in erofs_readdir()")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Closes: https://lore.kernel.org/r/A0FD7E0F-7558-49B0-8BC8-EB1ECDB2479A@outlook.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260324-alsa-seq-oss-fullsize-write-return-v1-1-66d448510538@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/oss/seq_oss_rw.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/erofs/dir.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/sound/core/seq/oss/seq_oss_rw.c
-+++ b/sound/core/seq/oss/seq_oss_rw.c
-@@ -101,9 +101,9 @@ snd_seq_oss_write(struct seq_oss_devinfo
- 				break;
- 			}
- 			fmt = (*(unsigned short *)rec.c) & 0xffff;
--			/* FIXME the return value isn't correct */
--			return snd_seq_oss_synth_load_patch(dp, rec.s.dev,
--							    fmt, buf, 0, count);
-+			err = snd_seq_oss_synth_load_patch(dp, rec.s.dev,
-+							   fmt, buf, 0, count);
-+			return err < 0 ? err : count;
+--- a/fs/erofs/dir.c
++++ b/fs/erofs/dir.c
+@@ -22,20 +22,18 @@ static int erofs_fill_dentries(struct in
+ 		nameoff = le16_to_cpu(de->nameoff);
+ 		de_name = (char *)dentry_blk + nameoff;
+ 
+-		/* the last dirent in the block? */
+-		if (de + 1 >= end)
+-			de_namelen = strnlen(de_name, maxsize - nameoff);
+-		else
++		/* non-trailing dirent in the directory block? */
++		if (de + 1 < end)
+ 			de_namelen = le16_to_cpu(de[1].nameoff) - nameoff;
++		else if (maxsize <= nameoff)
++			goto err_bogus;
++		else
++			de_namelen = strnlen(de_name, maxsize - nameoff);
+ 
+-		/* a corrupted entry is found */
+-		if (nameoff + de_namelen > maxsize ||
+-		    de_namelen > EROFS_NAME_LEN) {
+-			erofs_err(dir->i_sb, "bogus dirent @ nid %llu",
+-				  EROFS_I(dir)->nid);
+-			DBG_BUGON(1);
+-			return -EFSCORRUPTED;
+-		}
++		/* a corrupted entry is found (including negative namelen) */
++		if (!in_range32(de_namelen, 1, EROFS_NAME_LEN) ||
++		    nameoff + de_namelen > maxsize)
++			goto err_bogus;
+ 
+ 		if (!dir_emit(ctx, de_name, de_namelen,
+ 			      le64_to_cpu(de->nid), d_type))
+@@ -44,6 +42,10 @@ static int erofs_fill_dentries(struct in
+ 		ctx->pos += sizeof(struct erofs_dirent);
+ 	}
+ 	return 0;
++err_bogus:
++	erofs_err(dir->i_sb, "bogus dirent @ nid %llu", EROFS_I(dir)->nid);
++	DBG_BUGON(1);
++	return -EFSCORRUPTED;
+ }
+ 
+ static int erofs_readdir(struct file *f, struct dir_context *ctx)
+@@ -72,7 +74,7 @@ static int erofs_readdir(struct file *f,
  		}
- 		if (ev_is_long(&rec)) {
- 			/* extended code */
+ 
+ 		nameoff = le16_to_cpu(de->nameoff);
+-		if (nameoff < sizeof(struct erofs_dirent) || nameoff >= bsz) {
++		if (!nameoff || nameoff >= bsz || (nameoff % sizeof(*de))) {
+ 			erofs_err(sb, "invalid de[0].nameoff %u @ nid %llu",
+ 				  nameoff, EROFS_I(dir)->nid);
+ 			err = -EFSCORRUPTED;
 
 
