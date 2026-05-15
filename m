@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E0B39B971;
-	Fri, 15 May 2026 16:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD323B1029;
+	Fri, 15 May 2026 16:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860859; cv=none; b=EBbOC6OGzthajdxG0q9Y47TXw27Cobk30FGoAt5DzO4RiTQVT165CRXclqUQaogw4EBuClCmSH35jSKuOoaR+OUSKYkzUzkeCO5kYl59pgmYNKKB0vl0BPeJzuQgB+8g8cdxSRofchwmBRG+Ams1ot0sYsZMOM5ylu7+Fu38VDo=
+	t=1778860862; cv=none; b=MIYIpULv20tmKeDleivVwsjTD3CsvFc/sKrFYWxoJn/rI2jvJYt9MVAyQGUa6qcyYmYRnBZ1SMPY8QhlNhoYLpz1Fo95MZghrcxF11i1f67/U2TpKvwo4B8HkbPdJVeWmmz/o688pzSZZTKVqqT3qIShmnJ33IvtA4VFnEm+G/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860859; c=relaxed/simple;
-	bh=XWkNoZ9146MuWTt1DO+Og6cjP5+YxBzSgXbU5nITfDs=;
+	s=arc-20240116; t=1778860862; c=relaxed/simple;
+	bh=Qaa9T1+gBDry2uRnocoU4xOg3wsHVA8F9Isn68lQNps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BjaNffDaNpUjOWdP8RwE1HijFbu5LC0vyKPlLryFCxAxMlJ8R4HiZ3yJE7mXRmK24KzH4totWTnpLVfiTY7ahl6Oa8RuntpKqoYPvanvrObYb1JOJmzCodTlIILQZ+D3qLXsnuud7sHLuj3pu+4tWYXL2akRG9mGidESFXrkjHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0zIDY0N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E86sjUvJ8ebXmcylKkCBXH1qN3VWJzom1rXIvM/S54ZLLKJwNzUWprEbrV6V4pwH/md4eFvBIAAyaFxx1Pdnsx2Qjg/pma3s8mZaMCPpAjMO7zhbnF0y7/nLypFRFZ5EqSJPXFE3GG4i+GON9NK7xhEVPwIxSf7kZZ1LQJZMbbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIIS0+ou; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0zIDY0N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15756C2BCB0;
-	Fri, 15 May 2026 16:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIIS0+ou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6489C2BCB3;
+	Fri, 15 May 2026 16:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860859;
-	bh=XWkNoZ9146MuWTt1DO+Og6cjP5+YxBzSgXbU5nITfDs=;
+	s=korg; t=1778860862;
+	bh=Qaa9T1+gBDry2uRnocoU4xOg3wsHVA8F9Isn68lQNps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0zIDY0NrNFpP65bgmPl4VAqXTtE20rBUXKE5mVRYCVuWX92+/SxsyApspa02uDoe
-	 +7p3X3yO2JwMSFotprUWacVH4+41fuctdu8C81RG77Lgt3ARUOxWAM0O/ENeVShNyc
-	 Wt/+LWFCVB5IoFFzq/iJdyGdyZdyeuIFJjCg3abo=
+	b=MIIS0+oueY22w193gsklkFtcxBowJNlosGt85o1DxStI6bB46Man6ZxDwZwYbNGUY
+	 naUioFgsvGpu5zoGJOZ7ZGVNmL6brc0nY97M/EVBbUQTl7+HgF1FAGoiH32MUDxk7F
+	 v1h1g6yG2SV/dWDbEUXbSKT5WfYSxay8zvIJVnd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 069/474] net: qrtr: ns: Free the node during ctrl_cmd_bye()
-Date: Fri, 15 May 2026 17:42:58 +0200
-Message-ID: <20260515154716.535908379@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 105/474] KVM: nSVM: Clear tracking of L1->L2 NMI and soft IRQ on nested #VMEXIT
+Date: Fri, 15 May 2026 17:43:34 +0200
+Message-ID: <20260515154717.308473622@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,73 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Yosry Ahmed <yosry@kernel.org>
 
-commit 68efba36446a7774ea5b971257ade049272a07ac upstream.
+commit 8998e1d012f3f45d0456f16706682cef04c3c436 upstream.
 
-A node sends the BYE packet when it is about to go down. So the nameserver
-should advertise the removal of the node to all remote and local observers
-and free the node finally. But currently, the nameserver doesn't free the
-node memory even after processing the BYE packet. This causes the node
-memory to leak.
+KVM clears tracking of L1->L2 injected NMIs (i.e. nmi_l1_to_l2) and soft
+IRQs (i.e. soft_int_injected) on a synthesized #VMEXIT(INVALID) due to
+failed VMRUN. However, they are not explicitly cleared in other
+synthesized #VMEXITs.
 
-Hence, remove the node from Xarray list and free the node memory during
-both success and failure case of ctrl_cmd_bye().
+soft_int_injected is always cleared after the first VMRUN of L2 when
+completing interrupts, as any re-injection is then tracked by KVM
+(instead of purely in vmcb02).
 
+nmi_l1_to_l2 is not cleared after the first VMRUN if NMI injection
+failed, as KVM still needs to keep track that the NMI originated from L1
+to avoid blocking NMIs for L1. It is only cleared when the NMI injection
+succeeds.
+
+KVM could synthesize a #VMEXIT to L1 before successfully injecting the
+NMI into L2 (e.g. due to a #NPF on L2's NMI handler in L1's NPTs). In
+this case, nmi_l1_to_l2 will remain true, and KVM may not correctly mask
+NMIs and intercept IRET when injecting an NMI into L1.
+
+Clear both nmi_l1_to_l2 and soft_int_injected in nested_svm_vmexit(), i.e.
+for all #VMEXITs except those that occur due to failed consistency checks,
+as those happen before nmi_l1_to_l2 or soft_int_injected are set.
+
+Fixes: 159fc6fa3b7d ("KVM: nSVM: Transparently handle L1 -> L2 NMI re-injection")
 Cc: stable@vger.kernel.org
-Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260409-qrtr-fix-v3-3-00a8a5ff2b51@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260303003421.2185681-13-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/ns.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ arch/x86/kvm/svm/nested.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -339,7 +339,7 @@ static int ctrl_cmd_bye(struct sockaddr_
- 	struct qrtr_node *node;
- 	unsigned long index;
- 	struct kvec iv;
--	int ret;
-+	int ret = 0;
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -913,8 +913,6 @@ int nested_svm_vmrun(struct kvm_vcpu *vc
  
- 	iv.iov_base = &pkt;
- 	iv.iov_len = sizeof(pkt);
-@@ -354,8 +354,10 @@ static int ctrl_cmd_bye(struct sockaddr_
+ out_exit_err:
+ 	svm->nested.nested_run_pending = 0;
+-	svm->nmi_l1_to_l2 = false;
+-	svm->soft_int_injected = false;
  
- 	/* Advertise the removal of this client to all local servers */
- 	local_node = node_get(qrtr_ns.local_node);
--	if (!local_node)
--		return 0;
-+	if (!local_node) {
-+		ret = 0;
-+		goto delete_node;
-+	}
+ 	svm->vmcb->control.exit_code    = SVM_EXIT_ERR;
+ 	svm->vmcb->control.exit_code_hi = -1u;
+@@ -1154,6 +1152,10 @@ int nested_svm_vmexit(struct vcpu_svm *s
+ 	if (unlikely(vmcb01->save.rflags & X86_EFLAGS_TF))
+ 		kvm_queue_exception(&(svm->vcpu), DB_VECTOR);
  
- 	memset(&pkt, 0, sizeof(pkt));
- 	pkt.cmd = cpu_to_le32(QRTR_TYPE_BYE);
-@@ -372,10 +374,18 @@ static int ctrl_cmd_bye(struct sockaddr_
- 		ret = kernel_sendmsg(qrtr_ns.sock, &msg, &iv, 1, sizeof(pkt));
- 		if (ret < 0) {
- 			pr_err("failed to send bye cmd\n");
--			return ret;
-+			goto delete_node;
- 		}
- 	}
--	return 0;
++	/* Drop tracking for L1->L2 injected NMIs and soft IRQs */
++	svm->nmi_l1_to_l2 = false;
++	svm->soft_int_injected = false;
 +
-+	/* Ignore -ENODEV */
-+	ret = 0;
-+
-+delete_node:
-+	xa_erase(&nodes, from->sq_node);
-+	kfree(node);
-+
-+	return ret;
- }
- 
- static int ctrl_cmd_del_client(struct sockaddr_qrtr *from,
+ 	/*
+ 	 * Un-inhibit the AVIC right away, so that other vCPUs can start
+ 	 * to benefit from it right away.
 
 
