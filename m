@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A13B4D2EC5;
-	Fri, 15 May 2026 16:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCB43F6C30;
+	Fri, 15 May 2026 16:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861814; cv=none; b=FB8Mbma/dbsiD3RFoTMimSpN4ZttukYhwe0BDmKIUchu3aSPISA72s8d8Nck78FZkyBWI3O0YpMJi/5xZ8xnRQP6oJ9jRo6Rm7iSyDOtboJdSSKwsYOUeNcOLxQmVOYn7/BMAtJ7sFRj7EWoQWWBX/17XIFN7oaEzGItONfSCV8=
+	t=1778861816; cv=none; b=hW4fJIDxXULDjiCyV/dHY83I5OJqOj9yxQRZqxcRKGE2+UyeW31U0oD9bSMkg3yOECyhkug76nLG7MsCepHFKIsk2jtDjvKhQtdC7ej8egH4D7cvtG3S+kCxqxPBdQI1RfGMpl601moSkFLad3t4+JMVswO5V1rqRqWpbfAuyNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861814; c=relaxed/simple;
-	bh=89bORoSa64zFTTnbNIY7qbnrcz/C4Lymhb8Bgko6xSo=;
+	s=arc-20240116; t=1778861816; c=relaxed/simple;
+	bh=UeULd/xJ8RyqC+uBbc4t5V23wF0mUnRS5IGMzB+I7Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JBJKTibe0alxaCsyK0TwYAKorNgFwxI0E5dDPXZOyrEC0GOoSZdyBO27Dm3VRu7LMCpwU9OofCcz7vpDwfeN5CB8DmuciYIIgftMZqNCyInzCP04rgD+j/kVOf4xn+3KzEjpnD70JtWS8RkY6v2vFFYi/apiyQ1Grns3aT6zEaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5wlikla; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nLpLRYm/MvXUAMonDt/XVetg22mEKKMF01SQkW7hPQVk3BTX+m93UcpzCQHQyWLeXxY9991mAoJR0dVghIcu6UQpresyBcL87d/jP+ZhHgqx7cjx2xbaOWlIbw/Vsd/JinTQMAW45eQsQekNi7itciTqCLwLaiNzgAdGG+v2dCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewxffobX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5wlikla"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA964C2BCB0;
-	Fri, 15 May 2026 16:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewxffobX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C7DC2BCB0;
+	Fri, 15 May 2026 16:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861814;
-	bh=89bORoSa64zFTTnbNIY7qbnrcz/C4Lymhb8Bgko6xSo=;
+	s=korg; t=1778861816;
+	bh=UeULd/xJ8RyqC+uBbc4t5V23wF0mUnRS5IGMzB+I7Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5wliklaE8hzrtQde8bkdU7IYh46H0odYruK70K8gFrZM2jJkbtx0tUOu0VmW2AFI
-	 PYDhmQmj1BFOrhmu8Y2MnSqrYXbq63oh3aRzO4tPJEwmqk9hBNCuDfqlpjz86GQa6s
-	 exkBjDBCOJhDJ6iGisILuBUXkSzx/x9DqgrlSms8=
+	b=ewxffobXD0vlvfhswRgmCVEXaTGZb3O5IsruNGqnRTYRmXYvl/VgNZC02bNJWPg6Z
+	 lXjYFAFLeJN5eDRacEaPofipyiUUQmP/3ARgRphynPOvM5huZIJZeAU8elSnVFuQA+
+	 vpKbvIkdkCq06Btd8Celgl0kuAd5H8045u349HHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Michal Simek <michal.simek@amd.com>,
+	Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
+	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 431/474] spi: zynq-qspi: Simplify clock handling with devm_clk_get_enabled()
-Date: Fri, 15 May 2026 17:49:00 +0200
-Message-ID: <20260515154724.398087608@linuxfoundation.org>
+Subject: [PATCH 6.6 432/474] spi: zynq-qspi: fix controller deregistration
+Date: Fri, 15 May 2026 17:49:01 +0200
+Message-ID: <20260515154724.422024446@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,137 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 1f8fd9490e3184e9a2394df2e682901a1d57ce71 ]
+[ Upstream commit c9c012706c9fa8ca6d129a9161caf92ab625a3fd ]
 
-Replace devm_clk_get() followed by clk_prepare_enable() with
-devm_clk_get_enabled() for both "pclk" and "ref_clk". This removes
-the need for explicit clock enable and disable calls, as the managed
-API automatically disables the clocks on device removal or probe
-failure.
+Make sure to deregister the controller before disabling it during driver
+unbind.
 
-Remove the now-unnecessary clk_disable_unprepare() calls from the
-probe error paths and the remove callback. Simplify error handling
-by jumping directly to the remove_ctlr label.
+Note that clocks were also disabled before the recent commit
+1f8fd9490e31 ("spi: zynq-qspi: Simplify clock handling with
+devm_clk_get_enabled()").
 
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/24043625f89376da36feca2408f990a85be7ab36.1775555500.git.xiaopei01@kylinos.cn
+Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
+Cc: stable@vger.kernel.org	# 5.2: 8eb2fd00f65a
+Cc: stable@vger.kernel.org	# 5.2
+Cc: Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-27-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: c9c012706c9f ("spi: zynq-qspi: fix controller deregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-zynq-qspi.c |   42 ++++++------------------------------------
- 1 file changed, 6 insertions(+), 36 deletions(-)
+ drivers/spi/spi-zynq-qspi.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 --- a/drivers/spi/spi-zynq-qspi.c
 +++ b/drivers/spi/spi-zynq-qspi.c
-@@ -379,21 +379,10 @@ static int zynq_qspi_setup_op(struct spi
- {
- 	struct spi_controller *ctlr = spi->controller;
- 	struct zynq_qspi *qspi = spi_controller_get_devdata(ctlr);
--	int ret;
+@@ -641,7 +641,7 @@ static int zynq_qspi_probe(struct platfo
  
- 	if (ctlr->busy)
- 		return -EBUSY;
+ 	xqspi = spi_controller_get_devdata(ctlr);
+ 	xqspi->dev = dev;
+-	platform_set_drvdata(pdev, xqspi);
++	platform_set_drvdata(pdev, ctlr);
+ 	xqspi->regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(xqspi->regs)) {
+ 		ret = PTR_ERR(xqspi->regs);
+@@ -699,9 +699,9 @@ static int zynq_qspi_probe(struct platfo
+ 	/* QSPI controller initializations */
+ 	zynq_qspi_init_hw(xqspi, ctlr->num_chipselect);
  
--	ret = clk_enable(qspi->refclk);
--	if (ret)
--		return ret;
--
--	ret = clk_enable(qspi->pclk);
--	if (ret) {
--		clk_disable(qspi->refclk);
--		return ret;
--	}
--
- 	zynq_qspi_write(qspi, ZYNQ_QSPI_ENABLE_OFFSET,
- 			ZYNQ_QSPI_ENABLE_ENABLE_MASK);
- 
-@@ -659,7 +648,7 @@ static int zynq_qspi_probe(struct platfo
- 		goto remove_ctlr;
- 	}
- 
--	xqspi->pclk = devm_clk_get(&pdev->dev, "pclk");
-+	xqspi->pclk = devm_clk_get_enabled(&pdev->dev, "pclk");
- 	if (IS_ERR(xqspi->pclk)) {
- 		dev_err(&pdev->dev, "pclk clock not found.\n");
- 		ret = PTR_ERR(xqspi->pclk);
-@@ -668,36 +657,24 @@ static int zynq_qspi_probe(struct platfo
- 
- 	init_completion(&xqspi->data_completion);
- 
--	xqspi->refclk = devm_clk_get(&pdev->dev, "ref_clk");
-+	xqspi->refclk = devm_clk_get_enabled(&pdev->dev, "ref_clk");
- 	if (IS_ERR(xqspi->refclk)) {
- 		dev_err(&pdev->dev, "ref_clk clock not found.\n");
- 		ret = PTR_ERR(xqspi->refclk);
- 		goto remove_ctlr;
- 	}
- 
--	ret = clk_prepare_enable(xqspi->pclk);
--	if (ret) {
--		dev_err(&pdev->dev, "Unable to enable APB clock.\n");
--		goto remove_ctlr;
--	}
--
--	ret = clk_prepare_enable(xqspi->refclk);
--	if (ret) {
--		dev_err(&pdev->dev, "Unable to enable device clock.\n");
--		goto clk_dis_pclk;
--	}
--
- 	xqspi->irq = platform_get_irq(pdev, 0);
- 	if (xqspi->irq < 0) {
- 		ret = xqspi->irq;
--		goto clk_dis_all;
-+		goto remove_ctlr;
- 	}
- 	ret = devm_request_irq(&pdev->dev, xqspi->irq, zynq_qspi_irq,
- 			       0, pdev->name, xqspi);
- 	if (ret != 0) {
- 		ret = -ENXIO;
- 		dev_err(&pdev->dev, "request_irq failed\n");
--		goto clk_dis_all;
-+		goto remove_ctlr;
- 	}
- 
- 	ret = of_property_read_u32(np, "num-cs",
-@@ -707,7 +684,7 @@ static int zynq_qspi_probe(struct platfo
- 	} else if (num_cs > ZYNQ_QSPI_MAX_NUM_CS) {
- 		ret = -EINVAL;
- 		dev_err(&pdev->dev, "only 2 chip selects are available\n");
--		goto clk_dis_all;
-+		goto remove_ctlr;
- 	} else {
- 		ctlr->num_chipselect = num_cs;
- 	}
-@@ -725,15 +702,11 @@ static int zynq_qspi_probe(struct platfo
- 	ret = devm_spi_register_controller(&pdev->dev, ctlr);
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
  	if (ret) {
- 		dev_err(&pdev->dev, "devm_spi_register_controller failed\n");
--		goto clk_dis_all;
-+		goto remove_ctlr;
+-		dev_err(&pdev->dev, "devm_spi_register_controller failed\n");
++		dev_err(&pdev->dev, "failed to register controller\n");
+ 		goto remove_ctlr;
  	}
  
- 	return ret;
- 
--clk_dis_all:
--	clk_disable_unprepare(xqspi->refclk);
--clk_dis_pclk:
--	clk_disable_unprepare(xqspi->pclk);
- remove_ctlr:
- 	spi_controller_put(ctlr);
- 
-@@ -755,9 +728,6 @@ static void zynq_qspi_remove(struct plat
- 	struct zynq_qspi *xqspi = platform_get_drvdata(pdev);
+@@ -725,9 +725,16 @@ remove_ctlr:
+  */
+ static void zynq_qspi_remove(struct platform_device *pdev)
+ {
+-	struct zynq_qspi *xqspi = platform_get_drvdata(pdev);
++	struct spi_controller *ctlr = platform_get_drvdata(pdev);
++	struct zynq_qspi *xqspi = spi_controller_get_devdata(ctlr);
++
++	spi_controller_get(ctlr);
++
++	spi_unregister_controller(ctlr);
  
  	zynq_qspi_write(xqspi, ZYNQ_QSPI_ENABLE_OFFSET, 0);
--
--	clk_disable_unprepare(xqspi->refclk);
--	clk_disable_unprepare(xqspi->pclk);
++
++	spi_controller_put(ctlr);
  }
  
  static const struct of_device_id zynq_qspi_of_match[] = {
