@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD333E0089;
-	Fri, 15 May 2026 16:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A5F30568A;
+	Fri, 15 May 2026 16:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860921; cv=none; b=EFvcQiOPP2yDkj8yFmlbRPpfkVKsgumiDf4lEjwDfdeWpF3dut20u1GWWEkReDCtT6Sw9mrb5WMKlm+mrmTcDqN7zJaiU+pAcGlSAmpnT8v4sWvZtqf8N+8+R7zNzSENLrx6EcdNc6BSDxaRAG+9upKQOGCsJwG1JASa6tGWM+o=
+	t=1778860923; cv=none; b=JmPqQwULwaKfRl5kYLsLipdqFJV3zpPSJ5sHCN7p2yh0tYpklmVxDAsWOUE3u/pJ7A/UhvK/JJO1NrUxksyQjumKNCdZPa7+Y2/2YJQdi78jOU9q0lkZ5vII7np/Dnz3YggjrHWxpAiLcTcHbfx0HTPI20QrDhEPFWzZdLe6eho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860921; c=relaxed/simple;
-	bh=gHDPfEqpCX3dhZn5l7pqjluiHXLtxQl1kfxxCPk5GrI=;
+	s=arc-20240116; t=1778860923; c=relaxed/simple;
+	bh=ezl4yLPUptX+gUkY0h6Lttk1ZeFN5dccwyu4/otr6KU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OmSwa5F9IDIQcuhvarPW5ODvHksd2ZBEGRJLoMqtDpIVOXkyYU2osn7jkJ+ciYjYwUhFhBJoTFeWWzUTxv/P3Z2v36sqP/O/lvEpBeJ/grgfbEj1tko+jCQ6hAsanX0Q4eoOVbRxehxXouL+gA5WAF6ywu1cvPnAoiQZ2gbLKDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUTyE3Bk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PIBJ9L05RcsS/1l+HJFjBD99TrxrI0l9/c2URXGjI6ZrpvQ1xt9z2Hb0L+zsLbLsTfWBg9hY7PoxVhZctVpm85UXiywNWaAFEalpOTOWTLZc9YAcsLbF+oc5zmxVuidYTlkWwOWzhL1WSJHT3xydXwX01f1LctVjFdgKacaKMko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYD8MdPj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUTyE3Bk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DA9C2BCB0;
-	Fri, 15 May 2026 16:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYD8MdPj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D663C2BCB0;
+	Fri, 15 May 2026 16:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860921;
-	bh=gHDPfEqpCX3dhZn5l7pqjluiHXLtxQl1kfxxCPk5GrI=;
+	s=korg; t=1778860923;
+	bh=ezl4yLPUptX+gUkY0h6Lttk1ZeFN5dccwyu4/otr6KU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUTyE3BksVUPupS/xpH+AGBP+Vs7bPYBHDZNNlu3mUkLFzUlmpL9U+2HOlB8P3I8p
-	 evrW0eSkDFLaEqNAx6/s0WdFcyOsC6xchsdVzDBYeUztOnP2KWvQr2YAlNYLJu1Cg+
-	 wCiKY+yxsb5z+MqOvd5SL3SWdExW9Fw03mTOK5qM=
+	b=EYD8MdPjszRTdmbrXpnvB6fRSXqAx+2jjkJJbZzS3SYQIMg1413rfvCXg5SFPvuyX
+	 Db5X2+Ks+LLb8vYXnWq+lrrKxERXlAKKfe2LYN+bCzVgw/jvIpjRAMAt7A7nGE3AjS
+	 ZDSZc31vkcrp+BcwXQexIDQXXoljcFE2Va0f6ePA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tobias Gaertner <tob.gaertner@me.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.6 130/474] ntfs3: add buffer boundary checks to run_unpack()
-Date: Fri, 15 May 2026 17:43:59 +0200
-Message-ID: <20260515154717.845495189@linuxfoundation.org>
+Subject: [PATCH 6.6 131/474] ntfs3: fix integer overflow in run_unpack() volume boundary check
+Date: Fri, 15 May 2026 17:44:00 +0200
+Message-ID: <20260515154717.866959897@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,16 +52,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Tobias Gaertner <tob.gaertner@me.com>
 
-commit b62567bca47408e6739dee75f02a2113548af875 upstream.
+commit 984a415f019536ea2d24de9010744e5302a9a948 upstream.
 
-run_unpack() checks `run_buf < run_last` at the top of the while loop
-but then reads size_size and offset_size bytes via run_unpack_s64()
-without verifying they fit within the remaining buffer.  A crafted NTFS
-image with truncated run data in an MFT attribute triggers an OOB heap
-read of up to 15 bytes when the filesystem is mounted.
-
-Add boundary checks before each run_unpack_s64() call to ensure the
-declared field size does not exceed the remaining buffer.
+The volume boundary check `lcn + len > sbi->used.bitmap.nbits` uses raw
+addition which can wrap around for large lcn and len values, bypassing
+the validation.  Use check_add_overflow() as is already done for the
+adjacent prev_lcn + dlcn and vcn64 + len checks added by commit
+3ac37e100385 ("ntfs3: Fix integer overflow in run_unpack()").
 
 Found by fuzzing with a source-patched harness (LibAFL + QEMU).
 
@@ -71,30 +68,29 @@ Signed-off-by: Tobias Gaertner <tob.gaertner@me.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/run.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ntfs3/run.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 --- a/fs/ntfs3/run.c
 +++ b/fs/ntfs3/run.c
-@@ -963,6 +963,9 @@ int run_unpack(struct runs_tree *run, st
- 		if (size_size > 8)
- 			return -EINVAL;
- 
-+		if (run_buf + size_size > run_last)
-+			return -EINVAL;
+@@ -1018,9 +1018,15 @@ int run_unpack(struct runs_tree *run, st
+ 			return -EOPNOTSUPP;
+ 		}
+ #endif
+-		if (lcn != SPARSE_LCN64 && lcn + len > sbi->used.bitmap.nbits) {
+-			/* LCN range is out of volume. */
+-			return -EINVAL;
++		if (lcn != SPARSE_LCN64) {
++			u64 lcn_end;
 +
- 		len = run_unpack_s64(run_buf, size_size, 0);
- 		/* Skip size_size. */
- 		run_buf += size_size;
-@@ -975,6 +978,9 @@ int run_unpack(struct runs_tree *run, st
- 		else if (offset_size <= 8) {
- 			s64 dlcn;
- 
-+			if (run_buf + offset_size > run_last)
++			if (check_add_overflow(lcn, len, &lcn_end))
 +				return -EINVAL;
-+
- 			/* Initial value of dlcn is -1 or 0. */
- 			dlcn = (run_buf[offset_size - 1] & 0x80) ? (s64)-1 : 0;
- 			dlcn = run_unpack_s64(run_buf, offset_size, dlcn);
++			if (lcn_end > sbi->used.bitmap.nbits) {
++				/* LCN range is out of volume. */
++				return -EINVAL;
++			}
+ 		}
+ 
+ 		if (!run)
 
 
