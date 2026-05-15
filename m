@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8C33FD956;
-	Fri, 15 May 2026 16:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5643F3EFFB2;
+	Fri, 15 May 2026 16:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861701; cv=none; b=FuOKY8OhgQ71mAaYogh7iHyBkM6febx4oN2yPpo6Eim6Moep+u5ClhdlQJeQGm7v5zwB/Vu6tdu2gwSdeVdTjesB/CGFnifLC59hMFUUdMQfFK08QPeLusvVVzCqZw0iJZkInILAVSZB/hYyCybdIX8yTEX5IVxaq8xvilUCcf0=
+	t=1778861704; cv=none; b=QlUkDsT0+diJ4fh1fmIJCl0A+lCL+XnIHdrXgr4nG55NsgoH9w2a1Dj87bq4413AJYOez295VP+sKlc+fEPpb495InspdstCK3IiELGYApd4D71WaAsy6tOByfigftBhe6id/f5Oin3UfzCYh3zAkD91dFwPNfaYbHMmSmZB8Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861701; c=relaxed/simple;
-	bh=BIUCNHagUsviY+ceLW09rwWdcG++bWVFfUSVLUlyyp4=;
+	s=arc-20240116; t=1778861704; c=relaxed/simple;
+	bh=+9SXb7RoBo5lPyb29VP1Z/T996UxzdsearJ5i325Lks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bArsmVB7Y4yi9q7dT0GlPpmr8JQDCo7nGP33ujkFPp/i0/Nu1B8R1Gp3ugWtbIT4YWs+h7CsjxcUD7dSN7/u6ejiOPP91Yuo0Xj+pUfGn5njR0LKYOiSgrZlxYYeBCbRUx01+lhwGjbdRXeNS44VzqBGvjRmdxuvG5dxacRECnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fP9IPO1T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VY4zVCGi0iK/HpQ5PKvVbGyydqsIMbKpQR7gTSdGhse0cjwrT16mWdvRWxkgq7ayqUUnpbSYwiEANFpnL67WVenhAUfOIv9Kdfqh9I7k8KYl3UF1ycl/SRgYn2Cv47kSH+Zif0eyRLwea5Y+qK5MS/IKU/jPfKOrtcZWDo+Krjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGTNmGb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fP9IPO1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189B2C2BCB0;
-	Fri, 15 May 2026 16:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGTNmGb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2378C2BCB0;
+	Fri, 15 May 2026 16:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861701;
-	bh=BIUCNHagUsviY+ceLW09rwWdcG++bWVFfUSVLUlyyp4=;
+	s=korg; t=1778861704;
+	bh=+9SXb7RoBo5lPyb29VP1Z/T996UxzdsearJ5i325Lks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fP9IPO1TypVKmZWJsunupJIudCXZLIN5eXf1g5ce651xIVV5GaA4ZY56chiikwUeg
-	 kcnuvaqPBkQdBqO42Vci4YLkkJ70FadGEoFhu9i2kOffC7oqYpD/tang3OY5OMhPNV
-	 6R8S2GY8odIk1Uqluw1z6/JjxMjYKgt6QkIvKXZo=
+	b=fGTNmGb74qoFO7aGGu+23d9fpPRN6n6HomMP7M79fpnq/BDgTa2+4EHk9EwKEp22f
+	 EIfFjUEf3J/eyvxHMzBGCITtiKPKAOJTVSgJ0ZdcmTMarDLyX6rzo2lhBqSyuLgO77
+	 CzsMyax6zqVVU/WWxkZLA9NrNfbi7LZEzccON5Xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 6.6 378/474] ipmi:ssif: Fix a shutdown race
-Date: Fri, 15 May 2026 17:48:07 +0200
-Message-ID: <20260515154723.211323373@linuxfoundation.org>
+	Masahisa Kojima <masahisa.kojima@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 424/474] spi: syncuacer: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:53 +0200
+Message-ID: <20260515154724.239503629@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -49,45 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Johan Hovold <johan@kernel.org>
 
-It was possible for the SSIF thread to stop and quit before the
-kthread_stop() call because ssif->stopping was set before the
-stop.  So only exit the SSIF thread is kthread_should_stop()
-returns true.
+[ Upstream commit 75d849c3452e9611de031db45b3149ba9a99035f ]
 
-There is no need to wake the thread, as the wait will be interrupted
-by kthread_stop().
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
-(cherry picked from commit 6bd0eb6d759b9a22c5509ea04e19c2e8407ba418)
+Fixes: b0823ee35cf9 ("spi: Add spi driver for Socionext SynQuacer platform")
+Cc: stable@vger.kernel.org	# 5.3
+Cc: Masahisa Kojima <masahisa.kojima@linaro.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-21-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/spi/spi-synquacer.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -490,8 +490,6 @@ static int ipmi_ssif_thread(void *data)
- 		/* Wait for something to do */
- 		result = wait_for_completion_interruptible(
- 						&ssif_info->wake_thread);
--		if (ssif_info->stopping)
--			break;
- 		if (result == -ERESTARTSYS)
- 			continue;
- 		init_completion(&ssif_info->wake_thread);
-@@ -1289,10 +1287,8 @@ static void shutdown_ssif(void *send_inf
- 	ssif_info->stopping = true;
- 	del_timer_sync(&ssif_info->watch_timer);
- 	del_timer_sync(&ssif_info->retry_timer);
--	if (ssif_info->thread) {
--		complete(&ssif_info->wake_thread);
-+	if (ssif_info->thread)
- 		kthread_stop(ssif_info->thread);
--	}
+--- a/drivers/spi/spi-synquacer.c
++++ b/drivers/spi/spi-synquacer.c
+@@ -719,7 +719,7 @@ static int synquacer_spi_probe(struct pl
+ 	pm_runtime_set_active(sspi->dev);
+ 	pm_runtime_enable(sspi->dev);
+ 
+-	ret = devm_spi_register_controller(sspi->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret)
+ 		goto disable_pm;
+ 
+@@ -740,9 +740,15 @@ static void synquacer_spi_remove(struct
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct synquacer_spi *sspi = spi_controller_get_devdata(host);
+ 
++	spi_controller_get(host);
++
++	spi_unregister_controller(host);
++
+ 	pm_runtime_disable(sspi->dev);
+ 
+ 	clk_disable_unprepare(sspi->clk);
++
++	spi_controller_put(host);
  }
  
- static void ssif_remove(struct i2c_client *client)
+ static int __maybe_unused synquacer_spi_suspend(struct device *dev)
 
 
