@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F4E3F8716;
-	Fri, 15 May 2026 16:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877743F8716;
+	Fri, 15 May 2026 16:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862411; cv=none; b=dq23kXcQKs8kL/vjSktH8/ElbBdT4Ki2SoAIzwfNcGDlssPOsoMRVw/sqGz9VjLdJ1CLiRHQ1trODoyue3otiTW53SJ0rLPXiJbskcNZMf8jKDGhDE8q7HsSgCLELGNOwrkbHcKi2he7Xiov0DqaSLWUoqGES8WsE8lP3MijNi8=
+	t=1778862414; cv=none; b=XdGFFO/Z8ReKg+FdDDN+wTxO17pvWoutIQmeaOAk8iyTjahLcdrk5GPUIZ4f2lTb/3HoeBr7XNN3dSLPi6GFZK6VWPq+rF8SGkB5SNLETOUSv4f8SDvhDEXtKtZ0YRMkBkTMZsqEH5VZWOQjYKZbpoi+sOzO19vbDMpsAOYZb3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862411; c=relaxed/simple;
-	bh=dfzh2BwV/5a7I/tepkp8frk790HMlzCYApXc8cK0D60=;
+	s=arc-20240116; t=1778862414; c=relaxed/simple;
+	bh=3KMG9AA8rD3Bj28EJ4edBTuJpHw8f+W5yonWiZ69+wE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noGcYvOdTtCsotGcHqoBEk5geTBoSVjPLJ5spyUgixc3qtXzscO9W3hItGGphLbNPOtpx077buCIkgRBi1acLkE+LL8yzk+sN1v5axf9/4RCl1WjQdoopZXFk8xLwvOL4zQPga/6vT4jQHSAkoURUgCt32Y+LiT2W7eJxkyl4po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAQoAcXr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OqqmM3tBNq4j71uQdj+Yy5LYYvNQlXMcs2HE3Si2/8fioDgLTGrcHMJB/19qijInSbaJxYSRF0QsVK/Z4LvHvMli4CD+nMrFRCUjRnonGcM9UFo5sVaJsO09zy49CfHJXtnwwd6z9YIQK1uyeNd72lIzedMYlsqcfjk/OruAp0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1aTdip8k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAQoAcXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C15C2BCB0;
-	Fri, 15 May 2026 16:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1aTdip8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9BCAC2BCB0;
+	Fri, 15 May 2026 16:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862411;
-	bh=dfzh2BwV/5a7I/tepkp8frk790HMlzCYApXc8cK0D60=;
+	s=korg; t=1778862414;
+	bh=3KMG9AA8rD3Bj28EJ4edBTuJpHw8f+W5yonWiZ69+wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FAQoAcXrUx+zauOzpK84zaRp7txPPMBxk70b+SGG5D+4R2M0qI+npkZ7FUnixC00v
-	 6nNuYqmpAIkFdz4jeiDcdPnLR12rk9Epz/hTdPphVHD5kzmV9TZRtuJMPyCHNfg7GP
-	 z7K3i11wQFjglxKSqjfs4Ous4mTKkvgtO4v1EAn0=
+	b=1aTdip8kD2jl5mCZnXDGIJmvemSoAPstFoRKiTL8esfqG1fdMzIycpNWUoi/949BA
+	 UuvubCfYLKisuEB2W2w+qGDPUAq53nZRhufmd7h3vOTt184IER1csrsNwkO4dfaY4+
+	 ySOEhonsB264XAYMn8tDTq2qJ7SbhzRUEJgm4eQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 037/201] media: rc: streamzap: Error handling in probe
-Date: Fri, 15 May 2026 17:47:35 +0200
-Message-ID: <20260515154659.337907797@linuxfoundation.org>
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Tarang Raval <tarang.raval@siliconsignals.io>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 7.0 038/201] media: i2c: ov5647: Fix runtime PM refcount leak in s_ctrl
+Date: Fri, 15 May 2026 17:47:36 +0200
+Message-ID: <20260515154659.359942890@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -51,54 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit 42844992664f03ef9f930e64f7370fa481e9c267 upstream.
+commit f11ae9c04f8368a3b5a0280ef595198dace1c983 upstream.
 
-If submitting the URB fails, the device will be unusable.
-Probe() must fail.
+Three control cases (AUTOGAIN, EXPOSURE_AUTO, ANALOGUE_GAIN) directly
+return without calling pm_runtime_put(), causing runtime PM reference
+count leaks.
 
-Fixes: 7a569f524dd36 ("V4L/DVB: IR/streamzap: functional in-kernel decoding")
+Change these cases from 'return' to 'ret = ... break' pattern to ensure
+pm_runtime_put() is always called before function exit.
+
+Fixes: 4f66f36388d5 ("media: i2c: ov5647: Convert to CCI register access helpers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Tarang Raval <tarang.raval@siliconsignals.io>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/streamzap.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/media/i2c/ov5647.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/media/rc/streamzap.c
-+++ b/drivers/media/rc/streamzap.c
-@@ -219,9 +219,8 @@ static void streamzap_callback(struct ur
- 	case -ESHUTDOWN:
- 		/*
- 		 * this urb is terminated, clean up.
--		 * sz might already be invalid at this point
- 		 */
--		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
-+		dev_dbg(sz->dev, "urb terminated, status: %d\n", urb->status);
- 		return;
- 	default:
+diff --git a/drivers/media/i2c/ov5647.c b/drivers/media/i2c/ov5647.c
+index 6a46ef7233ac..db9bd2892140 100644
+--- a/drivers/media/i2c/ov5647.c
++++ b/drivers/media/i2c/ov5647.c
+@@ -967,21 +967,21 @@ static int ov5647_s_ctrl(struct v4l2_ctrl *ctrl)
  		break;
-@@ -358,11 +357,16 @@ static int streamzap_probe(struct usb_in
- 
- 	usb_set_intfdata(intf, sz);
- 
--	if (usb_submit_urb(sz->urb_in, GFP_ATOMIC))
-+	retval = usb_submit_urb(sz->urb_in, GFP_ATOMIC);
-+	if (retval < 0) {
- 		dev_err(sz->dev, "urb submit failed\n");
-+		goto rc_submit_fail;
-+	}
- 
- 	return 0;
--
-+rc_submit_fail:
-+	rc_free_device(sz->rdev);
-+	usb_set_intfdata(intf, NULL);
- rc_dev_fail:
- 	usb_free_urb(sz->urb_in);
- free_buf_in:
+ 	case V4L2_CID_AUTOGAIN:
+ 		/* Non-zero turns on AGC by clearing bit 1.*/
+-		return cci_update_bits(sensor->regmap, OV5647_REG_AEC_AGC, BIT(1),
+-				       ctrl->val ? 0 : BIT(1), NULL);
++		ret = cci_update_bits(sensor->regmap, OV5647_REG_AEC_AGC, BIT(1),
++				      ctrl->val ? 0 : BIT(1), NULL);
+ 		break;
+ 	case V4L2_CID_EXPOSURE_AUTO:
+ 		/*
+ 		 * Everything except V4L2_EXPOSURE_MANUAL turns on AEC by
+ 		 * clearing bit 0.
+ 		 */
+-		return cci_update_bits(sensor->regmap, OV5647_REG_AEC_AGC, BIT(0),
+-				       ctrl->val == V4L2_EXPOSURE_MANUAL ? BIT(0) : 0, NULL);
++		ret = cci_update_bits(sensor->regmap, OV5647_REG_AEC_AGC, BIT(0),
++				      ctrl->val == V4L2_EXPOSURE_MANUAL ? BIT(0) : 0, NULL);
+ 		break;
+ 	case V4L2_CID_ANALOGUE_GAIN:
+ 		/* 10 bits of gain, 2 in the high register. */
+-		return cci_write(sensor->regmap, OV5647_REG_GAIN,
+-				 ctrl->val & 0x3ff, NULL);
++		ret = cci_write(sensor->regmap, OV5647_REG_GAIN,
++				ctrl->val & 0x3ff, NULL);
+ 		break;
+ 	case V4L2_CID_EXPOSURE:
+ 		/*
+-- 
+2.54.0
+
 
 
