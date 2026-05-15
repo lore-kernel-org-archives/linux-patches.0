@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F1E3A961B;
-	Fri, 15 May 2026 16:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250913A961B;
+	Fri, 15 May 2026 16:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860867; cv=none; b=cuRXg9XmmyFgu3B58kjmdV/CFiSQN/ykEE4k+xK4fcfk6BW+9MeDZP8W9JMLBjgJLHlhyXVZSEs2SrACK1/bqhZ8eAajJFaWHdCTVD1keIj9cBeEBFqyKnaqvX8M7gjuSCt+H8u3UG8rEZCE9AKKAEbZTjziyf1YyFCLpfSuXAk=
+	t=1778860870; cv=none; b=C+N1aQ7w75mlzRDMt+uaNZ3LzX+mQbeYLPNvW0K0M8djLYTcDB9IsSqQbxELLXsHLnYJ2wq29rMjnsvGZsGMbyhHioBlbxo4dqliCSQAT0zpzj04QzPhfY7PxpeDipqmUPYlIzXpAHVO7QMr0452sXTOXhuJqGtJNLn6s732IAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860867; c=relaxed/simple;
-	bh=6fBUfC+oSDfzJyYJsKw0CNioKHASYNOQMW7lIrs8OEA=;
+	s=arc-20240116; t=1778860870; c=relaxed/simple;
+	bh=1kq05aRQ4Af6uNckjwxXLzsZEl05NR1lOiL6PTCFlis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JZGgg+wDK7YRXoPb54Fk+9dH8ai2D/4/mZQ40/1GgNQxNg5McZ+GoIyiLY6kpODUcEL+wbXFFQLMfGKRN3WlAoB/WbIMdsthNk+Sa9UClgxuXtYeR+7I3GKbBb1+qXagSc3+OfnZmOR1yeg5KmkguNI7ywZwF0XZfnEtAw9CyXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjRwYPlv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hvn3BSok/BstOui63crfGW/cJixl0G1RwSuoeyYHOdzT+qagLBFNyItuFavDiStEsjYDZBArdpx+ETANEHyCygrfTzBWGjlxU5hIMnDuEfxMabn4PXvBzO1pd8TD9Ev122y6lr28MO9YzEZwHi09Bpfl2mGhafjVNN7F09W+BM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFyP5sdv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjRwYPlv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F88C2BCB0;
-	Fri, 15 May 2026 16:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFyP5sdv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65ED1C2BCB0;
+	Fri, 15 May 2026 16:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860867;
-	bh=6fBUfC+oSDfzJyYJsKw0CNioKHASYNOQMW7lIrs8OEA=;
+	s=korg; t=1778860869;
+	bh=1kq05aRQ4Af6uNckjwxXLzsZEl05NR1lOiL6PTCFlis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AjRwYPlvWxRi6FmvVUy6b9ujvHdG0O/fYFosolVUPcD4UQLaC1K943AHXwyXsMHqo
-	 IpDjbpqRIij9XqwZd0+bM+nH0/Y8+tE7IvKOKONEJNDOAOI+Zhb0G+dH9QalhmwMVh
-	 6cgXNfxI4NK0FCsiP1swav2QVZLn5k37pBTyRVr4=
+	b=ZFyP5sdvW/KOTer6DlV9HaVzMAASihCXO00U+MJJSpVIlRxwcovMn5I6A5lwssUMM
+	 Ihfh6W4/1vl/+RrB2rblwer5qTnNBULTIPujtUzJl5tntcdHw9w2S0zET6XywCK7rn
+	 yp6BDmMIvLa1DHFwf0UXf6A3ofFUEj1LuUC8MbYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 107/474] KVM: nSVM: Add missing consistency check for nCR3 validity
-Date: Fri, 15 May 2026 17:43:36 +0200
-Message-ID: <20260515154717.351039551@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 108/474] mtd: docg3: Convert to platform remove callback returning void
+Date: Fri, 15 May 2026 17:43:37 +0200
+Message-ID: <20260515154717.372239641@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,46 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit b71138fcc362c67ebe66747bb22cb4e6b4d6a651 upstream.
+[ Upstream commit eb0cec77d534413a800ec20944a2b1e37cfecdcf ]
 
->From the APM Volume #2, 15.25.4 (24593—Rev. 3.42—March 2024):
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-  When VMRUN is executed with nested paging enabled (NP_ENABLE = 1), the
-  following conditions are considered illegal state combinations, in
-  addition to those mentioned in “Canonicalization and Consistency Checks”:
-      • Any MBZ bit of nCR3 is set.
-      • Any G_PAT.PA field has an unsupported type encoding or any
-        reserved field in G_PAT has a nonzero value.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Add the consistency check for nCR3 being a legal GPA with no MBZ bits
-set.  Note, the G_PAT.PA check is being handled separately[*].
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Link: https://lore.kernel.org/kvm/20260205214326.1029278-3-jmattson@google.com [*]
-Fixes: 4b16184c1cca ("KVM: SVM: Initialize Nested Nested MMU context on VMRUN")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260303003421.2185681-16-yosry@kernel.org
-[sean: capture everything in CC(), massage changelog formatting]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/linux-mtd/20231008200143.196369-5-u.kleine-koenig@pengutronix.de
+Stable-dep-of: ca19808bc6fa ("mtd: docg3: fix use-after-free in docg3_release()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/nested.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/mtd/devices/docg3.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -265,6 +265,10 @@ static bool __nested_vmcb_check_controls
- 	if (CC((control->nested_ctl & SVM_NESTED_CTL_NP_ENABLE) && !npt_enabled))
- 		return false;
+diff --git a/drivers/mtd/devices/docg3.c b/drivers/mtd/devices/docg3.c
+index 22e73dd6118b9..a2b643af70194 100644
+--- a/drivers/mtd/devices/docg3.c
++++ b/drivers/mtd/devices/docg3.c
+@@ -2046,7 +2046,7 @@ static int __init docg3_probe(struct platform_device *pdev)
+  *
+  * Returns 0
+  */
+-static int docg3_release(struct platform_device *pdev)
++static void docg3_release(struct platform_device *pdev)
+ {
+ 	struct docg3_cascade *cascade = platform_get_drvdata(pdev);
+ 	struct docg3 *docg3 = cascade->floors[0]->priv;
+@@ -2058,7 +2058,6 @@ static int docg3_release(struct platform_device *pdev)
+ 			doc_release_device(cascade->floors[floor]);
  
-+	if (CC((control->nested_ctl & SVM_NESTED_CTL_NP_ENABLE) &&
-+	       !kvm_vcpu_is_legal_gpa(vcpu, control->nested_cr3)))
-+		return false;
-+
- 	if (CC(!nested_svm_check_bitmap_pa(vcpu, control->msrpm_base_pa,
- 					   MSRPM_SIZE)))
- 		return false;
+ 	bch_free(docg3->cascade->bch);
+-	return 0;
+ }
+ 
+ #ifdef CONFIG_OF
+@@ -2076,7 +2075,7 @@ static struct platform_driver g3_driver = {
+ 	},
+ 	.suspend	= docg3_suspend,
+ 	.resume		= docg3_resume,
+-	.remove		= docg3_release,
++	.remove_new	= docg3_release,
+ };
+ 
+ module_platform_driver_probe(g3_driver, docg3_probe);
+-- 
+2.53.0
+
 
 
