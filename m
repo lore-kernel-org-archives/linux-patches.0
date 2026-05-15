@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6A8305670;
-	Fri, 15 May 2026 16:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337F2305670;
+	Fri, 15 May 2026 16:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860805; cv=none; b=mvRiHtf1wcDex3JEyyA5A/bQmsMG6QuBONZISVdnxF02aYMhcFWEKuW9IhK60uCos8WiaJRPLLRq829qYnewgAGLCvJKcroUCl/l0SBk0+814Pghrk/R/El72SDabHfVP5MhgHa02pbaDtwTRMYVqN4pooNmx1jH52Vpp6VbZd8=
+	t=1778860810; cv=none; b=hDOvS/AKYiLj4DUoc0JPpB3vGaOCDuM/UTyeuYq8WzWsBkcGIK6wcuicq26Evxlt8EceMr9TAcoEJ5lsp9XKM2vXOni1Qj/aLims3Z0DQF58cOKwtvCX+1XNX3hFTIK1B136tCj0usVImU7fLo+SvZ8zkeX/LtJi6THb0Knv4vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860805; c=relaxed/simple;
-	bh=WOu8lDHboO+Z/8Fe4XRkm7mw7dhGR6IEWY9ZREllflo=;
+	s=arc-20240116; t=1778860810; c=relaxed/simple;
+	bh=47KOaIpZurxjWNTpb8+cmqvIAWl2dMYqBGnGD+afHgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U34HMJUMi6fPZxyxkD6xeB+G+/8iYBvl3UWb0EpxGGrlVeBU5yE9BHaC8vSTOLFD6qeDYSx0+prg2rXMNBETBHxuow2ccHkOMJZfbqzXW3CRq7AqbwU/s/k/dxTawFFsA/KoINM7BRTDK1UTgHN7127kZX/SKNvYWD9Y8ZkEL/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dajfb8At; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PoqtfXkB5ogwhzZQvqSZ3aVzzGA23ylXQ92YjZUrLFMsQlrctiofuhvz9uHLV3GIU6PqElMeKXBNOkQ6dbEQx0lJMM5yzauhxfMWIzR58W3ajeW9OG9xtUrnhB03V7LnGYTP9dWau/+hZkYt4ctnag0wRog5Ak6dFKdKdKp1Yt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVWCn48K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dajfb8At"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC23C2BCB3;
-	Fri, 15 May 2026 16:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVWCn48K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD309C2BCB0;
+	Fri, 15 May 2026 16:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860805;
-	bh=WOu8lDHboO+Z/8Fe4XRkm7mw7dhGR6IEWY9ZREllflo=;
+	s=korg; t=1778860810;
+	bh=47KOaIpZurxjWNTpb8+cmqvIAWl2dMYqBGnGD+afHgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dajfb8Athf1sYNn+ba3QpbmNb96Kj4D5NMX98Aj556y172avUAiu6cXB1TBG8YY4/
-	 tIyTB4yP3qpIk+5B1MdOp5wQJBbXnksrZlurj/3PUs5oVYj/g/NZRJz0atCm89iqLz
-	 HxvqsJ0y54Ux52enLgtATD8rU4f9oUpphJXZuFlo=
+	b=nVWCn48K5Jln98i4zyhT9dqxguOMvNaTgLCiUCYjHCDd3jE0nKy06wTyyRa4zeUTc
+	 kyD+L8MIVkGI3XmAeBoixTYAXH68Xb/txLagyE1e/Qra9m3clp1LDTXrQgMBgnuJT6
+	 8qwRKb682jleiKOCI25dydgGpQU5dxXIvWFKywVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>
-Subject: [PATCH 6.6 086/474] arm64: dts: ti: am62-verdin: Enable pullup for eMMC data pins
-Date: Fri, 15 May 2026 17:43:15 +0200
-Message-ID: <20260515154716.899095971@linuxfoundation.org>
+	Paul Louvel <paul.louvel@bootlin.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 087/474] crypto: talitos - fix SEC1 32k ahash request limitation
+Date: Fri, 15 May 2026 17:43:16 +0200
+Message-ID: <20260515154716.920888360@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,57 +50,357 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Paul Louvel <paul.louvel@bootlin.com>
 
-commit d5325810814ee995debfa0b6c4a22e0391598bef upstream.
+commit 655ef638a2bc3cd0a9eff99a02f83cab94a3a917 upstream.
 
-Verdin AM62 board does not have external pullups on eMMC DAT1-DAT7 pins.
-Enable internal pullups on DAT1-DAT7 considering:
+Since commit c662b043cdca ("crypto: af_alg/hash: Support
+MSG_SPLICE_PAGES"), the crypto core may pass large scatterlists spanning
+multiple pages to drivers supporting ahash operations. As a result, a
+driver can now receive large ahash requests.
 
- - without a host-side pullup, these lines rely solely on the eMMC
-   device's internal pullup (R_int, 10kohm-150kohm per JEDEC), which may
-   exceed the recommended 50kohm max for 1.8V VCCQ
- - JEDEC JESD84-B51 Table 200 requires host-side pullups (R_DAT,
-   10kohm-100kohm) on all data lines to prevent bus floating
+The SEC1 engine has a limitation where a single descriptor cannot
+process more than 32k of data. The current implementation attempts to
+handle the entire request within a single descriptor, which leads to
+failures raised by the driver:
 
-Fixes: 316b80246b16 ("arm64: dts: ti: add verdin am62")
+  "length exceeds h/w max limit"
+
+Address this limitation by splitting large ahash requests into multiple
+descriptors, each respecting the 32k hardware limit. This allows
+processing arbitrarily large requests.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260320073032.10427-1-francesco@dolcini.it
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fixes: c662b043cdca ("crypto: af_alg/hash: Support MSG_SPLICE_PAGES")
+Signed-off-by: Paul Louvel <paul.louvel@bootlin.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/crypto/talitos.c |  216 +++++++++++++++++++++++++++++++----------------
+ 1 file changed, 147 insertions(+), 69 deletions(-)
 
---- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-@@ -507,16 +507,16 @@
- 	/* On-module eMMC */
- 	pinctrl_sdhci0: main-mmc0-default-pins {
- 		pinctrl-single,pins = <
--			AM62X_IOPAD(0x220, PIN_INPUT, 0) /*  (Y3) MMC0_CMD  */
--			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLK  */
--			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (AA2) MMC0_DAT0 */
--			AM62X_IOPAD(0x210, PIN_INPUT, 0) /* (AA1) MMC0_DAT1 */
--			AM62X_IOPAD(0x20c, PIN_INPUT, 0) /* (AA3) MMC0_DAT2 */
--			AM62X_IOPAD(0x208, PIN_INPUT, 0) /*  (Y4) MMC0_DAT3 */
--			AM62X_IOPAD(0x204, PIN_INPUT, 0) /* (AB2) MMC0_DAT4 */
--			AM62X_IOPAD(0x200, PIN_INPUT, 0) /* (AC1) MMC0_DAT5 */
--			AM62X_IOPAD(0x1fc, PIN_INPUT, 0) /* (AD2) MMC0_DAT6 */
--			AM62X_IOPAD(0x1f8, PIN_INPUT, 0) /* (AC2) MMC0_DAT7 */
-+			AM62X_IOPAD(0x220, PIN_INPUT,        0) /*  (Y3) MMC0_CMD  */
-+			AM62X_IOPAD(0x218, PIN_INPUT,        0) /* (AB1) MMC0_CLK  */
-+			AM62X_IOPAD(0x214, PIN_INPUT,        0) /* (AA2) MMC0_DAT0 */
-+			AM62X_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
-+			AM62X_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
-+			AM62X_IOPAD(0x208, PIN_INPUT_PULLUP, 0) /*  (Y4) MMC0_DAT3 */
-+			AM62X_IOPAD(0x204, PIN_INPUT_PULLUP, 0) /* (AB2) MMC0_DAT4 */
-+			AM62X_IOPAD(0x200, PIN_INPUT_PULLUP, 0) /* (AC1) MMC0_DAT5 */
-+			AM62X_IOPAD(0x1fc, PIN_INPUT_PULLUP, 0) /* (AD2) MMC0_DAT6 */
-+			AM62X_IOPAD(0x1f8, PIN_INPUT_PULLUP, 0) /* (AC2) MMC0_DAT7 */
- 		>;
- 	};
+--- a/drivers/crypto/talitos.c
++++ b/drivers/crypto/talitos.c
+@@ -12,6 +12,7 @@
+  * All rights reserved.
+  */
  
++#include <linux/workqueue.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/mod_devicetable.h>
+@@ -870,10 +871,18 @@ struct talitos_ahash_req_ctx {
+ 	unsigned int swinit;
+ 	unsigned int first;
+ 	unsigned int last;
++	unsigned int last_request;
+ 	unsigned int to_hash_later;
+ 	unsigned int nbuf;
+ 	struct scatterlist bufsl[2];
+ 	struct scatterlist *psrc;
++
++	struct scatterlist request_bufsl[2];
++	struct ahash_request *areq;
++	struct scatterlist *request_sl;
++	unsigned int remaining_ahash_request_bytes;
++	unsigned int current_ahash_request_bytes;
++	struct work_struct sec1_ahash_process_remaining;
+ };
+ 
+ struct talitos_export_state {
+@@ -1759,7 +1768,20 @@ static void ahash_done(struct device *de
+ 
+ 	kfree(edesc);
+ 
+-	ahash_request_complete(areq, err);
++	if (err) {
++		ahash_request_complete(areq, err);
++		return;
++	}
++
++	req_ctx->remaining_ahash_request_bytes -=
++		req_ctx->current_ahash_request_bytes;
++
++	if (!req_ctx->remaining_ahash_request_bytes) {
++		ahash_request_complete(areq, 0);
++		return;
++	}
++
++	schedule_work(&req_ctx->sec1_ahash_process_remaining);
+ }
+ 
+ /*
+@@ -1925,60 +1947,7 @@ static struct talitos_edesc *ahash_edesc
+ 				   nbytes, 0, 0, 0, areq->base.flags, false);
+ }
+ 
+-static int ahash_init(struct ahash_request *areq)
+-{
+-	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
+-	struct talitos_ctx *ctx = crypto_ahash_ctx(tfm);
+-	struct device *dev = ctx->dev;
+-	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
+-	unsigned int size;
+-	dma_addr_t dma;
+-
+-	/* Initialize the context */
+-	req_ctx->buf_idx = 0;
+-	req_ctx->nbuf = 0;
+-	req_ctx->first = 1; /* first indicates h/w must init its context */
+-	req_ctx->swinit = 0; /* assume h/w init of context */
+-	size =	(crypto_ahash_digestsize(tfm) <= SHA256_DIGEST_SIZE)
+-			? TALITOS_MDEU_CONTEXT_SIZE_MD5_SHA1_SHA256
+-			: TALITOS_MDEU_CONTEXT_SIZE_SHA384_SHA512;
+-	req_ctx->hw_context_size = size;
+-
+-	dma = dma_map_single(dev, req_ctx->hw_context, req_ctx->hw_context_size,
+-			     DMA_TO_DEVICE);
+-	dma_unmap_single(dev, dma, req_ctx->hw_context_size, DMA_TO_DEVICE);
+-
+-	return 0;
+-}
+-
+-/*
+- * on h/w without explicit sha224 support, we initialize h/w context
+- * manually with sha224 constants, and tell it to run sha256.
+- */
+-static int ahash_init_sha224_swinit(struct ahash_request *areq)
+-{
+-	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
+-
+-	req_ctx->hw_context[0] = SHA224_H0;
+-	req_ctx->hw_context[1] = SHA224_H1;
+-	req_ctx->hw_context[2] = SHA224_H2;
+-	req_ctx->hw_context[3] = SHA224_H3;
+-	req_ctx->hw_context[4] = SHA224_H4;
+-	req_ctx->hw_context[5] = SHA224_H5;
+-	req_ctx->hw_context[6] = SHA224_H6;
+-	req_ctx->hw_context[7] = SHA224_H7;
+-
+-	/* init 64-bit count */
+-	req_ctx->hw_context[8] = 0;
+-	req_ctx->hw_context[9] = 0;
+-
+-	ahash_init(areq);
+-	req_ctx->swinit = 1;/* prevent h/w initting context with sha256 values*/
+-
+-	return 0;
+-}
+-
+-static int ahash_process_req(struct ahash_request *areq, unsigned int nbytes)
++static int ahash_process_req_one(struct ahash_request *areq, unsigned int nbytes)
+ {
+ 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
+ 	struct talitos_ctx *ctx = crypto_ahash_ctx(tfm);
+@@ -1997,12 +1966,12 @@ static int ahash_process_req(struct ahas
+ 
+ 	if (!req_ctx->last && (nbytes + req_ctx->nbuf <= blocksize)) {
+ 		/* Buffer up to one whole block */
+-		nents = sg_nents_for_len(areq->src, nbytes);
++		nents = sg_nents_for_len(req_ctx->request_sl, nbytes);
+ 		if (nents < 0) {
+ 			dev_err(dev, "Invalid number of src SG.\n");
+ 			return nents;
+ 		}
+-		sg_copy_to_buffer(areq->src, nents,
++		sg_copy_to_buffer(req_ctx->request_sl, nents,
+ 				  ctx_buf + req_ctx->nbuf, nbytes);
+ 		req_ctx->nbuf += nbytes;
+ 		return 0;
+@@ -2029,7 +1998,7 @@ static int ahash_process_req(struct ahas
+ 		sg_init_table(req_ctx->bufsl, nsg);
+ 		sg_set_buf(req_ctx->bufsl, ctx_buf, req_ctx->nbuf);
+ 		if (nsg > 1)
+-			sg_chain(req_ctx->bufsl, 2, areq->src);
++			sg_chain(req_ctx->bufsl, 2, req_ctx->request_sl);
+ 		req_ctx->psrc = req_ctx->bufsl;
+ 	} else if (is_sec1 && req_ctx->nbuf && req_ctx->nbuf < blocksize) {
+ 		int offset;
+@@ -2038,26 +2007,26 @@ static int ahash_process_req(struct ahas
+ 			offset = blocksize - req_ctx->nbuf;
+ 		else
+ 			offset = nbytes_to_hash - req_ctx->nbuf;
+-		nents = sg_nents_for_len(areq->src, offset);
++		nents = sg_nents_for_len(req_ctx->request_sl, offset);
+ 		if (nents < 0) {
+ 			dev_err(dev, "Invalid number of src SG.\n");
+ 			return nents;
+ 		}
+-		sg_copy_to_buffer(areq->src, nents,
++		sg_copy_to_buffer(req_ctx->request_sl, nents,
+ 				  ctx_buf + req_ctx->nbuf, offset);
+ 		req_ctx->nbuf += offset;
+-		req_ctx->psrc = scatterwalk_ffwd(req_ctx->bufsl, areq->src,
++		req_ctx->psrc = scatterwalk_ffwd(req_ctx->bufsl, req_ctx->request_sl,
+ 						 offset);
+ 	} else
+-		req_ctx->psrc = areq->src;
++		req_ctx->psrc = req_ctx->request_sl;
+ 
+ 	if (to_hash_later) {
+-		nents = sg_nents_for_len(areq->src, nbytes);
++		nents = sg_nents_for_len(req_ctx->request_sl, nbytes);
+ 		if (nents < 0) {
+ 			dev_err(dev, "Invalid number of src SG.\n");
+ 			return nents;
+ 		}
+-		sg_pcopy_to_buffer(areq->src, nents,
++		sg_pcopy_to_buffer(req_ctx->request_sl, nents,
+ 				   req_ctx->buf[(req_ctx->buf_idx + 1) & 1],
+ 				      to_hash_later,
+ 				      nbytes - to_hash_later);
+@@ -2065,7 +2034,7 @@ static int ahash_process_req(struct ahas
+ 	req_ctx->to_hash_later = to_hash_later;
+ 
+ 	/* Allocate extended descriptor */
+-	edesc = ahash_edesc_alloc(areq, nbytes_to_hash);
++	edesc = ahash_edesc_alloc(req_ctx->areq, nbytes_to_hash);
+ 	if (IS_ERR(edesc))
+ 		return PTR_ERR(edesc);
+ 
+@@ -2087,14 +2056,123 @@ static int ahash_process_req(struct ahas
+ 	if (ctx->keylen && (req_ctx->first || req_ctx->last))
+ 		edesc->desc.hdr |= DESC_HDR_MODE0_MDEU_HMAC;
+ 
+-	return common_nonsnoop_hash(edesc, areq, nbytes_to_hash, ahash_done);
++	return common_nonsnoop_hash(edesc, req_ctx->areq, nbytes_to_hash, ahash_done);
+ }
+ 
+-static int ahash_update(struct ahash_request *areq)
++static void sec1_ahash_process_remaining(struct work_struct *work)
+ {
++	struct talitos_ahash_req_ctx *req_ctx =
++		container_of(work, struct talitos_ahash_req_ctx,
++			     sec1_ahash_process_remaining);
++	int err = 0;
++
++	req_ctx->request_sl = scatterwalk_ffwd(req_ctx->request_bufsl,
++					       req_ctx->request_sl, TALITOS1_MAX_DATA_LEN);
++
++	if (req_ctx->remaining_ahash_request_bytes > TALITOS1_MAX_DATA_LEN)
++		req_ctx->current_ahash_request_bytes = TALITOS1_MAX_DATA_LEN;
++	else {
++		req_ctx->current_ahash_request_bytes =
++			req_ctx->remaining_ahash_request_bytes;
++
++		if (req_ctx->last_request)
++			req_ctx->last = 1;
++	}
++
++	err = ahash_process_req_one(req_ctx->areq,
++				    req_ctx->current_ahash_request_bytes);
++
++	if (err != -EINPROGRESS)
++		ahash_request_complete(req_ctx->areq, err);
++}
++
++static int ahash_process_req(struct ahash_request *areq, unsigned int nbytes)
++{
++	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
++	struct talitos_ctx *ctx = crypto_ahash_ctx(tfm);
++	struct device *dev = ctx->dev;
++	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
++	struct talitos_private *priv = dev_get_drvdata(dev);
++	bool is_sec1 = has_ftr_sec1(priv);
++
++	req_ctx->areq = areq;
++	req_ctx->request_sl = areq->src;
++	req_ctx->remaining_ahash_request_bytes = nbytes;
++
++	if (is_sec1) {
++		if (nbytes > TALITOS1_MAX_DATA_LEN)
++			nbytes = TALITOS1_MAX_DATA_LEN;
++		else if (req_ctx->last_request)
++			req_ctx->last = 1;
++	}
++
++	req_ctx->current_ahash_request_bytes = nbytes;
++
++	return ahash_process_req_one(req_ctx->areq,
++				     req_ctx->current_ahash_request_bytes);
++}
++
++static int ahash_init(struct ahash_request *areq)
++{
++	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
++	struct talitos_ctx *ctx = crypto_ahash_ctx(tfm);
++	struct device *dev = ctx->dev;
+ 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
++	unsigned int size;
++	dma_addr_t dma;
+ 
++	/* Initialize the context */
++	req_ctx->buf_idx = 0;
++	req_ctx->nbuf = 0;
++	req_ctx->first = 1; /* first indicates h/w must init its context */
++	req_ctx->swinit = 0; /* assume h/w init of context */
++	size =	(crypto_ahash_digestsize(tfm) <= SHA256_DIGEST_SIZE)
++			? TALITOS_MDEU_CONTEXT_SIZE_MD5_SHA1_SHA256
++			: TALITOS_MDEU_CONTEXT_SIZE_SHA384_SHA512;
++	req_ctx->hw_context_size = size;
++	req_ctx->last_request = 0;
+ 	req_ctx->last = 0;
++	INIT_WORK(&req_ctx->sec1_ahash_process_remaining, sec1_ahash_process_remaining);
++
++	dma = dma_map_single(dev, req_ctx->hw_context, req_ctx->hw_context_size,
++			     DMA_TO_DEVICE);
++	dma_unmap_single(dev, dma, req_ctx->hw_context_size, DMA_TO_DEVICE);
++
++	return 0;
++}
++
++/*
++ * on h/w without explicit sha224 support, we initialize h/w context
++ * manually with sha224 constants, and tell it to run sha256.
++ */
++static int ahash_init_sha224_swinit(struct ahash_request *areq)
++{
++	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
++
++	req_ctx->hw_context[0] = SHA224_H0;
++	req_ctx->hw_context[1] = SHA224_H1;
++	req_ctx->hw_context[2] = SHA224_H2;
++	req_ctx->hw_context[3] = SHA224_H3;
++	req_ctx->hw_context[4] = SHA224_H4;
++	req_ctx->hw_context[5] = SHA224_H5;
++	req_ctx->hw_context[6] = SHA224_H6;
++	req_ctx->hw_context[7] = SHA224_H7;
++
++	/* init 64-bit count */
++	req_ctx->hw_context[8] = 0;
++	req_ctx->hw_context[9] = 0;
++
++	ahash_init(areq);
++	req_ctx->swinit = 1;/* prevent h/w initting context with sha256 values*/
++
++	return 0;
++}
++
++static int ahash_update(struct ahash_request *areq)
++{
++	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
++
++	req_ctx->last_request = 0;
+ 
+ 	return ahash_process_req(areq, areq->nbytes);
+ }
+@@ -2103,7 +2181,7 @@ static int ahash_final(struct ahash_requ
+ {
+ 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
+ 
+-	req_ctx->last = 1;
++	req_ctx->last_request = 1;
+ 
+ 	return ahash_process_req(areq, 0);
+ }
+@@ -2112,7 +2190,7 @@ static int ahash_finup(struct ahash_requ
+ {
+ 	struct talitos_ahash_req_ctx *req_ctx = ahash_request_ctx(areq);
+ 
+-	req_ctx->last = 1;
++	req_ctx->last_request = 1;
+ 
+ 	return ahash_process_req(areq, areq->nbytes);
+ }
 
 
