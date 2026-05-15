@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409A03FBB53;
-	Fri, 15 May 2026 16:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDB83FBB52;
+	Fri, 15 May 2026 16:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861765; cv=none; b=oZrLfUIYEL89130CJnaWfdjfBPOJKKe9mltf0UBZ6lNGC5SkMjXC0yRQe2d9h8YZY+5rEuGamXA6AzWJY0G5uN3rvT4OynqCm5vTYOwYEJA8UjJkXtCPkobzezRV+FcFM5wpcwdRRs7Iv2t6Ojo3dPNZ0XNaOI54mUYHXrR46LQ=
+	t=1778861767; cv=none; b=OrufMceG6XO1w9allH2vItAHXSuxfG326Q9Ic1jKbNoN0KYBia/ayuqErkeRDbgtz6AtUMJm0R4EPw43xdEKk1MS8ai6jmFlZ+7boU93CvjQgDyvON8dnAcEhr0wwsO5mTk0Vhs9do6gQ8YkjQ4ps0/mK1+q1HLVrh7F0wbEU2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861765; c=relaxed/simple;
-	bh=fnfGsauvpqQD1/PqwjE84FGuhDOOAGpCYN2TtKfW4x4=;
+	s=arc-20240116; t=1778861767; c=relaxed/simple;
+	bh=KYsMZrw7VO82muuQ7/X+YY8LuGZF4+MssERDOAi1XRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUHAqVg+Im7XIHP9DBOVhXd97ebemmoZgUmdf/QnKBFniy6lg8YoMqv43PgwWVgOchS0HIuFKd+JXUcTa6TEsherRruQwHMaYu2hHPNk3YhaKM0rA6I1SmHeofzAZcthhRafNMlbE/gnRvgfAjV6xtdto5WD8qkWbnopqdYCNp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7Am80nI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HPOSeNm8ClVUyCB5JsUm2dmRTtEio8Eg5NqYRp73SXxtRmBLvfirYlbGVrJL/Eznbj/Kepm4/S44Zhb7DLPffcmNtckArbOoTgRYn742TuwapmWu24KRUC01vNu6S9MSAvY5OS+wZDiDEYPvaA2WiX4vRDqZmsoXSehdFBWh86c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBxv+eqC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7Am80nI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D6DC2BCB0;
-	Fri, 15 May 2026 16:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBxv+eqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62018C2BCB0;
+	Fri, 15 May 2026 16:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861765;
-	bh=fnfGsauvpqQD1/PqwjE84FGuhDOOAGpCYN2TtKfW4x4=;
+	s=korg; t=1778861767;
+	bh=KYsMZrw7VO82muuQ7/X+YY8LuGZF4+MssERDOAi1XRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A7Am80nIlqi/4U2iu4/2tJXKwjUCt3noX3KJVcaRmjcbDJfoWTuQ5oT5DKRDu63dT
-	 so576SGGr/dEpx4yluMO4xX7QxEYyveUFugrgkY8RzOLiQqhJ6I+De3h6QYbRTCedo
-	 35pfeLKAxs0XmFYDHYMKEFPrivH1/wIjf9gFHLUM=
+	b=VBxv+eqCOj+K6ebZbtD5CEI5Jln/IAqmRADswqwLQC6gOFoYJ3Y9ClUbnKD7wtHnb
+	 ZhGO1gh1ST8mM7lRIUQdwMrDVdd4mgcJRUAUxAdGtZy3PSF1Jq7qt+LXTKllC3wV2K
+	 8carDEQWGjipQAqKHw1NaB4HGzEpgp1Ml2kXWomo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	munan Huang <munanevil@gmail.com>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.6 453/474] ksmbd: fix use-after-free in __ksmbd_close_fd() via durable scavenger
-Date: Fri, 15 May 2026 17:49:22 +0200
-Message-ID: <20260515154724.894928968@linuxfoundation.org>
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Pratyush Yadav <pratyush@kernel.org>
+Subject: [PATCH 6.6 454/474] mtd: spi-nor: sst: Factor out common write operation to `sst_nor_write_data()`
+Date: Fri, 15 May 2026 17:49:23 +0200
+Message-ID: <20260515154724.918180107@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -47,139 +45,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Bence Csókás <csokas.bence@prolan.hu>
 
-commit 235e32320a470fcd3998fb3774f2290a0eb302a1 upstream.
+commit 18bcb4aa54eab75dce41e5c176a1c2bff94f0f79 upstream.
 
-When a durable file handle survives session disconnect (TCP close without
-SMB2_LOGOFF), session_fd_check() sets fp->conn = NULL to preserve the
-handle for later reconnection. However, it did not clean up the byte-range
-locks on fp->lock_list.
+Writing to the Flash in `sst_nor_write()` is a 3-step process:
+first an optional one-byte write to get 2-byte-aligned, then the
+bulk of the data is written out in vendor-specific 2-byte writes.
+Finally, if there's a byte left over, another one-byte write.
+This was implemented 3 times in the body of `sst_nor_write()`.
+To reduce code duplication, factor out these sub-steps to their
+own function.
 
-Later, when the durable scavenger thread times out and calls
-__ksmbd_close_fd(NULL, fp), the lock cleanup loop did:
-
-    spin_lock(&fp->conn->llist_lock);
-
-This caused a slab use-after-free because fp->conn was NULL and the
-original connection object had already been freed by
-ksmbd_tcp_disconnect().
-
-The root cause is asymmetric cleanup: lock entries (smb_lock->clist) were
-left dangling on the freed conn->lock_list while fp->conn was nulled out.
-
-To fix this issue properly, we need to handle the lifetime of
-smb_lock->clist across three paths:
- - Safely skip clist deletion when list is empty and fp->conn is NULL.
- - Remove the lock from the old connection's lock_list in
-   session_fd_check()
- - Re-add the lock to the new connection's lock_list in
-   ksmbd_reopen_durable_fd().
-
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Co-developed-by: munan Huang <munanevil@gmail.com>
-Signed-off-by: munan Huang <munanevil@gmail.com>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ Minor context conflict resolved. ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+[pratyush@kernel.org: fixup whitespace, use %zu instead of %i in WARN()]
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Link: https://lore.kernel.org/r/20240710091401.1282824-1-csokas.bence@prolan.hu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs_cache.c |   40 ++++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ drivers/mtd/spi-nor/sst.c |   39 +++++++++++++++++++--------------------
+ 1 file changed, 19 insertions(+), 20 deletions(-)
 
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -356,9 +356,11 @@ static void __ksmbd_close_fd(struct ksmb
- 	 * there are not accesses to fp->lock_list.
- 	 */
- 	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
--		spin_lock(&fp->conn->llist_lock);
--		list_del(&smb_lock->clist);
--		spin_unlock(&fp->conn->llist_lock);
-+		if (!list_empty(&smb_lock->clist) && fp->conn) {
-+			spin_lock(&fp->conn->llist_lock);
-+			list_del(&smb_lock->clist);
-+			spin_unlock(&fp->conn->llist_lock);
-+		}
+--- a/drivers/mtd/spi-nor/sst.c
++++ b/drivers/mtd/spi-nor/sst.c
+@@ -123,6 +123,21 @@ static const struct flash_info sst_nor_p
+ 		.fixups = &sst26vf_nor_fixups },
+ };
  
- 		list_del(&smb_lock->flist);
- 		locks_free_lock(smb_lock->fl);
-@@ -755,6 +757,7 @@ static bool session_fd_check(struct ksmb
- 	struct ksmbd_inode *ci;
- 	struct oplock_info *op;
- 	struct ksmbd_conn *conn;
-+	struct ksmbd_lock *smb_lock, *tmp_lock;
- 
- 	if (!is_reconnectable(fp))
- 		return false;
-@@ -771,6 +774,12 @@ static bool session_fd_check(struct ksmb
- 	}
- 	up_write(&ci->m_lock);
- 
-+	list_for_each_entry_safe(smb_lock, tmp_lock, &fp->lock_list, flist) {
-+		spin_lock(&fp->conn->llist_lock);
-+		list_del_init(&smb_lock->clist);
-+		spin_unlock(&fp->conn->llist_lock);
-+	}
++static int sst_nor_write_data(struct spi_nor *nor, loff_t to, size_t len,
++			      const u_char *buf)
++{
++	u8 op = (len == 1) ? SPINOR_OP_BP : SPINOR_OP_AAI_WP;
++	int ret;
 +
- 	fp->conn = NULL;
- 	fp->tcon = NULL;
- 	fp->volatile_id = KSMBD_NO_FID;
-@@ -844,6 +853,9 @@ int ksmbd_reopen_durable_fd(struct ksmbd
++	nor->program_opcode = op;
++	ret = spi_nor_write_data(nor, to, 1, buf);
++	if (ret < 0)
++		return ret;
++	WARN(ret != len, "While writing %zu byte written %i bytes\n", len, ret);
++
++	return spi_nor_wait_till_ready(nor);
++}
++
+ static int sst_nor_write(struct mtd_info *mtd, loff_t to, size_t len,
+ 			 size_t *retlen, const u_char *buf)
  {
- 	struct ksmbd_inode *ci;
- 	struct oplock_info *op;
-+	struct ksmbd_conn *conn = work->conn;
-+	struct ksmbd_lock *smb_lock;
-+	unsigned int old_f_state;
+@@ -144,16 +159,10 @@ static int sst_nor_write(struct mtd_info
  
- 	if (!fp->is_durable || fp->conn || fp->tcon) {
- 		pr_err("Invalid durable fd [%p:%p]\n", fp->conn, fp->tcon);
-@@ -855,9 +867,23 @@ int ksmbd_reopen_durable_fd(struct ksmbd
- 		return -EBADF;
- 	}
+ 	/* Start write from odd address. */
+ 	if (to % 2) {
+-		nor->program_opcode = SPINOR_OP_BP;
+-
+ 		/* write one byte. */
+-		ret = spi_nor_write_data(nor, to, 1, buf);
++		ret = sst_nor_write_data(nor, to, 1, buf);
+ 		if (ret < 0)
+ 			goto out;
+-		WARN(ret != 1, "While writing 1 byte written %i bytes\n", ret);
+-		ret = spi_nor_wait_till_ready(nor);
+-		if (ret)
+-			goto out;
  
--	fp->conn = work->conn;
-+	old_f_state = fp->f_state;
-+	fp->f_state = FP_NEW;
-+	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
-+	if (!has_file_id(fp->volatile_id)) {
-+		fp->f_state = old_f_state;
-+		return -EBADF;
-+	}
+ 		to++;
+ 		actual++;
+@@ -161,16 +170,11 @@ static int sst_nor_write(struct mtd_info
+ 
+ 	/* Write out most of the data here. */
+ 	for (; actual < len - 1; actual += 2) {
+-		nor->program_opcode = SPINOR_OP_AAI_WP;
+-
+ 		/* write two bytes. */
+-		ret = spi_nor_write_data(nor, to, 2, buf + actual);
++		ret = sst_nor_write_data(nor, to, 2, buf + actual);
+ 		if (ret < 0)
+ 			goto out;
+-		WARN(ret != 2, "While writing 2 bytes written %i bytes\n", ret);
+-		ret = spi_nor_wait_till_ready(nor);
+-		if (ret)
+-			goto out;
 +
-+	fp->conn = conn;
- 	fp->tcon = work->tcon;
- 
-+	list_for_each_entry(smb_lock, &fp->lock_list, flist) {
-+		spin_lock(&conn->llist_lock);
-+		list_add_tail(&smb_lock->clist, &conn->lock_list);
-+		spin_unlock(&conn->llist_lock);
-+	}
-+
- 	ci = fp->f_ci;
- 	down_write(&ci->m_lock);
- 	list_for_each_entry_rcu(op, &ci->m_op_list, op_entry) {
-@@ -868,12 +894,6 @@ int ksmbd_reopen_durable_fd(struct ksmbd
+ 		to += 2;
+ 		nor->sst_write_second = true;
  	}
- 	up_write(&ci->m_lock);
+@@ -190,14 +194,9 @@ static int sst_nor_write(struct mtd_info
+ 		if (ret)
+ 			goto out;
  
--	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
--	if (!has_file_id(fp->volatile_id)) {
--		fp->conn = NULL;
--		fp->tcon = NULL;
--		return -EBADF;
--	}
- 	return 0;
- }
+-		nor->program_opcode = SPINOR_OP_BP;
+-		ret = spi_nor_write_data(nor, to, 1, buf + actual);
++		ret = sst_nor_write_data(nor, to, 1, buf + actual);
+ 		if (ret < 0)
+ 			goto out;
+-		WARN(ret != 1, "While writing 1 byte written %i bytes\n", ret);
+-		ret = spi_nor_wait_till_ready(nor);
+-		if (ret)
+-			goto out;
+ 
+ 		actual += 1;
  
 
 
