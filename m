@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6BD3FF1A2;
-	Fri, 15 May 2026 15:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350B13FF1DE;
+	Fri, 15 May 2026 15:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860278; cv=none; b=UBI8h9VQCvUO3cM6mtrz+SfswYzsBm0+MyTyj9SoccsbX4OoQEN96xmGXtW1pIQfVwAAtqmk/rFViyDktcJkAtDoyguDC3OxY+bPCc0z2ZCGgtc0qa6t71wkgfWxJcjyieAlZNbdiUsAk37C68NlqFZ0DtykUQCnP51nbp3KzK8=
+	t=1778860281; cv=none; b=RElZ9M8ci4NLMiiN93kl/PUr0xfrXtzS6Nhr5tFxa2lpa8pROyUN7RauMym0DprK8P7vj+B8Obd5lsekh3VgNo8ZVIY5NtGkqFLj8bkVjd4e/25rsEBbAWbChHqpHhBGXNH8DgP9LqCNxqeXyEdAB8Z9TikMjGEF51qXw6AJpHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860278; c=relaxed/simple;
-	bh=6TpEcMfJLsCb0/Zs4Ekpl4V+VOfjOGjCTAh0x3066Ic=;
+	s=arc-20240116; t=1778860281; c=relaxed/simple;
+	bh=WjafgHJW0zut6JgazDykr9ewT6VKrROIq5Nc0MSY4Ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TqxuOtLnumg/tzyZZbiZkZH0OQi3k5dtmO5BPpGHhSizMobVXIxVobGA5jtEJ0JzurXvxr6/YwEebsXnYiPyWEHFLys4E/P5uIHjjsDc9ki4ZX+M+NgkPYGPxa+C6fylSjvJQZauRRPprN0UGwRGIrEnfVCYaaVSZbQ0NO4CHRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHy/stUS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jm8cAbYHUaYUlJ7dllE8486FUXiXoxIoaKl6YeKjV8b4VF0wESSLpXyOii88vQlMk/+Dy5+1qY5mUAi3N7kwPpjDeW3lsqqizIqZH+0mf9l4t8CR8PZztr1CE95uLCQ2TPjUQmgbK1rZ1c2fUa0bc+bpU0y4XUcMb149xE1Hqqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K74Xw0vX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHy/stUS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39ED2C2BCB0;
-	Fri, 15 May 2026 15:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K74Xw0vX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3B1C2BCB0;
+	Fri, 15 May 2026 15:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860278;
-	bh=6TpEcMfJLsCb0/Zs4Ekpl4V+VOfjOGjCTAh0x3066Ic=;
+	s=korg; t=1778860281;
+	bh=WjafgHJW0zut6JgazDykr9ewT6VKrROIq5Nc0MSY4Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHy/stUSHegbj/COC6JtP1bA291Y6WUveRd5F+dgoeT1wIFCOpu8YQv/CtriU0Yo0
-	 DhNobHASqmp3bsI69d2lS9ozYgPfS3VNS7/bibezgGUNou61c5qrQniOTa0RUSMWW0
-	 hZ9+gFd85rYO4TqPJo7+uhTw0PCm7HbHDmGjps+w=
+	b=K74Xw0vXwubCUhgq8vLe3B7js2J1qC8U59030GhQlGQf+wk8dMNzHJtndQbU7qbn1
+	 W0EM1N1JGZQA07MWJyuYsoJ0p5k/IKjrJ/IDeFenXIltsM0W3Z/qv5/7MPf4P/F8o2
+	 WLp/g2Fy1y3/ElDwCMxJGS+EGfZLJyIq8FnZUeJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jun <1742789905@qq.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 028/144] media: saa7164: add ioremap return checks and cleanups
-Date: Fri, 15 May 2026 17:47:34 +0200
-Message-ID: <20260515154654.161241201@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 029/144] spi: aspeed-smc: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:35 +0200
+Message-ID: <20260515154654.184157578@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -44,116 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Jun <1742789905@qq.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit d51c60a498e83c9a79884c8e420f97e3885c9583 upstream.
+commit 1044e5a4ccd57bf5a64f90100a321b498e0267a2 upstream.
 
-Add checks for ioremap return values in saa7164_dev_setup(). If
-ioremap for BAR0 or BAR2 fails, release the already allocated PCI
-memory regions, remove the device from the global list, decrement
-the device count, and return -ENODEV.
+Make sure to deregister the controller before disabling it to allow
+SPI device drivers to do I/O during deregistration.
 
-This prevents potential null pointer dereferences and ensures proper
-cleanup on memory mapping failures.
-
-Fixes: 443c1228d505 ("V4L/DVB (12923): SAA7164: Add support for the NXP SAA7164 silicon")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wang Jun <1742789905@qq.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: e3228ed92893 ("spi: spi-mem: Convert Aspeed SMC driver to spi-mem")
+Cc: stable@vger.kernel.org	# 5.19
+Cc: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260409120419.388546-3-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/saa7164/saa7164-core.c |   47 +++++++++++++++++++++++--------
- 1 file changed, 35 insertions(+), 12 deletions(-)
+ drivers/spi/spi-aspeed-smc.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/media/pci/saa7164/saa7164-core.c
-+++ b/drivers/media/pci/saa7164/saa7164-core.c
-@@ -888,6 +888,15 @@ static int get_resources(struct saa7164_
- 	return -EBUSY;
- }
+--- a/drivers/spi/spi-aspeed-smc.c
++++ b/drivers/spi/spi-aspeed-smc.c
+@@ -733,7 +733,7 @@ static int aspeed_spi_probe(struct platf
+ 		return -ENOMEM;
  
-+static void release_resources(struct saa7164_dev *dev)
-+{
-+	release_mem_region(pci_resource_start(dev->pci, 0),
-+			   pci_resource_len(dev->pci, 0));
-+
-+	release_mem_region(pci_resource_start(dev->pci, 2),
-+			   pci_resource_len(dev->pci, 2));
-+}
-+
- static int saa7164_port_init(struct saa7164_dev *dev, int portnr)
+ 	aspi = spi_controller_get_devdata(ctlr);
+-	platform_set_drvdata(pdev, aspi);
++	platform_set_drvdata(pdev, ctlr);
+ 	aspi->data = data;
+ 	aspi->dev = dev;
+ 
+@@ -772,7 +772,7 @@ static int aspeed_spi_probe(struct platf
+ 	ctlr->num_chipselect = data->max_cs;
+ 	ctlr->dev.of_node = dev->of_node;
+ 
+-	ret = devm_spi_register_controller(dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret)
+ 		dev_err(&pdev->dev, "spi_register_controller failed\n");
+ 
+@@ -781,7 +781,10 @@ static int aspeed_spi_probe(struct platf
+ 
+ static void aspeed_spi_remove(struct platform_device *pdev)
  {
- 	struct saa7164_port *port = NULL;
-@@ -947,9 +956,9 @@ static int saa7164_dev_setup(struct saa7
- 
- 	snprintf(dev->name, sizeof(dev->name), "saa7164[%d]", dev->nr);
- 
--	mutex_lock(&devlist);
--	list_add_tail(&dev->devlist, &saa7164_devlist);
--	mutex_unlock(&devlist);
-+	scoped_guard(mutex, &devlist) {
-+		list_add_tail(&dev->devlist, &saa7164_devlist);
-+	}
- 
- 	/* board config */
- 	dev->board = UNSET;
-@@ -996,11 +1005,17 @@ static int saa7164_dev_setup(struct saa7
- 	}
- 
- 	/* PCI/e allocations */
--	dev->lmmio = ioremap(pci_resource_start(dev->pci, 0),
--			     pci_resource_len(dev->pci, 0));
-+	dev->lmmio = pci_ioremap_bar(dev->pci, 0);
-+	if (!dev->lmmio) {
-+		dev_err(&dev->pci->dev, "Failed to remap MMIO BAR 0\n");
-+		goto err_ioremap_bar0;
-+	}
- 
--	dev->lmmio2 = ioremap(pci_resource_start(dev->pci, 2),
--			     pci_resource_len(dev->pci, 2));
-+	dev->lmmio2 = pci_ioremap_bar(dev->pci, 2);
-+	if (!dev->lmmio2) {
-+		dev_err(&dev->pci->dev, "Failed to remap MMIO BAR 2\n");
-+		goto err_ioremap_bar2;
-+	}
- 
- 	dev->bmmio = (u8 __iomem *)dev->lmmio;
- 	dev->bmmio2 = (u8 __iomem *)dev->lmmio2;
-@@ -1019,17 +1034,25 @@ static int saa7164_dev_setup(struct saa7
- 	saa7164_pci_quirks(dev);
- 
- 	return 0;
+-	struct aspeed_spi *aspi = platform_get_drvdata(pdev);
++	struct spi_controller *ctlr = platform_get_drvdata(pdev);
++	struct aspeed_spi *aspi = spi_controller_get_devdata(ctlr);
 +
-+err_ioremap_bar2:
-+	iounmap(dev->lmmio);
-+err_ioremap_bar0:
-+	release_resources(dev);
-+
-+	scoped_guard(mutex, &devlist) {
-+		list_del(&dev->devlist);
-+	}
-+	saa7164_devcount--;
-+
-+	return -ENODEV;
++	spi_unregister_controller(ctlr);
+ 
+ 	aspeed_spi_enable(aspi, false);
  }
- 
- static void saa7164_dev_unregister(struct saa7164_dev *dev)
- {
- 	dprintk(1, "%s()\n", __func__);
- 
--	release_mem_region(pci_resource_start(dev->pci, 0),
--		pci_resource_len(dev->pci, 0));
--
--	release_mem_region(pci_resource_start(dev->pci, 2),
--		pci_resource_len(dev->pci, 2));
-+	release_resources(dev);
- 
- 	if (!atomic_dec_and_test(&dev->refcount))
- 		return;
 
 
