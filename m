@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EC33E0094;
-	Fri, 15 May 2026 16:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F073B9D91;
+	Fri, 15 May 2026 16:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862385; cv=none; b=IzT18hnma3aZGSC95/wUmFigHYL5NFUanfS2NbnHDDXa6QW62bC/AewkXzZQ2iu0D8dRLVY2SELLU+lRCEhQ7ybkLylxsrvhik9wmRfThJAZ3NfexQPM2xuacn1y4+SDdrexob6uUruKJPVzPqv99wowBNqrOf+wUmY0d6i2w58=
+	t=1778862388; cv=none; b=S8a7KrHrxXGfq/WOFiEGC9wQiFJTsMo/FxRZTKj6nS8csthRtqpedmKlTsMYwfogX+v9vY7fWiVgsVdtssmWG5ScK6noYtO7uJy1CDQrLC3OdQTkK9b6ej5gbrl7zX2VJT5rz5oFd1i8eGezWcp1qOttJM8N22jrFStK7hyrJaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862385; c=relaxed/simple;
-	bh=p7sRwcVK6ylO/ONNFgIFGWJkRzUmb4NCJqY/N+ppCSE=;
+	s=arc-20240116; t=1778862388; c=relaxed/simple;
+	bh=TCEWR1NZxo6zKg/Y3yvZcWJYlhO9HtyeNvtEOruhoAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qB0a1ZYVENIue575AxXslg/PZOVkoKVOZfBXpOmxQPHIm7SJSdSZoGPSrFjYuiUjYY2f2xLbGp/s2YvHVWI2ol8z1CjjMo3UNxmXPU63Ww3DZSv7rfIixVmjfTwO0WyoArLiCf14jLjUolKpEb/hOn6fU9pySdthqzAXTSTf4EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9mbom69; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LRHR5GAtKI17Lnp3tMmROgWCN+5PG/iF1dDRuWK1Do2zeg/mf44J4UIuhjQ1HxDjPphsIf7N8BIWzd4v5/MTSahh1r1H94Tu82AAeKgCs3Qg5u2SS4Ay80aKQc7Is4u2CkA+mW1QnKpD+4GmwBQV/NhP3X+YQxLNIKgpVeuFVlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ogtvl12N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9mbom69"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9CFC2BCB0;
-	Fri, 15 May 2026 16:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ogtvl12N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE9FC2BCB0;
+	Fri, 15 May 2026 16:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862385;
-	bh=p7sRwcVK6ylO/ONNFgIFGWJkRzUmb4NCJqY/N+ppCSE=;
+	s=korg; t=1778862388;
+	bh=TCEWR1NZxo6zKg/Y3yvZcWJYlhO9HtyeNvtEOruhoAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9mbom69Ar4pDsElZU4N/67KzK3UI/cKxUjKFZgnV39fiurl1u9p+pnIK+VQnSDvO
-	 sRKfK5qYQ4cn5kBuqISilVOzMFhznHn/cVFb1gGk1V59MbxmQ1UV8rStzwK3Zk6qZ9
-	 Vhu5A5bBlHu7RaQJWYykUIA5qY1MIRZ3FMKg2v/Q=
+	b=Ogtvl12N9pCI9WUlHIghxp4Y/KvojSgXkMeWMOWGNOu2Rsf1naG8F7u3t7Ad3xDL3
+	 JVaAo6sb8zS5uckSPz8Y3tUbOGz1rU+WF1cg/VIMJJFtLHeNZgViWwIN7Mk8MTJDXL
+	 L/a6qLd0D3MzkInSy9pPTco0ptbwl2yLr89c58Yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian@openwrt.org>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 028/201] spi: bcm63xx: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:26 +0200
-Message-ID: <20260515154659.142888584@linuxfoundation.org>
+Subject: [PATCH 7.0 029/201] spi: atmel: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:27 +0200
+Message-ID: <20260515154659.164878139@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,50 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit c39e65a4e3b8e764efed0b2f5152a1a8547b80fd upstream.
+commit 8d4de97e83520be89d0ff40610ca633b3963a7de upstream.
 
 Make sure to deregister the controller before disabling underlying
 resources like clocks during driver unbind.
 
-Fixes: b42dfed83d95 ("spi: add Broadcom BCM63xx SPI controller driver")
-Cc: stable@vger.kernel.org	# 3.4
-Cc: Florian Fainelli <florian@openwrt.org>
+Fixes: 754ce4f29937 ("[PATCH] SPI: atmel_spi driver")
+Cc: stable@vger.kernel.org	# 2.6.21
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260409120419.388546-6-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-5-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-bcm63xx.c |    8 +++++++-
+ drivers/spi/spi-atmel.c |    8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -602,7 +602,7 @@ static int bcm63xx_spi_probe(struct plat
- 		goto out_clk_disable;
+--- a/drivers/spi/spi-atmel.c
++++ b/drivers/spi/spi-atmel.c
+@@ -1654,7 +1654,7 @@ static int atmel_spi_probe(struct platfo
+ 	pm_runtime_set_active(&pdev->dev);
+ 	pm_runtime_enable(&pdev->dev);
  
- 	/* register and we are done */
--	ret = devm_spi_register_controller(dev, host);
+-	ret = devm_spi_register_controller(&pdev->dev, host);
 +	ret = spi_register_controller(host);
- 	if (ret) {
- 		dev_err(dev, "spi register failed\n");
- 		goto out_clk_disable;
-@@ -625,11 +625,17 @@ static void bcm63xx_spi_remove(struct pl
- 	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct bcm63xx_spi *bs = spi_controller_get_devdata(host);
+ 	if (ret)
+ 		goto out_free_dma;
+ 
+@@ -1688,8 +1688,12 @@ static void atmel_spi_remove(struct plat
+ 	struct spi_controller	*host = platform_get_drvdata(pdev);
+ 	struct atmel_spi	*as = spi_controller_get_devdata(host);
  
 +	spi_controller_get(host);
 +
+ 	pm_runtime_get_sync(&pdev->dev);
+ 
 +	spi_unregister_controller(host);
 +
- 	/* reset spi block */
- 	bcm_spi_writeb(bs, 0, SPI_INT_MASK);
+ 	/* reset the hardware and block queue progress */
+ 	if (as->use_dma) {
+ 		atmel_spi_stop_dma(host);
+@@ -1716,6 +1720,8 @@ static void atmel_spi_remove(struct plat
  
- 	/* HW shutdown */
- 	clk_disable_unprepare(bs->clk);
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 +
 +	spi_controller_put(host);
  }
  
- static int bcm63xx_spi_suspend(struct device *dev)
+ static int atmel_spi_runtime_suspend(struct device *dev)
 
 
