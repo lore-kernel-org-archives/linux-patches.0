@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3199C3F8713;
-	Fri, 15 May 2026 16:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E363CAA39;
+	Fri, 15 May 2026 16:06:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861206; cv=none; b=tcDRR5KCVb6l+d+Vkb6uEuHlh+ulRtjY82tG6HI5jvC23VhKqPn/cYVehgLC3DWlIDQRmXLWpJ+vYlR5mJ/ZbFCedI+u9OcrnyafmQQBEr3ZqZ28R22+xThRqmxMvbZUA+v0a3rvKyr5fmxli9wCLIIrOldCG5pFldS6frSVK28=
+	t=1778861208; cv=none; b=H1Y2rrXYNMKITPnGUg3zPSS4cus/GMQCl/RaZ4c8DRrBPp2p+yNibjk+/pSoqCZ6JPm0bexuH6aWhwKFQ8eYY9j+f4uXqzFacOuXbmv2VPdXOsl9u0bstLz3aPSr9aaAC6tljXja+xZ7QOzFSNAIZOTtURtGO65hRba0go65XzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861206; c=relaxed/simple;
-	bh=2AFAPLE5wppAEAwUVVP6uX1stnv5RfY+XnYai2MjH+o=;
+	s=arc-20240116; t=1778861208; c=relaxed/simple;
+	bh=+y3yONschNTIpJweaGxOvwuQ1sWWe7ZVSYaxNm9eYUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LoxwDX7nYxzSSC0GltqMXnHBi9KsgCUPbAvtMOczi1TsvbE5iHf0ORrljMsb2Q6rMq95FO0VABz1GVaZoLf0Mao9+KTTk4020nKUtWcxZ2jqMwrgWlZb2hpryjLY9yl66XVbzu2RC9Oui/ZJgG/oGhci7NFQz2qX81mHbih8nvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyZSvv7b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GuJvfQxrssEZlvwsBiztbDLs8DFs4VKoHS7qZomY0RsPnJiPDItLsX+mOyRVDqPAYmv4vn6kttZBAQVRQfyEUVYmoztb9neyn/VzYAWEBR0nVFFCzzYhSO16+lDvD57YPXZcpxiQzQr8P3tpudQiRfTpbDCd5pxO+aTfpULcq+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdvChCXp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyZSvv7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D878C2BCB0;
-	Fri, 15 May 2026 16:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdvChCXp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC71C2BCB3;
+	Fri, 15 May 2026 16:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861205;
-	bh=2AFAPLE5wppAEAwUVVP6uX1stnv5RfY+XnYai2MjH+o=;
+	s=korg; t=1778861208;
+	bh=+y3yONschNTIpJweaGxOvwuQ1sWWe7ZVSYaxNm9eYUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KyZSvv7b7O4RTCHYHJK0ZljUGXiX4vKLzRU2R8Vr1/aAVLxVhJGzhEbq2GgbWjiP7
-	 p9PYIJDWhhArcWwyUn9VwLHPwAPf4a2cHR4tVX3SyfrIxQR1ScaDuHPkS8yG9QTOh8
-	 6YVZcTZ62/KjGeCCGGY3OrnEkrC4S04UUTev/aK4=
+	b=sdvChCXpJUWlBVx5q/g+9+3uXqdB52cr28rAIqcW7ubSrUn/3Dwh863EojRzCbBsg
+	 L1wT4wUuuhtHLIJwWCQRrE1vSHVh905h+gFWaESnRf4yBFtfTmmAuiSyqi9EGjKpkq
+	 UZ+/lO2I9XkOPcRUDRnvO+bRr1cItCB9c2gGTNes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>
-Subject: [PATCH 6.6 238/474] thermal/drivers/sprd: Fix temperature clamping in sprd_thm_temp_to_rawdata
-Date: Fri, 15 May 2026 17:45:47 +0200
-Message-ID: <20260515154720.152931667@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ruijie Li <ruijieli51@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.6 203/474] xfrm: provide message size for XFRM_MSG_MAPPING
+Date: Fri, 15 May 2026 17:45:12 +0200
+Message-ID: <20260515154719.407059661@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,38 +56,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Ruijie Li <ruijieli51@gmail.com>
 
-commit 83c0f9a5d679a6f8d84fc49b2f62ea434ccab4b6 upstream.
+commit 28465227c80fe417b4013c432be1f3737cb9f9a3 upstream.
 
-The temperature was never clamped to SPRD_THM_TEMP_LOW or
-SPRD_THM_TEMP_HIGH because the return value of clamp() was not used. Fix
-this by assigning the clamped value to 'temp'.
+The compat 64=>32 translation path handles XFRM_MSG_MAPPING, but
+xfrm_msg_min[] does not provide the native payload size for this
+message type.
 
-Casting SPRD_THM_TEMP_LOW and SPRD_THM_TEMP_HIGH to int is also
-redundant and can be removed.
+Add the missing XFRM_MSG_MAPPING entry so compat translation can size
+and translate mapping notifications correctly.
 
-Fixes: 554fdbaf19b1 ("thermal: sprd: Add Spreadtrum thermal driver support")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260307102422.306055-1-thorsten.blum@linux.dev
+Fixes: 5461fc0c8d9f ("xfrm/compat: Add 64=>32-bit messages translator")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/sprd_thermal.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/xfrm/xfrm_user.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/thermal/sprd_thermal.c
-+++ b/drivers/thermal/sprd_thermal.c
-@@ -192,7 +192,7 @@ static int sprd_thm_temp_to_rawdata(int
- {
- 	u32 val;
- 
--	clamp(temp, (int)SPRD_THM_TEMP_LOW, (int)SPRD_THM_TEMP_HIGH);
-+	temp = clamp(temp, SPRD_THM_TEMP_LOW, SPRD_THM_TEMP_HIGH);
- 
- 	/*
- 	 * According to the thermal datasheet, the formula of converting
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -3015,6 +3015,7 @@ const int xfrm_msg_min[XFRM_NR_MSGTYPES]
+ 	[XFRM_MSG_GETSADINFO  - XFRM_MSG_BASE] = sizeof(u32),
+ 	[XFRM_MSG_NEWSPDINFO  - XFRM_MSG_BASE] = sizeof(u32),
+ 	[XFRM_MSG_GETSPDINFO  - XFRM_MSG_BASE] = sizeof(u32),
++	[XFRM_MSG_MAPPING     - XFRM_MSG_BASE] = XMSGSIZE(xfrm_user_mapping),
+ 	[XFRM_MSG_SETDEFAULT  - XFRM_MSG_BASE] = XMSGSIZE(xfrm_userpolicy_default),
+ 	[XFRM_MSG_GETDEFAULT  - XFRM_MSG_BASE] = XMSGSIZE(xfrm_userpolicy_default),
+ };
 
 
