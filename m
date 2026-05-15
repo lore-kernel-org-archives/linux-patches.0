@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444303FF1D5;
-	Fri, 15 May 2026 15:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6423FF1DD;
+	Fri, 15 May 2026 15:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860428; cv=none; b=os4zWsaKPmNEYpweH9SA8/UsPMdh4xl5KolJAM0KUvcIboT7hKqezLec182tupOfXeJYfCCXGhmp+n1FeiQBkbCM9wwp03cMKev0z2hxV0Rzk4EzVDksuLWrMrhqSL1a3If2GNIv3cqamA0kaFBPGN8LEXMnNAWVB2Dfgy5mLjI=
+	t=1778860430; cv=none; b=Ytsi82gXoGgQNw5mqauIG2fEt0SjSRsZbVoY/Esg2LbXOxCkYT3J2W4rBHvPIOn0SvS9O2wuHuKHFipcCCp5hgMoNo979N2xw+flVL3g8Kj0Kpyu6g2Hy5JOW7/RaVqEWZC7Oo7SbrIV0fH3/mYHlE8fCbxxqC/c7QE95qyjF+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860428; c=relaxed/simple;
-	bh=MHmmB775ZD7Up95Osp2mCXk0+wO09Eo9NauazZny4ag=;
+	s=arc-20240116; t=1778860430; c=relaxed/simple;
+	bh=ioDL2l7FeF24FRAnKC9S3PNgbq2S5IcQ00HNwbKEFTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bxJEx/I9vD1SvmOf542L8Z9EuslWZL726zUsExqohAs3tWRumfQH27q+PXktYLiXome5jEstWEWlDyiWPEgMjw7Aqz2+rvMA8bkHLylzMux9tO73j57mmwO5FwzhnF2fjl7np+pO/mtI8Otdo9jCryRTqNu1eKh4V3uy12b5N4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEe1O8yp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qrsu1smmI35FfKWa/fHAcpiXR2L0rNVZYhvvnxdJ03jdBa+ex4j4oy1r8JxZfNXmT4ZINOOnbhtcFsoI5EshvfI4MFFwM8QdujpuxENltAjmTTgk6ipax4JOon9IGRdvih86qPCn9xUZJuAOwpM/Gh5GLNFwbfqOMoOsUJt7NHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujKGuuES; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEe1O8yp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE089C2BCB0;
-	Fri, 15 May 2026 15:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujKGuuES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64873C2BCB0;
+	Fri, 15 May 2026 15:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860428;
-	bh=MHmmB775ZD7Up95Osp2mCXk0+wO09Eo9NauazZny4ag=;
+	s=korg; t=1778860430;
+	bh=ioDL2l7FeF24FRAnKC9S3PNgbq2S5IcQ00HNwbKEFTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eEe1O8yp+FihTVLB5Z4yLTqxZPnThUoSMPpPPUzVhSg+X62e2kikY7frk1oq2g7GG
-	 R37jHG7IlDCjbXyPnVFOKeJscu2Dzq38CCTU/dN/wcP6HG5rbYQH6aj3rKny5Grbi0
-	 FDZxV5F1skqcyJHTr2eLs4O1JT2/TEuQQttVxC4Q=
+	b=ujKGuuESWC8JIXWQSq+3x0wIgFHMZiOZjcKIA3PmsMwa1vafe5aYkm6FwO8QaSvCP
+	 Oe6xtDN/B9e1Z9XBkNZpPvDC61WZyBJ6Knon8LO+rBeJ5plv8gFDbNEOpJccxwhDRK
+	 fyvjarN3oUYshiVIRppcObPpxT+psLZiSjvjRvow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	=?UTF-8?q?Rapha=C3=ABl=20Gallais-Pou?= <rgallaispou@gmail.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.12 085/144] drm/exynos: remove bridge when component_add fails
-Date: Fri, 15 May 2026 17:48:31 +0200
-Message-ID: <20260515154655.493588435@linuxfoundation.org>
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 6.12 086/144] drm/panel: himax-hx83102: restore MODE_LPM after sending disable cmds
+Date: Fri, 15 May 2026 17:48:32 +0200
+Message-ID: <20260515154655.516990150@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -45,59 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
 
-commit 26f6654a9a60eb4d241f42a0ec85412e8821480b upstream.
+commit 2d4e80271f784aa0c7b17676e9762c7e8156be1c upstream.
 
-Use devm_drm_bridge_add() so the bridge is released if probe fails after
-registration, and drop the manual drm_bridge_remove() in remove().
+When preparing the panel, it seems that it always expects commands to be
+transferred in LP mode. However, the disable function removes the
+MIPI_DSI_MODE_LPM flag, and no other function re-adds it.
 
-Check the return value of devm_drm_bridge_add().
+As the unprepare function contains no DSI commands, re-adding the flag
+just after disabling the panel should be safe. Add the code re-adding
+the flag after the two commands for disabling the panel are sent.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Fixes: 576d72fbfb45 ("drm/exynos: mic: add a bridge at probe")
-Cc: stable@vger.kernel.org
-Reviewed-by: Raphaël Gallais-Pou <rgallaispou@gmail.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260423200622.325076-2-osama.abdelkader@gmail.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+This fixes screen unblanking (after blanking once) on
+mt8188-geralt-ciri-sku1 device.
+
+Cc: stable@vger.kernel.org # 6.11+
+Fixes: 0ef94554dc40 ("drm/panel: himax-hx83102: Break out as separate driver")
+Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260425165751.1716569-1-zhengxingda@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_mic.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/panel/panel-himax-hx83102.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/exynos/exynos_drm_mic.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_mic.c
-@@ -424,7 +424,9 @@ static int exynos_mic_probe(struct platf
- 	mic->bridge.funcs = &mic_bridge_funcs;
- 	mic->bridge.of_node = dev->of_node;
+--- a/drivers/gpu/drm/panel/panel-himax-hx83102.c
++++ b/drivers/gpu/drm/panel/panel-himax-hx83102.c
+@@ -479,6 +479,8 @@ static int hx83102_disable(struct drm_pa
+ 	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
+ 	mipi_dsi_dcs_enter_sleep_mode_multi(&dsi_ctx);
  
--	drm_bridge_add(&mic->bridge);
-+	ret = devm_drm_bridge_add(dev, &mic->bridge);
-+	if (ret)
-+		goto err;
++	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
++
+ 	mipi_dsi_msleep(&dsi_ctx, 150);
  
- 	pm_runtime_enable(dev);
- 
-@@ -444,12 +446,8 @@ err:
- 
- static void exynos_mic_remove(struct platform_device *pdev)
- {
--	struct exynos_mic *mic = platform_get_drvdata(pdev);
--
- 	component_del(&pdev->dev, &exynos_mic_component_ops);
- 	pm_runtime_disable(&pdev->dev);
--
--	drm_bridge_remove(&mic->bridge);
- }
- 
- static const struct of_device_id exynos_mic_of_match[] = {
+ 	return dsi_ctx.accum_err;
 
 
