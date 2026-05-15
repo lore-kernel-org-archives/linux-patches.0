@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610393F44E7;
-	Fri, 15 May 2026 16:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFB63F44F7;
+	Fri, 15 May 2026 16:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861335; cv=none; b=GtnHesVergG78D4W2M5mUp3M4YfyUssPVrW4AUo1ox9QKjt6uh1+u+C7IhsqEhwntE0gh07J14nr3v/uBHkwj4mAMZLEJ+GBZnFeqboqP6Aq3hRCpZnZOU2yNJpUEhcd15CMql5pKkHHBANjRmSW60ci+B1xNwLQpLXIVBE7+BA=
+	t=1778861338; cv=none; b=soovh5R0Uumv9Eu3JCwezXON9JUYGo3Wb+9TH7r7yA3NUhi636irdyKDnE5bvnM9E/3EbEdLT6Gm5zdtTNKJp+Y9X82igJn44lGhY4X5r7brfwz9qM46u/Mppc71p6sPgo/KZVP0N2lYRqnTYAu+MCaBa5czPoCOsNKQJat2g18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861335; c=relaxed/simple;
-	bh=Ik0HE8aze8lFsfs4elQIYsZKt1QVWCKSEl4iLH9zYvM=;
+	s=arc-20240116; t=1778861338; c=relaxed/simple;
+	bh=iZxK6imc4LxvzAaMKCwEbm6U46A3CAZ+SgDgRnAlkA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=crlmmSepRZA9DBig8FGPxjvtL79v4PDnxsyRm/yp8y2jAy8uEQt0OviJr6AgxZPDSIc/lvhRmBpXcgaLk8IEcB5e/JyZTkpa3EpHytpJAZnUWTEwbmws2LEH7PmVOwmJqxvg1+WMxNArfvtvDZexhzj4Ev0CYeWiAqIqZqvI0qE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojGlca73; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j9OH+sl+G4YabIiM43wQpUHQjBvKVc+xdpM0RpPKh/tzipVkyitRdhOJTiF/Pnp/mCYcbQ/LH+XI9nGsErpndGQVPpveXc3KdT1pDiau/uQoPjUtGMKesxGWhynDD0VJ9o9Vxv73ix+bhRLfHWerRCwN5mKgKiCXWJsW2oMWMHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEeoc8PH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojGlca73"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E47C2BCB3;
-	Fri, 15 May 2026 16:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEeoc8PH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882BFC2BCB0;
+	Fri, 15 May 2026 16:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861335;
-	bh=Ik0HE8aze8lFsfs4elQIYsZKt1QVWCKSEl4iLH9zYvM=;
+	s=korg; t=1778861338;
+	bh=iZxK6imc4LxvzAaMKCwEbm6U46A3CAZ+SgDgRnAlkA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ojGlca73dJ350CFBtmYQge4iLc9eqU/YJnPQRu8P2pFgGrh6826wsmugjKj8JcE9c
-	 qw3I7qmXCR5EP5JH0viHoSV3YPWa7dXJFtGOHVZrMDhULLOtAboXNnyrNiD1ag5pr3
-	 ex2eLTFd5XW/ZbdwpEz/ySohF72cjffwGrf7morM=
+	b=ZEeoc8PHtRna9ktieNgSGvLIJFXZPfvvYGasCFUK+EWynHemX/62J+2ur4wfX1q2K
+	 VrfxwCBEchKzncECsmSFm9IF7E21cRdr0lKW65M6Tl7EnumAFcsiRYbilk9Y2XK4B9
+	 YLeRS7XYCY5VHfgkYM9Tj+wQzvUgH0cGxnM8X+uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Gang Yan <yangang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 287/474] mptcp: fix scheduling with atomic in timestamp sockopt
-Date: Fri, 15 May 2026 17:46:36 +0200
-Message-ID: <20260515154721.210694428@linuxfoundation.org>
+	Cen Zhang <zzzccc427@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.6 288/474] f2fs: add READ_ONCE() for i_blocks in f2fs_update_inode()
+Date: Fri, 15 May 2026 17:46:37 +0200
+Message-ID: <20260515154721.232539516@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,57 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gang Yan <yangang@kylinos.cn>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit b5c52908d52c6c8eb8933264aa6087a0600fd892 upstream.
+commit 5471834a96fb697874be2ca0b052e74bcf3c23d1 upstream.
 
-Using lock_sock_fast() (atomic context) around sock_set_timestamp()
-and sock_set_timestamping() is unsafe, as both helpers can sleep.
+f2fs_update_inode() reads inode->i_blocks without holding i_lock to
+serialize it to the on-disk inode, while concurrent truncate or
+allocation paths may modify i_blocks under i_lock.  Since blkcnt_t is
+u64, this risks torn reads on 32-bit architectures.
 
-Replace lock_sock_fast() with sleepable lock_sock()/release_sock()
-to avoid scheduling while atomic panic.
+Following the approach in ext4_inode_blocks_set(), add READ_ONCE() to prevent
+potential compiler-induced tearing.
 
-Fixes: 9061f24bf82e ("mptcp: sockopt: propagate timestamp request to subflows")
+Fixes: 19f99cee206c ("f2fs: add core inode operations")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260420093343.16443-1-gang.yan@linux.dev
-Signed-off-by: Gang Yan <yangang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260427-net-mptcp-misc-fixes-7-1-rc2-v1-2-7432b7f279fa@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/f2fs/inode.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -159,10 +159,10 @@ static int mptcp_setsockopt_sol_socket_t
- 	lock_sock(sk);
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
--		bool slow = lock_sock_fast(ssk);
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -665,7 +665,7 @@ void f2fs_update_inode(struct inode *ino
+ 	ri->i_uid = cpu_to_le32(i_uid_read(inode));
+ 	ri->i_gid = cpu_to_le32(i_gid_read(inode));
+ 	ri->i_links = cpu_to_le32(inode->i_nlink);
+-	ri->i_blocks = cpu_to_le64(SECTOR_TO_BLOCK(inode->i_blocks) + 1);
++	ri->i_blocks = cpu_to_le64(SECTOR_TO_BLOCK(READ_ONCE(inode->i_blocks)) + 1);
  
-+		lock_sock(ssk);
- 		sock_set_timestamp(ssk, optname, !!val);
--		unlock_sock_fast(ssk, slow);
-+		release_sock(ssk);
- 	}
- 
- 	release_sock(sk);
-@@ -235,10 +235,10 @@ static int mptcp_setsockopt_sol_socket_t
- 
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
--		bool slow = lock_sock_fast(ssk);
- 
-+		lock_sock(ssk);
- 		sock_set_timestamping(ssk, optname, timestamping);
--		unlock_sock_fast(ssk, slow);
-+		release_sock(ssk);
- 	}
- 
- 	release_sock(sk);
+ 	if (!f2fs_is_atomic_file(inode) ||
+ 			is_inode_flag_set(inode, FI_ATOMIC_COMMITTED))
 
 
