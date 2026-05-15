@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBFC2EAD15;
-	Fri, 15 May 2026 15:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114343FF1CD;
+	Fri, 15 May 2026 15:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860712; cv=none; b=JZA870cXFK6uEsYZQVJyDncd9i+Na8mKSX2zgWNCPLU6YSJKNar6C4P6LvHR7iHT0+cYn3LEVZrqceCVKV0Rl6aYyLDkoYUPieWOE4TcWSmzGRWV8dDb+uJYMGTz8+rZUfhkYc2/FcmXY9qjnZxyD0t2Euz/HdFv3kz3MAx4SmY=
+	t=1778860715; cv=none; b=N16LdCBz99G2wXI9lc7wpRh3zUk2CRG67w7GFoxOukZ6994XiFSUJsewxHEhxdIDhs5VPSXKQwEzbpK1tBIfUsJZMQ26iPGLUt3lelxd5Qlr5Mir7JCofLe58hPiae1gkGL9aaxmtOgT1YSpl2Vb4S77X3DYSLdpUFg7QpMaRdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860712; c=relaxed/simple;
-	bh=QWaRBDJvdvEWKuObKu39n/5/ZeNbDI9WRAQHdmgiiFY=;
+	s=arc-20240116; t=1778860715; c=relaxed/simple;
+	bh=0WLNA7pebt8UeExbjfjOZsVnRnRkw3IKuPeh4lG4kRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uP5V2yxvblOBMNxFEE/7tQa7aMad3HrQa3hEHzpVSW24vODi+2tJEBfgRercrK5BtNEFM10u2qvv/lWCU5KZlnu5z3IiKwbsAA1HYsb+LAAC0nZ1u8kpzHdFT7GTo3nQiH7pMTpy0BBiOkMZQpr+spWpgawwziiYoeTMeBiN/iE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8UztbNw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s5+2q406kf57JSyidTkpKJ+I5eBz8PBfdERXIxbPx7nd87sfT4CQeZF/wisCjjvb1CvXQR95TBTqwHY2Ih8GTEcN+z0Gv6lu8MThBLsGybnNTrM/O6lqlQXjEMAU3abEpT4IcWLcSxexEBgZ0hdvlKo2i4xjOnGI+WBcUBGMsCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjjUtyug; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8UztbNw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B1DC2BCB3;
-	Fri, 15 May 2026 15:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjjUtyug"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C56FC2BCB0;
+	Fri, 15 May 2026 15:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860712;
-	bh=QWaRBDJvdvEWKuObKu39n/5/ZeNbDI9WRAQHdmgiiFY=;
+	s=korg; t=1778860715;
+	bh=0WLNA7pebt8UeExbjfjOZsVnRnRkw3IKuPeh4lG4kRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8UztbNwREtsu91hSVBr0IJdNygxPyYubE/8cCCjBm/+gYWzAAYFs4ZyxEO73+Z49
-	 yliDkmC+NZaq0fE9lttm436IQ54964d24l0arYBLlhhGQl3y95SimnGyJtuFAN+Myg
-	 L+VqausMDsLZAoUSxqITg1R1X9oOTjtM0ZGt8Wcw=
+	b=jjjUtyugWmr1+BC5EnKuzCIyhA6/GIohqSJA1JzgiNcgzIg4HJzceXDQbCBDR31K7
+	 dUHiwkCWnz9SfCgiFqmuhX/QPJULy0GD20OfXrWBe/sCfKmiRxW5bkw57c+TqPEBWF
+	 b1CF4uLoPnR8PNN5HCiaj/dcNkzcHvbcNlmqC6gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/474] LoongArch: Add spectre boundry for syscall dispatch table
-Date: Fri, 15 May 2026 17:42:12 +0200
-Message-ID: <20260515154715.554286046@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 050/474] parisc: _llseek syscall is only available for 32-bit userspace
+Date: Fri, 15 May 2026 17:42:39 +0200
+Message-ID: <20260515154716.129036980@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,46 +49,27 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 0c965d2784fbbd7f8e3b96d875c9cfdf7c00da3d ]
-
-The LoongArch syscall number is directly controlled by userspace, but
-does not have a array_index_nospec() boundry to prevent access past the
-syscall function pointer tables.
+commit da3680f564bd787ce974f9931e6e924d908b3b2a upstream.
 
 Cc: stable@vger.kernel.org
-Assisted-by: gkh_clanker_2000
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/syscall.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/parisc/kernel/syscalls/syscall.tbl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/kernel/syscall.c b/arch/loongarch/kernel/syscall.c
-index b4c5acd7aa3b3..f4e3bd219b1d7 100644
---- a/arch/loongarch/kernel/syscall.c
-+++ b/arch/loongarch/kernel/syscall.c
-@@ -9,6 +9,7 @@
- #include <linux/entry-common.h>
- #include <linux/errno.h>
- #include <linux/linkage.h>
-+#include <linux/nospec.h>
- #include <linux/syscalls.h>
- #include <linux/unistd.h>
- 
-@@ -55,7 +56,7 @@ void noinstr do_syscall(struct pt_regs *regs)
- 	nr = syscall_enter_from_user_mode(regs, nr);
- 
- 	if (nr < NR_syscalls) {
--		syscall_fn = sys_call_table[nr];
-+		syscall_fn = sys_call_table[array_index_nospec(nr, NR_syscalls)];
- 		regs->regs[4] = syscall_fn(regs->orig_a0, regs->regs[5], regs->regs[6],
- 					   regs->regs[7], regs->regs[8], regs->regs[9]);
- 	}
--- 
-2.53.0
-
+--- a/arch/parisc/kernel/syscalls/syscall.tbl
++++ b/arch/parisc/kernel/syscalls/syscall.tbl
+@@ -154,7 +154,7 @@
+ # 137 was afs_syscall
+ 138	common	setfsuid		sys_setfsuid
+ 139	common	setfsgid		sys_setfsgid
+-140	common	_llseek			sys_llseek
++140	32	_llseek			sys_llseek
+ 141	common	getdents		sys_getdents			compat_sys_getdents
+ 142	common	_newselect		sys_select			compat_sys_select
+ 143	common	flock			sys_flock
 
 
