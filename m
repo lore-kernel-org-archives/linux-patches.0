@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09E83FF1DA;
-	Fri, 15 May 2026 15:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8415A176238;
+	Fri, 15 May 2026 15:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860531; cv=none; b=Eova6IkzPb72rd4JfmGP+3Lukk82rB26+jg9uCGhvasYsd+JWMBuMDIeh9FsfkrhkD2tLxkgRtlug+vwUK+jn0XqptCrZX4EaeudvscmuyHd5cAUkVQWpxAm+cGG9lE5TuamgJ1tRKfNtUiBn3F+/0QY8BQUOjTpqkvVfUbtO1o=
+	t=1778860534; cv=none; b=blBw4hsuDiz18jLRImBh4j6hWaaIp3/PuyBbNBhUWYRxNoA9PZaHKvqXObMo6edbTpCkXouTEMsdN6sXIDw7+LJwPYm7XcZhYW4ypTMCtDg12jSvbeDp382/r8LH0rkqQP1K67bysVPx+MMMMixl8JJHeuLw0L9QbVFjNlx+tZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860531; c=relaxed/simple;
-	bh=SmvS9378pP0kT/YyJKCw7R/vgKYPP4YGezMi4Dm1D10=;
+	s=arc-20240116; t=1778860534; c=relaxed/simple;
+	bh=3eUHf4z1DQl5xb3w+r+fLLNEc8k7y2SLWY3zfgiWFUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFZrtSz7GJuMLwSyiz4Zj1b6r8jbxw17w7e1JfCJjCI4Skj4WwxemH0WW93BskZ6LfCDHSPwWnwqxyCwfr6UlxxdyX4qwlvL8nQozaJ6ufEzJEuJ4/k7Xk9EdcwniFmramTN5yImR/CRz1raIfNNHqbRbEDGm2Ymf9kPiRBVqw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1hZ6y1E+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nCBmhGDHCtTANYCM2k8mnY4KgA3UA61FaDfOO/DSIklqWL0gp2+0OrX2BjLeIRNDsSmXkC6qQx4oua+RjYAXKC6pk5I/vg72E1/5ZKgiXXaf0ig50cMxPiiQR9BIWKWmQ40MBK9O+yaN3Te/+Eq0RiEZFny3qHnWneF1TWgYIbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQlw/k8h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1hZ6y1E+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508A8C2BCB0;
-	Fri, 15 May 2026 15:55:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQlw/k8h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC615C2BCB0;
+	Fri, 15 May 2026 15:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860531;
-	bh=SmvS9378pP0kT/YyJKCw7R/vgKYPP4YGezMi4Dm1D10=;
+	s=korg; t=1778860534;
+	bh=3eUHf4z1DQl5xb3w+r+fLLNEc8k7y2SLWY3zfgiWFUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1hZ6y1E+IYBuO2I+Of5oI2HuNrWo3+PKUWQm8FUlRzBdHmjFWfRoJsdxHWQ39zr/t
-	 /0Kk1a6k0b3H3b0QhD74W4crcME2e7ItcvbQAMAqkipIKq5aw7qo3EsIV/2JV0i3ej
-	 goI1S5mi49U4DoFoPndO4L/5FCvda7DmMSHBecTw=
+	b=jQlw/k8hoMwX+eoF9s6T1b5XHxB00bdoMyAuA2C0dzcWzSCU61NByNooe29x7F+Qn
+	 buGewUT/o97h7nw7T4zZf7gzuRvUZG3WDIgwH3E5U8XXe+RO0tS/vH91sKYVO3jJPG
+	 eb5B9Ih8/vh3jYbhfkjWZBPbmlIhKCPApslXPKdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Liew Rui Yan <aethernet65535@gmail.com>,
 	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 125/144] mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid values
-Date: Fri, 15 May 2026 17:49:11 +0200
-Message-ID: <20260515154656.406153925@linuxfoundation.org>
+Subject: [PATCH 6.12 126/144] mm/damon/reclaim: detect and use fresh enabled and kdamond_pid values
+Date: Fri, 15 May 2026 17:49:12 +0200
+Message-ID: <20260515154656.430685197@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -53,9 +53,29 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit b98b7ff6025ae82570d4915e083f0cbd8d48b3cf upstream.
+commit 64a140afa5ed1c6f5ba6d451512cbdbbab1ba339 upstream.
 
-DAMON_LRU_SORT updates 'enabled' and 'kdamond_pid' parameter values, which
+Patch series "mm/damon/modules: detect and use fresh status", v3.
+
+DAMON modules including DAMON_RECLAIM, DAMON_LRU_SORT and DAMON_STAT
+commonly expose the kdamond running status via their parameters.  Under
+certain scenarios including wrong user inputs and memory allocation
+failures, those parameter values can be stale.  It can confuse users.  For
+DAMON_RECLAIM and DAMON_LRU_SORT, it even makes the kdamond unable to be
+restarted before the system reboot.
+
+The problem comes from the fact that there are multiple events for the
+status changes and it is difficult to follow up all the scenarios.  Fix
+the issue by detecting and using the status on demand, instead of using a
+cached status that is difficult to be updated.
+
+Patches 1-3 fix the bugs in DAMON_RECLAIM, DAMON_LRU_SORT and DAMON_STAT
+in the order.
+
+
+This patch (of 3):
+
+DAMON_RECLAIM updates 'enabled' and 'kdamond_pid' parameter values, which
 represents the running status of its kdamond, when the user explicitly
 requests start/stop of the kdamond.  The kdamond can, however, be stopped
 in events other than the explicit user request in the following three
@@ -69,16 +89,16 @@ events.
 Hence, if the kdamond is stopped by the above three events, the values of
 the status parameters can be stale.  Users could show the stale values and
 be confused.  This is already bad, but the real consequence is worse.
-DAMON_LRU_SORT avoids unnecessary damon_start() and damon_stop() calls
+DAMON_RECLAIM avoids unnecessary damon_start() and damon_stop() calls
 based on the 'enabled' parameter value.  And the update of 'enabled'
 parameter value depends on the damon_start() and damon_stop() call
 results.  Hence, once the kdamond has stopped by the unintentional events,
 the user cannot restart the kdamond before the system reboot.  For
 example, the issue can be reproduced via below steps.
 
-    # cd /sys/module/damon_lru_sort/parameters
+    # cd /sys/module/damon_reclaim/parameters
     #
-    # # start DAMON_LRU_SORT
+    # # start DAMON_RECLAIM
     # echo Y > enabled
     # ps -ef | grep kdamond
     root         806       2  0 17:53 ?        00:00:00 [kdamond.0]
@@ -117,74 +137,38 @@ change the status, and following all the events is challenging.
 Dynamically detect and use the fresh status for the parameters when those
 are requested.
 
-Link: https://lore.kernel.org/20260419161003.79176-3-sj@kernel.org
-Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
+Link: https://lore.kernel.org/20260419161003.79176-1-sj@kernel.org
+Link: https://lore.kernel.org/20260419161003.79176-2-sj@kernel.org
+Fixes: e035c280f6df ("mm/damon/reclaim: support online inputs update")
 Co-developed-by: Liew Rui Yan <aethernet65535@gmail.com>
 Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.0.x
+Cc: <stable@vger.kernel.org> # 5.19.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/damon.h |    1 
- mm/damon/core.c       |   16 +++++++++
- mm/damon/lru_sort.c   |   88 +++++++++++++++++++++++++++++++-------------------
- 3 files changed, 73 insertions(+), 32 deletions(-)
+ mm/damon/reclaim.c |   88 +++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 56 insertions(+), 32 deletions(-)
 
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -778,6 +778,7 @@ static inline unsigned int damon_max_nr_
- 
- int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
- int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
-+bool damon_is_running(struct damon_ctx *ctx);
- int damon_kdamond_pid(struct damon_ctx *ctx);
- 
- int damon_set_region_biggest_system_ram_default(struct damon_target *t,
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1164,6 +1164,22 @@ int damon_stop(struct damon_ctx **ctxs,
- }
- 
- /**
-+ * damon_is_running() - Returns if a given DAMON context is running.
-+ * @ctx:	The DAMON context to see if running.
-+ *
-+ * Return: true if @ctx is running, false otherwise.
-+ */
-+bool damon_is_running(struct damon_ctx *ctx)
-+{
-+	bool running;
-+
-+	mutex_lock(&ctx->kdamond_lock);
-+	running = ctx->kdamond != NULL;
-+	mutex_unlock(&ctx->kdamond_lock);
-+	return running;
-+}
-+
-+/**
-  * damon_kdamond_pid() - Return pid of a given DAMON context's worker thread.
-  * @ctx:	The DAMON context of the question.
-  *
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -111,15 +111,6 @@ module_param(monitor_region_start, ulong
- static unsigned long monitor_region_end __read_mostly;
- module_param(monitor_region_end, ulong, 0600);
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -137,15 +137,6 @@ module_param(monitor_region_end, ulong,
+ static bool skip_anon __read_mostly;
+ module_param(skip_anon, bool, 0600);
  
 -/*
 - * PID of the DAMON thread
 - *
-- * If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.
+- * If DAMON_RECLAIM is enabled, this becomes the PID of the worker thread.
 - * Else, -1.
 - */
 -static int kdamond_pid __read_mostly = -1;
 -module_param(kdamond_pid, int, 0400);
 -
- static struct damos_stat damon_lru_sort_hot_stat;
- DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_lru_sort_hot_stat,
- 		lru_sort_tried_hot_regions, lru_sorted_hot_regions,
-@@ -239,60 +230,93 @@ static int damon_lru_sort_turn(bool on)
+ static struct damos_stat damon_reclaim_stat;
+ DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_reclaim_stat,
+ 		reclaim_tried_regions, reclaimed_regions, quota_exceeds);
+@@ -247,60 +238,93 @@ static int damon_reclaim_turn(bool on)
  {
  	int err;
  
@@ -197,7 +181,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	if (!on)
 +		return damon_stop(&ctx, 1);
  
- 	err = damon_lru_sort_apply_parameters();
+ 	err = damon_reclaim_apply_parameters();
  	if (err)
  		return err;
  
@@ -209,14 +193,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	return damon_start(&ctx, 1, true);
 +}
 +
-+static bool damon_lru_sort_enabled(void)
++static bool damon_reclaim_enabled(void)
 +{
 +	if (!ctx)
 +		return false;
 +	return damon_is_running(ctx);
  }
  
- static int damon_lru_sort_enabled_store(const char *val,
+ static int damon_reclaim_enabled_store(const char *val,
  		const struct kernel_param *kp)
  {
 -	bool is_enabled = enabled;
@@ -229,7 +213,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  		return err;
  
 -	if (is_enabled == enable)
-+	if (damon_lru_sort_enabled() == enabled)
++	if (damon_reclaim_enabled() == enabled)
  		return 0;
  
  	/* Called before init function.  The function will handle this. */
@@ -237,32 +221,32 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -		goto set_param_out;
 +		return 0;
  
--	err = damon_lru_sort_turn(enable);
+-	err = damon_reclaim_turn(enable);
 -	if (err)
 -		return err;
-+	return damon_lru_sort_turn(enabled);
++	return damon_reclaim_turn(enabled);
 +}
  
 -set_param_out:
 -	enabled = enable;
 -	return err;
-+static int damon_lru_sort_enabled_load(char *buffer,
++static int damon_reclaim_enabled_load(char *buffer,
 +		const struct kernel_param *kp)
 +{
-+	return sprintf(buffer, "%c\n", damon_lru_sort_enabled() ? 'Y' : 'N');
++	return sprintf(buffer, "%c\n", damon_reclaim_enabled() ? 'Y' : 'N');
  }
  
  static const struct kernel_param_ops enabled_param_ops = {
- 	.set = damon_lru_sort_enabled_store,
+ 	.set = damon_reclaim_enabled_store,
 -	.get = param_get_bool,
-+	.get = damon_lru_sort_enabled_load,
++	.get = damon_reclaim_enabled_load,
  };
  
  module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
  MODULE_PARM_DESC(enabled,
- 	"Enable or disable DAMON_LRU_SORT (default: disabled)");
+ 	"Enable or disable DAMON_RECLAIM (default: disabled)");
  
-+static int damon_lru_sort_kdamond_pid_store(const char *val,
++static int damon_reclaim_kdamond_pid_store(const char *val,
 +		const struct kernel_param *kp)
 +{
 +	/*
@@ -272,7 +256,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	return 0;
 +}
 +
-+static int damon_lru_sort_kdamond_pid_load(char *buffer,
++static int damon_reclaim_kdamond_pid_load(char *buffer,
 +		const struct kernel_param *kp)
 +{
 +	int kdamond_pid = -1;
@@ -286,19 +270,19 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +}
 +
 +static const struct kernel_param_ops kdamond_pid_param_ops = {
-+	.set = damon_lru_sort_kdamond_pid_store,
-+	.get = damon_lru_sort_kdamond_pid_load,
++	.set = damon_reclaim_kdamond_pid_store,
++	.get = damon_reclaim_kdamond_pid_load,
 +};
 +
 +/*
 + * PID of the DAMON thread
 + *
-+ * If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.
++ * If DAMON_RECLAIM is enabled, this becomes the PID of the worker thread.
 + * Else, -1.
 + */
 +module_param_cb(kdamond_pid, &kdamond_pid_param_ops, NULL, 0400);
 +
- static int damon_lru_sort_handle_commit_inputs(void)
+ static int damon_reclaim_handle_commit_inputs(void)
  {
  	int err;
 
