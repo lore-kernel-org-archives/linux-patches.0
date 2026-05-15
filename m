@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC39B303CB0;
-	Fri, 15 May 2026 15:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B8017C220;
+	Fri, 15 May 2026 15:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860521; cv=none; b=PevV5rDkpMmeWs92wNTn+rdGuHa/j+g+6TlX0bHrS5TsNN9Vxj8RNS4srEdzrT33dLJneiUticsQoKwYG6VtXoPueWtXL/ssdum1SahLn8ckm5RuUlCJzmJ3vy70cRcK/ED0gRME42uZLec1TFXDiIghISgC1ta1fbZ1dQlxZas=
+	t=1778860524; cv=none; b=X0NqOuThuQ+OusSjHrkLwCg4plsQyxxyGP6+QE4yAAM6Zd+fBk/s7Ny9nETkO8bUEM2xx14xmv3jGQPhTG1whT12FO5r8HjpQpNnf4W5Auln7Lf2BZ2rgA0YszOqx8Xga7o87i7k6A1Z5MRvH0G8YSQPR9V6okcaULvAyZHOVPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860521; c=relaxed/simple;
-	bh=qpwlRt+1MyFELd8UYYVz550NoolGJARZMhnumpD3f0M=;
+	s=arc-20240116; t=1778860524; c=relaxed/simple;
+	bh=70SGxOhYCbB9idvTOPwIFOsSSnurzK59gU8NPbS/vZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lam88mj2CHEMn9rPdHw+4uJTz1NCufIPMGoR6mNlYFst3UccIQQy1Ze5xOxjVNsNEKKNVNgGDZiKQHuGc4B5QIn/33IiePf6fgBgGxnNkjCSM2F9Qs2PSaNT0dSEP6vfHyiTJ0corPl7+CZ6WEhbHnh3Q8Wa9NkNk/Nq9fmFeWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOGEjt/j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ufwm9ADmW+6fJLRUBzC+GoyF1L7pZrGe0WuabY1Ap9H8x1OyvamKgiRzDMW9gG61fV8tFEiQH0cZiawOs+Ef+2zOInvc7Jh8tGPjgRVs/DHaImXFj3PVF8Asp1YH1nfqylJo5rp5EHYbi4nE+Xy3+STezfqqa6KLa6lV+t2OtC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BD5pvfC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOGEjt/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1763BC2BCB3;
-	Fri, 15 May 2026 15:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BD5pvfC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C498C2BCB0;
+	Fri, 15 May 2026 15:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860521;
-	bh=qpwlRt+1MyFELd8UYYVz550NoolGJARZMhnumpD3f0M=;
+	s=korg; t=1778860524;
+	bh=70SGxOhYCbB9idvTOPwIFOsSSnurzK59gU8NPbS/vZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tOGEjt/j3bQHfVuZgYxlOAZAX8zAreNemPelVsIpRnDaIBZjWunZdHBwPmvp2U8oG
-	 u+niEJLod435au6TBkhvjZ4UacLeqdqOcmhpGViVULEoa+bK6ylyt7QYB6fCoCsiH4
-	 vI9uZPpXTtick5xUn1geAvB2FkuzXQESNvtCGhEc=
+	b=BD5pvfC0YPsM3WRRl3m7LKDxclfrcLWsJKpAk88qfLPAqIHRXtM22TX9Ey1b/x2VX
+	 q9PI7KC1LV/CPLiKUW9wzPihkeVywyLjHqTired1xQRroLmKQe5LOzzLHXza3r9goo
+	 Mvh91cs7+v6bOney/IOkNWevX6znL0Fmd9KVH9CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, Gary Guo" <gary@garyguo.net>,
-	Gary Guo <gary@garyguo.net>
-Subject: [PATCH 6.12 122/144] rust: pin-init: fix incorrect accessor reference lifetime
-Date: Fri, 15 May 2026 17:49:08 +0200
-Message-ID: <20260515154656.335588518@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 123/144] mm/damon/core: disallow time-quota setting zero esz
+Date: Fri, 15 May 2026 17:49:09 +0200
+Message-ID: <20260515154656.359347359@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -50,266 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: SeongJae Park <sj@kernel.org>
 
-commit 68bf102226cf2199dc609b67c1e847cad4de4b57 upstream
+commit 8bbde987c2b84f80da0853f739f0a920386f8b99 upstream.
 
-When a field has been initialized, `init!`/`pin_init!` create a reference
-or pinned reference to the field so it can be accessed later during the
-initialization of other fields. However, the reference it created is
-incorrectly `&'static` rather than just the scope of the initializer.
+When the throughput of a DAMOS scheme is very slow, DAMOS time quota can
+make the effective size quota smaller than damon_ctx->min_region_sz.  In
+the case, damos_apply_scheme() will skip applying the action, because the
+action is tried at region level, which requires >=min_region_sz size.
+That is, the quota is effectively exceeded for the quota charge window.
 
-This means that you can do
+Because no action will be applied, the total_charged_sz and
+total_charged_ns are also not updated.  damos_set_effective_quota() will
+try to update the effective size quota before starting the next charge
+window.  However, because the total_charged_sz and total_charged_ns have
+not updated, the throughput and effective size quota are also not changed.
+Since effective size quota can only be decreased, other effective size
+quota update factors including DAMOS quota goals and size quota cannot
+make any change, either.
 
-    init!(Foo {
-        a: 1,
-        _: {
-            let b: &'static u32 = a;
-        }
-    })
+As a result, the scheme is unexpectedly deactivated until the user notices
+and mitigates the situation.  The users can mitigate this situation by
+changing the time quota online or re-install the scheme.  While the
+mitigation is somewhat straightforward, finding the situation would be
+challenging, because DAMON is not providing good observabilities for that.
+Even if such observability is provided, doing the additional monitoring
+and the mitigation is somewhat cumbersome and not aligned to the intention
+of the time quota.  The time quota was intended to help reduce the user's
+administration overhead.
 
-which is unsound.
+Fix the problem by setting time quota-modified effective size quota be at
+least min_region_sz always.
 
-This is caused by `&mut (*$slot).$ident`, which actually allows arbitrary
-lifetime, so this is effectively `'static`.
+The issue was discovered [1] by sashiko.
 
-Fix it by adding `let_binding` method on `DropGuard` to shorten lifetime.
-This results in exactly what we want for these accessors. The safety and
-invariant comments of `DropGuard` have been reworked; instead of reasoning
-about what caller can do with the guard, express it in a way that the
-ownership is transferred to the guard and `forget` takes it back, so the
-unsafe operations within the `DropGuard` can be more easily justified.
-
-Assisted-by: Claude:claude-3-opus
-Signed-off-by: Gary Guo <gary@garyguo.net>
+Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
+Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
+Fixes: 1cd243030059 ("mm/damon/schemes: implement time quota")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/init/__internal.rs |   28 ++++++++----
- rust/kernel/init/macros.rs     |   91 ++++++++++++++++++++++++-----------------
- 2 files changed, 73 insertions(+), 46 deletions(-)
+ mm/damon/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/rust/kernel/init/__internal.rs
-+++ b/rust/kernel/init/__internal.rs
-@@ -189,32 +189,42 @@ impl<T> StackInit<T> {
- /// When a value of this type is dropped, it drops a `T`.
- ///
- /// Can be forgotten to prevent the drop.
-+///
-+/// # Invariants
-+///
-+/// - `ptr` is valid and properly aligned.
-+/// - `*ptr` is initialized and owned by this guard.
- pub struct DropGuard<T: ?Sized> {
-     ptr: *mut T,
- }
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1577,6 +1577,7 @@ static void damos_set_effective_quota(st
+ 			esz = min(throughput * quota->ms, esz);
+ 		else
+ 			esz = throughput * quota->ms;
++		esz = max(DAMON_MIN_REGION, esz);
+ 	}
  
- impl<T: ?Sized> DropGuard<T> {
--    /// Creates a new [`DropGuard<T>`]. It will [`ptr::drop_in_place`] `ptr` when it gets dropped.
-+    /// Creates a drop guard and transfer the ownership of the pointer content.
-     ///
--    /// # Safety
-+    /// The ownership is only relinquished if the guard is forgotten via [`core::mem::forget`].
-     ///
--    /// `ptr` must be a valid pointer.
-+    /// # Safety
-     ///
--    /// It is the callers responsibility that `self` will only get dropped if the pointee of `ptr`:
--    /// - has not been dropped,
--    /// - is not accessible by any other means,
--    /// - will not be dropped by any other means.
-+    /// - `ptr` is valid and properly aligned.
-+    /// - `*ptr` is initialized, and the ownership is transferred to this guard.
-     #[inline]
-     pub unsafe fn new(ptr: *mut T) -> Self {
-+        // INVARIANT: By safety requirement.
-         Self { ptr }
-     }
-+
-+    /// Create a let binding for accessor use.
-+    #[inline]
-+    pub fn let_binding(&mut self) -> &mut T {
-+        // SAFETY: Per type invariant.
-+        unsafe { &mut *self.ptr }
-+    }
- }
- 
- impl<T: ?Sized> Drop for DropGuard<T> {
-     #[inline]
-     fn drop(&mut self) {
--        // SAFETY: A `DropGuard` can only be constructed using the unsafe `new` function
--        // ensuring that this operation is safe.
-+        // SAFETY: `self.ptr` is valid, properly aligned and `*self.ptr` is owned by this guard.
-         unsafe { ptr::drop_in_place(self.ptr) }
-     }
- }
---- a/rust/kernel/init/macros.rs
-+++ b/rust/kernel/init/macros.rs
-@@ -1232,27 +1232,33 @@ macro_rules! __init_internal {
-         // return when an error/panic occurs.
-         // We also use the `data` to require the correct trait (`Init` or `PinInit`) for `$field`.
-         unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field), init)? };
--        // NOTE: the field accessor ensures that the initialized field is properly aligned.
-+        // NOTE: this ensures that the initialized field is properly aligned.
-         // Unaligned fields will cause the compiler to emit E0793. We do not support
-         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-         // `ptr::write` below has the same requirement.
--        #[allow(unused_variables, unused_assignments)]
--        // SAFETY:
--        // - the project function does the correct field projection,
--        // - the field has been initialized,
--        // - the reference is only valid until the end of the initializer.
--        let $field = $crate::macros::paste!(unsafe { $data.[< __project_ $field >](&mut (*$slot).$field) });
-+        // SAFETY: the field has been initialized.
-+        let _ = unsafe { &mut (*$slot).$field };
- 
-         // Create the drop guard:
-         //
-         // We rely on macro hygiene to make it impossible for users to access this local variable.
-         // We use `paste!` to create new hygiene for `$field`.
-         ::kernel::macros::paste! {
--            // SAFETY: We forget the guard later when initialization has succeeded.
--            let [< __ $field _guard >] = unsafe {
-+            // SAFETY:
-+            // - `addr_of_mut!((*$slot).$field)` is valid.
-+            // - `(*$slot).$field` has been initialized above.
-+            // - We only need the ownership to the pointee back when initialization has
-+            //   succeeded, where we `forget` the guard.
-+            let mut [< __ $field _guard >] = unsafe {
-                 $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
-             };
- 
-+            // NOTE: The reference is derived from the guard so that it only lives as long as
-+            // the guard does and cannot escape the scope.
-+            #[allow(unused_variables, unused_assignments)]
-+            // SAFETY: the project function does the correct field projection.
-+            let $field = unsafe { $data.[< __project_ $field >]([< __ $field _guard >].let_binding()) };
-+
-             $crate::__init_internal!(init_slot($use_data):
-                 @data($data),
-                 @slot($slot),
-@@ -1275,27 +1281,30 @@ macro_rules! __init_internal {
-         // return when an error/panic occurs.
-         unsafe { $crate::init::Init::__init(init, ::core::ptr::addr_of_mut!((*$slot).$field))? };
- 
--        // NOTE: the field accessor ensures that the initialized field is properly aligned.
-+        // NOTE: this ensures that the initialized field is properly aligned.
-         // Unaligned fields will cause the compiler to emit E0793. We do not support
-         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-         // `ptr::write` below has the same requirement.
--        #[allow(unused_variables, unused_assignments)]
--        // SAFETY:
--        // - the field is not structurally pinned, since the line above must compile,
--        // - the field has been initialized,
--        // - the reference is only valid until the end of the initializer.
--        let $field = unsafe { &mut (*$slot).$field };
-+        // SAFETY: the field has been initialized.
-+        let _ = unsafe { &mut (*$slot).$field };
- 
-         // Create the drop guard:
-         //
-         // We rely on macro hygiene to make it impossible for users to access this local variable.
-         // We use `paste!` to create new hygiene for `$field`.
-         ::kernel::macros::paste! {
--            // SAFETY: We forget the guard later when initialization has succeeded.
--            let [< __ $field _guard >] = unsafe {
-+            // SAFETY:
-+            // - `addr_of_mut!((*$slot).$field)` is valid.
-+            // - `(*$slot).$field` has been initialized above.
-+            // - We only need the ownership to the pointee back when initialization has
-+            //   succeeded, where we `forget` the guard.
-+            let mut [< __ $field _guard >] = unsafe {
-                 $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
-             };
- 
-+            #[allow(unused_variables, unused_assignments)]
-+            let $field = [< __ $field _guard >].let_binding();
-+
-             $crate::__init_internal!(init_slot():
-                 @data($data),
-                 @slot($slot),
-@@ -1319,28 +1328,30 @@ macro_rules! __init_internal {
-             unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
-         }
- 
--        // NOTE: the field accessor ensures that the initialized field is properly aligned.
-+        // NOTE: this ensures that the initialized field is properly aligned.
-         // Unaligned fields will cause the compiler to emit E0793. We do not support
-         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-         // `ptr::write` below has the same requirement.
--        #[allow(unused_variables, unused_assignments)]
--        // SAFETY:
--        // - the field is not structurally pinned, since no `use_data` was required to create this
--        //   initializer,
--        // - the field has been initialized,
--        // - the reference is only valid until the end of the initializer.
--        let $field = unsafe { &mut (*$slot).$field };
-+        // SAFETY: the field has been initialized.
-+        let _ = unsafe { &mut (*$slot).$field };
- 
-         // Create the drop guard:
-         //
-         // We rely on macro hygiene to make it impossible for users to access this local variable.
-         // We use `paste!` to create new hygiene for `$field`.
-         ::kernel::macros::paste! {
--            // SAFETY: We forget the guard later when initialization has succeeded.
--            let [< __ $field _guard >] = unsafe {
-+            // SAFETY:
-+            // - `addr_of_mut!((*$slot).$field)` is valid.
-+            // - `(*$slot).$field` has been initialized above.
-+            // - We only need the ownership to the pointee back when initialization has
-+            //   succeeded, where we `forget` the guard.
-+            let mut [< __ $field _guard >] = unsafe {
-                 $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
-             };
- 
-+            #[allow(unused_variables, unused_assignments)]
-+            let $field = [< __ $field _guard >].let_binding();
-+
-             $crate::__init_internal!(init_slot():
-                 @data($data),
-                 @slot($slot),
-@@ -1363,27 +1374,33 @@ macro_rules! __init_internal {
-             // SAFETY: The memory at `slot` is uninitialized.
-             unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
-         }
--        // NOTE: the field accessor ensures that the initialized field is properly aligned.
-+        // NOTE: this ensures that the initialized field is properly aligned.
-         // Unaligned fields will cause the compiler to emit E0793. We do not support
-         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
-         // `ptr::write` below has the same requirement.
--        #[allow(unused_variables, unused_assignments)]
--        // SAFETY:
--        // - the project function does the correct field projection,
--        // - the field has been initialized,
--        // - the reference is only valid until the end of the initializer.
--        let $field = $crate::macros::paste!(unsafe { $data.[< __project_ $field >](&mut (*$slot).$field) });
-+        // SAFETY: the field has been initialized.
-+        let _ = unsafe { &mut (*$slot).$field };
- 
-         // Create the drop guard:
-         //
-         // We rely on macro hygiene to make it impossible for users to access this local variable.
-         // We use `paste!` to create new hygiene for `$field`.
-         $crate::macros::paste! {
--            // SAFETY: We forget the guard later when initialization has succeeded.
--            let [< __ $field _guard >] = unsafe {
-+            // SAFETY:
-+            // - `addr_of_mut!((*$slot).$field)` is valid.
-+            // - `(*$slot).$field` has been initialized above.
-+            // - We only need the ownership to the pointee back when initialization has
-+            //   succeeded, where we `forget` the guard.
-+            let mut [< __ $field _guard >] = unsafe {
-                 $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
-             };
- 
-+            // NOTE: The reference is derived from the guard so that it only lives as long as
-+            // the guard does and cannot escape the scope.
-+            #[allow(unused_variables, unused_assignments)]
-+            // SAFETY: the project function does the correct field projection.
-+            let $field = unsafe { $data.[< __project_ $field >]([< __ $field _guard >].let_binding()) };
-+
-             $crate::__init_internal!(init_slot($use_data):
-                 @data($data),
-                 @slot($slot),
+ 	if (quota->sz && quota->sz < esz)
 
 
