@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5D530566D;
-	Fri, 15 May 2026 16:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3942B30DD1D;
+	Fri, 15 May 2026 16:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862012; cv=none; b=beqiQCk74FZ5RuV9vTH3JJ4IyMYqmvjbjRpVJNsBX8pY0wZcduEuiIT2ItSu5e+E2K6FrIM/q8YmcFeE9bibA0sU6slNya12TpLXTGh29lhytekCteDvPvkGF3cKu1anyatwL1+n0w4rXur7CvBpgJGSnZ20j+/cnC7kkLrr64I=
+	t=1778862015; cv=none; b=qCWdvthC6ZirC3ewC1RaO1xyves8wbeuj7l7mnXno9a01U4AU+13soa1tILZrPlOtkbz89GU0wH24XPGvEuSqpQVv9XyheZmDOrCOVRlvd/QBM4u1AVrqzdrzsxfXi3/FaVRnGSxT9iLwbVgEt6zf/U6/EaVjwMBmpLSNY+RcMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862012; c=relaxed/simple;
-	bh=Khi/k2+ygvdqExinGFj2A0h7ZekVoON+CYIX3WUGxGs=;
+	s=arc-20240116; t=1778862015; c=relaxed/simple;
+	bh=BPoeQQcL0kq2dQY8eT5RxdQ66V7cphsQTYu3r/i1Jtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tkawyM0rZxQe/4pw0320Ch+Dfm5o/SpbYvla9lytRQ8Hx6NZ0o4ANvkQmsxMtxgF+06mL3DOLQPiOM4VGV7BxZYDNytEIArh55/UvNYN2NiMvNmkqfwEbrqFTBjtiD7fPyDIwGr1c+GCdqYO1YJZLsDPtjKXDcapEmx3E31Of18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2nnWb5p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gNfadbeefwCAh+iehLkSLy47C2Oail8gYHVLYDnPjL9ILOwpTpqFmD0UR8nvfurDUB7oFe/iQfDrIflm9vqbI0HJEV6T/8tPTzcUEauTCRZ/3RIZlybYO/swBtlzXVFiEw32sSOufcrZyZ1pEaL4VMNlPVhnhiebM16dotWmQKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiaYzVgN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2nnWb5p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9DEC2BCB0;
-	Fri, 15 May 2026 16:20:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiaYzVgN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F4BC2BCB0;
+	Fri, 15 May 2026 16:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862012;
-	bh=Khi/k2+ygvdqExinGFj2A0h7ZekVoON+CYIX3WUGxGs=;
+	s=korg; t=1778862015;
+	bh=BPoeQQcL0kq2dQY8eT5RxdQ66V7cphsQTYu3r/i1Jtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U2nnWb5poYRIAIAaIXzSMmMqkdnSr/sEDWQOmjUjUdODDQ8y6QnalORyt85WLYWJK
-	 pkCp7wZ4o2/eUHFK2jiRojWPLA6S8zzQJp2+NRhFp0qOA2oPt+DraLJhIzk/H+nIA9
-	 7ALqhU/slRB1oJRT2mIMJXL0p3CNESoAzdYXCKcA=
+	b=xiaYzVgNq+Fsy2Wp/kpyHW2L/eJEancjjasBKUxhrB1u46Yy2xtEVriRw22AMLy2L
+	 PiQs2uIUMZtVyICLSKEkuh262U919e1M2D5nrla6YRnin7rVbePHH3DWDH82he+7JD
+	 q/ee6qKf31dBRdY3e+ZTntnfSz5aLVtbfGV+SamI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
+	Steven King <sfking@fdwdc.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 075/188] spi: bcmbca-hsspi: fix controller deregistration
-Date: Fri, 15 May 2026 17:48:12 +0200
-Message-ID: <20260515154658.946235328@linuxfoundation.org>
+Subject: [PATCH 6.18 076/188] spi: coldfire-qspi: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:13 +0200
+Message-ID: <20260515154658.967906825@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -53,47 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit c3d97c3320b9a1ebbd6119857341be034f7b3efc upstream.
+commit e7c510e192ff2a1264d999575eea39a506424264 upstream.
 
 Make sure to deregister the controller before disabling underlying
-resources like interrupts during driver unbind to allow SPI drivers to
-do I/O during deregistration.
+resources like clocks (via runtime pm) during driver unbind.
 
-Note that clocks were also disabled before the recent commit
-e532e21a246d ("spi: bcm63xx-hsspi: Simplify clock handling with
-devm_clk_get_enabled()").
-
-Fixes: a38a2233f23b ("spi: bcmbca-hsspi: Add driver for newer HSSPI controller")
-Cc: stable@vger.kernel.org	# 6.3: deb269e0394f
-Cc: stable@vger.kernel.org	# 6.3
-Cc: William Zhang <william.zhang@broadcom.com>
+Fixes: 34b8c6617366 ("spi: Add Freescale/Motorola Coldfire QSPI driver")
+Cc: stable@vger.kernel.org	# 2.6.34
+Cc: Steven King <sfking@fdwdc.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260409120419.388546-8-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-11-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-bcmbca-hsspi.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-coldfire-qspi.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-bcmbca-hsspi.c
-+++ b/drivers/spi/spi-bcmbca-hsspi.c
-@@ -550,7 +550,7 @@ static int bcmbca_hsspi_probe(struct pla
+--- a/drivers/spi/spi-coldfire-qspi.c
++++ b/drivers/spi/spi-coldfire-qspi.c
+@@ -410,9 +410,9 @@ static int mcfqspi_probe(struct platform
+ 	platform_set_drvdata(pdev, host);
+ 	pm_runtime_enable(&pdev->dev);
+ 
+-	status = devm_spi_register_controller(&pdev->dev, host);
++	status = spi_register_controller(host);
+ 	if (status) {
+-		dev_dbg(&pdev->dev, "devm_spi_register_controller failed\n");
++		dev_dbg(&pdev->dev, "failed to register controller\n");
+ 		goto fail1;
  	}
  
- 	/* register and we are done */
--	ret = devm_spi_register_controller(dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret)
- 		goto out_sysgroup_disable;
- 
-@@ -572,6 +572,8 @@ static void bcmbca_hsspi_remove(struct p
+@@ -436,11 +436,17 @@ static void mcfqspi_remove(struct platfo
  	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct bcmbca_hsspi *bs = spi_controller_get_devdata(host);
+ 	struct mcfqspi *mcfqspi = spi_controller_get_devdata(host);
  
++	spi_controller_get(host);
++
 +	spi_unregister_controller(host);
 +
- 	/* reset the hardware and block queue progress */
- 	__raw_writel(0, bs->regs + HSSPI_INT_MASK_REG);
- 	clk_disable_unprepare(bs->pll_clk);
+ 	pm_runtime_disable(&pdev->dev);
+ 	/* disable the hardware (set the baud rate to 0) */
+ 	mcfqspi_wr_qmr(mcfqspi, MCFQSPI_QMR_MSTR);
+ 
+ 	mcfqspi_cs_teardown(mcfqspi);
++
++	spi_controller_put(host);
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
 
 
