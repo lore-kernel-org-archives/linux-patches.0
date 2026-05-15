@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D4B3C4B72;
-	Fri, 15 May 2026 16:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC2F3E7BAD;
+	Fri, 15 May 2026 16:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861735; cv=none; b=uTlBeyeHUskP409BmawOeMaHVYNWvV/rW8hD+Sw+VgUYf4qnm0CIoyiQfUqczESbPM5BWBI4Hi7jCefJEB7mZLSQ313FQJZ7DT1XSaRu9IFt5Ava7VIdYaGGn9ybvyy59PWFv0Ilt7GwFPIZH/RdrJwNUHmsDBUFp9LsJjXb4y0=
+	t=1778861737; cv=none; b=cbkN0mlOcK9M88A5mxV53i3uZeXcn6/P1lODlGiwphQyk4GsF6UVBjqLafzvxWpCeu2L+Gj3X45nyppPMddGVdnBniBd+A/ymx4tQdnukUEEQb3dsJyGmsJrnIna/+DcK7w/tidKS9JGNVJ27cA2kejQPrsVp2UARGud14lanwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861735; c=relaxed/simple;
-	bh=yVEkMIKjDKVJxU6XRLYMAUxlcB0kUyELftCRD4YAHxg=;
+	s=arc-20240116; t=1778861737; c=relaxed/simple;
+	bh=P8DkaNsoA1Fr1lWX85YxApvFctG7RhvktmGYYASIeXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ObtWCSn2kp9ntSp8HE++sdbqA2HNnZ5lL3LLLj6q3fedmAIHYho9gIgi/+nPsM9CmcKWhMxbBxJTyE/MhQaVN4lwBLj+C9WVErZzBxqrKkPDXAXYleB1w3cnygdrlwt4iIq6Xhj3Wwou3NsNnSazMuO9E1kNCMsW1dco+Bmhca0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y64t86wg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S5RjMZqGfRnUwYXrxL9y6CumdiamwZXINM6X/QE8/NzGD0XDivaBoMeOD4XiZ7MN776aWUlHWWb6j6cW9ShJMU0Axm0jJl7TsiD/ElSWEt+c3sw5QhjBwsPwLCw7pAPRUwyGT7gCzZhCRubtUv0ynWMByduy8p0Myv0CDp2g+88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRspakdO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y64t86wg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68B1C2BCB0;
-	Fri, 15 May 2026 16:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRspakdO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A8BC2BCB0;
+	Fri, 15 May 2026 16:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861735;
-	bh=yVEkMIKjDKVJxU6XRLYMAUxlcB0kUyELftCRD4YAHxg=;
+	s=korg; t=1778861737;
+	bh=P8DkaNsoA1Fr1lWX85YxApvFctG7RhvktmGYYASIeXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y64t86wgP0d/7FHlefMkA/8YvibuKc55Vvr3yHs60NGAn1WYAuJVabejBAtWq9rHG
-	 Vo2X6gvnjPMoyNh6ZXwM8e/scc+FCPkeOaCiH2vrSMXMZJ6/txK43QDL1NzDh9RUyr
-	 S6Y5zSDhi2nwTte19PNvXvub4PZieOMxtkLalYcs=
+	b=gRspakdOs37S/L2E2lOwCMz5Rqk6sij577fmRKBbOkbkRt+QIxmBGaDHDDpnnMReM
+	 rKdgZwOS/lZ+yMzYhe6IVDoAC3YZ16VapSe1BRrF0NQvZ48s3Hu+e99Vn12vFbRnk0
+	 X5F3Jl93sX1b3t2dPmR5CNB2QjQRUnRQsrH1lmfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 443/474] fbcon: Avoid OOB font access if console rotation fails
-Date: Fri, 15 May 2026 17:49:12 +0200
-Message-ID: <20260515154724.672461274@linuxfoundation.org>
+Subject: [PATCH 6.6 444/474] rxrpc: Fix conn-level packet handling to unshare RESPONSE packets
+Date: Fri, 15 May 2026 17:49:13 +0200
+Message-ID: <20260515154724.694719011@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,53 +56,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit e4ef723d8975a2694cc90733a6b888a5e2841842 ]
+[ Upstream commit 24481a7f573305706054c59e275371f8d0fe919f ]
 
-Clear the font buffer if the reallocation during console rotation fails
-in fbcon_rotate_font(). The putcs implementations for the rotated buffer
-will return early in this case. See [1] for an example.
+The security operations that verify the RESPONSE packets decrypt bits of it
+in place - however, the sk_buff may be shared with a packet sniffer, which
+would lead to the sniffer seeing an apparently corrupt packet (actually
+decrypted).
 
-Currently, fbcon_rotate_font() keeps the old buffer, which is too small
-for the rotated font. Printing to the rotated console with a high-enough
-character code will overflow the font buffer.
+Fix this by handing a copy of the packet off to the specific security
+handler if the packet was cloned.
 
-v2:
-- fix typos in commit message
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
-Cc: stable@vger.kernel.org # v2.6.15+
-Link: https://elixir.bootlin.com/linux/v6.19/source/drivers/video/fbdev/core/fbcon_ccw.c#L144 # [1]
-Signed-off-by: Helge Deller <deller@gmx.de>
-[ renamed `par` to `ops` to match the 6.12 local pointer name ]
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260422161438.2593376-5-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon_rotate.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/rxrpc/conn_event.c |   29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/fbcon_rotate.c
-+++ b/drivers/video/fbdev/core/fbcon_rotate.c
-@@ -46,6 +46,10 @@ static int fbcon_rotate_font(struct fb_i
- 		info->fbops->fb_sync(info);
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -226,6 +226,33 @@ static void rxrpc_call_is_secure(struct
+ 		rxrpc_notify_socket(call);
+ }
  
- 	if (ops->fd_size < d_cellsize * len) {
-+		kfree(ops->fontbuffer);
-+		ops->fontbuffer = NULL;
-+		ops->fd_size = 0;
++static int rxrpc_verify_response(struct rxrpc_connection *conn,
++				 struct sk_buff *skb)
++{
++	int ret;
 +
- 		dst = kmalloc_array(len, d_cellsize, GFP_KERNEL);
- 
- 		if (dst == NULL) {
-@@ -54,7 +58,6 @@ static int fbcon_rotate_font(struct fb_i
++	if (skb_cloned(skb)) {
++		/* Copy the packet if shared so that we can do in-place
++		 * decryption.
++		 */
++		struct sk_buff *nskb = skb_copy(skb, GFP_NOFS);
++
++		if (nskb) {
++			rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
++			ret = conn->security->verify_response(conn, nskb);
++			rxrpc_free_skb(nskb, rxrpc_skb_put_response_copy);
++		} else {
++			/* OOM - Drop the packet. */
++			rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
++			ret = -ENOMEM;
++		}
++	} else {
++		ret = conn->security->verify_response(conn, skb);
++	}
++
++	return ret;
++}
++
+ /*
+  * connection-level Rx packet processor
+  */
+@@ -253,7 +280,7 @@ static int rxrpc_process_event(struct rx
  		}
+ 		spin_unlock(&conn->state_lock);
  
- 		ops->fd_size = d_cellsize * len;
--		kfree(ops->fontbuffer);
- 		ops->fontbuffer = dst;
- 	}
+-		ret = conn->security->verify_response(conn, skb);
++		ret = rxrpc_verify_response(conn, skb);
+ 		if (ret < 0)
+ 			return ret;
  
 
 
