@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6703C819C;
-	Fri, 15 May 2026 16:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F42C3FBB73;
+	Fri, 15 May 2026 16:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861994; cv=none; b=jqbOX+ENdF9awVl6pkiBiTfi258f1Tj8IMyCDfrOPAS1kLJqPiBx90alNOHhGsH0xXkPEMfrJ+PT9yu+jib+kgl6RbaJnQf2Hftzxkrh/r79QswANkq/3uCO8iTTuG4ghzORRXBzcX+TlAR3uU4ezkX3k/xPb2IlXqf1iB0XBz8=
+	t=1778861997; cv=none; b=mQiXw0f0dBG+JABxG7NfCOG6Z1XEmWLYlXJZGJFVYmtVb6CZ0akwW24wz5R8AjzJHGkY6IsydOXrQQIdRD1DQ3VF3i0TanVsax3Dwnyecenwx9RBpBYZHqHgyJ8RBbmAEOCMOv6Z/huU8sGYJcibLexU9t3EqaCWYgF1QcnoIHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861994; c=relaxed/simple;
-	bh=8LyEG523PNZDEGVfuhbzy85BztBhvYEaH2eXSHA0nnY=;
+	s=arc-20240116; t=1778861997; c=relaxed/simple;
+	bh=u8JY4Qw9TQdgYWygVgwD1V+9n7mmlZHvJDe845d7TbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/hndNyXRHy1WPajqshYCQCUqmR/+Lj9ddyKQRgCKSmrnonYl/RKlW2Ecs/1hBTap9tphceG6acNnTyjIgJzivem4wHnxx3nwofLmriqS8s8xrb5wo2r88nQKBqYqA/flWXuq4u9c4Ts+hbyBFpY/sM2Jk0fHPcSsoDja+XCAlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7U1W7Ic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bGv1xRaFagcPYkkVFSFl4p18r5KuvZrtNkKf3mV7mmEz9tXUH3nj5dHv20FFdXrmTtzeBznFgZSa0iiRU5Ws3bgmeZzZ1cLWnv7jf64YTvKCCNUvWuuKca/lgmkdhILT+FSOFPIrdp5k756VtSunDSLRkTkY1N2fkGWL7s7ftfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stZaacLV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7U1W7Ic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0ACAC2BCB0;
-	Fri, 15 May 2026 16:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stZaacLV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71615C2BCB0;
+	Fri, 15 May 2026 16:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861994;
-	bh=8LyEG523PNZDEGVfuhbzy85BztBhvYEaH2eXSHA0nnY=;
+	s=korg; t=1778861996;
+	bh=u8JY4Qw9TQdgYWygVgwD1V+9n7mmlZHvJDe845d7TbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7U1W7Ic36xHRLyNDm45O941WBED0SLEe6wUs7KMA2I9PJTU4rO55tEoddQVXwAv2
-	 CkbNglNSYwTRHR1ye7DIXU3d5ibnBfDGck53b1batTsv50BjNQeAdoT5JO6lsm44DQ
-	 jDj7kvlrKUY0E9r43gRZ5ck65l6JIGFN/9Ih849w=
+	b=stZaacLV5NlFL478wAGE0s2M9Tk+yoar/OMKUMxoRM+YNxz4mh1dm1C1EIL2Zg0mU
+	 CIC4wvVvx6ovqoFt7EipGI4Xy84APwV5SHXIQ3b9d9w07ctH6qgcD6HNWnhv2Y7pbw
+	 cPdlCtUkwykCxTitTxEDasnBPAapMgO5h9F5IMTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 024/188] spi: st-ssc4: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:21 +0200
-Message-ID: <20260515154657.832420039@linuxfoundation.org>
+Subject: [PATCH 6.18 025/188] regulator: max77650: fix OF node reference imbalance
+Date: Fri, 15 May 2026 17:47:22 +0200
+Message-ID: <20260515154657.854111056@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -53,49 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 19857374010d06ca6a2f7c2c53464122eb804df0 upstream.
+commit 2edaf5f7ada0ab5c9ec1f0836bd19779a8d85262 upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+The driver reuses the OF node of the parent multi-function device but
+fails to take another reference to balance the one dropped by the
+platform bus code when unbinding the MFD and deregistering the child
+devices.
 
-Fixes: 9e862375c542 ("spi: Add new driver for STMicroelectronics' SPI Controller")
-Cc: stable@vger.kernel.org	# 4.0
-Cc: Lee Jones <lee@kernel.org>
+Fix this by using the intended helper for reusing OF nodes.
+
+Fixes: bcc61f1c44fd ("regulator: max77650: add regulator support")
+Cc: stable@vger.kernel.org	# 5.1
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-18-johan@kernel.org
+Link: https://patch.msgid.link/20260408073055.5183-4-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-st-ssc4.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/regulator/max77650-regulator.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/spi/spi-st-ssc4.c
-+++ b/drivers/spi/spi-st-ssc4.c
-@@ -349,7 +349,7 @@ static int spi_st_probe(struct platform_
+--- a/drivers/regulator/max77650-regulator.c
++++ b/drivers/regulator/max77650-regulator.c
+@@ -337,7 +337,7 @@ static int max77650_regulator_probe(stru
+ 	parent = dev->parent;
  
- 	platform_set_drvdata(pdev, host);
+ 	if (!dev->of_node)
+-		dev->of_node = parent->of_node;
++		device_set_of_node_from_dev(dev, parent);
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register host\n");
- 		goto rpm_disable;
-@@ -371,10 +371,16 @@ static void spi_st_remove(struct platfor
- 	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct spi_st *spi_st = spi_controller_get_devdata(host);
- 
-+	spi_controller_get(host);
-+
-+	spi_unregister_controller(host);
-+
- 	pm_runtime_disable(&pdev->dev);
- 
- 	clk_disable_unprepare(spi_st->clk);
- 
-+	spi_controller_put(host);
-+
- 	pinctrl_pm_select_sleep_state(&pdev->dev);
- }
- 
+ 	rdescs = devm_kcalloc(dev, MAX77650_REGULATOR_NUM_REGULATORS,
+ 			      sizeof(*rdescs), GFP_KERNEL);
 
 
