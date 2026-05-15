@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E8E3E7BCC;
-	Fri, 15 May 2026 16:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A73239734B;
+	Fri, 15 May 2026 16:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862250; cv=none; b=YlP1S4vMVJ1i1cVMp2k0a7rdr5ooVsAw238r1U4Us0RGXrxUW6RLEELDElxt/Pqa4lFsktqJ8K30/lGo2Kk/0TJy1eU9HvnYoGu1/qADo95PQygdsBzS6MYVTvVNsZpY522u2YQDr73zwLNDPgXtSG5dVqSFJZDyOg1ZCgmPeTo=
+	t=1778862253; cv=none; b=ZnMXQIGT+1jzVmQMqzLUhWlaLKbQ2LnYB+juWoNVmrlC1zpQWLnSDvrBRcLSmSdPiO/xR2Pc+TSbobxGQ+nvHh7cd7kzRWdv9WO4Vkj6qJMD6TJE3FqWQHV43ESjXhjvLLVYwlCVoUuqmhvH1TiMLQkg8gPTSAKe62sudbjalvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862250; c=relaxed/simple;
-	bh=Xg2xQZeB7lj20izAJ5fqF7XJhowOHHFL+uuqRi6OzSs=;
+	s=arc-20240116; t=1778862253; c=relaxed/simple;
+	bh=AKUCLvlLGby2rI+ddhOn9+G3uxooUPIPwTzdNHg+DHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iu/UKHftwgcsqUNYwfu4AfX/lHRBO+5VSpHRADB/Mv1MD8iUp0JOnpP2/gjaj0sl3b+ZsO6DZTIMBW+dVeXf2O8c1c7wXFGZLAozj11cfj2h6NUg9nR4lauyhNhcRFchkED6GqMt9m+EQ3bGBR4Rrdnt0LetKxOn8MeHuSj+Sbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBZm8FJg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i5tF8VdRMyVpAQ/ayQRY4f4nCDLYQKyQFIC6IBiy160pzJIuUnc+pdIk8byVSTzWpkj2ALyant8ek9nCPOR9L0rXAA7HVnS8CKC0kIx2qrHbFXno8MrorlDzIJcC+8OrrFbARmBI4fToZHoOshCTmSZgKL7g8LzUksSoL83OyoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtVdAUBI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBZm8FJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593F8C2BCB0;
-	Fri, 15 May 2026 16:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtVdAUBI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC82EC2BCB0;
+	Fri, 15 May 2026 16:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862250;
-	bh=Xg2xQZeB7lj20izAJ5fqF7XJhowOHHFL+uuqRi6OzSs=;
+	s=korg; t=1778862253;
+	bh=AKUCLvlLGby2rI+ddhOn9+G3uxooUPIPwTzdNHg+DHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rBZm8FJg02M0kr1KVE1QKbjr66SuBB+Fxrywexdu8fYIQ4B9UCmvDL6uPLaABcoTq
-	 h+PsATxV7F7VutwJl+mCKuqIrTREy3UUQIjxLGJFRCh5IkA+UPPLWsDER+ed+nM5se
-	 zMXu8hmxhEEEN8Z0FjfQ88Kvnkg5z6/ksVesJz40=
+	b=QtVdAUBIxVitEe1a6w8nu49o/rJPrxYczrEzrh2Za0vRRUQ2CHBQwBmKnHMAoDXSQ
+	 w00NPjWsYAODZWqh5mot6ODy2rbXc6YHmwkJu1kqBPZ9TDz5Ime2mTWz4t2l5vdvdt
+	 mNH1zsn1mDQ7u7vKprH+ndTP1k+LXbF31arAMqiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	David Carlier <devnexen@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 167/188] spi: zynq-qspi: fix controller deregistration
-Date: Fri, 15 May 2026 17:49:44 +0200
-Message-ID: <20260515154700.956918668@linuxfoundation.org>
+Subject: [PATCH 6.18 168/188] Bluetooth: hci_conn: fix potential UAF in create_big_sync
+Date: Fri, 15 May 2026 17:49:45 +0200
+Message-ID: <20260515154700.980212081@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -52,70 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit c9c012706c9fa8ca6d129a9161caf92ab625a3fd ]
+[ Upstream commit 0beddb0c380bed5f5b8e61ddbe14635bb73d0b41 ]
 
-Make sure to deregister the controller before disabling it during driver
-unbind.
+Add hci_conn_valid() check in create_big_sync() to detect stale
+connections before proceeding with BIG creation. Handle the
+resulting -ECANCELED in create_big_complete() and re-validate the
+connection under hci_dev_lock() before dereferencing, matching the
+pattern used by create_le_conn_complete() and create_pa_complete().
 
-Note that clocks were also disabled before the recent commit
-1f8fd9490e31 ("spi: zynq-qspi: Simplify clock handling with
-devm_clk_get_enabled()").
+Keep the hci_conn object alive across the async boundary by taking
+a reference via hci_conn_get() when queueing create_big_sync(), and
+dropping it in the completion callback. The refcount and the lock
+are complementary: the refcount keeps the object allocated, while
+hci_dev_lock() serializes hci_conn_hash_del()'s list_del_rcu() on
+hdev->conn_hash, as required by hci_conn_del().
 
-Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
-Cc: stable@vger.kernel.org	# 5.2: 8eb2fd00f65a
-Cc: stable@vger.kernel.org	# 5.2
-Cc: Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-27-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+hci_conn_put() is called outside hci_dev_unlock() so the final put
+(which resolves to kfree() via bt_link_release) does not run under
+hdev->lock, though the release path would be safe either way.
+
+Without this, create_big_complete() would unconditionally
+dereference the conn pointer on error, causing a use-after-free
+via hci_connect_cfm() and hci_conn_del().
+
+Fixes: eca0ae4aea66 ("Bluetooth: Add initial implementation of BIS connections")
+Cc: stable@vger.kernel.org
+Co-developed-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ kept stable's `qos->bcast.out.phy == 0x02` context line instead of upstream's renamed `qos->bcast.out.phys == BIT(1)` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-zynq-qspi.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_conn.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-zynq-qspi.c
-+++ b/drivers/spi/spi-zynq-qspi.c
-@@ -643,7 +643,7 @@ static int zynq_qspi_probe(struct platfo
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2113,6 +2113,9 @@ static int create_big_sync(struct hci_de
+ 	u32 flags = 0;
+ 	int err;
  
- 	xqspi = spi_controller_get_devdata(ctlr);
- 	xqspi->dev = dev;
--	platform_set_drvdata(pdev, xqspi);
-+	platform_set_drvdata(pdev, ctlr);
- 	xqspi->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(xqspi->regs)) {
- 		ret = PTR_ERR(xqspi->regs);
-@@ -702,9 +702,9 @@ static int zynq_qspi_probe(struct platfo
- 	/* QSPI controller initializations */
- 	zynq_qspi_init_hw(xqspi, ctlr->num_chipselect);
++	if (!hci_conn_valid(hdev, conn))
++		return -ECANCELED;
++
+ 	if (qos->bcast.out.phy == 0x02)
+ 		flags |= MGMT_ADV_FLAG_SEC_2M;
  
--	ret = devm_spi_register_controller(&pdev->dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	if (ret) {
--		dev_err(&pdev->dev, "devm_spi_register_controller failed\n");
-+		dev_err(&pdev->dev, "failed to register controller\n");
- 		goto remove_ctlr;
+@@ -2188,11 +2191,24 @@ static void create_big_complete(struct h
+ 
+ 	bt_dev_dbg(hdev, "conn %p", conn);
+ 
++	if (err == -ECANCELED)
++		goto done;
++
++	hci_dev_lock(hdev);
++
++	if (!hci_conn_valid(hdev, conn))
++		goto unlock;
++
+ 	if (err) {
+ 		bt_dev_err(hdev, "Unable to create BIG: %d", err);
+ 		hci_connect_cfm(conn, err);
+ 		hci_conn_del(conn);
  	}
- 
-@@ -728,9 +728,16 @@ remove_ctlr:
-  */
- static void zynq_qspi_remove(struct platform_device *pdev)
- {
--	struct zynq_qspi *xqspi = platform_get_drvdata(pdev);
-+	struct spi_controller *ctlr = platform_get_drvdata(pdev);
-+	struct zynq_qspi *xqspi = spi_controller_get_devdata(ctlr);
 +
-+	spi_controller_get(ctlr);
-+
-+	spi_unregister_controller(ctlr);
- 
- 	zynq_qspi_write(xqspi, ZYNQ_QSPI_ENABLE_OFFSET, 0);
-+
-+	spi_controller_put(ctlr);
++unlock:
++	hci_dev_unlock(hdev);
++done:
++	hci_conn_put(conn);
  }
  
- static const struct of_device_id zynq_qspi_of_match[] = {
+ struct hci_conn *hci_bind_bis(struct hci_dev *hdev, bdaddr_t *dst, __u8 sid,
+@@ -2309,10 +2325,11 @@ struct hci_conn *hci_connect_bis(struct
+ 				 BT_BOUND, &data);
+ 
+ 	/* Queue start periodic advertising and create BIG */
+-	err = hci_cmd_sync_queue(hdev, create_big_sync, conn,
++	err = hci_cmd_sync_queue(hdev, create_big_sync, hci_conn_get(conn),
+ 				 create_big_complete);
+ 	if (err < 0) {
+ 		hci_conn_drop(conn);
++		hci_conn_put(conn);
+ 		return ERR_PTR(err);
+ 	}
+ 
 
 
