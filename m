@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FCC3FF1DD;
-	Fri, 15 May 2026 15:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6F7176238;
+	Fri, 15 May 2026 15:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860616; cv=none; b=W7eFTUEb/MCOvOHUlupyhy9AAbtFlGux4OrPycmOEGzxALi5yxCBnkAv5LDX425U9PswTvy1oYT/8IyBJhRWrpcMu/kfE4YhiVYpDsGrv3Rb28sk5Qs8Xiy0sQWXuq4CDr/2auHROrEGu0kgzKArBvH+Jnr+7cyUBACNMV97LlM=
+	t=1778860619; cv=none; b=EafA3DMcUboQ43NX44gdQfVslKv+hp9sAvWkPHPMOX0sZiP97ejpbk/l53852F0NoM+zGX8h/XxY6wKTwCBZ9dVlYXS/jbcLN4aIBmApIOj6v+HIQ5+tVyomfdWMB64RQrb/whjD8G706PimM7IDcLXBsyMKeIQ4u/oC5ijodf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860616; c=relaxed/simple;
-	bh=UpnZsrNE+A/LZ8oHXA7JOfhk34trNWkSWBUwBoL4tU4=;
+	s=arc-20240116; t=1778860619; c=relaxed/simple;
+	bh=sJvTTpOr1yjn8/x3rYo3fMqwskr/ft9R1ZUGc80WSxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjp4Bt9aEqNXD8ZCdbqDl4FhDbb13WdlrQFRBi1UzC92E354Q40trraw59YUoAGH8rLA3PTtLam2d+y7BTnwZXENO/4k72yJp/TShOjuHFP3HL7BngQNOWbdIDW82jVpe5iF8LIyAMQoTeiuY4n8fUZdqDyDpZnLqnKomSX2zE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1g0IyEq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kMA3IFRhVWpfaXjVAlWPtTjrH61YUUCiOEWsBuVQ6tyAaQbfwU4J+EeIjOoiLzTDGWwLe1UToj7dLqE6/3mC2p6+dajqOSzJCDLLp0ZUTrsuADfCnPvzs4pcULOKC00IFworLd5VPVxC60f1iMq/b1W/XKaNfSMfyZV3T9CdsNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3u83KRO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1g0IyEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA19CC2BCB0;
-	Fri, 15 May 2026 15:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3u83KRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52A7C2BCB0;
+	Fri, 15 May 2026 15:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860616;
-	bh=UpnZsrNE+A/LZ8oHXA7JOfhk34trNWkSWBUwBoL4tU4=;
+	s=korg; t=1778860619;
+	bh=sJvTTpOr1yjn8/x3rYo3fMqwskr/ft9R1ZUGc80WSxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j1g0IyEqF+O9zKNNFra4wcXKUXfKe5f+tQAyBWGdKeiSv9j+m6NSyp2CucuA5/z09
-	 /tvQNBVd6L9FDmLARwg3LYMJrX8ZbXSnc7Jd6J7u6wzvz1JxH1blVuSMOhAekVYXNV
-	 nPeBI9yNnUIdV2TI/+BMDn4Q68DMfp6ef8NcycwM=
+	b=m3u83KRO3NkbBbdVuI4yv8ZQR8cBrL7g857FRDBZhunxwcBHHuzJEKnKga6MSHm3r
+	 NVV4lL7+9zxriBrSbjTp8NXdqw5ut9TvKCfeHvSZk84mR2nFHDoigy83WkCzN8hXjp
+	 aFpwNAivLelroWnpNUXkcYpwoP08s/MRLuEJaKSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	cen zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Charles Xu <charles_xu@189.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Bin Lan <lanbincn@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/474] Bluetooth: MGMT: Fix possible UAFs
-Date: Fri, 15 May 2026 17:42:03 +0200
-Message-ID: <20260515154715.363889283@linuxfoundation.org>
+Subject: [PATCH 6.6 015/474] padata: Fix pd UAF once and for all
+Date: Fri, 15 May 2026 17:42:04 +0200
+Message-ID: <20260515154715.384120238@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,774 +51,278 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 302a1f674c00dd5581ab8e493ef44767c5101aab ]
+[ Upstream commit 71203f68c7749609d7fc8ae6ad054bdedeb24f91 ]
 
-This attemps to fix possible UAFs caused by struct mgmt_pending being
-freed while still being processed like in the following trace, in order
-to fix mgmt_pending_valid is introduce and use to check if the
-mgmt_pending hasn't been removed from the pending list, on the complete
-callbacks it is used to check and in addtion remove the cmd from the list
-while holding mgmt_pending_lock to avoid TOCTOU problems since if the cmd
-is left on the list it can still be accessed and freed.
+There is a race condition/UAF in padata_reorder that goes back
+to the initial commit.  A reference count is taken at the start
+of the process in padata_do_parallel, and released at the end in
+padata_serial_worker.
 
-BUG: KASAN: slab-use-after-free in mgmt_add_adv_patterns_monitor_sync+0x35/0x50 net/bluetooth/mgmt.c:5223
-Read of size 8 at addr ffff8880709d4dc0 by task kworker/u11:0/55
+This reference count is (and only is) required for padata_replace
+to function correctly.  If padata_replace is never called then
+there is no issue.
 
-CPU: 0 UID: 0 PID: 55 Comm: kworker/u11:0 Not tainted 6.16.4 #2 PREEMPT(full)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014
-Workqueue: hci0 hci_cmd_sync_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x240 mm/kasan/report.c:482
- kasan_report+0x118/0x150 mm/kasan/report.c:595
- mgmt_add_adv_patterns_monitor_sync+0x35/0x50 net/bluetooth/mgmt.c:5223
- hci_cmd_sync_work+0x210/0x3a0 net/bluetooth/hci_sync.c:332
- process_one_work kernel/workqueue.c:3238 [inline]
- process_scheduled_works+0xade/0x17b0 kernel/workqueue.c:3321
- worker_thread+0x8a0/0xda0 kernel/workqueue.c:3402
- kthread+0x711/0x8a0 kernel/kthread.c:464
- ret_from_fork+0x3fc/0x770 arch/x86/kernel/process.c:148
- ret_from_fork_asm+0x1a/0x30 home/kwqcheii/source/fuzzing/kernel/kasan/linux-6.16.4/arch/x86/entry/entry_64.S:245
- </TASK>
+In the function padata_reorder which serves as the core of padata,
+as soon as padata is added to queue->serial.list, and the associated
+spin lock released, that padata may be processed and the reference
+count on pd would go away.
 
-Allocated by task 12210:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
- poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
- __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:394
- kasan_kmalloc include/linux/kasan.h:260 [inline]
- __kmalloc_cache_noprof+0x230/0x3d0 mm/slub.c:4364
- kmalloc_noprof include/linux/slab.h:905 [inline]
- kzalloc_noprof include/linux/slab.h:1039 [inline]
- mgmt_pending_new+0x65/0x1e0 net/bluetooth/mgmt_util.c:269
- mgmt_pending_add+0x35/0x140 net/bluetooth/mgmt_util.c:296
- __add_adv_patterns_monitor+0x130/0x200 net/bluetooth/mgmt.c:5247
- add_adv_patterns_monitor+0x214/0x360 net/bluetooth/mgmt.c:5364
- hci_mgmt_cmd+0x9c9/0xef0 net/bluetooth/hci_sock.c:1719
- hci_sock_sendmsg+0x6ca/0xef0 net/bluetooth/hci_sock.c:1839
- sock_sendmsg_nosec net/socket.c:714 [inline]
- __sock_sendmsg+0x219/0x270 net/socket.c:729
- sock_write_iter+0x258/0x330 net/socket.c:1133
- new_sync_write fs/read_write.c:593 [inline]
- vfs_write+0x5c9/0xb30 fs/read_write.c:686
- ksys_write+0x145/0x250 fs/read_write.c:738
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Fix this by getting the next padata before the squeue->serial lock
+is released.
 
-Freed by task 12221:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
- kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:576
- poison_slab_object mm/kasan/common.c:247 [inline]
- __kasan_slab_free+0x62/0x70 mm/kasan/common.c:264
- kasan_slab_free include/linux/kasan.h:233 [inline]
- slab_free_hook mm/slub.c:2381 [inline]
- slab_free mm/slub.c:4648 [inline]
- kfree+0x18e/0x440 mm/slub.c:4847
- mgmt_pending_free net/bluetooth/mgmt_util.c:311 [inline]
- mgmt_pending_foreach+0x30d/0x380 net/bluetooth/mgmt_util.c:257
- __mgmt_power_off+0x169/0x350 net/bluetooth/mgmt.c:9444
- hci_dev_close_sync+0x754/0x1330 net/bluetooth/hci_sync.c:5290
- hci_dev_do_close net/bluetooth/hci_core.c:501 [inline]
- hci_dev_close+0x108/0x200 net/bluetooth/hci_core.c:526
- sock_do_ioctl+0xd9/0x300 net/socket.c:1192
- sock_ioctl+0x576/0x790 net/socket.c:1313
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:907 [inline]
- __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+In order to make this possible, simplify padata_reorder by only
+calling it once the next padata arrives.
 
-Fixes: cf75ad8b41d2 ("Bluetooth: hci_sync: Convert MGMT_SET_POWERED")
-Fixes: 2bd1b237616b ("Bluetooth: hci_sync: Convert MGMT_OP_SET_DISCOVERABLE to use cmd_sync")
-Fixes: f056a65783cc ("Bluetooth: hci_sync: Convert MGMT_OP_SET_CONNECTABLE to use cmd_sync")
-Fixes: 3244845c6307 ("Bluetooth: hci_sync: Convert MGMT_OP_SSP")
-Fixes: d81a494c43df ("Bluetooth: hci_sync: Convert MGMT_OP_SET_LE")
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Fixes: 6f6ff38a1e14 ("Bluetooth: hci_sync: Convert MGMT_OP_SET_LOCAL_NAME")
-Fixes: 71efbb08b538 ("Bluetooth: hci_sync: Convert MGMT_OP_SET_PHY_CONFIGURATION")
-Fixes: b747a83690c8 ("Bluetooth: hci_sync: Refactor add Adv Monitor")
-Fixes: abfeea476c68 ("Bluetooth: hci_sync: Convert MGMT_OP_START_DISCOVERY")
-Fixes: 26ac4c56f03f ("Bluetooth: hci_sync: Convert MGMT_OP_SET_ADVERTISING")
-Reported-by: cen zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Charles Xu <charles_xu@189.cn>
+Fixes: 16295bec6398 ("padata: Generic parallelization/serialization interface")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ Adjust context of padata_find_next(). Replace
+cpumask_next_wrap(cpu, pd->cpumask.pcpu) with
+cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false) in padata_reorder() in
+v6.6 according to dc5bb9b769c9 ("cpumask: deprecate cpumask_next_wrap()") and
+f954a2d37637 ("padata: switch padata_find_next() to using cpumask_next_wrap()")
+. ]
+Signed-off-by: Bin Lan <lanbincn@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c      | 259 ++++++++++++++++++++++++++------------
- net/bluetooth/mgmt_util.c |  46 +++++++
- net/bluetooth/mgmt_util.h |   3 +
- 3 files changed, 231 insertions(+), 77 deletions(-)
+ include/linux/padata.h |   3 -
+ kernel/padata.c        | 136 +++++++++++------------------------------
+ 2 files changed, 37 insertions(+), 102 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 51a6ad6a36c8d..4bf6c0aae9673 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1319,8 +1319,7 @@ static void mgmt_set_powered_complete(struct hci_dev *hdev, void *data, int err)
- 	struct mgmt_mode *cp;
+diff --git a/include/linux/padata.h b/include/linux/padata.h
+index 495b16b6b4d72..9ca779d7e310e 100644
+--- a/include/linux/padata.h
++++ b/include/linux/padata.h
+@@ -91,7 +91,6 @@ struct padata_cpumask {
+  * @cpu: Next CPU to be processed.
+  * @cpumask: The cpumasks in use for parallel and serial workers.
+  * @reorder_work: work struct for reordering.
+- * @lock: Reorder lock.
+  */
+ struct parallel_data {
+ 	struct padata_shell		*ps;
+@@ -102,8 +101,6 @@ struct parallel_data {
+ 	unsigned int			processed;
+ 	int				cpu;
+ 	struct padata_cpumask		cpumask;
+-	struct work_struct		reorder_work;
+-	spinlock_t                      ____cacheline_aligned lock;
+ };
  
- 	/* Make sure cmd still outstanding. */
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_SET_POWERED, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
- 	cp = cmd->param;
-@@ -1347,23 +1346,29 @@ static void mgmt_set_powered_complete(struct hci_dev *hdev, void *data, int err)
- 				mgmt_status(err));
- 	}
- 
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static int set_powered_sync(struct hci_dev *hdev, void *data)
+ /**
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 9260ab0b39eb5..44ea75bfd8681 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -261,20 +261,17 @@ EXPORT_SYMBOL(padata_do_parallel);
+  *   be parallel processed by another cpu and is not yet present in
+  *   the cpu's reorder queue.
+  */
+-static struct padata_priv *padata_find_next(struct parallel_data *pd,
+-					    bool remove_object)
++static struct padata_priv *padata_find_next(struct parallel_data *pd, int cpu,
++					    unsigned int processed)
  {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_mode *cp;
-+	struct mgmt_mode cp;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
- 
- 	/* Make sure cmd still outstanding. */
--	if (cmd != pending_find(MGMT_OP_SET_POWERED, hdev))
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
- 		return -ECANCELED;
-+	}
- 
--	cp = cmd->param;
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
- 
- 	BT_DBG("%s", hdev->name);
- 
--	return hci_set_powered_sync(hdev, cp->val);
-+	return hci_set_powered_sync(hdev, cp.val);
- }
- 
- static int set_powered(struct sock *sk, struct hci_dev *hdev, void *data,
-@@ -1504,8 +1509,7 @@ static void mgmt_set_discoverable_complete(struct hci_dev *hdev, void *data,
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	/* Make sure cmd still outstanding. */
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_SET_DISCOVERABLE, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
- 	hci_dev_lock(hdev);
-@@ -1527,12 +1531,15 @@ static void mgmt_set_discoverable_complete(struct hci_dev *hdev, void *data,
- 	new_settings(hdev, cmd->sk);
- 
- done:
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 	hci_dev_unlock(hdev);
- }
- 
- static int set_discoverable_sync(struct hci_dev *hdev, void *data)
- {
-+	if (!mgmt_pending_listed(hdev, data))
-+		return -ECANCELED;
-+
- 	BT_DBG("%s", hdev->name);
- 
- 	return hci_update_discoverable_sync(hdev);
-@@ -1679,8 +1686,7 @@ static void mgmt_set_connectable_complete(struct hci_dev *hdev, void *data,
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	/* Make sure cmd still outstanding. */
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_SET_CONNECTABLE, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
- 	hci_dev_lock(hdev);
-@@ -1696,7 +1702,7 @@ static void mgmt_set_connectable_complete(struct hci_dev *hdev, void *data,
- 
- done:
- 	if (cmd)
--		mgmt_pending_remove(cmd);
-+		mgmt_pending_free(cmd);
- 
- 	hci_dev_unlock(hdev);
- }
-@@ -1732,6 +1738,9 @@ static int set_connectable_update_settings(struct hci_dev *hdev,
- 
- static int set_connectable_sync(struct hci_dev *hdev, void *data)
- {
-+	if (!mgmt_pending_listed(hdev, data))
-+		return -ECANCELED;
-+
- 	BT_DBG("%s", hdev->name);
- 
- 	return hci_update_connectable_sync(hdev);
-@@ -1908,14 +1917,17 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct cmd_lookup match = { NULL, hdev };
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_mode *cp = cmd->param;
--	u8 enable = cp->val;
-+	struct mgmt_mode *cp;
-+	u8 enable;
- 	bool changed;
- 
- 	/* Make sure cmd still outstanding. */
--	if (err == -ECANCELED || cmd != pending_find(MGMT_OP_SET_SSP, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
-+	cp = cmd->param;
-+	enable = cp->val;
-+
- 	if (err) {
- 		u8 mgmt_err = mgmt_status(err);
- 
-@@ -1924,8 +1936,7 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
- 			new_settings(hdev, NULL);
- 		}
- 
--		mgmt_pending_foreach(MGMT_OP_SET_SSP, hdev, true,
--				     cmd_status_rsp, &mgmt_err);
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_err);
- 		return;
- 	}
- 
-@@ -1935,7 +1946,7 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
- 		changed = hci_dev_test_and_clear_flag(hdev, HCI_SSP_ENABLED);
- 	}
- 
--	mgmt_pending_foreach(MGMT_OP_SET_SSP, hdev, true, settings_rsp, &match);
-+	settings_rsp(cmd, &match);
- 
- 	if (changed)
- 		new_settings(hdev, match.sk);
-@@ -1949,14 +1960,25 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
- static int set_ssp_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_mode *cp = cmd->param;
-+	struct mgmt_mode cp;
- 	bool changed = false;
- 	int err;
- 
--	if (cp->val)
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	if (cp.val)
- 		changed = !hci_dev_test_and_set_flag(hdev, HCI_SSP_ENABLED);
- 
--	err = hci_write_ssp_mode_sync(hdev, cp->val);
-+	err = hci_write_ssp_mode_sync(hdev, cp.val);
- 
- 	if (!err && changed)
- 		hci_dev_clear_flag(hdev, HCI_SSP_ENABLED);
-@@ -2049,32 +2071,50 @@ static int set_hs(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
- 
- static void set_le_complete(struct hci_dev *hdev, void *data, int err)
- {
-+	struct mgmt_pending_cmd *cmd = data;
- 	struct cmd_lookup match = { NULL, hdev };
- 	u8 status = mgmt_status(err);
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
--	if (status) {
--		mgmt_pending_foreach(MGMT_OP_SET_LE, hdev, true, cmd_status_rsp,
--				     &status);
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, data))
- 		return;
-+
-+	if (status) {
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, status);
-+		goto done;
- 	}
- 
--	mgmt_pending_foreach(MGMT_OP_SET_LE, hdev, true, settings_rsp, &match);
-+	settings_rsp(cmd, &match);
- 
- 	new_settings(hdev, match.sk);
- 
- 	if (match.sk)
- 		sock_put(match.sk);
-+
-+done:
-+	mgmt_pending_free(cmd);
- }
- 
- static int set_le_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_mode *cp = cmd->param;
--	u8 val = !!cp->val;
-+	struct mgmt_mode cp;
-+	u8 val;
- 	int err;
- 
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+	val = !!cp.val;
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
- 	if (!val) {
- 		hci_clear_adv_instance_sync(hdev, NULL, 0x00, true);
- 
-@@ -2116,7 +2156,12 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct mgmt_pending_cmd *cmd = data;
- 	u8 status = mgmt_status(err);
--	struct sock *sk = cmd->sk;
-+	struct sock *sk;
-+
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
-+		return;
-+
-+	sk = cmd->sk;
- 
- 	if (status) {
- 		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev, true,
-@@ -2131,24 +2176,37 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
- static int set_mesh_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_cp_set_mesh *cp = cmd->param;
--	size_t len = cmd->param_len;
-+	struct mgmt_cp_set_mesh cp;
-+	size_t len;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	len = cmd->param_len;
- 
- 	memset(hdev->mesh_ad_types, 0, sizeof(hdev->mesh_ad_types));
- 
--	if (cp->enable)
-+	if (cp.enable)
- 		hci_dev_set_flag(hdev, HCI_MESH);
- 	else
- 		hci_dev_clear_flag(hdev, HCI_MESH);
- 
--	hdev->le_scan_interval = __le16_to_cpu(cp->period);
--	hdev->le_scan_window = __le16_to_cpu(cp->window);
-+	hdev->le_scan_interval = __le16_to_cpu(cp.period);
-+	hdev->le_scan_window = __le16_to_cpu(cp.window);
- 
--	len -= sizeof(*cp);
-+	len -= sizeof(cp);
- 
- 	/* If filters don't fit, forward all adv pkts */
- 	if (len <= sizeof(hdev->mesh_ad_types))
--		memcpy(hdev->mesh_ad_types, cp->ad_types, len);
-+		memcpy(hdev->mesh_ad_types, cp.ad_types, len);
- 
- 	hci_update_passive_scan_sync(hdev);
- 	return 0;
-@@ -3802,15 +3860,16 @@ static int name_changed_sync(struct hci_dev *hdev, void *data)
- static void set_name_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_cp_set_local_name *cp = cmd->param;
-+	struct mgmt_cp_set_local_name *cp;
- 	u8 status = mgmt_status(err);
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_SET_LOCAL_NAME, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
-+	cp = cmd->param;
-+
- 	if (status) {
- 		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_SET_LOCAL_NAME,
- 				status);
-@@ -3822,16 +3881,27 @@ static void set_name_complete(struct hci_dev *hdev, void *data, int err)
- 			hci_cmd_sync_queue(hdev, name_changed_sync, NULL, NULL);
- 	}
- 
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static int set_name_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_cp_set_local_name *cp = cmd->param;
-+	struct mgmt_cp_set_local_name cp;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
- 
- 	if (lmp_bredr_capable(hdev)) {
--		hci_update_name_sync(hdev, cp->name);
-+		hci_update_name_sync(hdev, cp.name);
- 		hci_update_eir_sync(hdev);
- 	}
- 
-@@ -3983,12 +4053,10 @@ int mgmt_phy_configuration_changed(struct hci_dev *hdev, struct sock *skip)
- static void set_default_phy_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct sk_buff *skb = cmd->skb;
-+	struct sk_buff *skb;
- 	u8 status = mgmt_status(err);
- 
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_SET_PHY_CONFIGURATION, hdev))
--		return;
-+	skb = cmd->skb;
- 
- 	if (!status) {
- 		if (!skb)
-@@ -4015,7 +4083,7 @@ static void set_default_phy_complete(struct hci_dev *hdev, void *data, int err)
- 	if (skb && !IS_ERR(skb))
- 		kfree_skb(skb);
- 
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static int set_default_phy_sync(struct hci_dev *hdev, void *data)
-@@ -4023,7 +4091,9 @@ static int set_default_phy_sync(struct hci_dev *hdev, void *data)
- 	struct mgmt_pending_cmd *cmd = data;
- 	struct mgmt_cp_set_phy_configuration *cp = cmd->param;
- 	struct hci_cp_le_set_default_phy cp_phy;
--	u32 selected_phys = __le32_to_cpu(cp->selected_phys);
-+	u32 selected_phys;
-+
-+	selected_phys = __le32_to_cpu(cp->selected_phys);
- 
- 	memset(&cp_phy, 0, sizeof(cp_phy));
- 
-@@ -4163,7 +4233,7 @@ static int set_phy_configuration(struct sock *sk, struct hci_dev *hdev,
- 		goto unlock;
- 	}
- 
--	cmd = mgmt_pending_add(sk, MGMT_OP_SET_PHY_CONFIGURATION, hdev, data,
-+	cmd = mgmt_pending_new(sk, MGMT_OP_SET_PHY_CONFIGURATION, hdev, data,
- 			       len);
- 	if (!cmd)
- 		err = -ENOMEM;
-@@ -5253,7 +5323,17 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
- {
- 	struct mgmt_rp_add_adv_patterns_monitor rp;
- 	struct mgmt_pending_cmd *cmd = data;
--	struct adv_monitor *monitor = cmd->user_data;
-+	struct adv_monitor *monitor;
-+
-+	/* This is likely the result of hdev being closed and mgmt_index_removed
-+	 * is attempting to clean up any pending command so
-+	 * hci_adv_monitors_clear is about to be called which will take care of
-+	 * freeing the adv_monitor instances.
-+	 */
-+	if (status == -ECANCELED && !mgmt_pending_valid(hdev, cmd))
-+		return;
-+
-+	monitor = cmd->user_data;
- 
- 	hci_dev_lock(hdev);
- 
-@@ -5279,9 +5359,20 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
- static int mgmt_add_adv_patterns_monitor_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct adv_monitor *monitor = cmd->user_data;
-+	struct adv_monitor *mon;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	mon = cmd->user_data;
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
- 
--	return hci_add_adv_monitor(hdev, monitor);
-+	return hci_add_adv_monitor(hdev, mon);
- }
- 
- static int __add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
-@@ -5548,7 +5639,8 @@ static int remove_adv_monitor(struct sock *sk, struct hci_dev *hdev,
- 			       status);
- }
- 
--static void read_local_oob_data_complete(struct hci_dev *hdev, void *data, int err)
-+static void read_local_oob_data_complete(struct hci_dev *hdev, void *data,
-+					 int err)
- {
- 	struct mgmt_rp_read_local_oob_data mgmt_rp;
- 	size_t rp_size = sizeof(mgmt_rp);
-@@ -5568,7 +5660,8 @@ static void read_local_oob_data_complete(struct hci_dev *hdev, void *data, int e
- 	bt_dev_dbg(hdev, "status %d", status);
- 
- 	if (status) {
--		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_READ_LOCAL_OOB_DATA, status);
-+		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_READ_LOCAL_OOB_DATA,
-+				status);
- 		goto remove;
- 	}
- 
-@@ -5873,17 +5966,12 @@ static void start_discovery_complete(struct hci_dev *hdev, void *data, int err)
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
--	if (err == -ECANCELED)
--		return;
+ 	struct padata_priv *padata;
+ 	struct padata_list *reorder;
+-	int cpu = pd->cpu;
+ 
+ 	reorder = per_cpu_ptr(pd->reorder_list, cpu);
+ 
+ 	spin_lock(&reorder->lock);
+-	if (list_empty(&reorder->list)) {
+-		spin_unlock(&reorder->lock);
+-		return NULL;
+-	}
++	if (list_empty(&reorder->list))
++		goto notfound;
+ 
+ 	padata = list_entry(reorder->list.next, struct padata_priv, list);
+ 
+@@ -282,101 +279,52 @@ static struct padata_priv *padata_find_next(struct parallel_data *pd,
+ 	 * Checks the rare case where two or more parallel jobs have hashed to
+ 	 * the same CPU and one of the later ones finishes first.
+ 	 */
+-	if (padata->seq_nr != pd->processed) {
+-		spin_unlock(&reorder->lock);
+-		return NULL;
+-	}
 -
--	if (cmd != pending_find(MGMT_OP_START_DISCOVERY, hdev) &&
--	    cmd != pending_find(MGMT_OP_START_LIMITED_DISCOVERY, hdev) &&
--	    cmd != pending_find(MGMT_OP_START_SERVICE_DISCOVERY, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
+-	if (remove_object) {
+-		list_del_init(&padata->list);
+-		++pd->processed;
+-		/* When sequence wraps around, reset to the first CPU. */
+-		if (unlikely(pd->processed == 0))
+-			pd->cpu = cpumask_first(pd->cpumask.pcpu);
+-		else
+-			pd->cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
+-	}
++	if (padata->seq_nr != processed)
++		goto notfound;
  
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_status(err),
- 			  cmd->param, 1);
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 
- 	hci_discovery_set_state(hdev, err ? DISCOVERY_STOPPED:
- 				DISCOVERY_FINDING);
-@@ -5891,6 +5979,9 @@ static void start_discovery_complete(struct hci_dev *hdev, void *data, int err)
- 
- static int start_discovery_sync(struct hci_dev *hdev, void *data)
- {
-+	if (!mgmt_pending_listed(hdev, data))
-+		return -ECANCELED;
++	list_del_init(&padata->list);
+ 	spin_unlock(&reorder->lock);
+ 	return padata;
 +
- 	return hci_start_discovery_sync(hdev);
++notfound:
++	pd->processed = processed;
++	pd->cpu = cpu;
++	spin_unlock(&reorder->lock);
++	return NULL;
  }
  
-@@ -6113,15 +6204,14 @@ static void stop_discovery_complete(struct hci_dev *hdev, void *data, int err)
+-static void padata_reorder(struct parallel_data *pd)
++static void padata_reorder(struct padata_priv *padata)
  {
- 	struct mgmt_pending_cmd *cmd = data;
++	struct parallel_data *pd = padata->pd;
+ 	struct padata_instance *pinst = pd->ps->pinst;
+-	int cb_cpu;
+-	struct padata_priv *padata;
+-	struct padata_serial_queue *squeue;
+-	struct padata_list *reorder;
++	unsigned int processed;
++	int cpu;
  
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_STOP_DISCOVERY, hdev))
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, cmd))
- 		return;
- 
- 	bt_dev_dbg(hdev, "err %d", err);
- 
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_status(err),
- 			  cmd->param, 1);
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 
- 	if (!err)
- 		hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
-@@ -6129,6 +6219,9 @@ static void stop_discovery_complete(struct hci_dev *hdev, void *data, int err)
- 
- static int stop_discovery_sync(struct hci_dev *hdev, void *data)
- {
-+	if (!mgmt_pending_listed(hdev, data))
-+		return -ECANCELED;
-+
- 	return hci_stop_discovery_sync(hdev);
- }
- 
-@@ -6338,14 +6431,18 @@ static void enable_advertising_instance(struct hci_dev *hdev, int err)
- 
- static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- {
-+	struct mgmt_pending_cmd *cmd = data;
- 	struct cmd_lookup match = { NULL, hdev };
- 	u8 instance;
- 	struct adv_info *adv_instance;
- 	u8 status = mgmt_status(err);
- 
-+	if (err == -ECANCELED || !mgmt_pending_valid(hdev, data))
-+		return;
-+
- 	if (status) {
--		mgmt_pending_foreach(MGMT_OP_SET_ADVERTISING, hdev, true,
--				     cmd_status_rsp, &status);
-+		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, status);
-+		mgmt_pending_free(cmd);
- 		return;
- 	}
- 
-@@ -6354,8 +6451,7 @@ static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- 	else
- 		hci_dev_clear_flag(hdev, HCI_ADVERTISING);
- 
--	mgmt_pending_foreach(MGMT_OP_SET_ADVERTISING, hdev, true, settings_rsp,
--			     &match);
-+	settings_rsp(cmd, &match);
- 
- 	new_settings(hdev, match.sk);
- 
-@@ -6387,10 +6483,23 @@ static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- static int set_adv_sync(struct hci_dev *hdev, void *data)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--	struct mgmt_mode *cp = cmd->param;
--	u8 val = !!cp->val;
-+	struct mgmt_mode cp;
-+	u8 val;
- 
--	if (cp->val == 0x02)
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	if (!__mgmt_pending_listed(hdev, cmd)) {
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return -ECANCELED;
-+	}
-+
-+	memcpy(&cp, cmd->param, sizeof(cp));
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	val = !!cp.val;
-+
-+	if (cp.val == 0x02)
- 		hci_dev_set_flag(hdev, HCI_ADVERTISING_CONNECTABLE);
- 	else
- 		hci_dev_clear_flag(hdev, HCI_ADVERTISING_CONNECTABLE);
-@@ -8100,10 +8209,6 @@ static void read_local_oob_ext_data_complete(struct hci_dev *hdev, void *data,
- 	u8 status = mgmt_status(err);
- 	u16 eir_len;
- 
--	if (err == -ECANCELED ||
--	    cmd != pending_find(MGMT_OP_READ_LOCAL_OOB_EXT_DATA, hdev))
+-	/*
+-	 * We need to ensure that only one cpu can work on dequeueing of
+-	 * the reorder queue the time. Calculating in which percpu reorder
+-	 * queue the next object will arrive takes some time. A spinlock
+-	 * would be highly contended. Also it is not clear in which order
+-	 * the objects arrive to the reorder queues. So a cpu could wait to
+-	 * get the lock just to notice that there is nothing to do at the
+-	 * moment. Therefore we use a trylock and let the holder of the lock
+-	 * care for all the objects enqueued during the holdtime of the lock.
+-	 */
+-	if (!spin_trylock_bh(&pd->lock))
 -		return;
++	processed = pd->processed;
++	cpu = pd->cpu;
+ 
+-	while (1) {
+-		padata = padata_find_next(pd, true);
++	do {
++		struct padata_serial_queue *squeue;
++		int cb_cpu;
+ 
+-		/*
+-		 * If the next object that needs serialization is parallel
+-		 * processed by another cpu and is still on it's way to the
+-		 * cpu's reorder queue, nothing to do for now.
+-		 */
+-		if (!padata)
+-			break;
++		cpu = cpumask_next_wrap(cpu, pd->cpumask.pcpu, -1, false);
++		processed++;
+ 
+ 		cb_cpu = padata->cb_cpu;
+ 		squeue = per_cpu_ptr(pd->squeue, cb_cpu);
+ 
+ 		spin_lock(&squeue->serial.lock);
+ 		list_add_tail(&padata->list, &squeue->serial.list);
+-		spin_unlock(&squeue->serial.lock);
 -
- 	if (!status) {
- 		if (!skb)
- 			status = MGMT_STATUS_FAILED;
-@@ -8210,7 +8315,7 @@ static void read_local_oob_ext_data_complete(struct hci_dev *hdev, void *data,
- 		kfree_skb(skb);
+ 		queue_work_on(cb_cpu, pinst->serial_wq, &squeue->work);
+-	}
  
- 	kfree(mgmt_rp);
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
+-	spin_unlock_bh(&pd->lock);
+-
+-	/*
+-	 * The next object that needs serialization might have arrived to
+-	 * the reorder queues in the meantime.
+-	 *
+-	 * Ensure reorder queue is read after pd->lock is dropped so we see
+-	 * new objects from another task in padata_do_serial.  Pairs with
+-	 * smp_mb in padata_do_serial.
+-	 */
+-	smp_mb();
+-
+-	reorder = per_cpu_ptr(pd->reorder_list, pd->cpu);
+-	if (!list_empty(&reorder->list) && padata_find_next(pd, false)) {
+ 		/*
+-		 * Other context(eg. the padata_serial_worker) can finish the request.
+-		 * To avoid UAF issue, add pd ref here, and put pd ref after reorder_work finish.
++		 * If the next object that needs serialization is parallel
++		 * processed by another cpu and is still on it's way to the
++		 * cpu's reorder queue, end the loop.
+ 		 */
+-		padata_get_pd(pd);
+-		if (!queue_work(pinst->serial_wq, &pd->reorder_work))
+-			padata_put_pd(pd);
+-	}
+-}
+-
+-static void invoke_padata_reorder(struct work_struct *work)
+-{
+-	struct parallel_data *pd;
+-
+-	local_bh_disable();
+-	pd = container_of(work, struct parallel_data, reorder_work);
+-	padata_reorder(pd);
+-	local_bh_enable();
+-	/* Pairs with putting the reorder_work in the serial_wq */
+-	padata_put_pd(pd);
++		padata = padata_find_next(pd, cpu, processed);
++		spin_unlock(&squeue->serial.lock);
++	} while (padata);
  }
  
- static int read_local_ssp_oob_req(struct hci_dev *hdev, struct sock *sk,
-@@ -8219,7 +8324,7 @@ static int read_local_ssp_oob_req(struct hci_dev *hdev, struct sock *sk,
- 	struct mgmt_pending_cmd *cmd;
- 	int err;
+ static void padata_serial_worker(struct work_struct *serial_work)
+@@ -427,6 +375,7 @@ void padata_do_serial(struct padata_priv *padata)
+ 	struct padata_list *reorder = per_cpu_ptr(pd->reorder_list, hashed_cpu);
+ 	struct padata_priv *cur;
+ 	struct list_head *pos;
++	bool gotit = true;
  
--	cmd = mgmt_pending_add(sk, MGMT_OP_READ_LOCAL_OOB_EXT_DATA, hdev,
-+	cmd = mgmt_pending_new(sk, MGMT_OP_READ_LOCAL_OOB_EXT_DATA, hdev,
- 			       cp, sizeof(*cp));
- 	if (!cmd)
- 		return -ENOMEM;
-diff --git a/net/bluetooth/mgmt_util.c b/net/bluetooth/mgmt_util.c
-index 4ba500c377a4c..e612121b96d0c 100644
---- a/net/bluetooth/mgmt_util.c
-+++ b/net/bluetooth/mgmt_util.c
-@@ -320,6 +320,52 @@ void mgmt_pending_remove(struct mgmt_pending_cmd *cmd)
- 	mgmt_pending_free(cmd);
- }
- 
-+bool __mgmt_pending_listed(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd)
-+{
-+	struct mgmt_pending_cmd *tmp;
-+
-+	lockdep_assert_held(&hdev->mgmt_pending_lock);
-+
-+	if (!cmd)
-+		return false;
-+
-+	list_for_each_entry(tmp, &hdev->mgmt_pending, list) {
-+		if (cmd == tmp)
-+			return true;
+ 	spin_lock(&reorder->lock);
+ 	/* Sort in ascending order of sequence number. */
+@@ -436,17 +385,14 @@ void padata_do_serial(struct padata_priv *padata)
+ 		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
+ 			break;
+ 	}
+-	list_add(&padata->list, pos);
++	if (padata->seq_nr != pd->processed) {
++		gotit = false;
++		list_add(&padata->list, pos);
 +	}
-+
-+	return false;
-+}
-+
-+bool mgmt_pending_listed(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd)
-+{
-+	bool listed;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+	listed = __mgmt_pending_listed(hdev, cmd);
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	return listed;
-+}
-+
-+bool mgmt_pending_valid(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd)
-+{
-+	bool listed;
-+
-+	if (!cmd)
-+		return false;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	listed = __mgmt_pending_listed(hdev, cmd);
-+	if (listed)
-+		list_del(&cmd->list);
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	return listed;
-+}
-+
- void mgmt_mesh_foreach(struct hci_dev *hdev,
- 		       void (*cb)(struct mgmt_mesh_tx *mesh_tx, void *data),
- 		       void *data, struct sock *sk)
-diff --git a/net/bluetooth/mgmt_util.h b/net/bluetooth/mgmt_util.h
-index 024e51dd69375..bcba8c9d89528 100644
---- a/net/bluetooth/mgmt_util.h
-+++ b/net/bluetooth/mgmt_util.h
-@@ -65,6 +65,9 @@ struct mgmt_pending_cmd *mgmt_pending_new(struct sock *sk, u16 opcode,
- 					  void *data, u16 len);
- void mgmt_pending_free(struct mgmt_pending_cmd *cmd);
- void mgmt_pending_remove(struct mgmt_pending_cmd *cmd);
-+bool __mgmt_pending_listed(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd);
-+bool mgmt_pending_listed(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd);
-+bool mgmt_pending_valid(struct hci_dev *hdev, struct mgmt_pending_cmd *cmd);
- void mgmt_mesh_foreach(struct hci_dev *hdev,
- 		       void (*cb)(struct mgmt_mesh_tx *mesh_tx, void *data),
- 		       void *data, struct sock *sk);
+ 	spin_unlock(&reorder->lock);
+ 
+-	/*
+-	 * Ensure the addition to the reorder list is ordered correctly
+-	 * with the trylock of pd->lock in padata_reorder.  Pairs with smp_mb
+-	 * in padata_reorder.
+-	 */
+-	smp_mb();
+-
+-	padata_reorder(pd);
++	if (gotit)
++		padata_reorder(padata);
+ }
+ EXPORT_SYMBOL(padata_do_serial);
+ 
+@@ -633,9 +579,7 @@ static struct parallel_data *padata_alloc_pd(struct padata_shell *ps)
+ 	padata_init_squeues(pd);
+ 	pd->seq_nr = -1;
+ 	refcount_set(&pd->refcnt, 1);
+-	spin_lock_init(&pd->lock);
+ 	pd->cpu = cpumask_first(pd->cpumask.pcpu);
+-	INIT_WORK(&pd->reorder_work, invoke_padata_reorder);
+ 
+ 	return pd;
+ 
+@@ -1145,12 +1089,6 @@ void padata_free_shell(struct padata_shell *ps)
+ 	if (!ps)
+ 		return;
+ 
+-	/*
+-	 * Wait for all _do_serial calls to finish to avoid touching
+-	 * freed pd's and ps's.
+-	 */
+-	synchronize_rcu();
+-
+ 	mutex_lock(&ps->pinst->lock);
+ 	list_del(&ps->list);
+ 	pd = rcu_dereference_protected(ps->pd, 1);
 -- 
 2.53.0
 
