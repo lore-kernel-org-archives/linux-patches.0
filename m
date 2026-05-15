@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0683FD96B;
-	Fri, 15 May 2026 16:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8803B9D84;
+	Fri, 15 May 2026 16:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861780; cv=none; b=ORwpU4nsAhKZKh0EAiOO8Rs72zXab1+9MTwY4mrveis7F8ppJvkPVciJydXN5PrFX9o7Ztjy2et0d5XMU0osQTgsFGNIbHfLDhnJVPkSHmiQU1A7TqdL6zKAt0cN/0hImHaoYCViD2D6lIMii/vbCBNxF1aUGBD8TtFcjhWwoHQ=
+	t=1778861783; cv=none; b=G1SJWvA+7MLP5jrRcQoVM6kMucvCrkK7twhaS2YT8YX6FVBLwMXDy9tF9YAzGw/sPo52ojWRixwEiBBii8SY78/EJpexuxPV2hNpSBnLvbQ6vNJuBMN8La/AYGtFFDyKqUlGn7zYpGQZUKCAao1bHTUGDsf/gSGduAEjiKXWC/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861780; c=relaxed/simple;
-	bh=+oABObnWmiGMXHDRmDKvU4xjL/6p9VC1whd8mJ18LKM=;
+	s=arc-20240116; t=1778861783; c=relaxed/simple;
+	bh=HJF/OscQ7yJHpLnNHES18tguwPgEhGqDqGFrZXyvzJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkfxhU+K29AqsUbvYnZpcHTzhQ4HS96DHEiT7s/353l6w2Ebm0Hudap7ZzwKnhWhha7YXM+GiinJXX/LuiSWc9Fxy2xMKTcs+Bwts63gi2iDtcRsmI0ZHUxZ50vtBZMT13wpfmUbZpO74//wTeDFcPMsaLo2Mrnq8SSrx09Ey3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLnbo7lO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P307RGKV1ZvYTU8V90N0xlP8fPLwqFzfc3QxqFAXW5Ad7M1XP9ZXe6tLKB0/9deZrylpDI/yssMXwhCpp6aFsMPWZnTDRfg3zDp+tiyoNPQSyxQq0+tFPHk+9htQAPrLKtXxFEx64eWacPNz0efLOtOJMkodVQWG2SNQEarZMWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HXwlA6J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLnbo7lO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42371C2BCB0;
-	Fri, 15 May 2026 16:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HXwlA6J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6AFC2BCB0;
+	Fri, 15 May 2026 16:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861780;
-	bh=+oABObnWmiGMXHDRmDKvU4xjL/6p9VC1whd8mJ18LKM=;
+	s=korg; t=1778861783;
+	bh=HJF/OscQ7yJHpLnNHES18tguwPgEhGqDqGFrZXyvzJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLnbo7lOUP3ghf5eU2co8ayhshA0ibaK1Dp32PEU3BqIbc158NoFuzryJ1PzmJOab
-	 l5ccAVFn4zFPtQEuTk3gpPbDzwasq4A76Paedo7qTZWaPoyzH+hCZhiA3GHR/c1mr9
-	 uuqRFRloDfew91G3gW5GTXys1fkdin5atCCAMLac=
+	b=0HXwlA6JQ2sKpOsSWw/Kxp/1h11WtAu7e+JEMtIGBfMe1QMHJHJ4q41Xyfh/8TSgl
+	 tQPi74gD3MjUKBXtRTU+KZaiQxB3tExXRIqRZ5OWaxqxa0yjWw+5/JiPjRiqPD9c/J
+	 BT/OyCHGecAk8jXEXA2v7MeCAC87BuVHEcuqWXfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yochai Eisenrich <echelonh@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 459/474] btrfs: fix btrfs_ioctl_space_info() slot_count TOCTOU which can lead to info-leak
-Date: Fri, 15 May 2026 17:49:28 +0200
-Message-ID: <20260515154725.031059575@linuxfoundation.org>
+Subject: [PATCH 6.6 460/474] tracing/probes: Limit size of event probe to 3K
+Date: Fri, 15 May 2026 17:49:29 +0200
+Message-ID: <20260515154725.053880509@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,59 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yochai Eisenrich <yochaie@sweet.security>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 973e57c726c1f8e77259d1c8e519519f1e9aea77 ]
+[ Upstream commit b2aa3b4d64e460ac606f386c24e7d8a873ce6f1a ]
 
-btrfs_ioctl_space_info() has a TOCTOU race between two passes over the
-block group RAID type lists. The first pass counts entries to determine
-the allocation size, then the second pass fills the buffer. The
-groups_sem rwlock is released between passes, allowing concurrent block
-group removal to reduce the entry count.
+There currently isn't a max limit an event probe can be. One could make an
+event greater than PAGE_SIZE, which makes the event useless because if
+it's bigger than the max event that can be recorded into the ring buffer,
+then it will never be recorded.
 
-When the second pass fills fewer entries than the first pass counted,
-copy_to_user() copies the full alloc_size bytes including trailing
-uninitialized kmalloc bytes to userspace.
+A event probe should never need to be greater than 3K, so make that the
+max size. As long as the max is less than the max that can be recorded
+onto the ring buffer, it should be fine.
 
-Fix by copying only total_spaces entries (the actually-filled count from
-the second pass) instead of alloc_size bytes, and switch to kzalloc so
-any future copy size mismatch cannot leak heap data.
-
-Fixes: 7fde62bffb57 ("Btrfs: buffer results in the space_info ioctl")
-CC: stable@vger.kernel.org # 3.0
-Signed-off-by: Yochai Eisenrich <echelonh@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ adapted upstream's `return -EFAULT;` to stable's `ret = -EFAULT;` fall-through to existing `out:` cleanup label ]
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 93ccae7a22274 ("tracing/kprobes: Support basic types on dynamic events")
+Link: https://patch.msgid.link/20260428122302.706610ba@gandalf.local.home
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ adjusted context to place MAX_PROBE_EVENT_SIZE near MAX_STRING_SIZE and appended EVENT_TOO_BIG after NEED_STRING_TYPE ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/trace/trace_probe.c | 6 ++++++
+ kernel/trace/trace_probe.h | 4 +++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 4723013995f5b..d17d1eff8eff4 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -3087,7 +3087,7 @@ static long btrfs_ioctl_space_info(struct btrfs_fs_info *fs_info,
- 		return -ENOMEM;
+diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
+index d46a1033ba5b3..dee9494ed189a 100644
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -1366,6 +1366,12 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
+ 	parg->offset = *size;
+ 	*size += parg->type->size * (parg->count ?: 1);
  
- 	space_args.total_spaces = 0;
--	dest = kmalloc(alloc_size, GFP_KERNEL);
-+	dest = kzalloc(alloc_size, GFP_KERNEL);
- 	if (!dest)
- 		return -ENOMEM;
- 	dest_orig = dest;
-@@ -3143,7 +3143,8 @@ static long btrfs_ioctl_space_info(struct btrfs_fs_info *fs_info,
- 	user_dest = (struct btrfs_ioctl_space_info __user *)
- 		(arg + sizeof(struct btrfs_ioctl_space_args));
++	if (*size > MAX_PROBE_EVENT_SIZE) {
++		ret = -E2BIG;
++		trace_probe_log_err(ctx->offset, EVENT_TOO_BIG);
++		goto fail;
++	}
++
+ 	if (parg->count) {
+ 		len = strlen(parg->type->fmttype) + 6;
+ 		parg->fmt = kmalloc(len, GFP_KERNEL);
+diff --git a/kernel/trace/trace_probe.h b/kernel/trace/trace_probe.h
+index c71fa9c2f3815..ce5a0935cd45c 100644
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -35,6 +35,7 @@
+ #define MAX_ARG_NAME_LEN	32
+ #define MAX_BTF_ARGS_LEN	128
+ #define MAX_STRING_SIZE		PATH_MAX
++#define MAX_PROBE_EVENT_SIZE	3072
  
--	if (copy_to_user(user_dest, dest_orig, alloc_size))
-+	if (copy_to_user(user_dest, dest_orig,
-+		 space_args.total_spaces * sizeof(*dest_orig)))
- 		ret = -EFAULT;
+ /* Reserved field names */
+ #define FIELD_STRING_IP		"__probe_ip"
+@@ -546,7 +547,8 @@ extern int traceprobe_define_arg_fields(struct trace_event_call *event_call,
+ 	C(NO_BTF_FIELD,		"This field is not found."),	\
+ 	C(BAD_BTF_TID,		"Failed to get BTF type info."),\
+ 	C(BAD_TYPE4STR,		"This type does not fit for string."),\
+-	C(NEED_STRING_TYPE,	"$comm and immediate-string only accepts string type"),
++	C(NEED_STRING_TYPE,	"$comm and immediate-string only accepts string type"),\
++	C(EVENT_TOO_BIG,	"Event too big (too many fields?)"),
  
- 	kfree(dest_orig);
+ #undef C
+ #define C(a, b)		TP_ERR_##a
 -- 
 2.53.0
 
