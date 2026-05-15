@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDB33A961B;
-	Fri, 15 May 2026 16:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E9A3B6354;
+	Fri, 15 May 2026 16:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860947; cv=none; b=iYYPd/hA5dMsjTBpLQNOqlkWE8Y5ERMzBK3aFvtaMWP2vsrGnDOMS/Hw9LgOHWpZN4/IzQRwx6USHdo5OgrfUK1+GWil6t9VVwXjvWOPR/RcJ9Nm08D96ym5jW5FyxEDxhrKu/IBVAbaf0JFTGMiJX94oy/MN2HYIprOZvo7Ab0=
+	t=1778860950; cv=none; b=aDGQDTQv6q8JqgBWUhE2Gg9yJsykrZcGzqlRjfyqitIZA7SPkbAZ8ha4K0XB2Fho1UJFrWbKk/Ljjp7CzfgLvy28dWVwcbYAh8D3M9GJyS1B7NNEJ1ZGjF1Iikp2KxVDm1AhsbOaXTS0gwh7SjRjgDTENKNUlUS24ZG6HzQQRLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860947; c=relaxed/simple;
-	bh=y5SfnvDnSxte7xZkoH/D0+9Qyqi5Zo4y/iGVgjaEVdQ=;
+	s=arc-20240116; t=1778860950; c=relaxed/simple;
+	bh=Ybhdlwl17g/ibRwOrXBYWWU4/dmzPrgYjTpDEqhzco4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mAtKI28I+VIr6GHZpp7B46YV3PCfZZXsxq/c/64YTNVlHHDc6RPdH5BBsXDVlBQwKwj+SOxyHozKtwCzGXdf7AcWFhCSUnDTW0aYWPCFuRLue/qev1noBH5LKoITXAWHZ1cD3RzLi8EU5P/JuNzZExWklC3ppGpXp54SxBswpyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vycx60NJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y8h5caJhJKBx4th4QF2QsRRnZW/t753Qr0A/XYbLevEvDkKCd4k1IzsLvvD4Aeg+J85iMjN9lOe4KgL4BQR7RqTDxfLOLqej4v5rWUDryGRtis7RVwh5DXl9QFObH8/udWXuRku5n9f6uXdwCyo4gRssCWlIeEqjxhQXSETtvpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n0SBN5da; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vycx60NJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB33EC2BCB0;
-	Fri, 15 May 2026 16:02:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n0SBN5da"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E9AC2BCB0;
+	Fri, 15 May 2026 16:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860947;
-	bh=y5SfnvDnSxte7xZkoH/D0+9Qyqi5Zo4y/iGVgjaEVdQ=;
+	s=korg; t=1778860949;
+	bh=Ybhdlwl17g/ibRwOrXBYWWU4/dmzPrgYjTpDEqhzco4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vycx60NJ91+9RVkzahTmRvKIAHe0Z9xMqr5S6p0y5fRF4kDSReoMJvKL3AgkuXR0X
-	 PH+mANkiaSP1OET8o7LFYNGvAHHHxhBuxpoVcS9AljVXmTauSsWw+2aBtWnKNBUVTx
-	 BBvMLSi4HS25b9dUfY7irqjUwnNQ2QK5DCht4blY=
+	b=n0SBN5da+qEjpSRzNKwalul5kMpONcjgi5tNyReFcUCRrzQHK2K8nAYxKdPCdn1ZK
+	 Q9Ga72EZSRoHqBG9jDt10zAgmW7PRHTFCkJlADGt2A+U92AZ+tQDhyJy1jC8pX1U8u
+	 IWjsIJuNDbSk34eU4yYAS6cQ8SIq2fInpvV+K3e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FengWei Shih <dannyshih@synology.com>,
-	Chia-Ming Chang <chiamingc@synology.com>,
-	Yu Kuai <yukuai@fnnas.com>
-Subject: [PATCH 6.6 113/474] md/raid5: fix soft lockup in retry_aligned_read()
-Date: Fri, 15 May 2026 17:43:42 +0200
-Message-ID: <20260515154717.481752624@linuxfoundation.org>
+	Arjan van de Ven <arjan@linux.intel.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 6.6 140/474] drm/amdgpu: fix zero-size GDS range init on RDNA4
+Date: Fri, 15 May 2026 17:44:09 +0200
+Message-ID: <20260515154718.058012234@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -45,59 +48,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chia-Ming Chang <chiamingc@synology.com>
+From: Arjan van de Ven <arjan@linux.intel.com>
 
-commit 7f9f7c697474268d9ef9479df3ddfe7cdcfbbffc upstream.
+commit 095a8b0ad3c3b5cdc3850d961adb8a8f735220bb upstream.
 
-When retry_aligned_read() encounters an overlapped stripe, it releases
-the stripe via raid5_release_stripe() which puts it on the lockless
-released_stripes llist. In the next raid5d loop iteration,
-release_stripe_list() drains the stripe onto handle_list (since
-STRIPE_HANDLE is set by the original IO), but retry_aligned_read()
-runs before handle_active_stripes() and removes the stripe from
-handle_list via find_get_stripe() -> list_del_init(). This prevents
-handle_stripe() from ever processing the stripe to resolve the
-overlap, causing an infinite loop and soft lockup.
+RDNA4 (GFX 12) hardware removes the GDS, GWS, and OA on-chip memory
+resources. The gfx_v12_0 initialisation code correctly leaves
+adev->gds.gds_size, adev->gds.gws_size, and adev->gds.oa_size at
+zero to reflect this.
 
-Fix this by using __release_stripe() with temp_inactive_list instead
-of raid5_release_stripe() in the failure path, so the stripe does not
-go through the released_stripes llist. This allows raid5d to break out
-of its loop, and the overlap will be resolved when the stripe is
-eventually processed by handle_stripe().
+amdgpu_ttm_init() unconditionally calls amdgpu_ttm_init_on_chip() for
+each of these resources regardless of size. When the size is zero,
+amdgpu_ttm_init_on_chip() forwards the call to ttm_range_man_init(),
+which calls drm_mm_init(mm, 0, 0). drm_mm_init() immediately fires
+DRM_MM_BUG_ON(start + size <= start) -- trivially true when size is
+zero -- crashing the kernel during modprobe of amdgpu on an RX 9070 XT.
 
-Fixes: 773ca82fa1ee ("raid5: make release_stripe lockless")
+Guard against this by returning 0 early from
+amdgpu_ttm_init_on_chip() when size_in_page is zero. This skips TTM
+resource manager registration for hardware resources that are absent,
+without affecting any other GPU type.
+
+DRM_MM_BUG_ON() only asserts if CONFIG_DRM_DEBUG_MM is enabled in
+the kernel config.  This is apparently rarely enabled as these chips
+have been in the market for over a year and this issue was only reported
+now.
+
+Link: https://lore.kernel.org/all/bug-221376-2300@https.bugzilla.kernel.org%2F/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221376
+Oops-Analysis: http://oops.fenrus.org/reports/bugzilla.korg/221376/report.html
+Assisted-by: GitHub Copilot:Claude Sonnet 4.6 linux-kernel-oops-x86.
+Signed-off-by: Arjan van de Ven <arjan@linux.intel.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5719ce5865279cad4fd5f01011fe037168503f2d)
 Cc: stable@vger.kernel.org
-Signed-off-by: FengWei Shih <dannyshih@synology.com>
-Signed-off-by: Chia-Ming Chang <chiamingc@synology.com>
-Link: https://lore.kernel.org/linux-raid/20260402061406.455755-1-chiamingc@synology.com/
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -6691,7 +6691,13 @@ static int  retry_aligned_read(struct r5
- 		}
- 
- 		if (!add_stripe_bio(sh, raid_bio, dd_idx, 0, 0)) {
--			raid5_release_stripe(sh);
-+			int hash;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -75,6 +75,9 @@ static int amdgpu_ttm_init_on_chip(struc
+ 				    unsigned int type,
+ 				    uint64_t size_in_page)
+ {
++	if (!size_in_page)
++		return 0;
 +
-+			spin_lock_irq(&conf->device_lock);
-+			hash = sh->hash_lock_index;
-+			__release_stripe(conf, sh,
-+					 &conf->temp_inactive_list[hash]);
-+			spin_unlock_irq(&conf->device_lock);
- 			conf->retry_read_aligned = raid_bio;
- 			conf->retry_read_offset = scnt;
- 			return handled;
+ 	return ttm_range_man_init(&adev->mman.bdev, type,
+ 				  false, size_in_page);
+ }
 
 
