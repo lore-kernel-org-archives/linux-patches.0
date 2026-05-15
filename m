@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585E8355049;
-	Fri, 15 May 2026 16:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0153B0ADB;
+	Fri, 15 May 2026 16:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860831; cv=none; b=ocudoKnAZvFv7gHcUnS9BSgLeQIlD23S4ZZsI6tfZusnZUC/7P9U/hZrhP8RKbE3E6xKRLcXJ6555LgHYAjzwIVFpjfnFpLB3rVJaQwyzhk5ubLUzB8u7xGteK3kMWJTePfYb13wXnN/KSs627svKXb9nTngxTRp3VH08jvwMbQ=
+	t=1778860833; cv=none; b=cgEellvXl3TQPEPn7xNPZFPAZEqea95dkc7RzBS9qUGNWQPytU5dLky9mZGH2lWLRqI5hfAMJ3ryu1e1jPJVGM3wrmMavb2VlqbqhJ87XODhvm4Ia7umdwiPp7ohv3cOed9OsKSXoAjZmSE/ZBDfcrtVwHHW6fvXzlBxSd7GB2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860831; c=relaxed/simple;
-	bh=AJLbIUHO1qevL1VGFANpcj7/IYze2HKMmzDW8Fhgs4w=;
+	s=arc-20240116; t=1778860833; c=relaxed/simple;
+	bh=XJguncabssY45WQr0FkJseUoCzPw3UULhX1jkVjjoXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qsxBndhcNR3JPhDk/A+IPc4vSOEfbwhN0HoFEav0rE6jPI3/kwjQCNfjZVcJCLI4TubOGKrO+156N7iB38OutDUtPiQMtcymX2SxcZaPbWKCNFiao8NtHldX0aa4jfwqS4Im/nKwQIjxhUPRp36Ic/LvkAx7JgewPiJSYCS/u7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPwUfr5g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EYNRk7cAiVTqcELRVYn2zMD6nPGuHNtGejzlS2cBelp9u01/6pwYwjrIVcfhReyiweqr7ON0zDmWEuarea4ssiZ1czIsYvLRRk0xzb1wtY47EjQ3BS0PPO4EjWgYvWyHjiteZ7UWG57+YgE+hHeEIGJQVWfCul1Wo8GWytM3O60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzYO7lZQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPwUfr5g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD82C2BCB0;
-	Fri, 15 May 2026 16:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzYO7lZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32952C2BCB0;
+	Fri, 15 May 2026 16:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860831;
-	bh=AJLbIUHO1qevL1VGFANpcj7/IYze2HKMmzDW8Fhgs4w=;
+	s=korg; t=1778860833;
+	bh=XJguncabssY45WQr0FkJseUoCzPw3UULhX1jkVjjoXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPwUfr5gpTSjJxi6Bq3I6lXeG8zj5t0OLUaOO4o3Y2zhFe2Ds+c2hYs52/uRMl3Od
-	 4Il4ktZ2920RYrM3SKpardmAh2jiDDuyA81n/HHasSTg8mPISDenqS1BVh8rLkI6bV
-	 nLIlEURSHUSVUgxTmIzivVlFWqQDV2Lgtx3rWsjc=
+	b=vzYO7lZQfBArEibr7qZfnZWRIjhqICrdEpOkChVkh1P2MMQwX9K8GVYpbtyExPaza
+	 b2v0AKDZap9czsA7uPo2oK8szaHtxLtjjbQeWh7EJar9twYIV7pYeXdFVyAd6SxG9N
+	 S0FqHqPeg144O47cDOCWLNLs/UTt0KwkdDUjuisw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiyang Chen <cyyzero16@gmail.com>,
-	Balbir Singh <bsingharora@gmail.com>,
-	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
-	Fan Yu <fan.yu9@zte.com.cn>,
-	Wang Yaxin <wang.yaxin@zte.com.cn>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 068/474] tools/accounting: handle truncated taskstats netlink messages
-Date: Fri, 15 May 2026 17:42:57 +0200
-Message-ID: <20260515154716.514274327@linuxfoundation.org>
+	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 095/474] KVM: nSVM: Mark all of vmcb02 dirty when restoring nested state
+Date: Fri, 15 May 2026 17:43:24 +0200
+Message-ID: <20260515154717.095472381@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -54,181 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiyang Chen <cyyzero16@gmail.com>
+From: Yosry Ahmed <yosry.ahmed@linux.dev>
 
-commit cc82b3dcc6a8fa259fbda12ab00d6fc00908a49e upstream.
+commit e63fb1379f4b9300a44739964e69549bebbcdca4 upstream.
 
-procacct and getdelays use a fixed receive buffer for taskstats generic
-netlink messages.  A multi-threaded process exit can emit a single
-PID+TGID notification large enough to exceed that buffer on newer kernels.
+When restoring a vCPU in guest mode, any state restored before
+KVM_SET_NESTED_STATE (e.g. KVM_SET_SREGS) will mark the corresponding
+dirty bits in vmcb01, as it is the active VMCB before switching to
+vmcb02 in svm_set_nested_state().
 
-Switch to recvmsg() so MSG_TRUNC is detected explicitly, increase the
-message buffer size, and report truncated datagrams clearly instead of
-misparsing them as fatal netlink errors.
+Hence, mark all fields in vmcb02 dirty in svm_set_nested_state() to
+capture any previously restored fields.
 
-Also print the taskstats version in debug output to make version
-mismatches easier to diagnose while inspecting taskstats traffic.
-
-Link: https://lkml.kernel.org/r/520308bb4cbbaf8dc2c7296b5f60f11e12fb30a5.1774810498.git.cyyzero16@gmail.com
-Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
-Cc: Balbir Singh <bsingharora@gmail.com>
-Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
-Cc: Fan Yu <fan.yu9@zte.com.cn>
-Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
+CC: stable@vger.kernel.org
+Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
+Link: https://patch.msgid.link/20260210010806.3204289-1-yosry.ahmed@linux.dev
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/accounting/getdelays.c |   41 +++++++++++++++++++++++++++++++++++++----
- tools/accounting/procacct.c  |   40 ++++++++++++++++++++++++++++++++++++----
- 2 files changed, 73 insertions(+), 8 deletions(-)
+ arch/x86/kvm/svm/nested.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/tools/accounting/getdelays.c
-+++ b/tools/accounting/getdelays.c
-@@ -59,7 +59,7 @@ int print_task_context_switch_counts;
- 	}
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -1753,6 +1753,12 @@ static int svm_set_nested_state(struct k
+ 	nested_vmcb02_prepare_control(svm, svm->vmcb->save.rip, svm->vmcb->save.cs.base);
  
- /* Maximum size of response requested or message sent */
--#define MAX_MSG_SIZE	1024
-+#define MAX_MSG_SIZE	2048
- /* Maximum number of cpus expected to be specified in a cpumask */
- #define MAX_CPUS	32
- 
-@@ -114,6 +114,32 @@ error:
- 	return -1;
- }
- 
-+static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
-+{
-+	struct sockaddr_nl nladdr;
-+	struct iovec iov = {
-+		.iov_base = msg,
-+		.iov_len = sizeof(*msg),
-+	};
-+	struct msghdr hdr = {
-+		.msg_name = &nladdr,
-+		.msg_namelen = sizeof(nladdr),
-+		.msg_iov = &iov,
-+		.msg_iovlen = 1,
-+	};
-+	int ret;
+ 	/*
++	 * Any previously restored state (e.g. KVM_SET_SREGS) would mark fields
++	 * dirty in vmcb01 instead of vmcb02, so mark all of vmcb02 dirty here.
++	 */
++	vmcb_mark_all_dirty(svm->vmcb);
 +
-+	ret = recvmsg(sd, &hdr, 0);
-+	if (ret < 0)
-+		return -1;
-+	if (hdr.msg_flags & MSG_TRUNC) {
-+		errno = EMSGSIZE;
-+		return -1;
-+	}
-+
-+	return ret;
-+}
-+
- 
- static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
- 	     __u8 genl_cmd, __u16 nla_type,
-@@ -465,12 +491,16 @@ int main(int argc, char *argv[])
- 	}
- 
- 	do {
--		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
-+		rep_len = recv_taskstats_msg(nl_sd, &msg);
- 		PRINTF("received %d bytes\n", rep_len);
- 
- 		if (rep_len < 0) {
--			fprintf(stderr, "nonfatal reply error: errno %d\n",
--				errno);
-+			if (errno == EMSGSIZE)
-+				fprintf(stderr,
-+					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
-+			else
-+				fprintf(stderr, "nonfatal reply error: errno %d\n",
-+					errno);
- 			continue;
- 		}
- 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
-@@ -512,6 +542,9 @@ int main(int argc, char *argv[])
- 							printf("TGID\t%d\n", rtid);
- 						break;
- 					case TASKSTATS_TYPE_STATS:
-+						PRINTF("version %u\n",
-+						       ((struct taskstats *)
-+							NLA_DATA(na))->version);
- 						if (print_delays)
- 							print_delayacct((struct taskstats *) NLA_DATA(na));
- 						if (print_io_accounting)
---- a/tools/accounting/procacct.c
-+++ b/tools/accounting/procacct.c
-@@ -71,7 +71,7 @@ int print_task_context_switch_counts;
- 	}
- 
- /* Maximum size of response requested or message sent */
--#define MAX_MSG_SIZE	1024
-+#define MAX_MSG_SIZE	2048
- /* Maximum number of cpus expected to be specified in a cpumask */
- #define MAX_CPUS	32
- 
-@@ -121,6 +121,32 @@ error:
- 	return -1;
- }
- 
-+static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
-+{
-+	struct sockaddr_nl nladdr;
-+	struct iovec iov = {
-+		.iov_base = msg,
-+		.iov_len = sizeof(*msg),
-+	};
-+	struct msghdr hdr = {
-+		.msg_name = &nladdr,
-+		.msg_namelen = sizeof(nladdr),
-+		.msg_iov = &iov,
-+		.msg_iovlen = 1,
-+	};
-+	int ret;
-+
-+	ret = recvmsg(sd, &hdr, 0);
-+	if (ret < 0)
-+		return -1;
-+	if (hdr.msg_flags & MSG_TRUNC) {
-+		errno = EMSGSIZE;
-+		return -1;
-+	}
-+
-+	return ret;
-+}
-+
- 
- static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
- 	     __u8 genl_cmd, __u16 nla_type,
-@@ -239,6 +265,8 @@ void handle_aggr(int mother, struct nlat
- 			PRINTF("TGID\t%d\n", rtid);
- 			break;
- 		case TASKSTATS_TYPE_STATS:
-+			PRINTF("version %u\n",
-+			       ((struct taskstats *)NLA_DATA(na))->version);
- 			if (mother == TASKSTATS_TYPE_AGGR_PID)
- 				print_procacct((struct taskstats *) NLA_DATA(na));
- 			if (fd) {
-@@ -348,12 +376,16 @@ int main(int argc, char *argv[])
- 	}
- 
- 	do {
--		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
-+		rep_len = recv_taskstats_msg(nl_sd, &msg);
- 		PRINTF("received %d bytes\n", rep_len);
- 
- 		if (rep_len < 0) {
--			fprintf(stderr, "nonfatal reply error: errno %d\n",
--				errno);
-+			if (errno == EMSGSIZE)
-+				fprintf(stderr,
-+					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
-+			else
-+				fprintf(stderr, "nonfatal reply error: errno %d\n",
-+					errno);
- 			continue;
- 		}
- 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
++	/*
+ 	 * While the nested guest CR3 is already checked and set by
+ 	 * KVM_SET_SREGS, it was set when nested state was yet loaded,
+ 	 * thus MMU might not be initialized correctly.
 
 
