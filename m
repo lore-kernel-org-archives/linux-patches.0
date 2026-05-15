@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6403BFE4C;
-	Fri, 15 May 2026 16:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAFA3EFFBF;
+	Fri, 15 May 2026 16:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861835; cv=none; b=nH9X+91z95Jp6CxCrV+bNGsVIrHfRqFq5lKN55gdf5/ub3jtkqnAQQpG0o4ayrhjJ0JaPDWS2UoX8sv43De6jDmgdP3Z9iPZAunDzZOSk9x9v95Z+rNAUlHXVs+4W2InIU4ORotWGddTEYy4hD0RjNlHxNLUQI1pGAnkoO2di0M=
+	t=1778861837; cv=none; b=Sfto3v7QV1xnaXmy+us8z/ZYstyJz+HYbVTBwMULrV+f87AILDI1n04vgOM6oMQtP/x26VrWF5vfirynzffHmkBdynhHBTFsYysQgu9Q4dcJTZ0BG/sBRSeslLuTcWRw6XsR5QwGilnTlmcIdF/wWXHuLwPj9lPUThYcvJlTBtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861835; c=relaxed/simple;
-	bh=RNmNfwV7WA6fuKXgKPwo0xNueNbwLPNBVQPQvUvW9eA=;
+	s=arc-20240116; t=1778861837; c=relaxed/simple;
+	bh=QsKbpiHWoKnCGsyP1M624L03yPvQBeZdhRHz3K9o5I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+8OUAKdiINaT1EqlVXYfNYFf/vOYIyKaL/0/PYzitEjMMlV/NpQbmcAXFN5CBvVgccOexlpPJe3OaPJTg0uNUe01cBBdTQwhmfZK7tlI+4heNaBfYBRdV4kn9m1HsGCyYkapnY1uho957eoIO56mLnur1hxjEWlGHLYVJ7Lfs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyoZQQQt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZVAamXmIq9AO8UzOMvC+0ca27oZYUVRDXscmBj5loK6JnKSJkWvvFMSteDcuwUmRxsEl5yk1zfXC5GnBCYI1HFcEa671mxNU2k+D77e/YibZtK3nZWlRN+tMEgTS7o+LEVCX8WIlwrVFzWbDbtGY/B4ZmPe7FGGbUw5oTR2W8Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ju052s4o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyoZQQQt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61306C2BCB0;
-	Fri, 15 May 2026 16:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ju052s4o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA27AC2BCB0;
+	Fri, 15 May 2026 16:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861834;
-	bh=RNmNfwV7WA6fuKXgKPwo0xNueNbwLPNBVQPQvUvW9eA=;
+	s=korg; t=1778861837;
+	bh=QsKbpiHWoKnCGsyP1M624L03yPvQBeZdhRHz3K9o5I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YyoZQQQtmVyrO5f/pXMH6m/G1oZaHZQtiLgP0+bszupDbgR67YqovRJeNEZhHIdYI
-	 7019+QgwE6Wj1T07+effSTPvI0YjwcfnVdgHHigYsFd/pO/QKZunUrWFEkRShbzP3l
-	 Od3DQYCdUFLFZFo0rTOPOX3RhgDhIb2QAx3Sr0ak=
+	b=ju052s4oyIFF9PHRXZ2vhX3UI3cSNyif4xv53kl9yq8qaxRxRzJjRngeRfJ+fBmU2
+	 DUsCp9WQPLOYTLzw55QXzil2t5K9FBue+E8QPMfYdl7vBXuPetignFmIIUDdmWlozM
+	 MPGoRCJXpzGF0nEuHROWW5Ib4jBIiWc2iUap67AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjoern Doebel <doebel@amazon.de>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 474/474] smb: client: use kzalloc to zero-initialize security descriptor buffer
-Date: Fri, 15 May 2026 17:49:43 +0200
-Message-ID: <20260515154725.362273852@linuxfoundation.org>
+	SDL <sdl@nppct.ru>,
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 468/474] drm/amdgpu/vcn3: Avoid overflow on msg bound check
+Date: Fri, 15 May 2026 17:49:37 +0200
+Message-ID: <20260515154725.235116377@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,49 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjoern Doebel <doebel@amazon.de>
+From: Benjamin Cheng <benjamin.cheng@amd.com>
 
-commit 5e489c6c47a2ac15edbaca153b9348e42c1eacab upstream.
+commit e6e9faba8100628990cccd13f0f044a648c303cf upstream.
 
-Commit 62e7dd0a39c2d ("smb: common: change the data type of num_aces
-to le16") split struct smb_acl's __le32 num_aces field into __le16
-num_aces and __le16 reserved. The reserved field corresponds to Sbz2
-in the MS-DTYP ACL wire format, which must be zero [1].
+As pointed out by SDL, the previous condition may be vulnerable to
+overflow.
 
-When building an ACL descriptor in build_sec_desc(), we are using a
-kmalloc()'ed descriptor buffer and writing the fields explicitly using
-le16() writes now. This never writes to the 2 byte reserved field,
-leaving it as uninitialized heap data.
-
-When the reserved field happens to contain non-zero slab garbage,
-Samba rejects the security descriptor with "ndr_pull_security_descriptor
-failed: Range Error", causing chmod to fail with EINVAL.
-
-Change kmalloc() to kzalloc() to ensure the entire buffer is
-zero-initialized.
-
-Fixes: 62e7dd0a39c2d ("smb: common: change the data type of num_aces to le16")
-Cc: stable@vger.kernel.org
-
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
-Assisted-by: Kiro:claude-opus-4.6
-[1] https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/20233ed8-a6c6-4097-aafa-dd545ed24428
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: b193019860d6 ("drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg")
+Cc: SDL <sdl@nppct.ru>
+Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit db00257ac9e4a51eb2515aaea161a019f7125e10)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsacl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -1766,7 +1766,7 @@ id_mode_to_cifs_acl(struct inode *inode,
- 	 * descriptor parameters, and security descriptor itself
- 	 */
- 	nsecdesclen = max_t(u32, nsecdesclen, DEFAULT_SEC_DESC_LEN);
--	pnntsd = kmalloc(nsecdesclen, GFP_KERNEL);
-+	pnntsd = kzalloc(nsecdesclen, GFP_KERNEL);
- 	if (!pnntsd) {
- 		kfree(pntsd);
- 		cifs_put_tlink(tlink);
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
+@@ -1852,6 +1852,7 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 
+ 	for (i = 0, msg = &msg[6]; i < num_buffers; ++i, msg += 4) {
+ 		uint32_t offset, size, *create;
++		uint64_t buf_end;
+ 
+ 		if (msg[0] != RDECODE_MESSAGE_CREATE)
+ 			continue;
+@@ -1859,7 +1860,8 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 		offset = msg[1];
+ 		size = msg[2];
+ 
+-		if (size < 4 || offset + size > end - addr) {
++		if (size < 4 || check_add_overflow(offset, size, &buf_end) ||
++		    buf_end > end - addr) {
+ 			DRM_ERROR("VCN message buffer exceeds BO bounds!\n");
+ 			r = -EINVAL;
+ 			goto out;
 
 
