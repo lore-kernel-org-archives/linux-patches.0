@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746AA3FBB4C;
-	Fri, 15 May 2026 16:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7383F44C0;
+	Fri, 15 May 2026 16:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861939; cv=none; b=smnwPWDNahLBbuBzxDuCX6eJxp0DRpJ0AhpfAy346B1w8LnOP2tOtqLC3rHZ4mzIn0Kagr9zEqG72iSgJowPjnpuMM7ghkO22zFKtZQrNae7eiTKXimu7UqdLFFHlWHhB/9Fuv5r3bVvHIVQ20lUQMq3XD2oxyWdIrxfJLAiOnY=
+	t=1778861942; cv=none; b=FalyQZruXUXC1svqn5EVn3cw+g7lUR5iDBD0d+iw5EA0Cmyy5VijMHkNmtZSfhVOB7YLtdT5u9dwFvkwG5iWJUV7Emln9I8GuucBXgVaiB3mnADGYX0EWKLGMZM/nhW2TvTIHpgdSVCyOVrJC/EMNXRNaKHMN76sYBfsYPfWK6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861939; c=relaxed/simple;
-	bh=18ttHaHiOvq01vjVI/Ir13/L//qRjoqvx6fVag8+f9o=;
+	s=arc-20240116; t=1778861942; c=relaxed/simple;
+	bh=AFWjbCrJ2TijToezgpoKYk4I2mka6K7UMKQ4LXLdh4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uMvrk8KOYsAbliE5LMYJ9cvfw5SJk7v1KhFYCGXyEi4ekFcXT/SUcxuRh5Dxlnz1Apbp78hk+/jwWPVt1qNTW5z8Rs5O8BkLtJ9wRf8fJ3EL6daKILZ95nXngs+vOz/a4AAvLbnfCKUMa835ojR/ul/PFGuwMNnAeR5DUmAEHHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbH5ycgJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SGqzKryICDPMLJ17jNSew+toIROE81P3fuk6d5O+eXJK7WqgJU36Qrfwg7WW/3HSVlApn4HwNjZZatCRymVnGLbZd64z5DZyEEZLB6rgHZRB5C29G5Z95/07/WjXGc1FfA6TTdCCTkdfvmR398N9L3eZD1o65qm2cG2RHHBMy4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5gC9Mzw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbH5ycgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2ECC2BCB0;
-	Fri, 15 May 2026 16:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5gC9Mzw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C3C4C2BCB0;
+	Fri, 15 May 2026 16:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861939;
-	bh=18ttHaHiOvq01vjVI/Ir13/L//qRjoqvx6fVag8+f9o=;
+	s=korg; t=1778861942;
+	bh=AFWjbCrJ2TijToezgpoKYk4I2mka6K7UMKQ4LXLdh4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DbH5ycgJAQ2WdTy+7/52VwVKUJPRqfnrwCIj9oUunzTGOYqtfOBtbSyX7gD/APeZw
-	 h6qgCGyglE8pgxTnr7a3gcrKJhjNFJCvXZ7loS49yEL/birIE22ur4raoQnCuh7RMN
-	 SnTpEsqVS4ZpraymFbBq2Nh9gpm0Bi9Lv/o9Ed+A=
+	b=v5gC9Mzw5CW5sRgYordIvgKrVCbafApn8/7513M9DvZyLutJ+qM8tOZoRiuSTsp3U
+	 1BqeQfIrrX6DYdAm/A414ntAbHU0YeB5iXeyTQjDSfGq360wQz6epRUc72Aj1Q91NN
+	 teck3C3/rlWJxFqBbSqyb3GuP5mDsiYnRgUrlJo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@linutronix.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 6.18 046/188] arm64: dts: broadcom: bcm2712-d-rpi-5-b: add fixes for pinctrl/pinctrl_aon
-Date: Fri, 15 May 2026 17:47:43 +0200
-Message-ID: <20260515154658.315640098@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 020/188] spi: atmel: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:17 +0200
+Message-ID: <20260515154657.745575480@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -50,40 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregor Herburger <gregor.herburger@linutronix.de>
+From: Johan Hovold <johan@kernel.org>
 
-commit aeb078cebc40d421f61a8f07b0e7919aeb44d751 upstream.
+commit 8d4de97e83520be89d0ff40610ca633b3963a7de upstream.
 
-On the -d revision of the bcm2712 the pinctrl differs from the c0
-revision. The driver already supports both and distinguishes the two
-with the compatible string.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-Update the compatible string and reg length to reflect the different
-pinctrl.
-
-Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
-Link: https://lore.kernel.org/r/20260226-raspi-dts-updates-v1-5-60832d20ff04@linutronix.de
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Fixes: 754ce4f29937 ("[PATCH] SPI: atmel_spi driver")
+Cc: stable@vger.kernel.org	# 2.6.21
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260409120419.388546-5-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/spi/spi-atmel.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
-+++ b/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
-@@ -35,3 +35,13 @@
- 		"PMIC_SCL", // AON_SGPIO_04
- 		"PMIC_SDA"; // AON_SGPIO_05
- };
+--- a/drivers/spi/spi-atmel.c
++++ b/drivers/spi/spi-atmel.c
+@@ -1655,7 +1655,7 @@ static int atmel_spi_probe(struct platfo
+ 	pm_runtime_set_active(&pdev->dev);
+ 	pm_runtime_enable(&pdev->dev);
+ 
+-	ret = devm_spi_register_controller(&pdev->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret)
+ 		goto out_free_dma;
+ 
+@@ -1689,8 +1689,12 @@ static void atmel_spi_remove(struct plat
+ 	struct spi_controller	*host = platform_get_drvdata(pdev);
+ 	struct atmel_spi	*as = spi_controller_get_devdata(host);
+ 
++	spi_controller_get(host);
 +
-+&pinctrl {
-+	compatible = "brcm,bcm2712d0-pinctrl";
-+	reg = <0x7d504100 0x20>;
-+};
+ 	pm_runtime_get_sync(&pdev->dev);
+ 
++	spi_unregister_controller(host);
 +
-+&pinctrl_aon {
-+	compatible = "brcm,bcm2712d0-aon-pinctrl";
-+	reg = <0x7d510700 0x1c>;
-+};
+ 	/* reset the hardware and block queue progress */
+ 	if (as->use_dma) {
+ 		atmel_spi_stop_dma(host);
+@@ -1717,6 +1721,8 @@ static void atmel_spi_remove(struct plat
+ 
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
++
++	spi_controller_put(host);
+ }
+ 
+ static int atmel_spi_runtime_suspend(struct device *dev)
 
 
