@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E89355049;
-	Fri, 15 May 2026 16:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D8930569C;
+	Fri, 15 May 2026 16:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862570; cv=none; b=vCk+EAiLK7jqTcRNTiZCoZmwL6ceTg5h/3kJ3xmMXck4JnuGorqqukbsEUYwyW8KNk9dwnY5Ae5DcFad9xAkii2g/SlxpG9sFa9rFg+wUzqM6qbhOn/YNas/wgmPML+njBgNb9jsBX4Why4XWLjOaDreD6Xw0+ENHEW1DuBAIvE=
+	t=1778862572; cv=none; b=A89WaEmxEa445ViBImjyjbAJ647gH52JExHMzJpgvx5p+POBLjHQQyzhDR85O0XQLmoSDU6EWCfGlXg1yAX+hf1/1DNGk43G56XGoJCwb5vDn7qYIRAlpV7oRIFHZIgEHchlP0Wm+s5stYRqZemZZXtMRazpw9M+7R3Nnw/LZR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862570; c=relaxed/simple;
-	bh=0FS610BWkRv/vH7qG7FG+bXXotVV+3hsi9AyrjHGI+Q=;
+	s=arc-20240116; t=1778862572; c=relaxed/simple;
+	bh=iudBr4CraeU3Hrh3KyQUb71fLtRVzs8oIISkh9Nmfh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WwSPSR2565dWgnNisg0hMkiTWrJR4RVGw8ikpsrElWXifrFh/n9WFYIbF8xab3fKLkhrPTAmHBONsmh42rbKd1nqUktuaVyAS5ybtZk70kQQY9CWWHODPfyyiBJY7DiMyj2PUGiutL6bwkonOU340WxmBp35CQeSOvcYh1FeuWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwmBiqOf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JUe63qive1c9xLA5nw+ztK4sVexCBYC0KNj5z7MN2yFgOKAuIjvb8OjP9H2rEkiqk/BOdDEnJHVxP7YDJepPqMNGO44N6ajggvZOFriwut+ZkowxSuArwuQT6/uJeBHH9j1yZhc33qz16of8GD/qu87FJFT+OO8NBoC1V+TbCDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XbAv9zK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwmBiqOf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DB3C2BCB0;
-	Fri, 15 May 2026 16:29:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XbAv9zK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6D4C2BCB0;
+	Fri, 15 May 2026 16:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862570;
-	bh=0FS610BWkRv/vH7qG7FG+bXXotVV+3hsi9AyrjHGI+Q=;
+	s=korg; t=1778862572;
+	bh=iudBr4CraeU3Hrh3KyQUb71fLtRVzs8oIISkh9Nmfh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwmBiqOfab0hs9vpnYnsDDnTqC/LI0yKDjp2QWKOSHmUYfefCfvyVEBtqwVaHjKj1
-	 Kxvj6sYCav2Ji2phIqkxgiiOvaSAJ+12DM3eo1brkXlf/LuUJPf5u5JuSDukfKFbTg
-	 Z63lcnAJPrDw6GPLPNaKKmbkwFqyIe2XlMBaJ+iE=
+	b=2XbAv9zK+C/aJ3xOrvfM728FMzggdfysfW2LeHtp7ocIqibxHxJdr78nGMVhGnkX/
+	 P7IkG4+Rp1OrFFgigxj1CM+j5wDXrR9hKSnEVwkwWopIgE9p6BB/6eC05lU+myasT1
+	 E5ycejX6yIupMEj5ZOgRy/JaRU9fQDGkbqhfnBmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Purna Chandra Mandal <purna.mandal@microchip.com>,
+	Lanqing Liu <lanqing.liu@spreadtrum.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 100/201] spi: pic32-sqi: fix controller deregistration
-Date: Fri, 15 May 2026 17:48:38 +0200
-Message-ID: <20260515154700.704412324@linuxfoundation.org>
+Subject: [PATCH 7.0 101/201] spi: sprd: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:39 +0200
+Message-ID: <20260515154700.728347340@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,48 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 420df79d1a618951eb0eb4331df95c9f4f763b8b upstream.
+commit 123d17dbc5f07059752fa5e616385ca29a8f935a upstream.
 
-Make sure to deregister the controller before releasing underlying
-resources like DMA during driver unbind.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-Fixes: 3270ac230f66 ("spi: pic32-sqi: add SPI driver for PIC32 SQI controller.")
-Cc: stable@vger.kernel.org	# 4.7
-Cc: Purna Chandra Mandal <purna.mandal@microchip.com>
+Note that the controller is suspended before disabling and releasing
+resources since commit de082d866cce ("spi: sprd: Add the SPI irq
+function for the SPI DMA mode") which avoids issues like unclocked
+accesses but prevents SPI device drivers from doing I/O during
+deregistration.
+
+Fixes: e7d973a31c24 ("spi: sprd: Add SPI driver for Spreadtrum SC9860")
+Cc: stable@vger.kernel.org	# 4.20
+Cc: Lanqing Liu <lanqing.liu@spreadtrum.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-8-johan@kernel.org
+Link: https://patch.msgid.link/20260410081757.503099-17-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-pic32-sqi.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/spi/spi-sprd.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-pic32-sqi.c
-+++ b/drivers/spi/spi-pic32-sqi.c
-@@ -642,7 +642,7 @@ static int pic32_sqi_probe(struct platfo
- 	host->prepare_transfer_hardware	= pic32_sqi_prepare_hardware;
- 	host->unprepare_transfer_hardware	= pic32_sqi_unprepare_hardware;
+--- a/drivers/spi/spi-sprd.c
++++ b/drivers/spi/spi-sprd.c
+@@ -977,7 +977,7 @@ static int sprd_spi_probe(struct platfor
+ 		goto err_rpm_put;
+ 	}
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret) {
- 		dev_err(&host->dev, "failed registering spi host\n");
- 		free_irq(sqi->irq, sqi);
-@@ -665,9 +665,15 @@ static void pic32_sqi_remove(struct plat
- {
- 	struct pic32_sqi *sqi = platform_get_drvdata(pdev);
+-	ret = devm_spi_register_controller(&pdev->dev, sctlr);
++	ret = spi_register_controller(sctlr);
+ 	if (ret)
+ 		goto err_rpm_put;
  
-+	spi_controller_get(sqi->host);
+@@ -1008,7 +1008,9 @@ static void sprd_spi_remove(struct platf
+ 	if (ret < 0)
+ 		dev_err(ss->dev, "failed to resume SPI controller\n");
+ 
+-	spi_controller_suspend(sctlr);
++	spi_controller_get(sctlr);
 +
-+	spi_unregister_controller(sqi->host);
++	spi_unregister_controller(sctlr);
+ 
+ 	if (ret >= 0) {
+ 		if (ss->dma.enable)
+@@ -1017,6 +1019,8 @@ static void sprd_spi_remove(struct platf
+ 	}
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 +
- 	/* release resources */
- 	free_irq(sqi->irq, sqi);
- 	ring_desc_ring_free(sqi);
-+
-+	spi_controller_put(sqi->host);
++	spi_controller_put(sctlr);
  }
  
- static const struct of_device_id pic32_sqi_of_ids[] = {
+ static int __maybe_unused sprd_spi_runtime_suspend(struct device *dev)
 
 
