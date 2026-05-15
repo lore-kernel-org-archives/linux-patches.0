@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E267122FF22;
-	Fri, 15 May 2026 16:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8ED3C9896;
+	Fri, 15 May 2026 16:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861794; cv=none; b=RYUwzVYtRYl1addOOnlaIE2URI49z8TjALuLJLKVlsbCW4hclquW8UV51Y4NCw4Zt24v9reHHRtA6zVqe8AUHn9nPhMjMY/GmFO2dv6C7URPZHINtBPAn68kfEv7hsObkJHZkHZb3UpZMHFLPzt8FZ/YLVbyb8MdcQh/SK8I36k=
+	t=1778861796; cv=none; b=UXcqJOyeo6Zsq++e5+2aHqmxeGlx9fipqH3NZA0Dbpc1K21rW/NovvWa2LEMA3uT+YMKNuKx8jxwcDrrfrZEqbsoORReqYHz6HuDCXYcycDgrtluVR6QhILY16f4O35bj8XoEtRkhksSUmUIqcSkTGeztBSFmEBzMCRbU1Cdp3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861794; c=relaxed/simple;
-	bh=jjtG1Nyz/NgiGHAluyChiMtTBwsohSMJVAc1EVFY780=;
+	s=arc-20240116; t=1778861796; c=relaxed/simple;
+	bh=mz2/inB1bQmhUCKE9kelncqYjubR7uOoSGmRDzbUbZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPxnocLmPDbv2YIvynThXmYXU8QDm95kybgS+H7k0+LYgjVJR7RJqnnnuqSKY9ax9m0Dp/laIdDr3vGwv/4E9z7EyuSyG2rZOldCmTqaRIcKD2FFSkjctMNILJncxAkYrMUIe8M6r/Aa+w4Hq9Cx9CRpP/083IQFdc3jFWHncI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKtOgkdv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fXxnXVBVd7vasEU7mY8aqs/or1P94deVztOrW+OowBlOi9TVj85xQM2qxAo+V9VD5y8Dm3rz+gZDjRGRF/cq6q00xpgEMdIkkgJ9Z4KK5cSiY0DVjS6SIu36MTposxBJ1HXCYrM+a7q+j1Gi3+e8MH8sBnq053WMiKjkgQvxRdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6gxZ2p+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKtOgkdv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A175C2BCB0;
-	Fri, 15 May 2026 16:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6gxZ2p+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57FCC2BCB0;
+	Fri, 15 May 2026 16:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861793;
-	bh=jjtG1Nyz/NgiGHAluyChiMtTBwsohSMJVAc1EVFY780=;
+	s=korg; t=1778861796;
+	bh=mz2/inB1bQmhUCKE9kelncqYjubR7uOoSGmRDzbUbZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKtOgkdvXrtvvD+fhcB39VeDMGr/rukZBqh4QJ+eNWzU5tmxWT4pFfHE/DcLkOFaN
-	 an9yfCo9nBdTlww3NDHoSSBWXae6GD4Lz/ID0hVB1ZV0zYVMI3Gw5cehVnFUJ6YNBC
-	 yVix2MfbdvWPQZ0P0M5SbcVQil/P3BomzkKcGJ9Y=
+	b=n6gxZ2p+M/Qazlgy5v0uX1r/b5s5/l/9ene5ywF7CJEXaKqSv+Xbynl6ojkPl9gMr
+	 g+wfiUEwSOaElWn0LsKvFZRnNxHB5+4axXAfv1NyZCVlAPogV+ZNiO03cjFt2S7hB7
+	 DuTsoEiGFaSc6/Hm4jOa9OpFnBaGEG0O0caFhjCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.6 463/474] KVM: arm64: Wake-up from WFI when iqrchip is in userspace
-Date: Fri, 15 May 2026 17:49:32 +0200
-Message-ID: <20260515154725.121657039@linuxfoundation.org>
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Luigi Leonardi <leonardi@redhat.com>
+Subject: [PATCH 6.6 464/474] vsock: fix buffer size clamping order
+Date: Fri, 15 May 2026 17:49:33 +0200
+Message-ID: <20260515154725.145750423@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -49,44 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 4ce98bf0865c349e7026ad9c14f48da264920953 upstream
+commit d114bfdc9b76bf93b881e195b7ec957c14227bab upstream.
 
-It appears that there is nothing in the wake-up path that
-evaluates whether the in-kernel interrupts are pending unless
-we have a vgic.
+In vsock_update_buffer_size(), the buffer size was being clamped to the
+maximum first, and then to the minimum. If a user sets a minimum buffer
+size larger than the maximum, the minimum check overrides the maximum
+check, inverting the constraint.
 
-This means that the userspace irqchip support has been broken for
-about four years, and nobody noticed. It was also broken before
-as we wouldn't wake-up on a PMU interrupt, but hey, who cares...
+This breaks the intended socket memory boundaries by allowing the
+vsk->buffer_size to grow beyond the configured vsk->buffer_max_size.
 
-It is probably time to remove the feature altogether, because it
-was a terrible idea 10 years ago, and it still is.
+Fix this by checking the minimum first, and then the maximum. This
+ensures the buffer size never exceeds the buffer_max_size.
 
-Fixes: b57de4ffd7c6d ("KVM: arm64: Simplify kvm_cpu_has_pending_timer()")
-Link: https://patch.msgid.link/20260423163607.486345-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: b9f2b0ffde0c ("vsock: handle buffer_size sockopts in the core")
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/180118C5-8BCF-4A63-A305-4EE53A34AB9C@doyensec.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Luigi Leonardi <leonardi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/arm.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/vmw_vsock/af_vsock.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -557,6 +557,11 @@ int kvm_arch_vcpu_ioctl_set_mpstate(stru
- int kvm_arch_vcpu_runnable(struct kvm_vcpu *v)
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1728,12 +1728,12 @@ static void vsock_update_buffer_size(str
+ 				     const struct vsock_transport *transport,
+ 				     u64 val)
  {
- 	bool irq_lines = *vcpu_hcr(v) & (HCR_VI | HCR_VF);
+-	if (val > vsk->buffer_max_size)
+-		val = vsk->buffer_max_size;
+-
+ 	if (val < vsk->buffer_min_size)
+ 		val = vsk->buffer_min_size;
+ 
++	if (val > vsk->buffer_max_size)
++		val = vsk->buffer_max_size;
 +
-+	irq_lines |= (!irqchip_in_kernel(v->kvm) &&
-+		      (kvm_timer_should_notify_user(v) ||
-+		       kvm_pmu_should_notify_user(v)));
-+
- 	return ((irq_lines || kvm_vgic_vcpu_pending_irq(v))
- 		&& !kvm_arm_vcpu_stopped(v) && !v->arch.pause);
- }
+ 	if (val != vsk->buffer_size &&
+ 	    transport && transport->notify_buffer_size)
+ 		transport->notify_buffer_size(vsk, &val);
 
 
