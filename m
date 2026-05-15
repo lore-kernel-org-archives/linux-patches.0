@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848F73B7B8B;
-	Fri, 15 May 2026 16:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A66344D8C;
+	Fri, 15 May 2026 16:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862622; cv=none; b=auhZmVn8BE5LubpgHJe7rCLQUg/9o+icLYMmXf5WBvF8G6qEU/IEOoXU2SKeampdkHooGdmOo2Mz+3v+S7PNbJe+Zrg1UTp7JHBHH+1ecZbqCBvs/eZw1nC+Tti8Q7a063CVnBNMWa9jpj6rR3wSEOc6WuI5vn0Q3MPRAFLpEig=
+	t=1778862625; cv=none; b=LVEqEVmTrGOpDWvtU2/0KoRXKSFBjzuuBwFl4TE+DZrwtl8hILDWZ3RpZwZxg3xci7jCKcV4lLaVsfsvIdsx3LYDCwfjdKVunx2Ak77DSqSLqffXGGtvKc3kTlA3KvAVIb4S3Es0/rtmC1F52/aWyGGNCCr6zjanYAp3PhOzljE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862622; c=relaxed/simple;
-	bh=iBXDVD4CmOkHa7IuSkPlmdjtPGpZrcUY9sPCwflISeU=;
+	s=arc-20240116; t=1778862625; c=relaxed/simple;
+	bh=rajBEbBnqXsNbh8BJNr+becq5dNaFzWmtnsP03wEiuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SiHESF8YXTOaPk/u5n6vqiESMM+ccfWl66D++/I1AroPnO3qtfcQnhfqdoYCChnnwvtl6RvjFKE5HRC2y9PuRBogmgVGhoBWoxAC2pNRgqPvlW6J3kQsjZ/z7Azbu7UorYNj+yrzh2EltxP/DjBhS7EllNadIM+S/yCMtKigOTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDmhNDbw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pbGmVSP77cQp8wo5Us+7+hoCA6vYZdTShYRzTcEFLglImfW/95G1kXCP6xef9y8sqtDTnhnY0KHcc9g627guJm5YjCNSDLuf9mTcbvVwrT6+1CMlNJF+/CP6/8pIDZwxPjd4cte9v10CCyfB8X2Vi4h0EH/1SwHcLq3RO4EiXfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mp5NQhRp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDmhNDbw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD9DC2BD04;
-	Fri, 15 May 2026 16:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mp5NQhRp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700B3C2BCF5;
+	Fri, 15 May 2026 16:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862622;
-	bh=iBXDVD4CmOkHa7IuSkPlmdjtPGpZrcUY9sPCwflISeU=;
+	s=korg; t=1778862624;
+	bh=rajBEbBnqXsNbh8BJNr+becq5dNaFzWmtnsP03wEiuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDmhNDbwFRokN2ki7QpwtgPyojWWmD+t6EGxPqgmiRV3fAyVN+wX4y2HwHsOT2WyS
-	 ikPHQZRTlMmQAw37CGL0TZ+Ev5M8/sAHf6mOgk97ZI84/ShK5+PZONjn1X3XaLaKw3
-	 39MOAFvpJPslPQb1dB9AAESdpcQX7tvbPGgiBUJA=
+	b=Mp5NQhRpJ+WPH/mKW1V+HgO1/PkUn8emLu0yRRWIEwIGwn2fnHfRXFTwWKynyt+dM
+	 s535pvFNQ048RPV2D/0LqpxgsJ/xHV/sCnkuw6Jn+rLkfI2pYcPRIJaNhouaLSrhJA
+	 C+Ji6pRBuLEYa63ycKIu6Ny2jYeIeCsj0xAnKLrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 118/201] spi: cadence: fix unclocked access on unbind
-Date: Fri, 15 May 2026 17:48:56 +0200
-Message-ID: <20260515154701.113263465@linuxfoundation.org>
+Subject: [PATCH 7.0 119/201] spi: cadence: fix clock imbalance on probe failure
+Date: Fri, 15 May 2026 17:48:57 +0200
+Message-ID: <20260515154701.135622485@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,55 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 5b1689a41f02955c5361944f748a4812a6ff9307 upstream.
+commit ecea4f0e9db2fb6ab4a68a59c5aba0d8f59a9566 upstream.
 
-Make sure that the controller is runtime resumed before disabling it
-during driver unbind to avoid unclocked register access and unbalanced
-clock disable.
+Make sure that the controller is active before disabling clocks on probe
+failure to avoid unbalanced clock disable.
 
-Also restore the autosuspend setting.
-
-This issue was flagged by Sashiko when reviewing a controller
-deregistration fix.
+Also drop the usage count before returning (so that the controller can
+be suspended after a probe deferral) and restore the autosuspend
+setting.
 
 Fixes: d36ccd9f7ea4 ("spi: cadence: Runtime pm adaptation")
 Cc: stable@vger.kernel.org	# 4.7
 Cc: Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>
-Link: https://sashiko.dev/#/patchset/20260414134319.978196-1-johan%40kernel.org?part=1
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421123615.1533617-2-johan@kernel.org
+Link: https://patch.msgid.link/20260421123615.1533617-3-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/spi/spi-cadence.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/drivers/spi/spi-cadence.c
 +++ b/drivers/spi/spi-cadence.c
-@@ -776,16 +776,23 @@ static void cdns_spi_remove(struct platf
- {
- 	struct spi_controller *ctlr = platform_get_drvdata(pdev);
- 	struct cdns_spi *xspi = spi_controller_get_devdata(ctlr);
-+	int ret = 0;
-+
+@@ -741,7 +741,6 @@ static int cdns_spi_probe(struct platfor
+ 		/* Set to default valid value */
+ 		ctlr->max_speed_hz = xspi->clk_rate / 4;
+ 		xspi->speed_hz = ctlr->max_speed_hz;
+-		pm_runtime_put_autosuspend(&pdev->dev);
+ 	} else {
+ 		ctlr->mode_bits |= SPI_NO_CS;
+ 		ctlr->target_abort = cdns_target_abort;
+@@ -752,12 +751,17 @@ static int cdns_spi_probe(struct platfor
+ 		goto clk_dis_all;
+ 	}
+ 
 +	if (!spi_controller_is_target(ctlr))
-+		ret = pm_runtime_get_sync(&pdev->dev);
++		pm_runtime_put_autosuspend(&pdev->dev);
++
+ 	return ret;
  
- 	spi_controller_get(ctlr);
- 
- 	spi_unregister_controller(ctlr);
- 
--	cdns_spi_write(xspi, CDNS_SPI_ER, CDNS_SPI_ER_DISABLE);
-+	if (ret >= 0)
-+		cdns_spi_write(xspi, CDNS_SPI_ER, CDNS_SPI_ER_DISABLE);
- 
+ clk_dis_all:
  	if (!spi_controller_is_target(ctlr)) {
  		pm_runtime_disable(&pdev->dev);
  		pm_runtime_set_suspended(&pdev->dev);
 +		pm_runtime_put_noidle(&pdev->dev);
 +		pm_runtime_dont_use_autosuspend(&pdev->dev);
  	}
- 
+ remove_ctlr:
  	spi_controller_put(ctlr);
 
 
