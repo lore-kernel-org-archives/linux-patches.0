@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6427A3E0096;
-	Fri, 15 May 2026 16:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD143F86E1;
+	Fri, 15 May 2026 16:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861384; cv=none; b=r8pebAkEOI7vj8wRocY4O3OyBoZOHmcXbLmDHt6Z9z715L8NptlOSLwO1ENyh4426lgBIirbStNa7AGEJYg3o2vzd2dLVq9fbuwNlcNJ92G1uVSvXGaCymymLbc+Ax2Nq2rQJAUinE5EsClfqPJ22eE3wnaXYLbuvJKOOGu4gPY=
+	t=1778861387; cv=none; b=kVZbwfO9RggmChM6eEmUARLvFdrJJj4I31yYFQeYwWaOqw92Pw+sAKPqMO09YivDABjX0J3LgQSzSUpjQSikhdSGbKMtJvNCXh22jtNo/+EFLzQrEWk+xDgoWO2kRohlRkcWS+Qb64jgTIx8XjgFT1RWc+ukzbc87XV8f8ojTlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861384; c=relaxed/simple;
-	bh=LW94ct7gAWwmMRA1IHTFf1LCpeRo+VqZBOFfdqQpyhQ=;
+	s=arc-20240116; t=1778861387; c=relaxed/simple;
+	bh=Wjyj/ze//pucDjZ4XBl0MUYJMrJFek5Gji513WjfnwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLwMxbUbfPsGGstklyJjneqCIux+lYP55KVLYzs0aPNWYL/onIjp0ZJ1Zn1Ul0hcBwOzyprmPiByZKkhLTfrMe9EeKlNlzf5Pp949NlPq/3noh+xofoAlIXrSIlNI3naBau2fLadM49vYRZ7GTax3SrWeuYuWyjarNl3Fsw7VZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kc/KucDT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m9DG4RrSWejE8BEfi6crN8AeVabgwtRDPkX2OQELx4DfVXDYIRIwGMmhT+fTXF0UEbaEvz2u8wwwH6M1zbJsh3YINucWZ9fHgebtV/Hsow5KHzN3pVrO/wXWQO24hh5q5WJqWn4sOMjq5wAllpaaYkQmJFNm9mCYfZm9xj7e05c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2jROBE7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kc/KucDT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC78C2BCB0;
-	Fri, 15 May 2026 16:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2jROBE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81429C2BCB0;
+	Fri, 15 May 2026 16:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861384;
-	bh=LW94ct7gAWwmMRA1IHTFf1LCpeRo+VqZBOFfdqQpyhQ=;
+	s=korg; t=1778861386;
+	bh=Wjyj/ze//pucDjZ4XBl0MUYJMrJFek5Gji513WjfnwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kc/KucDThnZNgtXk8HaCHk2TM3cGmrPFFvTdJsyDFhhk5A+dSW059btuA3kLYjgrN
-	 rVj/zGZe5U4F9zwDMDqc/WEJkxMFOrV09+207vY//GYtiQEn/rbP+rjCR+4LsyRBfg
-	 KNOuCoeePY3/xWEH7i1fgFGkar9+llYncUj5Dt3M=
+	b=w2jROBE7QgIgCxHfVKtzjqoUyemV39JHLEcaDB9oJsr5Zj/qZxBe02B+1QOH8hspm
+	 IelFqXao4an9G3brKp855PF3bwT9ePJwurJvMsvicGgI5OPCqe+Szp2og6vT0OSWNN
+	 ch4J9+QBF2u7oLFycghxL3Kbg6FxBDpE3eYWA+pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 291/474] f2fs: fix node_cnt race between extent node destroy and writeback
-Date: Fri, 15 May 2026 17:46:40 +0200
-Message-ID: <20260515154721.297353178@linuxfoundation.org>
+	Wenyou Yang <wenyou.yang@atmel.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 309/474] regulator: act8945a: fix OF node reference imbalance
+Date: Fri, 15 May 2026 17:46:58 +0200
+Message-ID: <20260515154721.693006354@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,93 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit ed78aeebef05212ef7dca93bd931e4eff67c113f upstream.
+commit 0d15ce31375ccef4162f960b34547a821b7619d2 upstream.
 
-f2fs_destroy_extent_node() does not set FI_NO_EXTENT before clearing
-extent nodes. When called from f2fs_drop_inode() with I_SYNC set,
-concurrent kworker writeback can insert new extent nodes into the same
-extent tree, racing with the destroy and triggering f2fs_bug_on() in
-__destroy_extent_node(). The scenario is as follows:
+The driver reuses the OF node of the parent multi-function device but
+fails to take another reference to balance the one dropped by the
+platform bus code when unbinding the MFD and deregistering the child
+devices.
 
-drop inode                            writeback
- - iput
-  - f2fs_drop_inode  // I_SYNC set
-   - f2fs_destroy_extent_node
-    - __destroy_extent_node
-     - while (node_cnt) {
-        write_lock(&et->lock)
-        __free_extent_tree
-        write_unlock(&et->lock)
-                                       - __writeback_single_inode
-                                        - f2fs_outplace_write_data
-                                         - f2fs_update_read_extent_cache
-                                          - __update_extent_tree_range
-                                           // FI_NO_EXTENT not set,
-                                           // insert new extent node
-       } // node_cnt == 0, exit while
-     - f2fs_bug_on(node_cnt)  // node_cnt > 0
+Fix this by using the intended helper for reusing OF nodes.
 
-Additionally, __update_extent_tree_range() only checks FI_NO_EXTENT for
-EX_READ type, leaving EX_BLOCK_AGE updates completely unprotected.
-
-This patch set FI_NO_EXTENT under et->lock in __destroy_extent_node(),
-consistent with other callers (__update_extent_tree_range and
-__drop_extent_tree) and check FI_NO_EXTENT for both EX_READ and
-EX_BLOCK_AGE tree.
-
-Fixes: 3fc5d5a182f6 ("f2fs: fix to shrink read extent node in batches")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 38c09961048b ("regulator: act8945a: add regulator driver for ACT8945A")
+Cc: stable@vger.kernel.org	# 4.6
+Cc: Wenyou Yang <wenyou.yang@atmel.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260408073055.5183-7-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/extent_cache.c |   17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/regulator/act8945a-regulator.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -87,9 +87,10 @@ static bool __may_extent_tree(struct ino
- 	if (!__init_may_extent_tree(inode, type))
- 		return false;
- 
-+	if (is_inode_flag_set(inode, FI_NO_EXTENT))
-+		return false;
-+
- 	if (type == EX_READ) {
--		if (is_inode_flag_set(inode, FI_NO_EXTENT))
--			return false;
- 		if (is_inode_flag_set(inode, FI_COMPRESSED_FILE) &&
- 				 !f2fs_sb_has_readonly(F2FS_I_SB(inode)))
- 			return false;
-@@ -602,6 +603,8 @@ static unsigned int __destroy_extent_nod
- 
- 	while (atomic_read(&et->node_cnt)) {
- 		write_lock(&et->lock);
-+		if (!is_inode_flag_set(inode, FI_NO_EXTENT))
-+			set_inode_flag(inode, FI_NO_EXTENT);
- 		node_cnt += __free_extent_tree(sbi, et, nr_shrink);
- 		write_unlock(&et->lock);
+--- a/drivers/regulator/act8945a-regulator.c
++++ b/drivers/regulator/act8945a-regulator.c
+@@ -302,8 +302,9 @@ static int act8945a_pmic_probe(struct pl
+ 		num_regulators = ARRAY_SIZE(act8945a_regulators);
  	}
-@@ -637,12 +640,12 @@ static void __update_extent_tree_range(s
  
- 	write_lock(&et->lock);
- 
--	if (type == EX_READ) {
--		if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
--			write_unlock(&et->lock);
--			return;
--		}
-+	if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
-+		write_unlock(&et->lock);
-+		return;
-+	}
- 
-+	if (type == EX_READ) {
- 		prev = et->largest;
- 		dei.len = 0;
- 
++	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
++
+ 	config.dev = &pdev->dev;
+-	config.dev->of_node = pdev->dev.parent->of_node;
+ 	config.driver_data = act8945a;
+ 	for (i = 0; i < num_regulators; i++) {
+ 		rdev = devm_regulator_register(&pdev->dev, &regulators[i],
 
 
