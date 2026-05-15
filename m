@@ -1,43 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE4734CFC3;
-	Fri, 15 May 2026 15:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C423793BF;
+	Fri, 15 May 2026 15:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860741; cv=none; b=ARtWd/D5tg5IbvElpi6Y/XYV9z2kQmQbyAwW0Ka44kucCBfnYayAKgi81sXjZ5v/qrb8hQHN9ZL1lkXFMyXTHLzZyzJAdarJOb9VjyzSVjSDd/f5V5xxDGoBwC2HZRvWugF0hz7bqFMHkTn53616DZcA1qG5W7EwH97iSlnfRbM=
+	t=1778860743; cv=none; b=ZhGKBK2yIxD0h3mnx+H4g8mu8qBHGXOzf7le/4Cthx9U4wlsfrqLvDjgCGUdOMsIxecAOU/dQCTc9R+2x8BcfQmZHSiAuCBB8n/2IIMsMYWPxepsT99TodAjYGuqolaIRP68bvZL7+9cJuW9yyWhmvDF1FPbFgrucM3fwZqOfdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860741; c=relaxed/simple;
-	bh=mRJqLUHEnamKMgMxk1oUSWd0UZyHGNLUXKf4iw8mmKY=;
+	s=arc-20240116; t=1778860743; c=relaxed/simple;
+	bh=Kf/iWU8HkoL4fFTSgPB/g4L2XkumGiB0TNtr5iYcnqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxnHoLW5L4NJ0W2iLLgqSWJ0ExvYgPjjCK5RzWMAEUnvgrHO3X2G+U+F0Q+9RWtF0WnYXIL3o0khUh8zVISaing404NJedkirpFcI2qYfabVHRKEao0u4+Z1nA7guFvPOqpfqjbzXr+SeZiJxvjKAZDfzwFjIicNiQBYiPDLuDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRlxxpYq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=auduPMZR4f2g8xqJU3rs6gcXYe7Rwu363R0oi/Oa4dKvHnJOqTXYh9LLd4wsEoyJ0+GFi0kCweMCtzopEamvIP76gyIfiS9BJ5WILS93gYZq8re2TlTNAPsfGqEbDjTM0VyhvmQdw2j9e9zQ0l5uvSGAdLvyiVmrAmDRm+2TBqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4lCLsB2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRlxxpYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858CFC2BCB0;
-	Fri, 15 May 2026 15:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4lCLsB2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E41C2BCB3;
+	Fri, 15 May 2026 15:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860740;
-	bh=mRJqLUHEnamKMgMxk1oUSWd0UZyHGNLUXKf4iw8mmKY=;
+	s=korg; t=1778860743;
+	bh=Kf/iWU8HkoL4fFTSgPB/g4L2XkumGiB0TNtr5iYcnqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cRlxxpYqnvyWo4x7nsa453gTZFOM6xsbP/Kf+3cp/XtkI1LtuA6CutXn+yQrBrJW1
-	 SWQ776zxK+dM4ajiMrQQJCx8sBPz2c3FhgAq02m6td23IMms0GAOLuZ0rXou2bZO6l
-	 w1GOMn7Iiu9ntIvFmYhH4k3HBGhLuVzZx8mchzds=
+	b=R4lCLsB2k8nz6k0qo1AaewSG99801rrJfvqu9LEvcjjvT4JLqDUvVeSYtsUyMlfZT
+	 f2e9umAh/ZXiVAX/QL0VNHTH7dzAl2Njv7dd3KlGLLFInztMHd9mX4skxYn3IfrfOf
+	 J6xlMoKBm4zMDlTK2bnxpEx74f1vxgTYdeqWtuso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Qu Wenruo <wqu@suse.com>,
-	Avinesh Kumar <avinesh.kumar@suse.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Brian Geffon <bgeffon@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 024/474] zram: do not forget to endio for partial discard requests
-Date: Fri, 15 May 2026 17:42:13 +0200
-Message-ID: <20260515154715.574894788@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 060/474] ALSA: caiaq: Handle probe errors properly
+Date: Fri, 15 May 2026 17:42:49 +0200
+Message-ID: <20260515154716.343332975@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -56,59 +49,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit e3668b371329ea036ff022ce8ecc82f8befcf003 upstream.
+commit 28abd224db4a49560b452115bca3672a20e45b2f upstream.
 
-As reported by Qu Wenruo and Avinesh Kumar, the following
+The probe procedure of setup_card() in caiaq driver doesn't treat the
+error cases gracefully, e.g. the error from snd_card_register() calls
+snd_card_free() but continues.  This would lead to a UAF for the
+further calls like snd_usb_caiaq_control_init(), as Berk suggested in
+another patch in the link below.
 
- getconf PAGESIZE
- 65536
- blkdiscard -p 4k /dev/zram0
+However, the problem is not only that; in general, this function drops
+the all error handlings (as it's a void function) although its caller
+can propagate an error to snd_probe(), which eventually calls
+snd_card_free() as a proper error path.  That said, we should treat
+each error case in setup_card(), and just return the error code
+promptly, which is then handled later as a fatal error in snd_probe().
 
-takes literally forever to complete.  zram doesn't support partial
-discards and just returns immediately w/o doing any discard work in such
-cases.  The problem is that we forget to endio on our way out, so
-blkdiscard sleeps forever in submit_bio_wait().  Fix this by jumping to
-end_bio label, which does bio_endio().
+This patch achieves it by changing the setup_card() to return an error
+code.  Also, the superfluous snd_card_free() call is removed, too.
 
-Link: https://lore.kernel.org/20260331074255.777019-1-senozhatsky@chromium.org
-Fixes: 0120dd6e4e20 ("zram: make zram_bio_discard more self-contained")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reported-by: Qu Wenruo <wqu@suse.com>
-Closes: https://lore.kernel.org/linux-block/92361cd3-fb8b-482e-bc89-15ff1acb9a59@suse.com
-Tested-by: Qu Wenruo <wqu@suse.com>
-Reported-by: Avinesh Kumar <avinesh.kumar@suse.com>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1256530
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Note that card->private_free can be set still safely at returning an
+error.  All called functions in card_free() have checks of the
+unassigned resources or NULL checks.
+
+Fixes: 8e3cd08ed8e5 ("[ALSA] caiaq - add control API and more input features")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20260413034941.1131465-2-berkcgoksel@gmail.com
+Link: https://patch.msgid.link/20260414105916.364073-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/caiaq/device.c |   33 ++++++++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 9 deletions(-)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1880,7 +1880,7 @@ static void zram_bio_discard(struct zram
- 	 */
- 	if (offset) {
- 		if (n <= (PAGE_SIZE - offset))
--			return;
-+			goto end_bio;
- 
- 		n -= (PAGE_SIZE - offset);
- 		index++;
-@@ -1895,6 +1895,7 @@ static void zram_bio_discard(struct zram
- 		n -= PAGE_SIZE;
- 	}
- 
-+end_bio:
- 	bio_endio(bio);
+--- a/sound/usb/caiaq/device.c
++++ b/sound/usb/caiaq/device.c
+@@ -290,7 +290,7 @@ int snd_usb_caiaq_set_auto_msg(struct sn
+ 					  tmp, sizeof(tmp));
  }
  
+-static void setup_card(struct snd_usb_caiaqdev *cdev)
++static int setup_card(struct snd_usb_caiaqdev *cdev)
+ {
+ 	int ret;
+ 	char val[4];
+@@ -325,8 +325,10 @@ static void setup_card(struct snd_usb_ca
+ 		snd_usb_caiaq_send_command(cdev, EP1_CMD_READ_IO, NULL, 0);
+ 
+ 		if (!wait_event_timeout(cdev->ep1_wait_queue,
+-					cdev->control_state[0] != 0xff, HZ))
+-			return;
++					cdev->control_state[0] != 0xff, HZ)) {
++			dev_err(dev, "Read timeout for control state\n");
++			return -EINVAL;
++		}
+ 
+ 		/* fix up some defaults */
+ 		if ((cdev->control_state[1] != 2) ||
+@@ -347,33 +349,43 @@ static void setup_card(struct snd_usb_ca
+ 	    cdev->spec.num_digital_audio_out +
+ 	    cdev->spec.num_digital_audio_in > 0) {
+ 		ret = snd_usb_caiaq_audio_init(cdev);
+-		if (ret < 0)
++		if (ret < 0) {
+ 			dev_err(dev, "Unable to set up audio system (ret=%d)\n", ret);
++			return ret;
++		}
+ 	}
+ 
+ 	if (cdev->spec.num_midi_in +
+ 	    cdev->spec.num_midi_out > 0) {
+ 		ret = snd_usb_caiaq_midi_init(cdev);
+-		if (ret < 0)
++		if (ret < 0) {
+ 			dev_err(dev, "Unable to set up MIDI system (ret=%d)\n", ret);
++			return ret;
++		}
+ 	}
+ 
+ #ifdef CONFIG_SND_USB_CAIAQ_INPUT
+ 	ret = snd_usb_caiaq_input_init(cdev);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(dev, "Unable to set up input system (ret=%d)\n", ret);
++		return ret;
++	}
+ #endif
+ 
+ 	/* finally, register the card and all its sub-instances */
+ 	ret = snd_card_register(cdev->chip.card);
+ 	if (ret < 0) {
+ 		dev_err(dev, "snd_card_register() returned %d\n", ret);
+-		snd_card_free(cdev->chip.card);
++		return ret;
+ 	}
+ 
+ 	ret = snd_usb_caiaq_control_init(cdev);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(dev, "Unable to set up control system (ret=%d)\n", ret);
++		return ret;
++	}
++
++	return 0;
+ }
+ 
+ static void card_free(struct snd_card *card)
+@@ -499,8 +511,11 @@ static int init_card(struct snd_usb_caia
+ 	scnprintf(card->longname, sizeof(card->longname), "%s %s (%s)",
+ 		       cdev->vendor_name, cdev->product_name, usbpath);
+ 
+-	setup_card(cdev);
+ 	card->private_free = card_free;
++	err = setup_card(cdev);
++	if (err < 0)
++		return err;
++
+ 	return 0;
+ 
+  err_kill_urb:
 
 
