@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CD43BB68B;
-	Fri, 15 May 2026 16:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64EE3F927C;
+	Fri, 15 May 2026 16:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861441; cv=none; b=oeQh9BGrZkz5xT6LS7hhBUK1wUjQEjZyWO4fw+tkmuS1QtDTrkbTJevcvwtCbPliKsfJSqO+bdDyj34P8RZn74nbSs1qwGwOEfD9P7kv+iEKFhL7EdL9c1gW+dEezx+9F/sV0ur6jc4yVwDMuBQgnouqFNa4flMxuIZzB6HPyEc=
+	t=1778861444; cv=none; b=Ug8K8qfgDKkJF8BNaMS38vDFCrleAdXWsj1NXWV4rMq6G0RIITtHJPdcaZqslEwNCrwa8NWif/wIaWE5NClESg6SPtsZ5AMOeT3BCJF8ozLalJhrjVF209EfA41BiL2/PWJIZNkN8Zai16CfCOdANXbsQwS5AtAHCc3iHRl5FME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861441; c=relaxed/simple;
-	bh=y29xSSyZ2v0AFk8J81xU5VMO9G+ea2FrpKuMJZgpJ+M=;
+	s=arc-20240116; t=1778861444; c=relaxed/simple;
+	bh=kZgWYx2AE0ypTEETC8r8gchwVzJmTbUyhnO/7dLHu+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xe25W8duDhVyMXC6S6fHt/NW1f7aTOlCF6HnPmkpMF+pOKG+IfqXJUWksRum8HGGNrOE9JywcyBLbMdCMVO7kKtXMlFE4R/45FaEQhugQTeHg26aj7KOINeL9FOTFJ7/22ud5WC6wh/wgIOYHMTG15gi8xB2cMLsxzOKHpATE1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBveX8g1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PJK1XJj6YcYgDffnacDEIUeIuo1ZYrNgtMlpVXJC15NH+kaW/RX0YunxjFVP5OWGpG99B07S54hw71b+noVrN4Y9rwHanj6sOJ5r0/wpqXIP+f/93OrCoPXi/foDB+5d/KC6p6A5lDYxLMLP2Kch7uOao7WXJoCMj3v8QUPC5JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQMPdsID; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBveX8g1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AEF6C2BCB0;
-	Fri, 15 May 2026 16:10:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQMPdsID"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC777C2BCB0;
+	Fri, 15 May 2026 16:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861441;
-	bh=y29xSSyZ2v0AFk8J81xU5VMO9G+ea2FrpKuMJZgpJ+M=;
+	s=korg; t=1778861444;
+	bh=kZgWYx2AE0ypTEETC8r8gchwVzJmTbUyhnO/7dLHu+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gBveX8g1j0NWE1vceuizJk96FSqrbfq9sffpaH5GOt4lKIYj5yL/isl7ujOmnsHw/
-	 MFekVTDxrWO+yrxAi3QMf0kqe8W1R5SkGlskTdqWHESa6Luo0YaWE4sskJ/TyI/AKa
-	 89Ylgprag61qp8C57EddZvaAV5FmjaaxomPDCgog=
+	b=UQMPdsIDPQSLbXwmMpXWHy74homOJZej7dE9ZP9mzwsMG8z1ceNmiGpdTUVRxZQy6
+	 HbWB6d4xHL8jWE3YMErk6HO9/omJdzAvKYYjWu1wegP3VE/TdaYzwAKtqN+6JI1G7d
+	 O5przl5IH8PAzi9cYp3BO8DKRPMZccBxN+F68MqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Perret <qperret@google.com>,
-	Fuad Tabba <tabba@google.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.6 293/474] KVM: arm64: Fix initialisation order in __pkvm_init_finalise()
-Date: Fri, 15 May 2026 17:46:42 +0200
-Message-ID: <20260515154721.339964064@linuxfoundation.org>
+	William Zhang <william.zhang@broadcom.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 329/474] spi: bcmbca-hsspi: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:18 +0200
+Message-ID: <20260515154722.131357987@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,56 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quentin Perret <qperret@google.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 5bb0aed57ba944f8c201e4e82ec066e0187e0f85 upstream.
+commit c3d97c3320b9a1ebbd6119857341be034f7b3efc upstream.
 
-fix_host_ownership() walks the hypervisor's stage-1 page-table to
-adjust the host's stage-2 accordingly. Any such adjustment that
-requires cache maintenance operations depends on the per-CPU hyp
-fixmap being present. However, fix_host_ownership() is currently
-called before fix_hyp_pgtable_refcnt() and hyp_create_fixmap(), so
-the fixmap does not yet exist when it runs.
+Make sure to deregister the controller before disabling underlying
+resources like interrupts during driver unbind to allow SPI drivers to
+do I/O during deregistration.
 
-This is benign today because the host stage-2 starts empty and no
-CMOs are needed, but it becomes a latent crash as soon as
-fix_host_ownership() is extended to operate on a non-empty
-page-table.
+Note that clocks were also disabled before the recent commit
+e532e21a246d ("spi: bcm63xx-hsspi: Simplify clock handling with
+devm_clk_get_enabled()").
 
-Reorder the calls so that fix_hyp_pgtable_refcnt() and
-hyp_create_fixmap() complete before fix_host_ownership() is invoked.
-
-Fixes: 0d16d12eb26e ("KVM: arm64: Fix-up hyp stage-1 refcounts for all pages mapped at EL2")
-Signed-off-by: Quentin Perret <qperret@google.com>
-Signed-off-by: Fuad Tabba <tabba@google.com>
-Link: https://patch.msgid.link/20260424084908.370776-7-tabba@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
+Fixes: a38a2233f23b ("spi: bcmbca-hsspi: Add driver for newer HSSPI controller")
+Cc: stable@vger.kernel.org	# 6.3: deb269e0394f
+Cc: stable@vger.kernel.org	# 6.3
+Cc: William Zhang <william.zhang@broadcom.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260409120419.388546-8-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/nvhe/setup.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/spi/spi-bcmbca-hsspi.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/hyp/nvhe/setup.c
-+++ b/arch/arm64/kvm/hyp/nvhe/setup.c
-@@ -284,15 +284,15 @@ void __noreturn __pkvm_init_finalise(voi
- 	};
- 	pkvm_pgtable.mm_ops = &pkvm_pgtable_mm_ops;
+--- a/drivers/spi/spi-bcmbca-hsspi.c
++++ b/drivers/spi/spi-bcmbca-hsspi.c
+@@ -557,7 +557,7 @@ static int bcmbca_hsspi_probe(struct pla
+ 	}
  
--	ret = fix_host_ownership();
-+	ret = fix_hyp_pgtable_refcnt();
+ 	/* register and we are done */
+-	ret = devm_spi_register_controller(dev, host);
++	ret = spi_register_controller(host);
  	if (ret)
- 		goto out;
+ 		goto out_sysgroup_disable;
  
--	ret = fix_hyp_pgtable_refcnt();
-+	ret = hyp_create_pcpu_fixmap();
- 	if (ret)
- 		goto out;
+@@ -581,6 +581,8 @@ static void bcmbca_hsspi_remove(struct p
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct bcmbca_hsspi *bs = spi_controller_get_devdata(host);
  
--	ret = hyp_create_pcpu_fixmap();
-+	ret = fix_host_ownership();
- 	if (ret)
- 		goto out;
- 
++	spi_unregister_controller(host);
++
+ 	/* reset the hardware and block queue progress */
+ 	__raw_writel(0, bs->regs + HSSPI_INT_MASK_REG);
+ 	clk_disable_unprepare(bs->pll_clk);
 
 
