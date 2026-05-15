@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F483F9279;
-	Fri, 15 May 2026 16:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F50B3F44CD;
+	Fri, 15 May 2026 16:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861898; cv=none; b=rJmrxmlGBO8fwvdkTE3Mskx1wwmG/EjsB4Eldyfk+Y+10LcpY0E0/BbVdkcVjc4pXsjluAJnmE4FPntQCYFRJh1b7/V5nN5MJk5sLbAaygfgWWsRYALsZyyyYeGKsBGFe+ZX08ubPU2TUxUaT+/+Wg3MKA+AFWq5uqbWsQ5nd5A=
+	t=1778861900; cv=none; b=MFveeUBxaCuhYfOUyda9JFJTLzl7chFZxWOmLzkuelJqb8jxQ/arrPgJFJPU19YTO90LJI4l+/RNglTSCVTN47cUP7zPzD58zcBlqAh3v3E3wgM7+cjjSYUx4gU6wgfJ5EvRrN5qQ2VfOuDuDtdKwNVCTxQpkOeA+LBmPM9csRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861898; c=relaxed/simple;
-	bh=pUuT8afjCmg1xY07sLGEkqwks9c84BO19x6N/YOCl+M=;
+	s=arc-20240116; t=1778861900; c=relaxed/simple;
+	bh=sgT9qKrqTh1+gEwTPmw7eFTHSYosgDbcs7JVD3AKK7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACzhKrrF+dGtye4mHSEihhw1DqZly0KhVXywGvIs0PPbpCLHuoP4jdJVeTbgZxCjeVk/xC8g7M9702e2miXrcQnF5CqpGtpa4Qjm8XGc93OiPY61OHyBXn39y+Vg5km1ddL7CxJjbfX4qQa758gxJ5YhAVTy/O/KqgNGYBUMxl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1lkmGDf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=reefPtLSXphV2MY+HzYJ+nq5Ws3xPuLc0uniKzELpyrX8wIwdWbsJRqhe7Fi2N/Xdquvppz+0cB6UCG0yb/l2nUfF63C7+ezG9G/oIamgBa+zGsiLb1aPLTKPxFeRV3pfeH4L2cPe7LlaKftHbmF07QHgELT/MnkEh3eNn5NJzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtVU0XsG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1lkmGDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EECC2BCB0;
-	Fri, 15 May 2026 16:18:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtVU0XsG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E922FC2BCB0;
+	Fri, 15 May 2026 16:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861897;
-	bh=pUuT8afjCmg1xY07sLGEkqwks9c84BO19x6N/YOCl+M=;
+	s=korg; t=1778861900;
+	bh=sgT9qKrqTh1+gEwTPmw7eFTHSYosgDbcs7JVD3AKK7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1lkmGDf3U6971oLDDJ5oVJufMWerdBAsGIC0cqLlhs/nNjvODPrbt+RgWJi6Mn9c
-	 l1l81BUf75ih4ZnK1j3uf9/Qk01M8TwxRClOBvw7V0yCFiZoDa/2kqVlDYO83wVzj0
-	 ReKuzqn5q3QNExvhePmBj7iTRZEfVHl2LTMcTfnI=
+	b=wtVU0XsG4peSXOG7sMQcx96THgWGjR4vaRQIq5HZQNZAaSF14YI81xiwm5c4lyjc1
+	 oquXhx5PuX3pIb3FQ5qA4HR7VLzSvRj5AuTcgVL/t/89xOWm1kRzOs1qZbNywLq56I
+	 uL1Be+p0lWcnbygMIpkryqspjdF5Gy8fxb/c5D4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 031/188] media: videobuf2: Set vma_flags in vb2_dma_sg_mmap
-Date: Fri, 15 May 2026 17:47:28 +0200
-Message-ID: <20260515154657.983230346@linuxfoundation.org>
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.18 032/188] media: intel/ipu6: fix error pointer dereference
+Date: Fri, 15 May 2026 17:47:29 +0200
+Message-ID: <20260515154658.004801934@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -51,99 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-commit 7254b31a13aaa0c2c0f9ffbc335b718656117ff4 upstream.
+commit 8dd088b8b106f7b119664f965b691785998edcfb upstream.
 
-vb2_dma_contig sets VMA flags VM_DONTEXPAND and VM_DONTDUMP and I do not
-see a reason why vb2_dma_sg should behave differently. This avoids
-hitting `WARN_ON(!(vma->vm_flags & VM_DONTEXPAND));` in
-drm_gem_mmap_obj() during mmap() of an imported dma-buf from the out of
-tree Apple ISP camera capture driver which uses vb2_dma_sg_memops.
+In a error path isp->psys is confirmed to be an error pointer not NULL so
+this condition is true and the error pointer is dereferenced. So isp-psys
+should be set to NULL before going to out_ipu6_bus_del_devices.
 
-gst-launch-1.0 v4l2src ! gtk4paintablesink
+Detected by Smatch:
+drivers/media/pci/intel/ipu6/ipu6.c:690 ipu6_pci_probe() error:
+'isp->psys' dereferencing possible ERR_PTR()
 
-[   38.201528] ------------[ cut here ]------------
-[   38.202135] WARNING: CPU: 7 PID: 2362 at drivers/gpu/drm/drm_gem.c:1144 drm_gem_mmap_obj+0x1f8/0x210
-[   38.203278] Modules linked in: rfcomm snd_seq_dummy snd_hrtimer
-snd_seq snd_seq_device uinput nf_conntrack_netbios_ns
-nf_conntrack_broadcast nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib
-nft_reject_inet nf_reject_ipv6 nft_reject nft_ct nft_chain_nat nf_nat
-nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nf_tables qrtr bnep
-nls_ascii i2c_dev loop fuse dm_multipath nfnetlink brcmfmac_wcc
-hid_magicmouse hci_bcm4377 brcmfmac brcmutil bluetooth ecdh_generic
-cfg80211 ecc btrfs xor xor_neon rfkill hid_apple raid6_pq joydev
-aop_als apple_nvmem_spmi industrialio snd_soc_aop apple_z2
-snd_soc_cs42l84 tps6598x snd_soc_tas2764 macsmc_reboot spi_nor
-macsmc_hwmon rtc_macsmc gpio_macsmc macsmc_power regmap_spmi
-macsmc_input dockchannel_hid panel_summit appledrm nvme_apple dwc3
-snd_soc_macaudio drm_client_lib nvme_core phy_apple_atc hwmon
-apple_sart apple_dockchannel macsmc apple_rtkit_helper
-spmi_apple_controller aop apple_wdt mfd_core nvmem_apple_efuses
-pinctrl_apple_gpio apple_isp apple_dcp videobuf2_dma_sg mux_core
-spi_apple
-[   38.203300]  videobuf2_memops i2c_pasemi_platform snd_soc_apple_mca videobuf2_v4l2 videodev clk_apple_nco videobuf2_common snd_pcm_dmaengine adpdrm asahi apple_admac adpdrm_mipi drm_dma_helper pwm_apple i2c_pasemi_core drm_display_helper mc cec apple_dart ofpart apple_soc_cpufreq leds_pwm phram
-[   38.217677] CPU: 7 UID: 1000 PID: 2362 Comm: gst-launch-1.0 Tainted: G        W           6.17.6+ #asahi-dev PREEMPT(full)
-[   38.219040] Tainted: [W]=WARN
-[   38.219398] Hardware name: Apple MacBook Pro (13-inch, M2, 2022) (DT)
-[   38.220213] pstate: 21400005 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[   38.221088] pc : drm_gem_mmap_obj+0x1f8/0x210
-[   38.221643] lr : drm_gem_mmap_obj+0x78/0x210
-[   38.222178] sp : ffffc0008dc678e0
-[   38.222579] x29: ffffc0008dc678e0 x28: 0000000000042a97 x27: ffff8000b701b480
-[   38.223465] x26: 00000000000000fb x25: ffffc0008dc67d20 x24: ffffc0008dc67968
-[   38.224402] x23: ffff8000e3ca5600 x22: ffff8000265b7800 x21: ffff80003000c0c0
-[   38.225279] x20: 0000000000000000 x19: ffff8000b68c5200 x18: ffffc0008dc67968
-[   38.226151] x17: 0000000000000000 x16: 0000000000000000 x15: ffffc000810a30a8
-[   38.227042] x14: 00007fff637effff x13: 00005555de91ffff x12: 00007fff63293fff
-[   38.227942] x11: 0000000000000000 x10: ffff8000184ecf08 x9 : ffffc0007a1900c8
-[   38.228824] x8 : ffffc0008dc67968 x7 : 0000000000000012 x6 : ffffc0015cf1c000
-[   38.229703] x5 : ffffc0008dc676a0 x4 : ffffc00081a27dc0 x3 : 0000000000000038
-[   38.230607] x2 : 0000000000000003 x1 : 0000000000000003 x0 : 00000000100000fb
-[   38.231488] Call trace:
-[   38.231806]  drm_gem_mmap_obj+0x1f8/0x210 (P)
-[   38.232342]  drm_gem_mmap+0x140/0x260
-[   38.232813]  __mmap_region+0x488/0x9a0
-[   38.233277]  mmap_region+0xd0/0x148
-[   38.233703]  do_mmap+0x350/0x5c0
-[   38.234148]  vm_mmap_pgoff+0x14c/0x200
-[   38.234612]  ksys_mmap_pgoff+0x150/0x208
-[   38.235107]  __arm64_sys_mmap+0x34/0x50
-[   38.235611]  invoke_syscall+0x50/0x120
-[   38.236075]  el0_svc_common.constprop.0+0x48/0xf0
-[   38.236680]  do_el0_svc+0x24/0x38
-[   38.237113]  el0_svc+0x38/0x168
-[   38.237507]  el0t_64_sync_handler+0xa0/0xe8
-[   38.238034]  el0t_64_sync+0x198/0x1a0
-[   38.238491] ---[ end trace 0000000000000000 ]---
-
-There were discussions in [1] at the end of 2023 that mmap() on imported
-dma-bufs should not be supported but as of v6.17 drm_gem_shmem_mmap() in
-drm_gem_shmem_helper.c still supports it.
-This might affect all gpu or accel drivers using drm_gem_shmem_mmap() or
-the wrapper drm_gem_shmem_object_mmap().
-
-[1] https://lore.kernel.org/dri-devel/bc7f7844-0aa3-4802-b203-69d58e8be2fa@linux.intel.com/
-
+Fixes: 25fedc021985a ("media: intel/ipu6: add Intel IPU6 PCI device driver")
 Cc: stable@vger.kernel.org
-Fixes: 5ba3f757f059 ("[media] v4l: videobuf2: add DMA scatter/gather allocator")
-Signed-off-by: Janne Grunau <j@jannau.net>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+[Sakari Ailus: Fix commit message.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/videobuf2/videobuf2-dma-sg.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/pci/intel/ipu6/ipu6.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-+++ b/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-@@ -345,6 +345,7 @@ static int vb2_dma_sg_mmap(void *buf_pri
- 		return err;
+--- a/drivers/media/pci/intel/ipu6/ipu6.c
++++ b/drivers/media/pci/intel/ipu6/ipu6.c
+@@ -686,7 +686,7 @@ out_free_irq:
+ out_ipu6_rpm_put:
+ 	pm_runtime_put_sync(&isp->psys->auxdev.dev);
+ out_ipu6_bus_del_devices:
+-	if (isp->psys) {
++	if (!IS_ERR_OR_NULL(isp->psys)) {
+ 		ipu6_cpd_free_pkg_dir(isp->psys);
+ 		ipu6_buttress_unmap_fw_image(isp->psys, &isp->psys->fw_sgt);
  	}
- 
-+	vm_flags_set(vma, VM_DONTEXPAND | VM_DONTDUMP);
- 	/*
- 	 * Use common vm_area operations to track buffer refcount.
- 	 */
 
 
