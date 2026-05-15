@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAC830568A;
-	Fri, 15 May 2026 16:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C0E30568A;
+	Fri, 15 May 2026 16:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861035; cv=none; b=H/uH9BC/Teo4cHaZaAdpj0tigeQw2mVXyKxNcO2TJWXu9jWMoIGNawxXn4X7/gIDgL8KNwKSrpzBboDkefpcJnSaI4Xn5B30lfwlKADQxDXyEXzRthl2mvxquWZGtmePldAHmmx7c4SWF8zXblmoheAoPKBaa4+gvKjBYJZT4gg=
+	t=1778861038; cv=none; b=HoRef73/1AIZBeaGVmNVSKtd1RhGlDewjpd63g6JEGzKSGZ6XO7WlHrvemzYZ0VKS03yxQV34mnTxM8cDw2pPT4YZHuR3FdnE2ZFDmO5RmzQK0SxcdTYCyBDMIS8e8Dy4cLSRDZ/2q8v3wnYSn5ba3ZWb7Du8o+ZCmQEv/rXWBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861035; c=relaxed/simple;
-	bh=bSijuh4BowO1bp3Exmq/lsLFuiq3+KZBNdb5j7JGnOo=;
+	s=arc-20240116; t=1778861038; c=relaxed/simple;
+	bh=F8X9LC040/yvQupX3w+ajtv7AVaOLyH0XgwKdRG2AmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HiTm101hQkyXPjsssaYpk7rcVIuH3jaXrwhusb3UrNz3KckEjixyA5boqanXCzs07r+46jN9umrXySDv0LaSkJ/uJfTxh4RZt7PLAM3uopaWHvfdG9I0xhotmU/e6SnmZP7KkrBEhw/YjnIa0BGcdJkUxF6dBZ05gVgxnirop4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mbe1Iv4M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PY+ktchA6dvdk1WeMkaLhccgjKn9vigZwNmSAVQ+4o28yecpLggSIFsF0XRfTTolCqQMlXADWk3LVnoyIoBC7HFveuoCPbA09LpQkA9FzNF4m1A20BQja4JJojyJeGUAnWFJQSjXaWuyptjBc11alqF01oC26qssQ8Fp/Ew1qRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQTd4IUE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mbe1Iv4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CF5C2BCB0;
-	Fri, 15 May 2026 16:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQTd4IUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5984C2BCB0;
+	Fri, 15 May 2026 16:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861035;
-	bh=bSijuh4BowO1bp3Exmq/lsLFuiq3+KZBNdb5j7JGnOo=;
+	s=korg; t=1778861038;
+	bh=F8X9LC040/yvQupX3w+ajtv7AVaOLyH0XgwKdRG2AmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mbe1Iv4MyEcDFd0DA9wB77KhuhIzKjbdFgudOIwk8+rhNh3YlKX9mASoi5vDDvdHZ
-	 Go67V5Z6sU+Ffcp+z/YzpVFa8SCb4qDN0vIVrbBgI6mEjlgIyLMrdcFRT0GsvhM/Gn
-	 uo6+b87OkGrxHN4s46fmfavzY7rg5FIquIbdoVIs=
+	b=GQTd4IUE8aEidwW6bZrBPogECG7ucnpQzSLI//+5JYFNibeg9IrbnkRzFXWi/ll1x
+	 K3FtblBRT2QqPgx2LblLfbpK+zyhkfEq8K+dioT0EYx1hUPOi5sHr64L4fwd/yviou
+	 Gpsmlv0lAB5RrA1J+nm4BzuZiMIqQQX8Cj6vqT7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 157/474] x86/shstk: Prevent deadlock during shstk sigreturn
-Date: Fri, 15 May 2026 17:44:26 +0200
-Message-ID: <20260515154718.422478475@linuxfoundation.org>
+Subject: [PATCH 6.6 175/474] selftests/bpf: validate STACK_ZERO is preserved on subreg spill
+Date: Fri, 15 May 2026 17:44:44 +0200
+Message-ID: <20260515154718.809843047@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,135 +55,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rick Edgecombe <rick.p.edgecombe@intel.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 9874b2917b9fbc30956fee209d3c4aa47201c64e ]
+[ Upstream commit b33ceb6a3d2ee07fdd836373383a6d4783581324 ]
 
-During sigreturn the shadow stack signal frame is popped. The kernel does
-this by reading the shadow stack using normal read accesses. When it can't
-assume the memory is shadow stack, it takes extra steps to makes sure it is
-reading actual shadow stack memory and not other normal readable memory. It
-does this by holding the mmap read lock while doing the access and checking
-the flags of the VMA.
+Add tests validating that STACK_ZERO slots are preserved when slot is
+partially overwritten with subregister spill.
 
-Unfortunately that is not safe. If the read of the shadow stack sigframe
-hits a page fault, the fault handler will try to recursively grab another
-mmap read lock. This normally works ok, but if a writer on another CPU is
-also waiting, the second read lock could fail and cause a deadlock.
-
-Fix this by doing the read of the userspace memory via gup. Embed it in the
-get_shstk_data() helper.
-
-Currently there is a check that skips the lookup work when the SSP can be
-assumed to be on a shadow stack. While reorganizing the function, remove
-the optimization to make the tricky code flows more common, such that
-issues like this cannot escape detection for so long.
-
-[Due to missing per-vma MM sequence counter, use a simpler GUP based
-solution for the backport]
-Cc: <stable@vger.kernel.org> # Depends on https://lore.kernel.org/all/20260504205924.536382-1-rick.p.edgecombe@intel.com/
-Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20231205184248.1502704-6-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/shstk.c | 46 ++++++++++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ .../selftests/bpf/progs/verifier_spill_fill.c | 40 +++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/arch/x86/kernel/shstk.c b/arch/x86/kernel/shstk.c
-index d259d7d5b962f..ba93c4e6a2319 100644
---- a/arch/x86/kernel/shstk.c
-+++ b/arch/x86/kernel/shstk.c
-@@ -18,6 +18,7 @@
- #include <linux/sizes.h>
- #include <linux/user.h>
- #include <linux/syscalls.h>
-+#include <linux/highmem.h>
- #include <asm/msr.h>
- #include <asm/fpu/xstate.h>
- #include <asm/fpu/types.h>
-@@ -262,11 +263,29 @@ static int put_shstk_data(u64 __user *addr, u64 data)
- 	return 0;
+diff --git a/tools/testing/selftests/bpf/progs/verifier_spill_fill.c b/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
+index 6115520154e33..d9dabae811767 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
++++ b/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
+@@ -4,6 +4,7 @@
+ #include <linux/bpf.h>
+ #include <bpf/bpf_helpers.h>
+ #include "bpf_misc.h"
++#include <../../../tools/include/linux/filter.h>
+ 
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_RINGBUF);
+@@ -450,4 +451,43 @@ l0_%=:	r1 >>= 16;					\
+ 	: __clobber_all);
  }
  
-+/* Copy from aligned address in userspace without risk of page fault. */
-+static int shstk_copy_user_gup(unsigned long *ldata, unsigned long __user *addr)
++SEC("raw_tp")
++__log_level(2)
++__success
++__msg("fp-8=0m??mmmm")
++__msg("fp-16=00mm??mm")
++__msg("fp-24=00mm???m")
++__naked void spill_subregs_preserve_stack_zero(void)
 +{
-+	struct page *page;
-+	void *kaddr;
++	asm volatile (
++		"call %[bpf_get_prandom_u32];"
 +
-+	mmap_assert_locked(current->mm);
-+	if (get_user_pages((unsigned long)addr, 1, 0, &page) != 1)
-+		return -EFAULT;
++		/* 32-bit subreg spill with ZERO, MISC, and INVALID */
++		".8byte %[fp1_u8_st_zero];"   /* ZERO, LLVM-18+: *(u8 *)(r10 -1) = 0; */
++		"*(u8 *)(r10 -2) = r0;"       /* MISC */
++		/* fp-3 and fp-4 stay INVALID */
++		"*(u32 *)(r10 -8) = r0;"
 +
-+	kaddr = kmap_local_page(page);
-+	*ldata = *(unsigned long *)(kaddr + offset_in_page(addr));
-+	kunmap_local(kaddr);
-+	put_page(page);
++		/* 16-bit subreg spill with ZERO, MISC, and INVALID */
++		".8byte %[fp10_u16_st_zero];" /* ZERO, LLVM-18+: *(u16 *)(r10 -10) = 0; */
++		"*(u16 *)(r10 -12) = r0;"     /* MISC */
++		/* fp-13 and fp-14 stay INVALID */
++		"*(u16 *)(r10 -16) = r0;"
 +
-+	return 0;
++		/* 8-bit subreg spill with ZERO, MISC, and INVALID */
++		".8byte %[fp18_u16_st_zero];" /* ZERO, LLVM-18+: *(u16 *)(r18 -10) = 0; */
++		"*(u16 *)(r10 -20) = r0;"     /* MISC */
++		/* fp-21, fp-22, and fp-23 stay INVALID */
++		"*(u8 *)(r10 -24) = r0;"
++
++		"r0 = 0;"
++		"exit;"
++	:
++	: __imm(bpf_get_prandom_u32),
++	  __imm_insn(fp1_u8_st_zero, BPF_ST_MEM(BPF_B, BPF_REG_FP, -1, 0)),
++	  __imm_insn(fp10_u16_st_zero, BPF_ST_MEM(BPF_H, BPF_REG_FP, -10, 0)),
++	  __imm_insn(fp18_u16_st_zero, BPF_ST_MEM(BPF_H, BPF_REG_FP, -18, 0))
++	: __clobber_all);
 +}
 +
- static int get_shstk_data(unsigned long *data, unsigned long __user *addr)
- {
- 	unsigned long ldata;
- 
--	if (unlikely(get_user(ldata, addr)))
-+	if (shstk_copy_user_gup(&ldata, addr))
- 		return -EFAULT;
- 
- 	if (!(ldata & SHSTK_DATA_BIT))
-@@ -296,7 +315,6 @@ static int shstk_pop_sigframe(unsigned long *ssp)
- {
- 	struct vm_area_struct *vma;
- 	unsigned long token_addr;
--	bool need_to_check_vma;
- 	int err = 1;
- 
- 	/*
-@@ -308,26 +326,21 @@ static int shstk_pop_sigframe(unsigned long *ssp)
- 	if (!IS_ALIGNED(*ssp, 8))
- 		return -EINVAL;
- 
--	need_to_check_vma = PAGE_ALIGN(*ssp) == *ssp;
--
--	if (need_to_check_vma)
--		if (mmap_read_lock_killable(current->mm))
--			return -EINTR;
-+	if (mmap_read_lock_killable(current->mm))
-+		return -EINTR;
- 
- 	err = get_shstk_data(&token_addr, (unsigned long __user *)*ssp);
- 	if (unlikely(err))
- 		goto out_err;
- 
--	if (need_to_check_vma) {
--		vma = find_vma(current->mm, *ssp);
--		if (!vma || !(vma->vm_flags & VM_SHADOW_STACK)) {
--			err = -EFAULT;
--			goto out_err;
--		}
--
--		mmap_read_unlock(current->mm);
-+	vma = find_vma(current->mm, *ssp);
-+	if (!vma || !(vma->vm_flags & VM_SHADOW_STACK)) {
-+		err = -EFAULT;
-+		goto out_err;
- 	}
- 
-+	mmap_read_unlock(current->mm);
-+
- 	/* Restore SSP aligned? */
- 	if (unlikely(!IS_ALIGNED(token_addr, 8)))
- 		return -EINVAL;
-@@ -340,8 +353,7 @@ static int shstk_pop_sigframe(unsigned long *ssp)
- 
- 	return 0;
- out_err:
--	if (need_to_check_vma)
--		mmap_read_unlock(current->mm);
-+	mmap_read_unlock(current->mm);
- 	return err;
- }
- 
+ char _license[] SEC("license") = "GPL";
 -- 
 2.53.0
 
