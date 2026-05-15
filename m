@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AAB3E7BC0;
-	Fri, 15 May 2026 16:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D4B3C4B72;
+	Fri, 15 May 2026 16:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861732; cv=none; b=C6N7hfyG30bjDkyLJi0PLauaF9gBqLd/PoyUdNpzEWoJECREM3FFpad6USkc7A4yDdW3HRnLz4az4Va3UUzX37UtQFt3PqKr2lZr2R3lYKsuKC+Xlonm01ytgjjrgHJyyDrRhS2dZWwWZs4MrMg8nPT/+i4hSgH6A3CHvVwKJxs=
+	t=1778861735; cv=none; b=uTlBeyeHUskP409BmawOeMaHVYNWvV/rW8hD+Sw+VgUYf4qnm0CIoyiQfUqczESbPM5BWBI4Hi7jCefJEB7mZLSQ313FQJZ7DT1XSaRu9IFt5Ava7VIdYaGGn9ybvyy59PWFv0Ilt7GwFPIZH/RdrJwNUHmsDBUFp9LsJjXb4y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861732; c=relaxed/simple;
-	bh=mVz4CxHrQe/03YdMOK/KHM6+i1vaKO+PH0dyf88x1FE=;
+	s=arc-20240116; t=1778861735; c=relaxed/simple;
+	bh=yVEkMIKjDKVJxU6XRLYMAUxlcB0kUyELftCRD4YAHxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrWRqJL3krd4Jml3dQDflHLsZfYkCwaGiiw+0iK2saqT6LXy+tHSQBc/IzxvKGRbofrHHi7s2ypak9BC09rte86hMrqnhRMPfCWwON0q9nf8HwHoPu4Pvx2ZtkZ6dhHWAlAhsWTCvYlzBK8ge3oH15hv4XJvpsKkn5vVbSI8xYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+FttAj7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ObtWCSn2kp9ntSp8HE++sdbqA2HNnZ5lL3LLLj6q3fedmAIHYho9gIgi/+nPsM9CmcKWhMxbBxJTyE/MhQaVN4lwBLj+C9WVErZzBxqrKkPDXAXYleB1w3cnygdrlwt4iIq6Xhj3Wwou3NsNnSazMuO9E1kNCMsW1dco+Bmhca0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y64t86wg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+FttAj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC08C2BCB0;
-	Fri, 15 May 2026 16:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y64t86wg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68B1C2BCB0;
+	Fri, 15 May 2026 16:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861732;
-	bh=mVz4CxHrQe/03YdMOK/KHM6+i1vaKO+PH0dyf88x1FE=;
+	s=korg; t=1778861735;
+	bh=yVEkMIKjDKVJxU6XRLYMAUxlcB0kUyELftCRD4YAHxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+FttAj7VTxrRrMggt0SgWWpq+eDxmLQsOUNV2iWZxesEhYggNojy2WUVXU8EnoU4
-	 EK5eto18cwvqXaI5CYEjVlI8CiN5JIDxHfQjpVGXzdZBeob/ERn+RdNMDMpNvLFZr0
-	 6phW1t65expXG/JVwvbK1VIwRmEM26vGF4CmtwHI=
+	b=Y64t86wgP0d/7FHlefMkA/8YvibuKc55Vvr3yHs60NGAn1WYAuJVabejBAtWq9rHG
+	 Vo2X6gvnjPMoyNh6ZXwM8e/scc+FCPkeOaCiH2vrSMXMZJ6/txK43QDL1NzDh9RUyr
+	 S6Y5zSDhi2nwTte19PNvXvub4PZieOMxtkLalYcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 425/474] spi: sun4i: switch to use modern name
-Date: Fri, 15 May 2026 17:48:54 +0200
-Message-ID: <20260515154724.261996860@linuxfoundation.org>
+Subject: [PATCH 6.6 443/474] fbcon: Avoid OOB font access if console rotation fails
+Date: Fri, 15 May 2026 17:49:12 +0200
+Message-ID: <20260515154724.672461274@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,204 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 6d232cc8a7e59af0c083319827541966a68817a0 ]
+[ Upstream commit e4ef723d8975a2694cc90733a6b888a5e2841842 ]
 
-Change legacy name master to modern name host or controller.
+Clear the font buffer if the reallocation during console rotation fails
+in fbcon_rotate_font(). The putcs implementations for the rotated buffer
+will return early in this case. See [1] for an example.
 
-No functional changed.
+Currently, fbcon_rotate_font() keeps the old buffer, which is too small
+for the rotated font. Printing to the rotated console with a high-enough
+character code will overflow the font buffer.
 
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://msgid.link/r/20231128093031.3707034-7-yangyingliang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 42108a2f03e0 ("spi: sun4i: fix controller deregistration")
+v2:
+- fix typos in commit message
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
+Cc: stable@vger.kernel.org # v2.6.15+
+Link: https://elixir.bootlin.com/linux/v6.19/source/drivers/video/fbdev/core/fbcon_ccw.c#L144 # [1]
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ renamed `par` to `ops` to match the 6.12 local pointer name ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-sun4i.c |   72 ++++++++++++++++++++++++------------------------
- 1 file changed, 36 insertions(+), 36 deletions(-)
+ drivers/video/fbdev/core/fbcon_rotate.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-sun4i.c
-+++ b/drivers/spi/spi-sun4i.c
-@@ -75,7 +75,7 @@
- #define SUN4I_FIFO_STA_TF_CNT_BITS		16
+--- a/drivers/video/fbdev/core/fbcon_rotate.c
++++ b/drivers/video/fbdev/core/fbcon_rotate.c
+@@ -46,6 +46,10 @@ static int fbcon_rotate_font(struct fb_i
+ 		info->fbops->fb_sync(info);
  
- struct sun4i_spi {
--	struct spi_master	*master;
-+	struct spi_controller	*host;
- 	void __iomem		*base_addr;
- 	struct clk		*hclk;
- 	struct clk		*mclk;
-@@ -161,7 +161,7 @@ static inline void sun4i_spi_fill_fifo(s
+ 	if (ops->fd_size < d_cellsize * len) {
++		kfree(ops->fontbuffer);
++		ops->fontbuffer = NULL;
++		ops->fd_size = 0;
++
+ 		dst = kmalloc_array(len, d_cellsize, GFP_KERNEL);
  
- static void sun4i_spi_set_cs(struct spi_device *spi, bool enable)
- {
--	struct sun4i_spi *sspi = spi_master_get_devdata(spi->master);
-+	struct sun4i_spi *sspi = spi_controller_get_devdata(spi->controller);
- 	u32 reg;
+ 		if (dst == NULL) {
+@@ -54,7 +58,6 @@ static int fbcon_rotate_font(struct fb_i
+ 		}
  
- 	reg = sun4i_spi_read(sspi, SUN4I_CTL_REG);
-@@ -201,11 +201,11 @@ static size_t sun4i_spi_max_transfer_siz
- 	return SUN4I_MAX_XFER_SIZE - 1;
- }
- 
--static int sun4i_spi_transfer_one(struct spi_master *master,
-+static int sun4i_spi_transfer_one(struct spi_controller *host,
- 				  struct spi_device *spi,
- 				  struct spi_transfer *tfr)
- {
--	struct sun4i_spi *sspi = spi_master_get_devdata(master);
-+	struct sun4i_spi *sspi = spi_controller_get_devdata(host);
- 	unsigned int mclk_rate, div, timeout;
- 	unsigned int start, end, tx_time;
- 	unsigned int tx_len = 0;
-@@ -334,7 +334,7 @@ static int sun4i_spi_transfer_one(struct
- 					      msecs_to_jiffies(tx_time));
- 	end = jiffies;
- 	if (!timeout) {
--		dev_warn(&master->dev,
-+		dev_warn(&host->dev,
- 			 "%s: timeout transferring %u bytes@%iHz for %i(%i)ms",
- 			 dev_name(&spi->dev), tfr->len, tfr->speed_hz,
- 			 jiffies_to_msecs(end - start), tx_time);
-@@ -389,8 +389,8 @@ static irqreturn_t sun4i_spi_handler(int
- 
- static int sun4i_spi_runtime_resume(struct device *dev)
- {
--	struct spi_master *master = dev_get_drvdata(dev);
--	struct sun4i_spi *sspi = spi_master_get_devdata(master);
-+	struct spi_controller *host = dev_get_drvdata(dev);
-+	struct sun4i_spi *sspi = spi_controller_get_devdata(host);
- 	int ret;
- 
- 	ret = clk_prepare_enable(sspi->hclk);
-@@ -418,8 +418,8 @@ out:
- 
- static int sun4i_spi_runtime_suspend(struct device *dev)
- {
--	struct spi_master *master = dev_get_drvdata(dev);
--	struct sun4i_spi *sspi = spi_master_get_devdata(master);
-+	struct spi_controller *host = dev_get_drvdata(dev);
-+	struct sun4i_spi *sspi = spi_controller_get_devdata(host);
- 
- 	clk_disable_unprepare(sspi->mclk);
- 	clk_disable_unprepare(sspi->hclk);
-@@ -429,62 +429,62 @@ static int sun4i_spi_runtime_suspend(str
- 
- static int sun4i_spi_probe(struct platform_device *pdev)
- {
--	struct spi_master *master;
-+	struct spi_controller *host;
- 	struct sun4i_spi *sspi;
- 	int ret = 0, irq;
- 
--	master = spi_alloc_master(&pdev->dev, sizeof(struct sun4i_spi));
--	if (!master) {
--		dev_err(&pdev->dev, "Unable to allocate SPI Master\n");
-+	host = spi_alloc_host(&pdev->dev, sizeof(struct sun4i_spi));
-+	if (!host) {
-+		dev_err(&pdev->dev, "Unable to allocate SPI Host\n");
- 		return -ENOMEM;
+ 		ops->fd_size = d_cellsize * len;
+-		kfree(ops->fontbuffer);
+ 		ops->fontbuffer = dst;
  	}
- 
--	platform_set_drvdata(pdev, master);
--	sspi = spi_master_get_devdata(master);
-+	platform_set_drvdata(pdev, host);
-+	sspi = spi_controller_get_devdata(host);
- 
- 	sspi->base_addr = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(sspi->base_addr)) {
- 		ret = PTR_ERR(sspi->base_addr);
--		goto err_free_master;
-+		goto err_free_host;
- 	}
- 
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0) {
- 		ret = -ENXIO;
--		goto err_free_master;
-+		goto err_free_host;
- 	}
- 
- 	ret = devm_request_irq(&pdev->dev, irq, sun4i_spi_handler,
- 			       0, "sun4i-spi", sspi);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Cannot request IRQ\n");
--		goto err_free_master;
-+		goto err_free_host;
- 	}
- 
--	sspi->master = master;
--	master->max_speed_hz = 100 * 1000 * 1000;
--	master->min_speed_hz = 3 * 1000;
--	master->set_cs = sun4i_spi_set_cs;
--	master->transfer_one = sun4i_spi_transfer_one;
--	master->num_chipselect = 4;
--	master->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH | SPI_LSB_FIRST;
--	master->bits_per_word_mask = SPI_BPW_MASK(8);
--	master->dev.of_node = pdev->dev.of_node;
--	master->auto_runtime_pm = true;
--	master->max_transfer_size = sun4i_spi_max_transfer_size;
-+	sspi->host = host;
-+	host->max_speed_hz = 100 * 1000 * 1000;
-+	host->min_speed_hz = 3 * 1000;
-+	host->set_cs = sun4i_spi_set_cs;
-+	host->transfer_one = sun4i_spi_transfer_one;
-+	host->num_chipselect = 4;
-+	host->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH | SPI_LSB_FIRST;
-+	host->bits_per_word_mask = SPI_BPW_MASK(8);
-+	host->dev.of_node = pdev->dev.of_node;
-+	host->auto_runtime_pm = true;
-+	host->max_transfer_size = sun4i_spi_max_transfer_size;
- 
- 	sspi->hclk = devm_clk_get(&pdev->dev, "ahb");
- 	if (IS_ERR(sspi->hclk)) {
- 		dev_err(&pdev->dev, "Unable to acquire AHB clock\n");
- 		ret = PTR_ERR(sspi->hclk);
--		goto err_free_master;
-+		goto err_free_host;
- 	}
- 
- 	sspi->mclk = devm_clk_get(&pdev->dev, "mod");
- 	if (IS_ERR(sspi->mclk)) {
- 		dev_err(&pdev->dev, "Unable to acquire module clock\n");
- 		ret = PTR_ERR(sspi->mclk);
--		goto err_free_master;
-+		goto err_free_host;
- 	}
- 
- 	init_completion(&sspi->done);
-@@ -496,16 +496,16 @@ static int sun4i_spi_probe(struct platfo
- 	ret = sun4i_spi_runtime_resume(&pdev->dev);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Couldn't resume the device\n");
--		goto err_free_master;
-+		goto err_free_host;
- 	}
- 
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
- 	pm_runtime_idle(&pdev->dev);
- 
--	ret = devm_spi_register_master(&pdev->dev, master);
-+	ret = devm_spi_register_controller(&pdev->dev, host);
- 	if (ret) {
--		dev_err(&pdev->dev, "cannot register SPI master\n");
-+		dev_err(&pdev->dev, "cannot register SPI host\n");
- 		goto err_pm_disable;
- 	}
- 
-@@ -514,8 +514,8 @@ static int sun4i_spi_probe(struct platfo
- err_pm_disable:
- 	pm_runtime_disable(&pdev->dev);
- 	sun4i_spi_runtime_suspend(&pdev->dev);
--err_free_master:
--	spi_master_put(master);
-+err_free_host:
-+	spi_controller_put(host);
- 	return ret;
- }
  
 
 
