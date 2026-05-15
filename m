@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C973FF1A0;
-	Fri, 15 May 2026 15:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122193FF1A0;
+	Fri, 15 May 2026 15:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860351; cv=none; b=UuufJIowqQev6vz2FuaBn6MWK92WddATnU25wGdDP9twuqmcQch6XIvmUelQrX0Pd2WGfEHFrBBwquh4855JvEn2yQy9X4Zf+804ziLcDnj/5hugxesz66pwn05QmyX07P65Kiuq1zQp/s0Nas1hq5wenMJ++8VJf54gu2Vf970=
+	t=1778860354; cv=none; b=QFQ5Okw8fM974CeqKFxxNdalW2I1aBOnKSSalXN8E2ng3f7T3cAxhcJKy9yhCUZW7i7qdpgVV1cUWZYOPCybUJex4LIKUwvavYyfnIeKgs5sRgG5fiMts0im45Cm5NRsfV4qN8wb+u8O1pJlWDgeu3RTL7KxO3SXVuwC9B0NGzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860351; c=relaxed/simple;
-	bh=pPNSHpc9HOfh1G125Mznmh4b6AW+M3AgoTwQ1bw3Nzs=;
+	s=arc-20240116; t=1778860354; c=relaxed/simple;
+	bh=CtbfDVY9CVfmeFiPg5a7ysZkZVppsq++0wWJbkKnrzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ixw5+Y34cJsFzJATfjT3pPK03Mrj7a9Wu7yzgzeuLlWOwBMkME5HVy/mR8CwGXnxIQgIYPOgNQ00QjDmz06xwbMyqTC26q0Vj5woSSNZu8+4wc7qameMu7fpITltyQ/a5DRFv+lBSG8IzO3UZiwQ/huXJKXbikpNuEwwFmcdTbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbqHFqqp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k8oJlJ1VIlRR1rftx9DYIy+BJMQeroiYtzcZjnlyPsJgkqDtzQkpAXXQY4saIJw/hmZq55RtHLDXAjRMV0IHGrOv0lanmdgaWC4FvbLVl9SSLa2Y4uKaaqatCUC+ckF5V1EctE3HN7CZa5O0ouugP+o7KbxOX48XtSSRqXvdI88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aq/6CobT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbqHFqqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C911EC2BCB3;
-	Fri, 15 May 2026 15:52:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aq/6CobT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5F8C2BCB0;
+	Fri, 15 May 2026 15:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860351;
-	bh=pPNSHpc9HOfh1G125Mznmh4b6AW+M3AgoTwQ1bw3Nzs=;
+	s=korg; t=1778860353;
+	bh=CtbfDVY9CVfmeFiPg5a7ysZkZVppsq++0wWJbkKnrzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DbqHFqqpmFA2cCJzTPwZGhsXUoVEMeeurrGH5rhu34FrTIesGqLmYRvXLdYcNseY+
-	 6jls2cgZR+EkaecbOaUCP2cItEB0teIc9HL87q7E/252imR64/NoW6LoEBMMKXzZIM
-	 Fm9wx1OM6Hi9b7JbdzjrNuXdu5bnyk9LruOZ/KIE=
+	b=aq/6CobT+uhYvUZgGioBdon8BGGnZmyQUd4Hg0yqJ6IHZjvffaVFtLn/PHIGYwdNm
+	 4TxmLi9gAUCOzx6H2hDA+YPDiQd24NHzPALBclC6wUCfrVasX+HH7rH18EcOpr2hjb
+	 2JEoBAx4K4xBAT15axScAWACXHSKWL34RlMy3+Pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Andrew Bresticker <abrestic@chromium.org>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 018/144] regulator: rk808: fix OF node reference imbalance
-Date: Fri, 15 May 2026 17:47:24 +0200
-Message-ID: <20260515154653.918283733@linuxfoundation.org>
+Subject: [PATCH 6.12 054/144] spi: img-spfi: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:00 +0200
+Message-ID: <20260515154654.799324473@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -54,38 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 65290b24d8a5f0b8cd065201e653db824c4a4da6 upstream.
+commit fc3a83b0d9c16b941c9028f5a8db9541dce4ddf2 upstream.
 
-The driver reuses the OF node of the parent multi-function device but
-fails to take another reference to balance the one dropped by the
-platform bus code when unbinding the MFD and deregistering the child
-devices.
+Make sure to deregister the controller before disabling and releasing
+underlying resources like clocks and DMA during driver unbind.
 
-Fix this by using the intended helper for reusing OF nodes.
-
-Fixes: 647e57351f8e ("regulator: rk808: reduce 'struct rk808' usage")
-Cc: stable@vger.kernel.org	# 6.2
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Fixes: deba25800a12 ("spi: Add driver for IMG SPFI controller")
+Cc: stable@vger.kernel.org	# 3.19
+Cc: Andrew Bresticker <abrestic@chromium.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260408073055.5183-3-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-16-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/rk808-regulator.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/spi/spi-img-spfi.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/regulator/rk808-regulator.c
-+++ b/drivers/regulator/rk808-regulator.c
-@@ -1878,8 +1878,7 @@ static int rk808_regulator_probe(struct
- 	struct regmap *regmap;
- 	int ret, i, nregulators;
+--- a/drivers/spi/spi-img-spfi.c
++++ b/drivers/spi/spi-img-spfi.c
+@@ -644,7 +644,7 @@ static int img_spfi_probe(struct platfor
+ 	pm_runtime_set_active(spfi->dev);
+ 	pm_runtime_enable(spfi->dev);
  
--	pdev->dev.of_node = pdev->dev.parent->of_node;
--	pdev->dev.of_node_reused = true;
-+	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
+-	ret = devm_spi_register_controller(spfi->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret)
+ 		goto disable_pm;
  
- 	regmap = dev_get_regmap(pdev->dev.parent, NULL);
- 	if (!regmap)
+@@ -670,6 +670,10 @@ static void img_spfi_remove(struct platf
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct img_spfi *spfi = spi_controller_get_devdata(host);
+ 
++	spi_controller_get(host);
++
++	spi_unregister_controller(host);
++
+ 	if (spfi->tx_ch)
+ 		dma_release_channel(spfi->tx_ch);
+ 	if (spfi->rx_ch)
+@@ -680,6 +684,8 @@ static void img_spfi_remove(struct platf
+ 		clk_disable_unprepare(spfi->spfi_clk);
+ 		clk_disable_unprepare(spfi->sys_clk);
+ 	}
++
++	spi_controller_put(host);
+ }
+ 
+ #ifdef CONFIG_PM
 
 
