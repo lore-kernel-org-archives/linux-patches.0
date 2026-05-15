@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0187F3B19DE;
-	Fri, 15 May 2026 16:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC193B19DE;
+	Fri, 15 May 2026 16:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862800; cv=none; b=khotJyOZnskKpxz5EOZMMV6B8KAqficqy3R7nDz9ARob37RlJW4BxRiklXTMimd4ggATLzA9ty8me8FdAEWwRiT4tunJNlcQFWwNSXBKd2Qg8x9nD/sM7eGz7J6I+DNDJpPMByU1DhZP4SzVmWkIl/YLWH27FtnXgM1yCjP/8S8=
+	t=1778862802; cv=none; b=Jg0m0sjZOQHWWZhUqrR9StlzAzWRRtYFq2GQZ2ftXyp4diOqM8ARRPQW5+Zk7/LVAlIrnaq0S0BrbSq003ZLSKC19FZZ4qiO1RNf9kKAIsfPN+RNwkgPfvaEH374FMyK0OG3J2NmqcgCusBURndyrLlGIkqqXyx8uy629k6jQzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862800; c=relaxed/simple;
-	bh=Zqc9hN3G2QlbIBkU6izABLSH3OE/i1oHl421MmEm23o=;
+	s=arc-20240116; t=1778862802; c=relaxed/simple;
+	bh=l7QSCD9z0MkKfg+23muROYEdaqBPnNfDoRSxF2F9pkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sehi5U66YFqwnNd2zUYlkb9l0mQWtK2dH2ulCKcsSk+7R2VYWoNAtB1UVgZhaaiTUoO6vpfrudySaDOGjAy/tdUyMEKJpVQgD11Lc5nz7XApZieZAMufe6NHGyvWaTnuDTO2gwTgG4WfCcnMaVd9g3iI0dbmSyMCCaIwxamthDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oqfcqq/l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=is0/r5pWSptwsVplNJ8bxeiyXseqUW4POSDAlH+Wke3e9ZLo0uMpv7DQX242+U/+ibT24uA/RPXIBgTrcPAPvUqaU1+2MRtQMQaJZqhWyQLI80BudjY1QnareM3zD0bOfHYJzMfQ5kCAhGW+hioc0gHETqzxcnGwQrUaMrThClY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrOnicJU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oqfcqq/l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAC8C2BCC7;
-	Fri, 15 May 2026 16:33:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrOnicJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25556C2BCC9;
+	Fri, 15 May 2026 16:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862799;
-	bh=Zqc9hN3G2QlbIBkU6izABLSH3OE/i1oHl421MmEm23o=;
+	s=korg; t=1778862802;
+	bh=l7QSCD9z0MkKfg+23muROYEdaqBPnNfDoRSxF2F9pkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oqfcqq/lpR0bfXHPlNonRb8Q0WVaoYdnWY9G4xfTqJftqoGhTyYQTiGWxHo14mI6c
-	 1G2+3TzW/IqfA0/LMZirWqa80QkQxCw2mKu2ZzezlV/PUOsnmsndGLv44ZYRwn//qB
-	 iR/tfAhOU80ejQPCkeqzQcI6IT1V6QAcr9yaTOpQ=
+	b=rrOnicJUcQuehCskNAgn8JB9yrzYjfBVOz3mRJ88yvewmo8xgkmFkbCj4gj55oJP5
+	 jRqRbOGLsAJ4PyyZuNEPUqiD72t5RYd4QTctXsOiPj2S0fSQpCalpYYC5z8Gp7r1mI
+	 6KUWld1IcKIdvf4zPqZTkhwjIA94KE4WjaHtQFD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Keiji Hayashibara <hayashibara.keiji@socionext.com>,
+	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 188/201] spi: uniphier: Simplify clock handling with devm_clk_get_enabled()
-Date: Fri, 15 May 2026 17:50:06 +0200
-Message-ID: <20260515154702.653017571@linuxfoundation.org>
+Subject: [PATCH 7.0 189/201] spi: uniphier: fix controller deregistration
+Date: Fri, 15 May 2026 17:50:07 +0200
+Message-ID: <20260515154702.675544332@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -52,94 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit fdca270f8f87cae2eb5b619234b9dd11a863ce6b ]
+[ Upstream commit 0245435f777264ac45945ed2f325dd095a41d1af ]
 
-Replace devm_clk_get() followed by clk_prepare_enable() with
-devm_clk_get_enabled() for the clock. This removes the need for
-explicit clock enable and disable calls, as the managed API automatically
-handles clock disabling on device removal or probe failure.
+Make sure to deregister the controller before releasing underlying
+resources like DMA during driver unbind.
 
-Remove the now-unnecessary clk_disable_unprepare() calls from the probe
-error path and the remove callback. Adjust error labels accordingly.
+Note that clocks were also disabled before the recent commit
+fdca270f8f87 ("spi: uniphier: Simplify clock handling with
+devm_clk_get_enabled()").
 
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Link: https://patch.msgid.link/b2deeefd4ef1a4bce71116aabfcb7e81400f6d37.1775546948.git.xiaopei01@kylinos.cn
+Fixes: 5ba155a4d4cc ("spi: add SPI controller driver for UniPhier SoC")
+Cc: stable@vger.kernel.org	# 4.19
+Cc: Keiji Hayashibara <hayashibara.keiji@socionext.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-25-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 0245435f7772 ("spi: uniphier: fix controller deregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-uniphier.c |   18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ drivers/spi/spi-uniphier.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 --- a/drivers/spi/spi-uniphier.c
 +++ b/drivers/spi/spi-uniphier.c
-@@ -666,28 +666,24 @@ static int uniphier_spi_probe(struct pla
- 	}
- 	priv->base_dma_addr = res->start;
+@@ -746,7 +746,7 @@ static int uniphier_spi_probe(struct pla
  
--	priv->clk = devm_clk_get(&pdev->dev, NULL);
-+	priv->clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(priv->clk)) {
- 		dev_err(&pdev->dev, "failed to get clock\n");
- 		ret = PTR_ERR(priv->clk);
- 		goto out_host_put;
- 	}
+ 	host->max_dma_len = min(dma_tx_burst, dma_rx_burst);
  
--	ret = clk_prepare_enable(priv->clk);
--	if (ret)
--		goto out_host_put;
--
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq < 0) {
- 		ret = irq;
--		goto out_disable_clk;
-+		goto out_host_put;
- 	}
+-	ret = devm_spi_register_controller(&pdev->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret)
+ 		goto out_release_dma;
  
- 	ret = devm_request_irq(&pdev->dev, irq, uniphier_spi_handler,
- 			       0, "uniphier-spi", priv);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to request IRQ\n");
--		goto out_disable_clk;
-+		goto out_host_put;
- 	}
- 
- 	init_completion(&priv->xfer_done);
-@@ -716,7 +712,7 @@ static int uniphier_spi_probe(struct pla
- 	if (IS_ERR_OR_NULL(host->dma_tx)) {
- 		if (PTR_ERR(host->dma_tx) == -EPROBE_DEFER) {
- 			ret = -EPROBE_DEFER;
--			goto out_disable_clk;
-+			goto out_host_put;
- 		}
- 		host->dma_tx = NULL;
- 		dma_tx_burst = INT_MAX;
-@@ -766,9 +762,6 @@ out_release_dma:
- 		host->dma_tx = NULL;
- 	}
- 
--out_disable_clk:
--	clk_disable_unprepare(priv->clk);
--
- out_host_put:
- 	spi_controller_put(host);
- 	return ret;
-@@ -777,14 +770,11 @@ out_host_put:
- static void uniphier_spi_remove(struct platform_device *pdev)
+@@ -771,10 +771,16 @@ static void uniphier_spi_remove(struct p
  {
  	struct spi_controller *host = platform_get_drvdata(pdev);
--	struct uniphier_spi_priv *priv = spi_controller_get_devdata(host);
  
++	spi_controller_get(host);
++
++	spi_unregister_controller(host);
++
  	if (host->dma_tx)
  		dma_release_channel(host->dma_tx);
  	if (host->dma_rx)
  		dma_release_channel(host->dma_rx);
--
--	clk_disable_unprepare(priv->clk);
++
++	spi_controller_put(host);
  }
  
  static const struct of_device_id uniphier_spi_match[] = {
