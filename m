@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466392EAB82;
-	Fri, 15 May 2026 16:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD4D2EAB82;
+	Fri, 15 May 2026 16:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861065; cv=none; b=O4pdSw9karj5QXiJvG5h5EKYBuqfdVCYblGn/A2WpjPjFvsSFjV+p7TvhQoCgv8nmo23LVW0NPPggAhB1PFVLcadfn2MxdfYClitrvmQNXitX3Ro33czPxW4kh75mXNW4Q8IXBvuqRTjVlsY2WTi2iATKZdg3HnpTiixv/nwhko=
+	t=1778861067; cv=none; b=e9WMn4B6wXEDYsFkUCSZdMqDrgeWfjnlsSoEzVWrEICiXOlqrN9zEmFV76L1SjgU6HvTRj2CEfYWuPGj3P0034Vsg9/n+WKntI0Df2a7AdINMYK3sOcS1/QMxFC2lUFcecHfmYr77ts3kaaO7cem/WZZWQYuZnjbZVsFMCVgBns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861065; c=relaxed/simple;
-	bh=YxU40DjLlder0NQTZyAeVQ4Ut2lmg4ED/u4759l8lUU=;
+	s=arc-20240116; t=1778861067; c=relaxed/simple;
+	bh=wzcw9C14vu52FEnDRwqEho1wA61s8SDmCUnL5+SLEfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U4h5M2p0wcxUWgIWQUG6KqrKtPw6dWLv2sE/wUh8kuoOV72z5xbQULjaIFhrnyqn36btuhh54XtA1M5Tk/xRipltB1lmTgNMI4vuAKLYk1Alm5+NFsfFE2ud4H1y6KW6rhNfeYJMG8K90JMwrq6E5F4ha2aRj4UpZWajarP5Q7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ijp6RgYi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RXeLg8IbY0SquNHA4ySvnqIXuLxD2ovvgqYFsuUdkD90okv8gyn9Xy9m32oJs4Ssad0WER6W2YQYIbYRL9UW/nbTjuqPvCR/kYb9Uayx9eFL8cEdHvSIXHNQCns0Hl9wsOcphG58+mO/EjaSgGvNiHbMPNtgAcj6kee29SVSgAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXV2zVDk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ijp6RgYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC11AC2BCB0;
-	Fri, 15 May 2026 16:04:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXV2zVDk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DF2C2BCB0;
+	Fri, 15 May 2026 16:04:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861065;
-	bh=YxU40DjLlder0NQTZyAeVQ4Ut2lmg4ED/u4759l8lUU=;
+	s=korg; t=1778861067;
+	bh=wzcw9C14vu52FEnDRwqEho1wA61s8SDmCUnL5+SLEfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ijp6RgYiH9NigC+d/yfqaPTfR1wNSVWVIWQggCgEhNp9eOxtfFRSBjpkILEHPkXfg
-	 sEaGasfE45Etbt/bx3dWynXZyz9FyX5piSnkUVMjjADRY7na+xD59rEm/JA701wVc/
-	 mHsXHsoKhYa3jaYUmIHZm1M/K5nP4QWMz7jhbQ3s=
+	b=rXV2zVDkECE8YEH0x1qII5J/sHiWccNWhgLUjFKPhvsBCQTeHfGOVD2ih8LTNO4RG
+	 BgrTj36i3x0d2h3KL5/b82K6mn7o2ZtN7GSLJd7t/9b8nspMLACpe29EZqH08/tGOt
+	 ONfsFOBrhbreHIVGg4sj5b9PFkdZqVKfCu9o9Qgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Wenshan Lan <jetlan9@163.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 158/474] spi: meson-spicc: Fix double-put in remove path
-Date: Fri, 15 May 2026 17:44:27 +0200
-Message-ID: <20260515154718.444319397@linuxfoundation.org>
+	Quan Zhou <quan.zhou@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.6 185/474] wifi: mt76: mt7921: fix ROC abort flow interruption in mt7921_roc_work
+Date: Fri, 15 May 2026 17:44:54 +0200
+Message-ID: <20260515154719.026576141@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -53,48 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-[ Upstream commit 63542bb402b7013171c9f621c28b609eda4dbf1f ]
+commit fdfa39f9f4fbae532b162da913a67b2410caf38f upstream.
 
-meson_spicc_probe() registers the controller with
-devm_spi_register_controller(), so teardown already drops the
-controller reference via devm cleanup.
+The mt7921_set_roc API may be executed concurrently with mt7921_roc_work,
+specifically between the following code paths:
 
-Calling spi_controller_put() again in meson_spicc_remove()
-causes a double-put.
+- The check and clear of MT76_STATE_ROC in mt7921_roc_work:
+    if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
+        return;
 
-Fixes: 8311ee2164c5 ("spi: meson-spicc: fix memory leak in meson_spicc_remove")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260322-rockchip-v1-1-fac3f0c6dad8@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ In v6.6, commit 68bf3288c7eb ("spi: meson-spicc: switch to use modern name")
-has not been applied, so the driver still uses the legacy spicc->master field
-and spi_master_put() API. The line to remove is spi_master_put(spicc->master)
-rather than spi_controller_put(spicc->host) as in the upstream patch.
-They are functionally identical. ]
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+- The execution of ieee80211_iterate_active_interfaces.
+
+This race condition can interrupt the ROC abort flow, resulting in
+the ROC process failing to abort as expected.
+
+To address this defect, the modification of MT76_STATE_ROC is now
+protected by mt792x_mutex_acquire(phy->dev). This ensures that
+changes to the ROC state are properly synchronized, preventing
+race conditions and ensuring the ROC abort flow is not interrupted.
+
+Fixes: 034ae28b56f1 ("wifi: mt76: mt7921: introduce remain_on_channel support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Reviewed-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/2568ece8b557e5dda79391414c834ef3233049b6.1769133724.git.quan.zhou@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-meson-spicc.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-meson-spicc.c b/drivers/spi/spi-meson-spicc.c
-index 43d134f4b42b1..de8cf91658fd5 100644
---- a/drivers/spi/spi-meson-spicc.c
-+++ b/drivers/spi/spi-meson-spicc.c
-@@ -918,8 +918,6 @@ static void meson_spicc_remove(struct platform_device *pdev)
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -361,10 +361,11 @@ void mt7921_roc_work(struct work_struct
+ 	phy = (struct mt792x_phy *)container_of(work, struct mt792x_phy,
+ 						roc_work);
  
- 	clk_disable_unprepare(spicc->core);
- 	clk_disable_unprepare(spicc->pclk);
+-	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
+-		return;
 -
--	spi_master_put(spicc->master);
- }
- 
- static const struct meson_spicc_data meson_spicc_gx_data = {
--- 
-2.53.0
-
+ 	mt792x_mutex_acquire(phy->dev);
++	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state)) {
++		mt792x_mutex_release(phy->dev);
++		return;
++	}
+ 	ieee80211_iterate_active_interfaces(phy->mt76->hw,
+ 					    IEEE80211_IFACE_ITER_RESUME_ALL,
+ 					    mt7921_roc_iter, phy);
 
 
