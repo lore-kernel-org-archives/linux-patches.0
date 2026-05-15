@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6DA14B08A;
-	Fri, 15 May 2026 15:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191DA3FF1A0;
+	Fri, 15 May 2026 15:51:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860299; cv=none; b=dXR3hOeeWya/OPPMOGR8M97MXz3tfg6kQXKxKwB4z3us3+UBljUFaUxmS1yLg1mbTMbLgfjE5rjlE5QXbvNI3tqYqABihrLiII37msK6ss0o7gr8ezb0AMbH0fluTvKd3UyGC9aoa2+NEKGOI9g8pVJXyb1C9PAaMnhBXXmohV0=
+	t=1778860302; cv=none; b=O2XTKgUyZFAnJWhnnFvb+i0mZx0kIqgnZz3qOawglmYmiXqteKNPNqS8Dz4KrttsIw3tP5lMcnpBRYKRyeUJC6MsIAGQrQinmuSgde4RsWwdZXqN2mNFe707ubcqLy45ieQrDlVh6hQEzMDEOrJFwyrPZJutYW49V6XtiWqdU14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860299; c=relaxed/simple;
-	bh=q0gF6QCMENoRzLyoHU0O6DlprjmRIK19uf9uaftOW/g=;
+	s=arc-20240116; t=1778860302; c=relaxed/simple;
+	bh=7JROdUpy+Z/7NTDkafBdqKsa4aWeLEAYX8YM8rYF8NQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WURlFdWvl/KFkBTjTM6xHzXf21j8NbNTRRCM0akInLaFhpaMJfntTxYW9StInLa2dUhuIVsqZ9gdxKh+5qJWSTsAAL5mNLNsA7yrN9yNocea0TwKjooyGPyf33CS4T5lXzRk0jdkb94pPrwgMS2ok/cEfKRrLAGEpf/ZfLkbZJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvwvwb/A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K8oolkHhhUJI0rJImyNtV1TPHbYVEfm6RuedO3/K9XZNSiJ+Emr+brWOI5CeftYi+SAR9UiCje/Kbnhry3PAI2YrN03aYinxkSbSUkTs61vouoN+2u4eRpA0hzsbIaywmSgbnVR4a7blnGZW1XJNJ7QXnTtvfVgrbUEfM38YySg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0FQfIuA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvwvwb/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D513DC2BCB0;
-	Fri, 15 May 2026 15:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0FQfIuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BB4C2BCB0;
+	Fri, 15 May 2026 15:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860299;
-	bh=q0gF6QCMENoRzLyoHU0O6DlprjmRIK19uf9uaftOW/g=;
+	s=korg; t=1778860301;
+	bh=7JROdUpy+Z/7NTDkafBdqKsa4aWeLEAYX8YM8rYF8NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvwvwb/AXPUwe89sqaAhi5Ni+tTQTIIrPsaL/SMy5O0+st3nbBhEsNCFOx+f6uA7X
-	 wjUQZBNGwtXNxzU4eqI3CFsYBgj0us8kF1vkxTimk+aa1EitOzzg/3gvo+ai9WBG2/
-	 gjSvAZehj495ERUe2KOm9mjnWdsjg2ZWSPeE5v/I=
+	b=t0FQfIuAhbZ7ZoDD00xqNHw12UmAJEIEvLOPtxXNrkZA5QMOwqBLS753KREGkXBxM
+	 7XJwlWCI0KLwYPcEHGIGdiIiN081HgUFvYwqJjUPd3w7K5ZWsXtmn+VHvUPW3LrGkT
+	 Wxfto203S2kk2BnH1NrR+9T2IgK1PVG3rukPSbV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Matthias Fend <matthias.fend@emfend.at>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 035/144] media: staging: imx: request mbus_config in csi_start
-Date: Fri, 15 May 2026 17:47:41 +0200
-Message-ID: <20260515154654.330282140@linuxfoundation.org>
+Subject: [PATCH 6.12 036/144] media: i2c: ov08d10: fix image vertical start setting
+Date: Fri, 15 May 2026 17:47:42 +0200
+Message-ID: <20260515154654.355597659@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -52,170 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Tretter <m.tretter@pengutronix.de>
+From: Matthias Fend <matthias.fend@emfend.at>
 
-commit 9df2aaa64890c0b6226057eb6fcb6352bd2df432 upstream.
+commit 5d150fa0f16096d736bd24d13e04495da5116fab upstream.
 
-Request the upstream mbus_config in csi_start, which starts the stream,
-instead of caching it in link_validate.
+The current settings for the "image vertical start" register appear to be
+incorrect. While this only results in an incorrect start line for native
+modes, this faulty setting causes actual problems in binning mode. At least
+on an i.MX8MP test system, only corrupted frames could be received.
+To correct this, the recommended settings from the reference register sets
+are used for all modes. Since this shifts the start by one line, the Bayer
+pattern also changes, which has also been corrected.
 
-This allows to get rid of the mbus_cfg field in the struct csi_priv and
-avoids state in the driver.
-
-Fixes: 4a34ec8e470c ("[media] media: imx: Add CSI subdev driver")
+Fixes: 7be91e02ed57 ("media: i2c: Add ov08d10 camera sensor driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Matthias Fend <matthias.fend@emfend.at>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/imx/imx-media-csi.c |   40 ++++++++++++++++++------------
- 1 file changed, 24 insertions(+), 16 deletions(-)
+ drivers/media/i2c/ov08d10.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/staging/media/imx/imx-media-csi.c
-+++ b/drivers/staging/media/imx/imx-media-csi.c
-@@ -97,9 +97,6 @@ struct csi_priv {
- 	/* the mipi virtual channel number at link validate */
- 	int vc_num;
- 
--	/* media bus config of the upstream subdevice CSI is receiving from */
--	struct v4l2_mbus_config mbus_cfg;
--
- 	spinlock_t irqlock; /* protect eof_irq handler */
- 	struct timer_list eof_timeout_timer;
- 	int eof_irq;
-@@ -403,7 +400,8 @@ static void csi_idmac_unsetup_vb2_buf(st
- }
- 
- /* init the SMFC IDMAC channel */
--static int csi_idmac_setup_channel(struct csi_priv *priv)
-+static int csi_idmac_setup_channel(struct csi_priv *priv,
-+				   struct v4l2_mbus_config *mbus_cfg)
+--- a/drivers/media/i2c/ov08d10.c
++++ b/drivers/media/i2c/ov08d10.c
+@@ -217,7 +217,7 @@ static const struct ov08d10_reg lane_2_m
+ 	{0x9a, 0x30},
+ 	{0xa8, 0x02},
+ 	{0xfd, 0x02},
+-	{0xa1, 0x01},
++	{0xa1, 0x00},
+ 	{0xa2, 0x09},
+ 	{0xa3, 0x9c},
+ 	{0xa5, 0x00},
+@@ -335,7 +335,7 @@ static const struct ov08d10_reg lane_2_m
+ 	{0x9a, 0x30},
+ 	{0xa8, 0x02},
+ 	{0xfd, 0x02},
+-	{0xa1, 0x09},
++	{0xa1, 0x08},
+ 	{0xa2, 0x09},
+ 	{0xa3, 0x90},
+ 	{0xa5, 0x08},
+@@ -467,7 +467,7 @@ static const struct ov08d10_reg lane_2_m
+ 	{0xaa, 0xd0},
+ 	{0xab, 0x06},
+ 	{0xac, 0x68},
+-	{0xa1, 0x09},
++	{0xa1, 0x04},
+ 	{0xa2, 0x04},
+ 	{0xa3, 0xc8},
+ 	{0xa5, 0x04},
+@@ -612,8 +612,8 @@ static const struct ov08d10_lane_cfg lan
+ static u32 ov08d10_get_format_code(struct ov08d10 *ov08d10)
  {
- 	struct imx_media_video_dev *vdev = priv->vdev;
- 	const struct imx_media_pixfmt *incc;
-@@ -432,7 +430,7 @@ static int csi_idmac_setup_channel(struc
- 	image.phys0 = phys[0];
- 	image.phys1 = phys[1];
+ 	static const u32 codes[2][2] = {
+-		{ MEDIA_BUS_FMT_SGRBG10_1X10, MEDIA_BUS_FMT_SRGGB10_1X10},
+-		{ MEDIA_BUS_FMT_SBGGR10_1X10, MEDIA_BUS_FMT_SGBRG10_1X10},
++		{ MEDIA_BUS_FMT_SBGGR10_1X10, MEDIA_BUS_FMT_SGBRG10_1X10 },
++		{ MEDIA_BUS_FMT_SGRBG10_1X10, MEDIA_BUS_FMT_SRGGB10_1X10 },
+ 	};
  
--	passthrough = requires_passthrough(&priv->mbus_cfg, infmt, incc);
-+	passthrough = requires_passthrough(mbus_cfg, infmt, incc);
- 	passthrough_cycles = 1;
- 
- 	/*
-@@ -572,11 +570,12 @@ static void csi_idmac_unsetup(struct csi
- 	csi_idmac_unsetup_vb2_buf(priv, state);
- }
- 
--static int csi_idmac_setup(struct csi_priv *priv)
-+static int csi_idmac_setup(struct csi_priv *priv,
-+			   struct v4l2_mbus_config *mbus_cfg)
- {
- 	int ret;
- 
--	ret = csi_idmac_setup_channel(priv);
-+	ret = csi_idmac_setup_channel(priv, mbus_cfg);
- 	if (ret)
- 		return ret;
- 
-@@ -595,7 +594,8 @@ static int csi_idmac_setup(struct csi_pr
- 	return 0;
- }
- 
--static int csi_idmac_start(struct csi_priv *priv)
-+static int csi_idmac_start(struct csi_priv *priv,
-+			   struct v4l2_mbus_config *mbus_cfg)
- {
- 	struct imx_media_video_dev *vdev = priv->vdev;
- 	int ret;
-@@ -619,7 +619,7 @@ static int csi_idmac_start(struct csi_pr
- 	priv->last_eof = false;
- 	priv->nfb4eof = false;
- 
--	ret = csi_idmac_setup(priv);
-+	ret = csi_idmac_setup(priv, mbus_cfg);
- 	if (ret) {
- 		v4l2_err(&priv->sd, "csi_idmac_setup failed: %d\n", ret);
- 		goto out_free_dma_buf;
-@@ -701,7 +701,8 @@ static void csi_idmac_stop(struct csi_pr
- }
- 
- /* Update the CSI whole sensor and active windows */
--static int csi_setup(struct csi_priv *priv)
-+static int csi_setup(struct csi_priv *priv,
-+		     struct v4l2_mbus_config *mbus_cfg)
- {
- 	struct v4l2_mbus_framefmt *infmt, *outfmt;
- 	const struct imx_media_pixfmt *incc;
-@@ -719,7 +720,7 @@ static int csi_setup(struct csi_priv *pr
- 	 * if cycles is set, we need to handle this over multiple cycles as
- 	 * generic/bayer data
- 	 */
--	if (is_parallel_bus(&priv->mbus_cfg) && incc->cycles) {
-+	if (is_parallel_bus(mbus_cfg) && incc->cycles) {
- 		if_fmt.width *= incc->cycles;
- 		crop.width *= incc->cycles;
- 	}
-@@ -730,7 +731,7 @@ static int csi_setup(struct csi_priv *pr
- 			     priv->crop.width == 2 * priv->compose.width,
- 			     priv->crop.height == 2 * priv->compose.height);
- 
--	ipu_csi_init_interface(priv->csi, &priv->mbus_cfg, &if_fmt, outfmt);
-+	ipu_csi_init_interface(priv->csi, mbus_cfg, &if_fmt, outfmt);
- 
- 	ipu_csi_set_dest(priv->csi, priv->dest);
- 
-@@ -745,9 +746,17 @@ static int csi_setup(struct csi_priv *pr
- 
- static int csi_start(struct csi_priv *priv)
- {
-+	struct v4l2_mbus_config mbus_cfg = { .type = 0 };
- 	struct v4l2_fract *input_fi, *output_fi;
- 	int ret;
- 
-+	ret = csi_get_upstream_mbus_config(priv, &mbus_cfg);
-+	if (ret) {
-+		v4l2_err(&priv->sd,
-+			 "failed to get upstream media bus configuration\n");
-+		return ret;
-+	}
-+
- 	input_fi = &priv->frame_interval[CSI_SINK_PAD];
- 	output_fi = &priv->frame_interval[priv->active_output_pad];
- 
-@@ -758,7 +767,7 @@ static int csi_start(struct csi_priv *pr
- 		return ret;
- 
- 	/* Skip first few frames from a BT.656 source */
--	if (priv->mbus_cfg.type == V4L2_MBUS_BT656) {
-+	if (mbus_cfg.type == V4L2_MBUS_BT656) {
- 		u32 delay_usec, bad_frames = 20;
- 
- 		delay_usec = DIV_ROUND_UP_ULL((u64)USEC_PER_SEC *
-@@ -769,12 +778,12 @@ static int csi_start(struct csi_priv *pr
- 	}
- 
- 	if (priv->dest == IPU_CSI_DEST_IDMAC) {
--		ret = csi_idmac_start(priv);
-+		ret = csi_idmac_start(priv, &mbus_cfg);
- 		if (ret)
- 			goto stop_upstream;
- 	}
- 
--	ret = csi_setup(priv);
-+	ret = csi_setup(priv, &mbus_cfg);
- 	if (ret)
- 		goto idmac_stop;
- 
-@@ -1138,7 +1147,6 @@ static int csi_link_validate(struct v4l2
- 
- 	mutex_lock(&priv->lock);
- 
--	priv->mbus_cfg = mbus_cfg;
- 	is_csi2 = !is_parallel_bus(&mbus_cfg);
- 	if (is_csi2) {
- 		/*
+ 	return codes[ov08d10->vflip->val][ov08d10->hflip->val];
 
 
