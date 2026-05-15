@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0654C3FF1A2;
-	Fri, 15 May 2026 16:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F0F3EFFA0;
+	Fri, 15 May 2026 16:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862552; cv=none; b=Q0qwpBu9mtkDWLtwbe01cdHBVrWHiItEv2/tkC5F+bpWpnLfOoo3z+H83U30Yw3hMDYqtAgGV7AJlM2aYXosEbD7PWzK7RkSxKevD/y5znNohgaVRNIBri8fmjPLClEb0L2NNWca+DS21qKTw9xBrYH8SaE7/pAE2W8tudrAG/E=
+	t=1778862555; cv=none; b=qtrn1/s1zDLC2+cwVMuCXmgxr0lma1b3cgqdB/tlLKMlfRJkCxk+9CxSRB2eGhUOFvknkmnFxyNO+DhHMRhh4t8/rBD0Eih9eYbSQ82QPGMnsPMkfsPOwnp8O1cpVirUmua8o6Wf9ir80Ti1GkmqxyEaZhIbN4gY2T/kXPP2P+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862552; c=relaxed/simple;
-	bh=7BvtRYdqbTE6ow/hkzMscwjH7RB02v4SgOHgdYF3Tj8=;
+	s=arc-20240116; t=1778862555; c=relaxed/simple;
+	bh=nJKaQ1N52qCWUNFirOW+ALK5Sj/6qm0vxN1vI6X5GrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kEouE9nkw8stJyIlMF3R+/gA5ZbZQDmzNvBP1PmDjcRdBTXRvnWNhqTA0a8Qjoy1RZGZl4FOPbds6/eoBWOlUsiZNNA0VfKy2dNfTubWazCNFWOHkx5k5wddowyJJrj9EWuHePfm2K+gyMWFQmLlU4HHKXeM4GxUORKi1VPjXeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qeh4Cszc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PTGKPPU9AsIZngRkqBs50sPAC0XCjyCS1qOWs/ix9b1VdtxhKbbSnJzLIVlz3/OSAsU+ADd5ArHCXq4wBjdnuHA/b0Ag6s5GoYVaggNjBJvGdM0Y4FeaDxXR309Fej6PBKpLsYdYyuNuw+329cJsGnmRItJNeH9qiahWAXXioww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tksvh5iy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qeh4Cszc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C47C2BCB0;
-	Fri, 15 May 2026 16:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tksvh5iy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D5CC2BCB0;
+	Fri, 15 May 2026 16:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862551;
-	bh=7BvtRYdqbTE6ow/hkzMscwjH7RB02v4SgOHgdYF3Tj8=;
+	s=korg; t=1778862554;
+	bh=nJKaQ1N52qCWUNFirOW+ALK5Sj/6qm0vxN1vI6X5GrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qeh4Cszcx1fhulcexdim3/7rL2ndOBfgbHY8FktUOGscgXuLqVxEmbsxLlh8QYLgp
-	 JZnshsJIVJcvLmqF7WKarSOR9zBHm9cm+40qB5xSXmhigybMW1I+eAGgWPcL+AOIbj
-	 KEaHWp4a0UCGxthOAooj8lZB0mNEQfIPjGU8OJKg=
+	b=Tksvh5iyvjwls63uoMR/7vwEpv8w4/BoMK04SDlcuHbGNgcJogN/kKCjVy7+h2ofj
+	 ydtl+qJC/kE2q38rsPxaZJvNLcgBvt5+jwUvZQczoNnOMMRQBwtYrKdtcrYzz+OSd3
+	 F7+IWus37Zwu+8SjuBQLMBSoGrr0FQv/CQmlmF8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurentiu Palcu <laurentiu.palcu@intel.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 085/201] spi: dln2: fix controller deregistration
-Date: Fri, 15 May 2026 17:48:23 +0200
-Message-ID: <20260515154700.373664087@linuxfoundation.org>
+Subject: [PATCH 7.0 094/201] spi: sh-hspi: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:32 +0200
+Message-ID: <20260515154700.569350982@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,49 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit c353020fbfa8514ee91a6de2d88de4e5edca5803 upstream.
+commit e63982e6392e45a6ecd68d6c317a081cc8e70143 upstream.
 
-Make sure to deregister the controller before disabling it to allow
-SPI device drivers to do I/O during deregistration.
+Make sure to deregister the controller before releasing underlying
+resources like clocks during driver unbind.
 
-Fixes: 3d8c0d749da3 ("spi: add support for DLN-2 USB-SPI adapter")
-Cc: stable@vger.kernel.org	# 4.0
-Cc: Laurentiu Palcu <laurentiu.palcu@intel.com>
+Fixes: 49e599b8595f ("spi: sh-hspi: control spi clock more correctly")
+Cc: stable@vger.kernel.org	# 3.4
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260409120419.388546-12-johan@kernel.org
+Link: https://patch.msgid.link/20260410081757.503099-13-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-dln2.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/spi/spi-sh-hspi.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-dln2.c
-+++ b/drivers/spi/spi-dln2.c
-@@ -758,7 +758,7 @@ static int dln2_spi_probe(struct platfor
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
+--- a/drivers/spi/spi-sh-hspi.c
++++ b/drivers/spi/spi-sh-hspi.c
+@@ -257,9 +257,9 @@ static int hspi_probe(struct platform_de
+ 	ctlr->transfer_one_message = hspi_transfer_one_message;
+ 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
  	if (ret < 0) {
- 		dev_err(&pdev->dev, "Failed to register host\n");
- 		goto exit_register;
-@@ -783,10 +783,16 @@ static void dln2_spi_remove(struct platf
- 	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct dln2_spi *dln2 = spi_controller_get_devdata(host);
+-		dev_err(&pdev->dev, "devm_spi_register_controller error.\n");
++		dev_err(&pdev->dev, "failed to register controller\n");
+ 		goto error2;
+ 	}
  
-+	spi_controller_get(host);
+@@ -279,9 +279,15 @@ static void hspi_remove(struct platform_
+ {
+ 	struct hspi_priv *hspi = platform_get_drvdata(pdev);
+ 
++	spi_controller_get(hspi->ctlr);
 +
-+	spi_unregister_controller(host);
++	spi_unregister_controller(hspi->ctlr);
 +
  	pm_runtime_disable(&pdev->dev);
  
- 	if (dln2_spi_enable(dln2, false) < 0)
- 		dev_err(&pdev->dev, "Failed to disable SPI module\n");
+ 	clk_put(hspi->clk);
 +
-+	spi_controller_put(host);
++	spi_controller_put(hspi->ctlr);
  }
  
- #ifdef CONFIG_PM_SLEEP
+ static const struct of_device_id hspi_of_match[] = {
 
 
