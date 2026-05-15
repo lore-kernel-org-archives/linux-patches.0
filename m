@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9B23FBB57;
-	Fri, 15 May 2026 16:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7D73FBB63;
+	Fri, 15 May 2026 16:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861538; cv=none; b=fiJyUSTImWE0Tt/IolUx6UiGN3apfhGud1YOUkZkg1Ith5QvVllYev+oofUV4R1MuD8oX5HBDChIBnVspIqdH3qDmQjfDsdx/lECbWkQqDam96p+8LPQbE+7h0N/+Rk2rTMksh0nvOX8AgiXVE6L9v8jL36alXiYyoXkNvOpBo0=
+	t=1778861540; cv=none; b=puh91rc7SgKytfAUsJyzZkLzJNx7Skaru6ECmbLaMYV0yODhtxig+vvt8/QImVUqm+KyF5zrbAhDw6EBRswU8jSB1/jSSNf1I9TPXDo/XYXnJtmfzBN0Vkp0A8D5SSZtSN0IiCbQijYdh2mYJMuppt5sI+nLW6g+BKDxQ6OmYyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861538; c=relaxed/simple;
-	bh=mSqCuQ2fs22lt8N4uXvhe9GNXrDLhE9NdVvBgfWMvGc=;
+	s=arc-20240116; t=1778861540; c=relaxed/simple;
+	bh=g+06aT9x6tQGxS/5fjWUf1CRuPtxY3XtTTh+BJl8L8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=td5q+mb1XN2ITej17KVrAK1vORe5HPmpGzxGV+O3YAKaVqUZUg4hkJNjpxa33kBDij3SkxOEwEzS6SjnpJzJRDlxEFbFnFMPoaZMVRMTg1iHdv+gHPLRyamU0BhOHmxcewsFsei0Se4Til2raZzVwjcTg2/XirSY9zDwisYRqi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0EuK8L1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CReJZnItqSrezi1F8X0hSRMcOvi4mwI/iKKcEHhkRL41rxcgzh6QEywQQu4UIH5OFrJb5kMnMH3S6pbHzCMYr7R3AGS8FOqUwCKy7xoerG0CAsGe99lK7UugAFlMy8ip/zvV/LJ+ZJ0uIeNivbxW+LRp6Ci7PK9Ttdf61pEaJv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eh41NJ5J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0EuK8L1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A3EC2BCB0;
-	Fri, 15 May 2026 16:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eh41NJ5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A221C2BCB0;
+	Fri, 15 May 2026 16:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861538;
-	bh=mSqCuQ2fs22lt8N4uXvhe9GNXrDLhE9NdVvBgfWMvGc=;
+	s=korg; t=1778861540;
+	bh=g+06aT9x6tQGxS/5fjWUf1CRuPtxY3XtTTh+BJl8L8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K0EuK8L1P9ZOFeNjNAMOtA6tZ+MQ/bKlu9UJsv+QkLX55NvYmmobrWlzUZxmOuQu0
-	 UeOx0+/skDglE9NZjRfWIBPABxJdCmygoNs/M19QnVQvZ8797uV4h4UzhXXC5XyVdy
-	 SPKZkLm1He6i/MnOw/q1ptrXLxRuE13x4rg6i/Sc=
+	b=eh41NJ5JlAeSjktpJo6/VxeazAJz3cWw+rqUW47sUYRNTrHA2sRA4fG7yFcy+HpJy
+	 GZysRcAhfAcYi0Q93IhFgx0DwKGRbYaHdWJkBsjPZ0+TGYQlL24OymyptL9vnLt8rD
+	 OsLjWH7cTrhZbj/whI5H8f3ywAajyhuyiBTQMg+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+6e4cb1cac5efc96ea0ca@syzkaller.appspotmail.com,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 366/474] f2fs: fix UAF caused by decrementing sbi->nr_pages[] in f2fs_write_end_io()
-Date: Fri, 15 May 2026 17:47:55 +0200
-Message-ID: <20260515154722.939477112@linuxfoundation.org>
+Subject: [PATCH 6.6 367/474] ksmbd: use msleep instaed of schedule_timeout_interruptible()
+Date: Fri, 15 May 2026 17:47:56 +0200
+Message-ID: <20260515154722.962250794@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -54,73 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 2d9c4a4ed4eef1f82c5b16b037aee8bad819fd53 ]
+[ Upstream commit f75f8bdd4ff4830abe31a1b94892eb12b85b9535 ]
 
-The xfstests case "generic/107" and syzbot have both reported a NULL
-pointer dereference.
+use msleep instaed of schedule_timeout_interruptible()
+to guarantee the task delays as expected.
 
-The concurrent scenario that triggers the panic is as follows:
-
-F2FS_WB_CP_DATA write callback          umount
-                                        - f2fs_write_checkpoint
-                                         - f2fs_wait_on_all_pages(sbi, F2FS_WB_CP_DATA)
-- blk_mq_end_request
- - bio_endio
-  - f2fs_write_end_io
-   : dec_page_count(sbi, F2FS_WB_CP_DATA)
-   : wake_up(&sbi->cp_wait)
-                                        - kill_f2fs_super
-                                         - kill_block_super
-                                          - f2fs_put_super
-                                           : iput(sbi->node_inode)
-                                           : sbi->node_inode = NULL
-   : f2fs_in_warm_node_list
-    - is_node_folio // sbi->node_inode is NULL and panic
-
-The root cause is that f2fs_put_super() calls iput(sbi->node_inode) and
-sets sbi->node_inode to NULL after sbi->nr_pages[F2FS_WB_CP_DATA] is
-decremented to zero. As a result, f2fs_in_warm_node_list() may
-dereference a NULL node_inode when checking whether a folio belongs to
-the node inode, leading to a panic.
-
-This patch fixes the issue by calling f2fs_in_warm_node_list() before
-decrementing sbi->nr_pages[F2FS_WB_CP_DATA], thus preventing the
-use-after-free condition.
-
-Cc: stable@kernel.org
-Fixes: 50fa53eccf9f ("f2fs: fix to avoid broken of dnode block list")
-Reported-by: syzbot+6e4cb1cac5efc96ea0ca@syzkaller.appspotmail.com
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ folio => page ]
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: def036ef87f8 ("ksmbd: reset rcount per connection in ksmbd_conn_wait_idle_sess_id()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/connection.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -356,6 +356,8 @@ static void f2fs_write_end_io(struct bio
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -495,7 +495,7 @@ again:
+ 	up_read(&conn_list_lock);
  
- 		f2fs_bug_on(sbi, page->mapping == NODE_MAPPING(sbi) &&
- 					page->index != nid_of_node(page));
-+		if (f2fs_in_warm_node_list(sbi, page))
-+			f2fs_del_fsync_node_entry(sbi, page);
- 
- 		dec_page_count(sbi, type);
- 
-@@ -367,8 +369,6 @@ static void f2fs_write_end_io(struct bio
- 				wq_has_sleeper(&sbi->cp_wait))
- 			wake_up(&sbi->cp_wait);
- 
--		if (f2fs_in_warm_node_list(sbi, page))
--			f2fs_del_fsync_node_entry(sbi, page);
- 		clear_page_private_gcing(page);
- 		end_page_writeback(page);
+ 	if (!list_empty(&conn_list)) {
+-		schedule_timeout_interruptible(HZ / 10); /* 100ms */
++		msleep(100);
+ 		goto again;
  	}
+ }
 
 
