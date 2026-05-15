@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA563FF1A2;
-	Fri, 15 May 2026 15:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47993FF1A0;
+	Fri, 15 May 2026 15:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860392; cv=none; b=TfTvWU5Y/NpJpy6JmoQaywbgPVPNXuMG5RiQo5FA8AjhcKKvbtsR0gWr/Rb3/Jch/ifaDCW+XPH5urarUbzs0NoYd4zPVSHVsI38cPZBW6OKAI711aGdGENPlWCt8+OYKai9UEOCArEDVv+D9HyFHPhGLs4JILI6kqsb12N2bPc=
+	t=1778860394; cv=none; b=n6evHGv1Gz5y5omdRLp/X59AMEgJo74kCj9TOSZ8VYZI9+pLhD7JpB7ralIxAKFe3iPn0Slm41ILZEGQUvHkQ6R+gShrbuCqxm9ykrzuZq6Zy9ub2C1epz/iyefFpasdteKF6aI3rYPMhH+Lhx0yPyB8MVIicEELcqyrAVFl82o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860392; c=relaxed/simple;
-	bh=4SQztIYIAMJyF4XHPuES4N5GRHbkcYiUDsTbzdi7OS8=;
+	s=arc-20240116; t=1778860394; c=relaxed/simple;
+	bh=cNNMW75QW3vnGJk/zgrK0RQLzwEcRxP45+aWNfkgmho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q4Hpon5RtR+ifKFMNrBbppv9qW0Vwy4Dxu4Zl0jjy8KH9ijb1kdsOPnlRbm13HBe+dL9THzUqUolembSm0QRn18md1oXkP5XWVL+Mgwv8NO2mqiLdvP4f8qsJze4JisbB/P9OB1c2sBHjCXcfsGXyBgGbOU9IoD/9J8qxVA2pwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z69t76Fp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sfW6L5qgXA8jHkXKSLAFv+pbRyBxa1v0AgZ7SsC88wfluIFH1YR5Xp5YxgaSk9NpFswE0bf+aoGbw0o3bu9Wr00YSyeOSoY1iqqyBwupV+cRlGFPGMtjPC2ESlRuC8+6ReH7j/XYH7xOZ7apdUle3mGaf5tJ95FuHM2ClzI4i9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gy00Dz3c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z69t76Fp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A942AC2BCB0;
-	Fri, 15 May 2026 15:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gy00Dz3c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C46FC2BCB0;
+	Fri, 15 May 2026 15:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860392;
-	bh=4SQztIYIAMJyF4XHPuES4N5GRHbkcYiUDsTbzdi7OS8=;
+	s=korg; t=1778860394;
+	bh=cNNMW75QW3vnGJk/zgrK0RQLzwEcRxP45+aWNfkgmho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z69t76FpSRS4QPDQoO2cTzZx9wb60WrLJkIocCrTBQPKbL1bT+jwVAZhONi+bSOQt
-	 Nr0Thg8G+tE8BGx9j/KG1sEp0QtwdeEZODHQwL8bX5+uGMGbKITsJqid4lIylWbVCB
-	 6tH+SLoIgzqL24ce8L78BvYawg3LsE2ezk5+kYGM=
+	b=gy00Dz3cH3A45Y6r5I4gNVk+6Wy1KKjIrpkIsHaiYIk/yH9SIYAb2frAu1ZWjw15H
+	 F8570ty7Di5GcwQzRRnEIlbUNPUnn0DtuwQktAqL86Aq5hb/PNT0W8ejTAJYkpRSk7
+	 8Yo5GifmOli0VryEjqwaqRkceRbfGfz9jobs8aaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Ruijing Dong <ruijing.dong@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 072/144] drm/amdgpu: Add bounds checking to ib_{get,set}_value
-Date: Fri, 15 May 2026 17:48:18 +0200
-Message-ID: <20260515154655.207143585@linuxfoundation.org>
+Subject: [PATCH 6.12 073/144] drm/amdgpu/vcn4: Prevent OOB reads when parsing IB
+Date: Fri, 15 May 2026 17:48:19 +0200
+Message-ID: <20260515154655.229288283@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -55,49 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Cheng <benjamin.cheng@amd.com>
 
-commit 66085e206431ef88ce36f53c1f53d570790ccc9e upstream.
+commit 2444eb0ec8283f4a3845eb7febad378476e1ba3c upstream.
 
-The uvd/vce/vcn code accesses the IB at predefined offsets without
-checking that the IB is large enough. Check the bounds here. The caller
-is responsible for making sure it can handle arbitrary return values.
-
-Also make the idx a uint32_t to prevent overflows causing the condition
-to fail.
+Rewrite the IB parsing to use amdgpu_ib_get_value() which handles the
+bounds checks.
 
 Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
 Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
-@@ -471,15 +471,18 @@ void amdgpu_debugfs_ring_init(struct amd
- 
- int amdgpu_ring_init_mqd(struct amdgpu_ring *ring);
- 
--static inline u32 amdgpu_ib_get_value(struct amdgpu_ib *ib, int idx)
-+static inline u32 amdgpu_ib_get_value(struct amdgpu_ib *ib, uint32_t idx)
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
+@@ -1854,9 +1854,10 @@ out:
+ static int vcn_v4_0_enc_find_ib_param(struct amdgpu_ib *ib, uint32_t id, int start)
  {
--	return ib->ptr[idx];
-+	if (idx < ib->length_dw)
-+		return ib->ptr[idx];
-+	return 0;
- }
+ 	int i;
++	uint32_t len;
  
--static inline void amdgpu_ib_set_value(struct amdgpu_ib *ib, int idx,
-+static inline void amdgpu_ib_set_value(struct amdgpu_ib *ib, uint32_t idx,
- 				       uint32_t value)
+-	for (i = start; i < ib->length_dw && ib->ptr[i] >= 8; i += ib->ptr[i] / 4) {
+-		if (ib->ptr[i + 1] == id)
++	for (i = start; (len = amdgpu_ib_get_value(ib, i)) >= 8; i += len / 4) {
++		if (amdgpu_ib_get_value(ib, i + 1) == id)
+ 			return i;
+ 	}
+ 	return -1;
+@@ -1867,8 +1868,6 @@ static int vcn_v4_0_ring_patch_cs_in_pla
+ 					   struct amdgpu_ib *ib)
  {
--	ib->ptr[idx] = value;
-+	if (idx < ib->length_dw)
-+		ib->ptr[idx] = value;
- }
+ 	struct amdgpu_ring *ring = amdgpu_job_ring(job);
+-	struct amdgpu_vcn_decode_buffer *decode_buffer;
+-	uint64_t addr;
+ 	uint32_t val;
+ 	int idx = 0, sidx;
  
- int amdgpu_ib_get(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+@@ -1879,20 +1878,22 @@ static int vcn_v4_0_ring_patch_cs_in_pla
+ 	while ((idx = vcn_v4_0_enc_find_ib_param(ib, RADEON_VCN_ENGINE_INFO, idx)) >= 0) {
+ 		val = amdgpu_ib_get_value(ib, idx + 2); /* RADEON_VCN_ENGINE_TYPE */
+ 		if (val == RADEON_VCN_ENGINE_TYPE_DECODE) {
+-			decode_buffer = (struct amdgpu_vcn_decode_buffer *)&ib->ptr[idx + 6];
++			uint32_t valid_buf_flag = amdgpu_ib_get_value(ib, idx + 6);
++			uint64_t msg_buffer_addr;
+ 
+-			if (!(decode_buffer->valid_buf_flag & 0x1))
++			if (!(valid_buf_flag & 0x1))
+ 				return 0;
+ 
+-			addr = ((u64)decode_buffer->msg_buffer_address_hi) << 32 |
+-				decode_buffer->msg_buffer_address_lo;
+-			return vcn_v4_0_dec_msg(p, job, addr);
++			msg_buffer_addr = ((u64)amdgpu_ib_get_value(ib, idx + 7)) << 32 |
++				amdgpu_ib_get_value(ib, idx + 8);
++			return vcn_v4_0_dec_msg(p, job, msg_buffer_addr);
+ 		} else if (val == RADEON_VCN_ENGINE_TYPE_ENCODE) {
+ 			sidx = vcn_v4_0_enc_find_ib_param(ib, RENCODE_IB_PARAM_SESSION_INIT, idx);
+-			if (sidx >= 0 && ib->ptr[sidx + 2] == RENCODE_ENCODE_STANDARD_AV1)
++			if (sidx >= 0 &&
++			    amdgpu_ib_get_value(ib, sidx + 2) == RENCODE_ENCODE_STANDARD_AV1)
+ 				return vcn_v4_0_limit_sched(p, job);
+ 		}
+-		idx += ib->ptr[idx] / 4;
++		idx += amdgpu_ib_get_value(ib, idx) / 4;
+ 	}
+ 	return 0;
+ }
 
 
