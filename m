@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD30C3E0082;
-	Fri, 15 May 2026 16:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6316C3FBB53;
+	Fri, 15 May 2026 16:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861093; cv=none; b=fkcQK7057I+qo2qSqAP2dSVFaerxLlUg+eu7zJuh8/exhwTVMALC84lpCU0TS4zJ5AZLBKTS/j1LwnzmP0PoSlzzhhcX1jGTBDpJ+uwjD51hPHnwaes7szhzr+hXZnzISkZeksbsiyKjQN+efXB/anhiBMxwj33RM3GKQvHKjjQ=
+	t=1778861096; cv=none; b=qJkzXC/ROciHHzinHh/xdaV+3cFuwKaw4JpsN29uCkRLyJZ8fkqBm0MF25EmiiMGvlPs3l2jeHg2gJN3gWVC3BXoHn/ubgEnWTMMVCuzU4iVSeZ+3PWvvSc7hDQfD1/RCvS8eKxz63XLp4aMrqT2AmIVnXYlPc75296lkyCojuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861093; c=relaxed/simple;
-	bh=C141+KxdT2B10+MgbG9rIy22REMVof0XkQDGijwqUCQ=;
+	s=arc-20240116; t=1778861096; c=relaxed/simple;
+	bh=t99nIk5XwnONiuzj0TtDqrtYrKcJUbJZhVa/PeEv4Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U4MWHcEZen9FEU4ez3fP7mWBlcU2uXQlEus5bDqzZsauLKNxN8riAV9pbp7U2h+IJccXQYfbvFPqk19qOcOxeMD8LD+o7X/JaZNirFWMJ9YzAERmQAC0PY6TEiKk1Dwuwb1Guop1YfXhkKR9iL2QPkDBHwJO0n6hyNWtJhaLLOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXC4oZX0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VPTeuheNY0QkSHhpy+gHbyCQM1P66KM6u3wy67703JzxenwxMhlA+KzHR5kfl2b7nXqDKapdlSTE2E7Atr3vyqitcT5Lw03LHCWPTzcQyeUi2MbLDskEUxhasJLBkMnO+8p5BK/7AyGn0nHE+S3u+DoZkfX4uz1lwVk0uS8KN8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Igsoayus; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXC4oZX0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A6CC2BCF5;
-	Fri, 15 May 2026 16:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Igsoayus"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF761C2BCC7;
+	Fri, 15 May 2026 16:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861093;
-	bh=C141+KxdT2B10+MgbG9rIy22REMVof0XkQDGijwqUCQ=;
+	s=korg; t=1778861096;
+	bh=t99nIk5XwnONiuzj0TtDqrtYrKcJUbJZhVa/PeEv4Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eXC4oZX0/9TYSg9Jp0/FWI8F7hDP4VqFbI+KPWTayTD4X3qY4O77THSWSl8nAfmne
-	 QUwxsBI6PNhF4ZjReM2IfrHjAigpmwHX5Qt5L4i1ru9Ss3gHe6jBgWBQPExncUzdGe
-	 SSpxY0/LAES4feFe7hSh8LzDj1gcjRPCJDLsfLC4=
+	b=IgsoayusCcLv8rmBdsXU6kT1edJzjRtApNYsRHfv2ZvE0c6iVudUVG/QlycQcVsd8
+	 KhRF0IjqXDZeRbEsjeMa0jLVTwF1p+j8GyNaYdZqKayotGwoB2wAvygoIpHqmTlwlE
+	 M5nZGsmTyGX6Zuu49jFZ/laU0mn4j28W8j5m0ne0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: [PATCH 6.6 159/474] rxrpc: Fix potential UAF after skb_unshare() failure
-Date: Fri, 15 May 2026 17:44:28 +0200
-Message-ID: <20260515154718.465558156@linuxfoundation.org>
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 195/474] ALSA: usb-audio: midi2: Restart output URBs on resume
+Date: Fri, 15 May 2026 17:45:04 +0200
+Message-ID: <20260515154719.240328620@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,202 +44,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 1f2740150f904bfa60e4bad74d65add3ccb5e7f8 ]
+commit f3c57c9c2a49a21d784b7c04a2c883bffc070659 upstream.
 
-If skb_unshare() fails to unshare a packet due to allocation failure in
-rxrpc_input_packet(), the skb pointer in the parent (rxrpc_io_thread())
-will be NULL'd out.  This will likely cause the call to
-trace_rxrpc_rx_done() to oops.
+USB MIDI 2.0 suspend saves the endpoint running state, clears it and
+kills all endpoint URBs. Resume restores the running state, but only
+restarts input endpoints.
 
-Fix this by moving the unsharing down to where rxrpc_input_call_event()
-calls rxrpc_input_call_packet().  There are a number of places prior to
-that where we ignore DATA packets for a variety of reasons (such as the
-call already being complete) for which an unshare is then avoided.
+For a running output endpoint, this leaves the endpoint marked running
+with an empty URB queue. Output transfer progress depends on either the
+rawmidi trigger path starting the queue or an output completion refilling
+it. After suspend there is no completion left, and output data that
+remains queued in the raw UMP or legacy rawmidi buffer can stay stalled
+until userspace happens to trigger the stream again.
 
-And with that, rxrpc_input_packet() doesn't need to take a pointer to the
-pointer to the packet, so change that to just a pointer.
+Restore the saved state with atomic accessors, keep input endpoints
+restarted as before, and restart output endpoints that were running before
+suspend. Clear the saved suspend state after restoring it.
 
-Fixes: 2d1faf7a0ca3 ("rxrpc: Simplify skbuff accounting in receive path")
-Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-4-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Relocated the unshare/skb_copy block from rxrpc_input_call_event()'s rx_queue dequeue loop to existing `if (skb) rxrpc_input_call_packet()` site, and substituted rxrpc_skb_put_call_rx with rxrpc_skb_put_input. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Readd rxrpc_skb_put_response_copy() or will cause a build fail with commit 24481a7f5733 ("rxrpc: Fix conn-level packet handling to unshare RESPONSE packets") ]
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ff49d1df79ae ("ALSA: usb-audio: USB MIDI 2.0 UMP support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260504-usb-midi2-output-resume-v1-1-c089cc8ad3c6@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |  4 ++--
- net/rxrpc/ar-internal.h      |  1 -
- net/rxrpc/call_event.c       | 23 +++++++++++++++++++++--
- net/rxrpc/io_thread.c        | 24 ++----------------------
- net/rxrpc/skbuff.c           |  9 ---------
- 5 files changed, 25 insertions(+), 36 deletions(-)
+ sound/usb/midi2.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
-index 539801f8ee282..f0560087637ed 100644
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -126,8 +126,6 @@
- 	E_(rxrpc_call_poke_timer_now,		"Timer-now")
+--- a/sound/usb/midi2.c
++++ b/sound/usb/midi2.c
+@@ -234,7 +234,7 @@ static void kill_midi_urbs(struct snd_us
+ 	if (!ep)
+ 		return;
+ 	if (suspending)
+-		ep->suspended = ep->running;
++		atomic_set(&ep->suspended, atomic_read(&ep->running));
+ 	atomic_set(&ep->running, 0);
+ 	for (i = 0; i < ep->num_urbs; i++) {
+ 		if (!ep->urbs[i].urb)
+@@ -1193,10 +1193,11 @@ void snd_usb_midi_v2_suspend_all(struct
  
- #define rxrpc_skb_traces \
--	EM(rxrpc_skb_eaten_by_unshare,		"ETN unshare  ") \
--	EM(rxrpc_skb_eaten_by_unshare_nomem,	"ETN unshar-nm") \
- 	EM(rxrpc_skb_get_conn_secured,		"GET conn-secd") \
- 	EM(rxrpc_skb_get_conn_work,		"GET conn-work") \
- 	EM(rxrpc_skb_get_last_nack,		"GET last-nack") \
-@@ -146,12 +144,14 @@
- 	EM(rxrpc_skb_put_jumbo_subpacket,	"PUT jumbo-sub") \
- 	EM(rxrpc_skb_put_last_nack,		"PUT last-nack") \
- 	EM(rxrpc_skb_put_purge,			"PUT purge    ") \
-+	EM(rxrpc_skb_put_response_copy,		"PUT resp-cpy ") \
- 	EM(rxrpc_skb_put_rotate,		"PUT rotate   ") \
- 	EM(rxrpc_skb_put_unknown,		"PUT unknown  ") \
- 	EM(rxrpc_skb_see_conn_work,		"SEE conn-work") \
- 	EM(rxrpc_skb_see_recvmsg,		"SEE recvmsg  ") \
- 	EM(rxrpc_skb_see_reject,		"SEE reject   ") \
- 	EM(rxrpc_skb_see_rotate,		"SEE rotate   ") \
-+	EM(rxrpc_skb_see_unshare_nomem,		"SEE unshar-nm") \
- 	E_(rxrpc_skb_see_version,		"SEE version  ")
- 
- #define rxrpc_local_traces \
-diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
-index f4512761f572d..1db479f3d6d3c 100644
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -1269,7 +1269,6 @@ int rxrpc_server_keyring(struct rxrpc_sock *, sockptr_t, int);
- void rxrpc_kernel_data_consumed(struct rxrpc_call *, struct sk_buff *);
- void rxrpc_new_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_see_skb(struct sk_buff *, enum rxrpc_skb_trace);
--void rxrpc_eaten_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_get_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_free_skb(struct sk_buff *, enum rxrpc_skb_trace);
- void rxrpc_purge_queue(struct sk_buff_head *);
-diff --git a/net/rxrpc/call_event.c b/net/rxrpc/call_event.c
-index 0f78544d043be..c8a4a4c979eb6 100644
---- a/net/rxrpc/call_event.c
-+++ b/net/rxrpc/call_event.c
-@@ -456,8 +456,27 @@ bool rxrpc_input_call_event(struct rxrpc_call *call, struct sk_buff *skb)
- 		resend = true;
- 	}
- 
--	if (skb)
--		rxrpc_input_call_packet(call, skb);
-+	if (skb) {
-+		struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
-+
-+		if (sp->hdr.securityIndex != 0 && skb_cloned(skb)) {
-+			/* Unshare the packet so that it can be modified by
-+			 * in-place decryption.
-+			 */
-+			struct sk_buff *nskb = skb_copy(skb, GFP_ATOMIC);
-+
-+			if (nskb) {
-+				rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
-+				rxrpc_input_call_packet(call, nskb);
-+				rxrpc_free_skb(nskb, rxrpc_skb_put_input);
-+			} else {
-+				/* OOM - Drop the packet. */
-+				rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
-+			}
-+		} else {
-+			rxrpc_input_call_packet(call, skb);
-+		}
-+	}
- 
- 	rxrpc_transmit_some_data(call);
- 
-diff --git a/net/rxrpc/io_thread.c b/net/rxrpc/io_thread.c
-index 0491f2bbf61e0..f542eda13ff0b 100644
---- a/net/rxrpc/io_thread.c
-+++ b/net/rxrpc/io_thread.c
-@@ -167,13 +167,12 @@ static bool rxrpc_extract_abort(struct sk_buff *skb)
- /*
-  * Process packets received on the local endpoint
-  */
--static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff **_skb)
-+static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff *skb)
+ static void resume_midi2_endpoint(struct snd_usb_midi2_endpoint *ep)
  {
- 	struct rxrpc_connection *conn;
- 	struct sockaddr_rxrpc peer_srx;
- 	struct rxrpc_skb_priv *sp;
- 	struct rxrpc_peer *peer = NULL;
--	struct sk_buff *skb = *_skb;
- 	bool ret = false;
- 
- 	skb_pull(skb, sizeof(struct udphdr));
-@@ -219,25 +218,6 @@ static bool rxrpc_input_packet(struct rxrpc_local *local, struct sk_buff **_skb)
- 			return rxrpc_bad_message(skb, rxrpc_badmsg_zero_call);
- 		if (sp->hdr.seq == 0)
- 			return rxrpc_bad_message(skb, rxrpc_badmsg_zero_seq);
--
--		/* Unshare the packet so that it can be modified for in-place
--		 * decryption.
--		 */
--		if (sp->hdr.securityIndex != 0) {
--			skb = skb_unshare(skb, GFP_ATOMIC);
--			if (!skb) {
--				rxrpc_eaten_skb(*_skb, rxrpc_skb_eaten_by_unshare_nomem);
--				*_skb = NULL;
--				return just_discard;
--			}
--
--			if (skb != *_skb) {
--				rxrpc_eaten_skb(*_skb, rxrpc_skb_eaten_by_unshare);
--				*_skb = skb;
--				rxrpc_new_skb(skb, rxrpc_skb_new_unshared);
--				sp = rxrpc_skb(skb);
--			}
--		}
- 		break;
- 
- 	case RXRPC_PACKET_TYPE_CHALLENGE:
-@@ -479,7 +459,7 @@ int rxrpc_io_thread(void *data)
- 			switch (skb->mark) {
- 			case RXRPC_SKB_MARK_PACKET:
- 				skb->priority = 0;
--				if (!rxrpc_input_packet(local, &skb))
-+				if (!rxrpc_input_packet(local, skb))
- 					rxrpc_reject_packet(local, skb);
- 				trace_rxrpc_rx_done(skb->mark, skb->priority);
- 				rxrpc_free_skb(skb, rxrpc_skb_put_input);
-diff --git a/net/rxrpc/skbuff.c b/net/rxrpc/skbuff.c
-index 3bcd6ee803960..e2169d1a14b5f 100644
---- a/net/rxrpc/skbuff.c
-+++ b/net/rxrpc/skbuff.c
-@@ -46,15 +46,6 @@ void rxrpc_get_skb(struct sk_buff *skb, enum rxrpc_skb_trace why)
- 	skb_get(skb);
+-	ep->running = ep->suspended;
+-	if (ep->direction == STR_IN)
++	atomic_set(&ep->running, atomic_read(&ep->suspended));
++	atomic_set(&ep->suspended, 0);
++
++	if (ep->direction == STR_IN || atomic_read(&ep->running))
+ 		submit_io_urbs(ep);
+-	/* FIXME: does it all? */
  }
  
--/*
-- * Note the dropping of a ref on a socket buffer by the core.
-- */
--void rxrpc_eaten_skb(struct sk_buff *skb, enum rxrpc_skb_trace why)
--{
--	int n = atomic_inc_return(&rxrpc_n_rx_skbs);
--	trace_rxrpc_skb(skb, 0, n, why);
--}
--
- /*
-  * Note the destruction of a socket buffer.
-  */
--- 
-2.53.0
-
+ void snd_usb_midi_v2_resume_all(struct snd_usb_audio *chip)
 
 
