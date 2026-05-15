@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B188F30566B;
-	Fri, 15 May 2026 15:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C18122FF22;
+	Fri, 15 May 2026 15:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860327; cv=none; b=osAW1LIgZBDZGwQsbR3Wkrq0pW9xjc8Ua8kZRb0CZK7iVSWmv1erabi8CkO3DRSKUqQhpEt49C7v7OUia3MtHzbX7CY1HQ2xdR7ebtCK4KTr18VlEL24dHPE2J8pq7uXEMq4SsbUjf9osvOR5oQIr5aNF+1NT/T5DDzWSDz2jRI=
+	t=1778860330; cv=none; b=T1xQvemRdaHkgJTbDl4CwA5bC0K8u8DQ8praIJDJIXUyOZ91XuqxYozYhEOR8vYXQ0UmjOZ5M3pYYMvyiF8bu+zYxazU1hTlGBlzuWGQFhrAJy2wcdNEgDPqkeFq+27RAZ/9OeOphfuseoF0A+fH+i6tCRGTwye9yJny16/HmI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860327; c=relaxed/simple;
-	bh=qeFa5UQQX+K3AmeR9j6BkRdfQYV59/l7YEgH3ErdKco=;
+	s=arc-20240116; t=1778860330; c=relaxed/simple;
+	bh=m4XrzqWZVbAx1mPVa35/IaqdWhDFxVhFZKHP6isTx9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIYjabjTmKjv37VUFo1OVRyZti+XMfBpfR2HI/gHGZ6cM6oDVkM7GrVaPxGJ2lsTmmtvBUYG7raABJG318vQ7NfWGUnG2fY/Yo7kqv0oVkMqL9h2B2LGnxlT+0lGYznheGiebRWzuhehcJsVutJfQRgDEgM9oVqHiUt2YRB/j5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYrWQOO9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UAVue1zrQa44VoCVWjlfME5ajVvDHX6KYQhhUlhYh+jk4+vL3K0wQkSI9trKKEHu9zNuChVJ2p8cFHN7YRlmi4HSqJ/7m/Bmc8basdbl/UwoopEOciSoYZVxWyNhfgZ/ZvrRs8B4ycLCkmIqG1Chfd4lG6slDFFRTeIgwPGlPlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKJTQVhh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYrWQOO9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466D0C4AF09;
-	Fri, 15 May 2026 15:52:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKJTQVhh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3984C2BCB0;
+	Fri, 15 May 2026 15:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860327;
-	bh=qeFa5UQQX+K3AmeR9j6BkRdfQYV59/l7YEgH3ErdKco=;
+	s=korg; t=1778860330;
+	bh=m4XrzqWZVbAx1mPVa35/IaqdWhDFxVhFZKHP6isTx9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yYrWQOO9DmQixn8Bl49SIk+eme73drwXbiLpQ7bwBWiEAuUmwyzednRRcjXW6SFef
-	 gXlBszq/P+SRNRgoZk6TDGt9u1tmiOKtpyHMMW6SbdvyURk54yUQhp0c4v3puYt0xb
-	 ZYB9UbLkJ8UYLHzvgmd6wlvJzws3dV5p2HHIVrK8=
+	b=iKJTQVhhDzShL3ffoRok4SwgOVrHUSwgkSFmQF4UX0iRSB6FI5+G5XeGGDI35O/g5
+	 D3UgynJOyJuQN/hjDy+rIwGT8aalqFV7LENNqfmEIdcxaZBh3DYVfOOfEVUs+t6SuW
+	 vLOqblX5wjF2hy7ZtHy6I5fAKswiRc80Kfo7yflg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 045/144] spi: pl022: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:51 +0200
-Message-ID: <20260515154654.576018910@linuxfoundation.org>
+Subject: [PATCH 6.12 046/144] spi: sh-hspi: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:52 +0200
+Message-ID: <20260515154654.600998595@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -53,52 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 994b33366be9148240690e3e94bffe17c4d89458 upstream.
+commit e63982e6392e45a6ecd68d6c317a081cc8e70143 upstream.
 
 Make sure to deregister the controller before releasing underlying
-resources like DMA during driver unbind.
+resources like clocks during driver unbind.
 
-Fixes: b43d65f7e818 ("[ARM] 5546/1: ARM PL022 SSP/SPI driver v3")
-Cc: stable@vger.kernel.org	# 2.6.31
-Cc: Linus Walleij <linusw@kernel.org>
+Fixes: 49e599b8595f ("spi: sh-hspi: control spi clock more correctly")
+Cc: stable@vger.kernel.org	# 3.4
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-9-johan@kernel.org
+Link: https://patch.msgid.link/20260410081757.503099-13-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-pl022.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/spi/spi-sh-hspi.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-pl022.c
-+++ b/drivers/spi/spi-pl022.c
-@@ -1960,7 +1960,7 @@ static int pl022_probe(struct amba_devic
+--- a/drivers/spi/spi-sh-hspi.c
++++ b/drivers/spi/spi-sh-hspi.c
+@@ -258,9 +258,9 @@ static int hspi_probe(struct platform_de
+ 	ctlr->transfer_one_message = hspi_transfer_one_message;
+ 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
  
- 	/* Register with the SPI framework */
- 	amba_set_drvdata(adev, pl022);
--	status = devm_spi_register_controller(&adev->dev, host);
-+	status = spi_register_controller(host);
- 	if (status != 0) {
- 		dev_err_probe(&adev->dev, status,
- 			      "problem registering spi host\n");
-@@ -2001,6 +2001,10 @@ pl022_remove(struct amba_device *adev)
- 	if (!pl022)
- 		return;
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret < 0) {
+-		dev_err(&pdev->dev, "devm_spi_register_controller error.\n");
++		dev_err(&pdev->dev, "failed to register controller\n");
+ 		goto error2;
+ 	}
  
-+	spi_controller_get(pl022->host);
-+
-+	spi_unregister_controller(pl022->host);
-+
- 	/*
- 	 * undo pm_runtime_put() in probe.  I assume that we're not
- 	 * accessing the primecell here.
-@@ -2012,6 +2016,8 @@ pl022_remove(struct amba_device *adev)
- 		pl022_dma_remove(pl022);
+@@ -280,9 +280,15 @@ static void hspi_remove(struct platform_
+ {
+ 	struct hspi_priv *hspi = platform_get_drvdata(pdev);
  
- 	amba_release_regions(adev);
++	spi_controller_get(hspi->ctlr);
 +
-+	spi_controller_put(pl022->host);
++	spi_unregister_controller(hspi->ctlr);
++
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	clk_put(hspi->clk);
++
++	spi_controller_put(hspi->ctlr);
  }
  
- #ifdef CONFIG_PM_SLEEP
+ static const struct of_device_id hspi_of_match[] = {
 
 
