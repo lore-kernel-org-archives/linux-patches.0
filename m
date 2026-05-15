@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162D33CB2FD;
-	Fri, 15 May 2026 16:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76AE26CE11;
+	Fri, 15 May 2026 16:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862359; cv=none; b=Ol0U1O5gXHtH5wYvYTq9qo7vZc0kxrrIhMmwuEpO32IU8imGpykXXChpEYJ7tvlZpxlo28SSStQq5wL9dcw9lZBLnzo+VjQzcVd1qphvW+D6VpmoACt0lizeSUXa2jeeGkEsV2O7XEmKRHapbcAkQYKg5xk49R5O3NCRR6Dk1iE=
+	t=1778862361; cv=none; b=dnJFnwH7mSV44qowfSrsKQromXFVCA16YXBo5IfjRsFvsGFidQN9BUQJgkn0MCIDuKmtQ5D9L+oq6WxxulGQjDibNwsOpbvHnR9irEn9x8l5mCaU/3tblybgVw709bONWOCMp079ZNDbW2yhcEi6Aiw4KC9jMJhZIsGNSfDmX4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862359; c=relaxed/simple;
-	bh=hVK0OAfE5kTK1tyayH4x/RU1kLYkVX+fYVkJajAaWag=;
+	s=arc-20240116; t=1778862361; c=relaxed/simple;
+	bh=P6bLBkopYQx86Vrax8EOCVKIayfragepcvUb25m13YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aYPjqbeo1adSf45mWU+0VqaAFreyal0godkrsnVmS+poVxJVaJ60BrzR0KUjo5YTZOqGWPeVhhADvrIiN1H3XzxGMr2SEhkMmKoylq0mAnEQ+wID11KK09Q5LIihl2MLK1QOa6/jWSfC9ANz2m02HmRPwqCMjgto/oA0P5nGDQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBSYmSES; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D8Jl+PkA7CVZ7GjEKdaRGWW9iIyFYIYRLykaiJneUJGWfh5JqCtWJPvcP/0MrZRaR3JzjUH0i1C+Dwjp6J8xS+Fay6tHOIpDwLN51dPCaNcw5LUo+sFEFKPqo5G1Jg7TB3l+u1yMIhm2J3Z7rspoexv56DiwuWtse0Lwrk1jn6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmov0ws7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBSYmSES"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9B1C2BCB0;
-	Fri, 15 May 2026 16:25:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmov0ws7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBA6C2BCB0;
+	Fri, 15 May 2026 16:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862359;
-	bh=hVK0OAfE5kTK1tyayH4x/RU1kLYkVX+fYVkJajAaWag=;
+	s=korg; t=1778862361;
+	bh=P6bLBkopYQx86Vrax8EOCVKIayfragepcvUb25m13YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBSYmSESO11Edaa9Q2QrWaeGtDYe9Ajgnh3IAoGpK/UaXins1VSgGOhIv7EVa7Msl
-	 3flClupA3ievDl/mvfrA+VJTeFBd7iJxO5ChwtjMkK5O6qQTOOkiAHpTelM3WsW8Bl
-	 zjeete5R26qrZpjyqZc2ejQBJOouVptxkzoXWscc=
+	b=gmov0ws7qKBlnf7XOHVUEj8q3/O13hNQX2bZNqCLJBEuW7ORviI6D32XwdevlieCe
+	 k/UaDlfkvaTqizSYGG4i5m4MYB4/VgQ8CCW2Na8HRIb700hRF3MJtHde4njnkEijE2
+	 ZHjBinZKrgKt9znYcoL7FL8/blT41qgSJ58wzqog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Koskovich <akoskovich@pm.me>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 019/201] media: i2c: ov8856: free control handler on error in ov8856_init_controls()
-Date: Fri, 15 May 2026 17:47:17 +0200
-Message-ID: <20260515154658.950333270@linuxfoundation.org>
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 7.0 002/201] HID: appletb-kbd: fix UAF in inactivity-timer cleanup path
+Date: Fri, 15 May 2026 17:47:00 +0200
+Message-ID: <20260515154658.592565506@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -51,45 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Koskovich <akoskovich@pm.me>
+From: Sangyun Kim <sangyun.kim@snu.ac.kr>
 
-commit f75e160745663ce9b13362ae6e90bd439c58df69 upstream.
+commit 4db2af929279c799b5653a39eb0795c72baffca4 upstream.
 
-The control handler wasn't freed if adding controls failed, add an error
-exit label and convert the existing error return to use it.
+Commit 38224c472a03 ("HID: appletb-kbd: fix slab use-after-free bug in
+appletb_kbd_probe") added timer_delete_sync(&kbd->inactivity_timer) to
+both the probe close_hw error path and appletb_kbd_remove(), but the
+way it was wired in left the inactivity timer reachable during driver
+tear-down via two distinct windows.
 
-Fixes: 879347f0c258 ("media: ov8856: Add support for OV8856 sensor")
+Window A -- put_device() before timer_delete_sync():
+
+	put_device(&kbd->backlight_dev->dev);
+	timer_delete_sync(&kbd->inactivity_timer);
+
+The inactivity_timer softirq reads kbd->backlight_dev and calls
+backlight_device_set_brightness() -> mutex_lock(&ops_lock).  If a
+concurrent hid_appletb_bl unbind drops the last devm reference
+between these two calls, the backlight_device is freed and the
+mutex_lock() touches freed memory.
+
+Window B -- backlight cleanup before hid_hw_stop():
+
+	if (kbd->backlight_dev) {
+		timer_delete_sync(...);
+		put_device(...);
+	}
+	hid_hw_close(hdev);
+	hid_hw_stop(hdev);
+
+Even after Window A is closed, hid_hw_close()/hid_hw_stop() still run
+afterwards, so a late ".event" callback from the HID core (USB URB
+completion on real Apple hardware) can arrive after
+timer_delete_sync() drained the softirq but before put_device() drops
+the reference.  That callback reaches reset_inactivity_timer(), which
+calls mod_timer() and re-arms the timer.  The freshly re-armed timer
+can then fire on the about-to-be-freed backlight_device.
+
+Both windows produce the same KASAN slab-use-after-free:
+
+  BUG: KASAN: slab-use-after-free in __mutex_lock+0x1aab/0x21c0
+  Read of size 8 at addr ffff88803ee9a108 by task swapper/0/0
+  Call Trace:
+   <IRQ>
+   __mutex_lock
+   backlight_device_set_brightness
+   appletb_inactivity_timer
+   call_timer_fn
+   run_timer_softirq
+   handle_softirqs
+  Allocated by task N:
+   devm_backlight_device_register
+   appletb_bl_probe
+  Freed by task M:
+   (concurrent hid_appletb_bl unbind path)
+
+Close both windows at once by reworking the tear-down in
+appletb_kbd_remove() and in the probe close_hw error path so that
+
+ 1) hid_hw_close()/hid_hw_stop() run before the backlight cleanup,
+    guaranteeing no further .event callback can fire and re-arm the
+    timer, and
+ 2) inside the "if (kbd->backlight_dev)" block, timer_delete_sync()
+    runs before put_device(), so the softirq is drained before the
+    final reference is dropped.
+
+Fixes: 38224c472a03 ("HID: appletb-kbd: fix slab use-after-free bug in appletb_kbd_probe")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov8856.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/hid/hid-appletb-kbd.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/media/i2c/ov8856.c
-+++ b/drivers/media/i2c/ov8856.c
-@@ -1951,12 +1951,18 @@ static int ov8856_init_controls(struct o
- 			  V4L2_CID_HFLIP, 0, 1, 1, 0);
- 	v4l2_ctrl_new_std(ctrl_hdlr, &ov8856_ctrl_ops,
- 			  V4L2_CID_VFLIP, 0, 1, 1, 0);
--	if (ctrl_hdlr->error)
--		return ctrl_hdlr->error;
-+	if (ctrl_hdlr->error) {
-+		ret = ctrl_hdlr->error;
-+		goto err_ctrl_handler_free;
+--- a/drivers/hid/hid-appletb-kbd.c
++++ b/drivers/hid/hid-appletb-kbd.c
+@@ -440,13 +440,13 @@ static int appletb_kbd_probe(struct hid_
+ unregister_handler:
+ 	input_unregister_handler(&kbd->inp_handler);
+ close_hw:
+-	if (kbd->backlight_dev) {
+-		put_device(&kbd->backlight_dev->dev);
+-		timer_delete_sync(&kbd->inactivity_timer);
+-	}
+ 	hid_hw_close(hdev);
+ stop_hw:
+ 	hid_hw_stop(hdev);
++	if (kbd->backlight_dev) {
++		timer_delete_sync(&kbd->inactivity_timer);
++		put_device(&kbd->backlight_dev->dev);
 +	}
- 
- 	ov8856->sd.ctrl_handler = ctrl_hdlr;
- 
- 	return 0;
-+
-+err_ctrl_handler_free:
-+	v4l2_ctrl_handler_free(ctrl_hdlr);
-+	return ret;
+ 	return ret;
  }
  
- static void ov8856_update_pad_format(struct ov8856 *ov8856,
+@@ -457,13 +457,13 @@ static void appletb_kbd_remove(struct hi
+ 	appletb_kbd_set_mode(kbd, APPLETB_KBD_MODE_OFF);
+ 
+ 	input_unregister_handler(&kbd->inp_handler);
++	hid_hw_close(hdev);
++	hid_hw_stop(hdev);
++
+ 	if (kbd->backlight_dev) {
+-		put_device(&kbd->backlight_dev->dev);
+ 		timer_delete_sync(&kbd->inactivity_timer);
++		put_device(&kbd->backlight_dev->dev);
+ 	}
+-
+-	hid_hw_close(hdev);
+-	hid_hw_stop(hdev);
+ }
+ 
+ static int appletb_kbd_suspend(struct hid_device *hdev, pm_message_t msg)
 
 
