@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418163B9D96;
-	Fri, 15 May 2026 16:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78984D8D90;
+	Fri, 15 May 2026 16:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862596; cv=none; b=fBh4k3iydyuH1LssnjYJEwM2Xj2EenYpCXvtP7+jPOOEMuXWiOEMEMN9EEVh2eLVP+E8V2pPWXcjhthyHTW46Ww11k0w9pNdf/YEGA7Wq4SM64PDmSq4wV5HbA/lONEnlx9F6tB8OKTvI1PvaKKsMHc7IUSYOZAsBoR8NrblOaQ=
+	t=1778862599; cv=none; b=j/EJC/2P/JVz1++RWgsBaqTWgDaGwzWGMzC8Q4ZTGQ0CHnHPLt5SZus6BQ/tuC6TOWZkIozH309YF9h5DmsoqQz4jfHmacJtMYkpJuatDNeRev8STOG0q16v9YM4xua133T/56aBBUp5CklDEBCeMQoqm97tHVORLfrFik3Bdnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862596; c=relaxed/simple;
-	bh=Z4UqND0/Y+pf2QSBexcu/pFD/lk08JuV1rt4ELrJzXk=;
+	s=arc-20240116; t=1778862599; c=relaxed/simple;
+	bh=l1KZzMYwWqntO0ORIl+JhelS98ROvdd65klwtytM2rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZX7jaJuFdokh/T3aVlL9+KPsCXL6xiOIFW44ijuRqO0RipaZhAm9Hh2b2Z/we04c8KkJOJMLUtMKP9uI1k+AtcvkjixKcd52C9ttLLHAn/0wh/m2Rs3YQdE5MUoJiB0vRm3DU3nNNhQMMF+6CNW0iqc5HQi9u3yDjN7RUbpiMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtgglOd/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMp8psRWP3+iyL1CroLNBOBh0yfd7RzdXdsu+VztUVm6xrmi0WIfIh5z3kU77ZJKOZd22gORY73kxapCJUcWxcC2MyumjaHUMt0tYPf2EfgqzIjMFsolIhWgBN9U7jNVgYT8odCIJjQUFygGcAmWx1G/QR9BcrLKIDXDlG5KhZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWukuSTX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtgglOd/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1452C2BCF5;
-	Fri, 15 May 2026 16:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWukuSTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52778C2BCB0;
+	Fri, 15 May 2026 16:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862596;
-	bh=Z4UqND0/Y+pf2QSBexcu/pFD/lk08JuV1rt4ELrJzXk=;
+	s=korg; t=1778862598;
+	bh=l1KZzMYwWqntO0ORIl+JhelS98ROvdd65klwtytM2rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AtgglOd/MBNCnSEup2vO2pE2oGQUC5iMjBdLaHnNUoJGPKv8u07UjoAOCR5MUSipm
-	 DnYZtzMXtxQTZ+XFbzt4N1krWytliFVaKc5kEe9NcLXbqa6SnOZH+O8b6ag/F56W7u
-	 4N7ZfJhBljEd+9OPuHaLnnm+6RlV5fnbOK05n3NA=
+	b=pWukuSTXCBobw4gqBbFO0fz2KvJ7bWQP+4FmXzbB9P4pI8JQhkugGn+ffb0o2xFBS
+	 7EACjAUQBcUu/71v/ma0LVQBbtOEWY3tAvp/lZHJ4sPpsJGRyPpK7fPBxD6r/vfoI8
+	 7sxULuU2qboHvabOWEe5n2X3O8cvDX86Fox5pKBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mason Yang <masonccyang@mxic.com.tw>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 109/201] spi: mxic: fix controller deregistration
-Date: Fri, 15 May 2026 17:48:47 +0200
-Message-ID: <20260515154700.913104466@linuxfoundation.org>
+Subject: [PATCH 7.0 110/201] spi: orion: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:48 +0200
+Message-ID: <20260515154700.934702242@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,36 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit adbc595e272052181d40ec307a4c5ba98571b0fe upstream.
+commit 220f4f11104a7f83b71543ef0e48dde1da2bc5d3 upstream.
 
 Make sure to deregister the controller before disabling underlying
-resources like clocks (via runtime pm) during driver unbind.
+resources like clocks during driver unbind.
 
-Fixes: b942d80b0a39 ("spi: Add MXIC controller driver")
-Cc: stable@vger.kernel.org	# 5.0: cc53711b2191
-Cc: stable@vger.kernel.org	# 5.0
-Cc: Mason Yang <masonccyang@mxic.com.tw>
+Fixes: 60cadec9da7b ("spi: new orion_spi driver")
+Cc: stable@vger.kernel.org	# 2.6.27
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260414134319.978196-6-johan@kernel.org
+Link: https://patch.msgid.link/20260414134319.978196-7-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-mxic.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-orion.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-mxic.c
-+++ b/drivers/spi/spi-mxic.c
-@@ -832,9 +832,10 @@ static void mxic_spi_remove(struct platf
+--- a/drivers/spi/spi-orion.c
++++ b/drivers/spi/spi-orion.c
+@@ -801,10 +801,15 @@ static void orion_spi_remove(struct plat
  	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct mxic_spi *mxic = spi_controller_get_devdata(host);
+ 	struct orion_spi *spi = spi_controller_get_devdata(host);
  
++	spi_controller_get(host);
++
 +	spi_unregister_controller(host);
 +
- 	pm_runtime_disable(&pdev->dev);
- 	mxic_spi_mem_ecc_remove(mxic);
+ 	pm_runtime_get_sync(&pdev->dev);
+ 	clk_disable_unprepare(spi->axi_clk);
+ 
 -	spi_unregister_controller(host);
++	spi_controller_put(host);
++
+ 	pm_runtime_disable(&pdev->dev);
  }
  
- static const struct of_device_id mxic_spi_of_ids[] = {
 
 
