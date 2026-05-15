@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BBA3FF1D8;
-	Fri, 15 May 2026 15:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC39B303CB0;
+	Fri, 15 May 2026 15:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860519; cv=none; b=AMhDNQ3e348c0Dnss1JMctpYYPcEzsXoRFNadU+m8d14E8Srj1KBqJ6tjTwLNc2eJruMrYWUyYfgxiEOkGFBY/8CZ1S7+vnVjbA4WHhBIeQrzVM3EyIvueXIqvkXzmRtSNCC4LCMc4zv0RLpHG5G+DAjFicn2twg0SimJdQKopo=
+	t=1778860521; cv=none; b=PevV5rDkpMmeWs92wNTn+rdGuHa/j+g+6TlX0bHrS5TsNN9Vxj8RNS4srEdzrT33dLJneiUticsQoKwYG6VtXoPueWtXL/ssdum1SahLn8ckm5RuUlCJzmJ3vy70cRcK/ED0gRME42uZLec1TFXDiIghISgC1ta1fbZ1dQlxZas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860519; c=relaxed/simple;
-	bh=cGkDbWum4ghFoFYoHvF541bMLiyBgSMnDuW6rBL//x8=;
+	s=arc-20240116; t=1778860521; c=relaxed/simple;
+	bh=qpwlRt+1MyFELd8UYYVz550NoolGJARZMhnumpD3f0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pa85vvZIC70QwXdktvJ3uKen4S5x+Vb6fKHrgaE6jwcFMwJL0rQeJuWOt6rrJrEscLlcBtflaaDs4NDSAeBdhfdbWorGjooDr5YB9AKIdjlJLy4M9ShI3doA266SduuqGPscFwWFgFvRnSaCeI9hzk/tfDt+mw6e26uoPjFsa1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XD0ns8b6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lam88mj2CHEMn9rPdHw+4uJTz1NCufIPMGoR6mNlYFst3UccIQQy1Ze5xOxjVNsNEKKNVNgGDZiKQHuGc4B5QIn/33IiePf6fgBgGxnNkjCSM2F9Qs2PSaNT0dSEP6vfHyiTJ0corPl7+CZ6WEhbHnh3Q8Wa9NkNk/Nq9fmFeWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOGEjt/j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XD0ns8b6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ABB0C2BCB3;
-	Fri, 15 May 2026 15:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOGEjt/j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1763BC2BCB3;
+	Fri, 15 May 2026 15:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860518;
-	bh=cGkDbWum4ghFoFYoHvF541bMLiyBgSMnDuW6rBL//x8=;
+	s=korg; t=1778860521;
+	bh=qpwlRt+1MyFELd8UYYVz550NoolGJARZMhnumpD3f0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XD0ns8b67BWuR/IO+RZZ3pjptx+pyaQceFwYbjlZ72M/ErDNBe+9fl1WB5yDYdT/1
-	 TIAHaJ3Bot3juDOG20w4cWWI4SPuhFQLo5ib/x1lvYqOvFJ+wRMPJjupb/eHFETulr
-	 ulKEAgX5wAVMo8jLtGsHNYvaDIAKy3At46qeru8k=
+	b=tOGEjt/j3bQHfVuZgYxlOAZAX8zAreNemPelVsIpRnDaIBZjWunZdHBwPmvp2U8oG
+	 u+niEJLod435au6TBkhvjZ4UacLeqdqOcmhpGViVULEoa+bK6ylyt7QYB6fCoCsiH4
+	 vI9uZPpXTtick5xUn1geAvB2FkuzXQESNvtCGhEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/144] fbcon: Avoid OOB font access if console rotation fails
-Date: Fri, 15 May 2026 17:49:07 +0200
-Message-ID: <20260515154656.310918889@linuxfoundation.org>
+	"stable@vger.kernel.org, Gary Guo" <gary@garyguo.net>,
+	Gary Guo <gary@garyguo.net>
+Subject: [PATCH 6.12 122/144] rust: pin-init: fix incorrect accessor reference lifetime
+Date: Fri, 15 May 2026 17:49:08 +0200
+Message-ID: <20260515154656.335588518@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -51,53 +50,266 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit e4ef723d8975a2694cc90733a6b888a5e2841842 ]
+commit 68bf102226cf2199dc609b67c1e847cad4de4b57 upstream
 
-Clear the font buffer if the reallocation during console rotation fails
-in fbcon_rotate_font(). The putcs implementations for the rotated buffer
-will return early in this case. See [1] for an example.
+When a field has been initialized, `init!`/`pin_init!` create a reference
+or pinned reference to the field so it can be accessed later during the
+initialization of other fields. However, the reference it created is
+incorrectly `&'static` rather than just the scope of the initializer.
 
-Currently, fbcon_rotate_font() keeps the old buffer, which is too small
-for the rotated font. Printing to the rotated console with a high-enough
-character code will overflow the font buffer.
+This means that you can do
 
-v2:
-- fix typos in commit message
+    init!(Foo {
+        a: 1,
+        _: {
+            let b: &'static u32 = a;
+        }
+    })
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
-Cc: stable@vger.kernel.org # v2.6.15+
-Link: https://elixir.bootlin.com/linux/v6.19/source/drivers/video/fbdev/core/fbcon_ccw.c#L144 # [1]
-Signed-off-by: Helge Deller <deller@gmx.de>
-[ renamed `par` to `ops` to match the 6.12 local pointer name ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+which is unsound.
+
+This is caused by `&mut (*$slot).$ident`, which actually allows arbitrary
+lifetime, so this is effectively `'static`.
+
+Fix it by adding `let_binding` method on `DropGuard` to shorten lifetime.
+This results in exactly what we want for these accessors. The safety and
+invariant comments of `DropGuard` have been reworked; instead of reasoning
+about what caller can do with the guard, express it in a way that the
+ownership is transferred to the guard and `forget` takes it back, so the
+unsafe operations within the `DropGuard` can be more easily justified.
+
+Assisted-by: Claude:claude-3-opus
+Signed-off-by: Gary Guo <gary@garyguo.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/fbcon_rotate.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ rust/kernel/init/__internal.rs |   28 ++++++++----
+ rust/kernel/init/macros.rs     |   91 ++++++++++++++++++++++++-----------------
+ 2 files changed, 73 insertions(+), 46 deletions(-)
 
---- a/drivers/video/fbdev/core/fbcon_rotate.c
-+++ b/drivers/video/fbdev/core/fbcon_rotate.c
-@@ -46,6 +46,10 @@ static int fbcon_rotate_font(struct fb_i
- 		info->fbops->fb_sync(info);
+--- a/rust/kernel/init/__internal.rs
++++ b/rust/kernel/init/__internal.rs
+@@ -189,32 +189,42 @@ impl<T> StackInit<T> {
+ /// When a value of this type is dropped, it drops a `T`.
+ ///
+ /// Can be forgotten to prevent the drop.
++///
++/// # Invariants
++///
++/// - `ptr` is valid and properly aligned.
++/// - `*ptr` is initialized and owned by this guard.
+ pub struct DropGuard<T: ?Sized> {
+     ptr: *mut T,
+ }
  
- 	if (ops->fd_size < d_cellsize * len) {
-+		kfree(ops->fontbuffer);
-+		ops->fontbuffer = NULL;
-+		ops->fd_size = 0;
+ impl<T: ?Sized> DropGuard<T> {
+-    /// Creates a new [`DropGuard<T>`]. It will [`ptr::drop_in_place`] `ptr` when it gets dropped.
++    /// Creates a drop guard and transfer the ownership of the pointer content.
+     ///
+-    /// # Safety
++    /// The ownership is only relinquished if the guard is forgotten via [`core::mem::forget`].
+     ///
+-    /// `ptr` must be a valid pointer.
++    /// # Safety
+     ///
+-    /// It is the callers responsibility that `self` will only get dropped if the pointee of `ptr`:
+-    /// - has not been dropped,
+-    /// - is not accessible by any other means,
+-    /// - will not be dropped by any other means.
++    /// - `ptr` is valid and properly aligned.
++    /// - `*ptr` is initialized, and the ownership is transferred to this guard.
+     #[inline]
+     pub unsafe fn new(ptr: *mut T) -> Self {
++        // INVARIANT: By safety requirement.
+         Self { ptr }
+     }
 +
- 		dst = kmalloc_array(len, d_cellsize, GFP_KERNEL);
++    /// Create a let binding for accessor use.
++    #[inline]
++    pub fn let_binding(&mut self) -> &mut T {
++        // SAFETY: Per type invariant.
++        unsafe { &mut *self.ptr }
++    }
+ }
  
- 		if (dst == NULL) {
-@@ -54,7 +58,6 @@ static int fbcon_rotate_font(struct fb_i
- 		}
+ impl<T: ?Sized> Drop for DropGuard<T> {
+     #[inline]
+     fn drop(&mut self) {
+-        // SAFETY: A `DropGuard` can only be constructed using the unsafe `new` function
+-        // ensuring that this operation is safe.
++        // SAFETY: `self.ptr` is valid, properly aligned and `*self.ptr` is owned by this guard.
+         unsafe { ptr::drop_in_place(self.ptr) }
+     }
+ }
+--- a/rust/kernel/init/macros.rs
++++ b/rust/kernel/init/macros.rs
+@@ -1232,27 +1232,33 @@ macro_rules! __init_internal {
+         // return when an error/panic occurs.
+         // We also use the `data` to require the correct trait (`Init` or `PinInit`) for `$field`.
+         unsafe { $data.$field(::core::ptr::addr_of_mut!((*$slot).$field), init)? };
+-        // NOTE: the field accessor ensures that the initialized field is properly aligned.
++        // NOTE: this ensures that the initialized field is properly aligned.
+         // Unaligned fields will cause the compiler to emit E0793. We do not support
+         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
+         // `ptr::write` below has the same requirement.
+-        #[allow(unused_variables, unused_assignments)]
+-        // SAFETY:
+-        // - the project function does the correct field projection,
+-        // - the field has been initialized,
+-        // - the reference is only valid until the end of the initializer.
+-        let $field = $crate::macros::paste!(unsafe { $data.[< __project_ $field >](&mut (*$slot).$field) });
++        // SAFETY: the field has been initialized.
++        let _ = unsafe { &mut (*$slot).$field };
  
- 		ops->fd_size = d_cellsize * len;
--		kfree(ops->fontbuffer);
- 		ops->fontbuffer = dst;
- 	}
+         // Create the drop guard:
+         //
+         // We rely on macro hygiene to make it impossible for users to access this local variable.
+         // We use `paste!` to create new hygiene for `$field`.
+         ::kernel::macros::paste! {
+-            // SAFETY: We forget the guard later when initialization has succeeded.
+-            let [< __ $field _guard >] = unsafe {
++            // SAFETY:
++            // - `addr_of_mut!((*$slot).$field)` is valid.
++            // - `(*$slot).$field` has been initialized above.
++            // - We only need the ownership to the pointee back when initialization has
++            //   succeeded, where we `forget` the guard.
++            let mut [< __ $field _guard >] = unsafe {
+                 $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
+             };
  
++            // NOTE: The reference is derived from the guard so that it only lives as long as
++            // the guard does and cannot escape the scope.
++            #[allow(unused_variables, unused_assignments)]
++            // SAFETY: the project function does the correct field projection.
++            let $field = unsafe { $data.[< __project_ $field >]([< __ $field _guard >].let_binding()) };
++
+             $crate::__init_internal!(init_slot($use_data):
+                 @data($data),
+                 @slot($slot),
+@@ -1275,27 +1281,30 @@ macro_rules! __init_internal {
+         // return when an error/panic occurs.
+         unsafe { $crate::init::Init::__init(init, ::core::ptr::addr_of_mut!((*$slot).$field))? };
+ 
+-        // NOTE: the field accessor ensures that the initialized field is properly aligned.
++        // NOTE: this ensures that the initialized field is properly aligned.
+         // Unaligned fields will cause the compiler to emit E0793. We do not support
+         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
+         // `ptr::write` below has the same requirement.
+-        #[allow(unused_variables, unused_assignments)]
+-        // SAFETY:
+-        // - the field is not structurally pinned, since the line above must compile,
+-        // - the field has been initialized,
+-        // - the reference is only valid until the end of the initializer.
+-        let $field = unsafe { &mut (*$slot).$field };
++        // SAFETY: the field has been initialized.
++        let _ = unsafe { &mut (*$slot).$field };
+ 
+         // Create the drop guard:
+         //
+         // We rely on macro hygiene to make it impossible for users to access this local variable.
+         // We use `paste!` to create new hygiene for `$field`.
+         ::kernel::macros::paste! {
+-            // SAFETY: We forget the guard later when initialization has succeeded.
+-            let [< __ $field _guard >] = unsafe {
++            // SAFETY:
++            // - `addr_of_mut!((*$slot).$field)` is valid.
++            // - `(*$slot).$field` has been initialized above.
++            // - We only need the ownership to the pointee back when initialization has
++            //   succeeded, where we `forget` the guard.
++            let mut [< __ $field _guard >] = unsafe {
+                 $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
+             };
+ 
++            #[allow(unused_variables, unused_assignments)]
++            let $field = [< __ $field _guard >].let_binding();
++
+             $crate::__init_internal!(init_slot():
+                 @data($data),
+                 @slot($slot),
+@@ -1319,28 +1328,30 @@ macro_rules! __init_internal {
+             unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
+         }
+ 
+-        // NOTE: the field accessor ensures that the initialized field is properly aligned.
++        // NOTE: this ensures that the initialized field is properly aligned.
+         // Unaligned fields will cause the compiler to emit E0793. We do not support
+         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
+         // `ptr::write` below has the same requirement.
+-        #[allow(unused_variables, unused_assignments)]
+-        // SAFETY:
+-        // - the field is not structurally pinned, since no `use_data` was required to create this
+-        //   initializer,
+-        // - the field has been initialized,
+-        // - the reference is only valid until the end of the initializer.
+-        let $field = unsafe { &mut (*$slot).$field };
++        // SAFETY: the field has been initialized.
++        let _ = unsafe { &mut (*$slot).$field };
+ 
+         // Create the drop guard:
+         //
+         // We rely on macro hygiene to make it impossible for users to access this local variable.
+         // We use `paste!` to create new hygiene for `$field`.
+         ::kernel::macros::paste! {
+-            // SAFETY: We forget the guard later when initialization has succeeded.
+-            let [< __ $field _guard >] = unsafe {
++            // SAFETY:
++            // - `addr_of_mut!((*$slot).$field)` is valid.
++            // - `(*$slot).$field` has been initialized above.
++            // - We only need the ownership to the pointee back when initialization has
++            //   succeeded, where we `forget` the guard.
++            let mut [< __ $field _guard >] = unsafe {
+                 $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
+             };
+ 
++            #[allow(unused_variables, unused_assignments)]
++            let $field = [< __ $field _guard >].let_binding();
++
+             $crate::__init_internal!(init_slot():
+                 @data($data),
+                 @slot($slot),
+@@ -1363,27 +1374,33 @@ macro_rules! __init_internal {
+             // SAFETY: The memory at `slot` is uninitialized.
+             unsafe { ::core::ptr::write(::core::ptr::addr_of_mut!((*$slot).$field), $field) };
+         }
+-        // NOTE: the field accessor ensures that the initialized field is properly aligned.
++        // NOTE: this ensures that the initialized field is properly aligned.
+         // Unaligned fields will cause the compiler to emit E0793. We do not support
+         // unaligned fields since `Init::__init` requires an aligned pointer; the call to
+         // `ptr::write` below has the same requirement.
+-        #[allow(unused_variables, unused_assignments)]
+-        // SAFETY:
+-        // - the project function does the correct field projection,
+-        // - the field has been initialized,
+-        // - the reference is only valid until the end of the initializer.
+-        let $field = $crate::macros::paste!(unsafe { $data.[< __project_ $field >](&mut (*$slot).$field) });
++        // SAFETY: the field has been initialized.
++        let _ = unsafe { &mut (*$slot).$field };
+ 
+         // Create the drop guard:
+         //
+         // We rely on macro hygiene to make it impossible for users to access this local variable.
+         // We use `paste!` to create new hygiene for `$field`.
+         $crate::macros::paste! {
+-            // SAFETY: We forget the guard later when initialization has succeeded.
+-            let [< __ $field _guard >] = unsafe {
++            // SAFETY:
++            // - `addr_of_mut!((*$slot).$field)` is valid.
++            // - `(*$slot).$field` has been initialized above.
++            // - We only need the ownership to the pointee back when initialization has
++            //   succeeded, where we `forget` the guard.
++            let mut [< __ $field _guard >] = unsafe {
+                 $crate::init::__internal::DropGuard::new(::core::ptr::addr_of_mut!((*$slot).$field))
+             };
+ 
++            // NOTE: The reference is derived from the guard so that it only lives as long as
++            // the guard does and cannot escape the scope.
++            #[allow(unused_variables, unused_assignments)]
++            // SAFETY: the project function does the correct field projection.
++            let $field = unsafe { $data.[< __project_ $field >]([< __ $field _guard >].let_binding()) };
++
+             $crate::__init_internal!(init_slot($use_data):
+                 @data($data),
+                 @slot($slot),
 
 
