@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5087D4C9574;
-	Fri, 15 May 2026 16:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7B83E0089;
+	Fri, 15 May 2026 16:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862588; cv=none; b=exOmPLSoqvDP1rR9CLSJATeHqvSYQEGZpg1Fheys24G7mKORGRtny80VL1JWx+blQ51a8yGnDhpag8ObGELlDxmt3LCdHJqUaSTfV7fKWYg0uth1FZDHO30OtqeaTMHUTnORkE6ucLiTY7OUUVr1HfdJ9L3ZV5lUc5kAe86I4RQ=
+	t=1778862591; cv=none; b=L8AiEb3hrc0EvC20nMraBiia1VRHFVw9sdtEmQyvRZ/fyRtcu/DjaU+tKZizQo0lxxS/QBw7jYn7M8eraTkwOFkcxXefrTNVYP7INdVC+kwEcH6TwTraWQkdk0ZDkTn1EXHmmB0KzgPlmJtW/rDW4Awcqcqwu+urPEgTK7hDYPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862588; c=relaxed/simple;
-	bh=1CqYAbtcM96E/j2bNb3a45HWJ24ABF1IpBeF3yloumM=;
+	s=arc-20240116; t=1778862591; c=relaxed/simple;
+	bh=FvwA3mAkrMohEOvKV0pf3LIFcQrofwMUp2VOzt7TtzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LAdfOZsDSJYrVBMR8Yw85I/TA7PXaJb7tNPwLSPOEybmEBdqd3b04JpniqSZ41l/GZbXmfMApZJDcmYGcAyPTns004CFiBfQdSIzc7/nIpNnE+/1Zk8ZpFNCPAGdGItSQ7L4q2oDkC3UvPEPYu/u/YzRFfgq0Gtsh6uRskUhbrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTFzPqau; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRkB6tHLvbR6QpMagS/W0oDAbVXMIb5lVzBRp5oocGMne9lHHevClpi1lW8x0W7GY2uY2Q7iSpTs6L27QBrXpB96rsc09t2vsNcUGSvsDjG92Q1D+Jn83P4AhJTwJp5LRy6X7RWYRkkZtDl38w9haEYgwrE/dvvmLqTnETLNADQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIF/gdVN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTFzPqau"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA6BC2BCB0;
-	Fri, 15 May 2026 16:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIF/gdVN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A59DC2BCB0;
+	Fri, 15 May 2026 16:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862588;
-	bh=1CqYAbtcM96E/j2bNb3a45HWJ24ABF1IpBeF3yloumM=;
+	s=korg; t=1778862591;
+	bh=FvwA3mAkrMohEOvKV0pf3LIFcQrofwMUp2VOzt7TtzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YTFzPqau8S4BLvKkfN9UcbHft8PUNPd0Spuyvrpqv3JicR3BEUzosToESTLjjQPME
-	 lRrUctBAlkROIw60CChQSB/7WOoiGlSEzTP5IpIVXAz2p0aqxpspR57H3gI/iasTii
-	 +T2fdGMn2t65rP36rNDc3mJNFqgOxoZnGJwrOLu0=
+	b=EIF/gdVNqAlKB+bj/ANWsQ3griBe11R+kuo6BfqO5lGiMUbp/Bc0bQnzhj76Yuz77
+	 C9NOctOcxdoLZ2/EvO3ukMWuEj9ZQqwHS4/pod05cxBcR8vj7cPRmASt9Z3agBsO8r
+	 ufeS10wK2Msvr/OQmaIIJVYCYaqfbesMkW37+8nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Jingoo Han <jg1.han@samsung.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 106/201] spi: mpfs: fix controller deregistration
-Date: Fri, 15 May 2026 17:48:44 +0200
-Message-ID: <20260515154700.845884401@linuxfoundation.org>
+Subject: [PATCH 7.0 107/201] spi: octeon: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:45 +0200
+Message-ID: <20260515154700.867723210@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,42 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 573c7db8fce91a1b07dd64a260bb44b9e6d05943 upstream.
+commit 3c49a4d8799bee423a80f392ba95b26af8e9ab91 upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like interrupts during driver unbind.
+Make sure to deregister the controller before disabling it to avoid
+hanging or leaking resources associated with the queue when the queue is
+non-empty.
 
-Fixes: 9ac8d17694b6 ("spi: add support for microchip fpga spi controllers")
-Cc: stable@vger.kernel.org	# 6.0
-Cc: Conor Dooley <conor.dooley@microchip.com>
+Fixes: 22ad2d8df77d ("spi: octeon: use devm_spi_register_master()")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Jingoo Han <jg1.han@samsung.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://patch.msgid.link/20260409120419.388546-21-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-9-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-mpfs.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-cavium-octeon.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-mpfs.c
-+++ b/drivers/spi/spi-mpfs.c
-@@ -574,7 +574,7 @@ static int mpfs_spi_probe(struct platfor
+--- a/drivers/spi/spi-cavium-octeon.c
++++ b/drivers/spi/spi-cavium-octeon.c
+@@ -54,7 +54,7 @@ static int octeon_spi_probe(struct platf
+ 	host->bits_per_word_mask = SPI_BPW_MASK(8);
+ 	host->max_speed_hz = OCTEON_SPI_MAX_CLOCK_HZ;
  
- 	mpfs_spi_init(host, spi);
+-	err = devm_spi_register_controller(&pdev->dev, host);
++	err = spi_register_controller(host);
+ 	if (err) {
+ 		dev_err(&pdev->dev, "register host failed: %d\n", err);
+ 		goto fail;
+@@ -73,8 +73,14 @@ static void octeon_spi_remove(struct pla
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct octeon_spi *p = spi_controller_get_devdata(host);
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret) {
- 		mpfs_spi_disable_ints(spi);
- 		mpfs_spi_disable(spi);
-@@ -592,6 +592,8 @@ static void mpfs_spi_remove(struct platf
- 	struct spi_controller *host  = platform_get_drvdata(pdev);
- 	struct mpfs_spi *spi = spi_controller_get_devdata(host);
- 
++	spi_controller_get(host);
++
 +	spi_unregister_controller(host);
 +
- 	mpfs_spi_disable_ints(spi);
- 	mpfs_spi_disable(spi);
+ 	/* Clear the CSENA* and put everything in a known state. */
+ 	writeq(0, p->register_base + OCTEON_SPI_CFG(p));
++
++	spi_controller_put(host);
  }
+ 
+ static const struct of_device_id octeon_spi_match[] = {
 
 
