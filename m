@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02673FD967;
-	Fri, 15 May 2026 16:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEE63F86E5;
+	Fri, 15 May 2026 16:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861376; cv=none; b=dXNMHnvIXMzHYZaxDnFhF5pfBXoOxhhZyTfhBymY23H6DPKrxt19i8ZSfU+BBgcc+nTBcK0GtIVTu2oNO65/dEs5g8P0/G9idmUUIEFcWaJJUjptzU/pDNX8+LICAfLGLtZag18u33P0SuxuBuvgwJKGN2tKezmiihH5NJVMghs=
+	t=1778861379; cv=none; b=Xh25ccqkCpmCu+sS/yq49KIzhTZmEY2brRoJc16JbRDp8UwzMuKpU78X4mbEbTvyrHs+1of7Hxu/6fCOXLBlQzJt3ETzcqevjJJCGvoyqXNITlMC5qCET0ZRCsE7QWJnoRFcbLwLHsZUC61sWLHG/2Il1ALl1HvGBC4/jWcILH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861376; c=relaxed/simple;
-	bh=xbwyUc9P3y0LSgYgnS5aQNKBUOI3VAeuFcL/udyORas=;
+	s=arc-20240116; t=1778861379; c=relaxed/simple;
+	bh=SCVaZPwxpIZTP3fMw3wssLb6M9Jknjz/d9Eh83Mrp9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NaoVVa6IHFTVTbTA+W7ho5zZ5Lcu0ysiBpULQUIj7eJfChy5LR1xh1+tsx8UifLdap7Lqhcdx2ZgsyT7ebt/y0DDWs0VrLoFfHQ7KT+QvxttKEjkQqALM+W/XaxjDCnc+uk/N7Bb82dcFdAOc++xqgwvBx+WKEvtTPYixNX6jec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTS5pote; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PLAnvQmv1XPoD5gZOWODJxbObWtyhX+kSkBu9yetSryuOqULhdvb1k/AsCfOxtpZQM7etVe3jOpDn1CXGaGb5WqdQI5DsCQ5cy9YWyx/t2ISJh1oMvB5tpFwYGFB4ppSdRG7aHvXzHooEE5mJwTH/TH0B4iBJadgrcjXUQi3MMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqI7wY38; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTS5pote"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BC1C2BCB0;
-	Fri, 15 May 2026 16:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqI7wY38"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C5FC2BCB0;
+	Fri, 15 May 2026 16:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861376;
-	bh=xbwyUc9P3y0LSgYgnS5aQNKBUOI3VAeuFcL/udyORas=;
+	s=korg; t=1778861379;
+	bh=SCVaZPwxpIZTP3fMw3wssLb6M9Jknjz/d9Eh83Mrp9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTS5potekOD17CI7lePK6yGlwvxIp4h3lvd2qKMHWt3ltt57nRxcNXfs5O4dZyxJS
-	 DRXj6lfActVyunsL2DGU8ZJhJX11vHCQbSpB4FddWxxpdZbHSNDFoqc0e4V4c1NmX+
-	 O6JzAeHzOf6PcZteYtEttvmQ0zsaXJRsuK/oGNEM=
+	b=hqI7wY38rClyWHAQOHjlHttMmmYePykZ0QLulB+J8VsRX3xYWokoTnFuF5QCRzD+v
+	 Kc0iDA+enQ9NhnszPtT9DgmmvWa16jvGAq9p1meXsTV8F4cd8W10PIKeyONjP3ey7s
+	 qRHYmWFi42hxWD10zmA1DXuzObSYF5lx71nyTPK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 306/474] media: rc: streamzap: Error handling in probe
-Date: Fri, 15 May 2026 17:46:55 +0200
-Message-ID: <20260515154721.627561224@linuxfoundation.org>
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 307/474] regulator: rk808: fix OF node reference imbalance
+Date: Fri, 15 May 2026 17:46:56 +0200
+Message-ID: <20260515154721.650031361@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,54 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 42844992664f03ef9f930e64f7370fa481e9c267 upstream.
+commit 65290b24d8a5f0b8cd065201e653db824c4a4da6 upstream.
 
-If submitting the URB fails, the device will be unusable.
-Probe() must fail.
+The driver reuses the OF node of the parent multi-function device but
+fails to take another reference to balance the one dropped by the
+platform bus code when unbinding the MFD and deregistering the child
+devices.
 
-Fixes: 7a569f524dd36 ("V4L/DVB: IR/streamzap: functional in-kernel decoding")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fix this by using the intended helper for reusing OF nodes.
+
+Fixes: 647e57351f8e ("regulator: rk808: reduce 'struct rk808' usage")
+Cc: stable@vger.kernel.org	# 6.2
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260408073055.5183-3-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/streamzap.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/regulator/rk808-regulator.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/media/rc/streamzap.c
-+++ b/drivers/media/rc/streamzap.c
-@@ -219,9 +219,8 @@ static void streamzap_callback(struct ur
- 	case -ESHUTDOWN:
- 		/*
- 		 * this urb is terminated, clean up.
--		 * sz might already be invalid at this point
- 		 */
--		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
-+		dev_dbg(sz->dev, "urb terminated, status: %d\n", urb->status);
- 		return;
- 	default:
- 		break;
-@@ -358,11 +357,16 @@ static int streamzap_probe(struct usb_in
+--- a/drivers/regulator/rk808-regulator.c
++++ b/drivers/regulator/rk808-regulator.c
+@@ -1674,8 +1674,7 @@ static int rk808_regulator_probe(struct
+ 	struct regmap *regmap;
+ 	int ret, i, nregulators;
  
- 	usb_set_intfdata(intf, sz);
+-	pdev->dev.of_node = pdev->dev.parent->of_node;
+-	pdev->dev.of_node_reused = true;
++	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
  
--	if (usb_submit_urb(sz->urb_in, GFP_ATOMIC))
-+	retval = usb_submit_urb(sz->urb_in, GFP_ATOMIC);
-+	if (retval < 0) {
- 		dev_err(sz->dev, "urb submit failed\n");
-+		goto rc_submit_fail;
-+	}
- 
- 	return 0;
--
-+rc_submit_fail:
-+	rc_free_device(sz->rdev);
-+	usb_set_intfdata(intf, NULL);
- rc_dev_fail:
- 	usb_free_urb(sz->urb_in);
- free_buf_in:
+ 	regmap = dev_get_regmap(pdev->dev.parent, NULL);
+ 	if (!regmap)
 
 
