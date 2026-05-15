@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C7A22FF22;
-	Fri, 15 May 2026 15:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE7A211A14;
+	Fri, 15 May 2026 15:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860678; cv=none; b=ZheeJoiBzM9Y1jW1SaAwHKaiuqq4ji8xv+ohMFWSanJMGDad7Ajm0jeMQZW53TPmkf9ZubzhPWvU2hTgDM1DCZ4X1fLrzZJVNc/ByMAribsUjpwnypJN3SjGezrfZthxS60vn3g1061jbdFTFx3fCpE/GuxOZNWL5vyKFwhof+8=
+	t=1778860681; cv=none; b=FydzxuWDxSDkmBrkEzjKr4m3yjlU/NQowh0Z2cCKZarys1SyAipPzgUXWCGDFbwJjVlQShee1o1LOvH/ocLlwl3E3I8O6SqmSULKIEIeVvFXHs2Of1JlZQjxqiZGWEFmlt+VeVmz7jFbfZQ9CLTzz5hDWlSPAFj/GMirzpGqeOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860678; c=relaxed/simple;
-	bh=TcoBcKye2FDZtvi7Q5WKcXeChhZ5V45RHnWTR2nzCRU=;
+	s=arc-20240116; t=1778860681; c=relaxed/simple;
+	bh=QR/UOZ4j/AOOiFujy8sJxOBaS5yRq2l4Z7fwTkMx34c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6DN+5XoOy9f9ge6GjEr9HP3W1XEZXZD0y89o0VguHzVwnW5J+ZeO44YBCMzQdNsG0uEGn6FYzor/0i3YlHT3Rr8iUj1ODnYpGuXlRrIPwH6BSrzjBhVIeKccXh9tVkF2OB8RPzy1y/UY5tzdIjtIQFYgPJu470ey5IMZQtgxfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyx2kE4v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=craJUUYlnJIj1QKWgv3kJpIg731y7oQ6Pv7TAkL7pW7FGx3JcN7Ql2Y6Qb9lv/iZ5GprD2i7Z15cpJweXNFPPNieLyAOWj4h+3u7rQCMUqf6hpdtfyDmpsvwow/mt37IWxkp3ZDLuznMeUDgV2ixkxa55Ce4YH4h2e5o/a3dPUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLM6RlpY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyx2kE4v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58726C2BCC7;
-	Fri, 15 May 2026 15:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLM6RlpY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36B1C2BCB0;
+	Fri, 15 May 2026 15:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860678;
-	bh=TcoBcKye2FDZtvi7Q5WKcXeChhZ5V45RHnWTR2nzCRU=;
+	s=korg; t=1778860681;
+	bh=QR/UOZ4j/AOOiFujy8sJxOBaS5yRq2l4Z7fwTkMx34c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lyx2kE4vU+nv9hYOVwUAOWHqtNDgkCFZ86AlxKHP6cz/6GNqBQAkRCH4EDxBGESbr
-	 i8AdcChkPApJGOtbQa1U19wV8NO45i/88OqxEA4Zy3toRDpKDP6pdNEBC8pbSrLpgD
-	 jVUVpHGLPmIa9dgoF0bssYEDN2hSTem8kZT+WQQQ=
+	b=oLM6RlpYq45sM/eIEkAkl3gDU8/3uUQOeu9oPK8hVyps7vBO7nXBuNvhakYaoULhO
+	 CSbu1JkvbZpEF+/x7d94Dw/1UxDnJ3whVvp6X6eFpV41XLPK8MmAO1xVuHemGF/4Pc
+	 fxUopR8o/e8J0l+v1eUlqyPTF5UfnykkYIXZxUFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Law <objecting@objecting.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 038/474] lib/ts_kmp: fix integer overflow in pattern length calculation
-Date: Fri, 15 May 2026 17:42:27 +0200
-Message-ID: <20260515154715.873827497@linuxfoundation.org>
+	Chen Ni <nichen@iscas.ac.cn>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Jai Luthra <jai.luthra@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.6 039/474] media: i2c: imx219: Check return value of devm_gpiod_get_optional() in imx219_probe()
+Date: Fri, 15 May 2026 17:42:28 +0200
+Message-ID: <20260515154715.895252895@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,61 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Law <objecting@objecting.org>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-commit 8cdf30813ea8ce881cecc08664144416dbdb3e16 upstream.
+commit 943b1f27a3eead21b22e2531a5432ea5910b60eb upstream.
 
-The ts_kmp algorithm stores its prefix_tbl[] table and pattern in a single
-allocation sized from the pattern length.  If the prefix_tbl[] size
-calculation wraps, the resulting allocation can be too small and
-subsequent pattern copies can overflow it.
+The devm_gpiod_get_optional() function may return an error pointer
+(ERR_PTR) in case of a genuine failure during GPIO acquisition,
+not just NULL which indicates the legitimate absence of an optional
+GPIO.
 
-Fix this by rejecting zero-length patterns and by using overflow helpers
-before calculating the combined allocation size.
+Add an IS_ERR() check after the function call to catch such errors and
+propagate them to the probe function, ensuring the driver fails to load
+safely rather than proceeding with an invalid pointer.
 
-
-This fixes a potential heap overflow.  The pattern length calculation can
-wrap during a size_t addition, leading to an undersized allocation.
-Because the textsearch library is reachable from userspace via Netfilter's
-xt_string module, this is a security risk that should be backported to LTS
-kernels.
-
-Link: https://lkml.kernel.org/r/20260308202028.2889285-2-objecting@objecting.org
-Signed-off-by: Josh Law <objecting@objecting.org>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1283b3b8f82b ("media: i2c: Add driver for Sony IMX219 sensor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Reviewed-by: Jai Luthra <jai.luthra@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/ts_kmp.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/media/i2c/imx219.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/lib/ts_kmp.c
-+++ b/lib/ts_kmp.c
-@@ -94,8 +94,22 @@ static struct ts_config *kmp_init(const
- 	struct ts_config *conf;
- 	struct ts_kmp *kmp;
- 	int i;
--	unsigned int prefix_tbl_len = len * sizeof(unsigned int);
--	size_t priv_size = sizeof(*kmp) + len + prefix_tbl_len;
-+	unsigned int prefix_tbl_len;
-+	size_t priv_size;
-+
-+	/* Zero-length patterns would make kmp_find() read beyond kmp->pattern. */
-+	if (unlikely(!len))
-+		return ERR_PTR(-EINVAL);
-+
-+	/*
-+	 * kmp->pattern is stored immediately after the prefix_tbl[] table.
-+	 * Reject lengths that would wrap while sizing either region.
-+	 */
-+	if (unlikely(check_mul_overflow(len, sizeof(*kmp->prefix_tbl),
-+					&prefix_tbl_len) ||
-+		     check_add_overflow(sizeof(*kmp), (size_t)len, &priv_size) ||
-+		     check_add_overflow(priv_size, prefix_tbl_len, &priv_size)))
-+		return ERR_PTR(-EINVAL);
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -1274,6 +1274,9 @@ static int imx219_probe(struct i2c_clien
+ 	/* Request optional enable pin */
+ 	imx219->reset_gpio = devm_gpiod_get_optional(dev, "reset",
+ 						     GPIOD_OUT_HIGH);
++	if (IS_ERR(imx219->reset_gpio))
++		return dev_err_probe(dev, PTR_ERR(imx219->reset_gpio),
++				     "failed to get reset gpio\n");
  
- 	conf = alloc_ts_config(priv_size, gfp_mask);
- 	if (IS_ERR(conf))
+ 	/*
+ 	 * The sensor must be powered for imx219_identify_module()
 
 
