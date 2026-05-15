@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991ED326939;
-	Fri, 15 May 2026 16:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A78246781;
+	Fri, 15 May 2026 16:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862715; cv=none; b=ZbKmH+D9WMXgCE1uP2dmXQ+GrsXMViAwQ4kQc98CRqEuHo2LT4ss8GN6/TZu9pADblTn0F0tIRoJMIhBrOiqidPU/yCAfnEYAPbXd4IG1cWZgtV5NoFWe8VrjWMmAR4W1LpJGrrK3RUCs+37X77/TkFIO7eoqYSeEYiIe2DeUWM=
+	t=1778862718; cv=none; b=LHyoyw+/C67Xl7wdie/T1+zxOUEzGID5C3iU0byxatNIrKWrfg4sCWcJKsfKTEA7B8692dVIJq54tO0ckSvzFv9uo6z1DL4FypnKUsu5WQ6p7hDPZaYHdf1c4fwluOu1/ssEclQ10L6HOVR+XtH4xxvPOyHhkFfxZq+D4sfFROI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862715; c=relaxed/simple;
-	bh=kiYZb5+gjx7pBVCxzjoX77US7vTNAZ2zTsM41cQ00bM=;
+	s=arc-20240116; t=1778862718; c=relaxed/simple;
+	bh=216ufziBc8sJGlkTR2qWLINU4x9Yq0AuSCwTswh0hmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OweTpzg9WMrATPVJAvyHF0I4kqww8vYW3X39oJsceAzgwQhCkhRHfABNKhI9mfmqhoKcXMBa2vZmHMaI+6fte4wv5BhwCT2fg+iS86Rn4cflurokeRWd1psmQC1Xvx7Yd2lh29VUs4tLN1GLbMV5SO4GkhN8Mz4daAuxavHbHpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQb8Iya2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D/LTsv6jWmyThMocrrEOsVUJTGGhqUCstv7qVPeEo+Peb/BBd+GY8TbS6e9YXny3TfglTVd4URFxynk6IvDN2/ksK3k+jLpTzZBL8y5dhd/D69v7gdl08O2Rp8CJT5VkbLa+nr4Bpej+IHqBmtjNQ17WgSElHMMiuPW0ej5l10s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfpiBCtk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQb8Iya2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2A5C2BCB0;
-	Fri, 15 May 2026 16:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfpiBCtk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04A6C2BCB0;
+	Fri, 15 May 2026 16:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862715;
-	bh=kiYZb5+gjx7pBVCxzjoX77US7vTNAZ2zTsM41cQ00bM=;
+	s=korg; t=1778862718;
+	bh=216ufziBc8sJGlkTR2qWLINU4x9Yq0AuSCwTswh0hmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pQb8Iya2KeF5zR9qpxRoX1r436ipAzVaxrzxtbnEyrzJW+JOW9zzj0YNZBfnmYZGu
-	 9UsAVs9HHFAxOw5QIBh2U3oInGXsn9UGAo/ZBYGQj06Jbfzyrt9qniAz/6ooA4NWMH
-	 MQ28mk/O+D0T1pLuA3rhUWRU795gmRBW/PHB6nfM=
+	b=pfpiBCtkdg8YnLnqOT8qfPgrNPM/pMC44iDIyLoP6XyW0TlcUeLd8pzrHGaUAbcmd
+	 ngSTECb2znt6RLhlG54bOIq6kVMOBprF5gSiCPyz5w2vEMEcW4pCkeAtxbEWbur4L8
+	 auoYoRcgC27iiMwUPoqMZW8K6PNB9oTHc8/1Zdxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Kent Russell <kent.russell@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 155/201] drm/radeon: add missing revision check for CI
-Date: Fri, 15 May 2026 17:49:33 +0200
-Message-ID: <20260515154701.932203536@linuxfoundation.org>
+Subject: [PATCH 7.0 156/201] drm/amdgpu: zero-initialize GART table on allocation
+Date: Fri, 15 May 2026 17:49:34 +0200
+Message-ID: <20260515154701.953738990@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -52,57 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-commit 17223816498f7b117d138d18eb0eba63604dc74e upstream.
+commit e6c2e6c2e1fa066968a16aca1cb66cd1bdde7741 upstream.
 
-The memory level workarounds only apply to revision 0 SKUs.
+GART TLB is flushed after unmapping but not after mapping. Since
+amdgpu_bo_create_kernel() does not zero-initialize the buffer, when a
+single PTE is written the TLB may speculatively load other uninitialized
+entries from the same cacheline. Those garbage entries can appear valid,
+and a subsequent write to another PTE in the same cacheline may cause the
+GPU to use a stale garbage PTE from the TLB.
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/1816
-Fixes: 127e056e2a82 ("drm/radeon: fix mclk vddc configuration for cards for hawaii")
-Fixes: 21b8a369046f ("drm/radeon: fix dram timing for certain hawaii boards")
-Fixes: 90b2fee35cb9 ("drm/radeon: fix dpm mc init for certain hawaii boards")
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
+Fix this by calling memset_io() to zero-initialize the GART table with
+gart_pte_flags immediately after allocation.
+
+Using AMDGPU_GEM_CREATE_VRAM_CLEARED, SDMA-based clear will not work
+since SDMA needs GART to be initialized to work.
+
+Suggested-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4d8dcc14311515077062b5740f39f427075de5c9)
+(cherry picked from commit d9af8263b82b6eaa60c5718e0c6631c5037e4b24)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/ci_dpm.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/radeon/ci_dpm.c
-+++ b/drivers/gpu/drm/radeon/ci_dpm.c
-@@ -2461,7 +2461,8 @@ static void ci_register_patching_mc_arb(
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
+@@ -262,12 +262,19 @@ void amdgpu_gart_table_ram_free(struct a
+  */
+ int amdgpu_gart_table_vram_alloc(struct amdgpu_device *adev)
+ {
++	int r;
++
+ 	if (adev->gart.bo != NULL)
+ 		return 0;
  
- 	if (patch &&
- 	    ((rdev->pdev->device == 0x67B0) ||
--	     (rdev->pdev->device == 0x67B1))) {
-+	     (rdev->pdev->device == 0x67B1)) &&
-+	    (rdev->pdev->revision == 0)) {
- 		if ((memory_clock > 100000) && (memory_clock <= 125000)) {
- 			tmp2 = (((0x31 * engine_clock) / 125000) - 1) & 0xff;
- 			*dram_timimg2 &= ~0x00ff0000;
-@@ -3304,7 +3305,8 @@ static int ci_populate_all_memory_levels
- 	pi->smc_state_table.MemoryLevel[0].EnabledForActivity = 1;
+-	return amdgpu_bo_create_kernel(adev,  adev->gart.table_size, PAGE_SIZE,
+-				       AMDGPU_GEM_DOMAIN_VRAM, &adev->gart.bo,
+-				       NULL, (void *)&adev->gart.ptr);
++	r = amdgpu_bo_create_kernel(adev,  adev->gart.table_size, PAGE_SIZE,
++				    AMDGPU_GEM_DOMAIN_VRAM, &adev->gart.bo,
++				    NULL, (void *)&adev->gart.ptr);
++	if (r)
++		return r;
++
++	memset_io(adev->gart.ptr, adev->gart.gart_pte_flags, adev->gart.table_size);
++	return 0;
+ }
  
- 	if ((dpm_table->mclk_table.count >= 2) &&
--	    ((rdev->pdev->device == 0x67B0) || (rdev->pdev->device == 0x67B1))) {
-+	    ((rdev->pdev->device == 0x67B0) || (rdev->pdev->device == 0x67B1)) &&
-+	    (rdev->pdev->revision == 0)) {
- 		pi->smc_state_table.MemoryLevel[1].MinVddc =
- 			pi->smc_state_table.MemoryLevel[0].MinVddc;
- 		pi->smc_state_table.MemoryLevel[1].MinVddcPhases =
-@@ -4493,7 +4495,8 @@ static int ci_register_patching_mc_seq(s
- 
- 	if (patch &&
- 	    ((rdev->pdev->device == 0x67B0) ||
--	     (rdev->pdev->device == 0x67B1))) {
-+	     (rdev->pdev->device == 0x67B1)) &&
-+	    (rdev->pdev->revision == 0)) {
- 		for (i = 0; i < table->last; i++) {
- 			if (table->last >= SMU7_DISCRETE_MC_REGISTER_ARRAY_SIZE)
- 				return -EINVAL;
+ /**
 
 
