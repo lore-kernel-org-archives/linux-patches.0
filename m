@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2193E00A2;
-	Fri, 15 May 2026 16:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B386B3C0607;
+	Fri, 15 May 2026 16:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861268; cv=none; b=IqU0etOFuHuEGOB3YE8DRpgE3TCtFMwtpa8FHFlur0v/99rHJRT7SpxNo8tcG37MFIpOLCl6wYMiuWqn+ByevRxDsbQrNF+TB1Yp2v1Rg3TN61l5TGu0/TBrEYnDxscQBOjcEHlhxGTO42T36kXhYzU4xdJFAhO3e1tmi0uuye8=
+	t=1778861270; cv=none; b=WISdYb2kp9DD2yXmi456bnp7LCw9DMIYw5/pYhQN9gECucqWRvZODiUsWVgwUnPLDl2onGrxzBXPU6/Yqviaak7T1Rl0wnkPtPd+1t0jy6vtMIBXSHnoP6r358GdPXS0PI0RxySw9pfsoK92nZcvsaXXtiBaqy5k51oJqfj63pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861268; c=relaxed/simple;
-	bh=XjlbVwBd/GCIiwSBaezMMv6r/+2tdAq9DIsU4zuTRa8=;
+	s=arc-20240116; t=1778861270; c=relaxed/simple;
+	bh=WblvGXYmczRjSfAXNCQTFlON26sirCbTeQdcuisMXmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n4UCDvJUtdyCuPc1UzMPVtadSReqtt37Vkv4mXnohQw8BERFeyEEUBUD3Ft1ZmoYhdUcI0sjnvFC3uxa8XDGvZP3e7yCXHyWiZYp481yJ6ZIk0Mj/F/NI5GNdg1qaiz/ErpA1ohOhyV7S8Vum4f98pzMnAH1trqesweULbKIZsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyugSkwT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d6TYChRKPRuAH+T0UTVsnqeCY7N232dZCw8/V/aYOrJvjIHAtync7Uw4YCEC2SnW+fOcuGy86fYmonejJeFgzAW2i/VOOCjFBHaVdTaNT+jwdMu2WwEz4RZ6kMsCzWtjg5Sm2BxUTjzGsIeypWYbNKvlRNBbjDf1YZEj9XCKfiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pM77yMjc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyugSkwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86682C2BCB0;
-	Fri, 15 May 2026 16:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pM77yMjc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C8CC2BCB0;
+	Fri, 15 May 2026 16:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861267;
-	bh=XjlbVwBd/GCIiwSBaezMMv6r/+2tdAq9DIsU4zuTRa8=;
+	s=korg; t=1778861270;
+	bh=WblvGXYmczRjSfAXNCQTFlON26sirCbTeQdcuisMXmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyugSkwTMj+GaDDKF5V2fo8zHnbm73T8EdgXPC5OlvLiFGYTmFPzQ8gT/bC0xGpVA
-	 7+HegXGzfQJ6CKdiAXNTPLb1QVQAI1J6YXPJVw9FD+JAeDTbu/qhQtGVFhP7owouDV
-	 cEQByT3+diQIdSlbB26jYopWtl5945yLrzvB9YOw=
+	b=pM77yMjcihhNbp/x9OQjFMIpqfhWu8KE8sQEVKIgxH/8V2102FCSyvQqtyXVHa8f+
+	 ml9rpXAGFd7EvY512D2+u9fZCfB2avLY2Iq8giLCoSEAC918K70Jp1OkarJieHJqVN
+	 B0kMqq+sNdro63tuhEvwoWeTtrL0e+/bhxsCwf5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 246/474] ASoC: Intel: bytcr_wm5102: Fix MCLK leak on platform_clock_control error
-Date: Fri, 15 May 2026 17:45:55 +0200
-Message-ID: <20260515154720.322089101@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.6 264/474] nvme-apple: drop invalid put of admin queue reference count
+Date: Fri, 15 May 2026 17:46:13 +0200
+Message-ID: <20260515154720.713804044@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -46,46 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 13d30682e8dee191ac04e93642f0372a723e8b0c upstream.
+commit ba9d308ccd6732dd97ed8080d834a4a89e758e14 upstream.
 
-If byt_wm5102_prepare_and_enable_pll1() fails in the
-SND_SOC_DAPM_EVENT_ON() path, platform_clock_control() returns after
-clk_prepare_enable(priv->mclk) without disabling the clock again.
+Commit 03b3bcd319b3 ("nvme: fix admin request_queue lifetime") moved the
+admin queue reference ->put call into nvme_free_ctrl() - a controller
+device release callback performed for every nvme driver doing
+nvme_init_ctrl().
 
-This leaks an MCLK enable reference on failed power-up attempts. Add the
-missing clk_disable_unprepare() on the error path, matching the unwind
-used by the other Intel platform_clock_control() implementations.
+nvme-apple sets refcount of the admin queue to 1 at allocation during the
+probe function and then puts it twice now:
 
-Fixes: 9a87fc1e0619 ("ASoC: Intel: bytcr_wm5102: Add machine driver for BYT/WM5102")
+nvme_free_ctrl()
+  blk_put_queue(ctrl->admin_q) // #1
+  ->free_ctrl()
+    apple_nvme_free_ctrl()
+      blk_put_queue(anv->ctrl.admin_q) // #2
+
+Note that there is a commit 941f7298c70c ("nvme-apple: remove an extra
+queue reference") which intended to drop taking an extra admin queue
+reference.  Looks like at that moment it accidentally fixed a refcount
+leak, which existed since the driver's introduction.  There were two ->get
+calls at driver's probe function and a single ->put inside
+apple_nvme_free_ctrl().
+
+However now after commit 03b3bcd319b3 ("nvme: fix admin request_queue
+lifetime") the refcount is imbalanced again.  Fix it by removing extra
+->put call from apple_nvme_free_ctrl().  anv->dev and ctrl->dev point to
+the same device, so use ctrl->dev directly for simplification.  Compile
+tested only.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 03b3bcd319b3 ("nvme: fix admin request_queue lifetime")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260427-bytcr-wm5102-mclk-leak-v1-1-02b96d08e99c@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/boards/bytcr_wm5102.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/host/apple.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/sound/soc/intel/boards/bytcr_wm5102.c
-+++ b/sound/soc/intel/boards/bytcr_wm5102.c
-@@ -111,6 +111,7 @@ static int platform_clock_control(struct
- 		ret = byt_wm5102_prepare_and_enable_pll1(codec_dai, 48000);
- 		if (ret) {
- 			dev_err(card->dev, "Error setting codec sysclk: %d\n", ret);
-+			clk_disable_unprepare(priv->mclk);
- 			return ret;
- 		}
- 	} else {
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -1208,11 +1208,7 @@ static int apple_nvme_get_address(struct
+ 
+ static void apple_nvme_free_ctrl(struct nvme_ctrl *ctrl)
+ {
+-	struct apple_nvme *anv = ctrl_to_apple_nvme(ctrl);
+-
+-	if (anv->ctrl.admin_q)
+-		blk_put_queue(anv->ctrl.admin_q);
+-	put_device(anv->dev);
++	put_device(ctrl->dev);
+ }
+ 
+ static const struct nvme_ctrl_ops nvme_ctrl_ops = {
 
 
