@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20B83F9270;
-	Fri, 15 May 2026 16:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE7B3F9276;
+	Fri, 15 May 2026 16:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862699; cv=none; b=lSLYpz8O42z9zaPs64IfQi96aR25oJ1t+CUuteV3Idy24wYy8U4BBodXQfuEc6TTci8gTD9+VbPYt7gQQIokl1rd24R1SQ4IHJvNNK8zUvkUgQLJ9RwKr5KsGOI/j+6TFvW4AzLGHUmqzBl3cpfj9r3/u8Pt0jQHqY0Ygim1bjQ=
+	t=1778862702; cv=none; b=lz5sVVJPifIA7HZtVM0r/xyPJMVnTbHBBmVMfw7YJBYY1Z4DUyRvIydGCiwhpAe0tGcbS4NuReIlwQvkAQ1eeNqulqjKRB2HpJpWGu2/z1uGq33LmGfbgqkVX5Kp/qmzQeUbPblbIfY6fT4z2esSFEkLcOJyLyhhDV5ZwyGk9VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862699; c=relaxed/simple;
-	bh=02+SIdtzs+wADiMShP1u0jIRPggpWSAyTTNdZ8c6cy0=;
+	s=arc-20240116; t=1778862702; c=relaxed/simple;
+	bh=QJrO0AcwBFRWTVDo+RqRJoGXIqtxFVLQY1SnthIlLpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P0MeIQVPaISmJQf7p1uWivY0X/uKRJgtop0JMKbVqIJvLWeglmyKmygmebmgAM3jYUZwHt5aiFLCVHz2WiDJ7I6J4fs5PeJhFipFxESwRP8x79Qc6Qu/Y+ktnsvSEveXJWMAWntWG0ANfAukl2pDqB6OpPFQmbvYb/AtDmeZ2fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCK2StZi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dHYBareHhARh7abeoX64/qrh8gp5Mn2s+9KqRCtzawuDtjWN5xIV3MOtUqOIylYlVKHB17d4lMym3+8pU+uxpjv8xTOmRJyG4jJ41DuijxfHWHPslhRM6vJWcdPNVS6zn7DXxrQtchXEVxvSOtUr0yO8Jucv7Lv9F+6ApgdlAfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h24nJXL8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCK2StZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C52C2BCB3;
-	Fri, 15 May 2026 16:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h24nJXL8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96ACC2BCB0;
+	Fri, 15 May 2026 16:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862699;
-	bh=02+SIdtzs+wADiMShP1u0jIRPggpWSAyTTNdZ8c6cy0=;
+	s=korg; t=1778862702;
+	bh=QJrO0AcwBFRWTVDo+RqRJoGXIqtxFVLQY1SnthIlLpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCK2StZicV5HwE1r3gPjd0WhKbiV+xJ7w+cE2w9JJIfVY3MZj8qCgMvOF/rM4AvqQ
-	 xZ23dHoCaj3SGi8YDRy3t+mTpWvHQfkJLJZqIBVI6jt6ClqjY6FmLjS0oepEO05UzA
-	 6Wj23FqEUa5hvtkGdkuN6cYwIpRKOGW8dQHgJW+Y=
+	b=h24nJXL8iFgPqn30r6BbrRMrheUle9x/duMavKkScss7ZacS8Av6C4NoONsdCfwm4
+	 kPk01+qgDKr9h89I/P/2XABnHhTFAb6KDvHJyx4roRTKXCi10Bir9U6+iynT3IJ+HZ
+	 +krEq0oaR+P2fc/3EyEiSyheo3R/hSrqIt0TO1P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 7.0 149/201] drm/xe: Fix bo leak in xe_dma_buf_init_obj() on allocation failure
-Date: Fri, 15 May 2026 17:49:27 +0200
-Message-ID: <20260515154701.799329699@linuxfoundation.org>
+Subject: [PATCH 7.0 150/201] drm/xe/bo: Fix bo leak on GGTT flag validation in xe_bo_init_locked()
+Date: Fri, 15 May 2026 17:49:28 +0200
+Message-ID: <20260515154701.821113916@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,72 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-commit 93a528f67ce5095bcab46a69839eca97f43dd352 upstream.
+commit 1d0adf2fd94fb0c0037c643fadd8f2cf3cffc009 upstream.
 
-When drm_gpuvm_resv_object_alloc() fails, the pre-allocated storage bo
-is not freed. Add xe_bo_free(storage) before returning the error.
+When XE_BO_FLAG_GGTT_ALL is set without XE_BO_FLAG_GGTT, the function
+returns an error without freeing a caller-provided bo, violating the
+documented contract that bo is freed on failure.
 
-xe_dma_buf_init_obj() calls xe_bo_init_locked(), which frees the bo on
-error. Therefore, xe_dma_buf_init_obj() must also free the bo on its own
-error paths. Otherwise, since xe_gem_prime_import() cannot distinguish
-whether the failure originated from xe_dma_buf_init_obj() or from
-xe_bo_init_locked(), it cannot safely decide whether the bo should be
-freed.
+Add xe_bo_free(bo) before returning the error.
 
-Add comments documenting the ownership semantics: on success, ownership
-of storage is transferred to the returned drm_gem_object; on failure,
-storage is freed before returning.
-
-v2: Add comments to explain the free logic.
-
-Fixes: eb289a5f6cc6 ("drm/xe: Convert xe_dma_buf.c for exhaustive eviction")
+Fixes: 5a3b0df25d6a ("drm/xe: Allow bo mapping on multiple ggtts")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4.6
 Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260408175255.3402838-4-shuicheng.lin@intel.com
+Link: https://patch.msgid.link/20260408175255.3402838-3-shuicheng.lin@intel.com
 Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit 78a6c5f899f22338bbf48b44fb8950409c5a69b9)
+(cherry picked from commit 3fbd6cf43cac7b60757f3ce3d95195d3843a902c)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_dma_buf.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_bo.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_dma_buf.c
-+++ b/drivers/gpu/drm/xe/xe_dma_buf.c
-@@ -238,6 +238,13 @@ struct dma_buf *xe_gem_prime_export(stru
- 	return buf;
- }
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -2154,8 +2154,10 @@ struct xe_bo *xe_bo_init_locked(struct x
+ 	}
  
-+/*
-+ * Takes ownership of @storage: on success it is transferred to the returned
-+ * drm_gem_object; on failure it is freed before returning the error.
-+ * This matches the contract of xe_bo_init_locked() which frees @storage on
-+ * its error paths, so callers need not (and must not) free @storage after
-+ * this call.
-+ */
- static struct drm_gem_object *
- xe_dma_buf_init_obj(struct drm_device *dev, struct xe_bo *storage,
- 		    struct dma_buf *dma_buf)
-@@ -251,8 +258,10 @@ xe_dma_buf_init_obj(struct drm_device *d
- 	int ret = 0;
- 
- 	dummy_obj = drm_gpuvm_resv_object_alloc(&xe->drm);
--	if (!dummy_obj)
-+	if (!dummy_obj) {
-+		xe_bo_free(storage);
- 		return ERR_PTR(-ENOMEM);
+ 	/* XE_BO_FLAG_GGTTx requires XE_BO_FLAG_GGTT also be set */
+-	if ((flags & XE_BO_FLAG_GGTT_ALL) && !(flags & XE_BO_FLAG_GGTT))
++	if ((flags & XE_BO_FLAG_GGTT_ALL) && !(flags & XE_BO_FLAG_GGTT)) {
++		xe_bo_free(bo);
+ 		return ERR_PTR(-EINVAL);
 +	}
  
- 	dummy_obj->resv = resv;
- 	xe_validation_guard(&ctx, &xe->val, &exec, (struct xe_val_flags) {}, ret) {
-@@ -261,6 +270,7 @@ xe_dma_buf_init_obj(struct drm_device *d
- 		if (ret)
- 			break;
- 
-+		/* xe_bo_init_locked() frees storage on error */
- 		bo = xe_bo_init_locked(xe, storage, NULL, resv, NULL, dma_buf->size,
- 				       0, /* Will require 1way or 2way for vm_bind */
- 				       ttm_bo_type_sg, XE_BO_FLAG_SYSTEM, &exec);
+ 	if (flags & (XE_BO_FLAG_VRAM_MASK | XE_BO_FLAG_STOLEN) &&
+ 	    !(flags & XE_BO_FLAG_IGNORE_MIN_PAGE_SIZE) &&
 
 
