@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A573FF1BE;
-	Fri, 15 May 2026 15:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B1E2EAB82;
+	Fri, 15 May 2026 15:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860485; cv=none; b=afP7A0BJXWsLWufvyaCjeHSjsOW05x8TgVzI6JopleAs1yDp/vqROdy/r/2CjcBOEItxN6jmm/SmcVVfxiycJ3t+8DIzcn2lOq7MSwgGnslqLLtx5sYm8JK7pD+x3Z1mzvzj96s3FzSuYo90/Db/FWqUff/iG5fkTGIsNeJtDQk=
+	t=1778860487; cv=none; b=GNwTxZ+d6/Yal+xzstEqlVp7+D4KvW9pFGF/KEpvvYQt+XSCW7i1iI7QYdGwzJ/LdVcDeSixeJSBLjsXH03RJqqlXYVZeCgZW7wVVYF6ndxW/GTAnobJkwZnGmNuqkaZbdB/EcByuHa8Tsc6rYaOlPyo39kke1cZcOkwitqTmd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860485; c=relaxed/simple;
-	bh=TUXR5hGXbuTLps3s/MvGqL7blAtphfKF2gXaDo32vjM=;
+	s=arc-20240116; t=1778860487; c=relaxed/simple;
+	bh=Fvk9S0fgVDFfn7JhBx63fxMMnH75258kb8baZX7JnEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lB5AQ3ThqFhxX+/sT3oUaDY6ATwyIp4/PeLF8FTt/HVovwnNJkHFnEBEGUt5Vpl0FoOpBi29N85SmrmE5fmDphrIGTTS6SA91U/sc+3NDCNK457RZsbs0n7YEA1Qe24H6JVmdjXhh10OtgelzOyVZWjH0p+bUnExR45Tbe0prMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjG7JbeR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UwQ5JXMJxGC+f6CIVZ4LW6ygYm9VlfJaez87hA0M3ClAVWYe5HVUHbfwdGcet7zcug1FI+x4N4OJ89+ALpd8mM9fzPIP24pSwXLAaGOZhlY2SIrmAkSrbalW/TsexztXethKvEmbrmY9zjven9SISkH0dxPC9RkGUBT+wTIeYZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3egFaEE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjG7JbeR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0B2C2BCB0;
-	Fri, 15 May 2026 15:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3egFaEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA9EC2BCB0;
+	Fri, 15 May 2026 15:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860484;
-	bh=TUXR5hGXbuTLps3s/MvGqL7blAtphfKF2gXaDo32vjM=;
+	s=korg; t=1778860487;
+	bh=Fvk9S0fgVDFfn7JhBx63fxMMnH75258kb8baZX7JnEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjG7JbeRgUBnGAI7Yd4tqWSoRseRRQyoPfup1eCQw2iYJQVRoESMwySYiMrE1+pPv
-	 1Ybpru0riXlWLNiIFfkhgeZupiO4mJGSGEbjH/K6YZ8huwdlLm4t8I2//xjJ/Puuhx
-	 RYL4jqnZm9exaCZ0hPGtewPvskoyGEPkkuonPQWc=
+	b=f3egFaEECO8En0cIYmOGWy9XClMD8wN/+q0qoWAxTarlx7zea1wzQZEW5SQbdUKY8
+	 boL/FCUe+AiafP5JHmpYHwTumVJgQLlr4NdykZ4TlJy97T3RWYgChbhw2HbqM47Anj
+	 gaYR4bHa4xBBm/569PRlYWDet4NHxCc/MAXSDAto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yasuaki Torimaru <yasuakitorimaru@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>
-Subject: [PATCH 6.12 065/144] drm/msm/gem: fix error handling in msm_ioctl_gem_info_get_metadata()
-Date: Fri, 15 May 2026 17:48:11 +0200
-Message-ID: <20260515154655.053764690@linuxfoundation.org>
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Nemesa Garg <nemesa.garg@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.12 066/144] drm/i915/psr: Init variable to avoid early exit from et alignment loop
+Date: Fri, 15 May 2026 17:48:12 +0200
+Message-ID: <20260515154655.077221759@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -44,64 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-commit 47cbfe2608314b833ad61a65827d8fb363bc2d2d upstream.
+commit 314f6179e370988ac00dadf373a4f6166eb3db15 upstream.
 
-msm_ioctl_gem_info_get_metadata() always returns 0 regardless of
-errors. When copy_to_user() fails or the user buffer is too small,
-the error code stored in ret is ignored because the function
-unconditionally returns 0. This causes userspace to believe the
-ioctl succeeded when it did not.
+Uninitialized boolean variable may cause unwanted exit from et alignment
+loop. Fix this by initializing it as false.
 
-Additionally, kmemdup() can return NULL on allocation failure, but
-the return value is not checked. This leads to a NULL pointer
-dereference in the subsequent copy_to_user() call.
-
-Add the missing NULL check for kmemdup() and return ret instead of 0.
-
-Note that the SET counterpart (msm_ioctl_gem_info_set_metadata)
-correctly returns ret.
-
-Fixes: 9902cb999e4e ("drm/msm/gem: Add metadata")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/714478/
-Message-ID: <20260325114635.383241-1-yasuakitorimaru@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: 1be2fca84f52 ("drm/i915/psr: Repeat Selective Update area alignment")
+Cc: <stable@vger.kernel.org> # v6.9+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Nemesa Garg <nemesa.garg@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patch.msgid.link/20260413112345.88853-1-jouni.hogander@intel.com
+(cherry picked from commit 289678a90b8cf81e3514c9d6c667235cd39c7acf)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_psr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -616,6 +616,11 @@ static int msm_ioctl_gem_info_get_metada
- 	len = msm_obj->metadata_size;
- 	buf = kmemdup(msm_obj->metadata, len, GFP_KERNEL);
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2624,7 +2624,7 @@ int intel_psr2_sel_fetch_update(struct i
+ 		return ret;
  
-+	if (!buf) {
-+		msm_gem_unlock(obj);
-+		return -ENOMEM;
-+	}
-+
- 	msm_gem_unlock(obj);
+ 	do {
+-		bool cursor_in_su_area;
++		bool cursor_in_su_area = false;
  
- 	if (*metadata_size < len) {
-@@ -628,7 +633,7 @@ static int msm_ioctl_gem_info_get_metada
- 
- 	kfree(buf);
- 
--	return 0;
-+	return ret;
- }
- 
- static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
+ 		/*
+ 		 * Adjust su area to cover cursor fully as necessary
 
 
