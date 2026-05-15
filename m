@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289E63E00BB;
-	Fri, 15 May 2026 16:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43C43E00AD;
+	Fri, 15 May 2026 16:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861104; cv=none; b=TzV194D9NR6pj7jCujViOoQ+vsW0Dl3GeGR6Pkusspmw14iBdO/FdHZSQTL9U2DcITYr6h6Rtm5nvI5GOiOpl4e9sPQbSiljIlmNNISlTiWoSyBZNKghxsTt1kcXDtHtY6VwH7JbW3WD1iJfFeMjwr+nGmlZrpYRtsTHrLvr1lo=
+	t=1778861106; cv=none; b=kPcW1d1ORcaZ/dfTjoM5cyn+Y482LI0mcv1bn1XOIom0ScWX5x0vCQry7XTVh7MOEk5rD2PIg6WRNK4Mjdhlc73//pkGMQMpwZB3aXHtUIZlRHY3l2d/v4cgyHeCSVlcg+GYjtvvLRgGeCLnDuAIpd7NJzeyyB+FaaLg7SnMndo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861104; c=relaxed/simple;
-	bh=RLHNnJ+WiXCN1zh76sK3NGCeH0YLRyb61iRqIpK0fwk=;
+	s=arc-20240116; t=1778861106; c=relaxed/simple;
+	bh=+91482usW+z7QkpnCTP8HvX052f+sTFaati/l29sy94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVc3Oe/gO85tOUHwfXesxJyWlcofLe3xeMGlSb32ux2CPfnaIG91kmRUXneviaj4rUB/WQQ6PyR5FXtqaloownSDTR70xQVJsEXIcp8GIPQekN/PWrYcdG5Ks6KIUw5HvOa95+ml9f5F8FYTMqt3KbbRt9UCSA0N0yLOf5hXXpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icid2glD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NPMWbKBxazt8uasx47Ft4niVVwiVf0Zxyke20N4DDG7vQ9MgXl3HIrGw2P9kRpKGJ4K7hjA+GmX1vlIOv3j6dLEqHim3sbZQ+84WeO6tvSNpk8umpGxa1XTuO+HGU4F4O/K3omCKYYI3B5MnupP1sFBnGTo1BtZu1+ziaI30rok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZYS+h6KY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icid2glD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A42C2BCB0;
-	Fri, 15 May 2026 16:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYS+h6KY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C36FC2BCB0;
+	Fri, 15 May 2026 16:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861104;
-	bh=RLHNnJ+WiXCN1zh76sK3NGCeH0YLRyb61iRqIpK0fwk=;
+	s=korg; t=1778861106;
+	bh=+91482usW+z7QkpnCTP8HvX052f+sTFaati/l29sy94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icid2glDYMfLi+lcvFsIuMvetYdgo2PdxkKQNKJHgjdyPEQz05bnOaEjq3tO9BVGd
-	 x/XXZJSM6KuryVrwRVLuulLhgD6PeTuLoxzr+xbAxJu86jYu/YIb94xr5o+cgtOQS9
-	 7CXtBQVykRcnTBrHK8cvunCUqLGK+7Lp+h0oagPQ=
+	b=ZYS+h6KY5CgZyexL2JJ95WzwJHx3xbecKcJONjIz0FoA8Oohjtxw9cULI7vbx6TpL
+	 kpj57d76mt5HExT99Icu97gENkCMGbfGIskQzUlctBKNPuhL04mPBYLnS+OeZalN5Z
+	 h8w0XseHUpZcTM8ZwyyEIZy5xTgyBr45phvyskbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Aaro Koskinen <aaro.koskinen@iki.fi>
-Subject: [PATCH 6.6 198/474] USB: omap_udc: DMA: Dont enable burst 4 mode
-Date: Fri, 15 May 2026 17:45:07 +0200
-Message-ID: <20260515154719.302293715@linuxfoundation.org>
+	syzbot+04c4e65cab786a2e5b7e@syzkaller.appspotmail.com,
+	Tejas Bharambe <tejas.bharambe@outlook.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
+	Jianqiang kang <jianqkang@sina.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 160/474] ext4: validate p_idx bounds in ext4_ext_correct_indexes
+Date: Fri, 15 May 2026 17:44:29 +0200
+Message-ID: <20260515154718.487213349@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,60 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaro Koskinen <aaro.koskinen@iki.fi>
+From: Tejas Bharambe <tejas.bharambe@outlook.com>
 
-commit 3f91484f6c13c434bd573ca6b6779c26adb0ddab upstream.
+[ Upstream commit 2acb5c12ebd860f30e4faf67e6cc8c44ddfe5fe8 ]
 
-Commit 65111084c63d7 ("USB: more omap_udc updates (dma and omap1710)")
-added setting for DMA burst 4 mode. But I think this should be undone for
-two reasons:
+ext4_ext_correct_indexes() walks up the extent tree correcting
+index entries when the first extent in a leaf is modified. Before
+accessing path[k].p_idx->ei_block, there is no validation that
+p_idx falls within the valid range of index entries for that
+level.
 
-- It breaks DMA on 15xx boards - transfers just silently stall.
+If the on-disk extent header contains a corrupted or crafted
+eh_entries value, p_idx can point past the end of the allocated
+buffer, causing a slab-out-of-bounds read.
 
-- On newer OMAP1 boards, like Nokia 770 (omap1710), there is no measurable
-performance impact when testing TCP throughput with g_ether with large
-15000 byte MTU size.
+Fix this by validating path[k].p_idx against EXT_LAST_INDEX() at
+both access sites: before the while loop and inside it. Return
+-EFSCORRUPTED if the index pointer is out of range, consistent
+with how other bounds violations are handled in the ext4 extent
+tree code.
 
-It's also worth noting that when the original change was made, the
-OMAP_DMA_DATA_BURST_4 handling in arch/arm/plat-omap/dma.c was broken, and
-actually resulted in the same as the OMAP_DMA_DATA_BURST_DIS i.e. burst
-disabled. This was fixed not until a couple kernel releases later in an
-unrelated commit 1a8bfa1eb998a ("[ARM] 3142/1: OMAP 2/5: Update files
-common to omap1 and omap2").
-
-So based on this it seems there was never really a very good reason to
-enable this burst mode in omap_udc, so remove it now to allow 15xx DMA
-to work again (it provides 2x throughput compared to PIO mode).
-
-Fixes: 65111084c63d ("[PATCH] USB: more omap_udc updates (dma and omap1710)")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Link: https://patch.msgid.link/ad06qHLclWHeSGnV@darkstar.musicnaut.iki.fi
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+04c4e65cab786a2e5b7e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=04c4e65cab786a2e5b7e
+Signed-off-by: Tejas Bharambe <tejas.bharambe@outlook.com>
+Link: https://patch.msgid.link/JH0PR06MB66326016F9B6AD24097D232B897CA@JH0PR06MB6632.apcprd06.prod.outlook.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ Minor conflict resolved. ]
+Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/omap_udc.c |    4 ----
- 1 file changed, 4 deletions(-)
+ fs/ext4/extents.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/usb/gadget/udc/omap_udc.c
-+++ b/drivers/usb/gadget/udc/omap_udc.c
-@@ -734,8 +734,6 @@ static void dma_channel_claim(struct oma
- 		if (status == 0) {
- 			omap_writew(reg, UDC_TXDMA_CFG);
- 			/* EMIFF or SDRC */
--			omap_set_dma_src_burst_mode(ep->lch,
--						OMAP_DMA_DATA_BURST_4);
- 			omap_set_dma_src_data_pack(ep->lch, 1);
- 			/* TIPB */
- 			omap_set_dma_dest_params(ep->lch,
-@@ -757,8 +755,6 @@ static void dma_channel_claim(struct oma
- 				UDC_DATA_DMA,
- 				0, 0);
- 			/* EMIFF or SDRC */
--			omap_set_dma_dest_burst_mode(ep->lch,
--						OMAP_DMA_DATA_BURST_4);
- 			omap_set_dma_dest_data_pack(ep->lch, 1);
- 		}
- 	}
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 7626cf2b07f1c..a94798e23c1af 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -1743,6 +1743,13 @@ static int ext4_ext_correct_indexes(handle_t *handle, struct inode *inode,
+ 	err = ext4_ext_get_access(handle, inode, path + k);
+ 	if (err)
+ 		return err;
++	if (unlikely(path[k].p_idx > EXT_LAST_INDEX(path[k].p_hdr))) {
++		EXT4_ERROR_INODE(inode,
++				 "path[%d].p_idx %p > EXT_LAST_INDEX %p",
++				 k, path[k].p_idx,
++				 EXT_LAST_INDEX(path[k].p_hdr));
++		return -EFSCORRUPTED;
++	}
+ 	path[k].p_idx->ei_block = border;
+ 	err = ext4_ext_dirty(handle, inode, path + k);
+ 	if (err)
+@@ -1755,6 +1762,14 @@ static int ext4_ext_correct_indexes(handle_t *handle, struct inode *inode,
+ 		err = ext4_ext_get_access(handle, inode, path + k);
+ 		if (err)
+ 			break;
++		if (unlikely(path[k].p_idx > EXT_LAST_INDEX(path[k].p_hdr))) {
++			EXT4_ERROR_INODE(inode,
++					 "path[%d].p_idx %p > EXT_LAST_INDEX %p",
++					 k, path[k].p_idx,
++					 EXT_LAST_INDEX(path[k].p_hdr));
++			err = -EFSCORRUPTED;
++			break;
++		}
+ 		path[k].p_idx->ei_block = border;
+ 		err = ext4_ext_dirty(handle, inode, path + k);
+ 		if (err)
+-- 
+2.53.0
+
 
 
