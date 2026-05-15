@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF89C30569C;
-	Fri, 15 May 2026 16:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7172949E0;
+	Fri, 15 May 2026 16:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862852; cv=none; b=uvnw+qyT0TuBGegPwc9kv/5yRONCHhicN0oVRQ/vfXvWzytJIZGHsXMGij4BOR3sJ8g7J7Upc2Xcv2o6hcigEqxuUWNilbX0Nlsob9J5lgKDsJSrSAbeZ9TMSo55A9eAhAM88e3wyu4bue9lsFXgrjlYzqYt5oXx7hbRJiRRG9U=
+	t=1778862854; cv=none; b=ALJDnru5vioAhn8+hBBBtS1l/aRQikcUkcMNQX8T7Z7nL1gdNr4NnwFT2kMxdkvVNqDby+0OgpGEwMGasD8O3uuOYhC2Z60Vg0WO6e4/Ox+TfeokgF5BrBrFlK2EEwJ7MYhKQrnLWEHfy3TitK29dfXp4YadPiozY44YYx+LxTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862852; c=relaxed/simple;
-	bh=34xMIoGXrqK8Qtiz6nq+RUXsOANTp0o1TnSqj1yCgAg=;
+	s=arc-20240116; t=1778862854; c=relaxed/simple;
+	bh=kHqCU2yIF/cnGq2uz0EqEQaxp6z43+kVuZ4PyCDgIhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vCCragB9OVaqIUHiws9SLCDh+9KLmQEHK8BtxVevtKEi595Aa0XMiG9n1t6Eq1IybGZU/pWG0xudZcE4/krRVKihnIPS//lKm2V9U7TauPOiOfh4yxuEhKn+V8YycnAVu4mcFqPBzycLce6ZNpSnb+d09yk0sPMdiGHplDn9XBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vilyr7mp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fcn7Vz1fxHejJDhI/7+wfXgJ8Q1RiG+lOLyGWZtBsdRIb04Ml1+RkDTaaFlM691dswdzZXQtgTe65QwwTT0KcXI287EJfL8BLrKEHGNKt+oruI6Iakhkd+hHpHv/lu69oPi2nId3fZ1Ez8BQnGr4mthUVi+4LgLVY4YSFrttXQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRtFG7YW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vilyr7mp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5712CC2BCB3;
-	Fri, 15 May 2026 16:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRtFG7YW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DA7C2BCB0;
+	Fri, 15 May 2026 16:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862851;
-	bh=34xMIoGXrqK8Qtiz6nq+RUXsOANTp0o1TnSqj1yCgAg=;
+	s=korg; t=1778862854;
+	bh=kHqCU2yIF/cnGq2uz0EqEQaxp6z43+kVuZ4PyCDgIhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vilyr7mpROUBTuBQ+pvZobJ6ngbMYb/cCjRdkINRa/ocSFRyS3AXpgzAcxWj5uZ3j
-	 DJs9VhgSZXSqlKfCSh3Zd3mDK2elU2bD73BPnQj+Ymph0VYuRS23IQSPPf9459Q94a
-	 76ybeKIYvhCbKVe1iAHjaMsLOyzYAl/3XV5cKxX8=
+	b=tRtFG7YWduBX0cGoRIetCnFmUnU8wlpqRkWrB2E9nqPmy8+YCITKfJshf5GlBHM69
+	 g5izRrg/2ypJ17UGXpG29GcBM24y7UNxxkH17jXg4/imYm392TMAeejX2HgGqoYl4k
+	 iuTD3XYh+Ya44Tui8mH9c8d+4Ak7MFlkZB+y8vwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>
-Subject: [PATCH 7.0 181/201] sched_ext: Use HK_TYPE_DOMAIN_BOOT to detect isolcpus= domain isolation
-Date: Fri, 15 May 2026 17:49:59 +0200
-Message-ID: <20260515154702.498222270@linuxfoundation.org>
+	Amit Sunil Dhamne <amitsd@google.com>,
+	stable <stable@kernel.org>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 7.0 182/201] usb: typec: tcpm: reset internal port states on soft reset AMS
+Date: Fri, 15 May 2026 17:50:00 +0200
+Message-ID: <20260515154702.521371096@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -51,76 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Amit Sunil Dhamne <amitsd@google.com>
 
-commit 6ae315d37924435516d697ea7dde0b799a5928e0 upstream.
+commit 2909f0d4994fb4306bf116df5ccee797791fce2c upstream.
 
-scx_enable() refuses to attach a BPF scheduler when isolcpus=domain is
-in effect by comparing housekeeping_cpumask(HK_TYPE_DOMAIN) against
-cpu_possible_mask.
+Reset internal port states (such as vdm_sm_running and
+explicit_contract) on soft reset AMS as the port needs to negotiate a
+new contract. The consequence of leaving the states in as-is cond are as
+follows:
+  * port is in SRC power role and an explicit contract is negotiated
+    with the port partner (in sink role)
+  * port partner sends a Soft Reset AMS while VDM State Machine is
+    running
+  * port accepts the Soft Reset request and the port advertises src caps
+  * port partner sends a Request message but since the explicit_contract
+    and vdm_sm_running are true from previous negotiation, the port ends
+    up sending Soft Reset instead of Accept msg.
 
-Since commit 27c3a5967f05 ("sched/isolation: Convert housekeeping
-cpumasks to rcu pointers"), HK_TYPE_DOMAIN's cpumask is RCU protected
-and dereferencing it requires either RCU read lock, the cpu_hotplug
-write lock, or the cpuset lock; scx_enable() holds none of these, so
-booting with isolcpus=domain and attaching any BPF scheduler triggers
-the following lockdep splat:
+Stub Log:
+[  203.653942] AMS DISCOVER_IDENTITY start
+[  203.653947] PD TX, header: 0x176f
+[  203.655901] PD TX complete, status: 0
+[  203.657470] PD RX, header: 0x124f [1]
+[  203.657477] Rx VDM cmd 0xff008081 type 2 cmd 1 len 1
+[  203.657482] AMS DISCOVER_IDENTITY finished
+[  203.657484] cc:=4
+[  204.155698] PD RX, header: 0x144f [1]
+[  204.155718] Rx VDM cmd 0xeeee8001 type 0 cmd 1 len 1
+[  204.155741] PD TX, header: 0x196f
+[  204.157622] PD TX complete, status: 0
+[  204.160060] PD RX, header: 0x4d [1]
+[  204.160066] state change SRC_READY -> SOFT_RESET [rev2 SOFT_RESET_AMS]
+[  204.160076] PD TX, header: 0x163
+[  204.162486] PD TX complete, status: 0
+[  204.162832] AMS SOFT_RESET_AMS finished
+[  204.162840] cc:=4
+[  204.162891] AMS POWER_NEGOTIATION start
+[  204.162896] state change SOFT_RESET -> AMS_START [rev2 POWER_NEGOTIATION]
+[  204.162908] state change AMS_START -> SRC_SEND_CAPABILITIES [rev2 POWER_NEGOTIATION]
+[  204.162913] PD TX, header: 0x1361
+[  204.165529] PD TX complete, status: 0
+[  204.165571] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES_TIMEOUT @ 60 ms [rev2 POWER_NEGOTIATION]
+[  204.166996] PD RX, header: 0x1242 [1]
+[  204.167009] state change SRC_SEND_CAPABILITIES -> SRC_SOFT_RESET_WAIT_SNK_TX [rev2 POWER_NEGOTIATION]
+[  204.167019] AMS POWER_NEGOTIATION finished
+[  204.167020] cc:=4
+[  204.167083] AMS SOFT_RESET_AMS start
+[  204.167086] state change SRC_SOFT_RESET_WAIT_SNK_TX -> SOFT_RESET_SEND [rev2 SOFT_RESET_AMS]
+[  204.167092] PD TX, header: 0x16d
+[  204.168824] PD TX complete, status: 0
+[  204.168854] pending state change SOFT_RESET_SEND -> HARD_RESET_SEND @ 60 ms [rev2 SOFT_RESET_AMS]
+[  204.171876] PD RX, header: 0x43 [1]
+[  204.171879] AMS SOFT_RESET_AMS finished
 
-  =============================
-  WARNING: suspicious RCU usage
-  -----------------------------
-  kernel/sched/isolation.c:60 suspicious rcu_dereference_check() usage!
+This causes COMMON.PROC.PD.11.2 check failure for
+TEST.PD.VDM.SRC.2_Rev2Src test on the PD compliance tester.
 
-  1 lock held by scx_flash/281:
-   #0: ffffffff8379fce0 (update_mutex){+.+.}-{4:4}, at:
-       bpf_struct_ops_link_create+0x134/0x1c0
-
-  Call Trace:
-   dump_stack_lvl+0x6f/0xb0
-   lockdep_rcu_suspicious.cold+0x37/0x70
-   housekeeping_cpumask+0xcd/0xe0
-   scx_enable.isra.0+0x17/0x120
-   bpf_scx_reg+0x5e/0x80
-   bpf_struct_ops_link_create+0x151/0x1c0
-   __sys_bpf+0x1e4b/0x33c0
-   __x64_sys_bpf+0x21/0x30
-   do_syscall_64+0x117/0xf80
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-In addition, commit 03ff73510169 ("cpuset: Update HK_TYPE_DOMAIN cpumask
-from cpuset") made HK_TYPE_DOMAIN include cpuset isolated partitions as
-well, which means the current check also rejects BPF schedulers when a
-cpuset partition is active. That contradicts the original intent of
-commit 9f391f94a173 ("sched_ext: Disallow loading BPF scheduler if
-isolcpus= domain isolation is in effect"), which explicitly noted that
-cpuset partitions are honored through per-task cpumasks and should not
-be rejected.
-
-Switch to housekeeping_enabled(HK_TYPE_DOMAIN_BOOT), which reads only
-the housekeeping flag bit (no RCU dereference) and reflects exactly the
-boot-time isolcpus= configuration that the error message refers to.
-
-Fixes: 27c3a5967f05 ("sched/isolation: Convert housekeeping cpumasks to rcu pointers")
-Cc: stable@vger.kernel.org # v7.0+
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Fixes: 8d3a0578ad1a ("usb: typec: tcpm: Respond Wait if VDM state machine is running")
+Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260414-fix-soft-reset-v1-1-01d7cb9764e2@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5331,8 +5331,7 @@ static int scx_enable(struct sched_ext_o
- 	static DEFINE_MUTEX(helper_mutex);
- 	struct scx_enable_cmd cmd;
- 
--	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
--			   cpu_possible_mask)) {
-+	if (housekeeping_enabled(HK_TYPE_DOMAIN_BOOT)) {
- 		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
- 		return -EINVAL;
- 	}
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -5539,6 +5539,8 @@ static void run_state_machine(struct tcp
+ 		usb_power_delivery_unregister_capabilities(port->partner_source_caps);
+ 		port->partner_source_caps = NULL;
+ 		tcpm_pd_send_control(port, PD_CTRL_ACCEPT, TCPC_TX_SOP);
++		port->vdm_sm_running = false;
++		port->explicit_contract = false;
+ 		tcpm_ams_finish(port);
+ 		if (port->pwr_role == TYPEC_SOURCE) {
+ 			port->upcoming_state = SRC_SEND_CAPABILITIES;
 
 
