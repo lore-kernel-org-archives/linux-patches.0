@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30F8355049;
-	Fri, 15 May 2026 16:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585E8355049;
+	Fri, 15 May 2026 16:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860828; cv=none; b=Eu8b1xRE+z1AEpSBBLNMcGaOU5RgQxSj6juRMU0E+eB4KhPKCFFcMKwUWw0OH/WxuYG6xXHvTUkbtyHaat9FZGShV20MU30TL9HvIRUhWF4DjukBErqQmTGY8+82piCzFN7x7wsj/xZ8AqlRBnga8FExHn9pEADcwKwUXYRkesc=
+	t=1778860831; cv=none; b=ocudoKnAZvFv7gHcUnS9BSgLeQIlD23S4ZZsI6tfZusnZUC/7P9U/hZrhP8RKbE3E6xKRLcXJ6555LgHYAjzwIVFpjfnFpLB3rVJaQwyzhk5ubLUzB8u7xGteK3kMWJTePfYb13wXnN/KSs627svKXb9nTngxTRp3VH08jvwMbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860828; c=relaxed/simple;
-	bh=vCTNRskmXZF872NfkVS9LZ98SD381s3m076/BvtEKks=;
+	s=arc-20240116; t=1778860831; c=relaxed/simple;
+	bh=AJLbIUHO1qevL1VGFANpcj7/IYze2HKMmzDW8Fhgs4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Byx1JYRyTd1p/meCY3EmRQZdqJWhoryy85J5HpVt1J7Kpk1JUiJsSdqFWq6E2tdjDip4SiIt1myf+ZIGZ+X95nACpQv9DYN6+O23kBFVgtPihmUGrF5kxB750/Ap1AZLNKV37esR809m2Ntpo5DycNfQsHZiQo0j+2bBGnkzL78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndCxt9B6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qsxBndhcNR3JPhDk/A+IPc4vSOEfbwhN0HoFEav0rE6jPI3/kwjQCNfjZVcJCLI4TubOGKrO+156N7iB38OutDUtPiQMtcymX2SxcZaPbWKCNFiao8NtHldX0aa4jfwqS4Im/nKwQIjxhUPRp36Ic/LvkAx7JgewPiJSYCS/u7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPwUfr5g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndCxt9B6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D4FC2BCB0;
-	Fri, 15 May 2026 16:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPwUfr5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD82C2BCB0;
+	Fri, 15 May 2026 16:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860828;
-	bh=vCTNRskmXZF872NfkVS9LZ98SD381s3m076/BvtEKks=;
+	s=korg; t=1778860831;
+	bh=AJLbIUHO1qevL1VGFANpcj7/IYze2HKMmzDW8Fhgs4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndCxt9B68OtA21US6UOYgkznbjXI2fr0L5mZEG63J4ubizn0UjkDiWRNcVleU3lGv
-	 rwU/7lfvKISPOODGlllneqvsU8h0p/+fuizfzKZJrcgjrfntBeN/RnSXJXmbC9eWZ0
-	 btA1gRrT2GzCZWcfbKx5ijfXSZoRATQyzAlmj6GY=
+	b=xPwUfr5gpTSjJxi6Bq3I6lXeG8zj5t0OLUaOO4o3Y2zhFe2Ds+c2hYs52/uRMl3Od
+	 4Il4ktZ2920RYrM3SKpardmAh2jiDDuyA81n/HHasSTg8mPISDenqS1BVh8rLkI6bV
+	 nLIlEURSHUSVUgxTmIzivVlFWqQDV2Lgtx3rWsjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 094/474] KVM: x86: Defer non-architectural deliver of exception payload to userspace read
-Date: Fri, 15 May 2026 17:43:23 +0200
-Message-ID: <20260515154717.073265590@linuxfoundation.org>
+	Yiyang Chen <cyyzero16@gmail.com>,
+	Balbir Singh <bsingharora@gmail.com>,
+	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
+	Fan Yu <fan.yu9@zte.com.cn>,
+	Wang Yaxin <wang.yaxin@zte.com.cn>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 068/474] tools/accounting: handle truncated taskstats netlink messages
+Date: Fri, 15 May 2026 17:42:57 +0200
+Message-ID: <20260515154716.514274327@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,175 +54,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yiyang Chen <cyyzero16@gmail.com>
 
-commit d0ad1b05bbe6f8da159a4dfb6692b3b7ce30ccc8 upstream.
+commit cc82b3dcc6a8fa259fbda12ab00d6fc00908a49e upstream.
 
-When attempting to play nice with userspace that hasn't enabled
-KVM_CAP_EXCEPTION_PAYLOAD, defer KVM's non-architectural delivery of the
-payload until userspace actually reads relevant vCPU state, and more
-importantly, force delivery of the payload in *all* paths where userspace
-saves relevant vCPU state, not just KVM_GET_VCPU_EVENTS.
+procacct and getdelays use a fixed receive buffer for taskstats generic
+netlink messages.  A multi-threaded process exit can emit a single
+PID+TGID notification large enough to exceed that buffer on newer kernels.
 
-Ignoring userspace save/restore for the moment, delivering the payload
-before the exception is injected is wrong regardless of whether L1 or L2
-is running.  To make matters even more confusing, the flaw *currently*
-being papered over by the !is_guest_mode() check isn't even the same bug
-that commit da998b46d244 ("kvm: x86: Defer setting of CR2 until #PF
-delivery") was trying to avoid.
+Switch to recvmsg() so MSG_TRUNC is detected explicitly, increase the
+message buffer size, and report truncated datagrams clearly instead of
+misparsing them as fatal netlink errors.
 
-At the time of commit da998b46d244, KVM didn't correctly handle exception
-intercepts, as KVM would wait until VM-Entry into L2 was imminent to check
-if the queued exception should morph to a nested VM-Exit.  I.e. KVM would
-deliver the payload to L2 and then synthesize a VM-Exit into L1.  But the
-payload was only the most blatant issue, e.g. waiting to check exception
-intercepts would also lead to KVM incorrectly escalating a
-should-be-intercepted #PF into a #DF.
+Also print the taskstats version in debug output to make version
+mismatches easier to diagnose while inspecting taskstats traffic.
 
-That underlying bug was eventually fixed by commit 7709aba8f716 ("KVM: x86:
-Morph pending exceptions to pending VM-Exits at queue time"), but in the
-interim, commit a06230b62b89 ("KVM: x86: Deliver exception payload on
-KVM_GET_VCPU_EVENTS") came along and subtly added another dependency on
-the !is_guest_mode() check.
-
-While not recorded in the changelog, the motivation for deferring the
-!exception_payload_enabled delivery was to fix a flaw where a synthesized
-MTF (Monitor Trap Flag) VM-Exit would drop a pending #DB and clobber DR6.
-On a VM-Exit, VMX CPUs save pending #DB information into the VMCS, which
-is emulated by KVM in nested_vmx_update_pending_dbg() by grabbing the
-payload from the queue/pending exception.  I.e. prematurely delivering the
-payload would cause the pending #DB to not be recorded in the VMCS, and of
-course, clobber L2's DR6 as seen by L1.
-
-Jumping back to save+restore, the quirked behavior of forcing delivery of
-the payload only works if userspace does KVM_GET_VCPU_EVENTS *before*
-CR2 or DR6 is saved, i.e. before KVM_GET_SREGS{,2} and KVM_GET_DEBUGREGS.
-E.g. if userspace does KVM_GET_SREGS before KVM_GET_VCPU_EVENTS, then the
-CR2 saved by userspace won't contain the payload for the exception save by
-KVM_GET_VCPU_EVENTS.
-
-Deliberately deliver the payload in the store_regs() path, as it's the
-least awful option even though userspace may not be doing save+restore.
-Because if userspace _is_ doing save restore, it could elide KVM_GET_SREGS
-knowing that SREGS were already saved when the vCPU exited.
-
-Link: https://lore.kernel.org/all/20200207103608.110305-1-oupton@google.com
-Cc: Yosry Ahmed <yosry.ahmed@linux.dev>
-Cc: stable@vger.kernel.org
-Reviewed-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Tested-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20260218005438.2619063-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lkml.kernel.org/r/520308bb4cbbaf8dc2c7296b5f60f11e12fb30a5.1774810498.git.cyyzero16@gmail.com
+Signed-off-by: Yiyang Chen <cyyzero16@gmail.com>
+Cc: Balbir Singh <bsingharora@gmail.com>
+Cc: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
+Cc: Fan Yu <fan.yu9@zte.com.cn>
+Cc: Wang Yaxin <wang.yaxin@zte.com.cn>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |   62 +++++++++++++++++++++++++++++++++--------------------
- 1 file changed, 39 insertions(+), 23 deletions(-)
+ tools/accounting/getdelays.c |   41 +++++++++++++++++++++++++++++++++++++----
+ tools/accounting/procacct.c  |   40 ++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 73 insertions(+), 8 deletions(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -695,9 +695,6 @@ static void kvm_multiple_exception(struc
- 		vcpu->arch.exception.error_code = error_code;
- 		vcpu->arch.exception.has_payload = has_payload;
- 		vcpu->arch.exception.payload = payload;
--		if (!is_guest_mode(vcpu))
--			kvm_deliver_exception_payload(vcpu,
--						      &vcpu->arch.exception);
- 		return;
+--- a/tools/accounting/getdelays.c
++++ b/tools/accounting/getdelays.c
+@@ -59,7 +59,7 @@ int print_task_context_switch_counts;
  	}
  
-@@ -5147,18 +5144,8 @@ static int kvm_vcpu_ioctl_x86_set_mce(st
- 	return 0;
+ /* Maximum size of response requested or message sent */
+-#define MAX_MSG_SIZE	1024
++#define MAX_MSG_SIZE	2048
+ /* Maximum number of cpus expected to be specified in a cpumask */
+ #define MAX_CPUS	32
+ 
+@@ -114,6 +114,32 @@ error:
+ 	return -1;
  }
  
--static void kvm_vcpu_ioctl_x86_get_vcpu_events(struct kvm_vcpu *vcpu,
--					       struct kvm_vcpu_events *events)
-+static struct kvm_queued_exception *kvm_get_exception_to_save(struct kvm_vcpu *vcpu)
- {
--	struct kvm_queued_exception *ex;
--
--	process_nmi(vcpu);
--
--#ifdef CONFIG_KVM_SMM
--	if (kvm_check_request(KVM_REQ_SMI, vcpu))
--		process_smi(vcpu);
--#endif
--
- 	/*
- 	 * KVM's ABI only allows for one exception to be migrated.  Luckily,
- 	 * the only time there can be two queued exceptions is if there's a
-@@ -5169,21 +5156,46 @@ static void kvm_vcpu_ioctl_x86_get_vcpu_
- 	if (vcpu->arch.exception_vmexit.pending &&
- 	    !vcpu->arch.exception.pending &&
- 	    !vcpu->arch.exception.injected)
--		ex = &vcpu->arch.exception_vmexit;
--	else
--		ex = &vcpu->arch.exception;
-+		return &vcpu->arch.exception_vmexit;
++static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
++{
++	struct sockaddr_nl nladdr;
++	struct iovec iov = {
++		.iov_base = msg,
++		.iov_len = sizeof(*msg),
++	};
++	struct msghdr hdr = {
++		.msg_name = &nladdr,
++		.msg_namelen = sizeof(nladdr),
++		.msg_iov = &iov,
++		.msg_iovlen = 1,
++	};
++	int ret;
 +
-+	return &vcpu->arch.exception;
++	ret = recvmsg(sd, &hdr, 0);
++	if (ret < 0)
++		return -1;
++	if (hdr.msg_flags & MSG_TRUNC) {
++		errno = EMSGSIZE;
++		return -1;
++	}
++
++	return ret;
 +}
 +
-+static void kvm_handle_exception_payload_quirk(struct kvm_vcpu *vcpu)
-+{
-+	struct kvm_queued_exception *ex = kvm_get_exception_to_save(vcpu);
  
- 	/*
--	 * In guest mode, payload delivery should be deferred if the exception
--	 * will be intercepted by L1, e.g. KVM should not modifying CR2 if L1
--	 * intercepts #PF, ditto for DR6 and #DBs.  If the per-VM capability,
--	 * KVM_CAP_EXCEPTION_PAYLOAD, is not set, userspace may or may not
--	 * propagate the payload and so it cannot be safely deferred.  Deliver
--	 * the payload if the capability hasn't been requested.
-+	 * If KVM_CAP_EXCEPTION_PAYLOAD is disabled, then (prematurely) deliver
-+	 * the pending exception payload when userspace saves *any* vCPU state
-+	 * that interacts with exception payloads to avoid breaking userspace.
-+	 *
-+	 * Architecturally, KVM must not deliver an exception payload until the
-+	 * exception is actually injected, e.g. to avoid losing pending #DB
-+	 * information (which VMX tracks in the VMCS), and to avoid clobbering
-+	 * state if the exception is never injected for whatever reason.  But
-+	 * if KVM_CAP_EXCEPTION_PAYLOAD isn't enabled, then userspace may or
-+	 * may not propagate the payload across save+restore, and so KVM can't
-+	 * safely defer delivery of the payload.
- 	 */
- 	if (!vcpu->kvm->arch.exception_payload_enabled &&
- 	    ex->pending && ex->has_payload)
- 		kvm_deliver_exception_payload(vcpu, ex);
+ static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
+ 	     __u8 genl_cmd, __u16 nla_type,
+@@ -465,12 +491,16 @@ int main(int argc, char *argv[])
+ 	}
+ 
+ 	do {
+-		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
++		rep_len = recv_taskstats_msg(nl_sd, &msg);
+ 		PRINTF("received %d bytes\n", rep_len);
+ 
+ 		if (rep_len < 0) {
+-			fprintf(stderr, "nonfatal reply error: errno %d\n",
+-				errno);
++			if (errno == EMSGSIZE)
++				fprintf(stderr,
++					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
++			else
++				fprintf(stderr, "nonfatal reply error: errno %d\n",
++					errno);
+ 			continue;
+ 		}
+ 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
+@@ -512,6 +542,9 @@ int main(int argc, char *argv[])
+ 							printf("TGID\t%d\n", rtid);
+ 						break;
+ 					case TASKSTATS_TYPE_STATS:
++						PRINTF("version %u\n",
++						       ((struct taskstats *)
++							NLA_DATA(na))->version);
+ 						if (print_delays)
+ 							print_delayacct((struct taskstats *) NLA_DATA(na));
+ 						if (print_io_accounting)
+--- a/tools/accounting/procacct.c
++++ b/tools/accounting/procacct.c
+@@ -71,7 +71,7 @@ int print_task_context_switch_counts;
+ 	}
+ 
+ /* Maximum size of response requested or message sent */
+-#define MAX_MSG_SIZE	1024
++#define MAX_MSG_SIZE	2048
+ /* Maximum number of cpus expected to be specified in a cpumask */
+ #define MAX_CPUS	32
+ 
+@@ -121,6 +121,32 @@ error:
+ 	return -1;
+ }
+ 
++static int recv_taskstats_msg(int sd, struct msgtemplate *msg)
++{
++	struct sockaddr_nl nladdr;
++	struct iovec iov = {
++		.iov_base = msg,
++		.iov_len = sizeof(*msg),
++	};
++	struct msghdr hdr = {
++		.msg_name = &nladdr,
++		.msg_namelen = sizeof(nladdr),
++		.msg_iov = &iov,
++		.msg_iovlen = 1,
++	};
++	int ret;
++
++	ret = recvmsg(sd, &hdr, 0);
++	if (ret < 0)
++		return -1;
++	if (hdr.msg_flags & MSG_TRUNC) {
++		errno = EMSGSIZE;
++		return -1;
++	}
++
++	return ret;
 +}
 +
-+static void kvm_vcpu_ioctl_x86_get_vcpu_events(struct kvm_vcpu *vcpu,
-+					       struct kvm_vcpu_events *events)
-+{
-+	struct kvm_queued_exception *ex = kvm_get_exception_to_save(vcpu);
-+
-+	process_nmi(vcpu);
-+
-+#ifdef CONFIG_KVM_SMM
-+	if (kvm_check_request(KVM_REQ_SMI, vcpu))
-+		process_smi(vcpu);
-+#endif
-+
-+	kvm_handle_exception_payload_quirk(vcpu);
  
- 	memset(events, 0, sizeof(*events));
+ static int send_cmd(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
+ 	     __u8 genl_cmd, __u16 nla_type,
+@@ -239,6 +265,8 @@ void handle_aggr(int mother, struct nlat
+ 			PRINTF("TGID\t%d\n", rtid);
+ 			break;
+ 		case TASKSTATS_TYPE_STATS:
++			PRINTF("version %u\n",
++			       ((struct taskstats *)NLA_DATA(na))->version);
+ 			if (mother == TASKSTATS_TYPE_AGGR_PID)
+ 				print_procacct((struct taskstats *) NLA_DATA(na));
+ 			if (fd) {
+@@ -348,12 +376,16 @@ int main(int argc, char *argv[])
+ 	}
  
-@@ -5364,6 +5376,8 @@ static void kvm_vcpu_ioctl_x86_get_debug
- {
- 	unsigned long val;
+ 	do {
+-		rep_len = recv(nl_sd, &msg, sizeof(msg), 0);
++		rep_len = recv_taskstats_msg(nl_sd, &msg);
+ 		PRINTF("received %d bytes\n", rep_len);
  
-+	kvm_handle_exception_payload_quirk(vcpu);
-+
- 	memset(dbgregs, 0, sizeof(*dbgregs));
- 	memcpy(dbgregs->db, vcpu->arch.db, sizeof(vcpu->arch.db));
- 	kvm_get_dr(vcpu, 6, &val);
-@@ -11396,6 +11410,8 @@ static void __get_sregs_common(struct kv
- 	if (vcpu->arch.guest_state_protected)
- 		goto skip_protected_regs;
- 
-+	kvm_handle_exception_payload_quirk(vcpu);
-+
- 	kvm_get_segment(vcpu, &sregs->cs, VCPU_SREG_CS);
- 	kvm_get_segment(vcpu, &sregs->ds, VCPU_SREG_DS);
- 	kvm_get_segment(vcpu, &sregs->es, VCPU_SREG_ES);
+ 		if (rep_len < 0) {
+-			fprintf(stderr, "nonfatal reply error: errno %d\n",
+-				errno);
++			if (errno == EMSGSIZE)
++				fprintf(stderr,
++					"dropped truncated taskstats netlink message, please increase MAX_MSG_SIZE\n");
++			else
++				fprintf(stderr, "nonfatal reply error: errno %d\n",
++					errno);
+ 			continue;
+ 		}
+ 		if (msg.n.nlmsg_type == NLMSG_ERROR ||
 
 
