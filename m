@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3921530569C;
-	Fri, 15 May 2026 16:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E927530569C;
+	Fri, 15 May 2026 16:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860973; cv=none; b=qPwSjvBlFlpM+LmfJoX2h4PZeyZuJYsu90gp+ZRXxZOIuUBleKyo1okWSiLovdp8iyKiXd7k08+MjlzL9/dVaFUqo8Hsc4iM+gUQkTB4C38ZJadFjBenSIywa/zzBs3reO/6uPLrwlzyTOEfTK5q/4Y5eZiYmSEMTvVRnvZXy/s=
+	t=1778860976; cv=none; b=eyGiUJubI+2d+O2Gp5XCxpqZOJUHTkDMRR18ztbzIaSZccDqa8fAlXacUuSpfoBE17K9Y5z22DzSHSXXwq6VFxaHdxBE24McFFWTg3sXX4ZorjTbeC9Tbqh38Hrp0wQU3JfKT85Ak2x8NROYIzr41JtNPRt7frSY+5tnoHQJ/0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860973; c=relaxed/simple;
-	bh=e34r+lI1mOB49XlUGKiU8IAs6mgCil1gBBhxu/Xsns0=;
+	s=arc-20240116; t=1778860976; c=relaxed/simple;
+	bh=cNV0LpT4J5aeiH/IWYGvVYisqfyxmCIcLKP2m4IgXn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r0PEi+eIKcUjf5AXo06A0cRT7e5y+xuW9alpvtO0V1rDqJcDvQ/pE/EBM2N62uNMKGQW/kp+SsF6JY3UdIBAO2XUm1ABOWXcBUx5bi9Squ9N2swBDE6EQGidg0c0kKwBf+EBNB7rOFY2F5DQpdkL8SzlDkQkgtQpNr7UDxSIKyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0k0HenJY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QTBzCUNnjDNhBTw+Y4CIRQtAHOZxt94O6R/fIRtCo9EonD2sI46S2+uYK2qQl00CZnubIctgpnm6LKRx1X2wwXFRnqiNo5biBY2tXpChbFMOIEMsjU37tB09Veh00FKz4OIrmfeFquNN4oUZf7iPPChNe1VadJTHP32EVtfdwWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPhaztnU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0k0HenJY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19ADC2BCB0;
-	Fri, 15 May 2026 16:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPhaztnU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5647FC2BCB0;
+	Fri, 15 May 2026 16:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860973;
-	bh=e34r+lI1mOB49XlUGKiU8IAs6mgCil1gBBhxu/Xsns0=;
+	s=korg; t=1778860975;
+	bh=cNV0LpT4J5aeiH/IWYGvVYisqfyxmCIcLKP2m4IgXn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0k0HenJYlj8qsBchAkGTotVAJeUCgNq1M8CvCY0Jt7FFMTGVaA+X0wqFQduJYSxDN
-	 E0Qlg3DAT7xCWWiXilZOpSUmOIcK4z7q5PzfgLg8Gs9g8iN2pkQ3J1T0ShH5m5zDm3
-	 gVcP4grl3Djj0Jw4EsF343O5DdtCFglFsWgzn3/8=
+	b=PPhaztnUW6cwZVUlgpxiQcum9cYYoZ0wYLosUElvRVVqua1piayJ1AwANa5j6SHyM
+	 csVFHIq0cnU3hIBRBt8Cz40rpVm/p+LaSO/nXvw7pn1HuqEqJxhBRhgA27d3Mr4Qpw
+	 4//OmdapWqPYbPbZBuH3rXBKl0Y3PRamLEUHpIio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	"Rafael J. Wysocki" <rjw@rjwysocki.net>
-Subject: [PATCH 6.6 149/474] ACPI: scan: Use acpi_dev_put() in object add error paths
-Date: Fri, 15 May 2026 17:44:18 +0200
-Message-ID: <20260515154718.251258845@linuxfoundation.org>
+	Junrui Luo <moonafterrain@outlook.com>,
+	Yu Kuai <yukuai@fnnas.com>
+Subject: [PATCH 6.6 114/474] md/raid5: validate payload size before accessing journal metadata
+Date: Fri, 15 May 2026 17:43:43 +0200
+Message-ID: <20260515154717.503151934@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,61 +50,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 9c0acc169ac71535477caedea8315f7041c5f07c upstream.
+commit b0cc3ae97e893bf54bbce447f4e9fd2e0b88bff9 upstream.
 
-After acpi_init_device_object(), the lifetime of struct acpi_device is
-managed by the driver core through reference counting.
+r5c_recovery_analyze_meta_block() and
+r5l_recovery_verify_data_checksum_for_mb() iterate over payloads in a
+journal metadata block using on-disk payload size fields without
+validating them against the remaining space in the metadata block.
 
-Both acpi_add_power_resource() and acpi_add_single_object() call
-acpi_init_device_object() and then invoke acpi_device_add(). If that
-fails, their error paths call the release callback directly instead of
-dropping the device reference through acpi_dev_put().
+A corrupted journal contains payload sizes extending beyond the PAGE_SIZE
+boundary can cause out-of-bounds reads when accessing payload fields or
+computing offsets.
 
-This bypasses the normal device lifetime rules and frees the object
-without releasing the reference acquired by device_initialize(), which
-may lead to a refcount leak.
+Add bounds validation for each payload type to ensure the full payload
+fits within meta_size before processing.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fix both error paths by using acpi_dev_put() and let the release
-callback handle the final cleanup.
-
-Fixes: 781d737c7466 ("ACPI: Drop power resources driver")
-Fixes: 718fb0de8ff88 ("ACPI: fix NULL bug for HID/UID string")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260413135343.2884481-1-lgs201920130244@gmail.com
-Signed-off-by: Rafael J. Wysocki <rjw@rjwysocki.net>
+Fixes: b4c625c67362 ("md/r5cache: r5cache recovery: part 1")
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://lore.kernel.org/linux-raid/SYBPR01MB78815E78D829BB86CD7C8015AF5FA@SYBPR01MB7881.ausprd01.prod.outlook.com/
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/power.c |    2 +-
- drivers/acpi/scan.c  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/raid5-cache.c |   48 ++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 33 insertions(+), 15 deletions(-)
 
---- a/drivers/acpi/power.c
-+++ b/drivers/acpi/power.c
-@@ -986,7 +986,7 @@ struct acpi_device *acpi_add_power_resou
- 	return device;
+--- a/drivers/md/raid5-cache.c
++++ b/drivers/md/raid5-cache.c
+@@ -2010,15 +2010,27 @@ r5l_recovery_verify_data_checksum_for_mb
+ 		return -ENOMEM;
  
-  err:
--	acpi_release_power_resource(&device->dev);
-+	acpi_dev_put(device);
- 	return NULL;
- }
+ 	while (mb_offset < le32_to_cpu(mb->meta_size)) {
++		sector_t payload_len;
++
+ 		payload = (void *)mb + mb_offset;
+ 		payload_flush = (void *)mb + mb_offset;
  
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -1862,7 +1862,7 @@ static int acpi_add_single_object(struct
- 		result = acpi_device_add(device);
+ 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_DATA) {
++			payload_len = sizeof(struct r5l_payload_data_parity) +
++				(sector_t)sizeof(__le32) *
++				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
++			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++				goto mismatch;
+ 			if (r5l_recovery_verify_data_checksum(
+ 				    log, ctx, page, log_offset,
+ 				    payload->checksum[0]) < 0)
+ 				goto mismatch;
+ 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_PARITY) {
++			payload_len = sizeof(struct r5l_payload_data_parity) +
++				(sector_t)sizeof(__le32) *
++				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
++			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++				goto mismatch;
+ 			if (r5l_recovery_verify_data_checksum(
+ 				    log, ctx, page, log_offset,
+ 				    payload->checksum[0]) < 0)
+@@ -2031,22 +2043,18 @@ r5l_recovery_verify_data_checksum_for_mb
+ 				    payload->checksum[1]) < 0)
+ 				goto mismatch;
+ 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
+-			/* nothing to do for R5LOG_PAYLOAD_FLUSH here */
++			payload_len = sizeof(struct r5l_payload_flush) +
++				(sector_t)le32_to_cpu(payload_flush->size);
++			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++				goto mismatch;
+ 		} else /* not R5LOG_PAYLOAD_DATA/PARITY/FLUSH */
+ 			goto mismatch;
  
- 	if (result) {
--		acpi_device_release(&device->dev);
-+		acpi_dev_put(device);
- 		return result;
+-		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
+-			mb_offset += sizeof(struct r5l_payload_flush) +
+-				le32_to_cpu(payload_flush->size);
+-		} else {
+-			/* DATA or PARITY payload */
++		if (le16_to_cpu(payload->header.type) != R5LOG_PAYLOAD_FLUSH) {
+ 			log_offset = r5l_ring_add(log, log_offset,
+ 						  le32_to_cpu(payload->size));
+-			mb_offset += sizeof(struct r5l_payload_data_parity) +
+-				sizeof(__le32) *
+-				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
+ 		}
+-
++		mb_offset += payload_len;
  	}
  
+ 	put_page(page);
+@@ -2097,6 +2105,7 @@ r5c_recovery_analyze_meta_block(struct r
+ 	log_offset = r5l_ring_add(log, ctx->pos, BLOCK_SECTORS);
+ 
+ 	while (mb_offset < le32_to_cpu(mb->meta_size)) {
++		sector_t payload_len;
+ 		int dd;
+ 
+ 		payload = (void *)mb + mb_offset;
+@@ -2105,6 +2114,12 @@ r5c_recovery_analyze_meta_block(struct r
+ 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
+ 			int i, count;
+ 
++			payload_len = sizeof(struct r5l_payload_flush) +
++				(sector_t)le32_to_cpu(payload_flush->size);
++			if (mb_offset + payload_len >
++			    le32_to_cpu(mb->meta_size))
++				return -EINVAL;
++
+ 			count = le32_to_cpu(payload_flush->size) / sizeof(__le64);
+ 			for (i = 0; i < count; ++i) {
+ 				stripe_sect = le64_to_cpu(payload_flush->flush_stripes[i]);
+@@ -2118,12 +2133,17 @@ r5c_recovery_analyze_meta_block(struct r
+ 				}
+ 			}
+ 
+-			mb_offset += sizeof(struct r5l_payload_flush) +
+-				le32_to_cpu(payload_flush->size);
++			mb_offset += payload_len;
+ 			continue;
+ 		}
+ 
+ 		/* DATA or PARITY payload */
++		payload_len = sizeof(struct r5l_payload_data_parity) +
++			(sector_t)sizeof(__le32) *
++			(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
++		if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++			return -EINVAL;
++
+ 		stripe_sect = (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_DATA) ?
+ 			raid5_compute_sector(
+ 				conf, le64_to_cpu(payload->location), 0, &dd,
+@@ -2188,9 +2208,7 @@ r5c_recovery_analyze_meta_block(struct r
+ 		log_offset = r5l_ring_add(log, log_offset,
+ 					  le32_to_cpu(payload->size));
+ 
+-		mb_offset += sizeof(struct r5l_payload_data_parity) +
+-			sizeof(__le32) *
+-			(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
++		mb_offset += payload_len;
+ 	}
+ 
+ 	return 0;
 
 
