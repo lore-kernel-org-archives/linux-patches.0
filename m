@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CA23FD94E;
-	Fri, 15 May 2026 16:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422FE3FD94E;
+	Fri, 15 May 2026 16:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862474; cv=none; b=WpV31f7yyMN5Zcc5Tv2AsPAw1LTGmhgg/akjQTXkR69fyiwW7COp6p1eSB3QPO690VaUTTLl37uP876AS/zxd2pDcKad+h+C5XS8VwdCgFShSrQ80p3Al/YTIIH91NaZZVxZXHpnqT81ZGk93dxYR5LMn0VqjacAb6NU5wfPbtM=
+	t=1778862477; cv=none; b=r0eWr4NjNY3g6YZsLF5lvcRphu65CYs+nZzYkiZroGcsMlQx56rblDU63fiRHSGZ7xYkRZNJm4p6uI8T6S2xviofYgFF2WxDqdMCq0c7wmX4YEV7d9ZZAY6OtKCD6Ul4GmaZdDVjXuvvQgiw8wQ2XH4BCMYi2CbMLZoa4RxsJYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862474; c=relaxed/simple;
-	bh=7JXJ0NjYxv5S0qInRgXQzz1t/SJOFpdqpiWt2G+bKkc=;
+	s=arc-20240116; t=1778862477; c=relaxed/simple;
+	bh=sHGy+X6CBURh3gr9fdG6ALH//hEWBeJMU5WksTR8efM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9As5J7Wn1582vTsV/cUtYM5xMvHVSUY9MgYPgJ3cGwO9drwUZER+vDOH8K7Fg9hA0ff37nv5XYeKhcsyPEeEIi8E+CV2pDc+K0GeuLKHfITIs9jgo4KbeXP7uJ5Y+Dvt9aea9Km7/UnWmfT2riOFsWomhwMIEqKxCfMzLSrzOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlP4xXVx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vrc8o/Nd5suY59SS4d2Di9+h7C4F2TdEIhBzS1W1ETIwcasFBS2/NWutcZeYnUkY3YoYh/nZ0Br/xiYBGSV/pL70W7IFbMtTC19TCBGMyi5a48PhvtkeKlYIgA0mdu+Sjt2u9HyNX2NjHVlidugjaYfybI9javVDb6u/Lwv46ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTzAYbwF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlP4xXVx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E773C2BCC7;
-	Fri, 15 May 2026 16:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTzAYbwF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB901C2BCB0;
+	Fri, 15 May 2026 16:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862474;
-	bh=7JXJ0NjYxv5S0qInRgXQzz1t/SJOFpdqpiWt2G+bKkc=;
+	s=korg; t=1778862477;
+	bh=sHGy+X6CBURh3gr9fdG6ALH//hEWBeJMU5WksTR8efM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tlP4xXVxYejxSzIsa686GVOiKZh9JKRDNg09X1st54ywwnysObZK96yakJ7RpkBhG
-	 +hK4hIk/24KrZtjVaSO6H3QCCkuCgbxUOp5eLSNm7xKeo3p4+gnAHvyYoLSfSmICFm
-	 dz7qzxs9DYJIHd5nw7c6t1uBS9k7vjR2aC3dUjLk=
+	b=KTzAYbwFTR48SPgLrWD8ZCKVeDS85e40AiQSfnvJ1Le6Xs5owIR2Lr8c4WD8JAGTc
+	 Pn4oA69OwV6jxFk47GwO/njLlBZr+YYJ41pD7QeDpmEUnBa/CxHBZV1TEjB5jkU4GT
+	 HyD8nkjmAFmwfFFquPeFtIQnsOM2lvk3Ety2R9SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 062/201] vsock/virtio: fix MSG_PEEK ignoring skb offset when calculating bytes to copy
-Date: Fri, 15 May 2026 17:48:00 +0200
-Message-ID: <20260515154659.879228939@linuxfoundation.org>
+	Gregor Herburger <gregor.herburger@linutronix.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 7.0 063/201] arm64: dts: broadcom: bcm2712-d-rpi-5-b: add fixes for pinctrl/pinctrl_aon
+Date: Fri, 15 May 2026 17:48:01 +0200
+Message-ID: <20260515154659.900491212@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -52,45 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luigi Leonardi <leonardi@redhat.com>
+From: Gregor Herburger <gregor.herburger@linutronix.de>
 
-commit 080f22f5d30233faf3d83be3098f35b8be9b7a00 upstream.
+commit aeb078cebc40d421f61a8f07b0e7919aeb44d751 upstream.
 
-`virtio_transport_stream_do_peek()` does not account for the skb offset
-when computing the number of bytes to copy.
+On the -d revision of the bcm2712 the pinctrl differs from the c0
+revision. The driver already supports both and distinguishes the two
+with the compatible string.
 
-This means that, after a partial recv() that advances the offset, a peek
-requesting more bytes than are available in the sk_buff causes
-`skb_copy_datagram_iter()` to go past the valid payload, resulting in
-a -EFAULT.
+Update the compatible string and reg length to reflect the different
+pinctrl.
 
-The dequeue path already handles this correctly.
-Apply the same logic to the peek path.
-
-Fixes: 0df7cd3c13e4 ("vsock/virtio/vhost: read data from non-linear skb")
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
-Link: https://patch.msgid.link/20260415-fix_peek-v4-1-8207e872759e@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
+Link: https://lore.kernel.org/r/20260226-raspi-dts-updates-v1-5-60832d20ff04@linutronix.de
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -547,9 +547,8 @@ virtio_transport_stream_do_peek(struct v
- 	skb_queue_walk(&vvs->rx_queue, skb) {
- 		size_t bytes;
- 
--		bytes = len - total;
--		if (bytes > skb->len)
--			bytes = skb->len;
-+		bytes = min_t(size_t, len - total,
-+			      skb->len - VIRTIO_VSOCK_SKB_CB(skb)->offset);
- 
- 		spin_unlock_bh(&vvs->rx_lock);
- 
+--- a/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
++++ b/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
+@@ -35,3 +35,13 @@
+ 		"PMIC_SCL", // AON_SGPIO_04
+ 		"PMIC_SDA"; // AON_SGPIO_05
+ };
++
++&pinctrl {
++	compatible = "brcm,bcm2712d0-pinctrl";
++	reg = <0x7d504100 0x20>;
++};
++
++&pinctrl_aon {
++	compatible = "brcm,bcm2712d0-aon-pinctrl";
++	reg = <0x7d510700 0x1c>;
++};
 
 
