@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D311B3FD96C;
-	Fri, 15 May 2026 16:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686263B6354;
+	Fri, 15 May 2026 16:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861148; cv=none; b=slMcQCPSm3XDG3SmsYh+3XvdiAXet3H4bKFax/Ph0iMbs0GThA9c1g9LcJusGEw8qas31qC2WWWLF9fpBrba1iM7ZNkDXsnmNAX7CUlU7+3I+Rky273V1eYS1gN0MJv/8YSc+y6+/+VFFdz35cofgufb12kPFaD/jLk0FVUzz6g=
+	t=1778861151; cv=none; b=U0wFxT2E+Vh1EiVIkH9sC1FJAU+inxZcXoif2h+SVOFwDPkGDseuE0C+bdHmhiSU2/6aJqxwDvjO/kU77lHNZKkSKc633xiLYQ6IbIDqZaumvjwd1gv12Dr5RUcRpbxpcxeK5x6ZPvRQibnigaShZfUxJNPtzcJ1crTpHZm5Mh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861148; c=relaxed/simple;
-	bh=jQK5vDivhyohLTA4nbLSV5lMYjhN49DCh1PmjEqR8OY=;
+	s=arc-20240116; t=1778861151; c=relaxed/simple;
+	bh=1jf7BdhdiH/HLG2AgVqWxlUuiBN5NeDOgz/Oc0hAvlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=by18UOauLhjY7c3/rSBuvIdFQPpcKXcKiurrMW16pyZizNqQcRIuNwWwbj029NS+8JLRA65E8IvaELVYywBfdW6fiFPuNrsU78FyCEOzPN7pUW0TnuOLzYQxUa3C7y5okoGhg2ruYO5id//S8DRqmXQk9d9k2q6gYBljezy+CPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lB6hCPeP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mZrh6Qbe8K51y8HWF+dPcyQciOKcwJ4wdXZldcB3nn3AeIcxyLGS5b9QbWeZf2b0FZ+QrwMnxzCOfWh/cif9vNhcpOoNCiGAMOFURopSoW2S/KNPIz6fe9H10FAcQ8LthdZUYKXlF+67DMSdq5/xPe+heiOBGk+LeBSJUAXlpNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGvaLztv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lB6hCPeP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A18FC2BCC7;
-	Fri, 15 May 2026 16:05:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGvaLztv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1763C2BCB0;
+	Fri, 15 May 2026 16:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861148;
-	bh=jQK5vDivhyohLTA4nbLSV5lMYjhN49DCh1PmjEqR8OY=;
+	s=korg; t=1778861151;
+	bh=1jf7BdhdiH/HLG2AgVqWxlUuiBN5NeDOgz/Oc0hAvlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lB6hCPePLDKk2q/SXU6nKpwbu4T3OGDIcZjssXKKG0Alc4msVM7KA59vI63qOZgcQ
-	 HIr8G5uhuvFQM4eXZYcroksbiuK7UEG021kVj2BogmRBn5zEBpPZaSASlw7peKjq19
-	 mE6USw46urVGTb7teFxPp9npwgz3Ic3C877QxwM4=
+	b=rGvaLztvFE9upYl/TQb6FxaM/raE+9lMTQ4giRRYuaF4XfXX4X9KMf4d62ExlxAyq
+	 81/TVXvKxPOf7EE4+rcjuxc83ueJgnTocEovqNcH1N6pOtJMWIaCPdGzFu49NTrFMC
+	 hiDLSAYwJdryp8OCCqnj08DGr+//7wSj5xUOTC1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Zen <kai.aizen.dev@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 218/474] net: rtnetlink: zero ifla_vf_broadcast to avoid stack infoleak in rtnl_fill_vfinfo
-Date: Fri, 15 May 2026 17:45:27 +0200
-Message-ID: <20260515154719.726526009@linuxfoundation.org>
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 201/474] ALSA: firewire-tascam: Do not drop unread control events
+Date: Fri, 15 May 2026 17:45:10 +0200
+Message-ID: <20260515154719.364665931@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -44,80 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Zen <kai.aizen.dev@gmail.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 4b9e327991815e128ad3af75c3a04630a63ce3e0 upstream.
+commit 0749daa8eb5ab90334aaad3b0671efd7150d43b1 upstream.
 
-rtnl_fill_vfinfo() declares struct ifla_vf_broadcast on the stack
-without initialisation:
+tscm_hwdep_read_queue() copies as many queued control events as fit in
+the userspace buffer. When the buffer is smaller than the current
+contiguous queue segment, length is rounded down to the number of bytes
+that can be copied.
 
-	struct ifla_vf_broadcast vf_broadcast;
+However, after copying that shortened length, the code advances pull_pos
+to the original tail_pos, marking the whole contiguous segment as
+consumed. Any events between the copied portion and tail_pos are lost.
 
-The struct contains a single fixed 32-byte field:
+Limit tail_pos to the position after the entries actually copied before
+updating pull_pos. When the whole segment fits, this is equivalent to the
+old tail_pos update; when the buffer is smaller, the remaining events
+stay queued for the next read.
 
-	/* include/uapi/linux/if_link.h */
-	struct ifla_vf_broadcast {
-		__u8 broadcast[32];
-	};
-
-The function then copies dev->broadcast into it using dev->addr_len
-as the length:
-
-	memcpy(vf_broadcast.broadcast, dev->broadcast, dev->addr_len);
-
-On Ethernet devices (the overwhelming majority of SR-IOV NICs)
-dev->addr_len is 6, so only the first 6 bytes of broadcast[] are
-written. The remaining 26 bytes retain whatever was previously on
-the kernel stack. The full struct is then handed to userspace via:
-
-	nla_put(skb, IFLA_VF_BROADCAST,
-		sizeof(vf_broadcast), &vf_broadcast)
-
-leaking up to 26 bytes of uninitialised kernel stack per VF per
-RTM_GETLINK request, repeatable.
-
-The other vf_* structs in the same function are explicitly zeroed
-for exactly this reason - see the memset() calls for ivi,
-vf_vlan_info, node_guid and port_guid a few lines above.
-vf_broadcast was simply missed when it was added.
-
-Reachability: any unprivileged local process can open AF_NETLINK /
-NETLINK_ROUTE without capabilities and send RTM_GETLINK with an
-IFLA_EXT_MASK attribute carrying RTEXT_FILTER_VF. The kernel walks
-each VF and emits IFLA_VF_BROADCAST, leaking 26 bytes of stack per
-VF per request. Stack residue at this call site can include return
-addresses and transient sensitive data; KASAN with stack
-instrumentation, or KMSAN, will flag the nla_put() when reproduced.
-
-Zero the on-stack struct before the partial memcpy, matching the
-existing pattern used for the other vf_* structs in the same
-function.
-
-Fixes: 75345f888f70 ("ipoib: show VF broadcast address")
+Fixes: a8c0d13267a4 ("ALSA: firewire-tascam: notify events of change of state for userspace applications")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kai Zen <kai.aizen.dev@gmail.com>
-Link: https://patch.msgid.link/3c506e8f936e52b57620269b55c348af05d413a2.1777557228.git.kai.aizen.dev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Co-developed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260503-alsa-firewire-tascam-read-queue-v2-1-126c6efd7642@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c |    1 +
+ sound/firewire/tascam/tascam-hwdep.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -1362,6 +1362,7 @@ static noinline_for_stack int rtnl_fill_
- 		port_guid.vf = ivi.vf;
+--- a/sound/firewire/tascam/tascam-hwdep.c
++++ b/sound/firewire/tascam/tascam-hwdep.c
+@@ -73,6 +73,7 @@ static long tscm_hwdep_read_queue(struct
+ 			length = rounddown(remained, sizeof(*entries));
+ 		if (length == 0)
+ 			break;
++		tail_pos = head_pos + length / sizeof(*entries);
  
- 	memcpy(vf_mac.mac, ivi.mac, sizeof(ivi.mac));
-+	memset(&vf_broadcast, 0, sizeof(vf_broadcast));
- 	memcpy(vf_broadcast.broadcast, dev->broadcast, dev->addr_len);
- 	vf_vlan.vlan = ivi.vlan;
- 	vf_vlan.qos = ivi.qos;
+ 		spin_unlock_irq(&tscm->lock);
+ 		if (copy_to_user(pos, &entries[head_pos], length))
 
 
