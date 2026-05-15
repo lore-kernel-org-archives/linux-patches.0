@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B26303CB0;
-	Fri, 15 May 2026 16:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820C13BB11C;
+	Fri, 15 May 2026 16:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861294; cv=none; b=paP6F+UCwFxASyKjncNEr9pUR+wie8rWFs/WwuUh1USnM1IjO4dn9S8Erq2Srxi42rTwegjxXwSbL8gauaRO9LHvaHQOlyCQlcYB+y+mZVCGYm8x6RPPNjaJXD2YKykSVuLVrc+qSNVF/jfcwWeTc3A/FjXRVn3IE8d8e3gnAOs=
+	t=1778861296; cv=none; b=sZ92/FaKCWHySTjmktnWUTd27lVK1oYq7kiH5F7U3O7LC5hobVLGlverO2cbyrBOCEaPVLlLQBxmNRBs6ljPfTwLWgw3aHJ8PM6iiYpXgsgmtDDcpqkZhE+iKDDg/tbALsaIekhJYp3B5pZjK6RZ8ViKKeEJ/onsIhm7fJaIbwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861294; c=relaxed/simple;
-	bh=LNLQQ5Qn6VIaexJn5O6fqAo47uZ2Fp2N0zce9vvGs1w=;
+	s=arc-20240116; t=1778861296; c=relaxed/simple;
+	bh=dBOfHkZjdbbLwAsSmvFIFWkdTXHaZ+1FGLemPoiYidw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnP1wEg1ms/rONmQRABMxX6c4pLkT4gEi/atoK6CAcOpj/f8mRlBztQOmQNpYMCBMHb17MvJDAbQCwNu14nD8Och27By59JmMKC98Wtayk5bMH3+YG0BLSX6y3Ki8zeeFR6Wb31tsKdQE3mXZgBP4dtYNIXrXT0A+gq+hojwSYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3qR57ck; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hNabj3PpJmiVCfW4rIza7WzI7I5lKcoJoQlbMK9daoD13bbgnojM8rfxh1BlO0zS67TfLVrjx/J7iXFIDSjxtPq6RpzatARMuqEXAO2P7xVd4EdR5dz2Yvodfj3wLouV1iRPaqfcQ9McaxehOmAYWm/f0BtoDOmC9oiC2GxIyJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B78pwE7r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3qR57ck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1FEC2BCB0;
-	Fri, 15 May 2026 16:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B78pwE7r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C24C2BCB0;
+	Fri, 15 May 2026 16:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861293;
-	bh=LNLQQ5Qn6VIaexJn5O6fqAo47uZ2Fp2N0zce9vvGs1w=;
+	s=korg; t=1778861296;
+	bh=dBOfHkZjdbbLwAsSmvFIFWkdTXHaZ+1FGLemPoiYidw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T3qR57ck35s8XZMoo7ZwVpEzOaEKYBMa7IpS9s1UPyJwplojCOqk5O84jCqXR4TtU
-	 lUuiM89vt54nSJ5lYiYwG0Ijjtc5ALTROTzQOcx3aOu3edxH4+PZKjevPwSzITBRGZ
-	 I2zlAhqXe8bUgDWWN9UJaGUjlhlUWTM5BUw1Fokc=
+	b=B78pwE7rJI1F6n0f7FRpsxhT/a+TQi1icyQfoyIfacFx8arseMqNa9YzNAFLtWman
+	 IpKB0DM1Pq5jxP+7w40fW8d4osbkBavnubQyFCyo6dnuj2Nt4Izcb1/4DGe4jpTLme
+	 6pt1Cu6jz8u0Rtbxjow0hxkdSiWKxiIjLKvNi5M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 273/474] mm/damon/sysfs-schemes: protect memcg_path kfree() with damon_sysfs_lock
-Date: Fri, 15 May 2026 17:46:22 +0200
-Message-ID: <20260515154720.908473342@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 247/474] ASoC: qcom: q6apm-dai: reset queue ptr on trigger stop
+Date: Fri, 15 May 2026 17:45:56 +0200
+Message-ID: <20260515154720.343186066@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,75 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit 1e68eb96e8beb1abefd12dd22c5637795d8a877e upstream.
+commit cab45ab95ce7600fc0ff84585c77fd45b7b0d67c upstream.
 
-Patch series "mm/damon/sysfs-schemes: fix use-after-free for [memcg_]path".
+Reset queue pointer on SNDRV_PCM_TRIGGER_STOP event to be inline
+with resetting appl_ptr. Without this we will end up with a queue_ptr
+out of sync and driver could try to send data that is not ready yet.
 
-Reads of 'memcg_path' and 'path' files in DAMON sysfs interface could race
-with their writes, results in use-after-free.  Fix those.
+Fix this by resetting the queue_ptr.
 
-
-This patch (of 2):
-
-damon_sysfs_scheme_filter->mmecg_path can be read and written by users,
-via DAMON sysfs memcg_path file.  It can also be indirectly read, for the
-parameters {on,off}line committing to DAMON.  The reads for parameters
-committing are protected by damon_sysfs_lock to avoid the sysfs files
-being destroyed while any of the parameters are being read.  But the
-user-driven direct reads and writes are not protected by any lock, while
-the write is deallocating the memcg_path-pointing buffer.  As a result,
-the readers could read the already freed buffer (user-after-free).  Note
-that the user-reads don't race when the same open file is used by the
-writer, due to kernfs's open file locking.  Nonetheless, doing the reads
-and writes with separate open files would be common.  Fix it by protecting
-both the user-direct reads and writes with damon_sysfs_lock.
-
-Link: https://lore.kernel.org/20260423150253.111520-1-sj@kernel.org
-Link: https://lore.kernel.org/20260423150253.111520-2-sj@kernel.org
-Fixes: 4f489fe6afb3 ("mm/damon/sysfs-schemes: free old damon_sysfs_scheme_filter->memcg_path on write")
-Co-developed-by: Junxi Qian <qjx1298677004@gmail.com>
-Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 3d4a4411aa8bb ("ASoC: q6apm-dai: schedule all available frames to avoid dsp under-runs")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260402081118.348071-6-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs-schemes.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6apm-dai.c |    1 +
+ sound/soc/qcom/qdsp6/q6apm.c     |    2 ++
+ 2 files changed, 3 insertions(+)
 
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -360,9 +360,14 @@ static ssize_t memcg_path_show(struct ko
- {
- 	struct damon_sysfs_scheme_filter *filter = container_of(kobj,
- 			struct damon_sysfs_scheme_filter, kobj);
-+	int len;
+--- a/sound/soc/qcom/qdsp6/q6apm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
+@@ -321,6 +321,7 @@ static int q6apm_dai_trigger(struct snd_
+ 	case SNDRV_PCM_TRIGGER_STOP:
+ 		/* TODO support be handled via SoftPause Module */
+ 		prtd->state = Q6APM_STREAM_STOPPED;
++		prtd->queue_ptr = 0;
+ 		break;
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+--- a/sound/soc/qcom/qdsp6/q6apm.c
++++ b/sound/soc/qcom/qdsp6/q6apm.c
+@@ -225,6 +225,8 @@ int q6apm_map_memory_regions(struct q6ap
  
--	return sysfs_emit(buf, "%s\n",
-+	if (!mutex_trylock(&damon_sysfs_lock))
-+		return -EBUSY;
-+	len = sysfs_emit(buf, "%s\n",
- 			filter->memcg_path ? filter->memcg_path : "");
-+	mutex_unlock(&damon_sysfs_lock);
-+	return len;
- }
+ 	mutex_lock(&graph->lock);
  
- static ssize_t memcg_path_store(struct kobject *kobj,
-@@ -376,8 +381,13 @@ static ssize_t memcg_path_store(struct k
- 		return -ENOMEM;
- 
- 	strscpy(path, buf, count + 1);
-+	if (!mutex_trylock(&damon_sysfs_lock)) {
-+		kfree(path);
-+		return -EBUSY;
-+	}
- 	kfree(filter->memcg_path);
- 	filter->memcg_path = path;
-+	mutex_unlock(&damon_sysfs_lock);
- 	return count;
- }
- 
++	data->dsp_buf = 0;
++
+ 	if (data->buf) {
+ 		mutex_unlock(&graph->lock);
+ 		return 0;
 
 
