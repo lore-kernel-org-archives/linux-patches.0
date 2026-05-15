@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8A23FF1AC;
-	Fri, 15 May 2026 15:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECAA3FF1DD;
+	Fri, 15 May 2026 15:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860555; cv=none; b=dhFiIR/i33R7EJCkczLwmmmgv4OQFXXxUD0XC7pseaaLIelZ3Hs1XO5SZLUaB8g5wl0dQV+tgwuglJ7i52qCYzlFPMfy/aAf8g6FDGU4uoDnw9u9wivCscRQSlD+w8h8umQWob/C2HuC+4pE1xILHCj+Vn8ZXdBxFbWIL6cSFNM=
+	t=1778860557; cv=none; b=CDGOpkIf2jysraylfsK/H61WAWqbOFNzGA7SjINLdLqOlNInvwLJ5gp8BgtBE9PhTCzvtsl4jaucRt0k0QkFmfarDJtLoLWJ8hToY9/IlY+aCf/OEz9Lb+ukqfIYS610tF17BfLiKg+bxvyRJ1+rBaDfp50dZ2GVHTVI4DnDEQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860555; c=relaxed/simple;
-	bh=jnZTRx6sw6BXSQdbkpOn856iAirUPtmsGCu8sm3nJd4=;
+	s=arc-20240116; t=1778860557; c=relaxed/simple;
+	bh=8z0K9qK4J4m5YocgvbNNlKvyLYb8PCo+Ynqf54Kq0jE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qi5h3ClO2q4OQKoohRW7KOcZrlBzT8vDXLNC2Wfftz8uU2+8HM+XOyXKHgQbV63TCzdK6bRHU4kMQ4USMVuYeLPgg/zRYdiK7G4iVqIRLkfRT6DKT+BBV+evNmNKxwu6DS9TEDnfVt8Z76B/jidhtGy8LNPT8aOYNFlE5ohBA74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqcEr9e3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5rb2RTCguhhuim9uv38+lv2EBA7Z6GAQ8uEfP8xaSunYB6mU3M4QSsLZ3wTXEZ08rymxB9bFSGxBJhiZbjC+eQ6nfPbamRFmCm0IZJjBbeSSPeGQK61kKSeOnWeS3BBc4t9hQUFbTpIvnbHpe2yQTg9Vt8qzxSac8TsWUcTPJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJhHbpNI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqcEr9e3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5BDC2BCB0;
-	Fri, 15 May 2026 15:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJhHbpNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07847C2BCB0;
+	Fri, 15 May 2026 15:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860554;
-	bh=jnZTRx6sw6BXSQdbkpOn856iAirUPtmsGCu8sm3nJd4=;
+	s=korg; t=1778860557;
+	bh=8z0K9qK4J4m5YocgvbNNlKvyLYb8PCo+Ynqf54Kq0jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hqcEr9e3bpr8cORDNC63OCoNqqTEmnif6RoHQmCPEZM04TxwbjznhFlcDxa/if3zY
-	 tSedwIpo3zvdQfUwsri6FtiBE7FvJf3V8tJcn6zU1lCvOjUqhq7lxDl9U1FvuvkNS1
-	 QvAHj94Iv9dV0/XKErBpIKmJQb1sK1m+4FooWeG0=
+	b=nJhHbpNIvWCgc+e5l8KyahE/0D0S9cKSAaVnl1cWSsMru6q/aA/CLbjYh6gD/38p0
+	 6AJ2g1GbO4a2RR8uDUrUWipcQfN41Xt2jjCyrpTp2XwzCwxFWsdqU+hVC1BhxRUgHf
+	 IDoBAy+MoIhmW8ZMjjCu6o6wVWi+PcYj5mPXMWWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Lentczner <mark@glyphic.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yochai Eisenrich <echelonh@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/144] ALSA: seq: Notify client and port info changes
-Date: Fri, 15 May 2026 17:48:53 +0200
-Message-ID: <20260515154655.975318396@linuxfoundation.org>
+Subject: [PATCH 6.12 134/144] btrfs: fix btrfs_ioctl_space_info() slot_count TOCTOU which can lead to info-leak
+Date: Fri, 15 May 2026 17:49:20 +0200
+Message-ID: <20260515154656.625953734@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -51,66 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Yochai Eisenrich <yochaie@sweet.security>
 
-[ Upstream commit b8e49e24cdba27a0810a0988e810e2c68f2033cb ]
+[ Upstream commit 973e57c726c1f8e77259d1c8e519519f1e9aea77 ]
 
-It was supposed to be notified when a sequencer client info and a port
-info has changed (via SNDRV_SEQ_EVENT_CLIENT_CHANGE and
-SNDRV_SEQ_EVENT_PORT_CHANGE event, respectively), and there are
-already helper functions.  But those aren't really sent from the
-driver so far, except for the recent support of UMP, simply due to the
-lack of implementations.
+btrfs_ioctl_space_info() has a TOCTOU race between two passes over the
+block group RAID type lists. The first pass counts entries to determine
+the allocation size, then the second pass fills the buffer. The
+groups_sem rwlock is released between passes, allowing concurrent block
+group removal to reduce the entry count.
 
-This patch adds the missing notifications at updating the client and
-the port info.  The formerly added notification for UMP is dropped
-because it's handled now in the port info side.
+When the second pass fills fewer entries than the first pass counted,
+copy_to_user() copies the full alloc_size bytes including trailing
+uninitialized kmalloc bytes to userspace.
 
-Reported-by: Mark Lentczner <mark@glyphic.com>
-Link: https://lore.kernel.org/CAPnksqRok7xGa4bxq9WWimVV=28-7_j628OmrWLS=S0=hzaTHQ@mail.gmail.com
-Link: https://patch.msgid.link/20241128074734.32165-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 92429ca999db ("ALSA: seq: Fix UMP group 16 filtering")
+Fix by copying only total_spaces entries (the actually-filled count from
+the second pass) instead of alloc_size bytes, and switch to kzalloc so
+any future copy size mismatch cannot leak heap data.
+
+Fixes: 7fde62bffb57 ("Btrfs: buffer results in the space_info ioctl")
+CC: stable@vger.kernel.org # 3.0
+Signed-off-by: Yochai Eisenrich <echelonh@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ adapted upstream's `return -EFAULT;` to stable's `ret = -EFAULT;` fall-through to existing `out:` cleanup label ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_clientmgr.c  |    7 +++++++
- sound/core/seq/seq_ump_client.c |    2 --
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ fs/btrfs/ioctl.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -1329,6 +1329,10 @@ static int snd_seq_ioctl_set_client_info
- 		client->midi_version = client_info->midi_version;
- 	memcpy(client->event_filter, client_info->event_filter, 32);
- 	client->group_filter = client_info->group_filter;
-+
-+	/* notify the change */
-+	snd_seq_system_client_ev_client_change(client->number);
-+
- 	return 0;
- }
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3113,7 +3113,7 @@ static long btrfs_ioctl_space_info(struc
+ 		return -ENOMEM;
  
-@@ -1452,6 +1456,9 @@ static int snd_seq_ioctl_set_port_info(s
- 	if (port) {
- 		snd_seq_set_port_info(port, info);
- 		snd_seq_port_unlock(port);
-+		/* notify the change */
-+		snd_seq_system_client_ev_port_change(info->addr.client,
-+						     info->addr.port);
- 	}
- 	return 0;
- }
---- a/sound/core/seq/seq_ump_client.c
-+++ b/sound/core/seq/seq_ump_client.c
-@@ -272,8 +272,6 @@ static void update_port_infos(struct seq
- 						new);
- 		if (err < 0)
- 			continue;
--		/* notify to system port */
--		snd_seq_system_client_ev_port_change(client->seq_client, i);
- 	}
- }
+ 	space_args.total_spaces = 0;
+-	dest = kmalloc(alloc_size, GFP_KERNEL);
++	dest = kzalloc(alloc_size, GFP_KERNEL);
+ 	if (!dest)
+ 		return -ENOMEM;
+ 	dest_orig = dest;
+@@ -3169,7 +3169,8 @@ static long btrfs_ioctl_space_info(struc
+ 	user_dest = (struct btrfs_ioctl_space_info __user *)
+ 		(arg + sizeof(struct btrfs_ioctl_space_args));
  
+-	if (copy_to_user(user_dest, dest_orig, alloc_size))
++	if (copy_to_user(user_dest, dest_orig,
++		 space_args.total_spaces * sizeof(*dest_orig)))
+ 		ret = -EFAULT;
+ 
+ 	kfree(dest_orig);
 
 
