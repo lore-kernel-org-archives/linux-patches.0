@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D023F86F7;
-	Fri, 15 May 2026 16:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0773C0607;
+	Fri, 15 May 2026 16:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861252; cv=none; b=LuCuqEoFF4rEXUm88jdkqfRwzuFiWHMuzcHKpoxLeH6PCAOgtxzB+Fji/tAXAvZgZAz+81ScwWZcQ4z7ucwGrzLDPs7v7hAM2eb/fDuW+ndcf2RvEwZHVnwCMJweLc17i/4hsl+fZotCLdWVSE8Nc0MXop+TzEYN9nOJWeLkz0w=
+	t=1778861255; cv=none; b=Ju0xUQWGSca90NLbeiDEAfFoNUcF5XkZnEBJThFaMj0u5VeGTbk17v+TfKYQ1ZvZP+qkE4UC93d2UbU2DqGmxoUL4R2JWlbT5BZzfgPrpf1uOzmeRtwWIUXG51SCYfgxVxbODCyiNjMd7JomlnH/RsI39mB/5Q2mvJjYB0GfKSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861252; c=relaxed/simple;
-	bh=iuJraftoh/JYF06oKE8YHwBLL/rqIwXbvZshACdDrUI=;
+	s=arc-20240116; t=1778861255; c=relaxed/simple;
+	bh=Qxe+P0M7yUv7Z0+NB9a1YoSEzFjWjyz8bPCpyZjedaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFbMjm/cTHfD2DZTTl8eMkTfautYbnbxCxFTn9VzNuwMPXb3nZmjiDzIaGyYAX1X9ROjuCsA+OZASXrd+gK6WkLv9ruG+R+YiBLui5QUdEeQUgYdvjvhC9pzAg+OHy96EYTvQhgVWHrxrEt9aKfFHq3EiY1q3orCmnNeLE9YBVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMSKxIQG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SsCRfdLvv0ml1LWJ8gZOlkjLiaIXEuI2Bs+jVjGpJISVIDPBjZ3w4VFy1Ii8EqPvTcLtWd05JgE7HD80X/JHVRtu/F4B4G5G0lRKImME5vnvoruE+q7FRyxAvSXijXXwxMpzwvR1yIilIPf8by4AiSzHl4dDKBgj3EnWY/xdYLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qN//Y6aG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMSKxIQG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F51C2BCB0;
-	Fri, 15 May 2026 16:07:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qN//Y6aG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB619C2BCB0;
+	Fri, 15 May 2026 16:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861252;
-	bh=iuJraftoh/JYF06oKE8YHwBLL/rqIwXbvZshACdDrUI=;
+	s=korg; t=1778861255;
+	bh=Qxe+P0M7yUv7Z0+NB9a1YoSEzFjWjyz8bPCpyZjedaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eMSKxIQG1V9uyAQwVbDYrCAooD3zHkRndYnUp56wLfRA2rpS4L4ArO3lDT7/+qNT/
-	 64sRbm+yK6tyxu/nQ5EQz7+jHQCeJhpOerJcqYGlMJf7uQtMTLKO+Orq/osrntIdVB
-	 f8i2wpu8+VW1mtvnE0av+slEC/rl3969logO5yzo=
+	b=qN//Y6aGFwHZJidlWDOV0+ixb41kMUlrris1HqoJVsIlsmRm2FG5mlmVvKvpNb6Q1
+	 ucbI/5sorcxyoIQfLkIrp8UuCY1zqYs7hgj7EzJBEH24noR7XaVrLW0Tw4xC3SiCv1
+	 93hdmQINqmwIwhBYlEAWoK2KdPo4WjnoiJSung2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.6 258/474] isofs: validate block number from NFS file handle in isofs_export_iget
-Date: Fri, 15 May 2026 17:46:07 +0200
-Message-ID: <20260515154720.581751059@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Ignat Korchagin <ignat@linux.win>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>
+Subject: [PATCH 6.6 259/474] lib/crypto: mpi: Fix integer underflow in mpi_read_raw_from_sgl()
+Date: Fri, 15 May 2026 17:46:08 +0200
+Message-ID: <20260515154720.603715597@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,54 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 24376458138387fb251e782e624c7776e9826796 upstream.
+commit 8c2f1288250a90a4b5cabed5d888d7e3aeed4035 upstream.
 
-isofs_fh_to_dentry() and isofs_fh_to_parent() pass an attacker-
-controlled block number (ifid->block or ifid->parent_block) from
-the NFS file handle to isofs_export_iget(), which only rejects
-block == 0 before calling isofs_iget() and ultimately sb_bread().
-A crafted file handle with fh_len sufficient to pass the check
-added by commit 0405d4b63d08 ("isofs: Prevent the use of too small
-fid") can still drive the server to read any in-range block on the
-backing device as if it were an iso_directory_record.  That earlier
-fix was assigned CVE-2025-37780.
+Yiming reports an integer underflow in mpi_read_raw_from_sgl() when
+subtracting "lzeros" from the unsigned "nbytes".
 
-sb_bread() on an out-of-range block returns NULL cleanly via the
-EIO path, so there is no memory-safety violation.  For in-range
-reads of adjacent-partition data on the same block device, the
-unrelated bytes end up in iso_inode_info fields that reach the NFS
-client as dentry metadata.  The deployment surface (isofs exported
-over NFS from loop-mounted images) is narrow and requires an
-authenticated NFS peer, but the malformed-file-handle class is
-reportable as hardening next to the existing CVE-2025-37780 fix.
+For this to happen, the scatterlist "sgl" needs to occupy more bytes
+than the "nbytes" parameter and the first "nbytes + 1" bytes of the
+scatterlist must be zero.  Under these conditions, the while loop
+iterating over the scatterlist will count more zeroes than "nbytes",
+subtract the number of zeroes from "nbytes" and cause the underflow.
 
-Reject block >= ISOFS_SB(sb)->s_nzones in isofs_export_iget() so
-the check covers both isofs_fh_to_dentry() and isofs_fh_to_parent()
-call sites with a single line.
+When commit 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers") originally
+introduced the bug, it couldn't be triggered because all callers of
+mpi_read_raw_from_sgl() passed a scatterlist whose length was equal to
+"nbytes".
 
-Fixes: 0405d4b63d08 ("isofs: Prevent the use of too small fid")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260419212155.2169382-3-michael.bommarito@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+However since commit 63ba4d67594a ("KEYS: asymmetric: Use new crypto
+interface without scatterlists"), the underflow can now actually be
+triggered.  When invoking a KEYCTL_PKEY_ENCRYPT system call with a
+larger "out_len" than "in_len" and filling the "in" buffer with zeroes,
+crypto_akcipher_sync_prep() will create an all-zero scatterlist used for
+both the "src" and "dst" member of struct akcipher_request and thereby
+fulfil the conditions to trigger the bug:
+
+  sys_keyctl()
+    keyctl_pkey_e_d_s()
+      asymmetric_key_eds_op()
+        software_key_eds_op()
+          crypto_akcipher_sync_encrypt()
+            crypto_akcipher_sync_prep()
+              crypto_akcipher_encrypt()
+                rsa_enc()
+                  mpi_read_raw_from_sgl()
+
+To the user this will be visible as a DoS as the kernel spins forever,
+causing soft lockup splats as a side effect.
+
+Fix it.
+
+Reported-by: Yiming Qian <yimingqian591@gmail.com> # off-list
+Fixes: 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v4.4+
+Reviewed-by: Ignat Korchagin <ignat@linux.win>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/59eca92ff4f87e2081777f1423a0efaaadcfdb39.1776003111.git.lukas@wunner.de
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/isofs/export.c |    2 +-
+ lib/crypto/mpi/mpicoder.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/isofs/export.c
-+++ b/fs/isofs/export.c
-@@ -24,7 +24,7 @@ isofs_export_iget(struct super_block *sb
- {
- 	struct inode *inode;
- 
--	if (block == 0)
-+	if (block == 0 || block >= ISOFS_SB(sb)->s_nzones)
- 		return ERR_PTR(-ESTALE);
- 	inode = isofs_iget(sb, block, offset);
- 	if (IS_ERR(inode))
+--- a/lib/crypto/mpi/mpicoder.c
++++ b/lib/crypto/mpi/mpicoder.c
+@@ -453,7 +453,7 @@ MPI mpi_read_raw_from_sgl(struct scatter
+ 	lzeros = 0;
+ 	len = 0;
+ 	while (nbytes > 0) {
+-		while (len && !*buff) {
++		while (len && !*buff && lzeros < nbytes) {
+ 			lzeros++;
+ 			len--;
+ 			buff++;
 
 
