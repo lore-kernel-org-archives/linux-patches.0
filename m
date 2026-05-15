@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D001B3F927B;
-	Fri, 15 May 2026 16:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722C33FF1BD;
+	Fri, 15 May 2026 16:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862332; cv=none; b=g24EjtiO2uHaOdsDTQReVk6Eh3rApPxLDhZVHzWaXw2z+f47hPtYqqiO+HAX6qm23Ox1wGJ92p5gHnB2YiPHunMdbrJlaCbEYxlkdWEWJ5/AeKZfJzhcNRJRMp8GTDsg+2CkbBdU2iSO3TvJqmle0sOeGH4lqalcmfvuY8QEjcU=
+	t=1778862335; cv=none; b=rJpN5z2pXVl5bePBaF2UuDMx/RjfJsjsQCDEktda0B/qWYz6rWRtnY1BcIw1fGDwqTAxpvrzv39xch+RuKJhyKltM7bjwKuGfuljJgIVKVNV1Ylkb1DjNBk6Y/SG70C4rdQhe0OTLUYlFKxp1tKPjEhoi9/EOqQNV2qMa+Keg3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862332; c=relaxed/simple;
-	bh=nxrPzUegP8hOeCBL7nZOfL/1JZ6CkzgpeG0JE4Dae1Y=;
+	s=arc-20240116; t=1778862335; c=relaxed/simple;
+	bh=JI8KR+GV0u4o6qiD/RkyAzRi2abWmG/mB90OCO5RKVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgA1a/2oLYfdrmyoudJ0GbbU+b1i7zeIwGtDckhn47BxqlZm3BQWxeoDvU9E+faLnGdUFzdYFCtP5E30QBAQ9vZuImY5UfDq+J8tRPaviota8qKymlDqn9ghlOLiGX5ElUdplO+1ZxtjdeK4WbpkSPu/t/zJWxEZocUssgSO/Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7Gow0ke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPdIuz2vVpwlCCC1LydSqn14jYt47jHTQRkaJPvGEGe7b+gFH5EPJBJRQ3CgYp7H9sf21M7sikKiKG4YBJLBMwqeZtqQAKQXUNBiZ4zJtVD6LfoVGdnTPzP+6frkvUnQTfmXCFc2Kmd047lLFxgQFcEc+ww+FPbZtmnMLQZQVOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+67j09Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7Gow0ke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C0DC2BCB0;
-	Fri, 15 May 2026 16:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+67j09Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0339DC2BCB0;
+	Fri, 15 May 2026 16:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862332;
-	bh=nxrPzUegP8hOeCBL7nZOfL/1JZ6CkzgpeG0JE4Dae1Y=;
+	s=korg; t=1778862335;
+	bh=JI8KR+GV0u4o6qiD/RkyAzRi2abWmG/mB90OCO5RKVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7Gow0kect2rFs4JN+iELXKIdW1uT1RndB51wAxEgLkr+AmfUZRkeB5Y7QGg7Y1+r
-	 SQ2h83BoEc0LHTx+18ur9Rr6vinKAp/pO4/hD0rU3rnIBUIqSByv0IPmHsenDqGIAn
-	 wMgqSVnfYi5zQgXtAZL5MkvQIB5TPl7GIlDqTyzY=
+	b=W+67j09Q5tXDJbS0FWPh1Xqokr6rSCJq15Co59dxePXO9c/D2zviSw0hZEFxrxVZh
+	 7gzX+jNKlN+duBdlU+HNnuc2LhIhXmSysutmCGCdc2n6vgvjmYVtbm5tQIEd54la5w
+	 ASaOLeWXDfRfrYsxW8WztLyR71QAfmPhYeEeiqMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.0 001/201] HID: playstation: Clamp num_touch_reports
-Date: Fri, 15 May 2026 17:46:59 +0200
-Message-ID: <20260515154658.571690123@linuxfoundation.org>
+	Guoniu Zhou <guoniu.zhou@nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.0 010/201] media: nxp: imx8-isi: Reduce minimum queued buffers from 2 to 0
+Date: Fri, 15 May 2026 17:47:08 +0200
+Message-ID: <20260515154658.760304540@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -51,50 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Guoniu Zhou <guoniu.zhou@nxp.com>
 
-commit cac61b58a3b6340c52afa06bb15eac033158db2f upstream.
+commit 2f38622d0f85f317be9e6b131da6cd511db94fd2 upstream.
 
-A device would never lie about the number of touch reports would it?
+Fix a hang issue when capturing a single frame with applications like cam
+in libcamera. It would hang waiting for the driver to complete the buffer,
+but streaming never starts because min_queued_buffers was set to 2.
 
-If it does the loop in dualshock4_parse_report will read off the end of
-the touch_reports array, up to about 2 KiB for the maximum number of 256
-loop iteraions. The data that is read is emitted via evdev if the
-DS4_TOUCH_POINT_INACTIVE bit happens to be set. Protect against this by
-clamping the num_touch_reports value provided by the device to the
-maximum size of the touch_reports array.
+The ISI module uses a ping-pong buffer mechanism that requires two buffers
+to be programmed at all times. However, when fewer than 2 user buffers are
+available, the driver use internal discard buffers to fill the remaining
+slot(s). Reduce minimum queued buffers from 2 to 0 allows streaming to
+start without any queued buffers.
 
-Fixes: 752038248808 ("HID: playstation: add DualShock4 touchpad support.")
+Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
 Cc: stable@vger.kernel.org
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Guoniu Zhou <guoniu.zhou@nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://patch.msgid.link/20260312-isi_min_buffers-v2-1-d5ea1c79ad81@nxp.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-playstation.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -2378,7 +2378,8 @@ static int dualshock4_parse_report(struc
- 			(struct dualshock4_input_report_usb *)data;
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+@@ -1410,7 +1410,7 @@ int mxc_isi_video_register(struct mxc_is
+ 	q->mem_ops = &vb2_dma_contig_memops;
+ 	q->buf_struct_size = sizeof(struct mxc_isi_buffer);
+ 	q->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
+-	q->min_queued_buffers = 2;
++	q->min_queued_buffers = 0;
+ 	q->lock = &video->lock;
+ 	q->dev = pipe->isi->dev;
  
- 		ds4_report = &usb->common;
--		num_touch_reports = usb->num_touch_reports;
-+		num_touch_reports = min_t(u8, usb->num_touch_reports,
-+					  ARRAY_SIZE(usb->touch_reports));
- 		touch_reports = usb->touch_reports;
- 	} else if (hdev->bus == BUS_BLUETOOTH && report->id == DS4_INPUT_REPORT_BT &&
- 		   size == DS4_INPUT_REPORT_BT_SIZE) {
-@@ -2392,7 +2393,8 @@ static int dualshock4_parse_report(struc
- 		}
- 
- 		ds4_report = &bt->common;
--		num_touch_reports = bt->num_touch_reports;
-+		num_touch_reports = min_t(u8, bt->num_touch_reports,
-+					  ARRAY_SIZE(bt->touch_reports));
- 		touch_reports = bt->touch_reports;
- 	} else if (hdev->bus == BUS_BLUETOOTH &&
- 		   report->id == DS4_INPUT_REPORT_BT_MINIMAL &&
 
 
