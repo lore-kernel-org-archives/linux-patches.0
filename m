@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55159282F1A;
-	Fri, 15 May 2026 15:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A573FF1BE;
+	Fri, 15 May 2026 15:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860482; cv=none; b=tGVS4FluyiVblC828IKKxU/sp/ZXLyZVztQqasIpa8MTQ1T7GAZVs67Brd/WfePQ0Z0XGAYXxsoHOOrJcI389xn6d2nDfugzhharLqBeFBY7ursC3LifAP+wuNqwADKWUeS6TDgU/wjDLlkGgW5Wx131pz27Z73NjdokRUT6bkY=
+	t=1778860485; cv=none; b=afP7A0BJXWsLWufvyaCjeHSjsOW05x8TgVzI6JopleAs1yDp/vqROdy/r/2CjcBOEItxN6jmm/SmcVVfxiycJ3t+8DIzcn2lOq7MSwgGnslqLLtx5sYm8JK7pD+x3Z1mzvzj96s3FzSuYo90/Db/FWqUff/iG5fkTGIsNeJtDQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860482; c=relaxed/simple;
-	bh=l6aS4U46MQB1NHBqgWj5PzMhwSK5mcTn7JgGmPADqRs=;
+	s=arc-20240116; t=1778860485; c=relaxed/simple;
+	bh=TUXR5hGXbuTLps3s/MvGqL7blAtphfKF2gXaDo32vjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oN/y/IUZRT4qfIxaRVfPlCbwZBB5R790OZ7T/zxh7maTkJxEdKC8BMK/DU7pxbAqxytxaamETJMSmcqGkk7/K+RtzwhlEz5w1RB7p0Vupzkut7+QOTPHNuVPV+wCxl0YmUooVGIrdNM0YXmrXhA5u39tyOi4wDitdF5FS90J6Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYoUcQ/J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lB5AQ3ThqFhxX+/sT3oUaDY6ATwyIp4/PeLF8FTt/HVovwnNJkHFnEBEGUt5Vpl0FoOpBi29N85SmrmE5fmDphrIGTTS6SA91U/sc+3NDCNK457RZsbs0n7YEA1Qe24H6JVmdjXhh10OtgelzOyVZWjH0p+bUnExR45Tbe0prMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjG7JbeR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYoUcQ/J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1110C2BCB3;
-	Fri, 15 May 2026 15:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjG7JbeR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0B2C2BCB0;
+	Fri, 15 May 2026 15:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860482;
-	bh=l6aS4U46MQB1NHBqgWj5PzMhwSK5mcTn7JgGmPADqRs=;
+	s=korg; t=1778860484;
+	bh=TUXR5hGXbuTLps3s/MvGqL7blAtphfKF2gXaDo32vjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zYoUcQ/J3T3AtaLEftrpThQ9imSemDt3RDXz7+hyTWyo1Sa6ISXnPg2KEd30rk5U9
-	 CJPbLzSi+GCMs+PIiDvyPWiieLdYeDMzklL3ZWX7cM1AZbwyemoxyTwgrPhrJpZHVR
-	 wT/SpztayCSLwWgQ1ecyeRITsbiU5tqPACpGfmKw=
+	b=JjG7JbeRgUBnGAI7Yd4tqWSoRseRRQyoPfup1eCQw2iYJQVRoESMwySYiMrE1+pPv
+	 1Ybpru0riXlWLNiIFfkhgeZupiO4mJGSGEbjH/K6YZ8huwdlLm4t8I2//xjJ/Puuhx
+	 RYL4jqnZm9exaCZ0hPGtewPvskoyGEPkkuonPQWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 064/144] spi: cadence: fix unclocked access on unbind
-Date: Fri, 15 May 2026 17:48:10 +0200
-Message-ID: <20260515154655.030117176@linuxfoundation.org>
+	Yasuaki Torimaru <yasuakitorimaru@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>
+Subject: [PATCH 6.12 065/144] drm/msm/gem: fix error handling in msm_ioctl_gem_info_get_metadata()
+Date: Fri, 15 May 2026 17:48:11 +0200
+Message-ID: <20260515154655.053764690@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -51,57 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
 
-commit 5b1689a41f02955c5361944f748a4812a6ff9307 upstream.
+commit 47cbfe2608314b833ad61a65827d8fb363bc2d2d upstream.
 
-Make sure that the controller is runtime resumed before disabling it
-during driver unbind to avoid unclocked register access and unbalanced
-clock disable.
+msm_ioctl_gem_info_get_metadata() always returns 0 regardless of
+errors. When copy_to_user() fails or the user buffer is too small,
+the error code stored in ret is ignored because the function
+unconditionally returns 0. This causes userspace to believe the
+ioctl succeeded when it did not.
 
-Also restore the autosuspend setting.
+Additionally, kmemdup() can return NULL on allocation failure, but
+the return value is not checked. This leads to a NULL pointer
+dereference in the subsequent copy_to_user() call.
 
-This issue was flagged by Sashiko when reviewing a controller
-deregistration fix.
+Add the missing NULL check for kmemdup() and return ret instead of 0.
 
-Fixes: d36ccd9f7ea4 ("spi: cadence: Runtime pm adaptation")
-Cc: stable@vger.kernel.org	# 4.7
-Cc: Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>
-Link: https://sashiko.dev/#/patchset/20260414134319.978196-1-johan%40kernel.org?part=1
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421123615.1533617-2-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Note that the SET counterpart (msm_ioctl_gem_info_set_metadata)
+correctly returns ret.
+
+Fixes: 9902cb999e4e ("drm/msm/gem: Add metadata")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/714478/
+Message-ID: <20260325114635.383241-1-yasuakitorimaru@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_drv.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-cadence.c
-+++ b/drivers/spi/spi-cadence.c
-@@ -698,16 +698,23 @@ static void cdns_spi_remove(struct platf
- {
- 	struct spi_controller *ctlr = platform_get_drvdata(pdev);
- 	struct cdns_spi *xspi = spi_controller_get_devdata(ctlr);
-+	int ret = 0;
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -616,6 +616,11 @@ static int msm_ioctl_gem_info_get_metada
+ 	len = msm_obj->metadata_size;
+ 	buf = kmemdup(msm_obj->metadata, len, GFP_KERNEL);
+ 
++	if (!buf) {
++		msm_gem_unlock(obj);
++		return -ENOMEM;
++	}
 +
-+	if (!spi_controller_is_target(ctlr))
-+		ret = pm_runtime_get_sync(&pdev->dev);
+ 	msm_gem_unlock(obj);
  
- 	spi_controller_get(ctlr);
+ 	if (*metadata_size < len) {
+@@ -628,7 +633,7 @@ static int msm_ioctl_gem_info_get_metada
  
- 	spi_unregister_controller(ctlr);
+ 	kfree(buf);
  
--	cdns_spi_write(xspi, CDNS_SPI_ER, CDNS_SPI_ER_DISABLE);
-+	if (ret >= 0)
-+		cdns_spi_write(xspi, CDNS_SPI_ER, CDNS_SPI_ER_DISABLE);
+-	return 0;
++	return ret;
+ }
  
- 	if (!spi_controller_is_target(ctlr)) {
- 		pm_runtime_disable(&pdev->dev);
- 		pm_runtime_set_suspended(&pdev->dev);
-+		pm_runtime_put_noidle(&pdev->dev);
-+		pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	}
- 
- 	spi_controller_put(ctlr);
+ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
 
 
