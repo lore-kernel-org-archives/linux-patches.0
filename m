@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5DD3FD958;
-	Fri, 15 May 2026 16:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7353F6C33;
+	Fri, 15 May 2026 16:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861351; cv=none; b=jCnWYIn+wn7w1ibFj6LrZeFqbdUZBZxSu9OBXDSbAnS1TyTp6qArcN34p0Igzd4gs1RSM97PgYB4SQrDpYbmyDmOgay+thzr6Mi3JKNLCQtAMSzVdhBAYlw7aRfvB0RvcQ/VjJ93aNU1HUo1yPyS+zr8sQLmKvP4aF8ehslg3hc=
+	t=1778861353; cv=none; b=A/njJafZ1HE06bn+0DlXHP0C+r04Xg+Qja8X8YC8hXjMyA+XATAwbLaySIzJYthggZppYyxKgPw/BNp4wx1EGjw7b8e/BOsGjq7NVwJ7/SaLVrP1E4VHAbsPtQyWD6JGl4Rv+s5b7hfW087XPqqr386KkQWMMdxhbDbEmAAbF3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861351; c=relaxed/simple;
-	bh=VcnHTkZ6ASNIB2vWq4JG1YaXwsoagnVNSJ2hgjAfJp4=;
+	s=arc-20240116; t=1778861353; c=relaxed/simple;
+	bh=ZBFxfRKuQzR6gvIh39l5x7+PlEdT8dGJMDkC0sVWMvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTIqSQ5xwIvv6TvdxzxsG4UBSo75Fy6qr/lN+QChTL6pB/8jyJKIgcyzl10xMCJVV7pWavr+kYKctEgy96AwvjUefUrGRY9b+mmTo/nzFb7M4CX6LYpAgG7v2PIdm59GdoPrfNV8LEuTYW9JFT0yKvMCz3kSsoja/HktredLdNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0Y7U2Yi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jm7X/RXlau4cw1kNPsdQk3xINY08GpE1ZYTATKiQ4yzUvaaRQVVJ/OXl7utoCXYI3mY5Megfdz3jvnW7BqmL2G5sD6jszttOOolfTRQ4qOkHE3jmKe636EvLDuV+0E/ZG4h35ZH2KFMr0Knvv6ZmmYdYDYjp6pp11bJ97h0BCzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVKaNO2T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0Y7U2Yi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BE7C2BCB0;
-	Fri, 15 May 2026 16:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVKaNO2T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2607AC2BCB0;
+	Fri, 15 May 2026 16:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861350;
-	bh=VcnHTkZ6ASNIB2vWq4JG1YaXwsoagnVNSJ2hgjAfJp4=;
+	s=korg; t=1778861353;
+	bh=ZBFxfRKuQzR6gvIh39l5x7+PlEdT8dGJMDkC0sVWMvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e0Y7U2Yibo+g6L3FdcYMRrvApYJSssnSJmuwBzGwAHq6kB4raI2ePG4x0gt4RILu4
-	 JS6ZBgmcgvnND3vXeXr6KE9XurY1xoTPaaM0y0wURTzoIcOPxEyc9mxlJ7DbKq9UD6
-	 /DEh0clT5fH1hVhNqO9lBu8DsznO7CYD/6cABxuo=
+	b=VVKaNO2TDJvf50bOJD7EaCPcSm0ysanaJTY14Z2k15r3H+CneVgv5wwGaE3/U2IDY
+	 wrIZjzk/zsP8ww4HC9DEw1hsen16aDwGHo1m4nzu45rd2ZS6RTluUQxWbZHE39imM+
+	 mb8TaknRO4vvmDMrUm1WuZc5/4xIPWSpsusNFRJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Asleson <tasleson@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	"Bryn M. Reeves" <bmr@redhat.com>
-Subject: [PATCH 6.6 253/474] dm: fix a buffer overflow in ioctl processing
-Date: Fri, 15 May 2026 17:46:02 +0200
-Message-ID: <20260515154720.471953008@linuxfoundation.org>
+	Tommaso Soncin <soncintommaso@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 244/474] ASoC: amd: yc: Add HP OMEN Gaming Laptop 16-ap0xxx product line in quirk table
+Date: Fri, 15 May 2026 17:45:53 +0200
+Message-ID: <20260515154720.280683174@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,55 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Tommaso Soncin <soncintommaso@gmail.com>
 
-commit 2fa49cc884f6496a915c35621ba4da35649bf159 upstream.
+commit d63c219b7ff39f897da10c160a2edef76320f16c upstream.
 
-Tony Asleson (using Claude) found a buffer overflow in dm-ioctl in the
-function retrieve_status:
+Add a DMI quirk for the HP OMEN Gaming Laptop 16-ap0xxx line fixing the
+issue where the internal microphone was not detected.
 
-1. The code in retrieve_status checks that the output string fits into
-   the output buffer and writes the output string there
-2. Then, the code aligns the "outptr" variable to the next 8-byte
-   boundary:
-	outptr = align_ptr(outptr);
-3. The alignment doesn't check overflow, so outptr could point past the
-   buffer end
-4. The "for" loop is iterated again, it executes:
-	remaining = len - (outptr - outbuf);
-5. If "outptr" points past "outbuf + len", the arithmetics wraps around
-   and the variable "remaining" contains unusually high number
-6. With "remaining" being high, the code writes more data past the end of
-   the buffer
-
-Luckily, this bug has no security implications because:
-1. Only root can issue device mapper ioctls
-2. The commonly used libraries that communicate with device mapper
-   (libdevmapper and devicemapper-rs) use buffer size that is aligned to
-   8 bytes - thus, "outptr = align_ptr(outptr)" can't overshoot the input
-   buffer and the bug can't happen accidentally
-
-Reported-by: Tony Asleson <tasleson@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reviewed-by: Bryn M. Reeves <bmr@redhat.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Tommaso Soncin <soncintommaso@gmail.com>
+Link: https://patch.msgid.link/20260429160858.538986-1-soncintommaso@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1341,6 +1341,10 @@ static void retrieve_status(struct dm_ta
- 		used = param->data_start + (outptr - outbuf);
- 
- 		outptr = align_ptr(outptr);
-+		if (!outptr || outptr > outbuf + len) {
-+			param->flags |= DM_BUFFER_FULL_FLAG;
-+			break;
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -55,6 +55,13 @@ static const struct dmi_system_id yc_acp
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN Gaming Laptop 16-ap0xxx"),
 +		}
- 		spec->next = outptr - outbuf;
- 	}
- 
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "Dell Inc."),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Dell G15 5525"),
+ 		}
+@@ -648,6 +655,13 @@ static const struct dmi_system_id yc_acp
+ 		}
+ 	},
+ 	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_BOARD_NAME, "8E35"),
++		}
++	},
++	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "MECHREVO"),
 
 
