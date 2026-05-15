@@ -1,44 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A4F3FF1AD;
-	Fri, 15 May 2026 16:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E393FF1AD;
+	Fri, 15 May 2026 16:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860957; cv=none; b=LD0TW4rYfcKltEndnFyPHOZHQHCbf5RKwoHHbQoasBj+el4wR6FNczNOhTCaKeaCIiAd3CC1p5z+mIrALbGxxgnkANHkK4GCjfbWbEjH428EVagC31zlMXkLHgO66AerhpTu0DGZud1uiGbsCIrQELA6+cjPsXlbzgHIEHt1TPA=
+	t=1778860960; cv=none; b=ECJ2tPzNGV+Lxaj8Lx6mXtr2CIfHT4vQufNgxbDgp7uBI753WPHb0woSZgojC+ADqVkj/L5lVpBYiSsCx6BXKfC7MfWEfl9SA+UX1EGruEAI8+pEr+E+ZFpnshabjY8CDPWTdb+rE4t/Yhjjg97zIILpy9BLDMxl/MmUIlBun2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860957; c=relaxed/simple;
-	bh=iYpdFdfHUrnt0cvO0zr8fCU6jm8ts9mTjOX5wU4B7wg=;
+	s=arc-20240116; t=1778860960; c=relaxed/simple;
+	bh=ClE7kl3CGkskUO9cnxT2yCA/HTB1KzneA+H+m9wuT5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WoVW1zO0F2Q99Yk81JgDL4GU43hMy3s5tjkcfGCpF0NY3Uf7QVfA3OsjGDSOx2YyjHPJYOcOUhbO4IftDUDNMzUCMsOLYtuW8s2fSCupzWmcmUP48jIlH21Lh+YDBAU8leokPrpSxShOHQqCuyqOtltTIBKOzmXf6XmLEN14i2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McdfXHrE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IK9U93TuGsCGit/1hcxaAfLy84b/RT8VvkZl4+HucC2sx9TUFNut3+AmotucSYmNR3vk1UaFxoieRBcvHo4u2NT4gMIYtSxnfj6PvadBTsK0/+Edo/GEdFFC+9FSi4eLuRthDsri4XTA5lOGTakP9VRTtskOi3rgu2OQKOx0oP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXAQ8ndX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McdfXHrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C1EC2BCB0;
-	Fri, 15 May 2026 16:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXAQ8ndX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC890C2BCB0;
+	Fri, 15 May 2026 16:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860957;
-	bh=iYpdFdfHUrnt0cvO0zr8fCU6jm8ts9mTjOX5wU4B7wg=;
+	s=korg; t=1778860960;
+	bh=ClE7kl3CGkskUO9cnxT2yCA/HTB1KzneA+H+m9wuT5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=McdfXHrE1XtH0IlDuYmXwxf5Pi8oir3rtpHu57da5buAGxLjEqlLtlW5Mdphp8ZjC
-	 5GGq2enWX+CMxpx4AnS0Ltw2cWmzzzgpd3OPPPrzNC/lWkK9d9RtQ7vFxIptbZ1d0S
-	 QvneZtmZCwCtu0ZOUnFtuOlz+CAHrrYhHWBjGmEQ=
+	b=KXAQ8ndX+OmGGUIwmjVZZYOormujAZ0cmdT5KKjYil4NFyNW1AcJ/SChi6AgqbRti
+	 ubitSWJ0tlMqJT2OkJtCuA39rGs3RS3/7AfwGvKyT3306NOkvgv6r9Y83RQK4D74Zo
+	 ez3nlMcZtl221z6tul544QhHkqkUquilm1yR8MFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Kai Ma <k4729.23098@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 143/474] netfilter: reject zero shift in nft_bitwise
-Date: Fri, 15 May 2026 17:44:12 +0200
-Message-ID: <20260515154718.121673305@linuxfoundation.org>
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 144/474] scsi: target: configfs: Bound snprintf() return in tg_pt_gp_members_show()
+Date: Fri, 15 May 2026 17:44:13 +0200
+Message-ID: <20260515154718.143074647@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -57,47 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Ma <k4729.23098@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit fe11e5c40817b84abaa5d83bfb6586d8412bfd07 upstream.
+commit 772a896a56e0e3ef9424a025cec9176f9d8f4552 upstream.
 
-Reject zero shift operands for nft_bitwise left and right shift
-expressions during initialization.
+target_tg_pt_gp_members_show() formats LUN paths with snprintf() into a
+256-byte stack buffer, then will memcpy() cur_len bytes from that
+buffer.  snprintf() returns the length the output would have had, which
+can exceed the buffer size when the fabric WWN is long because iSCSI IQN
+names can be up to 223 bytes.  The check at the memcpy() site only
+guards the destination page write, not the source read, so memcpy() will
+read past the stack buffer and copy adjacent stack contents to the sysfs
+reader, which when CONFIG_FORTIFY_SOURCE is enabled, fortify_panic()
+will be triggered.
 
-The carry propagation logic computes the carry from the adjacent 32-bit
-word using BITS_PER_TYPE(u32) - shift. A zero shift operand turns this
-into a 32-bit shift, which is undefined behaviour.
+Commit 27e06650a5ea ("scsi: target: target_core_configfs: Add length
+check to avoid buffer overflow") added the same bound to the
+target_lu_gp_members_show() but the tg_pt_gp variant was missed so
+resolve that here.
 
-Reject zero shift operands in the control plane, alongside the existing
-check for values greater than or equal to 32, so malformed rules never
-reach the packet path.
-
-Fixes: 567d746b55bc ("netfilter: bitwise: add support for shifts.")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Kai Ma <k4729.23098@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026041159-garter-theft-3be0@gregkh
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_bitwise.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/target/target_core_configfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/nft_bitwise.c
-+++ b/net/netfilter/nft_bitwise.c
-@@ -149,7 +149,8 @@ static int nft_bitwise_init_shift(struct
- 	if (err < 0)
- 		return err;
+--- a/drivers/target/target_core_configfs.c
++++ b/drivers/target/target_core_configfs.c
+@@ -3134,7 +3134,7 @@ static ssize_t target_tg_pt_gp_members_s
+ 			config_item_name(&lun->lun_group.cg_item));
+ 		cur_len++; /* Extra byte for NULL terminator */
  
--	if (priv->data.data[0] >= BITS_PER_TYPE(u32)) {
-+	if (!priv->data.data[0] ||
-+	    priv->data.data[0] >= BITS_PER_TYPE(u32)) {
- 		nft_data_release(&priv->data, desc.type);
- 		return -EINVAL;
- 	}
+-		if ((cur_len + len) > PAGE_SIZE) {
++		if (cur_len > TG_PT_GROUP_NAME_BUF || (cur_len + len) > PAGE_SIZE) {
+ 			pr_warn("Ran out of lu_gp_show_attr"
+ 				"_members buffer\n");
+ 			break;
 
 
