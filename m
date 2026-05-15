@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A243F86E1;
-	Fri, 15 May 2026 16:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267423FD97E;
+	Fri, 15 May 2026 16:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861389; cv=none; b=rDQaX9v9+O9vTK6VryBGd8G1JT+7cmDaGpQGIktxx3/NUGIGGqn9fFTWH2dtU1MCMSxYCdacRQcKlYwGS4hnuI9Xqocu7d21kbVr6pRmVTfllqmiDy0AxLa67TiOsMPmATHygfZ4cMI3wELe1DrzqXEKc1D4k09TeV3JZMIo3NQ=
+	t=1778861392; cv=none; b=YcWPyxMYRkwAavE+KdMNhc2qCmNWpCb1vCpFkQoO2zoZTU+v7eDwOhM6TJOw+Z/Eu3T388Bulbtv0Qx5NdEqTz8BdsgGV2gzegT1ZcQ0iJ2Uvx56hcjX50nskKCdeKgpkW8EVUTHCRT5E54m63Hyh2vaGbAYZbKYNqPbe+ZqoyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861389; c=relaxed/simple;
-	bh=eHHYgK7g0aEclmlPzpqyrbAKlQWuqSTOa4iJXf3BPJs=;
+	s=arc-20240116; t=1778861392; c=relaxed/simple;
+	bh=T8C2l0z+dGNT9XXzLsq/xhd19KoienjlyGARPS1fovk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ag071/Ou+nprBxnHM3myK2HhMF0dgbNrSCDghUPhQnkVT1MHgxU88rJTo3g//u66Wy1FH12WxEVbqCw38zjQd1HW0vPMCtdVy3N3moYQHNQ8Q3zrpqEuVjJ0tzRP4hEHylTlSv2dsR3V71D14mlBdeg4+TbHZh/UAXWoVVPuzOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuHK5umP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W85KIKfsyOrIucrttqg62CDzQwBPtmSWya0boXA45rSfYmD1OIdQ9fEDFBT/3BQKdLRXUUGCpM65N44Zpw9hXUabKV8SJRJyrjaf3DnlT5Kx3LurJ4+ogKIvnXv2C2+2xYaUJxYtggw49EzScsLkAIJPHOdpBxAHaTRq4TFbdM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzV2XxUe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuHK5umP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E2EC2BCB0;
-	Fri, 15 May 2026 16:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzV2XxUe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8628C2BCB0;
+	Fri, 15 May 2026 16:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861389;
-	bh=eHHYgK7g0aEclmlPzpqyrbAKlQWuqSTOa4iJXf3BPJs=;
+	s=korg; t=1778861392;
+	bh=T8C2l0z+dGNT9XXzLsq/xhd19KoienjlyGARPS1fovk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JuHK5umP6KcHF9iZq7AmdzkBuBro0SBvrIxc2tj0aYoupn4KYtkAURgUruGIhnKZx
-	 rcbmVqtG6K6ljrbJCr4XkYb45y8yAtSmMavvVRDEcQJpRdVSPpVHkyReFVShcB65Pl
-	 9ECpFqXH0ok7doVUaYDSiQL1iJqsh/bXN4q5PFqk=
+	b=IzV2XxUe63whv1nq4c0ESbWLySpJcWa6EMVcgzqCwfNgRgxRrUkqXgMJ+6y16QUtl
+	 IYt5au9Wkw+CpZMX1sD4h7GkQ+uuy1/Yn0xoI0dmvq7e9xTPFmOStJ/a0dwLg90nXO
+	 HcBFk368k0VSrnHS1FR4Hm6/iCp3RSZ2fZCxe5Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut@gmail.com>,
+	Hauke Mehrtens <hauke@hauke-m.de>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 310/474] regulator: bd9571mwv: fix OF node reference imbalance
-Date: Fri, 15 May 2026 17:46:59 +0200
-Message-ID: <20260515154721.715260326@linuxfoundation.org>
+Subject: [PATCH 6.6 311/474] spi: lantiq-ssc: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:00 +0200
+Message-ID: <20260515154721.737641569@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -53,38 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 8498100ee1d00422b8c5b161b3e332278b92a59a upstream.
+commit b99206710d032c16b7f8b75e4bc18414d8e4b9f4 upstream.
 
-The driver reuses the OF node of the parent multi-function device but
-fails to take another reference to balance the one dropped by the
-platform bus code when unbinding the MFD and deregistering the child
-devices.
+Make sure to deregister the controller before releasing underlying
+resources like clocks during driver unbind.
 
-Fix this by using the intended helper for reusing OF nodes.
-
-Fixes: e85c5a153fe2 ("regulator: Add ROHM BD9571MWV-M PMIC regulator driver")
-Cc: stable@vger.kernel.org	# 4.12
-Cc: Marek Vasut <marek.vasut@gmail.com>
+Fixes: 17f84b793c01 ("spi: lantiq-ssc: add support for Lantiq SSC SPI controller")
+Cc: stable@vger.kernel.org	# 4.11
+Cc: Hauke Mehrtens <hauke@hauke-m.de>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260408073055.5183-8-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-17-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/bd9571mwv-regulator.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-lantiq-ssc.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/regulator/bd9571mwv-regulator.c
-+++ b/drivers/regulator/bd9571mwv-regulator.c
-@@ -288,8 +288,9 @@ static int bd9571mwv_regulator_probe(str
+--- a/drivers/spi/spi-lantiq-ssc.c
++++ b/drivers/spi/spi-lantiq-ssc.c
+@@ -998,7 +998,7 @@ static int lantiq_ssc_probe(struct platf
+ 		"Lantiq SSC SPI controller (Rev %i, TXFS %u, RXFS %u, DMA %u)\n",
+ 		revision, spi->tx_fifo_size, spi->rx_fifo_size, supports_dma);
  
- 	platform_set_drvdata(pdev, bdreg);
+-	err = devm_spi_register_controller(dev, host);
++	err = spi_register_controller(host);
+ 	if (err) {
+ 		dev_err(dev, "failed to register spi host\n");
+ 		goto err_wq_destroy;
+@@ -1022,6 +1022,10 @@ static void lantiq_ssc_remove(struct pla
+ {
+ 	struct lantiq_ssc_spi *spi = platform_get_drvdata(pdev);
  
-+	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
++	spi_controller_get(spi->host);
 +
- 	config.dev = &pdev->dev;
--	config.dev->of_node = pdev->dev.parent->of_node;
- 	config.driver_data = bdreg;
- 	config.regmap = bdreg->regmap;
++	spi_unregister_controller(spi->host);
++
+ 	lantiq_ssc_writel(spi, 0, LTQ_SPI_IRNEN);
+ 	lantiq_ssc_writel(spi, 0, LTQ_SPI_CLC);
+ 	rx_fifo_flush(spi);
+@@ -1031,6 +1035,8 @@ static void lantiq_ssc_remove(struct pla
+ 	destroy_workqueue(spi->wq);
+ 	clk_disable_unprepare(spi->spi_clk);
+ 	clk_put(spi->fpi_clk);
++
++	spi_controller_put(spi->host);
+ }
  
+ static struct platform_driver lantiq_ssc_driver = {
 
 
