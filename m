@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF034481A90;
-	Fri, 15 May 2026 16:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF37366820;
+	Fri, 15 May 2026 16:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862118; cv=none; b=FiXftobUWWbGYdw5yQkKYSbo9xd4Lo4GbQdn9iCpryaJ1lYz7ZL4l9ycirBNlRkeOcb1Fz8JEm6bjhiYPdERn6vgkrUtGFdzZycZGwipx7qzF3C36y7Uz5ewxoxgBTbQAlfChP1kznNUu2RxQEGTqLzIu9P4ltDdc5ZMip9V1y8=
+	t=1778862121; cv=none; b=tHa0Hm4KF4pbZnyZ+BgTkVMB3HlDKE22AFiW//XxSsIq4GLtI+UGK9UPNUtbGUpWz8NvxgurpSY7weBy7pHbpeN2Go/EOvYmNmDQ265mWzSyfkquithQ+aLQgRsfy/FF4Q5sedHftRpeV7qfpkiB8b8e8/jWxhXHDyiPwYRdh8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862118; c=relaxed/simple;
-	bh=/H/RtRh7e+FcncFepzQ1wPxUlaH1Mz+4Aut9eXaxwBw=;
+	s=arc-20240116; t=1778862121; c=relaxed/simple;
+	bh=UUbc3Znecbc+CU03YleCPhh+vHI/MKp3WNzjqpeW3W4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWDFUBmTcUqke6M3K1xFDl9v5sonw2wzKHeTsk2iPtyEK7mbqvKgE8QS/mFNSHg6LU8vO6stnvuYo1YWQpjj2yv97o8vJXREQ0vMNULiPkaVStaCjyXPSXCJa8rt7Ezih9APxs1iAUIdK6x2LMggQGtOOEhTcRPIvMeuLnYvzV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BV85uugd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OYWQmtDJRrLV8czE0WjcetcC2LCUzwWsoK8+JyeNcWchV8Jp4+U5DFA9eGpHEE9vStetTFQdQQrKM3Qf785+/Ji3S1AnrrK1GVQ3XhpfyEyfrIJcEzb/kVXANrTO7mfU5MKU2n9kmDZtiWnqwNVkyhu+vim0sMpuAQ73wdks3l4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=touXQ/A+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BV85uugd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44284C2BCB0;
-	Fri, 15 May 2026 16:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="touXQ/A+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C58C2BCB0;
+	Fri, 15 May 2026 16:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862118;
-	bh=/H/RtRh7e+FcncFepzQ1wPxUlaH1Mz+4Aut9eXaxwBw=;
+	s=korg; t=1778862121;
+	bh=UUbc3Znecbc+CU03YleCPhh+vHI/MKp3WNzjqpeW3W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BV85uugdWH8bdm7qeocCn67L8FUpnP+h2WWzxo0R1g8dvtkvmdRjQdciTDOyVFned
-	 R6SB3DjPsS3WS7ajbJ5U8oCM7UopJsRShJVwIp70Ff5UCtpiAh3EcWK7QeIxiTp1lY
-	 OcVGzHmi3RPDIzPNwJIm0TYo4eridTI0HWUhY8dE=
+	b=touXQ/A+kL8PE23NtZcb9XIrj7Evpyggql6xudqltfaH6mNy03kEZzxDsLGg61DNM
+	 B/yga84RSAFyZSsFLqUPEp7sKnO6VsWV9JmWsJf9849iDWditVLNXpm2xr4fZb5mrr
+	 p5elfk90uAxNsKNWoLtLsSQUbKU8h10GZ5bHbavE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Cheng <benjamin.cheng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 108/188] drm/amdgpu/vce: Prevent partial address patches
-Date: Fri, 15 May 2026 17:48:45 +0200
-Message-ID: <20260515154659.672353225@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.18 117/188] drm/xe/bo: Fix bo leak on GGTT flag validation in xe_bo_init_locked()
+Date: Fri, 15 May 2026 17:48:54 +0200
+Message-ID: <20260515154659.868355674@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -50,33 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Cheng <benjamin.cheng@amd.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-commit de2a02cc28d6d5d37db07d00a9a684c754a5fd74 upstream.
+commit 1d0adf2fd94fb0c0037c643fadd8f2cf3cffc009 upstream.
 
-In the case that only one of lo/hi is valid, the patching could result
-in a bad address written to in FW.
+When XE_BO_FLAG_GGTT_ALL is set without XE_BO_FLAG_GGTT, the function
+returns an error without freeing a caller-provided bo, violating the
+documented contract that bo is freed on failure.
 
-Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Add xe_bo_free(bo) before returning the error.
+
+Fixes: 5a3b0df25d6a ("drm/xe: Allow bo mapping on multiple ggtts")
 Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4.6
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260408175255.3402838-3-shuicheng.lin@intel.com
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+(cherry picked from commit 3fbd6cf43cac7b60757f3ce3d95195d3843a902c)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_bo.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-@@ -656,6 +656,9 @@ static int amdgpu_vce_cs_reloc(struct am
- 	uint64_t addr;
- 	int r;
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -2112,8 +2112,10 @@ struct xe_bo *xe_bo_init_locked(struct x
+ 	}
  
-+	if (lo >= ib->length_dw || hi >= ib->length_dw)
-+		return -EINVAL;
-+
- 	if (index == 0xffffffff)
- 		index = 0;
+ 	/* XE_BO_FLAG_GGTTx requires XE_BO_FLAG_GGTT also be set */
+-	if ((flags & XE_BO_FLAG_GGTT_ALL) && !(flags & XE_BO_FLAG_GGTT))
++	if ((flags & XE_BO_FLAG_GGTT_ALL) && !(flags & XE_BO_FLAG_GGTT)) {
++		xe_bo_free(bo);
+ 		return ERR_PTR(-EINVAL);
++	}
  
+ 	if (flags & (XE_BO_FLAG_VRAM_MASK | XE_BO_FLAG_STOLEN) &&
+ 	    !(flags & XE_BO_FLAG_IGNORE_MIN_PAGE_SIZE) &&
 
 
