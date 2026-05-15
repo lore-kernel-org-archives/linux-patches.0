@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C1B3FBB50;
-	Fri, 15 May 2026 16:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950CF303CB0;
+	Fri, 15 May 2026 16:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861517; cv=none; b=PA8jqI7DDvh1RrcFxY2fCd/KwOx89wRngl5rfDc2pEWlZT5AhFy1ay36LJ0hrez83zmWyAmHrFtb4iyWFvUljbwBEk+QG3XoVH4Xe/MmKBY+0trqKVzzNvFzr6EsLbRjypydwIUyeaBn+V1oF/n9+ABZ1J+X7gnmUTz0ACyM6EU=
+	t=1778861519; cv=none; b=mtPz8w9HVJoYN1YGzdMdAVMLb/OVHL3FqQhDFkkUCxF0zCdNFiG2WiZrNQ+RB+HnfKj3iSmWGtGwIGoNAOycoj6jurk0XB9jliRUnIGNQVR/SgKHkfyhUcEV9WXfCThYsFh35ejxfL+2z1PKk/HsLnlotK86OqBH87luT6I+wgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861517; c=relaxed/simple;
-	bh=Zq2qIAcb9FW3ooC1gV7KQHni0hbGxQhNdqXeuHQ+tjw=;
+	s=arc-20240116; t=1778861519; c=relaxed/simple;
+	bh=ottGAUj9sviCgB5/h9DVDJZ1VSpBj5qrANpH/0Aj+XQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xr4QPY/loN9Sg5A7sGp4q2eDay9ywTahr/QnfX9MzK5AmbaiBDNoTWMkiOSa5uF34Q83vypY9I7WwHgxYtCTmCdScFO5Wdt+eQn/I30VBGd6SMmQlcpVzi/RuY7OA5FwW6NMclpqv1IgY/tnFxGK4aFEjfU+8riZUtmpnm9AZsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZvSwyBq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a6fdOkIOqgMKOx5ucJ3u7+ouYwi/1wdBt1wnZIony9RAVroPdKDT0GZhsI1VEx8RT4mpF2U5YcLyP4mpaI1GjtZMlbV6U5lw6EPMSSmjM0c6lV/maw19qMnc+tWi8cdR2ycwKpR/X7yRFdrBkprX91HDUWBSmzPfbqnSw/VwU7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4qI9P4v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZvSwyBq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9173CC2BCB0;
-	Fri, 15 May 2026 16:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4qI9P4v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8F4C2BCB0;
+	Fri, 15 May 2026 16:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861516;
-	bh=Zq2qIAcb9FW3ooC1gV7KQHni0hbGxQhNdqXeuHQ+tjw=;
+	s=korg; t=1778861519;
+	bh=ottGAUj9sviCgB5/h9DVDJZ1VSpBj5qrANpH/0Aj+XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZvSwyBqtZTJsQGAfWZ56nZLzsDQ4J4oa0KsMKJTo58RPObYPn8mK4pLrfA5P8XYx
-	 8vL6R+nbbleTP3ThNcJgYbOw8xL93eayWKputA3XkgKxJKv8RJu8udcjzFVhb7qjT4
-	 rKXFLGeNbChzRHT6f9i6NgwiJk3LXMX3I5uicGY0=
+	b=X4qI9P4v2Y0lWAUDJ2QOeY5rbR8gpPSp5ossCBkrJA87rypRpOQpZc8xtRDQ72LS4
+	 434YuLNvN2NpXDrMEQXw0YBVUBSZimPtgKYiGMEGusI4jPrg7I7dmdHFWf/UxcXPh8
+	 37KUTa0EGQiVFf1Fwn5rq8S1a1slGavrI5Ksz19I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.6 359/474] batman-adv: bla: prevent use-after-free when deleting claims
-Date: Fri, 15 May 2026 17:47:48 +0200
-Message-ID: <20260515154722.787071259@linuxfoundation.org>
+Subject: [PATCH 6.6 360/474] batman-adv: bla: only purge non-released claims
+Date: Fri, 15 May 2026 17:47:49 +0200
+Message-ID: <20260515154722.807863336@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,36 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 4ae1709a314060a196981b344610d023ea841e57 upstream.
+commit cf6b604011591865ae39ac82de8978c1120d17af upstream.
 
-When batadv_bla_del_backbone_claims() removes all claims for a backbone, it
-does this by dropping the link entry in the hash list. This list entry
-itself was one of the references which need to be dropped at the same time
-via batadv_claim_put().
+When batadv_bla_purge_claims() goes through the list of claims, it is only
+traversing the hash list with an rcu_read_lock(). Due to a potential
+parallel batadv_claim_put(), it can happen that it encounters a claim which
+was actually in the process of being released+freed by
+batadv_claim_release(). In this case, backbone_gw is set to NULL before the
+delayed RCU kfree is started. Calling batadv_bla_claim_get_backbone_gw() is
+then no longer allowed because it would cause a NULL-ptr derefence.
 
-But the batadv_claim_put() must not be done before the last access to the
-claim object in this function. Otherwise the claim might be freed already
-by the batadv_claim_release() function before the list entry was dropped.
+To avoid this, only claims with a valid reference counter must be purged.
+All others are already taken care of.
 
 Cc: stable@kernel.org
 Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/bridge_loop_avoidance.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 --- a/net/batman-adv/bridge_loop_avoidance.c
 +++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -318,8 +318,8 @@ batadv_bla_del_backbone_claims(struct ba
- 			if (claim->backbone_gw != backbone_gw)
- 				continue;
+@@ -1288,6 +1288,13 @@ static void batadv_bla_purge_claims(stru
  
--			batadv_claim_put(claim);
- 			hlist_del_rcu(&claim->hash_entry);
+ 		rcu_read_lock();
+ 		hlist_for_each_entry_rcu(claim, head, hash_entry) {
++			/* only purge claims not currently in the process of being released.
++			 * Such claims could otherwise have a NULL-ptr backbone_gw set because
++			 * they already went through batadv_claim_release()
++			 */
++			if (!kref_get_unless_zero(&claim->refcount))
++				continue;
++
+ 			backbone_gw = batadv_bla_claim_get_backbone_gw(claim);
+ 			if (now)
+ 				goto purge_now;
+@@ -1313,6 +1320,7 @@ purge_now:
+ 					      claim->addr, claim->vid);
+ skip:
+ 			batadv_backbone_gw_put(backbone_gw);
 +			batadv_claim_put(claim);
  		}
- 		spin_unlock_bh(list_lock);
+ 		rcu_read_unlock();
  	}
 
 
