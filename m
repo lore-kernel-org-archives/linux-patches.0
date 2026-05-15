@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5CB30569C;
-	Fri, 15 May 2026 16:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C6130569C;
+	Fri, 15 May 2026 16:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860978; cv=none; b=e4BbOnprG4n8+d0/O4xArTi7f5Vw8sikdN/BTqTyGc6QGt/wV9MFiLjl1O/73QwD5qBNEBEHLaqrgznW2IUcSSuE56bPTICTo1B13Haam/fEr268xrsxIWw/I/4pn3+P946oOID7TWLXk6xGFOr4kPDPUlsiWdLvSg86V+mc6uM=
+	t=1778860981; cv=none; b=oyCQK3nqvT+PpCoARnbeFPAuUAhDSBDFlRM1WuAXo0lxGoDv97aZpR3uScWdML04i59PoaPFJpvLSBP//RZX7u8lmOLCISeA18WZnclJ8FS9BH+I5m6pdu15E2X9P96zrMUdNTRZXKTHvRcTVjHPShCWL97w7YvjOdWZP1kHMCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860978; c=relaxed/simple;
-	bh=oq3L1fn/PLM1MotSikXjlZd99RFeamA1X0LLBrpad6Y=;
+	s=arc-20240116; t=1778860981; c=relaxed/simple;
+	bh=QEOtfw+dVuM36bPCmYqEvBwdHlREAC8obwcUvagroiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T6Z6zfZ3ve9Ekp35Zefd+y5ZsL6QA0qp0IT/n4nun+wmjilhP5TEu6b3Df3QmyLst748cDf3+dPznK+pz+e6PlLHUWZGafFkaCpuFv5HHI/S9bbYNust0xie1tCj/XFRhmT5zmHODw189+ABEOR3NmSRWRyM7/5exd1he5IHXso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ov1jCQlP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P45pxRfOaokQ7RreA322msQ4cadz7VeggHTWd5ZCUWdR4+MNc1ISpxVzr24nRtivV5w5Re+c5rzY8AFnVd669JRPcnzet+VTQpc0SIDTIUQkqkAbyv4yqVQSz/YQoDItayuIJTKDFxg2NCOKmfa7V+ny2BO/o+MYIgvKz/usOvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bq5r6Vob; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ov1jCQlP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8730C2BCB0;
-	Fri, 15 May 2026 16:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bq5r6Vob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9DEC2BCB0;
+	Fri, 15 May 2026 16:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860978;
-	bh=oq3L1fn/PLM1MotSikXjlZd99RFeamA1X0LLBrpad6Y=;
+	s=korg; t=1778860980;
+	bh=QEOtfw+dVuM36bPCmYqEvBwdHlREAC8obwcUvagroiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ov1jCQlPNd6ROFYcv6YDf4OZOvyp1X5VB3zM5ND/cXTR/o7Q25ReqfDE+yXs8roFX
-	 ceqc3bdot34woDcn0HmS9jbl5AUpnbvWxgT5G949MMT8DWw9OiG9W1rbpM8a/Ro7dO
-	 PdIZ8jPWSyl1EM/saIKc8d7OIbcom1rD8IytPOCQ=
+	b=Bq5r6Vob5zDjLBP68n9JBe525p8LVNikPyozcN3VCxVJrG/vCVZXAncn02Ep3TjZI
+	 QJ1jCsVAvrz3sA+AbAlrZ/922eoSAuo/iMBdog1A6isa3dFSrlTy/dEFSKnlSMIxMx
+	 rakvLbtgUyWjDua8U1yeWJANIqkQz1vGz41Wyj/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Kelley <skelley@nvidia.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Shivam Kalra <shivamkalra98@zohomail.in>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 150/474] ACPI: CPPC: Fix related_cpus inconsistency during CPU hotplug
-Date: Fri, 15 May 2026 17:44:19 +0200
-Message-ID: <20260515154718.272538815@linuxfoundation.org>
+Subject: [PATCH 6.6 151/474] ACPI: video: force native backlight on HP OMEN 16 (8A44)
+Date: Fri, 15 May 2026 17:44:20 +0200
+Message-ID: <20260515154718.293736241@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,140 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Shivam Kalra <shivamkalra98@zohomail.in>
 
-commit 75141a770f4f8225d316f6c7e146723a32e9720e upstream.
+commit 4b506ea5351a1f5937ac632a4a5c35f6f796cc41 upstream.
 
-When concurrently bringing up and down two SMT threads of a physical
-core, many warning call traces occur as below:
+The HP OMEN 16 Gaming Laptop (board name 8A44) has a mux-less hybrid
+GPU configuration with AMD Rembrandt (Radeon 680M) and NVIDIA GA104
+(RTX 3070 Ti). The internal eDP panel is wired to the AMD iGPU.
 
-The issue timeline is as follows:
+When Nouveau loads without GSP firmware, the ACPI video backlight
+device (acpi_video0) gets registered alongside the native AMD
+backlight (amdgpu_bl2). In this state, writes to amdgpu_bl2 update
+the software brightness value but fail to change the physical panel
+brightness.
 
- 1. When the system starts,
-    cpufreq: CPU: 220, policy->related_cpus: 220-221, policy->cpus: 220-221
-
- 2. Offline CPU 220 and CPU 221.
-
- 3. Online CPU 220
-    - CPU 221 is now offline, as acpi_get_psd_map() use
-      for_each_online_cpu(), so the cpu_data->shared_cpu_map,
-      policy->cpus, and related_cpus has only CPU 220.
-
-    cpufreq: CPU: 220, policy->related_cpus: 220, policy->cpus: 220
-
- 4. Offline CPU 220
-
- 5. Online CPU 221, the below call trace occurs:
-    - Since CPU 220 and CPU 221 share one policy, and
-      policy->related_cpus = 220 after step 3, so CPU 221
-      is not in policy->related_cpus but
-      per_cpu(cpufreq_cpu_data, cpu221) is not NULL.
-
-After reverting commit 56eb0c0ed345 ("ACPI: CPPC: Fix remaining
-for_each_possible_cpu() to use online CPUs"), the issue disappeared.
-
-The _PSD (P-State Dependency) defines the hardware-level dependency of
-frequency control across CPU cores. Since this relationship is a physical
-attribute of the hardware topology, it remains constant regardless of the
-online or offline status of the CPUs.
-
-Using for_each_online_cpu() in acpi_get_psd_map() is problematic. If a
-CPU is offline, it will be excluded from the shared_cpu_map.
-Consequently, if that CPU is brought online later, the kernel will fail
-to recognize it as part of any shared frequency domain.
-
-Switch back to for_each_possible_cpu() to ensure that all cores defined
-in the ACPI tables are correctly mapped into their respective performance
-domains from the start. This aligns with the logic of policy->related_cpus,
-which must encompass all potentially available cores in the domain to
-prevent logic gaps during CPU hotplug operations.
-
-To resolve the original issue regarding the "nosmt" or "nosmt=force"
-boot parameter, as send_pcc_cmd() function already does if (!desc)
-continue, so reverting that loop back to for_each_possible_cpu() is ok,
-only need to change the match_cpc_ptr NULL case in acpi_get_psd_map() to
-continue as Sean suggested.
-
-How to reproduce, on arm64 machine with SMT support which use acpi cppc
-cpufreq driver:
-
-	bash test.sh 220 & bash test.sh 221 &
-
-	The test.sh is as below:
-		while true
-			do
-			echo 0 > /sys/devices/system/cpu/cpu${1}/online
-			sleep 0.5
-			cat /sys/devices/system/cpu/cpu${1}/cpufreq/related_cpus
-			echo 1 >  /sys/devices/system/cpu/cpu${1}/online
-			cat /sys/devices/system/cpu/cpu${1}/cpufreq/related_cpus
-		done
-
-	CPU: 221 PID: 1119 Comm: cpuhp/221 Kdump: loaded Not tainted 6.6.0debug+ #5
-	Hardware name: To be filled by O.E.M. S920X20/BC83AMDA01-7270Z, BIOS 20.39 09/04/2024
-	pstate: a1400009 (NzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-	pc : cpufreq_online+0x8ac/0xa90
-	lr : cpuhp_cpufreq_online+0x18/0x30
-	sp : ffff80008739bce0
-	x29: ffff80008739bce0 x28: 0000000000000000 x27: ffff28400ca32200
-	x26: 0000000000000000 x25: 0000000000000003 x24: ffffd483503ff000
-	x23: ffffd483504051a0 x22: ffffd48350024a00 x21: 00000000000000dd
-	x20: 000000000000001d x19: ffff28400ca32000 x18: 0000000000000000
-	x17: 0000000000000020 x16: ffffd4834e6a3fc8 x15: 0000000000000020
-	x14: 0000000000000008 x13: 0000000000000001 x12: 00000000ffffffff
-	x11: 0000000000000040 x10: ffffd48350430728 x9 : ffffd4834f087c78
-	x8 : 0000000000000001 x7 : ffff2840092bdf00 x6 : ffffd483504264f0
-	x5 : ffffd48350405000 x4 : ffff283f7f95cc60 x3 : 0000000000000000
-	x2 : ffff53bc2f94b000 x1 : 00000000000000dd x0 : 0000000000000000
-	Call trace:
-	 cpufreq_online+0x8ac/0xa90
-	 cpuhp_cpufreq_online+0x18/0x30
-	 cpuhp_invoke_callback+0x128/0x580
-	 cpuhp_thread_fun+0x110/0x1b0
-	 smpboot_thread_fn+0x140/0x190
-	 kthread+0xec/0x100
-	 ret_from_fork+0x10/0x20
-	---[ end trace 0000000000000000 ]---
+Force native backlight to prevent acpi_video0 from registering.
+Confirmed that booting with acpi_backlight=native resolves the
+issue.
 
 Cc: All applicable <stable@vger.kernel.org>
-Fixes: 56eb0c0ed345 ("ACPI: CPPC: Fix remaining for_each_possible_cpu() to use online CPUs")
-Co-developed-by: Sean Kelley <skelley@nvidia.com>
-Signed-off-by: Sean Kelley <skelley@nvidia.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-[ rjw: Changelog edits ]
-Link: https://patch.msgid.link/20260417040112.3727756-1-ruanjinjie@huawei.com
+Signed-off-by: Shivam Kalra <shivamkalra98@zohomail.in>
+Link: https://patch.msgid.link/20260426-omen-16-backlight-fix-v1-1-62364f268ea6@zohomail.in
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/cppc_acpi.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/video_detect.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -347,7 +347,7 @@ static int send_pcc_cmd(int pcc_ss_id, u
- end:
- 	if (cmd == CMD_WRITE) {
- 		if (unlikely(ret)) {
--			for_each_online_cpu(i) {
-+			for_each_possible_cpu(i) {
- 				struct cpc_desc *desc = per_cpu(cpc_desc_ptr, i);
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -820,6 +820,14 @@ static const struct dmi_system_id video_
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Z830"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_native,
++	 /* HP OMEN Gaming Laptop 16-n0xxx */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "HP"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16-n0xxx"),
++		},
++	},
  
- 				if (!desc)
-@@ -509,13 +509,13 @@ int acpi_get_psd_map(unsigned int cpu, s
- 	else if (pdomain->coord_type == DOMAIN_COORD_TYPE_SW_ANY)
- 		cpu_data->shared_type = CPUFREQ_SHARED_TYPE_ANY;
- 
--	for_each_online_cpu(i) {
-+	for_each_possible_cpu(i) {
- 		if (i == cpu)
- 			continue;
- 
- 		match_cpc_ptr = per_cpu(cpc_desc_ptr, i);
- 		if (!match_cpc_ptr)
--			goto err_fault;
-+			continue;
- 
- 		match_pdomain = &(match_cpc_ptr->domain_info);
- 		if (match_pdomain->domain != pdomain->domain)
+ 	/*
+ 	 * Models which have nvidia-ec-wmi support, but should not use it.
 
 
