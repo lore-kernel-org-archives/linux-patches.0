@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AD735AC09;
-	Fri, 15 May 2026 16:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE20835AC09;
+	Fri, 15 May 2026 16:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861229; cv=none; b=TNmTpMsZP4AZO/QZ40HZ7sF1dwZCY+im0ZwatfKs54YPum+t8DgB7XQM1cxipK81bSYy47HuSZckCDeoq4xds9eSbCdqCePED6z9jQbT+pM/HkkcJUaIHIH3BxMYvtvynh8qe+Cwl4pnsw6cJntvWDrzMFvuh8wl/SHYNC6aOUI=
+	t=1778861231; cv=none; b=lFwpRqhTrCFEguQeGJqp4gZdsnHuWeRas3C1jl0iKCzDa0aQZt5Y14rg7iiCgojNPPOArBPUadNiKg7OTPG6XHnlkxrxVsBgdU0xwL9K8Jq9YmmGV4m4zcrWhJ6qaMasgwrzhTjdthmjnzKLT7i+id2IonhxAynCg6rKuqB3MfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861229; c=relaxed/simple;
-	bh=8RIQewIbG2OfN9Yng/wmkY8+3ZpJvxhGoIMYEW0D69w=;
+	s=arc-20240116; t=1778861231; c=relaxed/simple;
+	bh=joVOljqUk+Y1mcjSxLLHcbhu8Alli+7WxuLVlCLZSaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=op+UtniDiaPSaKLWLXr/Xh2f0MGI/97zxD4ay848x00JBnUFqZv8XKHoujCWx/yI/JTcmM6SyUJ0fAjcFnGkaxX5Y0I88inhLm5HIpRyy0fIQJdeEHYevizmENxnySsoqj+9lWYrKXNNij9FOv1y3yQ4McsOuSk/xWzx1o3Kzng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4IPW1tT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kml5rs6TOcaw9lVRNbE4DZQFtAtzHlh67W26e001P6AP9s/+eAGXk89lor+ptvIEi09asAzLNVigAbiPV/MZxqJJdbbq8PZ3eTjRU3A8720s8Ya72Jb1poqqBHFp/874w0BO5sPhxoT/9BH+R1qLzgB1vGhccS/c4A1YoqmdqDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ttc0ogh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4IPW1tT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE7AC2BCB0;
-	Fri, 15 May 2026 16:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ttc0ogh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65961C2BCB0;
+	Fri, 15 May 2026 16:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861229;
-	bh=8RIQewIbG2OfN9Yng/wmkY8+3ZpJvxhGoIMYEW0D69w=;
+	s=korg; t=1778861231;
+	bh=joVOljqUk+Y1mcjSxLLHcbhu8Alli+7WxuLVlCLZSaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4IPW1tTmKRtC4JU9lnB4AS6AJGTeGectV6GEcxhTiS3MiHyiK0mVtf6Dr9s7aeY5
-	 TPtxIgpcHeZCy06DV6s58BpG4uXTFufEUlaZBS9guCC3fLysB0t2u+zvZpLUjvUzTz
-	 jTHsL0lIGRdt/7hzOQR+JeYM89cMge855i1cRpaU=
+	b=1ttc0oghGf4im8yTrZOR9l5t50rs5+0ZVUfChBEXpNR90JZtG3gsAV31ueQW0fKo4
+	 KZcrDJk6/fmwVHn2c3wW8AjY0NV0QCQgDnP5lPusbDI+k8TwUKvjHaMDblFuQy0K/Y
+	 j+VvgOfwefdxa4B1+wtka/GfufKLyghgJu9GWtpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Stephen Smalley <stephen.smalley.work@gmail.com>,
 	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.6 206/474] selinux: shrink critical section in sel_write_load()
-Date: Fri, 15 May 2026 17:45:15 +0200
-Message-ID: <20260515154719.470054822@linuxfoundation.org>
+Subject: [PATCH 6.6 207/474] selinux: prune /sys/fs/selinux/disable
+Date: Fri, 15 May 2026 17:45:16 +0200
+Message-ID: <20260515154719.491791708@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,74 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-commit 868f31e4061eca8c3cd607d79d954d5e54f204aa upstream.
+commit 19cfa0099024bb9cd40f6d950caa7f47ff8e77f6 upstream.
 
-Currently sel_write_load() takes the policy mutex earlier than
-necessary. Move the taking of the mutex later. This avoids
-holding it unnecessarily across the vmalloc() and copy_from_user()
-of the policy data.
+Commit f22f9aaf6c3d ("selinux: remove the runtime disable
+functionality") removed the underlying SELinux runtime disable
+functionality but left everything else intact and started logging an
+error message to warn any residual users.
+
+Prune it to just log an error message once and to return count
+(i.e. all bytes written successfully) to avoid breaking
+userspace. This also fixes a local DoS from logspam.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
 Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/selinuxfs.c |   18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ security/selinux/selinuxfs.c |   36 +++++++-----------------------------
+ 1 file changed, 7 insertions(+), 29 deletions(-)
 
 --- a/security/selinux/selinuxfs.c
 +++ b/security/selinux/selinuxfs.c
-@@ -594,34 +594,31 @@ static ssize_t sel_write_load(struct fil
- 	if (!count)
- 		return -EINVAL;
+@@ -272,35 +272,13 @@ static ssize_t sel_write_disable(struct
+ 				 size_t count, loff_t *ppos)
  
--	mutex_lock(&selinux_state.policy_mutex);
+ {
+-	char *page;
+-	ssize_t length;
+-	int new_value;
 -
- 	length = avc_has_perm(current_sid(), SECINITSID_SECURITY,
- 			      SECCLASS_SECURITY, SECURITY__LOAD_POLICY, NULL);
- 	if (length)
--		goto out;
-+		return length;
- 
- 	data = vmalloc(count);
--	if (!data) {
--		length = -ENOMEM;
+-	if (count >= PAGE_SIZE)
+-		return -ENOMEM;
+-
+-	/* No partial writes. */
+-	if (*ppos != 0)
+-		return -EINVAL;
+-
+-	page = memdup_user_nul(buf, count);
+-	if (IS_ERR(page))
+-		return PTR_ERR(page);
+-
+-	if (sscanf(page, "%d", &new_value) != 1) {
+-		length = -EINVAL;
 -		goto out;
 -	}
-+	if (!data)
-+		return -ENOMEM;
- 	if (copy_from_user(data, buf, count) != 0) {
- 		length = -EFAULT;
- 		goto out;
- 	}
- 
-+	mutex_lock(&selinux_state.policy_mutex);
- 	length = security_load_policy(data, count, &load_state);
- 	if (length) {
- 		pr_warn_ratelimited("SELinux: failed to load policy\n");
--		goto out;
-+		goto out_unlock;
- 	}
- 	fsi = file_inode(file)->i_sb->s_fs_info;
- 	length = sel_make_policy_nodes(fsi, load_state.policy);
- 	if (length) {
- 		pr_warn_ratelimited("SELinux: failed to initialize selinuxfs\n");
- 		selinux_policy_cancel(&load_state);
--		goto out;
-+		goto out_unlock;
- 	}
- 
- 	selinux_policy_commit(&load_state);
-@@ -631,8 +628,9 @@ static ssize_t sel_write_load(struct fil
- 		from_kuid(&init_user_ns, audit_get_loginuid(current)),
- 		audit_get_sessionid(current));
- 
+-	length = count;
+-
+-	if (new_value) {
+-		pr_err("SELinux: https://github.com/SELinuxProject/selinux-kernel/wiki/DEPRECATE-runtime-disable\n");
+-		pr_err("SELinux: Runtime disable is not supported, use selinux=0 on the kernel cmdline.\n");
+-	}
+-
 -out:
-+out_unlock:
- 	mutex_unlock(&selinux_state.policy_mutex);
-+out:
- 	vfree(data);
- 	return length;
+-	kfree(page);
+-	return length;
++	/*
++	 * Setting disable is no longer supported, see
++	 * https://github.com/SELinuxProject/selinux-kernel/wiki/DEPRECATE-runtime-disable
++	 */
++	pr_err_once("SELinux: %s (%d) wrote to disable. This is no longer supported.\n",
++		    current->comm, current->pid);
++	return count;
  }
+ 
+ static const struct file_operations sel_disable_ops = {
 
 
