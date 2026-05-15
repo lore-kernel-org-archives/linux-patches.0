@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09BCF305665;
-	Fri, 15 May 2026 16:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BFB3CF67B;
+	Fri, 15 May 2026 16:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862813; cv=none; b=Xw3FtCcRia+njyYKqHP16p83Bw3PrRRn77a6KP6AaJxy7I1VqjGcgyS5DZ/KzKS0heB8GcOLDeDN7L0qnxndJmgfgIIPbjwQGFKsr9P0ZM53RHZYXvSSsErraeIVZaTiW0EU100fYrK7eoeiZdI2z/EGggu2yYiik+jPICH92ng=
+	t=1778862815; cv=none; b=l9bvOT0HgYvBFKWJCPorWSBA6XJTL/lWTJUIODeDuGIm+iUD6Ji4PkOzna4IrqF1UOi4rlToq3tZcXuT02djwAvr2BcHDPo44ZxuPqUE0iK2OLvzV5GdB32cmcs2ykHHgVNiA21VfTPuSIhaf+KzzTRXORlg2aASZzYU5ffJYjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862813; c=relaxed/simple;
-	bh=y3jP0NtkJieoB2rGuFnndQQJqFPBmACN4W6S8tL9gR8=;
+	s=arc-20240116; t=1778862815; c=relaxed/simple;
+	bh=z2MeJv/JfvhPGl631+65OWjJWFJacsH+MK91bSMvkaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJseMcbaH6xyys8u36aFDxvNeNh1RXZIqjBjDJtc20HLg0L+a+epAv6c2E4tsJITOBcdpILwibqwx6i+tuEAHxjmjBlUpps3xz4r8TMHhfCbD4btRvJX/bOwsTzRYmfpwE1wyIoVkHgNkNUxZ+xzlOiSzABEHATguTsEUzzKSJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5gvDakk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N+wqgrTamB6xuZQYQYBp8mxvdqqLFhKnbYlI7wcRwHQUSmFKgNX+bNk+NoUvDYFjtrkgyIdznKIKIjtMHR1HN+1UkZ/d8G036Yy2ANhzG4+W44JJ9B/2lWwn+h3H8CRSW4nPGDmlxt7J3RDVSLDfhA7eC5kYkZNzbMOCXaXCthg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvAqE+PU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5gvDakk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95545C2BCB0;
-	Fri, 15 May 2026 16:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvAqE+PU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DACEC2BCB0;
+	Fri, 15 May 2026 16:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862812;
-	bh=y3jP0NtkJieoB2rGuFnndQQJqFPBmACN4W6S8tL9gR8=;
+	s=korg; t=1778862815;
+	bh=z2MeJv/JfvhPGl631+65OWjJWFJacsH+MK91bSMvkaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5gvDakk2/G32Iajbu/KFMl00Zq0fynoF6yJn5JcwHrt6uXROTX2AGvxCVCnne2WC
-	 d6vRdf1KzRg81E0OvIIYc2n45UlZPneJwCE5mBsUZhOQz5Bki+BCDLHUw4CreGcagO
-	 vp/m1abdef15DIJA1FjSZp0vPWIE7oHQnTBLikMc=
+	b=XvAqE+PUhpPgysxkOjXNxqesAgeufEI9PjGMn9JLyEBE45s1CUAAgVW96WUGeyd7j
+	 wmFCdEmENqVeQ+c485pFjFXIdAqdi2bzv46Vom2+niFx+CeiHf1PsChj3r5etVfiwG
+	 q/0NP1WBzHDWKlB8DHFGXbuj/WiEuhJbBfJBV82g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Luxing Yin <tr0jan@lzu.edu.cn>,
-	Jiexun Wang <wangjiexun2025@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 7.0 175/201] batman-adv: stop tp_meter sessions during mesh teardown
-Date: Fri, 15 May 2026 17:49:53 +0200
-Message-ID: <20260515154702.369156850@linuxfoundation.org>
+	Markus Mayer <mmayer@broadcom.com>,
+	James Clark <james.clark@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 7.0 193/201] perf build: fix "argument list too long" in second location
+Date: Fri, 15 May 2026 17:50:11 +0200
+Message-ID: <20260515154702.761647688@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -57,233 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiexun Wang <wangjiexun2025@gmail.com>
+From: Markus Mayer <mmayer@broadcom.com>
 
-commit 3d3cf6a7314aca4df0a6dde28ce784a2a30d0166 upstream.
+commit 97ab89686a9e5d087042dbe73604a32b3de72653 upstream
 
-TP meter sessions remain linked on bat_priv->tp_list after the netlink
-request has already finished. When the mesh interface is removed,
-batadv_mesh_free() currently tears down the mesh without first draining
-these sessions.
+Turns out that displaying "RM $^" via quiet_cmd_rm can also upset the
+shell and cause it to display "argument list too long".
 
-A running sender thread or a late incoming tp_meter packet can then keep
-processing against a mesh instance which is already shutting down.
-Synchronize tp_meter with the mesh lifetime by stopping all active
-sessions from batadv_mesh_free() and waiting for sender threads to exit
-before teardown continues.
+Trying to quote $^ doesn't help.
 
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Co-developed-by: Luxing Yin <tr0jan@lzu.edu.cn>
-Signed-off-by: Luxing Yin <tr0jan@lzu.edu.cn>
-Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+In the end, *not* displaying the (potentially long) list of files is
+probably the right thing to do for a "quiet" message, anyway. Instead,
+let's display a count of how many files were removed. There is always
+V=1 if more detail is required.
+
+  TEST    linux/tools/perf/pmu-events/metric_test.log
+  RM      ...634 orphan file(s)...
+  LD      linux/tools/perf/util/perf-util-in.o
+
+Also move the comment regarding xargs before the rule, so it doesn't
+show up in the build output.
+
+Signed-off-by: Markus Mayer <mmayer@broadcom.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/main.c     |    1 
- net/batman-adv/tp_meter.c |   94 +++++++++++++++++++++++++++++++++++++---------
- net/batman-adv/tp_meter.h |    1 
- net/batman-adv/types.h    |    4 +
- 4 files changed, 82 insertions(+), 18 deletions(-)
+ tools/perf/pmu-events/Build |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -249,6 +249,7 @@ void batadv_mesh_free(struct net_device
- 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
+--- a/tools/perf/pmu-events/Build
++++ b/tools/perf/pmu-events/Build
+@@ -211,10 +211,10 @@ ifneq ($(strip $(ORPHAN_FILES)),)
  
- 	batadv_purge_outstanding_packets(bat_priv, NULL);
-+	batadv_tp_stop_all(bat_priv);
+ # Message for $(call echo-cmd,rm). Generally cleaning files isn't part
+ # of a build step.
+-quiet_cmd_rm  = RM      $^
++quiet_cmd_rm = RM      ...$(words $^) orphan file(s)...
  
- 	batadv_gw_node_free(bat_priv);
++# The list of files can be long. Use xargs to prevent issues.
+ prune_orphans: $(ORPHAN_FILES)
+-	# The list of files can be long. Use xargs to prevent issues.
+ 	$(Q)$(call echo-cmd,rm)echo "$^" | xargs rm -f
  
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -12,6 +12,7 @@
- #include <linux/byteorder/generic.h>
- #include <linux/cache.h>
- #include <linux/compiler.h>
-+#include <linux/completion.h>
- #include <linux/container_of.h>
- #include <linux/err.h>
- #include <linux/etherdevice.h>
-@@ -365,23 +366,38 @@ static void batadv_tp_vars_put(struct ba
- }
- 
- /**
-- * batadv_tp_sender_cleanup() - cleanup sender data and drop and timer
-- * @bat_priv: the bat priv with all the mesh interface information
-- * @tp_vars: the private data of the current TP meter session to cleanup
-+ * batadv_tp_list_detach() - remove tp session from mesh session list once
-+ * @tp_vars: the private data of the current TP meter session
-  */
--static void batadv_tp_sender_cleanup(struct batadv_priv *bat_priv,
--				     struct batadv_tp_vars *tp_vars)
-+static void batadv_tp_list_detach(struct batadv_tp_vars *tp_vars)
- {
--	cancel_delayed_work(&tp_vars->finish_work);
-+	bool detached = false;
- 
- 	spin_lock_bh(&tp_vars->bat_priv->tp_list_lock);
--	hlist_del_rcu(&tp_vars->list);
-+	if (!hlist_unhashed(&tp_vars->list)) {
-+		hlist_del_init_rcu(&tp_vars->list);
-+		detached = true;
-+	}
- 	spin_unlock_bh(&tp_vars->bat_priv->tp_list_lock);
- 
-+	if (!detached)
-+		return;
-+
-+	atomic_dec(&tp_vars->bat_priv->tp_num);
-+
- 	/* drop list reference */
- 	batadv_tp_vars_put(tp_vars);
-+}
- 
--	atomic_dec(&tp_vars->bat_priv->tp_num);
-+/**
-+ * batadv_tp_sender_cleanup() - cleanup sender data and drop and timer
-+ * @tp_vars: the private data of the current TP meter session to cleanup
-+ */
-+static void batadv_tp_sender_cleanup(struct batadv_tp_vars *tp_vars)
-+{
-+	cancel_delayed_work_sync(&tp_vars->finish_work);
-+
-+	batadv_tp_list_detach(tp_vars);
- 
- 	/* kill the timer and remove its reference */
- 	timer_delete_sync(&tp_vars->timer);
-@@ -886,7 +902,8 @@ out:
- 	batadv_orig_node_put(orig_node);
- 
- 	batadv_tp_sender_end(bat_priv, tp_vars);
--	batadv_tp_sender_cleanup(bat_priv, tp_vars);
-+	batadv_tp_sender_cleanup(tp_vars);
-+	complete(&tp_vars->finished);
- 
- 	batadv_tp_vars_put(tp_vars);
- 
-@@ -918,7 +935,8 @@ static void batadv_tp_start_kthread(stru
- 		batadv_tp_vars_put(tp_vars);
- 
- 		/* cleanup of failed tp meter variables */
--		batadv_tp_sender_cleanup(bat_priv, tp_vars);
-+		batadv_tp_sender_cleanup(tp_vars);
-+		complete(&tp_vars->finished);
- 		return;
- 	}
- 
-@@ -1024,6 +1042,7 @@ void batadv_tp_start(struct batadv_priv
- 	tp_vars->start_time = jiffies;
- 
- 	init_waitqueue_head(&tp_vars->more_bytes);
-+	init_completion(&tp_vars->finished);
- 
- 	spin_lock_init(&tp_vars->unacked_lock);
- 	INIT_LIST_HEAD(&tp_vars->unacked_list);
-@@ -1126,14 +1145,7 @@ static void batadv_tp_receiver_shutdown(
- 		   "Shutting down for inactivity (more than %dms) from %pM\n",
- 		   BATADV_TP_RECV_TIMEOUT, tp_vars->other_end);
- 
--	spin_lock_bh(&tp_vars->bat_priv->tp_list_lock);
--	hlist_del_rcu(&tp_vars->list);
--	spin_unlock_bh(&tp_vars->bat_priv->tp_list_lock);
--
--	/* drop list reference */
--	batadv_tp_vars_put(tp_vars);
--
--	atomic_dec(&bat_priv->tp_num);
-+	batadv_tp_list_detach(tp_vars);
- 
- 	spin_lock_bh(&tp_vars->unacked_lock);
- 	list_for_each_entry_safe(un, safe, &tp_vars->unacked_list, list) {
-@@ -1497,6 +1509,52 @@ out:
- }
- 
- /**
-+ * batadv_tp_stop_all() - stop all currently running tp meter sessions
-+ * @bat_priv: the bat priv with all the mesh interface information
-+ */
-+void batadv_tp_stop_all(struct batadv_priv *bat_priv)
-+{
-+	struct batadv_tp_vars *tp_vars[BATADV_TP_MAX_NUM];
-+	struct batadv_tp_vars *tp_var;
-+	size_t count = 0;
-+	size_t i;
-+
-+	spin_lock_bh(&bat_priv->tp_list_lock);
-+	hlist_for_each_entry(tp_var, &bat_priv->tp_list, list) {
-+		if (WARN_ON_ONCE(count >= BATADV_TP_MAX_NUM))
-+			break;
-+
-+		if (!kref_get_unless_zero(&tp_var->refcount))
-+			continue;
-+
-+		tp_vars[count++] = tp_var;
-+	}
-+	spin_unlock_bh(&bat_priv->tp_list_lock);
-+
-+	for (i = 0; i < count; i++) {
-+		tp_var = tp_vars[i];
-+
-+		switch (tp_var->role) {
-+		case BATADV_TP_SENDER:
-+			batadv_tp_sender_shutdown(tp_var,
-+						  BATADV_TP_REASON_CANCEL);
-+			wake_up(&tp_var->more_bytes);
-+			wait_for_completion(&tp_var->finished);
-+			break;
-+		case BATADV_TP_RECEIVER:
-+			batadv_tp_list_detach(tp_var);
-+			if (timer_shutdown_sync(&tp_var->timer))
-+				batadv_tp_vars_put(tp_var);
-+			break;
-+		}
-+
-+		batadv_tp_vars_put(tp_var);
-+	}
-+
-+	synchronize_net();
-+}
-+
-+/**
-  * batadv_tp_meter_init() - initialize global tp_meter structures
-  */
- void __init batadv_tp_meter_init(void)
---- a/net/batman-adv/tp_meter.h
-+++ b/net/batman-adv/tp_meter.h
-@@ -17,6 +17,7 @@ void batadv_tp_start(struct batadv_priv
- 		     u32 test_length, u32 *cookie);
- void batadv_tp_stop(struct batadv_priv *bat_priv, const u8 *dst,
- 		    u8 return_value);
-+void batadv_tp_stop_all(struct batadv_priv *bat_priv);
- void batadv_tp_meter_recv(struct batadv_priv *bat_priv, struct sk_buff *skb);
- 
- #endif /* _NET_BATMAN_ADV_TP_METER_H_ */
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -14,6 +14,7 @@
- #include <linux/average.h>
- #include <linux/bitops.h>
- #include <linux/compiler.h>
-+#include <linux/completion.h>
- #include <linux/if.h>
- #include <linux/if_ether.h>
- #include <linux/kref.h>
-@@ -1328,6 +1329,9 @@ struct batadv_tp_vars {
- 	/** @finish_work: work item for the finishing procedure */
- 	struct delayed_work finish_work;
- 
-+	/** @finished: completion signaled when a sender thread exits */
-+	struct completion finished;
-+
- 	/** @test_length: test length in milliseconds */
- 	u32 test_length;
- 
+ JEVENTS_DEPS += prune_orphans
 
 
