@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA123B4EAF;
-	Fri, 15 May 2026 16:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557E830568A;
+	Fri, 15 May 2026 16:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861463; cv=none; b=NbVUZ1knsXtM4AHK91xdtSZHWKpNyQH3EgDC0cuGcsM64F6km6N/z9+Hl4qa2XwgiU+WpH3JDVibtCTrWqRdr6GEbdmzFx8aZEoi/8UqIRejmM3FkzCRTxCFFVYf/y0FdHM50PuuhgoGSf9Z/FsKQBwG3piGqeGPY3iIXtAqW2Q=
+	t=1778861465; cv=none; b=ikqCxNDbanjJydtUk5PyiQvT/+IXku54VC3nZvM+If30LMVaHcum0squnRcActkzbCqB741M4lpmWEr0dAkx6UM5nkHLIm6WxNdkgcc9gcVwy5M1vh9RTKvF1akIZt7y1X20y8YD1Zt4t8FRysFfkNPuAj+4enWsrBrXUQtb244=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861463; c=relaxed/simple;
-	bh=AbQNFx/HTaXhQknYSam5IIFsnVZvcTza13Ul4VHuTPU=;
+	s=arc-20240116; t=1778861465; c=relaxed/simple;
+	bh=MDs4iIQSS4wQ6u6oV8t4TIB2Eqw5mCIdJANisDYMz/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7/B8NRYW0sov8a43o2tYR9i5FXsT0GuNHpWSSOO1ol63OpV1uNdR2HfyNO+jcIOKHERjFV7vSschWSIE7HQGMkPZq+equqzMANFofOGIpCh5h/cOkG5qmcdCj5y4/yBKBxWvPcS5xyl+tFXyPIWvNl0m+ml7mLTk/+WFYIKTtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABfJXjAz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y3vAvGX6h7WhFWqg1IQuTRwPtjHBFBxxec+wFKNSC2UNDdVSKTg+muqh/69Sk6Ib2aYcvy9k5IMd1Liydsglw1cwFgIB48MStA686EYkrBhq8sn5s9m1PM0h9UPWYdRpNjofOD/lx/qFH0EpqDKHzKYF3z7zxmPLUy2jZIFHIx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHzjeukF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABfJXjAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0C7C2BCB0;
-	Fri, 15 May 2026 16:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHzjeukF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF594C2BCB3;
+	Fri, 15 May 2026 16:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861462;
-	bh=AbQNFx/HTaXhQknYSam5IIFsnVZvcTza13Ul4VHuTPU=;
+	s=korg; t=1778861465;
+	bh=MDs4iIQSS4wQ6u6oV8t4TIB2Eqw5mCIdJANisDYMz/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ABfJXjAzLhUkh3W8HTrcWcc6LnchWdYeI9dzdUN5tz6AUCOPbys1K254F6UG/kW10
-	 c06JUjD6E4GhV9gKe76g90NUG+LAnWqsOF+uc8ry0k5bbmT8DfzDQzLfJPJaj/voWw
-	 edyxH/GeWOAccm8eD13n+r4mZushaWeez2ngijPQ=
+	b=bHzjeukFxsj54x9D6EmuAwo03f3tdglLS7wSTtExE6hjVvr+k1Yt5Pxx7FDwRYm5L
+	 2OdLrIcK0uotEnQNLLHUuL8qfhkOuWh+q9wi0xn4IjpnjROeeXtM4HFfTbSXY7RGi6
+	 mAOyTHVlBQnF2dUkYMteIQAymmspK1+cQowTKfo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anhad Jai Singh <ffledgling@meta.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Christian Brauner <brauner@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Chris Mason <clm@fb.com>,
-	Rik van Riel <riel@surriel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>
-Subject: [PATCH 6.6 296/474] exit: Sleep at TASK_IDLE when waiting for application core dump
-Date: Fri, 15 May 2026 17:46:45 +0200
-Message-ID: <20260515154721.405634602@linuxfoundation.org>
+	Xingyu Jin <xingyuj@google.com>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 297/474] HID: playstation: Clamp num_touch_reports
+Date: Fri, 15 May 2026 17:46:46 +0200
+Message-ID: <20260515154721.428771330@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -58,53 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: T.J. Mercier <tjmercier@google.com>
 
-commit b8e753128ed074fcb48e9ceded940752f6b1c19f upstream.
+commit cac61b58a3b6340c52afa06bb15eac033158db2f upstream.
 
-Currently, the coredump_task_exit() function sets the task state
-to TASK_UNINTERRUPTIBLE|TASK_FREEZABLE, which usually works well.
-But a combination of large memory and slow (and/or highly contended)
-mass storage can cause application core dumps to take more than
-two minutes, which can cause check_hung_task(), which is invoked by
-check_hung_uninterruptible_tasks(), to produce task-blocked splats.
-There does not seem to be any reasonable benefit to getting these splats.
+A device would never lie about the number of touch reports would it?
 
-Furthermore, as Oleg Nesterov points out, TASK_UNINTERRUPTIBLE could
-be misleading because the task sleeping in coredump_task_exit() really
-is killable, albeit indirectly.  See the check of signal->core_state
-in prepare_signal() and the check of fatal_signal_pending()
-in dump_interrupted(), which bypass the normal unkillability of
-TASK_UNINTERRUPTIBLE, resulting in coredump_finish() invoking
-wake_up_process() on any threads sleeping in coredump_task_exit().
+If it does the loop in dualshock4_parse_report will read off the end of
+the touch_reports array, up to about 2 KiB for the maximum number of 256
+loop iteraions. The data that is read is emitted via evdev if the
+DS4_TOUCH_POINT_INACTIVE bit happens to be set. Protect against this by
+clamping the num_touch_reports value provided by the device to the
+maximum size of the touch_reports array.
 
-Therefore, change that TASK_UNINTERRUPTIBLE to TASK_IDLE.
-
-Reported-by: Anhad Jai Singh <ffledgling@meta.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-Cc: Chris Mason <clm@fb.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Paul Menzel <pmenzel@molgen.mpg.de>
+Fixes: 752038248808 ("HID: playstation: add DualShock4 touchpad support.")
+Cc: stable@vger.kernel.org
+Reported-by: Xingyu Jin <xingyuj@google.com>
+Signed-off-by: T.J. Mercier <tjmercier@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/exit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-playstation.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -430,7 +430,7 @@ static void coredump_task_exit(struct ta
- 			complete(&core_state->startup);
+--- a/drivers/hid/hid-playstation.c
++++ b/drivers/hid/hid-playstation.c
+@@ -2200,7 +2200,8 @@ static int dualshock4_parse_report(struc
+ 		struct dualshock4_input_report_usb *usb = (struct dualshock4_input_report_usb *)data;
  
- 		for (;;) {
--			set_current_state(TASK_UNINTERRUPTIBLE|TASK_FREEZABLE);
-+			set_current_state(TASK_IDLE|TASK_FREEZABLE);
- 			if (!self.task) /* see coredump_finish() */
- 				break;
- 			schedule();
+ 		ds4_report = &usb->common;
+-		num_touch_reports = usb->num_touch_reports;
++		num_touch_reports = min_t(u8, usb->num_touch_reports,
++					  ARRAY_SIZE(usb->touch_reports));
+ 		touch_reports = usb->touch_reports;
+ 	} else if (hdev->bus == BUS_BLUETOOTH && report->id == DS4_INPUT_REPORT_BT &&
+ 			size == DS4_INPUT_REPORT_BT_SIZE) {
+@@ -2214,7 +2215,8 @@ static int dualshock4_parse_report(struc
+ 		}
+ 
+ 		ds4_report = &bt->common;
+-		num_touch_reports = bt->num_touch_reports;
++		num_touch_reports = min_t(u8, bt->num_touch_reports,
++					  ARRAY_SIZE(bt->touch_reports));
+ 		touch_reports = bt->touch_reports;
+ 	} else {
+ 		hid_err(hdev, "Unhandled reportID=%d\n", report->id);
 
 
