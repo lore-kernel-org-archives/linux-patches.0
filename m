@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070F33246FE;
-	Fri, 15 May 2026 16:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012663F44DB;
+	Fri, 15 May 2026 16:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862181; cv=none; b=FaptZrITMP6DFO9d+0t/wlQHn0lFtVxvXBXtffIWobLWNnbahJqn4WB0tBT9ZDSZFeOFv9ZqQwVozOCtkAmpsYingH6mpJZer3Zo6MRHrstaBbcjcD2zQOwto2foKuneLWqII9tRPoglqSRKFt1cVzLOdaBmLqiOAvGNeZJUE3g=
+	t=1778862184; cv=none; b=TfZ2pY0yfrHWzOTZwdF4PZ5BeDLnRtqbnEDlj+KBFNUDday3fVZzM35ioiwkddOZs91DJ9mZfMJDREyFfvP2M9W+t9citVWlPg/nPtbHgDx4toOfIEuTxNOatNfHhv4FHNH9CXV7PNm+rdeVdJCOclIAHBKHBzHonIHhXfBMSzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862181; c=relaxed/simple;
-	bh=S0/qdXpkhcpRb1YTTGChMSpUjaZgf/+RU6h86bBIuno=;
+	s=arc-20240116; t=1778862184; c=relaxed/simple;
+	bh=cFBw2ApuWtWB9BTXYJPWAB7g9jvSw5ffFTng/BNteag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYPS03UyqqRHNG/PhzezVXW9A1txYFNHEm3gyz5WT5/GAiIGLAdKY2mo35PriBDwnssiOhUS9f+JxT8Qb5z7MY/fUgTWZONe9CL7Ti3ySf/tfk0iqRJuCpqVRnsawnpk+nSFkUcfV8WNa5k5HG5x0Y8Uq8IUVrZLWDVix+AZe8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYINeBUB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sb19Ei36nES1bfPyT3ur0RO15Z7IwylAsCTSLCMiw1//ku+whDURCzyrl2OoCMNQiOFME6fJplsNRCyRn+Ic7P3Yiu+aokN5u4G5eFjrLpgPTvWDyBKkri7Zsz3dCOncKze4p17r1Acvc/2GeV6U+eKhqWQXFtm64VfQrkg5jH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYx3SH+0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYINeBUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CB9C2BCB0;
-	Fri, 15 May 2026 16:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYx3SH+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F45C2BCB0;
+	Fri, 15 May 2026 16:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862180;
-	bh=S0/qdXpkhcpRb1YTTGChMSpUjaZgf/+RU6h86bBIuno=;
+	s=korg; t=1778862183;
+	bh=cFBw2ApuWtWB9BTXYJPWAB7g9jvSw5ffFTng/BNteag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VYINeBUBIo6xIXljKZ4MydZEeK6g1s9B8huy3UOFuVg7mL8WnrYCTQXmnAr5Tj6Xa
-	 VaO/THnRv457sHgOS/vBG26byv42GzD5O1f/itK5Sc3VefbxqZQHymtu/vrx8OATKs
-	 1thhb7PEKLGTcUwxR+2UnZ7bJtU7tSbEVM9vZnGY=
+	b=vYx3SH+0rTknhz8PKLgDEfUI9lNGj02BUJ7k9cjgCbxp7jmY5XcQcd0Q01dvHv14l
+	 C5n9yfNZ0pWHpFSDdFcxlps9l8kIdXHnlNpnMloDQTK2I9xeBfl537oQHTrhXvzqIA
+	 5GJmS8lIj742ixuU1IfpAlRJD5sMjVJ1cVE/LYso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,13 +32,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yifan Wu <yifanwucs@gmail.com>,
 	Juefei Pu <tomapufckgml@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Luxing Yin <tr0jan@lzu.edu.cn>,
 	Jiexun Wang <wangjiexun2025@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 138/188] batman-adv: stop tp_meter sessions during mesh teardown
-Date: Fri, 15 May 2026 17:49:15 +0200
-Message-ID: <20260515154700.320840437@linuxfoundation.org>
+Subject: [PATCH 6.18 139/188] batman-adv: stop caching unowned originator pointers in BAT IV
+Date: Fri, 15 May 2026 17:49:16 +0200
+Message-ID: <20260515154700.342145865@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -59,231 +58,172 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-commit 3d3cf6a7314aca4df0a6dde28ce784a2a30d0166 upstream.
+commit f03e8583532941b07761c5429de7d50766fa3110 upstream.
 
-TP meter sessions remain linked on bat_priv->tp_list after the netlink
-request has already finished. When the mesh interface is removed,
-batadv_mesh_free() currently tears down the mesh without first draining
-these sessions.
+BAT IV keeps the last-hop neighbor address in each neigh_node, but some
+paths also cache an originator pointer derived from a temporary lookup.
+That pointer is not owned by the neigh_node and may no longer refer to a
+live originator entry after purge handling runs.
 
-A running sender thread or a late incoming tp_meter packet can then keep
-processing against a mesh instance which is already shutting down.
-Synchronize tp_meter with the mesh lifetime by stopping all active
-sessions from batadv_mesh_free() and waiting for sender threads to exit
-before teardown continues.
+Stop storing the auxiliary originator pointer in the BAT IV neighbor
+state. When BAT IV needs the neighbor originator data, resolve it from
+the stored neighbor address and drop the reference again after use.
 
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
 Cc: stable@kernel.org
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
-Co-developed-by: Luxing Yin <tr0jan@lzu.edu.cn>
-Signed-off-by: Luxing Yin <tr0jan@lzu.edu.cn>
 Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+[sven: avoid bonding logic for outgoing OGM]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/main.c     |    1 
- net/batman-adv/tp_meter.c |   94 +++++++++++++++++++++++++++++++++++++---------
- net/batman-adv/tp_meter.h |    1 
- net/batman-adv/types.h    |    4 +
- 4 files changed, 82 insertions(+), 18 deletions(-)
+ net/batman-adv/bat_iv_ogm.c |   83 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 59 insertions(+), 24 deletions(-)
 
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -249,6 +249,7 @@ void batadv_mesh_free(struct net_device
- 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
+--- a/net/batman-adv/bat_iv_ogm.c
++++ b/net/batman-adv/bat_iv_ogm.c
+@@ -173,19 +173,12 @@ free_orig_node_hash:
+ static struct batadv_neigh_node *
+ batadv_iv_ogm_neigh_new(struct batadv_hard_iface *hard_iface,
+ 			const u8 *neigh_addr,
+-			struct batadv_orig_node *orig_node,
+-			struct batadv_orig_node *orig_neigh)
++			struct batadv_orig_node *orig_node)
+ {
+ 	struct batadv_neigh_node *neigh_node;
  
- 	batadv_purge_outstanding_packets(bat_priv, NULL);
-+	batadv_tp_stop_all(bat_priv);
+ 	neigh_node = batadv_neigh_node_get_or_create(orig_node,
+ 						     hard_iface, neigh_addr);
+-	if (!neigh_node)
+-		goto out;
+-
+-	neigh_node->orig_node = orig_neigh;
+-
+-out:
+ 	return neigh_node;
+ }
  
- 	batadv_gw_node_free(bat_priv);
- 
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -12,6 +12,7 @@
- #include <linux/byteorder/generic.h>
- #include <linux/cache.h>
- #include <linux/compiler.h>
-+#include <linux/completion.h>
- #include <linux/container_of.h>
- #include <linux/err.h>
- #include <linux/etherdevice.h>
-@@ -365,23 +366,38 @@ static void batadv_tp_vars_put(struct ba
+@@ -907,6 +900,31 @@ static u8 batadv_iv_orig_ifinfo_sum(stru
  }
  
  /**
-- * batadv_tp_sender_cleanup() - cleanup sender data and drop and timer
-- * @bat_priv: the bat priv with all the mesh interface information
-- * @tp_vars: the private data of the current TP meter session to cleanup
-+ * batadv_tp_list_detach() - remove tp session from mesh session list once
-+ * @tp_vars: the private data of the current TP meter session
-  */
--static void batadv_tp_sender_cleanup(struct batadv_priv *bat_priv,
--				     struct batadv_tp_vars *tp_vars)
-+static void batadv_tp_list_detach(struct batadv_tp_vars *tp_vars)
- {
--	cancel_delayed_work(&tp_vars->finish_work);
-+	bool detached = false;
- 
- 	spin_lock_bh(&tp_vars->bat_priv->tp_list_lock);
--	hlist_del_rcu(&tp_vars->list);
-+	if (!hlist_unhashed(&tp_vars->list)) {
-+		hlist_del_init_rcu(&tp_vars->list);
-+		detached = true;
-+	}
- 	spin_unlock_bh(&tp_vars->bat_priv->tp_list_lock);
- 
-+	if (!detached)
-+		return;
-+
-+	atomic_dec(&tp_vars->bat_priv->tp_num);
-+
- 	/* drop list reference */
- 	batadv_tp_vars_put(tp_vars);
-+}
- 
--	atomic_dec(&tp_vars->bat_priv->tp_num);
-+/**
-+ * batadv_tp_sender_cleanup() - cleanup sender data and drop and timer
-+ * @tp_vars: the private data of the current TP meter session to cleanup
++ * batadv_iv_ogm_neigh_ifinfo_sum() - Get bcast_own sum for a last-hop neighbor
++ * @bat_priv: the bat priv with all the mesh interface information
++ * @neigh_node: last-hop neighbor of an originator
++ *
++ * Return: Number of replied (rebroadcasted) OGMs for the originator currently
++ * announced by the neighbor. Returns 0 if the neighbor's originator entry is
++ * not available anymore.
 + */
-+static void batadv_tp_sender_cleanup(struct batadv_tp_vars *tp_vars)
++static u8 batadv_iv_ogm_neigh_ifinfo_sum(struct batadv_priv *bat_priv,
++					 const struct batadv_neigh_node *neigh_node)
 +{
-+	cancel_delayed_work_sync(&tp_vars->finish_work);
++	struct batadv_orig_node *orig_neigh;
++	u8 sum;
 +
-+	batadv_tp_list_detach(tp_vars);
- 
- 	/* kill the timer and remove its reference */
- 	timer_delete_sync(&tp_vars->timer);
-@@ -886,7 +902,8 @@ out:
- 	batadv_orig_node_put(orig_node);
- 
- 	batadv_tp_sender_end(bat_priv, tp_vars);
--	batadv_tp_sender_cleanup(bat_priv, tp_vars);
-+	batadv_tp_sender_cleanup(tp_vars);
-+	complete(&tp_vars->finished);
- 
- 	batadv_tp_vars_put(tp_vars);
- 
-@@ -918,7 +935,8 @@ static void batadv_tp_start_kthread(stru
- 		batadv_tp_vars_put(tp_vars);
- 
- 		/* cleanup of failed tp meter variables */
--		batadv_tp_sender_cleanup(bat_priv, tp_vars);
-+		batadv_tp_sender_cleanup(tp_vars);
-+		complete(&tp_vars->finished);
- 		return;
++	orig_neigh = batadv_orig_hash_find(bat_priv, neigh_node->addr);
++	if (!orig_neigh)
++		return 0;
++
++	sum = batadv_iv_orig_ifinfo_sum(orig_neigh, neigh_node->if_incoming);
++	batadv_orig_node_put(orig_neigh);
++
++	return sum;
++}
++
++/**
+  * batadv_iv_ogm_orig_update() - use OGM to update corresponding data in an
+  *  originator
+  * @bat_priv: the bat priv with all the mesh interface information
+@@ -975,17 +993,9 @@ batadv_iv_ogm_orig_update(struct batadv_
  	}
  
-@@ -1024,6 +1042,7 @@ void batadv_tp_start(struct batadv_priv
- 	tp_vars->start_time = jiffies;
- 
- 	init_waitqueue_head(&tp_vars->more_bytes);
-+	init_completion(&tp_vars->finished);
- 
- 	spin_lock_init(&tp_vars->unacked_lock);
- 	INIT_LIST_HEAD(&tp_vars->unacked_list);
-@@ -1126,14 +1145,7 @@ static void batadv_tp_receiver_shutdown(
- 		   "Shutting down for inactivity (more than %dms) from %pM\n",
- 		   BATADV_TP_RECV_TIMEOUT, tp_vars->other_end);
- 
--	spin_lock_bh(&tp_vars->bat_priv->tp_list_lock);
--	hlist_del_rcu(&tp_vars->list);
--	spin_unlock_bh(&tp_vars->bat_priv->tp_list_lock);
+ 	if (!neigh_node) {
+-		struct batadv_orig_node *orig_tmp;
 -
--	/* drop list reference */
--	batadv_tp_vars_put(tp_vars);
+-		orig_tmp = batadv_iv_ogm_orig_get(bat_priv, ethhdr->h_source);
+-		if (!orig_tmp)
+-			goto unlock;
 -
--	atomic_dec(&bat_priv->tp_num);
-+	batadv_tp_list_detach(tp_vars);
+ 		neigh_node = batadv_iv_ogm_neigh_new(if_incoming,
+ 						     ethhdr->h_source,
+-						     orig_node, orig_tmp);
+-
+-		batadv_orig_node_put(orig_tmp);
++						     orig_node);
+ 		if (!neigh_node)
+ 			goto unlock;
+ 	} else {
+@@ -1037,10 +1047,9 @@ batadv_iv_ogm_orig_update(struct batadv_
+ 	 */
+ 	if (router_ifinfo &&
+ 	    neigh_ifinfo->bat_iv.tq_avg == router_ifinfo->bat_iv.tq_avg) {
+-		sum_orig = batadv_iv_orig_ifinfo_sum(router->orig_node,
+-						     router->if_incoming);
+-		sum_neigh = batadv_iv_orig_ifinfo_sum(neigh_node->orig_node,
+-						      neigh_node->if_incoming);
++		sum_orig = batadv_iv_ogm_neigh_ifinfo_sum(bat_priv, router);
++		sum_neigh = batadv_iv_ogm_neigh_ifinfo_sum(bat_priv,
++							   neigh_node);
+ 		if (sum_orig >= sum_neigh)
+ 			goto out;
+ 	}
+@@ -1106,7 +1115,6 @@ static bool batadv_iv_ogm_calc_tq(struct
+ 	if (!neigh_node)
+ 		neigh_node = batadv_iv_ogm_neigh_new(if_incoming,
+ 						     orig_neigh_node->orig,
+-						     orig_neigh_node,
+ 						     orig_neigh_node);
  
- 	spin_lock_bh(&tp_vars->unacked_lock);
- 	list_for_each_entry_safe(un, safe, &tp_vars->unacked_list, list) {
-@@ -1497,6 +1509,52 @@ out:
+ 	if (!neigh_node)
+@@ -1303,6 +1311,32 @@ out:
  }
  
  /**
-+ * batadv_tp_stop_all() - stop all currently running tp meter sessions
++ * batadv_orig_to_direct_router() - get direct next hop neighbor to an orig address
 + * @bat_priv: the bat priv with all the mesh interface information
++ * @orig_addr: the originator MAC address to search the best next hop router for
++ * @if_outgoing: the interface where the OGM should be sent to
++ *
++ * Return: A neighbor node which is the best router towards the given originator
++ * address. Bonding candidates are ignored.
 + */
-+void batadv_tp_stop_all(struct batadv_priv *bat_priv)
++static struct batadv_neigh_node *
++batadv_orig_to_direct_router(struct batadv_priv *bat_priv, u8 *orig_addr,
++			     struct batadv_hard_iface *if_outgoing)
 +{
-+	struct batadv_tp_vars *tp_vars[BATADV_TP_MAX_NUM];
-+	struct batadv_tp_vars *tp_var;
-+	size_t count = 0;
-+	size_t i;
++	struct batadv_neigh_node *neigh_node;
++	struct batadv_orig_node *orig_node;
 +
-+	spin_lock_bh(&bat_priv->tp_list_lock);
-+	hlist_for_each_entry(tp_var, &bat_priv->tp_list, list) {
-+		if (WARN_ON_ONCE(count >= BATADV_TP_MAX_NUM))
-+			break;
++	orig_node = batadv_orig_hash_find(bat_priv, orig_addr);
++	if (!orig_node)
++		return NULL;
 +
-+		if (!kref_get_unless_zero(&tp_var->refcount))
-+			continue;
++	neigh_node = batadv_orig_router_get(orig_node, if_outgoing);
++	batadv_orig_node_put(orig_node);
 +
-+		tp_vars[count++] = tp_var;
-+	}
-+	spin_unlock_bh(&bat_priv->tp_list_lock);
-+
-+	for (i = 0; i < count; i++) {
-+		tp_var = tp_vars[i];
-+
-+		switch (tp_var->role) {
-+		case BATADV_TP_SENDER:
-+			batadv_tp_sender_shutdown(tp_var,
-+						  BATADV_TP_REASON_CANCEL);
-+			wake_up(&tp_var->more_bytes);
-+			wait_for_completion(&tp_var->finished);
-+			break;
-+		case BATADV_TP_RECEIVER:
-+			batadv_tp_list_detach(tp_var);
-+			if (timer_shutdown_sync(&tp_var->timer))
-+				batadv_tp_vars_put(tp_var);
-+			break;
-+		}
-+
-+		batadv_tp_vars_put(tp_var);
-+	}
-+
-+	synchronize_net();
++	return neigh_node;
 +}
 +
 +/**
-  * batadv_tp_meter_init() - initialize global tp_meter structures
-  */
- void __init batadv_tp_meter_init(void)
---- a/net/batman-adv/tp_meter.h
-+++ b/net/batman-adv/tp_meter.h
-@@ -17,6 +17,7 @@ void batadv_tp_start(struct batadv_priv
- 		     u32 test_length, u32 *cookie);
- void batadv_tp_stop(struct batadv_priv *bat_priv, const u8 *dst,
- 		    u8 return_value);
-+void batadv_tp_stop_all(struct batadv_priv *bat_priv);
- void batadv_tp_meter_recv(struct batadv_priv *bat_priv, struct sk_buff *skb);
+  * batadv_iv_ogm_process_per_outif() - process a batman iv OGM for an outgoing
+  *  interface
+  * @skb: the skb containing the OGM
+@@ -1372,8 +1406,9 @@ batadv_iv_ogm_process_per_outif(const st
  
- #endif /* _NET_BATMAN_ADV_TP_METER_H_ */
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -14,6 +14,7 @@
- #include <linux/average.h>
- #include <linux/bitops.h>
- #include <linux/compiler.h>
-+#include <linux/completion.h>
- #include <linux/if.h>
- #include <linux/if_ether.h>
- #include <linux/kref.h>
-@@ -1328,6 +1329,9 @@ struct batadv_tp_vars {
- 	/** @finish_work: work item for the finishing procedure */
- 	struct delayed_work finish_work;
- 
-+	/** @finished: completion signaled when a sender thread exits */
-+	struct completion finished;
-+
- 	/** @test_length: test length in milliseconds */
- 	u32 test_length;
+ 	router = batadv_orig_router_get(orig_node, if_outgoing);
+ 	if (router) {
+-		router_router = batadv_orig_router_get(router->orig_node,
+-						       if_outgoing);
++		router_router = batadv_orig_to_direct_router(bat_priv,
++							     router->addr,
++							     if_outgoing);
+ 		router_ifinfo = batadv_neigh_ifinfo_get(router, if_outgoing);
+ 	}
  
 
 
