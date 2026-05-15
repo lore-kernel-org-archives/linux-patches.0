@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B083B6354;
-	Fri, 15 May 2026 16:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976DE2EAB82;
+	Fri, 15 May 2026 16:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861007; cv=none; b=QR/us5daaitPRtjL2b+Hcn2RUrhsqyWKLjMW5GQYf3ZoDJThcNpvuhhiXGJa3lOLm0N8KuCDUIy9j2FH0hem8prWGqBwLE3yZ/OXV0VT4iBZEms7xWJcd9XVWc/YXdvIRwtXrojox9HA02LuV36r16lLReBPj+TtQIeDkT5tFDk=
+	t=1778861009; cv=none; b=gd0yteDUh9lyQiW/RHacBk31fhNCILuqRR7niYX1Te48xBSgYcoTOTBci5r4uc2sBpCmJot0GthQaFHTzPiczRf+TktX9YYgwk231C7UsP3ndvPfN+rc1qDecrO5nm6ezARVZ1eA++GOlrMFVyYjkZF6ONoNb4W0fuXG33SulGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861007; c=relaxed/simple;
-	bh=It71yq6eoE9yVBMIZPdniqnqoNjdN39sR9BHZIV1rqQ=;
+	s=arc-20240116; t=1778861009; c=relaxed/simple;
+	bh=tKcL84HENbE8rivM7MoORaJDf0kh7dd1wP2jNAEG5KM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XKdu2KhTbGm+JipnFiBcTL7JC8iARtWdV8LddyIbkFKN/4duW/MChV70uA59N8y4FqcKUOld7RxeRPsdS2HjYMdmlT9tK2mqvyFcwB3W5mtfXhtNEyCullEPFBmcKYVn3J7ffF7uSJ4vWpd9tFn5nFxWy9z8bb33fKQpaBwn3aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Asi+w9xq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0Lg43ze8QdZO0nw+UW4yQJ7zG5xkFAcfiMU2hgGisOTUiNkK+4LzjGOa3za899lX31pgWKyU6phTDXGzFTYBlo2fulN7GXiZuYnyhRn0r2c/7wol5/Ru7ST/AVVuv8hQiZedpclrIBoGa5tvW9u1YuwiTeFGz2Oszd7S4j8aac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaAezCRh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Asi+w9xq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB45C2BCB0;
-	Fri, 15 May 2026 16:03:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaAezCRh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4EFC2BCB3;
+	Fri, 15 May 2026 16:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861007;
-	bh=It71yq6eoE9yVBMIZPdniqnqoNjdN39sR9BHZIV1rqQ=;
+	s=korg; t=1778861009;
+	bh=tKcL84HENbE8rivM7MoORaJDf0kh7dd1wP2jNAEG5KM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Asi+w9xqDMZIJV/uhex8Y6UQO7TsaxOVp5TLO+US2CYd9PpbDKLbEHdmJILAZ7tgY
-	 iqSZLcDzZ7rUPUnpnXHkIuyqHo9CHSdblIRDV/rWsItMjL76upfZZcYXQ29y8E1Hi1
-	 WNCU1mf4/YQf5pz8rikcnMOo4cixsCPflfLXLjhM=
+	b=oaAezCRhFM3WpGqjMepPG7NwQ4s/TkeNvkrPL/iga26sifsSADeoVzjpNP912q2m2
+	 UbptwQ0eC4fYbHd9MmE6iGyppisiUdoo0XM9rSCMVtfUcRGB6n3VWarx08S9xes9qk
+	 0E8REg5ui9E/5iGMtj4x8+15DLiokhiZHPW9hkdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yussuf Khalil <dev@pp3345.net>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Fang Wang <32840572@qq.com>,
+	Dong Chenchen <dongchenchen2@huawei.com>,
+	David Ahern <dsahern@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/474] drm/amd/display: Do not skip unrelated mode changes in DSC validation
-Date: Fri, 15 May 2026 17:44:25 +0200
-Message-ID: <20260515154718.401495772@linuxfoundation.org>
+Subject: [PATCH 6.6 165/474] net: Fix icmp host relookup triggering ip_rt_bug
+Date: Fri, 15 May 2026 17:44:34 +0200
+Message-ID: <20260515154718.594402653@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -53,121 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yussuf Khalil <dev@pp3345.net>
+From: Dong Chenchen <dongchenchen2@huawei.com>
 
-[ Upstream commit aed3d041ab061ec8a64f50a3edda0f4db7280025 ]
+[ Upstream commit c44daa7e3c73229f7ac74985acb8c7fb909c4e0a ]
 
-Starting with commit 17ce8a6907f7 ("drm/amd/display: Add dsc pre-validation in
-atomic check"), amdgpu resets the CRTC state mode_changed flag to false when
-recomputing the DSC configuration results in no timing change for a particular
-stream.
+arp link failure may trigger ip_rt_bug while xfrm enabled, call trace is:
 
-However, this is incorrect in scenarios where a change in MST/DSC configuration
-happens in the same KMS commit as another (unrelated) mode change. For example,
-the integrated panel of a laptop may be configured differently (e.g., HDR
-enabled/disabled) depending on whether external screens are attached. In this
-case, plugging in external DP-MST screens may result in the mode_changed flag
-being dropped incorrectly for the integrated panel if its DSC configuration
-did not change during precomputation in pre_validate_dsc().
-
-At this point, however, dm_update_crtc_state() has already created new streams
-for CRTCs with DSC-independent mode changes. In turn,
-amdgpu_dm_commit_streams() will never release the old stream, resulting in a
-memory leak. amdgpu_dm_atomic_commit_tail() will never acquire a reference to
-the new stream either, which manifests as a use-after-free when the stream gets
-disabled later on:
-
-BUG: KASAN: use-after-free in dc_stream_release+0x25/0x90 [amdgpu]
-Write of size 4 at addr ffff88813d836524 by task kworker/9:9/29977
-
-Workqueue: events drm_mode_rmfb_work_fn
+WARNING: CPU: 0 PID: 0 at net/ipv4/route.c:1241 ip_rt_bug+0x14/0x20
+Modules linked in:
+CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.0-rc6-00077-g2e1b3cc9d7f7
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:ip_rt_bug+0x14/0x20
 Call Trace:
- <TASK>
- dump_stack_lvl+0x6e/0xa0
- print_address_description.constprop.0+0x88/0x320
- ? dc_stream_release+0x25/0x90 [amdgpu]
- print_report+0xfc/0x1ff
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __virt_addr_valid+0x225/0x4e0
- ? dc_stream_release+0x25/0x90 [amdgpu]
- kasan_report+0xe1/0x180
- ? dc_stream_release+0x25/0x90 [amdgpu]
- kasan_check_range+0x125/0x200
- dc_stream_release+0x25/0x90 [amdgpu]
- dc_state_destruct+0x14d/0x5c0 [amdgpu]
- dc_state_release.part.0+0x4e/0x130 [amdgpu]
- dm_atomic_destroy_state+0x3f/0x70 [amdgpu]
- drm_atomic_state_default_clear+0x8ee/0xf30
- ? drm_mode_object_put.part.0+0xb1/0x130
- __drm_atomic_state_free+0x15c/0x2d0
- atomic_remove_fb+0x67e/0x980
+ <IRQ>
+ ip_send_skb+0x14/0x40
+ __icmp_send+0x42d/0x6a0
+ ipv4_link_failure+0xe2/0x1d0
+ arp_error_report+0x3c/0x50
+ neigh_invalidate+0x8d/0x100
+ neigh_timer_handler+0x2e1/0x330
+ call_timer_fn+0x21/0x120
+ __run_timer_base.part.0+0x1c9/0x270
+ run_timer_softirq+0x4c/0x80
+ handle_softirqs+0xac/0x280
+ irq_exit_rcu+0x62/0x80
+ sysvec_apic_timer_interrupt+0x77/0x90
 
-Since there is no reliable way of figuring out whether a CRTC has unrelated
-mode changes pending at the time of DSC validation, remember the value of the
-mode_changed flag from before the point where a CRTC was marked as potentially
-affected by a change in DSC configuration. Reset the mode_changed flag to this
-earlier value instead in pre_validate_dsc().
+The script below reproduces this scenario:
+ip xfrm policy add src 0.0.0.0/0 dst 0.0.0.0/0 \
+	dir out priority 0 ptype main flag localok icmp
+ip l a veth1 type veth
+ip a a 192.168.141.111/24 dev veth0
+ip l s veth0 up
+ping 192.168.141.155 -c 1
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5004
-Fixes: 17ce8a6907f7 ("drm/amd/display: Add dsc pre-validation in atomic check")
-Signed-off-by: Yussuf Khalil <dev@pp3345.net>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit cc7c7121ae082b7b82891baa7280f1ff2608f22b)
-Signed-off-by: Fang Wang <32840572@qq.com>
+icmp_route_lookup() create input routes for locally generated packets
+while xfrm relookup ICMP traffic.Then it will set input route
+(dst->out = ip_rt_bug) to skb for DESTUNREACH.
+
+For ICMP err triggered by locally generated packets, dst->dev of output
+route is loopback. Generally, xfrm relookup verification is not required
+on loopback interfaces (net.ipv4.conf.lo.disable_xfrm = 1).
+
+Skip icmp relookup for locally generated packets to fix it.
+
+Fixes: 8b7817f3a959 ("[IPSEC]: Add ICMP host relookup support")
+Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241127040850.1513135-1-dongchenchen2@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c          | 5 +++++
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h          | 1 +
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c    | 7 +++++--
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ net/ipv4/icmp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index f51c3921cbc26..12f75b2ad664d 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10152,6 +10152,11 @@ static int amdgpu_dm_atomic_check(struct drm_device *dev,
- 	}
- 
- 	if (dc_resource_is_dsc_encoding_supported(dc)) {
-+		for_each_oldnew_crtc_in_state(state, crtc, old_crtc_state, new_crtc_state, i) {
-+			dm_new_crtc_state = to_dm_crtc_state(new_crtc_state);
-+			dm_new_crtc_state->mode_changed_independent_from_dsc = new_crtc_state->mode_changed;
-+		}
-+
- 		for_each_oldnew_crtc_in_state(state, crtc, old_crtc_state, new_crtc_state, i) {
- 			if (drm_atomic_crtc_needs_modeset(new_crtc_state)) {
- 				ret = add_affected_mst_dsc_crtcs(state, crtc);
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-index 88606b805330d..8d4f2cadb9157 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-@@ -737,6 +737,7 @@ struct dm_crtc_state {
- 
- 	bool freesync_vrr_info_changed;
- 
-+	bool mode_changed_independent_from_dsc;
- 	bool dsc_force_changed;
- 	bool vrr_supported;
- 	struct mod_freesync_config freesync_config;
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 2698e5c74ddfd..ab6924d3046b7 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1587,8 +1587,11 @@ int pre_validate_dsc(struct drm_atomic_state *state,
- 		} else {
- 			int ind = find_crtc_index_in_state_by_stream(state, stream);
- 
--			if (ind >= 0)
--				state->crtcs[ind].new_state->mode_changed = 0;
-+			if (ind >= 0) {
-+				struct dm_crtc_state *dm_new_crtc_state = to_dm_crtc_state(state->crtcs[ind].new_state);
-+
-+				dm_new_crtc_state->base.mode_changed = dm_new_crtc_state->mode_changed_independent_from_dsc;
-+			}
- 		}
- 	}
- clean_exit:
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index 29c73b05b1e1a..3fcf11f83d87b 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -518,6 +518,9 @@ static struct rtable *icmp_route_lookup(struct net *net, struct flowi4 *fl4,
+ 	if (!IS_ERR(rt)) {
+ 		if (rt != rt2)
+ 			return rt;
++		if (inet_addr_type_dev_table(net, route_lookup_dev,
++					     fl4->daddr) == RTN_LOCAL)
++			return rt;
+ 	} else if (PTR_ERR(rt) == -EPERM) {
+ 		rt = NULL;
+ 	} else
 -- 
 2.53.0
 
