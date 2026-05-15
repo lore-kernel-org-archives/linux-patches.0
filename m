@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291503FF1D5;
-	Fri, 15 May 2026 15:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5812DC334;
+	Fri, 15 May 2026 15:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860477; cv=none; b=F3OAd1zj3bgEs7kh1WD2jw4SBHQsDmHJ+bpiQkp27j1BOzsZSj75W9xiPiiZKS3OdMU/zcbpoQ3mfDRg3PXmRGpOnbhRb3z8N1XNdR4OGZoq+nATylSg5+J8hDCmz+PuwXE7Zp8911TgxSzf1FpzTGBriAHLau4ZOA5q2aQPBO8=
+	t=1778860480; cv=none; b=lU0BTERf0OXQ5QAvmrGSK/FouKLCIrtfv7hoXP3dApBC8UbiOLPIve92r4P3T1EfFEMWWYQN6JJc6jxAUCDJModiHZ3gBjZGuL+rWEU8kkUzTABjOcnZzk7oH1pFzG3ebIj/BIc+Q9YMi1ZXDVR1ikhsyL3P/thozr1KhMb7++g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860477; c=relaxed/simple;
-	bh=PZ2tW9mr4yFY0gAOzmeQ3gBBb+b4jlVcQnnnjAZMOek=;
+	s=arc-20240116; t=1778860480; c=relaxed/simple;
+	bh=o4MPeey3h36UZCaGnug0t7G0pyvreohv6fRbkdH1Uak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LCMPryAvBlgktDGRswzOVQbmYpRT60cKr4JkvUExR1JEiL2wiUzOnW92w67NugMsKohq1kgChPs/iM/rEHDqZTL4UK7Q/KSUYsSbWF5kffd6AQ/lmJMZJMeIdSUW0Ob0XCSi2K0Sl/kSnXqdIq/Tz5KI7dJmU+QGOH+WPe7yaUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6QOVZmd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMQ1k99mVbvzliZjJH7U0UTeob5dM7vsPpDtNXsNTfqJyq34S5r1LLz+Et6XzqREBaN2MTjlXOJ3xsXlhdyHZ26EGxEUi2gMHsDuXFUE+dJhv+3JimxmN4gpmrwtBXI3T3RL6wRhNQhtH/L4y70CZul/2ib4lf3IBNLAOpcZI/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pn/9X9K/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6QOVZmd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F7DC2BCC7;
-	Fri, 15 May 2026 15:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pn/9X9K/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F768C2BCB0;
+	Fri, 15 May 2026 15:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860477;
-	bh=PZ2tW9mr4yFY0gAOzmeQ3gBBb+b4jlVcQnnnjAZMOek=;
+	s=korg; t=1778860479;
+	bh=o4MPeey3h36UZCaGnug0t7G0pyvreohv6fRbkdH1Uak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6QOVZmd6gYLj7XA+I4Gajp32d5B9Wauc4nNhcU5ILrJp8lKZABOj7FURrcGhNEWm
-	 g7kyV8Fq49NcQ04uiuHV5bZw7f4Jd7ynZlnY4+kldrH/XNuuh2mTWIg1JuEWyLS6lN
-	 8z4+b+dfDCp1wulXraTKlUBwAUi6oIM2Orhgo2jU=
+	b=Pn/9X9K/f6CUIYgrZyxWtaoK9wZ5V18ozu02zDBiv49I7Agei+g1UyrxlchvBtsxv
+	 /UixW0Up9dBlvc90ZaDSmbkNrjxfpmovJKltHBe82baTlAsoMGtSXPCHPI/7DErjsf
+	 mVbPsmw8HCYKqVXNdfaqcMnxLJUmZNYPbfN2aKp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Sunil Dhamne <amitsd@google.com>,
 	stable <stable@kernel.org>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.12 102/144] usb: typec: tcpm: reset internal port states on soft reset AMS
-Date: Fri, 15 May 2026 17:48:48 +0200
-Message-ID: <20260515154655.865680526@linuxfoundation.org>
+	Pritam Manohar Sutar <pritam.sutar@samsung.com>,
+	Selvarasu Ganesan <selvarasu.g@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 103/144] usb: dwc3: Move GUID programming after PHY initialization
+Date: Fri, 15 May 2026 17:48:49 +0200
+Message-ID: <20260515154655.887096149@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -52,84 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Selvarasu Ganesan <selvarasu.g@samsung.com>
 
-commit 2909f0d4994fb4306bf116df5ccee797791fce2c upstream.
+[ Upstream commit aad35f9c926ec220b0742af1ada45666ae667956 ]
 
-Reset internal port states (such as vdm_sm_running and
-explicit_contract) on soft reset AMS as the port needs to negotiate a
-new contract. The consequence of leaving the states in as-is cond are as
-follows:
-  * port is in SRC power role and an explicit contract is negotiated
-    with the port partner (in sink role)
-  * port partner sends a Soft Reset AMS while VDM State Machine is
-    running
-  * port accepts the Soft Reset request and the port advertises src caps
-  * port partner sends a Request message but since the explicit_contract
-    and vdm_sm_running are true from previous negotiation, the port ends
-    up sending Soft Reset instead of Accept msg.
+The Linux Version Code is currently written to the GUID register before
+PHY initialization. Certain PHY implementations (such as Synopsys eUSB
+PHY performing link_sw_reset) clear the GUID register to its default
+value during initialization, causing the kernel version information to
+be lost.
 
-Stub Log:
-[  203.653942] AMS DISCOVER_IDENTITY start
-[  203.653947] PD TX, header: 0x176f
-[  203.655901] PD TX complete, status: 0
-[  203.657470] PD RX, header: 0x124f [1]
-[  203.657477] Rx VDM cmd 0xff008081 type 2 cmd 1 len 1
-[  203.657482] AMS DISCOVER_IDENTITY finished
-[  203.657484] cc:=4
-[  204.155698] PD RX, header: 0x144f [1]
-[  204.155718] Rx VDM cmd 0xeeee8001 type 0 cmd 1 len 1
-[  204.155741] PD TX, header: 0x196f
-[  204.157622] PD TX complete, status: 0
-[  204.160060] PD RX, header: 0x4d [1]
-[  204.160066] state change SRC_READY -> SOFT_RESET [rev2 SOFT_RESET_AMS]
-[  204.160076] PD TX, header: 0x163
-[  204.162486] PD TX complete, status: 0
-[  204.162832] AMS SOFT_RESET_AMS finished
-[  204.162840] cc:=4
-[  204.162891] AMS POWER_NEGOTIATION start
-[  204.162896] state change SOFT_RESET -> AMS_START [rev2 POWER_NEGOTIATION]
-[  204.162908] state change AMS_START -> SRC_SEND_CAPABILITIES [rev2 POWER_NEGOTIATION]
-[  204.162913] PD TX, header: 0x1361
-[  204.165529] PD TX complete, status: 0
-[  204.165571] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES_TIMEOUT @ 60 ms [rev2 POWER_NEGOTIATION]
-[  204.166996] PD RX, header: 0x1242 [1]
-[  204.167009] state change SRC_SEND_CAPABILITIES -> SRC_SOFT_RESET_WAIT_SNK_TX [rev2 POWER_NEGOTIATION]
-[  204.167019] AMS POWER_NEGOTIATION finished
-[  204.167020] cc:=4
-[  204.167083] AMS SOFT_RESET_AMS start
-[  204.167086] state change SRC_SOFT_RESET_WAIT_SNK_TX -> SOFT_RESET_SEND [rev2 SOFT_RESET_AMS]
-[  204.167092] PD TX, header: 0x16d
-[  204.168824] PD TX complete, status: 0
-[  204.168854] pending state change SOFT_RESET_SEND -> HARD_RESET_SEND @ 60 ms [rev2 SOFT_RESET_AMS]
-[  204.171876] PD RX, header: 0x43 [1]
-[  204.171879] AMS SOFT_RESET_AMS finished
+Move the GUID register programming to occur after PHY initialization
+completes to ensure the Linux version information persists.
 
-This causes COMMON.PROC.PD.11.2 check failure for
-TEST.PD.VDM.SRC.2_Rev2Src test on the PD compliance tester.
-
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Fixes: 8d3a0578ad1a ("usb: typec: tcpm: Respond Wait if VDM state machine is running")
-Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
+Fixes: fa0ea13e9f1c ("usb: dwc3: core: write LINUX_VERSION_CODE to our GUID register")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260414-fix-soft-reset-v1-1-01d7cb9764e2@google.com
+Reported-by: Pritam Manohar Sutar <pritam.sutar@samsung.com>
+Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260417063314.2359-1-selvarasu.g@samsung.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ adapted dwc3_writel(dwc, ...) to dwc3_writel(dwc->regs, ...) ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/dwc3/core.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -5407,6 +5407,8 @@ static void run_state_machine(struct tcp
- 		usb_power_delivery_unregister_capabilities(port->partner_source_caps);
- 		port->partner_source_caps = NULL;
- 		tcpm_pd_send_control(port, PD_CTRL_ACCEPT, TCPC_TX_SOP);
-+		port->vdm_sm_running = false;
-+		port->explicit_contract = false;
- 		tcpm_ams_finish(port);
- 		if (port->pwr_role == TYPEC_SOURCE) {
- 			port->upcoming_state = SRC_SEND_CAPABILITIES;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1336,12 +1336,6 @@ static int dwc3_core_init(struct dwc3 *d
+ 
+ 	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
+ 
+-	/*
+-	 * Write Linux Version Code to our GUID register so it's easy to figure
+-	 * out which kernel version a bug was found.
+-	 */
+-	dwc3_writel(dwc->regs, DWC3_GUID, LINUX_VERSION_CODE);
+-
+ 	ret = dwc3_phy_setup(dwc);
+ 	if (ret)
+ 		return ret;
+@@ -1373,6 +1367,12 @@ static int dwc3_core_init(struct dwc3 *d
+ 	if (ret)
+ 		goto err_exit_phy;
+ 
++	/*
++	 * Write Linux Version Code to our GUID register so it's easy to figure
++	 * out which kernel version a bug was found.
++	 */
++	dwc3_writel(dwc->regs, DWC3_GUID, LINUX_VERSION_CODE);
++
+ 	dwc3_core_setup_global_control(dwc);
+ 	dwc3_core_num_eps(dwc);
+ 
 
 
