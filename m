@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF713FF1BD;
-	Fri, 15 May 2026 16:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05753CD8C1;
+	Fri, 15 May 2026 16:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862648; cv=none; b=fqo2PtSo2bEkvttZaRYA6FF3ynA+zlJftMc+htuU4qLs2PCYMAri5ogGJzcY8hut011yaTlpx6BoXz1AeafTmL31LX5sm1OGwHlhV4vBTEcCiUkySw8rlwDuNIyO7RixmKYBHnRP/uNcb6I/n4PqTQAGRnspTGHQARPUE9TpsA4=
+	t=1778862651; cv=none; b=T3poWmkUSASKr1Xg+2vfPEJVXqVA1SWSRv8iRizfZ9hVKAyayi3H4vlUmGkC1vze1qR843eUDvD8tFb7P2qPZRD7ZHbmJ24b92cGIr+TzHWUf1Mr9KoSBFN3hnfSuXcdQkeNuhbC2aSGkpIk1HfkMTVGXa0Xhe8tHj6yPG/Dejw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862648; c=relaxed/simple;
-	bh=nMGUe84rbxfJtwvo6Af3RyFhIKQjFrPrwB4j1+PgDXQ=;
+	s=arc-20240116; t=1778862651; c=relaxed/simple;
+	bh=z944eDKl+siqxv3RMb0ppA9UnmmZ53vo2xBFNoJgI/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8g0uRRq/F8mKyLzrJ9lPzhucXM8tX1wcoS4qbw6551voit3E8Y+6SExXR3VKLZtI9QtfW+/bbJOi9Rr3NSApkg8aGPtexc9LSInhd8fuS4vNrJLNvjWpeVpw+NAnzOc37S92IAJSug1FW76AKPo91iZ3F/3jMg1ZgqI3QgwNIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzoFzW+F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T4U67R6m46Yma5OthpRkRgEANu/mi/Ox0LW3NZOyAY5deg7UwGO/dh71xwd/fAxtl8UaNzZdM1/PtQ6lA04BuB34c2vN8AeTrj145bw7md/W27Dyy+wZ/KJ28JLUhANmEIdMOw/FCIy80purryJKwN0cTjLMmgV7SdOSahkcTv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5vNSAUj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzoFzW+F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F1BC2BCB0;
-	Fri, 15 May 2026 16:30:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5vNSAUj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D87C2BCB0;
+	Fri, 15 May 2026 16:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862648;
-	bh=nMGUe84rbxfJtwvo6Af3RyFhIKQjFrPrwB4j1+PgDXQ=;
+	s=korg; t=1778862650;
+	bh=z944eDKl+siqxv3RMb0ppA9UnmmZ53vo2xBFNoJgI/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YzoFzW+FHTNa/Ii/MScDzWBMp4X+BpiFVdrLOG5/jFSqKh4dDT0URRDpmGKZvlVcz
-	 PyuazvjA5KQGHF78NIl+sRhaEDWvKJoIKcoTnxk0KecIiyCUbAH63C8WRsSIJVkOt/
-	 ZasBhGOMxgNubLZc+r7Ya+qI3luZHzFSFHCOR6vw=
+	b=U5vNSAUjBmujAaefzYUG+VGtGUt/K+Tcdw7Qivp3VXCnzWE2bB92YdsmvsO3SiNfl
+	 nPzpTjfW2HlJ6VAOpZL8bJRiV5IDesXw5NgmCxrs9FmSIymTh3kO9BYW0KuQYCuq2Q
+	 ho2EMqWpiCgC0DmL92EEMt6OOlbguxm8IJpgfnkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anna Maniscalco <anna.maniscalco2000@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>
-Subject: [PATCH 7.0 127/201] drm/msm: always recover the gpu
-Date: Fri, 15 May 2026 17:49:05 +0200
-Message-ID: <20260515154701.316407497@linuxfoundation.org>
+	Purna Chandra Mandal <purna.mandal@microchip.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.0 089/201] spi: pic32: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:27 +0200
+Message-ID: <20260515154700.459504768@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -50,88 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 01a0d6cd7032e9993feea19fadb03ef9d5b488f2 upstream.
+commit 6b627bfe0c44e064aba464839e430dc1ca2b0bb8 upstream.
 
-Previously, in case there was no more work to do, recover worker
-wouldn't trigger recovery and would instead rely on the gpu going to
-sleep and then resuming when more work is submitted.
+Make sure to deregister the controller before releasing underlying
+resources like DMA during driver unbind.
 
-Recover_worker will first increment the fence of the hung ring so, if
-there's only one job submitted to a ring and that causes an hang, it
-will early out.
-
-There's no guarantee that the gpu will suspend and resume before more
-work is submitted and if the gpu is in a hung state it will stay in that
-state and probably trigger a timeout again.
-
-Just stop checking and always recover the gpu.
-
-Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-Cc: stable@vger.kernel.org
-Patchwork: https://patchwork.freedesktop.org/patch/704066/
-Message-ID: <20260210-recovery_suspend_fix-v1-1-00ed9013da04@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: 1bcb9f8ceb67 ("spi: spi-pic32: Add PIC32 SPI master driver")
+Cc: stable@vger.kernel.org	# 4.7
+Cc: Purna Chandra Mandal <purna.mandal@microchip.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-7-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/msm_gpu.c |   42 ++++++++++++++++++++----------------------
- 1 file changed, 20 insertions(+), 22 deletions(-)
+ drivers/spi/spi-pic32.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -546,32 +546,30 @@ static void recover_worker(struct kthrea
- 		msm_update_fence(ring->fctx, fence);
+--- a/drivers/spi/spi-pic32.c
++++ b/drivers/spi/spi-pic32.c
+@@ -821,7 +821,7 @@ static int pic32_spi_probe(struct platfo
  	}
  
--	if (msm_gpu_active(gpu)) {
--		/* retire completed submits, plus the one that hung: */
--		retire_submits(gpu);
-+	/* retire completed submits, plus the one that hung: */
-+	retire_submits(gpu);
+ 	/* register host */
+-	ret = devm_spi_register_controller(&pdev->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret) {
+ 		dev_err(&host->dev, "failed registering spi host\n");
+ 		goto err_bailout;
+@@ -840,11 +840,16 @@ err_host:
  
--		gpu->funcs->recover(gpu);
-+	gpu->funcs->recover(gpu);
+ static void pic32_spi_remove(struct platform_device *pdev)
+ {
+-	struct pic32_spi *pic32s;
++	struct pic32_spi *pic32s = platform_get_drvdata(pdev);
++
++	spi_controller_get(pic32s->host);
++
++	spi_unregister_controller(pic32s->host);
  
--		/*
--		 * Replay all remaining submits starting with highest priority
--		 * ring
--		 */
--		for (i = 0; i < gpu->nr_rings; i++) {
--			struct msm_ringbuffer *ring = gpu->rb[i];
--			unsigned long flags;
-+	/*
-+	 * Replay all remaining submits starting with highest priority
-+	 * ring
-+	 */
-+	for (i = 0; i < gpu->nr_rings; i++) {
-+		struct msm_ringbuffer *ring = gpu->rb[i];
-+		unsigned long flags;
+-	pic32s = platform_get_drvdata(pdev);
+ 	pic32_spi_disable(pic32s);
+ 	pic32_spi_dma_unprep(pic32s);
++
++	spi_controller_put(pic32s->host);
+ }
  
--			spin_lock_irqsave(&ring->submit_lock, flags);
--			list_for_each_entry(submit, &ring->submits, node) {
--				/*
--				 * If the submit uses an unusable vm make sure
--				 * we don't actually run it
--				 */
--				if (to_msm_vm(submit->vm)->unusable)
--					submit->nr_cmds = 0;
--				gpu->funcs->submit(gpu, submit);
--			}
--			spin_unlock_irqrestore(&ring->submit_lock, flags);
-+		spin_lock_irqsave(&ring->submit_lock, flags);
-+		list_for_each_entry(submit, &ring->submits, node) {
-+			/*
-+			 * If the submit uses an unusable vm make sure
-+			 * we don't actually run it
-+			 */
-+			if (to_msm_vm(submit->vm)->unusable)
-+				submit->nr_cmds = 0;
-+			gpu->funcs->submit(gpu, submit);
- 		}
-+		spin_unlock_irqrestore(&ring->submit_lock, flags);
- 	}
- 
- 	pm_runtime_put(&gpu->pdev->dev);
+ static const struct of_device_id pic32_spi_of_match[] = {
 
 
