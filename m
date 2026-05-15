@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD713BB68B;
-	Fri, 15 May 2026 16:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1183FF1A2;
+	Fri, 15 May 2026 16:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862274; cv=none; b=esHNJrnmahcvx6rIIRJfRtGJhFEWzRnSc0n0IHsswFtnAOuMs5hnNgWn++vGhlU5oqJXHqWr9dcKvb+7gtlLur61RMbY+euoA+nXeHhUlYGg9osHUehQlq+Qn/93mRLLKmKHwrzfpx8LtzpPvGBbiYLSW2Fs3qwhS2QcgZaMtXQ=
+	t=1778862277; cv=none; b=UKSvhMLzby/968wuOBkyyiwyKPXMGeWB+pRyJ7FFJNcaPxvYeQGZIVOFUfGgYFxWQNYaNIFOzVdp9MUaZgoBXQ1lJ0OaR4VwrDZtMOj6B91B1eBhqLGsh8+OebO58IKZzBEwcMnoq9G3esxOY2NhzV432fNKB1ZXQ8++wibMs4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862274; c=relaxed/simple;
-	bh=jsZ1jNHyUIflvEm8cSoSGu5HAOv2rj10CKMPPz118wc=;
+	s=arc-20240116; t=1778862277; c=relaxed/simple;
+	bh=oxNpqvadmMGaU3HTQ45fkAezed/FoZyQRBD5+mypTro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rsrobUYBVD0fTY60DPOMUeruTfxhCqgKDF5n01eKkIwBVIZHHpiJQsm8hZec89x6fG36WFt3p9ID9cmcpJ1E/y3bDVMiyckTf7zvIia9+M0HOz296K1Kd3W1RjNJ4hYnkj0O+GLUS+15cvQ+S7U59ZzZsSAmwsV4e8CjTckORPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xAeAC+Ka; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S5a0nzFZBAHDf3pPybnhgkPvJPLatGwvujeYU8wiIWLWxb6HjposxKPZg3YAdluoTAZUDnRBkTzHiVBf99R7zk/NSBuP8RZihg+uo2ZRpywYAJOEDmu7yRG/dhxQkAekS2gRku2yHHdW2rTPS6anzg1vdsQUm3X+mpQ5uPrLQ9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5r5/DF6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xAeAC+Ka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562D9C2BCB0;
-	Fri, 15 May 2026 16:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5r5/DF6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D878DC2BCB0;
+	Fri, 15 May 2026 16:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862274;
-	bh=jsZ1jNHyUIflvEm8cSoSGu5HAOv2rj10CKMPPz118wc=;
+	s=korg; t=1778862277;
+	bh=oxNpqvadmMGaU3HTQ45fkAezed/FoZyQRBD5+mypTro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xAeAC+KanZDQA3TExA6dfCATa1QR+o8OX+F3l9gsbOG8RmzUzjsI17xJQMNU6b0Gn
-	 VebTwZp7lHstHPlJSViD/yQU7L4hrYwuJ6lHmQXrkUsTqYGpDbSZXhqC3wdZ35SLhr
-	 Dccd5s6rrZwDIuMr6QAZCNhB8LIb6CYYx8cLe0HQ=
+	b=S5r5/DF6jNPY9uVOjJ7/etmj90K6AD77L+tgwV+SiNjahflFRDSMGPnGESQ75HZB+
+	 99Gf1sgYnb74nOMIAIxkTWJWk50rY9iognaLAHURkapnN8BVLdwW8PWlTAjyn+zOP6
+	 5ceeB2MMqUyAzL7lPq5A+YJ2PAnN1Nj8HNu1qwbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Yochai Eisenrich <echelonh@gmail.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 175/188] btrfs: fix double free in create_space_info_sub_group() error path
-Date: Fri, 15 May 2026 17:49:52 +0200
-Message-ID: <20260515154701.135322405@linuxfoundation.org>
+Subject: [PATCH 6.18 176/188] btrfs: fix btrfs_ioctl_space_info() slot_count TOCTOU which can lead to info-leak
+Date: Fri, 15 May 2026 17:49:53 +0200
+Message-ID: <20260515154701.157990058@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -52,55 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Yochai Eisenrich <yochaie@sweet.security>
 
-[ Upstream commit a7449edf96143f192606ec8647e3167e1ecbd728 ]
+[ Upstream commit 973e57c726c1f8e77259d1c8e519519f1e9aea77 ]
 
-When kobject_init_and_add() fails, the call chain is:
+btrfs_ioctl_space_info() has a TOCTOU race between two passes over the
+block group RAID type lists. The first pass counts entries to determine
+the allocation size, then the second pass fills the buffer. The
+groups_sem rwlock is released between passes, allowing concurrent block
+group removal to reduce the entry count.
 
-create_space_info_sub_group()
--> btrfs_sysfs_add_space_info_type()
--> kobject_init_and_add()
--> failure
--> kobject_put(&sub_group->kobj)
--> space_info_release()
--> kfree(sub_group)
+When the second pass fills fewer entries than the first pass counted,
+copy_to_user() copies the full alloc_size bytes including trailing
+uninitialized kmalloc bytes to userspace.
 
-Then control returns to create_space_info_sub_group(), where:
+Fix by copying only total_spaces entries (the actually-filled count from
+the second pass) instead of alloc_size bytes, and switch to kzalloc so
+any future copy size mismatch cannot leak heap data.
 
-btrfs_sysfs_add_space_info_type() returns error
--> kfree(sub_group)
-
-Thus, sub_group is freed twice.
-
-Keep parent->sub_group[index] = NULL for the failure path, but after
-btrfs_sysfs_add_space_info_type() has called kobject_put(), let the
-kobject release callback handle the cleanup.
-
-Fixes: f92ee31e031c ("btrfs: introduce btrfs_space_info sub-group")
-CC: stable@vger.kernel.org # 6.18+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Fixes: 7fde62bffb57 ("Btrfs: buffer results in the space_info ioctl")
+CC: stable@vger.kernel.org # 3.0
+Signed-off-by: Yochai Eisenrich <echelonh@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
+[ adapted upstream's `return -EFAULT;` to stable's `ret = -EFAULT;` fall-through to existing `out:` cleanup label ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/space-info.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/btrfs/ioctl.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -276,10 +276,8 @@ static int create_space_info_sub_group(s
- 	sub_group->subgroup_id = id;
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3025,7 +3025,7 @@ static long btrfs_ioctl_space_info(struc
+ 		return -ENOMEM;
  
- 	ret = btrfs_sysfs_add_space_info_type(sub_group);
--	if (ret) {
--		kfree(sub_group);
-+	if (ret)
- 		parent->sub_group[index] = NULL;
--	}
- 	return ret;
- }
+ 	space_args.total_spaces = 0;
+-	dest = kmalloc(alloc_size, GFP_KERNEL);
++	dest = kzalloc(alloc_size, GFP_KERNEL);
+ 	if (!dest)
+ 		return -ENOMEM;
+ 	dest_orig = dest;
+@@ -3081,7 +3081,8 @@ static long btrfs_ioctl_space_info(struc
+ 	user_dest = (struct btrfs_ioctl_space_info __user *)
+ 		(arg + sizeof(struct btrfs_ioctl_space_args));
  
+-	if (copy_to_user(user_dest, dest_orig, alloc_size))
++	if (copy_to_user(user_dest, dest_orig,
++		 space_args.total_spaces * sizeof(*dest_orig)))
+ 		ret = -EFAULT;
+ 
+ 	kfree(dest_orig);
 
 
