@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E492A26CE11;
-	Fri, 15 May 2026 16:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B63526CE11;
+	Fri, 15 May 2026 16:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862230; cv=none; b=SMuwWNRjnc6tP9ZNhFoOAlgsUdkqg1YXnDwZODPoeKgDWB9IVHW9Cqv40wCIIZfo/PqP92iOWolVuLKHuPoxLYb9NlnJuBkRw5O51/qf/OFL7uTT2/+zRbeEpAyAOfj4MHNOMulU4o4pnZPyP1kGeQyBajL0MpUTn2UDOppOT9I=
+	t=1778862232; cv=none; b=MQ5Pfl8WEWrf97grgyJQ51+Yg7kdOxlGWpDUDdMr7erljN6AOdSUrnTjYmKyeLdatptyD3OJop2PQaGH/3ekJZf6PkVzyoAnGw64+HRCxdMWA8/mBBaXdyp0CmnBwD2m1B0V8a7hQRmxt7KKtPYtTi7zUoxl5QMZA9m5DZ+Vzbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862230; c=relaxed/simple;
-	bh=Pq0N3jveOePUmAreNjRM29DWzLdk+SBX9+5PoYLyGMk=;
+	s=arc-20240116; t=1778862232; c=relaxed/simple;
+	bh=YnXqCmsA9zxRV/vO+LzE6a2hXMOvLOecFhhafAh6YOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oYokqfQvc3APwoZQ3as30XQFGf9WOxvNoYOlM7bziJ6Y07CNraD4p4qXbt22lVFy8q86iQ8oxU2xGS1jgmVo4fzchpm3TyoyefWEfKOwmGjkIs84T2Kn89wZLjS19Y4dW0DoRM6DNBaRoVFWMkUvpwaoUKPGkMyiZijFabKfHSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xr7CKGQH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Mh7gd7iTjhcKa6n8nB9P8DacUqhD5YIgeeFV/RbDPRPjZcupjRts+WB+8BisEC5RFGsiEBvoawwZ3Hmt+MaP/ND3X1juNhWfoASnjViQfsz2qX4bKqm0x+03rlECLkhEBeFVnOlb7EK3ULNid7B3xuQv2+OtvujpUhfGVBfVS0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVKGXyB+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xr7CKGQH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC65C2BCB0;
-	Fri, 15 May 2026 16:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVKGXyB+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129A3C2BCB0;
+	Fri, 15 May 2026 16:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862229;
-	bh=Pq0N3jveOePUmAreNjRM29DWzLdk+SBX9+5PoYLyGMk=;
+	s=korg; t=1778862232;
+	bh=YnXqCmsA9zxRV/vO+LzE6a2hXMOvLOecFhhafAh6YOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xr7CKGQHCqMw/4PrnpwUYQhmQSyFe3uMmZVSvSz/xqzjMswStqImK1S1iq6Ll95Ho
-	 0espsrwzxFlhNpZQozSazVR+ooXyw1z1eIKFvIYHsApbtmWY2SuChpGXsGsh1EytFR
-	 zylqn3qafzWSQUCyhwLNTm18cQPLkZXEUb1MV2N0=
+	b=AVKGXyB+SzkXp4eI5k9LDnhIVoOpd2nOhN/6Kaf44nNIESB7KKQNua95lfok5rtqx
+	 J66po+7WH/quElDE3VPpbnooXbNdzK8Cr3RhUQ20dgh9dCH5gwj3q+TFl/P5RE8apW
+	 jYLQ0YlVGMbsc221crSxuFb9ltAUXiogLBWPXVbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.18 116/188] drm/xe: Fix bo leak in xe_dma_buf_init_obj() on allocation failure
-Date: Fri, 15 May 2026 17:48:53 +0200
-Message-ID: <20260515154659.847732961@linuxfoundation.org>
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 107/188] drm/amdgpu/vcn4: Prevent OOB reads when parsing IB
+Date: Fri, 15 May 2026 17:48:44 +0200
+Message-ID: <20260515154659.651328929@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -45,80 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Benjamin Cheng <benjamin.cheng@amd.com>
 
-commit 93a528f67ce5095bcab46a69839eca97f43dd352 upstream.
+commit 2444eb0ec8283f4a3845eb7febad378476e1ba3c upstream.
 
-When drm_gpuvm_resv_object_alloc() fails, the pre-allocated storage bo
-is not freed. Add xe_bo_free(storage) before returning the error.
+Rewrite the IB parsing to use amdgpu_ib_get_value() which handles the
+bounds checks.
 
-xe_dma_buf_init_obj() calls xe_bo_init_locked(), which frees the bo on
-error. Therefore, xe_dma_buf_init_obj() must also free the bo on its own
-error paths. Otherwise, since xe_gem_prime_import() cannot distinguish
-whether the failure originated from xe_dma_buf_init_obj() or from
-xe_bo_init_locked(), it cannot safely decide whether the bo should be
-freed.
-
-Add comments documenting the ownership semantics: on success, ownership
-of storage is transferred to the returned drm_gem_object; on failure,
-storage is freed before returning.
-
-v2: Add comments to explain the free logic.
-
-Fixes: eb289a5f6cc6 ("drm/xe: Convert xe_dma_buf.c for exhaustive eviction")
+Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.6
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260408175255.3402838-4-shuicheng.lin@intel.com
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit 78a6c5f899f22338bbf48b44fb8950409c5a69b9)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_dma_buf.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_dma_buf.c
-+++ b/drivers/gpu/drm/xe/xe_dma_buf.c
-@@ -227,6 +227,13 @@ struct dma_buf *xe_gem_prime_export(stru
- 	return buf;
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
+@@ -1912,9 +1912,10 @@ out:
+ static int vcn_v4_0_enc_find_ib_param(struct amdgpu_ib *ib, uint32_t id, int start)
+ {
+ 	int i;
++	uint32_t len;
+ 
+-	for (i = start; i < ib->length_dw && ib->ptr[i] >= 8; i += ib->ptr[i] / 4) {
+-		if (ib->ptr[i + 1] == id)
++	for (i = start; (len = amdgpu_ib_get_value(ib, i)) >= 8; i += len / 4) {
++		if (amdgpu_ib_get_value(ib, i + 1) == id)
+ 			return i;
+ 	}
+ 	return -1;
+@@ -1925,8 +1926,6 @@ static int vcn_v4_0_ring_patch_cs_in_pla
+ 					   struct amdgpu_ib *ib)
+ {
+ 	struct amdgpu_ring *ring = amdgpu_job_ring(job);
+-	struct amdgpu_vcn_decode_buffer *decode_buffer;
+-	uint64_t addr;
+ 	uint32_t val;
+ 	int idx = 0, sidx;
+ 
+@@ -1937,20 +1936,22 @@ static int vcn_v4_0_ring_patch_cs_in_pla
+ 	while ((idx = vcn_v4_0_enc_find_ib_param(ib, RADEON_VCN_ENGINE_INFO, idx)) >= 0) {
+ 		val = amdgpu_ib_get_value(ib, idx + 2); /* RADEON_VCN_ENGINE_TYPE */
+ 		if (val == RADEON_VCN_ENGINE_TYPE_DECODE) {
+-			decode_buffer = (struct amdgpu_vcn_decode_buffer *)&ib->ptr[idx + 6];
++			uint32_t valid_buf_flag = amdgpu_ib_get_value(ib, idx + 6);
++			uint64_t msg_buffer_addr;
+ 
+-			if (!(decode_buffer->valid_buf_flag & 0x1))
++			if (!(valid_buf_flag & 0x1))
+ 				return 0;
+ 
+-			addr = ((u64)decode_buffer->msg_buffer_address_hi) << 32 |
+-				decode_buffer->msg_buffer_address_lo;
+-			return vcn_v4_0_dec_msg(p, job, addr);
++			msg_buffer_addr = ((u64)amdgpu_ib_get_value(ib, idx + 7)) << 32 |
++				amdgpu_ib_get_value(ib, idx + 8);
++			return vcn_v4_0_dec_msg(p, job, msg_buffer_addr);
+ 		} else if (val == RADEON_VCN_ENGINE_TYPE_ENCODE) {
+ 			sidx = vcn_v4_0_enc_find_ib_param(ib, RENCODE_IB_PARAM_SESSION_INIT, idx);
+-			if (sidx >= 0 && ib->ptr[sidx + 2] == RENCODE_ENCODE_STANDARD_AV1)
++			if (sidx >= 0 &&
++			    amdgpu_ib_get_value(ib, sidx + 2) == RENCODE_ENCODE_STANDARD_AV1)
+ 				return vcn_v4_0_limit_sched(p, job);
+ 		}
+-		idx += ib->ptr[idx] / 4;
++		idx += amdgpu_ib_get_value(ib, idx) / 4;
+ 	}
+ 	return 0;
  }
- 
-+/*
-+ * Takes ownership of @storage: on success it is transferred to the returned
-+ * drm_gem_object; on failure it is freed before returning the error.
-+ * This matches the contract of xe_bo_init_locked() which frees @storage on
-+ * its error paths, so callers need not (and must not) free @storage after
-+ * this call.
-+ */
- static struct drm_gem_object *
- xe_dma_buf_init_obj(struct drm_device *dev, struct xe_bo *storage,
- 		    struct dma_buf *dma_buf)
-@@ -240,8 +247,10 @@ xe_dma_buf_init_obj(struct drm_device *d
- 	int ret = 0;
- 
- 	dummy_obj = drm_gpuvm_resv_object_alloc(&xe->drm);
--	if (!dummy_obj)
-+	if (!dummy_obj) {
-+		xe_bo_free(storage);
- 		return ERR_PTR(-ENOMEM);
-+	}
- 
- 	dummy_obj->resv = resv;
- 	xe_validation_guard(&ctx, &xe->val, &exec, (struct xe_val_flags) {}, ret) {
-@@ -250,6 +259,7 @@ xe_dma_buf_init_obj(struct drm_device *d
- 		if (ret)
- 			break;
- 
-+		/* xe_bo_init_locked() frees storage on error */
- 		bo = xe_bo_init_locked(xe, storage, NULL, resv, NULL, dma_buf->size,
- 				       0, /* Will require 1way or 2way for vm_bind */
- 				       ttm_bo_type_sg, XE_BO_FLAG_SYSTEM, &exec);
 
 
