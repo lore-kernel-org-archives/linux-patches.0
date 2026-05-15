@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E113D16EA;
-	Fri, 15 May 2026 16:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3793CF058;
+	Fri, 15 May 2026 16:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862823; cv=none; b=JEgCEzQ/pj6ULSeDQxmSYV6h5lisi5yrsvz5oFlu2zxxxtB70viiGhirimKjKXgmxu1B9uRmLCPyUV980ObrPcPAeirxjH92hBB2g3k+ANfzpNRCg9pdydP6hRdf/94I6wl6/VxyotAKoboXYxFq3RTmdSmrd2ae8Ms3xj+c8LE=
+	t=1778862826; cv=none; b=hnGgOQ07UQdoIwZr0yXTyEgSvptomGFlQOPCAgkR0ynPBDW3dHey43YI9Vvipm7kBxhi3E5qr26XVX2YWM4M39NLXDj2uOdhTny+yc4+W5LZ7YlnAXk5bVAq5eep48YpA1Al5Hmc4WMoloIBk4iF7g1D58JN3AutDfHMIcLQ+Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862823; c=relaxed/simple;
-	bh=6J/9X/jMoO1pukP35BFVawR1rpN2cdwJUTPjnnQCF+E=;
+	s=arc-20240116; t=1778862826; c=relaxed/simple;
+	bh=t6C0/XKV5y1kKh2jberzegJb1K5l6hcREFFQAU/mwv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7Z2NSlMyNisavKQXzSBVG3pHZ+Sc39qV7IwZD1u3CmpudUeuYtRnMZeSUKjyYQOrkCA4nTXLlsr6Q1qWuH8qa9faXqV/D0trygMVngvcj7xlHmGbY4kvrZhX/zV5I3gVtj4w6F8GOT9nwdBFFgqXoCmlREL1sKqBkiP2/XjQB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKArUMic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CYN+kNyR6FOVPDF81F2aDFOi6hnlvVuriTg03jiJCi1b9zcpHiucwALv05WeUNyQZ43fBe1Vgz/jWE2tYxDRpZ8l+levMgUwqqyUw4zDb/smp5Nu9ZuJq0DocBZSR5+bNpAiywr7jfzJU4xuSGYKyrTset+M+1c/3AKfrgRalME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R07NnzhF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKArUMic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0356BC2BCC7;
-	Fri, 15 May 2026 16:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R07NnzhF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE99C2BCB0;
+	Fri, 15 May 2026 16:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862823;
-	bh=6J/9X/jMoO1pukP35BFVawR1rpN2cdwJUTPjnnQCF+E=;
+	s=korg; t=1778862826;
+	bh=t6C0/XKV5y1kKh2jberzegJb1K5l6hcREFFQAU/mwv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKArUMic4/2Om3D0Q4iNyFNXItky4GH38bf7T67f5ebX2avJ89EgVicxxkGjwLht9
-	 Hrvp1WfBv2MWq0KoG5ZydVAAL1YS4pZitGllnXlN4a5HkI/i/+sKExL3BF1q+Itkk7
-	 +0hKOhagjyeVcJsOsjPPrsSmFCRdKXZxw27Nw1bY=
+	b=R07NnzhFmU7A4gVp5v9voPKl19mDby/PmZSqsQbRiDYlHCoPN+NLGx5OcvRSlKAZX
+	 pAl8d2vQBAdcZkOTc304KssSKu7PW7RK4y2NK4e9oIEZY/1fGNA6/X3WAL2odwX03Y
+	 hL18I6AB9ugc65pkCGqyh3wFXjg8SYQltRVu8BCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yiqi Sun <sunyiqixm@gmail.com>,
 	Stefano Garzarella <sgarzare@redhat.com>,
 	Bobby Eshleman <bobbyeshleman@meta.com>,
 	Arseniy Krasnov <avkrasnov@rulkc.org>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Luigi Leonardi <leonardi@redhat.com>
-Subject: [PATCH 7.0 196/201] vsock/virtio: fix length and offset in tap skb for split packets
-Date: Fri, 15 May 2026 17:50:14 +0200
-Message-ID: <20260515154702.827622724@linuxfoundation.org>
+Subject: [PATCH 7.0 197/201] vsock/virtio: fix empty payload in tap skb for non-linear buffers
+Date: Fri, 15 May 2026 17:50:15 +0200
+Message-ID: <20260515154702.848658637@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -56,61 +57,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit 5f344d809e015fba3709e5219428c00b8ac5d7df upstream.
+commit 3a3e3d90cbc79600544536723911657730759af3 upstream.
 
-virtio_transport_build_skb() builds a new skb to be delivered to the
-vsockmon tap device. To build the new skb, it uses the original skb
-data length as payload length, but as the comment notes, the original
-packet stored in the skb may have been split in multiple packets, so we
-need to use the length in the header, which is correctly updated before
-the packet is delivered to the tap, and the offset for the data.
+For non-linear skbs, virtio_transport_build_skb() goes through
+virtio_transport_copy_nonlinear_skb() to copy the original payload
+in the new skb to be delivered to the vsockmon tap device.
+This manually initializes an iov_iter but does not set iov_iter.count.
+Since the iov_iter is zero-initialized, the copy length is zero and no
+payload is actually copied to the monitor interface, leaving data
+un-initialized.
 
-This was also similar to what we did before commit 71dc9ec9ac7d
-("virtio/vsock: replace virtio_vsock_pkt with sk_buff") where we probably
-missed something during the skb conversion.
+Fix this by removing the linear vs non-linear split and using
+skb_copy_datagram_iter() with iov_iter_kvec() for all cases, as
+vhost-vsock already does. This handles both linear and non-linear skbs,
+properly initializes the iov_iter, and removes the now unused
+virtio_transport_copy_nonlinear_skb().
 
-Also update the comment above, which was left stale by the skb
-conversion and still mentioned a buffer pointer that no longer exists.
+While touching this code, let's also check the return value of
+skb_copy_datagram_iter(), even though it's unlikely to fail.
 
-Fixes: 71dc9ec9ac7d ("virtio/vsock: replace virtio_vsock_pkt with sk_buff")
+Fixes: 4b0bf10eb077 ("vsock/virtio: non-linear skb handling for tap")
+Reported-by: Yiqi Sun <sunyiqixm@gmail.com>
 Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
 Reviewed-by: Arseniy Krasnov <avkrasnov@rulkc.org>
-Link: https://patch.msgid.link/20260508164411.261440-2-sgarzare@redhat.com
+Link: https://patch.msgid.link/20260508164411.261440-3-sgarzare@redhat.com
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Cc: Luigi Leonardi <leonardi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c |   40 +++++++++-----------------------
+ 1 file changed, 12 insertions(+), 28 deletions(-)
 
 --- a/net/vmw_vsock/virtio_transport_common.c
 +++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -169,12 +169,12 @@ static struct sk_buff *virtio_transport_
- 	struct sk_buff *skb;
- 	size_t payload_len;
+@@ -139,27 +139,6 @@ static void virtio_transport_init_hdr(st
+ 	hdr->fwd_cnt	= cpu_to_le32(0);
+ }
  
--	/* A packet could be split to fit the RX buffer, so we can retrieve
--	 * the payload length from the header and the buffer pointer taking
--	 * care of the offset in the original packet.
-+	/* A packet could be split to fit the RX buffer, so we use
-+	 * the payload length from the header, which has been updated
-+	 * by the sender to reflect the fragment size.
- 	 */
- 	pkt_hdr = virtio_vsock_hdr(pkt);
--	payload_len = pkt->len;
-+	payload_len = le32_to_cpu(pkt_hdr->len);
+-static void virtio_transport_copy_nonlinear_skb(const struct sk_buff *skb,
+-						void *dst,
+-						size_t len)
+-{
+-	struct iov_iter iov_iter = { 0 };
+-	struct kvec kvec;
+-	size_t to_copy;
+-
+-	kvec.iov_base = dst;
+-	kvec.iov_len = len;
+-
+-	iov_iter.iter_type = ITER_KVEC;
+-	iov_iter.kvec = &kvec;
+-	iov_iter.nr_segs = 1;
+-
+-	to_copy = min_t(size_t, len, skb->len);
+-
+-	skb_copy_datagram_iter(skb, VIRTIO_VSOCK_SKB_CB(skb)->offset,
+-			       &iov_iter, to_copy);
+-}
+-
+ /* Packet capture */
+ static struct sk_buff *virtio_transport_build_skb(void *opaque)
+ {
+@@ -217,13 +196,18 @@ static struct sk_buff *virtio_transport_
+ 	skb_put_data(skb, pkt_hdr, sizeof(*pkt_hdr));
  
- 	skb = alloc_skb(sizeof(*hdr) + sizeof(*pkt_hdr) + payload_len,
- 			GFP_ATOMIC);
-@@ -222,7 +222,8 @@ static struct sk_buff *virtio_transport_
- 
- 			virtio_transport_copy_nonlinear_skb(pkt, data, payload_len);
- 		} else {
--			skb_put_data(skb, pkt->data, payload_len);
-+			skb_put_data(skb, pkt->data + VIRTIO_VSOCK_SKB_CB(pkt)->offset,
-+				     payload_len);
+ 	if (payload_len) {
+-		if (skb_is_nonlinear(pkt)) {
+-			void *data = skb_put(skb, payload_len);
+-
+-			virtio_transport_copy_nonlinear_skb(pkt, data, payload_len);
+-		} else {
+-			skb_put_data(skb, pkt->data + VIRTIO_VSOCK_SKB_CB(pkt)->offset,
+-				     payload_len);
++		struct iov_iter iov_iter;
++		struct kvec kvec;
++		void *data = skb_put(skb, payload_len);
++
++		kvec.iov_base = data;
++		kvec.iov_len = payload_len;
++		iov_iter_kvec(&iov_iter, ITER_DEST, &kvec, 1, payload_len);
++
++		if (skb_copy_datagram_iter(pkt, VIRTIO_VSOCK_SKB_CB(pkt)->offset,
++					   &iov_iter, payload_len)) {
++			kfree_skb(skb);
++			return NULL;
  		}
  	}
  
