@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BEE3FF1A2;
-	Fri, 15 May 2026 15:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9833FF1D5;
+	Fri, 15 May 2026 15:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860333; cv=none; b=OZLnAZFZjBAYyfGSG82/gJY79SJs5zyAvLk5LoHYvnOhBxdaMQt3jG98DOrZIRuM+3xJqDq9FNvyLTZmlv8AG1dNALN2BNHvu2jva3MsKjeAd3QgJaSjP2z10qV7yVWM5Na01vIJFR0jakOcuPzkrmRMagSbwM/omYIw/1GCUbg=
+	t=1778860335; cv=none; b=L5ONedKJotd2QQ2ca0e23okqOkNlNMP0BtvX54zCx9hai3tCN1iaqIiGcS2bKH+IN3K5cGV8Rk8P/YBD0B/Uxrf98RhkKAooPoeJJ3NuQzj7Gc2NeYXV5mZ6ZSB2+vxsoaCceSFBytRmFDNJ1c+5jTcNNDSMO0zyFyubfZinBuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860333; c=relaxed/simple;
-	bh=wZeMndgOnQJDzUc4ktcVgHxBaAExXCPl42xvdSd3fW4=;
+	s=arc-20240116; t=1778860335; c=relaxed/simple;
+	bh=9lCKff/vvwyp5tA0mSokY5A963Oo5YEoEg2AIPcm5YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VHnqS0Nd33DikXWNd4nzDojbaTP76gVg5qmC4rbEROyvqUK6thOXk6hEYt00tcktP3WxXIT6O99DupEQo/GCdl93qEDkSu3masOOQhXyqZ32/QClc31oLkqPobbI0muTEWMzEYb0ecUMgHzmyXCV75aPVUZVBKCHTiqNRsUcIiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vx+M2sxc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FY7vVnOjRWYGGN59XCFCTO+ebzeVHFB0UYbodsxeOwjzkaMwhnfqtDf3SYL0xkzroFCWnVs7/98mKy3vAfaRMWIKdVQxTK/gMACuxqUfI4z9f7/RtloK8YZclLPY/N/Zhxw8/QYw1tIo554SXw1fEkWtKEsU+I9Rc36+4/nZXQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r805+GC7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vx+M2sxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672C4C2BCB0;
-	Fri, 15 May 2026 15:52:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r805+GC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C61BC2BCB0;
+	Fri, 15 May 2026 15:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860332;
-	bh=wZeMndgOnQJDzUc4ktcVgHxBaAExXCPl42xvdSd3fW4=;
+	s=korg; t=1778860335;
+	bh=9lCKff/vvwyp5tA0mSokY5A963Oo5YEoEg2AIPcm5YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vx+M2sxcxak7iyZcJvIl8WwZnH+iDTvMs4+kN9vTH86brfVAPQ8E5CL6y8DdWh6bi
-	 4ZdjwOA8J+FBInoS/dGxZ0ay7ajglIPwzFF3inDFx4dXgSN7s9puHHS3sZb1GMEnTm
-	 8mmK762KVA8OGznjDUlkq1A3K+zs92E84HW9sPdA=
+	b=r805+GC7GQ/uwIQK9Xr/XfsJRhN4fXJPQtdFxLyzNNslrCR0rYXmJstE8rbyvt9Wa
+	 L45BxhlcZhlCPd7T+thH+MKd2zSnjn3zdzz7HfjiGOF2w07czKHo6Rb2LfRT5Ia80g
+	 ekJz/RUcbnVK0f2vDPa+9mjXVXua+cVCcuslyVdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
+	William Zhang <william.zhang@broadcom.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 047/144] spi: fsl: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:53 +0200
-Message-ID: <20260515154654.625666562@linuxfoundation.org>
+Subject: [PATCH 6.12 048/144] spi: bcmbca-hsspi: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:54 +0200
+Message-ID: <20260515154654.650545635@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -53,60 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 9b7abfed4c3754062d1f3ffd452e65a38667f586 upstream.
+commit c3d97c3320b9a1ebbd6119857341be034f7b3efc upstream.
 
-Make sure to deregister the controller before releasing underlying
-resources like DMA during driver unbind.
+Make sure to deregister the controller before disabling underlying
+resources like interrupts during driver unbind to allow SPI drivers to
+do I/O during deregistration.
 
-Fixes: 4178b6b1b595 ("spi: fsl-(e)spi: migrate to using devm_ functions to simplify cleanup")
-Cc: stable@vger.kernel.org	# 4.3
-Cc: Heiner Kallweit <hkallweit1@gmail.com>
+Note that clocks were also disabled before the recent commit
+e532e21a246d ("spi: bcm63xx-hsspi: Simplify clock handling with
+devm_clk_get_enabled()").
+
+Fixes: a38a2233f23b ("spi: bcmbca-hsspi: Add driver for newer HSSPI controller")
+Cc: stable@vger.kernel.org	# 6.3: deb269e0394f
+Cc: stable@vger.kernel.org	# 6.3
+Cc: William Zhang <william.zhang@broadcom.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410064749.496888-1-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-8-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-spi.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/spi/spi-bcmbca-hsspi.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -614,7 +614,7 @@ static struct spi_controller *fsl_spi_pr
+--- a/drivers/spi/spi-bcmbca-hsspi.c
++++ b/drivers/spi/spi-bcmbca-hsspi.c
+@@ -550,7 +550,7 @@ static int bcmbca_hsspi_probe(struct pla
+ 	}
  
- 	mpc8xxx_spi_write_reg(&reg_base->mode, regval);
- 
+ 	/* register and we are done */
 -	ret = devm_spi_register_controller(dev, host);
 +	ret = spi_register_controller(host);
- 	if (ret < 0)
- 		goto err_probe;
+ 	if (ret)
+ 		goto out_sysgroup_disable;
  
-@@ -705,7 +705,13 @@ static void of_fsl_spi_remove(struct pla
- 	struct spi_controller *host = platform_get_drvdata(ofdev);
- 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
- 
-+	spi_controller_get(host);
-+
-+	spi_unregister_controller(host);
-+
- 	fsl_spi_cpm_free(mpc8xxx_spi);
-+
-+	spi_controller_put(host);
- }
- 
- static struct platform_driver of_fsl_spi_driver = {
-@@ -751,7 +757,13 @@ static void plat_mpc8xxx_spi_remove(stru
+@@ -572,6 +572,8 @@ static void bcmbca_hsspi_remove(struct p
  	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct mpc8xxx_spi *mpc8xxx_spi = spi_controller_get_devdata(host);
+ 	struct bcmbca_hsspi *bs = spi_controller_get_devdata(host);
  
-+	spi_controller_get(host);
-+
 +	spi_unregister_controller(host);
 +
- 	fsl_spi_cpm_free(mpc8xxx_spi);
-+
-+	spi_controller_put(host);
- }
- 
- MODULE_ALIAS("platform:mpc8xxx_spi");
+ 	/* reset the hardware and block queue progress */
+ 	__raw_writel(0, bs->regs + HSSPI_INT_MASK_REG);
+ 	clk_disable_unprepare(bs->pll_clk);
 
 
