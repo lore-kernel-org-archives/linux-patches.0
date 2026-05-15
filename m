@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D08720297C;
-	Fri, 15 May 2026 16:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125D317C220;
+	Fri, 15 May 2026 16:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862222; cv=none; b=k1pZcOD1sXkUqGd8Qj3WEV2etmSnwv6GuklTdlzkcIGzE8wdGdFSrFdBMH+BHi36us2UplCZkVJkHcBu9kTtHDHUrKcjuP7+bxIISgXJ8SbJzG/XBpaDxjm0CnNJ6BUIKOhuLtl+fporJQa2wjIHVtP7D351o/Q8kQ2f7fRSKAc=
+	t=1778862225; cv=none; b=ciLAlX5BPuITV6Ke9Kkyxkze4al+tjbPuAMPILNxoB2WCE1pDCnr0xb4pdaB0d7cYAJQkYSgUgYlq3rN/dr9/hNhs9SMXPCRKKU6cbqz/iE5Kl4+PuVNtbixswes9mYIWiiX29ee9bap5IbcurRaXpX68hjrtn4nxhxssaSWWTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862222; c=relaxed/simple;
-	bh=N+KNjdhU7abRwoQOV4SpYvqCuDqnrHCQyHeJnD8zzL0=;
+	s=arc-20240116; t=1778862225; c=relaxed/simple;
+	bh=qYZvqDEDPK9a2QjOoP9f0i5KDOVZiJl51CUfqdQEwxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LASruufr6SFe6NuZ6NQQbQcgPyKldNwlOOKTGGtjHGoRU11GCxIS3Hd1vgEgJ4U0MtpL7tgopla4lyizifdN4Q3SQ9fNlEoc5HSeyaRwbqoswGQLWsjpuRFVfpXW2FD7xU34mhEp2fjdHsj6juM/F66iUMJubvDmCIxWEVv9TTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3g7fl4U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QJLVvdxgv/5ieDyYSb1+e5Kkn8VeJuMiZZ17ppmv5ISQ9gTyt9lnX3AsK1PdvGih8c96Az+dYFJBH65vufKFRlZPAoGuuT3VFKBBmCixtj6ihBbMyYzIclQ00bbdt5Z7EOPA4uwWFHK7EpgJocsgak1aIoN3iTwZawn8uImiakM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3KRc2kf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3g7fl4U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82CFC2BCB0;
-	Fri, 15 May 2026 16:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3KRc2kf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629CAC2BCB0;
+	Fri, 15 May 2026 16:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862222;
-	bh=N+KNjdhU7abRwoQOV4SpYvqCuDqnrHCQyHeJnD8zzL0=;
+	s=korg; t=1778862224;
+	bh=qYZvqDEDPK9a2QjOoP9f0i5KDOVZiJl51CUfqdQEwxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3g7fl4UgXwSBPA3oqTF5iZRr6V1IJv3X1H5GSY+u4YB7xvStqkvnnpJaz1N2XF3S
-	 38J000NEmweHYwRBnXdPfb5KPNYpvf3nyaseIG5tOiM16xN1tg1KPDtWYLHigZDYk/
-	 +Oqfldt+wjAEa01rWUjMqv9EcGwMtvjKBo4mXhX8=
+	b=Q3KRc2kfZYBfcu/jqIM44u3PKatfWrmzPnHkky5PKJPv9Zla3hYlKdr+ZjfJuG5iT
+	 ntlSrVVRNLnXctD8I4pr0vA71Oz3kydpDXpQ/S2NC01W16qxXS4QynySpdEcSex1W7
+	 rrBHKfcT0FIkyOwXaXHtycQhpKBV67jDgT8HmAaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	soopyc <cassie@soopy.moe>,
-	Sasha Finkelstein <k@chaosmail.tech>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Aditya Garg <gargaditya08@live.com>
-Subject: [PATCH 6.18 113/188] drm/appletbdrm: Use kvzalloc for big allocations
-Date: Fri, 15 May 2026 17:48:50 +0200
-Message-ID: <20260515154659.781487940@linuxfoundation.org>
+	Amir Shetaia <Amir.Shetaia@amd.com>,
+	Alysa Liu <Alysa.Liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 114/188] drm/amdkfd: validate SVM ioctl nattr against buffer size
+Date: Fri, 15 May 2026 17:48:51 +0200
+Message-ID: <20260515154659.804050075@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -52,46 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Finkelstein <k@chaosmail.tech>
+From: Alysa Liu <Alysa.Liu@amd.com>
 
-commit aaaa684bab1f6d9ecfc49db328facb1771fd0eb2 upstream.
+commit 045e0ff208f0838a246c10204105126611b267a1 upstream.
 
-This driver is attached to a ~2000x80 screen, which is a lot more than
-a single page. This causes out of memory errors in some rare cases.
+Validate nattr field against the buffer size, preventing
+out-of-bounds buffer access via user-controlled attribute count.
 
-Reported-by: soopyc <cassie@soopy.moe>
-Closes: https://github.com/t2linux/fedora/issues/51
-Signed-off-by: Sasha Finkelstein <k@chaosmail.tech>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Aditya Garg <gargaditya08@live.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 0670c2f56e45 ("drm/tiny: add driver for Apple Touch Bars in x86 Macs")
-Cc: <stable@vger.kernel.org> # v6.15+
-Link: https://patch.msgid.link/20260420-x86-tb-vmalloc-v1-1-7757ff657223@chaosmail.tech
+Reviewed-by: Amir Shetaia <Amir.Shetaia@amd.com>
+Signed-off-by: Alysa Liu <Alysa.Liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5eca8bfdfa456c3304ca77523718fe24254c172f)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tiny/appletbdrm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |   26 ++++++++++++++++++++++++--
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h    |    3 +++
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/tiny/appletbdrm.c
-+++ b/drivers/gpu/drm/tiny/appletbdrm.c
-@@ -353,7 +353,7 @@ static int appletbdrm_primary_plane_help
- 		       frames_size +
- 		       sizeof(struct appletbdrm_fb_request_footer), 16);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -25,6 +25,7 @@
+ #include <linux/err.h>
+ #include <linux/fs.h>
+ #include <linux/file.h>
++#include <linux/overflow.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+ #include <linux/uaccess.h>
+@@ -1676,6 +1677,16 @@ static int kfd_ioctl_smi_events(struct f
+ 	return kfd_smi_event_open(pdd->dev, &args->anon_fd);
+ }
  
--	appletbdrm_state->request = kzalloc(request_size, GFP_KERNEL);
-+	appletbdrm_state->request = kvzalloc(request_size, GFP_KERNEL);
++static int kfd_ioctl_svm_validate(void *kdata, unsigned int usize)
++{
++	struct kfd_ioctl_svm_args *args = kdata;
++	size_t expected = struct_size(args, attrs, args->nattr);
++
++	if (expected == SIZE_MAX || usize < expected)
++		return -EINVAL;
++	return 0;
++}
++
+ #if IS_ENABLED(CONFIG_HSA_AMD_SVM)
  
- 	if (!appletbdrm_state->request)
- 		return -ENOMEM;
-@@ -543,7 +543,7 @@ static void appletbdrm_primary_plane_des
- {
- 	struct appletbdrm_plane_state *appletbdrm_state = to_appletbdrm_plane_state(state);
+ static int kfd_ioctl_set_xnack_mode(struct file *filep,
+@@ -3122,7 +3133,11 @@ out:
  
--	kfree(appletbdrm_state->request);
-+	kvfree(appletbdrm_state->request);
- 	kfree(appletbdrm_state->response);
+ #define AMDKFD_IOCTL_DEF(ioctl, _func, _flags) \
+ 	[_IOC_NR(ioctl)] = {.cmd = ioctl, .func = _func, .flags = _flags, \
+-			    .cmd_drv = 0, .name = #ioctl}
++			    .validate = NULL, .cmd_drv = 0, .name = #ioctl}
++
++#define AMDKFD_IOCTL_DEF_V(ioctl, _func, _validate, _flags) \
++	[_IOC_NR(ioctl)] = {.cmd = ioctl, .func = _func, .flags = _flags, \
++			    .validate = _validate, .cmd_drv = 0, .name = #ioctl}
  
- 	__drm_gem_destroy_shadow_plane_state(&appletbdrm_state->base);
+ /** Ioctl table */
+ static const struct amdkfd_ioctl_desc amdkfd_ioctls[] = {
+@@ -3219,7 +3234,8 @@ static const struct amdkfd_ioctl_desc am
+ 	AMDKFD_IOCTL_DEF(AMDKFD_IOC_SMI_EVENTS,
+ 			kfd_ioctl_smi_events, 0),
+ 
+-	AMDKFD_IOCTL_DEF(AMDKFD_IOC_SVM, kfd_ioctl_svm, 0),
++	AMDKFD_IOCTL_DEF_V(AMDKFD_IOC_SVM, kfd_ioctl_svm,
++			   kfd_ioctl_svm_validate, 0),
+ 
+ 	AMDKFD_IOCTL_DEF(AMDKFD_IOC_SET_XNACK_MODE,
+ 			kfd_ioctl_set_xnack_mode, 0),
+@@ -3341,6 +3357,12 @@ static long kfd_ioctl(struct file *filep
+ 		memset(kdata, 0, usize);
+ 	}
+ 
++	if (ioctl->validate) {
++		retcode = ioctl->validate(kdata, usize);
++		if (retcode)
++			goto err_i1;
++	}
++
+ 	retcode = func(filep, process, kdata);
+ 
+ 	if (cmd & IOC_OUT)
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -1036,10 +1036,13 @@ extern struct srcu_struct kfd_processes_
+ typedef int amdkfd_ioctl_t(struct file *filep, struct kfd_process *p,
+ 				void *data);
+ 
++typedef int amdkfd_ioctl_validate_t(void *kdata, unsigned int usize);
++
+ struct amdkfd_ioctl_desc {
+ 	unsigned int cmd;
+ 	int flags;
+ 	amdkfd_ioctl_t *func;
++	amdkfd_ioctl_validate_t *validate;
+ 	unsigned int cmd_drv;
+ 	const char *name;
+ };
 
 
