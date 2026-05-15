@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFD73FF1DF;
-	Fri, 15 May 2026 15:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECB117AE11;
+	Fri, 15 May 2026 15:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860271; cv=none; b=gN1exDT7+EF9uwgPCvrVPzYXUZZORclknNPb+9700Lam4Ye6zUHVWhdp1/wp1SEJUBUJ9mPitvUSRaIoVyFMdeil/qqI5ziT6fX6tBbjYYCjRdLlYonrESrdddhIxFTc7oZ42HHMk65u/j2UQLxKGU0kDtQn1AiCJDH2TdU6XR4=
+	t=1778860273; cv=none; b=uuXE9XVIS8nR+nxXj0fKEoVBxEFiYQRwlewhA4zteP+h+9TwAhAxodDHuN+dTGA92/MfPUAuLRh8oEDtL/RhtT/BFzSs734j3Wgnw2sypPFZ0hSnw45c3zJ9jzM/qrcnvzAvTikUHYbADD6loh27GI7gLxjWBnHeVYNoPLz6yBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860271; c=relaxed/simple;
-	bh=Xbmy9MykpMQYzxwut0y0QPSdDNi0A38fsMzhZJ7z+UY=;
+	s=arc-20240116; t=1778860273; c=relaxed/simple;
+	bh=uFc+fG3WqSC2L3LkRGbYjWor5FHv6Zzr/lSXHoiN0cQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFM5mKfcUWfyolT2WCup8QavTjvjw+3NzCul0zSPlo60BTvx8/CPT8GHhvhSDdreTvfKhGTzOXG48TmRIl2bSfR/38E1whbbchn451ogcg8j1qJqBJbnPZqsLe5SxRBjeQUsa9h3qBY2ixPs3emW++kD0/maMySQY+Of/blyAfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1B7diAOL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R8kbP5VX8R0cJFHCvth2UMCoQLvJ4tzPfZAHnGCbm/cFpdLvI1qSDb3mR8NKNGJspUipV3GlFTCWSyblrYC7wB1l1npTDQGAcVD8byamNnn+DO1ipnGMVzuXlpla92VmTIt48Tbjdg5vFIWVI4SbVgjPAZMhy1GEO1Po6GjTL9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0txPRF8d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1B7diAOL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79DE6C2BCB3;
-	Fri, 15 May 2026 15:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0txPRF8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FCFC2BCB3;
+	Fri, 15 May 2026 15:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860270;
-	bh=Xbmy9MykpMQYzxwut0y0QPSdDNi0A38fsMzhZJ7z+UY=;
+	s=korg; t=1778860273;
+	bh=uFc+fG3WqSC2L3LkRGbYjWor5FHv6Zzr/lSXHoiN0cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1B7diAOLagMbHUGAxvcE2oeXMKjAcVN06co3LXkzFw2XPXrG0b5yWuNEXKXqiEy6M
-	 aK29STpyt0d652KJ+tNAB3HarC75VGlKqwOuDib6oVyGeCrnBCS0bcbLMVWnpesr0e
-	 JYiz/yfrnUrPqs+ns6WnBDJ3vj7LU1quV0CsjaA4=
+	b=0txPRF8dmrRTCk9ku77izTBmEtRuIAZxLgHb37ZFXjHn/4AEnp+9hnNFxhS6hWlhX
+	 NnP+xbxcLrrOTMALTLosnxYuGXtx4M9e87sCekgYAxm4q/SOqYAFWUiuNZMh9uoHBD
+	 8TB6CQpVF9ZI8QTRJiE6y6OHLv+tSEAt/+rBOrwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 025/144] spi: meson-spicc: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:31 +0200
-Message-ID: <20260515154654.088791945@linuxfoundation.org>
+Subject: [PATCH 6.12 026/144] spi: qup: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:32 +0200
+Message-ID: <20260515154654.112882315@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -53,47 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 77953c76bec9af4191f8692a10225dd816208718 upstream.
+commit 443e3a0005a4342b218b6dbd4c6387d3c7fed85a upstream.
 
-Make sure to deregister the controller before disabling it to allow SPI
-device drivers to do I/O during deregistration.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-Fixes: 454fa271bc4e ("spi: Add Meson SPICC driver")
-Cc: stable@vger.kernel.org	# 4.13
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: 64ff247a978f ("spi: Add Qualcomm QUP SPI controller support")
+Cc: stable@vger.kernel.org	# 3.15
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260409120419.388546-18-johan@kernel.org
+Link: https://patch.msgid.link/20260410081757.503099-10-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-meson-spicc.c |    8 +++++++-
+ drivers/spi/spi-qup.c |    8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-meson-spicc.c
-+++ b/drivers/spi/spi-meson-spicc.c
-@@ -883,7 +883,7 @@ static int meson_spicc_probe(struct plat
- 		}
- 	}
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -1194,7 +1194,7 @@ static int spi_qup_probe(struct platform
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
+-	ret = devm_spi_register_controller(dev, host);
 +	ret = spi_register_controller(host);
- 	if (ret) {
- 		dev_err(&pdev->dev, "spi registration failed\n");
- 		goto out_host;
-@@ -901,8 +901,14 @@ static void meson_spicc_remove(struct pl
- {
- 	struct meson_spicc_device *spicc = platform_get_drvdata(pdev);
+ 	if (ret)
+ 		goto disable_pm;
  
-+	spi_controller_get(spicc->host);
+@@ -1321,6 +1321,10 @@ static void spi_qup_remove(struct platfo
+ 	struct spi_qup *controller = spi_controller_get_devdata(host);
+ 	int ret;
+ 
++	spi_controller_get(host);
 +
-+	spi_unregister_controller(spicc->host);
++	spi_unregister_controller(host);
 +
- 	/* Disable SPI */
- 	writel(0, spicc->base + SPICC_CONREG);
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+ 
+ 	if (ret >= 0) {
+@@ -1340,6 +1344,8 @@ static void spi_qup_remove(struct platfo
+ 
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 +
-+	spi_controller_put(spicc->host);
++	spi_controller_put(host);
  }
  
- static const struct meson_spicc_data meson_spicc_gx_data = {
+ static const struct of_device_id spi_qup_dt_match[] = {
 
 
