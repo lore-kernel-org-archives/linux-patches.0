@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A5D48C8BE;
-	Fri, 15 May 2026 16:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D114963A1;
+	Fri, 15 May 2026 16:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861944; cv=none; b=XzR/Lcz9kp/iOqx/Xqu/0Jt9aASr4//BK1X+1M8M7kWiY3B2yhNd76Dq+Bdy8Zy/Ofpq37uNBof3Xpi/3A1wN9IHPhGSgM02uM+z1p+VsLXABZY/p1lpNpHD1lYICiumXVPt6WO0IyMH2heViAdcx2mUtfEHWzOHB8WCt0EvptM=
+	t=1778861947; cv=none; b=f6eqbXbw+sw5A/Fvyvt++HHz5hhTb5TmyxkUtdTVbRwLdYgKhEqDRwraRlr6pSVWWhNiux3nT0VkoQAiOgP/0MgQAQE82IXpmGeBQXt2C3LJWYnJptzywEVONPPrwx1hZ6kREut7OF2X3tBBm9WOWDhF7dtZlc3yMEUCiPlHRTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861944; c=relaxed/simple;
-	bh=sjiIvNU8hvcP63FRuk2/Hf49j7yEx1/xRXitfss440M=;
+	s=arc-20240116; t=1778861947; c=relaxed/simple;
+	bh=Sklpkppusjp3+jC+HVFvTdDsUoKhd4Jbc6tzoOy/3Ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JyZ8rJSkWCp2NtZa3XkNkyCUvnSVX/jCfU0TLQDZVU+GUaMYIq55u5lBPtciOmJtZGtwo/yAIjzl4/les4qquJJMH2mPVHnBKqaBPTTKq+Rk0bSgi0tVehxb9MBqVD9c0CAAe0KnIFPs3cYgB60H5whEJWawaUhHa51eE3A0syw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BBRynbq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S2uCBlnalRV/XWjrXWHvNP/HvTjD4JXUhGY154vg7NZh6Vy6i9dUEBvRSkyJEReul/4S20BpqaGnAUedq5LJSzG1F4x+oMugBWpRH5CzhngH2z8PW7HvfjVNhfAZZ0gSJIN3dMHdnO7+KYF0H3UgG58nfYBXUVhezYw4OhV+kkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBjWpjHS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BBRynbq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F0DC2BCB3;
-	Fri, 15 May 2026 16:19:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBjWpjHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDC9C2BCB0;
+	Fri, 15 May 2026 16:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861944;
-	bh=sjiIvNU8hvcP63FRuk2/Hf49j7yEx1/xRXitfss440M=;
+	s=korg; t=1778861947;
+	bh=Sklpkppusjp3+jC+HVFvTdDsUoKhd4Jbc6tzoOy/3Ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2BBRynbqfh9IanQvIHX24/saaKg51ojjXg7A4LRK6SghxwnvhWcOphOMItLnHa92j
-	 Hp1idhC+8+ev9b3uzV8CVH1RCWtVwnniSUOh1320z9DjQp97q6DgPQnkJOIkfjcB8k
-	 kmWiCWFftQORtr5vOO91+UkOXfS/lARaEB0bq6YE=
+	b=sBjWpjHSURfL2+WONFZN/lI8LC736JLy/eHqoJqM+ZbA+KI5/KJbycIsCDwkQyJpp
+	 byBMtfgLQAG+4ahB2RzDo0KXJhMdEIC3xEfRcIWHR30jDDvm7HLS/HnWnBjQCzfxzM
+	 VDca0MtvZL/0YslD6iBpFh6DZTKgntFlhcN1EhK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@linutronix.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Rasmus Villemoes <ravi@prevas.dk>
-Subject: [PATCH 6.18 047/188] arm64: dts: broadcom: bcm2712-d-rpi-5-b: update uart10 interrupt
-Date: Fri, 15 May 2026 17:47:44 +0200
-Message-ID: <20260515154658.337368542@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 048/188] media: pci: zoran: fix potential memory leak in zoran_probe()
+Date: Fri, 15 May 2026 17:47:45 +0200
+Message-ID: <20260515154658.357666036@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -51,31 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregor Herburger <gregor.herburger@linutronix.de>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 18d4a06e10051681de074a9250e54afc1f3ee312 upstream.
+commit 8ea21435fe36fb853706f4935d78bc11beb63fb4 upstream.
 
-On the -d revision of bcm2712 the uart interrupt is on 120. Update it
-accordingly.
+The memory allocated for codec in videocodec_attach() is not freed in
+one of the error paths, due to an incorrect goto label. Fix the label
+to free it on error.
 
-Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
-Link: https://lore.kernel.org/r/20260226-raspi-dts-updates-v1-6-60832d20ff04@linutronix.de
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: Rasmus Villemoes <ravi@prevas.dk>
+Fixes: 8f7cc5c0b0eb ("media: staging: media: zoran: introduce zoran_i2c_init")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/pci/zoran/zoran_card.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
-+++ b/arch/arm64/boot/dts/broadcom/bcm2712-d-rpi-5-b.dts
-@@ -45,3 +45,7 @@
- 	compatible = "brcm,bcm2712d0-aon-pinctrl";
- 	reg = <0x7d510700 0x1c>;
- };
-+
-+&uart10 {
-+	interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
-+};
+--- a/drivers/media/pci/zoran/zoran_card.c
++++ b/drivers/media/pci/zoran/zoran_card.c
+@@ -1373,7 +1373,7 @@ static int zoran_probe(struct pci_dev *p
+ 		}
+ 		if (zr->codec->type != zr->card.video_codec) {
+ 			pci_err(pdev, "%s - wrong codec\n", __func__);
+-			goto zr_unreg_videocodec;
++			goto zr_detach_codec;
+ 		}
+ 	}
+ 	if (zr->card.video_vfe != 0) {
 
 
