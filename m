@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546753FD94F;
-	Fri, 15 May 2026 16:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070F33246FE;
+	Fri, 15 May 2026 16:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862178; cv=none; b=nSnF1jFBLwtzNj7qUU+Kqza3njM3CZXRY3ojrj9j3hNNaOgA1hrSDR5nwo4UZHV0OEXvmq97jYdgGaJ/HEvkm/4Tb0yajaKPq8nNkJaek1Vr+68n76qwNWyfsvYAjFgrvFEm26I0a2LIFEvqgpwp/RoeLrMIcW2IcNbXDFUdU/E=
+	t=1778862181; cv=none; b=FaptZrITMP6DFO9d+0t/wlQHn0lFtVxvXBXtffIWobLWNnbahJqn4WB0tBT9ZDSZFeOFv9ZqQwVozOCtkAmpsYingH6mpJZer3Zo6MRHrstaBbcjcD2zQOwto2foKuneLWqII9tRPoglqSRKFt1cVzLOdaBmLqiOAvGNeZJUE3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862178; c=relaxed/simple;
-	bh=dFDaohPD85a3DfsYS/KhKOawT5jfE5PS7LkV2lxznUI=;
+	s=arc-20240116; t=1778862181; c=relaxed/simple;
+	bh=S0/qdXpkhcpRb1YTTGChMSpUjaZgf/+RU6h86bBIuno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/F6MbYzAEVHGWqU7Vy5q3rG738DcN6Cjuw0uhoaRTnU4aVGTv2qX3OqXjfS9/yOqtupR21XpmnIgZV60bjU7H+owOE4Y8U1kAy5Hxdc7k9TqNrmBj7IcrrTj/i/ZRE8Y9fwBVIeY8EwvTCmc1oB5h9yg5ye3+9xPmqbXSWQj/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1YBUhUr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WYPS03UyqqRHNG/PhzezVXW9A1txYFNHEm3gyz5WT5/GAiIGLAdKY2mo35PriBDwnssiOhUS9f+JxT8Qb5z7MY/fUgTWZONe9CL7Ti3ySf/tfk0iqRJuCpqVRnsawnpk+nSFkUcfV8WNa5k5HG5x0Y8Uq8IUVrZLWDVix+AZe8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYINeBUB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1YBUhUr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85CFC2BCB0;
-	Fri, 15 May 2026 16:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYINeBUB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CB9C2BCB0;
+	Fri, 15 May 2026 16:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862178;
-	bh=dFDaohPD85a3DfsYS/KhKOawT5jfE5PS7LkV2lxznUI=;
+	s=korg; t=1778862180;
+	bh=S0/qdXpkhcpRb1YTTGChMSpUjaZgf/+RU6h86bBIuno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1YBUhUr0mohPzw2mwFPxKpLoU3nUcS1Ad8MpGLWzrzG7+Fz/ekahYPHmeEXOeo+S
-	 EJ5ExFZVazsFce1Gep/Zvh9ImcuXKexlscZJlNZE2peM856tMkQHGIUnhB8XrPif5o
-	 //81ZnEVqDm8+SpZLLCI8VkkPquGHaAiWThbogMo=
+	b=VYINeBUBIo6xIXljKZ4MydZEeK6g1s9B8huy3UOFuVg7mL8WnrYCTQXmnAr5Tj6Xa
+	 VaO/THnRv457sHgOS/vBG26byv42GzD5O1f/itK5Sc3VefbxqZQHymtu/vrx8OATKs
+	 1thhb7PEKLGTcUwxR+2UnZ7bJtU7tSbEVM9vZnGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -36,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiexun Wang <wangjiexun2025@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.18 137/188] batman-adv: reject new tp_meter sessions during teardown
-Date: Fri, 15 May 2026 17:49:14 +0200
-Message-ID: <20260515154700.300185205@linuxfoundation.org>
+Subject: [PATCH 6.18 138/188] batman-adv: stop tp_meter sessions during mesh teardown
+Date: Fri, 15 May 2026 17:49:15 +0200
+Message-ID: <20260515154700.320840437@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -59,10 +59,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-commit 3243543592425beec83d453793e9d27caa0d8e66 upstream.
+commit 3d3cf6a7314aca4df0a6dde28ce784a2a30d0166 upstream.
 
-Prevent tp_meter from starting new sender or receiver sessions after
-mesh_state has left BATADV_MESH_ACTIVE.
+TP meter sessions remain linked on bat_priv->tp_list after the netlink
+request has already finished. When the mesh interface is removed,
+batadv_mesh_free() currently tears down the mesh without first draining
+these sessions.
+
+A running sender thread or a late incoming tp_meter packet can then keep
+processing against a mesh instance which is already shutting down.
+Synchronize tp_meter with the mesh lifetime by stopping all active
+sessions from batadv_mesh_free() and waiting for sender threads to exit
+before teardown continues.
 
 Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
 Cc: stable@kernel.org
@@ -77,57 +85,205 @@ Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ net/batman-adv/main.c     |    1 
+ net/batman-adv/tp_meter.c |   94 +++++++++++++++++++++++++++++++++++++---------
+ net/batman-adv/tp_meter.h |    1 
+ net/batman-adv/types.h    |    4 +
+ 4 files changed, 82 insertions(+), 18 deletions(-)
 
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -249,6 +249,7 @@ void batadv_mesh_free(struct net_device
+ 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
+ 
+ 	batadv_purge_outstanding_packets(bat_priv, NULL);
++	batadv_tp_stop_all(bat_priv);
+ 
+ 	batadv_gw_node_free(bat_priv);
+ 
 --- a/net/batman-adv/tp_meter.c
 +++ b/net/batman-adv/tp_meter.c
-@@ -947,6 +947,13 @@ void batadv_tp_start(struct batadv_priv
+@@ -12,6 +12,7 @@
+ #include <linux/byteorder/generic.h>
+ #include <linux/cache.h>
+ #include <linux/compiler.h>
++#include <linux/completion.h>
+ #include <linux/container_of.h>
+ #include <linux/err.h>
+ #include <linux/etherdevice.h>
+@@ -365,23 +366,38 @@ static void batadv_tp_vars_put(struct ba
+ }
  
- 	/* look for an already existing test towards this node */
- 	spin_lock_bh(&bat_priv->tp_list_lock);
-+	if (atomic_read(&bat_priv->mesh_state) != BATADV_MESH_ACTIVE) {
-+		spin_unlock_bh(&bat_priv->tp_list_lock);
-+		batadv_tp_batctl_error_notify(BATADV_TP_REASON_DST_UNREACHABLE,
-+					      dst, bat_priv, session_cookie);
+ /**
+- * batadv_tp_sender_cleanup() - cleanup sender data and drop and timer
+- * @bat_priv: the bat priv with all the mesh interface information
+- * @tp_vars: the private data of the current TP meter session to cleanup
++ * batadv_tp_list_detach() - remove tp session from mesh session list once
++ * @tp_vars: the private data of the current TP meter session
+  */
+-static void batadv_tp_sender_cleanup(struct batadv_priv *bat_priv,
+-				     struct batadv_tp_vars *tp_vars)
++static void batadv_tp_list_detach(struct batadv_tp_vars *tp_vars)
+ {
+-	cancel_delayed_work(&tp_vars->finish_work);
++	bool detached = false;
+ 
+ 	spin_lock_bh(&tp_vars->bat_priv->tp_list_lock);
+-	hlist_del_rcu(&tp_vars->list);
++	if (!hlist_unhashed(&tp_vars->list)) {
++		hlist_del_init_rcu(&tp_vars->list);
++		detached = true;
++	}
+ 	spin_unlock_bh(&tp_vars->bat_priv->tp_list_lock);
+ 
++	if (!detached)
 +		return;
++
++	atomic_dec(&tp_vars->bat_priv->tp_num);
++
+ 	/* drop list reference */
+ 	batadv_tp_vars_put(tp_vars);
++}
+ 
+-	atomic_dec(&tp_vars->bat_priv->tp_num);
++/**
++ * batadv_tp_sender_cleanup() - cleanup sender data and drop and timer
++ * @tp_vars: the private data of the current TP meter session to cleanup
++ */
++static void batadv_tp_sender_cleanup(struct batadv_tp_vars *tp_vars)
++{
++	cancel_delayed_work_sync(&tp_vars->finish_work);
++
++	batadv_tp_list_detach(tp_vars);
+ 
+ 	/* kill the timer and remove its reference */
+ 	timer_delete_sync(&tp_vars->timer);
+@@ -886,7 +902,8 @@ out:
+ 	batadv_orig_node_put(orig_node);
+ 
+ 	batadv_tp_sender_end(bat_priv, tp_vars);
+-	batadv_tp_sender_cleanup(bat_priv, tp_vars);
++	batadv_tp_sender_cleanup(tp_vars);
++	complete(&tp_vars->finished);
+ 
+ 	batadv_tp_vars_put(tp_vars);
+ 
+@@ -918,7 +935,8 @@ static void batadv_tp_start_kthread(stru
+ 		batadv_tp_vars_put(tp_vars);
+ 
+ 		/* cleanup of failed tp meter variables */
+-		batadv_tp_sender_cleanup(bat_priv, tp_vars);
++		batadv_tp_sender_cleanup(tp_vars);
++		complete(&tp_vars->finished);
+ 		return;
+ 	}
+ 
+@@ -1024,6 +1042,7 @@ void batadv_tp_start(struct batadv_priv
+ 	tp_vars->start_time = jiffies;
+ 
+ 	init_waitqueue_head(&tp_vars->more_bytes);
++	init_completion(&tp_vars->finished);
+ 
+ 	spin_lock_init(&tp_vars->unacked_lock);
+ 	INIT_LIST_HEAD(&tp_vars->unacked_list);
+@@ -1126,14 +1145,7 @@ static void batadv_tp_receiver_shutdown(
+ 		   "Shutting down for inactivity (more than %dms) from %pM\n",
+ 		   BATADV_TP_RECV_TIMEOUT, tp_vars->other_end);
+ 
+-	spin_lock_bh(&tp_vars->bat_priv->tp_list_lock);
+-	hlist_del_rcu(&tp_vars->list);
+-	spin_unlock_bh(&tp_vars->bat_priv->tp_list_lock);
+-
+-	/* drop list reference */
+-	batadv_tp_vars_put(tp_vars);
+-
+-	atomic_dec(&bat_priv->tp_num);
++	batadv_tp_list_detach(tp_vars);
+ 
+ 	spin_lock_bh(&tp_vars->unacked_lock);
+ 	list_for_each_entry_safe(un, safe, &tp_vars->unacked_list, list) {
+@@ -1497,6 +1509,52 @@ out:
+ }
+ 
+ /**
++ * batadv_tp_stop_all() - stop all currently running tp meter sessions
++ * @bat_priv: the bat priv with all the mesh interface information
++ */
++void batadv_tp_stop_all(struct batadv_priv *bat_priv)
++{
++	struct batadv_tp_vars *tp_vars[BATADV_TP_MAX_NUM];
++	struct batadv_tp_vars *tp_var;
++	size_t count = 0;
++	size_t i;
++
++	spin_lock_bh(&bat_priv->tp_list_lock);
++	hlist_for_each_entry(tp_var, &bat_priv->tp_list, list) {
++		if (WARN_ON_ONCE(count >= BATADV_TP_MAX_NUM))
++			break;
++
++		if (!kref_get_unless_zero(&tp_var->refcount))
++			continue;
++
++		tp_vars[count++] = tp_var;
++	}
++	spin_unlock_bh(&bat_priv->tp_list_lock);
++
++	for (i = 0; i < count; i++) {
++		tp_var = tp_vars[i];
++
++		switch (tp_var->role) {
++		case BATADV_TP_SENDER:
++			batadv_tp_sender_shutdown(tp_var,
++						  BATADV_TP_REASON_CANCEL);
++			wake_up(&tp_var->more_bytes);
++			wait_for_completion(&tp_var->finished);
++			break;
++		case BATADV_TP_RECEIVER:
++			batadv_tp_list_detach(tp_var);
++			if (timer_shutdown_sync(&tp_var->timer))
++				batadv_tp_vars_put(tp_var);
++			break;
++		}
++
++		batadv_tp_vars_put(tp_var);
 +	}
 +
- 	tp_vars = batadv_tp_list_find(bat_priv, dst);
- 	if (tp_vars) {
- 		spin_unlock_bh(&bat_priv->tp_list_lock);
-@@ -1329,9 +1336,12 @@ static struct batadv_tp_vars *
- batadv_tp_init_recv(struct batadv_priv *bat_priv,
- 		    const struct batadv_icmp_tp_packet *icmp)
- {
--	struct batadv_tp_vars *tp_vars;
-+	struct batadv_tp_vars *tp_vars = NULL;
- 
- 	spin_lock_bh(&bat_priv->tp_list_lock);
-+	if (atomic_read(&bat_priv->mesh_state) != BATADV_MESH_ACTIVE)
-+		goto out_unlock;
++	synchronize_net();
++}
 +
- 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
- 					      icmp->session);
- 	if (tp_vars)
-@@ -1464,6 +1474,9 @@ void batadv_tp_meter_recv(struct batadv_
- {
- 	struct batadv_icmp_tp_packet *icmp;
++/**
+  * batadv_tp_meter_init() - initialize global tp_meter structures
+  */
+ void __init batadv_tp_meter_init(void)
+--- a/net/batman-adv/tp_meter.h
++++ b/net/batman-adv/tp_meter.h
+@@ -17,6 +17,7 @@ void batadv_tp_start(struct batadv_priv
+ 		     u32 test_length, u32 *cookie);
+ void batadv_tp_stop(struct batadv_priv *bat_priv, const u8 *dst,
+ 		    u8 return_value);
++void batadv_tp_stop_all(struct batadv_priv *bat_priv);
+ void batadv_tp_meter_recv(struct batadv_priv *bat_priv, struct sk_buff *skb);
  
-+	if (atomic_read(&bat_priv->mesh_state) != BATADV_MESH_ACTIVE)
-+		goto out;
-+
- 	icmp = (struct batadv_icmp_tp_packet *)skb->data;
+ #endif /* _NET_BATMAN_ADV_TP_METER_H_ */
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -14,6 +14,7 @@
+ #include <linux/average.h>
+ #include <linux/bitops.h>
+ #include <linux/compiler.h>
++#include <linux/completion.h>
+ #include <linux/if.h>
+ #include <linux/if_ether.h>
+ #include <linux/kref.h>
+@@ -1328,6 +1329,9 @@ struct batadv_tp_vars {
+ 	/** @finish_work: work item for the finishing procedure */
+ 	struct delayed_work finish_work;
  
- 	switch (icmp->subtype) {
-@@ -1478,6 +1491,8 @@ void batadv_tp_meter_recv(struct batadv_
- 			   "Received unknown TP Metric packet type %u\n",
- 			   icmp->subtype);
- 	}
++	/** @finished: completion signaled when a sender thread exits */
++	struct completion finished;
 +
-+out:
- 	consume_skb(skb);
- }
+ 	/** @test_length: test length in milliseconds */
+ 	u32 test_length;
  
 
 
