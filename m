@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA573FF1D1;
-	Fri, 15 May 2026 15:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC50E3FF1CD;
+	Fri, 15 May 2026 15:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860245; cv=none; b=Ytat31AcbTh6OcY953bU6NovrhkhRoSZVCT/0ep7AhmM+tQ48xQQPCCjSfek7rlDPC2yL+KAichMLThIp7WC89UlRosKyyn8W0c8EHlC+879jEDgXipvxJ08Z374uPJelu1iPI2Qd3ln6IHXLBmhmX35TGGSPs+sIrX6W1V0hMc=
+	t=1778860247; cv=none; b=eeUE+1THmbQwKqqiM9yPsciMyxng3BTYi+D/GvP2qebfluap07CLGHsQKxXbXxg9L9x1RHidqZALQqpp2pUyFe62++En8bTMB4wRF/sxZzH/deahC1/4JZgscZGLkQTOUIRKQh/9CGyxEh+X3Ofu6Uj5DZz9oz/3r34owD9IU1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860245; c=relaxed/simple;
-	bh=YQ69Gp1ahuela7vBIf2o3miE7qq3XcKWC3oKEamnlH0=;
+	s=arc-20240116; t=1778860247; c=relaxed/simple;
+	bh=DIuksUh/VS9rkl2r3uxD2UGdrPh7GrTwxTb5vv/a5y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZ1Odo/rtjE3M+JiC4Q7IGg+tefSwQKvOdXmEbPk3tAEvTvMb3cjtLZkfNTlTBoPbfr9pPfB9e3YpyUvM+r2VPzvAm9qHf/v9i2Rlda3k5BHMw5NfTlSxOFze2kszOwMQV7grkA+iJ1y4SmwXKxbQW0//ITXKuA/rl4j5mcsTYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6sz3ScA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTXzEqGBHX1grDUBIqXztXTCTfe+fhhOiUuPhCQIQnQsLGNKu+eG9uB1nnm6BDepikjz7uHSya10DKJYCIzp0K563pAS9SIdEWNCSdTTfKb6LTcAxPCHlQ+ig2bMvgZXIj4yNUDmOMxFhpvQm9pp25hImUKnsh6iR+RTFZgOm/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpJwntfG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6sz3ScA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780F1C2BCB0;
-	Fri, 15 May 2026 15:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpJwntfG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D3FC2BCB0;
+	Fri, 15 May 2026 15:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860244;
-	bh=YQ69Gp1ahuela7vBIf2o3miE7qq3XcKWC3oKEamnlH0=;
+	s=korg; t=1778860247;
+	bh=DIuksUh/VS9rkl2r3uxD2UGdrPh7GrTwxTb5vv/a5y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6sz3ScA31fezjozw57B6gyc+4ETvJxcKQNqU02M0WHAKQbd6itySlGfjUVfC8Dhc
-	 48sNtCAA9iezA3L0MfgVGT49RvpnztybaaxNWLXPyBEShe+5j0hRTG+w2C4Vc46h4Q
-	 MzmnN5jtjsDgRGni0IzMorA+auCLwQ3+p0FQIReE=
+	b=cpJwntfGWcl25ywiyDDDh7ybfgyVgC8MkKfgh26yCjpqVvFgIwGuoZTOLozYoC9LU
+	 9igNm1I5DYrRxmqorjrSsMXblhMeEdaOt+1mWfozfRbSUe97/bNbhBSKqUidH/Ktxm
+	 nqfo6xwRc0afp5NhH2/4JBzVyzJRF+TJqSwllfpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoniu Zhou <guoniu.zhou@nxp.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Alexander Koskovich <akoskovich@pm.me>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 003/144] media: nxp: imx8-isi: Reduce minimum queued buffers from 2 to 0
-Date: Fri, 15 May 2026 17:47:09 +0200
-Message-ID: <20260515154653.554783112@linuxfoundation.org>
+Subject: [PATCH 6.12 004/144] media: i2c: ov8856: free control handler on error in ov8856_init_controls()
+Date: Fri, 15 May 2026 17:47:10 +0200
+Message-ID: <20260515154653.578838689@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -51,42 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoniu Zhou <guoniu.zhou@nxp.com>
+From: Alexander Koskovich <akoskovich@pm.me>
 
-commit 2f38622d0f85f317be9e6b131da6cd511db94fd2 upstream.
+commit f75e160745663ce9b13362ae6e90bd439c58df69 upstream.
 
-Fix a hang issue when capturing a single frame with applications like cam
-in libcamera. It would hang waiting for the driver to complete the buffer,
-but streaming never starts because min_queued_buffers was set to 2.
+The control handler wasn't freed if adding controls failed, add an error
+exit label and convert the existing error return to use it.
 
-The ISI module uses a ping-pong buffer mechanism that requires two buffers
-to be programmed at all times. However, when fewer than 2 user buffers are
-available, the driver use internal discard buffers to fill the remaining
-slot(s). Reduce minimum queued buffers from 2 to 0 allows streaming to
-start without any queued buffers.
-
-Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
+Fixes: 879347f0c258 ("media: ov8856: Add support for OV8856 sensor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guoniu Zhou <guoniu.zhou@nxp.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://patch.msgid.link/20260312-isi_min_buffers-v2-1-d5ea1c79ad81@nxp.com
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ov8856.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-+++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
-@@ -1416,7 +1416,7 @@ int mxc_isi_video_register(struct mxc_is
- 	q->mem_ops = &vb2_dma_contig_memops;
- 	q->buf_struct_size = sizeof(struct mxc_isi_buffer);
- 	q->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
--	q->min_queued_buffers = 2;
-+	q->min_queued_buffers = 0;
- 	q->lock = &video->lock;
- 	q->dev = pipe->isi->dev;
+--- a/drivers/media/i2c/ov8856.c
++++ b/drivers/media/i2c/ov8856.c
+@@ -1951,12 +1951,18 @@ static int ov8856_init_controls(struct o
+ 			  V4L2_CID_HFLIP, 0, 1, 1, 0);
+ 	v4l2_ctrl_new_std(ctrl_hdlr, &ov8856_ctrl_ops,
+ 			  V4L2_CID_VFLIP, 0, 1, 1, 0);
+-	if (ctrl_hdlr->error)
+-		return ctrl_hdlr->error;
++	if (ctrl_hdlr->error) {
++		ret = ctrl_hdlr->error;
++		goto err_ctrl_handler_free;
++	}
  
+ 	ov8856->sd.ctrl_handler = ctrl_hdlr;
+ 
+ 	return 0;
++
++err_ctrl_handler_free:
++	v4l2_ctrl_handler_free(ctrl_hdlr);
++	return ret;
+ }
+ 
+ static void ov8856_update_pad_format(struct ov8856 *ov8856,
 
 
