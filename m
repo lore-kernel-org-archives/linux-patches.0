@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF663E009B;
-	Fri, 15 May 2026 16:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E46E3BFE4C;
+	Fri, 15 May 2026 16:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861691; cv=none; b=lshWVz5QuYFN6r5p128CldBBHlJucOvV+fHkQnjh0ZY4bp0DyZpkZ+dpmjKZHAW0m67Qc7DxvB61hOOhEqpejFkXbv2U6CKLx0U9fPuL1UsPbBmJblrcGkENbo2Lfr4uQ8tUzYNyFG3bXaMoo2EhtOzCGKRTZtud3jRH33hPY6w=
+	t=1778861694; cv=none; b=dE28o5DBH0wWyADsPkckLmCgYmkxQrIskL1DpOLH78Smh90IppIkgo561NioOTmnicYIcYfwWcEw82/Hw2iQt/VoN1QkARfrZfcnZlKGKTCaiYv/u9pvgWb8T/W5yHSawNYQcjsbzjt/txugS0QEkKp4Uc6KZI8L0LLthVdCUfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861691; c=relaxed/simple;
-	bh=fxr+r+XTVSPkDEzI0bAxcrh3hdlsvaHUECl2182CExU=;
+	s=arc-20240116; t=1778861694; c=relaxed/simple;
+	bh=WfkakbwekN0JKu4a7OQ3gOVTjrv81kTmJFeQioPFfPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KUs7p6IGXKRgNjEaRPnRWqcIgixqLsbacY7uiVSklDfM2aoQD01OyC3axvo3Sl6MTlGJ5PJIanUsuJL7mhIUCB/xbuC8Gu4FHQmJrdenhJ+E6lJLKiYQQeH9BC0ADO+nSWd2TAKqNGBbhx0OeHWC53/37UdDqOwwwDZGpPKjHhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXHhb3Gc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H2gafJbWKpPeR9vooSBGDZdcHNUZggPXcEfNCUrW8uisrdC/P7uI70t1Z8JB0/gSYz97WQeRm2JG2ayh/YvF+s05YsV8KWX/Ko5XzSAgDh53tsVy77NZlv3fvSUzQvstjr9CgvXC8MNCTMpWwbqqxh3WUmCAZ2qxKAoQhsTMHak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gF68OBOG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXHhb3Gc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4B1C2BCB0;
-	Fri, 15 May 2026 16:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gF68OBOG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59BE3C2BCB0;
+	Fri, 15 May 2026 16:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861691;
-	bh=fxr+r+XTVSPkDEzI0bAxcrh3hdlsvaHUECl2182CExU=;
+	s=korg; t=1778861693;
+	bh=WfkakbwekN0JKu4a7OQ3gOVTjrv81kTmJFeQioPFfPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tXHhb3GcTqnLoBvR164a0dplGUmBP7MDuVA1kZSSK1+S0uXuDsrb9vHvwsLOzKmNQ
-	 jhm0UPlH2SPqMWk7mHtr5S7JGvz0pkV9FaoW9S7m7CBYw/XSvQeue6SOI9EVoMzLdO
-	 Mqb9D8Xw4yXqUj8+RD4tBhuZVpIZbeKtRhQOx8iA=
+	b=gF68OBOG7VHU4yo31dQkExtxfHycSsKKflkvvY0crwJOmLMdmw4m1hyUu43BlOfk0
+	 B1gLd4J+k1cRaN3f3YEAzf0KjL9eY9G00g0wPWPlq51NkGRn+IfhSy1/Oupymvsb31
+	 feqFlAzsDCSyItUrcuahEW5TO+rqy40bMxFVr8/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 384/474] media: rc: igorplugusb: heed coherency rules
-Date: Fri, 15 May 2026 17:48:13 +0200
-Message-ID: <20260515154723.345202069@linuxfoundation.org>
+Subject: [PATCH 6.6 385/474] block: relax pgmap check in bio_add_page for compatible zone device pages
+Date: Fri, 15 May 2026 17:48:14 +0200
+Message-ID: <20260515154723.368126709@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,82 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-[ Upstream commit eac69475b01fe1e861dfe3960b57fa95671c132e ]
+[ Upstream commit 41c665aae2b5dbecddddcc8ace344caf630cc7a4 ]
 
-In a control request, the USB request structure
-can be subject to DMA on some HCs. Hence it must obey
-the rules for DMA coherency. Allocate it separately.
+bio_add_page() and bio_integrity_add_page() reject pages from different
+dev_pagemaps entirely, returning 0 even when those pages have compatible
+DMA mapping requirements. This forces callers to start a new bio when
+buffers span pgmap boundaries, even though the pages could safely coexist
+as separate bvec entries.
 
-Fixes: b1c97193c6437 ("[media] rc: port IgorPlug-USB to rc-core")
+This matters for guests where memory is registered through
+devm_memremap_pages() with MEMORY_DEVICE_GENERIC in multiple calls,
+creating separate dev_pagemaps for each chunk. When a direct I/O buffer
+spans two such chunks, bio_add_page() rejects the second page, forcing an
+unnecessary bio split or I/O failure.
+
+Introduce zone_device_pages_compatible() in blk.h to check whether two
+pages can coexist in the same bio as separate bvec entries. The block DMA
+iterator (blk_dma_map_iter_start) caches the P2PDMA mapping state from the
+first segment and applies it to all others, so P2PDMA pages from different
+pgmaps must not be mixed, and neither must P2PDMA and non-P2PDMA pages.
+All other combinations (MEMORY_DEVICE_GENERIC pages from different pgmaps,
+or MEMORY_DEVICE_GENERIC with normal RAM) use the same dma_map_phys path
+and are safe.
+
+Replace the blanket zone_device_pages_have_same_pgmap() rejection with
+zone_device_pages_compatible(), while keeping
+zone_device_pages_have_same_pgmap() as a merge guard.
+Pages from different pgmaps can be added as separate bvec entries but
+must not be coalesced into the same segment, as that would make
+it impossible to recover the correct pgmap via page_pgmap().
+
+Fixes: 49580e690755 ("block: add check when merging zone device pages")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ replaced kzalloc_obj(*ir->request, GFP_KERNEL) with kzalloc(sizeof(*ir->request), GFP_KERNEL) ]
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260410153414.4159050-3-namjain@linux.microsoft.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ restructured combined `if` into explicit `bv` block ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/igorplugusb.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ block/bio-integrity.c |    2 ++
+ block/bio.c           |   14 +++++++++-----
+ block/blk.h           |   19 +++++++++++++++++++
+ 3 files changed, 30 insertions(+), 5 deletions(-)
 
---- a/drivers/media/rc/igorplugusb.c
-+++ b/drivers/media/rc/igorplugusb.c
-@@ -34,7 +34,7 @@ struct igorplugusb {
- 	struct device *dev;
+--- a/block/bio-integrity.c
++++ b/block/bio-integrity.c
+@@ -134,6 +134,8 @@ int bio_integrity_add_page(struct bio *b
+ 		struct bio_vec *bv = &bip->bip_vec[bip->bip_vcnt - 1];
+ 		bool same_page = false;
  
- 	struct urb *urb;
--	struct usb_ctrlrequest request;
-+	struct usb_ctrlrequest *request;
++		if (!zone_device_pages_compatible(bv->bv_page, page))
++			return 0;
+ 		if (bvec_try_merge_hw_page(q, bv, page, len, offset,
+ 					   &same_page)) {
+ 			bip->bip_iter.bi_size += len;
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -1098,11 +1098,15 @@ int bio_add_page(struct bio *bio, struct
+ 	if (bio->bi_iter.bi_size > UINT_MAX - len)
+ 		return 0;
  
- 	struct timer_list timer;
- 
-@@ -122,7 +122,7 @@ static void igorplugusb_cmd(struct igorp
- {
- 	int ret;
- 
--	ir->request.bRequest = cmd;
-+	ir->request->bRequest = cmd;
- 	ir->urb->transfer_flags = 0;
- 	ret = usb_submit_urb(ir->urb, GFP_ATOMIC);
- 	if (ret && ret != -EPERM)
-@@ -164,13 +164,17 @@ static int igorplugusb_probe(struct usb_
- 	if (!ir)
- 		return -ENOMEM;
- 
-+	ir->request = kzalloc(sizeof(*ir->request), GFP_KERNEL);
-+	if (!ir->request)
-+		goto fail;
+-	if (bio->bi_vcnt > 0 &&
+-	    bvec_try_merge_page(&bio->bi_io_vec[bio->bi_vcnt - 1],
+-				page, len, offset, &same_page)) {
+-		bio->bi_iter.bi_size += len;
+-		return len;
++	if (bio->bi_vcnt > 0) {
++		struct bio_vec *bv = &bio->bi_io_vec[bio->bi_vcnt - 1];
 +
- 	ir->dev = &intf->dev;
++		if (!zone_device_pages_compatible(bv->bv_page, page))
++			return 0;
++		if (bvec_try_merge_page(bv, page, len, offset, &same_page)) {
++			bio->bi_iter.bi_size += len;
++			return len;
++		}
+ 	}
  
- 	timer_setup(&ir->timer, igorplugusb_timer, 0);
- 
--	ir->request.bRequest = GET_INFRACODE;
--	ir->request.bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
--	ir->request.wLength = cpu_to_le16(MAX_PACKET);
-+	ir->request->bRequest = GET_INFRACODE;
-+	ir->request->bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
-+	ir->request->wLength = cpu_to_le16(MAX_PACKET);
- 
- 	ir->urb = usb_alloc_urb(0, GFP_KERNEL);
- 	if (!ir->urb)
-@@ -228,6 +232,7 @@ fail:
- 	usb_free_urb(ir->urb);
- 	rc_free_device(ir->rc);
- 	kfree(ir->buf_in);
-+	kfree(ir->request);
- 
- 	return ret;
- }
-@@ -243,6 +248,7 @@ static void igorplugusb_disconnect(struc
- 	usb_unpoison_urb(ir->urb);
- 	usb_free_urb(ir->urb);
- 	kfree(ir->buf_in);
-+	kfree(ir->request);
+ 	if (bio->bi_vcnt >= bio->bi_max_vecs)
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -104,6 +104,25 @@ static inline bool biovec_phys_mergeable
+ 	return true;
  }
  
- static const struct usb_device_id igorplugusb_table[] = {
++/*
++ * Check if two pages from potentially different zone device pgmaps can
++ * coexist as separate bvec entries in the same bio.
++ *
++ * The block DMA iterator (blk_dma_map_iter_start) caches the P2PDMA mapping
++ * state from the first segment and applies it to all subsequent segments, so
++ * P2PDMA pages from different pgmaps must not be mixed in the same bio.
++ *
++ * Other zone device types (FS_DAX, GENERIC) use the same dma_map_phys() path
++ * as normal RAM.  PRIVATE and COHERENT pages never appear in bios.
++ */
++static inline bool zone_device_pages_compatible(const struct page *a,
++						const struct page *b)
++{
++	if (is_pci_p2pdma_page(a) || is_pci_p2pdma_page(b))
++		return zone_device_pages_have_same_pgmap(a, b);
++	return true;
++}
++
+ static inline bool __bvec_gap_to_prev(const struct queue_limits *lim,
+ 		struct bio_vec *bprv, unsigned int offset)
+ {
 
 
