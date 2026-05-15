@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0233B1029;
-	Fri, 15 May 2026 16:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704E83BB12D;
+	Fri, 15 May 2026 16:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862723; cv=none; b=UH2rXMJlY0FNLnpCrRUHwNbFwja3y2U03GIcbUQBipZuETTmpzY3HDXwSSApLpzQJoRIAdtVfipjGaZLtl2ljqnL47dnU/zMXAc0BRv/0BfUmje+PDVx7UCbTEkqtUAecXnWYsqGc25jHQKbJd6ZMC0m5kxJ07hFAAF76I02iOA=
+	t=1778862726; cv=none; b=R/GBCQCbTdFZxj3Uf+blCzrbxdbIbMYCaj2E0WjwgPJRZ1AY4d88XhMv3gb+/A05i6MLnMBHMaVsal4IDU1/6T2SFnhuk+5rbn3+eKNfkAUNldpS5JmigiqSTAbvPlun/yjPyP4enPq3jgZXuf6aKKvcgVTHdQGkhXMibPSsmGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862723; c=relaxed/simple;
-	bh=Yllzd1fTkyHMOyrJfQVMuf86EC+okVhueJUngIWc2iI=;
+	s=arc-20240116; t=1778862726; c=relaxed/simple;
+	bh=P4kuDXCh6aQ71bCeu4QeFP6W9TUvWpMFgGWhSUQt//s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lmb4N5Q+tNz918QOri8C9XyNotHmY+96pUNuusXNMmlejJK2TKHB724E6h4P+wLB9Prc0Pp+9UFO5CssqaEXbKAcLjEKhn8IpiOxEoW+jkYTYa6MaDGwBZtOn+PNYRDex4csu4JSW0zC+UszdBkPL4SkD1d/RFcNuLoyUPy8shc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzVhleiI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=joIsrmqVpJSdmL0KUoJ6pdiNj500wWN5fU+9zM/USIP41YsVppx3Rhx6syqJ/t1SUVFlpcjyvC4eBQNvZnC/CdXdMOBUdX3l4EPK2d84wUGL/NGAtESEhU8Yx+HYkOXkNeYi3Pwvhhm76uN6VQIruHKsQqMnYr3UKo5XCZszC90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSRNXbOd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzVhleiI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F41C2BCB0;
-	Fri, 15 May 2026 16:32:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSRNXbOd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DD5C2BCB0;
+	Fri, 15 May 2026 16:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862723;
-	bh=Yllzd1fTkyHMOyrJfQVMuf86EC+okVhueJUngIWc2iI=;
+	s=korg; t=1778862726;
+	bh=P4kuDXCh6aQ71bCeu4QeFP6W9TUvWpMFgGWhSUQt//s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZzVhleiI6xX1vndUeDEjr1LxWLzd/bNH9H9sCN/vW/aGbAq7AU/hsZupaKsYvxe7G
-	 ap7i4DvnyhMmBsHBGN/9mpS5h8OG2e5ae6iUpSSVtX0mF9JIFzC+Vku3nLduzj6z2X
-	 jmqasFZbr1wSP9bWbtNRmVy/T+d+FQnony6eDlJ4=
+	b=mSRNXbOdsq+etnM3uLCyIetunpwutw7YhMFgWQUrw/QHAgpfRTzTLBv3GtMORSkcl
+	 4FaUpxgKUSAVFGPAmrV7GxnpAX5AWIXCA6jVAYucJGqASAm5sAQqqSRSah5J+UIg61
+	 VgKV9tZFoiM+lMVEErC7Up8E73CLccxggOVr1BW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Dillon Varone <dillon.varone@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 7.0 131/201] drm/amd/display: fix math_mod() using arg1 instead of arg2
-Date: Fri, 15 May 2026 17:49:09 +0200
-Message-ID: <20260515154701.404450024@linuxfoundation.org>
+	Sunil Khatri <sunil.khatri@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.0 158/201] drm/amdgpu/userq: fix access to stale wptr mapping
+Date: Fri, 15 May 2026 17:49:36 +0200
+Message-ID: <20260515154701.997524510@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -48,47 +45,162 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wenjing Liu <wenjing.liu@amd.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-commit 2b104fc31be0607c04188fadbd4a9fa5b50f3b99 upstream.
+commit 6da7b1242da4455b11c24ce667d1cab1a348c8ea upstream.
 
-[Why]
-math_mod() multiplied by arg1 instead of arg2, returning a wrong
-result for any non-trivial modulo operation.
+Use drm_exec to take both locks i.e vm root bo and
+wptr_obj bo to access the mapping data properly.
 
-[How]
-Replace arg1 with arg2 in the subtraction term to correctly
-implement fmod(arg1, arg2).
+This fixes the security issue of unmap the wptr_obj while
+a queue creation is in progress and passing other
+bo at same address.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Dillon Varone <dillon.varone@amd.com>
-Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1fc6c8ab45dbee096469c08c13f6099d57a52d6c)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_standalone_libraries/lib_float_math.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/mes_userqueue.c |   95 +++++++++++------------------
+ 1 file changed, 37 insertions(+), 58 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_standalone_libraries/lib_float_math.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_standalone_libraries/lib_float_math.c
-@@ -23,7 +23,7 @@ double math_mod(const double arg1, const
- 		return arg2;
- 	if (isNaN(arg2))
- 		return arg1;
--	return arg1 - arg1 * ((int)(arg1 / arg2));
-+	return arg1 - arg2 * ((int)(arg1 / arg2));
- }
+--- a/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
+@@ -31,89 +31,68 @@
+ #define AMDGPU_USERQ_GANG_CTX_SZ PAGE_SIZE
  
- double math_min2(const double arg1, const double arg2)
+ static int
+-mes_userq_map_gtt_bo_to_gart(struct amdgpu_bo *bo)
+-{
+-	int ret;
+-
+-	ret = amdgpu_bo_reserve(bo, true);
+-	if (ret) {
+-		DRM_ERROR("Failed to reserve bo. ret %d\n", ret);
+-		goto err_reserve_bo_failed;
+-	}
+-
+-	ret = amdgpu_ttm_alloc_gart(&bo->tbo);
+-	if (ret) {
+-		DRM_ERROR("Failed to bind bo to GART. ret %d\n", ret);
+-		goto err_map_bo_gart_failed;
+-	}
+-
+-	amdgpu_bo_unreserve(bo);
+-	bo = amdgpu_bo_ref(bo);
+-
+-	return 0;
+-
+-err_map_bo_gart_failed:
+-	amdgpu_bo_unreserve(bo);
+-err_reserve_bo_failed:
+-	return ret;
+-}
+-
+-static int
+ mes_userq_create_wptr_mapping(struct amdgpu_device *adev,
+ 			      struct amdgpu_userq_mgr *uq_mgr,
+ 			      struct amdgpu_usermode_queue *queue,
+ 			      uint64_t wptr)
+ {
+ 	struct amdgpu_bo_va_mapping *wptr_mapping;
+-	struct amdgpu_vm *wptr_vm;
+ 	struct amdgpu_userq_obj *wptr_obj = &queue->wptr_obj;
++	struct amdgpu_bo *obj;
++	struct amdgpu_vm *vm = queue->vm;
++	struct drm_exec exec;
+ 	int ret;
+ 
+-	wptr_vm = queue->vm;
+-	ret = amdgpu_bo_reserve(wptr_vm->root.bo, false);
+-	if (ret)
+-		return ret;
+-
+ 	wptr &= AMDGPU_GMC_HOLE_MASK;
+-	wptr_mapping = amdgpu_vm_bo_lookup_mapping(wptr_vm, wptr >> PAGE_SHIFT);
+-	amdgpu_bo_unreserve(wptr_vm->root.bo);
+-	if (!wptr_mapping) {
+-		DRM_ERROR("Failed to lookup wptr bo\n");
+-		return -EINVAL;
+-	}
+ 
+-	wptr_obj->obj = wptr_mapping->bo_va->base.bo;
+-	if (wptr_obj->obj->tbo.base.size > PAGE_SIZE) {
+-		DRM_ERROR("Requested GART mapping for wptr bo larger than one page\n");
+-		return -EINVAL;
++	drm_exec_init(&exec, DRM_EXEC_IGNORE_DUPLICATES, 2);
++	drm_exec_until_all_locked(&exec) {
++		ret = amdgpu_vm_lock_pd(vm, &exec, 1);
++		drm_exec_retry_on_contention(&exec);
++		if (unlikely(ret))
++			goto fail_lock;
++
++		wptr_mapping = amdgpu_vm_bo_lookup_mapping(vm, wptr >> PAGE_SHIFT);
++		if (!wptr_mapping) {
++			ret = -EINVAL;
++			goto fail_lock;
++		}
++
++		obj = wptr_mapping->bo_va->base.bo;
++		ret = drm_exec_lock_obj(&exec, &obj->tbo.base);
++		drm_exec_retry_on_contention(&exec);
++		if (unlikely(ret))
++			goto fail_lock;
+ 	}
+ 
+-	ret = mes_userq_map_gtt_bo_to_gart(wptr_obj->obj);
+-	if (ret) {
+-		DRM_ERROR("Failed to map wptr bo to GART\n");
+-		return ret;
++	wptr_obj->obj = amdgpu_bo_ref(wptr_mapping->bo_va->base.bo);
++	if (wptr_obj->obj->tbo.base.size > PAGE_SIZE) {
++		ret = -EINVAL;
++		goto fail_map;
+ 	}
+ 
+-	ret = amdgpu_bo_reserve(wptr_obj->obj, true);
++	/* TODO use eviction fence instead of pinning. */
++	ret = amdgpu_bo_pin(wptr_obj->obj, AMDGPU_GEM_DOMAIN_GTT);
+ 	if (ret) {
+-		DRM_ERROR("Failed to reserve wptr bo\n");
+-		return ret;
++		DRM_ERROR("Failed to pin wptr bo. ret %d\n", ret);
++		goto fail_map;
+ 	}
+ 
+-	/* TODO use eviction fence instead of pinning. */
+-	ret = amdgpu_bo_pin(wptr_obj->obj, AMDGPU_GEM_DOMAIN_GTT);
++	ret = amdgpu_ttm_alloc_gart(&wptr_obj->obj->tbo);
+ 	if (ret) {
+-		drm_file_err(uq_mgr->file, "[Usermode queues] Failed to pin wptr bo\n");
+-		goto unresv_bo;
++		DRM_ERROR("Failed to bind bo to GART. ret %d\n", ret);
++		goto fail_map;
+ 	}
+ 
+ 	queue->wptr_obj.gpu_addr = amdgpu_bo_gpu_offset(wptr_obj->obj);
+-	amdgpu_bo_unreserve(wptr_obj->obj);
+ 
++	drm_exec_fini(&exec);
+ 	return 0;
+ 
+-unresv_bo:
+-	amdgpu_bo_unreserve(wptr_obj->obj);
++fail_map:
++	amdgpu_bo_unref(&wptr_obj->obj);
++fail_lock:
++	drm_exec_fini(&exec);
+ 	return ret;
+ 
+ }
 
 
