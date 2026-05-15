@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10003FF1DE;
-	Fri, 15 May 2026 15:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7261C3FF1CD;
+	Fri, 15 May 2026 15:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860754; cv=none; b=cw/+amusKZq9AWtd4ZWzQV4iLhbREI6UpmHAKZTHDwH5kAkRfPx+/XidXDMP241A7AEdRNEmhwB9+n61p+rFU2Yrx5K5O/xlostARLuqR0xorX3RozAvjNeo3fDmOT9xh71nSpOf+mpbyskSmdwhNgnXC3NmV/L8ICs1k92QF00=
+	t=1778860756; cv=none; b=jqWgJ1JEeC+tNPjQ/ugc63IGnQvBrMBS6bJw7d28/0ZJyi2WeuPe7OevVo/yIPSXMIlubmPyMuoMqsO+Ot3jYtjA5N2avqhq62xRCtqa6racjoO9EucGLn0DZsDgK3pSutNFN6KEZSwpzMWA/WlW1I8ZbcjLL5e0pA5sNWXhXZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860754; c=relaxed/simple;
-	bh=UFzmcRo70+u5S0d8cI3dbDcTMXTU0++zEZfoAfftkY0=;
+	s=arc-20240116; t=1778860756; c=relaxed/simple;
+	bh=9hso23ufZrdlB2DImqhm21Uq+A8GEw+bldgDMtK3by0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mYXI0XNC0V5PYWSPgAYVYbXlSggJPtI6OPDmTAbjDXo8X+rc02ty5NFtOQxYseH9EbQVpmmMTpVCh03WkZ6wYXNPt186oz04Kv3TiApUcPTRztURt+Yzb7zWCBU9qqTOZ8DJB2SKiJw3if3t+6g2Xy/vGOjLtUGwGZWu3ymjxOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVG74tzS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FDLgRT7YkeB+acRi2+W8nyKEydPNBeLpQEp5bTCNpGk9QrbdCBwQwQgHhMIGjKuwJFcVQynvM5/sP6/CWaPXTnesxmNOP9qPZyRkf/Icp+5Zu/irVnjnflRQ7tNl4c0sQQrJPOBJm2lYpgMvyHTDgXTMhuQ9ZwWwRyFSyEpumjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X90NZlKZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVG74tzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77700C2BCB0;
-	Fri, 15 May 2026 15:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X90NZlKZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A56C2BCB3;
+	Fri, 15 May 2026 15:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860753;
-	bh=UFzmcRo70+u5S0d8cI3dbDcTMXTU0++zEZfoAfftkY0=;
+	s=korg; t=1778860756;
+	bh=9hso23ufZrdlB2DImqhm21Uq+A8GEw+bldgDMtK3by0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kVG74tzSMyPHXVUznUCf2B+nJb5H4qkB5Gg4qZB8AqYKq3YvI402us4cp8A7r5cjV
-	 xVLnEyHl/f81efet0VJgG12nAGlbAxc4XNxug22OjgG/d3jUhMtWXsgHmSMxML8Jct
-	 65FbT1AnLg5+JWt5DnNJcUHquYnFH2DLbkn89pjo=
+	b=X90NZlKZm3HMGXxP55ehE1ZWiRhGmLLvOqCdPIvUlexjlxpp7pZI9TEIXmXxkXQFB
+	 tNHqON7VnbZgB09HmZCd+SC9fGJbkmJPgMIe/YWzMl2hxC4qpTEyI5ys/IB+J3EXOk
+	 7up7kcttHxfDUoygq3wpqKnuEF3qLT6w0pyWe6PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Santos <Jonathan.Santos@analog.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 064/474] iio: adc: ad7768-1: fix one-shot mode data acquisition
-Date: Fri, 15 May 2026 17:42:53 +0200
-Message-ID: <20260515154716.427683619@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.6 025/474] wifi: rtw88: check for PCI upstream bridge existence
+Date: Fri, 15 May 2026 17:42:14 +0200
+Message-ID: <20260515154715.596114417@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,51 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Santos <Jonathan.Santos@analog.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 8be19e233744961db6069da9c9ab63eb085a0447 upstream.
+commit eb101d2abdcccb514ca4fccd3b278dd8267374f6 upstream.
 
-According to the datasheet, one-shot mode requires a SYNC_IN pulse to
-trigger a new sample conversion. In the current implementation, No sync
-pulse was sent after switching to one-shot mode and reinit_completion()
-was called before mode switching, creating a race condition where spurious
-interrupts during mode change could trigger completion prematurely.
+pci_upstream_bridge() returns NULL if the device is on a root bus.  If
+8821CE is installed in the system with such a PCI topology, the probing
+routine will crash.  This has probably been unnoticed as 8821CE is mostly
+supplied in laptops where there is a PCI-to-PCI bridge located upstream
+from the device.  However the card might be installed on a system with
+different configuration.
 
-Fix by sending a sync pulse after configuring one-shot mode and
-reinit_completion() to ensure it only waits for the actual conversion
-completion.
+Check if the bridge does exist for the specific workaround to be applied.
 
-Fixes: a5f8c7da3dbe ("iio: adc: Add AD7768-1 ADC basic support")
-Signed-off-by: Jonathan Santos <Jonathan.Santos@analog.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Found by Linux Verification Center (linuxtesting.org) with Svace static
+analysis tool.
+
+Fixes: 24f5e38a13b5 ("rtw88: Disable PCIe ASPM while doing NAPI poll on 8821CE")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260220094730.49791-1-pchelkin@ispras.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7768-1.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw88/pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad7768-1.c
-+++ b/drivers/iio/adc/ad7768-1.c
-@@ -241,12 +241,17 @@ static int ad7768_scan_direct(struct iio
- 	struct ad7768_state *st = iio_priv(indio_dev);
- 	int readval, ret;
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -1749,7 +1749,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
+ 	}
  
--	reinit_completion(&st->completion);
--
- 	ret = ad7768_set_mode(st, AD7768_ONE_SHOT);
- 	if (ret < 0)
- 		return ret;
+ 	/* Disable PCIe ASPM L1 while doing NAPI poll for 8821CE */
+-	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C && bridge->vendor == PCI_VENDOR_ID_INTEL)
++	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C &&
++	    bridge && bridge->vendor == PCI_VENDOR_ID_INTEL)
+ 		rtwpci->rx_no_aspm = true;
  
-+	reinit_completion(&st->completion);
-+
-+	/* One-shot mode requires a SYNC pulse to generate a new sample */
-+	ret = ad7768_send_sync_pulse(st);
-+	if (ret)
-+		return ret;
-+
- 	ret = wait_for_completion_timeout(&st->completion,
- 					  msecs_to_jiffies(1000));
- 	if (!ret)
+ 	rtw_pci_phy_cfg(rtwdev);
 
 
