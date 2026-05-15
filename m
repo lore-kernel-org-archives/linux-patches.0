@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738FA3FF1CD;
-	Fri, 15 May 2026 15:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7922D3FF1D1;
+	Fri, 15 May 2026 15:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860255; cv=none; b=Vhd39t9i1/39SHZkCt4KfA/X61sQR/Z0eOOqZ4Xdj7EiletkBI3vehJF4UZomDxjXB1qbVoo+cSn0C0eiEqrpFX4PzoGHG87HBpQQGO2vOk//virM3DGXaxMidoBmcLzFoGbFE261val7P2OWQOaCv1x9oC9sJsschEnEqOMCY8=
+	t=1778860258; cv=none; b=AF1fCjOQA7EDrr1+Xd6bIwBbfnqWouotr2zTh4zba2skt9e7+JlyGCUcU0ip+9gO7RFTHZ6aIZUaLL1IG1UiMo033HRzspUSEyU9+AMcq6zMtrPrO9kK0s7hGFkeRharVvhOhOEEoOXjvpSIz8cPQ+WpnKLQA6mXS1YO1ZlIj9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860255; c=relaxed/simple;
-	bh=hUSOUCMKxmn9+L+WSGXvkHUODeqIR9Qk2Nz6qVDCve0=;
+	s=arc-20240116; t=1778860258; c=relaxed/simple;
+	bh=qDcr0oztXwvdg9iE62yed962Fq/RPD63cFgbv/QiP1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9pOc4hAiRlz0PNROwhmGC5c/umy4mHVrHguLrZefy5oqk6uhsVZQdP5Jbyq8dSs+AWSkXTufafCIrhAMqSAxorjY0/EAUynwkJEuqccD3NyOA2D4tUD7xnLr/IInnkrEX70giKAdHOhUTc8jjBS8UN+DY1tlMuDXZWkL9sFJL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jW2zIsy4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SOc8SRY+OGFbfZPVZWnXkFgpq4vXHDZThiwIM7w0XtFPr4F2/1iM5RXtOaZfdbA/CIyeQG5xLE1T3m2Sfr/PVsFmh0tyNnM3EtLl+h//tVla97e1fyUrWG+1RMWupl6akO29AligpRqAFcay06z5L2UjykGKfjAym2CaXFFj76c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+wtjTmE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jW2zIsy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D3BC2BCB0;
-	Fri, 15 May 2026 15:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+wtjTmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6EBC2BCB0;
+	Fri, 15 May 2026 15:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860255;
-	bh=hUSOUCMKxmn9+L+WSGXvkHUODeqIR9Qk2Nz6qVDCve0=;
+	s=korg; t=1778860257;
+	bh=qDcr0oztXwvdg9iE62yed962Fq/RPD63cFgbv/QiP1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jW2zIsy4qTFR9EfM2BfuUj5rtp/+4fRIhm/O87drSAmjqQMl6SujaWJFWVVvEpKkk
-	 lXkD34AZ+U4IgAD4otH5VVfpgmqjrvB7gcRaRD+zS/fG455azDj/Q0kz/Iq8+a9uiC
-	 Ll/vJ1maWj4aE4MN+Opz24kDDQK5uLuLZp6IE1lo=
+	b=S+wtjTmEenvtJyQtFVvzjBTSfY98s99anS6e6fJPQV+vrIbWAfUp6w/m2XV4YP/mX
+	 pyaJIxMyQwPSiNY+Zovp3Z/Sj0x+k7bpEsquBHrqU9vY/wyPBE6AHKDMrqNiES5NVA
+	 qe7zfmzhpVvrGmKv/7vzR/lySYsJZ0I5zw8l3N/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 007/144] media: chips-media: wave5: add missing spinlock protection for handle_dynamic_resolution_change()
-Date: Fri, 15 May 2026 17:47:13 +0200
-Message-ID: <20260515154653.652721537@linuxfoundation.org>
+	Florian Fainelli <florian@openwrt.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 008/144] spi: bcm63xx: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:14 +0200
+Message-ID: <20260515154653.678273671@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -51,54 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Johan Hovold <johan@kernel.org>
 
-commit cb8bdd3ffca280d014311ab395651d33f58a8708 upstream.
+commit c39e65a4e3b8e764efed0b2f5152a1a8547b80fd upstream.
 
-Add spin_lock_irqsave()/spin_unlock_irqrestore() around the
-handle_dynamic_resolution_change() call in initialize_sequence() to fix
-the missing lock protection.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-initialize_sequence() calls handle_dynamic_resolution_change() without
-holding inst->state_spinlock. However, handle_dynamic_resolution_change()
-has lockdep_assert_held(&inst->state_spinlock) indicating that callers
-must hold this lock.
-
-Other callers of handle_dynamic_resolution_change() properly acquire the
-spinlock:
-- wave5_vpu_dec_finish_decode()
-- wave5_vpu_dec_device_run()
-
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Fixes: 9707a6254a8a6b ("media: chips-media: wave5: Add the v4l2 layer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: b42dfed83d95 ("spi: add Broadcom BCM63xx SPI controller driver")
+Cc: stable@vger.kernel.org	# 3.4
+Cc: Florian Fainelli <florian@openwrt.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260409120419.388546-6-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-bcm63xx.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-@@ -1625,6 +1625,7 @@ static int initialize_sequence(struct vp
- {
- 	struct dec_initial_info initial_info;
- 	int ret = 0;
-+	unsigned long flags;
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -603,7 +603,7 @@ static int bcm63xx_spi_probe(struct plat
+ 		goto out_clk_disable;
  
- 	memset(&initial_info, 0, sizeof(struct dec_initial_info));
+ 	/* register and we are done */
+-	ret = devm_spi_register_controller(dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret) {
+ 		dev_err(dev, "spi register failed\n");
+ 		goto out_clk_disable;
+@@ -626,11 +626,17 @@ static void bcm63xx_spi_remove(struct pl
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct bcm63xx_spi *bs = spi_controller_get_devdata(host);
  
-@@ -1646,7 +1647,9 @@ static int initialize_sequence(struct vp
- 		return ret;
- 	}
++	spi_controller_get(host);
++
++	spi_unregister_controller(host);
++
+ 	/* reset spi block */
+ 	bcm_spi_writeb(bs, 0, SPI_INT_MASK);
  
-+	spin_lock_irqsave(&inst->state_spinlock, flags);
- 	handle_dynamic_resolution_change(inst);
-+	spin_unlock_irqrestore(&inst->state_spinlock, flags);
- 
- 	return 0;
+ 	/* HW shutdown */
+ 	clk_disable_unprepare(bs->clk);
++
++	spi_controller_put(host);
  }
+ 
+ static int bcm63xx_spi_suspend(struct device *dev)
 
 
