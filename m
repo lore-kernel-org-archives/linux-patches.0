@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C513E7BAE;
-	Fri, 15 May 2026 16:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F60A3F58D7;
+	Fri, 15 May 2026 16:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862054; cv=none; b=lx7pL6fkIYy6HmKMmLK5j2gSISHe4PaLPLDB61DI3a69vB8ZkYtQ6aASmi41M2BAZPBiSXCKaADdwcOdcc/1QFAfBl+ev7y17r4tlli5gOoDp7ztptBPYhQ5Oay4AJwpfZ2vGgP39cGCSVzUoyvl+zrz3TWFaIC+376/P/mNEZA=
+	t=1778862056; cv=none; b=ER2zcNleL/YxJ25JKocw0qIfGWuaOOfai79m2MJal9nRJ5NEYJhM7cGKQ9D3ZBhsHz1ZMWJTM7IiAb9bh8Mr3dnXeJKIlpmW9sCZ8seEmXqTIDk/f93UKmMzdLptXRRuob+TQSyxkfXQXOJD1A6cVyKGItVeJ9RrJPnj7aVWFYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862054; c=relaxed/simple;
-	bh=9JRcI4gXvTVRV/RXlmo/g+EnGdbIrHeiHSfwI+JJ9wI=;
+	s=arc-20240116; t=1778862056; c=relaxed/simple;
+	bh=QIFW6hJ0O6OamG3yf45z8llAXMaLN4rRR96X9Hys2xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gdAseJFzttR1a/q7lBs15R/VGxhHw8lZ3Af07r9jkvVNo5upixvxjjekeS12aaRNSl06yIvH3G94N02Ra36tL2uMVTnI64BQaIku7ZYnpMSbVhfEFHb9UNfsusaoT7bXQMRNIbQ0TdSXd80QhbTrquxG3ItpK9AATHxzS+3M8Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1dmyhUk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bsAeMIzleNqFHEEY+OlwF6nzlisqvmCOvkK3T9OcQYtbpHHrRO6PC41RkKxUqUBfl88T6PRXX4fMUClXGu7UFtQAlQHm58ls4NFuWcyNNRNVzfYZOD/4RX5W9qGJ+JEv1YcFNCrqukNujoWLngWrasNcTt6WwNYzrbZoM6BLlOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=foB15lPr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1dmyhUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DC3C2BCB3;
-	Fri, 15 May 2026 16:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="foB15lPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361A2C2BCB0;
+	Fri, 15 May 2026 16:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862054;
-	bh=9JRcI4gXvTVRV/RXlmo/g+EnGdbIrHeiHSfwI+JJ9wI=;
+	s=korg; t=1778862056;
+	bh=QIFW6hJ0O6OamG3yf45z8llAXMaLN4rRR96X9Hys2xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1dmyhUk/0i1kG89maP5n70xqa4yeKOfInvBzcTTp8hpTiwceYveDoKeniDQbTC/5
-	 OCD98fCsAtjepRQ22k9kSPndzD3wC1u794jEK+G+GGrq+ccfev75r1p34axjhpiGO+
-	 AOlkTEohZtSgiobIakbPO69IKvzOzzI26ijHJ+Lc=
+	b=foB15lPr4JMnltJv3rlA4DtOzBTmTpENCyZEqHWx/3U3gw/TpYKz0QKjag8R202vV
+	 OyMsQ/S7Fiu1xqqzqq9LG2XRU15Q0Vo0hI7Q7hgCEvxLUX8/cCVpLrqk0GqWTSWRYa
+	 igDsp5OpCCvICuMc4jeO5rxQUY0YogLVMT1QsjVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <rmk+kernel@arm.linux.org.uk>,
+	Grant Likely <grant.likely@secretlab.ca>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 090/188] spi: orion: fix clock imbalance on registration failure
-Date: Fri, 15 May 2026 17:48:27 +0200
-Message-ID: <20260515154659.279294664@linuxfoundation.org>
+Subject: [PATCH 6.18 091/188] spi: mpc52xx: fix use-after-free on registration failure
+Date: Fri, 15 May 2026 17:48:28 +0200
+Message-ID: <20260515154659.302610231@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -53,49 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 443cde0dc59c5d154156ac9f27a7dadef8ebc0c2 upstream.
+commit f62c060272b9d7423b1650b844e8e4e7b8f9f925 upstream.
 
-Make sure that the controller is not runtime suspended before disabling
-clocks on probe failure.
+Make sure to disable and free the interrupts in case controller
+registration fails to avoid a potential use-after-free and resource
+leak.
 
-Also restore the autosuspend setting.
+This issue was flagged by Sashiko when reviewing a controller
+deregistration fix.
 
-Fixes: 5c6786945b4e ("spi: spi-orion: add runtime PM support")
-Cc: stable@vger.kernel.org	# 3.17
-Cc: Russell King <rmk+kernel@arm.linux.org.uk>
+Fixes: 42bbb70980f3 ("powerpc/5200: Add mpc5200-spi (non-PSC) device driver")
+Cc: stable@vger.kernel.org	# 2.6.33
+Cc: Grant Likely <grant.likely@secretlab.ca>
+Link: https://sashiko.dev/#/patchset/20260414134319.978196-1-johan%40kernel.org?part=3
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421130211.1537628-3-johan@kernel.org
+Link: https://patch.msgid.link/20260421125800.1537361-1-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-orion.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-mpc52xx.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/spi/spi-orion.c
-+++ b/drivers/spi/spi-orion.c
-@@ -774,6 +774,7 @@ static int orion_spi_probe(struct platfo
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_use_autosuspend(&pdev->dev);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, SPI_AUTOSUSPEND_TIMEOUT);
-+	pm_runtime_get_noresume(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
+--- a/drivers/spi/spi-mpc52xx.c
++++ b/drivers/spi/spi-mpc52xx.c
+@@ -501,6 +501,9 @@ static int mpc52xx_spi_probe(struct plat
  
- 	status = orion_spi_reset(spi);
-@@ -785,10 +786,15 @@ static int orion_spi_probe(struct platfo
- 	if (status < 0)
- 		goto out_rel_pm;
- 
-+	pm_runtime_put_autosuspend(&pdev->dev);
-+
- 	return status;
- 
- out_rel_pm:
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
-+	pm_runtime_dont_use_autosuspend(&pdev->dev);
- out_rel_axi_clk:
- 	clk_disable_unprepare(spi->axi_clk);
- out:
+  err_register:
+ 	dev_err(&ms->host->dev, "initialization failed\n");
++	free_irq(ms->irq0, ms);
++	free_irq(ms->irq1, ms);
++	cancel_work_sync(&ms->work);
+  err_gpio:
+ 	while (i-- > 0)
+ 		gpiod_put(ms->gpio_cs[i]);
 
 
