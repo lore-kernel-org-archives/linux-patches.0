@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A5F30568A;
-	Fri, 15 May 2026 16:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D73230568A;
+	Fri, 15 May 2026 16:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860923; cv=none; b=JmPqQwULwaKfRl5kYLsLipdqFJV3zpPSJ5sHCN7p2yh0tYpklmVxDAsWOUE3u/pJ7A/UhvK/JJO1NrUxksyQjumKNCdZPa7+Y2/2YJQdi78jOU9q0lkZ5vII7np/Dnz3YggjrHWxpAiLcTcHbfx0HTPI20QrDhEPFWzZdLe6eho=
+	t=1778860926; cv=none; b=C8IUEvijR8CEHu8MgXCTF007d4jq5XmscYfP1igj8kX5IMoJ+SZifv4Bp+znkSID9C4t23M2t4D/nkDAs29cpX8tPY9l+ZroDCBD+NQJvC4Wq47BBmXLhvmXy2kW7RAxO7AFQ5dunvRmIcZYLCsDKMWbeX5zkM5Rw1+bGSKJVZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860923; c=relaxed/simple;
-	bh=ezl4yLPUptX+gUkY0h6Lttk1ZeFN5dccwyu4/otr6KU=;
+	s=arc-20240116; t=1778860926; c=relaxed/simple;
+	bh=lC14OOYeigQqrFm6ZttwAGkd0qIOxG4j5FWMUSGe38Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PIBJ9L05RcsS/1l+HJFjBD99TrxrI0l9/c2URXGjI6ZrpvQ1xt9z2Hb0L+zsLbLsTfWBg9hY7PoxVhZctVpm85UXiywNWaAFEalpOTOWTLZc9YAcsLbF+oc5zmxVuidYTlkWwOWzhL1WSJHT3xydXwX01f1LctVjFdgKacaKMko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYD8MdPj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Buzd1zJuf6WyBXdR3tygd8leen5L47ce1z2tTlCHMur4ADgvygDG73HEUPe8Mn4+bdCJ6Sm2Iw9csi+7q1ymZWWjhR/zLBuN35DBDJmtqv/P5yOOYLE7OzUEM3NLSy3De4r/e05hQIMDYwIte/8q53miPK7GdJfSefdBxZ/BAZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSYsngzl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYD8MdPj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D663C2BCB0;
-	Fri, 15 May 2026 16:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSYsngzl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59C1C2BCB0;
+	Fri, 15 May 2026 16:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860923;
-	bh=ezl4yLPUptX+gUkY0h6Lttk1ZeFN5dccwyu4/otr6KU=;
+	s=korg; t=1778860926;
+	bh=lC14OOYeigQqrFm6ZttwAGkd0qIOxG4j5FWMUSGe38Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EYD8MdPjszRTdmbrXpnvB6fRSXqAx+2jjkJJbZzS3SYQIMg1413rfvCXg5SFPvuyX
-	 Db5X2+Ks+LLb8vYXnWq+lrrKxERXlAKKfe2LYN+bCzVgw/jvIpjRAMAt7A7nGE3AjS
-	 ZDSZc31vkcrp+BcwXQexIDQXXoljcFE2Va0f6ePA=
+	b=WSYsngzliDlvWvDzAMqe/sP/YkNtUZuawGwNMFUUutjG0zvdE/TjGcgghYSF0r+Qj
+	 Cn6uEE46lzn/BeGvdw2EhwhRlUjXMtwx7GUAWE0dbIWnA80zlKjKzLI0MLjyvsYac9
+	 sT8UUkbLEDVdJASCt//e2NHDavhr94GiQkxBaOhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Gaertner <tob.gaertner@me.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.6 131/474] ntfs3: fix integer overflow in run_unpack() volume boundary check
-Date: Fri, 15 May 2026 17:44:00 +0200
-Message-ID: <20260515154717.866959897@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.6 132/474] rtmutex: Use waiter::task instead of current in remove_waiter()
+Date: Fri, 15 May 2026 17:44:01 +0200
+Message-ID: <20260515154717.888877214@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,47 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Gaertner <tob.gaertner@me.com>
+From: Keenan Dong <keenanat2000@gmail.com>
 
-commit 984a415f019536ea2d24de9010744e5302a9a948 upstream.
+commit 3bfdc63936dd4773109b7b8c280c0f3b5ae7d349 upstream.
 
-The volume boundary check `lcn + len > sbi->used.bitmap.nbits` uses raw
-addition which can wrap around for large lcn and len values, bypassing
-the validation.  Use check_add_overflow() as is already done for the
-adjacent prev_lcn + dlcn and vcn64 + len checks added by commit
-3ac37e100385 ("ntfs3: Fix integer overflow in run_unpack()").
+remove_waiter() is used by the slowlock paths, but it is also used for
+proxy-lock rollback in rt_mutex_start_proxy_lock() when invoked from
+futex_requeue().
 
-Found by fuzzing with a source-patched harness (LibAFL + QEMU).
+In the latter case waiter::task is not current, but remove_waiter()
+operates on current for the dequeue operation. That results in several
+problems:
 
-Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
+  1) the rbtree dequeue happens without waiter::task::pi_lock being held
+
+  2) the waiter task's pi_blocked_on state is not cleared, which leaves a
+     dangling pointer primed for UAF around.
+
+  3) rt_mutex_adjust_prio_chain() operates on the wrong top priority waiter
+     task
+
+Use waiter::task instead of current in all related operations in
+remove_waiter() to cure those problems.
+
+[ tglx: Fixup rt_mutex_adjust_prio_chain(), add a comment and amend the
+  	changelog ]
+
+Fixes: 8161239a8bcc ("rtmutex: Simplify PI algorithm and make highest prio task get lock")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Tobias Gaertner <tob.gaertner@me.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/run.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ kernel/locking/rtmutex.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/fs/ntfs3/run.c
-+++ b/fs/ntfs3/run.c
-@@ -1018,9 +1018,15 @@ int run_unpack(struct runs_tree *run, st
- 			return -EOPNOTSUPP;
- 		}
- #endif
--		if (lcn != SPARSE_LCN64 && lcn + len > sbi->used.bitmap.nbits) {
--			/* LCN range is out of volume. */
--			return -EINVAL;
-+		if (lcn != SPARSE_LCN64) {
-+			u64 lcn_end;
-+
-+			if (check_add_overflow(lcn, len, &lcn_end))
-+				return -EINVAL;
-+			if (lcn_end > sbi->used.bitmap.nbits) {
-+				/* LCN range is out of volume. */
-+				return -EINVAL;
-+			}
- 		}
+--- a/kernel/locking/rtmutex.c
++++ b/kernel/locking/rtmutex.c
+@@ -1511,20 +1511,23 @@ static bool rtmutex_spin_on_owner(struct
+  *
+  * Must be called with lock->wait_lock held and interrupts disabled. It must
+  * have just failed to try_to_take_rt_mutex().
++ *
++ * When invoked from rt_mutex_start_proxy_lock() waiter::task != current !
+  */
+ static void __sched remove_waiter(struct rt_mutex_base *lock,
+ 				  struct rt_mutex_waiter *waiter)
+ {
+ 	bool is_top_waiter = (waiter == rt_mutex_top_waiter(lock));
+ 	struct task_struct *owner = rt_mutex_owner(lock);
++	struct task_struct *waiter_task = waiter->task;
+ 	struct rt_mutex_base *next_lock;
  
- 		if (!run)
+ 	lockdep_assert_held(&lock->wait_lock);
+ 
+-	raw_spin_lock(&current->pi_lock);
+-	rt_mutex_dequeue(lock, waiter);
+-	current->pi_blocked_on = NULL;
+-	raw_spin_unlock(&current->pi_lock);
++	scoped_guard(raw_spinlock, &waiter_task->pi_lock) {
++		rt_mutex_dequeue(lock, waiter);
++		waiter_task->pi_blocked_on = NULL;
++	}
+ 
+ 	/*
+ 	 * Only update priority if the waiter was the highest priority
+@@ -1560,7 +1563,7 @@ static void __sched remove_waiter(struct
+ 	raw_spin_unlock_irq(&lock->wait_lock);
+ 
+ 	rt_mutex_adjust_prio_chain(owner, RT_MUTEX_MIN_CHAINWALK, lock,
+-				   next_lock, NULL, current);
++				   next_lock, NULL, waiter_task);
+ 
+ 	raw_spin_lock_irq(&lock->wait_lock);
+ }
 
 
