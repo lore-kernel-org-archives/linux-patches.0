@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF3C3E00A3;
-	Fri, 15 May 2026 16:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7573B583A;
+	Fri, 15 May 2026 16:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861976; cv=none; b=g2OkLiaYM9nFLT9R/TIX9NoWBjFKys2ks2t7VmUOMaGff+chAjrnzYg07RxKr/CVSCCaAj8qYIDrYuc+gt5z0Lr7wKVSjF/J/GD0227XhA6hB6Z3iPiKxTsAqjrwdntZD5gKBYtCVhrOv9qWTWe9fddOWv2Iw3xrG7sFzj+ZTGw=
+	t=1778861978; cv=none; b=fcZFzdwk6cFGrIeBT082VnpYaxvFxiUiwJgDns8NjpwUcvi6WvitMroO+wmqdJkw/W2THxsSYCPDN5FjXWMjg39+SppIMrI+e5JYeoD5CbFWR3tM/f2IEce/vEghjrygcYSM4JetktmMWuShEdUv+blzLJwVvFVNubGOAbg4jbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861976; c=relaxed/simple;
-	bh=MOIyVBKdYZSxa5HUL36QE2NYSSfeEnWpCQDbk8Dovj8=;
+	s=arc-20240116; t=1778861978; c=relaxed/simple;
+	bh=obN99Lh7cmh7qHv03TGzrQz9nSpFJ+/CvBPF1px56As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rGEWxVRVd7p+DubBLtEYVBqmFLwtRYeor2CvOHCoTL69HqcnIQ7hVLsMFMj5JlOAIDijmRS3TvdEy3kib4Cau+0qg2i3pecDRrvu4g1pVFbxM8NyIacLf8lCBXO9/fNygHkON8CwfPWgJeICujiXjOuLeHmr3AubcsujD1UCnlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HepuZoZL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GrGSLViN69i/zhyLhLPtlilrKPEVSoOnRm3PTNExkgD8leM5j0K6tkCKArPW0d0fFw5NSIaChqZjvHYElOBfepCqFsEQXzZ8dKoIcb9+/43O9wTeN8MRwyVFA5YKgMqEtfg7PS+CSJecgVTwsKky/a0OaFGThgELsTGJzXZUpns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZXEwkHT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HepuZoZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E70C2BCB0;
-	Fri, 15 May 2026 16:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZXEwkHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4508FC2BCB0;
+	Fri, 15 May 2026 16:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861976;
-	bh=MOIyVBKdYZSxa5HUL36QE2NYSSfeEnWpCQDbk8Dovj8=;
+	s=korg; t=1778861978;
+	bh=obN99Lh7cmh7qHv03TGzrQz9nSpFJ+/CvBPF1px56As=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HepuZoZL4fvGMZ2NfnZIsrAAzewt1JszsuePM0QUkeQeGNeInJ4QEci6kfolAMv3/
-	 YZwYhznYxOxMWouHh4XXJzXMrcO2/HUoCYsF4Z9gjHf8QZfVJfgb8ozNWA7JoBJQ9y
-	 ty+ZPr4nN7B8SloFdpwgC2snoIG6al5fFC9sg2j8=
+	b=YZXEwkHTEP09F2SffL1XTFh+ynm9UvUwoJyO/sY8i1ms3gBE433ZpCvoQJ1T5PTe9
+	 nv73ml+rMvjLkLCaLd4F3TAg09/a/5VqZq8/b7g3LX2T4Qizv+VUNRWRpWkVYsEYTn
+	 Kn3O9Ju0/DmFrlKllAiVAX8RkCEd8oGVf5e39Gkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 058/188] media: qcom: camss: Fix csid IRQ offset for sa8775p
-Date: Fri, 15 May 2026 17:47:55 +0200
-Message-ID: <20260515154658.573034842@linuxfoundation.org>
+Subject: [PATCH 6.18 059/188] media: qcom: iris: increase H265D_MAX_SLICE to fix H.265 decoding on SC7280
+Date: Fri, 15 May 2026 17:47:56 +0200
+Message-ID: <20260515154658.595653923@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -52,38 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-commit dd1b373941079cc102cc18bc68884e18245f5912 upstream.
+commit 3e0b2053751657ed2924adfe3ff25b1450231e33 upstream.
 
-Fix BUF_DONE_IRQ_STATUS_RDI_OFFSET calculation for csid lite on
-sa8775p platform. The offset should be 0 for csid lite on sa8775p,
+Follow the commit bfe1326573ff ("venus: Fix for H265 decoding failure.")
+and increase H265D_MAX_SLICE following firmware requirements on that
+platform. Otherwise decoding of the H.265 streams fails with the
+"insufficient scratch_1 buffer size" from the firmware.
 
-Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Fixes: ed03e99de0fa ("media: qcom: camss: Add support for CSID 690")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+[bod: Fixed commit log withthe => with the]
+Fixes: e1f5d32608ec ("media: iris: Add internal buffer calculation for HEVC and VP9 decoders")
 Cc: stable@vger.kernel.org
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss-csid-gen3.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/iris/iris_vpu_buffer.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-@@ -48,9 +48,9 @@
- #define IS_CSID_690(csid)	((csid->camss->res->version == CAMSS_8775P) \
- 				 || (csid->camss->res->version == CAMSS_8300))
- #define CSID_BUF_DONE_IRQ_STATUS	0x8C
--#define BUF_DONE_IRQ_STATUS_RDI_OFFSET  (csid_is_lite(csid) ?\
--						1 : (IS_CSID_690(csid) ?\
--						13 : 14))
-+#define BUF_DONE_IRQ_STATUS_RDI_OFFSET  (csid_is_lite(csid) ? \
-+						((IS_CSID_690(csid) ? 0 : 1)) : \
-+						((IS_CSID_690(csid) ? 13 : 14)))
- #define CSID_BUF_DONE_IRQ_MASK		0x90
- #define CSID_BUF_DONE_IRQ_CLEAR		0x94
- #define CSID_BUF_DONE_IRQ_SET		0x98
+--- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
++++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
+@@ -61,7 +61,7 @@ struct iris_inst;
+ #define SIZE_DOLBY_RPU_METADATA (41 * 1024)
+ #define H264_CABAC_HDR_RATIO_HD_TOT	1
+ #define H264_CABAC_RES_RATIO_HD_TOT	3
+-#define H265D_MAX_SLICE	1200
++#define H265D_MAX_SLICE	3600
+ #define SIZE_H265D_HW_PIC_T SIZE_H264D_HW_PIC_T
+ #define H265_CABAC_HDR_RATIO_HD_TOT 2
+ #define H265_CABAC_RES_RATIO_HD_TOT 2
 
 
