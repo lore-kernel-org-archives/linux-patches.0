@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF1C30DD1D;
-	Fri, 15 May 2026 16:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409C1355049;
+	Fri, 15 May 2026 16:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860841; cv=none; b=Wa0iqKTmcz9voUlWtXrL5MG5XZGrd3fSjBzBv4GhkHcdSg4FmQaxpfWkA6S2/WctRFk80DO+av3MfjwmzZSW21FYEhUDIUGsJoW8fxH7kNnEN3NIiNeogM29Jf99EbGTEfZlr6ItjLWAGAX6wGTLZpNYrXVkYY4w4VlPO7oUAqQ=
+	t=1778860844; cv=none; b=C3Yx+Hip6A1MlFpfHxeEZ7puMDyzc2bY0t+atyYtsU/aTBm88wjVGY84KjivsfnGHXYZgmsuWElTJHY1SXbX/vkc7nEAb3+RkMgSDnhAwG7XoHhdomiesSsnQEjH2qCTo42qszRP80zK1NmvpNVKP65i+42cj2Pb82t6psgI6pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860841; c=relaxed/simple;
-	bh=Lvjgk5DAput2VjNHrNdf62TthRZXI1UvNo6G3koSNjo=;
+	s=arc-20240116; t=1778860844; c=relaxed/simple;
+	bh=ib1VID1n5lv79pdI1Yiff/FE3wSr9MOcsJ3hg3pB8L8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=roQSnMwjwcI/dNESce0817lLhARxEcGy1pPEwSLPX+Ei2KV8M/ATE9AveWLSK3b56+qG+xKkoIGhUlYMzw5cyF1YUkf4Z7bqhxTzeUwUzguxwyFefofV12vzrsGdZWs2eGiz9m/nDOiLczZkZa305Abn/bJRBc+G/4qsi70LJXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3l1Bw7s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jmLQ8p+/evt90NJTf0UJaeIhVp6Lj0/3Z8F6J1A6q1pd4eAc81C07DRAeCCJHFhJ5zU4+vOSKnDhT9fvnLvTN9dox9JhiNkwzqK66vErW/WWPks5pQV11IQgr3d8hpEl3jYM38x3v2BHpKSocRCo+f5dB3P18OtZPhSQc4x9M5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFWmj+uS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3l1Bw7s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB749C2BCB0;
-	Fri, 15 May 2026 16:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFWmj+uS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C97C2BCB0;
+	Fri, 15 May 2026 16:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860841;
-	bh=Lvjgk5DAput2VjNHrNdf62TthRZXI1UvNo6G3koSNjo=;
+	s=korg; t=1778860843;
+	bh=ib1VID1n5lv79pdI1Yiff/FE3wSr9MOcsJ3hg3pB8L8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u3l1Bw7shSvYAAQiwkgpgsJJl38oioKSRdaYxP56Ub12beZbczsKR4W1mhrgNb9O3
-	 EzV/lqkmHTU9YJSByFotLRG90bKn4w6LyXIkDhpvEY7/nvmHVrJN8ipsdVRSXjBdlJ
-	 gRxO0LQ0xl3xXXEHKynZzcVLsbUd5v+Xsb9XxFOg=
+	b=zFWmj+uS3ezH61i0WpzLfSy8qHMCMxkAtUlxfnqYqhxmQmlvuQIJajE4DCnWjjc5a
+	 vQ4ZCj0YkANR26PMuaP6mJC0Lc7YXlomjLwq53vhMnKHVbh5niKVOTE9Ms2zgKHgwl
+	 BTM60N2jlY362czyTgALpX4vAR9PMTMN4+TwpAQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Cheng <chengkev@google.com>,
 	Yosry Ahmed <yosry.ahmed@linux.dev>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 098/474] KVM: SVM: Inject #UD for INVLPGA if EFER.SVME=0
-Date: Fri, 15 May 2026 17:43:27 +0200
-Message-ID: <20260515154717.159868256@linuxfoundation.org>
+Subject: [PATCH 6.6 099/474] KVM: SVM: Explicitly mark vmcb01 dirty after modifying VMCB intercepts
+Date: Fri, 15 May 2026 17:43:28 +0200
+Message-ID: <20260515154717.180690598@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,36 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Cheng <chengkev@google.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit d99df02ff427f461102230f9c5b90a6c64ee8e23 upstream.
+commit d5bde6113aed8315a2bfe708730b721be9c2f48b upstream.
 
-INVLPGA should cause a #UD when EFER.SVME is not set. Add a check to
-properly inject #UD when EFER.SVME=0.
+When reacting to an intercept update, explicitly mark vmcb01's intercepts
+dirty, as KVM always initially operates on vmcb01, and nested_svm_vmexit()
+isn't guaranteed to mark VMCB_INTERCEPTS as dirty.  I.e. if L2 is active,
+KVM will modify the intercepts for L1, but might not mark them as dirty
+before the next VMRUN of L1.
 
-Fixes: ff092385e828 ("KVM: SVM: Implement INVLPGA")
+Fixes: 116a0a23676e ("KVM: SVM: Add clean-bit for intercetps, tsc-offset and pause filter count")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kevin Cheng <chengkev@google.com>
 Reviewed-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20260228033328.2285047-3-chengkev@google.com
-[sean: tag for stable@]
+Link: https://patch.msgid.link/20260218230958.2877682-2-seanjc@google.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kvm/svm/nested.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -2494,6 +2494,9 @@ static int invlpga_interception(struct k
- 	gva_t gva = kvm_rax_read(vcpu);
- 	u32 asid = kvm_rcx_read(vcpu);
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -129,11 +129,13 @@ void recalc_intercepts(struct vcpu_svm *
+ 	struct vmcb_ctrl_area_cached *g;
+ 	unsigned int i;
  
-+	if (nested_svm_check_permissions(vcpu))
-+		return 1;
+-	vmcb_mark_dirty(svm->vmcb, VMCB_INTERCEPTS);
++	vmcb_mark_dirty(svm->vmcb01.ptr, VMCB_INTERCEPTS);
+ 
+ 	if (!is_guest_mode(&svm->vcpu))
+ 		return;
+ 
++	vmcb_mark_dirty(svm->vmcb, VMCB_INTERCEPTS);
 +
- 	/* FIXME: Handle an address size prefix. */
- 	if (!is_long_mode(vcpu))
- 		gva = (u32)gva;
+ 	c = &svm->vmcb->control;
+ 	h = &svm->vmcb01.ptr->control;
+ 	g = &svm->nested.ctl;
 
 
