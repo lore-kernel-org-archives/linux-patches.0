@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D0C2C11DF;
-	Fri, 15 May 2026 16:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BB93BB11C;
+	Fri, 15 May 2026 16:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862369; cv=none; b=s6bx8BSYXJ7gAjO8Qy1uoarwQDP2Dc9mjVdDZNEfrbOqJ7CxP3mf6WHHlHSgPURjg9kPiCw3GItp/7aXTu4rLJusfAF2X1/IcWswIexphM1WJMr1oHF0jDR4IpwqgDT7MbE8OG75lR8FDHI8BOmMjKAAMysCiyrKFWewzQ12jf4=
+	t=1778862372; cv=none; b=jInGjM8v5XP334UCo9jpWE+CHUcCS5Fp4M77rVN+UnxjNAwP/jUjgXlBaaNopekGTw8Jwe60Rs/LJuv/0iW7JRkEKDgCXGIitXIOag/9C3TV1Mih/mdrJmGUizMvoyJgTft0DNEK4jvaO1mO6tsNMsxO6po2OkIN/5TiUEUq2Lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862369; c=relaxed/simple;
-	bh=FRJQz5Z6nP3EEQ9rJF9zhpaoz0n8Ocd4Ia74yak9S3o=;
+	s=arc-20240116; t=1778862372; c=relaxed/simple;
+	bh=IWZNhWA1ii70co/QFYOLOmfLKJotIdTOKNIk9oNHufo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5oHRHLWhsL1nGfSyHQSwAdqEw+aOOMSMIjWKIJZUz7lBWAkQyf3W6Cd1zvtFTRVuryZt4Z5TK89hHRTHh9HU2NY2+yZB2tBQS8vfE0tWty14E3Cwltl0n76nrcQEdhsCV2di4wZcE9K6C7Ulk5XwyCIOXXVT6YC9cNirqEhZa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAMNymg7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iqi7UKecmEa+SKbLCYWjMLXuWS2mJPT6RFDFWttMc8yFLU0rGQY6TiXMkm4sqNbjt9qv7y6S8gpP93pd8I9YPzSvbBeFDxM1ntPijyg69NA90/Ok7I1MOErVBHXnm63F9ZgWnA9YmCwaz39IzYyNQ42HwUkyF3+wTziqetoAcxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0V9UM89; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAMNymg7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FBFC2BCB0;
-	Fri, 15 May 2026 16:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0V9UM89"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB1FC2BCB0;
+	Fri, 15 May 2026 16:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862369;
-	bh=FRJQz5Z6nP3EEQ9rJF9zhpaoz0n8Ocd4Ia74yak9S3o=;
+	s=korg; t=1778862372;
+	bh=IWZNhWA1ii70co/QFYOLOmfLKJotIdTOKNIk9oNHufo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jAMNymg7MbB0KXDI6Izv/lzQRSSJhgVgWWnfa3nWBr0Fgh1Rl331AutN3jp4Oup9R
-	 pIMQHoxaWT5AUgufU2c5bcSFRzwrdMV81pG4nq+RHYJWXAG0bhvnFbkrWm7v2dk3rK
-	 Ywq3UGzlOdEftaYK3PF0h7pcVJMmDDJiF5M3g98E=
+	b=f0V9UM89u/I3YPvwXdFT8yfelGrshFiswv71m0KLq0OOgFyb2nk9l27L98Z9GXq43
+	 Sq+OhSagCLwfoAD3jDrfR/WRUms/wAEMkgmk949ENmrrnYx5nI1mpwCxRmC0CGRAqu
+	 bN1+vWLMPi6qAh65p9fvaKnj2ZTKyGWvNpKRQZjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Ziyi Guo <n7l8m4@u.northwestern.edu>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 022/201] media: chips-media: wave5: fix a potential memory leak in wave5_vdi_init()
-Date: Fri, 15 May 2026 17:47:20 +0200
-Message-ID: <20260515154659.013956534@linuxfoundation.org>
+Subject: [PATCH 7.0 023/201] media: chips-media: wave5: add missing spinlock protection for send_eos_event()
+Date: Fri, 15 May 2026 17:47:21 +0200
+Message-ID: <20260515154659.036230396@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -51,33 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-commit 95bd174a453f77b09ea66e1e22834680754ba501 upstream.
+commit f48050436746be75227fbc90066a8658cbe94d17 upstream.
 
-Add wave5_vdi_free_dma_memory() in the error path of
-wave5_vdi_init() to prevent a potential memory leak.
+Add spin_lock_irqsave()/spin_unlock_irqrestore() around send_eos_event()
+calls in the VB2 buffer queue and streamoff callbacks to fix the missing
+lock protection.
 
-Fixes: 45d1a2b93277 ("media: chips-media: wave5: Add vpuapi layer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+wave5_vpu_dec_buf_queue_dst() and streamoff_output() call send_eos_event()
+without holding inst->state_spinlock. However, send_eos_event() has
+lockdep_assert_held(&inst->state_spinlock) indicating that callers must
+hold this lock.
+
+Other callers of send_eos_event() properly acquire the spinlock:
+- wave5_vpu_dec_finish_decode() acquires lock at line 431
+- wave5_vpu_dec_encoder_cmd() acquires lock at line 821
+- wave5_vpu_dec_device_run() acquires lock at line 1592
+
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Fixes: 9707a6254a8a6b ("media: chips-media: wave5: Add the v4l2 layer")
+Cc: stable@vger.kernel.org
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vdi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/chips-media/wave5/wave5-vdi.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vdi.c
-@@ -49,6 +49,7 @@ int wave5_vdi_init(struct device *dev)
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
+@@ -1303,13 +1303,17 @@ static void wave5_vpu_dec_buf_queue_dst(
  
- 	if (!PRODUCT_CODE_W_SERIES(vpu_dev->product_code)) {
- 		WARN_ONCE(1, "unsupported product code: 0x%x\n", vpu_dev->product_code);
-+		wave5_vdi_free_dma_memory(vpu_dev, &vpu_dev->common_mem);
- 		return -EOPNOTSUPP;
- 	}
+ 	if (vb2_is_streaming(vb->vb2_queue) && v4l2_m2m_dst_buf_is_last(m2m_ctx)) {
+ 		unsigned int i;
++		unsigned long flags;
  
+ 		for (i = 0; i < vb->num_planes; i++)
+ 			vb2_set_plane_payload(vb, i, 0);
+ 
+ 		vbuf->field = V4L2_FIELD_NONE;
+ 
++		spin_lock_irqsave(&inst->state_spinlock, flags);
+ 		send_eos_event(inst);
++		spin_unlock_irqrestore(&inst->state_spinlock, flags);
++
+ 		v4l2_m2m_last_buffer_done(m2m_ctx, vbuf);
+ 	} else {
+ 		v4l2_m2m_buf_queue(m2m_ctx, vbuf);
+@@ -1462,8 +1466,13 @@ static int streamoff_output(struct vb2_q
+ 	inst->codec_info->dec_info.stream_rd_ptr = new_rd_ptr;
+ 	inst->codec_info->dec_info.stream_wr_ptr = new_rd_ptr;
+ 
+-	if (v4l2_m2m_has_stopped(m2m_ctx))
++	if (v4l2_m2m_has_stopped(m2m_ctx)) {
++		unsigned long flags;
++
++		spin_lock_irqsave(&inst->state_spinlock, flags);
+ 		send_eos_event(inst);
++		spin_unlock_irqrestore(&inst->state_spinlock, flags);
++	}
+ 
+ 	/* streamoff on output cancels any draining operation */
+ 	inst->eos = false;
 
 
