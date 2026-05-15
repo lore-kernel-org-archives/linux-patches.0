@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F253130568A;
-	Fri, 15 May 2026 16:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F2F30568A;
+	Fri, 15 May 2026 16:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861041; cv=none; b=l6gNG7GO+7aivV7+TTY95qjcLzOvtW4D5LhUAlhPCYKVUowvQB/Jct1N3+knkuaKrit7FpJ1BR88AMHnzf51QlwZwtsRQcL4I85uIk6+2cEZ9M/ZYzduLWWfeNyeIizKGeu+ZSwgmFgqTCKGi557spDeX4gHEj8695exJgRYxBA=
+	t=1778861043; cv=none; b=ehr6IU17tZkdyKhZN9aZ4P72XAfoO/OGDyWPz7iyGZTWZdK2dUnYPiWFOyqjiSQYcYzuvTIrx1qZTLReDVhX4S7pGYz+P77RsQdzAOMJAwFMieyqA5n/fILCtijTW18yeTYXxJE3HNYYrd+/yNYT9HYO5idCzioTFGPx8YfO/XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861041; c=relaxed/simple;
-	bh=OjEALiGyQlX+kuR4zThfEUVdbsPfP4SRN940x+L0CCk=;
+	s=arc-20240116; t=1778861043; c=relaxed/simple;
+	bh=O6ZaKQI126z/4NGo/T0qrbU2R5PTphXyx2tZaB8LOaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BV0WGoN4n31SfFh5C2HC7Tjo9DSDm5eVGvU2K0DmfnFdfgF+MWCWohz6I8tqTn3mOk6e84CDAt32Ti1WsP1rOF5cJrTXoG3waO+Tk8kIWE3MU+AgsRonRnexwTAgu6NTiuDzfm/Na072U0YHlO6WRT0d/9nNfD/ac+MQtpf5OYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIWP9YKM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IYC80vczkJqPYqo460uADJwzcxefNSZzen5Wf/mZaSEmzhBSKvvoT/9kufjkM27sKqirmJ8HRjuEl21cQ8imEdhtdOMzeuFGo/py8l84qfeOzd1bRfpiN6y7UswQGGeYAGW2m5I1qJLPPf+iPTynX4RdaWLFnN7Pqskdp9bi4Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNGbfn9B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIWP9YKM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89769C2BCB0;
-	Fri, 15 May 2026 16:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNGbfn9B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F21C2BCB0;
+	Fri, 15 May 2026 16:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861040;
-	bh=OjEALiGyQlX+kuR4zThfEUVdbsPfP4SRN940x+L0CCk=;
+	s=korg; t=1778861043;
+	bh=O6ZaKQI126z/4NGo/T0qrbU2R5PTphXyx2tZaB8LOaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIWP9YKMyinBxBLYCzCqnQDDspfoUJEJaQ+eo1oUVuKDtcuvRhRBsOlSFIoX1iIZJ
-	 NzZppNjs3cnhoR9kFpp+liXGuOUm4B6bBt5SF7h2nV6CoCwbBgxXu1Lwu/BdXPpI9B
-	 SUsc9T37dIjXYG5To/pr4/x48w9H9YcjsAJd89Ks=
+	b=VNGbfn9B7FN2KRYBPOnSt8XeymoV9V/3LUspZX4i5dnnFFBtyi4Gl1baZMMYcioad
+	 nRItXDlD4vaNaPZcfxBHw42YsUSTGDt4wNJx7UV8OK3VF2Y1QDaJ8tax1nfo0y+iFR
+	 Q0NxlwFu72Ypg0WhZMlnIj00+U2GtcoyBCqy2/Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Paul Chaignon <paul.chaignon@gmail.com>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 176/474] bpf: preserve constant zero when doing partial register restore
-Date: Fri, 15 May 2026 17:44:45 +0200
-Message-ID: <20260515154718.832335397@linuxfoundation.org>
+Subject: [PATCH 6.6 177/474] selftests/bpf: validate zero preservation for sub-slot loads
+Date: Fri, 15 May 2026 17:44:46 +0200
+Message-ID: <20260515154718.854675008@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -57,74 +56,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit e322f0bcb8d371f4606eaf141c7f967e1a79bcb7 ]
+[ Upstream commit add1cd7f22e61756987865ada9fe95cd86569025 ]
 
-Similar to special handling of STACK_ZERO, when reading 1/2/4 bytes from
-stack from slot that has register spilled into it and that register has
-a constant value zero, preserve that zero and mark spilled register as
-precise for that. This makes spilled const zero register and STACK_ZERO
-cases equivalent in their behavior.
+Validate that 1-, 2-, and 4-byte loads from stack slots not aligned on
+8-byte boundary still preserve zero, when loading from all-STACK_ZERO
+sub-slots, or when stack sub-slots are covered by spilled register with
+known constant zero value.
 
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231205184248.1502704-7-andrii@kernel.org
+Link: https://lore.kernel.org/r/20231205184248.1502704-8-andrii@kernel.org
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Acked-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ .../selftests/bpf/progs/verifier_spill_fill.c | 71 +++++++++++++++++++
+ 1 file changed, 71 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 8309504d1660e..eaeb996ff56a2 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -4952,22 +4952,39 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 				copy_register_state(&state->regs[dst_regno], reg);
- 				state->regs[dst_regno].subreg_def = subreg_def;
- 			} else {
-+				int spill_cnt = 0, zero_cnt = 0;
+diff --git a/tools/testing/selftests/bpf/progs/verifier_spill_fill.c b/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
+index d9dabae811767..41fd61299eab0 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
++++ b/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
+@@ -490,4 +490,75 @@ __naked void spill_subregs_preserve_stack_zero(void)
+ 	: __clobber_all);
+ }
+ 
++char single_byte_buf[1] SEC(".data.single_byte_buf");
 +
- 				for (i = 0; i < size; i++) {
- 					type = stype[(slot - i) % BPF_REG_SIZE];
--					if (type == STACK_SPILL)
-+					if (type == STACK_SPILL) {
-+						spill_cnt++;
- 						continue;
-+					}
- 					if (type == STACK_MISC)
- 						continue;
--					if (type == STACK_ZERO)
-+					if (type == STACK_ZERO) {
-+						zero_cnt++;
- 						continue;
-+					}
- 					if (type == STACK_INVALID && env->allow_uninit_stack)
- 						continue;
- 					verbose(env, "invalid read from stack off %d+%d size %d\n",
- 						off, i, size);
- 					return -EACCES;
- 				}
--				mark_reg_unknown(env, state->regs, dst_regno);
--				insn_flags = 0; /* not restoring original register state */
++SEC("raw_tp")
++__log_level(2)
++__success
++__naked void partial_stack_load_preserves_zeros(void)
++{
++	asm volatile (
++		/* fp-8 is all STACK_ZERO */
++		".8byte %[fp8_st_zero];" /* LLVM-18+: *(u64 *)(r10 -8) = 0; */
 +
-+				if (spill_cnt == size &&
-+				    tnum_is_const(reg->var_off) && reg->var_off.value == 0) {
-+					__mark_reg_const_zero(&state->regs[dst_regno]);
-+					/* this IS register fill, so keep insn_flags */
-+				} else if (zero_cnt == size) {
-+					/* similarly to mark_reg_stack_read(), preserve zeroes */
-+					__mark_reg_const_zero(&state->regs[dst_regno]);
-+					insn_flags = 0; /* not restoring original register state */
-+				} else {
-+					mark_reg_unknown(env, state->regs, dst_regno);
-+					insn_flags = 0; /* not restoring original register state */
-+				}
- 			}
- 			state->regs[dst_regno].live |= REG_LIVE_WRITTEN;
- 		} else if (dst_regno >= 0) {
++		/* fp-16 is const zero register */
++		"r0 = 0;"
++		"*(u64 *)(r10 -16) = r0;"
++
++		/* load single U8 from non-aligned STACK_ZERO slot */
++		"r1 = %[single_byte_buf];"
++		"r2 = *(u8 *)(r10 -1);"
++		"r1 += r2;"
++		"*(u8 *)(r1 + 0) = r2;" /* this should be fine */
++
++		/* load single U8 from non-aligned ZERO REG slot */
++		"r1 = %[single_byte_buf];"
++		"r2 = *(u8 *)(r10 -9);"
++		"r1 += r2;"
++		"*(u8 *)(r1 + 0) = r2;" /* this should be fine */
++
++		/* load single U16 from non-aligned STACK_ZERO slot */
++		"r1 = %[single_byte_buf];"
++		"r2 = *(u16 *)(r10 -2);"
++		"r1 += r2;"
++		"*(u8 *)(r1 + 0) = r2;" /* this should be fine */
++
++		/* load single U16 from non-aligned ZERO REG slot */
++		"r1 = %[single_byte_buf];"
++		"r2 = *(u16 *)(r10 -10);"
++		"r1 += r2;"
++		"*(u8 *)(r1 + 0) = r2;" /* this should be fine */
++
++		/* load single U32 from non-aligned STACK_ZERO slot */
++		"r1 = %[single_byte_buf];"
++		"r2 = *(u32 *)(r10 -4);"
++		"r1 += r2;"
++		"*(u8 *)(r1 + 0) = r2;" /* this should be fine */
++
++		/* load single U32 from non-aligned ZERO REG slot */
++		"r1 = %[single_byte_buf];"
++		"r2 = *(u32 *)(r10 -12);"
++		"r1 += r2;"
++		"*(u8 *)(r1 + 0) = r2;" /* this should be fine */
++
++		/* for completeness, load U64 from STACK_ZERO slot */
++		"r1 = %[single_byte_buf];"
++		"r2 = *(u64 *)(r10 -8);"
++		"r1 += r2;"
++		"*(u8 *)(r1 + 0) = r2;" /* this should be fine */
++
++		/* for completeness, load U64 from ZERO REG slot */
++		"r1 = %[single_byte_buf];"
++		"r2 = *(u64 *)(r10 -16);"
++		"r1 += r2;"
++		"*(u8 *)(r1 + 0) = r2;" /* this should be fine */
++
++		"r0 = 0;"
++		"exit;"
++	:
++	: __imm_ptr(single_byte_buf),
++	  __imm_insn(fp8_st_zero, BPF_ST_MEM(BPF_DW, BPF_REG_FP, -8, 0))
++	: __clobber_common);
++}
++
+ char _license[] SEC("license") = "GPL";
 -- 
 2.53.0
 
