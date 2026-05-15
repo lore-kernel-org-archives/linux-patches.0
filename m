@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECB117AE11;
-	Fri, 15 May 2026 15:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531723FF1A2;
+	Fri, 15 May 2026 15:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860273; cv=none; b=uuXE9XVIS8nR+nxXj0fKEoVBxEFiYQRwlewhA4zteP+h+9TwAhAxodDHuN+dTGA92/MfPUAuLRh8oEDtL/RhtT/BFzSs734j3Wgnw2sypPFZ0hSnw45c3zJ9jzM/qrcnvzAvTikUHYbADD6loh27GI7gLxjWBnHeVYNoPLz6yBQ=
+	t=1778860276; cv=none; b=Zfz73ucpTYdx9sngs+jlNNjeMlO3W6vFXHpH6mWMTa9Ti57D9DflhzHMBrY3r3aUAi63stOwLFDqnyCdQyfli2COv1XYoP+Pu6m4tU7glrcgpr18Qh/Vlor5X8mprone6ZZ+EfpVrr8WcHTu/swOI7fKxfJuPas7bxwBukMeGuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860273; c=relaxed/simple;
-	bh=uFc+fG3WqSC2L3LkRGbYjWor5FHv6Zzr/lSXHoiN0cQ=;
+	s=arc-20240116; t=1778860276; c=relaxed/simple;
+	bh=BXcv2BjeYNkJFe9YzMsdw/OtFmBramiXZlFDuUcprPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R8kbP5VX8R0cJFHCvth2UMCoQLvJ4tzPfZAHnGCbm/cFpdLvI1qSDb3mR8NKNGJspUipV3GlFTCWSyblrYC7wB1l1npTDQGAcVD8byamNnn+DO1ipnGMVzuXlpla92VmTIt48Tbjdg5vFIWVI4SbVgjPAZMhy1GEO1Po6GjTL9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0txPRF8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g8ITd9XvvaCXKf+m3PUZlQD3WpmnKzKKHYztk2yyIyWUh229DMIOXWPWj5wPz3zoge/iBw9JUP1HAOukH7b+FtJocoGcxTsJqqgOP5FfgjCxUs/A41nCg8K1Z7ROIAuOytZF7YiDspqAStYxyZS1KI3qZYNM6BV1kh0uHSE06qY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJclXEjK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0txPRF8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FCFC2BCB3;
-	Fri, 15 May 2026 15:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJclXEjK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CF0C2BCB0;
+	Fri, 15 May 2026 15:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860273;
-	bh=uFc+fG3WqSC2L3LkRGbYjWor5FHv6Zzr/lSXHoiN0cQ=;
+	s=korg; t=1778860276;
+	bh=BXcv2BjeYNkJFe9YzMsdw/OtFmBramiXZlFDuUcprPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0txPRF8dmrRTCk9ku77izTBmEtRuIAZxLgHb37ZFXjHn/4AEnp+9hnNFxhS6hWlhX
-	 NnP+xbxcLrrOTMALTLosnxYuGXtx4M9e87sCekgYAxm4q/SOqYAFWUiuNZMh9uoHBD
-	 8TB6CQpVF9ZI8QTRJiE6y6OHLv+tSEAt/+rBOrwI=
+	b=QJclXEjKBPuPDm11hzgKzk2okHrD95weD+XZA0HdxhRaGc8idreAjkqq2IjQG6ZfY
+	 UHY4ezNdIcSqJUFkJDzDq4lZ9Jud6fRpYyDTnsEMGfeE/Ut3iVBJygsVCB1cazyeVL
+	 INdWUiSs4ZkoWXLjG9FkWzPABPPHmoE9b2XpkDa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Radu Pirea <radu.pirea@microchip.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 026/144] spi: qup: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:32 +0200
-Message-ID: <20260515154654.112882315@linuxfoundation.org>
+Subject: [PATCH 6.12 027/144] spi: at91-usart: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:33 +0200
+Message-ID: <20260515154654.137024532@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -52,51 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 443e3a0005a4342b218b6dbd4c6387d3c7fed85a upstream.
+commit 9acecc9bcff058eaef40fd7a4c3650e88b06b220 upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+Make sure to deregister the controller before disabling and releasing
+underlying resources like clocks and DMA during driver unbind.
 
-Fixes: 64ff247a978f ("spi: Add Qualcomm QUP SPI controller support")
-Cc: stable@vger.kernel.org	# 3.15
+Fixes: e1892546ff66 ("spi: at91-usart: Add driver for at91-usart as SPI")
+Cc: stable@vger.kernel.org	# 4.20
+Cc: Radu Pirea <radu.pirea@microchip.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-10-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-4-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-qup.c |    8 +++++++-
+ drivers/spi/spi-at91-usart.c |    8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -1194,7 +1194,7 @@ static int spi_qup_probe(struct platform
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
+--- a/drivers/spi/spi-at91-usart.c
++++ b/drivers/spi/spi-at91-usart.c
+@@ -556,7 +556,7 @@ static int at91_usart_spi_probe(struct p
+ 	spin_lock_init(&aus->lock);
+ 	init_completion(&aus->xfer_completion);
  
--	ret = devm_spi_register_controller(dev, host);
-+	ret = spi_register_controller(host);
+-	ret = devm_spi_register_controller(&pdev->dev, controller);
++	ret = spi_register_controller(controller);
  	if (ret)
- 		goto disable_pm;
+ 		goto at91_usart_fail_register_controller;
  
-@@ -1321,6 +1321,10 @@ static void spi_qup_remove(struct platfo
- 	struct spi_qup *controller = spi_controller_get_devdata(host);
- 	int ret;
+@@ -634,8 +634,14 @@ static void at91_usart_spi_remove(struct
+ 	struct spi_controller *ctlr = platform_get_drvdata(pdev);
+ 	struct at91_usart_spi *aus = spi_controller_get_devdata(ctlr);
  
-+	spi_controller_get(host);
++	spi_controller_get(ctlr);
 +
-+	spi_unregister_controller(host);
++	spi_unregister_controller(ctlr);
 +
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 
- 	if (ret >= 0) {
-@@ -1340,6 +1344,8 @@ static void spi_qup_remove(struct platfo
- 
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+ 	at91_usart_spi_release_dma(ctlr);
+ 	clk_disable_unprepare(aus->clk);
 +
-+	spi_controller_put(host);
++	spi_controller_put(ctlr);
  }
  
- static const struct of_device_id spi_qup_dt_match[] = {
+ static const struct dev_pm_ops at91_usart_spi_pm_ops = {
 
 
