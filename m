@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB5D3F9273;
-	Fri, 15 May 2026 16:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF85A3CAA39;
+	Fri, 15 May 2026 16:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861211; cv=none; b=Pw2YHu1ebETTMWa8DmsrgB7vBLxRpLt2SiS+xvdHv1qTj2q3DJdSJrpbxpivL6rqKkantSK0q4OHFyUz0TfNqkwitU1GfCazAC/0mamllrt+fdEbWgrR4T2bb1qNVMNlKJ3b92lP1281+dYoLDn1b1Pjb6m084PRZl1ZMjonqvs=
+	t=1778861213; cv=none; b=jW1PTa2+hdM1eFsxTR96TNZNR7VVrRPp/bbbSmxsJb4CNn7keondocIwTdGFmNz5Sq9hh4UdltMCJIWJGSX7xhmbNuZEBLhtBYUyxLuNLksIqBdi5zyXT80LdtpITOC0DchuVolwovQMIweJzVzog9dpWlrnB50oUoiYMM6KaKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861211; c=relaxed/simple;
-	bh=ZawA0ehsSpJoeh0lU2gWU/s489p0le5bi/NiksHExhE=;
+	s=arc-20240116; t=1778861213; c=relaxed/simple;
+	bh=SGh9FpTJSjqv8YIKoBmsDa5DwlhohzlgqSmeQWin9cI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BfPyk029CnHRa/SS6XdAKQGN2XDtfefCvkRYQLiAPCTvP9Ki26eatYDDSYcakbpxuHsdTYNhOMN5GdnBJTS4RRrHNN0SBEsVGgB4GfcYfbFTsT7IMhhLI5UbwZwwgn0RLYgLbYMKyEI3+qeN9XsoTxRj2v2hFuxW+F6TVuv2tZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzBrD+/3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jn/HvSbWMtQqYT6tcEtQoPTm4Op4RPG7XeTa+RZ7f6+9ZBXJg/QRvzbHQhcvbzBzwzXEG4/anE2aHtj87aPTY+WHEHRQVCJJI+J8SK6zL6gQgyva8KD3+trF/ncPa0TCFGY15e2C5yLC0MzhIIUEYaTdnT7SU0hAOOyBFk1WHd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUFWqyUN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzBrD+/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9230C2BCB0;
-	Fri, 15 May 2026 16:06:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUFWqyUN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4407DC2BCB3;
+	Fri, 15 May 2026 16:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861211;
-	bh=ZawA0ehsSpJoeh0lU2gWU/s489p0le5bi/NiksHExhE=;
+	s=korg; t=1778861213;
+	bh=SGh9FpTJSjqv8YIKoBmsDa5DwlhohzlgqSmeQWin9cI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzBrD+/3EDTBodb7EtHbyWS6cQ3napAuH/FEZhy9VlKZQ0yYM/VXOdq4TOWCNYuGx
-	 Zr5UWyU2f610WOtw3RnSttdsRpTWFvk9UDQLy/IXOzOVLNCCCflZ2mr+NoHBbmVbUX
-	 qYWYfBVzFKOMM1IaWE7e1DVD6DvjAxaPHzbC/TWA=
+	b=qUFWqyUNZ9fXmGDTodX+1jjafZK5egd3fKEVNwUOetjtidt4fIufYJapppsnDjlxY
+	 NT+rKF1k9sbfuhmONgoggXHsziijms1xVZl8TALhMKHA2GIrEQyCSRRSLz3c/b7JgV
+	 J6NU5AqCdrbi54IGOVU6EDakf+t3YV73AavAb2HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>
-Subject: [PATCH 6.6 239/474] thermal/drivers/sprd: Fix raw temperature clamping in sprd_thm_rawdata_to_temp
-Date: Fri, 15 May 2026 17:45:48 +0200
-Message-ID: <20260515154720.174174882@linuxfoundation.org>
+	Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 240/474] spi: topcliff-pch: fix use-after-free on unbind
+Date: Fri, 15 May 2026 17:45:49 +0200
+Message-ID: <20260515154720.194947620@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,38 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Johan Hovold <johan@kernel.org>
 
-commit b3414148bbc1f9cd56217e58a558c6ac4fd1b4a6 upstream.
+commit 9d72732fe70c11424bc90ed466c7ccfa58b42a9a upstream.
 
-The raw temperature data was never clamped to SPRD_THM_RAW_DATA_LOW or
-SPRD_THM_RAW_DATA_HIGH because the return value of clamp() was not used.
-Fix this by assigning the clamped value to 'rawdata'.
+Give the driver a chance to flush its queue before releasing the DMA
+buffers on driver unbind
 
-Casting SPRD_THM_RAW_DATA_LOW and SPRD_THM_RAW_DATA_HIGH to u32 is also
-redundant and can be removed.
-
-Fixes: 554fdbaf19b1 ("thermal: sprd: Add Spreadtrum thermal driver support")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260307102422.306055-2-thorsten.blum@linux.dev
+Fixes: c37f3c2749b5 ("spi/topcliff_pch: DMA support")
+Cc: stable@vger.kernel.org	# 3.1
+Cc: Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260414134319.978196-9-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/sprd_thermal.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-topcliff-pch.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/thermal/sprd_thermal.c
-+++ b/drivers/thermal/sprd_thermal.c
-@@ -178,7 +178,7 @@ static int sprd_thm_sensor_calibration(s
- static int sprd_thm_rawdata_to_temp(struct sprd_thermal_sensor *sen,
- 				    u32 rawdata)
- {
--	clamp(rawdata, (u32)SPRD_THM_RAW_DATA_LOW, (u32)SPRD_THM_RAW_DATA_HIGH);
-+	rawdata = clamp(rawdata, SPRD_THM_RAW_DATA_LOW, SPRD_THM_RAW_DATA_HIGH);
+--- a/drivers/spi/spi-topcliff-pch.c
++++ b/drivers/spi/spi-topcliff-pch.c
+@@ -1406,9 +1406,6 @@ static void pch_spi_pd_remove(struct pla
+ 	dev_dbg(&plat_dev->dev, "%s:[ch%d] irq=%d\n",
+ 		__func__, plat_dev->id, board_dat->pdev->irq);
  
- 	/*
- 	 * According to the thermal datasheet, the formula of converting
+-	if (use_dma)
+-		pch_free_dma_buf(board_dat, data);
+-
+ 	/* check for any pending messages; no action is taken if the queue
+ 	 * is still full; but at least we tried.  Unload anyway */
+ 	count = 500;
+@@ -1432,6 +1429,9 @@ static void pch_spi_pd_remove(struct pla
+ 		free_irq(board_dat->pdev->irq, data);
+ 	}
+ 
++	if (use_dma)
++		pch_free_dma_buf(board_dat, data);
++
+ 	pci_iounmap(board_dat->pdev, data->io_remap_addr);
+ 	spi_unregister_master(data->master);
+ }
 
 
