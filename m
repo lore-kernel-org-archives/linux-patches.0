@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3477E3F86E5;
-	Fri, 15 May 2026 16:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77743FBB5C;
+	Fri, 15 May 2026 16:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861668; cv=none; b=tZXLUF95vFkGFEh9pfTWz/SG/eiCKnZuD5wH06TmI6gqj17L+NavYTg13PCrA+EUpBWMq5RftegGhMsK0jCSawZnx577qHQC+V3xDjNLmt4P3LvwJ/0d9IuKPVQZ4ZgrYehiPgU+RNoj2bJhr+96I5AB0egREiA0buNzX8Fqnts=
+	t=1778861670; cv=none; b=LmG5ccmBNIn0/XvCZPY5IS4tTspaf3z0D+oVSxUL+DgAlHn+WEwv6UOMdI+nuntqSyhDbBHIk1tRxnm8j9JSBGx+qph1mLkjKRi3ghBZTCQ1aQ6i5PqllVShgMMp/VHYYS2znaGHg6D0XGjwCxJBO6/Er9AySHTcDHNc3HxzKCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861668; c=relaxed/simple;
-	bh=Qa9/9M6jlQR87nX9m3ZPcFHN2Piw3KU+R188zlBS/Ls=;
+	s=arc-20240116; t=1778861670; c=relaxed/simple;
+	bh=uh7qzifK5HNNXhdm20gHH6m6mZD6bLT7k0GiqL8TqLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bR28eO4BVmRFibD3SpknfLDJl3H1vDzcBemcOIiWhj6Rz1z6bpRV5mS8qnC5BSDhPeE5rUA5XUUcL6qduPwleX2TYWmhx2FrmrUOq1Y168EiJ8K7QT49CYfqp3GIr7K2w9L05uspaSLqtdxDYtsqxpyw9GxiPpy+m2yKXa1OqXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t81MLhnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R9EDT+Kdfh4jd34g8A/nq4XJtz2NwVN/Smp7IxDirShLGd0vNYVQLgf35/bggeLySAXMLOX3fjo8Ho8tB2acoLKyMqiBKY+bQoC6ok/E3Qes3m6yX/fXUEtyqJ9TL3t2MssadZ+Wt9r3PR9Jri+HDy/OFOr3PhTK/EF85LJcIrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i49pYuIS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t81MLhnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C95C2BCB0;
-	Fri, 15 May 2026 16:14:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i49pYuIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C587C2BCB0;
+	Fri, 15 May 2026 16:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861668;
-	bh=Qa9/9M6jlQR87nX9m3ZPcFHN2Piw3KU+R188zlBS/Ls=;
+	s=korg; t=1778861670;
+	bh=uh7qzifK5HNNXhdm20gHH6m6mZD6bLT7k0GiqL8TqLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t81MLhnIHsB2A4+3sUaEzXtNCFEvzF3pgLO6vEZ337wWddGJA5xAXtaIzYOAbgUEW
-	 GsNxpYuUgCc1PbtVhE56kxtC4H5HJNJXOudYa2KlLDlKtH2+I7vQ+9rxSn3U/HU52j
-	 FVu250n1zAu81x+cW3yF2jVNT3m9GF1rzG8zK0eI=
+	b=i49pYuIS6MpCHvw/6U8jTSuYKWd+LKwHyMMpJNHtV0S3YF1DupWREN6iBTOIvUUtG
+	 GyWzqcAhrmg3oivV3ASpw1EP7hwTkVsU7m4G6JAocZzIOTRG8H4K/0QhqbpcirG8vo
+	 pji1XIRv/uBLj9chutsEs4RIJJT0fYZILS2NCN9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Lentczner <mark@glyphic.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 416/474] ALSA: seq: Notify client and port info changes
-Date: Fri, 15 May 2026 17:48:45 +0200
-Message-ID: <20260515154724.060302565@linuxfoundation.org>
+Subject: [PATCH 6.6 417/474] ALSA: seq: Fix UMP group 16 filtering
+Date: Fri, 15 May 2026 17:48:46 +0200
+Message-ID: <20260515154724.082754114@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -45,72 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit b8e49e24cdba27a0810a0988e810e2c68f2033cb ]
+[ Upstream commit 92429ca999db99febced82f23362a71b2ba4c1d8 ]
 
-It was supposed to be notified when a sequencer client info and a port
-info has changed (via SNDRV_SEQ_EVENT_CLIENT_CHANGE and
-SNDRV_SEQ_EVENT_PORT_CHANGE event, respectively), and there are
-already helper functions.  But those aren't really sent from the
-driver so far, except for the recent support of UMP, simply due to the
-lack of implementations.
+The sequencer UAPI defines group_filter as an unsigned int bitmap.
+Bit 0 filters groupless messages and bits 1-16 filter UMP groups 1-16.
 
-This patch adds the missing notifications at updating the client and
-the port info.  The formerly added notification for UMP is dropped
-because it's handled now in the port info side.
+The internal snd_seq_client storage is only unsigned short, so bit 16
+is truncated when userspace sets the filter. The same truncation affects
+the automatic UMP client filter used to avoid delivery to inactive
+groups, so events for group 16 cannot be filtered.
 
-Reported-by: Mark Lentczner <mark@glyphic.com>
-Link: https://lore.kernel.org/CAPnksqRok7xGa4bxq9WWimVV=28-7_j628OmrWLS=S0=hzaTHQ@mail.gmail.com
-Link: https://patch.msgid.link/20241128074734.32165-1-tiwai@suse.de
+Store the internal bitmap as unsigned int and keep both userspace-provided
+and automatically generated values limited to the defined UAPI bits.
+
+Fixes: d2b706077792 ("ALSA: seq: Add UMP group filter")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260506-alsa-seq-ump-group16-filter-v1-1-b75160bf6993@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 92429ca999db ("ALSA: seq: Fix UMP group 16 filtering")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_clientmgr.c  |    7 +++++++
- sound/core/seq/seq_ump_client.c |    2 --
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ sound/core/seq/seq_clientmgr.c  |    2 +-
+ sound/core/seq/seq_clientmgr.h  |    5 ++++-
+ sound/core/seq/seq_ump_client.c |    2 +-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
 --- a/sound/core/seq/seq_clientmgr.c
 +++ b/sound/core/seq/seq_clientmgr.c
-@@ -1334,6 +1334,10 @@ static int snd_seq_ioctl_set_client_info
+@@ -1333,7 +1333,7 @@ static int snd_seq_ioctl_set_client_info
+ 	if (client->user_pversion >= SNDRV_PROTOCOL_VERSION(1, 0, 3))
  		client->midi_version = client_info->midi_version;
  	memcpy(client->event_filter, client_info->event_filter, 32);
- 	client->group_filter = client_info->group_filter;
-+
-+	/* notify the change */
-+	snd_seq_system_client_ev_client_change(client->number);
-+
- 	return 0;
- }
+-	client->group_filter = client_info->group_filter;
++	client->group_filter = client_info->group_filter & SND_SEQ_GROUP_FILTER_MASK;
  
-@@ -1457,6 +1461,9 @@ static int snd_seq_ioctl_set_port_info(s
- 	if (port) {
- 		snd_seq_set_port_info(port, info);
- 		snd_seq_port_unlock(port);
-+		/* notify the change */
-+		snd_seq_system_client_ev_port_change(info->addr.client,
-+						     info->addr.port);
- 	}
- 	return 0;
- }
+ 	/* notify the change */
+ 	snd_seq_system_client_ev_client_change(client->number);
+--- a/sound/core/seq/seq_clientmgr.h
++++ b/sound/core/seq/seq_clientmgr.h
+@@ -14,6 +14,9 @@
+ 
+ /* client manager */
+ 
++#define SND_SEQ_GROUP_FILTER_MASK	GENMASK(SNDRV_UMP_MAX_GROUPS, 0)
++#define SND_SEQ_GROUP_FILTER_GROUPS	GENMASK(SNDRV_UMP_MAX_GROUPS, 1)
++
+ struct snd_seq_user_client {
+ 	struct file *file;	/* file struct of client */
+ 	/* ... */
+@@ -40,7 +43,7 @@ struct snd_seq_client {
+ 	int number;		/* client number */
+ 	unsigned int filter;	/* filter flags */
+ 	DECLARE_BITMAP(event_filter, 256);
+-	unsigned short group_filter;
++	unsigned int group_filter;
+ 	snd_use_lock_t use_lock;
+ 	int event_lost;
+ 	/* ports */
 --- a/sound/core/seq/seq_ump_client.c
 +++ b/sound/core/seq/seq_ump_client.c
-@@ -273,8 +273,6 @@ static void update_port_infos(struct seq
- 						new);
- 		if (err < 0)
- 			continue;
--		/* notify to system port */
--		snd_seq_system_client_ev_port_change(client->seq_client, i);
- 	}
- }
- 
+@@ -370,7 +370,7 @@ static void setup_client_group_filter(st
+ 	cptr = snd_seq_kernel_client_get(client->seq_client);
+ 	if (!cptr)
+ 		return;
+-	filter = ~(1U << 0); /* always allow groupless messages */
++	filter = SND_SEQ_GROUP_FILTER_GROUPS; /* always allow groupless messages */
+ 	for (p = 0; p < SNDRV_UMP_MAX_GROUPS; p++) {
+ 		if (client->ump->groups[p].active)
+ 			filter &= ~(1U << (p + 1));
 
 
