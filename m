@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A76303CB0;
-	Fri, 15 May 2026 16:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3292C303CB0;
+	Fri, 15 May 2026 16:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861283; cv=none; b=nztQ9HuVyfWopvV+YlERTIuPDOQR4HZvYrKGDSSMm5nuBbvGA/p6j9zLMH+atMKc5oJVcau9t3W74OsUwfLc+w0U637/MKt7a7iZhVjdSNduOwEksKQJe/Z6XCAbkgIDKXH8Hb1WkmL6ks4e3FVkhV/ogaB9rbhOm8snLmEO6SM=
+	t=1778861286; cv=none; b=u2+MhI/3qdISzB7KMuaGDiXuKUcn1PvKrhW0CrKGlhUGz78zdTFi0RFSedb1scdXo0qF4aaA08crIigiTlXOaX1hUdrRYv9CpHTG4PeGK4ew69p7H2YLr+ByXO/o8esEHiZnfT4OcykAQKHnPqN6M2VFAyeAa6QCjn65l99vkO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861283; c=relaxed/simple;
-	bh=glBG4RnO+WG4qHcCiuBADMp9TzlIiFctzK0+detLuB8=;
+	s=arc-20240116; t=1778861286; c=relaxed/simple;
+	bh=bpwjBkl2m5UWhPC9jMwCOGEfbPNxALujq47+a1WVC0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lPXLIyJPxHud3Tz0N9IY8w1TBT0warZjzJDKu5sTLna+dTi+tagtaSp/SdIEul2HsB1KpPYGU9xpo/92jsyfIISNPmEdi4rCiBI9EiSv0+/4TFReRAhERnrakrNVWgcvj7lk/Xeml06pEFbXzdLE0h0bk3WPfSnCXr5aN9RKCmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OG82zZJ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ppx2t+4lIsfasPSZicx86+mrc+bLDxqr3JSHlMiC/g+k5+eKHctKGVNCn6JR7DE6aPcJ5IH8SPyERvUk6SoldPXKcWIYh5IlKQ9vXyR2X2F6FojufVgujd0dppwJIWPqiBfmTk6C6ofSzABGBXXK69DlwUEJWsCVBJDdGJlqYrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ne1B3wqg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OG82zZJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA1CC2BCB0;
-	Fri, 15 May 2026 16:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ne1B3wqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAFEC2BCB0;
+	Fri, 15 May 2026 16:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861283;
-	bh=glBG4RnO+WG4qHcCiuBADMp9TzlIiFctzK0+detLuB8=;
+	s=korg; t=1778861286;
+	bh=bpwjBkl2m5UWhPC9jMwCOGEfbPNxALujq47+a1WVC0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OG82zZJ7u18/M88nwAkbqC4UJt+qj7eW492rl15AdzzkUU12qDBo+9hIl8z+VjWA9
-	 Zj1M7UFvJmfSORt9UFoJGj/bqnJZs3p67bSISaB8sJDYI7c7ISCg1FmVrwuLjwb3Ro
-	 VtQjeLpHc7BXJ5PvndP9kvzF7ZDjZ7XBQ1PpZOIo=
+	b=ne1B3wqg2xBNZRFAm6us86Nr7TdNKs3s9PPncTWOskS+4p6o87d09Y/1y+yaSWHpW
+	 n/mQUK1olI7tr+77KuhMsZCU7ZuQW2j71U9r+XCWXBq0jVXrIBPP4DJld4JQRxKZgA
+	 h+dYyzMCYu71SSYtmgS8GbIMBHeQ1GyL3Zydc6Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Stable@vger.kernel.org,
 	Zisen Ye <zisenye@stu.xidian.edu.cn>,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 269/474] smb/client: fix out-of-bounds read in smb2_compound_op()
-Date: Fri, 15 May 2026 17:46:18 +0200
-Message-ID: <20260515154720.822760011@linuxfoundation.org>
+Subject: [PATCH 6.6 270/474] smb/client: fix out-of-bounds read in symlink_data()
+Date: Fri, 15 May 2026 17:46:19 +0200
+Message-ID: <20260515154720.843991498@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -53,63 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Zisen Ye <zisenye@stu.xidian.edu.cn>
 
-commit 8d09328dfda089675e4c049f3f256064a1d1996b upstream.
+commit d62b8d236fab503c6fec1d3e9a38bea71feaca20 upstream.
 
-If a server sends a truncated response but a large OutputBufferLength, and
-terminates the EA list early, check_wsl_eas() returns success without
-validating that the entire OutputBufferLength fits within iov_len.
+Since smb2_check_message() returns success without length validation for
+the symlink error response, in symlink_data() it is possible for
+iov->iov_len to be smaller than sizeof(struct smb2_err_rsp). If the buffer
+only contains the base SMB2 header (64 bytes), accessing
+err->ErrorContextCount (at offset 66) or err->ByteCount later in
+symlink_data() will cause an out-of-bounds read.
 
-Then smb2_compound_op() does:
-    memcpy(idata->wsl.eas, data[0], size[0]);
-
-Where size[0] is OutputBufferLength. If iov_len is smaller than size[0],
-memcpy can read beyond the end of the rsp_iov allocation and leak adjacent
-kernel heap memory.
-
-Link: https://lore.kernel.org/linux-cifs/d998240c-aca9-420d-9dbd-f5ba24af19e0@chenxiaosong.com/
-Fixes: ea41367b2a60 ("smb: client: introduce SMB2_OP_QUERY_WSL_EA")
-Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/linux-cifs/297d8d9b-adf7-42fd-a1c2-5b1f230032bc@chenxiaosong.com/
+Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
+Cc: Stable@vger.kernel.org
 Signed-off-by: Zisen Ye <zisenye@stu.xidian.edu.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2inode.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/smb/client/smb2misc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -108,7 +108,7 @@ static int check_wsl_eas(struct kvec *rs
- 	u32 outlen, next;
- 	u16 vlen;
- 	u8 nlen;
--	u8 *end;
-+	u8 *ea_end, *iov_end;
- 
- 	outlen = le32_to_cpu(rsp->OutputBufferLength);
- 	if (outlen < SMB2_WSL_MIN_QUERY_EA_RESP_SIZE ||
-@@ -117,15 +117,19 @@ static int check_wsl_eas(struct kvec *rs
- 
- 	ea = (void *)((u8 *)rsp_iov->iov_base +
- 		      le16_to_cpu(rsp->OutputBufferOffset));
--	end = (u8 *)rsp_iov->iov_base + rsp_iov->iov_len;
-+	ea_end = (u8 *)ea + outlen;
-+	iov_end = (u8 *)rsp_iov->iov_base + rsp_iov->iov_len;
-+	if (ea_end > iov_end)
-+		return -EINVAL;
-+
- 	for (;;) {
--		if ((u8 *)ea > end - sizeof(*ea))
-+		if ((u8 *)ea > ea_end - sizeof(*ea))
- 			return -EINVAL;
- 
- 		nlen = ea->ea_name_length;
- 		vlen = le16_to_cpu(ea->ea_value_length);
- 		if (nlen != SMB2_WSL_XATTR_NAME_LEN ||
--		    (u8 *)ea->ea_data + nlen + 1 + vlen > end)
-+		    (u8 *)ea->ea_data + nlen + 1 + vlen > ea_end)
- 			return -EINVAL;
- 
- 		switch (vlen) {
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -239,7 +239,8 @@ smb2_check_message(char *buf, unsigned i
+ 	if (len != calc_len) {
+ 		/* create failed on symlink */
+ 		if (command == SMB2_CREATE_HE &&
+-		    shdr->Status == STATUS_STOPPED_ON_SYMLINK)
++		    shdr->Status == STATUS_STOPPED_ON_SYMLINK &&
++		    len > calc_len)
+ 			return 0;
+ 		/* Windows 7 server returns 24 bytes more */
+ 		if (calc_len + 24 == len && command == SMB2_OPLOCK_BREAK_HE)
 
 
