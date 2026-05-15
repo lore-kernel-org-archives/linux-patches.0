@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C8F3BED47;
-	Fri, 15 May 2026 16:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D012949E0;
+	Fri, 15 May 2026 16:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862736; cv=none; b=GLHWvPdm4A2q58tO/qnCfuCk7kBxU7UA2vwpO9k6V09lkj6dPNy1E0YTah0wfsV6Nt34dD64kHneb3o9a+31TVIy4RwOHKHyzPiKS/YYTziCVFA54uxC2HUyuPevVIUB8RFQPAgrHGGsOvn+WdnemGPMwehuMSawFDfYjlJxFvE=
+	t=1778862739; cv=none; b=BJ8Q3RmyfdMIZAo8u98A+3uuAwzxd39Vk6e9kMEGxfbNFWYMkq/Pgk9GgQSX+03z60eBf1E6tJPXEvx0k/HWaPhWJwT9GbTXh3VIgR29X7Vsf1wx7XQS+gj7qSfu4iHHEqQzs/S1qgtA7kOMlmioyGSlsfRcj2FJFfLXOPqpPjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862736; c=relaxed/simple;
-	bh=/bcST7MvFXcs8xuYsStOUj0oxrn8EpLArY6it0dl+uI=;
+	s=arc-20240116; t=1778862739; c=relaxed/simple;
+	bh=lgzIWGy0yEi4h3O3bO0jXsN0inU8gRT30pzWnccNVsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AF3SuLy1YHKn7x/2glH9XI8MNHy+rW0JQFN4idxa0cGWS4pXXIrV6l2GVYGaxMlPVSFeIKfTJH3042TcFbsB6km6F5fMzzesGTg2jIvFCPKkZRFz81GGazgCdwm1pj8P35u4hbkX8ETtYGe7p17OQE8zUSua7Qu5QY0l/4gTvI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6WQlXpz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dhvCjW9r4QyI1C9PgeKJ5s8+ssOPLIUPgaCBEAEIrpJ8+OXDz0i+0yGJOsDQD1bnqghCbjanaJ+GLYAqFOqJFcQMEO2gi9oTLV0di+8YMBNWY/w89lBSF+AOvsAdlQ1BPpGvJIMnzRBcqF5rbmVuVSIdYMAVhQ6ohDjV2ujTuXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDPHgsw6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6WQlXpz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDB9C2BCB0;
-	Fri, 15 May 2026 16:32:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDPHgsw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA36C2BCB0;
+	Fri, 15 May 2026 16:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862736;
-	bh=/bcST7MvFXcs8xuYsStOUj0oxrn8EpLArY6it0dl+uI=;
+	s=korg; t=1778862739;
+	bh=lgzIWGy0yEi4h3O3bO0jXsN0inU8gRT30pzWnccNVsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z6WQlXpzSmizoht/D9XizXBbsH+FNf+tHeMOKIFIxar0SxcOkw5RxRgWUjA6EYaUG
-	 hUMfHnnmlllLTyl0JQ8vHglLCf3GG1N3rhv0EnGcVvrl24MxVzzmmbP0WXqixO/DI4
-	 cbVI2iKkkVwUr5yfCfIOqBT2H16U08EueoLOLGh4=
+	b=TDPHgsw6IFWu+Q9sDG9Dm1wyuwmITt4P7z2vi1afVkDLVYtLLswT4Ux0mOOCdKnJA
+	 y0FBnd5ebmUKWrRA4Sa/HkZF7Y7G1Iw9Sl+tdskDL4Ap8+0YoUo5E7XLX4+oYLiYxQ
+	 VVd1bn+Lis9FFCBlYAPfNwiveOJCmKz2IydtKwkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	=?UTF-8?q?Rapha=C3=ABl=20Gallais-Pou?= <rgallaispou@gmail.com>,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Subject: [PATCH 7.0 162/201] drm/sti: remove bridge when sti_hda component_add fails
-Date: Fri, 15 May 2026 17:49:40 +0200
-Message-ID: <20260515154702.085130211@linuxfoundation.org>
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 7.0 163/201] drm/panel: boe-tv101wum-nl6: restore MODE_LPM after sending disable cmds
+Date: Fri, 15 May 2026 17:49:41 +0200
+Message-ID: <20260515154702.105778713@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -46,70 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
 
-commit 84ae1840260fece9b6b70d3872b79384bbe5a90b upstream.
+commit 570cf799e87ae805eacfab3b4ba66676b5fccdb6 upstream.
 
-Use devm_drm_bridge_add() so the bridge is released if probe fails after
-registration, and drop the manual drm_bridge_remove() in remove().
+When preparing the panel, it seems that it always expects commands to be
+transferred in LP mode. However, the disable function removes the
+MIPI_DSI_MODE_LPM flag, and no other function re-adds it.
 
-Check the return value of devm_drm_bridge_add().
+As the unprepare function contains no DSI commands, re-adding the flag
+just after disabling the panel should be safe. Add the code re-adding
+the flag after the two commands for disabling the panel are sent.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Fixes: d28726efc637 ("drm/sti: hda: add bridge before attaching")
+This fixes error messages shown in kernel log when unblanking on
+mt8183-kukui-kodama-sku32 device.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Acked-by: Raphaël Gallais-Pou <rgallaispou@gmail.com>
-Link: https://patch.msgid.link/20260423200622.325076-1-osama.abdelkader@gmail.com
-Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Fixes: a869b9db7adf ("drm/panel: support for boe tv101wum-nl6 wuxga dsi video mode panel")
+Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260503091708.1079962-1-zhengxingda@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sti/sti_hda.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/sti/sti_hda.c b/drivers/gpu/drm/sti/sti_hda.c
-index b7397827889c..360a88ca8f0c 100644
---- a/drivers/gpu/drm/sti/sti_hda.c
-+++ b/drivers/gpu/drm/sti/sti_hda.c
-@@ -741,6 +741,7 @@ static int sti_hda_probe(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct sti_hda *hda;
- 	struct resource *res;
-+	int ret;
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -1324,6 +1324,8 @@ static int boe_panel_disable(struct drm_
+ 	mipi_dsi_dcs_set_display_off_multi(&ctx);
+ 	mipi_dsi_dcs_enter_sleep_mode_multi(&ctx);
  
- 	DRM_INFO("%s\n", __func__);
++	boe->dsi->mode_flags |= MIPI_DSI_MODE_LPM;
++
+ 	mipi_dsi_msleep(&ctx, 150);
  
-@@ -779,7 +780,9 @@ static int sti_hda_probe(struct platform_device *pdev)
- 		return PTR_ERR(hda->clk_hddac);
- 	}
- 
--	drm_bridge_add(&hda->bridge);
-+	ret = devm_drm_bridge_add(dev, &hda->bridge);
-+	if (ret)
-+		return ret;
- 
- 	platform_set_drvdata(pdev, hda);
- 
-@@ -788,10 +791,7 @@ static int sti_hda_probe(struct platform_device *pdev)
- 
- static void sti_hda_remove(struct platform_device *pdev)
- {
--	struct sti_hda *hda = platform_get_drvdata(pdev);
--
- 	component_del(&pdev->dev, &sti_hda_ops);
--	drm_bridge_remove(&hda->bridge);
- }
- 
- static const struct of_device_id hda_of_match[] = {
--- 
-2.54.0
-
+ 	return ctx.accum_err;
 
 
