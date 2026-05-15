@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC433FF1DA;
-	Fri, 15 May 2026 15:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFF5175A87;
+	Fri, 15 May 2026 15:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860283; cv=none; b=XgV5aigtbn254vKGE4CHOhomIFY9IuRFdypSzqhBTyOEwkQ0si0d4nBQcNn5MBu9/HZVPMjOcv031WJMPl16Bj7g9xlwJ/Dk0FYc7t9C6BMhnL0qr+YY/YBBDdZJ7C7v/9+WXq2K7bqQPNjclviKaElrAnnOltQ0JZsgYQCiYkU=
+	t=1778860286; cv=none; b=RjtDbHR9NrYLTKWcRU/YMGVt8UAqgeVb/iGnlURP+JNHedbP8aOUwdtqngu1jM2WcRzIokGluNa4RjnVbYZO//Y4jYzpVhUdqMpGXnf3U3PqXhswTk2/A+Rnm0tsi4cIsu1nPec9Y8GF6n1Q8LyVjFjOrF6dq/ZFWa05ulh0bec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860283; c=relaxed/simple;
-	bh=5HCZF10zD2sFI/Exk5w3QK6uT/fbjpJ6kI5xNnOJ6Gk=;
+	s=arc-20240116; t=1778860286; c=relaxed/simple;
+	bh=jtyUstZHIMfGpN0Em53a+DxxOZDH0zyRSI0j0v1pA+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uICzDKFdBN0UcVM/gdaYfaajSUPL2GFIL9cbVUolmapxvHRmfoTlRRAWHwoiG2u4KW0kqEHjiu64vxWDCqUkdl9knUh6TOGT8Zhla8O6RlBx9x7Sbh7G5cXcW92CBsPtjKRFkj8zLxIDfI59aiiHgeiMj2CQjKoh+R8qPTwTEUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0iyCv4V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sbwwInAVFnEpSfkcHtNIi1NYSXJ3emr6Iw4qa4SFunLoIliLE1plDIx1pKhdf7LAiLCvVy871Oo/tPXBfMLOXoAXW/sYx6iUvj2d7H92tzrAJCp1dDfKQOxYGtXBIUVNlG2ggrvI49iBX8sfYRoSSMzaQmNBNTnDTkkjHeKIiTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8fLn5ju; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0iyCv4V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5669DC2BCB0;
-	Fri, 15 May 2026 15:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8fLn5ju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B96C2BCB0;
+	Fri, 15 May 2026 15:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860283;
-	bh=5HCZF10zD2sFI/Exk5w3QK6uT/fbjpJ6kI5xNnOJ6Gk=;
+	s=korg; t=1778860286;
+	bh=jtyUstZHIMfGpN0Em53a+DxxOZDH0zyRSI0j0v1pA+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C0iyCv4VQb7SBizSW6E18849/2JNb/iCSyGd/gSgcRT89UevFYvLv837xwlTzdGA7
-	 Vk/5tZKDkyu0VoL72x2ggREbq2HD6YbPcO9sk4QU5Isd7axmUCauyHn3lqANE2YF2k
-	 APA5ODhocfw4wawQEuJHbeyTIhsz078ptq2mhUoU=
+	b=g8fLn5juKNCAPCuGxZJdsyRIp/jAkEyay4Hq5eHn1bR+19Nlad1ENq05s6H4yPCI7
+	 Js/GMs6xGs4A3O2zyANgow4K0iZ3vAnUR1J5MOODJpGgdceAIyXre48uwN0Q1ZT3ui
+	 6FpJSpTC38h92OURDt8t+hAsfezYcZcLp17zZq7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Artem S. Tashkinov" <aros@gmx.com>,
-	Krishna Chomal <krishna.chomal108@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 030/144] platform/x86: hp-wmi: Ignore backlight and FnLock events
-Date: Fri, 15 May 2026 17:47:36 +0200
-Message-ID: <20260515154654.208844583@linuxfoundation.org>
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 031/144] vsock/virtio: fix MSG_PEEK ignoring skb offset when calculating bytes to copy
+Date: Fri, 15 May 2026 17:47:37 +0200
+Message-ID: <20260515154654.233254762@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -45,49 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Chomal <krishna.chomal108@gmail.com>
+From: Luigi Leonardi <leonardi@redhat.com>
 
-commit e8c597368b8500a824c639bfb5ed0044068c6870 upstream.
+commit 080f22f5d30233faf3d83be3098f35b8be9b7a00 upstream.
 
-On HP OmniBook 7 the keyboard backlight and FnLock keys are handled
-directly by the firmware. However, they still trigger WMI events which
-results in "Unknown key code" warnings in dmesg.
+`virtio_transport_stream_do_peek()` does not account for the skb offset
+when computing the number of bytes to copy.
 
-Add these key codes to the keymap with KE_IGNORE to silence the warnings
-since no software action is needed.
+This means that, after a partial recv() that advances the offset, a peek
+requesting more bytes than are available in the sk_buff causes
+`skb_copy_datagram_iter()` to go past the valid payload, resulting in
+a -EFAULT.
 
-Tested-by: Artem S. Tashkinov <aros@gmx.com>
-Reported-by: Artem S. Tashkinov <aros@gmx.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221181
-Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
-Link: https://patch.msgid.link/20260403080155.169653-1-krishna.chomal108@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+The dequeue path already handles this correctly.
+Apply the same logic to the peek path.
+
+Fixes: 0df7cd3c13e4 ("vsock/virtio/vhost: read data from non-linear skb")
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Acked-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+Link: https://patch.msgid.link/20260415-fix_peek-v4-1-8207e872759e@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/vmw_vsock/virtio_transport_common.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -261,6 +261,11 @@ static const struct key_entry hp_wmi_key
- 	{ KE_KEY, 0x21a9,  { KEY_TOUCHPAD_OFF } },
- 	{ KE_KEY, 0x121a9, { KEY_TOUCHPAD_ON } },
- 	{ KE_KEY, 0x231b,  { KEY_HELP } },
-+	{ KE_IGNORE, 0x21ab, }, /* FnLock on */
-+	{ KE_IGNORE, 0x121ab, }, /* FnLock off */
-+	{ KE_IGNORE, 0x30021aa, }, /* kbd backlight: level 2 -> off */
-+	{ KE_IGNORE, 0x33221aa, }, /* kbd backlight: off -> level 1 */
-+	{ KE_IGNORE, 0x36421aa, }, /* kbd backlight: level 1 -> level 2*/
- 	{ KE_END, 0 }
- };
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -547,9 +547,8 @@ virtio_transport_stream_do_peek(struct v
+ 	skb_queue_walk(&vvs->rx_queue, skb) {
+ 		size_t bytes;
+ 
+-		bytes = len - total;
+-		if (bytes > skb->len)
+-			bytes = skb->len;
++		bytes = min_t(size_t, len - total,
++			      skb->len - VIRTIO_VSOCK_SKB_CB(skb)->offset);
+ 
+ 		spin_unlock_bh(&vvs->rx_lock);
  
 
 
