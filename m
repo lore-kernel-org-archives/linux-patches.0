@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A4324A06A;
-	Fri, 15 May 2026 16:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC112C11DF;
+	Fri, 15 May 2026 16:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862661; cv=none; b=R7uNL+/kJivN3w4o3aPdINnAbqxF7KrW4Ui+mUgEWMYHYziL9xUL8UdQ7zCg3zP7B+WQfCM6Y3LPwIaFTNvWm/5SEhKtsVkk/1h3PesRcsRi3nUgmnibAQY/NuQO7SM3bxJ0IYWtUjQ4YCvu5pBgoSkz2aqvslcxvfS+dh1nLwY=
+	t=1778862663; cv=none; b=LudnW2zrqCymLrYTf9egI5bpuMpfdswrZNRmSt6GoRy8OEnpbz8ZzWjXANbzBzDgTmXpMWlk/8MiqgiEvlZymlNxmxwHUoA9L21LwYCETRs8ab1BgjHJfeW765Ukz0/K62Nce9FGH5tvmS9BBe0P1NeQ0Wg7WvSY2M668pvQuic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862661; c=relaxed/simple;
-	bh=UT3F8X4fkhIHwSJiYz0Mv0m3K/NvIyc5VjpbzlPd/uk=;
+	s=arc-20240116; t=1778862663; c=relaxed/simple;
+	bh=e5IVDCBiXNewWxeFVJKVkn9rDrZ/jWWdSZ7MB92+Qm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pty4/+ZHrf9psIn5MKA3OacPu3CMRf573VxsVl/E7WNxN/6rvenDq3nmm6Hbqm7hZxwG7tyjykSgXBrDIEWllGzyoJLmjUmwoW+VIWtj8mQrMumMkKL+T0r8FMVUzSsQtnSRYZEKTYIY4iG+W9nmCr3AI/LhFCv5SqHLSdIN7p8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xr3YCInf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PAnuhRCp8OGbGbasLP8jEAzb0dGTgAmmcOi+lr9etqF6L5Rx0dV3UVEYJuwa47a9SwR4huWvGNe0+QakMEikpQ8UbIP9kfx1vr7ynePc225GSYSMxm+XFpQyHRqQgY0VX/16yt2x5DmaGdpjgZ0PkCc5RynjeFuAePVSBPKIgPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZc1wU3y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xr3YCInf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D89C2BCC7;
-	Fri, 15 May 2026 16:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZc1wU3y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFA2C2BCB0;
+	Fri, 15 May 2026 16:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862661;
-	bh=UT3F8X4fkhIHwSJiYz0Mv0m3K/NvIyc5VjpbzlPd/uk=;
+	s=korg; t=1778862663;
+	bh=e5IVDCBiXNewWxeFVJKVkn9rDrZ/jWWdSZ7MB92+Qm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xr3YCInfDhASj7wMGieH1PSXskQpg1iTDpBLcCihrgoh/j6bkG4VkX0WYDBXwqAU9
-	 w1nyUkEvzHXcX/NmSIVF7l3uYlwrzGDXP1/WxE+B2WddcE2cveEpuvoPWqALvBa6p6
-	 uGktlEpyyQvYAbCQE0UYzyk+/T0iJYHj7e2ebuQw=
+	b=rZc1wU3yN8Zc2YPD32BecHI1cPI5anuRuhGvnKufx4o1FxEB39OO0PO2E4/PqrzWH
+	 X/mFftcOh9jSK3WNljA7ZmG5qYglbBbRuGcXGuLmHPeCwc4bZHSV8OzK9ZX6uSmr97
+	 sgNFPZaRWrkor9wWkXzMh4BMzmRlqNrpI0WosVXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <jth@kernel.org>,
+	Leilk Liu <leilk.liu@mediatek.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 093/201] spi: ch341: fix devres lifetime
-Date: Fri, 15 May 2026 17:48:31 +0200
-Message-ID: <20260515154700.547451232@linuxfoundation.org>
+Subject: [PATCH 7.0 084/201] spi: mt65xx: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:22 +0200
+Message-ID: <20260515154700.350465306@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,60 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit abe572f630bc1f0e77041012ab075869036ede4f upstream.
+commit 2ad30599cccc572ba2fc11010670eb6e01ea6bfc upstream.
 
-USB drivers bind to USB interfaces and any device managed resources
-should have their lifetime tied to the interface rather than parent USB
-device. This avoids issues like memory leaks when drivers are unbound
-without their devices being physically disconnected (e.g. on probe
-deferral or configuration changes).
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-Fix the controller and driver data lifetime so that they are released
-on driver unbind.
-
-Note that this also makes sure that the SPI controller is placed
-correctly under the USB interface in the device tree.
-
-Fixes: 8846739f52af ("spi: add ch341a usb2spi driver")
-Cc: stable@vger.kernel.org	# 6.11
-Cc: Johannes Thumshirn <jth@kernel.org>
+Fixes: a568231f4632 ("spi: mediatek: Add spi bus for Mediatek MT8173")
+Cc: stable@vger.kernel.org	# 4.3: ace145802350
+Cc: stable@vger.kernel.org	# 4.3
+Cc: Leilk Liu <leilk.liu@mediatek.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260327104305.1309915-3-johan@kernel.org
+Link: https://patch.msgid.link/20260410081757.503099-2-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-ch341.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/spi/spi-mt65xx.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-ch341.c
-+++ b/drivers/spi/spi-ch341.c
-@@ -152,7 +152,7 @@ static int ch341_probe(struct usb_interf
- 	if (ret)
- 		return ret;
+--- a/drivers/spi/spi-mt65xx.c
++++ b/drivers/spi/spi-mt65xx.c
+@@ -1325,7 +1325,7 @@ static int mtk_spi_probe(struct platform
  
--	ctrl = devm_spi_alloc_host(&udev->dev, sizeof(struct ch341_spi_dev));
-+	ctrl = devm_spi_alloc_host(&intf->dev, sizeof(struct ch341_spi_dev));
- 	if (!ctrl)
- 		return -ENOMEM;
+ 	pm_runtime_enable(dev);
  
-@@ -163,7 +163,7 @@ static int ch341_probe(struct usb_interf
- 	ch341->read_pipe = usb_rcvbulkpipe(udev, usb_endpoint_num(in));
+-	ret = devm_spi_register_controller(dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret) {
+ 		pm_runtime_disable(dev);
+ 		return dev_err_probe(dev, ret, "failed to register host\n");
+@@ -1340,6 +1340,8 @@ static void mtk_spi_remove(struct platfo
+ 	struct mtk_spi *mdata = spi_controller_get_devdata(host);
+ 	int ret;
  
- 	ch341->rx_len = usb_endpoint_maxp(in);
--	ch341->rx_buf = devm_kzalloc(&udev->dev, ch341->rx_len, GFP_KERNEL);
-+	ch341->rx_buf = devm_kzalloc(&intf->dev, ch341->rx_len, GFP_KERNEL);
- 	if (!ch341->rx_buf)
- 		return -ENOMEM;
- 
-@@ -171,8 +171,7 @@ static int ch341_probe(struct usb_interf
- 	if (!ch341->rx_urb)
- 		return -ENOMEM;
- 
--	ch341->tx_buf =
--		devm_kzalloc(&udev->dev, CH341_PACKET_LENGTH, GFP_KERNEL);
-+	ch341->tx_buf = devm_kzalloc(&intf->dev, CH341_PACKET_LENGTH, GFP_KERNEL);
- 	if (!ch341->tx_buf) {
- 		ret = -ENOMEM;
- 		goto err_free_urb;
++	spi_unregister_controller(host);
++
+ 	cpu_latency_qos_remove_request(&mdata->qos_request);
+ 	if (mdata->use_spimem && !completion_done(&mdata->spimem_done))
+ 		complete(&mdata->spimem_done);
 
 
