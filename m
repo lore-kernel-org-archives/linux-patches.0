@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D953F44DA;
-	Fri, 15 May 2026 16:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE313C819C;
+	Fri, 15 May 2026 16:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861322; cv=none; b=rK6LNsOIlBIt+Orz3sPoZGC7kj2I+UXg2RGRZEW6IY8INRntmF12GfyngjSCT5PyrQaJJHDf7oWphNU/LHcLb9SnFDqPs7mK9tNM+f3xpXyBojMsIvI/AnigHWu6SgK2CzlaSIvP6lYUmr36rgWGGmW3L7H59qiMW895EhK86b4=
+	t=1778861324; cv=none; b=EhzylWxXYULafPhNfbSIBci7cSl179jRcl5kRANfqHSdEzWIPdNJyO1Plb9MWe6uSCCi3c8cOmNCrXH9M1Og+OayNLaAKnGmQkBsXrxsFxzNeu6g4Xr0un86JPi1itSs9DIiWQjywpnHffiMVIuNyU6FibFKln3Jwtp87POwc7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861322; c=relaxed/simple;
-	bh=W5WTlcNrzUarW0M65Gue1zSyNtLn0JrzITVsGByj9m4=;
+	s=arc-20240116; t=1778861324; c=relaxed/simple;
+	bh=B3sRrbkMClVJ13U0OE77qNDalMW+kXlVb2dsbnIqd9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKWzAHw26/DX7Fkzk6Pyfd/kYkrGzKEIZUoh5RQal4mW3KMbKJMA/Jf4E9Yd7f8u0aM+yW+LcQECUEUnI7NK0XfqigpOJS73SVBPJckU6pAMOwK6c4D6OqCLIJku0RZoUy4JrhvWLrmp/Eg6PpPbEsfweqVNfKnKY9G1y8GFGIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZP5twIDX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OfN2nQbAbNSnyMupmfWovfzYbyZnvcXATFbC8DSdImQIcqAREfG2kubmsZK+qwHJ3UbGfsTLb3hd3/snSElW2NClWYBqDxua0W66XVXNziC1weGehg+m274GLugeU+X/REqBLq3+fe7ZTh1+w49gZETMZuE0p8g+q+XsA0URzw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TD4w9Mky; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZP5twIDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B1BC2BCB0;
-	Fri, 15 May 2026 16:08:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TD4w9Mky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660F7C2BCB0;
+	Fri, 15 May 2026 16:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861322;
-	bh=W5WTlcNrzUarW0M65Gue1zSyNtLn0JrzITVsGByj9m4=;
+	s=korg; t=1778861324;
+	bh=B3sRrbkMClVJ13U0OE77qNDalMW+kXlVb2dsbnIqd9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZP5twIDXS3mmCpzuvLfiVL/fs0nY1nLTO0j2rptaFjLf+bbWQEaAA0M7AeYLpFCSu
-	 cUq71S+TGPZQmQvqFs2Cs9SbB2GCDpwo0Q5ZGCLIw+e4OF+HaWZaNNUqxmOzJP1tUe
-	 2qTkQYt7z6d4GXPX2DcG0q/m+Q55Nl1OCZgej8JE=
+	b=TD4w9MkyaGEb7Bowy4QfqmuLVh+l7bEHLx9nHOCtbe2GR6FoRItBOHZS27wgTCvT/
+	 mvvuz6qttL5LsoOEZx/mXJE9kTw8OW/x/BvUWn8S+SvIhvUNomRjbQW6ZRIla2lYBd
+	 cju2EB0uh8giCgGefFRw0rZChBcQKSQJNO8Egw8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Tuller <lance@lance0.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 283/474] mptcp: fastclose msk when linger time is 0
-Date: Fri, 15 May 2026 17:46:32 +0200
-Message-ID: <20260515154721.125159435@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 248/474] ASoC: qcom: q6apm-lpass-dai: Fix multiple graph opens
+Date: Fri, 15 May 2026 17:45:57 +0200
+Message-ID: <20260515154720.364540868@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,51 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit f14d6e9c3678a067f304abba561e0c5446c7e845 upstream.
+commit 69acc488aaf39d0ddf6c3cf0e47c1873d39919a2 upstream.
 
-The SO_LINGER socket option has been supported for a while with MPTCP
-sockets [1], but it didn't cause the equivalent of a TCP reset as
-expected when enabled and its time was set to 0. This was causing some
-behavioural differences with TCP where some connections were not
-promptly stopped as expected.
+As prepare can be called mulitple times, this can result in multiple
+graph opens for playback path.
 
-To fix that, an extra condition is checked at close() time before
-sending an MP_FASTCLOSE, the MPTCP equivalent of a TCP reset.
+This will result in a memory leaks, fix this by adding a check before
+opening.
 
-Note that backporting up to [1] will be difficult as more changes are
-needed to be able to send MP_FASTCLOSE. It seems better to stop at [2],
-which was supposed to already imitate TCP.
-
-Validated with MPTCP packetdrill tests [3].
-
-Fixes: 268b12387460 ("mptcp: setsockopt: support SO_LINGER") [1]
-Fixes: d21f83485518 ("mptcp: use fastclose on more edge scenarios") [2]
-Cc: stable@vger.kernel.org
-Reported-by: Lance Tuller <lance@lance0.com>
-Closes: https://github.com/lance0/xfr/pull/67
-Link: https://github.com/multipath-tcp/packetdrill/pull/196 [3]
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260427-net-mptcp-misc-fixes-7-1-rc2-v1-3-7432b7f279fa@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: be1fae62cf25 ("ASoC: q6apm-lpass-dai: close graph on prepare errors")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260402081118.348071-5-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6apm-lpass-dais.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -3177,7 +3177,8 @@ bool __mptcp_close(struct sock *sk, long
- 		goto cleanup;
- 	}
- 
--	if (mptcp_data_avail(msk) || timeout < 0) {
-+	if (mptcp_data_avail(msk) || timeout < 0 ||
-+	    (sock_flag(sk, SOCK_LINGER) && !sk->sk_lingertime)) {
- 		/* If the msk has read data, or the caller explicitly ask it,
- 		 * do the MPTCP equivalent of TCP reset, aka MPTCP fastclose
- 		 */
+--- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
++++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
+@@ -175,7 +175,7 @@ static int q6apm_lpass_dai_prepare(struc
+ 	 * It is recommend to load DSP with source graph first and then sink
+ 	 * graph, so sequence for playback and capture will be different
+ 	 */
+-	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
++	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK && dai_data->graph[dai->id] == NULL) {
+ 		graph = q6apm_graph_open(dai->dev, NULL, dai->dev, graph_id);
+ 		if (IS_ERR(graph)) {
+ 			dev_err(dai->dev, "Failed to open graph (%d)\n", graph_id);
 
 
