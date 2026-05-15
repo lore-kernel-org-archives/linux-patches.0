@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B101339734B;
-	Fri, 15 May 2026 16:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480CF3EFFA0;
+	Fri, 15 May 2026 16:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861629; cv=none; b=kL96Q+KdZIdCTguM+HBuJJEZnoqftE4VOoeAFwwCzNn219kFGJWFCgmu60Vr7/UVQ45J32bBYQgQdqDmimPV8t78c6l5YYxTcdcYKvn5m6pJd3ab8uBsYdq9WAS0MU6VY+IJTqjnc3R+Yt8xj/6H9Udz0P8raaNiCx2iJiuHLrE=
+	t=1778861632; cv=none; b=ZGzSIWZhLIndMg61Arb0fM0PhfAI0UhUI1UxOZIb3w3hasYShEQZlHKGPXFVd6YJBZtt3WeyXWUSXYlDSbAZjNHv5UCoNDiJMXmlf7hcFjx2/D0Y9XZ0RhE9GcyTpnjslfIdpJ7yOin4/yH0vBgY9Gq9glbJDk7FHHMWnIRe+4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861629; c=relaxed/simple;
-	bh=r3zuWAqiIiT/05B6sUYFx0kvJb7JZA8zkyr2H0ZIlZk=;
+	s=arc-20240116; t=1778861632; c=relaxed/simple;
+	bh=p2FpX8ldRcCn7gk5sdSkEZBxOkp+AeXEMlWj3osszIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=obk+e/SOVl5xguuBuzzp1MZFVqh2XtYeM4T0MOTE58RVtUqdcBKzUkl8aOaUxAtl3zoFn5S4zn9q3pRYDEpc284LxduYdBjbqaPMdX8b1B+FUSfPZO+mebKYcl5i0mJxk/unRFcdqpr5HbBLX5P+V0QXmUI1nUNcSiLWkIBqk4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1/vojAs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HahStxMMJHxei4rkGFdTRH1BsHaSBux/DD6aiHE6ECZTC0cwroHYlpxKeUBlDDiCfB2nxqZuB/fQWXG9Di1I/Vl0lJ4hESGzGL8rhp5YtrOJdr/zwLld8RsOI7ihJcu2q0XhfQKw8oC9yNsMhksPJchtKR0Vo+Iy5LxyMeUMcRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9xodS+0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1/vojAs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D1FC2BCB0;
-	Fri, 15 May 2026 16:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9xodS+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CF3C2BCB0;
+	Fri, 15 May 2026 16:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861629;
-	bh=r3zuWAqiIiT/05B6sUYFx0kvJb7JZA8zkyr2H0ZIlZk=;
+	s=korg; t=1778861632;
+	bh=p2FpX8ldRcCn7gk5sdSkEZBxOkp+AeXEMlWj3osszIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1/vojAslIFVDpje4by/V8JBIDP+9V5lIsSc4yXBkxL1fgxTsaB3S3mZBXL+ozieO
-	 OKnDqdie9GNC//V9gp1Tf8CheHqK1cw6up0Ylt3975Va5INZ4+dB4tgjMeMUYT7w06
-	 UOQaxSA5Vxw8Qt/JTiuUM/C0V6RmJaZIeWncdCsg=
+	b=H9xodS+078NaNEQGN5BT6Gd2hhsfqVi+Lw1UAoZnBCWoMfocyVoeI8vWs/EDjqadR
+	 AkXYLgp+II2stmrmHS5bFqa1VKKGxmswcOA/grk7o+L/SIFNhzDRVQPbwyVTA2goSQ
+	 TuKodRRpFlkCacaiZkjIwB7plhD1YcQssB/vrZhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 402/474] ksmbd: reset rcount per connection in ksmbd_conn_wait_idle_sess_id()
-Date: Fri, 15 May 2026 17:48:31 +0200
-Message-ID: <20260515154723.747737508@linuxfoundation.org>
+Subject: [PATCH 6.6 403/474] crypto: nx - Avoid -Wflex-array-member-not-at-end warning
+Date: Fri, 15 May 2026 17:48:32 +0200
+Message-ID: <20260515154723.770558382@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,67 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 
-[ Upstream commit def036ef87f8641c1c525d5ae17438d7a1006491 ]
+[ Upstream commit 1e6b251ce1759392666856908113dd5d7cea044d ]
 
-rcount is intended to be connection-specific: 2 for curr_conn, 1 for
-every other connection sharing the same session.  However, it is
-initialised only once before the hash iteration and is never reset.
-After the loop visits curr_conn, later sibling connections are also
-checked against rcount == 2, so a sibling with req_running == 1 is
-incorrectly treated as idle.  This makes the outcome depend on the
-hash iteration order: whether a given sibling is checked against the
-loose (< 2) or the strict (< 1) threshold is decided by whether it
-happens to be visited before or after curr_conn.
+-Wflex-array-member-not-at-end is coming in GCC-14, and we are getting
+ready to enable it globally. So, we are deprecating flexible-array
+members in the middle of another structure.
 
-The function's contract is "wait until every connection sharing this
-session is idle" so that destroy_previous_session() can safely tear
-the session down.  The latched rcount violates that contract and
-reopens the teardown race window the wait logic was meant to close:
-destroy_previous_session() may proceed before sibling channels have
-actually quiesced, overlapping session teardown with in-flight work
-on those connections.
+There is currently an object (`header`) in `struct nx842_crypto_ctx`
+that contains a flexible structure (`struct nx842_crypto_header`):
 
-Recompute rcount inside the loop so each connection is compared
-against its own threshold regardless of iteration order.
+struct nx842_crypto_ctx {
+	...
+        struct nx842_crypto_header header;
+        struct nx842_crypto_header_group group[NX842_CRYPTO_GROUP_MAX];
+	...
+};
 
-This is a code-inspection fix for an iteration-order-dependent logic
-error; a targeted reproducer would require SMB3 multichannel with
-in-flight work on a sibling channel landing after curr_conn in hash
-order, which is not something that can be triggered reliably.
+So, in order to avoid ending up with a flexible-array member in the
+middle of another struct, we use the `struct_group_tagged()` helper to
+separate the flexible array from the rest of the members in the flexible
+structure:
 
-Fixes: 76e98a158b20 ("ksmbd: fix race condition between destroy_previous_session() and smb2 operations()")
-Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+struct nx842_crypto_header {
+	struct_group_tagged(nx842_crypto_header_hdr, hdr,
+
+		... the rest of the members
+
+	);
+        struct nx842_crypto_header_group group[];
+} __packed;
+
+With the change described above, we can now declare an object of the
+type of the tagged struct, without embedding the flexible array in the
+middle of another struct:
+
+struct nx842_crypto_ctx {
+	...
+        struct nx842_crypto_header_hdr header;
+        struct nx842_crypto_header_group group[NX842_CRYPTO_GROUP_MAX];
+	...
+ } __packed;
+
+We also use `container_of()` whenever we need to retrieve a pointer to
+the flexible structure, through which we can access the flexible
+array if needed.
+
+So, with these changes, fix the following warning:
+
+In file included from drivers/crypto/nx/nx-842.c:55:
+drivers/crypto/nx/nx-842.h:174:36: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+  174 |         struct nx842_crypto_header header;
+      |                                    ^~~~~~
+
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: adb3faf2db1a ("crypto: nx - fix bounce buffer leaks in nx842_crypto_{alloc,free}_ctx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/connection.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/crypto/nx/nx-842.c |    6 ++++--
+ drivers/crypto/nx/nx-842.h |   10 ++++++----
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -180,7 +180,7 @@ int ksmbd_conn_wait_idle_sess_id(struct
+--- a/drivers/crypto/nx/nx-842.c
++++ b/drivers/crypto/nx/nx-842.c
+@@ -251,7 +251,9 @@ int nx842_crypto_compress(struct crypto_
+ 			  u8 *dst, unsigned int *dlen)
  {
- 	struct ksmbd_conn *conn;
- 	int rc, retry_count = 0, max_timeout = 120;
--	int rcount = 1, bkt;
-+	int rcount, bkt;
+ 	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
+-	struct nx842_crypto_header *hdr = &ctx->header;
++	struct nx842_crypto_header *hdr =
++				container_of(&ctx->header,
++					     struct nx842_crypto_header, hdr);
+ 	struct nx842_crypto_param p;
+ 	struct nx842_constraints c = *ctx->driver->constraints;
+ 	unsigned int groups, hdrsize, h;
+@@ -490,7 +492,7 @@ int nx842_crypto_decompress(struct crypt
+ 	}
  
- retry_idle:
- 	if (retry_count >= max_timeout)
-@@ -189,8 +189,7 @@ retry_idle:
- 	down_read(&conn_list_lock);
- 	hash_for_each(conn_list, bkt, conn, hlist) {
- 		if (conn->binding || xa_load(&conn->sessions, sess_id)) {
--			if (conn == curr_conn)
--				rcount = 2;
-+			rcount = (conn == curr_conn) ? 2 : 1;
- 			if (atomic_read(&conn->req_running) >= rcount) {
- 				rc = wait_event_timeout(conn->req_running_q,
- 					atomic_read(&conn->req_running) < rcount,
+ 	memcpy(&ctx->header, src, hdr_len);
+-	hdr = &ctx->header;
++	hdr = container_of(&ctx->header, struct nx842_crypto_header, hdr);
+ 
+ 	for (n = 0; n < hdr->groups; n++) {
+ 		/* ignore applies to last group */
+--- a/drivers/crypto/nx/nx-842.h
++++ b/drivers/crypto/nx/nx-842.h
+@@ -157,9 +157,11 @@ struct nx842_crypto_header_group {
+ } __packed;
+ 
+ struct nx842_crypto_header {
+-	__be16 magic;		/* NX842_CRYPTO_MAGIC */
+-	__be16 ignore;		/* decompressed end bytes to ignore */
+-	u8 groups;		/* total groups in this header */
++	struct_group_tagged(nx842_crypto_header_hdr, hdr,
++		__be16 magic;		/* NX842_CRYPTO_MAGIC */
++		__be16 ignore;		/* decompressed end bytes to ignore */
++		u8 groups;		/* total groups in this header */
++	);
+ 	struct nx842_crypto_header_group group[];
+ } __packed;
+ 
+@@ -171,7 +173,7 @@ struct nx842_crypto_ctx {
+ 	u8 *wmem;
+ 	u8 *sbounce, *dbounce;
+ 
+-	struct nx842_crypto_header header;
++	struct nx842_crypto_header_hdr header;
+ 	struct nx842_crypto_header_group group[NX842_CRYPTO_GROUP_MAX];
+ 
+ 	struct nx842_driver *driver;
 
 
