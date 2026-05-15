@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFEF30569C;
-	Fri, 15 May 2026 16:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78BE3CEBA9;
+	Fri, 15 May 2026 16:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862752; cv=none; b=aIzYrwkUmtAnIVj23/Lz+C9kfNySly1s4fc6E7HlvtNAfPeQFQFkti1zBN4pwGOLTLQwlg35q6j2F9J6Nh4ib49bzaGLxaWyGVxd3C6C7sYn3/9WWeuqfQ82P1OBm/r+lcqaxy7aN6CscFq6JhHA9ZhwEHIwXV/JeIYdXd6mydw=
+	t=1778862755; cv=none; b=hMv4VU4EwZPTEBuwspUEh0xiHQYyS9p6UVQ/nZmizeC6NqfygNn+n/CFq17KsUORtclKm6P4g1431KKRRAJkLHDfXNfnaJ9py7c1IGS5IhjECnQui+z0jQF3D5JiyVms9g5nBsUHLcSp5hWv21f98Lw5A1xRMl4cvfxxgJZApUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862752; c=relaxed/simple;
-	bh=/3VDThsd8JWFy7cr8aZIYEGowMk4sgRpp6uLEQOj6aY=;
+	s=arc-20240116; t=1778862755; c=relaxed/simple;
+	bh=uU1x48hFvK15xDijy6K35kflJWHcdIYjvLy/77amIQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LXo4ZZAHrr7pquS6etCTjtZqwZ4OM3pOxkZXJpPl0TwAK+WwdfCDOFP3YjeEs+K0D+8bF9+hC1hInu5utHiFIdIKo3S34ICdUfocj4hI3K6DnEgvfk9o2BA18xhgwJ1gT3Cu00sFpIHLyeL6u51wBxl2yxFf3Ti8Y0lPGYTkjD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNIK0RMC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WlH44j9FeYhzMOGVb7+hVpGY4Jets6qq5BvWn1PvbmzcEXEj2hTkTUUGCiELDDp0otdyN/XP6Vsdep2p/rtl6ZVtnXdcqSMH9yLp+tPR8iB8UEjVwLBmfWmwCNTlE00z1tfU3Cy30bKSoFOOqi4sfWLaL/Yl1O4lG+QeYwM129A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nIko3zYF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNIK0RMC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85E3C2BCC7;
-	Fri, 15 May 2026 16:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIko3zYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C82FC2BCB0;
+	Fri, 15 May 2026 16:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862752;
-	bh=/3VDThsd8JWFy7cr8aZIYEGowMk4sgRpp6uLEQOj6aY=;
+	s=korg; t=1778862754;
+	bh=uU1x48hFvK15xDijy6K35kflJWHcdIYjvLy/77amIQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNIK0RMC3tlZbZ9UzZPgghh8DgmJdjsI5+dQg1AKNATFoPWKJnc1GcKfKwIg6H54u
-	 PZstRbkFTfJbbxYhJpmyQzbFhgccEKlF3VHPJVKcKvaUi2MeYiKjZ8YWy2hdbZNv6C
-	 BjMzJGBva8ZpuFCSVvE+bmR2ku0lO4XVZGRHkCGk=
+	b=nIko3zYFG1GfKsTecbNDHFbeEaHNzM24/IGQC6oU1FAKmuW498IaZYT/bWLyJDc+x
+	 vlksR4qlc75/Bvj8sIr9tbfPeHA69CWkDuRu26FLnuoACtzYQU9qFduuKPhAY2II9t
+	 IiqSA8nc7OmoSRDpgQ6MEIHjVXBCkBQLSCgc0OWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 132/201] drm/amd: Add missing firmware declaration for PSP v15.0.0
-Date: Fri, 15 May 2026 17:49:10 +0200
-Message-ID: <20260515154701.425976574@linuxfoundation.org>
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 7.0 168/201] arm64: dts: qcom: kodiak: Fix PCIe1 PHY ref clock voting
+Date: Fri, 15 May 2026 17:49:46 +0200
+Message-ID: <20260515154702.215795283@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -51,38 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 
-commit 2744103f58e8e03ce675c670bbfe3f46034e5f24 upstream.
+commit 30e8b6d42e8988eaaf0c2efd8c3797cb3884faea upstream.
 
-PSP v15.0.0 needs both TOC and TA firmware. Without the declaration
-it won't get included in initramfs and leads to following failure:
+GCC_PCIE_CLKREF_EN controls a repeater that provides the reference clock
+only to the PCIe0 PHY. PCIe1 PHY receives its refclk directly from the CXO
+source.
 
-```
-Direct firmware load for amdgpu/psp_15_0_0_ta.bin failed with error -2
-early_init of IP block <psp> failed -19
-Fatal error during GPU init
-```
+If the PCIe1 driver in HLOS votes for or against GCC_PCIE_CLKREF_EN, it
+will inadvertently modify the refclk to PCIe0 as well. Since PCIe0 is
+managed by WPSS while PCIe1 is managed in HLOS, there is no mechanism to
+coordinate these votes. As a result, HLOS may disable this repeater
+during suspend and cut off the PCIe0 PHY refclk while PCIe0 is still
+active.
 
-Fixes: 9b24f63d825e7 ("drm/amdgpu: Enable support for PSP 15_0_0")
-Reviewed-by: Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Replace the unused GCC_PCIE_CLKREF_EN clock entry with RPMH_CXO_CLK to
+reflect the actual hardware wiring and prevent unintended changes to
+PCIe0 clocking.
+
+Fixes: 92e0ee9f83b3 ("arm64: dts: qcom: sc7280: Add PCIe and PHY related nodes")
 Cc: stable@vger.kernel.org
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260123-fix_pcie1_phy_clk-v1-1-38f82ea01792@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/psp_v15_0.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/kodiak.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/psp_v15_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/psp_v15_0.c
-@@ -32,6 +32,7 @@
- #include "mp/mp_15_0_0_sh_mask.h"
- 
- MODULE_FIRMWARE("amdgpu/psp_15_0_0_toc.bin");
-+MODULE_FIRMWARE("amdgpu/psp_15_0_0_ta.bin");
- 
- static int psp_v15_0_0_init_microcode(struct psp_context *psp)
- {
+--- a/arch/arm64/boot/dts/qcom/kodiak.dtsi
++++ b/arch/arm64/boot/dts/qcom/kodiak.dtsi
+@@ -2445,7 +2445,7 @@
+ 			reg = <0 0x01c0e000 0 0x1000>;
+ 			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
+ 				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+-				 <&gcc GCC_PCIE_CLKREF_EN>,
++				 <&rpmhcc RPMH_CXO_CLK>,
+ 				 <&gcc GCC_PCIE1_PHY_RCHNG_CLK>,
+ 				 <&gcc GCC_PCIE_1_PIPE_CLK>;
+ 			clock-names = "aux",
 
 
