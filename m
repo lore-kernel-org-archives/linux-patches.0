@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480CF3EFFA0;
-	Fri, 15 May 2026 16:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C553E7BAD;
+	Fri, 15 May 2026 16:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861632; cv=none; b=ZGzSIWZhLIndMg61Arb0fM0PhfAI0UhUI1UxOZIb3w3hasYShEQZlHKGPXFVd6YJBZtt3WeyXWUSXYlDSbAZjNHv5UCoNDiJMXmlf7hcFjx2/D0Y9XZ0RhE9GcyTpnjslfIdpJ7yOin4/yH0vBgY9Gq9glbJDk7FHHMWnIRe+4I=
+	t=1778861634; cv=none; b=GoJPlLoTpCS+l+uo081fkW3NAg9UUohodEmw8EBlTvS4n/Ghqh5Mu5Mdm4y3L/peYKQNUQJezTX9jV0TjeldhY1HrSYq0YbFdyvA9DlzGG7OCzyrt1TSeZpVfpkRfJpJttXzxPcxAIXW5Jlzulama+DgcctmgyBTK7oOLSuAC1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861632; c=relaxed/simple;
-	bh=p2FpX8ldRcCn7gk5sdSkEZBxOkp+AeXEMlWj3osszIw=;
+	s=arc-20240116; t=1778861634; c=relaxed/simple;
+	bh=cQ0KtQP64FKurObGX4gAMj1k4i5HNVQSxB5DKOY+5G8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HahStxMMJHxei4rkGFdTRH1BsHaSBux/DD6aiHE6ECZTC0cwroHYlpxKeUBlDDiCfB2nxqZuB/fQWXG9Di1I/Vl0lJ4hESGzGL8rhp5YtrOJdr/zwLld8RsOI7ihJcu2q0XhfQKw8oC9yNsMhksPJchtKR0Vo+Iy5LxyMeUMcRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9xodS+0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvzUHU40v2IMmvufkwLl7xvepcAtMLnLhoWvx6YeqiiVf/05QvIOWCmpa5Oi+Uqu1CFlaW9XKsrgt5NSzm2pwIJAIfWUVZrKITZ5z40DELdWU8BeiDLSxh7XclUo/R8XxbRBkc/eKq/0rbnTx9iKC9P68wuWRJHVvhTqH7vy+eQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecd1K5td; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9xodS+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CF3C2BCB0;
-	Fri, 15 May 2026 16:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecd1K5td"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64248C2BCB0;
+	Fri, 15 May 2026 16:13:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861632;
-	bh=p2FpX8ldRcCn7gk5sdSkEZBxOkp+AeXEMlWj3osszIw=;
+	s=korg; t=1778861634;
+	bh=cQ0KtQP64FKurObGX4gAMj1k4i5HNVQSxB5DKOY+5G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9xodS+078NaNEQGN5BT6Gd2hhsfqVi+Lw1UAoZnBCWoMfocyVoeI8vWs/EDjqadR
-	 AkXYLgp+II2stmrmHS5bFqa1VKKGxmswcOA/grk7o+L/SIFNhzDRVQPbwyVTA2goSQ
-	 TuKodRRpFlkCacaiZkjIwB7plhD1YcQssB/vrZhQ=
+	b=ecd1K5tdWxyExEELs63Mb5jYY6JJOvu5VXni8GWBiM7ztx5DgL2U0vXBpKFqsLNIc
+	 OndLnDRO2tbmw6acfGA8D/L3fgiCxQ7ZSh6uT32fu4qO1/GSS4gtl7UHIuHdg5bo+9
+	 2+u25Q27Xh2PVo2LwLvCxRdaS33uQLTjXQZJ0tx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 403/474] crypto: nx - Avoid -Wflex-array-member-not-at-end warning
-Date: Fri, 15 May 2026 17:48:32 +0200
-Message-ID: <20260515154723.770558382@linuxfoundation.org>
+Subject: [PATCH 6.6 404/474] crypto: nx - Migrate to scomp API
+Date: Fri, 15 May 2026 17:48:33 +0200
+Message-ID: <20260515154723.792269058@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,117 +51,284 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 1e6b251ce1759392666856908113dd5d7cea044d ]
+[ Upstream commit 980b5705f4e73f567e405cd18337cc32fd51cf79 ]
 
--Wflex-array-member-not-at-end is coming in GCC-14, and we are getting
-ready to enable it globally. So, we are deprecating flexible-array
-members in the middle of another structure.
+The only remaining user of 842 compression has been migrated to the
+acomp compression API, and so the NX hardware driver has to follow suit,
+given that no users of the obsolete 'comp' API remain, and it is going
+to be removed.
 
-There is currently an object (`header`) in `struct nx842_crypto_ctx`
-that contains a flexible structure (`struct nx842_crypto_header`):
+So migrate the NX driver code to scomp. These will be wrapped and
+exposed as acomp implementation via the crypto subsystem's
+acomp-to-scomp adaptation layer.
 
-struct nx842_crypto_ctx {
-	...
-        struct nx842_crypto_header header;
-        struct nx842_crypto_header_group group[NX842_CRYPTO_GROUP_MAX];
-	...
-};
-
-So, in order to avoid ending up with a flexible-array member in the
-middle of another struct, we use the `struct_group_tagged()` helper to
-separate the flexible array from the rest of the members in the flexible
-structure:
-
-struct nx842_crypto_header {
-	struct_group_tagged(nx842_crypto_header_hdr, hdr,
-
-		... the rest of the members
-
-	);
-        struct nx842_crypto_header_group group[];
-} __packed;
-
-With the change described above, we can now declare an object of the
-type of the tagged struct, without embedding the flexible array in the
-middle of another struct:
-
-struct nx842_crypto_ctx {
-	...
-        struct nx842_crypto_header_hdr header;
-        struct nx842_crypto_header_group group[NX842_CRYPTO_GROUP_MAX];
-	...
- } __packed;
-
-We also use `container_of()` whenever we need to retrieve a pointer to
-the flexible structure, through which we can access the flexible
-array if needed.
-
-So, with these changes, fix the following warning:
-
-In file included from drivers/crypto/nx/nx-842.c:55:
-drivers/crypto/nx/nx-842.h:174:36: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-  174 |         struct nx842_crypto_header header;
-      |                                    ^~~~~~
-
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Stable-dep-of: adb3faf2db1a ("crypto: nx - fix bounce buffer leaks in nx842_crypto_{alloc,free}_ctx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/nx/nx-842.c |    6 ++++--
- drivers/crypto/nx/nx-842.h |   10 ++++++----
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ drivers/crypto/nx/nx-842.c            |   33 +++++++++++++++++++--------------
+ drivers/crypto/nx/nx-842.h            |   15 ++++++++-------
+ drivers/crypto/nx/nx-common-powernv.c |   31 +++++++++++++++----------------
+ drivers/crypto/nx/nx-common-pseries.c |   33 ++++++++++++++++-----------------
+ 4 files changed, 58 insertions(+), 54 deletions(-)
 
 --- a/drivers/crypto/nx/nx-842.c
 +++ b/drivers/crypto/nx/nx-842.c
-@@ -251,7 +251,9 @@ int nx842_crypto_compress(struct crypto_
- 			  u8 *dst, unsigned int *dlen)
+@@ -101,9 +101,13 @@ static int update_param(struct nx842_cry
+ 	return 0;
+ }
+ 
+-int nx842_crypto_init(struct crypto_tfm *tfm, struct nx842_driver *driver)
++void *nx842_crypto_alloc_ctx(struct nx842_driver *driver)
  {
- 	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
--	struct nx842_crypto_header *hdr = &ctx->header;
-+	struct nx842_crypto_header *hdr =
-+				container_of(&ctx->header,
-+					     struct nx842_crypto_header, hdr);
- 	struct nx842_crypto_param p;
- 	struct nx842_constraints c = *ctx->driver->constraints;
- 	unsigned int groups, hdrsize, h;
-@@ -490,7 +492,7 @@ int nx842_crypto_decompress(struct crypt
+-	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
++	struct nx842_crypto_ctx *ctx;
++
++	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
++	if (!ctx)
++		return ERR_PTR(-ENOMEM);
+ 
+ 	spin_lock_init(&ctx->lock);
+ 	ctx->driver = driver;
+@@ -114,22 +118,23 @@ int nx842_crypto_init(struct crypto_tfm
+ 		kfree(ctx->wmem);
+ 		free_page((unsigned long)ctx->sbounce);
+ 		free_page((unsigned long)ctx->dbounce);
+-		return -ENOMEM;
++		kfree(ctx);
++		return ERR_PTR(-ENOMEM);
  	}
  
- 	memcpy(&ctx->header, src, hdr_len);
--	hdr = &ctx->header;
-+	hdr = container_of(&ctx->header, struct nx842_crypto_header, hdr);
+-	return 0;
++	return ctx;
+ }
+-EXPORT_SYMBOL_GPL(nx842_crypto_init);
++EXPORT_SYMBOL_GPL(nx842_crypto_alloc_ctx);
  
- 	for (n = 0; n < hdr->groups; n++) {
- 		/* ignore applies to last group */
+-void nx842_crypto_exit(struct crypto_tfm *tfm)
++void nx842_crypto_free_ctx(void *p)
+ {
+-	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
++	struct nx842_crypto_ctx *ctx = p;
+ 
+ 	kfree(ctx->wmem);
+ 	free_page((unsigned long)ctx->sbounce);
+ 	free_page((unsigned long)ctx->dbounce);
+ }
+-EXPORT_SYMBOL_GPL(nx842_crypto_exit);
++EXPORT_SYMBOL_GPL(nx842_crypto_free_ctx);
+ 
+ static void check_constraints(struct nx842_constraints *c)
+ {
+@@ -246,11 +251,11 @@ nospc:
+ 	return update_param(p, slen, dskip + dlen);
+ }
+ 
+-int nx842_crypto_compress(struct crypto_tfm *tfm,
++int nx842_crypto_compress(struct crypto_scomp *tfm,
+ 			  const u8 *src, unsigned int slen,
+-			  u8 *dst, unsigned int *dlen)
++			  u8 *dst, unsigned int *dlen, void *pctx)
+ {
+-	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
++	struct nx842_crypto_ctx *ctx = pctx;
+ 	struct nx842_crypto_header *hdr =
+ 				container_of(&ctx->header,
+ 					     struct nx842_crypto_header, hdr);
+@@ -431,11 +436,11 @@ usesw:
+ 	return update_param(p, slen + padding, dlen);
+ }
+ 
+-int nx842_crypto_decompress(struct crypto_tfm *tfm,
++int nx842_crypto_decompress(struct crypto_scomp *tfm,
+ 			    const u8 *src, unsigned int slen,
+-			    u8 *dst, unsigned int *dlen)
++			    u8 *dst, unsigned int *dlen, void *pctx)
+ {
+-	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
++	struct nx842_crypto_ctx *ctx = pctx;
+ 	struct nx842_crypto_header *hdr;
+ 	struct nx842_crypto_param p;
+ 	struct nx842_constraints c = *ctx->driver->constraints;
 --- a/drivers/crypto/nx/nx-842.h
 +++ b/drivers/crypto/nx/nx-842.h
-@@ -157,9 +157,11 @@ struct nx842_crypto_header_group {
- } __packed;
+@@ -3,7 +3,6 @@
+ #ifndef __NX_842_H__
+ #define __NX_842_H__
  
- struct nx842_crypto_header {
--	__be16 magic;		/* NX842_CRYPTO_MAGIC */
--	__be16 ignore;		/* decompressed end bytes to ignore */
--	u8 groups;		/* total groups in this header */
-+	struct_group_tagged(nx842_crypto_header_hdr, hdr,
-+		__be16 magic;		/* NX842_CRYPTO_MAGIC */
-+		__be16 ignore;		/* decompressed end bytes to ignore */
-+		u8 groups;		/* total groups in this header */
-+	);
- 	struct nx842_crypto_header_group group[];
- } __packed;
+-#include <crypto/algapi.h>
+ #include <linux/kernel.h>
+ #include <linux/init.h>
+ #include <linux/module.h>
+@@ -101,6 +100,8 @@
+ #define LEN_ON_SIZE(pa, size)	((size) - ((pa) & ((size) - 1)))
+ #define LEN_ON_PAGE(pa)		LEN_ON_SIZE(pa, PAGE_SIZE)
  
-@@ -171,7 +173,7 @@ struct nx842_crypto_ctx {
- 	u8 *wmem;
- 	u8 *sbounce, *dbounce;
- 
--	struct nx842_crypto_header header;
-+	struct nx842_crypto_header_hdr header;
- 	struct nx842_crypto_header_group group[NX842_CRYPTO_GROUP_MAX];
- 
++struct crypto_scomp;
++
+ static inline unsigned long nx842_get_pa(void *addr)
+ {
+ 	if (!is_vmalloc_addr(addr))
+@@ -179,13 +180,13 @@ struct nx842_crypto_ctx {
  	struct nx842_driver *driver;
+ };
+ 
+-int nx842_crypto_init(struct crypto_tfm *tfm, struct nx842_driver *driver);
+-void nx842_crypto_exit(struct crypto_tfm *tfm);
+-int nx842_crypto_compress(struct crypto_tfm *tfm,
++void *nx842_crypto_alloc_ctx(struct nx842_driver *driver);
++void nx842_crypto_free_ctx(void *ctx);
++int nx842_crypto_compress(struct crypto_scomp *tfm,
+ 			  const u8 *src, unsigned int slen,
+-			  u8 *dst, unsigned int *dlen);
+-int nx842_crypto_decompress(struct crypto_tfm *tfm,
++			  u8 *dst, unsigned int *dlen, void *ctx);
++int nx842_crypto_decompress(struct crypto_scomp *tfm,
+ 			    const u8 *src, unsigned int slen,
+-			    u8 *dst, unsigned int *dlen);
++			    u8 *dst, unsigned int *dlen, void *ctx);
+ 
+ #endif /* __NX_842_H__ */
+--- a/drivers/crypto/nx/nx-common-powernv.c
++++ b/drivers/crypto/nx/nx-common-powernv.c
+@@ -9,6 +9,7 @@
+ 
+ #include "nx-842.h"
+ 
++#include <crypto/internal/scompress.h>
+ #include <linux/timer.h>
+ 
+ #include <asm/prom.h>
+@@ -1031,23 +1032,21 @@ static struct nx842_driver nx842_powernv
+ 	.decompress =	nx842_powernv_decompress,
+ };
+ 
+-static int nx842_powernv_crypto_init(struct crypto_tfm *tfm)
++static void *nx842_powernv_crypto_alloc_ctx(void)
+ {
+-	return nx842_crypto_init(tfm, &nx842_powernv_driver);
++	return nx842_crypto_alloc_ctx(&nx842_powernv_driver);
+ }
+ 
+-static struct crypto_alg nx842_powernv_alg = {
+-	.cra_name		= "842",
+-	.cra_driver_name	= "842-nx",
+-	.cra_priority		= 300,
+-	.cra_flags		= CRYPTO_ALG_TYPE_COMPRESS,
+-	.cra_ctxsize		= sizeof(struct nx842_crypto_ctx),
+-	.cra_module		= THIS_MODULE,
+-	.cra_init		= nx842_powernv_crypto_init,
+-	.cra_exit		= nx842_crypto_exit,
+-	.cra_u			= { .compress = {
+-	.coa_compress		= nx842_crypto_compress,
+-	.coa_decompress		= nx842_crypto_decompress } }
++static struct scomp_alg nx842_powernv_alg = {
++	.base.cra_name		= "842",
++	.base.cra_driver_name	= "842-nx",
++	.base.cra_priority	= 300,
++	.base.cra_module	= THIS_MODULE,
++
++	.alloc_ctx		= nx842_powernv_crypto_alloc_ctx,
++	.free_ctx		= nx842_crypto_free_ctx,
++	.compress		= nx842_crypto_compress,
++	.decompress		= nx842_crypto_decompress,
+ };
+ 
+ static __init int nx_compress_powernv_init(void)
+@@ -1107,7 +1106,7 @@ static __init int nx_compress_powernv_in
+ 		nx842_powernv_exec = nx842_exec_vas;
+ 	}
+ 
+-	ret = crypto_register_alg(&nx842_powernv_alg);
++	ret = crypto_register_scomp(&nx842_powernv_alg);
+ 	if (ret) {
+ 		nx_delete_coprocs();
+ 		return ret;
+@@ -1128,7 +1127,7 @@ static void __exit nx_compress_powernv_e
+ 	if (!nx842_ct)
+ 		vas_unregister_api_powernv();
+ 
+-	crypto_unregister_alg(&nx842_powernv_alg);
++	crypto_unregister_scomp(&nx842_powernv_alg);
+ 
+ 	nx_delete_coprocs();
+ }
+--- a/drivers/crypto/nx/nx-common-pseries.c
++++ b/drivers/crypto/nx/nx-common-pseries.c
+@@ -11,6 +11,7 @@
+ #include <asm/vio.h>
+ #include <asm/hvcall.h>
+ #include <asm/vas.h>
++#include <crypto/internal/scompress.h>
+ 
+ #include "nx-842.h"
+ #include "nx_csbcpb.h" /* struct nx_csbcpb */
+@@ -1008,23 +1009,21 @@ static struct nx842_driver nx842_pseries
+ 	.decompress =	nx842_pseries_decompress,
+ };
+ 
+-static int nx842_pseries_crypto_init(struct crypto_tfm *tfm)
++static void *nx842_pseries_crypto_alloc_ctx(void)
+ {
+-	return nx842_crypto_init(tfm, &nx842_pseries_driver);
++	return nx842_crypto_alloc_ctx(&nx842_pseries_driver);
+ }
+ 
+-static struct crypto_alg nx842_pseries_alg = {
+-	.cra_name		= "842",
+-	.cra_driver_name	= "842-nx",
+-	.cra_priority		= 300,
+-	.cra_flags		= CRYPTO_ALG_TYPE_COMPRESS,
+-	.cra_ctxsize		= sizeof(struct nx842_crypto_ctx),
+-	.cra_module		= THIS_MODULE,
+-	.cra_init		= nx842_pseries_crypto_init,
+-	.cra_exit		= nx842_crypto_exit,
+-	.cra_u			= { .compress = {
+-	.coa_compress		= nx842_crypto_compress,
+-	.coa_decompress		= nx842_crypto_decompress } }
++static struct scomp_alg nx842_pseries_alg = {
++	.base.cra_name		= "842",
++	.base.cra_driver_name	= "842-nx",
++	.base.cra_priority	= 300,
++	.base.cra_module	= THIS_MODULE,
++
++	.alloc_ctx		= nx842_pseries_crypto_alloc_ctx,
++	.free_ctx		= nx842_crypto_free_ctx,
++	.compress		= nx842_crypto_compress,
++	.decompress		= nx842_crypto_decompress,
+ };
+ 
+ static int nx842_probe(struct vio_dev *viodev,
+@@ -1072,7 +1071,7 @@ static int nx842_probe(struct vio_dev *v
+ 	if (ret)
+ 		goto error;
+ 
+-	ret = crypto_register_alg(&nx842_pseries_alg);
++	ret = crypto_register_scomp(&nx842_pseries_alg);
+ 	if (ret) {
+ 		dev_err(&viodev->dev, "could not register comp alg: %d\n", ret);
+ 		goto error;
+@@ -1120,7 +1119,7 @@ static void nx842_remove(struct vio_dev
+ 	if (caps_feat)
+ 		sysfs_remove_group(&viodev->dev.kobj, &nxcop_caps_attr_group);
+ 
+-	crypto_unregister_alg(&nx842_pseries_alg);
++	crypto_unregister_scomp(&nx842_pseries_alg);
+ 
+ 	spin_lock_irqsave(&devdata_mutex, flags);
+ 	old_devdata = rcu_dereference_check(devdata,
+@@ -1252,7 +1251,7 @@ static void __exit nx842_pseries_exit(vo
+ 
+ 	vas_unregister_api_pseries();
+ 
+-	crypto_unregister_alg(&nx842_pseries_alg);
++	crypto_unregister_scomp(&nx842_pseries_alg);
+ 
+ 	spin_lock_irqsave(&devdata_mutex, flags);
+ 	old_devdata = rcu_dereference_check(devdata,
 
 
