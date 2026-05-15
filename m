@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59ED30569C;
-	Fri, 15 May 2026 16:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFEF30569C;
+	Fri, 15 May 2026 16:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862749; cv=none; b=txNnNugkjASyhND3D+Y4b9r1asqllqKA1kb9kPMFteJwCFDaHRPpKls+WEDI8BikmAXixawURO6OWyu2aGvMOLr+p26xvwbNsR7Sss34Fg9gKajBBo3sy0xACraqw6jcym5BfDRyN9a+41zERWGU3ATnrxwT/V06dPg/Z6g9By0=
+	t=1778862752; cv=none; b=aIzYrwkUmtAnIVj23/Lz+C9kfNySly1s4fc6E7HlvtNAfPeQFQFkti1zBN4pwGOLTLQwlg35q6j2F9J6Nh4ib49bzaGLxaWyGVxd3C6C7sYn3/9WWeuqfQ82P1OBm/r+lcqaxy7aN6CscFq6JhHA9ZhwEHIwXV/JeIYdXd6mydw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862749; c=relaxed/simple;
-	bh=r2vt8OaBbTeXyXohC3Oj5kB9W8BNorq2d4uDaEfefqo=;
+	s=arc-20240116; t=1778862752; c=relaxed/simple;
+	bh=/3VDThsd8JWFy7cr8aZIYEGowMk4sgRpp6uLEQOj6aY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q12FL8w3iVG5wFgcdfHx2YU4LawvIcNuGOqE+vuxeWtkkmxXJOvvaHmYMbAVUm/+0dKGbKYnC7XWnTUbxhY88i66VkUQ9b7qNoM1OhbQgRQAgo6gig8ql69Bhu4OxrbMNJhM9nZrKrKyUe+vCyYXJ7ulS78SV8CuxDm5+la4cjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dukNXGpB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LXo4ZZAHrr7pquS6etCTjtZqwZ4OM3pOxkZXJpPl0TwAK+WwdfCDOFP3YjeEs+K0D+8bF9+hC1hInu5utHiFIdIKo3S34ICdUfocj4hI3K6DnEgvfk9o2BA18xhgwJ1gT3Cu00sFpIHLyeL6u51wBxl2yxFf3Ti8Y0lPGYTkjD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNIK0RMC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dukNXGpB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECA2C2BCC7;
-	Fri, 15 May 2026 16:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNIK0RMC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85E3C2BCC7;
+	Fri, 15 May 2026 16:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862749;
-	bh=r2vt8OaBbTeXyXohC3Oj5kB9W8BNorq2d4uDaEfefqo=;
+	s=korg; t=1778862752;
+	bh=/3VDThsd8JWFy7cr8aZIYEGowMk4sgRpp6uLEQOj6aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dukNXGpBFDJMb0ZfHZbpSyn5xlIByIWRMGj15MzrRZnx8NiAIY6DAmAnZ6wXY3glD
-	 YiwGo/R/Ez5YsUAVwLIXh30OnigcfvnFh83SmoZfnMQ72jcf3TDtzRZY6f+EQtaLc6
-	 ySqqSUgD2t/o8RG9CPjF+rkEWHcFc6ACfgQTvFI4=
+	b=XNIK0RMC3tlZbZ9UzZPgghh8DgmJdjsI5+dQg1AKNATFoPWKJnc1GcKfKwIg6H54u
+	 PZstRbkFTfJbbxYhJpmyQzbFhgccEKlF3VHPJVKcKvaUi2MeYiKjZ8YWy2hdbZNv6C
+	 BjMzJGBva8ZpuFCSVvE+bmR2ku0lO4XVZGRHkCGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Kent Russell <kent.russell@amd.com>,
+	Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 167/201] drm/amdgpu/pm: align Hawaii mclk workaround with radeon
-Date: Fri, 15 May 2026 17:49:45 +0200
-Message-ID: <20260515154702.194630636@linuxfoundation.org>
+Subject: [PATCH 7.0 132/201] drm/amd: Add missing firmware declaration for PSP v15.0.0
+Date: Fri, 15 May 2026 17:49:10 +0200
+Message-ID: <20260515154701.425976574@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -45,47 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 1987c79b4fe5789dfa14423e78b5c25f6acf3e9d upstream.
+commit 2744103f58e8e03ce675c670bbfe3f46034e5f24 upstream.
 
-Align the hawaii mclk workaround with radeon and windows.
+PSP v15.0.0 needs both TOC and TA firmware. Without the declaration
+it won't get included in initramfs and leads to following failure:
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/1816
-Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
+```
+Direct firmware load for amdgpu/psp_15_0_0_ta.bin failed with error -2
+early_init of IP block <psp> failed -19
+Fatal error during GPU init
+```
+
+Fixes: 9b24f63d825e7 ("drm/amdgpu: Enable support for PSP 15_0_0")
+Reviewed-by: Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9649528b637f668c5af9f2b83ca4ad8576ae2121)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/psp_v15_0.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-@@ -1329,10 +1329,10 @@ static int ci_populate_all_memory_levels
- 	if ((dpm_table->mclk_table.count >= 2) &&
- 	    ((dev_id == 0x67B0) ||  (dev_id == 0x67B1)) &&
- 	    (adev->pdev->revision == 0)) {
--		smu_data->smc_state_table.MemoryLevel[1].MinVddci =
--				smu_data->smc_state_table.MemoryLevel[0].MinVddci;
--		smu_data->smc_state_table.MemoryLevel[1].MinMvdd =
--				smu_data->smc_state_table.MemoryLevel[0].MinMvdd;
-+		smu_data->smc_state_table.MemoryLevel[1].MinVddc =
-+				smu_data->smc_state_table.MemoryLevel[0].MinVddc;
-+		smu_data->smc_state_table.MemoryLevel[1].MinVddcPhases =
-+				smu_data->smc_state_table.MemoryLevel[0].MinVddcPhases;
- 	}
- 	smu_data->smc_state_table.MemoryLevel[0].ActivityLevel = 0x1F;
- 	CONVERT_FROM_HOST_TO_SMC_US(smu_data->smc_state_table.MemoryLevel[0].ActivityLevel);
+--- a/drivers/gpu/drm/amd/amdgpu/psp_v15_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/psp_v15_0.c
+@@ -32,6 +32,7 @@
+ #include "mp/mp_15_0_0_sh_mask.h"
+ 
+ MODULE_FIRMWARE("amdgpu/psp_15_0_0_toc.bin");
++MODULE_FIRMWARE("amdgpu/psp_15_0_0_ta.bin");
+ 
+ static int psp_v15_0_0_init_microcode(struct psp_context *psp)
+ {
 
 
