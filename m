@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE9F3F44D5;
-	Fri, 15 May 2026 16:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE283F44D5;
+	Fri, 15 May 2026 16:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861569; cv=none; b=RIhP8z16bjKRCfxaA8bEmdzawdOIVk1tLfjhSJAP3TWFiwaq8pqB5eeoLxsi/qmmEj/A8d1WRJRemcOkqAU9r5sMPBUBSy+HsiDyk8mLbhOsLI9EECDKbmmaLpFyKBHVfRfQNrZmxipwK00r07fRgLQz4H0K2IMZMYEJl79Vx+Y=
+	t=1778861572; cv=none; b=a+xy1lN+iwY8C2h4F2scPqCbrdTV2etTtCtEZi7sE9v3fO1kugWxuGHuyghQOMdHJ7oqnou6Y94fC6APMcP5G+6cqFS9OtrmL5AuPsmToi8LShM3c/qID5ArV0rA21xFthldD6fgyNqhfOhKoRjWNigr81fTXTPwjLpqhcaCTbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861569; c=relaxed/simple;
-	bh=dGZuyYDv4D7JbOBYk5nxUbaSRhJbKTIgBdnKVcSznck=;
+	s=arc-20240116; t=1778861572; c=relaxed/simple;
+	bh=LwAkWvixLUjuPhV078Gs+ecJUFVKkAVyOdf48/K2Whw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhG4M+jUmWGJB5vcQa4rQqolAGDrp1ln6p8m4hmbTRJAgGeKQGOMl1EFMsGyxcq3m1TC+SyaIQGJP+nqtTD5orpdhQG51mSp1FOjBWeNILGRAjMeEgNpV3D9EPWrj2+DoveFNJGBISejJ883QyS2QhPogzYMZq/YYq0LCFAucuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uuv6ScaZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tZLJAzbnb+nHHyKfv6ukqT5hnaaJCs7fEiKAjzR2Ctls8m/1RHHr03VeZ/EGHJTxcQyEJXEs8TUhfqsiHUW69AJ0BPGQXkB+ZR/ze5jaxitl+HNP2ra030HJUeNR5AFAbHQYht7ZloZTER80+pbr2d44zmgCof6NozMCzMUATkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOHcIno6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uuv6ScaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C920AC2BCB3;
-	Fri, 15 May 2026 16:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOHcIno6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BB58C2BCB3;
+	Fri, 15 May 2026 16:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861569;
-	bh=dGZuyYDv4D7JbOBYk5nxUbaSRhJbKTIgBdnKVcSznck=;
+	s=korg; t=1778861571;
+	bh=LwAkWvixLUjuPhV078Gs+ecJUFVKkAVyOdf48/K2Whw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uuv6ScaZRE89SFj2J8Ox5X6fqaoKlZQsu8/rSRcREoaP2hSswDNjw4KL09esGJ1xt
-	 V/2T7qLt+nNwa3KG4JBHmU+pnGRbN8nPL1cOjIntQPz5keTRkNPSRgW7wJCE5Wg1t8
-	 McVT8sFSAKZub06OHlgCtkZIkGX7cpL3KtyfXGEQ=
+	b=WOHcIno6x6sUS2LtRw2sXdwTd67MPYpmF/3FDmK3P45DCOEvhSY+JrPpgJHsh6m1Y
+	 LJhXy88hDEe3iokObVOkhAJp81g0iV94yPmYkFH4m22erc1k1G7pL8kVKdlmhr4QnB
+	 xJY085GHwl2+JdLmbLS4jlSk2H9A8r/EXxPhhrMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 377/474] thermal: core: Fix thermal zone governor cleanup issues
-Date: Fri, 15 May 2026 17:48:06 +0200
-Message-ID: <20260515154723.188617112@linuxfoundation.org>
+	Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 339/474] spi: cadence: fix unclocked access on unbind
+Date: Fri, 15 May 2026 17:47:28 +0200
+Message-ID: <20260515154722.348632775@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,66 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 41ff66baf81c6541f4f985dd7eac4494d03d9440 ]
+commit 5b1689a41f02955c5361944f748a4812a6ff9307 upstream.
 
-If thermal_zone_device_register_with_trips() fails after adding
-a thermal governor to the thermal zone being registered, the
-governor is not removed from it as appropriate which may lead to
-a memory leak.
+Make sure that the controller is runtime resumed before disabling it
+during driver unbind to avoid unclocked register access and unbalanced
+clock disable.
 
-In turn, thermal_zone_device_unregister() calls thermal_set_governor()
-without acquiring the thermal zone lock beforehand which may race with
-a governor update via sysfs and may lead to a use-after-free in that
-case.
+Also restore the autosuspend setting.
 
-Address these issues by adding two thermal_set_governor() calls, one to
-thermal_release() to remove the governor from the given thermal zone,
-and one to the thermal zone registration error path to cover failures
-preceding the thermal zone device registration.
+This issue was flagged by Sashiko when reviewing a controller
+deregistration fix.
 
-Fixes: e33df1d2f3a0 ("thermal: let governors have private data for each thermal zone")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5092923.31r3eYUQgx@rafael.j.wysocki
-[ kept the `thermal_zone_create_device_groups(tz, mask)` signature when adding the new failure-path cleanup ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d36ccd9f7ea4 ("spi: cadence: Runtime pm adaptation")
+Cc: stable@vger.kernel.org	# 4.7
+Cc: Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>
+Link: https://sashiko.dev/#/patchset/20260414134319.978196-1-johan%40kernel.org?part=1
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260421123615.1533617-2-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/thermal_core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/spi/spi-cadence.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -804,6 +804,7 @@ static void thermal_release(struct devic
- 		     sizeof("thermal_zone") - 1)) {
- 		tz = to_thermal_zone(dev);
- 		thermal_zone_destroy_device_groups(tz);
-+		thermal_set_governor(tz, NULL);
- 		mutex_destroy(&tz->lock);
- 		complete(&tz->removal);
- 	} else if (!strncmp(dev_name(dev), "cooling_device",
-@@ -1325,8 +1326,10 @@ thermal_zone_device_register_with_trips(
- 	/* sys I/F */
- 	/* Add nodes that are always present via .groups */
- 	result = thermal_zone_create_device_groups(tz, mask);
--	if (result)
-+	if (result) {
-+		thermal_set_governor(tz, NULL);
- 		goto remove_id;
-+	}
+--- a/drivers/spi/spi-cadence.c
++++ b/drivers/spi/spi-cadence.c
+@@ -685,16 +685,23 @@ static void cdns_spi_remove(struct platf
+ {
+ 	struct spi_controller *ctlr = platform_get_drvdata(pdev);
+ 	struct cdns_spi *xspi = spi_controller_get_devdata(ctlr);
++	int ret = 0;
++
++	if (!spi_controller_is_target(ctlr))
++		ret = pm_runtime_get_sync(&pdev->dev);
  
- 	/* A new thermal zone needs to be updated anyway. */
- 	atomic_set(&tz->need_update, 1);
-@@ -1478,8 +1481,6 @@ void thermal_zone_device_unregister(stru
+ 	spi_controller_get(ctlr);
  
- 	cancel_delayed_work_sync(&tz->poll_queue);
+ 	spi_unregister_controller(ctlr);
  
--	thermal_set_governor(tz, NULL);
--
- 	thermal_remove_hwmon_sysfs(tz);
- 	ida_free(&thermal_tz_ida, tz->id);
- 	ida_destroy(&tz->ida);
+-	cdns_spi_write(xspi, CDNS_SPI_ER, CDNS_SPI_ER_DISABLE);
++	if (ret >= 0)
++		cdns_spi_write(xspi, CDNS_SPI_ER, CDNS_SPI_ER_DISABLE);
+ 
+ 	if (!spi_controller_is_target(ctlr)) {
+ 		pm_runtime_disable(&pdev->dev);
+ 		pm_runtime_set_suspended(&pdev->dev);
++		pm_runtime_put_noidle(&pdev->dev);
++		pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	}
+ 
+ 	spi_controller_put(ctlr);
 
 
