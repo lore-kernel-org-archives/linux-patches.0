@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC71175A87;
-	Fri, 15 May 2026 15:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F6F175A87;
+	Fri, 15 May 2026 15:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860490; cv=none; b=iCBMXu2XYYzZSRgZDeLq6TmaT3hXnN4XFbo9SPx6YOpTQDXWrBgu0nXQa6ZF7aQ4BXN4xqDPayfGId4AFw7LibDt2lELPFRCpfSYsP3NIWA37W67bVU4GtP78Ph2qdr9KqisyDaRrkWV6CnaA5Q8DmE2L54dbR6wVnMzpfp38YM=
+	t=1778860493; cv=none; b=NRyNtUBoj193eedVkdB7wNN95Auq1GZwgwSFcX3rOvxmt0GFCpSxlnzMRZQ9U51/Ro5//493n7ihaobnRsSyVk7mek1QeXp1ypIP7h0DGmycapcTrHOGHQgMDh8dscVDsd4HV2tKyRYnhFkBl7MCsstHcpZiYf1+ZbglY+qCym8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860490; c=relaxed/simple;
-	bh=Ktd8c9uz6DnSb3uv7cHWs8ZZ6ngdRSbuFQVZ6gsby/Q=;
+	s=arc-20240116; t=1778860493; c=relaxed/simple;
+	bh=is7RaoVblCVMobnLonKU9RuRxuQ7NLaOja/90UV3/Bw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OOXx0lDmgYZPKJ6ND5Q4HS5Hn3SJ9eifVBonASvxitemwOeZsSXHOGy2MlryVW28+aRrFUkbmzKeu9wDgzj8TcXIu3ifzBccWj2KaOqLBbxF5FoDeENSEkufQxTrviKChbKoa9B9cEchcqYkA4Q5QqjO3befqYdL2tz7oKThgIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhCVAXXc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bNzYkyxG5sw54OwoLWp+9voSbw67TO5YxSC++5Goh7OE1YrwVMBqKRZdy/OhaCWwEET0lY/vnFWL7DY2w9FiWmCO/03eYoUxOzEmiQEavYymEfa5zQU+YsxknGorW66U0bey73N2WxQYh+SFBphMEo/nCw0YqqjjLQguwtZQSLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPL256yM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhCVAXXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A2EC2BCB0;
-	Fri, 15 May 2026 15:54:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPL256yM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723CCC2BCB0;
+	Fri, 15 May 2026 15:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860490;
-	bh=Ktd8c9uz6DnSb3uv7cHWs8ZZ6ngdRSbuFQVZ6gsby/Q=;
+	s=korg; t=1778860492;
+	bh=is7RaoVblCVMobnLonKU9RuRxuQ7NLaOja/90UV3/Bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hhCVAXXcaosMPi7LdtPEpLfV4KbQja6pDpZZgcg0mx1X20ljBGPtOB1xAkwpGOQPc
-	 z1MWrnVgTBSwYRPwM6ZupPcMnyNoofoZWzEY1xkFmYRliQ5/nMbpFiP+2OThfn6R6z
-	 MBv5ehxD0PvElHxuPgHIiT0dRdvYj13XDNOZLIRs=
+	b=ZPL256yMKFrIdDHCFsMgjgipSbTdZLP0G8W7rTYS+KXMsrI7XE9AookQV4CZDyOKO
+	 6fPuuOP9ZhiBdHZSes5z1I6kwSSGSqI5mSu66L52p9kVUtL7/QJBhesONg502zWYR6
+	 VNHIG2k27eX6XA2PCwgtrhN+o7DjASnkxa25BK3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Shetaia <Amir.Shetaia@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 067/144] drm/amdkfd: Clear VRAM on allocation to prevent stale data exposure
-Date: Fri, 15 May 2026 17:48:13 +0200
-Message-ID: <20260515154655.098418734@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>,
+	"Ramalingeswara Reddy, Kanala" <Kanala.RamalingeswaraReddy@amd.com>
+Subject: [PATCH 6.12 068/144] drm/amdgpu: Use SMUIO 15.0.0 offsets for TSC upper and lower count.
+Date: Fri, 15 May 2026 17:48:14 +0200
+Message-ID: <20260515154655.120444484@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -45,49 +45,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Shetaia <Amir.Shetaia@amd.com>
+From: Ramalingeswara Reddy, Kanala <Kanala.RamalingeswaraReddy@amd.com>
 
-commit ad52d61d82181dbdb7f05826de38352d5e550cc2 upstream.
+commit 574b3b14f7d1b329fc6e67b79328f0e6f4d4b3d4 upstream.
 
-KFD VRAM allocations set AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE
-but not AMDGPU_GEM_CREATE_VRAM_CLEARED, leaving freshly allocated
-VRAM with stale data from prior use observable by compute kernels.
+Define and use regGOLDEN_TSC_COUNT_UPPER_smu_15_0_0 and
+regGOLDEN_TSC_COUNT_LOWER_smu_15_0_0 for TSC upper and lower count.
 
-The GEM ioctl path already sets VRAM_CLEARED for all userspace
-allocations via amdgpu_gem_create_ioctl() and
-amdgpu_mode_dumb_create(). The KFD path was missing this flag,
-allowing stale page table remnants to leak into user buffers.
-
-This causes crashes in RCCL P2P transport where non-zero data in
-ptrExchange/head/tail fields corrupts the protocol handshake.
-
-Signed-off-by: Amir Shetaia <Amir.Shetaia@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
+Signed-off-by: Ramalingeswara Reddy, Kanala <Kanala.RamalingeswaraReddy@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |   31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -1737,7 +1737,8 @@ int amdgpu_amdkfd_gpuvm_alloc_memory_of_
- 			alloc_domain = AMDGPU_GEM_DOMAIN_GTT;
- 			alloc_flags = 0;
- 		} else {
--			alloc_flags = AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE;
-+			alloc_flags = AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE |
-+				AMDGPU_GEM_CREATE_VRAM_CLEARED;
- 			alloc_flags |= (flags & KFD_IOC_ALLOC_MEM_FLAGS_PUBLIC) ?
- 			AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED : 0;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -63,6 +63,11 @@
+ #define regPC_CONFIG_CNTL_1		0x194d
+ #define regPC_CONFIG_CNTL_1_BASE_IDX	1
  
++#define regGOLDEN_TSC_COUNT_UPPER_smu_15_0_0               0x0030
++#define regGOLDEN_TSC_COUNT_UPPER_smu_15_0_0_BASE_IDX      1
++#define regGOLDEN_TSC_COUNT_LOWER_smu_15_0_0               0x0031
++#define regGOLDEN_TSC_COUNT_LOWER_smu_15_0_0_BASE_IDX      1
++
+ #define regCP_GFX_MQD_CONTROL_DEFAULT                                             0x00000100
+ #define regCP_GFX_HQD_VMID_DEFAULT                                                0x00000000
+ #define regCP_GFX_HQD_QUEUE_PRIORITY_DEFAULT                                      0x00000000
+@@ -4975,11 +4980,27 @@ static uint64_t gfx_v11_0_get_gpu_clock_
+ 		amdgpu_gfx_off_ctrl(adev, true);
+ 	} else {
+ 		preempt_disable();
+-		clock_counter_hi_pre = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_UPPER);
+-		clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_LOWER);
+-		clock_counter_hi_after = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_UPPER);
+-		if (clock_counter_hi_pre != clock_counter_hi_after)
+-			clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_LOWER);
++		if (amdgpu_ip_version(adev, SMUIO_HWIP, 0) < IP_VERSION(15, 0, 0)) {
++			clock_counter_hi_pre = (uint64_t)RREG32_SOC15(SMUIO, 0,
++					regGOLDEN_TSC_COUNT_UPPER);
++			clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0,
++					regGOLDEN_TSC_COUNT_LOWER);
++			clock_counter_hi_after = (uint64_t)RREG32_SOC15(SMUIO, 0,
++					regGOLDEN_TSC_COUNT_UPPER);
++			if (clock_counter_hi_pre != clock_counter_hi_after)
++				clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0,
++						regGOLDEN_TSC_COUNT_LOWER);
++		} else {
++			clock_counter_hi_pre = (uint64_t)RREG32_SOC15(SMUIO, 0,
++					regGOLDEN_TSC_COUNT_UPPER_smu_15_0_0);
++			clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0,
++					regGOLDEN_TSC_COUNT_LOWER_smu_15_0_0);
++			clock_counter_hi_after = (uint64_t)RREG32_SOC15(SMUIO, 0,
++					regGOLDEN_TSC_COUNT_UPPER_smu_15_0_0);
++			if (clock_counter_hi_pre != clock_counter_hi_after)
++				clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0,
++						regGOLDEN_TSC_COUNT_LOWER_smu_15_0_0);
++		}
+ 		preempt_enable();
+ 	}
+ 	clock = clock_counter_lo | (clock_counter_hi_after << 32ULL);
 
 
