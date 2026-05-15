@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B3D2949E0;
-	Fri, 15 May 2026 16:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64034C9570;
+	Fri, 15 May 2026 16:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862583; cv=none; b=LUFtXBK6debA+CX5+pa0jS3ZYkEqK7gS0V3YyGtXynEReUgLToJeM8u5o+qjaF/3v2yhLhPQuL+qLvY15fAV5X1zE+yKL5hIRq9yMbO/OItq7bj/C02ekPG6eYJY109NdE9JO2469zHgdnzvZ3tu07bM8tncGXzMNNgc/euFTkc=
+	t=1778862585; cv=none; b=muybLRXIsKyNcFzGC84Fs9hiXdILr6GL6Ht1gEN+B8zrJjrNNSGv3ohJ70K3KiEJSDn+I0vaAFm17UQatPEh2AQwJYYtVMFgJWyR/KTaTtvdbqITpCwaKIKNF2skIddfQV6z6ItOO6pJtbN4zvMe9ptsaF1uLUj/SoQlaiu6TIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862583; c=relaxed/simple;
-	bh=08VHu7H/W+0ndZTIT2Bw84AFML76DLy8OAiA0sIk2Sk=;
+	s=arc-20240116; t=1778862585; c=relaxed/simple;
+	bh=2Llw+ECCDUIQ3GKdfYpSzbqZKrrg7SYdN+JtTTlJMH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R39b2SmZxOZ3az79koZC130ZyMWwhzUpEd864esCxTvJTIrEifbrQy0XaQyxzG/PXLEML6s0OyTIZVh7BuNtvku4SMdjxt8xlPvJq8WDocsIQ/xDJ6rQ3r1WQ3gMXd/0UV+nrUaM4/pjvcUf+fthRNnMsZVo72oWozeAZVQVjsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urW4V2w7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mn2Ds3jMgkB73dyFx6R8mIFIIiFpkusbIpNQlWDrQ03UBoXGdmx2VNPl2OKon41WshFLb4EF+IghV1zU+b/8scrsrYQmZ9rIan8GXHDcu7/rOhBNnenL3i3NvBZ+2e5HiV22YGGcg/ftlXG81nuqwPSQthvZFmDd3QkdAGuYLSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ0yn9Ay; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urW4V2w7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5C6C2BCB0;
-	Fri, 15 May 2026 16:29:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ0yn9Ay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF04C2BCB0;
+	Fri, 15 May 2026 16:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862583;
-	bh=08VHu7H/W+0ndZTIT2Bw84AFML76DLy8OAiA0sIk2Sk=;
+	s=korg; t=1778862585;
+	bh=2Llw+ECCDUIQ3GKdfYpSzbqZKrrg7SYdN+JtTTlJMH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=urW4V2w7ZCzpsFcTOZtUkIopbtpXcbIXYnAb7awl+kZb8B7s6G8c4NYGimVHxw3kT
-	 M/Co0ShgsowkoBqvkt8xgVXw/+ZG7fv2Dst5WC0lZP9i1zgzmsxfl0vZV0vORiBR5P
-	 SE0aqFamhSRyJyYaglcgxLvOmTUCTDUlgDmvyums=
+	b=aJ0yn9Ayq1t4h+dfwPRxOzQdPEyES+4GvZNyge5BP+eIkdVFBOsC3sNDAjO1hGFSc
+	 d8/aTA+TKPrXWUxOHOGMHz/Rx502gl5evMPq7lS9J1fjU96baiLDDqCVZHOdjkj7BE
+	 v8ubE7iaTkUKZ4TRaCBxWBSyh3mBYXQNfAD9t3E8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leilk Liu <leilk.liu@mediatek.com>,
+	Andrew Bresticker <abrestic@chromium.org>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 104/201] spi: slave-mt27xx: fix controller deregistration
-Date: Fri, 15 May 2026 17:48:42 +0200
-Message-ID: <20260515154700.798075981@linuxfoundation.org>
+Subject: [PATCH 7.0 105/201] spi: img-spfi: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:43 +0200
+Message-ID: <20260515154700.821906891@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,48 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit ab840cbda4fe6c40e52f6415c47056797c663bb2 upstream.
+commit fc3a83b0d9c16b941c9028f5a8db9541dce4ddf2 upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks (by disabling runtime PM) during driver unbind.
+Make sure to deregister the controller before disabling and releasing
+underlying resources like clocks and DMA during driver unbind.
 
-Fixes: 805be7ddf367 ("spi: mediatek: add spi slave for Mediatek MT2712")
-Cc: stable@vger.kernel.org	# 4.20
-Cc: Leilk Liu <leilk.liu@mediatek.com>
+Fixes: deba25800a12 ("spi: Add driver for IMG SPFI controller")
+Cc: stable@vger.kernel.org	# 3.19
+Cc: Andrew Bresticker <abrestic@chromium.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-16-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-16-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-slave-mt27xx.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/spi/spi-img-spfi.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-slave-mt27xx.c
-+++ b/drivers/spi/spi-slave-mt27xx.c
-@@ -453,7 +453,7 @@ static int mtk_spi_slave_probe(struct pl
+--- a/drivers/spi/spi-img-spfi.c
++++ b/drivers/spi/spi-img-spfi.c
+@@ -643,7 +643,7 @@ static int img_spfi_probe(struct platfor
+ 	pm_runtime_set_active(spfi->dev);
+ 	pm_runtime_enable(spfi->dev);
  
- 	pm_runtime_enable(&pdev->dev);
+-	ret = devm_spi_register_controller(spfi->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret)
+ 		goto disable_pm;
  
--	ret = devm_spi_register_controller(&pdev->dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	clk_disable_unprepare(mdata->spi_clk);
- 	if (ret) {
- 		dev_err(&pdev->dev,
-@@ -473,7 +473,15 @@ err_put_ctlr:
+@@ -669,6 +669,10 @@ static void img_spfi_remove(struct platf
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct img_spfi *spfi = spi_controller_get_devdata(host);
  
- static void mtk_spi_slave_remove(struct platform_device *pdev)
- {
-+	struct spi_controller *ctlr = platform_get_drvdata(pdev);
++	spi_controller_get(host);
 +
-+	spi_controller_get(ctlr);
++	spi_unregister_controller(host);
 +
-+	spi_unregister_controller(ctlr);
+ 	if (spfi->tx_ch)
+ 		dma_release_channel(spfi->tx_ch);
+ 	if (spfi->rx_ch)
+@@ -679,6 +683,8 @@ static void img_spfi_remove(struct platf
+ 		clk_disable_unprepare(spfi->spfi_clk);
+ 		clk_disable_unprepare(spfi->sys_clk);
+ 	}
 +
- 	pm_runtime_disable(&pdev->dev);
-+
-+	spi_controller_put(ctlr);
++	spi_controller_put(host);
  }
  
- #ifdef CONFIG_PM_SLEEP
+ #ifdef CONFIG_PM
 
 
