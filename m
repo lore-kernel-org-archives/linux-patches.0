@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E194BC030;
-	Fri, 15 May 2026 16:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B245F4C6EE3;
+	Fri, 15 May 2026 16:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862403; cv=none; b=YO8qUy23RY4cZkf0ImOUOGbh1ZE8OE75q22ZUUiyS93328CeCmYJq8HISFx8D92dix9CR1p8CrAUm8PHId2zTQVUiwU+lcLiMwRl8pL13v3EU9rx/dKLNFXAbdtU4jvh7jK6Ejx9Jn2H37FUYKlH0sr9qEvkU8NwA93I22CO5AE=
+	t=1778862406; cv=none; b=Ix1QsHdYijSz7scwHw9Yspu8WvS+FNFrrvgPYUzpaGEWh08yKm6znh5S+SJ3ogYx+VrTEeGeE85QpkOzjv5kQRCSyPcxKlAu5e8VUIWyBzTvYjKZRDq5uQ35s/NLxStSw64zqybLWteY1I64gwZuUfAgbr3Dik6qLqcqWiqfCuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862403; c=relaxed/simple;
-	bh=oPmqS/PKJqdXAD/wxKza3lFqD6G7BUiVOAsu7k1tkHI=;
+	s=arc-20240116; t=1778862406; c=relaxed/simple;
+	bh=yE7I/29KigPC4hM2VPdLQbQqlBiidtkxh/DUeCyVmFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOSYcJap37JiNjPxms1LJWSJPG89cWFjM+2Q+8GtM3ZfZRLNlmD0Q7dU2yZJW5stT30oBI40Diow6UVFt3pQj1X6STwkLe1L4sqBtJbfSg5sRNgW50jZ/CdvlxYkNJoFyZRBPQlSlf0NNilbA2eH7n8QCThbQpasucoj0R1tuJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tihu5GTG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDvetKQwqqwghg1lrOhJdTSgcG72KwSuBQLwLqFlohw6xXfBGO/OsftIjCThGjfyNrR7knFc/VdsjLz196ZFGgpbGGSXtCqf3+IxKzgdFpGdz55baWHxkolj6XgL0m0MjQLVITnQK5MH48UDotUT9JERqQAmF/o36KqbeG4rLF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VaPsA89z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tihu5GTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0C0C2BCB3;
-	Fri, 15 May 2026 16:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VaPsA89z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D477BC2BCB0;
+	Fri, 15 May 2026 16:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862403;
-	bh=oPmqS/PKJqdXAD/wxKza3lFqD6G7BUiVOAsu7k1tkHI=;
+	s=korg; t=1778862406;
+	bh=yE7I/29KigPC4hM2VPdLQbQqlBiidtkxh/DUeCyVmFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tihu5GTGaHJ333gUrfSz2TaHr8zBFNmDsM3l8p25DKs91yNp8g27vqnrqSr3YsEAc
-	 iECtH9aS+rtK5RxesKV3mmemdw147DQseF1L3Mg7aVB1xiXz98GifRO38ac+W57TRO
-	 xtWCFU69u+fL8i4x/69A2ux1RpDF8GHmfl9LXAg4=
+	b=VaPsA89zNJWAm7quEJN3igP+sj7PLon3dW7luqxHOSXnBPtvCMG1oqNjhezx9IIli
+	 iNIkgUJrdTPyVT1Oi3d6nhg3VVGHalFxpbUlvIdJsHJ92eJtuStcykPejVZsl6goyJ
+	 kSzbTdFemL1CJzCQ3229kdEFomv1oAHG246DWFq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 034/201] regulator: max77650: fix OF node reference imbalance
-Date: Fri, 15 May 2026 17:47:32 +0200
-Message-ID: <20260515154659.273318402@linuxfoundation.org>
+	Felix Gu <ustc.gu@gmail.com>,
+	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.0 035/201] media: ti: vpe: Add missing v4l2_device_unregister in vip_remove()
+Date: Fri, 15 May 2026 17:47:33 +0200
+Message-ID: <20260515154659.295319013@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -51,38 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit 2edaf5f7ada0ab5c9ec1f0836bd19779a8d85262 upstream.
+commit f3e969a5b54304cab6891a58d9dd8b29072bde4c upstream.
 
-The driver reuses the OF node of the parent multi-function device but
-fails to take another reference to balance the one dropped by the
-platform bus code when unbinding the MFD and deregistering the child
-devices.
+The v4l2_device is registered during probe but was not being unregistered
+during remove. Add the missing v4l2_device_unregister() call to properly
+clean up resources.
 
-Fix this by using the intended helper for reusing OF nodes.
-
-Fixes: bcc61f1c44fd ("regulator: max77650: add regulator support")
-Cc: stable@vger.kernel.org	# 5.1
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260408073055.5183-4-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: fc2873aa4a21 ("media: ti: vpe: Add the VIP driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/max77650-regulator.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/ti/vpe/vip.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/regulator/max77650-regulator.c
-+++ b/drivers/regulator/max77650-regulator.c
-@@ -337,7 +337,7 @@ static int max77650_regulator_probe(stru
- 	parent = dev->parent;
+diff --git a/drivers/media/platform/ti/vpe/vip.c b/drivers/media/platform/ti/vpe/vip.c
+index a4b616a5ece7..0e91e87bda9b 100644
+--- a/drivers/media/platform/ti/vpe/vip.c
++++ b/drivers/media/platform/ti/vpe/vip.c
+@@ -3641,6 +3641,7 @@ static void vip_remove(struct platform_device *pdev)
+ 	}
  
- 	if (!dev->of_node)
--		dev->of_node = parent->of_node;
-+		device_set_of_node_from_dev(dev, parent);
+ 	v4l2_ctrl_handler_free(&shared->ctrl_handler);
++	v4l2_device_unregister(&shared->v4l2_dev);
  
- 	rdescs = devm_kcalloc(dev, MAX77650_REGULATOR_NUM_REGULATORS,
- 			      sizeof(*rdescs), GFP_KERNEL);
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+-- 
+2.54.0
+
 
 
