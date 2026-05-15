@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D4C3F6C49;
-	Fri, 15 May 2026 16:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DA93F86E1;
+	Fri, 15 May 2026 16:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861402; cv=none; b=aujQWzedyQmpR8/Dw4KQXohqIuq+rXPnYT7GbIM9xfMulllSxzOQb/IHwBop43YWCkpc12a9o3dxSYu5zc2DZZnkrQEAs60iCYIk1VmIsQANS0H2OelK4ODv2JxpuLHS37/MaPslFHDHzEqym8qNb4wYZOIAzJ8SUIGuMZAJ0PE=
+	t=1778861405; cv=none; b=D+3zYeIU2LF9fK4jyrThb+aO67fgwVDKLtuFj4Ak4hgOgf8JpvffI2slNlWuGjOr3cbHfARKz7lEhGfzQgbMRwYLjGcGr6Y1eCAD12PfFOgJlVC8RDBIbCo5eSdLzoFAalu5pArr6MmHR4y4mFeIFWD2YKtCrURnmrg46/xqyc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861402; c=relaxed/simple;
-	bh=VnD3iHZ0Rx0TR6+ubrL/S5jZOKNcGVdejT5i3Nk0wbY=;
+	s=arc-20240116; t=1778861405; c=relaxed/simple;
+	bh=X9OWU3TVvpVgqtkPLeGSB6sKA3HgZi3FD0gmCtkAJLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OUN5/MAsRKomuZgve0u1Q5WLKHUrM5fPtUc8gUsgM3ujGANVbdo/KqHMcTZbyxqfkHsI9nPBlKba7sGDWSPIx+58e30QgU9y+Aw48JPDvmV6k1TA+L/QcSIHX7JOz6ZwhWxHuAW+E0ZYHtmpFVhodLZ4KdqUU/GJNtYQPsp+Qjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKkD/tdl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AFen1Ua+UdI1ANce2uqk9iWQrGAjA9zVzHTXdLDUYTIl5uzNs6JYhgf5vDyJuoU2T8AEHcKSo1TXLYbra+/vWm5wE2q/u9hpUKbg3CSO0HjULB/Zcc5mxqqd1ZRjeYL7vecGIwLUh/rDnWIpt6Fg1d02GtKSdFbN7zoYnExC6p8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSU8sTZO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKkD/tdl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D80C2BCB3;
-	Fri, 15 May 2026 16:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSU8sTZO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D4CC2BCB3;
+	Fri, 15 May 2026 16:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861402;
-	bh=VnD3iHZ0Rx0TR6+ubrL/S5jZOKNcGVdejT5i3Nk0wbY=;
+	s=korg; t=1778861404;
+	bh=X9OWU3TVvpVgqtkPLeGSB6sKA3HgZi3FD0gmCtkAJLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JKkD/tdlDVQ9qmVh6u6QuYJi+oSNQmC+akW4hIoQk6bVag/gYv44UsPdQGEzIMZtb
-	 yf1hyohlBjL+R9H2QhQ8AxYO1vCzXLREGg4KOyDGvCfzA1xWxJtW1mZLmtI91RbK8s
-	 aA19HS0sz4NA9IS89kNBbF5hf8C2HPL2vhafxBFU=
+	b=eSU8sTZOWt0a995LfJBPA0YyOJXXUFOsNRrBessyeiMWlkx7aDxRrA1CrWYclsfou
+	 Ri9WCvyNItGz9vjwR5dR/1cskddoJAgM+2QmwzugTyW0XBlzGcpgZ1Wx/d3PEcr5Er
+	 45/tUjkwIO5b/ZC5i3V70QEHhFcMOz1kasrh6DWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Artem S. Tashkinov" <aros@gmx.com>,
-	Krishna Chomal <krishna.chomal108@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.6 315/474] platform/x86: hp-wmi: Ignore backlight and FnLock events
-Date: Fri, 15 May 2026 17:47:04 +0200
-Message-ID: <20260515154721.828510460@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 316/474] media: pci: zoran: fix potential memory leak in zoran_probe()
+Date: Fri, 15 May 2026 17:47:05 +0200
+Message-ID: <20260515154721.850523131@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -45,49 +44,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Chomal <krishna.chomal108@gmail.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit e8c597368b8500a824c639bfb5ed0044068c6870 upstream.
+commit 8ea21435fe36fb853706f4935d78bc11beb63fb4 upstream.
 
-On HP OmniBook 7 the keyboard backlight and FnLock keys are handled
-directly by the firmware. However, they still trigger WMI events which
-results in "Unknown key code" warnings in dmesg.
+The memory allocated for codec in videocodec_attach() is not freed in
+one of the error paths, due to an incorrect goto label. Fix the label
+to free it on error.
 
-Add these key codes to the keymap with KE_IGNORE to silence the warnings
-since no software action is needed.
-
-Tested-by: Artem S. Tashkinov <aros@gmx.com>
-Reported-by: Artem S. Tashkinov <aros@gmx.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221181
-Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
-Link: https://patch.msgid.link/20260403080155.169653-1-krishna.chomal108@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 8f7cc5c0b0eb ("media: staging: media: zoran: introduce zoran_i2c_init")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/pci/zoran/zoran_card.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -238,6 +238,11 @@ static const struct key_entry hp_wmi_key
- 	{ KE_KEY, 0x21a9,  { KEY_TOUCHPAD_OFF } },
- 	{ KE_KEY, 0x121a9, { KEY_TOUCHPAD_ON } },
- 	{ KE_KEY, 0x231b,  { KEY_HELP } },
-+	{ KE_IGNORE, 0x21ab, }, /* FnLock on */
-+	{ KE_IGNORE, 0x121ab, }, /* FnLock off */
-+	{ KE_IGNORE, 0x30021aa, }, /* kbd backlight: level 2 -> off */
-+	{ KE_IGNORE, 0x33221aa, }, /* kbd backlight: off -> level 1 */
-+	{ KE_IGNORE, 0x36421aa, }, /* kbd backlight: level 1 -> level 2*/
- 	{ KE_END, 0 }
- };
- 
+--- a/drivers/media/pci/zoran/zoran_card.c
++++ b/drivers/media/pci/zoran/zoran_card.c
+@@ -1377,7 +1377,7 @@ static int zoran_probe(struct pci_dev *p
+ 		}
+ 		if (zr->codec->type != zr->card.video_codec) {
+ 			pci_err(pdev, "%s - wrong codec\n", __func__);
+-			goto zr_unreg_videocodec;
++			goto zr_detach_codec;
+ 		}
+ 	}
+ 	if (zr->card.video_vfe != 0) {
 
 
