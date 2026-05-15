@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7C34C0414;
-	Fri, 15 May 2026 16:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DEA4C77A3;
+	Fri, 15 May 2026 16:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861167; cv=none; b=YdcU6SCBarrplMO0ereDiHVisr/e4fake6+pPa8JnY0SSijZRXIZJjU2IPGuRkEBRwnIZnfaGdDUieSa4TtF2KdXeA8hqPEfMaBxLTbBl+dPPKo1l4XAvUfxX/P7InTXgaLYog4R0jXuVeMta02d4E6miLhyZv/aHaPMtxkOj9Y=
+	t=1778861170; cv=none; b=WJMoOEDltk2ZDNRl6ZZOlQ5mDERVN2XwmxYR8/3/AAT1Fk3MWHagtwLHJQhomNWbh2/RP6dHjNj1MlLoVEo4HImz1uivZ8eF6kF+R65mr7IxSjiUJEFEtaJBgTsQKYezOAASOgDnnyYXaZmDFmj/QykzfFEP8lF7sSte72LFE/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861167; c=relaxed/simple;
-	bh=S6VxBVCVrBSLBTevUWxz/FYV4nhg8Jvl9X31vAEbm0E=;
+	s=arc-20240116; t=1778861170; c=relaxed/simple;
+	bh=39xoTHT8tghc68dImqDHt6BPFyflbipiMgkCL4Ml0sk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZQc/vNHOWly98w1ohJS3xSguj43ZTKRc6Dz4RXQznZ3tJXbzBEoqiu9R2tW+/mScRsawIUHBF1XtMgPPgEfT9Hp1b6E3OsFmmnie6Ki6K1LLxyX+AkQz78C19Kz6LDkB0dtayClqk4p5guC32AmNXhXjcKV7yFxbvLPpaw+/oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhRdWi+m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UOmlHfXVf5l/DcBmuHdEmUPp4lhJ7+1X2RTpht+HEPOznKdQvMhkni4wkqwQ8XiU96CkIV6CKjZog3PqzMk8ZGs2i/CmHkCzuDGMamI50e85hPZvaOokJCtygQqvrNSjN6b4ELLbQquY6uDVsWbrRxxtK+uwJyvpJRXAqAAFOVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DC8sT0Ne; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhRdWi+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD02AC2BCB0;
-	Fri, 15 May 2026 16:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DC8sT0Ne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B339C2BCC9;
+	Fri, 15 May 2026 16:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861167;
-	bh=S6VxBVCVrBSLBTevUWxz/FYV4nhg8Jvl9X31vAEbm0E=;
+	s=korg; t=1778861169;
+	bh=39xoTHT8tghc68dImqDHt6BPFyflbipiMgkCL4Ml0sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhRdWi+m2lxAjNkDJ/Sn341cE0H69pElvHTsOKdHbGx026bYrrwEpeaMr58x0yOoY
-	 80LDlEvdQf6s5kyTN4eipXNWA5OsUbwv72qSNlFGW9q3dI/Vqgu/pfipUCKd3DV/02
-	 Ho6uBt/K0vkxvBWCK7SrcM50kF15fvL5Kr5wCLwk=
+	b=DC8sT0NeRsFfGPAz66LFQVJLuzUS9Ouc690VrBOH47EmqXZCxOqlPn3SssSIj7fVU
+	 xiB7egK8JAWJd+VxMpXtAuMn8qLaVSKPJiC/IaK9bmoqqmY964RoD7cmqeil5JwH1l
+	 Au17WPBCjLfB5ZJQyk7SwJFdCEC1VKnKMQMMR2nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 224/474] parisc: Fix IRQ leak in LASI driver
-Date: Fri, 15 May 2026 17:45:33 +0200
-Message-ID: <20260515154719.854634663@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 225/474] hwmon: (ltc2992) Clamp threshold writes to hardware range
+Date: Fri, 15 May 2026 17:45:34 +0200
+Message-ID: <20260515154719.876237617@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,63 +50,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit 37b0dc5e279f35036fb638d1e187197b6c05a76d upstream.
+commit d6cc7c99bf1f73eda7d565d224d791d16239bb41 upstream.
 
-When request_irq() succeeds but gsc_common_setup() fails later,
-the IRQ is never released. Fix this by adding proper error handling
-with goto labels to ensure resources are released in LIFO order.
+ltc2992_set_voltage(), ltc2992_set_current(), and ltc2992_set_power()
+do not validate the user-supplied value before converting it to a
+register value. This can result in:
 
-Detected by Smatch:
-  drivers/parisc/lasi.c:216 lasi_init_chip() warn: 'lasi->gsc_irq.irq'
-from request_irq() not released on lines: 207.
+1. Negative input values wrapping to large positive register values.
+   For power, the negative long is implicitly cast to u64 in
+   mul_u64_u32_div(), producing an incorrect value. For voltage and
+   current, the negative converted value wraps when passed to
+   ltc2992_write_reg() as a u32.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202604180957.4QdAIxP6-lkp@intel.com/
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+2. Intermediate arithmetic exceeding the range representable in u64 on
+   64-bit platforms. In ltc2992_set_voltage(), (u64)val * 1000 can
+   exceed U64_MAX when val is a large positive long. In
+   ltc2992_set_current(), (u64)val * r_sense_uohm can overflow
+   similarly. In ltc2992_set_power(), the computed value may not fit
+   in u64.
+
+3. Register values exceeding the hardware field width. Voltage and
+   current threshold registers are 12-bit (stored left-justified in
+   16 bits), and power threshold registers are 24-bit. Without
+   clamping, bits above the field width are truncated in
+   ltc2992_write_reg().
+
+Fix by clamping negative values to zero, clamping positive values to
+the rounded hardware-representable maximum (the value returned by the
+read path for a full-scale register) to prevent intermediate overflow,
+and clamping the converted register value to the hardware field width
+before writing. The existing conversion formula and rounding behavior
+are preserved.
+
+In the power write path, cancel the factor of 1000 from both the
+numerator (r_sense_uohm * 1000) and the denominator
+(VADC_UV_LSB * IADC_NANOV_LSB) to also eliminate a u32 overflow of
+r_sense_uohm * 1000 when r_sense_uohm exceeds about 4.29 ohms.
+
+Fixes: b0bd407e94b03 ("hwmon: (ltc2992) Add support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260416215904.101969-2-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/lasi.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/hwmon/ltc2992.c |   35 ++++++++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 7 deletions(-)
 
---- a/drivers/parisc/lasi.c
-+++ b/drivers/parisc/lasi.c
-@@ -193,8 +193,7 @@ static int __init lasi_init_chip(struct
+--- a/drivers/hwmon/ltc2992.c
++++ b/drivers/hwmon/ltc2992.c
+@@ -421,10 +421,16 @@ static int ltc2992_get_voltage(struct lt
  
- 	ret = request_irq(lasi->gsc_irq.irq, gsc_asic_intr, 0, "lasi", lasi);
- 	if (ret < 0) {
--		kfree(lasi);
--		return ret;
-+		goto err_free;
- 	}
- 
- 	/* enable IRQ's for devices below LASI */
-@@ -203,8 +202,7 @@ static int __init lasi_init_chip(struct
- 	/* Done init'ing, register this driver */
- 	ret = gsc_common_setup(dev, lasi);
- 	if (ret) {
--		kfree(lasi);
--		return ret;
-+		goto err_irq;
- 	}    
- 
- 	gsc_fixup_irqs(dev, lasi, lasi_choose_irq);
-@@ -214,6 +212,12 @@ static int __init lasi_init_chip(struct
- 		SYS_OFF_PRIO_DEFAULT, lasi_power_off, lasi);
- 
- 	return ret;
+ static int ltc2992_set_voltage(struct ltc2992_state *st, u32 reg, u32 scale, long val)
+ {
+-	val = DIV_ROUND_CLOSEST(val * 1000, scale);
+-	val = val << 4;
++	u32 reg_val;
++	long vmax;
 +
-+err_irq:
-+	free_irq(lasi->gsc_irq.irq, lasi);
-+err_free:
-+	kfree(lasi);
-+	return ret;
++	vmax = DIV_ROUND_CLOSEST_ULL(0xFFFULL * scale, 1000);
++	val = max(val, 0L);
++	val = min(val, vmax);
++	reg_val = min(DIV_ROUND_CLOSEST_ULL((u64)val * 1000, scale),
++		      0xFFFULL) << 4;
+ 
+-	return ltc2992_write_reg(st, reg, 2, val);
++	return ltc2992_write_reg(st, reg, 2, reg_val);
  }
  
- static struct parisc_device_id lasi_tbl[] __initdata = {
+ static int ltc2992_read_gpio_alarm(struct ltc2992_state *st, int nr_gpio, u32 attr, long *val)
+@@ -549,9 +555,15 @@ static int ltc2992_get_current(struct lt
+ static int ltc2992_set_current(struct ltc2992_state *st, u32 reg, u32 channel, long val)
+ {
+ 	u32 reg_val;
++	long cmax;
+ 
+-	reg_val = DIV_ROUND_CLOSEST(val * st->r_sense_uohm[channel], LTC2992_IADC_NANOV_LSB);
+-	reg_val = reg_val << 4;
++	cmax = DIV_ROUND_CLOSEST_ULL(0xFFFULL * LTC2992_IADC_NANOV_LSB,
++				     st->r_sense_uohm[channel]);
++	val = max(val, 0L);
++	val = min(val, cmax);
++	reg_val = min(DIV_ROUND_CLOSEST_ULL((u64)val * st->r_sense_uohm[channel],
++					    LTC2992_IADC_NANOV_LSB),
++		      0xFFFULL) << 4;
+ 
+ 	return ltc2992_write_reg(st, reg, 2, reg_val);
+ }
+@@ -624,9 +636,18 @@ static int ltc2992_get_power(struct ltc2
+ static int ltc2992_set_power(struct ltc2992_state *st, u32 reg, u32 channel, long val)
+ {
+ 	u32 reg_val;
++	u64 pmax, uval;
+ 
+-	reg_val = mul_u64_u32_div(val, st->r_sense_uohm[channel] * 1000,
+-				  LTC2992_VADC_UV_LSB * LTC2992_IADC_NANOV_LSB);
++	uval = max(val, 0L);
++	pmax = mul_u64_u32_div(0xFFFFFFULL,
++			       LTC2992_VADC_UV_LSB / 1000 *
++			       LTC2992_IADC_NANOV_LSB,
++			       st->r_sense_uohm[channel]);
++	uval = min(uval, pmax);
++	reg_val = min(mul_u64_u32_div(uval, st->r_sense_uohm[channel],
++				      LTC2992_VADC_UV_LSB / 1000 *
++				      LTC2992_IADC_NANOV_LSB),
++		      0xFFFFFFULL);
+ 
+ 	return ltc2992_write_reg(st, reg, 3, reg_val);
+ }
 
 
