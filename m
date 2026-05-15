@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8590820297C;
-	Fri, 15 May 2026 16:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B7020297C;
+	Fri, 15 May 2026 16:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861595; cv=none; b=d6nPLwF7zV8wkDpSgH8MdbY3qYixVIAr+ObJArvAgjr6NYuhcjeI05IHJFpVTd4iRkPjDPwKoXejSQPlKRRxJzXPnBYiUk8i9hQ1/sCE+wSB2ECuHYMiV7egUi71cLp1836bcHMqahS7OsUw2tMDXZpy3xt+/9reiljIGLvNvY0=
+	t=1778861598; cv=none; b=kmIgsP1RR7JvLBg5FLWV8xjxxWb6vq5w5mc7rBW9kwqDibD0HAywTZbMTUBw6Q9qigFoo32VmV/FbbGaIMIqvlU9J1qpf8H8UXVl88KqhrAPnvDzawULLhmJ7dUf3FOKDHrip8NEhdUjuc/xAp3ofU3gg6GAb24hoO+U/cyby/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861595; c=relaxed/simple;
-	bh=Z5sMeFUKX50no3V6W51pErXshTMXYhwNOs69r9Mupvk=;
+	s=arc-20240116; t=1778861598; c=relaxed/simple;
+	bh=5Zqly2z0475CEpwt/t9ql2ugMmPOEm/WxQ4eZQeWSqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THDYo/qUm/K36kK7Ct58OetZ4WAUWZGXlfqRvEBcM6xgxpX2MNHCcAu+hYjXHosqtX7mdswFSd60j2gWuTRMrBMDz2EYTi8J0OejWWe6Cnwyr26wRmI3OpEPXx0eQxfha6wZrbf3NwAPbvLB4Ho02Kcz4ODk2zHCof7pwJPModc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iw6hwWDK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V0iC2Pz23FPcLH9DMDj1XKZ8njppU2W7DPcjki4n9mC8Q51PgCr5NxM3LKD0ETQ/TTIRwsULUEV3yP5ZAFnkMFbhFTSrvQ3fD5OQsX7uqOlyYrsQBdPZ9OXfo74RRjyV6W/+JNj9rBmDQ7nMvCKRkjVJyd8420/VJkCHKtRr8so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwMGE0L+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iw6hwWDK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F2FC2BCB0;
-	Fri, 15 May 2026 16:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwMGE0L+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46AFC2BCB0;
+	Fri, 15 May 2026 16:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861595;
-	bh=Z5sMeFUKX50no3V6W51pErXshTMXYhwNOs69r9Mupvk=;
+	s=korg; t=1778861598;
+	bh=5Zqly2z0475CEpwt/t9ql2ugMmPOEm/WxQ4eZQeWSqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iw6hwWDKaUx4aW7Cp/C+Xyot2h2ExyU7ReRaabCqCuh8qfa1zEzb/9Pt2NgU3mobt
-	 S1h71+e1shjgLOTRVL4wnR34+8JcIZJ7du0H6pGkDv5nLl33ph5sYKq0LMsgF4w+WM
-	 TccymWWvhcPBsAJjKOOr4DGCozhfsuUb8dDYewOw=
+	b=HwMGE0L+ronWzNpZsefK6IEj5JEpDA36oz/AcWdEK9qMNKd7fpxCBCbysGgB5iLu3
+	 i4PpnocxXHDC/2xc8akHNhkrPO4yEP+V9Ie5TSjkVH7iPOdv73Bg8HYMBt7iY30qnl
+	 6nc/v5r/pSXGkSvRgeo1mYpulDCavkpKZF7YUYXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Simon Horman <horms@kernel.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 390/474] net: qrtr: ns: Limit the maximum server registration per node
-Date: Fri, 15 May 2026 17:48:19 +0200
-Message-ID: <20260515154723.482176934@linuxfoundation.org>
+Subject: [PATCH 6.6 391/474] net: qrtr: ns: Limit the maximum number of lookups
+Date: Fri, 15 May 2026 17:48:20 +0200
+Message-ID: <20260515154723.503721702@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -55,104 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit d5ee2ff98322337951c56398e79d51815acbf955 ]
+[ Upstream commit 5640227d9a21c6a8be249a10677b832e7f40dc55 ]
 
-Current code does no bound checking on the number of servers added per
-node. A malicious client can flood NEW_SERVER messages and exhaust memory.
+Current code does no bound checking on the number of lookups a client can
+perform. Though the code restricts the lookups to local clients, there is
+still a possibility of a malicious local client sending a flood of
+NEW_LOOKUP messages over the same socket.
 
-Fix this issue by limiting the maximum number of server registrations to
-256 per node. If the NEW_SERVER message is received for an old port, then
-don't restrict it as it will get replaced. While at it, also rate limit
-the error messages in the failure path of qrtr_ns_worker().
+Fix this issue by limiting the maximum number of lookups to 64 globally.
+Since the nameserver allows only atmost one local observer, this global
+lookup count will ensure that the lookups stay within the limit.
 
-Note that the limit of 256 is chosen based on the current platform
+Note that, limit of 64 is chosen based on the current platform
 requirements. If requirement changes in the future, this limit can be
 increased.
 
 Cc: stable@vger.kernel.org
 Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260409-qrtr-fix-v3-1-00a8a5ff2b51@oss.qualcomm.com
+Link: https://patch.msgid.link/20260409-qrtr-fix-v3-2-00a8a5ff2b51@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted comment block to only mention QRTR_NS_MAX_LOOKUPS and kept kzalloc() instead of kzalloc_obj() due to missing prerequisite commits ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/ns.c |   26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ net/qrtr/ns.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/net/qrtr/ns.c
 +++ b/net/qrtr/ns.c
-@@ -68,8 +68,14 @@ struct qrtr_server {
- struct qrtr_node {
- 	unsigned int id;
- 	struct xarray servers;
-+	u32 server_count;
- };
+@@ -22,6 +22,7 @@ static struct {
+ 	struct socket *sock;
+ 	struct sockaddr_qrtr bcast_sq;
+ 	struct list_head lookups;
++	u32 lookup_count;
+ 	struct workqueue_struct *workqueue;
+ 	struct work_struct work;
+ 	void (*saved_data_ready)(struct sock *sk);
+@@ -76,6 +77,11 @@ struct qrtr_node {
+  */
+ #define QRTR_NS_MAX_SERVERS 256
  
-+/* Max server limit is chosen based on the current platform requirements. If the
++/* Max lookup limit is chosen based on the current platform requirements. If the
 + * requirement changes in the future, this value can be increased.
 + */
-+#define QRTR_NS_MAX_SERVERS 256
++#define QRTR_NS_MAX_LOOKUPS 64
 +
  static struct qrtr_node *node_get(unsigned int node_id)
  {
  	struct qrtr_node *node;
-@@ -227,6 +233,17 @@ static struct qrtr_server *server_add(un
- 	if (!service || !port)
- 		return NULL;
+@@ -441,6 +447,7 @@ static int ctrl_cmd_del_client(struct so
  
-+	node = node_get(node_id);
-+	if (!node)
-+		return NULL;
-+
-+	/* Make sure the new servers per port are capped at the maximum value */
-+	old = xa_load(&node->servers, port);
-+	if (!old && node->server_count >= QRTR_NS_MAX_SERVERS) {
-+		pr_err_ratelimited("QRTR client node %u exceeds max server limit!\n", node_id);
-+		return NULL;
+ 		list_del(&lookup->li);
+ 		kfree(lookup);
++		qrtr_ns.lookup_count--;
+ 	}
+ 
+ 	/* Remove the server belonging to this port but don't broadcast
+@@ -558,6 +565,11 @@ static int ctrl_cmd_new_lookup(struct so
+ 	if (from->sq_node != qrtr_ns.local_node)
+ 		return -EINVAL;
+ 
++	if (qrtr_ns.lookup_count >= QRTR_NS_MAX_LOOKUPS) {
++		pr_err_ratelimited("QRTR client node exceeds max lookup limit!\n");
++		return -ENOSPC;
 +	}
 +
- 	srv = kzalloc(sizeof(*srv), GFP_KERNEL);
- 	if (!srv)
- 		return NULL;
-@@ -236,10 +253,6 @@ static struct qrtr_server *server_add(un
- 	srv->node = node_id;
- 	srv->port = port;
+ 	lookup = kzalloc(sizeof(*lookup), GFP_KERNEL);
+ 	if (!lookup)
+ 		return -ENOMEM;
+@@ -566,6 +578,7 @@ static int ctrl_cmd_new_lookup(struct so
+ 	lookup->service = service;
+ 	lookup->instance = instance;
+ 	list_add_tail(&lookup->li, &qrtr_ns.lookups);
++	qrtr_ns.lookup_count++;
  
--	node = node_get(node_id);
--	if (!node)
--		goto err;
--
- 	/* Delete the old server on the same port */
- 	old = xa_store(&node->servers, port, srv, GFP_KERNEL);
- 	if (old) {
-@@ -250,6 +263,8 @@ static struct qrtr_server *server_add(un
- 		} else {
- 			kfree(old);
- 		}
-+	} else {
-+		node->server_count++;
+ 	memset(&filter, 0, sizeof(filter));
+ 	filter.service = service;
+@@ -606,6 +619,7 @@ static void ctrl_cmd_del_lookup(struct s
+ 
+ 		list_del(&lookup->li);
+ 		kfree(lookup);
++		qrtr_ns.lookup_count--;
  	}
- 
- 	trace_qrtr_ns_server_add(srv->service, srv->instance,
-@@ -290,6 +305,7 @@ static int server_del(struct qrtr_node *
- 	}
- 
- 	kfree(srv);
-+	node->server_count--;
- 
- 	return 0;
  }
-@@ -678,7 +694,7 @@ static void qrtr_ns_worker(struct work_s
- 		}
- 
- 		if (ret < 0)
--			pr_err("failed while handling packet from %d:%d",
-+			pr_err_ratelimited("failed while handling packet from %d:%d",
- 			       sq.sq_node, sq.sq_port);
- 	}
  
 
 
