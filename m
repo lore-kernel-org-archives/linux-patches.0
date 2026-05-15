@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D2B4963B0;
-	Fri, 15 May 2026 16:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90613C4B72;
+	Fri, 15 May 2026 16:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861426; cv=none; b=CjfK7o/qSBVhWPx6oarIQ9w+ceMO4VxYAXT8jOLJV8sKJAVZC5fv0sHi6ebX0YI3lzqODdUXX3+uS3adWwItbeB49jfV+iAyU6vNBH2Pcpj4E0DGb4TFPpEnRnQmXbukT6PzEX1CN2RMPFC1unA2zrVUVzrSOgU/SCOboK3cJNU=
+	t=1778861428; cv=none; b=BN0SHEPjtJfTfvK5fmgwiABYSg7djmXXU1vlJCAuK8wjSDKvUQSCXsfpIZLNtlB3QcO52rroWYMTPZo5muckBb2c8t1sZtL22fmBJZCst3zuTw3GkRwRVlqcTGgLTvk3c/Mga51EzTW+yu3LVuj/OevL9P+2Vtd0+qWyDRyultY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861426; c=relaxed/simple;
-	bh=ussBQraCDdTwN1BxcTR4qz+6yx6co/HuhCWfS6cNW5Y=;
+	s=arc-20240116; t=1778861428; c=relaxed/simple;
+	bh=EgyRXerigE3WyKB+CpSEBcfFqP1TNdDKtS2jT4J/ECk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mT9/2Dp7bhYeCoq3tBRgltbY6S0jgsZpbRaKKQ01lOcodGVnDqMYrv0Y8j8kzWuhXrX+2cknAZ78/mgs9zSZkFoILT+IlZh7OeY7CT1KzAbIlJLg3DZhLHScb89Sa9U6sp7sBo7ScYNvdZq8fYyTZxNiPApCGq+1Ognj9mj7ILQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czqIbbix; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QT0DSIcik4jfaUnhH7MqmqHHWSPQt1gfNZrfLClIMw8m+ykpygCs+GRYBBtSrERXo0ieU53kdhn+2aaubNBBa8tL5OtNzugQEbn7L1jJi0Rl5LnxP9Zxtq4exJ20t3YyMXVu8zNyascbbsj8FE6k9PBpGffPYtVI2G0RR9KnMBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2df9iKJV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czqIbbix"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB91C2BCB0;
-	Fri, 15 May 2026 16:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2df9iKJV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D800C2BCB0;
+	Fri, 15 May 2026 16:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861426;
-	bh=ussBQraCDdTwN1BxcTR4qz+6yx6co/HuhCWfS6cNW5Y=;
+	s=korg; t=1778861428;
+	bh=EgyRXerigE3WyKB+CpSEBcfFqP1TNdDKtS2jT4J/ECk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=czqIbbixEo0YyBvEqWwFCmxo6gTGKujI99aSfEccXvLpdPnASJBl/aUiU3LMLnO5I
-	 yWZvwCF2ibJwZG6Q/Vc5AP2Oe6uI+ymUOj7365+zhNkJw3UJLzPdNYqmZUYHVQQ0Jf
-	 /jUxm+JyYaJY2pogU4HtJvthHiXL0wSr0az8kC9E=
+	b=2df9iKJVwXJr+hZ3X3/bOZ8YVExJ7JR2zrodkUFhd4ZMPyXz9bykv+nPD7Pnh8QX7
+	 O05MpgUBBkJPnA6Ogilvi6C9/DYnDGYb0OEfHIJC6l0LHGd13xVZA/qtGlgmvvNjP2
+	 0PmlZzh5LbeyASzTYmLjkUXmR7+/YfN7RUWfGg74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 323/474] spi: s3c64xx: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:12 +0200
-Message-ID: <20260515154721.998757460@linuxfoundation.org>
+Subject: [PATCH 6.6 324/474] spi: fsl-espi: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:13 +0200
+Message-ID: <20260515154722.020879154@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,41 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit c1446b61e472da24d1547525193467b4bea4a7cb upstream.
+commit e506a700a7ad229f5c8f01f4b8350119cccb4158 upstream.
 
-Make sure to deregister the controller before releasing underlying
-resources like DMA during driver unbind.
+Make sure to deregister the controller before disabling runtime PM
+(which can leave the controller disabled) to allow SPI device drivers to
+do I/O during deregistration.
 
-Fixes: 91800f0e9005 ("spi/s3c64xx: Use managed registration")
-Cc: stable@vger.kernel.org	# 3.13: 76fbad410c0f
-Cc: stable@vger.kernel.org	# 3.13
+Fixes: e9abb4db8d10 ("spi: fsl-espi: add runtime PM")
+Cc: stable@vger.kernel.org	# 4.3
+Cc: Heiner Kallweit <hkallweit1@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-12-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-14-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-s3c64xx.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-fsl-espi.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-s3c64xx.c
-+++ b/drivers/spi/spi-s3c64xx.c
-@@ -1305,7 +1305,7 @@ static int s3c64xx_spi_probe(struct plat
- 	       S3C64XX_SPI_INT_TX_OVERRUN_EN | S3C64XX_SPI_INT_TX_UNDERRUN_EN,
- 	       sdd->regs + S3C64XX_SPI_INT_EN);
+--- a/drivers/spi/spi-fsl-espi.c
++++ b/drivers/spi/spi-fsl-espi.c
+@@ -720,7 +720,7 @@ static int fsl_espi_probe(struct device
+ 	pm_runtime_enable(dev);
+ 	pm_runtime_get_sync(dev);
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
+-	ret = devm_spi_register_controller(dev, host);
 +	ret = spi_register_controller(host);
- 	if (ret != 0) {
- 		dev_err(&pdev->dev, "cannot register SPI host: %d\n", ret);
- 		goto err_pm_put;
-@@ -1336,6 +1336,8 @@ static void s3c64xx_spi_remove(struct pl
+ 	if (ret < 0)
+ 		goto err_pm;
  
- 	pm_runtime_get_sync(&pdev->dev);
+@@ -785,7 +785,15 @@ static int of_fsl_espi_probe(struct plat
  
+ static void of_fsl_espi_remove(struct platform_device *dev)
+ {
++	struct spi_controller *host = platform_get_drvdata(dev);
++
++	spi_controller_get(host);
++
 +	spi_unregister_controller(host);
 +
- 	writel(0, sdd->regs + S3C64XX_SPI_INT_EN);
+ 	pm_runtime_disable(&dev->dev);
++
++	spi_controller_put(host);
+ }
  
- 	pm_runtime_put_noidle(&pdev->dev);
+ #ifdef CONFIG_PM_SLEEP
 
 
