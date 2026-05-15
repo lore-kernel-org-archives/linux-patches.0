@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6117A44105E;
-	Fri, 15 May 2026 16:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE763E0091;
+	Fri, 15 May 2026 16:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861801; cv=none; b=s91o7edlOtezSoN44fKZuNteQZWyJSIvvD4Z+uALhOPCVwVi67lE6ZXBPXXhmN2INjtghqg2hUuYrqzOBbt6eGNZS/9nK/yiyoUsCJgiwRm8iHrfVI09sKJBqmO4BCZxN2nqRy2MJFp/PvoS1ar2ZkxpjvHp8JUi7f2/r8YnIzA=
+	t=1778861803; cv=none; b=aKh+W2HwFir3epG5meqHKl7ogY18IfFpX9dSqadQEGcEj2FkY84L2PdiOPL873nPGtw6+nKYwGNC3Na3y/EE90/k+u4AjtnhPGukXO0nD9Kl+GetOflUJNNZX5umKgr9b2Z/000WmzuIRW9vRwkyfe7rzNqt6VrMu7nrzLIms5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861801; c=relaxed/simple;
-	bh=rzkPZYriuL3eSsvpzoy7guZQn1PNIXje57PrgTMiJhg=;
+	s=arc-20240116; t=1778861803; c=relaxed/simple;
+	bh=0L4pScPUyIT0tCQ8XyF3Dw7v1MBs4nt9C55wNiBLG7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Psje3VKfpYk3hfazwKnNzzlV/lYJQtoDcXtpAPyzSURr2hx1FMutQnu66nVjJe5BRWkBVMws6zxmEAPERI+C4yzK2bLM0Ix8IJSIzaHTdhq83ttytAI60XKdppoWNREhpqN3VOIvVNyXoHFNzLHylohUVKD7I7rcnoAnkCsTcqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHsBfuwg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ujbZa0q2YbrIYN+MetsgElXgiEIdq+VlcY15G0y3RPG3LopUKGm2o9epd0vQS86Mow2XAVx/qpNu4L+4zHccsuR7dYUOpnXDh3SW3BrLEHJOcb7wWHyjxf0baU6VGaXKARNNprGw5WZB6oq8i3oxH1i77v2aa6WEWbsOWgEFBGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6GeyY53; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHsBfuwg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDF9C2BCB0;
-	Fri, 15 May 2026 16:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6GeyY53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DCF2C2BCB3;
+	Fri, 15 May 2026 16:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861801;
-	bh=rzkPZYriuL3eSsvpzoy7guZQn1PNIXje57PrgTMiJhg=;
+	s=korg; t=1778861803;
+	bh=0L4pScPUyIT0tCQ8XyF3Dw7v1MBs4nt9C55wNiBLG7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHsBfuwgPqSEhQ6Q2sMxp4KcHR8FJbQjN/0XV2aMeF+kQ7ePMsX7vWT/rZB+h6D58
-	 aF9e4fa/bK6huSMhUcKlibBd3n1XGtYejlQcm0aJwyPD+JLCX1/tjGUEWn4PvxuqvC
-	 hUFvYsgrfKTPZb3tKIbdOwk4tJ4bOXcXH03FsuTY=
+	b=v6GeyY53Zy4JBo3ea/K8G/W1oV2+63mqQb5h3yZWU2lyuAeybpNo4iWvxX2m0N4Kd
+	 qMdUkJDFM+Zv5rnT09CWHKwWUBQjhQ/j2Pv+VBwOsntrvy+4Fb+VmX92dLT8K+71At
+	 kcAdXtc9AF/fVYJKAOXiAMbqRM8mSzL5ptJUY23E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Eric Dumazet <edumazet@google.com>,
+	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
 	Stefano Garzarella <sgarzare@redhat.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Arseniy Krasnov <avkrasnov@rulkc.org>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	virtualization@lists.linux.dev,
+	Jakub Kicinski <kuba@kernel.org>,
 	Luigi Leonardi <leonardi@redhat.com>
-Subject: [PATCH 6.6 466/474] vsock/virtio: fix length and offset in tap skb for split packets
-Date: Fri, 15 May 2026 17:49:35 +0200
-Message-ID: <20260515154725.188310533@linuxfoundation.org>
+Subject: [PATCH 6.6 467/474] vsock/virtio: fix potential unbounded skb queue
+Date: Fri, 15 May 2026 17:49:36 +0200
+Message-ID: <20260515154725.211770846@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -48,63 +53,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 5f344d809e015fba3709e5219428c00b8ac5d7df upstream.
+commit 059b7dbd20a6f0c539a45ddff1573cb8946685b5 upstream.
 
-virtio_transport_build_skb() builds a new skb to be delivered to the
-vsockmon tap device. To build the new skb, it uses the original skb
-data length as payload length, but as the comment notes, the original
-packet stored in the skb may have been split in multiple packets, so we
-need to use the length in the header, which is correctly updated before
-the packet is delivered to the tap, and the offset for the data.
+virtio_transport_inc_rx_pkt() checks vvs->rx_bytes + len > vvs->buf_alloc.
 
-This was also similar to what we did before commit 71dc9ec9ac7d
-("virtio/vsock: replace virtio_vsock_pkt with sk_buff") where we probably
-missed something during the skb conversion.
+virtio_transport_recv_enqueue() skips coalescing for packets
+with VIRTIO_VSOCK_SEQ_EOM.
 
-Also update the comment above, which was left stale by the skb
-conversion and still mentioned a buffer pointer that no longer exists.
+If fed with packets with len == 0 and VIRTIO_VSOCK_SEQ_EOM,
+a very large number of packets can be queued
+because vvs->rx_bytes stays at 0.
 
-Fixes: 71dc9ec9ac7d ("virtio/vsock: replace virtio_vsock_pkt with sk_buff")
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Reviewed-by: Arseniy Krasnov <avkrasnov@rulkc.org>
-Link: https://patch.msgid.link/20260508164411.261440-2-sgarzare@redhat.com
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[LL: Fixed conflict since this tree does not use the offset added by commit
- 0df7cd3c13e4 ("vsock/virtio/vhost: read data from non-linear skb")]
+Fix this by estimating the skb metadata size:
+
+	(Number of skbs in the queue) * SKB_TRUESIZE(0)
+
+Fixes: 077706165717 ("virtio/vsock: don't use skbuff state to account credit")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Cc: "Eugenio Pérez" <eperezma@redhat.com>
+Cc: virtualization@lists.linux.dev
+Link: https://patch.msgid.link/20260430122653.554058-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[LL: Fixed conflict since this tree does not use buf_used added by commit
+ 45ca7e9f0730 ("vsock/virtio: fix `rx_bytes` accounting for stream sockets")]
 Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/net/vmw_vsock/virtio_transport_common.c
 +++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -122,12 +122,12 @@ static struct sk_buff *virtio_transport_
- 	size_t payload_len;
- 	void *payload_buf;
+@@ -283,7 +283,9 @@ static int virtio_transport_send_pkt_inf
+ static bool virtio_transport_inc_rx_pkt(struct virtio_vsock_sock *vvs,
+ 					u32 len)
+ {
+-	if (vvs->rx_bytes + len > vvs->buf_alloc)
++	u64 skb_overhead = (skb_queue_len(&vvs->rx_queue) + 1) * SKB_TRUESIZE(0);
++
++	if (skb_overhead + vvs->rx_bytes + len > vvs->buf_alloc)
+ 		return false;
  
--	/* A packet could be split to fit the RX buffer, so we can retrieve
--	 * the payload length from the header and the buffer pointer taking
--	 * care of the offset in the original packet.
-+	/* A packet could be split to fit the RX buffer, so we use
-+	 * the payload length from the header, which has been updated
-+	 * by the sender to reflect the fragment size.
- 	 */
- 	pkt_hdr = virtio_vsock_hdr(pkt);
--	payload_len = pkt->len;
-+	payload_len = le32_to_cpu(pkt_hdr->len);
- 	payload_buf = pkt->data;
- 
- 	skb = alloc_skb(sizeof(*hdr) + sizeof(*pkt_hdr) + payload_len,
+ 	vvs->rx_bytes += len;
 
 
