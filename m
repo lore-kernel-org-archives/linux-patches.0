@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7F23B6354;
-	Fri, 15 May 2026 16:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDB33A961B;
+	Fri, 15 May 2026 16:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860944; cv=none; b=X1EPmpARGk8fOGV8h1oMUQl9jn2GbC1jCFmoDlatlwJrX21nJOarGRYoj88XsiWwJV3uCypGrB2g2gy/NepG24RKG82LGTdwYjWYEuKzLIyWYxLFA9pqzmwtqugra7khEwHKPoydTcBxkQ2osH4LOEvbIqTVkoAR9wAAoYan9Es=
+	t=1778860947; cv=none; b=iYYPd/hA5dMsjTBpLQNOqlkWE8Y5ERMzBK3aFvtaMWP2vsrGnDOMS/Hw9LgOHWpZN4/IzQRwx6USHdo5OgrfUK1+GWil6t9VVwXjvWOPR/RcJ9Nm08D96ym5jW5FyxEDxhrKu/IBVAbaf0JFTGMiJX94oy/MN2HYIprOZvo7Ab0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860944; c=relaxed/simple;
-	bh=tUfR3JsiChd8iDcz+sxw/a271drnOGEVm4dyi1r1aH8=;
+	s=arc-20240116; t=1778860947; c=relaxed/simple;
+	bh=y5SfnvDnSxte7xZkoH/D0+9Qyqi5Zo4y/iGVgjaEVdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cf0qGOVHjVwAbaXjS8FlHX2eujKK+kC3wVwtoZtdC7hyziNQOvheSZld55FfFOOoh5qhtMXbo3stIxcYChqVdndwNpaxDYeBYwjulTOhh1v4UWrAw5phiOK1XqD1D/ZmyYdoQePHmn5k65OyoknpUn2Ch9QP5r7TloICGGhkdKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQdoHcSX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mAtKI28I+VIr6GHZpp7B46YV3PCfZZXsxq/c/64YTNVlHHDc6RPdH5BBsXDVlBQwKwj+SOxyHozKtwCzGXdf7AcWFhCSUnDTW0aYWPCFuRLue/qev1noBH5LKoITXAWHZ1cD3RzLi8EU5P/JuNzZExWklC3ppGpXp54SxBswpyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vycx60NJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQdoHcSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54392C2BCB0;
-	Fri, 15 May 2026 16:02:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vycx60NJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB33EC2BCB0;
+	Fri, 15 May 2026 16:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860944;
-	bh=tUfR3JsiChd8iDcz+sxw/a271drnOGEVm4dyi1r1aH8=;
+	s=korg; t=1778860947;
+	bh=y5SfnvDnSxte7xZkoH/D0+9Qyqi5Zo4y/iGVgjaEVdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQdoHcSXDVUV7828t+JYJWUggThffBG4BrQLZsbKNG0HIF6DvY+gdzO9249ADdWmE
-	 YJkI31mZ1NpiN7/YxB13cqk1mB7TOJITxkB/aKA1sjueA996xDn0jXwgIz2sfQHrnw
-	 0h9UzqT5m3zCMxKlmQNn3PZFqzWzdzi/10xmKaUU=
+	b=vycx60NJ91+9RVkzahTmRvKIAHe0Z9xMqr5S6p0y5fRF4kDSReoMJvKL3AgkuXR0X
+	 PH+mANkiaSP1OET8o7LFYNGvAHHHxhBuxpoVcS9AljVXmTauSsWw+2aBtWnKNBUVTx
+	 BBvMLSi4HS25b9dUfY7irqjUwnNQ2QK5DCht4blY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 139/474] ipv6: rpl: reserve mac_len headroom when recompressed SRH grows
-Date: Fri, 15 May 2026 17:44:08 +0200
-Message-ID: <20260515154718.037635099@linuxfoundation.org>
+	FengWei Shih <dannyshih@synology.com>,
+	Chia-Ming Chang <chiamingc@synology.com>,
+	Yu Kuai <yukuai@fnnas.com>
+Subject: [PATCH 6.6 113/474] md/raid5: fix soft lockup in retry_aligned_read()
+Date: Fri, 15 May 2026 17:43:42 +0200
+Message-ID: <20260515154717.481752624@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,78 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Chia-Ming Chang <chiamingc@synology.com>
 
-commit 9e6bf146b55999a095bb14f73a843942456d1adc upstream.
+commit 7f9f7c697474268d9ef9479df3ddfe7cdcfbbffc upstream.
 
-ipv6_rpl_srh_rcv() decompresses an RFC 6554 Source Routing Header, swaps
-the next segment into ipv6_hdr->daddr, recompresses, then pulls the old
-header and pushes the new one plus the IPv6 header back.  The
-recompressed header can be larger than the received one when the swap
-reduces the common-prefix length the segments share with daddr (CmprI=0,
-CmprE>0, seg[0][0] != daddr[0] gives the maximum +8 bytes).
+When retry_aligned_read() encounters an overlapped stripe, it releases
+the stripe via raid5_release_stripe() which puts it on the lockless
+released_stripes llist. In the next raid5d loop iteration,
+release_stripe_list() drains the stripe onto handle_list (since
+STRIPE_HANDLE is set by the original IO), but retry_aligned_read()
+runs before handle_active_stripes() and removes the stripe from
+handle_list via find_get_stripe() -> list_del_init(). This prevents
+handle_stripe() from ever processing the stripe to resolve the
+overlap, causing an infinite loop and soft lockup.
 
-pskb_expand_head() was gated on segments_left == 0, so on earlier
-segments the push consumed unchecked headroom.  Once skb_push() leaves
-fewer than skb->mac_len bytes in front of data,
-skb_mac_header_rebuild()'s call to:
+Fix this by using __release_stripe() with temp_inactive_list instead
+of raid5_release_stripe() in the failure path, so the stripe does not
+go through the released_stripes llist. This allows raid5d to break out
+of its loop, and the overlap will be resolved when the stripe is
+eventually processed by handle_stripe().
 
-	skb_set_mac_header(skb, -skb->mac_len);
-
-will store (data - head) - mac_len into the u16 mac_header field, which
-wraps to ~65530, and the following memmove() writes mac_len bytes ~64KiB
-past skb->head.
-
-A single AF_INET6/SOCK_RAW/IPV6_HDRINCL packet over lo with a two
-segment type-3 SRH (CmprI=0, CmprE=15) reaches headroom 8 after one
-pass; KASAN reports a 14-byte OOB write in ipv6_rthdr_rcv.
-
-Fix this by expanding the head whenever the remaining room is less than
-the push size plus mac_len, and request that much extra so the rebuilt
-MAC header fits afterwards.
-
-Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
-Cc: stable <stable@kernel.org>
-Reported-by: Anthropic
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026042133-gout-unvented-1bd9@gregkh
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 773ca82fa1ee ("raid5: make release_stripe lockless")
+Cc: stable@vger.kernel.org
+Signed-off-by: FengWei Shih <dannyshih@synology.com>
+Signed-off-by: Chia-Ming Chang <chiamingc@synology.com>
+Link: https://lore.kernel.org/linux-raid/20260402061406.455755-1-chiamingc@synology.com/
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/exthdrs.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/md/raid5.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -491,6 +491,7 @@ static int ipv6_rpl_srh_rcv(struct sk_bu
- 	struct net *net = dev_net(skb->dev);
- 	struct inet6_dev *idev;
- 	struct ipv6hdr *oldhdr;
-+	unsigned int chdr_len;
- 	unsigned char *buf;
- 	int accept_rpl_seg;
- 	int i, err;
-@@ -594,8 +595,10 @@ looped_back:
- 	skb_pull(skb, ((hdr->hdrlen + 1) << 3));
- 	skb_postpull_rcsum(skb, oldhdr,
- 			   sizeof(struct ipv6hdr) + ((hdr->hdrlen + 1) << 3));
--	if (unlikely(!hdr->segments_left)) {
--		if (pskb_expand_head(skb, sizeof(struct ipv6hdr) + ((chdr->hdrlen + 1) << 3), 0,
-+	chdr_len = sizeof(struct ipv6hdr) + ((chdr->hdrlen + 1) << 3);
-+	if (unlikely(!hdr->segments_left ||
-+		     skb_headroom(skb) < chdr_len + skb->mac_len)) {
-+		if (pskb_expand_head(skb, chdr_len + skb->mac_len, 0,
- 				     GFP_ATOMIC)) {
- 			__IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)), IPSTATS_MIB_OUTDISCARDS);
- 			kfree_skb(skb);
-@@ -605,7 +608,7 @@ looped_back:
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -6691,7 +6691,13 @@ static int  retry_aligned_read(struct r5
+ 		}
  
- 		oldhdr = ipv6_hdr(skb);
- 	}
--	skb_push(skb, ((chdr->hdrlen + 1) << 3) + sizeof(struct ipv6hdr));
-+	skb_push(skb, chdr_len);
- 	skb_reset_network_header(skb);
- 	skb_mac_header_rebuild(skb);
- 	skb_set_transport_header(skb, sizeof(struct ipv6hdr));
+ 		if (!add_stripe_bio(sh, raid_bio, dd_idx, 0, 0)) {
+-			raid5_release_stripe(sh);
++			int hash;
++
++			spin_lock_irq(&conf->device_lock);
++			hash = sh->hash_lock_index;
++			__release_stripe(conf, sh,
++					 &conf->temp_inactive_list[hash]);
++			spin_unlock_irq(&conf->device_lock);
+ 			conf->retry_read_aligned = raid_bio;
+ 			conf->retry_read_offset = scnt;
+ 			return handled;
 
 
