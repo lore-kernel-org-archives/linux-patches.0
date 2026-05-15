@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D72C3B4EAF;
-	Fri, 15 May 2026 16:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D7E3B635B;
+	Fri, 15 May 2026 16:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861455; cv=none; b=huJYY1BDSpHgpvVqIDydVJEZZs8WxU8BADDA+FGeQZQ9GwWOQThiR9qa1NgEraP+YHIZ2pbkDvNDw1HKVK9VGKOpNCOEjrTUK1LZCR2WbVEqzQdflPXZWQbIHyMH9LtWSOAD4xGhSK7KwyY3U3XNz3C8u4oiDj0HfMFEV53rUVM=
+	t=1778861457; cv=none; b=JwjtrTbhAn2cQv5VDDv6bvDh/h14jSx0HHsOJCBWhabEPvoG7YvYs9nkkpkHBMs6ZGLR35U7p9GUhJCW4EWg6Q1Pl8XsdTZE6k5e2B6rOEjxS2ezcBwMi2o3svrSM2dcOc4syIo49LUvcOFkDyWehZ3OR5Z+yYPH1r3eWOlhhdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861455; c=relaxed/simple;
-	bh=86Jtcb0hXiE6ufyuTEh0u3F/K4ogldepEYlN1878yoE=;
+	s=arc-20240116; t=1778861457; c=relaxed/simple;
+	bh=rVM/eC1s7G4IkiXuNSa2uI0nG8KwewL4QScCKLddNzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uxbZ/2R1a8TBKHhS6Z85+at8H54v50L6Z7gqN81XsIrFjrm1G2lM/ZI/3DB31K6jlgj4xmVldPsOBGbBb+ayRmA82ChvBSuf/iC+wjWcoAPJUVZtWtMUj5RYVj/S689DxEc88JYG43FbdURj6dbvD0/ZOyWDBGlMEN3gfkqHwL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZzVWQEM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rGx85iSsDTzykRFVaGLnafAU8XMz2kWmDaa5ZlBxdGi8t9WsBLCCoG/1s215wk8NZQQU+b8MXLH4IpmT7LgpS6OballhpyTpxf8ve5WeBKTS5V8t/10la2o2oUK1pWmsep3hMbQsP5yEzN1x1pwuc45t+9hVjAKVvm/U/TLnqSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOZv+dv9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZzVWQEM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAA4C2BCB0;
-	Fri, 15 May 2026 16:10:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOZv+dv9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBC5C2BCB0;
+	Fri, 15 May 2026 16:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861455;
-	bh=86Jtcb0hXiE6ufyuTEh0u3F/K4ogldepEYlN1878yoE=;
+	s=korg; t=1778861457;
+	bh=rVM/eC1s7G4IkiXuNSa2uI0nG8KwewL4QScCKLddNzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZzVWQEM0o4Y9yQBmy9bKhGHYv2qqa81dW12paKqECVDkipIb9rt/rOtgmjlt1f4B
-	 BfNOLUW7OvwZBzKt/rziiqGBlsikIvdAnRnuhaENYbOPlnG55wl+HBKTKu5or/KilP
-	 CWTUWd4yeSx4Khf/44ipkkEtpCNMG2pLTjOHn2Qc=
+	b=fOZv+dv9lNdTB+kG9Q6uEvz4x4bDOJFXrPYCVc7i0g4N8dqu3dCjvXDnJmvbLFQpm
+	 vzU6XFd4Od5tHUuii6UXYuO1XgzcPR2EUr1jy+bVaSqJ84T0lhUISFHXUI1J7oPV3r
+	 SdZIV6bDc7tO8rhtt6hf03gUC8NXw8m5/syn8QYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Bresticker <abrestic@chromium.org>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 333/474] spi: img-spfi: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:22 +0200
-Message-ID: <20260515154722.219470610@linuxfoundation.org>
+	Wentao Guan <guanwentao@uniontech.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 294/474] LoongArch: Fix potential ADE in loongson_gpu_fixup_dma_hang()
+Date: Fri, 15 May 2026 17:46:43 +0200
+Message-ID: <20260515154721.362121802@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,54 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-commit fc3a83b0d9c16b941c9028f5a8db9541dce4ddf2 upstream.
+commit 8dfa2f8780e486d05b9a0ffce70b8f5fbd62053e upstream.
 
-Make sure to deregister the controller before disabling and releasing
-underlying resources like clocks and DMA during driver unbind.
+The switch case in loongson_gpu_fixup_dma_hang() may not DC2 or DC3, and
+readl(crtc_reg) will access with random address, because the "device" is
+from "base+PCI_DEVICE_ID", "base" is from "pdev->devfn+1". This is wrong
+when my platform inserts a discrete GPU:
 
-Fixes: deba25800a12 ("spi: Add driver for IMG SPFI controller")
-Cc: stable@vger.kernel.org	# 3.19
-Cc: Andrew Bresticker <abrestic@chromium.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260409120419.388546-16-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+lspci -tv
+-[0000:00]-+-00.0  Loongson Technology LLC Hyper Transport Bridge Controller
+...
+           +-06.0  Loongson Technology LLC LG100 GPU
+           +-06.2  Loongson Technology LLC Device 7a37
+...
+
+Add a default switch case to fix the panic as below:
+
+ Kernel ade access[#1]:
+ CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.6.136-loong64-desktop-hwe+ #4
+ pc 90000000017e5534 ra 90000000017e54c0 tp 90000001002f8000 sp 90000001002fb6c0
+ a0 80000efe00003100 a1 0000000000003100 a2 0000000000000000 a3 0000000000000002
+ a4 90000001002fb6b4 a5 900000087cdb58fd a6 90000000027af000 a7 0000000000000001
+ t0 00000000000085b9 t1 000000000000ffff t2 0000000000000000 t3 0000000000000000
+ t4 fffffffffffffffd t5 00000000fffb6d9c t6 0000000000083b00 t7 00000000000070c0
+ t8 900000087cdb4d94 u0 900000087cdb58fd s9 90000001002fb826 s0 90000000031c12c8
+ s1 7fffffffffffff00 s2 90000000031c12d0 s3 0000000000002710 s4 0000000000000000
+ s5 0000000000000000 s6 9000000100053000 s7 7fffffffffffff00 s8 90000000030d4000
+    ra: 90000000017e54c0 loongson_gpu_fixup_dma_hang+0x40/0x210
+   ERA: 90000000017e5534 loongson_gpu_fixup_dma_hang+0xb4/0x210
+  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+  PRMD: 00000004 (PPLV0 +PIE -PWE)
+  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
+  ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
+ ESTAT: 00480000 [ADEM] (IS= ECode=8 EsubCode=1)
+  BADV: 7fffffffffffff00
+  PRID: 0014d000 (Loongson-64bit, Loongson-3A6000-HV)
+ Modules linked in:
+ Process swapper/0 (pid: 1, threadinfo=(____ptrval____), task=(____ptrval____))
+ Stack : 0000000000000006 90000001002fb778 90000001002fb704 0000000000000007
+         0000000016a65700 90000000017e5690 000000000000ffff ffffffffffffffff
+         900000000209f7c0 9000000100053000 900000000209f7a8 9000000000eebc08
+         0000000000000000 0000000000000000 0000000000000006 90000001002fb778
+         90000001000530b8 90000000027af000 0000000000000000 9000000100054000
+         9000000100053000 9000000000ebb70c 9000000100004c00 9000000004000001
+         90000001002fb7e4 bae765461f31cb12 0000000000000000 0000000000000000
+         0000000000000006 90000000027af000 0000000000000030 90000000027af000
+         900000087cd6f800 9000000100053000 0000000000000000 9000000000ebc560
+         7a2500147cdaf720 bae765461f31cb12 0000000000000001 0000000000000030
+         ...
+ Call Trace:
+ [<90000000017e5534>] loongson_gpu_fixup_dma_hang+0xb4/0x210
+ [<9000000000eebc08>] pci_fixup_device+0x108/0x280
+ [<9000000000ebb70c>] pci_setup_device+0x24c/0x690
+ [<9000000000ebc560>] pci_scan_single_device+0xe0/0x140
+ [<9000000000ebc684>] pci_scan_slot+0xc4/0x280
+ [<9000000000ebdd00>] pci_scan_child_bus_extend+0x60/0x3f0
+ [<9000000000f5bc94>] acpi_pci_root_create+0x2b4/0x420
+ [<90000000017e5e74>] pci_acpi_scan_root+0x2d4/0x440
+ [<9000000000f5b02c>] acpi_pci_root_add+0x21c/0x3a0
+ [<9000000000f4ee54>] acpi_bus_attach+0x1a4/0x3c0
+ [<90000000010e200c>] device_for_each_child+0x6c/0xe0
+ [<9000000000f4bbf4>] acpi_dev_for_each_child+0x44/0x70
+ [<9000000000f4ef40>] acpi_bus_attach+0x290/0x3c0
+ [<90000000010e200c>] device_for_each_child+0x6c/0xe0
+ [<9000000000f4bbf4>] acpi_dev_for_each_child+0x44/0x70
+ [<9000000000f4ef40>] acpi_bus_attach+0x290/0x3c0
+ [<9000000000f5211c>] acpi_bus_scan+0x6c/0x280
+ [<900000000189c028>] acpi_scan_init+0x194/0x310
+ [<900000000189bc6c>] acpi_init+0xcc/0x140
+ [<9000000000220cdc>] do_one_initcall+0x4c/0x310
+ [<90000000018618fc>] kernel_init_freeable+0x258/0x2d4
+ [<900000000184326c>] kernel_init+0x28/0x13c
+ [<9000000000222008>] ret_from_kernel_thread+0xc/0xa4
+
+Cc: stable@vger.kernel.org
+Fixes: 95db0c9f526d ("LoongArch: Workaround LS2K/LS7A GPU DMA hang bug")
+Link: https://gist.github.com/opsiff/ebf2dac51b4013d22462f2124c55f807
+Link: https://gist.github.com/opsiff/a62f2a73db0492b3c49bf223a339b133
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-img-spfi.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/loongarch/pci/pci.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/spi/spi-img-spfi.c
-+++ b/drivers/spi/spi-img-spfi.c
-@@ -644,7 +644,7 @@ static int img_spfi_probe(struct platfor
- 	pm_runtime_set_active(spfi->dev);
- 	pm_runtime_enable(spfi->dev);
- 
--	ret = devm_spi_register_controller(spfi->dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret)
- 		goto disable_pm;
- 
-@@ -670,6 +670,10 @@ static void img_spfi_remove(struct platf
- 	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct img_spfi *spfi = spi_controller_get_devdata(host);
- 
-+	spi_controller_get(host);
-+
-+	spi_unregister_controller(host);
-+
- 	if (spfi->tx_ch)
- 		dma_release_channel(spfi->tx_ch);
- 	if (spfi->rx_ch)
-@@ -680,6 +684,8 @@ static void img_spfi_remove(struct platf
- 		clk_disable_unprepare(spfi->spfi_clk);
- 		clk_disable_unprepare(spfi->sys_clk);
+--- a/arch/loongarch/pci/pci.c
++++ b/arch/loongarch/pci/pci.c
+@@ -133,6 +133,9 @@ static void loongson_gpu_fixup_dma_hang(
+ 		crtc_reg = regbase;
+ 		crtc_offset = 0x400;
+ 		break;
++	default:
++		iounmap(regbase);
++		return;
  	}
-+
-+	spi_controller_put(host);
- }
  
- #ifdef CONFIG_PM
+ 	for (i = 0; i < CRTC_NUM_MAX; i++, crtc_reg += crtc_offset) {
 
 
