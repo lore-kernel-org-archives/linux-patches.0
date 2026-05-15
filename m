@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBBA3D25A6;
-	Fri, 15 May 2026 16:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D52D3D330B;
+	Fri, 15 May 2026 16:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862671; cv=none; b=Y25FLYMLvKRNeTGEGrGKk8wGSTXz0agRJ+lGnaUz4RLyAqIYmZ5C8tx6LCOXbFZ2PggbwgUKxlrvuTU2ybKsNKfK+BpeflMigLp+yJdK2IWPsDGimAb9mOz1kqgkZjvMnU+Q4O5fKiFKo43NY34Itt9uAgAPqjeDLnn7VmgAPOo=
+	t=1778862674; cv=none; b=IXrKkivX8/mYzRnur3ux6xkFKABDNi9GoptozjfIbgrNZmS3T9AV2vfVXInvTxFKjt7NUEmjot5gN3b7kgGr1Mn9YaPyn9xh9pnGrpUg9mUAk4psEJ9zCF0Co1JpHwctlNpFJKph01Saamh8O69ywdwFkDbOj2/8H4OjW6qGTlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862671; c=relaxed/simple;
-	bh=tiqwway9sjmrulCefsO9yxZZBJRsAI6OcWC8dbsdsfM=;
+	s=arc-20240116; t=1778862674; c=relaxed/simple;
+	bh=hDnEKVKDySC3YbKQsRm18Txf5otohbr2fCH+PsmUeRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cOM6uxl+Rlc5ISfHkcnOLcexXowYqqIs11Gj51RjBVfPbfVKMNa4/00pLlKqF6SpM7WbBkVdkz/vjKDDu0FOx6doct91MUcOxCFX0Vpmn2xeU4w4N4LImF+rblm3Gt9MywS57fbgSqw2/2sb+/xVmSE125qzmgig7Ci6cOQFacA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cI/DdbvT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NpAgkHSr/rptFKRFKNWL7pmLabDLVodUZgJskZPwrnIJAdtrVrltAgK5LGG/VQV48hP4veAV/FJGzzIgFeP9pTxcyx29oCPdO7C/LdJNBZPSGPp4NZWj2iRF+ZfxR3jTcnH2x5S0kVZXdka9EIdvqh+PRQS/PChWywTBFm4R8NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoAse76Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cI/DdbvT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245A9C2BCB3;
-	Fri, 15 May 2026 16:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoAse76Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90EFC2BCB0;
+	Fri, 15 May 2026 16:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862671;
-	bh=tiqwway9sjmrulCefsO9yxZZBJRsAI6OcWC8dbsdsfM=;
+	s=korg; t=1778862674;
+	bh=hDnEKVKDySC3YbKQsRm18Txf5otohbr2fCH+PsmUeRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cI/DdbvTi/VSt68uyKhPSQ6DNvLBAvGhdaOtfNAY2TcltxRrCqlTbwU+i6MCWgedR
-	 LukPNjJoN0B9SZtCm16tcvy5qDHjxjolCTxwfMCkKNRrlN7EHiktC8JjR+UH6PlsES
-	 046aa2TA+l9WWgZ0M2flF9JB87LUlIKtdhN/agyI=
+	b=DoAse76QTmBwXaLZvoKu5jJZQv79nQqDXbTC9Cc6QruH1wb7/SJpMZSE2NAr2UiAE
+	 LWZq4E2mxApL1FTwgxdd0MhqId2Ejy3JzwunuYPnkRULOFI/Ya8TFbDwYYxg1rLn5l
+	 bnx04N6tXi8oob44fpZqWThUN3zg59ZoGj781KVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Benjamin Cheng <benjamin.cheng@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Ruijing Dong <ruijing.dong@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 139/201] drm/amdgpu/vcn4: Prevent OOB reads when parsing IB
-Date: Fri, 15 May 2026 17:49:17 +0200
-Message-ID: <20260515154701.579278513@linuxfoundation.org>
+Subject: [PATCH 7.0 140/201] drm/amdgpu/vce: Prevent partial address patches
+Date: Fri, 15 May 2026 17:49:18 +0200
+Message-ID: <20260515154701.601159976@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -46,7 +44,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
@@ -55,74 +52,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Cheng <benjamin.cheng@amd.com>
 
-commit 2444eb0ec8283f4a3845eb7febad378476e1ba3c upstream.
+commit de2a02cc28d6d5d37db07d00a9a684c754a5fd74 upstream.
 
-Rewrite the IB parsing to use amdgpu_ib_get_value() which handles the
-bounds checks.
+In the case that only one of lo/hi is valid, the patching could result
+in a bad address written to in FW.
 
 Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |   23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-@@ -1913,9 +1913,10 @@ out:
- static int vcn_v4_0_enc_find_ib_param(struct amdgpu_ib *ib, uint32_t id, int start)
- {
- 	int i;
-+	uint32_t len;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
+@@ -698,6 +698,9 @@ static int amdgpu_vce_cs_reloc(struct am
+ 	uint64_t addr;
+ 	int r;
  
--	for (i = start; i < ib->length_dw && ib->ptr[i] >= 8; i += ib->ptr[i] / 4) {
--		if (ib->ptr[i + 1] == id)
-+	for (i = start; (len = amdgpu_ib_get_value(ib, i)) >= 8; i += len / 4) {
-+		if (amdgpu_ib_get_value(ib, i + 1) == id)
- 			return i;
- 	}
- 	return -1;
-@@ -1926,8 +1927,6 @@ static int vcn_v4_0_ring_patch_cs_in_pla
- 					   struct amdgpu_ib *ib)
- {
- 	struct amdgpu_ring *ring = amdgpu_job_ring(job);
--	struct amdgpu_vcn_decode_buffer *decode_buffer;
--	uint64_t addr;
- 	uint32_t val;
- 	int idx = 0, sidx;
++	if (lo >= ib->length_dw || hi >= ib->length_dw)
++		return -EINVAL;
++
+ 	if (index == 0xffffffff)
+ 		index = 0;
  
-@@ -1938,20 +1937,22 @@ static int vcn_v4_0_ring_patch_cs_in_pla
- 	while ((idx = vcn_v4_0_enc_find_ib_param(ib, RADEON_VCN_ENGINE_INFO, idx)) >= 0) {
- 		val = amdgpu_ib_get_value(ib, idx + 2); /* RADEON_VCN_ENGINE_TYPE */
- 		if (val == RADEON_VCN_ENGINE_TYPE_DECODE) {
--			decode_buffer = (struct amdgpu_vcn_decode_buffer *)&ib->ptr[idx + 6];
-+			uint32_t valid_buf_flag = amdgpu_ib_get_value(ib, idx + 6);
-+			uint64_t msg_buffer_addr;
- 
--			if (!(decode_buffer->valid_buf_flag & 0x1))
-+			if (!(valid_buf_flag & 0x1))
- 				return 0;
- 
--			addr = ((u64)decode_buffer->msg_buffer_address_hi) << 32 |
--				decode_buffer->msg_buffer_address_lo;
--			return vcn_v4_0_dec_msg(p, job, addr);
-+			msg_buffer_addr = ((u64)amdgpu_ib_get_value(ib, idx + 7)) << 32 |
-+				amdgpu_ib_get_value(ib, idx + 8);
-+			return vcn_v4_0_dec_msg(p, job, msg_buffer_addr);
- 		} else if (val == RADEON_VCN_ENGINE_TYPE_ENCODE) {
- 			sidx = vcn_v4_0_enc_find_ib_param(ib, RENCODE_IB_PARAM_SESSION_INIT, idx);
--			if (sidx >= 0 && ib->ptr[sidx + 2] == RENCODE_ENCODE_STANDARD_AV1)
-+			if (sidx >= 0 &&
-+			    amdgpu_ib_get_value(ib, sidx + 2) == RENCODE_ENCODE_STANDARD_AV1)
- 				return vcn_v4_0_limit_sched(p, job);
- 		}
--		idx += ib->ptr[idx] / 4;
-+		idx += amdgpu_ib_get_value(ib, idx) / 4;
- 	}
- 	return 0;
- }
 
 
