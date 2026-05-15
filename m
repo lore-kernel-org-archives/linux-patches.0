@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0393C0A13;
-	Fri, 15 May 2026 16:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C583E0083;
+	Fri, 15 May 2026 16:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861122; cv=none; b=XmuMkV5ZtJtTqxGufkskjmrLfBKqYZbfGwTaFRn9UFeAKGbFXbzohWJ8JnBY1/fHlZCZ0JDqsQPyPcWm1LD0kq9czAyWxFOAbzrUld2aXmSuFkxYBxz7b2l/GhTYdwJ50TK2+65eK6Tkw8FbxqMUby00tq180jw8crwMJ+veztg=
+	t=1778861125; cv=none; b=Gg4XJeIPpSCVOkvPO/EGjHoYnj/DNjrYv+2SNKjJ1MAVi7D062A0cKaK25uUSDdhk3N3ti9vvZdirkJSONkH7eWLu/Slg77ASueUwYdC3MDgBnA0zoSIGYzxc5+q9cCmBau6QQ4nYnYW/BqP9kR0Bhg30bgp2QbIkaoErUe/mCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861122; c=relaxed/simple;
-	bh=Y0pW0P7Dy/Di8qfgUBo8u3LOQl44/nYtuvMavXteP5g=;
+	s=arc-20240116; t=1778861125; c=relaxed/simple;
+	bh=huyqOK+QcKfds8D/VN6rNnoBXBDUHESn9PpF+pJBGK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqVFn+MWcINQrlKPhfv70MU+Nl0rHmVJ8IRLKZnUTwMPkxdGUmD6wQ2JJ4oU+SZNY6IIgRkklNn1Eoxngs0NAeZZ+dSEI9L+24ByfFF4a4kMkRrE/0jeIxksSEfI7WUXICE8LRQ7rtp25UvRPq2XWQVmmw1Jbx2SXytwCyZB0Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9x0mSYm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rDHYpZYE5xoYLfAspddt1F+Yo2n0rDUe+9d4xo9eArEx4azjHLeL06nrE6qv6tE8JaUIkUWSv7wu77pgthzB5SPzkPP3fylfLg8ZllzJLuts7+pbewtVtlPAxECafEMksX2b6N1gwHh6DCXOpVucstHS9xgyCIH1RjJGvKOjVNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnIxLbGx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9x0mSYm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021CDC2BCB3;
-	Fri, 15 May 2026 16:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnIxLbGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956E2C2BCB0;
+	Fri, 15 May 2026 16:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861122;
-	bh=Y0pW0P7Dy/Di8qfgUBo8u3LOQl44/nYtuvMavXteP5g=;
+	s=korg; t=1778861124;
+	bh=huyqOK+QcKfds8D/VN6rNnoBXBDUHESn9PpF+pJBGK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s9x0mSYmAWZ+Lq3MBV8MvPvxktDe91FHejwpdhGuqbweiLMUI1m2yaaTZdAgm8olY
-	 lNrttMA2lroiNcaPySodz1S2zI/AQVCSlLK0P06sUo2XVfM4Fu4c0tAW7DiAyGjuKz
-	 7FJ54PdS7wr+Xkkmcl3LflXqqAbG1ULs8Fn22jSI=
+	b=TnIxLbGxu/omDsA0Equ/dyQ5iNXcywEXoGiYmiNoYgD0UuTb5fnj6xS/Hiy4JJGkF
+	 Rp+o+fqgZz05LDFKCtwDbFMXcedbFvuxG2ZDS5Pmna7ZsdO2yZR6xCRP9HKrglvZes
+	 hdWH2N4/hlsfyBvj3XUrFyCgqu3lFIfia+Kv7lXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Felix Gu <ustc.gu@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 200/474] usb: ulpi: fix memory leak on ulpi_register() error paths
-Date: Fri, 15 May 2026 17:45:09 +0200
-Message-ID: <20260515154719.343952091@linuxfoundation.org>
+	Soenke Huster <soenke.huster@eknoes.de>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 209/474] Bluetooth: virtio_bt: validate rx pkt_type header length
+Date: Fri, 15 May 2026 17:45:18 +0200
+Message-ID: <20260515154719.533666599@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,48 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 0b9fcab1b8608d429e5f239afb197de928d4de7d upstream.
+commit daf23014e5d975e72ea9c02b5160d3fcf070ea47 upstream.
 
-Commit 01af542392b5 ("usb: ulpi: fix double free in
-ulpi_register_interface() error path") removed kfree(ulpi) from
-ulpi_register_interface() to fix a double-free when device_register()
-fails.
+virtbt_rx_handle() reads the leading pkt_type byte from the RX skb
+and forwards the remainder to hci_recv_frame() for every
+event/ACL/SCO/ISO type, without checking that the remaining payload
+is at least the fixed HCI header for that type.
 
-But when ulpi_of_register() or ulpi_read_id() fail before
-device_register() is called, the ulpi allocation is leaked.
+After the preceding patch bounds the backend-supplied used.len to
+[1, VIRTBT_RX_BUF_SIZE], a one-byte completion still reaches
+hci_recv_frame() with skb->len already pulled to 0. If the byte
+happened to be HCI_ACLDATA_PKT, the ACL-vs-ISO classification
+fast-path in hci_dev_classify_pkt_type() dereferences
+hci_acl_hdr(skb)->handle whenever the HCI device has an active
+CIS_LINK, BIS_LINK, or PA_LINK connection, reading two bytes of
+uninitialized RX-buffer data. The same hazard exists for every
+packet type the driver accepts because none of the switch cases in
+virtbt_rx_handle() check skb->len against the per-type minimum HCI
+header size before handing the frame to the core.
 
-Add kfree(ulpi) on both error paths to properly clean up the allocation.
+After stripping pkt_type, require skb->len to cover the fixed
+header size for the selected type (event 2, ACL 4, SCO 3, ISO 4)
+before calling hci_recv_frame(); drop ratelimited otherwise.
+Unknown pkt_type values still take the original kfree_skb() default
+path.
 
-Fixes: 01af542392b5 ("usb: ulpi: fix double free in ulpi_register_interface() error path")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260407-ulpi-v1-1-f3fafe53f7b2@gmail.com
+Use bt_dev_err_ratelimited() because both the length and pkt_type
+values come from an untrusted backend that can otherwise flood the
+kernel log.
+
+Fixes: 160fbcf3bfb9 ("Bluetooth: virtio_bt: Use skb_put to set length")
+Cc: stable@vger.kernel.org
+Cc: Soenke Huster <soenke.huster@eknoes.de>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/common/ulpi.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/bluetooth/virtio_bt.c |   23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -286,12 +286,15 @@ static int ulpi_register(struct device *
- 	ACPI_COMPANION_SET(&ulpi->dev, ACPI_COMPANION(dev));
+--- a/drivers/bluetooth/virtio_bt.c
++++ b/drivers/bluetooth/virtio_bt.c
+@@ -198,6 +198,7 @@ static int virtbt_shutdown_generic(struc
  
- 	ret = ulpi_of_register(ulpi);
--	if (ret)
-+	if (ret) {
-+		kfree(ulpi);
- 		return ret;
-+	}
+ static void virtbt_rx_handle(struct virtio_bluetooth *vbt, struct sk_buff *skb)
+ {
++	size_t min_hdr;
+ 	__u8 pkt_type;
  
- 	ret = ulpi_read_id(ulpi);
- 	if (ret) {
- 		of_node_put(ulpi->dev.of_node);
-+		kfree(ulpi);
- 		return ret;
+ 	pkt_type = *((__u8 *) skb->data);
+@@ -205,16 +206,32 @@ static void virtbt_rx_handle(struct virt
+ 
+ 	switch (pkt_type) {
+ 	case HCI_EVENT_PKT:
++		min_hdr = sizeof(struct hci_event_hdr);
++		break;
+ 	case HCI_ACLDATA_PKT:
++		min_hdr = sizeof(struct hci_acl_hdr);
++		break;
+ 	case HCI_SCODATA_PKT:
++		min_hdr = sizeof(struct hci_sco_hdr);
++		break;
+ 	case HCI_ISODATA_PKT:
+-		hci_skb_pkt_type(skb) = pkt_type;
+-		hci_recv_frame(vbt->hdev, skb);
++		min_hdr = sizeof(struct hci_iso_hdr);
+ 		break;
+ 	default:
+ 		kfree_skb(skb);
+-		break;
++		return;
  	}
++
++	if (skb->len < min_hdr) {
++		bt_dev_err_ratelimited(vbt->hdev,
++				       "rx pkt_type 0x%02x payload %u < hdr %zu\n",
++				       pkt_type, skb->len, min_hdr);
++		kfree_skb(skb);
++		return;
++	}
++
++	hci_skb_pkt_type(skb) = pkt_type;
++	hci_recv_frame(vbt->hdev, skb);
+ }
  
+ static void virtbt_rx_work(struct work_struct *work)
 
 
