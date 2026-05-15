@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648583CF67B;
-	Fri, 15 May 2026 16:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1F83CF67B;
+	Fri, 15 May 2026 16:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861234; cv=none; b=nBPQcTVlZgb8NbRUpexL0VPVLNv3yXXtEbIo7mGBtA7GWoEYgC54mrULV1NKKcETevFzyA9TvDQhX6FRF7XBELrnVlnFJFjywtk6Jy1X8YMtCyXjyjoqCJkixUBMj6QJf1J1jgI/vanbGaSezilT7k4DFNsx3uWOds5fqZUyjbw=
+	t=1778861237; cv=none; b=H2fvcirHR7HBV4tznDzhkDAvb/Nhik+9PtdXu7al6+Hd2eKB2/EEvZUIqqTCYD3LUwL4/JG+baoWoJZOyWTlyfiumzj5SzDf61XfK4BeSIGaXxjFaP38SyWpSnk8yo+P1Rvy2L53GRMPpUBfxuhbqAjP5uI+9tIBBaskCYdJUp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861234; c=relaxed/simple;
-	bh=8g/iN3DIl+9uNR/azEhInVxujpr0t4j0b34ecT+Cy2M=;
+	s=arc-20240116; t=1778861237; c=relaxed/simple;
+	bh=V2ksPXJqqfveF5MC0jJuAnkWjnSBPml0tyiDxpRDYHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BkOo7fGeXX/caDfTkrHGRvf19A9Hz6kPMR8NLzHsdWcjzIK7G6Wc1E1CBHqYQA2YoNyRlfQBRBq6w/P6xdUhAaq4M6UQ3/iF5MKwAtCLc+sfkkWxsFsvTJkb7Ghh13eKG7QXH9yPv0L07QK48UGhpA6o38DBhwTH6mBgYjk6fW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WY7FLJx5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tq0MSe4eRI+34DOB2nk8ZedgKpfa1b/ygTUgIFD+FbmnzzvLhgzdOgaVEj+0El2hgQCFntjDaCdKZyF51CsCZXBd5/43ss8rGn430LUIkPeaBwuH9kT/OdFYQ884bpoQGzZJrfKKd62ZRJKFqvhhEkKb3MHarZVjdqYUKwq1yYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAyzyGX3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WY7FLJx5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF21C2BCB0;
-	Fri, 15 May 2026 16:07:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAyzyGX3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B0FC2BCB0;
+	Fri, 15 May 2026 16:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861234;
-	bh=8g/iN3DIl+9uNR/azEhInVxujpr0t4j0b34ecT+Cy2M=;
+	s=korg; t=1778861236;
+	bh=V2ksPXJqqfveF5MC0jJuAnkWjnSBPml0tyiDxpRDYHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WY7FLJx5sRdfPuZSelPXLwNLh+1rIJm7ZL+29eqmVA0qaPCLvvf2PMLwXmxNFxB2h
-	 0MJjkZDjR+uUF8x1vEu/mlHzCNhRjXO2kP9iwwUyAR2Ulu2H5CHRtWvpuIvH/jh5Yc
-	 2O8evjjTYIwP6LiBg4ES2IdW3P7dGjYEqqf1CpiI=
+	b=rAyzyGX3oSjm6ajhs0tYp+R3xN1CGILIVgWrKADw2xk4LSzSsCj+UTAV8zxbHw6d/
+	 rgQBqxb7Shuv1gkjYQOz8oz5qamfPWakvbPlTQNdve3cH6jwse858FM6bVehM0j2Pf
+	 2js0ge/7AP9ZUMMy9gE0bLDp7y0tyJIL6MQ5cUFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Soenke Huster <soenke.huster@eknoes.de>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 208/474] Bluetooth: virtio_bt: clamp rx length before skb_put
-Date: Fri, 15 May 2026 17:45:17 +0200
-Message-ID: <20260515154719.512741623@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 199/474] USB: serial: option: add Telit Cinterion LE910Cx compositions
+Date: Fri, 15 May 2026 17:45:08 +0200
+Message-ID: <20260515154719.323105903@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,91 +50,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit 21bd244b6de5d2fe1063c23acc93fbdd2b20d112 upstream.
+commit 100201d349edd226ca3470c894c92dccc67ee7a8 upstream.
 
-virtbt_rx_work() calls skb_put(skb, len) where len comes directly
-from virtqueue_get_buf() with no validation against the buffer we
-posted to the device. The RX skb is allocated in virtbt_add_inbuf()
-and exposed to virtio as exactly 1000 bytes via sg_init_one().
+Add the following Telit Cinterion LE910Cx compositions:
 
-Checking len against skb_tailroom(skb) is not sufficient because
-alloc_skb() can leave more tailroom than the 1000 bytes actually
-handed to the device. A malicious or buggy backend can therefore
-report used.len between 1001 and skb_tailroom(skb), causing skb_put()
-to include uninitialized kernel heap bytes that were never written by
-the device.
+0x1251: RNDIS + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
+T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=108 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1251 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=LE910C1-EU
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=02 Prot=ff Driver=rndis_host
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-The same path also accepts len == 0, in which case skb_put(skb, 0)
-leaves the skb empty but virtbt_rx_handle() still reads the pkt_type
-byte from skb->data, consuming uninitialized memory.
+0x1253: ECM + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
+T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=121 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1253 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=LE910C1-EU
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-Define VIRTBT_RX_BUF_SIZE once and reuse it in alloc_skb() and
-sg_init_one(), and gate virtbt_rx_work() on that same constant so
-the bound checked matches the buffer actually exposed to the device.
-Reject used.len == 0 in the same gate so an empty completion can
-no longer reach virtbt_rx_handle().
+0x1254: tty (AT) + tty (AT)
+T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=122 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1254 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=LE910C1-EU
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 2 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-Use bt_dev_err_ratelimited() because the length value comes from an
-untrusted backend that can otherwise flood the kernel log.
+0x1255: tty (AT/NMEA) + tty (AT) + tty (AT) + tty (SAP)
+T:  Bus=01 Lev=01 Prnt=21 Port=06 Cnt=01 Dev#=123 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1255 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=LE910C1-EU
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-Same class of bug as commit c04db81cd028 ("net/9p: Fix buffer
-overflow in USB transport layer"), which hardened the USB 9p
-transport against unchecked device-reported length.
-
-Fixes: 160fbcf3bfb9 ("Bluetooth: virtio_bt: Use skb_put to set length")
 Cc: stable@vger.kernel.org
-Cc: Soenke Huster <soenke.huster@eknoes.de>
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/virtio_bt.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/bluetooth/virtio_bt.c
-+++ b/drivers/bluetooth/virtio_bt.c
-@@ -12,6 +12,7 @@
- #include <net/bluetooth/hci_core.h>
- 
- #define VERSION "0.1"
-+#define VIRTBT_RX_BUF_SIZE 1000
- 
- enum {
- 	VIRTBT_VQ_TX,
-@@ -33,11 +34,11 @@ static int virtbt_add_inbuf(struct virti
- 	struct sk_buff *skb;
- 	int err;
- 
--	skb = alloc_skb(1000, GFP_KERNEL);
-+	skb = alloc_skb(VIRTBT_RX_BUF_SIZE, GFP_KERNEL);
- 	if (!skb)
- 		return -ENOMEM;
- 
--	sg_init_one(sg, skb->data, 1000);
-+	sg_init_one(sg, skb->data, VIRTBT_RX_BUF_SIZE);
- 
- 	err = virtqueue_add_inbuf(vq, sg, 1, skb, GFP_KERNEL);
- 	if (err < 0) {
-@@ -227,8 +228,15 @@ static void virtbt_rx_work(struct work_s
- 	if (!skb)
- 		return;
- 
--	skb_put(skb, len);
--	virtbt_rx_handle(vbt, skb);
-+	if (!len || len > VIRTBT_RX_BUF_SIZE) {
-+		bt_dev_err_ratelimited(vbt->hdev,
-+				       "rx reply len %u outside [1, %u]\n",
-+				       len, VIRTBT_RX_BUF_SIZE);
-+		kfree_skb(skb);
-+	} else {
-+		skb_put(skb, len);
-+		virtbt_rx_handle(vbt, skb);
-+	}
- 
- 	if (virtbt_add_inbuf(vbt) < 0)
- 		return;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1513,7 +1513,11 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1231, 0xff),	/* Telit LE910Cx (RNDIS) */
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x1250, 0xff, 0x00, 0x00) },	/* Telit LE910Cx (rmnet) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1251, 0xff) },	/* Telit LE910Cx (RNDIS) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1252, 0xff) },	/* Telit LE910Cx (MBIM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1253, 0xff) },	/* Telit LE910Cx (ECM) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1254, 0xff) },	/* Telit LE910Cx */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1255, 0xff) },	/* Telit LE910Cx */
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1260),
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1261),
 
 
