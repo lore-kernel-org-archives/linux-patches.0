@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442E820297C;
-	Fri, 15 May 2026 16:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894E33F58FC;
+	Fri, 15 May 2026 16:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861450; cv=none; b=gBiQdEgIZIk+dA/oMPYFAB9a9yUfiN0J29F+20yIq1dXSfw1SXQVGDir4lXUUh415N9hai1AtbDtLlIz2VxZMArTiofyo4U13NkTPYkiYG++CahcgPKSxt+5MFJ3Y1YrpCp1srN3GIpGgDUgtAk/+0fvRlyNvR4m2meCJMDXe0w=
+	t=1778861452; cv=none; b=oYaA14OtvU93lwK/EHawFWwFVoJaa0Fv4BCd9yjngGCr7T57736yQF/sKo3CXtc4KILc2n8/Uu1vXxm46RR2LnnweCTqw/gG55lNEURvaOb5/65fGNLpENx/O4qE5J2z0zYUn1qZ5b7xFvrxU26vDYCo39coKcTxxPFyJIK6rZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861450; c=relaxed/simple;
-	bh=HV8dezZ15hU1pNc2wK/w1gmcKJtIJvpAsj1kZfW+KHk=;
+	s=arc-20240116; t=1778861452; c=relaxed/simple;
+	bh=gXkYUa/Fz8Y6jtbwMkaP6abNU/mzFJkNmQBecczy0gM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PitLaaQywpZq7gX1sdTC7rB8M8YvR1RwTkTBqopRXfyrKb/jNs7MX4hh7cXfJUp8FplJzByTsqEiYXegK4pLvFTD2ucaz6jbofJaEHS8XLkRYpQQhF/MevTZyN1QeHsLWeOOhgYfo/IXXXaCNBt9WJYxAE5UKGKhtbr6cKYb3PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAoDy4Ht; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BzbaV1AClOpTAiRFR8PD8pj5wlso6Vb/N7jftyuEmp61uUd4VCGJXVMjscRPjx0wlrdNxU1NDbwIlSnSFdfKwFBtAMn4+74Sw/8yhsModBPZUR9AunZqr2KqX52LIhIZjdnN9hITgeZgDPWFS+ljEmQOXbcoEdzL7jrabC/MKQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cW4PklZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAoDy4Ht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F00CC2BCB0;
-	Fri, 15 May 2026 16:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cW4PklZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212C5C2BCB0;
+	Fri, 15 May 2026 16:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861449;
-	bh=HV8dezZ15hU1pNc2wK/w1gmcKJtIJvpAsj1kZfW+KHk=;
+	s=korg; t=1778861452;
+	bh=gXkYUa/Fz8Y6jtbwMkaP6abNU/mzFJkNmQBecczy0gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SAoDy4HtsDTtCiIfVwrgNG8PDo0we2kwe3CSFb0vLzAE82/61BPvoqJrURkA3Ggt9
-	 IvSC3AaGgQijzjXwphVyvbAfPoa8Qo9dqHvx4Y66pJWI0J5BPvmSUdB3I68/TH7JmB
-	 G2boPeuCLvcNRahMJJQbzmqZj0xC0glECGcJ6TtM=
+	b=cW4PklZxv7Wjr7M1k49Wnc4UA1F9M3FJ4J1zqRxYAgXKKqD1MozlKvxqGA2v2RtHv
+	 R0GErKHEebvWYCKctSJDDiUGgPBuxUiQVzu+hvtIm/MeyttSSLNTq8CI6uvefRa7Qb
+	 /RNHyihgP+zg8pvT9c/RSld+HUf51KMv1K8N8yLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lanqing Liu <lanqing.liu@spreadtrum.com>,
+	Jingoo Han <jg1.han@samsung.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 331/474] spi: sprd: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:20 +0200
-Message-ID: <20260515154722.174352750@linuxfoundation.org>
+Subject: [PATCH 6.6 332/474] spi: rspi: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:21 +0200
+Message-ID: <20260515154722.196435705@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -53,58 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 123d17dbc5f07059752fa5e616385ca29a8f935a upstream.
+commit 9944fa6726afb1e6eb7e2212764e7da0c97f2dcc upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+Make sure to deregister the controller before releasing underlying
+resources like DMA during driver unbind.
 
-Note that the controller is suspended before disabling and releasing
-resources since commit de082d866cce ("spi: sprd: Add the SPI irq
-function for the SPI DMA mode") which avoids issues like unclocked
-accesses but prevents SPI device drivers from doing I/O during
-deregistration.
-
-Fixes: e7d973a31c24 ("spi: sprd: Add SPI driver for Spreadtrum SC9860")
-Cc: stable@vger.kernel.org	# 4.20
-Cc: Lanqing Liu <lanqing.liu@spreadtrum.com>
+Fixes: 9e03d05eee4c ("spi: rcar: Use devm_spi_register_master()")
+Cc: stable@vger.kernel.org	# 3.14
+Cc: Jingoo Han <jg1.han@samsung.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-17-johan@kernel.org
+Link: https://patch.msgid.link/20260410081757.503099-11-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-sprd.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/spi/spi-rspi.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-sprd.c
-+++ b/drivers/spi/spi-sprd.c
-@@ -978,7 +978,7 @@ static int sprd_spi_probe(struct platfor
- 		goto err_rpm_put;
- 	}
+--- a/drivers/spi/spi-rspi.c
++++ b/drivers/spi/spi-rspi.c
+@@ -1176,8 +1176,14 @@ static void rspi_remove(struct platform_
+ {
+ 	struct rspi_data *rspi = platform_get_drvdata(pdev);
  
--	ret = devm_spi_register_controller(&pdev->dev, sctlr);
-+	ret = spi_register_controller(sctlr);
- 	if (ret)
- 		goto err_rpm_put;
- 
-@@ -1010,7 +1010,9 @@ static void sprd_spi_remove(struct platf
- 	if (ret < 0)
- 		dev_err(ss->dev, "failed to resume SPI controller\n");
- 
--	spi_controller_suspend(sctlr);
-+	spi_controller_get(sctlr);
++	spi_controller_get(rspi->ctlr);
 +
-+	spi_unregister_controller(sctlr);
- 
- 	if (ret >= 0) {
- 		if (ss->dma.enable)
-@@ -1019,6 +1021,8 @@ static void sprd_spi_remove(struct platf
- 	}
- 	pm_runtime_put_noidle(&pdev->dev);
++	spi_unregister_controller(rspi->ctlr);
++
+ 	rspi_release_dma(rspi->ctlr);
  	pm_runtime_disable(&pdev->dev);
 +
-+	spi_controller_put(sctlr);
++	spi_controller_put(rspi->ctlr);
  }
  
- static int __maybe_unused sprd_spi_runtime_suspend(struct device *dev)
+ static const struct spi_ops rspi_ops = {
+@@ -1387,9 +1393,9 @@ static int rspi_probe(struct platform_de
+ 	if (ret < 0)
+ 		dev_warn(&pdev->dev, "DMA not available, using PIO\n");
+ 
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret < 0) {
+-		dev_err(&pdev->dev, "devm_spi_register_controller error.\n");
++		dev_err(&pdev->dev, "failed to register controller\n");
+ 		goto error3;
+ 	}
+ 
 
 
