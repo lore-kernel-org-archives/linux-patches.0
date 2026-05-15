@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CD63F86F7;
-	Fri, 15 May 2026 16:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57AD3FBB42;
+	Fri, 15 May 2026 16:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861244; cv=none; b=Oy+RKgK5BEBgpaDXsqKuMX/WjcHLCHcUeNF4U2UEYSyVhavRdhczCTjfDSORDNc0lU7Fs3R0Pn97kDoyyd+wjSw1los2R2trP7JamTma8xg94Tc+olB/GINVjf+D1badIvSLUoFpLRWVYUWhyvxQjMeCjphZKIqF1ue1T6cQQoA=
+	t=1778861247; cv=none; b=fdBVCKoqW8JVueuWh/lcdtxWzzLvHss9Cim9RkDLScbwJILg0C035yUr5avu7FwAZzSC758Bid+bK6fK1zMFf/1lOGCUHT4Bp/2GuSh/kEnXSBCvYN7WA4/xylv9CjGcnf3rIs0OcqrYEVf9TArhPh/9IaE9Nejt6iNPDTgs998=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861244; c=relaxed/simple;
-	bh=JU8CBn4PXW42IwnSr/jo5ZytZFh6kXH4fuK/MCJ3dHs=;
+	s=arc-20240116; t=1778861247; c=relaxed/simple;
+	bh=3ekHlA+mYjEkse6KcpWoT4DqKHAZCoJqNgK6irlCYsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DSTk+FF0ilpkv/ZKnVZmq42rBAQBtDFZCk+phJDCVflVISTnHDg8rUKdw+iqtEspljCPNg/dJ4dJ4dTRqORHzmdpjdWj5VYcXgofXUWcllzxpXoFzRZHuP0g2LxRj1A05RsyyPkF9OITSrpJvo6ulTh3DAv2XZYccn4OR1ZTxXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjpdcn1z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lgQZzRYuMofozI7vb4ExzZcQA6xj1PG7Y0vnx/RZ11hmGvpEPVqf9CPVjNTc4efq3wgYYQLyq3SPfUjqyTto/WVw2ngPp7Fp7AhwK31MOMobF9gqcX34ujJjWj5XKO7dz4LR7iCj/17kQZWVzREnUdw95g7hQ8fC71/eUEm2+CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AprLD/jl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjpdcn1z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D547C2BCB0;
-	Fri, 15 May 2026 16:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AprLD/jl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C9BC2BCB0;
+	Fri, 15 May 2026 16:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861244;
-	bh=JU8CBn4PXW42IwnSr/jo5ZytZFh6kXH4fuK/MCJ3dHs=;
+	s=korg; t=1778861247;
+	bh=3ekHlA+mYjEkse6KcpWoT4DqKHAZCoJqNgK6irlCYsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjpdcn1zXngEhfqFgZnsEvp1Tu4pj3HSNQSMwgmjSxkcExfwjy3A+Qxthj6u0yB2o
-	 6kmPg8mtnuVNDq7Apmh84mXqTlczj31un16P4TNL0lqob7cyLRw3jKO3DNRlv+C26m
-	 Jy3xanvXcbz4gdWENIz8QcOEJv/lfOAuQ7EzLnbY=
+	b=AprLD/jlvJz6usR6fO71fPUgupfmruxWbbYyWwRc8A0K2lLlsglGQTVXBYDv45omB
+	 rxEKWFzhOsq3VKmQk9kUkpVO7R1UtDq9Do/V/6N4FhJec64LZh86xe5P+fS37yqIvl
+	 McGNgp1XZa9p041kIgmNuCQqDdy5Kz+Jw2DVip5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Biggers <ebiggers@kernel.org>,
 	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.6 255/474] dm-verity-fec: correctly reject too-small FEC devices
-Date: Fri, 15 May 2026 17:46:04 +0200
-Message-ID: <20260515154720.518311180@linuxfoundation.org>
+Subject: [PATCH 6.6 256/474] dm-verity-fec: correctly reject too-small hash devices
+Date: Fri, 15 May 2026 17:46:05 +0200
+Message-ID: <20260515154720.539002606@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,16 +52,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-commit 2b14e0bb63cc671120e7791658f5c494fc66d072 upstream.
+commit 4355142245f7e55336dcc005ec03592df4d546f8 upstream.
 
-Fix verity_fec_ctr() to reject too-small FEC devices by correctly
-computing the number of parity blocks as 'f->rounds * f->roots'.
-Previously it incorrectly used 'div64_u64(f->rounds * f->roots,
-v->fec->roots << SECTOR_SHIFT)' which is a much smaller value.
+Fix verity_fec_ctr() to reject too-small hash devices by correctly
+taking hash_start into account.
 
-Note that the units of 'rounds' are blocks, not bytes.  This matches the
-units of the value returned by dm_bufio_get_device_size(), which are
-also blocks.  A later commit will give 'rounds' a clearer name.
+Note that this is necessary because dm-verity doesn't call
+dm_bufio_set_sector_offset() on the hash device's bufio client
+(v->bufio).  Thus, dm_bufio_get_device_size(v->bufio) returns a size
+relative to 0 rather than hash_start.  An alternative fix would be to
+call dm_bufio_set_sector_offset() on v->bufio, but then all the code
+that reads from the hash device would have to be adjusted accordingly.
 
 Fixes: a739ff3f543a ("dm verity: add support for forward error correction")
 Cc: stable@vger.kernel.org
@@ -69,29 +70,20 @@ Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-fec.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/md/dm-verity-fec.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/md/dm-verity-fec.c
 +++ b/drivers/md/dm-verity-fec.c
-@@ -688,7 +688,7 @@ int verity_fec_ctr(struct dm_verity *v)
- {
- 	struct dm_verity_fec *f = v->fec;
- 	struct dm_target *ti = v->ti;
--	u64 hash_blocks, fec_blocks;
-+	u64 hash_blocks;
- 	int ret;
- 
- 	if (!verity_fec_is_enabled(v)) {
-@@ -769,8 +769,7 @@ int verity_fec_ctr(struct dm_verity *v)
- 
- 	dm_bufio_set_sector_offset(f->bufio, f->start << (v->data_dev_block_bits - SECTOR_SHIFT));
- 
--	fec_blocks = div64_u64(f->rounds * f->roots, v->fec->roots << SECTOR_SHIFT);
--	if (dm_bufio_get_device_size(f->bufio) < fec_blocks) {
-+	if (dm_bufio_get_device_size(f->bufio) < f->rounds * f->roots) {
- 		ti->error = "FEC device is too small";
+@@ -751,7 +751,8 @@ int verity_fec_ctr(struct dm_verity *v)
+ 	 * it to be large enough.
+ 	 */
+ 	f->hash_blocks = f->blocks - v->data_blocks;
+-	if (dm_bufio_get_device_size(v->bufio) < f->hash_blocks) {
++	if (dm_bufio_get_device_size(v->bufio) <
++	    v->hash_start + f->hash_blocks) {
+ 		ti->error = "Hash device is too small for "
+ 			DM_VERITY_OPT_FEC_BLOCKS;
  		return -E2BIG;
- 	}
 
 
