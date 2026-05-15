@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0BE3B9D91;
-	Fri, 15 May 2026 16:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0BB3E714A;
+	Fri, 15 May 2026 16:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862390; cv=none; b=A6Sl1HUuLRIBhvz9HrcDjXtDgjOcRTSrDsiAWMl8t/xSr2PAvu90i/UD6Fe63UK1bQ3iNLNJVokRtaxa8Jz2IEjv6noLSlfK2Xs5YbjRbjS9biGfn+x3oprYKpJxYSvRJ3SkugnKKyLBPEP9SP7Sv77HPb73VzR/s5MyV0e9x5I=
+	t=1778862393; cv=none; b=L7c6xRBdBcVQuAoPNfuMLtXSUOiSi66WxkYfW9kKnBBsVjhSnSDe151uR408Zf9K+W60ZAPlBPG+6mCthQh1kyPNmP03QV6SFs+kmMmytWxzxFCo3X/o93Cxyu0NoBG4sB7MJZQmfXDEAYsIgkb5fWgytOCi4jYQx25nGrTecek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862390; c=relaxed/simple;
-	bh=WxR/eWw2WChjZLsQR8Tt5wfnYhZXpyEn32gq3yrW6YQ=;
+	s=arc-20240116; t=1778862393; c=relaxed/simple;
+	bh=Iw2eA9eprtdaWJO+46ArJ8W8HkBbcxHw2lovzPkYkfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPK+4DrBRIaXRneHeZB5KmrE09teng9JYMRbzcyy+8+yM7eL8qTTRgVwV2b4+KcQTcuePjW4bPt2e18G/UR7tLH4bmNWIA1qlwHJXFfZLBjPtXq5o00gKutg+7d0tv+XbzxNK0JTF4uQOl7zYKTmZtiCEGj/gp0Hqgh839jl390=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDPnP929; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rNzQLfPQ33DM3cWFy/rkcpfoV95pTwkuAplMNdVSMcdeJ3KHJ9XNi8DTck1x/Savi1c2/JQqtgBxTG7JroJtClBCnaF1NAV1F4oQLruc/kwypsdpMV5bTcQtmBfJ64gVjjfMIw0ucIgHDNLo8UyG8bh0k97yetjaRjbVezBXTd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbYvbKgR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDPnP929"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7CDC2BCB0;
-	Fri, 15 May 2026 16:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbYvbKgR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CF8C2BCB0;
+	Fri, 15 May 2026 16:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862390;
-	bh=WxR/eWw2WChjZLsQR8Tt5wfnYhZXpyEn32gq3yrW6YQ=;
+	s=korg; t=1778862393;
+	bh=Iw2eA9eprtdaWJO+46ArJ8W8HkBbcxHw2lovzPkYkfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDPnP929dJkXiWzdMQr71Dq5igP4/8TSk/ommC/UZvc5Q5fZrzqHPyPIsTQHY30lR
-	 JCytF5chIR9XFlLJG+CsEgQ2kCu83HXxfNLt/bPsSVbYK8fp9XluPAvNvd0U6QS3zr
-	 u5CStylAgK454bZk61OFJDB6muXWCdAx7CvKI88Y=
+	b=NbYvbKgRB16WRf8WywxmumPJp1DJw/ZdhomOKDqGwt4okFR7UIAhkKlkdXmi0DGZ6
+	 EJbz5orBFl4nTy6pVB83JogfsKUO7wGEhdM7iuIv4JeIjd7yn2N6CW5cMXq34npPwH
+	 vcIkbStz/Oa9qxlPkAEPD/+bn99SAlq5WRpy6p3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 7.0 003/201] HID: appletb-kbd: run inactivity autodim from workqueues
-Date: Fri, 15 May 2026 17:47:01 +0200
-Message-ID: <20260515154658.614913599@linuxfoundation.org>
+	Josua Mayer <josua@solid-run.com>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 7.0 030/201] arm64: dts: lx2160a-cex7/lx2162a-sr-som: fix usd-cd & gpio pinmux
+Date: Fri, 15 May 2026 17:47:28 +0200
+Message-ID: <20260515154659.187193343@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -50,170 +50,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sangyun Kim <sangyun.kim@snu.ac.kr>
+From: Josua Mayer <josua@solid-run.com>
 
-commit 1654e53349d4e657b331de354313461f401f5063 upstream.
+commit 70008aee892bbb5c2969bbe9e5778fc081b14bd2 upstream.
 
-The autodim code in hid-appletb-kbd takes backlight_device->ops_lock
-via backlight_device_set_brightness() -> mutex_lock() from two
-different atomic contexts:
+Commit 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to
+support bus recovery") introduced pinmux nodes for lx2160 i2c
+interfaces, allowing runtime change between i2c and gpio functions
+implementing bus recovery.
 
- * appletb_inactivity_timer() is a struct timer_list callback, so it
-   runs in softirq context.  Every expiry triggers
+However, the dynamic configuration area (overwrite MUX) used by the
+pinctrl-single driver initially reads as zero and does not reflect the
+actual hardware state set by the Reset Configuration Word (RCW) at
+power-on.
 
-     BUG: sleeping function called from invalid context at kernel/locking/mutex.c:591
-     Call Trace:
-      <IRQ>
-      __might_resched
-      __mutex_lock
-      backlight_device_set_brightness
-      appletb_inactivity_timer
-      call_timer_fn
-      run_timer_softirq
+Because multiple groups of pins are configured from a single 32-bit
+register, the first write from the pinctrl driver unintentionally clears
+all other bits to zero.
 
- * reset_inactivity_timer() is called from appletb_kbd_hid_event() and
-   appletb_kbd_inp_event().  On real USB hardware these run in
-   softirq/IRQ context (URB completion and input-event dispatch).
-   When the Touch Bar has already been dimmed or turned off, the
-   reset path calls backlight_device_set_brightness() directly to
-   restore brightness, producing the same warning.
+For example, on the LX2162A Clearfog, RCWSR12 is initialized to
+0x08000006. When any i2c pinmux is applied, it clears all other fields.
+This inadvertently disables SD card-detect (IIC2_PMUX) and some GPIOs
+(SDHC1_DIR_PMUX):
 
-Both call sites hit the same mutex_lock()-from-atomic bug.  Fix them
-together by moving the blocking work onto the system workqueue:
+LX2162-CF RCWSR12: 0b0000100000000000 0000000000000110
+IIC2_PMUX              |||   |||   || |   |||   |||XXX : I2C/GPIO/CD-WP
+SDHC1_DIR_PMUX         XXX   |||   || |   |||   |||    : SDHC/GPIO/SPI
 
- * Convert the inactivity timer from struct timer_list to
-   struct delayed_work; the callback (appletb_inactivity_work) now
-   runs in process context where mutex_lock() is legal.
- * Add a dedicated struct work_struct restore_brightness_work and have
-   reset_inactivity_timer() schedule it instead of calling
-   backlight_device_set_brightness() directly.
+Reverting the commit in question was considered but bus recovery is an
+important feature.
 
-Cancel both works synchronously during driver tear-down alongside the
-existing backlight reference drop.
+Instead add pinmux nodes for those pins that were unintentionally
+reconfigured on SolidRun LX2160A Clearfog-CX and LX2162A Clearfog
+boards.
 
-The semantics are unchanged (same delays, same state transitions on
-dim, turn-off and user activity); only the execution context of the
-sleeping call changes.  The timer field and callback are renamed to
-match their new type; reset_inactivity_timer() keeps its name because
-it is invoked from input event paths that read naturally as "reset
-the inactivity timer".
-
-Fixes: 93a0fc489481 ("HID: hid-appletb-kbd: add support for automatic brightness control while using the touchbar")
+Fixes: 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to support bus recovery")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-appletb-kbd.c |   44 ++++++++++++++++++++++++++++--------------
- 1 file changed, 30 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi         |    7 +++
+ arch/arm64/boot/dts/freescale/fsl-lx2160a-clearfog-itx.dtsi |    2 +
+ arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi              |   24 ++++++++++++
+ arch/arm64/boot/dts/freescale/fsl-lx2162a-clearfog.dts      |    2 +
+ arch/arm64/boot/dts/freescale/fsl-lx2162a-sr-som.dtsi       |    7 +++
+ 5 files changed, 42 insertions(+)
 
---- a/drivers/hid/hid-appletb-kbd.c
-+++ b/drivers/hid/hid-appletb-kbd.c
-@@ -17,7 +17,7 @@
- #include <linux/module.h>
- #include <linux/string.h>
- #include <linux/backlight.h>
--#include <linux/timer.h>
-+#include <linux/workqueue.h>
- #include <linux/input/sparse-keymap.h>
+--- a/arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi
+@@ -162,6 +162,8 @@
+ };
  
- #include "hid-ids.h"
-@@ -62,7 +62,8 @@ struct appletb_kbd {
- 	struct input_handle kbd_handle;
- 	struct input_handle tpd_handle;
- 	struct backlight_device *backlight_dev;
--	struct timer_list inactivity_timer;
-+	struct delayed_work inactivity_work;
-+	struct work_struct restore_brightness_work;
- 	bool has_dimmed;
- 	bool has_turned_off;
- 	u8 saved_mode;
-@@ -164,16 +165,18 @@ static int appletb_tb_key_to_slot(unsign
- 	}
- }
+ &fspi {
++	pinctrl-names = "default";
++	pinctrl-0 = <&fspi_data74_pins>, <&fspi_data30_pins>, <&fspi_dqs_sck_cs10_pins>;
+ 	status = "okay";
  
--static void appletb_inactivity_timer(struct timer_list *t)
-+static void appletb_inactivity_work(struct work_struct *work)
- {
--	struct appletb_kbd *kbd = timer_container_of(kbd, t, inactivity_timer);
-+	struct appletb_kbd *kbd = container_of(to_delayed_work(work),
-+					       struct appletb_kbd,
-+					       inactivity_work);
+ 	flash@0 {
+@@ -177,6 +179,11 @@
+ 	};
+ };
  
- 	if (kbd->backlight_dev && appletb_tb_autodim) {
- 		if (!kbd->has_dimmed) {
- 			backlight_device_set_brightness(kbd->backlight_dev, 1);
- 			kbd->has_dimmed = true;
--			mod_timer(&kbd->inactivity_timer,
--				jiffies + secs_to_jiffies(appletb_tb_idle_timeout));
-+			mod_delayed_work(system_wq, &kbd->inactivity_work,
-+					 secs_to_jiffies(appletb_tb_idle_timeout));
- 		} else if (!kbd->has_turned_off) {
- 			backlight_device_set_brightness(kbd->backlight_dev, 0);
- 			kbd->has_turned_off = true;
-@@ -181,16 +184,25 @@ static void appletb_inactivity_timer(str
- 	}
- }
- 
-+static void appletb_restore_brightness_work(struct work_struct *work)
-+{
-+	struct appletb_kbd *kbd = container_of(work, struct appletb_kbd,
-+					       restore_brightness_work);
++&pinmux_i2crv {
++	pinctrl-names = "default";
++	pinctrl-0 = <&gpio0_14_12_pins>;
++};
 +
-+	if (kbd->backlight_dev)
-+		backlight_device_set_brightness(kbd->backlight_dev, 2);
-+}
+ &usb0 {
+ 	status = "okay";
+ };
+--- a/arch/arm64/boot/dts/freescale/fsl-lx2160a-clearfog-itx.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a-clearfog-itx.dtsi
+@@ -89,6 +89,8 @@
+ };
+ 
+ &esdhc0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&esdhc0_cd_wp_pins>, <&esdhc0_cmd_data30_clk_vsel_pins>;
+ 	sd-uhs-sdr104;
+ 	sd-uhs-sdr50;
+ 	sd-uhs-sdr25;
+--- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
+@@ -1721,6 +1721,10 @@
+ 				pinctrl-single,bits = <0x0 0x1 0x7>;
+ 			};
+ 
++			esdhc0_cd_wp_pins: iic2-sdhc-pins {
++				pinctrl-single,bits = <0x0 0x6 0x7>;
++			};
 +
- static void reset_inactivity_timer(struct appletb_kbd *kbd)
- {
- 	if (kbd->backlight_dev && appletb_tb_autodim) {
- 		if (kbd->has_dimmed || kbd->has_turned_off) {
--			backlight_device_set_brightness(kbd->backlight_dev, 2);
- 			kbd->has_dimmed = false;
- 			kbd->has_turned_off = false;
-+			schedule_work(&kbd->restore_brightness_work);
- 		}
--		mod_timer(&kbd->inactivity_timer,
--			jiffies + secs_to_jiffies(appletb_tb_dim_timeout));
-+		mod_delayed_work(system_wq, &kbd->inactivity_work,
-+				 secs_to_jiffies(appletb_tb_dim_timeout));
- 	}
- }
+ 			i2c2_scl: i2c2-scl-pins {
+ 				pinctrl-single,bits = <0x0 0 (0x7 << 3)>;
+ 			};
+@@ -1753,6 +1757,26 @@
+ 				pinctrl-single,bits = <0x0 (0x1 << 12) (0x7 << 12)>;
+ 			};
  
-@@ -408,9 +420,11 @@ static int appletb_kbd_probe(struct hid_
- 		dev_err_probe(dev, -ENODEV, "Failed to get backlight device\n");
- 	} else {
- 		backlight_device_set_brightness(kbd->backlight_dev, 2);
--		timer_setup(&kbd->inactivity_timer, appletb_inactivity_timer, 0);
--		mod_timer(&kbd->inactivity_timer,
--			jiffies + secs_to_jiffies(appletb_tb_dim_timeout));
-+		INIT_DELAYED_WORK(&kbd->inactivity_work, appletb_inactivity_work);
-+		INIT_WORK(&kbd->restore_brightness_work,
-+			  appletb_restore_brightness_work);
-+		mod_delayed_work(system_wq, &kbd->inactivity_work,
-+				 secs_to_jiffies(appletb_tb_dim_timeout));
- 	}
++			fspi_data74_pins: xspi1-data74-pins {
++				pinctrl-single,bits = <0x0 0x0 (0x7 << 15)>;
++			};
++
++			fspi_data30_pins: xspi1-data30-pins {
++				pinctrl-single,bits = <0x0 0x0 (0x7 << 18)>;
++			};
++
++			fspi_dqs_sck_cs10_pins: xspi1-base-pins {
++				pinctrl-single,bits = <0x0 0x0 (0x7 << 21)>;
++			};
++
++			esdhc0_cmd_data30_clk_vsel_pins: sdhc1-base-sdhc-vsel-pins {
++				pinctrl-single,bits = <0x0 0x0 (0x7 << 24)>;
++			};
++
++			gpio0_14_12_pins: sdhc1-dir-gpio-pins {
++				pinctrl-single,bits = <0x0 (0x1 << 27) (0x7 << 27)>;
++			};
++
+ 			i2c6_scl: i2c6-scl-pins {
+ 				pinctrl-single,bits = <0x4 0x2 0x7>;
+ 			};
+--- a/arch/arm64/boot/dts/freescale/fsl-lx2162a-clearfog.dts
++++ b/arch/arm64/boot/dts/freescale/fsl-lx2162a-clearfog.dts
+@@ -223,6 +223,8 @@
+ };
  
- 	kbd->inp_handler.event = appletb_kbd_inp_event;
-@@ -444,7 +458,8 @@ close_hw:
- stop_hw:
- 	hid_hw_stop(hdev);
- 	if (kbd->backlight_dev) {
--		timer_delete_sync(&kbd->inactivity_timer);
-+		cancel_delayed_work_sync(&kbd->inactivity_work);
-+		cancel_work_sync(&kbd->restore_brightness_work);
- 		put_device(&kbd->backlight_dev->dev);
- 	}
- 	return ret;
-@@ -461,7 +476,8 @@ static void appletb_kbd_remove(struct hi
- 	hid_hw_stop(hdev);
+ &esdhc0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&esdhc0_cd_wp_pins>, <&esdhc0_cmd_data30_clk_vsel_pins>;
+ 	sd-uhs-sdr104;
+ 	sd-uhs-sdr50;
+ 	sd-uhs-sdr25;
+--- a/arch/arm64/boot/dts/freescale/fsl-lx2162a-sr-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-lx2162a-sr-som.dtsi
+@@ -30,6 +30,8 @@
+ };
  
- 	if (kbd->backlight_dev) {
--		timer_delete_sync(&kbd->inactivity_timer);
-+		cancel_delayed_work_sync(&kbd->inactivity_work);
-+		cancel_work_sync(&kbd->restore_brightness_work);
- 		put_device(&kbd->backlight_dev->dev);
- 	}
- }
+ &fspi {
++	pinctrl-names = "default";
++	pinctrl-0 = <&fspi_data74_pins>, <&fspi_data30_pins>, <&fspi_dqs_sck_cs10_pins>;
+ 	status = "okay";
+ 
+ 	flash@0 {
+@@ -80,3 +82,8 @@
+ 		reg = <0x6f>;
+ 	};
+ };
++
++&pinmux_i2crv {
++	pinctrl-names = "default";
++	pinctrl-0 = <&gpio0_14_12_pins>;
++};
 
 
