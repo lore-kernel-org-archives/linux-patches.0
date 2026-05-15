@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B62439012;
-	Fri, 15 May 2026 16:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6117A44105E;
+	Fri, 15 May 2026 16:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861798; cv=none; b=CFbx9+ZOKPpKn9Z7+C4qrjYdmHYgq8r6yBlGzt4CmVPd2fcyy3nVhAl3GmQYeA4aJOEbxkmqDWsocSQG/cgXOSfuDO9N9v7LYdkxnK3uPfypmFKiowPCrcNjPVYqxcFG1kpG52d4Vg7vcOpnVPL2zYjeuL+CsRav6J03K2dSZQg=
+	t=1778861801; cv=none; b=s91o7edlOtezSoN44fKZuNteQZWyJSIvvD4Z+uALhOPCVwVi67lE6ZXBPXXhmN2INjtghqg2hUuYrqzOBbt6eGNZS/9nK/yiyoUsCJgiwRm8iHrfVI09sKJBqmO4BCZxN2nqRy2MJFp/PvoS1ar2ZkxpjvHp8JUi7f2/r8YnIzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861798; c=relaxed/simple;
-	bh=/uOoSPs84Qp/HYWLCkPifR5VZquZN+Ooh1YAq6Y0ni8=;
+	s=arc-20240116; t=1778861801; c=relaxed/simple;
+	bh=rzkPZYriuL3eSsvpzoy7guZQn1PNIXje57PrgTMiJhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cb9g1jzpepPLPfZpBaXoGVx8myL0XeK94hRCGeawF7hAK72MVXAOgCKiixlBFIbuufdp0jcAOC1BHvCXbxFah9LBM4ISbulfgMpDS2/mgE1fgl+lpbUbH972pDOHkbZMNh/uFXBAHAKs7KiD7rzYK3WIY6J7RZ9v0cmYmayYSSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRJZhbug; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Psje3VKfpYk3hfazwKnNzzlV/lYJQtoDcXtpAPyzSURr2hx1FMutQnu66nVjJe5BRWkBVMws6zxmEAPERI+C4yzK2bLM0Ix8IJSIzaHTdhq83ttytAI60XKdppoWNREhpqN3VOIvVNyXoHFNzLHylohUVKD7I7rcnoAnkCsTcqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHsBfuwg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRJZhbug"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D432C2BCB3;
-	Fri, 15 May 2026 16:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHsBfuwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDF9C2BCB0;
+	Fri, 15 May 2026 16:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861798;
-	bh=/uOoSPs84Qp/HYWLCkPifR5VZquZN+Ooh1YAq6Y0ni8=;
+	s=korg; t=1778861801;
+	bh=rzkPZYriuL3eSsvpzoy7guZQn1PNIXje57PrgTMiJhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qRJZhbug0suh+YHmwcdYr2XsR+NTFM8/DzJdRvoJU0g31vOq5YY4ZMI5dxrKEAd4K
-	 ZNK8PXFzL4DJE8kGObh0jeimaHVhAYxuEK31uWXfFVRula1J82AXA4jgajDbDIsRmK
-	 XgXLq9vwxhhk0G1mC0h0pUcUHQaXAsY2ALhOcvRE=
+	b=UHsBfuwgPqSEhQ6Q2sMxp4KcHR8FJbQjN/0XV2aMeF+kQ7ePMsX7vWT/rZB+h6D58
+	 aF9e4fa/bK6huSMhUcKlibBd3n1XGtYejlQcm0aJwyPD+JLCX1/tjGUEWn4PvxuqvC
+	 hUFvYsgrfKTPZb3tKIbdOwk4tJ4bOXcXH03FsuTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Bobby Eshleman <bobbyeshleman@meta.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
 	Stefano Garzarella <sgarzare@redhat.com>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Arseniy Krasnov <avkrasnov@rulkc.org>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 465/474] vsock/virtio: fix accept queue count leak on transport mismatch
-Date: Fri, 15 May 2026 17:49:34 +0200
-Message-ID: <20260515154725.166762070@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Luigi Leonardi <leonardi@redhat.com>
+Subject: [PATCH 6.6 466/474] vsock/virtio: fix length and offset in tap skb for split packets
+Date: Fri, 15 May 2026 17:49:35 +0200
+Message-ID: <20260515154725.188310533@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -54,54 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit 52bcb57a4e8a0865a76c587c2451906342ae1b2d upstream.
+commit 5f344d809e015fba3709e5219428c00b8ac5d7df upstream.
 
-virtio_transport_recv_listen() calls sk_acceptq_added() before
-vsock_assign_transport(). If vsock_assign_transport() fails or
-selects a different transport, the error path returns without
-calling sk_acceptq_removed(), permanently incrementing
-sk_ack_backlog.
+virtio_transport_build_skb() builds a new skb to be delivered to the
+vsockmon tap device. To build the new skb, it uses the original skb
+data length as payload length, but as the comment notes, the original
+packet stored in the skb may have been split in multiple packets, so we
+need to use the length in the header, which is correctly updated before
+the packet is delivered to the tap, and the offset for the data.
 
-After approximately backlog+1 such failures, sk_acceptq_is_full()
-returns true, causing the listener to reject all new connections.
+This was also similar to what we did before commit 71dc9ec9ac7d
+("virtio/vsock: replace virtio_vsock_pkt with sk_buff") where we probably
+missed something during the skb conversion.
 
-Fix by moving sk_acceptq_added() to after the transport validation,
-matching the pattern used by vmci_transport and hyperv_transport.
+Also update the comment above, which was left stale by the skb
+conversion and still mentioned a buffer pointer that no longer exists.
 
-Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Fixes: 71dc9ec9ac7d ("virtio/vsock: replace virtio_vsock_pkt with sk_buff")
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Arseniy Krasnov <avkrasnov@rulkc.org>
+Link: https://patch.msgid.link/20260508164411.261440-2-sgarzare@redhat.com
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260413131409.19022-1-phx0fer@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Cc: Luigi Leonardi <leonardi@redhat.com>
+[LL: Fixed conflict since this tree does not use the offset added by commit
+ 0df7cd3c13e4 ("vsock/virtio/vhost: read data from non-linear skb")]
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/net/vmw_vsock/virtio_transport_common.c
 +++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1353,8 +1353,6 @@ virtio_transport_recv_listen(struct sock
- 		return -ENOMEM;
- 	}
+@@ -122,12 +122,12 @@ static struct sk_buff *virtio_transport_
+ 	size_t payload_len;
+ 	void *payload_buf;
  
--	sk_acceptq_added(sk);
--
- 	lock_sock_nested(child, SINGLE_DEPTH_NESTING);
+-	/* A packet could be split to fit the RX buffer, so we can retrieve
+-	 * the payload length from the header and the buffer pointer taking
+-	 * care of the offset in the original packet.
++	/* A packet could be split to fit the RX buffer, so we use
++	 * the payload length from the header, which has been updated
++	 * by the sender to reflect the fragment size.
+ 	 */
+ 	pkt_hdr = virtio_vsock_hdr(pkt);
+-	payload_len = pkt->len;
++	payload_len = le32_to_cpu(pkt_hdr->len);
+ 	payload_buf = pkt->data;
  
- 	child->sk_state = TCP_ESTABLISHED;
-@@ -1376,6 +1374,7 @@ virtio_transport_recv_listen(struct sock
- 		return ret;
- 	}
- 
-+	sk_acceptq_added(sk);
- 	if (virtio_transport_space_update(child, skb))
- 		child->sk_write_space(child);
- 
+ 	skb = alloc_skb(sizeof(*hdr) + sizeof(*pkt_hdr) + payload_len,
 
 
