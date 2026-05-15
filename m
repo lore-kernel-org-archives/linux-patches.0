@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E927530569C;
-	Fri, 15 May 2026 16:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5CB30569C;
+	Fri, 15 May 2026 16:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860976; cv=none; b=eyGiUJubI+2d+O2Gp5XCxpqZOJUHTkDMRR18ztbzIaSZccDqa8fAlXacUuSpfoBE17K9Y5z22DzSHSXXwq6VFxaHdxBE24McFFWTg3sXX4ZorjTbeC9Tbqh38Hrp0wQU3JfKT85Ak2x8NROYIzr41JtNPRt7frSY+5tnoHQJ/0k=
+	t=1778860978; cv=none; b=e4BbOnprG4n8+d0/O4xArTi7f5Vw8sikdN/BTqTyGc6QGt/wV9MFiLjl1O/73QwD5qBNEBEHLaqrgznW2IUcSSuE56bPTICTo1B13Haam/fEr268xrsxIWw/I/4pn3+P946oOID7TWLXk6xGFOr4kPDPUlsiWdLvSg86V+mc6uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860976; c=relaxed/simple;
-	bh=cNV0LpT4J5aeiH/IWYGvVYisqfyxmCIcLKP2m4IgXn4=;
+	s=arc-20240116; t=1778860978; c=relaxed/simple;
+	bh=oq3L1fn/PLM1MotSikXjlZd99RFeamA1X0LLBrpad6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTBzCUNnjDNhBTw+Y4CIRQtAHOZxt94O6R/fIRtCo9EonD2sI46S2+uYK2qQl00CZnubIctgpnm6LKRx1X2wwXFRnqiNo5biBY2tXpChbFMOIEMsjU37tB09Veh00FKz4OIrmfeFquNN4oUZf7iPPChNe1VadJTHP32EVtfdwWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPhaztnU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T6Z6zfZ3ve9Ekp35Zefd+y5ZsL6QA0qp0IT/n4nun+wmjilhP5TEu6b3Df3QmyLst748cDf3+dPznK+pz+e6PlLHUWZGafFkaCpuFv5HHI/S9bbYNust0xie1tCj/XFRhmT5zmHODw189+ABEOR3NmSRWRyM7/5exd1he5IHXso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ov1jCQlP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPhaztnU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5647FC2BCB0;
-	Fri, 15 May 2026 16:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ov1jCQlP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8730C2BCB0;
+	Fri, 15 May 2026 16:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860975;
-	bh=cNV0LpT4J5aeiH/IWYGvVYisqfyxmCIcLKP2m4IgXn4=;
+	s=korg; t=1778860978;
+	bh=oq3L1fn/PLM1MotSikXjlZd99RFeamA1X0LLBrpad6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPhaztnUW6cwZVUlgpxiQcum9cYYoZ0wYLosUElvRVVqua1piayJ1AwANa5j6SHyM
-	 csVFHIq0cnU3hIBRBt8Cz40rpVm/p+LaSO/nXvw7pn1HuqEqJxhBRhgA27d3Mr4Qpw
-	 4//OmdapWqPYbPbZBuH3rXBKl0Y3PRamLEUHpIio=
+	b=ov1jCQlPNd6ROFYcv6YDf4OZOvyp1X5VB3zM5ND/cXTR/o7Q25ReqfDE+yXs8roFX
+	 ceqc3bdot34woDcn0HmS9jbl5AUpnbvWxgT5G949MMT8DWw9OiG9W1rbpM8a/Ro7dO
+	 PdIZ8jPWSyl1EM/saIKc8d7OIbcom1rD8IytPOCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Yu Kuai <yukuai@fnnas.com>
-Subject: [PATCH 6.6 114/474] md/raid5: validate payload size before accessing journal metadata
-Date: Fri, 15 May 2026 17:43:43 +0200
-Message-ID: <20260515154717.503151934@linuxfoundation.org>
+	Sean Kelley <skelley@nvidia.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 150/474] ACPI: CPPC: Fix related_cpus inconsistency during CPU hotplug
+Date: Fri, 15 May 2026 17:44:19 +0200
+Message-ID: <20260515154718.272538815@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,142 +51,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit b0cc3ae97e893bf54bbce447f4e9fd2e0b88bff9 upstream.
+commit 75141a770f4f8225d316f6c7e146723a32e9720e upstream.
 
-r5c_recovery_analyze_meta_block() and
-r5l_recovery_verify_data_checksum_for_mb() iterate over payloads in a
-journal metadata block using on-disk payload size fields without
-validating them against the remaining space in the metadata block.
+When concurrently bringing up and down two SMT threads of a physical
+core, many warning call traces occur as below:
 
-A corrupted journal contains payload sizes extending beyond the PAGE_SIZE
-boundary can cause out-of-bounds reads when accessing payload fields or
-computing offsets.
+The issue timeline is as follows:
 
-Add bounds validation for each payload type to ensure the full payload
-fits within meta_size before processing.
+ 1. When the system starts,
+    cpufreq: CPU: 220, policy->related_cpus: 220-221, policy->cpus: 220-221
 
-Fixes: b4c625c67362 ("md/r5cache: r5cache recovery: part 1")
-Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://lore.kernel.org/linux-raid/SYBPR01MB78815E78D829BB86CD7C8015AF5FA@SYBPR01MB7881.ausprd01.prod.outlook.com/
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+ 2. Offline CPU 220 and CPU 221.
+
+ 3. Online CPU 220
+    - CPU 221 is now offline, as acpi_get_psd_map() use
+      for_each_online_cpu(), so the cpu_data->shared_cpu_map,
+      policy->cpus, and related_cpus has only CPU 220.
+
+    cpufreq: CPU: 220, policy->related_cpus: 220, policy->cpus: 220
+
+ 4. Offline CPU 220
+
+ 5. Online CPU 221, the below call trace occurs:
+    - Since CPU 220 and CPU 221 share one policy, and
+      policy->related_cpus = 220 after step 3, so CPU 221
+      is not in policy->related_cpus but
+      per_cpu(cpufreq_cpu_data, cpu221) is not NULL.
+
+After reverting commit 56eb0c0ed345 ("ACPI: CPPC: Fix remaining
+for_each_possible_cpu() to use online CPUs"), the issue disappeared.
+
+The _PSD (P-State Dependency) defines the hardware-level dependency of
+frequency control across CPU cores. Since this relationship is a physical
+attribute of the hardware topology, it remains constant regardless of the
+online or offline status of the CPUs.
+
+Using for_each_online_cpu() in acpi_get_psd_map() is problematic. If a
+CPU is offline, it will be excluded from the shared_cpu_map.
+Consequently, if that CPU is brought online later, the kernel will fail
+to recognize it as part of any shared frequency domain.
+
+Switch back to for_each_possible_cpu() to ensure that all cores defined
+in the ACPI tables are correctly mapped into their respective performance
+domains from the start. This aligns with the logic of policy->related_cpus,
+which must encompass all potentially available cores in the domain to
+prevent logic gaps during CPU hotplug operations.
+
+To resolve the original issue regarding the "nosmt" or "nosmt=force"
+boot parameter, as send_pcc_cmd() function already does if (!desc)
+continue, so reverting that loop back to for_each_possible_cpu() is ok,
+only need to change the match_cpc_ptr NULL case in acpi_get_psd_map() to
+continue as Sean suggested.
+
+How to reproduce, on arm64 machine with SMT support which use acpi cppc
+cpufreq driver:
+
+	bash test.sh 220 & bash test.sh 221 &
+
+	The test.sh is as below:
+		while true
+			do
+			echo 0 > /sys/devices/system/cpu/cpu${1}/online
+			sleep 0.5
+			cat /sys/devices/system/cpu/cpu${1}/cpufreq/related_cpus
+			echo 1 >  /sys/devices/system/cpu/cpu${1}/online
+			cat /sys/devices/system/cpu/cpu${1}/cpufreq/related_cpus
+		done
+
+	CPU: 221 PID: 1119 Comm: cpuhp/221 Kdump: loaded Not tainted 6.6.0debug+ #5
+	Hardware name: To be filled by O.E.M. S920X20/BC83AMDA01-7270Z, BIOS 20.39 09/04/2024
+	pstate: a1400009 (NzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+	pc : cpufreq_online+0x8ac/0xa90
+	lr : cpuhp_cpufreq_online+0x18/0x30
+	sp : ffff80008739bce0
+	x29: ffff80008739bce0 x28: 0000000000000000 x27: ffff28400ca32200
+	x26: 0000000000000000 x25: 0000000000000003 x24: ffffd483503ff000
+	x23: ffffd483504051a0 x22: ffffd48350024a00 x21: 00000000000000dd
+	x20: 000000000000001d x19: ffff28400ca32000 x18: 0000000000000000
+	x17: 0000000000000020 x16: ffffd4834e6a3fc8 x15: 0000000000000020
+	x14: 0000000000000008 x13: 0000000000000001 x12: 00000000ffffffff
+	x11: 0000000000000040 x10: ffffd48350430728 x9 : ffffd4834f087c78
+	x8 : 0000000000000001 x7 : ffff2840092bdf00 x6 : ffffd483504264f0
+	x5 : ffffd48350405000 x4 : ffff283f7f95cc60 x3 : 0000000000000000
+	x2 : ffff53bc2f94b000 x1 : 00000000000000dd x0 : 0000000000000000
+	Call trace:
+	 cpufreq_online+0x8ac/0xa90
+	 cpuhp_cpufreq_online+0x18/0x30
+	 cpuhp_invoke_callback+0x128/0x580
+	 cpuhp_thread_fun+0x110/0x1b0
+	 smpboot_thread_fn+0x140/0x190
+	 kthread+0xec/0x100
+	 ret_from_fork+0x10/0x20
+	---[ end trace 0000000000000000 ]---
+
+Cc: All applicable <stable@vger.kernel.org>
+Fixes: 56eb0c0ed345 ("ACPI: CPPC: Fix remaining for_each_possible_cpu() to use online CPUs")
+Co-developed-by: Sean Kelley <skelley@nvidia.com>
+Signed-off-by: Sean Kelley <skelley@nvidia.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+[ rjw: Changelog edits ]
+Link: https://patch.msgid.link/20260417040112.3727756-1-ruanjinjie@huawei.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5-cache.c |   48 ++++++++++++++++++++++++++++++++---------------
- 1 file changed, 33 insertions(+), 15 deletions(-)
+ drivers/acpi/cppc_acpi.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/md/raid5-cache.c
-+++ b/drivers/md/raid5-cache.c
-@@ -2010,15 +2010,27 @@ r5l_recovery_verify_data_checksum_for_mb
- 		return -ENOMEM;
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -347,7 +347,7 @@ static int send_pcc_cmd(int pcc_ss_id, u
+ end:
+ 	if (cmd == CMD_WRITE) {
+ 		if (unlikely(ret)) {
+-			for_each_online_cpu(i) {
++			for_each_possible_cpu(i) {
+ 				struct cpc_desc *desc = per_cpu(cpc_desc_ptr, i);
  
- 	while (mb_offset < le32_to_cpu(mb->meta_size)) {
-+		sector_t payload_len;
-+
- 		payload = (void *)mb + mb_offset;
- 		payload_flush = (void *)mb + mb_offset;
+ 				if (!desc)
+@@ -509,13 +509,13 @@ int acpi_get_psd_map(unsigned int cpu, s
+ 	else if (pdomain->coord_type == DOMAIN_COORD_TYPE_SW_ANY)
+ 		cpu_data->shared_type = CPUFREQ_SHARED_TYPE_ANY;
  
- 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_DATA) {
-+			payload_len = sizeof(struct r5l_payload_data_parity) +
-+				(sector_t)sizeof(__le32) *
-+				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
-+			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
-+				goto mismatch;
- 			if (r5l_recovery_verify_data_checksum(
- 				    log, ctx, page, log_offset,
- 				    payload->checksum[0]) < 0)
- 				goto mismatch;
- 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_PARITY) {
-+			payload_len = sizeof(struct r5l_payload_data_parity) +
-+				(sector_t)sizeof(__le32) *
-+				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
-+			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
-+				goto mismatch;
- 			if (r5l_recovery_verify_data_checksum(
- 				    log, ctx, page, log_offset,
- 				    payload->checksum[0]) < 0)
-@@ -2031,22 +2043,18 @@ r5l_recovery_verify_data_checksum_for_mb
- 				    payload->checksum[1]) < 0)
- 				goto mismatch;
- 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
--			/* nothing to do for R5LOG_PAYLOAD_FLUSH here */
-+			payload_len = sizeof(struct r5l_payload_flush) +
-+				(sector_t)le32_to_cpu(payload_flush->size);
-+			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
-+				goto mismatch;
- 		} else /* not R5LOG_PAYLOAD_DATA/PARITY/FLUSH */
- 			goto mismatch;
- 
--		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
--			mb_offset += sizeof(struct r5l_payload_flush) +
--				le32_to_cpu(payload_flush->size);
--		} else {
--			/* DATA or PARITY payload */
-+		if (le16_to_cpu(payload->header.type) != R5LOG_PAYLOAD_FLUSH) {
- 			log_offset = r5l_ring_add(log, log_offset,
- 						  le32_to_cpu(payload->size));
--			mb_offset += sizeof(struct r5l_payload_data_parity) +
--				sizeof(__le32) *
--				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
- 		}
--
-+		mb_offset += payload_len;
- 	}
- 
- 	put_page(page);
-@@ -2097,6 +2105,7 @@ r5c_recovery_analyze_meta_block(struct r
- 	log_offset = r5l_ring_add(log, ctx->pos, BLOCK_SECTORS);
- 
- 	while (mb_offset < le32_to_cpu(mb->meta_size)) {
-+		sector_t payload_len;
- 		int dd;
- 
- 		payload = (void *)mb + mb_offset;
-@@ -2105,6 +2114,12 @@ r5c_recovery_analyze_meta_block(struct r
- 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
- 			int i, count;
- 
-+			payload_len = sizeof(struct r5l_payload_flush) +
-+				(sector_t)le32_to_cpu(payload_flush->size);
-+			if (mb_offset + payload_len >
-+			    le32_to_cpu(mb->meta_size))
-+				return -EINVAL;
-+
- 			count = le32_to_cpu(payload_flush->size) / sizeof(__le64);
- 			for (i = 0; i < count; ++i) {
- 				stripe_sect = le64_to_cpu(payload_flush->flush_stripes[i]);
-@@ -2118,12 +2133,17 @@ r5c_recovery_analyze_meta_block(struct r
- 				}
- 			}
- 
--			mb_offset += sizeof(struct r5l_payload_flush) +
--				le32_to_cpu(payload_flush->size);
-+			mb_offset += payload_len;
+-	for_each_online_cpu(i) {
++	for_each_possible_cpu(i) {
+ 		if (i == cpu)
  			continue;
- 		}
  
- 		/* DATA or PARITY payload */
-+		payload_len = sizeof(struct r5l_payload_data_parity) +
-+			(sector_t)sizeof(__le32) *
-+			(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
-+		if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
-+			return -EINVAL;
-+
- 		stripe_sect = (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_DATA) ?
- 			raid5_compute_sector(
- 				conf, le64_to_cpu(payload->location), 0, &dd,
-@@ -2188,9 +2208,7 @@ r5c_recovery_analyze_meta_block(struct r
- 		log_offset = r5l_ring_add(log, log_offset,
- 					  le32_to_cpu(payload->size));
+ 		match_cpc_ptr = per_cpu(cpc_desc_ptr, i);
+ 		if (!match_cpc_ptr)
+-			goto err_fault;
++			continue;
  
--		mb_offset += sizeof(struct r5l_payload_data_parity) +
--			sizeof(__le32) *
--			(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
-+		mb_offset += payload_len;
- 	}
- 
- 	return 0;
+ 		match_pdomain = &(match_cpc_ptr->domain_info);
+ 		if (match_pdomain->domain != pdomain->domain)
 
 
