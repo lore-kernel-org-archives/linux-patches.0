@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B55D3BB12D;
-	Fri, 15 May 2026 16:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311FE3FF1BD;
+	Fri, 15 May 2026 16:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862269; cv=none; b=lkY7qs325Gc3ev51jry589uxlIhzEay+T1aqju3uWcyQEc+mqK+Hy8YunwAholQxYJaFHxP8knF0dobx7PXAH/OjJIRD+ddTUeomS+MpePGWK7kHNrtFPdejchqiDq2zpa9wZNYx5YHsRQAApp4gioPVDivrvdk493ZGOw9OA20=
+	t=1778862272; cv=none; b=Dqo5iilHYqWFGhb9X659rK/YHJBPyZV06UI9SB+rKxwLu7ihFPibjuXwShXApxBJU1nIAbRtTUx+oH+P5hV76RFoa9cgbLAdEgLJzZaxswvqXqe6Jvf5crUOGi3OlnoJJcFN889WSwCEcxDt+eFFV8DJBjaWFxxdpOJu7wnltvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862269; c=relaxed/simple;
-	bh=hgU5DjiTTjVF21hirbAIj9Vjn02LEOFXWqXYge7sQhA=;
+	s=arc-20240116; t=1778862272; c=relaxed/simple;
+	bh=zX0O6fxzG+C7LNZH4a5s23NL+NwvcwMzCi4GIdxwpaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k39tYaFzdVgWDzm8aefeftMYDZ+a5VUAyKPZqX4uBznlvEAb4uZOgOxDW25m6bntYApEx9QrTUCHdKP+6/tPNRfE/zrV5nwI1KxFz6XJ4Y/GEmzB1p5hPT7hSuMO3XFOCjI5H2Pi+JY3yfMnP2wql0/Klb+teeZz7LOIlIRG3Bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLrx0/sO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GJbPNHYzsqfIsR1RP+nX5o5MSMv6UsuXwB/vLhvkIBxo05iUBIdI5As0Y5RjI1NG+lDHEIe4FPRUx8L6D5rZFowO6vBXMfW5VEpvW+v8HaFTfDySZUFR3/+7G8DjuvXEvsWsJKDNP5CGrmczaIjqAvDqHxKQy2CSuEQPCigT+SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hHMEFL2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLrx0/sO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E8AC2BCC7;
-	Fri, 15 May 2026 16:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hHMEFL2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC077C2BCB0;
+	Fri, 15 May 2026 16:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862269;
-	bh=hgU5DjiTTjVF21hirbAIj9Vjn02LEOFXWqXYge7sQhA=;
+	s=korg; t=1778862272;
+	bh=zX0O6fxzG+C7LNZH4a5s23NL+NwvcwMzCi4GIdxwpaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLrx0/sO2cONBJxYAFf0P0OlxHDP+jFne40CeEKB/MpMJPwDEjx92gS1pXBHBkXZe
-	 8kZSAnEzH09S8L/haesrquJ5rVL89rE852HFi7yCs0luFFMCkoeTB1XtiAe1yl/ejv
-	 FrTp7UXI3tfnxpquhOd+ZlncZUh7wkUKgoGCJjt0=
+	b=0hHMEFL2veg9lGt4f0M8kHUhPBlqBMnzM56mQotlUbeVRXYnFgj9DDO/TQraKf77p
+	 9HNQn5de1uNSimmveZuGNKN/5NKDCunK8lwPpmr/r+jRtY6F0Yxlnq3Ldob0Gxt12t
+	 VIZBolVpBXedsyxT4bOuAW2mExQillk2V2siINTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Pritam Manohar Sutar <pritam.sutar@samsung.com>,
-	Selvarasu Ganesan <selvarasu.g@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 173/188] usb: dwc3: Move GUID programming after PHY initialization
-Date: Fri, 15 May 2026 17:49:50 +0200
-Message-ID: <20260515154701.091979850@linuxfoundation.org>
+Subject: [PATCH 6.18 174/188] btrfs: remove fs_info argument from btrfs_sysfs_add_space_info_type()
+Date: Fri, 15 May 2026 17:49:51 +0200
+Message-ID: <20260515154701.113417647@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -53,59 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvarasu Ganesan <selvarasu.g@samsung.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit aad35f9c926ec220b0742af1ada45666ae667956 ]
+[ Upstream commit 771af6ff72e0ed0eb8bf97e5ae4fa5094e0c5d1d ]
 
-The Linux Version Code is currently written to the GUID register before
-PHY initialization. Certain PHY implementations (such as Synopsys eUSB
-PHY performing link_sw_reset) clear the GUID register to its default
-value during initialization, causing the kernel version information to
-be lost.
+We don't need it since we can grab fs_info from the given space_info.
+So remove the fs_info argument.
 
-Move the GUID register programming to occur after PHY initialization
-completes to ensure the Linux version information persists.
-
-Fixes: fa0ea13e9f1c ("usb: dwc3: core: write LINUX_VERSION_CODE to our GUID register")
-Cc: stable <stable@kernel.org>
-Reported-by: Pritam Manohar Sutar <pritam.sutar@samsung.com>
-Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260417063314.2359-1-selvarasu.g@samsung.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: a7449edf9614 ("btrfs: fix double free in create_space_info_sub_group() error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/btrfs/space-info.c |    4 ++--
+ fs/btrfs/sysfs.c      |    5 ++---
+ fs/btrfs/sysfs.h      |    3 +--
+ 3 files changed, 5 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1339,12 +1339,6 @@ static int dwc3_core_init(struct dwc3 *d
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -275,7 +275,7 @@ static int create_space_info_sub_group(s
+ 	sub_group->parent = parent;
+ 	sub_group->subgroup_id = id;
  
- 	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
+-	ret = btrfs_sysfs_add_space_info_type(fs_info, sub_group);
++	ret = btrfs_sysfs_add_space_info_type(sub_group);
+ 	if (ret) {
+ 		kfree(sub_group);
+ 		parent->sub_group[index] = NULL;
+@@ -309,7 +309,7 @@ static int create_space_info(struct btrf
+ 			goto out_free;
+ 	}
  
--	/*
--	 * Write Linux Version Code to our GUID register so it's easy to figure
--	 * out which kernel version a bug was found.
--	 */
--	dwc3_writel(dwc, DWC3_GUID, LINUX_VERSION_CODE);
--
- 	ret = dwc3_phy_setup(dwc);
+-	ret = btrfs_sysfs_add_space_info_type(info, space_info);
++	ret = btrfs_sysfs_add_space_info_type(space_info);
  	if (ret)
  		return ret;
-@@ -1376,6 +1370,12 @@ static int dwc3_core_init(struct dwc3 *d
- 	if (ret)
- 		goto err_exit_phy;
  
-+	/*
-+	 * Write Linux Version Code to our GUID register so it's easy to figure
-+	 * out which kernel version a bug was found.
-+	 */
-+	dwc3_writel(dwc, DWC3_GUID, LINUX_VERSION_CODE);
-+
- 	dwc3_core_setup_global_control(dwc);
- 	dwc3_core_num_eps(dwc);
+--- a/fs/btrfs/sysfs.c
++++ b/fs/btrfs/sysfs.c
+@@ -1981,13 +1981,12 @@ static const char *alloc_name(struct btr
+  * Create a sysfs entry for a space info type at path
+  * /sys/fs/btrfs/UUID/allocation/TYPE
+  */
+-int btrfs_sysfs_add_space_info_type(struct btrfs_fs_info *fs_info,
+-				    struct btrfs_space_info *space_info)
++int btrfs_sysfs_add_space_info_type(struct btrfs_space_info *space_info)
+ {
+ 	int ret;
+ 
+ 	ret = kobject_init_and_add(&space_info->kobj, &space_info_ktype,
+-				   fs_info->space_info_kobj, "%s",
++				   space_info->fs_info->space_info_kobj, "%s",
+ 				   alloc_name(space_info));
+ 	if (ret) {
+ 		kobject_put(&space_info->kobj);
+--- a/fs/btrfs/sysfs.h
++++ b/fs/btrfs/sysfs.h
+@@ -37,8 +37,7 @@ void __cold btrfs_exit_sysfs(void);
+ int btrfs_sysfs_add_mounted(struct btrfs_fs_info *fs_info);
+ void btrfs_sysfs_remove_mounted(struct btrfs_fs_info *fs_info);
+ void btrfs_sysfs_add_block_group_type(struct btrfs_block_group *cache);
+-int btrfs_sysfs_add_space_info_type(struct btrfs_fs_info *fs_info,
+-				    struct btrfs_space_info *space_info);
++int btrfs_sysfs_add_space_info_type(struct btrfs_space_info *space_info);
+ void btrfs_sysfs_remove_space_info(struct btrfs_space_info *space_info);
+ void btrfs_sysfs_update_devid(struct btrfs_device *device);
  
 
 
