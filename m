@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150C33FD964;
-	Fri, 15 May 2026 16:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82F13E7BC4;
+	Fri, 15 May 2026 16:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861133; cv=none; b=G9SKP9oUZ5zk9AceSBAREJ/grKsUIm4PZpM30sHMyCodNnbizS7SdsS44cpC4rgKSw1Z/7syWCZjKS4QW7cxhhKqNh8vk9BpAV757tfN+4vvspcXOg+8aSeESeMSMwPCEDmYqesMSkZ7sQl43Fzfj5gWWXon7txwJ2wvz/gwIBI=
+	t=1778861135; cv=none; b=DZc8bjA8YkGA2hVf+QbMIQEiJfz8XLFkEv3Ycmv6knKM0W3zLogDQwPI10TDtqoMj0OR2fWr8bDYs5V1jJAezLpTlGaoso3rdND7dAjMPHzfLVOyeVA5j0+if1KGpXKvIn/lYydWMtLIhTkiNPxrQ0NX2fYGmU8dWWJah5aHnUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861133; c=relaxed/simple;
-	bh=xLdNZyVdFvI736VmJ4XhMgStWX/vqV6EwZVr/5mQIqc=;
+	s=arc-20240116; t=1778861135; c=relaxed/simple;
+	bh=OanO54HoNS/xKD52UdWUeE/51ADH55J0fZcPqCtXLog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgZ8NdVdRAM1wU6jFPWKgJ0pJa4BBDMT4NYhlqcPtm3dT+7Z0bmw9iVBH8bXrGEFPgA3j8wAshOSbnCSZGDc5Y1vUH4wHQojxTMoNjJNnm3JYCoRzFyJ+3RTweiUyv3P+oE+4ZtELU+6Oycraltc8vYJrkP2Y2B56UKdqXYkbBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqLfKpKL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+Gofs2DU66sMiO9lXu5NCSFwKkE8Htv+PQpgbMtjPISQMBnnFZf7Na75ETRhep2VZsD4Tdc17fPBB+li+13R8/Msoic5CIWviRS01puJtbXjLVsG1jCXL0Ws2aLUGYlqLbNDS4ChRfEd01RmiAS/KqgvBSrJilNjGHZQO8pZRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScVOUfMd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqLfKpKL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7B6C2BCB0;
-	Fri, 15 May 2026 16:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScVOUfMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06518C2BCB0;
+	Fri, 15 May 2026 16:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861132;
-	bh=xLdNZyVdFvI736VmJ4XhMgStWX/vqV6EwZVr/5mQIqc=;
+	s=korg; t=1778861135;
+	bh=OanO54HoNS/xKD52UdWUeE/51ADH55J0fZcPqCtXLog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FqLfKpKLXWfu1T7fY3v18mK0A+xN+7qO/ske36qYjZJtHyoyAxh3uo2OKO/pt8EKR
-	 wyor+LGVZzK4HFuH+/cw7vrz+ZZWsn5hB22uLEfgHC57opKoC09kKs61lIgfXUEeKd
-	 IeQvYJbTzZbn4YB2ypqpKlDKYMpEQ3S0ZX6c+eaU=
+	b=ScVOUfMdkw/ESA/fKtrxSZL1tmHRmT9JOrUgXlbV4GO11DuAWkhRnydszK7DrNicI
+	 crE1wQQrfmgnWvbiwn5DVcPhnvhZlvaX/z0r0jSWOP0FnspeVDoi2EpQaPq3oh1GbW
+	 rx9AkPFylRpL+4jFSsN2dMFcnlBA15rgo81PrLIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 212/474] Bluetooth: L2CAP: Fix null-ptr-deref in l2cap_sock_state_change_cb()
-Date: Fri, 15 May 2026 17:45:21 +0200
-Message-ID: <20260515154719.597712478@linuxfoundation.org>
+	Ranjit Waghmode <ranjit.waghmode@xilinx.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 213/474] spi: zynqmp-gqspi: fix controller deregistration
+Date: Fri, 15 May 2026 17:45:22 +0200
+Message-ID: <20260515154719.618321711@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,33 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: Johan Hovold <johan@kernel.org>
 
-commit 2ff1a41a912de8517b4482e946dd951b7d80edbf upstream.
+commit 6895fc4faafc9082e15e4e624b23dd5f0c98feb5 upstream.
 
-Add the same NULL guard already present in
-l2cap_sock_resume_cb() and l2cap_sock_ready_cb().
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-Fixes: 89bc500e41fc ("Bluetooth: Add state tracking to struct l2cap_chan")
-Cc: stable@kernel.org
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: dfe11a11d523 ("spi: Add support for Zynq Ultrascale+ MPSoC GQSPI controller")
+Cc: stable@vger.kernel.org	# 4.2: 64640f6c972e
+Cc: stable@vger.kernel.org	# 4.2
+Cc: Ranjit Waghmode <ranjit.waghmode@xilinx.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-26-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_sock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-zynqmp-gqspi.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1627,6 +1627,9 @@ static void l2cap_sock_state_change_cb(s
- {
- 	struct sock *sk = chan->data;
+--- a/drivers/spi/spi-zynqmp-gqspi.c
++++ b/drivers/spi/spi-zynqmp-gqspi.c
+@@ -1324,7 +1324,7 @@ static int zynqmp_qspi_probe(struct plat
+ 	ctlr->dev.of_node = np;
+ 	ctlr->auto_runtime_pm = true;
  
-+	if (!sk)
-+		return;
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "spi_register_controller failed\n");
+ 		goto clk_dis_all;
+@@ -1365,6 +1365,8 @@ static void zynqmp_qspi_remove(struct pl
+ 
+ 	pm_runtime_get_sync(&pdev->dev);
+ 
++	spi_unregister_controller(xqspi->ctlr);
 +
- 	sk->sk_state = state;
+ 	zynqmp_gqspi_write(xqspi, GQSPI_EN_OFST, 0x0);
  
- 	if (err)
+ 	pm_runtime_disable(&pdev->dev);
 
 
