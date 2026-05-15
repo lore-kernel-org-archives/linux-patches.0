@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83A63E0092;
-	Fri, 15 May 2026 16:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747F63E0092;
+	Fri, 15 May 2026 16:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862524; cv=none; b=DGVoZj2V3erYoBfKqZsUQ46wIvykbxvvm+FayVtW2/xqRltytgJABVJKIbglbRkOK/t3IEJ1geDCzmRVQ1UfQczkm/JSox+8mcnhV0ajNX6i7jM+NZ6n9BBuj9/q5GsXmnVzl6cfypaLFNJc3RSe8X4Dj2maTU88srf21rM3g1M=
+	t=1778862526; cv=none; b=AU+POM6As1FeHfT0vM+aMwGQaZlfk8NlPDKkPXffk7FToJVbK/rPGwZuHR6oO95KL7N9OtrnK4SyHUGV7S2tmmnzueaIklHp72OpdWyTfeym5txj2xv4FIU99V2o3d8hB7SQqI+vIzWyJYqFFW69jAYtgQv+HunLXj+PojcdMew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862524; c=relaxed/simple;
-	bh=5Ydec4jVfZflJ9BMnefuWdvBDNKx6ZJKfjKbj3dC8Io=;
+	s=arc-20240116; t=1778862526; c=relaxed/simple;
+	bh=YZz8HD/jdTtGjcPVJfNwnvweYkVvQPvd27u5OO+ELME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oeMFiNatblfWwB9DpiQgQ6uQjvqRnCacGAx3X0Qb5YPj7wRXZb1vHkMXES7qAm4/kB63C9CYLk8S8W9DToluUbu3LFQlgNZlkMNA2TTmY31I/nD0zmmfs4hYkVsVERi+w0jqISQDgwc6t7cqX3hMVg8YuL1jACfh+yuhuJePzVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVT93bpj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kbUmbZJhYxYx3zfu9oGRZTiFt+Mf8wz/KCfcTlyqhnwMpUhBo/6tbiz+df2UlD/RDC+T9+ETU7VsPultlG+2qic6Tn8U63gcwUOoEYB4pc8RV3mTHgtvH9RW9CAb8GK2Hp33GHh1/ops5yAJWXwGPFwKVYV9VTR7LIQ7yEdgtpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjh9iLcz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVT93bpj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D720C2BCB0;
-	Fri, 15 May 2026 16:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjh9iLcz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEB5C2BCB0;
+	Fri, 15 May 2026 16:28:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862523;
-	bh=5Ydec4jVfZflJ9BMnefuWdvBDNKx6ZJKfjKbj3dC8Io=;
+	s=korg; t=1778862526;
+	bh=YZz8HD/jdTtGjcPVJfNwnvweYkVvQPvd27u5OO+ELME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVT93bpjBKlHjn0gR24fbcLTv7svGHmV6/f2hwlHVbJBwHbUgRPkm/2f+jHfPlYib
-	 pmd4DqQktJi4dmZA77hgiu/ADRgzkobtsjvYs5orWg5XJca0pltHPdXlmB5AJLi2E1
-	 1oUl6s/IAu0YObmNRhJlnh2HWZU58EWSAenUeZ8w=
+	b=qjh9iLczNtDGejwyPaSltzGEsc/2wNBxBso5zfM1BW4ClDHoJijmO619W4EG2fBz9
+	 RbTjbVNXEX5FZQ6Unt57n9dXxEaqxOT09qNRkVmlXDIY/nS6gXekqc4Qow++7ttvMy
+	 STaWA409ZyisYUyeket6lOt+6gtbMiG/pjkP3r8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
 	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
 	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 079/201] media: iris: fix use-after-free of fmt_src during MBPF check
-Date: Fri, 15 May 2026 17:48:17 +0200
-Message-ID: <20260515154700.243844154@linuxfoundation.org>
+Subject: [PATCH 7.0 080/201] media: iris: switch to hardware mode after firmware boot
+Date: Fri, 15 May 2026 17:48:18 +0200
+Message-ID: <20260515154700.265575682@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,118 +54,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
 
-commit 3d9593ad1a58c5acc3e5fa2a48222bb7632e6812 upstream.
+commit 95a337f92f0a602d4f935315bfbc8bf07f475e65 upstream.
 
-During concurrency testing, multiple instances can run in parallel, and
-each instance uses its own inst->lock while the core->lock protects the
-list of active instances. The race happens because these locks cover
-different scopes, inst->lock protects only the internals of a single
-instance, while the Macro Blocks Per Frame (MBPF) checker walks the
-core list under core->lock and reads fields like fmt_src->width and
-fmt_src->height. At the same time, iris_close() may free fmt_src and
-fmt_dst under inst->lock while the instance is still present in the core
-list. This allows a situation where the MBPF checker, still iterating
-through the core list, reaches an instance whose fmt_src was already
-freed by another thread and ends up dereferencing a dangling pointer,
-resulting in a use-after-free. This happens because the MBPF checker
-assumes that any instance in the core list is fully valid, but the
-freeing of fmt_src and fmt_dst without removing the instance from the
-core list is not correct.
+Currently the driver switches the vcodec GDSC to hardware (HW) mode
+before firmware load and boot sequence. GDSC can be powered off, keeping
+in hw mode, thereby the vcodec registers programmed in TrustZone (TZ)
+carry default (reset) values.
+Move the transition to HW mode after firmware load and boot sequence.
 
-The correct ordering is to defer freeing fmt_src and fmt_dst until after
-the instance has been removed from the core list and all teardown under
-the core lock has completed, ensuring that no dangling pointers are ever
-exposed during MBPF checks.
+The bug was exposed with driver configuring different stream ids to
+different devices via iommu-map. With registers carrying reset values,
+VPU would not generate desired stream-id, thereby leading to SMMU fault.
 
-Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+For vpu4, when GDSC is switched to HW mode, there is a need to perform
+the reset operation. Without reset, there are occasional issues of
+register corruption observed. Hence the vpu GDSC switch also involves
+the reset.
+
+Co-developed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
 Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Fixes: 5ad964ad5656 ("media: iris: Initialize and deinitialize encoder instance structure")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+[bod: occassional => occasional]
+Fixes: dde659d37036 ("media: iris: Introduce vpu ops for vpu4 with necessary hooks")
 Cc: stable@vger.kernel.org
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_vdec.c |    6 ------
- drivers/media/platform/qcom/iris/iris_vdec.h |    1 -
- drivers/media/platform/qcom/iris/iris_venc.c |    6 ------
- drivers/media/platform/qcom/iris/iris_venc.h |    1 -
- drivers/media/platform/qcom/iris/iris_vidc.c |    6 ++----
- 5 files changed, 2 insertions(+), 18 deletions(-)
+ drivers/media/platform/qcom/iris/iris_core.c       |    4 +++
+ drivers/media/platform/qcom/iris/iris_hfi_common.c |    4 +++
+ drivers/media/platform/qcom/iris/iris_vpu2.c       |    1 
+ drivers/media/platform/qcom/iris/iris_vpu3x.c      |    9 ++-----
+ drivers/media/platform/qcom/iris/iris_vpu4x.c      |   24 +++++++++++----------
+ drivers/media/platform/qcom/iris/iris_vpu_common.c |   16 ++++++++------
+ drivers/media/platform/qcom/iris/iris_vpu_common.h |    3 ++
+ 7 files changed, 38 insertions(+), 23 deletions(-)
 
---- a/drivers/media/platform/qcom/iris/iris_vdec.c
-+++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-@@ -61,12 +61,6 @@ int iris_vdec_inst_init(struct iris_inst
- 	return iris_ctrls_init(inst);
- }
+--- a/drivers/media/platform/qcom/iris/iris_core.c
++++ b/drivers/media/platform/qcom/iris/iris_core.c
+@@ -75,6 +75,10 @@ int iris_core_init(struct iris_core *cor
+ 	if (ret)
+ 		goto error_unload_fw;
  
--void iris_vdec_inst_deinit(struct iris_inst *inst)
--{
--	kfree(inst->fmt_dst);
--	kfree(inst->fmt_src);
--}
++	ret = iris_vpu_switch_to_hwmode(core);
++	if (ret)
++		goto error_unload_fw;
++
+ 	ret = iris_hfi_core_init(core);
+ 	if (ret)
+ 		goto error_unload_fw;
+--- a/drivers/media/platform/qcom/iris/iris_hfi_common.c
++++ b/drivers/media/platform/qcom/iris/iris_hfi_common.c
+@@ -159,6 +159,10 @@ int iris_hfi_pm_resume(struct iris_core
+ 	if (ret)
+ 		goto err_suspend_hw;
+ 
++	ret = iris_vpu_switch_to_hwmode(core);
++	if (ret)
++		goto err_suspend_hw;
++
+ 	ret = ops->sys_interframe_powercollapse(core);
+ 	if (ret)
+ 		goto err_suspend_hw;
+--- a/drivers/media/platform/qcom/iris/iris_vpu2.c
++++ b/drivers/media/platform/qcom/iris/iris_vpu2.c
+@@ -44,4 +44,5 @@ const struct vpu_ops iris_vpu2_ops = {
+ 	.power_off_controller = iris_vpu_power_off_controller,
+ 	.power_on_controller = iris_vpu_power_on_controller,
+ 	.calc_freq = iris_vpu2_calc_freq,
++	.set_hwmode = iris_vpu_set_hwmode,
+ };
+--- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
++++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
+@@ -234,14 +234,8 @@ static int iris_vpu35_power_on_hw(struct
+ 	if (ret)
+ 		goto err_disable_hw_free_clk;
+ 
+-	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], true);
+-	if (ret)
+-		goto err_disable_hw_clk;
 -
- static const struct iris_fmt iris_vdec_formats_cap[] = {
- 	[IRIS_FMT_NV12] = {
- 		.pixfmt = V4L2_PIX_FMT_NV12,
---- a/drivers/media/platform/qcom/iris/iris_vdec.h
-+++ b/drivers/media/platform/qcom/iris/iris_vdec.h
-@@ -9,7 +9,6 @@
- struct iris_inst;
- 
- int iris_vdec_inst_init(struct iris_inst *inst);
--void iris_vdec_inst_deinit(struct iris_inst *inst);
- int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f);
- int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f);
- int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
---- a/drivers/media/platform/qcom/iris/iris_venc.c
-+++ b/drivers/media/platform/qcom/iris/iris_venc.c
-@@ -79,12 +79,6 @@ int iris_venc_inst_init(struct iris_inst
- 	return iris_ctrls_init(inst);
- }
- 
--void iris_venc_inst_deinit(struct iris_inst *inst)
--{
--	kfree(inst->fmt_dst);
--	kfree(inst->fmt_src);
--}
--
- static const struct iris_fmt iris_venc_formats_cap[] = {
- 	[IRIS_FMT_H264] = {
- 		.pixfmt = V4L2_PIX_FMT_H264,
---- a/drivers/media/platform/qcom/iris/iris_venc.h
-+++ b/drivers/media/platform/qcom/iris/iris_venc.h
-@@ -9,7 +9,6 @@
- struct iris_inst;
- 
- int iris_venc_inst_init(struct iris_inst *inst);
--void iris_venc_inst_deinit(struct iris_inst *inst);
- int iris_venc_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f);
- int iris_venc_try_fmt(struct iris_inst *inst, struct v4l2_format *f);
- int iris_venc_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
---- a/drivers/media/platform/qcom/iris/iris_vidc.c
-+++ b/drivers/media/platform/qcom/iris/iris_vidc.c
-@@ -289,10 +289,6 @@ int iris_close(struct file *filp)
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
- 	mutex_lock(&inst->lock);
--	if (inst->domain == DECODER)
--		iris_vdec_inst_deinit(inst);
--	else if (inst->domain == ENCODER)
--		iris_venc_inst_deinit(inst);
- 	iris_session_close(inst);
- 	iris_inst_change_state(inst, IRIS_INST_DEINIT);
- 	iris_v4l2_fh_deinit(inst, filp);
-@@ -304,6 +300,8 @@ int iris_close(struct file *filp)
- 	mutex_unlock(&inst->lock);
- 	mutex_destroy(&inst->ctx_q_lock);
- 	mutex_destroy(&inst->lock);
-+	kfree(inst->fmt_src);
-+	kfree(inst->fmt_dst);
- 	kfree(inst);
- 
  	return 0;
+ 
+-err_disable_hw_clk:
+-	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
+ err_disable_hw_free_clk:
+ 	iris_disable_unprepare_clock(core, IRIS_HW_FREERUN_CLK);
+ err_disable_axi_clk:
+@@ -266,6 +260,7 @@ const struct vpu_ops iris_vpu3_ops = {
+ 	.power_off_controller = iris_vpu_power_off_controller,
+ 	.power_on_controller = iris_vpu_power_on_controller,
+ 	.calc_freq = iris_vpu3x_vpu4x_calculate_frequency,
++	.set_hwmode = iris_vpu_set_hwmode,
+ };
+ 
+ const struct vpu_ops iris_vpu33_ops = {
+@@ -274,6 +269,7 @@ const struct vpu_ops iris_vpu33_ops = {
+ 	.power_off_controller = iris_vpu33_power_off_controller,
+ 	.power_on_controller = iris_vpu_power_on_controller,
+ 	.calc_freq = iris_vpu3x_vpu4x_calculate_frequency,
++	.set_hwmode = iris_vpu_set_hwmode,
+ };
+ 
+ const struct vpu_ops iris_vpu35_ops = {
+@@ -283,4 +279,5 @@ const struct vpu_ops iris_vpu35_ops = {
+ 	.power_on_controller = iris_vpu35_vpu4x_power_on_controller,
+ 	.program_bootup_registers = iris_vpu35_vpu4x_program_bootup_registers,
+ 	.calc_freq = iris_vpu3x_vpu4x_calculate_frequency,
++	.set_hwmode = iris_vpu_set_hwmode,
+ };
+--- a/drivers/media/platform/qcom/iris/iris_vpu4x.c
++++ b/drivers/media/platform/qcom/iris/iris_vpu4x.c
+@@ -252,21 +252,10 @@ static int iris_vpu4x_power_on_hardware(
+ 		ret = iris_vpu4x_power_on_apv(core);
+ 		if (ret)
+ 			goto disable_hw_clocks;
+-
+-		iris_vpu4x_ahb_sync_reset_apv(core);
+ 	}
+ 
+-	iris_vpu4x_ahb_sync_reset_hardware(core);
+-
+-	ret = iris_vpu4x_genpd_set_hwmode(core, true, efuse_value);
+-	if (ret)
+-		goto disable_apv_power_domain;
+-
+ 	return 0;
+ 
+-disable_apv_power_domain:
+-	if (!(efuse_value & DISABLE_VIDEO_APV_BIT))
+-		iris_vpu4x_power_off_apv(core);
+ disable_hw_clocks:
+ 	iris_vpu4x_disable_hardware_clocks(core, efuse_value);
+ disable_vpp1_power_domain:
+@@ -359,6 +348,18 @@ disable_clocks_and_power:
+ 	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
+ }
+ 
++static int iris_vpu4x_set_hwmode(struct iris_core *core)
++{
++	u32 efuse_value = readl(core->reg_base + WRAPPER_EFUSE_MONITOR);
++
++	if (!(efuse_value & DISABLE_VIDEO_APV_BIT))
++		iris_vpu4x_ahb_sync_reset_apv(core);
++
++	iris_vpu4x_ahb_sync_reset_hardware(core);
++
++	return iris_vpu4x_genpd_set_hwmode(core, true, efuse_value);
++}
++
+ const struct vpu_ops iris_vpu4x_ops = {
+ 	.power_off_hw = iris_vpu4x_power_off_hardware,
+ 	.power_on_hw = iris_vpu4x_power_on_hardware,
+@@ -366,4 +367,5 @@ const struct vpu_ops iris_vpu4x_ops = {
+ 	.power_on_controller = iris_vpu35_vpu4x_power_on_controller,
+ 	.program_bootup_registers = iris_vpu35_vpu4x_program_bootup_registers,
+ 	.calc_freq = iris_vpu3x_vpu4x_calculate_frequency,
++	.set_hwmode = iris_vpu4x_set_hwmode,
+ };
+--- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
++++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+@@ -292,14 +292,8 @@ int iris_vpu_power_on_hw(struct iris_cor
+ 	if (ret && ret != -ENOENT)
+ 		goto err_disable_hw_clock;
+ 
+-	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], true);
+-	if (ret)
+-		goto err_disable_hw_ahb_clock;
+-
+ 	return 0;
+ 
+-err_disable_hw_ahb_clock:
+-	iris_disable_unprepare_clock(core, IRIS_HW_AHB_CLK);
+ err_disable_hw_clock:
+ 	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
+ err_disable_power:
+@@ -308,6 +302,16 @@ err_disable_power:
+ 	return ret;
+ }
+ 
++int iris_vpu_set_hwmode(struct iris_core *core)
++{
++	return dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], true);
++}
++
++int iris_vpu_switch_to_hwmode(struct iris_core *core)
++{
++	return core->iris_platform_data->vpu_ops->set_hwmode(core);
++}
++
+ int iris_vpu35_vpu4x_power_off_controller(struct iris_core *core)
+ {
+ 	u32 clk_rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
+--- a/drivers/media/platform/qcom/iris/iris_vpu_common.h
++++ b/drivers/media/platform/qcom/iris/iris_vpu_common.h
+@@ -21,6 +21,7 @@ struct vpu_ops {
+ 	int (*power_on_controller)(struct iris_core *core);
+ 	void (*program_bootup_registers)(struct iris_core *core);
+ 	u64 (*calc_freq)(struct iris_inst *inst, size_t data_size);
++	int (*set_hwmode)(struct iris_core *core);
+ };
+ 
+ int iris_vpu_boot_firmware(struct iris_core *core);
+@@ -30,6 +31,8 @@ int iris_vpu_watchdog(struct iris_core *
+ int iris_vpu_prepare_pc(struct iris_core *core);
+ int iris_vpu_power_on_controller(struct iris_core *core);
+ int iris_vpu_power_on_hw(struct iris_core *core);
++int iris_vpu_set_hwmode(struct iris_core *core);
++int iris_vpu_switch_to_hwmode(struct iris_core *core);
+ int iris_vpu_power_on(struct iris_core *core);
+ int iris_vpu_power_off_controller(struct iris_core *core);
+ void iris_vpu_power_off_hw(struct iris_core *core);
 
 
