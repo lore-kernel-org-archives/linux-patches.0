@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC193B19DE;
-	Fri, 15 May 2026 16:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F873B19DE;
+	Fri, 15 May 2026 16:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862802; cv=none; b=Jg0m0sjZOQHWWZhUqrR9StlzAzWRRtYFq2GQZ2ftXyp4diOqM8ARRPQW5+Zk7/LVAlIrnaq0S0BrbSq003ZLSKC19FZZ4qiO1RNf9kKAIsfPN+RNwkgPfvaEH374FMyK0OG3J2NmqcgCusBURndyrLlGIkqqXyx8uy629k6jQzE=
+	t=1778862805; cv=none; b=bC8q5ulgygBGd2jgKW+oS5q1CUJn+bQM1bPAequnmnegXbh9zOp+/9jHTDSxTFKA81Cz+Qpx46mk2LFmiGPLoHSglMETSIOb0J/i0vBciKfVV4XiCFQbVVsWho9Ka9bxH7YVi1STPyYCcaNyY89thhTJm++m35uWn6eK4gaoV5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862802; c=relaxed/simple;
-	bh=l7QSCD9z0MkKfg+23muROYEdaqBPnNfDoRSxF2F9pkA=;
+	s=arc-20240116; t=1778862805; c=relaxed/simple;
+	bh=zQDyTLhVaU/QFi1qY5rgmb+k9I87ButNpLmw1NWqtRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=is0/r5pWSptwsVplNJ8bxeiyXseqUW4POSDAlH+Wke3e9ZLo0uMpv7DQX242+U/+ibT24uA/RPXIBgTrcPAPvUqaU1+2MRtQMQaJZqhWyQLI80BudjY1QnareM3zD0bOfHYJzMfQ5kCAhGW+hioc0gHETqzxcnGwQrUaMrThClY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrOnicJU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N2dRIuOjWbt0/xWIQ9srK2xDIz0j3ibp7+hEaAPGam2wn9IWfuebwmZb0oC/+CzIKjyJThNDeonToYSV8iNnqTcVqax2PqePmrXFMpGYmSoOFlKALviAeNXYMO7Li9+zhpLIpQM37ThGDw+6TENqcEqUokex23wROIDnxyfcWXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+CwcBF3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrOnicJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25556C2BCC9;
-	Fri, 15 May 2026 16:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+CwcBF3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BA0C2BCB0;
+	Fri, 15 May 2026 16:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862802;
-	bh=l7QSCD9z0MkKfg+23muROYEdaqBPnNfDoRSxF2F9pkA=;
+	s=korg; t=1778862805;
+	bh=zQDyTLhVaU/QFi1qY5rgmb+k9I87ButNpLmw1NWqtRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrOnicJUcQuehCskNAgn8JB9yrzYjfBVOz3mRJ88yvewmo8xgkmFkbCj4gj55oJP5
-	 jRqRbOGLsAJ4PyyZuNEPUqiD72t5RYd4QTctXsOiPj2S0fSQpCalpYYC5z8Gp7r1mI
-	 6KUWld1IcKIdvf4zPqZTkhwjIA94KE4WjaHtQFD8=
+	b=z+CwcBF36QUoEhRNEK7GyhEKfiaBYXTpVerz1LxwlgPazJtf4PzNbxdeqajJpiuiu
+	 ivftHLM6q/lf99R9Ln1EFZy6XeZ6gVWaIYWDs1HNk2ljdcSsOiuA/J4Xpu/WH0ukaO
+	 nJNiLZx8t7sFnQQldO3mcwlWUT/0bZZLR+12exN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keiji Hayashibara <hayashibara.keiji@socionext.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Petr Malat <oss@malat.biz>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 189/201] spi: uniphier: fix controller deregistration
-Date: Fri, 15 May 2026 17:50:07 +0200
-Message-ID: <20260515154702.675544332@linuxfoundation.org>
+Subject: [PATCH 7.0 190/201] cgroup: Increment nr_dying_subsys_* from rmdir context
+Date: Fri, 15 May 2026 17:50:08 +0200
+Message-ID: <20260515154702.696773436@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -52,56 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Petr Malat <oss@malat.biz>
 
-[ Upstream commit 0245435f777264ac45945ed2f325dd095a41d1af ]
+[ Upstream commit 13e786b64bd3fd81c7eb22aa32bf8305c32f2ccf ]
 
-Make sure to deregister the controller before releasing underlying
-resources like DMA during driver unbind.
+Incrementing nr_dying_subsys_* in offline_css(), which is executed by
+cgroup_offline_wq worker, leads to a race where user can see the value
+to be 0 if he reads cgroup.stat after calling rmdir and before the worker
+executes. This makes the user wrongly expect resources released by the
+removed cgroup to be available for a new assignment.
 
-Note that clocks were also disabled before the recent commit
-fdca270f8f87 ("spi: uniphier: Simplify clock handling with
-devm_clk_get_enabled()").
+Increment nr_dying_subsys_* from kill_css(), which is called from the
+cgroup_rmdir() context.
 
-Fixes: 5ba155a4d4cc ("spi: add SPI controller driver for UniPhier SoC")
-Cc: stable@vger.kernel.org	# 4.19
-Cc: Keiji Hayashibara <hayashibara.keiji@socionext.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-25-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ab0312526867 ("cgroup: Show # of subsystem CSSes in cgroup.stat")
+Signed-off-by: Petr Malat <oss@malat.biz>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 93618edf7538 ("cgroup: Defer css percpu_ref kill on rmdir until cgroup is depopulated")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-uniphier.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/cgroup/cgroup.c |   22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
---- a/drivers/spi/spi-uniphier.c
-+++ b/drivers/spi/spi-uniphier.c
-@@ -746,7 +746,7 @@ static int uniphier_spi_probe(struct pla
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -5768,16 +5768,6 @@ static void offline_css(struct cgroup_su
+ 	RCU_INIT_POINTER(css->cgroup->subsys[ss->id], NULL);
  
- 	host->max_dma_len = min(dma_tx_burst, dma_rx_burst);
- 
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret)
- 		goto out_release_dma;
- 
-@@ -771,10 +771,16 @@ static void uniphier_spi_remove(struct p
- {
- 	struct spi_controller *host = platform_get_drvdata(pdev);
- 
-+	spi_controller_get(host);
-+
-+	spi_unregister_controller(host);
-+
- 	if (host->dma_tx)
- 		dma_release_channel(host->dma_tx);
- 	if (host->dma_rx)
- 		dma_release_channel(host->dma_rx);
-+
-+	spi_controller_put(host);
+ 	wake_up_all(&css->cgroup->offline_waitq);
+-
+-	css->cgroup->nr_dying_subsys[ss->id]++;
+-	/*
+-	 * Parent css and cgroup cannot be freed until after the freeing
+-	 * of child css, see css_free_rwork_fn().
+-	 */
+-	while ((css = css->parent)) {
+-		css->nr_descendants--;
+-		css->cgroup->nr_dying_subsys[ss->id]++;
+-	}
  }
  
- static const struct of_device_id uniphier_spi_match[] = {
+ /**
+@@ -6089,6 +6079,8 @@ static void css_killed_ref_fn(struct per
+  */
+ static void kill_css(struct cgroup_subsys_state *css)
+ {
++	struct cgroup_subsys *ss = css->ss;
++
+ 	lockdep_assert_held(&cgroup_mutex);
+ 
+ 	if (css->flags & CSS_DYING)
+@@ -6125,6 +6117,16 @@ static void kill_css(struct cgroup_subsy
+ 	 * css is confirmed to be seen as killed on all CPUs.
+ 	 */
+ 	percpu_ref_kill_and_confirm(&css->refcnt, css_killed_ref_fn);
++
++	css->cgroup->nr_dying_subsys[ss->id]++;
++	/*
++	 * Parent css and cgroup cannot be freed until after the freeing
++	 * of child css, see css_free_rwork_fn().
++	 */
++	while ((css = css->parent)) {
++		css->nr_descendants--;
++		css->cgroup->nr_dying_subsys[ss->id]++;
++	}
+ }
+ 
+ /**
 
 
