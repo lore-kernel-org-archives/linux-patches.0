@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE32C3FF1A0;
-	Fri, 15 May 2026 15:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738FA3FF1CD;
+	Fri, 15 May 2026 15:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860252; cv=none; b=ubtENazVo+dmEMPIdtCiJUb+CjigY7CmxBlCJn6m/XiLyMp77P/9TVDJ21f8WbdbjcXswsjdXPYUd8nVbSs6eI4bmv3ioSMjGV42UAN/z6gPjrYgOiZX1OHD6M1LVv4dmZsdUCs1U7LVAEW54Rw70bUHRlUXsCIdgnE7UjZM1VQ=
+	t=1778860255; cv=none; b=Vhd39t9i1/39SHZkCt4KfA/X61sQR/Z0eOOqZ4Xdj7EiletkBI3vehJF4UZomDxjXB1qbVoo+cSn0C0eiEqrpFX4PzoGHG87HBpQQGO2vOk//virM3DGXaxMidoBmcLzFoGbFE261val7P2OWQOaCv1x9oC9sJsschEnEqOMCY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860252; c=relaxed/simple;
-	bh=Ds6C+7cgT01GdYv8ATgRY6US0Kd79d0KWCUjzIIaK/A=;
+	s=arc-20240116; t=1778860255; c=relaxed/simple;
+	bh=hUSOUCMKxmn9+L+WSGXvkHUODeqIR9Qk2Nz6qVDCve0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tN8haRnfVC2QLujzj4SC0fhYWT+h87M+8/NNSSzW5Iuh2X61pzyswG5TTQSxKGSYYTjeFlw0XsVcKiaHE4YbMRHutp4I2ZkZkoWazdi3XZD0ZB5umxp4xUDLvqOR3P4F4Vn0qqRmwtB5lEjRHMvwk2F7VMnICmYYBVpnkVOk/9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7Zp0jVY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K9pOc4hAiRlz0PNROwhmGC5c/umy4mHVrHguLrZefy5oqk6uhsVZQdP5Jbyq8dSs+AWSkXTufafCIrhAMqSAxorjY0/EAUynwkJEuqccD3NyOA2D4tUD7xnLr/IInnkrEX70giKAdHOhUTc8jjBS8UN+DY1tlMuDXZWkL9sFJL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jW2zIsy4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7Zp0jVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DF9C2BCB0;
-	Fri, 15 May 2026 15:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jW2zIsy4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08D3BC2BCB0;
+	Fri, 15 May 2026 15:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860252;
-	bh=Ds6C+7cgT01GdYv8ATgRY6US0Kd79d0KWCUjzIIaK/A=;
+	s=korg; t=1778860255;
+	bh=hUSOUCMKxmn9+L+WSGXvkHUODeqIR9Qk2Nz6qVDCve0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a7Zp0jVYMGC/qoBVpfCA4u1yWMffb4haGBSSPsk/pUp4OrqJ7QiDZiUoiErD2QhUb
-	 GKKRWaDhoEOGpb3d7ABpCcAOPfiz0n8y66CyzReJztSidkLi3Z2ckf3KbuH+vDLAZp
-	 ndigyyU4c+Wdy6FOz65SjsoZAn9KuxDg+tVBa7qU=
+	b=jW2zIsy4qTFR9EfM2BfuUj5rtp/+4fRIhm/O87drSAmjqQMl6SujaWJFWVVvEpKkk
+	 lXkD34AZ+U4IgAD4otH5VVfpgmqjrvB7gcRaRD+zS/fG455azDj/Q0kz/Iq8+a9uiC
+	 Ll/vJ1maWj4aE4MN+Opz24kDDQK5uLuLZp6IE1lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ziyi Guo <n7l8m4@u.northwestern.edu>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 006/144] media: chips-media: wave5: add missing spinlock protection for send_eos_event()
-Date: Fri, 15 May 2026 17:47:12 +0200
-Message-ID: <20260515154653.627734661@linuxfoundation.org>
+Subject: [PATCH 6.12 007/144] media: chips-media: wave5: add missing spinlock protection for handle_dynamic_resolution_change()
+Date: Fri, 15 May 2026 17:47:13 +0200
+Message-ID: <20260515154653.652721537@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -53,21 +53,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-commit f48050436746be75227fbc90066a8658cbe94d17 upstream.
+commit cb8bdd3ffca280d014311ab395651d33f58a8708 upstream.
 
-Add spin_lock_irqsave()/spin_unlock_irqrestore() around send_eos_event()
-calls in the VB2 buffer queue and streamoff callbacks to fix the missing
-lock protection.
+Add spin_lock_irqsave()/spin_unlock_irqrestore() around the
+handle_dynamic_resolution_change() call in initialize_sequence() to fix
+the missing lock protection.
 
-wave5_vpu_dec_buf_queue_dst() and streamoff_output() call send_eos_event()
-without holding inst->state_spinlock. However, send_eos_event() has
-lockdep_assert_held(&inst->state_spinlock) indicating that callers must
-hold this lock.
+initialize_sequence() calls handle_dynamic_resolution_change() without
+holding inst->state_spinlock. However, handle_dynamic_resolution_change()
+has lockdep_assert_held(&inst->state_spinlock) indicating that callers
+must hold this lock.
 
-Other callers of send_eos_event() properly acquire the spinlock:
-- wave5_vpu_dec_finish_decode() acquires lock at line 431
-- wave5_vpu_dec_encoder_cmd() acquires lock at line 821
-- wave5_vpu_dec_device_run() acquires lock at line 1592
+Other callers of handle_dynamic_resolution_change() properly acquire the
+spinlock:
+- wave5_vpu_dec_finish_decode()
+- wave5_vpu_dec_device_run()
 
 Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
@@ -77,43 +77,28 @@ Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
 +++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-@@ -1345,13 +1345,17 @@ static void wave5_vpu_dec_buf_queue_dst(
+@@ -1625,6 +1625,7 @@ static int initialize_sequence(struct vp
+ {
+ 	struct dec_initial_info initial_info;
+ 	int ret = 0;
++	unsigned long flags;
  
- 	if (vb2_is_streaming(vb->vb2_queue) && v4l2_m2m_dst_buf_is_last(m2m_ctx)) {
- 		unsigned int i;
-+		unsigned long flags;
+ 	memset(&initial_info, 0, sizeof(struct dec_initial_info));
  
- 		for (i = 0; i < vb->num_planes; i++)
- 			vb2_set_plane_payload(vb, i, 0);
+@@ -1646,7 +1647,9 @@ static int initialize_sequence(struct vp
+ 		return ret;
+ 	}
  
- 		vbuf->field = V4L2_FIELD_NONE;
++	spin_lock_irqsave(&inst->state_spinlock, flags);
+ 	handle_dynamic_resolution_change(inst);
++	spin_unlock_irqrestore(&inst->state_spinlock, flags);
  
-+		spin_lock_irqsave(&inst->state_spinlock, flags);
- 		send_eos_event(inst);
-+		spin_unlock_irqrestore(&inst->state_spinlock, flags);
-+
- 		v4l2_m2m_last_buffer_done(m2m_ctx, vbuf);
- 	} else {
- 		v4l2_m2m_buf_queue(m2m_ctx, vbuf);
-@@ -1492,8 +1496,13 @@ static int streamoff_output(struct vb2_q
- 	inst->codec_info->dec_info.stream_rd_ptr = new_rd_ptr;
- 	inst->codec_info->dec_info.stream_wr_ptr = new_rd_ptr;
- 
--	if (v4l2_m2m_has_stopped(m2m_ctx))
-+	if (v4l2_m2m_has_stopped(m2m_ctx)) {
-+		unsigned long flags;
-+
-+		spin_lock_irqsave(&inst->state_spinlock, flags);
- 		send_eos_event(inst);
-+		spin_unlock_irqrestore(&inst->state_spinlock, flags);
-+	}
- 
- 	/* streamoff on output cancels any draining operation */
- 	inst->eos = false;
+ 	return 0;
+ }
 
 
