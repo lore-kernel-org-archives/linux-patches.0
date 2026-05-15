@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C6130569C;
-	Fri, 15 May 2026 16:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80353CF045;
+	Fri, 15 May 2026 16:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860981; cv=none; b=oyCQK3nqvT+PpCoARnbeFPAuUAhDSBDFlRM1WuAXo0lxGoDv97aZpR3uScWdML04i59PoaPFJpvLSBP//RZX7u8lmOLCISeA18WZnclJ8FS9BH+I5m6pdu15E2X9P96zrMUdNTRZXKTHvRcTVjHPShCWL97w7YvjOdWZP1kHMCY=
+	t=1778860983; cv=none; b=k9ed4hlPH8GBTv/qaeGBTF2l+oUTgQ4DP2kIhjJ4vBvlbPkTsCv5OSh2KPaj/G/edgPp2fmLmTUcmTIJOA1SmTmQkNKjdOwcm0MdxyiqMk/sFT25cjaJNh66QCjkGFm/Gfe82wlyufUR8/+QqImdJGYIl6EU6N438xEWCsOluaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860981; c=relaxed/simple;
-	bh=QEOtfw+dVuM36bPCmYqEvBwdHlREAC8obwcUvagroiw=;
+	s=arc-20240116; t=1778860983; c=relaxed/simple;
+	bh=Xyq4I1JVTTDZj7s5rr2BuEC4gn7hepMaQhlaElsgr8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P45pxRfOaokQ7RreA322msQ4cadz7VeggHTWd5ZCUWdR4+MNc1ISpxVzr24nRtivV5w5Re+c5rzY8AFnVd669JRPcnzet+VTQpc0SIDTIUQkqkAbyv4yqVQSz/YQoDItayuIJTKDFxg2NCOKmfa7V+ny2BO/o+MYIgvKz/usOvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bq5r6Vob; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uA5aDHZhHwJpNXd6lugY0uMhPixgL1YUUhhNI9XhmVGkuogtPPn4bo7YbH5L/fhMEBUDMikN1ByJ/xKscLAjxxb3rYisW3Bz6qVlk+Kgdm92jv4e4UOPuL994pwmmOoT6HvkXmmsC+5fOCUNKHmGJ01rfiFU1RNB/kQq3eMtQDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7AeP6Tf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bq5r6Vob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9DEC2BCB0;
-	Fri, 15 May 2026 16:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7AeP6Tf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF6AC2BCB0;
+	Fri, 15 May 2026 16:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860980;
-	bh=QEOtfw+dVuM36bPCmYqEvBwdHlREAC8obwcUvagroiw=;
+	s=korg; t=1778860983;
+	bh=Xyq4I1JVTTDZj7s5rr2BuEC4gn7hepMaQhlaElsgr8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bq5r6Vob5zDjLBP68n9JBe525p8LVNikPyozcN3VCxVJrG/vCVZXAncn02Ep3TjZI
-	 QJ1jCsVAvrz3sA+AbAlrZ/922eoSAuo/iMBdog1A6isa3dFSrlTy/dEFSKnlSMIxMx
-	 rakvLbtgUyWjDua8U1yeWJANIqkQz1vGz41Wyj/c=
+	b=a7AeP6Tf9qPQC37IdbQedK4Zdp7l4moXEKcngEKPFudiY/x88VNmaSQEdGBrZVmoQ
+	 FqBla+1cgVREcfhJ/dSOOByPqbRy5yS53+Us37pLaNuOD/WTmDtFc00fuiw+9a8aXO
+	 C0HU58xgq2nnQ+Op9hvSglt1k0Av3EzK9WaMSl6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivam Kalra <shivamkalra98@zohomail.in>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 151/474] ACPI: video: force native backlight on HP OMEN 16 (8A44)
-Date: Fri, 15 May 2026 17:44:20 +0200
-Message-ID: <20260515154718.293736241@linuxfoundation.org>
+	Sina Hassani <sina@openai.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.6 152/474] iommufd: Fix a race with concurrent allocation and unmap
+Date: Fri, 15 May 2026 17:44:21 +0200
+Message-ID: <20260515154718.314731343@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,49 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivam Kalra <shivamkalra98@zohomail.in>
+From: Sina Hassani <sina@openai.com>
 
-commit 4b506ea5351a1f5937ac632a4a5c35f6f796cc41 upstream.
+commit 8602018b1f17fbdaa5e5d79f4c8603ad20640c12 upstream.
 
-The HP OMEN 16 Gaming Laptop (board name 8A44) has a mux-less hybrid
-GPU configuration with AMD Rembrandt (Radeon 680M) and NVIDIA GA104
-(RTX 3070 Ti). The internal eDP panel is wired to the AMD iGPU.
+iopt_unmap_iova_range() releases the lock on iova_rwsem inside the loop
+body when getting to the more expensive unmap operations. This is fine on
+its own, except the loop condition is based on the first area that matches
+the unmap address range. If a concurrent call to map picks an area that
+was unmapped in previous iterations, the loop mistakenly tries to unmap
+it.
 
-When Nouveau loads without GSP firmware, the ACPI video backlight
-device (acpi_video0) gets registered alongside the native AMD
-backlight (amdgpu_bl2). In this state, writes to amdgpu_bl2 update
-the software brightness value but fail to change the physical panel
-brightness.
+This is reproducible by having one userspace thread map buffers and pass
+them to another thread that unmaps them. The problem manifests as EBUSY
+errors with single page mappings.
 
-Force native backlight to prevent acpi_video0 from registering.
-Confirmed that booting with acpi_backlight=native resolves the
-issue.
+Fix this by advancing the start pointer after unmapping an area. This
+ensures each iteration only examines the IOVA range that remains mapped,
+which is guaranteed not to have overlaps.
 
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Shivam Kalra <shivamkalra98@zohomail.in>
-Link: https://patch.msgid.link/20260426-omen-16-backlight-fix-v1-1-62364f268ea6@zohomail.in
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 51fe6141f0f6 ("iommufd: Data structure to provide IOVA to PFN mapping")
+Link: https://patch.msgid.link/r/CAAJpGJSR4r_ds1JOjmkqHtsBPyxu8GntoeW08Sk5RNQPmgi+tg@mail.gmail.com
+Signed-off-by: Sina Hassani <sina@openai.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iommu/iommufd/io_pagetable.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -820,6 +820,14 @@ static const struct dmi_system_id video_
- 		DMI_MATCH(DMI_PRODUCT_NAME, "Z830"),
- 		},
- 	},
-+	{
-+	 .callback = video_detect_force_native,
-+	 /* HP OMEN Gaming Laptop 16-n0xxx */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16-n0xxx"),
-+		},
-+	},
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -552,6 +552,16 @@ again:
+ 		unmapped_bytes += area_last - area_first + 1;
  
- 	/*
- 	 * Models which have nvidia-ec-wmi support, but should not use it.
+ 		down_write(&iopt->iova_rwsem);
++
++		/*
++		 * After releasing the iova_rwsem concurrent allocation could
++		 * place new areas at IOVAs we have already unmapped. Keep
++		 * moving the start of the search forward to ignore the area
++		 * already unmapped.
++		 */
++		if (area_last >= last)
++			break;
++		start = area_last + 1;
+ 	}
+ 
+ out_unlock_iova:
 
 
