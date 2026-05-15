@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB943F9286;
-	Fri, 15 May 2026 16:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50B23E008C;
+	Fri, 15 May 2026 16:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861611; cv=none; b=PFzbGptBQrtXJcCmy2ldcFBmgii3JzktBiWIcqYikLo9hEYdNkTmoUWJhwQHnXQNYJ0H9zqc8hz+nweGi+kl+54gjuRtq8kfOyg6WG4jwKB3jZVCee6cNzUEgqyXt5f1uvKq2QspEyZEDZHW6w/6jzulOV89tbGG1IffBzBqHnc=
+	t=1778861614; cv=none; b=PlMvO+Sh09CR1+rQA3rX3iXKGuCevMPCihNuBerrMDTQ+3+VdZqT6dorzBKhkdkv5NYzVzdJJSDIx2VgJiN7XoPWPnxhksTaDoIih1+BX4kB+OIK3WKnhUzegGkaqDHynLqhDr9OwewIZVkcJdTCr3styxsjA+n/n2WNxEpbV7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861611; c=relaxed/simple;
-	bh=n+61z/y33O6ThrdX/qe8lVCuFbsFuc9otHrv++L+rag=;
+	s=arc-20240116; t=1778861614; c=relaxed/simple;
+	bh=eEsfv3YqyeKh9umxlp5QNGnVcguT4X7OSf9RlS7hrU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KLDI3YQUCrVVJeGEmRtTrJ5eiAPm9f1idsB0NRd8Wsr69+n3j/mAeyZ26dvkBx9HU4gulyCgj5OD2J0Pi2jqN0baMCBStytFlwAEwhkffV98Kf5D7uObqa8UPOhrDBAt3erZsX+QmYiYZmpoS5+MK1ISQw2Wl5T2Jb8rRuw1Ywc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFpdM2zp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TiWvudvZnjIgQp0RWobo92+zDkzWLrjfV0iQYpGPSLrGEGeeSNSZPRG51G2hYBMm0DtPZ4864IfjWycf+GBLs+7SRNpi34gg5QMtgtbQMZRWvwaZUGaXXp1Aw2qufVMAMr3xUVak0bS324nwzLVcPK0Mt/wg6+4ZnH1bqEnvPe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=No5DG8Ze; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFpdM2zp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C11C2BCC9;
-	Fri, 15 May 2026 16:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="No5DG8Ze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFE8C2BCB3;
+	Fri, 15 May 2026 16:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861611;
-	bh=n+61z/y33O6ThrdX/qe8lVCuFbsFuc9otHrv++L+rag=;
+	s=korg; t=1778861613;
+	bh=eEsfv3YqyeKh9umxlp5QNGnVcguT4X7OSf9RlS7hrU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFpdM2zpXK7o2fjPsyd2Ys2ziLvWcrbj4l5hSj2OtN2tq//W7xFsX3Sf/FxqLoB2G
-	 VGV2uMjxFXLF47m8adUp5KBhHsYfYaUsmsjyVAyaetjleMzq7xF/cFq/9DSe9AKB0f
-	 OCg/zgHvcAcJT0NIXuZMY8yS63JrXb2SW71ih/2Q=
+	b=No5DG8ZeMb+FmiuPR9kuk83VFws0R43iv4oxs64Pab0ZcukC+Ga6wYyojxDfKhnrq
+	 VBYoJxDv86kGn+9l/30M3/RalBhTUP1ltkIRxXQJgmvgdnCqEvpH7w+dNrkBNwiBj4
+	 MhM1wmVn5jZDdudqqBngJT40/d0LERFCbbPrd7nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seohyeon Maeng <bioloidgp@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Luke Wang <ziniu.wang_1@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 396/474] udf: fix partition descriptor append bookkeeping
-Date: Fri, 15 May 2026 17:48:25 +0200
-Message-ID: <20260515154723.614651122@linuxfoundation.org>
+Subject: [PATCH 6.6 397/474] mmc: core: Optimize time for secure erase/trim for some Kingston eMMCs
+Date: Fri, 15 May 2026 17:48:26 +0200
+Message-ID: <20260515154723.637015300@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,58 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seohyeon Maeng <bioloidgp@gmail.com>
+From: Luke Wang <ziniu.wang_1@nxp.com>
 
-[ Upstream commit 08841b06fa64d8edbd1a21ca6e613420c90cc4b8 ]
+[ Upstream commit d6bf2e64dec87322f2b11565ddb59c0e967f96e3 ]
 
-Mounting a crafted UDF image with repeated partition descriptors can
-trigger a heap out-of-bounds write in part_descs_loc[].
+Kingston eMMC IY2964 and IB2932 takes a fixed ~2 seconds for each secure
+erase/trim operation regardless of size - that is, a single secure
+erase/trim operation of 1MB takes the same time as 1GB. With default
+calculated 3.5MB max discard size, secure erase 1GB requires ~300 separate
+operations taking ~10 minutes total.
 
-handle_partition_descriptor() deduplicates entries by partition number,
-but appended slots never record partnum. As a result duplicate
-Partition Descriptors are appended repeatedly and num_part_descs keeps
-growing.
+Add a card quirk, MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME, to set maximum
+secure erase size for those devices. This allows 1GB secure erase to
+complete in a single operation, reducing time from 10 minutes to just 2
+seconds.
 
-Once the table is full, the growth path still sizes the allocation from
-partnum even though inserts are indexed by num_part_descs. If partnum is
-already aligned to PART_DESC_ALLOC_STEP, ALIGN(partnum, step) can keep
-the old capacity and the next append writes past the end of the table.
-
-Store partnum in the appended slot and size growth from the next append
-count so deduplication and capacity tracking follow the same model.
-
-Fixes: ee4af50ca94f ("udf: Fix mounting of Win7 created UDF filesystems")
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Seohyeon Maeng <bioloidgp@gmail.com>
-Link: https://patch.msgid.link/20260310081652.21220-1-bioloidgp@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
-[ replaced kzalloc_objs() helper with equivalent kcalloc() ]
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+[ adapted `lim->max_secure_erase_sectors =` assignment to `blk_queue_max_secure_erase_sectors(q, ...)` setter and used pre-rename `mmc_can_secure_erase_trim`/`mmc_can_trim` helpers ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/super.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/core/card.h   |    5 +++++
+ drivers/mmc/core/queue.c  |    8 ++++++--
+ drivers/mmc/core/quirks.h |    9 +++++++++
+ include/linux/mmc/card.h  |    1 +
+ 4 files changed, 21 insertions(+), 2 deletions(-)
 
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1656,8 +1656,9 @@ static struct udf_vds_record *handle_par
- 			return &(data->part_descs_loc[i].rec);
- 	if (data->num_part_descs >= data->size_part_descs) {
- 		struct part_desc_seq_scan_data *new_loc;
--		unsigned int new_size = ALIGN(partnum, PART_DESC_ALLOC_STEP);
-+		unsigned int new_size;
- 
-+		new_size = data->num_part_descs + PART_DESC_ALLOC_STEP;
- 		new_loc = kcalloc(new_size, sizeof(*new_loc), GFP_KERNEL);
- 		if (!new_loc)
- 			return ERR_PTR(-ENOMEM);
-@@ -1667,6 +1668,7 @@ static struct udf_vds_record *handle_par
- 		data->part_descs_loc = new_loc;
- 		data->size_part_descs = new_size;
- 	}
-+	data->part_descs_loc[data->num_part_descs].partnum = partnum;
- 	return &(data->part_descs_loc[data->num_part_descs++].rec);
+--- a/drivers/mmc/core/card.h
++++ b/drivers/mmc/core/card.h
+@@ -297,4 +297,9 @@ static inline int mmc_card_no_uhs_ddr50_
+ 	return c->quirks & MMC_QUIRK_NO_UHS_DDR50_TUNING;
  }
  
++static inline int mmc_card_fixed_secure_erase_trim_time(const struct mmc_card *c)
++{
++	return c->quirks & MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME;
++}
++
+ #endif
+--- a/drivers/mmc/core/queue.c
++++ b/drivers/mmc/core/queue.c
+@@ -188,8 +188,12 @@ static void mmc_queue_setup_discard(stru
+ 	/* granularity must not be greater than max. discard */
+ 	if (card->pref_erase > max_discard)
+ 		q->limits.discard_granularity = SECTOR_SIZE;
+-	if (mmc_can_secure_erase_trim(card))
+-		blk_queue_max_secure_erase_sectors(q, max_discard);
++	if (mmc_can_secure_erase_trim(card)) {
++		if (mmc_card_fixed_secure_erase_trim_time(card))
++			blk_queue_max_secure_erase_sectors(q, UINT_MAX >> card->erase_shift);
++		else
++			blk_queue_max_secure_erase_sectors(q, max_discard);
++	}
+ 	if (mmc_can_trim(card) && card->erased_byte == 0)
+ 		blk_queue_max_write_zeroes_sectors(q, max_discard);
+ }
+--- a/drivers/mmc/core/quirks.h
++++ b/drivers/mmc/core/quirks.h
+@@ -153,6 +153,15 @@ static const struct mmc_fixup __maybe_un
+ 	MMC_FIXUP("M62704", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
+ 		  MMC_QUIRK_TRIM_BROKEN),
+ 
++	/*
++	 * On Some Kingston eMMCs, secure erase/trim time is independent
++	 * of erase size, fixed at approximately 2 seconds.
++	 */
++	MMC_FIXUP("IY2964", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
++		  MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME),
++	MMC_FIXUP("IB2932", CID_MANFID_KINGSTON, 0x0100, add_quirk_mmc,
++		  MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME),
++
+ 	END_FIXUP
+ };
+ 
+--- a/include/linux/mmc/card.h
++++ b/include/linux/mmc/card.h
+@@ -298,6 +298,7 @@ struct mmc_card {
+ #define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
+ #define MMC_QUIRK_BROKEN_SD_POWEROFF_NOTIFY	(1<<17) /* Disable broken SD poweroff notify support */
+ #define MMC_QUIRK_NO_UHS_DDR50_TUNING	(1<<18) /* Disable DDR50 tuning */
++#define MMC_QUIRK_FIXED_SECURE_ERASE_TRIM_TIME	(1<<20) /* Secure erase/trim time is fixed regardless of size */
+ 
+ 	bool			written_flag;	/* Indicates eMMC has been written since power on */
+ 	bool			reenable_cmdq;	/* Re-enable Command Queue */
 
 
