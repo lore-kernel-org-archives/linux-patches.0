@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523383F44F4;
-	Fri, 15 May 2026 16:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0C83E0090;
+	Fri, 15 May 2026 16:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861655; cv=none; b=fJM8SGMmqrlRzc04YjzFUvFGcDJ+MYk4Ity+eV1DyaJTHycTD4MBWImUcWHNa1mDIGW+EuEXZEUu27VFpCN6DuTjAC564gxRnGwDq9R5W3xzwbuadWFIvWHYuy0U8U/BRGeSkJ2YISk2p7/j6gPdMaFlnav0+zsVPw90+Hd04jI=
+	t=1778861657; cv=none; b=hR6Gpz/DsvwS6/2cWa0pq/R9i/KpCUXOyUlZCPj6P0EdAuCxmPHhvX/Zj8xEZ/rmjk/4hepUxPK11Ia7iHMCelwXglof6IyAbjcvUam93PbVQAOgKAjjSTSyGdl7duZDxtR/qkXnGn3ng+ngoXTDaGz/EY6Bi0KS5WJR17QmIWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861655; c=relaxed/simple;
-	bh=jx7sv5EUY3KzO3X2BYxNwxH44iLeQLqjcEZe7O5t6JA=;
+	s=arc-20240116; t=1778861657; c=relaxed/simple;
+	bh=ytPqvQlBQ1tMvd/kmz/Jig+4ud2EIMAXpkGzv0E3emA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZfx4clPAjZhR7UM6Gy2A9A0GGgCQkuAp+XP04Y0atn6sxsJ365DTQizCQO6+luGCx0zOS2aEaKHgqjBVMQ+lvKRCe7V59GI2/5M5tsNPHC34XvLkbCqyV+u6+Pc1zi8IxtNeY98+4Mx68ypadppVTxneh/5KFBXesQtEg/+QIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8AagCuK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uBZy83pE5ufid3GwTxCrcZh/H//sC/pV2cMCL+CcsVAZZgboQWTKtbJRgn0ubMZnB3L5SozmLNPC+CDoQa4Q0EihPakg1U1+1yiTVU3pKAeuR7G7q677B7HTXDzTQiUvcnYGPxjfjS0m5KB0N62R1QGI2jzi+MAoCpJy8abEY5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cie34h8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8AagCuK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8A1C2BCB0;
-	Fri, 15 May 2026 16:14:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cie34h8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75223C2BCB3;
+	Fri, 15 May 2026 16:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861655;
-	bh=jx7sv5EUY3KzO3X2BYxNwxH44iLeQLqjcEZe7O5t6JA=;
+	s=korg; t=1778861657;
+	bh=ytPqvQlBQ1tMvd/kmz/Jig+4ud2EIMAXpkGzv0E3emA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T8AagCuKwrGBr7K8Hx2bDSMZjy05H2+6E0bpOIuMCE4GUMhZ6lEcCDZy++U5Py84F
-	 WHt8jtPNQDzo2gqgs597M56bZDi1OfhyXmLtlipl64zpOwID3Dj37GJfvt/IABr2IB
-	 yNFJ7B0pF9Vds+1EjrIrzB1Wt0nvhqko7a6TeGiM=
+	b=Cie34h8uZWgltwLnYoYyskLveNVUpw9geSLYsZsIMWCXDgZlBUFT0Ulp8IkRpytAA
+	 bF7EZGt76RA/I5d+0a5F/jzUVHkzSpdPTTk5l32hF9TZGN7JFTWg/AnUs+vqPswX1p
+	 FW4IE1d/ngU6GeKcu6hwH1tkBXRvKl6cD4UsTKMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <linux@armlinux.org.uk>,
-	Sam Edwards <CFSworks@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	David Carlier <devnexen@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 411/474] net: stmmac: Prevent NULL deref when RX memory exhausted
-Date: Fri, 15 May 2026 17:48:40 +0200
-Message-ID: <20260515154723.948125021@linuxfoundation.org>
+Subject: [PATCH 6.6 412/474] tracepoint: balance regfunc() on func_add() failure in tracepoint_add_func()
+Date: Fri, 15 May 2026 17:48:41 +0200
+Message-ID: <20260515154723.969897741@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,117 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Edwards <cfsworks@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 0bb05e6adfa99a2ea1fee1125cc0953409f83ed8 ]
+[ Upstream commit fad217e16fded7f3c09f8637b0f6a224d58b5f2e ]
 
-The CPU receives frames from the MAC through conventional DMA: the CPU
-allocates buffers for the MAC, then the MAC fills them and returns
-ownership to the CPU. For each hardware RX queue, the CPU and MAC
-coordinate through a shared ring array of DMA descriptors: one
-descriptor per DMA buffer. Each descriptor includes the buffer's
-physical address and a status flag ("OWN") indicating which side owns
-the buffer: OWN=0 for CPU, OWN=1 for MAC. The CPU is only allowed to set
-the flag and the MAC is only allowed to clear it, and both must move
-through the ring in sequence: thus the ring is used for both
-"submissions" and "completions."
+When a tracepoint goes through the 0 -> 1 transition, tracepoint_add_func()
+invokes the subsystem's ext->regfunc() before attempting to install the
+new probe via func_add(). If func_add() then fails (for example, when
+allocate_probes() cannot allocate a new probe array under memory pressure
+and returns -ENOMEM), the function returns the error without calling the
+matching ext->unregfunc(), leaving the side effects of regfunc() behind
+with no installed probe to justify them.
 
-In the stmmac driver, stmmac_rx() bookmarks its position in the ring
-with the `cur_rx` index. The main receive loop in that function checks
-for rx_descs[cur_rx].own=0, gives the corresponding buffer to the
-network stack (NULLing the pointer), and increments `cur_rx` modulo the
-ring size. After the loop exits, stmmac_rx_refill(), which bookmarks its
-position with `dirty_rx`, allocates fresh buffers and rearms the
-descriptors (setting OWN=1). If it fails any allocation, it simply stops
-early (leaving OWN=0) and will retry where it left off when next called.
+For syscall tracepoints this is particularly unpleasant: syscall_regfunc()
+bumps sys_tracepoint_refcount and sets SYSCALL_TRACEPOINT on every task.
+After a leaked failure, the refcount is stuck at a non-zero value with no
+consumer, and every task continues paying the syscall trace entry/exit
+overhead until reboot. Other subsystems providing regfunc()/unregfunc()
+pairs exhibit similarly scoped persistent state.
 
-This means descriptors have a three-stage lifecycle (terms my own):
-- `empty` (OWN=1, buffer valid)
-- `full` (OWN=0, buffer valid and populated)
-- `dirty` (OWN=0, buffer NULL)
+Mirror the existing 1 -> 0 cleanup and call ext->unregfunc() in the
+func_add() error path, gated on the same condition used there so the
+unwind is symmetric with the registration.
 
-But because stmmac_rx() only checks OWN, it confuses `full`/`dirty`. In
-the past (see 'Fixes:'), there was a bug where the loop could cycle
-`cur_rx` all the way back to the first descriptor it dirtied, resulting
-in a NULL dereference when mistaken for `full`. The aforementioned
-commit resolved that *specific* failure by capping the loop's iteration
-limit at `dma_rx_size - 1`, but this is only a partial fix: if the
-previous stmmac_rx_refill() didn't complete, then there are leftover
-`dirty` descriptors that the loop might encounter without needing to
-cycle fully around. The current code therefore panics (see 'Closes:')
-when stmmac_rx_refill() is memory-starved long enough for `cur_rx` to
-catch up to `dirty_rx`.
-
-Fix this by explicitly checking, before advancing `cur_rx`, if the next
-entry is dirty; exit the loop if so. This prevents processing of the
-final, used descriptor until stmmac_rx_refill() succeeds, but
-fully prevents the `cur_rx == dirty_rx` ambiguity as the previous bugfix
-intended: so remove the clamp as well. Since stmmac_rx_zc() is a
-copy-paste-and-tweak of stmmac_rx() and the code structure is identical,
-any fix to stmmac_rx() will also need a corresponding fix for
-stmmac_rx_zc(). Therefore, apply the same check there.
-
-In stmmac_rx() (not stmmac_rx_zc()), a related bug remains: after the
-MAC sets OWN=0 on the final descriptor, it will be unable to send any
-further DMA-complete IRQs until it's given more `empty` descriptors.
-Currently, the driver simply *hopes* that the next stmmac_rx_refill()
-succeeds, risking an indefinite stall of the receive process if not. But
-this is not a regression, so it can be addressed in a future change.
-
-Fixes: b6cb4541853c7 ("net: stmmac: avoid rx queue overrun")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221010
+Fixes: 8cf868affdc4 ("tracing: Have the reg function allow to fail")
 Cc: stable@vger.kernel.org
-Suggested-by: Russell King <linux@armlinux.org.uk>
-Signed-off-by: Sam Edwards <CFSworks@gmail.com>
-Link: https://patch.msgid.link/20260422044503.5349-1-CFSworks@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20260413190601.21993-1-devnexen@gmail.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[ changed `tp->ext->unregfunc` to `tp->unregfunc` to match older struct layout ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ kernel/tracepoint.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5143,9 +5143,12 @@ read_again:
- 			break;
- 
- 		/* Prefetch the next RX descriptor */
--		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
--						priv->dma_conf.dma_rx_size);
--		next_entry = rx_q->cur_rx;
-+		next_entry = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
-+					       priv->dma_conf.dma_rx_size);
-+		if (unlikely(next_entry == rx_q->dirty_rx))
-+			break;
-+
-+		rx_q->cur_rx = next_entry;
- 
- 		if (priv->extend_desc)
- 			np = (struct dma_desc *)(rx_q->dma_erx + next_entry);
-@@ -5283,7 +5286,6 @@ static int stmmac_rx(struct stmmac_priv
- 
- 	dma_dir = page_pool_get_dma_dir(rx_q->page_pool);
- 	bufsz = DIV_ROUND_UP(priv->dma_conf.dma_buf_sz, PAGE_SIZE) * PAGE_SIZE;
--	limit = min(priv->dma_conf.dma_rx_size - 1, (unsigned int)limit);
- 
- 	if (netif_msg_rx_status(priv)) {
- 		void *rx_head;
-@@ -5339,9 +5341,12 @@ read_again:
- 		if (unlikely(status & dma_own))
- 			break;
- 
--		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
--						priv->dma_conf.dma_rx_size);
--		next_entry = rx_q->cur_rx;
-+		next_entry = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
-+					       priv->dma_conf.dma_rx_size);
-+		if (unlikely(next_entry == rx_q->dirty_rx))
-+			break;
-+
-+		rx_q->cur_rx = next_entry;
- 
- 		if (priv->extend_desc)
- 			np = (struct dma_desc *)(rx_q->dma_erx + next_entry);
+--- a/kernel/tracepoint.c
++++ b/kernel/tracepoint.c
+@@ -337,6 +337,8 @@ static int tracepoint_add_func(struct tr
+ 			lockdep_is_held(&tracepoints_mutex));
+ 	old = func_add(&tp_funcs, func, prio);
+ 	if (IS_ERR(old)) {
++		if (tp->unregfunc && !static_key_enabled(&tp->key))
++			tp->unregfunc();
+ 		WARN_ON_ONCE(warn && PTR_ERR(old) != -ENOMEM);
+ 		return PTR_ERR(old);
+ 	}
 
 
