@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423283F926A;
-	Fri, 15 May 2026 16:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3199C3F8713;
+	Fri, 15 May 2026 16:06:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861203; cv=none; b=h4+paHSzsZ7QJ1qNPehjHVTPAD6vdM0iXGEsEXOlDc4Vyg4qEP2z8f5LVXlvOAPkpOBCSedTlW1vji21P3lFQ4YJXG1r2K13cj5VQOAD6zkL2od170I6crjKJ6CoFZE5PVtRjVvVUXGFSoKOBc7KVUOu90Nv1+DQDiScFKotj9w=
+	t=1778861206; cv=none; b=tcDRR5KCVb6l+d+Vkb6uEuHlh+ulRtjY82tG6HI5jvC23VhKqPn/cYVehgLC3DWlIDQRmXLWpJ+vYlR5mJ/ZbFCedI+u9OcrnyafmQQBEr3ZqZ28R22+xThRqmxMvbZUA+v0a3rvKyr5fmxli9wCLIIrOldCG5pFldS6frSVK28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861203; c=relaxed/simple;
-	bh=Cf6vZOe8CslWSO4tlxfIfqnO0s005/tkhrJDAAm7URI=;
+	s=arc-20240116; t=1778861206; c=relaxed/simple;
+	bh=2AFAPLE5wppAEAwUVVP6uX1stnv5RfY+XnYai2MjH+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FnQdLgfaONp2b3txuUbAFvoP1KuQypzEgCKM7/rTbQBVxxANttLdxSL9ZBGsi8fqtFwzy2rrFSOGKr8m54NNbqVdwokabrGXl1F/1xcFHlD+2F0/z58ac1ULcY5oVOo73A3oDNok2+ujEdsVKgFtDrglnoInJ+7Zamx11J9rLS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFOp/Lco; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LoxwDX7nYxzSSC0GltqMXnHBi9KsgCUPbAvtMOczi1TsvbE5iHf0ORrljMsb2Q6rMq95FO0VABz1GVaZoLf0Mao9+KTTk4020nKUtWcxZ2jqMwrgWlZb2hpryjLY9yl66XVbzu2RC9Oui/ZJgG/oGhci7NFQz2qX81mHbih8nvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyZSvv7b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFOp/Lco"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB98BC2BCB0;
-	Fri, 15 May 2026 16:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyZSvv7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D878C2BCB0;
+	Fri, 15 May 2026 16:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861203;
-	bh=Cf6vZOe8CslWSO4tlxfIfqnO0s005/tkhrJDAAm7URI=;
+	s=korg; t=1778861205;
+	bh=2AFAPLE5wppAEAwUVVP6uX1stnv5RfY+XnYai2MjH+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFOp/LcovptERBxHriY7nxRAksp2NyvdvcfF+6fcibptB9EcbS8P53KCRAXdr8AeA
-	 A6+uJ8dtoxDIM/1V3nZNZov0KiFo/Ww/CM9fr+9aiZofF4Uft8GsJNyk7HyaFA/p/m
-	 ue9RIA6CT5iA/lDJuAfjwKCz5EjI/L3iT8YMujIs=
+	b=KyZSvv7b7O4RTCHYHJK0ZljUGXiX4vKLzRU2R8Vr1/aAVLxVhJGzhEbq2GgbWjiP7
+	 p9PYIJDWhhArcWwyUn9VwLHPwAPf4a2cHR4tVX3SyfrIxQR1ScaDuHPkS8yG9QTOh8
+	 6YVZcTZ62/KjGeCCGGY3OrnEkrC4S04UUTev/aK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.6 237/474] udf: reject descriptors with oversized CRC length
-Date: Fri, 15 May 2026 17:45:46 +0200
-Message-ID: <20260515154720.131472058@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>
+Subject: [PATCH 6.6 238/474] thermal/drivers/sprd: Fix temperature clamping in sprd_thm_temp_to_rawdata
+Date: Fri, 15 May 2026 17:45:47 +0200
+Message-ID: <20260515154720.152931667@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,48 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 55d41b0a20128e86b9e960dd2e3f0a2d69a18df7 upstream.
+commit 83c0f9a5d679a6f8d84fc49b2f62ea434ccab4b6 upstream.
 
-udf_read_tagged() skips CRC verification when descCRCLength +
-sizeof(struct tag) exceeds the block size.  A crafted UDF image can
-set descCRCLength to an oversized value to bypass CRC validation
-entirely; the descriptor is then accepted based solely on the 8-bit
-tag checksum, which is trivially recomputable.
+The temperature was never clamped to SPRD_THM_TEMP_LOW or
+SPRD_THM_TEMP_HIGH because the return value of clamp() was not used. Fix
+this by assigning the clamped value to 'temp'.
 
-Reject such descriptors instead of silently accepting them.  A
-legitimate single-block descriptor should never have a CRC length that
-exceeds the block.
+Casting SPRD_THM_TEMP_LOW and SPRD_THM_TEMP_HIGH to int is also
+redundant and can be removed.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 554fdbaf19b1 ("thermal: sprd: Add Spreadtrum thermal driver support")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260413211240.853662-1-michael.bommarito@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260307102422.306055-1-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/misc.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/thermal/sprd_thermal.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/udf/misc.c
-+++ b/fs/udf/misc.c
-@@ -230,8 +230,12 @@ struct buffer_head *udf_read_tagged(stru
- 	}
+--- a/drivers/thermal/sprd_thermal.c
++++ b/drivers/thermal/sprd_thermal.c
+@@ -192,7 +192,7 @@ static int sprd_thm_temp_to_rawdata(int
+ {
+ 	u32 val;
  
- 	/* Verify the descriptor CRC */
--	if (le16_to_cpu(tag_p->descCRCLength) + sizeof(struct tag) > sb->s_blocksize ||
--	    le16_to_cpu(tag_p->descCRC) == crc_itu_t(0,
-+	if (le16_to_cpu(tag_p->descCRCLength) + sizeof(struct tag) > sb->s_blocksize) {
-+		udf_err(sb, "block %u: CRC length %u exceeds block size\n",
-+			block, le16_to_cpu(tag_p->descCRCLength));
-+		goto error_out;
-+	}
-+	if (le16_to_cpu(tag_p->descCRC) == crc_itu_t(0,
- 					bh->b_data + sizeof(struct tag),
- 					le16_to_cpu(tag_p->descCRCLength)))
- 		return bh;
+-	clamp(temp, (int)SPRD_THM_TEMP_LOW, (int)SPRD_THM_TEMP_HIGH);
++	temp = clamp(temp, SPRD_THM_TEMP_LOW, SPRD_THM_TEMP_HIGH);
+ 
+ 	/*
+ 	 * According to the thermal datasheet, the formula of converting
 
 
