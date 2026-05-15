@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2F93FF1A2;
-	Fri, 15 May 2026 16:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324FBE56A;
+	Fri, 15 May 2026 16:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862762; cv=none; b=nc+t/NAL142TVvl8OeDPagQTAdhA3ujut9WjIeJfpmpB5QJ0w/CBzQITmDenF7rJze6sEmuMNg1ilT3WAhFcY8vmzwBp3uc3D2XqprMt8MkJbmn/ZXhAQxoSth+eZ/xW9puOF7948hiqgKcqWmp/oG2tgiVMp1GtQ5CYZwDYffc=
+	t=1778862765; cv=none; b=jbcRCNQfK0DrizVnIW4r5vGm1j4HkzBE0LWk+kLFRiOXxEZy/7x9eQfXeCVkDRJCD2b7ifVpAxuLt9E98E6syLF09cr/PqfxW/TlnRpwd+Yhm+UqiMZaO/xi2NDnO6ZgPJAoIeGsPWkR8Veqfysl4usFnCgXCNDKkkPRI1gzQIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862762; c=relaxed/simple;
-	bh=fW3ZlVDnvXJIH7HGyqToQrj1gpfZMntFoOkn9CxJcfI=;
+	s=arc-20240116; t=1778862765; c=relaxed/simple;
+	bh=TjqduLrxMPOZ5pCa8dxwSasU3zph4nxMeA+XObkUd80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oE4htIGGURlWZA1MJpEKoyJZY8XHM/1W40JhLq67GWjw6zc9n+GFaGVtZzoc2+JlXj+1oz+IMCe4TSY1wf9YVNTHFUM9/B0fOFY+HR6RNzL9llioS23Jbf8/B7LgvTCai2fDeLHmAaWSGMjWygAZxNnQlV49DZCcmREoBTByBzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AI6Apc27; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CWxzYzuCZWhdQabeFhAQAnznninwd+Hq4TUCzAJcp3cbfLUmitAbVD5NWemT/cnw1nAaW6SFK3SHdKjN5nzDvMLxF9daTJt/KByz4Dzr9stkpYjgGG/Ua+VHJZJZozka/2Ulav4CDGGIKVwpm6nmrnpdlUVBtgCM1bILV0fT9xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6arAgXB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AI6Apc27"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F53C2BCB0;
-	Fri, 15 May 2026 16:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6arAgXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC969C2BCB0;
+	Fri, 15 May 2026 16:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862762;
-	bh=fW3ZlVDnvXJIH7HGyqToQrj1gpfZMntFoOkn9CxJcfI=;
+	s=korg; t=1778862765;
+	bh=TjqduLrxMPOZ5pCa8dxwSasU3zph4nxMeA+XObkUd80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AI6Apc27e9+h9CLo0ToBbQkPJbLhj9wGjqhef7HGbDV8M2T1aNRdbbqvebPNq7MSw
-	 IDYfuqGG9Wz49I63iLERkulV1C9Hmlc2uIAworx6nG6BIDrfMuOSZMr3pGyHgpKIsH
-	 0RXfDzYXHPQROAOjWtl/abVZj92nCl1vi/SUt+Tc=
+	b=F6arAgXBDjDY92ieQZVtpsTXZe0c04yUeOhM7t60ZitT3Te+qfP2QeiQRVBAbnute
+	 2FggBu5G677DQRDZGjlyzrkVrnZhyHPsqXwnnfP3J9+Wmhryv84SDfDp9RcbBVAVM/
+	 4uXPtrr9/qnM6O1tUonMIq+IPs15xfgqPOaMtlJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Franz Schnyder <franz.schnyder@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>
-Subject: [PATCH 7.0 171/201] arm64: dts: ti: k3-am69-aquila-dev: Fix DP regulator enable GPIO
-Date: Fri, 15 May 2026 17:49:49 +0200
-Message-ID: <20260515154702.276297831@linuxfoundation.org>
+	Ben Morris <bmorris@anthropic.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 172/201] sctp: revalidate list cursor after sctp_sendmsg_to_asoc() in SCTP_SENDALL
+Date: Fri, 15 May 2026 17:49:50 +0200
+Message-ID: <20260515154702.298607868@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -51,41 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Franz Schnyder <franz.schnyder@toradex.com>
+From: Ben Morris <bmorris@anthropic.com>
 
-commit 222191225e69711089ecade3b98d79757d51e907 upstream.
+commit abb5f36771cc4c05899b34000829a787572a8817 upstream.
 
-Correct the DP regulator enable GPIO to index 21.
-The 3.3V DP regulator was not being enabled by the assigned GPIO, as it
-is routed to GPIO index 21 and not 37, which was causing instability
-with displays connected over DP or via an active DP-to-HDMI adapter.
+The SCTP_SENDALL path in sctp_sendmsg() iterates ep->asocs with
+list_for_each_entry_safe(), which caches the next entry in @tmp before
+the loop body runs.  The body calls sctp_sendmsg_to_asoc(), which may
+drop the socket lock inside sctp_wait_for_sndbuf().
 
-Fixes: 39ac6623b1d8 ("arm64: dts: ti: Add Aquila AM69 Support")
+While the lock is dropped, another thread can SCTP_SOCKOPT_PEELOFF the
+association cached in @tmp, migrating it to a new endpoint via
+sctp_sock_migrate() (list_del_init() + list_add_tail() to
+newep->asocs), and optionally close the new socket which frees the
+association via kfree_rcu().  The cached @tmp can also be freed by a
+network ABORT for that association, processed in softirq while the
+lock is dropped.
+
+sctp_wait_for_sndbuf() revalidates @asoc (the current entry) on re-lock
+via the "sk != asoc->base.sk" and "asoc->base.dead" checks, but nothing
+revalidates @tmp.  After a successful return, the iterator advances to
+the stale @tmp, yielding either a use-after-free (if the peeled socket
+was closed) or a list-walk onto the new endpoint's list head (type
+confusion of &newep->asocs as a struct sctp_association *).
+
+Both are reachable from CapEff=0; the type-confusion path gives
+controlled indirect call via the outqueue.sched->init_sid pointer.
+
+Fix by re-deriving @tmp from @asoc after sctp_sendmsg_to_asoc()
+returns.  @asoc is known to still be on ep->asocs at that point: the
+only callers that list_del an association from ep->asocs are
+sctp_association_free() (which sets asoc->base.dead) and
+sctp_assoc_migrate() (which changes asoc->base.sk), and
+sctp_wait_for_sndbuf() checks both under the lock before any
+successful return; a tripped check propagates as err < 0 and the loop
+bails before the re-derive.
+
+The SCTP_ABORT path in sctp_sendmsg_check_sflags() returns 0 and the
+loop hits 'continue' before sctp_sendmsg_to_asoc() is ever called, so
+the @tmp cached by list_for_each_entry_safe() still covers the
+lock-held free that ba59fb027307 ("sctp: walk the list of asoc
+safely") was added for.
+
+Fixes: 4910280503f3 ("sctp: add support for snd flag SCTP_SENDALL process in sendmsg")
 Cc: stable@vger.kernel.org
-Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260202083604.325060-2-fra.schnyder@gmail.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Signed-off-by: Ben Morris <bmorris@anthropic.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260508001455.3137-1-joycathacker@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/ti/k3-am69-aquila-dev.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/socket.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am69-aquila-dev.dts b/arch/arm64/boot/dts/ti/k3-am69-aquila-dev.dts
-index f48601ae38b7..d3677c2c2547 100644
---- a/arch/arm64/boot/dts/ti/k3-am69-aquila-dev.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am69-aquila-dev.dts
-@@ -33,7 +33,7 @@ reg_3v3_dp: regulator-3v3-dp {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_gpio_21_dp>;
- 		/* Aquila GPIO_21_DP (AQUILA B57) */
--		gpio = <&main_gpio0 37 GPIO_ACTIVE_HIGH>;
-+		gpio = <&main_gpio0 21 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
- 		regulator-max-microvolt = <3300000>;
- 		regulator-min-microvolt = <3300000>;
--- 
-2.54.0
-
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -1986,6 +1986,15 @@ static int sctp_sendmsg(struct sock *sk,
+ 				goto out_unlock;
+ 
+ 			iov_iter_revert(&msg->msg_iter, err);
++
++			/* sctp_sendmsg_to_asoc() may have released the socket
++			 * lock (sctp_wait_for_sndbuf), during which other
++			 * associations on ep->asocs could have been peeled
++			 * off or freed.  @asoc itself is revalidated by the
++			 * base.dead and base.sk checks in sctp_wait_for_sndbuf,
++			 * so re-derive the cached cursor from it.
++			 */
++			tmp = list_next_entry(asoc, asocs);
+ 		}
+ 
+ 		goto out_unlock;
 
 
