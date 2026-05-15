@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D068B3A961B;
-	Fri, 15 May 2026 16:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF7F3B19DE;
+	Fri, 15 May 2026 16:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861600; cv=none; b=dny2/ij6EPg2ChPF8WoxoSrjxzhRdJZ81f44oEQ4XzJjPNNtESl/0SV8vBa33VLR9Q7NILfDlVsLlNixk8PhxVuV73pj2zPZrgKh6jzH+ilLcwXDplorc7ccLNBVbnX4EOmJCWYdBzy7toRgqi5Tb15lxiuB7IBHnD6sTHigeWw=
+	t=1778861603; cv=none; b=Qesfu1/ZevJhBjHMfX1nHVNdTOhM6ZZRz6nXfO6wHWUzDxwguXKPfcXBV15GH7tgwkcRMXQtu+pZyG6oBD2rWDtCSLkdzagpoCtIPVybU7bcm5sfNFFnxSyt/B8xZ8dKJbsPD0pzqPyU6abk7Af+Hbsj+OxoVW9iNXWAFnPlbpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861600; c=relaxed/simple;
-	bh=qRx1Myc65XmuaIqFkw3Sc5fHKzm2axDy9dvG/KlABdM=;
+	s=arc-20240116; t=1778861603; c=relaxed/simple;
+	bh=QyC5u2yWIgjJSov7wzfvOy4jLSLJnJ8Zi/YlBEAv7bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSsFR/JeBqUSQGtp0lpfp+hkl18wTP1ZwA8UM/iLEpL/bYvCGWP/x8zhlK9efy+kl5RTf8aqBcklbr4PUA4pBCW/MMjJwy5tnuwO3mXugL+wQiaETg7yHgGfoSn+Y2taWmRbGpdIX2jlxmMOhPJfTgd5Bos0c8hrlkTbkCZ/CxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvAfb4b0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XcAxAyS9TQ5ay0Df02Y6kvlGYFEPporbvtXOIPE+5JqbodS3h80vyQdfJMvNdu0VdHk1ZHEefNxqV9WcvfBybeNSGDFNUX1CH6w0N1RrFXSL2PJKvM7JCARuDLi83ppk3Ez4Ud1jT8AcrMEPSHofkMcmwlSzPg4TouR5xOmE8eQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrrEW4on; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvAfb4b0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67901C2BCB0;
-	Fri, 15 May 2026 16:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrrEW4on"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FC7C2BCB0;
+	Fri, 15 May 2026 16:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861600;
-	bh=qRx1Myc65XmuaIqFkw3Sc5fHKzm2axDy9dvG/KlABdM=;
+	s=korg; t=1778861603;
+	bh=QyC5u2yWIgjJSov7wzfvOy4jLSLJnJ8Zi/YlBEAv7bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvAfb4b0E6qPndQA6LTondi3Q0GpIC8AO4eHSQI0rKkQcT2UImiWmIcsPgi5C5iQR
-	 fWpesgo3BSl54xT4ctSQCRnQNcRdD7WNk99sXYkwZ4lqP+9MW6MdC3hUrV3iIkGKMe
-	 A8+FksUNBi4yl3JtNNs+j2Dli+0MNTPbinjH+Vcw=
+	b=hrrEW4onfxEPT39AhvmooxQU9QfvZzJCmblWH7YavJbWElLor8lgT+8yJ8Pa8Vbm0
+	 4bWJfLBtZVL7w0dwisuB+U4oGOiTj28r7vRt9SqXjTbBn3NaIC8m65Gr0ipYPjKWsr
+	 ILbmBaV6Yacm12s7+1G7VAkYKVjAIrFWhKaC2Cgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 392/474] net: qrtr: ns: Limit the total number of nodes
-Date: Fri, 15 May 2026 17:48:21 +0200
-Message-ID: <20260515154723.524991597@linuxfoundation.org>
+Subject: [PATCH 6.6 393/474] spi: fix resource leaks on device setup failure
+Date: Fri, 15 May 2026 17:48:22 +0200
+Message-ID: <20260515154723.546922083@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,74 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 27d5e84e810b0849d08b9aec68e48570461ce313 ]
+[ Upstream commit db357034f7e0cf23f233f414a8508312dfe8fbbe ]
 
-Currently, the nameserver doesn't limit the number of nodes it handles.
-This can be an attack vector if a malicious client starts registering
-random nodes, leading to memory exhaustion.
+Make sure to call controller cleanup() if spi_setup() fails while
+registering a device to avoid leaking any resources allocated by
+setup().
 
-Hence, limit the maximum number of nodes to 64. Note that, limit of 64 is
-chosen based on the current platform requirements. If requirement changes
-in the future, this limit can be increased.
-
-Cc: stable@vger.kernel.org
-Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260409-qrtr-fix-v3-4-00a8a5ff2b51@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ dropped comment/define changes for missing QRTR_NS_MAX_SERVERS/LOOKUPS prereqs and kept plain kzalloc instead of kzalloc_obj ]
+Fixes: c7299fea6769 ("spi: Fix spi device unregister flow")
+Cc: stable@vger.kernel.org	# 5.13
+Cc: Saravana Kannan <saravanak@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410154907.129248-2-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/ns.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/spi/spi.c |   61 ++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 37 insertions(+), 24 deletions(-)
 
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -82,6 +82,13 @@ struct qrtr_node {
-  */
- #define QRTR_NS_MAX_LOOKUPS 64
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -42,6 +42,8 @@ EXPORT_TRACEPOINT_SYMBOL(spi_transfer_st
  
-+/* Max nodes limit is chosen based on the current platform requirements.
-+ * If the requirement changes in the future, this value can be increased.
-+ */
-+#define QRTR_NS_MAX_NODES   64
+ #include "internals.h"
+ 
++static int __spi_setup(struct spi_device *spi, bool initial_setup);
 +
-+static u8 node_count;
-+
- static struct qrtr_node *node_get(unsigned int node_id)
+ static DEFINE_IDR(spi_master_idr);
+ 
+ static void spidev_release(struct device *dev)
+@@ -677,7 +679,7 @@ static int __spi_add_device(struct spi_d
+ 	 * normally rely on the device being setup.  Devices
+ 	 * using SPI_CS_HIGH can't coexist well otherwise...
+ 	 */
+-	status = spi_setup(spi);
++	status = __spi_setup(spi, true);
+ 	if (status < 0) {
+ 		dev_err(dev, "can't setup %s, status %d\n",
+ 				dev_name(&spi->dev), status);
+@@ -3734,27 +3736,7 @@ static int spi_set_cs_timing(struct spi_
+ 	return status;
+ }
+ 
+-/**
+- * spi_setup - setup SPI mode and clock rate
+- * @spi: the device whose settings are being modified
+- * Context: can sleep, and no requests are queued to the device
+- *
+- * SPI protocol drivers may need to update the transfer mode if the
+- * device doesn't work with its default.  They may likewise need
+- * to update clock rates or word sizes from initial values.  This function
+- * changes those settings, and must be called from a context that can sleep.
+- * Except for SPI_CS_HIGH, which takes effect immediately, the changes take
+- * effect the next time the device is selected and data is transferred to
+- * or from it.  When this function returns, the SPI device is deselected.
+- *
+- * Note that this call will fail if the protocol driver specifies an option
+- * that the underlying controller or its driver does not support.  For
+- * example, not all hardware supports wire transfers using nine bit words,
+- * LSB-first wire encoding, or active-high chipselects.
+- *
+- * Return: zero on success, else a negative error code.
+- */
+-int spi_setup(struct spi_device *spi)
++static int __spi_setup(struct spi_device *spi, bool initial_setup)
  {
- 	struct qrtr_node *node;
-@@ -90,6 +97,11 @@ static struct qrtr_node *node_get(unsign
- 	if (node)
- 		return node;
- 
-+	if (node_count >= QRTR_NS_MAX_NODES) {
-+		pr_err_ratelimited("QRTR clients exceed max node limit!\n");
-+		return NULL;
-+	}
-+
- 	/* If node didn't exist, allocate and insert it to the tree */
- 	node = kzalloc(sizeof(*node), GFP_KERNEL);
- 	if (!node)
-@@ -103,6 +115,8 @@ static struct qrtr_node *node_get(unsign
- 		return NULL;
+ 	unsigned	bad_bits, ugly_bits;
+ 	int		status = 0;
+@@ -3833,7 +3815,7 @@ int spi_setup(struct spi_device *spi)
+ 	status = spi_set_cs_timing(spi);
+ 	if (status) {
+ 		mutex_unlock(&spi->controller->io_mutex);
+-		return status;
++		goto err_cleanup;
  	}
  
-+	node_count++;
+ 	if (spi->controller->auto_runtime_pm && spi->controller->set_cs) {
+@@ -3842,7 +3824,7 @@ int spi_setup(struct spi_device *spi)
+ 			mutex_unlock(&spi->controller->io_mutex);
+ 			dev_err(&spi->controller->dev, "Failed to power device: %d\n",
+ 				status);
+-			return status;
++			goto err_cleanup;
+ 		}
+ 
+ 		/*
+@@ -3879,6 +3861,37 @@ int spi_setup(struct spi_device *spi)
+ 			status);
+ 
+ 	return status;
 +
- 	return node;
++err_cleanup:
++	if (initial_setup)
++		spi_cleanup(spi);
++
++	return status;
++}
++
++/**
++ * spi_setup - setup SPI mode and clock rate
++ * @spi: the device whose settings are being modified
++ * Context: can sleep, and no requests are queued to the device
++ *
++ * SPI protocol drivers may need to update the transfer mode if the
++ * device doesn't work with its default.  They may likewise need
++ * to update clock rates or word sizes from initial values.  This function
++ * changes those settings, and must be called from a context that can sleep.
++ * Except for SPI_CS_HIGH, which takes effect immediately, the changes take
++ * effect the next time the device is selected and data is transferred to
++ * or from it.  When this function returns, the SPI device is deselected.
++ *
++ * Note that this call will fail if the protocol driver specifies an option
++ * that the underlying controller or its driver does not support.  For
++ * example, not all hardware supports wire transfers using nine bit words,
++ * LSB-first wire encoding, or active-high chipselects.
++ *
++ * Return: zero on success, else a negative error code.
++ */
++int spi_setup(struct spi_device *spi)
++{
++	return __spi_setup(spi, false);
  }
+ EXPORT_SYMBOL_GPL(spi_setup);
  
-@@ -406,6 +420,7 @@ static int ctrl_cmd_bye(struct sockaddr_
- delete_node:
- 	xa_erase(&nodes, from->sq_node);
- 	kfree(node);
-+	node_count--;
- 
- 	return ret;
- }
 
 
