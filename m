@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30AC3FF1D1;
-	Fri, 15 May 2026 15:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636083FF1DD;
+	Fri, 15 May 2026 15:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860462; cv=none; b=jz3xWkxbp6hh8FPhB2ooNjGxzBex5OBZwmvaccToUVSfA+3T0jKJIsoyXBe645kCTPe4C0UBtMEZHRLR1hdtUGfFQIcAQBZfIt3cNZOGSjROzSfxY9SRY++70x38q2a+Se6R/mC1CZlvmVnmb6/fSAIQXGC5k6WLWwnBKIOD4TE=
+	t=1778860464; cv=none; b=J1vbgLd4+0Y8I0BhW7hu/9VGIysJJ94phsfvc568iczmCWmdeRTAaSdce+y0fsuxRWyWgHgJ8DyBSXYIob03azm5bIFuMFXhlYjlvZIjlGgEppCexlVRy6SffGvAEV1fUL7G2HB8cCAKH/4yCACU5T6VzunaxbFcAdqe4vO7Vx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860462; c=relaxed/simple;
-	bh=qB9AXeTuY4T8hZJ6MIXBGPix7SPs/woBsIBAh0tdOjo=;
+	s=arc-20240116; t=1778860464; c=relaxed/simple;
+	bh=CZLuGdEo3ekkcGMrDLtfUhMb/S+XUmVeDofQ9sBpE/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/KzkKtvHUYSEjP+pJ7iyyzaKInhCfw4aoLEfRxSKI8V5jQ9zMvW5FKWEA+BCIfa5eRMaQShK/JYt/AcZkeDsTPmpRuC8mkhwLhli4AqED8UPZ6a2HovATuOINHVvwc26nMqa5gaSFyp56yofHrRcMLVad4PKlkiXqEsAYn1jRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0QXt1h4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hnw4CiwP6vL7apWWMyOLWafGDhbwu5QTb/GEqZF1aXh4ohuEYUei56Oxwz7P4wwBUUkQAHM+IYseiJRoUC4VzizUTzqpJk2WGC96RajmOtgAkr3FeTYs0qR3VuHhv5VBwRb8hr/TiXpIBP7PGwD8VqysXMJCFV1xuIqyW4hctzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoiyrUnR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0QXt1h4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B72C2BCB0;
-	Fri, 15 May 2026 15:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoiyrUnR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB0CC2BCB0;
+	Fri, 15 May 2026 15:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860461;
-	bh=qB9AXeTuY4T8hZJ6MIXBGPix7SPs/woBsIBAh0tdOjo=;
+	s=korg; t=1778860464;
+	bh=CZLuGdEo3ekkcGMrDLtfUhMb/S+XUmVeDofQ9sBpE/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0QXt1h4erkvK+tdpYwBsqtJVkyuEvmiBd89R5Eb4H6anpLnft87RDoOtq54LZ+A5
-	 rSM/bFfL+mQfCL10NZXUii7wpqW6YGqE5oyY0cSA9/WHDvu9kI+xWzmTbC/432Jntc
-	 cwQxbpAqj2sEeX9IBdwsq9oePWgwADAuDc0YdP5c=
+	b=CoiyrUnRBOVrUEYpCfICJpbKWolA119+bDOE4sj/RL1RRLUiX1T3Av8NAJqSm0Wse
+	 c9YEwbPrh20e0AXgBkE88pKCnqGC9Sv0YWMRnRzTsAiUhd1PhQsloPZdQHVqpWC60G
+	 HxSI0Ecj9FvIfiaEtq3yRTDTksilgI9K7fhYmJLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Jiexun Wang <wangjiexun2025@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.12 097/144] batman-adv: stop caching unowned originator pointers in BAT IV
-Date: Fri, 15 May 2026 17:48:43 +0200
-Message-ID: <20260515154655.755909234@linuxfoundation.org>
+Subject: [PATCH 6.12 098/144] batman-adv: bla: prevent use-after-free when deleting claims
+Date: Fri, 15 May 2026 17:48:44 +0200
+Message-ID: <20260515154655.777525459@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -56,174 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiexun Wang <wangjiexun2025@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit f03e8583532941b07761c5429de7d50766fa3110 upstream.
+commit 4ae1709a314060a196981b344610d023ea841e57 upstream.
 
-BAT IV keeps the last-hop neighbor address in each neigh_node, but some
-paths also cache an originator pointer derived from a temporary lookup.
-That pointer is not owned by the neigh_node and may no longer refer to a
-live originator entry after purge handling runs.
+When batadv_bla_del_backbone_claims() removes all claims for a backbone, it
+does this by dropping the link entry in the hash list. This list entry
+itself was one of the references which need to be dropped at the same time
+via batadv_claim_put().
 
-Stop storing the auxiliary originator pointer in the BAT IV neighbor
-state. When BAT IV needs the neighbor originator data, resolve it from
-the stored neighbor address and drop the reference again after use.
+But the batadv_claim_put() must not be done before the last access to the
+claim object in this function. Otherwise the claim might be freed already
+by the batadv_claim_release() function before the list entry was dropped.
 
-Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
 Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-[sven: avoid bonding logic for outgoing OGM]
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_iv_ogm.c |   83 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 59 insertions(+), 24 deletions(-)
+ net/batman-adv/bridge_loop_avoidance.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/batman-adv/bat_iv_ogm.c
-+++ b/net/batman-adv/bat_iv_ogm.c
-@@ -172,19 +172,12 @@ free_orig_node_hash:
- static struct batadv_neigh_node *
- batadv_iv_ogm_neigh_new(struct batadv_hard_iface *hard_iface,
- 			const u8 *neigh_addr,
--			struct batadv_orig_node *orig_node,
--			struct batadv_orig_node *orig_neigh)
-+			struct batadv_orig_node *orig_node)
- {
- 	struct batadv_neigh_node *neigh_node;
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -318,8 +318,8 @@ batadv_bla_del_backbone_claims(struct ba
+ 			if (claim->backbone_gw != backbone_gw)
+ 				continue;
  
- 	neigh_node = batadv_neigh_node_get_or_create(orig_node,
- 						     hard_iface, neigh_addr);
--	if (!neigh_node)
--		goto out;
--
--	neigh_node->orig_node = orig_neigh;
--
--out:
- 	return neigh_node;
- }
- 
-@@ -901,6 +894,31 @@ static u8 batadv_iv_orig_ifinfo_sum(stru
- }
- 
- /**
-+ * batadv_iv_ogm_neigh_ifinfo_sum() - Get bcast_own sum for a last-hop neighbor
-+ * @bat_priv: the bat priv with all the mesh interface information
-+ * @neigh_node: last-hop neighbor of an originator
-+ *
-+ * Return: Number of replied (rebroadcasted) OGMs for the originator currently
-+ * announced by the neighbor. Returns 0 if the neighbor's originator entry is
-+ * not available anymore.
-+ */
-+static u8 batadv_iv_ogm_neigh_ifinfo_sum(struct batadv_priv *bat_priv,
-+					 const struct batadv_neigh_node *neigh_node)
-+{
-+	struct batadv_orig_node *orig_neigh;
-+	u8 sum;
-+
-+	orig_neigh = batadv_orig_hash_find(bat_priv, neigh_node->addr);
-+	if (!orig_neigh)
-+		return 0;
-+
-+	sum = batadv_iv_orig_ifinfo_sum(orig_neigh, neigh_node->if_incoming);
-+	batadv_orig_node_put(orig_neigh);
-+
-+	return sum;
-+}
-+
-+/**
-  * batadv_iv_ogm_orig_update() - use OGM to update corresponding data in an
-  *  originator
-  * @bat_priv: the bat priv with all the soft interface information
-@@ -969,17 +987,9 @@ batadv_iv_ogm_orig_update(struct batadv_
+-			batadv_claim_put(claim);
+ 			hlist_del_rcu(&claim->hash_entry);
++			batadv_claim_put(claim);
+ 		}
+ 		spin_unlock_bh(list_lock);
  	}
- 
- 	if (!neigh_node) {
--		struct batadv_orig_node *orig_tmp;
--
--		orig_tmp = batadv_iv_ogm_orig_get(bat_priv, ethhdr->h_source);
--		if (!orig_tmp)
--			goto unlock;
--
- 		neigh_node = batadv_iv_ogm_neigh_new(if_incoming,
- 						     ethhdr->h_source,
--						     orig_node, orig_tmp);
--
--		batadv_orig_node_put(orig_tmp);
-+						     orig_node);
- 		if (!neigh_node)
- 			goto unlock;
- 	} else {
-@@ -1031,10 +1041,9 @@ batadv_iv_ogm_orig_update(struct batadv_
- 	 */
- 	if (router_ifinfo &&
- 	    neigh_ifinfo->bat_iv.tq_avg == router_ifinfo->bat_iv.tq_avg) {
--		sum_orig = batadv_iv_orig_ifinfo_sum(router->orig_node,
--						     router->if_incoming);
--		sum_neigh = batadv_iv_orig_ifinfo_sum(neigh_node->orig_node,
--						      neigh_node->if_incoming);
-+		sum_orig = batadv_iv_ogm_neigh_ifinfo_sum(bat_priv, router);
-+		sum_neigh = batadv_iv_ogm_neigh_ifinfo_sum(bat_priv,
-+							   neigh_node);
- 		if (sum_orig >= sum_neigh)
- 			goto out;
- 	}
-@@ -1100,7 +1109,6 @@ static bool batadv_iv_ogm_calc_tq(struct
- 	if (!neigh_node)
- 		neigh_node = batadv_iv_ogm_neigh_new(if_incoming,
- 						     orig_neigh_node->orig,
--						     orig_neigh_node,
- 						     orig_neigh_node);
- 
- 	if (!neigh_node)
-@@ -1297,6 +1305,32 @@ out:
- }
- 
- /**
-+ * batadv_orig_to_direct_router() - get direct next hop neighbor to an orig address
-+ * @bat_priv: the bat priv with all the mesh interface information
-+ * @orig_addr: the originator MAC address to search the best next hop router for
-+ * @if_outgoing: the interface where the OGM should be sent to
-+ *
-+ * Return: A neighbor node which is the best router towards the given originator
-+ * address. Bonding candidates are ignored.
-+ */
-+static struct batadv_neigh_node *
-+batadv_orig_to_direct_router(struct batadv_priv *bat_priv, u8 *orig_addr,
-+			     struct batadv_hard_iface *if_outgoing)
-+{
-+	struct batadv_neigh_node *neigh_node;
-+	struct batadv_orig_node *orig_node;
-+
-+	orig_node = batadv_orig_hash_find(bat_priv, orig_addr);
-+	if (!orig_node)
-+		return NULL;
-+
-+	neigh_node = batadv_orig_router_get(orig_node, if_outgoing);
-+	batadv_orig_node_put(orig_node);
-+
-+	return neigh_node;
-+}
-+
-+/**
-  * batadv_iv_ogm_process_per_outif() - process a batman iv OGM for an outgoing
-  *  interface
-  * @skb: the skb containing the OGM
-@@ -1366,8 +1400,9 @@ batadv_iv_ogm_process_per_outif(const st
- 
- 	router = batadv_orig_router_get(orig_node, if_outgoing);
- 	if (router) {
--		router_router = batadv_orig_router_get(router->orig_node,
--						       if_outgoing);
-+		router_router = batadv_orig_to_direct_router(bat_priv,
-+							     router->addr,
-+							     if_outgoing);
- 		router_ifinfo = batadv_neigh_ifinfo_get(router, if_outgoing);
- 	}
- 
 
 
