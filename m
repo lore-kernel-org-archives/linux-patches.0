@@ -1,37 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D37530569D;
-	Fri, 15 May 2026 16:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C7834DCD9;
+	Fri, 15 May 2026 16:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860823; cv=none; b=aU49L7FEN7DBCcQd4Ir4MAL38ZWqCDyjKmDpbriCOvU+4KFUokgxbpGZSdxyI4SHMYUKoqeB/53s5+/nvTpFnna8AGDZJwPFgKpFsXRe2lFaIqYtFjFAbjtosbO19YMGHXXFlJmNX+MMgFamkJlVSr5kRcKZW5P8ge1jPftiko0=
+	t=1778860825; cv=none; b=KtXadomK/A5CZSQQ1fKzPdkA1fuQrvvN0FbFKbHBXHTLlRvTQcK487Yz0TARfJ9LMWlvCrZHURtBdSGu1Zp5snhgtongW1f6vK23w3gbQe9rQeUA/JYjJLtTPpk4zyyC9nsvV8OAnkXKmwrl39AQmZDPAKl8M04YUsx4ip3hl/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860823; c=relaxed/simple;
-	bh=gwjeDNFeogAnU36a0RsU6HAzTMqIh875A+9xT7o3uvU=;
+	s=arc-20240116; t=1778860825; c=relaxed/simple;
+	bh=tHYB3h62lCHSl3co7DNbS7Gm5Rh4VA7rXcvKZdnxMA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIr03tOZT/TbzX1PwnX3YIc8oJlZDjTpwETZYF0WiRBp0NBQ2dj2U7BZaZCdfueUVwb3oPJu+j05T0lv7VWlhMzr91tqFJm0eq/IAmEIXFhpC5SfVYO+FjTdkHdZDHRmpzjerOdVKdllQrK/pK8uXeTHmRmkvNyZCg7q/JTP0YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOyKEiTd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OC0Du02i+HjSHL50CyxJdQAgotp0HeYT3XGnLc7xWKOvAI71eQ27xCkumG7w2FOW+gTA7Nc0cizDROWAFgMTH+P9bfXydjbqvxr9PdCcr3je6NBjGJb2+cFHf678CtGjBr7iCmA1Nrcvx/5BqmLS9B62Dw6luUs2EqAK+dcCDfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCLancN0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOyKEiTd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D693DC2BCB0;
-	Fri, 15 May 2026 16:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCLancN0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45133C2BCB0;
+	Fri, 15 May 2026 16:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860823;
-	bh=gwjeDNFeogAnU36a0RsU6HAzTMqIh875A+9xT7o3uvU=;
+	s=korg; t=1778860825;
+	bh=tHYB3h62lCHSl3co7DNbS7Gm5Rh4VA7rXcvKZdnxMA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tOyKEiTdp7PC+ikXHNJ8+qhZjVaQ2MYd4kRZcRxrc5CijZ+TOiyLfCYs0TZ2+4KVD
-	 pWVudoVkO8/7pghkqwHPGzYC4FkyLlrc7eNYyw9VlSJj2Z2Mj5QwSwBOMK5Ucf+smr
-	 QTXmbnVvw5BRdwOEiYeyEpiwbSzgvSyqSN6EDqOY=
+	b=GCLancN0DLeN8Z4qN0XIWk3R70598QjCxoEQM2abAh3XUPMSevikmBEhkvUEry9cN
+	 ocNd4Bz+v39kPPzgVtJ2wolPQ+OuYK6cLfoEj/a62TGDmcvJkim8BwGH0EtQ4IVcPM
+	 2Jiiu+9mQG8SHLHzONuOt2zhEAQvKK9PROFi2gv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
+	"Denis M. Karpov" <komlomal@gmail.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Jann Horn <jannh@google.com>,
+	Peter Xu <peterx@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 092/474] mm/damon/core: use time_in_range_open() for damos quota window start
-Date: Fri, 15 May 2026 17:43:21 +0200
-Message-ID: <20260515154717.030603236@linuxfoundation.org>
+Subject: [PATCH 6.6 093/474] userfaultfd: allow registration of ranges below mmap_min_addr
+Date: Fri, 15 May 2026 17:43:22 +0200
+Message-ID: <20260515154717.052095395@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,56 +60,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Denis M. Karpov <komlomal@gmail.com>
 
-commit 049a57421dd67a28c45ae7e92c36df758033e5fa upstream.
+commit 161ce69c2c89781784b945d8e281ff2da9dede9c upstream.
 
-damos_adjust_quota() uses time_after_eq() to show if it is time to start a
-new quota charge window, comparing the current jiffies and the scheduled
-next charge window start time.  If it is, the next charge window start
-time is updated and the new charge window starts.
+The current implementation of validate_range() in fs/userfaultfd.c
+performs a hard check against mmap_min_addr.  This is redundant because
+UFFDIO_REGISTER operates on memory ranges that must already be backed by a
+VMA.
 
-The time check and next window start time update is skipped while the
-scheme is deactivated by the watermarks.  Let's suppose the deactivation
-is kept more than LONG_MAX jiffies (assuming CONFIG_HZ of 250, more than
-99 days in 32 bit systems and more than one billion years in 64 bit
-systems), resulting in having the jiffies larger than the next charge
-window start time + LONG_MAX.  Then, the time_after_eq() call can return
-false until another LONG_MAX jiffies are passed.
+Enforcing mmap_min_addr or capability checks again in userfaultfd is
+unnecessary and prevents applications like binary compilers from using
+UFFD for valid memory regions mapped by application.
 
-This means the scheme can continue working after being reactivated by the
-watermarks.  But, soon, the quota will be exceeded and the scheme will
-again effectively stop working until the next charge window starts.
-Because the current charge window is extended to up to LONG_MAX jiffies,
-however, it will look like it stopped unexpectedly and indefinitely, from
-the user's perspective.
+Remove the redundant check for mmap_min_addr.
 
-Fix this by using !time_in_range_open() instead.
+We started using UFFD instead of the classic mprotect approach in the
+binary translator to track application writes.  During development, we
+encountered this bug.  The translator cannot control where the translated
+application chooses to map its memory and if the app requires a
+low-address area, UFFD fails, whereas mprotect would work just fine.  I
+believe this is a genuine logic bug rather than an improvement, and I
+would appreciate including the fix in stable.
 
-The issue was discovered [1] by sashiko.
-
-Link: https://lore.kernel.org/20260329152306.45796-1-sj@kernel.org
-Link: https://lore.kernel.org/20260324040722.57944-1-sj@kernel.org [1]
-Fixes: ee801b7dd782 ("mm/damon/schemes: activate schemes based on a watermarks mechanism")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.16.x
+Link: https://lore.kernel.org/20260409103345.15044-1-komlomal@gmail.com
+Fixes: 86039bd3b4e6 ("userfaultfd: add new syscall to provide memory externalization")
+Signed-off-by: Denis M. Karpov <komlomal@gmail.com>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Acked-by: Harry Yoo (Oracle) <harry@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Jann Horn <jannh@google.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/userfaultfd.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1048,7 +1048,8 @@ static void damos_adjust_quota(struct da
- 		quota->charged_from = jiffies;
- 
- 	/* New charge window starts */
--	if (time_after_eq(jiffies, quota->charged_from +
-+	if (!time_in_range_open(jiffies, quota->charged_from,
-+				quota->charged_from +
- 				msecs_to_jiffies(quota->reset_interval))) {
- 		if (quota->esz && quota->charged_sz >= quota->esz)
- 			s->stat.qt_exceeds++;
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -1295,8 +1295,6 @@ static __always_inline int validate_unal
+ 		return -EINVAL;
+ 	if (!len)
+ 		return -EINVAL;
+-	if (start < mmap_min_addr)
+-		return -EINVAL;
+ 	if (start >= task_size)
+ 		return -EINVAL;
+ 	if (len > task_size - start)
 
 
