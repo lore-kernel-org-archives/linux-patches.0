@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B1E2EAB82;
-	Fri, 15 May 2026 15:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC71175A87;
+	Fri, 15 May 2026 15:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860487; cv=none; b=GNwTxZ+d6/Yal+xzstEqlVp7+D4KvW9pFGF/KEpvvYQt+XSCW7i1iI7QYdGwzJ/LdVcDeSixeJSBLjsXH03RJqqlXYVZeCgZW7wVVYF6ndxW/GTAnobJkwZnGmNuqkaZbdB/EcByuHa8Tsc6rYaOlPyo39kke1cZcOkwitqTmd0=
+	t=1778860490; cv=none; b=iCBMXu2XYYzZSRgZDeLq6TmaT3hXnN4XFbo9SPx6YOpTQDXWrBgu0nXQa6ZF7aQ4BXN4xqDPayfGId4AFw7LibDt2lELPFRCpfSYsP3NIWA37W67bVU4GtP78Ph2qdr9KqisyDaRrkWV6CnaA5Q8DmE2L54dbR6wVnMzpfp38YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860487; c=relaxed/simple;
-	bh=Fvk9S0fgVDFfn7JhBx63fxMMnH75258kb8baZX7JnEs=;
+	s=arc-20240116; t=1778860490; c=relaxed/simple;
+	bh=Ktd8c9uz6DnSb3uv7cHWs8ZZ6ngdRSbuFQVZ6gsby/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UwQ5JXMJxGC+f6CIVZ4LW6ygYm9VlfJaez87hA0M3ClAVWYe5HVUHbfwdGcet7zcug1FI+x4N4OJ89+ALpd8mM9fzPIP24pSwXLAaGOZhlY2SIrmAkSrbalW/TsexztXethKvEmbrmY9zjven9SISkH0dxPC9RkGUBT+wTIeYZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3egFaEE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OOXx0lDmgYZPKJ6ND5Q4HS5Hn3SJ9eifVBonASvxitemwOeZsSXHOGy2MlryVW28+aRrFUkbmzKeu9wDgzj8TcXIu3ifzBccWj2KaOqLBbxF5FoDeENSEkufQxTrviKChbKoa9B9cEchcqYkA4Q5QqjO3befqYdL2tz7oKThgIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhCVAXXc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3egFaEE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA9EC2BCB0;
-	Fri, 15 May 2026 15:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhCVAXXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A2EC2BCB0;
+	Fri, 15 May 2026 15:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860487;
-	bh=Fvk9S0fgVDFfn7JhBx63fxMMnH75258kb8baZX7JnEs=;
+	s=korg; t=1778860490;
+	bh=Ktd8c9uz6DnSb3uv7cHWs8ZZ6ngdRSbuFQVZ6gsby/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3egFaEECO8En0cIYmOGWy9XClMD8wN/+q0qoWAxTarlx7zea1wzQZEW5SQbdUKY8
-	 boL/FCUe+AiafP5JHmpYHwTumVJgQLlr4NdykZ4TlJy97T3RWYgChbhw2HbqM47Anj
-	 gaYR4bHa4xBBm/569PRlYWDet4NHxCc/MAXSDAto=
+	b=hhCVAXXcaosMPi7LdtPEpLfV4KbQja6pDpZZgcg0mx1X20ljBGPtOB1xAkwpGOQPc
+	 z1MWrnVgTBSwYRPwM6ZupPcMnyNoofoZWzEY1xkFmYRliQ5/nMbpFiP+2OThfn6R6z
+	 MBv5ehxD0PvElHxuPgHIiT0dRdvYj13XDNOZLIRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Nemesa Garg <nemesa.garg@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 6.12 066/144] drm/i915/psr: Init variable to avoid early exit from et alignment loop
-Date: Fri, 15 May 2026 17:48:12 +0200
-Message-ID: <20260515154655.077221759@linuxfoundation.org>
+	Amir Shetaia <Amir.Shetaia@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 067/144] drm/amdkfd: Clear VRAM on allocation to prevent stale data exposure
+Date: Fri, 15 May 2026 17:48:13 +0200
+Message-ID: <20260515154655.098418734@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -54,37 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Amir Shetaia <Amir.Shetaia@amd.com>
 
-commit 314f6179e370988ac00dadf373a4f6166eb3db15 upstream.
+commit ad52d61d82181dbdb7f05826de38352d5e550cc2 upstream.
 
-Uninitialized boolean variable may cause unwanted exit from et alignment
-loop. Fix this by initializing it as false.
+KFD VRAM allocations set AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE
+but not AMDGPU_GEM_CREATE_VRAM_CLEARED, leaving freshly allocated
+VRAM with stale data from prior use observable by compute kernels.
 
-Fixes: 1be2fca84f52 ("drm/i915/psr: Repeat Selective Update area alignment")
-Cc: <stable@vger.kernel.org> # v6.9+
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Nemesa Garg <nemesa.garg@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260413112345.88853-1-jouni.hogander@intel.com
-(cherry picked from commit 289678a90b8cf81e3514c9d6c667235cd39c7acf)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+The GEM ioctl path already sets VRAM_CLEARED for all userspace
+allocations via amdgpu_gem_create_ioctl() and
+amdgpu_mode_dumb_create(). The KFD path was missing this flag,
+allowing stale page table remnants to leak into user buffers.
+
+This causes crashes in RCCL P2P transport where non-zero data in
+ptrExchange/head/tail fields corrupts the protocol handshake.
+
+Signed-off-by: Amir Shetaia <Amir.Shetaia@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -2624,7 +2624,7 @@ int intel_psr2_sel_fetch_update(struct i
- 		return ret;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1737,7 +1737,8 @@ int amdgpu_amdkfd_gpuvm_alloc_memory_of_
+ 			alloc_domain = AMDGPU_GEM_DOMAIN_GTT;
+ 			alloc_flags = 0;
+ 		} else {
+-			alloc_flags = AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE;
++			alloc_flags = AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE |
++				AMDGPU_GEM_CREATE_VRAM_CLEARED;
+ 			alloc_flags |= (flags & KFD_IOC_ALLOC_MEM_FLAGS_PUBLIC) ?
+ 			AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED : 0;
  
- 	do {
--		bool cursor_in_su_area;
-+		bool cursor_in_su_area = false;
- 
- 		/*
- 		 * Adjust su area to cover cursor fully as necessary
 
 
