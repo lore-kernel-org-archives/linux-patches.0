@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E1F318EE4;
-	Fri, 15 May 2026 16:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33C730569D;
+	Fri, 15 May 2026 16:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860818; cv=none; b=VZiyR2R6FpdP7GKnlsVKTIg004QSCcfsGVCNCrS70hxWekxhlL2AGuvRqQaAf5Ybr/XBxwog1rNOZ3tazQI76duT4NsQLuSaToY8Eru822aFQ3QsXLnPECwzx6RnYy8nCu9bRc9rAmFpEotez5lYJTXKqOv2jYfeRrUYT8lLin8=
+	t=1778860820; cv=none; b=eFlL5pLOJIXHlQaoHkn28GXcA9q+XG+7s7ed1CRUCwDGXMDbt+RzipfHrAi1IUqLTCtqFyi4/46rc49IU4HQvQqnHum2sOFDyEP6titnjCi3PBF7OCxvG9+kch4CupJifKBhOEqJVFipTKB6CXIRdNwEs+uCKFVMoB5yCO1iZnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860818; c=relaxed/simple;
-	bh=cO9U3qwgLOhgsihHvedXuVmo8thu7xmgFgsUfCyT5tE=;
+	s=arc-20240116; t=1778860820; c=relaxed/simple;
+	bh=V096p+y7kuYqp+6zQtq57iYUNsrdvWzPMfpLKogTzxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uq+fRoK7KkLH2rKyVFugQ+18z/xQs8pOs8auiGHVsTrR/nP3IBgitLuq0CbKSaARZNSnbzqgI3ddko4y7Yj493GI9cVzNi2c2D6jPVCC5D/sKzclck8sgCplvr+F0o56SV1r+w+WIZxjwSRMWCmFxLaI+SSl0I9zuZJTb+5We1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zha3tIGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TIF0wIJvZKWVl8DjiN7Tj/xUdAXofl7+YCCfqCbHNKaSJr/o0WkOULGID3Y2UGVerhrEXV9R0Yb/sDySkx4v+nCRsY2a1Up2oyrbFCsTA0feex8PVhkPV1HluoqvGQTAadJbdQvkmURzvGr0Yyctjh7xjGhIBAhRKIcG5CalslY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=he812TxD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zha3tIGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB82C2BCB0;
-	Fri, 15 May 2026 16:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="he812TxD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BA4C2BCB0;
+	Fri, 15 May 2026 16:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860818;
-	bh=cO9U3qwgLOhgsihHvedXuVmo8thu7xmgFgsUfCyT5tE=;
+	s=korg; t=1778860820;
+	bh=V096p+y7kuYqp+6zQtq57iYUNsrdvWzPMfpLKogTzxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zha3tIGMoq9SKB2GaaFv/rJbHhbO+h/7miTXiIBMfFr2GQxoHVjnP9kLTe7lpU75k
-	 FYFat9goqQ8eMrkD9nAD1SK/EyQvw5YKwy++lW0DDL5pOGLzVN650v/f/9Tplqp2ru
-	 4I6lf9qVzh07/5WAT0cmbKCJ+4yMTGC3JZbzDz94=
+	b=he812TxDaUPaksCvVVxgjoR2rDpyu7LqiPauzdxxVAItSb7YQfYxga06411PJuUti
+	 Nst589sgFHEelIlg2eMClt1Uy2EB/7Ljz9Rd7BfXj6uFzCENGje/r4q7sZ3+4T3EP2
+	 /Vzsi8ERdOD8IKx3eJllAKUkiRo/BRTMjfBBlxMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacqueline Wong <jacqwong@google.com>,
-	Jordan Hand <jhand@google.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.6 090/474] tpm: tpm_tis: stop transmit if retries are exhausted
-Date: Fri, 15 May 2026 17:43:19 +0200
-Message-ID: <20260515154716.985608711@linuxfoundation.org>
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Johan Hovold <johan@kernel.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.6 091/474] rtc: ntxec: fix OF node reference imbalance
+Date: Fri, 15 May 2026 17:43:20 +0200
+Message-ID: <20260515154717.007497986@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -45,54 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacqueline Wong <jacqwong@google.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 949692da7211572fac419b2986b6abc0cd1aeb76 upstream.
+commit 30c4d2f26bb3538c328035cea2e6265c8320539e upstream.
 
-tpm_tis_send_main() will attempt to retry sending data TPM_RETRY times.
-Currently, if those retries are exhausted, the driver will attempt to
-call execute. The TPM will be in the wrong state, leading to the
-operation simply timing out.
+The driver reuses the OF node of the parent multi-function device but
+fails to take another reference to balance the one dropped by the
+platform bus code when unbinding the MFD and deregistering the child
+devices.
 
-Instead, if there is still an error after retries are exhausted, return
-that error immediately.
+Fix this by using the intended helper for reusing OF nodes.
 
-Cc: stable@vger.kernel.org # v6.6+
-Fixes: 280db21e153d8 ("tpm_tis: Resend command to recover from data transfer errors")
-Signed-off-by: Jacqueline Wong <jacqwong@google.com>
-Signed-off-by: Jordan Hand <jhand@google.com>
-Link: https://lore.kernel.org/r/20260415160006.2275325-3-jacqwong@google.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 435af89786c6 ("rtc: New driver for RTC in Netronix embedded controller")
+Cc: stable@vger.kernel.org	# 5.13
+Cc: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260407122717.2676774-1-johan@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-ntxec.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -557,11 +557,16 @@ static int tpm_tis_send_main(struct tpm_
- 			break;
- 		else if (rc != -EAGAIN && rc != -EIO)
- 			/* Data transfer failed, not recoverable */
--			return rc;
-+			goto out_err;
+--- a/drivers/rtc/rtc-ntxec.c
++++ b/drivers/rtc/rtc-ntxec.c
+@@ -110,7 +110,7 @@ static int ntxec_rtc_probe(struct platfo
+ 	struct rtc_device *dev;
+ 	struct ntxec_rtc *rtc;
  
- 		usleep_range(priv->timeout_min, priv->timeout_max);
- 	}
+-	pdev->dev.of_node = pdev->dev.parent->of_node;
++	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
  
-+	if (rc == -EAGAIN || rc == -EIO) {
-+		dev_err(&chip->dev, "Exhausted %d tpm_tis_send_data retries\n", TPM_RETRY);
-+		goto out_err;
-+	}
-+
- 	/* go and do it */
- 	rc = tpm_tis_write8(priv, TPM_STS(priv->locality), TPM_STS_GO);
- 	if (rc < 0)
+ 	rtc = devm_kzalloc(&pdev->dev, sizeof(*rtc), GFP_KERNEL);
+ 	if (!rtc)
 
 
