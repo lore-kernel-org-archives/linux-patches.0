@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30E23FD968;
-	Fri, 15 May 2026 16:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931D83FD967;
+	Fri, 15 May 2026 16:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861369; cv=none; b=hKhG3gn9LBYudQSzoNN2S17cV5uipDVLjZxwCe/EK4FeL+7ljsQxhQ+AaAR2F5QDr/S2qZU/WACU73aB2zDUv0hSrIFE3Wu0LdkhPiZ9saHtKNryGFHt5jDGh4NIynbSIdLm/fJ2GT8fsTs93/XbdejDTcSdnVcSh8JZlqd4Hi0=
+	t=1778861371; cv=none; b=IVba0KGgLmlv6FFhCHlEviiD/AojCSi4L/deMz4LGxPWD9TKnOwJVwXQ2xvB4Q5ppt/Gaq/NgEjRNOYESLEcqK1Nfk4me9/wOz6gz5jiFfJrHVSMdBdMma+oCDu1Cp+gubFdrW/MOMDI+qmOdBiwgMD895JroxOs5h8+68PjonU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861369; c=relaxed/simple;
-	bh=5aZIXEJu4l0n6nhyt8/zfTLOi6VFCiaBlNYnw5W6JvQ=;
+	s=arc-20240116; t=1778861371; c=relaxed/simple;
+	bh=bSU5O849j4jTSH07EohFnTL8rm+xg7ZIt1WaFTTmTJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gc6xqGEn3YoBjAncu3RHKnors3oXXxs5TbhWeSqdeaaJS6ifT0QNhd80GfvtyKrzEeXn2s53u7u+ouZ0fchGyuiQkZc7QcVbwR7F85JL68849gbRJ93jDiHqVPlSJ6bfemODMzejln6DfCkjgxyc5FGZO5s3YAfLOe8tzUi1DD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLRh3kVW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dbQb95A2QrbYgE8/Jy4Tw7fyUStx/KL21LjlZtA4i4q78OKG1Om/IdZqR8nijzikK8SD+i55bFwBAv/pPhN44f5jirqDcb4lAXlX7rHRvRtHBjZp8aH0JtPPOlG+BIEhIRxLE5igDZ3lUDNeiAON7FF74fgsFGE+aud2sItP0Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IN8uuXu0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLRh3kVW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895E4C2BCC9;
-	Fri, 15 May 2026 16:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IN8uuXu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D19FC2BCB0;
+	Fri, 15 May 2026 16:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861368;
-	bh=5aZIXEJu4l0n6nhyt8/zfTLOi6VFCiaBlNYnw5W6JvQ=;
+	s=korg; t=1778861371;
+	bh=bSU5O849j4jTSH07EohFnTL8rm+xg7ZIt1WaFTTmTJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLRh3kVW9KAOhExYTzBIZWAFakiRvdnRufsNH3syJHuIc++5Yk1rmI8ok33VFzdeL
-	 QsxKb0AyYdeRfqHfRrG3eNMsqm23XbgsoLQvfT3O/WvAccuqvHAegMfOScsr6NiLhX
-	 ez54NPofgbt6SUQLNVaqKxavoCjGNwJ0mgen5txw=
+	b=IN8uuXu0b+9GK4BKH9UXHo0zb76atF9CM+vfflStWhUODR1qY+U2rpdumM0ohYrwT
+	 v5Oi3gdaOnpbUavopi7SxXqgml/w6QQx4NtPeJ+hzV8hGQyiPQvYgLwE9cz9hUjb7J
+	 qut4K7hKuXgVZDix/wHhjZWeqkCWWzCVadx4GV0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 303/474] regulator: mt6357: fix OF node reference imbalance
-Date: Fri, 15 May 2026 17:46:52 +0200
-Message-ID: <20260515154721.560388721@linuxfoundation.org>
+Subject: [PATCH 6.6 304/474] regulator: max77650: fix OF node reference imbalance
+Date: Fri, 15 May 2026 17:46:53 +0200
+Message-ID: <20260515154721.583025408@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 2f38e96c273e15f5e9f5d1fc2c0cbba703751602 upstream.
+commit 2edaf5f7ada0ab5c9ec1f0836bd19779a8d85262 upstream.
 
 The driver reuses the OF node of the parent multi-function device but
 fails to take another reference to balance the one dropped by the
@@ -61,26 +62,27 @@ devices.
 
 Fix this by using the intended helper for reusing OF nodes.
 
-Fixes: dafc7cde23dc ("regulator: add mt6357 regulator")
-Cc: stable@vger.kernel.org	# 6.2
+Fixes: bcc61f1c44fd ("regulator: max77650: add regulator support")
+Cc: stable@vger.kernel.org	# 5.1
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260408073055.5183-5-johan@kernel.org
+Link: https://patch.msgid.link/20260408073055.5183-4-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/mt6357-regulator.c |    2 +-
+ drivers/regulator/max77650-regulator.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/regulator/mt6357-regulator.c
-+++ b/drivers/regulator/mt6357-regulator.c
-@@ -410,7 +410,7 @@ static int mt6357_regulator_probe(struct
- 	struct regulator_dev *rdev;
- 	int i;
+--- a/drivers/regulator/max77650-regulator.c
++++ b/drivers/regulator/max77650-regulator.c
+@@ -339,7 +339,7 @@ static int max77650_regulator_probe(stru
+ 	parent = dev->parent;
  
--	pdev->dev.of_node = pdev->dev.parent->of_node;
-+	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
+ 	if (!dev->of_node)
+-		dev->of_node = parent->of_node;
++		device_set_of_node_from_dev(dev, parent);
  
- 	for (i = 0; i < MT6357_MAX_REGULATOR; i++) {
- 		config.dev = &pdev->dev;
+ 	rdescs = devm_kcalloc(dev, MAX77650_REGULATOR_NUM_REGULATORS,
+ 			      sizeof(*rdescs), GFP_KERNEL);
 
 
