@@ -1,149 +1,216 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011001.outbound.protection.outlook.com [40.93.194.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510A13DA7C5
-	for <patches@lists.linux.dev>; Fri, 15 May 2026 17:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778865979; cv=none; b=Jv8cW5fdMPrO62kdbChP0TTOAzklsSynz3QL1mBFrVypIZ2w07S6rUQEbnfCE381j18MKrXjOnhIA1uJx3VGE1Zqr2pLCq/lXQMNXPV0dM23Qc4MkLMm7DMoTNIHCQMMAMhNuKZWhSynYGt0DxHommRptGDJKNr3Fqkse+DnDSU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778865979; c=relaxed/simple;
-	bh=1R+q0brxT5FCSRMOO/LqKS2K1GLvRDjYnI692aiflvw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MpaB+PNzKNvIrnFSc9vdy+sJZ7E5FNvIsSeELHkzqWHAaGp0VzlvGSIDeNdFloBwRqcGlM00CeOu/FX515oOmRLkWuctT6xdua+IHcMgHEk6+JwjAedsGr86UgGks6I81vqXHyCWCF3VrpYW1rLtU5XeZESDHTDBREO/jV+SSss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=KfEFM//2; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E193DC4C0
+	for <patches@lists.linux.dev>; Fri, 15 May 2026 17:30:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.1
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1778866217; cv=fail; b=ixn0JsN/b/Cc0Gc1zjfOYmu3Whe4/hhes6LOBquuVdg9/JM5hi9jcP2gBFO4yB09kG7OzaYCxY8JDmWYWhIaKXTrvdlaOmMeShehqhkQH/avtjlYFzR2kVtnFvFsDabYPHSEr18wfYg2oiA9mNPZUnpS6d6bB68haJYx6kgkaxg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1778866217; c=relaxed/simple;
+	bh=lggE1rtPfHtoUGHC9J94m+26DqukC/fBcuL/Chf0dTY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=IaIVfkJumGe9cinmHWmpbgqomRIUWiccrcF3AOIHldnepc7IxpTRcDv7KJ8uacBfm9ZRsDaVsNL72INUWNONI1I13kEZGZQ0E9GTCr2hSvD/ew/IgHJanJJcDyxJDHKDN31nYg4hNuI1/AtZo/oB2sIo1bxwe/N8RAJMiAQyn4w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=pyHtBBXG; arc=fail smtp.client-ip=40.93.194.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="KfEFM//2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1778865975; x=1779470775; i=rwarsow@gmx.de;
-	bh=1R+q0brxT5FCSRMOO/LqKS2K1GLvRDjYnI692aiflvw=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=KfEFM//2iMm2jFi5/oxyReBdmPXdl1MSkE8mi8UF0V8z1gFg/s5EA12zF5vmYDof
-	 meRcisgZXrAr6TGBDasGXHsoA02Rqo2HPaRPL/tG4I1QuuBhtRrsYOBfkOrSktSAO
-	 +1SDi7WthWosLX9nRwDNBJhoW9fxiNzgU3IEItBfhcdEEBSWnoCubIsbcqATwOxQ8
-	 obuopxWhY+44V0z7WLDb+NWUfdpjb8tlWuEqH+SUFRg6gFwrz3W4SZpwuCsYD+TH0
-	 FbBt8/RwMyC0NzeQwJbkPfQ+M2kBlWL9lz147zrSyNbYFpVdk+F/CdnoIDpCh5LI1
-	 K2u+Go2xZqNFUaqlGg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MxDp4-1xLOdr2Jq4-017erD; Fri, 15
- May 2026 19:26:15 +0200
-Message-ID: <bd7d7066-d913-40c9-b4f5-baa7972932fe@gmx.de>
-Date: Fri, 15 May 2026 19:26:14 +0200
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="pyHtBBXG"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZOkuRnbSDdHzmhFpfL545ZpvhSbaiLKZWR5FoolBrChJG7SU7aFO5Y/XWKWYTHWxDWHuNoYtU2qJBRpHabEAJNsGlc89J412HtSeZclg7YU8HAPwXKUSi336y/YuLrZlMcd4OJCfKLuhu6N5lMTPVqqw+x1Qy6ZIjJpr9JQazfpFm9Q+Vm0CrOe7oNELyn/eVoZlgt05LK22bqren9UIrZsHstSrqbiufWg/FkHp+LwCZrEQ+wGPc7RcVhHphWvl9EQrbkTELon4FSLwLjppXUU2uBEaKoUIHymjnRn0ykbVQvxhw6vOxGLkSjYqOmu3gyCN733bMF3MK3FRsXG9LA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WH8QTgzVEvwVn1J023aYxR41RTUe2ha67t2tbOgrUHk=;
+ b=fv6DXOSMDTgHo5/xpl3sHlCmZxu+lJI8mPo2pgrIgzFM627fB7Lr3N+Bs4l3WtSVphj7i0B5YS9npmKhGweqBdK3HgfJBt28rv5RBjrPJfo2D8SLw4KuLIlGMuhLLOn7JYix03AVDFNBh9oqjbAhZn3T/+SGc9lMYKblPHitOfDl6sLQdfijAgqXA/9vL0Y005xWtVGZjP5ZTcT6uv1KuHltiKyjj/trsIJT30OixOTkZ3c6E+CQctjnIG2h/mejBv34gzBNet2Pzx9WC6h7yC/4MgYpkRmuH8UM3l8BiOcDRrmUkHePnGGf8aVyphea/IU4UX/e2Awn3ucyNNfixQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WH8QTgzVEvwVn1J023aYxR41RTUe2ha67t2tbOgrUHk=;
+ b=pyHtBBXGTh2P8dRhPVz6p5VY0TRg1q07yGX1WuU0xAA6Va/4uJzrJpJUmBRWJ+019skVKyE7fS0n30nJpuGqG+TdR4Rw5wFw5Ah8mU8kDNKNmBZTB5v45mZkdp03MekmTj7VS9xylxVSRARUbEl8D7Wnm2pzixRBSEJqR+H5F9cdHFknVxta2WZxjaossCkiVrupsrY/2eISbe9NZyNFhj3P3y61WF4XkoBLN/GtbbFLXBicVRwVJWallUSvWvgRGYTt9DahDDOa+X7LWOVz/amK59gS3Qf8enOpStMTx08khf+9w2iUMTb1cPJbEdKTXka4vvqM5pTKzbXPBgXB4w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by PH7PR12MB7283.namprd12.prod.outlook.com (2603:10b6:510:20a::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.19; Fri, 15 May
+ 2026 17:30:10 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.21.0025.012; Fri, 15 May 2026
+ 17:30:10 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Alex Williamson <alex@shazbot.org>,
+	David Matlack <dmatlack@google.com>,
+	kvm@vger.kernel.org,
+	Leon Romanovsky <leon@kernel.org>,
+	linux-kselftest@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	Mark Bloch <mbloch@nvidia.com>,
+	netdev@vger.kernel.org,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>
+Cc: patches@lists.linux.dev
+Subject: [PATCH v2 04/11] net/mlx5: Add ONCE and MMIO accessor variants to mlx5_ifc_macros.h
+Date: Fri, 15 May 2026 14:30:01 -0300
+Message-ID: <4-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+In-Reply-To: <0-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+References:
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BL1P223CA0007.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:208:2c4::12) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.0 000/201] 7.0.9-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260515154658.538039039@linuxfoundation.org>
-From: Ronald Warsow <rwarsow@gmx.de>
-Content-Language: de-DE, en-US
-In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:SaoI99PPJbtV+tiXwsvk67Ya6awe8kde0xJFurCgG5HwYGF2m+B
- Vjt4BVpC6bGlBszY/P9IjQkvRPZhs83lAY5Q3tyE6/0APwAx1AVCuFsjtqOlQBIxRXs0BFu
- Bj4muLQ1s3+zp8XOqqp0FzZ/oqQc+ufp9cqN5WTjx6abzTqz+wMrh3sv/uzWCHFMTkqDHql
- J3Mm1GCQI6l80RXFMDXGQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:8XczuTdnbXM=;/JdrpFrGzJgD3xUkmPxZt1+qJWG
- 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
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH7PR12MB7283:EE_
+X-MS-Office365-Filtering-Correlation-Id: 72251ac3-0ca0-4b48-f8b5-08deb2a79ca4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|366016|921020|18002099003|56012099003|22082099003|11063799003;
+X-Microsoft-Antispam-Message-Info:
+	tzx6XkrIR4ch8NYgczy/63strp4xE3hh5EXyaydJIHAH/opC9eGSkl9YpsQ9aWS8EzrodUzXODW00EpaL6oX5TZhoaCjp8wXLRBH89PZgXbdgGVb6yzNcrqwlMERWJ+FjIXjhUEgArSAeJ9pl80oCYr1B4YTm607JIzOsV361pWSVzVx6q22jGrK6sgVcCANbYPJAykJGSeWhgehy7pEtvZwVjA92xUnihHhAECJZC4/QuZpSMIR5pdtBzFnd4KS3rshf+76oR5LwDUfehr658CC3vGdNbk3jCKR7iihUHkBU3fBZMXSQUlPMliltlf45dQguDATl6zLgF4JUke/pYK79KtyhZ3Qz20c2lKyEkagyETHb2xgOpdiuepodlP/I2sET0OjhJTY9FsY0p1XKeycRZBg6cLEiItBAqrNwpSZpLrTpEhBKbctqUNqfK6wBbJMSTWnZO9ToeQpPUapXl+WK1UaBPodu1Ux0HAaNsbEN6Rp1qtGfjf/jF9tCmEsYIBIxm3GHuVyk3qACAfpD7AQl6+EwxVCJ6J8KARWmkzU4SEnai7/ZeOiX4TmWWhjzIwp+iQcEA+4uW5bnFLuOuzE2QgWoiSyjxASldvGkY1cJbVokICcFZlhKS8Db+QsBZkvkONg/4Qk0cLJlrle5lIN8A843+FACK3tP9mgUqpjWmTYsW1G4Amo2XK94yFyv7OpAEFt+arQrFfrwtiQof2Vbe2JmSFc9S5/3/U0eYU=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(921020)(18002099003)(56012099003)(22082099003)(11063799003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?fsZ9gocu8v6NIkenTKYHrDWGDAh9hH2N7Mv+FQ6eQew8nvu6p02ffj2QZw4X?=
+ =?us-ascii?Q?CDZLTgyv/X5JGyQGTstD7RCdFSUWXEVi+SZ4zQxTCD/O4dOo7Oa/mSJdXDu7?=
+ =?us-ascii?Q?sDmtJzu8wxoRxLXxOd2GiliPHCUIAWVvAKxaOgwiasWsHqwub5YC4DRL4SPB?=
+ =?us-ascii?Q?QHTzYgc9dG6HNn9tgrqfIwiS7sW9Qs1dv8dxx+It/giH7PyUUw6ovWYj9wvX?=
+ =?us-ascii?Q?e+kWUPpH/rs4kd5b7x7t4PRpe34ArS80t9Rfk4I821xZXHeHUEM6jWxlbfQQ?=
+ =?us-ascii?Q?Yq9VF0D5I55UCNXvzzSPoJd1s6pE3i7T4et67n7o4gHE8jy3Zgz+uAC/2BZR?=
+ =?us-ascii?Q?kG9yfb7pt+ENzg4JkbkXHFhOPZS3JUtxSrnIHrkVlKUcDaGsJgod/R4VzYI8?=
+ =?us-ascii?Q?csHV7dmENh+PPASR2XXCcOcQOiqlEv3+7jSm23ytOKTzfmdbp0RixC+rVWtr?=
+ =?us-ascii?Q?j5F2EYNSXIExA4eJn/K5jN8JKgw+72AP6IpTeZsQU78HV+I+UWumh5n/G7Bx?=
+ =?us-ascii?Q?yCZKZlv4DXHKqB9qiH2l1ztu+BFFxtfoMVbWNcymE7I9BLTtJKqmPauPSKZs?=
+ =?us-ascii?Q?CS+xGF0jm+Hnb3Cdyo7/F29njIiZuYxvHJuRp68ZWL6Xa38M+zqsSZ8E1CXS?=
+ =?us-ascii?Q?QAk6tHogs4cygvuucAUTpj3E7TArX3MPcf623U40JSgqN1WRV+gTt+Uu7XEs?=
+ =?us-ascii?Q?Cbqpxl61dcahW1dbLzUxHN7v5ApNG1FiZIBlTUuk8KUHkkjRDY+NAlvoJ+us?=
+ =?us-ascii?Q?czrn1jJnidzxqc/bs/avXX012FWJWPKze9jfXCukassMTFlehd076JEsxSNo?=
+ =?us-ascii?Q?e9qIv+yVbwAE4zYTFtTZD3wedJOMhtpnSx7uMewuuMK/K7Xup77i5uPDlwFk?=
+ =?us-ascii?Q?5ItFj6d+j8K57woMXF1TjNwwKLN4ghOU28KFZmLoFVzCPzTOzQu6mcpY82sv?=
+ =?us-ascii?Q?t0kwWw8BrmpgyglnVQcfNsxCfWZKOByYklcKv98gJ6JBivjQ1Y6v0fCRrDkQ?=
+ =?us-ascii?Q?D4QORbz0+sK0Lq2huZLZxjIOHFolLdzvWwDl+FUu00o6w586wrTO8arigFQE?=
+ =?us-ascii?Q?tsEtUbC0ac6SG4ECyLBECiJJLLT56W0GKcN5h1vfCykfbwJ05VlOx3IlhWUx?=
+ =?us-ascii?Q?Nl0UyWXyIRM0Vl0zjTvS3dDbV89eGuHpOdHXr23EY84p7x710JkenaF0fsTi?=
+ =?us-ascii?Q?c8poEibS9wsTUfryev0pcKD/zM63s/eE2+NjpmCFVJxjWNTJFw/VjtTNvWbL?=
+ =?us-ascii?Q?lzvnwaabeZXT4ucYCXXshpiVhOYOnsImL5+STGWuWoFGQG0DaVTdOfXWitKm?=
+ =?us-ascii?Q?5albFxkyoOSADj+mefNC0xjiemkN5jMPQ7+s7GcG1yP1okNNf0Okql3svsNB?=
+ =?us-ascii?Q?73VwFopFw+N0OijYUnqsJZT5MhZv8IPw/t6p/TR3OIYicvdbMSNcHV+Pbobg?=
+ =?us-ascii?Q?pIol1b5GW9z4KI1pvFmX+dIjS7gWxD3wlDVv5dC51gadZjZpXaqnswG5inRY?=
+ =?us-ascii?Q?1pON6Ozng09984dz+gFxffA7KY1+bwliutfM3YMy2gJFvdx2ZyfV8Y2csl7W?=
+ =?us-ascii?Q?dHQfNW31n3QqkEy8/Q4tSEooideY1mg5fZO/EaLjDrp2P5MFtQWg90M881bQ?=
+ =?us-ascii?Q?mzIwtG5kzffii/aVr3hgvNwyTsqa/1v0dKNhN7eojoHWBE9K1qMvxbuDKnnJ?=
+ =?us-ascii?Q?LAbtPcf+BeK0vsldql5bR8US2Rbf5DAOGmlnrcKvzTFbtH8K?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 72251ac3-0ca0-4b48-f8b5-08deb2a79ca4
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2026 17:30:09.3440
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: v7Oa5O0bLr3QglnuNjljY+r6H9xWbP5uY7xpmTsMWfb9VRNjKnGMwPYaJAppXmBF
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7283
 
-Hi
+Add MLX5_GET_ONCE / MLX5_SET_ONCE which include READ_ONCE/WRITE_ONCE
+semantics for touching ownership bits that hardware may read or write
+at any time. The kernel driver doesn't use the IFC struct for these
+ownership bits, but the VFIO driver will and needs these helpers.
 
-no regressions here on x86_64 (Intel 11th Gen. CPU)
+Add MLX5_GET_MMIO / MLX5_SET_MMIO for accessing the init seg using
+the IFC offsets. They embed a readl/writel using the IFC struct to
+generate the addressing.
 
-Thanks
+Add MLX5_ARRAY_GET64(), the missing counterpart to
+MLX5_ARRAY_SET64().
 
-Tested-by: Ronald Warsow <rwarsow@gmx.de>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ include/linux/mlx5/mlx5_ifc_macros.h | 52 ++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
+
+diff --git a/include/linux/mlx5/mlx5_ifc_macros.h b/include/linux/mlx5/mlx5_ifc_macros.h
+index d357acfd351de2..be963b9ad5b295 100644
+--- a/include/linux/mlx5/mlx5_ifc_macros.h
++++ b/include/linux/mlx5/mlx5_ifc_macros.h
+@@ -85,6 +85,13 @@ __mlx5_mask(typ, fld))
+ 	__MLX5_SET64(typ, p, fld[idx], v); \
+ } while (0)
+ 
++#define MLX5_ARRAY_GET64(typ, p, fld, idx)                                   \
++	({                                                                   \
++		BUILD_BUG_ON(__mlx5_bit_sz(typ, fld) % 64);                  \
++		be64_to_cpu(                                                 \
++			*((__be64 *)(p) + __mlx5_64_off(typ, fld) + (idx))); \
++	})
++
+ #define MLX5_GET64(typ, p, fld) be64_to_cpu(*((__be64 *)(p) + __mlx5_64_off(typ, fld)))
+ 
+ #define MLX5_GET64_PR(typ, p, fld) ({ \
+@@ -130,4 +137,49 @@ __mlx5_mask16(typ, fld))
+ 		tmp;							  \
+ 		})
+ 
++/*
++ * Use READ_ONCE/WRITE_ONCE for a single field that hardware may read/write
++ * unpredictably, mostly owner bits. All other bits in the DW must be stable.
++ * Usually a dma_wmb() will be required before a write and a dma_rmb() after a
++ * read.
++ */
++#define MLX5_GET_ONCE(typ, p, fld)                                              \
++	((be32_to_cpu(READ_ONCE(*((__be32 *)(p) + __mlx5_dw_off(typ, fld)))) >> \
++	  __mlx5_dw_bit_off(typ, fld)) &                                        \
++	 __mlx5_mask(typ, fld))
++
++#define MLX5_SET_ONCE(typ, p, fld, v)                                      \
++	do {                                                               \
++		u32 _v = v;                                                \
++		__be32 *_dw = (__be32 *)(p) + __mlx5_dw_off(typ, fld);     \
++		BUILD_BUG_ON(__mlx5_st_sz_bits(typ) % 32);                 \
++		WRITE_ONCE(*_dw,                                           \
++			   cpu_to_be32((be32_to_cpu(READ_ONCE(*_dw)) &     \
++					(~__mlx5_dw_mask(typ, fld))) |     \
++				       (((_v) & __mlx5_mask(typ, fld))     \
++					<< __mlx5_dw_bit_off(typ, fld)))); \
++	} while (0)
++
++/* Access MMIO registers, usually the init segment, using IFC structs. */
++#define MLX5_GET_MMIO(typ, p, fld)                                         \
++	((ioread32be(((__be32 __iomem *)(p) + __mlx5_dw_off(typ, fld))) >> \
++	  __mlx5_dw_bit_off(typ, fld)) &                                   \
++	 __mlx5_mask(typ, fld))
++
++/* The set is not relaxed so there is an integrated dma_wmb(). */
++#define MLX5_SET_MMIO(typ, p, fld, v)                                         \
++	do {                                                                  \
++		u32 _v = v;                                                   \
++		void __iomem *_dw =                                           \
++			((__be32 __iomem *)(p) + __mlx5_dw_off(typ, fld));    \
++		if (__mlx5_bit_sz(typ, fld) == 32)                            \
++			iowrite32be(_v, _dw);                                 \
++		else                                                          \
++			iowrite32be((ioread32be(_dw) &                        \
++				     (~__mlx5_dw_mask(typ, fld))) |           \
++					    ((_v & __mlx5_mask(typ, fld))     \
++					     << __mlx5_dw_bit_off(typ, fld)), \
++				    _dw);                                     \
++	} while (0)
++
+ #endif /* MLX5_IFC_MACROS_H */
+-- 
+2.43.0
+
