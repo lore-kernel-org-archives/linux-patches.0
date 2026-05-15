@@ -1,94 +1,115 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC233F8ED7
-	for <patches@lists.linux.dev>; Fri, 15 May 2026 18:02:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE293EEAE4;
+	Fri, 15 May 2026 18:25:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778868151; cv=none; b=e/MM9d6mJTh44u3Il+f5xdWysMpyY/guYXw4/lSD4dsF4ku0RBrS6B7XFderqPD3Qtnt4n+KRSs2Kur5u/3Fqzd47oFJF74ogs2kEFi4YmuGN1mLiVKAO3yVuvTlesO3oaOd7eZ1TajdaQSzPn6zvX8sKztdSPUumDG9N8kbs1I=
+	t=1778869509; cv=none; b=cNoamqcR5buNr1ahLYWkO2ckV8bj4BbOhUzejUp8esj59i+eOyNqVUeJwAxojrYpnkUkuzrBSu0ZpmVlg+21AFPDE2arpjO16pbAszsGFCIoGAsRGPrBkuGOR8pJh+O+nROxXlbncxxCp1z5+M73vRlkPj8bKab3gd7IkdKYyBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778868151; c=relaxed/simple;
-	bh=UmTfFE+A8IHNMuTFop8CJTADQ1vA8qvrVIqGodjLgHU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=f0i8djoolRjmWAEgZLP+cY5YvLTdthRdQYEnJ6jZOOET3JgiCA2zwU+qLy3Xb34bhpZofPIACdwrN/9GQgAmpcC6FooHyk5LAGJzk0OJZX1XTdCrXZJYCbppag6cMTnzphMxi1Fev1wORYvi4i62zlnmdNXEa4cYXD/KZk8+ivs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZfOf1v/q; arc=none smtp.client-ip=198.175.65.15
+	s=arc-20240116; t=1778869509; c=relaxed/simple;
+	bh=zEvMci9pxnTIa7WoY+kD0AnU5pBy99MDwm1K5SsIF78=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vol1yCRLQnShm+EKC/mByKMwLcprduqJslbrO1i49auuiggrFntHCJSgI56Htl0I6zcFYnj2s3/KZmfyH30Yoa9xWlpGuaTJdBU3Vrkyu5nD1qLt+CFzVusf+HE4HXJ++E5KwGOhyrqVBn6BQj5ABlP5aJ2IwWH0uzDiaEt0Sw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=k9Mq9SYL; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZfOf1v/q"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="k9Mq9SYL"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1778868150; x=1810404150;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=UmTfFE+A8IHNMuTFop8CJTADQ1vA8qvrVIqGodjLgHU=;
-  b=ZfOf1v/qkrafPOmP9zVBkC/kOAUIDsmspqIDow1lPDerqWqhgkuA4WkU
-   DQOZ9Eh9obSXspd4qtCmBiMvkQqDXSI5FS5O7aCLs76b+T54u3n+Zr+Z9
-   qhbKkKLlvjVDYRSioXR/i0413hDhdYCRlSJYlwYYgY9XIs7jTDSc3u/Wv
-   HbYv+VQVssGPOqtrPXUZdNUVxtoxflOIK7DvyFkwAuMnCZVGF6IYuWp8p
-   FT0chHljmU69wxQRNUZKRir7ZgTWQTgAsrVOrWprf2jVKgCbYMujw9wP8
-   Z17eFMiFcENCz6R+0jYRkZNR40OCkJr7OqUFZSTD+eQo7KZBIphewGnVt
-   A==;
-X-CSE-ConnectionGUID: Aynv9X7XQFiL0ByKmCVHCw==
-X-CSE-MsgGUID: MVk6ZrZQS4SxJqk65vk01w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11787"; a="83443421"
+  t=1778869508; x=1810405508;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=zEvMci9pxnTIa7WoY+kD0AnU5pBy99MDwm1K5SsIF78=;
+  b=k9Mq9SYLl2KV2sz6il+Y9+sVmGnK4YDIqkp0eC3cV8UIZWXN8VqBKn2g
+   pyt2+6CqhI5wa6xlW+UMFTOdJktND0Be/tVxJ3b0BF3KVwane5R5vjsoo
+   ciaEIEIUa+6x8pzRKORp1AzxHG0ycODzcdV6FgtIrT3VRxoH7S+9yWo9R
+   5a65OyJGOBP6DIWw9f61bV9ClY5u0LtwYS4J/qFyTI4TZ3ra0zOUq6ak+
+   u+fDWjNV8qK5X11j2EMAxKQ2lrfTS58tUUHMWu75/F7M304daq2LRv+A1
+   cNXpl+KqCagUKTPi7iqOQhbWwpvBBj8omFL1QLuMZrtiJIOWmtLmuxFOo
+   w==;
+X-CSE-ConnectionGUID: mpYj5scPSGu/4sEoRTwzqw==
+X-CSE-MsgGUID: 9iK3+9eZSzKgR2ZYf1s/Iw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11787"; a="90525235"
 X-IronPort-AV: E=Sophos;i="6.23,236,1770624000"; 
-   d="scan'208";a="83443421"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2026 11:02:30 -0700
-X-CSE-ConnectionGUID: Jnm4ighcQOiwUEeztoQ6pg==
-X-CSE-MsgGUID: 4BYze9ERTnyc8jh9vUOy4w==
+   d="scan'208";a="90525235"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2026 11:25:07 -0700
+X-CSE-ConnectionGUID: RL+DVIDDRHy+sE4xVGPatw==
+X-CSE-MsgGUID: 9V3VLIdnQ5mRy8Bcq/vpWw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,236,1770624000"; 
-   d="scan'208";a="237892315"
-Received: from hanvin-mobl3.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.222.27])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2026 11:02:30 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Dave Hansen <dave.hansen@intel.com>
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	x86@kernel.org,
-	linux-kernel@vger.kernel.org,
+   d="scan'208";a="242757890"
+Received: from lkp-server02.sh.intel.com (HELO 7a33ad3e7d27) ([10.239.97.151])
+  by orviesa003.jf.intel.com with ESMTP; 15 May 2026 11:25:06 -0700
+Received: from kbuild by 7a33ad3e7d27 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1wNxD2-000000002X3-40Le;
+	Fri, 15 May 2026 18:24:36 +0000
+Date: Sat, 16 May 2026 02:23:56 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, Leon Romanovsky <leon@kernel.org>,
+	linux-rdma@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, Jiri Pirko <jiri@resnulli.us>,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH] x86/cpu: Add Intel CPU model number for rugged Panther Lake
-Date: Fri, 15 May 2026 11:02:23 -0700
-Message-ID: <20260515180224.13818-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.54.0
+	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
+Subject: Re: [PATCH 6/6] RDMA/core: Move flow related functions to
+ ib_uverbs_support.ko
+Message-ID: <202605160258.313mCXe3-lkp@intel.com>
+References: <6-v1-045258567bd6+9fe-ib_uverbs_support_ko_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6-v1-045258567bd6+9fe-ib_uverbs_support_ko_jgg@nvidia.com>
 
-Derivative of Panther Lake with P-cores and low power E-cores intended
-for use in harsh environments.
+Hi Jason,
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/include/asm/intel-family.h | 2 ++
- 1 file changed, 2 insertions(+)
+kernel test robot noticed the following build warnings:
 
-diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
-index 950bfd006905..66d964afe18a 100644
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -29,6 +29,7 @@
-  *		_N,_P	- other mobile parts
-  *		_H	- premium mobile parts
-  *		_S	- other client parts
-+ *		_R	- ruggedized for harsh environment
-  *
-  *		Historical OPTDIFFs:
-  *
-@@ -151,6 +152,7 @@
- #define INTEL_LUNARLAKE_M		IFM(6, 0xBD) /* Lion Cove / Skymont */
- 
- #define INTEL_PANTHERLAKE_L		IFM(6, 0xCC) /* Cougar Cove / Darkmont */
-+#define INTEL_PANTHERLAKE_R		IFM(6, 0xE5) /* Cougar Cove / Darkmont */
- 
- #define INTEL_WILDCATLAKE_L		IFM(6, 0xD5)
- 
--- 
-2.54.0
+[auto build test WARNING on 254f49634ee16a731174d2ae34bc50bd5f45e731]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Jason-Gunthorpe/RDMA-core-Move-the-_ib_copy_validate_udata-functions-to-ib_core_uverbs/20260515-124950
+base:   254f49634ee16a731174d2ae34bc50bd5f45e731
+patch link:    https://lore.kernel.org/r/6-v1-045258567bd6%2B9fe-ib_uverbs_support_ko_jgg%40nvidia.com
+patch subject: [PATCH 6/6] RDMA/core: Move flow related functions to ib_uverbs_support.ko
+config: x86_64-randconfig-123 (https://download.01.org/0day-ci/archive/20260516/202605160258.313mCXe3-lkp@intel.com/config)
+compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
+sparse: v0.6.5-rc1
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260516/202605160258.313mCXe3-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202605160258.313mCXe3-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+>> drivers/infiniband/core/ib_core_uverbs.c:429:16: sparse: sparse: incorrect type in return expression (different modifiers) @@     expected int ( * )( ... ) @@     got int ( [noderef] *__v )( ... ) @@
+   drivers/infiniband/core/ib_core_uverbs.c:429:16: sparse:     expected int ( * )( ... )
+   drivers/infiniband/core/ib_core_uverbs.c:429:16: sparse:     got int ( [noderef] *__v )( ... )
+
+vim +429 drivers/infiniband/core/ib_core_uverbs.c
+
+   419	
+   420	uverbs_api_ioctl_handler_fn uverbs_get_handler_fn(struct ib_udata *udata)
+   421	{
+   422		struct uverbs_attr_bundle *bundle =
+   423			rdma_udata_to_uverbs_attr_bundle(udata);
+   424		struct bundle_priv *pbundle =
+   425			container_of(&bundle->hdr, struct bundle_priv, bundle);
+   426	
+   427		lockdep_assert_held(&bundle->ufile->device->disassociate_srcu);
+   428	
+ > 429		return srcu_dereference(pbundle->method_elm->handler,
+   430					&bundle->ufile->device->disassociate_srcu);
+   431	}
+   432	
+
+--
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
