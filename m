@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3327282F1A;
-	Fri, 15 May 2026 15:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE5B3FF1DA;
+	Fri, 15 May 2026 15:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860405; cv=none; b=OQtHRUPBjeTUJmWogl596UPWm5Piz+VeZQTSa1zfifaElEu58li6lSBdcZciz89oqTydhvzc3eJWz/aIr8Z9y88WoPoOfyPmvWoJ6eTHANY47qcspaLvpuR87fjmd4jVBPi/gBRONFDEB1vnVPIB5SJcu76spA+XrDajocYL+4k=
+	t=1778860407; cv=none; b=MhE0SfTK3R6t3MTYBJIgvuS0tMGM5OEP6cJmEoLHCKzEtAT75ohJTgP0TKuepX3L7nmex9U5/us+WTDUsKrklAmsjfIkcXE7qSb6FsG8XAYFJ/OlUmyROXoBfpOEzSbnXAXJVvkUUXvYlYZFXHoqTN8DY/Smat6vyGW5GOPksjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860405; c=relaxed/simple;
-	bh=9uGLmdzzZUOhd30UGpC80JKe0tIGfsOO28vwAundioY=;
+	s=arc-20240116; t=1778860407; c=relaxed/simple;
+	bh=oznLtrLFdgdWlgwAdHjeV7CoDA/b3zeF6U6SzQbHkhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnjFiyPcmkxhdCZU3mddEvu4A4rgZ3lTsoUflYH+ZqxVfPAn1YZvoHrAelV8omYt5/QPIH9SY58nmHY9W9WnrkjseJ+wInSyXsHKWA4lcWk2tQLAwpLPX201LxZ9eck6pO3eCqqdeWLWdu0kUy3SV5xE/s3d8Bf0VdQ3jrMsP8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Lr3p4Z8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uqzxyVfR+xlLw6Xe0O7kb5cnrMacr7PVP7ePdIuApldBWkavjD1/j4xs2aW5q2bfDqBV3HGmoIdVyKQYgtag2W5Oo0pj7XKnv58Hc2MLF9LAiDI/noMgi7i3luetSMaE3ATjrqrw8DLNJCkS+/jVKOF3JmMTQqWaF0d5e7nMcvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1xKp8N4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Lr3p4Z8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A27AC2BCF6;
-	Fri, 15 May 2026 15:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1xKp8N4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3513DC2BCB3;
+	Fri, 15 May 2026 15:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860404;
-	bh=9uGLmdzzZUOhd30UGpC80JKe0tIGfsOO28vwAundioY=;
+	s=korg; t=1778860407;
+	bh=oznLtrLFdgdWlgwAdHjeV7CoDA/b3zeF6U6SzQbHkhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Lr3p4Z8zXg892BZCHBS22N91eIPqFwqQkC6SBEtAmwLvtko5763tr/1hfvlP8atU
-	 kxQgkhboz1DAXMRIGv+LN746LWAyjHU7PdnpB1uO+G2PQ57uz6hBoKNTAT9YolrbYP
-	 NyIQn5iG9PFPkn4k0LhpElVms8G/qa6UyyXSJuVo=
+	b=A1xKp8N410dul3WhdN4ouv0idIuIEqQ+dghw4eSKufztaG1PfcsPhVt+cYGcriQTV
+	 fESVwCB5yGfRenvbPhfzRfOkz/jRrp9VXXFty9ivT+6w4rxvVGlV89M4zaT44glvsT
+	 uENs7+69CUB4DsncedRZwAZ7XwWi+GTF/oNAdgdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Kleiner <mario.kleiner.de@gmail.com>,
-	Aric Cyr <aric.cyr@amd.com>,
-	Anthony Koo <anthony.koo@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Krunoslav Kovac <krunoslav.kovac@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>
-Subject: [PATCH 6.12 077/144] drm/amd/display: Change dither policy for 10 bpc output back to dithering
-Date: Fri, 15 May 2026 17:48:23 +0200
-Message-ID: <20260515154655.316393132@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Ashutosh Desai <ashutoshdesai993@gmail.com>
+Subject: [PATCH 6.12 078/144] drm/gem: Fix inconsistent plane dimension calculation in drm_gem_fb_init_with_funcs()
+Date: Fri, 15 May 2026 17:48:24 +0200
+Message-ID: <20260515154655.339654768@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -55,90 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Kleiner <mario.kleiner.de@gmail.com>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-commit d65bfb1782304b03862c8c725fac608015dffd36 upstream.
+commit 3d4c2268bd7243c3780fe32bf24ff876da272acf upstream.
 
-Commit d5df648ec830 ("drm/amd/display: Change dither policy for 10bpc to
-round") degraded display of 12 bpc color precision output to 10 bpc sinks
-by switching 10 bpc output from dithering to "truncate to 10 bpc".
+drm_gem_fb_init_with_funcs() computes sub-sampled plane dimensions
+using plain integer division:
 
-I don't find the argumentation in that commit convincing, but the
-consequences highly unfortunate, especially for applications that
-require effective > 10 bpc precision output of > 10 bpc framebuffers.
+  unsigned int width  = mode_cmd->width  / (i ? info->hsub : 1);
+  unsigned int height = mode_cmd->height / (i ? info->vsub : 1);
 
-The argument wasn't something strong like "there are hardware design
-defects or limitations which require us to work around broken dithering
-to 10 bpc", or "there are some special use cases which do require
-truncation to 10 bpc", but essentially "at some point in the past we
-used truncation in Polaris/Vega times and it looks like it got
-inadvertently changed for Navi, so let's do that again". I couldn't find
-evidence for that in the git commit logs for this. The commit message also
-acknowledges that using dithering "...makes some sense for FP16...
-...but not for ARGB2101010 surfaces..."
+However, the ioctl-level framebuffer_check() in drm_framebuffer.c uses
+drm_format_info_plane_width/height() which round up dimensions via
+DIV_ROUND_UP(). This inconsistency corrupts the subsequent GEM object
+size check for certain pixel format and dimension combinations.
 
-The problem with this is that it makes fp16 surfaces, and especially
-rgba16 fixed point surfaces, less useful. These are now well
-supported by Mesa 25.3 and later via OpenGL + EGL, Vulkan/WSI, and by
-OSS AMDVLK Vulkan/WSI/display, and also by GNOME 50 mutter under Wayland,
-and they used to provide more than 10 bpc effective precision at the
-output.
+For example, with NV12 (vsub=2) and a 1-pixel-tall framebuffer the
+GEM size validation path sees height=0 instead of height=1. The
+expression (height - 1) then wraps to UINT_MAX as an unsigned int,
+causing min_size to overflow and wrap back to a small value. A tiny
+GEM object therefore passes the size guard, yet when the GPU accesses
+the chroma plane it will read or write memory beyond the object's
+bounds.
 
-Even for 8 or 10 bpc surfaces, the color pipeline behind the framebuffer,
-e.g., gamma tables, CTM, can be used for color correction and will
-benefit from an effective > 10 bpc output precision via dithering,
-retaining some precision that would get lost on the way through the
-pipeline, e.g., due to non-linear gamma functions.
+Fix by replacing the open-coded divisions with drm_format_info_plane_width()
+and drm_format_info_plane_height(), which use DIV_ROUND_UP() and match
+the calculation already used in framebuffer_check().
 
-Scientific apps rely on this for > 10 bpc display precision. Truncating
-to 10 bpc, instead of dithering the pipeline internal 12 bpc precision
-down to 10 bpc, causes a serious loss of precision. This also creates the
-undesirable and slightly absurd situation that using a cheap monitor
-with only 8 bpc input and display panel will yield roughly 12 bpc
-precision via dithering from 12 -> 8 bpc, whereas investment into a
-more expensive monitor with 10 bpc input and native 10 bpc display will
-only yield 10 bpc, even if a fp16 or rgb16 framebuffer and/or a properly
-set up color pipeline (gamma tables, CTM's etc. with more than 10 bpc out
-precision) would allow effective 12 bpc precision output.
-
-Therefore this patch proposes reverting that commit and going back to
-dithering down to 10 bpc, consistent with the behaviour for 6 bpc or 8 bpc
-output.
-
-Successfully tested on AMD Polaris DCE 11.2 and Raven Ridge DCN 1.0 with
-a native 10 bpc capable monitor, outputting a RGBA16 unorm framebuffer and
-measuring resulting color precision with a photometer. No apparent visual
-artifacts or problems were observed, and effective precision was measured
-to be 12 bpc again, as expected.
-
-Fixes: d5df648ec830 ("drm/amd/display: Change dither policy for 10bpc to round")
-Signed-off-by: Mario Kleiner <mario.kleiner.de@gmail.com>
-Tested-by: Mario Kleiner <mario.kleiner.de@gmail.com>
-Cc: stable@vger.kernel.org
-Cc: Aric Cyr <aric.cyr@amd.com>
-Cc: Anthony Koo <anthony.koo@amd.com>
-Cc: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Cc: Krunoslav Kovac <krunoslav.kovac@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reported-by: Mario Kleiner <mario.kleiner.de@gmail.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 4c3dbb2c312c ("drm: Add GEM backed framebuffer library")
+Cc: stable@vger.kernel.org # v4.14+
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260420013637.457751-1-ashutoshdesai993@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gem_framebuffer_helper.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -4693,7 +4693,7 @@ void resource_build_bit_depth_reduction_
- 			option = DITHER_OPTION_SPATIAL8;
- 			break;
- 		case COLOR_DEPTH_101010:
--			option = DITHER_OPTION_TRUN10;
-+			option = DITHER_OPTION_SPATIAL10;
- 			break;
- 		default:
- 			option = DITHER_OPTION_DISABLE;
+--- a/drivers/gpu/drm/drm_gem_framebuffer_helper.c
++++ b/drivers/gpu/drm/drm_gem_framebuffer_helper.c
+@@ -174,8 +174,8 @@ int drm_gem_fb_init_with_funcs(struct dr
+ 	}
+ 
+ 	for (i = 0; i < info->num_planes; i++) {
+-		unsigned int width = mode_cmd->width / (i ? info->hsub : 1);
+-		unsigned int height = mode_cmd->height / (i ? info->vsub : 1);
++		unsigned int width = drm_format_info_plane_width(info, mode_cmd->width, i);
++		unsigned int height = drm_format_info_plane_height(info, mode_cmd->height, i);
+ 		unsigned int min_size;
+ 
+ 		objs[i] = drm_gem_object_lookup(file, mode_cmd->handles[i]);
 
 
