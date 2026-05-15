@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9DD30566D;
-	Fri, 15 May 2026 15:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F07F3FF1D8;
+	Fri, 15 May 2026 15:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860539; cv=none; b=F8BMbqA00hp6jXEY+EyPdT+3Lf2TDzfYoZzAX2wzjv0M6IIRLJnlzHSqqBb3R+koboJfOE8BVnXT9Up2ppHcIafrVbX77wS1J1KOZ5lMYf4HNxXL5TAc4mvK5kew4ig+YzcTMDse0mAZI4yRiFqQnOaimiEGCyOf+ySLhp0+u/g=
+	t=1778860542; cv=none; b=urh6xLpv6Q7dPFw5Sa396yVOB3qNqx8U1X80QSSaYzBNLGfemLAu5py2A2gPj7xx/3zG7CT7VYviN0dUNkUT267+zCxcvz6Jqrb8bSxcKPPTEXfboTbZxcD99m6Zh3GbcZtnqambfDwlrVRPkI3dk0H+0uJIetyAPlHV9kViuGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860539; c=relaxed/simple;
-	bh=a1xU8UUVFiM7YIgwdI2AZt1Avh3VCHTIM+DmHThbLvc=;
+	s=arc-20240116; t=1778860542; c=relaxed/simple;
+	bh=o3XzFbL15NkbultVJ4tvNzUkg7XqqDaYSs7BynJ6D18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YE3PPVNp1jZravugcv31EM0SAogg8R64fP2jj4Me2YIBc/U3NM8W0hGQNuAntNXHaYn9x5075QslQIAiSCXZlrYVFbOTWxpWFhbNo86d/PsMP0tBmkAJsPFbjhB4QDtFfXUscuUY3iH1+lHSl/hjUikmRn3vSJQG1tyA692Sx/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+7+s3VD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=thA5DPP4x5bIDuDMwYog4tUVzK3IY71IKEH7QzSDa8H0EKHNn+lXbjNQ/P/asPUrByW7xXDfmWj7AcE7UcbwfaufMZP3uCclpGEVkLP2mW2lGBiMV1Fq7uP0MEYc25KmhTyAb5//3LVg8A20tEjgYY1ifN73kbaakpQLnzTjueI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkqKD9qT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+7+s3VD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3967C2BCB3;
-	Fri, 15 May 2026 15:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkqKD9qT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B64C2BCB0;
+	Fri, 15 May 2026 15:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860539;
-	bh=a1xU8UUVFiM7YIgwdI2AZt1Avh3VCHTIM+DmHThbLvc=;
+	s=korg; t=1778860541;
+	bh=o3XzFbL15NkbultVJ4tvNzUkg7XqqDaYSs7BynJ6D18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w+7+s3VDKn2GzlOcRN95QH2K8+BcxFDl3Yzefxs5NEk8Kgr1FlikKp78RbGLT6K9U
-	 BpiNyVEC+hawA3la3zwDY8ITcnatWGWXwQMqhAPjVtbxMzUpN3hA+NCKs+x69Xat0j
-	 5bea7v2UwvPE/o5XFKR/qpDrt9YRbNbuUOGC2R6I=
+	b=pkqKD9qToTLqvkJ/Q17DOAnA/dB8iEcaQX4C00ZyqHRNshaUyqhYCDu0pO4dAB7kl
+	 atU3q4WayoLlKOonAnRbmCvwFcebalPENLdb9wgiLgPQhLeJCYRStAX6CjRY/NYuv2
+	 uCnzplIdg9xrR6VuIjxFOkKotXP97PjVoCXe6t1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 128/144] rust: allow `clippy::collapsible_if` globally
-Date: Fri, 15 May 2026 17:49:14 +0200
-Message-ID: <20260515154656.479574239@linuxfoundation.org>
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Chen Zhen <chenzhen126@huawei.com>,
+	Jussi Maki <joamaki@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Yunseong Kim <yunseong.kim@est.tech>,
+	=?UTF-8?q?David=20Nystr=C3=83=C2=B6m?= <david.nystrom@est.tech>
+Subject: [PATCH 6.12 129/144] bonding: fix use-after-free due to enslave fail after slave array update
+Date: Fri, 15 May 2026 17:49:15 +0200
+Message-ID: <20260515154656.505044119@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -44,45 +50,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-commit 2adc8664018c1cc595c7c0c98474a33c7fe32a85 upstream.
+commit e9acda52fd2ee0cdca332f996da7a95c5fd25294 upstream.
 
-Similar to `clippy::collapsible_match` (globally allowed in the previous
-commit), the `clippy::collapsible_if` lint [1] can make code harder to
-read in certain cases.
+Fix a use-after-free which happens due to enslave failure after the new
+slave has been added to the array. Since the new slave can be used for Tx
+immediately, we can use it after it has been freed by the enslave error
+cleanup path which frees the allocated slave memory. Slave update array is
+supposed to be called last when further enslave failures are not expected.
+Move it after xdp setup to avoid any problems.
 
-Thus just let developers decide on their own.
+It is very easy to reproduce the problem with a simple xdp_pass prog:
+ ip l add bond1 type bond mode balance-xor
+ ip l set bond1 up
+ ip l set dev bond1 xdp object xdp_pass.o sec xdp_pass
+ ip l add dumdum type dummy
 
-In addition, remove the existing `expect` we had.
+Then run in parallel:
+ while :; do ip l set dumdum master bond1 1>/dev/null 2>&1; done;
+ mausezahn bond1 -a own -b rand -A rand -B 1.1.1.1 -c 0 -t tcp "dp=1-1023, flags=syn"
 
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Suggested-by: Gary Guo <gary@garyguo.net>
-Link: https://lore.kernel.org/rust-for-linux/DGROP5CHU1QZ.1OKJRAUZXE9WC@garyguo.net/
-Link: https://rust-lang.github.io/rust-clippy/master/index.html#collapsible_if [1]
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260426144201.227108-2-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+The crash happens almost immediately:
+ [  605.602850] Oops: general protection fault, probably for non-canonical address 0xe0e6fc2460000137: 0000 [#1] SMP KASAN NOPTI
+ [  605.602916] KASAN: maybe wild-memory-access in range [0x07380123000009b8-0x07380123000009bf]
+ [  605.602946] CPU: 0 UID: 0 PID: 2445 Comm: mausezahn Kdump: loaded Tainted: G    B               6.19.0-rc6+ #21 PREEMPT(voluntary)
+ [  605.602979] Tainted: [B]=BAD_PAGE
+ [  605.602998] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+ [  605.603032] RIP: 0010:netdev_core_pick_tx+0xcd/0x210
+ [  605.603063] Code: 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 3e 01 00 00 48 b8 00 00 00 00 00 fc ff df 4c 8b 6b 08 49 8d 7d 30 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 25 01 00 00 49 8b 45 30 4c 89 e2 48 89 ee 48 89
+ [  605.603111] RSP: 0018:ffff88817b9af348 EFLAGS: 00010213
+ [  605.603145] RAX: dffffc0000000000 RBX: ffff88817d28b420 RCX: 0000000000000000
+ [  605.603172] RDX: 00e7002460000137 RSI: 0000000000000008 RDI: 07380123000009be
+ [  605.603199] RBP: ffff88817b541a00 R08: 0000000000000001 R09: fffffbfff3ed8c0c
+ [  605.603226] R10: ffffffff9f6c6067 R11: 0000000000000001 R12: 0000000000000000
+ [  605.603253] R13: 073801230000098e R14: ffff88817d28b448 R15: ffff88817b541a84
+ [  605.603286] FS:  00007f6570ef67c0(0000) GS:ffff888221dfa000(0000) knlGS:0000000000000000
+ [  605.603319] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ [  605.603343] CR2: 00007f65712fae40 CR3: 000000011371b000 CR4: 0000000000350ef0
+ [  605.603373] Call Trace:
+ [  605.603392]  <TASK>
+ [  605.603410]  __dev_queue_xmit+0x448/0x32a0
+ [  605.603434]  ? __pfx_vprintk_emit+0x10/0x10
+ [  605.603461]  ? __pfx_vprintk_emit+0x10/0x10
+ [  605.603484]  ? __pfx___dev_queue_xmit+0x10/0x10
+ [  605.603507]  ? bond_start_xmit+0xbfb/0xc20 [bonding]
+ [  605.603546]  ? _printk+0xcb/0x100
+ [  605.603566]  ? __pfx__printk+0x10/0x10
+ [  605.603589]  ? bond_start_xmit+0xbfb/0xc20 [bonding]
+ [  605.603627]  ? add_taint+0x5e/0x70
+ [  605.603648]  ? add_taint+0x2a/0x70
+ [  605.603670]  ? end_report.cold+0x51/0x75
+ [  605.603693]  ? bond_start_xmit+0xbfb/0xc20 [bonding]
+ [  605.603731]  bond_start_xmit+0x623/0xc20 [bonding]
+
+Fixes: 9e2ee5c7e7c3 ("net, bonding: Add XDP support to the bonding driver")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reported-by: Chen Zhen <chenzhen126@huawei.com>
+Closes: https://lore.kernel.org/netdev/fae17c21-4940-5605-85b2-1d5e17342358@huawei.com/
+CC: Jussi Maki <joamaki@gmail.com>
+CC: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/20260123120659.571187-1-razor@blackwall.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Tested-by: Yunseong Kim <yunseong.kim@est.tech>
+Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
+Reviewd-by: David NystrÃ¶m <david.nystrom@est.tech>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/bonding/bond_main.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -453,6 +453,7 @@ export rust_common_flags := --edition=20
- 			    -Wrust_2018_idioms \
- 			    -Wunreachable_pub \
- 			    -Wclippy::all \
-+			    -Aclippy::collapsible_if \
- 			    -Aclippy::collapsible_match \
- 			    -Wclippy::ignored_unit_patterns \
- 			    -Wclippy::mut_mut \
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2349,9 +2349,6 @@ skip_mac_set:
+ 		unblock_netpoll_tx();
+ 	}
+ 
+-	if (bond_mode_can_use_xmit_hash(bond))
+-		bond_update_slave_arr(bond, NULL);
+-
+ 	if (!slave_dev->netdev_ops->ndo_bpf ||
+ 	    !slave_dev->netdev_ops->ndo_xdp_xmit) {
+ 		if (bond->xdp_prog) {
+@@ -2385,6 +2382,9 @@ skip_mac_set:
+ 			bpf_prog_inc(bond->xdp_prog);
+ 	}
+ 
++	if (bond_mode_can_use_xmit_hash(bond))
++		bond_update_slave_arr(bond, NULL);
++
+ 	bond_xdp_set_features(bond_dev);
+ 
+ 	slave_info(bond_dev, slave_dev, "Enslaving as %s interface with %s link\n",
 
 
