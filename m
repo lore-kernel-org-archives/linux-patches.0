@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AAE39B971;
-	Fri, 15 May 2026 16:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403F730569C;
+	Fri, 15 May 2026 16:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860991; cv=none; b=ooSgcrn0GsP76edSc94Y49scNMiCtwfsWQKJHlHCdKjuCEHJWSWZ3WnhUbqDquxNY522rSIvK4qBywb/VBa4+6Q02ybHRgLkdx2x3CHQg/XmklN4SOVnN5hOdFq8n/+h/8fq1Iw/jh1Ts+CXsQZnMY13VQysBnGx7L5LXWWH+Yw=
+	t=1778860994; cv=none; b=Gh8auDVckJDcAxs4XzjIAk9kX1QcyEw71m0Fx3gTkXAsR7mGgMdEX+EL5iA7xU7EpBmA21zxaYPNf6eR/l6SnUy9cpjWsndk4VWCIjYX/mdzAppLgL7pfS620/8HbJRa2XpSS8oLgCyLm2Vr6yA7PPYjbKVvnAzlOXAq8tvrRQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860991; c=relaxed/simple;
-	bh=yj4Lm2h6wyQM39iE8wX7FUBpBWvPeHuGY86rPw9v+WA=;
+	s=arc-20240116; t=1778860994; c=relaxed/simple;
+	bh=/R31SjH9IpNnkkhRsu9Owd/nS1qV4vuQkTHhEFRXIZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRad+JIZoL4xzDjUMk2aRF2vYX9456y9nHJ4lwFcdw6+jCh9+I6cDAhS/fltTwaPqzEDBOzsA2r4/susk0WVInzZTDJ6KLA7q00JSUQn+VWO5teSaRas/y7aE/lN8lGbsiLILu/7UVF+fmiHdXm+5INVwjyblOGyopj4HTHib/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cC7kZ+pN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHF4tfPsQHOxV/fTds8a0dkjenQMbef97a5lLwzDtBNtZc7pW7ULeAr1+871TBQpwaTyjv5AT9GPuUAoSaOoWFoniUwJrW3g36TQcvlw2yeEBH3Ts8WNf8fKVmnK59z+PadQSOKmkVU7xtyC9aBq6IXa4pYWdFui2amdkBbYmT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsJzxYfu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cC7kZ+pN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F95C2BCB0;
-	Fri, 15 May 2026 16:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsJzxYfu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFFCC2BCB0;
+	Fri, 15 May 2026 16:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860991;
-	bh=yj4Lm2h6wyQM39iE8wX7FUBpBWvPeHuGY86rPw9v+WA=;
+	s=korg; t=1778860994;
+	bh=/R31SjH9IpNnkkhRsu9Owd/nS1qV4vuQkTHhEFRXIZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cC7kZ+pNK926oJCswQs2nSjXI8Y5HOi8j6Hzjkqo7j0zBKR7fr4DK+GcKFIMfaYUl
-	 Rw7WT8+2dPeJoKVvCENxEGFONfjUFBoEleyjZsuQSsjQ8uRkTJOC4YBNDi+cdpTONO
-	 7KvwOOaZ+QweCZrm9JBHaL1cKJOJUkj9vECI7Ob0=
+	b=RsJzxYfuw24oaWSx2uacywpeS3J9y56QQZx4TEV7WqG8k9qDzET9JYPYZLdtfD3fN
+	 6pSwxu9HkJtXd9TvH9So/rDBIP2my54HMHpBWzBUq7YIIboyz3kBUhXBJ98Fbubim8
+	 71hu6qy2zF/6olTU7VVYopuxse/T221H/6sBH4Js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chia-Ming Chang <chiamingc@synology.com>,
-	robbieko <robbieko@synology.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.6 115/474] inotify: fix watch count leak when fsnotify_add_inode_mark_locked() fails
-Date: Fri, 15 May 2026 17:43:44 +0200
-Message-ID: <20260515154717.525991305@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Zhenzhong Wu <jt26wzz@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 116/474] tcp: call sk_data_ready() after listener migration
+Date: Fri, 15 May 2026 17:43:45 +0200
+Message-ID: <20260515154717.547302331@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,45 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-Ming Chang <chiamingc@synology.com>
+From: Zhenzhong Wu <jt26wzz@gmail.com>
 
-commit 6a320935fa4293e9e599ec9f85dc9eb3be7029f8 upstream.
+commit 3864c6ba1e041bc75342353a70fa2a2c6f909923 upstream.
 
-When fsnotify_add_inode_mark_locked() fails in inotify_new_watch(),
-the error path calls inotify_remove_from_idr() but does not call
-dec_inotify_watches() to undo the preceding inc_inotify_watches().
-This leaks a watch count, and repeated failures can exhaust the
-max_user_watches limit with -ENOSPC even when no watches are active.
+When inet_csk_listen_stop() migrates an established child socket from
+a closing listener to another socket in the same SO_REUSEPORT group,
+the target listener gets a new accept-queue entry via
+inet_csk_reqsk_queue_add(), but that path never notifies the target
+listener's waiters. A nonblocking accept() still works because it
+checks the queue directly, but poll()/epoll_wait() waiters and
+blocking accept() callers can also remain asleep indefinitely.
 
-Prior to commit 1cce1eea0aff ("inotify: Convert to using per-namespace
-limits"), the watch count was incremented after fsnotify_add_mark_locked()
-succeeded, so this path was not affected. The conversion moved
-inc_inotify_watches() before the mark insertion without adding the
-corresponding rollback.
+Call READ_ONCE(nsk->sk_data_ready)(nsk) after a successful migration
+in inet_csk_listen_stop().
 
-Add the missing dec_inotify_watches() call in the error path.
+However, after inet_csk_reqsk_queue_add() succeeds, the ref acquired
+in reuseport_migrate_sock() is effectively transferred to
+nreq->rsk_listener. Another CPU can then dequeue nreq via accept()
+or listener shutdown, hit reqsk_put(), and drop that listener ref.
+Since listeners are SOCK_RCU_FREE, wrap the post-queue_add()
+dereferences of nsk in rcu_read_lock()/rcu_read_unlock(), which also
+covers the existing sock_net(nsk) access in that path.
 
-Fixes: 1cce1eea0aff ("inotify: Convert to using per-namespace limits")
+The reqsk_timer_handler() path does not need the same changes for two
+reasons: half-open requests become readable only after the final ACK,
+where tcp_child_process() already wakes the listener; and once nreq is
+visible via inet_ehash_insert(), the success path no longer touches
+nsk directly.
+
+Fixes: 54b92e841937 ("tcp: Migrate TCP_ESTABLISHED/TCP_SYN_RECV sockets in accept queues.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chia-Ming Chang <chiamingc@synology.com>
-Signed-off-by: robbieko <robbieko@synology.com>
-Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
-Link: https://patch.msgid.link/20260224093442.3076294-1-chiamingc@synology.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Zhenzhong Wu <jt26wzz@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260422024554.130346-2-jt26wzz@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/inotify/inotify_user.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/inet_connection_sock.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/notify/inotify/inotify_user.c
-+++ b/fs/notify/inotify/inotify_user.c
-@@ -622,6 +622,7 @@ static int inotify_new_watch(struct fsno
- 	if (ret) {
- 		/* we failed to get on the inode, get off the idr */
- 		inotify_remove_from_idr(group, tmp_i_mark);
-+		dec_inotify_watches(group->inotify_data.ucounts);
- 		goto out_err;
- 	}
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1429,16 +1429,19 @@ void inet_csk_listen_stop(struct sock *s
+ 			if (nreq) {
+ 				refcount_set(&nreq->rsk_refcnt, 1);
  
++				rcu_read_lock();
+ 				if (inet_csk_reqsk_queue_add(nsk, nreq, child)) {
+ 					__NET_INC_STATS(sock_net(nsk),
+ 							LINUX_MIB_TCPMIGRATEREQSUCCESS);
+ 					reqsk_migrate_reset(req);
++					READ_ONCE(nsk->sk_data_ready)(nsk);
+ 				} else {
+ 					__NET_INC_STATS(sock_net(nsk),
+ 							LINUX_MIB_TCPMIGRATEREQFAILURE);
+ 					reqsk_migrate_reset(nreq);
+ 					__reqsk_free(nreq);
+ 				}
++				rcu_read_unlock();
+ 
+ 				/* inet_csk_reqsk_queue_add() has already
+ 				 * called inet_child_forget() on failure case.
 
 
