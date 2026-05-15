@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3002C3C9896;
-	Fri, 15 May 2026 16:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA753FD959;
+	Fri, 15 May 2026 16:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861143; cv=none; b=KzfT7vohgw+RwCoekRNwGr1alIZbITfRt+pzV6KLEdytysHBqQg7f9uemM2ZWT+RNsLVF/9KP8TLuPznzJa1UJrsQC3CO0Trt01Ic/iK3fceCpUtk1z9XklL39FKLh+anKiCaNsYkyGIAwmyVwnNLxlFLaMujk95LCuLGHn5Jw4=
+	t=1778861146; cv=none; b=HrFCKZnsCSw3oQHFOFmNorLxIVeZO/mLoCAbvWXoR+DUrefUv/3jFA9ocyYKKVMIMW24sdVsiedmHdkSjCGam0o+VDQ1MXe90nIAYrdcAqsaJvZwuOTpFJtykdVOOkrFKqn6ba2+uYf4gt24eYHqzHAg+6gXrZubO0z3gWi1UmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861143; c=relaxed/simple;
-	bh=K4tcsQeZc2wf4qsA8BcViAOgapx9B+f1yALHQW20x0s=;
+	s=arc-20240116; t=1778861146; c=relaxed/simple;
+	bh=qz1PcBJ62sSPZjA3zEqX+PJ01FVVRYtMQdshH8hFUAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lOap9siFX/iyOnPJEmd6flTncw8+kQtyJijB0LSmcDhNm+meo4gJD9clSHq3P5gV19SvZoqURRnwKaHeCci+YrSp7EtJe2Bkdg8J942fzdLuhLDRfqlUvw/Kuuxs9xNJqI4xq9PQKTfzetTpmgE95VCtMmTS3LQKO3IKrSqNBYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2ZDaktD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=teUNHx20YrCt0k4gRR7qidj6futir1Cma9ZHHE2jL9Yz2qqjSc85Vrqn++TLJAqbbwNGK5Vo2EMvVeUABOK8iQmsEtGNp8K8tR5qX1lqQ0BqpvFwdsaSDeB5Nfn2t1zBVYRqVo7+5bxWrP+BauckLQP3Uw6/wEoMvlvaeNiLwwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IA1NsXjp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2ZDaktD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA392C2BCB3;
-	Fri, 15 May 2026 16:05:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IA1NsXjp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C42EC2BCFA;
+	Fri, 15 May 2026 16:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861143;
-	bh=K4tcsQeZc2wf4qsA8BcViAOgapx9B+f1yALHQW20x0s=;
+	s=korg; t=1778861146;
+	bh=qz1PcBJ62sSPZjA3zEqX+PJ01FVVRYtMQdshH8hFUAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2ZDaktDJ1J3xKjHwAXwVJpZEohCwFIuMoY7MhVVrDE3BqWTpc8Ynw67WSU2y1HGV
-	 HSqNcDyF7CdoKz8pAL6yOxpYBm29jsehfcVIDIxua2fRYWcFp2NSMsG9zW/A1g5GBT
-	 usqen9LV8/3xgO04ZgzaRoR4bx6DgF4CkqlXykGg=
+	b=IA1NsXjpbtHDp9mJGL3uZrsB9zVe8IMe8wJyL2yYjoE/7MHDXFarUraP6Q4YCGhJ+
+	 9khvCOZit7LzFEVchEbRYDpWU7JXeTaIvxNmAAXL+qt67yUaF1P1XadLbF2461ER/i
+	 lX+7MLUUG5dC9wmwfU2Hkhp6z7fbpkZJTdY5PX/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.6 216/474] fanotify: fix false positive on permission events
-Date: Fri, 15 May 2026 17:45:25 +0200
-Message-ID: <20260515154719.684570347@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Takahiro Kuwano <takahiro.kuwano@infineon.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.6 217/474] mtd: spi-nor: debugfs: fix out-of-bounds read in spi_nor_params_show()
+Date: Fri, 15 May 2026 17:45:26 +0200
+Message-ID: <20260515154719.705434112@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,86 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miklos Szeredi <mszeredi@redhat.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-commit 7746e3bd4cc19b5092e00d32d676e329bfcb6900 upstream.
+commit e47029b977e747cb3a9174308fd55762cce70147 upstream.
 
-fsnotify_get_mark_safe() may return false for a mark on an unrelated group,
-which results in bypassing the permission check.
+Sashiko noticed an out-of-bounds read [1].
 
-Fix by skipping over detached marks that are not in the current group.
+In spi_nor_params_show(), the snor_f_names array is passed to
+spi_nor_print_flags() using sizeof(snor_f_names).
 
-CC: stable@vger.kernel.org
-Fixes: abc77577a669 ("fsnotify: Provide framework for dropping SRCU lock in ->handle_event")
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Link: https://patch.msgid.link/20260410144950.156160-1-mszeredi@redhat.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Since snor_f_names is an array of pointers, sizeof() returns the total
+number of bytes occupied by the pointers
+	(element_count * sizeof(void *))
+rather than the element count itself. On 64-bit systems, this makes the
+passed length 8x larger than intended.
+
+Inside spi_nor_print_flags(), the 'names_len' argument is used to
+bounds-check the 'names' array access. An out-of-bounds read occurs
+if a flag bit is set that exceeds the array's actual element count
+but is within the inflated byte-size count.
+
+Correct this by using ARRAY_SIZE() to pass the actual number of
+string pointers in the array.
+
+Cc: stable@vger.kernel.org
+Fixes: 0257be79fc4a ("mtd: spi-nor: expose internal parameters via debugfs")
+Closes: https://sashiko.dev/#/patchset/20260417-die-erase-fix-v2-1-73bb7004ebad%40infineon.com [1]
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Takahiro Kuwano <takahiro.kuwano@infineon.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/fsnotify.c             |    2 +-
- fs/notify/mark.c                 |   18 +++++++++++-------
- include/linux/fsnotify_backend.h |    1 +
- 3 files changed, 13 insertions(+), 8 deletions(-)
+ drivers/mtd/spi-nor/debugfs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/notify/fsnotify.c
-+++ b/fs/notify/fsnotify.c
-@@ -398,7 +398,7 @@ static struct fsnotify_mark *fsnotify_fi
- 	return hlist_entry_safe(node, struct fsnotify_mark, obj_list);
- }
+--- a/drivers/mtd/spi-nor/debugfs.c
++++ b/drivers/mtd/spi-nor/debugfs.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
  
--static struct fsnotify_mark *fsnotify_next_mark(struct fsnotify_mark *mark)
-+struct fsnotify_mark *fsnotify_next_mark(struct fsnotify_mark *mark)
- {
- 	struct hlist_node *node = NULL;
++#include <linux/array_size.h>
+ #include <linux/debugfs.h>
+ #include <linux/mtd/spi-nor.h>
+ #include <linux/spi/spi.h>
+@@ -92,7 +93,8 @@ static int spi_nor_params_show(struct se
+ 	seq_printf(s, "address nbytes\t%u\n", nor->addr_nbytes);
  
---- a/fs/notify/mark.c
-+++ b/fs/notify/mark.c
-@@ -380,9 +380,6 @@ EXPORT_SYMBOL_GPL(fsnotify_put_mark);
-  */
- static bool fsnotify_get_mark_safe(struct fsnotify_mark *mark)
- {
--	if (!mark)
--		return true;
--
- 	if (refcount_inc_not_zero(&mark->refcnt)) {
- 		spin_lock(&mark->lock);
- 		if (mark->flags & FSNOTIFY_MARK_FLAG_ATTACHED) {
-@@ -423,15 +420,22 @@ bool fsnotify_prepare_user_wait(struct f
- 	int type;
+ 	seq_puts(s, "flags\t\t");
+-	spi_nor_print_flags(s, nor->flags, snor_f_names, sizeof(snor_f_names));
++	spi_nor_print_flags(s, nor->flags, snor_f_names,
++			    ARRAY_SIZE(snor_f_names));
+ 	seq_puts(s, "\n");
  
- 	fsnotify_foreach_iter_type(type) {
-+		struct fsnotify_mark *mark = iter_info->marks[type];
-+
- 		/* This can fail if mark is being removed */
--		if (!fsnotify_get_mark_safe(iter_info->marks[type])) {
--			__release(&fsnotify_mark_srcu);
--			goto fail;
-+		while (mark && !fsnotify_get_mark_safe(mark)) {
-+			if (mark->group == iter_info->current_group) {
-+				__release(&fsnotify_mark_srcu);
-+				goto fail;
-+			}
-+			/* This is a mark in an unrelated group, skip */
-+			mark = fsnotify_next_mark(mark);
-+			iter_info->marks[type] = mark;
- 		}
- 	}
- 
- 	/*
--	 * Now that both marks are pinned by refcount in the inode / vfsmount
-+	 * Now that all marks are pinned by refcount in the inode / vfsmount / etc
- 	 * lists, we can drop SRCU lock, and safely resume the list iteration
- 	 * once userspace returns.
- 	 */
---- a/include/linux/fsnotify_backend.h
-+++ b/include/linux/fsnotify_backend.h
-@@ -817,6 +817,7 @@ static inline void fsnotify_clear_sb_mar
- }
- extern void fsnotify_get_mark(struct fsnotify_mark *mark);
- extern void fsnotify_put_mark(struct fsnotify_mark *mark);
-+struct fsnotify_mark *fsnotify_next_mark(struct fsnotify_mark *mark);
- extern void fsnotify_finish_user_wait(struct fsnotify_iter_info *iter_info);
- extern bool fsnotify_prepare_user_wait(struct fsnotify_iter_info *iter_info);
- 
+ 	seq_puts(s, "\nopcodes\n");
 
 
