@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD4D2EAB82;
-	Fri, 15 May 2026 16:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899742EAB82;
+	Fri, 15 May 2026 16:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861067; cv=none; b=e9WMn4B6wXEDYsFkUCSZdMqDrgeWfjnlsSoEzVWrEICiXOlqrN9zEmFV76L1SjgU6HvTRj2CEfYWuPGj3P0034Vsg9/n+WKntI0Df2a7AdINMYK3sOcS1/QMxFC2lUFcecHfmYr77ts3kaaO7cem/WZZWQYuZnjbZVsFMCVgBns=
+	t=1778861070; cv=none; b=pWoDsBFQAjwizsa36Rou2uFvxhz8QoGicSX4rMa9rjydfW2DYsRYnpEcI/qWYo5ysU/JI84K7rur/Ui8czHutJDqM1SRSDVUPLsRXZiaShFKYCnkldAeZZB3rufU1uSC0swDtoB0qQBw7CRSXGegpmWS5vYcclC/FeepfO2cb4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861067; c=relaxed/simple;
-	bh=wzcw9C14vu52FEnDRwqEho1wA61s8SDmCUnL5+SLEfE=;
+	s=arc-20240116; t=1778861070; c=relaxed/simple;
+	bh=wL/exdIolgbx7TJ5Ky6axLIEo5Q11GMry3njxsYiLss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RXeLg8IbY0SquNHA4ySvnqIXuLxD2ovvgqYFsuUdkD90okv8gyn9Xy9m32oJs4Ssad0WER6W2YQYIbYRL9UW/nbTjuqPvCR/kYb9Uayx9eFL8cEdHvSIXHNQCns0Hl9wsOcphG58+mO/EjaSgGvNiHbMPNtgAcj6kee29SVSgAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXV2zVDk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DE5RqUE7ZHogdmitYgb70QaO6RJxUt2vglZt6jWFdMdGZI3bIiNBYbTOJvixgbfWXPvFiBgewEY2XivVO5cvltXPpCVDGZnSkgNwFK/8OANtdFAceBmXwNsBcm6v7gL18E80FphWL0yEYwHUnmE1vfhRElNRIoVLWXm5oapr8DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lG8dO9au; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXV2zVDk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DF2C2BCB0;
-	Fri, 15 May 2026 16:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lG8dO9au"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F911C2BCB0;
+	Fri, 15 May 2026 16:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861067;
-	bh=wzcw9C14vu52FEnDRwqEho1wA61s8SDmCUnL5+SLEfE=;
+	s=korg; t=1778861070;
+	bh=wL/exdIolgbx7TJ5Ky6axLIEo5Q11GMry3njxsYiLss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rXV2zVDkECE8YEH0x1qII5J/sHiWccNWhgLUjFKPhvsBCQTeHfGOVD2ih8LTNO4RG
-	 BgrTj36i3x0d2h3KL5/b82K6mn7o2ZtN7GSLJd7t/9b8nspMLACpe29EZqH08/tGOt
-	 ONfsFOBrhbreHIVGg4sj5b9PFkdZqVKfCu9o9Qgc=
+	b=lG8dO9auZxI3zweYKrfa25FDG28wTXbwAjn5nFhEDQiTb29pV5ZMgaMkWNXSnPPld
+	 GW1d+aETgPYZEz7NlQcTWoOs28yQkXRPKpH6FzqvOx7vnZQwnLXKUkHQ78UnHkMEPR
+	 X1lkBWe1oVKdR4vEdkay7e8hqkN1LGdDldQvzYCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Zhou <quan.zhou@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.6 185/474] wifi: mt76: mt7921: fix ROC abort flow interruption in mt7921_roc_work
-Date: Fri, 15 May 2026 17:44:54 +0200
-Message-ID: <20260515154719.026576141@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 186/474] wifi: b43legacy: enforce bounds check on firmware key index in RX path
+Date: Fri, 15 May 2026 17:44:55 +0200
+Message-ID: <20260515154719.047661168@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,54 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit fdfa39f9f4fbae532b162da913a67b2410caf38f upstream.
+commit a035766f970bde2d4298346a31a80685be5c0205 upstream.
 
-The mt7921_set_roc API may be executed concurrently with mt7921_roc_work,
-specifically between the following code paths:
+Same fix as b43: the firmware-controlled key index in b43legacy_rx()
+can exceed dev->max_nr_keys. The existing B43legacy_WARN_ON is
+non-enforcing in production builds, allowing an out-of-bounds read of
+dev->key[].
 
-- The check and clear of MT76_STATE_ROC in mt7921_roc_work:
-    if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
-        return;
+Make the check enforcing by dropping the frame for invalid indices.
 
-- The execution of ieee80211_iterate_active_interfaces.
-
-This race condition can interrupt the ROC abort flow, resulting in
-the ROC process failing to abort as expected.
-
-To address this defect, the modification of MT76_STATE_ROC is now
-protected by mt792x_mutex_acquire(phy->dev). This ensures that
-changes to the ROC state are properly synchronized, preventing
-race conditions and ensuring the ROC abort flow is not interrupted.
-
-Fixes: 034ae28b56f1 ("wifi: mt76: mt7921: introduce remain_on_channel support")
+Fixes: 75388acd0cd8 ("[B43LEGACY]: add mac80211-based driver for legacy BCM43xx devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Reviewed-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/2568ece8b557e5dda79391414c834ef3233049b6.1769133724.git.quan.zhou@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260417111145.2694196-2-tristmd@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/broadcom/b43legacy/xmit.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -361,10 +361,11 @@ void mt7921_roc_work(struct work_struct
- 	phy = (struct mt792x_phy *)container_of(work, struct mt792x_phy,
- 						roc_work);
+--- a/drivers/net/wireless/broadcom/b43legacy/xmit.c
++++ b/drivers/net/wireless/broadcom/b43legacy/xmit.c
+@@ -476,7 +476,8 @@ void b43legacy_rx(struct b43legacy_wldev
+ 		 * key index, but the ucode passed it slightly different.
+ 		 */
+ 		keyidx = b43legacy_kidx_to_raw(dev, keyidx);
+-		B43legacy_WARN_ON(keyidx >= dev->max_nr_keys);
++		if (B43legacy_WARN_ON(keyidx >= dev->max_nr_keys))
++			goto drop;
  
--	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state))
--		return;
--
- 	mt792x_mutex_acquire(phy->dev);
-+	if (!test_and_clear_bit(MT76_STATE_ROC, &phy->mt76->state)) {
-+		mt792x_mutex_release(phy->dev);
-+		return;
-+	}
- 	ieee80211_iterate_active_interfaces(phy->mt76->hw,
- 					    IEEE80211_IFACE_ITER_RESUME_ALL,
- 					    mt7921_roc_iter, phy);
+ 		if (dev->key[keyidx].algorithm != B43legacy_SEC_ALGO_NONE) {
+ 			/* Remove PROTECTED flag to mark it as decrypted. */
 
 
