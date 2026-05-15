@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35483A961B;
-	Fri, 15 May 2026 16:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDFB3C76A0;
+	Fri, 15 May 2026 16:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862638; cv=none; b=BjlINXDubwIDSLWgMfSkrOGM3Ppo8GmsI7UwTf+0p4QGno3EXvfquAaBFvQ4drAgHF5GU7Hks6Cls5MNi8UvE0QExZm9005N+/t9y2Vu2rUfOXsdefl51vZXTMZVHz+ngW4bIzHUGZw+jstLvzoLmHjoytL53+wb9r6d3QYooTY=
+	t=1778862640; cv=none; b=bcIfjyy5X01ASlc0daRU5LmH840laiKomvK5kdbjdrWyb58IRxp7znv+j3U9hEXQ0rIOjtsi/4KfaUyzqH/sjWj0rf9fZ+V1jcdFlskSCrvg/QKCjPxxQwOgHgkMhclvqPZpOdFeb2QQwYZBgET0aJbooJyYPP42FKspWD3mVZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862638; c=relaxed/simple;
-	bh=4881bcLvj+J+S6PVLPTOnNb+wVWNA8sUhBC7RvypAk0=;
+	s=arc-20240116; t=1778862640; c=relaxed/simple;
+	bh=CgMSpeCsmD5sSdVQz7PkXzKWiZ4kR+AdikxNd6G6jOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nObpcABUONSJaxBrtdz6qDz98zxmvnQNK0ztIgTVzU77+9wom/2NoiSM2k4OxS8dHT9OKLfK+k9c2QVQct54Bb6FP8DF3dvD8qV1eaAPtzoCIBQwgGE1B7epCY5/CcYLzPGwR7JVD0uLkzpFDE8HicL2VT83XJb+XoYgv5ff1/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDF6oCQf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKqGNSQPExpbvQ0u9Rfdv2h0aYzc56Fk6o2/hETDRFJpLVSssayMBXXRNVheps8Gbf5NMpiVQU8QcMyHYlp7+wsnEWSAZySw/oSLmFgrKW0NsHMvhYbPVNl+20Sg4ZKJ7gjp+wxr8Ev7owfcF3Ytv1s6a6K7jAUZpexEsicZkv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLBD0yVt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDF6oCQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77991C2BCB0;
-	Fri, 15 May 2026 16:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLBD0yVt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2222CC2BCB0;
+	Fri, 15 May 2026 16:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862637;
-	bh=4881bcLvj+J+S6PVLPTOnNb+wVWNA8sUhBC7RvypAk0=;
+	s=korg; t=1778862640;
+	bh=CgMSpeCsmD5sSdVQz7PkXzKWiZ4kR+AdikxNd6G6jOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDF6oCQfQO3XYNBH1CpXDu5CkcQDgMvOVlcjy1MJXN+NASvU2fC3k516O/tJX3PAO
-	 MKEDK1lxui+nb0qNCpj1Pf/9V17ZbBg1eqtGPLzNq9VYDEjJeZTBRRtD16ZLxyqU7C
-	 BZkbYXRp0f4Yz+ByNzs2HSWcMr861hsCa5OjVmP8=
+	b=gLBD0yVtsCsgYSFHmUUA1hIFeYh0BMcvObNp5p4hcG2+2M7h/8ZUPbvnIDD6RpeG5
+	 VRpPdOTX7CgZKOHs+waYOiIqI3BUww26vNrAxmCfxmeIZ9yut6czPn1G7gBzpferqL
+	 LOY/19cxsyBz1CtPgK6VtqvgIAPGOr9NVG9GUK3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 088/201] spi: omap2-mcspi: fix controller deregistration
-Date: Fri, 15 May 2026 17:48:26 +0200
-Message-ID: <20260515154700.438046120@linuxfoundation.org>
+	Yasuaki Torimaru <yasuakitorimaru@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>
+Subject: [PATCH 7.0 124/201] drm/msm/gem: fix error handling in msm_ioctl_gem_info_get_metadata()
+Date: Fri, 15 May 2026 17:49:02 +0200
+Message-ID: <20260515154701.248054912@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -50,51 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
 
-commit fb45f95c377e4a4bdece2c5e17643b459c9c13e7 upstream.
+commit 47cbfe2608314b833ad61a65827d8fb363bc2d2d upstream.
 
-Make sure to deregister the controller before releasing underlying
-resources like DMA during driver unbind.
+msm_ioctl_gem_info_get_metadata() always returns 0 regardless of
+errors. When copy_to_user() fails or the user buffer is too small,
+the error code stored in ret is ignored because the function
+unconditionally returns 0. This causes userspace to believe the
+ioctl succeeded when it did not.
 
-Fixes: ccdc7bf92573 ("SPI: omap2_mcspi driver")
-Cc: stable@vger.kernel.org	# 2.6.23
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-6-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Additionally, kmemdup() can return NULL on allocation failure, but
+the return value is not checked. This leads to a NULL pointer
+dereference in the subsequent copy_to_user() call.
+
+Add the missing NULL check for kmemdup() and return ret instead of 0.
+
+Note that the SET counterpart (msm_ioctl_gem_info_set_metadata)
+correctly returns ret.
+
+Fixes: 9902cb999e4e ("drm/msm/gem: Add metadata")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/714478/
+Message-ID: <20260325114635.383241-1-yasuakitorimaru@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-omap2-mcspi.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_drv.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-omap2-mcspi.c
-+++ b/drivers/spi/spi-omap2-mcspi.c
-@@ -1585,7 +1585,7 @@ static int omap2_mcspi_probe(struct plat
- 	if (status < 0)
- 		goto disable_pm;
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -536,6 +536,11 @@ static int msm_ioctl_gem_info_get_metada
+ 	len = msm_obj->metadata_size;
+ 	buf = kmemdup(msm_obj->metadata, len, GFP_KERNEL);
  
--	status = devm_spi_register_controller(&pdev->dev, ctlr);
-+	status = spi_register_controller(ctlr);
- 	if (status < 0)
- 		goto disable_pm;
- 
-@@ -1606,11 +1606,17 @@ static void omap2_mcspi_remove(struct pl
- 	struct spi_controller *ctlr = platform_get_drvdata(pdev);
- 	struct omap2_mcspi *mcspi = spi_controller_get_devdata(ctlr);
- 
-+	spi_controller_get(ctlr);
++	if (!buf) {
++		msm_gem_unlock(obj);
++		return -ENOMEM;
++	}
 +
-+	spi_unregister_controller(ctlr);
-+
- 	omap2_mcspi_release_dma(ctlr);
+ 	msm_gem_unlock(obj);
  
- 	pm_runtime_dont_use_autosuspend(mcspi->dev);
- 	pm_runtime_put_sync(mcspi->dev);
- 	pm_runtime_disable(&pdev->dev);
-+
-+	spi_controller_put(ctlr);
+ 	if (*metadata_size < len) {
+@@ -548,7 +553,7 @@ static int msm_ioctl_gem_info_get_metada
+ 
+ 	kfree(buf);
+ 
+-	return 0;
++	return ret;
  }
  
- /* work with hotplug and coldplug */
+ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
 
 
