@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D705F3FF1AC;
-	Fri, 15 May 2026 15:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE563FF1D1;
+	Fri, 15 May 2026 15:55:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860513; cv=none; b=nZ5UJ3zn1SqyVsG+3fBvJmrzcynjnA4nlYeD/vTzcNuVB9I4+evHAgB69Y3mxyG5HvFFDw12Y2Hq9rk/BQu/sF96p/h2HCbjGmdJeVE2+RUE20Jhy8RD7NEc+JllRaFrzbOb0ZC6TBgUqy5OJKVlRi12woTrCqrjyFiYqCVxoDM=
+	t=1778860516; cv=none; b=UolZE4T0eGWTos9ztCUk6+XNzl19qQb3a/HT35AvRvN4ApLIqoazlyO1PXiIXCQ7KCrBT2wzr+wPLkEr+D3uHZsOXaaW0e2SPDtt+IAYYVYs11DHnZwqOKd2ruKmue2FL+HA2RuCbQKGBMDz484Nw9NpNyjgiBDzjiLdbnLEZUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860513; c=relaxed/simple;
-	bh=rUy8eIgEv+QO5xezsu1vYsVcEvhplXFL++DRYlh4rjU=;
+	s=arc-20240116; t=1778860516; c=relaxed/simple;
+	bh=QuCERnIvtr+pXg2Nw/PG+u7T3OHCJuCOeScabzkz+fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQU7IFq/1Zp11R9y1CGdgxAnoQFK60vhK6lvQPSStvAiojcxdUpvF6db3K+1DKZlFNF3KSzkOdLYxwkCrf2n1pys6D/zU2KTNytluTmGFsdjyRi4k8V25UZ2iTGhGMPYGitxFAJ2e6Qi91xTfQ4byIK+aQT576fZURfx1gCDhQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbcSwIDh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gJ0Yxm2iQx84hP1DJeJZpcC4SkzUoRUXBAN8OQB8VAFEvdQgliR25vZNPCJXyCpbO0/0hD+Eo9Q9SNuTr4w4xUug3gxSXUXiadJoUOpSN2wW6poXBP6uM1ceTbEZIb7j8CdE9d5CXass+Zes6LpZEuI6nEWcIlxnyacOxFzZSog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sknFbLpO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbcSwIDh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62361C2BCB0;
-	Fri, 15 May 2026 15:55:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sknFbLpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25C7C2BCB0;
+	Fri, 15 May 2026 15:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860513;
-	bh=rUy8eIgEv+QO5xezsu1vYsVcEvhplXFL++DRYlh4rjU=;
+	s=korg; t=1778860516;
+	bh=QuCERnIvtr+pXg2Nw/PG+u7T3OHCJuCOeScabzkz+fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rbcSwIDhwXpoZHbJdLkg4YxRrCysURE63e3pNb2qmcTRRGMeXkNBm6pBPPkWpRWle
-	 R2JlP1tVFiuN/bxqgAvwwKldNrtnQZ3erifqUCDkJtvXnM/PEUX8VUicGYMmwZLb7d
-	 hE7UcKPF2/uS52zCeUEo2/9A1n/bHF3xBK9+o5F8=
+	b=sknFbLpO12a7MuOuUD6Ah3KDpIb4tFguhzhtM2+RdcKy87nQpyY0mbvp0s/F+/QJW
+	 Vnbl6t/8jqt+ZTTDXouabU9GsW+//RACDeLfMzqdH9vXes/mVjBPVvWnRHeAEQdc/X
+	 VsqIX9AWETTKNO5tupEgBR7Fv1k3tzdA1FJgEZ+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	David Carlier <devnexen@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/144] block: fix zone write plug removal
-Date: Fri, 15 May 2026 17:49:05 +0200
-Message-ID: <20260515154656.259608862@linuxfoundation.org>
+Subject: [PATCH 6.12 120/144] tracefs: Fix default permissions not being applied on initial mount
+Date: Fri, 15 May 2026 17:49:06 +0200
+Message-ID: <20260515154656.284998572@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -53,289 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit b7d4ffb510373cc6ecf16022dd0e510a023034fb ]
+[ Upstream commit e8368d1f4bedbb0cce4cfe33a1d2664bb0fd4f27 ]
 
-Commit 7b295187287e ("block: Do not remove zone write plugs still in
-use") modified disk_should_remove_zone_wplug() to add a check on the
-reference count of a zone write plug to prevent removing zone write
-plugs from a disk hash table when the plugs are still being referenced
-by BIOs or requests in-flight. However, this check does not take into
-account that a BIO completion may happen right after its submission by
-a zone write plug BIO work, and before the zone write plug BIO work
-releases the zone write plug reference count. This situation leads to
-disk_should_remove_zone_wplug() returning false as in this case the zone
-write plug reference count is at least equal to 3. If the BIO that
-completes in such manner transitioned the zone to the FULL condition,
-the zone write plug for the FULL zone will remain in the disk hash
-table.
+Commit e4d32142d1de ("tracing: Fix tracefs mount options") moved the
+option application from tracefs_fill_super() to tracefs_reconfigure()
+called from tracefs_get_tree(). This fixed mount options being ignored
+on user-space mounts when the superblock already exists, but introduced
+a regression for the initial kernel-internal mount.
 
-Furthermore, relying on a particular value of a zone write plug
-reference count to set the BLK_ZONE_WPLUG_UNHASHED flag is fragile as
-reading the atomic reference count and doing a comparison with some
-value is not overall atomic at all.
+On the first mount (via simple_pin_fs during init), sget_fc() transfers
+fc->s_fs_info to sb->s_fs_info and sets fc->s_fs_info to NULL. When
+tracefs_get_tree() then calls tracefs_reconfigure(), it sees a NULL
+fc->s_fs_info and returns early without applying any options. The root
+inode keeps mode 0755 from simple_fill_super() instead of the intended
+TRACEFS_DEFAULT_MODE (0700).
 
-Address these issues by reworking the reference counting of zone write
-plugs so that removing plugs from a disk hash table can be done
-directly from disk_put_zone_wplug() when the last reference on a plug
-is dropped.
+Furthermore, even on subsequent user-space mounts without an explicit
+mode= option, tracefs_apply_options(sb, true) gates the mode behind
+fsi->opts & BIT(Opt_mode), which is unset for the defaults. So the
+mode is never corrected unless the user explicitly passes mode=0700.
 
-To do so, replace the function disk_remove_zone_wplug() with
-disk_mark_zone_wplug_dead(). This new function sets the zone write plug
-flag BLK_ZONE_WPLUG_DEAD (which replaces BLK_ZONE_WPLUG_UNHASHED) and
-drops the initial reference on the zone write plug taken when the plug
-was added to the disk hash table. This function is called either for
-zones that are empty or full, or directly in the case of a forced plug
-removal (e.g. when the disk hash table is being destroyed on disk
-removal). With this change, disk_should_remove_zone_wplug() is also
-removed.
+Restore the tracefs_apply_options(sb, false) call in tracefs_fill_super()
+to apply default permissions on initial superblock creation, matching
+what debugfs does in debugfs_fill_super().
 
-disk_put_zone_wplug() is modified to call the function
-disk_free_zone_wplug() to remove a zone write plug from a disk hash
-table and free the plug structure (with a call_rcu()), when the last
-reference on a zone write plug is dropped. disk_free_zone_wplug()
-always checks that the BLK_ZONE_WPLUG_DEAD flag is set.
-
-In order to avoid having multiple zone write plugs for the same zone in
-the disk hash table, disk_get_and_lock_zone_wplug() checked for the
-BLK_ZONE_WPLUG_UNHASHED flag. This check is removed and a check for
-the new BLK_ZONE_WPLUG_DEAD flag is added to
-blk_zone_wplug_handle_write(). With this change, we continue preventing
-adding multiple zone write plugs for the same zone and at the same time
-re-inforce checks on the user behavior by failing new incoming write
-BIOs targeting a zone that is marked as dead. This case can happen only
-if the user erroneously issues write BIOs to zones that are full, or to
-zones that are currently being reset or finished.
-
-Fixes: 7b295187287e ("block: Do not remove zone write plugs still in use")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ dropped blk_zone_set_cond() and disk_zone_wplug_update_cond() calls due to missing zones_cond tracking prereq ]
+Fixes: e4d32142d1de ("tracing: Fix tracefs mount options")
+Link: https://patch.msgid.link/20260404134747.98867-1-devnexen@gmail.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[ kept 6.12's `sb->s_d_op = &tracefs_dentry_operations;` instead of upstream's `set_default_d_op()` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-zoned.c |  145 ++++++++++++++++++++----------------------------------
- 1 file changed, 56 insertions(+), 89 deletions(-)
+ fs/tracefs/inode.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/block/blk-zoned.c
-+++ b/block/blk-zoned.c
-@@ -85,17 +85,17 @@ static inline unsigned int disk_zone_wpl
-  *    being executed or the zone write plug bio list is not empty.
-  *  - BLK_ZONE_WPLUG_NEED_WP_UPDATE: Indicates that we lost track of a zone
-  *    write pointer offset and need to update it.
-- *  - BLK_ZONE_WPLUG_UNHASHED: Indicates that the zone write plug was removed
-- *    from the disk hash table and that the initial reference to the zone
-- *    write plug set when the plug was first added to the hash table has been
-- *    dropped. This flag is set when a zone is reset, finished or become full,
-- *    to prevent new references to the zone write plug to be taken for
-- *    newly incoming BIOs. A zone write plug flagged with this flag will be
-- *    freed once all remaining references from BIOs or functions are dropped.
-+ *  - BLK_ZONE_WPLUG_DEAD: Indicates that the zone write plug will be
-+ *    removed from the disk hash table of zone write plugs when the last
-+ *    reference on the zone write plug is dropped. If set, this flag also
-+ *    indicates that the initial extra reference on the zone write plug was
-+ *    dropped, meaning that the reference count indicates the current number of
-+ *    active users (code context or BIOs and requests in flight). This flag is
-+ *    set when a zone is reset, finished or becomes full.
-  */
- #define BLK_ZONE_WPLUG_PLUGGED		(1U << 0)
- #define BLK_ZONE_WPLUG_NEED_WP_UPDATE	(1U << 1)
--#define BLK_ZONE_WPLUG_UNHASHED		(1U << 2)
-+#define BLK_ZONE_WPLUG_DEAD		(1U << 2)
+--- a/fs/tracefs/inode.c
++++ b/fs/tracefs/inode.c
+@@ -493,6 +493,7 @@ static int tracefs_fill_super(struct sup
+ 		return err;
  
- /**
-  * blk_zone_cond_str - Return string XXX in BLK_ZONE_COND_XXX.
-@@ -479,65 +479,42 @@ static void disk_free_zone_wplug_rcu(str
- 	mempool_free(zwplug, zwplug->disk->zone_wplugs_pool);
- }
+ 	sb->s_op = &tracefs_super_operations;
++	tracefs_apply_options(sb, false);
+ 	sb->s_d_op = &tracefs_dentry_operations;
  
--static inline void disk_put_zone_wplug(struct blk_zone_wplug *zwplug)
-+static void disk_free_zone_wplug(struct blk_zone_wplug *zwplug)
- {
--	if (refcount_dec_and_test(&zwplug->ref)) {
--		WARN_ON_ONCE(!bio_list_empty(&zwplug->bio_list));
--		WARN_ON_ONCE(zwplug->flags & BLK_ZONE_WPLUG_PLUGGED);
--		WARN_ON_ONCE(!(zwplug->flags & BLK_ZONE_WPLUG_UNHASHED));
--
--		call_rcu(&zwplug->rcu_head, disk_free_zone_wplug_rcu);
--	}
--}
--
--static inline bool disk_should_remove_zone_wplug(struct gendisk *disk,
--						 struct blk_zone_wplug *zwplug)
--{
--	/* If the zone write plug was already removed, we are done. */
--	if (zwplug->flags & BLK_ZONE_WPLUG_UNHASHED)
--		return false;
-+	struct gendisk *disk = zwplug->disk;
-+	unsigned long flags;
- 
--	/* If the zone write plug is still plugged, it cannot be removed. */
--	if (zwplug->flags & BLK_ZONE_WPLUG_PLUGGED)
--		return false;
-+	WARN_ON_ONCE(!(zwplug->flags & BLK_ZONE_WPLUG_DEAD));
-+	WARN_ON_ONCE(zwplug->flags & BLK_ZONE_WPLUG_PLUGGED);
-+	WARN_ON_ONCE(!bio_list_empty(&zwplug->bio_list));
- 
--	/*
--	 * Completions of BIOs with blk_zone_write_plug_bio_endio() may
--	 * happen after handling a request completion with
--	 * blk_zone_write_plug_finish_request() (e.g. with split BIOs
--	 * that are chained). In such case, disk_zone_wplug_unplug_bio()
--	 * should not attempt to remove the zone write plug until all BIO
--	 * completions are seen. Check by looking at the zone write plug
--	 * reference count, which is 2 when the plug is unused (one reference
--	 * taken when the plug was allocated and another reference taken by the
--	 * caller context).
--	 */
--	if (refcount_read(&zwplug->ref) > 2)
--		return false;
-+	spin_lock_irqsave(&disk->zone_wplugs_lock, flags);
-+	hlist_del_init_rcu(&zwplug->node);
-+	atomic_dec(&disk->nr_zone_wplugs);
-+	spin_unlock_irqrestore(&disk->zone_wplugs_lock, flags);
- 
--	/* We can remove zone write plugs for zones that are empty or full. */
--	return !zwplug->wp_offset || disk_zone_wplug_is_full(disk, zwplug);
-+	call_rcu(&zwplug->rcu_head, disk_free_zone_wplug_rcu);
- }
- 
--static void disk_remove_zone_wplug(struct gendisk *disk,
--				   struct blk_zone_wplug *zwplug)
-+static inline void disk_put_zone_wplug(struct blk_zone_wplug *zwplug)
- {
--	unsigned long flags;
-+	if (refcount_dec_and_test(&zwplug->ref))
-+		disk_free_zone_wplug(zwplug);
-+}
- 
--	/* If the zone write plug was already removed, we have nothing to do. */
--	if (zwplug->flags & BLK_ZONE_WPLUG_UNHASHED)
--		return;
-+/*
-+ * Flag the zone write plug as dead and drop the initial reference we got when
-+ * the zone write plug was added to the hash table. The zone write plug will be
-+ * unhashed when its last reference is dropped.
-+ */
-+static void disk_mark_zone_wplug_dead(struct blk_zone_wplug *zwplug)
-+{
-+	lockdep_assert_held(&zwplug->lock);
- 
--	/*
--	 * Mark the zone write plug as unhashed and drop the extra reference we
--	 * took when the plug was inserted in the hash table.
--	 */
--	zwplug->flags |= BLK_ZONE_WPLUG_UNHASHED;
--	spin_lock_irqsave(&disk->zone_wplugs_lock, flags);
--	hlist_del_init_rcu(&zwplug->node);
--	atomic_dec(&disk->nr_zone_wplugs);
--	spin_unlock_irqrestore(&disk->zone_wplugs_lock, flags);
--	disk_put_zone_wplug(zwplug);
-+	if (!(zwplug->flags & BLK_ZONE_WPLUG_DEAD)) {
-+		zwplug->flags |= BLK_ZONE_WPLUG_DEAD;
-+		disk_put_zone_wplug(zwplug);
-+	}
- }
- 
- static void blk_zone_wplug_bio_work(struct work_struct *work);
-@@ -557,18 +534,7 @@ static struct blk_zone_wplug *disk_get_a
- again:
- 	zwplug = disk_get_zone_wplug(disk, sector);
- 	if (zwplug) {
--		/*
--		 * Check that a BIO completion or a zone reset or finish
--		 * operation has not already removed the zone write plug from
--		 * the hash table and dropped its reference count. In such case,
--		 * we need to get a new plug so start over from the beginning.
--		 */
- 		spin_lock_irqsave(&zwplug->lock, *flags);
--		if (zwplug->flags & BLK_ZONE_WPLUG_UNHASHED) {
--			spin_unlock_irqrestore(&zwplug->lock, *flags);
--			disk_put_zone_wplug(zwplug);
--			goto again;
--		}
- 		return zwplug;
- 	}
- 
-@@ -654,14 +620,8 @@ static void disk_zone_wplug_set_wp_offse
- 	zwplug->flags &= ~BLK_ZONE_WPLUG_NEED_WP_UPDATE;
- 	zwplug->wp_offset = wp_offset;
- 	disk_zone_wplug_abort(zwplug);
--
--	/*
--	 * The zone write plug now has no BIO plugged: remove it from the
--	 * hash table so that it cannot be seen. The plug will be freed
--	 * when the last reference is dropped.
--	 */
--	if (disk_should_remove_zone_wplug(disk, zwplug))
--		disk_remove_zone_wplug(disk, zwplug);
-+	if (!zwplug->wp_offset || disk_zone_wplug_is_full(disk, zwplug))
-+		disk_mark_zone_wplug_dead(zwplug);
- }
- 
- static unsigned int blk_zone_wp_offset(struct blk_zone *zone)
-@@ -1076,6 +1036,19 @@ static bool blk_zone_wplug_handle_write(
- 		return true;
- 	}
- 
-+	/*
-+	 * If we got a zone write plug marked as dead, then the user is issuing
-+	 * writes to a full zone, or without synchronizing with zone reset or
-+	 * zone finish operations. In such case, fail the BIO to signal this
-+	 * invalid usage.
-+	 */
-+	if (zwplug->flags & BLK_ZONE_WPLUG_DEAD) {
-+		spin_unlock_irqrestore(&zwplug->lock, flags);
-+		disk_put_zone_wplug(zwplug);
-+		bio_io_error(bio);
-+		return true;
-+	}
-+
- 	/* Indicate that this BIO is being handled using zone write plugging. */
- 	bio_set_flag(bio, BIO_ZONE_WRITE_PLUGGING);
- 
-@@ -1144,7 +1117,7 @@ static void blk_zone_wplug_handle_native
- 				    disk->disk_name, zwplug->zone_no);
- 		disk_zone_wplug_abort(zwplug);
- 	}
--	disk_remove_zone_wplug(disk, zwplug);
-+	disk_mark_zone_wplug_dead(zwplug);
- 	spin_unlock_irqrestore(&zwplug->lock, flags);
- 
- 	disk_put_zone_wplug(zwplug);
-@@ -1249,14 +1222,8 @@ static void disk_zone_wplug_unplug_bio(s
- 	}
- 
- 	zwplug->flags &= ~BLK_ZONE_WPLUG_PLUGGED;
--
--	/*
--	 * If the zone is full (it was fully written or finished, or empty
--	 * (it was reset), remove its zone write plug from the hash table.
--	 */
--	if (disk_should_remove_zone_wplug(disk, zwplug))
--		disk_remove_zone_wplug(disk, zwplug);
--
-+	if (!zwplug->wp_offset || disk_zone_wplug_is_full(disk, zwplug))
-+		disk_mark_zone_wplug_dead(zwplug);
- 	spin_unlock_irqrestore(&zwplug->lock, flags);
- }
- 
-@@ -1450,9 +1417,9 @@ static void disk_destroy_zone_wplugs_has
- 		while (!hlist_empty(&disk->zone_wplugs_hash[i])) {
- 			zwplug = hlist_entry(disk->zone_wplugs_hash[i].first,
- 					     struct blk_zone_wplug, node);
--			refcount_inc(&zwplug->ref);
--			disk_remove_zone_wplug(disk, zwplug);
--			disk_put_zone_wplug(zwplug);
-+			spin_lock_irq(&zwplug->lock);
-+			disk_mark_zone_wplug_dead(zwplug);
-+			spin_unlock_irq(&zwplug->lock);
- 		}
- 	}
- 
+ 	return 0;
 
 
