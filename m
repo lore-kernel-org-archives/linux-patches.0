@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCBF3FF1D5;
-	Fri, 15 May 2026 15:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE73D17C220;
+	Fri, 15 May 2026 15:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860774; cv=none; b=ZQzZUUwuHaqKRL4SuwdftdTRK9soh4AozgHAgroo6jfMIbbwEHVOe8Isdj57jqzSv5S+JZ/KzhxaJd32l0Ts0SnFYlMJ2b0eAibxwv+J4L9LHV+qvuNJ+SFRVXbRFlUwDWNv11BDQfLmO+6bofXoo53CBC5TBaojju51Gpvac2Y=
+	t=1778860777; cv=none; b=il7/sv3tmwmcedmO/cNGHHaWsu8KMpgSkRF7kuBKxd+QCSSq8yXXZhFwtLunX5Rh8kH1rtJpBQqJfykr1oSzU41rQ0JrHj2EKOHAWe2VvV7bAu5pg+M/25bG2gVgB2zvxsnMdk1BcNICcGCs9QRaOz2lpHHbU01o5uy7uYtWRN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860774; c=relaxed/simple;
-	bh=8rUm8zxIwbfe9H+3ia4yufm2TPXSFZYNVGZrqz4J5aw=;
+	s=arc-20240116; t=1778860777; c=relaxed/simple;
+	bh=VcHPbsDKNuDcsWaAIciI4CX48iQuiflNq4HqdeplSbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HXgxDGx5iORyRJdTbkzRRhEdvr7blrw+9pBc1ThpVN/G7OEyRA72gOSf81+SrB7OIMRd+oCtSnyXtF2twtNp7+Dlv69uSla1ayyie3gC0A6RyevBHICt+tvOwRDSI1vaOU3ndkhJ6IAyaciTxEFQ9ylzXMhv3/5kJZlYMFv8dxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBLaOvmg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vv1CjiCYA4woG8uolgpyHCh1zUL0tVTJVImtKj8/y0DFZe2Rnm1qdiNUZPtp0v9+YKdYF4/6XLRO9LawBA/g2Y0EbNuDXWUCTziFR/f0IPBFYzfWIZEMzgFfIATP04ZAM9ajlqhT/qHSt5euDmsWQ2SlPZD92ozce8t3Gh8yeD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDbh8f0A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBLaOvmg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA79DC2BCB0;
-	Fri, 15 May 2026 15:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDbh8f0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A05C2BCB0;
+	Fri, 15 May 2026 15:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860774;
-	bh=8rUm8zxIwbfe9H+3ia4yufm2TPXSFZYNVGZrqz4J5aw=;
+	s=korg; t=1778860776;
+	bh=VcHPbsDKNuDcsWaAIciI4CX48iQuiflNq4HqdeplSbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBLaOvmgxQjOAxOliyPiOQCN+Q+JQbbmnXBvBC+FJjEx2piaqmgomTggQjb9ULNg6
-	 1iVawQ3fuRdTctmsFiuKtgIKrslIlp7cu7V1oGI0zDAJD1A6Xv+eQEDbrTTLqDiZW0
-	 B4haewsYm7ksxcqC0GGwzkIACcjiqAGH5dOEO4oA=
+	b=oDbh8f0ATqevMTdgSqE8Hl/xzWmgp30fxbQW7sUFPDvbuHL1gjQpvmarDosEhkzk/
+	 a9M6Pox24u/pbIteLKfj7LEOqGxon61veIzsjelE3RVsifEZr3fTQaVwBOC0uoOxHM
+	 jjBF9Um6W/0Fv8iwsyusTKAcRW66H8DF0gDfQNcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.6 075/474] drm/arcpgu: fix device node leak
-Date: Fri, 15 May 2026 17:43:04 +0200
-Message-ID: <20260515154716.663282569@linuxfoundation.org>
+	hkbinbin <hkbinbinbin@gmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.6 076/474] RDMA/rxe: Validate pad and ICRC before payload_size() in rxe_rcv
+Date: Fri, 15 May 2026 17:43:05 +0200
+Message-ID: <20260515154716.685214197@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,39 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: hkbinbin <hkbinbinbin@gmail.com>
 
-commit ad3ac32a3893a2bbcad545efc005a8e4e7ecf10c upstream.
+commit 7244491dab347f648e661da96dc0febadd9daec3 upstream.
 
-This function gets a device_node reference via
-of_graph_get_remote_port_parent() and stores it in encoder_node, but never
-puts that reference. Add it.
+rxe_rcv() currently checks only that the incoming packet is at least
+header_size(pkt) bytes long before payload_size() is used.
 
-There used to be a of_node_put(encoder_node) but it has been removed by
-mistake during a rework in commit 3ea66a794fdc ("drm/arc: Inline
-arcpgu_drm_hdmi_init").
+However, payload_size() subtracts both the attacker-controlled BTH pad
+field and RXE_ICRC_SIZE from pkt->paylen:
 
-Fixes: 3ea66a794fdc ("drm/arc: Inline arcpgu_drm_hdmi_init")
+  payload_size = pkt->paylen - offset[RXE_PAYLOAD] - bth_pad(pkt)
+                 - RXE_ICRC_SIZE
+
+This means a short packet can still make payload_size() underflow even
+if it includes enough bytes for the fixed headers. Simply requiring
+header_size(pkt) + RXE_ICRC_SIZE is not sufficient either, because a
+packet with a forged non-zero BTH pad can still leave payload_size()
+negative and pass an underflowed value to later receive-path users.
+
+Fix this by validating pkt->paylen against the full minimum length
+required by payload_size(): header_size(pkt) + bth_pad(pkt) +
+RXE_ICRC_SIZE.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Link: https://patch.msgid.link/20260402-drm-arcgpu-fix-device-node-leak-v2-1-d773cf754ae5@bootlin.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://patch.msgid.link/r/20260401121907.1468366-1-hkbinbinbin@gmail.com
+Signed-off-by: hkbinbin <hkbinbinbin@gmail.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tiny/arcpgu.c |    3 ++-
+ drivers/infiniband/sw/rxe/rxe_recv.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/tiny/arcpgu.c
-+++ b/drivers/gpu/drm/tiny/arcpgu.c
-@@ -248,7 +248,8 @@ DEFINE_DRM_GEM_DMA_FOPS(arcpgu_drm_ops);
- static int arcpgu_load(struct arcpgu_drm_private *arcpgu)
- {
- 	struct platform_device *pdev = to_platform_device(arcpgu->drm.dev);
--	struct device_node *encoder_node = NULL, *endpoint_node = NULL;
-+	struct device_node *encoder_node __free(device_node) = NULL;
-+	struct device_node *endpoint_node = NULL;
- 	struct drm_connector *connector = NULL;
- 	struct drm_device *drm = &arcpgu->drm;
- 	struct resource *res;
+--- a/drivers/infiniband/sw/rxe/rxe_recv.c
++++ b/drivers/infiniband/sw/rxe/rxe_recv.c
+@@ -330,7 +330,8 @@ void rxe_rcv(struct sk_buff *skb)
+ 	pkt->qp = NULL;
+ 	pkt->mask |= rxe_opcode[pkt->opcode].mask;
+ 
+-	if (unlikely(skb->len < header_size(pkt)))
++	if (unlikely(pkt->paylen < header_size(pkt) + bth_pad(pkt) +
++		       RXE_ICRC_SIZE))
+ 		goto drop;
+ 
+ 	err = hdr_check(pkt);
 
 
