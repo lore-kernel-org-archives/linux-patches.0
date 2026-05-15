@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D922D3F8713;
-	Fri, 15 May 2026 16:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2683E0089;
+	Fri, 15 May 2026 16:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862193; cv=none; b=U2g6Dd4i3JtYqxshdiTzgBg/X1V/Pp83Bbk3kyqwEjwlZdLQLUgKb78WVklcAnDinuAyj/WFXdj0rTIT2XNNaUkd34ODUgcNnMG9ZhaGB5KnbnA7onVqJZlUlJaHEmrAK8L5XtO8JgjMjsaKwD5eYFVa5KnZNYVES/f8QShTKaU=
+	t=1778862196; cv=none; b=fQ4OC661DQD72Gy1yum6xXOMp8kIYJrnGuKjoJF4taPe6w3IOboOOelHjFNJ3CojcXioQijRRrwuRwF4/qmoxXzEqBtr6HfzEcvtaLu2/ZYgO5jY0nVRTzB+ZyO8Zlc9Jx5dH6dpBFeTHf8lm4yA5OyEWV4Ykkjy2Vb1yRDCjVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862193; c=relaxed/simple;
-	bh=uor7hN7arLU+QOgVqSJvr7F+bB1L9byvj5d4uL3Jtk8=;
+	s=arc-20240116; t=1778862196; c=relaxed/simple;
+	bh=M/06DO8ufQgpjDZCgQ50u5f2txH0c9j9bqZ9Yl+gb1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=agvTwDFkeR+86Pfbfs43s0aCNv40l6+QLeRAEtFhacsRSW/fuHbjLzWQ57++KDoNUmK77yoeysi3dxl3o+8Kxctw5VkaX2T1O1kvXzXlWaho7SGhoSFe6J7nKJa2glFaolVwAaETF/uAKL6/jbA46CGQU5qwfb7r85+QK9f7Ykw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJJHydZ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h41s1AbN1Xe5IOay7KQC0+tCuxeY3kRtmaBBwIrKGwrUCSBDymhQ7LK83EFOg4CnVRk8KnThmGvHtI16xzlHl2jfsyhwJiMlc8yd8XhLBMg0RREEReKl7PfYXeTGUS2ZSAyPhVEHeA3An+ISCVNYV/1/Y8FQNsRkRGRQGMqEdZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZTr17qP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJJHydZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E42CC2BCB0;
-	Fri, 15 May 2026 16:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZTr17qP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DACBC2BCB0;
+	Fri, 15 May 2026 16:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862193;
-	bh=uor7hN7arLU+QOgVqSJvr7F+bB1L9byvj5d4uL3Jtk8=;
+	s=korg; t=1778862196;
+	bh=M/06DO8ufQgpjDZCgQ50u5f2txH0c9j9bqZ9Yl+gb1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJJHydZ1Cmuux6NtiLEFlDGJpeWeLrEnpiafNDNy2AzBOPA+wXGtXf+hdjc0jN7oO
-	 5ctFPSFtgDhbOWgZoI4RNKxWGHjyXpdoSbIfudb2YvpmG8ECxeiKpA7oI6izgvxU4w
-	 /VG4+YvYshSWRh97czrlnae4IUD2+A24XD7IKPKQ=
+	b=fZTr17qP4RXQCy2hlZXfAI41otDzapc82Vp6gToAyvr0FqWEgLyXci6Ha2EFnR3DF
+	 nRfwLlVSA7sgq67lVCXf+DNI9kbCOouBbOlgJOabsckxo2x12VBpWD9jfXNZZFlkQO
+	 upZL00hi0kBiq9DQEIw8CW5I07ZY0+83/aABx4cM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>
-Subject: [PATCH 6.18 143/188] sched_ext: Use HK_TYPE_DOMAIN_BOOT to detect isolcpus= domain isolation
-Date: Fri, 15 May 2026 17:49:20 +0200
-Message-ID: <20260515154700.426346174@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 6.18 144/188] io_uring/zcrx: use guards for locking
+Date: Fri, 15 May 2026 17:49:21 +0200
+Message-ID: <20260515154700.448436941@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -51,76 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Righi <arighi@nvidia.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 6ae315d37924435516d697ea7dde0b799a5928e0 upstream.
+commit 898ad80d1207cbdb22b21bafb6de4adfd7627bd0 upstream.
 
-scx_enable() refuses to attach a BPF scheduler when isolcpus=domain is
-in effect by comparing housekeeping_cpumask(HK_TYPE_DOMAIN) against
-cpu_possible_mask.
+Convert last several places using manual locking to guards to simplify
+the code.
 
-Since commit 27c3a5967f05 ("sched/isolation: Convert housekeeping
-cpumasks to rcu pointers"), HK_TYPE_DOMAIN's cpumask is RCU protected
-and dereferencing it requires either RCU read lock, the cpu_hotplug
-write lock, or the cpuset lock; scx_enable() holds none of these, so
-booting with isolcpus=domain and attaching any BPF scheduler triggers
-the following lockdep splat:
-
-  =============================
-  WARNING: suspicious RCU usage
-  -----------------------------
-  kernel/sched/isolation.c:60 suspicious rcu_dereference_check() usage!
-
-  1 lock held by scx_flash/281:
-   #0: ffffffff8379fce0 (update_mutex){+.+.}-{4:4}, at:
-       bpf_struct_ops_link_create+0x134/0x1c0
-
-  Call Trace:
-   dump_stack_lvl+0x6f/0xb0
-   lockdep_rcu_suspicious.cold+0x37/0x70
-   housekeeping_cpumask+0xcd/0xe0
-   scx_enable.isra.0+0x17/0x120
-   bpf_scx_reg+0x5e/0x80
-   bpf_struct_ops_link_create+0x151/0x1c0
-   __sys_bpf+0x1e4b/0x33c0
-   __x64_sys_bpf+0x21/0x30
-   do_syscall_64+0x117/0xf80
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-In addition, commit 03ff73510169 ("cpuset: Update HK_TYPE_DOMAIN cpumask
-from cpuset") made HK_TYPE_DOMAIN include cpuset isolated partitions as
-well, which means the current check also rejects BPF schedulers when a
-cpuset partition is active. That contradicts the original intent of
-commit 9f391f94a173 ("sched_ext: Disallow loading BPF scheduler if
-isolcpus= domain isolation is in effect"), which explicitly noted that
-cpuset partitions are honored through per-task cpumasks and should not
-be rejected.
-
-Switch to housekeeping_enabled(HK_TYPE_DOMAIN_BOOT), which reads only
-the housekeeping flag bit (no RCU dereference) and reflects exactly the
-boot-time isolcpus= configuration that the error message refers to.
-
-Fixes: 27c3a5967f05 ("sched/isolation: Convert housekeeping cpumasks to rcu pointers")
-Cc: stable@vger.kernel.org # v7.0+
-Signed-off-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://patch.msgid.link/eb4667cfaf88c559700f6399da9e434889f5b04a.1774261953.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ io_uring/zcrx.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4906,8 +4906,7 @@ static int scx_enable(struct sched_ext_o
- 	static DEFINE_MUTEX(helper_mutex);
- 	struct scx_enable_cmd cmd;
+--- a/io_uring/zcrx.c
++++ b/io_uring/zcrx.c
+@@ -696,9 +696,8 @@ static void io_zcrx_return_niov_freelist
+ {
+ 	struct io_zcrx_area *area = io_zcrx_iov_to_area(niov);
  
--	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
--			   cpu_possible_mask)) {
-+	if (housekeeping_enabled(HK_TYPE_DOMAIN_BOOT)) {
- 		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
- 		return -EINVAL;
+-	spin_lock_bh(&area->freelist_lock);
++	guard(spinlock_bh)(&area->freelist_lock);
+ 	area->freelist[area->free_count++] = net_iov_idx(niov);
+-	spin_unlock_bh(&area->freelist_lock);
+ }
+ 
+ static void io_zcrx_return_niov(struct net_iov *niov)
+@@ -829,7 +828,8 @@ static void io_zcrx_refill_slow(struct p
+ {
+ 	struct io_zcrx_area *area = ifq->area;
+ 
+-	spin_lock_bh(&area->freelist_lock);
++	guard(spinlock_bh)(&area->freelist_lock);
++
+ 	while (area->free_count && pp->alloc.count < PP_ALLOC_CACHE_REFILL) {
+ 		struct net_iov *niov = __io_zcrx_get_free_niov(area);
+ 		netmem_ref netmem = net_iov_to_netmem(niov);
+@@ -838,7 +838,6 @@ static void io_zcrx_refill_slow(struct p
+ 		io_zcrx_sync_for_device(pp, niov);
+ 		net_mp_netmem_place_in_cache(pp, netmem);
  	}
+-	spin_unlock_bh(&area->freelist_lock);
+ }
+ 
+ static netmem_ref io_pp_zc_alloc_netmems(struct page_pool *pp, gfp_t gfp)
+@@ -975,10 +974,10 @@ static struct net_iov *io_alloc_fallback
+ 	if (area->mem.is_dmabuf)
+ 		return NULL;
+ 
+-	spin_lock_bh(&area->freelist_lock);
+-	if (area->free_count)
+-		niov = __io_zcrx_get_free_niov(area);
+-	spin_unlock_bh(&area->freelist_lock);
++	scoped_guard(spinlock_bh, &area->freelist_lock) {
++		if (area->free_count)
++			niov = __io_zcrx_get_free_niov(area);
++	}
+ 
+ 	if (niov)
+ 		page_pool_fragment_netmem(net_iov_to_netmem(niov), 1);
 
 
