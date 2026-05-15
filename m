@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC3B3B19DE;
-	Fri, 15 May 2026 16:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F493B9D91;
+	Fri, 15 May 2026 16:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862459; cv=none; b=ftPpdqmPGA0TdNNh+g3fQX2gPGVjWeozQ6Z+vEyLdbaXeRxH/ECcGVqQtGQeycrptrlnUshhD57R/V3jGrYoYqcKp00KOEfz0jJkcEpU2HenDEz7WUFfv1babt84v1CeqaaGF5o+6mrztr1MZ4lT2Vh3XEmS+GZL08tReMaVoAY=
+	t=1778862461; cv=none; b=IyDt+Yod5guc5kYNTW7qcotJADVvyISQq7EM6IgcrDdtgoXRduEy4qx5cvBPgfxjYg/g2IjQZgqo8yKFIPtYT531fLS4ouiHNvNEvdeGAy7E/8ha7sgShtI6R/YT5GiS6n/1QU/I4SuC2+DaTZ/30hrkN+yjJc7VvzjNJX7WDhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862459; c=relaxed/simple;
-	bh=ydAhWQjEy33gMyQjBh5w4nuQHEo7DUch1XkHe6pwC6o=;
+	s=arc-20240116; t=1778862461; c=relaxed/simple;
+	bh=o5w4jcZQVPZS9ZEm0NetnadAEbklYply6pWH1Q5DMSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxNh27p7SjtaOWEF/5Rfy3AfcnE3j6qPdoXedsEJX4BV+4jO3xHISxsXL3TMglFNcUW6CEgJwI3bPCEkOVyp4jyWs2c17yoL625kOYMqli82X5lL0Z+++pRpMD0POe/XbYiV84LlbZfRxvpDWyj1/sc8QlDYQDhX9lU0SJTNuv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBX8KWeY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XLNHsFGnurWwB1YF4Z1dB2Wpfg8K0Kq+lzOXgBZ3dM7Uy+2GWSjOt+n5kXU2/nI+mMOazdezw2HP615c/N2fgZaT7dxPL5hTWZoPobstF6l0JFQK2fgxP9ztmV0rgORbk9ox9Zmf1MU1VNbhAyig9Rp30EhExvSAjVWP5VeLTd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZeTvhLY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBX8KWeY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B46C2BCB0;
-	Fri, 15 May 2026 16:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZeTvhLY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01EB0C2BCB0;
+	Fri, 15 May 2026 16:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862458;
-	bh=ydAhWQjEy33gMyQjBh5w4nuQHEo7DUch1XkHe6pwC6o=;
+	s=korg; t=1778862461;
+	bh=o5w4jcZQVPZS9ZEm0NetnadAEbklYply6pWH1Q5DMSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBX8KWeYKl62ag8ZVgA7wCcfyZEfgvUa7y350KVDIiYEXFNmFK1VVhpt9CNCDbu/Y
-	 aD8Ln+RFjXgmo8mOv1b4Qgom/af7wn70Q/sJWBNp72qNpoaQVCsIK7ui+q41LfyhNm
-	 TEi0/P2c2kHa+qg9B3iX3lhOBsnq+8wRpdcZ1eHY=
+	b=ZZeTvhLYa5vBtg01mrtgkhPtBdQ4KFiWnLVfRpuGqOar41RsTrW27LK9UFCXFGOU4
+	 q+Kv6SBay9zdpsFtcMglgdmzXodegV5cO7DjN1kb1wvtEjdEwbriifV/DYViWiTBzD
+	 rzmnBFLJl+HNfvsLusFM0HlXW1QSfgf8/BPCjesY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunny Luo <sunny.luo@amlogic.com>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 057/201] spi: amlogic-spisg: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:55 +0200
-Message-ID: <20260515154659.769593021@linuxfoundation.org>
+Subject: [PATCH 7.0 058/201] spi: aspeed-smc: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:56 +0200
+Message-ID: <20260515154659.791006321@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -45,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
@@ -53,42 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 84d31bb1f6256eea0db6cf64a3c7a53145f92bb9 upstream.
+commit 1044e5a4ccd57bf5a64f90100a321b498e0267a2 upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+Make sure to deregister the controller before disabling it to allow
+SPI device drivers to do I/O during deregistration.
 
-Fixes: cef9991e04ae ("spi: Add Amlogic SPISG driver")
-Cc: stable@vger.kernel.org	# 6.17: b8db95529979
-Cc: stable@vger.kernel.org	# 6.17
-Cc: Sunny Luo <sunny.luo@amlogic.com>
+Fixes: e3228ed92893 ("spi: spi-mem: Convert Aspeed SMC driver to spi-mem")
+Cc: stable@vger.kernel.org	# 5.19
+Cc: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260409120419.388546-2-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-3-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-amlogic-spisg.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-aspeed-smc.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi-amlogic-spisg.c
-+++ b/drivers/spi/spi-amlogic-spisg.c
-@@ -800,7 +800,7 @@ static int aml_spisg_probe(struct platfo
- 		goto out_clk;
+--- a/drivers/spi/spi-aspeed-smc.c
++++ b/drivers/spi/spi-aspeed-smc.c
+@@ -972,7 +972,7 @@ static int aspeed_spi_probe(struct platf
+ 		return -ENOMEM;
+ 
+ 	aspi = spi_controller_get_devdata(ctlr);
+-	platform_set_drvdata(pdev, aspi);
++	platform_set_drvdata(pdev, ctlr);
+ 	aspi->data = data;
+ 	aspi->dev = dev;
+ 
+@@ -1021,7 +1021,7 @@ static int aspeed_spi_probe(struct platf
+ 		return ret;
  	}
  
 -	ret = devm_spi_register_controller(dev, ctlr);
 +	ret = spi_register_controller(ctlr);
- 	if (ret) {
- 		dev_err(&pdev->dev, "spi controller registration failed\n");
- 		goto out_clk;
-@@ -823,6 +823,8 @@ static void aml_spisg_remove(struct plat
- {
- 	struct spisg_device *spisg = platform_get_drvdata(pdev);
+ 	if (ret)
+ 		dev_err(&pdev->dev, "spi_register_controller failed\n");
  
-+	spi_unregister_controller(spisg->controller);
+@@ -1030,7 +1030,10 @@ static int aspeed_spi_probe(struct platf
+ 
+ static void aspeed_spi_remove(struct platform_device *pdev)
+ {
+-	struct aspeed_spi *aspi = platform_get_drvdata(pdev);
++	struct spi_controller *ctlr = platform_get_drvdata(pdev);
++	struct aspeed_spi *aspi = spi_controller_get_devdata(ctlr);
 +
- 	if (!pm_runtime_suspended(&pdev->dev)) {
- 		pinctrl_pm_select_sleep_state(&spisg->pdev->dev);
- 		clk_disable_unprepare(spisg->core);
++	spi_unregister_controller(ctlr);
+ 
+ 	aspeed_spi_enable(aspi, false);
+ }
 
 
