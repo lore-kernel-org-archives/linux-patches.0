@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35B7374722;
-	Fri, 15 May 2026 16:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE1A3EFFB8;
+	Fri, 15 May 2026 16:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861486; cv=none; b=rGuWHOMkNI++w31vh+cCshrBpxil75XXbFh9XG8vdHz5XaMbsvFwoIjDUvmBdK8yBpiUwvddOEmh1+tMOkFcUhL6s+gthAIRKZJ2jvTsLdmkkOna351xyJoVVdyfut3Q44ke5nUEK8taDFHAJm4JP2yd/xTWYq8H8BLN9wSH+KI=
+	t=1778861488; cv=none; b=DOPV4MyRcW0DiNInSbeS3uKUy9Yke7uQxRlKKM5iS71yq5CP6AHWLqYTgz2g7q9Nxg5yAYg1WE/R0LoooumBDRUEnYoVtjmJoF49Oin+xl260uKzlKL+Zk+GcD6RwxwgXYQv1i+zq4ALlftuA6I2V4LwYLCLtzFX8aoSBKV8XmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861486; c=relaxed/simple;
-	bh=MvTOeEBKLLHzDrFvHIg+KqVNy3tSN5WGQWppZUzJju8=;
+	s=arc-20240116; t=1778861488; c=relaxed/simple;
+	bh=AP7/YS3++V3Aqq/fh9UcFTJWuvc8VC7M54+zEI72rSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AtXnqoC4T7fEFJnDq38N92Q4fiHkV8TT6B7XgM92VXXgy653+3kYUojPKhauQLQCalFFHRC/JEyMTIaww+ZDPRA2Wh0WwGwcwNgSCAwSdFCi2dbIgH9d8wAS2H6vOMO82Hhhtw7yEzfKBgVsuVkBhBLg4P2wbtum0qfzG57DIZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1kfR9M8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GOlzK3wf41rEwQDQQnxhaer7z/mE83FrB3dnAuGJLKMegHhmztRdSGEaIJeHQTkjiNMch6n54e2i8dVzwL4Izx6lloLVGmTE4fEi8M61HtteLWp+D0deh/CfcN+RA+BKVFXSWxxdJGD/J0bdtChazpUT/7PnjZ1/Pu2YAowlvCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gekihwwv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1kfR9M8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78133C2BCB0;
-	Fri, 15 May 2026 16:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gekihwwv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1126FC2BCB0;
+	Fri, 15 May 2026 16:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861485;
-	bh=MvTOeEBKLLHzDrFvHIg+KqVNy3tSN5WGQWppZUzJju8=;
+	s=korg; t=1778861488;
+	bh=AP7/YS3++V3Aqq/fh9UcFTJWuvc8VC7M54+zEI72rSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1kfR9M82dUQV5bHErRDoUmgIv6bdPyHCkU2jJlVs3canJqLYjs4H+S4b3uOANidh
-	 sC73RvGhMV6+9lunL282zzF+8sACc8vwCslC3kTQrMTAq0swtGEPkmudX3/KOnzcpD
-	 lSx83+GuCczHKHbf3BQ9LswDEYj9g7JetJSclR9M=
+	b=gekihwwvV+kAk4hH2x9mR3v4t8+qlPhN8E+eeXmJM2+GQD3Za11hzzlCdq0d+tyd3
+	 ZbX4wTYa4ovUHjqagJQv2VlaLGSi3YndTAoj3qW/J9aKgP952RfKPrxUZ5mi3Rne+o
+	 Nl25peryV9FiM9CpLxxB3O6bXTQsof5ODL6W7rgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Shetaia <Amir.Shetaia@amd.com>,
-	Alysa Liu <Alysa.Liu@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Kent Russell <kent.russell@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 348/474] drm/amdkfd: validate SVM ioctl nattr against buffer size
-Date: Fri, 15 May 2026 17:47:37 +0200
-Message-ID: <20260515154722.547591813@linuxfoundation.org>
+Subject: [PATCH 6.6 349/474] drm/radeon: add missing revision check for CI
+Date: Fri, 15 May 2026 17:47:38 +0200
+Message-ID: <20260515154722.569196160@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -45,108 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alysa Liu <Alysa.Liu@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 045e0ff208f0838a246c10204105126611b267a1 upstream.
+commit 17223816498f7b117d138d18eb0eba63604dc74e upstream.
 
-Validate nattr field against the buffer size, preventing
-out-of-bounds buffer access via user-controlled attribute count.
+The memory level workarounds only apply to revision 0 SKUs.
 
-Reviewed-by: Amir Shetaia <Amir.Shetaia@amd.com>
-Signed-off-by: Alysa Liu <Alysa.Liu@amd.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/1816
+Fixes: 127e056e2a82 ("drm/radeon: fix mclk vddc configuration for cards for hawaii")
+Fixes: 21b8a369046f ("drm/radeon: fix dram timing for certain hawaii boards")
+Fixes: 90b2fee35cb9 ("drm/radeon: fix dpm mc init for certain hawaii boards")
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5eca8bfdfa456c3304ca77523718fe24254c172f)
+(cherry picked from commit 4d8dcc14311515077062b5740f39f427075de5c9)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |   26 ++++++++++++++++++++++++--
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h    |    3 +++
- 2 files changed, 27 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/radeon/ci_dpm.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -26,6 +26,7 @@
- #include <linux/err.h>
- #include <linux/fs.h>
- #include <linux/file.h>
-+#include <linux/overflow.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include <linux/uaccess.h>
-@@ -1705,6 +1706,16 @@ static int kfd_ioctl_smi_events(struct f
- 	return kfd_smi_event_open(pdd->dev, &args->anon_fd);
- }
+--- a/drivers/gpu/drm/radeon/ci_dpm.c
++++ b/drivers/gpu/drm/radeon/ci_dpm.c
+@@ -2466,7 +2466,8 @@ static void ci_register_patching_mc_arb(
  
-+static int kfd_ioctl_svm_validate(void *kdata, unsigned int usize)
-+{
-+	struct kfd_ioctl_svm_args *args = kdata;
-+	size_t expected = struct_size(args, attrs, args->nattr);
-+
-+	if (expected == SIZE_MAX || usize < expected)
-+		return -EINVAL;
-+	return 0;
-+}
-+
- #if IS_ENABLED(CONFIG_HSA_AMD_SVM)
+ 	if (patch &&
+ 	    ((rdev->pdev->device == 0x67B0) ||
+-	     (rdev->pdev->device == 0x67B1))) {
++	     (rdev->pdev->device == 0x67B1)) &&
++	    (rdev->pdev->revision == 0)) {
+ 		if ((memory_clock > 100000) && (memory_clock <= 125000)) {
+ 			tmp2 = (((0x31 * engine_clock) / 125000) - 1) & 0xff;
+ 			*dram_timimg2 &= ~0x00ff0000;
+@@ -3307,7 +3308,8 @@ static int ci_populate_all_memory_levels
+ 	pi->smc_state_table.MemoryLevel[0].EnabledForActivity = 1;
  
- static int kfd_ioctl_set_xnack_mode(struct file *filep,
-@@ -3128,7 +3139,11 @@ out:
+ 	if ((dpm_table->mclk_table.count >= 2) &&
+-	    ((rdev->pdev->device == 0x67B0) || (rdev->pdev->device == 0x67B1))) {
++	    ((rdev->pdev->device == 0x67B0) || (rdev->pdev->device == 0x67B1)) &&
++	    (rdev->pdev->revision == 0)) {
+ 		pi->smc_state_table.MemoryLevel[1].MinVddc =
+ 			pi->smc_state_table.MemoryLevel[0].MinVddc;
+ 		pi->smc_state_table.MemoryLevel[1].MinVddcPhases =
+@@ -4504,7 +4506,8 @@ static int ci_register_patching_mc_seq(s
  
- #define AMDKFD_IOCTL_DEF(ioctl, _func, _flags) \
- 	[_IOC_NR(ioctl)] = {.cmd = ioctl, .func = _func, .flags = _flags, \
--			    .cmd_drv = 0, .name = #ioctl}
-+			    .validate = NULL, .cmd_drv = 0, .name = #ioctl}
-+
-+#define AMDKFD_IOCTL_DEF_V(ioctl, _func, _validate, _flags) \
-+	[_IOC_NR(ioctl)] = {.cmd = ioctl, .func = _func, .flags = _flags, \
-+			    .validate = _validate, .cmd_drv = 0, .name = #ioctl}
- 
- /** Ioctl table */
- static const struct amdkfd_ioctl_desc amdkfd_ioctls[] = {
-@@ -3225,7 +3240,8 @@ static const struct amdkfd_ioctl_desc am
- 	AMDKFD_IOCTL_DEF(AMDKFD_IOC_SMI_EVENTS,
- 			kfd_ioctl_smi_events, 0),
- 
--	AMDKFD_IOCTL_DEF(AMDKFD_IOC_SVM, kfd_ioctl_svm, 0),
-+	AMDKFD_IOCTL_DEF_V(AMDKFD_IOC_SVM, kfd_ioctl_svm,
-+			   kfd_ioctl_svm_validate, 0),
- 
- 	AMDKFD_IOCTL_DEF(AMDKFD_IOC_SET_XNACK_MODE,
- 			kfd_ioctl_set_xnack_mode, 0),
-@@ -3347,6 +3363,12 @@ static long kfd_ioctl(struct file *filep
- 		memset(kdata, 0, usize);
- 	}
- 
-+	if (ioctl->validate) {
-+		retcode = ioctl->validate(kdata, usize);
-+		if (retcode)
-+			goto err_i1;
-+	}
-+
- 	retcode = func(filep, process, kdata);
- 
- 	if (cmd & IOC_OUT)
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -1006,10 +1006,13 @@ extern struct srcu_struct kfd_processes_
- typedef int amdkfd_ioctl_t(struct file *filep, struct kfd_process *p,
- 				void *data);
- 
-+typedef int amdkfd_ioctl_validate_t(void *kdata, unsigned int usize);
-+
- struct amdkfd_ioctl_desc {
- 	unsigned int cmd;
- 	int flags;
- 	amdkfd_ioctl_t *func;
-+	amdkfd_ioctl_validate_t *validate;
- 	unsigned int cmd_drv;
- 	const char *name;
- };
+ 	if (patch &&
+ 	    ((rdev->pdev->device == 0x67B0) ||
+-	     (rdev->pdev->device == 0x67B1))) {
++	     (rdev->pdev->device == 0x67B1)) &&
++	    (rdev->pdev->revision == 0)) {
+ 		for (i = 0; i < table->last; i++) {
+ 			if (table->last >= SMU7_DISCRETE_MC_REGISTER_ARRAY_SIZE)
+ 				return -EINVAL;
 
 
