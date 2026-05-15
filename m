@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6187C3F44CE;
-	Fri, 15 May 2026 16:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061F9303CB0;
+	Fri, 15 May 2026 16:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861770; cv=none; b=D9/yq38PFtSX0s6EBb0252/tg3RsG+X7yvv3ujWrGu0Apx1vzFbF+JG2JAIZ5RY1a4h7PUrANBYEic4YBKQRRL4RfxGCYbF9wpb9cR6ZMbVW2XnFJdVQdj9+zl6zJEhtIrkU/bw/T9ojfzRzlu32u+AxAHqbxu5/LPXut/fqFmc=
+	t=1778861773; cv=none; b=aackML/jov1+DVr0blGVMIrObxpI2SmSGKRlo3CfXKJBiFuoJ6Aq7pG81s51G1Hn0MRtSymf7mMlcrBmVPs7qSLJRGrHdQoxfHOgI3/W2+BpH7xW3FS7PcQ268D0ppiRp90mM1Rf383JrIY0I+z4r18mNw8dRk0iw7rbPKmT63A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861770; c=relaxed/simple;
-	bh=JZcHzFFIhsGp6C2LfFqG74ufRq7LnmbaTLH11l48Pi4=;
+	s=arc-20240116; t=1778861773; c=relaxed/simple;
+	bh=kqohpkWxzl35Z4sksiR2Tfr2MwnZQgc2i9LtfArrxDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4HqfQTxLm54W+SsZ3d6LiT2VLKK3XNDRFLjrezM1/MnSwNCGchKK4T4rJ8imzCGTpSRGtkm+sMQCk79pRguZA5mDsTf6F+pDxKQfz1DN1m4PhuvLEra0K9Z0UE27TDfH++tDBOfW1pwltj/sNsz5oDIrMgcb5kR9WmEnNVt00U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Di5DsgMF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PxfD2yuubcPtZD3i8CyQTj9Zb52W9f3Yqfm039cGcY4YLkwA/SI+mKpdl4UDpfJEzHPQJp1hnwqSZVBOHUeIhKrLbTYQYJAdB4eqcbyYe5zc0NLPaLWUWIXchNwsCZDwAPDZLoRqz4luyBO6adAOY7rCiSy8ga+dfKr0/roXnWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpmwQW6P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Di5DsgMF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5E8C2BCB0;
-	Fri, 15 May 2026 16:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpmwQW6P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFE0C2BCB0;
+	Fri, 15 May 2026 16:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861770;
-	bh=JZcHzFFIhsGp6C2LfFqG74ufRq7LnmbaTLH11l48Pi4=;
+	s=korg; t=1778861772;
+	bh=kqohpkWxzl35Z4sksiR2Tfr2MwnZQgc2i9LtfArrxDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Di5DsgMFN+qv++3O0m3kDXCBRWxziREtRQuBhyZJVyOraOs7c+ilaUNo3leAgFHWX
-	 Hsz6VXeOSR1C8Z6Kp1TGo3FZsfNupw7xpCGSzFDdgGNa7fk3QRla5B2OqeBy6gd4gT
-	 bz7dUAn095B9+Crf2gusWaGhfh5wrhuROhEHmZ0M=
+	b=jpmwQW6Plm+5MGGhVVUY80qxG4j0lCSBo6WrA8Q3UTMHTnMg0lxCDXSIpjvcdPSPy
+	 ckrVG+wKVLPmygEqgbdl4WExldJv+qOvNW8QTG3Dgmog3eCpLKnwfMbLEnTBu6r6vi
+	 +UZgC9mK06l2rRdmbyfhSvJuLiG0xHGMgirfZc4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjaikumar V S <sanjaikumar.vs@dicortech.com>,
-	Hendrik Donner <hd@os-cillation.de>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>
-Subject: [PATCH 6.6 455/474] mtd: spi-nor: sst: Fix write enable before AAI sequence
-Date: Fri, 15 May 2026 17:49:24 +0200
-Message-ID: <20260515154724.941617957@linuxfoundation.org>
+	"Viorel Suman (OSS)" <viorel.suman@oss.nxp.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Subject: [PATCH 6.6 456/474] pwm: imx-tpm: Count the number of enabled channels in probe
+Date: Fri, 15 May 2026 17:49:25 +0200
+Message-ID: <20260515154724.963690016@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -45,67 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanjaikumar V S <sanjaikumar.vs@dicortech.com>
+From: Viorel Suman (OSS) <viorel.suman@oss.nxp.com>
 
-commit a0f64241d3566a49c0a9b33ba7ae458ae22003a9 upstream.
+commit 3962c24f2d14e8a7f8a23f56b7ce320523947342 upstream.
 
-When writing to SST flash starting at an odd address, a single byte is
-first programmed using the byte program (BP) command. After this
-operation completes, the flash hardware automatically clears the Write
-Enable Latch (WEL) bit.
+On a soft reset TPM PWM IP may preserve its internal state from previous
+runtime, therefore on a subsequent OS boot and driver probe
+"enable_count" value and TPM PWM IP internal channels "enabled" states
+may get unaligned. In consequence on a suspend/resume cycle the call "if
+(--tpm->enable_count == 0)" may lead to "enable_count" overflow the
+system being blocked from entering suspend due to:
 
-If an AAI (Auto Address Increment) word program sequence follows, it
-requires WEL to be set. Without re-enabling writes, the AAI sequence
-fails.
+   if (tpm->enable_count > 0)
+       return -EBUSY;
 
-Add spi_nor_write_enable() after the odd-address byte program when more
-data needs to be written. Use a local boolean for clarity.
+Fix the problem by counting the enabled channels in probe function.
 
-Fixes: b199489d37b2 ("mtd: spi-nor: add the framework for SPI NOR")
+Signed-off-by: Viorel Suman (OSS) <viorel.suman@oss.nxp.com>
+Fixes: 738a1cfec2ed ("pwm: Add i.MX TPM PWM driver support")
+Link: https://patch.msgid.link/20260311123309.348904-1-viorel.suman@oss.nxp.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanjaikumar V S <sanjaikumar.vs@dicortech.com>
-Tested-by: Hendrik Donner <hd@os-cillation.de>
-Reviewed-by: Hendrik Donner <hd@os-cillation.de>
-Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+[ukleinek: backport to linux-6.6.y]
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/sst.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/pwm/pwm-imx-tpm.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/mtd/spi-nor/sst.c
-+++ b/drivers/mtd/spi-nor/sst.c
-@@ -159,6 +159,8 @@ static int sst_nor_write(struct mtd_info
+--- a/drivers/pwm/pwm-imx-tpm.c
++++ b/drivers/pwm/pwm-imx-tpm.c
+@@ -350,6 +350,7 @@ static int pwm_imx_tpm_probe(struct plat
+ {
+ 	struct imx_tpm_pwm_chip *tpm;
+ 	int ret;
++	unsigned int i;
+ 	u32 val;
  
- 	/* Start write from odd address. */
- 	if (to % 2) {
-+		bool needs_write_enable = (len > 1);
+ 	tpm = devm_kzalloc(&pdev->dev, sizeof(*tpm), GFP_KERNEL);
+@@ -383,6 +384,13 @@ static int pwm_imx_tpm_probe(struct plat
+ 
+ 	mutex_init(&tpm->lock);
+ 
++	/* count the enabled channels */
++	for (i = 0; i < tpm->chip.npwm; ++i) {
++		val = readl(tpm->base + PWM_IMX_TPM_CnSC(i));
++		if (FIELD_GET(PWM_IMX_TPM_CnSC_ELS, val))
++			++tpm->enable_count;
++	}
 +
- 		/* write one byte. */
- 		ret = sst_nor_write_data(nor, to, 1, buf);
- 		if (ret < 0)
-@@ -166,6 +168,17 @@ static int sst_nor_write(struct mtd_info
- 
- 		to++;
- 		actual++;
-+
-+		/*
-+		 * Byte program clears the write enable latch. If more
-+		 * data needs to be written using the AAI sequence,
-+		 * re-enable writes.
-+		 */
-+		if (needs_write_enable) {
-+			ret = spi_nor_write_enable(nor);
-+			if (ret)
-+				goto out;
-+		}
- 	}
- 
- 	/* Write out most of the data here. */
+ 	ret = pwmchip_add(&tpm->chip);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to add PWM chip: %d\n", ret);
 
 
