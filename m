@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DEA4C77A3;
-	Fri, 15 May 2026 16:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACC020297C;
+	Fri, 15 May 2026 16:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861170; cv=none; b=WJMoOEDltk2ZDNRl6ZZOlQ5mDERVN2XwmxYR8/3/AAT1Fk3MWHagtwLHJQhomNWbh2/RP6dHjNj1MlLoVEo4HImz1uivZ8eF6kF+R65mr7IxSjiUJEFEtaJBgTsQKYezOAASOgDnnyYXaZmDFmj/QykzfFEP8lF7sSte72LFE/8=
+	t=1778861172; cv=none; b=Bmk7oJQnMuU/zlUrOdWOTEd7gAkwaJWFEGd0upB5X061AQuEJuGRn1fPtIhle4IQBa97o9mTSp+NS2xc4T/bS0m73aLgtH6/Csx0Rt8VPxZ72PrDKk6CudPATcBn7RZQZ9/HMiePusTNFrm2F8ukA09Gd18rISWDjY6PNb/7aKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861170; c=relaxed/simple;
-	bh=39xoTHT8tghc68dImqDHt6BPFyflbipiMgkCL4Ml0sk=;
+	s=arc-20240116; t=1778861172; c=relaxed/simple;
+	bh=vaALc1RlqcpfthlzwGmRVT83k3JjUA1NVec5kKzYZMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOmlHfXVf5l/DcBmuHdEmUPp4lhJ7+1X2RTpht+HEPOznKdQvMhkni4wkqwQ8XiU96CkIV6CKjZog3PqzMk8ZGs2i/CmHkCzuDGMamI50e85hPZvaOokJCtygQqvrNSjN6b4ELLbQquY6uDVsWbrRxxtK+uwJyvpJRXAqAAFOVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DC8sT0Ne; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eytxdVtXLm8oTR2cwY5xcy5rPaVr51DwAAqFaoWbEhrl3Hi9jhTGMNQ1YqNIkeTwYlp3u+QVhpXKzEgXmqn/s1++Gl7IssP1g2tQ8QDM2ZypdIRAu48nsOuIoO7L6UY4IsvdlZF/Hemk41Dm2XHrqbghh4zXFEYO0TOxG+7NqU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnIQwC2Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DC8sT0Ne"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B339C2BCC9;
-	Fri, 15 May 2026 16:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnIQwC2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4BAFC2BCB3;
+	Fri, 15 May 2026 16:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861169;
-	bh=39xoTHT8tghc68dImqDHt6BPFyflbipiMgkCL4Ml0sk=;
+	s=korg; t=1778861172;
+	bh=vaALc1RlqcpfthlzwGmRVT83k3JjUA1NVec5kKzYZMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DC8sT0NeRsFfGPAz66LFQVJLuzUS9Ouc690VrBOH47EmqXZCxOqlPn3SssSIj7fVU
-	 xiB7egK8JAWJd+VxMpXtAuMn8qLaVSKPJiC/IaK9bmoqqmY964RoD7cmqeil5JwH1l
-	 Au17WPBCjLfB5ZJQyk7SwJFdCEC1VKnKMQMMR2nc=
+	b=bnIQwC2QIXdOhl0t7SmNf8bzrshjDL3NOc60xPgRDr1BPZ5e60zxxGBBObfNmfWtK
+	 IvRYinsow0aSjmyfm9WeQq6R7butOB3CLWjvYX/SvcjQ869UtMMXQLvErkkewwg0D/
+	 hzvE2lkCEAq3GVD6jC+uA5FBPj6jlajwvOYRRlpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sanman Pradhan <psanman@juniper.net>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 225/474] hwmon: (ltc2992) Clamp threshold writes to hardware range
-Date: Fri, 15 May 2026 17:45:34 +0200
-Message-ID: <20260515154719.876237617@linuxfoundation.org>
+Subject: [PATCH 6.6 226/474] hwmon: (ltc2992) Fix u32 overflow in power read path
+Date: Fri, 15 May 2026 17:45:35 +0200
+Message-ID: <20260515154719.897519159@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,113 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Sanman Pradhan <psanman@juniper.net>
 
-commit d6cc7c99bf1f73eda7d565d224d791d16239bb41 upstream.
+commit 2da0c1fd01dbd6b22844e8676585153dfc660cbe upstream.
 
-ltc2992_set_voltage(), ltc2992_set_current(), and ltc2992_set_power()
-do not validate the user-supplied value before converting it to a
-register value. This can result in:
+ltc2992_get_power() computes the divisor for mul_u64_u32_div() as
+r_sense_uohm * 1000. This multiplication overflows u32 when
+r_sense_uohm exceeds about 4.29 ohms (4294967 micro-ohms), producing
+a truncated divisor and an incorrect power reading.
 
-1. Negative input values wrapping to large positive register values.
-   For power, the negative long is implicitly cast to u64 in
-   mul_u64_u32_div(), producing an incorrect value. For voltage and
-   current, the negative converted value wraps when passed to
-   ltc2992_write_reg() as a u32.
+Cancel the factor of 1000 from both the numerator
+(VADC_UV_LSB * IADC_NANOV_LSB = 312500000) and the divisor
+(r_sense_uohm * 1000), giving (VADC_UV_LSB / 1000) * IADC_NANOV_LSB
+= 312500 as the numerator and plain r_sense_uohm as the divisor.
+The cancellation is exact because LTC2992_VADC_UV_LSB (25000) is
+divisible by 1000.
 
-2. Intermediate arithmetic exceeding the range representable in u64 on
-   64-bit platforms. In ltc2992_set_voltage(), (u64)val * 1000 can
-   exceed U64_MAX when val is a large positive long. In
-   ltc2992_set_current(), (u64)val * r_sense_uohm can overflow
-   similarly. In ltc2992_set_power(), the computed value may not fit
-   in u64.
-
-3. Register values exceeding the hardware field width. Voltage and
-   current threshold registers are 12-bit (stored left-justified in
-   16 bits), and power threshold registers are 24-bit. Without
-   clamping, bits above the field width are truncated in
-   ltc2992_write_reg().
-
-Fix by clamping negative values to zero, clamping positive values to
-the rounded hardware-representable maximum (the value returned by the
-read path for a full-scale register) to prevent intermediate overflow,
-and clamping the converted register value to the hardware field width
-before writing. The existing conversion formula and rounding behavior
-are preserved.
-
-In the power write path, cancel the factor of 1000 from both the
-numerator (r_sense_uohm * 1000) and the denominator
-(VADC_UV_LSB * IADC_NANOV_LSB) to also eliminate a u32 overflow of
-r_sense_uohm * 1000 when r_sense_uohm exceeds about 4.29 ohms.
+This is the read-path counterpart of the write-path fix applied in
+the preceding patch.
 
 Fixes: b0bd407e94b03 ("hwmon: (ltc2992) Add support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260416215904.101969-2-sanman.pradhan@hpe.com
+Link: https://lore.kernel.org/r/20260416215904.101969-3-sanman.pradhan@hpe.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/ltc2992.c |   35 ++++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
+ drivers/hwmon/ltc2992.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/drivers/hwmon/ltc2992.c
 +++ b/drivers/hwmon/ltc2992.c
-@@ -421,10 +421,16 @@ static int ltc2992_get_voltage(struct lt
+@@ -627,8 +627,10 @@ static int ltc2992_get_power(struct ltc2
+ 	if (reg_val < 0)
+ 		return reg_val;
  
- static int ltc2992_set_voltage(struct ltc2992_state *st, u32 reg, u32 scale, long val)
- {
--	val = DIV_ROUND_CLOSEST(val * 1000, scale);
--	val = val << 4;
-+	u32 reg_val;
-+	long vmax;
-+
-+	vmax = DIV_ROUND_CLOSEST_ULL(0xFFFULL * scale, 1000);
-+	val = max(val, 0L);
-+	val = min(val, vmax);
-+	reg_val = min(DIV_ROUND_CLOSEST_ULL((u64)val * 1000, scale),
-+		      0xFFFULL) << 4;
- 
--	return ltc2992_write_reg(st, reg, 2, val);
-+	return ltc2992_write_reg(st, reg, 2, reg_val);
- }
- 
- static int ltc2992_read_gpio_alarm(struct ltc2992_state *st, int nr_gpio, u32 attr, long *val)
-@@ -549,9 +555,15 @@ static int ltc2992_get_current(struct lt
- static int ltc2992_set_current(struct ltc2992_state *st, u32 reg, u32 channel, long val)
- {
- 	u32 reg_val;
-+	long cmax;
- 
--	reg_val = DIV_ROUND_CLOSEST(val * st->r_sense_uohm[channel], LTC2992_IADC_NANOV_LSB);
--	reg_val = reg_val << 4;
-+	cmax = DIV_ROUND_CLOSEST_ULL(0xFFFULL * LTC2992_IADC_NANOV_LSB,
-+				     st->r_sense_uohm[channel]);
-+	val = max(val, 0L);
-+	val = min(val, cmax);
-+	reg_val = min(DIV_ROUND_CLOSEST_ULL((u64)val * st->r_sense_uohm[channel],
-+					    LTC2992_IADC_NANOV_LSB),
-+		      0xFFFULL) << 4;
- 
- 	return ltc2992_write_reg(st, reg, 2, reg_val);
- }
-@@ -624,9 +636,18 @@ static int ltc2992_get_power(struct ltc2
- static int ltc2992_set_power(struct ltc2992_state *st, u32 reg, u32 channel, long val)
- {
- 	u32 reg_val;
-+	u64 pmax, uval;
- 
--	reg_val = mul_u64_u32_div(val, st->r_sense_uohm[channel] * 1000,
--				  LTC2992_VADC_UV_LSB * LTC2992_IADC_NANOV_LSB);
-+	uval = max(val, 0L);
-+	pmax = mul_u64_u32_div(0xFFFFFFULL,
+-	*val = mul_u64_u32_div(reg_val, LTC2992_VADC_UV_LSB * LTC2992_IADC_NANOV_LSB,
+-			       st->r_sense_uohm[channel] * 1000);
++	*val = mul_u64_u32_div(reg_val,
 +			       LTC2992_VADC_UV_LSB / 1000 *
 +			       LTC2992_IADC_NANOV_LSB,
 +			       st->r_sense_uohm[channel]);
-+	uval = min(uval, pmax);
-+	reg_val = min(mul_u64_u32_div(uval, st->r_sense_uohm[channel],
-+				      LTC2992_VADC_UV_LSB / 1000 *
-+				      LTC2992_IADC_NANOV_LSB),
-+		      0xFFFFFFULL);
  
- 	return ltc2992_write_reg(st, reg, 3, reg_val);
+ 	return 0;
  }
 
 
