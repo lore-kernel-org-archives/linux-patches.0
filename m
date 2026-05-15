@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C68526CE11;
-	Fri, 15 May 2026 16:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AB32C11DF;
+	Fri, 15 May 2026 16:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862142; cv=none; b=LZGVwQOIHQXKBBH0Wsa09pEuZDSmOtl55/k+7pj2OmIA3ps1huq9S7RCWOvb09NpzzvNVtK9nwsUria2LHrghitDLjV97cpyR3H+HDHouRMA/pIlsoOcnoafqYiwF1ZWc17fIYwjmPdehdB44BKDD6aFIgBhw4vXTufiDYuPdHk=
+	t=1778862144; cv=none; b=p5F7ZnBs4fNvpUz59z6x1NeVlOKS6uwh9oyVLOucKkMiUXwXhtVMtNzEaEbx5QDpKadFe710EZwTNOxelRS7ZXvuysk0tEVzLQ0r5QSBOY+UDWq4XuiHYe/xdIOwNChaWeJHfaRgXkVAY2rGNtPXHsfv7zQXRtreFKFO6gjKOHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862142; c=relaxed/simple;
-	bh=Senjnna+x8d2tPkDXJ66phg0qDvbYCScfG2BtMennfk=;
+	s=arc-20240116; t=1778862144; c=relaxed/simple;
+	bh=TJ1yLVys4AyWgQPYhGdaAQF0p78qXvt3gPzsZUgzfo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UXonkV/ILqqRxtuTz9Shww0dCe1fgb6rKY3BVo4zyony2sVU0ht1Ejmt25U5XglbSDU4nnsJmlHHBOCSdyS/khwwIyaXG08jlm2w7H4sOuNuFkEXyo5Nmp1rWreiZrLp48tDGXlsummxoMwsRY/Up5CLtAiy9qI9AZNLUGP92g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTMClpFh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cUVwpyAwm46gM+A4R9WJhxXcLMbcCqX3Akj7N+9u5iBw8r5NCb0MMm/iVQhgqq987ajzbrzXGIvEClAMxAM9W7xfaP8ACjlK7Mr5KwrN3Ia5MSW5cunMdUXK5o3uJRvFgP6TMzUopeVXxZNBEMKRhp8C8AN4fTEPpZ34LncxZ44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HevzPQvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTMClpFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCA0C2BCB0;
-	Fri, 15 May 2026 16:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HevzPQvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166C8C2BCB0;
+	Fri, 15 May 2026 16:22:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862141;
-	bh=Senjnna+x8d2tPkDXJ66phg0qDvbYCScfG2BtMennfk=;
+	s=korg; t=1778862144;
+	bh=TJ1yLVys4AyWgQPYhGdaAQF0p78qXvt3gPzsZUgzfo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HTMClpFhFZeUgLbq4d3Gova0p6MPGdPzRe8ifZr0eyqCq0H0azp+6nSMuG64pkg74
-	 2lBMVTRAz1Fr37IRdmg1FmYtJKz87h5sgpbzRaGniLcurhjKX0mwcFJsVCg78mOukk
-	 gb8Q2Py3qwGMPhGnjoOvQlm1e04eX2CbbWsmW648=
+	b=HevzPQvqaZcJ4q2BA82ZuhMGyMXmHJCnD91eTt7qOnLE1m8wVYyBax8gzNc2BlNDp
+	 926+9oxMvtSU7MHfjVlM2tiNNxEM0LZnAWDQZ6UgkOaDGMC/hRSH79IqYcXHmZh5XB
+	 BD2XzCpoK2B3u9vmeDJfBpzhSLjYkTZUoIveCd2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 6.18 125/188] drm/panel: himax-hx83102: restore MODE_LPM after sending disable cmds
-Date: Fri, 15 May 2026 17:49:02 +0200
-Message-ID: <20260515154700.041097359@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"John B. Moore" <jbmoore61@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 126/188] drm/amdgpu/gfx9: drop unnecessary 64-bit fence flag check in KIQ
+Date: Fri, 15 May 2026 17:49:03 +0200
+Message-ID: <20260515154700.062204079@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -45,49 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+From: John B. Moore <jbmoore61@gmail.com>
 
-commit 2d4e80271f784aa0c7b17676e9762c7e8156be1c upstream.
+commit 7bbfb2559bcec39d1a4e1182d931a2046112c352 upstream.
 
-When preparing the panel, it seems that it always expects commands to be
-transferred in LP mode. However, the disable function removes the
-MIPI_DSI_MODE_LPM flag, and no other function re-adds it.
+Remove the BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT) assertion from
+gfx_v9_0_ring_emit_fence_kiq().  The KIQ hardware supports 64-bit
+fence writes; the 32-bit writeback address constraint is an
+upper-layer convention, not a hardware limitation.  The check serves
+no purpose and should not be present.
 
-As the unprepare function contains no DSI commands, re-adding the flag
-just after disabling the panel should be safe. Add the code re-adding
-the flag after the two commands for disabling the panel are sent.
+Found by code inspection while investigating related BUG_ON
+assertions in the GFX and compute ring emission paths.
 
-This fixes screen unblanking (after blanking once) on
-mt8188-geralt-ciri-sku1 device.
-
-Cc: stable@vger.kernel.org # 6.11+
-Fixes: 0ef94554dc40 ("drm/panel: himax-hx83102: Break out as separate driver")
-Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260425165751.1716569-1-zhengxingda@iscas.ac.cn
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: John B. Moore <jbmoore61@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1b1101a46a426bb4328116bb5273c326a2780389)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-himax-hx83102.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/gpu/drm/panel/panel-himax-hx83102.c
-+++ b/drivers/gpu/drm/panel/panel-himax-hx83102.c
-@@ -850,6 +850,8 @@ static int hx83102_disable(struct drm_pa
- 	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
- 	mipi_dsi_dcs_enter_sleep_mode_multi(&dsi_ctx);
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -5640,9 +5640,6 @@ static void gfx_v9_0_ring_emit_fence_kiq
+ {
+ 	struct amdgpu_device *adev = ring->adev;
  
-+	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
-+
- 	mipi_dsi_msleep(&dsi_ctx, 150);
- 
- 	return dsi_ctx.accum_err;
+-	/* we only allocate 32bit for each seq wb address */
+-	BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
+-
+ 	/* write fence seq to the "addr" */
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
+ 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(0) |
 
 
