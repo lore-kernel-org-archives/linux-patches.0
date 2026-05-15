@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC2F3E7BAD;
-	Fri, 15 May 2026 16:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA473E929C;
+	Fri, 15 May 2026 16:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861737; cv=none; b=cbkN0mlOcK9M88A5mxV53i3uZeXcn6/P1lODlGiwphQyk4GsF6UVBjqLafzvxWpCeu2L+Gj3X45nyppPMddGVdnBniBd+A/ymx4tQdnukUEEQb3dsJyGmsJrnIna/+DcK7w/tidKS9JGNVJ27cA2kejQPrsVp2UARGud14lanwM=
+	t=1778861740; cv=none; b=nQIY9c7xlDKzdOROxZqwG4R/I5M5zYMc9Ci7UJRm+hA0HyEClGyA/ckpSkIxC45of6IgD2NdVcGiZ8svXH+6bc9UNggC0au/ViRzjCMT1ZNSXnv0OkSHX/U8cSrQAWu5zEdpuN+opJrmlvqlFOVY/Fy7GB1kgOMW+dDWcFJWKh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861737; c=relaxed/simple;
-	bh=P8DkaNsoA1Fr1lWX85YxApvFctG7RhvktmGYYASIeXI=;
+	s=arc-20240116; t=1778861740; c=relaxed/simple;
+	bh=E1zItTB9UUXC1djE6GrXgCU5Cq+PGIm4N/lVL668HMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5RjMZqGfRnUwYXrxL9y6CumdiamwZXINM6X/QE8/NzGD0XDivaBoMeOD4XiZ7MN776aWUlHWWb6j6cW9ShJMU0Axm0jJl7TsiD/ElSWEt+c3sw5QhjBwsPwLCw7pAPRUwyGT7gCzZhCRubtUv0ynWMByduy8p0Myv0CDp2g+88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRspakdO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TqoCfxb7Xk1X0vqUJXVENsnjkchzbI93WP0rByuhcahjZ1kBlUOdIg1UEaoVZsfbh1mbfOT2lHllRToSw9cpiSJx+d8BbqXkH9Vc0r5FVuLz8DJxDtM8NigDYXkr77rvde0nCkaeM2DQBL6XxGcDTbgxi/KtuSv+o49CbDgU6x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lq2pkwTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRspakdO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A8BC2BCB0;
-	Fri, 15 May 2026 16:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lq2pkwTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8847C2BCB0;
+	Fri, 15 May 2026 16:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861737;
-	bh=P8DkaNsoA1Fr1lWX85YxApvFctG7RhvktmGYYASIeXI=;
+	s=korg; t=1778861740;
+	bh=E1zItTB9UUXC1djE6GrXgCU5Cq+PGIm4N/lVL668HMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gRspakdOs37S/L2E2lOwCMz5Rqk6sij577fmRKBbOkbkRt+QIxmBGaDHDDpnnMReM
-	 rKdgZwOS/lZ+yMzYhe6IVDoAC3YZ16VapSe1BRrF0NQvZ48s3Hu+e99Vn12vFbRnk0
-	 X5F3Jl93sX1b3t2dPmR5CNB2QjQRUnRQsrH1lmfs=
+	b=Lq2pkwTkV4BuYuvwUG2d/IujZx4ecaQZ37aR8XztwPkRkwIyYOVXl5yKBQtuhh8yb
+	 /kcVqLwtZjGDc+Z5TW9/tUblxdUC7X0QJSKN2wKZDYoVvaCoHJzy+VJc2kdS5GjACX
+	 vnuv6XmOPJwdix4wv2n7yAH3YnB8HkxoiNgwwpxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
 	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 444/474] rxrpc: Fix conn-level packet handling to unshare RESPONSE packets
-Date: Fri, 15 May 2026 17:49:13 +0200
-Message-ID: <20260515154724.694719011@linuxfoundation.org>
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 445/474] Bluetooth: L2CAP: Fix null-ptr-deref in l2cap_sock_get_sndtimeo_cb()
+Date: Fri, 15 May 2026 17:49:14 +0200
+Message-ID: <20260515154724.717336500@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -56,78 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-[ Upstream commit 24481a7f573305706054c59e275371f8d0fe919f ]
+commit 78a88d43dab8d23aeef934ed8ce34d40e6b3d613 upstream.
 
-The security operations that verify the RESPONSE packets decrypt bits of it
-in place - however, the sk_buff may be shared with a packet sniffer, which
-would lead to the sniffer seeing an apparently corrupt packet (actually
-decrypted).
+Add the same NULL guard already present in
+l2cap_sock_resume_cb() and l2cap_sock_ready_cb().
 
-Fix this by handing a copy of the packet off to the specific security
-handler if the packet was cloned.
-
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Closes: https://sashiko.dev/#/patchset/20260408121252.2249051-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260422161438.2593376-5-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8d836d71e222 ("Bluetooth: Access sk_sndtimeo indirectly in l2cap_core.c")
+Cc: stable@kernel.org
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/conn_event.c |   29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_sock.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -226,6 +226,33 @@ static void rxrpc_call_is_secure(struct
- 		rxrpc_notify_socket(call);
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1731,6 +1731,9 @@ static long l2cap_sock_get_sndtimeo_cb(s
+ {
+ 	struct sock *sk = chan->data;
+ 
++	if (!sk)
++		return 0;
++
+ 	return sk->sk_sndtimeo;
  }
- 
-+static int rxrpc_verify_response(struct rxrpc_connection *conn,
-+				 struct sk_buff *skb)
-+{
-+	int ret;
-+
-+	if (skb_cloned(skb)) {
-+		/* Copy the packet if shared so that we can do in-place
-+		 * decryption.
-+		 */
-+		struct sk_buff *nskb = skb_copy(skb, GFP_NOFS);
-+
-+		if (nskb) {
-+			rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
-+			ret = conn->security->verify_response(conn, nskb);
-+			rxrpc_free_skb(nskb, rxrpc_skb_put_response_copy);
-+		} else {
-+			/* OOM - Drop the packet. */
-+			rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
-+			ret = -ENOMEM;
-+		}
-+	} else {
-+		ret = conn->security->verify_response(conn, skb);
-+	}
-+
-+	return ret;
-+}
-+
- /*
-  * connection-level Rx packet processor
-  */
-@@ -253,7 +280,7 @@ static int rxrpc_process_event(struct rx
- 		}
- 		spin_unlock(&conn->state_lock);
- 
--		ret = conn->security->verify_response(conn, skb);
-+		ret = rxrpc_verify_response(conn, skb);
- 		if (ret < 0)
- 			return ret;
  
 
 
