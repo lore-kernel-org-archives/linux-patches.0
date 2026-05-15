@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419243C9896;
-	Fri, 15 May 2026 16:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11BA3F44C0;
+	Fri, 15 May 2026 16:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861309; cv=none; b=FVebDFRBQv6yeMuAagXW6z9DQbQkX3oWnfsFepcfcaCEA1r6zXBPKHeJ9TSitUacLLiAYtfUCC8HiawXhHLkKX5Agkv2NPkI/IVQnGV12aa+joHTFG82YuuA2n0JYL6ncsoyAOaUmNf8+eG0wjRLP73S+b/YAmmV49pBWuni8Qc=
+	t=1778861311; cv=none; b=ZqZJsAEF+BHuKoPtHijiSlY5Z58uBLV2MRpP34H8W2EZkMOFg/mdzExnCKEnk0HHkq1PHX1mKIS60iaMIbb5WE02lhORKvTKdrFOCY7W/4Jh0t5H3NyeMY9Bv/ayxYjpHMtsOPWLwt6TEX+t7KY78WrFw2hSSpJc509NoVO8a+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861309; c=relaxed/simple;
-	bh=JSWdLCsp+3Z3mvVIuYtIAES+Tv1tMcVJdWlcXm5RDL8=;
+	s=arc-20240116; t=1778861311; c=relaxed/simple;
+	bh=45vyBPKZxggtCmMWYEA/PNsAjkwSkWHoJVao+4knltA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AF41OS7QA+EJt6zK3ZnCEUB6ZU6byqrzkPj661aPvhIEQoo0azR9LRg1pmMQwqEGDRUtmQnlAqy9jLxDkBkA7kicR4fy5Edn6jU1GJkGRj3ZQLU3KOXB3EMPs3AYft4cNQkLMjGbLK/ITZG9J1OegbnRMzvkZknDadu8Zkglqls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfTeDzHO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cX6zgYTrBj1lQ5EAU7syRzOEAejEk4COaJa9KM1cLUo4t9SicAqBsj+Cl/Ega3K6qsoctSZAOq9G5xfIRIQ8z0+RSKxqNwOB9QLHBwRXWvWvroVUkeUeooI0sl5frTFzSlHeh1GKZxhJmKft/Z6pWZOSwDv8OrhrNi9qySixAv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qREgLPsL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfTeDzHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC69FC2BCB0;
-	Fri, 15 May 2026 16:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qREgLPsL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635FAC2BCB0;
+	Fri, 15 May 2026 16:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861309;
-	bh=JSWdLCsp+3Z3mvVIuYtIAES+Tv1tMcVJdWlcXm5RDL8=;
+	s=korg; t=1778861311;
+	bh=45vyBPKZxggtCmMWYEA/PNsAjkwSkWHoJVao+4knltA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mfTeDzHOCyrpxWZnXHaJbnI1f76ry1bUoSX3bfdMscGtdf5JT8AI93YG+RxQUdtn0
-	 NkK99gDgquQm0ViVsDdgY5MhA7Qdq2/WxYhHAMK1vh+en1MogmiUaMAq1viTJYK6yQ
-	 /Lg4p9411oLcztD4mKNtd9qSefqUfHQMEI6/Q5v4=
+	b=qREgLPsLCksXlg1VuKHLG1xDCAqRuv7z1F/v/5qKLeVo+EBwJ7YX/6sBGUhmxdMJV
+	 CwGVso2wuzNAqn11xI1EFkUz01jQucoXvR9zn4EpASwZoGYWv+D4AYhgyhETfnBGc2
+	 3aZmaTYmABdeti+OMpkvw5fC4xlF+WMF/knx/7HA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.6 278/474] RDMA/mlx5: Fix error path fall-through in mlx5_ib_dev_res_srq_init()
-Date: Fri, 15 May 2026 17:46:27 +0200
-Message-ID: <20260515154721.016349678@linuxfoundation.org>
+Subject: [PATCH 6.6 279/474] RDMA/ocrdma: Dont NULL deref uctx on errors in ocrdma_copy_pd_uresp()
+Date: Fri, 15 May 2026 17:46:28 +0200
+Message-ID: <20260515154721.037580834@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,43 +49,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit c488df06bd552bb8b6e14fa0cfd5ad986c6e9525 upstream.
+commit 34fbf48cf3b410d2a6e8c586fa952a36331ca5ba upstream.
 
-mlx5_ib_dev_res_srq_init() allocates two SRQs, s0 and s1. When
-ib_create_srq() fails for s1, the error branch destroys s0 but falls
-through and unconditionally assigns the freed s0 and the ERR_PTR s1 to
-devr->s0 and devr->s1.
-
-This leads to several problems: the lock-free fast path checks
-"if (devr->s1) return 0;" and treats the ERR_PTR as already initialised;
-users in mlx5_ib_create_qp() dereference the freed SRQ or ERR_PTR via
-to_msrq(devr->s0)->msrq.srqn; and mlx5_ib_dev_res_cleanup() dereferences
-the ERR_PTR and double-frees s0 on teardown.
-
-Fix by adding the same `goto unlock` in the s1 failure path.
+Sashiko points out that pd->uctx isn't initialized until late in the
+function so all these error flow references are NULL and will crash. Use
+the uctx that isn't NULL.
 
 Cc: stable@vger.kernel.org
-Fixes: 5895e70f2e6e ("IB/mlx5: Allocate resources just before first QP/SRQ is created")
-Link: https://patch.msgid.link/r/SYBPR01MB7881E1E0970268BD69C0BA75AF2B2@SYBPR01MB7881.ausprd01.prod.outlook.com
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: fe2caefcdf58 ("RDMA/ocrdma: Add driver for Emulex OneConnect IBoE RDMA adapter")
+Link: https://sashiko.dev/#/patchset/0-v1-e911b76a94d1%2B65d95-rdma_udata_rep_jgg%40nvidia.com?part=4
+Link: https://patch.msgid.link/r/9-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx5/main.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/ocrdma/ocrdma_verbs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -2924,6 +2924,7 @@ int mlx5_ib_dev_res_srq_init(struct mlx5
- 		ret = PTR_ERR(s1);
- 		mlx5_ib_err(dev, "Couldn't create SRQ 1 for res init, err=%d\n", ret);
- 		ib_destroy_srq(s0);
-+		goto unlock;
- 	}
+--- a/drivers/infiniband/hw/ocrdma/ocrdma_verbs.c
++++ b/drivers/infiniband/hw/ocrdma/ocrdma_verbs.c
+@@ -620,9 +620,9 @@ static int ocrdma_copy_pd_uresp(struct o
  
- 	devr->s0 = s0;
+ ucopy_err:
+ 	if (pd->dpp_enabled)
+-		ocrdma_del_mmap(pd->uctx, dpp_page_addr, PAGE_SIZE);
++		ocrdma_del_mmap(uctx, dpp_page_addr, PAGE_SIZE);
+ dpp_map_err:
+-	ocrdma_del_mmap(pd->uctx, db_page_addr, db_page_size);
++	ocrdma_del_mmap(uctx, db_page_addr, db_page_size);
+ 	return status;
+ }
+ 
 
 
