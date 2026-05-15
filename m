@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1623E7BCC;
-	Fri, 15 May 2026 16:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB394C040C;
+	Fri, 15 May 2026 16:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862531; cv=none; b=M3p/UCoO6SP+/umnJXtYdnZzZd+PU3FyzQ+JEMhpla0RwUoqeaYjfqxRGqxeQQDZDgNPJgpLcJtPiSvzqvP5gaXzb74ByKq7iQ7Tvf5XmOfKx7I1Mdw4mDudP5hqTAod+z3s+/hGj8doQkHH0jhPjRYEA+4JJFP1Yu+XGqNKGL4=
+	t=1778862534; cv=none; b=hv0mUnTNu/MiWgYYytoObx1MO3C1xZP0h6fqmwx7eeqWYOvSWhXLazZCua3hr4Utw6ZINLIzPu6M3YBTN/CM1JxkcZCQp/v9y7Eqvbu9K7/UpRq6bApuDcav3SsQvTjwA6QoVI3ddCxHaXXBRd8Wv3R0G3MUBOYXw8kN7K1vy38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862531; c=relaxed/simple;
-	bh=VluOG8gkyTo8POAhtczhTeB03+9jCcAou7+sXfMmRpc=;
+	s=arc-20240116; t=1778862534; c=relaxed/simple;
+	bh=o+s5BxD2oTEcHXUQQ+K7DaUZru8rwnVldworQS4LyFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dTXd91SL7a/raNzbgINvxTo8d64Y2qf1lm/alQh3apyeaobZ2bgbuye7S7RSDIKAR0DFrqf+AybtAQs2e5h2H30OaD375Gl/ORnl7ChM+gbBQcJD7ji/LH8eFa4V/q3wj5dm4KorhlLF4aPFFGiYIOjHq7iWioCcpmk5+NKAtVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2v6Gxz5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rVR7Qt4N2VDwJT3+/q/tpwgkK0D3OcewWRebS2Feof8Nqx6cuIQ3VAqk7kpJjgCqc6CWHdbrPDQKSs7u+GppFGjy6opszKk0U6oFdTaTXVP0/R4iknraexGUZuwA5L8QE240jkvpd96/fg27/IA4jNEnkFiAAYedKpij7RKNVx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmR/Ayb6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2v6Gxz5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D22C2BCB0;
-	Fri, 15 May 2026 16:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmR/Ayb6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85BEC2BCB0;
+	Fri, 15 May 2026 16:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862531;
-	bh=VluOG8gkyTo8POAhtczhTeB03+9jCcAou7+sXfMmRpc=;
+	s=korg; t=1778862534;
+	bh=o+s5BxD2oTEcHXUQQ+K7DaUZru8rwnVldworQS4LyFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2v6Gxz5+b/N6UYgMHuitiCFmEs/60NoNJvDIKCQjRAaXF4av442/WbZHjd6UaVAK
-	 7/gUKdigS3SBRofFZuW/QDDuEJ37yZIpFz4JgpuUqoJevsjIf8GCHsPYrnEgZgtBa1
-	 s/JDhcB36d6LTZ4jBYPHkJDLoR4mP32GQG8dbKxU=
+	b=cmR/Ayb6ISmlGeaEbUJ1TKsv8Z732NIq4nKsEe23K/eLEp7UVmQKW+o+pa2ewV25+
+	 CO7dBE0HJxfJH5NTw7zMp78It3GsOIt5ldP3JUWadXdNikw64OkQGy+HMW8ehCIUk0
+	 M75wYVD3y/Yz5OU7gpEsdbuMmf6WsHmpZQoz45FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>
-Subject: [PATCH 7.0 082/201] drm/xe/hdcp: Add NULL check for media_gt in intel_hdcp_gsc_check_status()
-Date: Fri, 15 May 2026 17:48:20 +0200
-Message-ID: <20260515154700.307193818@linuxfoundation.org>
+	Jingoo Han <jg1.han@samsung.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.0 083/201] spi: mxs: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:21 +0200
+Message-ID: <20260515154700.328526046@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -52,62 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo Sousa <gustavo.sousa@intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 60a1e131a811b68703da58fd805ab359b704ab03 upstream.
+commit 8b0d0011af20fb547aa67a1cefbf320992fd5e92 upstream.
 
-When media GT is disabled via configfs, there is no allocation for
-media_gt, which is kept as NULL.  In such scenario,
-intel_hdcp_gsc_check_status() results in a kernel pagefault error due to
-&gt->uc.gsc being evaluated as an invalid memory address.
+Make sure to deregister the controller before releasing underlying
+resources like DMA during driver unbind.
 
-Fix that by introducing a NULL check on media_gt and bailing out early
-if so.
-
-While at it, also drop the NULL check for gsc, since it can't be NULL if
-media_gt is not NULL.
-
-v2:
-  - Get address for gsc only after checking that gt is not NULL.
-    (Shuicheng)
-  - Drop the NULL check for gsc. (Shuicheng)
-v3:
-  - Add "Fixes" and "Cc: <stable...>" tags. (Matt)
-
-Fixes: 4af50beb4e0f ("drm/xe: Use gsc_proxy_init_done to check proxy status")
-Cc: <stable@vger.kernel.org> # v6.10+
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Link: https://patch.msgid.link/20260416-check-for-null-media_gt-in-intel_hdcp_gsc_check_status-v2-1-9adb9fd3b621@intel.com
-Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
-(cherry picked from commit bfaf87e84ca3ca3f6e275f9ae56da47a8b55ffd1)
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Fixes: 33e195acf268 ("spi: mxs: use devm_spi_register_master()")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Jingoo Han <jg1.han@samsung.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-4-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/display/xe_hdcp_gsc.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/spi/spi-mxs.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
-+++ b/drivers/gpu/drm/xe/display/xe_hdcp_gsc.c
-@@ -37,9 +37,17 @@ static bool intel_hdcp_gsc_check_status(
- 	struct xe_device *xe = to_xe_device(drm);
- 	struct xe_tile *tile = xe_device_get_root_tile(xe);
- 	struct xe_gt *gt = tile->media_gt;
--	struct xe_gsc *gsc = &gt->uc.gsc;
-+	struct xe_gsc *gsc;
+--- a/drivers/spi/spi-mxs.c
++++ b/drivers/spi/spi-mxs.c
+@@ -619,7 +619,7 @@ static int mxs_spi_probe(struct platform
+ 	if (ret)
+ 		goto out_pm_runtime_put;
  
--	if (!gsc || !xe_uc_fw_is_available(&gsc->fw)) {
-+	if (!gt) {
-+		drm_dbg_kms(&xe->drm,
-+			    "not checking GSC status for HDCP2.x: media GT not present or disabled\n");
-+		return false;
-+	}
+-	ret = devm_spi_register_controller(&pdev->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Cannot register SPI host, %d\n", ret);
+ 		goto out_pm_runtime_put;
+@@ -650,11 +650,17 @@ static void mxs_spi_remove(struct platfo
+ 	spi = spi_controller_get_devdata(host);
+ 	ssp = &spi->ssp;
+ 
++	spi_controller_get(host);
 +
-+	gsc = &gt->uc.gsc;
++	spi_unregister_controller(host);
 +
-+	if (!xe_uc_fw_is_available(&gsc->fw)) {
- 		drm_dbg_kms(&xe->drm,
- 			    "GSC Components not ready for HDCP2.x\n");
- 		return false;
+ 	pm_runtime_disable(&pdev->dev);
+ 	if (!pm_runtime_status_suspended(&pdev->dev))
+ 		mxs_spi_runtime_suspend(&pdev->dev);
+ 
+ 	dma_release_channel(ssp->dmach);
++
++	spi_controller_put(host);
+ }
+ 
+ static struct platform_driver mxs_spi_driver = {
 
 
