@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47F04C040C;
-	Fri, 15 May 2026 16:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5261F3E0092;
+	Fri, 15 May 2026 16:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862518; cv=none; b=gjhXYPsiqJ+DjGyM6+wZW7l0eQhEuIM4z7Pp5Ecq0RvcB3Hq89szxpu83qmkUcam8hHl6e5FcS5iEtaTlsooJztckGB7lGgFpu3qQQPrYKl0pPzmpVyCru1tES29Qnzut2m3dsMn3RR6oDhFPpfXmz2lf4/6AF4mGc8evo+vB2Q=
+	t=1778862521; cv=none; b=ZmfKyDa/yiAFaH5n7gSlC+agBM59EhLN8np8AUgKa0NySgBDSwB1rUHJ3f2DOB5GbFJdwJjlbxSgWHDY3M4p+SYXL0y1vyZS1dFdZ14dEpzdyCeog5DEG/BzW/1Nx20+3UNQ3Kw/9rD9c5qw0ZYW6Nf83/jdFVe9gOHRJ3JjrCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862518; c=relaxed/simple;
-	bh=JNTg0PJBNkUIBinN9yb81e0GyYohAkI5FIJo8yXk+bg=;
+	s=arc-20240116; t=1778862521; c=relaxed/simple;
+	bh=iya9lXVba/XJk8r0KnLcoUsx8rqSvwhjtlhjvS/OgjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WydZb/PLa7x51pqn3dZpFQfqVXRsjk+RyocySAA60lQbxgVavcfzDJIwrLXBpgyrY5BvIudOZIs9vkzkhkR/OYXyu3pK1MDRL0+6zW4+2JdTw80ZyjRFo0I5AXLNje54dwPZdCWv4jVOmkaYNQ2Og0Wr5k6vV/cWUk48LzLsZi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DdcKOez/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A9wZGkh5F9aBWXbAeVhjPFn0QzIlKzH3aERNPvbxuOGrJUC5U1GP7G8W3xnNO5ayLoK1qLP+jRnlyi8jsUubbnTceKf+igCo0Uc2u70C8BgnO8vnJF/Ac+QdCDbdEMQC6Gon0OZs4DVll8KNMxvwLTyrIiIYQwKMO9WQRfEevtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVQ74j52; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DdcKOez/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5F7C2BCB0;
-	Fri, 15 May 2026 16:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVQ74j52"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB3BC2BCB0;
+	Fri, 15 May 2026 16:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862518;
-	bh=JNTg0PJBNkUIBinN9yb81e0GyYohAkI5FIJo8yXk+bg=;
+	s=korg; t=1778862521;
+	bh=iya9lXVba/XJk8r0KnLcoUsx8rqSvwhjtlhjvS/OgjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DdcKOez/Y+uvW38UdsvU+6Xfi93KloLqacSIBGsGmZCwXsUCaey2Vsf+nsq670p94
-	 DP6wU/+1xEWvpZCgz2Z1mfOS94JVqcxg2KYpdI09TNjH05VPcYxEPKvUESLs7Vihm1
-	 crVoPirDJc94L2epYz2bdhCT0nGAe4SuzKGI2dAg=
+	b=sVQ74j52Xhm7alnqGE7WW5zCwC1JF+Vu//IO+2GWPOz65MIatWS3r2+e9Z29llTWq
+	 wBUAY/RYtFJ0bWS0ILVj9GlG5M62A2WVHY9pKABTuOpmT86Y/s91wvU3QcdMW0ktJZ
+	 ZC9gB19GJMKxqDiSFQ7S8NLWYovqhXrKTNNC6Tkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 078/201] media: iris: Fix dma_free_attrs() size in iris_hfi_queues_init()
-Date: Fri, 15 May 2026 17:48:16 +0200
-Message-ID: <20260515154700.222225596@linuxfoundation.org>
+	Dang Huynh <dang.huynh@mainlining.org>,
+	Michael Riesch <michael.riesch@collabora.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 7.0 043/201] media: rockchip: rkcif: Add missing MUST_CONNECT flag to pads
+Date: Fri, 15 May 2026 17:47:41 +0200
+Message-ID: <20260515154659.467329201@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -52,36 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Dang Huynh <dang.huynh@mainlining.org>
 
-commit 4a49ae56b0e4268d48fd96babe0cc68596bc301a upstream.
+commit 8e3c751259dc2d1325838eff26f41032523c7b57 upstream.
 
-The core->iface_q_table_vaddr buffer is alloc'd with size queue_size
-but freed with sizeof(*q_tbl_hdr) which is different.
+The pads missed checks for connected devices which may a null dereference
+when the stream is enabled.
 
-Change the dma_free_attrs() size.
+Unable to handle kernel NULL pointer dereference at virtual address
+0000000000000020
+pc : rkcif_interface_enable_streams+0x48/0xf0
+lr : rkcif_interface_enable_streams+0x44/0xf0
+Call trace:
+ rkcif_interface_enable_streams+0x48/0xf0
+ v4l2_subdev_enable_streams+0x26c/0x3f0
+ rkcif_stream_start_streaming+0x140/0x278
+ vb2_start_streaming+0x74/0x188
+ vb2_core_streamon+0xe0/0x1d8
+ vb2_ioctl_streamon+0x60/0xa8
+ v4l_streamon+0x2c/0x40
+ __video_do_ioctl+0x34c/0x400
+ video_usercopy+0x2d0/0x800
+ video_ioctl2+0x20/0x60
+ v4l2_ioctl+0x48/0x78
 
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Fixes: d7378f84e94e ("media: iris: introduce iris core state management with shared queues")
+Fixes: 501802e2ad51 ("media: rockchip: rkcif: add abstraction for dma blocks")
+Fixes: 85411d17bee9 ("media: rockchip: rkcif: add abstraction for interface and crop blocks")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Dang Huynh <dang.huynh@mainlining.org>
+Reviewed-by: Michael Riesch <michael.riesch@collabora.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/iris/iris_hfi_queue.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/rockchip/rkcif/rkcif-interface.c | 3 ++-
+ drivers/media/platform/rockchip/rkcif/rkcif-stream.c    | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/qcom/iris/iris_hfi_queue.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_queue.c
-@@ -263,7 +263,7 @@ int iris_hfi_queues_init(struct iris_cor
- 					  GFP_KERNEL, DMA_ATTR_WRITE_COMBINE);
- 	if (!core->sfr_vaddr) {
- 		dev_err(core->dev, "sfr alloc and map failed\n");
--		dma_free_attrs(core->dev, sizeof(*q_tbl_hdr), core->iface_q_table_vaddr,
-+		dma_free_attrs(core->dev, queue_size, core->iface_q_table_vaddr,
- 			       core->iface_q_table_daddr, DMA_ATTR_WRITE_COMBINE);
- 		return -ENOMEM;
- 	}
+diff --git a/drivers/media/platform/rockchip/rkcif/rkcif-interface.c b/drivers/media/platform/rockchip/rkcif/rkcif-interface.c
+index 523103872b7a..414a9980cf2e 100644
+--- a/drivers/media/platform/rockchip/rkcif/rkcif-interface.c
++++ b/drivers/media/platform/rockchip/rkcif/rkcif-interface.c
+@@ -378,7 +378,8 @@ int rkcif_interface_register(struct rkcif_device *rkcif,
+ 		snprintf(sd->name, sizeof(sd->name), "rkcif-mipi%d",
+ 			 interface->index - RKCIF_MIPI_BASE);
+ 
+-	pads[RKCIF_IF_PAD_SINK].flags = MEDIA_PAD_FL_SINK;
++	pads[RKCIF_IF_PAD_SINK].flags = MEDIA_PAD_FL_SINK |
++					MEDIA_PAD_FL_MUST_CONNECT;
+ 	pads[RKCIF_IF_PAD_SRC].flags = MEDIA_PAD_FL_SOURCE;
+ 	ret = media_entity_pads_init(&sd->entity, RKCIF_IF_PAD_MAX, pads);
+ 	if (ret)
+diff --git a/drivers/media/platform/rockchip/rkcif/rkcif-stream.c b/drivers/media/platform/rockchip/rkcif/rkcif-stream.c
+index f15bee4f7cd7..3130d420ad55 100644
+--- a/drivers/media/platform/rockchip/rkcif/rkcif-stream.c
++++ b/drivers/media/platform/rockchip/rkcif/rkcif-stream.c
+@@ -555,7 +555,7 @@ int rkcif_stream_register(struct rkcif_device *rkcif,
+ 	vdev->vfl_dir = VFL_DIR_RX;
+ 	video_set_drvdata(vdev, stream);
+ 
+-	stream->pad.flags = MEDIA_PAD_FL_SINK;
++	stream->pad.flags = MEDIA_PAD_FL_SINK | MEDIA_PAD_FL_MUST_CONNECT;
+ 
+ 	stream->pix.height = CIF_MIN_HEIGHT;
+ 	stream->pix.width = CIF_MIN_WIDTH;
+-- 
+2.54.0
+
 
 
