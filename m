@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390B0494A0E;
-	Fri, 15 May 2026 16:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2943F58FF;
+	Fri, 15 May 2026 16:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861650; cv=none; b=McGyy3MxclPkia+tTeB157/FGxSu/vXBhNxnTHuhAFNcKHYtAeAcfXcOKnVLZGg2+HCQsvvVgFa+xU87nzxoUcOIAcBo5qWhqaovc1BuJRjPPwbiG9P8Bg2C5vyOONcjCzaceaOcy8iiMKPt4x9GaDL/iSmvdG4ZypRRhlPTqQ8=
+	t=1778861652; cv=none; b=IrKgXN4jaXzbCwHvvDiZW5ck98/vqZAEAtG39Z72IqQRHyIebMRJ3HHmzsAO2WyXg/XY3asNd5tJeh+MfaCNX9jUQOIcAz8PJymRLiqR33vPvjapSyWZ9NW5egVKskkP4pinQ78NLsFs1wGaHGzfZ2vjiJScOgOAkosKAmxoOrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861650; c=relaxed/simple;
-	bh=B7G0vOi4bQoBfo6ez7hT1sVe3p3Ef51L95HJApK2OW0=;
+	s=arc-20240116; t=1778861652; c=relaxed/simple;
+	bh=+bw2W09CFEqfdic3PLrVcUfGmdC89B6CQOqYIGTt5Oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hn0Y6tCDro9XPVNFgQwLX60K+CwogT+j87vukY0Jhj1HP1lyTFVGTxY/buZ7cxt2WzcuRP36BBX5W7rEp/3IjwqrMpOzwRd71zUAXsvBbaTRfHnN5LQIMvrmPNVD4ejA4UiBpyKKK3li0pEVgV97FNyFio8ELMTGgHt8PT8Y1ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDagb5YZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oslOd8sfyDIi6eNAvEeZkPmf5anNzm8UMTnVyaEG6Ea/eAVXDfRvovpm/9SHxUgg1wFF4o04oTCvtzLoik8fpr+dDcVHpjJhGP2VI54+eZ/ZdSbn+073m4D2Jnav7XdFeaSurJEjIyK25y1bNw8fXc9G/Q62XGUFMRXlBlzQNjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DL57lbr9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDagb5YZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE503C2BCB0;
-	Fri, 15 May 2026 16:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DL57lbr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56026C2BCB0;
+	Fri, 15 May 2026 16:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861650;
-	bh=B7G0vOi4bQoBfo6ez7hT1sVe3p3Ef51L95HJApK2OW0=;
+	s=korg; t=1778861652;
+	bh=+bw2W09CFEqfdic3PLrVcUfGmdC89B6CQOqYIGTt5Oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDagb5YZ6ei7FqV7uK8RnggqdX3QSzxrG9v714gxXGOzTY1r0TMliBKCs7Bmv3eDP
-	 vEOqbwW0lnikhGsiFaFMyiCepTvUtY3iJMNcMFrL/FR0qeUD2M5CVgZHa9KvJoGTaU
-	 X+V3kcPPT3Zxnb0/TOpIy8msHrYgljR43mF403F4=
+	b=DL57lbr9qbb2csWXwYtD0TJPv/z87ZxZV7clx2g+5kjPcr7o1dYS0ib2e8mAEN6nX
+	 HO2edbf20EkROBF3bTIdLg8Wop1trDCtrSscs8npOuqLpveCCvJu52ALX1fI27ACw1
+	 nPCJ377nxTHdVdXEREME2vs7Dh1rB1kzPUmvHUF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Furong Xu <0x1207@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 409/474] net: stmmac: avoid shadowing global buf_sz
-Date: Fri, 15 May 2026 17:48:38 +0200
-Message-ID: <20260515154723.902983506@linuxfoundation.org>
+Subject: [PATCH 6.6 410/474] net: stmmac: rename STMMAC_GET_ENTRY() -> STMMAC_NEXT_ENTRY()
+Date: Fri, 15 May 2026 17:48:39 +0200
+Message-ID: <20260515154723.926589057@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -54,46 +53,176 @@ Content-Transfer-Encoding: 8bit
 
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit 876cfb20e8892143c0c967b3657074f9131f9b5f ]
+[ Upstream commit 6b4286e0550814cdc4b897f881ec1fa8b0313227 ]
 
-stmmac_rx() declares a local variable named "buf_sz" but there is also
-a global variable for a module parameter which is called the same. To
-avoid confusion, rename the local variable.
+STMMAC_GET_ENTRY() doesn't describe what this macro is doing - it is
+incrementing the provided index for the circular array of descriptors.
+Replace "GET" with "NEXT" as this better describes the action here.
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Furong Xu <0x1207@gmail.com>
-Link: https://patch.msgid.link/E1tpswi-005U6C-Py@rmk-PC.armlinux.org.uk
+Link: https://patch.msgid.link/E1w2vba-0000000DbWo-1oL5@rmk-PC.armlinux.org.uk
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 0bb05e6adfa9 ("net: stmmac: Prevent NULL deref when RX memory exhausted")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/chain_mode.c  |    2 -
+ drivers/net/ethernet/stmicro/stmmac/common.h      |    2 -
+ drivers/net/ethernet/stmicro/stmmac/ring_mode.c   |    2 -
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   26 +++++++++++-----------
+ 4 files changed, 16 insertions(+), 16 deletions(-)
 
+--- a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
++++ b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
+@@ -47,7 +47,7 @@ static int jumbo_frm(struct stmmac_tx_qu
+ 
+ 	while (len != 0) {
+ 		tx_q->tx_skbuff[entry] = NULL;
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 		desc = tx_q->dma_tx + entry;
+ 
+ 		if (len > bmax) {
+--- a/drivers/net/ethernet/stmicro/stmmac/common.h
++++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+@@ -54,7 +54,7 @@
+ #define DMA_MIN_RX_SIZE		64
+ #define DMA_MAX_RX_SIZE		1024
+ #define DMA_DEFAULT_RX_SIZE	512
+-#define STMMAC_GET_ENTRY(x, size)	((x + 1) & (size - 1))
++#define STMMAC_NEXT_ENTRY(x, size)	((x + 1) & (size - 1))
+ 
+ #undef FRAME_FILTER_DEBUG
+ /* #define FRAME_FILTER_DEBUG */
+--- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
++++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
+@@ -51,7 +51,7 @@ static int jumbo_frm(struct stmmac_tx_qu
+ 		stmmac_prepare_tx_desc(priv, desc, 1, bmax, csum,
+ 				STMMAC_RING_MODE, 0, false, skb->len);
+ 		tx_q->tx_skbuff[entry] = NULL;
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 
+ 		if (priv->extend_desc)
+ 			desc = (struct dma_desc *)(tx_q->dma_etx + entry);
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5279,10 +5279,10 @@ static int stmmac_rx(struct stmmac_priv
- 	struct sk_buff *skb = NULL;
- 	struct stmmac_xdp_buff ctx;
- 	int xdp_status = 0;
--	int buf_sz;
-+	int bufsz;
+@@ -2503,7 +2503,7 @@ static bool stmmac_xdp_xmit_zc(struct st
  
- 	dma_dir = page_pool_get_dma_dir(rx_q->page_pool);
--	buf_sz = DIV_ROUND_UP(priv->dma_conf.dma_buf_sz, PAGE_SIZE) * PAGE_SIZE;
-+	bufsz = DIV_ROUND_UP(priv->dma_conf.dma_buf_sz, PAGE_SIZE) * PAGE_SIZE;
- 	limit = min(priv->dma_conf.dma_rx_size - 1, (unsigned int)limit);
+ 		stmmac_enable_dma_transmission(priv, priv->ioaddr);
  
- 	if (netif_msg_rx_status(priv)) {
-@@ -5397,7 +5397,7 @@ read_again:
- 			dma_sync_single_for_cpu(priv->device, buf->addr,
- 						buf1_len, dma_dir);
+-		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
++		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
+ 		entry = tx_q->cur_tx;
+ 	}
+ 	u64_stats_update_begin(&txq_stats->napi_syncp);
+@@ -2659,7 +2659,7 @@ static int stmmac_tx_clean(struct stmmac
  
--			xdp_init_buff(&ctx.xdp, buf_sz, &rx_q->xdp_rxq);
-+			xdp_init_buff(&ctx.xdp, bufsz, &rx_q->xdp_rxq);
- 			xdp_prepare_buff(&ctx.xdp, page_address(buf->page),
- 					 buf->page_offset, buf1_len, true);
+ 		stmmac_release_tx_desc(priv, p, priv->mode);
+ 
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 	}
+ 	tx_q->dirty_tx = entry;
+ 
+@@ -3973,7 +3973,7 @@ static bool stmmac_vlan_insert(struct st
+ 		return false;
+ 
+ 	stmmac_set_tx_owner(priv, p);
+-	tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
++	tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
+ 	return true;
+ }
+ 
+@@ -4001,7 +4001,7 @@ static void stmmac_tso_allocator(struct
+ 	while (tmp_len > 0) {
+ 		dma_addr_t curr_addr;
+ 
+-		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx,
++		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx,
+ 						priv->dma_conf.dma_tx_size);
+ 		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
+ 
+@@ -4133,7 +4133,7 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 
+ 		stmmac_set_mss(priv, mss_desc, mss);
+ 		tx_q->mss = mss;
+-		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx,
++		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx,
+ 						priv->dma_conf.dma_tx_size);
+ 		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
+ 	}
+@@ -4258,7 +4258,7 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 	 * ndo_start_xmit will fill this descriptor the next time it's
+ 	 * called and stmmac_tx_clean may clean up to this descriptor.
+ 	 */
+-	tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
++	tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
+ 
+ 	if (unlikely(stmmac_tx_avail(priv, queue) <= (MAX_SKB_FRAGS + 1))) {
+ 		netif_dbg(priv, hw, priv->dev, "%s: stop transmitted packets\n",
+@@ -4451,7 +4451,7 @@ static netdev_tx_t stmmac_xmit(struct sk
+ 		int len = skb_frag_size(frag);
+ 		bool last_segment = (i == (nfrags - 1));
+ 
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 		WARN_ON(tx_q->tx_skbuff[entry]);
+ 
+ 		if (likely(priv->extend_desc))
+@@ -4521,7 +4521,7 @@ static netdev_tx_t stmmac_xmit(struct sk
+ 	 * ndo_start_xmit will fill this descriptor the next time it's
+ 	 * called and stmmac_tx_clean may clean up to this descriptor.
+ 	 */
+-	entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++	entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 	tx_q->cur_tx = entry;
+ 
+ 	if (netif_msg_pktdata(priv)) {
+@@ -4691,7 +4691,7 @@ static inline void stmmac_rx_refill(stru
+ 		dma_wmb();
+ 		stmmac_set_rx_owner(priv, p, use_rx_wd);
+ 
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_rx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_rx_size);
+ 	}
+ 	rx_q->dirty_rx = entry;
+ 	rx_q->rx_tail_addr = rx_q->dma_rx_phy +
+@@ -4818,7 +4818,7 @@ static int stmmac_xdp_xmit_xdpf(struct s
+ 
+ 	stmmac_enable_dma_transmission(priv, priv->ioaddr);
+ 
+-	entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++	entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 	tx_q->cur_tx = entry;
+ 
+ 	return STMMAC_XDP_TX;
+@@ -5048,7 +5048,7 @@ static bool stmmac_rx_refill_zc(struct s
+ 		dma_wmb();
+ 		stmmac_set_rx_owner(priv, rx_desc, use_rx_wd);
+ 
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_rx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_rx_size);
+ 	}
+ 
+ 	if (rx_desc) {
+@@ -5143,7 +5143,7 @@ read_again:
+ 			break;
+ 
+ 		/* Prefetch the next RX descriptor */
+-		rx_q->cur_rx = STMMAC_GET_ENTRY(rx_q->cur_rx,
++		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
+ 						priv->dma_conf.dma_rx_size);
+ 		next_entry = rx_q->cur_rx;
+ 
+@@ -5339,7 +5339,7 @@ read_again:
+ 		if (unlikely(status & dma_own))
+ 			break;
+ 
+-		rx_q->cur_rx = STMMAC_GET_ENTRY(rx_q->cur_rx,
++		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
+ 						priv->dma_conf.dma_rx_size);
+ 		next_entry = rx_q->cur_rx;
  
 
 
