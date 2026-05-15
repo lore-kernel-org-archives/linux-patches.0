@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47C33FD947;
-	Fri, 15 May 2026 16:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449B73F44CC;
+	Fri, 15 May 2026 16:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862087; cv=none; b=A23ajd/8YSX0pusOoXqMwcwHwK1sXe0tfkZSViht4HopjUG9fQIBmq8+SOEjlcCq4ytmPP1XORfbd+i3UfZ+SVhmRY8yklea2gR13EuEQarjHVyUJsWW7+7UM1GqR1tXvJH+CZuU9CmyVJ6quOgcpp/oPHUbFIHbRhyXIlNIctU=
+	t=1778862090; cv=none; b=p4oeFyC7dteYCZdinAFseY02qAPGWNV9Vo8CPsSBWR4PYfNeS3kR/gfQGDm6QzT3WS76D2AdSyxu0PqrVpgKnWRXINlGPkIclC4VBlK9ws4M53vABtd4MrxUohcee/jXF0cLza2S6vERxFKeaNte8puUVIAkDudShth8I21+Gn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862087; c=relaxed/simple;
-	bh=G7FULhrOrH98BpC1Xc9MTm1Qbf0VXyHu4/d6fxXQ/U0=;
+	s=arc-20240116; t=1778862090; c=relaxed/simple;
+	bh=l4oHMNpmuYFpfVkn0InMtH2x65sXa8vyVL5YQfWCFHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T7qOt+GlXgMZgLUK4zEO1ErsAgE8z5pqr8bRx8IdvCvjO837wbFwWu6kRD9d7hf1/ylooORwPG6CeqzjXEFOIn81qNZcwOMfRNYIX6NWcEM/FjY5IIiGHxOfkXpWNwYqXHY6PXzsC9nZ9t/i8NH6+pVGS1/jsSrdElh5/kj7lyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKExXmnj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J1xtCv/POLComb4jqvy4MZjH1wNCzWS5A7ExSdM5VGxoGqDSxtdUNiKO9slCap50iy8b1EX1GKcPNkRrGAiLrzvjjjSp4S+AbZzdZ6p6Tjz65839AeTXPM9CQPaaTNFa5JtSlETSTcWRgA0tCy6f9ubdgXMmkHVBHZIfI07rBy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgmhpUf7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKExXmnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDC6C2BCB0;
-	Fri, 15 May 2026 16:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgmhpUf7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5BDC2BCB0;
+	Fri, 15 May 2026 16:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862087;
-	bh=G7FULhrOrH98BpC1Xc9MTm1Qbf0VXyHu4/d6fxXQ/U0=;
+	s=korg; t=1778862090;
+	bh=l4oHMNpmuYFpfVkn0InMtH2x65sXa8vyVL5YQfWCFHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FKExXmnjCe4sdDrjlpnje3lx7d5R3jN36AufiiKzcClFj+wxtvA1VVGsZOKDKduZR
-	 qsk1mobdMGKsLUR99FWa0GBQcOY4JNpQN+HPKzT8ZWU6zs6RWzoS7H8KGc7FB5L3OS
-	 E5UjdT0YDYG9fm5kYbCE+rcex/X/UquWcXBei4A8=
+	b=WgmhpUf7SrEKQToLXWV46HIfNA5R9wV4exwnEOHPJYqWLrjJzphy5HLr7VbR7NVpE
+	 0rS69bXkmC4eiVbCt1APCnksLBZexzaYR16GcoDhL+8JHXESpsFVorl5OFSF/tbrEA
+	 ExDazB4URC0tKTxh70xQxjRjvFq8BNdpZzuT7TLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>,
-	"Ramalingeswara Reddy, Kanala" <Kanala.RamalingeswaraReddy@amd.com>
-Subject: [PATCH 6.18 102/188] drm/amdgpu: Use SMUIO 15.0.0 offsets for TSC upper and lower count.
-Date: Fri, 15 May 2026 17:48:39 +0200
-Message-ID: <20260515154659.541833852@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 067/188] spi: fsl-espi: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:04 +0200
+Message-ID: <20260515154658.770128169@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -51,69 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramalingeswara Reddy, Kanala <Kanala.RamalingeswaraReddy@amd.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 574b3b14f7d1b329fc6e67b79328f0e6f4d4b3d4 upstream.
+commit e506a700a7ad229f5c8f01f4b8350119cccb4158 upstream.
 
-Define and use regGOLDEN_TSC_COUNT_UPPER_smu_15_0_0 and
-regGOLDEN_TSC_COUNT_LOWER_smu_15_0_0 for TSC upper and lower count.
+Make sure to deregister the controller before disabling runtime PM
+(which can leave the controller disabled) to allow SPI device drivers to
+do I/O during deregistration.
 
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
-Signed-off-by: Ramalingeswara Reddy, Kanala <Kanala.RamalingeswaraReddy@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: e9abb4db8d10 ("spi: fsl-espi: add runtime PM")
+Cc: stable@vger.kernel.org	# 4.3
+Cc: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260409120419.388546-14-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |   31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ drivers/spi/spi-fsl-espi.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -64,6 +64,11 @@
- #define regPC_CONFIG_CNTL_1		0x194d
- #define regPC_CONFIG_CNTL_1_BASE_IDX	1
+--- a/drivers/spi/spi-fsl-espi.c
++++ b/drivers/spi/spi-fsl-espi.c
+@@ -719,7 +719,7 @@ static int fsl_espi_probe(struct device
+ 	pm_runtime_enable(dev);
+ 	pm_runtime_get_sync(dev);
  
-+#define regGOLDEN_TSC_COUNT_UPPER_smu_15_0_0               0x0030
-+#define regGOLDEN_TSC_COUNT_UPPER_smu_15_0_0_BASE_IDX      1
-+#define regGOLDEN_TSC_COUNT_LOWER_smu_15_0_0               0x0031
-+#define regGOLDEN_TSC_COUNT_LOWER_smu_15_0_0_BASE_IDX      1
+-	ret = devm_spi_register_controller(dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret < 0)
+ 		goto err_pm;
+ 
+@@ -783,7 +783,15 @@ static int of_fsl_espi_probe(struct plat
+ 
+ static void of_fsl_espi_remove(struct platform_device *dev)
+ {
++	struct spi_controller *host = platform_get_drvdata(dev);
 +
- #define regCP_GFX_MQD_CONTROL_DEFAULT                                             0x00000100
- #define regCP_GFX_HQD_VMID_DEFAULT                                                0x00000000
- #define regCP_GFX_HQD_QUEUE_PRIORITY_DEFAULT                                      0x00000000
-@@ -5174,11 +5179,27 @@ static uint64_t gfx_v11_0_get_gpu_clock_
- 		amdgpu_gfx_off_ctrl(adev, true);
- 	} else {
- 		preempt_disable();
--		clock_counter_hi_pre = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_UPPER);
--		clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_LOWER);
--		clock_counter_hi_after = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_UPPER);
--		if (clock_counter_hi_pre != clock_counter_hi_after)
--			clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_LOWER);
-+		if (amdgpu_ip_version(adev, SMUIO_HWIP, 0) < IP_VERSION(15, 0, 0)) {
-+			clock_counter_hi_pre = (uint64_t)RREG32_SOC15(SMUIO, 0,
-+					regGOLDEN_TSC_COUNT_UPPER);
-+			clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0,
-+					regGOLDEN_TSC_COUNT_LOWER);
-+			clock_counter_hi_after = (uint64_t)RREG32_SOC15(SMUIO, 0,
-+					regGOLDEN_TSC_COUNT_UPPER);
-+			if (clock_counter_hi_pre != clock_counter_hi_after)
-+				clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0,
-+						regGOLDEN_TSC_COUNT_LOWER);
-+		} else {
-+			clock_counter_hi_pre = (uint64_t)RREG32_SOC15(SMUIO, 0,
-+					regGOLDEN_TSC_COUNT_UPPER_smu_15_0_0);
-+			clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0,
-+					regGOLDEN_TSC_COUNT_LOWER_smu_15_0_0);
-+			clock_counter_hi_after = (uint64_t)RREG32_SOC15(SMUIO, 0,
-+					regGOLDEN_TSC_COUNT_UPPER_smu_15_0_0);
-+			if (clock_counter_hi_pre != clock_counter_hi_after)
-+				clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0,
-+						regGOLDEN_TSC_COUNT_LOWER_smu_15_0_0);
-+		}
- 		preempt_enable();
- 	}
- 	clock = clock_counter_lo | (clock_counter_hi_after << 32ULL);
++	spi_controller_get(host);
++
++	spi_unregister_controller(host);
++
+ 	pm_runtime_disable(&dev->dev);
++
++	spi_controller_put(host);
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
 
 
