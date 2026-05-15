@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BDC42EEC3;
-	Fri, 15 May 2026 16:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1855A3CB2D5;
+	Fri, 15 May 2026 16:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862100; cv=none; b=oZbl5pUFMsrFvKcmzNj+7xRr36c+4ZUgeA1hrxvMhO0ZMcaxTLIeMThuwj0dNLZ0tIhVoVPD+9Y983YOwgYOZnCXSTQUtb1uGna4CEF4P2AiiF+VCzyqXChls3OAeRwKxlkRhGRD9Vcv4turs3LZNopDhSpLPGO2sgN5Ofm1gLw=
+	t=1778862103; cv=none; b=Zw22vG8HbUc91iUHqeTS4Za+t2ESzjj2b8dgOqySMF4XJzMTsTKaD/+uw1uwEi6Vv/nGpgamHsfxkcRPW1JEq60FgiPWueAQsVGY4oV/g3BdxtlVZEh3zZKx/6wUC1MNMemM3Y41buVdJBXanHtwy9nDc36pgOhOPuwmiejX8k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862100; c=relaxed/simple;
-	bh=rt8GL+5HFwK76L19xSeFI3ZT0trgAHpxPkW9GhTGZkk=;
+	s=arc-20240116; t=1778862103; c=relaxed/simple;
+	bh=2/Mu6HYyl/J3MLcmft2szwh91mx6WIwsiZl6bjLHhVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dek5Re3ARBVK6XpixesXMK7+VqqlAx2Cq8p48EbzPDQ+xaRSsXGs+vDS16Qjbzqemo7divMrLvOllQIxg334zEU8FTf6aL6hF4zT2slxBpP0Yu3WvU/PFfcClCS6sLW5tqQ1bx4ptN+/XRVkjpTfq/Kukp5a7P64/LP4ysDo6sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1zx3luO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJqRCd7WOzxFgWf4GVuphRQF8XiuiboRal4sy8ZCDfRRrf7NnspswpGzifzeMtPkGTawOkAgXzmXsb3IkPV8VVgsjBkDCXhPjo58YbEg94CzxEy3YYQ3l1bNQLodxpD6Cr+oZVYecq0JWSHZNRr9L5dNmaHD5pnwFcyihcVCiNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ry4E8Nd4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1zx3luO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F506C2BCB0;
-	Fri, 15 May 2026 16:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ry4E8Nd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24CAC2BCB0;
+	Fri, 15 May 2026 16:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862100;
-	bh=rt8GL+5HFwK76L19xSeFI3ZT0trgAHpxPkW9GhTGZkk=;
+	s=korg; t=1778862103;
+	bh=2/Mu6HYyl/J3MLcmft2szwh91mx6WIwsiZl6bjLHhVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1zx3luOVbm1GmEXUlPpCXsVLSAKuIN8HxF2qmyWErNZT9jFpZ/oJ6ocV7qELVn1T
-	 YR1GFz7xAkhiWpigQyHRZvbsTs83mb0GUptVB0jFJIb2FTfxR8FAMSvV6OESxE1nN2
-	 rO8n2qYAq7eOwMU52ymc0GlU6blbIoVmI5KXKQoE=
+	b=ry4E8Nd4lRr2p7CqELPFeUvELu1d89QVXp5bglb8Lt3hse7Ss5rbL4WGVyoOovsz2
+	 puer1P/e5QxkK7Y2QafGJJDxCp+atL7Z45u/WIsbbbiQc2r+qG5B00hjjioGT0DgEj
+	 NzBuZSGBBfTl/4tZ1ErNCZ+amxs8Fw4GqrciyxsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Cheng <benjamin.cheng@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Ruijing Dong <ruijing.dong@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 106/188] drm/amdgpu: Add bounds checking to ib_{get,set}_value
-Date: Fri, 15 May 2026 17:48:43 +0200
-Message-ID: <20260515154659.629401156@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 068/188] spi: omap2-mcspi: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:05 +0200
+Message-ID: <20260515154658.792260479@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -46,58 +44,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Cheng <benjamin.cheng@amd.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 66085e206431ef88ce36f53c1f53d570790ccc9e upstream.
+commit fb45f95c377e4a4bdece2c5e17643b459c9c13e7 upstream.
 
-The uvd/vce/vcn code accesses the IB at predefined offsets without
-checking that the IB is large enough. Check the bounds here. The caller
-is responsible for making sure it can handle arbitrary return values.
+Make sure to deregister the controller before releasing underlying
+resources like DMA during driver unbind.
 
-Also make the idx a uint32_t to prevent overflows causing the condition
-to fail.
-
-Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: ccdc7bf92573 ("SPI: omap2_mcspi driver")
+Cc: stable@vger.kernel.org	# 2.6.23
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-6-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/spi/spi-omap2-mcspi.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
-@@ -547,15 +547,18 @@ void amdgpu_debugfs_ring_init(struct amd
+--- a/drivers/spi/spi-omap2-mcspi.c
++++ b/drivers/spi/spi-omap2-mcspi.c
+@@ -1585,7 +1585,7 @@ static int omap2_mcspi_probe(struct plat
+ 	if (status < 0)
+ 		goto disable_pm;
  
- int amdgpu_ring_init_mqd(struct amdgpu_ring *ring);
+-	status = devm_spi_register_controller(&pdev->dev, ctlr);
++	status = spi_register_controller(ctlr);
+ 	if (status < 0)
+ 		goto disable_pm;
  
--static inline u32 amdgpu_ib_get_value(struct amdgpu_ib *ib, int idx)
-+static inline u32 amdgpu_ib_get_value(struct amdgpu_ib *ib, uint32_t idx)
- {
--	return ib->ptr[idx];
-+	if (idx < ib->length_dw)
-+		return ib->ptr[idx];
-+	return 0;
+@@ -1606,11 +1606,17 @@ static void omap2_mcspi_remove(struct pl
+ 	struct spi_controller *ctlr = platform_get_drvdata(pdev);
+ 	struct omap2_mcspi *mcspi = spi_controller_get_devdata(ctlr);
+ 
++	spi_controller_get(ctlr);
++
++	spi_unregister_controller(ctlr);
++
+ 	omap2_mcspi_release_dma(ctlr);
+ 
+ 	pm_runtime_dont_use_autosuspend(mcspi->dev);
+ 	pm_runtime_put_sync(mcspi->dev);
+ 	pm_runtime_disable(&pdev->dev);
++
++	spi_controller_put(ctlr);
  }
  
--static inline void amdgpu_ib_set_value(struct amdgpu_ib *ib, int idx,
-+static inline void amdgpu_ib_set_value(struct amdgpu_ib *ib, uint32_t idx,
- 				       uint32_t value)
- {
--	ib->ptr[idx] = value;
-+	if (idx < ib->length_dw)
-+		ib->ptr[idx] = value;
- }
- 
- int amdgpu_ib_get(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+ /* work with hotplug and coldplug */
 
 
