@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E314DD6F3;
-	Fri, 15 May 2026 16:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4783F927A;
+	Fri, 15 May 2026 16:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862427; cv=none; b=fUPJ9vUltYEa7K+ngrpIlK94wmXNqW5bCxQvbCpxHqQbrbLIr7ZB7xYe09JIgEqubtvs40FPlsEZiEafxkg6EH2KrYnhSLMCRb3S8RgLnOQco4f7sZYSdTxi/HrDA2hqaMAv86RHIk+SKy/n/J0okpxwGU9mYPOMKJhx8vtGYEM=
+	t=1778862430; cv=none; b=C/jGIuvH4Nlx6ZvS7lZUXdMXvAAd6NPgpIibK6kqef+Lb/UIbwDNvHrZIdGCeNFC4KEg5PpDna4ke0pezCUKz7r1vyIHfW8dNyNQMb9i3eO83XdrhKZoX5LZbWckFaoO7lWpm1Vox/F5YI8FXUKSkSyeeA612QiqMrLUDRlyOFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862427; c=relaxed/simple;
-	bh=uJ3jJWiyIA/AWlPsZOkHdBd4fpK0CeYXaqeeZN+YSZw=;
+	s=arc-20240116; t=1778862430; c=relaxed/simple;
+	bh=Vh0ogmnOzRiOXJDmfsf26WgCOGeOcqHP0ga2pGuNt2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rqDRndqayC4mEOcxEIljgLnViOZI18Q950pzDNyfUCwHbRMtWBCit5piuJUMHMu8/t6DfVPyBYouPuApSuiHc7sf56vJelz0xxf9TDD0EsKkE58+UcT1IphNpxgM9XBwhw3WBkMKsZUqXc2IydXoamd5+MpOVZmMtneQLHOmahA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Tn1R1q/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fiPywHpVwn6tr95ekdlWaQA3Mrr9TwhWwEFK87eGOgaTY0YawuAjBdAvS69kdAB6U3xsTZ95PxMYU4om206qtvEltTrUVp10jWAgmohHLO6un52Y1u4fnNv18IGH+qiT9rLGHxaxPxf1Jyr2io6gvv3Kehsz3YY6bE8Sda2O7eE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=we5nlg9U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Tn1R1q/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2FCC2BCB0;
-	Fri, 15 May 2026 16:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="we5nlg9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FD0C2BCB0;
+	Fri, 15 May 2026 16:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862427;
-	bh=uJ3jJWiyIA/AWlPsZOkHdBd4fpK0CeYXaqeeZN+YSZw=;
+	s=korg; t=1778862430;
+	bh=Vh0ogmnOzRiOXJDmfsf26WgCOGeOcqHP0ga2pGuNt2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Tn1R1q/8t9NFmvpyA0sSiNySExC5DZJOBlE3vicX9bN1oTMYFZUNw3zLbW0edu+W
-	 LRfTKkxxTjyxUm6tPew0byg49VLjLpGKcfaA0WQSB87FPYG2nxeuQt0ClehhhkUSaw
-	 TBkjiIpvQxxx6g8Lbf/Tlikw/OnAEkAPnfNq3f6M=
+	b=we5nlg9U7+UfnkOMFh4jI7AK5oxC2kqhMf5Fdz9kLizX4K3PXdo1VZAA81qszxrn/
+	 yim+zlwAEbdvqPD45CV0ef3/HmTEqiN524VeXKpeYp/gn0M1kIHmCVDW7YCow+TpeG
+	 yDBbZ3ITpX9F/RwfUgLGq9uvrUJ75d7EozvEQD4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 7.0 008/201] drm/msm/hdmi: Fix wrong CTRL1 register used in writing info frames
-Date: Fri, 15 May 2026 17:47:06 +0200
-Message-ID: <20260515154658.718568888@linuxfoundation.org>
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.0 009/201] media: rzv2h-ivc: Avoid double job scheduling
+Date: Fri, 15 May 2026 17:47:07 +0200
+Message-ID: <20260515154658.739059883@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -50,50 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
 
-commit 8c6c93b7db42d15c6e8c2540a648d32986a04b1a upstream.
+commit b1de0940a19c1b0001425f8069d6a82369986af7 upstream.
 
-Commit 384d2b03d0a1 ("drm/msm/hdmi: make use of the drm_connector_hdmi
-framework") changed the unconditional register writes in few places to
-updates: read, apply mask, write.  The new code reads
-REG_HDMI_INFOFRAME_CTRL1 register, applies fields/mask for
-HDMI_INFOFRAME_CTRL0 register and finally writes to
-HDMI_INFOFRAME_CTRL0.  This difference between CTRL1 and CTRL0 looks
-unintended and may result in wrong data being written to HDMI bridge
-registers.
+The scheduling of a new buffer transfer in the IVC driver is triggered
+by two occurrences of the "frame completed" interrupt.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 384d2b03d0a1 ("drm/msm/hdmi: make use of the drm_connector_hdmi framework")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/711156/
-Link: https://lore.kernel.org/r/20260311191620.245394-2-krzysztof.kozlowski@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+The first interrupt occurrence identifies when all image data have been
+transferred to the ISP, the second occurrence identifies when the
+post-transfer VBLANK has completed and a new buffer can be transferred.
+
+Under heavy system load conditions the actual execution of the workqueue
+item might be delayed and two items might happen to run concurrently,
+leading to a new frame transfer being triggered while the previous one
+has not yet finished.
+
+This error condition is only visible because the driver maintains a
+status variable that counts the number of interrupts since the last
+transfer, and warns in case an IRQ happens before the counter has been
+reset.
+
+To ensure sequential execution of the worqueue items and avoid a double
+buffer transfer to run concurrently, protect the whole function body
+with the spinlock that so far was solely used to reset the counter and
+inspect the interrupt counter variable at the beginning of the buffer
+transfer function.
+
+As soon as the ongoing transfer completes, the workqueue item will be
+re-scheduled and will consume the pending buffer.
+
+Cc: stable@vger.kernel.org
+Fixes: f0b3984d821b ("media: platform: Add Renesas Input Video Control block driver")
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Signed-off-by: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -153,7 +153,7 @@ static int msm_hdmi_bridge_write_avi_inf
- 	for (i = 0; i < ARRAY_SIZE(buf); i++)
- 		hdmi_write(hdmi, REG_HDMI_AVI_INFO(i), buf[i]);
+--- a/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c
++++ b/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c
+@@ -149,6 +149,11 @@ static void rzv2h_ivc_transfer_buffer(st
+ 					     buffers.work);
+ 	struct rzv2h_ivc_buf *buf;
  
--	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
-+	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL0);
- 	val |= HDMI_INFOFRAME_CTRL0_AVI_SEND |
- 		HDMI_INFOFRAME_CTRL0_AVI_CONT;
- 	hdmi_write(hdmi, REG_HDMI_INFOFRAME_CTRL0, val);
-@@ -193,7 +193,7 @@ static int msm_hdmi_bridge_write_audio_i
- 		   buffer[9] << 16 |
- 		   buffer[10] << 24);
++	guard(spinlock_irqsave)(&ivc->spinlock);
++
++	if (ivc->vvalid_ifp)
++		return;
++
+ 	/* Setup buffers */
+ 	scoped_guard(spinlock_irqsave, &ivc->buffers.lock) {
+ 		buf = list_first_entry_or_null(&ivc->buffers.queue,
+@@ -164,9 +169,7 @@ static void rzv2h_ivc_transfer_buffer(st
+ 	buf->addr = vb2_dma_contig_plane_dma_addr(&buf->vb.vb2_buf, 0);
+ 	rzv2h_ivc_write(ivc, RZV2H_IVC_REG_AXIRX_SADDL_P0, buf->addr);
  
--	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL1);
-+	val = hdmi_read(hdmi, REG_HDMI_INFOFRAME_CTRL0);
- 	val |= HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SEND |
- 		HDMI_INFOFRAME_CTRL0_AUDIO_INFO_CONT |
- 		HDMI_INFOFRAME_CTRL0_AUDIO_INFO_SOURCE |
+-	scoped_guard(spinlock_irqsave, &ivc->spinlock) {
+-		ivc->vvalid_ifp = 2;
+-	}
++	ivc->vvalid_ifp = 2;
+ 	rzv2h_ivc_write(ivc, RZV2H_IVC_REG_FM_FRCON, 0x1);
+ }
+ 
+@@ -201,7 +204,7 @@ static void rzv2h_ivc_buf_queue(struct v
+ 	}
+ 
+ 	scoped_guard(spinlock_irq, &ivc->spinlock) {
+-		if (vb2_is_streaming(vb->vb2_queue) && !ivc->vvalid_ifp)
++		if (vb2_is_streaming(vb->vb2_queue))
+ 			queue_work(ivc->buffers.async_wq, &ivc->buffers.work);
+ 	}
+ }
 
 
