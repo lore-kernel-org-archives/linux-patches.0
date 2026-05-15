@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE74C39734B;
-	Fri, 15 May 2026 16:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D76739734B;
+	Fri, 15 May 2026 16:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861745; cv=none; b=Qedc+Rpf20rnrpgOmNsy087sNmXdhFfoZphtaWmisrEM44SMvx1ObuJA/twl6qmiRZ68y+zy9q0rbi7MCmazT37Bzu5vHeYd6nu3/RzBlhxhjUVkDR0lMc9nBvweAavWtqjRERQuyVl1je4k3XrJ3cA7gxguvyWHlvoRMcEtG/o=
+	t=1778861748; cv=none; b=MjxijIsxNsqVxLPKnZzeDU2y+aHghtS3lEA3EEumLY5amMUK+bb2hNNrOPTlblKXPPR4HVtos6kun8oemuBeL2X7OMK1UGcR4PPvs623rCuVzaZ6ppGEbApH6iN99nZDVarsSte/xEBSX27PV3gHdel+Q1iNi2uPmoeKIikrnx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861745; c=relaxed/simple;
-	bh=PkpPcdJp+PW2aQUlY+VXysxftd0Zf+PUeJic4AspTJ4=;
+	s=arc-20240116; t=1778861748; c=relaxed/simple;
+	bh=0MHDFAamYLudCQg9B9vP5UF0wk7ckX8qcQ5xThuAdBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E9zvVgx8GUrKBCFg5uY2KRDdY70AWHkwvzOXqpIcFXYqPNmpd1E9FYj17W/gaiSWfYubpx6kiQGHhV2TzNnI2CUz2DZqj27TSe+jwuNztQ0Vs3Xc967SHiuU0oebQdqpjYcGRKhGsoZ5wEEnQ06Lnu/f0DTo3VbMpjvzYl82d0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kacPf5nV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xtk5jNL0gCR0qsigE/j3mJQC8DWOAmQOcnrIKEitaoWhYLLvQBN7jmtUmW/YBxDNLTPwIbbC2xomtWcvH/rx0ny2zfSk5p5SOCWwjY97eUrjg6GjZYsuP+1ZWmKZOAMvcq+eloXSmkrGjCA0B4TNt6FUN5aLL7tSfF4TUKVUmWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+BIcRvW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kacPf5nV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24374C2BCFA;
-	Fri, 15 May 2026 16:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+BIcRvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28D1C2BCFA;
+	Fri, 15 May 2026 16:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861745;
-	bh=PkpPcdJp+PW2aQUlY+VXysxftd0Zf+PUeJic4AspTJ4=;
+	s=korg; t=1778861748;
+	bh=0MHDFAamYLudCQg9B9vP5UF0wk7ckX8qcQ5xThuAdBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kacPf5nVCzK/grEF5gA/2F6TnfvefS6EsXpTrwXBiNVh4/dMS8c/drop33pmbaHkJ
-	 2fVMiN2szkarr8LJz4MIFYH5QblbkTtW1aGO8FEM8+pv9Fg2SlXVzTTIYYFxazifnM
-	 Qo8ipXIp8Iin37UMHApsVpy5Cr+WlPUgFqIhvlKA=
+	b=H+BIcRvWWCXo8dl4OdQw/8wcjgJ0gXotChlFn1xeaNbYoHH8AQ1c+lsjnGpCGiX/U
+	 NGOi3vS4CoL0597mVhreBocmawCAQw5A0hH/yIhvU+t9kIsdRPTK+74IpcZXrKGD8K
+	 8c+laNRmzuGwL7ee1G/olO2QNoD04AGgvnIQVawc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 447/474] mm/damon/core: disallow time-quota setting zero esz
-Date: Fri, 15 May 2026 17:49:16 +0200
-Message-ID: <20260515154724.761334549@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	David Howells <dhowells@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Wentao Guan <guanwentao@uniontech.com>
+Subject: [PATCH 6.6 448/474] rxrpc: Also unshare DATA/RESPONSE packets when paged frags are present
+Date: Fri, 15 May 2026 17:49:17 +0200
+Message-ID: <20260515154724.784448172@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,61 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 8bbde987c2b84f80da0853f739f0a920386f8b99 upstream.
+commit aa54b1d27fe0c2b78e664a34fd0fdf7cd1960d71 upstream.
 
-When the throughput of a DAMOS scheme is very slow, DAMOS time quota can
-make the effective size quota smaller than damon_ctx->min_region_sz.  In
-the case, damos_apply_scheme() will skip applying the action, because the
-action is tried at region level, which requires >=min_region_sz size.
-That is, the quota is effectively exceeded for the quota charge window.
+The DATA-packet handler in rxrpc_input_call_event() and the RESPONSE
+handler in rxrpc_verify_response() copy the skb to a linear one before
+calling into the security ops only when skb_cloned() is true.  An skb
+that is not cloned but still carries externally-owned paged fragments
+(e.g. SKBFL_SHARED_FRAG set by splice() into a UDP socket via
+__ip_append_data, or a chained skb_has_frag_list()) falls through to
+the in-place decryption path, which binds the frag pages directly into
+the AEAD/skcipher SGL via skb_to_sgvec().
 
-Because no action will be applied, the total_charged_sz and
-total_charged_ns are also not updated.  damos_set_effective_quota() will
-try to update the effective size quota before starting the next charge
-window.  However, because the total_charged_sz and total_charged_ns have
-not updated, the throughput and effective size quota are also not changed.
-Since effective size quota can only be decreased, other effective size
-quota update factors including DAMOS quota goals and size quota cannot
-make any change, either.
+Extend the gate to also unshare when skb_has_frag_list() or
+skb_has_shared_frag() is true.  This catches the splice-loopback vector
+and other externally-shared frag sources while preserving the
+zero-copy fast path for skbs whose frags are kernel-private (e.g. NIC
+page_pool RX, GRO).  The OOM/trace handling already in place is reused.
 
-As a result, the scheme is unexpectedly deactivated until the user notices
-and mitigates the situation.  The users can mitigate this situation by
-changing the time quota online or re-install the scheme.  While the
-mitigation is somewhat straightforward, finding the situation would be
-challenging, because DAMON is not providing good observabilities for that.
-Even if such observability is provided, doing the additional monitoring
-and the mitigation is somewhat cumbersome and not aligned to the intention
-of the time quota.  The time quota was intended to help reduce the user's
-administration overhead.
-
-Fix the problem by setting time quota-modified effective size quota be at
-least min_region_sz always.
-
-The issue was discovered [1] by sashiko.
-
-Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
-Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
-Fixes: 1cd243030059 ("mm/damon/schemes: implement time quota")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.16.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Fixes: d0d5c0cd1e71 ("rxrpc: Use skb_unshare() rather than skb_cow_data()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/rxrpc/call_event.c |    4 +++-
+ net/rxrpc/conn_event.c |    3 ++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1026,6 +1026,7 @@ static void damos_set_effective_quota(st
- 	else
- 		throughput = PAGE_SIZE * 1024;
- 	esz = throughput * quota->ms;
-+	esz = max(DAMON_MIN_REGION, esz);
+--- a/net/rxrpc/call_event.c
++++ b/net/rxrpc/call_event.c
+@@ -461,7 +461,9 @@ bool rxrpc_input_call_event(struct rxrpc
  
- 	if (quota->sz && quota->sz < esz)
- 		esz = quota->sz;
+ 		if (sp->hdr.type == RXRPC_PACKET_TYPE_DATA &&
+ 		    sp->hdr.securityIndex != 0 &&
+-		    skb_cloned(skb)) {
++		    (skb_cloned(skb) ||
++		     skb_has_frag_list(skb) ||
++		     skb_has_shared_frag(skb))) {
+ 			/* Unshare the packet so that it can be modified by
+ 			 * in-place decryption.
+ 			 */
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -231,7 +231,8 @@ static int rxrpc_verify_response(struct
+ {
+ 	int ret;
+ 
+-	if (skb_cloned(skb)) {
++	if (skb_cloned(skb) || skb_has_frag_list(skb) ||
++	    skb_has_shared_frag(skb)) {
+ 		/* Copy the packet if shared so that we can do in-place
+ 		 * decryption.
+ 		 */
 
 
