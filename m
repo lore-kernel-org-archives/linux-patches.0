@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCA8246781;
-	Fri, 15 May 2026 16:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914CC246781;
+	Fri, 15 May 2026 16:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862833; cv=none; b=OrEoDNWCCFLzqkOdxP0lyQnmQ03vk6ZCCllDbBwvbcuD4AV9uF0xVcbeyfgDJ2r9CkABwHV2BwSquDrdS/RcH5oKE32qgtZO3eIHoih7q2mBSIFySpjz2KoEo8DeCj3SgjhCuRH15goeofiLdVNY+U9Sd0sZVcPCZWII0koY2cU=
+	t=1778862836; cv=none; b=ZJrmSDlZV6LJP1bfSHN6KkpTR1GJFZ/Mg23gqsPOHkzbzbWG6U7i5YUywDj/tXPo8tag17MtZkmNp8IdR50Na2DdTEbYco8FPnOWZ31H/vKfOs5J3EvujaCT/UPTw/Fx1XiC8nHzPLQu+bYjL3vUWulUlYjY8akTih4E0uGNxxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862833; c=relaxed/simple;
-	bh=x1lzgQ5/3iZjmO4ta8TD/hYRkKsHzVWnpBNUHmQDb7Q=;
+	s=arc-20240116; t=1778862836; c=relaxed/simple;
+	bh=yEFO6+EKbn0TsbBK33ZEkNT0jxQaHF0kHWQyayN4HdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CGcZuRFh5DGDoxjzcxM4gTD6Npwbq/gf8wuiwL6Qj/oEQGyhVTI1EVgpeXQ/FP6LWeWEqivvZJxNqbsMpgzJY3mUp0M2wsaES99s1nj4Xf7uUGnKm5nVSH3BF841Ad+md2LNM5YszJi/3fXq9y6UuRv/eGpNE+2cf7RSM/SdLqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKv3tx9l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i3qLZh27NkLmh/3SMjucDXksIBd4g17kKinDSmCc5xBYVX0QnavhKOAQsLXS44o8NoqU6vNTtkJ7Rw+pPhx/jfTiqwugXkTzaCmePnnWfhj5XmRVIdu8cJA0rYj+693z8CsyiRMz5x7MMfYUcrHK+QNqIufHFIrS2X0b3qa23pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/XxvI6K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKv3tx9l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600F1C2BCB0;
-	Fri, 15 May 2026 16:33:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/XxvI6K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB171C2BCB0;
+	Fri, 15 May 2026 16:33:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862833;
-	bh=x1lzgQ5/3iZjmO4ta8TD/hYRkKsHzVWnpBNUHmQDb7Q=;
+	s=korg; t=1778862836;
+	bh=yEFO6+EKbn0TsbBK33ZEkNT0jxQaHF0kHWQyayN4HdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oKv3tx9lOK5c58UGKgOFPY4vhQCNJ8jbjAxAMdurtbeMNLTPCHfAanPKGsWJp1omQ
-	 9S5Mtxt9GSbPc5ewpOjWh+MQe+BRCHfOpeQxrGJbFM7oDf9Smux/GM7Dghq2e7fysw
-	 sZ9QjekK77OwjKosb2AuxTLPKN6iDHHxrzh2Ngts=
+	b=u/XxvI6KuOrCpPJ49NvoZzrgFjro0N5Lyz1z8vNzNPfNGkQM2Rjaqm8LqLK9Kj2pf
+	 jZqbfFSN44tj4oRQVvvnZRfBQ2K50oA5AwzkaK8UvsHP4BlFGnjA2pqTlPf10W7OUo
+	 6NxV1qChI1ZIbSC9PWvmRbbDForGtmc7D2AF11P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Benjamin Cheng <benjamin.cheng@amd.com>,
 	Ruijing Dong <ruijing.dong@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 200/201] drm/amdgpu/vcn3: Avoid overflow on msg bound check
-Date: Fri, 15 May 2026 17:50:18 +0200
-Message-ID: <20260515154702.911580809@linuxfoundation.org>
+Subject: [PATCH 7.0 201/201] drm/amdgpu/vcn4: Avoid overflow on msg bound check
+Date: Fri, 15 May 2026 17:50:19 +0200
+Message-ID: <20260515154702.933552718@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -54,25 +54,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Cheng <benjamin.cheng@amd.com>
 
-commit e6e9faba8100628990cccd13f0f044a648c303cf upstream.
+commit 65bce27ea6192320448c30267ffc17ffa094e713 upstream.
 
 As pointed out by SDL, the previous condition may be vulnerable to
 overflow.
 
-Fixes: b193019860d6 ("drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg")
+Fixes: 0a78f2bac142 ("drm/amdgpu/vcn4: Prevent OOB reads when parsing dec msg")
 Cc: SDL <sdl@nppct.ru>
 Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
 Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit db00257ac9e4a51eb2515aaea161a019f7125e10)
+(cherry picked from commit 3c5367d950140d4ec7af830b2268a5a6fdaa3885)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |    4 +++-
+ drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-@@ -1972,6 +1972,7 @@ static int vcn_v3_0_dec_msg(struct amdgp
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
+@@ -1889,6 +1889,7 @@ static int vcn_v4_0_dec_msg(struct amdgp
  
  	for (i = 0, msg = &msg[6]; i < num_buffers; ++i, msg += 4) {
  		uint32_t offset, size, *create;
@@ -80,7 +80,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  		if (msg[0] != RDECODE_MESSAGE_CREATE)
  			continue;
-@@ -1979,7 +1980,8 @@ static int vcn_v3_0_dec_msg(struct amdgp
+@@ -1896,7 +1897,8 @@ static int vcn_v4_0_dec_msg(struct amdgp
  		offset = msg[1];
  		size = msg[2];
  
