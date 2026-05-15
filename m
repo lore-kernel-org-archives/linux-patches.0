@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6840317C220;
-	Fri, 15 May 2026 15:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDC43FF1A2;
+	Fri, 15 May 2026 15:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860304; cv=none; b=l6jGToadUmSdE7Ygjwk6itbIKSalxliE5e3vOoDez0eG4sRHF4TI/OuYHkOruvh6k9cMOFUdYud87oU23ArWiNt1A88HguM/2gJhZQXrp560QfVOUUU4M/ne9uj8ZzD5lxksvB08d38YkiGVXkMD8W3Cx0nubuy5mAy4pa+BQnE=
+	t=1778860307; cv=none; b=poEIbdhHNrtrcwfclBaQ0sau8bq856RcyosI4ADsTILdMU/HFO8hlEX6x61AJ53ZymUTKRmcICvEC3QzQHTAUledf6Hr5cuuS2L2pd3pJotqYAVSUg7uknEbjOCCOpzSRO86gK4lcnQKyDw7pCnLmyKKJAeeDimddq+EbboNoGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860304; c=relaxed/simple;
-	bh=N98viDCqjiotAej6uIOePU758pATPrKdhRygqQ3AqBE=;
+	s=arc-20240116; t=1778860307; c=relaxed/simple;
+	bh=xscvDLDx1UbrIlCFEyO/yzFSEa/Qgksyebc6ShcP7iE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZtYv0yO1qMmHHi95L2ttKeS2LYoM38iEBmul9v9aDA5MBCn6uwvOCRzQ2o1HMqudIBdTwdlyJjGC8NOw7lCDjtWvPEN6rTUd/zeXLEvU1Q3GngEFUVbmqaGMzJM33LTww8H+B7b6BPUYaLzrMJWdc03CNEQVg1rha6gKRPnX+i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMp351An; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NPzuGXhwnoBxua+HIWV6WkYc0uNCBRNVxo8tJA9OrcbBGX4fO/adytquPlVdPOMPwkGVAZUXH5LyTYaCi73hch9IVv0Za8AhELtZmt/6G5PFUW7ZXFSXhjlCC3PmpbLJ8W18vLqLGcayB+M6f1CYjhwT4g048TSyQSDaXRY4LSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBZ1OJwx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMp351An"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C67C2BCB0;
-	Fri, 15 May 2026 15:51:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBZ1OJwx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D00C2BCB0;
+	Fri, 15 May 2026 15:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860304;
-	bh=N98viDCqjiotAej6uIOePU758pATPrKdhRygqQ3AqBE=;
+	s=korg; t=1778860306;
+	bh=xscvDLDx1UbrIlCFEyO/yzFSEa/Qgksyebc6ShcP7iE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KMp351AnsXUoPP6CDF7f+kPWm3MhJPQYYeSysD9aqS1mnJF7I6hBCAfkzrT/d8Wrt
-	 aYWYMDnGhLhDq3KVfv5KCjHf5QwY7bBvwXeLgyBxyqw8+rpXwhgyotqlr1y8QzkSbC
-	 txNZW9B/vEmfoF/ealoA08rsc9Xs5ZDeO/oIsRgY=
+	b=oBZ1OJwx8XfrZRrqTIKsDNybfZrEqsacEPVLQAKqp7ggqv/wCcI0JEpxptuw0BRqJ
+	 5uWWUYHAZPa6GWzgb1hqG8SFac91anJDnINIwOtn/Fl59hQrwaFhXLQCrTLHpIxG0f
+	 cdww973RlkkIkJo8g57FMo8sBnZoMQJxRR9HME6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.12 037/144] media: omap3isp: drop the use count of v4l2 pipeline
-Date: Fri, 15 May 2026 17:47:43 +0200
-Message-ID: <20260515154654.378348277@linuxfoundation.org>
+	Jingoo Han <jg1.han@samsung.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 038/144] spi: mxs: fix controller deregistration
+Date: Fri, 15 May 2026 17:47:44 +0200
+Message-ID: <20260515154654.403376154@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -51,32 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 9da49bd9d4224035cff39b40d7395310abb10201 upstream.
+commit 8b0d0011af20fb547aa67a1cefbf320992fd5e92 upstream.
 
-In isp_video_open(), drop the use count of v4l2
-pipeline if vb2_queue_init() fails.
+Make sure to deregister the controller before releasing underlying
+resources like DMA during driver unbind.
 
-Fixes: 8fd390b89cc8 ("media: Split v4l2_pipeline_pm_use into v4l2_pipeline_pm_{get, put}")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Fixes: 33e195acf268 ("spi: mxs: use devm_spi_register_master()")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Jingoo Han <jg1.han@samsung.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-4-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/omap3isp/ispvideo.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-mxs.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/ti/omap3isp/ispvideo.c
-+++ b/drivers/media/platform/ti/omap3isp/ispvideo.c
-@@ -1324,6 +1324,7 @@ static int isp_video_open(struct file *f
+--- a/drivers/spi/spi-mxs.c
++++ b/drivers/spi/spi-mxs.c
+@@ -617,7 +617,7 @@ static int mxs_spi_probe(struct platform
+ 	if (ret)
+ 		goto out_pm_runtime_put;
  
- 	ret = vb2_queue_init(&handle->queue);
- 	if (ret < 0) {
-+		v4l2_pipeline_pm_put(&video->video.entity);
- 		omap3isp_put(video->isp);
- 		goto done;
- 	}
+-	ret = devm_spi_register_controller(&pdev->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Cannot register SPI host, %d\n", ret);
+ 		goto out_pm_runtime_put;
+@@ -648,11 +648,17 @@ static void mxs_spi_remove(struct platfo
+ 	spi = spi_controller_get_devdata(host);
+ 	ssp = &spi->ssp;
+ 
++	spi_controller_get(host);
++
++	spi_unregister_controller(host);
++
+ 	pm_runtime_disable(&pdev->dev);
+ 	if (!pm_runtime_status_suspended(&pdev->dev))
+ 		mxs_spi_runtime_suspend(&pdev->dev);
+ 
+ 	dma_release_channel(ssp->dmach);
++
++	spi_controller_put(host);
+ }
+ 
+ static struct platform_driver mxs_spi_driver = {
 
 
