@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28CC3F86E1;
-	Fri, 15 May 2026 16:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6427A3E0096;
+	Fri, 15 May 2026 16:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861381; cv=none; b=tfGM+wNHBTmRD48M/acX/SRoHRmrpXCuinVSI1mPoL87PxXh04Jn0NA3Zs6tAfT8iS9Mn/cX+DwkKDfOAeLKITpmVZ8P5TtTAElbDdXMYwz6MYfxavxe1RzRpT2joNbRo6TMpvx+trhaPNI5qnRQyGCkbancfUm/o8MSdphOZ84=
+	t=1778861384; cv=none; b=r8pebAkEOI7vj8wRocY4O3OyBoZOHmcXbLmDHt6Z9z715L8NptlOSLwO1ENyh4426lgBIirbStNa7AGEJYg3o2vzd2dLVq9fbuwNlcNJ92G1uVSvXGaCymymLbc+Ax2Nq2rQJAUinE5EsClfqPJ22eE3wnaXYLbuvJKOOGu4gPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861381; c=relaxed/simple;
-	bh=w1AeIbDbkuD6MYCw8ST/hmhCx/N5+j3vlwdUrWjJbRQ=;
+	s=arc-20240116; t=1778861384; c=relaxed/simple;
+	bh=LW94ct7gAWwmMRA1IHTFf1LCpeRo+VqZBOFfdqQpyhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HODUYaCaE2qiYACPIYgfhz/c9trYWUQl9LE7pYqf0k/FR+OCA9FBkyLfI9u3vKLgUDO56DwIhEOOR1/Mt1P0NOUXQMsu+TASCxtuqC4b6H8tPNRyn614CJ90uiQYEN1fp+LmfUNPtp7FOH/VNPrn86ayW6HJJajEhKQXDhO1YtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwqmzBD+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hLwMxbUbfPsGGstklyJjneqCIux+lYP55KVLYzs0aPNWYL/onIjp0ZJ1Zn1Ul0hcBwOzyprmPiByZKkhLTfrMe9EeKlNlzf5Pp949NlPq/3noh+xofoAlIXrSIlNI3naBau2fLadM49vYRZ7GTax3SrWeuYuWyjarNl3Fsw7VZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kc/KucDT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwqmzBD+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC2AC2BCB0;
-	Fri, 15 May 2026 16:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kc/KucDT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC78C2BCB0;
+	Fri, 15 May 2026 16:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861381;
-	bh=w1AeIbDbkuD6MYCw8ST/hmhCx/N5+j3vlwdUrWjJbRQ=;
+	s=korg; t=1778861384;
+	bh=LW94ct7gAWwmMRA1IHTFf1LCpeRo+VqZBOFfdqQpyhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FwqmzBD++PHE3ZbymdmnJPLlxaLinsYY4CtH7/eCU3z0BTm+dpKKNpSzzp7uf9Xhm
-	 mjmhBjvdDgc0WAt0fB9L+yLS1TI3CfJn0YeKCmn/+sv0jbg4hubJA6UNn9H8/reXPT
-	 jf6MhdvjG+lD08M0WzlTHe/IuMfTW7S0kwALwD6g=
+	b=kc/KucDThnZNgtXk8HaCHk2TM3cGmrPFFvTdJsyDFhhk5A+dSW059btuA3kLYjgrN
+	 rVj/zGZe5U4F9zwDMDqc/WEJkxMFOrV09+207vY//GYtiQEn/rbP+rjCR+4LsyRBfg
+	 KNOuCoeePY3/xWEH7i1fgFGkar9+llYncUj5Dt3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 308/474] media: videobuf2: Set vma_flags in vb2_dma_sg_mmap
-Date: Fri, 15 May 2026 17:46:57 +0200
-Message-ID: <20260515154721.671335377@linuxfoundation.org>
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.6 291/474] f2fs: fix node_cnt race between extent node destroy and writeback
+Date: Fri, 15 May 2026 17:46:40 +0200
+Message-ID: <20260515154721.297353178@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,99 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-commit 7254b31a13aaa0c2c0f9ffbc335b718656117ff4 upstream.
+commit ed78aeebef05212ef7dca93bd931e4eff67c113f upstream.
 
-vb2_dma_contig sets VMA flags VM_DONTEXPAND and VM_DONTDUMP and I do not
-see a reason why vb2_dma_sg should behave differently. This avoids
-hitting `WARN_ON(!(vma->vm_flags & VM_DONTEXPAND));` in
-drm_gem_mmap_obj() during mmap() of an imported dma-buf from the out of
-tree Apple ISP camera capture driver which uses vb2_dma_sg_memops.
+f2fs_destroy_extent_node() does not set FI_NO_EXTENT before clearing
+extent nodes. When called from f2fs_drop_inode() with I_SYNC set,
+concurrent kworker writeback can insert new extent nodes into the same
+extent tree, racing with the destroy and triggering f2fs_bug_on() in
+__destroy_extent_node(). The scenario is as follows:
 
-gst-launch-1.0 v4l2src ! gtk4paintablesink
+drop inode                            writeback
+ - iput
+  - f2fs_drop_inode  // I_SYNC set
+   - f2fs_destroy_extent_node
+    - __destroy_extent_node
+     - while (node_cnt) {
+        write_lock(&et->lock)
+        __free_extent_tree
+        write_unlock(&et->lock)
+                                       - __writeback_single_inode
+                                        - f2fs_outplace_write_data
+                                         - f2fs_update_read_extent_cache
+                                          - __update_extent_tree_range
+                                           // FI_NO_EXTENT not set,
+                                           // insert new extent node
+       } // node_cnt == 0, exit while
+     - f2fs_bug_on(node_cnt)  // node_cnt > 0
 
-[   38.201528] ------------[ cut here ]------------
-[   38.202135] WARNING: CPU: 7 PID: 2362 at drivers/gpu/drm/drm_gem.c:1144 drm_gem_mmap_obj+0x1f8/0x210
-[   38.203278] Modules linked in: rfcomm snd_seq_dummy snd_hrtimer
-snd_seq snd_seq_device uinput nf_conntrack_netbios_ns
-nf_conntrack_broadcast nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib
-nft_reject_inet nf_reject_ipv6 nft_reject nft_ct nft_chain_nat nf_nat
-nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nf_tables qrtr bnep
-nls_ascii i2c_dev loop fuse dm_multipath nfnetlink brcmfmac_wcc
-hid_magicmouse hci_bcm4377 brcmfmac brcmutil bluetooth ecdh_generic
-cfg80211 ecc btrfs xor xor_neon rfkill hid_apple raid6_pq joydev
-aop_als apple_nvmem_spmi industrialio snd_soc_aop apple_z2
-snd_soc_cs42l84 tps6598x snd_soc_tas2764 macsmc_reboot spi_nor
-macsmc_hwmon rtc_macsmc gpio_macsmc macsmc_power regmap_spmi
-macsmc_input dockchannel_hid panel_summit appledrm nvme_apple dwc3
-snd_soc_macaudio drm_client_lib nvme_core phy_apple_atc hwmon
-apple_sart apple_dockchannel macsmc apple_rtkit_helper
-spmi_apple_controller aop apple_wdt mfd_core nvmem_apple_efuses
-pinctrl_apple_gpio apple_isp apple_dcp videobuf2_dma_sg mux_core
-spi_apple
-[   38.203300]  videobuf2_memops i2c_pasemi_platform snd_soc_apple_mca videobuf2_v4l2 videodev clk_apple_nco videobuf2_common snd_pcm_dmaengine adpdrm asahi apple_admac adpdrm_mipi drm_dma_helper pwm_apple i2c_pasemi_core drm_display_helper mc cec apple_dart ofpart apple_soc_cpufreq leds_pwm phram
-[   38.217677] CPU: 7 UID: 1000 PID: 2362 Comm: gst-launch-1.0 Tainted: G        W           6.17.6+ #asahi-dev PREEMPT(full)
-[   38.219040] Tainted: [W]=WARN
-[   38.219398] Hardware name: Apple MacBook Pro (13-inch, M2, 2022) (DT)
-[   38.220213] pstate: 21400005 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[   38.221088] pc : drm_gem_mmap_obj+0x1f8/0x210
-[   38.221643] lr : drm_gem_mmap_obj+0x78/0x210
-[   38.222178] sp : ffffc0008dc678e0
-[   38.222579] x29: ffffc0008dc678e0 x28: 0000000000042a97 x27: ffff8000b701b480
-[   38.223465] x26: 00000000000000fb x25: ffffc0008dc67d20 x24: ffffc0008dc67968
-[   38.224402] x23: ffff8000e3ca5600 x22: ffff8000265b7800 x21: ffff80003000c0c0
-[   38.225279] x20: 0000000000000000 x19: ffff8000b68c5200 x18: ffffc0008dc67968
-[   38.226151] x17: 0000000000000000 x16: 0000000000000000 x15: ffffc000810a30a8
-[   38.227042] x14: 00007fff637effff x13: 00005555de91ffff x12: 00007fff63293fff
-[   38.227942] x11: 0000000000000000 x10: ffff8000184ecf08 x9 : ffffc0007a1900c8
-[   38.228824] x8 : ffffc0008dc67968 x7 : 0000000000000012 x6 : ffffc0015cf1c000
-[   38.229703] x5 : ffffc0008dc676a0 x4 : ffffc00081a27dc0 x3 : 0000000000000038
-[   38.230607] x2 : 0000000000000003 x1 : 0000000000000003 x0 : 00000000100000fb
-[   38.231488] Call trace:
-[   38.231806]  drm_gem_mmap_obj+0x1f8/0x210 (P)
-[   38.232342]  drm_gem_mmap+0x140/0x260
-[   38.232813]  __mmap_region+0x488/0x9a0
-[   38.233277]  mmap_region+0xd0/0x148
-[   38.233703]  do_mmap+0x350/0x5c0
-[   38.234148]  vm_mmap_pgoff+0x14c/0x200
-[   38.234612]  ksys_mmap_pgoff+0x150/0x208
-[   38.235107]  __arm64_sys_mmap+0x34/0x50
-[   38.235611]  invoke_syscall+0x50/0x120
-[   38.236075]  el0_svc_common.constprop.0+0x48/0xf0
-[   38.236680]  do_el0_svc+0x24/0x38
-[   38.237113]  el0_svc+0x38/0x168
-[   38.237507]  el0t_64_sync_handler+0xa0/0xe8
-[   38.238034]  el0t_64_sync+0x198/0x1a0
-[   38.238491] ---[ end trace 0000000000000000 ]---
+Additionally, __update_extent_tree_range() only checks FI_NO_EXTENT for
+EX_READ type, leaving EX_BLOCK_AGE updates completely unprotected.
 
-There were discussions in [1] at the end of 2023 that mmap() on imported
-dma-bufs should not be supported but as of v6.17 drm_gem_shmem_mmap() in
-drm_gem_shmem_helper.c still supports it.
-This might affect all gpu or accel drivers using drm_gem_shmem_mmap() or
-the wrapper drm_gem_shmem_object_mmap().
+This patch set FI_NO_EXTENT under et->lock in __destroy_extent_node(),
+consistent with other callers (__update_extent_tree_range and
+__drop_extent_tree) and check FI_NO_EXTENT for both EX_READ and
+EX_BLOCK_AGE tree.
 
-[1] https://lore.kernel.org/dri-devel/bc7f7844-0aa3-4802-b203-69d58e8be2fa@linux.intel.com/
-
+Fixes: 3fc5d5a182f6 ("f2fs: fix to shrink read extent node in batches")
 Cc: stable@vger.kernel.org
-Fixes: 5ba3f757f059 ("[media] v4l: videobuf2: add DMA scatter/gather allocator")
-Signed-off-by: Janne Grunau <j@jannau.net>
-Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/videobuf2/videobuf2-dma-sg.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/extent_cache.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-+++ b/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-@@ -345,6 +345,7 @@ static int vb2_dma_sg_mmap(void *buf_pri
- 		return err;
- 	}
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -87,9 +87,10 @@ static bool __may_extent_tree(struct ino
+ 	if (!__init_may_extent_tree(inode, type))
+ 		return false;
  
-+	vm_flags_set(vma, VM_DONTEXPAND | VM_DONTDUMP);
- 	/*
- 	 * Use common vm_area operations to track buffer refcount.
- 	 */
++	if (is_inode_flag_set(inode, FI_NO_EXTENT))
++		return false;
++
+ 	if (type == EX_READ) {
+-		if (is_inode_flag_set(inode, FI_NO_EXTENT))
+-			return false;
+ 		if (is_inode_flag_set(inode, FI_COMPRESSED_FILE) &&
+ 				 !f2fs_sb_has_readonly(F2FS_I_SB(inode)))
+ 			return false;
+@@ -602,6 +603,8 @@ static unsigned int __destroy_extent_nod
+ 
+ 	while (atomic_read(&et->node_cnt)) {
+ 		write_lock(&et->lock);
++		if (!is_inode_flag_set(inode, FI_NO_EXTENT))
++			set_inode_flag(inode, FI_NO_EXTENT);
+ 		node_cnt += __free_extent_tree(sbi, et, nr_shrink);
+ 		write_unlock(&et->lock);
+ 	}
+@@ -637,12 +640,12 @@ static void __update_extent_tree_range(s
+ 
+ 	write_lock(&et->lock);
+ 
+-	if (type == EX_READ) {
+-		if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
+-			write_unlock(&et->lock);
+-			return;
+-		}
++	if (is_inode_flag_set(inode, FI_NO_EXTENT)) {
++		write_unlock(&et->lock);
++		return;
++	}
+ 
++	if (type == EX_READ) {
+ 		prev = et->largest;
+ 		dei.len = 0;
+ 
 
 
