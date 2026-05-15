@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8183B6354;
-	Fri, 15 May 2026 16:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8593B6354;
+	Fri, 15 May 2026 16:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861364; cv=none; b=nXbONYjem/9/HMzCKUzrYWtc5Utb9bHYXV4EB5pm5pogsONjCC8RvQ4u3lg6U8yyfoAScLXvRBCLEy6jwUetODhq2d542tIFBQ0bXSL05am4jHyMr7OPwRW7gwC+zfUCLCr7LfmWhV1F29mvM9+LIxURbF0pFTyPC2AQiGJZ4eA=
+	t=1778861366; cv=none; b=JWdbrmvVdSjqDQn9ePfwLWZUAlTy7eG41MdsPEhvKmfhNHB1pi6oc1SGkJtZiFYRXXlrVZVlezP8pzozdNwdCForpcZjOIfbEVC0N/IsORUZoEL5NT3xdIRkINq7MtgQjyRUUupxw+3Tid4OfD5jjKY3WS+9HsQ/hEjk6xlQXDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861364; c=relaxed/simple;
-	bh=JNokXEwN/4lwGqzCiVNnm3ei7Nyvl4hSgwZNPwijy8s=;
+	s=arc-20240116; t=1778861366; c=relaxed/simple;
+	bh=thFPF4eJatF7pu1eCA12910LGIwG4BIMRVLGBnVA61Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HMj14pPF51vue/ePWz2qZU7cr07eiXc43TuDRVEi3w8UBfg+6Nzo/aMS4/cvyWrGs98OhM1F+t74hkotbdH3t7Mx6WKyiiIw+xiAulGo6jKUI7Ih0NSrm5VGECKwCPQxo6hIqjijD41alWkiXNvCQ2EtPBOwL44LsIW7wtWCKoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLzb8i7q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HL427w4vyqdoTfc8PH+amwU20zByNP/AyrJi9fHHjjBU+Kjx0nheYzC+APG8Ttjd+f34OyUiW+xLZXVYs5QfW2Ra3rfZWbB3UZsjy267RIJYLZ/0pTGgG4ZeSnVNf07BjQzeAVxSwSjBz3piTKxG/N8afuVR1YL9grlb96h3CVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEMb0hvS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLzb8i7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72738C2BCB0;
-	Fri, 15 May 2026 16:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEMb0hvS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02EA7C2BCB0;
+	Fri, 15 May 2026 16:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861363;
-	bh=JNokXEwN/4lwGqzCiVNnm3ei7Nyvl4hSgwZNPwijy8s=;
+	s=korg; t=1778861366;
+	bh=thFPF4eJatF7pu1eCA12910LGIwG4BIMRVLGBnVA61Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cLzb8i7qZbGOYe1YtnP6PzQHczcwQixq7BmvlFz2e6GwTGiGtKNcuevMiYm4wvQi5
-	 avyWv0aZc1iPZ7qjUuFoonvibgoybebmG5Qxr7upOTaWWIIVxayQmkP5cv4xlfaBnN
-	 Gfjujk7C04KqMWs1DO8KzeBnBjMKMW1OWg4Co0k4=
+	b=oEMb0hvSN5PdsARlX6TwXnz13VwHoSgHgcmR7rzkHdDXzwK3VQQo6wsCahA2fw4Dy
+	 gPhQ7Ngx8yXlqCbACK18ZXVDCOjtgPoqPdf3v2EcKe6p5M6QKe35k5v424x3rWSfdk
+	 PjWDycLpaF2UUFU8xgWKyNP2FjLkTE5bjz5nypXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 301/474] spi: atmel: fix controller deregistration
-Date: Fri, 15 May 2026 17:46:50 +0200
-Message-ID: <20260515154721.517613498@linuxfoundation.org>
+	Soufiane Dani <soufianeda@tutanota.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.6 302/474] staging: media: atomisp: Disallow all private IOCTLs
+Date: Fri, 15 May 2026 17:46:51 +0200
+Message-ID: <20260515154721.539077324@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,55 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 8d4de97e83520be89d0ff40610ca633b3963a7de upstream.
+commit 2b7eb2c5dc72f0fc954ac4aa155f9e285e937f7c upstream.
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+Disallow all private IOCTLs. These aren't quite as safe as one could
+assume of IOCTL handlers; disable them for now. Instead of removing the
+code, return in the beginning of the function if cmd is non-zero in order
+to keep static checkers happy.
 
-Fixes: 754ce4f29937 ("[PATCH] SPI: atmel_spi driver")
-Cc: stable@vger.kernel.org	# 2.6.21
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260409120419.388546-5-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Soufiane Dani <soufianeda@tutanota.com>
+Closes: https://lore.kernel.org/linux-staging/20260210-atomisp-fix-v1-1-024429cbff31@tutanota.com/
+Cc: stable@vger.kernel.org
+Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
+Fixes: ad85094b293e ("Revert "media: staging: atomisp: Remove driver"")
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-atmel.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/staging/media/atomisp/pci/atomisp_ioctl.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/spi/spi-atmel.c
-+++ b/drivers/spi/spi-atmel.c
-@@ -1647,7 +1647,7 @@ static int atmel_spi_probe(struct platfo
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
+--- a/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+@@ -1780,6 +1780,10 @@ static long atomisp_vidioc_default(struc
+ 	struct atomisp_sub_device *asd = atomisp_to_video_pipe(vdev)->asd;
+ 	int err;
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret)
- 		goto out_free_dma;
- 
-@@ -1679,8 +1679,12 @@ static void atmel_spi_remove(struct plat
- 	struct spi_controller	*host = platform_get_drvdata(pdev);
- 	struct atmel_spi	*as = spi_controller_get_devdata(host);
- 
-+	spi_controller_get(host);
++	/* Disable all private IOCTLs for now! */
++	if (cmd)
++		return -EINVAL;
 +
- 	pm_runtime_get_sync(&pdev->dev);
- 
-+	spi_unregister_controller(host);
-+
- 	/* reset the hardware and block queue progress */
- 	if (as->use_dma) {
- 		atmel_spi_stop_dma(host);
-@@ -1705,6 +1709,8 @@ static void atmel_spi_remove(struct plat
- 
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-+
-+	spi_controller_put(host);
- }
- 
- static int atmel_spi_runtime_suspend(struct device *dev)
+ 	switch (cmd) {
+ 	case ATOMISP_IOC_S_SENSOR_RUNMODE:
+ 		if (IS_ISP2401)
 
 
