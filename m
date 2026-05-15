@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C16743CEE6;
-	Fri, 15 May 2026 16:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C913FBB72;
+	Fri, 15 May 2026 16:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861986; cv=none; b=dB3uovu0T1T3RL29ieYT+ukqxtsKya4q1J21Nk0Xa2rHhjgbJQ4hLJXqtHlWihHiRYiQWJVDVoY7yHeGOXiE/hcVkhW+S3BlyAw5aYmvRCgBvrvOeD8ZCZ2fQRvMf9pHImkATye/m/JeoL8JqgAE8jIL+KWj2bG6eTGAJdabE84=
+	t=1778861989; cv=none; b=oM0RQiJWsW3DnIAgi2J+kF24G0mMZws2AzUVQPLlIfoEyuAczH0VXJhrSvGjVmCBmNFsZSzC8vepH98ivLps+n4BypYksbUm1x4hGIl04zzFv/4ORKM1IRUQJpnczOdAU8p6We6yvdn7/yZuM2r104KuYeLlkMGOYXTeIFWmGlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861986; c=relaxed/simple;
-	bh=HVYp9pJ6UMGQooXfPuahUCoXjhbj1bWk3OHrhnkTfBs=;
+	s=arc-20240116; t=1778861989; c=relaxed/simple;
+	bh=//3imWa6DubH500Aoj9tWHfALzZgc3JzWmLCbCAhSfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkDGBmIWGby2THVkwIF+PNb+6J4IdoLY0afFfWr4pLdDFXnwRJu00E3KyqcjJbFyls/EqjtwdLiSrW0ejyrnOCMzPewhuLijNrtyYa1MOmsC1JtjEZZwAM7UpUFC8HvKVPwNHABTo0EO43LG3byCaKwQdMxz+qMXVT6Iff+a0TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7ovXmTn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gcWOAMR1HkCO12CO7YYAyu3QeAwja1Bsx41IljD7ECobJPKC8ZFgl3YOZ5d/qNWtKXaKC8dzWCcHLNOHlRqc3L+rhSMefVTKP37C/C2hNeQDf3fw+npk0rXFsDLLrICc7LP+kxFFECeIVwMQi13Y/eO3q1lsLvnTwiEOYkvOG5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLve8OYT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7ovXmTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037A9C2BCC7;
-	Fri, 15 May 2026 16:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLve8OYT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B2CC2BCB0;
+	Fri, 15 May 2026 16:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861986;
-	bh=HVYp9pJ6UMGQooXfPuahUCoXjhbj1bWk3OHrhnkTfBs=;
+	s=korg; t=1778861988;
+	bh=//3imWa6DubH500Aoj9tWHfALzZgc3JzWmLCbCAhSfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h7ovXmTn/S2F23OKbWCmdNoO5hmb7BY0Vmm43NmhQV5boZipmqP1vck1kqUu53OPK
-	 IiGMJ+b4MeXtFVUsK+y5/4gt4CgYzR8ueqQp6CAi37SltXtVNLxMTKQYAc0EV5gHnb
-	 oaSCYXdhF+l+OO6qRpPQ5EE5GjjTPooCpyRzImdY=
+	b=MLve8OYTSolVEtFRBD7jGpswU3X1AUQTA9sYcMFjAAsoUjIaoaK2e8SPp89pkpW+8
+	 jv9/RxjbZASJ6YucW2A82DFUx94V07E41z1swEp0VHiuXf4iTwPFvDC/Wu07ArpHeM
+	 ShwqWZr574/ZTm2C2aYnuCoHluOrVUgfmC+8Yu9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 062/188] media: qcom: camss: Add missing clocks for VFE lite on sa8775p
-Date: Fri, 15 May 2026 17:47:59 +0200
-Message-ID: <20260515154658.661441977@linuxfoundation.org>
+	Soufiane Dani <soufianeda@tutanota.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.18 022/188] staging: media: atomisp: Disallow all private IOCTLs
+Date: Fri, 15 May 2026 17:47:19 +0200
+Message-ID: <20260515154657.788669752@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -52,131 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit d31fac47b39f5e1ed85a587688ca70b793e421b4 upstream.
+commit 2b7eb2c5dc72f0fc954ac4aa155f9e285e937f7c upstream.
 
-Add missing required clocks (cpas_ahb and camnoc_axi) for VFE lite
-instances on sa8775p platform. These clocks are necessary for proper
-VFE lite operation:
+Disallow all private IOCTLs. These aren't quite as safe as one could
+assume of IOCTL handlers; disable them for now. Instead of removing the
+code, return in the beginning of the function if cmd is non-zero in order
+to keep static checkers happy.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-Fixes: e7b59e1d06fb ("media: qcom: camss: Add support for VFE 690")
+Reported-by: Soufiane Dani <soufianeda@tutanota.com>
+Closes: https://lore.kernel.org/linux-staging/20260210-atomisp-fix-v1-1-024429cbff31@tutanota.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: a49d25364dfb ("staging/atomisp: Add support for the Intel IPU v2")
+Fixes: ad85094b293e ("Revert "media: staging: atomisp: Remove driver"")
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss.c |   40 ++++++++++++++++++------------
- 1 file changed, 25 insertions(+), 15 deletions(-)
+ drivers/staging/media/atomisp/pci/atomisp_ioctl.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -2926,15 +2926,17 @@ static const struct camss_subdev_resourc
- 	/* VFE2 (lite) */
- 	{
- 		.regulators = {},
--		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
-+		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
- 			   "vfe_lite_csid", "vfe_lite_cphy_rx",
--			   "vfe_lite"},
-+			   "vfe_lite", "camnoc_axi"},
- 		.clock_rate = {
--			{ 0, 0, 0, 0  },
-+			{ 0 },
-+			{ 0 },
- 			{ 300000000, 400000000, 400000000, 400000000 },
- 			{ 400000000, 400000000, 400000000, 400000000 },
- 			{ 400000000, 400000000, 400000000, 400000000 },
- 			{ 480000000, 600000000, 600000000, 600000000 },
-+			{ 400000000 },
- 		},
- 		.reg = { "vfe_lite0" },
- 		.interrupt = { "vfe_lite0" },
-@@ -2949,15 +2951,17 @@ static const struct camss_subdev_resourc
- 	/* VFE3 (lite) */
- 	{
- 		.regulators = {},
--		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
-+		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
- 			   "vfe_lite_csid", "vfe_lite_cphy_rx",
--			   "vfe_lite"},
-+			   "vfe_lite", "camnoc_axi"},
- 		.clock_rate = {
--			{ 0, 0, 0, 0  },
-+			{ 0 },
-+			{ 0 },
- 			{ 300000000, 400000000, 400000000, 400000000 },
- 			{ 400000000, 400000000, 400000000, 400000000 },
- 			{ 400000000, 400000000, 400000000, 400000000 },
- 			{ 480000000, 600000000, 600000000, 600000000 },
-+			{ 400000000 },
- 		},
- 		.reg = { "vfe_lite1" },
- 		.interrupt = { "vfe_lite1" },
-@@ -2972,15 +2976,17 @@ static const struct camss_subdev_resourc
- 	/* VFE4 (lite) */
- 	{
- 		.regulators = {},
--		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
-+		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
- 			   "vfe_lite_csid", "vfe_lite_cphy_rx",
--			   "vfe_lite"},
-+			   "vfe_lite", "camnoc_axi"},
- 		.clock_rate = {
--			{ 0, 0, 0, 0  },
-+			{ 0 },
-+			{ 0 },
- 			{ 300000000, 400000000, 400000000, 400000000 },
- 			{ 400000000, 400000000, 400000000, 400000000 },
- 			{ 400000000, 400000000, 400000000, 400000000 },
- 			{ 480000000, 600000000, 600000000, 600000000 },
-+			{ 400000000 },
- 		},
- 		.reg = { "vfe_lite2" },
- 		.interrupt = { "vfe_lite2" },
-@@ -2995,15 +3001,17 @@ static const struct camss_subdev_resourc
- 	/* VFE5 (lite) */
- 	{
- 		.regulators = {},
--		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
-+		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
- 			   "vfe_lite_csid", "vfe_lite_cphy_rx",
--			   "vfe_lite"},
-+			   "vfe_lite", "camnoc_axi"},
- 		.clock_rate = {
--			{ 0, 0, 0, 0  },
-+			{ 0 },
-+			{ 0 },
- 			{ 300000000, 400000000, 400000000, 400000000 },
- 			{ 400000000, 400000000, 400000000, 400000000 },
- 			{ 400000000, 400000000, 400000000, 400000000 },
- 			{ 480000000, 600000000, 600000000, 600000000 },
-+			{ 400000000 },
- 		},
- 		.reg = { "vfe_lite3" },
- 		.interrupt = { "vfe_lite3" },
-@@ -3018,15 +3026,17 @@ static const struct camss_subdev_resourc
- 	/* VFE6 (lite) */
- 	{
- 		.regulators = {},
--		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
-+		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
- 			   "vfe_lite_csid", "vfe_lite_cphy_rx",
--			   "vfe_lite"},
-+			   "vfe_lite", "camnoc_axi"},
- 		.clock_rate = {
--			{ 0, 0, 0, 0  },
-+			{ 0 },
-+			{ 0 },
- 			{ 300000000, 400000000, 400000000, 400000000 },
- 			{ 400000000, 400000000, 400000000, 400000000 },
- 			{ 400000000, 400000000, 400000000, 400000000 },
- 			{ 480000000, 600000000, 600000000, 600000000 },
-+			{ 400000000 },
- 		},
- 		.reg = { "vfe_lite4" },
- 		.interrupt = { "vfe_lite4" },
+--- a/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
++++ b/drivers/staging/media/atomisp/pci/atomisp_ioctl.c
+@@ -1357,6 +1357,10 @@ static int atomisp_s_parm(struct file *f
+ static long atomisp_vidioc_default(struct file *file, void *fh,
+ 				   bool valid_prio, unsigned int cmd, void *arg)
+ {
++	/* Disable all private IOCTLs for now! */
++	if (cmd)
++		return -EINVAL;
++
+ 	struct video_device *vdev = video_devdata(file);
+ 	struct atomisp_sub_device *asd = atomisp_to_video_pipe(vdev)->asd;
+ 	int err;
 
 
