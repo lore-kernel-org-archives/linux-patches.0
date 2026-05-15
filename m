@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1033F926E;
-	Fri, 15 May 2026 16:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418163B9D96;
+	Fri, 15 May 2026 16:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862593; cv=none; b=DeIjp/pEzn1mdmWxgzbqmvYLJ7y4WPGtxBe7dtryYAOX1Eqxi2K8GftrHnJC0EpSrdfZRYihS+eaEss7y6SbUsGs8oH9Nlz53+SGK7mZ9YMvtEfIFec1BmIvHVheFJ45Inp75Tnb9vtM/XBk0rQzki07X/i/ijdEAeBUfzZjgeM=
+	t=1778862596; cv=none; b=fBh4k3iydyuH1LssnjYJEwM2Xj2EenYpCXvtP7+jPOOEMuXWiOEMEMN9EEVh2eLVP+E8V2pPWXcjhthyHTW46Ww11k0w9pNdf/YEGA7Wq4SM64PDmSq4wV5HbA/lONEnlx9F6tB8OKTvI1PvaKKsMHc7IUSYOZAsBoR8NrblOaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862593; c=relaxed/simple;
-	bh=GVtBHaWrR6BTWm52znIThYYnO5IyfWSTgAjv0YjPXmc=;
+	s=arc-20240116; t=1778862596; c=relaxed/simple;
+	bh=Z4UqND0/Y+pf2QSBexcu/pFD/lk08JuV1rt4ELrJzXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EsQStmmzOEhGmFY/KF031Zoo4n84ile3qlsacm1u/OcZA6sE/makrIsVtOUXNouYoRpMgvwruPEJ3JM56K/JCzwmGU51Acw4LPUwtrX6MtQrFjEOaE2AwdBV4sIc+2GmJG+b5AjSYcWEgQm10M8BCdGmXtMP0hJZUwEFqd6Vdcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zb2Y7p76; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZX7jaJuFdokh/T3aVlL9+KPsCXL6xiOIFW44ijuRqO0RipaZhAm9Hh2b2Z/we04c8KkJOJMLUtMKP9uI1k+AtcvkjixKcd52C9ttLLHAn/0wh/m2Rs3YQdE5MUoJiB0vRm3DU3nNNhQMMF+6CNW0iqc5HQi9u3yDjN7RUbpiMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtgglOd/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zb2Y7p76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A23DC2BCB0;
-	Fri, 15 May 2026 16:29:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtgglOd/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1452C2BCF5;
+	Fri, 15 May 2026 16:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862593;
-	bh=GVtBHaWrR6BTWm52znIThYYnO5IyfWSTgAjv0YjPXmc=;
+	s=korg; t=1778862596;
+	bh=Z4UqND0/Y+pf2QSBexcu/pFD/lk08JuV1rt4ELrJzXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zb2Y7p76S39kYLteGiSjlF02Wcg3iFpar3d1d/eCIo5oLimkA/x51csWBzU9DWMKV
-	 LJL2I3435e5x7rRGzoELl7o+n5LTOErXewW4M60Q0bwOQLHqUsi70PiNzeWdBR0EDB
-	 ZFDOPRIqxSy3APuiR3566x7L9wyKgaaZKS0+s8q4=
+	b=AtgglOd/MBNCnSEup2vO2pE2oGQUC5iMjBdLaHnNUoJGPKv8u07UjoAOCR5MUSipm
+	 DnYZtzMXtxQTZ+XFbzt4N1krWytliFVaKc5kEe9NcLXbqa6SnOZH+O8b6ag/F56W7u
+	 4N7ZfJhBljEd+9OPuHaLnnm+6RlV5fnbOK05n3NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
+	Mason Yang <masonccyang@mxic.com.tw>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 108/201] spi: imx: fix runtime pm leak on probe deferral
-Date: Fri, 15 May 2026 17:48:46 +0200
-Message-ID: <20260515154700.890897484@linuxfoundation.org>
+Subject: [PATCH 7.0 109/201] spi: mxic: fix controller deregistration
+Date: Fri, 15 May 2026 17:48:47 +0200
+Message-ID: <20260515154700.913104466@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,32 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit a1d50a37d3b1df84f536a982f692371039df4a48 upstream.
+commit adbc595e272052181d40ec307a4c5ba98571b0fe upstream.
 
-Make sure to balance the runtime PM usage count before returning on
-probe failure (e.g. probe deferral) so that the controller can be
-suspended when a driver is later bound.
+Make sure to deregister the controller before disabling underlying
+resources like clocks (via runtime pm) during driver unbind.
 
-Fixes: 43b6bf406cd0 ("spi: imx: fix runtime pm support for !CONFIG_PM")
-Cc: stable@vger.kernel.org	# 5.10
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Fixes: b942d80b0a39 ("spi: Add MXIC controller driver")
+Cc: stable@vger.kernel.org	# 5.0: cc53711b2191
+Cc: stable@vger.kernel.org	# 5.0
+Cc: Mason Yang <masonccyang@mxic.com.tw>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421125632.1537235-1-johan@kernel.org
+Link: https://patch.msgid.link/20260414134319.978196-6-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-imx.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-mxic.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -2384,6 +2384,7 @@ out_register_controller:
- out_runtime_pm_put:
- 	pm_runtime_dont_use_autosuspend(spi_imx->dev);
- 	pm_runtime_disable(spi_imx->dev);
-+	pm_runtime_put_noidle(spi_imx->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
+--- a/drivers/spi/spi-mxic.c
++++ b/drivers/spi/spi-mxic.c
+@@ -832,9 +832,10 @@ static void mxic_spi_remove(struct platf
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct mxic_spi *mxic = spi_controller_get_devdata(host);
  
- 	clk_disable_unprepare(spi_imx->clk_ipg);
++	spi_unregister_controller(host);
++
+ 	pm_runtime_disable(&pdev->dev);
+ 	mxic_spi_mem_ecc_remove(mxic);
+-	spi_unregister_controller(host);
+ }
+ 
+ static const struct of_device_id mxic_spi_of_ids[] = {
 
 
