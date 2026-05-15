@@ -1,74 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227BD1C861D;
-	Fri, 15 May 2026 14:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0994C3FF1A2;
+	Fri, 15 May 2026 15:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778854275; cv=none; b=l18+llxMUEk2U7xqBGOGDSROM7fxxeboYaosFbLYIBhIPTgFPAe0bcjVqPybeBvuJacinA9nKzADXiIk7Ov5O7r6xBq1mxWkLLGE8587N3B9eD65DCkWb9QmRKSjbbtnU48VMpcT639AHsH2w4CpEXFz4B9ZJbgaU/4k4ELmSbY=
+	t=1778860229; cv=none; b=QinnUrTMIErJZxZ+B7YgcDI3A/dBek1QRlnQai24G5ZWp0c9sMtEMlHnNYEbMMoVDwKwb9WiRwDKPxDebrSHZKbGdvinDiyOBlRjZaYg1kDpPsa/oFaeQFqOp7Iiwc7asOeenSmfyaPoHN0hAqDcziZxU9GyigVX2wLY3RRcxW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778854275; c=relaxed/simple;
-	bh=v59ub3zIM85ceK9Xm+l25zDa14dRJ1t2DbhpmYfwjyw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qim5lp60HHkXK73MGEM8CuZ9CY/2VtXT+Ps8ZOWFDZRodWTIuGxc3YQi3oZLuxTYA/HuDHqEHU5TCY2LnvJ5i6MxVbvAUqDucXKhLB1DEQX4ar4pDPaPblTJn+w+IdOtI+Si4fkEektcjekWhjVsAPQFDw0C5O/hz1xZPkAThDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CFuvn7v0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1778860229; c=relaxed/simple;
+	bh=uwElOG6D3kbAPL0o7PLf5JEOSv6Qoozz0osDeGa6C+A=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=K977iMRN2bSNOYIK4yFGjlVCwRh0WB66IfSZDjMf+CMdzRv1zgWScJ0uMoEHMy4z/S5CgB1eCuwxKhi5xeY8zS6q41rtIdV8G/DuVURZZNsvywA9aAxogu4Mr8N5itTZJwojjtZ0rVaIoqocug+UlRw4yM840bnc3CJxy93Fdhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5KKk7Du; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CFuvn7v0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3F1C2BCB0;
-	Fri, 15 May 2026 14:11:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778854275;
-	bh=v59ub3zIM85ceK9Xm+l25zDa14dRJ1t2DbhpmYfwjyw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CFuvn7v0swDt+59PtYgfGSi593aL2XuMvHcb/bjh+5M9RQ3ExSSuHL7CQSgc4Skv1
-	 OrwDYkJPfAoc/lK7y83g0RCQ1sjjSQ6+TYhzvFwkTmUc3LvI1bf/84BlKrbXKOiZsB
-	 QmzIdxVjTaR4GzC1ElPzmSUlHy3c7ptzDx+VjSrzspl8F/BK8zScFg68X3mUBGTjhW
-	 o2AJ/BwBG3QDAyDYUJ3J2RYOWsGFiKHJxbOlt7qXsJfsYQsEM7zcbzZQbKAY40Tn23
-	 F/ME+pQjh4WA9YGliILehGvN1BXoQpjkTUjmIfKlYgH+Bl9uQDftx0tQXgUTm12+nq
-	 KU8QEV+BGJBXQ==
-Date: Fri, 15 May 2026 10:11:13 -0400
-From: Sasha Levin <sashal@kernel.org>
-To: Jens Axboe <axboe@kernel.dk>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>, io-uring@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 7.0] io_uring/wait: honour caller's time
- namespace for IORING_ENTER_ABS_TIMER
-Message-ID: <agcpgQ9OPLLP7c5Y@laps>
-References: <20260511221931.2370053-1-sashal@kernel.org>
- <20260511221931.2370053-13-sashal@kernel.org>
- <e12d01e9-8934-4150-bcb3-09ba147fc842@kernel.dk>
- <96e5ee2d-a64b-408a-ba7f-e9ca25952959@kernel.dk>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5KKk7Du"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67267C2BCB0;
+	Fri, 15 May 2026 15:50:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1778860228;
+	bh=uwElOG6D3kbAPL0o7PLf5JEOSv6Qoozz0osDeGa6C+A=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=o5KKk7DueT0HudMmHuJJwqmS2v3jySq/r/Hs9iVk67pR6e8Ia1qgM/WgV5X3qLMn8
+	 4c7X6S65AM1Wzct/GSDKlpfiK8DYIqnwyhRFYYL76Q2d5LlitpWj3QR0ZNthMyFL5C
+	 yMIat2/yNG6j//X62hrC8D4VnApwLEpVauy8zLr8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Xingyu Jin <xingyuj@google.com>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.12 001/144] HID: playstation: Clamp num_touch_reports
+Date: Fri, 15 May 2026 17:47:07 +0200
+Message-ID: <20260515154653.508245430@linuxfoundation.org>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
+References: <20260515154653.469907118@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <96e5ee2d-a64b-408a-ba7f-e9ca25952959@kernel.dk>
+Content-Transfer-Encoding: 8bit
 
-On Fri, May 15, 2026 at 08:04:57AM -0600, Jens Axboe wrote:
->On 5/12/26 9:47 AM, Jens Axboe wrote:
->> On 5/11/26 4:19 PM, Sasha Levin wrote:
->>> From: Maoyi Xie <maoyixie.tju@gmail.com>
->>>
->>> [ Upstream commit 45d2b37a37ab98484693533496395c610a2cab96 ]
->>
->> If you auto-pick this one, please also do the other one in the
->> series, 9cc6bac1bebf8310d2950d1411a91479e86d69a1. Makes no sense
->> to do just one of them.
->
->Hello?
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-Sorry, yes - I'll pick it up too.
+------------------
 
-I usually let AUTOSEL reviews soak for a bit before I go over them to catch
-follow up fixes or other concerns.
+From: T.J. Mercier <tjmercier@google.com>
 
--- 
-Thanks,
-Sasha
+commit cac61b58a3b6340c52afa06bb15eac033158db2f upstream.
+
+A device would never lie about the number of touch reports would it?
+
+If it does the loop in dualshock4_parse_report will read off the end of
+the touch_reports array, up to about 2 KiB for the maximum number of 256
+loop iteraions. The data that is read is emitted via evdev if the
+DS4_TOUCH_POINT_INACTIVE bit happens to be set. Protect against this by
+clamping the num_touch_reports value provided by the device to the
+maximum size of the touch_reports array.
+
+Fixes: 752038248808 ("HID: playstation: add DualShock4 touchpad support.")
+Cc: stable@vger.kernel.org
+Reported-by: Xingyu Jin <xingyuj@google.com>
+Signed-off-by: T.J. Mercier <tjmercier@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/hid/hid-playstation.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+--- a/drivers/hid/hid-playstation.c
++++ b/drivers/hid/hid-playstation.c
+@@ -2248,7 +2248,8 @@ static int dualshock4_parse_report(struc
+ 		struct dualshock4_input_report_usb *usb = (struct dualshock4_input_report_usb *)data;
+ 
+ 		ds4_report = &usb->common;
+-		num_touch_reports = usb->num_touch_reports;
++		num_touch_reports = min_t(u8, usb->num_touch_reports,
++					  ARRAY_SIZE(usb->touch_reports));
+ 		touch_reports = usb->touch_reports;
+ 	} else if (hdev->bus == BUS_BLUETOOTH && report->id == DS4_INPUT_REPORT_BT &&
+ 			size == DS4_INPUT_REPORT_BT_SIZE) {
+@@ -2262,7 +2263,8 @@ static int dualshock4_parse_report(struc
+ 		}
+ 
+ 		ds4_report = &bt->common;
+-		num_touch_reports = bt->num_touch_reports;
++		num_touch_reports = min_t(u8, bt->num_touch_reports,
++					  ARRAY_SIZE(bt->touch_reports));
+ 		touch_reports = bt->touch_reports;
+ 	} else if (hdev->bus == BUS_BLUETOOTH &&
+ 		   report->id == DS4_INPUT_REPORT_BT_MINIMAL &&
+
+
