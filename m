@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5093A961B;
-	Fri, 15 May 2026 16:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568DA3F6C49;
+	Fri, 15 May 2026 16:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861584; cv=none; b=dSR5lNspmVN6VLZl+w6XIEJ5lAiILXSSK/kreOnt6Xu78REvlDrDvjF8rLhJHIWvs4o6cUZY9nfWUawcy2fqX4DYl7amHL3lwYvI+FvfQU8Dk6kAR4fQ5U489HH18cRFqAknhzqn/9WPSb/scyUd6/QzeMJp+u4kREqeB6ru/iI=
+	t=1778861587; cv=none; b=sIzakqXsoVdYLnjRcIIavyBAYW2nx6mUK+fxeHjux/pcgE2ctgOg4XUOfcqE7/JoeVunntTs7oKQzE/f9dnykBAAuIYMaopzFVA5SDEB4F/hBOeLF5tJPCQCpkaY4p91wW3MmIyqjLvUBUiXDiYtX/o5VQ0lTwwOnJg0KDlGbRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861584; c=relaxed/simple;
-	bh=6wcievC7HHnG/0x9GG4E+xDs5NbRCAniU2Gvq9vQ5rc=;
+	s=arc-20240116; t=1778861587; c=relaxed/simple;
+	bh=u9VBuS1yVRlwGkfMzbIpAZihSYcRVNFO3qVFjz0H90k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DokXHDTjiZiRD/sfmG43tiy8Z8mPVa7RdsouU9mfF2c9sdfaBSLFctMOg7acTqNJtXVzokUj+H0kmcw60qpKH1uO4r36iISoN1V4cecAvtvE3uEmyquaZnRWThCAM8+3h/klmSSABBOgGrm7cq8KuxS6mEr2UcFuKqUkG8++7tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cI/kjPDm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KWG8HSzoajKw7lseg5+UZugU5fqHgIrKGOl4i3CYOkdTS3hhjBtR+r/AlM0/56JkCnZ1lYSzdruAw1iIsjjFFberpcKjGUiFqwFaOgYBSwQBTNj3r+HvsVbhRLBsKjiFSEW6TTXtJqyuNpX9w2EXgxGf7d2qR3TASLyQdw0O/Hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JytSYZbw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cI/kjPDm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513FBC2BCB0;
-	Fri, 15 May 2026 16:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JytSYZbw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF30FC2BCB0;
+	Fri, 15 May 2026 16:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861584;
-	bh=6wcievC7HHnG/0x9GG4E+xDs5NbRCAniU2Gvq9vQ5rc=;
+	s=korg; t=1778861587;
+	bh=u9VBuS1yVRlwGkfMzbIpAZihSYcRVNFO3qVFjz0H90k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cI/kjPDmKFgFhvLL2atv3EOvmphTkva9T7a3TCHR7SauZY6l5DHiFWcsU+k8YRtgD
-	 BB2aj0EYFQtKcDYlLlagmOFyvGFnGt73un0r/35K7bglTfLo2lRFsBGdlCbRLKZUze
-	 IfOOPcW/Vpy6Wr9dTryN+laaPJJ9fwD50kkESv9E=
+	b=JytSYZbwUv5G0S8CKTIMJnyZX+/vjk7f8yw0+uRR0/UV8d15FAWsDtAvfVsNAv9Er
+	 RWV2iVOlvIMN6Aul0X3aK+lE0Fx0+5x7gmp2RoN2f7Z+jrS9SOh9WGYrIHg0iT3aWu
+	 7fYNFuAfvr41pqc9BZzBxs8vVoeqt+AEr3fRCHeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 334/474] spi: imx: fix runtime pm leak on probe deferral
-Date: Fri, 15 May 2026 17:47:23 +0200
-Message-ID: <20260515154722.241864583@linuxfoundation.org>
+	Li Xiao <252270051@hdu.edu.cn>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 6.6 379/474] ipmi:ssif: Clean up kthread on errors
+Date: Fri, 15 May 2026 17:48:08 +0200
+Message-ID: <20260515154723.234779060@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,34 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Corey Minyard <corey@minyard.net>
 
-commit a1d50a37d3b1df84f536a982f692371039df4a48 upstream.
+If an error occurs after the ssif kthread is created, but before the
+main IPMI code starts the ssif interface, the ssif kthread will not
+be stopped.
 
-Make sure to balance the runtime PM usage count before returning on
-probe failure (e.g. probe deferral) so that the controller can be
-suspended when a driver is later bound.
+So make sure the kthread is stopped on an error condition if it is
+running.
 
-Fixes: 43b6bf406cd0 ("spi: imx: fix runtime pm support for !CONFIG_PM")
-Cc: stable@vger.kernel.org	# 5.10
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421125632.1537235-1-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 259307074bfc ("ipmi: Add SMBus interface driver (SSIF)")
+Reported-by: Li Xiao <<252270051@hdu.edu.cn>
+Cc: stable@vger.kernel.org
+Reviewed-by: Li Xiao <252270051@hdu.edu.cn>
+Signed-off-by: Corey Minyard <corey@minyard.net>
+(cherry picked from commit 75c486cb1bcaa1a3ec3a6438498176a3a4998ae4)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-imx.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/ipmi/ipmi_ssif.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -1881,6 +1881,7 @@ out_register_controller:
- out_runtime_pm_put:
- 	pm_runtime_dont_use_autosuspend(spi_imx->dev);
- 	pm_runtime_disable(spi_imx->dev);
-+	pm_runtime_put_noidle(spi_imx->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -1287,8 +1287,10 @@ static void shutdown_ssif(void *send_inf
+ 	ssif_info->stopping = true;
+ 	del_timer_sync(&ssif_info->watch_timer);
+ 	del_timer_sync(&ssif_info->retry_timer);
+-	if (ssif_info->thread)
++	if (ssif_info->thread) {
+ 		kthread_stop(ssif_info->thread);
++		ssif_info->thread = NULL;
++	}
+ }
  
- 	clk_disable_unprepare(spi_imx->clk_ipg);
+ static void ssif_remove(struct i2c_client *client)
+@@ -1913,6 +1915,15 @@ static int ssif_probe(struct i2c_client
+ 
+  out:
+ 	if (rv) {
++		/*
++		 * If ipmi_register_smi() starts the interface, it will
++		 * call shutdown and that will free the thread and set
++		 * it to NULL.  Otherwise it must be freed here.
++		 */
++		if (ssif_info->thread) {
++			kthread_stop(ssif_info->thread);
++			ssif_info->thread = NULL;
++		}
+ 		if (addr_info)
+ 			addr_info->client = NULL;
+ 
 
 
