@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE563FF1D1;
-	Fri, 15 May 2026 15:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BBA3FF1D8;
+	Fri, 15 May 2026 15:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860516; cv=none; b=UolZE4T0eGWTos9ztCUk6+XNzl19qQb3a/HT35AvRvN4ApLIqoazlyO1PXiIXCQ7KCrBT2wzr+wPLkEr+D3uHZsOXaaW0e2SPDtt+IAYYVYs11DHnZwqOKd2ruKmue2FL+HA2RuCbQKGBMDz484Nw9NpNyjgiBDzjiLdbnLEZUk=
+	t=1778860519; cv=none; b=AMhDNQ3e348c0Dnss1JMctpYYPcEzsXoRFNadU+m8d14E8Srj1KBqJ6tjTwLNc2eJruMrYWUyYfgxiEOkGFBY/8CZ1S7+vnVjbA4WHhBIeQrzVM3EyIvueXIqvkXzmRtSNCC4LCMc4zv0RLpHG5G+DAjFicn2twg0SimJdQKopo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860516; c=relaxed/simple;
-	bh=QuCERnIvtr+pXg2Nw/PG+u7T3OHCJuCOeScabzkz+fk=;
+	s=arc-20240116; t=1778860519; c=relaxed/simple;
+	bh=cGkDbWum4ghFoFYoHvF541bMLiyBgSMnDuW6rBL//x8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJ0Yxm2iQx84hP1DJeJZpcC4SkzUoRUXBAN8OQB8VAFEvdQgliR25vZNPCJXyCpbO0/0hD+Eo9Q9SNuTr4w4xUug3gxSXUXiadJoUOpSN2wW6poXBP6uM1ceTbEZIb7j8CdE9d5CXass+Zes6LpZEuI6nEWcIlxnyacOxFzZSog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sknFbLpO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pa85vvZIC70QwXdktvJ3uKen4S5x+Vb6fKHrgaE6jwcFMwJL0rQeJuWOt6rrJrEscLlcBtflaaDs4NDSAeBdhfdbWorGjooDr5YB9AKIdjlJLy4M9ShI3doA266SduuqGPscFwWFgFvRnSaCeI9hzk/tfDt+mw6e26uoPjFsa1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XD0ns8b6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sknFbLpO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25C7C2BCB0;
-	Fri, 15 May 2026 15:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XD0ns8b6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ABB0C2BCB3;
+	Fri, 15 May 2026 15:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860516;
-	bh=QuCERnIvtr+pXg2Nw/PG+u7T3OHCJuCOeScabzkz+fk=;
+	s=korg; t=1778860518;
+	bh=cGkDbWum4ghFoFYoHvF541bMLiyBgSMnDuW6rBL//x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sknFbLpO12a7MuOuUD6Ah3KDpIb4tFguhzhtM2+RdcKy87nQpyY0mbvp0s/F+/QJW
-	 Vnbl6t/8jqt+ZTTDXouabU9GsW+//RACDeLfMzqdH9vXes/mVjBPVvWnRHeAEQdc/X
-	 VsqIX9AWETTKNO5tupEgBR7Fv1k3tzdA1FJgEZ+8=
+	b=XD0ns8b67BWuR/IO+RZZ3pjptx+pyaQceFwYbjlZ72M/ErDNBe+9fl1WB5yDYdT/1
+	 TIAHaJ3Bot3juDOG20w4cWWI4SPuhFQLo5ib/x1lvYqOvFJ+wRMPJjupb/eHFETulr
+	 ulKEAgX5wAVMo8jLtGsHNYvaDIAKy3At46qeru8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/144] tracefs: Fix default permissions not being applied on initial mount
-Date: Fri, 15 May 2026 17:49:06 +0200
-Message-ID: <20260515154656.284998572@linuxfoundation.org>
+Subject: [PATCH 6.12 121/144] fbcon: Avoid OOB font access if console rotation fails
+Date: Fri, 15 May 2026 17:49:07 +0200
+Message-ID: <20260515154656.310918889@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -51,53 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit e8368d1f4bedbb0cce4cfe33a1d2664bb0fd4f27 ]
+[ Upstream commit e4ef723d8975a2694cc90733a6b888a5e2841842 ]
 
-Commit e4d32142d1de ("tracing: Fix tracefs mount options") moved the
-option application from tracefs_fill_super() to tracefs_reconfigure()
-called from tracefs_get_tree(). This fixed mount options being ignored
-on user-space mounts when the superblock already exists, but introduced
-a regression for the initial kernel-internal mount.
+Clear the font buffer if the reallocation during console rotation fails
+in fbcon_rotate_font(). The putcs implementations for the rotated buffer
+will return early in this case. See [1] for an example.
 
-On the first mount (via simple_pin_fs during init), sget_fc() transfers
-fc->s_fs_info to sb->s_fs_info and sets fc->s_fs_info to NULL. When
-tracefs_get_tree() then calls tracefs_reconfigure(), it sees a NULL
-fc->s_fs_info and returns early without applying any options. The root
-inode keeps mode 0755 from simple_fill_super() instead of the intended
-TRACEFS_DEFAULT_MODE (0700).
+Currently, fbcon_rotate_font() keeps the old buffer, which is too small
+for the rotated font. Printing to the rotated console with a high-enough
+character code will overflow the font buffer.
 
-Furthermore, even on subsequent user-space mounts without an explicit
-mode= option, tracefs_apply_options(sb, true) gates the mode behind
-fsi->opts & BIT(Opt_mode), which is unset for the defaults. So the
-mode is never corrected unless the user explicitly passes mode=0700.
+v2:
+- fix typos in commit message
 
-Restore the tracefs_apply_options(sb, false) call in tracefs_fill_super()
-to apply default permissions on initial superblock creation, matching
-what debugfs does in debugfs_fill_super().
-
-Cc: stable@vger.kernel.org
-Fixes: e4d32142d1de ("tracing: Fix tracefs mount options")
-Link: https://patch.msgid.link/20260404134747.98867-1-devnexen@gmail.com
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-[ kept 6.12's `sb->s_d_op = &tracefs_dentry_operations;` instead of upstream's `set_default_d_op()` ]
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
+Cc: stable@vger.kernel.org # v2.6.15+
+Link: https://elixir.bootlin.com/linux/v6.19/source/drivers/video/fbdev/core/fbcon_ccw.c#L144 # [1]
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ renamed `par` to `ops` to match the 6.12 local pointer name ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/inode.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/video/fbdev/core/fbcon_rotate.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/tracefs/inode.c
-+++ b/fs/tracefs/inode.c
-@@ -493,6 +493,7 @@ static int tracefs_fill_super(struct sup
- 		return err;
+--- a/drivers/video/fbdev/core/fbcon_rotate.c
++++ b/drivers/video/fbdev/core/fbcon_rotate.c
+@@ -46,6 +46,10 @@ static int fbcon_rotate_font(struct fb_i
+ 		info->fbops->fb_sync(info);
  
- 	sb->s_op = &tracefs_super_operations;
-+	tracefs_apply_options(sb, false);
- 	sb->s_d_op = &tracefs_dentry_operations;
+ 	if (ops->fd_size < d_cellsize * len) {
++		kfree(ops->fontbuffer);
++		ops->fontbuffer = NULL;
++		ops->fd_size = 0;
++
+ 		dst = kmalloc_array(len, d_cellsize, GFP_KERNEL);
  
- 	return 0;
+ 		if (dst == NULL) {
+@@ -54,7 +58,6 @@ static int fbcon_rotate_font(struct fb_i
+ 		}
+ 
+ 		ops->fd_size = d_cellsize * len;
+-		kfree(ops->fontbuffer);
+ 		ops->fontbuffer = dst;
+ 	}
+ 
 
 
