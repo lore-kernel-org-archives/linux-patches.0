@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6C4355049;
-	Fri, 15 May 2026 16:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2334305685;
+	Fri, 15 May 2026 16:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860836; cv=none; b=tv/5m6GGAzRSNZvCdDP2Yvj1LduWkHOEOteHjM8WRIbe0J1ohQ0iBNT3GmD/mZuWUi7TdNFQPZ5XEQGnbq7i7efEbvZcmsD728BhVriueG5LnH+/hPkl5bR0p3gNRIEKYMuGhQgIqp28K/LnaFPTr7LtA6kpzdpRkLiv1UkhzOo=
+	t=1778860839; cv=none; b=r/pAtSaS2HyfIUfBuU1Ia4T20pCISieH26Q2fCH6HJ/jBVSbd2VPXyRDxJWFawgT9pi0aSfUOJ5jxoEpyqPrNlj+iLmpIHr5e1JvUn4CN2xHfqJxRwXHYneXvvcSLjo+Vtk1D4lFPkOScC1rGcK8s7ywWUHgRwYkZsEzTivtp/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860836; c=relaxed/simple;
-	bh=t0jZOCF7ylDsKES2I3eylSbXa8Sr62pl3UQylv59Grc=;
+	s=arc-20240116; t=1778860839; c=relaxed/simple;
+	bh=IC8OPGvDXp/PXPRPDoKCrvqF5GKEASUZfsy2HwKVh6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JRt8iF0KhPt6i9ck3tQd560l2rR2dwiKFFvSqyBbJSh2nnRSca89TefqJjyBX8gzDHJRp3Heoc7CGtJkQSvl9GQYVuSjn55/tgG7gT5NXqZ/uFExOW6K3xMwNx0jQ59eBT0Mkbez3Zm0/iA6oeZ63W1GRv15brSp2FqR5YgmYg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTDhmZVj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kc/vsFVwVrriwZr6zAIt1QGX9wVpffYKzSM3tZuNWBOGacn+DqA6tOQUedHf8gUlSC+WZSX19b0tKO+/GUoj8RADV2q60FnCM1/HFd2aqjNe8dsLdx5o1jW9xSXgD10dpts3ooZ2AO/rHz94FIyWpfx7o8MmQ9NIrHp0oFRZCug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlJ1Cf3l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTDhmZVj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A17C2BCB0;
-	Fri, 15 May 2026 16:00:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlJ1Cf3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B755C2BCB0;
+	Fri, 15 May 2026 16:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860836;
-	bh=t0jZOCF7ylDsKES2I3eylSbXa8Sr62pl3UQylv59Grc=;
+	s=korg; t=1778860838;
+	bh=IC8OPGvDXp/PXPRPDoKCrvqF5GKEASUZfsy2HwKVh6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTDhmZVj1OVPSH5RVZOZ09UEqcvvXbLaI/P4uK67MRQCtCvTEYG73eFd2gNvxc/Y5
-	 y2Fs4+YAmOWn1u+Fw6jiKwDuCw8rrSDe2pTdvvbxtrMB97zFnk23mrlKulP7VLvZMN
-	 sTL8yWo33WWYPclHuEl/5DyX6HRsmr/+GQcI3ntM=
+	b=MlJ1Cf3lW79EqV3IHaTYfAlHvYZz7cm5ZcAWnjhkG8NWgbvareciebu43yruhlC1h
+	 4CsuUxX2uBBz2OdQ99A11mJX7RbvDjVA3g8tss4mryCs7oM/7G30eoqlngt2Bch0PL
+	 xuMgRDKA0SFnivums4e1+Gp7zGMHE61MUNdl7tX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.6 096/474] KVM: nSVM: Sync NextRIP to cached vmcb12 after VMRUN of L2
-Date: Fri, 15 May 2026 17:43:25 +0200
-Message-ID: <20260515154717.117484090@linuxfoundation.org>
+Subject: [PATCH 6.6 097/474] KVM: nSVM: Sync interrupt shadow to cached vmcb12 after VMRUN of L2
+Date: Fri, 15 May 2026 17:43:26 +0200
+Message-ID: <20260515154717.139029378@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,53 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Yosry Ahmed <yosry@kernel.org>
 
-commit 778d8c1b2a6ffe622ddcd3bb35b620e6e41f4da0 upstream.
+commit 03bee264f8ebfd39e0254c98e112d033a7aa9055 upstream.
 
 After VMRUN in guest mode, nested_sync_control_from_vmcb02() syncs
 fields written by the CPU from vmcb02 to the cached vmcb12. This is
 because the cached vmcb12 is used as the authoritative copy of some of
 the controls, and is the payload when saving/restoring nested state.
 
-NextRIP is also written by the CPU (in some cases) after VMRUN, but is
-not sync'd to the cached vmcb12. As a result, it is corrupted after
-save/restore (replaced by the original value written by L1 on nested
-VMRUN). This could cause problems for both KVM (e.g. when injecting a
-soft IRQ) or L1 (e.g. when using NextRIP to advance RIP after emulating
-an instruction).
+int_state is also written by the CPU, specifically bit 0 (i.e.
+SVM_INTERRUPT_SHADOW_MASK) for nested VMs, but it is not sync'd to
+cached vmcb12. This does not cause a problem if KVM_SET_NESTED_STATE
+preceeds KVM_SET_VCPU_EVENTS in the restore path, as an interrupt shadow
+would be correctly restored to vmcb02 (KVM_SET_VCPU_EVENTS overwrites
+what KVM_SET_NESTED_STATE restored in int_state).
 
-Fix this by sync'ing NextRIP to the cache after VMRUN of L2, but only
-after completing interrupts (not in nested_sync_control_from_vmcb02()),
-as KVM may update NextRIP (e.g. when re-injecting a soft IRQ).
+However, if KVM_SET_VCPU_EVENTS preceeds KVM_SET_NESTED_STATE, an
+interrupt shadow would be restored into vmcb01 instead of vmcb02. This
+would mostly be benign for L1 (delays an interrupt), but not for L2. For
+L2, the vCPU could hang (e.g. if a wakeup interrupt is delivered before
+a HLT that should have been in an interrupt shadow).
+
+Sync int_state to the cached vmcb12 in nested_sync_control_from_vmcb02()
+to avoid this problem. With that, KVM_SET_NESTED_STATE restores the
+correct interrupt shadow state, and if KVM_SET_VCPU_EVENTS follows it
+would overwrite it with the same value.
 
 Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_SET_NESTED_STATE")
 CC: stable@vger.kernel.org
-Co-developed-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-Link: https://patch.msgid.link/20260225005950.3739782-2-yosry@kernel.org
+Link: https://patch.msgid.link/20260225005950.3739782-3-yosry@kernel.org
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kvm/svm/nested.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4339,6 +4339,16 @@ static __no_kcsan fastpath_t svm_vcpu_ru
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -412,6 +412,7 @@ void nested_sync_control_from_vmcb02(str
+ 	u32 mask;
+ 	svm->nested.ctl.event_inj      = svm->vmcb->control.event_inj;
+ 	svm->nested.ctl.event_inj_err  = svm->vmcb->control.event_inj_err;
++	svm->nested.ctl.int_state	= svm->vmcb->control.int_state;
  
- 	svm_complete_interrupts(vcpu);
- 
-+	/*
-+	 * Update the cache after completing interrupts to get an accurate
-+	 * NextRIP, e.g. when re-injecting a soft interrupt.
-+	 *
-+	 * FIXME: Rework svm_get_nested_state() to not pull data from the
-+	 *        cache (except for maybe int_ctl).
-+	 */
-+	if (is_guest_mode(vcpu))
-+		svm->nested.ctl.next_rip = svm->vmcb->control.next_rip;
-+
- 	return svm_exit_handlers_fastpath(vcpu);
- }
- 
+ 	/* Only a few fields of int_ctl are written by the processor.  */
+ 	mask = V_IRQ_MASK | V_TPR_MASK;
 
 
