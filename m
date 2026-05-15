@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9B83FF1AD;
-	Fri, 15 May 2026 16:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112E63B6354;
+	Fri, 15 May 2026 16:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861022; cv=none; b=EvoGUxSlMbYfcgSH9WFEy9bdOLkrA83rzOKVvoBvSf0y07X8gAsDi91BivXZ5LL4I9nd0bfJPmrzfw/V+3HtwaPEb1Tg3OuHsBF5plXwP3r/qaGuTFUW6TEpl9butH6J+ywx2gDWN9ZMiVPBMwZl527J3VPDd4klEMFlsNZG2VE=
+	t=1778861025; cv=none; b=ppfZ29ZwEKJIIWpz/msP7uQ2Y3KBh9YR82ez4m6/NO+7OC/lVP+CCjrinD5KhhB81kP2CXsAi8iWsuHsbMTXfO5w8AB7yLGtLftwJls5bOzJERnzzx12iGPMu11/sXDjg6hGtvLPLUy6N2G76nYSv76CHU2ub7L4jtCVJMtxspc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861022; c=relaxed/simple;
-	bh=k9Vx94vH1fn4o+Sqay+LLGG9ZsOsTyYZVlSoOXR0SzU=;
+	s=arc-20240116; t=1778861025; c=relaxed/simple;
+	bh=77LPvAq35LWMxvq+R++00/oemkIgJCauG31a2bxQbcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0lmGIShIDfHouelEL6S8QcHqK216/hWibe6DC8ebQcqGmkFkPg8AxByUFMia8wF8oYRwrcHzXAPbZwLplVDakSyhj846rs6/pYvT8IWX0dXCRAnAqfV2gYxVJk0Jk1qReMWCgNHh7AKTxpWoISyIgiKO2eyXN39BsVnLk4vIDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ypf9YDw3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rhts2c4XI3YJHTgQI6m5/CZx8V2NLRMAXFe6qo1YK6PgLJ6U1X4mCMyGytX7xtWnOFkXmnZ7VhgxctAAW3+yrOj3h2x2Q5T3GUDTszrGvLNtGY8b1Qb5H+ATR5GjXUE78X+Fiwjx/JrOXT5/Nb30e9M+XdbcyY0j+se5uP/J2IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJgNzNNs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ypf9YDw3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BDDC2BCB0;
-	Fri, 15 May 2026 16:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJgNzNNs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B22FC2BCB0;
+	Fri, 15 May 2026 16:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861022;
-	bh=k9Vx94vH1fn4o+Sqay+LLGG9ZsOsTyYZVlSoOXR0SzU=;
+	s=korg; t=1778861025;
+	bh=77LPvAq35LWMxvq+R++00/oemkIgJCauG31a2bxQbcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ypf9YDw30IKm8COUM213FuL29mjBVXJd80eHK+SCovaHcM9etWpiM606qrNQVQnde
-	 2iT3tF0aOw2LdSfPBQgYUZmMdPYw3iyEYmcINGh2BqHyth1YMAamTt5cuNEw8umxqx
-	 5pceRDpTCtzGouPcm2WS9Vz5/s6VxsxVKvLbKVxQ=
+	b=XJgNzNNsIhQslSIc19w+VsFKlQ4qrxqBg2sLBdhca7cr8GYuo2X4J/kZLjD5Uco8e
+	 hB5ZkCBE983RAGhOneVSxNyrQSd16mSS2tudXW8iZydHqTlEAjg95BDzfC/rq8Hro1
+	 ZOmwVkQHp//FPB3ATXsVJbvULyFvVcljZ+Mgfna8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 170/474] KVM: SVM: check validity of VMCB controls when returning from SMM
-Date: Fri, 15 May 2026 17:44:39 +0200
-Message-ID: <20260515154718.701193930@linuxfoundation.org>
+	Manas <ghandatmanas@gmail.com>,
+	Rakshit Awasthi <rakshitawasthi17@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 171/474] net/sched: sch_red: Replace direct dequeue call with peek and qdisc_dequeue_peeked
+Date: Fri, 15 May 2026 17:44:40 +0200
+Message-ID: <20260515154718.722767511@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -49,76 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit be5fa8737d42c5ba16d2ea72c23681f8abbb07e8 upstream.
+commit 458d5615272d3de535748342eb68ca492343048c upstream.
 
-The VMCB12 is stored in guest memory and can be mangled while in SMM; it
-is then reloaded by svm_leave_smm(), but it is not checked again for
-validity.
+When red qdisc has children (eg qfq qdisc) whose peek() callback is
+qdisc_peek_dequeued(), we could get a kernel panic. When the parent of such
+qdiscs (eg illustrated in patch #3 as tbf) wants to retrieve an skb from
+its child (red in this case), it will do the following:
+ 1a. do a peek() - and when sensing there's an skb the child can offer, then
+     - the child in this case(red) calls its child's (qfq) peek.
+        qfq does the right thing and will return the gso_skb queue packet.
+        Note: if there wasnt a gso_skb entry then qfq will store it there.
+ 1b. invoke a dequeue() on the child (red). And herein lies the problem.
+     - red will call the child's dequeue() which will essentially just
+       try to grab something of qfq's queue.
 
-Move the cached vmcb12 control and save consistency checks out of
-svm_set_nested_state() and into a helper, and reuse it in
-svm_leave_smm().
+[   78.667668][  T363] KASAN: null-ptr-deref in range [0x0000000000000048-0x000000000000004f]
+[   78.667927][  T363] CPU: 1 UID: 0 PID: 363 Comm: ping Not tainted 7.1.0-rc1-00033-g46f74a3f7d57-dirty #790 PREEMPT(full)
+[   78.668263][  T363] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+[   78.668486][  T363] RIP: 0010:qfq_dequeue+0x446/0xc90 [sch_qfq]
+[   78.668718][  T363] Code: 54 c0 e8 dd 90 00 f1 48 c7 c7 e0 03 54 c0 48 89 de e8 ce 90 00 f1 48 8d 7b 48 b8 ff ff 37 00 48 89 fa 48 c1 e0 2a 48 c1 ea 03 <80> 3c 02 00 74 05 e8 ef a1 e1 f1 48 8b 7b 48 48 8d 54 24 58 48 8d
+[   78.669312][  T363] RSP: 0018:ffff88810de573e0 EFLAGS: 00010216
+[   78.669533][  T363] RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+[   78.669790][  T363] RDX: 0000000000000009 RSI: 0000000000000004 RDI: 0000000000000048
+[   78.670044][  T363] RBP: ffff888110dc4000 R08: ffffffffb1b0885a R09: fffffbfff6ba9078
+[   78.670297][  T363] R10: 0000000000000003 R11: ffff888110e31c80 R12: 0000001880000000
+[   78.670560][  T363] R13: ffff888110dc4150 R14: ffff888110dc42b8 R15: 0000000000000200
+[   78.670814][  T363] FS:  00007f66a8f09c40(0000) GS:ffff888163428000(0000) knlGS:0000000000000000
+[   78.671110][  T363] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   78.671324][  T363] CR2: 000055db4c6a30a8 CR3: 000000010da67000 CR4: 0000000000750ef0
+[   78.671585][  T363] PKRU: 55555554
+[   78.671713][  T363] Call Trace:
+[   78.671843][  T363]  <TASK>
+[   78.671936][  T363]  ? __pfx_qfq_dequeue+0x10/0x10 [sch_qfq]
+[   78.672148][  T363]  ? __pfx__printk+0x10/0x10
+[   78.672322][  T363]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   78.672496][  T363]  ? lockdep_hardirqs_on_prepare+0xa8/0x1a0
+[   78.672706][  T363]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   78.672875][  T363]  ? trace_hardirqs_on+0x19/0x1a0
+[   78.673047][  T363]  red_dequeue+0x65/0x270 [sch_red]
+[   78.673217][  T363]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   78.673385][  T363]  tbf_dequeue.cold+0xb0/0x70c [sch_tbf]
+[   78.673566][  T363]  __qdisc_run+0x169/0x1900
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+The right thing to do in #1b is to grab the skb off gso_skb queue.
+This patchset fixes that issue by changing #1b to use qdisc_dequeue_peeked()
+method instead.
+
+Fixes: 77be155cba4e ("pkt_sched: Add peek emulation for non-work-conserving qdiscs.")
+Reported-by: Manas <ghandatmanas@gmail.com>
+Reported-by: Rakshit Awasthi <rakshitawasthi17@gmail.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260430152957.194015-2-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |   12 ++++++++++--
- arch/x86/kvm/svm/svm.c    |    4 ++++
- arch/x86/kvm/svm/svm.h    |    1 +
- 3 files changed, 15 insertions(+), 2 deletions(-)
+ net/sched/sch_red.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -415,6 +415,15 @@ void nested_copy_vmcb_save_to_cache(stru
- 	__nested_copy_vmcb_save_to_cache(&svm->nested.save, save);
- }
+--- a/net/sched/sch_red.c
++++ b/net/sched/sch_red.c
+@@ -153,7 +153,7 @@ static struct sk_buff *red_dequeue(struc
+ 	struct red_sched_data *q = qdisc_priv(sch);
+ 	struct Qdisc *child = q->qdisc;
  
-+int nested_svm_check_cached_vmcb12(struct kvm_vcpu *vcpu)
-+{
-+	if (!nested_vmcb_check_save(vcpu) ||
-+	    !nested_vmcb_check_controls(vcpu))
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- /*
-  * Synchronize fields that are written by the processor, so that
-  * they can be copied back into the vmcb12.
-@@ -888,8 +897,7 @@ int nested_svm_vmrun(struct kvm_vcpu *vc
- 	nested_copy_vmcb_control_to_cache(svm, &vmcb12->control);
- 	nested_copy_vmcb_save_to_cache(svm, &vmcb12->save);
- 
--	if (!nested_vmcb_check_save(vcpu) ||
--	    !nested_vmcb_check_controls(vcpu)) {
-+	if (nested_svm_check_cached_vmcb12(vcpu) < 0) {
- 		vmcb12->control.exit_code    = SVM_EXIT_ERR;
- 		vmcb12->control.exit_code_hi = -1u;
- 		vmcb12->control.exit_info_1  = 0;
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4817,6 +4817,10 @@ static int svm_leave_smm(struct kvm_vcpu
- 	vmcb12 = map.hva;
- 	nested_copy_vmcb_control_to_cache(svm, &vmcb12->control);
- 	nested_copy_vmcb_save_to_cache(svm, &vmcb12->save);
-+
-+	if (nested_svm_check_cached_vmcb12(vcpu) < 0)
-+		goto unmap_save;
-+
- 	ret = enter_svm_guest_mode(vcpu, smram64->svm_guest_vmcb_gpa, vmcb12, false);
- 
- 	if (ret)
---- a/arch/x86/kvm/svm/svm.h
-+++ b/arch/x86/kvm/svm/svm.h
-@@ -612,6 +612,7 @@ static inline int nested_svm_simple_vmex
- 
- int nested_svm_exit_handled(struct vcpu_svm *svm);
- int nested_svm_check_permissions(struct kvm_vcpu *vcpu);
-+int nested_svm_check_cached_vmcb12(struct kvm_vcpu *vcpu);
- int nested_svm_check_exception(struct vcpu_svm *svm, unsigned nr,
- 			       bool has_error_code, u32 error_code);
- int nested_svm_exit_special(struct vcpu_svm *svm);
+-	skb = child->dequeue(child);
++	skb = qdisc_dequeue_peeked(child);
+ 	if (skb) {
+ 		qdisc_bstats_update(sch, skb);
+ 		qdisc_qstats_backlog_dec(sch, skb);
 
 
