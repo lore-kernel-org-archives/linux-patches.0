@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF8130566D;
-	Fri, 15 May 2026 16:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66213B19DE;
+	Fri, 15 May 2026 16:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861827; cv=none; b=Uhwt0ONgZsfqKloiL0l4qOcmGi6Gva9f02ZVjoonF4a3qHC3xiroqsZmrjVwAXyT2xAibAEP5Z++0E8EoPYuvIDtpoeubqkOA98ZaxiXYZak75lTq13JgY+Z+6074lZt5onqX7SCrROR0tg03VL6I7osiLd/CXnGbkJih0U19qA=
+	t=1778861829; cv=none; b=qVpZsCUNdYiTbZIWZnZSPcKVy/MGi2IsplDFi159edTOcGmJNlqfwZ407j7WS8wec6yTTSDBgGjIU44WeLtpXtlCdK40bP6dgTe/DRT9DF7no0rCfGCPOaf46YX7sJ3usz0QVBDyTuIwKDpItu0bPqWNndC8dUbv6e8000OtH78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861827; c=relaxed/simple;
-	bh=y5pQb9S4uAaZ0klBtrlfz1v5A7+CpNkHXCo+U+GDxm0=;
+	s=arc-20240116; t=1778861829; c=relaxed/simple;
+	bh=D3wWN18aDf/IBhyyVjclfibuEfLVl43xGl+v3shyCAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XoR23NzHIJq/vczpjuv5qI40ip11Ob89dTT6NrDiAOORrDzj23jrhQbKD+wbp5o44NAJvRY5CCK/eQmIpFNx05rLOVNscZp6yIQkuIGFw+ywVOe4Z4J9tgG/WvsbesmvVxja0wCI80Ju0IntmBsfuV7jOWZi85S7CAEke+NMGpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwTYQfE/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XuBQSHdAOOwiquFm8sltcQ9+GcF0ELfNKPHm+wE4I4n3mYLpsYWj+3ndkqrWw2EnGfyDXyfL6tgIRD0P3gCIaYxPjV24M9z+HDHj4pucSpDC28ommd+FxHT7mz3QIL4kCZKlrecprBiJ6MiUEdRTG8hLhFtvkg1S2PqK6rdsD0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFMf09sh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwTYQfE/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5985C2BCB3;
-	Fri, 15 May 2026 16:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFMf09sh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED13C2BCB0;
+	Fri, 15 May 2026 16:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861827;
-	bh=y5pQb9S4uAaZ0klBtrlfz1v5A7+CpNkHXCo+U+GDxm0=;
+	s=korg; t=1778861829;
+	bh=D3wWN18aDf/IBhyyVjclfibuEfLVl43xGl+v3shyCAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwTYQfE/nB5ShZKx3fUJ1QOKeL4nm7VL3QkaT0TJdqCa15TYtNvWnI8FjvP7Yy+rd
-	 12NebvGX3ocMJ3/K1Y4rGfZP94V4VVAZ0MG9U9rAszPPxq+YlDNE35y+p22Gl8gd84
-	 LAixyXAD9Ai5z3bRQaYdq6afTOUlNUyLVXdBM6bk=
+	b=qFMf09shD9qDLBC39qYQuzafvsDN9AYcpXqlT7yPYqxdWWuYlkXOYAqOdq8gYIIRy
+	 GdruwaJPNps7FO54/dpSBakf4NCjTxjeeYDuH0O0gAz55Wc0/uggW1u6tRPJ3cqoD+
+	 2Mi6LGE1d3HI9x6DYqsKKG0IHczJ/QGylt24AkYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 471/474] Bluetooth: MGMT: Fix memory leak in set_ssp_complete
-Date: Fri, 15 May 2026 17:49:40 +0200
-Message-ID: <20260515154725.297954202@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 472/474] crypto: nx - fix context leak in nx842_crypto_free_ctx
+Date: Fri, 15 May 2026 17:49:41 +0200
+Message-ID: <20260515154725.318436695@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,58 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 1b9c17fd0a7fdcbe69ec5d6fe8e50bc5ed7f01f2 upstream.
+commit 344e6a4f7ff4756b9b3f75e0eb7eaec297e35540 upstream.
 
-Fix memory leak in set_ssp_complete() where mgmt_pending_cmd structures
-are not freed after being removed from the pending list.
+Since the scomp conversion, nx842_crypto_alloc_ctx() allocates the
+context separately, but nx842_crypto_free_ctx() never releases it. Add
+the missing kfree(ctx) to nx842_crypto_free_ctx(), and reuse
+nx842_crypto_free_ctx() in the allocation error path.
 
-Commit 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs") replaced
-mgmt_pending_foreach() calls with individual command handling but missed
-adding mgmt_pending_free() calls in both error and success paths of
-set_ssp_complete(). Other completion functions like set_le_complete()
-were fixed correctly in the same commit.
-
-This causes a memory leak of the mgmt_pending_cmd structure and its
-associated parameter data for each SSP command that completes.
-
-Add the missing mgmt_pending_free(cmd) calls in both code paths to fix
-the memory leak. Also fix the same issue in set_advertising_complete().
-
-Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
-Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 980b5705f4e7 ("crypto: nx - Migrate to scomp API")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/crypto/nx/nx-842.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1937,6 +1937,7 @@ static void set_ssp_complete(struct hci_
- 		}
- 
- 		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_err);
-+		mgmt_pending_free(cmd);
- 		return;
+--- a/drivers/crypto/nx/nx-842.c
++++ b/drivers/crypto/nx/nx-842.c
+@@ -115,10 +115,7 @@ void *nx842_crypto_alloc_ctx(struct nx84
+ 	ctx->sbounce = (u8 *)__get_free_pages(GFP_KERNEL, BOUNCE_BUFFER_ORDER);
+ 	ctx->dbounce = (u8 *)__get_free_pages(GFP_KERNEL, BOUNCE_BUFFER_ORDER);
+ 	if (!ctx->wmem || !ctx->sbounce || !ctx->dbounce) {
+-		kfree(ctx->wmem);
+-		free_pages((unsigned long)ctx->sbounce, BOUNCE_BUFFER_ORDER);
+-		free_pages((unsigned long)ctx->dbounce, BOUNCE_BUFFER_ORDER);
+-		kfree(ctx);
++		nx842_crypto_free_ctx(ctx);
+ 		return ERR_PTR(-ENOMEM);
  	}
  
-@@ -1955,6 +1956,7 @@ static void set_ssp_complete(struct hci_
- 		sock_put(match.sk);
- 
- 	hci_update_eir_sync(hdev);
-+	mgmt_pending_free(cmd);
+@@ -133,6 +130,7 @@ void nx842_crypto_free_ctx(void *p)
+ 	kfree(ctx->wmem);
+ 	free_pages((unsigned long)ctx->sbounce, BOUNCE_BUFFER_ORDER);
+ 	free_pages((unsigned long)ctx->dbounce, BOUNCE_BUFFER_ORDER);
++	kfree(ctx);
  }
- 
- static int set_ssp_sync(struct hci_dev *hdev, void *data)
-@@ -6452,6 +6454,7 @@ static void set_advertising_complete(str
- 		hci_dev_clear_flag(hdev, HCI_ADVERTISING);
- 
- 	settings_rsp(cmd, &match);
-+	mgmt_pending_free(cmd);
- 
- 	new_settings(hdev, match.sk);
+ EXPORT_SYMBOL_GPL(nx842_crypto_free_ctx);
  
 
 
