@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6255C26CE11;
-	Fri, 15 May 2026 16:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162D33CB2FD;
+	Fri, 15 May 2026 16:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862356; cv=none; b=JiGfKIAUxsV62Xs5p4/ZO4UKnMXb5dw7U86ZKeQEyBWJG9vZVJP5gpYeD6qNdVYLY24iYe18fUXCcXcsJCvWUkAehW2Vglw1pWQCJcXNjV0Y8ihKAznljw40KJHsvaORqTwh/yLFiYejCMbQdlA6dTx/r1IRNn8YQAWgy7/7f+0=
+	t=1778862359; cv=none; b=Ol0U1O5gXHtH5wYvYTq9qo7vZc0kxrrIhMmwuEpO32IU8imGpykXXChpEYJ7tvlZpxlo28SSStQq5wL9dcw9lZBLnzo+VjQzcVd1qphvW+D6VpmoACt0lizeSUXa2jeeGkEsV2O7XEmKRHapbcAkQYKg5xk49R5O3NCRR6Dk1iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862356; c=relaxed/simple;
-	bh=n9Nmm9WI0Mff3ePXdn0t4X+YUN08Mn8XHo6ZSczbd54=;
+	s=arc-20240116; t=1778862359; c=relaxed/simple;
+	bh=hVK0OAfE5kTK1tyayH4x/RU1kLYkVX+fYVkJajAaWag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HrsbprclCpkaxpVeq13aG6D+7F/s45TJJplJQ25CBgarjA3FLMGiGc+3+nRoSbilfJP46uM4CWNV6cJgGJPvX1vRfoyb4julTWqUGw1JxHvK9nO6Hcie7o9xdL+85q1LPr9cEh304E8RPh7KiP7DNth1/V7TrQ10Pf/TxcND3/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGiAWUUQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aYPjqbeo1adSf45mWU+0VqaAFreyal0godkrsnVmS+poVxJVaJ60BrzR0KUjo5YTZOqGWPeVhhADvrIiN1H3XzxGMr2SEhkMmKoylq0mAnEQ+wID11KK09Q5LIihl2MLK1QOa6/jWSfC9ANz2m02HmRPwqCMjgto/oA0P5nGDQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBSYmSES; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGiAWUUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED367C2BCB0;
-	Fri, 15 May 2026 16:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBSYmSES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9B1C2BCB0;
+	Fri, 15 May 2026 16:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862356;
-	bh=n9Nmm9WI0Mff3ePXdn0t4X+YUN08Mn8XHo6ZSczbd54=;
+	s=korg; t=1778862359;
+	bh=hVK0OAfE5kTK1tyayH4x/RU1kLYkVX+fYVkJajAaWag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGiAWUUQl0DF7UKdf9IrH6aYDvdc1d3Vayvnq3QpanOsTRAeJxVBWV03k+QcFIPpg
-	 BLCPIgdBv+r7OjptRMJ0kBCEUrEBcWf+LdPhHDE8/KbqsVqw6I8xDTzICFqqGhaCzJ
-	 npY/5ZI9sSPSNkQznYvtItTjXdgutMN5/LW2LU8E=
+	b=eBSYmSESO11Edaa9Q2QrWaeGtDYe9Ajgnh3IAoGpK/UaXins1VSgGOhIv7EVa7Msl
+	 3flClupA3ievDl/mvfrA+VJTeFBd7iJxO5ChwtjMkK5O6qQTOOkiAHpTelM3WsW8Bl
+	 zjeete5R26qrZpjyqZc2ejQBJOouVptxkzoXWscc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Alexander Koskovich <akoskovich@pm.me>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 018/201] media: renesas: vin: Fix RAW8 (again)
-Date: Fri, 15 May 2026 17:47:16 +0200
-Message-ID: <20260515154658.929125839@linuxfoundation.org>
+Subject: [PATCH 7.0 019/201] media: i2c: ov8856: free control handler on error in ov8856_init_controls()
+Date: Fri, 15 May 2026 17:47:17 +0200
+Message-ID: <20260515154658.950333270@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -46,96 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+From: Alexander Koskovich <akoskovich@pm.me>
 
-commit 40c6da8a9c0f897f99a439330584d93ca7d41226 upstream.
+commit f75e160745663ce9b13362ae6e90bd439c58df69 upstream.
 
-Commit e7376745ad5c ("media: rcar-vin: Fix stride setting for RAW8
-formats") removed dividing the stride by two for RAW8 formats. It is
-unclear how this was tested, but in any of the recent tests this does
-not seem to work and produces quite distorted images.
+The control handler wasn't freed if adding controls failed, add an error
+exit label and convert the existing error return to use it.
 
-However, reverting the patch fixes the issues only partially. VNIS_REG
-requires alignment to 16 bytes, and when dividing the stride by 2, in
-some cases we end up with a non-aligned stride, producing a tilted
-image. This issue has to be fixed in rvin_format_bytesperline() where we
-do the alignment for bytesperline.
-
-Adding back the stride division and increasing the alignment for RAW8
-formats to 0x20 fixes the problems related to RAW8.
-
-Fixes: e7376745ad5c ("media: rcar-vin: Fix stride setting for RAW8 formats")
+Fixes: 879347f0c258 ("media: ov8856: Add support for OV8856 sensor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/renesas/rcar-vin/rcar-dma.c  |   22 ++++++++++++++++++++
- drivers/media/platform/renesas/rcar-vin/rcar-v4l2.c |   12 ++++++++++
- 2 files changed, 34 insertions(+)
+ drivers/media/i2c/ov8856.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
-+++ b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
-@@ -676,8 +676,30 @@ void rvin_crop_scale_comp(struct rvin_de
- 	if (vin->scaler)
- 		vin->scaler(vin);
- 
-+	/*
-+	 * VNIS_REG has four lowest bits always 0, i.e. the stride has to be
-+	 * aligned to 16 bytes. This is done in rvin_format_bytesperline().
-+	 */
-+
- 	fmt = rvin_format_from_pixel(vin, vin->format.pixelformat);
- 	stride = vin->format.bytesperline / fmt->bpp;
-+
-+	/*
-+	 * RAW8 format bpp is 1, but the hardware process RAW8 format in 2 pixel
-+	 * units, so we need to divide the stride by 2.
-+	 */
-+	switch (vin->format.pixelformat) {
-+	case V4L2_PIX_FMT_SBGGR8:
-+	case V4L2_PIX_FMT_SGBRG8:
-+	case V4L2_PIX_FMT_SGRBG8:
-+	case V4L2_PIX_FMT_SRGGB8:
-+	case V4L2_PIX_FMT_GREY:
-+		stride /= 2;
-+		break;
-+	default:
-+		break;
+--- a/drivers/media/i2c/ov8856.c
++++ b/drivers/media/i2c/ov8856.c
+@@ -1951,12 +1951,18 @@ static int ov8856_init_controls(struct o
+ 			  V4L2_CID_HFLIP, 0, 1, 1, 0);
+ 	v4l2_ctrl_new_std(ctrl_hdlr, &ov8856_ctrl_ops,
+ 			  V4L2_CID_VFLIP, 0, 1, 1, 0);
+-	if (ctrl_hdlr->error)
+-		return ctrl_hdlr->error;
++	if (ctrl_hdlr->error) {
++		ret = ctrl_hdlr->error;
++		goto err_ctrl_handler_free;
 +	}
+ 
+ 	ov8856->sd.ctrl_handler = ctrl_hdlr;
+ 
+ 	return 0;
 +
- 	rvin_write(vin, stride, VNIS_REG);
++err_ctrl_handler_free:
++	v4l2_ctrl_handler_free(ctrl_hdlr);
++	return ret;
  }
  
---- a/drivers/media/platform/renesas/rcar-vin/rcar-v4l2.c
-+++ b/drivers/media/platform/renesas/rcar-vin/rcar-v4l2.c
-@@ -155,6 +155,18 @@ static u32 rvin_format_bytesperline(stru
- 	case V4L2_PIX_FMT_NV16:
- 		align = 0x20;
- 		break;
-+	case V4L2_PIX_FMT_SBGGR8:
-+	case V4L2_PIX_FMT_SGBRG8:
-+	case V4L2_PIX_FMT_SGRBG8:
-+	case V4L2_PIX_FMT_SRGGB8:
-+	case V4L2_PIX_FMT_GREY:
-+		/*
-+		 * RAW8 format bpp is 1, but the hardware process RAW8 format in
-+		 * 2 pixel units, and we need to align to 32 bytes. See
-+		 * rvin_crop_scale_comp().
-+		 */
-+		align = 0x20;
-+		break;
- 	default:
- 		align = 0x10;
- 		break;
+ static void ov8856_update_pad_format(struct ov8856 *ov8856,
 
 
