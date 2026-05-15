@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5A730568A;
-	Fri, 15 May 2026 16:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAC830568A;
+	Fri, 15 May 2026 16:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861033; cv=none; b=fXmrKzDGHNfF01k/BYSgtiETHzsuXAy1oxCL8mr0BZurInFOZrqEutT+v98wdoA9hlVYyMBrd78vKv+JBekg4PyqRz4MWUWecR11YafsTQoAklZcj6yM6ynDOf+f/yjnLH2xBUU+3JbUU+DT95xI5hGdLe6zgRAN/iaTSh/vJc0=
+	t=1778861035; cv=none; b=H/uH9BC/Teo4cHaZaAdpj0tigeQw2mVXyKxNcO2TJWXu9jWMoIGNawxXn4X7/gIDgL8KNwKSrpzBboDkefpcJnSaI4Xn5B30lfwlKADQxDXyEXzRthl2mvxquWZGtmePldAHmmx7c4SWF8zXblmoheAoPKBaa4+gvKjBYJZT4gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861033; c=relaxed/simple;
-	bh=8ewDYznr9Mupqa+LsVao3Fkh9aJbmnv1p83cb+W9aPQ=;
+	s=arc-20240116; t=1778861035; c=relaxed/simple;
+	bh=bSijuh4BowO1bp3Exmq/lsLFuiq3+KZBNdb5j7JGnOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMycsEDF1DX+8b524Gm0Qo5TPikPeA6QjloAdPFZ0escmm3MT60FDRr8B9JpXsU/Y667/uKK+C2MyvVlZsld28VyI9IvPZKipY3EdAJYWJtLjsFHGBXUo3lso9Csqo39v2bHkm6FJmZnnmTqMAg1txUxRhWg0xKyaUHlvGRQ0GY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEZ/xNks; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HiTm101hQkyXPjsssaYpk7rcVIuH3jaXrwhusb3UrNz3KckEjixyA5boqanXCzs07r+46jN9umrXySDv0LaSkJ/uJfTxh4RZt7PLAM3uopaWHvfdG9I0xhotmU/e6SnmZP7KkrBEhw/YjnIa0BGcdJkUxF6dBZ05gVgxnirop4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mbe1Iv4M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEZ/xNks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BAECC2BCB0;
-	Fri, 15 May 2026 16:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mbe1Iv4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CF5C2BCB0;
+	Fri, 15 May 2026 16:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861032;
-	bh=8ewDYznr9Mupqa+LsVao3Fkh9aJbmnv1p83cb+W9aPQ=;
+	s=korg; t=1778861035;
+	bh=bSijuh4BowO1bp3Exmq/lsLFuiq3+KZBNdb5j7JGnOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YEZ/xNksDky0bStBX9nKz9erzMfe+yJ51YKI4J3T+lenU/FgmH5AY21jSzi3AOpWo
-	 usXiGf7kL+70Dpe2OcbwnUc2YXX8tLHhs4ruCT5YjKP8KArVC5VDsAopoUGy7I5fpG
-	 hSWdwkCPcZj23BOKHjh3utTgIveCiS5tTUpQ0o20=
+	b=Mbe1Iv4MyEcDFd0DA9wB77KhuhIzKjbdFgudOIwk8+rhNh3YlKX9mASoi5vDDvdHZ
+	 Go67V5Z6sU+Ffcp+z/YzpVFa8SCb4qDN0vIVrbBgI6mEjlgIyLMrdcFRT0GsvhM/Gn
+	 uo6+b87OkGrxHN4s46fmfavzY7rg5FIquIbdoVIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 174/474] bpf: preserve STACK_ZERO slots on partial reg spills
-Date: Fri, 15 May 2026 17:44:43 +0200
-Message-ID: <20260515154718.787746541@linuxfoundation.org>
+Subject: [PATCH 6.6 157/474] x86/shstk: Prevent deadlock during shstk sigreturn
+Date: Fri, 15 May 2026 17:44:26 +0200
+Message-ID: <20260515154718.422478475@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -55,116 +50,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Rick Edgecombe <rick.p.edgecombe@intel.com>
 
-[ Upstream commit eaf18febd6ebc381aeb61543705148b3e28c7c47 ]
+[ Upstream commit 9874b2917b9fbc30956fee209d3c4aa47201c64e ]
 
-Instead of always forcing STACK_ZERO slots to STACK_MISC, preserve it in
-situations where this is possible. E.g., when spilling register as
-1/2/4-byte subslots on the stack, all the remaining bytes in the stack
-slot do not automatically become unknown. If we knew they contained
-zeroes, we can preserve those STACK_ZERO markers.
+During sigreturn the shadow stack signal frame is popped. The kernel does
+this by reading the shadow stack using normal read accesses. When it can't
+assume the memory is shadow stack, it takes extra steps to makes sure it is
+reading actual shadow stack memory and not other normal readable memory. It
+does this by holding the mmap read lock while doing the access and checking
+the flags of the VMA.
 
-Add a helper mark_stack_slot_misc(), similar to scrub_spilled_slot(),
-but that doesn't overwrite either STACK_INVALID nor STACK_ZERO. Note
-that we need to take into account possibility of being in unprivileged
-mode, in which case STACK_INVALID is forced to STACK_MISC for correctness,
-as treating STACK_INVALID as equivalent STACK_MISC is only enabled in
-privileged mode.
+Unfortunately that is not safe. If the read of the shadow stack sigframe
+hits a page fault, the fault handler will try to recursively grab another
+mmap read lock. This normally works ok, but if a writer on another CPU is
+also waiting, the second read lock could fail and cause a deadlock.
 
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231205184248.1502704-5-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Fix this by doing the read of the userspace memory via gup. Embed it in the
+get_shstk_data() helper.
+
+Currently there is a check that skips the lookup work when the SSP can be
+assumed to be on a shadow stack. While reorganizing the function, remove
+the optimization to make the tricky code flows more common, such that
+issues like this cannot escape detection for so long.
+
+[Due to missing per-vma MM sequence counter, use a simpler GUP based
+solution for the backport]
+Cc: <stable@vger.kernel.org> # Depends on https://lore.kernel.org/all/20260504205924.536382-1-rick.p.edgecombe@intel.com/
+Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ arch/x86/kernel/shstk.c | 46 ++++++++++++++++++++++++++---------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index e44da369dff63..8309504d1660e 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -1347,6 +1347,21 @@ static bool is_spilled_scalar_reg(const struct bpf_stack_state *stack)
- 	       stack->spilled_ptr.type == SCALAR_VALUE;
+diff --git a/arch/x86/kernel/shstk.c b/arch/x86/kernel/shstk.c
+index d259d7d5b962f..ba93c4e6a2319 100644
+--- a/arch/x86/kernel/shstk.c
++++ b/arch/x86/kernel/shstk.c
+@@ -18,6 +18,7 @@
+ #include <linux/sizes.h>
+ #include <linux/user.h>
+ #include <linux/syscalls.h>
++#include <linux/highmem.h>
+ #include <asm/msr.h>
+ #include <asm/fpu/xstate.h>
+ #include <asm/fpu/types.h>
+@@ -262,11 +263,29 @@ static int put_shstk_data(u64 __user *addr, u64 data)
+ 	return 0;
  }
  
-+/* Mark stack slot as STACK_MISC, unless it is already STACK_INVALID, in which
-+ * case they are equivalent, or it's STACK_ZERO, in which case we preserve
-+ * more precise STACK_ZERO.
-+ * Note, in uprivileged mode leaving STACK_INVALID is wrong, so we take
-+ * env->allow_ptr_leaks into account and force STACK_MISC, if necessary.
-+ */
-+static void mark_stack_slot_misc(struct bpf_verifier_env *env, u8 *stype)
++/* Copy from aligned address in userspace without risk of page fault. */
++static int shstk_copy_user_gup(unsigned long *ldata, unsigned long __user *addr)
 +{
-+	if (*stype == STACK_ZERO)
-+		return;
-+	if (env->allow_ptr_leaks && *stype == STACK_INVALID)
-+		return;
-+	*stype = STACK_MISC;
++	struct page *page;
++	void *kaddr;
++
++	mmap_assert_locked(current->mm);
++	if (get_user_pages((unsigned long)addr, 1, 0, &page) != 1)
++		return -EFAULT;
++
++	kaddr = kmap_local_page(page);
++	*ldata = *(unsigned long *)(kaddr + offset_in_page(addr));
++	kunmap_local(kaddr);
++	put_page(page);
++
++	return 0;
 +}
 +
- static void scrub_spilled_slot(u8 *stype)
+ static int get_shstk_data(unsigned long *data, unsigned long __user *addr)
  {
- 	if (*stype != STACK_INVALID)
-@@ -4577,7 +4592,8 @@ static void copy_register_state(struct bpf_reg_state *dst, const struct bpf_reg_
- 	dst->live = live;
+ 	unsigned long ldata;
+ 
+-	if (unlikely(get_user(ldata, addr)))
++	if (shstk_copy_user_gup(&ldata, addr))
+ 		return -EFAULT;
+ 
+ 	if (!(ldata & SHSTK_DATA_BIT))
+@@ -296,7 +315,6 @@ static int shstk_pop_sigframe(unsigned long *ssp)
+ {
+ 	struct vm_area_struct *vma;
+ 	unsigned long token_addr;
+-	bool need_to_check_vma;
+ 	int err = 1;
+ 
+ 	/*
+@@ -308,26 +326,21 @@ static int shstk_pop_sigframe(unsigned long *ssp)
+ 	if (!IS_ALIGNED(*ssp, 8))
+ 		return -EINVAL;
+ 
+-	need_to_check_vma = PAGE_ALIGN(*ssp) == *ssp;
+-
+-	if (need_to_check_vma)
+-		if (mmap_read_lock_killable(current->mm))
+-			return -EINTR;
++	if (mmap_read_lock_killable(current->mm))
++		return -EINTR;
+ 
+ 	err = get_shstk_data(&token_addr, (unsigned long __user *)*ssp);
+ 	if (unlikely(err))
+ 		goto out_err;
+ 
+-	if (need_to_check_vma) {
+-		vma = find_vma(current->mm, *ssp);
+-		if (!vma || !(vma->vm_flags & VM_SHADOW_STACK)) {
+-			err = -EFAULT;
+-			goto out_err;
+-		}
+-
+-		mmap_read_unlock(current->mm);
++	vma = find_vma(current->mm, *ssp);
++	if (!vma || !(vma->vm_flags & VM_SHADOW_STACK)) {
++		err = -EFAULT;
++		goto out_err;
+ 	}
+ 
++	mmap_read_unlock(current->mm);
++
+ 	/* Restore SSP aligned? */
+ 	if (unlikely(!IS_ALIGNED(token_addr, 8)))
+ 		return -EINVAL;
+@@ -340,8 +353,7 @@ static int shstk_pop_sigframe(unsigned long *ssp)
+ 
+ 	return 0;
+ out_err:
+-	if (need_to_check_vma)
+-		mmap_read_unlock(current->mm);
++	mmap_read_unlock(current->mm);
+ 	return err;
  }
  
--static void save_register_state(struct bpf_func_state *state,
-+static void save_register_state(struct bpf_verifier_env *env,
-+				struct bpf_func_state *state,
- 				int spi, struct bpf_reg_state *reg,
- 				int size)
- {
-@@ -4592,7 +4608,7 @@ static void save_register_state(struct bpf_func_state *state,
- 
- 	/* size < 8 bytes spill */
- 	for (; i; i--)
--		scrub_spilled_slot(&state->stack[spi].slot_type[i - 1]);
-+		mark_stack_slot_misc(env, &state->stack[spi].slot_type[i - 1]);
- }
- 
- static bool is_bpf_st_mem(struct bpf_insn *insn)
-@@ -4652,7 +4668,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 	mark_stack_slot_scratched(env, spi);
- 	if (reg && !(off % BPF_REG_SIZE) && register_is_bounded(reg) &&
- 	    !register_is_null(reg) && env->bpf_capable) {
--		save_register_state(state, spi, reg, size);
-+		save_register_state(env, state, spi, reg, size);
- 		/* Break the relation on a narrowing spill. */
- 		if (fls64(reg->umax_value) > BITS_PER_BYTE * size)
- 			state->stack[spi].spilled_ptr.id = 0;
-@@ -4662,7 +4678,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 
- 		__mark_reg_known(&fake_reg, insn->imm);
- 		fake_reg.type = SCALAR_VALUE;
--		save_register_state(state, spi, &fake_reg, size);
-+		save_register_state(env, state, spi, &fake_reg, size);
- 		insn_flags = 0; /* not a register spill */
- 	} else if (reg && is_spillable_regtype(reg->type)) {
- 		/* register containing pointer is being spilled into stack */
-@@ -4675,7 +4691,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 			verbose(env, "cannot spill pointers to stack into stack frame of the caller\n");
- 			return -EINVAL;
- 		}
--		save_register_state(state, spi, reg, size);
-+		save_register_state(env, state, spi, reg, size);
- 	} else {
- 		u8 type = STACK_MISC;
- 
-@@ -4942,6 +4958,8 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 						continue;
- 					if (type == STACK_MISC)
- 						continue;
-+					if (type == STACK_ZERO)
-+						continue;
- 					if (type == STACK_INVALID && env->allow_uninit_stack)
- 						continue;
- 					verbose(env, "invalid read from stack off %d+%d size %d\n",
 -- 
 2.53.0
 
