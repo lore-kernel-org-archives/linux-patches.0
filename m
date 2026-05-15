@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADECA20297C;
-	Fri, 15 May 2026 16:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D08720297C;
+	Fri, 15 May 2026 16:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862219; cv=none; b=aO0PI5x8hLxODaD+NCEk57bKJPb7/2Y0BhzQRz+9gmODPJ5NnD3eDsRYYIHwHp/7vLWF0laDWAy050o8CWT9jSCKmmydhhQ/WUThlW9NFqz7+lUAke24AGOaL2DU1Zswwj9N3qHHgXyeWV2zJFWBucGlUxwMBFqg0kY5Y+uYOMI=
+	t=1778862222; cv=none; b=k1pZcOD1sXkUqGd8Qj3WEV2etmSnwv6GuklTdlzkcIGzE8wdGdFSrFdBMH+BHi36us2UplCZkVJkHcBu9kTtHDHUrKcjuP7+bxIISgXJ8SbJzG/XBpaDxjm0CnNJ6BUIKOhuLtl+fporJQa2wjIHVtP7D351o/Q8kQ2f7fRSKAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862219; c=relaxed/simple;
-	bh=bEwtz9wFEKMqSHgfST8WSFTEZdsIW9YApBNZzDskF3g=;
+	s=arc-20240116; t=1778862222; c=relaxed/simple;
+	bh=N+KNjdhU7abRwoQOV4SpYvqCuDqnrHCQyHeJnD8zzL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebQqfIqT3cH4XOb/gqJWinhGsholYroaMecsTyzVNBrZBjMm0DpBI9Bz7vDRxtOSTGGBw1G6VFrPMmREGaE8cdITQNnB2tDkUtP3F9YWwIlFdKXLmLt0//kQIB9FhYqZlX0Ro017qRlc4uyNMnLUwrKtynogu67ejHsMVRxN65Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvDdee0L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LASruufr6SFe6NuZ6NQQbQcgPyKldNwlOOKTGGtjHGoRU11GCxIS3Hd1vgEgJ4U0MtpL7tgopla4lyizifdN4Q3SQ9fNlEoc5HSeyaRwbqoswGQLWsjpuRFVfpXW2FD7xU34mhEp2fjdHsj6juM/F66iUMJubvDmCIxWEVv9TTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3g7fl4U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvDdee0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46562C2BCB0;
-	Fri, 15 May 2026 16:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3g7fl4U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82CFC2BCB0;
+	Fri, 15 May 2026 16:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862219;
-	bh=bEwtz9wFEKMqSHgfST8WSFTEZdsIW9YApBNZzDskF3g=;
+	s=korg; t=1778862222;
+	bh=N+KNjdhU7abRwoQOV4SpYvqCuDqnrHCQyHeJnD8zzL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CvDdee0LNq+Fh6tnpUtx8fW3toBsJkFinmo0/BCGvRsBHHooIUxO84nGFe8VRPsmu
-	 r47zzsLHt/21bj8xouI2fbWsoA5h4j7X41v1PB6h0F2YoZFSs2uWV9LSmPRcDZJIrN
-	 daSuD9JfZuWzyTg3yOOwz0wi11TAR5XPS57rbaJs=
+	b=j3g7fl4UgXwSBPA3oqTF5iZRr6V1IJv3X1H5GSY+u4YB7xvStqkvnnpJaz1N2XF3S
+	 38J000NEmweHYwRBnXdPfb5KPNYpvf3nyaseIG5tOiM16xN1tg1KPDtWYLHigZDYk/
+	 +Oqfldt+wjAEa01rWUjMqv9EcGwMtvjKBo4mXhX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	soopyc <cassie@soopy.moe>,
+	Sasha Finkelstein <k@chaosmail.tech>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>
-Subject: [PATCH 6.18 112/188] drm/gem: Fix inconsistent plane dimension calculation in drm_gem_fb_init_with_funcs()
-Date: Fri, 15 May 2026 17:48:49 +0200
-Message-ID: <20260515154659.759613648@linuxfoundation.org>
+	Aditya Garg <gargaditya08@live.com>
+Subject: [PATCH 6.18 113/188] drm/appletbdrm: Use kvzalloc for big allocations
+Date: Fri, 15 May 2026 17:48:50 +0200
+Message-ID: <20260515154659.781487940@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -50,56 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: Sasha Finkelstein <k@chaosmail.tech>
 
-commit 3d4c2268bd7243c3780fe32bf24ff876da272acf upstream.
+commit aaaa684bab1f6d9ecfc49db328facb1771fd0eb2 upstream.
 
-drm_gem_fb_init_with_funcs() computes sub-sampled plane dimensions
-using plain integer division:
+This driver is attached to a ~2000x80 screen, which is a lot more than
+a single page. This causes out of memory errors in some rare cases.
 
-  unsigned int width  = mode_cmd->width  / (i ? info->hsub : 1);
-  unsigned int height = mode_cmd->height / (i ? info->vsub : 1);
-
-However, the ioctl-level framebuffer_check() in drm_framebuffer.c uses
-drm_format_info_plane_width/height() which round up dimensions via
-DIV_ROUND_UP(). This inconsistency corrupts the subsequent GEM object
-size check for certain pixel format and dimension combinations.
-
-For example, with NV12 (vsub=2) and a 1-pixel-tall framebuffer the
-GEM size validation path sees height=0 instead of height=1. The
-expression (height - 1) then wraps to UINT_MAX as an unsigned int,
-causing min_size to overflow and wrap back to a small value. A tiny
-GEM object therefore passes the size guard, yet when the GPU accesses
-the chroma plane it will read or write memory beyond the object's
-bounds.
-
-Fix by replacing the open-coded divisions with drm_format_info_plane_width()
-and drm_format_info_plane_height(), which use DIV_ROUND_UP() and match
-the calculation already used in framebuffer_check().
-
-Fixes: 4c3dbb2c312c ("drm: Add GEM backed framebuffer library")
-Cc: stable@vger.kernel.org # v4.14+
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Reported-by: soopyc <cassie@soopy.moe>
+Closes: https://github.com/t2linux/fedora/issues/51
+Signed-off-by: Sasha Finkelstein <k@chaosmail.tech>
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260420013637.457751-1-ashutoshdesai993@gmail.com
+Reviewed-by: Aditya Garg <gargaditya08@live.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 0670c2f56e45 ("drm/tiny: add driver for Apple Touch Bars in x86 Macs")
+Cc: <stable@vger.kernel.org> # v6.15+
+Link: https://patch.msgid.link/20260420-x86-tb-vmalloc-v1-1-7757ff657223@chaosmail.tech
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gem_framebuffer_helper.c |    4 ++--
+ drivers/gpu/drm/tiny/appletbdrm.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/drm_gem_framebuffer_helper.c
-+++ b/drivers/gpu/drm/drm_gem_framebuffer_helper.c
-@@ -171,8 +171,8 @@ int drm_gem_fb_init_with_funcs(struct dr
- 	}
+--- a/drivers/gpu/drm/tiny/appletbdrm.c
++++ b/drivers/gpu/drm/tiny/appletbdrm.c
+@@ -353,7 +353,7 @@ static int appletbdrm_primary_plane_help
+ 		       frames_size +
+ 		       sizeof(struct appletbdrm_fb_request_footer), 16);
  
- 	for (i = 0; i < info->num_planes; i++) {
--		unsigned int width = mode_cmd->width / (i ? info->hsub : 1);
--		unsigned int height = mode_cmd->height / (i ? info->vsub : 1);
-+		unsigned int width = drm_format_info_plane_width(info, mode_cmd->width, i);
-+		unsigned int height = drm_format_info_plane_height(info, mode_cmd->height, i);
- 		unsigned int min_size;
+-	appletbdrm_state->request = kzalloc(request_size, GFP_KERNEL);
++	appletbdrm_state->request = kvzalloc(request_size, GFP_KERNEL);
  
- 		objs[i] = drm_gem_object_lookup(file, mode_cmd->handles[i]);
+ 	if (!appletbdrm_state->request)
+ 		return -ENOMEM;
+@@ -543,7 +543,7 @@ static void appletbdrm_primary_plane_des
+ {
+ 	struct appletbdrm_plane_state *appletbdrm_state = to_appletbdrm_plane_state(state);
+ 
+-	kfree(appletbdrm_state->request);
++	kvfree(appletbdrm_state->request);
+ 	kfree(appletbdrm_state->response);
+ 
+ 	__drm_gem_destroy_shadow_plane_state(&appletbdrm_state->base);
 
 
