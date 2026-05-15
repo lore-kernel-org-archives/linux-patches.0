@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C57830567C;
-	Fri, 15 May 2026 16:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A813F9299;
+	Fri, 15 May 2026 16:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862072; cv=none; b=N+VeuCJNojwi4i/PA/KD49tERc7dbCsdxp+hrMdZuUWRmIic3mlIlBJVULFRfRuQMobKKJXjqbB7JWfVNBFCym1DEeRdhfBoq5+R+e9hryi7aS8kZlXfAyfjTVDTG9PmS2OGY18173+xs7ff1n5vNV4UMI1fW8O8ixm8sPQQMNI=
+	t=1778862074; cv=none; b=KzUuUcsnEm8N/g2THF1ex/8Z21wzNR2/K9RS5MFxHCZ0ZSIIKewSHaAns94uNHwvFezFVK4zmtqJX7MvDHphxuvxOGurbuWwptrBGQzoZO+W7tcWNrUdxrHavuI67HyZ8EzDFYZwIPGZlGlQn/Q7jMQvOwggWOlegrncbqonszQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862072; c=relaxed/simple;
-	bh=5zQpFug0KSfaloPiqQ0b33S4cELNaqKDllATB0pNvPI=;
+	s=arc-20240116; t=1778862074; c=relaxed/simple;
+	bh=roI1bj0ec+fQ8jq1fw/PqXYNeTO4ULlCzLIWtpeff64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rm7N90Cehsp9PsZ8hMrAtM/7ayQuvF3FCnNcrpp8xBRRARYXh+bL58skXsfyp5lpluWsmYVApvgeY/mpNy78E83o+MelMLco8Fz+Kby5FC5ZioMnlwW2Vnc2gBvwOH03d2aGJTngQMZ5vY9b19golaXHfsW7qHXNTuEXjAqlSs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckaabf00; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mhzk6cZSI4cMNy6uhKM8FQFVMWUA6Jxrn5OUMqJGBX/BwXhzNj3uhL44yMEjuYZfXe/HO6rmOuPyPOpoIBJ6sagDgCkd/L309R6iuPWST/U//XDihPc5y8AMQi4gJhBchbb9EnqFFg711q38rYVpqayC4OOtfMrB3wQGI75CylQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbaoWRVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckaabf00"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C757AC2BCB0;
-	Fri, 15 May 2026 16:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbaoWRVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AEAC2BCB3;
+	Fri, 15 May 2026 16:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862072;
-	bh=5zQpFug0KSfaloPiqQ0b33S4cELNaqKDllATB0pNvPI=;
+	s=korg; t=1778862074;
+	bh=roI1bj0ec+fQ8jq1fw/PqXYNeTO4ULlCzLIWtpeff64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ckaabf00/FTzXHpExvHPw+u82I5YRVu8wZ+83eif67jvQPDwjyyVuc2hldSwlId9K
-	 SlIoTiRRgfW1EJ/JQryZoOO/T1eSSTEPZSXG71R7Pd6KcxIa/D6fbRWGyg+KgJglLq
-	 vJpj6B8ZZRl/vSKfjSi8FqVTDrb+sDutGn8oKyKg=
+	b=lbaoWRVstOMyAlwPQbxCbnMR8CBKKNmd1RCVJyb2zBDheLNaJRxTp16M97DOMHawa
+	 lqIe3gznC7sMhrvvI4UmMi9pQxHX+td8W6Jt5Ns1ErZou+KIyrGOmlxscjRX/Pubz0
+	 vgk4qa7u/Fv8Otdex7AX52SwNk62l7gE/vaQM8zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 096/188] spi: cadence: fix clock imbalance on probe failure
-Date: Fri, 15 May 2026 17:48:33 +0200
-Message-ID: <20260515154659.412614171@linuxfoundation.org>
+	Yasuaki Torimaru <yasuakitorimaru@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>
+Subject: [PATCH 6.18 097/188] drm/msm/gem: fix error handling in msm_ioctl_gem_info_get_metadata()
+Date: Fri, 15 May 2026 17:48:34 +0200
+Message-ID: <20260515154659.433998538@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -51,55 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
 
-commit ecea4f0e9db2fb6ab4a68a59c5aba0d8f59a9566 upstream.
+commit 47cbfe2608314b833ad61a65827d8fb363bc2d2d upstream.
 
-Make sure that the controller is active before disabling clocks on probe
-failure to avoid unbalanced clock disable.
+msm_ioctl_gem_info_get_metadata() always returns 0 regardless of
+errors. When copy_to_user() fails or the user buffer is too small,
+the error code stored in ret is ignored because the function
+unconditionally returns 0. This causes userspace to believe the
+ioctl succeeded when it did not.
 
-Also drop the usage count before returning (so that the controller can
-be suspended after a probe deferral) and restore the autosuspend
-setting.
+Additionally, kmemdup() can return NULL on allocation failure, but
+the return value is not checked. This leads to a NULL pointer
+dereference in the subsequent copy_to_user() call.
 
-Fixes: d36ccd9f7ea4 ("spi: cadence: Runtime pm adaptation")
-Cc: stable@vger.kernel.org	# 4.7
-Cc: Shubhrajyoti Datta <shubhrajyoti.datta@xilinx.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421123615.1533617-3-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Add the missing NULL check for kmemdup() and return ret instead of 0.
+
+Note that the SET counterpart (msm_ioctl_gem_info_set_metadata)
+correctly returns ret.
+
+Fixes: 9902cb999e4e ("drm/msm/gem: Add metadata")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yasuaki Torimaru <yasuakitorimaru@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/714478/
+Message-ID: <20260325114635.383241-1-yasuakitorimaru@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_drv.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-cadence.c
-+++ b/drivers/spi/spi-cadence.c
-@@ -662,7 +662,6 @@ static int cdns_spi_probe(struct platfor
- 		/* Set to default valid value */
- 		ctlr->max_speed_hz = xspi->clk_rate / 4;
- 		xspi->speed_hz = ctlr->max_speed_hz;
--		pm_runtime_put_autosuspend(&pdev->dev);
- 	} else {
- 		ctlr->mode_bits |= SPI_NO_CS;
- 		ctlr->target_abort = cdns_target_abort;
-@@ -673,12 +672,17 @@ static int cdns_spi_probe(struct platfor
- 		goto clk_dis_all;
- 	}
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -536,6 +536,11 @@ static int msm_ioctl_gem_info_get_metada
+ 	len = msm_obj->metadata_size;
+ 	buf = kmemdup(msm_obj->metadata, len, GFP_KERNEL);
  
-+	if (!spi_controller_is_target(ctlr))
-+		pm_runtime_put_autosuspend(&pdev->dev);
++	if (!buf) {
++		msm_gem_unlock(obj);
++		return -ENOMEM;
++	}
 +
- 	return ret;
+ 	msm_gem_unlock(obj);
  
- clk_dis_all:
- 	if (!spi_controller_is_target(ctlr)) {
- 		pm_runtime_disable(&pdev->dev);
- 		pm_runtime_set_suspended(&pdev->dev);
-+		pm_runtime_put_noidle(&pdev->dev);
-+		pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	}
- remove_ctlr:
- 	spi_controller_put(ctlr);
+ 	if (*metadata_size < len) {
+@@ -548,7 +553,7 @@ static int msm_ioctl_gem_info_get_metada
+ 
+ 	kfree(buf);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
 
 
