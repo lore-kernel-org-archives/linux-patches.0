@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79D82C11DF;
-	Fri, 15 May 2026 16:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D0C2C11DF;
+	Fri, 15 May 2026 16:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862367; cv=none; b=jt5f8mlJECYNAY+EMUVoiH8u4weYOsKFwyENz4W11omQAZVMgjLSraUe/SYGIWbjSrJ77pgY6g1Wr6xRhv1PVDW0IU6WbyBgbQfRxSV1rZyCrVfi4zkXtvflHrwIz8cbbiLZjXvEswSAmsaeh7cwKEVlA4NP1Pt5WJYAF5FWl74=
+	t=1778862369; cv=none; b=s6bx8BSYXJ7gAjO8Qy1uoarwQDP2Dc9mjVdDZNEfrbOqJ7CxP3mf6WHHlHSgPURjg9kPiCw3GItp/7aXTu4rLJusfAF2X1/IcWswIexphM1WJMr1oHF0jDR4IpwqgDT7MbE8OG75lR8FDHI8BOmMjKAAMysCiyrKFWewzQ12jf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862367; c=relaxed/simple;
-	bh=5tBijikLdMnS2ZEg5QUGrZs8Btq8hi3oGBZsaMdApM4=;
+	s=arc-20240116; t=1778862369; c=relaxed/simple;
+	bh=FRJQz5Z6nP3EEQ9rJF9zhpaoz0n8Ocd4Ia74yak9S3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9Z9uwxNBQRWNCaXhPgFBgSMG3vjfa6Z59qBZo8mA6cFX5oHFXODZN4GdEHLKXskL2x7Jz89S6Xf0JBary9D76bNFLsWygviE7iay+nsBb5rXpckFIAhcEUqboYe/zLR08/shMx76GdYPuYBkZqyk6Myxlw6PpKTqFxCECPtk6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVCZk4+i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P5oHRHLWhsL1nGfSyHQSwAdqEw+aOOMSMIjWKIJZUz7lBWAkQyf3W6Cd1zvtFTRVuryZt4Z5TK89hHRTHh9HU2NY2+yZB2tBQS8vfE0tWty14E3Cwltl0n76nrcQEdhsCV2di4wZcE9K6C7Ulk5XwyCIOXXVT6YC9cNirqEhZa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAMNymg7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVCZk4+i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF4AC2BCB0;
-	Fri, 15 May 2026 16:26:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAMNymg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FBFC2BCB0;
+	Fri, 15 May 2026 16:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862366;
-	bh=5tBijikLdMnS2ZEg5QUGrZs8Btq8hi3oGBZsaMdApM4=;
+	s=korg; t=1778862369;
+	bh=FRJQz5Z6nP3EEQ9rJF9zhpaoz0n8Ocd4Ia74yak9S3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVCZk4+iTyadwpuDgLiJgKB7h2kBLXldU4skR+wxwktLlbqVWy3mTw9PWUQwtxnBI
-	 wM6JFNgaklsbORrFl8qkf3weQWCtf9tpKmC1qcpXklBODNomTw6oIacWtO5Cu6amd0
-	 8EIYhebfCnMRxL488Oo/61kylfPUsJmmVvIsJ5vc=
+	b=jAMNymg7MbB0KXDI6Izv/lzQRSSJhgVgWWnfa3nWBr0Fgh1Rl331AutN3jp4Oup9R
+	 pIMQHoxaWT5AUgufU2c5bcSFRzwrdMV81pG4nq+RHYJWXAG0bhvnFbkrWm7v2dk3rK
+	 Ywq3UGzlOdEftaYK3PF0h7pcVJMmDDJiF5M3g98E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor@kernel.org>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 021/201] media: dt-bindings: rockchip,vdec: Mark reg-names required for RK35{76,88}
-Date: Fri, 15 May 2026 17:47:19 +0200
-Message-ID: <20260515154658.992552688@linuxfoundation.org>
+Subject: [PATCH 7.0 022/201] media: chips-media: wave5: fix a potential memory leak in wave5_vdi_init()
+Date: Fri, 15 May 2026 17:47:20 +0200
+Message-ID: <20260515154659.013956534@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,53 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit a11db8d8b403eba1f82728f440727128e9997edd upstream.
+commit 95bd174a453f77b09ea66e1e22834680754ba501 upstream.
 
-The Rockchip Video Decoder driver expects reg-names to be mandatory for
-RK3576 and RK3588 SoCs, however the binding does not currently require
-the use of them.
+Add wave5_vdi_free_dma_memory() in the error path of
+wave5_vdi_init() to prevent a potential memory leak.
 
-As a consequence, driver would fail to probe with a hypothetical
-devicetree that doesn't provide the reg-names for these SoCs, but which
-is otherwise a perfectly valid DT from the binding perspective.
-
-Update the binding and make reg-names required for the aforementioned
-SoCs.  While this change introduces an ABI break, the expected impact on
-potential users would be minimal, if any, since the old SoCs are
-unaffected, while the video decoder support for these newer variants in
-mainline driver and devicetrees hasn't been released yet.
-
-Moreover, this is also a prerequisite for a subsequent binding update
-introducing an alternative reg-names order, according to the
-address-based listing in the vendor's datasheet.
-
-Reported-by: Conor Dooley <conor@kernel.org>
-Closes: https://lore.kernel.org/all/20260227-urologist-gratitude-7984733f2d41@spud/
-Fixes: c6ffb7e1fb90 ("media: dt-bindings: rockchip: Document RK3588 Video Decoder bindings")
-Fixes: a5c4a6526476 ("media: dt-bindings: rockchip: Add RK3576 Video Decoder bindings")
+Fixes: 45d1a2b93277 ("media: chips-media: wave5: Add vpuapi layer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/media/rockchip,vdec.yaml |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/chips-media/wave5/wave5-vdi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/devicetree/bindings/media/rockchip,vdec.yaml
-+++ b/Documentation/devicetree/bindings/media/rockchip,vdec.yaml
-@@ -127,6 +127,8 @@ allOf:
-           minItems: 5
-         reset-names:
-           minItems: 5
-+      required:
-+        - reg-names
-     else:
-       properties:
-         reg:
+--- a/drivers/media/platform/chips-media/wave5/wave5-vdi.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vdi.c
+@@ -49,6 +49,7 @@ int wave5_vdi_init(struct device *dev)
+ 
+ 	if (!PRODUCT_CODE_W_SERIES(vpu_dev->product_code)) {
+ 		WARN_ONCE(1, "unsupported product code: 0x%x\n", vpu_dev->product_code);
++		wave5_vdi_free_dma_memory(vpu_dev, &vpu_dev->common_mem);
+ 		return -EOPNOTSUPP;
+ 	}
+ 
 
 
