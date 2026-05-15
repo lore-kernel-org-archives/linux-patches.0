@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F493B9D91;
-	Fri, 15 May 2026 16:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CFE3EFFD9;
+	Fri, 15 May 2026 16:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862461; cv=none; b=IyDt+Yod5guc5kYNTW7qcotJADVvyISQq7EM6IgcrDdtgoXRduEy4qx5cvBPgfxjYg/g2IjQZgqo8yKFIPtYT531fLS4ouiHNvNEvdeGAy7E/8ha7sgShtI6R/YT5GiS6n/1QU/I4SuC2+DaTZ/30hrkN+yjJc7VvzjNJX7WDhU=
+	t=1778862464; cv=none; b=LHxndiuawdl2VT6ZCChEqgTg0r1TTAO9/kdNS2ByM1nRFD8JGmh4H7/PbRmNSd02eZoCho9z+Hp9jhsA6NSh5Eub5SXRL7LJAhndL096AqTxkVMxw9YUlGMC243LUnRb9yRg2u7JL4hj7g9HOvCR4WYyQzsQvNCXnYebInV+UrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862461; c=relaxed/simple;
-	bh=o5w4jcZQVPZS9ZEm0NetnadAEbklYply6pWH1Q5DMSg=;
+	s=arc-20240116; t=1778862464; c=relaxed/simple;
+	bh=GV69Wxv6tTRH72kgwWYDeInNt8e6/gXCFJSBmUgQGYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XLNHsFGnurWwB1YF4Z1dB2Wpfg8K0Kq+lzOXgBZ3dM7Uy+2GWSjOt+n5kXU2/nI+mMOazdezw2HP615c/N2fgZaT7dxPL5hTWZoPobstF6l0JFQK2fgxP9ztmV0rgORbk9ox9Zmf1MU1VNbhAyig9Rp30EhExvSAjVWP5VeLTd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZeTvhLY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ipkl5CylSa25JQyG86UEOC2dpjLhnCUrX4nNN2ctPhmt5SDzijpPXvVYmxIo0T0LyR6a9sSMEJPo7XemszSHDSGE3Wm8X5Aawt7Kg8QJd1P9PeZ/UmekYRH46kpVlvA2D3JQwVXQNukkCUSup7rXIBMkft5bRBCianMB05dTr2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpLQnzNr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZeTvhLY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01EB0C2BCB0;
-	Fri, 15 May 2026 16:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpLQnzNr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FDFC2BCB0;
+	Fri, 15 May 2026 16:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862461;
-	bh=o5w4jcZQVPZS9ZEm0NetnadAEbklYply6pWH1Q5DMSg=;
+	s=korg; t=1778862464;
+	bh=GV69Wxv6tTRH72kgwWYDeInNt8e6/gXCFJSBmUgQGYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZZeTvhLYa5vBtg01mrtgkhPtBdQ4KFiWnLVfRpuGqOar41RsTrW27LK9UFCXFGOU4
-	 q+Kv6SBay9zdpsFtcMglgdmzXodegV5cO7DjN1kb1wvtEjdEwbriifV/DYViWiTBzD
-	 rzmnBFLJl+HNfvsLusFM0HlXW1QSfgf8/BPCjesY=
+	b=ZpLQnzNrE5WZenQMw/S4pU4y3nPkWF0um4/osS02zMe4PMbcgj44xDQRDliYUJeQ2
+	 4wySU/08xNMTP0sQPwhwOyii3UuthzxNrcsP8qPWv/P1aVLvrd0S/Hye7ESxvNUuR8
+	 8VUhkrOxLxGYA59JmcPH6/xj9QiPtPLNV1lY7GTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 058/201] spi: aspeed-smc: fix controller deregistration
-Date: Fri, 15 May 2026 17:47:56 +0200
-Message-ID: <20260515154659.791006321@linuxfoundation.org>
+Subject: [PATCH 7.0 041/201] regulator: rk808: fix OF node reference imbalance
+Date: Fri, 15 May 2026 17:47:39 +0200
+Message-ID: <20260515154659.423392844@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -45,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
@@ -54,53 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 1044e5a4ccd57bf5a64f90100a321b498e0267a2 upstream.
+commit 65290b24d8a5f0b8cd065201e653db824c4a4da6 upstream.
 
-Make sure to deregister the controller before disabling it to allow
-SPI device drivers to do I/O during deregistration.
+The driver reuses the OF node of the parent multi-function device but
+fails to take another reference to balance the one dropped by the
+platform bus code when unbinding the MFD and deregistering the child
+devices.
 
-Fixes: e3228ed92893 ("spi: spi-mem: Convert Aspeed SMC driver to spi-mem")
-Cc: stable@vger.kernel.org	# 5.19
-Cc: Cédric Le Goater <clg@kaod.org>
+Fix this by using the intended helper for reusing OF nodes.
+
+Fixes: 647e57351f8e ("regulator: rk808: reduce 'struct rk808' usage")
+Cc: stable@vger.kernel.org	# 6.2
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260409120419.388546-3-johan@kernel.org
+Link: https://patch.msgid.link/20260408073055.5183-3-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-aspeed-smc.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/regulator/rk808-regulator.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/spi/spi-aspeed-smc.c
-+++ b/drivers/spi/spi-aspeed-smc.c
-@@ -972,7 +972,7 @@ static int aspeed_spi_probe(struct platf
- 		return -ENOMEM;
+--- a/drivers/regulator/rk808-regulator.c
++++ b/drivers/regulator/rk808-regulator.c
+@@ -2114,8 +2114,7 @@ static int rk808_regulator_probe(struct
+ 	struct regmap *regmap;
+ 	int ret, i, nregulators;
  
- 	aspi = spi_controller_get_devdata(ctlr);
--	platform_set_drvdata(pdev, aspi);
-+	platform_set_drvdata(pdev, ctlr);
- 	aspi->data = data;
- 	aspi->dev = dev;
+-	pdev->dev.of_node = pdev->dev.parent->of_node;
+-	pdev->dev.of_node_reused = true;
++	device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
  
-@@ -1021,7 +1021,7 @@ static int aspeed_spi_probe(struct platf
- 		return ret;
- 	}
- 
--	ret = devm_spi_register_controller(dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	if (ret)
- 		dev_err(&pdev->dev, "spi_register_controller failed\n");
- 
-@@ -1030,7 +1030,10 @@ static int aspeed_spi_probe(struct platf
- 
- static void aspeed_spi_remove(struct platform_device *pdev)
- {
--	struct aspeed_spi *aspi = platform_get_drvdata(pdev);
-+	struct spi_controller *ctlr = platform_get_drvdata(pdev);
-+	struct aspeed_spi *aspi = spi_controller_get_devdata(ctlr);
-+
-+	spi_unregister_controller(ctlr);
- 
- 	aspeed_spi_enable(aspi, false);
- }
+ 	regmap = dev_get_regmap(pdev->dev.parent, NULL);
+ 	if (!regmap)
 
 
