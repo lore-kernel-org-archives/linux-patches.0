@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDC13FD94B;
-	Fri, 15 May 2026 16:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53DC3B6354;
+	Fri, 15 May 2026 16:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861356; cv=none; b=QcPCnSmReV4f0BZ8+FqZyJc10PHA7UDLJHCK3D/EXOzM1gbMKMaPbV7cLVbxfQxeLAGxJ8zwfacKHAsRzzZuTFdGg1TdZDTWc1d5MkxA34BuAIBqKpXgaEdwlbviiePzdGM8iEvpbN29uKQPG9W0Mz+OWfwZtpSL2hqageBbuMQ=
+	t=1778861358; cv=none; b=huq+eCXYw000XcePH16L2T9WVF7LudUVoH8wsTimxYFvBxX7zaUPgSp2/gBxq0NWz9F/2aLIXLbxM1Vyy6riNbh18U72lbMPj0UO6G9twHZxhv0h01GwXPEq5kLLRvUr4DQDOiIrqniakBOchjrAT5oc/qVPLHRzM0ITCD9qUdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861356; c=relaxed/simple;
-	bh=mucZ4Pf5mVvDwXtiQb9e0lLI7SwELleZyddSm6x5zHs=;
+	s=arc-20240116; t=1778861358; c=relaxed/simple;
+	bh=11VYSdsHI5D6JRFhB4zosFkdIqMvGhUGPvG/gIvIOcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S+FQaM43yKNGS7yM19dGfaGlAKZEicciLdz7UAew0kOh9J6AjD1gd8HxEpfhgsdp9QePGWjDVlKbxemfjKxVS0dxpqk0X7Bb9zEAoyEqWQUdna65dovpGTGB0c9atiChrSNbXIYkUKpLzOaYLvmkALsyCaCkz+jkCD4ozzF4/TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRqo8USw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B0jhTtk/xQvcWpbAmIW8vS4qgnJGGMmBtjsYb5dk3KDQtSNbruYXdre1lsaBW+QshgmlxKdvztlXK3BJRg0xyZzcCt8hd4Vp7ZVfJq4pg8KYC+KKDRtSVi7bysW9KHurDAGPoiv7y9i3DzxUJSnPNxUXeeDYwW8Ob1gcZQKgpxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0O2OL/B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRqo8USw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87B1C2BCB0;
-	Fri, 15 May 2026 16:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0O2OL/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B295C2BCB0;
+	Fri, 15 May 2026 16:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861356;
-	bh=mucZ4Pf5mVvDwXtiQb9e0lLI7SwELleZyddSm6x5zHs=;
+	s=korg; t=1778861358;
+	bh=11VYSdsHI5D6JRFhB4zosFkdIqMvGhUGPvG/gIvIOcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xRqo8USwa71ujFTQaFebuV01V66KMkX03pZ9p1Zm8H/h60dNFVDKzoqgcVKGtCvIX
-	 6ihFMHBjaFJn5LROEp2w70JM29Q56JQ+77eDcbJGLaaV4+VxG2/B8YwqIPnIbdlcxM
-	 gvbBMGPSY8ceor00M+lZuanAB7GeLqQYaX7rIaI0=
+	b=L0O2OL/B/Av+HrIGGobQFwzeNm3KHIubqqbS1OPSCRFdj8DjWBtPG4QRD5OQXgwFS
+	 2zn8Yfzp9Y60ilVyrTA0tyveEXZOgOkT6DSurUIw69ZlpReewQ4DhZ2jO36U0z6lqG
+	 DAHno3MYCS/kh92N+U3qZQMbFSZt//1DYOknZDQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 290/474] f2fs: fix incorrect multidevice info in trace_f2fs_map_blocks()
-Date: Fri, 15 May 2026 17:46:39 +0200
-Message-ID: <20260515154721.275899407@linuxfoundation.org>
+	Alexander Koskovich <akoskovich@pm.me>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 299/474] media: i2c: ov8856: free control handler on error in ov8856_init_controls()
+Date: Fri, 15 May 2026 17:46:48 +0200
+Message-ID: <20260515154721.472787886@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -52,38 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Alexander Koskovich <akoskovich@pm.me>
 
-commit eb2ca3ca983551a80e16a4a25df5a4ce59df8484 upstream.
+commit f75e160745663ce9b13362ae6e90bd439c58df69 upstream.
 
-When f2fs_map_blocks()->f2fs_map_blocks_cached() hits the read extent
-cache, map->m_multidev_dio is not updated, which leads to incorrect
-multidevice information being reported by trace_f2fs_map_blocks().
+The control handler wasn't freed if adding controls failed, add an error
+exit label and convert the existing error return to use it.
 
-This patch updates map->m_multidev_dio in f2fs_map_blocks_cached() when
-the read extent cache is hit.
-
-Cc: stable@kernel.org
-Fixes: 0094e98bd147 ("f2fs: factor a f2fs_map_blocks_cached helper")
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 879347f0c258 ("media: ov8856: Add support for OV8856 sensor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/i2c/ov8856.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1507,7 +1507,8 @@ static bool f2fs_map_blocks_cached(struc
- 		f2fs_wait_on_block_writeback_range(inode,
- 					map->m_pblk, map->m_len);
+--- a/drivers/media/i2c/ov8856.c
++++ b/drivers/media/i2c/ov8856.c
+@@ -1954,12 +1954,18 @@ static int ov8856_init_controls(struct o
+ 			  V4L2_CID_HFLIP, 0, 1, 1, 0);
+ 	v4l2_ctrl_new_std(ctrl_hdlr, &ov8856_ctrl_ops,
+ 			  V4L2_CID_VFLIP, 0, 1, 1, 0);
+-	if (ctrl_hdlr->error)
+-		return ctrl_hdlr->error;
++	if (ctrl_hdlr->error) {
++		ret = ctrl_hdlr->error;
++		goto err_ctrl_handler_free;
++	}
  
--	if (f2fs_allow_multi_device_dio(sbi, flag)) {
-+	map->m_multidev_dio = f2fs_allow_multi_device_dio(sbi, flag);
-+	if (map->m_multidev_dio) {
- 		int bidx = f2fs_target_device_index(sbi, map->m_pblk);
- 		struct f2fs_dev_info *dev = &sbi->devs[bidx];
+ 	ov8856->sd.ctrl_handler = ctrl_hdlr;
  
+ 	return 0;
++
++err_ctrl_handler_free:
++	v4l2_ctrl_handler_free(ctrl_hdlr);
++	return ret;
+ }
+ 
+ static void ov8856_update_pad_format(struct ov8856 *ov8856,
 
 
