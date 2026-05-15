@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD82817C220;
-	Fri, 15 May 2026 15:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4343FF1D8;
+	Fri, 15 May 2026 16:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860797; cv=none; b=fJeE/FAeTvyKJYuQ1bl3u193qwtK20Mbyiz4jW6CBZKojsNUIdTeMUMnqTITdkjO1HtWbqchiKVTLrAgZj6y/CfNu0nEWHWOY4Q6EWZF/0bpE5zPWMOFMjBtHKL9OarMvYIbIpb6hWSvJ6DSNSkDkuJBptUhjHTHL6kbtY6IbQA=
+	t=1778860800; cv=none; b=Y02yG7WX+2XVLoMGvKCpsZPe0z/N+YvJr6kcEgAFt1YLTv1gwb6P8f+jXwFmcpehMylHm8zwwS4s33cE+rvvDn+SscWY/8sq0rpVeSZ9y20lGAh/F1ZjupJjyHE0CmYp5fKDrNDRpcz/hkvxemVy71GAkt3Qsgq89T7eO8IuuwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860797; c=relaxed/simple;
-	bh=fcEm6mKRfgBCSZrC92C4Qjfy64KKRgHYkb6tjaPPVDI=;
+	s=arc-20240116; t=1778860800; c=relaxed/simple;
+	bh=yiSE3nBo3PHMFv+Q/T70B08wO/QgPBahZKV6YWITQNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGGvzQUAfn6YAN5vRdH18P0XMAwLuoy0jxXOzefiHO+mjuJvGrSOXfhZu58BaM/8spRTfW0tZeIZBUjLJ5dng/VgPtQa+EY1+zppUrV2YdxnqW089wv4U4b1Xf8JT6Pv94FB9N7wB7V1mpDCw2EuacXfOojuAF7fKUuWWB11TGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJTby/k4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QppDbvI6REHq4X1NM+Icizoi2kJMQ3TYDKY32j5ix8URqWZXBbGCi12ArEec7Nr6mGaYX2WqT0rZBTuvIW9/JwT9AZNfztcevQ0EyyjTcoxg++z21xcjcq8fPqCY0wI0kdbNhUBFFToAKYjF3gtzPA/LtVp0/gL9r2TtbGbpd34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FfiB12qa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJTby/k4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5240DC2BCB0;
-	Fri, 15 May 2026 15:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FfiB12qa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6587C2BCB0;
+	Fri, 15 May 2026 15:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860797;
-	bh=fcEm6mKRfgBCSZrC92C4Qjfy64KKRgHYkb6tjaPPVDI=;
+	s=korg; t=1778860800;
+	bh=yiSE3nBo3PHMFv+Q/T70B08wO/QgPBahZKV6YWITQNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJTby/k4lH0Zzi+7U78Ww9DZF+oJXEcjP3S1QIjTFFle0Uze77qYA+9SkmbLinPWs
-	 THTtTKoEhWYrFeA7Jcl2ljLVfj1OIzHw+62lv58phRsf8T2sDFVtxdp45ggww+2EfA
-	 I9PGj/lQYuNIjEqeHOsNExZlXDgBxICTBLxtDQUI=
+	b=FfiB12qaLpRN3lwTB2zoLyp69nzR2BSLfPfmdbgAeXbyEYh3kRaR7M4XjK3nArH0h
+	 O2DWBQb4aZkIanF8pNZQgBqHepjjQLwl0ewN034cAcSdhnMYarpvhLTyRJzO72LuVN
+	 QKVFf5URABMYUzOvIXPvW6P9Efb52C2iuImh+DOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Bin Liu <b-liu@ti.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 084/474] mmc: block: use single block write in retry
-Date: Fri, 15 May 2026 17:43:13 +0200
-Message-ID: <20260515154716.856059375@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 067/474] rxrpc: Fix re-decryption of RESPONSE packets
+Date: Fri, 15 May 2026 17:42:56 +0200
+Message-ID: <20260515154716.493017072@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -51,92 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bin Liu <b-liu@ti.com>
+From: David Howells <dhowells@redhat.com>
 
-commit c7c6d4f5103864f73ee3a78bfd6da241f84197dd upstream.
+commit 0422e7a4883f25101903f3e8105c0808aa5f4ce9 upstream.
 
-Due to errata i2493[0], multi-block write would still fail in retries.
+If a RESPONSE packet gets a temporary failure during processing, it may end
+up in a partially decrypted state - and then get requeued for a retry.
 
-With i2493, the MMC interface has the potential of write failures when
-issuing multi-block writes operating in HS200 mode with excessive IO
-supply noise.
+Fix this by just discarding the packet; we will send another CHALLENGE
+packet and thereby elicit a further response.  Similarly, discard an
+incoming CHALLENGE packet if we get an error whilst generating a RESPONSE;
+the server will send another CHALLENGE.
 
-While the errata provides guidance in hardware design and layout to
-minimize the IO supply noise, in theory the write failure cannot be
-resolved in hardware. The software solution to ensure the data integrity
-is to add minimum 5us delay between block writes. Single-block write is
-the practical way to introduce the delay.
-
-This patch reuses recovery_mode flag, and switches to single-block
-write in retry when multi-block write fails. It covers both CQE and
-non-CQE cases.
-
-[0] https://www.ti.com/lit/pdf/sprz582
-Cc: stable@vger.kernel.org
-Suggested-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Bin Liu <b-liu@ti.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Closes: https://sashiko.dev/#/patchset/20260422161438.2593376-4-dhowells@redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Jeffrey Altman <jaltman@auristor.com>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260423200909.3049438-3-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c |   12 ++++++++++--
- drivers/mmc/core/queue.h |    3 +++
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ include/trace/events/rxrpc.h |    1 -
+ net/rxrpc/conn_event.c       |   14 ++------------
+ 2 files changed, 2 insertions(+), 13 deletions(-)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -1378,6 +1378,9 @@ static void mmc_blk_data_prep(struct mmc
- 		    rq_data_dir(req) == WRITE &&
- 		    (md->flags & MMC_BLK_REL_WR);
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -232,7 +232,6 @@
+ 	EM(rxrpc_conn_put_unidle,		"PUT unidle  ") \
+ 	EM(rxrpc_conn_put_work,			"PUT work    ") \
+ 	EM(rxrpc_conn_queue_challenge,		"QUE chall   ") \
+-	EM(rxrpc_conn_queue_retry_work,		"QUE retry-wk") \
+ 	EM(rxrpc_conn_queue_rx_work,		"QUE rx-work ") \
+ 	EM(rxrpc_conn_see_new_service_conn,	"SEE new-svc ") \
+ 	EM(rxrpc_conn_see_reap_service,		"SEE reap-svc") \
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -344,7 +344,6 @@ again:
+ static void rxrpc_do_process_connection(struct rxrpc_connection *conn)
+ {
+ 	struct sk_buff *skb;
+-	int ret;
  
-+	if (mqrq->flags & MQRQ_XFER_SINGLE_BLOCK)
-+		recovery_mode = 1;
-+
- 	memset(brq, 0, sizeof(struct mmc_blk_request));
+ 	if (test_and_clear_bit(RXRPC_CONN_EV_CHALLENGE, &conn->events))
+ 		rxrpc_secure_connection(conn);
+@@ -353,17 +352,8 @@ static void rxrpc_do_process_connection(
+ 	 * connection that each one has when we've finished with it */
+ 	while ((skb = skb_dequeue(&conn->rx_queue))) {
+ 		rxrpc_see_skb(skb, rxrpc_skb_see_conn_work);
+-		ret = rxrpc_process_event(conn, skb);
+-		switch (ret) {
+-		case -ENOMEM:
+-		case -EAGAIN:
+-			skb_queue_head(&conn->rx_queue, skb);
+-			rxrpc_queue_conn(conn, rxrpc_conn_queue_retry_work);
+-			break;
+-		default:
+-			rxrpc_free_skb(skb, rxrpc_skb_put_conn_work);
+-			break;
+-		}
++		rxrpc_process_event(conn, skb);
++		rxrpc_free_skb(skb, rxrpc_skb_put_conn_work);
+ 	}
+ }
  
- 	mmc_crypto_prepare_req(mqrq);
-@@ -1517,10 +1520,13 @@ static void mmc_blk_cqe_complete_rq(stru
- 		err = 0;
- 
- 	if (err) {
--		if (mqrq->retries++ < MMC_CQE_RETRIES)
-+		if (mqrq->retries++ < MMC_CQE_RETRIES) {
-+			if (rq_data_dir(req) == WRITE)
-+				mqrq->flags |= MQRQ_XFER_SINGLE_BLOCK;
- 			blk_mq_requeue_request(req, true);
--		else
-+		} else {
- 			blk_mq_end_request(req, BLK_STS_IOERR);
-+		}
- 	} else if (mrq->data) {
- 		if (blk_update_request(req, BLK_STS_OK, mrq->data->bytes_xfered))
- 			blk_mq_requeue_request(req, true);
-@@ -2058,6 +2064,8 @@ static void mmc_blk_mq_complete_rq(struc
- 	} else if (!blk_rq_bytes(req)) {
- 		__blk_mq_end_request(req, BLK_STS_IOERR);
- 	} else if (mqrq->retries++ < MMC_MAX_RETRIES) {
-+		if (rq_data_dir(req) == WRITE)
-+			mqrq->flags |= MQRQ_XFER_SINGLE_BLOCK;
- 		blk_mq_requeue_request(req, true);
- 	} else {
- 		if (mmc_card_removed(mq->card))
---- a/drivers/mmc/core/queue.h
-+++ b/drivers/mmc/core/queue.h
-@@ -61,6 +61,8 @@ enum mmc_drv_op {
- 	MMC_DRV_OP_GET_EXT_CSD,
- };
- 
-+#define	MQRQ_XFER_SINGLE_BLOCK		BIT(0)
-+
- struct mmc_queue_req {
- 	struct mmc_blk_request	brq;
- 	struct scatterlist	*sg;
-@@ -69,6 +71,7 @@ struct mmc_queue_req {
- 	void			*drv_op_data;
- 	unsigned int		ioc_count;
- 	int			retries;
-+	u32			flags;
- };
- 
- struct mmc_queue {
 
 
