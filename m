@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378CB4BCAA1;
-	Fri, 15 May 2026 16:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A044BCACA;
+	Fri, 15 May 2026 16:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862293; cv=none; b=FSTfRH7yfrWM/Ie4GBjxYyBfScbvHiyH6mHshKsgZ3k7kEK6rInbGkmSJLx0akZJWQ+ELzKGFKsnOwQv6yTtUVwiGvH28drc4jiFnd3Y9m6qvSlICgHQ13icOG1t9FuLSdmlf4BKKSdoZ382zRR4NER04j98xYBDEIcwJ4skvnU=
+	t=1778862295; cv=none; b=Yqy0Dsmzg7DQZz3/UlwttYiDu2JbxRSxoYNPCIjm4v9Lo97H1voXBpORpFHQweLe59IcPWVYcN+gKGRxyL74bqK0DPRlC+RgvUAlmjGHvK5sOlRPyqlUA1dl/Mx5P5kjXQvglIVM5T2g5tYrI691hm35/DDBMHVPCRPeYpQvcII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862293; c=relaxed/simple;
-	bh=Mb5eSJ3gdx3j5O1HZ4lpuuZ18aH8uOUiqMOBp701WP0=;
+	s=arc-20240116; t=1778862295; c=relaxed/simple;
+	bh=F7zsZIdCX7miWLSHzSaCCOJvWvuqRwtu9EbX7mYipzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W+ERYxRRuI6F+mfDOBkgavTzzT4qP5u0nv/i9qH7TpTVb3T6dWbyIgNVvaz4MYeqLZjrzdL4OFJxDa0IGADqHiISBg60BZaKBmSmxfffDS7hVw4pCuhtiTxY+meQuB/DDH1Jp0v2Jjq1Y0ODNBrwTJ9XAAjfOCN8bc7Tz+pI4F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wee8Ps5j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i1Dwhb5XfGmz8eEtM9Fi4/ntyZ8iYTbBzjm/FXtN0EcmgvEcIcwAPnY2zsLhh4yMghmyDVSL2+m51YgxhRGDqfFimMOlUhJSk7EsNtzJG78PRhFlmfJ9D1RJqAKxv2BO1mcARrDh0EqyNcyEPzbg11NSxDmkAyhqTbQG7L4UtA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwsJVQdG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wee8Ps5j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CC4C2BCC7;
-	Fri, 15 May 2026 16:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwsJVQdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51683C2BCF5;
+	Fri, 15 May 2026 16:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862293;
-	bh=Mb5eSJ3gdx3j5O1HZ4lpuuZ18aH8uOUiqMOBp701WP0=;
+	s=korg; t=1778862295;
+	bh=F7zsZIdCX7miWLSHzSaCCOJvWvuqRwtu9EbX7mYipzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wee8Ps5jYDNETDsYd+nl9THhvjsydOuxh1CIGD2zOwSlU9rpoAnAMzVgMy9gUbDbC
-	 Z1LRLA0Gj2X24R/5E7Gp3ezC0vLPXfCGcyEGiEOIv5yPAZDoa/V5MZQU74RG5qNaWa
-	 Ha16Br45faVe6fKsDB9bafwvBR3sb4xd2wuUQLTU=
+	b=KwsJVQdGt00yfsy9AiuWZKnU4ej9oAYHUmq/CsNxHRDOk+oibgNcowZ4gtkAfdhlE
+	 SS2Mlt0Odm/pRapNoo6NazCTr/hWAHKdQOSqSqruwrdjRs2V4k6RtBuosAc8PiUBys
+	 YegZ80LK7NATt87m6BpU1irwoVrjAFY16Ek2C6uQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 155/188] drm/amdgpu: rework how we handle TLB fences
-Date: Fri, 15 May 2026 17:49:32 +0200
-Message-ID: <20260515154700.685199317@linuxfoundation.org>
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Luigi Leonardi <leonardi@redhat.com>
+Subject: [PATCH 6.18 182/188] vsock: fix buffer size clamping order
+Date: Fri, 15 May 2026 17:49:59 +0200
+Message-ID: <20260515154701.288496751@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -45,79 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 69c5fbd2b93b5ced77c6e79afe83371bca84c788 upstream.
+commit d114bfdc9b76bf93b881e195b7ec957c14227bab upstream.
 
-Add a new VM flag to indicate whether or not we need
-a TLB fence.  Userqs (KFD or KGD) require a TLB fence.
-A TLB fence is not strictly required for kernel queues,
-but it shouldn't hurt.  That said, enabling this
-unconditionally should be fine, but it seems to tickle
-some issues in KIQ/MES.  Only enable them for KFD,
-or when KGD userq queues are enabled (currently via module
-parameter).
+In vsock_update_buffer_size(), the buffer size was being clamped to the
+maximum first, and then to the minimum. If a user sets a minimum buffer
+size larger than the maximum, the minimum check overrides the maximum
+check, inverting the constraint.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4798
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4749
-Fixes: f3854e04b708 ("drm/amdgpu: attach tlb fence to the PTs update")
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Prike Liang <Prike.Liang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This breaks the intended socket memory boundaries by allowing the
+vsk->buffer_size to grow beyond the configured vsk->buffer_max_size.
+
+Fix this by checking the minimum first, and then the maximum. This
+ensures the buffer size never exceeds the buffer_max_size.
+
+Fixes: b9f2b0ffde0c ("vsock: handle buffer_size sockopts in the core")
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/180118C5-8BCF-4A63-A305-4EE53A34AB9C@doyensec.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Luigi Leonardi <leonardi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    7 ++++++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h |    2 ++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ net/vmw_vsock/af_vsock.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -1066,7 +1066,10 @@ amdgpu_vm_tlb_flush(struct amdgpu_vm_upd
- 	}
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1846,12 +1846,12 @@ static void vsock_update_buffer_size(str
+ 				     const struct vsock_transport *transport,
+ 				     u64 val)
+ {
+-	if (val > vsk->buffer_max_size)
+-		val = vsk->buffer_max_size;
+-
+ 	if (val < vsk->buffer_min_size)
+ 		val = vsk->buffer_min_size;
  
- 	/* Prepare a TLB flush fence to be attached to PTs */
--	if (!params->unlocked) {
-+	/* The check for need_tlb_fence should be dropped once we
-+	 * sort out the issues with KIQ/MES TLB invalidation timeouts.
-+	 */
-+	if (!params->unlocked && vm->need_tlb_fence) {
- 		amdgpu_vm_tlb_fence_create(params->adev, vm, fence);
- 
- 		/* Makes sure no PD/PT is freed before the flush */
-@@ -2584,6 +2587,7 @@ int amdgpu_vm_init(struct amdgpu_device
- 	ttm_lru_bulk_move_init(&vm->lru_bulk_move);
- 
- 	vm->is_compute_context = false;
-+	vm->need_tlb_fence = amdgpu_userq_enabled(&adev->ddev);
- 
- 	vm->use_cpu_for_update = !!(adev->vm_manager.vm_update_mode &
- 				    AMDGPU_VM_USE_CPU_FOR_GFX);
-@@ -2721,6 +2725,7 @@ int amdgpu_vm_make_compute(struct amdgpu
- 	dma_fence_put(vm->last_update);
- 	vm->last_update = dma_fence_get_stub();
- 	vm->is_compute_context = true;
-+	vm->need_tlb_fence = true;
- 
- unreserve_bo:
- 	amdgpu_bo_unreserve(vm->root.bo);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
-@@ -439,6 +439,8 @@ struct amdgpu_vm {
- 	struct ttm_lru_bulk_move lru_bulk_move;
- 	/* Flag to indicate if VM is used for compute */
- 	bool			is_compute_context;
-+	/* Flag to indicate if VM needs a TLB fence (KFD or KGD) */
-+	bool			need_tlb_fence;
- 
- 	/* Memory partition number, -1 means any partition */
- 	int8_t			mem_id;
++	if (val > vsk->buffer_max_size)
++		val = vsk->buffer_max_size;
++
+ 	if (val != vsk->buffer_size &&
+ 	    transport && transport->notify_buffer_size)
+ 		transport->notify_buffer_size(vsk, &val);
 
 
