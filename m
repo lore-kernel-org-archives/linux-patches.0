@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E71D3FF1BD;
-	Fri, 15 May 2026 16:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E6E3FF1BD;
+	Fri, 15 May 2026 16:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862340; cv=none; b=lk8a3KPCREJv8PJ0XiY+lzZJMSYMrOcoo2Volo2D9ikqyzJ9QZ9/mwryCSLsxlVVCC/u0Gdno7/EU3l9ShozWqwWW8cV2gfh/FimMNVR6cOsrWvOmiZlGfXsrQzaaIeWWl8HI55gdVBFwT6or6Sj7LsZEo6gvumvU6Oqe2xIJZk=
+	t=1778862343; cv=none; b=ZQNn6afKYUoG41Kl0Zz+8WYeiyVrcgyVkOxyVkP6RXY9TsK09byKgGQZRTSY0RaUgerA1JHjE72Af2xw1t0JvUhawCGJhRGJeviUWYSJka9TqBHsZ4R4GMnD5NvgFZ43sTVGOPDgSWfuWi0kqtjmYI0QKXUZyhu63C9HDHfqu88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862340; c=relaxed/simple;
-	bh=Mr9jYFF7SpQNTy9YThp5D1fbZNkSQEL+aJy6nuXei2s=;
+	s=arc-20240116; t=1778862343; c=relaxed/simple;
+	bh=Ori2c8vsEx2JRMbOcBmavVwvpWEVJfsgy/ZFerEFFZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AeVqftHr70j3VNnV//MfJYQeCradncp/4buq+mwv9CeiCKNVdfxh9dmrsujpF8CqdqvaCj9R/7ud+fMCzREXcHKle5iNDH/cbk8O2Sya+3XDycI+w7QHmSSVQE8MRQubdGdGUWqsVnhlKfbN5JUPMzDpqIEXMje+TtXSD1B2K9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZZ+pbZx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ImZX7FqpjNdh5v0B7n2AF5TvqhDn3qvdHD0TTa+QbqDZgLhnZFSALosX2WpYjPZjVDDb7lZwoQ1eRX9jeQKt96C/MN4WvYrFijTaWZZgbfo+9CH+jVcweEYFPFTEFAKortjEyYPq442dN0HWHoC50wCw4Ald3xczokK3jqeXz4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKjSbRqk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZZ+pbZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24329C2BCF5;
-	Fri, 15 May 2026 16:25:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKjSbRqk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEC3C2BCB0;
+	Fri, 15 May 2026 16:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862340;
-	bh=Mr9jYFF7SpQNTy9YThp5D1fbZNkSQEL+aJy6nuXei2s=;
+	s=korg; t=1778862343;
+	bh=Ori2c8vsEx2JRMbOcBmavVwvpWEVJfsgy/ZFerEFFZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZZ+pbZxufJhwh2NxIepERgMZIHdU4VF/bheWQDWXPev93v41jQpaoYoEutJYkTVH
-	 otBsf8eG7VL+KdlhQxSJG0CbWH2jzlyVdz5RndCLMlySVHOMTCE611iW98fFCR7KER
-	 snHbjnxY4BMWW3hDFyndshXU/G/zgmpNlsTTCLrE=
+	b=pKjSbRqkxKTPGDrw1bpPOey6H56jP34EZptBLCYeYztligeD/SZ5vgpWOmAnrTiQv
+	 Ie8dM2rVP/vmc5eC/VN8mfL1hEMLP42PNYTyWO5YDqC+8lpNdpEECEYqq4msCcjBby
+	 mTC2OfWyPnHv6ei5pfGqy13aSckzxkMGSl8F+Sg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <barnabas.pocze+renesas@ideasonboard.com>,
 	Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 012/201] media: rzv2h-ivc: Fix FM_STOP register write
-Date: Fri, 15 May 2026 17:47:10 +0200
-Message-ID: <20260515154658.802363217@linuxfoundation.org>
+Subject: [PATCH 7.0 013/201] media: rzv2h-ivc: Fix concurrent buffer list access
+Date: Fri, 15 May 2026 17:47:11 +0200
+Message-ID: <20260515154658.824430519@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -55,47 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Barnabás Pőcze <barnabas.pocze+renesas@ideasonboard.com>
 
-commit 562d2e0a672075292e92538dad61664e89b34d30 upstream.
+commit 72773ff1cdfaebc593f53b1719b2c1773ecf8c43 upstream.
 
-Bit 20 should be written in this register to stop frame processing.
-So fix that, as well as the poll condition.
+The list of buffers (`rzv2h_ivc::buffers.queue`) is protected by a
+spinlock (`rzv2h_ivc::buffers.lock`). However, in
+`rzv2h_ivc_transfer_buffer()`, which runs in a separate workqueue, the
+`list_del()` call is executed without holding the spinlock, which makes
+it possible for the list to be concurrently modified
+
+Fix that by removing a buffer from the list in the lock protected section.
 
 Cc: stable@vger.kernel.org
 Fixes: f0b3984d821b ("media: platform: Add Renesas Input Video Control block driver")
 Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
 Signed-off-by: Barnabás Pőcze <barnabas.pocze+renesas@ideasonboard.com>
+[assign ivc->buffers.curr in critical section as reported by Barnabas]
 Signed-off-by: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c |    5 +++--
- drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc.h       |    1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 --- a/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c
 +++ b/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc-video.c
-@@ -300,9 +300,10 @@ static void rzv2h_ivc_stop_streaming(str
- 	struct rzv2h_ivc *ivc = vb2_get_drv_priv(q);
- 	u32 val = 0;
+@@ -158,14 +158,13 @@ static void rzv2h_ivc_transfer_buffer(st
+ 	scoped_guard(spinlock_irqsave, &ivc->buffers.lock) {
+ 		buf = list_first_entry_or_null(&ivc->buffers.queue,
+ 					       struct rzv2h_ivc_buf, queue);
+-	}
+-
+-	if (!buf)
+-		return;
++		if (!buf)
++			return;
  
--	rzv2h_ivc_write(ivc, RZV2H_IVC_REG_FM_STOP, 0x1);
-+	rzv2h_ivc_write(ivc, RZV2H_IVC_REG_FM_STOP, RZV2H_IVC_REG_FM_STOP_FSTOP);
- 	readl_poll_timeout(ivc->base + RZV2H_IVC_REG_FM_STOP,
--			   val, !val, 10 * USEC_PER_MSEC, 250 * USEC_PER_MSEC);
-+			   val, !(val & RZV2H_IVC_REG_FM_STOP_FSTOP),
-+			   10 * USEC_PER_MSEC, 250 * USEC_PER_MSEC);
+-	list_del(&buf->queue);
++		list_del(&buf->queue);
++		ivc->buffers.curr = buf;
++	}
  
- 	rzv2h_ivc_return_buffers(ivc, VB2_BUF_STATE_ERROR);
- 	video_device_pipeline_stop(&ivc->vdev.dev);
---- a/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc.h
-+++ b/drivers/media/platform/renesas/rzv2h-ivc/rzv2h-ivc.h
-@@ -46,6 +46,7 @@
- #define RZV2H_IVC_REG_FM_MCON				0x0104
- #define RZV2H_IVC_REG_FM_FRCON				0x0108
- #define RZV2H_IVC_REG_FM_STOP				0x010c
-+#define RZV2H_IVC_REG_FM_STOP_FSTOP			BIT(20)
- #define RZV2H_IVC_REG_FM_INT_EN				0x0120
- #define RZV2H_IVC_VVAL_IFPE				BIT(0)
- #define RZV2H_IVC_REG_FM_INT_STA			0x0124
+-	ivc->buffers.curr = buf;
+ 	buf->addr = vb2_dma_contig_plane_dma_addr(&buf->vb.vb2_buf, 0);
+ 	rzv2h_ivc_write(ivc, RZV2H_IVC_REG_AXIRX_SADDL_P0, buf->addr);
+ 
 
 
