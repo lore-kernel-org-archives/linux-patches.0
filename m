@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03ACD30568A;
-	Fri, 15 May 2026 16:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB103E00A2;
+	Fri, 15 May 2026 16:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861049; cv=none; b=jLsfuLBIuSeKjb1hYrP02rM+RcX3DHaTgPlLStBeO6KNvRDcnHvcnNc0bk2kjwN/GZqde0b1gfDgnkNFmrzM564gIi/XEelLwVjmBgg/1EcOogcKewMuQvEW1zKRjE0OdNsqXFQugK8MwHCoxicuO4rQJ3ZLUEiZbKPNF2NJCDw=
+	t=1778861052; cv=none; b=YBlB2JWPA4OrVNXi47wiXjNf9mKf19ARVIC/eMT5g3AWHSyEsntCRr2DWzxyOBc7D8/kqHU7OR/D12hQopBXXNLuNWacCbMfyMLJD8Y+FyJJ09l4bsKu+vusVtn1zxohaF0B/HTHPHX4rcbkU4IXXB9YYuue6Y2Bgx+NWpXIbmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861049; c=relaxed/simple;
-	bh=ZxFmOIZdlH01ics5gM/E74B6CoGM7SUa6p05nfdLAUo=;
+	s=arc-20240116; t=1778861052; c=relaxed/simple;
+	bh=WI0XuORugAr83sb6RlVLck241ifok+K9aZ41TMwTHlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5ap+bhAt/7cTuEfY32RTv5gNZFWG4lJaOiJ50Fff/7/m7ZS9jgyHniwVaGI/fSrsKQusMXXqdwnKUfeRwM05RKw5faQ1ihTf2jvOLPimPO0Ws34NHQmZKCqUaOBSgxWlyyWyxT/DzbnK70dg8mBhBn01vsSsfdh82S81IPm0ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNWXT9Zu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UxbkzrZ0ozVayV/Ja5D4+B8n1lyHZ906QjrkJ/qQZIpBaGqAUYhTK4XaleLBmIeJooG9Vna4XIe2WjiFFooJ611G+aJt5JT8YeU7a/0dNAIOHwV8FDiiI2xfZUmwI1wpdQO2ZSZrE8V7UeEvRPSUKHF4y/Uz5XhHj/7qje86QwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QR/mROXu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNWXT9Zu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658DAC2BCB0;
-	Fri, 15 May 2026 16:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QR/mROXu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6A2C2BCFA;
+	Fri, 15 May 2026 16:04:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861048;
-	bh=ZxFmOIZdlH01ics5gM/E74B6CoGM7SUa6p05nfdLAUo=;
+	s=korg; t=1778861052;
+	bh=WI0XuORugAr83sb6RlVLck241ifok+K9aZ41TMwTHlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WNWXT9Zu5nKfk90vTNcJx7Moe53bcUGVd3eimQ4gT3k2j6pBhlY6x5TPtTgTOl4GD
-	 2q6SDr/PndWRcYrCkwb/9PndnXinM6NnLRgIabqLHtZdQgSgvWhjvW0Q5XFqKFEbkA
-	 0+AgcCMX9QuSjyNZaT8EiNHoSaBVY1CgdjtaMDE8=
+	b=QR/mROXuI8hgZtHjYnxR6V4zRNNF4CHlbSNtd0pIURHqR/ENRvoL3XAHlyv9eV7tq
+	 gtHgSONBIQxQQ6H+0Rm7YkWtyGQZyjr2dBotFA65UQIHvN9KPUp70bp7M7cy2IjePp
+	 knJ8z7K9RpOfkyW0HbAQYUz9O8viTgVjEAInbuC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Paul Chaignon <paul.chaignon@gmail.com>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/474] selftests/bpf: validate precision logic in partial_stack_load_preserves_zeros
-Date: Fri, 15 May 2026 17:44:48 +0200
-Message-ID: <20260515154718.897467136@linuxfoundation.org>
+Subject: [PATCH 6.6 180/474] bpf: handle fake register spill to stack with BPF_ST_MEM instruction
+Date: Fri, 15 May 2026 17:44:49 +0200
+Message-ID: <20260515154718.918646855@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -57,53 +57,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 064e0bea19b356c5d5f48a4549d80a3c03ce898b ]
+[ Upstream commit 482d548d40b0af9af730e4869903d4433e44f014 ]
 
-Enhance partial_stack_load_preserves_zeros subtest with detailed
-precision propagation log checks. We know expect fp-16 to be spilled,
-initially imprecise, zero const register, which is later marked as
-precise even when partial stack slot load is performed, even if it's not
-a register fill (!).
+When verifier validates BPF_ST_MEM instruction that stores known
+constant to stack (e.g., *(u64 *)(r10 - 8) = 123), it effectively spills
+a fake register with a constant (but initially imprecise) value to
+a stack slot. Because read-side logic treats it as a proper register
+fill from stack slot, we need to mark such stack slot initialization as
+INSN_F_STACK_ACCESS instruction to stop precision backtracking from
+missing it.
 
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: 41f6f64e6999 ("bpf: support non-r10 register spill/fill to/from stack in precision tracking")
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231205184248.1502704-10-andrii@kernel.org
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20231209010958.66758-1-andrii@kernel.org
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Acked-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/progs/verifier_spill_fill.c    | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ kernel/bpf/verifier.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/verifier_spill_fill.c b/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
-index 41fd61299eab0..df4920da34728 100644
---- a/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_spill_fill.c
-@@ -495,6 +495,22 @@ char single_byte_buf[1] SEC(".data.single_byte_buf");
- SEC("raw_tp")
- __log_level(2)
- __success
-+/* make sure fp-8 is all STACK_ZERO */
-+__msg("2: (7a) *(u64 *)(r10 -8) = 0          ; R10=fp0 fp-8_w=00000000")
-+/* but fp-16 is spilled IMPRECISE zero const reg */
-+__msg("4: (7b) *(u64 *)(r10 -16) = r0        ; R0_w=0 R10=fp0 fp-16_w=0")
-+/* and now check that precision propagation works even for such tricky case */
-+__msg("10: (71) r2 = *(u8 *)(r10 -9)         ; R2_w=P0 R10=fp0 fp-16_w=0")
-+__msg("11: (0f) r1 += r2")
-+__msg("mark_precise: frame0: last_idx 11 first_idx 0 subseq_idx -1")
-+__msg("mark_precise: frame0: regs=r2 stack= before 10: (71) r2 = *(u8 *)(r10 -9)")
-+__msg("mark_precise: frame0: regs= stack=-16 before 9: (bf) r1 = r6")
-+__msg("mark_precise: frame0: regs= stack=-16 before 8: (73) *(u8 *)(r1 +0) = r2")
-+__msg("mark_precise: frame0: regs= stack=-16 before 7: (0f) r1 += r2")
-+__msg("mark_precise: frame0: regs= stack=-16 before 6: (71) r2 = *(u8 *)(r10 -1)")
-+__msg("mark_precise: frame0: regs= stack=-16 before 5: (bf) r1 = r6")
-+__msg("mark_precise: frame0: regs= stack=-16 before 4: (7b) *(u64 *)(r10 -16) = r0")
-+__msg("mark_precise: frame0: regs=r0 stack= before 3: (b7) r0 = 0")
- __naked void partial_stack_load_preserves_zeros(void)
- {
- 	asm volatile (
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 705582bdda681..f6040169ef749 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4678,7 +4678,6 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+ 		__mark_reg_known(&fake_reg, insn->imm);
+ 		fake_reg.type = SCALAR_VALUE;
+ 		save_register_state(env, state, spi, &fake_reg, size);
+-		insn_flags = 0; /* not a register spill */
+ 	} else if (reg && is_spillable_regtype(reg->type)) {
+ 		/* register containing pointer is being spilled into stack */
+ 		if (size != BPF_REG_SIZE) {
 -- 
 2.53.0
 
