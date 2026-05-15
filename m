@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7261C3FF1CD;
-	Fri, 15 May 2026 15:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BE2305669;
+	Fri, 15 May 2026 15:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860756; cv=none; b=jqWgJ1JEeC+tNPjQ/ugc63IGnQvBrMBS6bJw7d28/0ZJyi2WeuPe7OevVo/yIPSXMIlubmPyMuoMqsO+Ot3jYtjA5N2avqhq62xRCtqa6racjoO9EucGLn0DZsDgK3pSutNFN6KEZSwpzMWA/WlW1I8ZbcjLL5e0pA5sNWXhXZE=
+	t=1778860759; cv=none; b=eSqkC30LPgO6GBeXy+VGFFC7FksvLni1TBiWwSp68Yj1ptBweiYQKo+wEmtTN4/+JterkzY6NyWf4wRCARff6YYONKBdogtbaNvFWnkYwBqF+OLWTpef6qMqHtmX6zOL5bXBqKprXKL4T7jT7vI66AG6aTcTCPGUYhJD7nefsio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860756; c=relaxed/simple;
-	bh=9hso23ufZrdlB2DImqhm21Uq+A8GEw+bldgDMtK3by0=;
+	s=arc-20240116; t=1778860759; c=relaxed/simple;
+	bh=okFSNRxOh2UOLW+G8pIya3ecyl33rs63bN7g4Tu5Al8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDLgRT7YkeB+acRi2+W8nyKEydPNBeLpQEp5bTCNpGk9QrbdCBwQwQgHhMIGjKuwJFcVQynvM5/sP6/CWaPXTnesxmNOP9qPZyRkf/Icp+5Zu/irVnjnflRQ7tNl4c0sQQrJPOBJm2lYpgMvyHTDgXTMhuQ9ZwWwRyFSyEpumjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X90NZlKZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KTxn082cbwBYXy+aYW8vxEI7DN9ExGPHnD9kYfvmJ6ZHtwgaA+ulWqr//qnBPqQEpbbzPO8FLyu5P4ABoOJ9TBNNC4sbH24nrxVMmQDI0t9yFbZ39guvCu+bZTUO6AQcxtnHE5xpfYTsEdlYWQUV/U9jOUSmhwJOi23VkzvI69w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8DLCcKR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X90NZlKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A56C2BCB3;
-	Fri, 15 May 2026 15:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8DLCcKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935AFC2BCB3;
+	Fri, 15 May 2026 15:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860756;
-	bh=9hso23ufZrdlB2DImqhm21Uq+A8GEw+bldgDMtK3by0=;
+	s=korg; t=1778860758;
+	bh=okFSNRxOh2UOLW+G8pIya3ecyl33rs63bN7g4Tu5Al8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X90NZlKZm3HMGXxP55ehE1ZWiRhGmLLvOqCdPIvUlexjlxpp7pZI9TEIXmXxkXQFB
-	 tNHqON7VnbZgB09HmZCd+SC9fGJbkmJPgMIe/YWzMl2hxC4qpTEyI5ys/IB+J3EXOk
-	 7up7kcttHxfDUoygq3wpqKnuEF3qLT6w0pyWe6PI=
+	b=a8DLCcKRMjuDGRMbN7ZAkBSmb7hFLLokbSvFstbZyi/m7IR/GE/FAxljG3Vzm4+1w
+	 8oBT5A7Kd81nZaYW4eY8LffRSe67RipGY5wv1oEqi4EGJ05M6nZJlOJViSWBeukxW/
+	 HO9DTkpqlopZJ9syHSKskS0RKSlH35j0UqYkAG78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.6 025/474] wifi: rtw88: check for PCI upstream bridge existence
-Date: Fri, 15 May 2026 17:42:14 +0200
-Message-ID: <20260515154715.596114417@linuxfoundation.org>
+	Johannes Berg <johannes@sipsolutions.net>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 026/474] um: drivers: call kernel_strrchr() explicitly in cow_user.c
+Date: Fri, 15 May 2026 17:42:15 +0200
+Message-ID: <20260515154715.616584611@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,44 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit eb101d2abdcccb514ca4fccd3b278dd8267374f6 upstream.
+commit 91e901c65b4da02a6fd543e3f0049829ae9645b7 upstream.
 
-pci_upstream_bridge() returns NULL if the device is on a root bus.  If
-8821CE is installed in the system with such a PCI topology, the probing
-routine will crash.  This has probably been unnoticed as 8821CE is mostly
-supplied in laptops where there is a PCI-to-PCI bridge located upstream
-from the device.  However the card might be installed on a system with
-different configuration.
+Building ARCH=um on glibc >= 2.43 fails:
 
-Check if the bridge does exist for the specific workaround to be applied.
+  arch/um/drivers/cow_user.c: error: implicit declaration of
+  function 'strrchr' [-Wimplicit-function-declaration]
 
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
+glibc 2.43's C23 const-preserving strrchr() macro does not survive
+UML's global -Dstrrchr=kernel_strrchr remap from arch/um/Makefile.
+Call kernel_strrchr() directly in cow_user.c so the source no longer
+depends on the -D rewrite.
 
-Fixes: 24f5e38a13b5 ("rtw88: Disable PCIe ASPM while doing NAPI poll on 8821CE")
+Fixes: 2c51a4bc0233 ("um: fix strrchr() problems")
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260220094730.49791-1-pchelkin@ispras.ru
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260408070102.2325572-1-michael.bommarito@gmail.com
+[remove unnecessary 'extern']
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/pci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/um/drivers/cow_user.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtw88/pci.c
-+++ b/drivers/net/wireless/realtek/rtw88/pci.c
-@@ -1749,7 +1749,8 @@ int rtw_pci_probe(struct pci_dev *pdev,
+--- a/arch/um/drivers/cow_user.c
++++ b/arch/um/drivers/cow_user.c
+@@ -15,6 +15,12 @@
+ #include "cow.h"
+ #include "cow_sys.h"
+ 
++/*
++ * arch/um/Makefile remaps strrchr to kernel_strrchr; call the kernel
++ * name directly to avoid glibc >= 2.43's C23 strrchr macro.
++ */
++char *kernel_strrchr(const char *, int);
++
+ #define PATH_LEN_V1 256
+ 
+ /* unsigned time_t works until year 2106 */
+@@ -153,7 +159,7 @@ static int absolutize(char *to, int size
+ 			   errno);
+ 		return -1;
  	}
- 
- 	/* Disable PCIe ASPM L1 while doing NAPI poll for 8821CE */
--	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C && bridge->vendor == PCI_VENDOR_ID_INTEL)
-+	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C &&
-+	    bridge && bridge->vendor == PCI_VENDOR_ID_INTEL)
- 		rtwpci->rx_no_aspm = true;
- 
- 	rtw_pci_phy_cfg(rtwdev);
+-	slash = strrchr(from, '/');
++	slash = kernel_strrchr(from, '/');
+ 	if (slash != NULL) {
+ 		*slash = '\0';
+ 		if (chdir(from)) {
 
 
