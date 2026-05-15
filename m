@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62F83FBB42;
-	Fri, 15 May 2026 16:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546753FD94F;
+	Fri, 15 May 2026 16:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862175; cv=none; b=dO3CwOQ+2yJWH+nXi/ubcsYm1nU9+4bZRUIjqPSQiDgC7j/e7/8Qt2P33BvBdZgswOqupGaxortMmOO0z0PcKb8+uGpPt54yL24+T4fzw5XePmq/xz3Vgc4NYlTLpJTH4yPBZ3pGqihlt9dw8BFYODghztbLMNAwDZjbsBDUHTY=
+	t=1778862178; cv=none; b=nSnF1jFBLwtzNj7qUU+Kqza3njM3CZXRY3ojrj9j3hNNaOgA1hrSDR5nwo4UZHV0OEXvmq97jYdgGaJ/HEvkm/4Tb0yajaKPq8nNkJaek1Vr+68n76qwNWyfsvYAjFgrvFEm26I0a2LIFEvqgpwp/RoeLrMIcW2IcNbXDFUdU/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862175; c=relaxed/simple;
-	bh=RAFVEUbxjhCJbMEWRreHx/A/AdPSBbQ1556TNF/QHuY=;
+	s=arc-20240116; t=1778862178; c=relaxed/simple;
+	bh=dFDaohPD85a3DfsYS/KhKOawT5jfE5PS7LkV2lxznUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VOP8YBqRoNoB4rIC58OJFUFZZYZ41Yyda1Dkm8T+VhBkzqicQtW9pk4Avb1u5WuNcrudayFB2eRl72LGf6itPr9LXlJVH1zWOom/Ec9SIoFS6Xd3eVEgqlFLljVJ+YNVb1/C6OIgTbiD0IZ08Qjv+rkBkBtVCk56kwBIuhBlBk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJ2tFCc1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g/F6MbYzAEVHGWqU7Vy5q3rG738DcN6Cjuw0uhoaRTnU4aVGTv2qX3OqXjfS9/yOqtupR21XpmnIgZV60bjU7H+owOE4Y8U1kAy5Hxdc7k9TqNrmBj7IcrrTj/i/ZRE8Y9fwBVIeY8EwvTCmc1oB5h9yg5ye3+9xPmqbXSWQj/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1YBUhUr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJ2tFCc1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F92C2BCB0;
-	Fri, 15 May 2026 16:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1YBUhUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85CFC2BCB0;
+	Fri, 15 May 2026 16:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862175;
-	bh=RAFVEUbxjhCJbMEWRreHx/A/AdPSBbQ1556TNF/QHuY=;
+	s=korg; t=1778862178;
+	bh=dFDaohPD85a3DfsYS/KhKOawT5jfE5PS7LkV2lxznUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJ2tFCc1kstEd6WM8ek6Fc0BvzyQNg9PNKkwKUv7VQxhPN+qONa48yWhxjLMiaEXS
-	 /dXLOZLM7FDq8Vsl7PEUBCbK9X9feJp17kEkP0MG6KzRRjl2QAt5Zs2W8VWuQkbSQO
-	 V36Cgwag1m2LfzvejyHcslR8V3Pk2malHrrwNGqw=
+	b=V1YBUhUr0mohPzw2mwFPxKpLoU3nUcS1Ad8MpGLWzrzG7+Fz/ekahYPHmeEXOeo+S
+	 EJ5ExFZVazsFce1Gep/Zvh9ImcuXKexlscZJlNZE2peM856tMkQHGIUnhB8XrPif5o
+	 //81ZnEVqDm8+SpZLLCI8VkkPquGHaAiWThbogMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Cheng <benjamin.cheng@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Ruijing Dong <ruijing.dong@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 110/188] drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg
-Date: Fri, 15 May 2026 17:48:47 +0200
-Message-ID: <20260515154659.715401207@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Luxing Yin <tr0jan@lzu.edu.cn>,
+	Jiexun Wang <wangjiexun2025@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 6.18 137/188] batman-adv: reject new tp_meter sessions during teardown
+Date: Fri, 15 May 2026 17:49:14 +0200
+Message-ID: <20260515154700.300185205@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -46,96 +51,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Cheng <benjamin.cheng@amd.com>
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-commit b193019860d61e92da395eae2011f2f6716b182f upstream.
+commit 3243543592425beec83d453793e9d27caa0d8e66 upstream.
 
-Check bounds against the end of the BO whenever we access the msg.
+Prevent tp_meter from starting new sender or receiver sessions after
+mesh_state has left BATADV_MESH_ACTIVE.
 
-Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Co-developed-by: Luxing Yin <tr0jan@lzu.edu.cn>
+Signed-off-by: Luxing Yin <tr0jan@lzu.edu.cn>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ net/batman-adv/tp_meter.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-@@ -1908,7 +1908,7 @@ static int vcn_v3_0_dec_msg(struct amdgp
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -947,6 +947,13 @@ void batadv_tp_start(struct batadv_priv
+ 
+ 	/* look for an already existing test towards this node */
+ 	spin_lock_bh(&bat_priv->tp_list_lock);
++	if (atomic_read(&bat_priv->mesh_state) != BATADV_MESH_ACTIVE) {
++		spin_unlock_bh(&bat_priv->tp_list_lock);
++		batadv_tp_batctl_error_notify(BATADV_TP_REASON_DST_UNREACHABLE,
++					      dst, bat_priv, session_cookie);
++		return;
++	}
++
+ 	tp_vars = batadv_tp_list_find(bat_priv, dst);
+ 	if (tp_vars) {
+ 		spin_unlock_bh(&bat_priv->tp_list_lock);
+@@ -1329,9 +1336,12 @@ static struct batadv_tp_vars *
+ batadv_tp_init_recv(struct batadv_priv *bat_priv,
+ 		    const struct batadv_icmp_tp_packet *icmp)
  {
- 	struct ttm_operation_ctx ctx = { false, false };
- 	struct amdgpu_bo_va_mapping *map;
--	uint32_t *msg, num_buffers;
-+	uint32_t *msg, num_buffers, len_dw;
- 	struct amdgpu_bo *bo;
- 	uint64_t start, end;
- 	unsigned int i;
-@@ -1929,6 +1929,11 @@ static int vcn_v3_0_dec_msg(struct amdgp
- 		return -EINVAL;
- 	}
+-	struct batadv_tp_vars *tp_vars;
++	struct batadv_tp_vars *tp_vars = NULL;
  
-+	if (end - addr < 16) {
-+		DRM_ERROR("VCN messages must be at least 4 DWORDs!\n");
-+		return -EINVAL;
-+	}
+ 	spin_lock_bh(&bat_priv->tp_list_lock);
++	if (atomic_read(&bat_priv->mesh_state) != BATADV_MESH_ACTIVE)
++		goto out_unlock;
 +
- 	bo->flags |= AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED;
- 	amdgpu_bo_placement_from_domain(bo, bo->allowed_domains);
- 	r = ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
-@@ -1945,8 +1950,8 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
+ 					      icmp->session);
+ 	if (tp_vars)
+@@ -1464,6 +1474,9 @@ void batadv_tp_meter_recv(struct batadv_
+ {
+ 	struct batadv_icmp_tp_packet *icmp;
  
- 	msg = ptr + addr - start;
- 
--	/* Check length */
- 	if (msg[1] > end - addr) {
-+		DRM_ERROR("VCN message header does not fit in BO!\n");
- 		r = -EINVAL;
- 		goto out;
- 	}
-@@ -1954,7 +1959,16 @@ static int vcn_v3_0_dec_msg(struct amdgp
- 	if (msg[3] != RDECODE_MSG_CREATE)
- 		goto out;
- 
-+	len_dw = msg[1] / 4;
- 	num_buffers = msg[2];
-+
-+	/* Verify that all indices fit within the claimed length. Each index is 4 DWORDs */
-+	if (num_buffers > len_dw || 6 + num_buffers * 4 > len_dw) {
-+		DRM_ERROR("VCN message has too many buffers!\n");
-+		r = -EINVAL;
++	if (atomic_read(&bat_priv->mesh_state) != BATADV_MESH_ACTIVE)
 +		goto out;
-+	}
 +
- 	for (i = 0, msg = &msg[6]; i < num_buffers; ++i, msg += 4) {
- 		uint32_t offset, size, *create;
+ 	icmp = (struct batadv_icmp_tp_packet *)skb->data;
  
-@@ -1964,14 +1978,15 @@ static int vcn_v3_0_dec_msg(struct amdgp
- 		offset = msg[1];
- 		size = msg[2];
- 
--		if (offset + size > end) {
-+		if (size < 4 || offset + size > end - addr) {
-+			DRM_ERROR("VCN message buffer exceeds BO bounds!\n");
- 			r = -EINVAL;
- 			goto out;
- 		}
- 
- 		create = ptr + addr + offset - start;
- 
--		/* H246, HEVC and VP9 can run on any instance */
-+		/* H264, HEVC and VP9 can run on any instance */
- 		if (create[0] == 0x7 || create[0] == 0x10 || create[0] == 0x11)
- 			continue;
+ 	switch (icmp->subtype) {
+@@ -1478,6 +1491,8 @@ void batadv_tp_meter_recv(struct batadv_
+ 			   "Received unknown TP Metric packet type %u\n",
+ 			   icmp->subtype);
+ 	}
++
++out:
+ 	consume_skb(skb);
+ }
  
 
 
