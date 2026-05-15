@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C133F9285;
-	Fri, 15 May 2026 16:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D643E3F9289;
+	Fri, 15 May 2026 16:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862705; cv=none; b=pNvLs4TTBh4peoPmiRFa3DNvp4uj2vcchzunD7hgHAvF7ehNADz2XQdb33jvNKjBgC4XR0QFPudBSa3aA+Asy2vFsj/GfBullzHWcgWQy6suzl6c0yI1gchM/eF1sEoea7VFI3b5yOQCqUZF++bSd83H6QsKNUgOJR+Jn8XnWEk=
+	t=1778862707; cv=none; b=oNoqEuCWjDecTOOsLVOdVuzLbCIWuMTrVXatV0uQGvL9I4ZQIOM/W/H38HEfkaSsYmuCN4gL9amGuR5jPdb2wSyTS9fM6gnfxmnCW5TjWn6F6Uhkck6vUa5n+wNVReXVHIvbqvlHG02LIYwKfcLUcEs6wk0gerk69rdbYzpc10o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862705; c=relaxed/simple;
-	bh=uZvFsKYgQoHL5hblN5h/HcRLtCi1JNqYOAR3vGUz7iQ=;
+	s=arc-20240116; t=1778862707; c=relaxed/simple;
+	bh=lK6NcF/F35kOTB53XuZI18izab7Gg54G/aRaDsBqFfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/V5M/eQVQvKgCs3Xt8d+5feI1OxqVSsdeOmyhn9eDcxsRw/ZdJZbHMysezpBUBm/Onv7/yrakHEgwoeLtSatV4Db/B/1G4/Rut5gX1RaJIRU9Rg0pbMXoNmqFuZ6J3OcAbmQeeG00P/bcF+U8jPvX0/XySPlsH8x4rPAoW/HD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7o0rjEj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i+QdaAKNHQSyYvFLctxq8d38RPLCcw/4Za1Esf22RRXR21rGWIWkkVOzdjVfblz9obDA6UWJHt5Tvhx+J/TpvpVGNdLmFIUpMieFtJeVaO+0eiH26rRF7onV0CvacQKYDMitMMiv7RTtiTyoEpL3P7wZsmpiDSt4RLZClvlUURQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbevR5LS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7o0rjEj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9027CC2BCC7;
-	Fri, 15 May 2026 16:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbevR5LS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BA6C2BCB0;
+	Fri, 15 May 2026 16:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862704;
-	bh=uZvFsKYgQoHL5hblN5h/HcRLtCi1JNqYOAR3vGUz7iQ=;
+	s=korg; t=1778862707;
+	bh=lK6NcF/F35kOTB53XuZI18izab7Gg54G/aRaDsBqFfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7o0rjEj/SCutct92OXzqREfXFpAqa+kp2fde0c0tILEi4JPIxFhu1frjiWXgOGkc
-	 CT2hbtEBjDNwjMGA9Jo9TkL6oAj0fZOKivWasRt0/O0b1rLwFonzJRFi1Vz83VUNRi
-	 nmB20ptqlE2dWPCeOs5PinFSIhA9wRGnY0KwgC+s=
+	b=JbevR5LSc/fb2q90WO6mPdPqnI3PmRUH5hJalXakTLCiPYiWUO6qFqyC1M6EdIK6c
+	 gpT5VRpcu1UA12vBsk9PqeKMyTBH1AIpD+qoksdsHGQdmnmeXC3ldHpBa/zn5FUbaT
+	 jLyz6Izst2pTRc0HZM0ogaP8LBCPXgv1CrTp5Jlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mattheq Brost <matthew.brost@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 7.0 151/201] drm/xe: Fix dma-buf attachment leak in xe_gem_prime_import()
-Date: Fri, 15 May 2026 17:49:29 +0200
-Message-ID: <20260515154701.842463140@linuxfoundation.org>
+Subject: [PATCH 7.0 152/201] drm/xe/bo: Fix bo leak on unaligned size validation in xe_bo_init_locked()
+Date: Fri, 15 May 2026 17:49:30 +0200
+Message-ID: <20260515154701.864244022@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -53,48 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-commit 111ab678471bf1f90d078d5513bb086b70596c3c upstream.
+commit 09a8f3c1c11977a6e10c167f26dd298790b31c32 upstream.
 
-When xe_dma_buf_init_obj() fails, the attachment from
-dma_buf_dynamic_attach() is not detached. Add dma_buf_detach() before
-returning the error. Note: we cannot use goto out_err here because
-xe_dma_buf_init_obj() already frees bo on failure, and out_err would
-double-free it.
+When type is ttm_bo_type_device and aligned_size != size, the function
+returns an error without freeing a caller-provided bo, violating the
+documented contract that bo is freed on failure.
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Add xe_bo_free(bo) before returning the error.
+
+Fixes: 4e03b584143e ("drm/xe/uapi: Reject bo creation of unaligned size")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4.6
-Reviewed-by: Mattheq Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260408175255.3402838-5-shuicheng.lin@intel.com
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260408175255.3402838-2-shuicheng.lin@intel.com
 Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit a828eb185aac41800df8eae4b60501ccc0dbbe51)
+(cherry picked from commit 601c2aa087b6f21014300a3f107a08ee4dde7bdf)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_dma_buf.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_bo.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_dma_buf.c
-+++ b/drivers/gpu/drm/xe/xe_dma_buf.c
-@@ -358,12 +358,15 @@ struct drm_gem_object *xe_gem_prime_impo
- 		goto out_err;
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -2176,8 +2176,10 @@ struct xe_bo *xe_bo_init_locked(struct x
+ 		alignment = SZ_4K >> PAGE_SHIFT;
  	}
  
--	/* Errors here will take care of freeing the bo. */
-+	/*
-+	 * xe_dma_buf_init_obj() takes ownership of bo on both success
-+	 * and failure, so we must not touch bo after this call.
-+	 */
- 	obj = xe_dma_buf_init_obj(dev, bo, dma_buf);
--	if (IS_ERR(obj))
-+	if (IS_ERR(obj)) {
-+		dma_buf_detach(dma_buf, attach);
- 		return obj;
--
--
+-	if (type == ttm_bo_type_device && aligned_size != size)
++	if (type == ttm_bo_type_device && aligned_size != size) {
++		xe_bo_free(bo);
+ 		return ERR_PTR(-EINVAL);
 +	}
- 	get_dma_buf(dma_buf);
- 	obj->import_attach = attach;
- 	return obj;
+ 
+ 	if (!bo) {
+ 		bo = xe_bo_alloc();
 
 
