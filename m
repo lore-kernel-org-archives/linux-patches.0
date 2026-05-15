@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D114963A1;
-	Fri, 15 May 2026 16:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245DB3FD960;
+	Fri, 15 May 2026 16:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778861947; cv=none; b=f6eqbXbw+sw5A/Fvyvt++HHz5hhTb5TmyxkUtdTVbRwLdYgKhEqDRwraRlr6pSVWWhNiux3nT0VkoQAiOgP/0MgQAQE82IXpmGeBQXt2C3LJWYnJptzywEVONPPrwx1hZ6kREut7OF2X3tBBm9WOWDhF7dtZlc3yMEUCiPlHRTU=
+	t=1778861950; cv=none; b=DIgOrj4ReqduRr5vEFe69mz5V5HRyeAUY3Z0MbO/flvJpe4v7VB0EuTJTTqXSnx+ce4gPEIMkKpR33ixb43hq2hYobNj+Tr3NU0TdbrWJ2sYt+nenp4k9PLsjrlugsVDL96yZS3hUgaq3jQumDo+VEIQw1o2rxwdYjSAoKUwjbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778861947; c=relaxed/simple;
-	bh=Sklpkppusjp3+jC+HVFvTdDsUoKhd4Jbc6tzoOy/3Ck=;
+	s=arc-20240116; t=1778861950; c=relaxed/simple;
+	bh=CJyK+fSwzNoEO4peugsJupLVQK7QOxhVsQctyqc7hxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2uCBlnalRV/XWjrXWHvNP/HvTjD4JXUhGY154vg7NZh6Vy6i9dUEBvRSkyJEReul/4S20BpqaGnAUedq5LJSzG1F4x+oMugBWpRH5CzhngH2z8PW7HvfjVNhfAZZ0gSJIN3dMHdnO7+KYF0H3UgG58nfYBXUVhezYw4OhV+kkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBjWpjHS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sy8lCRrT1ox/fZwsDrFF6PVwrFIckHZsnkHwIH5QWd97R3hlTowH+xTqPAAbscsL4QPqm/epO4fhIic7YOnXouMFokybjNWoUIG791Z4PsfVYYpjAXJt1+VFBUdG82QbvA58JiW1X9lofziSjiGgC6lhGgGVo9zsk/Sr1KMtRFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzhgYpwu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBjWpjHS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDC9C2BCB0;
-	Fri, 15 May 2026 16:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzhgYpwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE87AC2BCB0;
+	Fri, 15 May 2026 16:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778861947;
-	bh=Sklpkppusjp3+jC+HVFvTdDsUoKhd4Jbc6tzoOy/3Ck=;
+	s=korg; t=1778861950;
+	bh=CJyK+fSwzNoEO4peugsJupLVQK7QOxhVsQctyqc7hxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sBjWpjHSURfL2+WONFZN/lI8LC736JLy/eHqoJqM+ZbA+KI5/KJbycIsCDwkQyJpp
-	 byBMtfgLQAG+4ahB2RzDo0KXJhMdEIC3xEfRcIWHR30jDDvm7HLS/HnWnBjQCzfxzM
-	 VDca0MtvZL/0YslD6iBpFh6DZTKgntFlhcN1EhK8=
+	b=WzhgYpwuztV1T1K4RpXGioPDYzf/HSr5LwCtGHqStJZBHdP6fzebU6fRImXIG5Ohq
+	 tV35n9AhoLuHgpsrjhC0iHW+MfBufzt2hOhl2KV9YGR9dfNM8tlQrVP7+wvxRHixLa
+	 jXcBRsZVHSozzUxPaInaKN+gr2H4zM/Kfy2k2QaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 048/188] media: pci: zoran: fix potential memory leak in zoran_probe()
-Date: Fri, 15 May 2026 17:47:45 +0200
-Message-ID: <20260515154658.357666036@linuxfoundation.org>
+Subject: [PATCH 6.18 049/188] media: dib8000: avoid division by 0 in dib8000_set_dds()
+Date: Fri, 15 May 2026 17:47:46 +0200
+Message-ID: <20260515154658.379669723@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154657.309489048@linuxfoundation.org>
 References: <20260515154657.309489048@linuxfoundation.org>
@@ -50,33 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 
-commit 8ea21435fe36fb853706f4935d78bc11beb63fb4 upstream.
+commit dde3c37af95cd6fa301c4906f33d627bc9dd874c upstream.
 
-The memory allocated for codec in videocodec_attach() is not freed in
-one of the error paths, due to an incorrect goto label. Fix the label
-to free it on error.
+In dib8000_set_dds(), 1 << 26 (67108864) divided by e.g. 1 apparently can't
+fit into 16-bit variable unit_khz_dds_val, being truncated to 0; this will
+cause division by 0 while calling dprintk() with debugging enabled (via the
+module parameter).  Use s32 instead of s16 to declare the variable, getting
+rid of the cast to u16 in the *else* branch as well...
 
-Fixes: 8f7cc5c0b0eb ("media: staging: media: zoran: introduce zoran_i2c_init")
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
+
+Fixes: 173a64cb3fcf ("[media] dib8000: enhancement")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/zoran/zoran_card.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-frontends/dib8000.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/zoran/zoran_card.c
-+++ b/drivers/media/pci/zoran/zoran_card.c
-@@ -1373,7 +1373,7 @@ static int zoran_probe(struct pci_dev *p
- 		}
- 		if (zr->codec->type != zr->card.video_codec) {
- 			pci_err(pdev, "%s - wrong codec\n", __func__);
--			goto zr_unreg_videocodec;
-+			goto zr_detach_codec;
- 		}
- 	}
- 	if (zr->card.video_vfe != 0) {
+--- a/drivers/media/dvb-frontends/dib8000.c
++++ b/drivers/media/dvb-frontends/dib8000.c
+@@ -2695,7 +2695,7 @@ static void dib8000_viterbi_state(struct
+ 
+ static void dib8000_set_dds(struct dib8000_state *state, s32 offset_khz)
+ {
+-	s16 unit_khz_dds_val;
++	s32 unit_khz_dds_val;
+ 	u32 abs_offset_khz = abs(offset_khz);
+ 	u32 dds = state->cfg.pll->ifreq & 0x1ffffff;
+ 	u8 invert = !!(state->cfg.pll->ifreq & (1 << 25));
+@@ -2716,7 +2716,7 @@ static void dib8000_set_dds(struct dib80
+ 			dds = (1<<26) - dds;
+ 	} else {
+ 		ratio = 2;
+-		unit_khz_dds_val = (u16) (67108864 / state->cfg.pll->internal);
++		unit_khz_dds_val = 67108864 / state->cfg.pll->internal;
+ 
+ 		if (offset_khz < 0)
+ 			unit_khz_dds_val *= -1;
 
 
