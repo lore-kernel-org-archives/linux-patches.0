@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454C23D1A82;
-	Fri, 15 May 2026 16:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79D82C11DF;
+	Fri, 15 May 2026 16:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862364; cv=none; b=dg/19WYZgQxQlCQR8tyGYj3fXlfDV1p7HxfYyDrqPisp0EYBSO5XrPZML8fmKz8Hbzj8ZPv2OkkTv843mZgPMq7eh5WIE1mVqyMGaM/zA7fAD5AQVwzcYnG/6VCc9KFxQIQZT5B+lccROoEYhAZTUMEshA0b9KpwS0lXTC5koFA=
+	t=1778862367; cv=none; b=jt5f8mlJECYNAY+EMUVoiH8u4weYOsKFwyENz4W11omQAZVMgjLSraUe/SYGIWbjSrJ77pgY6g1Wr6xRhv1PVDW0IU6WbyBgbQfRxSV1rZyCrVfi4zkXtvflHrwIz8cbbiLZjXvEswSAmsaeh7cwKEVlA4NP1Pt5WJYAF5FWl74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862364; c=relaxed/simple;
-	bh=B5ywvKvbT/OpW4axmyj1WVulh55kRheV46jcoijxfbk=;
+	s=arc-20240116; t=1778862367; c=relaxed/simple;
+	bh=5tBijikLdMnS2ZEg5QUGrZs8Btq8hi3oGBZsaMdApM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fZ23bDvT+mUP99u+NXEdlJBtGQksckehRaF6T68nhfsdYU5kdZIB9Jm0pTou1FTgw18PhiryxpaUizVcu8iolGXO2ZSsvZCBbnAgq3SWgnCJ/nogo3/InsKXCEKfPv4QmtzWmYCU4MmdBYd7SN64QEJPpjI4zFzWS2+6RkGpmr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujjPyzy8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P9Z9uwxNBQRWNCaXhPgFBgSMG3vjfa6Z59qBZo8mA6cFX5oHFXODZN4GdEHLKXskL2x7Jz89S6Xf0JBary9D76bNFLsWygviE7iay+nsBb5rXpckFIAhcEUqboYe/zLR08/shMx76GdYPuYBkZqyk6Myxlw6PpKTqFxCECPtk6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVCZk4+i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujjPyzy8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1116C2BCB0;
-	Fri, 15 May 2026 16:26:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVCZk4+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF4AC2BCB0;
+	Fri, 15 May 2026 16:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862364;
-	bh=B5ywvKvbT/OpW4axmyj1WVulh55kRheV46jcoijxfbk=;
+	s=korg; t=1778862366;
+	bh=5tBijikLdMnS2ZEg5QUGrZs8Btq8hi3oGBZsaMdApM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ujjPyzy8uihrussGnqWZY9KYuixnCpfhQythMqvkgLF1RLOjzBDN8tnkzrZhqR+eb
-	 s3Sy/JcmEuza1TrnVMGp6L2PYh0l7MNiPUcTY1KV9QieJbiU2l0qAcs3YQWJ2KEx9o
-	 UZNTfwB4Djuw1HWwnAyI4MEzHksSLPVmal74sCBg=
+	b=dVCZk4+iTyadwpuDgLiJgKB7h2kBLXldU4skR+wxwktLlbqVWy3mTw9PWUQwtxnBI
+	 wM6JFNgaklsbORrFl8qkf3weQWCtf9tpKmC1qcpXklBODNomTw6oIacWtO5Cu6amd0
+	 8EIYhebfCnMRxL488Oo/61kylfPUsJmmVvIsJ5vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Conor Dooley <conor@kernel.org>,
 	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.0 020/201] media: dt-bindings: rockchip,vdec: Add alternative reg-names order for RK35{76,88}
-Date: Fri, 15 May 2026 17:47:18 +0200
-Message-ID: <20260515154658.971578077@linuxfoundation.org>
+Subject: [PATCH 7.0 021/201] media: dt-bindings: rockchip,vdec: Mark reg-names required for RK35{76,88}
+Date: Fri, 15 May 2026 17:47:19 +0200
+Message-ID: <20260515154658.992552688@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -54,75 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-commit 35c8178ed2bd9821a75a406d762b2f2e161f9c70 upstream.
+commit a11db8d8b403eba1f82728f440727128e9997edd upstream.
 
-With the introduction of the RK3588 SoC, and RK3576 afterwards, three
-register blocks have been provided for the video decoder unit instead of
-just one, which are further referenced in vendor's datasheet by 'link
-table', 'function' and 'cache'.  The former is present at the top of the
-listing, starting at video decoder unit base address.
+The Rockchip Video Decoder driver expects reg-names to be mandatory for
+RK3576 and RK3588 SoCs, however the binding does not currently require
+the use of them.
 
-However, while documenting RK3588, the binding broke the convention
-expecting the unit address to indicate the start of the primary register
-range, i.e. the 'function' block got listed before the 'link' one.
+As a consequence, driver would fail to probe with a hypothetical
+devicetree that doesn't provide the reg-names for these SoCs, but which
+is otherwise a perfectly valid DT from the binding perspective.
 
-Since the binding changes have been already released and a fix would
-bring up an ABI break, mark the current 'reg-names' ordering as
-deprecated and introduce an alternative 'link,function,cache' listing
-which follows the address-based ordering according to the TRM.
+Update the binding and make reg-names required for the aforementioned
+SoCs.  While this change introduces an ABI break, the expected impact on
+potential users would be minimal, if any, since the old SoCs are
+unaffected, while the video decoder support for these newer variants in
+mainline driver and devicetrees hasn't been released yet.
 
-Additionally, drop the 'reg' description items as the order is not fixed
-anymore, while the information they offer is not very relevant anyway.
+Moreover, this is also a prerequisite for a subsequent binding update
+introducing an alternative reg-names order, according to the
+address-based listing in the vendor's datasheet.
 
-It's worth noting there are currently no (known) users impacted by these
-binding changes, since the video decoder support for the aforementioned
-SoCs in mainline driver and devicetrees hasn't been released yet - it
-landed in v7.0-rc1 while all DTS updates resulting from this will be
-handled before v7.0 is out.
-
+Reported-by: Conor Dooley <conor@kernel.org>
+Closes: https://lore.kernel.org/all/20260227-urologist-gratitude-7984733f2d41@spud/
 Fixes: c6ffb7e1fb90 ("media: dt-bindings: rockchip: Document RK3588 Video Decoder bindings")
 Fixes: a5c4a6526476 ("media: dt-bindings: rockchip: Add RK3576 Video Decoder bindings")
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/media/rockchip,vdec.yaml |   20 +++++++------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ Documentation/devicetree/bindings/media/rockchip,vdec.yaml |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/Documentation/devicetree/bindings/media/rockchip,vdec.yaml
 +++ b/Documentation/devicetree/bindings/media/rockchip,vdec.yaml
-@@ -28,16 +28,20 @@ properties:
- 
-   reg:
-     minItems: 1
--    items:
--      - description: The function configuration registers base
--      - description: The link table configuration registers base
--      - description: The cache configuration registers base
-+    maxItems: 3
- 
-   reg-names:
--    items:
--      - const: function
--      - const: link
--      - const: cache
-+    oneOf:
-+      - items:
-+          - const: link
-+          - const: function
-+          - const: cache
-+      - items:
-+          - const: function
-+          - const: link
-+          - const: cache
-+        deprecated: true
-+        description: Use link,function,cache block order instead.
- 
-   interrupts:
-     maxItems: 1
+@@ -127,6 +127,8 @@ allOf:
+           minItems: 5
+         reset-names:
+           minItems: 5
++      required:
++        - reg-names
+     else:
+       properties:
+         reg:
 
 
