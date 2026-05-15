@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77F43FF1D5;
-	Fri, 15 May 2026 15:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4E93FF1A2;
+	Fri, 15 May 2026 15:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860291; cv=none; b=eOa6BXdaTw56SBlOCZ1aIL0iIzp2wOYPI0KxQ7Rh3EWg847Rc1mEiOuhdSsdbo2SlRoCyifE4haJQUZFefBkPg3Gfei2dDXwHW70EKazZN8RVxbuetYZF544K8xNq+i000+gW4ncK/ZSN24PodNqT4FmQhjrJN65lw/Zb4uQhpY=
+	t=1778860294; cv=none; b=cOlPmEO+uqYl/FhTkaetdcuE6kBzr8Hd39KJhPaKr7yzfDVnmKFKmTnW2bkWtw6ZtQoJYqs/Q+mr5WqbKVqWVlRe56dpF4GXsETvSWrBmOjF7qLwzQEEspMAQF9vnO75i2Zxei50D5+d75sUqlZP9WsmALmN1IQJjoG6mCb2vyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860291; c=relaxed/simple;
-	bh=xbDwHOFzIY5VXE+qyOhmCCWZapo5o+Mb9Tl8qD98DGM=;
+	s=arc-20240116; t=1778860294; c=relaxed/simple;
+	bh=izXdzrdt0+LVWC/IYvn7h5GXm56+dOp19s2HDjYWya4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnK4FtSvnFfrMY4G0CFCj1NstXy7Hojeu7KfRvpzfo9rArihd5nkVpFarrU0CvRRx+R6wT0zWOKv/3AQR994d+wlYAdQ4emHKiX39Z4fPo5ZfteTxz/O3aGKMY+3lLV+Dyh7XvGW11tRucFbu1iNdKxe5lwgYGD+fhq+Lm209BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qkmXymmR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SV+JY+Guyj6IofeoiCUsED4E8gjHQXjGkOpXEgl1vdWLNdNV9qBncDmyRAT46ABzqt4nloFq0wMq6yC/Cghr05GzXncw3LKDsFCn53uEJBKmB1uvRmumXnlYs68RsdXQUEr8HmaU8/chYXWxz7U72Dwlm132LZJCFwq+y/HUdzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1sLBNTT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qkmXymmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F89C2BCB0;
-	Fri, 15 May 2026 15:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1sLBNTT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E92C2BCB0;
+	Fri, 15 May 2026 15:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860291;
-	bh=xbDwHOFzIY5VXE+qyOhmCCWZapo5o+Mb9Tl8qD98DGM=;
+	s=korg; t=1778860294;
+	bh=izXdzrdt0+LVWC/IYvn7h5GXm56+dOp19s2HDjYWya4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkmXymmRESdlg6RQnc+P+JyB42PXOXc2n+BxLpcunmmQrtRytJkK4Fu8Vs6SGLvU1
-	 xNtQcEok5D8D2aTUw6FuUkLXonlejh4LqKSwAw7nSD09NsROToytodzGBmvZvY7Qmi
-	 aWFjvtSZDH88mK5OuOKMUHvjjykc0uEAa1sAmt2c=
+	b=Q1sLBNTTiemNtYlcTb5ef2wI8bSfDhJHUOH/e3izGHR9zn7Qpe4R4dO+MqrpIWn9i
+	 PgmTFBYXYsKL3QHm3sSekXnjf81s4SxMr3/UxOC9LETqUrpqzjVGQRbd7Mvbdl4ZKr
+	 8uwcJe8xCKsLd7ScjXwSP4qm1FgWn9wZ5BTVicQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
+	Oliver Neukum <oneukum@suse.com>,
+	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 033/144] media: dib8000: avoid division by 0 in dib8000_set_dds()
-Date: Fri, 15 May 2026 17:47:39 +0200
-Message-ID: <20260515154654.281160218@linuxfoundation.org>
+Subject: [PATCH 6.12 016/144] media: rc: streamzap: Error handling in probe
+Date: Fri, 15 May 2026 17:47:22 +0200
+Message-ID: <20260515154653.870313180@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154653.469907118@linuxfoundation.org>
 References: <20260515154653.469907118@linuxfoundation.org>
@@ -50,47 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit dde3c37af95cd6fa301c4906f33d627bc9dd874c upstream.
+commit 42844992664f03ef9f930e64f7370fa481e9c267 upstream.
 
-In dib8000_set_dds(), 1 << 26 (67108864) divided by e.g. 1 apparently can't
-fit into 16-bit variable unit_khz_dds_val, being truncated to 0; this will
-cause division by 0 while calling dprintk() with debugging enabled (via the
-module parameter).  Use s32 instead of s16 to declare the variable, getting
-rid of the cast to u16 in the *else* branch as well...
+If submitting the URB fails, the device will be unusable.
+Probe() must fail.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
-
-Fixes: 173a64cb3fcf ("[media] dib8000: enhancement")
+Fixes: 7a569f524dd36 ("V4L/DVB: IR/streamzap: functional in-kernel decoding")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/dib8000.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/rc/streamzap.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/media/dvb-frontends/dib8000.c
-+++ b/drivers/media/dvb-frontends/dib8000.c
-@@ -2694,7 +2694,7 @@ static void dib8000_viterbi_state(struct
+--- a/drivers/media/rc/streamzap.c
++++ b/drivers/media/rc/streamzap.c
+@@ -219,9 +219,8 @@ static void streamzap_callback(struct ur
+ 	case -ESHUTDOWN:
+ 		/*
+ 		 * this urb is terminated, clean up.
+-		 * sz might already be invalid at this point
+ 		 */
+-		dev_err(sz->dev, "urb terminated, status: %d\n", urb->status);
++		dev_dbg(sz->dev, "urb terminated, status: %d\n", urb->status);
+ 		return;
+ 	default:
+ 		break;
+@@ -358,11 +357,16 @@ static int streamzap_probe(struct usb_in
  
- static void dib8000_set_dds(struct dib8000_state *state, s32 offset_khz)
- {
--	s16 unit_khz_dds_val;
-+	s32 unit_khz_dds_val;
- 	u32 abs_offset_khz = abs(offset_khz);
- 	u32 dds = state->cfg.pll->ifreq & 0x1ffffff;
- 	u8 invert = !!(state->cfg.pll->ifreq & (1 << 25));
-@@ -2715,7 +2715,7 @@ static void dib8000_set_dds(struct dib80
- 			dds = (1<<26) - dds;
- 	} else {
- 		ratio = 2;
--		unit_khz_dds_val = (u16) (67108864 / state->cfg.pll->internal);
-+		unit_khz_dds_val = 67108864 / state->cfg.pll->internal;
+ 	usb_set_intfdata(intf, sz);
  
- 		if (offset_khz < 0)
- 			unit_khz_dds_val *= -1;
+-	if (usb_submit_urb(sz->urb_in, GFP_ATOMIC))
++	retval = usb_submit_urb(sz->urb_in, GFP_ATOMIC);
++	if (retval < 0) {
+ 		dev_err(sz->dev, "urb submit failed\n");
++		goto rc_submit_fail;
++	}
+ 
+ 	return 0;
+-
++rc_submit_fail:
++	rc_free_device(sz->rdev);
++	usb_set_intfdata(intf, NULL);
+ rc_dev_fail:
+ 	usb_free_urb(sz->urb_in);
+ free_buf_in:
 
 
