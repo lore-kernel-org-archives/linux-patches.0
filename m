@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A50617C220;
-	Fri, 15 May 2026 15:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D8B35AC09;
+	Fri, 15 May 2026 15:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778860702; cv=none; b=XsFi2taHc9Bd9ne0ncmhaKUk+hM7C3R+eWoyC9dLK2LSxIiCVlnWb3emNViZYW2d3hvAyzf5CEuFLosA2BwM6KYKMQcTTSKddbHEDY+R4MrlCtoF+nCKC9AymyELIUFqZlLG9aW9VlYZ+gCe0YZyGr26GOJ1Vu8TLQwxSx6GeFU=
+	t=1778860704; cv=none; b=GrBbvDiOQ7jUaYEWdivcM+jQx306vqxP2rNx0f1GdA0An3NPZh1ddSFhHjTwCHr4qkh/kHhZB6o8wTRsonn+ywlrdl+0/cdtRPPfb/rqO+2EU5ARD346zmXdyVNzjI/KXtVoGKRVx/5+Abx64dD0ASD86yf2Nxa0fW6AKm5bNnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778860702; c=relaxed/simple;
-	bh=tYy1Akax3Fz7d39qPTMHr0rLCYYHzaOxXQZ9JzhCAmc=;
+	s=arc-20240116; t=1778860704; c=relaxed/simple;
+	bh=8bNy+Tqsm+Fuc3nLrK76n9YMV6Ly5s95DYgTuQ/b0eQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cBQI0AoiNftQ32ZgQf4nLPCmyXw7tlsfNwJOBaoY0vyL2IGdbzOzkbyyTm3KC0K/OxT/Ig0m78RriYAAiv6hrRw1G+B25/zrgQ6QbQhIhdks2Ayg+eYfmafRENEsUvZnrIvCI42S/Swku20qZx+JRnpKDy8QZfM+cJ6h4jgTTPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaJbLjm1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ohj83r4GKI4y3dqm5vPsD49Mkgx+GTsjIwjlvS2rOlym3U5MpaSwTMy+G6zrGE93xSlUK6OeCVgNzJ3j28LLPRECVhL60dpTKrrMhQePO50A5r+iT5OmTx8popykdOSp3/5PERzhtLbTdTztelh3tCl3L0jHrbwDTWGQNo+ahXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eEUGGGWI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaJbLjm1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95120C2BCB3;
-	Fri, 15 May 2026 15:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEUGGGWI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F81FC2BCB0;
+	Fri, 15 May 2026 15:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778860701;
-	bh=tYy1Akax3Fz7d39qPTMHr0rLCYYHzaOxXQZ9JzhCAmc=;
+	s=korg; t=1778860704;
+	bh=8bNy+Tqsm+Fuc3nLrK76n9YMV6Ly5s95DYgTuQ/b0eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LaJbLjm1cpKjyM1bDQIb2V7eg3drsTVtFvNDwA0QCLrSSFe/XxSh8ZdxzmiM8JDkY
-	 KWeRruEKFZ+JazdYlEhkdjTY4irmqxDHAnTXuIJLtRIASTrRAemoZaeHEl/8sOYhnZ
-	 OpWYCRP1QhXs/wpO5RQ2dn+63Jj1bjIriTR9g5/c=
+	b=eEUGGGWIfgG7XNJ2WgZBvf/T9H98sJRHzgVMtElKJOe8+V2yvBt/W+6PSgWHkv6Ak
+	 JZ3MGEKTU04I7bkLYKw3DvoWJ3d0d9sGz9ho3GxaNwbZTcNnDX9ZsVURZeNLMqZY+4
+	 qPBTzpHCfdICc+lK6CGc6D6EahIELb5cTDvi2xf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Hunt <johunt@akamai.com>,
-	Yu Kuai <yukuai@fnnas.com>
-Subject: [PATCH 6.6 046/474] md/raid10: fix deadlock with check operation and nowait requests
-Date: Fri, 15 May 2026 17:42:35 +0200
-Message-ID: <20260515154716.043905373@linuxfoundation.org>
+	Marek Vasut <marex@nabladev.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 047/474] mfd: stpmic1: Attempt system shutdown twice in case PMIC is confused
+Date: Fri, 15 May 2026 17:42:36 +0200
+Message-ID: <20260515154716.066025735@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
 References: <20260515154715.053014143@linuxfoundation.org>
@@ -50,100 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Hunt <johunt@akamai.com>
+From: Marek Vasut <marex@nabladev.com>
 
-commit 7d96f3120a7fb7210d21b520c5b6f495da6ba436 upstream.
+commit ffdc5c51f8bcd0e5e8255ca275a0a3b958475d99 upstream.
 
-When an array check is running it will raise the barrier at which point
-normal requests will become blocked and increment the nr_pending value to
-signal there is work pending inside of wait_barrier(). NOWAIT requests
-do not block and so will return immediately with an error, and additionally
-do not increment nr_pending in wait_barrier(). Upstream change commit
-43806c3d5b9b ("raid10: cleanup memleak at raid10_make_request") added a
-call to raid_end_bio_io() to fix a memory leak when NOWAIT requests hit
-this condition. raid_end_bio_io() eventually calls allow_barrier() and
-it will unconditionally do an atomic_dec_and_test(&conf->nr_pending) even
-though the corresponding increment on nr_pending didn't happen in the
-NOWAIT case.
+Attempt to shut down again, in case the first attempt failed.
+The STPMIC1 might get confused and the first regmap_update_bits()
+returns with -ETIMEDOUT / -110 . If that or similar transient
+failure occurs, try to shut down again. If the second attempt
+fails, there is some bigger problem, report it to user.
 
-This can be easily seen by starting a check operation while an application
-is doing nowait IO on the same array. This results in a deadlocked state
-due to nr_pending value underflowing and so the md resync thread gets stuck
-waiting for nr_pending to == 0.
-
-Output of r10conf state of the array when we hit this condition:
-
-crash> struct r10conf
-	barrier = 1,
-        nr_pending = {
-          counter = -41
-        },
-        nr_waiting = 15,
-        nr_queued = 0,
-
-Example of md_sync thread stuck waiting on raise_barrier() and other
-requests stuck in wait_barrier():
-
-md1_resync
-[<0>] raise_barrier+0xce/0x1c0
-[<0>] raid10_sync_request+0x1ca/0x1ed0
-[<0>] md_do_sync+0x779/0x1110
-[<0>] md_thread+0x90/0x160
-[<0>] kthread+0xbe/0xf0
-[<0>] ret_from_fork+0x34/0x50
-[<0>] ret_from_fork_asm+0x1a/0x30
-
-kworker/u1040:2+flush-253:4
-[<0>] wait_barrier+0x1de/0x220
-[<0>] regular_request_wait+0x30/0x180
-[<0>] raid10_make_request+0x261/0x1000
-[<0>] md_handle_request+0x13b/0x230
-[<0>] __submit_bio+0x107/0x1f0
-[<0>] submit_bio_noacct_nocheck+0x16f/0x390
-[<0>] ext4_io_submit+0x24/0x40
-[<0>] ext4_do_writepages+0x254/0xc80
-[<0>] ext4_writepages+0x84/0x120
-[<0>] do_writepages+0x7a/0x260
-[<0>] __writeback_single_inode+0x3d/0x300
-[<0>] writeback_sb_inodes+0x1dd/0x470
-[<0>] __writeback_inodes_wb+0x4c/0xe0
-[<0>] wb_writeback+0x18b/0x2d0
-[<0>] wb_workfn+0x2a1/0x400
-[<0>] process_one_work+0x149/0x330
-[<0>] worker_thread+0x2d2/0x410
-[<0>] kthread+0xbe/0xf0
-[<0>] ret_from_fork+0x34/0x50
-[<0>] ret_from_fork_asm+0x1a/0x30
-
-Fixes: 43806c3d5b9b ("raid10: cleanup memleak at raid10_make_request")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josh Hunt <johunt@akamai.com>
-Link: https://lore.kernel.org/linux-raid/20260303005619.1352958-1-johunt@akamai.com
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Fixes: 6e9df38f359a ("mfd: stpmic1: Add PMIC poweroff via sys-off handler")
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://patch.msgid.link/20260122111423.62591-1-marex@nabladev.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid10.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mfd/stpmic1.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1204,7 +1204,7 @@ static void raid10_read_request(struct m
- 	}
+--- a/drivers/mfd/stpmic1.c
++++ b/drivers/mfd/stpmic1.c
+@@ -16,6 +16,8 @@
  
- 	if (!regular_request_wait(mddev, conf, bio, r10_bio->sectors)) {
--		raid_end_bio_io(r10_bio);
-+		free_r10bio(r10_bio);
- 		return;
- 	}
+ #include <dt-bindings/mfd/st,stpmic1.h>
  
-@@ -1425,7 +1425,7 @@ static void raid10_write_request(struct
++#define STPMIC1_MAX_RETRIES 2
++
+ #define STPMIC1_MAIN_IRQ 0
  
- 	sectors = r10_bio->sectors;
- 	if (!regular_request_wait(mddev, conf, bio, sectors)) {
--		raid_end_bio_io(r10_bio);
-+		free_r10bio(r10_bio);
- 		return;
- 	}
+ static const struct regmap_range stpmic1_readable_ranges[] = {
+@@ -121,9 +123,23 @@ static const struct regmap_irq_chip stpm
+ static int stpmic1_power_off(struct sys_off_data *data)
+ {
+ 	struct stpmic1 *ddata = data->cb_data;
++	int ret;
++
++	/*
++	 * Attempt to shut down again, in case the first attempt failed.
++	 * The STPMIC1 might get confused and the first regmap_update_bits()
++	 * returns with -ETIMEDOUT / -110 . If that or similar transient
++	 * failure occurs, try to shut down again. If the second attempt
++	 * fails, there is some bigger problem, report it to user.
++	 */
++	for (int retries = 0; retries < STPMIC1_MAX_RETRIES; retries++) {
++		ret = regmap_update_bits(ddata->regmap, MAIN_CR, SOFTWARE_SWITCH_OFF,
++					 SOFTWARE_SWITCH_OFF);
++		if (!ret)
++			return NOTIFY_DONE;
++	}
  
+-	regmap_update_bits(ddata->regmap, MAIN_CR,
+-			   SOFTWARE_SWITCH_OFF, SOFTWARE_SWITCH_OFF);
++	dev_err(ddata->dev, "Failed to access PMIC I2C bus (%d)\n", ret);
+ 
+ 	return NOTIFY_DONE;
+ }
 
 
