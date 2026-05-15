@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB394C040C;
-	Fri, 15 May 2026 16:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC144C0420;
+	Fri, 15 May 2026 16:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778862534; cv=none; b=hv0mUnTNu/MiWgYYytoObx1MO3C1xZP0h6fqmwx7eeqWYOvSWhXLazZCua3hr4Utw6ZINLIzPu6M3YBTN/CM1JxkcZCQp/v9y7Eqvbu9K7/UpRq6bApuDcav3SsQvTjwA6QoVI3ddCxHaXXBRd8Wv3R0G3MUBOYXw8kN7K1vy38=
+	t=1778862536; cv=none; b=pXr18up9W85dWyvcmIyLIPiDspd0d47GtSdb9k7JbALX1K9qTY8oOOvj0qtbA+t9w+GgxfYxfQBjzFRnzN5Mb4uPxR62TPQnYe1ADBcNxZDoh2xpd8hD7q66uV8raJyu5zyZNDDuon5W2xrB+ZKT0EyzFSY3lXVIRCziWQV/NOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778862534; c=relaxed/simple;
-	bh=o+s5BxD2oTEcHXUQQ+K7DaUZru8rwnVldworQS4LyFI=;
+	s=arc-20240116; t=1778862536; c=relaxed/simple;
+	bh=Es9OzjELDOOZiAUdFIcGacnL3lldSF4hpdz1OLcg7Ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rVR7Qt4N2VDwJT3+/q/tpwgkK0D3OcewWRebS2Feof8Nqx6cuIQ3VAqk7kpJjgCqc6CWHdbrPDQKSs7u+GppFGjy6opszKk0U6oFdTaTXVP0/R4iknraexGUZuwA5L8QE240jkvpd96/fg27/IA4jNEnkFiAAYedKpij7RKNVx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmR/Ayb6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dulmkI98kMvNAxlvatxPmEVPNgOoYEw9K5XBYUboUWBDoZPyfOX46qttrUFFv3UV+DUlQI3Xqq/YKQeRJ855/0r3l6sYBzHBWHEnXdJQYIS4eJFjvydSO2gxD/FQ9B78Bsf19MGWx5fKS/Fwsx4x2VP+0XhqnAhunj0MThS8OLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWJsaxre; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmR/Ayb6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85BEC2BCB0;
-	Fri, 15 May 2026 16:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWJsaxre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B615C2BCB0;
+	Fri, 15 May 2026 16:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778862534;
-	bh=o+s5BxD2oTEcHXUQQ+K7DaUZru8rwnVldworQS4LyFI=;
+	s=korg; t=1778862536;
+	bh=Es9OzjELDOOZiAUdFIcGacnL3lldSF4hpdz1OLcg7Ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cmR/Ayb6ISmlGeaEbUJ1TKsv8Z732NIq4nKsEe23K/eLEp7UVmQKW+o+pa2ewV25+
-	 CO7dBE0HJxfJH5NTw7zMp78It3GsOIt5ldP3JUWadXdNikw64OkQGy+HMW8ehCIUk0
-	 M75wYVD3y/Yz5OU7gpEsdbuMmf6WsHmpZQoz45FE=
+	b=mWJsaxrejYC7OAya0IVOTjQNXhAhXRVMcqAebJ8Ps/m39bKm7duzKHIZw7IQgviiF
+	 NuY628pLdcV5SRqkollAagjx2QyFdqWjNf/5XUPf1/ZoAYpCoud1C+t+xpo5FuqHsr
+	 wV6cAWaqymXYtrAX9dOa7IJbeGu2IKbXKEnD041c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingoo Han <jg1.han@samsung.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 083/201] spi: mxs: fix controller deregistration
-Date: Fri, 15 May 2026 17:48:21 +0200
-Message-ID: <20260515154700.328526046@linuxfoundation.org>
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.0 044/201] media: mali-c55: Fully reset the ISP configuration
+Date: Fri, 15 May 2026 17:47:42 +0200
+Message-ID: <20260515154659.488403161@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
 References: <20260515154658.538039039@linuxfoundation.org>
@@ -51,52 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 
-commit 8b0d0011af20fb547aa67a1cefbf320992fd5e92 upstream.
+commit 26ad493bea57efdccc32ffedbf731da2b7463b6c upstream.
 
-Make sure to deregister the controller before releasing underlying
-resources like DMA during driver unbind.
+The Mali C55 driver uses an auto-suspend delay of 2000 milli-seconds.
 
-Fixes: 33e195acf268 ("spi: mxs: use devm_spi_register_master()")
-Cc: stable@vger.kernel.org	# 3.13
-Cc: Jingoo Han <jg1.han@samsung.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-4-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+As the delay is quite large, it is certainly possible that two
+consecutive calls to enable_streams() do not go through a suspend of the
+peripheral, meaning we cannot rely on POW register values for the ISP
+configuration.
+
+To prevent a streaming session to be initialized with settings from the
+previous one, reset the full ISP configuration to know state disabling or
+bypassing all the ISP blocks the driver supports.
+
+Cc: stable@vger.kernel.org
+Fixes: d5f281f3dd29 ("media: mali-c55: Add Mali-C55 ISP driver")
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-mxs.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ .../platform/arm/mali-c55/mali-c55-params.c   | 50 +++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
---- a/drivers/spi/spi-mxs.c
-+++ b/drivers/spi/spi-mxs.c
-@@ -619,7 +619,7 @@ static int mxs_spi_probe(struct platform
- 	if (ret)
- 		goto out_pm_runtime_put;
+diff --git a/drivers/media/platform/arm/mali-c55/mali-c55-params.c b/drivers/media/platform/arm/mali-c55/mali-c55-params.c
+index c84a6047a570..773e5b6a2b7e 100644
+--- a/drivers/media/platform/arm/mali-c55/mali-c55-params.c
++++ b/drivers/media/platform/arm/mali-c55/mali-c55-params.c
+@@ -781,6 +781,43 @@ void mali_c55_params_init_isp_config(struct mali_c55 *mali_c55,
+ 				 MALI_C55_REG_BYPASS_3_SQUARE_BE,
+ 				 MALI_C55_REG_BYPASS_3_SQUARE_BE);
  
--	ret = devm_spi_register_controller(&pdev->dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Cannot register SPI host, %d\n", ret);
- 		goto out_pm_runtime_put;
-@@ -650,11 +650,17 @@ static void mxs_spi_remove(struct platfo
- 	spi = spi_controller_get_devdata(host);
- 	ssp = &spi->ssp;
++	/* Bypass the sensor offset correction (BLS) module */
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_BYPASS_3,
++		MALI_C55_REG_BYPASS_3_SENSOR_OFFSET_PRE_SH,
++		MALI_C55_REG_BYPASS_3_SENSOR_OFFSET_PRE_SH);
++
++	/* Configure 1x digital gain. */
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_DIGITAL_GAIN,
++				 MALI_C55_DIGITAL_GAIN_MASK, 256);
++
++	/* Set all AWB gains to 1x. at both AWB configuration points*/
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_AWB_GAINS1,
++				 MALI_C55_AWB_GAIN00_MASK, 256);
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_AWB_GAINS1,
++				 MALI_C55_AWB_GAIN01_MASK,
++				 MALI_C55_AWB_GAIN01(256));
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_AWB_GAINS2,
++				 MALI_C55_AWB_GAIN10_MASK, 256);
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_AWB_GAINS2,
++				 MALI_C55_AWB_GAIN11_MASK,
++				 MALI_C55_AWB_GAIN11(256));
++
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_AWB_GAINS1_AEXP,
++				 MALI_C55_AWB_GAIN00_MASK, 256);
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_AWB_GAINS1_AEXP,
++				 MALI_C55_AWB_GAIN01_MASK,
++				 MALI_C55_AWB_GAIN01(256));
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_AWB_GAINS2_AEXP,
++				 MALI_C55_AWB_GAIN10_MASK, 256);
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_AWB_GAINS2_AEXP,
++				 MALI_C55_AWB_GAIN11_MASK,
++				 MALI_C55_AWB_GAIN11(256));
++
++	/* Bypass mesh shading corrections (LSC). */
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_MESH_SHADING_CONFIG,
++				 MALI_C55_MESH_SHADING_ENABLE_MASK,
++				 false);
++
+ 	/* Bypass the temper module */
+ 	mali_c55_ctx_write(mali_c55, MALI_C55_REG_BYPASS_2,
+ 			   MALI_C55_REG_BYPASS_2_TEMPER);
+@@ -802,6 +839,19 @@ void mali_c55_params_init_isp_config(struct mali_c55 *mali_c55,
  
-+	spi_controller_get(host);
+ 	/* Disable the colour correction matrix */
+ 	mali_c55_ctx_write(mali_c55, MALI_C55_REG_CCM_ENABLE, 0);
 +
-+	spi_unregister_controller(host);
++	/* Disable AWB stats. */
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_METERING_CONFIG,
++				 MALI_C55_AWB_DISABLE_MASK,
++				 MALI_C55_AWB_DISABLE_MASK);
 +
- 	pm_runtime_disable(&pdev->dev);
- 	if (!pm_runtime_status_suspended(&pdev->dev))
- 		mxs_spi_runtime_suspend(&pdev->dev);
- 
- 	dma_release_channel(ssp->dmach);
-+
-+	spi_controller_put(host);
++	/* Disable auto-exposure 1024-bin histograms at both tap points. */
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_METERING_CONFIG,
++				 MALI_C55_AEXP_HIST_DISABLE_MASK,
++				 MALI_C55_AEXP_HIST_DISABLE);
++	mali_c55_ctx_update_bits(mali_c55, MALI_C55_REG_METERING_CONFIG,
++				 MALI_C55_AEXP_IHIST_DISABLE_MASK,
++				 MALI_C55_AEXP_IHIST_DISABLE);
  }
  
- static struct platform_driver mxs_spi_driver = {
+ void mali_c55_unregister_params(struct mali_c55 *mali_c55)
+-- 
+2.54.0
+
 
 
