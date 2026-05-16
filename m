@@ -1,155 +1,199 @@
-Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB33271464
-	for <patches@lists.linux.dev>; Sat, 16 May 2026 00:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25042192FA
+	for <patches@lists.linux.dev>; Sat, 16 May 2026 00:48:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778892395; cv=none; b=H1MqAnhpggJ4h/J/whyCR79f0yQYZHoG1ob4IF/8JKtTrS8bj0iyLThwR7LU1wLscux4G3xjSLXv4WgSb6ZSMw4yWGjb4hCs47pWygFS5cbWzS34q9ArSuT+2R5Pbg074Yuqb4+8Iv30RMHae4SqQvI3NFp0amNpiQ5oq+obfts=
+	t=1778892485; cv=none; b=njI86CVQTuby3/5kgkanP+Xhbj17H4RQ07dj0FnT4FPg+wMdOyfOidDi4GYZkZ+DNd5mvjQzeHexvGkq06dxconHUUKwNXJWeXl27OJMrqirRX8Xo0rQxBxpPegjks3101DTcLOZD2IsIpR/gg3I4XEhWnzEKg8CrhJ3DlaHDxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778892395; c=relaxed/simple;
-	bh=+yBByH+X4c1uoMXYjK5+sjqKUIapyqynpZtSyRIaqE4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KVJ0LR4sgDGVbyn0aR01Z1nF/LYsy6/oyDrncjGeDqOC4EUF6PQQWUiOesVIVxbuWQwsiYrF3JIrqMP3or58CxFUiI0oGTuhRIClwlRhFW0DNSwDUvxhbCG8rv732SHRVp0pZkcBUrK4Xb+TTL5ouOBmXMf7D0Ccd0IHpzhdF80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=s3Bl88Bt; arc=none smtp.client-ip=74.125.82.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1778892485; c=relaxed/simple;
+	bh=drDHN4Zg9cOOxdmNA9Mtsco7sGaHjsurCt5kmpxDGDI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LBvuKnv8da1AmUFsN09J5lLXCimzPd3JNfWpN0MF5Jd9r13D2wfxLjFj6vGwGlw1CJajbEhRFvfSHd144aiPonZaL+fmFOSxTygTNJghO49LyhpeabTY5O/5j03FZQTeElLhDHvn+80gaRO/vc00r5ev8MLWQIT9+d9Yub22ISo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=k8Kvdv1N; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="s3Bl88Bt"
-Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-135181f726dso41c88.1
-        for <patches@lists.linux.dev>; Fri, 15 May 2026 17:46:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="k8Kvdv1N"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-488a8ca4aadso3133145e9.3
+        for <patches@lists.linux.dev>; Fri, 15 May 2026 17:48:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1778892392; x=1779497192; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xi6UMXsamXS4nO8ukGa9Mfe0AvlJid/kwLk/3dcmb4k=;
-        b=s3Bl88BtV6CehRWzjxgbmVZ88wQ7MYpN+VZRSQqL5oipiqcmjK1b+XjYJhAnujSMxQ
-         B0UT2J1fGdO7P0J35OqFsWT3R6f8x+D/zB5sPHKcitZNRMjvzbia+4rqQHMzhxwbq1XZ
-         QUiLguuwzpx3/ZBO/OcRngI0E4oQbfC2MvoSaDj8/9UrPChf41qceS7fTo+N1oumxKkO
-         O2IImg8+hg9I+XR1Um/YRGn6l8CStiJMch72/ijWl8Hl6HAgapERqA8HSob4qS/PxO+s
-         ksXBDQ0j1Q39liSFA0oQI8JU4RNVvueqpUOBUGPvTxMYdVFSazJadPGuimxJ9ERUxzAn
-         hxiw==
+        d=googlemail.com; s=20251104; t=1778892481; x=1779497281; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ktNPJUhtUmCwD/xKtU4wmNTOqF7Ec1I7RC8ZgMrOzLU=;
+        b=k8Kvdv1NFKH+IVrH5xcgm2engdzlVnFqJlwXXzeY81GlSnuEbnPjwMD3Z7TB9XGlb8
+         bzOgVhWss2xl81RneebJ9j6109933F0DoGqli47Jg7KZOm9vzDg+lc9x48cO2yJjJsOD
+         dw5W8FMk8byT7G5WSlIrEWgUnRZ3602J4Jl1ht5UL2JQ8XwlYRh96Jg6waeKLUnY8tGr
+         85dWNBf/Vrq8U+yg/+YK9FbCZgJdBddR5aYkg+e+M+bWQgX3WWh+XoppGSJLGdtFtv8F
+         e+HrxZcLg5rZwwPs0ICO/4wwtp1aJiRHyP8S1OQT6lmM5VfMiJ6jKDzIVKWNjx63abjd
+         tylw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778892392; x=1779497192;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xi6UMXsamXS4nO8ukGa9Mfe0AvlJid/kwLk/3dcmb4k=;
-        b=de1dz4ialvhHmGhyo1Sgq2cVaFOf1Z5+3O5xwbdMjDNJIMsoX2RIgErmTMoaQKtO2C
-         3oNLd+lb/LHspnhYUbnUO3+f/S3VFk36JpDq29tdX1m/ZIr4W+JrqwsHLKUUARwoPOF4
-         JF5bXxDXBFJGrCkMQp6VmB/CHRKIM17tW2kKphRpHdsU+oAU/gOOSmiYbrRQdE8I6hJs
-         pTZM3kHgSqYUGGFW4Ff1f7GXZ7jSRT7/56DhSomFyTYJiXsPk/Wv7xC9aG+shKivl8rA
-         Js8Gt+klXbCXaF3YuRjU1x2bH0bbpx2jh0iavVFGe8E4+DqOgnhgcUxaB7lqVdTtQL3K
-         IDbQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9ancfVuMOXbTyaWAsT5L0kdl9TL4eR1pLyd6tiKBR/VSXuw8lEDaaVEq1K1OP/maamkzgmWZ78@lists.linux.dev
-X-Gm-Message-State: AOJu0YxdAUgYaPjOxnEO3uAd8vBTgS9XbhWZD8SJ9hWIrZ7GyIul4f42
-	tf9dk4rZVAZDH8nCep9kEoPbD26c/T+8hSqVU6gaz9okmQf5I9jSBQ2xsDdXrpi3eA==
-X-Gm-Gg: Acq92OH1nDvTL49UqhJeK+QiSggcqSw0ORMV/KN8UsKpoy4cXMf0vO89p7k8mC/7qf3
-	P3S5cbvaZw622NicYRCVsx/cctzkbje5thz/BmBgh8t9r+qT4MFo6gcY+n8rOvT4fno/xmW01i7
-	zytKBrzMUXdO6uL+0EPccxoy2rNqOkCYD1a55+91wQZ0spiRJuYFEZx7rMDklVxIDScN7Hd5bKy
-	7PmdB775X6W3mPIbUWIS3iAPbst+kHegnx+qfmQMY+lmpmIKP02zv0+MxTNOlvmhgitq8WiD259
-	MWWqmojyYcL0zXkQvCzTUzjLuG1/uO3eCGJg/SdFSo1lxbNwi75dapyKDOxG4fMZihSHu4USgu/
-	3UyYZ/lUh7WHYu5yDJ488ihqvTOd+sPbSYp30rBWP6ODrpB0L5blePHo+tbOZpCYU2zR/vAogXT
-	23D3qAKThIXEFx+if8e4Nk6b/BAJT3hfUORXTK8GA7zRouDmld87gMFnNXypefNcfAGmG1cw==
-X-Received: by 2002:a05:7022:fa02:b0:134:f1e8:e59a with SMTP id a92af1059eb24-1354506413fmr21692c88.27.1778892391267;
-        Fri, 15 May 2026 17:46:31 -0700 (PDT)
-Received: from google.com (153.46.83.34.bc.googleusercontent.com. [34.83.46.153])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cbcb93f3sm11830580c88.3.2026.05.15.17.46.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 May 2026 17:46:30 -0700 (PDT)
-Date: Sat, 16 May 2026 00:46:26 +0000
-From: Samiullah Khawaja <skhawaja@google.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Joerg Roedel <joro@8bytes.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-tegra@vger.kernel.org, Robin Murphy <robin.murphy@arm.com>, 
-	Thierry Reding <thierry.reding@kernel.org>, Krishna Reddy <vdumpa@nvidia.com>, Will Deacon <will@kernel.org>, 
-	David Matlack <dmatlack@google.com>, Nicolin Chen <nicolinc@nvidia.com>, 
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev, Pranjal Shrivastava <praan@google.com>, 
-	Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH v2 0/9] Remove SMMUv3 struct arm_smmu_cmdq_ent
-Message-ID: <age-DpeiCWBj7UPu@google.com>
-References: <0-v2-47b2bf710ad5+716ac-smmu_no_cmdq_ent_jgg@nvidia.com>
+        d=1e100.net; s=20251104; t=1778892481; x=1779497281;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ktNPJUhtUmCwD/xKtU4wmNTOqF7Ec1I7RC8ZgMrOzLU=;
+        b=Ec4giFAz80MlcQh3EWxqSVeVTrd8wiT2XB1Zci/gnLMgPQzGClMj7VdgzaUDKQfoZ5
+         gusWOszEuUZnnyOrl/jxwlCiJU/SlI9ehOCLSKdRe0z2WeskcVS0nfAGxK4lO2+gqAqG
+         wS1JgKlazeIjZI8iul7pw1+tKRswZVc9pBcjPpYIFOisrxjdO086REkd7pCydYr0H7in
+         LlrdlldnT/2FyVCtX9hUYoEnsP9BKbjg0g/C0zOVgJ1nYMNweh9hvdUBEl27/fyHyzLv
+         gkzs9ST+dkgLYkmYEQ6o3vABJAlvdH8gWDRt1OSvhInjLpWd82AJiE73456xRWOxm6Hd
+         XRdA==
+X-Gm-Message-State: AOJu0YyrTxQ4kkjhmvic2iXgUhMn6RUNYRDVoZM6naixpevG8d2uf3GY
+	JfeYWt124jMNmk3zWHfZcuE0Pk5IAcaOUzkKVwyhlF2db0cWvlICKY4=
+X-Gm-Gg: Acq92OFj2RBrumx/5Hm1xInCwX3W3hpJbN/9P0qP8xxKuygbKWiOUCgLTv4qRbIty6B
+	xdShV65lDV7EZN4cjHUWj2RevSapeaQyHC1o8bof8P7m+neNrrx1ManmjVftBPu7Ko6KrGEIDGW
+	cXuGs4LS0Ska1claSeHTC7pTOf3ZvhLJl5uBoFOo1qtczoICFHHEmUEHi+8WScqb42WQSio6PS1
+	ZQYKs+gIxNH67qqxq7dvwqB6tunFF4JGh3D9CPmT0v/+uGUaXJHUsNpZkESPA5LEC3IjxoQiOHK
+	55elkk4fySUQsUnweYoBtCwBfG/ZgB5XT0gYc2Z8u+myaj6ZX86Kr1bog+xxv2j7OvfGxT61lEq
+	C1Ls0Kr+YQIN7qGmUAENhJluDBttSiS9THc6qQOosQ/CbIXkr3IQehj0WmnWYxb+Axpp+n6fVn+
+	xdbq9b7yONzYU2uCLUS29MG48DOdlxiJdx3KYd+Hp3TmhJxFdfbhc3fFep7l4XWLlREr+r/5YX3
+	s0=
+X-Received: by 2002:a05:6000:2288:b0:45d:4532:5d98 with SMTP id ffacd0b85a97d-45e5c57d2f2mr8066451f8f.8.1778892481036;
+        Fri, 15 May 2026 17:48:01 -0700 (PDT)
+Received: from [192.168.1.3] (p5b057eb2.dip0.t-ipconnect.de. [91.5.126.178])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45d9ec39ff1sm19280360f8f.10.2026.05.15.17.48.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 15 May 2026 17:48:00 -0700 (PDT)
+Message-ID: <508bf3b7-56c7-4290-b663-7daf8ed4e80d@googlemail.com>
+Date: Sat, 16 May 2026 02:48:00 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <0-v2-47b2bf710ad5+716ac-smmu_no_cmdq_ent_jgg@nvidia.com>
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.18 143/188] sched_ext: Use HK_TYPE_DOMAIN_BOOT to detect
+ isolcpus= domain isolation
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Andrea Righi <arighi@nvidia.com>,
+ Tejun Heo <tj@kernel.org>, Frederic Weisbecker <frederic@kernel.org>
+References: <20260515154657.309489048@linuxfoundation.org>
+ <20260515154700.426346174@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20260515154700.426346174@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 13, 2026 at 08:57:39PM -0300, Jason Gunthorpe wrote:
->[ This is part of the patch pile to move SMMUv3 over to the generic page
->table:
->1) Introduction of new gather items and RISCV usage
->  https://patch.msgid.link/r/0-v2-b5156f657dc1+25f-iommu_riscv_inv_jgg@nvidia.com
->2) Remove SMMUv3 struct arm_smmu_cmdq_ent
->3) Organize the SMMUv3 invalidation flow so iommupt can use it
->4) Use the generic iommu page table for SMMUv3
->
->The whole branch is here:
->   https://github.com/jgunthorpe/linux/commits/iommu_pt_arm64/
->]
->
->The invalidation logic has this multi-step process where it first
->writes the command into a 32 byte struct arm_smmu_cmdq_ent, then it
->calls a function which converts it into a 16 byte HW struct, and
->sometimes it then edits the HW struct a little bit before passing it
->off to the batch or submission functions.
->
->Instead just generate the HW struct directly by moving the FIELD_PREP
->blocks out of the big case statement and into helper functions. Call the
->right function in all the places that were building arm_smmu_cmdq_ent.
->
->Add a type for the CMDQ entry similar to the STE/CD types that wraps the
->two u64s for clarity and use it everywhere.
->
->This is intended to have no functional change. It makes the following
->patches work better and removes a bunch of LOC. I've run several AI tools
->with instruction to look for functional changes, which did find one subtle
->mistake in PRI response.
->
->The removal of arm_smmu_cmdq_build_cmd() also achieves what Mostafa is
->doing in the pkvm series by making the command formation entirely header
->based with the arm_smmu_make_cmd_*() mini inlines.
->
->This series has no dependencies. Several people have already tested this
->on various ARM systems along with the full iommupt conversion.
->
->v2:
-> - Collect tags and add a commit message note about ATS
->v1: https://patch.msgid.link/r/0-v1-b7dc0a0d4aa0+3723d-smmu_no_cmdq_ent_jgg@nvidia.com
->
->Jason Gunthorpe (9):
->  iommu/arm-smmu-v3: Add struct arm_smmu_cmd to represent the HW format
->    command
->  iommu/arm-smmu-v3: Use the HW arm_smmu_cmd in cmdq selection functions
->  iommu/arm-smmu-v3: Use the HW arm_smmu_cmd in cmdq submission
->    functions
->  iommu/arm-smmu-v3: Convert arm_smmu_cmdq_batch cmds to struct
->    arm_smmu_cmd
->  iommu/arm-smmu-v3: Remove CMDQ_OP_CFGI_CD_ALL from
->    arm_smmu_cmdq_build_cmd()
->  iommu/arm-smmu-v3: Directly encode simple commands
->  iommu/arm-smmu-v3: Directly encode CMDQ_OP_ATC_INV
->  iommu/arm-smmu-v3: Directly encode CMDQ_OP_SYNC
->  iommu/arm-smmu-v3: Directly encode TLBI commands
->
-> .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     |  24 +-
-> drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 475 +++++++-----------
-> drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   | 248 +++++----
-> .../iommu/arm/arm-smmu-v3/tegra241-cmdqv.c    |  16 +-
-> 4 files changed, 350 insertions(+), 413 deletions(-)
->
->
->base-commit: d8fa633ffaf43316bc3ee8d7b21366cc92c02002
->-- 
->2.43.0
->
->
+Hi Greg,
 
-Sanity tested on non-coherent rockchip rk3588s with nvme.
+Am 15.05.2026 um 17:49 schrieb Greg Kroah-Hartman:
+> 6.18-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Andrea Righi <arighi@nvidia.com>
+> 
+> commit 6ae315d37924435516d697ea7dde0b799a5928e0 upstream.
+> 
+> scx_enable() refuses to attach a BPF scheduler when isolcpus=domain is
+> in effect by comparing housekeeping_cpumask(HK_TYPE_DOMAIN) against
+> cpu_possible_mask.
+> 
+> Since commit 27c3a5967f05 ("sched/isolation: Convert housekeeping
+> cpumasks to rcu pointers"), HK_TYPE_DOMAIN's cpumask is RCU protected
+> and dereferencing it requires either RCU read lock, the cpu_hotplug
+> write lock, or the cpuset lock; scx_enable() holds none of these, so
+> booting with isolcpus=domain and attaching any BPF scheduler triggers
+> the following lockdep splat:
+> 
+>    =============================
+>    WARNING: suspicious RCU usage
+>    -----------------------------
+>    kernel/sched/isolation.c:60 suspicious rcu_dereference_check() usage!
+> 
+>    1 lock held by scx_flash/281:
+>     #0: ffffffff8379fce0 (update_mutex){+.+.}-{4:4}, at:
+>         bpf_struct_ops_link_create+0x134/0x1c0
+> 
+>    Call Trace:
+>     dump_stack_lvl+0x6f/0xb0
+>     lockdep_rcu_suspicious.cold+0x37/0x70
+>     housekeeping_cpumask+0xcd/0xe0
+>     scx_enable.isra.0+0x17/0x120
+>     bpf_scx_reg+0x5e/0x80
+>     bpf_struct_ops_link_create+0x151/0x1c0
+>     __sys_bpf+0x1e4b/0x33c0
+>     __x64_sys_bpf+0x21/0x30
+>     do_syscall_64+0x117/0xf80
+>     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+> 
+> In addition, commit 03ff73510169 ("cpuset: Update HK_TYPE_DOMAIN cpumask
+> from cpuset") made HK_TYPE_DOMAIN include cpuset isolated partitions as
+> well, which means the current check also rejects BPF schedulers when a
+> cpuset partition is active. That contradicts the original intent of
+> commit 9f391f94a173 ("sched_ext: Disallow loading BPF scheduler if
+> isolcpus= domain isolation is in effect"), which explicitly noted that
+> cpuset partitions are honored through per-task cpumasks and should not
+> be rejected.
+> 
+> Switch to housekeeping_enabled(HK_TYPE_DOMAIN_BOOT), which reads only
+> the housekeeping flag bit (no RCU dereference) and reflects exactly the
+> boot-time isolcpus= configuration that the error message refers to.
+> 
+> Fixes: 27c3a5967f05 ("sched/isolation: Convert housekeeping cpumasks to rcu pointers")
+> Cc: stable@vger.kernel.org # v7.0+
+> Signed-off-by: Andrea Righi <arighi@nvidia.com>
+> Signed-off-by: Tejun Heo <tj@kernel.org>
+> Acked-by: Frederic Weisbecker <frederic@kernel.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>   kernel/sched/ext.c |    3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> --- a/kernel/sched/ext.c
+> +++ b/kernel/sched/ext.c
+> @@ -4906,8 +4906,7 @@ static int scx_enable(struct sched_ext_o
+>   	static DEFINE_MUTEX(helper_mutex);
+>   	struct scx_enable_cmd cmd;
+>   
+> -	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
+> -			   cpu_possible_mask)) {
+> +	if (housekeeping_enabled(HK_TYPE_DOMAIN_BOOT)) {
+>   		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
+>   		return -EINVAL;
+>   	}
+> 
+> 
 
-Tested-by: Samiullah Khawaja <skhawaja@google.com>
+
+This patch causes a build failure for me:
+
+   CC      kernel/sched/build_policy.o
+In file included from kernel/sched/build_policy.c:62:
+kernel/sched/ext.c: In function ‘scx_enable’:
+kernel/sched/ext.c:4924:34: error: ‘HK_TYPE_DOMAIN_BOOT’ undeclared (first use in this function); did you mean 
+‘HK_TYPE_DOMAIN’?
+  4924 |         if (housekeeping_enabled(HK_TYPE_DOMAIN_BOOT)) {
+       |                                  ^~~~~~~~~~~~~~~~~~~
+       |                                  HK_TYPE_DOMAIN
+kernel/sched/ext.c:4924:34: note: each undeclared identifier is reported only once for each function it appears in
+make[4]: *** [scripts/Makefile.build:287: kernel/sched/build_policy.o] Fehler 1
+make[3]: *** [scripts/Makefile.build:544: kernel/sched] Fehler 2
+make[2]: *** [scripts/Makefile.build:544: kernel] Fehler 2
+make[1]: *** [/usr/src/linux-stable-rc/Makefile:2024: .] Fehler 2
+make: *** [Makefile:248: __sub-make] Fehler 2
+root@linus:/usr/src/linux-stable-rc#
+
+If I revert this patch, the build succeeds, and the kernel boots and seems to work fine without any observable regressions.
+
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+
+Beste Grüße,
+Peter Schneider
+
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
