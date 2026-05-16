@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C208E2EB10;
-	Sat, 16 May 2026 10:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09CE3A641D;
+	Sat, 16 May 2026 10:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778926125; cv=none; b=htJFe+ysuayqYObKHxxa5bBCu4AjO5KnSj5nfPQiGB2rVypof9KchXfk/6vXyvvSxEK04TaDeExjioLsPiI6eVk33MePM+ASQVEuvuA7G0sxNskUu7hJTPz6yB3wJifKX/3AzVcNLKvFtavUU5FOsPrRe6JPKDxZKqkpOZN2w1A=
+	t=1778926151; cv=none; b=kvQHFzT/03eCy+FJWK5xx4gDkSRlL5YEShZJMRC4KlS8gpNvtSae9KDHEp9YHDkOm2QO1OwNRnUsObK+kTm+J6KKswo2X5ryq36RRAkqxu+9r+wTJgLxqvxpqQzS3Aq8+IULlkpLkgdsPEL3qUtJG0WfL3gErRs4nZ/324sL5co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778926125; c=relaxed/simple;
-	bh=WCkV5HHAZ7npLQ4fYQXVr/jcD0opZ45akxY5vAhxSwQ=;
+	s=arc-20240116; t=1778926151; c=relaxed/simple;
+	bh=s9M04Mdt/yj/QFlPC0dI9WgS04NnyGvQXA9Ne8VoKT8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hySTAR8Tru4BdVt/zH1pCXPBS6KnFSMqephXff4dzyvWvFWDpxHUVQ6jYpPRhg0SjCQT2scpr0LMMDoc4KV3Fm994VvYu82Oz1rnyhFVpNV0bgD7MA8A1aEX5+ik2GWSNvdsNC4h4C83eYMVMRHwSibS/1YZIB6pjwHUjsyjRYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPYtUJe5; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=NU12Mv/FmFY+hzURtwkMowuej5UWWJY3BhIMqVUKbq6i2097zF76B0UbPRqwl8eim6ZcO+se5rH3WS1y1NRfVS3porK280z69fZ/bY4mw+wdT7EMP5JTBxn+HDumsrXvN/xE6CPabr55+Gr7CjsWOR3CL7RIbC2zIrsfuiz7eYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9ct5AxW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPYtUJe5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D10C19425;
-	Sat, 16 May 2026 10:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9ct5AxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14EE8C19425;
+	Sat, 16 May 2026 10:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1778926125;
-	bh=WCkV5HHAZ7npLQ4fYQXVr/jcD0opZ45akxY5vAhxSwQ=;
+	s=korg; t=1778926150;
+	bh=s9M04Mdt/yj/QFlPC0dI9WgS04NnyGvQXA9Ne8VoKT8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=xPYtUJe52PXMQbL/UdupGMItJKkjL9jCjfhuifqXHuEf7IURfyltOKU+JQXIegdCP
-	 Wz6TDN9i2vKTJj7PWUQ/8aFHq4neo6IiV/wAMgwaKP3Xu4MAmghsf3UesQVnZQcleY
-	 jMx8aKvqnT68eZ5x+oH6I4+jpr1pAu3QDsbZiGiA=
-Date: Sat, 16 May 2026 12:08:49 +0200
+	b=I9ct5AxWlc9oI4wioS+Y+wUkUUAJSxJGwgAk6w3BO/2PRsHQIH6envd51SUEIzYao
+	 8ztrCuh/VMOZtGeApmewMOhHnRlRe6K1XpArqVFi+I10oqPKpLmiIdfb2bWxRgICan
+	 nmlGCf8c8A8BitG25IJMsxd3yu/QMWQYyVCgVzO8=
+Date: Sat, 16 May 2026 12:09:14 +0200
 From: Greg KH <gregkh@linuxfoundation.org>
 To: Wentao Guan <guanwentao@uniontech.com>
 Cc: achill@achill.org, akpm@linux-foundation.org, broonie@kernel.org,
@@ -34,10 +34,10 @@ Cc: achill@achill.org, akpm@linux-foundation.org, broonie@kernel.org,
 	rwarsow@gmx.de, shuah@kernel.org, sr@sladewatkins.com,
 	stable@vger.kernel.org, sudipm.mukherjee@gmail.com,
 	torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.18 000/188] 6.18.32-rc1 review
-Message-ID: <2026051641-cartel-liable-85aa@gregkh>
-References: <20260515154657.309489048@linuxfoundation.org>
- <20260515171303.613447-1-guanwentao@uniontech.com>
+Subject: Re: [PATCH 6.12 000/144] 6.12.90-rc1 review
+Message-ID: <2026051658-affront-uplifting-095b@gregkh>
+References: <20260515154653.469907118@linuxfoundation.org>
+ <20260515190713.620177-1-guanwentao@uniontech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,11 +47,11 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260515171303.613447-1-guanwentao@uniontech.com>
+In-Reply-To: <20260515190713.620177-1-guanwentao@uniontech.com>
 
-On Sat, May 16, 2026 at 01:13:04AM +0800, Wentao Guan wrote:
-> Build failed, you can drop the commit to build ok:
-> git revert 0253904dd601b15da2983297d64c106a393b3aa3.
+On Sat, May 16, 2026 at 03:07:14AM +0800, Wentao Guan wrote:
+> Build failed, you can drop the commit to build ok, same as 6.18.30-rc1:
+> git revert 14d9ce90cf4855d638ecbcdb0c208a144d6f991b..
 > Revert "sched_ext: Use HK_TYPE_DOMAIN_BOOT to detect isolcpus= domain isolation"
 > 
 > Tested-by: Wentao Guan <guanwentao@uniontech.com>
@@ -63,13 +63,14 @@ On Sat, May 16, 2026 at 01:13:04AM +0800, Wentao Guan wrote:
 > https://gist.github.com/opsiff/a840ae9e3d6857f5b7bacb9cdc49f8e9
 > 
 > Log:
-> kernel/sched/ext.c: In function ‘scx_enable’:
-> kernel/sched/ext.c:4924:34: error: ‘HK_TYPE_DOMAIN_BOOT’ undeclared (first use in this function); did you mean ‘HK_TYPE_DOMAIN’?
->  4924 |         if (housekeeping_enabled(HK_TYPE_DOMAIN_BOOT)) {
+> In file included from kernel/sched/build_policy.c:63:
+> kernel/sched/ext.c: In function ‘scx_ops_enable’:
+> kernel/sched/ext.c:5524:34: error: ‘HK_TYPE_DOMAIN_BOOT’ undeclared (first use in this function); did you mean ‘HK_TYPE_DOMAIN’?
+>  5524 |         if (housekeeping_enabled(HK_TYPE_DOMAIN_BOOT)) {
 >       |                                  ^~~~~~~~~~~~~~~~~~~
 >       |                                  HK_TYPE_DOMAIN
-> kernel/sched/ext.c:4924:34: note: each undeclared identifier is reported only once for each function it appears in
->   CC [M]  crypto/algif_hash.o
+> 
+> missed HK_TYPE_DOMAIN_BOOT is introduced in this commit:
 > 
 > commit 4fca0e550d506e1c95504c2d9247bc92bf621bf6
 > Author: Frederic Weisbecker <frederic@kernel.org>
@@ -98,7 +99,9 @@ On Sat, May 16, 2026 at 01:13:04AM +0800, Wentao Guan wrote:
 >     Cc: Thomas Gleixner <tglx@linutronix.de>
 >     Cc: Vlastimil Babka <vbabka@suse.cz>
 >     Cc: Waiman Long <longman@redhat.com>
+> 
 
-Thanks, will go and drop this commit now.
+Also dropped from here, thanks.  My fault, I should have only backported
+this to 7.0.y as the commit itself said to.
 
 greg k-h
