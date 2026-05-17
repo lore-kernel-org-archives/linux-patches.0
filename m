@@ -1,128 +1,109 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658772C21F1
-	for <patches@lists.linux.dev>; Sun, 17 May 2026 15:03:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4986130ACF6
+	for <patches@lists.linux.dev>; Sun, 17 May 2026 17:36:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779030239; cv=none; b=ZvQVcyv8eEJoa+EqFtSqkcJWDDG5PKqIFt094v8aBFuw6L4OC+PrQf8zYCEluH0/lLcRkmkcst5Ziqe4wT8XrEri594Y2/rGiUc61v1BUEoAYmCyXVVBhAKr15SrfFTdWsYkOx1XnO83t9lC6HkDX0j9SIduCzgAHXs2sqxJGhQ=
+	t=1779039420; cv=none; b=FynDHuFRYaHChTU1nrJ/va1JO2JuvVLhqlW+YZ7LfxZgX4A4c80N/vXzMsbNjh7RS3TjpjF2gi9DBhyCN5nj1Ir/zaduvIX/Nu4V/uCF4+VgMQ7h6Cps33hjqQOS22UfPq1Nr7yFfDEYMvtwCzjbrqwjMg+lMppWeslu6vnERVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779030239; c=relaxed/simple;
-	bh=LWnaYu+moDKVGVFbOqLV7F5kZTdYVtQHeWavTvTfy2k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n6kp/psE2u6NWIoC+j1731k49oneW2egQuiFPV/vrAauO6NeKdRRSem29WnKDg/KdMPebcDxDBpMcDllGiaJ2YbRIak0XLWFF6ikW2O1Wrem7kjmWh17IKVQyZzEU1cLb7FYV/Kmf+uWef1DQQi2wTc9GR7An4KhZnOHPFss9j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L9H9DFe9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ob7uqjKh; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L9H9DFe9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ob7uqjKh"
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id D942A1D00087;
-	Sun, 17 May 2026 11:03:56 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Sun, 17 May 2026 11:03:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1779030236;
-	 x=1779116636; bh=xaMXhyqz+SZNDhzmtIfosQ7fpeNzKwiThvo5+Ali8f0=; b=
-	L9H9DFe9k5Kdw3KQPG7ufPcW4WQ9vhsWvkCW2qRThnADst/enYsLu0Q4+JKQVm5X
-	hSvyn9jvHJlRFdtZze9HknZzRKgYKNkqYIrnHAXxNd2AXC6opw9zA9m5CoS4BfBk
-	Wn5n+2U/n2qcsIfOsioPUxhaJhh74T7wLtjZUF0Fql4yicEHcVG7rPajI0bkSPUW
-	H+uPE/j8Az7ueCxST2mPc0pnDCm5bM2KU5HWgGhK2Uf2PaYqpnCfxZtwpBRXTING
-	ExLqZQf1oeA2Z0A6tVBhstTiHw2YZZStZ0MMZn+pmxCalmMTAkNp8XopOlgQzGfu
-	nVFq8or3wUnyYz9/NWJ5YQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779030236; x=
-	1779116636; bh=xaMXhyqz+SZNDhzmtIfosQ7fpeNzKwiThvo5+Ali8f0=; b=o
-	b7uqjKhRqzvmb5IdweXGnsU7y6Fnoq1ulTkhGsMEAg9twdYh+Mcwxs86uebvP6T3
-	3BaF5zEPnn5U/WxSOdClW2QuGWI1oYKw4y7y62FO8WMxETIMwKaIhcDejBKNFlmX
-	4L/9HII/qf/34Zntn+fiVzEgVbPloe1rHpuANSaEmfqcjgZLsfoG4SZU/CCYJFVa
-	wr2ZA58HCgXtDWkf7WHuvWKbh4P/2kDlc5ts+VrjfFROeZoT80/oiiPipI/A+Rra
-	zpRfi07XRAl3Lrmx/1loQNtduADYZX0fOSS4ulBcHRndp/BxG7pFOiIxE94dA2fG
-	XUb0mf2rLwVrRuK/6Z92Q==
-X-ME-Sender: <xms:3NgJaujFTNaB0weFIXwuL0Y4zrAUAVIA04tKKyxCYK8Uew5-bKncnw>
-    <xme:3NgJasuacuM9Bw5ECuDBD7nbBuf3-yyXIcMEt52QQbN7TcTddW7N_jC62M6PtOWNb
-    tO-UbmuqKPGG10ciTNCUVixVEkLnKsSy_qyOYIHGW_X2cQ6WLtpFHM>
-X-ME-Received: <xmr:3NgJan00dd-lut5ZWg-tn7f4TSzZqigTb-BNcr5XbBJDU6p0lyPbZ0yPvncn3DIK1yRy2_BnPd5OwK52NY2DXk-ZoRIw1tmy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeeivdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpedfuegrrhhr
-    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
-    frrghtthgvrhhnpeefleehkeehleekjeelffefhfdvleejteehledtieduffevteffleet
-    gefgfefhjeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggrrhhrhihnsehpohgsohigrdgt
-    ohhmpdhnsggprhgtphhtthhopedvtddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohep
-    shhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrthgthh
-    gvsheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdhkvghr
-    nhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhrvhgrlhgush
-    eslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheprghkphhmsehl
-    ihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehlihhnuhigsehroh
-    gvtghkqdhushdrnhgvthdprhgtphhtthhopehshhhurghhsehkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehprghttghhvghssehkvghrnhgvlhgtihdrohhrgh
-X-ME-Proxy: <xmx:3NgJajxgt7Zj_RaAN0ER5Sy5JJN67lUFpmrlBgAshmem38Z7bkL8Kg>
-    <xmx:3NgJaiV4NQye06yCzeaJZWJHbB2jf2ld4HF_GhJMJ6-I6fGzBVnPsg>
-    <xmx:3NgJalCHmx7oo-lNCaYSUhTnc8g-SV_Pzh_1fKEHid_d8V9221ftbQ>
-    <xmx:3NgJaj4xmavfjXuIfKrd1GWOg1Z2UonvznHExwUT2oepx1T6p7m7ag>
-    <xmx:3NgJat9gYvTAWOhYjWpQ2HS4aJcXSP5Bgt9zPED29y00F97H39VNOdCU>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 17 May 2026 11:03:54 -0400 (EDT)
-Message-ID: <21ca47ff-a636-46b8-b58c-6f28ace4b4e7@pobox.com>
-Date: Sun, 17 May 2026 08:03:53 -0700
+	s=arc-20240116; t=1779039420; c=relaxed/simple;
+	bh=PN7KJHGCytWXOOJvTmKMVmlGax4OWyRapLMOkVBqsjY=;
+	h=From:To:Cc:Subject:In-Reply-To:Date:Message-ID:MIME-Version:
+	 Content-Type; b=t0L7sAcEsuV5qi6QTSdyGPin2YmL0QlLF5WYj3Ua0P+VylayJBQSc3KQk5SpQmMtiZwp028VBJCYg7Eh5JSmBR19y3WcA85cqlTn6001csRu+qrps9/ANAtOXpfVrqZrLZQoiF51QE6ohUyPdc3A7MDHNXkNW5IfoyHbrQiqcPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from mop.sam.mop (1.5.5.2.4.d.e.f.f.f.5.f.9.d.6.0.a.5.c.d.c.d.9.1.0.b.8.0.1.0.0.2.ip6.arpa [IPv6:2001:8b0:19dc:dc5a:6d9:f5ff:fed4:2551])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: sam)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 71E9A3424C4;
+	Sun, 17 May 2026 17:36:57 +0000 (UTC)
+From: Sam James <sam@gentoo.org>
+To: gregkh@linuxfoundation.org
+Cc: brauner@kernel.org,patches@lists.linux.dev,sashal@kernel.org,stable@vger.kernel.org,
+ kernel@gentoo.org, dist-kernel@gentoo.org
+Subject: Re: [PATCH 6.18 160/188] papr-hvpipe: convert
+ papr_hvpipe_dev_create_handle() to FD_PREPARE()
+In-Reply-To: <20260515154700.798003472@linuxfoundation.org>
+Organization: Gentoo
+User-Agent: mu4e 1.14.1; emacs 31.0.60
+Date: Sun, 17 May 2026 18:36:53 +0100
+Message-ID: <87cxyuq6oa.fsf@gentoo.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.0 000/201] 7.0.9-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260515154658.538039039@linuxfoundation.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260515154658.538039039@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
 
-On 5/15/26 8:46 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.0.9 release.
-> There are 201 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 17 May 2026 15:46:37 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.9-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Tested on 2 different amd64 systems. Working well, no regressions
-observed.
+This fails to build:
 
-Tested-by: Barry K. Nathan <barryn@pobox.com>
+/var/tmp/portage/sys-kernel/gentoo-kernel-6.18.32/work/linux-6.18/arch/powe=
+rpc/platforms/pseries/papr-hvpipe.c: In function =E2=80=98papr_hvpipe_dev_c=
+reate_handle=E2=80=99:
+/var/tmp/portage/sys-kernel/gentoo-kernel-6.18.32/work/linux-6.18/arch/powe=
+rpc/platforms/pseries/papr-hvpipe.c:513:9: error: implicit declaration of f=
+unction =E2=80=98FD_PREPARE=E2=80=99 [-Wimplicit-function-declaration]
+  513 |         FD_PREPARE(fdf, O_RDONLY | O_CLOEXEC,
+      |         ^~~~~~~~~~
+/var/tmp/portage/sys-kernel/gentoo-kernel-6.18.32/work/linux-6.18/arch/powe=
+rpc/platforms/pseries/papr-hvpipe.c:513:20: error: =E2=80=98fdf=E2=80=99 un=
+declared (first use in this function); did you mean =E2=80=98fd=E2=80=99?
+  513 |         FD_PREPARE(fdf, O_RDONLY | O_CLOEXEC,
+      |                    ^~~
+      |                    fd
+/var/tmp/portage/sys-kernel/gentoo-kernel-6.18.32/work/linux-6.18/arch/powe=
+rpc/platforms/pseries/papr-hvpipe.c:513:20: note: each undeclared identifie=
+r is reported only once for each function it appears in
+/var/tmp/portage/sys-kernel/gentoo-kernel-6.18.32/work/linux-6.18/arch/powe=
+rpc/platforms/pseries/papr-hvpipe.c:532:16: error: implicit declaration of =
+function =E2=80=98fd_publish=E2=80=99 [-Wimplicit-function-declaration]
+  532 |         return fd_publish(fdf);
+      |                ^~~~~~~~~~
+make[6]: *** [/var/tmp/portage/sys-kernel/gentoo-kernel-6.18.32/work/linux-=
+6.18/scripts/Makefile.build:287: arch/powerpc/platforms/pseries/papr-hvpipe=
+.o] Error 1
+make[5]: *** [/var/tmp/portage/sys-kernel/gentoo-kernel-6.18.32/work/linux-=
+6.18/scripts/Makefile.build:544: arch/powerpc/platforms/pseries] Error 2
+make[4]: *** [/var/tmp/portage/sys-kernel/gentoo-kernel-6.18.32/work/linux-=
+6.18/scripts/Makefile.build:544: arch/powerpc/platforms] Error 2
+make[3]: ***
+[/var/tmp/portage/sys-kernel/gentoo-kernel-6.18.32/work/linux-6.18/scripts/=
+Makefile.build:544:
+arch/powerpc] Error 2
 
--- 
--Barry K. Nathan  <barryn@pobox.com>
+FD_PREPARE doesn't exist in 6.18, it's from:
+
+commit 011703a9acd76edc7c85d80dbccb6e50dba53aad
+Author:     Christian Brauner <brauner@kernel.org>
+AuthorDate: Sun Nov 23 17:33:19 2025 +0100
+Commit:     Christian Brauner <brauner@kernel.org>
+CommitDate: Fri Nov 28 12:42:23 2025 +0100
+
+    file: add FD_{ADD,PREPARE}()
+
+sam
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmoJ/LUbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
+Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
+QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkIWR
+AQDlXMpRv+pVsg7RHX4yDHW0uOrVAzLWzGp6TKmqZxSJwgD/dfQNcFMe/UxMHSRA
+yg8+I+Vk8gcU/kYmSZ2lzr5qCgI=
+=cuWc
+-----END PGP SIGNATURE-----
+--=-=-=--
