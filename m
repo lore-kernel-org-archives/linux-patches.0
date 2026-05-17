@@ -1,109 +1,94 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1551D38B12D
-	for <patches@lists.linux.dev>; Sat, 16 May 2026 22:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF76405C22;
+	Sun, 17 May 2026 04:37:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778970155; cv=none; b=H73RWb1PhzuwX0dA2CCii+f/tuxaZBsZfdccgVz+9iGQR+KGwPUf1gJY9+NSbQFdTRwdyg2a7UCoOq56HrCNeg+2RIXEDDen8p52ymzPl67tOBPLpWGYC7r+2lR9sUP7x5XLca3K7Wz0NfV5gJPPox0avsKW3ynbCi719xA/K4M=
+	t=1778992635; cv=none; b=NKY8boAfu6em7gqiCoGfjv4zMAVnDXvoyrW9GBhiDg1AmL5+x/cRSZbeOIy9ubpmGkbuyPO9SbVpVz1DjX5GLiAH4auTEFNOQ/7HF+y6zZxaVY6vAfqVE9CgKIn0cXUasD9gDdTtso741q78qfcnydTpVf1r0mBSSK8mnsGPMWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778970155; c=relaxed/simple;
-	bh=4jugQan87WW62OkdA+/W9xo3plv+dnJsx5zP15FbgtA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y/1TTI22RjydGAhe5Xva+tOlZUPxLsW5uduLipWjCxETso88Z6S3AYnIxCQ/StW60mzkB/dG6dEzQeiCk8TX9dedS397KzuFBdTbXjoF32nxpN/fjr+NV88P0f9SuHE5Pi53vuq+NDcPT9qXJwa+H1voaDzqI3EAbKSIxhFGw7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=O47vjcB1; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1778992635; c=relaxed/simple;
+	bh=4tCss4+MpZL1Sng5kKdHtEx5exMywGFuCrBOXlhBTqI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QjcUUaNQXeC9LSa8Q3/qy63RYnwFKaWu6eYuVvqquSjxfu7a8dhOJyjiPsdukQ3m0XKlCNCcxT6EZgnoU/wATF8LSR6SNqhRRF9IL0uDyNJ51PPE3mP7aW+E25LPDYOVqoOTIs1lLnBmGoLnYaGDQ8OFubbuoJgJVEBkTPJ3+ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iz+PW5dR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="O47vjcB1"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-48a3e9862f0so5167295e9.1
-        for <patches@lists.linux.dev>; Sat, 16 May 2026 15:22:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1778970152; x=1779574952; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/KJ2iP9YLpv0fim6ZmaqIgPF+/tIhMj4Q1ToMIsKE5U=;
-        b=O47vjcB120QhskAwgA+Mhi2Bdp+dJ5mlzLEhkD8/D0mubUK3NLEChEbtDXL5ZyIgX1
-         ePmi0cglJIMV6LpeevFWNZXABb93W2bOElg/nYBAfw6dyJKTm4IjcpD32PeUgNJ0cXwf
-         8ck1pd1GS2WZutoaL783RIAhujkUYdbdt5k0xmhqf/fR0hICTSCarwdSouc/IRwYcfga
-         Ds/Cai743kOtF3gJY5RXJQNPsCkdbH1J1wBYccxESI/amTbcFjogMQBM5/RM/rOI6i6V
-         EzzElmOfwN8xugoL77+0xx7SEpiPXic4mdi/khrK3nC801/7lNceVCixKYtJ757iJIYr
-         Vndg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778970152; x=1779574952;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/KJ2iP9YLpv0fim6ZmaqIgPF+/tIhMj4Q1ToMIsKE5U=;
-        b=Fu3iWLPIS6gBHfGdn0cJcyWX+7q04WOVdlAZY9Y6uktFJu0gTeVzPn8kOnvN/Yul0K
-         K2B6v4pUOp2Jvruj42RsaOVb/d8fS8PhrHCR1LVpIFOH1yHznAxJbjWIBgBqcg70ePQy
-         Yjklf1IGl1UdxOoK/DPTldd6mGVeQM0IJI7SdEPqUXUqU4DaZlYxKVnIMlBKJsDqP8EB
-         bKSzDvfITinPh6k0KL8KPAi7eUogwarRyqG4rCZwBC5yvLj7bfB3xKIPQByvsmsOBG5M
-         KKv3rSGmFhatbSwNC6YMWinGRwJxsa+sKIKmjD2rRrO/ay/0iQ0HOxDYSBzcHO+kHh6R
-         r3vQ==
-X-Gm-Message-State: AOJu0Yz34V0zFUiszLgwPaobqaYp5bLUz24KQ5EToRhsqEpwgmv2qjES
-	ar6uok3aVslU37/Vr/fuU+6TNqpFLcVcEfc/11UqXyYOWKUjgN9FfY0=
-X-Gm-Gg: Acq92OFbLSRnBsu4d3hXeKnkKx8YiPcur1+0/OgSGISOthq/TXtEPczqHnb4uHq/VQQ
-	fBbmiK5GuH00vkVQd6s0xoTFTwNIzYSwSxaVj6oga851+ASRf4GWRw2RG1vXM2obr4RinNYiM0L
-	jmuZvyvbA3pDBO65Y3y/XA1GflsLxrSYe87/aDceUP19cZBwANcxALSVll+SMcoUIGa75gma/lU
-	KWpntPQmRSuqTDWxdFuVaf3K38ltOnhbyyFYZJEHw2njgK7euDZr4JdBXd/7i3CtOPqkcOEzv69
-	pRj+RAFfxRMy3f4sxbtH89MLdC6g8ko0ivJIlIcAQhmBtKcJOr1OIr8t05FcEtiL2huRl6fhKUr
-	JB+PqtUeIT/d6sVSP9wJbYCBCswgKVayI9Q7NBJgKuI9NZEhFZzaXuHtaeUL2CHkxXjYQe5nIUM
-	MKtcSx+pZGCgNRiSVHQDXaPDU56R89qQ9wfnuhUQVIjlUoJ4M1MbpFGgKyDuwavHfnxvkx6J2Uy
-	DoKYdm+TmhNKA==
-X-Received: by 2002:a05:600c:1688:b0:488:c21a:4754 with SMTP id 5b1f17b1804b1-48fd646b8a0mr131869295e9.18.1778970152386;
-        Sat, 16 May 2026 15:22:32 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2b4b92.dip0.t-ipconnect.de. [91.43.75.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45da0fe13b4sm25463416f8f.28.2026.05.16.15.22.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 May 2026 15:22:32 -0700 (PDT)
-Message-ID: <31029eaa-1d73-4ef1-8849-85b0cbd9a52e@googlemail.com>
-Date: Sun, 17 May 2026 00:22:31 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iz+PW5dR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130C7C2BCB0;
+	Sun, 17 May 2026 04:37:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778992634;
+	bh=4tCss4+MpZL1Sng5kKdHtEx5exMywGFuCrBOXlhBTqI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iz+PW5dRk6r2Pkn6kCRu+6iKJps2enRk+9KaTj6KFPverUHVfkqv/pSGBlKuw2Y7X
+	 AR9k+MbAKlWcY3WKNfQGfEk1/mOToU5kg56fuicRjjPRtyU/mhAz3tkFcWM9b76tBr
+	 Oyr2Gf/f/pHnOP/Cr/u1qlvVh//0V6hu0Lx5JprEPGzn1TRG++op+GZ0sV14t7m0Uf
+	 wADSss//qI5d/99eNRDTSpffKtzXvMkwgTLg2oAx7oV/mg4TN2Kt5yGULTS99W4ycF
+	 GFP4Suv6hUJCwV520w5HvZMkJw75VYOZg36YGD8pD3LOMrUgGPjo3qWyNcXPtCbJEh
+	 gEaJ7U6SL3ONQ==
+Date: Sun, 17 May 2026 13:37:07 +0900
+From: Nathan Chancellor <nathan@kernel.org>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, achill@achill.org,
+	akpm@linux-foundation.org, broonie@kernel.org, conor@kernel.org,
+	f.fainelli@gmail.com, hargar@microsoft.com, jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org, linux@roeck-us.net,
+	lkft-triage@lists.linaro.org, patches@kernelci.org,
+	patches@lists.linux.dev, pavel@nabladev.com, rwarsow@gmx.de,
+	shuah@kernel.org, sr@sladewatkins.com, stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com, torvalds@linux-foundation.org,
+	Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	linux-input@vger.kernel.org, Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH 6.18 000/188] 6.18.32-rc1 review
+Message-ID: <20260517043707.GC1534263@ax162>
+References: <20260515154657.309489048@linuxfoundation.org>
+ <20260516020430.110135-1-ojeda@kernel.org>
+ <2026051659-facing-superior-e50a@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.18 000/187] 6.18.32-rc2 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260516102236.209957148@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260516102236.209957148@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2026051659-facing-superior-e50a@gregkh>
 
-Am 16.05.2026 um 12:30 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.18.32 release.
-> There are 187 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Sat, May 16, 2026 at 12:11:56PM +0200, Greg KH wrote:
+> On Sat, May 16, 2026 at 04:04:30AM +0200, Miguel Ojeda wrote:
+> > On Fri, 15 May 2026 17:46:57 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > This is the start of the stable review cycle for the 6.18.32 release.
+> > > There are 188 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Sun, 17 May 2026 15:46:37 +0000.
+> > > Anything received after that time might be too late.
+> > 
+> > Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
+> > for loongarch64:
+> > 
+> > Tested-by: Miguel Ojeda <ojeda@kernel.org>
+> > 
+> > Via arm32 I see:
+> > 
+> >     drivers/hid/hid-core.c:2050:29: error: format specifies type 'long' but the argument has type 'size_t' (aka 'unsigned int') [-Werror,-Wformat]
+> >      2049 |                 hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %ld)\n",
+> >           |                                                                                         ~~~
+> >           |                                                                                         %zu
+> >      2050 |                                      report->id, csize, bsize);
+> >           |                                                         ^~~~~
+> > 
+> > It is also reproducible in mainline, though. Cc'ing a few folks...
+> 
+> bsize is size_t, so that should be %zu, right?
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
-
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-
-
-Beste Grüße,
-Peter Schneider
+Indeed. Does not look like anyone has sent a patch yet so I will send
+one shortly since this is breaking i386_defconfig in my tests since
+-Werror is enabled by default there.
 
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+Cheers,
+Nathan
