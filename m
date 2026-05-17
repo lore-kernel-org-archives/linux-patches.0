@@ -1,61 +1,128 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DC336F42B;
-	Sun, 17 May 2026 13:33:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027E2222590
+	for <patches@lists.linux.dev>; Sun, 17 May 2026 14:46:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779024795; cv=none; b=JBdhy208ckxaynqrKTsArxOg7lr8sthd/DVNMECoeSbilSOSqlj64Xc8TW/WvNgIYtR0W24lwNr/U1w670YM/rFZMu0CHgigLx2g730V7nzyK5UTbMr8OIEq9OYLXlIUl7VP6asmZjibN1cUX846U2/mf82qE4Yg91NkZVhANUk=
+	t=1779029196; cv=none; b=AhEkvmSLrP+3EjLf4iScy7rJA9KniNo0rHjqu5eOPCfim1AEXFRPlGsbvjjyYlLy5lTrrVysGFtcRROdTaeuRdnWNBmXTYRV8m+Vgp1G2q/F3COEiU1aCfUV5mWUxBcFS5LmaZFGhzdXcEibk/ci0mLzSzM57SJlJY16+zLvmnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779024795; c=relaxed/simple;
-	bh=IdinB7sTl6FdyjpnyNarYNQYP0c3VL4anWA+C6BTDKM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bunMOVoRvZ2JND5/SY/Y+W7mjOyXziR0eh8D8zbH+RbJU985tPG9RT5r0cdJLLpYG+oi0b5YSGr0z4dN2QIhYom3Qm6WKdbQaRd8xEQAr1VRi80Az2RRsnr4SqQwuy9tdbEnAC6McOHiy3t45hsAozaUtHR7Bulf9+hbQVEItkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kTmRStPs; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1779029196; c=relaxed/simple;
+	bh=yV2o+LQxy0twDXt6ZXJi08/jDtOXS9SC2hNuenY4Hd8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NtRS5x4Si7KKEf+WpO9hVYjP62yxBt7G6rv/s/vCYdQ9WHdLp7xf8+4XEBySK6CrXvBLosj5r/sQtdRzlWLe4xGNbV6OnbkQ3caaNBDg3OwWvsBGSYsuP3r2ETGBshXJjw74i4Cus61+BMiunFmvlb6HJo/S09NxWOWTvFF4zBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WYaMyG6p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bUmgyeUv; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kTmRStPs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C48CC2BCF5;
-	Sun, 17 May 2026 13:33:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779024795;
-	bh=IdinB7sTl6FdyjpnyNarYNQYP0c3VL4anWA+C6BTDKM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTmRStPssQPEDsXzEgsXWS2E7fKbaBSG28LO5m7Bq2PI1MrFseOLmn4FZBdJH4p9x
-	 ijEx14JCRqnkZwLdO14NMKjmkZ71QP7KRBoz8lE2TvJSDCZPFIjN16CBIqjFlTvu67
-	 sOvC/wZv7H9tteYxl41cS958xVMbhZM/lP3OosaLVm3sNu8adhsSK+9pxhioEo/wvH
-	 xyU2rRgLzflNW2GVupCwxR6lSLIwQuwdlPJgdDVHkoaVxJ2rRSnzKr9c/1Wku7yP2g
-	 YzYH4jZLB75f8PSI6OAiPmz2RxfehQKvFmsJJeMLLYK3vnkcHRkwObOPnqwlSD6sbt
-	 YvN01xNylXxRg==
-From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Sasha Levin <sashal@kernel.org>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <barnabas.pocze@ideasonboard.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: Re: [PATCH 7.0 016/201] media: mali-c55: Fix wrong comment of ISP block types
-Date: Sun, 17 May 2026 09:33:07 -0400
-Message-ID: <20260516170159.mali-c55-comment-drop@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <agdO8lvv9vj9_1n8@zed>
-References: <20260515154658.538039039@linuxfoundation.org> <20260515154658.887165119@linuxfoundation.org> <agdO8lvv9vj9_1n8@zed>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WYaMyG6p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bUmgyeUv"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4821D7A009D;
+	Sun, 17 May 2026 10:46:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Sun, 17 May 2026 10:46:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1779029192;
+	 x=1779115592; bh=ZpwJxHaGeUzpDJMtobLHlHxO0AbKrTCoxDPJ7Sj9Z+g=; b=
+	WYaMyG6ppjC9ymoKlUW66RfdpUQLe9EcFz3cT9i0tozeUPdR/nI6dRxds/8uZcQp
+	UqABJJmozQiABMfHI1YDBegQI5atLLAr9WSVhSwmDCRZUTX86C8F1INGqfqtmX+S
+	7rpK+RvedkRiRkDHzv+E2t6YPST95ejsiOFUzQPg8m49jk7FqXZG9T5ej+A3C/yE
+	xidH0VHRmMw21g2X/SWLgjNDOniC7gMFOYnrStxTdbtjevEy+yKPiUgIzpQ0bAMZ
+	RbMa1bmKtnHwdyl32NTwf962koH0gsvVt8OxcFfd6DZXDo+Xqs1jPYVLxU6q+d1h
+	CGEF1nadRSrnVbFF+DUBKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779029192; x=
+	1779115592; bh=ZpwJxHaGeUzpDJMtobLHlHxO0AbKrTCoxDPJ7Sj9Z+g=; b=b
+	UmgyeUvdYGAPfZN6sZokOytR81f5rv4EH5EmUVfiKPEBW/RgnqUleIHz0MF1wkPp
+	z+SorUmX5SbLdlA+HrdJXWPJ4JPaZJhEI+BrqRa5E/Z1kC59jW9rNTQ9gXRnUxTI
+	GlwSsjSE+lGZgjK88SVRIMal4PikZMDmbfBCvEjXqyC0t+YA3R67KpxybvqFsBqS
+	0FsvIQhNnzJu4OkyYrzpWz2XyHXVjSs7ZovR1GlXhnYL7im7QzLa6UROmz8XVvXB
+	Vg/oe/CQ5J/MfmCYU79CP61QHY8EKKknwc2jfHouiqq3DU1FHuXetq+2F5F/Bzb3
+	iY6Lq9gofFmE/TQvTVUiw==
+X-ME-Sender: <xms:xtQJatwPqBSx5FIUvJutqmLoDB-_wu5b9VFuO-62orbSTbGblNINew>
+    <xme:xtQJapK3oQxQeilEwLt6-LXoMDJ8jznemxhlmuUVKmNocrYnZM4r50SEceHSy1QwJ
+    DllUvHTLHtVV_QS0z_niwUGL-wE2eV1lCh0AUj0q-tluGxaVNuhopw>
+X-ME-Received: <xmr:xtQJai08dIvAaYOOrA9VLnMmuXaW5xXHKp3EY2TZfvL8zfPVUwoIpXKYHfLOFXTqIuzEOfO0Hhg7KM7_Tndb7Pb1uzUNKdy1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeeivdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpedfuegrrhhr
+    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
+    frrghtthgvrhhnpeefleehkeehleekjeelffefhfdvleejteehledtieduffevteffleet
+    gefgfefhjeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggrrhhrhihnsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopedvtddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohep
+    shhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrthgthh
+    gvsheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdhkvghr
+    nhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhrvhgrlhgush
+    eslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheprghkphhmsehl
+    ihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehlihhnuhigsehroh
+    gvtghkqdhushdrnhgvthdprhgtphhtthhopehshhhurghhsehkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehprghttghhvghssehkvghrnhgvlhgtihdrohhrgh
+X-ME-Proxy: <xmx:xtQJajf3fKFslBQqT981NBlMExrV92XveSQQ_WEA_ZISiYlgmm7S-Q>
+    <xmx:xtQJam5lcBx9YTjMyQGH7FogtNTwjALZ9Itg2PMGWoyZNDgMSZXMBQ>
+    <xmx:xtQJam-av7w-nAdV-h3EEZA4t_o7hXNJ8Suhgy6FRici2sGI52Pv5w>
+    <xmx:xtQJatKccix4smnWiCAC6bAEOwZzLHLnC-PulFcITI5m-7KHZjhkUw>
+    <xmx:yNQJahHw35ixIWxSYEsnXRKl75ZanJqyyFdjDKFeGygy1NGJIWaDh3bE>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 17 May 2026 10:46:28 -0400 (EDT)
+Message-ID: <eafcb24b-ce47-44f5-9425-8686125f349d@pobox.com>
+Date: Sun, 17 May 2026 07:46:27 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 000/474] 6.6.140-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260515154715.053014143@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260515154715.053014143@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> I know this is borderline for stable, however it's in a uAPI header
-> so I considered it worth adding stable to the cc list.
->
-> If you don't think it's necessary, feel free to drop the patch.
+On 5/15/26 8:41 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.140 release.
+> There are 474 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 17 May 2026 15:46:37 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.140-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Dropped from the 7.0 queue, thanks.
+Tested on an amd64 laptop (Lenovo ThinkPad T14 Gen 1). Working well,
+no regressions observed.
 
---
-Thanks,
-Sasha
+Tested-by: Barry K. Nathan <barryn@pobox.com>
+
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
