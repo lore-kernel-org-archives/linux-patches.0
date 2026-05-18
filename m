@@ -1,51 +1,52 @@
-Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010032.outbound.protection.outlook.com [52.101.61.32])
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012024.outbound.protection.outlook.com [52.101.48.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAAA2D5A01
-	for <patches@lists.linux.dev>; Mon, 18 May 2026 20:55:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40465396560
+	for <patches@lists.linux.dev>; Mon, 18 May 2026 20:55:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.24
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779137714; cv=fail; b=AplOwwJn6q3qMta7K3iCW2VrjetLieFdDxFHlS/Ps3N3dkFEVZom+Igyai0OLkstNuPSSpa+PFyhVnDlril5F9Mz3ZE7TFRMX8697bk2FgpShzbT59puO+V9pIjLO+E1f5K93xYP9k5dJ8PkUVv5F9alVhse+jOXW1JyPtd2/TQ=
+	t=1779137729; cv=fail; b=JFR/4WSnZzSxbIDgPn96mrXZFSXtrQKWl65Il/9Ou81uuA6SYmtTvyQxj2lNfx1K2ET1jd45Vh/p3eWGlCrNm1sSM4v15XvnZe6CnKgZkhM16qkrv/ljxF6SwOH5r3K7606zihuloccNzD5cCJK7L5W+izS+qs2B5cZqxX4YFu8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779137714; c=relaxed/simple;
-	bh=/GKw1u5MqXLqyEYwt5WAmrW7FridGtLTpbu5bTewuTw=;
+	s=arc-20240116; t=1779137729; c=relaxed/simple;
+	bh=sLfVeNR88uoaCXTkHAx64R7geKVsy7OcldDsqC1xkq4=;
 	h=Message-ID:Date:From:Subject:To:Cc:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=e5xj/ejY0hIIxH23RUBBGpYs5sRZuHnTqcELD+dxF2aWRk1iJLqxpeg4gqn492giC0ZFrBZFlpe9/c/vDfpGHNCOnoo0RourggYF/2aJh5T4MO4SS1cdzehLY33ZTbWjPu3dcn758WbDvHwhrHr6g48+sPZV2NmgBKgMgE8mZK4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=bNkCnsSa; arc=fail smtp.client-ip=52.101.61.32
+	 Content-Type:MIME-Version; b=R7UQTqIPc3esR1dffMYxzGfWUT/8ya5jUgNK8tsGgCidC6Wwh7IVhrcGdOa71o3C6AyhqtIy6N9D0a1xUiM2kOBB2Lf7wE2sVXXMA8le2MndEgZGaCwLQdI6aNP1GiCUeptDQxR6m65rw94UPqdrlgH/tDfl9mO7UXk5W9fTXFI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=ggWawMEj; arc=fail smtp.client-ip=52.101.48.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="bNkCnsSa"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="ggWawMEj"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fwJd7G2B0gpfppB4oSKCGMgotq70drLLzH6FUhnHjBh2iWhrkP2POTMlPuq6KrhbPevQXH1mUuxOokwnHtTaN1SykLzsDogT/krjyvFZN8DkjZzZ/OvkXl7XbuxxGS8Zzjo/dXo8BeYlVyxpBfMQMKKuEKKLTfkJ0JbE0unWBqONvaV2d2fkALNXvJikfcpOzCZ7/pJbjdqN1oUPWYq5ewn+qR2N9RvZ5HeuP7P5DFDVYDQqaVjeebayFIex2H3D18PuJcM8Er+avpIA2z64s7tydyaHp7zBNo1j1nDrnebe3Ehk8fGDH6mzdrK8k4vMi8+5tO4CafHdFNdk9o+xDA==
+ b=UTaIPDVQcBiv57um49nsxGras4DIl1uSVUkROIMArjvGvMoOltNrTLSM3EOHApQnwdB/vM3fV9oUV1qryrM2LH1IN33p6xvlp+w5qeve5nCE+qLgKlc1a7nw2rGJSc+MOEa/ToF41kunzOdfXoSxi52SdtUc5po1re0DUYWPpq/7d2kr/EXbAc4ba9CRxI3A5m3Fe4tDHO+CyQZo2dlB1RYBqpCiFGJAj+7jK829ChYsNDrDglHj4zzjAIYosDhsRErz8+jHx3hN+tiCpC6lUveolM2AJN9l6j+ZMl/OdOzIBaLhc5bmA8sVy4rP3geqMLq5bPE7gkfWuwPfg0F5IA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q6iVRpTHh7Z1d3qBvk96d1k+ESd3dUksXxgIPUUIEHA=;
- b=luu8LD+xdwATS3sQrGPXgpbkg9MJ2huKTVidpbSZWIbiJHCAE2Jh6g9/W42BnE7Rqjy28SlOXiI+VG4bcwGNzVanYaOz7PFUVJLf7TF2Zff8zdiLTcgOtkooVeufTj29Sa3Z7UqtzYZh/7i63eC4NHwcm0b4k8mkGK0zQ4mor71zPzawTbNYN696jPbUieg3uONE4UPGaB02qJELOGheAk0M4Y0so12vbPAS54i2VwRFXon6VuT+4EcyR9M9THT1MuVPrl0j1IAgqx26diC1WmC0r2MAVBLO0AR1wFPGqWfO11/7vB8WRjDKemYPodGF4N8olVzT8CA/eZoqTjl1CQ==
+ bh=/W96JRVqCN/flRxbA9+tqFQ3YJHAQzhWiBqYPj6ygDU=;
+ b=luT42uWKw/NL4YzaqSRktFQ6Lex2pFv01ybdwe9pfH/B22+LZiKHzM8G2mfvphCJv6yW364qrDKMBIftQ/R41spC+CDSKtxMOWj6c/PveFl9AHDQi7dIg1gcwhSgU+5K1P2OjsdeE+t97J4qBaOUVz0xElId2VSiYjerMZ+NdJnoXchri1oS8tJQWSrmvqwOw+ggCrSgKwJ5lVSalwSPtl+JjwzVg/2dQLgpupQjKVL/88INnMFj7l8QvOU9X+phD2dYT6kw0R6Bhf7mo1/zuU5iNkKvHn3eehbKrMf3pLrD0uTMTbTBQI7fIWwNuiaqj0LuB31iMcMoO4AjADt4PQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=q6iVRpTHh7Z1d3qBvk96d1k+ESd3dUksXxgIPUUIEHA=;
- b=bNkCnsSaoIoQevqvqVZyC2+SmnUdaREurtOCJ4fvgkNPlWSTZ6jszc5JVSR+8bYOfwo+tw89cGEu+ACLdjzXTZmqJFPrNh6kznMI3KNVyIkgnTNafyURylHyx0xQqrUqai4SVPs9XPIDDBlOM9y6ig4VPOYCK0SiB8h5kTL2AWg=
+ bh=/W96JRVqCN/flRxbA9+tqFQ3YJHAQzhWiBqYPj6ygDU=;
+ b=ggWawMEj51ShxfZaN/DUoIWs8ne8Xbj8DB2tou/+HGUkX4OMmKxaQ4iZfDzzVfEKHECrawkvCH/6QxY3wndyJOUX5kuExZW9QV1Cci91Ee0nASmCzizEy+jcOWjYecym0rF/vWU8t2PZ5kdip0psH3jr1US3V5+Qh61qY/VjOcY=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from SA3PR12MB8803.namprd12.prod.outlook.com (2603:10b6:806:317::8)
  by CY3PR12MB9631.namprd12.prod.outlook.com (2603:10b6:930:ff::6) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.19; Mon, 18 May
- 2026 20:55:01 +0000
+ 2026 20:55:17 +0000
 Received: from SA3PR12MB8803.namprd12.prod.outlook.com
  ([fe80::b6b5:dec5:43de:6d2f]) by SA3PR12MB8803.namprd12.prod.outlook.com
  ([fe80::b6b5:dec5:43de:6d2f%6]) with mapi id 15.21.0025.022; Mon, 18 May 2026
- 20:55:01 +0000
-Message-ID: <75aa4c10-8e5a-4a9b-b702-100d761fa13a@amd.com>
-Date: Mon, 18 May 2026 15:54:59 -0500
+ 20:55:14 +0000
+Message-ID: <170821c5-0d78-4c7a-a52d-e37a5133356c@amd.com>
+Date: Mon, 18 May 2026 15:55:11 -0500
 User-Agent: Mozilla Thunderbird
 From: Babu Moger <babu.moger@amd.com>
-Subject: Re: [PATCH v2 4/5] fs/resctrl: Fix deadlock for errors during mount
+Subject: Re: [PATCH v2 5/5] fs/resctrl: Fix issues with worker threads when
+ CPUs are taken offline
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>,
  Reinette Chatre <reinette.chatre@intel.com>,
  Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
@@ -55,13 +56,13 @@ To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>,
 Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org,
  linux-kernel@vger.kernel.org, patches@lists.linux.dev
 References: <20260515193944.15114-1-tony.luck@intel.com>
- <20260515193944.15114-5-tony.luck@intel.com>
+ <20260515193944.15114-6-tony.luck@intel.com>
 Content-Language: en-US
-In-Reply-To: <20260515193944.15114-5-tony.luck@intel.com>
+In-Reply-To: <20260515193944.15114-6-tony.luck@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CH0PR03CA0068.namprd03.prod.outlook.com
- (2603:10b6:610:cc::13) To SA3PR12MB8803.namprd12.prod.outlook.com
+X-ClientProxiedBy: CH0PR03CA0065.namprd03.prod.outlook.com
+ (2603:10b6:610:cc::10) To SA3PR12MB8803.namprd12.prod.outlook.com
  (2603:10b6:806:317::8)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -71,66 +72,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SA3PR12MB8803:EE_|CY3PR12MB9631:EE_
-X-MS-Office365-Filtering-Correlation-Id: d1cb8896-6702-4c14-7458-08deb51fba92
+X-MS-Office365-Filtering-Correlation-Id: 5f282352-a177-4845-5c4c-08deb51fc234
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|366016|1800799024|7416014|4143699003|11063799003|18002099003|56012099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	Bc/kQtDXJ86HBiQSzQxz25DzYcPcZJrz7JPU5Xeddu93Hy/1Nbfr3IIArD+9XqFtCFqB9z6RbdZmBxJOTDuKzEdqUrGBixrmZl5es3NMyNTVpg9IYB+zCd8d3hvoJTay69Xz6KBqeVMsfAIB4y2rFI4S2roMQzCIFBpSFPyNAHLe4dJYzrkT6hsgwTNchwHXoNYnPpIPxeselrxtUjNh8PznkSSgLNtBi6t8gnZiZKVpKDbxJzxLYvbT39x0fNBvuK/oTv3JycuRr1SFb90n4rN8mEAWGywrpaTnjQp8D/58nymV6kIGf9cRSqUl7GXFr0HjdHnCsjYsSlkgN9bN+sUJKQsAyoVt0+BQCTn/0koSI7+B+WAsLjq9l+IaN4uREWhZOeRRUURZiS3c/0DElyvo51Ie35sf4sqcKQZ1Juj3fTi2Y8NEft/GWjupindWdRHjmYn3vzOKaShWIv95NsYRM0ZtSZuct6lnOBvDxHC08NEpdmi//v0438ARKUIRn2upUnnNnPX14mnfRW0E1ZsAtE98wrRKtXw7a6jYYvKszah3Qxf/343HB5mVn7E1EhUB0a7DG2SPZAKMzTV6f2z5VQFqEEblHVa2N1QHzKRmWn9SXBvfjtUIzETarEJBCWOnOgEouqNK9032cbnD0w==
+	vPeWlJ/tnX+pWr0/yae6i9fCD+Wr3ocVrmqN+X8PptZSL7+SmRNW8EUemy5Y2ZIYAyoaYS7mgXJ8tKjZIkt0zgPjsY8JmkBU2A/vCEyQQB4IPo+0Y8Pt0++zZW93tJZvr5JiK+Y7Kov8Q+TUUKyHVnGNvYnN/sdmIMM3O1DoK8ysfBdA4ItFYeFa8fCNoG6UgRu3Pg9rDWvlH7MguAka8SHmecNsGhmgE2/F5FvQkLWImvEBo6TQPEMEDGx/l6PwlcqhFcaI64gizH0kJAeKObQI0p5KpzqKc8j3R6ywTOBbmIQpzr1UMOZIMIwfJc59mNYNdL1sfuchVbqKPWmOA3OtCV+6/q2FWa2HOW22pjR7GNqxNL/hAZTVP5ZLOyRggyTTghEJU8vleNAZsMKZT4oofDfZVau4dHFG5RQhX/cfwq+wY/8yu/JMbNnY+t7NiUtr89P+EIiQm/x5e3Dfw45PAZ7qT39fOSPwj1QDVV6fvYpY9P48vQYPYQLmWaJsUYpsF6QNdk9RCUNYw8lsVRy0474sApHIk1l4GGwS/+ZuoUU7NsKB0aa1NKJZt7ed5zEnY8zFC26WXvF+x1ARQ9oyimmIQSKleieihV5BypiTlmPNndSNzZcXdwZVkOBMHrypPTTLkWAcjncEi7nY1g==
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA3PR12MB8803.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(7416014)(4143699003)(11063799003)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UUwrMm1ielg4U01wVnBvNnNEdmJqS3JiVnNoVWtYSUxMaGhGT3cxWXk1ck4v?=
- =?utf-8?B?UzYrWmxSL21EMTEvK3NpRUp4UmFBNFBLOWVMU2lJQWQ4OHQ0YXUvbUUwRVFo?=
- =?utf-8?B?WnFVTGV5WWZZTzRPdzQrYVNqOW91MWNycFE0MlhRVUJYZXJ2SkRYYnZndURa?=
- =?utf-8?B?bGdObEtZL1YweGN5L0ZldUlMVm1mdHNpUGFjcHluL2k5VjlXM2VPdm9hblc1?=
- =?utf-8?B?djRUWWd4c1RFdDl3ZzBXNnU4eTZzWEdna3Z0c2l1T25jdDlTS241ckp3TGJ5?=
- =?utf-8?B?c1Q1TXFlenpxeTdSWlJCYnVuWG0yWm8rTkFidHBRRmdTSFFBaXJIcVI1N2Za?=
- =?utf-8?B?YjJ3ZUprSU1sNURsdVYwblRnRDJpdmdZakVjVG1QSVNPMFcrdGxTNFd0cnRH?=
- =?utf-8?B?Y1dwcmRvZ1oyUXlQcC8ySFV5YUJISjNESkxZTHZwc2g1VjkvRTlrUEhGTkxD?=
- =?utf-8?B?S2FJMzZhV2syMDlka3BjZEZESWNaaVV5bHM2bkdrSFUrc3R4b2VIVXpPNm1s?=
- =?utf-8?B?aHpNME5ZTnB2UTFKWFpnVG1pb0h5UkN1S0c4a1N5RGp4S0xOMGUvNUREaTRE?=
- =?utf-8?B?dGt5cUhrQTZaSzdlZ0tFWVJaczFaVW10dkNKYUEwc1dMNmFSbEExSnluSkFX?=
- =?utf-8?B?eFlvb2dQZzlFcmYweDVDMWFPWHlLN3A2U2ptSVBFSnlGdFZtSHgrcmptblYw?=
- =?utf-8?B?NzJvem1JRDJ5VXNhZTBCcGZ0RDJXQnB3RktZdy82anVnTzl1VDdoaEpwV0M4?=
- =?utf-8?B?cGZ2eXlrWmJzY1Jmbk1ZUnppdExRSHh6NFRPRnhSRWxIL2JnMmdkeEpNYVF2?=
- =?utf-8?B?ZWJWZlFNWjF1U0FRbzZGb1RmSjlRU2VFNUZ5MUlWS21BazRBbytsbVZuM3Vp?=
- =?utf-8?B?WVJXekx5UGhwNlAvcThES0RMMXVkdmlxM3Z3eEREKzc2TjdSSjA3NThkRVFX?=
- =?utf-8?B?OEZHM241d1pBckhzNXNnd0VEYkNGck0wRnQ2eVZJYXhFY0dKZXMrV0tDRll6?=
- =?utf-8?B?NjFRcm1rUHF5U1crSmVtTm5UWnBzditwdnVSVWpiREM1bkxUN3NhQmFkZXJ6?=
- =?utf-8?B?ekNUVTMrRVA1WDgxcys4STZ2OE5TMzRvTFA4RUVxTDFXcHVQSVNxZVdvY2Vp?=
- =?utf-8?B?SnlEV29Va0tzRFlqZWJSTFFZRDlUV3p6ZGdEdWNsUWp3VEY4TGtVSGRPYnJB?=
- =?utf-8?B?dXY3Wkc2VHNZQ0ExdXdINWNTTVE0WWJSbW9pTW1LdWMrbUpLUE5Ua1RPVDhi?=
- =?utf-8?B?MnNSeGxBY1lHcytqL0JMTVhreGpvUlZpYXlRZXplU3RyK2JobUdSei9HSEJD?=
- =?utf-8?B?MGN2blFWMW42ZUdhQ3Ira3NaRFBKZThjYkl1U2d4NmJkU3BRYk9uaFBhNG1n?=
- =?utf-8?B?OTZpLzk3MHdoTXJ5QWlucndPWmsySUhTMXFnSmsraE1oOEthekhQUy9wNkVN?=
- =?utf-8?B?R2E5L0lSRDBCRS9ZVE9qT3hIbUFpQ2RaWDVPSHB0Qmh4d1ZzQk45b3JXRFZX?=
- =?utf-8?B?RlJpZkFJbUc0YUZQQk92dkIxVVVXREdXQU9oekZnbkNxU3VaOVFpWmwwMyt4?=
- =?utf-8?B?SncyQVZZcW9MSWgzUmFOZEE4MFNhQ1lIUHdud05GYU9QdjlaYVZLUHVsVVZX?=
- =?utf-8?B?ZFRFdmRZZVl0S01yS0pyUERDRWRCSUVLQjFhTmtuTXhvSFV0M1JGT3JwSEhn?=
- =?utf-8?B?Y0JkcTUySmNTdnA1anBtc1d6M1QwNzlHNUZyMWJMRnEyRjNhdXVuRXJnK1FN?=
- =?utf-8?B?a09MTWxtbWM1Z0JUenBWWHJtd21GZHcybzF4VXJqRWc5MktYOHZxSVFnTmxH?=
- =?utf-8?B?KzFqZHZPYTJDWDJDSUs4eDRCaERyZ28wbTczMWRpZklzaEJWamV1bzlzS2lo?=
- =?utf-8?B?dTZqWXNqTFE1em4yN2hmMENESGlEV0xubG9ManJSN05vVlYvVFNQZG5NdVRV?=
- =?utf-8?B?eVY4RXBOdXhFU1JidW5DTnd3cnlVTGxKZllqTDFCQXBiSWVEdWF2SHpJVnNC?=
- =?utf-8?B?dWt3M2oxeGluRkhwOFE4a1FlTEZraUdlQ0dFUklmL29rbEpsbXovaG9IOFdu?=
- =?utf-8?B?dUxiNGw3YTFoSWltdUx3c01YaUJReUt6TmFoeEJwNWRic0k0WHdmYk9udDFN?=
- =?utf-8?B?ZEE3REtoNkhNNUF5ZXJnRjZ5NTBkQVAzNkFvb0YyWkpYSUxJckUwSUFWa1N4?=
- =?utf-8?B?R1F2cWZQQ0EyZXYveXAzSjZOcVlCek9tSThLV3d4SHkxSm9sbXBUQ0l4bUU1?=
- =?utf-8?B?NDg1WTNlSkxrL2dWV2pPdUNDTzJLU2dDVXRDM3YrSGZjVnNtVzdiM2xWV3ZI?=
- =?utf-8?Q?Wr6aR9AKRpfwaoX/1I?=
+	=?utf-8?B?c2t0R3VQbkNOVjNFaEhUL3dEZzRpT1pXTC9tWEZPZDBoMi9UQlRYbWdIbVNF?=
+ =?utf-8?B?NmtnQU5vU0ZHNkgvY2t4WDdTZUlvTzZCdnN4NGRwaE1kTXJScUoxblFucEVi?=
+ =?utf-8?B?Y1dSYmVvS1lhZzlObGZIQk9MVU4xVGtpUWtXZUFkOHhGbERNMEJXbTVwcldw?=
+ =?utf-8?B?UGlwU3VRWmppeGtkNUh4b3BQT1R4elBwQ0Y3S0RvQ3RDV0p0bys5TDF5NmVT?=
+ =?utf-8?B?eURGa0c2WStpMUJIZGRxL0dUeWVjb3NnZnNlaE5XSjdyWm9sek8xdjlzejgv?=
+ =?utf-8?B?d3YzSlB5Y2dUUUhWOXZhOUhWZXJIbnc0cmY3RWdSc3QxdDBQank3TTRvQVM3?=
+ =?utf-8?B?ZWxETzB5R0NOVVh2eDNXdHNiTnQrQ2Q1Q09EdVdsSFZSZEZOUmZlT3BOTVBa?=
+ =?utf-8?B?WXhTeVpqQ3JGZzJqcFNRZlNUUmhuWUxiNmlNLzE4cXFjQTdETHc1ZU93YXZI?=
+ =?utf-8?B?M2ZhOERURFJlcjRZNGp1bUVTL1dVK05Lc2VYeVYvbk5veXNMTlMzUTBFRjEz?=
+ =?utf-8?B?UW5Wd0FoSHA4K0NOSFN3TzExWjAyT2t4TU9jMmwzVVJqQWlrVXZxamVwREkr?=
+ =?utf-8?B?R0VDbmRiVGlwemlReVRCV1RVbmlPRzZIUGFnUkZRZFNHR3NRdWRvME0wd09o?=
+ =?utf-8?B?S29FN3ArRzhlMlpiS081ZFdvbVAyVHJvMnBrZ2RNUlpNYWRKTnFCcG9XYW1a?=
+ =?utf-8?B?YjRYdk9mUHBkSmhidEFlUC9NeDlhdkQ5SFM2am1iVTV6bjcwZk04RDRUcGdp?=
+ =?utf-8?B?eTNYcFZSVXh3WnpDN0R4c3NKMmhSeGpJblJtZ3MwUTNrMS9INVpEdXRNTERv?=
+ =?utf-8?B?eEhkY2RUMGhnTU8ycStJc2FsaEs0SDVaV2phRU5CekZhbEJ1M3Q1QzFKeFha?=
+ =?utf-8?B?TzJicC9JbjU0WEViT3FZS3ZaRURIZ1Rvblh1eGpVMDgyRWFjT1lmbDMySmZX?=
+ =?utf-8?B?Q3d2b1cxZWVxdm5VY0hmNGswWXJmaCtaQnc1bG5tMTVDSHVuV1I5NFArY1dC?=
+ =?utf-8?B?YS9hc1YwaWVmaVY4dzZqTEZRNU9VQm9XN0l6QXlQM0UwMzJUT0NRQzJJNXlU?=
+ =?utf-8?B?NXpRbWZIZjJxM0dkbld4bjZCZ05IS2RzczY2bW1FUDN4YkRkeCsrc1BsU1JV?=
+ =?utf-8?B?NVJYb3pVeVhLR0JkRkhUNlEyM0ZBSm92OXF4NFRaMTAyWnFxZ1I4aVpCVmlZ?=
+ =?utf-8?B?d2FJZG41V3JWbVMzblZTUTNnaEFDL2ZjUUtUR1pQeU5INHRTcnlHMVhoTnF3?=
+ =?utf-8?B?ZFZVam5VeDZwbTAvdkhZWEdleTRGanc5RXEyMldGR054OGs4elZVSVdSSmF1?=
+ =?utf-8?B?YmRweFNNMWJFTXNJeXlWbVdiQ2htMkFwdkZlRGc4RzhwY2ZyOEJ3MGlKK05i?=
+ =?utf-8?B?Q2FqNFNDMndTNk9JbTZvZ1EyMXc2bHVIVHI4N3JLdjEvOXhPZ1JFQ0Y3Vm10?=
+ =?utf-8?B?NWFHWGRna3RFUkhma2RRakZKbURyWHdyZ0tHekRiSUZ1a1ZTdGlmOVRRaWpT?=
+ =?utf-8?B?UkN1OEJSU3VOck9ZbWUxVFprdllobzdHbVNsNkMxcWlvaUxOS3FVRitHZ0s1?=
+ =?utf-8?B?aFBnMzE3eWh5bnBrTXBWWG81MTlqT01ZOVFiVk9FRUQwTEFZODYxbEttNDUy?=
+ =?utf-8?B?d205QWdlaXpuRlAyZll6Y24vTEJPSTdPN2ZlTWQyaHA4d1FQc3llZFlwTW0r?=
+ =?utf-8?B?N2wvV0h3a1lQbVNQSG9HcVhxVSs5aURxL1N3VlNJLzVkMnUzTEJJTnJ5VWsy?=
+ =?utf-8?B?bXQvNGYzejdmV0RSVThhOUQvdmxvZWhUdldVSHpYTGhNbE9NMkREemV3TDEz?=
+ =?utf-8?B?UnM5RFR4YU82TUc2dDhMSDliSGdGR2VuU2NaUTFhWVNnUUkycVA2MURZZUVD?=
+ =?utf-8?B?VkxWSWxhdkEzRENncGtmanNUeWRmY29xdWpYaFRqU09qUlpzTDRqWThOZTZk?=
+ =?utf-8?B?ZVlFU2FpcHBkcEZKWGVpZFFQUC85SERhZm84eUNQbEJpWDF2aVlLTGVJbzBP?=
+ =?utf-8?B?aHhWd2Focm52K09Yc1hHNWZRa1lma09tc0I0ZzZ2TVluYnlaK0NjNjlmdW52?=
+ =?utf-8?B?Vm8wa3V2cDhJQnBaZGJlbUpaSE04ODdXYUczVVJORmI4OXJnd28xaWQ2QWV2?=
+ =?utf-8?B?cE15ODQrL2hidFE1cDkvMEpLZXhXdHVpN0ZpVHNGTWJ6UFdEMUN1NFh6QXRS?=
+ =?utf-8?B?QWEyc3ZXRmVNdkU2OFl3ajJuaDJVaE9mZGpDZzRmMjBHVzkyT2hFQURSWndl?=
+ =?utf-8?B?c2pVZnF6YjFxVUZ6Sm1obGpBK0JmRmpLSitoRHlzL2M1eG45OWZiMkxUdjNl?=
+ =?utf-8?Q?29xgyD5l41MxW3IV7G?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d1cb8896-6702-4c14-7458-08deb51fba92
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f282352-a177-4845-5c4c-08deb51fc234
 X-MS-Exchange-CrossTenant-AuthSource: SA3PR12MB8803.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2026 20:55:01.3199
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2026 20:55:14.1251
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fqJEmyQhqkh1pXPe83lqEN0wj4YfKg1ceLeG/HtJv3vfei0FWYWr870t2aI1QkgB
+X-MS-Exchange-CrossTenant-UserPrincipalName: aiFIyI0ubEps4juUcdlCmMMe9uQKIl+nILLzmXH4CJaxswKndy5YvhIvNrvlW6Xo
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9631
 
 Hi Tony,
@@ -139,25 +140,34 @@ Hi Tony,
 On 5/15/26 14:39, Tony Luck wrote:
 > From: Reinette Chatre <reinette.chatre@intel.com>
 > 
-> Sashiko noticed[1] a deadlock in the resctrl mount code.
+> Sashiko noticed[1] a user-after-free in the resctrl worker thread code
+
+user-after-free -> use-after-free
+
+> where the rdt_l3_mon_domain structure was freed while the worker was blocked
+> waiting for locks.
 > 
-> rdt_get_tree() acquires rdtgroup_mutex before calling kernfs_get_tree(). If
-> superblock setup fails inside kernfs_get_tree(), the VFS calls kill_sb on
-> the same thread before the call returns.  rdt_kill_sb() unconditionally
-> attempts to acquire rdtgroup_mutex and deadlock occurs.
+> The root issue is that cancel_delayed_work() does not block in the case where
+> the worker thread is executing. This results in the race that Sashiko noticed,
+> but also causes problems when the CPU that has been chosen to service the
+> worker thread is taken offline.
 > 
-> Move the call to kernfs_get_tree() outside of locks.
+> Note that worker threads are allowed to delete their own work_struct
+> (see comment in kernel/workqueue.c:process_one_work()) so there can't be
+> any problems on the return path from the worker in this case where the
+> work_struct was deleted by other code while the worker was executing.
 > 
-> Add resctrl_unmount() helper to keep code consistent between the
-> rdt_get_tree() failure path and a normal unmount.
+> Indicate failure of cancel_delayed_work() calls in resctrl_offline_cpu()
+> by setting d->mbm_work_cpu or d->cqm_work_cpu to nr_cpu_ids. Make the worker
+> threads check to see if they are no longer bound to the right CPU. In this
+> case search the L3 domain list for any domain(s) with the work cpu set to
+> nr_cpu_ids. In the case where the last CPU was removed from a domain, the
+> domain has been removed from the list and there is nothing to do. If the
+> domain still exists, then restart the worker on any of the remaining CPUs.
 > 
-> If kernfs_get_tree() fails and ctx->kfc.new_sb_created is set, then rdt_kill_sb()
-> has already been called and no further cleanup is needed.
+> Remove redundant cancel_delayed_work() calls from resctrl_offline_mon_domain().
 > 
-> Add an extra hold in this error path on rdtgroup_default.kn to defend against
-> other races destroying the root which is then dereferenced in kernfs_kill_sb()
-> 
-> Fixes: 5ff193fbde20 ("x86/intel_rdt: Add basic resctrl filesystem support")
+> Fixes: 24247aeeabe9 ("x86/intel_rdt/cqm: Improve limbo list processing")
 > Co-developed-by: Tony Luck <tony.luck@intel.com>
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 
@@ -172,134 +182,149 @@ Babu
 
 > Link: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com [1]
 > ---
->   fs/resctrl/rdtgroup.c | 82 +++++++++++++++++++++++++++++--------------
->   1 file changed, 55 insertions(+), 27 deletions(-)
+>   fs/resctrl/monitor.c  | 55 +++++++++++++++++++++++++++++++++++++++++++
+>   fs/resctrl/rdtgroup.c | 27 +++++++++++++++------
+>   2 files changed, 75 insertions(+), 7 deletions(-)
 > 
-> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-> index 97d1a3648b9e..282a0acedea8 100644
-> --- a/fs/resctrl/rdtgroup.c
-> +++ b/fs/resctrl/rdtgroup.c
-> @@ -2978,10 +2978,34 @@ static void resctrl_fs_teardown(void)
->   	rdtgroup_destroy_root();
->   }
->   
-> +static void resctrl_unmount(void)
-> +{
-> +	struct rdt_resource *r;
-> +
-> +	cpus_read_lock();
-> +	mutex_lock(&rdtgroup_mutex);
-> +
-> +	rdt_disable_ctx();
-> +
-> +	/* Put everything back to default values. */
-> +	for_each_alloc_capable_rdt_resource(r)
-> +		resctrl_arch_reset_all_ctrls(r);
-> +
-> +	resctrl_fs_teardown();
-> +	if (resctrl_arch_alloc_capable())
-> +		resctrl_arch_disable_alloc();
-> +	if (resctrl_arch_mon_capable())
-> +		resctrl_arch_disable_mon();
-> +	resctrl_mounted = false;
-> +	mutex_unlock(&rdtgroup_mutex);
-> +	cpus_read_unlock();
-> +}
-> +
->   static int rdt_get_tree(struct fs_context *fc)
+> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+> index 9fd901c78dc6..c422850f044b 100644
+> --- a/fs/resctrl/monitor.c
+> +++ b/fs/resctrl/monitor.c
+> @@ -791,12 +791,38 @@ static void mbm_update(struct rdt_resource *r, struct rdt_l3_mon_domain *d,
+>    */
+>   void cqm_handle_limbo(struct work_struct *work)
 >   {
->   	struct rdt_fs_context *ctx = rdt_fc2context(fc);
->   	unsigned long flags = RFTYPE_CTRL_BASE;
-> +	struct kernfs_node *rdt_root_kn;
->   	struct rdt_l3_mon_domain *dom;
->   	struct rdt_resource *r;
->   	int ret;
-> @@ -3057,10 +3081,6 @@ static int rdt_get_tree(struct fs_context *fc)
->   	if (ret)
->   		goto out_mondata;
+> +	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+>   	unsigned long delay = msecs_to_jiffies(CQM_LIMBOCHECK_INTERVAL);
+>   	struct rdt_l3_mon_domain *d;
 >   
-> -	ret = kernfs_get_tree(fc);
-> -	if (ret < 0)
-> -		goto out_psl;
-> -
->   	if (resctrl_arch_alloc_capable())
->   		resctrl_arch_enable_alloc();
->   	if (resctrl_arch_mon_capable())
-> @@ -3076,10 +3096,37 @@ static int rdt_get_tree(struct fs_context *fc)
->   						   RESCTRL_PICK_ANY_CPU);
+>   	cpus_read_lock();
+>   	mutex_lock(&rdtgroup_mutex);
+>   
+> +	/*
+> +	 * Worker was blocked waiting for the CPU it was running on to go
+> +	 * offline. Handle two scenarios:
+> +	 * - Worker was running on the last CPU of a domain. The domain and
+> +	 *   thus the work_struct has been freed so do not attempt to obtain
+> +	 *   domain via container_of(). All remaining domains have limbo
+> +	 *   handlers so the loop will not find any domains needing a
+> +	 *   limbo handler. Just exit.
+> +	 * - Worker was running on CPU that just went offline with other
+> +	 *   CPUs in domain still running and available to take over the
+> +	 *   worker. Offline handler could not schedule a new worker on
+> +	 *   another CPU in the domain but signaled that this needs to be
+> +	 *   done by setting cqm_work_cpu to nr_cpu_ids. Find the domain
+> +	 *   that needs a worker and schedule it after the normal CQM
+> +	 *   interval.
+> +	 */
+> +	if (!is_percpu_thread()) {
+> +		list_for_each_entry(d, &r->mon_domains, hdr.list) {
+> +			if (d->cqm_work_cpu == nr_cpu_ids)
+> +				cqm_setup_limbo_handler(d, CQM_LIMBOCHECK_INTERVAL,
+> +							RESCTRL_PICK_ANY_CPU);
+> +		}
+> +		goto out_unlock;
+> +	}
+> +
+>   	d = container_of(work, struct rdt_l3_mon_domain, cqm_limbo.work);
+>   
+>   	__check_limbo(d, false);
+> @@ -808,6 +834,7 @@ void cqm_handle_limbo(struct work_struct *work)
+>   					 delay);
 >   	}
 >   
-> -	goto out;
-> +	/*
-> +	 * Ensure root kn remains accessible after mutex is unlocked so that
-> +	 * kernfs_kill_sb() can run safely if called by kernfs_get_tree()'s
-> +	 * failure path after creating a superblock but before taking reference
-> +	 * on root kn.
-> +	 */
-> +	kernfs_get(rdtgroup_default.kn);
-> +
-> +	/*
-> +	 * Make backup of the current root kn being created to be used in kernfs_put().
-> +	 * The additional reference taken above will prevent the kn from being freed
-> +	 * before kernfs_kill_sb() can run but rdtgroup_default.kn may be set to NULL
-> +	 * via rdtgroup_destroy_root() and its backing root (rdt_root) could be overwritten
-> +	 * before kernfs_put() can run.
-> +	 */
-> +	rdt_root_kn = rdtgroup_default.kn;
-> +
-> +	rdt_last_cmd_clear();
-> +	mutex_unlock(&rdtgroup_mutex);
-> +	cpus_read_unlock();
-> +
-> +	ret = kernfs_get_tree(fc);
-> +	/*
-> +	 * resctrl can only be mounted once, new superblock only expected
-> +	 * to be created once.
-> +	 */
-> +	if (!ctx->kfc.new_sb_created)
-> +		resctrl_unmount();
-> +	kernfs_put(rdt_root_kn);
-> +	return ret;
->   
-> -out_psl:
-> -	rdt_pseudo_lock_release();
->   out_mondata:
->   	if (resctrl_arch_mon_capable())
->   		kernfs_remove(kn_mondata);
-> @@ -3099,7 +3146,6 @@ static int rdt_get_tree(struct fs_context *fc)
->   out_root:
->   	rdtgroup_destroy_root();
->   out:
-> -	rdt_last_cmd_clear();
+> +out_unlock:
 >   	mutex_unlock(&rdtgroup_mutex);
 >   	cpus_read_unlock();
->   	return ret;
-> @@ -3186,26 +3232,8 @@ static int rdt_init_fs_context(struct fs_context *fc)
->   
->   static void rdt_kill_sb(struct super_block *sb)
->   {
-> -	struct rdt_resource *r;
-> -
-> -	cpus_read_lock();
-> -	mutex_lock(&rdtgroup_mutex);
-> -
-> -	rdt_disable_ctx();
-> -
-> -	/* Put everything back to default values. */
-> -	for_each_alloc_capable_rdt_resource(r)
-> -		resctrl_arch_reset_all_ctrls(r);
-> -
-> -	resctrl_fs_teardown();
-> -	if (resctrl_arch_alloc_capable())
-> -		resctrl_arch_disable_alloc();
-> -	if (resctrl_arch_mon_capable())
-> -		resctrl_arch_disable_mon();
-> -	resctrl_mounted = false;
-> +	resctrl_unmount();
->   	kernfs_kill_sb(sb);
-> -	mutex_unlock(&rdtgroup_mutex);
-> -	cpus_read_unlock();
 >   }
+> @@ -852,6 +879,34 @@ void mbm_handle_overflow(struct work_struct *work)
+>   		goto out_unlock;
 >   
->   static struct file_system_type rdt_fs_type = {
+>   	r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+> +
+> +	/*
+> +	 * Worker was blocked waiting for the CPU it was running on to go
+> +	 * offline. Handle two scenarios:
+> +	 * - Worker was running on the last CPU of a domain. The domain and
+> +	 *   thus the work_struct has been freed so do not attempt to obtain
+> +	 *   domain via container_of(). All remaining domains have overflow
+> +	 *   handlers so the loop will not find any domains needing an
+> +	 *   overflow handler. Just exit.
+> +	 * - Worker was running on CPU that just went offline with other
+> +	 *   CPUs in domain still running and available to take over the
+> +	 *   worker. Offline handler could not schedule a new worker on
+> +	 *   another CPU in the domain but signaled that this needs to be
+> +	 *   done by setting mbm_work_cpu to nr_cpu_ids. Find the domain
+> +	 *   that needs a worker and schedule it to run after the normal
+> +	 *   MBM interval. This is completely safe on CPUs with wide MBM
+> +	 *   counters. Likely OK for old CPUs with narrow counters as the
+> +	 *   MBM_OVERFLOW_INTERVAL was picked conservatively.
+> +	 */
+> +	if (!is_percpu_thread()) {
+> +		list_for_each_entry(d, &r->mon_domains, hdr.list) {
+> +			if (d->mbm_work_cpu == nr_cpu_ids)
+> +				mbm_setup_overflow_handler(d, MBM_OVERFLOW_INTERVAL,
+> +							   RESCTRL_PICK_ANY_CPU);
+> +		}
+> +		goto out_unlock;
+> +	}
+> +
+>   	d = container_of(work, struct rdt_l3_mon_domain, mbm_over.work);
+>   
+>   	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
+> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+> index 282a0acedea8..fd82fc78b058 100644
+> --- a/fs/resctrl/rdtgroup.c
+> +++ b/fs/resctrl/rdtgroup.c
+> @@ -4376,8 +4376,7 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+>   		goto out_unlock;
+>   
+>   	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
+> -	if (resctrl_is_mbm_enabled())
+> -		cancel_delayed_work(&d->mbm_over);
+> +
+>   	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) && has_busy_rmid(d)) {
+>   		/*
+>   		 * When a package is going down, forcefully
+> @@ -4388,7 +4387,6 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+>   		 * package never comes back.
+>   		 */
+>   		__check_limbo(d, true);
+> -		cancel_delayed_work(&d->cqm_limbo);
+>   	}
+>   
+>   	domain_destroy_l3_mon_state(d);
+> @@ -4569,13 +4567,28 @@ void resctrl_offline_cpu(unsigned int cpu)
+>   	d = get_mon_domain_from_cpu(cpu, l3);
+>   	if (d) {
+>   		if (resctrl_is_mbm_enabled() && cpu == d->mbm_work_cpu) {
+> -			cancel_delayed_work(&d->mbm_over);
+> -			mbm_setup_overflow_handler(d, 0, cpu);
+> +			if (cancel_delayed_work(&d->mbm_over)) {
+> +				mbm_setup_overflow_handler(d, 0, cpu);
+> +			} else {
+> +				/*
+> +				 * Unable to schedule work on new CPU if it
+> +				 * is currently running since the re-schedule
+> +				 * will just force new work to run on
+> +				 * current CPU. Mark domain's worker as
+> +				 * needing to be rescheduled to be handled
+> +				 * by worker itself.
+> +				 */
+> +				d->mbm_work_cpu = nr_cpu_ids;
+> +			}
+>   		}
+>   		if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) &&
+>   		    cpu == d->cqm_work_cpu && has_busy_rmid(d)) {
+> -			cancel_delayed_work(&d->cqm_limbo);
+> -			cqm_setup_limbo_handler(d, 0, cpu);
+> +			if (cancel_delayed_work(&d->cqm_limbo)) {
+> +				cqm_setup_limbo_handler(d, 0, cpu);
+> +			} else {
+> +				/* Same as mbm_work_cpu case above */
+> +				d->cqm_work_cpu = nr_cpu_ids;
+> +			}
+>   		}
+>   	}
+>   
 
