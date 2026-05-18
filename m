@@ -1,224 +1,147 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010028.outbound.protection.outlook.com [52.101.193.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30204381AF
-	for <patches@lists.linux.dev>; Mon, 18 May 2026 13:28:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779110899; cv=none; b=KCetqyUELMslfZkAD0Udq3qDpXIRwHmi0CfDJDH1G7x8/mHTThd6+pqDpBLsetU+SNSrOrkNtfAheu2Paib+mwcCRSQpQl1OnkYcACIi2cIcssxaqjZPg4m+Dn1kg7qGk1oRWt5fHsLIWJpe1gXMgA+z/Y1pUQ+Viaaftnvqtqk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779110899; c=relaxed/simple;
-	bh=7qgIJKx6jB7//23rw9I/17KAcv7/R5w93uBSpHhdmZg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K2e9mDy2MKXTTnJZaELLdTgEm2YXbjdIp70GGak7v+uf7szZeHxj8tmEs0jP8xeJGhI6aq+pUtqTvaEwJwMYc402N8bn35Kj+Hc+DPSwazGJdjiQC95pscJuUu/TSRYP0O7BCMRik0M3bbRyZufAZUi6VStXfxoMIOYZO3KMPCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk; spf=pass smtp.mailfrom=kernel.dk; dkim=pass (2048-bit key) header.d=kernel-dk.20251104.gappssmtp.com header.i=@kernel-dk.20251104.gappssmtp.com header.b=d7zUIlpN; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kernel.dk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel.dk
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E08536212D;
+	Mon, 18 May 2026 14:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.28
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779115240; cv=fail; b=eZ3N5fKnYem+KsooBZhtNHvF9Ug/iGB3mlVo3tMVOtxfW7aNVrmjpwPWrlqDYEunmIt+yAxJlxjDjBaUrglPFb5zb0fKpp19aFUqbU4fjIy6M2Cqg1ui65a0FoansEwX4/1tjMe/lYQDJm/XybWYdFGMnGecdLChHLq5XJPaOM4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779115240; c=relaxed/simple;
+	bh=U4ShrQKry4IWqwNB2pxYejt+0hnjNCSyTOwu5niHIJ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=U2uKPF2rsw+5XW9X0Vn9EuhVyAw0FnXJ852jd6be+doB4oipeqUZ+zSZ2U2R0zKv/JTqhGrIhhSiUOBk9GITZXEGAOP/ONNBubHFXui4QVS878HzisF0ez3/GTE2eLJoC811CGj4/LQWwR38sjhk/DwavG4DnKxHZK5C56q3Rc0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=okRBQ9HS; arc=fail smtp.client-ip=52.101.193.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel-dk.20251104.gappssmtp.com header.i=@kernel-dk.20251104.gappssmtp.com header.b="d7zUIlpN"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-479d9b155deso605272b6e.3
-        for <patches@lists.linux.dev>; Mon, 18 May 2026 06:28:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kernel-dk.20251104.gappssmtp.com; s=20251104; t=1779110895; x=1779715695; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=izu6ilS0aWgn06SyEgroVOflUroeHp1roh/NZR2jEuQ=;
-        b=d7zUIlpNm9tRyCI/LJfz/JOVrZlIF57Kvae83T3gMEsGoM7Ll1VX6NFjBUloKb2zhU
-         4xKMh/V4OYjh8zMDVZoRSFA+0G/KUr47OQvCMQ082gDFTSvZjhSTPNnyKcGNixoXFN3u
-         r7mQ4ZE2uvDvDjF05DyZsoCD69ifxUIV6HN1cM08537bwuoDDcAnxwfe624uNjbMtWhR
-         IlpJLskRX9Prm5yCDd3FgX2e+Qg838ZoHVqzmLvwD5mNMLg2+Mjazj/yk0vK7eU0WBxd
-         mJJNQn5DiYF+eqzVl4oXbPtzLHV/s1lXU7nxrXfR1q8+QLgbd8JR7DMEjPd+emNR1Awy
-         SdCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779110895; x=1779715695;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=izu6ilS0aWgn06SyEgroVOflUroeHp1roh/NZR2jEuQ=;
-        b=NJBROVioZ1q5mf5cQetyYx8Ai05oVtd0gzx8ZniYkAY//T6UeBRhSrsca/vQJE99rE
-         VnVwHpKNR55Y8FRTENT3e1B6Gmm00jsMEXNv0GSIwYOOSh6q68cEVbtkMBpl784BOK2k
-         3okVYvlBYyhWvVo6KvEHp5nPXlQZ59Wj9UdZGuVeFVUONHE93l14F+XzvCGh6RiAqt1/
-         Ya2PkVcGFqEzK8OeoZQIcT/f1ouXR6A/XtVp36Xa1+dx1RrXnE6gdNDHCTR1OYKxcejw
-         G5AZyqAB4ntmcx7G1dees70JZOZwErqYYKe6XWZuvofSdi8/NYGuEqtkvKuWxX++6HO1
-         YLAA==
-X-Forwarded-Encrypted: i=1; AFNElJ/L1Ef3piSjWzTLzL2f4zow8ME80WUIKPpkdh9rNkXsSJYc+xoU+5YdxInK7DZ3aMpZTj6ZcMpy@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxqthx9TK1ZYha4QdcpI3qIH7l9UHmzOyb+Xijk8Wa6Q9/+2NaL
-	YZgjEPaaobT/Zf+Y5yugYhU1ZK0fa0yys6lCyvSCqmx+aqg9Yu9GeKIrInr4Kf/TaLQ=
-X-Gm-Gg: Acq92OEBzgZyB4LYPX/dE3s+1zYdyb1uPilhvK4Wc7f5T8u0EwCJ4MGZ+0n1lIpaUQl
-	5/xSY2u24OJad2RYhH9UQhfOSlL79mhbKzQ0Y9Z4VOpCz/V64hU3brlnyUhqjgmi2jPNEDTmLyo
-	oU8E4e8xdFu4VGAcJDqAsQHidAGEa1J334svVzB0/T8gbie8sEMxy6dWy0FxRtOdFN7PrxYFzay
-	Us7QHPqmXWL402pnIZeVdEYSNq+Fql00Blujz2VGBWTKXOSsDpmpev3bGP7LRsa9yFCFZLNq+rp
-	bIj67OdKV8oPcXRK/i95T3Y4PA8fk+8+IuftxCIKY6qp2zMH92bZmMk9GCHxuwXG1suUDt0pUhG
-	6fpotdjoyT2aQLPQo/2xNaRU/4Apaq2I6FgqpgGmyLXiWGk5HGPJAxRLDOZBDP5ahKimS3P4SGQ
-	QAzCDI/rxcrtyVvQcRXermOTZRJEk5fjkb8Z26XOi710x9RfwIk74Q+Z2Bso75qo/sDzW/beE7r
-	5hePJq3
-X-Received: by 2002:a05:6808:3992:b0:46e:df55:23fa with SMTP id 5614622812f47-482e562d225mr8979603b6e.17.1779110894636;
-        Mon, 18 May 2026 06:28:14 -0700 (PDT)
-Received: from [192.168.1.102] ([96.43.243.2])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-482ee38c9aesm4861520b6e.8.2026.05.18.06.28.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 May 2026 06:28:13 -0700 (PDT)
-Message-ID: <77993be8-8170-4666-8531-1c46f49907ed@kernel.dk>
-Date: Mon, 18 May 2026 07:28:12 -0600
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="okRBQ9HS"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jw8yKooUhaUhtxaoIjUCAEd8NKpwcv1Ln7o3VqaaJgJb/D/n5Ku+mg1UDRcN7Lquan/ry2WZWmgxHqoeYUdbD/ziuGuMQsAUxfYTnj4cpvn8XBh7cM/JDLKUkkrG4p2LSQJCz1NKCl30WwS5HRcuD0maVZaHMa7ucGdomAAE+Y31wgUE0iyMRmgIj1GXIYMN4e5MBnSO+s0/0ZtlI9Muydoy3GC0WYSRWbZG/Mvb6n3hbNc2UPfE+IZ3G218EzR+RRdg+/drykeGldJCn83h0Klw4EFV1CznFajdW5PLA/wYxiFEE2WRpfejVb42LRDHeNnimeFvA6+QyYGhPrHSmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EbZC8JzwIDcz4gBodRgQZqGtswqhri4rwzABGODtQM4=;
+ b=iay+PVblQUc8/IK45+fR40Ufagiq9a7qNNSqa2xu/l5VbB72GPfUD6eIso2jMVMs0wMDpSeoRNiPSaoxFzQw/862uyXmv8r2xpuGIeg4sg7wIY6mLhWvs2S8bHRfqnIZeTnmr+y6UI7V7Bssg1Q2/2v1P/31sTyaLh+rUop03qwmp6tbyrmDfBcfE2A2kDLS1oDFMFGazWOkPcAejqXEEZ8hu8BZgH1uK0L1x8AUuzQIYEBgljuv9Cod/WaLtKSiWDIIzrSbwiuEKlYWALJJNgQOi9dfnE3zTTsmYB0PoOgTvIouwakxSQPjenm1qLcYdrjCOavCmY/5ZUzlu2DCdg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EbZC8JzwIDcz4gBodRgQZqGtswqhri4rwzABGODtQM4=;
+ b=okRBQ9HSFHEO2jf+xHP6DhsRhiSOEHezBhqPgGNpOjephXQ00cQy6xa0LUFpVf1NYSkQ1YcH2juIuQQvkiiHDptH+bbl+NEZ7qQxP1Gzg+i2/vU9juBkxgM9BFLotV2MMV28H86M67wvOMo7QPULi2mvOgRWkqbBhu0LEcSoIH1LjFrVZy/ykCsl8bIu+lZY+3haHusaRJR+AY8JDPktJsZJoIzqRp3+YusjtGcIPGS8h91QO2avPEQhhkzHCieLFvj5bc97dSh9njFJSZQRHpn5RMuKIzpQ7b2zArAf8JK0fK1SvJDFFjZjEOU3ssjOSHot/3AOM6mhnvMiidmdxg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by SA1PR12MB7101.namprd12.prod.outlook.com (2603:10b6:806:29d::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.23; Mon, 18 May
+ 2026 14:40:32 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.21.0025.022; Mon, 18 May 2026
+ 14:40:32 +0000
+Date: Mon, 18 May 2026 11:40:31 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: iommu@lists.linux.dev, Jonathan Hunter <jonathanh@nvidia.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+	Robin Murphy <robin.murphy@arm.com>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Krishna Reddy <vdumpa@nvidia.com>, Will Deacon <will@kernel.org>,
+	David Matlack <dmatlack@google.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Pranjal Shrivastava <praan@google.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Mostafa Saleh <smostafa@google.com>
+Subject: Re: [PATCH v2 7/9] iommu/arm-smmu-v3: Directly encode CMDQ_OP_ATC_INV
+Message-ID: <20260518144031.GM787748@nvidia.com>
+References: <0-v2-47b2bf710ad5+716ac-smmu_no_cmdq_ent_jgg@nvidia.com>
+ <7-v2-47b2bf710ad5+716ac-smmu_no_cmdq_ent_jgg@nvidia.com>
+ <agqHLMyWkWRlx0pU@Asurada-Nvidia>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <agqHLMyWkWRlx0pU@Asurada-Nvidia>
+X-ClientProxiedBy: BN9PR03CA0683.namprd03.prod.outlook.com
+ (2603:10b6:408:10e::28) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 130/144] io_uring/kbuf: support min length left for
- incremental buffers
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
- stable@vger.kernel.org, patches@lists.linux.dev,
- Martin Michaelis <code@mgjm.de>, Gabriel Krisman Bertazi <krisman@suse.de>,
- Vegard Nossum <vegard.nossum@oracle.com>
-References: <20260515154653.469907118@linuxfoundation.org>
- <20260515154656.529062291@linuxfoundation.org>
- <876ac528-b2db-4d52-afff-2a44f13a6767@oracle.com>
- <bc8ede5a-ab28-4191-9153-7e66c28916ac@kernel.dk>
- <2026051801-trifocals-gummy-2be3@gregkh>
-Content-Language: en-US
-From: Jens Axboe <axboe@kernel.dk>
-In-Reply-To: <2026051801-trifocals-gummy-2be3@gregkh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SA1PR12MB7101:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8bce0057-7ab4-41d7-d73b-08deb4eb69e2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|7416014|11063799003|4143699003|18002099003|22082099003|56012099003;
+X-Microsoft-Antispam-Message-Info:
+	x8K/ZHQMzc+razI1vsliWiYARUopHJ4yfl5mDVvPs5ZBq9UQSRv+vdKhCEGA0JR+Yu8S+/dNZRVKbh7I9itPi21x6p7RYg0/kb2KZM5HPyXfLa10TKZZSYIUGLQx0g8bCC5ex3X+htcr+rKp/3rsX+HHmFt3JeWXiw01e7q3wPgtiLJE5SS4hlQLQJQ8KpZbzCajcUIMaj6dGKANjnKSDsQt5Cb2HyldNGFc5GYH1GV5WGJ5zlerWdBa7X9d9WSDqZcQTVYcUGQK1oKPPo35zb/6enwIrC/wtFLewxBNRZQOTMyRUmBMhctQIRZRa2MOth/ccLoj8b8Mxv+YKF5rjXhHj596ZAmXZdzVsDU23OqQ6XmRaVXapsJIvYgPH5ZIxXGPkapgngEDyBRPWEhTp76p8vz+IoQrozQtUECiYpAdgzyJ8uwqAlAnjJ5qOs6SxTY42aVEGJStozqTY8czhPQ28Qz2WerceEGAwWHVmv5a7NGwq+xgMJp86VzXgwBh81dsBlMbFpUfJ2Hw7RM2+8C1Nn7F0bYO9JfBldrzAUfy5AxdDBisNv2FLlwMV/MLLQDCbFfm7dQ/7/YuBJPtCe7TjeHqI6OUTlo9xwLisg1WNJ3/DhdbuRVWWMrr+EHZX+x8VDdeaEmHoaEKZTDGd0Qj2SyAbCL+WHqOasa2n1E/bvcbZM4dn/GlDA4bIlNW
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(11063799003)(4143699003)(18002099003)(22082099003)(56012099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?NKr92nb+gn4U+UtJ06Mx1UvXBc2NlHNfNDMJQnzuiSEq9DiNcQc/C/9A5sjS?=
+ =?us-ascii?Q?dC+9nWEkvXdmqejDLpi/cBscs4nJ5c2YJhVPeVxf2CBmNjCP1VnkrA3HWfgh?=
+ =?us-ascii?Q?09SF52/WNVujtBUsY4KJOOAva/e3kL1eOAWLhqDA7coIfCSTW+QE0DbjS3+w?=
+ =?us-ascii?Q?Q6Ok4fPPSuIGiQQgz1uoh5eh2GluvZBqgkNdu6F7EhATorU8LOwiXTTRdKK8?=
+ =?us-ascii?Q?WDCcKNfFE50nV+0kHxe5h24GoUM/ShkEsu6vyNzixgUsqxOYAx3seNgvcNPq?=
+ =?us-ascii?Q?1FF+RjZGTVMsQjPus+SEgrt8+73oEBS3YSydIm+GoryYKVL2qpMMFUwlZGOP?=
+ =?us-ascii?Q?IGCOvhJXUPcqYHLTBZJRrjIvYoaAlt3tkn1PwtTXkggkTAkaKOFBg+aDFtiI?=
+ =?us-ascii?Q?+BCcdi1f4nH4cbQ2G+sM5NU5FEkeEIDYwrY/4siNbXbNZ6WLfR8l+jwvGsJh?=
+ =?us-ascii?Q?a2GDihnnjo4IHLObncBPg3QTzkYTZd2/q2Mv1xxAAlnQ9hCXKxFo8N8ghsAz?=
+ =?us-ascii?Q?thwfkbk0ad1WxEb6X6Wuw/HhaEvz5xDTFIxWGQL2Lv6rk9UdjSFMRlk5Qm6Z?=
+ =?us-ascii?Q?Oxzo2ZLFu+BhPN6bOKtZ1GWu1eGD+iDIKjXz7xBneyd6WQG2eWc4y27XnOJ5?=
+ =?us-ascii?Q?gnQ7/B4xmszJ/rHk+9gRYXrF9C92OJwJhBtYtryYPkla7SymmMezXdN153eD?=
+ =?us-ascii?Q?NLQfYW9JUD178ooRuP1ho+ry6sBUQ4G/dcUNr0qBnDKs6QH/4DVMbnZGU7Lp?=
+ =?us-ascii?Q?TnoXjwAdQqs6fnFtUB0KQ4+x45PlqpPx63pRqYaUe3iKws7eYuIWsBZaIyXp?=
+ =?us-ascii?Q?s+eu+DJMMsxny/Sp2FLTHLlo2y48l5e+gh4+U/i/3oIYmh6r/MkgEust+X3D?=
+ =?us-ascii?Q?nqrcxhNykIyRUAIUGh8tXpzcdzdEi4Lgkk1GN/AgtHoZcAIAiQSogtEymwmi?=
+ =?us-ascii?Q?fYOi8PFRueDi05AX6DXMLFT9DckVkBr2tnXD1xen5U2QWrJvCQwWVJoFSKBV?=
+ =?us-ascii?Q?c6P+gu7r/PSIJIRbM7kv5KFc+kFbJYZtob/72f/peoLXFzbVWvMYmhUyuZRN?=
+ =?us-ascii?Q?hpAwq4XBwM8XH1Tl2eKIpVIcrT+XPAzbfG7/KGj07MWhCXbbJXY23EbuuMnK?=
+ =?us-ascii?Q?ktsZzTV3aQAmqxmDHb88FVVDOUYLp2Dz/GvtCflyVgTVHfafmAB5wbtc7+EW?=
+ =?us-ascii?Q?W6DBMcWTMpqtfZ2rB/fkY3gmt+9Wt8/inYKxV6I7syZyFwixxVOfHsan41g5?=
+ =?us-ascii?Q?0FjysosG6DBrUFvEgZ3SFy9dQh3tEemyPh7cWBYZvJhjARDnntkf00Z5azcL?=
+ =?us-ascii?Q?GHmSQ2J2xrIQVP8s8H5zMdXvexfQmNv7liWRpWv5SeyuDBNjagCOR9PIQK1V?=
+ =?us-ascii?Q?K3sfQxA+BJMUKaCK0Xx2yVi4qtqjjT478fuXNUN0h0mYEnOjqS9TikPqutTC?=
+ =?us-ascii?Q?BecGlISew9sy2yVT7vT0hVCisMKrCGWhIjY8AuNkqAOkoakDMaJOnsPLfOCV?=
+ =?us-ascii?Q?sNK7l7FkiCzE05frGwLFMBuoOBBZLhQYsLNcfdGEatXYaxkchzwnExaOXtz9?=
+ =?us-ascii?Q?ul/UY1FHNd/ULRFd2FNKNsUFtAOh0rxghr6SinDppJGeTr492SQvig/akxly?=
+ =?us-ascii?Q?p1o8sFTOyLMgFlHePm9EPIy439c1LoVDNYrbyG4oT8LmAO8FIauwSJXwwF9p?=
+ =?us-ascii?Q?Q8qi//y6XCs34eAooe8Alv+jld28PKcv224AkIWaNvC9rhXK?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8bce0057-7ab4-41d7-d73b-08deb4eb69e2
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2026 14:40:32.2003
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: YxdBQfvkhU2Oy73FNHfrGyey2l+z+8iyPLxIOrSl7pEco9dTq3Sa2j0OcHjAmiu/
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7101
 
-On 5/18/26 6:16 AM, Greg Kroah-Hartman wrote:
-> On Sun, May 17, 2026 at 07:02:25PM -0600, Jens Axboe wrote:
->> On 5/17/26 12:39 PM, Harshit Mogalapalli wrote:
->>> Hi Greg and Jens,
->>>
->>> On 15/05/26 21:19, Greg Kroah-Hartman wrote:
->>>> 6.12-stable review patch.  If anyone has any objections, please let me know.
->>>>
->>>> ------------------
->>>>
->>>> From: Martin Michaelis <code@mgjm.de>
->>>>
->>>> commit 7deba791ad495ce1d7921683f4f7d1190fa210d1 upstream.
->>>>
->>>> Incrementally consumed buffer rings are generally fully consumed, but
->>>> it's quite possible that the application has a minimum size it needs to
->>>> meet to avoid truncation. Currently that minimum limit is 1 byte, but
->>>> this should be a setting that is the hands of the application. For
->>>> recvmsg multishot, a prime use case for incrementally consumed buffers,
->>>> the application may get spurious -EFAULT returned at the end of an
->>>> incrementally consumed buffer, as less space is available than the
->>>> headers need.
->>>>
->>>> Grab a u32 field in struct io_uring_buf_reg, which the application can
->>>> use to inform the kernel of the minimum size that should be available
->>>> in an incrementally consumed buffer. If less than that is available,
->>>> the current buffer is fully processed and the next one will be picked.
->>>>
->>>> Cc: stable@vger.kernel.org
->>>> Fixes: ae98dbf43d75 ("io_uring/kbuf: add support for incremental buffer consumption")
->>>> Link: https://github.com/axboe/liburing/issues/1433
->>>> Signed-off-by: Martin Michaelis <code@mgjm.de>
->>>> [axboe: write commit message, change io_buffer_list member name]
->>>> Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
->>>> Signed-off-by: Jens Axboe <axboe@kernel.dk>
->>>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->>>> ---
->>>>   include/uapi/linux/io_uring.h |    3 ++-
->>>>   io_uring/kbuf.c               |    8 +++++++-
->>>>   io_uring/kbuf.h               |    7 +++++++
->>>>   3 files changed, 16 insertions(+), 2 deletions(-)
->>>>
->>>> --- a/include/uapi/linux/io_uring.h
->>>> +++ b/include/uapi/linux/io_uring.h
->>>> @@ -758,7 +758,8 @@ struct io_uring_buf_reg {
->>>>       __u32    ring_entries;
->>>>       __u16    bgid;
->>>>       __u16    flags;
->>>> -    __u64    resv[3];
->>>> +    __u32    min_left;
->>>> +    __u32    resv[5];
->>>>   };
->>>
->>> ^^^ let us remember this. More comments below
->>>>     /* argument for IORING_REGISTER_PBUF_STATUS */
->>>> --- a/io_uring/kbuf.c
->>>> +++ b/io_uring/kbuf.c
->>>> @@ -47,7 +47,7 @@ static bool io_kbuf_inc_commit(struct io
->>>>           this_len = min_t(u32, len, buf_len);
->>>>           buf_len -= this_len;
->>>>           /* Stop looping for invalid buffer length of 0 */
->>>> -        if (buf_len || !this_len) {
->>>> +        if (buf_len > bl->min_left_sub_one || !this_len) {
->>>>               WRITE_ONCE(buf->addr, READ_ONCE(buf->addr) + this_len);
->>>>               WRITE_ONCE(buf->len, buf_len);
->>>>               return false;
->>>> @@ -727,6 +727,10 @@ int io_register_pbuf_ring(struct io_ring
->>>>       if (reg.ring_entries >= 65536)
->>>>           return -EINVAL;
->>>>   +    /* minimum left byte count is a property of incremental buffers */
->>>> +    if (!(reg.flags & IOU_PBUF_RING_INC) && reg.min_left)
->>>> +        return -EINVAL;
->>>> +
->>>>       bl = io_buffer_get_list(ctx, reg.bgid);
->>>>       if (bl) {
->>>>           /* if mapped buffer ring OR classic exists, don't allow */
->>>> @@ -747,6 +751,8 @@ int io_register_pbuf_ring(struct io_ring
->>>>       if (!ret) {
->>>>           bl->nr_entries = reg.ring_entries;
->>>>           bl->mask = reg.ring_entries - 1;
->>>> +        if (reg.min_left)
->>>> +            bl->min_left_sub_one = reg.min_left - 1;
->>>>           if (reg.flags & IOU_PBUF_RING_INC)
->>>>               bl->flags |= IOBL_INC;
->>>
->>>
->>> I have run an AI assisted backport review and it spotted an issue: I
->>> have taken a look and the issues goes like:
->>>
->>> Backport updates struct io_uring_buf_reg to min_left + resv[5] but
->>> keeps legacy validation that only checks reg.resv[0..2], so resv[3]
->>> and resv[4] are silently accepted.
->>>
->>> Upstream has something like this:
->>>
->>> if (copy_from_user(&reg, arg, sizeof(reg)))
->>>     return -EFAULT;
->>> if (!mem_is_zero(reg.resv, sizeof(reg.resv)))
->>>     return -EINVAL;
->>> if (reg.flags & ~(IOU_PBUF_RING_MMAP | IOU_PBUF_RING_INC))
->>>     return -EINVAL;
->>>
->>> 6.12.y still has:
->>>
->>> if (copy_from_user(&reg, arg, sizeof(reg)))
->>>     return -EFAULT;
->>>
->>> if (reg.resv[0] || reg.resv[1] || reg.resv[2])
->>>     return -EINVAL;
->>> if (reg.flags & ~(IOU_PBUF_RING_MMAP | IOU_PBUF_RING_INC))
->>>     return -EINVAL;
->>>
->>> So we are not checking resv[3], resv[4],
->>>
->>> This commit is needed commit: 172484907285 ("io_uring/kbuf: use
->>> mem_is_zero()") to fix this. It is a clean cherry-pick, so I think the
->>> best thing is to take it for next cycle. this commit is present in
->>> 6.16-rc1+ so newer long-term stable kernel releases than 6.12.y don't
->>> have this problem.
->>>
->>>
->>> Jens, please correct me if the above understanding looks wrong.
->>
->> Nope you are right. It's not an actual issue, it's just future proofing
->> checking. So it's quite fine to just add that commit for the next stable
->> release. I'll check the others too, as the mem_is_zero() commit landed
->> in 6.16.
+On Sun, May 17, 2026 at 08:27:40PM -0700, Nicolin Chen wrote:
+> > -	*cmd = (struct arm_smmu_cmdq_ent) {
+> > -		.opcode			= CMDQ_OP_ATC_INV,
+> > -		.substream_valid	= (ssid != IOMMU_NO_PASID),
+> > -		.atc.ssid		= ssid,
+> > -	};
+> > -
+> > -	if (!size) {
+> > -		cmd->atc.size = ATC_INV_SIZE_ALL;
+> > -		return;
+> > -	}
 > 
-> Thanks, now queued up.
+> .. should !size jump to arm_smmu_make_cmd_atc_inv_all()?
 
-Thanks Greg!
+I audited it, there are no !sizes anymore and there is only one caller
+that never does full invalidation
 
--- 
-Jens Axboe
-
+Jason
