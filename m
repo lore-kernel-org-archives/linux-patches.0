@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166102DC767
-	for <patches@lists.linux.dev>; Mon, 18 May 2026 19:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D48390991
+	for <patches@lists.linux.dev>; Mon, 18 May 2026 19:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779132447; cv=none; b=X2D1wMMtcoOV+Ng0iOJSaYlBctWsJ+N28uwaQxxfOcVmehJd6IWnjvbQtoTwwuFUayy3BZGRBTFOQ7klmzmWRk/oNSU704cBrj/bQtyNFMQEPpRn1rzZhllkTB5MsJIBs+68loqJylNc5DrIDXdzK733EHdJTSv10tA5HbeYg54=
+	t=1779132733; cv=none; b=twOcNDicutmer7nhizKtzz3p4l4sPOmlChJy8/Eo5QvoUPsLaDZOsxK0sHAf7CFfGTDf5IaFvfc6vr2lONq8BpvUnWJ192WR+mLpuTHu+ALHTxpYlJIn9CmIgsPfBFIlegAOKcayfum+wo5cilcs9K8kPli8Q86kq1x+T4TCOLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779132447; c=relaxed/simple;
-	bh=YRihdkqnvxmS51AeFJSpM1nEEVHb4XlF/fcLdZbrTQA=;
+	s=arc-20240116; t=1779132733; c=relaxed/simple;
+	bh=weo+MBRG/g1PNMDtnZKYbZc6wxN9ad89bpvSP5ejePw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f4bjl5/HewdFtgd+yHUqGldhpQ5LSR+vxfCY4HTkcrFZQIY8m1hTA2E4rU5Ku3LjtD+hks4pSMTpSvWV2WI7Z81DGta0owQbzmN//x2MQ9Meh9mEnUXS79EXtradLAzXlLGsQCAaqNEcUaP/Xyu3kcw7dcScOEk4Lwqs/Hga+yw=
+	 MIME-Version:Content-Type; b=MSo47JaAzXqdrMrDwZPGQkDaB2V2oS2hasRmY1snNN7RPepkNbVuI+WTHx1BUVqbmSOfEy0a6vOpzsFJ1nkG72eJa9Kzqr23j7qdnhjC+tb76GuqIAYxxh+el32NqiFGHay7u6xrynIw4pyvEKVxvzONuseTRgAcG/O3hriR4/o=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,21 +19,20 @@ Received: from mop.sam.mop (1.5.5.2.4.d.e.f.f.f.5.f.9.d.6.0.a.5.c.d.c.d.9.1.0.b.
 	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: sam)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 6BD74342496;
-	Mon, 18 May 2026 19:27:24 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id D04AA342655;
+	Mon, 18 May 2026 19:32:10 +0000 (UTC)
 From: Sam James <sam@gentoo.org>
 To: Sasha Levin <sashal@kernel.org>
-Cc: gregkh@linuxfoundation.org,  brauner@kernel.org,
-  patches@lists.linux.dev,  stable@vger.kernel.org,  kernel@gentoo.org,
-  dist-kernel@gentoo.org
-Subject: Re: [PATCH 6.18 160/188] papr-hvpipe: convert
- papr_hvpipe_dev_create_handle() to FD_PREPARE()
-In-Reply-To: <20260518155236.reply-0002@kernel.org>
+Cc: gregkh@linuxfoundation.org,  ardb@kernel.org,
+  herbert@gondor.apana.org.au,  patches@lists.linux.dev,
+  stable@vger.kernel.org,  dist-kernel@gentoo.org,  kernel@gentoo.org
+Subject: Re: [PATCH 6.6 404/474] crypto: nx - Migrate to scomp API
+In-Reply-To: <20260518155236.reply-0001@kernel.org>
 Organization: Gentoo
-References: <87cxyuq6oa.fsf@gentoo.org> <20260518155236.reply-0002@kernel.org>
+References: <87y0hha5dw.fsf@gentoo.org> <20260518155236.reply-0001@kernel.org>
 User-Agent: mu4e 1.14.1; emacs 31.0.60
-Date: Mon, 18 May 2026 20:27:21 +0100
-Message-ID: <87tss4bjs6.fsf@gentoo.org>
+Date: Mon, 18 May 2026 20:32:07 +0100
+Message-ID: <87lddgbjk8.fsf@gentoo.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,36 +48,36 @@ Content-Type: text/plain
 Sasha Levin <sashal@kernel.org> writes:
 
 > On Sun, May 17, 2026, Sam James wrote:
->> FD_PREPARE doesn't exist in 6.18, it's from:
+>> This fails to build. I think it's this patch. I did try figure out why
+>> but I couldn't spot it when comparing branches (and all other branches
+>> are fine).
 >>
->> commit 011703a9acd76edc7c85d80dbccb6e50dba53aad
->> Author:     Christian Brauner <brauner@kernel.org>
->>     file: add FD_{ADD,PREPARE}()
+>> /var/tmp/portage/sys-kernel/gentoo-kernel-6.6.140/work/linux-6.6/drivers/crypto/nx/nx-common-pseries.c:1023:35:
+>> error: initialization of 'void * (*)(struct crypto_scomp *)' from
+>> incompatible pointer type 'void * (*)(void)'
+>> [-Wincompatible-pointer-types]
 >
-> Thanks Sam. Backporting the FD_PREPARE/fd_publish primitives to 6.18 is
-> too invasive for stable, so I've reverted both papr-hvpipe commits from
-> pending-6.18:
->
->   - 09c15bbbed533 ("papr-hvpipe: convert papr_hvpipe_dev_create_handle()
->     to FD_PREPARE()")
->   - 6542e180fa6e1 ("pseries/papr-hvpipe: Fix race with interrupt handler")
->
-> The race fix can be reworked later without depending on FD_PREPARE if
-> the maintainers want it in 6.18.
+> Thanks Sam. The root cause is that upstream 980b5705f4e7 ("crypto: nx -
+> Migrate to scomp API") was written against the post-v6.6 simplified
+> scomp API (alloc_ctx(void) / free_ctx(void *)), whereas v6.6 still uses
+> the older alloc_ctx(struct crypto_scomp *tfm) / free_ctx(struct
+> crypto_scomp *, void *) prototypes. The migration was pulled in as
+> Stable-dep-of for adb3faf2db1a, but that fix does not actually require
+> the scomp migration.
 
-Thanks!
+Thank you!
 
 --=-=-=
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmoLaBkbFIAAAAAABAAO
+iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmoLaTgbFIAAAAAABAAO
 bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
 Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkOiU
-AQCVt4yaakLOHZVqq9FFq/dZQw+qhME6JSVmSFD4e5pnKQD/Rm1gg1V670cYU22x
-UpGYe2rrRpfzLuThfUtcdJy0YwQ=
-=qL7m
+QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkPqq
+AP0Q1MFpmEp7hmHn5aMz1kxObp/RpPi/9pCdO2OiTzN6CQD/YmIhP8XbdAMJlsl/
+USF4rnN3UH35o+lLGNkWIgE/XQw=
+=iZ8l
 -----END PGP SIGNATURE-----
 --=-=-=--
