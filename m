@@ -1,131 +1,283 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013041.outbound.protection.outlook.com [40.93.196.41])
+Received: from n169-114.mail.139.com (n169-114.mail.139.com [120.232.169.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B3932D0E3;
-	Mon, 18 May 2026 03:53:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779076385; cv=fail; b=JEQW+OdSuHGF/MlwGL/jhd9mj2XABaI2sOtP+/lCbPcaVluO3VT8KlxXShujgKFrc1z/LqmuPaC0gkep5jtC1CNte7umLFjKu18ZP5Uthhb47jR4qYywKVkikmdrWAHQN5IHpgN/NbBP0dudghgq/e4O40YtDzOxzS9a1ZxUngM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779076385; c=relaxed/simple;
-	bh=sJGrnTKwaezRaNWJ5p7bjroMFytgZxmaLfBDAI2UAW4=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZwJHdW90CqaXEwGExI5Lv/PjNbsQdhlJmFVHIF5Tl9UceXwvWAE/LRcA5uQBzN19zHPUqmGLSp02jPF2OpqziNgFGylEdvM1mREJ7EW7k5hm/Y1q+UhoTKKfkbRAUJDbZmGI2aPBDme++XFYhy4c6pZUy3qaktxCl0tVWtHpt2A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=FNYJ8X8s; arc=fail smtp.client-ip=40.93.196.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32DA13DBA0;
+	Mon, 18 May 2026 04:21:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779078105; cv=none; b=OdZszhvb8KGvk1j/N6f1Pu8GntJjpo1RY35OCKDHRi5jdKwQeo4G8r2b5Z77b7440wCB7U4BIAoXzsnwjGkniceaTQPemJDCb7i/5VJ5fj6j7pJvu77jhTlAWN7ApWKnWh0lbCS3DwoEa0ySs4jB1turjB/E1rXNdlCj1M5aORU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779078105; c=relaxed/simple;
+	bh=8aXYRl//JGNCU2h37QhnEWAcwTENSu3Si3q7xsFzPhw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=d3sLyTKIiWIlZpg/C4DXRmghQIb4SCF5ZDBR1kaJMDvhiSh0xoTR/jVphLZdpqnyihDqeCQaWS+wM+lRz6xrshAH2S9VhlQIXIzsN3JqQPssdH/fuffFMDsUerCNDR/CQVfcsDTTHEoJ1fyKj7+KqQWXI3NuWGxfcI/ZpuzKxJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=LFU+w16i; arc=none smtp.client-ip=120.232.169.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="FNYJ8X8s"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=abzJbSr+Z815mPY1MTZMZFj44OCitLT+ho3O7nwOdqr9Ze3EUeuPjlDichzlmszCVlwsx1koYftP2Mnt/qQi04BpImIseR1Q4UfwZdcxAnL/kfCB6WFZ3JVcDOQZnXwNUqV1ULtJD2p7Ys0Suc/YM3y6cWdGsaOR9/sciNExlFPj1RkRuxc7EmWDDXaXKzwa0R4heBuxN+6MeoS1e3DX1PhBQ2coZxHD0ifP1NcZPJ+spSlQE1QMqVdUlcgAZqG0OlDnsg5kwJm8L0gocGnY/jOALJpTEay+bQQwr4FR30p+MpwSwgNCZfiO/mSnJhPGeq7+ADhyvjAVtuPAfNv7Lw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aPDpaQeHNrCq65cCV+4ZfIgSPAJIkMjINljltrPDkEw=;
- b=C6crtPza35lLQagsmm4B3lNvYMNbjQahlOACf9FSp0Eehes38RBzo0EhrwFfCoqcqVhUwtTIMf7C497T+xxAR3CUYBHBL/Vhg6ecbEtV3iA3L9i2kbB5Ziqqc3nujNFtOTB54dXS1NQuD1t5l1OQSJSC89G9tqwYxqn4n3nRw5ZAzhZmCtTXLjrIyVkfPmDfSMcxlYfPywFmvMUKXDJGVIWMqXSq2KwuKOuNqfC8q+6hLIXSMGQqayv2izDGzhifC4NB+BNZUXvSGlC7ekGaI+EGn+qq5kLrJz+qwtUm4qFkJiuRhBE9vgyJvxTyK89mF1xACrHNr3sjmwr2rk/Pog==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aPDpaQeHNrCq65cCV+4ZfIgSPAJIkMjINljltrPDkEw=;
- b=FNYJ8X8seifiPPn/lbbccd/P/FewAyPBYlDzpJBU3udhQfaQoQ6HKWMtt09O0x0c8h+9BrswNnILmywrW5sNQGYkiPxaiW/e97xWMR5n4bd++1EdKwHjCfRdIttY+IX569jSu2yXSKkc8jI3Fuv1eaoBGrKL1vs69A/CUDbZTT4te2nFGRDLQrNyZhrsoFD/zUh1PJUPfA9PpM2TnV5k5n7ofxdbF0T9Q6SMEc3TIyjUVVAS+V1amNzX6lvxUMUmm8663CRaBAewusKTzKkfCKIv5vzFDAAJiuqx4oJlEtcb1n9m9Xe9psBRo/Cdtt27te7fl9kGhMw89OaW2sNhlA==
-Received: from BN9PR03CA0484.namprd03.prod.outlook.com (2603:10b6:408:130::9)
- by SAVPR12MB999146.namprd12.prod.outlook.com (2603:10b6:806:4e8::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Mon, 18 May
- 2026 03:52:56 +0000
-Received: from BN1PEPF00004687.namprd05.prod.outlook.com
- (2603:10b6:408:130:cafe::1f) by BN9PR03CA0484.outlook.office365.com
- (2603:10b6:408:130::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.25.23 via Frontend Transport; Mon, 18
- May 2026 03:52:55 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BN1PEPF00004687.mail.protection.outlook.com (10.167.243.132) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.48.11 via Frontend Transport; Mon, 18 May 2026 03:52:55 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Sun, 17 May
- 2026 20:52:36 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Sun, 17 May
- 2026 20:52:36 -0700
-Received: from Asurada-Nvidia (10.127.8.9) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Sun, 17 May 2026 20:52:35 -0700
-Date: Sun, 17 May 2026 20:52:33 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <iommu@lists.linux.dev>, Jonathan Hunter <jonathanh@nvidia.com>, "Joerg
- Roedel" <joro@8bytes.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-tegra@vger.kernel.org>, Robin Murphy <robin.murphy@arm.com>, "Thierry
- Reding" <thierry.reding@kernel.org>, Krishna Reddy <vdumpa@nvidia.com>, "Will
- Deacon" <will@kernel.org>, David Matlack <dmatlack@google.com>, Pasha
- Tatashin <pasha.tatashin@soleen.com>, <patches@lists.linux.dev>, Pranjal
- Shrivastava <praan@google.com>, Samiullah Khawaja <skhawaja@google.com>,
-	Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH v2 9/9] iommu/arm-smmu-v3: Directly encode TLBI commands
-Message-ID: <agqNAd04LHNR9m0y@Asurada-Nvidia>
-References: <0-v2-47b2bf710ad5+716ac-smmu_no_cmdq_ent_jgg@nvidia.com>
- <9-v2-47b2bf710ad5+716ac-smmu_no_cmdq_ent_jgg@nvidia.com>
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="LFU+w16i"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=139.com; s=dkim; l=0;
+	h=from:subject:message-id:to:cc:mime-version;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	b=LFU+w16iKWArwZ/IR/xbuS6WW2XIRnICRpluGJKHbY2F7tZ1fYp6A8aC9V4g89UGVTo5VUi6P/6LB
+	 cLdMFVXGQmB8F0UdY4aCxJh2q1iJKJaTHcyvy3tFTch+Y6afOT6PFjtusEu/hq6kBIEmEcRUfQe8iO
+	 dN3iA9to0JB9OoVQ=
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM:                                                                                        
+X-RM-SPAM-FLAG:00000000
+Received:from NTT-kernel-dev (unknown[60.247.85.88])
+	by rmsmtp-lg-appmail-40-12054 (RichMail) with SMTP id 2f166a0a93c86e1-006ea;
+	Mon, 18 May 2026 12:21:32 +0800 (CST)
+X-RM-TRANSID:2f166a0a93c86e1-006ea
+From: Li hongliang <1468888505@139.com>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	viro@zeniv.linux.org.uk
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	almaz.alexandrovich@paragon-software.com,
+	ntfs3@lists.linux.dev
+Subject: [PATCH 6.12.y] ntfs: ->d_compare() must not block
+Date: Mon, 18 May 2026 12:21:30 +0800
+Message-Id: <20260518042130.489507-1-1468888505@139.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <9-v2-47b2bf710ad5+716ac-smmu_no_cmdq_ent_jgg@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00004687:EE_|SAVPR12MB999146:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2c52f6d2-1afd-4b39-c1b2-08deb490f1a7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|36860700016|376014|1800799024|7416014|22082099003|18002099003|56012099003|3023799003|4143699003|11063799003;
-X-Microsoft-Antispam-Message-Info:
-	LInagtaRV6sDVQLVkHHfa5PCWHSDZuYopdvyxiFBd94opoAuwa4KI+edkJn3Q2OnDrLQJeOzME9biSBkZuupOrCxKYLPlDKUGFtHQRbFK/9phetpNT7Ah/h1DXKS9D0E4Ec9QwaIAKAw9wgLgKK45GQmJO4CMp9RbdJ0ZqBxXeqVq/5cmdLrH1RlGepWTbEBae7Kr0WFyRpGQSc+hakN1RtGGbuMA3tBzcWxCat5hez+67uz39SGQHDdUiXf9YXu0eufeB1Qe7G1GFsWruF8ljeek4eBzdo2joZ0NF6anw5Y2TS771e/aGOS/yPiKuTrmrphDKK23gyKmxaqn006zlMMjZEhRGN3xbQh12gPsZOEF1ZNByn9rxkhpRfkf6uMRuPkXhLNPY6tdXifxCAR18EiDt+qCs/rghT/RyY0zGPyuuIz3YEM/PfBh/KPx2WzB4wFqSlHbKdHYWz52Y5gGyZnXVRwzkcYHH/tfnXRVasN7YBoTe3VWr8a574iZQ8hW/9LQPL2S2SxMPWCowchoZw3mpySbTnSbbPr/MhiIN/q0oDIhIxOcq5TGyBWD6L6QMjZRI+qiP1q2tlR/2BBJgbQk+i2jFsdHyWi02bJuiBOkL8kIgphMmOj71srXH0KhrOadEWzKj37haPvKQxjNfEPXvidLpvB5zdBYoQ713hh4A2uT2ncWXWzWuumD8+ldy1DFm7taEd57DMfvUmCU4DCepJzr4zKpLxGyM+EJL8=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(36860700016)(376014)(1800799024)(7416014)(22082099003)(18002099003)(56012099003)(3023799003)(4143699003)(11063799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	rcOm2p1fOHI9m0zLScI01Ls7xJ5fA4552o0ylSsLXZTJWRyNs5wnERew02xMmyU/tKJFnLQKlOWpyLZmBFxaQTsbWOitwqKAEPeK5yAaCLrUSnh0HVPPhtYF7NYUJrQljlymiPF8yIZgaqnYY9JkXxJf+6bqy6JbPtmTCOZav/+S3Svwzv6BOYpjgH+vGCXQ7aH+k+O6DA6He222xAB/xoZnf57TIF5ceI2Gf77l1I4lRWB1EUPi7qzbX9sAs1zoK89IBEZE8I26M1ylyY7rHevA75Q7wh4N4GSb9VcTT1zI4DkrqtijBzEMieBXHLSl9RfGtcGSUUXeA7EfySKmZB0mzWu61RRmA7/OyUjGSoLJ5qS9AZamy7lgYoCAKmVkWJdY3rgOP56h8Xf75o4vDqAQJaRD4YwBTvP6eUCOoJCDlrsv/mqOPDfn/vbc+9ey
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2026 03:52:55.3831
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2c52f6d2-1afd-4b39-c1b2-08deb490f1a7
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN1PEPF00004687.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAVPR12MB999146
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 13, 2026 at 08:57:48PM -0300, Jason Gunthorpe wrote:
-> TLBI is more complicated than all the other commands because the
-> invalidation loop builds a template command from the struct
-> arm_smmu_inv which is then expanded into many TLBI commands for the
-> invalidation.
-> 
-> Reviewed-by: Mostafa Saleh <smostafa@google.com>
-> Reviewed-by: Pranjal Shrivastava <praan@google.com>
-> Tested-by: Pranjal Shrivastava <praan@google.com>
-> Tested-by: Mostafa Saleh <smostafa@google.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+[ Upstream commit ca2a04e84af79596e5cd9cfe697d5122ec39c8ce ]
+
+... so don't use __getname() there.  Switch it (and ntfs_d_hash(), while
+we are at it) to kmalloc(PATH_MAX, GFP_NOWAIT).  Yes, ntfs_d_hash()
+almost certainly can do with smaller allocations, but let ntfs folks
+deal with that - keep the allocation size as-is for now.
+
+Stop abusing names_cachep in ntfs, period - various uses of that thing
+in there have nothing to do with pathnames; just use k[mz]alloc() and
+be done with that.  For now let's keep sizes as-in, but AFAICS none of
+the users actually want PATH_MAX.
+
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Li hongliang <1468888505@139.com>
+---
+ fs/ntfs3/dir.c    |  5 ++---
+ fs/ntfs3/fsntfs.c |  4 ++--
+ fs/ntfs3/inode.c  | 13 ++++++-------
+ fs/ntfs3/namei.c  | 17 ++++++++---------
+ fs/ntfs3/xattr.c  |  5 ++---
+ 5 files changed, 20 insertions(+), 24 deletions(-)
+
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index 600e66035c1b..522ebc14b1fb 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -425,8 +425,7 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
+ 	if (!dir_emit_dots(file, ctx))
+ 		return 0;
+ 
+-	/* Allocate PATH_MAX bytes. */
+-	name = __getname();
++	name = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!name)
+ 		return -ENOMEM;
+ 
+@@ -504,7 +503,7 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
+ 
+ out:
+ 
+-	__putname(name);
++	kfree(name);
+ 	put_indx_node(node);
+ 
+ 	if (err == 1) {
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 37c5d9a1f77b..5972f160e566 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2670,7 +2670,7 @@ int ntfs_set_label(struct ntfs_sb_info *sbi, u8 *label, int len)
+ 	u32 uni_bytes;
+ 	struct ntfs_inode *ni = sbi->volume.ni;
+ 	/* Allocate PATH_MAX bytes. */
+-	struct cpu_str *uni = __getname();
++	struct cpu_str *uni = kmalloc(PATH_MAX, GFP_KERNEL);
+ 
+ 	if (!uni)
+ 		return -ENOMEM;
+@@ -2714,6 +2714,6 @@ int ntfs_set_label(struct ntfs_sb_info *sbi, u8 *label, int len)
+ 		err = _ni_write_inode(&ni->vfs_inode, 0);
+ 
+ out:
+-	__putname(uni);
++	kfree(uni);
+ 	return err;
+ }
+\ No newline at end of file
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 8113d47b0ceb..b50c9dff327d 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1301,7 +1301,7 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
+ 		fa |= FILE_ATTRIBUTE_READONLY;
+ 
+ 	/* Allocate PATH_MAX bytes. */
+-	new_de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
++	new_de = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!new_de) {
+ 		err = -ENOMEM;
+ 		goto out1;
+@@ -1713,7 +1713,7 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
+ 	ntfs_mark_rec_free(sbi, ino, false);
+ 
+ out2:
+-	__putname(new_de);
++	kfree(new_de);
+ 	kfree(rp);
+ 
+ out1:
+@@ -1734,7 +1734,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
+ 	struct NTFS_DE *de;
+ 
+ 	/* Allocate PATH_MAX bytes. */
+-	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
++	de = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
+ 
+@@ -1748,7 +1748,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
+ 
+ 	err = ni_add_name(ntfs_i(d_inode(dentry->d_parent)), ni, de);
+ out:
+-	__putname(de);
++	kfree(de);
+ 	return err;
+ }
+ 
+@@ -1771,8 +1771,7 @@ int ntfs_unlink_inode(struct inode *dir, const struct dentry *dentry)
+ 	if (ntfs_is_meta_file(sbi, ni->mi.rno))
+ 		return -EINVAL;
+ 
+-	/* Allocate PATH_MAX bytes. */
+-	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
++	de = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
+ 
+@@ -1808,7 +1807,7 @@ int ntfs_unlink_inode(struct inode *dir, const struct dentry *dentry)
+ 
+ out:
+ 	ni_unlock(ni);
+-	__putname(de);
++	kfree(de);
+ 	return err;
+ }
+ 
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index 71a5a959a48c..fa4f7d9f3845 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -68,7 +68,7 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 				  u32 flags)
+ {
+ 	struct ntfs_inode *ni = ntfs_i(dir);
+-	struct cpu_str *uni = __getname();
++	struct cpu_str *uni = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	struct inode *inode;
+ 	int err;
+ 
+@@ -85,7 +85,7 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 			inode = dir_search_u(dir, uni, NULL);
+ 			ni_unlock(ni);
+ 		}
+-		__putname(uni);
++		kfree(uni);
+ 	}
+ 
+ 	/*
+@@ -287,8 +287,7 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
+ 			return err;
+ 	}
+ 
+-	/* Allocate PATH_MAX bytes. */
+-	de = __getname();
++	de = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
+ 
+@@ -333,7 +332,7 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
+ 	ni_unlock(ni);
+ 	ni_unlock(dir_ni);
+ out:
+-	__putname(de);
++	kfree(de);
+ 	return err;
+ }
+ 
+@@ -391,7 +390,7 @@ static int ntfs_d_hash(const struct dentry *dentry, struct qstr *name)
+ 	/*
+ 	 * Try slow way with current upcase table
+ 	 */
+-	uni = kmem_cache_alloc(names_cachep, GFP_NOWAIT);
++	uni = kmalloc(PATH_MAX, GFP_NOWAIT);
+ 	if (!uni)
+ 		return -ENOMEM;
+ 
+@@ -413,7 +412,7 @@ static int ntfs_d_hash(const struct dentry *dentry, struct qstr *name)
+ 	err = 0;
+ 
+ out:
+-	kmem_cache_free(names_cachep, uni);
++	kfree(uni);
+ 	return err;
+ }
+ 
+@@ -452,7 +451,7 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
+ 	 * Try slow way with current upcase table
+ 	 */
+ 	sbi = dentry->d_sb->s_fs_info;
+-	uni1 = __getname();
++	uni1 = kmalloc(PATH_MAX, GFP_NOWAIT);
+ 	if (!uni1)
+ 		return -ENOMEM;
+ 
+@@ -482,7 +481,7 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
+ 	ret = !ntfs_cmp_names_cpu(uni1, uni2, sbi->upcase, false) ? 0 : 1;
+ 
+ out:
+-	__putname(uni1);
++	kfree(uni1);
+ 	return ret;
+ }
+ 
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index e0055dcf8fe3..6861c09d66d7 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -552,8 +552,7 @@ struct posix_acl *ntfs_get_acl(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	int err;
+ 	void *buf;
+ 
+-	/* Allocate PATH_MAX bytes. */
+-	buf = __getname();
++	buf = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!buf)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -584,7 +583,7 @@ struct posix_acl *ntfs_get_acl(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	if (!IS_ERR(acl))
+ 		set_cached_acl(inode, type, acl);
+ 
+-	__putname(buf);
++	kfree(buf);
+ 
+ 	return acl;
+ }
+-- 
+2.34.1
+
+
