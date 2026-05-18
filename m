@@ -1,70 +1,69 @@
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011022.outbound.protection.outlook.com [40.93.194.22])
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011055.outbound.protection.outlook.com [52.101.52.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687EF390C8B;
-	Mon, 18 May 2026 19:44:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176F5359A68
+	for <patches@lists.linux.dev>; Mon, 18 May 2026 20:54:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.55
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779133465; cv=fail; b=sVoQ7u86OaOzGrhZ1u/zO3FVWfDwdFmD0Twq3RwTlZYbzYLpaW4sFBbxBH72AN1OE37QC2uOp4/lukEvI5isKcSJyPOb9E3OsOrbrd9OTspcbIhW5z6FCys4cHPrDFO3xf6hDGAZ/A38aZW+rJgJZDxj1wio/CJT7COg85ddmyY=
+	t=1779137663; cv=fail; b=GMNGR66YvjhOj2GZ1Htgm/Ll2lA6+9ftSaN7jnIUgJnh/xWSZTzwx5ys2zwpktAWo1K1WHJBlbc4MEXodP+0vAL0Z1DUtyzBn/t6y4wJmjdGBSUZLv/FjJSFHe8pKFPljFHcmiDO/1irenlqHVjmYXqR1Fb9upL9D9A06twTsS0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779133465; c=relaxed/simple;
-	bh=Wfd7Bb2wDAAacP/2G0iMWe4BHrDfM4lo1ZceE83k0cs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=WSOTHrDeiKNMwD12A2jcsxe9Vg4tgMirDX2j3cyx39QPvEf32YGebhbEsun8Gl2qq2WsudBTmAypKEEOmBGJlYs1E6O2BfCX1DMEi0ybYkcpNYEMMCz0UxPml0/Otth9d/JHNNUQAgYrIvYlCbDcnl0B2Sw8ezLgY+i9bieFvfw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=o3CopqF9; arc=fail smtp.client-ip=40.93.194.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1779137663; c=relaxed/simple;
+	bh=zmP3UqEJuEnbbIGy7CvLZPGczCcoVx6KmE0A9s0EhQw=;
+	h=Message-ID:Date:From:Subject:To:Cc:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=TFOvQqTT78sSMiyfJjd2vuD+Ibitt3bAxcY4ilTHM7KUH6DtjlWzQQ2wqly93ci2xCN7KyfFo7fyxx/wx2iGr+fchDm4pI9TgDhF4SnTrefaFi2F/OPsJiqjSDamQpPkgOPRRvaORPXgZUp3+CshyhUWLZNPtPZruyuFyYNUsIc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=vjZP4a5I; arc=fail smtp.client-ip=52.101.52.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="o3CopqF9"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="vjZP4a5I"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RLSbzyM+3Nt1mcmYwVt3WIu+fBEupexbM5AtYda1LkNj6KO/ozRm1IDBkhE9/ca8fGZohWtG6GdHFT740vboUHE6EBaNc0wFDigVEmtuL+jW4UHR3YXlkfWJME2UvGDtarob/prrPGQUqvs49FUaIQw4hcABHaeakejTTa8BEF0h5A/9MSX78nN0gFqmPaGu6Y3hI4c3ox2uux5cgsID32LyivZR3TcHOotEsTB2fQ3rdJpPK8ik6hEHMSUcauK1eWVev0OIQDIUB+bfVx1iaZGkzPqyidjSOw80u7fVBdgmXezqPWfAl4xKh+xiLcvSqMptw2bPsBTweRJiFQxkhw==
+ b=kNMU+lwysIpCEqwrQ2/vuScEqFelSNlJYAuSAA8QjxmIaBWPmYrZaqQNyo9gwGcu8LsoV2gVhz4i6MRq26Gqf1BK1pWdFiIp+CLNMR7A7HfTlIc7CU3N4R955enSwjXTlzFziSghrUQ2rV2n/2494VsmwQgoHDEk8/oCk9vGHkxd+STLn9Gf51PKy+yIcA9e6Z9f6ogjz3lbrI/exVYgBBVjg2hYAqD9tXU7rgBWIA6DBVVHNgnPK1Omby4RopE4Nj6AbaVhNn+jgrG5k9lfRx0HUGDe+XI0zr7THLiKo/MfP3MKyIrwvlXTICYAOQ8TEU3as8IAW08QJskftO0agA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JZWHiELT+SKeD/VHhgOQrpDww5CYuKtPZAq1kcMnPBU=;
- b=Hy/XU0KVoNWD4ldD9iii05J8b4EJradCEKtswqpAEGWS3EGjrLKFgJy7NDcTP+AbxHvsVanAncvml4bIisOQ+xTPKkWe8IPfAbMok+MpN7mnP50KgMMCvzKUffgrlNmbDVYA1V0B4f+1dDZw8kkxDP8z0jor8VhaUtCMaVzXvn3GMG8EvDM2FXq/lqsXR4fiVzwbk2n8PMMuP4K1mZMoXBk8wYQfoEfZbW5+1wnzDL0QqhkNrCuQFOvjMREP9iZMzw7pbWL+nCy6aYMcRDb6krWYdijpt8vQjSYSEZOTu6/f/+LknbalwCV4vF5OTK3ZtYHg0hsFBWQykyU+8mMEpQ==
+ bh=DP2kE9xEqOwVBgiVrCaA9fP6FfRtGNkx+BlLdBKSNqU=;
+ b=Ksf/oiKRNtrQPymP5wr8drp+7lOBdBrWPkyx5YCJ5OzsgY0MBRdsSX2q4L1PDY97sYetaVLns5RXLMvt6R9RC8rVUB7A4DkjswTSuAbRTarPMXORQukoM0D/61yzxROEMEPr+E/ihCAUE+1w+Zu3X3i7HoWMELo9nlPrv2UWQL9H+RmW7qZj14OkgfAhIjNdstHSljGa09PuRrxGQa4KaBaPz4RHADDWPlKHS2t0rwApGd3AVUgEyJsicpnUvgb5VG58XU8vW8K+imfFK/Q5D4zOjbh4FbyEQxsqM5UsLrIRwDAgUrxWRHY8FOyt3AKvEsTZ5yHvOnbmtak26cZIrA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JZWHiELT+SKeD/VHhgOQrpDww5CYuKtPZAq1kcMnPBU=;
- b=o3CopqF97bTypzwzts4Vpk/7lsZZxxb5aQSyphKtDgqy8GfJ3q7c6tSAvKP09y8z5aXnGDVlaPaBDNiIUIArmy3xmgtALfL7Xe16od+HG7AfzWko0Uf7K0hI59+8PxnMBs69pO5lbR4oWVcUuc1PNUVT9Uc4kqGoixxD9WvScPHBkmo+lK+1hsJNnbqELbC9HJtpw5l2jDkiZz8ty3NNJpHS38bfcKq4Z5PCeveCkxdNldCuZryFJSqcFeF6uLWmBCNbc0D55nDhWiTinvfEMFNNFlk5bvy0ZilZK/jAzM1x8QKZuaP5j9NQ5Kau0JBCgC/j2/CEnHm5G7ipmdMjLA==
+ bh=DP2kE9xEqOwVBgiVrCaA9fP6FfRtGNkx+BlLdBKSNqU=;
+ b=vjZP4a5Ip1NDQqwx5LmbKzxkukJ/DXX0tWt/ENJhakbeJroIxvBWVZMRQLsQ+qkfoTUEykeIRxQ7brOfbjur8I3gnNdFfc22KNKD2AFfRM1nozPMPPUhzWHXte1z7FC/ArHkIRUaYm91q9KeOXx0zt4qwhZxXhIzmG8Deehd3hU=
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by PH7PR12MB5951.namprd12.prod.outlook.com (2603:10b6:510:1da::16) with
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from SA3PR12MB8803.namprd12.prod.outlook.com (2603:10b6:806:317::8)
+ by CY3PR12MB9631.namprd12.prod.outlook.com (2603:10b6:930:ff::6) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.23; Mon, 18 May
- 2026 19:44:15 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.21.0025.022; Mon, 18 May 2026
- 19:44:15 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	Jean-Philippe Brucker <jpb@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Cc: David Matlack <dmatlack@google.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	patches@lists.linux.dev,
-	Pranjal Shrivastava <praan@google.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Mostafa Saleh <smostafa@google.com>
-Subject: [PATCH 5/8] iommu/arm-smmu-v3: Precompute the invalidation commands
-Date: Mon, 18 May 2026 16:43:42 -0300
-Message-ID: <5-v1-5b1ac97a5403+6588f-smmu_tlbi_jgg@nvidia.com>
-In-Reply-To: <0-v1-5b1ac97a5403+6588f-smmu_tlbi_jgg@nvidia.com>
-References:
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BLAPR03CA0144.namprd03.prod.outlook.com
- (2603:10b6:208:32e::29) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.19; Mon, 18 May
+ 2026 20:54:15 +0000
+Received: from SA3PR12MB8803.namprd12.prod.outlook.com
+ ([fe80::b6b5:dec5:43de:6d2f]) by SA3PR12MB8803.namprd12.prod.outlook.com
+ ([fe80::b6b5:dec5:43de:6d2f%6]) with mapi id 15.21.0025.022; Mon, 18 May 2026
+ 20:54:12 +0000
+Message-ID: <6dc547cf-4e33-4075-a463-3208db35db0c@amd.com>
+Date: Mon, 18 May 2026 15:54:09 -0500
+User-Agent: Mozilla Thunderbird
+From: Babu Moger <babu.moger@amd.com>
+Subject: Re: [PATCH v2 1/5] fs/resctrl: Move functions to avoid forward
+ references in subsequent fixes
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>,
+ Reinette Chatre <reinette.chatre@intel.com>,
+ Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+ Peter Newman <peternewman@google.com>, James Morse <james.morse@arm.com>,
+ Drew Fustini <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>,
+ Chen Yu <yu.c.chen@intel.com>
+Cc: Borislav Petkov <bp@alien8.de>, x86@kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20260515193944.15114-1-tony.luck@intel.com>
+ <20260515193944.15114-2-tony.luck@intel.com>
+Content-Language: en-US
+In-Reply-To: <20260515193944.15114-2-tony.luck@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CH0PR03CA0081.namprd03.prod.outlook.com
+ (2603:10b6:610:cc::26) To SA3PR12MB8803.namprd12.prod.outlook.com
+ (2603:10b6:806:317::8)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -72,319 +71,477 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH7PR12MB5951:EE_
-X-MS-Office365-Filtering-Correlation-Id: f309dfb6-ea13-4ff9-fe72-08deb515d78d
+X-MS-TrafficTypeDiagnostic: SA3PR12MB8803:EE_|CY3PR12MB9631:EE_
+X-MS-Office365-Filtering-Correlation-Id: ef186533-467e-43d4-5c7e-08deb51f9d22
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|7416014|376014|366016|11063799003|56012099003|22082099003|18002099003|3023799003;
+	BCL:0;ARA:13230040|376014|366016|1800799024|7416014|4143699003|11063799003|18002099003|56012099003|22082099003|3023799003;
 X-Microsoft-Antispam-Message-Info:
-	jeBltHideTtW+j5QuUmz4nHHGB8mPI39r6toQNaw53wCen3V3RL8G85zBy3naJDsDA9fDQendWbxtAnPUoHhL0w6oW13/6sMH9mFIreaNVsft/DE8JWEaIPIy6LwFT2+PfUCqSLqXoAKH4sfLgI12RofF9ia9xP8xmLWs0qxjfQJ3PPcdXkXb/B1k9Pa/AehICHq5iyzgct+tGcD3FvgbeUylMqfZdoXv/3S50bkyXG05WDh6DbYlzth8qr1e6affmod+QozeqOpl6m3BBEMQ/D/tbBofn4AhIadaC6gEmh4rkfBoqfFZtrAfz9a5zhpmlfJvrcaTZhmTgyh0bzP02yqrXIO7ohOwHIEKnAPZrA3sjOyHRfEEji/l1uxnzBG99kwK81J1FErGb/yhtW7JyesvDEt7x+cxRXEBTCqD0KzGACHd9F5cm5HBb/iJbatbdb/OjOA2swRubbfqpFUy1Ty2OkFGPzcMO3pjsvHCV5PBbtDr/gomgeBZCRvHvPMoZnueMNiBrQcd2Rj/166mImZRooFsRgrzLcMZ391+SDeQ8dxBHoj+TqHmI2qclhIwF3KV6s0YaUT+1zygpFDrTmnw+lk6wqcbTDyA8jpL5m6uLm0Nma8d+xc0pZ8Lp3O6N+YB1EmbYaZ7dliazXIo2FlbgTY0TQ3cGUY0GLP5oXpDp563IEv/3eomuv1FAlS
+	ItHfH4v1PoeUvn5tN2PZkYnf0/JzQFx9T/le4B8+fG/7l0/89xpW4GcTU1wS9gulOvw5IxIpkg8qSCzgbIvmvqXpUidCfVsike9HSl1BgKLWkT6T4MEoXhq1QSfHRJSN7pZ7hf53ysjRT0+qBZKBDRgmmnOF4M6rvP27Z0KQg0NHP4MU99dUSRP3/ut3ufedAvYRq0l0x1GuMZutvW+35v4bPGscX2b+nXzH4ngbc1DP1R5fayMlVZFboVfJl+xbwFnSlHXedjO3n2+0kuEZ1GUlO+G9RXd8x+4HpRtJD7ApJITErrbM7Xn+xvS5k9+fx2p0ES/LwGxrJAXYzrHQc4bqyV9mIF55uoAC2SzsSNZhedDXLfJr1/ZoIPx9UbUQYzqFySy8kCYRaGYlO1ujrBoj4Dj2SPRn1ZRvWpJscbf5qX2kmzojQItVb1QBvzwFH4IHAWQPcxjA69N7Pg5lV0SqrdkYTPeNXcDsmJ3nfKvGKooW37Cu5mZGhFC78Yj9usBZfi2rLrVOR8GqwJZq1+n51gedQD6ulLfqS6PvXrS6DzpSkX8S3cA2KX2cP8ftwiShaGlQLV/QH4h9Sj1Mqlt77LlGl+miNwYLq2V17JNHsTavmPM+sWEob+zT1QypHe8rm9A8+wUvvC5JxyyM9rocTLmAnQfABBhKvOy782w3nqhhCfcY1rh0ZP0Jrhv+
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(11063799003)(56012099003)(22082099003)(18002099003)(3023799003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA3PR12MB8803.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(7416014)(4143699003)(11063799003)(18002099003)(56012099003)(22082099003)(3023799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?NrQuBx+R4CStvemefBXHxkT2U5duJtmJXAg8eqMWa4x0BEeB34y9xtIGDi+b?=
- =?us-ascii?Q?9qz+pjEHlHkdaqh/draAClsuf0jV5H9fe3XJO5dw8ZKbR+J6ZbP/u+UCcXgw?=
- =?us-ascii?Q?owxjZvOEuvqhnoIY1wIj3Xl2VrCgNzGGeRh/hKFp/dC50FnzHDoMrInpegcL?=
- =?us-ascii?Q?waC+l/mipzqVAb73PMoWQxI9lH0lSV0cOGCJCMvwm8p5pbDOhAMixXC+TSEJ?=
- =?us-ascii?Q?U/0JVaBBouKcRyEpjicd+zxUlkjSzthNV49Eukpl8X7EBcfoNqN3knJKBwjq?=
- =?us-ascii?Q?q3K/iDeIRSGL+rZk0+QsLcpiqEuvWryvunWKy5vaoNHtCj+WlXIQ/9BYNZ4u?=
- =?us-ascii?Q?2oIvrrLe1UlC/7hw+m+aZiNVyvDgYJTDzHcemwv4JrzOY/GL7o8Wo+P2xWT5?=
- =?us-ascii?Q?M+/FIaQC8F5FeV/h7lcMl/DAEKzrFNpQqd4bmzEk1gSyxU5hZwBEWRsNUyb7?=
- =?us-ascii?Q?9HmwDDIeSpu9ErxAXdBGBYh2Kel5GiexarXYSu8DvZu0D+EUnla07ke0h06H?=
- =?us-ascii?Q?0mdtaqmo3bE1zOQ0ImtMsjhNwr+vEAOZ7bqg0ZMWPQUiBQrM8ELLbdpS5wZ4?=
- =?us-ascii?Q?TPqqRz+MljfCN2ya7ApWlPLGP432dhZshxK9kjlivOiKXdqCw6j/Fcn7TBbj?=
- =?us-ascii?Q?5QsN7IRTvfdwh+kGcgHtdYmFLilt8c8v1Zln7Ojh560iTIezAiwpyYqHY0TS?=
- =?us-ascii?Q?D6HvZvk+qVfP04UvtLXIVI1h8k0AYP+CTXs3zc9rUTj2dDfq2PJageL/QPKZ?=
- =?us-ascii?Q?g/aELvSUZnPE2RYJgfq+9g/Li9E/v42enLlHhTv0edlyW+xBgivVUFkuPzZG?=
- =?us-ascii?Q?nCXebvqSp9i7M4/HHfGkhQ8Xo10pGSMVNsiFDvvEEu6Fdk9+t/XlBnIkIT/V?=
- =?us-ascii?Q?ligWwez+lafrPuDX07lhRRFX8vzAfaQG/tmVIvGZmHF+7AbXneMZEXIcTk/h?=
- =?us-ascii?Q?Zk+EBLf9uxoCU7p/520yOB4/kaN5Jy5cVAo2IwHgaOfwpe0aXl60EhfHTT2G?=
- =?us-ascii?Q?ctorsAmuk4lUY7WrKem1FA6kbAdfyjSObyZBYOgmtVfoy/kOyOZ8Xp67i2T5?=
- =?us-ascii?Q?XxRdokaHX+YhHbiPU5Pns0Q2awarSSkL/Zh1rkzup/iFLT1rWxSMYOXou+6m?=
- =?us-ascii?Q?XCPIiv031srGgWTkzHSQKmHo2bogTDCtXhlw6u44yueo6ieju9gDZUO8m25E?=
- =?us-ascii?Q?6lw7oIX2CKpaXl5baPlbsIpxC6qTBsVw8Kr8iG5iQxjJP6bEMcBUodgDo3Ms?=
- =?us-ascii?Q?vcbrdXHYfMAtZ7SKqEyW6pxWusFMVJ+8wFNbSXX6Ibk/PLQu/y4a+26FXFHk?=
- =?us-ascii?Q?/H2GB5izuNHMh7n7XXku9pi5ybCsURNfRNN9iaVisW03P5uwBn7CF7vJ4HV0?=
- =?us-ascii?Q?xTZbN/qKlIJd/fN8stISywBqz9UKYyO900tUyO+T/WxPLvgQ2PF4SLCH3aAE?=
- =?us-ascii?Q?XZ8wuTzvKnleMnFzCccLmIXLgeG+1NnuK6BrYYd/tueRV0P4ZKCIZzMoF5Bf?=
- =?us-ascii?Q?cNTJCod20Ryvkl6JZFo9dRDZCMT+FYCENkNpv1hA5Ql6B+/LXGQETymP0ksu?=
- =?us-ascii?Q?iBOh9lO6iICo2zcaBfuTyi8X/bvmV7nIvD9im2T+PyXU5HBkNTUkrfzAl2hH?=
- =?us-ascii?Q?PurRs8vmLpaEiiKsk2N1lBPn1vu+ABdc3S/bECd6OosMglsm7vwoEvBeIF5c?=
- =?us-ascii?Q?2f0G1Fj3YhEb3TfMcaYMJ7B0gC90SIVR5tdTwDIST2ogoxUa?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f309dfb6-ea13-4ff9-fe72-08deb515d78d
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+	=?utf-8?B?WStoUFNCeXBXZlJYcmt5Mk9nYW1VMXlhbUMvUnAxbTk0bi9NS0xhQmtsQysx?=
+ =?utf-8?B?SUFGNGJyKyt4ZFFIUkhiZTVCQlgrdExFTCt3bE0yN1d3aVBGQTRraVRJTmJH?=
+ =?utf-8?B?c0Y1WVJKYVZlc1JleXRUTjJpeDcyWXdzSnpmdEFPd2RranhOdEJJMDZUYk8r?=
+ =?utf-8?B?MkpFTGdVSXpOZ0lrMzBPZ1hVbVNibU96VXFmVnJ3Vk4rT01SVzRmSVJLNWdV?=
+ =?utf-8?B?Y0N5WnZ1d0hicU9BSVQvbGpITVovcUMvRVkyTWVSeEt4VTNCanVHOFY3d0l6?=
+ =?utf-8?B?VDFmN1FFcURRQWZZSStkN1FPL2tpQXlNL2drUEYwNjIveTVEOWtjU1hhU1BB?=
+ =?utf-8?B?ZWNFODF5WHZEelRYdlhPQXM3RW82TWxMOVE3QjZBaGdGT3piMno2bTEwM2Fw?=
+ =?utf-8?B?K1Jmc2JLdnF3dmgvaFhrbGVUS21rd25qRU1UazdSUnZwQ2FqRDZLS0IvMlBD?=
+ =?utf-8?B?MlQ0eWxaTTdMNC82SFdlejlMR2E5cHEzWGFBZ0pzMXl0VzczVXR1RFBvUVNz?=
+ =?utf-8?B?VXBITjM5OHJ4dFVFb1lMTjZUTktxRUpmNGtpNnR0NnU3Tzd2a0FIUkxDcEhD?=
+ =?utf-8?B?cWExTzIxR2xWOVZkU1NVRzlJNHJGeTdIZ25HUWZoQUovbXQzaUF5a3dYWHNj?=
+ =?utf-8?B?NWlCT1BMQWs1Y2tZQ1IrZWtrSmxoSEhHVU5tREtGL3lBYVdNVHVzZ3hOTVJ3?=
+ =?utf-8?B?MkdKbUhFbm9UalU4akt1eU41Wk11dk1BazR4VjlYcGFLZDFCNFhSWTlReUZk?=
+ =?utf-8?B?TTZYbGhlK015NlhlandWMldNTzRnV21tSEp2SnRZWC9iblBFZy9JQVVjcFpa?=
+ =?utf-8?B?aFNGc0NSbXVNeU1XVHNWNy9SaE5zdXRZbmk5NVFFSlFHT3B5ZmJFN25JWDl2?=
+ =?utf-8?B?SmthSmpVK0FHVFJnWHpOMkRvVHZhZVNETGxEeU0wWkhjUURpNGxocCtxOGRC?=
+ =?utf-8?B?VG5Sam9vWFQwV1A3K2tOUFNQenlNNGs5QjEvODI4MDZONThmSXVhanNhNUN1?=
+ =?utf-8?B?MDQ0Z0tNRGZXM2VuNTM1azM4T3lQT2tDR0tCN2psYjJUVjFVR1R6Y0JScm1j?=
+ =?utf-8?B?bjVCc0FPRlFUT2FLcklQVkg3Z045T2I4aDMvVmdsaU4xTGwwSGhyK2d1WmUz?=
+ =?utf-8?B?cmY4Q1A3VWI1YmlVRHArTi84QnV6L3BlZFBBYlliWVk0bGNWSTdKai9uUkRF?=
+ =?utf-8?B?OURoNysvTjJpb1RRSkFYMi9lYStmRElIOGFBZEZOb0c1bHdKakluSXMwMTJN?=
+ =?utf-8?B?aEx0VGhaYzBuSEVYR3Q3UlVzWjFsK202SitjOExqMmx2SEZnaXFaQmRYenVK?=
+ =?utf-8?B?KzFZRmVSYTVNeUtwYTVWcC9ZckdJaW5CNnhBSFVJczV0Y1ovUDFyU1N3V1dk?=
+ =?utf-8?B?cTFuWHNCK2JPWGk3dm9Ybit2b2VxclF6dzg0R0g4ZFVTOWJzZm8yVkcxSVI2?=
+ =?utf-8?B?NFVGOWQwVjNkNlp4bEZxMURhTG01alp4VHpaV2dXem1rSTVmZnBZNjJCdE1U?=
+ =?utf-8?B?WDVPSXV0RmFxN3pTM2Rkb3BNTTV1cFJCYm10Z2V6V2lkaGttbVllR2Y5a01u?=
+ =?utf-8?B?ek9UQXRTemx6S1lWRzdCREVYeDZrM25sd3dDa1JTRTcxdlhpc25wV2c0MUJX?=
+ =?utf-8?B?VGpLZTV1bnBzclNoektvcCs4em5XTThmdVVzejNFVHl1Z0xSNGUvbUduYk0x?=
+ =?utf-8?B?REgvUTlQdG1zcGU3cTFudFBEa2IzdTdWR0FKVjBVZFFOeEhib3F2OXlwaVhX?=
+ =?utf-8?B?TDgvdGZlWTRCNkxzK1NTbktQZDFpQ291aUV1R3MxY0JQYTJldldhVVlmRWhY?=
+ =?utf-8?B?OE1Pb2k1VWJ6a0FscStza3R4azUxOWZ1V1JsOHo1ZjRkNE0zM2pORnRpelc4?=
+ =?utf-8?B?Qk9IQXk3NjZpV1ZFdWcxMDFQd0JFMzZySVRQTHp3N2JsWVEycjdkS0daTEdl?=
+ =?utf-8?B?bDU1c0pxZTNpTkJsYjJYNnRqa2MwbWJKKzdtNmV3endOVCtxa3p3MXFPbUFZ?=
+ =?utf-8?B?YnYxaEJZTUpxclNwU2dkZzFZMFdtcGl0ZVQvdC9BQnhVMTJEL0o3TTM2b2g2?=
+ =?utf-8?B?aDNESzVvVjh2ZVJYdExaU0grYU1IZUF4anR0aVNiVkt6dnVIZUJXd0FqeVg2?=
+ =?utf-8?B?dGg1aDIrMXN1Qitack15WUsxVDE2SDRoeXg3QVZzQlF2RWtnNUh2bVdZaVhR?=
+ =?utf-8?B?OUdKZXpyQks1NVJMNjFoQ1BNQXVtRGxaYkFJelYwNzd0MkNsZEtQOTFUZmRp?=
+ =?utf-8?B?Mnhac3FncDgrVmJWdUI2U2I1Wmx6c2lTZVp1cmdXRFQxUUNFbURLY3lhMTZM?=
+ =?utf-8?Q?nd4HnIbIhK0XaWUJQd?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ef186533-467e-43d4-5c7e-08deb51f9d22
+X-MS-Exchange-CrossTenant-AuthSource: SA3PR12MB8803.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2026 19:44:15.1030
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2026 20:54:11.9443
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: UfocH9TLYqVEs/T0KNYvaBDPGzbct9HFLY8ETt3pS6J4phN6GMCpycjy4PmSShn+
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5951
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7Pin6Rn8z4KKZp7m4wRBHTdnDlJP7P40MkUDps/NwiQOySEWVxBuAvK/9SAbObD8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9631
 
-Store the required cmd data in the tlbi and just copy it out when
-processing each item in the invs list. The cmd form only depends on
-if the instance supports RIL or not, otherwise it is always the same.
+Hi Tony,
 
-This avoids redundant calculations for each invs entry.
+On 5/15/26 14:39, Tony Luck wrote:
+> No functional change. Just pull some functions before rdt_get_tree().
 
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 132 +++++++++++---------
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  11 ++
- 2 files changed, 81 insertions(+), 62 deletions(-)
+Would it be better to list functions instead of "some functions" ?
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 3b0b273fcde829..9aa08f782e8986 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2398,32 +2398,15 @@ static bool arm_smmu_ttl_addr_aligned(u64 address, unsigned int tg,
- 	return !(address & GENMASK_U64(pgsz_lg2 - 1, 0));
- }
- 
--static void arm_smmu_cmdq_batch_add_ril(struct arm_smmu_device *smmu,
--					struct arm_smmu_cmdq_batch *cmds,
--					struct arm_smmu_cmd *cmd, bool leaf,
--					u64 address, unsigned int num,
--					unsigned int scale, u8 ttl, u8 tg_enc)
--{
--	cmd->data[0] |= FIELD_PREP(CMDQ_TLBI_0_NUM, num) |
--			FIELD_PREP(CMDQ_TLBI_0_SCALE, scale);
--	cmd->data[1] = FIELD_PREP(CMDQ_TLBI_1_LEAF, leaf) |
--		       FIELD_PREP(CMDQ_TLBI_1_TTL, ttl) |
--		       FIELD_PREP(CMDQ_TLBI_1_TG, tg_enc) | address;
--	arm_smmu_cmdq_batch_add_cmd_p(smmu, cmds, cmd);
--}
--
- /*
-- * Issue a single range TLBI command covering [iova, iova+size). Returns true if
-- * successful, false if the range is too large for a single command.
-+ * Generate a single range TLBI command covering [iova, iova+size). Sets
-+ * use_full_inv if the range is too large for a single command.
-  *
-  * The algorithm finds the smallest SCALE where the range (in tg-sized pages)
-  * fits in the 5-bit NUM field (max 32 units of 2^SCALE pages). This may widen
-  * the invalidation range.
-  */
--static bool arm_smmu_cmdq_batch_add_range(struct arm_smmu_device *smmu,
--					  struct arm_smmu_cmdq_batch *cmds,
--					  struct arm_smmu_cmd *cmd,
--					  struct arm_smmu_tlbi *tlbi)
-+static void arm_smmu_tlbi_calc_range(struct arm_smmu_tlbi *tlbi)
- {
- 	unsigned int tg_lg2 = tlbi->smmu_domain->tgsz_lg2;
- 	u64 cur_tg = tlbi->iova >> tg_lg2;
-@@ -2433,9 +2416,6 @@ static bool arm_smmu_cmdq_batch_add_range(struct arm_smmu_device *smmu,
- 	unsigned int scale;
- 	u8 ttl = 0;
- 
--	if (!tlbi->size)
--		return false;
--
- 	/*
- 	 * Determine what level the granule is at. For non-leaf, both
- 	 * io-pgtable and SVA pass a nominal last-level granule because they
-@@ -2452,10 +2432,13 @@ static bool arm_smmu_cmdq_batch_add_range(struct arm_smmu_device *smmu,
- 	if (num_tg == 1) {
- 		if (!ttl)
- 			ttl = 3;
--		arm_smmu_cmdq_batch_add_ril(smmu, cmds, cmd, tlbi->leaf_only,
--					    cur_tg << tg_lg2, 0, 0, ttl,
--					    tg_enc);
--		return true;
-+		tlbi->range.data0 = 0;
-+		tlbi->range.data1 =
-+			FIELD_PREP(CMDQ_TLBI_1_LEAF, tlbi->leaf_only) |
-+			FIELD_PREP(CMDQ_TLBI_1_TTL, ttl) |
-+			FIELD_PREP(CMDQ_TLBI_1_TG, tg_enc) |
-+			(cur_tg << tg_lg2);
-+		return;
- 	}
- 
- 	/*
-@@ -2474,7 +2457,8 @@ static bool arm_smmu_cmdq_batch_add_range(struct arm_smmu_device *smmu,
- 		/*
- 		 * Range too large for a single command, use full invalidation.
- 		 */
--		return false;
-+		tlbi->range.use_full_inv = true;
-+		return;
- 	}
- 
- 	/* 16K granule TTL=1 is reserved (Section 4.4.1) */
-@@ -2485,38 +2469,31 @@ static bool arm_smmu_cmdq_batch_add_range(struct arm_smmu_device *smmu,
- 	if (ttl && !arm_smmu_ttl_addr_aligned(cur_tg << tg_lg2, tg_lg2, ttl))
- 		ttl = 0;
- 
--	arm_smmu_cmdq_batch_add_ril(smmu, cmds, cmd, tlbi->leaf_only,
--				    cur_tg << tg_lg2,
--				    DIV_ROUND_UP_ULL(num_tg, 1ULL << scale) - 1,
--				    scale, ttl, tg_enc);
--	return true;
-+	tlbi->range.data0 =
-+		FIELD_PREP(CMDQ_TLBI_0_NUM,
-+			   DIV_ROUND_UP_ULL(num_tg, 1ULL << scale) - 1) |
-+		FIELD_PREP(CMDQ_TLBI_0_SCALE, scale);
-+	tlbi->range.data1 = FIELD_PREP(CMDQ_TLBI_1_LEAF, tlbi->leaf_only) |
-+			    FIELD_PREP(CMDQ_TLBI_1_TTL, ttl) |
-+			    FIELD_PREP(CMDQ_TLBI_1_TG, tg_enc) |
-+			    (cur_tg << tg_lg2);
- }
- 
- /*
-  * One TLBI command per IOTLB entry, assuming the entries are all at least
-- * iopte_granule sized. Returns false if too many commands would be needed which
-- * indicates too high a latency. The threshold is similar to MAX_DVM_OPS in
-- * arch/arm64/include/asm/tlbflush.h for the 4k PAGE_SIZE.
-+ * iopte_granule sized. Sets use_full_inv if too many commands would be needed
-+ * which indicates too high a latency. The threshold is similar to MAX_DVM_OPS
-+ * in arch/arm64/include/asm/tlbflush.h for the 4k PAGE_SIZE.
-  */
--static bool arm_smmu_cmdq_batch_add_single(struct arm_smmu_device *smmu,
--					   struct arm_smmu_cmdq_batch *cmds,
--					   struct arm_smmu_cmd *cmd,
--					   struct arm_smmu_tlbi *tlbi)
-+static void arm_smmu_tlbi_calc_single(struct arm_smmu_tlbi *tlbi)
- {
- 	unsigned long num_ops = tlbi->size / tlbi->iopte_granule;
--	unsigned long iova = tlbi->iova;
--	unsigned long i;
- 
--	if (!num_ops || num_ops > 512)
--		return false;
--
--	for (i = 0; i < num_ops; i++) {
--		cmd->data[1] = FIELD_PREP(CMDQ_TLBI_1_LEAF, tlbi->leaf_only) |
--			       (iova & ~GENMASK_U64(11, 0));
--		arm_smmu_cmdq_batch_add_cmd_p(smmu, cmds, cmd);
--		iova += tlbi->iopte_granule;
-+	if (!num_ops || num_ops > 512) {
-+		tlbi->single.use_full_inv = true;
-+		return;
- 	}
--	return true;
-+	tlbi->single.num = num_ops;
- }
- 
- static void arm_smmu_inv_all_cmd(struct arm_smmu_inv *inv,
-@@ -2536,16 +2513,32 @@ static bool arm_smmu_inv_to_cmdq_batch(struct arm_smmu_inv *inv,
- 				       struct arm_smmu_cmd *cmd,
- 				       struct arm_smmu_tlbi *tlbi)
- {
-+	u64 iova = tlbi->iova;
-+	unsigned int i;
-+
- 	if (inv->smmu->features & ARM_SMMU_FEAT_RANGE_INV) {
--		if (arm_smmu_cmdq_batch_add_range(inv->smmu, cmds, cmd, tlbi))
--			return false;
--	} else {
--		if (arm_smmu_cmdq_batch_add_single(inv->smmu, cmds, cmd, tlbi))
--			return false;
-+		if (tlbi->range.use_full_inv) {
-+			arm_smmu_inv_all_cmd(inv, cmds, cmd);
-+			return true;
-+		}
-+		cmd->data[0] |= tlbi->range.data0;
-+		cmd->data[1] = tlbi->range.data1;
-+		arm_smmu_cmdq_batch_add_cmd_p(inv->smmu, cmds, cmd);
-+		return false;
- 	}
- 
--	arm_smmu_inv_all_cmd(inv, cmds, cmd);
--	return true;
-+	if (tlbi->single.use_full_inv) {
-+		arm_smmu_inv_all_cmd(inv, cmds, cmd);
-+		return true;
-+	}
-+
-+	for (i = 0; i < tlbi->single.num; i++) {
-+		cmd->data[1] = FIELD_PREP(CMDQ_TLBI_1_LEAF, tlbi->leaf_only) |
-+			       (iova & ~GENMASK_U64(11, 0));
-+		iova += tlbi->iopte_granule;
-+		arm_smmu_cmdq_batch_add_cmd_p(inv->smmu, cmds, cmd);
-+	}
-+	return false;
- }
- 
- static inline bool arm_smmu_invs_end_batch(struct arm_smmu_inv *cur,
-@@ -2564,8 +2557,8 @@ static inline bool arm_smmu_invs_end_batch(struct arm_smmu_inv *cur,
- 	return false;
- }
- 
--static void __arm_smmu_domain_inv_range(struct arm_smmu_tlbi *tlbi,
--					struct arm_smmu_invs *invs)
-+static void arm_smmu_domain_tlbi_inv(struct arm_smmu_tlbi *tlbi,
-+				     struct arm_smmu_invs *invs)
- {
- 	struct arm_smmu_cmdq_batch cmds = {};
- 	bool used_s12_vmall = false;
-@@ -2662,6 +2655,13 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
- 	};
- 	struct arm_smmu_invs *invs;
- 
-+	if (!size || size == SIZE_MAX) {
-+		tlbi.single.use_full_inv = true;
-+		tlbi.range.use_full_inv = true;
-+	} else {
-+		arm_smmu_tlbi_calc_single(&tlbi);
-+	}
-+
- 	/*
- 	 * An invalidation request must follow some IOPTE change and then load
- 	 * an invalidation array. In the meantime, a domain attachment mutates
-@@ -2692,6 +2692,14 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
- 	rcu_read_lock();
- 	invs = rcu_dereference(smmu_domain->invs);
- 
-+	/* Only precaculate RIL if it will be used. */
-+	if (invs->has_range_inv) {
-+		if (!tlbi.range.use_full_inv)
-+			arm_smmu_tlbi_calc_range(&tlbi);
-+	} else {
-+		tlbi.range.use_full_inv = true;
-+	}
-+
- 	/*
- 	 * Avoid locking unless ATS is being used. No ATC invalidation can be
- 	 * going on after a domain is detached.
-@@ -2700,10 +2708,10 @@ void arm_smmu_domain_inv_range(struct arm_smmu_domain *smmu_domain,
- 		unsigned long flags;
- 
- 		read_lock_irqsave(&invs->rwlock, flags);
--		__arm_smmu_domain_inv_range(&tlbi, invs);
-+		arm_smmu_domain_tlbi_inv(&tlbi, invs);
- 		read_unlock_irqrestore(&invs->rwlock, flags);
- 	} else {
--		__arm_smmu_domain_inv_range(&tlbi, invs);
-+		arm_smmu_domain_tlbi_inv(&tlbi, invs);
- 	}
- 
- 	rcu_read_unlock();
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index d58fe91a96325f..b5e214b428d644 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -809,6 +809,17 @@ struct arm_smmu_tlbi {
- 	size_t size;
- 	unsigned int iopte_granule;
- 	bool leaf_only;
-+
-+	struct {
-+		bool use_full_inv;
-+		u16 num;
-+	} single;
-+
-+	struct {
-+		bool use_full_inv;
-+		u32 data0;
-+		u64 data1;
-+	} range;
- };
- 
- struct arm_smmu_evtq {
--- 
-2.43.0
+Thanks
+Babu
+
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>   fs/resctrl/rdtgroup.c | 376 +++++++++++++++++++++---------------------
+>   1 file changed, 188 insertions(+), 188 deletions(-)
+> 
+> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+> index 5dfdaa6f9d8f..a6376a3fc4c3 100644
+> --- a/fs/resctrl/rdtgroup.c
+> +++ b/fs/resctrl/rdtgroup.c
+> @@ -2782,6 +2782,194 @@ static void schemata_list_destroy(void)
+>   	}
+>   }
+>   
+> +/*
+> + * Move tasks from one to the other group. If @from is NULL, then all tasks
+> + * in the systems are moved unconditionally (used for teardown).
+> + *
+> + * If @mask is not NULL the cpus on which moved tasks are running are set
+> + * in that mask so the update smp function call is restricted to affected
+> + * cpus.
+> + */
+> +static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
+> +				 struct cpumask *mask)
+> +{
+> +	struct task_struct *p, *t;
+> +
+> +	read_lock(&tasklist_lock);
+> +	for_each_process_thread(p, t) {
+> +		if (!from || is_closid_match(t, from) ||
+> +		    is_rmid_match(t, from)) {
+> +			resctrl_arch_set_closid_rmid(t, to->closid,
+> +						     to->mon.rmid);
+> +
+> +			/*
+> +			 * Order the closid/rmid stores above before the loads
+> +			 * in task_curr(). This pairs with the full barrier
+> +			 * between the rq->curr update and
+> +			 * resctrl_arch_sched_in() during context switch.
+> +			 */
+> +			smp_mb();
+> +
+> +			/*
+> +			 * If the task is on a CPU, set the CPU in the mask.
+> +			 * The detection is inaccurate as tasks might move or
+> +			 * schedule before the smp function call takes place.
+> +			 * In such a case the function call is pointless, but
+> +			 * there is no other side effect.
+> +			 */
+> +			if (IS_ENABLED(CONFIG_SMP) && mask && task_curr(t))
+> +				cpumask_set_cpu(task_cpu(t), mask);
+> +		}
+> +	}
+> +	read_unlock(&tasklist_lock);
+> +}
+> +
+> +static void free_all_child_rdtgrp(struct rdtgroup *rdtgrp)
+> +{
+> +	struct rdtgroup *sentry, *stmp;
+> +	struct list_head *head;
+> +
+> +	head = &rdtgrp->mon.crdtgrp_list;
+> +	list_for_each_entry_safe(sentry, stmp, head, mon.crdtgrp_list) {
+> +		rdtgroup_unassign_cntrs(sentry);
+> +		free_rmid(sentry->closid, sentry->mon.rmid);
+> +		list_del(&sentry->mon.crdtgrp_list);
+> +
+> +		if (atomic_read(&sentry->waitcount) != 0)
+> +			sentry->flags = RDT_DELETED;
+> +		else
+> +			rdtgroup_remove(sentry);
+> +	}
+> +}
+> +
+> +/*
+> + * Forcibly remove all of subdirectories under root.
+> + */
+> +static void rmdir_all_sub(void)
+> +{
+> +	struct rdtgroup *rdtgrp, *tmp;
+> +
+> +	/* Move all tasks to the default resource group */
+> +	rdt_move_group_tasks(NULL, &rdtgroup_default, NULL);
+> +
+> +	list_for_each_entry_safe(rdtgrp, tmp, &rdt_all_groups, rdtgroup_list) {
+> +		/* Free any child rmids */
+> +		free_all_child_rdtgrp(rdtgrp);
+> +
+> +		/* Remove each rdtgroup other than root */
+> +		if (rdtgrp == &rdtgroup_default)
+> +			continue;
+> +
+> +		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
+> +		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
+> +			rdtgroup_pseudo_lock_remove(rdtgrp);
+> +
+> +		/*
+> +		 * Give any CPUs back to the default group. We cannot copy
+> +		 * cpu_online_mask because a CPU might have executed the
+> +		 * offline callback already, but is still marked online.
+> +		 */
+> +		cpumask_or(&rdtgroup_default.cpu_mask,
+> +			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
+> +
+> +		rdtgroup_unassign_cntrs(rdtgrp);
+> +
+> +		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
+> +
+> +		kernfs_remove(rdtgrp->kn);
+> +		list_del(&rdtgrp->rdtgroup_list);
+> +
+> +		if (atomic_read(&rdtgrp->waitcount) != 0)
+> +			rdtgrp->flags = RDT_DELETED;
+> +		else
+> +			rdtgroup_remove(rdtgrp);
+> +	}
+> +	/* Notify online CPUs to update per cpu storage and PQR_ASSOC MSR */
+> +	update_closid_rmid(cpu_online_mask, &rdtgroup_default);
+> +
+> +	kernfs_remove(kn_info);
+> +	kernfs_remove(kn_mongrp);
+> +	kernfs_remove(kn_mondata);
+> +}
+> +
+> +/**
+> + * mon_get_kn_priv() - Get the mon_data priv data for this event.
+> + *
+> + * The same values are used across the mon_data directories of all control and
+> + * monitor groups for the same event in the same domain. Keep a list of
+> + * allocated structures and re-use an existing one with the same values for
+> + * @rid, @domid, etc.
+> + *
+> + * @rid:    The resource id for the event file being created.
+> + * @domid:  The domain id for the event file being created.
+> + * @mevt:   The type of event file being created.
+> + * @do_sum: Whether SNC summing monitors are being created. Only set
+> + *	    when @rid == RDT_RESOURCE_L3.
+> + *
+> + * Return: Pointer to mon_data private data of the event, NULL on failure.
+> + */
+> +static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
+> +					struct mon_evt *mevt,
+> +					bool do_sum)
+> +{
+> +	struct mon_data *priv;
+> +
+> +	lockdep_assert_held(&rdtgroup_mutex);
+> +
+> +	list_for_each_entry(priv, &mon_data_kn_priv_list, list) {
+> +		if (priv->rid == rid && priv->domid == domid &&
+> +		    priv->sum == do_sum && priv->evt == mevt)
+> +			return priv;
+> +	}
+> +
+> +	priv = kzalloc_obj(*priv);
+> +	if (!priv)
+> +		return NULL;
+> +
+> +	priv->rid = rid;
+> +	priv->domid = domid;
+> +	priv->sum = do_sum;
+> +	priv->evt = mevt;
+> +	list_add_tail(&priv->list, &mon_data_kn_priv_list);
+> +
+> +	return priv;
+> +}
+> +
+> +/**
+> + * mon_put_kn_priv() - Free all allocated mon_data structures.
+> + *
+> + * Called when resctrl file system is unmounted.
+> + */
+> +static void mon_put_kn_priv(void)
+> +{
+> +	struct mon_data *priv, *tmp;
+> +
+> +	lockdep_assert_held(&rdtgroup_mutex);
+> +
+> +	list_for_each_entry_safe(priv, tmp, &mon_data_kn_priv_list, list) {
+> +		list_del(&priv->list);
+> +		kfree(priv);
+> +	}
+> +}
+> +
+> +static void resctrl_fs_teardown(void)
+> +{
+> +	lockdep_assert_held(&rdtgroup_mutex);
+> +
+> +	/* Cleared by rdtgroup_destroy_root() */
+> +	if (!rdtgroup_default.kn)
+> +		return;
+> +
+> +	rmdir_all_sub();
+> +	rdtgroup_unassign_cntrs(&rdtgroup_default);
+> +	mon_put_kn_priv();
+> +	rdt_pseudo_lock_release();
+> +	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
+> +	closid_exit();
+> +	schemata_list_destroy();
+> +	rdtgroup_destroy_root();
+> +}
+> +
+>   static int rdt_get_tree(struct fs_context *fc)
+>   {
+>   	struct rdt_fs_context *ctx = rdt_fc2context(fc);
+> @@ -2981,194 +3169,6 @@ static int rdt_init_fs_context(struct fs_context *fc)
+>   	return 0;
+>   }
+>   
+> -/*
+> - * Move tasks from one to the other group. If @from is NULL, then all tasks
+> - * in the systems are moved unconditionally (used for teardown).
+> - *
+> - * If @mask is not NULL the cpus on which moved tasks are running are set
+> - * in that mask so the update smp function call is restricted to affected
+> - * cpus.
+> - */
+> -static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
+> -				 struct cpumask *mask)
+> -{
+> -	struct task_struct *p, *t;
+> -
+> -	read_lock(&tasklist_lock);
+> -	for_each_process_thread(p, t) {
+> -		if (!from || is_closid_match(t, from) ||
+> -		    is_rmid_match(t, from)) {
+> -			resctrl_arch_set_closid_rmid(t, to->closid,
+> -						     to->mon.rmid);
+> -
+> -			/*
+> -			 * Order the closid/rmid stores above before the loads
+> -			 * in task_curr(). This pairs with the full barrier
+> -			 * between the rq->curr update and
+> -			 * resctrl_arch_sched_in() during context switch.
+> -			 */
+> -			smp_mb();
+> -
+> -			/*
+> -			 * If the task is on a CPU, set the CPU in the mask.
+> -			 * The detection is inaccurate as tasks might move or
+> -			 * schedule before the smp function call takes place.
+> -			 * In such a case the function call is pointless, but
+> -			 * there is no other side effect.
+> -			 */
+> -			if (IS_ENABLED(CONFIG_SMP) && mask && task_curr(t))
+> -				cpumask_set_cpu(task_cpu(t), mask);
+> -		}
+> -	}
+> -	read_unlock(&tasklist_lock);
+> -}
+> -
+> -static void free_all_child_rdtgrp(struct rdtgroup *rdtgrp)
+> -{
+> -	struct rdtgroup *sentry, *stmp;
+> -	struct list_head *head;
+> -
+> -	head = &rdtgrp->mon.crdtgrp_list;
+> -	list_for_each_entry_safe(sentry, stmp, head, mon.crdtgrp_list) {
+> -		rdtgroup_unassign_cntrs(sentry);
+> -		free_rmid(sentry->closid, sentry->mon.rmid);
+> -		list_del(&sentry->mon.crdtgrp_list);
+> -
+> -		if (atomic_read(&sentry->waitcount) != 0)
+> -			sentry->flags = RDT_DELETED;
+> -		else
+> -			rdtgroup_remove(sentry);
+> -	}
+> -}
+> -
+> -/*
+> - * Forcibly remove all of subdirectories under root.
+> - */
+> -static void rmdir_all_sub(void)
+> -{
+> -	struct rdtgroup *rdtgrp, *tmp;
+> -
+> -	/* Move all tasks to the default resource group */
+> -	rdt_move_group_tasks(NULL, &rdtgroup_default, NULL);
+> -
+> -	list_for_each_entry_safe(rdtgrp, tmp, &rdt_all_groups, rdtgroup_list) {
+> -		/* Free any child rmids */
+> -		free_all_child_rdtgrp(rdtgrp);
+> -
+> -		/* Remove each rdtgroup other than root */
+> -		if (rdtgrp == &rdtgroup_default)
+> -			continue;
+> -
+> -		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
+> -		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
+> -			rdtgroup_pseudo_lock_remove(rdtgrp);
+> -
+> -		/*
+> -		 * Give any CPUs back to the default group. We cannot copy
+> -		 * cpu_online_mask because a CPU might have executed the
+> -		 * offline callback already, but is still marked online.
+> -		 */
+> -		cpumask_or(&rdtgroup_default.cpu_mask,
+> -			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
+> -
+> -		rdtgroup_unassign_cntrs(rdtgrp);
+> -
+> -		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
+> -
+> -		kernfs_remove(rdtgrp->kn);
+> -		list_del(&rdtgrp->rdtgroup_list);
+> -
+> -		if (atomic_read(&rdtgrp->waitcount) != 0)
+> -			rdtgrp->flags = RDT_DELETED;
+> -		else
+> -			rdtgroup_remove(rdtgrp);
+> -	}
+> -	/* Notify online CPUs to update per cpu storage and PQR_ASSOC MSR */
+> -	update_closid_rmid(cpu_online_mask, &rdtgroup_default);
+> -
+> -	kernfs_remove(kn_info);
+> -	kernfs_remove(kn_mongrp);
+> -	kernfs_remove(kn_mondata);
+> -}
+> -
+> -/**
+> - * mon_get_kn_priv() - Get the mon_data priv data for this event.
+> - *
+> - * The same values are used across the mon_data directories of all control and
+> - * monitor groups for the same event in the same domain. Keep a list of
+> - * allocated structures and re-use an existing one with the same values for
+> - * @rid, @domid, etc.
+> - *
+> - * @rid:    The resource id for the event file being created.
+> - * @domid:  The domain id for the event file being created.
+> - * @mevt:   The type of event file being created.
+> - * @do_sum: Whether SNC summing monitors are being created. Only set
+> - *	    when @rid == RDT_RESOURCE_L3.
+> - *
+> - * Return: Pointer to mon_data private data of the event, NULL on failure.
+> - */
+> -static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
+> -					struct mon_evt *mevt,
+> -					bool do_sum)
+> -{
+> -	struct mon_data *priv;
+> -
+> -	lockdep_assert_held(&rdtgroup_mutex);
+> -
+> -	list_for_each_entry(priv, &mon_data_kn_priv_list, list) {
+> -		if (priv->rid == rid && priv->domid == domid &&
+> -		    priv->sum == do_sum && priv->evt == mevt)
+> -			return priv;
+> -	}
+> -
+> -	priv = kzalloc_obj(*priv);
+> -	if (!priv)
+> -		return NULL;
+> -
+> -	priv->rid = rid;
+> -	priv->domid = domid;
+> -	priv->sum = do_sum;
+> -	priv->evt = mevt;
+> -	list_add_tail(&priv->list, &mon_data_kn_priv_list);
+> -
+> -	return priv;
+> -}
+> -
+> -/**
+> - * mon_put_kn_priv() - Free all allocated mon_data structures.
+> - *
+> - * Called when resctrl file system is unmounted.
+> - */
+> -static void mon_put_kn_priv(void)
+> -{
+> -	struct mon_data *priv, *tmp;
+> -
+> -	lockdep_assert_held(&rdtgroup_mutex);
+> -
+> -	list_for_each_entry_safe(priv, tmp, &mon_data_kn_priv_list, list) {
+> -		list_del(&priv->list);
+> -		kfree(priv);
+> -	}
+> -}
+> -
+> -static void resctrl_fs_teardown(void)
+> -{
+> -	lockdep_assert_held(&rdtgroup_mutex);
+> -
+> -	/* Cleared by rdtgroup_destroy_root() */
+> -	if (!rdtgroup_default.kn)
+> -		return;
+> -
+> -	rmdir_all_sub();
+> -	rdtgroup_unassign_cntrs(&rdtgroup_default);
+> -	mon_put_kn_priv();
+> -	rdt_pseudo_lock_release();
+> -	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
+> -	closid_exit();
+> -	schemata_list_destroy();
+> -	rdtgroup_destroy_root();
+> -}
+> -
+>   static void rdt_kill_sb(struct super_block *sb)
+>   {
+>   	struct rdt_resource *r;
 
