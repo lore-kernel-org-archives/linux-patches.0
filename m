@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B00A3FB060;
-	Wed, 20 May 2026 18:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047E53F7AA9;
+	Wed, 20 May 2026 18:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300484; cv=none; b=kSPI/VfyRzTT6zVHnPWhhzSmfNX8rWJdUWvSsxltt9RY81E2lMSfPYNvbzn/KlO3dij6F0uE/2QRjSXTOt2C8vR++BVnEIXc5IFX9fnJVWy3uet2cwHLjCUZzpUw3jH9vntjJO2NS9WV9kLL7pG/U8DvR/tGZp/FemH8NEhv6T0=
+	t=1779300487; cv=none; b=CUgn6e8qYET3iOdtBK5QQx9U1u61vhrd/mBmaqh6ryfsE34Hi4P1g6s+TBq93HsEuBqStzcSmJ1OxwWTsngslUAgAes5NvM6ckK66KsRckpOkb36DWu9Tu3jCymxGEENWvBB5qZ+sFydJJxLChWgzq8+a35eDRXshX+PcwHXc0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300484; c=relaxed/simple;
-	bh=BqAlOKuyrjrwOm2g/cjMiAbpe2uF8PJlrATHQJafH6Q=;
+	s=arc-20240116; t=1779300487; c=relaxed/simple;
+	bh=3kDfXUS5jSEjp6ynX6U2HeqXVnwvmEMYYeRJgyYd1+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THqlPNH9xekD02n7VVEF72brTpj9dMZj02AC++raQnhNNIlzYQQGqsUyIE28UvDefqbi0tp1MYTLCNXv+kKfQ6cHF+t4PudiT5UwII8YqqOnzRwC4Awzqd+m290u0/O5ybZ/Zm25LIi0uHxGJTRbQ2kP3EIlqzrJTTnNiz+DP20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/K3GGCi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qUN0v/RQpxoPcQbU7miIfjeN6eV4fLKuxu7uxcbyFGcZjwIIuHdr6Z4volP6eLpfUHEVH6DD4QuCAVG0gi+RtJQYug859Hx1PJVRZgzyMpmvqUTU+UIe4VntyGdV1N+xnwZBnFdxmRbGg1FGCbZd1L/Gi2M0Wt3HKu+EiqXns8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKNcxAC3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/K3GGCi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54301F000E9;
-	Wed, 20 May 2026 18:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKNcxAC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6039B1F000E9;
+	Wed, 20 May 2026 18:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300483;
-	bh=TC1oIZCyxhLVcJR1Eq8d4IlPY/oPKOWq7+GYtnOCS/s=;
+	s=korg; t=1779300485;
+	bh=08YXNBNTkF9aVIMy/g2SPVKCtXDrJDPgvHtr3RSX4Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G/K3GGCiikYN/kLUiSrfC//Jp38HAPRjuBVZCXmeRxyqGcG5DDECdy9xHhRe42cqT
-	 N0EVS94M3Zerps+/0Wj378+DYDlfxuAAMucfw/lE+r2iR1LCbP6HEoouXvMbL6VKGX
-	 vQwyEOjLHOpeGn3dqQlbPsXH1hXqyxpUCwn6dOEY=
+	b=IKNcxAC3T2DZrPurS6Iea+NGQ8X5rTYvDZKGdNJM/mWaUCFKYRcjcniIEsTwJUHD4
+	 t2z7hMRDDxlv6cEM/W+NyagW1lE8quPPQGkNlnwtj0qjUUqfxit/g+cQodOj3IQlIR
+	 SRJ+MNfNcGE+ckDK0LRF9x3FIknPQe9C2q5T2OAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Shameer Kolothum <skolothumtho@nvidia.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 192/666] drm/msm/shrinker: Fix can_block() logic
-Date: Wed, 20 May 2026 18:16:43 +0200
-Message-ID: <20260520162115.362087197@linuxfoundation.org>
+Subject: [PATCH 6.12 166/666] iommu/tegra241-cmdqv: Set supports_cmd op in tegra241_vcmdq_hw_init()
+Date: Wed, 20 May 2026 18:16:17 +0200
+Message-ID: <20260520162114.803891869@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,42 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robin.clark@oss.qualcomm.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit df0f439e3926817cf577ca6272aad68468ff7624 ]
+[ Upstream commit 803e41f36d227022ab9bbe780c82283fd4713b2e ]
 
-The intention here was to allow blocking if DIRECT_RECLAIM or if called
-from kswapd and KSWAPD_RECLAIM is set.
+vintf->hyp_own is finalized in tegra241_vintf_hw_init(). On the other hand,
+tegra241_vcmdq_alloc_smmu_cmdq() is called via an init_structures callback,
+which is earlier than tegra241_vintf_hw_init().
 
-Reported by Claude code review: https://lore.gitlab.freedesktop.org/drm-ai-reviews/review-patch9-20260309151119.290217-10-boris.brezillon@collabora.com/ on a panthor patch which had copied similar logic.
+This results in the supports_cmd op always being set to the guest function,
+although this doesn't break any functionality nor have some noticeable perf
+impact since non-invalidation commands are not issued in the perf sensitive
+context.
 
-Reported-by: Boris Brezillon <boris.brezillon@collabora.com>
-Fixes: 7860d720a84c ("drm/msm: Fix build break with recent mm tree")
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Patchwork: https://patchwork.freedesktop.org/patch/714238/
-Message-ID: <20260325184106.1259528-1-robin.clark@oss.qualcomm.com>
+Fix this by moving supports_cmd to tegra241_vcmdq_hw_init().
+
+After this change,
+ - For a guest kernel, this will be a status quo
+ - For a host kernel, non-invalidation commands will be issued to VCMDQ(s)
+
+Fixes: a9d40285bdef ("iommu/tegra241-cmdqv: Limit CMDs for VCMDQs of a guest owned VINTF")
+Reported-by: Eric Auger <eric.auger@redhat.com>
+Reported-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Closes: https://lore.kernel.org/qemu-devel/CH3PR12MB754836BEE54E39B30C7210C0AB44A@CH3PR12MB7548.namprd12.prod.outlook.com/
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 07ca4ddfe4e37..89c0ea8ddeaac 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -26,9 +26,8 @@ static bool can_swap(void)
+diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+index dd7d030d2e890..a76839cf571d2 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
++++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+@@ -387,6 +387,10 @@ static int tegra241_vcmdq_hw_init(struct tegra241_vcmdq *vcmdq)
+ 	/* Reset VCMDQ */
+ 	tegra241_vcmdq_hw_deinit(vcmdq);
  
- static bool can_block(struct shrink_control *sc)
- {
--	if (!(sc->gfp_mask & __GFP_DIRECT_RECLAIM))
--		return false;
--	return current_is_kswapd() || (sc->gfp_mask & __GFP_RECLAIM);
-+	return (sc->gfp_mask & __GFP_DIRECT_RECLAIM) ||
-+	       (current_is_kswapd() && (sc->gfp_mask & __GFP_KSWAPD_RECLAIM));
++	/* vintf->hyp_own is a HW state finalized in tegra241_vintf_hw_init() */
++	if (!vcmdq->vintf->hyp_own)
++		vcmdq->cmdq.supports_cmd = tegra241_guest_vcmdq_supports_cmd;
++
+ 	/* Configure and enable VCMDQ */
+ 	writeq_relaxed(vcmdq->cmdq.q.q_base, REG_VCMDQ_PAGE1(vcmdq, BASE));
+ 
+@@ -514,9 +518,6 @@ static int tegra241_vcmdq_alloc_smmu_cmdq(struct tegra241_vcmdq *vcmdq)
+ 	q->q_base = q->base_dma & VCMDQ_ADDR;
+ 	q->q_base |= FIELD_PREP(VCMDQ_LOG2SIZE, q->llq.max_n_shift);
+ 
+-	if (!vcmdq->vintf->hyp_own)
+-		cmdq->supports_cmd = tegra241_guest_vcmdq_supports_cmd;
+-
+ 	return arm_smmu_cmdq_init(smmu, cmdq);
  }
  
- static unsigned long
 -- 
 2.53.0
 
