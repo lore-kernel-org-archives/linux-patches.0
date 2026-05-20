@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E834717A2FC;
-	Wed, 20 May 2026 18:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF8F370AEE;
+	Wed, 20 May 2026 18:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302050; cv=none; b=rDYqq4hIJ/XVX1w6hjRLDY0YLB1itCq/gIR3iItPMpKA9Trm2Jw1LtTNO7w8nJTgHmLrWkO0Nw5N0SibvyXieD43wMX9yopoI2res3by00cQlc2m7MQ1KPhja8day50HtmkFcXVGabkpfZ+gw5WXcYDJjS60INlHBYRPv0E1wGI=
+	t=1779302053; cv=none; b=OqIWQS8WZBy8o+V9AgjAVHUeA2JCjQ59Tt9w8jaCr6vueJ04ay5I5XZvr8U//oXA2xJl55bcnKjnO2op1i7h24b821VP/bFBiE3UDG/LEKX8XDLwLNZqY9hpEjnlkgWRZhpxc4Mhrfmohj/x42oKENyvvPSKakGH9MnTG+RdRbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302050; c=relaxed/simple;
-	bh=O/ivgddiUHIOXGnAPS9g8oIvKijQLtpFCN5XOwoBpVo=;
+	s=arc-20240116; t=1779302053; c=relaxed/simple;
+	bh=//OrHTap7eYIU6xCweGTP6+s7LCL0/YypC7sNbDiXSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iE/UTYKFqVuqmrI5TV+NelMFJ+DUxjSPnn1U1e7XiLBrVdjHXC7Zu3+I+o/gltFTL57FZWcCvyakV7KWfhPJX458ZBlbQ9vGFKrfZKjO8rxXAt7zAGisl5lr1znJC4lf/Rsz+OL+jYfNin1iQ9KVgu105YUm8Q0zj2+JGZ0buxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjprFnfv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VzImzLTDci0qdri2SHKM5oyOxJM7g4TN8vi+AxkZIhKLHiI/IOooy/pR3h5ezuzSJjx6zCl4uoR4RenUD5XyTQW5khZ/m3m5TQZMih2OVgCa1Tj3RAsCVujNJgPns3U9DGPeFw0n+Uh1ycmnX3O0yoDFGsQu7WbiL62lbhQArDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qv7/u7V/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjprFnfv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2D21F000E9;
-	Wed, 20 May 2026 18:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qv7/u7V/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C031F000E9;
+	Wed, 20 May 2026 18:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302048;
-	bh=YfQDO8AXuhnryrGdmoaAHzUJ/rD724KV9a/PAd/BFTU=;
+	s=korg; t=1779302051;
+	bh=xvPgrzxFp8lujiaSQpqjYW3A8Z70XDOoHLGx7+VdYcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zjprFnfvmukCAkG0o0yb36gYXAEfV3HkhT0R32MxtTFPT74hk+aXLKp2KW9GacD1L
-	 Oa8qGWXw4W4xAjHe3DP3NgbFNugtW8sHj8h4Hr8woiNHWeH7D7GU1+y0EpnklHY9ao
-	 3XIdrngQ1tiLML4UfimrJfR53I+Wgn8e4NJjkWjE=
+	b=qv7/u7V/etJOYTTmrO8cW62yX3+Q5ynRJRvBwiuZSaK9GO2Ysn6ez9rByzgUFtd81
+	 9n7yZa4YcyxXes5xnjWYMmwcGAlaN9AB1qA0BFRhwxk6lkjTlk99aOnxRTJZ4t0L1z
+	 /KNOrYX85fNXHWtYYLQkgpKkGtalN1LyANzMfvQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Pengyu Luo <mitltlatltl@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Alexander Koskovich <akoskovich@pm.me>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/508] drm/msm/dsi: add the missing parameter description
-Date: Wed, 20 May 2026 18:19:00 +0200
-Message-ID: <20260520162101.163817677@linuxfoundation.org>
+Subject: [PATCH 6.6 118/508] drm/msm/dsi: rename MSM8998 DSI version from V2_2_0 to V2_0_0
+Date: Wed, 20 May 2026 18:19:01 +0200
+Message-ID: <20260520162101.185064167@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,38 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengyu Luo <mitltlatltl@gmail.com>
+From: Alexander Koskovich <akoskovich@pm.me>
 
-[ Upstream commit 958adefc4c0fddee3b12269da5dd7cb49bac953f ]
+[ Upstream commit 913a709dea0eff9c7b2e9470f8c8594b9a0114ab ]
 
-Add a description for is_bonded_dsi in dsi_adjust_pclk_for_compression
-to match the existing kernel-doc comment.
+The MSM8998 DSI controller is v2.0.0 as stated in commit 7b8c9e203039
+("drm/msm/dsi: Add support for MSM8998 DSI controller"). The value was
+always correct just the name was wrong.
 
-Fixes: e4eb11b34d6c ("drm/msm/dsi: fix pclk rate calculation for bonded dsi")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202603080314.XeqyRZ7A-lkp@intel.com/
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+Rename and reorder to maintain version sorting.
+
+Fixes: 7b8c9e203039 ("drm/msm/dsi: Add support for MSM8998 DSI controller")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/710112/
-Link: https://lore.kernel.org/r/20260309100254.877801-1-mitltlatltl@gmail.com
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+Patchwork: https://patchwork.freedesktop.org/patch/713717/
+Link: https://lore.kernel.org/r/20260324-dsi-rgb101010-support-v5-3-ff6afc904115@pm.me
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c | 4 ++--
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 6077331deba97..771ac34561037 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -533,6 +533,7 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
-  * dsi_adjust_pclk_for_compression() - Adjust the pclk rate for compression case
-  * @mode: The selected mode for the DSI output
-  * @dsc: DRM DSC configuration for this DSI output
-+ * @is_bonded_dsi: True if two DSI controllers are bonded
-  *
-  * Adjust the pclk rate by calculating a new hdisplay proportional to
-  * the compression ratio such that:
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+index 1f98ff74ceb09..39940685681b9 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+@@ -263,10 +263,10 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
+ 		&msm8996_dsi_cfg, &msm_dsi_6g_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V1_4_2,
+ 		&msm8976_dsi_cfg, &msm_dsi_6g_host_ops},
++	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_0_0,
++		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_1_0,
+ 		&sdm660_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+-	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_0,
+-		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
+ 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_3_0,
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+index 43f0dd74edb65..32eff45744624 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+@@ -19,8 +19,8 @@
+ #define MSM_DSI_6G_VER_MINOR_V1_3_1	0x10030001
+ #define MSM_DSI_6G_VER_MINOR_V1_4_1	0x10040001
+ #define MSM_DSI_6G_VER_MINOR_V1_4_2	0x10040002
++#define MSM_DSI_6G_VER_MINOR_V2_0_0	0x20000000
+ #define MSM_DSI_6G_VER_MINOR_V2_1_0	0x20010000
+-#define MSM_DSI_6G_VER_MINOR_V2_2_0	0x20000000
+ #define MSM_DSI_6G_VER_MINOR_V2_2_1	0x20020001
+ #define MSM_DSI_6G_VER_MINOR_V2_3_0	0x20030000
+ #define MSM_DSI_6G_VER_MINOR_V2_4_0	0x20040000
 -- 
 2.53.0
 
