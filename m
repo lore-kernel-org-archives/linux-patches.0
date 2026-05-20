@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A88A348C55;
-	Wed, 20 May 2026 18:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA26D3E123F;
+	Wed, 20 May 2026 18:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301158; cv=none; b=WENNXE69Q3FmATbBFcpCT/ELL5v+gXrR7gLj/5wYm6y5yEtysofSDm2OCNHEI2M5SUjAlTSw+djbYUNGqrfjyXbYrFnwm88aVG0NfEcIBHoKBl2x4I2twm/08P1puAgylF1hMpxpXRbm9S9xBibdyvi0VEwtq96Z5PxFYGNaUsY=
+	t=1779301160; cv=none; b=NIAdoL7Q6jdbzkN9p0xzyDdX8WqNUy51cABeLmFpEe/cJuOCLXKdzrFfB8BL8qpYBtxp7XLcCalaTL5NAGWWTHS4e7D/et2WiNQhN6KL+kUoJM/C4ew3q1AHHHwsSrJAPewGCUgWkwn5cTggWFWCF/80UEJNcJ/Zz84Fho2AUvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301158; c=relaxed/simple;
-	bh=pIMZ4j4pdc1zYrsXvn2vHs0Ob+ZYCgfrToiLBHGI9vg=;
+	s=arc-20240116; t=1779301160; c=relaxed/simple;
+	bh=2+LjpUsJkjcNe2YX067Z+ofMOlyMeNF2z+qrd3GcSOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/zWzX2IPt+PJC0oEvoYRA1eGTAsxUXdqTiV/qiNWo5S7FlNJGvB6lyUeJiVcfCunpG2dBURVKY5r6vqKWvPKXsK9mkRsSCOSpHx4iwL30ShL3uNvNDPoC15TdGukBBrWnO2TbpEl7pdg2Fb+Tp9wpzWzvvoqgeO72Bgq3+VtSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRCtjCXc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l1FwSEsDq8ucgwyuQqbmTtKiiBhchec4ZdwEHVi8EYn41xFVuzotFmK8w+zMt8QJpbMBjvvAIXIyZS+BaLN6z3D5AcbupnX9x5gqX0/B0kRPlyHlidiJeut09ps3ARyYUND/2mNiHcc4u731PPO5Q/tVempa1LwEWRfRKkghnio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YEVuK2R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRCtjCXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED901F000E9;
-	Wed, 20 May 2026 18:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YEVuK2R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3566B1F000E9;
+	Wed, 20 May 2026 18:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301157;
-	bh=oqZhHYzSgNM40pbhlbznbKY7V0EoK7htHV4Gis9EdE0=;
+	s=korg; t=1779301159;
+	bh=MixuNpONV3Z/Ayw+h64YLLvnDlHzkYnu1s3ojimKIw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eRCtjCXc8MMIhvAWfQitbQEV2bsooo/8QFvs4sfNXxhAlA6oPVighqS1M7wePGm2l
-	 R9unduxsqWb6mG65AD0/wOvFKralOqx5e5VIuUD2etH/gle7tyF9CUmjQGEC1z5ocL
-	 0NX/8cj/VU5e38YBhJQiarw7sDdSG+phE88yBw8I=
+	b=1YEVuK2RJ3cpmt+ffYYU74Bk8hKYGECIoL0osqDd0GetwrU3fo9nUIyu0IaXgrV07
+	 L9vWU8aS2dTpJh9VOId3IORWJC656gFgipe/8yaz4hBZBvZk9FrPz4vTibWbqX/nst
+	 gBu8jhPHR9LRvFlwfpqUr9egu8FgHcfnGk/JiCAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 449/666] tcp: add data-race annotations around tp->data_segs_out and tp->total_retrans
-Date: Wed, 20 May 2026 18:21:00 +0200
-Message-ID: <20260520162121.003240495@linuxfoundation.org>
+Subject: [PATCH 6.12 432/666] erofs: unify lcn as u64 for 32-bit platforms
+Date: Wed, 20 May 2026 18:20:43 +0200
+Message-ID: <20260520162120.635142010@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,71 +50,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 21e92a38cfd891538598ba8f805e0165a820d532 ]
+[ Upstream commit 2d8c7edcb661812249469f4a5b62e9339118846f ]
 
-tcp_get_timestamping_opt_stats() intentionally runs lockless, we must
-add READ_ONCE() and WRITE_ONCE() annotations to keep KCSAN happy.
+As sashiko reported [1], `lcn` was typed as `unsigned long` (or
+`unsigned int` sometimes), which is only 32 bits wide on 32-bit
+platforms, which causes `(lcn << lclusterbits)` to be truncated
+at 4 GiB.
 
-Fixes: 7e98102f4897 ("tcp: record pkts sent and retransmistted")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260416200319.3608680-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+In order to consolidate the logic, just use `u64` consistently
+around the codebase.
+
+[1] https://sashiko.dev/r/20260420034612.1899973-1-hsiangkao%40linux.alibaba.com
+
+Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c        | 4 ++--
- net/ipv4/tcp_output.c | 8 +++++---
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ fs/erofs/zmap.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 9c5fc44647831..382c2895ec311 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4276,9 +4276,9 @@ struct sk_buff *tcp_get_timestamping_opt_stats(const struct sock *sk,
- 	nla_put_u64_64bit(stats, TCP_NLA_SNDBUF_LIMITED,
- 			  info.tcpi_sndbuf_limited, TCP_NLA_PAD);
- 	nla_put_u64_64bit(stats, TCP_NLA_DATA_SEGS_OUT,
--			  tp->data_segs_out, TCP_NLA_PAD);
-+			  READ_ONCE(tp->data_segs_out), TCP_NLA_PAD);
- 	nla_put_u64_64bit(stats, TCP_NLA_TOTAL_RETRANS,
--			  tp->total_retrans, TCP_NLA_PAD);
-+			  READ_ONCE(tp->total_retrans), TCP_NLA_PAD);
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index d0371ca374ce2..af1046908c626 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -10,7 +10,7 @@
+ struct z_erofs_maprecorder {
+ 	struct inode *inode;
+ 	struct erofs_map_blocks *map;
+-	unsigned long lcn;
++	u64 lcn;
+ 	/* compression extent information gathered */
+ 	u8  type, headtype;
+ 	u16 clusterofs;
+@@ -20,8 +20,7 @@ struct z_erofs_maprecorder {
+ 	bool partialref;
+ };
  
- 	rate = READ_ONCE(sk->sk_pacing_rate);
- 	rate64 = (rate != ~0UL) ? rate : ~0ULL;
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 5e37dc45639db..dbe39ad886821 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -1446,7 +1446,8 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
+-static int z_erofs_load_full_lcluster(struct z_erofs_maprecorder *m,
+-				      unsigned long lcn)
++static int z_erofs_load_full_lcluster(struct z_erofs_maprecorder *m, u64 lcn)
+ {
+ 	struct inode *const inode = m->inode;
+ 	struct erofs_inode *const vi = EROFS_I(inode);
+@@ -94,7 +93,7 @@ static int get_compacted_la_distance(unsigned int lobits,
+ }
  
- 	if (skb->len != tcp_header_size) {
- 		tcp_event_data_sent(tp, sk);
--		tp->data_segs_out += tcp_skb_pcount(skb);
-+		WRITE_ONCE(tp->data_segs_out,
-+			   tp->data_segs_out + tcp_skb_pcount(skb));
- 		tp->bytes_sent += skb->len - tcp_header_size;
- 	}
+ static int z_erofs_load_compact_lcluster(struct z_erofs_maprecorder *m,
+-					 unsigned long lcn, bool lookahead)
++					 u64 lcn, bool lookahead)
+ {
+ 	struct inode *const inode = m->inode;
+ 	struct erofs_inode *const vi = EROFS_I(inode);
+@@ -234,7 +233,7 @@ static int z_erofs_load_compact_lcluster(struct z_erofs_maprecorder *m,
+ }
  
-@@ -3411,7 +3412,7 @@ int __tcp_retransmit_skb(struct sock *sk, struct sk_buff *skb, int segs)
- 	TCP_ADD_STATS(sock_net(sk), TCP_MIB_RETRANSSEGS, segs);
- 	if (TCP_SKB_CB(skb)->tcp_flags & TCPHDR_SYN)
- 		__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPSYNRETRANS);
--	tp->total_retrans += segs;
-+	WRITE_ONCE(tp->total_retrans, tp->total_retrans + segs);
- 	tp->bytes_retrans += skb->len;
+ static int z_erofs_load_lcluster_from_disk(struct z_erofs_maprecorder *m,
+-					   unsigned int lcn, bool lookahead)
++					   u64 lcn, bool lookahead)
+ {
+ 	struct erofs_inode *vi = EROFS_I(m->inode);
+ 	int err;
+@@ -249,7 +248,7 @@ static int z_erofs_load_lcluster_from_disk(struct z_erofs_maprecorder *m,
+ 		return err;
  
- 	/* make sure skb->data is aligned on arches that require it
-@@ -4433,7 +4434,8 @@ int tcp_rtx_synack(const struct sock *sk, struct request_sock *req)
- 			 * However in this case, we are dealing with a passive fastopen
- 			 * socket thus we can change total_retrans value.
- 			 */
--			tcp_sk_rw(sk)->total_retrans++;
-+			WRITE_ONCE(tcp_sk_rw(sk)->total_retrans,
-+				   tcp_sk_rw(sk)->total_retrans + 1);
+ 	if (m->type >= Z_EROFS_LCLUSTER_TYPE_MAX) {
+-		erofs_err(m->inode->i_sb, "unknown type %u @ lcn %u of nid %llu",
++		erofs_err(m->inode->i_sb, "unknown type %u @ lcn %llu of nid %llu",
+ 			  m->type, lcn, EROFS_I(m->inode)->nid);
+ 		DBG_BUGON(1);
+ 		return -EOPNOTSUPP;
+@@ -269,7 +268,7 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
+ 	const unsigned int lclusterbits = vi->z_lclusterbits;
+ 
+ 	while (m->lcn >= lookback_distance) {
+-		unsigned long lcn = m->lcn - lookback_distance;
++		u64 lcn = m->lcn - lookback_distance;
+ 		int err;
+ 
+ 		err = z_erofs_load_lcluster_from_disk(m, lcn, false);
+@@ -287,7 +286,7 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
+ 			return 0;
  		}
- 		trace_tcp_retransmit_synack(sk, req);
+ 	}
+-	erofs_err(sb, "bogus lookback distance %u @ lcn %lu of nid %llu",
++	erofs_err(sb, "bogus lookback distance %u @ lcn %llu of nid %llu",
+ 		  lookback_distance, m->lcn, vi->nid);
+ 	DBG_BUGON(1);
+ 	return -EFSCORRUPTED;
+@@ -301,7 +300,7 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
+ 	struct erofs_inode *vi = EROFS_I(inode);
+ 	bool bigpcl1 = vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_1;
+ 	bool bigpcl2 = vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_2;
+-	unsigned long lcn = m->lcn + 1;
++	u64 lcn = m->lcn + 1;
+ 	int err;
+ 
+ 	DBG_BUGON(m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD);
+@@ -332,7 +331,7 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
+ 		  m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD);
+ 
+ 	if (m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD && m->delta[0] != 1) {
+-		erofs_err(sb, "bogus CBLKCNT @ lcn %lu of nid %llu", lcn, vi->nid);
++		erofs_err(sb, "bogus CBLKCNT @ lcn %llu of nid %llu", lcn, vi->nid);
+ 		DBG_BUGON(1);
+ 		return -EFSCORRUPTED;
  	}
 -- 
 2.53.0
