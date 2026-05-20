@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDFE2F363F;
-	Wed, 20 May 2026 17:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60A23D5647;
+	Wed, 20 May 2026 17:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299454; cv=none; b=BitSxTMBJkG0Qtx82oxGJwYai4uNKVwLZHv2d9+vdvgi3odeyLhUwDzbf2c8sj39KTx1L1xYUodi6G3YB9FMkgXGaaMtLyynYLX2FsGYNaAwszkqU+FBLXsxPD6osVT4AMLIcatZoAMwtA1fMMkA9sTvDN4U6DlKsvpkJ7qiTT4=
+	t=1779299456; cv=none; b=W+eHttAFtNG0u8T51K+A0JJWul7xCCiKYm/h3Aa+pHXWU3+0ZnTe+jWLgAz6q+JnjpLB4rRQhuBn5RfBD6p7EohL4qDP4YuoAblKp6RlPvQ6TpaJ+c3vEBOAwY93rhV/qi4QkT/4JTQA9nrHUmbYqJ8WYtGgdo3+UCLCpR7SVFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299454; c=relaxed/simple;
-	bh=68X+PEO5aWpI2TiQGsxLMyxA+WRENrZw588JGgqGxuA=;
+	s=arc-20240116; t=1779299456; c=relaxed/simple;
+	bh=gHiADcNCdLLhE5NaHoIBeMf9e4mOEB4Kfb3g9x+zHSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZrPebm6ji6ts9bkPhIKEQukzjzNMpd5Ojx4ENWPqjbfbTMOPDtuDHWHaayGOqjg3xbLtzP2vpZglWRm/lRwT/JVPQwnHr92Q/5leFCFDn8J2fnnhCP466/gGQr8Qn+HGP67ROdC0wloet2mfnHyimO4qkZZiCyf7lOWcmOLron0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bf+ZZBMi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CV8XJw/dDOU4vfNVaiRvCytXXeqAupW38mKRaXbg3TRfaZQQmK7HGJ4cgLX0R7D9VzfAiycnpbI7vkC7hF1McEvt8rPUgGZhhIG41z1TmLfkBuj58NS8FLYcujZSz6Dz/i90kd+dX8SuWgStw33nhK+Vd2SRzTFsE3BNHh5eXwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D17lIY4+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bf+ZZBMi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DF01F000E9;
-	Wed, 20 May 2026 17:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D17lIY4+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388351F000E9;
+	Wed, 20 May 2026 17:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299453;
-	bh=RDhMdNnHU/QPGUqVH8XSJGP1mv1Nllq/+hb1/zDbmX4=;
+	s=korg; t=1779299455;
+	bh=fmKfqhBlmYiwV/ko7bF4O3vbB0WwgoNCU+fkpIieYzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bf+ZZBMiVdduNnj31GIZJGYYeJA8ivqggY7X69D2qSNubm8s4VuFd/5yZ4Ft6CYje
-	 0OKwZL6x5DJdDT3dqeM0mUCcBCylVeYzb963CV3OcSlY+/tOta6rKYmHPwshYofMyr
-	 5AypEEzAehTn/OAPoFBkjfAIUvQOTElJJHwu/LG8=
+	b=D17lIY4+W12CrO5iAvUKKUsHyU8xf3/05VQPQYvhvu6nh7u1NxqkMDE6feHaJskpB
+	 EsYxhQKeHbpcv9EmCND69q6YapuN5r9GPazuTeHfrs0I6s0zZ39nHS9ou4SquQfz4b
+	 jsZ0/ONq7qgzZREWmedF7cLoLiAcELV3bIPTqoso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3f46c095ac0ca048cb71@syzkaller.appspotmail.com,
 	Andrew Lunn <andrew@lunn.ch>,
-	Zhan Jun <zhanjun@uniontech.com>,
+	Morduan Zang <zhangdandan@uniontech.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 778/957] net: usb: rtl8150: fix use-after-free in rtl8150_start_xmit()
-Date: Wed, 20 May 2026 18:21:01 +0200
-Message-ID: <20260520162151.432663437@linuxfoundation.org>
+Subject: [PATCH 6.18 779/957] net: usb: rtl8150: free skb on usb_submit_urb() failure in xmit
+Date: Wed, 20 May 2026 18:21:02 +0200
+Message-ID: <20260520162151.454146853@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,87 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Jun <zhanjun@uniontech.com>
+From: Morduan Zang <zhangdandan@uniontech.com>
 
-[ Upstream commit 23f0e34c64acba15cad4d23e50f41f533da195fa ]
+[ Upstream commit adbe2cdf75461891e50dbe11896ac78e9af1f874 ]
 
-syzbot reported a KASAN slab-use-after-free read in rtl8150_start_xmit()
-when accessing skb->len for tx statistics after usb_submit_urb() has
-been called:
+When rtl8150_start_xmit() fails to submit the tx URB, the URB is never
+handed to the USB core and write_bulk_callback() will not run.  The
+driver returns NETDEV_TX_OK, which tells the networking stack that the
+skb has been consumed, but nothing actually frees the skb on this
+error path:
 
-  BUG: KASAN: slab-use-after-free in rtl8150_start_xmit+0x71f/0x760
-    drivers/net/usb/rtl8150.c:712
-  Read of size 4 at addr ffff88810eb7a930 by task kworker/0:4/5226
-
-The URB completion handler write_bulk_callback() frees the skb via
-dev_kfree_skb_irq(dev->tx_skb). The URB may complete on another CPU
-in softirq context before usb_submit_urb() returns in the submitter,
-so by the time the submitter reads skb->len the skb has already been
-queued to the per-CPU completion_queue and freed by net_tx_action():
-
-  CPU A (xmit)                      CPU B (USB completion softirq)
-  ------------                      ------------------------------
   dev->tx_skb = skb;
-  usb_submit_urb()      --+
-                          |-------> write_bulk_callback()
-                          |           dev_kfree_skb_irq(dev->tx_skb)
-                          |         net_tx_action()
-                          |           napi_skb_cache_put()   <-- free
-  netdev->stats.tx_bytes  |
-    += skb->len;          <-- UAF read
+  ...
+  if ((res = usb_submit_urb(dev->tx_urb, GFP_ATOMIC))) {
+          ...
+          /* no kfree_skb here */
+  }
+  return NETDEV_TX_OK;
 
-Fix it by caching skb->len before submitting the URB and using the
-cached value when updating the tx_bytes counter.
+This leaks the skb on every submit failure and also leaves dev->tx_skb
+pointing at memory that the driver itself may later free, which is
+fragile.
 
-The pre-existing tx_bytes semantics are preserved: the counter tracks
-the original frame length (skb->len), not the ETH_ZLEN/USB-alignment
-padded "count" value that is handed to the device.  Changing that
-would be a user-visible accounting change and is out of scope for
-this UAF fix.
+Free the skb with dev_kfree_skb_any() in the error path and clear
+dev->tx_skb so no stale pointer is left behind.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+3f46c095ac0ca048cb71@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69e69ee7.050a0220.24bfd3.002b.GAE@google.com/
-Closes: https://syzkaller.appspot.com/bug?extid=3f46c095ac0ca048cb71
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Zhan Jun <zhanjun@uniontech.com>
-Link: https://patch.msgid.link/809895186B866C10+20260423004913.136655-1-zhangdandan@uniontech.com
+Signed-off-by: Morduan Zang <zhangdandan@uniontech.com>
+Link: https://patch.msgid.link/E7D3E1C013C5A859+20260424015517.9574-1-zhangdandan@uniontech.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/usb/rtl8150.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index e40b0669d9f4b..8700ae392b10a 100644
+index 8700ae392b10a..647f28b367b99 100644
 --- a/drivers/net/usb/rtl8150.c
 +++ b/drivers/net/usb/rtl8150.c
-@@ -685,6 +685,7 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
- 					    struct net_device *netdev)
- {
- 	rtl8150_t *dev = netdev_priv(netdev);
-+	unsigned int skb_len;
- 	int count, res;
- 
- 	/* pad the frame and ensure terminating USB packet, datasheet 9.2.3 */
-@@ -696,6 +697,8 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
- 		return NETDEV_TX_OK;
- 	}
- 
-+	skb_len = skb->len;
-+
- 	netif_stop_queue(netdev);
- 	dev->tx_skb = skb;
- 	usb_fill_bulk_urb(dev->tx_urb, dev->udev, usb_sndbulkpipe(dev->udev, 2),
-@@ -711,7 +714,7 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
+@@ -712,6 +712,13 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
+ 			netdev->stats.tx_errors++;
+ 			netif_start_queue(netdev);
  		}
++		/*
++		 * The URB was not submitted, so write_bulk_callback() will
++		 * never run to free dev->tx_skb.  Drop the skb here and
++		 * clear tx_skb to avoid leaving a stale pointer.
++		 */
++		dev->tx_skb = NULL;
++		dev_kfree_skb_any(skb);
  	} else {
  		netdev->stats.tx_packets++;
--		netdev->stats.tx_bytes += skb->len;
-+		netdev->stats.tx_bytes += skb_len;
- 		netif_trans_update(netdev);
- 	}
- 
+ 		netdev->stats.tx_bytes += skb_len;
 -- 
 2.53.0
 
