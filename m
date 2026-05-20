@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D110636D9E7;
-	Wed, 20 May 2026 16:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6FC31CA4E;
+	Wed, 20 May 2026 16:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295089; cv=none; b=RSVAZhL1LYYv/li5mWM9HRvBUePegff+7Y460Byqjb2yUfR/XCF1Wg3z8XJDz26IKJmS/8lnLMC4I055VbJNiJhUbbhkTEIjopcjTua9TeZji2Fza4eHneV2Lfwqwbdp57RRHThO1m2JO+2iFo0oEHiu4HqLwl8PyArvaSt+080=
+	t=1779295092; cv=none; b=cNHwLI+uqKVsLC7w33id4vu+Blu5e9pNZYqRuQWWyIvu6Fd37PuhBiq/UVGzYr2SxoQVq2NFEjI351fuStew80DGTbELd3ols1TdXxzzVhptgcuordZAabFubMiGzw604Rx3TKTJe4ovfnJ4Y+mLGFWnRn2KwwEvB+skxJ0zaDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295089; c=relaxed/simple;
-	bh=xSYmPeu40OgATJE8bMk+WhvjI/1fSR742VSJ05frBYY=;
+	s=arc-20240116; t=1779295092; c=relaxed/simple;
+	bh=vFuz1ZF0T/AAzTsejShk03BXskDRDqt/RLv37Xos/GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcigVScRx8Dl+RC8q/qksn18PoCg78ARV7bLC7QczYfwpCJBaBuzhq8hxHxZS92S6yEn8LdOYheCHaeMCyF0+sVzPNRc6CYCaPAqPc8jODUPfgbAu6iaKV8yYf0XMy+It7anrTba+BGVuXfJkXTkY39isjwmzi2ify3HQhYBeH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEbByfTt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cxHwcOawk/L4Yvd1K9442g3L/KBtRaEqxMdQzL2Jkyh00jZRykXhIJl9HrcC+6hk0bPC6xfwg4+q5iuscA59gkotiE4DB5zy3dRvdyU++2ZUrDT8MrBpTk+8DjSuoMk4nutBBy11O3RqCrJqj6cOnd9yyS+NTVvD+/YsaySouxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nAivZcQX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEbByfTt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8771F000E9;
-	Wed, 20 May 2026 16:38:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nAivZcQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB2971F000E9;
+	Wed, 20 May 2026 16:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295087;
-	bh=8iDQx6cGHgr7POun8H1fIsCCiQu4+wAkz5GWSqi1Mdk=;
+	s=korg; t=1779295090;
+	bh=ETGhH3lMyRocJ7T50sfFenXUBFxSB+iRE2JRFVt452A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iEbByfTtLxDP6EqVV4ftoPsxhFR/5/yq2vPi/W+2HsGKxgfb5Ce07Yfw/U8L+9m4g
-	 MiO7eleh6g4lL96Glmi7KAsYPHMuAoM6jAh98TAWVvgh8/e8kLpa1aNrdw/+VqAyF3
-	 NrEuKKN1wFtBQupJGuN2cavcr59h/ZFHr4ESObME=
+	b=nAivZcQXw9ei1HwVobY+uS8fwawSg2mfKLX9EKvaY89XhvpzVfmFhuU+Z8czcUtnp
+	 DMHVBtwn9FlRlLyjA3p2Lg//vZeup5OP+M1p6vTqpP39xw//CNtEgSrd/yLMJ/U8Vw
+	 f9fWgWnPAijTu1B0DmZmj5vWLmLwfV68RrAheIwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0285/1146] crypto: inside-secure/eip93 - register hash before authenc algorithms
-Date: Wed, 20 May 2026 18:08:55 +0200
-Message-ID: <20260520162154.666461599@linuxfoundation.org>
+	John Madieu <john.madieu.xa@bp.renesas.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Subject: [PATCH 7.0 0286/1146] PCI: rzg3s-host: Fix reset handling in probe error path
+Date: Wed, 20 May 2026 18:08:56 +0200
+Message-ID: <20260520162154.690036054@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,65 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: John Madieu <john.madieu.xa@bp.renesas.com>
 
-[ Upstream commit 5377032914b29b4643adece0ff1dfc67e36700f4 ]
+[ Upstream commit d284389d4576e7c8040dc4cbb66876e539c6d064 ]
 
-Register hash before hmac and authenc algorithms. This will ensure
-selftests pass at startup. Previously, selftests failed on the
-crypto_alloc_ahash() function since the associated algorithm was
-not yet registered.
+Fix incorrect reset_control_bulk_deassert() call in the probe error
+path. When unwinding from a failed pci_host_probe(), the configuration
+resets should be asserted to restore the hardware to its initial state,
+not deasserted again.
 
-Fixes following error:
-...
-[   18.375811] alg: self-tests for authenc(hmac(sha1),cbc(aes)) using authenc(hmac(sha1-eip93),cbc(aes-eip93)) failed (rc=-2)
-[   18.382140] alg: self-tests for authenc(hmac(sha224),rfc3686(ctr(aes))) using authenc(hmac(sha224-eip93),rfc3686(ctr(aes-eip93))) failed (rc=-2)
-[   18.395029] alg: aead: authenc(hmac(sha256-eip93),cbc(des-eip93)) setkey failed on test vector 0; expected_error=0, actual_error=-2, flags=0x1
-[   18.409734] alg: aead: authenc(hmac(md5-eip93),cbc(des3_ede-eip93)) setkey failed on test vector 0; expected_error=0, actual_error=-2, flags=0x1
-...
-
-Fixes: 9739f5f93b78 ("crypto: eip93 - Add Inside Secure SafeXcel EIP-93 crypto engine support")
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 7ef502fb35b2 ("PCI: Add Renesas RZ/G3S host controller driver")
+Signed-off-by: John Madieu <john.madieu.xa@bp.renesas.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com> # RZ/V2N EVK
+Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20260306143423.19562-2-john.madieu.xa@bp.renesas.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/inside-secure/eip93/eip93-main.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/pci/controller/pcie-rzg3s-host.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/inside-secure/eip93/eip93-main.c b/drivers/crypto/inside-secure/eip93/eip93-main.c
-index b7fd9795062d4..76858bb4fcc22 100644
---- a/drivers/crypto/inside-secure/eip93/eip93-main.c
-+++ b/drivers/crypto/inside-secure/eip93/eip93-main.c
-@@ -36,6 +36,14 @@ static struct eip93_alg_template *eip93_algs[] = {
- 	&eip93_alg_cbc_aes,
- 	&eip93_alg_ctr_aes,
- 	&eip93_alg_rfc3686_aes,
-+	&eip93_alg_md5,
-+	&eip93_alg_sha1,
-+	&eip93_alg_sha224,
-+	&eip93_alg_sha256,
-+	&eip93_alg_hmac_md5,
-+	&eip93_alg_hmac_sha1,
-+	&eip93_alg_hmac_sha224,
-+	&eip93_alg_hmac_sha256,
- 	&eip93_alg_authenc_hmac_md5_cbc_des,
- 	&eip93_alg_authenc_hmac_sha1_cbc_des,
- 	&eip93_alg_authenc_hmac_sha224_cbc_des,
-@@ -52,14 +60,6 @@ static struct eip93_alg_template *eip93_algs[] = {
- 	&eip93_alg_authenc_hmac_sha1_rfc3686_aes,
- 	&eip93_alg_authenc_hmac_sha224_rfc3686_aes,
- 	&eip93_alg_authenc_hmac_sha256_rfc3686_aes,
--	&eip93_alg_md5,
--	&eip93_alg_sha1,
--	&eip93_alg_sha224,
--	&eip93_alg_sha256,
--	&eip93_alg_hmac_md5,
--	&eip93_alg_hmac_sha1,
--	&eip93_alg_hmac_sha224,
--	&eip93_alg_hmac_sha256,
- };
+diff --git a/drivers/pci/controller/pcie-rzg3s-host.c b/drivers/pci/controller/pcie-rzg3s-host.c
+index 2809112e63171..7a80455aad366 100644
+--- a/drivers/pci/controller/pcie-rzg3s-host.c
++++ b/drivers/pci/controller/pcie-rzg3s-host.c
+@@ -1589,8 +1589,7 @@ static int rzg3s_pcie_probe(struct platform_device *pdev)
  
- inline void eip93_irq_disable(struct eip93_device *eip93, u32 mask)
+ host_probe_teardown:
+ 	rzg3s_pcie_teardown_irqdomain(host);
+-	reset_control_bulk_deassert(host->data->num_cfg_resets,
+-				    host->cfg_resets);
++	reset_control_bulk_assert(host->data->num_cfg_resets, host->cfg_resets);
+ rpm_put:
+ 	pm_runtime_put_sync(dev);
+ rpm_disable:
 -- 
 2.53.0
 
