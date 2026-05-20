@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F503EAC83;
-	Wed, 20 May 2026 16:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A383F1AB8;
+	Wed, 20 May 2026 16:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294468; cv=none; b=sKzZM8IBp93Fx7HAsgYf27n8neplaBWSxdNTFEBOrZs8dRZYkUAxA034kn4kdrDVcXvUPIJn4mLLtTbm9A6kpLjiguTNTJeJ4KVgU/+lhD2kQfxcoHUl6G+HlZuyQ21apRHu5RYLSAlt84K9NEKfxJ5BNAgWwFa8pUEo3bEJKWQ=
+	t=1779294470; cv=none; b=Bk0/phC8ykJV5BW2CBKSSLk8TAWWTTQ3RQsdv/xRhXp4yItBcsF7Xx4R5SYEszaVY7c6bEqI+6+HLtKEy1TXqNyJPN8F4uzbNihxYMHL3v0nbY+9v5vINGVADVEZnPg9sqMe3i5vlUjjfsAcfTGtAci6aK4xFmMoRh9I+gcwhYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294468; c=relaxed/simple;
-	bh=xnghIO0jLWqZZI9Iv78VymRjMfoG27rLm1uvFq6oBBc=;
+	s=arc-20240116; t=1779294470; c=relaxed/simple;
+	bh=swTAUfiA4bJaS0r50QhCnKYZIaqBhwECZEZsBc2tjmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jhqp2bAcB59ZI6HT707nXU02Xu+VSXwqBan87qd+woFLdQ6voAbgjLEddLrMnDdPL6Q1qPw5cMV4FF9l6dSeBJN98AWwezFq77HMUXOha76RSHDg7hfEf93JQuEpnldB4izL6r812pxDvti6mtophbCPmLfajjMEQVPSkMsiqOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/cZkAmG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LvGUQHakEIldiIpLQPjhHQTwmE2KmXQv19Dt2f+R+xutzyA7nPG6GRFnu98PIUmmCD1ybYAdreXYrLcmskQCwEg9qD6DLu3u/7eVT2ZObIR2bXB9PWBZnNfe2nO0qv/4Akun0tAD22QMxwjHP5PtjSRe1W1gzt9qmwVCMX6Uslo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQn4STfC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/cZkAmG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BFD1F00893;
-	Wed, 20 May 2026 16:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQn4STfC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DD951F00893;
+	Wed, 20 May 2026 16:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294466;
-	bh=ZIVfmAk+yRcji5LkFmC6jEqT59J5Ry5ezw8JRlp6IR0=;
+	s=korg; t=1779294469;
+	bh=FzlEFQTo8ss7pJXJGCX4EPedMiaUB7vFxgc9065gYrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0/cZkAmG/sVPjdvSPnsCegr0AvOxHYeHwAGxNqewubltm1T5lMyoNgLRrtZMglxnv
-	 POH8Pexj5bqHDozdWlSPJp604VRAYbNI9X3NFlGF30oMFbtK9Lu2lmkok24LAtlpLg
-	 QCsJYibx4yZI9Fab62KVAhmao60GaNNprvR7kUWU=
+	b=VQn4STfCbHeiZ90R3XnfWXi+7zg1SJ8kUUnbZkIayvgjsAhYGHLsTcP26P4/YtrB4
+	 PxEV0RRJxv6weLHNk37EhMm/2cPMAqiPh4li6zyPxjhgy/b9LtBFWT2JlSq7VJ2Q2D
+	 yUTWn8sT738nk3I3eXqvPWaaOCWxQ5Not5ZjWVe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0051/1146] perf/amd/ibs: Account interrupt for discarded samples
-Date: Wed, 20 May 2026 18:05:01 +0200
-Message-ID: <20260520162149.528921999@linuxfoundation.org>
+Subject: [PATCH 7.0 0052/1146] perf/amd/ibs: Preserve PhyAddrVal bit when clearing PhyAddr MSR
+Date: Wed, 20 May 2026 18:05:02 +0200
+Message-ID: <20260520162149.550577713@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,58 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Ravi Bangoria <ravi.bangoria@amd.com>
 
-[ Upstream commit 01336b5559785a136de1cac49705f63a70a755bc ]
+[ Upstream commit 723a290326e015b07931eabc603d3735999377be ]
 
-Add interrupt throttling accounting for below cases:
+Commit 50a53b60e141 ("perf/amd/ibs: Prevent leaking sensitive data to
+userspace") zeroed the physical address and also cleared the PhyAddrVal
+flag before copying the value into a perf sample to avoid exposing
+physical addresses to unprivileged users.
 
-  o IBS Op PMU: A software filter (in addition to the hardware filter)
-    drops samples whose load latency is below the user-specified
-    threshold.
+Clearing PhyAddrVal, however, has an unintended side-effect: several
+other IBS fields are considered valid only when this bit is set. As a
+result, those otherwise correct fields are discarded, reducing IBS
+functionality.
 
-  o IBS Fetch PMU: Samples discarded due to the zero-RIP erratum (#1197).
+Continue to zero the physical address, but keep the PhyAddrVal bit
+intact so the related fields remain usable while still preventing any
+address leak.
 
-Although these samples are discarded, the NMI cost is still incurred, so
-they should be counted for interrupt throttling.
-
-Fixes: 26db2e0c51fe83e1dd852c1321407835b481806e ("perf/x86/amd/ibs: Work around erratum #1197")
-Fixes: d20610c19b4a22bc69085b7eb7a02741d51de30e ("perf/amd/ibs: Add support for OP Load Latency Filtering")
+Fixes: 50a53b60e141 ("perf/amd/ibs: Prevent leaking sensitive data to userspace")
 Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://patch.msgid.link/20260216042216.1440-2-ravi.bangoria@amd.com
+Link: https://patch.msgid.link/20260216042216.1440-4-ravi.bangoria@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/ibs.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/x86/events/amd/ibs.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
-index aca89f23d2e00..705ef43325be3 100644
+index 705ef43325be3..ddd74eff3faef 100644
 --- a/arch/x86/events/amd/ibs.c
 +++ b/arch/x86/events/amd/ibs.c
-@@ -1293,8 +1293,10 @@ static int perf_ibs_handle_irq(struct perf_ibs *perf_ibs, struct pt_regs *iregs)
- 		 * within [128, 2048] range.
- 		 */
- 		if (!op_data3.ld_op || !op_data3.dc_miss ||
--		    op_data3.dc_miss_lat <= (event->attr.config1 & 0xFFF))
-+		    op_data3.dc_miss_lat <= (event->attr.config1 & 0xFFF)) {
-+			throttle = perf_event_account_interrupt(event);
- 			goto out;
-+		}
+@@ -1214,12 +1214,10 @@ static void perf_ibs_phyaddr_clear(struct perf_ibs *perf_ibs,
+ 				   struct perf_ibs_data *ibs_data)
+ {
+ 	if (perf_ibs == &perf_ibs_op) {
+-		ibs_data->regs[ibs_op_msr_idx(MSR_AMD64_IBSOPDATA3)] &= ~(1ULL << 18);
+ 		ibs_data->regs[ibs_op_msr_idx(MSR_AMD64_IBSDCPHYSAD)] = 0;
+ 		return;
  	}
  
- 	/*
-@@ -1326,8 +1328,10 @@ static int perf_ibs_handle_irq(struct perf_ibs *perf_ibs, struct pt_regs *iregs)
- 		regs.flags &= ~PERF_EFLAGS_EXACT;
- 	} else {
- 		/* Workaround for erratum #1197 */
--		if (perf_ibs->fetch_ignore_if_zero_rip && !(ibs_data.regs[1]))
-+		if (perf_ibs->fetch_ignore_if_zero_rip && !(ibs_data.regs[1])) {
-+			throttle = perf_event_account_interrupt(event);
- 			goto out;
-+		}
+-	ibs_data->regs[ibs_fetch_msr_idx(MSR_AMD64_IBSFETCHCTL)] &= ~(1ULL << 52);
+ 	ibs_data->regs[ibs_fetch_msr_idx(MSR_AMD64_IBSFETCHPHYSAD)] = 0;
+ }
  
- 		set_linear_ip(&regs, ibs_data.regs[1]);
- 		regs.flags |= PERF_EFLAGS_EXACT;
 -- 
 2.53.0
 
