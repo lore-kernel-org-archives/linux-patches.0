@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B875340A57;
-	Wed, 20 May 2026 18:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEEC340A57;
+	Wed, 20 May 2026 18:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300131; cv=none; b=EwZc7LQmT8UBDkn7AJInZYCQI8v/mRBWFZ3ToVW2aPeKzmIh/k2hfsqwrf3nGPBocnhC8R/7PGeBjkvyVxhYpt4fz0V3d3pBHLpEOYR8hrCTUnYwpJHAM6r2qA+8C9RnCFvOaUmk4pEEp25R2ujCqARSigwBq6OOHC9KTq31FxM=
+	t=1779300133; cv=none; b=T/wR66/fGmB1bTKPMsZRYKYQfU3NJoif3vMVya1/nT2H/tFyEXAEk0E10PTSEvnEv1I9+tIgHPJOIO0n+k4e/blfnTo5FzOumwe3iEviPKcp+TVfdY1WwmwcxtVqicn/Wceidf6rRV7BVFLNiM5ngDCMca1Lg5Vx0NKCYK9vo8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300131; c=relaxed/simple;
-	bh=iPyzu1I8lpa6sb/OLjM9iOnqVKS6dYZ09xEK8huwxTU=;
+	s=arc-20240116; t=1779300133; c=relaxed/simple;
+	bh=iu3jBR5gpuarm5VDPybVfUsehpc7wgWcpVj2cHnPqiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2Aw7nNPRObQwNtBXrvkAeYrgLisGGWbxVxRIswNOe1xNUn875+B81vbi+uM7VTQq/QDbIrY05/XDTyZkwVxH3wYMvrHJT2hv3+l8iH+pjFR3zeANyoR/kLe5rE+xl2FFHrF1/kS4w80pwa966BU1XFp2Gn4gy0FGIWXWO5paoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7J+BEwH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nQoOBhcIX31K00QH69ZKC9i/Aex/q2/mbpoZaTe3evu9c8XxL9PhZVrrB8y8IHhqWHCKW2jKZFlQ4oYISW9uwQFzS8QpMtHrdEFbIXpvskiMnHJmII2cYULh0Lf7f6OlVxna+c4/HASpI92AJ4BtnpEBch85o4s9VnDa69pgp1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLesDluB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7J+BEwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212C61F000E9;
-	Wed, 20 May 2026 18:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLesDluB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01BB1F000E9;
+	Wed, 20 May 2026 18:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300129;
-	bh=dumrn0rOxUBb5gu8Ee3ESjYOb62Ebzw2UhbLwBkfIb8=;
+	s=korg; t=1779300132;
+	bh=3MRalDC0MgJ7pXsdrBwaQZ9M6anFYxFLhj2blt5P2kM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F7J+BEwH+199Gp8KGhJWbA+usW8yQfN+/veHypGD/4OjwPVgheQFyrRWirxURFjDL
-	 hsH5TBGmJV8/k/L8m5IAaoP+vrb4uls20QIH9VTtPcBifOBt4tk6Xfl5vDkr9GZADE
-	 sPCX/tnFPGlRfRJYsf298I1pSC8JDdE9CiIJG6nM=
+	b=oLesDluBxU+t+IEo+WuHMhoMWwCNT5WNXjP3b4I5YlKVhgDGgagm227NNMZA8VL1f
+	 riYbpOono3gN0rApydA+D2MnKosGIBAP8BrEtkP7aIsW61yWXmslYYiRBZXfekhSqL
+	 R7y0q6r81FZrDhDNLxdYroB+3tozRUbxbmx/kkvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/666] wifi: rtw89: phy: fix uninitialized variable access in rtw89_phy_cfo_set_crystal_cap()
-Date: Wed, 20 May 2026 18:14:29 +0200
-Message-ID: <20260520162112.492166703@linuxfoundation.org>
+Subject: [PATCH 6.12 032/666] locking: Fix rwlock support in <linux/spinlock_up.h>
+Date: Wed, 20 May 2026 18:14:03 +0200
+Message-ID: <20260520162111.930433043@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,45 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 047cddf88c611e616d49a00311d4722e46286234 ]
+[ Upstream commit 756a0e011cfca0b45a48464aa25b05d9a9c2fb0b ]
 
-In the rtw89_phy_cfo_set_crystal_cap() function, for chips other than
-RTL8852A/RTL8851B, the values read by rtw89_mac_read_xtal_si() are
-stored into the local variables sc_xi_val and sc_xo_val. If either
-read fails, these variables remain uninitialized, they are later
-used to update cfo->crystal_cap and in debug print statements. This
-can lead to undefined behavior.
+Architecture support for rwlocks must be available whether or not
+CONFIG_DEBUG_SPINLOCK has been defined. Move the definitions of the
+arch_{read,write}_{lock,trylock,unlock}() macros such that these become
+visbile if CONFIG_DEBUG_SPINLOCK=n.
 
-Fix the issue by initializing sc_xi_val and sc_xo_val to zero,
-like is implemented in vendor driver.
+This patch prepares for converting do_raw_{read,write}_trylock() into
+inline functions. Without this patch that conversion triggers a build
+failure for UP architectures, e.g. arm-ep93xx. I used the following
+kernel configuration to build the kernel for that architecture:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+	CONFIG_ARCH_MULTIPLATFORM=y
+	CONFIG_ARCH_MULTI_V7=n
+	CONFIG_ATAGS=y
+	CONFIG_MMU=y
+	CONFIG_ARCH_MULTI_V4T=y
+	CONFIG_CPU_LITTLE_ENDIAN=y
+	CONFIG_ARCH_EP93XX=y
 
-Fixes: 8379fa611536 ("rtw89: 8852c: add write/read crystal function in CFO tracking")
-Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260323140613.1615574-1-a.velichayshiy@ispras.ru
+Fixes: fb1c8f93d869 ("[PATCH] spinlock consolidation")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260313171510.230998-2-bvanassche@acm.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/phy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/spinlock_up.h | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
-index b473e02ecd9e7..d544077ec2989 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.c
-+++ b/drivers/net/wireless/realtek/rtw89/phy.c
-@@ -3893,7 +3893,7 @@ static void rtw89_phy_cfo_set_crystal_cap(struct rtw89_dev *rtwdev,
- {
- 	struct rtw89_cfo_tracking_info *cfo = &rtwdev->cfo_tracking;
- 	const struct rtw89_chip_info *chip = rtwdev->chip;
--	u8 sc_xi_val, sc_xo_val;
-+	u8 sc_xi_val = 0, sc_xo_val = 0;
+diff --git a/include/linux/spinlock_up.h b/include/linux/spinlock_up.h
+index c87204247592f..a132fc562297a 100644
+--- a/include/linux/spinlock_up.h
++++ b/include/linux/spinlock_up.h
+@@ -48,16 +48,6 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
+ 	lock->slock = 1;
+ }
  
- 	if (!force && cfo->crystal_cap == crystal_cap)
- 		return;
+-/*
+- * Read-write spinlocks. No debug version.
+- */
+-#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
+-#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
+-#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
+-#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
+-
+ #else /* DEBUG_SPINLOCK */
+ #define arch_spin_is_locked(lock)	((void)(lock), 0)
+ /* for sched/core.c and kernel_lock.c: */
+@@ -68,4 +58,14 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
+ 
+ #define arch_spin_is_contended(lock)	(((void)(lock), 0))
+ 
++/*
++ * Read-write spinlocks. No debug version.
++ */
++#define arch_read_lock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_write_lock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_read_trylock(lock)	({ barrier(); (void)(lock); 1; })
++#define arch_write_trylock(lock)	({ barrier(); (void)(lock); 1; })
++#define arch_read_unlock(lock)		do { barrier(); (void)(lock); } while (0)
++#define arch_write_unlock(lock)	do { barrier(); (void)(lock); } while (0)
++
+ #endif /* __LINUX_SPINLOCK_UP_H */
 -- 
 2.53.0
 
