@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F178E36A376;
-	Wed, 20 May 2026 17:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A445036A36A;
+	Wed, 20 May 2026 17:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298016; cv=none; b=V2EzqcxQX+7CFJriLcXrKLg1D2nI68v1si3euZg/98P0qr1Ntvyi0r8bzikIcKcQSr8DGVe9opdPX8B+mzpssGXaHlmyC0fURTgafdAmBxPj+VYKC+SvBu4qRL2odcSDNB6kRUpxxWGm52hsoZH8YK1GQk2BIZ4PnWJmkEZg06M=
+	t=1779298018; cv=none; b=VBuHRh8LbJlHJsqsvrOmj9kL2xtxtWf9Lm3ZJpaZIV2O38JLpFoLJ0KXXV6u2nJfNhrJGeYfxhhZfqIbA4wU/Dlyh6eitf9Fm7+3gKKDvToBy9L8Sg16SFG6rOFIkQLrI1/qDirEN05qPUt108ifNzUIjI6RI1+Bx5nWEyhg6Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298016; c=relaxed/simple;
-	bh=5697+wn7isz1c78Gidnv9XybDAC3dFum00y5HLD7kiY=;
+	s=arc-20240116; t=1779298018; c=relaxed/simple;
+	bh=fPftY9FKKbSxEePkDp1BdxSCARYAQc5KO7Nwo6beMhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duh7I8RNZNdcaUZVk1ow1obDZ/6X9vI2TRKKrzfigUI4CHKhyzsUNYar+sX4919CmjOcz1WOuyWN9V3MjUK8D2Bwk1WxIiyg+PaHtRdXyjPfcIRxQ4W7OJIu8HpXyzjvjDLzqySnzki6zuJMdkv36a4qyfUOc43oFjtHgYvGvUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gx2YjHKD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TcTdIZAsy4SZVe5BQNfzWAtgVp7yeg50rET+4VDNjBbh7PIsDoNvlEeLsM3aEB0yhIUeGvlC6V2ar/Ebg0NshFWkD4sIAh6lAKU+of/udNHSegRH2dAXLTuUvh94bPJxYKCp7A4ICjH3zEKdYEYCgXaoM55etf0kA8BWYnTWnP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13hB4XYu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gx2YjHKD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632711F000E9;
-	Wed, 20 May 2026 17:26:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13hB4XYu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0601F000E9;
+	Wed, 20 May 2026 17:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298014;
-	bh=PXhz9n0aDodIPOZM2s+pCXvWX87hHTbk14HmACcKxz0=;
+	s=korg; t=1779298017;
+	bh=KQnhmDZAdFbjlFt9zT2d84NnLUufv6Xe44UhWaA2SXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gx2YjHKDmG4mmpvWHCkwjnZ0O5lKNHrca2j9CVtlFVjcLb8QPa1ouuUGDwcVk5kCw
-	 DtiSbC8Zne8yh3VCjBFV7YBzfC8xUXGHLZ4avDZTrMCeHHfyAySYPxrncmDiy7sSDg
-	 QypJQ3EJUThkntBYmUGSvRjuLPtD8uSt+/4yvA7Y=
+	b=13hB4XYu0xZFvidmh00Z8gQKSGesvuoUZBfkwnA4r4CGMh7mJbbT+J0tvqGwP+oEf
+	 Gh2S6S55/EE6pSYN1+/N9y9CE4JV9sGhXKaA/bU9R1MgCOHptDtS6oRlu09keBSWPN
+	 X3xLx+XIj748SHVvcxPUSKfYJdTAyngXPgvcCEUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ian Ray <ian.ray@gehealthcare.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 249/957] drm/panel: sharp-ls043t1le01: make use of prepare_prev_first
-Date: Wed, 20 May 2026 18:12:12 +0200
-Message-ID: <20260520162139.943774757@linuxfoundation.org>
+Subject: [PATCH 6.18 250/957] drm/panel: simple: Correct G190EAN01 prepare timing
+Date: Wed, 20 May 2026 18:12:13 +0200
+Message-ID: <20260520162139.964007575@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,36 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit c222177d7c7e1b2e0433d9e47ec2da7015345d50 ]
+[ Upstream commit f1080f82570b797598c1ba7e9c800ae9e94aafc6 ]
 
-The DSI link must be powered up to let panel driver to talk to the panel
-during prepare() callback execution. Set the prepare_prev_first flag to
-guarantee this.
+The prepare timing specified by the G190EAN01 datasheet should be
+between 30 and 50 ms. Considering it might take some time for the
+LVDS encoder to enable the signal, we should only wait the min.
+required time in the panel driver and not the max. allowed time.
 
-Fixes: 9e15123eca79 ("drm/msm/dsi: Stop unconditionally powering up DSI hosts at modeset")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Fixes: 2f7b832fc992 ("drm/panel: simple: Add support for AUO G190EAN01 panel")
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260323-panel-fix-v1-1-9f12b09161e8@oss.qualcomm.com
+Link: https://patch.msgid.link/20260217142528.68613-1-ian.ray@gehealthcare.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/panel/panel-simple.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-index 36abfa2e65e96..dd1eaba23ad3c 100644
---- a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-+++ b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
-@@ -201,6 +201,7 @@ static int sharp_nt_panel_add(struct sharp_nt_panel *sharp_nt)
- 
- 	drm_panel_init(&sharp_nt->base, &sharp_nt->dsi->dev,
- 		       &sharp_nt_panel_funcs, DRM_MODE_CONNECTOR_DSI);
-+	sharp_nt->base.prepare_prev_first = true;
- 
- 	ret = drm_panel_of_backlight(&sharp_nt->base);
- 	if (ret)
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 271f933991937..ef1c4b9299ee4 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -1295,7 +1295,7 @@ static const struct panel_desc auo_g190ean01 = {
+ 		.height = 301,
+ 	},
+ 	.delay = {
+-		.prepare = 50,
++		.prepare = 30,
+ 		.enable = 200,
+ 		.disable = 110,
+ 		.unprepare = 1000,
 -- 
 2.53.0
 
