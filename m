@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B10C3F54DD;
-	Wed, 20 May 2026 16:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4992F0C62;
+	Wed, 20 May 2026 16:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294503; cv=none; b=p9FWkILA8eqHSucbzJFFtqRfc0HYrnfcEZB70AIC/2o03aKpr0uku9c7fufYPVSeGzWiv1WH+yUVANHSxhry9NhXfl7+zgMjYFLjLZPGavqfU7BZpcXiSks4e/bZlcvW1xttMOgweh2WEQp1BxHu3MIFVgajOzv9k+4ed1alGG0=
+	t=1779294507; cv=none; b=X5r4q73VAphCC8SjZ8fWCBi8E9vOdsFrzKOjTFJJ5eIzWbiX+GL6d5l2wrFHu0jU8vyA8Qmv5+GN8hl+NxAJ5M05wFWKTQheisvUe2LZntsXGBLztzvs7mVnNsI2ZOm+yKxthDESa0yp3pYNxjTMcJKN38xlMtVZPehv+vDMTlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294503; c=relaxed/simple;
-	bh=aOut4IAAQfYo0o4XgAvqzQ7d82AUnGjFrGJ49BQAit8=;
+	s=arc-20240116; t=1779294507; c=relaxed/simple;
+	bh=BRwJmpqDs/Hu8qUxlz8R4Jojt2VxNzYXf6iloUtW2UQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UUr6MzX06U+GtzhWiIToOc25+t5gvF+twPEV7gf63T32+86z5ZYPYtvQ65k60/QwG+ftQaFm9oAF7JeNufwxvodh088ICJqz/YzwvSGduQZTnqlYDIOi4Da/X/GXxaoEiNfOGYWZTYFY53Eh0q1zVkKiHmyLmiK8XAd+vHqy4so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3diIZmO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PFlvKfCsYgIVhCKULjLqnaZ5iw9r5gglPAGHmZ42wRXWyIgmoqhDsYxN8x7px/X2sNjYnFwgo12ZmPKb7JLywZuhfh5VBhwUhi+W8fR7NfFerSoybYA9LA1OYbE8LYQULtxECLbiYyZvi7Ajfhe7Ro1NdmeCJ1aWLQYtHAtQFDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjHdH/q5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3diIZmO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1251F000E9;
-	Wed, 20 May 2026 16:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjHdH/q5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7D11F00896;
+	Wed, 20 May 2026 16:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294500;
-	bh=clYL/opHpczheOvY8sqfJzZiFeCVsXJ2uH1m7ZWkkH4=;
+	s=korg; t=1779294503;
+	bh=RoLICWOMaeh2SEVZDKU9siUvubga8wZLhpyah/msltQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L3diIZmOW2NUcZx9fV4ItrFtFacUmenMRMCzOVWkDMO8nTjARt3af985XF0NlV14w
-	 k7obVx031+yZ4ckmVr7wD3NW97c/wV9Ld4IDZlrDGl56jT4oKg5MhLqoaxbz2LwrcO
-	 d255dOZ9rZK6/yyfXWitGI5HJ9/2LWg7NiIdqM3o=
+	b=SjHdH/q58XvliigUQ9s/6i5T2MNFZUnQWiVSaT8njBgdfkCTsxfyNmu9mFpMyK3aA
+	 AgIHQ66NQDjpB+/Olnhw43KJGOetjXftcfWqFpP1+xPFCV2CUiSKYkVcxphJxUQxfi
+	 TCKBKUVN6vPPRPd2BYbmYwWt4KoFEh/I5BSavClU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0063/1146] ASoC: Intel: avs: Check maximum valid CPUID leaf
-Date: Wed, 20 May 2026 18:05:13 +0200
-Message-ID: <20260520162149.791315328@linuxfoundation.org>
+Subject: [PATCH 7.0 0064/1146] ASoC: Intel: avs: Include CPUID header at file scope
+Date: Wed, 20 May 2026 18:05:14 +0200
+Message-ID: <20260520162149.813464413@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,55 +54,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Ahmed S. Darwish <darwi@linutronix.de>
 
-[ Upstream commit 93a1f0e61329f538cfc7122d7fa0e7a1803e326d ]
+[ Upstream commit 7f78e0b46e9984e955cb73ffada8dace8b4dd059 ]
 
-The Intel AVS driver queries CPUID(0x15) before checking if the CPUID leaf
-is available.  Check the maximum-valid CPU standard leaf beforehand.
+Commit
 
-Use the CPUID_LEAF_TSC macro instead of the custom local one for the
-CPUID(0x15) leaf number.
+    cbe37a4d2b3c ("ASoC: Intel: avs: Configure basefw on TGL-based platforms")
+
+includes the main CPUID header from within a C function.  This works by
+luck and forbids valid refactoring inside that header.
+
+Include the CPUID header at file scope instead.
+
+Remove the COMPILE_TEST build flag so that the CONFIG_X86 conditionals can
+be removed.  The driver gets enough compilation testing already on x86.
+
+For clarity, refactor the CPUID(0x15) code into its own function without
+changing any of the driver's logic.
 
 Fixes: cbe37a4d2b3c ("ASoC: Intel: avs: Configure basefw on TGL-based platforms")
+Suggested-by: Borislav Petkov <bp@alien8.de>		# CONFIG_X86 removal
 Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Acked-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260327021645.555257-2-darwi@linutronix.de
+Link: https://lore.kernel.org/all/20250612234010.572636-3-darwi@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/tgl.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ sound/soc/intel/Kconfig   |  2 +-
+ sound/soc/intel/avs/tgl.c | 37 ++++++++++++++++++++++++-------------
+ 2 files changed, 25 insertions(+), 14 deletions(-)
 
+diff --git a/sound/soc/intel/Kconfig b/sound/soc/intel/Kconfig
+index 412555e626b81..63367364916ae 100644
+--- a/sound/soc/intel/Kconfig
++++ b/sound/soc/intel/Kconfig
+@@ -95,7 +95,7 @@ config SND_SOC_INTEL_KEEMBAY
+ 
+ config SND_SOC_INTEL_AVS
+ 	tristate "Intel AVS driver"
+-	depends on X86 || COMPILE_TEST
++	depends on X86
+ 	depends on PCI
+ 	depends on COMMON_CLK
+ 	select ACPI_NHLT if ACPI
 diff --git a/sound/soc/intel/avs/tgl.c b/sound/soc/intel/avs/tgl.c
-index afb0665161010..4649d749b41e0 100644
+index 4649d749b41e0..a7123639de431 100644
 --- a/sound/soc/intel/avs/tgl.c
 +++ b/sound/soc/intel/avs/tgl.c
-@@ -11,8 +11,6 @@
+@@ -7,6 +7,7 @@
+ //
+ 
+ #include <linux/pci.h>
++#include <asm/cpuid/api.h>
+ #include "avs.h"
  #include "debug.h"
  #include "messages.h"
+@@ -38,28 +39,38 @@ static int avs_tgl_dsp_core_stall(struct avs_dev *adev, u32 core_mask, bool stal
+ 	return avs_dsp_core_stall(adev, core_mask, stall);
+ }
  
--#define CPUID_TSC_LEAF 0x15
--
- static int avs_tgl_dsp_core_power(struct avs_dev *adev, u32 core_mask, bool power)
+-static int avs_tgl_config_basefw(struct avs_dev *adev)
++/*
++ * Succeed if CPUID(0x15) is not available, or if the nominal core crystal clock
++ * frequency cannot be enumerated from it.  There is nothing to do in both cases.
++ */
++static int avs_tgl_set_xtal_freq(struct avs_dev *adev)
  {
- 	core_mask &= AVS_MAIN_CORE_MASK;
-@@ -49,7 +47,11 @@ static int avs_tgl_config_basefw(struct avs_dev *adev)
- 	unsigned int ecx;
+-	struct pci_dev *pci = adev->base.pci;
+-	struct avs_bus_hwid hwid;
++	unsigned int freq;
+ 	int ret;
+-#ifdef CONFIG_X86
+-	unsigned int ecx;
+-
+-#include <asm/cpuid/api.h>
  
- #include <asm/cpuid/api.h>
--	ecx = cpuid_ecx(CPUID_TSC_LEAF);
-+
-+	if (boot_cpu_data.cpuid_level < CPUID_LEAF_TSC)
-+		goto no_cpuid;
-+
-+	ecx = cpuid_ecx(CPUID_LEAF_TSC);
- 	if (ecx) {
- 		ret = avs_ipc_set_fw_config(adev, 1, AVS_FW_CFG_XTAL_FREQ_HZ, sizeof(ecx), &ecx);
+ 	if (boot_cpu_data.cpuid_level < CPUID_LEAF_TSC)
+-		goto no_cpuid;
++		return 0;
+ 
+-	ecx = cpuid_ecx(CPUID_LEAF_TSC);
+-	if (ecx) {
+-		ret = avs_ipc_set_fw_config(adev, 1, AVS_FW_CFG_XTAL_FREQ_HZ, sizeof(ecx), &ecx);
++	freq = cpuid_ecx(CPUID_LEAF_TSC);
++	if (freq) {
++		ret = avs_ipc_set_fw_config(adev, 1, AVS_FW_CFG_XTAL_FREQ_HZ, sizeof(freq), &freq);
  		if (ret)
-@@ -57,6 +59,7 @@ static int avs_tgl_config_basefw(struct avs_dev *adev)
+ 			return AVS_IPC_RET(ret);
  	}
- #endif
+-#endif
  
-+no_cpuid:
+-no_cpuid:
++	return 0;
++}
++
++static int avs_tgl_config_basefw(struct avs_dev *adev)
++{
++	struct pci_dev *pci = adev->base.pci;
++	struct avs_bus_hwid hwid;
++	int ret;
++
++	ret = avs_tgl_set_xtal_freq(adev);
++	if (ret)
++		return ret;
++
  	hwid.device = pci->device;
  	hwid.subsystem = pci->subsystem_vendor | (pci->subsystem_device << 16);
  	hwid.revision = pci->revision;
