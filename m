@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E703F23A4;
-	Wed, 20 May 2026 17:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9939A39B483;
+	Wed, 20 May 2026 17:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299462; cv=none; b=OFPOOmMSKcVSk9ZBD3pcpKH+yYRlTuGzZAKg7GR99L6/tuZchai3A52hKIWoFJO8L9MuYeQaRzKkECBShp8ldZ6lss/Ts2xERRQ/Jmf2dv0Bm+sMe2GM2X0Ayd8ifSdavF7v8ij5q5UBl3K63PkGnvBJkpKOvUR966A6aiKsQkE=
+	t=1779299464; cv=none; b=TWTBFd3Wn5dlnVomqSIO0oXRMgiF4bTSmkvtNqT0v+mFcqoCkyQKpAplgHPqig+v1bEP9GJv/ece870juzSV4BWSmAXWrLqMOcsXF+N/b7MrwRP/ZQejODDiQetTpdHivjU3oS0JFL5f+IUZ27iypF5mnTQ53owfhJ1m7+Fv7PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299462; c=relaxed/simple;
-	bh=sZtTUeGnzrH0BPLLI0ucZvnZESmi2JxuF9mSS7wzdRs=;
+	s=arc-20240116; t=1779299464; c=relaxed/simple;
+	bh=SKsYaqiPjur4Qt8yQp5s7iMcHqM4i94sXs2S6jqicPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/HDf8xihCdHkpRuCaS1aK1+dDmuDQttcxpFnwH6V7M/1QYNrivWicoSCkf9SlPweq8xVxv0WqU3D5Svqe4ucWXRtEdpcE6iHJ96UmC31pn4PmA2oeiPYoOldq4NLgWJdTfR/R1EnxCV3i/WIFZY3TasL/lJedWr1PVc3h2lL/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfONHmQl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L+oCEZG3Ji09j2JJ9ZUCj4Ml8D6ABm+veDkFd7Z8m4WZ/B521qvvptZ2eGy+3Rn3ksfRionMP1zClfddS7kR5S1LYFbCvpwqZ8DS7DGi4abcm4aoBI3mQHmXhPRMEG+AqXjy7aXs/4aZ8+8EQjU9HZKYw14auIkz9/swEWPQeKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MW0RDbTd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfONHmQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ABEC1F000E9;
-	Wed, 20 May 2026 17:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MW0RDbTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADB81F000E9;
+	Wed, 20 May 2026 17:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299460;
-	bh=TbIsWLaXJHdzQ2u0oKQEeo208n4qv/qbWIImjfrz+I0=;
+	s=korg; t=1779299463;
+	bh=WxLQwceetoX4JHjQ5Bm3i1kNGUgqaau9Y270G38c9CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BfONHmQlkNui+MWuLlAOJOlM+K8bra4WHthfUYAIIfiQ93P2W+JAp9RhZoUyUHow4
-	 cK6ovZP1oeYbPRgkRqB11PBqhoTPAmdNh6gJ1M5KQHzZ6Enjo32QuMwmi84ZaqMJcJ
-	 ydcKGHREhAnWKOvVNdaCgr/UCail0h5HzQku1YTo=
+	b=MW0RDbTdH9v3NPCev2D395vPS6zT5M8FbRaXCI0/S8dJpQlAcK+J09cF23vchkU7g
+	 EuGY+r5Nr7qmrLHrBE9fj0QmEgaTyTc5+aJvqCzqiCqw9SK4cS9abGJU28M/upMMTm
+	 yAeoMaKedcb8FbgWy224WXKn09DeikXcmR2wa23U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Paul Geurts <paul.geurts@prodrive-technologies.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Mark Greer <mgreer@animalcreek.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 780/957] spi: amlogic-spisg: initialize completion before requesting IRQ
-Date: Wed, 20 May 2026 18:21:03 +0200
-Message-ID: <20260520162151.475382325@linuxfoundation.org>
+Subject: [PATCH 6.18 781/957] NFC: trf7970a: Ignore antenna noise when checking for RF field
+Date: Wed, 20 May 2026 18:21:04 +0200
+Message-ID: <20260520162151.497495025@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,44 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Paul Geurts <paul.geurts@prodrive-technologies.com>
 
-[ Upstream commit 8d0189c1ea98b56481eb809e3d1bdbf85557e819 ]
+[ Upstream commit a9bc28aa4e64320668131349436a650bf42591a5 ]
 
-Move init_completion(&spisg->completion) to before devm_request_irq()
-to avoid a potential race condition where an interrupt could fire
-before the completion structure is initialized.
+The main channel Received Signal Strength Indicator (RSSI) measurement
+is used to determine whether an RF field is present or not. RSSI != 0
+is interpreted as an RF Field is present. This does not take RF noise
+and measurement inaccuracy into account, and results in false positives
+in the field.
 
-Fixes: cef9991e04ae ("spi: Add Amlogic SPISG driver")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260428-amlogic-spisg-v1-1-8eecc3b446d6@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Define a noise level and make sure the RF field is only interpreted as
+present when the RSSI is above the noise level.
+
+Fixes: 851ee3cbf850 ("NFC: trf7970a: Don't turn on RF if there is already an RF field")
+Signed-off-by: Paul Geurts <paul.geurts@prodrive-technologies.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Mark Greer <mgreer@animalcreek.com>
+Link: https://patch.msgid.link/20260422100930.581237-1-paul.geurts@prodrive-technologies.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-amlogic-spisg.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/nfc/trf7970a.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-amlogic-spisg.c b/drivers/spi/spi-amlogic-spisg.c
-index 56a6cf8471b9f..970fddbb25857 100644
---- a/drivers/spi/spi-amlogic-spisg.c
-+++ b/drivers/spi/spi-amlogic-spisg.c
-@@ -795,6 +795,7 @@ static int aml_spisg_probe(struct platform_device *pdev)
+diff --git a/drivers/nfc/trf7970a.c b/drivers/nfc/trf7970a.c
+index d17c701c7888b..08c27bb438b59 100644
+--- a/drivers/nfc/trf7970a.c
++++ b/drivers/nfc/trf7970a.c
+@@ -317,6 +317,7 @@
+ #define TRF7970A_RSSI_OSC_STATUS_RSSI_MASK	(BIT(2) | BIT(1) | BIT(0))
+ #define TRF7970A_RSSI_OSC_STATUS_RSSI_X_MASK	(BIT(5) | BIT(4) | BIT(3))
+ #define TRF7970A_RSSI_OSC_STATUS_RSSI_OSC_OK	BIT(6)
++#define TRF7970A_RSSI_OSC_STATUS_RSSI_NOISE_LEVEL	1
  
- 	dma_set_max_seg_size(&pdev->dev, SPISG_BLOCK_MAX);
+ #define TRF7970A_SPECIAL_FCN_REG1_COL_7_6		BIT(0)
+ #define TRF7970A_SPECIAL_FCN_REG1_14_ANTICOLL		BIT(1)
+@@ -1300,7 +1301,7 @@ static int trf7970a_is_rf_field(struct trf7970a *trf, bool *is_rf_field)
+ 	if (ret)
+ 		return ret;
  
-+	init_completion(&spisg->completion);
- 	ret = devm_request_irq(&pdev->dev, irq, aml_spisg_irq, 0, NULL, spisg);
- 	if (ret) {
- 		dev_err(&pdev->dev, "irq request failed\n");
-@@ -807,8 +808,6 @@ static int aml_spisg_probe(struct platform_device *pdev)
- 		goto out_clk;
- 	}
- 
--	init_completion(&spisg->completion);
--
- 	pm_runtime_put(&spisg->pdev->dev);
- 
- 	return 0;
+-	if (rssi & TRF7970A_RSSI_OSC_STATUS_RSSI_MASK)
++	if ((rssi & TRF7970A_RSSI_OSC_STATUS_RSSI_MASK) > TRF7970A_RSSI_OSC_STATUS_RSSI_NOISE_LEVEL)
+ 		*is_rf_field = true;
+ 	else
+ 		*is_rf_field = false;
 -- 
 2.53.0
 
