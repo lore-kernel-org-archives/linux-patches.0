@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A183F4DDB;
-	Wed, 20 May 2026 17:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDF43F6C4C;
+	Wed, 20 May 2026 17:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297895; cv=none; b=cnvGgfwd0R2ZzFu85hof9lPPF6M/LyNLneZxN0Lusk2fTMSwBLQe/YYTL1g6TncitXB7c/kavOyGyrhqK/FOMKX3KrD9a77m4pIHZhMNM/f0dHU7/g/ZXeune7tePqk3XOZvW8J/wLe1lW7BcTw5jV9J1Ib5Akm90NGDypLF2so=
+	t=1779297897; cv=none; b=caC14sk3AJmwrWR+7yWXe63kAd1IxAwCvHsSlocwVJrgDlFexoZDcn4dqy5UCjEoMGEVlfIYwVWzMtA+vd4ANh/bsdRiml75hra7e+l2uHJkEMTnCzVpRfhmSRoLuL4kWpuMWI2o+WvJib/9IB4kZZTeJAL+AosBrEzROmMzygk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297895; c=relaxed/simple;
-	bh=w1IGc4u6n6z57SNxZ6Mfw1mgIrCg18EnkMB8an+259U=;
+	s=arc-20240116; t=1779297897; c=relaxed/simple;
+	bh=mJc6uT6BaPJZ/nefZuCwiMuv1BX/DAZ6t+rYoOrdYA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWm84P3LvcsWtnIrRFaYaUUO7FlWRgr75F/4oH7bB4IZ5IHyTtoQmfI4UjKlihTRqsay+USbf6xTSKtNkdMqTaWkff71qD1/uH8miHT11tBUDz6kTUbubV/AZQ9YJ8CbadeiTsu2UEtlNtVxIUpJN3KYc+Z/7hX4hvqlAwT37tA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkYcpsmk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JDpngFku1bnYNV5OHLFyBuuAAl2ctDapTA474finhds6f1N41oSWJEPICvoiDabsMq3A1/UCl8AJ3eKG68QhcOlCilLTvN4o3h6eRtJLSKN5rOjMJxJGfG6RM/NpwqCdoK+9MMBx9Ul7Szh0/pySE7tZqt2hU4agBec7Gg4d0VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrjKH/6r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkYcpsmk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C5D1F000E9;
-	Wed, 20 May 2026 17:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrjKH/6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0EF71F000E9;
+	Wed, 20 May 2026 17:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297893;
-	bh=75UVgVGEY7uY/5SADRnBiA9lhMjWRFkcpEOGJh9PmZU=;
+	s=korg; t=1779297896;
+	bh=aikQOXxOD2V69NnsdJAvnx02S3hhz9DBY8kPK66jZCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RkYcpsmklmo7DvzBTmRB/yeEU7/9ijfzHeILehMiBgHmaMDt7bGR/+6pwk/5aPWGK
-	 uhHOY+Jn4rzShEbeL2gDWET8OfpC8Z/57tTb3oI+DmQctGL1m+y2iiU7OE8e1NWwYR
-	 5UzyW6QC18N2zWaAtanzvDq7MA/bA7KABGQgevYU=
+	b=nrjKH/6rGzuGFtgRIAtSZbKkwcJq9DaZtOAjySoQ7BtpYr2gxO136giq2L0Lv9yw6
+	 KOMb/WWj1SL+3myNptgp9T3ncH+M7jm5yBViCN+HHOSCaVCZpxNcCgJFKECnljgh5m
+	 Lnyi56YDkb5Mpp4YM6dJW7gdgSmcbNQsr3nGr5Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	Martin Wilck <mwilck@suse.com>,
+	Hanna Czenczek <hreitz@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 203/957] dm cache: fix dirty mapping checking in passthrough mode switching
-Date: Wed, 20 May 2026 18:11:26 +0200
-Message-ID: <20260520162138.946795257@linuxfoundation.org>
+Subject: [PATCH 6.18 204/957] dm-mpath: dont stop probing paths at presuspend
+Date: Wed, 20 May 2026 18:11:27 +0200
+Message-ID: <20260520162138.967995407@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,149 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit 322586745bd1a0e5f3559fd1635fdeb4dbd1d6b8 ]
+[ Upstream commit 51d81e14fe6788dc6463064c7517480f2acd2724 ]
 
-As mentioned in commit 9b1cc9f251af ("dm cache: share cache-metadata
-object across inactive and active DM tables"), dm-cache assumed table
-reload occurs after suspension, while LVM's table preload breaks this
-assumption. The dirty mapping check for passthrough mode was designed
-around this assumption and is performed during table creation, causing
-the check to fail with preload while metadata updates are ongoing. This
-risks loading dirty mappings into passthrough mode, resulting in data
-loss.
+Commit 5c977f102315 ("dm-mpath: Don't grab work_mutex while probing
+paths"), added code to make multipath quit probing paths early, if it
+was trying to suspend. This isn't necessary. It was just an optimization
+to try to keep path probing from delaying a suspend. However it causes
+problems with the intended user of this code, qemu. The path probing
+code was added because failed ioctls to multipath devices don't cause
+paths to fail in cases where a regular IO failure would.
 
-Reproduce steps:
+If an ioctl to a path failed because the path was down, and the
+multipath device had passed presuspend, the M_MPATH_PROBE_PATHS ioctl
+would exit early, without probing the path. The caller would then retry
+the original ioctl, hoping to use a different path. But if there was
+only one path in the pathgroup, it would pick the same non-working path
+again, even if there were working paths in other pathgroups.
 
-1. Create a writeback cache with zero migration_threshold to produce
-   dirty mappings
+ioctls to a suspended dm device will return -EAGAIN, notifying the
+caller that the device is suspended, but ioctls to a device that is just
+preparing to suspend won't (and in general, shouldn't). This means that
+the caller (qemu in this case) would get into a tight loop where it
+would issue an ioctl that failed, skip probing the paths because the
+device had already passed presuspend, and start over issuing the ioctl
+again. This would continue until the multipath device finally fully
+suspended, or the caller gave up and failed the ioctl.
 
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
-dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
-dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writeback smq \
-2 migration_threshold 0"
+multipath's path probing code could return -EAGAIN in this case, and the
+caller could delay a bit before retrying, but the whole purpose of
+skipping the probe after presuspend was to speed things up, and that
+would just slow them down. Instead, remove the is_suspending flag, and
+check dm_suspended() instead to decide whether to exit the probing code
+early. This means that when the probing code exits early, future ioctls
+will also be delayed, because the device is fully suspended.
 
-2. Preload a table in passthrough mode
-
-dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
-
-3. Write to the first cache block to make it dirty
-
-fio --filename=/dev/mapper/cache --name=populate --rw=write --bs=4k \
---direct=1 --size=64k
-
-4. Resume the inactive table. Now it's possible to load the dirty block
-   into passthrough mode.
-
-dmsetup resume cache
-
-Fix by moving the checks to the preresume phase to support table
-preloading. Also remove the unused function dm_cache_metadata_all_clean.
-
-Fixes: 2ee57d587357 ("dm cache: add passthrough mode")
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Fixes: 5c977f102315 ("dm-mpath: Don't grab work_mutex while probing paths")
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Reviewed-by: Martin Wilck <mwilck@suse.com>
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-metadata.c | 11 -----------
- drivers/md/dm-cache-metadata.h |  5 -----
- drivers/md/dm-cache-target.c   | 25 ++++++++-----------------
- 3 files changed, 8 insertions(+), 33 deletions(-)
+ drivers/md/dm-mpath.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/dm-cache-metadata.c b/drivers/md/dm-cache-metadata.c
-index a9a1ab284076a..cf491c8508a42 100644
---- a/drivers/md/dm-cache-metadata.c
-+++ b/drivers/md/dm-cache-metadata.c
-@@ -1714,17 +1714,6 @@ int dm_cache_write_hints(struct dm_cache_metadata *cmd, struct dm_cache_policy *
- 	return r;
- }
+diff --git a/drivers/md/dm-mpath.c b/drivers/md/dm-mpath.c
+index 00df5be165759..3a25ec2993dc2 100644
+--- a/drivers/md/dm-mpath.c
++++ b/drivers/md/dm-mpath.c
+@@ -102,7 +102,6 @@ struct multipath {
+ 	struct bio_list queued_bios;
  
--int dm_cache_metadata_all_clean(struct dm_cache_metadata *cmd, bool *result)
--{
--	int r;
--
--	READ_LOCK(cmd);
--	r = blocks_are_unmapped_or_clean(cmd, 0, cmd->cache_blocks, result);
--	READ_UNLOCK(cmd);
--
--	return r;
--}
--
- void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd)
+ 	struct timer_list nopath_timer;	/* Timeout for queue_if_no_path */
+-	bool is_suspending;
+ };
+ 
+ /*
+@@ -1748,9 +1747,6 @@ static void multipath_presuspend(struct dm_target *ti)
  {
- 	WRITE_LOCK_VOID(cmd);
-diff --git a/drivers/md/dm-cache-metadata.h b/drivers/md/dm-cache-metadata.h
-index 5f77890207fed..2f107e7c67d0a 100644
---- a/drivers/md/dm-cache-metadata.h
-+++ b/drivers/md/dm-cache-metadata.h
-@@ -135,11 +135,6 @@ int dm_cache_get_metadata_dev_size(struct dm_cache_metadata *cmd,
-  */
- int dm_cache_write_hints(struct dm_cache_metadata *cmd, struct dm_cache_policy *p);
+ 	struct multipath *m = ti->private;
  
--/*
-- * Query method.  Are all the blocks in the cache clean?
-- */
--int dm_cache_metadata_all_clean(struct dm_cache_metadata *cmd, bool *result);
--
- int dm_cache_metadata_needs_check(struct dm_cache_metadata *cmd, bool *result);
- int dm_cache_metadata_set_needs_check(struct dm_cache_metadata *cmd);
- void dm_cache_metadata_set_read_only(struct dm_cache_metadata *cmd);
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index e8709950dc49d..9c64fe56ecb6c 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -2506,23 +2506,8 @@ static int cache_create(struct cache_args *ca, struct cache **result)
- 		goto bad;
+-	spin_lock_irq(&m->lock);
+-	m->is_suspending = true;
+-	spin_unlock_irq(&m->lock);
+ 	/* FIXME: bio-based shouldn't need to always disable queue_if_no_path */
+ 	if (m->queue_mode == DM_TYPE_BIO_BASED || !dm_noflush_suspending(m->ti))
+ 		queue_if_no_path(m, false, true, __func__);
+@@ -1773,7 +1769,6 @@ static void multipath_resume(struct dm_target *ti)
+ 	struct multipath *m = ti->private;
+ 
+ 	spin_lock_irq(&m->lock);
+-	m->is_suspending = false;
+ 	if (test_bit(MPATHF_SAVED_QUEUE_IF_NO_PATH, &m->flags)) {
+ 		set_bit(MPATHF_QUEUE_IF_NO_PATH, &m->flags);
+ 		clear_bit(MPATHF_SAVED_QUEUE_IF_NO_PATH, &m->flags);
+@@ -2100,7 +2095,7 @@ static int probe_active_paths(struct multipath *m)
+ 		if (m->current_pg == m->last_probed_pg)
+ 			goto skip_probe;
  	}
+-	if (!m->current_pg || m->is_suspending ||
++	if (!m->current_pg || dm_suspended(m->ti) ||
+ 	    test_bit(MPATHF_QUEUE_IO, &m->flags))
+ 		goto skip_probe;
+ 	set_bit(MPATHF_DELAY_PG_SWITCH, &m->flags);
+@@ -2109,7 +2104,7 @@ static int probe_active_paths(struct multipath *m)
  
--	if (passthrough_mode(cache)) {
--		bool all_clean;
--
--		r = dm_cache_metadata_all_clean(cache->cmd, &all_clean);
--		if (r) {
--			*error = "dm_cache_metadata_all_clean() failed";
--			goto bad;
--		}
--
--		if (!all_clean) {
--			*error = "Cannot enter passthrough mode unless all blocks are clean";
--			r = -EINVAL;
--			goto bad;
--		}
--
-+	if (passthrough_mode(cache))
- 		policy_allow_migrations(cache->policy, false);
--	}
- 
- 	spin_lock_init(&cache->lock);
- 	bio_list_init(&cache->deferred_bios);
-@@ -2849,6 +2834,12 @@ static int load_mapping(void *context, dm_oblock_t oblock, dm_cblock_t cblock,
- 	struct cache *cache = context;
- 
- 	if (dirty) {
-+		if (passthrough_mode(cache)) {
-+			DMERR("%s: cannot enter passthrough mode unless all blocks are clean",
-+			      cache_device_name(cache));
-+			return -EBUSY;
-+		}
-+
- 		set_bit(from_cblock(cblock), cache->dirty_bitset);
- 		atomic_inc(&cache->nr_dirty);
- 	} else
-@@ -3082,7 +3073,7 @@ static int cache_preresume(struct dm_target *ti)
- 					   load_filtered_mapping, cache);
- 		if (r) {
- 			DMERR("%s: could not load cache mappings", cache_device_name(cache));
--			if (r != -EFBIG)
-+			if (r != -EFBIG && r != -EBUSY)
- 				metadata_operation_failed(cache, "dm_cache_load_mappings", r);
- 			return r;
- 		}
+ 	list_for_each_entry(pgpath, &pg->pgpaths, list) {
+ 		if (pg != READ_ONCE(m->current_pg) ||
+-		    READ_ONCE(m->is_suspending))
++		    dm_suspended(m->ti))
+ 			goto out;
+ 		if (!pgpath->is_active)
+ 			continue;
 -- 
 2.53.0
 
