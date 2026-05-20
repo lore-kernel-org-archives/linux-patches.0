@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3513F4DD7;
-	Wed, 20 May 2026 18:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A75430DEAC;
+	Wed, 20 May 2026 18:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302024; cv=none; b=RY1KghckrDV1HG/lsinQwx0UqiBZM6wiitYRU8d+o36+qv7nfnJg09Gad7WHmlaP+KO8UYfNIWThOcLOPD8Weqa5bV8EI7wIQ7ZQ5qj7JSHqvkelU34qmg3VjJrAjQbxkuYfns9Bi6rsWPIncryJozwOAyE2UrgffOoPGlF+zeU=
+	t=1779302027; cv=none; b=rblzzNUUrJ1usTDkv8n2ZF8b0C9HxrvFnHlQrySBP/xY9YjZ/xGlRW1G+8NJhO2K6w5dCL1SnBqvihgrkf/SZSeOkbtVFH6bXFZl6Da/0/icWdqBfMDmCmcegq4oMf0bZWKSuSGibw39l7oXQ61YejGVH4DghQz/inoVvCNgjNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302024; c=relaxed/simple;
-	bh=1PZsXcyet17unVWk3Rj5/3Usq8uZ/j2RPHl9XK1wIWg=;
+	s=arc-20240116; t=1779302027; c=relaxed/simple;
+	bh=Mkn3LpEpg680kEeGmu5hbALv3eAIuozG6c88QT4DZB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmnL6mvaM3yq1y5vZI7VXvwy4/S97igrT+lFbRYt730jYVGSqHD807S1na9jpz1BD/iMZOEPiOhMwttBlJ2Cgv0rhPjgMkmJ6HeQCLTemGBj5aLwkGHN+cdIKCwgi9Qq+3Yw97bkhlJO3xFi2a+0ej0DRsGcloEOo3SMSjnusNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8j8ms+W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rjZB7HMtDGhCsThbRD8okcORWfOi9YNICTcJkjZrAIOrupfyEPgaNcXgJTZqitk8HtBDeeZBOrvqSQLvZYLcxmiW9+pwwWmKeAMDaNBHWCn16M7V32brWwAnSF6D9A3exQP7ejiG5WYjwh9lzNe1vqrQqmLALFJuI7ip7KIzuDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+pioLhb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8j8ms+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F471F00897;
-	Wed, 20 May 2026 18:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+pioLhb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0BB1F00893;
+	Wed, 20 May 2026 18:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302022;
-	bh=F7klQ7sYY7n0dYQp4mEzqMq1otfWc+hqdZQmFCyztrQ=;
+	s=korg; t=1779302024;
+	bh=sLPKrl6wbUGzDM1l/JqqAuvXMxVmLhtBHiKXPhz3mus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8j8ms+WaRpg9XbEUzZ1xjffjboMw19JZ9WosT+f/t+mqdMy818CvNiemrqr81cqy
-	 2YkxgMNlSPweTlVLcxp6xReZVwN6nBG+T4kL02iQ07pRiZDIQ1Xk1w3Bj6MEFSaN8f
-	 UVohwbq5lOuDsUYFkSL+WoyTh3yj960ADwPky/yE=
+	b=X+pioLhbVmOoCdErG4pKnmtu7W/lyzp8uIU7uDUHtbz7+tqP8OYkvyOGHXdoP/jSD
+	 gONtUqithAmXOtq8OJOIaarXISc101GPWBUYIX6ttTXTe1hyES2wqCfB0Ebli0EmI0
+	 tftOf0Ym8Rt6HHJv3wp2FwQfaxzEfjXkfEOjcNFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	Helge Deller <deller@gmx.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 108/508] fbdev: matroxfb: Mark variable with __maybe_unused to avoid W=1 build break
-Date: Wed, 20 May 2026 18:18:51 +0200
-Message-ID: <20260520162100.963131566@linuxfoundation.org>
+Subject: [PATCH 6.6 109/508] crypto: atmel - Remove cfb and ofb
+Date: Wed, 20 May 2026 18:18:52 +0200
+Message-ID: <20260520162100.987537950@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,68 +50,643 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit caf6144053b4e1c815aa56afb54745a176f999df ]
+[ Upstream commit a16144bda9c332079b6a1db52725e9c22007114d ]
 
-Clang is not happy about set but unused variable:
+Remove the unused CFB/OFB implementation.
 
-drivers/video/fbdev/matrox/g450_pll.c:412:18: error: variable 'mnp' set but not used
-   412 |         unsigned int mnp;
-       |                      ^
-1 error generated.
-
-Since the commit 7b987887f97b ("video: fbdev: matroxfb: remove dead code
-and set but not used variable") the 'mnp' became unused, but eliminating
-that code might have side-effects. The question here is what should we do
-with 'mnp'? The easiest way out is just mark it with __maybe_unused which
-will shut the compiler up and won't change any possible IO flow. So does
-this change.
-
-A dive into the history of the driver:
-
-The problem was revealed when the #if 0 guarded code along with unused
-pixel_vco variable was removed. That code was introduced in the original
-commit 213d22146d1f ("[PATCH] (1/3) matroxfb for 2.5.3"). And then guarded
-in the commit 705e41f82988 ("matroxfb DVI updates: Handle DVI output on
-G450/G550. Powerdown unused portions of G450/G550 DAC. Split G450/G550 DAC
-from older DAC1064 handling. Modify PLL setting when both CRTCs use same
-pixel clocks.").
-
-NOTE: The two commits mentioned above pre-date Git era and available in
-history.git repository for archaeological purposes.
-
-Even without that guard the modern compilers may see that the pixel_vco
-wasn't ever used and seems a leftover after some debug or review made
-25 years ago.
-
-The g450_mnp2vco() doesn't have any IO and as Jason said doesn't seem
-to have any side effects either than some unneeded CPU processing during
-runtime. I agree that's unlikely that timeout (or heating up the CPU) has
-any effect on the HW (GPU/display) functionality.
-
-Fixes: 7b987887f97b ("video: fbdev: matroxfb: remove dead code and set but not used variable")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 57a13941c0bb ("crypto: atmel-aes - guard unregister on error in atmel_aes_register_algs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/matrox/g450_pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/atmel-aes.c  | 214 +-----------------------------------
+ drivers/crypto/atmel-tdes.c | 205 +---------------------------------
+ 2 files changed, 8 insertions(+), 411 deletions(-)
 
-diff --git a/drivers/video/fbdev/matrox/g450_pll.c b/drivers/video/fbdev/matrox/g450_pll.c
-index ff8e321a22cef..b2d3f7328ea83 100644
---- a/drivers/video/fbdev/matrox/g450_pll.c
-+++ b/drivers/video/fbdev/matrox/g450_pll.c
-@@ -407,7 +407,7 @@ static int __g450_setclk(struct matrox_fb_info *minfo, unsigned int fout,
- 		case M_VIDEO_PLL:
- 			{
- 				u_int8_t tmp;
--				unsigned int mnp;
-+				unsigned int mnp __maybe_unused;
- 				unsigned long flags;
- 				
- 				matroxfb_DAC_lock_irqsave(flags);
+diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
+index 97fcde0126766..f023f27468c0d 100644
+--- a/drivers/crypto/atmel-aes.c
++++ b/drivers/crypto/atmel-aes.c
+@@ -46,11 +46,6 @@
+ #define ATMEL_AES_BUFFER_ORDER	2
+ #define ATMEL_AES_BUFFER_SIZE	(PAGE_SIZE << ATMEL_AES_BUFFER_ORDER)
+ 
+-#define CFB8_BLOCK_SIZE		1
+-#define CFB16_BLOCK_SIZE	2
+-#define CFB32_BLOCK_SIZE	4
+-#define CFB64_BLOCK_SIZE	8
+-
+ #define SIZE_IN_WORDS(x)	((x) >> 2)
+ 
+ /* AES flags */
+@@ -60,12 +55,6 @@
+ #define AES_FLAGS_OPMODE_MASK	(AES_MR_OPMOD_MASK | AES_MR_CFBS_MASK)
+ #define AES_FLAGS_ECB		AES_MR_OPMOD_ECB
+ #define AES_FLAGS_CBC		AES_MR_OPMOD_CBC
+-#define AES_FLAGS_OFB		AES_MR_OPMOD_OFB
+-#define AES_FLAGS_CFB128	(AES_MR_OPMOD_CFB | AES_MR_CFBS_128b)
+-#define AES_FLAGS_CFB64		(AES_MR_OPMOD_CFB | AES_MR_CFBS_64b)
+-#define AES_FLAGS_CFB32		(AES_MR_OPMOD_CFB | AES_MR_CFBS_32b)
+-#define AES_FLAGS_CFB16		(AES_MR_OPMOD_CFB | AES_MR_CFBS_16b)
+-#define AES_FLAGS_CFB8		(AES_MR_OPMOD_CFB | AES_MR_CFBS_8b)
+ #define AES_FLAGS_CTR		AES_MR_OPMOD_CTR
+ #define AES_FLAGS_GCM		AES_MR_OPMOD_GCM
+ #define AES_FLAGS_XTS		AES_MR_OPMOD_XTS
+@@ -87,7 +76,6 @@
+ 
+ struct atmel_aes_caps {
+ 	bool			has_dualbuff;
+-	bool			has_cfb64;
+ 	bool			has_gcm;
+ 	bool			has_xts;
+ 	bool			has_authenc;
+@@ -860,22 +848,6 @@ static int atmel_aes_dma_start(struct atmel_aes_dev *dd,
+ 	int err;
+ 
+ 	switch (dd->ctx->block_size) {
+-	case CFB8_BLOCK_SIZE:
+-		addr_width = DMA_SLAVE_BUSWIDTH_1_BYTE;
+-		maxburst = 1;
+-		break;
+-
+-	case CFB16_BLOCK_SIZE:
+-		addr_width = DMA_SLAVE_BUSWIDTH_2_BYTES;
+-		maxburst = 1;
+-		break;
+-
+-	case CFB32_BLOCK_SIZE:
+-	case CFB64_BLOCK_SIZE:
+-		addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+-		maxburst = 1;
+-		break;
+-
+ 	case AES_BLOCK_SIZE:
+ 		addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+ 		maxburst = dd->caps.max_burst_size;
+@@ -1103,7 +1075,7 @@ static int atmel_aes_crypt(struct skcipher_request *req, unsigned long mode)
+ 	}
+ 
+ 	/*
+-	 * ECB, CBC, CFB, OFB or CTR mode require the plaintext and ciphertext
++	 * ECB, CBC or CTR mode require the plaintext and ciphertext
+ 	 * to have a positve integer length.
+ 	 */
+ 	if (!req->cryptlen && opmode != AES_FLAGS_XTS)
+@@ -1113,27 +1085,7 @@ static int atmel_aes_crypt(struct skcipher_request *req, unsigned long mode)
+ 	    !IS_ALIGNED(req->cryptlen, crypto_skcipher_blocksize(skcipher)))
+ 		return -EINVAL;
+ 
+-	switch (mode & AES_FLAGS_OPMODE_MASK) {
+-	case AES_FLAGS_CFB8:
+-		ctx->block_size = CFB8_BLOCK_SIZE;
+-		break;
+-
+-	case AES_FLAGS_CFB16:
+-		ctx->block_size = CFB16_BLOCK_SIZE;
+-		break;
+-
+-	case AES_FLAGS_CFB32:
+-		ctx->block_size = CFB32_BLOCK_SIZE;
+-		break;
+-
+-	case AES_FLAGS_CFB64:
+-		ctx->block_size = CFB64_BLOCK_SIZE;
+-		break;
+-
+-	default:
+-		ctx->block_size = AES_BLOCK_SIZE;
+-		break;
+-	}
++	ctx->block_size = AES_BLOCK_SIZE;
+ 	ctx->is_aead = false;
+ 
+ 	rctx = skcipher_request_ctx(req);
+@@ -1188,66 +1140,6 @@ static int atmel_aes_cbc_decrypt(struct skcipher_request *req)
+ 	return atmel_aes_crypt(req, AES_FLAGS_CBC);
+ }
+ 
+-static int atmel_aes_ofb_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_OFB | AES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_aes_ofb_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_OFB);
+-}
+-
+-static int atmel_aes_cfb_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_CFB128 | AES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_aes_cfb_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_CFB128);
+-}
+-
+-static int atmel_aes_cfb64_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_CFB64 | AES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_aes_cfb64_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_CFB64);
+-}
+-
+-static int atmel_aes_cfb32_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_CFB32 | AES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_aes_cfb32_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_CFB32);
+-}
+-
+-static int atmel_aes_cfb16_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_CFB16 | AES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_aes_cfb16_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_CFB16);
+-}
+-
+-static int atmel_aes_cfb8_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_CFB8 | AES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_aes_cfb8_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_aes_crypt(req, AES_FLAGS_CFB8);
+-}
+-
+ static int atmel_aes_ctr_encrypt(struct skcipher_request *req)
+ {
+ 	return atmel_aes_crypt(req, AES_FLAGS_CTR | AES_FLAGS_ENCRYPT);
+@@ -1318,76 +1210,6 @@ static struct skcipher_alg aes_algs[] = {
+ 	.decrypt		= atmel_aes_cbc_decrypt,
+ 	.ivsize			= AES_BLOCK_SIZE,
+ },
+-{
+-	.base.cra_name		= "ofb(aes)",
+-	.base.cra_driver_name	= "atmel-ofb-aes",
+-	.base.cra_blocksize	= 1,
+-	.base.cra_ctxsize	= sizeof(struct atmel_aes_ctx),
+-
+-	.init			= atmel_aes_init_tfm,
+-	.min_keysize		= AES_MIN_KEY_SIZE,
+-	.max_keysize		= AES_MAX_KEY_SIZE,
+-	.setkey			= atmel_aes_setkey,
+-	.encrypt		= atmel_aes_ofb_encrypt,
+-	.decrypt		= atmel_aes_ofb_decrypt,
+-	.ivsize			= AES_BLOCK_SIZE,
+-},
+-{
+-	.base.cra_name		= "cfb(aes)",
+-	.base.cra_driver_name	= "atmel-cfb-aes",
+-	.base.cra_blocksize	= 1,
+-	.base.cra_ctxsize	= sizeof(struct atmel_aes_ctx),
+-
+-	.init			= atmel_aes_init_tfm,
+-	.min_keysize		= AES_MIN_KEY_SIZE,
+-	.max_keysize		= AES_MAX_KEY_SIZE,
+-	.setkey			= atmel_aes_setkey,
+-	.encrypt		= atmel_aes_cfb_encrypt,
+-	.decrypt		= atmel_aes_cfb_decrypt,
+-	.ivsize			= AES_BLOCK_SIZE,
+-},
+-{
+-	.base.cra_name		= "cfb32(aes)",
+-	.base.cra_driver_name	= "atmel-cfb32-aes",
+-	.base.cra_blocksize	= CFB32_BLOCK_SIZE,
+-	.base.cra_ctxsize	= sizeof(struct atmel_aes_ctx),
+-
+-	.init			= atmel_aes_init_tfm,
+-	.min_keysize		= AES_MIN_KEY_SIZE,
+-	.max_keysize		= AES_MAX_KEY_SIZE,
+-	.setkey			= atmel_aes_setkey,
+-	.encrypt		= atmel_aes_cfb32_encrypt,
+-	.decrypt		= atmel_aes_cfb32_decrypt,
+-	.ivsize			= AES_BLOCK_SIZE,
+-},
+-{
+-	.base.cra_name		= "cfb16(aes)",
+-	.base.cra_driver_name	= "atmel-cfb16-aes",
+-	.base.cra_blocksize	= CFB16_BLOCK_SIZE,
+-	.base.cra_ctxsize	= sizeof(struct atmel_aes_ctx),
+-
+-	.init			= atmel_aes_init_tfm,
+-	.min_keysize		= AES_MIN_KEY_SIZE,
+-	.max_keysize		= AES_MAX_KEY_SIZE,
+-	.setkey			= atmel_aes_setkey,
+-	.encrypt		= atmel_aes_cfb16_encrypt,
+-	.decrypt		= atmel_aes_cfb16_decrypt,
+-	.ivsize			= AES_BLOCK_SIZE,
+-},
+-{
+-	.base.cra_name		= "cfb8(aes)",
+-	.base.cra_driver_name	= "atmel-cfb8-aes",
+-	.base.cra_blocksize	= CFB8_BLOCK_SIZE,
+-	.base.cra_ctxsize	= sizeof(struct atmel_aes_ctx),
+-
+-	.init			= atmel_aes_init_tfm,
+-	.min_keysize		= AES_MIN_KEY_SIZE,
+-	.max_keysize		= AES_MAX_KEY_SIZE,
+-	.setkey			= atmel_aes_setkey,
+-	.encrypt		= atmel_aes_cfb8_encrypt,
+-	.decrypt		= atmel_aes_cfb8_decrypt,
+-	.ivsize			= AES_BLOCK_SIZE,
+-},
+ {
+ 	.base.cra_name		= "ctr(aes)",
+ 	.base.cra_driver_name	= "atmel-ctr-aes",
+@@ -1404,21 +1226,6 @@ static struct skcipher_alg aes_algs[] = {
+ },
+ };
+ 
+-static struct skcipher_alg aes_cfb64_alg = {
+-	.base.cra_name		= "cfb64(aes)",
+-	.base.cra_driver_name	= "atmel-cfb64-aes",
+-	.base.cra_blocksize	= CFB64_BLOCK_SIZE,
+-	.base.cra_ctxsize	= sizeof(struct atmel_aes_ctx),
+-
+-	.init			= atmel_aes_init_tfm,
+-	.min_keysize		= AES_MIN_KEY_SIZE,
+-	.max_keysize		= AES_MAX_KEY_SIZE,
+-	.setkey			= atmel_aes_setkey,
+-	.encrypt		= atmel_aes_cfb64_encrypt,
+-	.decrypt		= atmel_aes_cfb64_decrypt,
+-	.ivsize			= AES_BLOCK_SIZE,
+-};
+-
+ 
+ /* gcm aead functions */
+ 
+@@ -2407,9 +2214,6 @@ static void atmel_aes_unregister_algs(struct atmel_aes_dev *dd)
+ 	if (dd->caps.has_gcm)
+ 		crypto_unregister_aead(&aes_gcm_alg);
+ 
+-	if (dd->caps.has_cfb64)
+-		crypto_unregister_skcipher(&aes_cfb64_alg);
+-
+ 	for (i = 0; i < ARRAY_SIZE(aes_algs); i++)
+ 		crypto_unregister_skcipher(&aes_algs[i]);
+ }
+@@ -2434,14 +2238,6 @@ static int atmel_aes_register_algs(struct atmel_aes_dev *dd)
+ 			goto err_aes_algs;
+ 	}
+ 
+-	if (dd->caps.has_cfb64) {
+-		atmel_aes_crypto_alg_init(&aes_cfb64_alg.base);
+-
+-		err = crypto_register_skcipher(&aes_cfb64_alg);
+-		if (err)
+-			goto err_aes_cfb64_alg;
+-	}
+-
+ 	if (dd->caps.has_gcm) {
+ 		atmel_aes_crypto_alg_init(&aes_gcm_alg.base);
+ 
+@@ -2482,8 +2278,6 @@ static int atmel_aes_register_algs(struct atmel_aes_dev *dd)
+ err_aes_xts_alg:
+ 	crypto_unregister_aead(&aes_gcm_alg);
+ err_aes_gcm_alg:
+-	crypto_unregister_skcipher(&aes_cfb64_alg);
+-err_aes_cfb64_alg:
+ 	i = ARRAY_SIZE(aes_algs);
+ err_aes_algs:
+ 	for (j = 0; j < i; j++)
+@@ -2495,7 +2289,6 @@ static int atmel_aes_register_algs(struct atmel_aes_dev *dd)
+ static void atmel_aes_get_cap(struct atmel_aes_dev *dd)
+ {
+ 	dd->caps.has_dualbuff = 0;
+-	dd->caps.has_cfb64 = 0;
+ 	dd->caps.has_gcm = 0;
+ 	dd->caps.has_xts = 0;
+ 	dd->caps.has_authenc = 0;
+@@ -2507,7 +2300,6 @@ static void atmel_aes_get_cap(struct atmel_aes_dev *dd)
+ 	case 0x600:
+ 	case 0x500:
+ 		dd->caps.has_dualbuff = 1;
+-		dd->caps.has_cfb64 = 1;
+ 		dd->caps.has_gcm = 1;
+ 		dd->caps.has_xts = 1;
+ 		dd->caps.has_authenc = 1;
+@@ -2515,13 +2307,11 @@ static void atmel_aes_get_cap(struct atmel_aes_dev *dd)
+ 		break;
+ 	case 0x200:
+ 		dd->caps.has_dualbuff = 1;
+-		dd->caps.has_cfb64 = 1;
+ 		dd->caps.has_gcm = 1;
+ 		dd->caps.max_burst_size = 4;
+ 		break;
+ 	case 0x130:
+ 		dd->caps.has_dualbuff = 1;
+-		dd->caps.has_cfb64 = 1;
+ 		dd->caps.max_burst_size = 4;
+ 		break;
+ 	case 0x120:
+diff --git a/drivers/crypto/atmel-tdes.c b/drivers/crypto/atmel-tdes.c
+index 6870a13342e22..48888b2ff7936 100644
+--- a/drivers/crypto/atmel-tdes.c
++++ b/drivers/crypto/atmel-tdes.c
+@@ -45,11 +45,6 @@
+ #define TDES_FLAGS_OPMODE_MASK	(TDES_MR_OPMOD_MASK | TDES_MR_CFBS_MASK)
+ #define TDES_FLAGS_ECB		TDES_MR_OPMOD_ECB
+ #define TDES_FLAGS_CBC		TDES_MR_OPMOD_CBC
+-#define TDES_FLAGS_OFB		TDES_MR_OPMOD_OFB
+-#define TDES_FLAGS_CFB64	(TDES_MR_OPMOD_CFB | TDES_MR_CFBS_64b)
+-#define TDES_FLAGS_CFB32	(TDES_MR_OPMOD_CFB | TDES_MR_CFBS_32b)
+-#define TDES_FLAGS_CFB16	(TDES_MR_OPMOD_CFB | TDES_MR_CFBS_16b)
+-#define TDES_FLAGS_CFB8		(TDES_MR_OPMOD_CFB | TDES_MR_CFBS_8b)
+ 
+ #define TDES_FLAGS_MODE_MASK	(TDES_FLAGS_OPMODE_MASK | TDES_FLAGS_ENCRYPT)
+ 
+@@ -60,13 +55,8 @@
+ 
+ #define ATMEL_TDES_QUEUE_LENGTH	50
+ 
+-#define CFB8_BLOCK_SIZE		1
+-#define CFB16_BLOCK_SIZE	2
+-#define CFB32_BLOCK_SIZE	4
+-
+ struct atmel_tdes_caps {
+ 	bool	has_dma;
+-	u32		has_cfb_3keys;
+ };
+ 
+ struct atmel_tdes_dev;
+@@ -376,7 +366,6 @@ static int atmel_tdes_crypt_pdc(struct atmel_tdes_dev *dd,
+ 				dma_addr_t dma_addr_in,
+ 				dma_addr_t dma_addr_out, int length)
+ {
+-	struct atmel_tdes_reqctx *rctx = skcipher_request_ctx(dd->req);
+ 	int len32;
+ 
+ 	dd->dma_size = length;
+@@ -386,19 +375,7 @@ static int atmel_tdes_crypt_pdc(struct atmel_tdes_dev *dd,
+ 					   DMA_TO_DEVICE);
+ 	}
+ 
+-	switch (rctx->mode & TDES_FLAGS_OPMODE_MASK) {
+-	case TDES_FLAGS_CFB8:
+-		len32 = DIV_ROUND_UP(length, sizeof(u8));
+-		break;
+-
+-	case TDES_FLAGS_CFB16:
+-		len32 = DIV_ROUND_UP(length, sizeof(u16));
+-		break;
+-
+-	default:
+-		len32 = DIV_ROUND_UP(length, sizeof(u32));
+-		break;
+-	}
++	len32 = DIV_ROUND_UP(length, sizeof(u32));
+ 
+ 	atmel_tdes_write(dd, TDES_PTCR, TDES_PTCR_TXTDIS|TDES_PTCR_RXTDIS);
+ 	atmel_tdes_write(dd, TDES_TPR, dma_addr_in);
+@@ -419,7 +396,6 @@ static int atmel_tdes_crypt_dma(struct atmel_tdes_dev *dd,
+ 				dma_addr_t dma_addr_in,
+ 				dma_addr_t dma_addr_out, int length)
+ {
+-	struct atmel_tdes_reqctx *rctx = skcipher_request_ctx(dd->req);
+ 	struct scatterlist sg[2];
+ 	struct dma_async_tx_descriptor	*in_desc, *out_desc;
+ 	enum dma_slave_buswidth addr_width;
+@@ -431,19 +407,7 @@ static int atmel_tdes_crypt_dma(struct atmel_tdes_dev *dd,
+ 					   DMA_TO_DEVICE);
+ 	}
+ 
+-	switch (rctx->mode & TDES_FLAGS_OPMODE_MASK) {
+-	case TDES_FLAGS_CFB8:
+-		addr_width = DMA_SLAVE_BUSWIDTH_1_BYTE;
+-		break;
+-
+-	case TDES_FLAGS_CFB16:
+-		addr_width = DMA_SLAVE_BUSWIDTH_2_BYTES;
+-		break;
+-
+-	default:
+-		addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+-		break;
+-	}
++	addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
+ 
+ 	dd->dma_lch_in.dma_conf.dst_addr_width = addr_width;
+ 	dd->dma_lch_out.dma_conf.src_addr_width = addr_width;
+@@ -680,39 +644,11 @@ static int atmel_tdes_crypt(struct skcipher_request *req, unsigned long mode)
+ 	if (!req->cryptlen)
+ 		return 0;
+ 
+-	switch (mode & TDES_FLAGS_OPMODE_MASK) {
+-	case TDES_FLAGS_CFB8:
+-		if (!IS_ALIGNED(req->cryptlen, CFB8_BLOCK_SIZE)) {
+-			dev_dbg(dev, "request size is not exact amount of CFB8 blocks\n");
+-			return -EINVAL;
+-		}
+-		ctx->block_size = CFB8_BLOCK_SIZE;
+-		break;
+-
+-	case TDES_FLAGS_CFB16:
+-		if (!IS_ALIGNED(req->cryptlen, CFB16_BLOCK_SIZE)) {
+-			dev_dbg(dev, "request size is not exact amount of CFB16 blocks\n");
+-			return -EINVAL;
+-		}
+-		ctx->block_size = CFB16_BLOCK_SIZE;
+-		break;
+-
+-	case TDES_FLAGS_CFB32:
+-		if (!IS_ALIGNED(req->cryptlen, CFB32_BLOCK_SIZE)) {
+-			dev_dbg(dev, "request size is not exact amount of CFB32 blocks\n");
+-			return -EINVAL;
+-		}
+-		ctx->block_size = CFB32_BLOCK_SIZE;
+-		break;
+-
+-	default:
+-		if (!IS_ALIGNED(req->cryptlen, DES_BLOCK_SIZE)) {
+-			dev_dbg(dev, "request size is not exact amount of DES blocks\n");
+-			return -EINVAL;
+-		}
+-		ctx->block_size = DES_BLOCK_SIZE;
+-		break;
++	if (!IS_ALIGNED(req->cryptlen, DES_BLOCK_SIZE)) {
++		dev_dbg(dev, "request size is not exact amount of DES blocks\n");
++		return -EINVAL;
+ 	}
++	ctx->block_size = DES_BLOCK_SIZE;
+ 
+ 	rctx->mode = mode;
+ 
+@@ -832,55 +768,6 @@ static int atmel_tdes_cbc_decrypt(struct skcipher_request *req)
+ {
+ 	return atmel_tdes_crypt(req, TDES_FLAGS_CBC);
+ }
+-static int atmel_tdes_cfb_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_tdes_crypt(req, TDES_FLAGS_CFB64 | TDES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_tdes_cfb_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_tdes_crypt(req, TDES_FLAGS_CFB64);
+-}
+-
+-static int atmel_tdes_cfb8_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_tdes_crypt(req, TDES_FLAGS_CFB8 | TDES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_tdes_cfb8_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_tdes_crypt(req, TDES_FLAGS_CFB8);
+-}
+-
+-static int atmel_tdes_cfb16_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_tdes_crypt(req, TDES_FLAGS_CFB16 | TDES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_tdes_cfb16_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_tdes_crypt(req, TDES_FLAGS_CFB16);
+-}
+-
+-static int atmel_tdes_cfb32_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_tdes_crypt(req, TDES_FLAGS_CFB32 | TDES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_tdes_cfb32_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_tdes_crypt(req, TDES_FLAGS_CFB32);
+-}
+-
+-static int atmel_tdes_ofb_encrypt(struct skcipher_request *req)
+-{
+-	return atmel_tdes_crypt(req, TDES_FLAGS_OFB | TDES_FLAGS_ENCRYPT);
+-}
+-
+-static int atmel_tdes_ofb_decrypt(struct skcipher_request *req)
+-{
+-	return atmel_tdes_crypt(req, TDES_FLAGS_OFB);
+-}
+ 
+ static int atmel_tdes_init_tfm(struct crypto_skcipher *tfm)
+ {
+@@ -931,71 +818,6 @@ static struct skcipher_alg tdes_algs[] = {
+ 	.encrypt		= atmel_tdes_cbc_encrypt,
+ 	.decrypt		= atmel_tdes_cbc_decrypt,
+ },
+-{
+-	.base.cra_name		= "cfb(des)",
+-	.base.cra_driver_name	= "atmel-cfb-des",
+-	.base.cra_blocksize	= DES_BLOCK_SIZE,
+-	.base.cra_alignmask	= 0x7,
+-
+-	.min_keysize		= DES_KEY_SIZE,
+-	.max_keysize		= DES_KEY_SIZE,
+-	.ivsize			= DES_BLOCK_SIZE,
+-	.setkey			= atmel_des_setkey,
+-	.encrypt		= atmel_tdes_cfb_encrypt,
+-	.decrypt		= atmel_tdes_cfb_decrypt,
+-},
+-{
+-	.base.cra_name		= "cfb8(des)",
+-	.base.cra_driver_name	= "atmel-cfb8-des",
+-	.base.cra_blocksize	= CFB8_BLOCK_SIZE,
+-	.base.cra_alignmask	= 0,
+-
+-	.min_keysize		= DES_KEY_SIZE,
+-	.max_keysize		= DES_KEY_SIZE,
+-	.ivsize			= DES_BLOCK_SIZE,
+-	.setkey			= atmel_des_setkey,
+-	.encrypt		= atmel_tdes_cfb8_encrypt,
+-	.decrypt		= atmel_tdes_cfb8_decrypt,
+-},
+-{
+-	.base.cra_name		= "cfb16(des)",
+-	.base.cra_driver_name	= "atmel-cfb16-des",
+-	.base.cra_blocksize	= CFB16_BLOCK_SIZE,
+-	.base.cra_alignmask	= 0x1,
+-
+-	.min_keysize		= DES_KEY_SIZE,
+-	.max_keysize		= DES_KEY_SIZE,
+-	.ivsize			= DES_BLOCK_SIZE,
+-	.setkey			= atmel_des_setkey,
+-	.encrypt		= atmel_tdes_cfb16_encrypt,
+-	.decrypt		= atmel_tdes_cfb16_decrypt,
+-},
+-{
+-	.base.cra_name		= "cfb32(des)",
+-	.base.cra_driver_name	= "atmel-cfb32-des",
+-	.base.cra_blocksize	= CFB32_BLOCK_SIZE,
+-	.base.cra_alignmask	= 0x3,
+-
+-	.min_keysize		= DES_KEY_SIZE,
+-	.max_keysize		= DES_KEY_SIZE,
+-	.ivsize			= DES_BLOCK_SIZE,
+-	.setkey			= atmel_des_setkey,
+-	.encrypt		= atmel_tdes_cfb32_encrypt,
+-	.decrypt		= atmel_tdes_cfb32_decrypt,
+-},
+-{
+-	.base.cra_name		= "ofb(des)",
+-	.base.cra_driver_name	= "atmel-ofb-des",
+-	.base.cra_blocksize	= 1,
+-	.base.cra_alignmask	= 0x7,
+-
+-	.min_keysize		= DES_KEY_SIZE,
+-	.max_keysize		= DES_KEY_SIZE,
+-	.ivsize			= DES_BLOCK_SIZE,
+-	.setkey			= atmel_des_setkey,
+-	.encrypt		= atmel_tdes_ofb_encrypt,
+-	.decrypt		= atmel_tdes_ofb_decrypt,
+-},
+ {
+ 	.base.cra_name		= "ecb(des3_ede)",
+ 	.base.cra_driver_name	= "atmel-ecb-tdes",
+@@ -1021,19 +843,6 @@ static struct skcipher_alg tdes_algs[] = {
+ 	.decrypt		= atmel_tdes_cbc_decrypt,
+ 	.ivsize			= DES_BLOCK_SIZE,
+ },
+-{
+-	.base.cra_name		= "ofb(des3_ede)",
+-	.base.cra_driver_name	= "atmel-ofb-tdes",
+-	.base.cra_blocksize	= DES_BLOCK_SIZE,
+-	.base.cra_alignmask	= 0x7,
+-
+-	.min_keysize		= DES3_EDE_KEY_SIZE,
+-	.max_keysize		= DES3_EDE_KEY_SIZE,
+-	.setkey			= atmel_tdes_setkey,
+-	.encrypt		= atmel_tdes_ofb_encrypt,
+-	.decrypt		= atmel_tdes_ofb_decrypt,
+-	.ivsize			= DES_BLOCK_SIZE,
+-},
+ };
+ 
+ static void atmel_tdes_queue_task(unsigned long data)
+@@ -1121,14 +930,12 @@ static void atmel_tdes_get_cap(struct atmel_tdes_dev *dd)
+ {
+ 
+ 	dd->caps.has_dma = 0;
+-	dd->caps.has_cfb_3keys = 0;
+ 
+ 	/* keep only major version number */
+ 	switch (dd->hw_version & 0xf00) {
+ 	case 0x800:
+ 	case 0x700:
+ 		dd->caps.has_dma = 1;
+-		dd->caps.has_cfb_3keys = 1;
+ 		break;
+ 	case 0x600:
+ 		break;
 -- 
 2.53.0
 
