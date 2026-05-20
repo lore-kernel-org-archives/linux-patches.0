@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BF14F5E0;
-	Wed, 20 May 2026 17:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A413F65E6;
+	Wed, 20 May 2026 17:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299995; cv=none; b=Cn2MXbxcrbZq88d+2ZphPgG+9mzKEVtE7vA0P3HHVOCefJfMvoNORK0bcGJBHgCLIk8Mj1/z/jWfDF3qibwUPR6NB7KAxKr72VzKWrgQ2sqnWXbz/fvlKGM2CqrftP9/0ws7ewUpI20vN4VOy9Hi92oy6zggClqIr7ahvSNa6I4=
+	t=1779299998; cv=none; b=gQC9Vm5UC2qcygpPQZdmuBV+p8sFDHfyBlTpDJEw4jBJ/QYpjszSIx9tbAdpuo7lD1b2lKgv9SbEBOfxE0x2cnoW/yBTWFw3Tu+YV7YM6jbI4sot6oItCXJGdzGhHlwi5RWt/X3WqJYmsgJFOA7m9knjc8neK2xEnWVg3R2gK+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299995; c=relaxed/simple;
-	bh=0BAE/ZizDv0totuLMbT2Is58LGaaw7I+ZGFMGzfvehQ=;
+	s=arc-20240116; t=1779299998; c=relaxed/simple;
+	bh=Mp1eaa4gIBx323x72iYhDNRoA7ZXvtpEDt+Pu15QVNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZzXhLQ3USHl9RtXpbQVnmfek3dtfD86zGRzmZu8bVm9lYV/FzlkMYCWDFTg6uH1u2msWpOGBoN18RFvJVUuUksqihmkPVY9i1FAXgJGhHKJUJTCDdZGzcRNap5wRkfdwcsmAQ3WR+D/gCk2Wf5HOBBTpMz+HWy1lklybr+5K+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6+Ac2EA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nvUOr+/7i84w7HMWitC4u6ab/Q8f9VNsXMKgc+jwI9ZTiMTjTVxkKnsTTaVHVCOdFGeDSHS//cOKk9GP2CJvubJnei4SiMjm0GXSelmAKMn76/mA6PppVqR6dazT9dw701uhbR78mnv+4d3R9G0bh8Nk1gYv6htOpMNJTvKNMBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXtevr04; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6+Ac2EA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3941A1F000E9;
-	Wed, 20 May 2026 17:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXtevr04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BF01F000E9;
+	Wed, 20 May 2026 17:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299994;
-	bh=VRcUZzAmJskI3Y0mvZY0saelOQe2AJPB0ErkiaPeSTg=;
+	s=korg; t=1779299997;
+	bh=fjvDaB5GWEhaYxSuMiWGovGMJCGzYJdZjEMifRSTDdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E6+Ac2EAXcXtL37AqZLgQZJplAIGMjVzzAgdJNYbsC7hM2sXyQEOd1g5ZgJdJtMTC
-	 dZtOdyaKhm86xi8fVGFSSRIDx9c1qfL0OUdgUF3atJ3ff3Sym93E5FjXrSqNNw42W1
-	 QaGyA8wipNsDRPvkGPgF+sJix46lAoBzG8+nfpVw=
+	b=aXtevr0486HA5XWlvPXxPhpFh8xxFbXKUUSe1QSnUDGsOZGXq45CUTx0Pgllq7z25
+	 nJwvjDrMyymyz88GlopUISXXehZfSQVEQIMQa6/uKv0vBvW9I0ySaHxKDyOfERyehB
+	 Ovq6qUw/H0QlzgttboPp0VK9ZiLyBKX8fYJeE9Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 6.18 928/957] irqchip/riscv-imsic: Clear interrupt move state during CPU offlining
-Date: Wed, 20 May 2026 18:23:31 +0200
-Message-ID: <20260520162154.711654452@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 001/666] io_uring/kbuf: use mem_is_zero()
+Date: Wed, 20 May 2026 18:13:32 +0200
+Message-ID: <20260520162111.260571789@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
-References: <20260520162134.554764788@linuxfoundation.org>
+In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
+References: <20260520162111.222830634@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +46,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit cefafbd561402b0fe6447449364a30315b9b1570 upstream.
+commit 1724849072854a66861d461b298b04612702d685 upstream.
 
-Affinity changes of IMSIC interrupts have to be careful to not lose an
-interrupt in the process. Each vector keeps track of an affinity change in
-progress with two pointers in struct imsic_vector.
+Make use of mem_is_zero() for reserved fields checking.
 
-imsic_vector::move_prev points to the previous CPU target data and
-imsic_vector::move_next to the designated new CPU target data.
-
-imsic_vector::move_prev on the new CPU can only be cleared after the
-previous CPU has cleared imsic_vector::move_next, which ususally happens in
-__imsic_remote_sync().
-
-In case of CPU hot-unplug __imsic_remote_sync() is not invoked because the
-CPU is already marked offline. That means imsic_vector::move_prev becomes
-stale until the CPU is onlined again.
-
-The stale pointer prevents further affinity changes for the affected
-interrupts.
-
-Solve this by clearing the imsic_vector::move_prev pointers in the CPU
-hotplug offline path.
-
-[ tglx: Replace word salad in change log ]
-
-Fixes: 0f67911e821c ("irqchip/riscv-imsic: Separate next and previous pointers in IMSIC vector")
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260508-imsic-v2-1-e9f08dd46cf5@sifive.com
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/11fe27b7a831329bcdb4ea087317ef123ba7c171.1747150490.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-riscv-imsic-early.c |    2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/kbuf.c |   14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
---- a/drivers/irqchip/irq-riscv-imsic-early.c
-+++ b/drivers/irqchip/irq-riscv-imsic-early.c
-@@ -163,6 +163,8 @@ static int imsic_dying_cpu(unsigned int
- 	/* Cleanup IPIs */
- 	imsic_ipi_dying_cpu();
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -705,8 +705,7 @@ int io_register_pbuf_ring(struct io_ring
  
-+	imsic_local_sync_all(false);
-+
- 	/* Mark per-CPU IMSIC state as offline */
- 	imsic_state_offline();
+ 	if (copy_from_user(&reg, arg, sizeof(reg)))
+ 		return -EFAULT;
+-
+-	if (reg.resv[0] || reg.resv[1] || reg.resv[2])
++	if (!mem_is_zero(reg.resv, sizeof(reg.resv)))
+ 		return -EINVAL;
+ 	if (reg.flags & ~(IOU_PBUF_RING_MMAP | IOU_PBUF_RING_INC))
+ 		return -EINVAL;
+@@ -773,9 +772,7 @@ int io_unregister_pbuf_ring(struct io_ri
  
+ 	if (copy_from_user(&reg, arg, sizeof(reg)))
+ 		return -EFAULT;
+-	if (reg.resv[0] || reg.resv[1] || reg.resv[2])
+-		return -EINVAL;
+-	if (reg.flags)
++	if (!mem_is_zero(reg.resv, sizeof(reg.resv)) || reg.flags)
+ 		return -EINVAL;
+ 
+ 	bl = io_buffer_get_list(ctx, reg.bgid);
+@@ -793,14 +790,11 @@ int io_register_pbuf_status(struct io_ri
+ {
+ 	struct io_uring_buf_status buf_status;
+ 	struct io_buffer_list *bl;
+-	int i;
+ 
+ 	if (copy_from_user(&buf_status, arg, sizeof(buf_status)))
+ 		return -EFAULT;
+-
+-	for (i = 0; i < ARRAY_SIZE(buf_status.resv); i++)
+-		if (buf_status.resv[i])
+-			return -EINVAL;
++	if (!mem_is_zero(buf_status.resv, sizeof(buf_status.resv)))
++		return -EINVAL;
+ 
+ 	bl = io_buffer_get_list(ctx, buf_status.buf_group);
+ 	if (!bl)
 
 
