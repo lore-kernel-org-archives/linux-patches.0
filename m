@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F2C36A376;
-	Wed, 20 May 2026 16:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC94336A376;
+	Wed, 20 May 2026 16:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295033; cv=none; b=FKh53RCSd5j9ICpNIQEHs9UGvq+9ZCIiKWamAbBrUjxaxuZBeYB3E7zZ4v0SJEati34TAOEjEuZhzO585ylsmrbF8XSSlpG+XHs/RkCKFjPdIJhHn9fkArySO0RIHT1nKLMHZ//3S0Ti9NQ0JD0sI1+EuofSOZ9JDiwlNZElr/E=
+	t=1779295036; cv=none; b=frbzWoi75BiikaEe9xxkJ2WuNVV2P31AQvGRKyEXIfxUorh+KVyPm0IOSGgk+JoCNBIEmpZuHev77ZOGK2uKiIfCLm79LzidmYZvLM/MfdDzg2FnUIArTX3wYT5liZzry7LLRjdwN0IXNMb265BCqFX8iNjjzU96qfugAcroA5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295033; c=relaxed/simple;
-	bh=vJcaWHcJCTMd267gAhXNsWk93mLnmZl5o51J28GXTAI=;
+	s=arc-20240116; t=1779295036; c=relaxed/simple;
+	bh=afCNoqytbfD8CqKUt2nBQg5FgYP5xtKWxaxojA0sSVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8oRfp/v40fXDE5vVCjQe/AkWcXGkXyZywcNPZUpZhQLb6YYs7SGe3ltpw1rru0OeSnEqOry1aALYWeMSvYc4vzSYic7ZxoiAHHGi5EBtnTC+Zx7n5CqgeJ0dyEFvwx1k5L8cE3MoAROqS4xnLv9I6VGy1j0F0/SXxhR9mB8lN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWM8NzS1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SMjA9+cDcGYdDlf7wheH+/CXznygeSU7vTHX+zUQP7PNmD1CnUdFWAj0NHxCO2eOZzWjdGWM7TtyCvwB2X2b/iKUwJCjKUlPaS+ieZJXa/sI1aup4b8/dkAuW8k/7DqVSDS65N8VFoMplbl4QWbwn0v5IAng+cim42Cj29QqQAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U239HRYQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWM8NzS1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A2B1F000E9;
-	Wed, 20 May 2026 16:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U239HRYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7101F000E9;
+	Wed, 20 May 2026 16:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295032;
-	bh=19rwA/3f5jAO+VMXVUhRDr2U/Z6c3imldCsBAkh1U94=;
+	s=korg; t=1779295034;
+	bh=X9c4FNvBEdgHaBe6FZdfAoxDibpeTxSnzuL9MTntKDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mWM8NzS13mEPlt5d39QOa6kM4Xy5FSUSjpEedkUd+E7EKwXQMZLk5f7UM2qIMKmAk
-	 kjdXjuCBztpFvCek0vexiXr9kHX2idtv/Fqt3JRhGj8JJ+3cb9zme7IEI5V+YInmIQ
-	 bUc8brZphMjuyEVBRDIq/idGDn3UQAHtdWPlkwuM=
+	b=U239HRYQTuvRp90wmwIhxR2zN7xY0Y8mf+dvSa8Xw3MlI5k44+XmC4yYadyoz5BfJ
+	 oyeSXmZ7Z/yRlkUErz5jnrYL4OHwdiuzHAOFLhgJyTSBKv+26lFUtEqocADf/S92NB
+	 ZOLrs4I1TZxuGQ7wm1y1UnAacWNpWYd42l8n75C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aksh Garg <a-garg7@ti.com>,
+	Senchuan Zhang <zhangsenchuan@eswincomputing.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0266/1146] PCI: dwc: ep: Mirror the max link width and speed fields to all functions
-Date: Wed, 20 May 2026 18:08:36 +0200
-Message-ID: <20260520162154.245640046@linuxfoundation.org>
+Subject: [PATCH 7.0 0267/1146] PCI: dwc: Perform cleanup in the error path of dw_pcie_resume_noirq()
+Date: Wed, 20 May 2026 18:08:37 +0200
+Message-ID: <20260520162154.267267637@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,81 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aksh Garg <a-garg7@ti.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 94cbea0f636b55602a9a10583670976680ecea67 ]
+[ Upstream commit edb5ca3262e2255cf938a5948709d3472d4871ad ]
 
-PCIe r7.0, section 7.5.3.6 states that for multi-function devices, the
-Max Link Width and Max Link Speed fields in the Link Capabilities
-Register must report the same values for all functions.
+If the dw_pcie_resume_noirq() API fails, it just returns the errno without
+doing cleanup in the error path, leading to resource leak.
 
-Currently, dw_pcie_setup() programs these fields only for Function 0
-via dw_pcie_link_set_max_speed() and dw_pcie_link_set_max_link_width().
-For multi-function endpoint configurations, Function 1 and beyond retain
-their default values, violating the PCIe specification.
+So perform cleanup in the error path.
 
-Fix this by reading the Max Link Width and Max Link Speed fields from
-Link Capabilities Register of Function 0 after dw_pcie_setup() completes,
-then mirroring these values to all other functions.
-
-Fixes: 24ede430fa49 ("PCI: designware-ep: Add multiple PFs support for DWC")
-Fixes: 89db0793c9f2 ("PCI: dwc: Add missing PCI_EXP_LNKCAP_MLW handling")
-Signed-off-by: Aksh Garg <a-garg7@ti.com>
-[mani: renamed ref_lnkcap to func0_lnkcap]
+Fixes: 4774faf854f5 ("PCI: dwc: Implement generic suspend/resume functionality")
+Reported-by: Senchuan Zhang <zhangsenchuan@eswincomputing.com>
+Closes: https://lore.kernel.org/linux-pci/78296255.3869.19c8eb694d6.Coremail.zhangsenchuan@eswincomputing.com
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260224083817.916782-3-a-garg7@ti.com
+Link: https://patch.msgid.link/20260226133951.296743-1-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../pci/controller/dwc/pcie-designware-ep.c   | 29 ++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-designware-host.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 10d6f53cf7bad..ab2e7de5c55eb 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -1110,7 +1110,8 @@ static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
- {
- 	struct dw_pcie_ep *ep = &pci->ep;
- 	u8 funcs = ep->epc->max_functions;
--	u8 func_no;
-+	u32 func0_lnkcap, lnkcap;
-+	u8 func_no, offset;
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 6ae6189e9b8a9..c3c2dec728eea 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -1300,15 +1300,24 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
  
- 	dw_pcie_dbi_ro_wr_en(pci);
+ 	ret = dw_pcie_start_link(pci);
+ 	if (ret)
+-		return ret;
++		goto err_deinit;
  
-@@ -1118,6 +1119,32 @@ static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
- 		dw_pcie_ep_init_rebar_registers(ep, func_no);
+ 	ret = dw_pcie_wait_for_link(pci);
+-	if (ret)
+-		return ret;
++	if (ret == -ETIMEDOUT)
++		goto err_stop_link;
  
- 	dw_pcie_setup(pci);
+ 	if (pci->pp.ops->post_init)
+ 		pci->pp.ops->post_init(&pci->pp);
+ 
++	return 0;
 +
-+	/*
-+	 * PCIe r7.0, section 7.5.3.6 states that for multi-function
-+	 * endpoints, max link width and speed fields must report same
-+	 * values for all functions. However, dw_pcie_setup() programs
-+	 * these fields only for function 0. Hence, mirror these fields
-+	 * to all other functions as well.
-+	 */
-+	if (funcs > 1) {
-+		offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+		func0_lnkcap = dw_pcie_readl_dbi(pci, offset + PCI_EXP_LNKCAP);
-+		func0_lnkcap = FIELD_GET(PCI_EXP_LNKCAP_MLW |
-+					 PCI_EXP_LNKCAP_SLS, func0_lnkcap);
++err_stop_link:
++	dw_pcie_stop_link(pci);
 +
-+		for (func_no = 1; func_no < funcs; func_no++) {
-+			offset = dw_pcie_ep_find_capability(ep, func_no,
-+							    PCI_CAP_ID_EXP);
-+			lnkcap = dw_pcie_ep_readl_dbi(ep, func_no,
-+						      offset + PCI_EXP_LNKCAP);
-+			FIELD_MODIFY(PCI_EXP_LNKCAP_MLW | PCI_EXP_LNKCAP_SLS,
-+				     &lnkcap, func0_lnkcap);
-+			dw_pcie_ep_writel_dbi(ep, func_no,
-+					      offset + PCI_EXP_LNKCAP, lnkcap);
-+		}
-+	}
++err_deinit:
++	if (pci->pp.ops->deinit)
++		pci->pp.ops->deinit(&pci->pp);
 +
- 	dw_pcie_dbi_ro_wr_dis(pci);
+ 	return ret;
  }
- 
+ EXPORT_SYMBOL_GPL(dw_pcie_resume_noirq);
 -- 
 2.53.0
 
