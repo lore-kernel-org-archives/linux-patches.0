@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1DE3EE1FA;
-	Wed, 20 May 2026 17:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0283F1AD9;
+	Wed, 20 May 2026 17:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298624; cv=none; b=iKIYovgOnu1nzkUZ2Kq5zB7xtk4z33f0ZRMTwPW/ipoD2j1uZ6Rz9NY5aNdUth4a0kxvHsy4awroZhrD9C6uESQIq/M83vX9b3r6ycd6ExeNRxqURGre0fZT7DiOykpHMYeFLoK6QYf72F1DdcgVvihCpOJdFtRUa5Gzp4v07aQ=
+	t=1779298626; cv=none; b=TBC+Rzo9nks1iddkhgoU0CV7KfrBZQ3xp3hI+8+I5PYi1O3CwE5HRGzCKz0tWKkoAMGzJUccfAvGBIUD2xlxEWouO10UJDtfPI6//NRwb2sWlyxZMOjWPFLECXDWl+Mc9EMNughdLdlSuF4XHX6rDclG4jz2lC8BAJLDp1+SMTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298624; c=relaxed/simple;
-	bh=IdrWWFGsKzb9YNcYC8QDLqjHI7DwtyodSexINeySrnQ=;
+	s=arc-20240116; t=1779298626; c=relaxed/simple;
+	bh=lUeP3jxQvoNlDyiAecw8CWzyD106s94+dyayelWFuQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MlKaKkAyyuPcQJ5T1HpPzhobo3LKzh3hdwfIAI9batHPIiArXz2G1vdEbmnqOr7g4w+IOsaiYzMCGLka2j8O5xFfYaCkMNXwJtNjMtw84NRuOPzbQPrdL2IrHl0VgGxasZc1UeSueafm3v82klCTHEBhYyJRkDIrI8pmryAvxhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFRmWDJ0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NwpeUBUIhTNJ6W7YXU2yoQSgh+STwUl+RcocWz/pdOkIg/7UfBGdeAcV/QlPhre2QmFzr1YEp9X9LSthBwGHPYfEw99I7vP2dJrVMYbYiV06iB52sNd6VptiFnJZtwu/7Q84K85GV+9Bz+V3UZwpV+ReqaMuh3yXB6Lp26kGcKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRYDal6R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFRmWDJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68CC1F00893;
-	Wed, 20 May 2026 17:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRYDal6R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F27C1F000E9;
+	Wed, 20 May 2026 17:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298620;
-	bh=b7Nr0/prRxwBbSruk8ItC2CFjNItq8BozE4AN5RmntU=;
+	s=korg; t=1779298622;
+	bh=T8GdM7gyN8SSpF9Qgw17SuFqLJheRPY5EckH2ggm870=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFRmWDJ0XqVkils9PGA5OJbPw3yXzI2gyoH5YWsdgSQtT98u2fGXtze0YuRH+J/Hd
-	 mQhphvOFQwi4GVgpGuLhprimY9uunpBf9EspNruVgG8oZCXS86TBFYs4q3td7UUBNf
-	 sXfj3WTA59D8wcCDvBifu78f+PBTxaAubDJ3p/pk=
+	b=XRYDal6R95NQ0s86uqw+DaO9Z/pWE8KSj+/IjzgAvqnZNesbffcgRcVBqg5d1NTmu
+	 U1YScTZ1o67ReNTmBW/ZXvC3+BHNrBuDBT/mhVby6cLyB+j7Kd4hMCjl4HpBxr57za
+	 RdKKzjC8jo5nZAmF1tLV3Y36h31jWwmbR/Vg6QW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 478/957] mtd: spinand: winbond: Configure the IO mode after the dummy cycles
-Date: Wed, 20 May 2026 18:16:01 +0200
-Message-ID: <20260520162144.892664557@linuxfoundation.org>
+Subject: [PATCH 6.18 479/957] mtd: spinand: Gather all the bus interface steps in one single function
+Date: Wed, 20 May 2026 18:16:02 +0200
+Message-ID: <20260520162144.913849614@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,72 +52,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit ef1ed296fb9d9246256e1b5b2cf2e86e85606ac3 ]
+[ Upstream commit be0b86c648bf811237cc17e274e9f9488fccb772 ]
 
-When we will change the bus interface, the action that actually performs
-the transition is the IO mode register write. This means after the IO
-mode register write, we should use the new bus interface. But the
-->configure_chip() hook itself is not responsible of making this change
-official, it is the caller that must act according to the return value.
+Writing the quad enable bit in one helper and doing the chip
+configuration in another does not make much sense from a bus interface
+setup point of view.
 
-Reorganize this helper to first configure the dummy cycles before
-possibly switching to another bus interface.
+Instead, let's create a broader helper which is going to be in charge of
+all the bus configuration steps at once. This will specifically allow to
+transition to octal DDR mode, and even fallback to quad (if suppoorted)
+or single mode otherwise.
 
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Stable-dep-of: 25a915fad503 ("mtd: spinand: winbond: Clarify when to enable the HS bit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/spi/winbond.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ drivers/mtd/nand/spi/core.c | 62 ++++++++++++++++++++++---------------
+ 1 file changed, 37 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/mtd/nand/spi/winbond.c b/drivers/mtd/nand/spi/winbond.c
-index 2361109101727..6cb5dd45e6fb7 100644
---- a/drivers/mtd/nand/spi/winbond.c
-+++ b/drivers/mtd/nand/spi/winbond.c
-@@ -357,21 +357,6 @@ static int w35n0xjw_vcr_cfg(struct spinand_device *spinand)
- 
- 	op = spinand->op_templates->read_cache;
- 
--	single = (op->cmd.buswidth == 1 && op->addr.buswidth == 1 && op->data.buswidth == 1);
--	dtr = (op->cmd.dtr || op->addr.dtr || op->data.dtr);
--	if (single && !dtr)
--		io_mode = W35N01JW_VCR_IO_MODE_SINGLE_SDR;
--	else if (!single && !dtr)
--		io_mode = W35N01JW_VCR_IO_MODE_OCTAL_SDR;
--	else if (!single && dtr)
--		io_mode = W35N01JW_VCR_IO_MODE_OCTAL_DDR;
--	else
--		return -EINVAL;
--
--	ret = w35n0xjw_write_vcr(spinand, W35N01JW_VCR_IO_MODE_REG, io_mode);
--	if (ret)
--		return ret;
--
- 	dummy_cycles = ((op->dummy.nbytes * 8) / op->dummy.buswidth) / (op->dummy.dtr ? 2 : 1);
- 	switch (dummy_cycles) {
- 	case 8:
-@@ -388,6 +373,21 @@ static int w35n0xjw_vcr_cfg(struct spinand_device *spinand)
- 	if (ret)
- 		return ret;
- 
-+	single = (op->cmd.buswidth == 1 && op->addr.buswidth == 1 && op->data.buswidth == 1);
-+	dtr = (op->cmd.dtr && op->addr.dtr && op->data.dtr);
-+	if (single && !dtr)
-+		io_mode = W35N01JW_VCR_IO_MODE_SINGLE_SDR;
-+	else if (!single && !dtr)
-+		io_mode = W35N01JW_VCR_IO_MODE_OCTAL_SDR;
-+	else if (!single && dtr)
-+		io_mode = W35N01JW_VCR_IO_MODE_OCTAL_DDR;
-+	else
-+		return -EINVAL;
-+
-+	ret = w35n0xjw_write_vcr(spinand, W35N01JW_VCR_IO_MODE_REG, io_mode);
-+	if (ret)
-+		return ret;
-+
+diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
+index 5c1797946a047..b88f30ed746fc 100644
+--- a/drivers/mtd/nand/spi/core.c
++++ b/drivers/mtd/nand/spi/core.c
+@@ -177,18 +177,9 @@ static int spinand_init_cfg_cache(struct spinand_device *spinand)
  	return 0;
  }
  
+-static int spinand_init_quad_enable(struct spinand_device *spinand)
++static int spinand_init_quad_enable(struct spinand_device *spinand,
++				    bool enable)
+ {
+-	bool enable = false;
+-
+-	if (!(spinand->flags & SPINAND_HAS_QE_BIT))
+-		return 0;
+-
+-	if (spinand->op_templates->read_cache->data.buswidth == 4 ||
+-	    spinand->op_templates->write_cache->data.buswidth == 4 ||
+-	    spinand->op_templates->update_cache->data.buswidth == 4)
+-		enable = true;
+-
+ 	return spinand_upd_cfg(spinand, CFG_QUAD_ENABLE,
+ 			       enable ? CFG_QUAD_ENABLE : 0);
+ }
+@@ -1314,12 +1305,6 @@ static int spinand_manufacturer_init(struct spinand_device *spinand)
+ 			return ret;
+ 	}
+ 
+-	if (spinand->configure_chip) {
+-		ret = spinand->configure_chip(spinand);
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	return 0;
+ }
+ 
+@@ -1496,6 +1481,31 @@ static int spinand_detect(struct spinand_device *spinand)
+ 	return 0;
+ }
+ 
++static int spinand_configure_chip(struct spinand_device *spinand)
++{
++	bool quad_enable = false;
++	int ret;
++
++	if (spinand->flags & SPINAND_HAS_QE_BIT) {
++		if (spinand->ssdr_op_templates.read_cache->data.buswidth == 4 ||
++		    spinand->ssdr_op_templates.write_cache->data.buswidth == 4 ||
++		    spinand->ssdr_op_templates.update_cache->data.buswidth == 4)
++			quad_enable = true;
++	}
++
++	ret = spinand_init_quad_enable(spinand, quad_enable);
++	if (ret)
++		return ret;
++
++	if (spinand->configure_chip) {
++		ret = spinand->configure_chip(spinand);
++		if (ret)
++			return ret;
++	}
++
++	return ret;
++}
++
+ static int spinand_init_flash(struct spinand_device *spinand)
+ {
+ 	struct device *dev = &spinand->spimem->spi->dev;
+@@ -1506,10 +1516,6 @@ static int spinand_init_flash(struct spinand_device *spinand)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = spinand_init_quad_enable(spinand);
+-	if (ret)
+-		return ret;
+-
+ 	ret = spinand_upd_cfg(spinand, CFG_OTP_ENABLE, 0);
+ 	if (ret)
+ 		return ret;
+@@ -1522,19 +1528,25 @@ static int spinand_init_flash(struct spinand_device *spinand)
+ 		return ret;
+ 	}
+ 
++	ret = spinand_configure_chip(spinand);
++	if (ret)
++		goto manuf_cleanup;
++
+ 	/* After power up, all blocks are locked, so unlock them here. */
+ 	for (i = 0; i < nand->memorg.ntargets; i++) {
+ 		ret = spinand_select_target(spinand, i);
+ 		if (ret)
+-			break;
++			goto manuf_cleanup;
+ 
+ 		ret = spinand_lock_block(spinand, BL_ALL_UNLOCKED);
+ 		if (ret)
+-			break;
++			goto manuf_cleanup;
+ 	}
+ 
+-	if (ret)
+-		spinand_manufacturer_cleanup(spinand);
++	return 0;
++
++manuf_cleanup:
++	spinand_manufacturer_cleanup(spinand);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
