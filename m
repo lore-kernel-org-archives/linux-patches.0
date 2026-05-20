@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7091B372EDE;
-	Wed, 20 May 2026 17:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEA5372EDE;
+	Wed, 20 May 2026 17:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297135; cv=none; b=obUVMEjNRxtX8+OIgedTEJBF8+RPhHfgZarOX+nxlQxyUSJSqkPhjj/XZ6O6Tpb+06mssUov4at6ngZenkKaN/C8ReB5Lm+Ejaaca0NjGAl/SPBDzglwZVi5x+DpA6eLAjBaLpHbxnfpRBRJcDSFd3Azw7G+H+zYhLb8BMn4dNE=
+	t=1779297137; cv=none; b=NUV7bhhKMEgw1m72M0VyAfEqFHY7WTTtMAXZrr5KxKrE9Y+qtBC9sKK0RaZk+1GPsOHRUPv9+X+nSU8uk7pI4y4x17w8jwU5nflqITq3lUXLfGpeerTAkPxOr9lAbnY+n3+h3mQRVnfpFtQHVv/NW2yTjXKeSz+u2P1g+Tp5Upk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297135; c=relaxed/simple;
-	bh=xSfKq4XCv+PUlfM+lyurIcjE7q95daex/SMH6/3OOJk=;
+	s=arc-20240116; t=1779297137; c=relaxed/simple;
+	bh=xXpeEEfpm06CrisPCMqCeLDJHJlEwFXuWhku1BNVEH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cYCdsQPPBewSy2kyA6c0+TghfE2xu3InTundcM9vv/fjiPJ51IQRJ0yLlnns6EgFc1ib+nBN5KddHRbwGTGw2yN6uSzXurMKgqQqeM2TUvwfr4DXX82RseCBsKQrCewRFy7og7p3XO6hyupDlS/7c+K7oklnyRlTHxT3EGV3Zjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zof48o0V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jhVZ7FlvtbKvvwvLXiXV2SqAfbtlm0K/hoMo9d7ROeQYGdum/H9qgLdw9tPG4LAsNgSSI6oWvFS7Qr/W0g3TsL6UqIdeg6co//BpN22qGshJZNV3uXPq75J2ggJDa6mKYUB+gPNhUIyGXlq5+uHMbV4XhdbvIaJjWd/7IynbQPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Spj2KsO5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zof48o0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDBB71F000E9;
-	Wed, 20 May 2026 17:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Spj2KsO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E101F000E9;
+	Wed, 20 May 2026 17:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297133;
-	bh=hyG1jPOhvCZ+K1JC8FtpoM3ZkylvvgiKCbM8D9+mFtU=;
+	s=korg; t=1779297136;
+	bh=zsMDX0mgen/Q80YzZkbSBSmn1RS+pl2ugOlsDHj/SwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zof48o0VU5kE2CFG53JjnWnUUWmuhgPFs+S/XflJKfl6Ts/ecmUD+sD9Pjm6FYnue
-	 p0+SpabIrAvmkvLTzFa8RcJOWbblERbdCxB1LXNXJ9WW0zbMFzIccAblUQMvlu/9l4
-	 y9OyIdJFNSUc+/wONJDguszejnqOkjexWOfJfp/M=
+	b=Spj2KsO5fz+RGLccLvfckKd11ssQAjCb8PaHrnTAi4RxPjylmQChwtzW4NQkOvVrK
+	 tVYuoHHl33EPIw3toEweM2wj0wSWxWvTY40BC0L0LAh89Q5Zz/XlJqXt2mWq3YO/HY
+	 MdliqJy0WZ3+1cuUGrepzV2EINfoj/HD6ubjv+Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Stearn <mathias@mongodb.com>,
 	Thomas Gleixner <tglx@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Dmitry Vyukov <dvyukov@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1063/1146] rseq: Revert to historical performance killing behaviour
-Date: Wed, 20 May 2026 18:21:53 +0200
-Message-ID: <20260520162212.289309119@linuxfoundation.org>
+Subject: [PATCH 7.0 1064/1146] rseq: Implement read only ABI enforcement for optimized RSEQ V2 mode
+Date: Wed, 20 May 2026 18:21:54 +0200
+Message-ID: <20260520162212.311769581@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,395 +54,226 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@kernel.org>
 
-commit b9eac6a9d93c952c4b7775a24d5c7a1bbf4c3c00 upstream.
+commit 82f572449cfe75f12ea985986da60e11f308f77d upstream.
 
-The recent RSEQ optimization work broke the TCMalloc abuse of the RSEQ ABI
-as it not longer unconditionally updates the CPU, node, mm_cid fields,
-which are documented as read only for user space. Due to the observed
-behavior of the kernel it was possible for TCMalloc to overwrite the
-cpu_id_start field for their own purposes and rely on the kernel to update
-it unconditionally after each context switch and before signal delivery.
+The optimized RSEQ V2 mode requires that user space adheres to the ABI
+specification and does not modify the read-only fields cpu_id_start,
+cpu_id, node_id and mm_cid behind the kernel's back.
 
-The RSEQ ABI only guarantees that these fields are updated when the data
-changes, i.e. the task is migrated or the MMCID of the task changes due to
-switching from or to per CPU ownership mode.
+While the kernel does not rely on these fields, the adherence to this is a
+fundamental prerequisite to allow multiple entities, e.g. libraries, in an
+application to utilize the full potential of RSEQ without stepping on each
+other toes.
 
-The optimization work eliminated the unconditional updates and reduced them
-to the documented ABI guarantees, which results in a massive performance
-win for syscall, scheduling heavy work loads, which in turn breaks the
-TCMalloc expectations.
+Validate this adherence on every update of these fields. If the kernel
+detects that user space modified the fields, the application is force
+terminated.
 
-There have been several options discussed to restore the TCMalloc
-functionality while preserving the optimization benefits. They all end up
-in a series of hard to maintain workarounds, which in the worst case
-introduce overhead for everyone, e.g. in the scheduler.
-
-The requirements of TCMalloc and the optimization work are diametral and
-the required work arounds are a maintainence burden. They end up as fragile
-constructs, which are blocking further optimization work and are pretty
-much guaranteed to cause more subtle issues down the road.
-
-The optimization work heavily depends on the generic entry code, which is
-not used by all architectures yet. So the rework preserved the original
-mechanism moslty unmodified to keep the support for architectures, which
-handle rseq in their own exit to user space loop. That code is currently
-optimized out by the compiler on architectures which use the generic entry
-code.
-
-This allows to revert back to the original behaviour by replacing the
-compile time constant conditions with a runtime condition where required,
-which disables the optimization and the dependend time slice extension
-feature until the run-time condition can be enabled in the RSEQ
-registration code on a per task basis again.
-
-The following changes are required to restore the original behavior, which
-makes TCMalloc work again:
-
-  1) Replace the compile time constant conditionals with runtime
-     conditionals where appropriate to prevent the compiler from optimizing
-     the legacy mode out
-
-  2) Enforce unconditional update of IDs on context switch for the
-     non-optimized v1 mode
-
-  3) Enforce update of IDs in the pre signal delivery path for the
-     non-optimized v1 mode
-
-  4) Enforce update of IDs in the membarrier(RSEQ) IPI for the
-     non-optimized v1 mode
-
-  5) Make time slice and future extensions depend on optimized v2 mode
-
-This brings back the full performance problems, but preserves the v2
-optimization code and for generic entry code using architectures also the
-TIF_RSEQ optimization which avoids a full evaluation of the exit to user
-mode loop in many cases.
-
-Fixes: 566d8015f7ee ("rseq: Avoid CPU/MM CID updates when no event pending")
-Reported-by: Mathias Stearn <mathias@mongodb.com>
+Fixes: d6200245c75e ("rseq: Allow registering RSEQ with slice extension")
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
 Tested-by: Dmitry Vyukov <dvyukov@google.com>
-Closes: https://lore.kernel.org/CAHnCjA25b+nO2n5CeifknSKHssJpPrjnf+dtr7UgzRw4Zgu=oA@mail.gmail.com
-Link: https://patch.msgid.link/20260428224427.517051752%40kernel.org
+Link: https://patch.msgid.link/20260428224427.845230956%40kernel.org
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rseq.h       | 35 ++++++++++++++++++++++-----------
- include/linux/rseq_entry.h | 39 +++++++++++++++++++++++++++----------
- include/linux/rseq_types.h |  9 ++++++++-
- kernel/rseq.c              | 40 +++++++++++++++++++++++++++++++-------
- kernel/sched/membarrier.c  | 11 ++++++++++-
- 5 files changed, 104 insertions(+), 30 deletions(-)
+ include/linux/rseq_entry.h | 83 ++++++++++++++------------------------
+ include/linux/rseq_types.h |  4 +-
+ kernel/rseq.c              |  5 +--
+ 3 files changed, 35 insertions(+), 57 deletions(-)
 
-diff --git a/include/linux/rseq.h b/include/linux/rseq.h
-index f446909551df0..7ef79b25e714b 100644
---- a/include/linux/rseq.h
-+++ b/include/linux/rseq.h
-@@ -9,6 +9,11 @@
- 
- void __rseq_handle_slowpath(struct pt_regs *regs);
- 
-+static __always_inline bool rseq_v2(struct task_struct *t)
-+{
-+	return IS_ENABLED(CONFIG_GENERIC_IRQ_ENTRY) && likely(t->rseq.event.has_rseq > 1);
-+}
-+
- /* Invoked from resume_user_mode_work() */
- static inline void rseq_handle_slowpath(struct pt_regs *regs)
- {
-@@ -16,8 +21,7 @@ static inline void rseq_handle_slowpath(struct pt_regs *regs)
- 		if (current->rseq.event.slowpath)
- 			__rseq_handle_slowpath(regs);
- 	} else {
--		/* '&' is intentional to spare one conditional branch */
--		if (current->rseq.event.sched_switch & current->rseq.event.has_rseq)
-+		if (current->rseq.event.sched_switch && current->rseq.event.has_rseq)
- 			__rseq_handle_slowpath(regs);
- 	}
- }
-@@ -30,9 +34,9 @@ void __rseq_signal_deliver(int sig, struct pt_regs *regs);
-  */
- static inline void rseq_signal_deliver(struct ksignal *ksig, struct pt_regs *regs)
- {
--	if (IS_ENABLED(CONFIG_GENERIC_IRQ_ENTRY)) {
--		/* '&' is intentional to spare one conditional branch */
--		if (current->rseq.event.has_rseq & current->rseq.event.user_irq)
-+	if (rseq_v2(current)) {
-+		/* has_rseq is implied in rseq_v2() */
-+		if (current->rseq.event.user_irq)
- 			__rseq_signal_deliver(ksig->sig, regs);
- 	} else {
- 		if (current->rseq.event.has_rseq)
-@@ -50,15 +54,22 @@ static __always_inline void rseq_sched_switch_event(struct task_struct *t)
- {
- 	struct rseq_event *ev = &t->rseq.event;
- 
--	if (IS_ENABLED(CONFIG_GENERIC_IRQ_ENTRY)) {
-+	/*
-+	 * Only apply the user_irq optimization for RSEQ ABI V2 registrations.
-+	 * Legacy users like TCMalloc rely on the original ABI V1 behaviour
-+	 * which updates IDs on every context swtich.
-+	 */
-+	if (rseq_v2(t)) {
- 		/*
--		 * Avoid a boat load of conditionals by using simple logic
--		 * to determine whether NOTIFY_RESUME needs to be raised.
-+		 * Avoid a boat load of conditionals by using simple logic to
-+		 * determine whether TIF_NOTIFY_RESUME or TIF_RSEQ needs to be
-+		 * raised.
- 		 *
--		 * It's required when the CPU or MM CID has changed or
--		 * the entry was from user space.
-+		 * It's required when the CPU or MM CID has changed or the entry
-+		 * was via interrupt from user space. ev->has_rseq does not have
-+		 * to be evaluated here because rseq_v2() implies has_rseq.
- 		 */
--		bool raise = (ev->user_irq | ev->ids_changed) & ev->has_rseq;
-+		bool raise = ev->user_irq | ev->ids_changed;
- 
- 		if (raise) {
- 			ev->sched_switch = true;
-@@ -66,6 +77,7 @@ static __always_inline void rseq_sched_switch_event(struct task_struct *t)
- 		}
- 	} else {
- 		if (ev->has_rseq) {
-+			t->rseq.event.ids_changed = true;
- 			t->rseq.event.sched_switch = true;
- 			rseq_raise_notify_resume(t);
- 		}
-@@ -161,6 +173,7 @@ static inline unsigned int rseq_alloc_align(void)
- }
- 
- #else /* CONFIG_RSEQ */
-+static inline bool rseq_v2(struct task_struct *t) { return false; }
- static inline void rseq_handle_slowpath(struct pt_regs *regs) { }
- static inline void rseq_signal_deliver(struct ksignal *ksig, struct pt_regs *regs) { }
- static inline void rseq_sched_switch_event(struct task_struct *t) { }
 diff --git a/include/linux/rseq_entry.h b/include/linux/rseq_entry.h
-index c6831c93cd6ee..c67a3476e9dd6 100644
+index c67a3476e9dd6..413a3543fbe8e 100644
 --- a/include/linux/rseq_entry.h
 +++ b/include/linux/rseq_entry.h
-@@ -110,6 +110,20 @@ static __always_inline void rseq_slice_clear_grant(struct task_struct *t)
- 	t->rseq.slice.state.granted = false;
- }
- 
-+/*
-+ * Open coded, so it can be invoked within a user access region.
-+ *
-+ * This clears the user space state of the time slice extensions field only when
-+ * the task has registered the optimized RSEQ_ABI V2. Some legacy registrations,
-+ * e.g. TCMalloc, have conflicting non-ABI fields in struct RSEQ, which would be
-+ * overwritten by an unconditional write.
-+ */
-+#define rseq_slice_clear_user(rseq, efault)				\
-+do {									\
-+	if (rseq_slice_extension_enabled())				\
-+		unsafe_put_user(0U, &rseq->slice_ctrl.all, efault);	\
-+} while (0)
-+
- static __always_inline bool rseq_grant_slice_extension(bool work_pending)
- {
- 	struct task_struct *curr = current;
-@@ -220,6 +234,7 @@ static __always_inline bool rseq_slice_extension_enabled(void) { return false; }
- static __always_inline bool rseq_arm_slice_extension_timer(void) { return false; }
- static __always_inline void rseq_slice_clear_grant(struct task_struct *t) { }
- static __always_inline bool rseq_grant_slice_extension(bool work_pending) { return false; }
-+#define rseq_slice_clear_user(rseq, efault) do { } while (0)
+@@ -238,7 +238,6 @@ static __always_inline bool rseq_grant_slice_extension(bool work_pending) { retu
  #endif /* !CONFIG_RSEQ_SLICE_EXTENSION */
  
  bool rseq_debug_update_user_cs(struct task_struct *t, struct pt_regs *regs, unsigned long csaddr);
-@@ -507,11 +522,9 @@ bool rseq_set_ids_get_csaddr(struct task_struct *t, struct rseq_ids *ids,
- 		if (csaddr)
- 			unsafe_get_user(*csaddr, &rseq->rseq_cs, efault);
+-bool rseq_debug_validate_ids(struct task_struct *t);
  
--		/* Open coded, so it's in the same user access region */
--		if (rseq_slice_extension_enabled()) {
--			/* Unconditionally clear it, no point in conditionals */
--			unsafe_put_user(0U, &rseq->slice_ctrl.all, efault);
--		}
-+		/* RSEQ ABI V2 only operations */
-+		if (rseq_v2(t))
-+			rseq_slice_clear_user(rseq, efault);
- 	}
- 
- 	rseq_slice_clear_grant(t);
-@@ -602,6 +615,14 @@ static __always_inline bool rseq_exit_user_update(struct pt_regs *regs, struct t
- 	 * interrupts disabled
- 	 */
- 	guard(pagefault)();
-+	/*
-+	 * This optimization is only valid when the task registered for the
-+	 * optimized RSEQ_ABI_V2 variant. Some legacy users rely on the original
-+	 * RSEQ implementation behaviour which unconditionally updated the IDs.
-+	 * rseq_sched_switch_event() ensures that legacy registrations always
-+	 * have both sched_switch and ids_changed set, which is compatible with
-+	 * the historical TIF_NOTIFY_RESUME behaviour.
-+	 */
- 	if (likely(!t->rseq.event.ids_changed)) {
- 		struct rseq __user *rseq = t->rseq.usrptr;
- 		/*
-@@ -613,11 +634,9 @@ static __always_inline bool rseq_exit_user_update(struct pt_regs *regs, struct t
- 		scoped_user_rw_access(rseq, efault) {
- 			unsafe_get_user(csaddr, &rseq->rseq_cs, efault);
- 
--			/* Open coded, so it's in the same user access region */
--			if (rseq_slice_extension_enabled()) {
--				/* Unconditionally clear it, no point in conditionals */
--				unsafe_put_user(0U, &rseq->slice_ctrl.all, efault);
--			}
-+			/* RSEQ ABI V2 only operations */
-+			if (rseq_v2(t))
-+				rseq_slice_clear_user(rseq, efault);
- 		}
- 
- 		rseq_slice_clear_grant(t);
-diff --git a/include/linux/rseq_types.h b/include/linux/rseq_types.h
-index 0b42045988db0..a469c1870849c 100644
---- a/include/linux/rseq_types.h
-+++ b/include/linux/rseq_types.h
-@@ -9,6 +9,12 @@
- #ifdef CONFIG_RSEQ
- struct rseq;
- 
-+/*
-+ * rseq_event::has_rseq contains the ABI version number so preserving it
-+ * in AND operations requires a mask.
-+ */
-+#define RSEQ_HAS_RSEQ_VERSION_MASK	0xff
-+
- /**
-  * struct rseq_event - Storage for rseq related event management
-  * @all:		Compound to initialize and clear the data efficiently
-@@ -17,7 +23,8 @@ struct rseq;
-  *			exit to user
-  * @ids_changed:	Indicator that IDs need to be updated
-  * @user_irq:		True on interrupt entry from user mode
-- * @has_rseq:		True if the task has a rseq pointer installed
-+ * @has_rseq:		Greater than 0 if the task has a rseq pointer installed.
-+ *			Contains the RSEQ version number
-  * @error:		Compound error code for the slow path to analyze
-  * @fatal:		User space data corrupted or invalid
-  * @slowpath:		Indicator that slow path processing via TIF_NOTIFY_RESUME
-diff --git a/kernel/rseq.c b/kernel/rseq.c
-index 586f58f652c6e..aa25753ea1350 100644
---- a/kernel/rseq.c
-+++ b/kernel/rseq.c
-@@ -253,11 +253,14 @@ static bool rseq_handle_cs(struct task_struct *t, struct pt_regs *regs)
- static void rseq_slowpath_update_usr(struct pt_regs *regs)
+ static __always_inline void rseq_note_user_irq_entry(void)
  {
- 	/*
--	 * Preserve rseq state and user_irq state. The generic entry code
--	 * clears user_irq on the way out, the non-generic entry
--	 * architectures are not having user_irq.
-+	 * Preserve has_rseq and user_irq state. The generic entry code clears
-+	 * user_irq on the way out, the non-generic entry architectures are not
-+	 * setting user_irq.
- 	 */
--	const struct rseq_event evt_mask = { .has_rseq = true, .user_irq = true, };
-+	const struct rseq_event evt_mask = {
-+		.has_rseq	= RSEQ_HAS_RSEQ_VERSION_MASK,
-+		.user_irq	= true,
-+	};
- 	struct task_struct *t = current;
- 	struct rseq_ids ids;
- 	u32 node_id;
-@@ -330,8 +333,9 @@ void __rseq_handle_slowpath(struct pt_regs *regs)
- void __rseq_signal_deliver(int sig, struct pt_regs *regs)
- {
- 	rseq_stat_inc(rseq_stats.signal);
-+
- 	/*
--	 * Don't update IDs, they are handled on exit to user if
-+	 * Don't update IDs yet, they are handled on exit to user if
- 	 * necessary. The important thing is to abort a critical section of
- 	 * the interrupted context as after this point the instruction
- 	 * pointer in @regs points to the signal handler.
-@@ -344,6 +348,13 @@ void __rseq_signal_deliver(int sig, struct pt_regs *regs)
- 		current->rseq.event.error = 0;
- 		force_sigsegv(sig);
- 	}
-+
-+	/*
-+	 * In legacy mode, force the update of IDs before returning to user
-+	 * space to stay compatible.
-+	 */
-+	if (!rseq_v2(current))
-+		rseq_force_update();
+@@ -358,43 +357,6 @@ bool rseq_debug_update_user_cs(struct task_struct *t, struct pt_regs *regs,
+ 	return false;
  }
+ 
+-/*
+- * On debug kernels validate that user space did not mess with it if the
+- * debug branch is enabled.
+- */
+-bool rseq_debug_validate_ids(struct task_struct *t)
+-{
+-	struct rseq __user *rseq = t->rseq.usrptr;
+-	u32 cpu_id, uval, node_id;
+-
+-	/*
+-	 * On the first exit after registering the rseq region CPU ID is
+-	 * RSEQ_CPU_ID_UNINITIALIZED and node_id in user space is 0!
+-	 */
+-	node_id = t->rseq.ids.cpu_id != RSEQ_CPU_ID_UNINITIALIZED ?
+-		  cpu_to_node(t->rseq.ids.cpu_id) : 0;
+-
+-	scoped_user_read_access(rseq, efault) {
+-		unsafe_get_user(cpu_id, &rseq->cpu_id_start, efault);
+-		if (cpu_id != t->rseq.ids.cpu_id)
+-			goto die;
+-		unsafe_get_user(uval, &rseq->cpu_id, efault);
+-		if (uval != cpu_id)
+-			goto die;
+-		unsafe_get_user(uval, &rseq->node_id, efault);
+-		if (uval != node_id)
+-			goto die;
+-		unsafe_get_user(uval, &rseq->mm_cid, efault);
+-		if (uval != t->rseq.ids.mm_cid)
+-			goto die;
+-	}
+-	return true;
+-die:
+-	t->rseq.event.fatal = true;
+-efault:
+-	return false;
+-}
+-
+ #endif /* RSEQ_BUILD_SLOW_PATH */
  
  /*
-@@ -408,6 +419,7 @@ static bool rseq_reset_ids(void)
- SYSCALL_DEFINE4(rseq, struct rseq __user *, rseq, u32, rseq_len, int, flags, u32, sig)
+@@ -504,20 +466,32 @@ rseq_update_user_cs(struct task_struct *t, struct pt_regs *regs, unsigned long c
+  * faults in task context are fatal too.
+  */
+ static rseq_inline
+-bool rseq_set_ids_get_csaddr(struct task_struct *t, struct rseq_ids *ids,
+-			     u32 node_id, u64 *csaddr)
++bool rseq_set_ids_get_csaddr(struct task_struct *t, struct rseq_ids *ids, u64 *csaddr)
  {
- 	u32 rseqfl = 0;
-+	u8 version = 1;
+ 	struct rseq __user *rseq = t->rseq.usrptr;
  
- 	if (flags & RSEQ_FLAG_UNREGISTER) {
- 		if (flags & ~RSEQ_FLAG_UNREGISTER)
-@@ -461,7 +473,11 @@ SYSCALL_DEFINE4(rseq, struct rseq __user *, rseq, u32, rseq_len, int, flags, u32
- 	if (!access_ok(rseq, rseq_len))
- 		return -EFAULT;
- 
--	if (IS_ENABLED(CONFIG_RSEQ_SLICE_EXTENSION)) {
-+	/*
-+	 * The version check effectivly disables time slice extensions until the
-+	 * RSEQ ABI V2 registration are implemented.
-+	 */
-+	if (IS_ENABLED(CONFIG_RSEQ_SLICE_EXTENSION) && version > 1) {
- 		if (rseq_slice_extension_enabled()) {
- 			rseqfl |= RSEQ_CS_FLAG_SLICE_EXT_AVAILABLE;
- 			if (flags & RSEQ_FLAG_SLICE_EXT_DEFAULT_ON)
-@@ -484,7 +500,15 @@ SYSCALL_DEFINE4(rseq, struct rseq __user *, rseq, u32, rseq_len, int, flags, u32
- 		unsafe_put_user(RSEQ_CPU_ID_UNINITIALIZED, &rseq->cpu_id, efault);
- 		unsafe_put_user(0U, &rseq->node_id, efault);
- 		unsafe_put_user(0U, &rseq->mm_cid, efault);
--		unsafe_put_user(0U, &rseq->slice_ctrl.all, efault);
+-	if (static_branch_unlikely(&rseq_debug_enabled)) {
+-		if (!rseq_debug_validate_ids(t))
+-			return false;
+-	}
+-
+ 	scoped_user_rw_access(rseq, efault) {
++		/* Validate the R/O fields for debug and optimized mode */
++		if (static_branch_unlikely(&rseq_debug_enabled) || rseq_v2(t)) {
++			u32 cpu_id, uval;
 +
-+		/*
-+		 * All fields past mm_cid are only valid for non-legacy v2
-+		 * registrations.
-+		 */
-+		if (version > 1) {
-+			if (IS_ENABLED(CONFIG_RSEQ_SLICE_EXTENSION))
-+				unsafe_put_user(0U, &rseq->slice_ctrl.all, efault);
++			unsafe_get_user(cpu_id, &rseq->cpu_id_start, efault);
++			if (cpu_id != t->rseq.ids.cpu_id)
++				goto die;
++			unsafe_get_user(uval, &rseq->cpu_id, efault);
++			if (uval != cpu_id)
++				goto die;
++			unsafe_get_user(uval, &rseq->node_id, efault);
++			if (uval != t->rseq.ids.node_id)
++				goto die;
++			unsafe_get_user(uval, &rseq->mm_cid, efault);
++			if (uval != t->rseq.ids.mm_cid)
++				goto die;
 +		}
- 	}
++
+ 		unsafe_put_user(ids->cpu_id, &rseq->cpu_id_start, efault);
+ 		unsafe_put_user(ids->cpu_id, &rseq->cpu_id, efault);
+-		unsafe_put_user(node_id, &rseq->node_id, efault);
++		unsafe_put_user(ids->node_id, &rseq->node_id, efault);
+ 		unsafe_put_user(ids->mm_cid, &rseq->mm_cid, efault);
+ 		if (csaddr)
+ 			unsafe_get_user(*csaddr, &rseq->rseq_cs, efault);
+@@ -529,10 +503,13 @@ bool rseq_set_ids_get_csaddr(struct task_struct *t, struct rseq_ids *ids,
+ 
+ 	rseq_slice_clear_grant(t);
+ 	/* Cache the new values */
+-	t->rseq.ids.cpu_cid = ids->cpu_cid;
++	t->rseq.ids = *ids;
+ 	rseq_stat_inc(rseq_stats.ids);
+ 	rseq_trace_update(t, ids);
+ 	return true;
++
++die:
++	t->rseq.event.fatal = true;
+ efault:
+ 	return false;
+ }
+@@ -542,11 +519,11 @@ bool rseq_set_ids_get_csaddr(struct task_struct *t, struct rseq_ids *ids,
+  * is in a critical section.
+  */
+ static rseq_inline bool rseq_update_usr(struct task_struct *t, struct pt_regs *regs,
+-					struct rseq_ids *ids, u32 node_id)
++					struct rseq_ids *ids)
+ {
+ 	u64 csaddr;
+ 
+-	if (!rseq_set_ids_get_csaddr(t, ids, node_id, &csaddr))
++	if (!rseq_set_ids_get_csaddr(t, ids, &csaddr))
+ 		return false;
  
  	/*
-@@ -712,6 +736,8 @@ int rseq_slice_extension_prctl(unsigned long arg2, unsigned long arg3)
- 			return -ENOTSUPP;
- 		if (!current->rseq.usrptr)
- 			return -ENXIO;
-+		if (!rseq_v2(current))
-+			return -ENOTSUPP;
+@@ -649,12 +626,12 @@ static __always_inline bool rseq_exit_user_update(struct pt_regs *regs, struct t
+ 	}
  
- 		/* No change? */
- 		if (enable == !!current->rseq.slice.state.enabled)
-diff --git a/kernel/sched/membarrier.c b/kernel/sched/membarrier.c
-index 6234456037252..226a6329f3e92 100644
---- a/kernel/sched/membarrier.c
-+++ b/kernel/sched/membarrier.c
-@@ -199,7 +199,16 @@ static void ipi_rseq(void *info)
- 	 * is negligible.
- 	 */
- 	smp_mb();
--	rseq_sched_switch_event(current);
-+	/*
-+	 * Legacy mode requires that IDs are written and the critical section is
-+	 * evaluated. V2 optimized mode handles the critical section and IDs are
-+	 * only updated if they change as a consequence of preemption after
-+	 * return from this IPI.
-+	 */
-+	if (rseq_v2(current))
-+		rseq_sched_switch_event(current);
-+	else
-+		rseq_force_update();
+ 	struct rseq_ids ids = {
+-		.cpu_id = task_cpu(t),
+-		.mm_cid = task_mm_cid(t),
++		.cpu_id	 = task_cpu(t),
++		.mm_cid	 = task_mm_cid(t),
++		.node_id = cpu_to_node(ids.cpu_id),
+ 	};
+-	u32 node_id = cpu_to_node(ids.cpu_id);
+ 
+-	return rseq_update_usr(t, regs, &ids, node_id);
++	return rseq_update_usr(t, regs, &ids);
+ efault:
+ 	return false;
  }
+diff --git a/include/linux/rseq_types.h b/include/linux/rseq_types.h
+index a469c1870849c..85739a63e85e6 100644
+--- a/include/linux/rseq_types.h
++++ b/include/linux/rseq_types.h
+@@ -66,8 +66,9 @@ struct rseq_event {
+  *		compiler emit a single compare on 64-bit
+  * @cpu_id:	The CPU ID which was written last to user space
+  * @mm_cid:	The MM CID which was written last to user space
++ * @node_id:	The node ID which was written last to user space
+  *
+- * @cpu_id and @mm_cid are updated when the data is written to user space.
++ * @cpu_id, @mm_cid and @node_id are updated when the data is written to user space.
+  */
+ struct rseq_ids {
+ 	union {
+@@ -77,6 +78,7 @@ struct rseq_ids {
+ 			u32	mm_cid;
+ 		};
+ 	};
++	u32			node_id;
+ };
  
- static void ipi_sync_rq_state(void *info)
+ /**
+diff --git a/kernel/rseq.c b/kernel/rseq.c
+index aa25753ea1350..101612027f6a3 100644
+--- a/kernel/rseq.c
++++ b/kernel/rseq.c
+@@ -263,7 +263,6 @@ static void rseq_slowpath_update_usr(struct pt_regs *regs)
+ 	};
+ 	struct task_struct *t = current;
+ 	struct rseq_ids ids;
+-	u32 node_id;
+ 	bool event;
+ 
+ 	if (unlikely(t->flags & PF_EXITING))
+@@ -299,9 +298,9 @@ static void rseq_slowpath_update_usr(struct pt_regs *regs)
+ 	if (!event)
+ 		return;
+ 
+-	node_id = cpu_to_node(ids.cpu_id);
++	ids.node_id = cpu_to_node(ids.cpu_id);
+ 
+-	if (unlikely(!rseq_update_usr(t, regs, &ids, node_id))) {
++	if (unlikely(!rseq_update_usr(t, regs, &ids))) {
+ 		/*
+ 		 * Clear the errors just in case this might survive magically, but
+ 		 * leave the rest intact.
 -- 
 2.53.0
 
