@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0571617A2FC;
-	Wed, 20 May 2026 18:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650282D7386;
+	Wed, 20 May 2026 18:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302013; cv=none; b=XdvlrzSl5NkfiUqEg4F4nlQgI8B41RDPFWvvbjU0M9w/cZadpsZLinFwH7JN7KWzIJ4BuRMnoaLE7OXvixb+NHThbZ9EylhovasShYQvkUsIO6aW0rGg4kgDIYvgYEiruQxUdaB0lvpxCgFmpUiki7ll7+tk/QQJEVSUOQQVQgE=
+	t=1779302015; cv=none; b=rh12fHXnrYeA+CFRxg0EsDYSBz5ZC93eQCzNHqsNcV7vWe6Id2FEBFrPEJ5oEkfRsPKm+1YPKoETMA768tq/kvh86+kyLCuq0zmtWvWsYp88CYr1NaBLUwn5Q7riwvCXgk1z3lzw1maL7NM8Qkftzlg0mnea4xx7uPMbXDWgjFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302013; c=relaxed/simple;
-	bh=x1wzJ0GVCL4DXwUXCVtyFN1aNSp7xniwnEbRv/z3zD8=;
+	s=arc-20240116; t=1779302015; c=relaxed/simple;
+	bh=d4a5HJaFH/QzcC/paUthaEfG8RoP7nmRi7DKAdOyNq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VVGCejd4HAJGtntVcXq5SdWNTaFvDqOTXIJ5j1pH+lyPKaGoqw81+hFOL8PSohBk4h9Hl/XkcZd9XCpoMgKrylJ5bqxpd8XnnD03Tt5uuep31j8WtGE9GlVLDpWqQGcZRElFypp1EHZHibJGSfj1Uu1NaChHIRDlrOc/s7GGsWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocxZLUHs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H7ekRo0kuRw/AMNiyb9kVVSs2yh/+Rd1FG+pNgKGRnH5sxWj3wpVuBHKp8SfSDW2VKkAdIreupSW5RSlgKMmTtdKXxbtHB2YtB1dP9vKDxyFLG580UkDJGXrLxOCgEB7imeX1OpMPGybrihkSi2jYuDaaIdACuY0E0+mhSa2+qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTtIneu1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocxZLUHs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE191F000E9;
-	Wed, 20 May 2026 18:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTtIneu1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B611F00893;
+	Wed, 20 May 2026 18:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302011;
-	bh=kHF+MYOVMp7a67gUksu0xzdZo2KHh6o0mF5COEJoWq0=;
+	s=korg; t=1779302014;
+	bh=a8kb+vxupfa2C2RN0miTx5xS1Dz9+ev59qIwhIKYY34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ocxZLUHsMcYrT4PV+IQKZTYd5pQZzUzI9GqQPwdMhAn3NbDIoKWFANTwmy+7Wnh4w
-	 dluhZwjgE29UlwuChNF1HK38bXFNQdzcDM/sNr0Wj803XyFYGY3tAnNsSUHkyPllj8
-	 xCEb1ZlNxMPH/KCghbFMEiZ3gL6HRIqhDm+TLiNo=
+	b=fTtIneu19H3rKmXXFhMZbFdH1/m1RZDrfsrvM664uwJcb63fJYBZ2tqo9AhqVsOAx
+	 H+PkTMqetDCIBCRS/WD+3/4htqpCGd3tnun/mZzT1Q6QQnbpwtvIYCxlgO4iSMsDu3
+	 WVYQ1ldBYI/9zp5S1Z2WvWkwrzyYPyTdLdUn8HYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/508] drm/sun4i: Fix resource leaks
-Date: Wed, 20 May 2026 18:18:48 +0200
-Message-ID: <20260520162100.896410421@linuxfoundation.org>
+Subject: [PATCH 6.6 079/508] Bluetooth: fix locking in hci_conn_request_evt() with HCI_PROTO_DEFER
+Date: Wed, 20 May 2026 18:18:22 +0200
+Message-ID: <20260520162100.321828831@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,39 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 127367ad2e0f4870de60c6d719ae82ecf68d674c ]
+[ Upstream commit 5c7209a341ff2ac338b2b0375c34a307b37c9ac2 ]
 
-Three clocks are not being released in devm_regmap_init_mmio() error
-path.
+When protocol sets HCI_PROTO_DEFER, hci_conn_request_evt() calls
+hci_connect_cfm(conn) without hdev->lock. Generally hci_connect_cfm()
+assumes it is held, and if conn is deleted concurrently -> UAF.
 
-Add proper goto and set ret to the error code.
+Only SCO and ISO set HCI_PROTO_DEFER and only for defer setup listen,
+and HCI_EV_CONN_REQUEST is not generated for ISO.  In the non-deferred
+listening socket code paths, hci_connect_cfm(conn) is called with
+hdev->lock held.
 
-Fixes: 8270249fbeaf0 ("drm/sun4i: backend: Create regmap after access is possible")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260226163836.10335-1-ethantidmore06@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fix by holding the lock.
+
+Fixes: 70c464256310 ("Bluetooth: Refactor connection request handling")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_backend.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_event.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/sun4i/sun4i_backend.c b/drivers/gpu/drm/sun4i/sun4i_backend.c
-index 6a2ffaa477ab8..4943577ec7fb8 100644
---- a/drivers/gpu/drm/sun4i/sun4i_backend.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_backend.c
-@@ -878,7 +878,8 @@ static int sun4i_backend_bind(struct device *dev, struct device *master,
- 						     &sun4i_backend_regmap_config);
- 	if (IS_ERR(backend->engine.regs)) {
- 		dev_err(dev, "Couldn't create the backend regmap\n");
--		return PTR_ERR(backend->engine.regs);
-+		ret = PTR_ERR(backend->engine.regs);
-+		goto err_disable_ram_clk;
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index f6285c4325d63..4607db3037bd9 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3282,8 +3282,6 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
+ 
+ 	memcpy(conn->dev_class, ev->dev_class, 3);
+ 
+-	hci_dev_unlock(hdev);
+-
+ 	if (ev->link_type == ACL_LINK ||
+ 	    (!(flags & HCI_PROTO_DEFER) && !lmp_esco_capable(hdev))) {
+ 		struct hci_cp_accept_conn_req cp;
+@@ -3317,7 +3315,6 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
+ 		hci_connect_cfm(conn, 0);
  	}
  
- 	list_add_tail(&backend->engine.list, &drv->engine_list);
+-	return;
+ unlock:
+ 	hci_dev_unlock(hdev);
+ }
 -- 
 2.53.0
 
