@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CC53FC5AD;
-	Wed, 20 May 2026 18:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D387400DF5;
+	Wed, 20 May 2026 18:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301419; cv=none; b=jrFgNM5Mjf0rjcztA2taMDJ/q3SXVPsDVNLAy929sOlXWSSePTYM4Fgj/3IioaqL9CI1UGDiccm/o7l7POBUhoX0t0HBBeq2d4PM2RkpkekR2hYLuIT098qB6cdKIvM2N+MSJ3kqX0CB2f68Vu/Ry6CDIalIjVAUZopHaAuNsHw=
+	t=1779301421; cv=none; b=NstWeGBpS81W4xZbuxhbbaqNx1cgA1bcmQ3KH5bJhEUVcDfGrshPWdZ7niDee7IH98EebnZf6Hj/1IlqGP9wk4XXxZS5DiOfGQwpSk05Bi6IVVz2rOMULbWdT6HmbCqGp/FKncMIlKF7hQfwB+qGACvIlBVZ0Yeyere1B1a+cXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301419; c=relaxed/simple;
-	bh=C3ZMR+EasfuYDe7JvNb/boxrNO6CUOII8qeTm7yRM60=;
+	s=arc-20240116; t=1779301421; c=relaxed/simple;
+	bh=Fw+9TamXA0+M/teiq9q+J4A3TLKPBLdXeD85lMeCZ80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1/OUs+nJLVIPRvcCHNIJf9/CQ0Yb2EZNTKKjuLEpv3A02PHMOsNGldPCALts3kxDXyN3nGE7LPD95GPoi62utbdR5/7zzUfJlfKWAYgi8ZauxIoBAbVtbPTaD5VlHlX4aPkPk7aLtYtVrNEEwWR/tx34AfCyceSumt90Zpptug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzedYavV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tvpldx15Vi6k5Z4ykFAvZrwytuyR50cN24Xd2/bb6AD04D4v9GF1OCglbNuCXtAaJo2DtdqCngE+QLsBcQJoX6leKYsyknZ4PQ6KrNpsiGmXQIynuSpA/6A8NaYY8sftOzdIP6gkY8ygZw6mpLw/7lsdwMq08nuqYX2uR9XsZCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wq1UWy4x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzedYavV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218341F000E9;
-	Wed, 20 May 2026 18:23:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wq1UWy4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0A61F00893;
+	Wed, 20 May 2026 18:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301417;
-	bh=V7EKHY8dNMJQlpaO6aL/kRRhjcGEb2lY6gw1RHiU/jo=;
+	s=korg; t=1779301420;
+	bh=KkEYPxrKReaLzkQewRiFUrRsuEKQLHqkJHXrMblgHn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tzedYavVOq4eYH1QWvp/vhd7DhLNoeomXEKo2DlttzkVpmLZzRB5poq8tABm2dNdE
-	 r8bTyLw7/lKcDuBQdISVyJ5/Lh9csEVfK/n+AlO7bHx2RhARN8ZmH7l2mvtMCyyo6D
-	 pa8L7xM5ZoJp5PkJZEAQSBQdGdr0s5glZ9RbvXw8=
+	b=Wq1UWy4xnQWM3W9UydCwcKe5oN53iJOP/5nCqFoAmeVWaOUWMurqe83a35peGZ1fF
+	 79RVkWL0c4AtfLaHHwT+NHfFd9KozTzjZcoImhV1h/CBxbBXOA6NaUKuEO0pf2t7tj
+	 xpMkNTxkzsayWm9NdRBteuqWeay8FJTOsdeL7W6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Shankar <ushankar@purestorage.com>,
 	Breno Leitao <leitao@debian.org>,
 	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 547/666] netconsole: allow selection of egress interface via MAC address
-Date: Wed, 20 May 2026 18:22:38 +0200
-Message-ID: <20260520162123.126715973@linuxfoundation.org>
+Subject: [PATCH 6.12 548/666] netpoll: Extract carrier wait function
+Date: Wed, 20 May 2026 18:22:39 +0200
+Message-ID: <20260520162123.147526879@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,212 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Shankar <ushankar@purestorage.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit f8a10bed32f5fbede13a5f22fdc4ab8740ea213a ]
+[ Upstream commit 76d30b51e818064e02917ce6328fb2c8adce5c87 ]
 
-Currently, netconsole has two methods of configuration - module
-parameter and configfs. The former interface allows for netconsole
-activation earlier during boot (by specifying the module parameter on
-the kernel command line), so it is preferred for debugging issues which
-arise before userspace is up/the configfs interface can be used. The
-module parameter syntax requires specifying the egress interface name.
-This requirement makes it hard to use for a couple reasons:
-- The egress interface name can be hard or impossible to predict. For
-  example, installing a new network card in a system can change the
-  interface names assigned by the kernel.
-- When constructing the module parameter, one may have trouble
-  determining the original (kernel-assigned) name of the interface
-  (which is the name that should be given to netconsole) if some stable
-  interface naming scheme is in effect. A human can usually look at
-  kernel logs to determine the original name, but this is very painful
-  if automation is constructing the parameter.
+Extract the carrier waiting logic into a dedicated helper function
+netpoll_wait_carrier() to improve code readability and reduce
+duplication in netpoll_setup().
 
-For these reasons, allow selection of the egress interface via MAC
-address when configuring netconsole using the module parameter. Update
-the netconsole documentation with an example of the new syntax.
-Selection of egress interface by MAC address via configfs is far less
-interesting (since when this interface can be used, one should be able
-to easily convert between MAC address and interface name), so it is left
-unimplemented.
-
-Signed-off-by: Uday Shankar <ushankar@purestorage.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Tested-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250312-netconsole-v6-2-3437933e79b8@purestorage.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20250618-netpoll_ip_ref-v1-1-c2ac00fe558f@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 3bc179bc7146 ("netpoll: fix IPv6 local-address corruption")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/netconsole.rst |  6 ++-
- include/linux/netpoll.h                 |  6 +++
- net/core/netpoll.c                      | 51 +++++++++++++++++++------
- 3 files changed, 50 insertions(+), 13 deletions(-)
+ net/core/netpoll.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/networking/netconsole.rst b/Documentation/networking/netconsole.rst
-index d55c2a22ec7af..56578486ff7e8 100644
---- a/Documentation/networking/netconsole.rst
-+++ b/Documentation/networking/netconsole.rst
-@@ -45,7 +45,7 @@ following format::
- 	r             if present, prepend kernel version (release) to the message
- 	src-port      source for UDP packets (defaults to 6665)
- 	src-ip        source IP to use (interface address)
--	dev           network interface (eth0)
-+	dev           network interface name (eth0) or MAC address
- 	tgt-port      port for logging agent (6666)
- 	tgt-ip        IP address for logging agent
- 	tgt-macaddr   ethernet MAC address for logging agent (broadcast)
-@@ -62,6 +62,10 @@ or using IPv6::
- 
-  insmod netconsole netconsole=@/,@fd00:1:2:3::1/
- 
-+or using a MAC address to select the egress interface::
-+
-+   linux netconsole=4444@10.0.0.1/22:33:44:55:66:77,9353@10.0.0.2/12:34:56:78:9a:bc
-+
- It also supports logging to multiple remote agents by specifying
- parameters for the multiple agents separated by semicolons and the
- complete string enclosed in "quotes", thusly::
-diff --git a/include/linux/netpoll.h b/include/linux/netpoll.h
-index b34301650c479..ca88b1b87059f 100644
---- a/include/linux/netpoll.h
-+++ b/include/linux/netpoll.h
-@@ -25,7 +25,13 @@ union inet_addr {
- struct netpoll {
- 	struct net_device *dev;
- 	netdevice_tracker dev_tracker;
-+	/*
-+	 * Either dev_name or dev_mac can be used to specify the local
-+	 * interface - dev_name is used if it is a nonempty string, else
-+	 * dev_mac is used.
-+	 */
- 	char dev_name[IFNAMSIZ];
-+	u8 dev_mac[ETH_ALEN];
- 	const char *name;
- 
- 	union inet_addr local_ip, remote_ip;
 diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 11b2a841b7488..a38b239cd7db6 100644
+index a38b239cd7db6..a9c38f75b00ec 100644
 --- a/net/core/netpoll.c
 +++ b/net/core/netpoll.c
-@@ -506,7 +506,8 @@ void netpoll_print_options(struct netpoll *np)
- 		np_info(np, "local IPv6 address %pI6c\n", &np->local_ip.in6);
- 	else
- 		np_info(np, "local IPv4 address %pI4\n", &np->local_ip.ip);
--	np_info(np, "interface '%s'\n", np->dev_name);
-+	np_info(np, "interface name '%s'\n", np->dev_name);
-+	np_info(np, "local ethernet address '%pM'\n", np->dev_mac);
- 	np_info(np, "remote port %d\n", np->remote_port);
- 	if (np->ipv6)
- 		np_info(np, "remote IPv6 address %pI6c\n", &np->remote_ip.in6);
-@@ -575,11 +576,18 @@ int netpoll_parse_options(struct netpoll *np, char *opt)
- 	cur++;
- 
- 	if (*cur != ',') {
--		/* parse out dev name */
-+		/* parse out dev_name or dev_mac */
- 		if ((delim = strchr(cur, ',')) == NULL)
- 			goto parse_failed;
- 		*delim = 0;
--		strscpy(np->dev_name, cur, sizeof(np->dev_name));
-+
-+		np->dev_name[0] = '\0';
-+		eth_broadcast_addr(np->dev_mac);
-+		if (!strchr(cur, ':'))
-+			strscpy(np->dev_name, cur, sizeof(np->dev_name));
-+		else if (!mac_pton(cur, np->dev_mac))
-+			goto parse_failed;
-+
- 		cur = delim;
- 	}
- 	cur++;
-@@ -684,27 +692,45 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
+@@ -706,6 +706,21 @@ static char *egress_dev(struct netpoll *np, char *buf)
+ 	return buf;
  }
- EXPORT_SYMBOL_GPL(__netpoll_setup);
  
-+/*
-+ * Returns a pointer to a string representation of the identifier used
-+ * to select the egress interface for the given netpoll instance. buf
-+ * must be a buffer of length at least MAC_ADDR_STR_LEN + 1.
-+ */
-+static char *egress_dev(struct netpoll *np, char *buf)
++static void netpoll_wait_carrier(struct netpoll *np, struct net_device *ndev,
++				 unsigned int timeout)
 +{
-+	if (np->dev_name[0])
-+		return np->dev_name;
++	unsigned long atmost;
 +
-+	snprintf(buf, MAC_ADDR_STR_LEN, "%pM", np->dev_mac);
-+	return buf;
++	atmost = jiffies + timeout * HZ;
++	while (!netif_carrier_ok(ndev)) {
++		if (time_after(jiffies, atmost)) {
++			np_notice(np, "timeout waiting for carrier\n");
++			break;
++		}
++		msleep(1);
++	}
 +}
 +
  int netpoll_setup(struct netpoll *np)
  {
-+	struct net *net = current->nsproxy->net_ns;
-+	char buf[MAC_ADDR_STR_LEN + 1];
- 	struct net_device *ndev = NULL;
- 	bool ip_overwritten = false;
- 	struct in_device *in_dev;
- 	int err;
- 
- 	rtnl_lock();
--	if (np->dev_name[0]) {
--		struct net *net = current->nsproxy->net_ns;
-+	if (np->dev_name[0])
- 		ndev = __dev_get_by_name(net, np->dev_name);
--	}
-+	else if (is_valid_ether_addr(np->dev_mac))
-+		ndev = dev_getbyhwaddr(net, ARPHRD_ETHER, np->dev_mac);
-+
- 	if (!ndev) {
--		np_err(np, "%s doesn't exist, aborting\n", np->dev_name);
-+		np_err(np, "%s doesn't exist, aborting\n", egress_dev(np, buf));
- 		err = -ENODEV;
- 		goto unlock;
+ 	struct net *net = current->nsproxy->net_ns;
+@@ -736,28 +751,17 @@ int netpoll_setup(struct netpoll *np)
  	}
- 	netdev_hold(ndev, &np->dev_tracker, GFP_KERNEL);
  
- 	if (netdev_master_upper_dev_get(ndev)) {
--		np_err(np, "%s is a slave device, aborting\n", np->dev_name);
-+		np_err(np, "%s is a slave device, aborting\n",
-+		       egress_dev(np, buf));
- 		err = -EBUSY;
- 		goto put;
- 	}
-@@ -712,7 +738,8 @@ int netpoll_setup(struct netpoll *np)
  	if (!netif_running(ndev)) {
- 		unsigned long atmost;
- 
--		np_info(np, "device %s not up yet, forcing it\n", np->dev_name);
-+		np_info(np, "device %s not up yet, forcing it\n",
-+			egress_dev(np, buf));
+-		unsigned long atmost;
+-
+ 		np_info(np, "device %s not up yet, forcing it\n",
+ 			egress_dev(np, buf));
  
  		err = dev_open(ndev, NULL);
- 
-@@ -746,7 +773,7 @@ int netpoll_setup(struct netpoll *np)
- 			if (!ifa) {
- put_noaddr:
- 				np_err(np, "no IP address for %s, aborting\n",
--				       np->dev_name);
-+				       egress_dev(np, buf));
- 				err = -EDESTADDRREQ;
- 				goto put;
- 			}
-@@ -777,13 +804,13 @@ int netpoll_setup(struct netpoll *np)
- 			}
- 			if (err) {
- 				np_err(np, "no IPv6 address for %s, aborting\n",
--				       np->dev_name);
-+				       egress_dev(np, buf));
- 				goto put;
- 			} else
- 				np_info(np, "local IPv6 %pI6c\n", &np->local_ip.in6);
- #else
- 			np_err(np, "IPv6 is not supported %s, aborting\n",
--			       np->dev_name);
-+			       egress_dev(np, buf));
- 			err = -EINVAL;
+-
+ 		if (err) {
+ 			np_err(np, "failed to open %s\n", ndev->name);
  			goto put;
- #endif
+ 		}
+ 
+ 		rtnl_unlock();
+-		atmost = jiffies + carrier_timeout * HZ;
+-		while (!netif_carrier_ok(ndev)) {
+-			if (time_after(jiffies, atmost)) {
+-				np_notice(np, "timeout waiting for carrier\n");
+-				break;
+-			}
+-			msleep(1);
+-		}
+-
++		netpoll_wait_carrier(np, ndev, carrier_timeout);
+ 		rtnl_lock();
+ 	}
+ 
 -- 
 2.53.0
 
