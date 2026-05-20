@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1575F3E1D1B;
-	Wed, 20 May 2026 16:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2F33546D0;
+	Wed, 20 May 2026 16:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295360; cv=none; b=TSp263vvPGpovCMpUv2fUjkBahGcCFsdCEORa42iTbRLina0/+XxvlUniNMhZOJ5RpdeBJy8dyzsqFqhKh/cGAMdrK2RbKMIzHRkCpfwg8KeH1fA5nNJhZJt/eWCG8JZDBGAt8ncM/ONBiRavUKBNUWCk9ug7p8pK/tqYQt2x/k=
+	t=1779295362; cv=none; b=YDWCGL2xOIlXVh7GEt1e4t+xcCBgRvQUmuvsFCkSfn2yV4rLUR2fMPdssrnd3BN74EttVhgl7TQsuDDhbcKE3navqjQMUFrBI0utGOR/xCaDlB+gBkm7imbdVPc0KD8qiz+BZQknK+yjS/ua2Ifh8VbXTmxQRcb4bD4AHwelkHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295360; c=relaxed/simple;
-	bh=qP0Pka6aP3IiUvA0C7ZOOcYbYa4AVK0EZwc6AEjQ1Ls=;
+	s=arc-20240116; t=1779295362; c=relaxed/simple;
+	bh=9rD+s4FXSsacKXoCw5MCReDe5Vdr5eaIMTuZ+MVxW+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQuvZInh/MkzzRz59veB8xVIQi4mYE0kJVTAOkS0qI7uAZDYKAV9/iETEIi+A/ae1f1C2vZJlHrLN3hEgnUU4yYAH2Z4mXBkyek237OBnd8HcFu0xYxLquDW4VpoyItmsuQd4hDnX3KPtjTCp3cnvH4Tq20lRrx+O3r3mfFXlgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJKDboWO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lW5kY5mvNPTwAotpHJhXFBsmvFI77A0XNNVBkKNeOrkU6Z+zQIfV+SEj/Cpcktp/5/M0oDuhf8eaIUVVBlGw5ayElr41zTdHgDRIOjNxsbEMQxqakOxEnJCcQKBL20J6QI1E9J3Lym086GzZmQLKJbe3O+RSsXqPFDj3rYQXfEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MG8gkgBo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJKDboWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5140E1F000E9;
-	Wed, 20 May 2026 16:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MG8gkgBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF061F000E9;
+	Wed, 20 May 2026 16:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295358;
-	bh=xN+VTsTZrgpD9w8frbtH0wt3P3CWYZWjkPX2tLKOMls=;
+	s=korg; t=1779295361;
+	bh=VCLDKlc3RX3Uu5udX4evR6xePk3F3yCGNDD385v5KV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pJKDboWOtv8A6XSH2/wJdBLpx6CAi8zqy3USzFbdGIfFhBCjTsWynrR53nHS+pUgO
-	 XSOtD/YKSchqXXGWQd6+6UWDOCksLLZgA+IGnrUXvnWnmh/MG/hOPkUwjbxzfy+7yX
-	 qAreWj5nIp3NMdmUhnIZcye4wyhy2QM3iM9TQ4nk=
+	b=MG8gkgBo0bKPdACYJK8jCIg1ZL1SmMLlU+1D79b4dSSZmo98KZgL4PkudGoGH7YDN
+	 yL6BGebm2yGDycEtUNNRND4cM4mR2a/MnUOBt2Uy0phagtLZ3jyEtMx7SLWdLdWT1V
+	 WoUW4cRTfxliivg3895sGdGJmin+HVvE3f9kNan8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lei Huang <huanglei@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0348/1146] ALSA: hda/realtek: fix bad indentation for alc269
-Date: Wed, 20 May 2026 18:09:58 +0200
-Message-ID: <20260520162156.075486177@linuxfoundation.org>
+Subject: [PATCH 7.0 0349/1146] ALSA: hda/realtek: fix code style (ERROR: else should follow close brace })
+Date: Wed, 20 May 2026 18:09:59 +0200
+Message-ID: <20260520162156.096994069@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,44 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Lei Huang <huanglei@kylinos.cn>
 
-[ Upstream commit c1258a2924d3a2453a6e7a6581acd8d6e5c6ba70 ]
+[ Upstream commit d1888bf848ade6a9e71c7ba516fd215aa1bd8d65 ]
 
-Mention complains about this coding style:
+Fix checkpatch code style errors:
 
-  ERROR: code indent should use tabs where possible
-  #6640: FILE: sound/hda/codecs/realtek/alc269.c:6640:
-  +        [ALC233_FIXUP_LENOVO_GPIO2_MIC_HOTKEY] = {$
+  ERROR: else should follow close brace '}'
+  #2300: FILE: sound/hda/codecs/realtek/alc269.c:2300:
+  +       }
+  +       else
 
-fix it up.
-
-Fixes: 5de5db35350d ("ALSA: hda/realtek - Enable Mute LED for Lenovo platform")
+Fixes: 31278997add6 ("ALSA: hda/realtek - Add headset quirk for Dell DT")
 Signed-off-by: Lei Huang <huanglei@kylinos.cn>
-Link: https://patch.msgid.link/20260331024036.30782-1-huanglei814@163.com
+Link: https://patch.msgid.link/20260331075405.78148-1-huanglei814@163.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index ded6e78142a07..8e135bcaa28e6 100644
+index 8e135bcaa28e6..cbc24d71a1115 100644
 --- a/sound/hda/codecs/realtek/alc269.c
 +++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6657,10 +6657,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc288_fixup_surface_swap_dacs,
- 	},
--        [ALC233_FIXUP_LENOVO_GPIO2_MIC_HOTKEY] = {
--                .type = HDA_FIXUP_FUNC,
--                .v.func = alc233_fixup_lenovo_gpio2_mic_hotkey,
--        },
-+	[ALC233_FIXUP_LENOVO_GPIO2_MIC_HOTKEY] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc233_fixup_lenovo_gpio2_mic_hotkey,
-+	},
- 	[ALC245_FIXUP_BASS_HP_DAC] = {
- 		.type = HDA_FIXUP_FUNC,
- 		/* Borrow the DAC routing selected for those Thinkpads */
+@@ -2296,9 +2296,9 @@ static void alc_fixup_headset_mode_alc255_no_hp_mic(struct hda_codec *codec,
+ 		struct alc_spec *spec = codec->spec;
+ 		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
+ 		alc255_set_default_jack_type(codec);
+-	}
+-	else
++	} else {
+ 		alc_fixup_headset_mode(codec, fix, action);
++	}
+ }
+ 
+ static void alc288_update_headset_jack_cb(struct hda_codec *codec,
 -- 
 2.53.0
 
