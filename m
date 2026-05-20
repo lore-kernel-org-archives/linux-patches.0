@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD65A3E120E;
-	Wed, 20 May 2026 16:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426363E9281;
+	Wed, 20 May 2026 16:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294437; cv=none; b=CUqOra7aI6zg5qM+pLtIobs6WdMd6wQF4KkwNAwolHS4WF40e8l82xaQe7x4rQcPF+T41BpC8403GQYjjS5EMGVWLiQol6LyAFmjkyJxcvp7+1Rfe2bcgpr3VT/XJ/CjKDNpH5xZ1E3hyCRKNDkk5jhc9806LL3wQ/N1mVfa/a4=
+	t=1779294438; cv=none; b=t/RtzUwA1/qgovkvzvdc5HFke9v/7Sw9f4Ocp15qlBWKfeeQmBx859tIh084aeg4bZf2Ds+Y7p6gZO4guUjiCpEWIGoQyDM7BO89yVdBhW45qPxZbwQ1MUb60zhxB1QdtrpQzJ46pRHRIhDeGapwjtzKbQFbo5HA3JnR1nPEXFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294437; c=relaxed/simple;
-	bh=/Dv7dwc7GR8sN+9XzzSx6igoGLyMdtfpT6F3EwKR7cg=;
+	s=arc-20240116; t=1779294438; c=relaxed/simple;
+	bh=hH7WpIM60XdDN8l/l/Hf0haj2BnVd58t65GbzZPGOM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxv1jkRA5XNZoCTw7jQyDEbfAsxW/yGBWz8mAw4rIXDwInD2jyRPzaG6TwQvgI7AIMKMaRjxS71d5l9lla7iH5cZ8y4z/BLiXX+CLLFN+gnqo6JVROwrYJeiH9czWl+5VnSK2ogjl6/VYpLb4VI2aC3H7Fe8v/CEZ0VGqYSGxrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISNEO8os; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=E0PzEfVCc/OeAroYKpYpqQMINZd1eqx/TyoFmh2fDpT5hocs2qHYQSx81FGw44RGo9I4y81yGUh79owI0c+RGHK2Ruf1XAHvhoden0CLsI4LhqWnzjINdgorpQ7oSTglozVnqELTmMyzshCuweF4zOrKgp7gTC2qshNa8bMgZcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqIDW3RV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISNEO8os"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BA11F00898;
-	Wed, 20 May 2026 16:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqIDW3RV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CBC71F00893;
+	Wed, 20 May 2026 16:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294434;
-	bh=fTqCRrbYgG2EVFlxdJt2bxDL8xKr8YTpn6lzP2Va7AA=;
+	s=korg; t=1779294437;
+	bh=/ZRvNojWz1wbgnzf9iN6PG5mnIkUpx6htklP56nscqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ISNEO8osPcgyowd/D+zu97oyb/clX5BlhzTtu+EgRONYZC6XINoRN/8QBkvUBtbX9
-	 t1lLWjMM1r44yGQLw3X8r/ZAw9vnqgMo0xepENZHNOg7ENRGu4/e3GQNeVvYne0Jn7
-	 gHpP9tBJ4qrK9YijOg6QgSdRBCxFRQFSr8mn8Rcs=
+	b=JqIDW3RVLeysxTH4rNbwBBqOro09J3yKhgS6ubGvyCqW1rMzLt0AuVRvsnQJO7Qtp
+	 HvdPrLWIbK91OYqSTZxw6FGE/4UiumHL+jgbkzDjCanCWNXtfSf8Ga5wokNTU3ygxJ
+	 3exsDRGBkCZc7qVn9JicYj6HpxYszGp1Iu9IMmC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0006/1146] fs: fix archiecture-specific compat_ftruncate64
-Date: Wed, 20 May 2026 18:04:16 +0200
-Message-ID: <20260520162148.538361617@linuxfoundation.org>
+Subject: [PATCH 7.0 0007/1146] drbd: Balance RCU calls in drbd_adm_dump_devices()
+Date: Wed, 20 May 2026 18:04:17 +0200
+Message-ID: <20260520162148.561175760@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,214 +48,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit e43dce8a0bc09083ea1145a1a0c61d83cbe72d97 ]
+[ Upstream commit 2b31e86387e60b3689339f0f0fbb4d3623d9d494 ]
 
-The "small" argument to do_sys_ftruncate indicates if > 32-bit size
-should be reject, but all the arch-specific compat ftruncate64
-implementations get this wrong.  Merge do_sys_ftruncate and
-ksys_ftruncate, replace the integer as boolean small flag with a
-descriptive one about LFS semantics, and use it correctly in the
-architecture-specific ftruncate64 implementations.
+Make drbd_adm_dump_devices() call rcu_read_lock() before
+rcu_read_unlock() is called. This has been detected by the Clang
+thread-safety analyzer.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Fixes: 3dd681d944f6 ("arm64: 32-bit (compat) applications support")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260323070205.2939118-2-hch@lst.de
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Tested-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: a55bbd375d18 ("drbd: Backport the "status" command")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260326214054.284593-1-bvanassche@acm.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/sys32.c       |  2 +-
- arch/mips/kernel/linux32.c      |  2 +-
- arch/parisc/kernel/sys_parisc.c |  4 ++--
- arch/powerpc/kernel/sys_ppc32.c |  2 +-
- arch/sparc/kernel/sys_sparc32.c |  2 +-
- arch/x86/kernel/sys_ia32.c      |  3 ++-
- fs/internal.h                   |  1 -
- fs/open.c                       | 12 ++++++------
- include/linux/syscalls.h        |  8 ++------
- 9 files changed, 16 insertions(+), 20 deletions(-)
+ drivers/block/drbd/drbd_nl.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kernel/sys32.c b/arch/arm64/kernel/sys32.c
-index 96bcfb9074430..12a948f3a5043 100644
---- a/arch/arm64/kernel/sys32.c
-+++ b/arch/arm64/kernel/sys32.c
-@@ -89,7 +89,7 @@ COMPAT_SYSCALL_DEFINE4(aarch32_truncate64, const char __user *, pathname,
- COMPAT_SYSCALL_DEFINE4(aarch32_ftruncate64, unsigned int, fd, u32, __pad,
- 		       arg_u32p(length))
- {
--	return ksys_ftruncate(fd, arg_u64(length));
-+	return ksys_ftruncate(fd, arg_u64(length), FTRUNCATE_LFS);
- }
- 
- COMPAT_SYSCALL_DEFINE5(aarch32_readahead, int, fd, u32, __pad,
-diff --git a/arch/mips/kernel/linux32.c b/arch/mips/kernel/linux32.c
-index a0c0a7a654e94..fe9a787db5694 100644
---- a/arch/mips/kernel/linux32.c
-+++ b/arch/mips/kernel/linux32.c
-@@ -60,7 +60,7 @@ SYSCALL_DEFINE4(32_truncate64, const char __user *, path,
- SYSCALL_DEFINE4(32_ftruncate64, unsigned long, fd, unsigned long, __dummy,
- 	unsigned long, a2, unsigned long, a3)
- {
--	return ksys_ftruncate(fd, merge_64(a2, a3));
-+	return ksys_ftruncate(fd, merge_64(a2, a3), FTRUNCATE_LFS);
- }
- 
- SYSCALL_DEFINE5(32_llseek, unsigned int, fd, unsigned int, offset_high,
-diff --git a/arch/parisc/kernel/sys_parisc.c b/arch/parisc/kernel/sys_parisc.c
-index b2cdbb8a12b16..fcb0d80691392 100644
---- a/arch/parisc/kernel/sys_parisc.c
-+++ b/arch/parisc/kernel/sys_parisc.c
-@@ -216,7 +216,7 @@ asmlinkage long parisc_truncate64(const char __user * path,
- asmlinkage long parisc_ftruncate64(unsigned int fd,
- 					unsigned int high, unsigned int low)
- {
--	return ksys_ftruncate(fd, (long)high << 32 | low);
-+	return ksys_ftruncate(fd, (long)high << 32 | low, FTRUNCATE_LFS);
- }
- 
- /* stubs for the benefit of the syscall_table since truncate64 and truncate 
-@@ -227,7 +227,7 @@ asmlinkage long sys_truncate64(const char __user * path, unsigned long length)
- }
- asmlinkage long sys_ftruncate64(unsigned int fd, unsigned long length)
- {
--	return ksys_ftruncate(fd, length);
-+	return ksys_ftruncate(fd, length, FTRUNCATE_LFS);
- }
- asmlinkage long sys_fcntl64(unsigned int fd, unsigned int cmd, unsigned long arg)
- {
-diff --git a/arch/powerpc/kernel/sys_ppc32.c b/arch/powerpc/kernel/sys_ppc32.c
-index d451a8229223a..03fa487f26147 100644
---- a/arch/powerpc/kernel/sys_ppc32.c
-+++ b/arch/powerpc/kernel/sys_ppc32.c
-@@ -101,7 +101,7 @@ PPC32_SYSCALL_DEFINE4(ppc_ftruncate64,
- 		       unsigned int, fd, u32, reg4,
- 		       unsigned long, len1, unsigned long, len2)
- {
--	return ksys_ftruncate(fd, merge_64(len1, len2));
-+	return ksys_ftruncate(fd, merge_64(len1, len2), FTRUNCATE_LFS);
- }
- 
- PPC32_SYSCALL_DEFINE6(ppc32_fadvise64,
-diff --git a/arch/sparc/kernel/sys_sparc32.c b/arch/sparc/kernel/sys_sparc32.c
-index f84a02ab6bf90..04432b82b9e3e 100644
---- a/arch/sparc/kernel/sys_sparc32.c
-+++ b/arch/sparc/kernel/sys_sparc32.c
-@@ -58,7 +58,7 @@ COMPAT_SYSCALL_DEFINE3(truncate64, const char __user *, path, u32, high, u32, lo
- 
- COMPAT_SYSCALL_DEFINE3(ftruncate64, unsigned int, fd, u32, high, u32, low)
- {
--	return ksys_ftruncate(fd, ((u64)high << 32) | low);
-+	return ksys_ftruncate(fd, ((u64)high << 32) | low, FTRUNCATE_LFS);
- }
- 
- static int cp_compat_stat64(struct kstat *stat,
-diff --git a/arch/x86/kernel/sys_ia32.c b/arch/x86/kernel/sys_ia32.c
-index 6cf65397d2257..610a1c2f45191 100644
---- a/arch/x86/kernel/sys_ia32.c
-+++ b/arch/x86/kernel/sys_ia32.c
-@@ -61,7 +61,8 @@ SYSCALL_DEFINE3(ia32_truncate64, const char __user *, filename,
- SYSCALL_DEFINE3(ia32_ftruncate64, unsigned int, fd,
- 		unsigned long, offset_low, unsigned long, offset_high)
- {
--	return ksys_ftruncate(fd, ((loff_t) offset_high << 32) | offset_low);
-+	return ksys_ftruncate(fd, ((loff_t) offset_high << 32) | offset_low,
-+			FTRUNCATE_LFS);
- }
- 
- /* warning: next two assume little endian */
-diff --git a/fs/internal.h b/fs/internal.h
-index 77e90e4124e09..8c1f6c548dbfd 100644
---- a/fs/internal.h
-+++ b/fs/internal.h
-@@ -200,7 +200,6 @@ extern int build_open_flags(const struct open_how *how, struct open_flags *op);
- struct file *file_close_fd_locked(struct files_struct *files, unsigned fd);
- 
- int do_ftruncate(struct file *file, loff_t length, int small);
--int do_sys_ftruncate(unsigned int fd, loff_t length, int small);
- int chmod_common(const struct path *path, umode_t mode);
- int do_fchownat(int dfd, const char __user *filename, uid_t user, gid_t group,
- 		int flag);
-diff --git a/fs/open.c b/fs/open.c
-index 91f1139591abe..412d0d6fbaa75 100644
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -197,7 +197,7 @@ int do_ftruncate(struct file *file, loff_t length, int small)
- 				   ATTR_MTIME | ATTR_CTIME, file);
- }
- 
--int do_sys_ftruncate(unsigned int fd, loff_t length, int small)
-+int ksys_ftruncate(unsigned int fd, loff_t length, unsigned int flags)
- {
- 	if (length < 0)
- 		return -EINVAL;
-@@ -205,18 +205,18 @@ int do_sys_ftruncate(unsigned int fd, loff_t length, int small)
- 	if (fd_empty(f))
- 		return -EBADF;
- 
--	return do_ftruncate(fd_file(f), length, small);
-+	return do_ftruncate(fd_file(f), length, !(flags & FTRUNCATE_LFS));
- }
- 
- SYSCALL_DEFINE2(ftruncate, unsigned int, fd, off_t, length)
- {
--	return do_sys_ftruncate(fd, length, 1);
-+	return ksys_ftruncate(fd, length, 0);
- }
- 
- #ifdef CONFIG_COMPAT
- COMPAT_SYSCALL_DEFINE2(ftruncate, unsigned int, fd, compat_off_t, length)
- {
--	return do_sys_ftruncate(fd, length, 1);
-+	return ksys_ftruncate(fd, length, 0);
- }
- #endif
- 
-@@ -229,7 +229,7 @@ SYSCALL_DEFINE2(truncate64, const char __user *, path, loff_t, length)
- 
- SYSCALL_DEFINE2(ftruncate64, unsigned int, fd, loff_t, length)
- {
--	return do_sys_ftruncate(fd, length, 0);
-+	return ksys_ftruncate(fd, length, FTRUNCATE_LFS);
- }
- #endif /* BITS_PER_LONG == 32 */
- 
-@@ -245,7 +245,7 @@ COMPAT_SYSCALL_DEFINE3(truncate64, const char __user *, pathname,
- COMPAT_SYSCALL_DEFINE3(ftruncate64, unsigned int, fd,
- 		       compat_arg_u64_dual(length))
- {
--	return ksys_ftruncate(fd, compat_arg_u64_glue(length));
-+	return ksys_ftruncate(fd, compat_arg_u64_glue(length), FTRUNCATE_LFS);
- }
- #endif
- 
-diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
-index 02bd6ddb62782..8787b3511c86c 100644
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -1283,12 +1283,8 @@ static inline long ksys_lchown(const char __user *filename, uid_t user,
- 			     AT_SYMLINK_NOFOLLOW);
- }
- 
--int do_sys_ftruncate(unsigned int fd, loff_t length, int small);
--
--static inline long ksys_ftruncate(unsigned int fd, loff_t length)
--{
--	return do_sys_ftruncate(fd, length, 1);
--}
-+#define FTRUNCATE_LFS	(1u << 0)	/* allow truncating > 32-bit */
-+int ksys_ftruncate(unsigned int fd, loff_t length, unsigned int flags);
- 
- int do_sys_truncate(const char __user *pathname, loff_t length);
- 
+diff --git a/drivers/block/drbd/drbd_nl.c b/drivers/block/drbd/drbd_nl.c
+index e201f0087a0f7..728ecc431b38d 100644
+--- a/drivers/block/drbd/drbd_nl.c
++++ b/drivers/block/drbd/drbd_nl.c
+@@ -3378,8 +3378,10 @@ int drbd_adm_dump_devices(struct sk_buff *skb, struct netlink_callback *cb)
+ 		if (resource_filter) {
+ 			retcode = ERR_RES_NOT_KNOWN;
+ 			resource = drbd_find_resource(nla_data(resource_filter));
+-			if (!resource)
++			if (!resource) {
++				rcu_read_lock();
+ 				goto put_result;
++			}
+ 			cb->args[0] = (long)resource;
+ 		}
+ 	}
+@@ -3628,8 +3630,10 @@ int drbd_adm_dump_peer_devices(struct sk_buff *skb, struct netlink_callback *cb)
+ 		if (resource_filter) {
+ 			retcode = ERR_RES_NOT_KNOWN;
+ 			resource = drbd_find_resource(nla_data(resource_filter));
+-			if (!resource)
++			if (!resource) {
++				rcu_read_lock();
+ 				goto put_result;
++			}
+ 		}
+ 		cb->args[0] = (long)resource;
+ 	}
 -- 
 2.53.0
 
