@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378E9369D67;
-	Wed, 20 May 2026 17:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E48369D7E;
+	Wed, 20 May 2026 17:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298398; cv=none; b=I0jz9FPbMoGmY6rk3zMSWzg9K1smDMwxQM77nq2m+3DkRS4hPRqMUkR7xtu/9kB52SoUCwYKqka4VTx9FsdLQ0MTqMMU31Rdo8Pw42io0ceNkEaInipqnJ+w1NMvDLSp6irdcvVUDYB/ngfEdXli6V44M1qcTfRRb9uo2Qs4X9Q=
+	t=1779298400; cv=none; b=Ppyt7ZlhumsyiL18XW3kf8lGV2/FBnR8izKU5u580p1C9V1ii/6Z4y0Lh+qdwLPoxYANsWQABP/Qhj5sN+SOI1kt7+VKqDiM7cK8H4cfFZspQo4Bary7/LhWIGLXa8Gm6F9YTCd5YdeuSycXbG1/DWPZ7MdgPNR9Xsxpwx8UVDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298398; c=relaxed/simple;
-	bh=7LW+12iJpall26cvqIJQWVf7zcYwDnZ9knM7mfu+EFo=;
+	s=arc-20240116; t=1779298400; c=relaxed/simple;
+	bh=uEiBYne8AqzX11+RmBuyW13DIAP8J6WhLbRYMROOjWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iF8b2t67P+csatsdpzgeU3Yl/3q81S/tSTqnGgwXhfcUflOfaEj/WuVTUS+8AGAdX3mQdUfOCgtuKXzhTfHM3kJUHjJg9yFSALOnXABTlFDnzRnA/mjx+WPsOG5KQDVdKos+fbNzRTsKOrFeiShnXlVT/DixrocConqXwYIMciE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeeBZIuk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ca8r5pk+LW7vC5lPi4kYh0ap49ubWaNfd+xO9KreXIvwO3AP/6/V8fIY8ZqrFWEZb3vco+VB3jYYp0vAN02wpRcb88Qk37s1n4IdA1a0VPEBEI1WWcQqIWu+zKP08ReuwS63TuTPInC4FPdTklPSmI7F/ZxAEopwNACHEuQIbG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ly13JKSj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeeBZIuk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C2DD1F000E9;
-	Wed, 20 May 2026 17:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ly13JKSj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A471F000E9;
+	Wed, 20 May 2026 17:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298397;
-	bh=S42fEUhpGnWk5gEXWepNX9tdZK9zzLgPUg8WqdJPvRw=;
+	s=korg; t=1779298399;
+	bh=UX3iAwtyv6RXDO8m3GtDgN9pArH9QBa3xF6/Nw65Hg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eeeBZIukZzHOu5ZAtjZbMimEV/cEKmxrBuM0K8zYlb0eRfKQTpxn2EZmXx88+sN2z
-	 cfj+w+RF+OIwvM2W6HmfvGW/f03IVsktLEdZ3oGHeEpHT6w46L1QoM+0FEI2o6p1hG
-	 YEjT2LImTpwK2vpuyO1P4SCaNCRrXk/CjoHc9A/U=
+	b=ly13JKSjsaEl0U11BWlRwhAYCrzVqlBUVKd1WXeEGbO/b98/GT0X+dXQYcqJJEunO
+	 3WOdSfLyouD8wqFemdQAzt7YXpCyDwz64NDZSGPSp+rK1hZBzLfj8NvznkAQSO5ZfM
+	 U1XwlXsdf4VkLZ1AGD2jm4BkjOCBBu0BBIJyGpso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 393/957] arm64: dts: rockchip: Add mphy reset to ufshc node
-Date: Wed, 20 May 2026 18:14:36 +0200
-Message-ID: <20260520162143.050644989@linuxfoundation.org>
+Subject: [PATCH 6.18 354/957] gfs2: less aggressive low-memory log flushing
+Date: Wed, 20 May 2026 18:13:57 +0200
+Message-ID: <20260520162142.206802549@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,45 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 792c42da47fa199f90492784e3c57280acd57f22 ]
+[ Upstream commit 7288185ce87ec70133b7bc3b694b0f74bf46a0ee ]
 
-The mphy reset signal is used to reset the physical adapter. Resetting
-other components while leaving the mphy unreset may occasionally prevent
-the UFS controller from successfully linking up with the device.
+It turns out that for some workloads, the fix in commit b74cd55aa9a9d
+("gfs2: low-memory forced flush fixes") causes the number of forced log
+flushes to increase to a degree that the overall filesystem performance
+drops significantly.  Address that by forcing a log flush only when
+gfs2_writepages cannot make any progress rather than when it cannot make
+"enough" progress.
 
-This addresses an intermittent hardware bug where the UFS link fails to
-establish under specific timing conditions with certain chips. While
-difficult to reproduce initially, this issue was consistently observed in
-downstream testing and requires explicit mphy reset control for full
-stability.
-
-Fixes: c75e5e010fef ("scsi: arm64: dts: rockchip: Add UFS support for RK3576 SoC")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://patch.msgid.link/1773277913-29580-1-git-send-email-shawn.lin@rock-chips.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: b74cd55aa9a9d ("gfs2: low-memory forced flush fixes")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3576.dtsi | 5 +++--
+ fs/gfs2/aops.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3576.dtsi b/arch/arm64/boot/dts/rockchip/rk3576.dtsi
-index 70e67d4dccb8a..5d69a81aecc64 100644
---- a/arch/arm64/boot/dts/rockchip/rk3576.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3576.dtsi
-@@ -1829,8 +1829,9 @@ ufshc: ufshc@2a2d0000 {
- 			pinctrl-0 = <&ufs_refclk &ufs_rstgpio>;
- 			pinctrl-names = "default";
- 			resets = <&cru SRST_A_UFS_BIU>, <&cru SRST_A_UFS_SYS>,
--				 <&cru SRST_A_UFS>, <&cru SRST_P_UFS_GRF>;
--			reset-names = "biu", "sys", "ufs", "grf";
-+				 <&cru SRST_A_UFS>, <&cru SRST_P_UFS_GRF>,
-+				 <&cru SRST_MPHY_INIT>;
-+			reset-names = "biu", "sys", "ufs", "grf", "mphy";
- 			reset-gpios = <&gpio4 RK_PD0 GPIO_ACTIVE_LOW>;
- 			status = "disabled";
- 		};
+diff --git a/fs/gfs2/aops.c b/fs/gfs2/aops.c
+index 47d74afd63ac9..eafe0488b10d4 100644
+--- a/fs/gfs2/aops.c
++++ b/fs/gfs2/aops.c
+@@ -159,6 +159,7 @@ static int gfs2_writepages(struct address_space *mapping,
+ 			   struct writeback_control *wbc)
+ {
+ 	struct gfs2_sbd *sdp = gfs2_mapping2sbd(mapping);
++	long initial_nr_to_write = wbc->nr_to_write;
+ 	struct iomap_writepage_ctx wpc = {
+ 		.inode		= mapping->host,
+ 		.wbc		= wbc,
+@@ -167,13 +168,13 @@ static int gfs2_writepages(struct address_space *mapping,
+ 	int ret;
+ 
+ 	/*
+-	 * Even if we didn't write enough pages here, we might still be holding
++	 * Even if we didn't write any pages here, we might still be holding
+ 	 * dirty pages in the ail. We forcibly flush the ail because we don't
+ 	 * want balance_dirty_pages() to loop indefinitely trying to write out
+ 	 * pages held in the ail that it can't find.
+ 	 */
+ 	ret = iomap_writepages(&wpc);
+-	if (ret == 0 && wbc->nr_to_write > 0)
++	if (ret == 0 && wbc->nr_to_write == initial_nr_to_write)
+ 		set_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags);
+ 	return ret;
+ }
 -- 
 2.53.0
 
