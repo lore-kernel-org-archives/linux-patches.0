@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B62439D6E2;
-	Wed, 20 May 2026 11:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90D33EBF0F;
+	Wed, 20 May 2026 11:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276028; cv=none; b=XyN9OynOtjo6DIyWmVPmFnFnRIHX5AJt8CX4pLEYZASsKQjJDeZh+DIDKi7NXtWioeJngwhDE0thzrFKABeB6gwVbx8AVi3HD2c73UYXyYyNAf3ZCCD3Jg2WM7ImmV/Ibb/b5tgxYKBy3LdFEydwpM8HR5SERBknp0jinfZVKVE=
+	t=1779276030; cv=none; b=UDSWqAkA4S/fBBZuFyOgW6qwHjBKg8BjHPWdElUaxLXdPp7Zic5L5I0j8E+yE7iCcITeGiDP/VA7SMzBwZs1K/p+GdD/q3jg7jae9mk1DybTIlZbul4pKtXQMv/T6jRYb1TJOycJc03+/D/Gs34dpNjMEVlqshUVocUArZGSwqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276028; c=relaxed/simple;
-	bh=LRN2672r35IyVec++JGBaiETnqJv8Sk5nTuKiSNxa8A=;
+	s=arc-20240116; t=1779276030; c=relaxed/simple;
+	bh=KRKHu4WJoa0DmBrPO2Rq6iggehoAGmF7JjHx2Qe0fZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sjLne0DAi5kl+hOA4Va5GNYlp15QgzzL+m3pe+Ykmwc2ruJg/J0GoaUm54eN+wge1FRex/ghKmNHrBE+SMdjFCP1cXFhxwmrtBAGsH7ws8x0ak7Bu7OJTRf+8gsGh4ft0J/IguOR0vbsJtxtbKCqZZJpC8bmY2HFRI8Tr6sBBfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DqWkldPq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kLzeeIjoSijCZYMDP39dQUOxLVVdoZ33Zc9T8TsJ0eCpJIOtvoM0KJvF/cpHS10wTDJ48BbbTHMiJyBgAi5KYCh5yGr+7xnPgrGjeoee6wSs2/bqdXkxXpSUQGC5+Bfe86NBmCWN6g/L03SHdPoNtanalqCqVuC3nvgpsCBQD4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ju1naoQw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DqWkldPq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6EE1F00897;
-	Wed, 20 May 2026 11:20:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ju1naoQw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E816D1F000E9;
+	Wed, 20 May 2026 11:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276026;
-	bh=Awnos86qn1nOZLrjiQeDKSX5qCUuZjhkaj+6eONAsSQ=;
+	s=k20260515; t=1779276027;
+	bh=TebGB/gW42Lw0MfSZeNASHalsW2sx4OdFUJ7gXRZD2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DqWkldPqCO9shgs18fFncUaZJppA0Hy5/IivQGaN+7SsYDBo5wxCa1hiyX6Eo7CxM
-	 HmaIOco1eTf6/cOq9kbtZrntWqCAYcN+TA8rBLCDQ3cnKFnWEZUYBXJb2OK6ZAmxCW
-	 WaPG/a31nc2CYWzgsTq0fNzna+Q6y/D8VwEvOK1rMZz/GoZmccFBaVB5foSdRBWZSE
-	 vTfbHRf14Cpe/OOc0ZySNe6KHMXMThqlTPFtcXVfzPupChiSRASusS4ydX7pGRzkM4
-	 t2wu6GRtpwiGwTxNCFnyd+RacghFG9yOJy/XPn+U7ea2gjZpQTO9gMioPUXdgPtOOT
-	 uHAMTFhCD4GNw==
+	b=ju1naoQwm2OouaUlTSYbgQFoIrSzSQpYa/PuknOE0svysQiSgAPiFd85MLfkE9LNt
+	 LMOfIgaByF5iAsQUqDnEklX2uvv5CNr6dhCj50z0aUSNWzYOZ7Y+c1Z7unAI8sZpaf
+	 hA+pfbWiygnQUfNzDMFx33d98SgavaXCk3SSrx6N+PmybwkXzMlYTRgaC3Pg22N2mb
+	 3Cgcre64+WemdOZnqdcX6f71oA19pyDkfK1MRutoMc792sll6eJQRI8Oo+92d6O95+
+	 Niwe6Ty1PhNnsjwMVLTBYVU/B7+MZFQO2gKvitmp+oi99dDQVnhlNxmY0kTaXlPH68
+	 lNIIt5YNHkRLQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Xu Rao <raoxu@uniontech.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rfoss@kernel.org,
-	todor.too@gmail.com,
-	mchehab@kernel.org,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] media: qcom: camss: avoid format string warning
-Date: Wed, 20 May 2026 07:19:01 -0400
-Message-ID: <20260520111944.3424570-29-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] HID: i2c-hid: add reset quirk for BLTP7853 touchpad
+Date: Wed, 20 May 2026 07:19:02 -0400
+Message-ID: <20260520111944.3424570-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -55,38 +51,26 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Xu Rao <raoxu@uniontech.com>
 
-[ Upstream commit 23c39cb598977f10909a2387c5e5f34afc1d6933 ]
+[ Upstream commit a991aa5e89365ba1959fae6847fd288125b209e5 ]
 
-clang-22 warns about csiphy_match_clock_name() taking a variable format
-string that is not checked against the 'int index' argument:
+The BLTP7853 I2C HID touchpad may fail to probe after reboot or
+reprobe because reset completion is not signalled to the host. The
+driver then waits for the reset-complete interrupt until it times out
+and the device probe fails:
 
-drivers/media/platform/qcom/camss/camss-csiphy.c:566:44: error: diagnostic behavior may be improved by
-      adding the 'format(printf, 2, 3)' attribute to the declaration of 'csiphy_match_clock_name'
-      [-Werror,-Wmissing-format-attribute]
-  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
-      | __attribute__((format(printf, 2, 3)))
-  562 |                                     int index)
-  563 | {
-  564 |         char name[16]; /* csiphyXXX_timer\0 */
-  565 |
-  566 |         snprintf(name, sizeof(name), format, index);
-      |                                                   ^
-drivers/media/platform/qcom/camss/camss-csiphy.c:561:13: note: 'csiphy_match_clock_name' declared here
-  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
-      |             ^
+  i2c_hid i2c-BLTP7853:00: failed to reset device.
+  i2c_hid i2c-BLTP7853:00: can't add hid device: -61
+  i2c_hid: probe of i2c-BLTP7853:00 failed with error -61
 
-Change the function to use a snprintf() style format string that allows this
-to be checked at the call site.
+Add I2C_HID_QUIRK_NO_IRQ_AFTER_RESET for the device so i2c-hid does
+not wait for a reset interrupt that may never arrive.
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -95,229 +79,225 @@ LLM Generated explanations, may be completely bogus:
 ## Phase Walkthrough
 
 ### Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem is `media: qcom: camss`; action verb is
-`avoid`; claimed intent is to avoid a clang-22 format-string build
-warning/error in `csiphy_match_clock_name()`.
+Record: subsystem `HID: i2c-hid`; action verb `add`; intent is to add a
+reset-handling quirk for the BLTP7853 touchpad.
 
-Step 1.2 Record: Verified fetched commit
-`2211e826bd69c041534093735241182013dde7bc` has:
-- `Signed-off-by: Arnd Bergmann <arnd@arndb.de>`
-- `Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>`
-- `Signed-off-by: Bryan O'Donoghue <bod@kernel.org>`
+Record: tags present are `Signed-off-by: Xu Rao <raoxu@uniontech.com>`
+and `Signed-off-by: Jiri Kosina <jkosina@suse.com>`. No `Fixes:`,
+`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, `Link:`, or
+`Cc: stable@vger.kernel.org` tags are present in the supplied message.
 
-The original lore submission also has `Fixes: 0727615fb975 ("media:
-qcom: camss: Functionally decompose CSIPHY clock lookups")`. No
-`Reported-by`, `Tested-by`, `Cc: stable`, or bug-report `Link` was
-verified.
+Record: the commit message describes a real probe failure: the device
+may not signal reset completion after reboot or reprobe, the driver
+waits for reset completion, and probe fails with `-61` / `-ENODATA`. The
+root cause given is missing reset-complete IRQ from the device.
 
-Step 1.3 Record: The body describes a clang-22 diagnostic promoted to
-error: `[-Werror,-Wmissing-format-attribute]`. The root cause is that
-`csiphy_match_clock_name()` takes a `const char *format` and passes it
-to `snprintf()` with a fixed `int index`, but the helper itself lacks a
-checkable printf-style prototype.
-
-Step 1.4 Record: This is not a hidden runtime bug fix. It is a build-
-warning/build-error fix for newer clang plus warning-as-error
-configurations.
+Record: this is not hidden as cleanup; it is explicitly a hardware
+workaround for a probe failure.
 
 ### Phase 2: Diff Analysis
-Step 2.1 Record: One file changed:
-`drivers/media/platform/qcom/camss/camss-csiphy.c`, `7 insertions(+), 3
-deletions(-)`. One function modified: `csiphy_match_clock_name()`. Scope
-is single-file surgical.
+Record: files changed are `drivers/hid/hid-ids.h` with 3 additions and
+`drivers/hid/i2c-hid/i2c-hid-core.c` with 2 additions. Total scope: 5
+added lines, no removals. No function body is changed; the modified
+object is the private `i2c_hid_quirks[]` table.
 
-Step 2.2 Record: Before, the helper accepted `format, int index` and
-called `snprintf(name, sizeof(name), format, index)`. After, it is
-declared `__printf(2, 3)`, accepts varargs, uses `va_start()`,
-`vsnprintf()`, and `va_end()`. Call sites remain unchanged.
+Record: before the patch, vendor/product `0x36b6/0xc001` had no private
+i2c-hid quirk entry, so the reset path used normal reset-ack waiting.
+After the patch, `i2c_hid_lookup_quirk()` can match the BLTP7853 IDs and
+set `I2C_HID_QUIRK_NO_IRQ_AFTER_RESET`.
 
-Step 2.3 Record: Bug category is build fix / compiler diagnostic fix. It
-does not fix memory safety, locking, refcounting, or runtime logic.
+Record: in current code, `I2C_HID_QUIRK_NO_IRQ_AFTER_RESET` makes
+`i2c_hid_finish_hwreset()` sleep 100 ms and clear
+`I2C_HID_RESET_PENDING` instead of waiting for a reset IRQ. In older
+stable code, the same quirk skips the 5 second wait path that returns
+`-ENODATA`.
 
-Step 2.4 Record: The fix is mechanically correct and minimal. Existing
-callers pass literal format strings plus `csiphy->id`, so behavior is
-preserved while allowing compiler format checking. Regression risk is
-very low; the only meaningful risk is varargs misuse, but current call
-sites were verified unchanged and simple.
+Record: bug category is hardware workaround / quirk. Specific mechanism:
+a device that does not raise the expected reset-complete interrupt is
+handled through an existing no-IRQ-after-reset path.
+
+Record: fix quality is high: tiny table-only change, uses existing
+infrastructure, no new API, no locking change, no cross-subsystem
+behavior. Regression risk is very low and limited to devices reporting
+exactly the new vendor/product pair.
 
 ### Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` shows the helper body was introduced by
-`0727615fb975f6`, authored by Bryan O'Donoghue on 2023-09-25. `git
-describe --contains` places it at `v6.7-rc1~51^2~149`.
+Record: exact candidate subject was not found in local `git log` on
+`master`, `all-next`, `fixes-next`, `input-next`, `pending-7.0`, or
+`for-greg/7.0-200`; no candidate commit hash was available to blame the
+newly added lines.
 
-Step 3.2 Record: The final fetched commit lacks a `Fixes:` trailer, but
-the original lore submission includes `Fixes: 0727615fb975`. I inspected
-that commit; it introduced the helper and the `snprintf(..., format,
-index)` pattern.
+Record: existing no-IRQ reset quirk support was introduced by
+`402946a8ef71e` (`HID: i2c-hid: Add no-irq-after-reset quirk for
+0911:5288 device`), contained since `v4.15-rc1`. Related Voyo quirk
+`fc6a31b007393` shows the same failure pattern: repeated `failed to
+reset device` and final `can't add hid device: -61`.
 
-Step 3.3 Record: Recent file history includes later CAMSS/CSIPHY
-changes, especially `74cae7794341` changing callers to use `csiphy->id`.
-No prerequisite for this format-warning fix was found beyond the helper
-existing.
+Record: no `Fixes:` tag is present, so Step 3.2 is not applicable.
 
-Step 3.4 Record: Arnd Bergmann has prior CAMSS build/undefined-behavior
-fixes in history. Bryan O'Donoghue, who reviewed the patch, is listed as
-a CAMSS maintainer in `MAINTAINERS`.
+Record: recent history contains normal HID/i2c-hid quirk and fix
+activity. Relevant related changes include `7bcf9ebb50f2a` (`Turn
+missing reset ack into a warning`) and older device-specific no-IRQ
+quirks. No prerequisite was identified beyond existing
+`I2C_HID_QUIRK_NO_IRQ_AFTER_RESET` support.
 
-Step 3.5 Record: No dependent commits were found. The patch only needs
-the existing helper and kernel `__printf`/`va_list` support, both
-present in the checked tree.
+Record: local `git log --author="Xu Rao" -- drivers/hid` found no HID
+commits on `master`. `MAINTAINERS` confirms Jiri Kosina is an HID core
+maintainer, and he signed off the supplied commit.
 
 ### Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 2211e826...` found the original patch at
-`https://patch.msgid.link/20260320151828.3456863-1-arnd@kernel.org`. `b4
-dig -a` found only v1.
+Record: candidate `b4 dig` could not be performed because the exact
+candidate commit hash is unavailable and the subject is not present in
+local reachable history.
 
-Step 4.2 Record: `b4 dig -w` shows relevant maintainers/lists were
-included: CAMSS maintainers, media maintainers, `linux-media`, `linux-
-arm-msm`, `linux-kernel`, and `llvm`.
+Record: `b4 dig -c 402946a8ef71e` found the original related no-IRQ-
+after-reset quirk submission at
+`https://patch.msgid.link/20171107122800.23196-1-hdegoede@redhat.com`;
+`b4 dig -a` showed v1 and v2; `b4 dig -w` showed HID maintainers and
+`linux-input@vger.kernel.org` were included.
 
-Step 4.3 Record: No separate bug report was present. The concrete report
-is the compiler diagnostic embedded in the patch.
+Record: `b4 dig -c 7bcf9ebb50f2a` found the reset-ack warning patch as
+`[PATCH v3 5/7]`.
 
-Step 4.4 Record: This is a standalone one-patch fix, not part of a
-multi-patch series.
-
-Step 4.5 Record: Direct lore stable search was blocked by Anubis; web
-search did not find stable-specific discussion for this exact patch.
+Record: web searches for the exact BLTP7853 reset-quirk subject and
+stable-list discussion found no direct candidate thread. Searches did
+find related BLTP7853 touchpad reports, but not independent confirmation
+of this exact `0x36b6/0xc001` reset failure.
 
 ### Phase 5: Code Semantic Analysis
-Step 5.1 Record: Modified function: `csiphy_match_clock_name()`.
+Record: modified key object is `i2c_hid_quirks[]`; relevant functions
+are `i2c_hid_lookup_quirk()`, `__i2c_hid_core_probe()`,
+`i2c_hid_finish_hwreset()`, and older-branch `i2c_hid_command()`
+behavior.
 
-Step 5.2 Record: Callers are only within `msm_csiphy_subdev_init()`, at
-the three verified clock-name checks: `"csiphy%d_timer"`, `"csi%d_phy"`,
-and `"csiphy%d"`.
+Record: callers verified: `i2c_hid_core_probe()` is called from ACPI,
+OF, ELAN, and Goodix i2c-hid probe drivers. `__i2c_hid_core_probe()`
+reads HID descriptor vendor/product IDs and calls
+`i2c_hid_lookup_quirk()`.
 
-Step 5.3 Record: The helper calls formatting and string comparison
-functions: previously `snprintf()` and `strcmp()`, after patch
-`vsnprintf()` and `strcmp()`.
+Record: call chain is device enumeration/probe: platform driver probe ->
+`i2c_hid_core_probe()` -> `__i2c_hid_core_probe()` ->
+`i2c_hid_lookup_quirk()` -> HID registration -> reset during HID parse.
+This is reachable during boot, reboot, and reprobe for affected
+hardware.
 
-Step 5.4 Record: The affected path is CAMSS device probe:
-`camss_probe()` calls `camss_init_subdevices()`, which calls
-`msm_csiphy_subdev_init()`. Runtime behavior remains equivalent for the
-verified call sites.
-
-Step 5.5 Record: Nearby CAMSS code has no other `const char *format`
-helper or `vsnprintf()`/`__printf()` pattern matching this issue.
+Record: similar patterns exist for HANTICK, ITE/Voyo, and Raydium
+devices already using `I2C_HID_QUIRK_NO_IRQ_AFTER_RESET`.
 
 ### Phase 6: Stable Tree Analysis
-Step 6.1 Record: The buggy helper exists from `v6.7` onward. Verified
-absent in `v6.6`, present in `v6.12`, and present in `v7.0`.
+Record: `I2C_HID_QUIRK_NO_IRQ_AFTER_RESET` exists in active checked
+stable branches `5.10.y`, `5.15.y`, `6.1.y`, `6.6.y`, `6.12.y`,
+`6.18.y`, `6.19.y`, and `7.0.y`.
 
-Step 6.2 Record: `git apply --check` succeeds against the current
-`7.0.5` checkout. For `v6.12`, the same helper and `snprintf(name,
-sizeof(name), format, index)` pattern are present, but I did not run a
-separate worktree apply check.
+Record: BLTP-specific IDs from this patch are not present in those
+checked branches or `master`.
 
-Step 6.3 Record: No related stable-specific fix for this exact CAMSS
-warning was found in local targeted searches or public web search.
+Record: `5.10.y`, `5.15.y`, `6.1.y`, and `6.6.y` still have the reset-
+ack timeout returning `-ENODATA`, matching the commit-message failure.
+`6.12.y` and newer checked branches contain `7bcf9ebb50f2a`, where
+missing reset ack is downgraded to a warning, so the benefit there is
+mostly avoiding a delay/warning rather than fixing probe failure.
 
-### Phase 7: Subsystem Context
-Step 7.1 Record: Subsystem is Qualcomm CAMSS media driver under
-`drivers/media/platform/qcom/camss/`. Criticality is peripheral/driver-
-specific, but build failures affect anyone building this driver or
-COMPILE_TEST coverage.
+Record: patch applies cleanly to current `stable/linux-7.0.y` when
+checked with `git apply --check`. Older stable trees may need minor
+context adjustment due to file layout differences, but the required
+quirk mechanism exists.
 
-Step 7.2 Record: CAMSS is actively developed; recent history shows many
-CAMSS commits, including fixes and new platform support.
+### Phase 7: Subsystem And Maintainer Context
+Record: subsystem is HID/i2c-hid under `drivers/hid/`, criticality
+`IMPORTANT` for users of affected laptop touchpad hardware.
+
+Record: subsystem is actively maintained; `MAINTAINERS` lists HID core
+as maintained by Jiri Kosina and Benjamin Tissoires.
 
 ### Phase 8: Impact And Risk
-Step 8.1 Record: Affected population is config-specific: builders with
-`CONFIG_VIDEO_QCOM_CAMSS`, including `COMPILE_TEST`, using clang-22 with
-`-Wmissing-format-attribute` and warnings-as-errors.
+Record: affected population is hardware-specific: systems with an I2C
+HID device reporting the BLTP7853 IDs added by this patch.
 
-Step 8.2 Record: Trigger is build-time, not runtime.
-`scripts/Makefile.warn` verifies `-Wmissing-format-attribute` is under
-`W=1`; `-Werror` is enabled by `W=e` or `CONFIG_WERROR`.
+Record: trigger condition is probe/reprobe after reboot or reprobe, as
+described by the commit message and matched to the older stable reset
+path.
 
-Step 8.3 Record: Failure mode is build failure, not
-crash/corruption/security. Severity is medium, but build fixes are an
-accepted stable exception.
+Record: failure severity is HIGH for older stable branches because the
+touchpad can fail to bind at all. For newer branches with
+`7bcf9ebb50f2a`, severity is LOW-MEDIUM because generic handling avoids
+probe failure but still waits/logs.
 
-Step 8.4 Record: Benefit is moderate: keeps affected stable builds
-working with newer clang warning behavior. Risk is very low: 10-line
-single-function mechanical change, no API change, call sites unchanged.
+Record: benefit is high for older stable users with this hardware; risk
+is very low because the change is a narrow hardware quirk table entry.
 
 ### Phase 9: Final Synthesis
-Evidence for backporting:
-- Real build failure mode documented in commit and lore.
-- Fits stable build-fix exception.
-- Very small, contained, reviewed by CAMSS maintainer.
-- Applies cleanly to current `7.0.5`; buggy code exists in `v6.12+` and
-  `v7.0`.
+Evidence for backporting: real device probe failure, existing quirk
+mechanism, tiny hardware-specific change, no new API, maintainer sign-
+off, and older stable branches demonstrably still have the failing reset
+timeout behavior.
 
-Evidence against backporting:
-- Not a runtime correctness, crash, data corruption, or security fix.
-- Trigger requires specific compiler/warning-as-error build settings.
-- Not relevant to `v6.6` and older because the helper is absent there.
+Evidence against backporting: no direct candidate lore thread or
+external bug report could be verified; exact hardware ID `0x36b6/0xc001`
+was only verified from the supplied patch, not an external hardware
+database. Newer stable branches already have generic missing-reset-ack
+handling, reducing urgency there.
 
-Stable rules checklist:
-1. Obviously correct and tested: yes for code review/readability; no
-   local clang-22 build reproduction.
-2. Fixes a real bug: yes, a verified build diagnostic/error path.
-3. Important issue: medium; build failure, not runtime failure.
-4. Small and contained: yes, one function, one file, 7+/3-.
-5. No new feature/API: yes.
-6. Can apply to stable: verified for current `7.0.5`; likely
-   straightforward for `v6.12+`, not applicable to `v6.6` and older.
-
-Exception category: Build fix.
+Stable rules: obviously correct by inspection, fixes a real hardware
+probe failure on older stable branches, small and contained, no new
+feature/API, and falls under the accepted hardware quirk exception.
+Backport difficulty should be clean or minor.
 
 ## Verification
-- Phase 1: `git show` verified candidate commit metadata and exact diff
-  for `2211e826bd69...`.
-- Phase 2: `git diff --shortstat` verified `1 file changed, 7
-  insertions(+), 3 deletions(-)`.
-- Phase 3: `git blame` verified helper introduced by `0727615fb975`;
-  `git show` inspected that commit.
-- Phase 3/6: `git describe --contains` and tag containment checks
-  verified introduction in `v6.7`, presence in `v6.12+`, absence from
-  `v6.6`.
-- Phase 4: `b4 dig`, `b4 dig -a`, `b4 dig -w`, and saved mbox verified
-  original lore thread, v1-only series, recipients, `Fixes:` trailer,
-  and Bryan’s review.
-- Phase 5: `rg` and file reads verified call sites and probe call chain.
-- Phase 6: `git apply --check` verified clean apply to current `7.0.5`.
-- Phase 7: `MAINTAINERS` verified Bryan O'Donoghue is a CAMSS
-  maintainer.
-- Phase 8: `scripts/Makefile.warn` verified when `-Wmissing-format-
-  attribute` and `-Werror` are enabled.
-- UNVERIFIED: I did not reproduce the clang-22 build failure locally.
-- UNVERIFIED: I did not perform an actual `git apply --check` in a
-  separate `v6.12` worktree.
-
-This is stable-worthy as a low-risk build fix for stable trees that
-contain the helper, especially `v6.12+`/`v7.0` era trees, and should be
-skipped for older trees where the code does not exist.
+- [Phase 1] Parsed supplied message and tags: only Xu Rao and Jiri
+  Kosina Signed-off-by tags present.
+- [Phase 2] Read `drivers/hid/i2c-hid/i2c-hid-core.c`: verified quirk
+  table and reset handling.
+- [Phase 3] Searched local histories without `--all`: exact candidate
+  not found; related no-IRQ quirk commits found.
+- [Phase 3] Inspected `402946a8ef71e`, `fc6a31b007393`, and
+  `7bcf9ebb50f2a`: confirmed same reset-ack quirk mechanism and later
+  generic warning behavior.
+- [Phase 4] Ran `b4 dig` for related commits; candidate `b4 dig` was not
+  possible without a candidate hash.
+- [Phase 5] Traced callers with `rg` and read ACPI/OF probe files:
+  confirmed probe-time reachability.
+- [Phase 6] Checked active stable branches: quirk support exists in all
+  checked branches; old reset failure path exists through `6.6.y`;
+  `6.12.y+` has generic warning handling.
+- [Phase 6] Ran `git apply --check` against current `7.0.y`: patch shape
+  applies cleanly.
+- UNVERIFIED: original candidate lore discussion, independent bug
+  report, and exact external hardware database confirmation for
+  `0x36b6/0xc001`.
 
 **YES**
 
- drivers/media/platform/qcom/camss/camss-csiphy.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/hid/hid-ids.h              | 3 +++
+ drivers/hid/i2c-hid/i2c-hid-core.c | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
-index 62623393f4144..78a1b568dbae6 100644
---- a/drivers/media/platform/qcom/camss/camss-csiphy.c
-+++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
-@@ -558,12 +558,16 @@ static int csiphy_init_formats(struct v4l2_subdev *sd,
- 	return csiphy_set_format(sd, fh ? fh->state : NULL, &format);
- }
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index c371721826dcc..559040e47f3c7 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -277,6 +277,9 @@
+ #define USB_VENDOR_ID_BIGBEN	0x146b
+ #define USB_DEVICE_ID_BIGBEN_PS3OFMINIPAD	0x0902
  
--static bool csiphy_match_clock_name(const char *clock_name, const char *format,
--				    int index)
-+static bool __printf(2, 3)
-+csiphy_match_clock_name(const char *clock_name, const char *format, ...)
- {
- 	char name[16]; /* csiphyXXX_timer\0 */
-+	va_list args;
++#define I2C_VENDOR_ID_BLTP		0x36b6
++#define I2C_PRODUCT_ID_BLTP7853		0xc001
 +
-+	va_start(args, format);
-+	vsnprintf(name, sizeof(name), format, args);
-+	va_end(args);
- 
--	snprintf(name, sizeof(name), format, index);
- 	return !strcmp(clock_name, name);
- }
+ #define USB_VENDOR_ID_BTC		0x046e
+ #define USB_DEVICE_ID_BTC_EMPREX_REMOTE	0x5578
+ #define USB_DEVICE_ID_BTC_EMPREX_REMOTE_2	0x5577
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 5a183af3d5c6a..baff2728603ec 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -149,6 +149,8 @@ static const struct i2c_hid_quirks {
+ 		 I2C_HID_QUIRK_BOGUS_IRQ },
+ 	{ I2C_VENDOR_ID_GOODIX, I2C_DEVICE_ID_GOODIX_0D42,
+ 		 I2C_HID_QUIRK_DELAY_WAKEUP_AFTER_RESUME },
++	{ I2C_VENDOR_ID_BLTP, I2C_PRODUCT_ID_BLTP7853,
++		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
+ 	{ 0, 0 }
+ };
  
 -- 
 2.53.0
