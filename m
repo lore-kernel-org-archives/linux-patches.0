@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0678403EAE;
-	Wed, 20 May 2026 18:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85034403EA7;
+	Wed, 20 May 2026 18:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302965; cv=none; b=R1nTQqI3PjnCTR988iXen8v6NcrJY7G3E24frUkyIMFvKXPSc6YhNtMQf7/rvZU/ZFX3mE2teDGHYxpox8s4zWnq2d/v2HPHLcM2VKnDwEgd7Wr5QzqLFi8q/vdlkzd7kx/nJrWKsN1z5LpCP6EEKVGiR5hGz5nrfinjwx/i/7o=
+	t=1779302967; cv=none; b=WCw5DurLfEELNNTvY96fQ2dxnRrwkJbP49Fardk36Zaqch5UAAUcWWe604a0YszsgEUmjKHQf+epzu3isTaCfjBDpDWI2FJp1yZfiEqtGHpQ0DWdgO5ertLhe7x3Gad1Q00YBoCeJnW5CYMa/AqvDgLYMswTXByLYOyBQdbmfg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302965; c=relaxed/simple;
-	bh=yw8Tr7JfZknYcnyypW7rjEI3+vHNiNrr9kOrw17m0Dc=;
+	s=arc-20240116; t=1779302967; c=relaxed/simple;
+	bh=Kycty08P8vfyeEUuJu1JBRmLT245+WnxkQcDivqpYs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bLmSxKJ073hquCXZI74JBz2jbFSc6291lv0d0bSwVLZsWNyXIGoHQjjqvm2Fj4fB4Rarb7f7n+wrbcxN2MBA+j4vWZ/QDrW1KD6WXDOtrA6t/6XgKg0sAMTOGK1d+7WYzxYkbUiGKr/G+z7PZvtUfShGw4J0ZJ7RKzZyZJdd65o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P56i1nru; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O7STTyF60TWJoSzb7A1sazy+JDC8cbhnhk9lNkbexGOBJ5RdLm72o1gsArhfuB0YAPn8n90Hr59RXYhNO1Y6AMk9Hc3MYDBdgwVOeCRP3gv1Va7mNm70fu4EtOoYzVQY/Ep2fw1MoRPePoS5EklSFhwQVhwLllVl3CixnVA1cxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7Ybw7h7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P56i1nru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2841F000E9;
-	Wed, 20 May 2026 18:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7Ybw7h7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43E71F00893;
+	Wed, 20 May 2026 18:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302961;
-	bh=HOTlXKMnAyYHrsqcBNyI3hndbQBLGYijb3HwToAELTw=;
+	s=korg; t=1779302964;
+	bh=4ydFlfpvcMnAZp8kenAuknekihW/CnROR8HsdRKHU7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P56i1nrul+I3DjD5mgBuZU08rstYIZTdzGq6mcOE24tbpwMU2bQ2GQeYWdpln1nSW
-	 vRM94Xx2EHKTl775/a0N8C+BiXVXn0z6lPC5on7aLsuYd3CTYnWjMQsAflk7GHydVK
-	 61QxbGeV67/xBB7yZPE6SdGM3BRKUFR38soNBtGo=
+	b=c7Ybw7h7Ljd4pwTe2CHrTC8oBWjXehnvF7MZcS7+YxFGImOuZ6xVXxX+/Hbfi75B1
+	 H+/wELymErbbnwJIkIJpQ0OQf+EXXvOt6xjoT/9+Mle8ULz6/x1MAHwcGw7M6yvQ6o
+	 5J6s1LrsJYyvFajnlj8DH+J9pXe+j9DNgWuxc0T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mateusz Redzynia <mateuszx.redzynia@intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Alva Lan <alvalan9@foxmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 465/508] ASoC: SOF: Intel: hda: Fix NULL pointer dereference
-Date: Wed, 20 May 2026 18:24:48 +0200
-Message-ID: <20260520162108.673580537@linuxfoundation.org>
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Ye Bin <yebin10@huawei.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 466/508] smb/client: fix possible infinite loop and oob read in symlink_data()
+Date: Wed, 20 May 2026 18:24:49 +0200
+Message-ID: <20260520162108.695273286@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -56,63 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 16c589567a956d46a7c1363af3f64de3d420af20 ]
+commit 7d9a7f1f96cd617ee9e75bb22217c709038e26b8 upstream.
 
-If there's a mismatch between the DAI links in the machine driver and
-the topology, it is possible that the playback/capture widget is not
-set, especially in the case of loopback capture for echo reference
-where we use the dummy DAI link. Return the error when the widget is not
-set to avoid a null pointer dereference like below when the topology is
-broken.
+On 32-bit architectures, the infinite loop is as follows:
 
-RIP: 0010:hda_dai_get_ops.isra.0+0x14/0xa0 [snd_sof_intel_hda_common]
+  len = p->ErrorDataLength == 0xfffffff8
+  u8 *next = p->ErrorContextData + len
+  next == p
 
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Mateusz Redzynia <mateuszx.redzynia@intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260204081833.16630-10-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+On 32-bit architectures, the out-of-bounds read is as follows:
+
+  len = p->ErrorDataLength == 0xfffffff0
+  u8 *next = p->ErrorContextData + len
+  next == (u8 *)p - 8
+
+Reported-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/intel/hda-dai.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2file.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/sof/intel/hda-dai.c b/sound/soc/sof/intel/hda-dai.c
-index 1fe7cce160913..a3d0b6d721aaf 100644
---- a/sound/soc/sof/intel/hda-dai.c
-+++ b/sound/soc/sof/intel/hda-dai.c
-@@ -77,12 +77,22 @@ static const struct hda_dai_widget_dma_ops *
- hda_dai_get_ops(struct snd_pcm_substream *substream, struct snd_soc_dai *cpu_dai)
- {
- 	struct snd_soc_dapm_widget *w = snd_soc_dai_get_widget(cpu_dai, substream->stream);
--	struct snd_sof_widget *swidget = w->dobj.private;
-+	struct snd_sof_widget *swidget;
- 	struct snd_sof_dev *sdev;
- 	struct snd_sof_dai *sdai;
+--- a/fs/smb/client/smb2file.c
++++ b/fs/smb/client/smb2file.c
+@@ -49,6 +49,9 @@ static struct smb2_symlink_err_rsp *syml
+ 				 __func__, le32_to_cpu(p->ErrorId));
  
--	sdev = widget_to_sdev(w);
-+	/*
-+	 * this is unlikely if the topology and the machine driver DAI links match.
-+	 * But if there's a missing DAI link in topology, this will prevent a NULL pointer
-+	 * dereference later on.
-+	 */
-+	if (!w) {
-+		dev_err(cpu_dai->dev, "%s: widget is NULL\n", __func__);
-+		return NULL;
-+	}
- 
-+	sdev = widget_to_sdev(w);
-+	swidget = w->dobj.private;
- 	if (!swidget) {
- 		dev_err(sdev->dev, "%s: swidget is NULL\n", __func__);
- 		return NULL;
--- 
-2.53.0
-
+ 			len = ALIGN(le32_to_cpu(p->ErrorDataLength), 8);
++			if (len > end - ((u8 *)p + sizeof(*p)))
++				return ERR_PTR(-EINVAL);
++
+ 			p = (struct smb2_error_context_rsp *)(p->ErrorContextData + len);
+ 		}
+ 	} else if (le32_to_cpu(err->ByteCount) >= sizeof(*sym) &&
 
 
