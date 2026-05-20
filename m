@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F1D2D7386;
-	Wed, 20 May 2026 18:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505A9371048;
+	Wed, 20 May 2026 18:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301361; cv=none; b=FUmanxrc3akDIMpvIxQEBfZ01fZmqDjcCCYQ1TYQMqbfWcF4sJj3NFYOBts56DiLAmBOplanKrs3oW/dt678KN1NWXM6ImwbmGdgXJw7ixbl/NjK5ny9ltfDTPzjHf1wa1Vgn3xTzgNnigrpYRzgZM5Feb09n53ZrJb94h7yRYo=
+	t=1779301363; cv=none; b=lporepmlOwx3GFrl6UD+LSzj6bHKAY+ixuKS3y+unr7m3QxgnSFdpEuAW6hgb01gtP2iNqrOqghW4K6wKaBCG2OB3uQDiIahdLgDGt65Zl3BZUrt6I3UD6ZRqaWwhyIhtSiry/qRNE5/wmUY7nru/PHBmy1TcL6KGeyw6HGh11w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301361; c=relaxed/simple;
-	bh=BY1jCMJbj95ih/yreA7h+Jdp7043h1y6SisofbDvSD8=;
+	s=arc-20240116; t=1779301363; c=relaxed/simple;
+	bh=9Z6faMLma62nEyU68be42B0qiFiHeHZEbHJIwXYRIqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKbuvhT5fpjC4FW0xtl1B6b3BFNuli1daH/yllpKxQ6P2Ga2iatiiNrWsqXZjmBVpZLddh9eU5BrisqP1al1OzGLxOYov6r8DSY2jivyysLUHm2wVeElYf5ZjtRXxWkqc4QTQIKHrDMwyoFXRt8CUrXKJOQPxJWhcxbpH61V4/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQM6vPZL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gQC6AuIdJ3QzNAn7BJGrGgJwxaINj48oxpU/M8//igytqQr0tRAvj3SqfVlUKT8eNLZ6dJnDbYS5G7HF0hhJ5U2Vm1T1rwgwCaHY4k04qVLMEg3JSPGOCVuYKEunNkbOFTZyE13yRvOugOYhC6Br+5mf1ONcFu7nXRaAWjHF2j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhNwu3GK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQM6vPZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2463F1F00893;
-	Wed, 20 May 2026 18:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhNwu3GK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71E41F000E9;
+	Wed, 20 May 2026 18:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301359;
-	bh=KQCFe/wDNJcBHoNmdnV+PIjSIyeCC3dHpST2/q3W38o=;
+	s=korg; t=1779301362;
+	bh=wj1/MrVEmlFeIKQYhTOAYxthkSVeyDGiTY5PMqsfRoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DQM6vPZLFmnzBteFZNOg5uekV+qbYyRj7IkTitSvzM1KE/2FhIfEf8RKEjgcpmBUE
-	 8/6JSxSxykXF/+IfGSATEA1wN+cSnZSBdxBxctContg1UZ0T8+QU8DucMA1+H+MXZD
-	 fbMkV8ti/4s1/rm09QUhohQzo1/Om+EmbHqvQOTc=
+	b=MhNwu3GK9G7fm+57F2yFpLWWmgND+qJrHCcoCQM+BBmZ42bQRdyhltMzE5CbNTbaQ
+	 3ETFyxnDaLw+/+YgRzfCRgi7E+2Z2OegDqy5JYFCpyf3lv6JWo88MNxdXyuBP2HTN8
+	 ZGd1VVDlFB+pRtlczaOeEUl/qrlGoAtVYFJo6DbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Petr Oros <poros@redhat.com>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 484/666] ice: fix ice_ptp_read_tx_hwtstamp_status_eth56g
-Date: Wed, 20 May 2026 18:21:35 +0200
-Message-ID: <20260520162121.756600695@linuxfoundation.org>
+Subject: [PATCH 6.12 475/666] slip: bound decode() reads against the compressed packet length
+Date: Wed, 20 May 2026 18:21:26 +0200
+Message-ID: <20260520162121.563761334@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,61 +52,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 1f75dbc53f68f0fb2acd99f92315e426a3d0b446 ]
+[ Upstream commit 4c1367a2d7aad643a6f87c6931b13cc1a25e8ca7 ]
 
-The ice_ptp_read_tx_hwtstamp_status_eth56g function calls
-ice_read_phy_eth56g with a PHY index. However the function actually expects
-a port index. This causes the function to read the wrong PHY_PTP_INT_STATUS
-registers, and effectively makes the status wrong for the second set of
-ports from 4 to 7.
+slhc_uncompress() parses a VJ-compressed TCP header by advancing a
+pointer through the packet via decode() and pull16(). Neither helper
+bounds-checks against isize, and decode() masks its return with
+& 0xffff so it can never return the -1 that callers test for -- those
+error paths are dead code.
 
-The ice_read_phy_eth56g function uses the provided port index to determine
-which PHY device to read. We could refactor the entire chain to take a PHY
-index, but this would impact many code sites. Instead, multiply the PHY
-index by the number of ports, so that we read from the first port of each
-PHY.
+A short compressed frame whose change byte requests optional fields
+lets decode() read past the end of the packet. The over-read bytes
+are folded into the cached cstate and reflected into subsequent
+reconstructed packets.
 
-Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Petr Oros <poros@redhat.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Make decode() and pull16() take the packet end pointer and return -1
+when exhausted. Add a bounds check before the TCP-checksum read.
+The existing == -1 tests now do what they were always meant to.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Simon Horman <horms@kernel.org>
+Closes: https://lore.kernel.org/netdev/20260414134126.758795-2-horms@kernel.org/
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260420-jk-iwl-net-2026-04-20-ptp-e825c-phy-interrupt-fixes-v1-4-bc2240f42251@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260416100147.531855-5-bestswngs@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/slip/slhc.c | 43 ++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-index dc97bee4fd2ea..478ee1c540142 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-@@ -2682,13 +2682,19 @@ int ice_ptp_read_tx_hwtstamp_status_eth56g(struct ice_hw *hw, u32 *ts_status)
- 	*ts_status = 0;
+diff --git a/drivers/net/slip/slhc.c b/drivers/net/slip/slhc.c
+index fcb3eebe7311c..daf086c283423 100644
+--- a/drivers/net/slip/slhc.c
++++ b/drivers/net/slip/slhc.c
+@@ -80,9 +80,9 @@
+ #include <linux/unaligned.h>
  
- 	for (phy = 0; phy < params->num_phys; phy++) {
-+		u8 port;
- 		int err;
+ static unsigned char *encode(unsigned char *cp, unsigned short n);
+-static long decode(unsigned char **cpp);
++static long decode(unsigned char **cpp, const unsigned char *end);
+ static unsigned char * put16(unsigned char *cp, unsigned short x);
+-static unsigned short pull16(unsigned char **cpp);
++static long pull16(unsigned char **cpp, const unsigned char *end);
  
--		err = ice_read_phy_eth56g(hw, phy, PHY_PTP_INT_STATUS, &status);
-+		/* ice_read_phy_eth56g expects a port index, so use the first
-+		 * port of the PHY
-+		 */
-+		port = phy * hw->ptp.ports_per_phy;
-+
-+		err = ice_read_phy_eth56g(hw, port, PHY_PTP_INT_STATUS, &status);
- 		if (err)
- 			return err;
+ /* Allocate compression data structure
+  *	slots must be in range 0 to 255 (zero meaning no compression)
+@@ -190,30 +190,34 @@ encode(unsigned char *cp, unsigned short n)
+ 	return cp;
+ }
  
--		*ts_status |= (status & mask) << (phy * hw->ptp.ports_per_phy);
-+		*ts_status |= (status & mask) << port;
+-/* Pull a 16-bit integer in host order from buffer in network byte order */
+-static unsigned short
+-pull16(unsigned char **cpp)
++/* Pull a 16-bit integer in host order from buffer in network byte order.
++ * Returns -1 if the buffer is exhausted, otherwise the 16-bit value.
++ */
++static long
++pull16(unsigned char **cpp, const unsigned char *end)
+ {
+-	short rval;
++	long rval;
+ 
++	if (*cpp + 2 > end)
++		return -1;
+ 	rval = *(*cpp)++;
+ 	rval <<= 8;
+ 	rval |= *(*cpp)++;
+ 	return rval;
+ }
+ 
+-/* Decode a number */
++/* Decode a number. Returns -1 if the buffer is exhausted. */
+ static long
+-decode(unsigned char **cpp)
++decode(unsigned char **cpp, const unsigned char *end)
+ {
+ 	int x;
+ 
++	if (*cpp >= end)
++		return -1;
+ 	x = *(*cpp)++;
+-	if(x == 0){
+-		return pull16(cpp) & 0xffff;	/* pull16 returns -1 on error */
+-	} else {
+-		return x & 0xff;		/* -1 if PULLCHAR returned error */
+-	}
++	if (x == 0)
++		return pull16(cpp, end);
++	return x & 0xff;
+ }
+ 
+ /*
+@@ -499,6 +503,7 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
+ 	struct cstate *cs;
+ 	int len, hdrlen;
+ 	unsigned char *cp = icp;
++	const unsigned char *end = icp + isize;
+ 
+ 	/* We've got a compressed packet; read the change byte */
+ 	comp->sls_i_compressed++;
+@@ -536,6 +541,8 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
+ 	thp = &cs->cs_tcp;
+ 	ip = &cs->cs_ip;
+ 
++	if (cp + 2 > end)
++		goto bad;
+ 	thp->check = *(__sum16 *)cp;
+ 	cp += 2;
+ 
+@@ -566,26 +573,26 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
+ 	default:
+ 		if(changes & NEW_U){
+ 			thp->urg = 1;
+-			if((x = decode(&cp)) == -1) {
++			if((x = decode(&cp, end)) == -1) {
+ 				goto bad;
+ 			}
+ 			thp->urg_ptr = htons(x);
+ 		} else
+ 			thp->urg = 0;
+ 		if(changes & NEW_W){
+-			if((x = decode(&cp)) == -1) {
++			if((x = decode(&cp, end)) == -1) {
+ 				goto bad;
+ 			}
+ 			thp->window = htons( ntohs(thp->window) + x);
+ 		}
+ 		if(changes & NEW_A){
+-			if((x = decode(&cp)) == -1) {
++			if((x = decode(&cp, end)) == -1) {
+ 				goto bad;
+ 			}
+ 			thp->ack_seq = htonl( ntohl(thp->ack_seq) + x);
+ 		}
+ 		if(changes & NEW_S){
+-			if((x = decode(&cp)) == -1) {
++			if((x = decode(&cp, end)) == -1) {
+ 				goto bad;
+ 			}
+ 			thp->seq = htonl( ntohl(thp->seq) + x);
+@@ -593,7 +600,7 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
+ 		break;
  	}
- 
- 	ice_debug(hw, ICE_DBG_PTP, "PHY interrupt err: %x\n", *ts_status);
+ 	if(changes & NEW_I){
+-		if((x = decode(&cp)) == -1) {
++		if((x = decode(&cp, end)) == -1) {
+ 			goto bad;
+ 		}
+ 		ip->id = htons (ntohs (ip->id) + x);
 -- 
 2.53.0
 
