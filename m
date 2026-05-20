@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E513539B483;
-	Wed, 20 May 2026 17:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CA33F4DC0;
+	Wed, 20 May 2026 17:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299656; cv=none; b=sIwJCPr9q/XnOj2aNYCIhWJh9A3nfNt6NdP8pVRVFP5ULGRl0hO3vWNPEprhbu1fyL/X0GAtoHcMFPHBjYoGlc+Fxe5AAFrvVUEElwi1BMO5eSgdkeQGCOMaArCIkTphgseEyAA+5IS9NTSFzkKGIehqbyPIQRke/WCnoL1IR9M=
+	t=1779299661; cv=none; b=tgqnOom4zfx2GhPMfRHm8oOistCYcAlMHFKXKsFGvKBIH0YctFq5a3JT0vHYCeMEClcoG9+ZncsyMzJCFQKd8VVy2uD5ulGco2yZSQylHCPBGJiDD5loooTUibGwbdSoCa9ywwuIOfe5LFNaA0QkGgoCNNhcgi4KqRzAy1738To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299656; c=relaxed/simple;
-	bh=CfGpJVRqMxOuXPbU0rpc5GA30+/UYNoNDw3KDfpkG1g=;
+	s=arc-20240116; t=1779299661; c=relaxed/simple;
+	bh=RgMCk+/2/Ue8o40PadZQYkSpk+mhj9Tg3EOo6YVYps0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEhAFTk/5G3KcXVIzga4WEI9nsir2SXfiCDbr0UVbbTTP/pqXTZqj7R8iai+PMkTi9Le5FZ72bdHr1hFI37z+ieDUe0RGvZ6pPUqinGBCeURSsckOyqvq4l7s8iGimxzoB5Veq36n3UoS5lHvg0ndh8jRLV1o10dD6r7ehJcl0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNtKrDLf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yu0FLj87XKYnPzb6t9U8tXccEuCvNqBQ6ahqRotwFA83DV+3upOSwP999hNYbQ9V2bBvTtgcnCuHr51+Cw4JgPcFV3nJ/aBWU7RXpmFRmijUfYuBkfkaS2+7Zfl9OqkgiB0x333pp22QCgb/cqOig+HLoq8CIzeNs1cRI2WH+jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgBi2Jwq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNtKrDLf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559661F000E9;
-	Wed, 20 May 2026 17:54:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgBi2Jwq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F471F000E9;
+	Wed, 20 May 2026 17:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299655;
-	bh=DLVYGVIpkN0McsHeIZNFJFl3ByuFmmer6Ur+eAtGm20=;
+	s=korg; t=1779299658;
+	bh=GtizY04h9R/BmUhRh8CELXRXgN/zhJczU29dSXdIRaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sNtKrDLfJsOAgkUDEH/sY//tzar0hOni6X1wQx448dlGybaxkRSIHMtG/qOrM884V
-	 4ZZtlE7S3vtGmeHkXzhqZmruECf1f2kAtPlKVJoN5OsnZiongA8/wR4nmcdmJBkiVy
-	 5o8njo/lFOB3Vc3AIx2Bk/5+0SW12i9PyJ4biExk=
+	b=AgBi2JwqouEkxr0bDaiK5J/rzzOYk97WDbaYRVe8YP9Cav7vUutOfx7LJV42ZWMg1
+	 /0sVKgd6Rfk1jIO4zRWDjbP8NQDTJZXg+Yf8BG1POYwHC1emRQ51WYoj5ss8Ww4OcK
+	 qNlZ+TKqaPChzv8YgVFlX87jxktkxV1+PShgN1r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 856/957] net/sched: cls_flower: revert unintended changes
-Date: Wed, 20 May 2026 18:22:19 +0200
-Message-ID: <20260520162153.128891774@linuxfoundation.org>
+Subject: [PATCH 6.18 857/957] kselftest/arm64: Include <asm/ptrace.h> for user_gcs definition
+Date: Wed, 20 May 2026 18:22:20 +0200
+Message-ID: <20260520162153.150721719@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,53 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 1e01abec856593e02cd69fd95b784c10dd46880c ]
+[ Upstream commit bb7235e226888607e6aac1288062fcb1ac105589 ]
 
-While applying the blamed commit 4ca07b9239bd ("net: mctp i2c: check
-length before marking flow active"), I unintentionally included
-unrelated and unacceptable changes.
+kselftest includes kernel uAPI headers with option:
 
-Revert them.
+  -isystem $(top_srcdir)/usr/include
 
-Fixes: 4ca07b9239bd ("net: mctp i2c: check length before marking flow active")
-Reported-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Closes: https://lore.kernel.org/netdev/bd8704fe0bd53e278add5cde4873256656623e2e.camel@codeconstruct.com.au/
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/043026a53ff84da88b17648c4b0d17f0331749cb.1777447863.git.pabeni@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Include <asm/ptrace.h> in libc-gcs.c for the definition of struct
+user_gcs from the uAPI headers, and remove the redundant definition in
+gcs-util.h. This fixes a compilation error on systems where the
+toolchain defines NT_ARM_GCS.
+
+Fixes: a505a52b4e29 ("kselftest/arm64: Add a GCS test program built with the system libc")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flower.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ tools/testing/selftests/arm64/gcs/gcs-util.h | 6 ------
+ tools/testing/selftests/arm64/gcs/libc-gcs.c | 1 +
+ 2 files changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index f3af0ac892a86..099ff6a3e1f51 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -560,7 +560,6 @@ static int __fl_delete(struct tcf_proto *tp, struct cls_fl_filter *f,
- 		       struct netlink_ext_ack *extack)
- {
- 	struct cls_fl_head *head = fl_head_dereference(tp);
--	struct fl_flow_mask *mask;
+diff --git a/tools/testing/selftests/arm64/gcs/gcs-util.h b/tools/testing/selftests/arm64/gcs/gcs-util.h
+index c99a6b39ac147..7a81bb07ed4b8 100644
+--- a/tools/testing/selftests/arm64/gcs/gcs-util.h
++++ b/tools/testing/selftests/arm64/gcs/gcs-util.h
+@@ -18,12 +18,6 @@
  
- 	*last = false;
+ #ifndef NT_ARM_GCS
+ #define NT_ARM_GCS 0x410
+-
+-struct user_gcs {
+-	__u64 features_enabled;
+-	__u64 features_locked;
+-	__u64 gcspr_el0;
+-};
+ #endif
  
-@@ -577,12 +576,11 @@ static int __fl_delete(struct tcf_proto *tp, struct cls_fl_filter *f,
- 	list_del_rcu(&f->list);
- 	spin_unlock(&tp->lock);
+ /* Shadow Stack/Guarded Control Stack interface */
+diff --git a/tools/testing/selftests/arm64/gcs/libc-gcs.c b/tools/testing/selftests/arm64/gcs/libc-gcs.c
+index 17b2fabfec386..72e82bfbecc99 100644
+--- a/tools/testing/selftests/arm64/gcs/libc-gcs.c
++++ b/tools/testing/selftests/arm64/gcs/libc-gcs.c
+@@ -16,6 +16,7 @@
  
--	mask = f->mask;
-+	*last = fl_mask_put(head, f->mask);
- 	if (!tc_skip_hw(f->flags))
- 		fl_hw_destroy_filter(tp, f, rtnl_held, extack);
- 	tcf_unbind_filter(tp, &f->res);
- 	__fl_put(f);
--	*last = fl_mask_put(head, mask);
+ #include <asm/hwcap.h>
+ #include <asm/mman.h>
++#include <asm/ptrace.h>
  
- 	return 0;
- }
+ #include <linux/compiler.h>
+ 
 -- 
 2.53.0
 
