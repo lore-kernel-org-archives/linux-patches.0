@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB96363C6F;
-	Wed, 20 May 2026 16:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CAD371056;
+	Wed, 20 May 2026 16:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295378; cv=none; b=imW3fm5VcRkguLHwQ2MEAFtZa7/tz7MCANC9i0jTjzxrd5lk0r5u8tzwWirm8AW80udv/dK0EJHsTgdWUWVVsqPeQqB16vyOLqsby7O1hR6PJ7I/J5M4IjiAm30n8r+cCF7cNa4sIKpK73y1lwPLUGgloUBgGW1MB9R12PWNVkk=
+	t=1779295381; cv=none; b=ierGv4w+0+BKILO/g6mYI7yjEo6o23QEob56hXQK5AALv+rDnOLBeoCCDp5GkYW+elt2D6YLdRsQkPd7EWlmLUgZGKcrVM8yxvM15RtKiMFtCC/Ddlx10farOEpDeTLo0dRMMoGu8mGbhL5YrWA6o/MdL4z4Mgt0CTKa1WzF928=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295378; c=relaxed/simple;
-	bh=GoWZf30J7luQ8nNQ3msENtJE9sEfC6Bv27Vf5B74fBM=;
+	s=arc-20240116; t=1779295381; c=relaxed/simple;
+	bh=ZAykyASMUIF7DoK5OpT3tLpzYGc+wlECM29jg7SL9Ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZeAMtJS+GvLv9cTF0E0XftMFVzeBtY1qQ1tDjXEk6E7Z4AJypODwTW24lz4RZfEhtfoYnExIIOT5lLp1fJTwD8C8iM+sDpUp2BTCM9a94nP8PIlNlaJd73iA8+WaLXDLk107uBghQZzs3GE2I9aqSmghVsGLHtXwxyqu0p0oO8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lw5JoBu8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rnlbEYstNWWryHuZgw3f1VTB33PQ9GdapHq4MFRV1AAqL4obHIdqjSl4I7lKDaoN42vMd0ZqnukAIYzOhBzVqGjfCxZPHf+VoI+nr0iwaj1vcfIXcjeYcixUmNj7hf0+9t2Ou6Mmu8L4FF1eVIHw6aGuBt6q0i4bJtBNUd73Xvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pg4WTBSZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lw5JoBu8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BA61F000E9;
-	Wed, 20 May 2026 16:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pg4WTBSZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2DD1F000E9;
+	Wed, 20 May 2026 16:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295377;
-	bh=R0+JjRZrhOzzmDobxqrpn/Wlm4+WJRaXsleKNPx1b/Y=;
+	s=korg; t=1779295379;
+	bh=SnSLziOAsgnvFXKNB8+OwAbz72J95Ds2UAXEmZwS3dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lw5JoBu8n+QoLd3JcW5hgqhk0/0aQ4nPlqJ964H6Jl+TGcPGTfF+AUm68eAsVkjVg
-	 vxjjDYyM91OMM1pU5CzRaTO++ecN19IUjZb5jdS8TwKjExWJwposGZhtVbhUDmEZpS
-	 qzh6OoBj47Uhz2KjB1XoksjkmdgNJxsJo6ip+UkI=
+	b=Pg4WTBSZ2wRv2Y5M5ZoCCcqMAyYvoCfXJYx0B+GY64jlXSFLJGa8xVTdUTcq6AQ+q
+	 w0OO+V6qAp0dFEFhvDXwS0ezZ+KWvhMtt+LlnzZLcDFC+/uLjj8FneNP1c4kmMXUw3
+	 NZu/z6PcLjYyr8c7YUpC6CNMRuz4yBz9Z/SMw/SA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eliot Courtney <ecourtney@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	AnishMulay <anishm7030@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Sayali Patil <sayalip@linux.ibm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0397/1146] gpu: nova-core: bitfield: fix broken Default implementation
-Date: Wed, 20 May 2026 18:10:47 +0200
-Message-ID: <20260520162157.183912965@linuxfoundation.org>
+Subject: [PATCH 7.0 0398/1146] selftests/mm: skip migration tests if NUMA is unavailable
+Date: Wed, 20 May 2026 18:10:48 +0200
+Message-ID: <20260520162157.205456841@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,41 +63,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eliot Courtney <ecourtney@nvidia.com>
+From: AnishMulay <anishm7030@gmail.com>
 
-[ Upstream commit de0aca13509bf47a2d49bc7a26d56079c758c95f ]
+[ Upstream commit 54218f10dfbe88c8e41c744fd45a756cde60b8c4 ]
 
-The current implementation does not actually set the default values for
-the fields in the bitfield.
+Currently, the migration test asserts that numa_available() returns 0.  On
+systems where NUMA is not available (returning -1), such as certain ARM64
+configurations or single-node systems, this assertion fails and crashes
+the test.
 
-Fixes: 3fa145bef533 ("gpu: nova-core: register: generate correct `Default` implementation")
-Signed-off-by: Eliot Courtney <ecourtney@nvidia.com>
-Link: https://patch.msgid.link/20260401-fix-bitfield-v2-1-2fa68c98114a@nvidia.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Update the test to check the return value of numa_available().  If it is
+less than 0, skip the test gracefully instead of failing.
+
+This aligns the behavior with other MM selftests (like rmap) that skip
+when NUMA support is missing.
+
+Link: https://lkml.kernel.org/r/20260218163941.13499-1-anishm7030@gmail.com
+Fixes: 0c2d08728470 ("mm: add selftests for migration entries")
+Signed-off-by: AnishMulay <anishm7030@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Tested-by: Sayali Patil <sayalip@linux.ibm.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/nova-core/bitfield.rs | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ tools/testing/selftests/mm/migration.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/nova-core/bitfield.rs b/drivers/gpu/nova-core/bitfield.rs
-index 16e143658c511..02efdcf78d894 100644
---- a/drivers/gpu/nova-core/bitfield.rs
-+++ b/drivers/gpu/nova-core/bitfield.rs
-@@ -314,12 +314,11 @@ macro_rules! bitfield {
-         /// Returns a value for the bitfield where all fields are set to their default value.
-         impl ::core::default::Default for $name {
-             fn default() -> Self {
--                #[allow(unused_mut)]
--                let mut value = Self(Default::default());
-+                let value = Self(Default::default());
+diff --git a/tools/testing/selftests/mm/migration.c b/tools/testing/selftests/mm/migration.c
+index ee24b88c2b248..60e78bbfc0e3e 100644
+--- a/tools/testing/selftests/mm/migration.c
++++ b/tools/testing/selftests/mm/migration.c
+@@ -36,7 +36,8 @@ FIXTURE_SETUP(migration)
+ {
+ 	int n;
  
-                 ::kernel::macros::paste!(
-                 $(
--                value.[<set_ $field>](Default::default());
-+                let value = value.[<set_ $field>](Default::default());
-                 )*
-                 );
- 
+-	ASSERT_EQ(numa_available(), 0);
++	if (numa_available() < 0)
++		SKIP(return, "NUMA not available");
+ 	self->nthreads = numa_num_task_cpus() - 1;
+ 	self->n1 = -1;
+ 	self->n2 = -1;
 -- 
 2.53.0
 
