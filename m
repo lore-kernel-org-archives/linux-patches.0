@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC1F30675C;
-	Wed, 20 May 2026 17:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59F23EF0C1;
+	Wed, 20 May 2026 17:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299835; cv=none; b=sKm+Vlce9n8vNDf8HjED5LVyawNcHZKTxfNCRfopaggRcDF63PIrhze/KMtgpTq7aIUSfq7xn3wSz9kGe/5R3H4SCFxHwqq+NXiG6xnHfq9YWT8ZInfNFDkKpzyn0xTKeHwwT1VrcrVx7ifCdo4qmHVsr/kqJQIazLoTaAbGyCY=
+	t=1779299837; cv=none; b=QssMFRi9a3MZ7PwBZ2oZaijrcvBuf0Ur74GhN+wfkOeYAR88MEhORGkM2ef3gYXjaGNZozYKJTEoPyD3Fi+P3SR/b1pKa20ustrLuSLwiFrspAH1xYys4V89twxD4bqJi3zgu9OtL+GEOvoNXyR48MwumtHHMfyj/uphfBVBO/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299835; c=relaxed/simple;
-	bh=7Do49goFwFvsaEPY/wW18sPnPAlv21fzIhX4eupPCbk=;
+	s=arc-20240116; t=1779299837; c=relaxed/simple;
+	bh=lagxnSNGFnIFFU5pFqLFjW4fRrKWJnH7a60x8wf9uQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pS/HhIugf1BDe1TAXeSnBybFsy6xnL9ZvhqYoqGHk2ABoG6BALC1g0moftgqODxTqYZnt0Xac2jbvcm9fmjMDgZMyXO2sozQUUWXiuXhI4nD2+ynGJfhA2AurFTI6WG2qA3+mKwUlUPRY2t7s6zb4rKhvu1HD+KJudmXPBhws9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZM98WaU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HZUB/FcG1t1ILqdhSftQBjVKflR8pR5wp1YVVGY+h+i+tGTAoniNmC5SUmO2GgA1Yy4We/O72w2snyr6cLGin1ZdpO8WXPUJDuqisOBwv9fy2HVcuRskoaUDBurqWd5kaOENzN92jPO5JKwGLe+X46fuu1CiMJ5QA7kGmKDJrZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmpMujzK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZM98WaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B23C1F000E9;
-	Wed, 20 May 2026 17:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmpMujzK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164671F000E9;
+	Wed, 20 May 2026 17:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299833;
-	bh=/TY45QGM2zCIrpQTVQk0HsGOrAo4r9KwQXj0HhH1z+I=;
+	s=korg; t=1779299836;
+	bh=6vM+1YQwKFNaAHoOYMFvUyIKGrpibKYKeE1zHgOjTZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zZM98WaUaGMzDnll4lR4veQ7dYco9i7WDf9Riny9xi/RpvBjE3FOvggNNqcVt22wT
-	 XVh7DeSq0cl7PWkGFzVXxSDOhIu3vssrcfZSMxOpDlVmxP/Yxs5fbTjRzyyZawpFgj
-	 irk4SWlxKDHweWAXqZv65MkNzUe1jRnfCbqHsPBM=
+	b=jmpMujzKKmlZH3+AoKR8MfG+k5HuwWgbSysYMoTnhoSA5NH7WJKlXhmYgiup+rHe6
+	 tccorv1b/LsXd3Tyt0NBCynDGTaFgr57sW/7oIS3qwYShO7YYLA73zUuZRNVqKfnu7
+	 zoYOhW2+nOI9ti04bUHI+N7YVZsDeP4HUSB0vAzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jianmin Lv <lvjianmin@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Myeonghun Pak <mhun512@gmail.com>
-Subject: [PATCH 6.18 904/957] drm/loongson: Use managed KMS polling
-Date: Wed, 20 May 2026 18:23:07 +0200
-Message-ID: <20260520162154.179821325@linuxfoundation.org>
+	syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 6.18 905/957] drm: Replace old pointer to new idr
+Date: Wed, 20 May 2026 18:23:08 +0200
+Message-ID: <20260520162154.201574976@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,46 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit 0a9c56dd387605d17dabeedd9fdd2c4c1d0bab7b upstream.
+commit dc366607c41c45fd0ae6f3db090f31dd611b644a upstream.
 
-lsdc_pci_probe() initializes KMS polling before setting up vblank support,
-requesting the IRQ and registering the DRM device. If any of those later
-steps fails, probe returns without finalizing polling. The driver also
-never finalizes polling on regular removal.
+Commit 5e28b7b94408 introduced a logical error by failing to replace the
+newly generated IDR pointer to old id's pointer at the correct location
+within the "change handle" logic; this resulted in the issue reported by
+syzbot [1].
 
-Use drmm_kms_helper_poll_init() so polling is tied to the DRM device
-lifetime and automatically finalized on probe failure and device removal.
+Specifically, the new IDR object pointer is intended to replace the original
+id's pointer during the normal execution flow.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
+Additionally, an unnecessary conditional check for the ret exit path has
+been removed.
 
-Fixes: f39db26c5428 ("drm: Add kms driver for loongson display controller")
+[1]
+!RB_EMPTY_ROOT(&prime_fpriv->dmabufs)
+WARNING: drivers/gpu/drm/drm_prime.c:224 at drm_prime_destroy_file_private+0x48/0x60 drivers/gpu/drm/drm_prime.c:224, CPU#0: syz.0.17/5833
+Call Trace:
+ drm_file_free.part.0+0x7e6/0xcc0 drivers/gpu/drm/drm_file.c:269
+ drm_file_free drivers/gpu/drm/drm_file.c:237 [inline]
+ drm_close_helper.isra.0+0x186/0x200 drivers/gpu/drm/drm_file.c:290
+ drm_release+0x1ab/0x360 drivers/gpu/drm/drm_file.c:438
+
+Fixes: 5e28b7b94408 ("drm: Set old handle to NULL before prime swap in change_handle")
+Reported-by: syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d7c9eed171647e421013
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Acked-by: Jianmin Lv <lvjianmin@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260513065706.23803-1-mhun512@gmail.com
+Tested-by: syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/tencent_C267296443AAA4567771176886DFF364A305@qq.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/loongson/lsdc_drv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gem.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/loongson/lsdc_drv.c
-+++ b/drivers/gpu/drm/loongson/lsdc_drv.c
-@@ -291,7 +291,7 @@ static int lsdc_pci_probe(struct pci_dev
+--- a/drivers/gpu/drm/drm_gem.c
++++ b/drivers/gpu/drm/drm_gem.c
+@@ -1017,17 +1017,12 @@ int drm_gem_change_handle_ioctl(struct d
  
- 	vga_client_register(pdev, lsdc_vga_set_decode);
+ 	spin_unlock(&file_priv->table_lock);
  
--	drm_kms_helper_poll_init(ddev);
-+	drmm_kms_helper_poll_init(ddev);
+-	if (ret < 0)
+-		goto out_unlock;
+-
+ 	if (obj->dma_buf) {
+ 		ret = drm_prime_add_buf_handle(&file_priv->prime, obj->dma_buf,
+ 					       handle);
+ 		if (ret < 0) {
+ 			spin_lock(&file_priv->table_lock);
+ 			idr_remove(&file_priv->object_idr, handle);
+-			idrobj = idr_replace(&file_priv->object_idr, obj, handle);
+-			WARN_ON(idrobj != NULL);
+ 			spin_unlock(&file_priv->table_lock);
+ 			goto out_unlock;
+ 		}
+@@ -1039,7 +1034,9 @@ int drm_gem_change_handle_ioctl(struct d
  
- 	if (loongson_vblank) {
- 		ret = drm_vblank_init(ddev, descp->num_of_crtc);
+ 	spin_lock(&file_priv->table_lock);
+ 	idr_remove(&file_priv->object_idr, args->handle);
++	idrobj = idr_replace(&file_priv->object_idr, obj, handle);
+ 	spin_unlock(&file_priv->table_lock);
++	WARN_ON(idrobj != NULL);
+ 
+ out_unlock:
+ 	mutex_unlock(&file_priv->prime.lock);
 
 
