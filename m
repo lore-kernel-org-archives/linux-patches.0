@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B37217A2FC;
-	Wed, 20 May 2026 18:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54709272E56;
+	Wed, 20 May 2026 18:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301944; cv=none; b=bRsikDWBjcGw20GfRVesFyfvTfYqVINeJxtqxHNKLOnV+ovHbShdT9MOCszsPXBnSR14Ki+ihaajg/MjzvlUXgBzp/QHLhjqQw8u6BDND1phLQ9hAtCucx2iLJA0HbIyePrayz+7rL4vK6ZZN721NLKfUMgkTVQkijTxrD8dD7M=
+	t=1779301948; cv=none; b=G0/RcMR+fe0Hcr/HbYVFErw2P20d1dpDcOpCbNGsepnF7qDqDBraGyyeIJxDHOHSKkrlFC39o29Ou4RP+BAnah+FD5yTlyBVgT5BkTmnDuBNmIeqDk4u7uoLF1ileiDbXhNRl1gl3otp5AMW0UfgswVZpxZ8uvyqwlVccpnqfGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301944; c=relaxed/simple;
-	bh=XPGUEeZmtEDM5Jlzs6ZeLZ/ZUUzLySQtAZnWLggIS3Q=;
+	s=arc-20240116; t=1779301948; c=relaxed/simple;
+	bh=ZdXgRoi/fS2dVJegs5KaPEuG+RNu/4Zz3VNfnkzdois=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQkUzfsWHD8y6w6k5fcZ6I6fqw7D7PduVBZp2cz+RPEStL53gwue7fKqJq3MQV7tJ6I80+Ty+gPMqhU0rP6R0skBLOaOBcZ9SNHWJ8QpT2NROre3AA8SQm9kmHFeEK0WGw1v+8hjByRoJkCzvIyGoRNQGBqB8lNPuQzEoY2lKnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNd58jqD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=szLqepB27j4kuOSM+t3Qa6dMkTCcOMg/ieHiHJd0EvujlYNl5MXNGqJ1DKNP2kmWoKa1SX3PyPOdhbUuprznLLfLcqXEicndVWAnkBp0uoNRN90n4PyoORjNLCnybGNQNVJtM9U262PhNlmHL7vknF/6SFZ8ZdSnGLrEQPUAmdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L17v88YD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNd58jqD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BEA1F008A2;
-	Wed, 20 May 2026 18:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L17v88YD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8811F00897;
+	Wed, 20 May 2026 18:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301943;
-	bh=JGles59k6HboYnKHY7EaBX9n4eyX1pyy1lWG0WZKnCo=;
+	s=korg; t=1779301945;
+	bh=2YAfLDk7udvkWSKdCy6epWZgt9LGD7hsYZV4BIIDvBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PNd58jqDR64TKmGjhUJUMa04xbmSh78sTifIPtwZuKabR6ZGct2fwUJInKjGOVw0z
-	 Y6rh3kAsONAHtfgTUmZ0kzaSxmJsDDHq+T273oKeYgVcRH61krYJ+007X3chRpCODt
-	 I7HrPL+Gi7WrbZdF2q3IwSiz+4GkRStZLdEL/krU=
+	b=L17v88YD342OLd9hcH2YIpia9Tqu2E4w3eaFJTy7j6pyfs5h1ZR/hwVWtW0yPItUZ
+	 pm9jK+HyvlvsdknMKxnKU51rbM5lCzUs4zVZE6dBapj8xvVowxybPZ7+H+ODJuRJKV
+	 PsnGhsjwO14IFi/ZBdm/Tx9bujVOFUkNVDr2TqaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/508] wifi: mt76: mt7996: fix struct mt7996_mcu_uni_event
-Date: Wed, 20 May 2026 18:17:40 +0200
-Message-ID: <20260520162059.396003391@linuxfoundation.org>
+Subject: [PATCH 6.6 038/508] wifi: mt76: mt7915: fix use-after-free bugs in mt7915_mac_dump_work()
+Date: Wed, 20 May 2026 18:17:41 +0200
+Message-ID: <20260520162059.417352956@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,51 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit efbd5bf395f4e6b45a87f3835d4c2e28170c77c5 ]
+[ Upstream commit 1146d0946b5358fad24812bd39d68f31cd40cc34 ]
 
-The cid field is defined as a two-byte value in the firmware.
+When the mt7915 pci chip is detaching, the mt7915_crash_data is
+released in mt7915_coredump_unregister(). However, the work item
+dump_work may still be running or pending, leading to UAF bugs
+when the already freed crash_data is dereferenced again in
+mt7915_mac_dump_work().
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20260203155532.1098290-2-shayne.chen@mediatek.com
+The race condition can occur as follows:
+
+CPU 0 (removal path)               | CPU 1 (workqueue)
+mt7915_pci_remove()                | mt7915_sys_recovery_set()
+ mt7915_unregister_device()        |  mt7915_reset()
+  mt7915_coredump_unregister()     |   queue_work()
+   vfree(dev->coredump.crash_data) | mt7915_mac_dump_work()
+                                   |  crash_data-> // UAF
+
+Fix this by ensuring dump_work is properly canceled before
+the crash_data is deallocated. Add cancel_work_sync() in
+mt7915_unregister_device() to synchronize with any pending
+or executing dump work.
+
+Fixes: 4dbcb9125cc3 ("wifi: mt76: mt7915: enable coredump support")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Link: https://patch.msgid.link/20260130145759.84272-1-duoming@zju.edu.cn
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.h | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 8ab55fc705f07..9f8c312b64d75 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -204,7 +204,7 @@ mt7996_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 		event = (struct mt7996_mcu_uni_event *)skb->data;
- 		ret = le32_to_cpu(event->status);
- 		/* skip invalid event */
--		if (mcu_cmd != event->cid)
-+		if (mcu_cmd != le16_to_cpu(event->cid))
- 			ret = -EAGAIN;
- 	} else {
- 		skb_pull(skb, sizeof(struct mt7996_mcu_rxd));
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-index 58504b80eae8b..fee79666fe162 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.h
-@@ -25,8 +25,8 @@ struct mt7996_mcu_rxd {
- };
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+index e9068718b3d1f..529a3640944b5 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -1254,6 +1254,7 @@ int mt7915_register_device(struct mt7915_dev *dev)
  
- struct mt7996_mcu_uni_event {
--	u8 cid;
--	u8 __rsv[3];
-+	__le16 cid;
-+	u8 __rsv[2];
- 	__le32 status; /* 0: success, others: fail */
- } __packed;
- 
+ void mt7915_unregister_device(struct mt7915_dev *dev)
+ {
++	cancel_work_sync(&dev->dump_work);
+ 	mt7915_unregister_ext_phy(dev);
+ 	mt7915_coredump_unregister(dev);
+ 	mt7915_unregister_thermal(&dev->phy);
 -- 
 2.53.0
 
