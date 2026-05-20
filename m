@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74324356754;
-	Wed, 20 May 2026 16:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E178E36DA03;
+	Wed, 20 May 2026 16:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294546; cv=none; b=txPP9qjFydTn0Od/ifXgYy6t74D76uCM9yLBgpcV+jagwJQQHoFYMunc6JKDFWq2Ezu36E+3ifbz+dwwSRH+inAIEZOg4u6vz9foF1Vo6o2/at8Y6wVW/MM6ewWgpN6wn4cvI2NYVIpLhphfqyYTATyiTE4vbV4eM0nPx/7NpIM=
+	t=1779294550; cv=none; b=Lgbtn+7seqQvZ8Y+Q7Mc1eXNeeKEm19sfeU9WgQ3buCPB5CQa/i94Te9yI9Pw3yanPpvKyvye2rRPYtTU67pU+sePYbXniK+SPGJi0zA3waKp4MbOIpTSyD/Z91paS7ZMoq1x/sMfhWDtKX746jWu1D/qHnQt3UKY0ltwqSyzd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294546; c=relaxed/simple;
-	bh=CJwWC9C5bOGlIkqvFklXM8xpsk60Mq9kwPtZGHYRf38=;
+	s=arc-20240116; t=1779294550; c=relaxed/simple;
+	bh=VCNbQ8ZjYJgTAFbFDAzo+S45FRPv2YimO82ECysKPeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dXH43zued0VvHcNVpZzCWtm9vnZZMGUvAkORn5sruXbN+b++cdaBaCZ6s9qieAlKufTq5NjZtusYQsTkVbwiDyy10fp5yoXZA6dWuEcij5AxaQbCYZqGQOBlN+T7E4LLqlAworSy5B99Lt2BGLEqmTQybF2tCY3q2Rt64hiRZew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bF1RHhsb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n0rQvr7HMFPpVNPA81a7TP3AKJu0ObUEh/I7NBLnjL3ZxiCcbh4AKZFlX4J2loW3HMJb5M5VgRinS0VgT2K3WF6rvBPsxxCAvK0gZRMBRvPRnfjDqBkvutO502QsCZwCkdzWsWFvZHAnBfbAWUllLJeno5M0iITUwAxoDsIVweU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FE4bYMqM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bF1RHhsb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91B31F00893;
-	Wed, 20 May 2026 16:29:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FE4bYMqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBA21F000E9;
+	Wed, 20 May 2026 16:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294545;
-	bh=fxRWKmPXwj23YdNXqboerPFLAAjMUpu6O7OYXMBaS7A=;
+	s=korg; t=1779294548;
+	bh=/N6xFZhtzS0MoT62s6cfQh88HwvE1wsTrX9umHKygpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bF1RHhsbXrqnd+rv4lNw2cxOJtUTD1kiXHdg8EhHEGeeVAViPjvEibnBoxd36y0Wg
-	 rED/PEC05Up3eNEpQoon3/1pDd+15wlGBZVWWPcDd853LTMozbO3aq035YhXGQsZwS
-	 WLzQAYP8AMoJV9xbDcRpE2Mx087osUpgTpIjm6oA=
+	b=FE4bYMqMrStZmGWskycGQyZZ4CostJBKnveLNW3r1Lv6r4xJmSy9ujiFdh+Frq8ma
+	 1Ihd0Bz+5NO7+GxAkh1eMyqFonSwnzGh42+CjPHbIH3EdA0PvlCb5805EHmUnWO2Xf
+	 B55AFZ+VDFkcWTYtuY4jv9yWDbZcMQfgNydCqhj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Cai Xinchen <caixinchen1@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0078/1146] dpaa2: add independent dependencies for FSL_DPAA2_SWITCH
-Date: Wed, 20 May 2026 18:05:28 +0200
-Message-ID: <20260520162150.119954198@linuxfoundation.org>
+Subject: [PATCH 7.0 0040/1146] s390/cio: use generic driver_override infrastructure
+Date: Wed, 20 May 2026 18:04:50 +0200
+Message-ID: <20260520162149.288336753@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,52 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cai Xinchen <caixinchen1@huawei.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 12589892f41c4c645c80ef9f036f7451a6045624 ]
+[ Upstream commit ac4d8bb6e2e13e8684a76ea48d13ebaaaf5c24c4 ]
 
-Since the commit 84cba72956fd ("dpaa2-switch: integrate
-the MAC endpoint support") included dpaa2-mac.o in the driver,
-but it didn't select PCS_LYNX, PHYLINK and FSL_XGMAC_MDIO. it
-will lead to link error, such as
-undefined reference to `phylink_ethtool_ksettings_set'
-undefined reference to `lynx_pcs_create_fwnode'
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-And the same reason as the commit d2624e70a2f53 ("dpaa2-eth: select
-XGMAC_MDIO for MDIO bus support"), enable the FSL_XGMAC_MDIO Kconfig
-option in order to have MDIO access to internal and external PHYs.
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
 
-Because dpaa2-switch uses fsl_mc_driver APIs, add depends on FSL_MC_BUS
-&& FSL_MC_DPIO as FSL_DPAA2_SWITCH do.
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
 
-FSL_XGMAC_MDIO and FSL_MC_BUS depend on OF, thus the dependence of
-FSL_MC_BUS can satisfy FSL_XGMAC_MDIO's OF requirement.
-
-Fixes: 84cba72956fd ("dpaa2-switch: integrate the MAC endpoint support")
-Suggested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
-Link: https://patch.msgid.link/20260312065907.476663-2-caixinchen1@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: ebc3d1791503 ("s390/cio: introduce driver_override on the css bus")
+Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Link: https://patch.msgid.link/20260324005919.2408620-10-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/Kconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/s390/cio/cio.h |  5 -----
+ drivers/s390/cio/css.c | 34 ++++------------------------------
+ 2 files changed, 4 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/Kconfig b/drivers/net/ethernet/freescale/dpaa2/Kconfig
-index d029b69c3f183..36280e5d99e1f 100644
---- a/drivers/net/ethernet/freescale/dpaa2/Kconfig
-+++ b/drivers/net/ethernet/freescale/dpaa2/Kconfig
-@@ -34,6 +34,10 @@ config FSL_DPAA2_SWITCH
- 	tristate "Freescale DPAA2 Ethernet Switch"
- 	depends on BRIDGE || BRIDGE=n
- 	depends on NET_SWITCHDEV
-+	depends on FSL_MC_BUS && FSL_MC_DPIO
-+	select PHYLINK
-+	select PCS_LYNX
-+	select FSL_XGMAC_MDIO
- 	help
- 	  Driver for Freescale DPAA2 Ethernet Switch. This driver manages
- 	  switch objects discovered on the Freeescale MC bus.
+diff --git a/drivers/s390/cio/cio.h b/drivers/s390/cio/cio.h
+index 08a5e9380e75a..bad142c536e1e 100644
+--- a/drivers/s390/cio/cio.h
++++ b/drivers/s390/cio/cio.h
+@@ -103,11 +103,6 @@ struct subchannel {
+ 	struct work_struct todo_work;
+ 	struct schib_config config;
+ 	u64 dma_mask;
+-	/*
+-	 * Driver name to force a match.  Do not set directly, because core
+-	 * frees it.  Use driver_set_override() to set or clear it.
+-	 */
+-	const char *driver_override;
+ } __attribute__ ((aligned(8)));
+ 
+ DECLARE_PER_CPU_ALIGNED(struct irb, cio_irb);
+diff --git a/drivers/s390/cio/css.c b/drivers/s390/cio/css.c
+index 5ab239f38588f..e5a0ec6b4e3e7 100644
+--- a/drivers/s390/cio/css.c
++++ b/drivers/s390/cio/css.c
+@@ -159,7 +159,6 @@ static void css_subchannel_release(struct device *dev)
+ 
+ 	sch->config.intparm = 0;
+ 	cio_commit_config(sch);
+-	kfree(sch->driver_override);
+ 	kfree(sch);
+ }
+ 
+@@ -323,37 +322,9 @@ static ssize_t modalias_show(struct device *dev, struct device_attribute *attr,
+ 
+ static DEVICE_ATTR_RO(modalias);
+ 
+-static ssize_t driver_override_store(struct device *dev,
+-				     struct device_attribute *attr,
+-				     const char *buf, size_t count)
+-{
+-	struct subchannel *sch = to_subchannel(dev);
+-	int ret;
+-
+-	ret = driver_set_override(dev, &sch->driver_override, buf, count);
+-	if (ret)
+-		return ret;
+-
+-	return count;
+-}
+-
+-static ssize_t driver_override_show(struct device *dev,
+-				    struct device_attribute *attr, char *buf)
+-{
+-	struct subchannel *sch = to_subchannel(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = sysfs_emit(buf, "%s\n", sch->driver_override);
+-	device_unlock(dev);
+-	return len;
+-}
+-static DEVICE_ATTR_RW(driver_override);
+-
+ static struct attribute *subch_attrs[] = {
+ 	&dev_attr_type.attr,
+ 	&dev_attr_modalias.attr,
+-	&dev_attr_driver_override.attr,
+ 	NULL,
+ };
+ 
+@@ -1356,9 +1327,11 @@ static int css_bus_match(struct device *dev, const struct device_driver *drv)
+ 	struct subchannel *sch = to_subchannel(dev);
+ 	const struct css_driver *driver = to_cssdriver(drv);
+ 	struct css_device_id *id;
++	int ret;
+ 
+ 	/* When driver_override is set, only bind to the matching driver */
+-	if (sch->driver_override && strcmp(sch->driver_override, drv->name))
++	ret = device_match_driver_override(dev, drv);
++	if (ret == 0)
+ 		return 0;
+ 
+ 	for (id = driver->subchannel_type; id->match_flags; id++) {
+@@ -1415,6 +1388,7 @@ static int css_uevent(const struct device *dev, struct kobj_uevent_env *env)
+ 
+ static const struct bus_type css_bus_type = {
+ 	.name     = "css",
++	.driver_override = true,
+ 	.match    = css_bus_match,
+ 	.probe    = css_probe,
+ 	.remove   = css_remove,
 -- 
 2.53.0
 
