@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971FF3F44F7;
-	Wed, 20 May 2026 17:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469C33F20F9;
+	Wed, 20 May 2026 17:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299522; cv=none; b=huAm9h+CEfoYGESdOeDv8KMqgWykxOaX6ATFP6hdmRsSDBbawzc8+NYVJPYXOsoPhg0lpMADSy53cLeGLmNAbPwkFdkorZtoadEVt92C/NYpFfQZhb6NNCJyqjJLTQxqhYOjVad2wmbK5ZI1Uos8HyHmYxF9Vq0fE0AYoQJE91M=
+	t=1779299525; cv=none; b=nPoCRxcN0bNUZ3WRkxfM6+F+DEwjMgAd5sEkqrL7Tnfo98mamIar2XrHf2SCmMNW8jtk/8EAVaZTbis1lPxK9IHGyRt7BmKnc/1LrrhaYZmrscpylOVEF/ey1kmOcXH45P5G/XY62Iy9stt5syC5bTjxsFqgm6+pa3LKxxE+OnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299522; c=relaxed/simple;
-	bh=FQ5UqUIWF2o013yhl/0hUPB+lKXhcDpn4fE2/i/kDbc=;
+	s=arc-20240116; t=1779299525; c=relaxed/simple;
+	bh=7P58it20zphk2h1NS90XJobpWCiQu+8njAwiBqs40X0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ojNTBKEdMCHvpl10iC7Z8aopQNN4ySFZqagNL1dNpqbiDhmt/TjSbAzEpypz2HtI7QpMakJDrAhLBqh+lpGtLRbOxq3wfqB02egDZUO/IBoHDQ0VIJd53tl/A8yAQEUn2bygH/cNvxo3i44Hm1w4kYXtysqSWGEncMLb0K2bzNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfqjcEDp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rrLhXQEj99aZ4dUsNyZtjcqRvRZwQxMGBkV/X+qFLG3JJsMw2u+w1x5/zOefYDkzF3How+15YuJlV/+LWZdvy2+7jweoWLwEnunY9tXKtd8sPNmAOfMctLZr4voAp4HcH3HLLJp1NyvL7Ew/y/6ZV7889MoiuzeQWMNQ/qxt3EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpDCDSSh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfqjcEDp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0956E1F000E9;
-	Wed, 20 May 2026 17:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpDCDSSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D661F000E9;
+	Wed, 20 May 2026 17:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299521;
-	bh=TDpRpkJBeg3DPpAfgUr1DZ5v1wtIdPblHHTuLxmpGHk=;
+	s=korg; t=1779299524;
+	bh=6uTc5/xS1JjyDiorFC7kC8NVztT5clKUrtDZFu5qh20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QfqjcEDpELXVl5I+5pCrXDYD/BBaIs99zIccLOPIh0EnXG6JC0KLg/tWIb2NUIxs8
-	 2dXAzx5gCcZYS7qeqtBIlEL4e695j/AxpxEcE79NrbH0Lk/N/xdQvDfbapMBhdyXoo
-	 Of30IgpAzcAfBBmIhmhNlQFiQpNy/AwC55gVvh8M=
+	b=DpDCDSShoDO5KUOBCJHUh+y/4l+ydfhQ7lqX9WcYoFmBXjTEVKa08zz6vGeBiZpPn
+	 UnSRhOe+5kWREyTVj/WOC3hp/jpfabl07XRKc0m5nlwBj55d6NkJaKylFA8gImK24L
+	 Az1JxMITM6/hnaFrJUACaByzON3JmwFml2suT+G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Yinjie Yao <yinjie.yao@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 805/957] drm/amdgpu/vcn: set no_user_fence for VCN v5.0.1 enc ring
-Date: Wed, 20 May 2026 18:21:28 +0200
-Message-ID: <20260520162152.026128939@linuxfoundation.org>
+Subject: [PATCH 6.18 806/957] drm/amdgpu/jpeg: set no_user_fence for JPEG v2.0 ring
+Date: Wed, 20 May 2026 18:21:29 +0200
+Message-ID: <20260520162152.047762400@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -55,34 +55,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Yinjie Yao <yinjie.yao@amd.com>
 
-[ Upstream commit 8f4954722eab88e10c4ea0c0d3b1269c31421d3a ]
+[ Upstream commit e5f612dc91650561fe2b5b76dd6d2898ec9ad480 ]
 
-VCN encoder and decoder rings do not support 64-bit user fence writes,
-reject CS submissions with user fences.
+JPEG rings do not support 64-bit user fence writes, reject CS
+submissions with user fences.
 
-Fixes: 346492f30ce3 ("drm/amdgpu: Add VCN_5_0_1 support")
+Fixes: 6ac27241106b ("drm/amdgpu: add JPEG v2.0 function supports")
 Reviewed-by: Christian König <christian.koenig@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e16be95a2c3ee712b142cb27d2dca0b461181359)
+(cherry picked from commit 96179da0c6b059eb31706a0abe8dd6381c533143)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c | 1 +
+ drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-index 8bd457dea4cff..972d4a7147a12 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
-@@ -1330,6 +1330,7 @@ static const struct amdgpu_ring_funcs vcn_v5_0_1_unified_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCN_ENC,
- 	.align_mask = 0x3f,
- 	.nop = VCN_ENC_CMD_NO_OP,
+diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
+index 27c76bd424cfb..1e214b493402c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
+@@ -802,6 +802,7 @@ static const struct amd_ip_funcs jpeg_v2_0_ip_funcs = {
+ static const struct amdgpu_ring_funcs jpeg_v2_0_dec_ring_vm_funcs = {
+ 	.type = AMDGPU_RING_TYPE_VCN_JPEG,
+ 	.align_mask = 0xf,
 +	.no_user_fence = true,
- 	.get_rptr = vcn_v5_0_1_unified_ring_get_rptr,
- 	.get_wptr = vcn_v5_0_1_unified_ring_get_wptr,
- 	.set_wptr = vcn_v5_0_1_unified_ring_set_wptr,
+ 	.get_rptr = jpeg_v2_0_dec_ring_get_rptr,
+ 	.get_wptr = jpeg_v2_0_dec_ring_get_wptr,
+ 	.set_wptr = jpeg_v2_0_dec_ring_set_wptr,
 -- 
 2.53.0
 
