@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0431C3AE6E6;
-	Wed, 20 May 2026 16:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B953D88FC;
+	Wed, 20 May 2026 16:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296386; cv=none; b=I0evH9Dcd3FLXOdmBhGxUMEaqqtAEg8QY3wm7nngKa0lDwmaLJwwbXY3gDvfiCi18GAitOaN1LysF/JIjK20wOk1pOefgSpJZrmvE9oJdCLaZSAw6vOoIil4YWH/zMNGAqb1ccPq3MsHkhlRMdQIPERW0jp4z07WadgN1CO6tAk=
+	t=1779296388; cv=none; b=JHddcRiVoODUWQ2QAOyLUgkutyqmgxT+XiVEFUqlrZ12Ta8lT+kvQmn7UwOyrJPjLLmJ2aSg4ILj75K5o9tVM8BUiPHmEd1SVzoHZpBtctm8Oiv5lLJnuq/xrxlQHwkmgobKpDpka6ogK7jGjbjvZQxywFERP4K+UZIjjO2Y3aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296386; c=relaxed/simple;
-	bh=BnPv+WOlvE53JaCYUo9NkKe9xg/HwOD3B4rjhXF7AAU=;
+	s=arc-20240116; t=1779296388; c=relaxed/simple;
+	bh=Q3eKWhE39JT/oYF86mu6wWQgD5fQBPiCDlo2UnNp+Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkuCE/+oqsVWnHHfMtLmO0Td9GsDNBAjIz4GRxLWS0iSbMAYa/b8OpPNiwrLrvICdb+bvrOfz6+krmFJHePfczupsPCj3HIvFMf+uHiHN+zgBp3YQMuJJUjyb5hYoOZ4EPyA25dCt8wH/rfoW2kdJMqxqS/kcckODnEXwk3V48I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chxHeq8e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ITVjR25of5P1fSOoazC6YcxK/xEJngXPKF9Qh4b1UO4S4ntWprI7CPhqE8qCQtTNfVl/u8N3o3X4+6QiTkLbaRPkMgdKrUwwM6nfyeqpIuA7Qf7vBkxAGvgzvE/BV8CQhkn2/yFzP1eni7dLy91iBtBVSlVFIWP3m6JWZvIKJ/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdH/gPqC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chxHeq8e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB311F00893;
-	Wed, 20 May 2026 16:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdH/gPqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30471F000E9;
+	Wed, 20 May 2026 16:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296384;
-	bh=udFhIriGAvgOiFC/f3U0NpEeR3rlo9HoXXptHbBbAV4=;
+	s=korg; t=1779296387;
+	bh=z1dr55nGzsKR8qk9dObsQCVKL9aWRFEJsxXg/e9Non4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=chxHeq8eEAGZqhy2lQLKVYMImyUSugV9q55nvFjurRrR5JAfnwfEqMbQGCcVs7sRt
-	 ajsdsZp8/6RaU2ImMVKO64hsdIGu1qfdaQoIW7pZReWC0PRwNL6VJT2ErLMstH6NEV
-	 iHQ88y1eiMeSeB4ZVByptOE8p02aHKN5D638+pfo=
+	b=gdH/gPqCz9F2kN41/H1BR3ZADVGAmB6GScWNAazvaYiOxCjfCZ7mCGCxt25DwH2N9
+	 VJ9TibU2SvSfEj6PCyylbiwL7hek9gKbFIe/OHXQ38wLcwVYco0WEQA+8oxtjsaEZJ
+	 ewTU4MytvTy+jzkbMcYU7poRcgh3gFQslFlR0dLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0738/1146] f2fs: allow empty mount string for Opt_usr|grp|projjquota
-Date: Wed, 20 May 2026 18:16:28 +0200
-Message-ID: <20260520162204.908745330@linuxfoundation.org>
+Subject: [PATCH 7.0 0739/1146] f2fs: protect extension_list reading with sb_lock in f2fs_sbi_show()
+Date: Wed, 20 May 2026 18:16:29 +0200
+Message-ID: <20260520162204.932548568@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,80 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-[ Upstream commit 2a3db1e02ce08c14af04da70bb99e8a0a31eb9e8 ]
+[ Upstream commit 5909bedbed38c558bee7cb6758ceedf9bc3a9194 ]
 
-The fsparam_string_empty() gives an error when mounting without string, since
-its type is set to fsparam_flag in VFS. So, let's allow the flag as well.
+In f2fs_sbi_show(), the extension_list, extension_count and
+hot_ext_count are read without holding sbi->sb_lock. If a concurrent
+sysfs store modifies the extension list via f2fs_update_extension_list(),
+the show path may read inconsistent count and array contents, potentially
+leading to out-of-bounds access or displaying stale data.
 
-This addresses xfstests/f2fs/015 and f2fs/021.
+Fix this by holding sb_lock around the entire extension list read
+and format operation.
 
-Fixes: d18535132523 ("f2fs: separate the options parsing and options checking")
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Fixes: b6a06cbbb5f7 ("f2fs: support hot file extension")
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ fs/f2fs/sysfs.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index f44e962b1ee7d..79cc7b39802f8 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -336,9 +336,12 @@ static const struct fs_parameter_spec f2fs_param_specs[] = {
- 	fsparam_flag("usrquota", Opt_usrquota),
- 	fsparam_flag("grpquota", Opt_grpquota),
- 	fsparam_flag("prjquota", Opt_prjquota),
--	fsparam_string_empty("usrjquota", Opt_usrjquota),
--	fsparam_string_empty("grpjquota", Opt_grpjquota),
--	fsparam_string_empty("prjjquota", Opt_prjjquota),
-+	fsparam_string("usrjquota", Opt_usrjquota),
-+	fsparam_flag("usrjquota", Opt_usrjquota),
-+	fsparam_string("grpjquota", Opt_grpjquota),
-+	fsparam_flag("grpjquota", Opt_grpjquota),
-+	fsparam_string("prjjquota", Opt_prjjquota),
-+	fsparam_flag("prjjquota", Opt_prjjquota),
- 	fsparam_flag("nat_bits", Opt_nat_bits),
- 	fsparam_enum("jqfmt", Opt_jqfmt, f2fs_param_jqfmt),
- 	fsparam_enum("alloc_mode", Opt_alloc, f2fs_param_alloc_mode),
-@@ -979,26 +982,26 @@ static int f2fs_parse_param(struct fs_context *fc, struct fs_parameter *param)
- 		ctx_set_opt(ctx, F2FS_MOUNT_PRJQUOTA);
- 		break;
- 	case Opt_usrjquota:
--		if (!*param->string)
--			ret = f2fs_unnote_qf_name(fc, USRQUOTA);
--		else
-+		if (param->type == fs_value_is_string && *param->string)
- 			ret = f2fs_note_qf_name(fc, USRQUOTA, param);
-+		else
-+			ret = f2fs_unnote_qf_name(fc, USRQUOTA);
- 		if (ret)
- 			return ret;
- 		break;
- 	case Opt_grpjquota:
--		if (!*param->string)
--			ret = f2fs_unnote_qf_name(fc, GRPQUOTA);
--		else
-+		if (param->type == fs_value_is_string && *param->string)
- 			ret = f2fs_note_qf_name(fc, GRPQUOTA, param);
-+		else
-+			ret = f2fs_unnote_qf_name(fc, GRPQUOTA);
- 		if (ret)
- 			return ret;
- 		break;
- 	case Opt_prjjquota:
--		if (!*param->string)
--			ret = f2fs_unnote_qf_name(fc, PRJQUOTA);
--		else
-+		if (param->type == fs_value_is_string && *param->string)
- 			ret = f2fs_note_qf_name(fc, PRJQUOTA, param);
-+		else
-+			ret = f2fs_unnote_qf_name(fc, PRJQUOTA);
- 		if (ret)
- 			return ret;
- 		break;
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index cd1921edb59ef..0d05ecd64ca03 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -379,10 +379,12 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
+ 	if (!strcmp(a->attr.name, "extension_list")) {
+ 		__u8 (*extlist)[F2FS_EXTENSION_LEN] =
+ 					sbi->raw_super->extension_list;
+-		int cold_count = le32_to_cpu(sbi->raw_super->extension_count);
+-		int hot_count = sbi->raw_super->hot_ext_count;
++		int cold_count, hot_count;
+ 		int len = 0, i;
+ 
++		f2fs_down_read(&sbi->sb_lock);
++		cold_count = le32_to_cpu(sbi->raw_super->extension_count);
++		hot_count = sbi->raw_super->hot_ext_count;
+ 		len += sysfs_emit_at(buf, len, "cold file extension:\n");
+ 		for (i = 0; i < cold_count; i++)
+ 			len += sysfs_emit_at(buf, len, "%s\n", extlist[i]);
+@@ -390,6 +392,7 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
+ 		len += sysfs_emit_at(buf, len, "hot file extension:\n");
+ 		for (i = cold_count; i < cold_count + hot_count; i++)
+ 			len += sysfs_emit_at(buf, len, "%s\n", extlist[i]);
++		f2fs_up_read(&sbi->sb_lock);
+ 
+ 		return len;
+ 	}
 -- 
 2.53.0
 
