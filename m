@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEE7373BEE;
-	Wed, 20 May 2026 18:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78097318ED6;
+	Wed, 20 May 2026 18:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302100; cv=none; b=WIpR94kijCgFxh8RI6L/ygeQFN1X3IT8JdBFrmcnY6T6qu/N1lsYvgJDkkgXe6+3wjFKUbF7RdRVQmpId1dK23/pcReUf28aHRuBO6AYWJZoA3RdrCfXk0GR6JedhazQO+AJO8psDLoxhV/fDJNHp+Z2BSjr3ef+XGd+wXujiow=
+	t=1779302102; cv=none; b=s3qzeCLsH2+NitH7kYH9AIf2s8YiN8mr4nEN1Dlp9MrOtSEccx4GYBJ+ytVcKJL09OhiWN7aPlC1rmmd0lGmiyZj0vhXkdOlZ5sGnb8jWPULlSPYRsHeOc/5xcexFIRx/DUIwz4Y6G/NPc0qbByVALNGUJHTnA5bllWLl6ZQXp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302100; c=relaxed/simple;
-	bh=iw2Pnb74kERRbmVUCtDuIgVfFjUXQr16kyZQPQKeuzU=;
+	s=arc-20240116; t=1779302102; c=relaxed/simple;
+	bh=v6U7TN7LVqlrVJHkBbPEXDlgeGjS81h3V2bw0QNRGm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WqT+yNYCtEwOURr66kazttuTGQFW7dBjp2ep4yzxUZ7gpLiO7NgPzQrt4rh3hf+NZ3IqmylYg87UsMn3gU8B6G4Qh504Evz3EUzfwZDwsmkwez2w3c01OTc3XK4qIHcK8JYtj3V+TSVXzWsqwBvgXAsEF/70eSrnbhjWvyjZzDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCf5zfDN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=U3yEjV3XIPrLUFwzcQj+l8OfHhaJrbbj0aewBPcHGkRPnS+XA8GgnR/yPVWSxv+OSJNjFUmi60E4uVCWpxzEHLHa32IrrOy87r5wDcMbnGQssUJYvBD3VLLNx3OEQxQAafle7Kph2BOvj8V8gQvgeXlwBFn5FzhIaFZnNtlxwQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiWbdC+F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCf5zfDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354F61F00894;
-	Wed, 20 May 2026 18:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiWbdC+F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEBD51F00893;
+	Wed, 20 May 2026 18:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302098;
-	bh=WoMLj2ASPD514E3Oar4vsJHb3PDBg1NjxfLWjd8oSoQ=;
+	s=korg; t=1779302101;
+	bh=0qr2vDB4tgxIjm+eEOFf7dbZTHU0IPMBPKKDzzd1ss4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gCf5zfDN1zgjWMCFFAtI+uxAES7q1i1PVtwiaDI027YqcPg3aMtZABdmVMygX9Pts
-	 bXAstWIzM/NKt/MEhwcWvUJJdaGBADoVWXPIzqjE68RZIuSsOK9tj0fdaEV6SM5ex3
-	 +5rgNlBiSGmAczL3pwr4pqS7a6HEvzju3wVoC9Dk=
+	b=MiWbdC+FThrsU7Hy09JKVCrx4odswa86D12Gi11Jpw4fl0Rzzy5tq58BSjeTzHnHS
+	 qqwjFItFF+3dRAcR/Jc7pTavfI1HA59uV8xo1w9KSRBg3ampDcu9MkeWTAzvHkfoLR
+	 fNEk8p5daNfACXwREgSE1in261/k1bFkAQOcCjms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 139/508] ASoC: fsl_micfil: Fix event generation in micfil_put_dc_remover_state()
-Date: Wed, 20 May 2026 18:19:22 +0200
-Message-ID: <20260520162101.641598170@linuxfoundation.org>
+Subject: [PATCH 6.6 122/508] drm/amd/pm/ci: Use highest MCLK on CI when MCLK DPM is disabled
+Date: Wed, 20 May 2026 18:19:05 +0200
+Message-ID: <20260520162101.272519944@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,65 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 7d2bd35100de370dc326b250e8f6b66bee06a2f3 ]
+[ Upstream commit 894f0d34d66cb47fe718fe2ae5c18729d22c5218 ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation micfil_put_dc_remover_state() only returns 0 or a
-negative error code, causing ALSA to not generate any change events.
+When MCLK DPM is disabled for any reason, populate the MCLK
+table with the highest MCLK DPM level, so that the ASIC can
+use the highest possible memory clock to get good performance
+even when MCLK DPM is disabled.
 
-return the value of snd_soc_component_update_bits() directly, as it has
-the capability of return check status of changed or not.
-
-Also enable pm runtime before calling the function
-snd_soc_component_update_bits() to make the regmap cache data align with
-the value in hardware.
-
-Fixes: 29dbfeecab85 ("ASoC: fsl_micfil: Add Hardware Voice Activity Detector support")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260401094226.2900532-6-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_micfil.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
-index 88553f0c0de86..32ee7093c8110 100644
---- a/sound/soc/fsl/fsl_micfil.c
-+++ b/sound/soc/fsl/fsl_micfil.c
-@@ -243,6 +243,10 @@ static int micfil_put_dc_remover_state(struct snd_kcontrol *kcontrol,
- 	if (val < 0 || val > 3)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
+index 23f991dd065f3..fa9ab4144d308 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
+@@ -1322,6 +1322,14 @@ static int ci_populate_all_memory_levels(struct pp_hwmgr *hwmgr)
+ 			return result;
+ 	}
  
-+	ret = pm_runtime_resume_and_get(comp->dev);
-+	if (ret)
-+		return ret;
++	if (data->mclk_dpm_key_disabled && dpm_table->mclk_table.count) {
++		/* Populate the table with the highest MCLK level when MCLK DPM is disabled */
++		for (i = 0; i < dpm_table->mclk_table.count - 1; i++) {
++			levels[i] = levels[dpm_table->mclk_table.count - 1];
++			levels[i].DisplayWatermark = PPSMC_DISPLAY_WATERMARK_HIGH;
++		}
++	}
 +
- 	micfil->dc_remover = val;
+ 	smu_data->smc_state_table.MemoryLevel[0].EnabledForActivity = 1;
  
- 	/* Calculate total value for all channels */
-@@ -252,10 +256,10 @@ static int micfil_put_dc_remover_state(struct snd_kcontrol *kcontrol,
- 	/* Update DC Remover mode for all channels */
- 	ret = snd_soc_component_update_bits(comp, REG_MICFIL_DC_CTRL,
- 					    MICFIL_DC_CTRL_CONFIG, reg_val);
--	if (ret < 0)
--		return ret;
- 
--	return 0;
-+	pm_runtime_put_autosuspend(comp->dev);
-+
-+	return ret;
- }
- 
- static int micfil_get_dc_remover_state(struct snd_kcontrol *kcontrol,
+ 	dev_id = adev->pdev->device;
 -- 
 2.53.0
 
