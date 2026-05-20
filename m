@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95C83F2115;
-	Wed, 20 May 2026 16:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E383F39CF;
+	Wed, 20 May 2026 16:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294475; cv=none; b=kpFZtD6vAMpxCfl1D0XpVAgnpW199J5lpzKTOAXUHBo9OQKYbvzoouPZxqHxq3yxmgRa/eNdOuo2qgEZudjDt7slb3dne+Yn8pz70kdSfvIp8GAuV6wV9l5UJtxS9mWSP2qqkVgE2y+wkQc6eb9lI/OHKyH+QVMHMLnpO+LWTPc=
+	t=1779294476; cv=none; b=rrWHvwA4rho294ORhU2E0NNooKlDMqgiBiMmjMLkZNRYbqGxizRPy38DkK7jHlvbUEtp06TaAN035BHTNJlHjsLi4SzuUHWEzTp3QnzYzbt7ZUgKXHfrYLHEHHWgMl/8dTr7XTgSC/bN/hHdEaBSoMZ2JbQMMvl4qaSfs8UQh1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294475; c=relaxed/simple;
-	bh=134dxTFODI+rmzVtUNCAn2WE84IJqQPkOjBUzZL91WU=;
+	s=arc-20240116; t=1779294476; c=relaxed/simple;
+	bh=NT6HcpET+rQ6dZ3JRETlGtx0/qthsd1PXez0qztQNvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YzxOrTojMnGkDv69L4Ft5VEt1/fAfCXZRYvvPbSkGaSTShyOMxIsDGhsD6wy6ZqWLy1ZwDgZMVTbBC7LF1JLi0aPFSVh3XqGdsX2q9Xh28Bh/kryY3y/9f77sAwEx9TH8QOrp8wyWD9EsKsl6iJhnjw1Zd0A4Fjv8juX5POF85Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuIQr+qw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=odwU+U4wx6G5sYDCS5Nsilm4MNh+zwKdKv1laE3NXkkjnSbhsD87IGR5d8AwS+M+8TYly67XD0DBGV7fJEym0lezhSbrEUlVhfE544RkS0eheQ/JShLcnVeXeyeFKFNh/D6TG+EbIWIu2NZB9mvAXPBgXiz+SUaIRYWnhTJ5ZMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbXaRfhT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuIQr+qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B2E1F00893;
-	Wed, 20 May 2026 16:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbXaRfhT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF911F000E9;
+	Wed, 20 May 2026 16:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294471;
-	bh=YHxmJWVKtPikMlOdiT/EorBKJQBf2s3JiLlOjkvXi8o=;
+	s=korg; t=1779294474;
+	bh=FbwAXFi7yL0tCQftat/8sY0GY4HpzA/kZ4k5vBhZNiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VuIQr+qwFlvOI6h/lOQp1KJVo+KphrzYY6nqnADtfTM7NkZR6EmoDrZ86ZZ4xJp5H
-	 f7B4o/NCJJRpBM0gb2IqKaQmZxG8nRqwad4dkeSl4a+zG4K6GNJr6e3Jz8XRZ+jGR/
-	 jPOUnsetzXmnKJKW2ThqxQNpH35jW343Fwg+m5eg=
+	b=gbXaRfhT9F+b7vwnQrTj9J0h+5x7pPgPVbpSKBeJvSOEHG+Yw+K+uPxTz70AAGyn0
+	 1/TQBb/QqNVbpCKDAbLeDPSC6sGxwAsYQNpRhn4KVF0MNU6NyOCz8lLXVvIA1VL4mC
+	 onK1XtAjWbryrOJTz/s9voM1xHMPTF7JO/NLdZXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sadasivan Shaiju <sadasivan.shaiju2@amd.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Xiaoyao Li <xiaoyao.li@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0053/1146] perf/amd/ibs: Avoid calling perf_allow_kernel() from the IBS NMI handler
-Date: Wed, 20 May 2026 18:05:03 +0200
-Message-ID: <20260520162149.572076201@linuxfoundation.org>
+Subject: [PATCH 7.0 0054/1146] x86/tdx: Fix the typo in TDX_ATTR_MIGRTABLE
+Date: Wed, 20 May 2026 18:05:04 +0200
+Message-ID: <20260520162149.593996122@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,59 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Bangoria <ravi.bangoria@amd.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-[ Upstream commit b0a09142622a994c4f4088c3f61db5da87cfc711 ]
+[ Upstream commit 3aecb2e7b948400354399b26f3f1653bd2c1bae0 ]
 
-Calling perf_allow_kernel() from the NMI context is unsafe and could be
-fatal. Capture the permission at event-initialization time by storing it
-in event->hw.flags, and have the NMI handler rely on that cached flag
-instead of making the call directly.
+The TD scoped TDCS attributes are defined by bit positions. In the guest
+side of the TDX code, the 'tdx_attributes' string array holds pretty
+print names for these attributes, which are generated via macros and
+defines. Today these pretty print names are only used to print the
+attribute names to dmesg.
 
-Fixes: 50a53b60e141d ("perf/amd/ibs: Prevent leaking sensitive data to userspace")
-Reported-by: Sadasivan Shaiju <sadasivan.shaiju2@amd.com>
-Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://patch.msgid.link/20260216042216.1440-5-ravi.bangoria@amd.com
+Unfortunately there is a typo in the define for the migratable bit.
+Change the defines TDX_ATTR_MIGRTABLE* to TDX_ATTR_MIGRATABLE*. Update
+the sole user, the tdx_attributes array, to use the fixed name.
+
+Since these defines control the string printed to dmesg, the change is
+user visible. But the risk of breakage is almost zero since it is not
+exposed in any interface expected to be consumed programmatically.
+
+Fixes: 564ea84c8c14 ("x86/tdx: Dump attributes and TD_CTLS on boot")
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Acked-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20260303030335.766779-2-xiaoyao.li@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/ibs.c          | 5 ++++-
- arch/x86/events/perf_event_flags.h | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/coco/tdx/debug.c         | 2 +-
+ arch/x86/include/asm/shared/tdx.h | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/events/amd/ibs.c b/arch/x86/events/amd/ibs.c
-index ddd74eff3faef..7b8eea1d75c10 100644
---- a/arch/x86/events/amd/ibs.c
-+++ b/arch/x86/events/amd/ibs.c
-@@ -313,6 +313,9 @@ static int perf_ibs_init(struct perf_event *event)
- 	if (ret)
- 		return ret;
- 
-+	if (perf_allow_kernel())
-+		hwc->flags |= PERF_X86_EVENT_UNPRIVILEGED;
-+
- 	if (hwc->sample_period) {
- 		if (config & perf_ibs->cnt_mask)
- 			/* raw max_cnt may not be set */
-@@ -1346,7 +1349,7 @@ static int perf_ibs_handle_irq(struct perf_ibs *perf_ibs, struct pt_regs *iregs)
- 	 * unprivileged users.
- 	 */
- 	if ((event->attr.sample_type & PERF_SAMPLE_RAW) &&
--	    perf_allow_kernel()) {
-+	    (hwc->flags & PERF_X86_EVENT_UNPRIVILEGED)) {
- 		perf_ibs_phyaddr_clear(perf_ibs, &ibs_data);
- 	}
- 
-diff --git a/arch/x86/events/perf_event_flags.h b/arch/x86/events/perf_event_flags.h
-index 70078334e4a33..47f84ee8f5409 100644
---- a/arch/x86/events/perf_event_flags.h
-+++ b/arch/x86/events/perf_event_flags.h
-@@ -23,3 +23,4 @@ PERF_ARCH(PEBS_LAT_HYBRID,	0x0020000) /* ld and st lat for hybrid */
- PERF_ARCH(NEEDS_BRANCH_STACK,	0x0040000) /* require branch stack setup */
- PERF_ARCH(BRANCH_COUNTERS,	0x0080000) /* logs the counters in the extra space of each branch */
- PERF_ARCH(ACR,			0x0100000) /* Auto counter reload */
-+PERF_ARCH(UNPRIVILEGED,		0x0200000) /* Unprivileged event (wrt perf_allow_kernel()) */
+diff --git a/arch/x86/coco/tdx/debug.c b/arch/x86/coco/tdx/debug.c
+index cef847c8bb67f..28990c2ab0a14 100644
+--- a/arch/x86/coco/tdx/debug.c
++++ b/arch/x86/coco/tdx/debug.c
+@@ -17,7 +17,7 @@ static __initdata const char *tdx_attributes[] = {
+ 	DEF_TDX_ATTR_NAME(ICSSD),
+ 	DEF_TDX_ATTR_NAME(LASS),
+ 	DEF_TDX_ATTR_NAME(SEPT_VE_DISABLE),
+-	DEF_TDX_ATTR_NAME(MIGRTABLE),
++	DEF_TDX_ATTR_NAME(MIGRATABLE),
+ 	DEF_TDX_ATTR_NAME(PKS),
+ 	DEF_TDX_ATTR_NAME(KL),
+ 	DEF_TDX_ATTR_NAME(TPA),
+diff --git a/arch/x86/include/asm/shared/tdx.h b/arch/x86/include/asm/shared/tdx.h
+index 8bc074c8d7c6a..11f3cf30b1ac8 100644
+--- a/arch/x86/include/asm/shared/tdx.h
++++ b/arch/x86/include/asm/shared/tdx.h
+@@ -35,8 +35,8 @@
+ #define TDX_ATTR_LASS			BIT_ULL(TDX_ATTR_LASS_BIT)
+ #define TDX_ATTR_SEPT_VE_DISABLE_BIT	28
+ #define TDX_ATTR_SEPT_VE_DISABLE	BIT_ULL(TDX_ATTR_SEPT_VE_DISABLE_BIT)
+-#define TDX_ATTR_MIGRTABLE_BIT		29
+-#define TDX_ATTR_MIGRTABLE		BIT_ULL(TDX_ATTR_MIGRTABLE_BIT)
++#define TDX_ATTR_MIGRATABLE_BIT		29
++#define TDX_ATTR_MIGRATABLE		BIT_ULL(TDX_ATTR_MIGRATABLE_BIT)
+ #define TDX_ATTR_PKS_BIT		30
+ #define TDX_ATTR_PKS			BIT_ULL(TDX_ATTR_PKS_BIT)
+ #define TDX_ATTR_KL_BIT			31
 -- 
 2.53.0
 
