@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B840B33D4E9;
-	Wed, 20 May 2026 17:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C35C33D4E9;
+	Wed, 20 May 2026 17:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297434; cv=none; b=srdEHorkT/QKMJj62bIS+1BRZbM/AuR3V0chaZU09+kGIkngxoiobRoQyEEeUCnmYejR7OeK0UGU7tmIV8JMF5iDoECslXYedbyv2b+vdnAEtSPTYQqZlw8fzJsBzHQQEGPRyLtFHWhSjJB07yNOBVaJYGKknDP2+FV7ifFZyVc=
+	t=1779297437; cv=none; b=swnpR1ycysFo757OQtFxM8lW5VTnRKPVXZCSWRUXDrsCqC/YjljNAVxI/ZqSH3iC7VE8NtNpedof/WLx2h0ROi5vfe4SyWKPEhOsLEE5EeX/ssqY08fDGkkJQoPgv7//bPD++sV+ZPBbSWe9QqtSVS8EJqpQuM+wzahEZK7TssI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297434; c=relaxed/simple;
-	bh=9OwUhgg+3CUIgEiISb2XdPsq0KepqQ37VV2c+PSBENw=;
+	s=arc-20240116; t=1779297437; c=relaxed/simple;
+	bh=m5nkQc+jxcnmlgaG0PUShWN9YZ8EATcUI5c1K+27SYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=squFRhKnQ1RYlEtAo4dRb1h5oiEnTlozbqFaWeS5HwBhLQ9+0SS7ZFIlC4GOiGgwt0xnNETAXW0T46Z5KzxrEN+VTf448M2oWgH4Jp5O5c8cSmmjZctwMiCnfTigPC5zR20eWMtcQhEAsD0pmiW5KcoDxxll2Zx2c+S1SCX1B1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4rCFKL6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I7I5PjMc8D0Gn0hZhpYzoECAc+JDrdAyAPIb2264M3rJn9+tbj22BXjxB4HBkSEA/oTq10jd0l8SR7vvkFahJXmutB2XKl38Bz+xa+lMEsYkhsMUbs8uZ/ATlXPEEpuWaOxId2ws6CoU09UIyhJpG9IMzdQ+wxxgA8Q/qgwM6qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvAqx6+K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4rCFKL6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1331F000E9;
-	Wed, 20 May 2026 17:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvAqx6+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C2C1F000E9;
+	Wed, 20 May 2026 17:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297433;
-	bh=7IvGxWyNWsiu3tOBHIyhYDdCCX5hTcLeUOcnwF7xpJg=;
+	s=korg; t=1779297436;
+	bh=M6J2RzdOAek53R9UKg2KVxvMwN5fGedrTZWfAhGmoco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s4rCFKL6xKSYuqBwVlJ9AaSPSqgO4nQKGqPdb+UbTNXUcAW+n73K+fTwKmrWkDszp
-	 dlSgeATnY0GA9e0Jj66HrnEL2cRQdVSYNMruAGUTStJPe0fWcLvD3pe8NOAYKWwkdE
-	 sbJ+TpaDtCHZ6xZo+7sfYt/6c9SL4XQ+0miur2g8=
+	b=RvAqx6+K/m80NgPJrj2+1X8v4KbA6dorLMUt4hM6pRhukf2ToqksAVYVg2a9m/RS6
+	 fvi+vgFahHyogcXsXmAWfEQaxl8G8MI2B2an5a66USQEvQYHPyH9CGYlnJPeCk3l7U
+	 L4xDwF1XcnN3ctuiRlIwSt+/Rr+2kZzXAuZrxKXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyungjung Joo <jhj140711@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 003/957] fs/mbcache: cancel shrink work before destroying the cache
-Date: Wed, 20 May 2026 18:08:06 +0200
-Message-ID: <20260520162134.633525500@linuxfoundation.org>
+Subject: [PATCH 6.18 030/957] PCI: use generic driver_override infrastructure
+Date: Wed, 20 May 2026 18:08:33 +0200
+Message-ID: <20260520162135.213758114@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,47 +53,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyungJung Joo <jhj140711@gmail.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit d227786ab1119669df4dc333a61510c52047cce4 ]
+[ Upstream commit 10a4206a24013be4d558d476010cbf2eb4c9fa64 ]
 
-mb_cache_destroy() calls shrinker_free() and then frees all cache
-entries and the cache itself, but it does not cancel the pending
-c_shrink_work work item first.
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-If mb_cache_entry_create() schedules c_shrink_work via schedule_work()
-and the work item is still pending or running when mb_cache_destroy()
-runs, mb_cache_shrink_worker() will access the cache after its memory
-has been freed, causing a use-after-free.
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
 
-This is only reachable by a privileged user (root or CAP_SYS_ADMIN)
-who can trigger the last put of a mounted ext2/ext4/ocfs2 filesystem.
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
 
-Cancel the work item with cancel_work_sync() before calling
-shrinker_free(), ensuring the worker has finished and will not be
-rescheduled before the cache is torn down.
-
-Fixes: c2f3140fe2ec ("mbcache2: limit cache size")
-Signed-off-by: Hyungjung Joo <jhj140711@gmail.com>
-Link: https://patch.msgid.link/20260317054556.1821600-1-jhj140711@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: 782a985d7af2 ("PCI: Introduce new device binding path using pci_dev.driver_override")
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Alex Williamson <alex@shazbot.org>
+Tested-by: Gui-Dong Han <hanguidong02@gmail.com>
+Reviewed-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://patch.msgid.link/20260324005919.2408620-6-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/mbcache.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/pci-driver.c           | 11 +++++++----
+ drivers/pci/pci-sysfs.c            | 28 ----------------------------
+ drivers/pci/probe.c                |  1 -
+ drivers/vfio/pci/vfio_pci_core.c   |  5 ++---
+ drivers/xen/xen-pciback/pci_stub.c |  6 ++++--
+ include/linux/pci.h                |  6 ------
+ 6 files changed, 13 insertions(+), 44 deletions(-)
 
-diff --git a/fs/mbcache.c b/fs/mbcache.c
-index e60a840999aa9..90b0564c62d0b 100644
---- a/fs/mbcache.c
-+++ b/fs/mbcache.c
-@@ -408,6 +408,7 @@ void mb_cache_destroy(struct mb_cache *cache)
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index b4111c92c9572..fba07a700508f 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -138,9 +138,11 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
  {
- 	struct mb_cache_entry *entry, *next;
+ 	struct pci_dynid *dynid;
+ 	const struct pci_device_id *found_id = NULL, *ids;
++	int ret;
  
-+	cancel_work_sync(&cache->c_shrink_work);
- 	shrinker_free(cache->c_shrink);
+ 	/* When driver_override is set, only bind to the matching driver */
+-	if (dev->driver_override && strcmp(dev->driver_override, drv->name))
++	ret = device_match_driver_override(&dev->dev, &drv->driver);
++	if (ret == 0)
+ 		return NULL;
  
- 	/*
+ 	/* Look at the dynamic ids first, before the static ones */
+@@ -164,7 +166,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+ 		 * matching.
+ 		 */
+ 		if (found_id->override_only) {
+-			if (dev->driver_override)
++			if (ret > 0)
+ 				return found_id;
+ 		} else {
+ 			return found_id;
+@@ -172,7 +174,7 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+ 	}
+ 
+ 	/* driver_override will always match, send a dummy id */
+-	if (dev->driver_override)
++	if (ret > 0)
+ 		return &pci_device_id_any;
+ 	return NULL;
+ }
+@@ -423,7 +425,7 @@ static int __pci_device_probe(struct pci_driver *drv, struct pci_dev *pci_dev)
+ static inline bool pci_device_can_probe(struct pci_dev *pdev)
+ {
+ 	return (!pdev->is_virtfn || pdev->physfn->sriov->drivers_autoprobe ||
+-		pdev->driver_override);
++		device_has_driver_override(&pdev->dev));
+ }
+ #else
+ static inline bool pci_device_can_probe(struct pci_dev *pdev)
+@@ -1695,6 +1697,7 @@ static const struct cpumask *pci_device_irq_get_affinity(struct device *dev,
+ 
+ const struct bus_type pci_bus_type = {
+ 	.name		= "pci",
++	.driver_override = true,
+ 	.match		= pci_bus_match,
+ 	.uevent		= pci_uevent,
+ 	.probe		= pci_device_probe,
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index 9d6f74bd95f8c..d36b46849fee2 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -615,33 +615,6 @@ static ssize_t devspec_show(struct device *dev,
+ static DEVICE_ATTR_RO(devspec);
+ #endif
+ 
+-static ssize_t driver_override_store(struct device *dev,
+-				     struct device_attribute *attr,
+-				     const char *buf, size_t count)
+-{
+-	struct pci_dev *pdev = to_pci_dev(dev);
+-	int ret;
+-
+-	ret = driver_set_override(dev, &pdev->driver_override, buf, count);
+-	if (ret)
+-		return ret;
+-
+-	return count;
+-}
+-
+-static ssize_t driver_override_show(struct device *dev,
+-				    struct device_attribute *attr, char *buf)
+-{
+-	struct pci_dev *pdev = to_pci_dev(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = sysfs_emit(buf, "%s\n", pdev->driver_override);
+-	device_unlock(dev);
+-	return len;
+-}
+-static DEVICE_ATTR_RW(driver_override);
+-
+ static struct attribute *pci_dev_attrs[] = {
+ 	&dev_attr_power_state.attr,
+ 	&dev_attr_resource.attr,
+@@ -669,7 +642,6 @@ static struct attribute *pci_dev_attrs[] = {
+ #ifdef CONFIG_OF
+ 	&dev_attr_devspec.attr,
+ #endif
+-	&dev_attr_driver_override.attr,
+ 	&dev_attr_ari_enabled.attr,
+ 	NULL,
+ };
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index 23833fd7265e2..4e4e38e626912 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -2449,7 +2449,6 @@ static void pci_release_dev(struct device *dev)
+ 	pci_release_of_node(pci_dev);
+ 	pcibios_release_device(pci_dev);
+ 	pci_bus_put(pci_dev->bus);
+-	kfree(pci_dev->driver_override);
+ 	bitmap_free(pci_dev->dma_alias_mask);
+ 	dev_dbg(dev, "device released\n");
+ 	kfree(pci_dev);
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index 085373d71e9c2..69476fc67ca08 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -2013,9 +2013,8 @@ static int vfio_pci_bus_notifier(struct notifier_block *nb,
+ 	    pdev->is_virtfn && physfn == vdev->pdev) {
+ 		pci_info(vdev->pdev, "Captured SR-IOV VF %s driver_override\n",
+ 			 pci_name(pdev));
+-		pdev->driver_override = kasprintf(GFP_KERNEL, "%s",
+-						  vdev->vdev.ops->name);
+-		WARN_ON(!pdev->driver_override);
++		WARN_ON(device_set_driver_override(&pdev->dev,
++						   vdev->vdev.ops->name));
+ 	} else if (action == BUS_NOTIFY_BOUND_DRIVER &&
+ 		   pdev->is_virtfn && physfn == vdev->pdev) {
+ 		struct pci_driver *drv = pci_dev_driver(pdev);
+diff --git a/drivers/xen/xen-pciback/pci_stub.c b/drivers/xen/xen-pciback/pci_stub.c
+index 045e74847fe6b..7de2fa67743c6 100644
+--- a/drivers/xen/xen-pciback/pci_stub.c
++++ b/drivers/xen/xen-pciback/pci_stub.c
+@@ -598,6 +598,8 @@ static int pcistub_seize(struct pci_dev *dev,
+ 	return err;
+ }
+ 
++static struct pci_driver xen_pcibk_pci_driver;
++
+ /* Called when 'bind'. This means we must _NOT_ call pci_reset_function or
+  * other functions that take the sysfs lock. */
+ static int pcistub_probe(struct pci_dev *dev, const struct pci_device_id *id)
+@@ -609,8 +611,8 @@ static int pcistub_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 
+ 	match = pcistub_match(dev);
+ 
+-	if ((dev->driver_override &&
+-	     !strcmp(dev->driver_override, PCISTUB_DRIVER_NAME)) ||
++	if (device_match_driver_override(&dev->dev,
++					 &xen_pcibk_pci_driver.driver) > 0 ||
+ 	    match) {
+ 
+ 		if (dev->hdr_type != PCI_HEADER_TYPE_NORMAL
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 05aeee8c8844a..89f5a4290b6e2 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -547,12 +547,6 @@ struct pci_dev {
+ 	u8		supported_speeds; /* Supported Link Speeds Vector */
+ 	phys_addr_t	rom;		/* Physical address if not from BAR */
+ 	size_t		romlen;		/* Length if not from BAR */
+-	/*
+-	 * Driver name to force a match.  Do not set directly, because core
+-	 * frees it.  Use driver_set_override() to set or clear it.
+-	 */
+-	const char	*driver_override;
+-
+ 	unsigned long	priv_flags;	/* Private flags for the PCI driver */
+ 
+ 	/* These methods index pci_reset_fn_methods[] */
 -- 
 2.53.0
 
