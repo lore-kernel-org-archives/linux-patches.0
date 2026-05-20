@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21563EBF35;
-	Wed, 20 May 2026 17:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B403E3C62;
+	Wed, 20 May 2026 17:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298611; cv=none; b=MkfD2vg7jj1WigDKdxAQ7REJcvAjAPjpogorfEF9g+l1sKhOYi95gS7mS9hGc9flxw7AC3w+SzneOkSHb0SOw6+Kmr1jIsVZv6GfIq+ojk73EB+KLIHI85KRplAteOawRaEgrwISzQOecXjCd8z9Eb6MCYKbe23kVlxjvUnRm0E=
+	t=1779298615; cv=none; b=DUJs2LxAbUo54gb22C2AEJvAqvYkPl4nwcP7PVmmBtJkAgWJ2oAPPeVN2JOCC+BKJvrW4kKjiEJZM4Fo2XdRIXxSzlxLz/uNSjJo0c+zOAhRj/t9LzvFfLdF9TuSSn5sEtGDILvUI5pXZ7kCV5t1j87pwHrbX59pz+7wggZK3ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298611; c=relaxed/simple;
-	bh=VVOifEw3Z2gKHCsj0QiPDAY/H95JAAy2Vq9pW9uGb0M=;
+	s=arc-20240116; t=1779298615; c=relaxed/simple;
+	bh=wm1oBipnRs51xEmGbGeeZjTTgoyuZG6SlJpuMnNi1sU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBWiJqS+P++uBhyWvsSQmJV92LnSlenatm6oxX6aLkX+yTa75f1M38wSpB7mJ7rCUwbKUkoRouFov8k9wblxhX30888GO6pIMssTBQ74oM3APpndoAYLOhW+8q2tS9HWUzIbFni2UrpXQaD8/rmpVLAkA9emAKzbTFGbFeiVznM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZjZ+pEq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t/TnV887ff9q/Sx1UT2bP5iMbjfBYMYBjaYDv0cSIrJnY8AfYcL0d/8Tr+v64c/jZzWPQhjGcsuByuDXN0dHL+ijJFsgzaA5vrhHwO6niWhyvQ8rHQ8GOrxgfmqtMmmgkCyvihSGyGvLLlExhsI1lniJx+hrFAyoKsvHM+jMdOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PY9hTPgx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZjZ+pEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FDB1F000E9;
-	Wed, 20 May 2026 17:36:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PY9hTPgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BA51F000E9;
+	Wed, 20 May 2026 17:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298609;
-	bh=uGihaR7Dqm++pR+5NDi/P+WLby0LLJ4yZoAttKRuJXM=;
+	s=korg; t=1779298612;
+	bh=lHpWKS5Ru9/ZPMqy2TDcrCeAagN9VS6y1hnEKeb9EBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eZjZ+pEqUQyEdjMBy+EAXjtjAophlR2utGpMkDS6V3/+vdBEeh81f+5vtlRErQkRv
-	 vNg3J3EZAFbSn1XT8Lm0K0FmpJIYW0tN7DQjNYPQc6tODaJd5MWyhaXH2hfWQSQLS/
-	 dP4NIXwGSyqf/hL2DR9qKaFXJkLF5CW6QqqpXbSo=
+	b=PY9hTPgxwnkttdUq6QNuOkmtWgOpp10oes9HB/LDIuittNlGk6r2VM9q23NqE6I1W
+	 rR3pADmhfx3qzYFY/5r2y6TEiTKa0FZAAPMr8fPUwfioj8p/rr5OCqE3oTnS9cBKq5
+	 luqVmubzpAP3FkqkK7f8c2d0vdJkZKvjMee8Y2jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 475/957] mtd: spinand: Decouple write enable and write disable operations
-Date: Wed, 20 May 2026 18:15:58 +0200
-Message-ID: <20260520162144.827869173@linuxfoundation.org>
+Subject: [PATCH 6.18 476/957] mtd: spinand: Create an array of operation templates
+Date: Wed, 20 May 2026 18:15:59 +0200
+Message-ID: <20260520162144.850084517@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,87 +53,241 @@ Content-Transfer-Encoding: 8bit
 
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit c0ba929cf7a960c796cc9946b3f79d8405e9b805 ]
+[ Upstream commit 408015023294958407925bc50cdd85718d12a335 ]
 
-In order to introduce templates for all operations and not only for page
-helpers (in order to introduce octal DDR support), decouple the WR_EN
-and WR_DIS operations into two separate macros.
+Currently, the SPI NAND core implementation directly calls macros to get
+the various operations in shape. These macros are specific to the bus
+interface, currently only supporting the single SDR interface (any
+command following the 1S-XX-XX pattern).
 
-Adapt the callers accordingly.
+Introducing support for other bus interfaces (such as octal DTR) would
+mean that every user of these macros should become aware of the current
+bus interface and act accordingly, picking up and adapting to the
+current configuration. This would add quite a bit of boilerplate, be
+repetitive as well as error prone in case we miss one occurrence.
 
-There is no functional change.
+Instead, let's create a table with all SPI NAND memory operations that
+are currently supported. We initialize them with the same single SDR _OP
+macros as before. This opens the possibility for users of the individual
+macros to make use of these templates instead. This way, when we will add
+another bus interface, we can just switch to another set of templates
+and all users will magically fill in their spi_mem_op structures with
+the correct ops.
+
+The existing read, write and update cache variants are also moved in
+this template array, which is barely noticeable by callers as we also
+add a structure member pointing to it.
 
 Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Stable-dep-of: 25a915fad503 ("mtd: spinand: winbond: Clarify when to enable the HS bit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/spi/core.c   |  2 +-
- drivers/mtd/nand/spi/esmt.c   |  2 +-
- drivers/mtd/nand/spi/micron.c |  2 +-
- include/linux/mtd/spinand.h   | 10 ++++++++--
- 4 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/mtd/nand/spi/core.c    | 38 ++++++++++++++++++++++--------
+ drivers/mtd/nand/spi/winbond.c |  4 ++--
+ include/linux/mtd/spinand.h    | 43 +++++++++++++++++++++++++++-------
+ 3 files changed, 64 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
-index 33e6b76944ab8..d3029ce2fe9ae 100644
+index d3029ce2fe9ae..5c1797946a047 100644
 --- a/drivers/mtd/nand/spi/core.c
 +++ b/drivers/mtd/nand/spi/core.c
-@@ -362,7 +362,7 @@ static void spinand_ondie_ecc_save_status(struct nand_device *nand, u8 status)
+@@ -184,9 +184,9 @@ static int spinand_init_quad_enable(struct spinand_device *spinand)
+ 	if (!(spinand->flags & SPINAND_HAS_QE_BIT))
+ 		return 0;
  
- int spinand_write_enable_op(struct spinand_device *spinand)
- {
--	struct spi_mem_op op = SPINAND_WR_EN_DIS_1S_0_0_OP(true);
-+	struct spi_mem_op op = SPINAND_WR_EN_1S_0_0_OP;
+-	if (spinand->op_templates.read_cache->data.buswidth == 4 ||
+-	    spinand->op_templates.write_cache->data.buswidth == 4 ||
+-	    spinand->op_templates.update_cache->data.buswidth == 4)
++	if (spinand->op_templates->read_cache->data.buswidth == 4 ||
++	    spinand->op_templates->write_cache->data.buswidth == 4 ||
++	    spinand->op_templates->update_cache->data.buswidth == 4)
+ 		enable = true;
  
- 	return spi_mem_exec_op(spinand->spimem, &op);
+ 	return spinand_upd_cfg(spinand, CFG_QUAD_ENABLE,
+@@ -1162,7 +1162,7 @@ static int spinand_create_dirmap(struct spinand_device *spinand,
+ 	info.offset = plane << fls(nand->memorg.pagesize);
+ 
+ 	info.length = nanddev_page_size(nand) + nanddev_per_page_oobsize(nand);
+-	info.op_tmpl = *spinand->op_templates.update_cache;
++	info.op_tmpl = *spinand->op_templates->update_cache;
+ 	desc = devm_spi_mem_dirmap_create(&spinand->spimem->spi->dev,
+ 					  spinand->spimem, &info);
+ 	if (IS_ERR(desc))
+@@ -1170,7 +1170,7 @@ static int spinand_create_dirmap(struct spinand_device *spinand,
+ 
+ 	spinand->dirmaps[plane].wdesc = desc;
+ 
+-	info.op_tmpl = *spinand->op_templates.read_cache;
++	info.op_tmpl = *spinand->op_templates->read_cache;
+ 	desc = spinand_create_rdesc(spinand, &info);
+ 	if (IS_ERR(desc))
+ 		return PTR_ERR(desc);
+@@ -1185,7 +1185,7 @@ static int spinand_create_dirmap(struct spinand_device *spinand,
+ 	}
+ 
+ 	info.length = nanddev_page_size(nand) + nanddev_per_page_oobsize(nand);
+-	info.op_tmpl = *spinand->op_templates.update_cache;
++	info.op_tmpl = *spinand->op_templates->update_cache;
+ 	info.op_tmpl.data.ecc = true;
+ 	desc = devm_spi_mem_dirmap_create(&spinand->spimem->spi->dev,
+ 					  spinand->spimem, &info);
+@@ -1194,7 +1194,7 @@ static int spinand_create_dirmap(struct spinand_device *spinand,
+ 
+ 	spinand->dirmaps[plane].wdesc_ecc = desc;
+ 
+-	info.op_tmpl = *spinand->op_templates.read_cache;
++	info.op_tmpl = *spinand->op_templates->read_cache;
+ 	info.op_tmpl.data.ecc = true;
+ 	desc = spinand_create_rdesc(spinand, &info);
+ 	if (IS_ERR(desc))
+@@ -1330,6 +1330,22 @@ static void spinand_manufacturer_cleanup(struct spinand_device *spinand)
+ 		return spinand->manufacturer->ops->cleanup(spinand);
  }
-diff --git a/drivers/mtd/nand/spi/esmt.c b/drivers/mtd/nand/spi/esmt.c
-index 9a9325c0bc497..f880c3b15ceab 100644
---- a/drivers/mtd/nand/spi/esmt.c
-+++ b/drivers/mtd/nand/spi/esmt.c
-@@ -137,7 +137,7 @@ static int f50l1g41lb_user_otp_info(struct spinand_device *spinand, size_t len,
- static int f50l1g41lb_otp_lock(struct spinand_device *spinand, loff_t from,
- 			       size_t len)
- {
--	struct spi_mem_op write_op = SPINAND_WR_EN_DIS_1S_0_0_OP(true);
-+	struct spi_mem_op write_op = SPINAND_WR_EN_1S_0_0_OP;
- 	struct spi_mem_op exec_op = SPINAND_PROG_EXEC_1S_1S_0_OP(0);
- 	u8 status;
+ 
++static void spinand_init_ssdr_templates(struct spinand_device *spinand)
++{
++	struct spinand_mem_ops *tmpl = &spinand->ssdr_op_templates;
++
++	tmpl->reset = (struct spi_mem_op)SPINAND_RESET_1S_0_0_OP;
++	tmpl->readid = (struct spi_mem_op)SPINAND_READID_1S_1S_1S_OP(0, 0, NULL, 0);
++	tmpl->wr_en = (struct spi_mem_op)SPINAND_WR_EN_1S_0_0_OP;
++	tmpl->wr_dis = (struct spi_mem_op)SPINAND_WR_DIS_1S_0_0_OP;
++	tmpl->set_feature = (struct spi_mem_op)SPINAND_SET_FEATURE_1S_1S_1S_OP(0, NULL);
++	tmpl->get_feature = (struct spi_mem_op)SPINAND_GET_FEATURE_1S_1S_1S_OP(0, NULL);
++	tmpl->blk_erase = (struct spi_mem_op)SPINAND_BLK_ERASE_1S_1S_0_OP(0);
++	tmpl->page_read = (struct spi_mem_op)SPINAND_PAGE_READ_1S_1S_0_OP(0);
++	tmpl->prog_exec = (struct spi_mem_op)SPINAND_PROG_EXEC_1S_1S_0_OP(0);
++	spinand->op_templates = &spinand->ssdr_op_templates;
++}
++
+ static const struct spi_mem_op *
+ spinand_select_op_variant(struct spinand_device *spinand,
+ 			  const struct spinand_op_variants *variants)
+@@ -1425,21 +1441,21 @@ int spinand_match_and_init(struct spinand_device *spinand,
+ 		if (!op)
+ 			return -ENOTSUPP;
+ 
+-		spinand->op_templates.read_cache = op;
++		spinand->ssdr_op_templates.read_cache = op;
+ 
+ 		op = spinand_select_op_variant(spinand,
+ 					       info->op_variants.write_cache);
+ 		if (!op)
+ 			return -ENOTSUPP;
+ 
+-		spinand->op_templates.write_cache = op;
++		spinand->ssdr_op_templates.write_cache = op;
+ 
+ 		op = spinand_select_op_variant(spinand,
+ 					       info->op_variants.update_cache);
+ 		if (!op)
+ 			return -ENOTSUPP;
+ 
+-		spinand->op_templates.update_cache = op;
++		spinand->ssdr_op_templates.update_cache = op;
+ 
+ 		return 0;
+ 	}
+@@ -1554,6 +1570,8 @@ static int spinand_init(struct spinand_device *spinand)
+ 	if (!spinand->scratchbuf)
+ 		return -ENOMEM;
+ 
++	spinand_init_ssdr_templates(spinand);
++
+ 	ret = spinand_detect(spinand);
+ 	if (ret)
+ 		goto err_free_bufs;
+diff --git a/drivers/mtd/nand/spi/winbond.c b/drivers/mtd/nand/spi/winbond.c
+index af377b917a107..b389c9ee58508 100644
+--- a/drivers/mtd/nand/spi/winbond.c
++++ b/drivers/mtd/nand/spi/winbond.c
+@@ -291,7 +291,7 @@ static int w25n0xjw_hs_cfg(struct spinand_device *spinand)
+ 	u8 sr4;
  	int ret;
-diff --git a/drivers/mtd/nand/spi/micron.c b/drivers/mtd/nand/spi/micron.c
-index a49d7cb6a96da..b8130e04e8e79 100644
---- a/drivers/mtd/nand/spi/micron.c
-+++ b/drivers/mtd/nand/spi/micron.c
-@@ -251,7 +251,7 @@ static int mt29f2g01abagd_user_otp_info(struct spinand_device *spinand,
- static int mt29f2g01abagd_otp_lock(struct spinand_device *spinand, loff_t from,
- 				   size_t len)
- {
--	struct spi_mem_op write_op = SPINAND_WR_EN_DIS_1S_0_0_OP(true);
-+	struct spi_mem_op write_op = SPINAND_WR_EN_1S_0_0_OP;
- 	struct spi_mem_op exec_op = SPINAND_PROG_EXEC_1S_1S_0_OP(0);
- 	u8 status;
+ 
+-	op = spinand->op_templates.read_cache;
++	op = spinand->op_templates->read_cache;
+ 	if (op->cmd.dtr || op->addr.dtr || op->dummy.dtr || op->data.dtr)
+ 		hs = false;
+ 	else if (op->cmd.buswidth == 1 && op->addr.buswidth == 1 &&
+@@ -355,7 +355,7 @@ static int w35n0xjw_vcr_cfg(struct spinand_device *spinand)
+ 	u8 io_mode;
  	int ret;
+ 
+-	op = spinand->op_templates.read_cache;
++	op = spinand->op_templates->read_cache;
+ 
+ 	single = (op->cmd.buswidth == 1 && op->addr.buswidth == 1 && op->data.buswidth == 1);
+ 	dtr = (op->cmd.dtr || op->addr.dtr || op->data.dtr);
 diff --git a/include/linux/mtd/spinand.h b/include/linux/mtd/spinand.h
-index 1c741145e4971..c74c9ba0cd0a4 100644
+index c74c9ba0cd0a4..3825fe9e759a6 100644
 --- a/include/linux/mtd/spinand.h
 +++ b/include/linux/mtd/spinand.h
-@@ -26,8 +26,14 @@
- 		   SPI_MEM_OP_NO_DUMMY,					\
- 		   SPI_MEM_OP_NO_DATA)
+@@ -604,6 +604,36 @@ struct spinand_dirmap {
+ 	struct spi_mem_dirmap_desc *rdesc_ecc;
+ };
  
--#define SPINAND_WR_EN_DIS_1S_0_0_OP(enable)					\
--	SPI_MEM_OP(SPI_MEM_OP_CMD((enable) ? 0x06 : 0x04, 1),		\
-+#define SPINAND_WR_EN_1S_0_0_OP						\
-+	SPI_MEM_OP(SPI_MEM_OP_CMD(0x06, 1),				\
-+		   SPI_MEM_OP_NO_ADDR,					\
-+		   SPI_MEM_OP_NO_DUMMY,					\
-+		   SPI_MEM_OP_NO_DATA)
++/**
++ * struct spinand_mem_ops - SPI NAND memory operations
++ * @reset: reset op template
++ * @readid: read ID op template
++ * @wr_en: write enable op template
++ * @wr_dis: write disable op template
++ * @set_feature: set feature op template
++ * @get_feature: get feature op template
++ * @blk_erase: blk erase op template
++ * @page_read: page read op template
++ * @prog_exec: prog exec op template
++ * @read_cache: read cache op template
++ * @write_cache: write cache op template
++ * @update_cache: update cache op template
++ */
++struct spinand_mem_ops {
++	struct spi_mem_op reset;
++	struct spi_mem_op readid;
++	struct spi_mem_op wr_en;
++	struct spi_mem_op wr_dis;
++	struct spi_mem_op set_feature;
++	struct spi_mem_op get_feature;
++	struct spi_mem_op blk_erase;
++	struct spi_mem_op page_read;
++	struct spi_mem_op prog_exec;
++	const struct spi_mem_op *read_cache;
++	const struct spi_mem_op *write_cache;
++	const struct spi_mem_op *update_cache;
++};
 +
-+#define SPINAND_WR_DIS_1S_0_0_OP					\
-+	SPI_MEM_OP(SPI_MEM_OP_CMD(0x04, 1),				\
- 		   SPI_MEM_OP_NO_ADDR,					\
- 		   SPI_MEM_OP_NO_DUMMY,					\
- 		   SPI_MEM_OP_NO_DATA)
+ /**
+  * struct spinand_device - SPI NAND device instance
+  * @base: NAND device instance
+@@ -611,10 +641,8 @@ struct spinand_dirmap {
+  * @lock: lock used to serialize accesses to the NAND
+  * @id: NAND ID as returned by READ_ID
+  * @flags: NAND flags
+- * @op_templates: various SPI mem op templates
+- * @op_templates.read_cache: read cache op template
+- * @op_templates.write_cache: write cache op template
+- * @op_templates.update_cache: update cache op template
++ * @ssdr_op_templates: Templates for all single SDR SPI mem operations
++ * @op_templates: Templates for all SPI mem operations
+  * @select_target: select a specific target/die. Usually called before sending
+  *		   a command addressing a page or an eraseblock embedded in
+  *		   this die. Only required if your chip exposes several dies
+@@ -648,11 +676,8 @@ struct spinand_device {
+ 	struct spinand_id id;
+ 	u32 flags;
+ 
+-	struct {
+-		const struct spi_mem_op *read_cache;
+-		const struct spi_mem_op *write_cache;
+-		const struct spi_mem_op *update_cache;
+-	} op_templates;
++	struct spinand_mem_ops ssdr_op_templates;
++	struct spinand_mem_ops *op_templates;
+ 
+ 	struct spinand_dirmap *dirmaps;
+ 
 -- 
 2.53.0
 
