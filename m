@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B5863CB;
-	Wed, 20 May 2026 16:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A2F363C59;
+	Wed, 20 May 2026 16:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295346; cv=none; b=fnINjeje9dqRi4OWRJ7r83h8vtti1zmXniKUlrvs6OHrVJ938JmWWtDEN+G+uomyfAe3FRXrusEjYARUEHrP1b2/RiOeRDfCnXkDp62WdBA0Xk254Qn8CUM+otAiyGR5ogC9stOtNciWnaIjZZeZIo8yOV1K1OihOCvSMNohbws=
+	t=1779295349; cv=none; b=Es4jxW5sf+tZj4Kho8mGvTOtHA9ZWBFXNUhRTR0PnOfrvV6788tbKjbWDiWwI9N26LpzEIuWK6Ek5V4tSPnBbaH4Z5K3glsdodgDxkpl5yMdYDiNPh+ZTs5o88/w+oL5GKF2+kQHDt/z49rkaYZxuex006sDoguaC94K9I2TNQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295346; c=relaxed/simple;
-	bh=CjX8L/IcLRJCCaxDi26YbBW6ddXifnHBdPsX8L+e8Pg=;
+	s=arc-20240116; t=1779295349; c=relaxed/simple;
+	bh=a4dQUMgSfwTd5Plt37VlXmgp7N6kMw1csmGLVq2A6VU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdQAdkv1y7wWho3p+sptEivm/gBGGoVNSp+9I7PT6UCXSqsmbAeKDScXIs7CnNMYUGTNTX37VNSrTyz8p3xWllBeaYkkHcn4QlRcV7UY4KFuwwbCHAtXFhVf6rHJxLK/lisv9MU9D36r6vZmusozk4exm5ACyFukZ3YVDNmPFZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxMlqf5L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SIv8eCPh7DJZUxV5Una9sPkwFVTHkDKGUFDkRzUcyzoVz8Fp3+XQstgCWFqonSWAbTopiRJ8GdkzsGS6U6LSG41lQzyzuJ7aB/y4ZXRlyIKKhBvWbPdBJlFBMYEHe3OhRAOwfiQMpiW2UiilEjRjAMHCOYh673YGyVWW5IjEzuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPkpxo7n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxMlqf5L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3509A1F00893;
-	Wed, 20 May 2026 16:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPkpxo7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9E31F00893;
+	Wed, 20 May 2026 16:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295345;
-	bh=fX1spIT6m5VFkq/7+E49JT+OX8oH9zZIIGZzjEzEcWg=;
+	s=korg; t=1779295348;
+	bh=ujiSMbvzDJD+HNNIy3n40p7VaVNAnqU50nSsxv+8ZeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RxMlqf5LuasfzChONbpjQHASeVIiMZTXZ9Pk6cZ7bn3TAXdzgxFpYj/a5I6IAa5Ae
-	 yqwf/GRuiIdJtWQJM/w7qlmYccD9uLz1OLWvDspEnzfp4lMELPhYLrWevmXQdvL0Cm
-	 /Z/58U4P8ibP7G2AEOlguYj7erClnOr05tRZ+jGs=
+	b=bPkpxo7nwIW+4zhjgpmk/Hv7SwowtXO+Gn8alqy7vUmjd1GDhqs6538JsqVc2xtus
+	 XPhcTCfYzVMToSd3zF2jZpIw6KMQEofl5dWq7zlJzBQaDJSgWEoWHZ49WYQmpW9u5v
+	 C+DS6TNGOCXq23UerQgPYysGdstUZBl0KVBUJ4VY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hans Zhang <18255117159@163.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0382/1146] ASoC: qcom: qdsp6: topology: check widget type before accessing data
-Date: Wed, 20 May 2026 18:10:32 +0200
-Message-ID: <20260520162156.845112217@linuxfoundation.org>
+Subject: [PATCH 7.0 0383/1146] PCI: dwc: Fix type mismatch for kstrtou32_from_user() return value
+Date: Wed, 20 May 2026 18:10:33 +0200
+Message-ID: <20260520162156.867526931@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,49 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Hans Zhang <18255117159@163.com>
 
-[ Upstream commit d5bfdd28e0cdd45043ae6e0ac168a451d59283dc ]
+[ Upstream commit 445588a3b18bb0702d746cb61f7a443639027651 ]
 
-Check widget type before accessing the private data, as this could a
-virtual widget which is no associated with a dsp graph, container and
-module. Accessing witout check could lead to incorrect memory access.
+kstrtou32_from_user() returns int, but the return value was stored in
+a u32 variable 'val', risking sign loss. Use a dedicated int variable
+to correctly handle the return code.
 
-Fixes: 36ad9bf1d93d ("ASoC: qdsp6: audioreach: add topology support")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260402081118.348071-4-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4fbfa17f9a07 ("PCI: dwc: Add debugfs based Silicon Debug support for DWC")
+Signed-off-by: Hans Zhang <18255117159@163.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260401023048.4182452-1-18255117159@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/topology.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ .../controller/dwc/pcie-designware-debugfs.c  | 21 +++++++++++--------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/topology.c b/sound/soc/qcom/qdsp6/topology.c
-index e732fac9b8ca0..1f69fba6de26d 100644
---- a/sound/soc/qcom/qdsp6/topology.c
-+++ b/sound/soc/qcom/qdsp6/topology.c
-@@ -952,9 +952,6 @@ static int audioreach_widget_unload(struct snd_soc_component *scomp,
- 	struct audioreach_container *cont;
- 	struct audioreach_module *mod;
+diff --git a/drivers/pci/controller/dwc/pcie-designware-debugfs.c b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
+index 0d1340c9b3642..9461be0744907 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-debugfs.c
++++ b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
+@@ -208,10 +208,11 @@ static ssize_t lane_detect_write(struct file *file, const char __user *buf,
+ 	struct dw_pcie *pci = file->private_data;
+ 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
+ 	u32 lane, val;
++	int ret;
  
--	mod = dobj->private;
--	cont = mod->container;
--
- 	if (w->id == snd_soc_dapm_mixer) {
- 		/* virtual widget */
- 		struct snd_ar_control *scontrol = dobj->private;
-@@ -963,6 +960,11 @@ static int audioreach_widget_unload(struct snd_soc_component *scomp,
- 		kfree(scontrol);
- 		return 0;
- 	}
-+	mod = dobj->private;
-+	if (!mod)
-+		return 0;
-+
-+	cont = mod->container;
+-	val = kstrtou32_from_user(buf, count, 0, &lane);
+-	if (val)
+-		return val;
++	ret = kstrtou32_from_user(buf, count, 0, &lane);
++	if (ret)
++		return ret;
  
- 	mutex_lock(&apm->lock);
- 	idr_remove(&apm->modules_idr, mod->instance_id);
+ 	val = dw_pcie_readl_dbi(pci, rinfo->ras_cap_offset + SD_STATUS_L1LANE_REG);
+ 	val &= ~(LANE_SELECT);
+@@ -347,10 +348,11 @@ static ssize_t counter_enable_write(struct file *file, const char __user *buf,
+ 	struct dw_pcie *pci = pdata->pci;
+ 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
+ 	u32 val, enable;
++	int ret;
+ 
+-	val = kstrtou32_from_user(buf, count, 0, &enable);
+-	if (val)
+-		return val;
++	ret = kstrtou32_from_user(buf, count, 0, &enable);
++	if (ret)
++		return ret;
+ 
+ 	mutex_lock(&rinfo->reg_event_lock);
+ 	set_event_number(pdata, pci, rinfo);
+@@ -408,10 +410,11 @@ static ssize_t counter_lane_write(struct file *file, const char __user *buf,
+ 	struct dw_pcie *pci = pdata->pci;
+ 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
+ 	u32 val, lane;
++	int ret;
+ 
+-	val = kstrtou32_from_user(buf, count, 0, &lane);
+-	if (val)
+-		return val;
++	ret = kstrtou32_from_user(buf, count, 0, &lane);
++	if (ret)
++		return ret;
+ 
+ 	mutex_lock(&rinfo->reg_event_lock);
+ 	set_event_number(pdata, pci, rinfo);
 -- 
 2.53.0
 
