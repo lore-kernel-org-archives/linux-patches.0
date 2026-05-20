@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9B83FC5A6;
-	Wed, 20 May 2026 18:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EADC3CB2F8;
+	Wed, 20 May 2026 18:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302936; cv=none; b=lX1awr4LZ+kxXYeLvKVDb6I/aw7zwD/yb4wQAIO4qF2hzY+eKSTiKdIKEN+wxdXyb05ksatsWKTjAPifksOR/aMMuzAb/tT+AMnhbBsZ0LU6VxBTLQ9lwkytm/IFg7haUjcj/UX8FFE4jwkP25G7zG37dV9So9zp92i6Nl/6oMk=
+	t=1779302938; cv=none; b=oYyK31JrMFpxl/h62x7D5Ke2oDi93BZvF251t99w6Pme87kaOepRdemh58YroNOS8WlxULaVPeck1YQheV7xYwKSC+pmDnHiS51Jo19WBq1aB4hS88Fuy48zJjTgAnrEk7jfnii/D3w5xKY6+d88NPsCXFGHbMKIRFqBYd6981I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302936; c=relaxed/simple;
-	bh=bqn0k51y8oRyIfMKjDEOHvidUJognjFWzRz+YODQWp4=;
+	s=arc-20240116; t=1779302938; c=relaxed/simple;
+	bh=eisxQHVxLyUwkbRS3ZVdi9Pwty7RaPp8D4o9rNO6gHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VX/zCmRLKdkO1tqoKBXbmbpPisUJJkBS47KrzGgOWqNHyeqquvevDPYo6EhGdVvvZ1tVxrCbbfKMlxLDirdDl4aZ89ya1LPSSlAWIKqji5zQXDdtCn6MVjIojaQV78oBvIE2hP2lJJf+XTwidxgJhLOxMCMP1k4WW7caXPIua24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuospaI9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oDrBaYCJDUIFbkQkjNCtrIFqo8EaXdY9U6o4Jomd4PKVGjBfq40svuHQ7/InYrDuhizfsK8mf/21UH9KIHqt9dfm+2G9zKhNnLbBSMUodQYWEYyevy9VDVRzqAgbe9v8FhUraHb3+HP5JfiHNDuLliFECdGOT6JXCZsWSEmSIg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3D3dfuo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuospaI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB841F000E9;
-	Wed, 20 May 2026 18:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3D3dfuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94E21F00893;
+	Wed, 20 May 2026 18:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302932;
-	bh=a1XzRIYSqjLm5FhSGvaqegEVKg/xSAX9EaI2cmSmV/c=;
+	s=korg; t=1779302935;
+	bh=wj2GFe8n3V+EV2ZSydgc6lHoPUBoREVKyfALr5zHero=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kuospaI9pVJbLLhdg34DgTnJauQuC8aFE8l8kRm+K6+df0fcAVK5tGx10i6PChhQ0
-	 /O0bsUnRfQshSiJkY0SM8aqyck3Y2j+XKNTxS0iDud6zrhyPmwIiYm4muJ/h1fvxr8
-	 jHdxq45w18EOEE/J22bsej/roQQslZHSTeUNNhwY=
+	b=P3D3dfuo3J7wUt9yBANthr7z6TZVfnYfDK/hYHYpLIqXRj2wWSouD3zxhaVfQOkOu
+	 DNvbz5ZYSqX1Oy4yB9u9AkBISnU4hmEM8U4Zuv05js79pMINxxF/Lxt1O6c7NXmf7a
+	 CM5H70gO35qlWDwnkvrENq6mJUTkkL3peT+Jp2Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Sergio Correia <scorreia@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.6 455/508] audit: fix incorrect inheritable capability in CAPSET records
-Date: Wed, 20 May 2026 18:24:38 +0200
-Message-ID: <20260520162108.454263663@linuxfoundation.org>
+	Li Xiasong <lixiasong1@huawei.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.6 456/508] netfilter: nft_ct: fix missing expect put in obj eval
+Date: Wed, 20 May 2026 18:24:39 +0200
+Message-ID: <20260520162108.475904064@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,44 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Correia <scorreia@redhat.com>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-commit e4a640475e43f406fdfd56d370b1f34b0cbbc18d upstream.
+commit 19f94b6fee75b3ef7fbc06f3745b9a771a8a19a4 upstream.
 
-__audit_log_capset() records the effective capability set into the
-inheritable field due to a copy-paste error. Every CAPSET audit
-record therefore reports cap_pi (process inheritable) with the value
-of cap_effective instead of cap_inheritable.
+nft_ct_expect_obj_eval() allocates an expectation and may call
+nf_ct_expect_related(), but never drops its local reference.
 
-This silently corrupts audit data used for compliance and forensic
-analysis: an attacker who modifies inheritable capabilities to
-prepare for a privilege-escalating exec would have the change masked
-in the audit trail.
+Add nf_ct_expect_put(exp) before return to balance allocation.
 
-The bug has been present since the original introduction of CAPSET
-audit records in 2008.
-
+Fixes: 857b46027d6f ("netfilter: nft_ct: add ct expectations support")
 Cc: stable@vger.kernel.org
-Fixes: e68b75a027bb ("When the capset syscall is used it is not possible for audit to record the actual capbilities being added/removed.  This patch adds a new record type which emits the target pid and the eff, inh, and perm cap sets.")
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Sergio Correia <scorreia@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/auditsc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_ct.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/auditsc.c
-+++ b/kernel/auditsc.c
-@@ -2845,7 +2845,7 @@ void __audit_log_capset(const struct cre
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -1363,6 +1363,8 @@ static void nft_ct_expect_obj_eval(struc
  
- 	context->capset.pid = task_tgid_nr(current);
- 	context->capset.cap.effective   = new->cap_effective;
--	context->capset.cap.inheritable = new->cap_effective;
-+	context->capset.cap.inheritable = new->cap_inheritable;
- 	context->capset.cap.permitted   = new->cap_permitted;
- 	context->capset.cap.ambient     = new->cap_ambient;
- 	context->type = AUDIT_CAPSET;
+ 	if (nf_ct_expect_related(exp, 0) != 0)
+ 		regs->verdict.code = NF_DROP;
++
++	nf_ct_expect_put(exp);
+ }
+ 
+ static const struct nla_policy nft_ct_expect_policy[NFTA_CT_EXPECT_MAX + 1] = {
 
 
