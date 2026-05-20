@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287273E832A;
-	Wed, 20 May 2026 16:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C342C36CDE9;
+	Wed, 20 May 2026 16:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294928; cv=none; b=rKRAZEc/x3k+Ym4CEY+eA8F3M+7su5rlr+9wnSqnBGgajHAAdVJq0KV3tRrUWPM5wlUOOPILEAj7sJ6oEtThBt5B22F5wb+6vYfa2SJFhwrlWNALQKIc8AAGyO9HMw2fqYJaLVFFGttJyHLp/Wf5fopBJEavuPuqGcPIiRS2GtA=
+	t=1779294930; cv=none; b=p5Qvs/0HFMUD88wKBYUw2L5zzDBDXWOyVx+FhtXz6HQo5cRU3PfttXEsfEnmiqeQnn4W0HUGDyCB0KShaJ65NwjC95atgOWGw7XPN48bLM/xQ4VK/vs1bsVR2uBNsO0/04QMzD49EzB7fTiwtIcFdkKSj9gP3Jna0/kk9BHcPDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294928; c=relaxed/simple;
-	bh=Sv5i1VbTS3ljxmyq1Xk5PsyVsIOtVbgYSopLuEel/Iw=;
+	s=arc-20240116; t=1779294930; c=relaxed/simple;
+	bh=WdUpudvFd08riCXBNCoYOprxtxbiEh+BtzWHv8arA28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpBkYzCCxVo7xLb6CPcmKfariJSbBaf31oNPZ/zpuStNk5XWpD13hmW2Hq4cnkRwjl8+sQJXU8bNgHgvDcquXmjHbKldqNLifLdDHXZ8cqgkvLq2cgk7rNjIlX25E8v3lXXWbnGXJxoltss9lDGVETC2G2c4Im1ZTf028miFAwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nguIOOXj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l4hY4ygGKdMDoMqs1NRnmJLXQuLft5a2nOA+H8h2SeQEcQj0gXtDOCAQY5AQOKhPz4NAAGFW3OXnfoaXedzqJr0f7cyrpzEqi0TXkHuCgp4Mot8RGGL8kPXkgox7tj+5b1ISF+SQvdwzVDeuGleguzf26R2Y7U045wN6u4HeuSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COjNAYrV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nguIOOXj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57A891F000E9;
-	Wed, 20 May 2026 16:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COjNAYrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E5A1F000E9;
+	Wed, 20 May 2026 16:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294926;
-	bh=avgr4cG0M9JN4GV1QGqxHRfb+0RmxQ+5qECbr1IxZKA=;
+	s=korg; t=1779294929;
+	bh=6+n926pjkK5lbB7u0mbkfQkyxX/qrtN79Iy070w68Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nguIOOXjZbiksxGxXIlKX0bWkhwpsqujsCL+uQ+DzyHCuv3c+LSPfUXPuc5jxP6dz
-	 b5ARbU+k+eDe8icw55GToO70Swy3oZDDqC2jTSyXhONMV95xd/CiSV0/q0//oTpQJG
-	 didz4DcSqEhwxvO8sxPRl7rltBxVKYxr4PBWCBxI=
+	b=COjNAYrV1w4ZZEIOP2DP5G20T2PDOxAZsJYbU/J84bqZlqg1EuOXsk+GE4aEQK77V
+	 JQm9sTL+M55q59988ubF/1pc0UGhusUxhMGGrtAKm2lry12NE1hjUzAaR5nrB4sUMy
+	 qIXSJbXshSfyZP5cjv2/2h3CMmz+aNNpt+rk5f+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuwen Chen <ywen.chen@foxmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Alexander Konyukhov <Alexander.Konyukhov@kaspersky.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0226/1146] selftests/futex: Fix incorrect result reporting of futex_requeue test item
-Date: Wed, 20 May 2026 18:07:56 +0200
-Message-ID: <20260520162153.369504932@linuxfoundation.org>
+Subject: [PATCH 7.0 0227/1146] drm/komeda: fix integer overflow in AFBC framebuffer size check
+Date: Wed, 20 May 2026 18:07:57 +0200
+Message-ID: <20260520162153.391597662@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,117 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuwen Chen <ywen.chen@foxmail.com>
+From: Alexander Konyukhov <Alexander.Konyukhov@kaspersky.com>
 
-[ Upstream commit d317e2ef9dcf673c9f37cda784284af7c6812757 ]
+[ Upstream commit 779ec12c85c9e4547519e3903a371a3b26a289de ]
 
-When using the TEST_HARNESS_MAIN macro definition to declare the main
-function, it is required to use the EXPECT*() and ASSERT*() macros in
-conjunction and not ksft_test_result_*(). Otherwise, even if a test item
-fails, the test will still return a success result because
-ksft_test_result_*() does not affect the test harness state.
+The AFBC framebuffer size validation calculates the minimum required
+buffer size by adding the AFBC payload size to the framebuffer offset.
+This addition is performed without checking for integer overflow.
 
-Convert the code to use EXPECT/ASSERT() variants, which ensures that the
-overall test result is fail if one of the EXPECT()s fails.
+If the addition oveflows, the size check may incorrectly succed and
+allow userspace to provide an undersized drm_gem_object, potentially
+leading to out-of-bounds memory access.
 
-[ tglx: Massaged change log to explain _why_ ksft_test_result*() is the wrong
-  	choice ]
+Add usage of check_add_overflow() to safely compute the minimum
+required size and reject the framebuffer if an overflow is detected.
+This makes the AFBC size validation more robust against malformed.
 
-Fixes: f341a20f6d7e ("selftests/futex: Refactor futex_requeue with kselftest_harness.h")
-Signed-off-by: Yuwen Chen <ywen.chen@foxmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/tencent_51851B741CC4B5EC9C22AFF70BA82BB60805@qq.com
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 65ad2392dd6d ("drm/komeda: Added AFBC support for komeda driver")
+Signed-off-by: Alexander Konyukhov <Alexander.Konyukhov@kaspersky.com>
+Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://lore.kernel.org/r/20260203134907.1587067-1-Alexander.Konyukhov@kaspersky.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../futex/functional/futex_requeue.c          | 49 +++----------------
- 1 file changed, 8 insertions(+), 41 deletions(-)
+ drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/futex/functional/futex_requeue.c b/tools/testing/selftests/futex/functional/futex_requeue.c
-index 35d4be23db5da..dcf0d5f2f3122 100644
---- a/tools/testing/selftests/futex/functional/futex_requeue.c
-+++ b/tools/testing/selftests/futex/functional/futex_requeue.c
-@@ -34,34 +34,18 @@ TEST(requeue_single)
- 	volatile futex_t _f1 = 0;
- 	volatile futex_t f2 = 0;
- 	pthread_t waiter[10];
--	int res;
- 
- 	f1 = &_f1;
- 
- 	/*
- 	 * Requeue a waiter from f1 to f2, and wake f2.
- 	 */
--	if (pthread_create(&waiter[0], NULL, waiterfn, NULL))
--		ksft_exit_fail_msg("pthread_create failed\n");
-+	ASSERT_EQ(0, pthread_create(&waiter[0], NULL, waiterfn, NULL));
- 
- 	usleep(WAKE_WAIT_US);
- 
--	ksft_print_dbg_msg("Requeuing 1 futex from f1 to f2\n");
--	res = futex_cmp_requeue(f1, 0, &f2, 0, 1, 0);
--	if (res != 1)
--		ksft_test_result_fail("futex_requeue simple returned: %d %s\n",
--				      res ? errno : res,
--				      res ? strerror(errno) : "");
--
--	ksft_print_dbg_msg("Waking 1 futex at f2\n");
--	res = futex_wake(&f2, 1, 0);
--	if (res != 1) {
--		ksft_test_result_fail("futex_requeue simple returned: %d %s\n",
--				      res ? errno : res,
--				      res ? strerror(errno) : "");
--	} else {
--		ksft_test_result_pass("futex_requeue simple succeeds\n");
--	}
-+	EXPECT_EQ(1, futex_cmp_requeue(f1, 0, &f2, 0, 1, 0));
-+	EXPECT_EQ(1, futex_wake(&f2, 1, 0));
- }
- 
- TEST(requeue_multiple)
-@@ -69,7 +53,7 @@ TEST(requeue_multiple)
- 	volatile futex_t _f1 = 0;
- 	volatile futex_t f2 = 0;
- 	pthread_t waiter[10];
--	int res, i;
-+	int i;
- 
- 	f1 = &_f1;
- 
-@@ -77,30 +61,13 @@ TEST(requeue_multiple)
- 	 * Create 10 waiters at f1. At futex_requeue, wake 3 and requeue 7.
- 	 * At futex_wake, wake INT_MAX (should be exactly 7).
- 	 */
--	for (i = 0; i < 10; i++) {
--		if (pthread_create(&waiter[i], NULL, waiterfn, NULL))
--			ksft_exit_fail_msg("pthread_create failed\n");
--	}
-+	for (i = 0; i < 10; i++)
-+		ASSERT_EQ(0, pthread_create(&waiter[i], NULL, waiterfn, NULL));
- 
- 	usleep(WAKE_WAIT_US);
- 
--	ksft_print_dbg_msg("Waking 3 futexes at f1 and requeuing 7 futexes from f1 to f2\n");
--	res = futex_cmp_requeue(f1, 0, &f2, 3, 7, 0);
--	if (res != 10) {
--		ksft_test_result_fail("futex_requeue many returned: %d %s\n",
--				      res ? errno : res,
--				      res ? strerror(errno) : "");
--	}
--
--	ksft_print_dbg_msg("Waking INT_MAX futexes at f2\n");
--	res = futex_wake(&f2, INT_MAX, 0);
--	if (res != 7) {
--		ksft_test_result_fail("futex_requeue many returned: %d %s\n",
--				      res ? errno : res,
--				      res ? strerror(errno) : "");
--	} else {
--		ksft_test_result_pass("futex_requeue many succeeds\n");
--	}
-+	EXPECT_EQ(10, futex_cmp_requeue(f1, 0, &f2, 3, 7, 0));
-+	EXPECT_EQ(7, futex_wake(&f2, INT_MAX, 0));
- }
- 
- TEST_HARNESS_MAIN
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.c b/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.c
+index 6ee909f8d5349..50e86f352838f 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_framebuffer.c
+@@ -4,6 +4,8 @@
+  * Author: James.Qian.Wang <james.qian.wang@arm.com>
+  *
+  */
++#include <linux/overflow.h>
++
+ #include <drm/drm_device.h>
+ #include <drm/drm_fb_dma_helper.h>
+ #include <drm/drm_gem.h>
+@@ -93,7 +95,9 @@ komeda_fb_afbc_size_check(struct komeda_fb *kfb, struct drm_file *file,
+ 	kfb->afbc_size = kfb->offset_payload + n_blocks *
+ 			 ALIGN(bpp * AFBC_SUPERBLK_PIXELS / 8,
+ 			       AFBC_SUPERBLK_ALIGNMENT);
+-	min_size = kfb->afbc_size + fb->offsets[0];
++	if (check_add_overflow(kfb->afbc_size, fb->offsets[0], &min_size)) {
++		goto check_failed;
++	}
+ 	if (min_size > obj->size) {
+ 		DRM_DEBUG_KMS("afbc size check failed, obj_size: 0x%zx. min_size 0x%llx.\n",
+ 			      obj->size, min_size);
 -- 
 2.53.0
 
