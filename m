@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A532D12EE;
-	Wed, 20 May 2026 16:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8952D12EE;
+	Wed, 20 May 2026 16:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295207; cv=none; b=BbqhIg3Uis6XAI1vuaBGSqhdBpyyuLYwDkE8YhCMMwhbCIwLSZA13jeX505Fnd2X5tS2H4lzjJFb1OQJX6lwG0zg/qxiQaT9/lrdqYTVgZjqwzpTpsUJ8p9CdHRixIp4bsIPkHJZJ5pN1x8I+HFFrZTjm/WAb90PgTT6lvAGB9g=
+	t=1779295209; cv=none; b=Ck4mBIdGIbkURir0oLWhGS2K3OcC4FfMzuZuVzRI731XsJq8RfddS8X5WKPbapZiBMNZ9MT9SSTS3kpWkYwiiIjg2wCpJXxDIU9akMF+IGmMcr8FnJ0qdPjlZbb3u6yhB6nzz0g08Tu7ttnHj56vdp9i+OUik/+rWsJrRP2jVkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295207; c=relaxed/simple;
-	bh=KV/5/6d5W527gnGAM58lQRmAShbr8Sq3pJJTzryBp4g=;
+	s=arc-20240116; t=1779295209; c=relaxed/simple;
+	bh=ZQMoi2jaE4rrilDov9MjD3jIG8zI7RwyOlgtBNHtC94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o2ddRf6qUOB9LAAeAVltY99qYvBkzDU50Y1e/XKSyFOr+8k79DvYdu1BvBaBgjRi2IQzy7Np/GSXb7T0/4Fh/srGOkj9UQdABv94XTsfernM6ZNzuoRW1GGQV6hUvKAEV5k4zR2EaKq4d/OKAXJQX2Cx3xUjdQQr5ijuBpf3p3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsIt6BKZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=X48OET/J7iIBu0X9WC6Jja8o3ejmhYlxA7MR1TUVCJ4jtBLJP6GTF42Brp6Zz5zl1hgGvu3/TpZf0asnQtMgXTKZmZoGs12rHvyDjFEv8vPaDUjkXnQ1owFIDmaRcYsvhoZ8xHnOuAc62lNrKI5tNno7z7xyJW6wTNFMqvy8cXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4Icg9Hz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsIt6BKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFD91F000E9;
-	Wed, 20 May 2026 16:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4Icg9Hz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3053C1F000E9;
+	Wed, 20 May 2026 16:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295206;
-	bh=X1/FFulbl1rquXocq5YwLMjE82z4v5chU//tgwyruUo=;
+	s=korg; t=1779295208;
+	bh=sH/a2BDMFLMgWURZPMxkMAugsi+aJWRRTO2iwUSMX98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qsIt6BKZ6/OMxyZkvytxekDvWOalX1FEVf6WnFiHOl1HvfSfteXE9fT/oUqXNTX0b
-	 OcHdNOsg8cYIg3fPcwRnWz0ZTyArkToA/frTPQCd1NHJISErFmaw7r+eArpD4N0MXS
-	 0NbmVCn3EFskCHizHxXb1etSOzOFrkHn6PPyyC8g=
+	b=s4Icg9Hztw9I0MANmWLmCiW4bmTViaIpX8D5kWFtTtuZqamffXvqxacDL72LGHe5S
+	 Fk7WOoSUG60wIW2BANMuPv7uiCogs2pLm+61WjFadFeEJY+kD/6IZt770fYd+g2E9u
+	 RpjwgwCA4EqsyUc/ZJQhmsvzywxDABYQq7gI/8pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Oswald <stevepeter.oswald@gmail.com>,
+	Peter Nisbet <peter.nisbet@intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0330/1146] PCI: Prevent shrinking bridge window from its required size
-Date: Wed, 20 May 2026 18:09:40 +0200
-Message-ID: <20260520162155.665744238@linuxfoundation.org>
+Subject: [PATCH 7.0 0331/1146] PCI: Fix premature removal from realloc_head list during resource assignment
+Date: Wed, 20 May 2026 18:09:41 +0200
+Message-ID: <20260520162155.689517161@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,203 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit dc4b4d04e1caa3552f000d84d832779ebe51b093 ]
+[ Upstream commit 1ee4716a5a28eaef81ae1f280d983258bee49623 ]
 
-Steve reported an eGPU (either Radeon Instinct MI50 32GB or NVIDIA 3080
-10GB) connected via Thunderbolt was not assigned sufficient BAR space in
-v6.11, so the amdgpu and nvidia drivers were unable to initialize the
-device.
+reassign_resources_sorted() checks for two things:
 
-pci_bridge_distribute_available_resources() -> ... ->
-adjust_bridge_window() is called between __pci_bus_size_bridges()
-and assigning the resources. Since the commit 948675736a77 ("PCI: Allow
-adjust_bridge_window() to shrink resource if necessary")
-adjust_bridge_window() can also shrink the bridge window.  The shrunken
-size, however, conflicts with what __pci_bus_size_bridges() ->
-pbus_size_mem() calculated as the required bridge window size. By shrinking
-the size, adjust_bridge_window() prevents the rest of the resource fitting
-algorithm from working as intended.  Resource fitting logic is expecting
-assignment failures when bridge windows need resizing, but there are cases
-where failures are no longer happening after the commit 948675736a77 ("PCI:
-Allow adjust_bridge_window() to shrink resource if necessary").
+a) Resource assignment failures for mandatory resources by checking if the
+   resource remains unassigned, which are known to always repeat, and does
+   not attempt to assign them again.
 
-The commit 948675736a77 ("PCI: Allow adjust_bridge_window() to shrink
-resource if necessary") justifies the change by the extra reservation
-made due to hpmemsize parameter, however, the kernel code contradicts
-that statement. (For simplicity, finer-grained hpmmiosize and hpmmiopref
-parameters that can be used to the same effect as hpmemsize are ignored in
-this description.)
+b) That resource is not among the ones being processed/assigned at this
+   stage, leading to skip processing such resources in
+   reassign_resources_sorted() as well (resource assignment progresses
+   one PCI hierarchy level at a time).
 
-pbus_size_mem() calls calculate_memsize() twice. First with add_size=0
-to find out the minimal required resource size. The second call occurs
-with add_size=hpmemsize (effectively) but the result does not directly
-affect the resource size only resulting in an entry on the realloc_head
-list (a.k.a. add_list). Yet, adjust_bridge_window() directly changes
-the resource size which does not include what is reserved due to
-hpmemsize. Also, if the required size for the bridge window exceeds
-hpmemsize, the parameter does not have any effect even on the second
-size calculation made by pbus_size_mem(); from calculate_memsize():
+The problem here is that a) is checked before b), but b) also implies the
+resource is not being assigned yet, making also a) true. As a) only skips
+resource assignment but still removes the resource from realloc_head, the
+later stages that would need to process the information in realloc_head
+cannot obtain the optional size information anymore. This leads to
+considering only non-optional part for bridge windows deeper in the PCI
+hierarchy.
 
-  size = max(size, add_size) + children_add_size;
+This problem has been observed during rescan (add_size is not considered
+while attempting assignment for 0000:e2:00.0 indicating the corresponding
+entry was removed from realloc_head while processing resource assignments
+for 0000:e1):
 
-The commit ae4611f1d7e9 ("PCI: Set resource size directly in
-adjust_bridge_window()") that precedes the commit 948675736a77 ("PCI:
-Allow adjust_bridge_window() to shrink resource if necessary") is also
-related to causing this problem. Its changelog explicitly states
-adjust_bridge_window() wants to "guarantee" allocation success.
-Guaranteed allocations, however, are incompatible with how the other
-parts of the resource fitting algorithm work. The given justification
-fails to explain why guaranteed allocations at this stage are required
-nor why forcing window to a smaller value than what was calculated by
-pbus_size_mem() is correct. While the change might have worked by chance
-in some test scenario, too small bridge window does not "guarantee"
-success from the point of view of the endpoint device resource
-assignments. No issue is mentioned within the changelog so it's unclear
-if the change was made to fix some observed issue nor and what that
-issue was.
+  pci_bus 0000:e1: scanning bus
+  ...
+  pci 0000:e3:01.0: bridge window [mem 0x800000000-0x1000ffffff 64bit pref] to [bus e4] add_size 60c000000 add_align 800000000
+  pci 0000:e3:01.0: bridge window [mem 0x00100000-0x000fffff] to [bus e4] add_size 200000 add_align 200000
+  pci 0000:e3:02.0: disabling bridge window [mem 0x00000000-0x000fffff 64bit pref] to [bus e5] (unused)
+  pci 0000:e2:00.0: bridge window [mem 0x800000000-0x1000ffffff 64bit pref] to [bus e3-e5] add_size 60c000000 add_align 800000000
+  pci 0000:e2:00.0: bridge window [mem 0x00100000-0x001fffff] to [bus e3-e5] add_size 200000 add_align 200000
+  pcieport 0000:e1:02.0: bridge window [io  size 0x2000]: can't assign; no space
+  pcieport 0000:e1:02.0: bridge window [io  size 0x2000]: failed to assign
+  pcieport 0000:e1:02.0: bridge window [io  0x1000-0x2fff]: resource restored
+  pcieport 0000:e1:02.0: bridge window [io  0x1000-0x2fff]: resource restored
+  pcieport 0000:e1:02.0: bridge window [io  size 0x2000]: can't assign; no space
+  pcieport 0000:e1:02.0: bridge window [io  size 0x2000]: failed to assign
+  pci 0000:e2:00.0: bridge window [mem 0x28f000000000-0x28f800ffffff 64bit pref]: assigned
 
-The unwanted shrinking of a bridge window occurs, e.g., when a device with
-large BARs such as eGPU is attached using Thunderbolt and the Root Port
-holds less than enough resource space for the eGPU. The GPU resources are
-in order of GBs and the default hotplug allocation is a mere 2MB
-(DEFAULT_HOTPLUG_MMIO_PREF_SIZE). The problem is illustrated by this log
-(filtered to the relevant content only):
-
-  pci 0000:00:07.0: PCI bridge to [bus 03-2c]
-  pci 0000:00:07.0:   bridge window [mem 0x6000000000-0x601bffffff 64bit pref]
-  pci 0000:03:00.0: PCI bridge to [bus 00]
-  pci 0000:03:00.0:   bridge window [mem 0x00000000-0x000fffff 64bit pref]
-  pci 0000:03:00.0: bridge configuration invalid ([bus 00-00]), reconfiguring
-  pci 0000:03:00.0: PCI bridge to [bus 04-2c]
-  pcieport 0000:00:07.0: Assigned bridge window [mem 0x6000000000-0x601bffffff 64bit pref] to [bus 03-2c] cannot fit 0xc00000000 required for 0000:03:00.0 bridging to [bus 04-2c]
-  pci 0000:03:00.0: bridge window [mem 0x800000000-0x10003fffff 64bit pref] to [bus 04-2c] add_size 100000 add_align 100000
-  pcieport 0000:00:07.0: distributing available resources
-  pci 0000:03:00.0: bridge window [mem 0x800000000-0x10003fffff 64bit pref] shrunken by 0x00000007e4400000
-  pci 0000:03:00.0: bridge window [mem 0x6000000000-0x601bffffff 64bit pref]: assigned
-
-The initial size of the Root Port's window is 448MB (0x601bffffff -
-0x6000000000). __pci_bus_size_bridges() -> pbus_size_mem() calculates the
-required size to be 32772 MB (0x10003fffff - 0x800000000) which would fit
-the eGPU resources. adjust_bridge_window() then shrinks the bridge window
-down to what is guaranteed to fit into the Root Port's bridge window. The
-bridge window for 03:00.0 is also eliminated from the add_list (a.k.a.
-realloc_head) list by adjust_bridge_window().
-
-After adjustment, the resources are assigned and as the bridge window for
-03:00.0 is assigned successfully, no failure is recorded. Without a
-failure, no attempt to resize the window of the Root Port is required.  The
-end result is eGPU not having large enough resources to work.
-
-The commit 948675736a77 ("PCI: Allow adjust_bridge_window() to shrink
-resource if necessary") also claims nested bridge windows are sized the
-same, which is false. pbus_size_mem() calculates the size for the parent
-bridge window by summing all the downstream resources so the resource
-fitting calculates larger bridge window for the parent to accommodate the
-childen. That is, hpmemsize does not result the same size for the case
-where there are nested bridge windows.
-
-In order to fix the most immediate problem, don't shrink the resource size
-in adjust_bridge_window() as hpmemsize had nothing to do with it.  When
-considering add_size, only reduce it up to what is added due to hpmemsize
-(if required size is larger than hpmemsize, the parameter has no impact,
-see calculate_memsize()). Unfortunately, if the tail of the bridge window
-was aligned in calculate_memsize() from below hpmemsize to above it, the
-size check will falsely match but the check at least errs to the side of
-caution. There's not enough information available in adjust_bridge_window()
-to know the calculated size precisely.
-
-This is not exactly a revert of the commits e4611f1d7e9 ("PCI: Set resource
-size directly in adjust_bridge_window()") and 948675736a77 ("PCI: Allow
-adjust_bridge_window() to shrink resource if necessary") as shrinking still
-remains in place but is implemented differently, and the end result behaves
-very differently.
-
-It is possible that those two commits fixed some other issue that is not
-described with enough detail in the changelog and undoing parts of them
-results in another regression due to behavioral change.  Nonetheless, as
-described above, the solution by those two commits was flawed and the
-issue, if one exists, should be solved in a way that is compatible with the
-rest of the resource fitting algorithm instead of working against it.
-
-Besides shrinking, the case where adjust_bridge_window() expands the bridge
-window is likely somewhat wrong as well because it removes the entry from
-add_list (a.k.a. realloc_head), but it is less damaging as that only
-impacts optional resources and may have no impact if expanding by hpmemsize
-is larger than what add_size was. Fixing it is left as further work.
-
-Fixes: 948675736a77 ("PCI: Allow adjust_bridge_window() to shrink resource if necessary")
-Fixes: ae4611f1d7e9 ("PCI: Set resource size directly in adjust_bridge_window()")
-Reported-by: Steve Oswald <stevepeter.oswald@gmail.com>
-Closes: https://lore.kernel.org/linux-pci/CAN95MYEaO8QYYL=5cN19nv_qDGuuP5QOD17pD_ed6a7UqFVZ-g@mail.gmail.com/
+Fixes: 96336ec70264 ("PCI: Perform reset_resource() and build fail list in sync")
+Reported-by: Peter Nisbet <peter.nisbet@intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260219153951.68869-1-ilpo.jarvinen@linux.intel.com
+Tested-by: Peter Nisbet <peter.nisbet@intel.com>
+Link: https://patch.msgid.link/20260313084551.1934-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 42 +++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 40 insertions(+), 2 deletions(-)
+ drivers/pci/setup-bus.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index 61f769aaa2f6c..1f87b018799f9 100644
+index 1f87b018799f9..9506845c112c4 100644
 --- a/drivers/pci/setup-bus.c
 +++ b/drivers/pci/setup-bus.c
-@@ -1837,6 +1837,7 @@ static void adjust_bridge_window(struct pci_dev *bridge, struct resource *res,
- 				 resource_size_t new_size)
- {
- 	resource_size_t add_size, size = resource_size(res);
-+	struct pci_dev_resource *dev_res;
+@@ -434,6 +434,10 @@ static void reassign_resources_sorted(struct list_head *realloc_head,
+ 		dev = add_res->dev;
+ 		idx = pci_resource_num(dev, res);
  
- 	if (resource_assigned(res))
- 		return;
-@@ -1849,9 +1850,46 @@ static void adjust_bridge_window(struct pci_dev *bridge, struct resource *res,
- 		pci_dbg(bridge, "bridge window %pR extended by %pa\n", res,
- 			&add_size);
- 	} else if (new_size < size) {
-+		int idx = pci_resource_num(bridge, res);
++		/* Skip this resource if not found in head list */
++		if (!res_to_dev_res(head, res))
++			continue;
 +
-+		/*
-+		 * hpio/mmio/mmioprefsize hasn't been included at all? See the
-+		 * add_size param at the callsites of calculate_memsize().
-+		 */
-+		if (!add_list)
-+			return;
-+
-+		/* Only shrink if the hotplug extra relates to window size. */
-+		switch (idx) {
-+			case PCI_BRIDGE_IO_WINDOW:
-+				if (size > pci_hotplug_io_size)
-+					return;
-+				break;
-+			case PCI_BRIDGE_MEM_WINDOW:
-+				if (size > pci_hotplug_mmio_size)
-+					return;
-+				break;
-+			case PCI_BRIDGE_PREF_MEM_WINDOW:
-+				if (size > pci_hotplug_mmio_pref_size)
-+					return;
-+				break;
-+			default:
-+				break;
-+		}
-+
-+		dev_res = res_to_dev_res(add_list, res);
- 		add_size = size - new_size;
--		pci_dbg(bridge, "bridge window %pR shrunken by %pa\n", res,
--			&add_size);
-+		if (add_size < dev_res->add_size) {
-+			dev_res->add_size -= add_size;
-+			pci_dbg(bridge, "bridge window %pR optional size shrunken by %pa\n",
-+				res, &add_size);
-+		} else {
-+			pci_dbg(bridge, "bridge window %pR optional size removed\n",
-+				res);
-+			pci_dev_res_remove_from_list(add_list, res);
-+		}
-+		return;
-+
- 	} else {
- 		return;
- 	}
+ 		/*
+ 		 * Skip resource that failed the earlier assignment and is
+ 		 * not optional as it would just fail again.
+@@ -442,10 +446,6 @@ static void reassign_resources_sorted(struct list_head *realloc_head,
+ 		    !pci_resource_is_optional(dev, idx))
+ 			goto out;
+ 
+-		/* Skip this resource if not found in head list */
+-		if (!res_to_dev_res(head, res))
+-			continue;
+-
+ 		res_name = pci_resource_name(dev, idx);
+ 		add_size = add_res->add_size;
+ 		align = add_res->min_align;
 -- 
 2.53.0
 
