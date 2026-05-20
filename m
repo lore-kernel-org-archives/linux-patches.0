@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D8135C1A0;
-	Wed, 20 May 2026 17:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5719635AC18;
+	Wed, 20 May 2026 17:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297538; cv=none; b=ok+SEAyf/ipBRUdm7C6SOldnAT59LibCV4ET4Bo+buzThRtk/JF7/9pGZ49+TcGpofQsZ10HpLNuqExMiwDd7hs58DxUaJ01ycUdD2lF9Z51InP6m6aOFCXIx8DTZa7cw8NSGLQRY5RHWxyaU4HDFey/Z7gtD8Zk/nxMTO47ksw=
+	t=1779297541; cv=none; b=KGWgP5bDpnYPuhyXcGXEX4zepgx6vvskY0JL0CqCIcm7NWSpeYmveUlq7Qo+NAO3v+B/B+VfOlwe4dkeBEw0wYNsGXReN3Ksl9puViBnw/j/3qcAnex9lmFQPKOQkoiUmKYQeWvg3duLYsLIprvhOY+VDK73VmZ2CwwlkHzjn+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297538; c=relaxed/simple;
-	bh=pVcq1nDvtkvNK+1fih0BtQRZOt5/YkneZ0GCp2y/PvQ=;
+	s=arc-20240116; t=1779297541; c=relaxed/simple;
+	bh=XzSLkbovYVDJooLQFancuZlk0bVPM1TfbQONOFEnV1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sft/Qrul4ME9JlVrmOwi+3BYm85RbZLDos1ubRw7QX5LVRQUTXc1sRdAJGFY3316FBWyAa9eqOviqlIdPN1Sa+g6Ly81EUR6iKglZDhgmjxdYOnobD6izyx6pLXgjQlcX1it6OCgqxpvTrjtGb6GLo6S/c0XfzO9/gwMAxi8QPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPYtaRSI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e8ojjrtmUk7gP3JNfpd4Nq7JC9ty730QOQbquyrlTw4uVRNG4sEVgCGouC7dor86Khj4ydXuDIvgUkWBXl+Av8QcRFqOP7geZE9ipyluNbXTIN/NFfy6AS1jYzXATOiNI+Jh90VxlHHYcYrO21TjX4Lx7Joo6soGFuzD5ClO8G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MB2lszr6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPYtaRSI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FD51F000E9;
-	Wed, 20 May 2026 17:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MB2lszr6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2BE1F000E9;
+	Wed, 20 May 2026 17:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297537;
-	bh=AO8MQOYjIr0chSIigcyx2kVLgZhkDKeBvaokTVNAb3w=;
+	s=korg; t=1779297540;
+	bh=cATB/uBEBpr33/OnWEsl529eQNUM0ZbbTqTPqddaR9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yPYtaRSI4XRAsV9h8DYrWp3Z0+o+5OHNeikFW9q14gGYi9FvXUky/0eAC26zGwnMR
-	 BoZWBNSBBUMob91nKkcS+N6byEaR7XijGC0kJU+8OBuKfV1/I9SF//LdXAwvlRX1Wl
-	 /jgUZ6tKjapTCSb2HKWtEZ/JClCMN0XwDeMRDr3g=
+	b=MB2lszr6AjySZs+PWJWyd27a1RPEsdC1X5sme5UoXVd3yEReX+1G6NfgHlVW0Lo2N
+	 pzDnnxcxDjyI/XovpJ2+9nnschZ3AHD6iUtYEohz90N0KW/Ye+gDP7Zn2aspsXIDaA
+	 mbrcOdygPidAyL3La3yjYJR3XQSk+KaVLh8wma9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
+	Heitor Alves de Siqueira <halves@igalia.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/957] module: Fix freeing of charp module parameters when CONFIG_SYSFS=n
-Date: Wed, 20 May 2026 18:09:11 +0200
-Message-ID: <20260520162136.039373598@linuxfoundation.org>
+Subject: [PATCH 6.18 069/957] wifi: libertas: use USB anchors for tracking in-flight URBs
+Date: Wed, 20 May 2026 18:09:12 +0200
+Message-ID: <20260520162136.061104495@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,120 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Heitor Alves de Siqueira <halves@igalia.com>
 
-[ Upstream commit deffe1edba626d474fef38007c03646ca5876a0e ]
+[ Upstream commit a57f35fc19add4dfe33703af575a2c19c2cef9c7 ]
 
-When setting a charp module parameter, the param_set_charp() function
-allocates memory to store a copy of the input value. Later, when the module
-is potentially unloaded, the destroy_params() function is called to free
-this allocated memory.
+The libertas driver currently handles URB lifecycles manually, which
+makes it non-trivial to check if specific URBs are pending or not. Add
+anchors for TX/RX URBs, and use those to track in-flight requests.
 
-However, destroy_params() is available only when CONFIG_SYSFS=y, otherwise
-only a dummy variant is present. In the unlikely case that the kernel is
-configured with CONFIG_MODULES=y and CONFIG_SYSFS=n, this results in
-a memory leak of charp values when a module is unloaded.
-
-Fix this issue by making destroy_params() always available when
-CONFIG_MODULES=y. Rename the function to module_destroy_params() to clarify
-that it is intended for use by the module loader.
-
-Fixes: e180a6b7759a ("param: fix charp parameters set via sysfs")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
+Link: https://patch.msgid.link/20260313-libertas-usb-anchors-v1-1-915afbe988d7@igalia.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 7c5c2b661bdb ("wifi: libertas: don't kill URBs in interrupt context")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/moduleparam.h | 11 +++--------
- kernel/module/main.c        |  4 ++--
- kernel/params.c             | 27 ++++++++++++++++++---------
- 3 files changed, 23 insertions(+), 19 deletions(-)
+ .../net/wireless/marvell/libertas/if_usb.c    | 27 ++++++++++++-------
+ .../net/wireless/marvell/libertas/if_usb.h    |  3 +++
+ 2 files changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/moduleparam.h b/include/linux/moduleparam.h
-index 6907aedc4f748..77775fd821407 100644
---- a/include/linux/moduleparam.h
-+++ b/include/linux/moduleparam.h
-@@ -414,14 +414,9 @@ extern char *parse_args(const char *name,
- 		      void *arg, parse_unknown_fn unknown);
- 
- /* Called by module remove. */
--#ifdef CONFIG_SYSFS
--extern void destroy_params(const struct kernel_param *params, unsigned num);
--#else
--static inline void destroy_params(const struct kernel_param *params,
--				  unsigned num)
--{
--}
--#endif /* !CONFIG_SYSFS */
-+#ifdef CONFIG_MODULES
-+void module_destroy_params(const struct kernel_param *params, unsigned int num);
-+#endif
- 
- /* All the helper functions */
- /* The macros to do compile-time type checking stolen from Jakub
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 66d4efbddfffe..3745cd02c8479 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -1408,7 +1408,7 @@ static void free_module(struct module *mod)
- 	module_unload_free(mod);
- 
- 	/* Free any allocated parameters. */
--	destroy_params(mod->kp, mod->num_kp);
-+	module_destroy_params(mod->kp, mod->num_kp);
- 
- 	if (is_livepatch_module(mod))
- 		free_module_elf(mod);
-@@ -3519,7 +3519,7 @@ static int load_module(struct load_info *info, const char __user *uargs,
- 	mod_sysfs_teardown(mod);
-  coming_cleanup:
- 	mod->state = MODULE_STATE_GOING;
--	destroy_params(mod->kp, mod->num_kp);
-+	module_destroy_params(mod->kp, mod->num_kp);
- 	blocking_notifier_call_chain(&module_notify_list,
- 				     MODULE_STATE_GOING, mod);
- 	klp_module_going(mod);
-diff --git a/kernel/params.c b/kernel/params.c
-index 7c2242f64bf08..8942884e21c43 100644
---- a/kernel/params.c
-+++ b/kernel/params.c
-@@ -746,15 +746,6 @@ void module_param_sysfs_remove(struct module *mod)
- }
- #endif
- 
--void destroy_params(const struct kernel_param *params, unsigned num)
--{
--	unsigned int i;
--
--	for (i = 0; i < num; i++)
--		if (params[i].ops->free)
--			params[i].ops->free(params[i].arg);
--}
--
- struct module_kobject * __init_or_module
- lookup_or_create_module_kobject(const char *name)
+diff --git a/drivers/net/wireless/marvell/libertas/if_usb.c b/drivers/net/wireless/marvell/libertas/if_usb.c
+index 924ab93b7b671..60bfff523b918 100644
+--- a/drivers/net/wireless/marvell/libertas/if_usb.c
++++ b/drivers/net/wireless/marvell/libertas/if_usb.c
+@@ -114,8 +114,8 @@ static void if_usb_write_bulk_callback(struct urb *urb)
+ static void if_usb_free(struct if_usb_card *cardp)
  {
-@@ -986,3 +977,21 @@ static int __init param_sysfs_builtin_init(void)
- late_initcall(param_sysfs_builtin_init);
+ 	/* Unlink tx & rx urb */
+-	usb_kill_urb(cardp->tx_urb);
+-	usb_kill_urb(cardp->rx_urb);
++	usb_kill_anchored_urbs(&cardp->tx_submitted);
++	usb_kill_anchored_urbs(&cardp->rx_submitted);
  
- #endif /* CONFIG_SYSFS */
+ 	usb_free_urb(cardp->tx_urb);
+ 	cardp->tx_urb = NULL;
+@@ -221,6 +221,9 @@ static int if_usb_probe(struct usb_interface *intf,
+ 		     udev->descriptor.bDeviceSubClass,
+ 		     udev->descriptor.bDeviceProtocol);
+ 
++	init_usb_anchor(&cardp->rx_submitted);
++	init_usb_anchor(&cardp->tx_submitted);
 +
-+#ifdef CONFIG_MODULES
+ 	for (i = 0; i < iface_desc->desc.bNumEndpoints; ++i) {
+ 		endpoint = &iface_desc->endpoint[i].desc;
+ 		if (usb_endpoint_is_bulk_in(endpoint)) {
+@@ -426,7 +429,7 @@ static int usb_tx_block(struct if_usb_card *cardp, uint8_t *payload, uint16_t nb
+ 		goto tx_ret;
+ 	}
+ 
+-	usb_kill_urb(cardp->tx_urb);
++	usb_kill_anchored_urbs(&cardp->tx_submitted);
+ 
+ 	usb_fill_bulk_urb(cardp->tx_urb, cardp->udev,
+ 			  usb_sndbulkpipe(cardp->udev,
+@@ -435,8 +438,10 @@ static int usb_tx_block(struct if_usb_card *cardp, uint8_t *payload, uint16_t nb
+ 
+ 	cardp->tx_urb->transfer_flags |= URB_ZERO_PACKET;
+ 
++	usb_anchor_urb(cardp->tx_urb, &cardp->tx_submitted);
+ 	if ((ret = usb_submit_urb(cardp->tx_urb, GFP_ATOMIC))) {
+ 		lbs_deb_usbd(&cardp->udev->dev, "usb_submit_urb failed: %d\n", ret);
++		usb_unanchor_urb(cardp->tx_urb);
+ 	} else {
+ 		lbs_deb_usb2(&cardp->udev->dev, "usb_submit_urb success\n");
+ 		ret = 0;
+@@ -467,8 +472,10 @@ static int __if_usb_submit_rx_urb(struct if_usb_card *cardp,
+ 			  cardp);
+ 
+ 	lbs_deb_usb2(&cardp->udev->dev, "Pointer for rx_urb %p\n", cardp->rx_urb);
++	usb_anchor_urb(cardp->rx_urb, &cardp->rx_submitted);
+ 	if ((ret = usb_submit_urb(cardp->rx_urb, GFP_ATOMIC))) {
+ 		lbs_deb_usbd(&cardp->udev->dev, "Submit Rx URB failed: %d\n", ret);
++		usb_unanchor_urb(cardp->rx_urb);
+ 		kfree_skb(skb);
+ 		cardp->rx_skb = NULL;
+ 		ret = -1;
+@@ -838,8 +845,8 @@ static void if_usb_prog_firmware(struct lbs_private *priv, int ret,
+ 	}
+ 
+ 	/* Cancel any pending usb business */
+-	usb_kill_urb(cardp->rx_urb);
+-	usb_kill_urb(cardp->tx_urb);
++	usb_kill_anchored_urbs(&cardp->rx_submitted);
++	usb_kill_anchored_urbs(&cardp->tx_submitted);
+ 
+ 	cardp->fwlastblksent = 0;
+ 	cardp->fwdnldover = 0;
+@@ -869,8 +876,8 @@ static void if_usb_prog_firmware(struct lbs_private *priv, int ret,
+ 	if (cardp->bootcmdresp == BOOT_CMD_RESP_NOT_SUPPORTED) {
+ 		/* Return to normal operation */
+ 		ret = -EOPNOTSUPP;
+-		usb_kill_urb(cardp->rx_urb);
+-		usb_kill_urb(cardp->tx_urb);
++		usb_kill_anchored_urbs(&cardp->rx_submitted);
++		usb_kill_anchored_urbs(&cardp->tx_submitted);
+ 		if (if_usb_submit_rx_urb(cardp) < 0)
+ 			ret = -EIO;
+ 		goto done;
+@@ -900,7 +907,7 @@ static void if_usb_prog_firmware(struct lbs_private *priv, int ret,
+ 	wait_event_interruptible(cardp->fw_wq, cardp->surprise_removed || cardp->fwdnldover);
+ 
+ 	timer_delete_sync(&cardp->fw_timeout);
+-	usb_kill_urb(cardp->rx_urb);
++	usb_kill_anchored_urbs(&cardp->rx_submitted);
+ 
+ 	if (!cardp->fwdnldover) {
+ 		pr_info("failed to load fw, resetting device!\n");
+@@ -960,8 +967,8 @@ static int if_usb_suspend(struct usb_interface *intf, pm_message_t message)
+ 		goto out;
+ 
+ 	/* Unlink tx & rx urb */
+-	usb_kill_urb(cardp->tx_urb);
+-	usb_kill_urb(cardp->rx_urb);
++	usb_kill_anchored_urbs(&cardp->tx_submitted);
++	usb_kill_anchored_urbs(&cardp->rx_submitted);
+ 
+  out:
+ 	return ret;
+diff --git a/drivers/net/wireless/marvell/libertas/if_usb.h b/drivers/net/wireless/marvell/libertas/if_usb.h
+index 7d0daeb33c3f7..a0cd36197c2b0 100644
+--- a/drivers/net/wireless/marvell/libertas/if_usb.h
++++ b/drivers/net/wireless/marvell/libertas/if_usb.h
+@@ -48,6 +48,9 @@ struct if_usb_card {
+ 	struct urb *rx_urb, *tx_urb;
+ 	struct lbs_private *priv;
+ 
++	struct usb_anchor rx_submitted;
++	struct usb_anchor tx_submitted;
 +
-+/*
-+ * module_destroy_params - free all parameters for one module
-+ * @params: module parameters (array)
-+ * @num: number of module parameters
-+ */
-+void module_destroy_params(const struct kernel_param *params, unsigned int num)
-+{
-+	unsigned int i;
-+
-+	for (i = 0; i < num; i++)
-+		if (params[i].ops->free)
-+			params[i].ops->free(params[i].arg);
-+}
-+
-+#endif /* CONFIG_MODULES */
+ 	struct sk_buff *rx_skb;
+ 
+ 	uint8_t ep_in;
 -- 
 2.53.0
 
