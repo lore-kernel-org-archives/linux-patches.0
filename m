@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DAF34A3BF;
-	Wed, 20 May 2026 17:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4C43A7850;
+	Wed, 20 May 2026 17:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296462; cv=none; b=phIvGVg5z8E4Sf+DCPkinhNTuTw/uZllA1R28zWuLlijVmmVgauLOM+mVuzAhI6V0uu/OGRau26jRPWV6+abBTHxmZOG81lDZErvRYqSSchAEO7FqF9ZVDYOLKn0wmyje53EI82oNoZp8J4RNgrqAQcF/Fn0y3tERebMrV+Svp8=
+	t=1779296465; cv=none; b=BbFdHZRo4EUm7im7AvFVJqavUVv8np6Vmj2Ym+iTaIQscHfaQTyWUYIJtZ8g0dJ1rb3TNvjwSiDLycRBj9tY8kc3a1dJ0NT8IHag3crMmaMUuwJ52oGThqK6pdLp4RanV0aIutFMSGVyoR7Q5iPUjAUusCXrcw18Y0GR5wogr+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296462; c=relaxed/simple;
-	bh=5hFCSCZBKQ2yS5YaTubBW+JKb4g5tVthHNAh1fmh7Qo=;
+	s=arc-20240116; t=1779296465; c=relaxed/simple;
+	bh=pfIpexa8RoFO9inU/acA/s5qnDaKlktKZhKkPLQEy7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MmUyL7SizPwoY+YFGd1kVH/VsbNsSiv02LFnGu6fw44kWweNX05xk4gsahFEKVxNzb95oof4bPj4k3wtsYQMMoxGEBvEnNqWtKwrVc+sgreUIH4RfaXrBZ9PYZOEKMgphG0tsuP1zns5FhlgdZPnM6U2RnzZSIrTdADGJE7y11k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVGdFbWc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E1+YsfqEn4Mb5MYWAguuVZ2fL/PvK00A/17PT7dwW+/pzLN2vo0tKNiFCvc+/86jCV3JHizfL2Se01CmcM5HVxlpFz40sbyy8FLDlHGWD3tS79tiwaiiDLgPwZbl6F2HWMpLOODTyXVpX1A3vKLO2I86jP2WdnMKDYZ/jIDl1B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMRtGj7p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVGdFbWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD8F1F000E9;
-	Wed, 20 May 2026 17:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMRtGj7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7EF1F000E9;
+	Wed, 20 May 2026 17:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296461;
-	bh=qxQDs0aMUO17JShKeg23CWh2LQCZgtkPjRA2b3vA8ts=;
+	s=korg; t=1779296463;
+	bh=mexmh4jMGnGVHVz+kPu9AHgpNCIWpupx4dtWgw2wfCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eVGdFbWcgvitMgnMqXQNPz3GKCXWM6Xnc0IriBeUiw8QTcjiDrXBobycmdT6+BalE
-	 eAmAJLcFYEwYVn21I6obkzpvUpzNwj0ml5iKXzWxn8b9ZMfVmg44/ddMUyaHCWfrR0
-	 ubf//E1NsHJZh5ziLuLYUnrym9RleQoGq1bBPWqE=
+	b=XMRtGj7pLJwYudA1JfzqJnaV++z5SY9U3UK+SIZlZgBUHbHyEwZmT4EuCA9v9Lg4b
+	 EVi3YFpSGRuwzpYu92aOH8MivFYAmgYt+97cdVGPDnEdoWzIo5eDHUs2Qq91OcpJeW
+	 Z4zgU/DGWJTpxhgphEdBbncSTPkIC/+0KuNwtuL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Simon Horman <horms@kernel.org>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0807/1146] pppoe: drop PFC frames
-Date: Wed, 20 May 2026 18:17:37 +0200
-Message-ID: <20260520162206.489248616@linuxfoundation.org>
+Subject: [PATCH 7.0 0808/1146] net/mlx5: Fix HCA caps leak on notifier init failure
+Date: Wed, 20 May 2026 18:17:38 +0200
+Message-ID: <20260520162206.510385722@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,110 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit cc1ff87bce1ccd38410ab10960f576dcd17db679 ]
+[ Upstream commit d03fc81a57956248383efec99967d0ae627390a8 ]
 
-RFC 2516 Section 7 states that Protocol Field Compression (PFC) is NOT
-RECOMMENDED for PPPoE. In practice, pppd does not support negotiating
-PFC for PPPoE sessions, and the current PPPoE driver assumes an
-uncompressed (2-byte) protocol field. However, the generic PPP layer
-function ppp_input() is not aware of the negotiation result, and still
-accepts PFC frames.
+mlx5_mdev_init() allocates HCA caps via mlx5_hca_caps_alloc() before
+calling mlx5_notifiers_init(). If notifier initialization fails, the
+error path jumps to err_hca_caps and skips mlx5_hca_caps_free(), leaking
+allocated caps.
 
-If a peer with a broken implementation or an attacker sends a frame with
-a compressed (1-byte) protocol field, the subsequent PPP payload is
-shifted by one byte. This causes the network header to be 4-byte
-misaligned, which may trigger unaligned access exceptions on some
-architectures.
+Add a dedicated unwind label for notifier-init failure that frees HCA
+caps before continuing the existing cleanup sequence.
 
-To reduce the attack surface, drop PPPoE PFC frames. Introduce
-ppp_skb_is_compressed_proto() helper function to be used in both
-ppp_generic.c and pppoe.c to avoid open-coding.
-
-Fixes: 7fb1b8ca8fa1 ("ppp: Move PFC decompression to PPP generic layer")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260415022456.141758-2-qingfang.deng@linux.dev
+Fixes: b6b03097f982 ("net/mlx5: Initialize events outside devlink lock")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260415005022.34764-1-prathameshdeshpande7@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c |  2 +-
- drivers/net/ppp/pppoe.c       |  8 +++++++-
- include/linux/ppp_defs.h      | 16 ++++++++++++++++
- 3 files changed, 24 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index c2024684b10d5..192a5b94783e3 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -2260,7 +2260,7 @@ ppp_do_recv(struct ppp *ppp, struct sk_buff *skb, struct channel *pch)
-  */
- static void __ppp_decompress_proto(struct sk_buff *skb)
- {
--	if (skb->data[0] & 0x01)
-+	if (ppp_skb_is_compressed_proto(skb))
- 		*(u8 *)skb_push(skb, 1) = 0x00;
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 3f73d9b1115dd..fab80c79ff071 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1907,7 +1907,7 @@ int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
  
-diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
-index 4275b393a4544..6992b3f647819 100644
---- a/drivers/net/ppp/pppoe.c
-+++ b/drivers/net/ppp/pppoe.c
-@@ -424,7 +424,7 @@ static int pppoe_rcv(struct sk_buff *skb, struct net_device *dev,
- 	if (skb_mac_header_len(skb) < ETH_HLEN)
- 		goto drop;
+ 	err = mlx5_notifiers_init(dev);
+ 	if (err)
+-		goto err_hca_caps;
++		goto err_notifiers_init;
  
--	if (!pskb_may_pull(skb, sizeof(struct pppoe_hdr)))
-+	if (!pskb_may_pull(skb, PPPOE_SES_HLEN))
- 		goto drop;
+ 	/* The conjunction of sw_vhca_id with sw_owner_id will be a global
+ 	 * unique id per function which uses mlx5_core.
+@@ -1923,6 +1923,8 @@ int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
  
- 	ph = pppoe_hdr(skb);
-@@ -434,6 +434,12 @@ static int pppoe_rcv(struct sk_buff *skb, struct net_device *dev,
- 	if (skb->len < len)
- 		goto drop;
+ 	return 0;
  
-+	/* skb->data points to the PPP protocol header after skb_pull_rcsum.
-+	 * Drop PFC frames.
-+	 */
-+	if (ppp_skb_is_compressed_proto(skb))
-+		goto drop;
-+
- 	if (pskb_trim_rcsum(skb, len))
- 		goto drop;
- 
-diff --git a/include/linux/ppp_defs.h b/include/linux/ppp_defs.h
-index b7e57fdbd4139..b1d1f46d7d3be 100644
---- a/include/linux/ppp_defs.h
-+++ b/include/linux/ppp_defs.h
-@@ -8,6 +8,7 @@
- #define _PPP_DEFS_H_
- 
- #include <linux/crc-ccitt.h>
-+#include <linux/skbuff.h>
- #include <uapi/linux/ppp_defs.h>
- 
- #define PPP_FCS(fcs, c) crc_ccitt_byte(fcs, c)
-@@ -25,4 +26,19 @@ static inline bool ppp_proto_is_valid(u16 proto)
- 	return !!((proto & 0x0101) == 0x0001);
- }
- 
-+/**
-+ * ppp_skb_is_compressed_proto - checks if PPP protocol in a skb is compressed
-+ * @skb: skb to check
-+ *
-+ * Check if the PPP protocol field is compressed (the least significant
-+ * bit of the most significant octet is 1). skb->data must point to the PPP
-+ * protocol header.
-+ *
-+ * Return: Whether the PPP protocol field is compressed.
-+ */
-+static inline bool ppp_skb_is_compressed_proto(const struct sk_buff *skb)
-+{
-+	return unlikely(skb->data[0] & 0x01);
-+}
-+
- #endif /* _PPP_DEFS_H_ */
++err_notifiers_init:
++	mlx5_hca_caps_free(dev);
+ err_hca_caps:
+ 	mlx5_adev_cleanup(dev);
+ err_adev_init:
 -- 
 2.53.0
 
