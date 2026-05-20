@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F5D3FD15C;
-	Wed, 20 May 2026 18:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3213F3FD15C;
+	Wed, 20 May 2026 18:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302694; cv=none; b=QVJtoNIj38sjldwg59i8P7JxBaDPymNqq8AEw29wmUwOU4Kt0oXHcvgouAAy/kfwRFzfCTVrVVHuPcuoAKP5weYYyvDeB8MHi6pmNKYXxpZ1i5yUx7Ykp8V0G5PFdTED+/KityQSfVkgmsO3Iz9ZQRNhZNOBnhASQSyJ08Ks+1s=
+	t=1779302697; cv=none; b=u78+Jf9rLSLwClah06Srv64plkjV8VnI9UlRemthmQq44SqdAbH5dMaccpVSPjl9TAmi1d7OVpyGnQLgTgBK2dAuHmg1D6Pw0Ud2HRa2NfelOFMkP7Hx1h74/Emm0l+5B1LJMmxUttlWq8wmeKXtUr1NfkXwzvhOv8fvkalSozU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302694; c=relaxed/simple;
-	bh=3qB2aD0QKTcl2cnJGq6l2D3b4IoD3e8jxrq3DIlUmWE=;
+	s=arc-20240116; t=1779302697; c=relaxed/simple;
+	bh=Mc/2p+TouOg4v/MwjjfspFjo8Ox+Np+RdJ2ViRp4QlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tZL7z+HdW5es3jxN0e5+RgndEe2u4dHuvMBfiszCnznSwagrrlHGipioUncMoLP+xlNHOBa+yZ/52naeQvjk/1z2224/Ft/vICJbD0njvoXR1LL61LaJoFckHHDVlzaGnAtYlZzxr//wY4fNTv2vgXbsyW60QmFLfzZV9kWvEOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/4NDRCF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JpytfnEGTexCHpVjilKFCFtuWSTMA+AO6d9RJ39u7i96V69romkfNj54+q6ORDnfDNPq6ihm8kY69PNQwVyF2zyqF1r4Xy89q7EFCd9e38kBrdxG42a4bMsLqkCMO2NVegx4R6Ripbd4g886RS3NkiIKBrnXVda6zOlciJ1aZDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufPDGZhP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/4NDRCF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE491F000E9;
-	Wed, 20 May 2026 18:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufPDGZhP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972D01F000E9;
+	Wed, 20 May 2026 18:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302693;
-	bh=70q0sn0o59vxUvMWvOItLCs3OrIgs+9J57feTurCkH0=;
+	s=korg; t=1779302696;
+	bh=V1qpNHXbW5pyn0iL+MHi12ODAC8iPt8OOna2DfpXfns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e/4NDRCFZi0mZ7PvbKXCT0ATIWsXtYb9mcNjth6t7Q/6g2kvZqHwi+3+mxBIu3J1A
-	 4c/uyeGTtGJ+80ZdlQM4WbCafwa88LsZVucIh2EdSzjnSuj1LzIrcNVsF/BoBQRg13
-	 qh43sjrL7pJnasSg2yFf18Js0Jyv4+kSYSc1V8lY=
+	b=ufPDGZhPt4esC88godE8sc70/j+5e22GwAuR7SVAiz0h1UlGOxur48ccDCB5Lu7DP
+	 5fsKuTRepaevt5rfWkw87dskfgSthq4iW8uRaw71vVs0JKBsJKRLFxZICTSUnaUhpe
+	 LHG9aThiA1EmgmQpM+GbKDOI1Kaz0vhIcDs/F0Fg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Mark Harmstone <mark@harmstone.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 364/508] mailbox: mailbox-test: make data_ready a per-instance variable
-Date: Wed, 20 May 2026 18:23:07 +0200
-Message-ID: <20260520162106.516723730@linuxfoundation.org>
+Subject: [PATCH 6.6 365/508] btrfs: fix double-decrement of bytes_may_use in submit_one_async_extent()
+Date: Wed, 20 May 2026 18:23:08 +0200
+Message-ID: <20260520162106.537471951@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,71 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Mark Harmstone <mark@harmstone.com>
 
-[ Upstream commit 6e937f4e769e60947909e3525965f0137b9039e8 ]
+[ Upstream commit 82323b1a7088b7a5c3e528a5d634bff447fa286f ]
 
-While not the default case, multiple tests can be run simultaneously.
-Then, data_ready being a global variable will be overwritten and the
-per-instance lock will not help. Turn the global variable into a
-per-instance one to avoid this problem.
+submit_one_async_extent() calls btrfs_reserve_extent(), which decrements
+bytes_may_use. If the call btrfs_create_io_em() fails, we jump to
+out_free_reserve, which calls extent_clear_unlock_delalloc().
 
-Fixes: e339c80af95e ("mailbox: mailbox-test: don't rely on rx_buffer content to signal data ready")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Because we're specifying EXTENT_DO_ACCOUNTING, i.e.
+EXTENT_CLEAR_META_RESV | EXTENT_CLEAR_DATA_RESV, this decreases
+bytes_may_use again. This can lead to problems later on, as an initial
+write can fail only for the writeback to silently ENOSPC.
+
+Fix this by replacing EXTENT_DO_ACCOUNTING with EXTENT_CLEAR_META_RESV.
+This parallels a4fe134fc1d8eb ("btrfs: fix a double release on reserved
+extents in cow_one_range()"), which is the same fix in cow_one_range().
+
+Fixes: 151a41bc46df ("Btrfs: fix what bits we clear when erroring out from delalloc")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Mark Harmstone <mark@harmstone.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-test.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/btrfs/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index 2c98c300ba33b..f2ed7f884a575 100644
---- a/drivers/mailbox/mailbox-test.c
-+++ b/drivers/mailbox/mailbox-test.c
-@@ -28,8 +28,6 @@
- #define MBOX_HEXDUMP_MAX_LEN	(MBOX_HEXDUMP_LINE_LEN *		\
- 				 (MBOX_MAX_MSG_LEN / MBOX_BYTES_PER_LINE))
- 
--static bool mbox_data_ready;
--
- struct mbox_test_device {
- 	struct device		*dev;
- 	void __iomem		*tx_mmio;
-@@ -42,6 +40,7 @@ struct mbox_test_device {
- 	spinlock_t		lock;
- 	struct mutex		mutex;
- 	wait_queue_head_t	waitq;
-+	bool			data_ready;
- 	struct fasync_struct	*async_queue;
- 	struct dentry		*root_debugfs_dir;
- };
-@@ -162,7 +161,7 @@ static bool mbox_test_message_data_ready(struct mbox_test_device *tdev)
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&tdev->lock, flags);
--	data_ready = mbox_data_ready;
-+	data_ready = tdev->data_ready;
- 	spin_unlock_irqrestore(&tdev->lock, flags);
- 
- 	return data_ready;
-@@ -227,7 +226,7 @@ static ssize_t mbox_test_message_read(struct file *filp, char __user *userbuf,
- 	*(touser + l) = '\0';
- 
- 	memset(tdev->rx_buffer, 0, MBOX_MAX_MSG_LEN);
--	mbox_data_ready = false;
-+	tdev->data_ready = false;
- 
- 	spin_unlock_irqrestore(&tdev->lock, flags);
- 
-@@ -297,7 +296,7 @@ static void mbox_test_receive_message(struct mbox_client *client, void *message)
- 				     message, MBOX_MAX_MSG_LEN);
- 		memcpy(tdev->rx_buffer, message, MBOX_MAX_MSG_LEN);
- 	}
--	mbox_data_ready = true;
-+	tdev->data_ready = true;
- 	spin_unlock_irqrestore(&tdev->lock, flags);
- 
- 	wake_up_interruptible(&tdev->waitq);
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 46df425ab7bae..00cd932791c8d 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -1209,7 +1209,7 @@ static void submit_one_async_extent(struct async_chunk *async_chunk,
+ 	extent_clear_unlock_delalloc(inode, start, end,
+ 				     NULL, EXTENT_LOCKED | EXTENT_DELALLOC |
+ 				     EXTENT_DELALLOC_NEW |
+-				     EXTENT_DEFRAG | EXTENT_DO_ACCOUNTING,
++				     EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV,
+ 				     PAGE_UNLOCK | PAGE_START_WRITEBACK |
+ 				     PAGE_END_WRITEBACK);
+ 	free_async_extent_pages(async_extent);
 -- 
 2.53.0
 
