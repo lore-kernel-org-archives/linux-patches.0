@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D090236D9EA;
-	Wed, 20 May 2026 16:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D876318EC7;
+	Wed, 20 May 2026 16:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295930; cv=none; b=C1EnDoVJyP2Xnp02qNMQuLh9mBZw8LzJw8nuEa+f+wEqd0tUbVbYb/CE3XnDnGp9clyDzXpruQ+mYt5CbmSr7pXA6ELFRlHfj+qU+3LlRxpVLjG4ooAopJFuwSMai84SRHqFmvpntBGCEFrRoecALVuYqVhEQBpVi5X/sUnAiao=
+	t=1779295932; cv=none; b=utOpcvdHOOwa9tSyvwXMCQ4SJ1tx9MdrVkq6gxVNzha/AQ9ZORXyPkdqcMrWkqA78ZvTr8i5P5Ntym4q4jonKZvXgRtsTEaOo6iPYn9tRgzOEH4FuXAvstaZNMNx1ayOYr72ScIA5Kofg2iQxPNfydnLASBY76Qjxm40fCnu2bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295930; c=relaxed/simple;
-	bh=BnUBuzjxfvNOjbivFtg7rqnNU9XNW8kZL2xwLoZ93wE=;
+	s=arc-20240116; t=1779295932; c=relaxed/simple;
+	bh=E57E7eQjq6p5A/mBhsfBm+eVgAMXU/ugSleSArpCEr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1q6v5AYxSZPagTjnrl9wr7HHoDt9oTKgYU3s/zTgFvd/TrM/DqWTxuivpZyx4lmXJVEmccHPQNymRaqc6ul4uLPctxMfV2nbr5DCt1dmP+R3UPpJvH4yi8vgbJXLh4D2gESazgMZzjKh6IG3/GCH3JjI0ZxRS3qLHwP4VaSSmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RoKF5U3C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WcjbuTJ9g1VSEHbTCv2xrlIQnzThRz+lFyE1QRKr0ZbNwggr/3MoTS9buxfWOgX1u1DnkjrNPl5I3heyXj+hkKhRnv1AuSFKraGs2c++PgpPmzAwhbyF609IHqgbO/klGtroRs8Rnbn0xRIYBYigG8cZliQ/Q3rI8asCphPTNGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UqFLwFc3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RoKF5U3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6191F00893;
-	Wed, 20 May 2026 16:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqFLwFc3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D429D1F000E9;
+	Wed, 20 May 2026 16:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295928;
-	bh=Vm64RBOTgx6bfKNjcUB/pOPS1lNPqk9WWXfNcVHEb+s=;
+	s=korg; t=1779295931;
+	bh=xaqbLAqkphwN4cFEsvBQrxX+IKo0oasSVEiGQBW2lLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RoKF5U3CnVntRc9/VX58rHO7ftczlbMjeVSX9F9VzzMguui1Bc/fn8qbliXLnWQs1
-	 9FBXrFiX3ccEyi9kk8xrq3WcUrndW8I9q4bC0PCCct7Ji4lwPWYhCMvKq7UhiIPGQE
-	 QxerMaOWiP993jhlbRNu7VGRekyfHCpEtPKALwuQ=
+	b=UqFLwFc3qv2bj5jcKewmOakzZ/xGLmIRRaFxneHSQn2hZiwddG2A2wMONAgF1rtzy
+	 4srLL3y5qVtWHskhC+Sc17WW8DxG4yjnHQUQkiifRjc2EES6f93qB6ItLLsgSGL9gc
+	 rJRs7OnVVyyxCoCQ9BesOewZaxVpO1PfjpJ2xKI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Sebastian Ene <sebastianene@google.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0566/1146] ARM: dts: imx27-eukrea: replace interrupts with interrupts-extended
-Date: Wed, 20 May 2026 18:13:36 +0200
-Message-ID: <20260520162200.994349775@linuxfoundation.org>
+Subject: [PATCH 7.0 0567/1146] firmware: arm_ffa: Use the correct buffer size during RXTX_MAP
+Date: Wed, 20 May 2026 18:13:37 +0200
+Message-ID: <20260520162201.017227674@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,74 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Sebastian Ene <sebastianene@google.com>
 
-[ Upstream commit 0477a6b31e2874e554e3bcfac9883684b8f8ca2d ]
+[ Upstream commit 83210251fd70d5f96bcdc8911e15f7411a6b2463 ]
 
-The property interrupts use default interrupt controllers. But pass down
-gpio<n> as phandle. Correct it by use interrupts-extended.
+Don't use the discovered buffer size from an FFA_FEATURES call directly
+since we can run on a system that has the PAGE_SIZE larger than the
+returned size which makes the alloc_pages_exact for the buffer to be
+rounded up.
 
-Fixes: d8cae888aa2bc ("ARM: dts: Add support for the cpuimx27 board from Eukrea and its baseboard")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 61824feae5c0 ("firmware: arm_ffa: Fetch the Rx/Tx buffer size using ffa_features()")
+Signed-off-by: Sebastian Ene <sebastianene@google.com>
+Link: https://patch.msgid.link/20260402113939.930221-1-sebastianene@google.com
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi      | 8 ++++----
- .../boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/firmware/arm_ffa/driver.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-index c7e9235848782..9f0e65526d5f9 100644
---- a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-@@ -106,7 +106,7 @@ uart8250@3,200000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 23 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 23 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x200000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-@@ -119,7 +119,7 @@ uart8250@3,400000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 22 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 22 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x400000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-@@ -132,7 +132,7 @@ uart8250@3,800000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 27 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 27 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x800000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-@@ -145,7 +145,7 @@ uart8250@3,1000000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 30 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 30 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x1000000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-diff --git a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
-index d78793601306c..c71f802983304 100644
---- a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
-@@ -76,7 +76,7 @@ ads7846@0 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_touch>;
- 		reg = <0>;
--		interrupts = <&gpio4 25 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio4 25 IRQ_TYPE_LEVEL_LOW>;
- 		spi-cpol;
- 		spi-max-frequency = <1500000>;
- 		ti,keep-vref-on;
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index f2f94d4d533e8..eb27828482837 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -2078,7 +2078,7 @@ static int __init ffa_init(void)
+ 
+ 	ret = ffa_rxtx_map(virt_to_phys(drv_info->tx_buffer),
+ 			   virt_to_phys(drv_info->rx_buffer),
+-			   rxtx_bufsz / FFA_PAGE_SIZE);
++			   PAGE_ALIGN(rxtx_bufsz) / FFA_PAGE_SIZE);
+ 	if (ret) {
+ 		pr_err("failed to register FFA RxTx buffers\n");
+ 		goto free_pages;
 -- 
 2.53.0
 
