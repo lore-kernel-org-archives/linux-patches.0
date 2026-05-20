@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551B9373BEB;
-	Wed, 20 May 2026 16:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC03368968;
+	Wed, 20 May 2026 16:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296256; cv=none; b=YaY9wSNaIj1KIwjoWHosEFNq62ORmov7QYA7WVhEET+W5sAq7NtO9REYrCIF/fZQkzXqia709RqXQGswS1vyWc0qrUqSyV6REdeTJauaf555c4cAfgtGPenMoKptjkfCQGCj/iBgWo//v/Od+2Q1Qi+chrxfYrIWfWdGumY25y8=
+	t=1779296259; cv=none; b=rJyX6XcqXnJbjF+nBxc+nOL4qhe6t2EvfbsvM32ALugPVID1kmGFQulcPtszMG7Fu0p3qv50BLuaazlXwGQTCdnqJnuftHPsuyTp+MZKw3usIE6/0ExdUgqPxRPOKSb3CWAfOml+AmViZnb67siGU2+z3B8990jHLJw34iG8YDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296256; c=relaxed/simple;
-	bh=laEm0dPvnNKNe3Daq6OXx9T3zXUX6LIg0M4ub98c+GM=;
+	s=arc-20240116; t=1779296259; c=relaxed/simple;
+	bh=WQr+35TIzsccfnZV//4PZB27kG2X5X0R2jl8BBfvnng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SGMIElLD1LXNEqQ6kE3rmfKOdzzYkKYMbBNJ3er7adcEqBwtDPnJTqzAjr/ZY7pROmfiSBgUPBIejdqh6D2GdSgnSIRqJ5pJ8wWEV0eV3ZuLdPIU3zHa/jAqQafTfuMl6aPrK6ju2PS7ElMjfIBkNcFKyjNJb0putSyRK9yka1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hz8+r8D5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PQA/1yTDddHDlrxVX8Kse9Ke3oQu8v5baQyGXuGXhIi/T6SDvRFKEQQIxDgZaoxPHviY8kga44xfLi6q0eiePHmdGbu0ftBa3VXWdaAb+snDFaRLSqtCgR3f/iTzC8yQvyKgNPB2LqtGRclsgplDjfNt/HKkK5euVqva/5hDGag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulwNB3j1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hz8+r8D5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA82A1F000E9;
-	Wed, 20 May 2026 16:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulwNB3j1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0401F000E9;
+	Wed, 20 May 2026 16:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296255;
-	bh=1nLVc4DUDEFrAXuPoD4nVukZyUvN2+QyUTKNohizI9I=;
+	s=korg; t=1779296257;
+	bh=nM0zVYarTb50y3Ia1mZxUVdmVv0RzZ0MQqBYLwD8cFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hz8+r8D5/UPTbIqcpF3WjSPwqrUBc8R9qenDDt6whf1i9QUVmSU7iYhNgFLlsyj+n
-	 5hlnX1obaJgRyv/KgjRLfIlbXb+PptRiwfLfCanznefcstqfoR3QPfawsgJsPa12ZF
-	 UzE3KDRVPEhiGGiwBOkZOn068nBF/mnsMbB+UHNA=
+	b=ulwNB3j16yaHbehp9nl60hkPfn8gQ7srDhH/AvO/JBT5woDZk7gYHW22GXnM9fndM
+	 J1fCs/OXGpWzBdbS4E5X/9lYOCx/mxfj4cWZJNaLpWkTGidIXWacckiJmcKERiclg5
+	 OZXISUDMzlmYhx9WNLhOmaCf4/TRLRufQoGQpWKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0693/1146] RDMA/core: Prefer NLA_NUL_STRING
-Date: Wed, 20 May 2026 18:15:43 +0200
-Message-ID: <20260520162203.871105092@linuxfoundation.org>
+Subject: [PATCH 7.0 0729/1146] printk_ringbuffer: Fix get_data() size sanity check
+Date: Wed, 20 May 2026 18:16:19 +0200
+Message-ID: <20260520162204.705024252@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,54 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: John Ogness <john.ogness@linutronix.de>
 
-[ Upstream commit 6ed3d14fc45d3da6025e7fe4a6a09066856698e2 ]
+[ Upstream commit 8e81ecbf1cb46b8d2d13e772d5924b09bd60169a ]
 
-These attributes are evaluated as c-string (passed to strcmp), but
-NLA_STRING doesn't check for the presence of a \0 terminator.
+Commit cc3bad11de6e ("printk_ringbuffer: Fix check of valid data
+size when blk_lpos overflows") added sanity checking to get_data()
+to avoid returning data of illegal sizes (too large or too small).
+It uses the helper function data_check_size() for the check.
+However, data_check_size() expects the size of the data, not the
+size of the data block. get_data() is providing the size of the
+data block.  This means that if the data size (text_buf_size) is
+at or near the maximum legal size:
 
-Either this needs to switch to nla_strcmp() and needs to adjust printf fmt
-specifier to not use plain %s, or this needs to use NLA_NUL_STRING.
+sizeof(prb_data_block) + text_buf_size == DATA_SIZE(data_ring) / 2
 
-As the code has been this way for long time, it seems to me that userspace
-does include the terminating nul, even tough its not enforced so far, and
-thus NLA_NUL_STRING use is the simpler solution.
+data_check_size() will report failure because it adds
+sizeof(prb_data_block) to the provided size. The sanity check in
+get_data() is counting the data block header twice. The result is
+that the reader fails to read the legal record.
 
-Fixes: 30dc5e63d6a5 ("RDMA/core: Add support for iWARP Port Mapper user space service")
-Link: https://patch.msgid.link/r/20260330122742.13315-1-fw@strlen.de
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Since get_data() subtracts the data block header size before returning,
+move the sanity check to after the subtraction.
+
+Luckily printk() is not vulnerable to this problem because
+truncate_msg() limits printk-messages to 1/4 of the ringbuffer.
+Indeed, by adjusting the printk_ringbuffer KUnit test, which does not
+use printk() and its truncate_msg() check, it is easy to see that the
+reader fails and the WARN_ON is triggered.
+
+Fixes: cc3bad11de6e ("printk_ringbuffer: Fix check of valid data size when blk_lpos overflows")
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Tested-by: Petr Mladek <pmladek@suse.com>
+Link: https://patch.msgid.link/20260326133809.8045-1-john.ogness@linutronix.de
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/iwpm_msg.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/printk/printk_ringbuffer.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/core/iwpm_msg.c b/drivers/infiniband/core/iwpm_msg.c
-index 69c85249b4650..4625abd29ac06 100644
---- a/drivers/infiniband/core/iwpm_msg.c
-+++ b/drivers/infiniband/core/iwpm_msg.c
-@@ -365,9 +365,9 @@ int iwpm_remove_mapping(struct sockaddr_storage *local_addr, u8 nl_client)
- /* netlink attribute policy for the received response to register pid request */
- static const struct nla_policy resp_reg_policy[IWPM_NLA_RREG_PID_MAX] = {
- 	[IWPM_NLA_RREG_PID_SEQ]     = { .type = NLA_U32 },
--	[IWPM_NLA_RREG_IBDEV_NAME]  = { .type = NLA_STRING,
-+	[IWPM_NLA_RREG_IBDEV_NAME]  = { .type = NLA_NUL_STRING,
- 					.len = IWPM_DEVNAME_SIZE - 1 },
--	[IWPM_NLA_RREG_ULIB_NAME]   = { .type = NLA_STRING,
-+	[IWPM_NLA_RREG_ULIB_NAME]   = { .type = NLA_NUL_STRING,
- 					.len = IWPM_ULIBNAME_SIZE - 1 },
- 	[IWPM_NLA_RREG_ULIB_VER]    = { .type = NLA_U16 },
- 	[IWPM_NLA_RREG_PID_ERR]     = { .type = NLA_U16 }
-@@ -677,7 +677,7 @@ int iwpm_remote_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
+diff --git a/kernel/printk/printk_ringbuffer.c b/kernel/printk/printk_ringbuffer.c
+index 56c8e3d031f49..a3526bdd4e10d 100644
+--- a/kernel/printk/printk_ringbuffer.c
++++ b/kernel/printk/printk_ringbuffer.c
+@@ -1302,10 +1302,6 @@ static const char *get_data(struct prb_data_ring *data_ring,
+ 		return NULL;
+ 	}
  
- /* netlink attribute policy for the received request for mapping info */
- static const struct nla_policy resp_mapinfo_policy[IWPM_NLA_MAPINFO_REQ_MAX] = {
--	[IWPM_NLA_MAPINFO_ULIB_NAME] = { .type = NLA_STRING,
-+	[IWPM_NLA_MAPINFO_ULIB_NAME] = { .type = NLA_NUL_STRING,
- 					.len = IWPM_ULIBNAME_SIZE - 1 },
- 	[IWPM_NLA_MAPINFO_ULIB_VER]  = { .type = NLA_U16 }
- };
+-	/* Sanity check. Data-less blocks were handled earlier. */
+-	if (WARN_ON_ONCE(!data_check_size(data_ring, *data_size) || !*data_size))
+-		return NULL;
+-
+ 	/* A valid data block will always be aligned to the ID size. */
+ 	if (WARN_ON_ONCE(blk_lpos->begin != ALIGN(blk_lpos->begin, sizeof(db->id))) ||
+ 	    WARN_ON_ONCE(blk_lpos->next != ALIGN(blk_lpos->next, sizeof(db->id)))) {
+@@ -1319,6 +1315,10 @@ static const char *get_data(struct prb_data_ring *data_ring,
+ 	/* Subtract block ID space from size to reflect data size. */
+ 	*data_size -= sizeof(db->id);
+ 
++	/* Sanity check the max size of the regular data block. */
++	if (WARN_ON_ONCE(!data_check_size(data_ring, *data_size)))
++		return NULL;
++
+ 	return &db->data[0];
+ }
+ 
 -- 
 2.53.0
 
