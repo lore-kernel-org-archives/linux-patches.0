@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B602348C55;
-	Wed, 20 May 2026 18:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FA329B78D;
+	Wed, 20 May 2026 18:21:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301276; cv=none; b=BJYvUz+tpQq2OnIcqZDT8gmkpVcg9xOmKBm9+Cr3CKak7NzK6srmPijMaGEaO/xA4HhBhyJqerzhxoBBIgUm6TRY568Ezs47qQKslRby1kyvHfZ+skuhuwcq2CWXsaXlM/Ide2jK7YNF1bhb5UooOZdl9prbgYXVTSQ2ydD5rmE=
+	t=1779301279; cv=none; b=nZVqgoGRvyu+ndjRQg7cAaFQkdusbq0srg/Uy5ZDO6HvfjngbODQBkinT5TMcwR6aWM5HCkK0+zch4Ef/TqQ8dy7s4vl0MxKW7dgab7GVwXKtSRSn03iKqa26qdFYcXb1i8FXTaVjg7b1NbybRSZvVPNeKeS90jP9kHDdmm4u1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301276; c=relaxed/simple;
-	bh=jN930yQxiXNpu4/W1lQuRsrhMqgW58g0MBlsMwXHeHU=;
+	s=arc-20240116; t=1779301279; c=relaxed/simple;
+	bh=Cx2rvfT4MzdniqkS5EVIRjhfrvAtLMUOk3hB8WpAQM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QsSbLBL95EsH8vRZN7nfqETuxpWH2iZDekdCgZy4vnQyfPjH90Cv5O0ha9RPh52MoPlOCjQClcYt5mU4Ex2QluqfywfkiZL2wRZImr3OMiRyfNBNsh58VGQkn3HXJxBcs/3azhUP4KbcoQWuar+ZKP+lGmGbkIBX+SbA0GZCBNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxV0MyjI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=b/7b24/BwfXejthMiNVa814cbMyWttxpwdoICtYy4hLxa2Iv7/bTCj1hkIn91ICkJ2+hqf74iWTax6fLHJL4SQeBJUUqYzwpsGiuGWXNcrvWLAC8AZACeGOLxyy9DEVFWsaN3axoU9iN71mA7a6JOOhv4TVOoVtjJCg7X0BBcQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkarNqMY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxV0MyjI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61C51F00893;
-	Wed, 20 May 2026 18:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkarNqMY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE4D1F000E9;
+	Wed, 20 May 2026 18:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301275;
-	bh=bL6S5vf0JBTDmIEDaVp1xTSXoSxcwOZLfdZaCqrj/GI=;
+	s=korg; t=1779301278;
+	bh=89RyYzin8e4Kn8s9n+xzqRwCdRtNvXBrBwqx1UO6K7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CxV0MyjIutUOt0liwa3/GEc+KH/cEaWKilCpCyv4y7CdeMZQX42DGf6djFaEsFH0j
-	 BPgSbep67fLlA/42uEy7WIzuqUuEtaEvYOSvDpA3ZSTVtIMpHGMv+JXVBa/TOdwQAw
-	 Pa5eddlCDofecu41BvJRm44kEFTJU8ve+bF0cD4Q=
+	b=hkarNqMYVjwSvP5QCcStklnSmDEPp/FnjOpv/LkupOq2rQij6Qt5aDFYOn0Xp5hDN
+	 bJqRG0kmkZvmqAm8nSAPfqdL/xnTs8kNb3763ZMq5WjyOlg4XEPXNeVFvZmOMoYV1E
+	 HXZC+2gl6FHemQ+YANO5WXI9fyLc2kJwFQfMjkzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akihiko Odaki <akihiko.odaki@daynix.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Lei Yang <leiyang@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 494/666] virtio_net: Use new RSS config structs
-Date: Wed, 20 May 2026 18:21:45 +0200
-Message-ID: <20260520162121.969322406@linuxfoundation.org>
+Subject: [PATCH 6.12 477/666] pwm: atmel-tcb: Cache clock rates and mark chip as atomic
+Date: Wed, 20 May 2026 18:21:28 +0200
+Message-ID: <20260520162121.606896948@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -49,289 +45,141 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Sangyun Kim <sangyun.kim@snu.ac.kr>
 
-[ Upstream commit ed3100e90d0d120a045a551b85eb43cf2527e885 ]
+[ Upstream commit 68637b68afcc3cb4d56aca14a3a1d1b47b879369 ]
 
-The new RSS configuration structures allow easily constructing data for
-VIRTIO_NET_CTRL_MQ_RSS_CONFIG as they strictly follow the order of data
-for the command.
+atmel_tcb_pwm_apply() holds tcbpwmc->lock as a spinlock via
+guard(spinlock)() and then calls atmel_tcb_pwm_config(), which calls
+clk_get_rate() twice. clk_get_rate() acquires clk_prepare_lock (a
+mutex), so this is a sleep-in-atomic-context violation.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
-Link: https://patch.msgid.link/20250321-virtio-v2-3-33afb8f4640b@daynix.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 3bc06da858ef ("virtio_net: sync rss_trailer.max_tx_vq on queue_pairs change via VQ_PAIRS_SET")
+On CONFIG_DEBUG_ATOMIC_SLEEP kernels every pwm_apply_state() that
+enables or reconfigures the PWM triggers a "BUG: sleeping function
+called from invalid context" warning.
+
+Acquire exclusive control over the clock rates with
+clk_rate_exclusive_get() at probe time and cache the rates in struct
+atmel_tcb_pwm_chip, then read the cached rates from
+atmel_tcb_pwm_config(). This keeps the spinlock-based mutual exclusion
+introduced in commit 37f7707077f5 ("pwm: atmel-tcb: Fix race condition
+and convert to guards") and removes the sleeping calls from the atomic
+section.
+
+With no sleeping calls left in .apply() and the regmap-mmio bus already
+running with fast_io=true, also mark the chip as atomic so consumers
+can use pwm_apply_atomic() from atomic context.
+
+Fixes: 37f7707077f5 ("pwm: atmel-tcb: Fix race condition and convert to guards")
+Signed-off-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Link: https://patch.msgid.link/20260419080838.3192357-1-sangyun.kim@snu.ac.kr
+[ukleinek: Ensure .clk is enabled before calling clk_get_rate on it.]
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 117 ++++++++++++++-------------------------
- 1 file changed, 43 insertions(+), 74 deletions(-)
+ drivers/pwm/pwm-atmel-tcb.c | 38 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 34 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 05b50a4626b85..7aa1832672942 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -365,24 +365,7 @@ struct receive_queue {
- 	bool do_dma;
- };
+diff --git a/drivers/pwm/pwm-atmel-tcb.c b/drivers/pwm/pwm-atmel-tcb.c
+index 5ee4254d1e487..9554deb413ab3 100644
+--- a/drivers/pwm/pwm-atmel-tcb.c
++++ b/drivers/pwm/pwm-atmel-tcb.c
+@@ -50,6 +50,8 @@ struct atmel_tcb_pwm_chip {
+ 	spinlock_t lock;
+ 	u8 channel;
+ 	u8 width;
++	unsigned long rate;
++	unsigned long slow_rate;
+ 	struct regmap *regmap;
+ 	struct clk *clk;
+ 	struct clk *gclk;
+@@ -266,7 +268,7 @@ static int atmel_tcb_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	int slowclk = 0;
+ 	unsigned period;
+ 	unsigned duty;
+-	unsigned rate = clk_get_rate(tcbpwmc->clk);
++	unsigned long rate = tcbpwmc->rate;
+ 	unsigned long long min;
+ 	unsigned long long max;
  
--/* This structure can contain rss message with maximum settings for indirection table and keysize
-- * Note, that default structure that describes RSS configuration virtio_net_rss_config
-- * contains same info but can't handle table values.
-- * In any case, structure would be passed to virtio hw through sg_buf split by parts
-- * because table sizes may be differ according to the device configuration.
-- */
- #define VIRTIO_NET_RSS_MAX_KEY_SIZE     40
--struct virtio_net_ctrl_rss {
--	__le32 hash_types;
--	__le16 indirection_table_mask;
--	__le16 unclassified_queue;
--	__le16 hash_cfg_reserved; /* for HASH_CONFIG (see virtio_net_hash_config for details) */
--	__le16 max_tx_vq;
--	u8 hash_key_length;
--	u8 key[VIRTIO_NET_RSS_MAX_KEY_SIZE];
--
--	__le16 *indirection_table;
--};
- 
- /* Control VQ buffers: protected by the rtnl lock */
- struct control_buf {
-@@ -426,7 +409,9 @@ struct virtnet_info {
- 	u16 rss_indir_table_size;
- 	u32 rss_hash_types_supported;
- 	u32 rss_hash_types_saved;
--	struct virtio_net_ctrl_rss rss;
-+	struct virtio_net_rss_config_hdr *rss_hdr;
-+	struct virtio_net_rss_config_trailer rss_trailer;
-+	u8 rss_hash_key_data[VIRTIO_NET_RSS_MAX_KEY_SIZE];
- 
- 	/* Has control virtqueue */
- 	bool has_cvq;
-@@ -520,23 +505,16 @@ static struct sk_buff *virtnet_skb_append_frag(struct sk_buff *head_skb,
- 					       struct page *page, void *buf,
- 					       int len, int truesize);
- 
--static int rss_indirection_table_alloc(struct virtio_net_ctrl_rss *rss, u16 indir_table_size)
-+static size_t virtnet_rss_hdr_size(const struct virtnet_info *vi)
- {
--	if (!indir_table_size) {
--		rss->indirection_table = NULL;
--		return 0;
--	}
-+	u16 indir_table_size = vi->has_rss ? vi->rss_indir_table_size : 1;
- 
--	rss->indirection_table = kmalloc_array(indir_table_size, sizeof(u16), GFP_KERNEL);
--	if (!rss->indirection_table)
--		return -ENOMEM;
--
--	return 0;
-+	return struct_size(vi->rss_hdr, indirection_table, indir_table_size);
- }
- 
--static void rss_indirection_table_free(struct virtio_net_ctrl_rss *rss)
-+static size_t virtnet_rss_trailer_size(const struct virtnet_info *vi)
- {
--	kfree(rss->indirection_table);
-+	return struct_size(&vi->rss_trailer, hash_key_data, vi->rss_key_size);
- }
- 
- static bool is_xdp_frame(void *ptr)
-@@ -3477,15 +3455,16 @@ static void virtnet_rss_update_by_qpairs(struct virtnet_info *vi, u16 queue_pair
- 
- 	for (; i < vi->rss_indir_table_size; ++i) {
- 		indir_val = ethtool_rxfh_indir_default(i, queue_pairs);
--		vi->rss.indirection_table[i] = cpu_to_le16(indir_val);
-+		vi->rss_hdr->indirection_table[i] = cpu_to_le16(indir_val);
- 	}
--	vi->rss.max_tx_vq = cpu_to_le16(queue_pairs);
-+	vi->rss_trailer.max_tx_vq = cpu_to_le16(queue_pairs);
- }
- 
- static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
- {
- 	struct virtio_net_ctrl_mq *mq __free(kfree) = NULL;
--	struct virtio_net_ctrl_rss old_rss;
-+	struct virtio_net_rss_config_hdr *old_rss_hdr;
-+	struct virtio_net_rss_config_trailer old_rss_trailer;
- 	struct net_device *dev = vi->dev;
- 	struct scatterlist sg;
- 
-@@ -3500,24 +3479,28 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
- 	 * update (VIRTIO_NET_CTRL_MQ_VQ_PAIRS_SET below) and return directly.
+@@ -294,7 +296,7 @@ static int atmel_tcb_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
  	 */
- 	if (vi->has_rss && !netif_is_rxfh_configured(dev)) {
--		memcpy(&old_rss, &vi->rss, sizeof(old_rss));
--		if (rss_indirection_table_alloc(&vi->rss, vi->rss_indir_table_size)) {
--			vi->rss.indirection_table = old_rss.indirection_table;
-+		old_rss_hdr = vi->rss_hdr;
-+		old_rss_trailer = vi->rss_trailer;
-+		vi->rss_hdr = kzalloc(virtnet_rss_hdr_size(vi), GFP_KERNEL);
-+		if (!vi->rss_hdr) {
-+			vi->rss_hdr = old_rss_hdr;
- 			return -ENOMEM;
- 		}
+ 	if (i == ARRAY_SIZE(atmel_tcb_divisors)) {
+ 		i = slowclk;
+-		rate = clk_get_rate(tcbpwmc->slow_clk);
++		rate = tcbpwmc->slow_rate;
+ 		min = div_u64(NSEC_PER_SEC, rate);
+ 		max = min << tcbpwmc->width;
  
-+		*vi->rss_hdr = *old_rss_hdr;
- 		virtnet_rss_update_by_qpairs(vi, queue_pairs);
- 
- 		if (!virtnet_commit_rss_command(vi)) {
- 			/* restore ctrl_rss if commit_rss_command failed */
--			rss_indirection_table_free(&vi->rss);
--			memcpy(&vi->rss, &old_rss, sizeof(old_rss));
-+			kfree(vi->rss_hdr);
-+			vi->rss_hdr = old_rss_hdr;
-+			vi->rss_trailer = old_rss_trailer;
- 
- 			dev_warn(&dev->dev, "Fail to set num of queue pairs to %d, because committing RSS failed\n",
- 				 queue_pairs);
- 			return -EINVAL;
- 		}
--		rss_indirection_table_free(&old_rss);
-+		kfree(old_rss_hdr);
- 		goto succ;
+@@ -431,24 +433,49 @@ static int atmel_tcb_pwm_probe(struct platform_device *pdev)
  	}
  
-@@ -3960,28 +3943,12 @@ static int virtnet_set_ringparam(struct net_device *dev,
- static bool virtnet_commit_rss_command(struct virtnet_info *vi)
- {
- 	struct net_device *dev = vi->dev;
--	struct scatterlist sgs[4];
--	unsigned int sg_buf_size;
-+	struct scatterlist sgs[2];
+ 	chip->ops = &atmel_tcb_pwm_ops;
++	chip->atomic = true;
+ 	tcbpwmc->channel = channel;
+ 	tcbpwmc->width = config->counter_width;
  
- 	/* prepare sgs */
--	sg_init_table(sgs, 4);
--
--	sg_buf_size = offsetof(struct virtio_net_ctrl_rss, hash_cfg_reserved);
--	sg_set_buf(&sgs[0], &vi->rss, sg_buf_size);
--
--	if (vi->has_rss) {
--		sg_buf_size = sizeof(uint16_t) * vi->rss_indir_table_size;
--		sg_set_buf(&sgs[1], vi->rss.indirection_table, sg_buf_size);
--	} else {
--		sg_set_buf(&sgs[1], &vi->rss.hash_cfg_reserved, sizeof(uint16_t));
--	}
--
--	sg_buf_size = offsetof(struct virtio_net_ctrl_rss, key)
--			- offsetof(struct virtio_net_ctrl_rss, max_tx_vq);
--	sg_set_buf(&sgs[2], &vi->rss.max_tx_vq, sg_buf_size);
--
--	sg_buf_size = vi->rss_key_size;
--	sg_set_buf(&sgs[3], vi->rss.key, sg_buf_size);
-+	sg_init_table(sgs, 2);
-+	sg_set_buf(&sgs[0], vi->rss_hdr, virtnet_rss_hdr_size(vi));
-+	sg_set_buf(&sgs[1], &vi->rss_trailer, virtnet_rss_trailer_size(vi));
+-	err = clk_prepare_enable(tcbpwmc->slow_clk);
++	err = clk_prepare_enable(tcbpwmc->clk);
+ 	if (err)
+ 		goto err_gclk;
  
- 	if (!virtnet_send_command(vi, VIRTIO_NET_CTRL_MQ,
- 				  vi->has_rss ? VIRTIO_NET_CTRL_MQ_RSS_CONFIG
-@@ -3998,17 +3965,17 @@ static bool virtnet_commit_rss_command(struct virtnet_info *vi)
++	err = clk_prepare_enable(tcbpwmc->slow_clk);
++	if (err)
++		goto err_disable_clk;;
++
++	err = clk_rate_exclusive_get(tcbpwmc->clk);
++	if (err)
++		goto err_disable_slow_clk;
++
++	err = clk_rate_exclusive_get(tcbpwmc->slow_clk);
++	if (err)
++		goto err_clk_unlock;
++
++	tcbpwmc->rate = clk_get_rate(tcbpwmc->clk);
++	tcbpwmc->slow_rate = clk_get_rate(tcbpwmc->slow_clk);
++
+ 	spin_lock_init(&tcbpwmc->lock);
  
- static void virtnet_init_default_rss(struct virtnet_info *vi)
- {
--	vi->rss.hash_types = cpu_to_le32(vi->rss_hash_types_supported);
-+	vi->rss_hdr->hash_types = cpu_to_le32(vi->rss_hash_types_supported);
- 	vi->rss_hash_types_saved = vi->rss_hash_types_supported;
--	vi->rss.indirection_table_mask = vi->rss_indir_table_size
-+	vi->rss_hdr->indirection_table_mask = vi->rss_indir_table_size
- 						? cpu_to_le16(vi->rss_indir_table_size - 1) : 0;
--	vi->rss.unclassified_queue = 0;
-+	vi->rss_hdr->unclassified_queue = 0;
+ 	err = pwmchip_add(chip);
+ 	if (err < 0)
+-		goto err_disable_clk;
++		goto err_slow_clk_unlock;
  
- 	virtnet_rss_update_by_qpairs(vi, vi->curr_queue_pairs);
+ 	platform_set_drvdata(pdev, chip);
  
--	vi->rss.hash_key_length = vi->rss_key_size;
-+	vi->rss_trailer.hash_key_length = vi->rss_key_size;
+ 	return 0;
  
--	netdev_rss_key_fill(vi->rss.key, vi->rss_key_size);
-+	netdev_rss_key_fill(vi->rss_hash_key_data, vi->rss_key_size);
- }
++err_slow_clk_unlock:
++	clk_rate_exclusive_put(tcbpwmc->slow_clk);
++
++err_clk_unlock:
++	clk_rate_exclusive_put(tcbpwmc->clk);
++
+ err_disable_clk:
++	clk_disable_unprepare(tcbpwmc->clk);
++
++err_disable_slow_clk:
+ 	clk_disable_unprepare(tcbpwmc->slow_clk);
  
- static void virtnet_get_hashflow(const struct virtnet_info *vi, struct ethtool_rxnfc *info)
-@@ -4119,7 +4086,7 @@ static bool virtnet_set_hashflow(struct virtnet_info *vi, struct ethtool_rxnfc *
+ err_gclk:
+@@ -470,6 +497,9 @@ static void atmel_tcb_pwm_remove(struct platform_device *pdev)
  
- 	if (new_hashtypes != vi->rss_hash_types_saved) {
- 		vi->rss_hash_types_saved = new_hashtypes;
--		vi->rss.hash_types = cpu_to_le32(vi->rss_hash_types_saved);
-+		vi->rss_hdr->hash_types = cpu_to_le32(vi->rss_hash_types_saved);
- 		if (vi->dev->features & NETIF_F_RXHASH)
- 			return virtnet_commit_rss_command(vi);
- 	}
-@@ -5291,11 +5258,11 @@ static int virtnet_get_rxfh(struct net_device *dev,
+ 	pwmchip_remove(chip);
  
- 	if (rxfh->indir) {
- 		for (i = 0; i < vi->rss_indir_table_size; ++i)
--			rxfh->indir[i] = le16_to_cpu(vi->rss.indirection_table[i]);
-+			rxfh->indir[i] = le16_to_cpu(vi->rss_hdr->indirection_table[i]);
- 	}
- 
- 	if (rxfh->key)
--		memcpy(rxfh->key, vi->rss.key, vi->rss_key_size);
-+		memcpy(rxfh->key, vi->rss_hash_key_data, vi->rss_key_size);
- 
- 	rxfh->hfunc = ETH_RSS_HASH_TOP;
- 
-@@ -5319,7 +5286,7 @@ static int virtnet_set_rxfh(struct net_device *dev,
- 			return -EOPNOTSUPP;
- 
- 		for (i = 0; i < vi->rss_indir_table_size; ++i)
--			vi->rss.indirection_table[i] = cpu_to_le16(rxfh->indir[i]);
-+			vi->rss_hdr->indirection_table[i] = cpu_to_le16(rxfh->indir[i]);
- 		update = true;
- 	}
- 
-@@ -5331,7 +5298,7 @@ static int virtnet_set_rxfh(struct net_device *dev,
- 		if (!vi->has_rss && !vi->has_rss_hash_report)
- 			return -EOPNOTSUPP;
- 
--		memcpy(vi->rss.key, rxfh->key, vi->rss_key_size);
-+		memcpy(vi->rss_hash_key_data, rxfh->key, vi->rss_key_size);
- 		update = true;
- 	}
- 
-@@ -5945,9 +5912,9 @@ static int virtnet_set_features(struct net_device *dev,
- 
- 	if ((dev->features ^ features) & NETIF_F_RXHASH) {
- 		if (features & NETIF_F_RXHASH)
--			vi->rss.hash_types = cpu_to_le32(vi->rss_hash_types_saved);
-+			vi->rss_hdr->hash_types = cpu_to_le32(vi->rss_hash_types_saved);
- 		else
--			vi->rss.hash_types = cpu_to_le32(VIRTIO_NET_HASH_REPORT_NONE);
-+			vi->rss_hdr->hash_types = cpu_to_le32(VIRTIO_NET_HASH_REPORT_NONE);
- 
- 		if (!virtnet_commit_rss_command(vi))
- 			return -EINVAL;
-@@ -6619,9 +6586,11 @@ static int virtnet_probe(struct virtio_device *vdev)
- 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
- 				rss_max_indirection_table_length));
- 	}
--	err = rss_indirection_table_alloc(&vi->rss, vi->rss_indir_table_size);
--	if (err)
-+	vi->rss_hdr = kzalloc(virtnet_rss_hdr_size(vi), GFP_KERNEL);
-+	if (!vi->rss_hdr) {
-+		err = -ENOMEM;
- 		goto free;
-+	}
- 
- 	if (vi->has_rss || vi->has_rss_hash_report) {
- 		vi->rss_key_size =
-@@ -6900,7 +6869,7 @@ static void virtnet_remove(struct virtio_device *vdev)
- 
- 	remove_vq_common(vi);
- 
--	rss_indirection_table_free(&vi->rss);
-+	kfree(vi->rss_hdr);
- 
- 	free_netdev(vi->dev);
- }
++	clk_rate_exclusive_put(tcbpwmc->slow_clk);
++	clk_rate_exclusive_put(tcbpwmc->clk);
++	clk_disable_unprepare(tcbpwmc->clk);
+ 	clk_disable_unprepare(tcbpwmc->slow_clk);
+ 	clk_put(tcbpwmc->gclk);
+ 	clk_put(tcbpwmc->clk);
 -- 
 2.53.0
 
