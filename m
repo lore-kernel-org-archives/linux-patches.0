@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E3D2D879E;
-	Wed, 20 May 2026 17:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950323603F7;
+	Wed, 20 May 2026 17:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298298; cv=none; b=cpj/yT2mzKlXVWbvoPmgNCHg6jpLprt6qV37Po2NaKLD4oWRJIeEA70QO0Gk7zLO+K5wJQTYu0SOMTQMO54DLObjyOPB/07nx/5718LFmEmfH5D74Hya0Jmh56Kb74t0S3kqPjKNqPrc0rGF6AKgE4iddvhw3gTWhONwxc20ST4=
+	t=1779298300; cv=none; b=IBNO7iTSlzC81Prq1eQeyvvC6g+PNQI3m5oNomFBNvdKg15FKJVNGqAF9ELRy99W/kVjnBjJptbiIT8MsfxdeygtbjD9+MT9yhTYjcUab4eocVm/i1fD7MiKT4ceRVTmuk0QtBXb4tXAhov1mn1IvujK5jkdHpSHkjhMZxHc6vA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298298; c=relaxed/simple;
-	bh=AQYf5rR1C7eouNbQtb7SIxkBK5iV0JTpWU2Rml1bvLU=;
+	s=arc-20240116; t=1779298300; c=relaxed/simple;
+	bh=rbgHuIYgWa+306nHBiXjokxL+OgLxh5FZ57/moufJ9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eNRjhFnctN5qXhRHwO0erf437lAAaEAbfx7ZuAR3IPTGo4batuMcuy5MEbRwMv1as0ykFFahzR2YKKB8sNUCVyn3ovPx47RxZ3IohuFcTC0Svz3390ny4V7CxzmGulouyl61Rxvuki/yZcAz3duAiJ/pnsmcjW0VWKJcdI1KPKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPHR55W4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ANHpbcqhs3+NWiuH1+0BaLS7qLQxXNbSGPh2US5j2ZpnHoUs/v9Epi4y4cTWRSUzDbdf1z+q00oueGT9VOjR6qNqW+n+zu5y4PpqjOfUFJhchQ4zMxSqHbPG4EzsiXZJIneOOEPTlw1gOb+N690B/384WC+EK2nK/jHTAIySRhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDD2dGE3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPHR55W4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682AC1F000E9;
-	Wed, 20 May 2026 17:31:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDD2dGE3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072B51F000E9;
+	Wed, 20 May 2026 17:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298296;
-	bh=AKvy7eJmxTw4TN4hfWjGzXupkCOfK6x2jjPsozymf38=;
+	s=korg; t=1779298299;
+	bh=ngNseTWZRwUFD6VA4GhPEGo7Re/wKcmco6H/DArFXo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tPHR55W4PxmkKrJZuuNW8OKn4ckeellh3qr9KlfmuVNQOrX2RCjw+rFMH6HsDEyoH
-	 yfK+/pIoXgoTQvhSAOltHolHe/ELdqs38K+O1c3v5/2N1uWM4O8HB7sb9cgWJ7DSQW
-	 V2O7zXkXrOpfc3ekC9GOjZkRk/VSSk6iDtv6gkrs=
+	b=wDD2dGE3LwErOnqGaqy33oXzf+4+/dohXQtARBBoHDRxoUxLsDcraI9afL40+Yg3Z
+	 2FdTVO3lRcyOFNC2s0SqT3+pIsZ9I1J0UDq8wcJ1XsKaG6/FMpTqmKnPOKDWau0CBl
+	 sAgWrCbVuo+CWj1O+vIowgA0E58D93ogwuC1p07w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Hawley <warthog9@eaglescrag.net>,
-	Andrea Righi <arighi@nvidia.com>,
-	Marcos Paulo de Souza <mpdesouza@suse.com>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Thomas Huth <thuth@redhat.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 350/957] ktest: Run POST_KTEST hooks on failure and cancellation
-Date: Wed, 20 May 2026 18:13:53 +0200
-Message-ID: <20260520162142.120920025@linuxfoundation.org>
+Subject: [PATCH 6.18 359/957] efi/capsule-loader: fix incorrect sizeof in phys array reallocation
+Date: Wed, 20 May 2026 18:14:02 +0200
+Message-ID: <20260520162142.314928140@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,107 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Thomas Huth <thuth@redhat.com>
 
-[ Upstream commit bc6e165a452da909cef0efbc286e6695624db372 ]
+[ Upstream commit 48a428215782321b56956974f23593e40ce84b7a ]
 
-PRE_KTEST can be useful for setting up the environment and POST_KTEST to
-tear it down, however POST_KTEST only runs on the normal end-of-run path.
-It is skipped when ktest exits through dodie() or cancel_test(). Final
-cleanup hooks are skipped.
+The krealloc() call for cap_info->phys in __efi_capsule_setup_info() uses
+sizeof(phys_addr_t *) instead of sizeof(phys_addr_t), which might be
+causing an undersized allocation.
 
-Factor the final hook execution into run_post_ktest(), call it from the
-normal exit path and from the early exit paths, and guard it so the hook
-runs at most once.
+The allocation is also inconsistent with the initial array allocation in
+efi_capsule_open() that allocates one entry with sizeof(phys_addr_t),
+and the efi_capsule_write() function that stores phys_addr_t values (not
+pointers) via page_to_phys().
 
-Cc: John Hawley <warthog9@eaglescrag.net>
-Cc: Andrea Righi <arighi@nvidia.com>
-Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
-Cc: Matthieu Baerts <matttbe@kernel.org>
-Cc: Fernando Fernandez Mancera <fmancera@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Link: https://patch.msgid.link/20260307-ktest-fixes-v1-8-565d412f4925@suse.com
-Fixes: 921ed4c7208e ("ktest: Add PRE/POST_KTEST and TEST options")
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+On 64-bit systems where sizeof(phys_addr_t) == sizeof(phys_addr_t *), this
+goes unnoticed. On 32-bit systems with PAE where phys_addr_t is 64-bit but
+pointers are 32-bit, this allocates half the required space, which might
+lead to a heap buffer overflow when storing physical addresses.
+
+This is similar to the bug fixed in commit fccfa646ef36 ("efi/capsule-loader:
+fix incorrect allocation size") which fixed the same issue at the initial
+allocation site.
+
+Fixes: f24c4d478013 ("efi/capsule-loader: Reinstate virtual capsule mapping")
+Assisted-by: Claude:claude-sonnet-4-5
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ drivers/firmware/efi/capsule-loader.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index 924e17df56f74..17bdce9cafac2 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -100,6 +100,7 @@ my $test_type;
- my $build_type;
- my $build_options;
- my $final_post_ktest;
-+my $post_ktest_done = 0;
- my $pre_ktest;
- my $post_ktest;
- my $pre_test;
-@@ -1575,6 +1576,24 @@ sub get_test_name() {
-     return $name;
- }
+diff --git a/drivers/firmware/efi/capsule-loader.c b/drivers/firmware/efi/capsule-loader.c
+index 0c17bdd388e12..bbddeb6a09552 100644
+--- a/drivers/firmware/efi/capsule-loader.c
++++ b/drivers/firmware/efi/capsule-loader.c
+@@ -67,7 +67,7 @@ int __efi_capsule_setup_info(struct capsule_info *cap_info)
+ 	cap_info->pages = temp_page;
  
-+sub run_post_ktest {
-+    my $cmd;
-+
-+    return if ($post_ktest_done);
-+
-+    if (defined($final_post_ktest)) {
-+	$cmd = $final_post_ktest;
-+    } elsif (defined($post_ktest)) {
-+	$cmd = $post_ktest;
-+    } else {
-+	return;
-+    }
-+
-+    my $cp_post_ktest = eval_kernel_version($cmd);
-+    run_command $cp_post_ktest;
-+    $post_ktest_done = 1;
-+}
-+
- sub dodie {
-     # avoid recursion
-     return if ($in_die);
-@@ -1634,6 +1653,7 @@ sub dodie {
-     if (defined($post_test)) {
- 	run_command $post_test;
-     }
-+    run_post_ktest;
- 
-     die @_, "\n";
- }
-@@ -4300,6 +4320,7 @@ sub cancel_test {
- 	send_email("KTEST: Your [$name] test was cancelled",
- 	    "Your test started at $script_start_time was cancelled: sig int");
-     }
-+    run_post_ktest;
-     die "\nCaught Sig Int, test interrupted: $!\n"
- }
- 
-@@ -4661,11 +4682,7 @@ for (my $i = 1; $i <= $opt{"NUM_TESTS"}; $i++) {
-     success $i;
- }
- 
--if (defined($final_post_ktest)) {
--
--    my $cp_final_post_ktest = eval_kernel_version $final_post_ktest;
--    run_command $cp_final_post_ktest;
--}
-+run_post_ktest;
- 
- if ($opt{"POWEROFF_ON_SUCCESS"}) {
-     halt;
+ 	temp_page = krealloc(cap_info->phys,
+-			     pages_needed * sizeof(phys_addr_t *),
++			     pages_needed * sizeof(phys_addr_t),
+ 			     GFP_KERNEL | __GFP_ZERO);
+ 	if (!temp_page)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
