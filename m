@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385FD362139;
-	Wed, 20 May 2026 18:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4129C40961C;
+	Wed, 20 May 2026 18:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779303041; cv=none; b=kPOCf3b5tNHn63gtRUi3kBNxKCe/fPESvYhGFFJ86wDGPyNKk3IOgH7PEXEcFn21JcJLelAAc/n69lqcCf60+d1zmD3TFP/j9AHLrD5VjrNc7d22pCPJzT+W+Yc4PGyQKDegzz9UTsWNmkSBNYCtT3Tvfc+wPDD8CI067G+6y9c=
+	t=1779303043; cv=none; b=Z+oxN1SGzhgyzq5djjoUPxIbPx9e4k7JIjoLLQFE4XTai9oKhAc96iHZxH9gcwB22ps672hNEUCmypFol1nM3UMIj9aMOsXnsahRb0RN/ioekwT4P95L7q4NlPZ8p3cgmDMEuGY5luDRFSFTpeE2sNzm7BRK/vUpfO1+MmEJMG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779303041; c=relaxed/simple;
-	bh=b3etokwvWpnW51a+b0hBjogd0hUML214bHn2ScoIN8Q=;
+	s=arc-20240116; t=1779303043; c=relaxed/simple;
+	bh=D/zPMycm4wbA/NnWKZB0+memLF2N/g9r/RhrjrjWHTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8jPGk7w6QHZgloFD1ZmDcaM81JtFOkPPtUoNUx5nucfoYdnEC6SvBrpMIpft4hhWdx+qiUrWZcciZLQWXNgUiqNSrqlZi/Jkg1KQWT580cthGIuUAfNyZaBVHs68eYMQxbdLp1FCojqO6BDIK1KFWzn1DWAT+jmCueZolxQQHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRE3eMOX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PVI1ti6mZp79opkNLNP8AHRtvvPWET0RmMxE7vJmSduRG8mogxZiC3OFQtNoOXiIH25jJKtBNTH0xJgI0675L77YnBuEOSVuN6viMyhBtLcqMox3zGNHQ2ISsmWpHv3ULaRI4hTzyLpIoyqBKsi3lIQdT5hwnDy2ZjnS/WwOmIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAe0p8xO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRE3eMOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921871F000E9;
-	Wed, 20 May 2026 18:50:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAe0p8xO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0121F00893;
+	Wed, 20 May 2026 18:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779303038;
-	bh=4dhpDWBIB5OhaiaMUohly/9HaqPufG5imkPMj3wIszU=;
+	s=korg; t=1779303040;
+	bh=nBCCrmChx71EiN0Q/SXqSbTZ+o5zjqf/KYdIViMqlFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mRE3eMOXkQ4WQj4G5aCFH21+WWbNwo8WxM2dH8dIOqr7N2Zj2WL14kT7oUVKOPzru
-	 EK2uQfr9HuHmUVZ24LlOn47JqyFk2Hw1tlVEgnyI/o2VljJt1EBJzk7SUEhOLWAi2w
-	 oZSoR3j/XoU2EH/2O0fKtMfycfu5/Ynd6hReal3g=
+	b=wAe0p8xOkL31c0oonYHPYIqL9jOMMXCUdQm4FefkpmXIx+EVixAVD5rpQD8bKvGuv
+	 P2z20ch1s1/zcf7WDZC/r3Fr+rYcggD87s6tqTcmIb47Tf1zm2DLHAmA18G28pvYA3
+	 S9tlTe/KFGvaskOACNBDt54PoTvIZ2Z6dCaWOpVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 496/508] mptcp: pm: prio: skip closed subflows
-Date: Wed, 20 May 2026 18:25:19 +0200
-Message-ID: <20260520162109.344769213@linuxfoundation.org>
+	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
+	Krzysztof Karas <krzysztof.karas@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.6 479/508] drm/i915: skip __i915_request_skip() for already signaled requests
+Date: Wed, 20 May 2026 18:25:02 +0200
+Message-ID: <20260520162108.971057470@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,43 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
 
-[ Upstream commit 166b78344031bf7ac9f55cb5282776cfd85f220e ]
+commit 4cfe4c0efbdcde742a47813180cc69b132d7598e upstream.
 
-When sending an MP_PRIO, closed subflows need to be skipped.
+After a GPU reset the HWSP is zeroed, so previously completed
+requests appear incomplete. If such a request is picked up during
+reset_rewind() and marked guilty, i915_request_set_error_once()
+returns early (fence already signaled), leaving fence.error without
+a fatal error code. The subsequent __i915_request_skip() then hits:
+```
+GEM_BUG_ON(!fatal_error(rq->fence.error))
+```
 
-This fixes the case where the initial subflow got closed, re-opened
-later, then an MP_PRIO is needed for the same local address.
+Fixes a kernel BUG observed on Sandy Bridge (Gen6) during
+heartbeat-triggered engine resets.
+```
+kernel BUG at drivers/gpu/drm/i915/i915_request.c:556!
+RIP: __i915_request_skip+0x15e/0x1d0 [i915]
+...
+__i915_request_reset+0x212/0xa70 [i915]
+reset_rewind+0xe4/0x280 [i915]
+intel_gt_reset+0x30d/0x5b0 [i915]
+heartbeat+0x516/0x530 [i915]
+```
 
-Note that explicit MP_PRIO cannot be sent during the 3WHS, so it is fine
-to use __mptcp_subflow_active().
+Guard __i915_request_skip() with i915_request_signaled(), if the
+fence is already signaled, the ring content is committed and there
+is nothing left to skip.
 
-Fixes: 067065422fcd ("mptcp: add the outgoing MP_PRIO support")
-Cc: stable@vger.kernel.org
-Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-9-fca8091060a4@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ applied to renamed function `mptcp_pm_nl_mp_prio_send_ack()` in `pm_netlink.c` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 36e191f0644b ("drm/i915: Apply i915_request_skip() on submission")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/13729
+Signed-off-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+Cc: stable@vger.kernel.org # v5.7+
+Reviewed-by: Krzysztof Karas <krzysztof.karas@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://lore.kernel.org/r/fe76921d35b6ae85aa651822726d0d9815aa5362.1776339012.git.sebastian.brzezinka@intel.com
+(cherry picked from commit 5ba54393dcd7adf75a9f39f5a933b1538349cad5)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/i915/gt/intel_reset.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -923,6 +923,9 @@ int mptcp_pm_nl_mp_prio_send_ack(struct
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 		struct mptcp_addr_info local, remote;
- 
-+		if (!__mptcp_subflow_active(subflow))
-+			continue;
-+
- 		mptcp_local_address((struct sock_common *)ssk, &local);
- 		if (!mptcp_addresses_equal(&local, addr, addr->port))
- 			continue;
+--- a/drivers/gpu/drm/i915/gt/intel_reset.c
++++ b/drivers/gpu/drm/i915/gt/intel_reset.c
+@@ -134,7 +134,8 @@ void __i915_request_reset(struct i915_re
+ 	rcu_read_lock(); /* protect the GEM context */
+ 	if (guilty) {
+ 		i915_request_set_error_once(rq, -EIO);
+-		__i915_request_skip(rq);
++		if (!i915_request_signaled(rq))
++			__i915_request_skip(rq);
+ 		banned = mark_guilty(rq);
+ 	} else {
+ 		i915_request_set_error_once(rq, -EAGAIN);
 
 
