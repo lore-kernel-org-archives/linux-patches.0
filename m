@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B791937D101;
-	Wed, 20 May 2026 16:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9432533B969;
+	Wed, 20 May 2026 16:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296203; cv=none; b=sGXc/K+Ez6wC5BbAXj05KyOuYPmmuCGtZ8t1zrcpqqPqDjyYurIXjaEgpOWMvXFRmUReiCM+jJ/3Go0CSgZZrqjngwiBYj6nB7qzUM7AoDXbtY8nTCFnwWjnw8RlBdqhtxR/Sks9v0FEyB+a8qG+QUKvpQqR+hm++WrM/nqW3Og=
+	t=1779296206; cv=none; b=KOqBXSRl7hzAOyLa1/dWMaT8u2PBGJSnwrTdqt4BDkMVlfLzEN/0NLMC2B+P6pNd+/9fyxruulqsyYIrYgKi7sLC5nzJmQKJ6Buo1h7vvLYv3R8lmSPPmOxflw6bUzud59U57c67017vd9Nu8InNXBKQPa5r3kOmHoC9mj7rVcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296203; c=relaxed/simple;
-	bh=zLoWorZecwNXsOyx4U+QoFAOEJTWeb961+MXzzfYsCQ=;
+	s=arc-20240116; t=1779296206; c=relaxed/simple;
+	bh=KEio4HCbtTPXvKtJr44eaik2Pk8QC7Ici/7kMMzWLYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XP0jij1fADJLsLgTsEjL8+k3oIlpc2qvqsMALTtZ9wn7975fBdrD4031P6SdldI+n+1HScFbl0G/CMUFVIIMcyrVXZydOPImlx2sVH6Qhdr65WJS+mrW7ayR+14GUTmEKHaPxwG6fA3ozfYcR53pYMN0gyBCBHVC5bXHgTWUXzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPmaX/vg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eKua3Csx0WFRnvrDu8EYwJrBkv+5kd2g9bAWJEqFbSxvQflT9nrjD1S+c4WbcC1sqUhRkoJ8KxHWQGgn2DmSD33heHni/cREYF9Dnc/GP0Ag24yIEG7P4BLeugLMIDenhpkzgUyhsywfUamQbndV4T7mMg2CDbOFAD1NvasXZYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+4OmOSD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPmaX/vg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A21A1F000E9;
-	Wed, 20 May 2026 16:56:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+4OmOSD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11E91F000E9;
+	Wed, 20 May 2026 16:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296202;
-	bh=FPbSOOICa7GZ0PSdkSixzQptmZdy8pIfmZ70GawX0+g=;
+	s=korg; t=1779296205;
+	bh=9KTyugGG58Ds75wF0qytm7tq2S2BzfD+bdqkBTATUJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pPmaX/vgHOCt1RONme9f4Mgttvb+sqAMe7uPG+gpyh0ugJMDAavEZ+toSyuJi7BiX
-	 SOTsWm48t0/1//AfhanzKf/IFudMzcFb8hiYUSYw+3PkQllvAX9uoNHHZG6j6hwJwi
-	 H42q31F9uZJ0jaxDc71WvJAOeL6N6pKf43aM4yzE=
+	b=n+4OmOSDWO2wwO5SZbArbQjdjPmV5EL9nTUqK+a5dhpH/L5U74z03OfnZOHYFjk4i
+	 oGSErWhF1slIK/uV3ivVsUAdSmQfgCPoj8t0JHFrmCFlmdvqGdq6GbrT8zR5Dqxhij
+	 N6c0VmvhLo0l0/CUGwAfrA8L+NtUwJ2yqp1cbD3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0710/1146] clk: renesas: r9a09g057: Remove entries for WDT{0,2,3}
-Date: Wed, 20 May 2026 18:16:00 +0200
-Message-ID: <20260520162204.256127386@linuxfoundation.org>
+Subject: [PATCH 7.0 0711/1146] scsi: qla2xxx: Add support to report MPI FW state
+Date: Wed, 20 May 2026 18:16:01 +0200
+Message-ID: <20260520162204.278797203@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,69 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 1b4f047dc4010d51821694cc4ed73b52b3040a5c ]
+[ Upstream commit 0e124af675ebabddacfeb0958abd443265dddf13 ]
 
-The HW user manual for the Renesas RZ/V2H(P) SoC specifies
-that only the WDT1 IP is supposed to be used by Linux,
-while the WDT{0,2,3} IPs are supposed to be used by the CM33
-and CR8 cores.
+MPI firmware state was returned as 0.  Get MPI FW state to proceed with
+flash image validation.
 
-Remove the clock and reset entries for WDT{0,2,3} to prevent
-interfering with the CM33 and CR8 cores.
+A new sysfs node 'mpi_fw_state' is added to report MPI firmware state:
 
-This change is harmless as only WDT1 is used by Linux, there
-are no users for the WDT{0,2,3} cores.
+    /sys/class/scsi_host/hostXX/mpi_fw_state
 
-Fixes: 3aeccbe08171 ("clk: renesas: r9a09g057: Add clock and reset entries for GTM/RIIC/SDHI/WDT")
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260203124247.7320-4-fabrizio.castro.jz@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: d74181ca110e ("scsi: qla2xxx: Add bsg interface to support firmware img validation")
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260305093337.2007205-1-njavali@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a09g057-cpg.c | 15 ---------------
- 1 file changed, 15 deletions(-)
+ drivers/scsi/qla2xxx/qla_attr.c | 62 ++++++++++++++++++++++++++++++++-
+ drivers/scsi/qla2xxx/qla_init.c |  2 +-
+ drivers/scsi/qla2xxx/qla_mbx.c  |  9 +++++
+ 3 files changed, 71 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/renesas/r9a09g057-cpg.c b/drivers/clk/renesas/r9a09g057-cpg.c
-index b0e43e5e50dde..c3174f40fdb40 100644
---- a/drivers/clk/renesas/r9a09g057-cpg.c
-+++ b/drivers/clk/renesas/r9a09g057-cpg.c
-@@ -280,22 +280,10 @@ static const struct rzv2h_mod_clk r9a09g057_mod_clks[] __initconst = {
- 						BUS_MSTOP(11, BIT(15))),
- 	DEF_MOD("gtm_7_pclk",			CLK_PLLCLN_DIV16, 4, 10, 2, 10,
- 						BUS_MSTOP(12, BIT(0))),
--	DEF_MOD("wdt_0_clkp",			CLK_PLLCM33_DIV16, 4, 11, 2, 11,
--						BUS_MSTOP(3, BIT(10))),
--	DEF_MOD("wdt_0_clk_loco",		CLK_QEXTAL, 4, 12, 2, 12,
--						BUS_MSTOP(3, BIT(10))),
- 	DEF_MOD("wdt_1_clkp",			CLK_PLLCLN_DIV16, 4, 13, 2, 13,
- 						BUS_MSTOP(1, BIT(0))),
- 	DEF_MOD("wdt_1_clk_loco",		CLK_QEXTAL, 4, 14, 2, 14,
- 						BUS_MSTOP(1, BIT(0))),
--	DEF_MOD("wdt_2_clkp",			CLK_PLLCLN_DIV16, 4, 15, 2, 15,
--						BUS_MSTOP(5, BIT(12))),
--	DEF_MOD("wdt_2_clk_loco",		CLK_QEXTAL, 5, 0, 2, 16,
--						BUS_MSTOP(5, BIT(12))),
--	DEF_MOD("wdt_3_clkp",			CLK_PLLCLN_DIV16, 5, 1, 2, 17,
--						BUS_MSTOP(5, BIT(13))),
--	DEF_MOD("wdt_3_clk_loco",		CLK_QEXTAL, 5, 2, 2, 18,
--						BUS_MSTOP(5, BIT(13))),
- 	DEF_MOD("rtc_0_clk_rtc",		CLK_PLLCM33_DIV16, 5, 3, 2, 19,
- 						BUS_MSTOP(3, BIT(11) | BIT(12))),
- 	DEF_MOD("rspi_0_pclk",			CLK_PLLCLN_DIV8, 5, 4, 2, 20,
-@@ -598,10 +586,7 @@ static const struct rzv2h_reset r9a09g057_resets[] __initconst = {
- 	DEF_RST(7, 2, 3, 3),		/* GTM_5_PRESETZ */
- 	DEF_RST(7, 3, 3, 4),		/* GTM_6_PRESETZ */
- 	DEF_RST(7, 4, 3, 5),		/* GTM_7_PRESETZ */
--	DEF_RST(7, 5, 3, 6),		/* WDT_0_RESET */
- 	DEF_RST(7, 6, 3, 7),		/* WDT_1_RESET */
--	DEF_RST(7, 7, 3, 8),		/* WDT_2_RESET */
--	DEF_RST(7, 8, 3, 9),		/* WDT_3_RESET */
- 	DEF_RST(8, 1, 3, 18),		/* RSCI0_PRESETN */
- 	DEF_RST(8, 2, 3, 19),		/* RSCI0_TRESETN */
- 	DEF_RST(8, 3, 3, 20),		/* RSCI1_PRESETN */
+diff --git a/drivers/scsi/qla2xxx/qla_attr.c b/drivers/scsi/qla2xxx/qla_attr.c
+index 2e584a8bf66b2..6a05ce195aa05 100644
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -1638,7 +1638,7 @@ qla2x00_fw_state_show(struct device *dev, struct device_attribute *attr,
+ {
+ 	scsi_qla_host_t *vha = shost_priv(class_to_shost(dev));
+ 	int rval = QLA_FUNCTION_FAILED;
+-	uint16_t state[6];
++	uint16_t state[16];
+ 	uint32_t pstate;
+ 
+ 	if (IS_QLAFX00(vha->hw)) {
+@@ -2402,6 +2402,63 @@ qla2x00_dport_diagnostics_show(struct device *dev,
+ 	    vha->dport_data[0], vha->dport_data[1],
+ 	    vha->dport_data[2], vha->dport_data[3]);
+ }
++
++static ssize_t
++qla2x00_mpi_fw_state_show(struct device *dev, struct device_attribute *attr,
++			  char *buf)
++{
++	scsi_qla_host_t *vha = shost_priv(class_to_shost(dev));
++	int rval = QLA_FUNCTION_FAILED;
++	u16 state[16];
++	u16 mpi_state;
++	struct qla_hw_data *ha = vha->hw;
++
++	if (!(IS_QLA27XX(ha) || IS_QLA28XX(ha)))
++		return scnprintf(buf, PAGE_SIZE,
++				"MPI state reporting is not supported for this HBA.\n");
++
++	memset(state, 0, sizeof(state));
++
++	mutex_lock(&vha->hw->optrom_mutex);
++	if (qla2x00_chip_is_down(vha)) {
++		mutex_unlock(&vha->hw->optrom_mutex);
++		ql_dbg(ql_dbg_user, vha, 0x70df,
++		       "ISP reset is in progress, failing mpi_fw_state.\n");
++		return -EBUSY;
++	} else if (vha->hw->flags.eeh_busy) {
++		mutex_unlock(&vha->hw->optrom_mutex);
++		ql_dbg(ql_dbg_user, vha, 0x70ea,
++		       "HBA in PCI error state, failing mpi_fw_state.\n");
++		return -EBUSY;
++	}
++
++	rval = qla2x00_get_firmware_state(vha, state);
++	mutex_unlock(&vha->hw->optrom_mutex);
++	if (rval != QLA_SUCCESS) {
++		ql_dbg(ql_dbg_user, vha, 0x70eb,
++		       "MB Command to retrieve MPI state failed (%d), failing mpi_fw_state.\n",
++				rval);
++		return -EIO;
++	}
++
++	mpi_state = state[11];
++
++	if (!(mpi_state & BIT_15))
++		return scnprintf(buf, PAGE_SIZE,
++				 "MPI firmware state reporting is not supported by this firmware. (0x%02x)\n",
++				mpi_state);
++
++	if (!(mpi_state & BIT_8))
++		return scnprintf(buf, PAGE_SIZE,
++				 "MPI firmware is disabled. (0x%02x)\n",
++				mpi_state);
++
++	return scnprintf(buf, PAGE_SIZE,
++			 "MPI firmware is enabled, state is %s. (0x%02x)\n",
++			 mpi_state & BIT_9 ? "active" : "inactive",
++			 mpi_state);
++}
++
+ static DEVICE_ATTR(dport_diagnostics, 0444,
+ 	   qla2x00_dport_diagnostics_show, NULL);
+ 
+@@ -2469,6 +2526,8 @@ static DEVICE_ATTR(port_speed, 0644, qla2x00_port_speed_show,
+     qla2x00_port_speed_store);
+ static DEVICE_ATTR(port_no, 0444, qla2x00_port_no_show, NULL);
+ static DEVICE_ATTR(fw_attr, 0444, qla2x00_fw_attr_show, NULL);
++static DEVICE_ATTR(mpi_fw_state, 0444, qla2x00_mpi_fw_state_show, NULL);
++
+ 
+ static struct attribute *qla2x00_host_attrs[] = {
+ 	&dev_attr_driver_version.attr.attr,
+@@ -2517,6 +2576,7 @@ static struct attribute *qla2x00_host_attrs[] = {
+ 	&dev_attr_qlini_mode.attr,
+ 	&dev_attr_ql2xiniexchg.attr,
+ 	&dev_attr_ql2xexchoffld.attr,
++	&dev_attr_mpi_fw_state.attr,
+ 	NULL,
+ };
+ 
+diff --git a/drivers/scsi/qla2xxx/qla_init.c b/drivers/scsi/qla2xxx/qla_init.c
+index 730c42b1a7b9d..e746c9274cded 100644
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -4914,7 +4914,7 @@ qla2x00_fw_ready(scsi_qla_host_t *vha)
+ 	unsigned long	wtime, mtime, cs84xx_time;
+ 	uint16_t	min_wait;	/* Minimum wait time if loop is down */
+ 	uint16_t	wait_time;	/* Wait time if loop is coming ready */
+-	uint16_t	state[6];
++	uint16_t	state[16];
+ 	struct qla_hw_data *ha = vha->hw;
+ 
+ 	if (IS_QLAFX00(vha->hw))
+diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
+index 0d598be6f3eab..44e310f1a3708 100644
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -2268,6 +2268,13 @@ qla2x00_get_firmware_state(scsi_qla_host_t *vha, uint16_t *states)
+ 		mcp->in_mb = MBX_6|MBX_5|MBX_4|MBX_3|MBX_2|MBX_1|MBX_0;
+ 	else
+ 		mcp->in_mb = MBX_1|MBX_0;
++
++	if (IS_QLA27XX(ha) || IS_QLA28XX(ha)) {
++		mcp->mb[12] = 0;
++		mcp->out_mb |= MBX_12;
++		mcp->in_mb |= MBX_12;
++	}
++
+ 	mcp->tov = MBX_TOV_SECONDS;
+ 	mcp->flags = 0;
+ 	rval = qla2x00_mailbox_command(vha, mcp);
+@@ -2280,6 +2287,8 @@ qla2x00_get_firmware_state(scsi_qla_host_t *vha, uint16_t *states)
+ 		states[3] = mcp->mb[4];
+ 		states[4] = mcp->mb[5];
+ 		states[5] = mcp->mb[6];  /* DPORT status */
++		if (IS_QLA27XX(ha) || IS_QLA28XX(ha))
++			states[11] = mcp->mb[12]; /* MPI state. */
+ 	}
+ 
+ 	if (rval != QLA_SUCCESS) {
 -- 
 2.53.0
 
