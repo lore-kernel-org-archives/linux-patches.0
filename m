@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3BE352C52;
-	Wed, 20 May 2026 16:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE5D3630AF;
+	Wed, 20 May 2026 16:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295712; cv=none; b=N0g6aDG2SK0KPIgIvvjOC6hg5rZX1ZrOgUSPjjOPVTQgW29mwTucNB/eKpkPFfrU1uXZ4pfHXtVoeX5vEbOtLY/Vyx+D8BTnMh9Pb3xOIZ6ghahvaK/dw7GkFl4++EapxqD+VkXOr9ZLcO5J7VzpJauHaeSDMq0w69jKju1eK2A=
+	t=1779295715; cv=none; b=ZNUyJON+OSoEeyqAUNFJpwgVI84WHHOgCSoEMR+0G+NXMRxbc7Z4OYXVXjslisjAf6ibYcFuRenOEHuWe/qdhbVFm/cWsxZyssN31OUp8YEO/hfiPkBzyobmw2kijlhFSwN+KMF2shwr5rxij8z+w5L6R6K034GtI7pWwZWBnk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295712; c=relaxed/simple;
-	bh=FgY+DvKloEuP5Jaq9KZ2tOF4UyGsE4Vx/U9Ik+B8cHA=;
+	s=arc-20240116; t=1779295715; c=relaxed/simple;
+	bh=das5MQs4PNCHgL8yXnagjqSowIWnC8r5lj28tDkVivY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BpHp5AsqYSMFquT1jyD3HmOnFsB2YxVOjUwxlFoqUG8kC5uC/HW6lQfTxGEfS6yt6mic8voVwzdgqlDrcOvsc0158YfvFSkMISqMFMcOET7rtSXoK376uqEa7UOB0OKX/HmeKmHDeyHbRS/1zWkdscvDDUpD4GFFLAOmdcR0qjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mM9LDYty; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X0Knud1r+2trNsNpb7QVqNRSbfcqyCqb9vktTicUv7UDRFQlf6pjRr4m8glztbQusQ75bJX7ddC5nivhG/6ZD/X7mmm3nOaQQ1R1aJWWjD4leBKUzVst7PF3O+TTIdMbNpy+QyNCFWT0F9xuEHm9eX+pxGjDE6RCavxMep2/LEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MUA5z5Yn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mM9LDYty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B53B1F000E9;
-	Wed, 20 May 2026 16:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MUA5z5Yn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B151F000E9;
+	Wed, 20 May 2026 16:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295710;
-	bh=AIsnDuGbN1nxYuG/YCglAdymwBfgRPWDdamhkgEoO8M=;
+	s=korg; t=1779295713;
+	bh=QXZ1CqAMdIYIGbR6+yUVHyZgnHhB5HNwgHYJnGQA68Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mM9LDYtyLyvhSYMJHUD3II/1gWN7Mnx1e5tW3voCMcVHqKkFjC2UasI0JFqiPRN59
-	 9pfBe9jtznmD5UDGhCc5rqv+g/vYQGSp0FisUptbMba9VWn2XxWv1Gac+SKkueKJRd
-	 8k57BeBxCfrAOOklYtLCMBL2IM448d+nb2tRT7zo=
+	b=MUA5z5YnYlltCBo6t2zZMWb1v8W4R4guxsdob19wp+xEC10R6UqsKQxio4v09WaCh
+	 KlQ7ecy9M8adIShxYsO9725jQ+IEf8Dtng0ZFEwNZX8Y7VyR8Mh6ski0D8W3PtDaJa
+	 /NQc3i+Qoje+O4J1RD2pkbsFGl7PgHZlyjy6A+w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0516/1146] arm64: dts: qcom: sm8750: correct Iris corners for the MXC rail
-Date: Wed, 20 May 2026 18:12:46 +0200
-Message-ID: <20260520162159.862838578@linuxfoundation.org>
+Subject: [PATCH 7.0 0525/1146] arm64: dts: qcom: hamoa: Fix xo clock supply of platform SD host controller
+Date: Wed, 20 May 2026 18:12:55 +0200
+Message-ID: <20260520162200.062934243@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,74 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 2755bdd02a43c204fb0ca02b93787a863c1cf9d2 ]
+[ Upstream commit d094f79960e1da20c1380083c95945371baa3668 ]
 
-The corners of the MVS0 / MVS0C clocks on the MMCX rail don't always
-match the PLL corners on the MXC rail. Correct the performance corners
-for the MXC rail following the PLL documentation.
+The expected frequency of SD host controller core supply clock is 19.2MHz,
+while RPMH_CXO_CLK clock frequency on SM8650 platform is 38.4MHz.
 
-Fixes: c0d11ff90475 ("arm64: dts: qcom: sm8750: Add Iris VPU v3.5")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260313-iris-fix-corners-v1-6-32a393c25dda@oss.qualcomm.com
+Apparently the overclocked supply clock could be good enough on some
+boards and even with the most of SD cards, however some low-end UHS-I
+SD cards in SDR104 mode of the host controller produce I/O errors in
+runtime, fortunately this problem is gone, if the "xo" clock frequency
+matches the expected 19.2MHz clock rate.
+
+Fixes: ffb21c1e19b1 ("arm64: dts: qcom: x1e80100: Describe the SDHC controllers")
+Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20260314023715.357512-4-vladimir.zapolskiy@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8750.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/hamoa.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-index f56b1f889b857..f34f112d3aa34 100644
---- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-@@ -2945,19 +2945,19 @@ iris_opp_table: opp-table {
+diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
+index f01b363009826..cb95549275ca8 100644
+--- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
++++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
+@@ -4714,7 +4714,7 @@ sdhc_2: mmc@8804000 {
  
- 				opp-240000000 {
- 					opp-hz = /bits/ 64 <240000000>;
--					required-opps = <&rpmhpd_opp_low_svs_d1>,
-+					required-opps = <&rpmhpd_opp_svs>,
- 							<&rpmhpd_opp_low_svs_d1>;
- 				};
+ 			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
+ 				 <&gcc GCC_SDCC2_APPS_CLK>,
+-				 <&rpmhcc RPMH_CXO_CLK>;
++				 <&bi_tcxo_div2>;
+ 			clock-names = "iface", "core", "xo";
+ 			iommus = <&apps_smmu 0x520 0>;
+ 			qcom,dll-config = <0x0007642c>;
+@@ -4767,7 +4767,7 @@ sdhc_4: mmc@8844000 {
  
- 				opp-338000000 {
- 					opp-hz = /bits/ 64 <338000000>;
--					required-opps = <&rpmhpd_opp_low_svs>,
-+					required-opps = <&rpmhpd_opp_svs>,
- 							<&rpmhpd_opp_low_svs>;
- 				};
- 
- 				opp-420000000 {
- 					opp-hz = /bits/ 64 <420000000>;
--					required-opps = <&rpmhpd_opp_svs>,
-+					required-opps = <&rpmhpd_opp_svs_l1>,
- 							<&rpmhpd_opp_svs>;
- 				};
- 
-@@ -2969,19 +2969,19 @@ opp-444000000 {
- 
- 				opp-533333334 {
- 					opp-hz = /bits/ 64 <533333334>;
--					required-opps = <&rpmhpd_opp_nom>,
-+					required-opps = <&rpmhpd_opp_svs_l1>,
- 							<&rpmhpd_opp_nom>;
- 				};
- 
- 				opp-570000000 {
- 					opp-hz = /bits/ 64 <570000000>;
--					required-opps = <&rpmhpd_opp_nom_l1>,
-+					required-opps = <&rpmhpd_opp_nom>,
- 							<&rpmhpd_opp_nom_l1>;
- 				};
- 
- 				opp-630000000 {
- 					opp-hz = /bits/ 64 <630000000>;
--					required-opps = <&rpmhpd_opp_turbo>,
-+					required-opps = <&rpmhpd_opp_nom>,
- 							<&rpmhpd_opp_turbo>;
- 				};
- 			};
+ 			clocks = <&gcc GCC_SDCC4_AHB_CLK>,
+ 				 <&gcc GCC_SDCC4_APPS_CLK>,
+-				 <&rpmhcc RPMH_CXO_CLK>;
++				 <&bi_tcxo_div2>;
+ 			clock-names = "iface", "core", "xo";
+ 			iommus = <&apps_smmu 0x160 0>;
+ 			qcom,dll-config = <0x0007642c>;
 -- 
 2.53.0
 
