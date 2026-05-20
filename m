@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C0139658D;
-	Wed, 20 May 2026 11:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E661C3C3C1C;
+	Wed, 20 May 2026 11:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779275997; cv=none; b=fnU1fLQEBvElOrB/HZg+l4YnCtUUWY3tb3ZfWZKUr2mCFSyQCrV7ogCvVuVkRWytNsCRKM5b5Lu0m0MQEv4gkv3CQLLkVT3Bx8MCinBNddCyTmo29QIai+/vrIrK4uTYHoY1hCKmuoKq6R/8XKErdus7FAKgeA6jKp/4Uv1Vnmg=
+	t=1779275998; cv=none; b=OjRR7nOCdfu2zc7BhVk6Qnw3JflON3wjfQgqj5l+lalFtsKJyzS8uic/iCNidDj8JSMBEi4JjOW9Zdr474C5OLOA3AEzvYPa1It221neFltWykxXaTU4+bI+a3zJt+pa/mKfNuOLGBZu5VSyO/mWKGXYOfFGcHVmOR4c58XYhOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779275997; c=relaxed/simple;
-	bh=RQNb7GGy+bNMh/3tLvKifE9HAoNS+QkXX2pfhribtes=;
+	s=arc-20240116; t=1779275998; c=relaxed/simple;
+	bh=CnTY8TCe4XhDblSh7LHCw5vJCcGfjIK7cE3NRSFm09E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hpEcO7vAQTSkcaii+5x/9wukBA1I1vLlC6bggq+Iof61Bc/wmg+2DSBVrzH1RpZtqZMOQTSovDjFYXQX4mY6VNWn8i9t96Cx5kyZcXo+HpmNkMdeUYHkQd7bn7M6gPdnMa8ROK6oIYq+XZLQVyYTrLkqT9uTaXEwZ+MEf1eLMTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jHuMJxRP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eunwtrglLPyfkRRB8E/kQO3D4EpNTkbw+kEeWCJpBSHWOLkxyI0B8shDq3Dzs96vAGhdBC7ov8igUhMVRlU2ZcIznWQdSVQ1aouRJPKB7zlDqj6K7vsEN4m4cps100kL/ji/x1AUUsMzixJT2d835dypbqjUqw6RC9dbJPK+l6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oz+1FkNV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jHuMJxRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5E11F00896;
-	Wed, 20 May 2026 11:19:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oz+1FkNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07851F00897;
+	Wed, 20 May 2026 11:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779275990;
-	bh=8UWgSKkIXnrTfv+q9nLslYDYdVCevJUvbhSLAj4hwo0=;
+	s=k20260515; t=1779275993;
+	bh=2EmGlUeCTz0s9sqrvcVXILR/f6rFvrw/kcITTMO5Niw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jHuMJxRPdYnzH6HeBPmjKHi8AtaTvt7MOIHxe68KW36WzSeTko0iZ3PfhmITyiGRI
-	 lpi5ZRBMr3Dt9AYr99cGZlm+nRt4XUcWumx+Cx2c2GmPbI8+7Mnm68cQRizGOadoU6
-	 0RGOxiZ3/v2FODpGks4b0K+anpdSQI6+rwLrr5nFMNsx12J/2HlVMCi2RbhdfU+LgZ
-	 0SL+MRdghV6SyY2Yi6tQ6q5fHD1ZrTRZdxwrf2XHE2EpfWmFiDucNse2AkXyRMVS9w
-	 J3DaI4DX+4gRSFmZsNWwk9tBsWy60v1G+nJQxQI2nqTDpFXIl4qCijI99E0T3IiZm5
-	 9r9X+4qjdS5HQ==
+	b=oz+1FkNVlgES5VGnWZEWoH1eaLZ6e3ERcEgsldtbq3iG4VBv/bzLn57BACjfG6Ybt
+	 tNwTDvWfkNfANItuZQZvjeSmLWW2jP3AQ7K8jO1d4SThPgCHvuON1VnPp+SHrf1DYa
+	 4xNt3CRLHqY8ApwnipoCNkiN5KFLDJAEG1/ej4937Ml/41eST+WE4drTWbTrgID/YU
+	 j5f1L6YhVRHUaE7+j3xuAhnv2GAuIgGMWmsXwgmOe572HphDCUln9MG83g+U1JmVbP
+	 m548sHZvPJu+a9vyZKeJQAmABOiaaTVEl8Esro32wFDu5/wUeyooNO5pJ8YyXWfGF+
+	 9lyF6Y8g62ltA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "T.J. Mercier" <tjmercier@google.com>,
-	Tejun Heo <tj@kernel.org>,
+Cc: Lianqin Hu <hulianqin@vivo.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	hannes@cmpxchg.org,
-	mkoutny@suse.com,
-	corbet@lwn.net,
-	cgroups@vger.kernel.org,
-	linux-doc@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] docs: cgroup-v1: Update charge-commit section
-Date: Wed, 20 May 2026 07:18:36 -0400
-Message-ID: <20260520111944.3424570-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] ALSA: usb-audio: Add iface reset and delay quirk for TTGK Technology USB-C Audio
+Date: Wed, 20 May 2026 07:18:38 -0400
+Message-ID: <20260520111944.3424570-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -56,275 +54,234 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "T.J. Mercier" <tjmercier@google.com>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-[ Upstream commit d8769544bde51b0ac980d10f8fe9f9fed6c95995 ]
+[ Upstream commit 2149c011510cbdcf183a13b26756e4a02071f0f2 ]
 
-Commit 1d8f136a421f ("memcg/hugetlb: remove memcg hugetlb
-try-commit-cancel protocol") removed mem_cgroup_commit_charge() and
-mem_cgroup_cancel_charge(), but the docs still refer to those functions.
-There is no longer any charge cancellation.
+Setting up the interface when suspended/resumeing fail on this card.
+Adding a reset and delay quirk will eliminate this problem.
 
-Update the docs to match the code.
+usb 1-1: new full-speed USB device number 2 using xhci-hcd
+usb 1-1: New USB device found, idVendor=3302, idProduct=17c2
+usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 1-1: Product: USB-C Audio
+usb 1-1: Manufacturer: TTGK Technology
+usb 1-1: SerialNumber: 170120210706
 
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/TYUPR06MB621720E4E8F99A42E162FD51D23D2@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Step 1.1 Record: subsystem `docs: cgroup-v1`; action verb `Update`;
-intent: update `Documentation/admin-guide/cgroup-v1/memcg_test.rst` so
-the charge-commit section matches current memcg code.
+Record: Subsystem is `ALSA: usb-audio`; action verb is `Add`; intent is
+adding an interface reset plus interface delay quirk for TTGK Technology
+USB-C Audio `3302:17c2`.
 
-Step 1.2 Record: tags present: `Signed-off-by: T.J. Mercier
-<tjmercier@google.com>` and `Signed-off-by: Tejun Heo <tj@kernel.org>`.
-No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
-`Link:`, or `Cc: stable@vger.kernel.org` tags in the committed message.
+Record: Tags present in the provided commit/message: `Signed-off-by:
+Lianqin Hu <hulianqin@vivo.com>`, `Signed-off-by: Takashi Iwai
+<tiwai@suse.de>`, `Link: https://patch.msgid.link/TYUPR06MB621720E4E8F99
+A42E162FD51D23D2@TYUPR06MB6217.apcprd06.prod.outlook.com`. No `Fixes:`,
+`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc: stable`.
 
-Step 1.3 Record: the body says commit `1d8f136a421f` removed
-`mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`, while the
-cgroup-v1 memcg docs still name them and describe cancellation.
-Symptom/failure mode: incorrect documentation only. Version information:
-the referenced removal commit is from 2025-01-13 in the local object
-database; candidate commit is from 2026-04-30. Root cause: docs were not
-updated when the code was changed.
+Record: Commit body describes a real device-specific failure: interface
+setup fails when the card is suspended/resumed. The included USB
+enumeration log verifies the target device ID `3302:17c2`, product
+`USB-C Audio`, manufacturer `TTGK Technology`.
 
-Step 1.4 Record: this is not a hidden runtime bug fix. It is an explicit
-documentation correctness fix.
+Record: This is not a hidden cleanup fix; it is an explicit hardware
+workaround/quirk for a suspend/resume interface setup failure.
 
 ## Phase 2: Diff Analysis
-Step 2.1 Record: one file changed: `Documentation/admin-
-guide/cgroup-v1/memcg_test.rst`, `2 insertions(+), 4 deletions(-)`. No
-functions modified. Scope: single-file documentation-only surgical
-change.
+Record: One file changed: `sound/usb/quirks.c`, 2 insertions. Modified
+area: `quirk_flags_table[]`. Scope: single-file surgical hardware quirk.
 
-Step 2.2 Record: before, the section was titled `charge-commit-cancel`,
-listed `mem_cgroup_commit_charge()` or `mem_cgroup_cancel_charge()`, and
-described `cancel()`. After, it is titled `charge-commit`, lists
-`commit_charge()`, and removes the cancellation text.
+Record: Before: device `3302:17c2` had no built-in quirk flags. After:
+it gets `QUIRK_FLAG_FORCE_IFACE_RESET | QUIRK_FLAG_IFACE_DELAY`.
 
-Step 2.3 Record: bug category is documentation/comment correctness.
-Specific mechanism: removes stale references to APIs that are absent in
-current `6.19.y`/`7.0.y` code and in `origin/master`.
+Record: Bug category is hardware workaround. Verified semantics:
+`QUIRK_FLAG_IFACE_DELAY` adds 50 ms after `usb_set_interface()` in
+`endpoint_set_interface()`, and `QUIRK_FLAG_FORCE_IFACE_RESET` marks
+playback endpoints for re-prepare/interface setup after stop/restart.
 
-Step 2.4 Record: fix quality is obviously correct for trees whose memcg
-code no longer has `mem_cgroup_commit_charge()` /
-`mem_cgroup_cancel_charge()`. Regression risk is zero runtime risk, but
-there is a branch-selection concern: `stable/linux-6.12.y` still
-contains those functions, so this exact doc update would be misleading
-there.
+Record: Fix quality is high: exact VID/PID match, existing flag
+mechanisms, no new API, no broad behavior change. Regression risk is
+very low and limited to this USB device ID.
 
 ## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` before the candidate shows the stale doc
-lines came from `f3f5edc5e41e` in this repository’s history. `git blame
-origin/master` shows the changed lines attributed to `d8769544bde51`.
+Record: `git blame` around the insertion area shows the quirk table is
+established and contains many adjacent hardware-specific entries; nearby
+entries are from existing ALSA USB-audio quirk commits.
 
-Step 3.2 Record: no `Fixes:` tag. I still inspected referenced commit
-`1d8f136a421f26747e58c01281cba5bffae8d289`; it removed prototypes and
-implementations for `mem_cgroup_commit_charge()`,
-`mem_cgroup_cancel_charge()`, and related hugetlb try/commit/cancel
-helpers.
+Record: No `Fixes:` tag, so no introducing commit to follow.
 
-Step 3.3 Record: recent history for `Documentation/admin-
-guide/cgroup-v1/memcg_test.rst` on `origin/master` has only the file
-introduction/import commit and this candidate. Related path history
-shows the candidate was merged via `cgroup-for-7.1-rc2-fixes`. No
-prerequisite doc series found.
+Record: Recent file history shows many similar stable-style quirks,
+including `ALSA: usb-audio: Add iface reset and delay quirk for AB17X
+USB Audio`, `SPACETOUCH USB Audio`, `AB13X USB Audio`, and `GHW-123P`.
 
-Step 3.4 Record: author `T.J. Mercier` has at least one other cgroup-
-related commit in `origin/master`; Tejun Heo is listed in `MAINTAINERS`
-as cgroup maintainer and committed the patch.
+Record: Author history under `sound/usb` shows Lianqin Hu has submitted
+multiple similar USB-audio delay/reset quirk patches.
 
-Step 3.5 Record: no code dependencies for the patch itself. It can apply
-standalone to the current `stable/linux-7.0.y` checkout. Applicability
-must be gated by whether the target tree’s code has removed the old
-APIs.
+Record: Dependency check: `QUIRK_FLAG_IFACE_DELAY` exists since
+v5.15-era code, but `QUIRK_FLAG_FORCE_IFACE_RESET` appears from
+v6.2-rc1. Therefore v6.6+ style trees have the required infrastructure;
+v6.1/v5.15 do not have the reset flag without additional
+prerequisite/adaptation.
 
 ## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c d8769544bde51...` found the original
-submission at
-`https://patch.msgid.link/20260430201142.240387-1-tjmercier@google.com`.
-`b4 dig -a` found only v1 of a single-patch series. The mbox contains
-Tejun’s reply: “Applied to cgroup/for-7.1-fixes.” No NAKs or concerns
-found in the saved thread.
+Record: No local commit hash was found on `master`, `sound-next`, or
+`all-next`, so `b4 dig -c <commit>` could not be used. I used the
+provided `Link:` with `b4 am`/`b4 mbox`.
 
-Step 4.2 Record: `b4 dig -w` shows recipients included cgroup
-maintainers/list and docs list: `tj@kernel.org`, `hannes@cmpxchg.org`,
-`mkoutny@suse.com`, `cgroups@vger.kernel.org`, `corbet@lwn.net`,
-`skhan@linuxfoundation.org`, `linux-doc@vger.kernel.org`, `linux-
+Record: `b4 am` found one patch and a two-message thread. `b4 am -c`
+checked for newer revisions and did not report a newer version.
+
+Record: Full thread shows Takashi Iwai replied: “Applied now. Thanks.”
+No objections, NAKs, or risk concerns were present in the fetched
+thread.
+
+Record: Original recipients included ALSA maintainers/lists: Jaroslav
+Kysela, Takashi Iwai, `linux-sound@vger.kernel.org`, and `linux-
 kernel@vger.kernel.org`.
 
-Step 4.3 Record: no `Reported-by` or bug-report `Link:` tags. No syzbot,
-bugzilla, or user-impact bug report applies.
-
-Step 4.4 Record: b4 found a standalone single-patch series, not part of
-a multi-patch dependency chain.
-
-Step 4.5 Record: web search did not find stable-list discussion for this
-exact patch. `WebFetch` to lore/patch.msgid was blocked by Anubis, but
-b4 successfully fetched the mbox.
+Record: Stable-specific web search did not find usable stable-list
+discussion; lore web pages were blocked by Anubis, and search results
+did not reveal a stable objection.
 
 ## Phase 5: Code Semantic Analysis
-Step 5.1 Record: no functions modified by the diff.
+Record: Key affected function/data is `quirk_flags_table[]`; consumers
+are `snd_usb_init_quirk_flags_table()`, `endpoint_set_interface()`,
+`snd_usb_endpoint_stop()`, and `snd_usb_endpoint_prepare()`.
 
-Step 5.2 Record: no callers affected by the diff. For documentation
-accuracy, I verified current `stable/linux-7.0.y` code has
-`commit_charge()` callers in `charge_memcg()`,
-`mem_cgroup_replace_folio()`, and `mem_cgroup_migrate()`.
+Record: Callers: `usb_audio_probe()` creates the USB audio card, calls
+`snd_usb_audio_create()`, which initializes quirk flags from the built-
+in table. PCM prepare paths call `snd_usb_endpoint_prepare()`, and PCM
+stop paths call `snd_usb_endpoint_stop()`.
 
-Step 5.3 Record: no changed callees. The relevant current code has
-`commit_charge()` assigning `folio->memcg_data`, and callers also invoke
-`memcg1_commit_charge()` where appropriate.
+Record: Callees/effects: `endpoint_set_interface()` calls
+`usb_set_interface()` and then delays if `QUIRK_FLAG_IFACE_DELAY` is
+set. `snd_usb_endpoint_stop()` sets `need_prepare`/`need_setup` for
+playback endpoints if `QUIRK_FLAG_FORCE_IFACE_RESET` is set.
 
-Step 5.4 Record: runtime reachability is not relevant because no
-executable code changes.
+Record: Reachability is verified through USB device probe and normal
+ALSA PCM suspend/resume/stream restart paths for this hardware.
 
-Step 5.5 Record: similar stale docs pattern exists in stable branches;
-however code state differs by branch. `6.19.y`/`7.0.y` have stale docs
-and no old API. `6.12.y` still has `mem_cgroup_commit_charge()` and
-`mem_cgroup_cancel_charge()` in code.
+Record: Similar patterns exist in the same table for several devices
+using the same two flags, so this follows established local practice.
 
-## Phase 6: Cross-Referencing And Stable Tree Analysis
-Step 6.1 Record: buggy stale documentation exists in
-`stable/linux-7.0.y`, `stable/linux-6.19.y`, `stable/linux-6.18.y`,
-`stable/linux-6.6.y`, `stable/linux-6.1.y`, `stable/linux-5.15.y`, and
-`stable/linux-5.10.y` by exact doc grep. I verified the old APIs are
-absent in several of those trees, but `stable/linux-6.12.y` still
-contains `mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`,
-so this exact upstream text is not universally correct for all
-maintained stable lines.
+## Phase 6: Stable Tree Analysis
+Record: The generic USB-audio quirk table exists in v5.15, v6.1, v6.6,
+v6.12, and v7.0 tags checked.
 
-Step 6.2 Record: `git apply --check` of the candidate diff succeeds on
-the current `stable/linux-7.0.y` checkout. Expected backport difficulty:
-clean for trees with matching doc context; branch-specific review needed
-for `6.12.y`.
+Record: Required reset-flag infrastructure exists in v6.6, v6.12, and
+v7.0; it is absent in v6.1/v5.15 tags checked.
 
-Step 6.3 Record: no related stable fix for this exact doc update found
-by local stable branch ancestry checks or web search.
+Record: Textual `git apply --check` failed on v6.6, v6.12, v6.1, and
+current 7.0 checkout because nearby table context differs. `git apply
+--check --3way` on current 7.0 succeeded cleanly; representative
+release-tag worktrees reported conflicts with three-way check, so older
+backports need minor context adjustment.
 
-## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: subsystem is cgroup-v1 memcg documentation.
-Criticality: peripheral/runtime-none; important only for documentation
-correctness.
+Record: No related `TTGK` or `3302:17c2` entry exists locally under
+`sound/usb`.
 
-Step 7.2 Record: cgroup and memcg areas are active; recent
-`origin/master` history includes multiple cgroup/mm fixes. The candidate
-was applied by the cgroup maintainer.
+## Phase 7: Subsystem Context
+Record: Subsystem is ALSA USB audio, an important driver subsystem for
+USB audio peripherals.
 
-## Phase 8: Impact And Risk Assessment
-Step 8.1 Record: affected population is documentation readers and
-developers/admins consulting old cgroup-v1 memcg internals. No kernel
-runtime users are affected.
+Record: Activity level is high: recent history in `sound/usb/quirks.c`
+contains multiple hardware quirk additions and USB-audio behavior fixes.
 
-Step 8.2 Record: trigger condition is reading or relying on the stale
-documentation. Unprivileged users cannot trigger a kernel failure
-because there is no runtime behavior.
+## Phase 8: Impact And Risk
+Record: Affected users are owners of TTGK Technology USB-C Audio device
+`3302:17c2`.
 
-Step 8.3 Record: failure mode is incorrect documentation. Severity: LOW.
-It can mislead developers/admins, but it does not fix crash, corruption,
-leak, deadlock, or security behavior.
+Record: Trigger condition is using this device across suspend/resume or
+stream restart/interface setup paths. The commit message explicitly
+reports interface setup failure in that scenario.
 
-Step 8.4 Record: benefit is low but real for documentation correctness,
-especially because the stable rules exception allows
-documentation/comment fixes and runtime risk is zero. Risk is very low
-for branches whose code matches the new text; risk is documentation-
-regression risk if applied to a branch like `6.12.y` where cancellation
-APIs still exist.
+Record: Failure mode is device malfunction after suspend/resume, not a
+kernel crash. Severity is medium for the kernel generally but high for
+affected hardware users because audio can fail after power-management
+transitions.
+
+Record: Benefit is high for affected hardware and low-risk for everyone
+else. Risk is very low because the change is an exact VID/PID quirk
+using existing flags.
 
 ## Phase 9: Final Synthesis
-Step 9.1 Record: evidence for backporting: tiny docs-only patch;
-corrects verified stale references in current `7.0.y` and `6.19.y`;
-applied by cgroup maintainer; no runtime regression risk; documentation
-fixes are allowed. Evidence against: no runtime bug or user-visible
-stability issue; not correct for every stable branch, specifically
-verified `6.12.y` still has the old commit/cancel APIs. Unresolved: I
-did not exhaustively validate every maintained stable branch’s memcg API
-state.
+Record: Evidence for backporting: real hardware failure, exact device
+ID, standard quirk exception category, two-line contained patch,
+existing flag behavior, maintainer applied it, no API/feature expansion
+beyond a device-specific workaround.
 
-Step 9.2 Stable rules checklist:
-1. Obviously correct and tested? Yes for matching-code branches;
-   verified by code grep, `git diff --check`, and `git apply --check` on
-   `7.0.y`.
-2. Fixes a real bug that affects users? It fixes incorrect
-   documentation, not runtime behavior.
-3. Important issue? No runtime severity; LOW documentation correctness
-   issue.
-4. Small and contained? Yes, 6-line docs-only diff in one file.
-5. No new features or APIs? Yes.
-6. Can apply to stable trees? Yes to at least current `7.0.y`; should
-   not be applied blindly to `6.12.y`.
+Record: Evidence against: no external bug report or Tested-by tag found;
+exact mail patch needs context adjustment for stable trees; v6.1/v5.15
+lack `QUIRK_FLAG_FORCE_IFACE_RESET`, so those trees would need a
+deliberate adaptation or prerequisite decision.
 
-Step 9.3 Record: exception category is documentation fix.
+Record: Stable rules: obviously correct: yes; fixes a real user-visible
+hardware bug: yes; important enough for affected users: yes; small and
+contained: yes; no new API/feature: yes; applies cleanly: not textually
+everywhere, but trivial/minor for v6.6+ style trees.
 
-Step 9.4 Decision: backport is acceptable for stable trees whose memcg
-implementation no longer has charge cancellation APIs. It should be
-excluded from trees like `6.12.y` where the old APIs still exist. With
-that branch-selection caveat, this qualifies under the documentation-fix
-exception.
+Record: Exception category: hardware quirk/workaround for a broken USB
+audio device. This is a standard stable-acceptable category.
 
-Verification:
-- [Phase 1] Parsed candidate commit
-  `d8769544bde51b0ac980d10f8fe9f9fed6c95995`: only two Signed-off-by
-  tags, no bug/report/stable tags.
-- [Phase 2] `git show --stat --patch`: confirmed one docs file, `2
-  insertions(+), 4 deletions(-)`.
-- [Phase 3] `git show 1d8f136a421f...`: confirmed referenced commit
-  removed `mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`
-  from mainline code.
-- [Phase 3] `git log origin/master --grep`: found candidate and merge
-  via `cgroup-for-7.1-rc2-fixes`.
-- [Phase 4] `b4 dig`: found lore thread and exact patch-id match.
-- [Phase 4] `b4 dig -a`: only v1 single-patch series.
-- [Phase 4] `b4 dig -w`: relevant cgroup and docs maintainers/lists were
-  included.
-- [Phase 4] Saved mbox: confirmed Tejun replied “Applied to
-  cgroup/for-7.1-fixes”; no NAKs or stable nomination found.
-- [Phase 5] `rg`/`git grep`: confirmed current code uses
-  `commit_charge()` and no longer has old API names in `7.0.y`.
-- [Phase 6] `git apply --check`: candidate applies cleanly to current
-  `7.0.y`.
-- [Phase 6] Branch checks: `6.12.y` still has
-  `mem_cgroup_commit_charge()` and `mem_cgroup_cancel_charge()`, so this
-  patch must not be applied there unchanged.
-- [Phase 8] Runtime impact verified as none because only
-  `Documentation/admin-guide/cgroup-v1/memcg_test.rst` changes.
+## Verification
+- [Phase 1] Parsed provided subject, tags, commit body, and USB
+  enumeration log.
+- [Phase 2] Verified diff is two inserted lines in `sound/usb/quirks.c`.
+- [Phase 2/5] Verified `QUIRK_FLAG_IFACE_DELAY` and
+  `QUIRK_FLAG_FORCE_IFACE_RESET` definitions and consumers in
+  `sound/usb/usbaudio.h` and `sound/usb/endpoint.c`.
+- [Phase 3] Ran `git blame` around the table insertion area and recent
+  `git log` for `sound/usb/quirks.c`.
+- [Phase 3] Verified similar reset/delay quirk commits and Lianqin Hu’s
+  related ALSA USB-audio quirk history.
+- [Phase 4] `b4 am` fetched the patch from the provided message-id link;
+  `b4 mbox` fetched the two-message thread.
+- [Phase 4] Verified Takashi Iwai’s maintainer reply: “Applied now.
+  Thanks.”
+- [Phase 4] `b4 am -c` did not report newer revisions.
+- [Phase 5] Traced quirk flag initialization from `usb_audio_probe()` to
+  `snd_usb_audio_create()` to `snd_usb_init_quirk_flags_table()`.
+- [Phase 6] Checked v5.15, v6.1, v6.6, v6.12, and v7.0 tag contents for
+  flag availability.
+- [Phase 6] Verified `FORCE_IFACE_RESET` absent in v6.1/v5.15 and
+  present in v6.6+.
+- [Phase 6] Verified plain apply fails due context; current 7.0 three-
+  way apply check succeeds without modifying the worktree.
+- UNVERIFIED: exact upstream commit SHA, because the commit was not
+  present on checked local branches and web search did not find it.
+
+This should be backported to stable trees that already contain the
+quirk-flag infrastructure, especially v6.6+ style trees. For older
+v6.1/v5.15 trees, it should not be applied verbatim unless maintainers
+choose a small adapted backport or also carry the reset-flag
+infrastructure.
 
 **YES**
 
- Documentation/admin-guide/cgroup-v1/memcg_test.rst | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/admin-guide/cgroup-v1/memcg_test.rst b/Documentation/admin-guide/cgroup-v1/memcg_test.rst
-index 9f8e27355cba5..7c7cd457cf695 100644
---- a/Documentation/admin-guide/cgroup-v1/memcg_test.rst
-+++ b/Documentation/admin-guide/cgroup-v1/memcg_test.rst
-@@ -47,21 +47,19 @@ Please note that implementation details can be changed.
- 	  Called when swp_entry's refcnt goes down to 0. A charge against swap
- 	  disappears.
- 
--3. charge-commit-cancel
-+3. charge-commit
- =======================
- 
- 	Memcg pages are charged in two steps:
- 
- 		- mem_cgroup_try_charge()
--		- mem_cgroup_commit_charge() or mem_cgroup_cancel_charge()
-+		- commit_charge()
- 
- 	At try_charge(), there are no flags to say "this page is charged".
- 	at this point, usage += PAGE_SIZE.
- 
- 	At commit(), the page is associated with the memcg.
- 
--	At cancel(), simply usage -= PAGE_SIZE.
--
- Under below explanation, we assume CONFIG_SWAP=y.
- 
- 4. Anonymous
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 2ffc69b57ab49..1428a0b620d37 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2417,6 +2417,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x3255, 0x0000, /* Luxman D-10X */
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
++	DEVICE_FLG(0x3302, 0x17c2, /* TTGK Technology USB-C Audio */
++		   QUIRK_FLAG_FORCE_IFACE_RESET | QUIRK_FLAG_IFACE_DELAY),
+ 	DEVICE_FLG(0x339b, 0x3a07, /* Synaptics HONOR USB-C HEADSET */
+ 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
 -- 
 2.53.0
 
