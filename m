@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E5230DEAC;
-	Wed, 20 May 2026 18:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFFA333441;
+	Wed, 20 May 2026 18:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302078; cv=none; b=j6JvyybvFmlpoo8Nt3UuGW7SWsl8fgL2gb0Xx93VG2RAK79doO9y2Y6VwA7nRLHAT2ldI225QOfmGAuJ0iKFR8lGJ8vMMcP9dZFDX4OkYw/CBCizREZSyPK8ogP5F6uFAlA2VSQeDKMGrryJtOcCM48hVG3hEAhlBfdous8ETv8=
+	t=1779302081; cv=none; b=NLMq0ptZDEnNfRvCGp6GwLxeI5GxJfRYQFjv4qwgT8XOVp0GYcXrGCaFGAxijrkR8NLuee/532E3NBj4bt50O9+7ZNFEOg0ya5Ks6WuBLs3onkQf6mcD92YaYYiWJA941iXnw1Lir+C3iZPHgcRlu2+Mmm4r0fdHzGJeJG1Zc2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302078; c=relaxed/simple;
-	bh=YAwN+bPLVaWYy1wHlLNFApIViM6R4JFz8zUWosfBEtQ=;
+	s=arc-20240116; t=1779302081; c=relaxed/simple;
+	bh=4QNrLGrNwAi8Fhar7xy+j6bgd6DXgAL1Vh+1aURjZDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uU56o4OcpEkKz48CP/UXe1+Eh1D+OLdPe9EfeQTrFGUq5e48s8WLIoRM9a+CjdYKlaP0yib15J8rhXjij+DkKCTaN7S8UeGbEnmkv0qZEJe+Q5HQGZEu37P7qybt5VV06IiCLphA8mYylu+gu5RbsmxuwQCp0rK0jjSKSl2ufy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKfpii2+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gywWI/N3tVreJDVrVfZlLUtxItv30ZH53pKg2O4Omdqxwwid36yOqPc7wLJQzVmuDgMTeUXzhv5exJTC44p62QaySR9UxAE/9qsDKlwncuCDx0+Y74IZQUepjJmbXA0g3IhYhgLyFjEneVZDypgKtJGQ905AOgEp2Cchw2Ko994=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqA6uNl9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKfpii2+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CFD1F000E9;
-	Wed, 20 May 2026 18:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqA6uNl9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16F01F000E9;
+	Wed, 20 May 2026 18:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302077;
-	bh=SiYm8I4gI6sok+Zmz5vOgR0EEmpCvZtng/2MGDSBY0w=;
+	s=korg; t=1779302080;
+	bh=gvrKOTVKj40buxbrdO/TIVK0Rk3+moAcd22NC86cPqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nKfpii2+rF+ILFHheNrFEYGLL6GZNDfEzUI5SyO/Q3WsOX0PqfBJSDy7QKXta4N//
-	 bnc2mYSf5x0rusTKqmqKY4OQ/7ASx2hAl1jVDQA03zkn5fDChwbV94JSDvqNOA38JW
-	 xmPc+MVKPDGssv5P2AkZmEVWVcNy6ixtnjGad99g=
+	b=fqA6uNl9rh9StpgVNq7omGK61Mz3EVtP7x7Pbclr3sRbc+eX3lMMGyGxEnL9E5d7F
+	 Wa0w36A1VzaCJgJB9i8La7qz3A5OeuIATgjMHTZwBRv+VqmgKLNuIkgf22U31iWNLV
+	 de0oe2AKbxdRAwgiM3vuuScyuiKLmyO78wtvOKl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Connor Abbott <cwabbott0@gmail.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 131/508] drm/msm/a6xx: Fix HLSQ register dumping
-Date: Wed, 20 May 2026 18:19:14 +0200
-Message-ID: <20260520162101.466250883@linuxfoundation.org>
+Subject: [PATCH 6.6 132/508] drm/msm/shrinker: Fix can_block() logic
+Date: Wed, 20 May 2026 18:19:15 +0200
+Message-ID: <20260520162101.488717644@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -53,35 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Rob Clark <robin.clark@oss.qualcomm.com>
 
-[ Upstream commit c289a6db9ba6cb974f0317da142e4f665d589566 ]
+[ Upstream commit df0f439e3926817cf577ca6272aad68468ff7624 ]
 
-Fix the bitfield offset of HLSQ_READ_SEL state-type bitfield.  Otherwise
-we are always reading TP state when we wanted SP or HLSQ state.
+The intention here was to allow blocking if DIRECT_RECLAIM or if called
+from kswapd and KSWAPD_RECLAIM is set.
 
-Reported-by: Connor Abbott <cwabbott0@gmail.com>
-Suggested-by: Connor Abbott <cwabbott0@gmail.com>
-Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
+Reported by Claude code review: https://lore.gitlab.freedesktop.org/drm-ai-reviews/review-patch9-20260309151119.290217-10-boris.brezillon@collabora.com/ on a panthor patch which had copied similar logic.
+
+Reported-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 7860d720a84c ("drm/msm: Fix build break with recent mm tree")
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/714236/
-Message-ID: <20260325184043.1259312-1-robin.clark@oss.qualcomm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Patchwork: https://patchwork.freedesktop.org/patch/714238/
+Message-ID: <20260325184106.1259528-1-robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_gem_shrinker.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 258de1bfc5700..6ebb7e6254175 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -672,7 +672,7 @@ static void a6xx_get_crashdumper_hlsq_registers(struct msm_gpu *gpu,
- 	u64 out = dumper->iova + A6XX_CD_DATA_OFFSET;
- 	int i, regcount = 0;
+diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+index 0641f5bb8649a..5d5cf51cde65a 100644
+--- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
++++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+@@ -26,9 +26,8 @@ static bool can_swap(void)
  
--	in += CRASHDUMP_WRITE(in, REG_A6XX_HLSQ_DBG_READ_SEL, regs->val1);
-+	in += CRASHDUMP_WRITE(in, REG_A6XX_HLSQ_DBG_READ_SEL, (regs->val1 & 0xff) << 8);
+ static bool can_block(struct shrink_control *sc)
+ {
+-	if (!(sc->gfp_mask & __GFP_DIRECT_RECLAIM))
+-		return false;
+-	return current_is_kswapd() || (sc->gfp_mask & __GFP_RECLAIM);
++	return (sc->gfp_mask & __GFP_DIRECT_RECLAIM) ||
++	       (current_is_kswapd() && (sc->gfp_mask & __GFP_KSWAPD_RECLAIM));
+ }
  
- 	for (i = 0; i < regs->count; i += 2) {
- 		u32 count = RANGE(regs->registers, i);
+ static unsigned long
 -- 
 2.53.0
 
