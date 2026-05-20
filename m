@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2712369D6E;
-	Wed, 20 May 2026 16:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3E6368968;
+	Wed, 20 May 2026 16:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296311; cv=none; b=GV0SuljRaufclofoH5Vi8PsCT50turCfN73LYZuZo6zxYX9lsBjInxQSRTOkhUBo0Vw5ZdCmhBJphiemIVdWzBqs8GwHzKI6QkBUG+ndfHTXsiFdzvs77D6uLTvG/yKsWk0+Jy8xRbwfplhz+EtvhsI4bOH+eso3PagtQkC3w8E=
+	t=1779296314; cv=none; b=tF9Q06l3FlDmPfm02rLxxbPHwE4C728JZ1LJV536+hw57IpwQG7g5UbeIrzHj9QmjXaYm4uF3Tzb91/l6dmmZzvxr8w5Czrz7c5cbLFgE4vAyLkKVcni78LZWGhZG6KmmvDct6HND2y029FCuCCxfY8q2b6sqk4y/hWDrZmgPoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296311; c=relaxed/simple;
-	bh=bv18WOzk2fRABz03uZNjZ/U4qs/Z3MgOBU5SLO1mrq8=;
+	s=arc-20240116; t=1779296314; c=relaxed/simple;
+	bh=s8vZvvNOhEedifZdK2efRUFMLi0Rxs0AefxbxSGgSaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+EjR0I53T29AM0ZEUUo94dDXx//kFbbHJ/kVAf32p67cMDhjkwJCmLRFRZTEcIyN2IAi4cAONi1dZsG0ht/kLX5Z02qzRvefDq5Cp6cDFk8iLZtzJHix8WcdWzQsjQWM/Cqu5Fm1SnAGbEH5Wl7WHi6rg3yYXrVafO9mtBJuF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qp9gTIGC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cGuSFwFwjuhtA77/SPxXDiyOZiwUrKXDqSuQsbIfJsSRD56LxygmjCz42lSQ2DkuqUMssTvWN0I2R+iwat0X5xgnhwVZwMakl4goivLJmtVkabonWZhUciXDe7le4ITqa6YJLj9tQMfjj/xwS/NCWjO8Ae7eH77OceCX9Kt5hSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlOGwPCC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qp9gTIGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4312C1F000E9;
-	Wed, 20 May 2026 16:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlOGwPCC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E361F000E9;
+	Wed, 20 May 2026 16:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296310;
-	bh=FA/IVUY9f2a3Ug3Es47rMaa7reHCBLJiY1emuLtyzz8=;
+	s=korg; t=1779296313;
+	bh=ccrbawwvEBabTXmTlk3ejbjy3VuNWcuFLCCIrMypZWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qp9gTIGCkl6fuvEWAhj+/NaS+/IGgQNxogWgyTWHPwTqfoJL7P3dOINRABY2AI+Wv
-	 2AMe4BJ7eBN6VnHCpzAwvBOEbEAqET8mTV7qY+GvPBGVa1k/T/GKadDeA+ocBwtU8b
-	 IjYwt2e5OKkK2lu5xHiVxjBsUMyWptxuNUjzr5s0=
+	b=ZlOGwPCCMxVEy45lJsJBICtSevFr4fpwwTVUNpeRXgPjKcgKTkgMpN4WzEN5T6lNV
+	 H7tM2iz/UUr5lV2mC3VhJE/rCb6NxsPzXUEkk+J3lmSwsMVd7+xtqKD5jxgFdg95gs
+	 je5j9TpJtm3WO5L+ouCEE0sJ2soeAINgddsWfcSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0752/1146] arm64: dts: imx8mp-navqp: Correct PAD settings for PMIC_nINT
-Date: Wed, 20 May 2026 18:16:42 +0200
-Message-ID: <20260520162205.230172633@linuxfoundation.org>
+Subject: [PATCH 7.0 0735/1146] drm/amd/display: Fix parameter mismatch in panel self-refresh helper
+Date: Wed, 20 May 2026 18:16:25 +0200
+Message-ID: <20260520162204.840554748@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,36 +58,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 741d6ac1a2a2e0f3e2cae5eef3516cdd75119e83 ]
+[ Upstream commit f2483b3f39c8e20d2de0cc16e512a1b2aa14baf9 ]
 
-With commit 5d0efaf47ee90 ("regulator: pca9450: Correct interrupt type"),
-there will be interrupt storm for i.MX8MP NAVQP. Per schematic, there
-is no on board PULL-UP resistors for GPIO1_IO03, so need to set PAD
-PUE and PU together to make pull up work properly.
+Align parameter names with function arguments.
 
-Fixes: 682729a9d506d ("arm64: dts: freescale: Add device tree for Emcraft Systems NavQ+ Kit")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+The function controls panel self-refresh enable/disable based on vblank
+and VRR state.
+
+Fixes the below with gcc W=1:
+../display/amdgpu_dm/amdgpu_dm_crtc.c:131 function parameter 'dm' not described in 'amdgpu_dm_crtc_set_panel_sr_feature'
+../display/amdgpu_dm/amdgpu_dm_crtc.c:131 function parameter 'acrtc' not described in 'amdgpu_dm_crtc_set_panel_sr_feature'
+../display/amdgpu_dm/amdgpu_dm_crtc.c:131 function parameter 'stream' not described in 'amdgpu_dm_crtc_set_panel_sr_feature'
+../display/amdgpu_dm/amdgpu_dm_crtc.c:131 function parameter 'dm' not described in 'amdgpu_dm_crtc_set_panel_sr_feature'
+../display/amdgpu_dm/amdgpu_dm_crtc.c:131 function parameter 'acrtc' not described in 'amdgpu_dm_crtc_set_panel_sr_feature'
+../display/amdgpu_dm/amdgpu_dm_crtc.c:131 function parameter 'stream' not described in 'amdgpu_dm_crtc_set_panel_sr_feature'
+
+Fixes: 754003486c3c ("drm/amd/display: Add Idle state manager(ISM)")
+Cc: Ray Wu <ray.wu@amd.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-navqp.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../amd/display/amdgpu_dm/amdgpu_dm_crtc.c    | 21 +++++++++----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-navqp.dts b/arch/arm64/boot/dts/freescale/imx8mp-navqp.dts
-index 4a4f7c1adc23f..9dedb9f11145e 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-navqp.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-navqp.dts
-@@ -356,7 +356,7 @@ MX8MP_IOMUXC_I2C4_SDA__I2C4_SDA					0x400001c3
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+index 304437c2284d8..527d0ad69348e 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
+@@ -101,23 +101,22 @@ bool amdgpu_dm_crtc_vrr_active(const struct dm_crtc_state *dm_state)
  
- 	pinctrl_pmic: pmicgrp {
- 		fsl,pins = <
--			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03				0x41
-+			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03				0x1c0
- 		>;
- 	};
- 
+ /**
+  * amdgpu_dm_crtc_set_panel_sr_feature() - Manage panel self-refresh features.
+- *
+- * @vblank_work:    is a pointer to a struct vblank_control_work object.
+- * @vblank_enabled: indicates whether the DRM vblank counter is currently
+- *                  enabled (true) or disabled (false).
+- * @allow_sr_entry: represents whether entry into the self-refresh mode is
+- *                  allowed (true) or not allowed (false).
++ * @dm: amdgpu display manager instance.
++ * @acrtc: CRTC whose panel self-refresh state is being updated.
++ * @stream: DC stream associated with @acrtc.
++ * @vblank_enabled: Whether the DRM vblank counter is currently enabled.
++ * @allow_sr_entry: Whether entry into self-refresh mode is allowed.
+  *
+  * The DRM vblank counter enable/disable action is used as the trigger to enable
+  * or disable various panel self-refresh features:
+  *
+  * Panel Replay and PSR SU
+  * - Enable when:
+- *      - VRR is disabled
+- *      - vblank counter is disabled
+- *      - entry is allowed: usermode demonstrates an adequate number of fast
+- *        commits)
+- *     - CRC capture window isn't active
++ *   - VRR is disabled
++ *   - vblank counter is disabled
++ *   - entry is allowed: usermode demonstrates an adequate number of fast
++ *     commits
++ *   - CRC capture window isn't active
+  * - Keep enabled even when vblank counter gets enabled
+  *
+  * PSR1
 -- 
 2.53.0
 
