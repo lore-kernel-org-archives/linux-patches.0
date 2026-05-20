@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EDE3F5BF0;
-	Wed, 20 May 2026 17:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC21F3F5BF0;
+	Wed, 20 May 2026 17:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297160; cv=none; b=CqzMTyuhRczVnnxDkompLNuJ676yB6wQf+moGTEeSV5wHdeqCpbaKF5GjFY1GjKsfRzk13tN+7G3e0ieI2X77mUj1ApAuhIXKnGBZaGLQN4jeD99tz291/oRXpVLhFCl9oM1mF7TLBkf0aQAxGCFM2qjtfp7tq2HPVTf9WYjhiA=
+	t=1779297163; cv=none; b=FAZgf8hzldKzMQc0a6O1aDsXcWPDEanef3SCYvNaMfsDlmxTvb/Wtfovk5t18vcmnhw0w7ZuBib1W0v7mHhSDL3hveY56QKzIk9g5U5cbmvWW8DZTsqs6hIBlLZqRwbxTPnqHRLQs9BBo+/xoh1QNfZgHqPGWaoOjPHrY5OdBhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297160; c=relaxed/simple;
-	bh=QbtX3gO0UVHCpi6cTma/gYA6/QcwDdunoPY5nW6bjg8=;
+	s=arc-20240116; t=1779297163; c=relaxed/simple;
+	bh=U/gB07a1CRPu5ljdVNXEA4Mspw5RMELf9Dce3nLb0Lw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gW9UXOCp1M4EbLyzTcRUNQnebrIi6CnpDCopkYD5f8y7OAQUp0J5BCe3W1jRSJvTev4081f0k+bL2DdXRGi+5MxVoLUCnrc9PqtCbJXo8iYX8pChGCY3Mrp6KMkzBTwXjFFyQUYNQvzDhl3A88eP1VHE28P5ZrmbJbuoc9W6Mfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhsATwHx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V4eyg4hHep4YP26InBY/Gky8Rxe3bjxvu+HuzIGMm1RNtYkTpjZExf/lvZEQlJLx8+uzB3x7KjXmltfAenJsM5LMZK2B/Lt4z1YonQY2VgfYeOt1w4zWIC3KTXMwwwWBm1bLNT3XW8xXkeOM4U8nZr+avgyru6z3Dyj/Hv+9aIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JROqxA+U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhsATwHx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC1A1F000E9;
-	Wed, 20 May 2026 17:12:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JROqxA+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FBD1F000E9;
+	Wed, 20 May 2026 17:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297159;
-	bh=njGeHpQOvZhsBy8Uj0VmEzjYcUGSNocifVbB76FcxQ4=;
+	s=korg; t=1779297162;
+	bh=bcy6PmKCc+jqcgUOnRFg1uy9xccwpefezNPjYnV+wys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UhsATwHxl8IMq5whRBgehj/ZONHmVWzNLFGrBIp5UvsH5rp/hz3sXwzWmQI5EPJ0j
-	 ov5fzAzo88uqwXa2nwfp6bVyUmw9mPr3F4pN6HeLSb6Yy63Pr8u4tEcgtPrxwEISBO
-	 qF64Qe1bcQSGOkkU1uWb3d45Xr8+Wq0o++cjgPEk=
+	b=JROqxA+UaI79TcRmyNINUU37V6P1qIcQIQVL70XvADcJW7PZhfwbJN731n8K207/0
+	 L/8/cdaIGbGXnba4M9h3G01KkB5wp/NE9bSt5fCZDfKK3T7HkZHNVpXbagc28uvm/w
+	 F2MGRMTtpe0HSkT9AO/mpuP1qmTPdbguDj0rAc1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 7.0 1046/1146] netfilter: nf_conntrack_sip: get helper before allocating expectation
-Date: Wed, 20 May 2026 18:21:36 +0200
-Message-ID: <20260520162211.902881524@linuxfoundation.org>
+	syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 7.0 1073/1146] drm: Replace old pointer to new idr
+Date: Wed, 20 May 2026 18:22:03 +0200
+Message-ID: <20260520162212.514166782@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,50 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit eb6317739b1ea3ab28791e1f91b24781905fa815 upstream.
+commit dc366607c41c45fd0ae6f3db090f31dd611b644a upstream.
 
-process_register_request() allocates an expectation and then checks
-whether a conntrack helper is available. If helper lookup fails, the
-function returns early and the allocated expectation is left behind.
+Commit 5e28b7b94408 introduced a logical error by failing to replace the
+newly generated IDR pointer to old id's pointer at the correct location
+within the "change handle" logic; this resulted in the issue reported by
+syzbot [1].
 
-Reorder the code to fetch and validate helper before calling
-nf_ct_expect_alloc(). This keeps the logic simpler and removes the leak
-path while preserving existing behavior.
+Specifically, the new IDR object pointer is intended to replace the original
+id's pointer during the normal execution flow.
 
-Fixes: e14575fa7529 ("netfilter: nf_conntrack: use rcu accessors where needed")
+Additionally, an unnecessary conditional check for the ret exit path has
+been removed.
+
+[1]
+!RB_EMPTY_ROOT(&prime_fpriv->dmabufs)
+WARNING: drivers/gpu/drm/drm_prime.c:224 at drm_prime_destroy_file_private+0x48/0x60 drivers/gpu/drm/drm_prime.c:224, CPU#0: syz.0.17/5833
+Call Trace:
+ drm_file_free.part.0+0x7e6/0xcc0 drivers/gpu/drm/drm_file.c:269
+ drm_file_free drivers/gpu/drm/drm_file.c:237 [inline]
+ drm_close_helper.isra.0+0x186/0x200 drivers/gpu/drm/drm_file.c:290
+ drm_release+0x1ab/0x360 drivers/gpu/drm/drm_file.c:438
+
+Fixes: 5e28b7b94408 ("drm: Set old handle to NULL before prime swap in change_handle")
+Reported-by: syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d7c9eed171647e421013
 Cc: stable@vger.kernel.org
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Tested-by: syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/tencent_C267296443AAA4567771176886DFF364A305@qq.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_sip.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/drm_gem.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -1367,6 +1367,10 @@ static int process_register_request(stru
- 		goto store_cseq;
- 	}
+--- a/drivers/gpu/drm/drm_gem.c
++++ b/drivers/gpu/drm/drm_gem.c
+@@ -1049,17 +1049,12 @@ int drm_gem_change_handle_ioctl(struct d
  
-+	helper = rcu_dereference(nfct_help(ct)->helper);
-+	if (!helper)
-+		return NF_DROP;
-+
- 	exp = nf_ct_expect_alloc(ct);
- 	if (!exp) {
- 		nf_ct_helper_log(skb, ct, "cannot alloc expectation");
-@@ -1377,10 +1381,6 @@ static int process_register_request(stru
- 	if (sip_direct_signalling)
- 		saddr = &ct->tuplehash[!dir].tuple.src.u3;
+ 	spin_unlock(&file_priv->table_lock);
  
--	helper = rcu_dereference(nfct_help(ct)->helper);
--	if (!helper)
--		return NF_DROP;
+-	if (ret < 0)
+-		goto out_unlock;
 -
- 	nf_ct_expect_init(exp, SIP_EXPECT_SIGNALLING, nf_ct_l3num(ct),
- 			  saddr, &daddr, proto, NULL, &port);
- 	exp->timeout.expires = sip_timeout * HZ;
+ 	if (obj->dma_buf) {
+ 		ret = drm_prime_add_buf_handle(&file_priv->prime, obj->dma_buf,
+ 					       handle);
+ 		if (ret < 0) {
+ 			spin_lock(&file_priv->table_lock);
+ 			idr_remove(&file_priv->object_idr, handle);
+-			idrobj = idr_replace(&file_priv->object_idr, obj, handle);
+-			WARN_ON(idrobj != NULL);
+ 			spin_unlock(&file_priv->table_lock);
+ 			goto out_unlock;
+ 		}
+@@ -1071,7 +1066,9 @@ int drm_gem_change_handle_ioctl(struct d
+ 
+ 	spin_lock(&file_priv->table_lock);
+ 	idr_remove(&file_priv->object_idr, args->handle);
++	idrobj = idr_replace(&file_priv->object_idr, obj, handle);
+ 	spin_unlock(&file_priv->table_lock);
++	WARN_ON(idrobj != NULL);
+ 
+ out_unlock:
+ 	mutex_unlock(&file_priv->prime.lock);
 
 
