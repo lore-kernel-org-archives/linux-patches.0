@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016BB221F2F;
-	Wed, 20 May 2026 16:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5B7221F2F;
+	Wed, 20 May 2026 16:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295194; cv=none; b=uf/eG0JaKMIEtl2elSQTP7PsjsSlp4YCdWCFnu+HdBV1yXJDsP4SauyWFQV/P9zwR59TfeNe82svJCVPptROEmCmMusslr5qb48sQ5aupNZMXN+fMOrcdRIEIkTh6RkjAyuKU6FdNAKZDkYaJQ4PmEpbO+Hs8ydlr+FgkCAN82w=
+	t=1779295196; cv=none; b=oZWR42Wt4l6hFfEktKUTVBLkXpZUceM01HG4FdMYhzxkmR0dV1RTca6gsrWHAPZhI/p0Bch85GD5d2w4zKZWXc2EK8w6UniO9rWqWT/1ORfWbZORx0J4Li3zVKn5kdp5XCuiopUHa/Yb+Sl0zbFP00Yhw64OiWdtJPdpdOG0sWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295194; c=relaxed/simple;
-	bh=EsV8vczmsm7yK1wTYhxa7fXjoT3tz1R8uIq3LQGfY1w=;
+	s=arc-20240116; t=1779295196; c=relaxed/simple;
+	bh=gjWT0C+qquBlWgQk5So8qar7c9nYav3KApgyxe7dkw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKgQzBPqOSG71h5pofptWTl6X2MxOPoUtK+hIZzEuRGSTmZoTu35WBPR449g7iDxRb3EanC6T/+U+OYh3g81uYy8IT5TQF0yj76jYG0ej4o/oBahlZ01TQpen9IRKLZrUp9YqG0LKhpYXo3CwzHkdytvXnxavHpan6GzTkdhgrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3+IisQO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RAZIjPVKh647l+rXt8tSVSvRdYgMIUsGvCEAXZ44aioyP1+2FEtHeKHW/4u9Wujx1oP7VKB10y9cpnh3P7mCsDpySxRERPYt8MqKBy3KvzRFKuwf6XvMSfx0Gha/8O7SlQqfSkuzwxdDbmMHCpPjq/Bz/RVbpO6WJbGaktJHPjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6iY4NtJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3+IisQO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AFC1F000E9;
-	Wed, 20 May 2026 16:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6iY4NtJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043B91F000E9;
+	Wed, 20 May 2026 16:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295192;
-	bh=XE6ybgrkHFGhxM5R642c+jyHTH5MMmTTf9JjVTZ5deM=;
+	s=korg; t=1779295195;
+	bh=qtVXUu6Of3P93hnL//HpA1qlQz7RzZeO/PB6XXKujN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w3+IisQOPr5Vj3jf/yJ0zhdxob7DxFk7J0N2E7/qk6lYcVeewofMEIqNHTg8d1Gmn
-	 HRwW+ps0WnCkA5xyzIQoavJdH2XuwbH0rFozYDLj72PJCRuXRP+y90qLooDeiX7bqm
-	 VyB6iuT+Kstnf+TiEooN6qVetPgHdvP1xO1tcaLs=
+	b=j6iY4NtJMpcQX/LX8kCsPAqc8qzUGEB5tVQiElBQ+UvQ8evDyk5xQKDQ/GtcvWPqN
+	 tB9+bQj1s1Pmjxtp86OLuAwJrfhOlE6gTwu+uEmA/kDqryRL/uzeIXzbUT7yb0a4ec
+	 OW1TuMCwmOnbk0S1Lw5rbnwZ9Edv1qzwBCJ6QK/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ellen Pan <yunru.pan@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Bokun Zhang <bokun.zhang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0326/1146] tools/sched_ext: scx_pair: fix pair_ctx indexing for CPU pairs
-Date: Wed, 20 May 2026 18:09:36 +0200
-Message-ID: <20260520162155.575394216@linuxfoundation.org>
+Subject: [PATCH 7.0 0300/1146] drm/amdgpu: Remove dead negative offset check in amdgpu_virt_init_critical_region()
+Date: Wed, 20 May 2026 18:09:10 +0200
+Message-ID: <20260520162154.999434316@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,81 +50,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit f546c77038ab898726e7344255217fbec382b97f ]
+[ Upstream commit 4fce3dfab54d60ebaff1c7a9020a730a0708b705 ]
 
-scx_pair sizes pair_ctx to nr_cpu_ids / 2, so valid pair_ctx keys are
-dense pair indexes in the range [0, nr_cpu_ids / 2).
+amdgpu_virt_init_critical_region() stores init_hdr_offset as u64.
+The subsequent check for init_hdr_offset < 0 is therefore always false.
 
-However, the userspace setup code stores pair_id as the first CPU number
-in each pair. On an 8-CPU system with "-S 1", that produces pair IDs
-0, 2, 4 and 6 for pairs [0,1], [2,3], [4,5] and [6,7]. CPUs in the
-latter half then look up pair_ctx with out-of-range keys and the BPF
-scheduler aborts with:
+Drop the unreachable validation and rely on the existing
+check_add_overflow() and VRAM end bounds check for offset validation.
 
-EXIT: scx_bpf_error (scx_pair.bpf.c:328: failed to lookup pairc and
-in_pair_mask for cpu[5])
+This resolves the Smatch warning about comparing an unsigned value
+against zero.
 
-Assign pair_id using a dense pair counter instead so that each CPU pair
-maps to a valid pair_ctx entry. Besides, reject odd CPU configuration, as
-scx_pair requires all CPUs to be paired.
+drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c:953 amdgpu_virt_init_critical_region() warn: unsigned 'init_hdr_offset' is never less than zero.
 
-Fixes: f0262b102c7c ("tools/sched_ext: add scx_pair scheduler")
-Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 07009df6494d ("drm/amdgpu: Introduce SRIOV critical regions v2 during VF init")
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Ellen Pan <yunru.pan@amd.com>
+Cc: Lijo Lazar <lijo.lazar@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Bokun Zhang <bokun.zhang@amd.com>
+Reviewed-by: Ellen Pan <yunru.pan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/sched_ext/scx_pair.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/tools/sched_ext/scx_pair.c b/tools/sched_ext/scx_pair.c
-index 2e509391f3dab..eb1bea2dd0ccc 100644
---- a/tools/sched_ext/scx_pair.c
-+++ b/tools/sched_ext/scx_pair.c
-@@ -48,6 +48,7 @@ int main(int argc, char **argv)
- 	struct bpf_link *link;
- 	__u64 seq = 0, ecode;
- 	__s32 stride, i, opt, outer_fd;
-+	__u32 pair_id = 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+index 275745aa58292..1e284ecad2170 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+@@ -950,11 +950,6 @@ int amdgpu_virt_init_critical_region(struct amdgpu_device *adev)
+ 	if (adev->virt.req_init_data_ver != GPU_CRIT_REGION_V2)
+ 		return 0;
  
- 	libbpf_set_print(libbpf_print_fn);
- 	signal(SIGINT, sigint_handler);
-@@ -82,6 +83,14 @@ int main(int argc, char **argv)
- 		scx_pair__destroy(skel);
- 		return -1;
- 	}
-+
-+	if (skel->rodata->nr_cpu_ids & 1) {
-+		fprintf(stderr, "scx_pair requires an even CPU count, got %u\n",
-+			skel->rodata->nr_cpu_ids);
-+		scx_pair__destroy(skel);
-+		return -1;
-+	}
-+
- 	bpf_map__set_max_entries(skel->maps.pair_ctx, skel->rodata->nr_cpu_ids / 2);
- 
- 	/* Resize arrays so their element count is equal to cpu count. */
-@@ -109,10 +118,11 @@ int main(int argc, char **argv)
- 
- 		skel->rodata_pair_cpu->pair_cpu[i] = j;
- 		skel->rodata_pair_cpu->pair_cpu[j] = i;
--		skel->rodata_pair_id->pair_id[i] = i;
--		skel->rodata_pair_id->pair_id[j] = i;
-+		skel->rodata_pair_id->pair_id[i] = pair_id;
-+		skel->rodata_pair_id->pair_id[j] = pair_id;
- 		skel->rodata_in_pair_idx->in_pair_idx[i] = 0;
- 		skel->rodata_in_pair_idx->in_pair_idx[j] = 1;
-+		pair_id++;
- 
- 		printf("[%d, %d] ", i, j);
- 	}
+-	if (init_hdr_offset < 0) {
+-		dev_err(adev->dev, "Invalid init header offset\n");
+-		return -EINVAL;
+-	}
+-
+ 	vram_size = RREG32(mmRCC_CONFIG_MEMSIZE);
+ 	if (!vram_size || vram_size == U32_MAX)
+ 		return -EINVAL;
 -- 
 2.53.0
 
