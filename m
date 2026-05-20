@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F09028DC4;
-	Wed, 20 May 2026 17:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D6936F421;
+	Wed, 20 May 2026 17:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297321; cv=none; b=SrcecTn3yhSOKCROEZW5UNpNZo4CfaCWJHyXCzJFNCDVwj/ka8LI4QneivCLQ4U+zK4jUVD84V1ZkWzm4tRCGyDbSVLXgz9bp1IuJg/Erofyauhy9fLXU92+1WAl4ri76zO9MMTgiBtSLAZ+JEewhySj0bLSrALUId2GLP0dTb8=
+	t=1779297323; cv=none; b=SeRrh1vX37zKBkyvNIjO5qqOcvECdcKoQAmUumxpZP5sm9XvULYVElKbyit7csofK/85pSPyD1ROcu977DU011aRciHZCj5aZz2m6CFnFMRytTtRu0eFj5ST6CywEY+UIBgkVmBILwOyQQ0sUZOS4AHZji/xMspMKmlkRI4TmD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297321; c=relaxed/simple;
-	bh=ey7R/E12OIKzT7T5jhY1u3ZlITpxfODVKKCBTjis7IY=;
+	s=arc-20240116; t=1779297323; c=relaxed/simple;
+	bh=8lPfHbOnLo3mfgPC42n+avaCRGbSFCfUo4VSdy0+2lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZd2HGp76vq4XCVGUqvGWgKn2B3mZa+6yUad+0bJ9kVnLnt24vbe/Z2O+skVkhIyBo5wf7j7c4BmO2PIP3xd6uk0hPBX3YxNaXKjAtdI/xqetcXZZUtKjZQAQ+560hgihLoF7YyQUQaeBjyleyiIlIsUOWM1zOkImFLeigwz7kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfRbRSKU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gMd2FkAB3a0d0GVNJ/5I8MqBoB23nX4KqoQwp1hjCzLWZS4nfIrvksS+RBFnNATr93MrlIsMCWf6o/UMe+1SYM2+R90fxMefI1DpB4+JhePVoPWfqyE3HLlffQAJH3mCheY43TXhXktGM573V2N3aHZdRsdNjZAamYi25NLWbqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUGDw/Gv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfRbRSKU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D281F000E9;
-	Wed, 20 May 2026 17:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUGDw/Gv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586B01F000E9;
+	Wed, 20 May 2026 17:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297320;
-	bh=6vJhqz8zq07VxkqjgyA47ZupviApOyagd5W2KpNVAvg=;
+	s=korg; t=1779297322;
+	bh=YD2dWraivMyHmgaE+G9GNTU5lBrtTSBP/HEny8O00W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VfRbRSKUX0HexuVhtmfyR7LLEIyW/uCO+Hp4ckko6zVt4CRtGCp+XULrFIyv57hHf
-	 Aw+bDZ/4bWUjZgMkZAnTmwp0YzFNiKFn1vqp2wHsTgjYz9k8fa6o5+rrF7HMxBYhiR
-	 gUknpYRL9qSR1trcHhmX6G2pcT3xmfmm3H38nTBQ=
+	b=nUGDw/GvHPB7cvuQuRJbXPNBAt8wjsXtfOW8laFYN2iUa4Ifgki7GNB8RPgWi12s8
+	 F0pp3el5VkSARVyVyIBGYK7ucjv0XupAdTWBfKRo9b3F3EKGODCRditHf4y2Zgu/Uw
+	 t6/ZtNm0tvk38s43qy0ecfi3HXRoK3ZN2LJ4lnkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 7.0 1093/1146] btrfs: only release the dirty pages io tree after successful writes
-Date: Wed, 20 May 2026 18:22:23 +0200
-Message-ID: <20260520162212.973942681@linuxfoundation.org>
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 7.0 1094/1146] ceph: fix a buffer leak in __ceph_setxattr()
+Date: Wed, 20 May 2026 18:22:24 +0200
+Message-ID: <20260520162212.999149337@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,152 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-commit 4066c55e109475a06d18a1f127c939d551211956 upstream.
+commit 5d3cc36b4e77a27ce7b686b7c59c7072bcb3fa8e upstream.
 
-[WARNING]
-With extra warning on dirty extent buffers at umount (aka, the next
-patch in the series), test case generic/388 can trigger the following
-warning about dirty extent buffers at unmount time:
+The old_blob in __ceph_setxattr() can store
+ci->i_xattrs.prealloc_blob value during the retry.
+However, it is never called the ceph_buffer_put()
+for the old_blob object. This patch fixes the issue of
+the buffer leak.
 
-  BTRFS critical (device dm-2 state E): emergency shutdown
-  BTRFS error (device dm-2 state E): error while writing out transaction: -30
-  BTRFS warning (device dm-2 state E): Skipping commit of aborted transaction.
-  BTRFS error (device dm-2 state EA): Transaction 9 aborted (error -30)
-  BTRFS: error (device dm-2 state EA) in cleanup_transaction:2068: errno=-30 Readonly filesystem
-  BTRFS info (device dm-2 state EA): forced readonly
-  BTRFS info (device dm-2 state EA): last unmount of filesystem 4fbf2e15-f941-49a0-bc7c-716315d2777c
-  ------------[ cut here ]------------
-  WARNING: disk-io.c:3311 at invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs], CPU#8: umount/914368
-  CPU: 8 UID: 0 PID: 914368 Comm: umount Tainted: G           OE       7.1.0-rc1-custom+ #372 PREEMPT(full)  2de38db8d1deae71fde295430a0ff3ab98ccf596
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
-  RIP: 0010:invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs]
-  Call Trace:
-   <TASK>
-   close_ctree+0x52e/0x574 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
-   generic_shutdown_super+0x89/0x1a0
-   kill_anon_super+0x16/0x40
-   btrfs_kill_super+0x16/0x20 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
-   deactivate_locked_super+0x2d/0xb0
-   cleanup_mnt+0xdc/0x140
-   task_work_run+0x5a/0xa0
-   exit_to_user_mode_loop+0x123/0x4b0
-   do_syscall_64+0x243/0x7c0
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30539776 owner 9 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30621696 owner 257 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30638080 owner 258 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30654464 owner 7 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30703616 owner 2 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30720000 owner 10 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30736384 owner 4 gen 9 refs 2 flags 0x7
-  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30752768 owner 11 gen 9 refs 2 flags 0x7
-
-I'm using a stripped down version, which seems to trigger the warning
-more reliably:
-
-  _fsstress_pid=""
-  workload()
-  {
-  	dmesg -C
-  	mkfs.btrfs -f -K $dev > /dev/null
-  	echo 1 > /sys/kernel/debug/clear_warn_once
-  	mount $dev $mnt
-  	$fsstress -w -n 1024 -p 4 -d $mnt &
-  	_fsstress_pid=$!
-  	sleep 0
-  	$godown $mnt
-  	pkill --echo -PIPE fsstress > /dev/null
-  	wait $_fsstress_pid
-  	unset _fsstress_pid
-  	umount $mnt
-
-  	if dmesg | grep -q "WARNING"; then
-  		fail
-  	fi
-  }
-
-  for (( i = 0; i < $runtime; i++ )); do
-  	echo "=== $i/$runtime ==="
-  	workload
-  done
-
-[CAUSE]
-Inside btrfs_write_and_wait_transaction(), we first try to write all
-dirty ebs, then wait for them to finish.
-
-After that we call btrfs_extent_io_tree_release() to free all
-extent states from dirty_pages io tree.
-
-However if we hit an error from btrfs_write_marked_extent(), then we
-still call btrfs_extent_io_tree_release() to clear that dirty_pages io
-tree, which may contain dirty records that we haven't yet submitted.
-
-Furthermore, the later transaction cleanup path will utilize that
-dirty_pages io tree to properly cleanup those dirty ebs, but since it's
-already empty, no dirty ebs are properly cleaned up, thus will later
-trigger the warnings inside invalidate_btree_folios().
-
-[FIX]
-Normally such dirty ebs won't cause problems, as when the iput() is
-called on the btree inode, the dirty ebs will be forcibly written back,
-and since the fs is already in an error status, such writeback will not
-reach disk and finish immediately.
-
-But it's still better to get rid of such dirty ebs, if we ended up with
-dirty ebs but the fs is not in an error status, then such writeback at
-iput() time will be too late, as all workers are already stopped but
-writeback will utilize workers, which will lead to NULL pointer
-dereferences.
-
-Instead of unconditionally calling btrfs_extent_io_tree_release(), only
-call it if btrfs_write_and_wait_transaction() finished successfully, so
-that @dirty_pages extent io tree is kept untouched for transaction
-cleanup.
-
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c     |    1 +
- fs/btrfs/transaction.c |    9 ++++-----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ fs/ceph/xattr.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -4709,6 +4709,7 @@ static void btrfs_destroy_marked_extents
- 			free_extent_buffer_stale(eb);
- 		}
- 	}
-+	btrfs_extent_io_tree_release(dirty_pages);
- }
+--- a/fs/ceph/xattr.c
++++ b/fs/ceph/xattr.c
+@@ -1294,6 +1294,7 @@ retry:
  
- static void btrfs_destroy_pinned_extent(struct btrfs_fs_info *fs_info,
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -1275,14 +1275,13 @@ static int btrfs_write_and_wait_transact
- 	blk_finish_plug(&plug);
- 	ret2 = btrfs_wait_extents(fs_info, dirty_pages);
- 
--	btrfs_extent_io_tree_release(&trans->transaction->dirty_pages);
--
- 	if (ret)
- 		return ret;
--	else if (ret2)
-+	if (ret2)
- 		return ret2;
--	else
--		return 0;
-+
-+	btrfs_extent_io_tree_release(&trans->transaction->dirty_pages);
-+	return 0;
- }
- 
- /*
+ do_sync:
+ 	spin_unlock(&ci->i_ceph_lock);
++	ceph_buffer_put(old_blob);
+ do_sync_unlocked:
+ 	if (lock_snap_rwsem)
+ 		up_read(&mdsc->snap_rwsem);
 
 
