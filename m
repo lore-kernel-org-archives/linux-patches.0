@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374F43FC5AE;
-	Wed, 20 May 2026 17:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F133FC5B0;
+	Wed, 20 May 2026 17:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299965; cv=none; b=oJxvlmnFvdnNZ/hOTBB3i1+bIySbkCt5U0VVW3V24HycOHtovYKVjcmRFh7+rseivVGHNeVY0qLl1NJAoGvKNL9JsQX0AnLwAWRKnZpwndUtO9UdoL6JvDzf413KRRJwXb90CThvn8dzMUaf//6aRw3FqhM0dGowis2SY8MkvhA=
+	t=1779299969; cv=none; b=ixk0toxQeTe/pK+NYpUv87tGtj1CADPuWmxUWcTFMiNDTqw79XzGGRMCsbzv9GpXmu+uLbBttBqjnfQV6Tstw0GTadaWqCMI/rYozn6h5X7U6SHlBB9bVKXeamLe50CCKJcFfPjWMi1z67AcuQTKnBw1ClPtCnI1PcAn9kWlpQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299965; c=relaxed/simple;
-	bh=PWpbr9s32fIT1gPa/DSUFkejOi1LkEn+be27uMnk55s=;
+	s=arc-20240116; t=1779299969; c=relaxed/simple;
+	bh=WtOuvgI9nuDP7EN0lkRdDmL6k/OfdK25oMFoMLVgEzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MdolSFHiILqvp1VU6R3DOtyouoUZVBXQ7gPPoyUhRKqjeYJuENsuT/yZq3SzaT/4PN5oZUtupbXsuVOmV8B4Z7nLYULwAhwY3/b5XhAYPQXaIsRZyBHOpfxl/kBzSg75xUrhn8EccOBo5PdxbAuV3yipm3XNW/a0NlU3Hf3MAjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLLAPio9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f1XXFFvOkQhbV9jNLBMK5MbJXpCamq31lwe6LPlwBkF87io+kehBxDZQpejdPwSm4E6Z1FYh6LqCHHhiJsUFZikwkHteOFl1Tca+lU1PlDtucLq5qo8PWBRLH1oQF2jR+HYhWXTz6jpHRpNlB7+LJafagFd3z8AYdh1OpsN3wXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUrnsunu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLLAPio9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BA71F000E9;
-	Wed, 20 May 2026 17:59:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUrnsunu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5FE1F00893;
+	Wed, 20 May 2026 17:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299963;
-	bh=Okdf9mP5ea2CihL14RaEyGEZ/3jWb8Njg9oa2ZxBwLc=;
+	s=korg; t=1779299965;
+	bh=J8ekor1fDo/mnaITJgdbwVK2xw7992KJvvzXr6eSe7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLLAPio9QoDo0lW1ud3aNeY2hp6RFaJcwNz+VJuFfWyfLbbB/EQjNHdJkItNMo4Tm
-	 LQ5w8vGl10WItOq/XT+/vrOeICp5/YOF8SFjnqm9pGMnaKpCGAY7qY5DaWNMMZtzDk
-	 YeQg3n73l9q5vPnS2Xo9pop0mryEWRMINLhmgg1M=
+	b=bUrnsunu/8sDQ5RAJa+cX1eq69mMXWJOh+7Lyvwm23423Iksr96hGuP1gxDm5mGTn
+	 GoIylh9DG0keUwzfq/FAtGvRZzVaGR2WmjZBzjmyT+lKHSuCW+p/n7HbyemZEVBC5a
+	 +WmIqwETSRCBUKJI7bzHwKg/gQVz0j0oDWKPqpP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tejun Heo <tj@kernel.org>,
 	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 953/957] sched_ext: Guard scx_dsq_move() against NULL kit->dsq after failed iter_new
-Date: Wed, 20 May 2026 18:23:56 +0200
-Message-ID: <20260520162155.270345073@linuxfoundation.org>
+Subject: [PATCH 6.18 954/957] sched_ext: Pass held rq to SCX_CALL_OP() for core_sched_before
+Date: Wed, 20 May 2026 18:23:57 +0200
+Message-ID: <20260520162155.292541619@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,43 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 4fda9f0e7c950da4fe03cedeb2ac818edf5d03e9 ]
+[ Upstream commit 4155fb489fa175ec74eedde7d02219cf2fe74303 ]
 
-bpf_iter_scx_dsq_new() clears kit->dsq on failure and
-bpf_iter_scx_dsq_{next,destroy}() guard against that. scx_dsq_move() doesn't -
-it dereferences kit->dsq immediately, so a BPF program that calls
-scx_bpf_dsq_move[_vtime]() after a failed iter_new oopses the kernel.
+scx_prio_less() runs from core-sched's pick_next_task() path with rq
+locked but invokes ops.core_sched_before() with NULL locked_rq, leaving
+scx_locked_rq_state NULL. If the BPF callback calls a kfunc that
+re-acquires rq based on scx_locked_rq() - e.g. scx_bpf_cpuperf_set(cpu)
+- it re-acquires the already-held rq.
 
-Return false if kit->dsq is NULL.
+Pass task_rq(a).
 
-Fixes: 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()")
+Fixes: 7b0888b7cc19 ("sched_ext: Implement core-sched support")
 Cc: stable@vger.kernel.org # v6.12+
 Reported-by: Chris Mason <clm@meta.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Reviewed-by: Andrea Righi <arighi@nvidia.com>
-[ dropped upstream `sch = src_dsq->sched` reordering since stable initializes `sch` from `scx_root` instead ]
+[ adapted call to use stable's single `sch`/`SCX_KF_REST` mask and `scx_rq_bypassing(task_rq(a))` signature ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/sched/ext.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -5650,6 +5650,14 @@ static bool scx_dsq_move(struct bpf_iter
- 	bool in_balance;
- 	unsigned long flags;
- 
-+	/*
-+	 * The verifier considers an iterator slot initialized on any
-+	 * KF_ITER_NEW return, so a BPF program may legally reach here after
-+	 * bpf_iter_scx_dsq_new() failed and left @kit->dsq NULL.
-+	 */
-+	if (unlikely(!src_dsq))
-+		return false;
-+
- 	if (!scx_kf_allowed_if_unlocked() &&
- 	    !scx_kf_allowed(sch, SCX_KF_DISPATCH))
- 		return false;
+@@ -2522,7 +2522,7 @@ bool scx_prio_less(const struct task_str
+ 	if (SCX_HAS_OP(sch, core_sched_before) &&
+ 	    !scx_rq_bypassing(task_rq(a)))
+ 		return SCX_CALL_OP_2TASKS_RET(sch, SCX_KF_REST, core_sched_before,
+-					      NULL,
++					      task_rq(a),
+ 					      (struct task_struct *)a,
+ 					      (struct task_struct *)b);
+ 	else
 
 
