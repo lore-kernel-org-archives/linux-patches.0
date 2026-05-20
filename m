@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07DAC28DC4;
-	Wed, 20 May 2026 17:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03A630BF68;
+	Wed, 20 May 2026 17:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298506; cv=none; b=FNj85rZEN3pS1HFxgbBedz3xoRvdDJ8ZdNpNh7r8i5ESvusK42vF68f/kIm/WqvGLyBlxZXmaXFW1zVTyDTR0hjO5Mp0HJ7nizvphLOqCISSNFvoQxF+KBAFKKNF2FuxnyjFQIQ9/yfoXgDE24p4zhrZNQ9cyIOEAOFJOpzXB6k=
+	t=1779298508; cv=none; b=s/kbYp1/MqP0hzc2PM/JOVu9+aN9FKZddJV1DaSKOFnMgyTb253MniaPDzeSovSi7GIxOyEEEjAKt2RITSavaROMeP/kVGGpuTPiBAwO4DxKK9K1yYkJgdQ96HtBR21LWIawPqOsE91n2lV2eLQt3pL02bMdUMm538v0PpgCnA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298506; c=relaxed/simple;
-	bh=W3AuZketVAtq0s0X/d7r3jgp1+cO8m57Eudi6x72f94=;
+	s=arc-20240116; t=1779298508; c=relaxed/simple;
+	bh=J++k1AVzFPOmdefCGubGKu6ZjOd4HJf3hhxllwWRZEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7Yj6uBjx0ea/6iw1jAGm4ANPh8JmDQstYbSgwoCPZyCpQ+cMq9mOB6m+Jc6Os9l5Z6Qj7D2TXvJ6a7WdRfC44LSIz6JtnjFwMu32HRIczmJQzc+kwdDlXciapd4cjKtTp2rCd/Mg/7/5fQC8ilriMnxZmnVL1drTvPBdp+8TME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7H7Kx1F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p+Abj2Zzj/lxJBW0U/j5P3F8mGVqRL2kIXR4qDJpHvh/rmhdgv3A4qksG1Z4B1U2P8f9K7JtnmdasfKdY3EtbvvxN3ZbwQ1Fa2ULz9XpXMI5oW/a8s7Q6e5tzisinXv1Ns+TjrHK76xufrNxcE7Y0aOPQTKOFkfejF4bSC9ZnDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abBY0CLw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7H7Kx1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1FD1F000E9;
-	Wed, 20 May 2026 17:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abBY0CLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1074D1F000E9;
+	Wed, 20 May 2026 17:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298504;
-	bh=WumE+9f+JJG4TDA892vK7HGpuz2yHKBw70LRm1pk1jE=;
+	s=korg; t=1779298507;
+	bh=XqqJWfuNzVHlQGotqpl32aFOdHIDy8W7IPxjVg95mJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E7H7Kx1FwZ7O9koJdU9ftv/r+np4YIz6jji55bWjspPZJ2mTY+s+wRgXsTzWce+3V
-	 g3+6etSwTjvXxwOxIDIqKdbGSnemvURkT1nNK5W+W7IFp91z6GVavV+dN/BPN2JiVa
-	 vr2t9JasWByil/L8Gos65QbGl/F2Q1LUrFp/spl8=
+	b=abBY0CLwQEy4MutdqiTePTH2BBzSnGqhaA8JEA7AomS14SCr+C9/tzfJ9azeEawsg
+	 rMkt7NrRgBQi2XtupBJkq8D0riQqWPgpFcQGrQMFm18dP3Tv3x50gxqASmWR3NFiQq
+	 LLpB/EPcg/zqQwoHi2ht95rEmN8uKWe9vYgsBCNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Alexander Koskovich <akoskovich@pm.me>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 434/957] soc: qcom: aoss: compare against normalized cooling state
-Date: Wed, 20 May 2026 18:15:17 +0200
-Message-ID: <20260520162143.933524830@linuxfoundation.org>
+Subject: [PATCH 6.18 435/957] arm64: dts: qcom: sm8250: Add missing CPU7 3.09GHz OPP
+Date: Wed, 20 May 2026 18:15:18 +0200
+Message-ID: <20260520162143.955116568@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,39 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Alexander Koskovich <AKoskovich@pm.me>
 
-[ Upstream commit cd3c4670db3ffe997be9548c7a9db3952563cf14 ]
+[ Upstream commit b683730e27ba4f91986c4c92f5cb7297f1e01a6d ]
 
-qmp_cdev_set_cur_state() normalizes the requested state to a boolean
-(cdev_state = !!state). The existing early-return check compares
-qmp_cdev->state == state, which can be wrong if state is non-boolean
-(any non-zero value). Compare qmp_cdev->state against cdev_state instead,
-so the check matches the effective state and avoids redundant updates.
+This resolves the following error seen on the ASUS ROG Phone 3:
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Fixes: 05589b30b21a ("soc: qcom: Extend AOSS QMP driver to support resources that are used to wake up the SoC.")
+cpu cpu7: Voltage update failed freq=3091200
+cpu cpu7: failed to update OPP for freq=3091200
+
+Fixes: 8e0e8016cb79 ("arm64: dts: qcom: sm8250: Add CPU opp tables")
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260329195333.1478090-1-alok.a.tiwari@oracle.com
+Link: https://lore.kernel.org/r/20260307-sm8250-cpu7-opp-v1-1-435f5f6628a1@pm.me
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/qcom_aoss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-index a543ab9bee6c4..c255662b8fc3d 100644
---- a/drivers/soc/qcom/qcom_aoss.c
-+++ b/drivers/soc/qcom/qcom_aoss.c
-@@ -355,7 +355,7 @@ static int qmp_cdev_set_cur_state(struct thermal_cooling_device *cdev,
- 	/* Normalize state */
- 	cdev_state = !!state;
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 50dd11432bb2e..adf6b49b52c48 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -665,6 +665,11 @@ cpu7_opp20: opp-2841600000 {
+ 			opp-hz = /bits/ 64 <2841600000>;
+ 			opp-peak-kBps = <8368000 51609600>;
+ 		};
++
++		cpu7_opp21: opp-3091200000 {
++			opp-hz = /bits/ 64 <3091200000>;
++			opp-peak-kBps = <8368000 51609600>;
++		};
+ 	};
  
--	if (qmp_cdev->state == state)
-+	if (qmp_cdev->state == cdev_state)
- 		return 0;
- 
- 	ret = qmp_send(qmp_cdev->qmp, "{class: volt_flr, event:zero_temp, res:%s, value:%s}",
+ 	firmware {
 -- 
 2.53.0
 
