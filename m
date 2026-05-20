@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16B335F619;
-	Wed, 20 May 2026 17:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB13332EBD;
+	Wed, 20 May 2026 17:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297406; cv=none; b=QfL7qq+PcFBmNwCze4AgKx6FTUHb6G00IBd8qwSyoZSQPwqvx1+W3VeJxxs6shdw1nUVqaKl9mwUqBR97FdFeW5USbL8MAC088m8z2TO6WMOxrATt4Q2moxjxze1jmBDwnyhVWqkTCUlOgDrBOd46m65fy+l/JEawxJwnnNSvTk=
+	t=1779297408; cv=none; b=KDmpkb3qOp5ZPKT7uhqE7FBC1x4MN5oa+Vq36xucpL7JsLI7atzk3yBtlm+JzbMWWFybNQKFwbxMYTHkbajBjJloV+/nyMzE2HXZooeZ/jvFnZPyM/eS+039Jk+j7nJABDuRuepiQl4OQVsqLWmK5h55yGDL+3M7Bb841PfOGHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297406; c=relaxed/simple;
-	bh=5fyaSUIMzmM57b3l6W9iLWBmN9dZONvZZp1WtVu9YHI=;
+	s=arc-20240116; t=1779297408; c=relaxed/simple;
+	bh=NgM3iB9rZtIZhO7aN4N8vQS/8kjPJqwfIi3oSEpI8J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jG8o2+X58KzrbyAZQF4UWaYEW3Or/+ZExoWp8Z1Yryc5eWCkTmucFrgfjpExvrga72tFsH+1ifOBxYbcygZOO0bMQBIiMwq0rUlIuFzWn3+tlZEmnRJjLq0NSUWONkQbZiGp1R1VqxE9ZQTzywEL5sc1ibLs14wjA93638FalBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kupyufnT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jpq/PVJUh6ah4D+spdi3BrE/Cm5w5/7wocW4/UXaqKnhCiROOh/W3EgChvfZ449lBEhboUev47N6KKQPSh1kRWrnWsWog29auiIgWjncMr31G46uatVesC2AtLpXfQd373egb+a0MEeVdNK3ef0X+9UudKywX0zK9MZS4UvNxYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKFzaFJM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kupyufnT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CD21F000E9;
-	Wed, 20 May 2026 17:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKFzaFJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25791F000E9;
+	Wed, 20 May 2026 17:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297404;
-	bh=D9zqkVdWRamgseCAMzFGPRlwAEJn1ruFXYYOQ+auI1Q=;
+	s=korg; t=1779297407;
+	bh=0e53QNlgg73VVJ3bx/yqum8PqM6piNUmKf3+zCwh3Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kupyufnTarBfudMJKBJfto23DPtRKsqZJE0+aQ+lai6cTZKPvSwcQEYud8ygxOUQU
-	 UrVil/N892/KUyMERvtYFhLDYYI0IMWlXbEFbkwNIWp+TcLRiDRyxM4fuTm1u9bNe4
-	 UP9jLoUY8TnsDFIWGTk3kDIFt3iuLoxdfY7IJNQo=
+	b=tKFzaFJMoX3T/PXjo+wabY/5vTSyv6vZURXCIxVO6fkq/M0wsK1Bm7uWjVAE9AS9R
+	 FkC1T/H4U2y/SaBlH1B9U6iLq656rz0IBcpgL9kxyU+XMOX1aE8xjy/rhFfiBuxsxp
+	 SBuaxoTG0k+788QtSF573uWM1CGCYnEcgugAwM0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyungjung Joo <jhj140711@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 002/957] fs/omfs: reject s_sys_blocksize smaller than OMFS_DIR_START
-Date: Wed, 20 May 2026 18:08:05 +0200
-Message-ID: <20260520162134.613714756@linuxfoundation.org>
+Subject: [PATCH 6.18 020/957] ACPI: x86: cmos_rtc: Clean up address space handler driver
+Date: Wed, 20 May 2026 18:08:23 +0200
+Message-ID: <20260520162134.998563159@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,53 +50,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyungJung Joo <jhj140711@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 0621c385fda1376e967f37ccd534c26c3e511d14 ]
+[ Upstream commit ba0b236736dde4059bdcb8e99beaa50d6e5b6e7e ]
 
-omfs_fill_super() rejects oversized s_sys_blocksize values (> PAGE_SIZE),
-but it does not reject values smaller than OMFS_DIR_START (0x1b8 = 440).
+Make multiple changes that do not alter functionality to the CMOS RTC
+ACPI address space handler driver, including the following:
 
-Later, omfs_make_empty() uses
+ - Drop the unused .detach() callback from cmos_rtc_handler.
 
-    sbi->s_sys_blocksize - OMFS_DIR_START
+ - Rename acpi_cmos_rtc_attach_handler() to acpi_cmos_rtc_attach().
 
-as the length argument to memset().  Since s_sys_blocksize is u32,
-a crafted filesystem image with s_sys_blocksize < OMFS_DIR_START causes
-an unsigned underflow there, wrapping to a value near 2^32.  That drives
-a ~4 GiB memset() from bh->b_data + OMFS_DIR_START and overwrites kernel
-memory far beyond the backing block buffer.
+ - Rearrange acpi_cmos_rtc_space_handler() to reduce the number of
+   redundant checks and make white space follow the coding style.
 
-Add the corresponding lower-bound check alongside the existing upper-bound
-check in omfs_fill_super(), so that malformed images are rejected during
-superblock validation before any filesystem data is processed.
+ - Adjust an error message in acpi_install_cmos_rtc_space_handler()
+   and make the white space follow the coding style.
 
-Fixes: a3ab7155ea21 ("omfs: add directory routines")
-Signed-off-by: Hyungjung Joo <jhj140711@gmail.com>
-Link: https://patch.msgid.link/20260317054827.1822061-1-jhj140711@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+ - Rearrange acpi_remove_cmos_rtc_space_handler() and adjust an error
+   message in it.
+
+No intentional functional impact.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5094429.31r3eYUQgx@rafael.j.wysocki
+Stable-dep-of: 6cee29ad9d7e ("ACPI: x86: cmos_rtc: Improve coordination with ACPI TAD driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/omfs/inode.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/acpi/x86/cmos_rtc.c | 61 +++++++++++++++++++------------------
+ 1 file changed, 32 insertions(+), 29 deletions(-)
 
-diff --git a/fs/omfs/inode.c b/fs/omfs/inode.c
-index 135c49c5d848c..31218d89b7580 100644
---- a/fs/omfs/inode.c
-+++ b/fs/omfs/inode.c
-@@ -512,6 +512,12 @@ static int omfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 		goto out_brelse_bh;
+diff --git a/drivers/acpi/x86/cmos_rtc.c b/drivers/acpi/x86/cmos_rtc.c
+index 51643ff6fe5fc..977234da9fc11 100644
+--- a/drivers/acpi/x86/cmos_rtc.c
++++ b/drivers/acpi/x86/cmos_rtc.c
+@@ -24,31 +24,35 @@ static const struct acpi_device_id acpi_cmos_rtc_ids[] = {
+ 	{}
+ };
+ 
+-static acpi_status
+-acpi_cmos_rtc_space_handler(u32 function, acpi_physical_address address,
+-		      u32 bits, u64 *value64,
+-		      void *handler_context, void *region_context)
++static acpi_status acpi_cmos_rtc_space_handler(u32 function,
++					       acpi_physical_address address,
++					       u32 bits, u64 *value64,
++					       void *handler_context,
++					       void *region_context)
+ {
+-	int i;
++	unsigned int i, bytes = DIV_ROUND_UP(bits, 8);
+ 	u8 *value = (u8 *)value64;
+ 
+ 	if (address > 0xff || !value64)
+ 		return AE_BAD_PARAMETER;
+ 
+-	if (function != ACPI_WRITE && function != ACPI_READ)
+-		return AE_BAD_PARAMETER;
++	guard(spinlock_irq)(&rtc_lock);
++
++	if (function == ACPI_WRITE) {
++		for (i = 0; i < bytes; i++, address++, value++)
++			CMOS_WRITE(*value, address);
+ 
+-	spin_lock_irq(&rtc_lock);
++		return AE_OK;
++	}
+ 
+-	for (i = 0; i < DIV_ROUND_UP(bits, 8); ++i, ++address, ++value)
+-		if (function == ACPI_READ)
++	if (function == ACPI_READ) {
++		for (i = 0; i < bytes; i++, address++, value++)
+ 			*value = CMOS_READ(address);
+-		else
+-			CMOS_WRITE(*value, address);
+ 
+-	spin_unlock_irq(&rtc_lock);
++		return AE_OK;
++	}
+ 
+-	return AE_OK;
++	return AE_BAD_PARAMETER;
+ }
+ 
+ int acpi_install_cmos_rtc_space_handler(acpi_handle handle)
+@@ -56,11 +60,11 @@ int acpi_install_cmos_rtc_space_handler(acpi_handle handle)
+ 	acpi_status status;
+ 
+ 	status = acpi_install_address_space_handler(handle,
+-			ACPI_ADR_SPACE_CMOS,
+-			&acpi_cmos_rtc_space_handler,
+-			NULL, NULL);
++						    ACPI_ADR_SPACE_CMOS,
++						    acpi_cmos_rtc_space_handler,
++						    NULL, NULL);
+ 	if (ACPI_FAILURE(status)) {
+-		pr_err("Error installing CMOS-RTC region handler\n");
++		pr_err("Failed to install CMOS-RTC address space handler\n");
+ 		return -ENODEV;
  	}
  
-+	if (sbi->s_sys_blocksize < OMFS_DIR_START) {
-+		printk(KERN_ERR "omfs: sysblock size (%d) is too small\n",
-+			sbi->s_sys_blocksize);
-+		goto out_brelse_bh;
-+	}
+@@ -70,26 +74,25 @@ EXPORT_SYMBOL_GPL(acpi_install_cmos_rtc_space_handler);
+ 
+ void acpi_remove_cmos_rtc_space_handler(acpi_handle handle)
+ {
+-	if (ACPI_FAILURE(acpi_remove_address_space_handler(handle,
+-			ACPI_ADR_SPACE_CMOS, &acpi_cmos_rtc_space_handler)))
+-		pr_err("Error removing CMOS-RTC region handler\n");
++	acpi_status status;
 +
- 	if (sbi->s_blocksize < sbi->s_sys_blocksize ||
- 	    sbi->s_blocksize > OMFS_MAX_BLOCK_SIZE) {
- 		printk(KERN_ERR "omfs: block size (%d) is out of range\n",
++	status = acpi_remove_address_space_handler(handle,
++						   ACPI_ADR_SPACE_CMOS,
++						   acpi_cmos_rtc_space_handler);
++	if (ACPI_FAILURE(status))
++		pr_err("Failed to remove CMOS-RTC address space handler\n");
+ }
+ EXPORT_SYMBOL_GPL(acpi_remove_cmos_rtc_space_handler);
+ 
+-static int acpi_cmos_rtc_attach_handler(struct acpi_device *adev, const struct acpi_device_id *id)
++static int acpi_cmos_rtc_attach(struct acpi_device *adev,
++				const struct acpi_device_id *id)
+ {
+ 	return acpi_install_cmos_rtc_space_handler(adev->handle);
+ }
+ 
+-static void acpi_cmos_rtc_detach_handler(struct acpi_device *adev)
+-{
+-	acpi_remove_cmos_rtc_space_handler(adev->handle);
+-}
+-
+ static struct acpi_scan_handler cmos_rtc_handler = {
+ 	.ids = acpi_cmos_rtc_ids,
+-	.attach = acpi_cmos_rtc_attach_handler,
+-	.detach = acpi_cmos_rtc_detach_handler,
++	.attach = acpi_cmos_rtc_attach,
+ };
+ 
+ void __init acpi_cmos_rtc_init(void)
 -- 
 2.53.0
 
