@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B5129B8D0;
-	Wed, 20 May 2026 18:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FF0371048;
+	Wed, 20 May 2026 18:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301719; cv=none; b=qOSbYPmQSItky3x19MaVNNyxN+nnK9UfYgtZvgHz/DLndt12xxbCJJOojV67oQ/PPEvz+2QA2uHFHsOS4RASH7pdePrOR2Ej0X/UHC8DHqIiMmP41ZS54rt0TsyKrIcvxtdxdY2azarbJzvMrY+KgK7k5uLQsiKNzKIFqTFcIdI=
+	t=1779301722; cv=none; b=XFUzUv4XVzMnaZ4qmwCKBtZq8BKHkobCbde80tjgq92NGtN+5sekj2oe9XGeNiafJCP/V23wQ8POrWWae/ZWhzU7CP4Y8lCu+PW0D/UFIQCAGfl/Okqi/D+jgYCCgh9Bqt/7ginlx+mDktmYWGBD/79Kkx5ZaA90P6lWzWg7oSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301719; c=relaxed/simple;
-	bh=FxLNsJxlAJOITeK2znjCRnocbJSzSK9UlUY1EHTDMps=;
+	s=arc-20240116; t=1779301722; c=relaxed/simple;
+	bh=OwwhIz5dKWrxdNuJkjxiZPtSdOEsHvFhMdHK5OawJjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZrMia9sLanu8Awu66/TgbUsh2GIZViF1OOzo2h3oljA7+LWLqHfKcFi06G2RFUFTCYike/57/GR+YMsvu6hDMqJEHLsQgnCHB8YUtPs95udXJywvKI7YIpjW8Go5sRDWQDC8dlNAjYILL7IjtXzaVf6aEMxlQx4Gc1a/QESxz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaTTrqun; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rqCDlj8Kh4+MTTcyk9Ude9R7V911HZjYUk4a+c0zsbL+u3JjacsmfIZjAxbtUjHAfG77JEaQMGEGyxCvQKApKry3cnQyiY8fjAAGBUc+L073Wb6w70tF//pYIqpU9Rdd6pkLEurnlmEiVRhTLmbrwJM21aot6w4VdgPd+a8eADQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADZIhLHD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaTTrqun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D011F000E9;
-	Wed, 20 May 2026 18:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADZIhLHD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD0B1F000E9;
+	Wed, 20 May 2026 18:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301718;
-	bh=N/LdKMJVxaHCpkTShwxmh6IQocTaWXb+w8r1mYxdJlE=;
+	s=korg; t=1779301720;
+	bh=RZwMJyGIyoc+fdHsMY8FToa+FQBQWsHIWiuGP3JTUBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eaTTrqunvMcqLe9kiSHFyn2jodKsw40K+sSGyYct+fhO7b34BvQlaeSZ8Z96lEwWs
-	 LOJ1lYVCnuMYA410DoPDHbxWaeqOHeWfm8JLQkTjgEhtcFNdsGhuXMS405WK4TqxXt
-	 TEXJUcZRdzhiZFa9d+Qx6D76zNaN+xUBYr0UW9Kc=
+	b=ADZIhLHDKIwzfi+P3jHdNGEmWZjxJbRU5IPSgNBlXGK3vCEtjXsrpNEkqhNpxnIkD
+	 HIOoL2so7yFEvyRV+IWKs5xFxDjK+afLo4kbjYn+ILBR+4z818ci1/IOmzSUkIO8Q+
+	 RI4izXEtVMNUJxGENa8x1u+jVPOTFnP4T6/xGXhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Yash Shah <yash.shah@sifive.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 654/666] btrfs: do not mark inode incompressible after inline attempt fails
-Date: Wed, 20 May 2026 18:24:25 +0200
-Message-ID: <20260520162125.459528520@linuxfoundation.org>
+Subject: [PATCH 6.12 663/666] spi: sifive: fix controller deregistration
+Date: Wed, 20 May 2026 18:24:34 +0200
+Message-ID: <20260520162125.660409995@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,78 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 2e0e3716c7b6f8d71df2fbe709b922e54700f71b ]
+[ Upstream commit 0f25236694a2854627c1597465a071e6bb6fe572 ]
 
-[BUG]
-The following sequence will set the file with nocompress flag:
+Make sure to deregister the controller before disabling underlying
+resources like interrupts during driver unbind.
 
-  # mkfs.btrfs -f $dev
-  # mount $dev $mnt -o max_inline=4,compress
-  # xfs_io -f -c "pwrite 0 2k" -c sync $mnt/foobar
+Note that clocks were also disabled before the recent commit
+140039c23aca ("spi: sifive: Simplify clock handling with
+devm_clk_get_enabled()").
 
-The inode will have NOCOMPRESS flag, even if the content itself (all 0xcd)
-can still be compressed very well:
-
-	item 4 key (257 INODE_ITEM 0) itemoff 15879 itemsize 160
-		generation 9 transid 10 size 2097152 nbytes 1052672
-		block group 0 mode 100600 links 1 uid 0 gid 0 rdev 0
-		sequence 257 flags 0x8(NOCOMPRESS)
-
-Please note that, this behavior is there even before commit 59615e2c1f63
-("btrfs: reject single block sized compression early").
-
-[CAUSE]
-At compress_file_range(), after btrfs_compress_folios() call, we try
-making an inlined extent by calling cow_file_range_inline().
-
-But cow_file_range_inline() calls can_cow_file_range_inline() which has
-more accurate checks on if the range can be inlined.
-
-One of the user configurable conditions is the "max_inline=" mount
-option. If that value is set low (like the example, 4 bytes, which
-cannot store any header), or the compressed content is just slightly
-larger than 2K (the default value, meaning a 50% compression ratio),
-cow_file_range_inline() will return 1 immediately.
-
-And since we're here only to try inline the compressed data, the range
-is no larger than a single fs block.
-
-Thus compression is never going to make it a win, we fall back to
-marking the inode incompressible unavoidably.
-
-[FIX]
-Just add an extra check after inline attempt, so that if the inline
-attempt failed, do not set the nocompress flag.
-
-As there is no way to remove that flag, and the default 50% compression
-ratio is way too strict for the whole inode.
-
-CC: stable@vger.kernel.org # 6.12+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 484a9a68d669 ("spi: sifive: Add driver for the SiFive SPI controller")
+Cc: stable@vger.kernel.org	# 5.1
+Cc: Yash Shah <yash.shah@sifive.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-15-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-sifive.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1085,6 +1085,12 @@ again:
- 			mapping_set_error(mapping, -EIO);
- 		goto free_pages;
- 	}
-+	/*
-+	 * If a single block at file offset 0 cannot be inlined, fall back to
-+	 * regular writes without marking the file incompressible.
-+	 */
-+	if (start == 0 && end <= blocksize)
-+		goto cleanup_and_bail_uncompressed;
+--- a/drivers/spi/spi-sifive.c
++++ b/drivers/spi/spi-sifive.c
+@@ -393,7 +393,7 @@ static int sifive_spi_probe(struct platf
+ 	dev_info(&pdev->dev, "mapped; irq=%d, cs=%d\n",
+ 		 irq, host->num_chipselect);
  
- 	/*
- 	 * We aren't doing an inline extent. Round the compressed size up to a
+-	ret = devm_spi_register_controller(&pdev->dev, host);
++	ret = spi_register_controller(host);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "spi_register_host failed\n");
+ 		goto put_host;
+@@ -412,8 +412,14 @@ static void sifive_spi_remove(struct pla
+ 	struct spi_controller *host = platform_get_drvdata(pdev);
+ 	struct sifive_spi *spi = spi_controller_get_devdata(host);
+ 
++	spi_controller_get(host);
++
++	spi_unregister_controller(host);
++
+ 	/* Disable all the interrupts just in case */
+ 	sifive_spi_write(spi, SIFIVE_SPI_REG_IE, 0);
++
++	spi_controller_put(host);
+ }
+ 
+ static int sifive_spi_suspend(struct device *dev)
 
 
