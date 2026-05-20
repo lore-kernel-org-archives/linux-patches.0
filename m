@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B1F2609FD;
-	Wed, 20 May 2026 17:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1D43D75DA;
+	Wed, 20 May 2026 17:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296695; cv=none; b=XU5plfsF7x73u1herGQOeoXYiNeNFNDz6j6yz6sL1wz2TTKyKorFTh1K8uxcGcr0GxbFGXHSawTqfXJ4HZ4bLK++kFGS3r4BMYpiftYyVdOqI345WGkR87XPAAY8jYQsysxgk+zCix6Oa1XFzD9d1TzvrzubdXSRKrC52bXBMaw=
+	t=1779296697; cv=none; b=KHD7WfWprPSXl15botq++Ic4ChC3nYRrfyRqZ/rFUQ5yH6w+JIbbBK5tlWu15e11zsEtfaRnHP7VIiscf9w8uKNKq/EJsCfHBk4HEPKK1ieCGnj8fkyLRdVkZ6eFBOq6kvXjUyIC4MaNwZhh/U9IIjV56YsCw+Wrz6Yh2rmk1pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296695; c=relaxed/simple;
-	bh=LaYyPsYR7Jwvw6OpN6pyDOfPJKTph74jcB2Qh0J1ju0=;
+	s=arc-20240116; t=1779296697; c=relaxed/simple;
+	bh=a8KeOSjYQ6ViMP6q+KKg6+bvcRvdrMXMb5W0J/G5ukY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmoiBjbj0jzjfhdeuscBUK85SgFI5Fgyvtnvtz2AhD6d0M9U7ZbAot4Y01sN+ptj9MGpLRj7WUp8Fs8v2CU9TQifFrHGT5kPRkwLAVXm89c2sOue9iXWyvlvO3emwkic/dpccmahf0DRV5ITXPvp+74xdcildtZeUhHE8dyvakc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y59XmVa4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qkgj63o93YivBIMpI7/SbhYhtqAeGli2vt+MwRcNSo2fZLg+UfidVBpYAbYHf7yNic6XozptpzIGL5+Q4+WWsutZXkDQxD+b/+E/2oTrNp/1OO7QRJyM+E5kS47W/LwV9U+4ish8WJ2528hDO49x4/mdsT0NFh3BrbycC4JomJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7GB6j0i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y59XmVa4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69E71F000E9;
-	Wed, 20 May 2026 17:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7GB6j0i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8153A1F00894;
+	Wed, 20 May 2026 17:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296693;
-	bh=ZDalqIcT3ZFUuL2d1i+D+9f/Ks4dXp/zNoG/2kuo3NA=;
+	s=korg; t=1779296696;
+	bh=GJutnci1SsfpKEsw9vDlzRPZdffjvCRUjww+cZCMu84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y59XmVa41mkERbOOTr/pMv8BC861ICV3AWjmJNiluZE7A/yiluEf0AjX6PFdc83WY
-	 uwlS0hE3pJ6tyBnmzjwGB2ofUFUx8P/WoQnib4hiJc2g0EdsmA48Dq+/oFog9adhBk
-	 hjzVdVncT1bWFjyHusMV7YS9S6KAyo1Z5n02cctw=
+	b=Q7GB6j0idwDQkR+Ae5dZSTYSLRnLoGmmPHMCNvs5AXrPZdcYVHm1V7rJYkgn/tFwi
+	 daJysLc0JyyWH80cctEssS6tHYDH78akiqGoX3EpVCdQ9ghPZH9UdA+kVG833HbNTZ
+	 s7aZOZicPrT8Hy2pYkflQlTW+uJ9JPLiaotAomlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Pighin <anthony.pighin@nokia.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0869/1146] rtc: abx80x: Disable alarm feature if no interrupt attached
-Date: Wed, 20 May 2026 18:18:39 +0200
-Message-ID: <20260520162207.904722356@linuxfoundation.org>
+Subject: [PATCH 7.0 0896/1146] netfilter: nf_tables: use list_del_rcu for netlink hooks
+Date: Wed, 20 May 2026 18:19:06 +0200
+Message-ID: <20260520162208.513290744@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,49 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Pighin (Nokia) <anthony.pighin@nokia.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 0fedce7244e4b85c049ce579c87e298a1b0b811d ]
+[ Upstream commit f3224ee463f8f6f6ced7dcdf6081add4f8128527 ]
 
-Commit 795cda8338ea ("rtc: interface: Fix long-standing race when setting
-alarm") exposed an issue where the rtc-abx80x driver does not clear the
-alarm feature bit, but instead relies on the set_alarm operation to return
-invalid.
+nft_netdev_unregister_hooks and __nft_unregister_flowtable_net_hooks need
+to use list_del_rcu(), this list can be walked by concurrent dumpers.
 
-For example, when a RTC_UIE_ON ioctl is handled, it should abort at the
-feature validation. Instead, it proceeds to the rtc_timer_enqueue(),
-which used to return an error from the set_alarm call. However,
-following the race condition handling, which likely should not be
-discarding predecing errors, a success condition is returned to the
-ioctl() caller. This results in (for example):
-    hwclock: select() to /dev/rtc0 to wait for clock tick timed out
+Add a new helper and use it consistently.
 
-Notwithstanding the validity of the race condition handling, if an interrupt
-wasn't specified, or could not be attached, the driver should clear the
-alarm feature bit.
-
-Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
-Signed-off-by: Anthony Pighin <anthony.pighin@nokia.com>
-Link: https://patch.msgid.link/BN0PR08MB69510928028C933749F4139383D1A@BN0PR08MB6951.namprd08.prod.outlook.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: f9a43007d3f7 ("netfilter: nf_tables: double hook unregistration in netns path")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-abx80x.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nf_tables_api.c | 44 ++++++++++++++---------------------
+ 1 file changed, 18 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index 3fee27914ba80..5f3a3e60a19d0 100644
---- a/drivers/rtc/rtc-abx80x.c
-+++ b/drivers/rtc/rtc-abx80x.c
-@@ -933,6 +933,8 @@ static int abx80x_probe(struct i2c_client *client)
- 			client->irq = 0;
- 		}
- 	}
-+	if (client->irq <= 0)
-+		clear_bit(RTC_FEATURE_ALARM, priv->rtc->features);
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 8c42247a176c7..090d4d688a333 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -374,6 +374,12 @@ static void nft_netdev_hook_free_rcu(struct nft_hook *hook)
+ 	call_rcu(&hook->rcu, __nft_netdev_hook_free_rcu);
+ }
  
- 	err = rtc_add_group(priv->rtc, &rtc_calib_attr_group);
- 	if (err) {
++static void nft_netdev_hook_unlink_free_rcu(struct nft_hook *hook)
++{
++	list_del_rcu(&hook->list);
++	nft_netdev_hook_free_rcu(hook);
++}
++
+ static void nft_netdev_unregister_hooks(struct net *net,
+ 					struct list_head *hook_list,
+ 					bool release_netdev)
+@@ -384,10 +390,8 @@ static void nft_netdev_unregister_hooks(struct net *net,
+ 	list_for_each_entry_safe(hook, next, hook_list, list) {
+ 		list_for_each_entry(ops, &hook->ops_list, list)
+ 			nf_unregister_net_hook(net, ops);
+-		if (release_netdev) {
+-			list_del(&hook->list);
+-			nft_netdev_hook_free_rcu(hook);
+-		}
++		if (release_netdev)
++			nft_netdev_hook_unlink_free_rcu(hook);
+ 	}
+ }
+ 
+@@ -2323,10 +2327,8 @@ void nf_tables_chain_destroy(struct nft_chain *chain)
+ 
+ 		if (nft_base_chain_netdev(table->family, basechain->ops.hooknum)) {
+ 			list_for_each_entry_safe(hook, next,
+-						 &basechain->hook_list, list) {
+-				list_del_rcu(&hook->list);
+-				nft_netdev_hook_free_rcu(hook);
+-			}
++						 &basechain->hook_list, list)
++				nft_netdev_hook_unlink_free_rcu(hook);
+ 		}
+ 		module_put(basechain->type->owner);
+ 		if (rcu_access_pointer(basechain->stats)) {
+@@ -3026,6 +3028,7 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
+ 				list_for_each_entry(ops, &h->ops_list, list)
+ 					nf_unregister_net_hook(ctx->net, ops);
+ 			}
++			/* hook.list is on stack, no need for list_del_rcu() */
+ 			list_del(&h->list);
+ 			nft_netdev_hook_free_rcu(h);
+ 		}
+@@ -8903,10 +8906,8 @@ static void __nft_unregister_flowtable_net_hooks(struct net *net,
+ 	list_for_each_entry_safe(hook, next, hook_list, list) {
+ 		list_for_each_entry(ops, &hook->ops_list, list)
+ 			nft_unregister_flowtable_ops(net, flowtable, ops);
+-		if (release_netdev) {
+-			list_del(&hook->list);
+-			nft_netdev_hook_free_rcu(hook);
+-		}
++		if (release_netdev)
++			nft_netdev_hook_unlink_free_rcu(hook);
+ 	}
+ }
+ 
+@@ -8977,8 +8978,7 @@ static int nft_register_flowtable_net_hooks(struct net *net,
+ 
+ 			nft_unregister_flowtable_ops(net, flowtable, ops);
+ 		}
+-		list_del_rcu(&hook->list);
+-		nft_netdev_hook_free_rcu(hook);
++		nft_netdev_hook_unlink_free_rcu(hook);
+ 	}
+ 
+ 	return err;
+@@ -8988,10 +8988,8 @@ static void nft_hooks_destroy(struct list_head *hook_list)
+ {
+ 	struct nft_hook *hook, *next;
+ 
+-	list_for_each_entry_safe(hook, next, hook_list, list) {
+-		list_del_rcu(&hook->list);
+-		nft_netdev_hook_free_rcu(hook);
+-	}
++	list_for_each_entry_safe(hook, next, hook_list, list)
++		nft_netdev_hook_unlink_free_rcu(hook);
+ }
+ 
+ static int nft_flowtable_update(struct nft_ctx *ctx, const struct nlmsghdr *nlh,
+@@ -9079,8 +9077,7 @@ static int nft_flowtable_update(struct nft_ctx *ctx, const struct nlmsghdr *nlh,
+ 				nft_unregister_flowtable_ops(ctx->net,
+ 							     flowtable, ops);
+ 		}
+-		list_del_rcu(&hook->list);
+-		nft_netdev_hook_free_rcu(hook);
++		nft_netdev_hook_unlink_free_rcu(hook);
+ 	}
+ 
+ 	return err;
+@@ -9586,13 +9583,8 @@ static void nf_tables_flowtable_notify(struct nft_ctx *ctx,
+ 
+ static void nf_tables_flowtable_destroy(struct nft_flowtable *flowtable)
+ {
+-	struct nft_hook *hook, *next;
+-
+ 	flowtable->data.type->free(&flowtable->data);
+-	list_for_each_entry_safe(hook, next, &flowtable->hook_list, list) {
+-		list_del_rcu(&hook->list);
+-		nft_netdev_hook_free_rcu(hook);
+-	}
++	nft_hooks_destroy(&flowtable->hook_list);
+ 	kfree(flowtable->name);
+ 	module_put(flowtable->data.type->owner);
+ 	kfree(flowtable);
 -- 
 2.53.0
 
