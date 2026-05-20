@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7623F20E5;
-	Wed, 20 May 2026 17:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FCC3F1AD8;
+	Wed, 20 May 2026 17:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296810; cv=none; b=ntoal3TWYQLGT4WqgWOk5mLz87yEAItaaJVa9CWe+B63GEo5GUXAD/dg/N1nnoi+kKId8wnGO9tvkqApYYl2/n7phbhILcSIvma4TpAxz8a+DP4e/7Hw2qLg+qVa/65aWLlFWQQlQwV2wrQK0g2C1YI87deEMsMLozLu9OwPwwg=
+	t=1779296813; cv=none; b=ND1i7Vn8OTlZMslXv2WmPYNFiXYqNR/E5BTVxyuX+Z4beW8LP+a+JrziPr1NXVSc4IM5gT116dpNQCyJ4LYpKPYcTix9y+DeDyuZ0DG/LT5scsZZn6WeayN2SdDPSXjiS81Tq2vqjtMEDrvYG01GgT2mtpgpsunPjFHDRnaFHP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296810; c=relaxed/simple;
-	bh=Ya4SN/OGdLXa+9t0p6MLYoAndJsjCNRLRMnSHzsqUCM=;
+	s=arc-20240116; t=1779296813; c=relaxed/simple;
+	bh=Bul4/HAr57eldpdjil+Bnk/ky8VXKFuNB7T8MVRF1hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BGaVM7JB94wbirPnAWRxQWeDkCj/U7EBGXK0JNLpYGEYQ8tRicl0kvzz6qAmX/g2K0ZqS36F/bcsK9d2UObAM2W+sdJ/l9uvHGRNni2l4CE28QypyCI4Gr0krz9K5KY2YJ4qJGtWOZoEJ5O6H4H2omNN9t9iWpuR0uWVAkWoXQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnEsE5yx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IgLkG+Dm9fUgZNxEMgK+L0pq+2fDOsB5lPa4Q108u9CoEIGKf1x5sQbfEiD622+yf7/oMEHztQCrMNHBfoxPjiHz2zv94J55Ot6+0MKke6tHOqW3Nk7HWnNRf6DNjmnuWYnZ4rOc3ydNGwWuUOaEknIHbAZ/afvMQxNPLIdEyKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWUfOKH1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnEsE5yx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42A81F000E9;
-	Wed, 20 May 2026 17:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWUfOKH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6DD1F000E9;
+	Wed, 20 May 2026 17:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296809;
-	bh=6MLrE1/kbHC5H7cUvMuUhS8/GT6GbgBVkYWMVMNbOJc=;
+	s=korg; t=1779296811;
+	bh=eq0eONkDQYp2FtjQEIKC+ZzM6YA4xrjn3gXkdAdunso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bnEsE5yxjXHpxcTn0/ktwUZFMXnceTpkgXl+veCXwD66i7+HGOdQbyr0VG00HAZDL
-	 qmXpgaRC6j866DS5ggluG51wHRYpxk5ILqOPZIXT9JyTgahx4bVyyXcF8nz0SCZUiw
-	 WPr1MS7Xgt9ZqisSKYcO6BW4qlnd+gjhNkMxx9Pg=
+	b=HWUfOKH1S+UlD/t1yeVt/h7TJ6cNEyeohPH4FYwoXa7rrg8fGWpQFavvZFR3Ma+IX
+	 0QgM1FGAOUTvwZgflgxBG7jiGG1WLl9mCvntSWObFEFmTrmfNpYZ0NM5SHUsP5Z3ru
+	 xFAGiw9ulcIOV6mPBBngRPcZ2dDqgMTU+9fGOQBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Madieu <john.madieu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0913/1146] spi: rockchip: Read ISR, not IMR, to detect cs-inactive IRQ
-Date: Wed, 20 May 2026 18:19:23 +0200
-Message-ID: <20260520162208.902051351@linuxfoundation.org>
+Subject: [PATCH 7.0 0940/1146] net/sched: sch_fq_pie: annotate data-races in fq_pie_dump_stats()
+Date: Wed, 20 May 2026 18:19:50 +0200
+Message-ID: <20260520162209.508808941@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,59 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Madieu <john.madieu@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b4683a239a409d65f88052f5630c748a8ba070cd ]
+[ Upstream commit 59b145771c7982cfe9020d4e9e22da92d6b5ae31 ]
 
-rockchip_spi_isr() decides whether the current interrupt was the
-cs-inactive event by reading IMR:
+fq_codel_dump_stats() acquires the qdisc spinlock a bit too late.
 
-	if (rs->cs_inactive &&
-	    readl_relaxed(rs->regs + ROCKCHIP_SPI_IMR) & INT_CS_INACTIVE)
-		ctlr->target_abort(ctlr);
+Move this acquisition before we fill tc_fq_pie_xstats with live data.
 
-IMR is the interrupt mask register: it tells which sources are enabled,
-not which one fired. In the PIO path, rockchip_spi_prepare_irq() enables
-both INT_RF_FULL and INT_CS_INACTIVE in IMR when rs->cs_inactive is true:
+Alternative would be to add READ_ONCE() and WRITE_ONCE() annotations,
+but the spinlock is needed anyway to scan q->new_flows and q->old_flows.
 
-	if (rs->cs_inactive)
-		writel_relaxed(INT_RF_FULL | INT_CS_INACTIVE,
-			       rs->regs + ROCKCHIP_SPI_IMR);
-
-so the IMR check is always true once cs_inactive is enabled, and every
-PIO interrupt - including normal RF_FULL completions - is dispatched to
-ctlr->target_abort(), aborting the transfer. The bug is reachable on
-ROCKCHIP_SPI_VER2_TYPE2 in target mode with a DMA-capable controller
-when the transfer is short enough to fall back to PIO
-(rockchip_spi_can_dma() returns false below fifo_len).
-
-Read ISR (which is RISR masked by IMR) so the check actually reflects
-which interrupt fired, and parenthesise the expression for clarity while
-at it.
-
-Fixes: 869f2c94db92 ("spi: rockchip: Stop spi slave dma receiver when cs inactive")
-Signed-off-by: John Madieu <john.madieu@gmail.com>
-Link: https://patch.msgid.link/20260425092936.2590132-2-john.madieu@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260423063527.2568262-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rockchip.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_fq_pie.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/spi/spi-rockchip.c b/drivers/spi/spi-rockchip.c
-index eb1992b4178e2..2eb9ede8cc909 100644
---- a/drivers/spi/spi-rockchip.c
-+++ b/drivers/spi/spi-rockchip.c
-@@ -357,7 +357,8 @@ static irqreturn_t rockchip_spi_isr(int irq, void *dev_id)
- 	struct rockchip_spi *rs = spi_controller_get_devdata(ctlr);
+diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
+index d8ac3519e9379..66ec15998ce05 100644
+--- a/net/sched/sch_fq_pie.c
++++ b/net/sched/sch_fq_pie.c
+@@ -509,18 +509,19 @@ static int fq_pie_dump(struct Qdisc *sch, struct sk_buff *skb)
+ static int fq_pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ {
+ 	struct fq_pie_sched_data *q = qdisc_priv(sch);
+-	struct tc_fq_pie_xstats st = {
+-		.packets_in	= q->stats.packets_in,
+-		.overlimit	= q->stats.overlimit,
+-		.overmemory	= q->overmemory,
+-		.dropped	= q->stats.dropped,
+-		.ecn_mark	= q->stats.ecn_mark,
+-		.new_flow_count = q->new_flow_count,
+-		.memory_usage   = q->memory_usage,
+-	};
++	struct tc_fq_pie_xstats st = { 0 };
+ 	struct list_head *pos;
  
- 	/* When int_cs_inactive comes, spi target abort */
--	if (rs->cs_inactive && readl_relaxed(rs->regs + ROCKCHIP_SPI_IMR) & INT_CS_INACTIVE) {
-+	if (rs->cs_inactive &&
-+	    (readl_relaxed(rs->regs + ROCKCHIP_SPI_ISR) & INT_CS_INACTIVE)) {
- 		ctlr->target_abort(ctlr);
- 		writel_relaxed(0, rs->regs + ROCKCHIP_SPI_IMR);
- 		writel_relaxed(0xffffffff, rs->regs + ROCKCHIP_SPI_ICR);
+ 	sch_tree_lock(sch);
++
++	st.packets_in	= q->stats.packets_in;
++	st.overlimit	= q->stats.overlimit;
++	st.overmemory	= q->overmemory;
++	st.dropped	= q->stats.dropped;
++	st.ecn_mark	= q->stats.ecn_mark;
++	st.new_flow_count = q->new_flow_count;
++	st.memory_usage   = q->memory_usage;
++
+ 	list_for_each(pos, &q->new_flows)
+ 		st.new_flows_len++;
+ 
 -- 
 2.53.0
 
