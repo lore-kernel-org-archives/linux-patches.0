@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903313CC9E9;
-	Wed, 20 May 2026 16:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8CA369D4C;
+	Wed, 20 May 2026 16:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294680; cv=none; b=Rh7QZ7OMfYLTHUoK8KJvhm1V3E0vkqUESA2zXNVoWlIRjWEQRShzNFNuHLIzDhupMWkyaNvsXbdggSsDIpfHJapzki8D9ak9iMeEVOvxB7VqLSFC62aLOOBOuaEXTrTHsvqM9HH9mLyyLhROM9oXJTvU3ux8kJ2Omjtr1eqDwu8=
+	t=1779294683; cv=none; b=je5V1yED8cWFkdnU5oe2TLtawkOOl9LJnUgt3sr4JxEQwX+GwTSvZXLc/MJYnF+Iyyi1S1vFmdxdkhaO8+QYTL9M5EDoBjCA3OfD0jdd+2JnPoe06iTtRfso+KXYB0Rk+uJRT7OmvTVxKhsZyRY9tBcaSzGnnfPMVUDku/gz43s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294680; c=relaxed/simple;
-	bh=Gmvux0jRIJqCAZHFRkxbJ/Dm/6HTkxpe4kZ9GI2YMug=;
+	s=arc-20240116; t=1779294683; c=relaxed/simple;
+	bh=FpqvP+HlNs458irsMOU1IVm2qvE9DTSysjHTVdtfl4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTtnQosP9YLT5w9Yp6fAg8jlB32+8UXs1qArZki1hWaptEFa9GaB+p/UPo7SYR1NU3hmjKmaTMa4lYX3FW4eWLMboeiLwB1yzDqGfLXWT5OKkf56mbqifd6nh3/gttY+xhMienohle4oSU2HnBfoigtyDMWqrlCcupzSgAI7hvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YNNTjVK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dz/NxvawkxVNBG0bE1EtXYkdm1kM0id7N7/2x3ql6qc/FrI8otsURX2Kpq9Or1vJXM/KOnfIRzUFCaJEGcrEVSes0Rjf1Tg7DmBMPz4xRnVOYIAlY9QjBOIa4s403L9ITRQMeEMW9ZqUuL0B1Xd/jaXxDQWWhF99uz3v+5okYZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=067F8CHJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YNNTjVK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021291F00893;
-	Wed, 20 May 2026 16:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="067F8CHJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F93F1F000E9;
+	Wed, 20 May 2026 16:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294679;
-	bh=202LZ7FkOgKBzIOE0vhQcM7mCkSrfsZZWCqWgf2QIA8=;
+	s=korg; t=1779294682;
+	bh=xWlXirXZ9p68cBrYs/Xw7KhVeAYuS919VD5m2cuHPyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2YNNTjVKJKdm8Ci8dW4hwyA3rzf1ZDJM1VK2lam3aQAurbZQ0ipc9Nv6tgUrUIwON
-	 bWAKgy+s/0udYnCWXvcxtVlNqpurTlCLf+rqQNxg2lR0CC1bk3VCUr23tv58VBVQWv
-	 bhe2VYci5Vfqj4k6qlw7D4ZqYgRyZqqnYU0iBFEo=
+	b=067F8CHJNAsP3C9G6QG9eFdqCOoAxirxA/p2AB4WhEUgPf4xHQ5D+9pfBSZJ9nnCk
+	 NjuuVkDtefGRqIWEOYlEw/EYLljDr22kXKJp3CJ3kpJXKRTCPXXuH3kyHt63KqcwNF
+	 Xluc/Su+lPE1g5Oz67c3m8e5Ll2qXuyAkWVmwCiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	David Carlier <devnexen@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0132/1146] selftests/bpf: Fix sockmap_multi_channels reliability
-Date: Wed, 20 May 2026 18:06:22 +0200
-Message-ID: <20260520162151.312656839@linuxfoundation.org>
+Subject: [PATCH 7.0 0133/1146] bpf: Use RCU-safe iteration in dev_map_redirect_multi() SKB path
+Date: Wed, 20 May 2026 18:06:23 +0200
+Message-ID: <20260520162151.333793704@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,73 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit d9d7125e445dc06c2d9bd3dbd070dcbcd41a540f ]
+[ Upstream commit 8ed82f807bb09d2c8455aaa665f2c6cb17bc6a19 ]
 
-Previously I added a FIONREAD test for sockmap, but it can occasionally
-fail in CI [1].
+The DEVMAP_HASH branch in dev_map_redirect_multi() uses
+hlist_for_each_entry_safe() to iterate hash buckets, but this function
+runs under RCU protection (called from xdp_do_generic_redirect_map()
+in softirq context). Concurrent writers (__dev_map_hash_update_elem,
+dev_map_hash_delete_elem) modify the list using RCU primitives
+(hlist_add_head_rcu, hlist_del_rcu).
 
-The test sends 10 bytes in two segments (2 + 8). For UDP, FIONREAD only
-reports the length of the first datagram, not the total queued data.
-The original code used recv_timeout() expecting all 10 bytes, but under
-high system load, the second datagram may not yet be processed by the
-protocol stack, so recv would only return the first 2-byte datagram,
-causing a size mismatch failure.
+hlist_for_each_entry_safe() performs plain pointer dereferences without
+rcu_dereference(), missing the acquire barrier needed to pair with
+writers' rcu_assign_pointer(). On weakly-ordered architectures (ARM64,
+POWER), a reader can observe a partially-constructed node. It also
+defeats CONFIG_PROVE_RCU lockdep validation and KCSAN data-race
+detection.
 
-Fix this by receiving exactly the expected bytes (matching FIONREAD) in
-the first recv. The remaining datagram is then consumed in a second recv
-block, which is only reachable for UDP since TCP's expected already
-equals sizeof(buf).
+Replace with hlist_for_each_entry_rcu() using rcu_read_lock_bh_held()
+as the lockdep condition, consistent with the rcu_dereference_check()
+used in the DEVMAP (non-hash) branch of the same functions. Also fix
+the same incorrect lockdep_is_held(&dtab->index_lock) condition in
+dev_map_enqueue_multi(), where the lock is not held either.
 
-Test:
-./test_progs -a sockmap_basic
-410/1   sockmap_basic/sockmap create_update_free:OK
-...
-Summary: 1/35 PASSED, 0 SKIPPED, 0 FAILED
-
-[1] https://github.com/kernel-patches/bpf/actions/runs/22919385910/job/66515395423
-
-Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
-Fixes: 17e2ce02bf56 ("selftests/bpf: Add tests for FIONREAD and copied_seq")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://lore.kernel.org/r/20260312072549.6766-1-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: e624d4ed4aa8 ("xdp: Extend xdp_redirect_map with broadcast support")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20260320072645.16731-1-devnexen@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/sockmap_basic.c    | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ kernel/bpf/devmap.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-index dd3c757859f6b..d2846579285f2 100644
---- a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-@@ -1298,10 +1298,23 @@ static void test_sockmap_multi_channels(int sotype)
- 	avail = wait_for_fionread(p1, expected, IO_TIMEOUT_SEC);
- 	ASSERT_EQ(avail, expected, "ioctl(FIONREAD) full return");
+diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
+index 3d619d01088e3..cc0a43ebab6b9 100644
+--- a/kernel/bpf/devmap.c
++++ b/kernel/bpf/devmap.c
+@@ -665,7 +665,7 @@ int dev_map_enqueue_multi(struct xdp_frame *xdpf, struct net_device *dev_rx,
+ 		for (i = 0; i < dtab->n_buckets; i++) {
+ 			head = dev_map_index_hash(dtab, i);
+ 			hlist_for_each_entry_rcu(dst, head, index_hlist,
+-						 lockdep_is_held(&dtab->index_lock)) {
++						rcu_read_lock_bh_held()) {
+ 				if (!is_valid_dst(dst, xdpf))
+ 					continue;
  
--	recvd = recv_timeout(p1, rcv, sizeof(rcv), MSG_DONTWAIT, 1);
--	if (!ASSERT_EQ(recvd, sizeof(buf), "recv_timeout(p1)") ||
-+	recvd = recv_timeout(p1, rcv, expected, MSG_DONTWAIT, 1);
-+	if (!ASSERT_EQ(recvd, expected, "recv_timeout(p1)") ||
- 	    !ASSERT_OK(memcmp(buf, rcv, recvd), "data mismatch"))
- 		goto end;
-+
-+	/* process remaining data for udp if secondary data is available */
-+	expected = sizeof(buf) - expected;
-+	if (expected) {
-+		avail = wait_for_fionread(p1, expected, IO_TIMEOUT_SEC);
-+		ASSERT_EQ(avail, expected, "second ioctl(FIONREAD) full return");
-+
-+		recvd = recv_timeout(p1, rcv, expected, MSG_DONTWAIT, 1);
-+		if (!ASSERT_EQ(recvd, expected, "second recv_timeout(p1)") ||
-+		    !ASSERT_OK(memcmp(buf + sizeof(buf) - expected, rcv, recvd),
-+			       "second data mismatch"))
-+			goto end;
-+	}
- end:
- 	if (c0 >= 0)
- 		close(c0);
+@@ -747,7 +747,6 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
+ 	struct bpf_dtab_netdev *dst, *last_dst = NULL;
+ 	int excluded_devices[1+MAX_NEST_DEV];
+ 	struct hlist_head *head;
+-	struct hlist_node *next;
+ 	int num_excluded = 0;
+ 	unsigned int i;
+ 	int err;
+@@ -787,7 +786,7 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
+ 	} else { /* BPF_MAP_TYPE_DEVMAP_HASH */
+ 		for (i = 0; i < dtab->n_buckets; i++) {
+ 			head = dev_map_index_hash(dtab, i);
+-			hlist_for_each_entry_safe(dst, next, head, index_hlist) {
++			hlist_for_each_entry_rcu(dst, head, index_hlist, rcu_read_lock_bh_held()) {
+ 				if (is_ifindex_excluded(excluded_devices, num_excluded,
+ 							dst->dev->ifindex))
+ 					continue;
 -- 
 2.53.0
 
