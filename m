@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714EA370AE5;
-	Wed, 20 May 2026 16:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA7436EAB8;
+	Wed, 20 May 2026 16:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295404; cv=none; b=enitNjS5yKFbZPifGFZ7GbTmfOQe34UpVIg42pYPOE03VVcEXYQdXEdClmGNQbbZOMDHkZBi/37xs6a1SRB1IXbzoazFQyXByUNasryeFdMgPyGf9z2Ic2NmOMI9UCFPublcnK2fbF3cfxMGwGV8/SfoRgrjEAqHglUCXICT+tk=
+	t=1779295407; cv=none; b=UXSlq29UsbW9Ie2NIknogqfjpDHT/KyBC4J5BpSZ3kVzI3hB9npVH0+7w3B7p4zzGucRoBZQ/m1FTAnVfG2A8vWkheklya1gj/kKBp3RRLDmALT3u3Lk1ERzB1lR3vU9DMEJ+UQ634Otw3vPxYRVOjmheSiZhyt9ygY3C4yup0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295404; c=relaxed/simple;
-	bh=uIwXe8eha1eYq62U7bbjvvbEvKRK+6ZXJA+0gPofRnc=;
+	s=arc-20240116; t=1779295407; c=relaxed/simple;
+	bh=KquaecswzJ6ATd1bXKKZm/Hp4ASTaPyjR5H82kKdUPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5hq1zY881ZSKfBEUJUTXecxebEELHJOqI3eQrlBjiggQCPf7ZpFY3Nm7lQwz2BzityPh30gkXn4dOqUrUBd00ywpyZ9duqv6lLmB8oUXIdsUv25ATKpcz9SiVDG6rtgpopDSSel+e0KiC4zPaJes82rb22jmRGHPWWuNXAETr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2VrySV3H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ENTgBp4WykIrPoYw15eYqfJwjXE0tCZdFh1At5TIZBoOkugcTKQrqzw+8thXCws6eEFVI3nanHNzncNZeatu5h4F7RLume4VI6Y0q/Hq53TgMRakbAzLmgF9oh59ySkSEhhfLroC/yMKhmdc0v98AcxkQjyCGGArzLHb5Xivzfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FqT1GsMx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2VrySV3H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73621F000E9;
-	Wed, 20 May 2026 16:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FqT1GsMx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796F91F000E9;
+	Wed, 20 May 2026 16:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295403;
-	bh=+l1ilbhMeT+s+uIOs4dZPfNaN/yESa7OHULVPSGCxSA=;
+	s=korg; t=1779295406;
+	bh=1grX5NXIPAwcA3WYVHDLkvkhx/BWbl/2cD/ZTGhANC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2VrySV3HIvJpc9YnVnqKYb5xHIPT5ylhO0NEOcMRcfBJ2bV/zS5v+fgSrj/oxYqmR
-	 LGBS6Js7e4sxifn7e/pGGQUyZyETJof6yNOzCcRrSk8h8OT7ejf+jdtwY4+NUKAw94
-	 ubebg0gP1Q0yVYQ3F1WRpf3SvB6xRjMD7GMQu5NE=
+	b=FqT1GsMxVXx3LJq2snpDFDifjHQhWHkRJNqhKzxEGDPuls7BQzehb0TcTr1VwkIRq
+	 NUVDF7R5AIbnimsTrcS33kCRdJOJ/sAxGdRt9fGBM0cH+/EEXGiNfEcF3pMxexHH0D
+	 +ppjO6HnWvBA6ckMOmgKZIvgBZcqnmVW8ueHqr9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ravi Hothi <ravi.hothi@oss.qualcomm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0406/1146] ALSA: scarlett2: Add missing sentinel initializer field
-Date: Wed, 20 May 2026 18:10:56 +0200
-Message-ID: <20260520162157.388193773@linuxfoundation.org>
+Subject: [PATCH 7.0 0407/1146] ASoC: qcom: audioreach: explicitly enable speaker protection modules
+Date: Wed, 20 May 2026 18:10:57 +0200
+Message-ID: <20260520162157.409439341@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,37 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
+From: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
 
-[ Upstream commit 2428cd6e8b6fa80c36db4652702ca0acd2ce3f08 ]
+[ Upstream commit b481eabe5a193ba8499f446c2ab7e0ac042f8776 ]
 
-A "-Wmissing-field-initializers" warning was emitted when compiling the
-module using the W=2 option. There is a sentinel initializer field
-missing in the end of scarlett2_devices[]. Tested using a
-Scarlett Solo 4th gen.
+Speaker protection and VI feedback modules are disabled by default.
+Explicitly enable them when configuring speaker protection.
 
-Fixes: d98cc489029d ("ALSA: scarlett2: Move USB IDs out from device_info struct")
-Signed-off-by: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
-Link: https://patch.msgid.link/20260405222548.8903-1-npetrakopoulos2003@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3e43a8c033c3 ("ASoC: qcom: audioreach: Add support for VI Sense module")
+Fixes: 0db76f5b2235 ("ASoC: qcom: audioreach: Add support for Speaker Protection module")
+Signed-off-by: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260326113531.3144998-1-ravi.hothi@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_scarlett2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/audioreach.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/usb/mixer_scarlett2.c b/sound/usb/mixer_scarlett2.c
-index fd1fb668929a2..8eaa962227596 100644
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -2262,7 +2262,7 @@ static const struct scarlett2_device_entry scarlett2_devices[] = {
- 	{ USB_ID(0x1235, 0x820c), &clarett_8pre_info, "Clarett+" },
+diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/audioreach.c
+index 241c3b4479c6f..ff8cd55b0d898 100644
+--- a/sound/soc/qcom/qdsp6/audioreach.c
++++ b/sound/soc/qcom/qdsp6/audioreach.c
+@@ -1365,9 +1365,14 @@ int audioreach_set_media_format(struct q6apm_graph *graph,
+ 	case MODULE_ID_SPEAKER_PROTECTION:
+ 		rc = audioreach_speaker_protection(graph, module,
+ 						   PARAM_ID_SP_OP_MODE_NORMAL);
++		if (!rc)
++			rc = audioreach_module_enable(graph, module, true);
++
+ 		break;
+ 	case MODULE_ID_SPEAKER_PROTECTION_VI:
+ 		rc = audioreach_speaker_protection_vi(graph, module, cfg);
++		if (!rc)
++			rc = audioreach_module_enable(graph, module, true);
+ 		break;
  
- 	/* End of list */
--	{ 0, NULL },
-+	{ 0, NULL, NULL },
- };
- 
- /* get the starting port index number for a given port type/direction */
+ 	default:
 -- 
 2.53.0
 
