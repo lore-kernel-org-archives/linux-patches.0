@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1878136A352;
-	Wed, 20 May 2026 17:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF23F3CB2F8;
+	Wed, 20 May 2026 17:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296457; cv=none; b=DUOhnfFgLQbk8r5abEyBPcD2VT+Qse4MWgIhwkxflsEqE1zbrXWCqytlJyrKDMdY5NyY9/dqk1v1grR1bFSds09IWTERSXjFXU3+g4Q1PtO9BTsz91+Di2gtLlTnpfm+wg1Zhf+tPsPSBVXsFnEXSn52/1r14oAo4ZpsUS8qf0I=
+	t=1779296459; cv=none; b=iBMdU4nQ3/uJg5bH4601LjOlzcuhzRFSMZL608znE9GSjkBhQydGluAZDH2njMDiBWSKW9C85AmCndyJuufonH3VPbDqkh9UP8h6D+BwwYjPnySU8RkSGdsoT+SY8l4+OLuzmgfCWulyd8XP5bFy8T+O4oGX00kKPxpRUYpTOHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296457; c=relaxed/simple;
-	bh=B8LXd1OH0E5o1/LXhKrzzBm7NlwCV8amPF5pjK69dKU=;
+	s=arc-20240116; t=1779296459; c=relaxed/simple;
+	bh=XgeaSrg4cv2gkkm7Say5k8cO9EFO4zZx0HoVsvVuvbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KD3YOykya4oxD3NDme/r5Thhc1QL38xLzPV3KPVXthweP0xWBDASnHOj4bv9e3vxptYidQJvyguKkvkOofble6LcmjP2cBuvwot/fQGmqQpfch0/k5bALQQzHtxRs7s6Uuc3//LR4OrCEi5WAHsXMjOi8x4WASDCKm00huWOu4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evPZwItZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bGULR+NjOnyFVKGDqysoFJKfAa++iztgYGcy4VA2LJ1H8paVhX0cTyZ3PZkM6GGonelGgL2n7mBHDoyjAtFn5m3wTy9msYk08bhV0EW9peXY731hphOL0yK26SaGAC5TaPzrgoN+Sw9ihc9aOupzUr4n1gMVXRBb+5CbzxfyCXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jg/uS72V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evPZwItZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1FD1F000E9;
-	Wed, 20 May 2026 17:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jg/uS72V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A911F000E9;
+	Wed, 20 May 2026 17:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296456;
-	bh=CkBPEhSKDZIhV1VBks4DD9NFnf+bWoPdyxuQ3mhPw8E=;
+	s=korg; t=1779296458;
+	bh=90gA57PbM3LqR6CehmUTjWTVbyI1EDCIchsUDGz6lK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=evPZwItZOmuo6T6Qszj2EliLCpYVX2Zc7n7FFNMPzqq5pBRLLMxeUGCvVTK46ahsA
-	 YmklXQdYtaMuuM8BvVV3l8PeaaHSAsScPan6cwU6tDPSs5CSwVyvRXvJm5hpRl3Wn2
-	 y5hyLMNUPBMAXhm5+WrHoE5InCu9TBl0dVWZJ4pw=
+	b=jg/uS72VzOnoClHybHY1emvgQKgCoZCXVG9p28JfMwJVUppQfc/suyOfgZRJ6wrWY
+	 1ct6Ou2sE5iHlknRTaTmOnAqOC/KMGQ1Rm5US98FrFGt3UZuwckIinJpUABeXnUeuH
+	 +YBGwgOIs4ZpFjcp9lrZChcFmM1+c6l+32oodT70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0806/1146] sctp: fix OOB write to userspace in sctp_getsockopt_peer_auth_chunks
-Date: Wed, 20 May 2026 18:17:36 +0200
-Message-ID: <20260520162206.466831079@linuxfoundation.org>
+Subject: [PATCH 7.0 0780/1146] tcp: annotate data-races in tcp_get_info_chrono_stats()
+Date: Wed, 20 May 2026 18:17:10 +0200
+Message-ID: <20260520162205.867373830@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,66 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0cf004ffb61cd32d140531c3a84afe975f9fc7ea ]
+[ Upstream commit 267bf3cf9a6f0ffb98b8afd983c1950e835f07c9 ]
 
-sctp_getsockopt_peer_auth_chunks() checks that the caller's optval
-buffer is large enough for the peer AUTH chunk list with
+tcp_get_timestamping_opt_stats() does not own the socket lock,
+this is intentional.
 
-    if (len < num_chunks)
-            return -EINVAL;
+It calls tcp_get_info_chrono_stats() while other threads could
+change chrono fields in tcp_chrono_set().
 
-but then writes num_chunks bytes to p->gauth_chunks, which lives
-at offset offsetof(struct sctp_authchunks, gauth_chunks) == 8
-inside optval.  The check is missing the sizeof(struct
-sctp_authchunks) = 8-byte header.  When the caller supplies
-len == num_chunks (for any num_chunks > 0) the test passes but
-copy_to_user() writes sizeof(struct sctp_authchunks) = 8 bytes
-past the declared buffer.
+I do not think we need coherent TCP socket state snapshot
+in tcp_get_timestamping_opt_stats(), I chose to only
+add annotations to keep KCSAN happy.
 
-The sibling function sctp_getsockopt_local_auth_chunks() at the
-next line already has the correct check:
-
-    if (len < sizeof(struct sctp_authchunks) + num_chunks)
-            return -EINVAL;
-
-Align the peer variant with its sibling.
-
-Reproducer confirms on v7.0-13-generic: an unprivileged userspace
-caller that opens a loopback SCTP association with AUTH enabled,
-queries num_chunks with a short optval, then issues the real
-getsockopt with len == num_chunks and sentinel bytes painted past
-the buffer observes those sentinel bytes overwritten with the
-peer's AUTH chunk type.  The bytes written are under the peer's
-control but land in the caller's own userspace; this is not a
-kernel memory corruption, but it is a kernel-side contract
-violation that can silently corrupt adjacent userspace data.
-
-Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260416031903.1447072-1-michael.bommarito@gmail.com
+Fixes: 1c885808e456 ("tcp: SOF_TIMESTAMPING_OPT_STATS option for SO_TIMESTAMPING")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260416200319.3608680-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/tcp.h | 10 +++++++---
+ net/ipv4/tcp.c    | 14 ++++++++++----
+ 2 files changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 48759da0a0261..6c58ad092e512 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -7042,7 +7042,7 @@ static int sctp_getsockopt_peer_auth_chunks(struct sock *sk, int len,
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 905587114d444..1946935388be6 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -2161,10 +2161,14 @@ static inline void tcp_chrono_set(struct tcp_sock *tp, const enum tcp_chrono new
+ 	const u32 now = tcp_jiffies32;
+ 	enum tcp_chrono old = tp->chrono_type;
  
- 	/* See if the user provided enough room for all the data */
- 	num_chunks = ntohs(ch->param_hdr.length) - sizeof(struct sctp_paramhdr);
--	if (len < num_chunks)
-+	if (len < sizeof(struct sctp_authchunks) + num_chunks)
- 		return -EINVAL;
++	/* Following WRITE_ONCE()s pair with READ_ONCE()s in
++	 * tcp_get_info_chrono_stats().
++	 */
+ 	if (old > TCP_CHRONO_UNSPEC)
+-		tp->chrono_stat[old - 1] += now - tp->chrono_start;
+-	tp->chrono_start = now;
+-	tp->chrono_type = new;
++		WRITE_ONCE(tp->chrono_stat[old - 1],
++			   tp->chrono_stat[old - 1] + now - tp->chrono_start);
++	WRITE_ONCE(tp->chrono_start, now);
++	WRITE_ONCE(tp->chrono_type, new);
+ }
  
- 	if (copy_to_user(to, ch->chunks, num_chunks))
+ static inline void tcp_chrono_start(struct sock *sk, const enum tcp_chrono type)
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 202a4e57a2188..a8ff76c40f79b 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -4225,12 +4225,18 @@ static void tcp_get_info_chrono_stats(const struct tcp_sock *tp,
+ 				      struct tcp_info *info)
+ {
+ 	u64 stats[__TCP_CHRONO_MAX], total = 0;
+-	enum tcp_chrono i;
++	enum tcp_chrono i, cur;
+ 
++	/* Following READ_ONCE()s pair with WRITE_ONCE()s in tcp_chrono_set().
++	 * This is because socket lock might not be owned by us at this point.
++	 * This is best effort, tcp_get_timestamping_opt_stats() can
++	 * see wrong values. A real fix would be too costly for TCP fast path.
++	 */
++	cur = READ_ONCE(tp->chrono_type);
+ 	for (i = TCP_CHRONO_BUSY; i < __TCP_CHRONO_MAX; ++i) {
+-		stats[i] = tp->chrono_stat[i - 1];
+-		if (i == tp->chrono_type)
+-			stats[i] += tcp_jiffies32 - tp->chrono_start;
++		stats[i] = READ_ONCE(tp->chrono_stat[i - 1]);
++		if (i == cur)
++			stats[i] += tcp_jiffies32 - READ_ONCE(tp->chrono_start);
+ 		stats[i] *= USEC_PER_SEC / HZ;
+ 		total += stats[i];
+ 	}
 -- 
 2.53.0
 
