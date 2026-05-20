@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5BD3D3D1C;
-	Wed, 20 May 2026 16:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E333EA953;
+	Wed, 20 May 2026 16:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296285; cv=none; b=tXRP7PetUiHxhm39+ZFj0VpeZR9/ZaeTTYE0LDwfHQsjuUgj6uWdFKVmAQ3MnrPvJRCAKtBEPOeXzyXR3wjbncL1bimql2ZPzAS3MIZcZETRFfo2Cp+O0KzSwAr2kFxNxO3qZrxTFajI+Pi2fUgw9mx+0lrgH1/kBIk9e+r+fU8=
+	t=1779296288; cv=none; b=pwY+NcVNVztvhfrbyEHHh/XqaFdOWQeU+aQg7JL4Rr0J3F6m2xUlm+LcsobLlyGNY5mnHAH/OJRPHx6z/PpU9YTbEhb1j4X0d2NWQFjeOC7gVLjetZ59Iz18N2Ow/OjwmRzytCmmntTAz64jgwf6kg7TnK0cl9Zy+jOhFG7MilY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296285; c=relaxed/simple;
-	bh=m/S/nh0+H8rb0T1/SYCmqg1jAH7g2v7Wp4F7Ga3mYFA=;
+	s=arc-20240116; t=1779296288; c=relaxed/simple;
+	bh=QCTGbaW5/LinkrDt0yAuADVs+N9051ki3BVUCPHMUOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rsbelnLdevDCViqs/jCwzilXg2ucCAbzcmCY3Bp25ii1DNohuCGQbk6cWYRyUqjqnhUIeP9j775/MUbDqRsnFEiLu6HkO9LD+VCmTzofuxEMheHE+OWvydZ+eqgNd4WoqMT1xU/zdgVFaS8oHRRiOU1KsTIjaT1ydJL3bBvYT48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTd2mNhb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=avB8VazHPW4EztPdPutNYWg1rCZCKXU3LXIzF9ozlqpyRtb6xUnxj7ivq3kxPI+jjCK0BdR1Fd9sO3Ni01kZhf+zeJdnNK0strh8pjyDdGKTbv1ME/W7HJuEAX+zG+PcL+BzZZNPYcU7FH+HNRStRVmBAlKH5BXumm+z2T8RpPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYtlWRRV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTd2mNhb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23DE1F00893;
-	Wed, 20 May 2026 16:58:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYtlWRRV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2CA1F000E9;
+	Wed, 20 May 2026 16:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296284;
-	bh=BAs5+q3IIiLECBNjp6r+F+JvFBIOmHYx3LwzHN1ekK8=;
+	s=korg; t=1779296287;
+	bh=fwptTu4jqx6mJbuJxniRprnXweLPJJFm2vQP8l9qjkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QTd2mNhbRJvsG1jDl9nqQ8Zpsm1Uju7X+d1e6WuoRIUoOj/8OnPHIRKmdazjFH2AV
-	 PS8ev8IJk5jM7EAYO7p+4n2Bie6mpJC+5FRrZGVRCjb55wlOjADCBGegYeOpdAsv9S
-	 iO0MXfVlGWpQRW0CtpVn3/9cRVzgR69a2g38rczI=
+	b=KYtlWRRVY0wslWLN8jU3KlkQY3ufmlh8s2yY7z7lBxM5Ux4g4/UbNqUN5AqFcTIbO
+	 CwxoIjJ4+tYOezdeS3cbubHAn08SlND8JJ8uw3bcVQTf4t2WOBVZAgTKpuQhmDGT1V
+	 /Np2EMEvl6FW7iKVYzYyNmy4QCPbGwq8Owyv8iEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Don Brace <don.brace@microchip.com>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	T Pratham <t-pratham@ti.com>,
+	Manorit Chawdhry <m-chawdhry@ti.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0734/1146] scsi: hpsa: Enlarge controller and IRQ name buffers
-Date: Wed, 20 May 2026 18:16:24 +0200
-Message-ID: <20260520162204.817782518@linuxfoundation.org>
+Subject: [PATCH 7.0 0743/1146] crypto: sa2ul - Fix AEAD fallback algorithm names
+Date: Wed, 20 May 2026 18:16:33 +0200
+Message-ID: <20260520162205.021750467@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,53 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: T Pratham <t-pratham@ti.com>
 
-[ Upstream commit 8e8cb6f39930e836144f51cdb6d409c9e4cb71fe ]
+[ Upstream commit 8451ab6ad686ffdcdf9ddadaa446a79ab48e5590 ]
 
-hpsa formats the controller name into h->devname[8] and derives
-interrupt names from it in h->intrname[][16]. Once host_no reaches four
-digits, "hpsa%d" no longer fits in devname, and the derived IRQ names
-can then overrun the interrupt-name buffers as well.
+For authenc AEAD algorithms, sa2ul is trying to register very specific
+-ce version as a fallback. This causes registration failure on SoCs
+which do not have ARMv8-CE enabled/available. Change the fallback
+algorithm from the specific driver name to generic algorithm name so
+that the kernel can allocate any available fallback.
 
-The previous fix switched these builders to bounded formatting, but that
-would truncate user-visible controller and IRQ names. Keep the existing
-names intact instead by enlarging the fixed buffers to cover the current
-formatted strings.
-
-Fixes: 2946e82bdd76 ("hpsa: use scsi host_no as hpsa controller number")
-Fixes: 8b47004a5512 ("hpsa: add interrupt number to /proc/interrupts interrupt name")
-Acked-by: Don Brace <don.brace@microchip.com>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260401120552.78541-1-pengpeng@iscas.ac.cn
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: d2c8ac187fc92 ("crypto: sa2ul - Add AEAD algorithm support")
+Signed-off-by: T Pratham <t-pratham@ti.com>
+Reviewed-by: Manorit Chawdhry <m-chawdhry@ti.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hpsa.h | 4 ++--
+ drivers/crypto/sa2ul.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/hpsa.h b/drivers/scsi/hpsa.h
-index 99b0750850b2b..f6bfe75dd696d 100644
---- a/drivers/scsi/hpsa.h
-+++ b/drivers/scsi/hpsa.h
-@@ -164,7 +164,7 @@ struct bmic_controller_parameters {
- struct ctlr_info {
- 	unsigned int *reply_map;
- 	int	ctlr;
--	char	devname[8];
-+	char	devname[16];
- 	char    *product_name;
- 	struct pci_dev *pdev;
- 	u32	board_id;
-@@ -255,7 +255,7 @@ struct ctlr_info {
- 	int remove_in_progress;
- 	/* Address of h->q[x] is passed to intr handler to know which queue */
- 	u8 q[MAX_REPLY_QUEUES];
--	char intrname[MAX_REPLY_QUEUES][16];	/* "hpsa0-msix00" names */
-+	char intrname[MAX_REPLY_QUEUES][32];	/* controller and IRQ names */
- 	u32 TMFSupportFlags; /* cache what task mgmt funcs are supported. */
- #define HPSATMF_BITS_SUPPORTED  (1 << 0)
- #define HPSATMF_PHYS_LUN_RESET  (1 << 1)
+diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
+index df3defa1ef4b6..965a03d5b27ae 100644
+--- a/drivers/crypto/sa2ul.c
++++ b/drivers/crypto/sa2ul.c
+@@ -1744,13 +1744,13 @@ static int sa_cra_init_aead(struct crypto_aead *tfm, const char *hash,
+ static int sa_cra_init_aead_sha1(struct crypto_aead *tfm)
+ {
+ 	return sa_cra_init_aead(tfm, "sha1",
+-				"authenc(hmac(sha1-ce),cbc(aes-ce))");
++				"authenc(hmac(sha1),cbc(aes))");
+ }
+ 
+ static int sa_cra_init_aead_sha256(struct crypto_aead *tfm)
+ {
+ 	return sa_cra_init_aead(tfm, "sha256",
+-				"authenc(hmac(sha256-ce),cbc(aes-ce))");
++				"authenc(hmac(sha256),cbc(aes))");
+ }
+ 
+ static void sa_exit_tfm_aead(struct crypto_aead *tfm)
 -- 
 2.53.0
 
