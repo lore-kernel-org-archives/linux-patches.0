@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64958366075;
-	Wed, 20 May 2026 17:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E3236A376;
+	Wed, 20 May 2026 17:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297731; cv=none; b=G9ANTDYaGfQ1PizIG7j5Ite0pU1E3iml2CMGfws7mv+1++8zzME51w+l8KbErItnTQNVEyG9nLHS1WzhL2ijPgliJhk5fnfEZ5C0P6liphsFS2KVjsq1Ect9x4ky58OUackLJj3kL4Y49yAB3RTXE/Jwm1s68pPRdLtSxAfEnts=
+	t=1779297734; cv=none; b=gd6sp++eRidIKyA53FFlK6Vege+v+VcX+/6X5eOGNuLBbhZoKJ1q9kMT2OMPYI29iO3VFwYKDzVi32LB2CCJfZ01ktQvRv95CLeekPA7fY1gHosXTK6SSk6YRaY8CXWHakL6ZNCwXEkWsUWkdqD4QGOBx0ecXcdJhl6SeWMUpBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297731; c=relaxed/simple;
-	bh=a2mhFM8kUCtU6/X2JMAEYxGB7tgVRcPsbVisLZnco6o=;
+	s=arc-20240116; t=1779297734; c=relaxed/simple;
+	bh=HafFY+9mlDrb3p/p0zdyPhyJCESMe9Rc/lMMwfb6TVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eaJRQcnngtAYmqK01XNkaYwNp3sLaYVrnNOFuErzu3TxN5p1GhzQ9kO/CDXoaROOkTNVh6/Z0ryyOFn79G0ZMAnVusvwvifAedDzugeHHsAqX9Rq6+qtOLoKHB9UYqZWF6hQnECYkYOQS2tAGiG9PhGqwmZUtzYQaBJoLr+sHVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndlCUNut; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wxz1AayzyjkU/MbyC7RO1pSx2x82G+gKLmiibIH8VsUxZBCnjxH2vU6Ry8Zzn3t06zOyO/0c0den9a8FuUn8lxetWXmO0A/56mJY4Wj1G1vXQUvSR0o9RxYzO/KHvDxaixWdNSujJ7+35HSj9lOEWWDJoFGMOWOdwRHpdoag/kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWDokYdb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndlCUNut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88B61F000E9;
-	Wed, 20 May 2026 17:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWDokYdb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7357E1F000E9;
+	Wed, 20 May 2026 17:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297730;
-	bh=qJrvNrbZrVB5VL/yUw2uznRp30wuLIjH5LBzG+WxY7w=;
+	s=korg; t=1779297733;
+	bh=n54kVoQ8CpDVizEs6HKoE4Ak7xfln37Or4hdhBrVM7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ndlCUNuth3xPSm/05YdRXEiaLzrY98q/QcBaV8jM1oKN4cxVj7O+c6uGz3Xk+wiCU
-	 TvtIPz8eFbnM18ayeNbdT1eeig9LcGa37KENTwnqR9TY50O6CTp8VZMonKZ2eAnKtI
-	 JArWAYFqJH+QY70soC0+YSxWy1BzziAcdtOk59gY=
+	b=hWDokYdbHm2RAMbTGF2SP7vmnK+HjXlBM0jGk1wQablh1tklEhKTI3dIcuaT/gI/a
+	 +fx1DLs6Z8/JyNwe6xoulwtM9MVoCt3v0c/0zYQ0QvTXO6Cr+BvMDeD3Fw0Om905L+
+	 TG/yCRoFFe96X/ztDM26LrjrWmI3s9dfsJfJ0beA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Puranjay Mohan <puranjay@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 143/957] bpf: fix mm lifecycle in open-coded task_vma iterator
-Date: Wed, 20 May 2026 18:10:26 +0200
-Message-ID: <20260520162137.655734901@linuxfoundation.org>
+Subject: [PATCH 6.18 144/957] bpf: switch task_vma iterator from mmap_lock to per-VMA locks
+Date: Wed, 20 May 2026 18:10:27 +0200
+Message-ID: <20260520162137.677634401@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,144 +53,195 @@ Content-Transfer-Encoding: 8bit
 
 From: Puranjay Mohan <puranjay@kernel.org>
 
-[ Upstream commit d8e27d2d22b6e2df3a0125b8c08e9aace38c954c ]
+[ Upstream commit bee9ef4a40a277bf401be43d39ba7f7f063cf39c ]
 
-The open-coded task_vma iterator reads task->mm locklessly and acquires
-mmap_read_trylock() but never calls mmget(). If the task exits
-concurrently, the mm_struct can be freed as it is not
-SLAB_TYPESAFE_BY_RCU, resulting in a use-after-free.
+The open-coded task_vma iterator holds mmap_lock for the entire duration
+of iteration, increasing contention on this highly contended lock.
 
-Safely read task->mm with a trylock on alloc_lock and acquire an mm
-reference. Drop the reference via bpf_iter_mmput_async() in _destroy()
-and error paths. bpf_iter_mmput_async() is a local wrapper around
-mmput_async() with a fallback to mmput() on !CONFIG_MMU.
+Switch to per-VMA locking. Find the next VMA via an RCU-protected maple
+tree walk and lock it with lock_vma_under_rcu(). lock_next_vma() is not
+used because its fallback takes mmap_read_lock(), and the iterator must
+work in non-sleepable contexts.
 
-Reject irqs-disabled contexts (including NMI) up front. Operations used
-by _next() and _destroy() (mmap_read_unlock, bpf_iter_mmput_async)
-take spinlocks with IRQs disabled (pool->lock, pi_lock). Running from
-NMI or from a tracepoint that fires with those locks held could
-deadlock.
+lock_vma_under_rcu() is a point lookup (mas_walk) that finds the VMA
+containing a given address but cannot iterate across gaps. An
+RCU-protected vma_next() walk (mas_find) first locates the next VMA's
+vm_start to pass to lock_vma_under_rcu().
 
-A trylock on alloc_lock is used instead of the blocking task_lock()
-(get_task_mm) to avoid a deadlock when a softirq BPF program iterates
-a task that already holds its alloc_lock on the same CPU.
+Between the RCU walk and the lock, the VMA may be removed, shrunk, or
+write-locked. On failure, advance past it using vm_end from the RCU
+walk. Because the VMA slab is SLAB_TYPESAFE_BY_RCU, vm_end may be
+stale; fall back to PAGE_SIZE advancement when it does not make forward
+progress. Concurrent VMA insertions at addresses already passed by the
+iterator are not detected.
 
-Fixes: 4ac454682158 ("bpf: Introduce task_vma open-coded iterator kfuncs")
+CONFIG_PER_VMA_LOCK is required; return -EOPNOTSUPP without it.
+
 Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Link: https://lore.kernel.org/r/20260408154539.3832150-2-puranjay@kernel.org
+Link: https://lore.kernel.org/r/20260408154539.3832150-3-puranjay@kernel.org
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 4cbee026db54 ("bpf: return VMA snapshot from task_vma iterator")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/task_iter.c | 54 +++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 51 insertions(+), 3 deletions(-)
+ kernel/bpf/task_iter.c | 91 +++++++++++++++++++++++++++++++++---------
+ 1 file changed, 73 insertions(+), 18 deletions(-)
 
 diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
-index 98d9b4c0daff3..c1f5fbe9dc2f3 100644
+index c1f5fbe9dc2f3..87e87f18913d9 100644
 --- a/kernel/bpf/task_iter.c
 +++ b/kernel/bpf/task_iter.c
 @@ -9,6 +9,7 @@
  #include <linux/bpf_mem_alloc.h>
  #include <linux/btf_ids.h>
  #include <linux/mm_types.h>
-+#include <linux/sched/mm.h>
++#include <linux/mmap_lock.h>
+ #include <linux/sched/mm.h>
  #include "mmap_unlock_work.h"
  
- static const char * const iter_task_type_names[] = {
-@@ -794,6 +795,15 @@ const struct bpf_func_proto bpf_find_vma_proto = {
- 	.arg5_type	= ARG_ANYTHING,
- };
- 
-+static inline void bpf_iter_mmput_async(struct mm_struct *mm)
-+{
-+#ifdef CONFIG_MMU
-+	mmput_async(mm);
-+#else
-+	mmput(mm);
-+#endif
-+}
-+
+@@ -807,8 +808,8 @@ static inline void bpf_iter_mmput_async(struct mm_struct *mm)
  struct bpf_iter_task_vma_kern_data {
  	struct task_struct *task;
  	struct mm_struct *mm;
-@@ -825,6 +835,24 @@ __bpf_kfunc int bpf_iter_task_vma_new(struct bpf_iter_task_vma *it,
+-	struct mmap_unlock_irq_work *work;
+-	struct vma_iterator vmi;
++	struct vm_area_struct *locked_vma;
++	u64 next_addr;
+ };
+ 
+ struct bpf_iter_task_vma {
+@@ -829,21 +830,19 @@ __bpf_kfunc int bpf_iter_task_vma_new(struct bpf_iter_task_vma *it,
+ 				      struct task_struct *task, u64 addr)
+ {
+ 	struct bpf_iter_task_vma_kern *kit = (void *)it;
+-	bool irq_work_busy = false;
+ 	int err;
+ 
  	BUILD_BUG_ON(sizeof(struct bpf_iter_task_vma_kern) != sizeof(struct bpf_iter_task_vma));
  	BUILD_BUG_ON(__alignof__(struct bpf_iter_task_vma_kern) != __alignof__(struct bpf_iter_task_vma));
  
-+	/* bpf_iter_mmput_async() needs mmput_async() which requires CONFIG_MMU */
-+	if (!IS_ENABLED(CONFIG_MMU)) {
-+		kit->data = NULL;
-+		return -EOPNOTSUPP;
-+	}
-+
-+	/*
-+	 * Reject irqs-disabled contexts including NMI. Operations used
-+	 * by _next() and _destroy() (mmap_read_unlock, bpf_iter_mmput_async)
-+	 * can take spinlocks with IRQs disabled (pi_lock, pool->lock).
-+	 * Running from NMI or from a tracepoint that fires with those
-+	 * locks held could deadlock.
-+	 */
-+	if (irqs_disabled()) {
-+		kit->data = NULL;
-+		return -EBUSY;
-+	}
-+
- 	/* is_iter_reg_valid_uninit guarantees that kit hasn't been initialized
- 	 * before, so non-NULL kit->data doesn't point to previously
- 	 * bpf_mem_alloc'd bpf_iter_task_vma_kern_data
-@@ -834,7 +862,25 @@ __bpf_kfunc int bpf_iter_task_vma_new(struct bpf_iter_task_vma *it,
- 		return -ENOMEM;
- 
- 	kit->data->task = get_task_struct(task);
-+	/*
-+	 * Safely read task->mm and acquire an mm reference.
-+	 *
-+	 * Cannot use get_task_mm() because its task_lock() is a
-+	 * blocking spin_lock that would deadlock if the target task
-+	 * already holds alloc_lock on this CPU (e.g. a softirq BPF
-+	 * program iterating a task interrupted while holding its
-+	 * alloc_lock).
-+	 */
-+	if (!spin_trylock(&task->alloc_lock)) {
-+		err = -EBUSY;
-+		goto err_cleanup_iter;
-+	}
- 	kit->data->mm = task->mm;
-+	if (kit->data->mm && !(task->flags & PF_KTHREAD))
-+		mmget(kit->data->mm);
-+	else
-+		kit->data->mm = NULL;
-+	spin_unlock(&task->alloc_lock);
- 	if (!kit->data->mm) {
- 		err = -ENOENT;
- 		goto err_cleanup_iter;
-@@ -844,15 +890,16 @@ __bpf_kfunc int bpf_iter_task_vma_new(struct bpf_iter_task_vma *it,
- 	irq_work_busy = bpf_mmap_unlock_get_irq_work(&kit->data->work);
- 	if (irq_work_busy || !mmap_read_trylock(kit->data->mm)) {
- 		err = -EBUSY;
--		goto err_cleanup_iter;
-+		goto err_cleanup_mmget;
+-	/* bpf_iter_mmput_async() needs mmput_async() which requires CONFIG_MMU */
+-	if (!IS_ENABLED(CONFIG_MMU)) {
++	if (!IS_ENABLED(CONFIG_PER_VMA_LOCK)) {
+ 		kit->data = NULL;
+ 		return -EOPNOTSUPP;
  	}
  
- 	vma_iter_init(&kit->data->vmi, kit->data->mm, addr);
+ 	/*
+ 	 * Reject irqs-disabled contexts including NMI. Operations used
+-	 * by _next() and _destroy() (mmap_read_unlock, bpf_iter_mmput_async)
++	 * by _next() and _destroy() (vma_end_read, bpf_iter_mmput_async)
+ 	 * can take spinlocks with IRQs disabled (pi_lock, pool->lock).
+ 	 * Running from NMI or from a tracepoint that fires with those
+ 	 * locks held could deadlock.
+@@ -886,18 +885,10 @@ __bpf_kfunc int bpf_iter_task_vma_new(struct bpf_iter_task_vma *it,
+ 		goto err_cleanup_iter;
+ 	}
+ 
+-	/* kit->data->work == NULL is valid after bpf_mmap_unlock_get_irq_work */
+-	irq_work_busy = bpf_mmap_unlock_get_irq_work(&kit->data->work);
+-	if (irq_work_busy || !mmap_read_trylock(kit->data->mm)) {
+-		err = -EBUSY;
+-		goto err_cleanup_mmget;
+-	}
+-
+-	vma_iter_init(&kit->data->vmi, kit->data->mm, addr);
++	kit->data->locked_vma = NULL;
++	kit->data->next_addr = addr;
  	return 0;
  
-+err_cleanup_mmget:
-+	bpf_iter_mmput_async(kit->data->mm);
+-err_cleanup_mmget:
+-	bpf_iter_mmput_async(kit->data->mm);
  err_cleanup_iter:
--	if (kit->data->task)
--		put_task_struct(kit->data->task);
-+	put_task_struct(kit->data->task);
+ 	put_task_struct(kit->data->task);
  	bpf_mem_free(&bpf_global_ma, kit->data);
- 	/* NULL kit->data signals failed bpf_iter_task_vma initialization */
- 	kit->data = NULL;
-@@ -875,6 +922,7 @@ __bpf_kfunc void bpf_iter_task_vma_destroy(struct bpf_iter_task_vma *it)
- 	if (kit->data) {
- 		bpf_mmap_unlock_mm(kit->data->work, kit->data->mm);
- 		put_task_struct(kit->data->task);
-+		bpf_iter_mmput_async(kit->data->mm);
- 		bpf_mem_free(&bpf_global_ma, kit->data);
- 	}
+@@ -906,13 +897,76 @@ __bpf_kfunc int bpf_iter_task_vma_new(struct bpf_iter_task_vma *it,
+ 	return err;
  }
+ 
++/*
++ * Find and lock the next VMA at or after data->next_addr.
++ *
++ * lock_vma_under_rcu() is a point lookup (mas_walk): it finds the VMA
++ * containing a given address but cannot iterate. An RCU-protected
++ * maple tree walk with vma_next() (mas_find) is needed first to locate
++ * the next VMA's vm_start across any gap.
++ *
++ * Between the RCU walk and the lock, the VMA may be removed, shrunk,
++ * or write-locked. On failure, advance past it using vm_end from the
++ * RCU walk. SLAB_TYPESAFE_BY_RCU can make vm_end stale, so fall back
++ * to PAGE_SIZE advancement to guarantee forward progress.
++ */
++static struct vm_area_struct *
++bpf_iter_task_vma_find_next(struct bpf_iter_task_vma_kern_data *data)
++{
++	struct vm_area_struct *vma;
++	struct vma_iterator vmi;
++	unsigned long start, end;
++
++retry:
++	rcu_read_lock();
++	vma_iter_init(&vmi, data->mm, data->next_addr);
++	vma = vma_next(&vmi);
++	if (!vma) {
++		rcu_read_unlock();
++		return NULL;
++	}
++	start = vma->vm_start;
++	end = vma->vm_end;
++	rcu_read_unlock();
++
++	vma = lock_vma_under_rcu(data->mm, start);
++	if (!vma) {
++		if (end <= data->next_addr)
++			data->next_addr += PAGE_SIZE;
++		else
++			data->next_addr = end;
++		goto retry;
++	}
++
++	if (unlikely(vma->vm_end <= data->next_addr)) {
++		data->next_addr += PAGE_SIZE;
++		vma_end_read(vma);
++		goto retry;
++	}
++
++	return vma;
++}
++
+ __bpf_kfunc struct vm_area_struct *bpf_iter_task_vma_next(struct bpf_iter_task_vma *it)
+ {
+ 	struct bpf_iter_task_vma_kern *kit = (void *)it;
++	struct vm_area_struct *vma;
+ 
+ 	if (!kit->data) /* bpf_iter_task_vma_new failed */
+ 		return NULL;
+-	return vma_next(&kit->data->vmi);
++
++	if (kit->data->locked_vma) {
++		vma_end_read(kit->data->locked_vma);
++		kit->data->locked_vma = NULL;
++	}
++
++	vma = bpf_iter_task_vma_find_next(kit->data);
++	if (!vma)
++		return NULL;
++
++	kit->data->locked_vma = vma;
++	kit->data->next_addr = vma->vm_end;
++	return vma;
+ }
+ 
+ __bpf_kfunc void bpf_iter_task_vma_destroy(struct bpf_iter_task_vma *it)
+@@ -920,7 +974,8 @@ __bpf_kfunc void bpf_iter_task_vma_destroy(struct bpf_iter_task_vma *it)
+ 	struct bpf_iter_task_vma_kern *kit = (void *)it;
+ 
+ 	if (kit->data) {
+-		bpf_mmap_unlock_mm(kit->data->work, kit->data->mm);
++		if (kit->data->locked_vma)
++			vma_end_read(kit->data->locked_vma);
+ 		put_task_struct(kit->data->task);
+ 		bpf_iter_mmput_async(kit->data->mm);
+ 		bpf_mem_free(&bpf_global_ma, kit->data);
 -- 
 2.53.0
 
