@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4153F20FA;
-	Wed, 20 May 2026 17:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043C31C3BFC;
+	Wed, 20 May 2026 17:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299063; cv=none; b=LT1QPPCYgJ0wGvCrDCXcgBhQrsyqmM1Og8zgWk2cGVR39IXJKNa9K4hgEAjJ65UWqi0L/SzWOJOBwkWK2Pfyx5j+96MjeQOKrlxBD5MOKL6VQaImWsVeuj1b1NMskX3FXqqVRLiu/XnW2dvA9pfjPoUyMj6yxTk2eRfVhBwqm+8=
+	t=1779299066; cv=none; b=H1xv4DGTwujylN3Z7Z4vY2BUwQ8h/hT4XZdIk7kjxB/OnIDGgw330otaKdAf86xsZQts8seJ7EBy0UKj5VlUuQmc54jOeVFhLRo602iNcvgJTV3YW0kAPnoBSEoBDvxP96f1W54zyXcR59PZA5E102CFnXDnqCMxN4KjDojBe2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299063; c=relaxed/simple;
-	bh=h3Osl3BhJ+l/U1EvODaO/14qVQHg0tuOKY8TZuuhNiA=;
+	s=arc-20240116; t=1779299066; c=relaxed/simple;
+	bh=ROgacIQtwCaS80dFD+3vBfzkpIpM+kqV5S/LaKNx8Rw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSfOgs85scgmlObjBwRYWcpQyi0W57aKbh03SxNVIFCrQwffrKIdAY7SWezqJuUoR4xr/wgZR1qsAnUqPjcpUpr6hRHfz6VVDKepZ4ht3273jeSifBajGXLyLyFlEB4NM/NdFtjEuSRYW6byLPs4RJFqcDeESWXMWR76LeiQdvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+Zlm7ph; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=inVIKF/sMDQ+OwO1PiPedeE0cmyYzkyd00V0EEWNOjhu39PgT70D7asHujnbBvB3dcVt7RzTUkerHkPDSlsHtYlWaf1N6vYUux73YOVdFdMhp7O/ZiTYl9TUv1qrl/GPAwAE0q77D/jdKebvpdW+I3s+M9Nq1EvnQ/Hdzx7k49g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8g/POAG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+Zlm7ph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631331F000E9;
-	Wed, 20 May 2026 17:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8g/POAG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26171F000E9;
+	Wed, 20 May 2026 17:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299061;
-	bh=R+v1zywOEu99Zu+hO4/xf0n8t7buynTbNVJ8V6sSGbc=;
+	s=korg; t=1779299064;
+	bh=vYEgn7ij4I3UgUglpgYdJ0vyFFNVaGan6DgPTEQRtoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+Zlm7phGIqA/o6T02Zdgm5AW87IaxG52wMT0IMwtkOGrnYJj592K0X6q+UWOmp9U
-	 cmaFodYeAYozQoN1rBKlKKZRMC7Qc2XqPyKxjp4R7RIqox2JAWuCxpPAZeSpi3MaAU
-	 0AdKpOBD8wIFD9o1QV/ol5tSvORBzgdmgm42AXc4=
+	b=Y8g/POAGZrfbrmvaSd5l8mEUUnMKxhITVUSOct0iUjhQewnkPh5bVGdUmhLtJOVQ1
+	 g96GR51yqqIkDdaAO+IfjepmjqjoHeB9sJ7bifSdm5TRlKPzisgSIYnh+jphkZoDRq
+	 JLNaOMjvvE6/gtZhZ0NxHlIqCJaqo1KkGzoED+T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zoltan Fodor <zoltan.fodor@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>,
+	Alice Mikityanska <alice@isovalent.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 647/957] ice: update PCS latency settings for E825 10G/25Gb modes
-Date: Wed, 20 May 2026 18:18:50 +0200
-Message-ID: <20260520162148.560056009@linuxfoundation.org>
+Subject: [PATCH 6.18 648/957] ice: Remove jumbo_remove step from TX path
+Date: Wed, 20 May 2026 18:18:51 +0200
+Message-ID: <20260520162148.582539866@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -55,84 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Grzegorz Nitka <grzegorz.nitka@intel.com>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit 05567e4052732d70c7ff9655217b3d14d25f639a ]
+[ Upstream commit 8b76102c5e00d1f090e0c31d17b060c76d8fa859 ]
 
-Update MAC Rx/Tx offset registers settings (PHY_MAC_[RX|TX]_OFFSET
-registers) with the data obtained with the latest research. It applies
-to PCS latency settings for the following speeds/modes:
-* 10Gb NO-FEC
-        - TX latency changed from 71.25 ns to 73 ns
-        - RX latency changed from -25.6 ns to -28 ns
-* 25Gb NO-FEC
-	- TX latency changed from 28.17 ns to 33 ns
-        - RX latency changed from -12.45 ns to -12 ns
-* 25Gb RS-FEC
-        - TX latency changed from 64.5 ns to 69 ns
-        - RX latency changed from -3.6 ns to -3 ns
+Now that the kernel doesn't insert HBH for BIG TCP IPv6 packets, remove
+unnecessary steps from the ice TX path, that used to check and remove
+HBH.
 
-The original data came from simulation and pre-production hardware.
-The new data measures the actual delays and as such is more accurate.
-
-Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
-Co-developed-by: Zoltan Fodor <zoltan.fodor@intel.com>
-Signed-off-by: Zoltan Fodor <zoltan.fodor@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-2-686c33c9828d@intel.com
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260205133925.526371-8-alice.kernel@fastmail.im
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 1a303baa715e ("ice: fix double-free of tx_buf skb")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp_consts.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_txrx.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_consts.h b/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
-index 19dddd9b53ddd..4d298c27bfb27 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
-@@ -78,14 +78,14 @@ struct ice_eth56g_mac_reg_cfg eth56g_mac_cfg[NUM_ICE_ETH56G_LNK_SPD] = {
- 		.blktime = 0x666, /* 3.2 */
- 		.tx_offset = {
- 			.serdes = 0x234c, /* 17.6484848 */
--			.no_fec = 0x8e80, /* 71.25 */
-+			.no_fec = 0x93d9, /* 73 */
- 			.fc = 0xb4a4, /* 90.32 */
- 			.sfd = 0x4a4, /* 2.32 */
- 			.onestep = 0x4ccd /* 38.4 */
- 		},
- 		.rx_offset = {
- 			.serdes = 0xffffeb27, /* -10.42424 */
--			.no_fec = 0xffffcccd, /* -25.6 */
-+			.no_fec = 0xffffc7b6, /* -28 */
- 			.fc = 0xfffc557b, /* -469.26 */
- 			.sfd = 0x4a4, /* 2.32 */
- 			.bs_ds = 0x32 /* 0.0969697 */
-@@ -118,17 +118,17 @@ struct ice_eth56g_mac_reg_cfg eth56g_mac_cfg[NUM_ICE_ETH56G_LNK_SPD] = {
- 		.mktime = 0x147b, /* 10.24, only if RS-FEC enabled */
- 		.tx_offset = {
- 			.serdes = 0xe1e, /* 7.0593939 */
--			.no_fec = 0x3857, /* 28.17 */
-+			.no_fec = 0x4266, /* 33 */
- 			.fc = 0x48c3, /* 36.38 */
--			.rs = 0x8100, /* 64.5 */
-+			.rs = 0x8a00, /* 69 */
- 			.sfd = 0x1dc, /* 0.93 */
- 			.onestep = 0x1eb8 /* 15.36 */
- 		},
- 		.rx_offset = {
- 			.serdes = 0xfffff7a9, /* -4.1697 */
--			.no_fec = 0xffffe71a, /* -12.45 */
-+			.no_fec = 0xffffe700, /* -12 */
- 			.fc = 0xfffe894d, /* -187.35 */
--			.rs = 0xfffff8cd, /* -3.6 */
-+			.rs = 0xfffff8cc, /* -3 */
- 			.sfd = 0x1dc, /* 0.93 */
- 			.bs_ds = 0x14 /* 0.0387879, RS-FEC 0 */
- 		}
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+index 73f08d02f9c76..90dbe5266ce78 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -2594,9 +2594,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+ 
+ 	ice_trace(xmit_frame_ring, tx_ring, skb);
+ 
+-	if (unlikely(ipv6_hopopt_jumbo_remove(skb)))
+-		goto out_drop;
+-
+ 	count = ice_xmit_desc_count(skb);
+ 	if (ice_chk_linearize(skb, count)) {
+ 		if (__skb_linearize(skb))
 -- 
 2.53.0
 
