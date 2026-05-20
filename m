@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8433EF0D7;
-	Wed, 20 May 2026 18:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6783D1CC6;
+	Wed, 20 May 2026 18:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301729; cv=none; b=C4BN2rLgHKk2AxcQFxHl8bfii7f6Q4cgvf3zcaqNrklWCuq/3yXDjEjACf+8WiKDz73/WyUQ3ic4WryWln+OYIe+bs7J934ugYBz4hQ/Ryr1GXspwlerwT5xLDe+bgzYNYk3QzFLur1yBUq9L5e9F3bLr37yIXzkdQJkpfttax8=
+	t=1779301732; cv=none; b=htQ17KrGBNigCEMaOAfR5oHFJqdR4aiuUhpPlNrUOHSge8H3RnBOsEZCYTI8CqSwJyIiMDHSJ9XoTm+qkW8fiZH8af1hTKefF3vmuOiSCTBeZXi9AXnmNMu7wyheLKeUhqZ2Bo38FmSJKkxa4ZJDiBY/yQgvXbzJgx/sPurBuxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301729; c=relaxed/simple;
-	bh=lh23AFZCValWGwBPAlzWZlzxL6/pxPB6NmFgJk6i5dM=;
+	s=arc-20240116; t=1779301732; c=relaxed/simple;
+	bh=3kcxQMbrqcvMU5/ckb1x4fgzeap3wevfbL8biv5052k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qBW+9MbrrDLXP6aXggSYJ7D0XvmqmGyo/asUZRADRWBxtR4uj1KkJ2xQ3RdMOwMaBH83KBWTiTxpo0l0haOU2GtV0r3MMXTQvgr2KMmBOQfjYhQeVC0cDDQUcnhaleJfVOTzEcKYzeJoKmAJtTepkVUOwQehlqzG30RCFIMgf3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhhdrY1E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sEWDgF4PxXp1yZ5jsXRy84dq7h3bdEH+OHyt1tCpmNKGfsiZNtqTt7gdJUehybZvi0YPQhiMDSbVGBUwqtnxbMrXR8+zYc76OckGVofBJV9JzFRJKGAT6P6QP4RcQV/z0h2jfBq3+hFBbuBUpFKlgt9x3eu9nGOcapYO3NsDijY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPZdTa3G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhhdrY1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360C51F00897;
-	Wed, 20 May 2026 18:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPZdTa3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC15A1F00899;
+	Wed, 20 May 2026 18:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301728;
-	bh=UwOpTJuaHabs9RXC3OdPshLIZ5cfkJe5Q0XW8qVbJ00=;
+	s=korg; t=1779301731;
+	bh=y3wzFYlaPTgctW2fgqXg3QrGR0/yLJDEQBMSO+G6rG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KhhdrY1E4FW+KqhrwOzAGW+QScT9DvU6Qp2YIbx3pg1cZg0Z7Fj1nj5X127hfJLS3
-	 z3EYgzF2CKJhiqInoG7lK5MLyyiMMA7VpRRY8N71unBk2aFWt9Kd0HiR7yKWZM9NBM
-	 gXoeb9+K9jm/61Xbd9iQ1v8EsZoce1jeg/hCGHmA=
+	b=LPZdTa3G5AmxWygCIRwSC3CiRR0DEH92XwERNwcegFiLQdmjED+tVdLcKSn96QMpY
+	 MOeOxN7RIqlpMmiEOaqLVbPDgQSPsLHLtKypj9qCndXsLgBp0cGF5oT34AgCi5OwXQ
+	 B8eYOl1oqBJv1DhzqtxT/AgliAixpjbm3OtR6Yig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Long Li <longli@microsoft.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 666/666] mptcp: pm: ADD_ADDR rtx: resched blocked ADD_ADDR quicker
-Date: Wed, 20 May 2026 18:24:37 +0200
-Message-ID: <20260520162125.726568295@linuxfoundation.org>
+Subject: [PATCH 6.12 655/666] RDMA/mana: Remove user triggerable WARN_ON() in mana_ib_create_qp_rss()
+Date: Wed, 20 May 2026 18:24:26 +0200
+Message-ID: <20260520162125.481757585@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,50 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 3cf12492891c4b5ff54dda404a2de4ec54c9e1b5 ]
+[ Upstream commit 159f2efabc89d3f931d38f2d35876535d4abf0a3 ]
 
-When an ADD_ADDR needs to be retransmitted and another one has already
-been prepared -- e.g. multiple ADD_ADDRs have been sent in a row and
-need to be retransmitted later -- this additional retransmission will
-need to wait.
+Sashiko points out that the user can specify WQs sharing the same CQ as a
+part of the uAPI and this will trigger the WARN_ON() then go on to corrupt
+the kernel.
 
-In this case, the timer was reset to TCP_RTO_MAX / 8, which is ~15
-seconds. This delay is unnecessary long: it should just be rescheduled
-at the next opportunity, e.g. after the retransmission timeout.
+Just reject it outright and fail the QP creation.
 
-Without this modification, some issues can be seen from time to time in
-the selftests when multiple ADD_ADDRs are sent, and the host takes time
-to process them, e.g. the "signal addresses, ADD_ADDR timeout" MPTCP
-Join selftest, especially with a debug kernel config.
-
-Note that on older kernels, 'timeout' is not available. It should be
-enough to replace it by one second (HZ).
-
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-6-fca8091060a4@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ replaced `TCP_RTO_MAX / 8` with `HZ` ]
+Fixes: c15d7802a424 ("RDMA/mana_ib: Add CQ interrupt support for RAW QP")
+Link: https://sashiko.dev/#/patchset/0-v2-1c49eeb88c48%2B91-rdma_udata_rep_jgg%40nvidia.com?part=1
+Link: https://patch.msgid.link/r/5-v1-41f3135e5565+9d2-rdma_ai_fixes1_jgg@nvidia.com
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+[ adjusted context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/mana/cq.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -315,7 +315,7 @@ static void mptcp_pm_add_timer(struct ti
- 	}
+--- a/drivers/infiniband/hw/mana/cq.c
++++ b/drivers/infiniband/hw/mana/cq.c
+@@ -120,8 +120,9 @@ int mana_ib_install_cq_cb(struct mana_ib
  
- 	if (mptcp_pm_should_add_signal_addr(msk)) {
--		sk_reset_timer(sk, timer, jiffies + TCP_RTO_MAX / 8);
-+		sk_reset_timer(sk, timer, jiffies + HZ);
- 		goto out;
- 	}
- 
+ 	if (cq->queue.id >= gc->max_num_cqs)
+ 		return -EINVAL;
+-	/* Create CQ table entry */
+-	WARN_ON(gc->cq_table[cq->queue.id]);
++	/* Create CQ table entry, sharing a CQ between WQs is not supported */
++	if (gc->cq_table[cq->queue.id])
++		return -EINVAL;
+ 	gdma_cq = kzalloc(sizeof(*gdma_cq), GFP_KERNEL);
+ 	if (!gdma_cq)
+ 		return -ENOMEM;
 
 
