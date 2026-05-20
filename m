@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1279829B8D0;
-	Wed, 20 May 2026 18:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7ECC3F9F2D;
+	Wed, 20 May 2026 18:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301640; cv=none; b=ELwmvan7Tp1gJSUC28YcQk2nO3+ZYrStbgSPIJKOY78XWyyfV0EqPL6gvxoFZ2MdUDOiCrn/mCJoaDYfH/bcehuO36Mg/kmncbpbX+zre9QhzMV5ofek1UV/S+Xq2QJjtM4SvgTP+FOmvoTO0GOFqf2rzswbTH6CBqQpIilIs/I=
+	t=1779301643; cv=none; b=qNwneVI9MXDpUBEotO4CRQ8U5EJB7fdxRBg3bqj2PKj7IhZuka5ZRwLfYbitHRlLU47gRLZaENIgn0ds8Gq6mvR9gBAfOFWS9zlU4Zi2VZsGzQhTtMHARXN/Dgiy9ke7WWwsBvSkKQhlEHgnyXJb0pK9Ox400EdOTGON3QXvrkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301640; c=relaxed/simple;
-	bh=52Q2+cyxVMmHfDREAq+I7O3325tYktBTD8sCYd+Qf1U=;
+	s=arc-20240116; t=1779301643; c=relaxed/simple;
+	bh=nJgbPTjXYaMbRuVsr4s57DEh9FAZLoEzaT+q73AQeoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxFXp1mosgV3oX4/br1UGFDPGxYTl6mMPzje0zuto+YXH75O8PfaDFHCteU/sBWzqSGS3v0nlfuKa76JuryXfkUUB0geAi5PlNJDYQMO3DbjBBeNTqEcDm0gmitDCCp3fDylABTAd1y3Xo58ptVRxHMhZSHjd1gKatgSaCcy2zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGuN/4iO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sws5RLmE1s8c6SCKKdMgLjfVO6il0Ln36kM7lGOmHPdnkMi7ljjbYCanRB6dZLqmxXkJqOlPVjDtS9tb2u11kY0OlwUO+L1Zve773YvzowZlQgfXFrn8QlBXdyeYB5/f4GEhY4t4UxNjwV1drJ5ew7dLTPCB2Xhjnimv5EbuKfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nY9j42kQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGuN/4iO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A961F000E9;
-	Wed, 20 May 2026 18:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nY9j42kQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA481F000E9;
+	Wed, 20 May 2026 18:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301639;
-	bh=gz4HSYYv298b9R92QyIHuBZ+N3hBNcT3jjYnIMIpKb0=;
+	s=korg; t=1779301641;
+	bh=p/bxONIKdS1kTtIywLgE8cpboIDxRiWnmUZHvZVxcHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CGuN/4iOk6go9RV5JOh1gPZtNDhKQxYFlSKG5Q5XZPwF03eDw+stdg5GLiI5fASJB
-	 FWBJexAXKtvO2IW5nGYlCso/AnBx10kbMLe64QevOUxAl0iAVtN0niNNFK/Z+byrAU
-	 jBW6U9XyPjgJw/THKtneaS0vvcLxoUG834cXNpTM=
+	b=nY9j42kQe3zv9cKbQtR36eJp7gqRdYAsJfLgl4xxrRGUHNKcGfQqE0K/ZuJBlzt70
+	 FU7F4RFo/vg5olIihHGTSfrTnddWGUHufVfb2dWZnQvzFO+wSm93U5wJUvCKCIex6t
+	 j1lpdZwLxngWPS4yanvPBIgp/W71ayuEbvjQ1kkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 631/666] ceph: fix BUG_ON in __ceph_build_xattrs_blob() due to stale blob size
-Date: Wed, 20 May 2026 18:24:02 +0200
-Message-ID: <20260520162124.952235668@linuxfoundation.org>
+	Nicholas Carlini <nicholas@carlini.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 632/666] io-wq: check that the predecessor is hashed in io_wq_remove_pending()
+Date: Wed, 20 May 2026 18:24:03 +0200
+Message-ID: <20260520162124.975151174@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,125 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+From: Nicholas Carlini <nicholas@carlini.com>
 
-commit 0c22d9511cbde746622f8e4c11aaa63fe76d45f9 upstream.
+commit d6a2d7b04b5a093021a7a0e2e69e9d5237dfa8cc upstream.
 
-The generic/642 test-case can reproduce the kernel crash:
+io_wq_remove_pending() needs to fix up wq->hash_tail[] if the cancelled
+work was the tail of its hash bucket. When doing this, it checks whether
+the preceding entry in acct->work_list has the same hash value, but
+never checks that the predecessor is hashed at all. io_get_work_hash()
+is simply atomic_read(&work->flags) >> IO_WQ_HASH_SHIFT, and the hash
+bits are never set for non-hashed work, so it returns 0. Thus, when a
+hashed bucket-0 work is cancelled while a non-hashed work is its list
+predecessor, the check spuriously passes and a pointer to the non-hashed
+io_kiocb is stored in wq->hash_tail[0].
 
-[40243.605254] ------------[ cut here ]------------
-[40243.605956] kernel BUG at fs/ceph/xattr.c:918!
-[40243.607142] Oops: invalid opcode: 0000 [#1] SMP PTI
-[40243.608067] CPU: 7 UID: 0 PID: 498762 Comm: kworker/7:1 Not tainted 7.0.0-rc7+ #3 PREEMPT(full)
-[40243.609700] Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[40243.611820] Workqueue: ceph-msgr ceph_con_workfn
-[40243.612715] RIP: 0010:__ceph_build_xattrs_blob+0x1b8/0x1e0
-[40243.613731] Code: 0f 84 82 fe ff ff e9 cf 8e 56 ff 48 8d 65 e8 31 c0 5b 41 5c 41 5d 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 c3 cc cc cc cc <0f> 0b 4c 8b 62 08 41 8b 85 24 07 00 00 49 83 c4 04 41 89 44 24 fc
-[40243.616888] RSP: 0018:ffffcc80c4d4b688 EFLAGS: 00010287
-[40243.617773] RAX: 0000000000010026 RBX: 0000000000000001 RCX: 0000000000000000
-[40243.618928] RDX: ffff8a773798dee0 RSI: 0000000000000000 RDI: 0000000000000000
-[40243.620158] RBP: ffffcc80c4d4b6a0 R08: 0000000000000000 R09: 0000000000000000
-[40243.621573] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8a75f3b58000
-[40243.622907] R13: ffff8a75f3b58000 R14: 0000000000000080 R15: 000000000000bffd
-[40243.624054] FS:  0000000000000000(0000) GS:ffff8a787d1b4000(0000) knlGS:0000000000000000
-[40243.625331] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[40243.626269] CR2: 000072f390b623c0 CR3: 000000011c02a003 CR4: 0000000000372ef0
-[40243.627408] Call Trace:
-[40243.627839]  <TASK>
-[40243.628188]  __prep_cap+0x3fd/0x4a0
-[40243.628789]  ? do_raw_spin_unlock+0x4e/0xe0
-[40243.629474]  ceph_check_caps+0x46a/0xc80
-[40243.630094]  ? __lock_acquire+0x4a2/0x2650
-[40243.630773]  ? find_held_lock+0x31/0x90
-[40243.631347]  ? handle_cap_grant+0x79f/0x1060
-[40243.632068]  ? lock_release+0xd9/0x300
-[40243.632696]  ? __mutex_unlock_slowpath+0x3e/0x340
-[40243.633429]  ? lock_release+0xd9/0x300
-[40243.634052]  handle_cap_grant+0xcf6/0x1060
-[40243.634745]  ceph_handle_caps+0x122b/0x2110
-[40243.635415]  mds_dispatch+0x5bd/0x2160
-[40243.636034]  ? ceph_con_process_message+0x65/0x190
-[40243.636828]  ? lock_release+0xd9/0x300
-[40243.637431]  ceph_con_process_message+0x7a/0x190
-[40243.638184]  ? kfree+0x311/0x4f0
-[40243.638749]  ? kfree+0x311/0x4f0
-[40243.639268]  process_message+0x16/0x1a0
-[40243.639915]  ? sg_free_table+0x39/0x90
-[40243.640572]  ceph_con_v2_try_read+0xf58/0x2120
-[40243.641255]  ? lock_acquire+0xc8/0x300
-[40243.641863]  ceph_con_workfn+0x151/0x820
-[40243.642493]  process_one_work+0x22f/0x630
-[40243.643093]  ? process_one_work+0x254/0x630
-[40243.643770]  worker_thread+0x1e2/0x400
-[40243.644332]  ? __pfx_worker_thread+0x10/0x10
-[40243.645020]  kthread+0x109/0x140
-[40243.645560]  ? __pfx_kthread+0x10/0x10
-[40243.646125]  ret_from_fork+0x3f8/0x480
-[40243.646752]  ? __pfx_kthread+0x10/0x10
-[40243.647316]  ? __pfx_kthread+0x10/0x10
-[40243.647919]  ret_from_fork_asm+0x1a/0x30
-[40243.648556]  </TASK>
-[40243.648902] Modules linked in: overlay hctr2 libpolyval chacha libchacha adiantum libnh libpoly1305 essiv intel_rapl_msr intel_rapl_common intel_uncore_frequency_common skx_edac_common nfit kvm_intel kvm irqbypass joydev ghash_clmulni_intel aesni_intel rapl input_leds mac_hid psmouse vga16fb serio_raw vgastate floppy i2c_piix4 pata_acpi bochs qemu_fw_cfg i2c_smbus sch_fq_codel rbd dm_crypt msr parport_pc ppdev lp parport efi_pstore
-[40243.654766] ---[ end trace 0000000000000000 ]---
+Because non-hashed work is dequeued via the fast path in
+io_get_next_work(), which never touches hash_tail[], the stale pointer
+is never cleared. Therefore, after the non-hashed io_kiocb completes and
+is freed back to req_cachep, wq->hash_tail[0] is a dangling pointer. The
+io_wq is per-task (tctx->io_wq) and survives ring open/close, so the
+dangling pointer persists for the lifetime of the task; the next hashed
+bucket-0 enqueue dereferences it in io_wq_insert_work() and
+wq_list_add_after() writes through freed memory.
 
-Commit d93231a6bc8a ("ceph: prevent a client from exceeding the MDS
-maximum xattr size") moved the required_blob_size computation to before
-the __build_xattrs() call, introducing a race.
-
-__build_xattrs() releases and reacquires i_ceph_lock during execution.
-In that window, handle_cap_grant() may update i_xattrs.blob with a
-newer MDS-provided blob and bump i_xattrs.version.  When
-__build_xattrs() detects that index_version < version, it destroys and
-rebuilds the entire xattr rb-tree from the new blob, potentially
-increasing count, names_size, and vals_size.
-
-The prealloc_blob size check that follows still uses the stale
-required_blob_size computed before the rebuild, so it passes even when
-prealloc_blob is too small for the now-larger tree. After __set_xattr()
-adds one more xattr on top, __ceph_build_xattrs_blob() is called from
-the cap flush path and hits:
-
-    BUG_ON(need > ci->i_xattrs.prealloc_blob->alloc_len);
-
-Fix this by recomputing required_blob_size after __build_xattrs()
-returns, using the current tree state. Also re-validate against
-m_max_xattr_size to fall back to the sync path if the rebuilt tree now
-exceeds the MDS limit.
+Add the missing io_wq_is_hashed() check so a non-hashed predecessor
+never inherits a hash_tail[] slot.
 
 Cc: stable@vger.kernel.org
-Fixes: d93231a6bc8a ("ceph: prevent a client from exceeding the MDS maximum xattr size")
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 204361a77f40 ("io-wq: fix hang after cancelling pending hashed work")
+Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/xattr.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ io_uring/io-wq.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/xattr.c
-+++ b/fs/ceph/xattr.c
-@@ -1256,6 +1256,22 @@ retry:
- 	      ceph_vinop(inode), name, ceph_cap_string(issued));
- 	__build_xattrs(inode);
- 
-+	/*
-+	 * __build_xattrs() may have released and reacquired i_ceph_lock,
-+	 * during which handle_cap_grant() could have replaced i_xattrs.blob
-+	 * with a newer MDS-provided blob and bumped i_xattrs.version. If that
-+	 * caused __build_xattrs() to rebuild the rb-tree from the new blob,
-+	 * count/names_size/vals_size may now be larger than when
-+	 * required_blob_size was computed above. Recompute it here so the
-+	 * prealloc_blob size check below reflects the current tree state.
-+	 */
-+	required_blob_size = __get_required_blob_size(ci, name_len, val_len);
-+	if (required_blob_size > mdsc->mdsmap->m_max_xattr_size) {
-+		doutc(cl, "sync (size too large): %d > %llu\n",
-+		      required_blob_size, mdsc->mdsmap->m_max_xattr_size);
-+		goto do_sync;
-+	}
-+
- 	if (!ci->i_xattrs.prealloc_blob ||
- 	    required_blob_size > ci->i_xattrs.prealloc_blob->alloc_len) {
- 		struct ceph_buffer *blob;
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -1044,7 +1044,8 @@ static inline void io_wq_remove_pending(
+ 	if (io_wq_is_hashed(work) && work == wq->hash_tail[hash]) {
+ 		if (prev)
+ 			prev_work = container_of(prev, struct io_wq_work, list);
+-		if (prev_work && io_get_work_hash(prev_work) == hash)
++		if (prev_work && io_wq_is_hashed(prev_work) &&
++		    io_get_work_hash(prev_work) == hash)
+ 			wq->hash_tail[hash] = prev_work;
+ 		else
+ 			wq->hash_tail[hash] = NULL;
 
 
