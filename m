@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE9117A2FC;
-	Wed, 20 May 2026 18:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B21130DEAC;
+	Wed, 20 May 2026 18:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302170; cv=none; b=SPUcvO77mjpHpOD9GMW8muOxIin+nfv2eo1JVwW3L0o5pG8P139+QTvG7Nt+7cAOjdqgByx4C8hqEOQZJLZiBX3WWFfv9poDmVawmenAax9yG7mlSJUBwragx6jA39QCEGwBEki6SSOpWif4081NwCUZM9b3NuWQjrN6XexKwEc=
+	t=1779302173; cv=none; b=u23l1pMIcjETQo1Hd3aAMvwIcHFu5Eg4elyLqugjRNrsAyUlTruZbIZgmabCdpSfaGdotAbP5d9rvks0fGlZmMJeudygos+Vx3SyxLVMavNfh00PqvXKSMN6INYYAcAZjGTinKf+WY9aUD3faDFEegJJelMjyT5OEpzGY2Y6M6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302170; c=relaxed/simple;
-	bh=9R3WQ3UkMWX9xhTQSRWy394WZNSPbjR64jOHBySK4F4=;
+	s=arc-20240116; t=1779302173; c=relaxed/simple;
+	bh=DxFa3GBZwbve65PRtIlsnbY1GE79ebCCeB/K/ZHRyj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+WqDuf+HKo+wT55O6WZORj8wWYT1k/tsUCtOwF0O1nxAJHfXU+BCL5+so5jhCSx/BWS89ebzyxvjPj18vgcbGdSt1zXhmIn2Pe4gZelTS8DLnrd7djsxMCpgs+NU0f1k4ax0jgTrVbUDlMEfglFF+6lvHzbMX3d1dVifFJXE+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKnZd6mc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u3KEIz8lwnPbejrG4bf32bj+hS1zM441tYoRktAilV6QakzeVH6iQYtFQVgESaOCwZHx55yctQC2a4JRXNHjENJZ6sAkZc4PVcL9u96L2mOKzmFw4+jvDpxePI61Bpqz+ZBfMl7pA9X9MODylC7vSvfWOCu6LkY2yuvhO1zJlAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4JkYIJX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKnZd6mc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324C81F000E9;
-	Wed, 20 May 2026 18:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4JkYIJX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DED1F000E9;
+	Wed, 20 May 2026 18:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302169;
-	bh=GnUfVifiE1M2mJqA7uzY/UXRFO05Uad3emfVEBx4Cnc=;
+	s=korg; t=1779302172;
+	bh=w5vZQG6kOC3NrgWdXNbaoRJKP/+nhrjeuZv6S+fLnIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xKnZd6mczHlsjd9rInO7SbYc3A8k61o8Q86PQuufrkosO2NWty1sjDYBr3Y+KllRZ
-	 o1+abr14ZnuarTMxsZAOS7DUeAg3UQ5UwsyUt8CchE8Vb6T6gGJQj9Y9DCAJFFqQuD
-	 Rx7dNiiUBII2khhUXWVMJgEOv3urOrB6cuUdoz3Q=
+	b=d4JkYIJXhC5yNbIlvT8cBLE47cZBO/Q4LgU7wg0MihWuu8VTqyL3EzjaGc8XrzjKT
+	 HUrjUe7PSzVh6e11Lmhk55ipsDCzIIN11QB7mjwCKpFuYKG+22I9QtUJjxwgQPylkT
+	 dfA1WRw1vT+R48yeNQGmXvqMLaLSgqQsaIkDMS2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/508] PCI: tegra194: Disable direct speed change for Endpoint mode
-Date: Wed, 20 May 2026 18:19:46 +0200
-Message-ID: <20260520162102.170565344@linuxfoundation.org>
+Subject: [PATCH 6.6 164/508] PCI: tegra194: Allow system suspend when the Endpoint link is not up
+Date: Wed, 20 May 2026 18:19:47 +0200
+Message-ID: <20260520162102.192904464@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -56,48 +56,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit 976f6763f57970388bcd7118931f33f447916927 ]
+[ Upstream commit c76f8eae7d4695b1176c4ea5eb93c17e16a20272 ]
 
-Pre-silicon simulation showed the controller operating in Endpoint mode
-initiating link speed change after completing Secondary Bus Reset. Ideally,
-the Root Port or the Switch Downstream Port should initiate the link speed
-change post SBR, not the Endpoint.
+Host software initiates the L2 sequence. PCIe link is kept in L2 state
+during suspend. If Endpoint mode is enabled and the link is up, the
+software cannot proceed with suspend. However, when the PCIe Endpoint
+driver is probed, but the PCIe link is not up, Tegra can go into suspend
+state. So, allow system to suspend in this case.
 
-So, as per the hardware team recommendation, disable direct speed change
-for the Endpoint mode to prevent it from initiating speed change after the
-physical layer link is up at Gen1, leaving speed change ownership with the
-host.
-
-Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
+Fixes: de2bbf2b71bb ("PCI: tegra194: Don't allow suspend when Tegra PCIe is in EP mode")
 Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
 Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
-[mani: commit log]
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
-Link: https://patch.msgid.link/20260324190755.1094879-8-mmaddireddy@nvidia.com
+Link: https://patch.msgid.link/20260324190755.1094879-10-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 31 +++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index dba73a0ea4210..b29d1edd4c9bd 100644
+index b29d1edd4c9bd..cab6cd5b8f3cd 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1839,6 +1839,10 @@ static void pex_ep_event_pex_rst_deassert(struct tegra_pcie_dw *pcie)
+@@ -2307,16 +2307,28 @@ static void tegra_pcie_dw_remove(struct platform_device *pdev)
+ 		gpiod_set_value(pcie->pex_refclk_sel_gpiod, 0);
+ }
  
- 	reset_control_deassert(pcie->core_rst);
+-static int tegra_pcie_dw_suspend_late(struct device *dev)
++static int tegra_pcie_dw_suspend(struct device *dev)
+ {
+ 	struct tegra_pcie_dw *pcie = dev_get_drvdata(dev);
+-	u32 val;
  
-+	val = dw_pcie_readl_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL);
-+	val &= ~PORT_LOGIC_SPEED_CHANGE;
-+	dw_pcie_writel_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL, val);
+ 	if (pcie->of_data->mode == DW_PCIE_EP_TYPE) {
+-		dev_err(dev, "Failed to Suspend as Tegra PCIe is in EP mode\n");
+-		return -EPERM;
++		if (pcie->ep_state == EP_STATE_ENABLED) {
++			dev_err(dev, "Tegra PCIe is in EP mode, suspend not allowed\n");
++			return -EPERM;
++		}
 +
- 	if (pcie->update_fc_fixup) {
- 		val = dw_pcie_readl_dbi(pci, CFG_TIMER_CTRL_MAX_FUNC_NUM_OFF);
- 		val |= 0x1 << CFG_TIMER_CTRL_ACK_NAK_SHIFT;
++		disable_irq(pcie->pex_rst_irq);
++		return 0;
+ 	}
+ 
++	return 0;
++}
++
++static int tegra_pcie_dw_suspend_late(struct device *dev)
++{
++	struct tegra_pcie_dw *pcie = dev_get_drvdata(dev);
++	u32 val;
++
+ 	if (!pcie->link_state)
+ 		return 0;
+ 
+@@ -2336,6 +2348,9 @@ static int tegra_pcie_dw_suspend_noirq(struct device *dev)
+ {
+ 	struct tegra_pcie_dw *pcie = dev_get_drvdata(dev);
+ 
++	if (pcie->of_data->mode == DW_PCIE_EP_TYPE)
++		return 0;
++
+ 	if (!pcie->link_state)
+ 		return 0;
+ 
+@@ -2350,6 +2365,9 @@ static int tegra_pcie_dw_resume_noirq(struct device *dev)
+ 	struct tegra_pcie_dw *pcie = dev_get_drvdata(dev);
+ 	int ret;
+ 
++	if (pcie->of_data->mode == DW_PCIE_EP_TYPE)
++		return 0;
++
+ 	if (!pcie->link_state)
+ 		return 0;
+ 
+@@ -2382,8 +2400,8 @@ static int tegra_pcie_dw_resume_early(struct device *dev)
+ 	u32 val;
+ 
+ 	if (pcie->of_data->mode == DW_PCIE_EP_TYPE) {
+-		dev_err(dev, "Suspend is not supported in EP mode");
+-		return -ENOTSUPP;
++		enable_irq(pcie->pex_rst_irq);
++		return 0;
+ 	}
+ 
+ 	if (!pcie->link_state)
+@@ -2488,6 +2506,7 @@ static const struct of_device_id tegra_pcie_dw_of_match[] = {
+ };
+ 
+ static const struct dev_pm_ops tegra_pcie_dw_pm_ops = {
++	.suspend = tegra_pcie_dw_suspend,
+ 	.suspend_late = tegra_pcie_dw_suspend_late,
+ 	.suspend_noirq = tegra_pcie_dw_suspend_noirq,
+ 	.resume_noirq = tegra_pcie_dw_resume_noirq,
 -- 
 2.53.0
 
