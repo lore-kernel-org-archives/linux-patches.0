@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2163630BC;
-	Wed, 20 May 2026 16:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CB1363086;
+	Wed, 20 May 2026 16:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295693; cv=none; b=JO3uKgGeToUAnEC4vQxZDCXoxCHGgo6853GwNdNXvVsiG5Hwc++R1oZ5NXz2aP4RCP6CYNFsRbCyewognVisPVK6s+MXfhcLXt1L5rhQdCuysSq6pnHPur6kTQ5Icfe2JU3nqU3uOt93JvJqg41Zm2FHnnVRdlaqFUTIGH7L6cM=
+	t=1779295696; cv=none; b=qRfRFgd5pydLCHizd45HZ8/Ja4PxE+lQrBkq6/tVrOj4pSYR4O7V7XEGM1eoqVuSOjMpbqm5LaTfMkt7BXQy4rBI0kPejnnqAjtY9z6Kjdqea4suzEdOOSP4gqVGM6n8uSatdi9FCvMIgztA/5fqW23bOzUDBv6EQUiOf13OSHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295693; c=relaxed/simple;
-	bh=PnBPYf25ZRpBqhAvXbGmrGIOEYG16x1AYChyMtyuSuI=;
+	s=arc-20240116; t=1779295696; c=relaxed/simple;
+	bh=cHC3bRM/SJ7Yd1959qkOg8JMemmivlovhFUFkP4/h8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4cnyrTZ6BA0IuUxkck4FuFEzog3g7YmOfZT84npUvC1QD3ZZHQQ3cbbtGMbic8vrFfoj9gBeKvsMuob89afHMQceUQUpfWsfmodpqwPZpEO9WEsNJhx6rCZDzTqfGGhYAU5R8Eh4m2X4nPsbon0KboQU1f9guSkCyU6FYyY7Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDMIPO7q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NbBL9xH4LzW21mfWGnB0J/dYJgWicPCSF9C7Bj0wpGkR0ovSqcgTMM6wMEZLEdJ7nLjnTagsorukXTxMxEWT/pF0ypLId3+4MNY/kmO2tmH5cm7OKwgjvywksLVUTrwx9wUTUmazu5Cvu8UAyDxw/ZU54XNVtGxhoMoq7xq+lTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhi/+0On; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDMIPO7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090041F000E9;
-	Wed, 20 May 2026 16:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhi/+0On"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05CF1F000E9;
+	Wed, 20 May 2026 16:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295692;
-	bh=7L0sq/GYbiPs3ET746hU2mhcPbpunxXcQ78oQGkVvvk=;
+	s=korg; t=1779295695;
+	bh=mp/K1rYtPPbvqid0wt+nRYKgNMyTZJ5i1s8z7kN/SnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NDMIPO7q/mEOXAGhKCWvDO48lKVhH5wfkhkHDy7O0khjWXUAqsHUmSPOJH3J4V/36
-	 eK1I7yjezbliRlwcgwexkDWdDYIRPPYGJoshHFSBQCxYgfpIGlDW6zL+mMviS7V5H6
-	 evT++DEzfo1NyogcquA6zAjd4Sou7nAi4gADc454=
+	b=bhi/+0OnK/Agt5szilJ1viVkDBzyX+NY6tB5ShhdepGd47xwRZvFT0YSbGJWK5Go9
+	 J/+wufDMio16IHD8o/FSs85OJnu52LSEYsOeP7ZOD5MVOlMKcJ1w303BQ7Jw+M7huV
+	 3XzTpG1rTobbGSslBSQDIb87WWrNgL5cOOvhfSf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jacob Pan <jacob.pan@linux.microsoft.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0514/1146] arm64: dts: qcom: sm8550: correct Iris corners for the MXC rail
-Date: Wed, 20 May 2026 18:12:44 +0200
-Message-ID: <20260520162159.817123061@linuxfoundation.org>
+Subject: [PATCH 7.0 0476/1146] iommufd: vfio compatibility extension check for noiommu mode
+Date: Wed, 20 May 2026 18:12:06 +0200
+Message-ID: <20260520162158.966777467@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,51 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Jacob Pan <jacob.pan@linux.microsoft.com>
 
-[ Upstream commit ff8edb5bc8bdf8bdf4573d8dc062b09cc1e6bc76 ]
+[ Upstream commit 7147ec874ea08c322d779d8eba28946e294ed1f3 ]
 
-The corners of the MVS0 / MVS0C clocks on the MMCX rail don't always
-match the PLL corners on the MXC rail. Correct the performance corners
-for the MXC rail following the PLL documentation.
+VFIO_CHECK_EXTENSION should return false for TYPE1_IOMMU variants when
+in NO-IOMMU mode and IOMMUFD compat container is set. This change makes
+the behavior match VFIO_CONTAINER in noiommu mode. It also prevents
+userspace from incorrectly attempting to use TYPE1 IOMMU operations
+in a no-iommu context.
 
-Fixes: 41661853ae8e ("arm64: dts: qcom: sm8550: add iris DT node")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260313-iris-fix-corners-v1-4-32a393c25dda@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: d624d6652a65 ("iommufd: vfio container FD ioctl compatibility")
+Link: https://patch.msgid.link/r/20260213183636.3340-1-jacob.pan@linux.microsoft.com
+Signed-off-by: Jacob Pan <jacob.pan@linux.microsoft.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iommu/iommufd/vfio_compat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index e3f93f4f412de..6a338c522ee92 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -3320,19 +3320,19 @@ opp-338000000 {
+diff --git a/drivers/iommu/iommufd/vfio_compat.c b/drivers/iommu/iommufd/vfio_compat.c
+index a258ee2f4579f..acb48cdd3b005 100644
+--- a/drivers/iommu/iommufd/vfio_compat.c
++++ b/drivers/iommu/iommufd/vfio_compat.c
+@@ -283,7 +283,7 @@ static int iommufd_vfio_check_extension(struct iommufd_ctx *ictx,
+ 	case VFIO_TYPE1_IOMMU:
+ 	case VFIO_TYPE1v2_IOMMU:
+ 	case VFIO_UNMAP_ALL:
+-		return 1;
++		return !ictx->no_iommu_mode;
  
- 				opp-366000000 {
- 					opp-hz = /bits/ 64 <366000000>;
--					required-opps = <&rpmhpd_opp_svs_l1>,
-+					required-opps = <&rpmhpd_opp_svs>,
- 							<&rpmhpd_opp_svs_l1>;
- 				};
- 
- 				opp-444000000 {
- 					opp-hz = /bits/ 64 <444000000>;
--					required-opps = <&rpmhpd_opp_nom>,
-+					required-opps = <&rpmhpd_opp_svs_l1>,
- 							<&rpmhpd_opp_nom>;
- 				};
- 
- 				opp-533333334 {
- 					opp-hz = /bits/ 64 <533333334>;
--					required-opps = <&rpmhpd_opp_turbo>,
-+					required-opps = <&rpmhpd_opp_nom>,
- 							<&rpmhpd_opp_turbo>;
- 				};
- 			};
+ 	case VFIO_NOIOMMU_IOMMU:
+ 		return IS_ENABLED(CONFIG_VFIO_NOIOMMU);
 -- 
 2.53.0
 
