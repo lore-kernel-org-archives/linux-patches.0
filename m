@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F0A2D7386;
-	Wed, 20 May 2026 18:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A56036A033;
+	Wed, 20 May 2026 18:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301395; cv=none; b=qSeY5AFr4yDVBi0bdHPsICYaXRzCm2m6yqZSoBcpfAqz7XGXsFswkYGgqsoP2EVoK8rhXMcC6ZXmxG6zNe9EMY/1OXaGM19GWv5GMubQSU7AVoU3djqPXxmkHuI64OxcJg2kZ/MUTbZRKPZiSzeqvszRtndfRKdZFphFBMnMbsM=
+	t=1779301397; cv=none; b=EDiTyQ5NYz6EaABsHxaBbmlODA9FYhwaQy1AYKel3y1BGQKruN5vORf5vyuTZE2ARoepBI/915KGB/YrB0fSIf63+pZFMswDC79Dbaws1u15h4BZoc2l2cA9HR/E16aKrXLSE+Z07j3rPwkl3kiRz7uPv7Lj+hhMFT1n3X8I9uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301395; c=relaxed/simple;
-	bh=X3SaE5XGhLyX4eZwaUdGHeF2a6PpkjnficggZttuoE0=;
+	s=arc-20240116; t=1779301397; c=relaxed/simple;
+	bh=+5eiioj8k2llRebhV5v19P2Ep0bSnGtV2p5pPQ6x/kI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pc6SgbFcvh8gXm5YIcMXgWbFr8f2SdQ0REPZ4pldsDunEybD5AF9/86jgbsRM0Z343TMDU6voeYNsXv6NMYQJVgqwL2+UP/vYlV2X43N6PCXXEiA0kWT6fbiYJiBXZmHON0qQwNxuZaKDOmQpTczHdgRpFd7cmSGRUVCQ43j7a0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIOr/j0D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NHuRHsb/2zYdDyRb370WWlWwiTpGwm3u9XUTNSAScG7zkWkbKmA3g6QLPXLFGHz9C3eUB0P/YqxzFX93XJqv0r7aZv+z14eS7Q4Lcr21W9NiVeL5PKm0dU4i+NFNGKmWwqQS2AvChFOALPklNGm6eSMzF5fGYYuvmIEdW4+5Kfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvw+SLzY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIOr/j0D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E971F000E9;
-	Wed, 20 May 2026 18:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvw+SLzY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123D41F000E9;
+	Wed, 20 May 2026 18:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301393;
-	bh=QPZL7ClyfPLlOsz01K6G8ss5G3SXX7oN6klu8TEiY/k=;
+	s=korg; t=1779301396;
+	bh=KLFa3aMKdAYGm5xmNDLvBA6Kz18sXaLDiILtdS2Qjkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NIOr/j0DB2P/VOrmv0YNmFpJOj4zcOrDM9c3DXUx2FZPQWyoZQOoZGqHPOjAr4xgb
-	 YnAEPeKvD/0YR4WHlJW92Dh093iJd1Dvid5vRMy52ybtLreLcbc/gK+iNIpCxxVBfR
-	 Z7x8o6Rse69A5mfknyoIaddmx071tZTFXt073JH4=
+	b=kvw+SLzYuwT8MxrtApBOEfLkPIo6i/eWPwr8hhwwpscnqNW0EDboWan9XgaR0WSXl
+	 m/QQulGAb/oSRTL3/0pcUutxUqXm73pO9PBAIFyzAM/tMB5+CCAX/5ZUwK+SQ5A2Tb
+	 HAUSkyXv6MzmheN0R4KPIN3fRz2aCJR5pw8q6uPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Haoze Xie <royenheart@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 521/666] drm/amdgpu/uvd3.1: Dont validate the firmware when already validated
-Date: Wed, 20 May 2026 18:22:12 +0200
-Message-ID: <20260520162122.555409581@linuxfoundation.org>
+Subject: [PATCH 6.12 539/666] vrf: Fix a potential NPD when removing a port from a VRF
+Date: Wed, 20 May 2026 18:22:30 +0200
+Message-ID: <20260520162122.953465544@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,67 +50,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 13e4cf116dbf7a1fb8123a59bea2c098f30d3736 ]
+[ Upstream commit 2674d603a9e6970463b2b9ebcf8e31e90beae169 ]
 
-UVD 3.1 firmware validation seems to always fail after
-attempting it when it had already been validated.
-(This works similarly with the VCE 1.0 as well.)
+RCU readers that identified a net device as a VRF port using
+netif_is_l3_slave() assume that a subsequent call to
+netdev_master_upper_dev_get_rcu() will return a VRF device. They then
+continue to dereference its l3mdev operations.
 
-Don't attempt repeating the validation when it's already done.
+This assumption is not always correct and can result in a NPD [1]. There
+is no RCU synchronization when removing a port from a VRF, so it is
+possible for an RCU reader to see a new master device (e.g., a bridge)
+that does not have l3mdev operations.
 
-This caused issues in situations when the system isn't able
-to suspend the GPU properly and so the GPU isn't actually
-powered down. Then amdgpu would fail when calling the IP
-block resume function.
+Fix by adding RCU synchronization after clearing the IFF_L3MDEV_SLAVE
+flag. Skip this synchronization when a net device is removed from a VRF
+as part of its deletion and when the VRF device itself is deleted. In
+the latter case an RCU grace period will pass by the time RTNL is
+released.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/2887
-Fixes: bb7978111dd3 ("drm/amdgpu: fix SI UVD firmware validate resume fail")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 889a2cfd889c4a4dd9d0c89ce9a8e60b78be71dd)
+[1]
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+[...]
+RIP: 0010:l3mdev_fib_table_rcu (net/l3mdev/l3mdev.c:181)
+[...]
+Call Trace:
+<TASK>
+l3mdev_fib_table_by_index (net/l3mdev/l3mdev.c:201 net/l3mdev/l3mdev.c:189)
+__inet_bind (net/ipv4/af_inet.c:499 (discriminator 3))
+inet_bind_sk (net/ipv4/af_inet.c:469)
+__sys_bind (./include/linux/file.h:62 (discriminator 1) ./include/linux/file.h:83 (discriminator 1) net/socket.c:1951 (discriminator 1))
+__x64_sys_bind (net/socket.c:1969 (discriminator 1) net/socket.c:1967 (discriminator 1) net/socket.c:1967 (discriminator 1))
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Fixes: fdeea7be88b1 ("net: vrf: Set slave's private flag before linking")
+Reported-by: Haoze Xie <royenheart@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260419145332.3988923-1-n05ec@lzu.edu.cn/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260423063607.1208202-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/vrf.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-index 4dd1595dc3d88..0344f74cc4547 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
-@@ -242,6 +242,10 @@ static void uvd_v3_1_mc_resume(struct amdgpu_device *adev)
- 	uint64_t addr;
- 	uint32_t size;
+diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
+index b62462d8eff26..93ecd9577f4d3 100644
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -1104,6 +1104,7 @@ static int do_vrf_add_slave(struct net_device *dev, struct net_device *port_dev,
  
-+	/* When the keyselect is already set, don't perturb it. */
-+	if (RREG32(mmUVD_FW_START))
-+		return;
-+
- 	/* program the VCPU memory controller bits 0-27 */
- 	addr = (adev->uvd.inst->gpu_addr + AMDGPU_UVD_FIRMWARE_OFFSET) >> 3;
- 	size = AMDGPU_UVD_FIRMWARE_SIZE(adev) >> 3;
-@@ -284,6 +288,12 @@ static int uvd_v3_1_fw_validate(struct amdgpu_device *adev)
- 	int i;
- 	uint32_t keysel = adev->uvd.keyselect;
+ err:
+ 	port_dev->priv_flags &= ~IFF_L3MDEV_SLAVE;
++	synchronize_net();
+ 	return ret;
+ }
  
-+	if (RREG32(mmUVD_FW_START) & UVD_FW_STATUS__PASS_MASK) {
-+		dev_dbg(adev->dev, "UVD keyselect already set: 0x%x (on CPU: 0x%x)\n",
-+			RREG32(mmUVD_FW_START), adev->uvd.keyselect);
-+		return 0;
-+	}
-+
- 	WREG32(mmUVD_FW_START, keysel);
+@@ -1123,10 +1124,16 @@ static int vrf_add_slave(struct net_device *dev, struct net_device *port_dev,
+ }
  
- 	for (i = 0; i < 10; ++i) {
+ /* inverse of do_vrf_add_slave */
+-static int do_vrf_del_slave(struct net_device *dev, struct net_device *port_dev)
++static int do_vrf_del_slave(struct net_device *dev, struct net_device *port_dev,
++			    bool needs_sync)
+ {
+ 	netdev_upper_dev_unlink(port_dev, dev);
+ 	port_dev->priv_flags &= ~IFF_L3MDEV_SLAVE;
++	/* Make sure that concurrent RCU readers that identified the device
++	 * as a VRF port see a VRF master or no master at all.
++	 */
++	if (needs_sync)
++		synchronize_net();
+ 
+ 	cycle_netdev(port_dev, NULL);
+ 
+@@ -1135,7 +1142,7 @@ static int do_vrf_del_slave(struct net_device *dev, struct net_device *port_dev)
+ 
+ static int vrf_del_slave(struct net_device *dev, struct net_device *port_dev)
+ {
+-	return do_vrf_del_slave(dev, port_dev);
++	return do_vrf_del_slave(dev, port_dev, true);
+ }
+ 
+ static void vrf_dev_uninit(struct net_device *dev)
+@@ -1691,7 +1698,7 @@ static void vrf_dellink(struct net_device *dev, struct list_head *head)
+ 	struct list_head *iter;
+ 
+ 	netdev_for_each_lower_dev(dev, port_dev, iter)
+-		vrf_del_slave(dev, port_dev);
++		do_vrf_del_slave(dev, port_dev, false);
+ 
+ 	vrf_map_unregister_dev(dev);
+ 
+@@ -1822,7 +1829,7 @@ static int vrf_device_event(struct notifier_block *unused,
+ 			goto out;
+ 
+ 		vrf_dev = netdev_master_upper_dev_get(dev);
+-		vrf_del_slave(vrf_dev, dev);
++		do_vrf_del_slave(vrf_dev, dev, false);
+ 	}
+ out:
+ 	return NOTIFY_DONE;
 -- 
 2.53.0
 
