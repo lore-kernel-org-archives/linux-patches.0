@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624303A453B;
-	Wed, 20 May 2026 18:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F0A2D7386;
+	Wed, 20 May 2026 18:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301392; cv=none; b=K5CjV5exvF6Ylr4cX4yAqUcSDJQbfBh8mSJKRwQJukMDgRCt4dN4xddAx27nTJQGGpsbY0P+0v9Xd1c35ziUsdQ9J1CDJKnuGmDFNscfM987xUZWwrV8CpNvTN10Y3/z/yHVGMn3ZMSgQcaSB02iihl33dMGGiFwHt4a6xBQltk=
+	t=1779301395; cv=none; b=qSeY5AFr4yDVBi0bdHPsICYaXRzCm2m6yqZSoBcpfAqz7XGXsFswkYGgqsoP2EVoK8rhXMcC6ZXmxG6zNe9EMY/1OXaGM19GWv5GMubQSU7AVoU3djqPXxmkHuI64OxcJg2kZ/MUTbZRKPZiSzeqvszRtndfRKdZFphFBMnMbsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301392; c=relaxed/simple;
-	bh=qoyXsV4r9j9N9Ntg1QvbX41kjqs8BJLyw1L4+w4nwd8=;
+	s=arc-20240116; t=1779301395; c=relaxed/simple;
+	bh=X3SaE5XGhLyX4eZwaUdGHeF2a6PpkjnficggZttuoE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZmsgVSM9rI22qOQl3Fk0QwfJHzCuo1VUYgDn7Khm91L2WGzx9mRDvIFt4xMxyBq+nQEVvL6tSkwDrdKxmM9FHFVMI20bxUV448+h9bzJPpHI5vcZdR5Pp7aLBT+AzoZIrijDuy+ThZjtiFOWyayWd+lYFcEDppYtfg/AuZJTXio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qI3a6cFv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pc6SgbFcvh8gXm5YIcMXgWbFr8f2SdQ0REPZ4pldsDunEybD5AF9/86jgbsRM0Z343TMDU6voeYNsXv6NMYQJVgqwL2+UP/vYlV2X43N6PCXXEiA0kWT6fbiYJiBXZmHON0qQwNxuZaKDOmQpTczHdgRpFd7cmSGRUVCQ43j7a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIOr/j0D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qI3a6cFv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD771F00893;
-	Wed, 20 May 2026 18:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIOr/j0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E971F000E9;
+	Wed, 20 May 2026 18:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301391;
-	bh=fiiO/6dGWkv3OMySbCVRDk6/XjkLlClrCnlqD9nZQnE=;
+	s=korg; t=1779301393;
+	bh=QPZL7ClyfPLlOsz01K6G8ss5G3SXX7oN6klu8TEiY/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qI3a6cFv5bFdUMFQ+vsyJ2uLZiZk5DUeB0PEMbTOXljmI5yyA7WQ2v/cMBl1hI/XA
-	 5jnXB7/sMgiGAHvrXMxCzqSSfMg6QU8S00S43FOs1drF2/kAUoGT3Hbr5XcYFroXNv
-	 TmceolB+wNfYXAF8glRaec6tMgvqS+gtDEZZnGbY=
+	b=NIOr/j0DB2P/VOrmv0YNmFpJOj4zcOrDM9c3DXUx2FZPQWyoZQOoZGqHPOjAr4xgb
+	 YnAEPeKvD/0YR4WHlJW92Dh093iJd1Dvid5vRMy52ybtLreLcbc/gK+iNIpCxxVBfR
+	 Z7x8o6Rse69A5mfknyoIaddmx071tZTFXt073JH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 538/666] net/sched: sch_fq_pie: annotate data-races in fq_pie_dump_stats()
-Date: Wed, 20 May 2026 18:22:29 +0200
-Message-ID: <20260520162122.931780906@linuxfoundation.org>
+Subject: [PATCH 6.12 521/666] drm/amdgpu/uvd3.1: Dont validate the firmware when already validated
+Date: Wed, 20 May 2026 18:22:12 +0200
+Message-ID: <20260520162122.555409581@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,66 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 59b145771c7982cfe9020d4e9e22da92d6b5ae31 ]
+[ Upstream commit 13e4cf116dbf7a1fb8123a59bea2c098f30d3736 ]
 
-fq_codel_dump_stats() acquires the qdisc spinlock a bit too late.
+UVD 3.1 firmware validation seems to always fail after
+attempting it when it had already been validated.
+(This works similarly with the VCE 1.0 as well.)
 
-Move this acquisition before we fill tc_fq_pie_xstats with live data.
+Don't attempt repeating the validation when it's already done.
 
-Alternative would be to add READ_ONCE() and WRITE_ONCE() annotations,
-but the spinlock is needed anyway to scan q->new_flows and q->old_flows.
+This caused issues in situations when the system isn't able
+to suspend the GPU properly and so the GPU isn't actually
+powered down. Then amdgpu would fail when calling the IP
+block resume function.
 
-Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260423063527.2568262-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/2887
+Fixes: bb7978111dd3 ("drm/amdgpu: fix SI UVD firmware validate resume fail")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 889a2cfd889c4a4dd9d0c89ce9a8e60b78be71dd)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_pie.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index 6ed08b705f8a5..ceba154656624 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -506,18 +506,19 @@ static int fq_pie_dump(struct Qdisc *sch, struct sk_buff *skb)
- static int fq_pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- {
- 	struct fq_pie_sched_data *q = qdisc_priv(sch);
--	struct tc_fq_pie_xstats st = {
--		.packets_in	= q->stats.packets_in,
--		.overlimit	= q->stats.overlimit,
--		.overmemory	= q->overmemory,
--		.dropped	= q->stats.dropped,
--		.ecn_mark	= q->stats.ecn_mark,
--		.new_flow_count = q->new_flow_count,
--		.memory_usage   = q->memory_usage,
--	};
-+	struct tc_fq_pie_xstats st = { 0 };
- 	struct list_head *pos;
+diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
+index 4dd1595dc3d88..0344f74cc4547 100644
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
+@@ -242,6 +242,10 @@ static void uvd_v3_1_mc_resume(struct amdgpu_device *adev)
+ 	uint64_t addr;
+ 	uint32_t size;
  
- 	sch_tree_lock(sch);
++	/* When the keyselect is already set, don't perturb it. */
++	if (RREG32(mmUVD_FW_START))
++		return;
 +
-+	st.packets_in	= q->stats.packets_in;
-+	st.overlimit	= q->stats.overlimit;
-+	st.overmemory	= q->overmemory;
-+	st.dropped	= q->stats.dropped;
-+	st.ecn_mark	= q->stats.ecn_mark;
-+	st.new_flow_count = q->new_flow_count;
-+	st.memory_usage   = q->memory_usage;
-+
- 	list_for_each(pos, &q->new_flows)
- 		st.new_flows_len++;
+ 	/* program the VCPU memory controller bits 0-27 */
+ 	addr = (adev->uvd.inst->gpu_addr + AMDGPU_UVD_FIRMWARE_OFFSET) >> 3;
+ 	size = AMDGPU_UVD_FIRMWARE_SIZE(adev) >> 3;
+@@ -284,6 +288,12 @@ static int uvd_v3_1_fw_validate(struct amdgpu_device *adev)
+ 	int i;
+ 	uint32_t keysel = adev->uvd.keyselect;
  
++	if (RREG32(mmUVD_FW_START) & UVD_FW_STATUS__PASS_MASK) {
++		dev_dbg(adev->dev, "UVD keyselect already set: 0x%x (on CPU: 0x%x)\n",
++			RREG32(mmUVD_FW_START), adev->uvd.keyselect);
++		return 0;
++	}
++
+ 	WREG32(mmUVD_FW_START, keysel);
+ 
+ 	for (i = 0; i < 10; ++i) {
 -- 
 2.53.0
 
