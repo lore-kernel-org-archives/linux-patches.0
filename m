@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431FB366065;
-	Wed, 20 May 2026 16:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FE6233933;
+	Wed, 20 May 2026 16:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294896; cv=none; b=XEiXfVSCYumY9Wh5ZKuJKVw7VQQ0ZFTDFYeuRa2MC8GCSgW7jrtlYqZ3o2eBJ39XmY1ZVMZB8btOvO1DHwDgdRXHvHskHvPcQUPuIN0o5GT4GehQcz6Xwwjq8V+A3pXVN56VJbLXJb+qWwSHM8iPf/4uAutdo1TLj2D3UwxMtJ4=
+	t=1779294899; cv=none; b=c9bNdyy6baFXr8DpQuRgPRzguNRwXdccfmKawtN+C8x5o/0/1CrSyN0vSZAEpNw/Xw9rehssyKFLwtTzEMJbJJYnpX9H2TIn4HbBcYSp7urdymxo3jqHQNLgwKmhgpYI+lTbzsDPwBCueYe7Py1m89pGDXChrsAXoN3wc2hO3rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294896; c=relaxed/simple;
-	bh=kneX9aYa4RQSn1XLBAfESh2FKEFJ5hhKfWfWPUEDcx8=;
+	s=arc-20240116; t=1779294899; c=relaxed/simple;
+	bh=QitxyfiUiKuyUZvh92Kv/u2axb83XUJK//BgsLIW9A0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WppJzS/N1pJLAbCOZAdcdeOjot/5fx6cMDeu4rhaE1Q9bik4fgelqkAqe1T6LflKElQ6kBi0LdtHjspgjQNTxUAbDCfeoGXR3suzNMmfBwc7nnnAC9NQmyoaJ4YnsquL2LGkRKGrkky72Vjz9s6z8I1AXRu6ct3Xfwt8n6xYDXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ItBnJwob; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pbyi9T9AS/TXnn+TBTAojZRjjalXA8ruAld8VkVyuuNPbpjZtUw7IdUXqgTobfEKvfmmHRhmdJPc5N4istW+EzP1QUbaz8WLejvUF1cZs+Zl9LdHefiL/P5clM3K/yCa6J1mIWZPpTDESJ/0wV/7YrgBHtQk/DMmzzlwGwb040w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1q+w2tu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItBnJwob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81FA1F000E9;
-	Wed, 20 May 2026 16:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1q+w2tu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CE31F000E9;
+	Wed, 20 May 2026 16:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294895;
-	bh=uZ9AfxTOWqFHI15D+acENUHSWR/weCXU1jyKxwTz24Y=;
+	s=korg; t=1779294897;
+	bh=A+6sD6keqWscORHu1UE3KpFurbqsdOCCDnXG0IylpVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ItBnJwobTtdjy1H/Xz2ZuYHVz+zBGXvG0dnRSOqEew/2vZq4LNi+/8ilm2fgwotYk
-	 NdcKtOx0Qdxbux2BpqsSjEmaNCUjYGsN1SAkWSx0xKmZkE1GteOgLH0h6JCl7S42mV
-	 NUs8kxZBwgwv4aWzim5dyI/g7fFb9nLCZTW2ZDes=
+	b=I1q+w2tuwaAt/IYZkbHciSqOE0ckTliMpaNjkygOHMdD6AxuNnqWf7uKU4/D8fH5L
+	 zizG3U1mmpsXCQyvqM32qP0TWVaXogWdGgLzzv7viiJYHHq8+b/5u8NWVuH+9XgP/U
+	 Q4OCZaicgWusGm3nBd0IZz+InuCaeCLlZNYuvLcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0172/1146] macsec: Support VLAN-filtering lower devices
-Date: Wed, 20 May 2026 18:07:02 +0200
-Message-ID: <20260520162152.179373852@linuxfoundation.org>
+Subject: [PATCH 7.0 0173/1146] net: bcmgenet: fix off-by-one in bcmgenet_put_txcb
+Date: Wed, 20 May 2026 18:07:03 +0200
+Message-ID: <20260520162152.200844178@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,188 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit a363b1c8be879c79a688eaf93ba01b63f8b0e63c ]
+[ Upstream commit 57f3f53d2c9c5a9e133596e2f7bc1c50688a6d38 ]
 
-VLAN-filtering is done through two netdev features
-(NETIF_F_HW_VLAN_CTAG_FILTER and NETIF_F_HW_VLAN_STAG_FILTER) and two
-netdev ops (ndo_vlan_rx_add_vid and ndo_vlan_rx_kill_vid).
+The write_ptr points to the next open tx_cb. We want to return the
+tx_cb that gets rewinded, so we must rewind the pointer first then
+return the tx_cb that it points to. That way the txcb can be correctly
+cleaned up.
 
-Implement these and advertise the features if the lower device supports
-them. This allows proper VLAN filtering to work on top of MACsec
-devices, when the lower device is capable of VLAN filtering.
-As a concrete example, having this chain of interfaces now works:
-vlan_filtering_capable_dev(1) -> macsec_dev(2) -> macsec_vlan_dev(3)
-
-Before the mentioned commit this used to accidentally work because the
-MACsec device (and thus the lower device) was put in promiscuous mode
-and the VLAN filter was not used. But after commit [1] correctly made
-the macsec driver expose the IFF_UNICAST_FLT flag, promiscuous mode was
-no longer used and VLAN filters on dev 1 kicked in. Without support in
-dev 2 for propagating VLAN filters down, the register_vlan_dev ->
-vlan_vid_add -> __vlan_vid_add -> vlan_add_rx_filter_info call from dev
-3 is silently eaten (because vlan_hw_filter_capable returns false and
-vlan_add_rx_filter_info silently succeeds).
-
-For MACsec, VLAN filters are only relevant for offload, otherwise
-the VLANs are encrypted and the lower devices don't care about them. So
-VLAN filters are only passed on to lower devices in offload mode.
-Flipping between offload modes now needs to offload/unoffload the
-filters with vlan_{get,drop}_rx_*_filter_info().
-
-To avoid the back-and-forth filter updating during rollback, the setting
-of macsec->offload is moved after the add/del secy ops. This is safe
-since none of the code called from those requires macsec->offload.
-
-In case adding the filters fails, the added ones are rolled back and an
-error is returned to the operation toggling the offload state.
-
-Fixes: 0349659fd72f ("macsec: set IFF_UNICAST_FLT priv flag")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260408115240.1636047-5-cratiu@nvidia.com
+Fixes: 876dbadd53a7 ("net: bcmgenet: Fix unmapping of fragments in bcmgenet_xmit()")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260406175756.134567-2-justin.chen@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 71 +++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 63 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index f6cad0746a022..6147ee8b1d78b 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -2584,7 +2584,9 @@ static void macsec_inherit_tso_max(struct net_device *dev)
- 		netif_inherit_tso_max(dev, macsec->real_dev);
- }
- 
--static int macsec_update_offload(struct net_device *dev, enum macsec_offload offload)
-+static int macsec_update_offload(struct net_device *dev,
-+				 enum macsec_offload offload,
-+				 struct netlink_ext_ack *extack)
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index 482a31e7b72bc..0f6e4baba25b9 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -1819,15 +1819,15 @@ static struct enet_cb *bcmgenet_put_txcb(struct bcmgenet_priv *priv,
  {
- 	enum macsec_offload prev_offload;
- 	const struct macsec_ops *ops;
-@@ -2616,14 +2618,35 @@ static int macsec_update_offload(struct net_device *dev, enum macsec_offload off
- 	if (!ops)
- 		return -EOPNOTSUPP;
+ 	struct enet_cb *tx_cb_ptr;
  
--	macsec->offload = offload;
+-	tx_cb_ptr = ring->cbs;
+-	tx_cb_ptr += ring->write_ptr - ring->cb_ptr;
 -
- 	ctx.secy = &macsec->secy;
- 	ret = offload == MACSEC_OFFLOAD_OFF ? macsec_offload(ops->mdo_del_secy, &ctx)
- 					    : macsec_offload(ops->mdo_add_secy, &ctx);
--	if (ret) {
--		macsec->offload = prev_offload;
-+	if (ret)
- 		return ret;
-+
-+	/* Remove VLAN filters when disabling offload. */
-+	if (offload == MACSEC_OFFLOAD_OFF) {
-+		vlan_drop_rx_ctag_filter_info(dev);
-+		vlan_drop_rx_stag_filter_info(dev);
-+	}
-+	macsec->offload = offload;
-+	/* Add VLAN filters when enabling offload. */
-+	if (prev_offload == MACSEC_OFFLOAD_OFF) {
-+		ret = vlan_get_rx_ctag_filter_info(dev);
-+		if (ret) {
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "adding ctag VLAN filters failed, err %d",
-+					   ret);
-+			goto rollback_offload;
-+		}
-+		ret = vlan_get_rx_stag_filter_info(dev);
-+		if (ret) {
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "adding stag VLAN filters failed, err %d",
-+					   ret);
-+			vlan_drop_rx_ctag_filter_info(dev);
-+			goto rollback_offload;
-+		}
- 	}
+ 	/* Rewinding local write pointer */
+ 	if (ring->write_ptr == ring->cb_ptr)
+ 		ring->write_ptr = ring->end_ptr;
+ 	else
+ 		ring->write_ptr--;
  
- 	macsec_set_head_tail_room(dev);
-@@ -2633,6 +2656,12 @@ static int macsec_update_offload(struct net_device *dev, enum macsec_offload off
- 
- 	netdev_update_features(dev);
- 
-+	return 0;
++	tx_cb_ptr = ring->cbs;
++	tx_cb_ptr += ring->write_ptr - ring->cb_ptr;
 +
-+rollback_offload:
-+	macsec->offload = prev_offload;
-+	macsec_offload(ops->mdo_del_secy, &ctx);
-+
- 	return ret;
+ 	return tx_cb_ptr;
  }
  
-@@ -2673,7 +2702,7 @@ static int macsec_upd_offload(struct sk_buff *skb, struct genl_info *info)
- 	offload = nla_get_u8(tb_offload[MACSEC_OFFLOAD_ATTR_TYPE]);
- 
- 	if (macsec->offload != offload)
--		ret = macsec_update_offload(dev, offload);
-+		ret = macsec_update_offload(dev, offload, info->extack);
- out:
- 	rtnl_unlock();
- 	return ret;
-@@ -3486,7 +3515,8 @@ static netdev_tx_t macsec_start_xmit(struct sk_buff *skb,
- }
- 
- #define MACSEC_FEATURES \
--	(NETIF_F_SG | NETIF_F_HIGHDMA | NETIF_F_FRAGLIST)
-+	(NETIF_F_SG | NETIF_F_HIGHDMA | NETIF_F_FRAGLIST | \
-+	 NETIF_F_HW_VLAN_STAG_FILTER | NETIF_F_HW_VLAN_CTAG_FILTER)
- 
- #define MACSEC_OFFLOAD_FEATURES \
- 	(MACSEC_FEATURES | NETIF_F_GSO_SOFTWARE | NETIF_F_SOFT_FEATURES | \
-@@ -3707,6 +3737,29 @@ static int macsec_set_mac_address(struct net_device *dev, void *p)
- 	return err;
- }
- 
-+static int macsec_vlan_rx_add_vid(struct net_device *dev,
-+				  __be16 proto, u16 vid)
-+{
-+	struct macsec_dev *macsec = netdev_priv(dev);
-+
-+	if (!macsec_is_offloaded(macsec))
-+		return 0;
-+
-+	return vlan_vid_add(macsec->real_dev, proto, vid);
-+}
-+
-+static int macsec_vlan_rx_kill_vid(struct net_device *dev,
-+				   __be16 proto, u16 vid)
-+{
-+	struct macsec_dev *macsec = netdev_priv(dev);
-+
-+	if (!macsec_is_offloaded(macsec))
-+		return 0;
-+
-+	vlan_vid_del(macsec->real_dev, proto, vid);
-+	return 0;
-+}
-+
- static int macsec_change_mtu(struct net_device *dev, int new_mtu)
- {
- 	struct macsec_dev *macsec = macsec_priv(dev);
-@@ -3748,6 +3801,8 @@ static const struct net_device_ops macsec_netdev_ops = {
- 	.ndo_set_rx_mode	= macsec_dev_set_rx_mode,
- 	.ndo_change_rx_flags	= macsec_dev_change_rx_flags,
- 	.ndo_set_mac_address	= macsec_set_mac_address,
-+	.ndo_vlan_rx_add_vid	= macsec_vlan_rx_add_vid,
-+	.ndo_vlan_rx_kill_vid	= macsec_vlan_rx_kill_vid,
- 	.ndo_start_xmit		= macsec_start_xmit,
- 	.ndo_get_stats64	= macsec_get_stats64,
- 	.ndo_get_iflink		= macsec_get_iflink,
-@@ -3912,7 +3967,7 @@ static int macsec_changelink(struct net_device *dev, struct nlattr *tb[],
- 		offload = nla_get_u8(data[IFLA_MACSEC_OFFLOAD]);
- 		if (macsec->offload != offload) {
- 			macsec_offload_state_change = true;
--			ret = macsec_update_offload(dev, offload);
-+			ret = macsec_update_offload(dev, offload, extack);
- 			if (ret)
- 				goto cleanup;
- 		}
 -- 
 2.53.0
 
