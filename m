@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D062F363F;
-	Wed, 20 May 2026 18:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5A43DC4DA;
+	Wed, 20 May 2026 18:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300647; cv=none; b=FAkoZdYHuL00pbHUsk9yDcqwWuNa5hhdTZWqMUDjH2jU1ONDqROuN2T0GerFBW4Bg9XEQPGiuntmXma3Md6WD1fuH11ie18v1O4bXVOoaNdgfmTLZU1eolnLDymZ7lPHleVmawOGAZx8Lgykb53jW+ndcfYntyZvUUsy4eCBDPc=
+	t=1779300649; cv=none; b=gZ85NmH9qDpU+W7jR1QRcO49bTS67VUkIji5jFmmW9t4b4L+sBuaIHnf/NDROhifx/G+BIkN9je41ePpdT/1A+q7KEI0y2ax6RlO7qq4oBedtEBgnzMl161kSyR6BAxplutCMH/Zdesjn7EY4GeevtNtMZBY9RbTAqsRFrYPgSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300647; c=relaxed/simple;
-	bh=NsPHGr//pU7EB1xgxPxWLPgYiqlNGSa6RIymAxUQOGA=;
+	s=arc-20240116; t=1779300649; c=relaxed/simple;
+	bh=ZQIQY6z54/hH+RqEac5bVkV+nqXnjUYvRpX5w75/jdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GxJJJZ3DGmaQuc7x+M6tmavL3lPetF9jEks0ZKKmc1d37ybF/SPFY+22B90a95bjaQcSAzWcoIEVSQMF9pVxPxAfVAqZSpB7E+O+7qJWX+20q7OMVxd4irMjG02YYLmIEnDHKoFIGFhdPSxoFBWR9LUuifWzgsRygW4Opva6XQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXORmmxp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ToX49LLdsg0+LuK2biuCL+hyAS09aF9iwWZhlAaHe5RzwBvtSZoGnxGYuWuk8e6uNmJeXihjFD/K4cf4uS3i1ZpzSCNHD/JGPmECN8Hr8YFoQAhBIQQeImaezjmhOXwYlXAdhyjFQISYQ6zzSTuWAqNSkQMQbvsinI8IXAKNNtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMfHM5Js; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXORmmxp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F761F000E9;
-	Wed, 20 May 2026 18:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMfHM5Js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2D91F000E9;
+	Wed, 20 May 2026 18:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300645;
-	bh=bsh+izPjYqz0WovleBpNPdbQjcS1+y+9N5dnjMN+u0E=;
+	s=korg; t=1779300648;
+	bh=1YR9uz0Y29F2+JlT8IY/IUq7SX4Gu59jcvfbHb4e26Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uXORmmxpOVjIPJVoDTgBKZX6Plg5RwwNpx7GDaIqcvU0fklKohEx5A4ZxAWULQfOr
-	 UTQGINuW61RcxYL57B2UBnIoXNBsYpdUc7XYAThF1QU7SNKZxRSgEnzQdqJ0ifKkVx
-	 NVxt8yZpFRvjix5HZESHwUa8uhtCCl1fJPCJCpYE=
+	b=XMfHM5JswjGZFw2dFATgcalGFeOXJAanj6hQcSiaoUK5MtIxPyACzqcgkLjYVAsSJ
+	 PjDYBC1O+79a1FE5NDgppU6G/FLba8vcMMOZmCZ8L63pJlrbtxaUSrEDZTNiyNP7F+
+	 wUfJGiNIt1WxiKR/EYYkTGbHnD86KZTpHbGXn4mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
 	Jason Gunthorpe <jgg@nvidia.com>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/666] iommu/amd: Convert dev_data lock from spinlock to mutex
-Date: Wed, 20 May 2026 18:17:04 +0200
-Message-ID: <20260520162115.823997782@linuxfoundation.org>
+Subject: [PATCH 6.12 214/666] iommu/amd: Introduce helper function to update 256-bit DTE
+Date: Wed, 20 May 2026 18:17:05 +0200
+Message-ID: <20260520162115.845659816@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,104 +53,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 
-[ Upstream commit e843aedbeb82b17a5fe6172449bff133fc8b68a1 ]
+[ Upstream commit 8b3f78733814b180089a400743b6f19d118aec62 ]
 
-Currently in attach device path it takes dev_data->spinlock. But as per
-design attach device path can sleep. Also if device is PRI capable then
-it adds device to IOMMU fault handler queue which takes mutex. Hence
-currently PRI enablement is done outside dev_data lock.
+The current implementation does not follow 128-bit write requirement
+to update DTE as specified in the AMD I/O Virtualization Techonology
+(IOMMU) Specification.
 
-Covert dev_data lock from spinlock to mutex so that it follows the
-design and also PRI enablement can be done properly.
+Therefore, modify the struct dev_table_entry to contain union of u128 data
+array, and introduce a helper functions update_dte256() to update DTE using
+two 128-bit cmpxchg operations to update 256-bit DTE with the modified
+structure, and take into account the DTE[V, GV] bits when programming
+the DTE to ensure proper order of DTE programming and flushing.
 
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Joerg Roedel <jroedel@suse.de>
+In addition, introduce a per-DTE spin_lock struct dev_data.dte_lock to
+provide synchronization when updating the DTE to prevent cmpxchg128
+failure.
+
+Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
+Suggested-by: Uros Bizjak <ubizjak@gmail.com>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20241030063556.6104-10-vasant.hegde@amd.com
+Reviewed-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Link: https://lore.kernel.org/r/20241118054937.5203-5-suravee.suthikulpanit@amd.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Stable-dep-of: faad224fe0f0 ("iommu/amd: Fix clone_alias() to use the original device's devid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h |  2 +-
- drivers/iommu/amd/iommu.c           | 14 +++++++-------
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/iommu/amd/amd_iommu_types.h |  10 ++-
+ drivers/iommu/amd/iommu.c           | 123 ++++++++++++++++++++++++++++
+ 2 files changed, 132 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
-index f99a4b1349287..eadb4379cb4a1 100644
+index eadb4379cb4a1..7f13b314abbce 100644
 --- a/drivers/iommu/amd/amd_iommu_types.h
 +++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -838,7 +838,7 @@ struct devid_map {
-  */
+@@ -426,9 +426,13 @@
+ #define DTE_GCR3_SHIFT_C	43
+ 
+ #define DTE_GPT_LEVEL_SHIFT	54
++#define DTE_GPT_LEVEL_MASK	GENMASK_ULL(55, 54)
+ 
+ #define GCR3_VALID		0x01ULL
+ 
++/* DTE[128:179] | DTE[184:191] */
++#define DTE_DATA2_INTR_MASK	~GENMASK_ULL(55, 52)
++
+ #define IOMMU_PAGE_MASK (((1ULL << 52) - 1) & ~0xfffULL)
+ #define IOMMU_PTE_PRESENT(pte) ((pte) & IOMMU_PTE_PR)
+ #define IOMMU_PTE_DIRTY(pte) ((pte) & IOMMU_PTE_HD)
+@@ -839,6 +843,7 @@ struct devid_map {
  struct iommu_dev_data {
  	/*Protect against attach/detach races */
--	spinlock_t lock;
-+	struct mutex mutex;
+ 	struct mutex mutex;
++	spinlock_t dte_lock;              /* DTE lock for 256-bit access */
  
  	struct list_head list;		  /* For domain->dev_list */
  	struct llist_node dev_data_list;  /* For global dev_data_list */
+@@ -889,7 +894,10 @@ extern struct amd_iommu *amd_iommus[MAX_IOMMUS];
+  * Structure defining one entry in the device table
+  */
+ struct dev_table_entry {
+-	u64 data[4];
++	union {
++		u64 data[4];
++		u128 data128[2];
++	};
+ };
+ 
+ /*
 diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 4d59832ed6f81..2a2b9e3e3be7e 100644
+index 2a2b9e3e3be7e..e5c6cf57439c9 100644
 --- a/drivers/iommu/amd/iommu.c
 +++ b/drivers/iommu/amd/iommu.c
-@@ -225,7 +225,7 @@ static struct iommu_dev_data *alloc_dev_data(struct amd_iommu *iommu, u16 devid)
- 	if (!dev_data)
+@@ -77,12 +77,125 @@ static void detach_device(struct device *dev);
+ static void set_dte_entry(struct amd_iommu *iommu,
+ 			  struct iommu_dev_data *dev_data);
+ 
++static void iommu_flush_dte_sync(struct amd_iommu *iommu, u16 devid);
++
+ /****************************************************************************
+  *
+  * Helper functions
+  *
+  ****************************************************************************/
+ 
++static __always_inline void amd_iommu_atomic128_set(__int128 *ptr, __int128 val)
++{
++	/*
++	 * Note:
++	 * We use arch_cmpxchg128_local() because:
++	 * - Need cmpxchg16b instruction mainly for 128-bit store to DTE
++	 *   (not necessary for cmpxchg since this function is already
++	 *   protected by a spin_lock for this DTE).
++	 * - Neither need LOCK_PREFIX nor try loop because of the spin_lock.
++	 */
++	arch_cmpxchg128_local(ptr, *ptr, val);
++}
++
++static void write_dte_upper128(struct dev_table_entry *ptr, struct dev_table_entry *new)
++{
++	struct dev_table_entry old;
++
++	old.data128[1] = ptr->data128[1];
++	/*
++	 * Preserve DTE_DATA2_INTR_MASK. This needs to be
++	 * done here since it requires to be inside
++	 * spin_lock(&dev_data->dte_lock) context.
++	 */
++	new->data[2] &= ~DTE_DATA2_INTR_MASK;
++	new->data[2] |= old.data[2] & DTE_DATA2_INTR_MASK;
++
++	amd_iommu_atomic128_set(&ptr->data128[1], new->data128[1]);
++}
++
++static void write_dte_lower128(struct dev_table_entry *ptr, struct dev_table_entry *new)
++{
++	amd_iommu_atomic128_set(&ptr->data128[0], new->data128[0]);
++}
++
++/*
++ * Note:
++ * IOMMU reads the entire Device Table entry in a single 256-bit transaction
++ * but the driver is programming DTE using 2 128-bit cmpxchg. So, the driver
++ * need to ensure the following:
++ *   - DTE[V|GV] bit is being written last when setting.
++ *   - DTE[V|GV] bit is being written first when clearing.
++ *
++ * This function is used only by code, which updates DMA translation part of the DTE.
++ * So, only consider control bits related to DMA when updating the entry.
++ */
++static void update_dte256(struct amd_iommu *iommu, struct iommu_dev_data *dev_data,
++			  struct dev_table_entry *new)
++{
++	unsigned long flags;
++	struct dev_table_entry *dev_table = get_dev_table(iommu);
++	struct dev_table_entry *ptr = &dev_table[dev_data->devid];
++
++	spin_lock_irqsave(&dev_data->dte_lock, flags);
++
++	if (!(ptr->data[0] & DTE_FLAG_V)) {
++		/* Existing DTE is not valid. */
++		write_dte_upper128(ptr, new);
++		write_dte_lower128(ptr, new);
++		iommu_flush_dte_sync(iommu, dev_data->devid);
++	} else if (!(new->data[0] & DTE_FLAG_V)) {
++		/* Existing DTE is valid. New DTE is not valid.  */
++		write_dte_lower128(ptr, new);
++		write_dte_upper128(ptr, new);
++		iommu_flush_dte_sync(iommu, dev_data->devid);
++	} else if (!FIELD_GET(DTE_FLAG_GV, ptr->data[0])) {
++		/*
++		 * Both DTEs are valid.
++		 * Existing DTE has no guest page table.
++		 */
++		write_dte_upper128(ptr, new);
++		write_dte_lower128(ptr, new);
++		iommu_flush_dte_sync(iommu, dev_data->devid);
++	} else if (!FIELD_GET(DTE_FLAG_GV, new->data[0])) {
++		/*
++		 * Both DTEs are valid.
++		 * Existing DTE has guest page table,
++		 * new DTE has no guest page table,
++		 */
++		write_dte_lower128(ptr, new);
++		write_dte_upper128(ptr, new);
++		iommu_flush_dte_sync(iommu, dev_data->devid);
++	} else if (FIELD_GET(DTE_GPT_LEVEL_MASK, ptr->data[2]) !=
++		   FIELD_GET(DTE_GPT_LEVEL_MASK, new->data[2])) {
++		/*
++		 * Both DTEs are valid and have guest page table,
++		 * but have different number of levels. So, we need
++		 * to upadte both upper and lower 128-bit value, which
++		 * require disabling and flushing.
++		 */
++		struct dev_table_entry clear = {};
++
++		/* First disable DTE */
++		write_dte_lower128(ptr, &clear);
++		iommu_flush_dte_sync(iommu, dev_data->devid);
++
++		/* Then update DTE */
++		write_dte_upper128(ptr, new);
++		write_dte_lower128(ptr, new);
++		iommu_flush_dte_sync(iommu, dev_data->devid);
++	} else {
++		/*
++		 * Both DTEs are valid and have guest page table,
++		 * and same number of levels. We just need to only
++		 * update the lower 128-bit. So no need to disable DTE.
++		 */
++		write_dte_lower128(ptr, new);
++	}
++
++	spin_unlock_irqrestore(&dev_data->dte_lock, flags);
++}
++
+ static inline bool pdom_is_v2_pgtbl_mode(struct protection_domain *pdom)
+ {
+ 	return (pdom && (pdom->pd_mode == PD_MODE_V2));
+@@ -226,6 +339,7 @@ static struct iommu_dev_data *alloc_dev_data(struct amd_iommu *iommu, u16 devid)
  		return NULL;
  
--	spin_lock_init(&dev_data->lock);
-+	mutex_init(&dev_data->mutex);
+ 	mutex_init(&dev_data->mutex);
++	spin_lock_init(&dev_data->dte_lock);
  	dev_data->devid = devid;
  	ratelimit_default_init(&dev_data->rs);
  
-@@ -2129,7 +2129,7 @@ static int attach_device(struct device *dev,
- 	struct amd_iommu *iommu = get_amd_iommu_from_dev_data(dev_data);
- 	int ret = 0;
- 
--	spin_lock(&dev_data->lock);
-+	mutex_lock(&dev_data->mutex);
- 
- 	if (dev_data->domain != NULL) {
- 		ret = -EBUSY;
-@@ -2155,7 +2155,7 @@ static int attach_device(struct device *dev,
- 	}
- 
- out:
--	spin_unlock(&dev_data->lock);
-+	mutex_unlock(&dev_data->mutex);
- 
- 	return ret;
+@@ -1312,6 +1426,15 @@ static int iommu_flush_dte(struct amd_iommu *iommu, u16 devid)
+ 	return iommu_queue_command(iommu, &cmd);
  }
-@@ -2171,7 +2171,7 @@ static void detach_device(struct device *dev)
- 	bool ppr = dev_data->ppr;
- 	unsigned long flags;
  
--	spin_lock(&dev_data->lock);
-+	mutex_lock(&dev_data->mutex);
- 
- 	/*
- 	 * First check if the device is still attached. It might already
-@@ -2209,7 +2209,7 @@ static void detach_device(struct device *dev)
- 	pdom_detach_iommu(iommu, domain);
- 
- out:
--	spin_unlock(&dev_data->lock);
-+	mutex_unlock(&dev_data->mutex);
- 
- 	/* Remove IOPF handler */
- 	if (ppr)
-@@ -2486,9 +2486,9 @@ static int blocked_domain_attach_device(struct iommu_domain *domain,
- 		detach_device(dev);
- 
- 	/* Clear DTE and flush the entry */
--	spin_lock(&dev_data->lock);
-+	mutex_lock(&dev_data->mutex);
- 	dev_update_dte(dev_data, false);
--	spin_unlock(&dev_data->lock);
-+	mutex_unlock(&dev_data->mutex);
- 
- 	return 0;
- }
++static void iommu_flush_dte_sync(struct amd_iommu *iommu, u16 devid)
++{
++	int ret;
++
++	ret = iommu_flush_dte(iommu, devid);
++	if (!ret)
++		iommu_completion_wait(iommu);
++}
++
+ static void amd_iommu_flush_dte_all(struct amd_iommu *iommu)
+ {
+ 	u32 devid;
 -- 
 2.53.0
 
