@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E7D3F4114;
-	Wed, 20 May 2026 17:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA43E3D8129;
+	Wed, 20 May 2026 17:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296842; cv=none; b=m+NQ7chDhEHJ8ZWffrBy2t+ErwJy8BCF6z+/hMFclI8JPxs4BZEl1Oit9G8b0ga/R8bco0sZHBdRKJbhHELQyuQ71l1LNHw0XfYS7pzMdfTTYE8M26xhiOkXM+ADqWwKfqFjWh8ea9pgmvpMDm9ajn7rQtdm3OeDDJP/mfBnCIw=
+	t=1779296845; cv=none; b=YVnnVGBufRwh0bWRVoEV2dApZQWq1N8sII3M2DIIMRVxAAjpPVrGJ9ne+/wGmtK+7JaMgERDuKRhlVruksOMtJtMRPKkywuQ41xH6k7pJZlpy3KHSPfjwUEFwShXjW9N+WDckMntDaW0CJHFBonz24hSHrjVYQ62ginBx/rRo8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296842; c=relaxed/simple;
-	bh=Jq430R61qFgyURWUgzAHvAWB6Xqt7wdkVfOHO3Gkdas=;
+	s=arc-20240116; t=1779296845; c=relaxed/simple;
+	bh=RbTlRE73DINY6yoydVv/y0zCi06kSnlfAb1jpmz8etU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EyRysOsmEQwclhEdhOOAfhfcB3OEeYyXUYJBWxP7arYfzF1l9dd/kTDqOI3z9+VDBf75BPIQy3Ij37ZoP/iavOdnUMKIaVLOcOkUa3ipdherKIWKn85ur2Pkg5BdhEnmYqfzpwUcMMDS3tEOa73ZmfMUTGCToiPsua+74xLf1Jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFjLp6Zr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gUsfc0NS3JzjwQnfHYoTajJm47T7x6Is7nf9JpjGDzVBAj/l52u2aHMRcT9ALms+CVcPFu7JDC5MMwNMPXio2FjVpMfwzw7I2p43N1lvma08mQabShojdf3V0GUt8SGtmhr68kRe3+ZD6pYw/qgUGiPn0xWvg/PGTWCKrujjNtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQsrKcbd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFjLp6Zr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506091F00893;
-	Wed, 20 May 2026 17:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQsrKcbd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82521F000E9;
+	Wed, 20 May 2026 17:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296840;
-	bh=h+ByJEBHpEhz5OwIQr+i6b2U6tD3/VgkGpLNjm4BeHE=;
+	s=korg; t=1779296843;
+	bh=K0nEmt1rvjdUQDOYL9lV0W8FNdA/iPJDfaqTnOfKan4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFjLp6ZrpcpxyWssZac9n5zZf+vtxpPD80IrO3iAw0FjnfBNr54RR8bsvUKDHy1ko
-	 TFXHfdBJFe/MDrkUuNc/G+8CT4R7K3eTKeT+jOEE8ea5dan1YADps3sYXFJW516N+y
-	 EFQKE8FTq/A8OlLm6OIv5VhHtJWEloAvqBEASL3Q=
+	b=xQsrKcbdQnBLgE+F8O096dBjp1WdAhIe7pLqZzJrmJsVWwigp7eXRgqbhqeeBYdRX
+	 bdxi+WqxZYjiNE/eEUqOc2EeZ8nxOtrgc7pOdQXHluDkicvhIJTf0GuG0K4nTy/tyX
+	 OLb5fUK4ym/lI1XCdoK27kvBoYUtHE8qVrsJG/qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0950/1146] netpoll: fix IPv6 local-address corruption
-Date: Wed, 20 May 2026 18:20:00 +0200
-Message-ID: <20260520162209.733593614@linuxfoundation.org>
+Subject: [PATCH 7.0 0951/1146] ALSA: usb-audio: Fix potential leak of pd at parsing UAC3 streams
+Date: Wed, 20 May 2026 18:20:01 +0200
+Message-ID: <20260520162209.757136471@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,86 +44,209 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 3bc179bc7146c26c9dff75d2943d10528274e301 ]
+[ Upstream commit c39f0bc03f84ba64c9144c95714df1dc36150f6d ]
 
-netpoll_setup() decides whether to auto-populate the local source
-address by testing np->local_ip.ip, which only inspects the first 4
-bytes of the union inet_addr storage.
+At parsing UAC3 streams, we allocate a PD object at each time, and
+either assign or free it.  But there is a case where the PD object may
+be leaked; namely, in __snd_usb_parse_audio_interface() loop, when an
+audioformat shares the same endpoint with others, it's put to a link
+and returns from snd_usb_add_audio_stream(), but the PD is forgotten
+afterwards.  Overall, the treatment of PD object in the parser code is
+a bit flaky, and we should be more careful about the object ownership.
 
-For an IPv6 netpoll whose caller-supplied local address has a zero
-high-32 bits (::1, ::<suffix>, IPv4-mapped ::ffff:a.b.c.d, etc.), this
-misdetects the address as unset (which they are not, but the first
-4 bytes are empty), calls netpoll_take_ipv6() and overwrites it with
-whatever matching link-local/global address the device happens to expose
-first.
+This patch tries to fix the above case and improve the code a bit.
+The pd object is now managed with the auto-cleanup in the loop, and
+the ownership is updated when the pd object gets assigned to the
+stream, which guarantees the release of the leftover object.
 
-Introduce a helper netpoll_local_ip_unset() that picks the correct
-family-aware test (ipv6_addr_any() for IPv6, !.ip for IPv4) and use it
-from netpoll_setup().
-
-Reproducer is something like:
-
-  echo "::2" > local_ip
-  echo 1     > enabled
-  cat local_ip
-  # before this fix: 2001:db8::1   (caller-supplied ::2 was clobbered)
-  # after  this fix: ::2
-
-Fixes: b7394d2429c1 ("netpoll: prepare for ipv6")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260424-netpoll_fix-v1-1-3a55348c625f@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7edf3b5e6a45 ("ALSA: usb-audio: AudioStreaming Power Domain parsing")
+Link: https://patch.msgid.link/20260427151508.12544-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ sound/usb/quirks.c |  2 +-
+ sound/usb/stream.c | 58 ++++++++++++++++++----------------------------
+ sound/usb/stream.h |  3 ++-
+ 3 files changed, 25 insertions(+), 38 deletions(-)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 5ae90c14ba493..84faace50ac28 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -706,6 +706,23 @@ static int netpoll_take_ipv4(struct netpoll *np, struct net_device *ndev)
- 	return 0;
- }
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 6f2a053d971c9..e8ae3464887b2 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -122,7 +122,7 @@ static int add_audio_stream_from_fixed_fmt(struct snd_usb_audio *chip,
  
-+/*
-+ * Test whether the caller left np->local_ip unset, so that
-+ * netpoll_setup() should auto-populate it from the egress device.
-+ *
-+ * np->local_ip is a union of __be32 (IPv4) and struct in6_addr (IPv6),
-+ * so an IPv6 address whose first 4 bytes are zero (e.g. ::1, ::2,
-+ * IPv4-mapped ::ffff:a.b.c.d) must not be tested via the IPv4 arm —
-+ * doing so would misclassify a caller-supplied address as unset and
-+ * silently overwrite it with whatever address the device exposes.
-+ */
-+static bool netpoll_local_ip_unset(const struct netpoll *np)
-+{
-+	if (np->ipv6)
-+		return ipv6_addr_any(&np->local_ip.in6);
-+	return !np->local_ip.ip;
-+}
-+
- int netpoll_setup(struct netpoll *np)
+ 	snd_usb_audioformat_set_sync_ep(chip, fp);
+ 
+-	err = snd_usb_add_audio_stream(chip, stream, fp);
++	err = snd_usb_add_audio_stream(chip, stream, fp, NULL);
+ 	if (err < 0)
+ 		return err;
+ 
+diff --git a/sound/usb/stream.c b/sound/usb/stream.c
+index b07e2ec661c16..03a939cdd07ac 100644
+--- a/sound/usb/stream.c
++++ b/sound/usb/stream.c
+@@ -79,7 +79,7 @@ static void snd_usb_audio_pcm_free(struct snd_pcm *pcm)
+ static void snd_usb_init_substream(struct snd_usb_stream *as,
+ 				   int stream,
+ 				   struct audioformat *fp,
+-				   struct snd_usb_power_domain *pd)
++				   struct snd_usb_power_domain **pdptr)
  {
- 	struct net *net = current->nsproxy->net_ns;
-@@ -750,7 +767,7 @@ int netpoll_setup(struct netpoll *np)
- 		rtnl_lock();
+ 	struct snd_usb_substream *subs = &as->substream[stream];
+ 
+@@ -105,10 +105,11 @@ static void snd_usb_init_substream(struct snd_usb_stream *as,
+ 	if (fp->channels > subs->channels_max)
+ 		subs->channels_max = fp->channels;
+ 
+-	if (pd) {
+-		subs->str_pd = pd;
++	if (pdptr && *pdptr) {
++		subs->str_pd = *pdptr;
++		*pdptr = NULL; /* assigned */
+ 		/* Initialize Power Domain to idle status D1 */
+-		snd_usb_power_domain_set(subs->stream->chip, pd,
++		snd_usb_power_domain_set(subs->stream->chip, subs->str_pd,
+ 					 UAC3_PD_STATE_D1);
  	}
  
--	if (!np->local_ip.ip) {
-+	if (netpoll_local_ip_unset(np)) {
- 		if (!np->ipv6) {
- 			err = netpoll_take_ipv4(np, ndev);
- 			if (err)
+@@ -486,11 +487,14 @@ snd_pcm_chmap_elem *convert_chmap_v3(struct uac3_cluster_header_descriptor
+  * if not, create a new pcm stream. note, fp is added to the substream
+  * fmt_list and will be freed on the chip instance release. do not free
+  * fp or do remove it from the substream fmt_list to avoid double-free.
++ *
++ * pdptr is optional and can be NULL.  When it's non-NULL and the PD gets
++ * assigned to the stream, *pdptr is cleared to NULL upon return.
+  */
+-static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+-				      int stream,
+-				      struct audioformat *fp,
+-				      struct snd_usb_power_domain *pd)
++int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
++			     int stream,
++			     struct audioformat *fp,
++			     struct snd_usb_power_domain **pdptr)
+ 
+ {
+ 	struct snd_usb_stream *as;
+@@ -523,7 +527,7 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+ 		err = snd_pcm_new_stream(as->pcm, stream, 1);
+ 		if (err < 0)
+ 			return err;
+-		snd_usb_init_substream(as, stream, fp, pd);
++		snd_usb_init_substream(as, stream, fp, pdptr);
+ 		return add_chmap(as->pcm, stream, subs);
+ 	}
+ 
+@@ -552,7 +556,7 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+ 	else
+ 		strscpy(pcm->name, "USB Audio");
+ 
+-	snd_usb_init_substream(as, stream, fp, pd);
++	snd_usb_init_substream(as, stream, fp, pdptr);
+ 
+ 	/*
+ 	 * Keep using head insertion for M-Audio Audiophile USB (tm) which has a
+@@ -570,21 +574,6 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+ 	return add_chmap(pcm, stream, &as->substream[stream]);
+ }
+ 
+-int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+-			     int stream,
+-			     struct audioformat *fp)
+-{
+-	return __snd_usb_add_audio_stream(chip, stream, fp, NULL);
+-}
+-
+-static int snd_usb_add_audio_stream_v3(struct snd_usb_audio *chip,
+-				       int stream,
+-				       struct audioformat *fp,
+-				       struct snd_usb_power_domain *pd)
+-{
+-	return __snd_usb_add_audio_stream(chip, stream, fp, pd);
+-}
+-
+ static int parse_uac_endpoint_attributes(struct snd_usb_audio *chip,
+ 					 struct usb_host_interface *alts,
+ 					 int protocol, int iface_no)
+@@ -1107,8 +1096,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
+ 		}
+ 	}
+ 
+-	if (pd)
+-		*pd_out = pd;
++	*pd_out = pd;
+ 
+ 	return fp;
+ }
+@@ -1123,7 +1111,6 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
+ 	struct usb_interface_descriptor *altsd;
+ 	int i, altno, err, stream;
+ 	struct audioformat *fp = NULL;
+-	struct snd_usb_power_domain *pd = NULL;
+ 	bool set_iface_first;
+ 	int num, protocol;
+ 
+@@ -1165,6 +1152,12 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
+ 		if (snd_usb_apply_interface_quirk(chip, iface_no, altno))
+ 			continue;
+ 
++		/* pd may be allocated at snd_usb_get_audioformat_uac3() and
++		 * assigned at snd_usb_add_audio_stream(); otherwise it'll be
++		 * freed automatically by cleanup at each loop.
++		 */
++		struct snd_usb_power_domain *pd __free(kfree) = NULL;
++
+ 		/*
+ 		 * Roland audio streaming interfaces are marked with protocols
+ 		 * 0/1/2, but are UAC 1 compatible.
+@@ -1220,23 +1213,16 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
+ 			*has_non_pcm = true;
+ 		if ((fp->fmt_type == UAC_FORMAT_TYPE_I) == non_pcm) {
+ 			audioformat_free(fp);
+-			kfree(pd);
+ 			fp = NULL;
+-			pd = NULL;
+ 			continue;
+ 		}
+ 
+ 		snd_usb_audioformat_set_sync_ep(chip, fp);
+ 
+ 		dev_dbg(&dev->dev, "%u:%d: add audio endpoint %#x\n", iface_no, altno, fp->endpoint);
+-		if (protocol == UAC_VERSION_3)
+-			err = snd_usb_add_audio_stream_v3(chip, stream, fp, pd);
+-		else
+-			err = snd_usb_add_audio_stream(chip, stream, fp);
+-
++		err = snd_usb_add_audio_stream(chip, stream, fp, &pd);
+ 		if (err < 0) {
+ 			audioformat_free(fp);
+-			kfree(pd);
+ 			return err;
+ 		}
+ 
+diff --git a/sound/usb/stream.h b/sound/usb/stream.h
+index d92e18d5818fe..61b9a133da018 100644
+--- a/sound/usb/stream.h
++++ b/sound/usb/stream.h
+@@ -7,7 +7,8 @@ int snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
+ 
+ int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
+ 			     int stream,
+-			     struct audioformat *fp);
++			     struct audioformat *fp,
++			     struct snd_usb_power_domain **pdptr);
+ 
+ #endif /* __USBAUDIO_STREAM_H */
+ 
 -- 
 2.53.0
 
