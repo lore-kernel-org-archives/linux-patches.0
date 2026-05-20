@@ -1,115 +1,134 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB133EE1C0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EA13EEAC6;
 	Wed, 20 May 2026 17:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296923; cv=none; b=h9EcoBVq6u9rBl0aMoecqWtBUy+L9qGSWRQYRdkLXC/KBevJRdoRjYR5YVkabIvhW71IIwlcCrm1djVZGAdr3/KKCtl2WfwmjXtNJWmPr5EQxd8+YXO/AIf9MAvbHX2TT3Hcavh/KDJln5yCZgeDkmC0zcGz8MD0MCM8n3r3Z9A=
+	t=1779296924; cv=none; b=rcFLofntyctofTZ3yhaspG4tQsQcvZwUf9vrihNR2Jjw5N+ibTeRpJrkaHXuBEp07yCJfbjRk36v2dIxWB9Lh+dnBumzJ0Ewe0KheFdx5kyr1fds//7CvAY80POuV0L02oxcWTopzZeTR13TiV5JatG7dA+YMB8m29W0j96miDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296923; c=relaxed/simple;
-	bh=L7EJMqgJYoiCn3av+LJXTFfkJe9GT0Dt1fkxhroRpek=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uF4ZOjtCazhCCuTo47MPrT+H0Yk5lVoxM+OAEfMoFjjpWhPIktdkgxekrKGfkU6Sylt2Ze/LIuQpwxONzvMFu348y/qHQDv1z69eHjvKpQuROmzktwO3iwJFR14Ccu9Pqd9ltuJVOQfGX9dO29t2zrH1hHn4i1mfA0mSe9rPdo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NF58qjlH; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779296924; c=relaxed/simple;
+	bh=nwOAuvb9zdiYLA1YDYM2y4sndnfc6us2hnD3d795oSQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PNLZbBvGleoOYE10bgziCHdrC6Znq2ZH63SRQeiD3TAhaHwG1ph9iLVq0tzi0hhdquCua1E0ETRO/Ig0cgQ+9Ebfaqj11zQzWj+PIThZ4yily48nqQ0egcUDTiDMCxrY4WVWWAdVpKr6uBLE5v8EyCSJ5iFCOXIJRMPhTFtfzXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xi7x7vKx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NF58qjlH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37121F000E9;
-	Wed, 20 May 2026 17:08:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296922;
-	bh=13dEf3ks5FwS6qpnT+bl3w8wEa/yNQiIb2cQAOWsmjw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NF58qjlHxpBRWxRAN+gbQxNzOrIS4GK3lnS1xhI3bExQ822tjMt00UBghGHBRmlAg
-	 EBw6IoNroc0vpJBGoid0pEtvgBRzMgGLzaPnj6envyUIvk4w4GV1g1J/70PzavF9QK
-	 IvVj4Gt8HUdhfvQO5e9zxLbPe1Od1A7QBnSqAYcg=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xi7x7vKx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145321F00893;
+	Wed, 20 May 2026 17:08:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779296922;
+	bh=w9HP9QD1bStPE0a/AIdK4vgeSA4PyhKoCISFxCkq/EA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Xi7x7vKx6d/U9gU4hRoHNvQNx2to1raVwGm6/dLWTfJ8aK3INMxwBu1qHHfqbn/Ag
+	 ZCljK3d9wEbBsKWV5leqAnNjvnmbcGQ4GVWM7PbNp8Bnv+UZUPVlF5+hrB636jFLe2
+	 AN5EkFP/wk/p/ky7uWkCa6FvAI4FraKwCg9dBE5uNRrC6gSVMj4VhjRsQEbBEJ45Zl
+	 jNS0K1uRVQUrOxH4AcAFejNkEOIagO7mqolBtVk2hrQggyqp1dMVvSxhg/iZp9zLtB
+	 rapjGhoZrL5rXx1+f84eV5/ubQkCo4FErTbXCA+I+lbmjvBx2cbzihUDy2Yx++jk9l
+	 9U2FPK2iiOprg==
+Date: Thu, 21 May 2026 01:08:36 +0800
+From: Gao Xiang <xiang@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Amir Goldstein <amir73il@gmail.com>,
+	Chunhai Guo <guochunhai@vivo.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0983/1146] net: psp: check for device unregister when creating assoc
-Date: Wed, 20 May 2026 18:20:33 +0200
-Message-ID: <20260520162210.476014008@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
+Subject: Re: [PATCH 7.0 0013/1146] erofs: verify metadata accesses for
+ file-backed mounts
+Message-ID: <ag3qlMOcTYM2FBUQ@debian>
 References: <20260520162148.390695140@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+ <20260520162148.691068692@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260520162148.691068692@linuxfoundation.org>
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+Hi Greg,
 
-------------------
+On Wed, May 20, 2026 at 06:04:23PM +0200, Greg Kroah-Hartman wrote:
+> 7.0-stable review patch.  If anyone has any objections, please let me know.
+> 
 
-From: Jakub Kicinski <kuba@kernel.org>
+As I said in
+https://lore.kernel.org/r/75e6d1c8-e989-4eb7-aca3-37a40318e888@linux.alibaba.com
 
-[ Upstream commit b89769f936a8fa9e66de72ddc1b71a9745a488e6 ]
-
-psp_assoc_device_get_locked() obtains a psp_dev reference via
-psp_dev_get_for_sock() (which uses psp_dev_tryget() under RCU);
-it then acquires psd->lock and drops the reference. Before
-the lock is taken, psp_dev_unregister() can run to completion:
-take psd->lock, clear out state, unlock, drop the registration
-reference.
-
-The expectation is that the lock prevents device unregistration,
-but much like with netdevs special care has to be taken when
-"upgrading" a reference to a locked device. Add the missing
-check if device is still alive. psp_dev_is_registered() exists
-already but had no callers, which makes me wonder if I either
-forgot to add this or lost the check during refactoring...
-
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Fixes: 6b46ca260e22 ("net: psp: add socket security association code")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260427190606.366101-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/psp/psp_nl.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/net/psp/psp_nl.c b/net/psp/psp_nl.c
-index 6afd7707ec12e..0cc744a6e1c9b 100644
---- a/net/psp/psp_nl.c
-+++ b/net/psp/psp_nl.c
-@@ -305,8 +305,13 @@ int psp_assoc_device_get_locked(const struct genl_split_ops *ops,
- 
- 	psd = psp_dev_get_for_sock(socket->sk);
- 	if (psd) {
--		err = psp_dev_check_access(psd, genl_info_net(info));
--		if (err) {
-+		/* Extra care needed here, psp_dev_get_for_sock() only gives
-+		 * us access to struct psp_dev's memory, which is quite weak.
-+		 */
-+		mutex_lock(&psd->lock);
-+		if (!psp_dev_is_registered(psd) ||
-+		    psp_dev_check_access(psd, genl_info_net(info))) {
-+			mutex_unlock(&psd->lock);
- 			psp_dev_put(psd);
- 			psd = NULL;
- 		}
-@@ -319,7 +324,6 @@ int psp_assoc_device_get_locked(const struct genl_split_ops *ops,
- 
- 	id = info->attrs[PSP_A_ASSOC_DEV_ID];
- 	if (psd) {
--		mutex_lock(&psd->lock);
- 		if (id && psd->id != nla_get_u32(id)) {
- 			mutex_unlock(&psd->lock);
- 			NL_SET_ERR_MSG_ATTR(info->extack, id,
--- 
-2.53.0
+and
+https://lore.kernel.org/r/5a4afec4-fe39-419e-8b2b-4e9901eb93be@linux.alibaba.com
 
 
+Please help dropping this patch from auto-backporting flow
+since this fix commit needs another fix, but Christoph
+doesn't like that fix so it never gets upstream:
 
+https://lore.kernel.org/all/agF0wJSFRAEcRP8M@infradead.org/T/#u
+
+Since it impacts Android use cases (SELinux), I will
+backport this manually later, and for now not backporting
+this won't impact any.
+
+Thanks,
+Gao Xiang
+
+> ------------------
+> 
+> From: Gao Xiang <hsiangkao@linux.alibaba.com>
+> 
+> [ Upstream commit 307210c262a29f41d7177851295ea1703bd04175 ]
+> 
+> For file-backed mounts, metadata is fetched via the page cache of
+> backing inodes to avoid double caching and redundant copy ops out
+> of RO uptodate folios, which is used by Android APEXes, ComposeFS,
+> containerd.  However, rw_verify_area() was missing prior to
+> metadata accesses.
+> 
+> Similar to vfs_iocb_iter_read(), fix this by:
+>  - Enabling fanotify pre-content hooks on metadata accesses;
+>  - security_file_permission() for security modules.
+> 
+> Verified that fanotify pre-content hooks now works correctly.
+> 
+> Fixes: fb176750266a ("erofs: add file-backed mount support")
+> Acked-by: Amir Goldstein <amir73il@gmail.com>
+> Reviewed-by: Chunhai Guo <guochunhai@vivo.com>
+> Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  fs/erofs/data.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/fs/erofs/data.c b/fs/erofs/data.c
+> index f79ee80627d95..132a27deb2f3b 100644
+> --- a/fs/erofs/data.c
+> +++ b/fs/erofs/data.c
+> @@ -30,6 +30,20 @@ void *erofs_bread(struct erofs_buf *buf, erofs_off_t offset, bool need_kmap)
+>  {
+>  	pgoff_t index = (buf->off + offset) >> PAGE_SHIFT;
+>  	struct folio *folio = NULL;
+> +	loff_t fpos;
+> +	int err;
+> +
+> +	/*
+> +	 * Metadata access for file-backed mounts reuses page cache of backing
+> +	 * fs inodes (only folio data will be needed) to prevent double caching.
+> +	 * However, the data access range must be verified here in advance.
+> +	 */
+> +	if (buf->file) {
+> +		fpos = index << PAGE_SHIFT;
+> +		err = rw_verify_area(READ, buf->file, &fpos, PAGE_SIZE);
+> +		if (err < 0)
+> +			return ERR_PTR(err);
+> +	}
+>  
+>  	if (buf->page) {
+>  		folio = page_folio(buf->page);
+> -- 
+> 2.53.0
+> 
+> 
+> 
