@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB9F3D412C;
-	Wed, 20 May 2026 16:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971E536C0CA;
+	Wed, 20 May 2026 16:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295015; cv=none; b=tgDtvCjm3higmLoVP0pBacxJRezyWtlRIYxYajdLqZKke7k98GKyL2RBvqrG+TFckh2Cm/+wW/oR8hxfUyO2gAAWYKfYy/HPpWIFX2HESArBg9yT50zERlDhP0lcepCxULMt6qFHv2rapTnXDBOoAWYc+4RNMQsM20bFjqfIhkI=
+	t=1779295017; cv=none; b=GFBOWizPNVMs2ZhBxqYx5OMyBYz/kUT7DQIETsaeHpRNd4KbLk6zgd4rpMikTodjEnipBxOQ4Xn7c/wJFmV6nFkhz9WSxgmdhqdhidMN93JWKvaFQSRxkMF33yY9TVe8kELFYvAo00iHoFoGVHh4PNqIXl8xpY3xRQbrNUgaoUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295015; c=relaxed/simple;
-	bh=NO+i8mNxVgEs5sAd7onGeQXSMngpPSzEWaPrcfLjaaM=;
+	s=arc-20240116; t=1779295017; c=relaxed/simple;
+	bh=daqZTh+gb0snWRsLXGuDSRB5yBaWxzChorco8M4lYi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eW4/MAZuSYc1yjWpFTjk9PxkIZxqVL9agaCKoHpwfhyYcJYBmsiYXY4kTY2obomJgBYJ9ZfXv4fFh3qyE77rQRgNmmJDUVE0UNBiK6BQZHcgecVfxIza9gT9GSPqZwvSoSGNN33yo/obwisx70F2TtK7sT8ulofgUc/5NpKv4yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IVt3V4lt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mr+tkElxH22JChTBlvhlWjFWMNFGY+hTSAkAIbaFQnB3rPq0Ew3bW13CJlK83uQfCi8Vurde49GWQtc9MQfri9akI4hlZe+LVOxekV7Jbxoxnh5lkE8wN3Ks1AaRBMeve+8KCFWepIUUkOq2pY4vHmD7rjMTteByUmOzqKg4Moo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMgbo2Ba; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IVt3V4lt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA571F00893;
-	Wed, 20 May 2026 16:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMgbo2Ba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A5F1F000E9;
+	Wed, 20 May 2026 16:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295013;
-	bh=DhzFMKvk943N+Z7GyMaWyQvo3oAYbPkmu6UvLX5xKTM=;
+	s=korg; t=1779295016;
+	bh=uW1hdYnYo+fcdcLdxAFRotq0Fr7jHaSp0Ba1LlRiiM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IVt3V4lt63ChQLfQMPNUoOtw+Snr9GUe6cApQOShHatLzLV8AjsvKBWvSlfs6Y0oY
-	 VdoYPsmTooKlAJ+DGpc4WP0ud7E3hr0dFNsZxpa8MVT8G1WYQLj3JnGDG/j5UDSMqm
-	 G+xTy7N3adk4Tpzg0e463/TSp2BdIayTnV61hQOc=
+	b=iMgbo2BaTtJyH/Gi/Js7/YX8Bx5M38Ov91SXke8W4QKKawjkTKI4F5gSkJ/If1knl
+	 5QThBefZtCXHUbh0ehK1y8tIOGXDRiYDTQpGF5UsFaNActQ+6wSFnMXw1UF3D3IsKE
+	 EOwhYENrAJiixAmWgaaIICNKz020PxHZMlabJZr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0217/1146] udp: Force compute_score to always inline
-Date: Wed, 20 May 2026 18:07:47 +0200
-Message-ID: <20260520162153.169541305@linuxfoundation.org>
+Subject: [PATCH 7.0 0218/1146] tcp: Dont set treq->req_usec_ts in cookie_tcp_reqsk_init().
+Date: Wed, 20 May 2026 18:07:48 +0200
+Message-ID: <20260520162153.191402558@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,123 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@suse.de>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit b80a95ccf1604a882bb153c45ccb4056e44c8edb ]
+[ Upstream commit c058bbf05b1197c33df7204842665bd8bc70b3a8 ]
 
-Back in 2024 I reported a 7-12% regression on an iperf3 UDP loopback
-thoughput test that we traced to the extra overhead of calling
-compute_score on two places, introduced by commit f0ea27e7bfe1 ("udp:
-re-score reuseport groups when connected sockets are present").  At the
-time, I pointed out the overhead was caused by the multiple calls,
-associated with cpu-specific mitigations, and merged commit
-50aee97d1511 ("udp: Avoid call to compute_score on multiple sites") to
-jump back explicitly, to force the rescore call in a single place.
+Commit de5626b95e13 ("tcp: Factorise cookie-independent fields
+initialisation in cookie_v[46]_check().") miscategorised
+tcp_rsk(req)->req_usec_ts init to cookie_tcp_reqsk_init(),
+which is used by both BPF/non-BPF SYN cookie reqsk.
 
-Recently though, we got another regression report against a newer distro
-version, which a team colleague traced back to the same root-cause.
-Turns out that once we updated to gcc-13, the compiler got smart enough
-to unroll the loop, undoing my previous mitigation.  Let's bite the
-bullet and __always_inline compute_score on both ipv4 and ipv6 to
-prevent gcc from de-optimizing it again in the future.  These functions
-are only called in two places each, udpX_lib_lookup1 and
-udpX_lib_lookup2, so the extra size shouldn't be a problem and it is hot
-enough to be very visible in profilings.  In fact, with gcc13, forcing
-the inline will prevent gcc from unrolling the fix from commit
-50aee97d1511, so we don't end up increasing udpX_lib_lookup2 at all.
+Rather, it should have been moved to cookie_tcp_reqsk_alloc() by
+commit 8e7bab6b9652 ("tcp: Factorise cookie-dependent fields
+initialisation in cookie_v[46]_check()") so that only non-BPF SYN
+cookie sets tcp_rsk(req)->req_usec_ts to false.
 
-I haven't recollected the results myself, as I don't have access to the
-machine at the moment.  But the same colleague reported 4.67%
-inprovement with this patch in the loopback benchmark, solving the
-regression report within noise margins.
+Let's move the initialisation to cookie_tcp_reqsk_alloc() to
+respect bpf_tcp_req_attrs.usec_ts_ok.
 
-Eric Dumazet reported no size change to vmlinux when built with clang.
-I report the same also with gcc-13:
-
-scripts/bloat-o-meter vmlinux vmlinux-inline
-add/remove: 0/2 grow/shrink: 4/0 up/down: 616/-416 (200)
-Function                                     old     new   delta
-udp6_lib_lookup2                             762     949    +187
-__udp6_lib_lookup                            810     975    +165
-udp4_lib_lookup2                             757     906    +149
-__udp4_lib_lookup                            871     986    +115
-__pfx_compute_score                           32       -     -32
-compute_score                                384       -    -384
-Total: Before=35011784, After=35011984, chg +0.00%
-
-Fixes: 50aee97d1511 ("udp: Avoid call to compute_score on multiple sites")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://patch.msgid.link/20260410155936.654915-1-krisman@suse.de
+Fixes: e472f88891ab ("bpf: tcp: Support arbitrary SYN Cookie.")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260410235328.1773449-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 12 ++++++------
- net/ipv6/udp.c | 13 +++++++------
- 2 files changed, 13 insertions(+), 12 deletions(-)
+ net/ipv4/syncookies.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index cb99a3c27053e..2551bfaa26810 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -365,10 +365,10 @@ int udp_v4_get_port(struct sock *sk, unsigned short snum)
- 	return udp_lib_get_port(sk, snum, hash2_nulladdr);
- }
+diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
+index fc3affd9c8014..b5f0a65c67864 100644
+--- a/net/ipv4/syncookies.c
++++ b/net/ipv4/syncookies.c
+@@ -286,7 +286,6 @@ static int cookie_tcp_reqsk_init(struct sock *sk, struct sk_buff *skb,
+ 	treq->rcv_isn = ntohl(th->seq) - 1;
+ 	treq->snt_isn = ntohl(th->ack_seq) - 1;
+ 	treq->syn_tos = TCP_SKB_CB(skb)->ip_dsfield;
+-	treq->req_usec_ts = false;
  
--static int compute_score(struct sock *sk, const struct net *net,
--			 __be32 saddr, __be16 sport,
--			 __be32 daddr, unsigned short hnum,
--			 int dif, int sdif)
-+static __always_inline int
-+compute_score(struct sock *sk, const struct net *net,
-+	      __be32 saddr, __be16 sport, __be32 daddr,
-+	      unsigned short hnum, int dif, int sdif)
- {
- 	int score;
- 	struct inet_sock *inet;
-@@ -508,8 +508,8 @@ static struct sock *udp4_lib_lookup2(const struct net *net,
- 				continue;
+ #if IS_ENABLED(CONFIG_MPTCP)
+ 	treq->is_mptcp = sk_is_mptcp(sk);
+@@ -349,6 +348,7 @@ struct request_sock *cookie_tcp_reqsk_alloc(const struct request_sock_ops *ops,
+ 	ireq->wscale_ok = tcp_opt->wscale_ok;
+ 	ireq->ecn_ok = !!(tcp_opt->rcv_tsecr & TS_OPT_ECN);
  
- 			/* compute_score is too long of a function to be
--			 * inlined, and calling it again here yields
--			 * measurable overhead for some
-+			 * inlined twice here, and calling it uninlined
-+			 * here yields measurable overhead for some
- 			 * workloads. Work around it by jumping
- 			 * backwards to rescore 'result'.
- 			 */
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 010b909275dd0..301649a63e8a3 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -127,10 +127,11 @@ void udp_v6_rehash(struct sock *sk)
- 	udp_lib_rehash(sk, new_hash, new_hash4);
- }
++	treq->req_usec_ts = false;
+ 	treq->ts_off = tsoff;
  
--static int compute_score(struct sock *sk, const struct net *net,
--			 const struct in6_addr *saddr, __be16 sport,
--			 const struct in6_addr *daddr, unsigned short hnum,
--			 int dif, int sdif)
-+static __always_inline int
-+compute_score(struct sock *sk, const struct net *net,
-+	      const struct in6_addr *saddr, __be16 sport,
-+	      const struct in6_addr *daddr, unsigned short hnum,
-+	      int dif, int sdif)
- {
- 	int bound_dev_if, score;
- 	struct inet_sock *inet;
-@@ -260,8 +261,8 @@ static struct sock *udp6_lib_lookup2(const struct net *net,
- 				continue;
- 
- 			/* compute_score is too long of a function to be
--			 * inlined, and calling it again here yields
--			 * measurable overhead for some
-+			 * inlined twice here, and calling it uninlined
-+			 * here yields measurable overhead for some
- 			 * workloads. Work around it by jumping
- 			 * backwards to rescore 'result'.
- 			 */
+ 	return req;
 -- 
 2.53.0
 
