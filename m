@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A5115E8B;
-	Wed, 20 May 2026 17:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61C315E8B;
+	Wed, 20 May 2026 17:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298668; cv=none; b=GG8wXX0aBRYFAqgoC9ZHbbn3RmUG1baCe1uNw7o56k7VyZAumpKk643oiNhkdIYauDGL2OEpLb7E8QxBH+KCfwNhcDw6ACtWs0QxgTTaSncfSBi7r/tOkDIPo7oigAIWQ7HewRAsXCmn39kPrjkaITOTcHlH6Z8zoN6oHvQTQqg=
+	t=1779298670; cv=none; b=Msm5CTVUtHY2JBvK+rNJvDqhH5PMJNEypL5qzlvwGll9llMyj8Bw+bN5BXv3rXJaQYORK05kOqyX1pETVGJZYRAQ3z0c+FPLyKUHtS/31Pw6x5dGB5zpDN7sshlMrMpEkPsDOSn841xlf6/lWIMnroAhoqPL1VWJXKu7zel2AeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298668; c=relaxed/simple;
-	bh=jeYs/YBddoBJ52Rhw8sbwjCksDDgpYQa9/bOx4+nMRY=;
+	s=arc-20240116; t=1779298670; c=relaxed/simple;
+	bh=Ob7mXN7r4x0LarEKlfQQ2UERfsRcY0lPs/GdrLAyHFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qs6ajlYavsHeU8LQq2x1/ccBBDi9ueaAh/LvKOMWtHM5Uu5CPC4l8iyi8jDAT6bhdLVPbqzsinxG9SKNp2yDJ3Z0FBskktcNJskythNkc7tKuzBSR2VCSiseMK0VgEwAZdb9Bfs5g6vw5Fn0KP7vR9X75XonEIiQ2FxGSHxn7jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0H5b+awv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hxV8P2yo/IAtPTCin7i3i1Q1giL33nwgYhevnunBF/fXjfg4SNr/aen6ZxZjvcZabjAyqdSTdHnekhuh2wwkcOQz9ORe2B1ksF9+Ua/zeGecv2IG2WdOSrUA4gm8D076vBCg+isIE8cStvE4EwSLKXNxaADjr/syN1gbAJTV7k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtumFE+D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0H5b+awv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0C41F000E9;
-	Wed, 20 May 2026 17:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtumFE+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179E61F000E9;
+	Wed, 20 May 2026 17:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298666;
-	bh=DeGLIornzc4FzLeA3F4gNluMliXw1PL0v4JewZqIcJY=;
+	s=korg; t=1779298669;
+	bh=59RKQ5j9b244G2jMfDGrkRBJjV0ZfUZxNQF2UTDYOp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0H5b+awv0sqlN1pBcq8bcNUqWd082iin3DWZ4VKR2r8DXCTt6Lo3BCZBc4UNwVZDg
-	 0V4G28i3xlOd/Tc0N8SdlJmsHjPBcKHxiMBwZ70U3rKsvwq4QR5ca/gXw39n0x2ocY
-	 mgZ9oTNKqNmOt1T0nnjEvhl2vb0iATgNJeEbwGvQ=
+	b=BtumFE+DGsHx+7UfJIfnt1+mv4CBv1AlW0NqmpPCC+D5bxa/GKRKX8IYj8lIwOK4L
+	 ZNeXbhkT4BTnq5K6AZN2yzopwozMOsbDQ+1kDBMS0noAst8N/zqwQGDVWJha+QT/0F
+	 TwzlZT8fmXccT3yfLKf/FyyKJt2QnOGc0O3Wa/ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 499/957] perf trace: Avoid an ERR_PTR in syscall_stats
-Date: Wed, 20 May 2026 18:16:22 +0200
-Message-ID: <20260520162145.347079999@linuxfoundation.org>
+Subject: [PATCH 6.18 500/957] pinctrl: cy8c95x0: remove duplicate error message
+Date: Wed, 20 May 2026 18:16:23 +0200
+Message-ID: <20260520162145.372859805@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,76 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit d05073adda0f047e9b2115a2932bcb2797eab238 ]
+[ Upstream commit 970dacb3b9f0fedbbbcfd7dbf1f4f22340b3f359 ]
 
-hashmap__new may return an ERR_PTR and previously this would be
-assigned to syscall_stats meaning all use of syscall_stats needs to
-test for NULL (uninitialized) or an ERR_PTR. Given the only reason
-hashmap__new can fail is ENOMEM, just use NULL to indicate the
-allocation failure and avoid the code having to test for NULL and
-IS_ERR.
+The pin control core is covered to report any error via message.
+The devm_request_threaded_irq() already prints an error message.
+Remove the duplicates.
 
-Fixes: 96f202eab813 (perf trace: Fix IS_ERR() vs NULL check bug)
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+While at it, drop the info message as the same information about
+an IRQ in use can be retrieved differently.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Stable-dep-of: 5ad32c3607cf ("pinctrl: cy8c95x0: Avoid returning positive values to user space")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/pinctrl/pinctrl-cy8c95x0.c | 21 +++++----------------
+ 1 file changed, 5 insertions(+), 16 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 1f0b9ba3cdc15..96efe1fba8547 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1565,7 +1565,9 @@ static bool syscall_id_equal(long key1, long key2, void *ctx __maybe_unused)
- 
- static struct hashmap *alloc_syscall_stats(void)
+diff --git a/drivers/pinctrl/pinctrl-cy8c95x0.c b/drivers/pinctrl/pinctrl-cy8c95x0.c
+index 5c055d344ac9d..c0f1d964f8397 100644
+--- a/drivers/pinctrl/pinctrl-cy8c95x0.c
++++ b/drivers/pinctrl/pinctrl-cy8c95x0.c
+@@ -1310,6 +1310,7 @@ static int cy8c95x0_irq_setup(struct cy8c95x0_pinctrl *chip, int irq)
  {
--	return hashmap__new(syscall_id_hash, syscall_id_equal, NULL);
-+	struct hashmap *result = hashmap__new(syscall_id_hash, syscall_id_equal, NULL);
-+
-+	return IS_ERR(result) ? NULL : result;
+ 	struct gpio_irq_chip *girq = &chip->gpio_chip.irq;
+ 	DECLARE_BITMAP(pending_irqs, MAX_LINE);
++	struct device *dev = chip->dev;
+ 	int ret;
+ 
+ 	mutex_init(&chip->irq_lock);
+@@ -1336,17 +1337,9 @@ static int cy8c95x0_irq_setup(struct cy8c95x0_pinctrl *chip, int irq)
+ 	girq->handler = handle_simple_irq;
+ 	girq->threaded = true;
+ 
+-	ret = devm_request_threaded_irq(chip->dev, irq,
+-					NULL, cy8c95x0_irq_handler,
+-					IRQF_ONESHOT | IRQF_SHARED,
+-					dev_name(chip->dev), chip);
+-	if (ret) {
+-		dev_err(chip->dev, "failed to request irq %d\n", irq);
+-		return ret;
+-	}
+-	dev_info(chip->dev, "Registered threaded IRQ\n");
+-
+-	return 0;
++	return devm_request_threaded_irq(dev, irq, NULL, cy8c95x0_irq_handler,
++					 IRQF_ONESHOT | IRQF_SHARED,
++					 dev_name(chip->dev), chip);
  }
  
- static void delete_syscall_stats(struct hashmap *syscall_stats)
-@@ -1573,7 +1575,7 @@ static void delete_syscall_stats(struct hashmap *syscall_stats)
- 	struct hashmap_entry *pos;
- 	size_t bkt;
+ static int cy8c95x0_setup_pinctrl(struct cy8c95x0_pinctrl *chip)
+@@ -1362,11 +1355,7 @@ static int cy8c95x0_setup_pinctrl(struct cy8c95x0_pinctrl *chip)
+ 	pd->owner = THIS_MODULE;
  
--	if (IS_ERR(syscall_stats))
-+	if (!syscall_stats)
- 		return;
+ 	chip->pctldev = devm_pinctrl_register(chip->dev, pd, chip);
+-	if (IS_ERR(chip->pctldev))
+-		return dev_err_probe(chip->dev, PTR_ERR(chip->pctldev),
+-			"can't register controller\n");
+-
+-	return 0;
++	return PTR_ERR_OR_ZERO(chip->pctldev);
+ }
  
- 	hashmap__for_each_entry(syscall_stats, pos, bkt)
-@@ -1589,7 +1591,7 @@ static struct thread_trace *thread_trace__new(struct trace *trace)
- 		ttrace->files.max = -1;
- 		if (trace->summary) {
- 			ttrace->syscall_stats = alloc_syscall_stats();
--			if (IS_ERR(ttrace->syscall_stats))
-+			if (!ttrace->syscall_stats)
- 				zfree(&ttrace);
- 		}
- 	}
-@@ -4441,7 +4443,7 @@ static int trace__run(struct trace *trace, int argc, const char **argv)
- 
- 	if (trace->summary_mode == SUMMARY__BY_TOTAL && !trace->summary_bpf) {
- 		trace->syscall_stats = alloc_syscall_stats();
--		if (IS_ERR(trace->syscall_stats))
-+		if (!trace->syscall_stats)
- 			goto out_delete_evlist;
- 	}
- 
-@@ -4749,7 +4751,7 @@ static int trace__replay(struct trace *trace)
- 
- 	if (trace->summary_mode == SUMMARY__BY_TOTAL) {
- 		trace->syscall_stats = alloc_syscall_stats();
--		if (IS_ERR(trace->syscall_stats))
-+		if (!trace->syscall_stats)
- 			goto out;
- 	}
- 
+ static int cy8c95x0_detect(struct i2c_client *client,
 -- 
 2.53.0
 
