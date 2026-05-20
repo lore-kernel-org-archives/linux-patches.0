@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67D63F44CD;
-	Wed, 20 May 2026 17:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7623F20E5;
+	Wed, 20 May 2026 17:06:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296808; cv=none; b=Khti/v+wQx4VCMFFZqjPeUNlkmiQYDAynWzl96zQifDddNfFosIzov2VDte0/pHtKh9A2+lFiQSZMV+9LPrmscqdT0RtZ43EimSZRkFxjNaeOHiCJGJFU1ZWYjKqGcRty6FeRfGwCIatRn7cuE7lcmw/zsBRmBKcQv70lnqLJx8=
+	t=1779296810; cv=none; b=ntoal3TWYQLGT4WqgWOk5mLz87yEAItaaJVa9CWe+B63GEo5GUXAD/dg/N1nnoi+kKId8wnGO9tvkqApYYl2/n7phbhILcSIvma4TpAxz8a+DP4e/7Hw2qLg+qVa/65aWLlFWQQlQwV2wrQK0g2C1YI87deEMsMLozLu9OwPwwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296808; c=relaxed/simple;
-	bh=dmbNJ8HfhGUHDSoEOpAHQCV90XCU2x61sEAfwJv38FA=;
+	s=arc-20240116; t=1779296810; c=relaxed/simple;
+	bh=Ya4SN/OGdLXa+9t0p6MLYoAndJsjCNRLRMnSHzsqUCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sr/Jq4G0VkZXR/XxAiPa/ZjP+2UP9+IjmdBwvX1Retfk23xlk3AzZPo6p5WdqaWPSs+H9GLMz2LPFR01j6pNJa08A3I6LhnerHMhN9Mm/EipybiU4pMPMLjf4gi1wkVlwweIHtxQCQsjJOPHXL1YbNbTYdcioOmebA7rNSPtqdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sz5fYnJ3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BGaVM7JB94wbirPnAWRxQWeDkCj/U7EBGXK0JNLpYGEYQ8tRicl0kvzz6qAmX/g2K0ZqS36F/bcsK9d2UObAM2W+sdJ/l9uvHGRNni2l4CE28QypyCI4Gr0krz9K5KY2YJ4qJGtWOZoEJ5O6H4H2omNN9t9iWpuR0uWVAkWoXQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnEsE5yx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sz5fYnJ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B531F000E9;
-	Wed, 20 May 2026 17:06:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnEsE5yx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42A81F000E9;
+	Wed, 20 May 2026 17:06:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296806;
-	bh=agX3byaUy08QpzT0NZnqETcYauV/F4/u/k07s4fM7Ac=;
+	s=korg; t=1779296809;
+	bh=6MLrE1/kbHC5H7cUvMuUhS8/GT6GbgBVkYWMVMNbOJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sz5fYnJ3gvppuMSmbON3DikLUUjE/qnlqJGxwI5WbqPEtw6tuLvWRofwJrEXYzhqy
-	 ANrRL6c3DUbzoXspg+9pK3MSLH5TFhmYDjvS44PcBeEEoRlEvCGnDweR6o/Lio6Xy+
-	 XX+y+wo5fHGxH09XkW5/K9nLsmlwMC6gxSjV3UAs=
+	b=bnEsE5yxjXHpxcTn0/ktwUZFMXnceTpkgXl+veCXwD66i7+HGOdQbyr0VG00HAZDL
+	 qmXpgaRC6j866DS5ggluG51wHRYpxk5ILqOPZIXT9JyTgahx4bVyyXcF8nz0SCZUiw
+	 WPr1MS7Xgt9ZqisSKYcO6BW4qlnd+gjhNkMxx9Pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	John Madieu <john.madieu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0939/1146] net/sched: sch_choke: annotate data-races in choke_dump_stats()
-Date: Wed, 20 May 2026 18:19:49 +0200
-Message-ID: <20260520162209.486546566@linuxfoundation.org>
+Subject: [PATCH 7.0 0913/1146] spi: rockchip: Read ISR, not IMR, to detect cs-inactive IRQ
+Date: Wed, 20 May 2026 18:19:23 +0200
+Message-ID: <20260520162208.902051351@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,95 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: John Madieu <john.madieu@gmail.com>
 
-[ Upstream commit d3aeb889dcbd78e95f500d383799a23d949796e0 ]
+[ Upstream commit b4683a239a409d65f88052f5630c748a8ba070cd ]
 
-choke_dump_stats() only runs with RTNL held.
-It reads fields that can be changed in qdisc fast path.
-Add READ_ONCE()/WRITE_ONCE() annotations.
+rockchip_spi_isr() decides whether the current interrupt was the
+cs-inactive event by reading IMR:
 
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260423062839.2524324-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	if (rs->cs_inactive &&
+	    readl_relaxed(rs->regs + ROCKCHIP_SPI_IMR) & INT_CS_INACTIVE)
+		ctlr->target_abort(ctlr);
+
+IMR is the interrupt mask register: it tells which sources are enabled,
+not which one fired. In the PIO path, rockchip_spi_prepare_irq() enables
+both INT_RF_FULL and INT_CS_INACTIVE in IMR when rs->cs_inactive is true:
+
+	if (rs->cs_inactive)
+		writel_relaxed(INT_RF_FULL | INT_CS_INACTIVE,
+			       rs->regs + ROCKCHIP_SPI_IMR);
+
+so the IMR check is always true once cs_inactive is enabled, and every
+PIO interrupt - including normal RF_FULL completions - is dispatched to
+ctlr->target_abort(), aborting the transfer. The bug is reachable on
+ROCKCHIP_SPI_VER2_TYPE2 in target mode with a DMA-capable controller
+when the transfer is short enough to fall back to PIO
+(rockchip_spi_can_dma() returns false below fifo_len).
+
+Read ISR (which is RISR masked by IMR) so the check actually reflects
+which interrupt fired, and parenthesise the expression for clarity while
+at it.
+
+Fixes: 869f2c94db92 ("spi: rockchip: Stop spi slave dma receiver when cs inactive")
+Signed-off-by: John Madieu <john.madieu@gmail.com>
+Link: https://patch.msgid.link/20260425092936.2590132-2-john.madieu@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_choke.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/spi/spi-rockchip.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_choke.c b/net/sched/sch_choke.c
-index 94df8e741a979..2875bcdb18a41 100644
---- a/net/sched/sch_choke.c
-+++ b/net/sched/sch_choke.c
-@@ -229,7 +229,7 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+diff --git a/drivers/spi/spi-rockchip.c b/drivers/spi/spi-rockchip.c
+index eb1992b4178e2..2eb9ede8cc909 100644
+--- a/drivers/spi/spi-rockchip.c
++++ b/drivers/spi/spi-rockchip.c
+@@ -357,7 +357,8 @@ static irqreturn_t rockchip_spi_isr(int irq, void *dev_id)
+ 	struct rockchip_spi *rs = spi_controller_get_devdata(ctlr);
  
- 		/* Draw a packet at random from queue and compare flow */
- 		if (choke_match_random(q, skb, &idx)) {
--			q->stats.matched++;
-+			WRITE_ONCE(q->stats.matched, q->stats.matched + 1);
- 			choke_drop_by_idx(sch, idx, to_free);
- 			goto congestion_drop;
- 		}
-@@ -241,11 +241,13 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			qdisc_qstats_overlimit(sch);
- 			if (use_harddrop(q) || !use_ecn(q) ||
- 			    !INET_ECN_set_ce(skb)) {
--				q->stats.forced_drop++;
-+				WRITE_ONCE(q->stats.forced_drop,
-+					   q->stats.forced_drop + 1);
- 				goto congestion_drop;
- 			}
- 
--			q->stats.forced_mark++;
-+			WRITE_ONCE(q->stats.forced_mark,
-+				   q->stats.forced_mark + 1);
- 		} else if (++q->vars.qcount) {
- 			if (red_mark_probability(p, &q->vars, q->vars.qavg)) {
- 				q->vars.qcount = 0;
-@@ -253,11 +255,13 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 				qdisc_qstats_overlimit(sch);
- 				if (!use_ecn(q) || !INET_ECN_set_ce(skb)) {
--					q->stats.prob_drop++;
-+					WRITE_ONCE(q->stats.prob_drop,
-+					           q->stats.prob_drop + 1);
- 					goto congestion_drop;
- 				}
- 
--				q->stats.prob_mark++;
-+				WRITE_ONCE(q->stats.prob_mark,
-+					   q->stats.prob_mark + 1);
- 			}
- 		} else
- 			q->vars.qR = red_random(p);
-@@ -272,7 +276,7 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return NET_XMIT_SUCCESS;
- 	}
- 
--	q->stats.pdrop++;
-+	WRITE_ONCE(q->stats.pdrop, q->stats.pdrop + 1);
- 	return qdisc_drop(skb, sch, to_free);
- 
- congestion_drop:
-@@ -461,10 +465,12 @@ static int choke_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- {
- 	struct choke_sched_data *q = qdisc_priv(sch);
- 	struct tc_choke_xstats st = {
--		.early	= q->stats.prob_drop + q->stats.forced_drop,
--		.marked	= q->stats.prob_mark + q->stats.forced_mark,
--		.pdrop	= q->stats.pdrop,
--		.matched = q->stats.matched,
-+		.early	= READ_ONCE(q->stats.prob_drop) +
-+			  READ_ONCE(q->stats.forced_drop),
-+		.marked	= READ_ONCE(q->stats.prob_mark) +
-+			  READ_ONCE(q->stats.forced_mark),
-+		.pdrop	= READ_ONCE(q->stats.pdrop),
-+		.matched = READ_ONCE(q->stats.matched),
- 	};
- 
- 	return gnet_stats_copy_app(d, &st, sizeof(st));
+ 	/* When int_cs_inactive comes, spi target abort */
+-	if (rs->cs_inactive && readl_relaxed(rs->regs + ROCKCHIP_SPI_IMR) & INT_CS_INACTIVE) {
++	if (rs->cs_inactive &&
++	    (readl_relaxed(rs->regs + ROCKCHIP_SPI_ISR) & INT_CS_INACTIVE)) {
+ 		ctlr->target_abort(ctlr);
+ 		writel_relaxed(0, rs->regs + ROCKCHIP_SPI_IMR);
+ 		writel_relaxed(0xffffffff, rs->regs + ROCKCHIP_SPI_ICR);
 -- 
 2.53.0
 
