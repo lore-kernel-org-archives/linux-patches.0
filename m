@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9387432E128;
-	Wed, 20 May 2026 17:10:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EF43F1AC4;
+	Wed, 20 May 2026 17:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297018; cv=none; b=J4SFlnvdNfaQlPWOfCB6eNJTbxKn4HRDIe6QZ8rXECHsyRqE29ueFTSzL2C49o+05Vox8nbdq5RvYW0tFreFgFKGHk/kdMg38bHZhznDBcYEdEyMN8vjXqQ2PjCRQ8LAht5p/yGwb3NgjjTeV3hSpY+lFe2Ne/XRklN8KiT71zg=
+	t=1779297021; cv=none; b=aZgckrSKEMcdiuohK1b1ATsfIznKLRnnJ4XK0Gm2hCjELIvqyD76lsvlk7qHKY4Rr0N7M9WOr+/6XwmSD9hc7dvGU/dW8nG6YQjNfyF1OGekmlZRvTshn31Dft6kPSqX+5z4XUJQCL9EtFyIc8QDB7J3EAtpJqvYQu5tOMHmmiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297018; c=relaxed/simple;
-	bh=fwRQIYIRid+Nk3JF5tkjxKiEglq0DpftlAI2xr20/bY=;
+	s=arc-20240116; t=1779297021; c=relaxed/simple;
+	bh=aooyowtYD0BrvNWKifwSLDqzGhslnEp8i2pU8NG2ysk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=paDgUFSwQ62YNRy9VduTvdyXofsF+BLzQxU2hhMFx6mLXMQNZVVBJ06io6XZtMcX4pQFGG9GZM+abD94W03w0dHO7ghpVrt5PRQOi1cKk8C1Igkrltyt0KLwKqek3VF+4Qimp9McNiw+/nOZIH5httfE+vUh0X+nJozoSNw5IfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcxccukF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RiweBQ4caAOPCSYVSJ/6V17ZOUcUwbrUHtZ0rfGSGPZZKE2LVmbfcc0JSo8F1hBtRnTrIBqRRR9iHCPl30Ma2xiL6snkMxeW7mPC+R9SQMkThRG9gKthbL5YPQWQDiHQVHRu+cFAHA7AvNB83kGr0rWfEHTnaekcINn0FtAckiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUHcET3C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcxccukF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BCC1F000E9;
-	Wed, 20 May 2026 17:10:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUHcET3C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE021F000E9;
+	Wed, 20 May 2026 17:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297017;
-	bh=RLgIOOfuscX9Syx2K8KM1nF+6B4VUgHzd+DRBu/O6jk=;
+	s=korg; t=1779297020;
+	bh=wmhX0qoOMCzQZr5LI7o/u4kYEeptO1dKMmvT3GWp+Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jcxccukF+v77V3h61RyluaFHsj7apH+CGQMaJhBTB+n4fueBoOrgGN6mMrUNtU3dL
-	 zb53rSW5r7rJ4wDHbDSFk0vKmD60u1ZoTpDDPOgBV5dn94WXHIf7O7Ut8xQWAamFiu
-	 rIYfRuMaloi8AuU0g/QD8c39u/koIfRRavOv8HMY=
+	b=FUHcET3CtmVPgzLS9GGFTke6Flp/pPgRSeJK7oeH7JAANWsPSctHviQe+OTgPjP1H
+	 ZuJbcZuFDNU5ozc0lxbtYTZKyGtNeyYbXgwxOM+qLYs1+dPwvjktNmFEiL4XaFW9uW
+	 vnYZfraPUP5m1IKJv5knmvMS+nOuRy9KtWHGN4nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hasan Basbunar <basbunarhasan@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Petr Oros <poros@redhat.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1019/1146] page_pool: fix memory-provider leak in page_pool_create_percpu() error path
-Date: Wed, 20 May 2026 18:21:09 +0200
-Message-ID: <20260520162211.291179932@linuxfoundation.org>
+Subject: [PATCH 7.0 1020/1146] iavf: rename IAVF_VLAN_IS_NEW to IAVF_VLAN_ADDING
+Date: Wed, 20 May 2026 18:21:10 +0200
+Message-ID: <20260520162211.314645153@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,106 +56,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hasan Basbunar <basbunarhasan@gmail.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit 5ef343614db766acdc01c56d66e780a1b43c6ac6 ]
+[ Upstream commit 70d62b669f1f9080a25278fc90b64309f4ae8959 ]
 
-When page_pool_create_percpu() fails on page_pool_list(), it falls
-through to its err_uninit: label, which calls page_pool_uninit().
-At that point page_pool_init() has already taken two references
-when the user requested PP_FLAG_ALLOW_UNREADABLE_NETMEM:
+Rename the IAVF_VLAN_IS_NEW state to IAVF_VLAN_ADDING to better
+describe what the state represents: an ADD request has been sent to
+the PF and is waiting for a response.
 
-	pool->mp_ops->init(pool)
-	static_branch_inc(&page_pool_mem_providers);
+This is a pure rename with no behavioral change, preparing for a
+cleanup of the VLAN filter state machine.
 
-Neither is undone by page_pool_uninit(); both are only undone by
-__page_pool_destroy() (success-side teardown). The error path
-therefore leaks the per-provider reference taken by mp_ops->init
-(io_zcrx_ifq->refs in the io_uring zcrx provider, the dmabuf
-binding refcount in the devmem provider) plus one increment of
-the page_pool_mem_providers static branch on every failure of
-xa_alloc_cyclic() inside page_pool_list().
-
-The leaked io_zcrx_ifq->refs in turn pins everything
-io_zcrx_ifq_free() would release on cleanup: ifq->user (uid),
-ifq->mm_account (mmdrop), ifq->dev (device refcount),
-ifq->netdev_tracker (netdev refcount), and the rbuf region.
-The leaked static branch increment forces all subsequent
-page_pool_alloc_netmems() and page_pool_return_page() callers to
-take the slow mp_ops branch for the lifetime of the kernel.
-
-Reachable via the io_uring zcrx path:
-
-	io_uring_register(IORING_REGISTER_ZCRX_IFQ)  /* CAP_NET_ADMIN */
-	  -> __io_uring_register
-	  -> io_register_zcrx
-	  -> zcrx_register_netdev
-	  -> netif_mp_open_rxq
-	  -> driver ndo_queue_mem_alloc
-	  -> page_pool_create_percpu
-	    -> page_pool_init succeeds (mp_ops->init runs, branch++)
-	    -> page_pool_list fails (xa_alloc_cyclic -ENOMEM)
-	    -> goto err_uninit         <-- leak
-
-The same shape applies to the devmem dmabuf provider via
-mp_dmabuf_devmem_init()/mp_dmabuf_devmem_destroy().
-
-Restore the cleanup symmetry by moving the mp_ops->destroy() and
-static_branch_dec() calls out of __page_pool_destroy() and into
-page_pool_uninit(), so page_pool_uninit() is again the strict
-inverse of page_pool_init(). page_pool_uninit() has only two
-callers (the err_uninit: path and __page_pool_destroy()), so this
-preserves the single-call invariant on the success path while
-fixing the err path. The error path of page_pool_init() itself
-still skips the mp_ops cleanup correctly: mp_ops->init is the
-last action that takes a reference before page_pool_init() returns
-0, so when it returns an error neither the refcount nor the static
-branch has been touched.
-
-Triggering the bug requires xa_alloc_cyclic() to fail with -ENOMEM,
-which under normal GFP_KERNEL retry behaviour is rare. It is
-deterministic under CONFIG_FAULT_INJECTION with fail_page_alloc /
-xa fault injection, or under sustained memory pressure. The leak
-is silent: there is no warning, and the released kernel build
-continues running with a permanently-incremented static branch.
-
-Fixes: 0f9214046893 ("memory-provider: dmabuf devmem memory provider")
-Signed-off-by: Hasan Basbunar <basbunarhasan@gmail.com>
-Link: https://patch.msgid.link/20260428170739.34881-1-basbunarhasan@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Petr Oros <poros@redhat.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-1-cdcb48303fd8@intel.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: f2ce65b9b917 ("iavf: stop removing VLAN filters from PF on interface down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/page_pool.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf.h          | 2 +-
+ drivers/net/ethernet/intel/iavf/iavf_virtchnl.c | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 265a729431bb7..8171d1173221b 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -327,6 +327,11 @@ static void page_pool_uninit(struct page_pool *pool)
- 	if (!pool->system)
- 		free_percpu(pool->recycle_stats);
- #endif
-+
-+	if (pool->mp_ops) {
-+		pool->mp_ops->destroy(pool);
-+		static_branch_dec(&page_pool_mem_providers);
-+	}
- }
+diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
+index e9fb0a0919e37..47a862ca5e2c3 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf.h
++++ b/drivers/net/ethernet/intel/iavf/iavf.h
+@@ -158,7 +158,7 @@ struct iavf_vlan {
+ enum iavf_vlan_state_t {
+ 	IAVF_VLAN_INVALID,
+ 	IAVF_VLAN_ADD,		/* filter needs to be added */
+-	IAVF_VLAN_IS_NEW,	/* filter is new, wait for PF answer */
++	IAVF_VLAN_ADDING,	/* ADD sent to PF, waiting for response */
+ 	IAVF_VLAN_ACTIVE,	/* filter is accepted by PF */
+ 	IAVF_VLAN_DISABLE,	/* filter needs to be deleted by PF, then marked INACTIVE */
+ 	IAVF_VLAN_INACTIVE,	/* filter is inactive, we are in IFF_DOWN */
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+index a52c100dcbc56..6b06ae872a0cd 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+@@ -746,7 +746,7 @@ static void iavf_vlan_add_reject(struct iavf_adapter *adapter)
  
- /**
-@@ -1126,11 +1131,6 @@ static void __page_pool_destroy(struct page_pool *pool)
- 	page_pool_unlist(pool);
- 	page_pool_uninit(pool);
+ 	spin_lock_bh(&adapter->mac_vlan_list_lock);
+ 	list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
+-		if (f->state == IAVF_VLAN_IS_NEW) {
++		if (f->state == IAVF_VLAN_ADDING) {
+ 			list_del(&f->list);
+ 			kfree(f);
+ 			adapter->num_vlan_filters--;
+@@ -812,7 +812,7 @@ void iavf_add_vlans(struct iavf_adapter *adapter)
+ 			if (f->state == IAVF_VLAN_ADD) {
+ 				vvfl->vlan_id[i] = f->vlan.vid;
+ 				i++;
+-				f->state = IAVF_VLAN_IS_NEW;
++				f->state = IAVF_VLAN_ADDING;
+ 				if (i == count)
+ 					break;
+ 			}
+@@ -874,7 +874,7 @@ void iavf_add_vlans(struct iavf_adapter *adapter)
+ 				vlan->tpid = f->vlan.tpid;
  
--	if (pool->mp_ops) {
--		pool->mp_ops->destroy(pool);
--		static_branch_dec(&page_pool_mem_providers);
--	}
--
- 	kfree(pool);
- }
+ 				i++;
+-				f->state = IAVF_VLAN_IS_NEW;
++				f->state = IAVF_VLAN_ADDING;
+ 			}
+ 		}
  
+@@ -2910,7 +2910,7 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
+ 
+ 		spin_lock_bh(&adapter->mac_vlan_list_lock);
+ 		list_for_each_entry(f, &adapter->vlan_filter_list, list) {
+-			if (f->state == IAVF_VLAN_IS_NEW)
++			if (f->state == IAVF_VLAN_ADDING)
+ 				f->state = IAVF_VLAN_ACTIVE;
+ 		}
+ 		spin_unlock_bh(&adapter->mac_vlan_list_lock);
 -- 
 2.53.0
 
