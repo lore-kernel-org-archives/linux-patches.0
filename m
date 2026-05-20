@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C873D47D3;
-	Wed, 20 May 2026 16:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF32368968;
+	Wed, 20 May 2026 16:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296298; cv=none; b=g66ZJBQAEyPHGP2jisFdA9mQTRL2OMK79Y+7nVvrZM0BFkIpdqiI/KxqSheWFZKNyYju9WxnxC9oVNaoSHKM+l1+F+/iz+U9UxgzacJexsXP9mJkz1pKie1m4yCC2WR+fpShEwZJ+jmQeduCVaByXKuvgF9J6d4j9ju9HbeoLSg=
+	t=1779296301; cv=none; b=NMkm55huInq4yNvLhwgAFpZw8r9q/pef8/EZLxV4Tp/i7I0RYpF5bZGMAzQZXD4XZ8oB93Lo510qAbNn0UsWosSLtKPvdlyFHTjWAQ5QFe87pVbE+tv257uc3eCWAPT+zBL7sq6kMdsTWbn9fw6SBCu4DzYLRyHpZyKceHA2opQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296298; c=relaxed/simple;
-	bh=hybPV2/GWvw4f10Ka2EXWPHDsCdspSEHJtXh0lUZjcE=;
+	s=arc-20240116; t=1779296301; c=relaxed/simple;
+	bh=ZLe7muEFLnS2mjWvM+i7H9B+FofBsRSdYxC7/LHAyWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kQHSFjf5hiBo/PohvG5eJBsWlMilwsi21FfSEHbYYRBfTQfBOOGjyZJNukMfo1BCL5o0L7wkTt3bYIhlRpQrYvm3wqPME1d621Xb7F3Nx2QDQxJSVyygFehEv20s17/BwDtKVU4vZU+08MPJMAyQJMEJrGNd7yL7X96nJHsQ81g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+wTdLpy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TEtX/bUWDvwT1wvROKKF1eLnyy0RLdX8BbW018S5OVHpN2yHWLLnksY+eYenkdKEB6Gf00Cp0XMzy+X6qmMaJ87HcISNvtU5h9xdl7AuYwgEDfayujc++c65FaWjF8uAPPOumqo2aC0AefNbXKf+fbOmFLQeymL1P18TBBkVf4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZBw+MfD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+wTdLpy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CCA81F000E9;
-	Wed, 20 May 2026 16:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZBw+MfD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36051F000E9;
+	Wed, 20 May 2026 16:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296297;
-	bh=9kYVgx1GfFEzwE2YxrMCiMD6iNb+L2U5EmW6j9VxWcE=;
+	s=korg; t=1779296300;
+	bh=TBA/fZHVbOUysIEQ6WTE2D9MJv5+8DyjejOdFa9aZtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A+wTdLpyYJZGOxr9We0LRM35jA+gUDsLnppOYWMJ05JNYJ0KbDmsOmAhouH8xtvj+
-	 hdc2Q/p8vC80QCLpyhjkAmZYgCV8dLfdGiTYWmqdjeqeoSlxz9zAV01Vvb3++iYPkH
-	 A5uQu8sUQrZLpjG7w+wkGMnKanCZBmzGtFzVtKD8=
+	b=tZBw+MfDJ8sR/s2ksWwyEHL107fC5GVt12dxaisYPB8DJlgc8o/RchCtQGDK4NTDp
+	 Wg9/+Iw5V+GMrzyhSq7b6e6LI+94r43HYU1CroGKQptPcGFzv57fxPmkc2PyrtGYTG
+	 Xq4f20gy1QVwLNBi9R+uB+ELQzEVjz8ljJM2H6Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Adrian Vladu <avladu@cloudbasesolutions.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Aditya Garg <gargaditya@linux.microsoft.com>,
+	Roman Kisel <romank@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0747/1146] erofs: unify lcn as u64 for 32-bit platforms
-Date: Wed, 20 May 2026 18:16:37 +0200
-Message-ID: <20260520162205.112889293@linuxfoundation.org>
+Subject: [PATCH 7.0 0748/1146] tools: hv: Fix cross-compilation
+Date: Wed, 20 May 2026 18:16:38 +0200
+Message-ID: <20260520162205.137141255@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,113 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Aditya Garg <gargaditya@linux.microsoft.com>
 
-[ Upstream commit 2d8c7edcb661812249469f4a5b62e9339118846f ]
+[ Upstream commit ca5ee0e918115fb5cf626d75461d9fca06e06caf ]
 
-As sashiko reported [1], `lcn` was typed as `unsigned long` (or
-`unsigned int` sometimes), which is only 32 bits wide on 32-bit
-platforms, which causes `(lcn << lclusterbits)` to be truncated
-at 4 GiB.
+Use the native ARCH only in case it is not set, this will allow the
+cross-compilation where ARCH is explicitly set.
 
-In order to consolidate the logic, just use `u64` consistently
-around the codebase.
+Additionally, simplify the ARCH check to build the fcopy daemon only
+for x86 and x86_64.
 
-[1] https://sashiko.dev/r/20260420034612.1899973-1-hsiangkao%40linux.alibaba.com
-
-Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: 82b0945ce2c2 ("tools: hv: Add new fcopy application based on uio driver")
+Reported-by: Adrian Vladu <avladu@cloudbasesolutions.com>
+Closes: https://lore.kernel.org/linux-hyperv/PR3PR09MB54119DB2FD76977C62D8DD6AB04D2@PR3PR09MB5411.eurprd09.prod.outlook.com/
+Co-developed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Aditya Garg <gargaditya@linux.microsoft.com>
+Reviewed-by: Roman Kisel <romank@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ tools/hv/Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index 30775502b56da..abf7ddc64c63b 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -10,7 +10,7 @@
- struct z_erofs_maprecorder {
- 	struct inode *inode;
- 	struct erofs_map_blocks *map;
--	unsigned long lcn;
-+	u64 lcn;
- 	/* compression extent information gathered */
- 	u8  type, headtype;
- 	u16 clusterofs;
-@@ -20,8 +20,7 @@ struct z_erofs_maprecorder {
- 	bool partialref, in_mbox;
- };
+diff --git a/tools/hv/Makefile b/tools/hv/Makefile
+index 34ffcec264ab0..016753f3dd7f6 100644
+--- a/tools/hv/Makefile
++++ b/tools/hv/Makefile
+@@ -2,7 +2,7 @@
+ # Makefile for Hyper-V tools
+ include ../scripts/Makefile.include
  
--static int z_erofs_load_full_lcluster(struct z_erofs_maprecorder *m,
--				      unsigned long lcn)
-+static int z_erofs_load_full_lcluster(struct z_erofs_maprecorder *m, u64 lcn)
- {
- 	struct inode *const inode = m->inode;
- 	struct erofs_inode *const vi = EROFS_I(inode);
-@@ -94,7 +93,7 @@ static int get_compacted_la_distance(unsigned int lobits,
- }
+-ARCH := $(shell uname -m 2>/dev/null)
++ARCH ?= $(shell uname -m 2>/dev/null)
+ sbindir ?= /usr/sbin
+ libexecdir ?= /usr/libexec
+ sharedstatedir ?= /var/lib
+@@ -20,7 +20,7 @@ override CFLAGS += -O2 -Wall -g -D_GNU_SOURCE -I$(OUTPUT)include
+ override CFLAGS += -Wno-address-of-packed-member
  
- static int z_erofs_load_compact_lcluster(struct z_erofs_maprecorder *m,
--					 unsigned long lcn, bool lookahead)
-+					 u64 lcn, bool lookahead)
- {
- 	struct inode *const inode = m->inode;
- 	struct erofs_inode *const vi = EROFS_I(inode);
-@@ -234,7 +233,7 @@ static int z_erofs_load_compact_lcluster(struct z_erofs_maprecorder *m,
- }
- 
- static int z_erofs_load_lcluster_from_disk(struct z_erofs_maprecorder *m,
--					   unsigned int lcn, bool lookahead)
-+					   u64 lcn, bool lookahead)
- {
- 	struct erofs_inode *vi = EROFS_I(m->inode);
- 	int err;
-@@ -249,7 +248,7 @@ static int z_erofs_load_lcluster_from_disk(struct z_erofs_maprecorder *m,
- 		return err;
- 
- 	if (m->type >= Z_EROFS_LCLUSTER_TYPE_MAX) {
--		erofs_err(m->inode->i_sb, "unknown type %u @ lcn %u of nid %llu",
-+		erofs_err(m->inode->i_sb, "unknown type %u @ lcn %llu of nid %llu",
- 			  m->type, lcn, EROFS_I(m->inode)->nid);
- 		DBG_BUGON(1);
- 		return -EOPNOTSUPP;
-@@ -269,7 +268,7 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
- 	const unsigned int lclusterbits = vi->z_lclusterbits;
- 
- 	while (m->lcn >= lookback_distance) {
--		unsigned long lcn = m->lcn - lookback_distance;
-+		u64 lcn = m->lcn - lookback_distance;
- 		int err;
- 
- 		if (!lookback_distance)
-@@ -286,7 +285,7 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
- 		m->map->m_la = (lcn << lclusterbits) | m->clusterofs;
- 		return 0;
- 	}
--	erofs_err(sb, "bogus lookback distance %u @ lcn %lu of nid %llu",
-+	erofs_err(sb, "bogus lookback distance %u @ lcn %llu of nid %llu",
- 		  lookback_distance, m->lcn, vi->nid);
- 	DBG_BUGON(1);
- 	return -EFSCORRUPTED;
-@@ -300,7 +299,7 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
- 	struct erofs_inode *vi = EROFS_I(inode);
- 	bool bigpcl1 = vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_1;
- 	bool bigpcl2 = vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_2;
--	unsigned long lcn = m->lcn + 1;
-+	u64 lcn = m->lcn + 1;
- 	int err;
- 
- 	DBG_BUGON(m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD);
-@@ -331,7 +330,7 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
- 		  m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD);
- 
- 	if (m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD && m->delta[0] != 1) {
--		erofs_err(sb, "bogus CBLKCNT @ lcn %lu of nid %llu", lcn, vi->nid);
-+		erofs_err(sb, "bogus CBLKCNT @ lcn %llu of nid %llu", lcn, vi->nid);
- 		DBG_BUGON(1);
- 		return -EFSCORRUPTED;
- 	}
+ ALL_TARGETS := hv_kvp_daemon hv_vss_daemon
+-ifneq ($(ARCH), aarch64)
++ifneq ($(filter x86_64 x86,$(ARCH)),)
+ ALL_TARGETS += hv_fcopy_uio_daemon
+ endif
+ ALL_PROGRAMS := $(patsubst %,$(OUTPUT)%,$(ALL_TARGETS))
 -- 
 2.53.0
 
