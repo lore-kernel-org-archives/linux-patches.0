@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4153A16B6;
-	Wed, 20 May 2026 17:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38A928DC4;
+	Wed, 20 May 2026 17:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296623; cv=none; b=CaEk/jtoc+L5m6+T2zsT2+0Hd0nJFSuoNE/YIrMQsle6H3N6tu7Tw1LptaZ6i2JyVQ9Mu292lZbI4H+68f1cBkskPmVOxpdf2pgwRLDEOl7TDj+23oiDVwxaZMjXGUCMpz/F6OEieuLVlAdGjxZB9byV/EOGUyj+ZQ0W9mz2Jfo=
+	t=1779296626; cv=none; b=i4SVAy3ZjnGovygr5QhjsOLsRn32/jmfv6HVOCApqreN0xuRIoobE1GfsrXO+f43EIcevk6HSXCvxqKZjA4YHQKj7MMf2ainNkwIF9VNVuc5BEDJq9lVpwaUYCm0DZO35P8IoE/R2/vPhAyDVGUsgFIRI+BfcT8OFf4VS4fZAfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296623; c=relaxed/simple;
-	bh=h/lqeavsH0csq6gAfPKNDLaX46SX0Kj0H7PbFMw2wa4=;
+	s=arc-20240116; t=1779296626; c=relaxed/simple;
+	bh=E6f5MswcTXREYpCgHzwwYHGVjZEwx2i6d7mQo1Kmy7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmUMhQsX6kDq/RFEotOWj9mRQp2gUHnH6lvYs6PuNBjdQticWtDhzftX4rRbEHqZTlO/bKrjlh3yt+Yi6Q6CigDUCV9GYb50CU3XsFHCNyIiMLjwWWJJIZUjAwDinpvU96i9FpoRx19nCpOJ8HXhdzfnUShOgzu5MmlLdsl/PHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boCWO7t7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=quMSfYR/eHUPkOx3Qnkh8/HRi6rrv7AmXS3t6suxchXBfjNX5vFT/RTgKbJ69n1nx76drnQsNRgkgcw9FJCpxYda4+Q+3ZbD+PC3LJsr6Sb6rElZsRkaQM4aW/c8jV5od4qnBhcVlAjUINQvBVm3sTHBoPY8a/mFQyotjeJ2HfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYa8dMOJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boCWO7t7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A4E1F000E9;
-	Wed, 20 May 2026 17:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYa8dMOJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666D01F000E9;
+	Wed, 20 May 2026 17:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296622;
-	bh=+BY00HR6VAW69g8m2narP1PyzWo0zPzluyMh1QrLopE=;
+	s=korg; t=1779296624;
+	bh=HsM099AuIpuRIwXAnU17xAjs70eYw+KHiC4BjGmPQc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=boCWO7t7pRuUIwXIj+HNOCAN43zHI6U9e3/1zkvxQpOik5iNE7WA3pccj4wDNNAOB
-	 3N1nM/HPc0g1nECDSmGjhr6O4fx2TK1pgbdiHOX7Dx1h3LHGPazXZbkiLdZFmVrAYa
-	 JeNYc2w0NJpVJBeD4/kRZch9FyyweaYh+ptM9E80=
+	b=oYa8dMOJ1yCtpcQ+D91mOcqOdhGnjYI8qO6JPz1GL1/ctK3py//cKFrFF4g2UW17p
+	 8acvpP9mGCQjR4Sbi7NSX8x3yKsfcOYAJeBYV/bg7124QmG2q14Q7rnlXi68+B+iKV
+	 vNJc5sJ3yL04XggqQp6/ogvbwsX7wStiDDr1esLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0827/1146] ksmbd: destroy async_ida in ksmbd_conn_free()
-Date: Wed, 20 May 2026 18:17:57 +0200
-Message-ID: <20260520162206.947560579@linuxfoundation.org>
+Subject: [PATCH 7.0 0828/1146] ksmbd: fix durable fd leak on ClientGUID mismatch in durable v2 open
+Date: Wed, 20 May 2026 18:17:58 +0200
+Message-ID: <20260520162206.969563113@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,50 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 From: DaeMyung Kang <charsyam@gmail.com>
 
-[ Upstream commit b32c8db48212a34998c36d0bbc05b29d5c407ef5 ]
+[ Upstream commit 804054d19886ac6628883d82410f6ee42a818664 ]
 
-When per-connection async_ida was converted from a dynamically
-allocated ksmbd_ida to an embedded struct ida, ksmbd_ida_free() was
-removed from the connection teardown path but no matching
-ida_destroy() was added.  The connection is therefore freed with the
-IDA's backing xarray still intact.
+ksmbd_lookup_fd_cguid() returns a ksmbd_file with its refcount
+incremented via ksmbd_fp_get(). parse_durable_handle_context() in
+the DURABLE_REQ_V2 case properly releases this reference on every
+path inside the ClientGUID-match branch, either by calling
+ksmbd_put_durable_fd() or by transferring ownership to dh_info->fp
+for a successful reconnect. However, when an entry exists in the
+global file table with the same CreateGuid but a different
+ClientGUID, the code simply falls through to the new-open path
+without dropping the reference obtained from ksmbd_lookup_fd_cguid().
 
-The kernel IDA API expects ida_init() and ida_destroy() to be paired
-over an object's lifetime, so add the missing cleanup before the
-connection is freed.
+Per MS-SMB2 section 3.3.5.9.10 ("Handling the
+SMB2_CREATE_DURABLE_HANDLE_REQUEST_V2 Create Context"), the server
+MUST locate an Open whose Open.CreateGuid matches the request's
+CreateGuid AND whose Open.ClientGuid matches the ClientGuid of the
+connection that received the request. If no such Open is found, the
+server MUST continue with the normal open execution phase. A
+CreateGuid hit with a ClientGUID mismatch is therefore the
+"Open not found" case: proceeding with a new open is correct, but
+the reference obtained purely as a side effect of the lookup must
+not be leaked.
 
-No leak has been observed in testing; this is a pairing fix to match
-the IDA lifetime rules, not a response to a reproduced regression.
+Repeated requests that hit this mismatch pin global_ft entries,
+prevent __ksmbd_close_fd() from ever running for the corresponding
+files, and defeat the durable scavenger, leading to long-lived
+resource leaks.
 
-Fixes: d40012a83f87 ("cifsd: declare ida statically")
+Release the reference in the mismatch path and clear dh_info->fp so
+subsequent logic does not mistake a non-matching lookup result for
+a reconnect target.
+
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
 Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/smb/server/smb2pdu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index 9d7e8a0812721..fb9918e5d9871 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -98,6 +98,15 @@ void ksmbd_conn_free(struct ksmbd_conn *conn)
- 	kfree(conn->preauth_info);
- 	kfree(conn->mechToken);
- 	if (atomic_dec_and_test(&conn->refcnt)) {
-+		/*
-+		 * async_ida is embedded in struct ksmbd_conn, so pair
-+		 * ida_destroy() with the final kfree() rather than with
-+		 * the unconditional field teardown above.  This keeps
-+		 * the IDA valid for the entire lifetime of the struct,
-+		 * even while other refcount holders (oplock / vfs
-+		 * durable handles) still reference the connection.
-+		 */
-+		ida_destroy(&conn->async_ida);
- 		conn->transport->ops->free_transport(conn->transport);
- 		kfree(conn);
- 	}
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index e3a120a2d0596..c3c7688f0fa80 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2845,6 +2845,8 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
+ 					dh_info->reconnected = true;
+ 					goto out;
+ 				}
++				ksmbd_put_durable_fd(dh_info->fp);
++				dh_info->fp = NULL;
+ 			}
+ 
+ 			if ((lc && (lc->req_state & SMB2_LEASE_HANDLE_CACHING_LE)) ||
 -- 
 2.53.0
 
