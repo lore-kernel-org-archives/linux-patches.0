@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA3C403E9A;
-	Wed, 20 May 2026 18:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991D3371CEA;
+	Wed, 20 May 2026 18:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302542; cv=none; b=TX9KLwcKiBJdTSxDZ5NYxJCRsEI+Hs6dAEY7QYtYkIeUGwh1r6z/mo7yo0q00cbjF2+CtuDbLu/UdwPZRAcDDLTy0vXM8gH/GONeADPcUNewTcDTLv39UlBhDmddiZM3VyoPKOBJAM4yOCWYC7fZSQ+g4D6HFM2YTQVCHf2VNAI=
+	t=1779302544; cv=none; b=oUySvn50mijh4DqjtnpajwwsxFLIj+V1Kb9GZns6biQEKSfTHg4Fnw7oHcK0/EeDn7+yTs2z1DofuV8DQ3Q6x4+GUZE13RXthXm3BNQ6ztAbMKxDMrQrtB3HYnzmlME9uPATCbYeP4g2HI7gkjDadJriJLzDDTleZ57N6/bXJyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302542; c=relaxed/simple;
-	bh=aX5k7NgNtouCarVxlZ421LZySKE9qW3Micln4CfxtKs=;
+	s=arc-20240116; t=1779302544; c=relaxed/simple;
+	bh=mMllXNOXXC+QClaZ97R6tNYFWnHf8VRj/WomKdnHTAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wgqe332sB0CCy3KYcVwcuyuCWCnGtepkBbEKXHrnnV+qzVvCcaTFkBgmB64m13FIFGF5NBZyKnQoXtEM40dimKjGVZYz8eRSnYSQPUtp5DZrbHhGKCzn+QtBXXyn0ENGQAtxy0uf2bLBO0+TegRozWO0EpPHgkiTFwSx+rfDNek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysS//uL/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YDsCqyHZTcQrnf+j+KLUsddnsgTSdlRqti1eBbIhwSVcJA5IyfTy7dx2ZbpqByf6dNRBfKB35Z1nnE3tTJzLFUxnlC4fJD7OkAedQdAzivcuBPLr1Vjb8CavWFCyic8dEIUgHYlO+srlJO9IvZCfwrz6Yfcv2hlLEWo2K4jRs7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YM7A6VR4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysS//uL/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAEA1F000E9;
-	Wed, 20 May 2026 18:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YM7A6VR4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F9D1F000E9;
+	Wed, 20 May 2026 18:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302540;
-	bh=m/F5AJ0GzktEWKHf9fGtBeOytbylWv6GkWwsLREdGxk=;
+	s=korg; t=1779302543;
+	bh=s0dzWOp02HcUdaNwo9FbtHeHApvC+JwsrrtMSil1Klk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ysS//uL/0GveeEspxsuyvu4FwUzGuPcEpdH4mOCzZb4h/zqmZoMTG5gcDMOEVWYg5
-	 k1GtE2tMS4TJamI18/te8TlsUoFuONU+NUoY32Vz1uGHB0EhrB/CzOb+n2kDp8fQ2q
-	 NWR3Jl2c7717sVMFXPvf/e8PjZ6/36ECbLczywlM=
+	b=YM7A6VR485QodV+h8WPNpXH8sv4JAmCHTY7TTTWs77DSd+H42WDj8FReUDJ7FxvjL
+	 Td/9o1xZH5G3ouYJZAfsSBGNROLTaHVRtT27LNMYBQPWzYD+Wwf6txkIAB7YYcUq3u
+	 SDkpy2h9xjlHaDB66ObSh6Uf30jJolGJGeCQqKiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhang <zhangjian.3032@bytedance.com>,
-	Corey Minyard <corey@minyard.net>,
+	T Pratham <t-pratham@ti.com>,
+	Manorit Chawdhry <m-chawdhry@ti.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 254/508] ipmi: ssif_bmc: fix missing check for copy_to_user() partial failure
-Date: Wed, 20 May 2026 18:21:17 +0200
-Message-ID: <20260520162104.151952479@linuxfoundation.org>
+Subject: [PATCH 6.6 300/508] crypto: sa2ul - Fix AEAD fallback algorithm names
+Date: Wed, 20 May 2026 18:22:03 +0200
+Message-ID: <20260520162105.142973083@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,40 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Zhang <zhangjian.3032@bytedance.com>
+From: T Pratham <t-pratham@ti.com>
 
-[ Upstream commit ea641be7a4faee4351f9c5ed6b188e1bbf5586a6 ]
+[ Upstream commit 8451ab6ad686ffdcdf9ddadaa446a79ab48e5590 ]
 
-copy_to_user() returns the number of bytes that could not be copied,
-with a non-zero value indicating a partial or complete failure. The
-current code only checks for negative return values and treats all
-non-negative results as success.
+For authenc AEAD algorithms, sa2ul is trying to register very specific
+-ce version as a fallback. This causes registration failure on SoCs
+which do not have ARMv8-CE enabled/available. Change the fallback
+algorithm from the specific driver name to generic algorithm name so
+that the kernel can allocate any available fallback.
 
-Treating any positive return value from copy_to_user() as
-an error and returning -EFAULT.
-
-Fixes: dd2bc5cc9e25 ("ipmi: ssif_bmc: Add SSIF BMC driver")
-Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
-Message-ID: <20260403090603.3988423-2-zhangjian.3032@bytedance.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Fixes: d2c8ac187fc92 ("crypto: sa2ul - Add AEAD algorithm support")
+Signed-off-by: T Pratham <t-pratham@ti.com>
+Reviewed-by: Manorit Chawdhry <m-chawdhry@ti.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ssif_bmc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/crypto/sa2ul.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/ipmi/ssif_bmc.c b/drivers/char/ipmi/ssif_bmc.c
-index e8460e966b83e..6928adb5df5ab 100644
---- a/drivers/char/ipmi/ssif_bmc.c
-+++ b/drivers/char/ipmi/ssif_bmc.c
-@@ -163,6 +163,8 @@ static ssize_t ssif_bmc_read(struct file *file, char __user *buf, size_t count,
- 		spin_unlock_irqrestore(&ssif_bmc->lock, flags);
+diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
+index 94eb6f6afa257..af221d5d999f2 100644
+--- a/drivers/crypto/sa2ul.c
++++ b/drivers/crypto/sa2ul.c
+@@ -1775,13 +1775,13 @@ static int sa_cra_init_aead(struct crypto_aead *tfm, const char *hash,
+ static int sa_cra_init_aead_sha1(struct crypto_aead *tfm)
+ {
+ 	return sa_cra_init_aead(tfm, "sha1",
+-				"authenc(hmac(sha1-ce),cbc(aes-ce))");
++				"authenc(hmac(sha1),cbc(aes))");
+ }
  
- 		ret = copy_to_user(buf, &msg, count);
-+		if (ret > 0)
-+			ret = -EFAULT;
- 	}
+ static int sa_cra_init_aead_sha256(struct crypto_aead *tfm)
+ {
+ 	return sa_cra_init_aead(tfm, "sha256",
+-				"authenc(hmac(sha256-ce),cbc(aes-ce))");
++				"authenc(hmac(sha256),cbc(aes))");
+ }
  
- 	return (ret < 0) ? ret : count;
+ static void sa_exit_tfm_aead(struct crypto_aead *tfm)
 -- 
 2.53.0
 
