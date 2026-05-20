@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9B13ED5C8;
-	Wed, 20 May 2026 17:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9AF3F1AB8;
+	Wed, 20 May 2026 17:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298618; cv=none; b=AcHRVaYFxCMhgDjvesHbM4Fv/yZZ7r3XHPQPuMBlkBacmoep4P8N6CWpR/Y/EkSU+AGkfm7BhRLM6Zcdwi4llaHqD6hwrYpgsvUIqLbly0Z/9nyBvBsc7V6liTweupSKOJrjhXMlQAwIT5I4+ZR24O6hBLAiT4ajbVoVlcABoDA=
+	t=1779298620; cv=none; b=tvXUrrG9ZWUJ+pBLMAID6cyJ1H6kCHlHtsAJvvBDuOFqeGgWBC8D/iGRa1OA0iF2A7uIXDEQ94YvTgpXUDCmBmy+6FWQsgBR6xus1mCW/KjJ9ObtCOM8mnVx9hoKCz1gjf4+bDRG1sHAqHaChFgSV0x2Tgp4cBusk/Ve4btVcnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298618; c=relaxed/simple;
-	bh=1jnKUWFbPjNrr9BGXsMkQMHOaYG2eNtNjenmz9tZGCY=;
+	s=arc-20240116; t=1779298620; c=relaxed/simple;
+	bh=XV4cBgjOjJiw5REQQRJ9krJOxkkbSbemYJ5Yq/GxrTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OsiYtCyNHlDtgInQwJ/ZU/AdrSJYcFocrFyb/Et8mDEtb2p4L1m4Gm2pi1qP1I5u7Mq6XziMS1Gl48kYBGqsBYjQZGmgbD/IGN/qGyFXIdr5AwU5gvU3MdiAfJ0bK9ns+QF4XjwKjEvCtNS3UwV5NATUdm42CkUeGhKXJoZ8QHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXnWZnGR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eWB1VgCMQsNVTVz7TL3nwgXGR2tHXlG5l9iR6OgrB51hublmo3DMwv+9fQ4hZ4pQFb9PvVowafJxTMEzXZ4DEsjBGxQSPJvomP1w3whoyD9hmm9xdcYw1GXM+QwTjdOPZ3o7Kzo3CRp6Pi1YXgmUCahDf3clz9V8dBjwkFef++s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVFJ5fVF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXnWZnGR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E2F1F00893;
-	Wed, 20 May 2026 17:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVFJ5fVF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1201F000E9;
+	Wed, 20 May 2026 17:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298614;
-	bh=HA3Zw8+x2lfSJkx7o4C19ufPrpfv+CQw4Xi6BL7aq7I=;
+	s=korg; t=1779298617;
+	bh=ct0C7fnC0wFOdxNGwH5KDwkO3rthh5PG43UD7Ef0GPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WXnWZnGRPwv9MEmrN4Ce3ULxWUhMTEkI7OScd1sQ/A6WCCCxSzkGkcAzj50NTHhg8
-	 maNH+Jv4Of3WpUQ1hlVUoX2pIgioR/Edx4hbyhwBHQknEX6tFsW6V1PD7e0hKJluOq
-	 c5VjuDgoRwMfhZ+IHBv2WTvuM6u3ZJA8X4bfDyTk=
+	b=JVFJ5fVFe0D2ZYj6EKq8IRQvswc7SIoEi+GbXqfsJc3kQCo+0NMLIx4L3ggQPivjn
+	 HjztJ/L0mEJoRaDGLrA+9wvfaWZkUWztlkUVuF3P6VcJkxYA77+F6f83EWk+eTo6RP
+	 JcKjPnU9ycSdw/JyRtBtr8yGeQP5N7Tp+Tui1bgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 477/957] mtd: spinand: winbond: Rename IO_MODE register macro
-Date: Wed, 20 May 2026 18:16:00 +0200
-Message-ID: <20260520162144.871458418@linuxfoundation.org>
+Subject: [PATCH 6.18 442/957] fwctl: Fix class init ordering to avoid NULL pointer dereference on device removal
+Date: Wed, 20 May 2026 18:15:25 +0200
+Message-ID: <20260520162144.106252113@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -50,41 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Richard Cheng <icheng@nvidia.com>
 
-[ Upstream commit 57e1015cc9a96372f330195abe32a904ec8d1eab ]
+[ Upstream commit a55f80233f384dc89ef3425b2e1dd0e6d44bcf29 ]
 
-Suffix the macro name with *_REG to align with the rest of the driver.
+CXL is linked before fwctl in drivers/Makefile. Both use `module_init, so
+`cxl_pci_driver_init()` runs first. When `cxl_pci_probe()` calls
+`fwctl_register()` and then `device_add()`, fwctl_class is not yet
+registered because fwctl_init() hasn't run, causing `class_to_subsys()` to
+return NULL and skip knode_class initialization.
 
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Stable-dep-of: 25a915fad503 ("mtd: spinand: winbond: Clarify when to enable the HS bit")
+On device removal, `class_to_subsys()` returns non-NULL, and
+`device_del()` calls `klist_del()` on the uninitialized knode, triggering
+a NULL pointer dereference.
+
+Fixes: 858ce2f56b52 ("cxl: Add FWCTL support to CXL")
+Link: https://patch.msgid.link/r/20260409051902.40218-1-icheng@nvidia.com
+Signed-off-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Kai-Heng Feng <kaihengf@nvidia.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/spi/winbond.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/fwctl/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/spi/winbond.c b/drivers/mtd/nand/spi/winbond.c
-index b389c9ee58508..2361109101727 100644
---- a/drivers/mtd/nand/spi/winbond.c
-+++ b/drivers/mtd/nand/spi/winbond.c
-@@ -22,7 +22,7 @@
- #define W25N0XJW_SR4			0xD0
- #define W25N0XJW_SR4_HS			BIT(2)
+diff --git a/drivers/fwctl/main.c b/drivers/fwctl/main.c
+index bc6378506296c..098c3824ad751 100644
+--- a/drivers/fwctl/main.c
++++ b/drivers/fwctl/main.c
+@@ -415,7 +415,7 @@ static void __exit fwctl_exit(void)
+ 	unregister_chrdev_region(fwctl_dev, FWCTL_MAX_DEVICES);
+ }
  
--#define W35N01JW_VCR_IO_MODE			0x00
-+#define W35N01JW_VCR_IO_MODE_REG	0x00
- #define W35N01JW_VCR_IO_MODE_SINGLE_SDR		0xFF
- #define W35N01JW_VCR_IO_MODE_OCTAL_SDR		0xDF
- #define W35N01JW_VCR_IO_MODE_OCTAL_DDR_DS	0xE7
-@@ -368,7 +368,7 @@ static int w35n0xjw_vcr_cfg(struct spinand_device *spinand)
- 	else
- 		return -EINVAL;
- 
--	ret = w35n0xjw_write_vcr(spinand, W35N01JW_VCR_IO_MODE, io_mode);
-+	ret = w35n0xjw_write_vcr(spinand, W35N01JW_VCR_IO_MODE_REG, io_mode);
- 	if (ret)
- 		return ret;
- 
+-module_init(fwctl_init);
++subsys_initcall(fwctl_init);
+ module_exit(fwctl_exit);
+ MODULE_DESCRIPTION("fwctl device firmware access framework");
+ MODULE_LICENSE("GPL");
 -- 
 2.53.0
 
