@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB883F23C5;
-	Wed, 20 May 2026 18:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F543F23C5;
+	Wed, 20 May 2026 18:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301108; cv=none; b=X/pPrvcuoBClgnkLaxDCw5DaQIBo5G1iFnDZvLbVIOPVbKxfj3p+7Roy+x+IXVvZTgJjEPugSctSBhb1ESjJFGYK9n0w+zEM8aCwytJ5B45Ou/qKbmJLneBFa/3xwpzGBaK7L80vwcmws6CDRa8drFLbf5o9dKXrp9uvKIXPQe0=
+	t=1779301110; cv=none; b=MQsjf1/BWIQ82pw9Yn9uZopMtD4CUxOHhwsBlIK7KqbmDPH5w0g1vJeOKNM4slcBVPL36wxf7JlF2JN/LEqPqepvr82cLf9Ik/mgaiDye5d9qj2Zh0bRAMFpqYEbiYpTzgUtzc2rz1RDxFYbOFtrn10GtkjPYvSVMVyFHNcSUZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301108; c=relaxed/simple;
-	bh=irF7/Wual0BRRs9qdm+V+wU487vGovF03cVY89Jj1J4=;
+	s=arc-20240116; t=1779301110; c=relaxed/simple;
+	bh=P6A++E6kgAlDAE7CjHiW1/blm0PFS6c+5vJm9qI+TZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=arcFvy6Xzil8KKT7OvvhiiPlSLsEc4t4styGDY9YHojiTT0UEBkzJUPqGNH6KLm7bEIMXhEz7DYxFgUYUfNu42q+4EBsy4I8e3b3yoTnbDoMjuqJQdcSNOejj0owadaB3t7KFEY1EV5pBPWWMapVOsCaKLm3F54gqXL0YbEtrjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wta1FfFk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tWjSINuOkNVNFTNe176ufAWyVQcRD6SJ/l8fWPFY4N39xq5zw/bsZAQgC7UF292QpQtz6SsbrcrV0pDMypvLBIWRAzUqd+CZXIfBbrBjCsQScYNhYW0mNTCVHsqFbXsyoFp+OmoseuiOP1S0z7wHlfphmiuS3HBcxESX4S72yJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+U3xheS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wta1FfFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9FA1F000E9;
-	Wed, 20 May 2026 18:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+U3xheS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137B21F000E9;
+	Wed, 20 May 2026 18:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301106;
-	bh=sCx1jS3t99y3GNx+uu0G7pDuiQ3aezCayBlZ+BBL3eU=;
+	s=korg; t=1779301109;
+	bh=czGnA3hjFZpNFe0fhYFLmDYfgVt72mlyWU4JnE5HLWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wta1FfFkODHJ+0pt2KDa+8xRbbe1hzx1XXdGtPsS8UzH0rFvh4NCy7wbLY10+i1ta
-	 Ba0jf66V1enCJgtddLvEYi0EA3J8dkAWsmD9gybAJ1Y2oMHG0Bw/5bbLLCrcr9UvjX
-	 6/v0BfJOTv1jGaBirac741QKe2Tg6dG4ejMS8Yy4=
+	b=C+U3xheSZxgzzRXWe5zlsnHxxfpZG2E5/YLBbMTG6mY/AhMv2WuXT70BWYR5SmJvH
+	 9WrDhw8HmC+JAQ6FRp5F88PpUjhUOweZFHaG4qvfP3CQ3NGHXslihu62QMTRr4IvWg
+	 8FWXWVjc4HtmS5LiaprSeapr/1+oAce9//YABwb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	T Pratham <t-pratham@ti.com>,
-	Manorit Chawdhry <m-chawdhry@ti.com>,
+	Paul Moses <p@1g4.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 427/666] crypto: sa2ul - Fix AEAD fallback algorithm names
-Date: Wed, 20 May 2026 18:20:38 +0200
-Message-ID: <20260520162120.527071032@linuxfoundation.org>
+Subject: [PATCH 6.12 428/666] crypto: ccp - copy IV using skcipher ivsize
+Date: Wed, 20 May 2026 18:20:39 +0200
+Message-ID: <20260520162120.548282779@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,45 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T Pratham <t-pratham@ti.com>
+From: Paul Moses <p@1g4.org>
 
-[ Upstream commit 8451ab6ad686ffdcdf9ddadaa446a79ab48e5590 ]
+[ Upstream commit a7a1f3cdd64d8a165d9b8c9e9ad7fb46ac19dfc4 ]
 
-For authenc AEAD algorithms, sa2ul is trying to register very specific
--ce version as a fallback. This causes registration failure on SoCs
-which do not have ARMv8-CE enabled/available. Change the fallback
-algorithm from the specific driver name to generic algorithm name so
-that the kernel can allocate any available fallback.
+AF_ALG rfc3686-ctr-aes-ccp requests pass an 8-byte IV to the driver.
 
-Fixes: d2c8ac187fc92 ("crypto: sa2ul - Add AEAD algorithm support")
-Signed-off-by: T Pratham <t-pratham@ti.com>
-Reviewed-by: Manorit Chawdhry <m-chawdhry@ti.com>
+ccp_aes_complete() restores AES_BLOCK_SIZE bytes into the caller's IV
+buffer while RFC3686 skciphers expose an 8-byte IV, so the restore
+overruns the provided buffer.
+
+Use crypto_skcipher_ivsize() to copy only the algorithm's IV length.
+
+Fixes: 2b789435d7f3 ("crypto: ccp - CCP AES crypto API support")
+Signed-off-by: Paul Moses <p@1g4.org>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/sa2ul.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/ccp/ccp-crypto-aes.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
-index 461eca40e8789..d1c2d129ad418 100644
---- a/drivers/crypto/sa2ul.c
-+++ b/drivers/crypto/sa2ul.c
-@@ -1775,13 +1775,13 @@ static int sa_cra_init_aead(struct crypto_aead *tfm, const char *hash,
- static int sa_cra_init_aead_sha1(struct crypto_aead *tfm)
- {
- 	return sa_cra_init_aead(tfm, "sha1",
--				"authenc(hmac(sha1-ce),cbc(aes-ce))");
-+				"authenc(hmac(sha1),cbc(aes))");
- }
+diff --git a/drivers/crypto/ccp/ccp-crypto-aes.c b/drivers/crypto/ccp/ccp-crypto-aes.c
+index d11daaf47f068..871886826cf00 100644
+--- a/drivers/crypto/ccp/ccp-crypto-aes.c
++++ b/drivers/crypto/ccp/ccp-crypto-aes.c
+@@ -29,8 +29,11 @@ static int ccp_aes_complete(struct crypto_async_request *async_req, int ret)
+ 	if (ret)
+ 		return ret;
  
- static int sa_cra_init_aead_sha256(struct crypto_aead *tfm)
- {
- 	return sa_cra_init_aead(tfm, "sha256",
--				"authenc(hmac(sha256-ce),cbc(aes-ce))");
-+				"authenc(hmac(sha256),cbc(aes))");
- }
+-	if (ctx->u.aes.mode != CCP_AES_MODE_ECB)
+-		memcpy(req->iv, rctx->iv, AES_BLOCK_SIZE);
++	if (ctx->u.aes.mode != CCP_AES_MODE_ECB) {
++		size_t ivsize = crypto_skcipher_ivsize(crypto_skcipher_reqtfm(req));
++
++		memcpy(req->iv, rctx->iv, ivsize);
++	}
  
- static void sa_exit_tfm_aead(struct crypto_aead *tfm)
+ 	return 0;
+ }
 -- 
 2.53.0
 
