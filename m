@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305BA3403F4;
-	Wed, 20 May 2026 17:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D05F3403F4;
+	Wed, 20 May 2026 17:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297237; cv=none; b=iKFv9ZpJjiSgeQ7wXEA7UQFOpY/ilF48lHvGdbqyyV3d0xVEzvLt3q5MFnGjF52Ia+LoWNNpPhPkKeW82qBpo39y4M8NGmk6BOXo7yi7nOHNvhshrqLM4ofgjaGWLtyp9nD6m67/YfMSVP48s82tFkN3tjokLvKtSbcz+b6CGl0=
+	t=1779297240; cv=none; b=antsTzqgq3b1Lpg6JmuvWjnkpOb39GWUWswP+LdyTytgaHY3Z4ITybqgGnnyh52lFT62paQE8tUNfzxVfPPr637f4WS4YZh0DqVr5hcviU4VJ8MQc3Q6u6TuxBb32DNCNnt4e41/6YN7Lqb2hZ5pIaegrkH+QBUcYa/pF9sKVko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297237; c=relaxed/simple;
-	bh=O8Jbh6kdcqSVt+ycsUMStTAnBmHTnpOZ1rLAkmjNORU=;
+	s=arc-20240116; t=1779297240; c=relaxed/simple;
+	bh=1hmCuTcXUFoLmn1bisYIeCDsrKkL5VVs5t88Oej/rDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQ0QyoN6CMYfgnIaLNm4HCocpegypZKLuD9rOeI35KsmMLm5IwiuG4sbiZOTkLBRDcpLc4dsH9FUWUufiyswcHq7xcn0jABbis/G1htJVdqGc8/W5C1MPSxZg95YCARi0RUxKuPw5N/BA0F8vI/JP54d2OGy/9VqgqCw5b+eOes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QStOcYV3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gE9WV4sF+BZ3suwm4nUcaoA+XFDNLg95aW3Jo2eOGVke2xR9BwV9bU2k7fohoGK+CfbygJQFRsLybvWEa2fKU90UoL9jYZxX4aifUwKjNS3tNp2lOeGcCzuoTTQon7FlNaWaHjJna0SyfnYxqlaNbX8/rrNuwzpuqT6WjpYkdHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLFBpVk5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QStOcYV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FC01F000E9;
-	Wed, 20 May 2026 17:13:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLFBpVk5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AFAF1F000E9;
+	Wed, 20 May 2026 17:13:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297236;
-	bh=wpgNKafX2g4cfLL9d7C9xbzWFlKCgSsrAVSLxE2VsIE=;
+	s=korg; t=1779297238;
+	bh=csUTH6NMqWm4B2zZNHtgTWDhklabwa47K1n+pX5UZQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QStOcYV3w0B8LSCv4z6mcklFJ13qioadWxU9s2ujfLjOAgCRWPLXULdTJGTB7LXlC
-	 RIcWLBRmZGjipHY2cTAEkVgcvEKa+gIRtCWb6O/R9KKTOFY8nhgII4mtVQtAHM4AAH
-	 Oq0ZTDPwTM4dfGEfTr5pV4W1Pm/hxUVezQg3z4QI=
+	b=TLFBpVk5UBuo0t5e0kZ4fa0gvWF3LgcM5iOnjd1cmmMWDwBQXuu/DXE+VxUJXOUed
+	 RiKtjgTYoecwo/ZjUZLQSNh/jRMFUxQgqvjcn1YngmgzndFLTucgs15cushbmYoHV6
+	 WlLatsyV0j9nVsu5jLzrai8g9MIwmk4SuWqEPH9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 7.0 1103/1146] powerpc/warp: Fix error handling in pika_dtm_thread
-Date: Wed, 20 May 2026 18:22:33 +0200
-Message-ID: <20260520162213.207351783@linuxfoundation.org>
+	Xiaoli Feng <xifeng@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	netfs@lists.linux.dev,
+	linux-cifs@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 7.0 1104/1146] netfs: fix error handling in netfs_extract_user_iter()
+Date: Wed, 20 May 2026 18:22:34 +0200
+Message-ID: <20260520162213.229460888@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,39 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 108d7f951271cbd36ca36efc5e5d106966f5180c upstream.
+commit 0aad5704c6b4d14007d4eab15883e8524e4310f4 upstream.
 
-pika_dtm_thread() acquires client through of_find_i2c_device_by_node()
-but fails to release it in error handling path. This could result in a
-reference count leak, preventing proper cleanup and potentially
-leading to resource exhaustion. Add put_device() to release the
-reference in the error handling path.
+In netfs_extract_user_iter(), if iov_iter_extract_pages() failed to
+extract user pages, bail out on -ENOMEM, otherwise return the error
+code only if @npages == 0, allowing short DIO reads and writes to be
+issued.
 
-Found by code review.
+This fixes mmapstress02 from LTP tests against CIFS.
 
+Fixes: 85dd2c8ff368 ("netfs: Add a function to extract a UBUF or IOVEC into a BVEC iterator")
+Reported-by: Xiaoli Feng <xifeng@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260512123404.719402-10-dhowells@redhat.com
+Cc: netfs@lists.linux.dev
 Cc: stable@vger.kernel.org
-Fixes: 3984114f0562 ("powerpc/warp: Platform fix for i2c change")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20251116024411.21968-1-make24@iscas.ac.cn
+Cc: linux-cifs@vger.kernel.org
+Cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/44x/warp.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/netfs/iterator.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/arch/powerpc/platforms/44x/warp.c
-+++ b/arch/powerpc/platforms/44x/warp.c
-@@ -293,6 +293,8 @@ static int pika_dtm_thread(void __iomem
- 		schedule_timeout(HZ);
+--- a/fs/netfs/iterator.c
++++ b/fs/netfs/iterator.c
+@@ -22,7 +22,7 @@
+  *
+  * Extract the page fragments from the given amount of the source iterator and
+  * build up a second iterator that refers to all of those bits.  This allows
+- * the original iterator to disposed of.
++ * the original iterator to be disposed of.
+  *
+  * @extraction_flags can have ITER_ALLOW_P2PDMA set to request peer-to-peer DMA be
+  * allowed on the pages extracted.
+@@ -67,8 +67,8 @@ ssize_t netfs_extract_user_iter(struct i
+ 		ret = iov_iter_extract_pages(orig, &pages, count,
+ 					     max_pages - npages, extraction_flags,
+ 					     &offset);
+-		if (ret < 0) {
+-			pr_err("Couldn't get user pages (rc=%zd)\n", ret);
++		if (unlikely(ret <= 0)) {
++			ret = ret ?: -EIO;
+ 			break;
+ 		}
+ 
+@@ -97,6 +97,13 @@ ssize_t netfs_extract_user_iter(struct i
+ 		npages += cur_npages;
  	}
  
-+	put_device(&client->dev);
++	if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
++		for (i = 0; i < npages; i++)
++			unpin_user_page(bv[i].bv_page);
++		kvfree(bv);
++		return ret;
++	}
 +
- 	return 0;
+ 	iov_iter_bvec(new, orig->data_source, bv, npages, orig_len - count);
+ 	return npages;
  }
- 
 
 
