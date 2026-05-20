@@ -1,50 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403F23EAC8F;
-	Wed, 20 May 2026 16:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B5D342CBA;
+	Wed, 20 May 2026 16:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295389; cv=none; b=ID3SFLL6LZ12V1YmoyQBEg0RQ7lRq6RdoEqpVoDyH4V/d7Y2rvaMlkk28e2M+7ST8rGvtWtm2y1EYE0Buk3NG5OPPrb9Vhnxue0rQ2cgqxjqnPTM9wjlyv3xkCCYkJI4pW26IQ695hjsD1ViI8Fjba+Qcd0NYmItwY0MKGh9hkU=
+	t=1779295391; cv=none; b=ObOeX7jWNm0w4St9+k83v8UjqzHenYESgJPzAmOB5unP2Bgi0DDh05iAikv8tY6VVjtli5QZEtLxGoF2dy1NgentaqgrBXIbKT1maUpuVyYQJvFE9SlSfRoYOTvglFeFphJAfzkgwiV9BQZNUdYnWKSzFfnm+ahtQtyv+ePXGU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295389; c=relaxed/simple;
-	bh=kXsg/TxVIxsAY8OysjPnBq054QTeU6jKoEB93GVLnTo=;
+	s=arc-20240116; t=1779295391; c=relaxed/simple;
+	bh=SkVnDH9lvTraXxb1AP4kOzNtSWl22detHosNXctXwjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzdMg2eitgF5eOiEG+8gN1UC3Z9bz97gbAlESoopGjKq3ZpG1ERedudvSvdBOvEJCeQMNa4Z2Ay/nkDGd6kmoyYPmS/h6AS+DFdEz9wVxj6eyMqSMYfkPU6Cu5q8yUAWtNgaCS5US4x6AD7oJuw8+SUFOdFf2wAhXHqzfQ8TBCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvKrm1Os; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a3Z0xHThPrtp70JkIcThw/SpdeOj+uxU/7oCwJZ/G9O4B0kCvr9lhJe8xTpUSGRBxlRw/nmDBIuT+Yj4UhwEhxM9GBX1vrxmbVmyh9Ul6nGAAIsjSr1sReawCdXXMDTTq2apbr5ClzmRlBZflBvAAYlK9o0Fi3wa2r2vyn5OnBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xK1JYe9b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvKrm1Os"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1740F1F00893;
-	Wed, 20 May 2026 16:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xK1JYe9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7D61F000E9;
+	Wed, 20 May 2026 16:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295387;
-	bh=cgk5rWaI3a40sDr45r9iuwxvhKTPp1UpjddN3bMSIyg=;
+	s=korg; t=1779295390;
+	bh=/eUrGjIpUge8mQCCDRF3+DfKlTpmfemV3FR45OlqZUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hvKrm1OsyVdzKpQlV1uMZajscY9C/eO2VMSvt4UWo27R2PEbHCpKqeHflc0rs5ApC
-	 oDzBA2NXGzB+YgCHeIfgLT92Cn5p5W1c0YcxjQbh8Oh2gmqqpWkvJ5DvU4k38Ylm/7
-	 LxBBmc9c0CtXrPYgO748AiOqfxzP/Q4LuO5Rprpw=
+	b=xK1JYe9bhM6QtdXFrvfJeb8ojAdL2OGno994pimTYIbUgiP7dfTAjCbLPYxytSI9D
+	 EbR1MlBDzvHTVlotb5ttvo6BVPwJc/sKP4X8y+2uLi486DmRf2xeHiaKUeBzWS5lw5
+	 ttjwn/ZiyN6XcY3UGG91pTSzEdH6lVKm+N5s3Ehg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	wang lian <lianux.mm@gmail.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Brian Geffon <bgeffon@google.com>,
+	gao xu <gaoxu2@honor.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Minchan Kim <minchan@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0401/1146] Docs/mm/damon/index: fix typo: autoamted -> automated
-Date: Wed, 20 May 2026 18:10:51 +0200
-Message-ID: <20260520162157.277004172@linuxfoundation.org>
+Subject: [PATCH 7.0 0402/1146] zram: do not permit params change after init
+Date: Wed, 20 May 2026 18:10:52 +0200
+Message-ID: <20260520162157.297902549@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -63,46 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit a4e82de81fe59d5bfcc9450145e8e108561f2e07 ]
+[ Upstream commit 241f9005b1c81c2637eef2c836a03c83b4f3eeb9 ]
 
-There is an obvious typo.  Fix it (s/autoamted/automated/).
+Patch series "zram: recompression cleanups and tweaks", v2.
 
-Link: https://lkml.kernel.org/r/20260307195356.203753-8-sj@kernel.org
-Fixes: 32d11b320897 ("Docs/mm/damon/index: simplify the intro")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Acked-by: wang lian <lianux.mm@gmail.com>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+This series is a somewhat random mix of fixups, recompression cleanups and
+improvements partly based on internal conversations.  A few patches in the
+series remove unexpected or confusing behaviour, e.g.  auto correction of
+bad priority= param for recompression, which should have always been just
+an error.  Then it also removes "chain recompression" which has a tricky,
+unexpected and confusing behaviour at times.  We also unify and harden the
+handling of algo/priority params.  There is also an addition of missing
+device lock in algorithm_params_store() which previously permitted
+modification of algo params while the device is active.
+
+This patch (of 6):
+
+First, algorithm_params_store(), like any sysfs handler, should grab
+device lock.
+
+Second, like any write() sysfs handler, it should grab device lock in
+exclusive mode.
+
+Third, it should not permit change of algos' parameters after device init,
+as this doesn't make sense - we cannot compress with one C/D dict and then
+just change C/D dict to a different one, for example.
+
+Another thing to notice is that algorithm_params_store() accesses device's
+->comp_algs for algo priority lookup, which should be protected by device
+lock in exclusive mode in general.
+
+Link: https://lkml.kernel.org/r/20260311084312.1766036-1-senozhatsky@chromium.org
+Link: https://lkml.kernel.org/r/20260311084312.1766036-2-senozhatsky@chromium.org
+Fixes: 4eac932103a5 ("zram: introduce algorithm_params device attribute")
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Brian Geffon <bgeffon@google.com>
+Cc: gao xu <gaoxu2@honor.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Minchan Kim <minchan@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/mm/damon/index.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/zram/zram_drv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/mm/damon/index.rst b/Documentation/mm/damon/index.rst
-index 82f6c5eea49a7..318f6a7bfea47 100644
---- a/Documentation/mm/damon/index.rst
-+++ b/Documentation/mm/damon/index.rst
-@@ -12,7 +12,7 @@ DAMON is a Linux kernel subsystem for efficient :ref:`data access monitoring
-  - *light-weight* (for production online usages),
-  - *scalable* (in terms of memory size),
-  - *tunable* (for flexible usages), and
-- - *autoamted* (for production operation without manual tunings).
-+ - *automated* (for production operation without manual tunings).
+diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
+index 85943da0cdca8..aaaef8dd82538 100644
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -1748,6 +1748,10 @@ static ssize_t algorithm_params_store(struct device *dev,
+ 		}
+ 	}
  
- .. toctree::
-    :maxdepth: 2
++	guard(rwsem_write)(&zram->dev_lock);
++	if (init_done(zram))
++		return -EBUSY;
++
+ 	/* Lookup priority by algorithm name */
+ 	if (algo) {
+ 		s32 p;
 -- 
 2.53.0
 
