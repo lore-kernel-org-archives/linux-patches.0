@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CB1228CB0;
-	Wed, 20 May 2026 16:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080DC36A34D;
+	Wed, 20 May 2026 16:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294838; cv=none; b=avzSyVLARqTgqtfB2Ic1/CHU141R3LJ2b5sKHGFAB4J/KUKGn4m3ShWqJmvjeZzaiXITodCYeUJpWUC+gOov9Z+7kycN1XRzAEN608vYrpduXBjHT8L2FBUgox5MM2UHjt5gGjzZjZfHFR0E3tAYLrtmSyjlmO6iwov7/0/Ox7g=
+	t=1779294841; cv=none; b=Z7DtmA3EbUS9B4PzZ+bSr0e+PFHZgeQcYIjyroblmN+v5dGO0ExMIlYqLC68iQSdNkYysdjEKugBtbV//4PwAiApX7pCDvWiN1aMiZIn+HpwYTu3QpIKiNWKq7AqnmP3gam1SYxJKi48Xux9nWASLB5IbM2YUG3v27DR9krnyao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294838; c=relaxed/simple;
-	bh=VhpRDSaLniwQAmdV2E3q3S0O6MIQ4ZN8Z96M9hhoJxU=;
+	s=arc-20240116; t=1779294841; c=relaxed/simple;
+	bh=5eErl1pu8jwxF6LuezxmGsrWosDxi1/v5RJHGAR3Yoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zur2SVBXYgGGqFl8dI5tVLG69Wv8mU2Idotgmn6fGZ47wNkkVeiqQ/7/8i0yrI7Ka/pL9VJj58qqvgGtxVaORAKJUWIdyKR2Bewvwlrczvl2e62nwzGEewqubHD2N1hP4VTGvvBhrAjVVlP10mDaviI8EsBe/PXJAd5zsN2RYiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZUfYcmG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I6pF85qs7YUa5hHccdVPe/0VMEMKUljhiER0z6BmnJiQ/TYIhefmRmQMB+8aepamk8mZH/uYG4sii21NOiJRhnXPSA7oDomfTHDdwSSn2isNT4egadA42EzLcZLtopBIUvHBkFteTrsy1E6PUzi9LKUu8jIUI2L1m3amXjiuDpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TK2g2Zuy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZUfYcmG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52F71F000E9;
-	Wed, 20 May 2026 16:33:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TK2g2Zuy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1611F000E9;
+	Wed, 20 May 2026 16:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294837;
-	bh=cTyZx2ZDl8B1oROxK8lXj/1K8cT6gEL65BV9XgOpTbk=;
+	s=korg; t=1779294839;
+	bh=yhYynhroLWjiEdqmNHp1EShY1z3wVXr3U0M8tPVn8sU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DZUfYcmGbnuARTw8Zae49QF4yo0dbJlEylwXJODYlApWsfmtltca1JoQ+4bAWGnQS
-	 vajFAcKcYSbBI3+uOMqDUE6okwDEoiCwllx8Oi3RK6+RztgaZ+CNLZ/xiEcDH26T77
-	 Pfs5pVQZZNBxUMm16kv0xZG9Jc6jNaeyvD+kfK10=
+	b=TK2g2ZuyEbNP8jjeMm+BnOu7JnI54Cus+47MAHFz+KTCK2vYBab34DFJ41Uok6RuZ
+	 PkeLs/YGG/M1bCd8W86CWeTluAOuk+DT2y3CzlvI5/Ujw0JSgs0UbQbpyzkFbXhYtL
+	 2SqhFUbadnsBiRQQlQUtZroP2nPQ7/9hniPJfvDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0191/1146] net: mana: Use pci_name() for debugfs directory naming
-Date: Wed, 20 May 2026 18:07:21 +0200
-Message-ID: <20260520162152.601143099@linuxfoundation.org>
+Subject: [PATCH 7.0 0192/1146] net: mana: Move current_speed debugfs file to mana_init_port()
+Date: Wed, 20 May 2026 18:07:22 +0200
+Message-ID: <20260520162152.622006814@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,51 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
 
-[ Upstream commit c116f07ab9d22bb6f355f3cf9e44c1e6a47fe559 ]
+[ Upstream commit 3b7c7fc97aea7b4048001d12f45777201c74a17f ]
 
-Use pci_name(pdev) for the per-device debugfs directory instead of
-hardcoded "0" for PFs and pci_slot_name(pdev->slot) for VFs. The
-previous approach had two issues:
+Move the current_speed debugfs file creation from mana_probe_port() to
+mana_init_port(). The file was previously created only during initial
+probe, but mana_cleanup_port_context() removes the entire vPort debugfs
+directory during detach/attach cycles. Since mana_init_port() recreates
+the directory on re-attach, moving current_speed here ensures it survives
+these cycles.
 
-1. pci_slot_name() dereferences pdev->slot, which can be NULL for VFs
-   in environments like generic VFIO passthrough or nested KVM,
-   causing a NULL pointer dereference.
-
-2. Multiple PFs would all use "0", and VFs across different PCI
-   domains or buses could share the same slot name, leading to
-   -EEXIST errors from debugfs_create_dir().
-
-pci_name(pdev) returns the unique BDF address, is always valid, and is
-unique across the system.
-
-Fixes: 6607c17c6c5e ("net: mana: Enable debugfs files for MANA device")
+Fixes: 75cabb46935b ("net: mana: Add support for net_shaper_ops")
 Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260408081224.302308-2-ernis@linux.microsoft.com
+Link: https://patch.msgid.link/20260408081224.302308-3-ernis@linux.microsoft.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/gdma_main.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-index 786186c9a115f..c2e855ff3ca9a 100644
---- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
-+++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-@@ -2007,11 +2007,8 @@ static int mana_gd_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	gc->dev = &pdev->dev;
- 	xa_init(&gc->irq_contexts);
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+index 6d87533924fa8..2ff19e1938f49 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -3124,6 +3124,8 @@ static int mana_init_port(struct net_device *ndev)
+ 	eth_hw_addr_set(ndev, apc->mac_addr);
+ 	sprintf(vport, "vport%d", port_idx);
+ 	apc->mana_port_debugfs = debugfs_create_dir(vport, gc->mana_pci_debugfs);
++	debugfs_create_u32("current_speed", 0400, apc->mana_port_debugfs,
++			   &apc->speed);
+ 	return 0;
  
--	if (gc->is_pf)
--		gc->mana_pci_debugfs = debugfs_create_dir("0", mana_debugfs_root);
--	else
--		gc->mana_pci_debugfs = debugfs_create_dir(pci_slot_name(pdev->slot),
--							  mana_debugfs_root);
-+	gc->mana_pci_debugfs = debugfs_create_dir(pci_name(pdev),
-+						  mana_debugfs_root);
+ reset_apc:
+@@ -3402,8 +3404,6 @@ static int mana_probe_port(struct mana_context *ac, int port_idx,
  
- 	err = mana_gd_setup(pdev);
- 	if (err)
+ 	netif_carrier_on(ndev);
+ 
+-	debugfs_create_u32("current_speed", 0400, apc->mana_port_debugfs, &apc->speed);
+-
+ 	return 0;
+ 
+ free_indir:
 -- 
 2.53.0
 
