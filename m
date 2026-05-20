@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9983DB33D;
-	Wed, 20 May 2026 11:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AD33F54DB;
+	Wed, 20 May 2026 11:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276054; cv=none; b=UdsILaTsuWd+xRomR4ceCF9hMIBmpDovB2x4slglzn9Uo0OtwUMEcLIoabpgquYDauosoZdqLt5ijUd8jiCB0y9x4TERhJCMFDK2fcWCWLbk+eXF5ePHyjP7FBhuDfnXgKCWuVYo/296NZRydJpeSt4Wrg92cYgUB7HdawwpuJs=
+	t=1779276055; cv=none; b=juniZ39si0LtODDEYdsjdBAIQfh2ILEKvSduPvFW5+2fOTHV+vowZzLjnscCdxW4HGODvld2Za0Vb+z/LdXp8O12ocXVaEArwcV60yf2bQ+/cQQdn5YV+0mbKJPyPFvdohcgtG0LLMNIu/JK9yguS8pPxudUT7XgZSQzznBX1RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276054; c=relaxed/simple;
-	bh=XhAd41Z06wOuUxDQcx5PGrlK2cE7UQU8eKd6LyGCH2M=;
+	s=arc-20240116; t=1779276055; c=relaxed/simple;
+	bh=MSSv7cZG4QR4CTe1tyXdoTYxertwGmgfBqtd9Nohg+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbrXoNfkK8WlMwHSagNhwAJolwPUFQIqamK2ZdxfdwjgpyjvtlBoq7DVZjuGL2J1hDJgUvEvs4XQQ8NWX9YZSNjXsGt3tPzLIaDyQ8vSnozCjmGtG5lqvyOMAK97BkxuNMKPZXIAHdwBx6ubV/9QASKsIDMd54YM+dh0Qnf4E2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kqu6YLE2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NJunGqjopsik5P0JPssvU4x4xgCXRvF5eHD7tdyT+MkOxo0l9XzBLNYH7754iy80XKZG0RQZ6rwKQDBZZurDpWyr2G/shI8lx8yVAJuAcOgVKRJSMn/7/If8FR045TXG5oaA+X0KpRPBZmFSZ7rRKwJgDsYR/ZyYQDJEuaBisjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rulbb9lA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kqu6YLE2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA201F00894;
-	Wed, 20 May 2026 11:20:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rulbb9lA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E8A1F000E9;
+	Wed, 20 May 2026 11:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276052;
-	bh=UR8YaLfyNJTK2sII2DsNqJ1PeWNm2h21TvTZ8rrIw3Q=;
+	s=k20260515; t=1779276053;
+	bh=vo7xLNpRRxHEcNbThS8imVCpKzJpc9GuQTSEECQtEYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kqu6YLE2x1tz92HDazdRjYyh2dUd2nTtP8EBlbV6Rq0BiMCKz+Jb6P2Yjkpj4OcUk
-	 MWvofruGUUZIM/kTmbaV9ca8TDVMR/CuG8E4/YRYDePOhLsw7aQsAM5bAdAfC8KdT1
-	 HMJEBdUJU/brGl5Kf0329YdJhtV5M/k5f1M/pvA1VYHigiO/IVhxoLsc54fq3kk1rO
-	 u6lupFfqfezIJMuzzpZj3Y0i+HW++54oyPUUBfhbeOOwqqWMIwrjW2wOOKw19MKGRi
-	 cxXo4LccWs5KC8exjpBA8lF5mqoDH63lSJA/SCU09JXAShu4HqG8v7qDrO4Im5rHRe
-	 MFl+H0j1tALLw==
+	b=Rulbb9lA0EbzBso6sdZzUlxWfynxQNJaCbdzGrqQPt3EYmMQhNWy6bzS90B7CI5LL
+	 K+MWJFOyi2ZGy7k2jkbT8ODmTPH1iJVV9f4ZTvjjMW7EWeLfPTBFbfwusbmH3Sdhcg
+	 RPasKQ30oTUGIChJlPKQe8dUI3YR9WQqr3cvwIXfJ1rIOs+Hohmj/xpcQCLc5t/7Kk
+	 mk5ngTNj1juVE2z1XDQijR1pQj35JWgBZvQ6h1DTr9aZ4Fh2DWN/K1uJZiZvqKQn1V
+	 vN36Fqmd9AkLdmXuud1UnNPNmohfTezHbkH+dBDfE4h7efXeM6GNWHAWM154Mi7i7A
+	 6UnKAakfsllEg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xiang Liu <xiang.liu@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Tomas Henzl <thenzl@redhat.com>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	James.Bottomley@HansenPartnership.com,
+	storagedev@microchip.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] drm/amd/ras: Fix CPER ring debugfs read overflow
-Date: Wed, 20 May 2026 07:19:19 -0400
-Message-ID: <20260520111944.3424570-47-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] scsi: smartpqi: Silence a recursive lock warning
+Date: Wed, 20 May 2026 07:19:20 -0400
+Message-ID: <20260520111944.3424570-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -54,283 +52,209 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiang Liu <xiang.liu@amd.com>
+From: Tomas Henzl <thenzl@redhat.com>
 
-[ Upstream commit 6bbede02dc62a1021aeeae87ab243bd7a93c61d2 ]
+[ Upstream commit d65efdf467ff935e35dfe6aa9a7ab93f17ac07ee ]
 
-The legacy CPER debugfs reader can reach the payload path without a
-valid pointer snapshot. The remaining user byte count is also treated as
-the ring occupancy in dwords, so reads past the header can copy more than
-requested.
+On systems with multiple controllers debug kernel shows
 
-Take the CPER lock before sampling pointers. Resample rptr/wptr for
-payload reads, bound the payload copy by available dwords and the
-remaining user size, and advance the file position for each dword copied.
+  WARNING: possible recursive locking detected
 
-Signed-off-by: Xiang Liu <xiang.liu@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1e40ef87ffdc291e05ccdade8b9170cc9c1c4249)
+during shutdown.
+
+Each controller does have its own ctrl_info (and mutex) and that isn't
+correctly recognized by debug kernel.  Suppress the warning by releasing
+the mutex at the end of pqi_shutdown().
+
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Acked-by: Don Brace <don.brace@microchip.com>
+Link: https://patch.msgid.link/20260414124118.23661-1-thenzl@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Records
+## Decision Summary
+Backport this to stable trees that contain the mutex-based
+`pqi_ctrl_block_device_reset()` shutdown path, verified in `v5.15`,
+`v6.1`, `v6.6`, `v6.12`, `v6.16`, and `v6.19`. Do not apply it as-is to
+`v5.10`, where that helper only sets `block_device_reset = true` and no
+`pqi_ctrl_unblock_device_reset()` helper exists.
 
-Step 1.1 Record: Subsystem `drm/amd/ras`; action verb `Fix`; claimed
-intent is preventing CPER ring debugfs read overflow.
+This is a one-line fix for an imbalanced `lun_reset_mutex` lock in
+`pqi_shutdown()`. The direct user-visible symptom is a lockdep “possible
+recursive locking detected” warning during shutdown/reboot on systems
+with multiple smartpqi controllers. The impact is mostly debug-kernel
+noise rather than data loss or a production crash, but the patch
+corrects real locking hygiene, is tiny, subsystem-reviewed, and has very
+low risk.
 
-Step 1.2 Record: Tags present: `Signed-off-by: Xiang Liu
-<xiang.liu@amd.com>`, `Reviewed-by: Tao Zhou <tao.zhou1@amd.com>`,
-`Signed-off-by: Alex Deucher <alexander.deucher@amd.com>`, and a cherry-
-pick line. No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc:
-stable`.
+## Phase Walkthrough
+Phase 1:
+- Record 1.1: subsystem `scsi: smartpqi`; action `Silence`; intent is to
+  stop a recursive lock warning during shutdown.
+- Record 1.2: tags present: `Signed-off-by: Tomas Henzl`, `Acked-by: Don
+  Brace`, `Link:
+  https://patch.msgid.link/20260414124118.23661-1-thenzl@redhat.com`,
+  `Signed-off-by: Martin K. Petersen`. No `Fixes:`, no `Reported-by:`,
+  no `Cc: stable`.
+- Record 1.3: message describes debug kernels warning on multi-
+  controller systems because distinct per-controller mutexes are not
+  recognized as distinct after shutdown leaves one held.
+- Record 1.4: hidden bug fix: yes. It is described as silencing a
+  warning, but the code adds a missing unlock for a mutex acquired
+  earlier in the same function.
 
-Step 1.3 Record: Commit body describes two concrete bugs: CPER payload
-reads can proceed without a valid rptr/wptr snapshot, and byte `size` is
-treated as dword ring occupancy, allowing copies beyond the requested
-read count.
+Phase 2:
+- Record 2.1: one file, `drivers/scsi/smartpqi/smartpqi_init.c`, one
+  insertion in `pqi_shutdown()`. Single-file surgical fix.
+- Record 2.2: before, `pqi_shutdown()` locked
+  `ctrl_info->lun_reset_mutex` via `pqi_ctrl_block_device_reset()` and
+  returned after `pqi_reset()` without unlocking. After, it unlocks via
+  `pqi_ctrl_unblock_device_reset()`.
+- Record 2.3: bug category is synchronization/lock balancing. The
+  changed helper is verified as
+  `mutex_unlock(&ctrl_info->lun_reset_mutex)`.
+- Record 2.4: fix quality is high: one existing helper call, no new API,
+  no refactor. Main risk is allowing a reset waiter to proceed late in
+  shutdown; Tomas explicitly discussed this risk on-list and said he
+  checked it.
 
-Step 1.4 Record: Not hidden; this is an explicit memory-safety/user-copy
-bounds fix.
+Phase 3:
+- Record 3.1: blame shows the shutdown call to
+  `pqi_ctrl_block_device_reset()` is old, but `9fa8202336096` changed
+  the helper to a mutex-based block/unblock model. That is the relevant
+  introduction point for the missing unlock.
+- Record 3.2: no `Fixes:` tag, so no tagged introducing commit to
+  follow.
+- Record 3.3: recent file history shows normal smartpqi churn, including
+  fixes and device-ID updates; no prerequisite for this one-line helper
+  call was identified for v5.15+ style code.
+- Record 3.4: Tomas Henzl has SCSI commits in history but no recent
+  smartpqi commits found; Don Brace is listed as smartpqi maintainer and
+  acked the patch.
+- Record 3.5: dependency is the existing
+  `pqi_ctrl_unblock_device_reset()` helper. It exists in v5.15+ verified
+  tags, not in v5.10.
 
-Step 2.1 Record: One file changed,
-`drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c`; one function changed,
-`amdgpu_debugfs_ring_read`; roughly +13/-? surgical single-function
-change.
+Phase 4:
+- Record 4.1: candidate commit hash was not available locally, so `b4
+  dig -c` could not be used for this candidate. `b4 mbox` and `b4 am`
+  using the Link fetched the original thread.
+- Record 4.2: original recipients were `linux-scsi` and Don Brace; Don
+  Brace acked it; Martin Petersen applied it.
+- Record 4.3: external thread and an earlier related LKML post show a
+  real lockdep splat with call trace through `__do_sys_reboot ->
+  device_shutdown -> pci_device_shutdown -> pqi_shutdown`.
+- Record 4.4: no newer v2/v3 was reported by `b4 mbox -c`; thread had
+  six messages. A separate 2025 lockdep-key proposal for the same
+  warning was found, but it is not present in this tree.
+- Record 4.5: web search found no relevant stable-list discussion.
 
-Step 2.2 Record: Before, CPER locking and pointer sampling happened only
-when `*pos < 12`; payload-only reads used uninitialized `early[]`.
-Before, payload loop copied one dword while decrementing `size` by one,
-although `size` is bytes. After, CPER reads lock before sampling,
-resample pointers for payload, compute available dwords separately, cap
-reads by `size >> 2`, and advance `*pos`.
+Phase 5:
+- Record 5.1: modified function: `pqi_shutdown()`.
+- Record 5.2: caller is PCI driver `.shutdown = pqi_shutdown`; this is
+  reached from PCI/device shutdown during reboot/poweroff paths.
+- Record 5.3: relevant callees are `pqi_wait_until_ofa_finished()`,
+  `pqi_scsi_block_requests()`, `pqi_ctrl_block_device_reset()`,
+  `pqi_ctrl_block_requests()`, `pqi_ctrl_wait_until_quiesced()`,
+  `pqi_flush_cache()`, `pqi_crash_if_pending_command()`, `pqi_reset()`,
+  and now `pqi_ctrl_unblock_device_reset()`.
+- Record 5.4: verified external call trace reaches `pqi_shutdown()` from
+  reboot. Trigger requires multiple smartpqi controllers and a
+  debug/lockdep kernel.
+- Record 5.5: similar lock/unlock pairing exists in OFA and
+  suspend/resume paths; shutdown was the unmatched case.
 
-Step 2.3 Record: Bug category is memory safety / bounds correctness plus
-synchronization. Mechanism: debugfs `read()` could return/copy more
-bytes than requested and could use invalid CPER ring pointers on reads
-starting past the header.
+Phase 6:
+- Record 6.1: verified `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.16`, and
+  `v6.19` have mutex-based block/unblock helpers and shutdown lacks the
+  final unblock. Verified `v5.10` does not have the mutex helper.
+- Record 6.2: expected backport difficulty is clean or trivial for
+  v5.15+ style trees because the exact helper and shutdown context
+  exist. v5.10 is not applicable as-is.
+- Record 6.3: no related fix already present in the checked local tree;
+  `lun_reset_key` proposal is absent.
 
-Step 2.4 Record: Fix quality is good: small, local, no API change.
-Regression risk is low; it only changes CPER debugfs reads. Holding
-`cper.ring_lock` for payload-only reads matches the existing intent to
-serialize with `amdgpu_cper_ring_write`.
+Phase 7:
+- Record 7.1: subsystem is SCSI storage driver, `smartpqi`; criticality
+  is driver-specific but storage-related.
+- Record 7.2: subsystem is active; recent history shows ongoing fixes,
+  device IDs, and driver updates.
 
-Step 3.1 Record: `git blame` shows the CPER payload reader came from
-`5a1428242952f2` (`drm/amdgpu: read CPER ring via debugfs`), first
-contained by `v6.15-rc1`; the partial CPER lock came from
-`8652920d2c0024`.
+Phase 8:
+- Record 8.1: affected users are systems with Microchip/Microsemi
+  SmartPQI controllers, especially multiple controllers with
+  debug/lockdep kernels.
+- Record 8.2: trigger is shutdown/reboot. The verified external trace
+  shows reboot path; unprivileged triggerability was not verified.
+- Record 8.3: failure mode is lockdep warning/lock imbalance, severity
+  medium-low in production terms but valid for debug-kernel correctness.
+- Record 8.4: benefit is moderate for affected systems and CI/debug
+  kernels; risk is very low because this is one line using an existing
+  helper after a matching lock.
 
-Step 3.2 Record: No `Fixes:` tag to follow. I inspected the introducing
-commits manually: `5a1428242952f2` added the affected CPER payload
-reader; `8652920d2c0024` added the existing CPER ring mutex but only
-around the header path.
-
-Step 3.3 Record: Related history includes `4d614ce8ffd75` adding the
-CPER ring buffer, `a6d9d192903ea` adding CPER writes, `d6f9bbce18762`
-fixing CPER ring remaining-size computation, and `93c19634f72fb` fixing
-a separate uniras CPER debugfs user-buffer overflow.
-
-Step 3.4 Record: Xiang Liu has multiple AMDGPU/RAS CPER commits in this
-area. Alex Deucher committed the patch per the commit tags and is the
-AMDGPU maintainer path in local history.
-
-Step 3.5 Record: Dependencies are the existing CPER ring/debugfs code.
-The affected code exists in this v7.0.y checkout and in tags `v6.15`
-through `v7.0`; it is absent from `v6.14` by pattern check.
-
-Step 4.1 Record: `b4 dig -c 1e40ef...` failed because the commit object
-is not present locally. Web searches did not find the exact target
-subject/body; they found related AMDGPU CPER debugfs patches and the
-uniras buffer-overflow bug report.
-
-Step 4.2 Record: `b4 dig -w` also failed for the same reason. Commit
-tags still show AMDGPU review by Tao Zhou and commit by Alex Deucher.
-
-Step 4.3 Record: No direct bug report found for this exact patch.
-Related Dan Carpenter report verified a similar CPER debugfs user-buffer
-overflow in `amdgpu_ras_cper_debugfs_read`, not this legacy reader.
-
-Step 4.4 Record: Related CPER series context verified on freedesktop
-archives: CPER debugfs read and CPER mutex patches were part of a v2
-AMDGPU CPER series.
-
-Step 4.5 Record: No stable-specific discussion found for the exact
-target terms.
-
-Step 5.1 Record: Modified function: `amdgpu_debugfs_ring_read`.
-
-Step 5.2 Record: Callers are debugfs file operations:
-`amdgpu_debugfs_ring_fops.read` and, for SR-IOV,
-`amdgpu_debugfs_virt_ring_read`, which calls `amdgpu_debugfs_ring_read`.
-
-Step 5.3 Record: Key callees are `amdgpu_ring_get_rptr`,
-`amdgpu_ring_get_wptr`, `put_user`, and CPER lock operations. CPER
-writes use `amdgpu_cper_ring_write`, which takes the same
-`cper.ring_lock`.
-
-Step 5.4 Record: Reachability is via
-`/sys/kernel/debug/dri/*/amdgpu_ring_cper`, created by
-`amdgpu_debugfs_ring_init` for registered rings. `amdgpu_ring_init`
-registers rings in `adev->rings`, and `amdgpu_debugfs_init` iterates
-those rings.
-
-Step 5.5 Record: Similar pattern found: separate uniras CPER reader
-overflow fixed by `93c19634f72fb`.
-
-Step 6.1 Record: Buggy legacy CPER debugfs reader exists in `v6.15`,
-`v6.16`, `v6.17`, `v6.18`, `v6.19`, and `v7.0`; not found in `v6.14`.
-
-Step 6.2 Record: Expected backport difficulty is low for trees
-containing the CPER reader. I could not complete a meaningful `git apply
---check` because my hand-built check patch was malformed, but the
-current file matches the relevant pre-fix logic.
-
-Step 6.3 Record: Related uniras fix exists locally, but it does not fix
-the legacy `amdgpu_debugfs_ring_read` CPER path.
-
-Step 7.1 Record: Subsystem is AMDGPU DRM/RAS driver code. Criticality is
-driver-specific, not core kernel-wide.
-
-Step 7.2 Record: Subsystem is active; local history shows multiple
-CPER/RAS changes around v6.15-v6.19.
-
-Step 8.1 Record: Affected users are AMDGPU systems with CPER ring
-enabled and debugfs CPER ring reads.
-
-Step 8.2 Record: Trigger is reading the CPER ring debugfs file,
-especially payload reads past the 12-byte header or small/count-limited
-reads. Unprivileged triggerability depends on debugfs mount permissions
-and was not verified.
-
-Step 8.3 Record: Failure mode is user-copy beyond requested read size
-and possible invalid ring indexing from missing pointer snapshot.
-Severity: HIGH for memory-safety correctness, reduced by debugfs-only
-exposure.
-
-Step 8.4 Record: Benefit is meaningful for affected AMDGPU debugfs users
-because it prevents incorrect user copies and invalid CPER ring reads.
-Risk is low: small, contained, no feature/API change.
-
-## Stable Rules
-
-1. Obviously correct and tested: mostly yes by inspection and maintainer
-   review tag; no explicit `Tested-by`.
-2. Fixes a real bug: yes, byte count vs dword count and missing pointer
-   snapshot are verified in the code.
-3. Important issue: yes, memory-safety/user-copy overflow from a
-   readable debugfs file.
-4. Small and contained: yes, one function in one driver file.
-5. No new features/APIs: yes.
-6. Can apply to stable: yes for v6.15+ trees containing the CPER debugfs
-   reader; not applicable to v6.14 and older.
+Phase 9:
+- Record 9.1: evidence for backporting: real lock imbalance,
+  reproducible lockdep warning, one-line fix, maintainer ack, existing
+  helper, verified affected stable baselines v5.15+. Evidence against:
+  symptom is mainly debug warning, not crash/data corruption; v5.10 not
+  applicable as-is.
+- Record 9.2: stable rules: obviously correct yes; fixes a real bug yes;
+  important issue borderline but acceptable due lockdep warning and tiny
+  risk; small/contained yes; no new features/APIs yes; applies to v5.15+
+  style trees likely clean/trivial.
+- Record 9.3: no exception category applies.
+- Record 9.4: risk-benefit favors backporting for applicable stable
+  trees.
 
 ## Verification
-
-- Phase 1: Parsed provided commit message and tags; no `Fixes`,
-  `Reported-by`, `Link`, or stable tag present.
-- Phase 2: Compared provided diff with current
-  `amdgpu_debugfs_ring_read` implementation; verified `size` is bytes
-  and old CPER loop decrements it as dwords.
-- Phase 3: Ran `git blame` on the affected function; identified
-  `5a1428242952f2` and `8652920d2c0024`.
-- Phase 3: Ran `git show` on related commits `4d614ce8ffd75`,
-  `5a1428242952f2`, `8652920d2c0024`, `d6f9bbce18762`, `527e3d40339b`,
-  `93c19634f72fb`, and `a91d91b600479`.
-- Phase 4: Ran `b4 dig`; it failed because the target commit object is
-  unavailable in this checkout.
-- Phase 4: Web searched exact subject/body; no direct target lore found.
-  Fetched related freedesktop CPER series and Dan Carpenter uniras
-  overflow report.
-- Phase 5: Used repo search/read to trace debugfs fops, ring debugfs
-  creation, CPER writer locking, and ring registration.
-- Phase 6: Checked tags `v6.14` through `v7.0`; verified affected code
-  starts at `v6.15`.
-- Phase 8: Verified debugfs exposure through
-  `debugfs_create_file_size(..., 0444, ...)`; did not verify system
-  mount permissions, so unprivileged exploitability remains unverified.
-
-This is a small, well-scoped memory-safety fix for code present in
-stable trees starting at v6.15. It should be backported to affected
-stable trees.
+- Phase 1: Parsed supplied commit message and `b4 am` output; confirmed
+  tags and absence of `Fixes:`/stable/Reported-by.
+- Phase 2: Read `smartpqi_init.c`; confirmed
+  `pqi_ctrl_block_device_reset()` is `mutex_lock()` and
+  `pqi_ctrl_unblock_device_reset()` is `mutex_unlock()`.
+- Phase 3: Used `git blame`, `git show 0530736e40a069`, and `git show
+  9fa8202336096d`; confirmed helper semantics changed to mutex model in
+  the shutdown/suspend update.
+- Phase 4: `WebFetch` to `patch.msgid.link` was blocked by Anubis; `b4
+  mbox`/`b4 am` fetched the lore thread successfully. `b4 am` reported
+  the patch applies cleanly to current tree.
+- Phase 4: Read lore mirror; confirmed Bart’s “patch looks fine”
+  comment, Tomas’s risk discussion, Don Brace’s ack, and Martin
+  Petersen’s apply notice.
+- Phase 5: Used exact searches and file reads to trace `.shutdown =
+  pqi_shutdown`, SCSI reset handlers, and related lock users.
+- Phase 6: Used version tags to verify affected code in `v5.15+` and
+  non-applicability to `v5.10`.
+- Phase 7: Checked `MAINTAINERS`; confirmed Don Brace maintains
+  smartpqi.
+- Phase 8: External LKML mirror provided the concrete lockdep call trace
+  and trigger conditions.
+- Unverified: I did not build-test the patch and did not verify stable
+  branch-specific conflicts beyond version-tag code presence.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c | 29 +++++++++++++++++-------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-index 4638a686a84e7..bebd72178cc13 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.c
-@@ -572,8 +572,9 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
- 					size_t size, loff_t *pos)
- {
- 	struct amdgpu_ring *ring = file_inode(f)->i_private;
--	uint32_t value, result, early[3];
-+	u32 value, result, early[3] = { 0 };
- 	uint64_t p;
-+	u32 avail_dw, start_dw, read_dw;
- 	loff_t i;
- 	int r;
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index b4ed991976d06..2026ac645d6ab 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -9427,6 +9427,7 @@ static void pqi_shutdown(struct pci_dev *pci_dev)
  
-@@ -585,10 +586,10 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
+ 	pqi_crash_if_pending_command(ctrl_info);
+ 	pqi_reset(ctrl_info);
++	pqi_ctrl_unblock_device_reset(ctrl_info);
+ }
  
- 	result = 0;
- 
--	if (*pos < 12) {
--		if (ring->funcs->type == AMDGPU_RING_TYPE_CPER)
--			mutex_lock(&ring->adev->cper.ring_lock);
-+	if (ring->funcs->type == AMDGPU_RING_TYPE_CPER)
-+		mutex_lock(&ring->adev->cper.ring_lock);
- 
-+	if (*pos < 12) {
- 		early[0] = amdgpu_ring_get_rptr(ring) & ring->buf_mask;
- 		early[1] = amdgpu_ring_get_wptr(ring) & ring->buf_mask;
- 		early[2] = ring->wptr & ring->buf_mask;
-@@ -620,13 +621,24 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
- 			*pos += 4;
- 		}
- 	} else {
-+		early[0] = amdgpu_ring_get_rptr(ring) & ring->buf_mask;
-+		early[1] = amdgpu_ring_get_wptr(ring) & ring->buf_mask;
-+
- 		p = early[0];
- 		if (early[0] <= early[1])
--			size = (early[1] - early[0]);
-+			avail_dw = early[1] - early[0];
- 		else
--			size = ring->ring_size - (early[0] - early[1]);
-+			avail_dw = ring->buf_mask + 1 - (early[0] - early[1]);
- 
--		while (size) {
-+		start_dw = (*pos > 12) ? ((*pos - 12) >> 2) : 0;
-+		if (start_dw >= avail_dw)
-+			goto out;
-+
-+		p = (p + start_dw) & ring->ptr_mask;
-+		avail_dw -= start_dw;
-+		read_dw = min_t(u32, avail_dw, size >> 2);
-+
-+		while (read_dw) {
- 			if (p == early[1])
- 				goto out;
- 
-@@ -639,9 +651,10 @@ static ssize_t amdgpu_debugfs_ring_read(struct file *f, char __user *buf,
- 
- 			buf += 4;
- 			result += 4;
--			size--;
-+			read_dw--;
- 			p++;
- 			p &= ring->ptr_mask;
-+			*pos += 4;
- 		}
- 	}
- 
+ static void pqi_process_lockup_action_param(void)
 -- 
 2.53.0
 
