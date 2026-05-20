@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0FD36A37D;
-	Wed, 20 May 2026 16:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8214C367B8D;
+	Wed, 20 May 2026 16:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294878; cv=none; b=k90C85RA3/XRtERmJz1Z82Z8QoYSeAXsK59F97dB5ngPNZQaBaIvAXROBfrU91g4g57ZepWiLO6nNGtNNu33R/B/4pBER7qW8eHH57gdfpn513MDMA45KpGvD2sQ8i9hUmxjT+U8+TyF/jXqZgoVvGtNIQF2HrDnK/ycXon4Z+8=
+	t=1779294881; cv=none; b=q6hBxCQJPagxvJsLxImGVDbGZphSA/XgGsv6xOL0oJQi17wDBFEtRUNnMXZuRcIhuPz86JMOPXCIgn/Lxmv9LIoqYk0XKJMuEDCzZVyBtRQuHZyHxF/bIliNIEG74uBJICf0t3Q80egGQuo7fivpNkedyHHpAOn62Gu3aUU0MI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294878; c=relaxed/simple;
-	bh=H+QPOWCIaEZb9zz4277qJ2a6/Auw0Bb8NvAGcXxpUIY=;
+	s=arc-20240116; t=1779294881; c=relaxed/simple;
+	bh=UPaaKVUDtjqMvl8IAohcu7f9AG5ULhPgR6J0bM2Jpo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QIXK9U89XDJ20RjKCtzuLbhD8h6TWyJMKU1+mMumMxL5FNztNVbQqtCNpbSu1Worb4nv7Akszyew1NDI2JFritdgXJJfsvO14sGBI+7qa8hdrdgGVyIA5YkBfEunwM0h+4Jm2iyibKvF8QiYcYAfIi362m+49+o0BfewMhERkgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOmH7WMz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lcCFOSdKiKA6MFLFApnulxBhctOwdQBx+ildzwppb6tKNjniEBKvQ+kiL468c5y+IG0zR0AyiOowC+jgRCJAQMxrfQNrYxZcvOUuEZPg61r7af6fvBGfEWJ753cldLgT3xnFZDmx4P3RKr0F0A5QlSkdh+ky+ax1TF0GFlRyF3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wg1FAIA0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOmH7WMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3261F000E9;
-	Wed, 20 May 2026 16:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wg1FAIA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE201F000E9;
+	Wed, 20 May 2026 16:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294876;
-	bh=xwNbSoZTlDwiNjMl7ePOu9U2LFbVCKi54b1j1/F0iCs=;
+	s=korg; t=1779294879;
+	bh=LBtdGqqXwHLd7hu3nqvWTHDAeLnKLIgdlSomAodRM/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oOmH7WMzE1uSnFyaxlsXXFdPwRFVop5ZMc2FcgtAHPpn08OUdFdQ+NuSNwzQXmX63
-	 dxehsqSm7oHOvIPcFA9lXAEHoQyQBXbfzC0E+MPbualxpURAnhYDMt5Lle2IiXh1/m
-	 Xavzj6wvH+smTXxSspTInMDpVIDTCe+o47ojDDI0=
+	b=wg1FAIA0jVRLgN9KUSAgPWLDMRb1Xqx8J3vgkXBtoKmi8wj0cJwxaQBvIeKhRdx1T
+	 kyoPG5NETGFOf40loqNnDDfQbK0XeOhFFN19himVZW/hM2hNUf4sOE1tspr4IFQwLS
+	 bSdfc/HwGNzLMZOPW146SDAYen2eFtoO4EPTZQ/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Anton Protopopov <a.s.protopopov@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Charles Perry <charles.perry@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0169/1146] bpf: Remove static qualifier from local subprog pointer
-Date: Wed, 20 May 2026 18:06:59 +0200
-Message-ID: <20260520162152.114127361@linuxfoundation.org>
+Subject: [PATCH 7.0 0205/1146] net: phy: fix a return path in get_phy_c45_ids()
+Date: Wed, 20 May 2026 18:07:35 +0200
+Message-ID: <20260520162152.908074527@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,50 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Charles Perry <charles.perry@microchip.com>
 
-[ Upstream commit 9dba0ae973e75051b63cbdd5b3532bb24aa63b3f ]
+[ Upstream commit 6f533abe7bbad2eef1e42c639b6bb9dad2b02362 ]
 
-The local subprog pointer in create_jt() and visit_abnormal_return_insn()
-was declared static.
+The return value of phy_c45_probe_present() is stored in "ret", not
+"phy_reg", fix this. "phy_reg" always has a positive value if we reach
+this return path (since it would have returned earlier otherwise), which
+means that the original goal of the patch of not considering -ENODEV
+fatal wasn't achieved.
 
-It is unconditionally assigned via bpf_find_containing_subprog() before
-every use. Thus, the static qualifier serves no purpose and rather creates
-confusion. Just remove it.
-
-Fixes: e40f5a6bf88a ("bpf: correct stack liveness for tail calls")
-Fixes: 493d9e0d6083 ("bpf, x86: add support for indirect jumps")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Anton Protopopov <a.s.protopopov@gmail.com>
-Link: https://lore.kernel.org/r/20260408191242.526279-3-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 17b447539408 ("net: phy: c45 scanning: Don't consider -ENODEV fatal")
+Signed-off-by: Charles Perry <charles.perry@microchip.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20260409133654.3203336-1-charles.perry@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++--
+ drivers/net/phy/phy_device.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 71c078d18683a..bf5e146692e0a 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -18764,7 +18764,7 @@ static struct bpf_iarray *jt_from_subprog(struct bpf_verifier_env *env,
- static struct bpf_iarray *
- create_jt(int t, struct bpf_verifier_env *env)
- {
--	static struct bpf_subprog_info *subprog;
-+	struct bpf_subprog_info *subprog;
- 	int subprog_start, subprog_end;
- 	struct bpf_iarray *jt;
- 	int i;
-@@ -18839,7 +18839,7 @@ static int visit_gotox_insn(int t, struct bpf_verifier_env *env)
-  */
- static int visit_abnormal_return_insn(struct bpf_verifier_env *env, int t)
- {
--	static struct bpf_subprog_info *subprog;
-+	struct bpf_subprog_info *subprog;
- 	struct bpf_iarray *jt;
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 3bd415710bf3f..f3696d9819d35 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -927,8 +927,8 @@ static int get_phy_c45_ids(struct mii_bus *bus, int addr,
+ 				/* returning -ENODEV doesn't stop bus
+ 				 * scanning
+ 				 */
+-				return (phy_reg == -EIO ||
+-					phy_reg == -ENODEV) ? -ENODEV : -EIO;
++				return (ret == -EIO ||
++					ret == -ENODEV) ? -ENODEV : -EIO;
  
- 	if (env->insn_aux_data[t].jt)
+ 			if (!ret)
+ 				continue;
 -- 
 2.53.0
 
