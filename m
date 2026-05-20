@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B61F35F619;
-	Wed, 20 May 2026 17:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47ED35F619;
+	Wed, 20 May 2026 17:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297395; cv=none; b=T36UCvgRuDTHEQGvnixgiYrC4gtmWhUNT7+kxFJBzajSlp2XBtUk3qN3VpI+rV9LQ7BSPDJWMSdp0kiPTHt8Q5PPn+LFR2LNnW0JMwoP4LO9k8qpkDBJL6vklWhdLO1a/OFbi8A4El9GcFnroAratkA2cvKWS99I0QGcpjHFKRw=
+	t=1779297398; cv=none; b=nP3RUA6j1koNDiu+3/joLZEbqWTxIuZChT2WlncyuTunIuVHww6UP8rsImK5kPxSQmpQ9Pdk9mEFkBYPzIWtB6fZ29VZUoXVCcsLfbDLmx5QnExWva5Ufdkw9IpW6pv+4ulqOFloHYH9OIaIMAPinqSqoymOa/ISvVM7dLlZf0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297395; c=relaxed/simple;
-	bh=495Upsqj3cMyHLl7HIdeJIKAj6mDYP+gPr9KaIo17fA=;
+	s=arc-20240116; t=1779297398; c=relaxed/simple;
+	bh=4Tg0ho7fyR0cFz9uULIwUYJDDdTtInCLaLKxgrtwZ8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evi+68T+ATMiwr8dL5bv9pRK/Tm/Bdc2t2z73xkGfaq0YrVryFgbc+dqiX2EZHL/J+6DxHCnI1pXVkvZ3FYvTMxLBa24SVJUIdRDa47l3MDR6Db0c9rtqVI/Jemc9cPlPAiYwTQpsULh29L96hncDUJUvG928Gl9SAPZ8KoOWLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9FIrchc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YU86INogTsk5W4U2uY85LV2SDBAhfR1+7xBhqdV4itZDcAAwQay2LvoNvY6X3qV6QyX2kEJ9FWqYDTyz0dE816ScAyYpmuEabXaxdlQA5MxosVEx4GEUSlw7NH7m9TSeku4PiV7gnqdEau6jMds8Au8O9MIQas4hDewg/iVsm/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQFkgEBf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9FIrchc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9009C1F000E9;
-	Wed, 20 May 2026 17:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQFkgEBf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C381F000E9;
+	Wed, 20 May 2026 17:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297394;
-	bh=JWFp45+OMYazbssMIY7PtIkpkeMiROLv82RFyKe4eLI=;
+	s=korg; t=1779297396;
+	bh=/YZZ7SpZCq1LFj42hq1V6GjKkV9DiC9m1fZHR4114bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S9FIrchceoWP4ndguYVFKW+tiTmfQUOPjS9O80fEXYoMzuexeEc97oUq0rQsXeyWr
-	 ypuNdEXk0zez6vXN/2soilykrk5oNBfcXeMx7KBtzlMI5ML2jWrRWTezN6crw0jUlK
-	 ilv9QCJHHal/2XmWkNpeovZ2R4ts9AkhKJ/UJb9A=
+	b=zQFkgEBfdx2RjSIo5ILDY7h9r0eWQDhPx5VoUu1VfGZoD+FF/SnikR9nTGUcqxs0J
+	 9FV1ipCXfkAiYJ/PFzZTPe2+R4iEkk6i0g4AwuYzcyiNmChCgXD2+pR6nVK8xnu0KG
+	 IeyWGnlNETJfkl6usSjXaWArqcfSC5kumXM4kEys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fnnas.com>,
+	syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 016/957] md: wake raid456 reshape waiters before suspend
-Date: Wed, 20 May 2026 18:08:19 +0200
-Message-ID: <20260520162134.912379773@linuxfoundation.org>
+Subject: [PATCH 6.18 017/957] btrfs: fix deadlock between reflink and transaction commit when using flushoncommit
+Date: Wed, 20 May 2026 18:08:20 +0200
+Message-ID: <20260520162134.934459143@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -50,57 +53,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit cf86bb53b9c92354904a328e947a05ffbfdd1840 ]
+[ Upstream commit b48c980b6a7e409050bb3067165db31cc6205e3e ]
 
-During raid456 reshape, direct IO across the reshape position can sleep
-in raid5_make_request() waiting for reshape progress while still
-holding an active_io reference. If userspace then freezes reshape and
-writes md/suspend_lo or md/suspend_hi, mddev_suspend() kills active_io
-and waits for all in-flight IO to drain.
+When using the flushoncommit mount option, we can have a deadlock between
+a transaction commit and a reflink operation that copied an inline extent
+to an offset beyond the current i_size of the destination node.
 
-This can deadlock: the IO needs reshape progress to continue, but the
-reshape thread is already frozen, so the active_io reference is never
-dropped and suspend never completes.
+The deadlock happens like this:
 
-raid5_prepare_suspend() already wakes wait_for_reshape for dm-raid. Do
-the same for normal md suspend when reshape is already interrupted, so
-waiting raid456 IO can abort, drop its reference, and let suspend
-finish.
+1) Task A clones an inline extent from inode X to an offset of inode Y
+   that is beyond Y's current i_size. This means we copied the inline
+   extent's data to a folio of inode Y that is beyond its EOF, using a
+   call to copy_inline_to_page();
 
-The mdadm test tests/25raid456-reshape-deadlock reproduces the hang.
+2) Task B starts a transaction commit and calls
+   btrfs_start_delalloc_flush() to flush delalloc;
 
-Fixes: 714d20150ed8 ("md: add new helpers to suspend/resume array")
-Link: https://lore.kernel.org/linux-raid/20260327140729.2030564-1-yukuai@fnnas.com/
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+3) The delalloc flushing sees the new dirty folio of inode Y and when it
+   attempts to flush it, it ends up at extent_writepage() and sees that
+   the offset of the folio is beyond the i_size of inode Y, so it attempts
+   to invalidate the folio by calling folio_invalidate(), which ends up at
+   btrfs' folio invalidate callback - btrfs_invalidate_folio(). There it
+   tries to lock the folio's range in inode Y's extent io tree, but it
+   blocks since it's currently locked by task A - during a reflink we lock
+   the inodes and the source and destination ranges after flushing all
+   delalloc and waiting for ordered extent completion - after that we
+   don't expect to have dirty folios in the ranges, the exception is if
+   we have to copy an inline extent's data (because the destination offset
+   is not zero);
+
+4) Task A then attempts to start a transaction to update the inode item,
+   and then it's blocked since the current transaction is in the
+   TRANS_STATE_COMMIT_START state. Therefore task A has to wait for the
+   current transaction to become unblocked (its state >=
+   TRANS_STATE_UNBLOCKED).
+
+   So task A is waiting for the transaction commit done by task B, and
+   the later waiting on the extent lock of inode Y that is currently
+   held by task A.
+
+Syzbot recently reported this with the following stack traces:
+
+  INFO: task kworker/u8:7:1053 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:kworker/u8:7    state:D stack:23520 pid:1053  tgid:1053  ppid:2      task_flags:0x4208060 flags:0x00080000
+  Workqueue: writeback wb_workfn (flush-btrfs-46)
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wait_extent_bit fs/btrfs/extent-io-tree.c:811 [inline]
+   btrfs_lock_extent_bits+0x59c/0x700 fs/btrfs/extent-io-tree.c:1914
+   btrfs_lock_extent fs/btrfs/extent-io-tree.h:152 [inline]
+   btrfs_invalidate_folio+0x43d/0xc40 fs/btrfs/inode.c:7704
+   extent_writepage fs/btrfs/extent_io.c:1852 [inline]
+   extent_write_cache_pages fs/btrfs/extent_io.c:2580 [inline]
+   btrfs_writepages+0x12ff/0x2440 fs/btrfs/extent_io.c:2713
+   do_writepages+0x32e/0x550 mm/page-writeback.c:2554
+   __writeback_single_inode+0x133/0x11a0 fs/fs-writeback.c:1750
+   writeback_sb_inodes+0x995/0x19d0 fs/fs-writeback.c:2042
+   wb_writeback+0x456/0xb70 fs/fs-writeback.c:2227
+   wb_do_writeback fs/fs-writeback.c:2374 [inline]
+   wb_workfn+0x41a/0xf60 fs/fs-writeback.c:2414
+   process_one_work kernel/workqueue.c:3276 [inline]
+   process_scheduled_works+0xb6e/0x18c0 kernel/workqueue.c:3359
+   worker_thread+0xa53/0xfc0 kernel/workqueue.c:3440
+   kthread+0x388/0x470 kernel/kthread.c:436
+   ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
+   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+   </TASK>
+  INFO: task syz.4.64:6910 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:syz.4.64        state:D stack:22752 pid:6910  tgid:6905  ppid:5944   task_flags:0x400140 flags:0x00080002
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wait_current_trans+0x39f/0x590 fs/btrfs/transaction.c:535
+   start_transaction+0x6a7/0x1650 fs/btrfs/transaction.c:705
+   clone_copy_inline_extent fs/btrfs/reflink.c:299 [inline]
+   btrfs_clone+0x128a/0x24d0 fs/btrfs/reflink.c:529
+   btrfs_clone_files+0x271/0x3f0 fs/btrfs/reflink.c:750
+   btrfs_remap_file_range+0x76b/0x1320 fs/btrfs/reflink.c:903
+   vfs_copy_file_range+0xda7/0x1390 fs/read_write.c:1600
+   __do_sys_copy_file_range fs/read_write.c:1683 [inline]
+   __se_sys_copy_file_range+0x2fb/0x480 fs/read_write.c:1650
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f5f73afc799
+  RSP: 002b:00007f5f7315e028 EFLAGS: 00000246 ORIG_RAX: 0000000000000146
+  RAX: ffffffffffffffda RBX: 00007f5f73d75fa0 RCX: 00007f5f73afc799
+  RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000005
+  RBP: 00007f5f73b92c99 R08: 0000000000000863 R09: 0000000000000000
+  R10: 00002000000000c0 R11: 0000000000000246 R12: 0000000000000000
+  R13: 00007f5f73d76038 R14: 00007f5f73d75fa0 R15: 00007fff138a5068
+   </TASK>
+  INFO: task syz.4.64:6975 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:syz.4.64        state:D stack:24736 pid:6975  tgid:6905  ppid:5944   task_flags:0x400040 flags:0x00080002
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wb_wait_for_completion+0x3e8/0x790 fs/fs-writeback.c:227
+   __writeback_inodes_sb_nr+0x24c/0x2d0 fs/fs-writeback.c:2838
+   try_to_writeback_inodes_sb+0x9a/0xc0 fs/fs-writeback.c:2886
+   btrfs_start_delalloc_flush fs/btrfs/transaction.c:2175 [inline]
+   btrfs_commit_transaction+0x82e/0x31a0 fs/btrfs/transaction.c:2364
+   btrfs_ioctl+0xca7/0xd00 fs/btrfs/ioctl.c:5206
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0xff/0x170 fs/ioctl.c:583
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f5f73afc799
+  RSP: 002b:00007f5f7313d028 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00007f5f73d76090 RCX: 00007f5f73afc799
+  RDX: 0000000000000000 RSI: 0000000000009408 RDI: 0000000000000004
+  RBP: 00007f5f73b92c99 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 00007f5f73d76128 R14: 00007f5f73d76090 R15: 00007fff138a5068
+   </TASK>
+
+Fix this by updating the i_size of the destination inode of a reflink
+operation after we copy an inline extent's data to an offset beyond the
+i_size and before attempting to start a transaction to update the inode's
+item.
+
+Reported-by: syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/69bba3fe.050a0220.227207.002f.GAE@google.com/
+Fixes: 05a5a7621ce6 ("Btrfs: implement full reflink support for inline extents")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/btrfs/reflink.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 0a3152f21d488..b91ac1b7d7a15 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -486,6 +486,17 @@ int mddev_suspend(struct mddev *mddev, bool interruptible)
- 	}
+diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
+index 5465a5eae9b2d..614e884c2a9bc 100644
+--- a/fs/btrfs/reflink.c
++++ b/fs/btrfs/reflink.c
+@@ -321,6 +321,51 @@ static int clone_copy_inline_extent(struct btrfs_inode *inode,
  
- 	percpu_ref_kill(&mddev->active_io);
+ 	ret = copy_inline_to_page(inode, new_key->offset,
+ 				  inline_data, size, datal, comp_type);
 +
 +	/*
-+	 * RAID456 IO can sleep in wait_for_reshape while still holding an
-+	 * active_io reference. If reshape is already interrupted or frozen,
-+	 * wake those waiters so they can abort and drop the reference instead
-+	 * of deadlocking suspend.
++	 * If we copied the inline extent data to a page/folio beyond the i_size
++	 * of the destination inode, then we need to increase the i_size before
++	 * we start a transaction to update the inode item. This is to prevent a
++	 * deadlock when the flushoncommit mount option is used, which happens
++	 * like this:
++	 *
++	 * 1) Task A clones an inline extent from inode X to an offset of inode
++	 *    Y that is beyond Y's current i_size. This means we copied the
++	 *    inline extent's data to a folio of inode Y that is beyond its EOF,
++	 *    using the call above to copy_inline_to_page();
++	 *
++	 * 2) Task B starts a transaction commit and calls
++	 *    btrfs_start_delalloc_flush() to flush delalloc;
++	 *
++	 * 3) The delalloc flushing sees the new dirty folio of inode Y and when
++	 *    it attempts to flush it, it ends up at extent_writepage() and sees
++	 *    that the offset of the folio is beyond the i_size of inode Y, so
++	 *    it attempts to invalidate the folio by calling folio_invalidate(),
++	 *    which ends up at btrfs' folio invalidate callback -
++	 *    btrfs_invalidate_folio(). There it tries to lock the folio's range
++	 *    in inode Y's extent io tree, but it blocks since it's currently
++	 *    locked by task A - during reflink we lock the inodes and the
++	 *    source and destination ranges after flushing all delalloc and
++	 *    waiting for ordered extent completion - after that we don't expect
++	 *    to have dirty folios in the ranges, the exception is if we have to
++	 *    copy an inline extent's data (because the destination offset is
++	 *    not zero);
++	 *
++	 * 4) Task A then does the 'goto out' below and attempts to start a
++	 *    transaction to update the inode item, and then it's blocked since
++	 *    the current transaction is in the TRANS_STATE_COMMIT_START state.
++	 *    Therefore task A has to wait for the current transaction to become
++	 *    unblocked (its state >= TRANS_STATE_UNBLOCKED).
++	 *
++	 * This leads to a deadlock - the task committing the transaction
++	 * waiting for the delalloc flushing which is blocked during folio
++	 * invalidation on the inode's extent lock and the reflink task waiting
++	 * for the current transaction to be unblocked so that it can start a
++	 * a new one to update the inode item (while holding the extent lock).
 +	 */
-+	if (mddev->pers && mddev->pers->prepare_suspend &&
-+	    reshape_interrupted(mddev))
-+		mddev->pers->prepare_suspend(mddev);
++	if (ret == 0 && new_key->offset + datal > i_size_read(&inode->vfs_inode))
++		i_size_write(&inode->vfs_inode, new_key->offset + datal);
 +
- 	if (interruptible)
- 		err = wait_event_interruptible(mddev->sb_wait,
- 				percpu_ref_is_zero(&mddev->active_io));
+ 	goto out;
+ }
+ 
 -- 
 2.53.0
 
