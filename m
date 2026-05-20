@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB02423A93;
-	Wed, 20 May 2026 18:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD503FB7FC;
+	Wed, 20 May 2026 18:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302771; cv=none; b=Jd60RtTmyDN5OIG5m8UgRQaiJRD7fHxBOyaElBmjpSMZ2anwEQzanl/xjZxVyJjMGCY39nTWG0x8bCe/muwn+mB5Uegakkd0F0Fdq4IIYxQY17ZJfrxDmDeRDjbG5EALKira2vLQqbJPHVyt8n6+ygxq8sKKf+nELypGJ776Sdg=
+	t=1779302775; cv=none; b=DmkJLluaBxGgPkhvfkPVi87rUhrOWNeCiiEjtMSBe4t+idIx3VGFfi0LNuDrWPbxgtBmRyy6qflkSd7VLvwnk3P6WfRUEgxJejBqwShcY/1co9ho0RrfVFbqs/6pnBZpDD+ENy9CpvScyAo1WTw+kVtZ/hGtO6TwviZbgcHggwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302771; c=relaxed/simple;
-	bh=E8nASBNTIwalgEimevVpsnvDfqUct6t63b83/5d1itg=;
+	s=arc-20240116; t=1779302775; c=relaxed/simple;
+	bh=zCNsgg9019a/wu6YEerm2rbPszHbku9X2CT3AcfpJ0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBpU9oOamVgjm5J51neArYxoCMeaVjwjQapmQyI+kDmpNZMmY8vOllSr5LjkmcZ7H4S3HjhLFsMX9JU6bdriGxmG306KIN/Ddcf/lG7XL7o1915KDd05lBVzjTf1o3P0ff/9tkCPkzJH9G2Zu6HuDcFpa6U+GMZEWUO1OgK8Fnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMEPB5eJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EeiJsAsOs/C5eblVAejRhANr0jpGa/472JdAC9zFBM/jydWF+TaNH6OHaonqECmpawtGWOg8PGp7tjSaV2/3iXMhmk6+LQB+FTO+8xVnoLln7rA18heZw/jXx/pVTwnFhFkSreOJFBYL4fh8fl7Trdnzr4I/U+XKP3cNS53gilw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUr9abfc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMEPB5eJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0851F000E9;
-	Wed, 20 May 2026 18:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUr9abfc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AD01F000E9;
+	Wed, 20 May 2026 18:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302769;
-	bh=poOymMYs6pa0zIIDFGpjwdWRZzPwyvjlIdpcnlKrl8M=;
+	s=korg; t=1779302772;
+	bh=cKlL/nSbNjxQSn+XoDa3SMhblkn2mvZAIv4XN/ApyLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kMEPB5eJuK67KKnbi6yz10E+pbqJaezKDiVTN2OqpyVcAGBwGq/Jgrryyk3SKp4x+
-	 sPo5NJJcyNT6zui6qo1J686xT2U+OZho+H8m4mVdSvIiTN4iSPknauQg/A8ad3UPqe
-	 IXKNAMvC/bVjqldm2a4FCoe9WEyCsXwUdk1lspaI=
+	b=rUr9abfccCkUabBpr4TFdfIdJmSe4MxcYrysZryjsjkspQMtC+12XOnR2ge3F+jCr
+	 9v8E8FiM1z3qJfH842YCkWMI+ulTkMMjZb1Q+frJkOi7/PQ2/O+RbkPTnWK58BCwyD
+	 JCDJ6BhyAcpWjO3q2Q91ILT63KBV5t2I7iwFRKkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	DaeMyung Kang <charsyam@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 352/508] nfp: fix swapped arguments in nfp_encode_basic_qdr() calls
-Date: Wed, 20 May 2026 18:22:55 +0200
-Message-ID: <20260520162106.263996524@linuxfoundation.org>
+Subject: [PATCH 6.6 343/508] ksmbd: fix durable fd leak on ClientGUID mismatch in durable v2 open
+Date: Wed, 20 May 2026 18:22:46 +0200
+Message-ID: <20260520162106.065116915@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,105 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-[ Upstream commit 4078c5611d7585548b249377ebd60c272e410490 ]
+[ Upstream commit 804054d19886ac6628883d82410f6ee42a818664 ]
 
-There is a mismatch between the passed arguments and the actual
-nfp_encode_basic_qdr() function parameter names:
+ksmbd_lookup_fd_cguid() returns a ksmbd_file with its refcount
+incremented via ksmbd_fp_get(). parse_durable_handle_context() in
+the DURABLE_REQ_V2 case properly releases this reference on every
+path inside the ClientGUID-match branch, either by calling
+ksmbd_put_durable_fd() or by transferring ownership to dh_info->fp
+for a successful reconnect. However, when an entry exists in the
+global file table with the same CreateGuid but a different
+ClientGUID, the code simply falls through to the new-open path
+without dropping the reference obtained from ksmbd_lookup_fd_cguid().
 
-  static int nfp_encode_basic_qdr(u64 addr, int dest_island, int cpp_tgt,
-                                  int mode, bool addr40, int isld1,
-                                  int isld0)
-  {
-      ...
+Per MS-SMB2 section 3.3.5.9.10 ("Handling the
+SMB2_CREATE_DURABLE_HANDLE_REQUEST_V2 Create Context"), the server
+MUST locate an Open whose Open.CreateGuid matches the request's
+CreateGuid AND whose Open.ClientGuid matches the ClientGuid of the
+connection that received the request. If no such Open is found, the
+server MUST continue with the normal open execution phase. A
+CreateGuid hit with a ClientGUID mismatch is therefore the
+"Open not found" case: proceeding with a new open is correct, but
+the reference obtained purely as a side effect of the lookup must
+not be leaked.
 
-But "dest_island" and "cpp_tgt" are swapped at every call-site.
-For example:
+Repeated requests that hit this mismatch pin global_ft entries,
+prevent __ksmbd_close_fd() from ever running for the corresponding
+files, and defeat the durable scavenger, leading to long-lived
+resource leaks.
 
-  return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-                              mode, addr40, isld1, isld0);
+Release the reference in the mismatch path and clear dh_info->fp so
+subsequent logic does not mistake a non-matching lookup result for
+a reconnect target.
 
-As a result, nfp_encode_basic_qdr() receives "dest_island" as CPP target
-type, which is always NFP_CPP_TARGET_QDR(2) for these calls, and "cpp_tgt"
-as the destination island ID, which can accidentally match or be outside
-the valid NFP_CPP_TARGET_* types (e.g. '-1' for any destination).
-
-Since code already worked for years, also add extra pr_warn() to error
-paths in nfp_encode_basic_qdr() to help identify any potential address
-verification failures.
-
-Detected using the static analysis tool - Svace.
-
-Fixes: 4cb584e0ee7d ("nfp: add CPP access core")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Link: https://patch.msgid.link/20260422160536.61855-1-aleksei.kodanev@bell-sw.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/netronome/nfp/nfpcore/nfp_target.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ fs/smb/server/smb2pdu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
-index 79470f198a62a..9cf19446657c6 100644
---- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
-@@ -435,12 +435,17 @@ static int nfp_encode_basic_qdr(u64 addr, int dest_island, int cpp_tgt,
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 6c41a67be725d..d68fe617369e0 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2827,6 +2827,8 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
+ 					dh_info->reconnected = true;
+ 					goto out;
+ 				}
++				ksmbd_put_durable_fd(dh_info->fp);
++				dh_info->fp = NULL;
+ 			}
  
- 	/* Full Island ID and channel bits overlap? */
- 	ret = nfp_decode_basic(addr, &v, cpp_tgt, mode, addr40, isld1, isld0);
--	if (ret)
-+	if (ret) {
-+		pr_warn("%s: decode dest_island failed: %d\n", __func__, ret);
- 		return ret;
-+	}
- 
- 	/* The current address won't go where expected? */
--	if (dest_island != -1 && dest_island != v)
-+	if (dest_island != -1 && dest_island != v) {
-+		pr_warn("%s: dest_island mismatch: current (%d) != decoded (%d)\n",
-+			__func__, dest_island, v);
- 		return -EINVAL;
-+	}
- 
- 	/* If dest_island was -1, we don't care where it goes. */
- 	return 0;
-@@ -493,7 +498,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 			 * the address but we can verify if the existing
- 			 * contents will point to a valid island.
- 			 */
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		iid_lsb = addr40 ? 34 : 26;
-@@ -504,7 +509,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 		return 0;
- 	case 1:
- 		if (cpp_tgt == NFP_CPP_TARGET_QDR && !addr40)
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		idx_lsb = addr40 ? 39 : 31;
-@@ -530,7 +535,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 			 * be set before hand and with them select an island.
- 			 * So we need to confirm that it's at least plausible.
- 			 */
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		/* Make sure we compare against isldN values
-@@ -551,7 +556,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
- 			 * iid<1> = addr<30> = channel<0>
- 			 * channel<1> = addr<31> = Index
- 			 */
--			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
-+			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
- 						    mode, addr40, isld1, isld0);
- 
- 		isld[0] &= ~3;
+ 			if ((lc && (lc->req_state & SMB2_LEASE_HANDLE_CACHING_LE)) ||
 -- 
 2.53.0
 
