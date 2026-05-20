@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83A33F0A83;
-	Wed, 20 May 2026 17:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0D03F23A4;
+	Wed, 20 May 2026 17:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299665; cv=none; b=QBEm9fF1wnUptCMOKnZCIS+DVlK0eF6f1I9c0OfMys15kH8SDs53G+mKlsf5wLciiqRTZ0wSv1uQv0O5je6Rb6cndqCK5T1lWb+Q/4E9hPs6EAsq/Twm+vgSbnOivM79ccoj0Do67Ral0s1tZmkui6c98ezHDUr607YOhSF8RNE=
+	t=1779299667; cv=none; b=Pu7dRP8eQC7d6f7AzrTUxSDE/MpBmSYidfDjo6NONW/KJCKHpfhUVWSZ/l8GYHFwiBIhi+De81zCMHA2nse14YqbDBsvgINn6IIj/UQl+LkiNoMz22lebNvqcYxMijhtgxGK9Ll/O0A2Y8req/tKvMhQO97537U5yX4G+k4EWyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299665; c=relaxed/simple;
-	bh=/Mp6kZPzz1cO1tJEin+HrkFJvMnrP/0w4yj3624xYMM=;
+	s=arc-20240116; t=1779299667; c=relaxed/simple;
+	bh=2DeGGLwyS8KzRrgvm5BEmq7ato29uYA1z0dh/krImww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AnJhSkDJoriAm20vIiOWeXE/fN9lLZvbtdB3PB3e9cMdunClAlf42h2B8OzWhweCzcsM0OiKlYdU0wjfXl+rDlP0AMWXALgXzAZ8vGHgdehuy8QrE3nIPVnLCqjQM+HHn5QWj6Q3U87Vke6WiGS6cQJY7tDbDsBCaJlBOvQOCps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iNwRfK/y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lGz/7sYiWBnr5T2YXe0nDBB7EXO6njs2Yf9FLm1JwhIRUWrvbPUPZoFZpsnQFJf2Ttf3yZuTrXOf8qyIA5lZfeqv3v38PEhok4u4zUfZzqKnQBS+h21+XnXpD9WzYDAPfRiC0HLUigjdIYzTBEcrHC4TIP09j8s41rebi+ba7ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAaUjLVk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iNwRfK/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487281F000E9;
-	Wed, 20 May 2026 17:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAaUjLVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F411F000E9;
+	Wed, 20 May 2026 17:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299663;
-	bh=Xe5JX+Dk2xVu+7u0UfF3UnozZuIeSX3nwBr30Snh8sc=;
+	s=korg; t=1779299666;
+	bh=WUuN+Y3yFSRdyNp/AtDJBn+byovCjyV6objlV4XGUj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iNwRfK/yBYhV1hNebu8fXCWRVrEpg9C9nCmDO2+ty/Ai3WlZJSO8Fm1PzFqT0xot+
-	 DE/7Z1E+X2QBE88f1W3DLEwnrnCc9Or4vnHk3PkZ0IsX5mkwXETDYp5LP/mW7TYpiO
-	 LcW/uVPrJL0fzAGeAizcurJb63VI5h6NB1uvCmys=
+	b=hAaUjLVkrco8kh8UxdeneZu30nN3av3uDfK1k6MUEnoEq4Rap6dbf5QXsez0aYnTk
+	 MZapo7aYT6s9wrYvwheT9XOfVa94id+wRzvE46aBn92zIUumGcGp8rRMxPkPQpgyYH
+	 f0Fo18otAvHMbWXlxSiow9Mr7IeWEQjOcAeiIopU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 841/957] iavf: rename IAVF_VLAN_IS_NEW to IAVF_VLAN_ADDING
-Date: Wed, 20 May 2026 18:22:04 +0200
-Message-ID: <20260520162152.801361758@linuxfoundation.org>
+Subject: [PATCH 6.18 859/957] futex: Drop CLONE_THREAD requirement for private default hash alloc
+Date: Wed, 20 May 2026 18:22:22 +0200
+Message-ID: <20260520162153.193871024@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -56,85 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-[ Upstream commit 70d62b669f1f9080a25278fc90b64309f4ae8959 ]
+[ Upstream commit ee9dce44362b2d8132c32964656ab6dff7dfbc6a ]
 
-Rename the IAVF_VLAN_IS_NEW state to IAVF_VLAN_ADDING to better
-describe what the state represents: an ADD request has been sent to
-the PF and is waiting for a response.
+Currently need_futex_hash_allocate_default() depends on strict pthread
+semantics, abusing CLONE_THREAD.  This breaks the non-concurrency
+assumptions when doing the mm->futex_ref pcpu allocations, leading to
+bugs[0] when sharing the mm in other ways; ie:
 
-This is a pure rename with no behavioral change, preparing for a
-cleanup of the VLAN filter state machine.
+    BUG: KASAN: slab-use-after-free in futex_hash_put
 
-Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-1-cdcb48303fd8@intel.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: f2ce65b9b917 ("iavf: stop removing VLAN filters from PF on interface down")
+... where the +1 bias can end up on a percpu counter that mm->futex_ref
+no longer points at.
+
+Loosen the check to cover any CLONE_VM clone, except vfork().  Excluding
+vfork keeps the existing paths untouched (no overhead), and we can't
+race in the first place: either the parent is suspended and the child
+runs alone, or mm->futex_ref is already allocated from an earlier
+CLONE_VM.
+
+Link: https://lore.kernel.org/all/CAL_bE8LsmCQ-FAtYDuwbJhOkt9p2wwYQwAbMh=PifC=VsiBM6A@mail.gmail.com/ [0]
+Fixes: d9b05321e21e ("futex: Move futex_hash_free() back to __mmput()")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf.h          | 2 +-
- drivers/net/ethernet/intel/iavf/iavf_virtchnl.c | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ kernel/fork.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
-index e9fb0a0919e37..47a862ca5e2c3 100644
---- a/drivers/net/ethernet/intel/iavf/iavf.h
-+++ b/drivers/net/ethernet/intel/iavf/iavf.h
-@@ -158,7 +158,7 @@ struct iavf_vlan {
- enum iavf_vlan_state_t {
- 	IAVF_VLAN_INVALID,
- 	IAVF_VLAN_ADD,		/* filter needs to be added */
--	IAVF_VLAN_IS_NEW,	/* filter is new, wait for PF answer */
-+	IAVF_VLAN_ADDING,	/* ADD sent to PF, waiting for response */
- 	IAVF_VLAN_ACTIVE,	/* filter is accepted by PF */
- 	IAVF_VLAN_DISABLE,	/* filter needs to be deleted by PF, then marked INACTIVE */
- 	IAVF_VLAN_INACTIVE,	/* filter is inactive, we are in IFF_DOWN */
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-index 291b21230b65f..9dab61f198c0d 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-@@ -746,7 +746,7 @@ static void iavf_vlan_add_reject(struct iavf_adapter *adapter)
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 3ad76c2cf5af5..1215d3f52c6d2 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1911,9 +1911,11 @@ static void rv_task_fork(struct task_struct *p)
  
- 	spin_lock_bh(&adapter->mac_vlan_list_lock);
- 	list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
--		if (f->state == IAVF_VLAN_IS_NEW) {
-+		if (f->state == IAVF_VLAN_ADDING) {
- 			list_del(&f->list);
- 			kfree(f);
- 			adapter->num_vlan_filters--;
-@@ -811,7 +811,7 @@ void iavf_add_vlans(struct iavf_adapter *adapter)
- 			if (f->state == IAVF_VLAN_ADD) {
- 				vvfl->vlan_id[i] = f->vlan.vid;
- 				i++;
--				f->state = IAVF_VLAN_IS_NEW;
-+				f->state = IAVF_VLAN_ADDING;
- 				if (i == count)
- 					break;
- 			}
-@@ -872,7 +872,7 @@ void iavf_add_vlans(struct iavf_adapter *adapter)
- 				vlan->tpid = f->vlan.tpid;
+ static bool need_futex_hash_allocate_default(u64 clone_flags)
+ {
+-	if ((clone_flags & (CLONE_THREAD | CLONE_VM)) != (CLONE_THREAD | CLONE_VM))
+-		return false;
+-	return true;
++	/*
++	 * Allocate a default futex hash for any sibling that will
++	 * share the parent's mm, except vfork.
++	 */
++	return (clone_flags & (CLONE_VM | CLONE_VFORK)) == CLONE_VM;
+ }
  
- 				i++;
--				f->state = IAVF_VLAN_IS_NEW;
-+				f->state = IAVF_VLAN_ADDING;
- 			}
- 		}
+ /*
+@@ -2296,10 +2298,6 @@ __latent_entropy struct task_struct *copy_process(
+ 	if (retval)
+ 		goto bad_fork_cancel_cgroup;
  
-@@ -2906,7 +2906,7 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 
- 		spin_lock_bh(&adapter->mac_vlan_list_lock);
- 		list_for_each_entry(f, &adapter->vlan_filter_list, list) {
--			if (f->state == IAVF_VLAN_IS_NEW)
-+			if (f->state == IAVF_VLAN_ADDING)
- 				f->state = IAVF_VLAN_ACTIVE;
- 		}
- 		spin_unlock_bh(&adapter->mac_vlan_list_lock);
+-	/*
+-	 * Allocate a default futex hash for the user process once the first
+-	 * thread spawns.
+-	 */
+ 	if (need_futex_hash_allocate_default(clone_flags)) {
+ 		retval = futex_hash_allocate_default();
+ 		if (retval)
 -- 
 2.53.0
 
