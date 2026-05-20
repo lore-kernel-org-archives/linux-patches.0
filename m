@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C042342CB3;
-	Wed, 20 May 2026 18:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA85343880;
+	Wed, 20 May 2026 18:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301867; cv=none; b=IvLY5iXSBEgZRrZxavx7nfsMU9ietJ7SfJHBpHk//mnk6Gxy6QYbHWDOJ9eJRWk4unFz9C9qeL7oMNz7Sg8QjXy1iLVfGc03w+eJx8X3bQN83VWLq/Fwk0+qt7DJCpcUvMoYntX4kysebIxDQhnmA9KHJIOOTWGIbwGUQXltlBA=
+	t=1779301870; cv=none; b=MdCcm6c0n5lerHyJys8Yh3H4xWhG7hPaqxhZ0m+foEXPamQE819oE0386mkm4VG9EGQS+Rud4zvTI+zZBpNhuBG6mbVUZbJqYg/odzDH/4Vq/m8KrfJXwLVPl3JZEMqo6wZiDFhiRX+qClVGp2BTCmvnBmYnBEhyHqFzYZoCVkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301867; c=relaxed/simple;
-	bh=dkKObe/ZbnL5EHPcMxaKBdyFynjxDLPX7W5MLxi+kSw=;
+	s=arc-20240116; t=1779301870; c=relaxed/simple;
+	bh=9L42QXqvSmkWqiSMMp7Z/4Yz9cdn7t+1wIDB0tI9B58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sqVcnsl43XgmWrDOORZqSMjZJSg1Y+QvCYAN0QteDBb7/49fpUnJM/GJgbvFf9oMLZgyjIAXKmlpgIGadgQe3ORYj5ruIz4YiSRliSIZ96kEir7QDEMo5lNDQrXeCmmuswUH7dBs/4FAHOBnLSXSbTM8dzoh9Ax/calRWzYkAh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSkxxAoM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ktbUXV4nYF+8RJbukNSk0TL+lfCIqfU60X3NO7vP9qoOpxKv5w+kIld5dKOJkJrfNCChawTzJv/f/kT8IzvdJUrJ2y1fCeIME9lLBlMI2gWAj6INb92xRASI+G+CrUl4mMBkT2vKZpLidmH//9Pi9NOvXN0qTa+Ls3gXYr7Uq2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4jcSP4j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSkxxAoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F241F1F000E9;
-	Wed, 20 May 2026 18:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4jcSP4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE311F000E9;
+	Wed, 20 May 2026 18:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301866;
-	bh=noz4tzogPB7IbOrmyBOXwta8REaI1SGjyPqiR5hd1K0=;
+	s=korg; t=1779301869;
+	bh=2i5ij8Tl7cnmwOihSKyAdjVttYmAPCMNsB+3G/aERe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MSkxxAoMYVc0WvuKLTfqDLDsnVhZdyiVtOmilW6HaIiUMQdvI11pRuip2Dpi6drKI
-	 FwZgiVqblafoxDArRt2cZXAYwzpE4gN1e0ges5rmyCN/P+02r7obtOu/GOL3ywORQI
-	 3uR3blZsUBC4jEsgqKosfVaY7OxBetRE12nfatFY=
+	b=w4jcSP4jYEHCsFwSNwXT2FuoSt5X58hnqN73lcgrmYu6nQlyLScv7WR8ckDkmab1+
+	 5UgZL3UqdgfJoBvHFWeCxnpk8c3cCHgPFM5tsB65ffI3xfmejqLmHHH55z8BQyLd8J
+	 wh+AXoPGPYRZiGmSpwbcR2xBhP8MrMyjRvZQCujY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/508] wifi: mt76: mt7615: fix use_cts_prot support
-Date: Wed, 20 May 2026 18:17:36 +0200
-Message-ID: <20260520162059.308425592@linuxfoundation.org>
+Subject: [PATCH 6.6 051/508] bpf: reject negative CO-RE accessor indices in bpf_core_parse_spec()
+Date: Wed, 20 May 2026 18:17:54 +0200
+Message-ID: <20260520162059.701172023@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,171 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryder Lee <ryder.lee@mediatek.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 1974a67d9b65c29a0a9426e32e8cd8c056de48b7 ]
+[ Upstream commit 1c22483a2c4bbf747787f328392ca3e68619c4dc ]
 
-Driver should not directly write WTBL to prevent overwritten issues.
+CO-RE accessor strings are colon-separated indices that describe a path
+from a root BTF type to a target field, e.g. "0:1:2" walks through
+nested struct members. bpf_core_parse_spec() parses each component with
+sscanf("%d"), so negative values like -1 are silently accepted.  The
+subsequent bounds checks (access_idx >= btf_vlen(t)) only guard the
+upper bound and always pass for negative values because C integer
+promotion converts the __u16 btf_vlen result to int, making the
+comparison (int)(-1) >= (int)(N) false for any positive N.
 
-With this fix, when driver needs to adjust its behavior for compatibility,
-especially concerning older 11g/n devices, by enabling or disabling CTS
-protection frames, often for hidden SSIDs or to manage legacy clients.
+When -1 reaches btf_member_bit_offset() it gets cast to u32 0xffffffff,
+producing an out-of-bounds read far past the members array.  A crafted
+BPF program with a negative CO-RE accessor on any struct that exists in
+vmlinux BTF (e.g. task_struct) crashes the kernel deterministically
+during BPF_PROG_LOAD on any system with CONFIG_DEBUG_INFO_BTF=y
+(default on major distributions).  The bug is reachable with CAP_BPF:
 
-Fixes: e34235ccc5e3 ("wifi: mt76: mt7615: enable use_cts_prot support")
-Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
-Link: https://patch.msgid.link/edb87088b0111b32fafc6c4179f54a5286dd37d8.1768879119.git.ryder.lee@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+ BUG: unable to handle page fault for address: ffffed11818b6626
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ Oops: Oops: 0000 [#1] SMP KASAN NOPTI
+ CPU: 0 UID: 0 PID: 85 Comm: poc Not tainted 7.0.0-rc6 #18 PREEMPT(full)
+ RIP: 0010:bpf_core_parse_spec (tools/lib/bpf/relo_core.c:354)
+ RAX: 00000000ffffffff
+ Call Trace:
+  <TASK>
+  bpf_core_calc_relo_insn (tools/lib/bpf/relo_core.c:1321)
+  bpf_core_apply (kernel/bpf/btf.c:9507)
+  check_core_relo (kernel/bpf/verifier.c:19475)
+  bpf_check (kernel/bpf/verifier.c:26031)
+  bpf_prog_load (kernel/bpf/syscall.c:3089)
+  __sys_bpf (kernel/bpf/syscall.c:6228)
+  </TASK>
+
+CO-RE accessor indices are inherently non-negative (struct member index,
+array element index, or enumerator index), so reject them immediately
+after parsing.
+
+Fixes: ddc7c3042614 ("libbpf: implement BPF CO-RE offset relocation algorithm")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/20260404161221.961828-2-bestswngs@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7615/mac.c   | 15 ------
- .../net/wireless/mediatek/mt76/mt7615/main.c  |  7 +--
- .../net/wireless/mediatek/mt76/mt7615/mcu.c   | 47 +++++++++++++++++++
- .../wireless/mediatek/mt76/mt7615/mt7615.h    |  5 +-
- .../net/wireless/mediatek/mt76/mt7615/regs.h  |  2 -
- 5 files changed, 53 insertions(+), 23 deletions(-)
+ tools/lib/bpf/relo_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
-index 7ba789834e8df..1e473f490b4bd 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
-@@ -1174,21 +1174,6 @@ void mt7615_mac_set_rates(struct mt7615_phy *phy, struct mt7615_sta *sta,
- }
- EXPORT_SYMBOL_GPL(mt7615_mac_set_rates);
- 
--void mt7615_mac_enable_rtscts(struct mt7615_dev *dev,
--			      struct ieee80211_vif *vif, bool enable)
--{
--	struct mt7615_vif *mvif = (struct mt7615_vif *)vif->drv_priv;
--	u32 addr;
--
--	addr = mt7615_mac_wtbl_addr(dev, mvif->sta.wcid.idx) + 3 * 4;
--
--	if (enable)
--		mt76_set(dev, addr, MT_WTBL_W3_RTS);
--	else
--		mt76_clear(dev, addr, MT_WTBL_W3_RTS);
--}
--EXPORT_SYMBOL_GPL(mt7615_mac_enable_rtscts);
--
- static int
- mt7615_mac_wtbl_update_key(struct mt7615_dev *dev, struct mt76_wcid *wcid,
- 			   struct ieee80211_key_conf *key,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/main.c b/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-index dab16b5fc3861..b908ccfa48778 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/main.c
-@@ -597,9 +597,6 @@ static void mt7615_bss_info_changed(struct ieee80211_hw *hw,
- 		}
- 	}
- 
--	if (changed & BSS_CHANGED_ERP_CTS_PROT)
--		mt7615_mac_enable_rtscts(dev, vif, info->use_cts_prot);
--
- 	if (changed & BSS_CHANGED_BEACON_ENABLED && info->enable_beacon) {
- 		mt7615_mcu_add_bss_info(phy, vif, NULL, true);
- 		mt7615_mcu_sta_add(phy, vif, NULL, true);
-@@ -612,6 +609,10 @@ static void mt7615_bss_info_changed(struct ieee80211_hw *hw,
- 		       BSS_CHANGED_BEACON_ENABLED))
- 		mt7615_mcu_add_beacon(dev, hw, vif, info->enable_beacon);
- 
-+	if (changed & BSS_CHANGED_HT || changed & BSS_CHANGED_ERP_CTS_PROT)
-+		mt7615_mcu_set_protection(phy, vif, info->ht_operation_mode,
-+					  info->use_cts_prot);
-+
- 	if (changed & BSS_CHANGED_PS)
- 		mt76_connac_mcu_set_vif_ps(&dev->mt76, vif);
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-index 94adb22f8570f..d5071981014ee 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-@@ -2560,3 +2560,50 @@ int mt7615_mcu_set_roc(struct mt7615_phy *phy, struct ieee80211_vif *vif,
- 	return mt76_mcu_send_msg(&dev->mt76, MCU_CE_CMD(SET_ROC),
- 				 &req, sizeof(req), false);
- }
-+
-+int mt7615_mcu_set_protection(struct mt7615_phy *phy, struct ieee80211_vif *vif,
-+			      u8 ht_mode, bool use_cts_prot)
-+{
-+	struct mt7615_dev *dev = phy->dev;
-+	struct {
-+		u8 prot_idx;
-+		u8 band;
-+		u8 rsv[2];
-+
-+		bool long_nav;
-+		bool prot_mm;
-+		bool prot_gf;
-+		bool prot_bw40;
-+		bool prot_rifs;
-+		bool prot_bw80;
-+		bool prot_bw160;
-+		u8 prot_erp_mask;
-+	} __packed req = {
-+		.prot_idx = 0x2,
-+		.band = phy != &dev->phy,
-+	};
-+
-+	switch (ht_mode & IEEE80211_HT_OP_MODE_PROTECTION) {
-+	case IEEE80211_HT_OP_MODE_PROTECTION_NONMEMBER:
-+	case IEEE80211_HT_OP_MODE_PROTECTION_NONHT_MIXED:
-+		req.prot_mm = true;
-+		req.prot_gf = true;
-+		fallthrough;
-+	case IEEE80211_HT_OP_MODE_PROTECTION_20MHZ:
-+		req.prot_bw40 = true;
-+		break;
-+	}
-+
-+	if (ht_mode & IEEE80211_HT_OP_MODE_NON_GF_STA_PRSNT)
-+		req.prot_gf = true;
-+
-+	if (use_cts_prot) {
-+		struct mt7615_vif *mvif = (struct mt7615_vif *)vif->drv_priv;
-+		u8 i = mvif->mt76.omac_idx > HW_BSSID_MAX ? HW_BSSID_0 : mvif->mt76.omac_idx;
-+
-+		req.prot_erp_mask = BIT(i);
-+	}
-+
-+	return mt76_mcu_send_msg(&dev->mt76, MCU_EXT_CMD(PROTECT_CTRL), &req,
-+				 sizeof(req), true);
-+}
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h b/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h
-index fa83b255e180c..39388acfb94ba 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h
-@@ -466,8 +466,6 @@ void mt7615_mac_reset_counters(struct mt7615_phy *phy);
- void mt7615_mac_cca_stats_reset(struct mt7615_phy *phy);
- void mt7615_mac_set_scs(struct mt7615_phy *phy, bool enable);
- void mt7615_mac_enable_nf(struct mt7615_dev *dev, bool ext_phy);
--void mt7615_mac_enable_rtscts(struct mt7615_dev *dev,
--			      struct ieee80211_vif *vif, bool enable);
- void mt7615_mac_sta_poll(struct mt7615_dev *dev);
- int mt7615_mac_write_txwi(struct mt7615_dev *dev, __le32 *txwi,
- 			  struct sk_buff *skb, struct mt76_wcid *wcid,
-@@ -522,7 +520,8 @@ int mt7615_mcu_set_sku_en(struct mt7615_phy *phy, bool enable);
- int mt7615_mcu_apply_rx_dcoc(struct mt7615_phy *phy);
- int mt7615_mcu_apply_tx_dpd(struct mt7615_phy *phy);
- int mt7615_dfs_init_radar_detector(struct mt7615_phy *phy);
--
-+int mt7615_mcu_set_protection(struct mt7615_phy *phy, struct ieee80211_vif *vif,
-+			      u8 ht_mode, bool use_cts_prot);
- int mt7615_mcu_set_roc(struct mt7615_phy *phy, struct ieee80211_vif *vif,
- 		       struct ieee80211_channel *chan, int duration);
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/regs.h b/drivers/net/wireless/mediatek/mt76/mt7615/regs.h
-index 806b3887c541c..9e6d55c91b269 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/regs.h
-@@ -455,8 +455,6 @@ enum mt7615_reg_base {
- #define MT_WTBL_RIUCR3_RATE6		GENMASK(19, 8)
- #define MT_WTBL_RIUCR3_RATE7		GENMASK(31, 20)
- 
--#define MT_WTBL_W3_RTS			BIT(22)
--
- #define MT_WTBL_W5_CHANGE_BW_RATE	GENMASK(7, 5)
- #define MT_WTBL_W5_SHORT_GI_20		BIT(8)
- #define MT_WTBL_W5_SHORT_GI_40		BIT(9)
+diff --git a/tools/lib/bpf/relo_core.c b/tools/lib/bpf/relo_core.c
+index 63a4d5ad12d1a..04c8febfc0aa7 100644
+--- a/tools/lib/bpf/relo_core.c
++++ b/tools/lib/bpf/relo_core.c
+@@ -293,6 +293,8 @@ int bpf_core_parse_spec(const char *prog_name, const struct btf *btf,
+ 			++spec_str;
+ 		if (sscanf(spec_str, "%d%n", &access_idx, &parsed_len) != 1)
+ 			return -EINVAL;
++		if (access_idx < 0)
++			return -EINVAL;
+ 		if (spec->raw_len == BPF_CORE_SPEC_MAX_LEN)
+ 			return -E2BIG;
+ 		spec_str += parsed_len;
 -- 
 2.53.0
 
