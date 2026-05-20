@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E1A3F789B;
-	Wed, 20 May 2026 18:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87133CCFB0;
+	Wed, 20 May 2026 18:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301100; cv=none; b=txlisneHBwhuUDFmlgVxZMbBiOpktTb+vFK+moqKLwNtjCmPomUFOp1F6rwg5tb8J1sQTZ3xNz+J8OTsH22Qs2fpbPmYQpC34GaeuGxCmpAovQTQ7+9qtNbGNzW2bzYC9c8i1H60tSHGrNQrBp1kLFi55I//zAnKm4j9n74X6WM=
+	t=1779301103; cv=none; b=E9uXA83krslTE96S1QKDKTg0mriKHKfxjNOHjaDmXK5cahS9JRl8p4qRSiGSxpXtjxn0fAQqW2gsrvPfQFp6/ar0ykTtkkUJmiGvK/qknfpGRdr+HL6yeXzTc3wmq5lhSEc0w2zGitOJqrdA+l5ISoBWOCp4pMQ/vVSSG9H0gSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301100; c=relaxed/simple;
-	bh=c5jU2VYdhn3nhhBchrW+E3Y9B6bU2TJLd+Dro16pURw=;
+	s=arc-20240116; t=1779301103; c=relaxed/simple;
+	bh=otC08+ysUGtTqI0LEZe8meF7PkHja98zJnypilCqbgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNNqVvAC8S68oh16Tf51dCVRINaoIRh5Jyfd2HFSaP3QWVA6N5XTAvNc2Dxm2roxLvEwoSY/Ef/OLOOUzykJUgoIu0Qr8CwYrWn0jRAbMgCIwYaaENarZ1bfpu39sI2M8sZmyd8RIfkfl7klcEZ+SEl2SL/QyPEG0pZmXM4eh/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFjIyqIT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Hw1ql7WCdbsDNK5HQxQCUa5gqC1S7hg9h6YQu/31EZ2kSudfmF5j1/vCD4L5nzjsrT/egXX0BpcWNX6iK2SrpY7sDIaM4JnA/+uI09xa8dzo+V8+AXF4TlOGlg7o75CM+9VzaU/gwLLXVTTyLpAAzq82oyIXOtsB2QcTn9s9t5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jxa5s+gB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFjIyqIT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F741F000E9;
-	Wed, 20 May 2026 18:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jxa5s+gB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC791F000E9;
+	Wed, 20 May 2026 18:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301099;
-	bh=4uYNSNgWHMzdNl0w3CpyuE2TouCxebQ15ZqI+nO0DOs=;
+	s=korg; t=1779301101;
+	bh=9PjLR92C6xiI394Q+99Eytslg24ujwxa7qh+hmNwl5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QFjIyqITwNmriYNAAYv6yH2/RQNQm8CgCTHWEi5Qq7OF68IWfrCJvDFeSc4lg/PiJ
-	 S3IHntK4ZkWepB1hsV0US7d/vkXQsGjSl1M0tOiIXFwgBEe3EZ3lBK5A1toLwX7iHv
-	 +6pMj0s5jCMvarf0bejK0ri9xE7H+L/lOBHGtpeM=
+	b=Jxa5s+gBOAICrdNjuoFnj5XyVKQJhLOdRwglmGaTnao1VxDukml0ay60z5EUxPI6S
+	 ESQnPNrzJwFWldK8PKwW8QCLFTAY0WHBcRbaAaqVMqU1gC3F3Ia2FtjsvBI/3Ug8bq
+	 nAsW8B7y2K8BpYH+Ys5Vdl26WmrRlqdLoZgnD09c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 389/666] tty: hvc_iucv: fix off-by-one in number of supported devices
-Date: Wed, 20 May 2026 18:20:00 +0200
-Message-ID: <20260520162119.686886655@linuxfoundation.org>
+Subject: [PATCH 6.12 425/666] drm/i915: Relocate the SKL wm sanitation code
+Date: Wed, 20 May 2026 18:20:36 +0200
+Message-ID: <20260520162120.481492150@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -44,54 +45,479 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit f2a880e802ad12d1e38039d1334fb1475d0f5241 ]
+[ Upstream commit e31e8681d29c5c35aa070ca6323c6b95ecf0db99 ]
 
-MAX_HVC_IUCV_LINES == HVC_ALLOC_TTY_ADAPTERS == 8.
-This is the number of entries in:
-  static struct hvc_iucv_private *hvc_iucv_table[MAX_HVC_IUCV_LINES];
+In order to add more MBUS sanitation into the code we'll want
+to reuse a bunch of the code that performs the MBUS/related
+hardware programming. Currently that code comes after the
+main skl_wm_get_hw_state_and_sanitize() entrypoint. In order
+to avoid annoying forward declarations relocate the
+skl_wm_get_hw_state_and_sanitize() and related stuff nearer to
+the end of the file.
 
-Sometimes hvc_iucv_table[] is limited by:
-(a)	if (num > hvc_iucv_devices) // for error detection
-or
-(b)	for (i = 0; i < hvc_iucv_devices; i++) // in 2 places
-(so these 2 don't agree; second one appears to be correct to me.)
-
-hvc_iucv_devices can be 0..8. This is a counter.
-(c)	if (hvc_iucv_devices > MAX_HVC_IUCV_LINES)
-
-If hvc_iucv_devices == 8, (a) allows the code to access hvc_iucv_table[8].
-Oops.
-
-Fixes: 44a01d5ba8a4 ("[S390] s390/hvc_console: z/VM IUCV hypervisor console support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20260130072939.1535869-1-rdunlap@infradead.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241031155646.15165-2-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Stable-dep-of: a97c88a176b6 ("drm/i915/wm: Verify the correct plane DDB entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/hvc/hvc_iucv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/skl_watermark.c | 420 +++++++++----------
+ 1 file changed, 210 insertions(+), 210 deletions(-)
 
-diff --git a/drivers/tty/hvc/hvc_iucv.c b/drivers/tty/hvc/hvc_iucv.c
-index ed4bf40278a7e..a88722afa3731 100644
---- a/drivers/tty/hvc/hvc_iucv.c
-+++ b/drivers/tty/hvc/hvc_iucv.c
-@@ -130,7 +130,7 @@ static struct iucv_handler hvc_iucv_handler = {
-  */
- static struct hvc_iucv_private *hvc_iucv_get_private(uint32_t num)
- {
--	if (num > hvc_iucv_devices)
-+	if (num >= hvc_iucv_devices)
- 		return NULL;
- 	return hvc_iucv_table[num];
+diff --git a/drivers/gpu/drm/i915/display/skl_watermark.c b/drivers/gpu/drm/i915/display/skl_watermark.c
+index 045c7cac166bb..2b05db764a3a9 100644
+--- a/drivers/gpu/drm/i915/display/skl_watermark.c
++++ b/drivers/gpu/drm/i915/display/skl_watermark.c
+@@ -3039,202 +3039,6 @@ static void skl_wm_get_hw_state(struct drm_i915_private *i915)
+ 	dbuf_state->enabled_slices = i915->display.dbuf.enabled_slices;
  }
+ 
+-static bool skl_dbuf_is_misconfigured(struct drm_i915_private *i915)
+-{
+-	const struct intel_dbuf_state *dbuf_state =
+-		to_intel_dbuf_state(i915->display.dbuf.obj.state);
+-	struct skl_ddb_entry entries[I915_MAX_PIPES] = {};
+-	struct intel_crtc *crtc;
+-
+-	for_each_intel_crtc(&i915->drm, crtc) {
+-		const struct intel_crtc_state *crtc_state =
+-			to_intel_crtc_state(crtc->base.state);
+-
+-		entries[crtc->pipe] = crtc_state->wm.skl.ddb;
+-	}
+-
+-	for_each_intel_crtc(&i915->drm, crtc) {
+-		const struct intel_crtc_state *crtc_state =
+-			to_intel_crtc_state(crtc->base.state);
+-		u8 slices;
+-
+-		slices = skl_compute_dbuf_slices(crtc, dbuf_state->active_pipes,
+-						 dbuf_state->joined_mbus);
+-		if (dbuf_state->slices[crtc->pipe] & ~slices)
+-			return true;
+-
+-		if (skl_ddb_allocation_overlaps(&crtc_state->wm.skl.ddb, entries,
+-						I915_MAX_PIPES, crtc->pipe))
+-			return true;
+-	}
+-
+-	return false;
+-}
+-
+-static void skl_wm_sanitize(struct drm_i915_private *i915)
+-{
+-	struct intel_crtc *crtc;
+-
+-	/*
+-	 * On TGL/RKL (at least) the BIOS likes to assign the planes
+-	 * to the wrong DBUF slices. This will cause an infinite loop
+-	 * in skl_commit_modeset_enables() as it can't find a way to
+-	 * transition between the old bogus DBUF layout to the new
+-	 * proper DBUF layout without DBUF allocation overlaps between
+-	 * the planes (which cannot be allowed or else the hardware
+-	 * may hang). If we detect a bogus DBUF layout just turn off
+-	 * all the planes so that skl_commit_modeset_enables() can
+-	 * simply ignore them.
+-	 */
+-	if (!skl_dbuf_is_misconfigured(i915))
+-		return;
+-
+-	drm_dbg_kms(&i915->drm, "BIOS has misprogrammed the DBUF, disabling all planes\n");
+-
+-	for_each_intel_crtc(&i915->drm, crtc) {
+-		struct intel_plane *plane = to_intel_plane(crtc->base.primary);
+-		const struct intel_plane_state *plane_state =
+-			to_intel_plane_state(plane->base.state);
+-		struct intel_crtc_state *crtc_state =
+-			to_intel_crtc_state(crtc->base.state);
+-
+-		if (plane_state->uapi.visible)
+-			intel_plane_disable_noatomic(crtc, plane);
+-
+-		drm_WARN_ON(&i915->drm, crtc_state->active_planes != 0);
+-
+-		memset(&crtc_state->wm.skl.ddb, 0, sizeof(crtc_state->wm.skl.ddb));
+-	}
+-}
+-
+-static void skl_wm_get_hw_state_and_sanitize(struct drm_i915_private *i915)
+-{
+-	skl_wm_get_hw_state(i915);
+-	skl_wm_sanitize(i915);
+-}
+-
+-void intel_wm_state_verify(struct intel_atomic_state *state,
+-			   struct intel_crtc *crtc)
+-{
+-	struct drm_i915_private *i915 = to_i915(state->base.dev);
+-	const struct intel_crtc_state *new_crtc_state =
+-		intel_atomic_get_new_crtc_state(state, crtc);
+-	struct skl_hw_state {
+-		struct skl_ddb_entry ddb[I915_MAX_PLANES];
+-		struct skl_ddb_entry ddb_y[I915_MAX_PLANES];
+-		struct skl_pipe_wm wm;
+-	} *hw;
+-	const struct skl_pipe_wm *sw_wm = &new_crtc_state->wm.skl.optimal;
+-	struct intel_plane *plane;
+-	u8 hw_enabled_slices;
+-	int level;
+-
+-	if (DISPLAY_VER(i915) < 9 || !new_crtc_state->hw.active)
+-		return;
+-
+-	hw = kzalloc(sizeof(*hw), GFP_KERNEL);
+-	if (!hw)
+-		return;
+-
+-	skl_pipe_wm_get_hw_state(crtc, &hw->wm);
+-
+-	skl_pipe_ddb_get_hw_state(crtc, hw->ddb, hw->ddb_y);
+-
+-	hw_enabled_slices = intel_enabled_dbuf_slices_mask(i915);
+-
+-	if (DISPLAY_VER(i915) >= 11 &&
+-	    hw_enabled_slices != i915->display.dbuf.enabled_slices)
+-		drm_err(&i915->drm,
+-			"mismatch in DBUF Slices (expected 0x%x, got 0x%x)\n",
+-			i915->display.dbuf.enabled_slices,
+-			hw_enabled_slices);
+-
+-	for_each_intel_plane_on_crtc(&i915->drm, crtc, plane) {
+-		const struct skl_ddb_entry *hw_ddb_entry, *sw_ddb_entry;
+-		const struct skl_wm_level *hw_wm_level, *sw_wm_level;
+-
+-		/* Watermarks */
+-		for (level = 0; level < i915->display.wm.num_levels; level++) {
+-			hw_wm_level = &hw->wm.planes[plane->id].wm[level];
+-			sw_wm_level = skl_plane_wm_level(sw_wm, plane->id, level);
+-
+-			if (skl_wm_level_equals(hw_wm_level, sw_wm_level))
+-				continue;
+-
+-			drm_err(&i915->drm,
+-				"[PLANE:%d:%s] mismatch in WM%d (expected e=%d b=%u l=%u, got e=%d b=%u l=%u)\n",
+-				plane->base.base.id, plane->base.name, level,
+-				sw_wm_level->enable,
+-				sw_wm_level->blocks,
+-				sw_wm_level->lines,
+-				hw_wm_level->enable,
+-				hw_wm_level->blocks,
+-				hw_wm_level->lines);
+-		}
+-
+-		hw_wm_level = &hw->wm.planes[plane->id].trans_wm;
+-		sw_wm_level = skl_plane_trans_wm(sw_wm, plane->id);
+-
+-		if (!skl_wm_level_equals(hw_wm_level, sw_wm_level)) {
+-			drm_err(&i915->drm,
+-				"[PLANE:%d:%s] mismatch in trans WM (expected e=%d b=%u l=%u, got e=%d b=%u l=%u)\n",
+-				plane->base.base.id, plane->base.name,
+-				sw_wm_level->enable,
+-				sw_wm_level->blocks,
+-				sw_wm_level->lines,
+-				hw_wm_level->enable,
+-				hw_wm_level->blocks,
+-				hw_wm_level->lines);
+-		}
+-
+-		hw_wm_level = &hw->wm.planes[plane->id].sagv.wm0;
+-		sw_wm_level = &sw_wm->planes[plane->id].sagv.wm0;
+-
+-		if (HAS_HW_SAGV_WM(i915) &&
+-		    !skl_wm_level_equals(hw_wm_level, sw_wm_level)) {
+-			drm_err(&i915->drm,
+-				"[PLANE:%d:%s] mismatch in SAGV WM (expected e=%d b=%u l=%u, got e=%d b=%u l=%u)\n",
+-				plane->base.base.id, plane->base.name,
+-				sw_wm_level->enable,
+-				sw_wm_level->blocks,
+-				sw_wm_level->lines,
+-				hw_wm_level->enable,
+-				hw_wm_level->blocks,
+-				hw_wm_level->lines);
+-		}
+-
+-		hw_wm_level = &hw->wm.planes[plane->id].sagv.trans_wm;
+-		sw_wm_level = &sw_wm->planes[plane->id].sagv.trans_wm;
+-
+-		if (HAS_HW_SAGV_WM(i915) &&
+-		    !skl_wm_level_equals(hw_wm_level, sw_wm_level)) {
+-			drm_err(&i915->drm,
+-				"[PLANE:%d:%s] mismatch in SAGV trans WM (expected e=%d b=%u l=%u, got e=%d b=%u l=%u)\n",
+-				plane->base.base.id, plane->base.name,
+-				sw_wm_level->enable,
+-				sw_wm_level->blocks,
+-				sw_wm_level->lines,
+-				hw_wm_level->enable,
+-				hw_wm_level->blocks,
+-				hw_wm_level->lines);
+-		}
+-
+-		/* DDB */
+-		hw_ddb_entry = &hw->ddb[PLANE_CURSOR];
+-		sw_ddb_entry = &new_crtc_state->wm.skl.plane_ddb[PLANE_CURSOR];
+-
+-		if (!skl_ddb_entry_equal(hw_ddb_entry, sw_ddb_entry)) {
+-			drm_err(&i915->drm,
+-				"[PLANE:%d:%s] mismatch in DDB (expected (%u,%u), found (%u,%u))\n",
+-				plane->base.base.id, plane->base.name,
+-				sw_ddb_entry->start, sw_ddb_entry->end,
+-				hw_ddb_entry->start, hw_ddb_entry->end);
+-		}
+-	}
+-
+-	kfree(hw);
+-}
+-
+ bool skl_watermark_ipc_enabled(struct drm_i915_private *i915)
+ {
+ 	return i915->display.wm.ipc_enabled;
+@@ -3390,20 +3194,6 @@ static void skl_setup_wm_latency(struct drm_i915_private *i915)
+ 	intel_print_wm_latency(i915, "Gen9 Plane", i915->display.wm.skl_latency);
+ }
+ 
+-static const struct intel_wm_funcs skl_wm_funcs = {
+-	.compute_global_watermarks = skl_compute_wm,
+-	.get_hw_state = skl_wm_get_hw_state_and_sanitize,
+-};
+-
+-void skl_wm_init(struct drm_i915_private *i915)
+-{
+-	intel_sagv_init(i915);
+-
+-	skl_setup_wm_latency(i915);
+-
+-	i915->display.funcs.wm = &skl_wm_funcs;
+-}
+-
+ static struct intel_global_state *intel_dbuf_duplicate_state(struct intel_global_obj *obj)
+ {
+ 	struct intel_dbuf_state *dbuf_state;
+@@ -3747,6 +3537,216 @@ void intel_dbuf_post_plane_update(struct intel_atomic_state *state)
+ 	gen9_dbuf_slices_update(i915, new_slices);
+ }
+ 
++static bool skl_dbuf_is_misconfigured(struct drm_i915_private *i915)
++{
++	const struct intel_dbuf_state *dbuf_state =
++		to_intel_dbuf_state(i915->display.dbuf.obj.state);
++	struct skl_ddb_entry entries[I915_MAX_PIPES] = {};
++	struct intel_crtc *crtc;
++
++	for_each_intel_crtc(&i915->drm, crtc) {
++		const struct intel_crtc_state *crtc_state =
++			to_intel_crtc_state(crtc->base.state);
++
++		entries[crtc->pipe] = crtc_state->wm.skl.ddb;
++	}
++
++	for_each_intel_crtc(&i915->drm, crtc) {
++		const struct intel_crtc_state *crtc_state =
++			to_intel_crtc_state(crtc->base.state);
++		u8 slices;
++
++		slices = skl_compute_dbuf_slices(crtc, dbuf_state->active_pipes,
++						 dbuf_state->joined_mbus);
++		if (dbuf_state->slices[crtc->pipe] & ~slices)
++			return true;
++
++		if (skl_ddb_allocation_overlaps(&crtc_state->wm.skl.ddb, entries,
++						I915_MAX_PIPES, crtc->pipe))
++			return true;
++	}
++
++	return false;
++}
++
++static void skl_wm_sanitize(struct drm_i915_private *i915)
++{
++	struct intel_crtc *crtc;
++
++	/*
++	 * On TGL/RKL (at least) the BIOS likes to assign the planes
++	 * to the wrong DBUF slices. This will cause an infinite loop
++	 * in skl_commit_modeset_enables() as it can't find a way to
++	 * transition between the old bogus DBUF layout to the new
++	 * proper DBUF layout without DBUF allocation overlaps between
++	 * the planes (which cannot be allowed or else the hardware
++	 * may hang). If we detect a bogus DBUF layout just turn off
++	 * all the planes so that skl_commit_modeset_enables() can
++	 * simply ignore them.
++	 */
++	if (!skl_dbuf_is_misconfigured(i915))
++		return;
++
++	drm_dbg_kms(&i915->drm, "BIOS has misprogrammed the DBUF, disabling all planes\n");
++
++	for_each_intel_crtc(&i915->drm, crtc) {
++		struct intel_plane *plane = to_intel_plane(crtc->base.primary);
++		const struct intel_plane_state *plane_state =
++			to_intel_plane_state(plane->base.state);
++		struct intel_crtc_state *crtc_state =
++			to_intel_crtc_state(crtc->base.state);
++
++		if (plane_state->uapi.visible)
++			intel_plane_disable_noatomic(crtc, plane);
++
++		drm_WARN_ON(&i915->drm, crtc_state->active_planes != 0);
++
++		memset(&crtc_state->wm.skl.ddb, 0, sizeof(crtc_state->wm.skl.ddb));
++	}
++}
++
++static void skl_wm_get_hw_state_and_sanitize(struct drm_i915_private *i915)
++{
++	skl_wm_get_hw_state(i915);
++	skl_wm_sanitize(i915);
++}
++
++void intel_wm_state_verify(struct intel_atomic_state *state,
++			   struct intel_crtc *crtc)
++{
++	struct drm_i915_private *i915 = to_i915(state->base.dev);
++	const struct intel_crtc_state *new_crtc_state =
++		intel_atomic_get_new_crtc_state(state, crtc);
++	struct skl_hw_state {
++		struct skl_ddb_entry ddb[I915_MAX_PLANES];
++		struct skl_ddb_entry ddb_y[I915_MAX_PLANES];
++		struct skl_pipe_wm wm;
++	} *hw;
++	const struct skl_pipe_wm *sw_wm = &new_crtc_state->wm.skl.optimal;
++	struct intel_plane *plane;
++	u8 hw_enabled_slices;
++	int level;
++
++	if (DISPLAY_VER(i915) < 9 || !new_crtc_state->hw.active)
++		return;
++
++	hw = kzalloc(sizeof(*hw), GFP_KERNEL);
++	if (!hw)
++		return;
++
++	skl_pipe_wm_get_hw_state(crtc, &hw->wm);
++
++	skl_pipe_ddb_get_hw_state(crtc, hw->ddb, hw->ddb_y);
++
++	hw_enabled_slices = intel_enabled_dbuf_slices_mask(i915);
++
++	if (DISPLAY_VER(i915) >= 11 &&
++	    hw_enabled_slices != i915->display.dbuf.enabled_slices)
++		drm_err(&i915->drm,
++			"mismatch in DBUF Slices (expected 0x%x, got 0x%x)\n",
++			i915->display.dbuf.enabled_slices,
++			hw_enabled_slices);
++
++	for_each_intel_plane_on_crtc(&i915->drm, crtc, plane) {
++		const struct skl_ddb_entry *hw_ddb_entry, *sw_ddb_entry;
++		const struct skl_wm_level *hw_wm_level, *sw_wm_level;
++
++		/* Watermarks */
++		for (level = 0; level < i915->display.wm.num_levels; level++) {
++			hw_wm_level = &hw->wm.planes[plane->id].wm[level];
++			sw_wm_level = skl_plane_wm_level(sw_wm, plane->id, level);
++
++			if (skl_wm_level_equals(hw_wm_level, sw_wm_level))
++				continue;
++
++			drm_err(&i915->drm,
++				"[PLANE:%d:%s] mismatch in WM%d (expected e=%d b=%u l=%u, got e=%d b=%u l=%u)\n",
++				plane->base.base.id, plane->base.name, level,
++				sw_wm_level->enable,
++				sw_wm_level->blocks,
++				sw_wm_level->lines,
++				hw_wm_level->enable,
++				hw_wm_level->blocks,
++				hw_wm_level->lines);
++		}
++
++		hw_wm_level = &hw->wm.planes[plane->id].trans_wm;
++		sw_wm_level = skl_plane_trans_wm(sw_wm, plane->id);
++
++		if (!skl_wm_level_equals(hw_wm_level, sw_wm_level)) {
++			drm_err(&i915->drm,
++				"[PLANE:%d:%s] mismatch in trans WM (expected e=%d b=%u l=%u, got e=%d b=%u l=%u)\n",
++				plane->base.base.id, plane->base.name,
++				sw_wm_level->enable,
++				sw_wm_level->blocks,
++				sw_wm_level->lines,
++				hw_wm_level->enable,
++				hw_wm_level->blocks,
++				hw_wm_level->lines);
++		}
++
++		hw_wm_level = &hw->wm.planes[plane->id].sagv.wm0;
++		sw_wm_level = &sw_wm->planes[plane->id].sagv.wm0;
++
++		if (HAS_HW_SAGV_WM(i915) &&
++		    !skl_wm_level_equals(hw_wm_level, sw_wm_level)) {
++			drm_err(&i915->drm,
++				"[PLANE:%d:%s] mismatch in SAGV WM (expected e=%d b=%u l=%u, got e=%d b=%u l=%u)\n",
++				plane->base.base.id, plane->base.name,
++				sw_wm_level->enable,
++				sw_wm_level->blocks,
++				sw_wm_level->lines,
++				hw_wm_level->enable,
++				hw_wm_level->blocks,
++				hw_wm_level->lines);
++		}
++
++		hw_wm_level = &hw->wm.planes[plane->id].sagv.trans_wm;
++		sw_wm_level = &sw_wm->planes[plane->id].sagv.trans_wm;
++
++		if (HAS_HW_SAGV_WM(i915) &&
++		    !skl_wm_level_equals(hw_wm_level, sw_wm_level)) {
++			drm_err(&i915->drm,
++				"[PLANE:%d:%s] mismatch in SAGV trans WM (expected e=%d b=%u l=%u, got e=%d b=%u l=%u)\n",
++				plane->base.base.id, plane->base.name,
++				sw_wm_level->enable,
++				sw_wm_level->blocks,
++				sw_wm_level->lines,
++				hw_wm_level->enable,
++				hw_wm_level->blocks,
++				hw_wm_level->lines);
++		}
++
++		/* DDB */
++		hw_ddb_entry = &hw->ddb[PLANE_CURSOR];
++		sw_ddb_entry = &new_crtc_state->wm.skl.plane_ddb[PLANE_CURSOR];
++
++		if (!skl_ddb_entry_equal(hw_ddb_entry, sw_ddb_entry)) {
++			drm_err(&i915->drm,
++				"[PLANE:%d:%s] mismatch in DDB (expected (%u,%u), found (%u,%u))\n",
++				plane->base.base.id, plane->base.name,
++				sw_ddb_entry->start, sw_ddb_entry->end,
++				hw_ddb_entry->start, hw_ddb_entry->end);
++		}
++	}
++
++	kfree(hw);
++}
++
++static const struct intel_wm_funcs skl_wm_funcs = {
++	.compute_global_watermarks = skl_compute_wm,
++	.get_hw_state = skl_wm_get_hw_state_and_sanitize,
++};
++
++void skl_wm_init(struct drm_i915_private *i915)
++{
++	intel_sagv_init(i915);
++
++	skl_setup_wm_latency(i915);
++
++	i915->display.funcs.wm = &skl_wm_funcs;
++}
++
+ static int skl_watermark_ipc_status_show(struct seq_file *m, void *data)
+ {
+ 	struct drm_i915_private *i915 = m->private;
 -- 
 2.53.0
 
