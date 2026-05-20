@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4B7331A41;
-	Wed, 20 May 2026 18:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709AC331A41;
+	Wed, 20 May 2026 18:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302220; cv=none; b=kwT+//4TQSpR2IvgoGkcaitW9sSO/BjzSlNVh7jOZITcV7f4zk1oDxoV9pQ/VjBRQ/97sudGcOzghgpzigxethOaR6y/LMnE2p2QuXkxQ4R1H7MOT49zHQZDJm9+1xgWOCTjGsMPCRGNJUkuDlberOmtZEl79sYa8xqyJB6FP/M=
+	t=1779302223; cv=none; b=UWLyTAcK+ayCZAaENi7h1VIK3PfzqUul6eUGilUmF0lbXg0Cat1AliHEHkf9Ao/TTTv7bv7tFU+/0ei7ie6D4SZ+wnj4Nzb7RZd06Biyw8fwQhc02m5uD2DBVoItqMlltJWhfNcRcYGK7LNUlGCwBdAqwkOxQdnSfcG/G2ZYYqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302220; c=relaxed/simple;
-	bh=FA9xhnzKczuAAD7DbR0xyL09bUo8h1WWwO5Za4x/+Vs=;
+	s=arc-20240116; t=1779302223; c=relaxed/simple;
+	bh=9eAze9ulSL716molV/t9se/wgUJzD8B8eCxadUJ8byY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fl0yIGa6SsENjKN8s1DO5n2i/qniL7A/RUkOd9xx0GQiGIjdutrjdjRBS0tgBqXmdlp4wtWVu6H4CCV9TkbTPDaEjZu1dta0PS6jyAYAAReYiMF49I8jQalTpcGzZAZgYFHNAQfNyjDKytuF0soJqL5OvX3PbWwhllKQF2CU6Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhXezcbm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G851PnljfWnDnxx/Mk9jGeelA55PH0gF+UNqBBYjQe50hgCVXINH/yjYyrGnFgVchXmpbSIS3wPelMMgfrUyjbHpOCHsvG2eQss9ZILZt/Nc90YEvJRtdWWEXPSxzCauA4pZBHv67Okq0oBF855TsUvReaSiJbq/OqNLE+ZPJ/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8Gw4t0s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhXezcbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1791F000E9;
-	Wed, 20 May 2026 18:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8Gw4t0s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7D21F000E9;
+	Wed, 20 May 2026 18:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302219;
-	bh=dLQZojlbwHlhPmkxshHdQV6Rm8ATwp1kJTDx+ZqUyJg=;
+	s=korg; t=1779302222;
+	bh=QfkpeCg1AfeGv2MkWT/gSEKtgyaX3b8iXqnJh3BlGfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nhXezcbm+ZoEqMKpNkY+uobyBu+yhApeIMON/ioBa1GjXlJAKCyrGvw/gagAXajxJ
-	 KleW3pCgDMTfPpyIgGX4rv7vm6yimMrjasjn5shhBmSTrkpOxJrIoURIl5Q2wIxYid
-	 1y4jkWKWSUc3nnh3KB9eqFpnD7V88CEXV61qw2JE=
+	b=S8Gw4t0sVJltEt7D+EHKhMcjWBh85KzcSdOm5NOkUbD/e2wphyP29fbAjakpWxeRs
+	 /c6EUnxzdF7mhxVVNJJ+mLQc+5plsmgh0TTi24vkuEZau7bg5GkOS1hDYsHIIciTcp
+	 oKYw925mGrq/eFBMYTtyxjHQKIaRi1O3Qqjp61iE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Sherry Sun <sherry.sun@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/508] spi: mtk-snfi: unregister ECC engine on probe failure and remove() callback
-Date: Wed, 20 May 2026 18:19:50 +0200
-Message-ID: <20260520162102.257592617@linuxfoundation.org>
+Subject: [PATCH 6.6 185/508] arm64: dts: imx8mp-evk: Enable pull select bit for PCIe regulator GPIO (M.2 W_DISABLE1)
+Date: Wed, 20 May 2026 18:20:08 +0200
+Message-ID: <20260520162102.644298229@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,57 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Sherry Sun <sherry.sun@nxp.com>
 
-[ Upstream commit ab00febad191d7a4400aa1c3468279fb508258d4 ]
+[ Upstream commit d1e7eab6033f9885a02c4b4e8f09e34d8e9d21ab ]
 
-mtk_snand_probe() registers the on-host NAND ECC engine, but teardown was
-missing from both probe unwind and remove-time cleanup. Add a devm cleanup
-action after successful registration so
-nand_ecc_unregister_on_host_hw_engine() runs automatically on probe
-failures and during device removal.
+The current pin configuration for MX8MP_IOMUXC_SD1_DATA4__GPIO2_IO06
+sets the weak pull-up but does not enable the pull select field.
+Bit 8 in the IOMUX register must be set in order for the weak pull-up
+to actually take effect.
 
-Fixes: 764f1b748164 ("spi: add driver for MTK SPI NAND Flash Interface")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://patch.msgid.link/20263f885f1a9c9d559f95275298cd6de4b11ed5.1775546401.git.xiaopei01@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Update the pinctrl setting from 0x40 to 0x140 to enable both the pull
+select and the weak pull-up, ensuring the line behaves as expected.
+
+Fixes: d50650500064 ("arm64: dts: imx8mp-evk: Add PCIe support")
+Signed-off-by: Sherry Sun <sherry.sun@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mtk-snfi.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8mp-evk.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-mtk-snfi.c b/drivers/spi/spi-mtk-snfi.c
-index 4433a8a9299f6..22f3b22d77ad8 100644
---- a/drivers/spi/spi-mtk-snfi.c
-+++ b/drivers/spi/spi-mtk-snfi.c
-@@ -1307,6 +1307,13 @@ static const struct spi_controller_mem_caps mtk_snand_mem_caps = {
- 	.ecc = true,
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
+index 92f8cc05fe9da..e29b6e9a70276 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
+@@ -764,7 +764,7 @@ MX8MP_IOMUXC_SD1_DATA5__GPIO2_IO07	0x40
  
-+static void mtk_unregister_ecc_engine(void *data)
-+{
-+	struct nand_ecc_engine *eng = data;
-+
-+	nand_ecc_unregister_on_host_hw_engine(eng);
-+}
-+
- static irqreturn_t mtk_snand_irq(int irq, void *id)
- {
- 	struct mtk_snand *snf = id;
-@@ -1487,6 +1494,13 @@ static int mtk_snand_probe(struct platform_device *pdev)
- 		goto disable_clk;
- 	}
+ 	pinctrl_pcie0_reg: pcie0reggrp {
+ 		fsl,pins = <
+-			MX8MP_IOMUXC_SD1_DATA4__GPIO2_IO06	0x40
++			MX8MP_IOMUXC_SD1_DATA4__GPIO2_IO06	0x140
+ 		>;
+ 	};
  
-+	ret = devm_add_action_or_reset(&pdev->dev, mtk_unregister_ecc_engine,
-+				       &ms->ecc_eng);
-+	if (ret) {
-+		dev_err_probe(&pdev->dev, ret, "failed to add ECC unregister action\n");
-+		goto release_ecc;
-+	}
-+
- 	ctlr->num_chipselect = 1;
- 	ctlr->mem_ops = &mtk_snand_mem_ops;
- 	ctlr->mem_caps = &mtk_snand_mem_caps;
 -- 
 2.53.0
 
