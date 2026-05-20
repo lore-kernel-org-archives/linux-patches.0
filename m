@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216E0331A41;
-	Wed, 20 May 2026 18:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4B7331A41;
+	Wed, 20 May 2026 18:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302218; cv=none; b=G6Y3aJKg8HX+x7RpZIHKVcc2ouJSpNvz68pLqgaj8w0XosUSjS79/9bZnlDrFA+rZIuU8Uy922LfR/1/NlRSoV3MbBFTNeYJzZdbVjkRlcnkfbyMo7IZ+p5k6xTf5vL7mJ+rjYrISli4bcma1Sw6WPJoRbzCj2y6olm3cGyGciI=
+	t=1779302220; cv=none; b=kwT+//4TQSpR2IvgoGkcaitW9sSO/BjzSlNVh7jOZITcV7f4zk1oDxoV9pQ/VjBRQ/97sudGcOzghgpzigxethOaR6y/LMnE2p2QuXkxQ4R1H7MOT49zHQZDJm9+1xgWOCTjGsMPCRGNJUkuDlberOmtZEl79sYa8xqyJB6FP/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302218; c=relaxed/simple;
-	bh=qU6yfr6KTOUfCQ4UMmQ10Uj003hlojhy28wtEF056BA=;
+	s=arc-20240116; t=1779302220; c=relaxed/simple;
+	bh=FA9xhnzKczuAAD7DbR0xyL09bUo8h1WWwO5Za4x/+Vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AEz6pAQxt3UMGr7qicP5epSn5+fNo1bKUEK8gs8AQ8mwXhoa3FQTgKC6/XpD+tWENJboUWm5GxQR5oxgQJjZX+YM12xwZv/j3tXHMt+TRSXp5rKw8vwP7CUn1wJfHgnT79Ghh8/Bjhu1zZVjlTHTx9bZ3gOSHLF3zxXlAkLGBy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rC+Xiucz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fl0yIGa6SsENjKN8s1DO5n2i/qniL7A/RUkOd9xx0GQiGIjdutrjdjRBS0tgBqXmdlp4wtWVu6H4CCV9TkbTPDaEjZu1dta0PS6jyAYAAReYiMF49I8jQalTpcGzZAZgYFHNAQfNyjDKytuF0soJqL5OvX3PbWwhllKQF2CU6Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhXezcbm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rC+Xiucz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867721F000E9;
-	Wed, 20 May 2026 18:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhXezcbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1791F000E9;
+	Wed, 20 May 2026 18:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302217;
-	bh=9yeunL510d+7Ta9Ia2BN9xnFyy+U6iu67T3AIVWkc1w=;
+	s=korg; t=1779302219;
+	bh=dLQZojlbwHlhPmkxshHdQV6Rm8ATwp1kJTDx+ZqUyJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rC+Xiucz4NaO9u9qyejTMIesmMkH2WW7Wf88vp4Yc4h/Cls+ZzdZ+L6cvGd9WgElS
-	 nMxZsuYv6Jp3b8RF+G5JcXXPBsPlE6nFIoz+NnXwTuCXOo6hm9zzVorG0R9mb0mIyK
-	 uEx3XDzRHv1cG+Q1eLCXdY8T0sv2CGcsfBZob9ZU=
+	b=nhXezcbm+ZoEqMKpNkY+uobyBu+yhApeIMON/ioBa1GjXlJAKCyrGvw/gagAXajxJ
+	 KleW3pCgDMTfPpyIgGX4rv7vm6yimMrjasjn5shhBmSTrkpOxJrIoURIl5Q2wIxYid
+	 1y4jkWKWSUc3nnh3KB9eqFpnD7V88CEXV61qw2JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/508] arm64: dts: imx8-apalis: Fix LEDs name collision
-Date: Wed, 20 May 2026 18:20:07 +0200
-Message-ID: <20260520162102.622497838@linuxfoundation.org>
+Subject: [PATCH 6.6 167/508] spi: mtk-snfi: unregister ECC engine on probe failure and remove() callback
+Date: Wed, 20 May 2026 18:19:50 +0200
+Message-ID: <20260520162102.257592617@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,101 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 92ab53b9bb2a72581c32073755077af916eb9aee ]
+[ Upstream commit ab00febad191d7a4400aa1c3468279fb508258d4 ]
 
-Ixora boards have multiple instances of status leds, to avoid a name
-collision add the function-enumerator property.
+mtk_snand_probe() registers the on-host NAND ECC engine, but teardown was
+missing from both probe unwind and remove-time cleanup. Add a devm cleanup
+action after successful registration so
+nand_ecc_unregister_on_host_hw_engine() runs automatically on probe
+failures and during device removal.
 
-This fixes the following Linux kernel warnings:
-
-  leds-gpio leds: Led green:status renamed to green:status_1 due to name collision
-  leds-gpio leds: Led red:status renamed to red:status_1 due to name collision
-
-Fixes: c083131c9021 ("arm64: dts: freescale: add apalis imx8 aka quadmax carrier board support")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 764f1b748164 ("spi: add driver for MTK SPI NAND Flash Interface")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/20263f885f1a9c9d559f95275298cd6de4b11ed5.1775546401.git.xiaopei01@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.1.dtsi | 4 ++++
- arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.2.dtsi | 4 ++++
- 2 files changed, 8 insertions(+)
+ drivers/spi/spi-mtk-snfi.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.1.dtsi b/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.1.dtsi
-index c6d51f1162985..4802834e26a86 100644
---- a/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.1.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.1.dtsi
-@@ -21,6 +21,7 @@ led-1 {
- 			color = <LED_COLOR_ID_GREEN>;
- 			default-state = "off";
- 			function = LED_FUNCTION_STATUS;
-+			function-enumerator = <1>;
- 			gpios = <&lsio_gpio5 27 GPIO_ACTIVE_HIGH>;
- 		};
+diff --git a/drivers/spi/spi-mtk-snfi.c b/drivers/spi/spi-mtk-snfi.c
+index 4433a8a9299f6..22f3b22d77ad8 100644
+--- a/drivers/spi/spi-mtk-snfi.c
++++ b/drivers/spi/spi-mtk-snfi.c
+@@ -1307,6 +1307,13 @@ static const struct spi_controller_mem_caps mtk_snand_mem_caps = {
+ 	.ecc = true,
+ };
  
-@@ -29,6 +30,7 @@ led-2 {
- 			color = <LED_COLOR_ID_RED>;
- 			default-state = "off";
- 			function = LED_FUNCTION_STATUS;
-+			function-enumerator = <1>;
- 			gpios = <&lsio_gpio5 29 GPIO_ACTIVE_HIGH>;
- 		};
++static void mtk_unregister_ecc_engine(void *data)
++{
++	struct nand_ecc_engine *eng = data;
++
++	nand_ecc_unregister_on_host_hw_engine(eng);
++}
++
+ static irqreturn_t mtk_snand_irq(int irq, void *id)
+ {
+ 	struct mtk_snand *snf = id;
+@@ -1487,6 +1494,13 @@ static int mtk_snand_probe(struct platform_device *pdev)
+ 		goto disable_clk;
+ 	}
  
-@@ -37,6 +39,7 @@ led-3 {
- 			color = <LED_COLOR_ID_GREEN>;
- 			default-state = "off";
- 			function = LED_FUNCTION_STATUS;
-+			function-enumerator = <2>;
- 			gpios = <&lsio_gpio5 20 GPIO_ACTIVE_HIGH>;
- 		};
- 
-@@ -45,6 +48,7 @@ led-4 {
- 			color = <LED_COLOR_ID_RED>;
- 			default-state = "off";
- 			function = LED_FUNCTION_STATUS;
-+			function-enumerator = <2>;
- 			gpios = <&lsio_gpio5 21 GPIO_ACTIVE_HIGH>;
- 		};
- 	};
-diff --git a/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.2.dtsi b/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.2.dtsi
-index 40067ab8aa74b..b28dd1cece8ab 100644
---- a/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.2.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8-apalis-ixora-v1.2.dtsi
-@@ -21,6 +21,7 @@ led-1 {
- 			color = <LED_COLOR_ID_GREEN>;
- 			default-state = "off";
- 			function = LED_FUNCTION_STATUS;
-+			function-enumerator = <1>;
- 			gpios = <&lsio_gpio5 27 GPIO_ACTIVE_HIGH>;
- 		};
- 
-@@ -29,6 +30,7 @@ led-2 {
- 			color = <LED_COLOR_ID_RED>;
- 			default-state = "off";
- 			function = LED_FUNCTION_STATUS;
-+			function-enumerator = <1>;
- 			gpios = <&lsio_gpio5 29 GPIO_ACTIVE_HIGH>;
- 		};
- 
-@@ -37,6 +39,7 @@ led-3 {
- 			color = <LED_COLOR_ID_GREEN>;
- 			default-state = "off";
- 			function = LED_FUNCTION_STATUS;
-+			function-enumerator = <2>;
- 			gpios = <&lsio_gpio5 20 GPIO_ACTIVE_HIGH>;
- 		};
- 
-@@ -45,6 +48,7 @@ led-4 {
- 			color = <LED_COLOR_ID_RED>;
- 			default-state = "off";
- 			function = LED_FUNCTION_STATUS;
-+			function-enumerator = <2>;
- 			gpios = <&lsio_gpio5 21 GPIO_ACTIVE_HIGH>;
- 		};
- 	};
++	ret = devm_add_action_or_reset(&pdev->dev, mtk_unregister_ecc_engine,
++				       &ms->ecc_eng);
++	if (ret) {
++		dev_err_probe(&pdev->dev, ret, "failed to add ECC unregister action\n");
++		goto release_ecc;
++	}
++
+ 	ctlr->num_chipselect = 1;
+ 	ctlr->mem_ops = &mtk_snand_mem_ops;
+ 	ctlr->mem_caps = &mtk_snand_mem_caps;
 -- 
 2.53.0
 
