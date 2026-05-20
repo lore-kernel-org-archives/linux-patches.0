@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAF73CCFB0;
-	Wed, 20 May 2026 16:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B226A369D4C;
+	Wed, 20 May 2026 16:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295507; cv=none; b=Bs5dLulaBXqB8lgkjDp16epv1fMaNVMBWIeQj4lfLJT2EdF7Ye0lSMp1+oaeDVgVMYI0zyFKG+oV8H6dfFRer7Cd6Yj7Cm6AI29J3a3jHWhE23ut9M5TDqdvd+Uwb//i+nmi0EfAWpp571A8YmiqUkfKCQY6T9OdFdi0k+GOEfo=
+	t=1779295509; cv=none; b=kIjT/WOkyzrzshGXNM9RG4DmVTtzZnf6GrzRkxAAQEDr5y01GbwBMLZgHjaNN5KJedB78z9J9xjy44sqZ93xIlrcCb/YpnWMCipNtj9/W9QlrAj43A4Tyu50YRAghatSvii71ZT+F3W0SjGg1AVRLxMmLbxeHFf2+lwjf8g3bcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295507; c=relaxed/simple;
-	bh=+JW96+VS1cPSDD1VW+BpOgjCqsEEFtMoeWNqTgcPQps=;
+	s=arc-20240116; t=1779295509; c=relaxed/simple;
+	bh=Wl4llWjACVR2WMC6BcVC8h9Evee8mdVyKlvdv2wMUEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E73QdeA2iTsUH0zPUMjM35JGoo9HBHvzlfZCGdS0hyzyk5P+FFPSbl8XM2FFHK4wN5yJd8L4HjleKZcXpZRMh+5BlSEW6DjFLg6KMr9h237A+ZD72+baJQKtcKunI1RuAHZv5U4X7Br3EeWnpCJAurRfeFrVx4MW3lNl8RDJHyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YD2ab0x7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ntNZHddtcnt+7S/mk/NgiA1RNxeYSWcDX4zsMX/4zGHBYFe4Fc0m82KEujs9WAjAC3159pKgbcaD4V4vAbfMGswtcDkebFgqhRl/F4amvZ/BpohDThb5JiqOmhN08QaSAM3mQRKqYgrK4mFA06Is+nyPF+n4fKmIfndCLiuhhHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwoXKFFa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YD2ab0x7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E691F000E9;
-	Wed, 20 May 2026 16:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwoXKFFa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCCC41F000E9;
+	Wed, 20 May 2026 16:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295505;
-	bh=yhpXagRSwhbEsGj/nDxcXNGTUBDpxANR0pCoVnPuU88=;
+	s=korg; t=1779295508;
+	bh=G8UQkiU0k+LK78dOgHrENAjXEpB/VAT5WFh62JFJsGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YD2ab0x7Ou0MpiPcgNRgTUYiCqmL1SuV20SUGCvOhDwCBj2U5Nu/AbG9Pz57bj1yG
-	 9MT4KwuhUByKeUTnA5RHzSFN9D6VsnlAKWlECXHRVQedDaZUsoFjpPyCCOCeZ4f35V
-	 gqBXlcyF+RXpmELeZtuKiiHrKeeqivM+xG0cGQzw=
+	b=KwoXKFFaces6vIFcq+cMjbRAoeqCwDFzo8CChSG2wr8h/8wKXz0hMQHKlhF0SxQCg
+	 SeFgfsIhLtvrYzLPuP/xZEpZ45+lgnesJpzWYC8oDIPJGU4dqlWUvWh5eyy19k7h9A
+	 qjxfEsnC62Oj6lCqfngzomS/sHPz6bGd7zQ+Zudk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horst Birthelmer <hbirthelmer@ddn.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0446/1146] fuse: fix premature writetrhough request for large folio
-Date: Wed, 20 May 2026 18:11:36 +0200
-Message-ID: <20260520162158.293493405@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 7.0 0429/1146] drm/fb-helper: Fix a locking bug in an error path
+Date: Wed, 20 May 2026 18:11:19 +0200
+Message-ID: <20260520162157.898362793@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -47,78 +48,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 5223e0470e7bb7910038fe3d31171490e00fbbb9 ]
+[ Upstream commit bd64240dc88caaf7b96dd869f36f165f51b52039 ]
 
-When large folio is enabled and the initial folio offset exceeds
-PAGE_SIZE, e.g. the position resides in the second page of a large
-folio, after the folio copying the offset (in the page) won't be updated
-to 0 even though the expected range is successfully copied until the end
-of the folio.  In this case fuse_fill_write_pages() exits prematurelly
-before the request has reached the max_write/max_pages limit.
+The name of the function __drm_fb_helper_initial_config_and_unlock() and
+also the comment above that function make it clear that all code paths
+in this function should unlock fb_helper->lock before returning. Add a
+mutex_unlock() call in the only code path where it is missing. This has
+been detected by the Clang thread-safety analyzer.
 
-Fix this by eliminating page offset entirely and use folio offset
-instead.
-
-Fixes: d60a6015e1a2 ("fuse: support large folios for writethrough writes")
-Reviewed-by: Horst Birthelmer <hbirthelmer@ddn.com>
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Christian König <christian.koenig@amd.com> # radeon
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> # msm
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Fixes: 63c971af4036 ("drm/fb-helper: Allocate and release fb_info in single place")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260403205355.1181984-1-bvanassche@acm.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/drm_fb_helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index 676fd9856bfbf..3939f90d1b4d2 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -1242,7 +1242,6 @@ static ssize_t fuse_fill_write_pages(struct fuse_io_args *ia,
- {
- 	struct fuse_args_pages *ap = &ia->ap;
- 	struct fuse_conn *fc = get_fuse_conn(mapping->host);
--	unsigned offset = pos & (PAGE_SIZE - 1);
- 	size_t count = 0;
- 	unsigned int num;
- 	int err = 0;
-@@ -1269,7 +1268,7 @@ static ssize_t fuse_fill_write_pages(struct fuse_io_args *ia,
- 		if (mapping_writably_mapped(mapping))
- 			flush_dcache_folio(folio);
+diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+index 05803169bed57..16bfbfb0af161 100644
+--- a/drivers/gpu/drm/drm_fb_helper.c
++++ b/drivers/gpu/drm/drm_fb_helper.c
+@@ -1641,8 +1641,10 @@ __drm_fb_helper_initial_config_and_unlock(struct drm_fb_helper *fb_helper)
+ 	drm_client_modeset_probe(&fb_helper->client, width, height);
  
--		folio_offset = ((index - folio->index) << PAGE_SHIFT) + offset;
-+		folio_offset = offset_in_folio(folio, pos);
- 		bytes = min(folio_size(folio) - folio_offset, num);
+ 	info = drm_fb_helper_alloc_info(fb_helper);
+-	if (IS_ERR(info))
++	if (IS_ERR(info)) {
++		mutex_unlock(&fb_helper->lock);
+ 		return PTR_ERR(info);
++	}
  
- 		tmp = copy_folio_from_iter_atomic(folio, folio_offset, bytes, ii);
-@@ -1299,9 +1298,6 @@ static ssize_t fuse_fill_write_pages(struct fuse_io_args *ia,
- 		count += tmp;
- 		pos += tmp;
- 		num -= tmp;
--		offset += tmp;
--		if (offset == folio_size(folio))
--			offset = 0;
- 
- 		/* If we copied full folio, mark it uptodate */
- 		if (tmp == folio_size(folio))
-@@ -1313,7 +1309,9 @@ static ssize_t fuse_fill_write_pages(struct fuse_io_args *ia,
- 			ia->write.folio_locked = true;
- 			break;
- 		}
--		if (!fc->big_writes || offset != 0)
-+		if (!fc->big_writes)
-+			break;
-+		if (folio_offset + tmp != folio_size(folio))
- 			break;
- 	}
- 
+ 	ret = drm_fb_helper_single_fb_probe(fb_helper);
+ 	if (ret < 0) {
 -- 
 2.53.0
 
