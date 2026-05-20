@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0589C331220;
-	Wed, 20 May 2026 18:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4B43F7ABC;
+	Wed, 20 May 2026 18:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300692; cv=none; b=JKckhHkF1iKso6UPtlU4llBJd2wmPbALpeoLyavf2eADTZRQRTTFj/bccqZLd+3ywgh2WnDSDNIuNnbQJvIUh88nXrl05NEhOM2Edh6B5wxB5axNHNMfFH78ayoY9+zArsYI/w4S/FvGPS0fgykoOEOgfROWkbUptZSIL1Fhn9E=
+	t=1779300694; cv=none; b=P7/6/qYBm1wQqnZV37AiQf44orcqvTWczuRajWqqyY9Wj5qHWT2NkLqRYT4hBJzxWA76l0eldNIAD2PFu0JVFa+7hWIARACcKpuM6W1XWJ3o1aFEVrUckZZRgQCP5v9+GKI9yFsAjB6UO9YbSVZsF7O3FGAxoaU9MRfrHEJWq7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300692; c=relaxed/simple;
-	bh=8aUYuQAgaylzAjG9bjCIKsDvp8UcnrkQbv9TGy8NBpc=;
+	s=arc-20240116; t=1779300694; c=relaxed/simple;
+	bh=HkAfpxwuVhpGShdIJIMZyM1temQD9dm9MmruoDaURiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nSS7rfNIeCuwtIOEs7XI+c0m8sMWJogMALsx4sbpr8ntbKO7uXVxtd0yIcOzkL77sHE9xabFnEQwklGXCtDmU2SU6DbIU9kuHl0uPVQYj1bMhSv2nFVstmD1YIFhr1eb9KqWMULR1NAVk/sKxB6eg2T5qANSGaEZsz+nivKINNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leAbChsj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MP0BCMEnPTWD60PNKEpnOtYuUbSsdSthOhfsgQQLVG11KGDHzVAiJZNpv7DBhCVrEjy3lStaxB+OFsspmi4rh0oxvippONAu8vZPvLWVAMHnJvPRmFEQENZuwaGjcmyFexbdNdC3rKt/ZAnnc6F/iWsxFK2N5cUoT22Fz0/dWq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xG/HjZsc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leAbChsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4321F000E9;
-	Wed, 20 May 2026 18:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xG/HjZsc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED7A1F00893;
+	Wed, 20 May 2026 18:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300690;
-	bh=p5o6bfIl+MJGw0fq1hYViBCGDUzbfGx2IgY617+x9t0=;
+	s=korg; t=1779300693;
+	bh=dgZPLW+BbT+f+PATM5M8QSnmlAaOl1IOngaErbDw0U0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=leAbChsjIXPZ0YjXfaJxAMsraV+dQC2KWKShIOBGO4ab6K7kyvdJlIhk/N0flnNMN
-	 972CVswS4zVzoxeWruzQE1T26267I6PdTFqwqD5s3LjqvrYX+rpLrb6yZjuieDDZJH
-	 RDo12mJcsh+HvVgnwXZMq6lYVPUC5CsVnsGikdwo=
+	b=xG/HjZscaFgVHveZpR9HKbqlNHublagSbwm2//SGdp0XVFGInfhxyWv0kt+prspsQ
+	 W71U2Jjk9F8PdNPM1xSZJqAXGOvGVH7yhixrDVzCC9MFMtX9im0idW8gdrKg34zi6F
+	 l3A/hgIAQvn/5oecbh9t3DGdU4QV3qz9RqLoNuwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Jan Kara <jack@suse.cz>,
+	Akari Tsuyukusa <akkun11.open@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 254/666] fanotify: call fanotify_events_supported() before path_permission() and security_path_notify()
-Date: Wed, 20 May 2026 18:17:45 +0200
-Message-ID: <20260520162116.722454890@linuxfoundation.org>
+Subject: [PATCH 6.12 272/666] arm64: dts: mediatek: mt7981b: Fix gpio-ranges pin count
+Date: Wed, 20 May 2026 18:18:03 +0200
+Message-ID: <20260520162117.110741917@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,76 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Akari Tsuyukusa <akkun11.open@gmail.com>
 
-[ Upstream commit 66052a768d4726a31e939b5ac902f2b0b452c8d5 ]
+[ Upstream commit b62a927f4a46a7f58d88ba3d5fb6e88e1a4b4603 ]
 
-The latter trigger LSM (e.g. SELinux) checks, which will log a denial
-when permission is denied, so it's better to do them after validity
-checks to avoid logging a denial when the operation would fail anyway.
+The gpio-ranges in the MT7981B pinctrl node were incorrectly defined,
+therefore, pin 56 cannot be used.
+Correct the range count to match the driver.
 
-Fixes: 0b3b094ac9a7 ("fanotify: Disallow permission events for proc filesystem")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20260216150625.793013-3-omosnace@redhat.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 62b24c7fdf0a ("arm64: dts: mediatek: mt7981: add pinctrl")
+Signed-off-by: Akari Tsuyukusa <akkun11.open@gmail.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt7981b.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index f3f957bac71b0..93c1619cdad65 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1025,6 +1025,7 @@ static int fanotify_find_path(int dfd, const char __user *filename,
- 
- 		*path = fd_file(f)->f_path;
- 		path_get(path);
-+		ret = 0;
- 	} else {
- 		unsigned int lookup_flags = 0;
- 
-@@ -1034,22 +1035,7 @@ static int fanotify_find_path(int dfd, const char __user *filename,
- 			lookup_flags |= LOOKUP_DIRECTORY;
- 
- 		ret = user_path_at(dfd, filename, lookup_flags, path);
--		if (ret)
--			goto out;
--	}
--
--	/* you can only watch an inode if you have read permissions on it */
--	ret = path_permission(path, MAY_READ);
--	if (ret) {
--		path_put(path);
--		goto out;
- 	}
--
--	ret = security_path_notify(path, mask, obj_type);
--	if (ret)
--		path_put(path);
--
--out:
- 	return ret;
- }
- 
-@@ -1841,6 +1827,15 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
- 			goto path_put_and_out;
- 	}
- 
-+	/* you can only watch an inode if you have read permissions on it */
-+	ret = path_permission(&path, MAY_READ);
-+	if (ret)
-+		goto path_put_and_out;
-+
-+	ret = security_path_notify(&path, mask, obj_type);
-+	if (ret)
-+		goto path_put_and_out;
-+
- 	if (fid_mode) {
- 		ret = fanotify_test_fsid(path.dentry, flags, &__fsid);
- 		if (ret)
+diff --git a/arch/arm64/boot/dts/mediatek/mt7981b.dtsi b/arch/arm64/boot/dts/mediatek/mt7981b.dtsi
+index 5cbea9cd411fb..63da296bebad6 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7981b.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7981b.dtsi
+@@ -200,7 +200,7 @@ pio: pinctrl@11d00000 {
+ 			interrupt-controller;
+ 			interrupts = <GIC_SPI 225 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-parent = <&gic>;
+-			gpio-ranges = <&pio 0 0 56>;
++			gpio-ranges = <&pio 0 0 57>;
+ 			gpio-controller;
+ 			#gpio-cells = <2>;
+ 			#interrupt-cells = <2>;
 -- 
 2.53.0
 
