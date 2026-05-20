@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8CE3546C8;
-	Wed, 20 May 2026 17:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E889B3F1AD9;
+	Wed, 20 May 2026 17:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299202; cv=none; b=ZkUza6lgKY1pCaeeUvJCqdXXZJDl3DIg3dVoGPyDtfN1r1QeDGr6Yq1U3tr9KiiSi4o9cvbtQik+CzUpkkgFMOdT41HWcJ/LO4JuqxDl18iTj/o/xZhS/ip2sb1aa+iOZAUfe5RAxzhTBbRFei4UvT0BzmYDnEayr+wx3Yu5YZw=
+	t=1779299205; cv=none; b=Q1beyrNC4LRJ+KwU3W1BtddmPESrjRi3X8/4DiRuBRpArxnfizvpq35/EOAZOg3k5WAnAn/KfGL/AgUCEnh4KyhmJKl1l3Ilrz6o2EP9fVsbFC1/qXwndKgVQJmR5d0DFKhKVEXnmoLIozyCD0VOfzNErCDCd8FFiUFVw9N7XFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299202; c=relaxed/simple;
-	bh=flcPIiSnxS8FwPxUIYag+btjH8EbjRxbDOvzK70Y8ik=;
+	s=arc-20240116; t=1779299205; c=relaxed/simple;
+	bh=yXtT8VctCHuPbNPbR/9/M4zxTXA3KOLI93IqOj47zc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jDsk02/KAwddyFPDyHfltXr2WVFe1l+icaTYwIm2nJ5Wy0Ccs/mddEV6V+AId28AyDAtoqk7JL3ZMy24ph8ZvCwqfj7KNNuylwGdJyIeNrwbkylbgU9zLBBCI6+NL5UPiLqGrcLupmyurEgc5x10AuxyNAfpbNgpiYajInPkrnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtQ22dEU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tGd3s2yf7diHJsWcCXCtdOqNuNny+gAB2cU4gg+PMlJH3/NcfRH2Mh5j1/H/sm9mglCRaKMU8yQwapeuZzyx6I3uy/naqTDoqqiMwuLJhFuMvrS2yJQZXDymUWRRYDwfS4/6z8LBh5j+XSS8PsaLlqPsiDyLGwxFx4NDRvhta/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eceKLjUo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtQ22dEU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FE21F000E9;
-	Wed, 20 May 2026 17:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eceKLjUo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CD31F000E9;
+	Wed, 20 May 2026 17:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299201;
-	bh=JKh6IS9gciuGLhwyrQKCwzbW77XOsi0izEJx7aTb5M8=;
+	s=korg; t=1779299203;
+	bh=IFpSEWqsOfjXHp3H3I+NKT2T0ttTIIkP9gdkQts9Zr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JtQ22dEULx7bwiOGglKHz74ghAH+AYrrc8Ndfv79azfSzlz8xWqNfDZZe+ZkZzDf5
-	 GsezXACJNtoYF84UaaeYeom2IswzKUSjUHKKugbipA4WHu4bav7i33UIJp5VW3xgeB
-	 vgNnJOqwbhC38uqKk9QHBwyPc+F1j/gpTynQfLvw=
+	b=eceKLjUoX8zF05LvNjztji7h4ioW7cUc7Oxx81098Hlj0Vvg+K7+ts1KFfwtwFhkw
+	 R0nIOu1tyd8E0QbqKE7BxuWp3N8MDRnRakWpXvj+zC92ONJuCc1EuY+VT3grqL0LbN
+	 QcpUQg7UOv96PWCnZyhkTC0911JJuAytkp3C7QK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yingnan Zhang <342144303@qq.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 700/957] net: airoha: Add size check for TX NAPIs in airoha_qdma_cleanup()
-Date: Wed, 20 May 2026 18:19:43 +0200
-Message-ID: <20260520162149.720462630@linuxfoundation.org>
+Subject: [PATCH 6.18 665/957] ipvs: fix MTU check for GSO packets in tunnel mode
+Date: Wed, 20 May 2026 18:19:08 +0200
+Message-ID: <20260520162148.954134951@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,64 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Yingnan Zhang <342144303@qq.com>
 
-[ Upstream commit 4b91cb65789b794bfc8d50554b8994f8e0f16309 ]
+[ Upstream commit 67bf42cae41d847fd6e5749eb68278ca5d748b25 ]
 
-If airoha_qdma_init routine fails before airoha_qdma_tx_irq_init() runs
-successfully for all TX NAPIs, airoha_qdma_cleanup() will
-unconditionally runs netif_napi_del() on TX NAPIs, triggering a NULL
-pointer dereference. Fix the issue relying on q_tx_irq size value to
-check if the TX NAPIs is properly initialized in airoha_qdma_cleanup().
-Moreover, run netif_napi_add_tx() just if irq_q queue is properly
-allocated.
+Currently, IPVS skips MTU checks for GSO packets by excluding them with
+the !skb_is_gso(skb) condition. This creates problems when IPVS tunnel
+mode encapsulates GSO packets with IPIP headers.
 
-Fixes: 23020f049327 ("net: airoha: Introduce ethernet support for EN7581 SoC")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260420-airoha_qdma_init_rx_queue-fix-v2-2-d99347e5c18d@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The issue manifests in two ways:
+
+1. MTU violation after encapsulation:
+   When a GSO packet passes through IPVS tunnel mode, the original MTU
+   check is bypassed. After adding the IPIP tunnel header, the packet
+   size may exceed the outgoing interface MTU, leading to unexpected
+   fragmentation at the IP layer.
+
+2. Fragmentation with problematic IP IDs:
+   When net.ipv4.vs.pmtu_disc=1 and a GSO packet with multiple segments
+   is fragmented after encapsulation, each segment gets a sequentially
+   incremented IP ID (0, 1, 2, ...). This happens because:
+
+   a) The GSO packet bypasses MTU check and gets encapsulated
+   b) At __ip_finish_output, the oversized GSO packet is split into
+      separate SKBs (one per segment), with IP IDs incrementing
+   c) Each SKB is then fragmented again based on the actual MTU
+
+   This sequential IP ID allocation differs from the expected behavior
+   and can cause issues with fragment reassembly and packet tracking.
+
+Fix this by properly validating GSO packets using
+skb_gso_validate_network_len(). This function correctly validates
+whether the GSO segments will fit within the MTU after segmentation. If
+validation fails, send an ICMP Fragmentation Needed message to enable
+proper PMTU discovery.
+
+Fixes: 4cdd34084d53 ("netfilter: nf_conntrack_ipv6: improve fragmentation handling")
+Signed-off-by: Yingnan Zhang <342144303@qq.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/netfilter/ipvs/ip_vs_xmit.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 8416451f4786a..865b854bd4afc 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -1051,8 +1051,6 @@ static int airoha_qdma_tx_irq_init(struct airoha_tx_irq_queue *irq_q,
- 	struct airoha_eth *eth = qdma->eth;
- 	dma_addr_t dma_addr;
+diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
+index ecbcdc43263d6..fc254d1f59de9 100644
+--- a/net/netfilter/ipvs/ip_vs_xmit.c
++++ b/net/netfilter/ipvs/ip_vs_xmit.c
+@@ -103,6 +103,18 @@ __ip_vs_dst_check(struct ip_vs_dest *dest)
+ 	return dest_dst;
+ }
  
--	netif_napi_add_tx(eth->napi_dev, &irq_q->napi,
--			  airoha_qdma_tx_napi_poll);
- 	irq_q->q = dmam_alloc_coherent(eth->dev, size * sizeof(u32),
- 				       &dma_addr, GFP_KERNEL);
- 	if (!irq_q->q)
-@@ -1062,6 +1060,9 @@ static int airoha_qdma_tx_irq_init(struct airoha_tx_irq_queue *irq_q,
- 	irq_q->size = size;
- 	irq_q->qdma = qdma;
- 
-+	netif_napi_add_tx(eth->napi_dev, &irq_q->napi,
-+			  airoha_qdma_tx_napi_poll);
++/* Based on ip_exceeds_mtu(). */
++static bool ip_vs_exceeds_mtu(const struct sk_buff *skb, unsigned int mtu)
++{
++	if (skb->len <= mtu)
++		return false;
 +
- 	airoha_qdma_wr(qdma, REG_TX_IRQ_BASE(id), dma_addr);
- 	airoha_qdma_rmw(qdma, REG_TX_IRQ_CFG(id), TX_IRQ_DEPTH_MASK,
- 			FIELD_PREP(TX_IRQ_DEPTH_MASK, size));
-@@ -1481,8 +1482,12 @@ static void airoha_qdma_cleanup(struct airoha_qdma *qdma)
- 		}
- 	}
- 
--	for (i = 0; i < ARRAY_SIZE(qdma->q_tx_irq); i++)
-+	for (i = 0; i < ARRAY_SIZE(qdma->q_tx_irq); i++) {
-+		if (!qdma->q_tx_irq[i].size)
-+			continue;
++	if (skb_is_gso(skb) && skb_gso_validate_network_len(skb, mtu))
++		return false;
 +
- 		netif_napi_del(&qdma->q_tx_irq[i].napi);
-+	}
++	return true;
++}
++
+ static inline bool
+ __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
+ {
+@@ -112,10 +124,9 @@ __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
+ 		 */
+ 		if (IP6CB(skb)->frag_max_size > mtu)
+ 			return true; /* largest fragment violate MTU */
+-	}
+-	else if (skb->len > mtu && !skb_is_gso(skb)) {
++	} else if (ip_vs_exceeds_mtu(skb, mtu))
+ 		return true; /* Packet size violate MTU size */
+-	}
++
+ 	return false;
+ }
  
- 	for (i = 0; i < ARRAY_SIZE(qdma->q_tx); i++) {
- 		if (!qdma->q_tx[i].ndesc)
+@@ -233,7 +244,7 @@ static inline bool ensure_mtu_is_adequate(struct netns_ipvs *ipvs, int skb_af,
+ 			return true;
+ 
+ 		if (unlikely(ip_hdr(skb)->frag_off & htons(IP_DF) &&
+-			     skb->len > mtu && !skb_is_gso(skb) &&
++			     ip_vs_exceeds_mtu(skb, mtu) &&
+ 			     !ip_vs_iph_icmp(ipvsh))) {
+ 			icmp_send(skb, ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED,
+ 				  htonl(mtu));
 -- 
 2.53.0
 
