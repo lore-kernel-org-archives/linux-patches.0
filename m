@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCCF36CE19;
-	Wed, 20 May 2026 18:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA657371CEA;
+	Wed, 20 May 2026 18:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300236; cv=none; b=NPYTzx1Vt1jdtnop2eQcL0CJ5HqD1zjniBGfEek6RqF77XiPc84k4K3CDiO6ccDq8R4l3TWzJdGYIGVdjinehH/lZsGBntOIoIgCvajBlM6arWhwMFWQnzTudZEH4CLNDRlL/7bL6YCtBWv+9k/tZoyuSUK/IRVoqBVbRhhM2aA=
+	t=1779300239; cv=none; b=lot0JT/F7k8bPb0nwZNlsTttHKZoS5tYTVEY1KI6brqtTKD2DlSyjs7a9Z1DYRbm0HqRln7sQ6IzvdC4dxjUqVGp5GagsaP5P38BZ98qKT4hOe2JiwG3Id4XfgveuFaa/mESxBEZHFW7cUGNaWsCKm4g5lpQPFd4HP6RK5MZCrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300236; c=relaxed/simple;
-	bh=01hzfm77YPfE/n5d32Px4Tk7Y2hnTbMjIuLNM8zBUPc=;
+	s=arc-20240116; t=1779300239; c=relaxed/simple;
+	bh=0IDP+AtUzey/Vp9j36YQ+6jOUiUm54CqjUE4MosTB6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=As4LirnL5WQD1Dlaz5iJGoK3FOSwJYEwiKepPhvOYF66YqIP6/KjMNZa2Dti7Woko9Xs8dOiJkFw6jgxH4W/Ljt6ViRxxJ3uJhhBkOLL92c3KunEPY9q20WLjTdRpuLZE5a1daKSaUCdfDgWRKSLJermF6zxsbCgHeB7zsxhnSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j37H1AEq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JcaydwHwONlupknjNMthk9lbezM2lGgypndZumnMoW5PEhcjWxk7NSLyd/354GBPVmccCGa5zmt+VgLhW3rCFn+q5cGFoF5bCMNos7mQ1DV6aAuY0lv6dj+hDIqBKSykFyinZQ9Zayf1P2Jp5/FJ33oEbfhbSBZVSr5IRnpgvDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycaWkj3e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j37H1AEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CDF1F000E9;
-	Wed, 20 May 2026 18:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycaWkj3e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDA61F000E9;
+	Wed, 20 May 2026 18:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300235;
-	bh=6M5BGq2GbL4IKOwKGHW4RwuHNsxDvw4eV8hLkhYVClk=;
+	s=korg; t=1779300237;
+	bh=LrLmIwtsOHXblShu5FrAzz66iwFg1voL64xqh6msHCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j37H1AEqcNJYzMW0OVXRfjz478hSFF13uZqh7mdooaZAvddVxUs77OmKB4lF/CIOa
-	 dO2zasKn1mCB9/UREktn8UmpuzVLmTojNW554QQGfzpaiwM3nkybjz8+vuxRQxnpzJ
-	 7KEMJ2xSG1pV/cVicwx1/hlstcIgQT6b6DyHLP/E=
+	b=ycaWkj3eKlUvHVIwWxvQ+Si1QSritIk7K12VtddbHsXxyl/QskTn3unUEFkdd5ob1
+	 UF1vV9afr2xIBVLlwskOc0ysYUIYVYvsoBSJLtzqnVTheDrJE7DE+o3Tj6NaLgrPLJ
+	 0jE8EQYgmq2wdpEm/G2HWdnBd2at7ErOVm1gRDCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taegu Ha <hataegu0826@gmail.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/666] ppp: require CAP_NET_ADMIN in target netns for unattached ioctls
-Date: Wed, 20 May 2026 18:15:09 +0200
-Message-ID: <20260520162113.347719955@linuxfoundation.org>
+Subject: [PATCH 6.12 099/666] net: ipa: Fix programming of QTIME_TIMESTAMP_CFG
+Date: Wed, 20 May 2026 18:15:10 +0200
+Message-ID: <20260520162113.369435259@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,48 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taegu Ha <hataegu0826@gmail.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 2bb6379416fd19f44c3423a00bfd8626259f6067 ]
+[ Upstream commit de08f9585692813bd41ee654fca0487664c4de30 ]
 
-/dev/ppp open is currently authorized against file->f_cred->user_ns,
-while unattached administrative ioctls operate on current->nsproxy->net_ns.
+The 'val' variable gets overwritten multiple times, discarding previous
+values. Looking at the git log shows these should be combined with |=
+instead.
 
-As a result, a local unprivileged user can create a new user namespace
-with CLONE_NEWUSER, gain CAP_NET_ADMIN only in that new user namespace,
-and still issue PPPIOCNEWUNIT, PPPIOCATTACH, or PPPIOCATTCHAN against
-an inherited network namespace.
-
-Require CAP_NET_ADMIN in the user namespace that owns the target network
-namespace before handling unattached PPP administrative ioctls.
-
-This preserves normal pppd operation in the network namespace it is
-actually privileged in, while rejecting the userns-only inherited-netns
-case.
-
-Fixes: 273ec51dd7ce ("net: ppp_generic - introduce net-namespace functionality v2")
-Signed-off-by: Taegu Ha <hataegu0826@gmail.com>
-Link: https://patch.msgid.link/20260409071117.4354-1-hataegu0826@gmail.com
+Fixes: 9265a4f0f0b4 ("net: ipa: define even more IPA register fields")
+Link: https://sashiko.dev/#/patchset/20260403-milos-ipa-v1-0-01e9e4e03d3e%40fairphone.com?part=4
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260409-ipa-fixes-v1-1-a817c30678ac@fairphone.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ipa/ipa_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index afc1566488b32..e08ce91bc19a9 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -1064,6 +1064,9 @@ static int ppp_unattached_ioctl(struct net *net, struct ppp_file *pf,
- 	struct ppp_net *pn;
- 	int __user *p = (int __user *)arg;
+diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
+index 5f3dd5a2dcf46..f374a590d1c5e 100644
+--- a/drivers/net/ipa/ipa_main.c
++++ b/drivers/net/ipa/ipa_main.c
+@@ -361,7 +361,7 @@ static void ipa_qtime_config(struct ipa *ipa)
+ {
+ 	const struct reg *reg;
+ 	u32 offset;
+-	u32 val;
++	u32 val = 0;
  
-+	if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
-+		return -EPERM;
-+
- 	switch (cmd) {
- 	case PPPIOCNEWUNIT:
- 		/* Create a new ppp unit */
+ 	/* Timer clock divider must be disabled when we change the rate */
+ 	reg = ipa_reg(ipa, TIMERS_XO_CLK_DIV_CFG);
+@@ -374,8 +374,8 @@ static void ipa_qtime_config(struct ipa *ipa)
+ 		val |= reg_bit(reg, DPL_TIMESTAMP_SEL);
+ 	}
+ 	/* Configure tag and NAT Qtime timestamp resolution as well */
+-	val = reg_encode(reg, TAG_TIMESTAMP_LSB, TAG_TIMESTAMP_SHIFT);
+-	val = reg_encode(reg, NAT_TIMESTAMP_LSB, NAT_TIMESTAMP_SHIFT);
++	val |= reg_encode(reg, TAG_TIMESTAMP_LSB, TAG_TIMESTAMP_SHIFT);
++	val |= reg_encode(reg, NAT_TIMESTAMP_LSB, NAT_TIMESTAMP_SHIFT);
+ 
+ 	iowrite32(val, ipa->reg_virt + reg_offset(reg));
+ 
 -- 
 2.53.0
 
