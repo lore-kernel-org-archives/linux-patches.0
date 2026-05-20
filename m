@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6513C3403FA;
-	Wed, 20 May 2026 16:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B79236605E;
+	Wed, 20 May 2026 16:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295619; cv=none; b=PLbKqoeFlz9GiJXcsW/0TWINPoOV7CCI0S1ahIDNhTBoZv38H87JuFr204m3b6TjKLc4kgMFak7AiTa+vAxN6HieRIPlU+SVCzcN/oFnAu960s4rKL39Mz5Y+PNZcZO0Zfow1mKsCs7yWKe88gdlGCjeO6G9j6qpY/+hR9AjRdA=
+	t=1779295621; cv=none; b=dklfqgvCVCNdiChrOheytKT90VpZnfMMiayGxpn0udzhhoHe+KibMMhlHEpZgsx2emQqKA2oVGdg8trHcTFgveYW9UmsTzvDyCc9AVyB10dZI57tt5zzmZWRaZ4JwUS4IOdPa0b7nZrrIRuwvcLmjy7uVBWUtIDB40yqV6R05Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295619; c=relaxed/simple;
-	bh=2K2HY4jRwPyaI4BGL7AlWVN8JLyCYKNwF5y+gnKpcUI=;
+	s=arc-20240116; t=1779295621; c=relaxed/simple;
+	bh=SK4o+zqRqtORdR2BhXQ9gq21D0VBIpC2/vo/Oeu9gZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQrSd0IoCZu6p5zjk8zKKZ2zXPoB93pEaakI60ZWqIl6BYng61LI4INFHLJvhjQIACbZle+yor2O9rsM1mWHcC06GLKbkUcvnF+RAbdnmqSJFW71Y0t+QUVHoS57ijX+08gJpOtBVucLLwP78Y64O32Ce2ut1fRDL7OpLCMmM6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Py4cUysW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jj6PkilF6/oRGdTLJSRYVNzIf6vic8m2c7Y7gg0m+2gW4vcq+mw0TOHIVMxzP/Nhq+KrKVhXrWdvKoWQ9xeyYyxVcs0QufWOYY9CB5FUaW03HGtGuUlwM3nbj2X0YTSBKoM00YX9mGym2ygyUpoZZAzjUZyiAlprRlBe86d8GEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOKVCOE0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Py4cUysW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B187C1F000E9;
-	Wed, 20 May 2026 16:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOKVCOE0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5697E1F00893;
+	Wed, 20 May 2026 16:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295616;
-	bh=8ysita/pXNaSvo74CYrFIq/WS5wVN4MjnR/8rT7a7oA=;
+	s=korg; t=1779295618;
+	bh=a3OrJQHRHji6Q+pznd4GP9tntbE2R5oCk5hC5Zo0IQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Py4cUysW2tYIaHG5NWgC3bT+zbwbNpeClrjKN5DleiKZasMSA0dVeqJMpSo5lxi27
-	 LVqK7gBshctKEIjk3C53pVUGZSvds/7k15XVk/RZ2/joyy+ob/CqiX4OSF6nbLG2fg
-	 gSUgavmleqid23FGnRg8ufoGCCH/YI9W7gkPE8AQ=
+	b=mOKVCOE0z44IyvJRxtrsMdaAbtVTVk06DgUrhe5YaTK2LvwEEf2MPIK8mBXJZRrPW
+	 0AGJDGYj9RrooXlDCMlaaRUCaZQ1f38Jh3hz1abJQHwcD8LBaMUV4UhUVijB+1lGjo
+	 UNTU/yYeZogUOfWvwGHvRp3vzvkozIExF0jf+Jz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0488/1146] arm64: dts: imx8mp-kontron: Fix touch reset configuration on DL devices
-Date: Wed, 20 May 2026 18:12:18 +0200
-Message-ID: <20260520162159.238224249@linuxfoundation.org>
+Subject: [PATCH 7.0 0489/1146] arm64: dts: imx8mp-kontron: Drop vmmc-supply to fix SD card on SMARC eval carrier
+Date: Wed, 20 May 2026 18:12:19 +0200
+Message-ID: <20260520162159.259893062@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,65 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-[ Upstream commit 058c53476dde9937877e93d964a283bbb5e1e4c7 ]
+[ Upstream commit d2ce84eecf081056b1d18d7524de52f849281ba7 ]
 
-The reset signal needs a pullup, but there is no hardware pullup.
-As a workaround, enable the internal pullup to fix the touchscreen.
+The SMARC evaluation carrier provides an SD card power switch that
+complies with the OSM standard definition. The OSM base devicetree
+already describes this correctly.
 
-As this deviates from the default generic GPIO settings in the OSM
-devicetree, add a new node for the touch pinctrl and redefine the
-generic gpio1 pinctrl.
+Stop overriding the vmmc-supply in the board devicetree and rely on
+the definition from the OSM base DTS instead to fix the power supply
+configuration for the SD card.
 
-Fixes: 946ab10e3f40f ("arm64: dts: Add support for Kontron OSM-S i.MX8MP SoM and BL carrier board")
+Fixes: 6fe1ced5ccab7 ("arm64: dts: Add support for Kontron i.MX8MP SMARC module and eval carrier")
 Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/freescale/imx8mp-kontron-dl.dtso | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ .../boot/dts/freescale/imx8mp-kontron-smarc-eval-carrier.dts     | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso b/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso
-index a3cba41d2b531..7131e9a499ae1 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-kontron-dl.dtso
-@@ -77,6 +77,8 @@
- 	touchscreen@5d {
- 		compatible = "goodix,gt928";
- 		reg = <0x5d>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&pinctrl_touch>;
- 		interrupt-parent = <&gpio1>;
- 		interrupts = <6 8>;
- 		irq-gpios = <&gpio1 6 0>;
-@@ -98,6 +100,16 @@
- 	status = "okay";
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-kontron-smarc-eval-carrier.dts b/arch/arm64/boot/dts/freescale/imx8mp-kontron-smarc-eval-carrier.dts
+index 2173a36ff6917..74d620dd06b7b 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-kontron-smarc-eval-carrier.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-kontron-smarc-eval-carrier.dts
+@@ -249,6 +249,5 @@ &usb3_phy1 {
  };
  
-+/* redefine to remove touch controller GPIOs */
-+&pinctrl_gpio1 {
-+	fsl,pins = <
-+		MX8MP_IOMUXC_GPIO1_IO00__GPIO1_IO00		0x19 /* GPIO_A_0 */
-+		MX8MP_IOMUXC_GPIO1_IO01__GPIO1_IO01		0x19 /* GPIO_A_1 */
-+		MX8MP_IOMUXC_GPIO1_IO05__GPIO1_IO05		0x19 /* GPIO_A_2 */
-+		MX8MP_IOMUXC_GPIO1_IO08__GPIO1_IO08		0x19 /* GPIO_A_5 */
-+	>;
-+};
-+
- &pwm1 {
+ &usdhc2 {
+-	vmmc-supply = <&reg_vdd_3v3>;
  	status = "okay";
- };
-@@ -108,4 +120,11 @@
- 			MX8MP_IOMUXC_SAI3_RXFS__GPIO4_IO28		0x19
- 		>;
- 	};
-+
-+	pinctrl_touch: touchgrp {
-+		fsl,pins = <
-+			MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06		0x19
-+			MX8MP_IOMUXC_GPIO1_IO07__GPIO1_IO07		0x150
-+		>;
-+	};
  };
 -- 
 2.53.0
