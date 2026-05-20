@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BC83A4526;
-	Wed, 20 May 2026 16:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207043DA7D9;
+	Wed, 20 May 2026 16:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296198; cv=none; b=tH4wjf5cc4dVTUVFzYhH2ThssvEcIUSPFtpYk3jQAoijzN3yoXSh8YooM1v1NJgBvBaB6EMla4Z2wgJKEQtkv0m1YCGcKEOgvuL2yVTNFiai0egCosjunRs3rgFYwqU4CKYEAnG117wsGUJgIVI+QuLzTS9+nQj7lW9u47WvYyQ=
+	t=1779296201; cv=none; b=Dclk3C2PC7MhO3wMp5yQ+yjN9C46y1Mux3BpPCy5mqZk9fHZDNp1yFj1EhJcMhc/XRILRqT26owTtJPV23fzPN8/z4/LBghGmDU/l3yn4JlaugvioO+BmeDgXhkgQYvKiQWaQWc7Ppgbodm4eJoXVdkNuS1EtZOG34eOkqejC/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296198; c=relaxed/simple;
-	bh=g9AMjYoHXIzfJGCQguqkB2o0m04JPEcw+Ag8nfA1XuI=;
+	s=arc-20240116; t=1779296201; c=relaxed/simple;
+	bh=9rj9lrna0F52Ymd+e0aFxZy+7F+BnwnhJ/e9uROJTLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SH095G1dbIWSsN9Irha5I6+AmK5KR2nOHzrmsl+ECmBJ4jbPqWxxNeGIWc2dO5deWy0n7IQyW4dkCmA0xveDrvySV8fZkOHagy4pFe1FVLFN/h7n4CyUAdfggmRTFAdYbQzjooswCA9J0oWhMZcWU9ujZ8XyvN4ihJFcMt2khRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZReB8RBw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=n0WzikOJ1wDH/iERLctPflGI/7013HhpO3cD782pRaG1HpOYmf380SQnFt9fRaNUuBM0j4SdtltuVzT/NzG98RiQXUj2GBKy/zlvbxH3EyKlZPjShy6yBfl+KuFuE03NoBl6LFRyBrcZ0iK0rnniUUsmtmXQOLNdzZa+yqWiLZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqYXdXtx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZReB8RBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D909C1F000E9;
-	Wed, 20 May 2026 16:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqYXdXtx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EF41F000E9;
+	Wed, 20 May 2026 16:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296197;
-	bh=s4ZJ8Bu+7XvEP8+RoBAJOg3dCT7RI5tQegUPcuqimK8=;
+	s=korg; t=1779296200;
+	bh=23EQdpJqzv9VuBLkdHZrG8mOuJwYMxKsbr3yzUUYc+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZReB8RBw1++ZrT6yri5o6tL7qnMDc9hqOSK2PqKZSFZaUfVJayUnUw7lsMA4JT7/l
-	 5Vd1CIXPBC70okwzAK7MWMlLKEor0KHNVsl1SD1PxtpCL+LPaEZmotVUJMty6TOqb0
-	 Tw2I1GZIIyK/rrEap/SjEBfVcrY6LMVP1kV46kx8=
+	b=HqYXdXtxGR1gooX5L6A4dSmgnW0U24PhwkaitzvslMBm/bKj4nFKF4AexUbUw3QTR
+	 k3ZJFvMd9txLSmM5w4e7qUX0wMeLJxzSGZherOQ1igfLsyR44ptSNUD5V/5MDqRC6G
+	 n/0llgbhnynAsQPnK4MtHwLZ1zM4wnIp3fAWnYvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0691/1146] platform/x86: dell_rbu: avoid uninit value usage in packet_size_write()
-Date: Wed, 20 May 2026 18:15:41 +0200
-Message-ID: <20260520162203.826692721@linuxfoundation.org>
+Subject: [PATCH 7.0 0709/1146] clk: qcom: dispcc[01]-sa8775p: Fix DSI byte clock rate setting
+Date: Wed, 20 May 2026 18:15:59 +0200
+Message-ID: <20260520162204.234025492@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,54 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit f8fd138c2363c0e2d3235c32bfb4fb5c6474e4ae ]
+[ Upstream commit 2851b6c6a42e22c243aa4cd606a49e2b9acfb6d6 ]
 
-Ensure the temp value has been properly parsed from the user-provided
-buffer and initialized to be used in later operations.  While at it,
-prefer a convenient kstrtoul() helper.
+The clock tree for byte_clk_src is as follows:
 
-Found by Linux Verification Center (linuxtesting.org) with Svace static
-analysis tool.
+   ┌──────byte0_clk_src─────┐
+   │                        │
+byte0_clk            byte0_div_clk_src
+                            │
+                     byte0_intf_clk
 
-Fixes: ad6ce87e5bd4 ("[PATCH] dell_rbu: changes in packet update mechanism")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260403134240.604837-1-pchelkin@ispras.ru
-[ij: add include]
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+If both of its direct children have CLK_SET_RATE_PARENT with different
+requests, byte0_clk_src (and its parent) will be reconfigured. In this
+case, byte0_intf should strictly follow the rate of byte0_clk (with
+some adjustments based on PHY mode).
+
+Remove CLK_SET_RATE_PARENT from byte0_div_clk_src to avoid this issue.
+
+Fixes: e700bfd2f976 ("clk: qcom: Add support for Display clock Controllers on SA8775P")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260304-topic-dsi_byte_fixup-v1-5-b79b29f83176@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell_rbu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/dispcc0-sa8775p.c | 2 --
+ drivers/clk/qcom/dispcc1-sa8775p.c | 2 --
+ 2 files changed, 4 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell_rbu.c b/drivers/platform/x86/dell/dell_rbu.c
-index eb50f1d75d0c1..3fa9de9aa47b8 100644
---- a/drivers/platform/x86/dell/dell_rbu.c
-+++ b/drivers/platform/x86/dell/dell_rbu.c
-@@ -30,6 +30,7 @@
- #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
- 
- #include <linux/init.h>
-+#include <linux/kstrtox.h>
- #include <linux/module.h>
- #include <linux/slab.h>
- #include <linux/string.h>
-@@ -619,9 +620,12 @@ static ssize_t packet_size_write(struct file *filp, struct kobject *kobj,
- 				 char *buffer, loff_t pos, size_t count)
- {
- 	unsigned long temp;
-+
-+	if (kstrtoul(buffer, 10, &temp))
-+		return -EINVAL;
-+
- 	spin_lock(&rbu_data.lock);
- 	packet_empty_list();
--	sscanf(buffer, "%lu", &temp);
- 	if (temp < 0xffffffff)
- 		rbu_data.packetsize = temp;
- 
+diff --git a/drivers/clk/qcom/dispcc0-sa8775p.c b/drivers/clk/qcom/dispcc0-sa8775p.c
+index aeda9cf4bfee8..b248fa9705873 100644
+--- a/drivers/clk/qcom/dispcc0-sa8775p.c
++++ b/drivers/clk/qcom/dispcc0-sa8775p.c
+@@ -591,7 +591,6 @@ static struct clk_regmap_div mdss_0_disp_cc_mdss_byte0_div_clk_src = {
+ 			&mdss_0_disp_cc_mdss_byte0_clk_src.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_regmap_div_ops,
+ 	},
+ };
+@@ -606,7 +605,6 @@ static struct clk_regmap_div mdss_0_disp_cc_mdss_byte1_div_clk_src = {
+ 			&mdss_0_disp_cc_mdss_byte1_clk_src.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_regmap_div_ops,
+ 	},
+ };
+diff --git a/drivers/clk/qcom/dispcc1-sa8775p.c b/drivers/clk/qcom/dispcc1-sa8775p.c
+index cd55d1c119024..9882edbb79f9e 100644
+--- a/drivers/clk/qcom/dispcc1-sa8775p.c
++++ b/drivers/clk/qcom/dispcc1-sa8775p.c
+@@ -591,7 +591,6 @@ static struct clk_regmap_div mdss_1_disp_cc_mdss_byte0_div_clk_src = {
+ 			&mdss_1_disp_cc_mdss_byte0_clk_src.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_regmap_div_ops,
+ 	},
+ };
+@@ -606,7 +605,6 @@ static struct clk_regmap_div mdss_1_disp_cc_mdss_byte1_div_clk_src = {
+ 			&mdss_1_disp_cc_mdss_byte1_clk_src.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_regmap_div_ops,
+ 	},
+ };
 -- 
 2.53.0
 
