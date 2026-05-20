@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E493EEAD8;
-	Wed, 20 May 2026 18:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63C73E277C;
+	Wed, 20 May 2026 18:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302294; cv=none; b=n0lKDgjZCEc9aQxzgsVB+vkFaQSX3oIxsZXIppEPbOKnkvx98cXG51P//BHSYu/Kb9jv3k3mhcQVtdf+etVNd5sHBzzt47Cwm8yeLzYIJK64A325oM/L+b9SOc++mVbAJzDwmXsRo8fkQAE8a8mCGP/X3pviy99RqOcNGOLNpyM=
+	t=1779302296; cv=none; b=XhiQShV8jQowoCNgfxKOWOuea1tfNDOiNYgafQPq+6mX+CSuU2q0Mhz/TpKhzCTG6dJ1ooCYcphgZHxnAJjUo5/X0TR+TkjLAfeORyTbeif5nOQsA0uksG6+qRtQCBW4lYC+CSkaueDUljMHY9FN8CyaeRkIk6X/RIttHUtqXTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302294; c=relaxed/simple;
-	bh=2B518yxfsGdxMB5Uti+o/vRY8NBNhw2RQ2u3mqWf9CM=;
+	s=arc-20240116; t=1779302296; c=relaxed/simple;
+	bh=2a6aCUz0zYyq+X9SJt7UEHzIQwzWSc3ELWC23qNdfwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JJi5CqQrj0bpj8nHQc20LI0emVsroqWZXHmXhz4L7RiFd0kLZsfq2Fn4SwVpxKnCz3bHXP5evhqlc1KhxAp21gkFYM8EvCssoYF1Yh6yaRwyEV3NmvfNHwsZom+gw4amUwvbR0eTFmM2xpHOi7JBXMzjx8iC3xd1mIwardFm+q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffxmPOQr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kdeb+v6k50IhtY1UAIOyLK94YqNghChy4dcWM/PwkncULZw/OWHUYbNne/Vyrttf1A4dGk9w8Qddvk4cv2w+Cjfw9rn+pue6ia8IdYCEednX+NwnihYX38HAiVcKh52Yh5ivcqO6NK7MUHs/bjnZn7L6T+b1t7FJgafUBnR4vCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PlOK8zj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffxmPOQr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A543E1F000E9;
-	Wed, 20 May 2026 18:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PlOK8zj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424681F000E9;
+	Wed, 20 May 2026 18:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302293;
-	bh=bmGcnoBdAJi1cnqmEmWZ/cDr0ZmQQdLs8fk/M9ykbFw=;
+	s=korg; t=1779302295;
+	bh=9zGl7Fr4g4dUndDGeyUpwcAXBWgYZIy1XTfnM4/Lz8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ffxmPOQrouGzFZWrIF247q0k59aW6tv2wHmMJDHjpthEmbnSXAtYf5uoWPqfeq3cU
-	 LfZ7+UjFbkNfTVg5FoIYdPMaICDVr7TPV60n7AIMNk+n6GxDM/jkvI+l/GBx1eSD+/
-	 9KdYkbiSGgECTExYIk7+//LZn7a75GYfRt0AMFRc=
+	b=1PlOK8zjMgwq73rXU8xsB9ynT90OHadMa06rJw2sfyLvrn8kXgJmt2P8Hc2wAgDYV
+	 UcUAkEnamTh6doRxl3uctJCb4ZVcdrJjvaznMkns9LkUlKtpkDD7pFR6UD9zWVEMbF
+	 2zbSePXHaTr6fsdiKhY4FrBDx4Dl+8lRapaxvQe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Haixin Xu <jerryxucs@gmail.com>,
-	Stephan Mueller <smueller@chronox.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot+0ea5108a1f5fb4fcc2d8@syzkaller.appspotmail.com,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 171/508] crypto: jitterentropy - replace long-held spinlock with mutex
-Date: Wed, 20 May 2026 18:19:54 +0200
-Message-ID: <20260520162102.343593920@linuxfoundation.org>
+Subject: [PATCH 6.6 172/508] gfs2: Call unlock_new_inode before d_instantiate
+Date: Wed, 20 May 2026 18:19:55 +0200
+Message-ID: <20260520162102.364971216@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -56,107 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haixin Xu <jerryxucs@gmail.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 01d798e9feb30212952d4e992801ba6bd6a82351 ]
+[ Upstream commit 2ff7cf7e0640ff071ebc5c7e3dc2df024a7c91e6 ]
 
-jent_kcapi_random() serializes the shared jitterentropy state, but it
-currently holds a spinlock across the jent_read_entropy() call. That
-path performs expensive jitter collection and SHA3 conditioning, so
-parallel readers can trigger stalls as contending waiters spin for
-the same lock.
+As Neil Brown describes in detail in the link referenced below, new
+inodes must be unlocked before they can be instantiated.
 
-To prevent non-preemptible lock hold, replace rng->jent_lock with a
-mutex so contended readers sleep instead of spinning on a shared lock
-held across expensive entropy generation.
+An even better fix is to use d_instantiate_new(), which combines
+d_instantiate() and unlock_new_inode().
 
-Fixes: bb5530e40824 ("crypto: jitterentropy - add jitterentropy RNG")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Haixin Xu <jerryxucs@gmail.com>
-Reviewed-by: Stephan Mueller <smueller@chronox.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 3d36e57ff768 ("gfs2: gfs2_create_inode rework")
+Reported-by: syzbot+0ea5108a1f5fb4fcc2d8@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-fsdevel/177153754005.8396.8777398743501764194@noble.neil.brown.name/
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/jitterentropy-kcapi.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/gfs2/inode.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/crypto/jitterentropy-kcapi.c b/crypto/jitterentropy-kcapi.c
-index dd05faf00571f..8ae5245081f6a 100644
---- a/crypto/jitterentropy-kcapi.c
-+++ b/crypto/jitterentropy-kcapi.c
-@@ -42,6 +42,7 @@
- #include <linux/fips.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/slab.h>
- #include <linux/time.h>
- #include <crypto/internal/rng.h>
-@@ -182,7 +183,7 @@ int jent_read_random_block(void *hash_state, char *dst, unsigned int dst_len)
-  ***************************************************************************/
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 45040622d316e..18f75beea0890 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -805,7 +805,7 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 		goto fail_gunlock4;
  
- struct jitterentropy {
--	spinlock_t jent_lock;
-+	struct mutex jent_lock;
- 	struct rand_data *entropy_collector;
- 	struct crypto_shash *tfm;
- 	struct shash_desc *sdesc;
-@@ -192,7 +193,7 @@ static void jent_kcapi_cleanup(struct crypto_tfm *tfm)
- {
- 	struct jitterentropy *rng = crypto_tfm_ctx(tfm);
+ 	mark_inode_dirty(inode);
+-	d_instantiate(dentry, inode);
++	d_instantiate_new(dentry, inode);
+ 	/* After instantiate, errors should result in evict which will destroy
+ 	 * both inode and iopen glocks properly. */
+ 	if (file) {
+@@ -817,7 +817,6 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
+ 	gfs2_glock_dq_uninit(&gh);
+ 	gfs2_glock_put(io_gl);
+ 	gfs2_qa_put(dip);
+-	unlock_new_inode(inode);
+ 	return error;
  
--	spin_lock(&rng->jent_lock);
-+	mutex_lock(&rng->jent_lock);
- 
- 	if (rng->sdesc) {
- 		shash_desc_zero(rng->sdesc);
-@@ -207,7 +208,7 @@ static void jent_kcapi_cleanup(struct crypto_tfm *tfm)
- 	if (rng->entropy_collector)
- 		jent_entropy_collector_free(rng->entropy_collector);
- 	rng->entropy_collector = NULL;
--	spin_unlock(&rng->jent_lock);
-+	mutex_unlock(&rng->jent_lock);
- }
- 
- static int jent_kcapi_init(struct crypto_tfm *tfm)
-@@ -217,7 +218,7 @@ static int jent_kcapi_init(struct crypto_tfm *tfm)
- 	struct shash_desc *sdesc;
- 	int size, ret = 0;
- 
--	spin_lock_init(&rng->jent_lock);
-+	mutex_init(&rng->jent_lock);
- 
- 	/*
- 	 * Use SHA3-256 as conditioner. We allocate only the generic
-@@ -252,7 +253,6 @@ static int jent_kcapi_init(struct crypto_tfm *tfm)
- 		goto err;
- 	}
- 
--	spin_lock_init(&rng->jent_lock);
- 	return 0;
- 
- err:
-@@ -267,7 +267,7 @@ static int jent_kcapi_random(struct crypto_rng *tfm,
- 	struct jitterentropy *rng = crypto_rng_ctx(tfm);
- 	int ret = 0;
- 
--	spin_lock(&rng->jent_lock);
-+	mutex_lock(&rng->jent_lock);
- 
- 	ret = jent_read_entropy(rng->entropy_collector, rdata, dlen);
- 
-@@ -293,7 +293,7 @@ static int jent_kcapi_random(struct crypto_rng *tfm,
- 		ret = -EINVAL;
- 	}
- 
--	spin_unlock(&rng->jent_lock);
-+	mutex_unlock(&rng->jent_lock);
- 
- 	return ret;
- }
+ fail_gunlock4:
 -- 
 2.53.0
 
