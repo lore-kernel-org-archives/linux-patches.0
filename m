@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B557B331220;
-	Wed, 20 May 2026 18:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6077E42A96;
+	Wed, 20 May 2026 18:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300457; cv=none; b=TPQzPWgYLKQie/WRuJp4RKDDjUTYRzZmNaZeG4lGgLvlMEvuzrknxoUeVn+fKtXWP2UwZuUBWAF66Zy0gP1WsFM6JXUwhe+Zu8vlW8fhgPAWZgLkWrF01o6e6JJS0vhV8MClNqNSyuAcb3fjIDVkVj+Smwmu4vrOlYgjFni6x0A=
+	t=1779300460; cv=none; b=DvDgWcNegKuwa+LsJMwDIO+HooiL2Gwjr5VFaIhZLPLiFw/hTh6n1Zi3pQpvgjmaw1eqn5Ya/U9gKCsnuptKZgsnGnrKiGDzUQhsmH+XC7PbpD7XpW/JRCgQtENSnUirAt/akDBL05+5d6xvURFLLN1sXXA98gZ+fDZMoCrGAw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300457; c=relaxed/simple;
-	bh=9yDaGvHQSIMFJLad9nGUi+f8+0MPhQlWLtwjTdTHgZE=;
+	s=arc-20240116; t=1779300460; c=relaxed/simple;
+	bh=DSVb3mFLeFiE2Jl7v2e4X7po7lr760gKm5zrHSV8fo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MiQ/VtSaTQ5Tj2ZFKAAhxz74gmzrhFBvY6hMjI6iPSb20Ke1FAtY81mkqOl/ajmqFtGG/cwMJ1EoRBiV8qxrYdK+KOMjxl0KmrTpxuvjFI502jV+YoQCT4Wzo2voB7dr+cMzAe9RQRHMrYxW8cVa7K6+7Y/DUbknd3OMtVw/o5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voUHl3U7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ftDmjpVAiBUHt8vFG0fBgIdhPzwwA3M9A70tA0W1JduoLELuISt/o+rVkxh7GUyOIUzek0IWYuhGYnrrT3Yw57urA7ughRbCX/0U/74pvFzvJNswb4SMOKm37gMFL4x+gKkXUE+ap86P2FTTW7yZBN2P/5NTojk0D0+uMB1Xdp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPS1J1fs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voUHl3U7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B7E1F000E9;
-	Wed, 20 May 2026 18:07:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPS1J1fs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54D91F00893;
+	Wed, 20 May 2026 18:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300456;
-	bh=PqnOO+3fMuUYEi+0pxjrvMvprLcXNeb4X66F8RJ0t/g=;
+	s=korg; t=1779300459;
+	bh=ZUraPjYCF1yt9bkjhMTpDwR3dlg69TDBivt04O4JVzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=voUHl3U7C4nu9xxJTNliHGxltJ0NICnTQPIA4Xtdj1SyVQd1DSwkUF/HxJ2IVX8h5
-	 olruzFM8RSXspUEuSAXUfV4uCGYpAMRWc2ebpyhM57cBKdptkCLxwUEqUaaS6imjnj
-	 AdtALOhXzrJCyeBSepJn2aDUoMaD1mFPe6Czs5iA=
+	b=ZPS1J1fsQDdY0q04oVNErJ8burlqdmcBs78n7nKgkxf/a9as/rUi0hTVE5ELgAVn6
+	 Q2ki6790RbWFcyG1VwhsaB+ksCJUo2Uxn7pWfwPWpz77OBK2nxzugEWLWvFlDLvBtu
+	 +MtpdObki0CkjK6/xpKMFmzXo5GBezcMz1GcjD4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Dadu <alexandru.dadu@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>,
+	Sunil Khatri <sunil.khatri@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 165/666] drm/imagination: Switch reset_reason fields from enum to u32
-Date: Wed, 20 May 2026 18:16:16 +0200
-Message-ID: <20260520162114.783447103@linuxfoundation.org>
+Subject: [PATCH 6.12 183/666] drm/amdgpu: add amdgpu_device reference in ip block
+Date: Wed, 20 May 2026 18:16:34 +0200
+Message-ID: <20260520162115.167626272@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -45,67 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandru Dadu <alexandru.dadu@imgtec.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-[ Upstream commit d2f83a6cd598bf413f1acf34153bd1d71023fbab ]
+[ Upstream commit 37b993225d37744f2a62bf67074a76a6cb7b8b98 ]
 
-Update the reset_reason fwif structure fields from enum to u32 to remove
-any ambiguity from the interface (enum is not a fixed size thus is unfit
-for the purpose of the data type).
+To handle amdgpu_device reference for different GPUs
+we add it's reference in each ip block which can be
+used to differentiate between difference gpu devices.
 
-Fixes: a26f067feac1f ("drm/imagination: Add FWIF headers")
-Signed-off-by: Alexandru Dadu <alexandru.dadu@imgtec.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://patch.msgid.link/20260323-b4-firmware-context-reset-notification-handling-v3-2-1a66049a9a65@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 8b3e8fa6d7bd ("drm/amdgpu/uvd4.2: Don't initialize UVD 4.2 when DPM is disabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imagination/pvr_rogue_fwif.h        | 8 ++++++--
- drivers/gpu/drm/imagination/pvr_rogue_fwif_shared.h | 6 +++++-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h        | 1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_rogue_fwif.h b/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
-index 172886be4c820..5d590c4c25663 100644
---- a/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
-+++ b/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
-@@ -1347,8 +1347,12 @@ struct rogue_fwif_fwccb_cmd_freelists_reconstruction_data {
- struct rogue_fwif_fwccb_cmd_context_reset_data {
- 	/* Context affected by the reset */
- 	u32 server_common_context_id;
--	/* Reason for reset */
--	enum rogue_context_reset_reason reset_reason;
-+	/*
-+	 * Reason for reset
-+	 * The valid values for reset_reason are the ones from
-+	 * enum rogue_context_reset_reason
-+	 */
-+	u32 reset_reason;
- 	/* Data Master affected by the reset */
- 	u32 dm;
- 	/* Job ref running at the time of reset */
-diff --git a/drivers/gpu/drm/imagination/pvr_rogue_fwif_shared.h b/drivers/gpu/drm/imagination/pvr_rogue_fwif_shared.h
-index 6c09c15bf9bd8..f95acd5a1f8e8 100644
---- a/drivers/gpu/drm/imagination/pvr_rogue_fwif_shared.h
-+++ b/drivers/gpu/drm/imagination/pvr_rogue_fwif_shared.h
-@@ -249,7 +249,11 @@ enum rogue_context_reset_reason {
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+index 7edf8d67a0fa5..b667da0ec68a3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -388,6 +388,7 @@ struct amdgpu_ip_block_version {
+ struct amdgpu_ip_block {
+ 	struct amdgpu_ip_block_status status;
+ 	const struct amdgpu_ip_block_version *version;
++	struct amdgpu_device *adev;
  };
  
- struct rogue_context_reset_reason_data {
--	enum rogue_context_reset_reason reset_reason;
-+	/*
-+	 * The valid values for reset_reason are the ones from
-+	 * enum rogue_context_reset_reason
-+	 */
-+	u32 reset_reason;
- 	u32 reset_ext_job_ref;
- };
+ int amdgpu_device_ip_block_version_cmp(struct amdgpu_device *adev,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 12d7e45a42456..1183d671d0606 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -2336,6 +2336,8 @@ int amdgpu_device_ip_block_add(struct amdgpu_device *adev,
+ 	DRM_INFO("add ip block number %d <%s>\n", adev->num_ip_blocks,
+ 		  ip_block_version->funcs->name);
  
++	adev->ip_blocks[adev->num_ip_blocks].adev = adev;
++
+ 	adev->ip_blocks[adev->num_ip_blocks++].version = ip_block_version;
+ 
+ 	return 0;
 -- 
 2.53.0
 
