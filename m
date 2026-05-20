@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B010435201E;
-	Wed, 20 May 2026 16:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5493835201E;
+	Wed, 20 May 2026 16:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295627; cv=none; b=T5jn3eQoseVCqw3FZ36mQ/CPpmpqoDGFoKZmQsSgAwxYlhdPP20mcH2Y7314ILo3jUD2Wr02pU4xcMBFkboD0Ey0IsxfIhY3QzzMf3F39fpWDDPSAoX3Ky51E8X2LUOKzafSnrvV3JYn8nCv321F5XrnEhuRaaBhG+5h+TCLP6Q=
+	t=1779295630; cv=none; b=d0o6aqAF85difvYoBh5WxSb1IR9bbhVyKad/9I1sLWwklb8PykdXrUqscQ9EBn0dFYgh3oMZlc2Ji7zBCCi3VNjtQzFLnf+LN/L8rwiHUk3DZs1qUcyrCGK9MeUFVff22YgPXJILhUN3+OwCR6tNl3tDYqBEhaBYjeZ7RUrT2DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295627; c=relaxed/simple;
-	bh=3ggeqoe907+oLVBaF4vGEa7tm3q8OoMhZiQMNE64uJw=;
+	s=arc-20240116; t=1779295630; c=relaxed/simple;
+	bh=Wp8GNfgcXHRoZlOSKK+ctiONjKrPg7Le9LukSeZZUQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAbjap9oShcQirGfNLVVfhIDnieBrJ/FdfLm3VESv8yV2iIzkKqY+mi9/dbrvO+uChaO2DrZDtqkIXKnn4iq5uiiGPGMRXU/SR1YUIDebE3upxmuO2E2LI7axkBdPgDs3oRF3qtuskBu1UTiMkYmD0vUW+9g1kRfDtUCZbA7EKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uro6yK7s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=plwjN0AFlAZSBMdmFym9WhfG+y/U3PdjQRnTuUnggAzku4Yp6KdGkP+T3zxrQEzCM6UuC9F0DU7q7F2ycnKMVasM3bcL3Hr2AHlqxh7Cjnx4ZYckwbWpce6kUi2LQdzNh8yhuf/9mMydlYZ1/gyFVM1Eat07FwCsSc+1dFEqfdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJA1Eoz4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uro6yK7s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204381F000E9;
-	Wed, 20 May 2026 16:47:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJA1Eoz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2761F000E9;
+	Wed, 20 May 2026 16:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295626;
-	bh=cdUXRehwTyguR/tVJsvm/ljzW3iwT4sOBU2gf09SiwM=;
+	s=korg; t=1779295629;
+	bh=vuBpIy6x3yffySYpumiuIcBm3jA1ieLSRasYk/3mNNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uro6yK7s3uezKBrSoGW6fG9itg7wOLRvlZ7SLEzrr53vd4IBYyWgGBewsfLeQkW52
-	 ZfaZAeLSdNKIMGSSrLuggrmgMCVZkyh2n1E4hpmON+ZGeXCmQlrGWxXm2tZ905MMmP
-	 glrWN0o5M8LZFwIGuJ3gAzEOzZESis17v0ZUEliI=
+	b=TJA1Eoz4F5v6bNqxIek/6SDw83NOaJrVBT4ChDXf0U4uJcwqNLqtmg05tiyzvOqEk
+	 RyS96QbJj58aVeUU+L60jT4xf6yyM2rxKZaShL0pKS0CDS5XAhpCpt8EbcrS3/G7Zu
+	 MnrgoAzIghNoQ/84cjsdgmF1GzS1+5gXkRM1D4k8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
+	William Zhang <william.zhang@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0491/1146] arm64: dts: imx8mp-hummingboard-pulse: fix mini-hdmi dsi port reference
-Date: Wed, 20 May 2026 18:12:21 +0200
-Message-ID: <20260520162159.304225854@linuxfoundation.org>
+Subject: [PATCH 7.0 0492/1146] ARM: dts: BCM5301X: Drop extra NAND controller compatible
+Date: Wed, 20 May 2026 18:12:22 +0200
+Message-ID: <20260520162159.326082700@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,58 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 1d1d14d4253e6f373c247e67f3716768910be81e ]
+[ Upstream commit f699e0aa7a1382f52fb6f3e8e26754e7aaad6db6 ]
 
-imx8mp.dtsi includes a default port@1 node with an empty placeholder
-endpoint intended for linking to a dsi bridge or panel.
+Fix the dtbs_check warning introduced when the brcm,brcmnand fallback
+compatible got removed for iProc machines.
 
-HummingBoard Pulse mini-hdmi dtsi described a new endpoint node with a
-different label attached.
-
-This duplicate label causes confusion and is suspected to also cause
-errors during dsi_attach.
-
-Remove the duplicate node and link to the one defined in soc dtsi.
-Further remove the unnecessary attach-bridge property.
-
-Fixes: 2a222aa2bee9 ("arm64: dts: add description for solidrun imx8mp hummingboard variants")
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 4db35366d6dc ("dt-bindings: mtd: brcm,brcmnand: Drop "brcm,brcmnand" compatible for iProc")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Acked-by: William Zhang <william.zhang@broadcom.com>
+Link: https://lore.kernel.org/r/20260204091530.624230-1-miquel.raynal@bootlin.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../imx8mp-hummingboard-pulse-mini-hdmi.dtsi          | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ arch/arm/boot/dts/broadcom/bcm-ns.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse-mini-hdmi.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse-mini-hdmi.dtsi
-index 46916ddc05335..0e5f4607c7c1b 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse-mini-hdmi.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-hummingboard-pulse-mini-hdmi.dtsi
-@@ -41,7 +41,7 @@ port@0 {
- 				reg = <0>;
+diff --git a/arch/arm/boot/dts/broadcom/bcm-ns.dtsi b/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
+index d0d5f7e52a917..46b650abdb904 100644
+--- a/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
+@@ -479,7 +479,7 @@ thermal: thermal@2c0 {
+ 	};
  
- 				adv7535_from_dsim: endpoint {
--					remote-endpoint = <&dsim_to_adv7535>;
-+					remote-endpoint = <&mipi_dsi_out>;
- 				};
- 			};
- 
-@@ -71,11 +71,8 @@ &lcdif1 {
- &mipi_dsi {
- 	samsung,esc-clock-frequency = <10000000>;
- 	status = "okay";
-+};
- 
--	port@1 {
--		dsim_to_adv7535: endpoint {
--			remote-endpoint = <&adv7535_from_dsim>;
--			attach-bridge;
--		};
--	};
-+&mipi_dsi_out {
-+	remote-endpoint = <&adv7535_from_dsim>;
- };
+ 	nand_controller: nand-controller@18028000 {
+-		compatible = "brcm,nand-iproc", "brcm,brcmnand-v6.1", "brcm,brcmnand";
++		compatible = "brcm,nand-iproc", "brcm,brcmnand-v6.1";
+ 		reg = <0x18028000 0x600>, <0x1811a408 0x600>, <0x18028f00 0x20>;
+ 		reg-names = "nand", "iproc-idm", "iproc-ext";
+ 		interrupts = <GIC_SPI 68 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.53.0
 
