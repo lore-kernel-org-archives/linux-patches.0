@@ -1,40 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39AF41C2FC;
-	Wed, 20 May 2026 18:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A017E423A6C;
+	Wed, 20 May 2026 18:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302334; cv=none; b=ec8AiafJV7hbxOxkddxr4vXpogoutO+P/KznYqk212OBUbQa3NP8n6yTUk4GIRKcCpZLW0p3T4l1/lOmtNfaALCcX8tbK29UF1mUPK0kkqNBqAbshD3KlNKrDYm5vw4tqZiH5w4H9oYCt+3NjcBvK/g0Q/Rr0d7KXA9xYBNTLAU=
+	t=1779302337; cv=none; b=ZpIZ/brM+mVvAatsFhFACKaWxUoZU+LC/zB7PtQMn+bn+NRDB/j1RgS8VpGh1HaAFWaFTYtDV2gBJCCyBd3a4kKb/dKkDdEM/1TQ+po90vV4CuNv0zJ82vabjy2ufgFFNLOCVFnx9VY0O0McMBmJzCrL34XdeIbU/52mISBN954=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302334; c=relaxed/simple;
-	bh=l1ENN/0XhNYh7o79/4wDcZbRRVDaY91ZWEd3InGhj1k=;
+	s=arc-20240116; t=1779302337; c=relaxed/simple;
+	bh=Jxqy8L9ANGFp0eSnKEybTa4RzR9pY8WsuXYiV199yUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVcVwEFBX/Dzfq0J6BRafaHuXvkojI4975vBJzyE8T7KrW1MkdOnxfXdML2BXUpQQpBjk02k5/navGDKZ0IHYFTTxYZfaPciFMIj3OihqmPpqonqUU8Fb7JZ9m5HCGIIe+xdxrjXBII2NV6XwTWtY7LjMfPnT2WJ/yWnh7Kcnhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2cbzOu0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DmgjgfS1dMg4Tv+616p1vdbjYnOWl4CBvR8NKvPJIajuaGukidmLqypQnP5nEkA+cc5VeT0hiWxPs9As3aCcSSHhWZK7CHkASuhoBlosVeEvxi2wXUgqEXhdZjBs6pwZe1W0gjkfH6NNTFSCOWi2Myufs2h4hT7vUxqTnjlMPgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMJcveyZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2cbzOu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262351F00893;
-	Wed, 20 May 2026 18:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMJcveyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A6F1F0089B;
+	Wed, 20 May 2026 18:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302332;
-	bh=R7x7YD7GNMkhFzO9L2vaXQYbW/zdP/7ouuildr10O58=;
+	s=korg; t=1779302335;
+	bh=nEFNmEaDSksLN0yzhIX/dZ0OL7J/hq2EQiy3Wql5sJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2cbzOu077ERobewN7K108rJOhDQUVJx8Obp5m90pYTQKAmXNGx4/byu+1QjoSBGp
-	 9tCiy/+zpgWvZgUyYSqgAA5BaSlRpleW0lXUU2CH3D9CkIuH1Zm1dLIQyTGdw7SpHE
-	 quUKlU4JDhwG7hfDXiU4zBpfrC97AkRhSHZDdkEE=
+	b=hMJcveyZVkdYyAtCz9if9jqeEaz6ZhJq4LctkVGAji3KN34dVeCRGqP0VlP2izr5l
+	 plMxlKmdz4uqX3XFx837K/NTccwOSD3ll4d8XgT1Qa54lG8stYgMXaQ7+tRUg/iVfs
+	 /qnPBlgbKLGhzz6cu+LuSzfOjXcFW9G7hUKC0kEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Chris Mason <clm@fb.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	David Sterba <dsterba@suse.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	"Jason A. Donenfeld" <jason@zx2c4.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Li Nan <linan122@huawei.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Magnus Lindholm <linmag7@gmail.com>,
+	Matt Turner <mattst88@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Richard Henderson <richard.henderson@linaro.org>,
+	Richard Weinberger <richard@nod.at>,
+	Russell King <linux@armlinux.org.uk>,
+	Song Liu <song@kernel.org>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Ted Tso <tytso@mit.edu>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	WANG Xuerui <kernel@xen0n.name>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 228/508] mtd: spi-nor: sfdp: introduce smpt_map_id fixup hook
-Date: Wed, 20 May 2026 18:20:51 +0200
-Message-ID: <20260520162103.590105119@linuxfoundation.org>
+Subject: [PATCH 6.6 211/508] arm64/xor: fix conflicting attributes for xor_block_template
+Date: Wed, 20 May 2026 18:20:34 +0200
+Message-ID: <20260520162103.210969783@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -53,86 +89,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit f74de390557bf2bcc5dca4a357b41c0701d3f76e ]
+[ Upstream commit 675a0dd596e712404557286d0a883b54ee28e4f4 ]
 
-Certain chips have inconsistent Sector Map Parameter Table (SMPT) data,
-which leads to the wrong map ID being identified, causing failures to
-detect the correct sector map.
+Commit 2c54b423cf85 ("arm64/xor: use EOR3 instructions when available")
+changes the definition to __ro_after_init instead of const, but failed to
+update the external declaration in xor.h.  This was not found because
+xor-neon.c doesn't include <asm/xor.h>, and can't easily do that due to
+current architecture of the XOR code.
 
-To fix this, introduce smpt_map_id() into the struct spi_nor_fixups.
-This function will be called after the initial SMPT-based detection,
-allowing chip-specific logic to correct the map ID.
-
-Infineon S25FS512S needs this fixup as it has inconsistency between map
-ID definition and configuration register value actually obtained.
-
-Co-developed-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Tested-by: Marek Vasut <marek.vasut+renesas@mailbox.org> # S25FS512S
-Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
-Stable-dep-of: 3620d67b4849 ("mtd: spi-nor: update spi_nor_fixups::post_sfdp() documentation")
+Link: https://lkml.kernel.org/r/20260327061704.3707577-4-hch@lst.de
+Fixes: 2c54b423cf85 ("arm64/xor: use EOR3 instructions when available")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Tested-by: Eric Biggers <ebiggers@kernel.org>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Andreas Larsson <andreas@gaisler.com>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: "Borislav Petkov (AMD)" <bp@alien8.de>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Chris Mason <clm@fb.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: David Sterba <dsterba@suse.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jason A. Donenfeld <jason@zx2c4.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: Li Nan <linan122@huawei.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Magnus Lindholm <linmag7@gmail.com>
+Cc: Matt Turner <mattst88@gmail.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Song Liu <song@kernel.org>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Ted Ts'o <tytso@mit.edu>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: WANG Xuerui <kernel@xen0n.name>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/core.h |  3 +++
- drivers/mtd/spi-nor/sfdp.c | 12 ++++++++++++
- 2 files changed, 15 insertions(+)
+ arch/arm64/include/asm/xor.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
-index a68cf82498ed8..6c478331e494e 100644
---- a/drivers/mtd/spi-nor/core.h
-+++ b/drivers/mtd/spi-nor/core.h
-@@ -418,6 +418,8 @@ struct spi_nor_flash_parameter {
-  * @post_bfpt: called after the BFPT table has been parsed
-  * @smpt_read_dummy: called during SMPT table is being parsed. Used to fix the
-  *                   number of dummy cycles in read register ops.
-+ * @smpt_map_id: called after map ID in SMPT table has been determined for the
-+ *               case the map ID is wrong and needs to be fixed.
-  * @post_sfdp: called after SFDP has been parsed (is also called for SPI NORs
-  *             that do not support RDSFDP). Typically used to tweak various
-  *             parameters that could not be extracted by other means (i.e.
-@@ -436,6 +438,7 @@ struct spi_nor_fixups {
- 			 const struct sfdp_parameter_header *bfpt_header,
- 			 const struct sfdp_bfpt *bfpt);
- 	void (*smpt_read_dummy)(const struct spi_nor *nor, u8 *read_dummy);
-+	void (*smpt_map_id)(const struct spi_nor *nor, u8 *map_id);
- 	int (*post_sfdp)(struct spi_nor *nor);
- 	int (*late_init)(struct spi_nor *nor);
- };
-diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
-index f1ec785628bfb..dcf88ad2a00b2 100644
---- a/drivers/mtd/spi-nor/sfdp.c
-+++ b/drivers/mtd/spi-nor/sfdp.c
-@@ -705,6 +705,16 @@ static u8 spi_nor_smpt_read_dummy(const struct spi_nor *nor, const u32 settings)
- 	return read_dummy;
- }
+diff --git a/arch/arm64/include/asm/xor.h b/arch/arm64/include/asm/xor.h
+index befcd8a7abc98..7c03207157196 100644
+--- a/arch/arm64/include/asm/xor.h
++++ b/arch/arm64/include/asm/xor.h
+@@ -13,7 +13,7 @@
  
-+static void spi_nor_smpt_map_id_fixups(const struct spi_nor *nor, u8 *map_id)
-+{
-+	if (nor->manufacturer && nor->manufacturer->fixups &&
-+	    nor->manufacturer->fixups->smpt_map_id)
-+		nor->manufacturer->fixups->smpt_map_id(nor, map_id);
-+
-+	if (nor->info->fixups && nor->info->fixups->smpt_map_id)
-+		nor->info->fixups->smpt_map_id(nor, map_id);
-+}
-+
- /**
-  * spi_nor_get_map_in_use() - get the configuration map in use
-  * @nor:	pointer to a 'struct spi_nor'
-@@ -758,6 +768,8 @@ static const u32 *spi_nor_get_map_in_use(struct spi_nor *nor, const u32 *smpt,
- 		map_id = map_id << 1 | !!(*buf & read_data_mask);
- 	}
+ #ifdef CONFIG_KERNEL_MODE_NEON
  
-+	spi_nor_smpt_map_id_fixups(nor, &map_id);
-+
- 	/*
- 	 * If command descriptors are provided, they always precede map
- 	 * descriptors in the table. There is no need to start the iteration
+-extern struct xor_block_template const xor_block_inner_neon;
++extern struct xor_block_template xor_block_inner_neon __ro_after_init;
+ 
+ static void
+ xor_neon_2(unsigned long bytes, unsigned long * __restrict p1,
 -- 
 2.53.0
 
