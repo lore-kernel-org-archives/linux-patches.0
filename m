@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CF330DEAC;
-	Wed, 20 May 2026 18:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9DA17A2FC;
+	Wed, 20 May 2026 18:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302057; cv=none; b=qKoTSilqR9sJ5f38nssfOWoW4SzllNesmPy7EqQQIZzwnEBX2VodWqmncqzwe8MHmG/k5b2m+vDVn4iq+ZZUyxH2Mo4RE9xXnlTkShkgFVH/9iQxUo2rxwW9XACJeznrj1NY2cPuYLDBoyR1IdTFq6zm5jdHnXGULj6J1/BmHF4=
+	t=1779302060; cv=none; b=mtoQMVDTnxuCkPsImXEmFBOuonYaCJIoEHrY+NRepEII5uxKlQzkJoK21Mh7C4WLTvY2cjZI9mfQPscPpcFVLnCnbFoPVUMsULHvWRYlCPpFsKGaIIEcUdqvnjGcDg7fWN0Kk7ZS8h37PXy6yesEdNaCLRCMe8WOEYMA9PG6QJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302057; c=relaxed/simple;
-	bh=DxNBSoLPWpvDabLsuCzhsjWvrtFznNi8/Kjqp1I5akw=;
+	s=arc-20240116; t=1779302060; c=relaxed/simple;
+	bh=Di/hBDCvfcFfIiCCkbxHjbDDsMVEebKP7y+/M9SVCVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxIdNCwiuU8f9tfgHZV5Cz/J3tgj8oRY+SNZmindUlNHcLANcNdrZQSVIb/YFIWF9sRrNf9u0Bwf1PVAylVK/yzYBp6Q4k+HRLIX5FV7qk9FvUXThGCzQCRlA3+H3voHQSoupmgiDTXVOHTcvAuBCAhqcdrwfOteYnBQG56GYjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFqRwsHW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FsjvbS3Y+4NHoTqLSi3T1g3A+isZ6X4GAbDDTxPgUZjl6n8pmG81RyQGI/JpALR8VENkPMs6JS+CHHuzSf/071fS8XL+ygg9tPshpRPqU2mTRzpZ5woa3AI8jrc+VsQ6QWK/ICuF76gkaq6tpsSjqkB+WM+xXpLxLqqulFe2Tfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLagWd0W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFqRwsHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0701F000E9;
-	Wed, 20 May 2026 18:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLagWd0W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A815A1F000E9;
+	Wed, 20 May 2026 18:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302056;
-	bh=Hqm6o4LujjybOGouSXgSQbU0HRgUzZyPe3MFX8nLyt4=;
+	s=korg; t=1779302059;
+	bh=hc/h8VwXF9IuI78JZv2bOFl6vMXjPj9ZPyTzAt1j4g0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mFqRwsHWmNcmncKl+cYS0zYX87A6DLgpADOsXt7VCmkd6jUWSw1VKMuOwDH0SIRZ4
-	 arsRSoZF2sqDi2tKz5Nz7DXO2GuQK2wN9M/sGB/rdN89Ce00pTR0BhvhGDTzksad40
-	 2njtx7gmwvaFauW32s1V5keHyO4VgtNxMjWlzttc=
+	b=YLagWd0WCIAoot7cvk6sRwp4Om3o5hRvMbvbc+mQm/KaDT5r3S2fGdApmdoxGqw5M
+	 zHvHgXMzzD/QgkTMybMi/vrInBC1yszeFI2Z9ftsTOQ6YInYkt+bMW/blda+3zLbzT
+	 CoQZYOaafUHwoljGWleR1uANA6NP/WA52E3tVbFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Benno Lossin <benno.lossin@proton.me>,
 	Andrew Lunn <andrew@lunn.ch>,
+	Alice Ryhl <aliceryhl@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/508] net: phy: aquantia: move to separate directory
-Date: Wed, 20 May 2026 18:18:24 +0200
-Message-ID: <20260520162100.364483853@linuxfoundation.org>
+Subject: [PATCH 6.6 082/508] net: phy: add Rust Asix PHY driver
+Date: Wed, 20 May 2026 18:18:25 +0200
+Message-ID: <20260520162100.385997744@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,101 +55,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-[ Upstream commit d2213db3f49bce8e7a87c8de05b9a091f78f654e ]
+[ Upstream commit cbe0e415089636170aa6eb540ca4af5dc9842a60 ]
 
-Move aquantia PHY driver to separate driectory in preparation for
-firmware loading support to keep things tidy.
+This is the Rust implementation of drivers/net/phy/ax88796b.c. The
+features are equivalent. You can choose C or Rust version kernel
+configuration.
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: e7a62edd34b1 ("net: phy: qcom: at803x: Use the correct bit to disable extended next page")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/Kconfig                         | 5 +----
- drivers/net/phy/Makefile                        | 6 +-----
- drivers/net/phy/aquantia/Kconfig                | 5 +++++
- drivers/net/phy/aquantia/Makefile               | 6 ++++++
- drivers/net/phy/{ => aquantia}/aquantia.h       | 0
- drivers/net/phy/{ => aquantia}/aquantia_hwmon.c | 0
- drivers/net/phy/{ => aquantia}/aquantia_main.c  | 0
- 7 files changed, 13 insertions(+), 9 deletions(-)
- create mode 100644 drivers/net/phy/aquantia/Kconfig
- create mode 100644 drivers/net/phy/aquantia/Makefile
- rename drivers/net/phy/{ => aquantia}/aquantia.h (100%)
- rename drivers/net/phy/{ => aquantia}/aquantia_hwmon.c (100%)
- rename drivers/net/phy/{ => aquantia}/aquantia_main.c (100%)
+ MAINTAINERS                      |   8 ++
+ drivers/net/phy/Kconfig          |   8 ++
+ drivers/net/phy/Makefile         |   6 +-
+ drivers/net/phy/ax88796b_rust.rs | 135 +++++++++++++++++++++++++++++++
+ rust/uapi/uapi_helper.h          |   2 +
+ 5 files changed, 158 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/net/phy/ax88796b_rust.rs
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e700dca4974b3..8b1ee5b11eca2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3060,6 +3060,14 @@ S:	Maintained
+ F:	Documentation/devicetree/bindings/net/asix,ax88796c.yaml
+ F:	drivers/net/ethernet/asix/ax88796c_*
+ 
++ASIX PHY DRIVER [RUST]
++M:	FUJITA Tomonori <fujita.tomonori@gmail.com>
++R:	Trevor Gross <tmgross@umich.edu>
++L:	netdev@vger.kernel.org
++L:	rust-for-linux@vger.kernel.org
++S:	Maintained
++F:	drivers/net/phy/ax88796b_rust.rs
++
+ ASPEED CRYPTO DRIVER
+ M:	Neal Liu <neal_liu@aspeedtech.com>
+ L:	linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
 diff --git a/drivers/net/phy/Kconfig b/drivers/net/phy/Kconfig
-index 107880d13d219..aa5491aaaab40 100644
+index aa5491aaaab40..466d3dff60744 100644
 --- a/drivers/net/phy/Kconfig
 +++ b/drivers/net/phy/Kconfig
-@@ -96,10 +96,7 @@ config ADIN1100_PHY
- 	  Currently supports the:
- 	  - ADIN1100 - Robust,Industrial, Low Power 10BASE-T1L Ethernet PHY
+@@ -104,6 +104,14 @@ config AX88796B_PHY
+ 	  Currently supports the Asix Electronics PHY found in the X-Surf 100
+ 	  AX88796B package.
  
--config AQUANTIA_PHY
--	tristate "Aquantia PHYs"
--	help
--	  Currently supports the Aquantia AQ1202, AQ2104, AQR105, AQR405
-+source "drivers/net/phy/aquantia/Kconfig"
- 
- config AX88796B_PHY
- 	tristate "Asix PHYs"
++config AX88796B_RUST_PHY
++	bool "Rust reference driver for Asix PHYs"
++	depends on RUST_PHYLIB_ABSTRACTIONS && AX88796B_PHY
++	help
++	  Uses the Rust reference driver for Asix PHYs (ax88796b_rust.ko).
++	  The features are equivalent. It supports the Asix Electronics PHY
++	  found in the X-Surf 100 AX88796B package.
++
+ config BROADCOM_PHY
+ 	tristate "Broadcom 54XX PHYs"
+ 	select BCM_NET_PHYLIB
 diff --git a/drivers/net/phy/Makefile b/drivers/net/phy/Makefile
-index c945ed9bd14b3..f65e85c91fc10 100644
+index f65e85c91fc10..ab450a46b8550 100644
 --- a/drivers/net/phy/Makefile
 +++ b/drivers/net/phy/Makefile
-@@ -35,11 +35,7 @@ obj-y				+= $(sfp-obj-y) $(sfp-obj-m)
- obj-$(CONFIG_ADIN_PHY)		+= adin.o
- obj-$(CONFIG_ADIN1100_PHY)	+= adin1100.o
+@@ -37,7 +37,11 @@ obj-$(CONFIG_ADIN1100_PHY)	+= adin1100.o
  obj-$(CONFIG_AMD_PHY)		+= amd.o
--aquantia-objs			+= aquantia_main.o
--ifdef CONFIG_HWMON
--aquantia-objs			+= aquantia_hwmon.o
--endif
--obj-$(CONFIG_AQUANTIA_PHY)	+= aquantia.o
-+obj-$(CONFIG_AQUANTIA_PHY)	+= aquantia/
+ obj-$(CONFIG_AQUANTIA_PHY)	+= aquantia/
  obj-$(CONFIG_AT803X_PHY)	+= at803x.o
- obj-$(CONFIG_AX88796B_PHY)	+= ax88796b.o
- obj-$(CONFIG_BCM54140_PHY)	+= bcm54140.o
-diff --git a/drivers/net/phy/aquantia/Kconfig b/drivers/net/phy/aquantia/Kconfig
-new file mode 100644
-index 0000000000000..226146417a6a7
---- /dev/null
-+++ b/drivers/net/phy/aquantia/Kconfig
-@@ -0,0 +1,5 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+config AQUANTIA_PHY
-+	tristate "Aquantia PHYs"
-+	help
-+	  Currently supports the Aquantia AQ1202, AQ2104, AQR105, AQR405
-diff --git a/drivers/net/phy/aquantia/Makefile b/drivers/net/phy/aquantia/Makefile
-new file mode 100644
-index 0000000000000..346f350bc0846
---- /dev/null
-+++ b/drivers/net/phy/aquantia/Makefile
-@@ -0,0 +1,6 @@
-+# SPDX-License-Identifier: GPL-2.0
-+aquantia-objs			+= aquantia_main.o
-+ifdef CONFIG_HWMON
-+aquantia-objs			+= aquantia_hwmon.o
+-obj-$(CONFIG_AX88796B_PHY)	+= ax88796b.o
++ifdef CONFIG_AX88796B_RUST_PHY
++  obj-$(CONFIG_AX88796B_PHY)	+= ax88796b_rust.o
++else
++  obj-$(CONFIG_AX88796B_PHY)	+= ax88796b.o
 +endif
-+obj-$(CONFIG_AQUANTIA_PHY)	+= aquantia.o
-diff --git a/drivers/net/phy/aquantia.h b/drivers/net/phy/aquantia/aquantia.h
-similarity index 100%
-rename from drivers/net/phy/aquantia.h
-rename to drivers/net/phy/aquantia/aquantia.h
-diff --git a/drivers/net/phy/aquantia_hwmon.c b/drivers/net/phy/aquantia/aquantia_hwmon.c
-similarity index 100%
-rename from drivers/net/phy/aquantia_hwmon.c
-rename to drivers/net/phy/aquantia/aquantia_hwmon.c
-diff --git a/drivers/net/phy/aquantia_main.c b/drivers/net/phy/aquantia/aquantia_main.c
-similarity index 100%
-rename from drivers/net/phy/aquantia_main.c
-rename to drivers/net/phy/aquantia/aquantia_main.c
+ obj-$(CONFIG_BCM54140_PHY)	+= bcm54140.o
+ obj-$(CONFIG_BCM63XX_PHY)	+= bcm63xx.o
+ obj-$(CONFIG_BCM7XXX_PHY)	+= bcm7xxx.o
+diff --git a/drivers/net/phy/ax88796b_rust.rs b/drivers/net/phy/ax88796b_rust.rs
+new file mode 100644
+index 0000000000000..5c92572962dce
+--- /dev/null
++++ b/drivers/net/phy/ax88796b_rust.rs
+@@ -0,0 +1,135 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (C) 2023 FUJITA Tomonori <fujita.tomonori@gmail.com>
++
++//! Rust Asix PHYs driver
++//!
++//! C version of this driver: [`drivers/net/phy/ax88796b.c`](./ax88796b.c)
++use kernel::{
++    c_str,
++    net::phy::{self, DeviceId, Driver},
++    prelude::*,
++    uapi,
++};
++
++kernel::module_phy_driver! {
++    drivers: [PhyAX88772A, PhyAX88772C, PhyAX88796B],
++    device_table: [
++        DeviceId::new_with_driver::<PhyAX88772A>(),
++        DeviceId::new_with_driver::<PhyAX88772C>(),
++        DeviceId::new_with_driver::<PhyAX88796B>()
++    ],
++    name: "rust_asix_phy",
++    author: "FUJITA Tomonori <fujita.tomonori@gmail.com>",
++    description: "Rust Asix PHYs driver",
++    license: "GPL",
++}
++
++const MII_BMCR: u16 = uapi::MII_BMCR as u16;
++const BMCR_SPEED100: u16 = uapi::BMCR_SPEED100 as u16;
++const BMCR_FULLDPLX: u16 = uapi::BMCR_FULLDPLX as u16;
++
++// Performs a software PHY reset using the standard
++// BMCR_RESET bit and poll for the reset bit to be cleared.
++// Toggle BMCR_RESET bit off to accommodate broken AX8796B PHY implementation
++// such as used on the Individual Computers' X-Surf 100 Zorro card.
++fn asix_soft_reset(dev: &mut phy::Device) -> Result {
++    dev.write(uapi::MII_BMCR as u16, 0)?;
++    dev.genphy_soft_reset()
++}
++
++struct PhyAX88772A;
++
++#[vtable]
++impl Driver for PhyAX88772A {
++    const FLAGS: u32 = phy::flags::IS_INTERNAL;
++    const NAME: &'static CStr = c_str!("Asix Electronics AX88772A");
++    const PHY_DEVICE_ID: DeviceId = DeviceId::new_with_exact_mask(0x003b1861);
++
++    // AX88772A is not working properly with some old switches (NETGEAR EN 108TP):
++    // after autoneg is done and the link status is reported as active, the MII_LPA
++    // register is 0. This issue is not reproducible on AX88772C.
++    fn read_status(dev: &mut phy::Device) -> Result<u16> {
++        dev.genphy_update_link()?;
++        if !dev.is_link_up() {
++            return Ok(0);
++        }
++        // If MII_LPA is 0, phy_resolve_aneg_linkmode() will fail to resolve
++        // linkmode so use MII_BMCR as default values.
++        let ret = dev.read(MII_BMCR)?;
++
++        if ret & BMCR_SPEED100 != 0 {
++            dev.set_speed(uapi::SPEED_100);
++        } else {
++            dev.set_speed(uapi::SPEED_10);
++        }
++
++        let duplex = if ret & BMCR_FULLDPLX != 0 {
++            phy::DuplexMode::Full
++        } else {
++            phy::DuplexMode::Half
++        };
++        dev.set_duplex(duplex);
++
++        dev.genphy_read_lpa()?;
++
++        if dev.is_autoneg_enabled() && dev.is_autoneg_completed() {
++            dev.resolve_aneg_linkmode();
++        }
++
++        Ok(0)
++    }
++
++    fn suspend(dev: &mut phy::Device) -> Result {
++        dev.genphy_suspend()
++    }
++
++    fn resume(dev: &mut phy::Device) -> Result {
++        dev.genphy_resume()
++    }
++
++    fn soft_reset(dev: &mut phy::Device) -> Result {
++        asix_soft_reset(dev)
++    }
++
++    fn link_change_notify(dev: &mut phy::Device) {
++        // Reset PHY, otherwise MII_LPA will provide outdated information.
++        // This issue is reproducible only with some link partner PHYs.
++        if dev.state() == phy::DeviceState::NoLink {
++            let _ = dev.init_hw();
++            let _ = dev.start_aneg();
++        }
++    }
++}
++
++struct PhyAX88772C;
++
++#[vtable]
++impl Driver for PhyAX88772C {
++    const FLAGS: u32 = phy::flags::IS_INTERNAL;
++    const NAME: &'static CStr = c_str!("Asix Electronics AX88772C");
++    const PHY_DEVICE_ID: DeviceId = DeviceId::new_with_exact_mask(0x003b1881);
++
++    fn suspend(dev: &mut phy::Device) -> Result {
++        dev.genphy_suspend()
++    }
++
++    fn resume(dev: &mut phy::Device) -> Result {
++        dev.genphy_resume()
++    }
++
++    fn soft_reset(dev: &mut phy::Device) -> Result {
++        asix_soft_reset(dev)
++    }
++}
++
++struct PhyAX88796B;
++
++#[vtable]
++impl Driver for PhyAX88796B {
++    const NAME: &'static CStr = c_str!("Asix Electronics AX88796B");
++    const PHY_DEVICE_ID: DeviceId = DeviceId::new_with_model_mask(0x003b1841);
++
++    fn soft_reset(dev: &mut phy::Device) -> Result {
++        asix_soft_reset(dev)
++    }
++}
+diff --git a/rust/uapi/uapi_helper.h b/rust/uapi/uapi_helper.h
+index 301f5207f0238..08f5e9334c9e8 100644
+--- a/rust/uapi/uapi_helper.h
++++ b/rust/uapi/uapi_helper.h
+@@ -7,3 +7,5 @@
+  */
+ 
+ #include <uapi/asm-generic/ioctl.h>
++#include <uapi/linux/mii.h>
++#include <uapi/linux/ethtool.h>
 -- 
 2.53.0
 
