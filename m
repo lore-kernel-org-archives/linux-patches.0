@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00C236A01E;
-	Wed, 20 May 2026 16:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6E5335BBB;
+	Wed, 20 May 2026 16:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294888; cv=none; b=gXfBxxMrVg2g5Df7XZ2DQMXQ1Z1L7JMLJYZllxtRcA+tcnJd1IWU8J5RvmrrKXIm3DUZbSV4ffndQ1O2v++AFiA8ZzV/INJZ5JJgryXZtlGOExVTZYcWQPHPIH876sZra8bD54yF3jo72KdW6b1pZbLhS2z9WbRFLKTmkfPfQ4A=
+	t=1779294891; cv=none; b=YY9XBnuecUiMNqJWXGHm20XQAgiAbicHxt1Ov3ig+eOwUScdA9LuREfivRdL1gQQtKRrZrGwFav5gC7SMEfuJanh6KWpTtZ16h4tuBaatWOCYOSxBZmxPixmBy9gqrR9Z2KFO5DsQTMQJW5cF4JHZk35PR5TrGk+qR7QqQOIq/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294888; c=relaxed/simple;
-	bh=eIApBFQFu0y26Q4m/d9ArulHIaiA/r5z0D2hZDoHTEI=;
+	s=arc-20240116; t=1779294891; c=relaxed/simple;
+	bh=6kxe5JcAPeRX8cfEX+SwGzloNLWS1ie+q2oE++cFJFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MzwZKbxgFV/z9lQrDzDrXDDA/gqaAOcdHe2Exic5sFJvc4VLF4on68U1kgS6eFzW28Awib4GtQZLtkShdHuUkSchY+WF73fIU7YMVEodKmslSU0BbhQkBxzZudlJOKanC+ZFmAgSq5+d4YnLBQ9kkc7R8nue7Ld+AK96FtEIYg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eqhm6cW4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hcszMY6T1SXTimCui05nlomcYSwcbPBxtg13Ys6/4fXCILivt6kllghZDHMrCOAZ8mVr4Vi2H/XS4dD/zv5DsFeou13L76MgEbloH7TuO+czqEAFrk3I6OxXC3Fa8K7D6p+njKTVJMQ6kWbY2/TWziy19zMrjElreryKaszTMDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXc/TjM5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eqhm6cW4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A361F000E9;
-	Wed, 20 May 2026 16:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXc/TjM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702FF1F000E9;
+	Wed, 20 May 2026 16:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294887;
-	bh=89PFykt7KbcNKN4b1abxVnBFqI2QygY47NR3XsgF+CM=;
+	s=korg; t=1779294889;
+	bh=3fk6HIo8yT2clCTDFMsgjf0wTnsAGEutiQCwAIDewnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eqhm6cW4jb2VZI1WyTvHrublHukeAUF7aN5kD2umEwPqE74yp2XEY+IZ02rcm/r/l
-	 QupjSvMH1w7kCUZJEQY2Fjc7fHhQpUSl3Ivz7SYjDuSB/1vJccdyGkYCgCvSM8lNpN
-	 nXm4UDSyRlk1znr83wcQLagWRdBan1AOpNTywPnY=
+	b=LXc/TjM5iSCAXuJGU3Bk6PBRVPLbEfZzTypVrBsm6jTiHvclJtBkxFrhOrlzPVi+d
+	 uJa/L2P+Apl70AVek58kLIRdXrUCN/F1L4IhfT4rwyLcUzF9+E7ykq0qd38tij4juk
+	 SIHoGhmmR7gJkcXGztzJcCxkRr6sokPqpVffOV+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0208/1146] net: ethernet: mtk_eth_soc: initialize PPE per-tag-layer MTU registers
-Date: Wed, 20 May 2026 18:07:38 +0200
-Message-ID: <20260520162152.974284866@linuxfoundation.org>
+Subject: [PATCH 7.0 0170/1146] mptcp: better mptcp-level RTT estimator
+Date: Wed, 20 May 2026 18:07:00 +0200
+Message-ID: <20260520162152.136492440@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,143 +53,266 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 2dddb34dd0d07b01fa770eca89480a4da4f13153 ]
+[ Upstream commit d2000361e4ddf5047d660a902a3b0ed7520be1e5 ]
 
-The PPE enforces output frame size limits via per-tag-layer VLAN_MTU
-registers that the driver never initializes. The hardware defaults do
-not account for PPPoE overhead, causing the PPE to punt encapsulated
-frames back to the CPU instead of forwarding them.
+The current MPTCP-level RTT estimator has several issues. On high speed
+links, the MPTCP-level receive buffer auto-tuning happens with a
+frequency well above the TCP-level's one. That in turn can cause
+excessive/unneeded receive buffer increase.
 
-Initialize the registers at PPE start and on MTU changes using the
-maximum GMAC MTU. This is a conservative approximation -- the actual
-per-PPE requirement depends on egress path, but using the global
-maximum ensures the limits are never too small.
+On such links, the initial rtt_us value is considerably higher than the
+actual delay, and the current mptcp_rcv_space_adjust() updates
+msk->rcvq_space.rtt_us with a period equal to the such field previous
+value. If the initial rtt_us is 40ms, its first update will happen after
+40ms, even if the subflows see actual RTT orders of magnitude lower.
 
-Fixes: ba37b7caf1ed2 ("net: ethernet: mtk_eth_soc: add support for initializing the PPE")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Link: https://patch.msgid.link/ec995ab8ce8be423267a1cc093147a74d2eb9d82.1775789829.git.daniel@makrotopia.org
+Additionally:
+- setting the msk RTT to the maximum among all the subflows RTTs makes
+  DRS constantly overshooting the rcvbuf size when a subflow has
+  considerable higher latency than the other(s).
+
+- during unidirectional bulk transfers with multiple active subflows,
+  the TCP-level RTT estimator occasionally sees considerably higher
+  value than the real link delay, i.e. when the packet scheduler reacts
+  to an incoming ACK on given subflow pushing data on a different
+  subflow.
+
+- currently inactive but still open subflows (i.e. switched to backup
+  mode) are always considered when computing the msk-level RTT.
+
+Address the all the issues above with a more accurate RTT estimation
+strategy: the MPTCP-level RTT is set to the minimum of all the subflows
+actually feeding data into the MPTCP receive buffer, using a small
+sliding window.
+
+While at it, also use EWMA to compute the msk-level scaling_ratio, to
+that MPTCP can avoid traversing the subflow list is
+mptcp_rcv_space_adjust().
+
+Use some care to avoid updating msk and ssk level fields too often.
+
+Fixes: a6b118febbab ("mptcp: add receive buffer auto-tuning")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260407-net-next-mptcp-reduce-rbuf-v2-1-0d1d135bf6f6@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 22 ++++++++++++++-
- drivers/net/ethernet/mediatek/mtk_ppe.c     | 30 +++++++++++++++++++++
- drivers/net/ethernet/mediatek/mtk_ppe.h     |  1 +
- 3 files changed, 52 insertions(+), 1 deletion(-)
+ include/trace/events/mptcp.h |  2 +-
+ net/mptcp/protocol.c         | 63 ++++++++++++++++++++----------------
+ net/mptcp/protocol.h         | 37 ++++++++++++++++++++-
+ 3 files changed, 72 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index ddc321a02fdae..796f79088f366 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3566,12 +3566,23 @@ static int mtk_device_event(struct notifier_block *n, unsigned long event, void
- 	return NOTIFY_DONE;
+diff --git a/include/trace/events/mptcp.h b/include/trace/events/mptcp.h
+index 269d949b20254..04521acba4832 100644
+--- a/include/trace/events/mptcp.h
++++ b/include/trace/events/mptcp.h
+@@ -219,7 +219,7 @@ TRACE_EVENT(mptcp_rcvbuf_grow,
+ 		__be32 *p32;
+ 
+ 		__entry->time = time;
+-		__entry->rtt_us = msk->rcvq_space.rtt_us >> 3;
++		__entry->rtt_us = mptcp_rtt_us_est(msk) >> 3;
+ 		__entry->copied = msk->rcvq_space.copied;
+ 		__entry->inq = mptcp_inq_hint(sk);
+ 		__entry->space = msk->rcvq_space.space;
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 1a73d2461c7b9..8ef967aa80a0b 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -879,6 +879,32 @@ static bool move_skbs_to_msk(struct mptcp_sock *msk, struct sock *ssk)
+ 	return moved;
  }
  
-+static int mtk_max_gmac_mtu(struct mtk_eth *eth)
++static void mptcp_rcv_rtt_update(struct mptcp_sock *msk,
++				 struct mptcp_subflow_context *subflow)
 +{
-+	int i, max_mtu = ETH_DATA_LEN;
++	const struct tcp_sock *tp = tcp_sk(subflow->tcp_sock);
++	u32 rtt_us = tp->rcv_rtt_est.rtt_us;
++	int id;
 +
-+	for (i = 0; i < ARRAY_SIZE(eth->netdev); i++)
-+		if (eth->netdev[i] && eth->netdev[i]->mtu > max_mtu)
-+			max_mtu = eth->netdev[i]->mtu;
-+
-+	return max_mtu;
-+}
-+
- static int mtk_open(struct net_device *dev)
- {
- 	struct mtk_mac *mac = netdev_priv(dev);
- 	struct mtk_eth *eth = mac->hw;
- 	struct mtk_mac *target_mac;
--	int i, err, ppe_num;
-+	int i, err, ppe_num, mtu;
- 
- 	ppe_num = eth->soc->ppe_num;
- 
-@@ -3618,6 +3629,10 @@ static int mtk_open(struct net_device *dev)
- 			mtk_gdm_config(eth, target_mac->id, gdm_config);
- 		}
- 
-+		mtu = mtk_max_gmac_mtu(eth);
-+		for (i = 0; i < ARRAY_SIZE(eth->ppe); i++)
-+			mtk_ppe_update_mtu(eth->ppe[i], mtu);
-+
- 		napi_enable(&eth->tx_napi);
- 		napi_enable(&eth->rx_napi);
- 		mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
-@@ -4311,6 +4326,7 @@ static int mtk_change_mtu(struct net_device *dev, int new_mtu)
- 	int length = new_mtu + MTK_RX_ETH_HLEN;
- 	struct mtk_mac *mac = netdev_priv(dev);
- 	struct mtk_eth *eth = mac->hw;
-+	int max_mtu, i;
- 
- 	if (rcu_access_pointer(eth->prog) &&
- 	    length > MTK_PP_MAX_BUF_SIZE) {
-@@ -4321,6 +4337,10 @@ static int mtk_change_mtu(struct net_device *dev, int new_mtu)
- 	mtk_set_mcr_max_rx(mac, length);
- 	WRITE_ONCE(dev->mtu, new_mtu);
- 
-+	max_mtu = mtk_max_gmac_mtu(eth);
-+	for (i = 0; i < ARRAY_SIZE(eth->ppe); i++)
-+		mtk_ppe_update_mtu(eth->ppe[i], max_mtu);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.c b/drivers/net/ethernet/mediatek/mtk_ppe.c
-index 75f7728fc7962..18279e2a7022e 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe.c
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe.c
-@@ -973,6 +973,36 @@ static void mtk_ppe_init_foe_table(struct mtk_ppe *ppe)
- 	}
- }
- 
-+void mtk_ppe_update_mtu(struct mtk_ppe *ppe, int mtu)
-+{
-+	int base;
-+	u32 val;
-+
-+	if (!ppe)
++	/* Update once per subflow per rcvwnd to avoid touching the msk
++	 * too often.
++	 */
++	if (!rtt_us || tp->rcv_rtt_est.seq == subflow->prev_rtt_seq)
 +		return;
 +
-+	/* The PPE checks output frame size against per-tag-layer MTU limits,
-+	 * treating PPPoE and DSA tags just like 802.1Q VLAN tags. The Linux
-+	 * device MTU already accounts for PPPoE (PPPOE_SES_HLEN) and DSA tag
-+	 * overhead, but 802.1Q VLAN tags are handled transparently without
-+	 * being reflected by the lower device MTU being increased by 4.
-+	 * Use the maximum MTU across all GMAC interfaces so that PPE output
-+	 * frame limits are sufficiently high regardless of which port a flow
-+	 * egresses through.
-+	 */
-+	base = ETH_HLEN + mtu;
++	subflow->prev_rtt_seq = tp->rcv_rtt_est.seq;
 +
-+	val = FIELD_PREP(MTK_PPE_VLAN_MTU0_NONE, base) |
-+	      FIELD_PREP(MTK_PPE_VLAN_MTU0_1TAG, base + VLAN_HLEN);
-+	ppe_w32(ppe, MTK_PPE_VLAN_MTU0, val);
++	/* Pairs with READ_ONCE() in mptcp_rtt_us_est(). */
++	id = msk->rcv_rtt_est.next_sample;
++	WRITE_ONCE(msk->rcv_rtt_est.samples[id], rtt_us);
++	if (++msk->rcv_rtt_est.next_sample == MPTCP_RTT_SAMPLES)
++		msk->rcv_rtt_est.next_sample = 0;
 +
-+	val = FIELD_PREP(MTK_PPE_VLAN_MTU1_2TAG,
-+			 base + 2 * VLAN_HLEN) |
-+	      FIELD_PREP(MTK_PPE_VLAN_MTU1_3TAG,
-+			 base + 3 * VLAN_HLEN);
-+	ppe_w32(ppe, MTK_PPE_VLAN_MTU1, val);
++	/* EWMA among the incoming subflows */
++	msk->scaling_ratio = ((msk->scaling_ratio << 3) - msk->scaling_ratio +
++			     tp->scaling_ratio) >> 3;
 +}
 +
- void mtk_ppe_start(struct mtk_ppe *ppe)
+ void mptcp_data_ready(struct sock *sk, struct sock *ssk)
  {
- 	u32 val;
-diff --git a/drivers/net/ethernet/mediatek/mtk_ppe.h b/drivers/net/ethernet/mediatek/mtk_ppe.h
-index 223f709e2704f..ba85e39a155bf 100644
---- a/drivers/net/ethernet/mediatek/mtk_ppe.h
-+++ b/drivers/net/ethernet/mediatek/mtk_ppe.h
-@@ -346,6 +346,7 @@ struct mtk_ppe {
- struct mtk_ppe *mtk_ppe_init(struct mtk_eth *eth, void __iomem *base, int index);
+ 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
+@@ -892,6 +918,7 @@ void mptcp_data_ready(struct sock *sk, struct sock *ssk)
+ 		return;
  
- void mtk_ppe_deinit(struct mtk_eth *eth);
-+void mtk_ppe_update_mtu(struct mtk_ppe *ppe, int mtu);
- void mtk_ppe_start(struct mtk_ppe *ppe);
- int mtk_ppe_stop(struct mtk_ppe *ppe);
- int mtk_ppe_prepare_reset(struct mtk_ppe *ppe);
+ 	mptcp_data_lock(sk);
++	mptcp_rcv_rtt_update(msk, subflow);
+ 	if (!sock_owned_by_user(sk)) {
+ 		/* Wake-up the reader only for in-sequence data */
+ 		if (move_skbs_to_msk(msk, ssk) && mptcp_epollin_ready(sk))
+@@ -2077,7 +2104,6 @@ static void mptcp_rcv_space_init(struct mptcp_sock *msk, const struct sock *ssk)
+ 
+ 	msk->rcvspace_init = 1;
+ 	msk->rcvq_space.copied = 0;
+-	msk->rcvq_space.rtt_us = 0;
+ 
+ 	/* initial rcv_space offering made to peer */
+ 	msk->rcvq_space.space = min_t(u32, tp->rcv_wnd,
+@@ -2088,15 +2114,15 @@ static void mptcp_rcv_space_init(struct mptcp_sock *msk, const struct sock *ssk)
+ 
+ /* receive buffer autotuning.  See tcp_rcv_space_adjust for more information.
+  *
+- * Only difference: Use highest rtt estimate of the subflows in use.
++ * Only difference: Use lowest rtt estimate of the subflows in use, see
++ * mptcp_rcv_rtt_update() and mptcp_rtt_us_est().
+  */
+ static void mptcp_rcv_space_adjust(struct mptcp_sock *msk, int copied)
+ {
+ 	struct mptcp_subflow_context *subflow;
+ 	struct sock *sk = (struct sock *)msk;
+-	u8 scaling_ratio = U8_MAX;
+-	u32 time, advmss = 1;
+-	u64 rtt_us, mstamp;
++	u32 time, rtt_us;
++	u64 mstamp;
+ 
+ 	msk_owned_by_me(msk);
+ 
+@@ -2111,29 +2137,8 @@ static void mptcp_rcv_space_adjust(struct mptcp_sock *msk, int copied)
+ 	mstamp = mptcp_stamp();
+ 	time = tcp_stamp_us_delta(mstamp, READ_ONCE(msk->rcvq_space.time));
+ 
+-	rtt_us = msk->rcvq_space.rtt_us;
+-	if (rtt_us && time < (rtt_us >> 3))
+-		return;
+-
+-	rtt_us = 0;
+-	mptcp_for_each_subflow(msk, subflow) {
+-		const struct tcp_sock *tp;
+-		u64 sf_rtt_us;
+-		u32 sf_advmss;
+-
+-		tp = tcp_sk(mptcp_subflow_tcp_sock(subflow));
+-
+-		sf_rtt_us = READ_ONCE(tp->rcv_rtt_est.rtt_us);
+-		sf_advmss = READ_ONCE(tp->advmss);
+-
+-		rtt_us = max(sf_rtt_us, rtt_us);
+-		advmss = max(sf_advmss, advmss);
+-		scaling_ratio = min(tp->scaling_ratio, scaling_ratio);
+-	}
+-
+-	msk->rcvq_space.rtt_us = rtt_us;
+-	msk->scaling_ratio = scaling_ratio;
+-	if (time < (rtt_us >> 3) || rtt_us == 0)
++	rtt_us = mptcp_rtt_us_est(msk);
++	if (rtt_us == U32_MAX || time < (rtt_us >> 3))
+ 		return;
+ 
+ 	if (msk->rcvq_space.copied <= msk->rcvq_space.space)
+@@ -3000,6 +3005,7 @@ static void __mptcp_init_sock(struct sock *sk)
+ 	msk->timer_ival = TCP_RTO_MIN;
+ 	msk->scaling_ratio = TCP_DEFAULT_SCALING_RATIO;
+ 	msk->backlog_len = 0;
++	mptcp_init_rtt_est(msk);
+ 
+ 	WRITE_ONCE(msk->first, NULL);
+ 	inet_csk(sk)->icsk_sync_mss = mptcp_sync_mss;
+@@ -3446,6 +3452,7 @@ static int mptcp_disconnect(struct sock *sk, int flags)
+ 	msk->bytes_retrans = 0;
+ 	msk->rcvspace_init = 0;
+ 	msk->fastclosing = 0;
++	mptcp_init_rtt_est(msk);
+ 
+ 	/* for fallback's sake */
+ 	WRITE_ONCE(msk->ack_seq, 0);
+diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
+index ec15e503da8b7..d19c54761c27a 100644
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -268,6 +268,13 @@ struct mptcp_data_frag {
+ 	struct page *page;
+ };
+ 
++/* Arbitrary compromise between as low as possible to react timely to subflow
++ * close event and as big as possible to avoid being fouled by biased large
++ * samples due to peer sending data on a different subflow WRT to the incoming
++ * ack.
++ */
++#define MPTCP_RTT_SAMPLES	5
++
+ /* MPTCP connection sock */
+ struct mptcp_sock {
+ 	/* inet_connection_sock must be the first member */
+@@ -340,11 +347,17 @@ struct mptcp_sock {
+ 				 */
+ 	struct mptcp_pm_data	pm;
+ 	struct mptcp_sched_ops	*sched;
++
++	/* Most recent rtt_us observed by in use incoming subflows. */
++	struct {
++		u32	samples[MPTCP_RTT_SAMPLES];
++		u32	next_sample;
++	} rcv_rtt_est;
++
+ 	struct {
+ 		int	space;	/* bytes copied in last measurement window */
+ 		int	copied; /* bytes copied in this measurement window */
+ 		u64	time;	/* start time of measurement window */
+-		u64	rtt_us; /* last maximum rtt of subflows */
+ 	} rcvq_space;
+ 	u8		scaling_ratio;
+ 	bool		allow_subflows;
+@@ -422,6 +435,27 @@ static inline struct mptcp_data_frag *mptcp_send_head(const struct sock *sk)
+ 	return msk->first_pending;
+ }
+ 
++static inline void mptcp_init_rtt_est(struct mptcp_sock *msk)
++{
++	int i;
++
++	for (i = 0; i < MPTCP_RTT_SAMPLES; ++i)
++		msk->rcv_rtt_est.samples[i] = U32_MAX;
++	msk->rcv_rtt_est.next_sample = 0;
++	msk->scaling_ratio = TCP_DEFAULT_SCALING_RATIO;
++}
++
++static inline u32 mptcp_rtt_us_est(const struct mptcp_sock *msk)
++{
++	u32 rtt_us = READ_ONCE(msk->rcv_rtt_est.samples[0]);
++	int i;
++
++	/* Lockless access of collected samples. */
++	for (i = 1; i < MPTCP_RTT_SAMPLES; ++i)
++		rtt_us = min(rtt_us, READ_ONCE(msk->rcv_rtt_est.samples[i]));
++	return rtt_us;
++}
++
+ static inline struct mptcp_data_frag *mptcp_send_next(struct sock *sk)
+ {
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+@@ -523,6 +557,7 @@ struct mptcp_subflow_context {
+ 	u32	map_data_len;
+ 	__wsum	map_data_csum;
+ 	u32	map_csum_len;
++	u32	prev_rtt_seq;
+ 	u32	request_mptcp : 1,  /* send MP_CAPABLE */
+ 		request_join : 1,   /* send MP_JOIN */
+ 		request_bkup : 1,
 -- 
 2.53.0
 
