@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3ED17A2FC;
-	Wed, 20 May 2026 18:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6811B17A2FC;
+	Wed, 20 May 2026 18:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301925; cv=none; b=tBpBE/8VF4kk37fOf0svGuNTKLL9lh4YIbf9U/5itn1CF7qEuQN7xYqHWdinR8kWT2DWz1Xinm4iNezEg0NbRjw0s/mwGqbjcq7oIhKCkgUXd9sCSSjJ5kGP3NFyOdzokJRvHRFLwxyKRtsna0xb29cfwAIYWVHPWnUtxV1PsdA=
+	t=1779301928; cv=none; b=CBHYnGp2zSIlWSAaWBic+Ks2gOoScO7eF/Zb91fMo1vYFSOswr6MrZ7NAyhVFO/o34cUCiUHTDdqwEvcIvnFtzTcXQAUlakQgAJGsk81dsTXrGH5ge0xrXjsbZSht/JIOR1ZeSDFom7in3M86kcNBkgy1bm81jXFN3Uuo1uj6qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301925; c=relaxed/simple;
-	bh=OgXzNIasbHgHto0JrY+9ugUUXCrPXl4egEylgMn6GAo=;
+	s=arc-20240116; t=1779301928; c=relaxed/simple;
+	bh=Tt2qX5stI9I7+f9mgvrJvkWnGoR02pV/266nJQ3Rzdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SM5l1CTFW2Fu+VPpuU325ICpGQTwZHUzaoeuxcV9aM9fr43QtY4n75pOudMNtyB+nOzw4EeXz0LrQulrFyXxui3XuZT4qiA6En4BDlNV3gfVFjVNiyS6lYEYr16/DsI9geiBltBvZPSx3ogAnGoF5o4yCdir81M3K6x0SW/X8Ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuOlGIn8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IIMTPIOQxHwKVY/4UDWMuGvP66VYkeZUEKbsuETHAEDquDLbZvT6EoF7brzHdIvFq9U0jOtH7ZqhbXRwHu6v1Ip07+jtiQTrO/JyfM5nw+qQ/ktZFG0gKo4AJET4G6DaU9+AEiyMofmYqB1K9qIYwNQGUT4M6wUAPY4DMM3v62c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCONYX/f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuOlGIn8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED631F000E9;
-	Wed, 20 May 2026 18:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCONYX/f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCA71F000E9;
+	Wed, 20 May 2026 18:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301924;
-	bh=TI7F3/ChF2AaV7fi55wD3kLav6SUd3qxs5OETAeBJBw=;
+	s=korg; t=1779301927;
+	bh=mU0ur5DCRK2ADKLPqyVX/QrP9Uw6SwzDdVJ4+7sIurs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VuOlGIn84KVmBKFGwT6AJp4IsR19OhlcN1I6Auut3m/rxRYhh9wZKryncEdhF4aeT
-	 /rH1vx9owp2U6BwRAWvMpo5fICOZup5xPIXU1pUHcod5NMx2X0g+UCcTwH5WMFSOBH
-	 Os3SvrNv90aDeQyMLN5ZfRdCBfaucOHx4pLKwds8=
+	b=LCONYX/fWa0lkxxcHr27ZUw3IGhcW1shO6yFzQZc+HBzsI3hIMtYIYdXffqGXyZFI
+	 4bClslD5qkXQSJOsNLv74EiG8FxA/iGnyh4VX8nXJS8Vg0OaBG2Do90aDbZAC1lTFU
+	 LkclSDkF5lMI8XrUunqoZsCnW6p6ZyKhRKe8ACq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/508] wifi: mt76: mt7996: fix FCS error flag check in RX descriptor
-Date: Wed, 20 May 2026 18:17:38 +0200
-Message-ID: <20260520162059.352876050@linuxfoundation.org>
+Subject: [PATCH 6.6 071/508] net: ipa: Fix programming of QTIME_TIMESTAMP_CFG
+Date: Wed, 20 May 2026 18:18:14 +0200
+Message-ID: <20260520162100.146128323@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,42 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit d8db56142e531f060c938fa0b5175ed6c8cabb11 ]
+[ Upstream commit de08f9585692813bd41ee654fca0487664c4de30 ]
 
-The mt7996 driver currently checks the MT_RXD3_NORMAL_FCS_ERR bit in
-rxd1 whereas other Connac3-based drivers(mt7925) correctly check this
-bit in rxd3.
+The 'val' variable gets overwritten multiple times, discarding previous
+values. Looking at the git log shows these should be combined with |=
+instead.
 
-Since the MT_RXD3_NORMAL_FCS_ERR bit is defined in the fourth RX
-descriptor word (rxd3), update mt7996 to use the proper descriptor
-field. This change aligns mt7996 with mt7925 and the rest of the
-Connac3 family.
-
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20251013090826.753992-1-alok.a.tiwari@oracle.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 9265a4f0f0b4 ("net: ipa: define even more IPA register fields")
+Link: https://sashiko.dev/#/patchset/20260403-milos-ipa-v1-0-01e9e4e03d3e%40fairphone.com?part=4
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260409-ipa-fixes-v1-1-a817c30678ac@fairphone.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ipa/ipa_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 3dd503b363ce0..9270a68e6a38d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -528,7 +528,7 @@ mt7996_mac_fill_rx(struct mt7996_dev *dev, struct sk_buff *skb)
- 	    !(csum_status & (BIT(0) | BIT(2) | BIT(3))))
- 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
+index da853353a5c72..f5924142021d2 100644
+--- a/drivers/net/ipa/ipa_main.c
++++ b/drivers/net/ipa/ipa_main.c
+@@ -369,7 +369,7 @@ static void ipa_qtime_config(struct ipa *ipa)
+ {
+ 	const struct reg *reg;
+ 	u32 offset;
+-	u32 val;
++	u32 val = 0;
  
--	if (rxd1 & MT_RXD3_NORMAL_FCS_ERR)
-+	if (rxd3 & MT_RXD3_NORMAL_FCS_ERR)
- 		status->flag |= RX_FLAG_FAILED_FCS_CRC;
+ 	/* Timer clock divider must be disabled when we change the rate */
+ 	reg = ipa_reg(ipa, TIMERS_XO_CLK_DIV_CFG);
+@@ -380,8 +380,8 @@ static void ipa_qtime_config(struct ipa *ipa)
+ 	val = reg_encode(reg, DPL_TIMESTAMP_LSB, DPL_TIMESTAMP_SHIFT);
+ 	val |= reg_bit(reg, DPL_TIMESTAMP_SEL);
+ 	/* Configure tag and NAT Qtime timestamp resolution as well */
+-	val = reg_encode(reg, TAG_TIMESTAMP_LSB, TAG_TIMESTAMP_SHIFT);
+-	val = reg_encode(reg, NAT_TIMESTAMP_LSB, NAT_TIMESTAMP_SHIFT);
++	val |= reg_encode(reg, TAG_TIMESTAMP_LSB, TAG_TIMESTAMP_SHIFT);
++	val |= reg_encode(reg, NAT_TIMESTAMP_LSB, NAT_TIMESTAMP_SHIFT);
  
- 	if (rxd1 & MT_RXD1_NORMAL_TKIP_MIC_ERR)
+ 	iowrite32(val, ipa->reg_virt + reg_offset(reg));
+ 
 -- 
 2.53.0
 
