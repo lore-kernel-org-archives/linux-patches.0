@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC6D3C4576;
-	Wed, 20 May 2026 17:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B303E5ECF;
+	Wed, 20 May 2026 17:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299428; cv=none; b=KUTI96S5J8gnJhQi+rmxm34RfkBX+SDg+eHdr1bvuT4jigiYRxW+HaMaNCchlY+1Jb3hoLIRDsjcx1i/P9D9Suqa+arRoYtSRSTkVggHoBNQ666QGuaBR7KivUVri8pmoChnlXqt6gBo9jXf7DrcoCV1JmZWbBKQaqcBqWd7Ozo=
+	t=1779299430; cv=none; b=WKASn3PwrtaJdocdaCNaWwnItHAOvTHMT725GqD+xznrWDT5XmGbwKbWozt7/aUyb/YHDfgpn5jwiOBJzoN+nnFZuuoKz29/cglmg7A+/vV8reCoahKdZOzrRYUUUNYjBsbsOBHako2UrbDOOPEdM3tFoY5f6DKMpKulYcYwmWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299428; c=relaxed/simple;
-	bh=+i5D3SW1vmxQgFcLs6334tuP00/FX8ehWK7eC1xz3AE=;
+	s=arc-20240116; t=1779299430; c=relaxed/simple;
+	bh=DWgYu8BebPO9EXER8CoSFP6sYIWoS9PsyYKWiz6vHEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZGK/5ehZVx+O04/rl/kc2cMqFL2c0Et6QsQaAu/g4V46nuBGtXwaJy7DmPFQyC98LXrSRNt1Fq+QVEIvnuWtgHS6YdYfmT1Mk4oFnHU1RjJZcK/CIr9mvlaekstoaukd4PHGMqDvGul68Xw2avpsGe1HYGx2YlvY6+11rbC1qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnfYLPCB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lJUnMWwG/cD6UGPMOeK3H+xfniwyoBEC/jY61GXaqh3ezih9bgFeRMa9yj72RbH6iQBd3wR56wvx3aGgss/gAlqVWD3eQNz/pVrrkW28/W/Iio3vAseegaUccV/si19o3guo2NMq7YRgp1j+5v6iQqFAqBzyGMYKqY/0hd2q1h0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oip7pu6o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnfYLPCB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2AA1F00897;
-	Wed, 20 May 2026 17:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oip7pu6o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A081F00893;
+	Wed, 20 May 2026 17:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299426;
-	bh=Qkgd/aZx360ltAeWYO2AjybTI980aHIxe+MiIH3JvP4=;
+	s=korg; t=1779299429;
+	bh=bJ3I2ACWAz/Uebfd4JC90ezFLJWiujluFfX2HuqxyhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YnfYLPCBWUJ8wbkaP7C3CI+LaLX7eemUL75dhNi67WWSYfyK6iCgH4wRJk/e2bVCA
-	 FlJ9k+TaPD3SIbeeodd0drXLzWYcG4UAOExjjIpGVK9aEaO7FgYKON4RBsvkwoDBA9
-	 FqF0X/r0S6B5z5T2Xar3lBvO36r5zckd8l7x5d+s=
+	b=Oip7pu6ohuGW2Ba+WWVr4jJBiZH0o2G+WsElAJckqmzp2zxe2rkl8lyh9DciybxN/
+	 N9S3vGcKW6j8JXx1UKvs7Okj0LjjYI8eD13TME8+3kX/K7bfXNXxWf6kM2evX+HmSF
+	 /tnVrjUg0c8kCdasC7dsupXe18HBuz4CCld3bu7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Jiexun Wang <wangjiexun2025@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 769/957] net/sched: netem: fix slot delay calculation overflow
-Date: Wed, 20 May 2026 18:20:52 +0200
-Message-ID: <20260520162151.239623516@linuxfoundation.org>
+Subject: [PATCH 6.18 752/957] netfilter: xt_policy: fix strict mode inbound policy matching
+Date: Wed, 20 May 2026 18:20:35 +0200
+Message-ID: <20260520162150.872954677@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,49 +57,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Hemminger <stephen@networkplumber.org>
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-[ Upstream commit 51e94e1e2fef351c74d69eb53666df808d26af95 ]
+[ Upstream commit 4b2b4d7d4e203c92db8966b163edfacb1f0e1e29 ]
 
-get_slot_next() computes a random delay between min_delay and
-max_delay using:
+match_policy_in() walks sec_path entries from the last transform to the
+first one, but strict policy matching needs to consume info->pol[] in
+the same forward order as the rule layout.
 
-  get_random_u32() * (max_delay - min_delay) >> 32
+Derive the strict-match policy position from the number of transforms
+already consumed so that multi-element inbound rules are matched
+consistently.
 
-This overflows signed 64-bit arithmetic when the delay range exceeds
-approximately 2.1 seconds (2^31 nanoseconds), producing a negative
-result that effectively disables slot-based pacing. This is a
-realistic configuration for WAN emulation (e.g., slot 1s 5s).
-
-Use mul_u64_u32_shr() which handles the widening multiply without
-overflow.
-
-Fixes: 0a9fe5c375b5 ("netem: slotting with non-uniform distribution")
-Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260418032027.900913-6-stephen@networkplumber.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c4b885139203 ("[NETFILTER]: x_tables: replace IPv4/IPv6 policy match by address family independant version")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Acked-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/netfilter/xt_policy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 41d60e904090d..6e221bdfb3871 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -658,9 +658,8 @@ static void get_slot_next(struct netem_sched_data *q, u64 now)
+diff --git a/net/netfilter/xt_policy.c b/net/netfilter/xt_policy.c
+index cb6e8279010a4..b5fa65558318f 100644
+--- a/net/netfilter/xt_policy.c
++++ b/net/netfilter/xt_policy.c
+@@ -63,7 +63,7 @@ match_policy_in(const struct sk_buff *skb, const struct xt_policy_info *info,
+ 		return 0;
  
- 	if (!q->slot_dist)
- 		next_delay = q->slot_config.min_delay +
--				(get_random_u32() *
--				 (q->slot_config.max_delay -
--				  q->slot_config.min_delay) >> 32);
-+			mul_u64_u32_shr(q->slot_config.max_delay - q->slot_config.min_delay,
-+					get_random_u32(), 32);
- 	else
- 		next_delay = tabledist(q->slot_config.dist_delay,
- 				       (s32)(q->slot_config.dist_jitter),
+ 	for (i = sp->len - 1; i >= 0; i--) {
+-		pos = strict ? i - sp->len + 1 : 0;
++		pos = strict ? sp->len - i - 1 : 0;
+ 		if (pos >= info->len)
+ 			return 0;
+ 		e = &info->pol[pos];
 -- 
 2.53.0
 
