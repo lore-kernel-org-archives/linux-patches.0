@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA92272E56;
-	Wed, 20 May 2026 18:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F057DF59;
+	Wed, 20 May 2026 18:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302192; cv=none; b=Io3uhmVhxmMrMgCMFnFMJhEvyMPIYau6oQxh+4w5DIU/cwmsmrEexn16cDDBrgHq8HObljepMlkOgEO7pbh6lUJUiH4qI+RoDre8ScKV/w1pKWGOxpAU8AUgB/nde7Fk44DhtsqXjLlLIS5iwk+fvMG24HasBb3ig1VE8dPEWuc=
+	t=1779302194; cv=none; b=FjcMudoFHRKsVkQ9nN7Hs0p4mbkXVlUrxT1Eq4fUiPOsnqKmjjfxqlEYnydoaX3Jtp/b0xSQZ49PFlz9KGMO9bw7WLDDEtUwDXN00sE/Vwath6AFA1tufMz9zBHi++Kwczii0u0jNrCc+0JLgd0Uxnt28AVJcBCePw+KK/FG6es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302192; c=relaxed/simple;
-	bh=yu9BDYruO//a0hday1UWtMS1v9PklUBI7m8R919xYdo=;
+	s=arc-20240116; t=1779302194; c=relaxed/simple;
+	bh=ehvze0AOlahPoUikkqesDFnS5VryVx/KKMjO8iqomwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuKYncGgUHxOEDfaYFXuZ4MfEeFr8zJWQUsmEdJ+RhGUepv8js5C7x0kOfw8enq79kt1xLvA7TIG9gSZ1eemxTaVmjLS+mtwy5g9PK6RYXP0X8p8rZkAWCIvrq4hRnpCnnpYgR3+wWMbkxpf4JDW1ptlIIIXMFALuyPXsA2G/n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSR0ehpY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uDNLQTYmQUWfxUbJ2rDkd4wZYGGOlibete6WTd9pWghQcnqZ4N5w3vPuDJP+3b/FJvKnwNOhc9ugnw0UVE4LHgFLoJTeCSciFm0vfYsgfBfYeFaFwFrKEl8H8zkltt2+sP5m3I6C37Q99T/7P5DpK20lIOYjXUuQ969COvWgxOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYYrNhr/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSR0ehpY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437411F000E9;
-	Wed, 20 May 2026 18:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYYrNhr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DADE71F000E9;
+	Wed, 20 May 2026 18:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302190;
-	bh=Sy5C7SiXcYG0hhpiefSzO9Ej+BT0Vw9tizMCrpOZfpg=;
+	s=korg; t=1779302193;
+	bh=ZkpWCQlIrmhXI7h4RmDSPBCwiKxPZG1KbtZTbdwriow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oSR0ehpYrgkdqwGYq26CnxFp0QlWbe78rggoKgxlotoZfRApithJarJ9j+Cj+NF9N
-	 +u2NgxloK1OWRf3HxP/6XEFCu9ROVM5XbxeFSJCtMWwn590763YGHMYSNC04P38RE4
-	 Xf6GABPmkhMC11yp7pvCrMPc+THX0j8xmm//9Zko=
+	b=oYYrNhr/8B8BqifaCTnjY+7G8R/+3RZwjzL3uoLtalzxxDdL6Ga0QSEHVEz4YzqL1
+	 BsdEql4jrg2sVMXFpRii5+FdQMIoLFR7/2kw0hu8Q0bF4WnPt8f1Qq/wSXd8GLNyg9
+	 Vye+JfcWyFSjZLP9ZJg9oIFP+LdWGSnadmRZECRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
+	John Hawley <warthog9@eaglescrag.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 166/508] PCI: dwc: Apply ECRC workaround to DesignWare 5.00a as well
-Date: Wed, 20 May 2026 18:19:49 +0200
-Message-ID: <20260520162102.236581511@linuxfoundation.org>
+Subject: [PATCH 6.6 175/508] ktest: Run POST_KTEST hooks on failure and cancellation
+Date: Wed, 20 May 2026 18:19:58 +0200
+Message-ID: <20260520162102.430685860@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -48,67 +51,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 40805f32dceadebb7381d911003100bec7b8cd51 ]
+[ Upstream commit bc6e165a452da909cef0efbc286e6695624db372 ]
 
-The ECRC (TLP digest) workaround was originally added for DesignWare
-version 4.90a. Tegra234 SoC has 5.00a DWC HW version, which has the same
-ATU TD override behaviour, so apply the workaround for 5.00a too.
+PRE_KTEST can be useful for setting up the environment and POST_KTEST to
+tear it down, however POST_KTEST only runs on the normal end-of-run path.
+It is skipped when ktest exits through dodie() or cancel_test(). Final
+cleanup hooks are skipped.
 
-Fixes: a54e19073718 ("PCI: tegra194: Add Tegra234 PCIe support")
-Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
-Link: https://patch.msgid.link/20260324190755.1094879-13-mmaddireddy@nvidia.com
+Factor the final hook execution into run_post_ktest(), call it from the
+normal exit path and from the early exit paths, and guard it so the hook
+runs at most once.
+
+Cc: John Hawley <warthog9@eaglescrag.net>
+Cc: Andrea Righi <arighi@nvidia.com>
+Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Link: https://patch.msgid.link/20260307-ktest-fixes-v1-8-565d412f4925@suse.com
+Fixes: 921ed4c7208e ("ktest: Add PRE/POST_KTEST and TEST options")
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ tools/testing/ktest/ktest.pl | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 46b12e157bebe..504450a8b6a45 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -426,13 +426,13 @@ static inline void dw_pcie_writel_atu_ob(struct dw_pcie *pci, u32 index, u32 reg
- static inline u32 dw_pcie_enable_ecrc(u32 val)
- {
- 	/*
--	 * DesignWare core version 4.90A has a design issue where the 'TD'
--	 * bit in the Control register-1 of the ATU outbound region acts
--	 * like an override for the ECRC setting, i.e., the presence of TLP
--	 * Digest (ECRC) in the outgoing TLPs is solely determined by this
--	 * bit. This is contrary to the PCIe spec which says that the
--	 * enablement of the ECRC is solely determined by the AER
--	 * registers.
-+	 * DWC versions 0x3530302a and 0x3536322a have a design issue where
-+	 * the 'TD' bit in the Control register-1 of the ATU outbound
-+	 * region acts like an override for the ECRC setting, i.e., the
-+	 * presence of TLP Digest (ECRC) in the outgoing TLPs is solely
-+	 * determined by this bit. This is contrary to the PCIe spec which
-+	 * says that the enablement of the ECRC is solely determined by the
-+	 * AER registers.
- 	 *
- 	 * Because of this, even when the ECRC is enabled through AER
- 	 * registers, the transactions going through ATU won't have TLP
-@@ -502,7 +502,7 @@ static int __dw_pcie_prog_outbound_atu(struct dw_pcie *pci, u8 func_no,
- 	if (upper_32_bits(limit_addr) > upper_32_bits(cpu_addr) &&
- 	    dw_pcie_ver_is_ge(pci, 460A))
- 		val |= PCIE_ATU_INCREASE_REGION_SIZE;
--	if (dw_pcie_ver_is(pci, 490A))
-+	if (dw_pcie_ver_is(pci, 490A) || dw_pcie_ver_is(pci, 500A))
- 		val = dw_pcie_enable_ecrc(val);
- 	dw_pcie_writel_atu_ob(pci, index, PCIE_ATU_REGION_CTRL1, val);
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 13686e7629c4d..d78d5f3b0a55e 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -98,6 +98,7 @@ my $test_type;
+ my $build_type;
+ my $build_options;
+ my $final_post_ktest;
++my $post_ktest_done = 0;
+ my $pre_ktest;
+ my $post_ktest;
+ my $pre_test;
+@@ -1537,6 +1538,24 @@ sub get_test_name() {
+     return $name;
+ }
  
++sub run_post_ktest {
++    my $cmd;
++
++    return if ($post_ktest_done);
++
++    if (defined($final_post_ktest)) {
++	$cmd = $final_post_ktest;
++    } elsif (defined($post_ktest)) {
++	$cmd = $post_ktest;
++    } else {
++	return;
++    }
++
++    my $cp_post_ktest = eval_kernel_version($cmd);
++    run_command $cp_post_ktest;
++    $post_ktest_done = 1;
++}
++
+ sub dodie {
+     # avoid recursion
+     return if ($in_die);
+@@ -1596,6 +1615,7 @@ sub dodie {
+     if (defined($post_test)) {
+ 	run_command $post_test;
+     }
++    run_post_ktest;
+ 
+     die @_, "\n";
+ }
+@@ -4230,6 +4250,7 @@ sub cancel_test {
+ 	send_email("KTEST: Your [$name] test was cancelled",
+ 	    "Your test started at $script_start_time was cancelled: sig int");
+     }
++    run_post_ktest;
+     die "\nCaught Sig Int, test interrupted: $!\n"
+ }
+ 
+@@ -4540,11 +4561,7 @@ for (my $i = 1; $i <= $opt{"NUM_TESTS"}; $i++) {
+     success $i;
+ }
+ 
+-if (defined($final_post_ktest)) {
+-
+-    my $cp_final_post_ktest = eval_kernel_version $final_post_ktest;
+-    run_command $cp_final_post_ktest;
+-}
++run_post_ktest;
+ 
+ if ($opt{"POWEROFF_ON_SUCCESS"}) {
+     halt;
 -- 
 2.53.0
 
