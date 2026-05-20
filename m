@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4273F0A83;
-	Wed, 20 May 2026 17:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0E13E9C3D;
+	Wed, 20 May 2026 17:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298881; cv=none; b=erh8bwBN44ELamI8sRQKUimZRSn/JgR/LpU6cx8FA3Lc4LiGFw48zktuaZzV2d43mbsZoS7wdpLMfGSFN/+hmlTq0hG7sna+CoYZjSBoetCUdO5PGL3Q3bmtg/8S0PQtdeihwScPa/ZIzgLN79b9Od6Tvgm1uhthzRP7Bun5IN0=
+	t=1779298884; cv=none; b=R54Jp3K5VNMUqLCEDMbJNYDM/YngNvX4pDrMqZEWSmgAQfERbPKDx8mS3gTkoMRIgK7zHcJvmcGYxc0C0MbTqD/ECeKOLrDMKczWIi83Fs238IYua2NbNXKx1DS667GY9wqZ0aYAjNkekfOnpY7fS/9AK7NFMupJEgXsJQjZPeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298881; c=relaxed/simple;
-	bh=SRfhTI9Ux98y9htu9TV7t57ZN1a13XQ2u+Vcvtqzx6o=;
+	s=arc-20240116; t=1779298884; c=relaxed/simple;
+	bh=TbmxbAZia8hbBIQHRnf3n5LgQYdF32Z7I9UtCKb0gl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e/nFq2ddJSNTD3H/Le6I8F7/IPI6NkiDcNFa2vyXplQUjlnugkFFWh4VGpGLsmzbVu9DLLqR6Xr9oeEOPc/VsvYyYl/OrYmb2YCo4LhBjmUuf2vE3TxPU2PshAS2+pFKBgNiICJl3dWO8rSxmGGMsx52oBsRqSlvUBzvSMCQUpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4p4wJnj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JqoSM9y0ClZin8+VVCZqz+ztTVobkmBTHbCwudvbfpd5n9NBUGmAGy/Wo4j3PkeTkGQErmLicYB824gezvkj7JtQxD/lvYk+eCeREhaLulvYT+LdsqAcTuQznsJC+W5AVJH/u7hsmVHtOlDw7lJidqk33nB8wrj4rW8szFI/ock=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODVegToG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4p4wJnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B401D1F00893;
-	Wed, 20 May 2026 17:41:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODVegToG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB1B1F00893;
+	Wed, 20 May 2026 17:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298880;
-	bh=r5hZ09EnQCPAyFJUoqc//X7N58cQSGiHFYABT17VEEA=;
+	s=korg; t=1779298882;
+	bh=UW0/KSer2BWLDcZIwh3cb629u/e7MmxXmQzgqPqHquQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R4p4wJnju5KSBHOnGx0yLuf+Lmiopkf/rIselO+d48fBhEZ1fhM5YsDiDM+FGy3+p
-	 Tb2Q/m/BsARJ2ayJVAo70R8BMx3SUu/JwaAnQ01a2C6JqQvA1bKDnze0CohDG5FlBs
-	 FMqGVNAw/IO9XEU//FUS7TR5H0keQQliSjSEpzPQ=
+	b=ODVegToGAwy2ahJLZmCre0Fp+DiO/3mo+DDdNt4Zq9CPvIGuICC4ctLteS6Vhhm9j
+	 JtdLHJ0eQnZE1N1cJF+E0oApxJxMqueu74dVdCwTt4+7nLz3p6bIv8kPYQ5Wlh2ebQ
+	 c/jRq9JqCjJ8R3NZQ/ERKHBsvNTbsQUxCo7iXU4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Jorge Marques <jorge.marques@analog.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 527/957] i3c: master: adi: Fix error propagation for CCCs
-Date: Wed, 20 May 2026 18:16:50 +0200
-Message-ID: <20260520162145.962201566@linuxfoundation.org>
+Subject: [PATCH 6.18 573/957] clk: imx8mq: Correct the CSI PHY sels
+Date: Wed, 20 May 2026 18:17:36 +0200
+Message-ID: <20260520162146.957490849@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,42 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Marques <jorge.marques@analog.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-[ Upstream commit 0b73da96b6eb6b9354654f96a9d423ab22cb222d ]
+[ Upstream commit d16f57caa78776e6e8a88b96cb2597797b376138 ]
 
-adi_i3c_master_send_ccc_cmd() always returned 0, ignoring the transfer
-result populated in the completion path. As a consequence, CCC command
-errors were silently dropped, including the default -ETIMEDOUT and
-later overwritten by adi_i3c_master_end_xfer_locked().
+According to i.MX 8M Quad Reference Manual (Section 5.1.2 Table 5-1)
+MIPI_CSI1_PHY_REF_CLK_ROOT and MIPI_CSI2_PHY_REF_CLK_ROOT have
+SYSTEM_PLL2_DIV3 available as their second source, which corresponds
+to sys2_pll_333m rather than sys2_pll_125m.
 
-Fix this by returning xfer->ret so that callers correctly receive any
-transfer error codes.
-
-Fixes: a79ac2cdc91d ("i3c: master: Add driver for Analog Devices I3C Controller IP")
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Jorge Marques <jorge.marques@analog.com>
-Link: https://patch.msgid.link/20260323-ad4062-positive-error-fix-v3-5-30bdc68004be@analog.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: b80522040cd3 ("clk: imx: Add clock driver for i.MX8MQ CCM")
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://patch.msgid.link/20260128-imx8mq-csi-clk-v1-1-ac028ed26e8c@puri.sm
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/adi-i3c-master.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/imx/clk-imx8mq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i3c/master/adi-i3c-master.c b/drivers/i3c/master/adi-i3c-master.c
-index 82ac0b3d057ab..d329faf4b3f96 100644
---- a/drivers/i3c/master/adi-i3c-master.c
-+++ b/drivers/i3c/master/adi-i3c-master.c
-@@ -362,7 +362,7 @@ static int adi_i3c_master_send_ccc_cmd(struct i3c_master_controller *m,
+diff --git a/drivers/clk/imx/clk-imx8mq.c b/drivers/clk/imx/clk-imx8mq.c
+index f70ed231b92d6..cedc8a02aa1f0 100644
+--- a/drivers/clk/imx/clk-imx8mq.c
++++ b/drivers/clk/imx/clk-imx8mq.c
+@@ -237,7 +237,7 @@ static const char * const imx8mq_dsi_esc_sels[] = {"osc_25m", "sys2_pll_100m", "
+ static const char * const imx8mq_csi1_core_sels[] = {"osc_25m", "sys1_pll_266m", "sys2_pll_250m", "sys1_pll_800m",
+ 					      "sys2_pll_1000m", "sys3_pll_out", "audio_pll2_out", "video_pll1_out", };
  
- 	cmd->err = adi_i3c_cmd_get_err(&xfer->cmds[0]);
+-static const char * const imx8mq_csi1_phy_sels[] = {"osc_25m", "sys2_pll_125m", "sys2_pll_100m", "sys1_pll_800m",
++static const char * const imx8mq_csi1_phy_sels[] = {"osc_25m", "sys2_pll_333m", "sys2_pll_100m", "sys1_pll_800m",
+ 					     "sys2_pll_1000m", "clk_ext2", "audio_pll2_out", "video_pll1_out", };
  
--	return 0;
-+	return xfer->ret;
- }
+ static const char * const imx8mq_csi1_esc_sels[] = {"osc_25m", "sys2_pll_100m", "sys1_pll_80m", "sys1_pll_800m",
+@@ -246,7 +246,7 @@ static const char * const imx8mq_csi1_esc_sels[] = {"osc_25m", "sys2_pll_100m",
+ static const char * const imx8mq_csi2_core_sels[] = {"osc_25m", "sys1_pll_266m", "sys2_pll_250m", "sys1_pll_800m",
+ 					      "sys2_pll_1000m", "sys3_pll_out", "audio_pll2_out", "video_pll1_out", };
  
- static int adi_i3c_master_priv_xfers(struct i3c_dev_desc *dev,
+-static const char * const imx8mq_csi2_phy_sels[] = {"osc_25m", "sys2_pll_125m", "sys2_pll_100m", "sys1_pll_800m",
++static const char * const imx8mq_csi2_phy_sels[] = {"osc_25m", "sys2_pll_333m", "sys2_pll_100m", "sys1_pll_800m",
+ 					     "sys2_pll_1000m", "clk_ext2", "audio_pll2_out", "video_pll1_out", };
+ 
+ static const char * const imx8mq_csi2_esc_sels[] = {"osc_25m", "sys2_pll_100m", "sys1_pll_80m", "sys1_pll_800m",
 -- 
 2.53.0
 
