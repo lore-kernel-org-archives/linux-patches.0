@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860DE3DC4DA;
-	Wed, 20 May 2026 18:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5C13D5647;
+	Wed, 20 May 2026 18:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300786; cv=none; b=ll8W9r+p9PWX3t4KOrmQTT3PcTB7gbfuE62AAtUq704fkvyRD7cT7GGd3TRNYN8Po6Oj1xeiwN4brSNGIKyBCYQ3//MoYo/uUoeytWuv9++2FdSNd7MdcJBizn8sRJXHltAwpBpBT1VUEaklSNqD6Aw/r1GgyHAKknCKR66Ymew=
+	t=1779300789; cv=none; b=fAjnZSkl58Lw4f4VtH/k8m3ggET/ju/gE/zx8RldMwzQX+v03IA1bfm5oMLZSwbkTelHGMhk8mgRsorh2U2V+YdAMM2V4aIUjeft5sOkYlIaUlLzPBpIi1ktZ5dwu0cr7FWFxv/5OxRmuXc5ZbKJcLyx6owRpmlxNxPhQmFIbEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300786; c=relaxed/simple;
-	bh=J0xdx+KEcy70H8RteGYBCxJZgN7g2sexLg4sT/BPJQg=;
+	s=arc-20240116; t=1779300789; c=relaxed/simple;
+	bh=2A5Pt145JLoSPQSMxitasV0mdMv0bUyEt4hYt/zZU7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMFTOnfROdOaLJ8afwWRYP6ilYwe72thOd3N0i+HlWPtcXHIsLWgpilkERuGLINXqPSShFH0ZkxIr/vD5/CBv/e7QREoBo/W6+OICZr0U8AviHbZJAholh0fZn7NzJSlxFk5GjuyuqkUZUh4AalF0vYSwJgTRdDLf46y0pNrWr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMoFmoPn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ICJJ0nvmoPVIrw4umO3Ahn5hscMt7pE/dNvkMqMdkNkuDG1uqFHr7WRYzYjUeqJdBynqCf1LiJrbMJWRm8wlRlDqt2yW8GiGMhZSpZuBg3rhCsY//t3HM5iro7O3Ez1/Droet9PNpvdJgA9RmDFhFIz2Mgx4RRbVz/yNK9RFObk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzbzvxC1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMoFmoPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2EA31F000E9;
-	Wed, 20 May 2026 18:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzbzvxC1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BCA1F000E9;
+	Wed, 20 May 2026 18:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300785;
-	bh=bbXJ8VpIiDeu/Sd9/k3x2SQEC1/EwfwANv+taQmVgcE=;
+	s=korg; t=1779300788;
+	bh=90DzSI+fivlVug/1MaaF9S3fVb1rML2NF+5riTXVBrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lMoFmoPnQKXqVxbpIGt0sYmJ29cQE6nrsd6GZ8HpKtURrjqTAcuZshvHnHJNT7TS3
-	 dPcxC3AWe1E8wrMk9+REap+ZXuOOvQqE7Jf9iCfZdrKdkbQWbFa2ESQ8P/S4BzcB0R
-	 OQ6aUSV8WK8roBUq9dvsGzqjbHAiT0zjLqv6OSPQ=
+	b=YzbzvxC1yoOLP+HuyCua7pEJvngsmm4ApK30NCaDigiFCYtU10UWjJUqD22+fEU09
+	 Mukp01gE5jCSb9E6g1qcdqPuYCktaW49eXiNfmwFQyphi+JxKaycar+lgAmGV5wfDK
+	 XV/BM64W7i6SahEso8N+qZCne6KFr1Pd3QnG/inM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 308/666] ocfs2/dlm: fix off-by-one in dlm_match_regions() region comparison
-Date: Wed, 20 May 2026 18:18:39 +0200
-Message-ID: <20260520162117.897146940@linuxfoundation.org>
+Subject: [PATCH 6.12 309/666] soc: qcom: llcc: fix v1 SB syndrome register offset
+Date: Wed, 20 May 2026 18:18:40 +0200
+Message-ID: <20260520162117.918854862@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -59,46 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 01b61e8dda9b0fdb0d4cda43de25f4e390554d7b ]
+[ Upstream commit 24e7625df5ce065393249b78930781be593bc381 ]
 
-The local-vs-remote region comparison loop uses '<=' instead of '<',
-causing it to read one entry past the valid range of qr_regions.  The
-other loops in the same function correctly use '<'.
+The llcc_v1_edac_reg_offset table uses 0x2304c for trp_ecc_sb_err_syn0,
+which is inconsistent with the surrounding TRP ECC registers (0x2034x)
+and with llcc_v2_1_edac_reg_offset, where trp_ecc_sb_err_syn0 is 0x2034c
+adjacent to trp_ecc_error_status0/1 at 0x20344/0x20348.
 
-Fix the loop condition to use '<' for consistency and correctness.
+Use 0x2034c for llcc v1 so the SB syndrome register follows the expected
++0x4 progression from trp_ecc_error_status1. This fixes EDAC reading the
+wrong register for SB syndrome reporting.
 
-Link: https://lkml.kernel.org/r/SYBPR01MB78813DA26B50EC5E01F00566AF7BA@SYBPR01MB7881.ausprd01.prod.outlook.com
-Fixes: ea2034416b54 ("ocfs2/dlm: Add message DLM_QUERY_REGION")
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: c13d7d261e36 ("soc: qcom: llcc: Pass LLCC version based register offsets to EDAC driver")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260330095118.2657362-1-alok.a.tiwari@oracle.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlm/dlmdomain.c | 2 +-
+ drivers/soc/qcom/llcc-qcom.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/dlm/dlmdomain.c b/fs/ocfs2/dlm/dlmdomain.c
-index ad335fa6c188d..fe17f1e548c1c 100644
---- a/fs/ocfs2/dlm/dlmdomain.c
-+++ b/fs/ocfs2/dlm/dlmdomain.c
-@@ -1002,7 +1002,7 @@ static int dlm_match_regions(struct dlm_ctxt *dlm,
- 	for (i = 0; i < localnr; ++i) {
- 		foundit = 0;
- 		r = remote;
--		for (j = 0; j <= qr->qr_numregions; ++j) {
-+		for (j = 0; j < qr->qr_numregions; ++j) {
- 			if (!memcmp(l, r, O2HB_MAX_REGION_NAME_LEN)) {
- 				foundit = 1;
- 				break;
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 0278e1854af06..5de1a72c077c3 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -2584,7 +2584,7 @@ static const struct llcc_slice_config x1e80100_data[] = {
+ static const struct llcc_edac_reg_offset llcc_v1_edac_reg_offset = {
+ 	.trp_ecc_error_status0 = 0x20344,
+ 	.trp_ecc_error_status1 = 0x20348,
+-	.trp_ecc_sb_err_syn0 = 0x2304c,
++	.trp_ecc_sb_err_syn0 = 0x2034c,
+ 	.trp_ecc_db_err_syn0 = 0x20370,
+ 	.trp_ecc_error_cntr_clear = 0x20440,
+ 	.trp_interrupt_0_status = 0x20480,
 -- 
 2.53.0
 
