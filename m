@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8F33D5642;
-	Wed, 20 May 2026 17:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9756B3F23D5;
+	Wed, 20 May 2026 17:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297253; cv=none; b=av9HWm+aKeqEB7k1PkePli2gRJyzLjMp7KOGYJ6Ozj68NDY2XGAINDTi97lFW12fQhrFP2C973a9OjOUsfn6Ix9AISo3u0dSg33t3qgey543/8e8rPF1jJutCRclCZkec5b4WsxgghttpoGpErwttxwbwcxlTGsmAXnH9nLQvXE=
+	t=1779297255; cv=none; b=WEgoKSitgFuLa645zEKhTGQwWuLaAmw0xTwGSklUjfeCdGko1xVT7b3tOMpJa2pwONTRN/1s/RDuWnKV/6FyNkxIl7mcs4gHGgxZuQKOIBaWJLnmZMtFphFom//jf51A9fhfxBfLzLr+72wmUWm/Qwv80nLb0rB137+E96clxYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297253; c=relaxed/simple;
-	bh=OZ8EJhXynZFduoznESVaUdm9XTIOYtzcDT5gFeqsZ4w=;
+	s=arc-20240116; t=1779297255; c=relaxed/simple;
+	bh=wyvc/ssxtaNeeHsg0mrT1OpINQB6xK0gNjFg+faLeiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZxsppTN6R2xb5dNFa14OoWrjqJnMEH7k3/Sk2ilLYaPgOWOqQY7w5kkwj/2T+TuWC/tcGJ+4puPTunAJiyqxTuJEEFMJ5+XSmdH3OfqXeROBzkzfzR7GkbL/hYNV9FbHWuWsNCeo4GiFPRgVpS3vvdBIezEq0ca0mni/ubFWRJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUeU6+nh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=StRzWbFu9V9urAQ6VT6w4IePfMjUkWs5pNfLMfe5uVy6cwCkmULsUq3f4MfB1gduZt8tVNJyZeW105t67JoUNJaANjMMIWlwV4MwS8W7Er32pEDtcMtGU/J/qj0mkEnm7DCgXTZv+bbKJPOe2pFdC4PALlvtRnANxNL98Nxweto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLQzrrHL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUeU6+nh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8D21F000E9;
-	Wed, 20 May 2026 17:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLQzrrHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087EB1F000E9;
+	Wed, 20 May 2026 17:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297251;
-	bh=67vgx+gec97GFNHwjVog4DRw+DCGUZNJaXpFXn4sMFQ=;
+	s=korg; t=1779297254;
+	bh=meYMvZsQYilu7mkM0bpgjG6W1QwzUXeBgZuCemwwhNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cUeU6+nhPIHDscNHYVyMioTJ5BRZWRtkYlKQdg8QZH6BsvyZI220gLLBtYgUTE+lJ
-	 3WOs7EpkUJxzUq7BKvZ0kwvIObyeSiczXVjWkevcUexaDFbEWNor+7ej+Q3VKEyBYL
-	 C3tp/19fsOIvnsnblCgbvebjc4e++JWZc6c2P0BA=
+	b=jLQzrrHLS0knnPwqW97hzUGur85hqk+cdx7NrpAKxtTcnBhJmbwFOsZboE6Uf15jp
+	 S97v8h9qxHEDYe4q1b47TPhA9VsAM3HVjZj0wZzlPfpzNM2nzEV72M27fNXkr37ZKY
+	 qhezwhfHMFPqoJN35pDawfm/lUpFWTbMiouCztOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 7.0 1108/1146] nfsd: update mtime/ctime on COPY in presence of delegated attributes
-Date: Wed, 20 May 2026 18:22:38 +0200
-Message-ID: <20260520162213.320869970@linuxfoundation.org>
+	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 7.0 1109/1146] irqchip/riscv-imsic: Clear interrupt move state during CPU offlining
+Date: Wed, 20 May 2026 18:22:39 +0200
+Message-ID: <20260520162213.343065074@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,70 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-commit 4183cf383b6faec17a0882b84cd2d901dba62b16 upstream.
+commit cefafbd561402b0fe6447449364a30315b9b1570 upstream.
 
-When delegated attributes are given on open, the file is opened with
-NOCMTIME and modifying operations do not update mtime/ctime as to not get
-out-of-sync with the client's delegated view. However, for COPY operation,
-the server should update its view of mtime/ctime and reflect that in any
-GETATTR queries.
+Affinity changes of IMSIC interrupts have to be careful to not lose an
+interrupt in the process. Each vector keeps track of an affinity change in
+progress with two pointers in struct imsic_vector.
 
-Fixes: e5e9b24ab8fa ("nfsd: freeze c/mtime updates with outstanding WRITE_ATTRS delegation")
+imsic_vector::move_prev points to the previous CPU target data and
+imsic_vector::move_next to the designated new CPU target data.
+
+imsic_vector::move_prev on the new CPU can only be cleared after the
+previous CPU has cleared imsic_vector::move_next, which ususally happens in
+__imsic_remote_sync().
+
+In case of CPU hot-unplug __imsic_remote_sync() is not invoked because the
+CPU is already marked offline. That means imsic_vector::move_prev becomes
+stale until the CPU is onlined again.
+
+The stale pointer prevents further affinity changes for the affected
+interrupts.
+
+Solve this by clearing the imsic_vector::move_prev pointers in the CPU
+hotplug offline path.
+
+[ tglx: Replace word salad in change log ]
+
+Fixes: 0f67911e821c ("irqchip/riscv-imsic: Separate next and previous pointers in IMSIC vector")
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20260508-imsic-v2-1-e9f08dd46cf5@sifive.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |   11 ++++++++++-
- fs/nfsd/xdr4.h     |    1 +
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-riscv-imsic-early.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2121,8 +2121,10 @@ do_callback:
+--- a/drivers/irqchip/irq-riscv-imsic-early.c
++++ b/drivers/irqchip/irq-riscv-imsic-early.c
+@@ -158,6 +158,8 @@ static int imsic_dying_cpu(unsigned int
+ 	/* Cleanup IPIs */
+ 	imsic_ipi_dying_cpu();
  
- 	set_bit(NFSD4_COPY_F_COMPLETED, &copy->cp_flags);
- 	trace_nfsd_copy_async_done(copy);
--	nfsd4_send_cb_offload(copy);
- 	atomic_dec(&copy->cp_nn->pending_async_copies);
-+	if (copy->cp_res.wr_bytes_written > 0 && copy->attr_update)
-+		nfsd_update_cmtime_attr(copy->nf_dst->nf_file, 0);
-+	nfsd4_send_cb_offload(copy);
- 	return 0;
- }
- 
-@@ -2182,6 +2184,9 @@ nfsd4_copy(struct svc_rqst *rqstp, struc
- 		memcpy(&result->cb_stateid, &copy->cp_stateid.cs_stid,
- 			sizeof(result->cb_stateid));
- 		dup_copy_fields(copy, async_copy);
-+		if ((READ_ONCE(copy->nf_dst->nf_file->f_mode) &
-+			       FMODE_NOCMTIME) != 0)
-+			async_copy->attr_update = true;
- 		memcpy(async_copy->cp_cb_offload.co_referring_sessionid.data,
- 		       cstate->session->se_sessionid.data,
- 		       NFS4_MAX_SESSIONID_LEN);
-@@ -2200,6 +2205,10 @@ nfsd4_copy(struct svc_rqst *rqstp, struc
- 	} else {
- 		status = nfsd4_do_copy(copy, copy->nf_src->nf_file,
- 				       copy->nf_dst->nf_file, true);
-+		if ((READ_ONCE(copy->nf_dst->nf_file->f_mode) &
-+			       FMODE_NOCMTIME) != 0 &&
-+				copy->cp_res.wr_bytes_written > 0)
-+			nfsd_update_cmtime_attr(copy->nf_dst->nf_file, 0);
- 	}
- out:
- 	trace_nfsd_copy_done(copy, status);
---- a/fs/nfsd/xdr4.h
-+++ b/fs/nfsd/xdr4.h
-@@ -752,6 +752,7 @@ struct nfsd4_copy {
- 
- 	struct nfsd_file        *nf_src;
- 	struct nfsd_file        *nf_dst;
-+	bool			attr_update;
- 
- 	copy_stateid_t		cp_stateid;
++	imsic_local_sync_all(false);
++
+ 	/* Mark per-CPU IMSIC state as offline */
+ 	imsic_state_offline();
  
 
 
