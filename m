@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DC9366075;
-	Wed, 20 May 2026 17:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF74B372EDE;
+	Wed, 20 May 2026 17:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297602; cv=none; b=ckClKlK6sDaMUIJHvCq0xC0vr8MPza1HWgXqrTQQR3LLrGMhOvzuILAvHSIYcmOgxTDJJ+lunf8DlsR5fQ6dc74jPyeipiXUNaMTXizdGo69Cebpx2Ad4G4fGAIQFNr7XBw4HDARYXwkQWPifxNM34/viMBjms96bQFkJ0qyv+I=
+	t=1779297604; cv=none; b=M0lOPIzCAORnkQlO09G0zp5tKbs6CXV6e28bBFDN+garqm9ixA36YAukGhVX5+4/UOt8MYygwMHJvLzYwtkIwMyE5XhPhOCiAJ3Rhg9PC1P8OFMBKhVCvdAAK5GX9XqchmJstVFZ18xSASn8JMnZCViAtjbVyHPnBdDamvn6zFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297602; c=relaxed/simple;
-	bh=49XvN6rR4pXbsgc2Zy2DtBW9zBFc8XaT4LJ5aqnzgtA=;
+	s=arc-20240116; t=1779297604; c=relaxed/simple;
+	bh=WZD6vZI+AF/7h0XiwkyQc3n2UVRWYvbXq3UpE8nz+6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YiBppFLf6YbZjWcJ+XOqNhDBzaYsgPW7abAaoxE/bPmLvOV+LnkmGH5MeBhfI5E5Z8rOFF9ldnCLfVlbUuQ5IpyVsB+2tkIhnH1KlEJqih/3h6GvtkoYK1cv+RIvO63GXtBlGb4EKs9eC0oZiRQtziEPCoaLm40EaB/BY1VJSGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJOXd1x8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q8rPyYQc7tUb0zEgBEHrfJuGMnC4GzA7YM3bMtV3nFZ1SOdW36XtwIcYXR6uct0wrREJQhOOsGdnSCdgw4PeeL2qB1QGX52KRorPqHU5CDMDRq+Itnp5cUJamm5i5haniX2xSZUz74mXPtrBz6qBP75hnxL3dShico3GwMG5uU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNJLmSem; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJOXd1x8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF731F000E9;
-	Wed, 20 May 2026 17:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNJLmSem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F691F00894;
+	Wed, 20 May 2026 17:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297600;
-	bh=IAxxan1h3SnKi8pYFN2Gb9t2SJV1Lm6Z0hNgMpWR2+A=;
+	s=korg; t=1779297603;
+	bh=dzygsRMiJPLLo2CJtPGYLzOiD3qqQZONYR92t0U05sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rJOXd1x8/Xdv8TmRYhUhgL/Kr9fPWMgTQMR24HFKIkqhhOiZAUcFypI/m2xOn2qP4
-	 wKoKd9kr82DxVUAXNRZEfL5drpuMJntNiTpjC5py/btKQpMqEjgK15QcdGway0WPad
-	 CWXgZYFkPpkCBp9FJrw+12KqBur1jJ2rzvAMNnxk=
+	b=yNJLmSemrCTeufOoTXiVv4VzzF9TYEExgHRZxpPdzA4/hfcnSXirMgGBR1u8407v2
+	 cW8ASnckwsq46tVGGo2jZBWmQ+yMHOzDzLgXmswM2LPUrnbWoztUNAuvKO6Vthl7r6
+	 mSj1ppYwFQJkkFNdMcTvVOOzpYqmLUSqUK4eWA90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Colton Lewis <coltonlewis@google.com>,
-	Will Deacon <will@kernel.org>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 094/957] arm64: cpufeature: Make PMUVer and PerfMon unsigned
-Date: Wed, 20 May 2026 18:09:37 +0200
-Message-ID: <20260520162136.598513914@linuxfoundation.org>
+Subject: [PATCH 6.18 095/957] wifi: mt76: mt7996: fix wrong DMAD length when using MAC TXP
+Date: Wed, 20 May 2026 18:09:38 +0200
+Message-ID: <20260520162136.619452702@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,54 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Shayne Chen <shayne.chen@mediatek.com>
 
-[ Upstream commit d1dcc20bcc40efe1f1c71639376c91dafa489222 ]
+[ Upstream commit 97b9f9831bf297f3ffa62018721601ed2736f2c3 ]
 
-On the host, this change doesn't make a difference because the fields
-are defined as FTR_EXACT. However, KVM allows userspace to set these
-fields for a guest and overrides the type to be FTR_LOWER_SAFE. And
-while KVM used to do an unsigned comparison to validate that the new
-value is lower than what the hardware provides, since the linked commit
-it uses the generic sanitization framework which does a signed
-comparison.
+The struct mt76_connac_fw_txp is used for HIF TXP. Change to use the
+struct mt76_connac_hw_txp to fix the wrong DMAD length for MAC TXP.
 
-Fix it by defining these fields as unsigned. In theory, without this
-fix, userspace could set a higher PMU version than the hardware supports
-by providing any value with the top bit set.
-
-Fixes: c118cead07a7 ("KVM: arm64: Use generic sanitisation for ID_(AA64)DFR0_EL1")
-Signed-off-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Colton Lewis <coltonlewis@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: cb6ebbdffef2 ("wifi: mt76: mt7996: support writing MAC TXD for AddBA Request")
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20260203155532.1098290-1-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/cpufeature.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index e25b0f84a22da..39a798f74778e 100644
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -564,7 +564,7 @@ static const struct arm64_ftr_bits ftr_id_aa64dfr0[] = {
- 	 * We can instantiate multiple PMU instances with different levels
- 	 * of support.
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 2aa8bb779b228..0b5194e708b3a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -1109,10 +1109,10 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 	 * req
  	 */
--	S_ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_AA64DFR0_EL1_PMUVer_SHIFT, 4, 0),
-+	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_AA64DFR0_EL1_PMUVer_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_EXACT, ID_AA64DFR0_EL1_DebugVer_SHIFT, 4, 0x6),
- 	ARM64_FTR_END,
- };
-@@ -708,7 +708,7 @@ static const struct arm64_ftr_bits ftr_id_pfr2[] = {
+ 	if (le32_to_cpu(ptr[7]) & MT_TXD7_MAC_TXD) {
+-		u32 val;
++		u32 val, mac_txp_size = sizeof(struct mt76_connac_hw_txp);
  
- static const struct arm64_ftr_bits ftr_id_dfr0[] = {
- 	/* [31:28] TraceFilt */
--	S_ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_DFR0_EL1_PerfMon_SHIFT, 4, 0),
-+	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_DFR0_EL1_PerfMon_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_MProfDbg_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_MMapTrc_SHIFT, 4, 0),
- 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_CopTrc_SHIFT, 4, 0),
+ 		ptr = (__le32 *)(txwi + MT_TXD_SIZE);
+-		memset((void *)ptr, 0, sizeof(struct mt76_connac_fw_txp));
++		memset((void *)ptr, 0, mac_txp_size);
+ 
+ 		val = FIELD_PREP(MT_TXP0_TOKEN_ID0, id) |
+ 		      MT_TXP0_TOKEN_ID0_VALID_MASK;
+@@ -1131,6 +1131,8 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 				  tx_info->buf[1].addr >> 32);
+ #endif
+ 		ptr[3] = cpu_to_le32(val);
++
++		tx_info->buf[0].len = MT_TXD_SIZE + mac_txp_size;
+ 	} else {
+ 		struct mt76_connac_txp_common *txp;
+ 
 -- 
 2.53.0
 
