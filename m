@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9443A453B;
-	Wed, 20 May 2026 18:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F603F1AA4;
+	Wed, 20 May 2026 18:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301545; cv=none; b=XaROvy+SOVtD3bNbIRVQS/4S3ox/mF7b5T3893MORLpb1PZ9de8UxASSYHt/xKH433BupwMWDiMDarYeKj8BxCxcAXa9QOQvudyH/ZEZYhoah6lcnu3U2m68vIQXjwWkaT9UlVI2IrttRsCb9olaUZWsO8jkj5Ml7efkwwTGOI4=
+	t=1779301548; cv=none; b=cdsZQPRX7qNKU8pDFBb4igOO6osxh/kTTVQnmY1H+2hA0IkCdijKt6HRs7D4wEXCO4w6OSB0mUcAJByVPreYSYKN7I1T3CUwXxarJiPPNlIcUl/hd/tQ/JOnVv64QRdEMxYSjc6Z4HHgzMDbJlihgbSO/mmNrnbVMueHV95E0fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301545; c=relaxed/simple;
-	bh=3eXZfJAlWiGQ2dapnZefwyFeVPXaJsGx0H4odIU6dg8=;
+	s=arc-20240116; t=1779301548; c=relaxed/simple;
+	bh=u/UOSU9nyVOjWe2A9ug1KWuu29xeZK4z8u5ehJkUV90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ucYucJGcR4UwbVLlcEHBpZiFlCCDu/WeYIM/kDvbpfAacIV1v2bl3yOTYn4odbn6RPvloRjUwnph7zw+SkCB6eC1v4AAyaaNowogtfJtRmiW6Hm5WuleaTtHxXEP0d+rHzpw/KE//Z8Cc410E0scpxP40IHDv0ynUO6geNz1bds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUmfJnl5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KYPPNVf7MRJya3D3X6QBNlcE2gKS4Vig7140kWjyR+9UvoZ1L9PNlpHOSBnn545iTxABVKt8hAX5ecyMwwyfGOIBplh5VbNHQy9qLw+uZFpJKrn5+oy8DmZVCbiFpP6XnHzZ4Kq0iyHl2ocxnOPhOy9I5jwYRfHPmb0su57u8Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spMfUeqi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUmfJnl5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A7E1F000E9;
-	Wed, 20 May 2026 18:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spMfUeqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C471F000E9;
+	Wed, 20 May 2026 18:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301544;
-	bh=VI9WSh/yphqr7TYFETASbo1VNum5yyUDrYe+y1YA6a0=;
+	s=korg; t=1779301546;
+	bh=3kTeMAtvUfvKmwe/I81tJkKwVJBvL5ScCLcdW3DGawU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wUmfJnl55Pe7CqQuOO51/ITmzlOt8lEwvtzl1qoES/LR0NvVeZuBJmLA+WFDn9mKb
-	 1mpoly9xL7fmz9GAfdnajHRKvuNA4/eulgTJyaPZyI/Cmah3E4balWKzYVt2mzfxh4
-	 NONdeNxB559fDKKonBydOWywnpnuH34SF1WlfAzA=
+	b=spMfUeqivPV3rpsAuWO01XdJQpS/zicBgZ+XEmcN2rcZKX33V4TWg2kflrMOetok/
+	 +ohtolWkZgefTs0xVPfAc/oJzOC3V0jBeXPBlxosK/omG81eyGPV1r9DYXS+aHM0oy
+	 dd+YfRabg5g/YBqfTzAWCdjV96Cg8MJHd14mR5Sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Liang Jie <liangjie@lixiang.com>,
+	Tom Talpey <tom@talpey.com>,
+	Steve French <stfrench@microsoft.com>,
+	Alva Lan <alvalan9@foxmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 594/666] arm64: Reserve an extra page for early kernel mapping
-Date: Wed, 20 May 2026 18:23:25 +0200
-Message-ID: <20260520162124.138855134@linuxfoundation.org>
+Subject: [PATCH 6.12 595/666] smb: client: correctly handle ErrorContextData as a flexible array
+Date: Wed, 20 May 2026 18:23:26 +0200
+Message-ID: <20260520162124.160669657@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,84 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+From: Liang Jie <liangjie@lixiang.com>
 
-[ Upstream commit 4d8e74ad4585672489da6145b3328d415f50db82 ]
+[ Upstream commit 215b7f9ecb8d7c14d56febdcdd246f3579c32aba ]
 
-The final part of [data, end) segment may overflow into the next page of
-init_pg_end[1] which is the gap page before early_init_stack[2]:
+The `smb2_symlink_err_rsp` structure was previously defined with
+`ErrorContextData` as a single `__u8` byte. However, the `ErrorContextData`
+field is intended to be a variable-length array based on `ErrorDataLength`.
+This mismatch leads to incorrect pointer arithmetic and potential memory
+access issues when processing error contexts.
 
-[1]
-crash_arm64_v9.0.1> vtop ffffffed00601000
-VIRTUAL           PHYSICAL
-ffffffed00601000  83401000
+Updates the `ErrorContextData` field to be a flexible array
+(`__u8 ErrorContextData[]`). Additionally, it modifies the corresponding
+casts in the `symlink_data()` function to properly handle the flexible
+array, ensuring correct memory calculations and data handling.
 
-PAGE DIRECTORY: ffffffecffd62000
-   PGD: ffffffecffd62da0 => 10000000833fb003
-   PMD: ffffff80033fb018 => 10000000833fe003
-   PTE: ffffff80033fe008 => 68000083401f03
-  PAGE: 83401000
+These changes improve the robustness of SMB2 symlink error processing.
 
-     PTE        PHYSICAL  FLAGS
-68000083401f03  83401000  (VALID|SHARED|AF|NG|PXN|UXN)
-
-      PAGE       PHYSICAL      MAPPING       INDEX CNT FLAGS
-fffffffec00d0040 83401000                0        0  1 4000 reserved
-
-[2]
-ffffffed002c8000 (r) __pi__data
-ffffffed0054e000 (d) __pi___bss_start
-ffffffed005f5000 (b) __pi_init_pg_dir
-ffffffed005fe000 (b) __pi_init_pg_end
-ffffffed005ff000 (B) early_init_stack
-ffffffed00608000 (b) __pi__end
-
-For 4K pages, the early kernel mapping may use 2MB block entries but the
-kernel segments are only 64KB aligned. Segment boundaries that fall
-within a 2MB block therefore require a PTE table so that different
-attributes can be applied on either side of the boundary.
-
-KERNEL_SEGMENT_COUNT still correctly counts the five permanent kernel
-VMAs registered by declare_kernel_vmas(). However, since commit
-5973a62efa34 ("arm64: map [_text, _stext) virtual address range
-non-executable+read-only"), the early mapper also maps [_text, _stext)
-separately from [_stext, _etext). This adds one more early-only split
-and can require one more page-table page than the existing
-EARLY_SEGMENT_EXTRA_PAGES allowance reserves.
-
-Increase the 4K-page early mapping allowance by one page to cover that
-additional split.
-
-Fixes: 5973a62efa34 ("arm64: map [_text, _stext) virtual address range non-executable+read-only")
-Assisted-by: TRAE:GLM-5.1
-Suggested-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
-[catalin.marinas@arm.com: rewrote part of the commit log]
-[catalin.marinas@arm.com: expanded the code comment]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Liang Jie <liangjie@lixiang.com>
+Suggested-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kernel-pgtable.h | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2file.c | 4 ++--
+ fs/smb/client/smb2pdu.h  | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kernel-pgtable.h b/arch/arm64/include/asm/kernel-pgtable.h
-index bf05a77873a49..56fe12a6f7b0a 100644
---- a/arch/arm64/include/asm/kernel-pgtable.h
-+++ b/arch/arm64/include/asm/kernel-pgtable.h
-@@ -69,7 +69,12 @@
- #define KERNEL_SEGMENT_COUNT	5
+diff --git a/fs/smb/client/smb2file.c b/fs/smb/client/smb2file.c
+index b7ab18d4bedca..35d2933982d31 100644
+--- a/fs/smb/client/smb2file.c
++++ b/fs/smb/client/smb2file.c
+@@ -42,14 +42,14 @@ static struct smb2_symlink_err_rsp *symlink_data(const struct kvec *iov)
+ 		end = (struct smb2_error_context_rsp *)((u8 *)err + iov->iov_len);
+ 		do {
+ 			if (le32_to_cpu(p->ErrorId) == SMB2_ERROR_ID_DEFAULT) {
+-				sym = (struct smb2_symlink_err_rsp *)&p->ErrorContextData;
++				sym = (struct smb2_symlink_err_rsp *)p->ErrorContextData;
+ 				break;
+ 			}
+ 			cifs_dbg(FYI, "%s: skipping unhandled error context: 0x%x\n",
+ 				 __func__, le32_to_cpu(p->ErrorId));
  
- #if SWAPPER_BLOCK_SIZE > SEGMENT_ALIGN
--#define EARLY_SEGMENT_EXTRA_PAGES (KERNEL_SEGMENT_COUNT + 1)
-+/*
-+ * KERNEL_SEGMENT_COUNT counts the permanent kernel VMAs. The early mapping
-+ * has one additional split, [_text, _stext). Reserve one more page for the
-+ * SWAPPER_BLOCK_SIZE-unaligned boundaries.
-+ */
-+#define EARLY_SEGMENT_EXTRA_PAGES (KERNEL_SEGMENT_COUNT + 2)
- /*
-  * The initial ID map consists of the kernel image, mapped as two separate
-  * segments, and may appear misaligned wrt the swapper block size. This means
+ 			len = ALIGN(le32_to_cpu(p->ErrorDataLength), 8);
+-			p = (struct smb2_error_context_rsp *)((u8 *)&p->ErrorContextData + len);
++			p = (struct smb2_error_context_rsp *)(p->ErrorContextData + len);
+ 		} while (p < end);
+ 	} else if (le32_to_cpu(err->ByteCount) >= sizeof(*sym) &&
+ 		   iov->iov_len >= SMB2_SYMLINK_STRUCT_SIZE) {
+diff --git a/fs/smb/client/smb2pdu.h b/fs/smb/client/smb2pdu.h
+index 076d9e83e1a04..3c09a58dfd073 100644
+--- a/fs/smb/client/smb2pdu.h
++++ b/fs/smb/client/smb2pdu.h
+@@ -79,7 +79,7 @@ struct smb2_symlink_err_rsp {
+ struct smb2_error_context_rsp {
+ 	__le32 ErrorDataLength;
+ 	__le32 ErrorId;
+-	__u8  ErrorContextData; /* ErrorDataLength long array */
++	__u8  ErrorContextData[] __counted_by_le(ErrorDataLength);
+ } __packed;
+ 
+ /* ErrorId values */
 -- 
 2.53.0
 
