@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C9E363C4C;
-	Wed, 20 May 2026 17:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A446363C4C;
+	Wed, 20 May 2026 17:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298952; cv=none; b=apm9n4ZNWzD6BK6lOA8mq+WtfTDQhRBLRdJG8liZd98o/9FFaMjiKcePxnIwJsA2BM40yS1UqbjBoT47OlGnFdXhN/K2n/GfmGOHtjtaxTiw2LmQ/hP0ZxN+P+RBsT6h/GI5JZW8jXjKz/+cS7lQGcA6CEsu8NCYrEV+Kn/EJhs=
+	t=1779298955; cv=none; b=r4W9O/XgbSOL0LzE3IhhAi0Cqffn5BQwEcTH0x8NveUrznZJ4Um+Wh/nun3jCnBs8g6Q7jYJ1HgMuPJbpHdesZurmnMzoL6ecdXuW60rEH5hpbZUP11k1g6ZAHXJsNXzXqxX0NJXGwqMIYdDnKZGGKeN12dfebn/Q95JmjbrB88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298952; c=relaxed/simple;
-	bh=a+GsLqmB1e76SerArkJeQfaUG2+HaxMNbtVimI/Zik8=;
+	s=arc-20240116; t=1779298955; c=relaxed/simple;
+	bh=7BskovTGeYpy2kU0ncyDT8tqfKbgHNRSPjSz914NNDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GrEc2lPKBp/BpZ5783sVusIb9+2WA0zA4fDTYgRd0p14A2H7xH7ZwvpX0I8TTe/EnT5bV6CYFy/TaHDUEiAvqMneA2RzfBqYIthT4avMATfUUehaUJMMFif/IfAXF/quG/ue1Cn2OSJCdtfuRkt/9EeiuwXzi015lzAsj6XZbD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vRNfTU3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mHTD1Fjd4lf+BFZIYTUVKda5SgXGxzVcz3m9kBSYftshq3dbgCJNhOEUuujPA1tCQxi1neAStviQjTKjXDLgUau5f1zrHVa4BC+XAKodHOz8GaiTfNMDFoEneYAKRbgBN1Au1ISvDC4sz0I8GEMHlZw00Gm0d/t1JJhwO3ytxQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGycJsYz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vRNfTU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9511F000E9;
-	Wed, 20 May 2026 17:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGycJsYz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809DE1F000E9;
+	Wed, 20 May 2026 17:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298951;
-	bh=w6du0ELgf6iPc9b7EZkXamR7ilk7OSeDPZxIiTGuj5M=;
+	s=korg; t=1779298954;
+	bh=bwzvo/jOU8il57LeFhvJmld2w8ChpYO/aizibm+k/hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1vRNfTU3mmN96xR7DX4enk5V8EHwi9EwPgQn3Bn48qilYLEgNVdOPv7oi5AqquNB3
-	 7i6/yMnl+x040Hmqlr4UIHkGR7QYN/N0n0JBqVj+MNy2D9lKB7hNnZv4Kg3HUsw2K8
-	 FEKgeqegFfpXpkvDjhsyirfvYC4lavnkTyrn+z5k=
+	b=ZGycJsYzz0MF8xJL+Y91zeYNwbi2i6wnJoxDYVhBeQCEHvmKz+Ef/hl8i7CjXcemP
+	 wBTB4UvnBCJgFWkYvrIxPDXEYyZn3I/2HXXVk23Tx3n/N0He0MY+hGMRDMNXrMVoHs
+	 cUB1qIxCS4+qQqObHmQir7aJarokajzUA3HjwCfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peng Fan <peng.fan@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 605/957] arm64: dts: imx8mp-ultra-mach-sbc: Correct PAD settings for PMIC_nINT
-Date: Wed, 20 May 2026 18:18:08 +0200
-Message-ID: <20260520162147.655278872@linuxfoundation.org>
+Subject: [PATCH 6.18 606/957] arm64: dts: imx8mp-dhcom-som: Correct PAD settings for PMIC_nINT
+Date: Wed, 20 May 2026 18:18:09 +0200
+Message-ID: <20260520162147.676540774@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,39 +53,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit daaf41ee72fb5fad936e7051a015cccae9b33937 ]
+[ Upstream commit f9ed5afc988da3e22543725e35be6addbb0497bc ]
 
-With commit 5d0efaf47ee90 ("regulator: pca9450: Correct interrupt type"),
-there might be interrupt storm for this board. Need to set PAD PUE and PU
-together to make pull up work properly.
+PMIC_nINT is low level triggered, but the current PAD settings is
+PE=0,PUE=0,FSEL_1_FAST_SLEW_RATE=1,SION=1. So PAD needs to be configured
+as PULL UP with PULL Enable, no need SION. Correct it.
 
-Fixes: d1c1400bd3b8b ("arm64: dts: imx8mp: Add initial support for Ultratronik imx8mp-ultra-mach-sbc board")
+Fixes: 8d6712695bc8e ("arm64: dts: imx8mp: Add support for DH electronics i.MX8M Plus DHCOM and PDK2")
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-ultra-mach-sbc.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-ultra-mach-sbc.dts b/arch/arm64/boot/dts/freescale/imx8mp-ultra-mach-sbc.dts
-index 9ecec1a418781..3e6f9c88cc200 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-ultra-mach-sbc.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-ultra-mach-sbc.dts
-@@ -275,7 +275,7 @@ pmic@25 {
- 		reg = <0x25>;
- 		pinctrl-0 = <&pinctrl_pmic>;
- 		interrupt-parent = <&gpio1>;
--		interrupts = <3 GPIO_ACTIVE_LOW>;
-+		interrupts = <3 IRQ_TYPE_LEVEL_LOW>;
- 
- 		/*
- 		 * i.MX 8M Plus Data Sheet for Consumer Products
-@@ -739,7 +739,7 @@ MX8MP_IOMUXC_GPIO1_IO07__GPIO1_IO07		0x40	/* NFC_INT */
- 
- 	pinctrl_pmic: pmic-grp {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
+index f8303b7e2bd22..0a6a60670f762 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
+@@ -989,7 +989,7 @@ MX8MP_IOMUXC_SAI5_RXC__GPIO3_IO20		0x22
+ 	pinctrl_pmic: dhcom-pmic-grp {
  		fsl,pins = <
--			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03		0x40	/* #PMIC_INT */
-+			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03		0x1c0	/* #PMIC_INT */
+ 			/* PMIC_nINT */
+-			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03		0x40000090
++			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03		0x1c0
  		>;
  	};
  
