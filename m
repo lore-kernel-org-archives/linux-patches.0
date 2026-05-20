@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1874F5E0;
-	Wed, 20 May 2026 18:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D6B4F5E0;
+	Wed, 20 May 2026 18:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300027; cv=none; b=KpgXVs0HTR3SnH+xiRX1CJKNZm4FxHnRpvEd3cb8bAIYD/tfisa8OrZad+wNzCSJsZkucpeVgGKou35f643p/3BJn4vMQSwPZ+mCae0GGz8Pr8HG3blIuJNq7JLjwBqwALcaG+voC6Jpl+T2/vZCtVey2lEqELnMHMObhC/+GJU=
+	t=1779300030; cv=none; b=OeyIfyIxzO122xVH/IkOz1jVNbCz6zjGSOj0AqTkUS87YVOIAO5XdxsB/XiQStKnqBz3cDWFXX9z/vT8mv1g1y1AKdKZxMYpMw+kHA8Tg1fbdL+Qjyrmzdo+rCuL9emJPjma1LqsKIPLcZbk6FXAxU2CRTUTXsMzfsM194Uvp18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300027; c=relaxed/simple;
-	bh=csyydmjjtfSMnTn3p1W0qdCvBI2G7RB3Lv1MPlmr5F8=;
+	s=arc-20240116; t=1779300030; c=relaxed/simple;
+	bh=mysAR7jHoDMe6BKcM5pC4HIMqM3PsJQ4NC3yof/z91M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bZUb16S7pj9mumzRdWSnWiQa75hvbGAzchudYIril/AbdT3j0HjRZ/ZMeziFZwNnCxezb6HhNM92K7+E1vIUyFoeWK8i6DStMVQBNIouTNme+c6MZm5cGqB6rysP1u9MruHEHbUhJZLD6DKU2sWXvRZpaDSA7iQzIhn34U9u9ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sau6Zfw7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pI+VwXj8GXAX+dbiVYQ3fjpps/pNPzOZE2HHkx01cVzU7jPIa1GJrkHOIM9MEjqm0M/ER8/sjgw1JbiISrN8MowBz62rKzrgCWc2RR5qjAKO9SKBq/hQJpbSaCV6Fkkoyxuf2w2kvFQTr6rVVxqvZgp2hAiCrLQmy+bkr1uZqP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzMLK3ku; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sau6Zfw7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9A11F000E9;
-	Wed, 20 May 2026 18:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzMLK3ku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993671F000E9;
+	Wed, 20 May 2026 18:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300026;
-	bh=7Pbga9wODyUFuCVR4+s8UQBZU32Egy+IlUK7gXmz7UU=;
+	s=korg; t=1779300029;
+	bh=6eKwN6ISbfsyXajIn9NOltcrOY0w2lsPfueT68eHpno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sau6Zfw7u7NoLCdUy55CA/wUc/aqGZrd37FngiA8P0eH/NAyRMtYAJrMo7W3zWH+h
-	 zoqZ89pW7/2w1c/5rLFIhvxRUwhaje09lKW5x5HD5rg5oWmU5AYgq0ODOhi0A1KuH1
-	 EQc4IFeFaXL70VEIs2NvfA5cjwCyhiy2nxSYs6fU=
+	b=rzMLK3kuUikvGEfRKZapZPSJ0IM+r8vIRVLPuN+BKIaKm3ivk8EApTOWbelIO+mB1
+	 bKhv1cA8eqA3CUmL4v8B8NOhJxcoPrUt3I8ajj8tqERxcSkc82cSgl/0aYbkpz+Zzm
+	 urLdFzZxU1L+KM/3n08Mbuz/qWHzXXOcwmzkgxtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/666] blk-cgroup: wait for blkcg cleanup before initializing new disk
-Date: Wed, 20 May 2026 18:13:33 +0200
-Message-ID: <20260520162111.282367574@linuxfoundation.org>
+Subject: [PATCH 6.12 020/666] debugfs: fix placement of EXPORT_SYMBOL_GPL for debugfs_create_str()
+Date: Wed, 20 May 2026 18:13:51 +0200
+Message-ID: <20260520162111.667952303@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,73 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 3dbaacf6ab68f81e3375fe769a2ecdbd3ce386fd ]
+[ Upstream commit 4afc929c0f74c4f22b055a82b371d50586da58ca ]
 
-When a queue is shared across disk rebind (e.g., SCSI unbind/bind), the
-previous disk's blkcg state is cleaned up asynchronously via
-disk_release() -> blkcg_exit_disk(). If the new disk's blkcg_init_disk()
-runs before that cleanup finishes, we may overwrite q->root_blkg while
-the old one is still alive, and radix_tree_insert() in blkg_create()
-fails with -EEXIST because the old blkg entries still occupy the same
-queue id slot in blkcg->blkg_tree. This causes the sd probe to fail
-with -ENOMEM.
+The EXPORT_SYMBOL_GPL() for debugfs_create_str was placed incorrectly
+away from the function definition. Move it immediately below the
+debugfs_create_str() function where it belongs.
 
-Fix it by waiting in blkcg_init_disk() for root_blkg to become NULL,
-which indicates the previous disk's blkcg cleanup has completed.
-
-Fixes: 1059699f87eb ("block: move blkcg initialization/destroy into disk allocation/release handler")
-Cc: Yi Zhang <yi.zhang@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260311032837.2368714-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: d60b59b96795 ("debugfs: Export debugfs_create_str symbol")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://patch.msgid.link/20260323085930.88894-3-hanguidong02@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/debugfs/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 3f7cb9d891aa3..9a198001cfa56 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -24,6 +24,7 @@
- #include <linux/backing-dev.h>
- #include <linux/slab.h>
- #include <linux/delay.h>
-+#include <linux/wait_bit.h>
- #include <linux/atomic.h>
- #include <linux/ctype.h>
- #include <linux/resume_user_mode.h>
-@@ -611,6 +612,8 @@ static void blkg_destroy_all(struct gendisk *disk)
+diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
+index d3ffd954d6f94..cc9587a1c9a9f 100644
+--- a/fs/debugfs/file.c
++++ b/fs/debugfs/file.c
+@@ -991,7 +991,6 @@ ssize_t debugfs_read_file_str(struct file *file, char __user *user_buf,
  
- 	q->root_blkg = NULL;
- 	spin_unlock_irq(&q->queue_lock);
-+
-+	wake_up_var(&q->root_blkg);
+ 	return ret;
  }
+-EXPORT_SYMBOL_GPL(debugfs_create_str);
  
- static void blkg_iostat_set(struct blkg_iostat *dst, struct blkg_iostat *src)
-@@ -1451,6 +1454,18 @@ int blkcg_init_disk(struct gendisk *disk)
- 	struct blkcg_gq *new_blkg, *blkg;
- 	bool preloaded;
+ static ssize_t debugfs_write_file_str(struct file *file, const char __user *user_buf,
+ 				      size_t count, loff_t *ppos)
+@@ -1086,6 +1085,7 @@ void debugfs_create_str(const char *name, umode_t mode,
+ 	debugfs_create_mode_unsafe(name, mode, parent, value, &fops_str,
+ 				   &fops_str_ro, &fops_str_wo);
+ }
++EXPORT_SYMBOL_GPL(debugfs_create_str);
  
-+	/*
-+	 * If the queue is shared across disk rebind (e.g., SCSI), the
-+	 * previous disk's blkcg state is cleaned up asynchronously via
-+	 * disk_release() -> blkcg_exit_disk(). Wait for that cleanup to
-+	 * finish (indicated by root_blkg becoming NULL) before setting up
-+	 * new blkcg state. Otherwise, we may overwrite q->root_blkg while
-+	 * the old one is still alive, and radix_tree_insert() in
-+	 * blkg_create() will fail with -EEXIST because the old entries
-+	 * still occupy the same queue id slot in blkcg->blkg_tree.
-+	 */
-+	wait_var_event(&q->root_blkg, !READ_ONCE(q->root_blkg));
-+
- 	new_blkg = blkg_alloc(&blkcg_root, disk, GFP_KERNEL);
- 	if (!new_blkg)
- 		return -ENOMEM;
+ static ssize_t read_file_blob(struct file *file, char __user *user_buf,
+ 			      size_t count, loff_t *ppos)
 -- 
 2.53.0
 
