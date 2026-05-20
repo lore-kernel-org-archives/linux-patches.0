@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962A83F5BF7;
-	Wed, 20 May 2026 16:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0D93DA5B6;
+	Wed, 20 May 2026 16:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294511; cv=none; b=OgRrfImQgBj7ORzssIet9+Ua/PuZl6hza6nGa6om8p2P0OjNHxcq5AF73zqmKrOiRKJIwG2V7ZgFTfaQ5eICgr8faaxkE3D+JVbs0sOLR1dILE1tjU1EZVe0BjRCrKprGeEtHA14GMcpZQEZT8fDxcYplxHoC3epnybZ9AwWBJk=
+	t=1779294514; cv=none; b=tytOFxAbfxCXNDlkwrCffkwNJ+PiDmmEWYJJlSOGk9rlCI3pP96iURN9y36KHO+K0h3kNDlP1xEQ3x6AboNbaerM8TxezUVrM9hAqb1PPF5Bg/sSBhKeVxZ7PNb63EeFF2DtMBgI1i9C9+jKvAcRSXny9UJ9ZsjQU2YBXhSBvi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294511; c=relaxed/simple;
-	bh=bZm2nRmgXLvQWOmUa7w73WUrgRSfa4Ex+RDI1D44B+8=;
+	s=arc-20240116; t=1779294514; c=relaxed/simple;
+	bh=T7PmWCCzBiFzSZPtIVy03/KOoK19w814aG21kpZglWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qZCqlt+TQrV/UJUTG1QrChOA5WSmLBpx9fwO9vnvtCKFwCENafNAWsbBk3MoVGcuxlfwk7OD9JHHnX6O5d7hHFsKLCd1KvGWfxL7Rub807/PRLj7JNoxbWLHlr3jWPeEsYFK7Nk0Kx+9fEdQn1Yc+kc5z5sUxbHCzOmhYMfvKI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkRZ29ab; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=M/XbfnBaFMWTbDXVlggh273euveORPUMG3kUvsuf0blbEmNmizSt2cLvSrU2ici2ZsBxlojc4i1JgoQY/6L28LNVyUnmulNviumA7rx7YTVWCMNY/foPR/ySO9C/Ts5f7Zv6WLEK9F78lHlFD8y5v942iAEKJlQE5e1IDvuJRrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5L6KCG/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkRZ29ab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D49B1F00894;
-	Wed, 20 May 2026 16:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5L6KCG/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A024F1F000E9;
+	Wed, 20 May 2026 16:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294508;
-	bh=7F+pKd8it24yUMVY0WZb9acN6GXWFcv9erFexdKCa+U=;
+	s=korg; t=1779294511;
+	bh=xAAyt+8zoTXHfGxOcZOdD6nOrVanYFYRmITZg6QDTqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SkRZ29abKX8LMomrdg9IhVC2Ge8yS5ZYGt0fnRgHsRPDkaIJaqRszmoNJlocvHymP
-	 BjcSnhqzgMOkS2+lb4HoWRbzVYXoIJ1VoBynezeTHIXSznrZd2X3GE17qMXD89qv0N
-	 a4Eb4n6cv3uymHac6wszgNzMZltAgG3+oAc6Lf2M=
+	b=N5L6KCG/v0yDpou7CmfeGA/0mVilpzcRH14CJV6k2AyNjVNhI/K9EM/aRumCUhmT9
+	 S0AP2ugTli6Sq1f0j+aj4nJZED+A+8AFkqLuOSauhpv4be+SBMu8jbYLG+6QPIw79A
+	 u6oI1lNq/U5GziGHueFhKW93FwA+rpx5R9E/sai0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Juergen Gross <jgross@suse.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Jean Delvare <jdelvare@suse.de>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0065/1146] x86/vdso: Clean up remnants of VDSO32_NOTE_MASK
-Date: Wed, 20 May 2026 18:05:15 +0200
-Message-ID: <20260520162149.834973286@linuxfoundation.org>
+Subject: [PATCH 7.0 0066/1146] firmware: dmi: Correct an indexing error in dmi.h
+Date: Wed, 20 May 2026 18:05:16 +0200
+Message-ID: <20260520162149.856097512@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,49 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit 6517f293b2c6774d21b6e7e26a55fae60c6ec4cf ]
+[ Upstream commit c064abc68e009d2cc18416e7132d9c25e03125b6 ]
 
-VDSO32_NOTE_MASK is not used or provided anymore, remove it.
+The entries later in enum dmi_entry_type don't match the SMBIOS
+specification¹.
 
-Fixes: a13f2ef168cb ("x86/xen: remove 32-bit Xen PV guest support")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: H. Peter Anvin <hpa@zytor.com>
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Juergen Gross <jgross@suse.com>
-Link: https://patch.msgid.link/20260330-vdso-x86-vdso32_note_mask-v1-1-2f5c473327bf@linutronix.de
+The entry for type 33: `64-Bit Memory Error Information` is not present and
+thus the index for all later entries is incorrect.
+
+Add it.
+
+Also, add missing entry types 43-46, while at it.
+
+  ¹ Search for "System Management BIOS (SMBIOS) Reference Specification"
+
+  [ bp: Drop the flaky SMBIOS spec URL. ]
+
+Fixes: 93c890dbe5287 ("firmware: Add DMI entry types to the headers")
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Jean Delvare <jdelvare@suse.de>
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Link: https://patch.msgid.link/20260307141024.819807-2-superm1@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/vdso.h | 1 -
- arch/x86/tools/vdso2c.c     | 1 -
- 2 files changed, 2 deletions(-)
+ include/linux/dmi.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/x86/include/asm/vdso.h b/arch/x86/include/asm/vdso.h
-index e8afbe9faa5b9..f2d49212ae902 100644
---- a/arch/x86/include/asm/vdso.h
-+++ b/arch/x86/include/asm/vdso.h
-@@ -18,7 +18,6 @@ struct vdso_image {
- 	unsigned long extable_base, extable_len;
- 	const void *extable;
- 
--	long sym_VDSO32_NOTE_MASK;
- 	long sym___kernel_sigreturn;
- 	long sym___kernel_rt_sigreturn;
- 	long sym___kernel_vsyscall;
-diff --git a/arch/x86/tools/vdso2c.c b/arch/x86/tools/vdso2c.c
-index f84e8f8fa5fe6..b8a555763f437 100644
---- a/arch/x86/tools/vdso2c.c
-+++ b/arch/x86/tools/vdso2c.c
-@@ -75,7 +75,6 @@ struct vdso_sym {
+diff --git a/include/linux/dmi.h b/include/linux/dmi.h
+index 927f8a8b7a1dd..2eedf44e68012 100644
+--- a/include/linux/dmi.h
++++ b/include/linux/dmi.h
+@@ -60,6 +60,7 @@ enum dmi_entry_type {
+ 	DMI_ENTRY_OOB_REMOTE_ACCESS,
+ 	DMI_ENTRY_BIS_ENTRY,
+ 	DMI_ENTRY_SYSTEM_BOOT,
++	DMI_ENTRY_64_MEM_ERROR,
+ 	DMI_ENTRY_MGMT_DEV,
+ 	DMI_ENTRY_MGMT_DEV_COMPONENT,
+ 	DMI_ENTRY_MGMT_DEV_THRES,
+@@ -69,6 +70,10 @@ enum dmi_entry_type {
+ 	DMI_ENTRY_ADDITIONAL,
+ 	DMI_ENTRY_ONBOARD_DEV_EXT,
+ 	DMI_ENTRY_MGMT_CONTROLLER_HOST,
++	DMI_ENTRY_TPM_DEVICE,
++	DMI_ENTRY_PROCESSOR_ADDITIONAL,
++	DMI_ENTRY_FIRMWARE_INVENTORY,
++	DMI_ENTRY_STRING_PROPERTY,
+ 	DMI_ENTRY_INACTIVE = 126,
+ 	DMI_ENTRY_END_OF_TABLE = 127,
  };
- 
- struct vdso_sym required_syms[] = {
--	{"VDSO32_NOTE_MASK", true},
- 	{"__kernel_vsyscall", true},
- 	{"__kernel_sigreturn", true},
- 	{"__kernel_rt_sigreturn", true},
 -- 
 2.53.0
 
