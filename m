@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D610828DC4;
-	Wed, 20 May 2026 17:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C5F359A6F;
+	Wed, 20 May 2026 17:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298429; cv=none; b=isPtJrx2vba142Z0l6UfmRg04NGiRlPmnOeMojV0Q8YZlqQFiQGpPtRh/TV4E7gzBqldNFI4OXhfRYwJW4L3y3T490mtquHt7Uh2kKnJnIUlkfVaPP5qYcphLWNby8HP1eW1/B31aS9oXOE+QLvbX8PdSA9hI8Rk+jjZFGQpyfo=
+	t=1779298432; cv=none; b=PfEast+J3/99V69BN/pW9FMWMnB1B9ha4x1LjXRj+yWrWbMhapYgpKUaXgIDwSdzYLjZzGN+nf4PDOyeX0O8PWyTHMyT9EM2hrlyq5/eZdA4hD2iHT9g89b/GqwsUw0g11HChXFvTLQBE/fR7Yoknhbwxd4xsTSinJaLWCLfpO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298429; c=relaxed/simple;
-	bh=E2a07I6341wbAapEqyeSKH9NCf9rB3tQ4Xem2ca+DnE=;
+	s=arc-20240116; t=1779298432; c=relaxed/simple;
+	bh=ZqS/Pg6M2fuz0eR3fT4zV8cfywHozLdU6FIIthFxkKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=covriG/LNOdVoDkZ53ofVJHDnFYF74xwSkbfml8fSs+iMzqhfHfp73L+H/7/e8LJVSHNXfMLCYMu3I/Xbt4B22riWS+kaJPgycZSzh8qfE4jm6cvf0ZCATCLwPfFS5V5Q5rAK/XDvZ3gQFdK7osnkb23dr/hp8Kqe/7JCz6ojb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9xQ+OJ3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yu551fKWSn9HTNZVKYMxC/BdvK68eUuzByjrqsEc4KS0zrUL8XOEW4aG4ab+OX/5P/cuyBSNG3QFGiRoBS4JazHPuk5aV9osb0Lv3p9/QA+QZ6Po7WRE9VoCizYXgccTtpn1NcSALFXFhH1oy/gvm+GT4zO0edhhDE0n9XxAfS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZTpgqh9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9xQ+OJ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4718A1F000E9;
-	Wed, 20 May 2026 17:33:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZTpgqh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6EB21F000E9;
+	Wed, 20 May 2026 17:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298428;
-	bh=nNkgFm/FVgXZwjt3vdgpXMlep0P55Xq63gd/LTLK/TQ=;
+	s=korg; t=1779298431;
+	bh=eOiLi4/TtUAGmqaHzouAuvW1O6IMcmtEC0DbcPki1is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9xQ+OJ35KXw2ocsZLPGJ9oBontHeMOcpoMMOcV3DQyX1gM16Zns+M9jiovgsIoxJ
-	 0G4Tehtit/GDn5kgwtVLlh3jGUmwAUvBPoet0d1JFjhS+vYCKhFGPuErxncAzhO6pG
-	 ViA2rtnsuRyKyQb6OaOKxrw1wUOta/BtnQ9ogNxo=
+	b=dZTpgqh9Q4Y90Pm2Iqh5DLA9aCcbYW8KIv5h4jCq88NpjrMfVHY13JvvqkMtYO3N5
+	 YJZSAH2VK1EjfKdGC2rw68ZM71n0RPXbNIjF75awArGyhi3uYKUyidIzJ/pXW9uU6h
+	 G/2HYSkLGDTHYjUgol7bArKqab4INKt2ISnbZIeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 408/957] arm64: dts: qcom: sm8550: Enable UHS-I SDR50 and SDR104 SD card modes
-Date: Wed, 20 May 2026 18:14:51 +0200
-Message-ID: <20260520162143.371607334@linuxfoundation.org>
+Subject: [PATCH 6.18 409/957] arm64: dts: qcom: sm8650: Enable UHS-I SDR50 and SDR104 SD card modes
+Date: Wed, 20 May 2026 18:14:52 +0200
+Message-ID: <20260520162143.394260735@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,13 +55,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 66b0f024fba0728ddce6916dce173bb1bdd4eab0 ]
+[ Upstream commit 93f823e7d48232e62fb8fb74481696609c90244a ]
 
-The restriction on UHS-I speed modes was added to all SM8550 platforms
-by copying it from SM8450 dtsi file, and due to the overclocking of SD
-cards it was an actually reproducible problem. Since the latter issue
-has been fixed, UHS-I speed modes are working fine on SM8550 boards,
-below is the test performed on SM8550-HDK:
+The restriction on UHS-I speed modes was added to all SM8650 platforms
+by copying it from SM8450 and SM8550 dtsi files, and it was an actually
+reproducible problem due to the overclocking of SD cards. Since the latter
+issue has been fixed in the SM8650 GCC driver, UHS-I speed modes are
+working fine on SM8650 boards, below is the test performed on SM8650-HDK:
 
 SDR50 speed mode:
 
@@ -71,7 +72,7 @@ SDR50 speed mode:
     % dd if=/dev/mmcblk0p1 of=/dev/null bs=1M count=1024
     1024+0 records in
     1024+0 records out
-    1073741824 bytes (1.1 GB, 1.0 GiB) copied, 23.5468 s, 45.6 MB/s
+    1073741824 bytes (1.1 GB, 1.0 GiB) copied, 24.8086 s, 43.3 MB/s
 
 SDR104 speed mode:
 
@@ -82,35 +83,36 @@ SDR104 speed mode:
     % dd if=/dev/mmcblk0p1 of=/dev/null bs=1M count=1024
     1024+0 records in
     1024+0 records out
-    1073741824 bytes (1.1 GB, 1.0 GiB) copied, 11.9819 s, 89.6 MB/s
+    1073741824 bytes (1.1 GB, 1.0 GiB) copied, 12.9448 s, 82.9 MB/s
 
 Unset the UHS-I speed mode restrictions from the SM8550 platform dtsi
 file, there is no indication that the SDHC controller is broken.
 
-Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
+Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Link: https://lore.kernel.org/r/20260314023715.357512-6-vladimir.zapolskiy@linaro.org
+Link: https://lore.kernel.org/r/20260314023715.357512-7-vladimir.zapolskiy@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 3 ---
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 3 ---
  1 file changed, 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 002ed12f942c0..118a626dfcff5 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -3191,9 +3191,6 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index d157cbc493d92..069b7f1267a0e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -4941,9 +4941,6 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 
  			bus-width = <4>;
- 			dma-coherent;
  
 -			/* Forbid SDR104/SDR50 - broken hw! */
 -			sdhci-caps-mask = <0x3 0>;
 -
- 			status = "disabled";
+ 			qcom,dll-config = <0x0007642c>;
+ 			qcom,ddr-config = <0x80040868>;
  
- 			sdhc2_opp_table: opp-table {
 -- 
 2.53.0
 
