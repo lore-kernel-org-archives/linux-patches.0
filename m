@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023C23A3E90;
-	Wed, 20 May 2026 17:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35EF3ED3A4;
+	Wed, 20 May 2026 17:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298045; cv=none; b=DDSMXP0WtP5+0itHyOvsrANUxenLUj5vCiangFsUnoJuLwkmvd+phzCg7OhnZYgxOd6nPfUI+SjCjBLpSQwgU1r3oecAwoWEIc8DsZTfvMj7ZaNnE8vB1d93y5DaHGqg7u5NCAuqm8eM+FQa7OdgRimE7aQF96XhAYW8f2FkXEw=
+	t=1779298047; cv=none; b=RBrobC2A1919aWZxuXXUq95v+DEhzX3azfH99scKNm+BoeMJS2zTFfbdUSkKPYPPk3khHOgqjtJmToaaXx5M9IX/29EvbAok6TEOBzTEMpSbC41lF/KNlwVGdKXUOBC5MPvUATkl+AqLlfFbTkUr+d5dAg0BKnopb9+AuxpfbHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298045; c=relaxed/simple;
-	bh=pFEh/HeA38xzr/2stUoGop4LMQAb27DKGwIIXw0aBwQ=;
+	s=arc-20240116; t=1779298047; c=relaxed/simple;
+	bh=wnZabdvochLpEEylh2kaYg5LYpeRttV+J5KsoEkw9Y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kS1eOf/VDTzPbOtCIUMDYndponZXiN0PvD7LDVjGd02092iqLDBbokuFO/gPngNrhvc1Iiair0UvuwZ31PM2pG/5xBh4wbtYDtYk7LULVWf1XENL6gzeX3M718EAoOOoc4Ma3YhIL9OIax1pQFL+IdhALflyBy+l++bYzjvUMmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mM0O4FPG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DOW8f2M6f/0xemtEu4liQhtTJrBcpXkCsJYhWN+ZRf1OpfxfyPmIptwanA1ve+I0OedTEEBV6esRq51IwYINOejGzgN4hH03nxcToaYr36YbxHAg2RXDJ1vNwnbCWUcYpGwxfG/cJpIiZKAtkNJtWYJuKFczHLmJc7jF5FYH7Vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmkHl1JO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mM0O4FPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A081F000E9;
-	Wed, 20 May 2026 17:27:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmkHl1JO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AEC1F000E9;
+	Wed, 20 May 2026 17:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298043;
-	bh=A9e2JgZKIQ6znWjqKajqbH8f91hTHk/LWM6cHZWTFBM=;
+	s=korg; t=1779298046;
+	bh=IaCc80rP23ntapLtlh1iDRY53GzEu+Ltk2FMVl1Nlsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mM0O4FPGbtHGuJSadPmOLEmv4M4AletBR909T00J3KvMX2+fy3pxV1QtmzHDNNxyq
-	 RPNposk/EXwv2qnopucTZXGL/7i3MRRdqtgFxUsdYmG2TmsQf5Q4xvngSY3PZ05byP
-	 gVnStwW4ZlwFHIFKjwTSGeadIdRD/Jy7bhr0u2WU=
+	b=CmkHl1JO7s6XZ4hDuMSCesYPbVCyEwf1RXjE+J2LRNZ7q1f0isKfHj1m7W3pZtpwv
+	 gsEa2W7hdTvM6tm8rpoO+Vn63Vu4qRaavEevQP4qFQpNQRZVkcUTiDmE1fJpU/ijOl
+	 lDi8ndLm0w075Sn2BrwfA8qlc9dk0buUgTU/opio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 259/957] ASoC: amd: acp: update dmic_num logic for acp pdm dmic
-Date: Wed, 20 May 2026 18:12:22 +0200
-Message-ID: <20260520162140.161129164@linuxfoundation.org>
+Subject: [PATCH 6.18 220/957] drm/v3d: Handle error from drm_sched_entity_init()
+Date: Wed, 20 May 2026 18:11:43 +0200
+Message-ID: <20260520162139.313542913@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -45,50 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 5902e1f3c501375797dcd7ca21b58e2c9abbe317 ]
+[ Upstream commit 8cf1bec37b27846ad3169744c9f1a89a06dcb3fa ]
 
-Currently there is no mechanism to read dmic_num in mach_params
-structure. In this scenario mach_params->dmic_num check always
-returns 0 which fails to add component string for dmic.
-Update the condition check with acp pdm dmic quirk check and
-pass the dmic_num as 1.
+drm_sched_entity_init() can fail but its return value is currently being
+ignored in v3d_open(). Check the return value and properly unwind
+on failure by destroying any already-initialized scheduler entities.
 
-Fixes: 2981d9b0789c ("ASoC: amd: acp: add soundwire machine driver for legacy stack")
-
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20260330072431.3512358-2-Vijendar.Mukunda@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 57692c94dcbe ("drm/v3d: Introduce a new DRM driver for Broadcom V3D V3.x+")
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260306-v3d-reset-locking-improv-v3-1-49864fe00692@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-sdw-legacy-mach.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/v3d/v3d_drv.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-index 2b2910b1856d5..798c73d7e26de 100644
---- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-@@ -520,11 +520,11 @@ static int mc_probe(struct platform_device *pdev)
- 					  " cfg-amp:%d", amp_num);
- 	if (!card->components)
- 		return -ENOMEM;
--	if (mach->mach_params.dmic_num) {
-+	if (soc_sdw_quirk & ASOC_SDW_ACP_DMIC) {
- 		card->components = devm_kasprintf(card->dev, GFP_KERNEL,
- 						  "%s mic:dmic cfg-mics:%d",
- 						  card->components,
--						  mach->mach_params.dmic_num);
-+						  1);
- 		if (!card->components)
- 			return -ENOMEM;
- 	}
+diff --git a/drivers/gpu/drm/v3d/v3d_drv.c b/drivers/gpu/drm/v3d/v3d_drv.c
+index f4da7a94e4016..7bbb2256ce7dc 100644
+--- a/drivers/gpu/drm/v3d/v3d_drv.c
++++ b/drivers/gpu/drm/v3d/v3d_drv.c
+@@ -130,7 +130,7 @@ v3d_open(struct drm_device *dev, struct drm_file *file)
+ 	struct v3d_dev *v3d = to_v3d_dev(dev);
+ 	struct v3d_file_priv *v3d_priv;
+ 	struct drm_gpu_scheduler *sched;
+-	int i;
++	int i, ret;
+ 
+ 	v3d_priv = kzalloc(sizeof(*v3d_priv), GFP_KERNEL);
+ 	if (!v3d_priv)
+@@ -140,9 +140,11 @@ v3d_open(struct drm_device *dev, struct drm_file *file)
+ 
+ 	for (i = 0; i < V3D_MAX_QUEUES; i++) {
+ 		sched = &v3d->queue[i].sched;
+-		drm_sched_entity_init(&v3d_priv->sched_entity[i],
+-				      DRM_SCHED_PRIORITY_NORMAL, &sched,
+-				      1, NULL);
++		ret = drm_sched_entity_init(&v3d_priv->sched_entity[i],
++					    DRM_SCHED_PRIORITY_NORMAL, &sched,
++					    1, NULL);
++		if (ret)
++			goto err_sched;
+ 
+ 		memset(&v3d_priv->stats[i], 0, sizeof(v3d_priv->stats[i]));
+ 		seqcount_init(&v3d_priv->stats[i].lock);
+@@ -152,6 +154,12 @@ v3d_open(struct drm_device *dev, struct drm_file *file)
+ 	file->driver_priv = v3d_priv;
+ 
+ 	return 0;
++
++err_sched:
++	for (i--; i >= 0; i--)
++		drm_sched_entity_destroy(&v3d_priv->sched_entity[i]);
++	kfree(v3d_priv);
++	return ret;
+ }
+ 
+ static void
 -- 
 2.53.0
 
