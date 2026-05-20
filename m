@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574653A4526;
-	Wed, 20 May 2026 17:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266A93A4526;
+	Wed, 20 May 2026 17:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297613; cv=none; b=Vx96bWXe9GmOInIXOJyzOC9NaQbz+48njJUWbv+XjWQ9Q7dEaciSKOx0BeGn98sgGFxFmQTC54Yv6AeWur2bGgAPeoGVowwPfXkKWxojkE6CpuT3dVAmztcJp4ClHK6lEzqEvkBn1TWlwB3v3Vozn7mwSJLunsQoV0An9kwnxe8=
+	t=1779297615; cv=none; b=HYCS1hY9ctqYlc+KWctpaAux+0RTi4DGjrSuuVQsYuieVpCxzEVwIBOuGL+CaKTUGna5sgHe1OhsmJs2SdCtSHv83c/5jZgidGUWDJ1xuTjciZ+p9dnIr44H9Vn235PnFG41tFUyDMCHeR+N0VCR0Y0OQVgHfPIams+GYsvD4k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297613; c=relaxed/simple;
-	bh=EMjmzyVV3R8a6vdJ4cW9E/7zRKg8W2dwJyfcz0isp74=;
+	s=arc-20240116; t=1779297615; c=relaxed/simple;
+	bh=vhDM5JIVsghPIZe3p0K6gIIgzRttWwUvCsnDS41dyiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ai0GnRQ8L8FT/ciOA06jhG2L1f5V2n57rh95aEHDwPBoeBOaP/VSNdzxijkZaPiwa+c5XMOXk0KbHN3U+iFd6i/II0QaNMNT5dBqZVi5Z2z/QjZciaMXGYGcK8GJoG5cPJiR2vrOJ5d+RYYP89A5ZTUcRSlJxRwrqipOr2GZMh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcIVK912; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cgFn3Yi4gmgCkTToZ9WkUvbqttjjojF6sjbwk/+XXQkIYpOByf0E9Mkts8mi8H45yFnMXn9x1lRcalYt1AUtiwizw8at3At5a+93falew6B2joZFeor97/CN1PvatQLDYZ5Pn3IMjlXCGryuWLwZGsu5HKb2Sc+bfwsnZcNFZkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=prPOSykb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcIVK912"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC16F1F000E9;
-	Wed, 20 May 2026 17:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="prPOSykb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651261F00894;
+	Wed, 20 May 2026 17:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297611;
-	bh=u6Lxb7fJeGatdN/kAnPrLXpT3QoDpLtDbi172IAWiqU=;
+	s=korg; t=1779297613;
+	bh=Yb16QcmcDUt7OzpLjEnvm0keN5Wwu6bok+pgXw3nip0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GcIVK912/TFi53skTRH/g1YLZlGJHUq4WdbL3HYwNtS7Nkqp/OOuFZrwDP+0Fbf22
-	 SfXsnPx1goZ3wA19kXFCetipKxwJCKuNE74cvBInUAudai2MHyfx8yG4sV27Xw39HE
-	 4RWG819Immfalksqd7vH7syGHIivXb1fXXWhHobE=
+	b=prPOSykbyZVvO6nHfMsrgPvg7sUgek3WknaHMEv5L6KIyNwY8etHZ0LDlsVa7GTNT
+	 XA/RqdX3wBK2R8728WCSPKm2EvbC2jyergHd7j9e9GnxnPTA6Rab0kUZpbvbuFp3PX
+	 fPfaG450HRxH36MsUvLmHm0AvlYkRBvju6KMfGuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
+	Michael Lo <michael.lo@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 098/957] wifi: mt76: mt7996: fix use-after-free bugs in mt7996_mac_dump_work()
-Date: Wed, 20 May 2026 18:09:41 +0200
-Message-ID: <20260520162136.685570001@linuxfoundation.org>
+Subject: [PATCH 6.18 099/957] wifi: mt76: mt7921: fix 6GHz regulatory update on connection
+Date: Wed, 20 May 2026 18:09:42 +0200
+Message-ID: <20260520162136.706779084@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,51 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Michael Lo <michael.lo@mediatek.com>
 
-[ Upstream commit c8f62f73bbced3a79894655bdb0b625462d956fc ]
+[ Upstream commit 3dc0c40d7806c72cfe88cf4e1e2650c1673f9db4 ]
 
-When the mt7996 pci chip is detaching, the mt7996_crash_data is
-released in mt7996_coredump_unregister(). However, the work item
-dump_work may still be running or pending, leading to UAF bugs
-when the already freed crash_data is dereferenced again in
-mt7996_mac_dump_work().
+Call mt7921_regd_update() instead of mt7921_mcu_set_clc() when setting
+the 6GHz power type after connection, so that regulatory limits and SAR
+power are also applied.
 
-The race condition can occur as follows:
-
-CPU 0 (removal path)               | CPU 1 (workqueue)
-mt7996_pci_remove()                | mt7996_sys_recovery_set()
- mt7996_unregister_device()        |  mt7996_reset()
-  mt7996_coredump_unregister()     |   queue_work()
-   vfree(dev->coredump.crash_data) | mt7996_mac_dump_work()
-                                   |  crash_data-> // UAF
-
-Fix this by ensuring dump_work is properly canceled before
-the crash_data is deallocated. Add cancel_work_sync() in
-mt7996_unregister_device() to synchronize with any pending
-or executing dump work.
-
-Fixes: 878161d5d4a4 ("wifi: mt76: mt7996: enable coredump support")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://patch.msgid.link/20260131024731.18741-1-duoming@zju.edu.cn
+Fixes: 51ba0e3a15eb ("wifi: mt76: mt7921: add 6GHz power type support for clc")
+Signed-off-by: Michael Lo <michael.lo@mediatek.com>
+Link: https://patch.msgid.link/20260211095025.2415624-1-leon.yen@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index e26f8e9e4f8fc..ba769e6de76d2 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1732,6 +1732,7 @@ int mt7996_register_device(struct mt7996_dev *dev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 07495c97f1c12..ce11666a32db9 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -800,7 +800,8 @@ mt7921_regd_set_6ghz_power_type(struct ieee80211_vif *vif, bool is_add)
+ 	}
  
- void mt7996_unregister_device(struct mt7996_dev *dev)
- {
-+	cancel_work_sync(&dev->dump_work);
- 	cancel_work_sync(&dev->wed_rro.work);
- 	mt7996_unregister_phy(mt7996_phy3(dev));
- 	mt7996_unregister_phy(mt7996_phy2(dev));
+ out:
+-	mt7921_mcu_set_clc(dev, dev->mt76.alpha2, dev->country_ie_env);
++	if (vif->bss_conf.chanreq.oper.chan->band == NL80211_BAND_6GHZ)
++		mt7921_regd_update(dev);
+ }
+ 
+ int mt7921_mac_sta_add(struct mt76_dev *mdev, struct ieee80211_vif *vif,
 -- 
 2.53.0
 
