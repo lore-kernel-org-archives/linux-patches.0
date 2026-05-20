@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB39270545;
-	Wed, 20 May 2026 18:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99790DF59;
+	Wed, 20 May 2026 18:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302205; cv=none; b=QVEfc5Ef9tPosExJjnjEUVIdBemQxGPJToTWfIVJwV9Hs9qzQyxUxKT87SMvn0c1BXkqy+GdmqoGAoyZBy4nUTaEvW+1I7olT08qP4yko4FNsTrPv//M1tEx1pJvNp6DiBAnleeFtNRW4H9qWnEtekuUP7cmHqNVFj0808qHiUU=
+	t=1779302207; cv=none; b=nXL/3pIGapZP+dm+xpEb7KeFgmurlYIECyo5lAGq709aUIPsh0SiO0YklLarc2Y3WWgUm+49lDgjyFa4xXg0RVX0cqmjJbArufIviKMUevyfiiDcbJGUlk+hWt/rjdUvmWhUz+3NkgdFl/xlLiV3ZzCkgO1fU3MlQFkuyWfxvqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302205; c=relaxed/simple;
-	bh=F9ZLRQPc8v8YqgXcPTWqSdVOmitcy3t+cxN6SvwXmuw=;
+	s=arc-20240116; t=1779302207; c=relaxed/simple;
+	bh=caTF7qZuvQqomgvIXeZYGiFB0ZVny9EhBaS+nKgXi0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZNn3ZmVpokmJog9RZf9Go6g8EAvQ4Bn7wvRHbl+Y7wuTbHTQI7D4PFw7QtzGnkdjokr5dwzM5CkzSnOPn0xjpitMZMpkR7LTc8XdShw0pra4x5xazE9BILNWACzVjmJCHGPp2adhwgLOL9glAhHdPWs9Jt5M3FUhUXuMQ7RSUtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQNUpSyd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JUx1TX2Sv5dJBGxwadiszY5kSuI/5kZBPzvDRunjTA2x0/+AHGKs3zqkfcZyJsl3B1qYTEILhSqi/sMEBTn3AVQiw95/SiH/96IUCfFi4w3h9qQSuunoDfSjKeqSxpmD8JVpXq105mHawTe8vEVOXLsDkj6RBI1OWuH+IuANIXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcgBNWjr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQNUpSyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E3E1F000E9;
-	Wed, 20 May 2026 18:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcgBNWjr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2E01F000E9;
+	Wed, 20 May 2026 18:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302203;
-	bh=rWkQTRUtcDT1APBH4KT9y8tyXDSytWdUM8/anXiykf8=;
+	s=korg; t=1779302206;
+	bh=2b4n/VBAD7YIV94gEK+AykdYS7GD7nGmm3alUe8RdLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UQNUpSydGGg9Vsq9HeJTK+0i8eCiZMKovC5Q6nzssUoDUI50kvszTsiX53/NN9qXf
-	 YJcg6Yxo+jifneG5Smk90V/Ojx/aA0RmmizuSemIJ1rcTQn7/g3n3R5IVgZ/ceI6RE
-	 tpmjTM2buRZCslw9NQgPfVeuDdxtQo9eJ0MeghGE=
+	b=rcgBNWjrpgC4Usx/IiKZdOnmOsvIJgbPGzvcixaT/Tl6gn/P+m70Bl2FTI5Ax9JSs
+	 EAMQcqCkJKnsXzNYXCgCvF9+nAnK/FYVljT8obZ4YV+Rb7fi2oAIY3EyDL6q79Vprj
+	 C8f81ECORk9pTBSONGBRJqUdINif/w/8mSUXJVwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Huth <thuth@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Joshua Klinesmith <joshuaklinesmith@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/508] efi/capsule-loader: fix incorrect sizeof in phys array reallocation
-Date: Wed, 20 May 2026 18:20:02 +0200
-Message-ID: <20260520162102.516967804@linuxfoundation.org>
+Subject: [PATCH 6.6 180/508] ksmbd: fix use-after-free from async crypto on Qualcomm crypto engine
+Date: Wed, 20 May 2026 18:20:03 +0200
+Message-ID: <20260520162102.539340585@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,50 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Huth <thuth@redhat.com>
+From: Joshua Klinesmith <joshuaklinesmith@gmail.com>
 
-[ Upstream commit 48a428215782321b56956974f23593e40ce84b7a ]
+[ Upstream commit 3e298897f41c61450c2e7a4f457e8b2485eb35b3 ]
 
-The krealloc() call for cap_info->phys in __efi_capsule_setup_info() uses
-sizeof(phys_addr_t *) instead of sizeof(phys_addr_t), which might be
-causing an undersized allocation.
+ksmbd_crypt_message() sets a NULL completion callback on AEAD requests
+and does not handle the -EINPROGRESS return code from async hardware
+crypto engines like the Qualcomm Crypto Engine (QCE). When QCE returns
+-EINPROGRESS, ksmbd treats it as an error and immediately frees the
+request while the hardware DMA operation is still in flight. The DMA
+completion callback then dereferences freed memory, causing a NULL
+pointer crash:
 
-The allocation is also inconsistent with the initial array allocation in
-efi_capsule_open() that allocates one entry with sizeof(phys_addr_t),
-and the efi_capsule_write() function that stores phys_addr_t values (not
-pointers) via page_to_phys().
+  pc : qce_skcipher_done+0x24/0x174
+  lr : vchan_complete+0x230/0x27c
+  ...
+  el1h_64_irq+0x68/0x6c
+  ksmbd_free_work_struct+0x20/0x118 [ksmbd]
+  ksmbd_exit_file_cache+0x694/0xa4c [ksmbd]
 
-On 64-bit systems where sizeof(phys_addr_t) == sizeof(phys_addr_t *), this
-goes unnoticed. On 32-bit systems with PAE where phys_addr_t is 64-bit but
-pointers are 32-bit, this allocates half the required space, which might
-lead to a heap buffer overflow when storing physical addresses.
+Use the standard crypto_wait_req() pattern with crypto_req_done() as
+the completion callback, matching the approach used by the SMB client
+in fs/smb/client/smb2ops.c. This properly handles both synchronous
+engines (immediate return) and async engines (-EINPROGRESS followed
+by callback notification).
 
-This is similar to the bug fixed in commit fccfa646ef36 ("efi/capsule-loader:
-fix incorrect allocation size") which fixed the same issue at the initial
-allocation site.
-
-Fixes: f24c4d478013 ("efi/capsule-loader: Reinstate virtual capsule mapping")
-Assisted-by: Claude:claude-sonnet-4-5
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Link: https://github.com/openwrt/openwrt/issues/21822
+Signed-off-by: Joshua Klinesmith <joshuaklinesmith@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/capsule-loader.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/auth.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/efi/capsule-loader.c b/drivers/firmware/efi/capsule-loader.c
-index 97bafb5f70389..c6a8bdbcae71b 100644
---- a/drivers/firmware/efi/capsule-loader.c
-+++ b/drivers/firmware/efi/capsule-loader.c
-@@ -67,7 +67,7 @@ int __efi_capsule_setup_info(struct capsule_info *cap_info)
- 	cap_info->pages = temp_page;
+diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
+index 16a57425099de..d28b34e1d047a 100644
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -1106,6 +1106,7 @@ int ksmbd_crypt_message(struct ksmbd_work *work, struct kvec *iov,
+ 	struct smb2_transform_hdr *tr_hdr = smb2_get_msg(iov[0].iov_base);
+ 	unsigned int assoc_data_len = sizeof(struct smb2_transform_hdr) - 20;
+ 	int rc;
++	DECLARE_CRYPTO_WAIT(wait);
+ 	struct scatterlist *sg;
+ 	u8 sign[SMB2_SIGNATURE_SIZE] = {};
+ 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
+@@ -1192,12 +1193,12 @@ int ksmbd_crypt_message(struct ksmbd_work *work, struct kvec *iov,
  
- 	temp_page = krealloc(cap_info->phys,
--			     pages_needed * sizeof(phys_addr_t *),
-+			     pages_needed * sizeof(phys_addr_t),
- 			     GFP_KERNEL | __GFP_ZERO);
- 	if (!temp_page)
- 		return -ENOMEM;
+ 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
+ 	aead_request_set_ad(req, assoc_data_len);
+-	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_SLEEP, NULL, NULL);
++	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG |
++				  CRYPTO_TFM_REQ_MAY_SLEEP,
++				  crypto_req_done, &wait);
+ 
+-	if (enc)
+-		rc = crypto_aead_encrypt(req);
+-	else
+-		rc = crypto_aead_decrypt(req);
++	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req) :
++			     crypto_aead_decrypt(req), &wait);
+ 	if (rc)
+ 		goto free_iv;
+ 
 -- 
 2.53.0
 
