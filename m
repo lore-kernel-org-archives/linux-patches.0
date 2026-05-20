@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1479E3A3E60;
-	Wed, 20 May 2026 17:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48303F39C9;
+	Wed, 20 May 2026 17:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299599; cv=none; b=BPyRFENmi5DXdf0NeSmZAcqDsNfl3wDGvZmemUJKMIEhY4jTlx5juSjinBsaNm6Nnw06WP+vcY0DGmZznWyY0ITzxymgBc5ODv2VvWi+vDsY+yWkU2A4cQEkotQss4tSJgMU7uFREA9L9GnIYD3I+V0LwWyNsGzuYqPY8xwyJz4=
+	t=1779299601; cv=none; b=bNPigFZeb0eL21/yNPWVFl/Qcr6y0Ajfz9gIHvdY+DSSm9VhQPLDp4QA+t3D41Be7WBBRJUlG1yUqzc0P/4jJg45nrVhBetA8tN2S5bhv2W4qVexwvAsjT+uhp9rEhcV6y4K9MVGu0MCTwrk3yEAzLfRFefb4LnI7g6jDKPP1xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299599; c=relaxed/simple;
-	bh=rahn2ierDjrr9GXm9bM6wXv27BXyb5Ixoik48IuivFU=;
+	s=arc-20240116; t=1779299601; c=relaxed/simple;
+	bh=NKfRuvMpYOswN1eAD9Mq9Q6VwO/Vxc8JviPV+Y8boBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=by5l8pnmw6pzomCSRHm9ZZ77gvrkd1d94ZQ3musWr/KkJl3GiTPBP0+YJrLhpBg593/Wmo5JpLPPS7hEs1VLfS6UcLxRqBH4rQ0UyrwhVmuD7Xq3GpfjGb+qLib8Ovj++pQ3B+ArpkC7HyLNeLD8ktyKwEWr2mN4Mz4uIHXtMgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAV+qkxF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ln/opCuoMGxg8f3aGk2xd7MJqUFG4R9KGiHS3hz1oJ89x3sLkZ9/IN5NNRxE1bhJHsB9IzkjL2HhRDXD7y6FE8861M7WbewuEvczLPmqCmwfKT//1lTGI9OR96eANYHUm8SX/IHQ03VHT39ZiZWwyjXRdrLvqFSuUTgwQUo2tDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnEUGmjL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAV+qkxF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9D71F000E9;
-	Wed, 20 May 2026 17:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnEUGmjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC961F000E9;
+	Wed, 20 May 2026 17:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299598;
-	bh=bvxDva1WUkjj0jLWKJrADQ7d0xhVcqX2ModVcN1ygUk=;
+	s=korg; t=1779299600;
+	bh=XxQrsrcvd2Gq4HmPnYDK4zHp2mkV1mx2HguddvbwyBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dAV+qkxFbaotUMVVk7Wbrxc8maBKCP0CtWM4BNqQvxc9VXVRxB8tZ6GYeuvGa1489
-	 yNdQgR1QlKnGOaoKZeFXkhmtc4wGkZEkZQA4vXmyjLVGhQu+Nm6J1lFB6tMcYnbbXR
-	 2k2LdzTmSnPlwHjybxZ6RbmmooMLaY2O1cBPE1wU=
+	b=wnEUGmjL7HhRTDNkhCb0wi5Bm8TtUYRzpmJgyH7/pGEUH6WG3IzwnpAhnyhxlkUuN
+	 PMgEXJeHokSSa3oE5/ts+FoD0EnGrUNNbErOy1FIGlTWOYfQKXbLARBSlxMp1fJGH7
+	 i7Rd/F9jrwZhGdvO2mmaccZt3eHZgNLz5jZTBI9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stuart Summers <stuart.summers@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+	Francois Dugast <francois.dugast@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 832/957] drm/xe/debugfs: Correct printing of register whitelist ranges
-Date: Wed, 20 May 2026 18:21:55 +0200
-Message-ID: <20260520162152.610602621@linuxfoundation.org>
+Subject: [PATCH 6.18 833/957] drm/xe: Fix error cleanup in xe_exec_queue_create_ioctl()
+Date: Wed, 20 May 2026 18:21:56 +0200
+Message-ID: <20260520162152.631070211@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,56 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 03f2499c51dffce611b065b2894406beb9f2ebe0 ]
+[ Upstream commit f3cc22d4df3ed58439ea7e21daa54c3608e03b78 ]
 
-The register-save-restore debugfs prints whitelist entries as offset
-ranges.  E.g.,
+Two error handling issues exist in xe_exec_queue_create_ioctl():
 
-        REG[0x39319c-0x39319f]: allow read access
+1. When xe_hw_engine_group_add_exec_queue() fails, the error path jumps
+   to put_exec_queue which skips xe_exec_queue_kill(). If the VM is in
+   preempt fence mode, xe_vm_add_compute_exec_queue() has already added
+   the queue to the VM's compute exec queue list. Skipping the kill
+   leaves the queue on that list, leading to a dangling pointer after
+   the queue is freed.
 
-for a single dword-sized register.  However the GENMASK value used to
-set the lower bits to '1' for the upper bound of the whitelist range
-incorrectly included one more bit than it should have, causing the
-whitelist ranges to sometimes appear twice as large as they really were.
-For example,
+2. When xa_alloc() fails after xe_hw_engine_group_add_exec_queue() has
+   succeeded, the error path does not call
+   xe_hw_engine_group_del_exec_queue() to remove the queue from the hw
+   engine group list. The queue is then freed while still linked into
+   the hw engine group, causing a use-after-free.
 
-        REG[0x6210-0x6217]: allow rw access
+Fix both by:
+- Changing the xe_hw_engine_group_add_exec_queue() failure path to jump
+  to kill_exec_queue so that xe_exec_queue_kill() properly removes the
+  queue from the VM's compute list.
+- Adding a del_hw_engine_group label before kill_exec_queue for the
+  xa_alloc() failure path, which removes the queue from the hw engine
+  group before proceeding with the rest of the cleanup.
 
-was also intended to be a single dword-sized register whitelist (with a
-range 0x6210-0x6213) but was printed incorrectly as a qword-sized range
-because one too many bits was flipped on.  Similar 'off by one' logic
-was applied when printing 4-dword register ranges and 64-dword register
-ranges as well.
-
-Correct the GENMASK logic to print these ranges in debugfs correctly.
-No impact outside of correcting the misleading debugfs output.
-
-Fixes: d855d2246ea6 ("drm/xe: Print whitelist while applying")
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Link: https://patch.msgid.link/20260408-regsr_wl_range-v1-1-e9a28c8b4264@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 1a2a722ff96749734a5585dfe7f0bea7719caa8b)
+Fixes: 7970cb36966c ("'drm/xe/hw_engine_group: Register hw engine group's exec queues")
+Cc: Francois Dugast <francois.dugast@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260408020647.3397933-1-shuicheng.lin@intel.com
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+(cherry picked from commit 37c831f401746a45d510b312b0ed7a77b1e06ec8)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_reg_whitelist.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_exec_queue.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_reg_whitelist.c b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-index 23f6c81d99946..21763dc51150b 100644
---- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
-+++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-@@ -174,7 +174,7 @@ void xe_reg_whitelist_print_entry(struct drm_printer *p, unsigned int indent,
+diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
+index 231d1fbe5eefa..0df11f054cfba 100644
+--- a/drivers/gpu/drm/xe/xe_exec_queue.c
++++ b/drivers/gpu/drm/xe/xe_exec_queue.c
+@@ -789,7 +789,7 @@ int xe_exec_queue_create_ioctl(struct drm_device *dev, void *data,
+ 		if (q->vm && q->hwe->hw_engine_group) {
+ 			err = xe_hw_engine_group_add_exec_queue(q->hwe->hw_engine_group, q);
+ 			if (err)
+-				goto put_exec_queue;
++				goto kill_exec_queue;
+ 		}
  	}
  
- 	range_start = reg & REG_GENMASK(25, range_bit);
--	range_end = range_start | REG_GENMASK(range_bit, 0);
-+	range_end = range_start | REG_GENMASK(range_bit - 1, 0);
+@@ -798,12 +798,15 @@ int xe_exec_queue_create_ioctl(struct drm_device *dev, void *data,
+ 	/* user id alloc must always be last in ioctl to prevent UAF */
+ 	err = xa_alloc(&xef->exec_queue.xa, &id, q, xa_limit_32b, GFP_KERNEL);
+ 	if (err)
+-		goto kill_exec_queue;
++		goto del_hw_engine_group;
  
- 	switch (val & RING_FORCE_TO_NONPRIV_ACCESS_MASK) {
- 	case RING_FORCE_TO_NONPRIV_ACCESS_RW:
+ 	args->exec_queue_id = id;
+ 
+ 	return 0;
+ 
++del_hw_engine_group:
++	if (q->vm && q->hwe && q->hwe->hw_engine_group)
++		xe_hw_engine_group_del_exec_queue(q->hwe->hw_engine_group, q);
+ kill_exec_queue:
+ 	xe_exec_queue_kill(q);
+ put_exec_queue:
 -- 
 2.53.0
 
