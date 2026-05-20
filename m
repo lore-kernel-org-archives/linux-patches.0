@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A50356762;
-	Wed, 20 May 2026 16:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EEA2F0C62;
+	Wed, 20 May 2026 16:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296043; cv=none; b=kaJBSkVW5pcRQLIsNwfRe3S6a3khJLS1sXGdWB3QPOZTxj3MNYyfnv6SgjsCiHDHP71wSkdIuLePc7Occ3ZWnT6HDm5rjTEutXBL9iu/rPYzJ/2ZU4vwr2cF6ZnSWhrObNucxFSh9Sh2o1zpUsOIs1ShZUv74DbU5QSCx/BmHMc=
+	t=1779296045; cv=none; b=ooYAcVpN9cBe3h1qKngTr0kvSaPajXQmiKrXnGAERjX03KkrwsZ6dR3dSEPGN/aYog886z70nEFQE1Xi7fHyRAnsi5yuqvAnCr7ZZ249IZYs0h8S/p9IwqF6g1XCVmrAPcDO4sc3oFESppXpyKF8HcEtxOVUsgR8gh2pBNQuxzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296043; c=relaxed/simple;
-	bh=jqlxzx6ovpsWvRQ2HnKe6mnB84nKNda6ilrNGZPhSfE=;
+	s=arc-20240116; t=1779296045; c=relaxed/simple;
+	bh=hM2GRG1dusJfioV4eSH6TJRnVxrx4fdWIex0+QXaHJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=makRn8leH5uNByoDXE4e6uCkj22tE3cP2YlvodPvW/3lW+gyZlGAY8tfdCVPhTnAIeG1nd2dd/ipntGH+8E7Exz/rmifX993ePm5Qi2IeuZRyejNnJoJ+sw308FTbcXeRYFy6FzK+MYxGKLeTr74iaoXtxdrlf0KVerwaE/z3vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5Q3bG7a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ciw0RKt9tGDwTE2V2Fq6MWur5jxdKFFpPlKHsyTnHc+iTpkGoJlMdW2mZaXtQouygBcAKTV09mVx7GqS5GZEXKgsMCc02HFfyNNIoK99jdroAPLH3fX84jb3jNpJvIgXvAnWW62pyMDpsIQ6P7BtqyrUPDL1huhZfnBCeApNwE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDN6QVqU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5Q3bG7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA9C1F000E9;
-	Wed, 20 May 2026 16:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDN6QVqU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7711F000E9;
+	Wed, 20 May 2026 16:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296041;
-	bh=PYrHJrIsDBP3vxayc39/GCm5bvklEmAtZAzddTRtI68=;
+	s=korg; t=1779296044;
+	bh=+oCHvi4/gWQxQ7MbHu7QF1Wo4ig1pLV2LRG1U9fC5g0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R5Q3bG7ajsc/vrPul0AL855WEgah2CM/UYIlr5sdyIdDDRht4lGendsUFepYOKDy8
-	 9TvZsgY56ioukl5JwzgVq/7W8Z2d6TFohfsXijtXMfirNpgy8DDs3xV7yOXpLPTfYB
-	 sguhBGEMggbBbq9Wa5S4jv7fjHocaA3I2xigzNKc=
+	b=oDN6QVqUWmMkoQq+cEU5BV456KDxTAmMmzDjRfBMUFYuabDqBvvc3JotVN/sb4Y5M
+	 iCmpg66n8j/3NIoMUFt/i2+CUONM79xiK0qcI0dZE8RkXKw/DtJKzabzFU05p/+JZm
+	 jABUayrfjKcbET/nJ3LhWhIJIxoxEKnke31RkCBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0608/1146] ext4: fix possible null-ptr-deref in mbt_kunit_exit()
-Date: Wed, 20 May 2026 18:14:18 +0200
-Message-ID: <20260520162201.940377556@linuxfoundation.org>
+Subject: [PATCH 7.0 0609/1146] bpf, arm64: Reject out-of-range B.cond targets
+Date: Wed, 20 May 2026 18:14:19 +0200
+Message-ID: <20260520162201.964945964@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,68 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 22f53f08d9eb837ce69b1a07641d414aac8d045f ]
+[ Upstream commit 48d83d94930eb4db4c93d2de44838b9455cff626 ]
 
-There's issue as follows:
-    # test_new_blocks_simple: failed to initialize: -12
-KASAN: null-ptr-deref in range [0x0000000000000638-0x000000000000063f]
-Tainted: [E]=UNSIGNED_MODULE, [N]=TEST
-RIP: 0010:mbt_kunit_exit+0x5e/0x3e0 [ext4_test]
-Call Trace:
- <TASK>
- kunit_try_run_case_cleanup+0xbc/0x100 [kunit]
- kunit_generic_run_threadfn_adapter+0x89/0x100 [kunit]
- kthread+0x408/0x540
- ret_from_fork+0xa76/0xdf0
- ret_from_fork_asm+0x1a/0x30
+aarch64_insn_gen_cond_branch_imm() calls label_imm_common() to
+compute a 19-bit signed byte offset for a conditional branch,
+but unlike its siblings aarch64_insn_gen_branch_imm() and
+aarch64_insn_gen_comp_branch_imm(), it does not check whether
+label_imm_common() returned its out-of-range sentinel (range)
+before feeding the value to aarch64_insn_encode_immediate().
 
-If mbt_kunit_init() init testcase failed will lead to null-ptr-deref.
-So add test if 'sb' is inited success in mbt_kunit_exit().
+aarch64_insn_encode_immediate() unconditionally masks the value
+with the 19-bit field mask, so an offset that was rejected by
+label_imm_common() gets silently truncated. With the sentinel
+value SZ_1M, the resulting field ends up with bit 18 (the sign
+bit of the 19-bit signed displacement) set, and the CPU decodes
+it as a ~1 MiB *backward* branch, producing an incorrectly
+targeted B.cond instruction. For code-gen locations like the
+emit_bpf_tail_call() this function is the only barrier between
+an overflowing displacement and a silently miscompiled branch.
 
-Fixes: 7c9fa399a369 ("ext4: add first unit test for ext4_mb_new_blocks_simple in mballoc")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20260330133035.287842-6-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fix it by returning AARCH64_BREAK_FAULT when the offset is out
+of range, so callers see a loud failure instead of a silently
+misencoded branch. validate_code() scans the generated image
+for any AARCH64_BREAK_FAULT and then lets the JIT fail.
+
+Fixes: 345e0d35ecdd ("arm64: introduce aarch64_insn_gen_cond_branch_imm()")
+Fixes: c94ae4f7c5ec ("arm64: insn: remove BUG_ON from codegen")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
+Link: https://lore.kernel.org/r/20260415121403.639619-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc-test.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/lib/insn.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ext4/mballoc-test.c b/fs/ext4/mballoc-test.c
-index 6f5bfbb0e8a42..95cb644cd32fa 100644
---- a/fs/ext4/mballoc-test.c
-+++ b/fs/ext4/mballoc-test.c
-@@ -362,7 +362,6 @@ static int mbt_kunit_init(struct kunit *test)
- 		return ret;
- 	}
+diff --git a/arch/arm64/lib/insn.c b/arch/arm64/lib/insn.c
+index cc5b40917d0dd..37ce75f7f1f08 100644
+--- a/arch/arm64/lib/insn.c
++++ b/arch/arm64/lib/insn.c
+@@ -338,6 +338,8 @@ u32 aarch64_insn_gen_cond_branch_imm(unsigned long pc, unsigned long addr,
+ 	long offset;
  
--	test->priv = sb;
- 	kunit_activate_static_stub(test,
- 				   ext4_read_block_bitmap_nowait,
- 				   ext4_read_block_bitmap_nowait_stub);
-@@ -383,6 +382,8 @@ static int mbt_kunit_init(struct kunit *test)
- 		return -ENOMEM;
- 	}
+ 	offset = label_imm_common(pc, addr, SZ_1M);
++	if (offset >= SZ_1M)
++		return AARCH64_BREAK_FAULT;
  
-+	test->priv = sb;
-+
- 	return 0;
- }
+ 	insn = aarch64_insn_get_bcond_value();
  
-@@ -390,6 +391,9 @@ static void mbt_kunit_exit(struct kunit *test)
- {
- 	struct super_block *sb = (struct super_block *)test->priv;
- 
-+	if (!sb)
-+		return;
-+
- 	mbt_mb_release(sb);
- 	mbt_ctx_release(sb);
- 	mbt_ext4_free_super_block(sb);
 -- 
 2.53.0
 
