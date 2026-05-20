@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B35B36A369;
-	Wed, 20 May 2026 16:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387E5375ACB;
+	Wed, 20 May 2026 16:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294996; cv=none; b=tIRzqPNDEHVa1ihStou1tmcPIT2gwHgu/VQcX9r8KkPB6cWAx6I+Y1LRaJSsdN0h8PJiXayYXaGrthBH4pl5Ow0D2n0vnRS1+TaxoGWx0yIkNep54QJlFAfljEgzM/0wAkvQvnQN8XzjzhBKKojS/VmLbT4+DVafGI/n1RA+pDk=
+	t=1779294999; cv=none; b=LTrKF8BVwhLnJ+vEnMzieCRiVIaP1lhHTh+jLttXU+3F224DNIG/0BV/xHPi2YycYJ9xkDqy8mxnlagUo5UvpVktS69oJlC0gDLcMu2bizG7/maUfDYr6HTukYv3J8d3D047vqHl3SDpyCnFYm72ngl4g9zfUom3Us7OY81SAEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294996; c=relaxed/simple;
-	bh=w1+tWIYOk45jY37YHcerxLV7MWBqeMEdVUsiOAy9z04=;
+	s=arc-20240116; t=1779294999; c=relaxed/simple;
+	bh=n0ybVxE0/cu+3jY/LidqQuDblRYCjIOBSV6hp7e0Hnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MzJcU1I36g51u8Edn9RBWODd55QOeXO2HD2AmWC9gsorM2g75Q1o6y8BMF8sW8i0Clb1V6qxVuNhlqaLgWBwNZnib1Gvb2XYqqs4lbznHBcWefxnSwr/AN8zCphJlUqJdqf2Baoqb4EMQta3lmKK2Duxc9P8EXfj/9vpEMXR2+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STvS4uV0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jAL9JCnJfZsHzRJeINXBslset05hAC2e+0w5AzMNLNAkIr5AGR1iOZT19iPvYwbg88lVT+6DsQG/KVlALCeZjp+h5NVzmjn6+qFV2rVKLUfxBVbNCVUYnxKFy1j9p5x7Ps3ad89W8LNqO8XVy1rn0LfcDiqm2+Mv7579rjjaTj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iyGgRtIl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STvS4uV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C8C1F000E9;
-	Wed, 20 May 2026 16:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iyGgRtIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8631F000E9;
+	Wed, 20 May 2026 16:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294995;
-	bh=m41WLRwNKkvdgMqjfgAum6Pf2Ey65rhWbUxOzs4oauU=;
+	s=korg; t=1779294997;
+	bh=F8gAANpuckwEWdkvbO52SvXl8S2L5RjqjUWA8DLg9ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=STvS4uV0zlXmmP21iE+kOkj/JZq9i8LM/F2oCqoNKNMsrenAn6GLt+Rxj2/jyZZZx
-	 3NLaX9266Z6GVKoaxEdFUb2O17RdD7k8CSm8UgBZ7CqNVmJ/sfAJbeGGabwF5yrKuG
-	 ehxCmmmzr+tbopZnp7U4wcuF+JtzSLjSOmf2/AbY=
+	b=iyGgRtIlshpuhxCF+qNB81RyvsQDct4ylPjHMMDfvHTyjotjx5t3opDKzYk0FYjKH
+	 4dX+FX854vpZDz2lVlTVaHS5SRHMtWZYMFnhubmBhVf1JdIPD0K+y/7Dp/YPky+Xtb
+	 eIYOezK4n1Iq3S97GT6JJZSc+wzmkL1YRsorXQpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sander Vanheule <sander@svanheule.net>,
-	Mark Brown <broonie@kernel.org>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0249/1146] ASoC: sti: use managed regmap_field allocations
-Date: Wed, 20 May 2026 18:08:19 +0200
-Message-ID: <20260520162153.871083094@linuxfoundation.org>
+Subject: [PATCH 7.0 0250/1146] dm cache: fix null-deref with concurrent writes in passthrough mode
+Date: Wed, 20 May 2026 18:08:20 +0200
+Message-ID: <20260520162153.892172047@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,43 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sander Vanheule <sander@svanheule.net>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit 1696fad8b259a2d46e51cd6e17e4bcdbe02279fa ]
+[ Upstream commit 7d1f98d668ee34c1d15bdc0420fdd062f24a27c0 ]
 
-The regmap_field objects allocated at player init are never freed and
-may leak resources if the driver is removed.
+In passthrough mode, when dm-cache starts to invalidate a cache
+entry and bio prison cell lock fails due to concurrent write to
+the same cached block, mg->cell remains NULL. The error path in
+invalidate_complete() attempts to unlock and free the cell
+unconditionally, causing a NULL pointer dereference:
 
-Switch to devm_regmap_field_alloc() to automatically limit the lifetime
-of the allocations the lifetime of the device.
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 0 UID: 0 PID: 134 Comm: fio Not tainted 6.19.0-rc7 #3 PREEMPT
+RIP: 0010:dm_cell_unlock_v2+0x3f/0x210
+<snip>
+Call Trace:
+ invalidate_complete+0xef/0x430
+ map_bio+0x130f/0x1a10
+ cache_map+0x320/0x6b0
+ __map_bio+0x458/0x510
+ dm_submit_bio+0x40e/0x16d0
+ __submit_bio+0x419/0x870
+<snip>
 
-Fixes: 76c2145ded6b ("ASoC: sti: Add CPU DAI driver for playback")
-Signed-off-by: Sander Vanheule <sander@svanheule.net>
-Link: https://patch.msgid.link/20260220152634.480766-3-sander@svanheule.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reproduce steps:
+
+1. Create a cache device
+
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
+dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+
+2. Promote the first data block into cache
+
+fio --filename=/dev/mapper/cache --name=populate --rw=write --bs=4k \
+--direct=1 --size=64k
+
+3. Reload the cache into passthrough mode
+
+dmsetup suspend cache
+dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
+dmsetup resume cache
+
+4. Write to the first cached block concurrently
+
+fio --filename=/dev/mapper/cache --name test --rw=randwrite --bs=4k \
+--randrepeat=0 --direct=1 --numjobs=2 --size 64k
+
+Fix by checking if mg->cell is valid before attempting to unlock it.
+
+Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sti/uniperif_player.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-cache-target.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sti/uniperif_player.c b/sound/soc/sti/uniperif_player.c
-index f1b7e76f97b58..45d35b887e4eb 100644
---- a/sound/soc/sti/uniperif_player.c
-+++ b/sound/soc/sti/uniperif_player.c
-@@ -1028,11 +1028,11 @@ static int uni_player_parse_dt_audio_glue(struct platform_device *pdev,
- 		return PTR_ERR(regmap);
- 	}
+diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
+index 935ab79b1d0cd..ae1edffd14eaa 100644
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -1462,8 +1462,10 @@ static void invalidate_complete(struct dm_cache_migration *mg, bool success)
+ 	struct cache *cache = mg->cache;
  
--	player->clk_sel = regmap_field_alloc(regmap, regfield[0]);
-+	player->clk_sel = devm_regmap_field_alloc(&pdev->dev, regmap, regfield[0]);
- 	if (IS_ERR(player->clk_sel))
- 		return PTR_ERR(player->clk_sel);
+ 	bio_list_init(&bios);
+-	if (dm_cell_unlock_v2(cache->prison, mg->cell, &bios))
+-		free_prison_cell(cache, mg->cell);
++	if (mg->cell) {
++		if (dm_cell_unlock_v2(cache->prison, mg->cell, &bios))
++			free_prison_cell(cache, mg->cell);
++	}
  
--	player->valid_sel = regmap_field_alloc(regmap, regfield[1]);
-+	player->valid_sel = devm_regmap_field_alloc(&pdev->dev, regmap, regfield[1]);
- 	if (IS_ERR(player->valid_sel))
- 		return PTR_ERR(player->valid_sel);
- 
+ 	if (!success && mg->overwrite_bio)
+ 		bio_io_error(mg->overwrite_bio);
 -- 
 2.53.0
 
