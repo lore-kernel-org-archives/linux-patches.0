@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536503F660B;
-	Wed, 20 May 2026 18:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9FA3F660B;
+	Wed, 20 May 2026 18:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300344; cv=none; b=G6OGwtQZbeAe/VwfIttiejFqh7PL5yf5l8CAuwM/WeSoN6FLKD20lik9btJx4lgIn0uIgOenAWOMsZ/OBwBkdHelMy40wSln1ylLnNH6BstIVmRwiPBcGuRDFukbg1HHOfxs3iA2GzscyXC6yYlsyOPSK63opcmkFMitw3bjc1Q=
+	t=1779300347; cv=none; b=ZSTg0QQjhVnhaVuqpCPSKPpiNBqQbLqdo4so11cPBEutU+69Nf5RbftV0LX6CJIGx3wMV1gk4+MPMvtEKM7wCeu9yO1h30Zt5d3ga4qFcV3VfA9AJL2viX47/ug3QEFP2iHyCB/vJmHdPbsGSWmB/SEHDryOABXlfUj2INf8fik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300344; c=relaxed/simple;
-	bh=9UqwEvIDG8If6DgS7pHeZHVky7s+5rWT9J3nejlYnHw=;
+	s=arc-20240116; t=1779300347; c=relaxed/simple;
+	bh=1rs0nf2/8DBRTHk+BbaPXReMz2hUYVR0RrW1FXv0CIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lnglPu/mnRCpXzPAdiWc3hegZ2+444eWltQXk+7GetVm1LU47iQ8q+5lEymVfV1QZbIlt3QBr+g35EkVN23K+FGVfmHzEqE3iHTmAgGwhxN3UvYkp3XD7mdHZ5ExNvH/WHHo5YoVjhuzZAXC/7xDfMjoOfNXjGFUzmeoaIy7ggs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1R9OUTK/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gHgR3LSb1mf+sYr5r8fJTFZSisIIyozKXqOGkF3ibksA882CkeO4m8wxbDt8Wh8CIv88611AT6tXMGoD94IbRAprDPy2qep8qzi6QMWE3/tjKR8sd4Hd4Upr3Cb0jxu3tIj0oktE0iwxeRAg3HNyZpT7oSwqrepjf9UQhkloPos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qX896Cia; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1R9OUTK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96261F000E9;
-	Wed, 20 May 2026 18:05:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qX896Cia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7A91F000E9;
+	Wed, 20 May 2026 18:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300343;
-	bh=NNGaGhl2EpnSpVzkV3AKlG77xt3FfNhYMdZCEqXPRgw=;
+	s=korg; t=1779300345;
+	bh=pfqmVYd2UF38Kl1J23SPWaWPeMMLrHDCo18ovgYVzsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1R9OUTK/6qtkdBMUDuyyFNKP1LQepaMD/Nq3toDthKKt9sef/A1dTHTxpKXyQrH1W
-	 0BeK9LyQ7FtbD8u+7e/wzU1uUB72KExyvQ6ShFKO/IUpEiv6RznMi97F4X4I6uiztc
-	 28WNNbyXWTc6x15pbXrX+k42Y0hy5IloeLcVYkKQ=
+	b=qX896CiaJFr6HG619KYwxB7VwvSPQxtS8dHbJNRrZVJEpD7a2BmIrfqsiCnqEAeLV
+	 2EmzgdL1DFJRBcduQ9XrQshFJOguMk5RS2Sm/6BHlvDc0m2uMqCZsT7kdcITC4PAaw
+	 tQEFOh+5CDzXJNHkFZSbriZ3RpWemR8fLy4Apt/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Jayesh Choudhary <j-choudhary@ti.com>,
 	Harikrishna Shenoy <h-shenoy@ti.com>,
 	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/666] drm/bridge: cadence: cdns-mhdp8546-core: Set the mhdp connector earlier in atomic_enable()
-Date: Wed, 20 May 2026 18:15:50 +0200
-Message-ID: <20260520162114.223955951@linuxfoundation.org>
+Subject: [PATCH 6.12 140/666] drm/bridge: cadence: cdns-mhdp8546-core: Add mode_valid hook to drm_bridge_funcs
+Date: Wed, 20 May 2026 18:15:51 +0200
+Message-ID: <20260520162114.245208529@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,191 +55,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Jayesh Choudhary <j-choudhary@ti.com>
 
-[ Upstream commit 43d6508ddbf9fb974fbc359a033154f78c9d4c8b ]
+[ Upstream commit 6dbff34016052b099558b76632e4983e2df13fed ]
 
-In case if we get errors in cdns_mhdp_link_up() or cdns_mhdp_reg_read()
-in atomic_enable, we will go to cdns_mhdp_modeset_retry_fn() and will hit
-NULL pointer while trying to access the mutex. We need the connector to
-be set before that. Unlike in legacy cases with flag
-!DRM_BRIDGE_ATTACH_NO_CONNECTOR, we do not have connector initialised
-in bridge_attach(), so add the mhdp->connector_ptr in device structure
-to handle both cases with DRM_BRIDGE_ATTACH_NO_CONNECTOR and
-!DRM_BRIDGE_ATTACH_NO_CONNECTOR, set it in atomic_enable() earlier to
-avoid possible NULL pointer dereference in recovery paths like
-modeset_retry_fn() with the DRM_BRIDGE_ATTACH_NO_CONNECTOR flag set.
+Add cdns_mhdp_bridge_mode_valid() to check if specific mode is valid for
+this bridge or not. In the legacy usecase with
+!DRM_BRIDGE_ATTACH_NO_CONNECTOR we were using the hook from
+drm_connector_helper_funcs but with DRM_BRIDGE_ATTACH_NO_CONNECTOR
+we need to have mode_valid() in drm_bridge_funcs.
+
+Without this patch, when using DRM_BRIDGE_ATTACH_NO_CONNECTOR
+flag, the cdns_mhdp_bandwidth_ok() function would not be called
+during  mode validation, potentially allowing modes that exceed
+the bridge's bandwidth capabilities to be incorrectly marked as
+valid.
 
 Fixes: c932ced6b585 ("drm/tidss: Update encoder/bridge chain connect model")
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
 Signed-off-by: Harikrishna Shenoy <h-shenoy@ti.com>
 Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patch.msgid.link/20251209120332.3559893-2-h-shenoy@ti.com
+Link: https://patch.msgid.link/20251209120332.3559893-3-h-shenoy@ti.com
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/bridge/cadence/cdns-mhdp8546-core.c   | 29 ++++++++++---------
- .../drm/bridge/cadence/cdns-mhdp8546-core.h   |  1 +
- .../drm/bridge/cadence/cdns-mhdp8546-hdcp.c   | 18 +++++++++---
- 3 files changed, 30 insertions(+), 18 deletions(-)
+ .../drm/bridge/cadence/cdns-mhdp8546-core.c   | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-index b18bdb2daddf8..d718a908208f5 100644
+index d718a908208f5..d56466e9b155f 100644
 --- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
 +++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-@@ -810,7 +810,7 @@ static void cdns_mhdp_fw_cb(const struct firmware *fw, void *context)
- 	bridge_attached = mhdp->bridge_attached;
- 	spin_unlock(&mhdp->start_lock);
- 	if (bridge_attached) {
--		if (mhdp->connector.dev)
-+		if (mhdp->connector_ptr)
- 			drm_kms_helper_hotplug_event(mhdp->bridge.dev);
- 		else
- 			drm_bridge_hpd_notify(&mhdp->bridge, cdns_mhdp_detect(mhdp));
-@@ -1706,6 +1706,7 @@ static int cdns_mhdp_connector_init(struct cdns_mhdp_device *mhdp)
- 		return ret;
- 	}
- 
-+	mhdp->connector_ptr = conn;
- 	drm_connector_helper_add(conn, &cdns_mhdp_conn_helper_funcs);
- 
- 	ret = drm_display_info_set_bus_formats(&conn->display_info,
-@@ -1985,17 +1986,25 @@ static void cdns_mhdp_atomic_enable(struct drm_bridge *bridge,
- 	struct drm_atomic_state *state = bridge_state->base.state;
- 	struct cdns_mhdp_bridge_state *mhdp_state;
- 	struct drm_crtc_state *crtc_state;
--	struct drm_connector *connector;
- 	struct drm_connector_state *conn_state;
- 	struct drm_bridge_state *new_state;
- 	const struct drm_display_mode *mode;
- 	u32 resp;
--	int ret;
-+	int ret = 0;
- 
- 	dev_dbg(mhdp->dev, "bridge enable\n");
- 
- 	mutex_lock(&mhdp->link_mutex);
- 
-+	mhdp->connector_ptr = drm_atomic_get_new_connector_for_encoder(state,
-+								       bridge->encoder);
-+	if (WARN_ON(!mhdp->connector_ptr))
-+		goto out;
-+
-+	conn_state = drm_atomic_get_new_connector_state(state, mhdp->connector_ptr);
-+	if (WARN_ON(!conn_state))
-+		goto out;
-+
- 	if (mhdp->plugged && !mhdp->link_up) {
- 		ret = cdns_mhdp_link_up(mhdp);
- 		if (ret < 0)
-@@ -2015,15 +2024,6 @@ static void cdns_mhdp_atomic_enable(struct drm_bridge *bridge,
- 	cdns_mhdp_reg_write(mhdp, CDNS_DPTX_CAR,
- 			    resp | CDNS_VIF_CLK_EN | CDNS_VIF_CLK_RSTN);
- 
--	connector = drm_atomic_get_new_connector_for_encoder(state,
--							     bridge->encoder);
--	if (WARN_ON(!connector))
--		goto out;
--
--	conn_state = drm_atomic_get_new_connector_state(state, connector);
--	if (WARN_ON(!conn_state))
--		goto out;
--
- 	if (mhdp->hdcp_supported &&
- 	    mhdp->hw_state == MHDP_HW_READY &&
- 	    conn_state->content_protection ==
-@@ -2100,6 +2100,7 @@ static void cdns_mhdp_atomic_disable(struct drm_bridge *bridge,
- 	if (mhdp->info && mhdp->info->ops && mhdp->info->ops->disable)
- 		mhdp->info->ops->disable(mhdp);
- 
-+	mhdp->connector_ptr = NULL;
- 	mutex_unlock(&mhdp->link_mutex);
+@@ -2231,6 +2231,25 @@ static const struct drm_edid *cdns_mhdp_bridge_edid_read(struct drm_bridge *brid
+ 	return cdns_mhdp_edid_read(mhdp, connector);
  }
  
-@@ -2365,7 +2366,7 @@ static void cdns_mhdp_modeset_retry_fn(struct work_struct *work)
- 
- 	mhdp = container_of(work, typeof(*mhdp), modeset_retry_work);
- 
--	conn = &mhdp->connector;
-+	conn = mhdp->connector_ptr;
- 
- 	/* Grab the locks before changing connector property */
- 	mutex_lock(&conn->dev->mode_config.mutex);
-@@ -2442,7 +2443,7 @@ static void cdns_mhdp_hpd_work(struct work_struct *work)
- 	int ret;
- 
- 	ret = cdns_mhdp_update_link_status(mhdp);
--	if (mhdp->connector.dev) {
-+	if (mhdp->connector_ptr) {
- 		if (ret < 0)
- 			schedule_work(&mhdp->modeset_retry_work);
- 		else
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.h b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.h
-index bad2fc0c73066..a76775c768956 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.h
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.h
-@@ -376,6 +376,7 @@ struct cdns_mhdp_device {
- 	struct mutex link_mutex;
- 
- 	struct drm_connector connector;
-+	struct drm_connector *connector_ptr;
- 	struct drm_bridge bridge;
- 
- 	struct cdns_mhdp_link link;
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
-index 31832ba4017f1..3c8532d7f7841 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-hdcp.c
-@@ -394,7 +394,7 @@ static int _cdns_mhdp_hdcp_disable(struct cdns_mhdp_device *mhdp)
- 	int ret;
- 
- 	dev_dbg(mhdp->dev, "[%s:%d] HDCP is being disabled...\n",
--		mhdp->connector.name, mhdp->connector.base.id);
-+		mhdp->connector_ptr->name, mhdp->connector_ptr->base.id);
- 
- 	ret = cdns_mhdp_hdcp_set_config(mhdp, 0, false);
- 
-@@ -436,6 +436,10 @@ static int cdns_mhdp_hdcp_check_link(struct cdns_mhdp_device *mhdp)
- 	int ret = 0;
- 
- 	mutex_lock(&mhdp->hdcp.mutex);
++static enum drm_mode_status
++cdns_mhdp_bridge_mode_valid(struct drm_bridge *bridge,
++			    const struct drm_display_info *info,
++			    const struct drm_display_mode *mode)
++{
++	struct cdns_mhdp_device *mhdp = bridge_to_mhdp(bridge);
 +
-+	if (!mhdp->connector_ptr)
-+		goto out;
++	mutex_lock(&mhdp->link_mutex);
 +
- 	if (mhdp->hdcp.value == DRM_MODE_CONTENT_PROTECTION_UNDESIRED)
- 		goto out;
- 
-@@ -445,7 +449,7 @@ static int cdns_mhdp_hdcp_check_link(struct cdns_mhdp_device *mhdp)
- 
- 	dev_err(mhdp->dev,
- 		"[%s:%d] HDCP link failed, retrying authentication\n",
--		mhdp->connector.name, mhdp->connector.base.id);
-+		mhdp->connector_ptr->name, mhdp->connector_ptr->base.id);
- 
- 	ret = _cdns_mhdp_hdcp_disable(mhdp);
- 	if (ret) {
-@@ -487,13 +491,19 @@ static void cdns_mhdp_hdcp_prop_work(struct work_struct *work)
- 	struct cdns_mhdp_device *mhdp = container_of(hdcp,
- 						     struct cdns_mhdp_device,
- 						     hdcp);
--	struct drm_device *dev = mhdp->connector.dev;
-+	struct drm_device *dev = NULL;
- 	struct drm_connector_state *state;
- 
-+	if (mhdp->connector_ptr)
-+		dev = mhdp->connector_ptr->dev;
++	if (!cdns_mhdp_bandwidth_ok(mhdp, mode, mhdp->link.num_lanes,
++				    mhdp->link.rate)) {
++		mutex_unlock(&mhdp->link_mutex);
++		return MODE_CLOCK_HIGH;
++	}
 +
-+	if (!dev)
-+		return;
++	mutex_unlock(&mhdp->link_mutex);
++	return MODE_OK;
++}
 +
- 	drm_modeset_lock(&dev->mode_config.connection_mutex, NULL);
- 	mutex_lock(&mhdp->hdcp.mutex);
- 	if (mhdp->hdcp.value != DRM_MODE_CONTENT_PROTECTION_UNDESIRED) {
--		state = mhdp->connector.state;
-+		state = mhdp->connector_ptr->state;
- 		state->content_protection = mhdp->hdcp.value;
- 	}
- 	mutex_unlock(&mhdp->hdcp.mutex);
+ static const struct drm_bridge_funcs cdns_mhdp_bridge_funcs = {
+ 	.atomic_enable = cdns_mhdp_atomic_enable,
+ 	.atomic_disable = cdns_mhdp_atomic_disable,
+@@ -2245,6 +2264,7 @@ static const struct drm_bridge_funcs cdns_mhdp_bridge_funcs = {
+ 	.edid_read = cdns_mhdp_bridge_edid_read,
+ 	.hpd_enable = cdns_mhdp_bridge_hpd_enable,
+ 	.hpd_disable = cdns_mhdp_bridge_hpd_disable,
++	.mode_valid = cdns_mhdp_bridge_mode_valid,
+ };
+ 
+ static bool cdns_mhdp_detect_hpd(struct cdns_mhdp_device *mhdp, bool *hpd_pulse)
 -- 
 2.53.0
 
