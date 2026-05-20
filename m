@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA3431F9BE;
-	Wed, 20 May 2026 16:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F6F2F0C62;
+	Wed, 20 May 2026 16:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295599; cv=none; b=exU86a1fk0/zrdtwBEeKoRJZyplLLff62sFvQ5CJUG5pz6BXrZmMb6lHpj1Cdjupr/hcDsnCYXX7L1Yeu8e/usHhtgrO1UBXQmC4rdkmHRxvegfegaWnx5E81PVGrHJe5vxoQff65XwNwSCNDT+pWk1f2QJTfmna5Z+UKFTIFU8=
+	t=1779295601; cv=none; b=FmS5Htpkop21weNNqWmQqRk6NO3D6faaipg6XE/SCEkty3vkKMmEHCpVYnBJDiYSdETfe0pKuapEwepCFjgas9vPDJxAV1n+uucykcf2hTwL8a6gNAmmnMawtQgVrhM42IiLGDj1X7yWP1yHX1p7vk6ISCA/DlwULLtjkVivxJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295599; c=relaxed/simple;
-	bh=oMGjPdSgxUkGGyVaH0QMA9hIH1ZUFDKXBVRqdsJde7E=;
+	s=arc-20240116; t=1779295601; c=relaxed/simple;
+	bh=WNSKa11xhyB8fXXs8mvkjOzXVLuyUMmq173Mbng+PjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9k9P2Zc+bLN03YL3alHrwpU160+SsLeZuiLRNOQ7xjnzGsZ+kJL54Zuoyv6XPle4ZAmj0zgnLWq/FquJamUvU9l59MH1Fy4KVtJfNEPH6SCbG1/d6Z7x8dTd6rjulYN1Cbu/bxi9Mqm7XKgULj/BaGN2+RJs4XsJ+3gl1ClVdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZ2cY8hA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pOuBDHvoIKjE+X3kARlvjXZ77Pl9A/5B6NwH0mgn3YYXikyvd2cmTw3oVtQH4lau2pbjIzrYKMRAuSOqY3DjThPa5fH+HPf9FltivbADKdBpXSS6s8LMrdE2p/Fizm5EGqY/xnpbVdCWuyNut6vffm7uECWFblxQiBPWyGT0ri4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvZt7+ew; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZ2cY8hA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394481F000E9;
-	Wed, 20 May 2026 16:46:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvZt7+ew"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D524A1F000E9;
+	Wed, 20 May 2026 16:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295597;
-	bh=PzkmxkvEYHp+kIpaClo5Cw2Blz37yJv1KU5TeC7c7fM=;
+	s=korg; t=1779295600;
+	bh=3OS6yHwfK/VzpH1HDUxOlx7abhVkvDR6ilx6yVXe1pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RZ2cY8hA05Meb4nejTTK9C6rNcWfH/7l+EjcMJxQN557uDLjMw4wG5uOkjjBUbKFv
-	 /2pG63iJH14h/75ENLF75TM7PIYD3fEb7+iKAjFFI/xSeCes777qAyOq/FPVbx+Oqk
-	 MmvSIXPLYIAxEjVIewZS0bdYOaxK4K5ohLX3+NLk=
+	b=JvZt7+ewYy8Om3z16ngyGPN0YtRWsVOZwKO8BZQfvAgK5saKr4GwEk7o2ctjrKUNW
+	 KzMVHVFqKd31f3QuON5wLE+LwMlpB7hVQK0Rx2kXYDl4o3kvS2zutkLD/GmlRQQjOe
+	 jgjjCOMenQe82wYfjGx7Q2n8NZxtEe4u8mNTym/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Hongyang Zhao <hongyang.zhao@thundersoft.com>,
-	Roger Shimizu <rosh@debian.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0481/1146] arm64: dts: qcom: qcs6490-rubikpi3: Use lt9611 DSI Port B
-Date: Wed, 20 May 2026 18:12:11 +0200
-Message-ID: <20260520162159.077165494@linuxfoundation.org>
+Subject: [PATCH 7.0 0482/1146] arm64: dts: qcom: talos: Add missing clock-names to GCC
+Date: Wed, 20 May 2026 18:12:12 +0200
+Message-ID: <20260520162159.099565876@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,53 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit ebcf2240a2494faf202ce5ec80ef159a38b1e542 ]
+[ Upstream commit c653607929bb4e0d8b80573bdb523adab5b975c2 ]
 
-The LT9611 HDMI bridge on RubikPi3 has DSI physically connected to
-Port B. Update the devicetree to use port@1 which corresponds to
-Port B input on the LT9611.
+The binding for this clock controller requires that clock-names are
+present. They're not really used by the kernel driver, but they're
+marked as required, so someone might have assumed it's done on purpose
+(where in reality we try to stay away from that since index-based
+references are faster, take up less space and are already widely used)
+and referenced it in drivers for another OS.
 
-Fixes: f055a39f6874 ("arm64: dts: qcom: Add qcs6490-rubikpi3 board dts")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
-Reviewed-by: Roger Shimizu <rosh@debian.org>
-Tested-by: Roger Shimizu <rosh@debian.org>
-Link: https://lore.kernel.org/r/20260207-rubikpi-next-20260116-v3-3-23b9aa189a3a@thundersoft.com
+Hence, do the least painful thing and add the missing entries.
+
+Fixes: 8e266654a2fe ("arm64: dts: qcom: add QCS615 platform")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260126-topic-talos_dt_warn-v1-1-c452afc647ad@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/talos.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-index 0b64a0b912021..f47efca42d48d 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-@@ -755,10 +755,10 @@ ports {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
+diff --git a/arch/arm64/boot/dts/qcom/talos.dtsi b/arch/arm64/boot/dts/qcom/talos.dtsi
+index 75716b4a58d6d..6dab0d5dcbb8a 100644
+--- a/arch/arm64/boot/dts/qcom/talos.dtsi
++++ b/arch/arm64/boot/dts/qcom/talos.dtsi
+@@ -666,6 +666,9 @@ gcc: clock-controller@100000 {
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>,
+ 				 <&rpmhcc RPMH_CXO_CLK_A>,
+ 				 <&sleep_clk>;
++			clock-names = "bi_tcxo",
++				      "bi_tcxo_ao",
++				      "sleep_clk";
  
--			port@0 {
--				reg = <0>;
-+			port@1 {
-+				reg = <1>;
- 
--				lt9611_a: endpoint {
-+				lt9611_b: endpoint {
- 					remote-endpoint = <&mdss_dsi0_out>;
- 				};
- 			};
-@@ -801,7 +801,7 @@ &mdss_dsi {
- };
- 
- &mdss_dsi0_out {
--	remote-endpoint = <&lt9611_a>;
-+	remote-endpoint = <&lt9611_b>;
- 	data-lanes = <0 1 2 3>;
- };
- 
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
 -- 
 2.53.0
 
