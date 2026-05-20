@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2373528DC4;
-	Wed, 20 May 2026 17:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C468D364E89;
+	Wed, 20 May 2026 17:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297042; cv=none; b=Y8zwpdDzur3kCs6aUmnsasFfohP/NrRBbjVYiS4dt4rleqyLUujOHTnZ0Q5Tl19d6GFizPSB+HaGdhqrjthLesIsiCZJsIRQ1k4/C4uz8nu4nv6ymlrdOGlSgMVwjbJC94vHLqLLIue79U0N+R18w6loPJeFJwO449Pcr5SrGiw=
+	t=1779297044; cv=none; b=Fn5r0HroHzVjEES7xXhnjnvfxaZ9QsnfT8srKZAM4TKXJKIv7cDqn9R6zVNCrShb4NDe/gFAW9EQhR9VNyBXi709X7M/IsyOruLoTbMllfpMiiQkM3mqS5jNJ6zSI255IxJKEy5tnH+js5tf25UTVbXZ36H0besrvfcHZuDudlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297042; c=relaxed/simple;
-	bh=Sr3JIbgdu8Q0irVgpxcbfd2HGjmKOEqqsHKiZwCuHPY=;
+	s=arc-20240116; t=1779297044; c=relaxed/simple;
+	bh=ufnb1MVS9g1u69JFudKgthLanM6oPGCm/+8s0g+WAII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVlWyMhZPH1v56n5UMFoHtxBE9S8SKNIIWp1galyNjegibQeFd6LC7NxySV4oEJc7X3two8upYKD0dLFFtk0eq0+SAf7j/frlg/zYYD+LTj5wKdjPqKWppG0ag1MVWidyd3MXk3SaUoEwQ+xHWbxMIONIF+quBElRrHJqFqz1AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PO+SitZ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OkX+8ZR3ny5+ImWezktM2VXLrTzu0Fd6iD6fqc5lvwAq/5oEn0HVPQ21N2fQ1edAZPg8JCtSEeIG86caEhQeouKaKCRIerCODFv7eOnNWAcx2yNVEzPuqq9mNm+rZ5nvI3LwEJQkJsBxSagXTWAddkD/HpBg8J6jFupDCDDzI2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plEQ+6PZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PO+SitZ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F01C1F000E9;
-	Wed, 20 May 2026 17:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plEQ+6PZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CD71F000E9;
+	Wed, 20 May 2026 17:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297041;
-	bh=dXGPR/e6wwv+RmYOjIenf5rsdB3CxWbVf4mUBsJeqEw=;
+	s=korg; t=1779297043;
+	bh=fqm1kFWmrT3yvdqhctlfWTcwOI84+12sodl6AEjPIcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PO+SitZ9mdHi9qlXg6yaJX+UFnXC665zpA66KejaLvrg+zNwsbvnov9XL8cxfUCsb
-	 Yyyhfm6KTlPiLBEO02ilJKVjLla2Z+Eu96/zk9Db48OoXmMbzWDmpGfOBt4FY2A+q9
-	 1v9gLvkGG7+3W+3YILvJtSPsdNKJrN1hOGWCJ1uE=
+	b=plEQ+6PZnrTf9FSicClNVa8SGpBs8ICGo1E0nO98ZBKPlg2DpGh9UaDcaiDpzrVBM
+	 TwexKRlPjwsO0krQ9lyeMT086EhWm6e6rvrtrEIKSu6HRDg2LGvlQX7/2BpofCc8My
+	 eN/Ue3+y9xqR98KhZ3LVgK4XM1Y0j+QGPGioz0FU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1028/1146] ice: fix missing dpll notifications for SW pins
-Date: Wed, 20 May 2026 18:21:18 +0200
-Message-ID: <20260520162211.494186798@linuxfoundation.org>
+Subject: [PATCH 7.0 1002/1146] drm/amd/display: Allow embedded connectors without DDC
+Date: Wed, 20 May 2026 18:20:52 +0200
+Message-ID: <20260520162210.909928309@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,161 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 1a41b58fd4dc80dca16c717e6e77c88b9d4e83a7 ]
+[ Upstream commit 494941aa772dab79251543764db6cd14bd337e43 ]
 
-The SMA/U.FL pin redesign (commit 2dd5d03c77e2 ("ice: redesign dpll
-sma/u.fl pins control")) introduced software-controlled pins that wrap
-backing CGU input/output pins, but never updated the notification and
-data paths to propagate pin events to these SW wrappers.
+On some laptops, the embedded panel may not have
+a DDC (display data channel) available. On these,
+the EDID may be hardcoded in ACPI or the VBIOS.
 
-The periodic work sends dpll_pin_change_ntf() only for direct CGU input
-pins.  SW pins that wrap these inputs never receive change or phase
-offset notifications, so userspace consumers such as synce4l monitoring
-SMA pins via dpll netlink never learn about state transitions or phase
-offset updates.  Similarly, ice_dpll_phase_offset_get() reads the SW
-pin's own phase_offset field which is never updated; the PPS monitor
-writes to the backing CGU input's field instead.
+In this case, use GPIO_DDC_LINE_UNKNOWN and don't fail.
 
-Fix by introducing ice_dpll_pin_ntf(), a wrapper around
-dpll_pin_change_ntf() that also notifies any registered SMA/U.FL pin
-whose backing CGU input matches.  Replace all direct
-dpll_pin_change_ntf() calls in the periodic notification paths with
-this wrapper.  Fix ice_dpll_phase_offset_get() to return the backing
-CGU input's phase_offset for input-direction SW pins.
-
-Fixes: 2dd5d03c77e2 ("ice: redesign dpll sma/u.fl pins control")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Ivan Vecera <ivecera@redhat.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-10-cdcb48303fd8@intel.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: def3488eb0fd ("drm/amd/display: refactor HPD to increase flexibility")
+Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/5192
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 75b8a6ca0e8bc3ce24572f854e95f8721b321179)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_dpll.c | 47 +++++++++++++++++------
- 1 file changed, 36 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc.h                | 2 +-
+ drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c | 3 +++
+ drivers/gpu/drm/amd/display/dc/link/link_factory.c | 4 +++-
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
-index 3f8cd5b8298b5..721a3f4d6a28f 100644
---- a/drivers/net/ethernet/intel/ice/ice_dpll.c
-+++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
-@@ -1963,7 +1963,10 @@ ice_dpll_phase_offset_get(const struct dpll_pin *pin, void *pin_priv,
- 				       d->active_input == p->input->pin))
- 		*phase_offset = d->phase_offset * ICE_DPLL_PHASE_OFFSET_FACTOR;
- 	else if (d->phase_offset_monitor_period)
--		*phase_offset = p->phase_offset * ICE_DPLL_PHASE_OFFSET_FACTOR;
-+		*phase_offset = (p->input &&
-+				 p->direction == DPLL_PIN_DIRECTION_INPUT ?
-+				 p->input->phase_offset :
-+				 p->phase_offset) * ICE_DPLL_PHASE_OFFSET_FACTOR;
- 	else
- 		*phase_offset = 0;
- 	mutex_unlock(&pf->dplls.lock);
-@@ -2657,6 +2660,27 @@ static u64 ice_generate_clock_id(struct ice_pf *pf)
- 	return pci_get_dsn(pf->pdev);
- }
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index 4c4239cac863d..8044c80971f04 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -1638,7 +1638,7 @@ struct dc_scratch_space {
+ 	struct dc_link_training_overrides preferred_training_settings;
+ 	struct dp_audio_test_data audio_test_data;
  
-+/**
-+ * ice_dpll_pin_ntf - notify pin change including any SW pin wrappers
-+ * @dplls: pointer to dplls struct
-+ * @pin: the dpll_pin that changed
-+ *
-+ * Send a change notification for @pin and for any registered SMA/U.FL pin
-+ * whose backing CGU input matches @pin.
-+ */
-+static void ice_dpll_pin_ntf(struct ice_dplls *dplls, struct dpll_pin *pin)
-+{
-+	dpll_pin_change_ntf(pin);
-+	for (int i = 0; i < ICE_DPLL_PIN_SW_NUM; i++) {
-+		if (dplls->sma[i].pin && dplls->sma[i].input &&
-+		    dplls->sma[i].input->pin == pin)
-+			dpll_pin_change_ntf(dplls->sma[i].pin);
-+		if (dplls->ufl[i].pin && dplls->ufl[i].input &&
-+		    dplls->ufl[i].input->pin == pin)
-+			dpll_pin_change_ntf(dplls->ufl[i].pin);
-+	}
-+}
+-	uint8_t ddc_hw_inst;
++	enum gpio_ddc_line ddc_hw_inst;
+ 
+ 	uint8_t hpd_src;
+ 
+diff --git a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
+index a2c46350e44e8..95f8b7c7d657a 100644
+--- a/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
++++ b/drivers/gpu/drm/amd/display/dc/gpio/gpio_service.c
+@@ -646,6 +646,9 @@ enum gpio_result dal_ddc_change_mode(
+ enum gpio_ddc_line dal_ddc_get_line(
+ 	const struct ddc *ddc)
+ {
++	if (!ddc)
++		return GPIO_DDC_LINE_UNKNOWN;
 +
- /**
-  * ice_dpll_notify_changes - notify dpll subsystem about changes
-  * @d: pointer do dpll
-@@ -2665,6 +2689,7 @@ static u64 ice_generate_clock_id(struct ice_pf *pf)
-  */
- static void ice_dpll_notify_changes(struct ice_dpll *d)
- {
-+	struct ice_dplls *dplls = &d->pf->dplls;
- 	bool pin_notified = false;
- 
- 	if (d->prev_dpll_state != d->dpll_state) {
-@@ -2673,17 +2698,17 @@ static void ice_dpll_notify_changes(struct ice_dpll *d)
- 	}
- 	if (d->prev_input != d->active_input) {
- 		if (d->prev_input)
--			dpll_pin_change_ntf(d->prev_input);
-+			ice_dpll_pin_ntf(dplls, d->prev_input);
- 		d->prev_input = d->active_input;
- 		if (d->active_input) {
--			dpll_pin_change_ntf(d->active_input);
-+			ice_dpll_pin_ntf(dplls, d->active_input);
- 			pin_notified = true;
- 		}
- 	}
- 	if (d->prev_phase_offset != d->phase_offset) {
- 		d->prev_phase_offset = d->phase_offset;
- 		if (!pin_notified && d->active_input)
--			dpll_pin_change_ntf(d->active_input);
-+			ice_dpll_pin_ntf(dplls, d->active_input);
- 	}
+ 	return (enum gpio_ddc_line)dal_gpio_get_enum(ddc->pin_data);
  }
  
-@@ -2712,6 +2737,7 @@ static bool ice_dpll_is_pps_phase_monitor(struct ice_pf *pf)
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_factory.c b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
+index 21815ad01a295..409cc6e6cd846 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_factory.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
+@@ -549,7 +549,9 @@ static bool construct_phy(struct dc_link *link,
+ 		goto ddc_create_fail;
+ 	}
  
- /**
-  * ice_dpll_pins_notify_mask - notify dpll subsystem about bulk pin changes
-+ * @dplls: pointer to dplls struct
-  * @pins: array of ice_dpll_pin pointers registered within dpll subsystem
-  * @pin_num: number of pins
-  * @phase_offset_ntf_mask: bitmask of pin indexes to notify
-@@ -2721,15 +2747,14 @@ static bool ice_dpll_is_pps_phase_monitor(struct ice_pf *pf)
-  *
-  * Context: Must be called while pf->dplls.lock is released.
-  */
--static void ice_dpll_pins_notify_mask(struct ice_dpll_pin *pins,
-+static void ice_dpll_pins_notify_mask(struct ice_dplls *dplls,
-+				      struct ice_dpll_pin *pins,
- 				      u8 pin_num,
- 				      u32 phase_offset_ntf_mask)
- {
--	int i = 0;
--
--	for (i = 0; i < pin_num; i++)
--		if (phase_offset_ntf_mask & (1 << i))
--			dpll_pin_change_ntf(pins[i].pin);
-+	for (int i = 0; i < pin_num; i++)
-+		if (phase_offset_ntf_mask & BIT(i))
-+			ice_dpll_pin_ntf(dplls, pins[i].pin);
- }
- 
- /**
-@@ -2905,7 +2930,7 @@ static void ice_dpll_periodic_work(struct kthread_work *work)
- 	ice_dpll_notify_changes(de);
- 	ice_dpll_notify_changes(dp);
- 	if (phase_offset_ntf)
--		ice_dpll_pins_notify_mask(d->inputs, d->num_inputs,
-+		ice_dpll_pins_notify_mask(d, d->inputs, d->num_inputs,
- 					  phase_offset_ntf);
- 
- resched:
+-	if (!link->ddc->ddc_pin) {
++	/* Embedded display connectors such as LVDS may not have DDC. */
++	if (!link->ddc->ddc_pin &&
++	    !dc_is_embedded_signal(link->connector_signal)) {
+ 		DC_ERROR("Failed to get I2C info for connector!\n");
+ 		goto ddc_create_fail;
+ 	}
 -- 
 2.53.0
 
