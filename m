@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FDD3D565B;
-	Wed, 20 May 2026 11:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA42B3E5A2F;
+	Wed, 20 May 2026 11:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276022; cv=none; b=FPpH37ObO9Qqjif4ljayaBodapSXXZ4TdroDCVqpWZwVdcnOhx3CVO9uMJ8Fv435ceVcRtIuxYZq39o4FEJJEPBwh7sxALpbMyLV6gUxiRdgw4QR0j1M3d2P8ICKK40bm1zrsu0sWogWZe9YjNHcJSMKNw1XMSroullLESnPJoI=
+	t=1779276023; cv=none; b=YaemlcNjD4vBQ57hwKmif77QX1dYQa6K+tq6TOAEo9R+V/0lRnA4zojQmU51plwOwPgFN0gm2I5e7lyX3f87ctG5eNHx6wPRUmFnfHvo1XHQlM76RRHSSWsUv8dcCg3uzy5/3faVaQ8k8zXJMfq47tq+Hxt1DWKWNpzrvs8sm1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276022; c=relaxed/simple;
-	bh=9XqgKcjYiXNDXU5OJxr+za0FK/nyzKGrvh5Ed/wllDY=;
+	s=arc-20240116; t=1779276023; c=relaxed/simple;
+	bh=jE/ap6AtQ4rLyz3VGPMSPdQOfMucbwTXULMeXJdwvuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g4SvkvLv4en7acF5YYt5TSM5IRSyt5CuoLY+OAGjBulwLyk7bxreV9UHyYya1nVWmMv50J3CJoloKZkoqx/Us+vYyFRmwSpjw+f/Nv3NA/CVD47ZaWGHFHr2/ufNV4NU00sOmPctmlKmXmEegVO7p7l8Le6xuGb2ztA/thuNGI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GVvC94ct; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XHK2J0675Tgn9PtFcRCzYJVxIup/03az0pS4DekUMbTpJ72wS8WKYgCcyGNpdxc6fzr06eO7smZyOVco1D7fFKuaI19jBQD3cURBDKWXHBisGONQHtihZE4ZhdjrUUyp4FKhnizra/ab+/kix2TnQTLSwQr8adBOj/7Ps4AZsMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/4weUHP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GVvC94ct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1BA1F0089A;
-	Wed, 20 May 2026 11:20:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/4weUHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A561F0089B;
+	Wed, 20 May 2026 11:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276019;
-	bh=86pkA5p74HDwTMFjudY77u2qEq7BzgKXWCa8owjS5ok=;
+	s=k20260515; t=1779276020;
+	bh=nc2srJMlOO6QkJcXkXpQ/gYgy6cnV+CHKhJGFqFNrqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GVvC94ct4I8khklouz1uHSfLgUmFxhLNVBCbtHCKPxvwH5vGcBnYqpoTAPsEiNRsS
-	 yvnEOtTcsIVwLHVlSo042BSUj2gj1jN8ymDGGLnvr1iyRdQ5ER9pL0kId6V9tw+Fsd
-	 7T5EryqOPg8OWmX0m7YFwefUF+uyiksW48qkMpeSAgjLkaCP3yqubdc/IriOlkOjGR
-	 ziI8XsUxrY5ApMUwLT6y0xj0gaYJH46sIbJCvm4Nx5rKYokjLo6QAcngK5IasIa4oB
-	 7NqvU9iDCx/c7baGvpATzDUIaykCQQ6eYu503b80Frs9m3GSRXTHQzu3XPRPN+icX2
-	 6Db2vVJZ7Qlkw==
+	b=B/4weUHPpReSv0OB1ihrkk9lSXMsbhGY0y9ypctV25/gRlQrnpEzJx/D/mQGgOxdY
+	 BV0R6aIOJukhEMHMGpDH52wPge/AulHOeFjKaW1gSWc4Ilv0xgUON6WaUH5Kg2mgtU
+	 stJEX2RAXTwXVZEzQ897R882liCLDA7yp2b4v58dlyQqd1BR/i28XEGrtNHaI0LGX5
+	 ssZJscbnc2tKlM+Rer6S6gk6wxHjUTJ7Eq1pCD1s4Py7fZs9DSJ3gT+0P6h46x9ipq
+	 eMDuICF5914aUfsH9cJKq3s3SUYyjyy3vvlU3TE6SfVn4BF8RL9fJwkJOCtmUQ/tmM
+	 JK3AGJk00cR8g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Florian Pradines <florian.pradines@gmail.com>,
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org,
-	libertas-dev@lists.infradead.org,
+	gupt21@gmail.com,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-i2c@vger.kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] wifi: libertas: fix integer underflow in process_cmdrequest()
-Date: Wed, 20 May 2026 07:18:56 -0400
-Message-ID: <20260520111944.3424570-24-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] HID: mcp2221: fix OOB write in mcp2221_raw_event()
+Date: Wed, 20 May 2026 07:18:57 -0400
+Message-ID: <20260520111944.3424570-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -47,276 +51,274 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
+From: Florian Pradines <florian.pradines@gmail.com>
 
-[ Upstream commit 3994b4afd521d60e47e012fe2ed7b606aaec370b ]
+[ Upstream commit f097d246677b03db814c5862f368cea341b76a00 ]
 
-The existing validation only checks if recvlength exceeds
-LBS_CMD_BUFFER_SIZE, but doesn't check the lower bound. When a
-USB device sends a response shorter than MESSAGE_HEADER_LEN, the
-subtraction (recvlength - MESSAGE_HEADER_LEN) wraps to a huge
-value, causing memcpy to corrupt the heap.
-Add the same lower bound check that libertas_tf already has.
+mcp2221_raw_event() copies device-supplied data into mcp->rxbuf at
+offset rxbuf_idx without checking that the copy fits within the
+destination buffer. A device responding with up to 60 bytes to a
+small I2C/SMBus read can overflow the buffer.
 
-Signed-off-by: Amir Mohammad Jahangirzad <a.jahangirzad@gmail.com>
-Link: https://patch.msgid.link/20260418004247.368944-1-a.jahangirzad@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Add a rxbuf_size field to struct mcp2221, set it alongside rxbuf in
+mcp_i2c_smbus_read(), and check rxbuf_idx + data[3] <= rxbuf_size
+before the memcpy.
+
+Reported-by: Benoît Sevens <bsevens@google.com>
+Signed-off-by: Florian Pradines <florian.pradines@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
-### Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem is `wifi: libertas`; action verb is `fix`;
-claimed intent is to prevent integer underflow in
-`process_cmdrequest()`.
+## Phase 1: Commit Message Forensics
+Step 1.1 Record: subsystem `HID: mcp2221`; action verb `fix`; claimed
+intent: prevent an out-of-bounds write in `mcp2221_raw_event()` when
+copying device-supplied I2C read data into `mcp->rxbuf`.
 
-Step 1.2 Record: Tags present are `Signed-off-by: Amir Mohammad
-Jahangirzad`, `Link: https://patch.msgid.link/20260418004247.368944-1-
-a.jahangirzad@gmail.com`, and `Signed-off-by: Johannes Berg`. No
-`Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by`, or
-`Cc: stable` tag was present in the supplied commit message or original
-posted patch.
+Step 1.2 Record: tags found in upstream commit
+`f097d246677b03db814c5862f368cea341b76a00`: `Reported-by: Benoît Sevens
+<bsevens@google.com>`, `Signed-off-by: Florian Pradines
+<florian.pradines@gmail.com>`, `Signed-off-by: Jiri Kosina
+<jkosina@suse.com>`. No `Fixes:`, no `Cc: stable`, no `Link:` in the
+commit message.
 
-Step 1.3 Record: The commit body describes a concrete memory corruption
-bug: `recvlength` is only checked against the upper bound, then
-`recvlength - MESSAGE_HEADER_LEN` is stored in `priv->resp_len[i]` and
-used as the `memcpy()` length. If a USB device supplies fewer than 4
-bytes, the subtraction becomes negative and is converted to a huge
-unsigned copy length. Symptom/failure mode: heap/driver memory
-corruption from `memcpy()`. Version information: none in the message.
-Root cause: missing lower-bound validation.
+Step 1.3 Record: bug description is explicit: `mcp2221_raw_event()`
+copies `data[3]` bytes into `mcp->rxbuf + rxbuf_idx` without checking
+the destination buffer size. Failure mode is kernel memory corruption
+via OOB write when a device returns up to 60 bytes for a smaller
+requested read.
 
-Step 1.4 Record: This is not hidden; it is explicitly a memory-safety
-fix. It matches the same already-present guard in `libertas_tf`.
+Step 1.4 Record: not hidden; this is a direct memory-safety fix.
 
-### Phase 2: Diff Analysis
-Step 2.1 Record: One file changed:
-`drivers/net/wireless/marvell/libertas/if_usb.c`, 3 insertions and 2
-deletions. Modified function: `process_cmdrequest()`. Scope: single-file
-surgical fix.
+## Phase 2: Diff Analysis
+Step 2.1 Record: one file changed, `drivers/hid/hid-mcp2221.c`, 7
+insertions. Modified areas: `struct mcp2221`, `mcp_i2c_smbus_read()`,
+`mcp2221_raw_event()`. Scope: single-file surgical fix.
 
-Step 2.2 Record: Before, `process_cmdrequest()` rejected only
-`recvlength > LBS_CMD_BUFFER_SIZE`; lengths `1..3` passed and produced
-`recvlength - MESSAGE_HEADER_LEN`. After, it rejects `recvlength <
-MESSAGE_HEADER_LEN` as well as overlarge responses. This affects the USB
-command-response receive path.
+Step 2.2 Record: before, the driver tracked `rxbuf` and `rxbuf_idx` but
+not the destination size. After, it stores `rxbuf_size` when setting
+`rxbuf`, and rejects `rxbuf_idx + data[3] > rxbuf_size` before
+`memcpy()`.
 
-Step 2.3 Record: Bug category is memory safety, specifically integer
-underflow leading to oversized `memcpy()`. Verified details:
-`MESSAGE_HEADER_LEN` is 4, `resp_len` is `u32`, `resp_buf` is `u8
-resp_buf[2][LBS_UPLD_SIZE]`, and `LBS_UPLD_SIZE` is 2312. A negative
-subtraction assigned to `u32` becomes a huge length, far beyond the
-destination buffer.
+Step 2.3 Record: bug category is memory safety, specifically OOB write
+from device-controlled length and cumulative receive offset. The earlier
+`data[3] > 60` check only capped a single MCP2221 report, not the
+destination buffer size.
 
-Step 2.4 Record: Fix quality is high: minimal bounds check, no API
-change, no new behavior except rejecting malformed command responses.
-Regression risk is very low; valid command responses must already
-include the 4-byte command type/header.
+Step 2.4 Record: fix is minimal and locally correct for the upstream
+parent, but direct stable backports need care because older stable
+branches still have two manual `mcp_smbus_xfer()` paths that set
+`mcp->rxbuf` directly.
 
-### Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` shows the upper-bound check came from
-`ddac452680a516` in the v2.6.25-rc1 era, and the `resp_len = recvlength
-- MESSAGE_HEADER_LEN` plus `memcpy()` flow came from `7919b89c8276` in
-the v2.6.26-rc1 era. This code is old and widely present.
+## Phase 3: Git History
+Step 3.1 Record: `git blame` showed `rxbuf`, `rxbuf_idx`,
+`mcp_i2c_smbus_read()`, and the `memcpy()` path originated in
+`67a95c21463d0`, first contained in `v5.7-rc1`. The partial-read
+handling came from `2682468671aa0`, first contained in `v6.8-rc1`. The
+prior per-report `data[3] > 60` guard came from `b56cc41a3ae73`, first
+contained in `v6.17-rc4` and backported to stable equivalents.
 
-Step 3.2 Record: No `Fixes:` tag is present in the candidate, so there
-is no specific tagged introducing commit to follow. Blame nevertheless
-identifies the relevant old code.
+Step 3.2 Record: no `Fixes:` tag, so no tagged introducing commit to
+follow.
 
-Step 3.3 Record: Recent file history includes unrelated cleanup/fix
-commits such as `3968e81ba644` changing skb free placement and
-`d66676e6ca96` fixing a warning in `usb_tx_block()`. I found no
-prerequisite commit needed for this bounds check.
+Step 3.3 Record: recent related commits include `b56cc41a3ae73` for the
+60-byte report cap, `e31b556c0ba21` for read-error cancellation, and
+`ab05515757fcb` for using `mcp_i2c_smbus_read()` for block reads.
+`ab05515757fcb` is an important context dependency for the exact
+upstream diff.
 
-Step 3.4 Record: `git log --author='Amir Mohammad Jahangirzad'` found no
-prior local commits in this Marvell wireless subtree. The final signoff
-is from Johannes Berg; `MAINTAINERS` lists Johannes Berg as wireless
-maintainer, while the Libertas driver itself is marked orphaned under
-`linux-wireless` and `libertas-dev`.
+Step 3.4 Record: author Florian Pradines had no other local commits
+found in `drivers/hid`; Jiri Kosina, the HID maintainer,
+committed/applied the patch.
 
-Step 3.5 Record: Dependencies found: none. The patch uses existing local
-constants and mirrors the already-existing `libertas_tf` check.
+Step 3.5 Record: upstream parent contains `ab05515757fcb`; stable
+branches checked from `5.10.y` through `7.0.y` do not. A stable backport
+should either adapt the patch to set `rxbuf_size` in the two remaining
+manual `mcp_smbus_xfer()` paths or include an appropriate
+prerequisite/backport.
 
-### Phase 4: Mailing List And External Research
-Step 4.1 Record: No commit hash was available in local history, so `b4
-dig -c` could not be used successfully; `b4 dig -c
-20260418004247.368944-1-a.jahangirzad@gmail.com` failed because it
-expects a commit. Fallback `b4 mbox` and the lore mirror found the
-original patch at `https://yhbt.net/lore/lkml/20260418004247.368944-1-
-a.jahangirzad@gmail.com/T/`. The thread has one message and no replies.
-`b4 mbox -c` found no newer revision in the thread.
+## Phase 4: Mailing List / External Research
+Step 4.1 Record: `b4 dig -c f097d246677b03db814c5862f368cea341b76a00`
+found the lore thread: `https://patch.msgid.link/20260509094517.2691246-
+1-florian.pradines@gmail.com`. `b4 dig -a` showed only v1.
 
-Step 4.2 Record: Original recipients included Johannes Berg, Kees Cook,
-Ingo Molnar, Johan Hovold, `linux-wireless`, `libertas-dev`, and `linux-
-kernel`. No reviewer replies, NAKs, or explicit stable nominations were
-present in the fetched thread.
+Step 4.2 Record: `b4 dig -w` showed recipients included Florian
+Pradines, Rishi Gupta, Jiri Kosina, Benjamin Tissoires, `linux-i2c`, and
+`linux-input`.
 
-Step 4.3 Record: No `Reported-by` or bug-report link was present. I
-found no separate public bug report for this exact issue. The message
-itself provides the failure mechanism.
+Step 4.3 Record: reporter Benoît Sevens previously submitted a similar
+heap-buffer-overflow patch. Jiri replied that Benoît’s patch was mangled
+and that Florian’s patch would be taken with Benoît added as `Reported-
+by`. Benoît then noted the missing `mcp_smbus_xfer()` assignments, which
+is relevant for older stable bases.
 
-Step 4.4 Record: Related precedent exists: commit `3348ef6a6a126` fixed
-the identical underflow in `libertas_tf: process_cmdrequest()`, with
-message “If recvlength is less than MESSAGE_HEADER_LEN (4) we would end
-up corrupting memory.” That analogous fix was later carried in stable
-review postings for 4.19 and 3.16.
+Step 4.4 Record: not part of a multi-patch series. Related patches exist
+for report-size validation, but Jiri questioned the “MCP2221 always
+sends 64-byte reports” assumption in that separate thread.
 
-Step 4.5 Record: Web searches found the exact candidate posting and
-stable history for the analogous `libertas_tf` fix, but no exact stable
-discussion for this new `libertas` patch.
+Step 4.5 Record: direct lore/stable WebFetch was blocked by Anubis, but
+web search found related stable discussion for prior mcp2221 fixes, not
+an exact stable request for `f097d246677b`.
 
-### Phase 5: Code Semantic Analysis
-Step 5.1 Record: Modified function: `process_cmdrequest()`.
+## Phase 5: Semantic Analysis
+Step 5.1 Record: changed function is `mcp_i2c_smbus_read()`; changed
+callback is `mcp2221_raw_event()`.
 
-Step 5.2 Record: Caller is `if_usb_receive()`, reached as the receive
-URB completion callback installed by `usb_fill_bulk_urb()` through
-`if_usb_submit_rx_urb()`.
+Step 5.2 Record: callers of `mcp_i2c_smbus_read()` are `mcp_i2c_xfer()`
+and `mcp_smbus_xfer()`, wired into `mcp_i2c_algo`. `mcp2221_raw_event()`
+is called from HID core before normal raw report processing, via
+`hid_input_report()` / `__hid_input_report()`.
 
-Step 5.3 Record: Key callees are `memcpy()`, `dev_kfree_skb_irq()`, and
-`lbs_notify_command_response()`. The command response is later consumed
-by the main thread through `lbs_process_command_response()`.
+Step 5.3 Record: affected callees include `mcp_send_data_req_status()`,
+`mcp_send_report()`, `wait_for_completion_timeout()`, and the vulnerable
+`memcpy()`.
 
-Step 5.4 Record: Reachability is verified through USB receive
-completion: a Libertas USB device response with type `CMD_TYPE_REQUEST`
-reaches `process_cmdrequest()`. The triggering input is device-
-controlled USB receive data, so this is reachable with affected hardware
-or a malicious/faulty USB device.
+Step 5.4 Record: reachability is real: USB HID interrupt input reaches
+`mcp2221_raw_event()`, and I2C/SMBus transfers reach
+`mcp_i2c_smbus_read()` through the registered I2C adapter.
+Triggerability by an unprivileged local user was not verified; trigger
+by a malicious or buggy MCP2221-side device response is verified by the
+code path.
 
-Step 5.5 Record: Similar pattern found in `libertas_tf`; that sibling
-driver already has the exact lower-bound check. `if_sdio` and `if_spi`
-use different response formats and do not subtract `MESSAGE_HEADER_LEN`
-in the same way.
+Step 5.5 Record: similar pattern found in stable branches: two manual
+`mcp_smbus_xfer()` receive-buffer assignments remain in stable branches
+and must be handled in backports.
 
-### Phase 6: Cross-Referencing And Stable Tree Analysis
-Step 6.1 Record: Representative tags `v3.16`, `v4.14`, `v4.19`, `v5.4`,
-`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, and newer `v6.13` through
-`v6.17` all contain the buggy `process_cmdrequest()` pattern without the
-lower-bound check. The bug dates back to at least the v2.6.26-rc1 era.
+## Phase 6: Stable Tree Analysis
+Step 6.1 Record: the driver was introduced in `v5.7-rc1`; local stable
+refs `5.10.y`, `5.15.y`, `6.1.y`, `6.6.y`, `6.12.y`, `6.18.y`, `6.19.y`,
+and `7.0.y` contain the vulnerable `rxbuf`/`memcpy()` pattern. `5.4.y`
+does not contain the driver.
 
-Step 6.2 Record: Expected backport difficulty is low for modern stable
-trees: the same context is present in representative stable tags, and
-`git apply --check` succeeds against the current tree. Very old trees
-before the Marvell directory move may need path/context adjustment, as
-verified by older tags using `drivers/net/wireless/libertas/if_usb.c`.
+Step 6.2 Record: `git apply --check` against current
+`stable/linux-7.0.y` succeeds syntactically, but semantic backport work
+is needed because stable lacks `ab05515757fcb`.
 
-Step 6.3 Record: No exact related fix for `libertas` was found in local
-history. The sibling `libertas_tf` fix exists and was stable-backported.
+Step 6.3 Record: prior stable branches already contain the earlier
+60-byte cap fix or its backported equivalent, but that does not fix
+cumulative overflow into smaller destination buffers.
 
-### Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: Subsystem is wireless driver code under
-`drivers/net/wireless/marvell/libertas`. Criticality: driver-specific,
-but memory corruption in a kernel USB receive path is high severity for
-affected systems.
+## Phase 7: Subsystem Context
+Step 7.1 Record: subsystem is HID driver for the Microchip MCP2221 USB-
+to-I2C/SMBus bridge. Criticality: driver-specific, but memory corruption
+from USB/HID device input is high severity for affected systems.
 
-Step 7.2 Record: Subsystem activity is low-to-moderate; recent history
-shows occasional fixes and cleanups. `MAINTAINERS` marks Marvell
-Libertas as orphaned, with `linux-wireless` and `libertas-dev` lists.
+Step 7.2 Record: file history shows active recent maintenance and
+multiple security/correctness fixes in this driver.
 
-### Phase 8: Impact And Risk Assessment
-Step 8.1 Record: Affected population is config- and hardware-specific:
-systems with `CONFIG_LIBERTAS_USB` and Marvell Libertas 8388 USB
-devices, or systems exposed to a malicious USB device matching the
-driver IDs.
+## Phase 8: Impact And Risk
+Step 8.1 Record: affected population is users of MCP2221 hardware or
+systems exposed to such USB HID devices.
 
-Step 8.2 Record: Trigger condition is a USB command response shorter
-than `MESSAGE_HEADER_LEN` but with `CMD_TYPE_REQUEST` dispatch. This is
-device-controlled. I did not verify an unprivileged software-only
-trigger; physical or device-level control is the verified trigger model.
+Step 8.2 Record: trigger is an I2C/SMBus read where the MCP2221-side
+response reports more bytes than the destination buffer can hold.
+Physical/malicious-device trigger is verified; unprivileged local
+trigger depends on device-node permissions and was not verified.
 
-Step 8.3 Record: Failure mode is heap/driver memory corruption from
-oversized `memcpy()`. Severity: HIGH to CRITICAL, because kernel memory
-corruption can crash the system and can have security implications.
+Step 8.3 Record: failure mode is OOB write into kernel memory, severity
+HIGH to CRITICAL due to memory corruption/crash/security risk.
 
-Step 8.4 Record: Benefit is high for affected systems: prevents kernel
-memory corruption from malformed USB responses. Risk is very low: 3-line
-effective validation change in one driver function, with precedent in
-sibling driver.
+Step 8.4 Record: benefit is high. Risk is low for the upstream parent
+and for correctly adapted stable backports. Risk is medium for blind
+cherry-picks into older stable branches because `rxbuf_size` would not
+be set in all stable receive-buffer paths.
 
-### Phase 9: Final Synthesis
-Step 9.1 Record: Evidence for backporting: real memory corruption bug;
-old code present across many stable release tags; tiny surgical fix; no
-new API or feature; exact validation already used by `libertas_tf`;
-analogous `libertas_tf` fix was stable-backported. Evidence against:
-driver-specific and no external bug report or tested-by tag. Unresolved:
-exact final upstream commit hash was not present in local history, so
-`b4 dig -c <commit_hash>` could not be completed.
+## Phase 9: Final Synthesis
+Evidence for backporting: real OOB write, explicit reporter, small
+patch, maintainer-applied, affects stable-supported code since `5.10.y`,
+fixes a memory-corruption class bug.
 
-Step 9.2 Record:
-1. Obviously correct and tested? Obviously correct by code inspection;
-   no explicit `Tested-by`.
-2. Fixes a real bug? Yes, verified underflow into oversized `memcpy()`.
-3. Important issue? Yes, kernel memory corruption.
-4. Small and contained? Yes, one function in one file.
-5. No new features/APIs? Yes.
-6. Can apply to stable trees? Yes for modern representative tags with
-   likely clean/minor context; old pre-directory-move trees may need
-   path adjustment.
+Evidence against or concerns: no `Fixes:`/`Cc: stable`; exact upstream
+diff assumes `ab05515757fcb`, absent from checked stable branches; blind
+cherry-pick is not sufficient for older stable trees.
 
-Step 9.3 Record: No exception category such as device ID, quirk, DT,
-build, or docs applies. This is a direct memory-safety bug fix.
+Stable rules checklist: obviously correct on its upstream base: yes.
+Fixes a real user-affecting bug: yes. Important issue: yes, kernel
+memory corruption. Small and contained: yes, 7 insertions. No new
+feature/API: yes. Applies to stable: syntactically yes on `7.0.y`, but
+older stable needs a branch-specific backport adjustment.
 
-Step 9.4 Record: Stable backport decision is YES. The fix prevents
-kernel memory corruption in an old, stable-present USB driver path with
-extremely low regression risk.
+Exception category: none; this is a memory-safety fix, not a device
+ID/quirk/doc/build exception.
 
 ## Verification
-- Phase 1: Parsed supplied tags and fetched original patch thread with
-  `b4 mbox`; confirmed no `Fixes`, `Reported-by`, `Tested-by`,
-  `Reviewed-by`, `Acked-by`, or stable tag.
-- Phase 2: Read `drivers/net/wireless/marvell/libertas/if_usb.c`,
-  `dev.h`, and `defs.h`; confirmed `MESSAGE_HEADER_LEN`, `resp_len`,
-  `resp_buf`, and `memcpy()` behavior.
-- Phase 3: Ran `git blame` on `process_cmdrequest()`; identified old
-  introducing history around `ddac452680a516` and `7919b89c8276`.
-- Phase 3: Ran `git describe --contains`; confirmed relevant code dates
-  to v2.6.25/v2.6.26-era history.
-- Phase 4: `b4 dig` with the message-id failed because no local commit
-  hash was available; recorded as unresolved.
-- Phase 4: `b4 mbox` fetched the patch thread; `b4 mbox -c` found one
-  message and no newer revision.
-- Phase 4: Fetched lore mirror and stable archive pages; confirmed
-  analogous `libertas_tf` fix and stable review postings.
-- Phase 5: Traced callers from `if_usb_receive()` through
-  `usb_fill_bulk_urb()` and `if_usb_submit_rx_urb()`.
-- Phase 6: Checked release tags from `v3.16` through representative
-  active v6 tags; confirmed the buggy code exists broadly.
-- Phase 6: Ran `git apply --check` against the current tree; patch
-  applies cleanly there.
-- Phase 7: Checked `MAINTAINERS`; confirmed Libertas is orphaned under
-  wireless lists and Johannes Berg is listed for wireless maintenance.
-- Phase 8: Verified trigger is USB device-controlled receive data; no
-  unprivileged software-only trigger was verified.
+- Phase 1: fetched and inspected upstream commit
+  `f097d246677b03db814c5862f368cea341b76a00`.
+- Phase 2: verified exact diff is 7 insertions in `drivers/hid/hid-
+  mcp2221.c`.
+- Phase 3: ran `git blame`, `git describe --contains`, and targeted `git
+  log` without `--all`; identified `67a95c21463d0`, `2682468671aa0`,
+  `b56cc41a3ae73`, and `ab05515757fcb`.
+- Phase 4: ran `b4 dig -c`, `b4 dig -a`, `b4 dig -w`, and fetched mboxes
+  with `b4 mbox`; verified Jiri’s “Applied, thanks” and Benoît’s earlier
+  report/backport-relevant concern.
+- Phase 5: used code search and file reads to verify HID and I2C/SMBus
+  call paths.
+- Phase 6: used `git grep` against stable refs to verify vulnerable
+  patterns in `5.10.y` through `7.0.y`, and absence from `5.4.y`.
+- Phase 6: verified exact patch syntactically applies to current
+  `stable/linux-7.0.y`, but `ab05515757fcb` is not an ancestor of
+  checked stable refs.
+- Phase 8: severity is based on verified device-controlled `memcpy()`
+  into kernel buffer without destination-size check.
+- UNVERIFIED: no runtime reproducer was executed; no build test was run;
+  unprivileged local triggerability was not verified.
+
+This should be backported, but stable maintainers should not blindly
+cherry-pick it into pre-`ab05515757fcb` trees without adding
+`rxbuf_size` initialization to every remaining `mcp->rxbuf` assignment.
 
 **YES**
 
- drivers/net/wireless/marvell/libertas/if_usb.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/hid/hid-mcp2221.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/libertas/if_usb.c b/drivers/net/wireless/marvell/libertas/if_usb.c
-index 8a6bf1365cfab..42d3fd32ece28 100644
---- a/drivers/net/wireless/marvell/libertas/if_usb.c
-+++ b/drivers/net/wireless/marvell/libertas/if_usb.c
-@@ -625,9 +625,10 @@ static inline void process_cmdrequest(int recvlength, uint8_t *recvbuff,
- 	unsigned long flags;
- 	u8 i;
- 
--	if (recvlength > LBS_CMD_BUFFER_SIZE) {
-+	if (recvlength < MESSAGE_HEADER_LEN ||
-+	    recvlength > LBS_CMD_BUFFER_SIZE) {
- 		lbs_deb_usbd(&cardp->udev->dev,
--			     "The receive buffer is too large\n");
-+			     "The receive buffer is invalid: %d\n", recvlength);
- 		kfree_skb(skb);
- 		return;
+diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
+index ef3b5c77c38e3..badd4958bc12c 100644
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -121,6 +121,7 @@ struct mcp2221 {
+ 	u8 *rxbuf;
+ 	u8 txbuf[64];
+ 	int rxbuf_idx;
++	int rxbuf_size;
+ 	int status;
+ 	u8 cur_i2c_clk_div;
+ 	struct gpio_chip *gc;
+@@ -323,12 +324,14 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
+ 		mcp->txbuf[3] = (u8)(msg->addr << 1);
+ 		total_len = msg->len;
+ 		mcp->rxbuf = msg->buf;
++		mcp->rxbuf_size = msg->len;
+ 	} else {
+ 		mcp->txbuf[1] = smbus_len;
+ 		mcp->txbuf[2] = 0;
+ 		mcp->txbuf[3] = (u8)(smbus_addr << 1);
+ 		total_len = smbus_len;
+ 		mcp->rxbuf = smbus_buf;
++		mcp->rxbuf_size = smbus_len;
  	}
+ 
+ 	ret = mcp_send_data_req_status(mcp, mcp->txbuf, 4);
+@@ -912,6 +915,10 @@ static int mcp2221_raw_event(struct hid_device *hdev,
+ 					mcp->status = -EINVAL;
+ 					break;
+ 				}
++				if (mcp->rxbuf_idx + data[3] > mcp->rxbuf_size) {
++					mcp->status = -EINVAL;
++					break;
++				}
+ 				buf = mcp->rxbuf;
+ 				memcpy(&buf[mcp->rxbuf_idx], &data[4], data[3]);
+ 				mcp->rxbuf_idx = mcp->rxbuf_idx + data[3];
 -- 
 2.53.0
 
