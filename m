@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74528371048;
-	Wed, 20 May 2026 18:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCA93FDC00;
+	Wed, 20 May 2026 18:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301442; cv=none; b=IzSeGige5s/YqbBV2Kkw+CRqlCM3CmDuQoKl9/t+phwiQkxdRmVn8mshCxx61jO+oL+mbaTYXLsBgNdkWhkkq+Vjdt+jE2FO5AxwrY04UZtXhN53jahtHgRlDD5zQfXk4qRJlzHiF03UoOnfpXYzVd4WzqmCJkMapUhnV+3IEFU=
+	t=1779301445; cv=none; b=gZQtyPEViZuvwDZ2GhAQyEtedC/+tIVA0KXYbsqp2vjplGsBSrnmzqvBMN2ibqyBhgKRkI54t6tp5WN7n+sXmMy4fZyrjgm7BIXlqrowfZ0uoUurZpwIUtj+IV8+wH1rFaHLLSKa2jrG2qIArtV8gi14xvb+51nwLeBDDhxyCyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301442; c=relaxed/simple;
-	bh=lYHqfg+GGMRyR4UU6iiMDyiz1dkxump6patEJ369if4=;
+	s=arc-20240116; t=1779301445; c=relaxed/simple;
+	bh=4LxR3k90MF3JpItXQSzLsHkJMUFi1LrTsEU5puU5hTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g5etXV6l0Y65wuy23u4+/Fl8VHXxStXfQD2Pr88Y4QN8JGxsNNOJxy5dB2wW4P1NIY/gH9FvmJrWVtEG04irGszfaLNbfaitGFE+foDfoWD2bCvolKBU340+MQQTXp0udlznVMuXe2/uhQeHfm+BEyoK0BJTsnSy3vbWb/xfPqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoztNbI9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=O5wldt8/bVFxY0DzPF+tXjeFcEkhGPD8xIvrYo5lU7El2ck74XUS4W3Vj0OaTIsI6QCaUoODi5UVXSfVSuO/HamXRNnDzH4nDV3w/jSUdUex49LRyEv+HWxo5tRwZtTbQH2fdT5B94ax7BXhnpJIx1uzTd7UPDjlXkdoHlIyZyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z40ZOLgl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoztNbI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D922D1F000E9;
-	Wed, 20 May 2026 18:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z40ZOLgl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8378F1F00893;
+	Wed, 20 May 2026 18:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301441;
-	bh=RsZQoOo5mkW0pQ5v7UGMcaXf3ZEvKkjYz30RGuyHET0=;
+	s=korg; t=1779301444;
+	bh=F3KZLKCoJ5ANQRl8UhQh6JzdsX3tuEQtcTpTbuqHwGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NoztNbI9pq8/sXaR0AlRAuG2LRvADmyK6iUQ7YPgw4JalDGCKi38ppagUYGSIwB5x
-	 lXlelkcIHIig579Zm4/2pYJPfk2qEGj0l36TRn4TcSbJNJSLrFPf9g7Hf5Sj7LcN+h
-	 DUais0hayJkLsmA0H2/+ehVx7+8w9jwvXg3h9T2s=
+	b=Z40ZOLglGpq80Jc9S2gdv+iYkKquD8mNkOWz60EolpQWItGEPW1+RTb/TOZcsB60X
+	 zpOOuqjqLHbesPCCx7CCi/7AVJt06zEbiXoypsmd9ZyLF97E/QFyn+97ACyJdPPN7U
+	 mjUoDKT9MvOS6PPsMpBJTmfwMe5odjhHoNaoA5CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Yinjie Yao <yinjie.yao@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 555/666] drm/amdgpu/vcn: set no_user_fence for VCN v2.0 enc/dec rings
-Date: Wed, 20 May 2026 18:22:46 +0200
-Message-ID: <20260520162123.295758634@linuxfoundation.org>
+Subject: [PATCH 6.12 556/666] drm/amdgpu/vcn: set no_user_fence for VCN v2.5 enc/dec rings
+Date: Wed, 20 May 2026 18:22:47 +0200
+Message-ID: <20260520162123.316641768@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,42 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Yinjie Yao <yinjie.yao@amd.com>
 
-[ Upstream commit 8d80b293b41fcb5e9396db93e788b0f4ebcbafb7 ]
+[ Upstream commit 4f317863a3ab212a027d8c8c3cc3af4e3fb95704 ]
 
 VCN encoder and decoder rings do not support 64-bit user fence writes,
 reject CS submissions with user fences.
 
-Fixes: 1b61de45dfaf ("drm/amdgpu: add initial VCN2.0 support (v2)")
+Fixes: 28c17d72072b ("drm/amdgpu: add VCN2.5 basic supports")
 Reviewed-by: Christian König <christian.koenig@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e2b5499fca55f1a32960a311bbb62e35891eaf73)
+(cherry picked from commit efc9dd5590894109bce9a0bfe1fa5592dd6b20b1)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c | 2 ++
+ drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-index 5431b2589ed61..29f5f6b1eb0a4 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-@@ -2127,6 +2127,7 @@ static const struct amd_ip_funcs vcn_v2_0_ip_funcs = {
- static const struct amdgpu_ring_funcs vcn_v2_0_dec_ring_vm_funcs = {
+diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
+index 9708b9a47b536..42edc91f4a78d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
+@@ -1628,6 +1628,7 @@ static void vcn_v2_5_dec_ring_set_wptr(struct amdgpu_ring *ring)
+ static const struct amdgpu_ring_funcs vcn_v2_5_dec_ring_vm_funcs = {
  	.type = AMDGPU_RING_TYPE_VCN_DEC,
  	.align_mask = 0xf,
 +	.no_user_fence = true,
  	.secure_submission_supported = true,
- 	.get_rptr = vcn_v2_0_dec_ring_get_rptr,
- 	.get_wptr = vcn_v2_0_dec_ring_get_wptr,
-@@ -2158,6 +2159,7 @@ static const struct amdgpu_ring_funcs vcn_v2_0_enc_ring_vm_funcs = {
+ 	.get_rptr = vcn_v2_5_dec_ring_get_rptr,
+ 	.get_wptr = vcn_v2_5_dec_ring_get_wptr,
+@@ -1728,6 +1729,7 @@ static const struct amdgpu_ring_funcs vcn_v2_5_enc_ring_vm_funcs = {
  	.type = AMDGPU_RING_TYPE_VCN_ENC,
  	.align_mask = 0x3f,
  	.nop = VCN_ENC_CMD_NO_OP,
 +	.no_user_fence = true,
- 	.get_rptr = vcn_v2_0_enc_ring_get_rptr,
- 	.get_wptr = vcn_v2_0_enc_ring_get_wptr,
- 	.set_wptr = vcn_v2_0_enc_ring_set_wptr,
+ 	.get_rptr = vcn_v2_5_enc_ring_get_rptr,
+ 	.get_wptr = vcn_v2_5_enc_ring_get_wptr,
+ 	.set_wptr = vcn_v2_5_enc_ring_set_wptr,
 -- 
 2.53.0
 
