@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA843A6B99;
-	Wed, 20 May 2026 18:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646613FA5D5;
+	Wed, 20 May 2026 18:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301218; cv=none; b=ZjCsJH12yVsp2uO6cVcZ6O7Td6uSrGbYrSgCYGehT8GB2E0eat+AMa2DVjikJVlHmCqVcrI9jYK01ZA+IhzPywzKFivUnaykoczEddv6CshYFsfnO35c5wFFTAOQi0YrOh8M/9BuMkkMIebNeG8XvIO8aUY8fRGBzLp1U5i4Wwc=
+	t=1779301221; cv=none; b=PT1IFlksHtqRLd3PzfZGOEN7P9Z0g2RhZwId6gfRzuTQTO61b4zLDginJ82yjPIAsAJfma+wogYdOUJ9cZ5eWf45IroXuWEEMsok/5poFzXqc31NuZs6Nf3jn0yZIoK6h53Zldh3EHaDbUdMBMIx0TqJ+Jk8E/EO4mLQAL8R8BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301218; c=relaxed/simple;
-	bh=bsLwcLBIPESHKEiEdkoqItA1rwtNjkPb6PtMQJm9dwY=;
+	s=arc-20240116; t=1779301221; c=relaxed/simple;
+	bh=aBcenjRpuAxQ335nubOTATxF12RwboaXiLTSfvq34Co=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HC6VtyBsr3U3h2hS3791PI8LMWdVQmX1pDMFUTSqmL9POWccjuWgHcCOUmuPqnkBVWG9KWBOKbgPBH6/69OZWOqNfPe0o33MLGcxST5uSLwpRZbRR5KjX/bjYn04fb/BUqbaeQ70Hi/tBJ26Z7Ut1WdD5XlOJ+raIm5WQfGNEsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2R1N49c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kqrNLXnBQ04wLZCIhYOE8VBFvSm9jBo8EogUP40VVuT6iEtd9uvTYd2XKF0qS+GeayfxIpFXFBcPEKkSV/FO3STBXlzHOg7GxCAW0Zk34N9wqRWFCq9LFooplZSjoOPIHhx3pvIOZWkjYDX/l4xIsxjuT/vdAKUjyhfnJC6cQ5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hvj7Yh9i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2R1N49c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F991F000E9;
-	Wed, 20 May 2026 18:20:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hvj7Yh9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C013D1F000E9;
+	Wed, 20 May 2026 18:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301217;
-	bh=F3aPY8db0gwaNy5pqVgUwl25nMTESPddPYU6ZCQu0oE=;
+	s=korg; t=1779301220;
+	bh=QWcDENL+qv11H12oFj80GSVK39eOPI0Ji08r4FX60Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g2R1N49c93BCo+PRK9Y7Lfu55VDaHT2oM1gZOncohIBqQVPxFJbVmbChYP/W4fSEb
-	 /W6NKjlt4tLya3+zkXtpIeODoGzltI6Rmsxm3DjRM1M0lHM/eD4v5YhGZaDO8WS/lB
-	 uBQnICHDsKABU8dr/5+X1mxZb9v+F6SLaj8BLsc0=
+	b=Hvj7Yh9ijy3QNvp03DIWpiCSUmgA8kZMryEzRgGUgpFaa77hnYizfe/ckBpaUdg++
+	 TTft/JOcfrVFGMq4I60t0mt6G10MkzQmnrjlsR7G2PdosdZwyI1CbszsSx37UHO1mo
+	 DXAIpvtYch/uw8h1BGfiTt5etQ6JRIYcLQAK4o/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	"Kito Xu (veritas501)" <hxzene@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 434/666] arm64: dts: imx8mp-debix-som-a: Correct PAD settings for PMIC_nINT
-Date: Wed, 20 May 2026 18:20:45 +0200
-Message-ID: <20260520162120.678577525@linuxfoundation.org>
+Subject: [PATCH 6.12 470/666] netfilter: xtables: restrict several matches to inet family
+Date: Wed, 20 May 2026 18:21:21 +0200
+Message-ID: <20260520162121.455462584@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,53 +51,205 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 2ea7872048a179b0ea8dadc67771961df3f0fc4a ]
+[ Upstream commit b6fe26f86a1649f84e057f3f15605b08eda15497 ]
 
-With commit 5d0efaf47ee90 ("regulator: pca9450: Correct interrupt type"),
-there is interrupt storm for i.MX8MP DEBIX SOM A. Need to set PAD
-PUE and PU together to make pull up work properly.
+This is a partial revert of:
 
-Fixes: 21baf0b47f81b ("arm64: dts: freescale: Add DEBIX SOM A and SOM A I/O Board support")
-Reported-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Closes: https://lore.kernel.org/all/20260323105858.GA2185714@killaraus.ideasonboard.com/
-Reported-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Closes: https://lore.kernel.org/imx/20260324194353.GB2352505@killaraus.ideasonboard.com/T/#m9a07fdc75496369a7d76d52c5e34ed140dcabfe3
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+  commit ab4f21e6fb1c ("netfilter: xtables: use NFPROTO_UNSPEC in more extensions")
+
+to allow ipv4 and ipv6 only.
+
+- xt_mac
+- xt_owner
+- xt_physdev
+
+These extensions are not used by ebtables in userspace.
+
+Moreover, xt_realm is only for ipv4, since dst->tclassid is ipv4
+specific.
+
+Fixes: ab4f21e6fb1c ("netfilter: xtables: use NFPROTO_UNSPEC in more extensions")
+Reported-by: "Kito Xu (veritas501)" <hxzene@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-debix-som-a-bmb-08.dts | 2 +-
- arch/arm64/boot/dts/freescale/imx8mp-debix-som-a.dtsi       | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/xt_mac.c     | 34 +++++++++++++++++++++++-----------
+ net/netfilter/xt_owner.c   | 37 +++++++++++++++++++++++++------------
+ net/netfilter/xt_physdev.c | 29 +++++++++++++++++++----------
+ net/netfilter/xt_realm.c   |  2 +-
+ 4 files changed, 68 insertions(+), 34 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-debix-som-a-bmb-08.dts b/arch/arm64/boot/dts/freescale/imx8mp-debix-som-a-bmb-08.dts
-index d241db3743a9c..ed89d2ccb6ce2 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-debix-som-a-bmb-08.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-debix-som-a-bmb-08.dts
-@@ -452,7 +452,7 @@ MX8MP_IOMUXC_SAI1_RXD1__GPIO4_IO03		0x140
+diff --git a/net/netfilter/xt_mac.c b/net/netfilter/xt_mac.c
+index 81649da57ba5d..bd2354760895d 100644
+--- a/net/netfilter/xt_mac.c
++++ b/net/netfilter/xt_mac.c
+@@ -38,25 +38,37 @@ static bool mac_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 	return ret;
+ }
  
- 	pinctrl_pmic: pmicgrp {
- 		fsl,pins = <
--			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03		0x41
-+			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03		0x1c0
- 		>;
- 	};
+-static struct xt_match mac_mt_reg __read_mostly = {
+-	.name      = "mac",
+-	.revision  = 0,
+-	.family    = NFPROTO_UNSPEC,
+-	.match     = mac_mt,
+-	.matchsize = sizeof(struct xt_mac_info),
+-	.hooks     = (1 << NF_INET_PRE_ROUTING) | (1 << NF_INET_LOCAL_IN) |
+-	             (1 << NF_INET_FORWARD),
+-	.me        = THIS_MODULE,
++static struct xt_match mac_mt_reg[] __read_mostly = {
++	{
++		.name		= "mac",
++		.family		= NFPROTO_IPV4,
++		.match		= mac_mt,
++		.matchsize	= sizeof(struct xt_mac_info),
++		.hooks		= (1 << NF_INET_PRE_ROUTING) |
++				  (1 << NF_INET_LOCAL_IN) |
++				  (1 << NF_INET_FORWARD),
++		.me		= THIS_MODULE,
++	},
++	{
++		.name		= "mac",
++		.family		= NFPROTO_IPV6,
++		.match		= mac_mt,
++		.matchsize	= sizeof(struct xt_mac_info),
++		.hooks		= (1 << NF_INET_PRE_ROUTING) |
++				  (1 << NF_INET_LOCAL_IN) |
++				  (1 << NF_INET_FORWARD),
++		.me		= THIS_MODULE,
++	},
+ };
  
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-debix-som-a.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-debix-som-a.dtsi
-index 91094c2277443..b31e8fe95ca74 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-debix-som-a.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-debix-som-a.dtsi
-@@ -241,7 +241,7 @@ MX8MP_IOMUXC_I2C4_SDA__I2C4_SDA			0x400001c3
+ static int __init mac_mt_init(void)
+ {
+-	return xt_register_match(&mac_mt_reg);
++	return xt_register_matches(mac_mt_reg, ARRAY_SIZE(mac_mt_reg));
+ }
  
- 	pinctrl_pmic: pmicgrp {
- 		fsl,pins = <
--			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03		0x41
-+			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03		0x1c0
- 		>;
- 	};
+ static void __exit mac_mt_exit(void)
+ {
+-	xt_unregister_match(&mac_mt_reg);
++	xt_unregister_matches(mac_mt_reg, ARRAY_SIZE(mac_mt_reg));
+ }
+ 
+ module_init(mac_mt_init);
+diff --git a/net/netfilter/xt_owner.c b/net/netfilter/xt_owner.c
+index 50332888c8d23..7be2fe22b067e 100644
+--- a/net/netfilter/xt_owner.c
++++ b/net/netfilter/xt_owner.c
+@@ -127,26 +127,39 @@ owner_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 	return true;
+ }
+ 
+-static struct xt_match owner_mt_reg __read_mostly = {
+-	.name       = "owner",
+-	.revision   = 1,
+-	.family     = NFPROTO_UNSPEC,
+-	.checkentry = owner_check,
+-	.match      = owner_mt,
+-	.matchsize  = sizeof(struct xt_owner_match_info),
+-	.hooks      = (1 << NF_INET_LOCAL_OUT) |
+-	              (1 << NF_INET_POST_ROUTING),
+-	.me         = THIS_MODULE,
++static struct xt_match owner_mt_reg[] __read_mostly = {
++	{
++		.name       = "owner",
++		.revision   = 1,
++		.family     = NFPROTO_IPV4,
++		.checkentry = owner_check,
++		.match      = owner_mt,
++		.matchsize  = sizeof(struct xt_owner_match_info),
++		.hooks      = (1 << NF_INET_LOCAL_OUT) |
++			      (1 << NF_INET_POST_ROUTING),
++		.me         = THIS_MODULE,
++	},
++	{
++		.name       = "owner",
++		.revision   = 1,
++		.family     = NFPROTO_IPV6,
++		.checkentry = owner_check,
++		.match      = owner_mt,
++		.matchsize  = sizeof(struct xt_owner_match_info),
++		.hooks      = (1 << NF_INET_LOCAL_OUT) |
++			      (1 << NF_INET_POST_ROUTING),
++		.me         = THIS_MODULE,
++	}
+ };
+ 
+ static int __init owner_mt_init(void)
+ {
+-	return xt_register_match(&owner_mt_reg);
++	return xt_register_matches(owner_mt_reg, ARRAY_SIZE(owner_mt_reg));
+ }
+ 
+ static void __exit owner_mt_exit(void)
+ {
+-	xt_unregister_match(&owner_mt_reg);
++	xt_unregister_matches(owner_mt_reg, ARRAY_SIZE(owner_mt_reg));
+ }
+ 
+ module_init(owner_mt_init);
+diff --git a/net/netfilter/xt_physdev.c b/net/netfilter/xt_physdev.c
+index 343e65f377d44..130842c35c6fa 100644
+--- a/net/netfilter/xt_physdev.c
++++ b/net/netfilter/xt_physdev.c
+@@ -115,24 +115,33 @@ static int physdev_mt_check(const struct xt_mtchk_param *par)
+ 	return 0;
+ }
+ 
+-static struct xt_match physdev_mt_reg __read_mostly = {
+-	.name       = "physdev",
+-	.revision   = 0,
+-	.family     = NFPROTO_UNSPEC,
+-	.checkentry = physdev_mt_check,
+-	.match      = physdev_mt,
+-	.matchsize  = sizeof(struct xt_physdev_info),
+-	.me         = THIS_MODULE,
++static struct xt_match physdev_mt_reg[] __read_mostly = {
++	{
++		.name		= "physdev",
++		.family		= NFPROTO_IPV4,
++		.checkentry	= physdev_mt_check,
++		.match		= physdev_mt,
++		.matchsize	= sizeof(struct xt_physdev_info),
++		.me		= THIS_MODULE,
++	},
++	{
++		.name		= "physdev",
++		.family		= NFPROTO_IPV6,
++		.checkentry	= physdev_mt_check,
++		.match		= physdev_mt,
++		.matchsize	= sizeof(struct xt_physdev_info),
++		.me		= THIS_MODULE,
++	},
+ };
+ 
+ static int __init physdev_mt_init(void)
+ {
+-	return xt_register_match(&physdev_mt_reg);
++	return xt_register_matches(physdev_mt_reg, ARRAY_SIZE(physdev_mt_reg));
+ }
+ 
+ static void __exit physdev_mt_exit(void)
+ {
+-	xt_unregister_match(&physdev_mt_reg);
++	xt_unregister_matches(physdev_mt_reg, ARRAY_SIZE(physdev_mt_reg));
+ }
+ 
+ module_init(physdev_mt_init);
+diff --git a/net/netfilter/xt_realm.c b/net/netfilter/xt_realm.c
+index 6df485f4403d0..61b2f1e58d150 100644
+--- a/net/netfilter/xt_realm.c
++++ b/net/netfilter/xt_realm.c
+@@ -33,7 +33,7 @@ static struct xt_match realm_mt_reg __read_mostly = {
+ 	.matchsize	= sizeof(struct xt_realm_info),
+ 	.hooks		= (1 << NF_INET_POST_ROUTING) | (1 << NF_INET_FORWARD) |
+ 			  (1 << NF_INET_LOCAL_OUT) | (1 << NF_INET_LOCAL_IN),
+-	.family		= NFPROTO_UNSPEC,
++	.family		= NFPROTO_IPV4,
+ 	.me		= THIS_MODULE
+ };
  
 -- 
 2.53.0
