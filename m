@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A133DF59;
-	Wed, 20 May 2026 18:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA51272E56;
+	Wed, 20 May 2026 18:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302068; cv=none; b=KSNeStBdKj+9dGxXUU4nn92qbMs1d4S5hhwZyOj9RPjqyVrJOU6j+a3h3QeXEAjEkaNjL+eg0hgR28mUPzQjlSdt+xdvi2A5yYFWFPtj2Xe6abrbvpnns8wQXEV/iIAkpCTsiKzaD3WRULFcK453EJ+Vxrlz4U+tUjRT5vYRgAw=
+	t=1779302071; cv=none; b=oGvhm2hKF4YdVys2AVG8qbE/HGG8ZTX8iIx/S1h/pMseMzfJjNoAcii7z34FPqIkO+g7qu1NBVVkpqLQHQWYtBiMP3EiQzE2fyVW2cQ7PrWnv6wHIDRSOVWA0DBzfxRnIH303kjYvmAnsiRoqrekM66MuVo6r07027hKOTtJQZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302068; c=relaxed/simple;
-	bh=U1Uxj5FZtaOtS+qwUCvL/MS5nRNUGnLxG9gQ1Vyja8o=;
+	s=arc-20240116; t=1779302071; c=relaxed/simple;
+	bh=2fa9BOvWHtnsPWy9DRip0xq0Qt5nWNG6yySk/5KQHlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+Ea36jQm/B38UNr5Bbn4fhfaINmpznQS7EyYNF9s6OP5ppZd8t6T/wAHi61stNDTlCqRNIlasXIqJPH1PYbwG5ALJ60X8lxZhlCOaNlVbZ2kdkxxFqZZH1u1idi2vCpL6s5VFT9z7Ha9c8z70bg9yfwyD5uzHbw0lxZ/D4y1cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INWCfKvo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PG8GfbpTOWfvAFMfHn267CRgWTTbe3tjWcootWEjvL9ysP3rWIkpstFPWnG8vFBVIKobba260QCRr6G4Lh35gNsv5JfZ39EkJMdBAh2ujStyVf4GgZmUZ2JkmzNHHGO0mpkRJlH63HpMIJorsRT20N2/U23Df502AKXCZ0yKTWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFMkilsR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INWCfKvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844961F00893;
-	Wed, 20 May 2026 18:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFMkilsR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8731F000E9;
+	Wed, 20 May 2026 18:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302067;
-	bh=I2qRDacTl8wLOawBPhN/OYnnPIJFrs3uqdNCF3oTZrA=;
+	s=korg; t=1779302069;
+	bh=kry0Q36azYsLDQNCj+DcLPyK5rbNvZifO38BgIE7Q74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=INWCfKvotTW/PDc0FA3wJE5mo/VpcE351kHiXreePvEGjWZLM5ufDG54qyIl+wrrt
-	 G1w3k45iv8YAbTDEGnhwGCKHUTWcHQAUoe4IV8eHFVyLWOH3Dl5Ht8j5LMhjWAMGkf
-	 BgWCIV41Fm1SdBYIfRm/oxLKVwNbOuR/Qzo3qxrU=
+	b=YFMkilsRlmwtQ+fP84Oy09q61MTKJ8XV15dUlrW1QdarNusXdXHAHYuUhMDn3ydph
+	 ilojuATFYpqi628XFjVGNrhp1CaHysgNGnwFRKTkxVLF8AqZNd1LFzwSB8kye7eYwC
+	 XcrMnbOhrhfbtoNKReZSg4G2Z4FEURjmuuyfy5Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+619b9ef527f510a57cfc@syzkaller.appspotmail.com,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/508] sctp: fix missing encap_port propagation for GSO fragments
-Date: Wed, 20 May 2026 18:18:28 +0200
-Message-ID: <20260520162100.451752639@linuxfoundation.org>
+Subject: [PATCH 6.6 076/508] bpf: reject short IPv4/IPv6 inputs in bpf_prog_test_run_skb
+Date: Wed, 20 May 2026 18:18:19 +0200
+Message-ID: <20260520162100.256148187@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,42 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-[ Upstream commit bf6f95ae3b8b2638c0e1d6d802d50983ce5d0f45 ]
+[ Upstream commit 12bec2bd4b76d81c5d3996bd14ec1b7f4d983747 ]
 
-encap_port in SCTP_INPUT_CB(skb) is used by sctp_vtag_verify() for
-SCTP-over-UDP processing. In the GSO case, it is only set on the head
-skb, while fragment skbs leave it 0.
+bpf_prog_test_run_skb() calls eth_type_trans() first and then uses
+skb->protocol to initialize sk family and address fields for the test
+run.
 
-This results in fragment skbs seeing encap_port == 0, breaking
-SCTP-over-UDP connections.
+For IPv4 and IPv6 packets, it may access ip_hdr(skb) or ipv6_hdr(skb)
+even when the provided test input only contains an Ethernet header.
 
-Fix it by propagating encap_port from the head skb cb when initializing
-fragment skbs in sctp_inq_pop().
+Reject the input earlier if the Ethernet frame carries IPv4/IPv6
+EtherType but the L3 header is too short.
 
-Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/ea65ed61b3598d8b4940f0170b9aa1762307e6c3.1776017631.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fold the IPv4/IPv6 header length checks into the existing protocol
+switch and return -EINVAL before accessing the network headers.
+
+Fixes: fa5cb548ced6 ("bpf: Setup socket family and addresses in bpf_prog_test_run_skb")
+Reported-by: syzbot+619b9ef527f510a57cfc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=619b9ef527f510a57cfc
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Link: https://lore.kernel.org/r/20260408034623.180320-2-sun.jian.kdev@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/inqueue.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bpf/test_run.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/net/sctp/inqueue.c b/net/sctp/inqueue.c
-index f5a7d5a387555..a024c08432471 100644
---- a/net/sctp/inqueue.c
-+++ b/net/sctp/inqueue.c
-@@ -201,6 +201,7 @@ struct sctp_chunk *sctp_inq_pop(struct sctp_inq *queue)
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index c9c6f675d8e21..8e665cee22503 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -1031,19 +1031,23 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
  
- 			cb->chunk = head_cb->chunk;
- 			cb->af = head_cb->af;
-+			cb->encap_port = head_cb->encap_port;
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+-		sk->sk_family = AF_INET;
+-		if (sizeof(struct iphdr) <= skb_headlen(skb)) {
+-			sk->sk_rcv_saddr = ip_hdr(skb)->saddr;
+-			sk->sk_daddr = ip_hdr(skb)->daddr;
++		if (skb_headlen(skb) < sizeof(struct iphdr)) {
++			ret = -EINVAL;
++			goto out;
  		}
- 	}
- 
++		sk->sk_family = AF_INET;
++		sk->sk_rcv_saddr = ip_hdr(skb)->saddr;
++		sk->sk_daddr = ip_hdr(skb)->daddr;
+ 		break;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case htons(ETH_P_IPV6):
+-		sk->sk_family = AF_INET6;
+-		if (sizeof(struct ipv6hdr) <= skb_headlen(skb)) {
+-			sk->sk_v6_rcv_saddr = ipv6_hdr(skb)->saddr;
+-			sk->sk_v6_daddr = ipv6_hdr(skb)->daddr;
++		if (skb_headlen(skb) < sizeof(struct ipv6hdr)) {
++			ret = -EINVAL;
++			goto out;
+ 		}
++		sk->sk_family = AF_INET6;
++		sk->sk_v6_rcv_saddr = ipv6_hdr(skb)->saddr;
++		sk->sk_v6_daddr = ipv6_hdr(skb)->daddr;
+ 		break;
+ #endif
+ 	default:
 -- 
 2.53.0
 
