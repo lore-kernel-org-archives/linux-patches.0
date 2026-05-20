@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626963FFAAD;
-	Wed, 20 May 2026 18:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D03B401A24;
+	Wed, 20 May 2026 18:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302877; cv=none; b=iBs12Ud4j0Wh0BNkvM1oA+AdrG1OgpKCdTQ/8XwLGTaye5eoayof6Bal05tD/dKloTrgDmoO5gxckwpUOR+1YH3zuUuWP3y841EJ08xVClRS0oV8JEiJy6CYcuN3PWt+NZFne5O+eDQb5pLrU2B+vkBhOm13CD7zHGJSgkhQIV4=
+	t=1779302878; cv=none; b=gMhOIoLGI62rGFyCxFtwUjQlx6X+T4vYqujMtNrPOfxAivYJT3RxZMdtHVOgHRR3gFI1xzBH9mQYeQR7SGaZulWEJXVAaCSKlABoqgvn8XuWW+U8JTCzhf6lXGM/xjZ14sJjzWfUZ25APC0n6cwcr3hOSHY/mp0CtEDrJVTFSug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302877; c=relaxed/simple;
-	bh=Lbzub+APeHn0WJWpL8j1TsSrsS5FJUPw0AF9s0ErCas=;
+	s=arc-20240116; t=1779302878; c=relaxed/simple;
+	bh=ANZb7LQJXxmRXKAJ4H+PfZAws/p47HLYM2cM+zseObA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U2KqOuhNUKYSpqzmjRJP7X0yF1YK8gCLbwS9+xdQBIfnL60ijvtCYWPK+tsJOL5U90y36nyPab7u9UxVb/QQawax3KKcic0u5R2DoO+ozmTuo2zrgfR3O9+GtvrPs0PHp3iW82dXKo9uaVVhohlA80PlyydIquVIIj/qyuF8E0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjP7n1dH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YyjBD6Emf54+48hJVPnVjYdmWM1tLJE9haOLms/1BdEKVYbcKUUcMREe46aJwAsXV5RrxLe67LW1akHZ2qnK8d0xQRYji44cF1fpfnY8BOGlIk7BWBD1gieQdStOQoyAVBWnK2oylejGugWSYKO4d3Gzs3XFw9g61sV7/bczF5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWIgOT++; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjP7n1dH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5024A1F00893;
-	Wed, 20 May 2026 18:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWIgOT++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E31E1F00896;
+	Wed, 20 May 2026 18:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302869;
-	bh=nnrqUzgvujyAAaK2aglMoDe3MYHAJSa2JWfqQHSppq4=;
+	s=korg; t=1779302875;
+	bh=9TcCgFCDh2vYCIoK3N94/fvFbt7E+ppLKxTUlWXXDwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NjP7n1dH7vIqK91Ip3ip3n1KPPY+4b7EKpfT71IQJst8Y6ZZW+76VBY4kdVa2CJ5w
-	 SnqnB+XJP8OE8e8xPaVh0tcaqdsCTQ9fvBCRVwk3JwGrkJzZ37ajEkMxmse4Wrp+t7
-	 boOOAvUbDa9+0kvO+c3ldIJdBiNHhcWbX9Opv3JQ=
+	b=hWIgOT++XYSvm0uGoRIeRUl7oudAjvAY2NXEAaQGa0zO61DfYGlXI2PNz5pDLFyn4
+	 zihOGIYmt9UjXo3nEb3YZh4PC2IRQpU2kGp2k2HT+zYxtREjxIpQCnnG6zE1+kjhed
+	 P5VB9FYH79Q6uis3aucNR2jo6+q0lAgZnpwED4+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9bb2ff2a4ab9e17307e1@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Petr Oros <poros@redhat.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 429/508] bonding: 3ad: implement proper RCU rules for port->aggregator
-Date: Wed, 20 May 2026 18:24:12 +0200
-Message-ID: <20260520162107.897274787@linuxfoundation.org>
+Subject: [PATCH 6.6 431/508] iavf: stop removing VLAN filters from PF on interface down
+Date: Wed, 20 May 2026 18:24:14 +0200
+Message-ID: <20260520162107.940556770@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -54,570 +56,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit c4f050ce06c56cfb5993268af4a5cb66ed1cd04e ]
+[ Upstream commit f2ce65b9b917474a1a6ce68d357e15fac2aca0f2 ]
 
-syzbot found a data-race in bond_3ad_get_active_agg_info /
-bond_3ad_state_machine_handler [1] which hints at lack of proper
-RCU implementation.
+When a VF goes down, the driver currently sends DEL_VLAN to the PF for
+every VLAN filter (ACTIVE -> DISABLE -> send DEL -> INACTIVE), then
+re-adds them all on UP (INACTIVE -> ADD -> send ADD -> ADDING ->
+ACTIVE). This round-trip is unnecessary because:
 
-Add __rcu qualifier to port->aggregator, and add proper RCU API.
+ 1. The PF disables the VF's queues via VIRTCHNL_OP_DISABLE_QUEUES,
+    which already prevents all RX/TX traffic regardless of VLAN filter
+    state.
 
-[1]
+ 2. The VLAN filters remaining in PF HW while the VF is down is
+    harmless - packets matching those filters have nowhere to go with
+    queues disabled.
 
-BUG: KCSAN: data-race in bond_3ad_get_active_agg_info / bond_3ad_state_machine_handler
+ 3. The DEL+ADD cycle during down/up creates race windows where the
+    VLAN filter list is incomplete. With spoofcheck enabled, the PF
+    enables TX VLAN filtering on the first non-zero VLAN add, blocking
+    traffic for any VLANs not yet re-added.
 
-write to 0xffff88813cf5c4b0 of 8 bytes by task 36 on cpu 0:
-  ad_port_selection_logic drivers/net/bonding/bond_3ad.c:1659 [inline]
-  bond_3ad_state_machine_handler+0x9d5/0x2d60 drivers/net/bonding/bond_3ad.c:2569
-  process_one_work kernel/workqueue.c:3302 [inline]
-  process_scheduled_works+0x4f0/0x9c0 kernel/workqueue.c:3385
-  worker_thread+0x58a/0x780 kernel/workqueue.c:3466
-  kthread+0x22a/0x280 kernel/kthread.c:436
-  ret_from_fork+0x146/0x330 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+Remove the entire DISABLE/INACTIVE state machinery:
+ - Remove IAVF_VLAN_DISABLE and IAVF_VLAN_INACTIVE enum values
+ - Remove iavf_restore_filters() and its call from iavf_open()
+ - Remove VLAN filter handling from iavf_clear_mac_vlan_filters(),
+   rename it to iavf_clear_mac_filters()
+ - Remove DEL_VLAN_FILTER scheduling from iavf_down()
+ - Remove all DISABLE/INACTIVE handling from iavf_del_vlans()
 
-read to 0xffff88813cf5c4b0 of 8 bytes by task 22063 on cpu 1:
-  __bond_3ad_get_active_agg_info drivers/net/bonding/bond_3ad.c:2858 [inline]
-  bond_3ad_get_active_agg_info+0x8c/0x230 drivers/net/bonding/bond_3ad.c:2881
-  bond_fill_info+0xe0f/0x10f0 drivers/net/bonding/bond_netlink.c:853
-  rtnl_link_info_fill net/core/rtnetlink.c:906 [inline]
-  rtnl_link_fill+0x1d7/0x4e0 net/core/rtnetlink.c:927
-  rtnl_fill_ifinfo+0xf8e/0x1380 net/core/rtnetlink.c:2168
-  rtmsg_ifinfo_build_skb+0x11c/0x1b0 net/core/rtnetlink.c:4453
-  rtmsg_ifinfo_event net/core/rtnetlink.c:4486 [inline]
-  rtmsg_ifinfo+0x6d/0x110 net/core/rtnetlink.c:4495
-  __dev_notify_flags+0x76/0x390 net/core/dev.c:9790
-  netif_change_flags+0xac/0xd0 net/core/dev.c:9823
-  do_setlink+0x905/0x2950 net/core/rtnetlink.c:3180
-  rtnl_group_changelink net/core/rtnetlink.c:3813 [inline]
-  __rtnl_newlink net/core/rtnetlink.c:3981 [inline]
-  rtnl_newlink+0xf55/0x1400 net/core/rtnetlink.c:4109
-  rtnetlink_rcv_msg+0x64b/0x720 net/core/rtnetlink.c:6995
-  netlink_rcv_skb+0x123/0x220 net/netlink/af_netlink.c:2550
-  rtnetlink_rcv+0x1c/0x30 net/core/rtnetlink.c:7022
-  netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
-  netlink_unicast+0x5a8/0x680 net/netlink/af_netlink.c:1344
-  netlink_sendmsg+0x5c8/0x6f0 net/netlink/af_netlink.c:1894
-  sock_sendmsg_nosec net/socket.c:787 [inline]
-  __sock_sendmsg net/socket.c:802 [inline]
-  ____sys_sendmsg+0x563/0x5b0 net/socket.c:2698
-  ___sys_sendmsg+0x195/0x1e0 net/socket.c:2752
-  __sys_sendmsg net/socket.c:2784 [inline]
-  __do_sys_sendmsg net/socket.c:2789 [inline]
-  __se_sys_sendmsg net/socket.c:2787 [inline]
-  __x64_sys_sendmsg+0xd4/0x160 net/socket.c:2787
-  x64_sys_call+0x194c/0x3020 arch/x86/include/generated/asm/syscalls_64.h:47
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0x12c/0x3b0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+VLAN filters now stay ACTIVE across down/up cycles. Only explicit
+user removal (ndo_vlan_rx_kill_vid) or PF/VF reset triggers VLAN
+filter deletion/re-addition.
 
-value changed: 0x0000000000000000 -> 0xffff88813cf5c400
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 UID: 0 PID: 22063 Comm: syz.0.31122 Tainted: G        W           syzkaller #0 PREEMPT(full)
-Tainted: [W]=WARN
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
-
-Fixes: 47e91f56008b ("bonding: use RCU protection for 3ad xmit path")
-Reported-by: syzbot+9bb2ff2a4ab9e17307e1@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/69f0a82f.050a0220.3aadc4.0000.GAE@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Jay Vosburgh <jv@jvosburgh.net>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Link: https://patch.msgid.link/20260428123207.3809211-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ed1f5b58ea01 ("i40evf: remove VLAN filters on close")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-2-cdcb48303fd8@intel.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_3ad.c         | 109 ++++++++++++++-----------
- drivers/net/bonding/bond_main.c        |   8 +-
- drivers/net/bonding/bond_netlink.c     |  16 ++--
- drivers/net/bonding/bond_procfs.c      |   3 +-
- drivers/net/bonding/bond_sysfs_slave.c |  17 ++--
- include/net/bond_3ad.h                 |   2 +-
- 6 files changed, 89 insertions(+), 66 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf.h        |  6 +--
+ drivers/net/ethernet/intel/iavf/iavf_main.c   | 39 ++-----------------
+ .../net/ethernet/intel/iavf/iavf_virtchnl.c   | 33 +++-------------
+ 3 files changed, 12 insertions(+), 66 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_3ad.c b/drivers/net/bonding/bond_3ad.c
-index a897836ad21a3..d1da96f3efd40 100644
---- a/drivers/net/bonding/bond_3ad.c
-+++ b/drivers/net/bonding/bond_3ad.c
-@@ -991,6 +991,7 @@ static int ad_marker_send(struct port *port, struct bond_marker *marker)
- static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- {
- 	struct bonding *bond = __get_bond_by_port(port);
-+	struct aggregator *aggregator;
- 	mux_states_t last_state;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
+index c09ec8cc1e9fb..d1f39befc8b8c 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf.h
++++ b/drivers/net/ethernet/intel/iavf/iavf.h
+@@ -159,10 +159,8 @@ enum iavf_vlan_state_t {
+ 	IAVF_VLAN_INVALID,
+ 	IAVF_VLAN_ADD,		/* filter needs to be added */
+ 	IAVF_VLAN_ADDING,	/* ADD sent to PF, waiting for response */
+-	IAVF_VLAN_ACTIVE,	/* filter is accepted by PF */
+-	IAVF_VLAN_DISABLE,	/* filter needs to be deleted by PF, then marked INACTIVE */
+-	IAVF_VLAN_INACTIVE,	/* filter is inactive, we are in IFF_DOWN */
+-	IAVF_VLAN_REMOVE,	/* filter needs to be removed from list */
++	IAVF_VLAN_ACTIVE,	/* PF confirmed, filter is in HW */
++	IAVF_VLAN_REMOVE,	/* filter queued for DEL from PF */
+ };
  
- 	/* keep current State Machine state to compare later if it was
-@@ -998,6 +999,7 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- 	 */
- 	last_state = port->sm_mux_state;
- 
-+	aggregator = rcu_dereference(port->aggregator);
- 	if (port->sm_vars & AD_PORT_BEGIN) {
- 		port->sm_mux_state = AD_MUX_DETACHED;
- 	} else {
-@@ -1017,7 +1019,7 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- 				 * cycle to update ready variable, we check
- 				 * READY_N and update READY here
- 				 */
--				__set_agg_ports_ready(port->aggregator, __agg_ports_are_ready(port->aggregator));
-+				__set_agg_ports_ready(aggregator, __agg_ports_are_ready(aggregator));
- 				port->sm_mux_state = AD_MUX_DETACHED;
- 				break;
- 			}
-@@ -1032,7 +1034,7 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- 			 * update ready variable, we check READY_N and update
- 			 * READY here
- 			 */
--			__set_agg_ports_ready(port->aggregator, __agg_ports_are_ready(port->aggregator));
-+			__set_agg_ports_ready(aggregator, __agg_ports_are_ready(aggregator));
- 
- 			/* if the wait_while_timer expired, and the port is
- 			 * in READY state, move to ATTACHED state
-@@ -1048,7 +1050,7 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- 			if ((port->sm_vars & AD_PORT_SELECTED) &&
- 			    (port->partner_oper.port_state & LACP_STATE_SYNCHRONIZATION) &&
- 			    !__check_agg_selection_timer(port)) {
--				if (port->aggregator->is_active) {
-+				if (aggregator->is_active) {
- 					int state = AD_MUX_COLLECTING_DISTRIBUTING;
- 
- 					if (!bond->params.coupled_control)
-@@ -1064,9 +1066,9 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- 				 * cycle to update ready variable, we check
- 				 * READY_N and update READY here
- 				 */
--				__set_agg_ports_ready(port->aggregator, __agg_ports_are_ready(port->aggregator));
-+				__set_agg_ports_ready(aggregator, __agg_ports_are_ready(aggregator));
- 				port->sm_mux_state = AD_MUX_DETACHED;
--			} else if (port->aggregator->is_active) {
-+			} else if (aggregator->is_active) {
- 				port->actor_oper_port_state |=
- 				    LACP_STATE_SYNCHRONIZATION;
- 			}
-@@ -1077,7 +1079,7 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- 				 * sure that a collecting distributing
- 				 * port in an active aggregator is enabled
- 				 */
--				if (port->aggregator->is_active &&
-+				if (aggregator->is_active &&
- 				    !__port_is_collecting_distributing(port)) {
- 					__enable_port(port);
- 					*update_slave_arr = true;
-@@ -1096,7 +1098,7 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- 					 */
- 					struct slave *slave = port->slave;
- 
--					if (port->aggregator->is_active &&
-+					if (aggregator->is_active &&
- 					    bond_is_slave_rx_disabled(slave)) {
- 						ad_enable_collecting(port);
- 						*update_slave_arr = true;
-@@ -1116,8 +1118,8 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- 				 * sure that a collecting distributing
- 				 * port in an active aggregator is enabled
- 				 */
--				if (port->aggregator &&
--				    port->aggregator->is_active &&
-+				if (aggregator &&
-+				    aggregator->is_active &&
- 				    !__port_is_collecting_distributing(port)) {
- 					__enable_port(port);
- 					*update_slave_arr = true;
-@@ -1149,7 +1151,7 @@ static void ad_mux_machine(struct port *port, bool *update_slave_arr)
- 			port->sm_mux_timer_counter = __ad_timer_to_ticks(AD_WAIT_WHILE_TIMER, 0);
- 			break;
- 		case AD_MUX_ATTACHED:
--			if (port->aggregator->is_active)
-+			if (aggregator->is_active)
- 				port->actor_oper_port_state |=
- 				    LACP_STATE_SYNCHRONIZATION;
- 			else
-@@ -1522,9 +1524,9 @@ static void ad_port_selection_logic(struct port *port, bool *update_slave_arr)
- 	bond = __get_bond_by_port(port);
- 
- 	/* if the port is connected to other aggregator, detach it */
--	if (port->aggregator) {
-+	temp_aggregator = rcu_dereference(port->aggregator);
-+	if (temp_aggregator) {
- 		/* detach the port from its former aggregator */
--		temp_aggregator = port->aggregator;
- 		for (curr_port = temp_aggregator->lag_ports; curr_port;
- 		     last_port = curr_port,
- 		     curr_port = curr_port->next_port_in_aggregator) {
-@@ -1547,7 +1549,7 @@ static void ad_port_selection_logic(struct port *port, bool *update_slave_arr)
- 				/* clear the port's relations to this
- 				 * aggregator
- 				 */
--				port->aggregator = NULL;
-+				RCU_INIT_POINTER(port->aggregator, NULL);
- 				port->next_port_in_aggregator = NULL;
- 				port->actor_port_aggregator_identifier = 0;
- 
-@@ -1570,7 +1572,7 @@ static void ad_port_selection_logic(struct port *port, bool *update_slave_arr)
- 					     port->slave->bond->dev->name,
- 					     port->slave->dev->name,
- 					     port->actor_port_number,
--					     port->aggregator->aggregator_identifier);
-+					     temp_aggregator->aggregator_identifier);
- 		}
- 	}
- 	/* search on all aggregators for a suitable aggregator for this port */
-@@ -1594,15 +1596,15 @@ static void ad_port_selection_logic(struct port *port, bool *update_slave_arr)
- 		    )
- 		   ) {
- 			/* attach to the founded aggregator */
--			port->aggregator = aggregator;
-+			rcu_assign_pointer(port->aggregator, aggregator);
- 			port->actor_port_aggregator_identifier =
--				port->aggregator->aggregator_identifier;
-+				aggregator->aggregator_identifier;
- 			port->next_port_in_aggregator = aggregator->lag_ports;
--			port->aggregator->num_of_ports++;
-+			aggregator->num_of_ports++;
- 			aggregator->lag_ports = port;
- 			slave_dbg(bond->dev, slave->dev, "Port %d joined LAG %d (existing LAG)\n",
- 				  port->actor_port_number,
--				  port->aggregator->aggregator_identifier);
-+				  aggregator->aggregator_identifier);
- 
- 			/* mark this port as selected */
- 			port->sm_vars |= AD_PORT_SELECTED;
-@@ -1617,39 +1619,40 @@ static void ad_port_selection_logic(struct port *port, bool *update_slave_arr)
- 	if (!found) {
- 		if (free_aggregator) {
- 			/* assign port a new aggregator */
--			port->aggregator = free_aggregator;
- 			port->actor_port_aggregator_identifier =
--				port->aggregator->aggregator_identifier;
-+				free_aggregator->aggregator_identifier;
- 
- 			/* update the new aggregator's parameters
- 			 * if port was responsed from the end-user
- 			 */
- 			if (port->actor_oper_port_key & AD_DUPLEX_KEY_MASKS)
- 				/* if port is full duplex */
--				port->aggregator->is_individual = false;
-+				free_aggregator->is_individual = false;
- 			else
--				port->aggregator->is_individual = true;
-+				free_aggregator->is_individual = true;
- 
--			port->aggregator->actor_admin_aggregator_key =
-+			free_aggregator->actor_admin_aggregator_key =
- 				port->actor_admin_port_key;
--			port->aggregator->actor_oper_aggregator_key =
-+			free_aggregator->actor_oper_aggregator_key =
- 				port->actor_oper_port_key;
--			port->aggregator->partner_system =
-+			free_aggregator->partner_system =
- 				port->partner_oper.system;
--			port->aggregator->partner_system_priority =
-+			free_aggregator->partner_system_priority =
- 				port->partner_oper.system_priority;
--			port->aggregator->partner_oper_aggregator_key = port->partner_oper.key;
--			port->aggregator->receive_state = 1;
--			port->aggregator->transmit_state = 1;
--			port->aggregator->lag_ports = port;
--			port->aggregator->num_of_ports++;
-+			free_aggregator->partner_oper_aggregator_key = port->partner_oper.key;
-+			free_aggregator->receive_state = 1;
-+			free_aggregator->transmit_state = 1;
-+			free_aggregator->lag_ports = port;
-+			free_aggregator->num_of_ports++;
-+
-+			rcu_assign_pointer(port->aggregator, free_aggregator);
- 
- 			/* mark this port as selected */
- 			port->sm_vars |= AD_PORT_SELECTED;
- 
- 			slave_dbg(bond->dev, port->slave->dev, "Port %d joined LAG %d (new LAG)\n",
- 				  port->actor_port_number,
--				  port->aggregator->aggregator_identifier);
-+				  free_aggregator->aggregator_identifier);
- 		} else {
- 			slave_err(bond->dev, port->slave->dev,
- 				  "Port %d did not find a suitable aggregator\n",
-@@ -1661,13 +1664,12 @@ static void ad_port_selection_logic(struct port *port, bool *update_slave_arr)
- 	 * in all aggregator's ports, else set ready=FALSE in all
- 	 * aggregator's ports
- 	 */
--	__set_agg_ports_ready(port->aggregator,
--			      __agg_ports_are_ready(port->aggregator));
-+	aggregator = rcu_dereference(port->aggregator);
-+	__set_agg_ports_ready(aggregator, __agg_ports_are_ready(aggregator));
- 
--	aggregator = __get_first_agg(port);
--	ad_agg_selection_logic(aggregator, update_slave_arr);
-+	ad_agg_selection_logic(__get_first_agg(port), update_slave_arr);
- 
--	if (!port->aggregator->is_active)
-+	if (!aggregator->is_active)
- 		port->actor_oper_port_state &= ~LACP_STATE_SYNCHRONIZATION;
+ struct iavf_vlan_filter {
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 02e07fe6a0528..c7fecd7261140 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -846,27 +846,6 @@ static void iavf_del_vlan(struct iavf_adapter *adapter, struct iavf_vlan vlan)
+ 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
  }
  
-@@ -2021,13 +2023,15 @@ static void ad_initialize_port(struct port *port, const struct bond_params *bond
-  */
- static void ad_enable_collecting(struct port *port)
- {
--	if (port->aggregator->is_active) {
-+	struct aggregator *aggregator = rcu_dereference(port->aggregator);
-+
-+	if (aggregator->is_active) {
- 		struct slave *slave = port->slave;
+-/**
+- * iavf_restore_filters
+- * @adapter: board private structure
+- *
+- * Restore existing non MAC filters when VF netdev comes back up
+- **/
+-static void iavf_restore_filters(struct iavf_adapter *adapter)
+-{
+-	struct iavf_vlan_filter *f;
+-
+-	/* re-add all VLAN filters */
+-	spin_lock_bh(&adapter->mac_vlan_list_lock);
+-
+-	list_for_each_entry(f, &adapter->vlan_filter_list, list) {
+-		if (f->state == IAVF_VLAN_INACTIVE)
+-			f->state = IAVF_VLAN_ADD;
+-	}
+-
+-	spin_unlock_bh(&adapter->mac_vlan_list_lock);
+-	adapter->aq_required |= IAVF_FLAG_AQ_ADD_VLAN_FILTER;
+-}
  
- 		slave_dbg(slave->bond->dev, slave->dev,
- 			  "Enabling collecting on port %d (LAG %d)\n",
- 			  port->actor_port_number,
--			  port->aggregator->aggregator_identifier);
-+			  aggregator->aggregator_identifier);
- 		__enable_collecting_port(port);
- 	}
- }
-@@ -2039,11 +2043,13 @@ static void ad_enable_collecting(struct port *port)
-  */
- static void ad_disable_distributing(struct port *port, bool *update_slave_arr)
- {
--	if (port->aggregator && __agg_has_partner(port->aggregator)) {
-+	struct aggregator *aggregator = rcu_dereference(port->aggregator);
-+
-+	if (aggregator && __agg_has_partner(aggregator)) {
- 		slave_dbg(port->slave->bond->dev, port->slave->dev,
- 			  "Disabling distributing on port %d (LAG %d)\n",
- 			  port->actor_port_number,
--			  port->aggregator->aggregator_identifier);
-+			  aggregator->aggregator_identifier);
- 		__disable_distributing_port(port);
- 		/* Slave array needs an update */
- 		*update_slave_arr = true;
-@@ -2060,11 +2066,13 @@ static void ad_disable_distributing(struct port *port, bool *update_slave_arr)
- static void ad_enable_collecting_distributing(struct port *port,
- 					      bool *update_slave_arr)
- {
--	if (port->aggregator->is_active) {
-+	struct aggregator *aggregator = rcu_dereference(port->aggregator);
-+
-+	if (aggregator->is_active) {
- 		slave_dbg(port->slave->bond->dev, port->slave->dev,
- 			  "Enabling port %d (LAG %d)\n",
- 			  port->actor_port_number,
--			  port->aggregator->aggregator_identifier);
-+			  aggregator->aggregator_identifier);
- 		__enable_port(port);
- 		/* Slave array needs update */
- 		*update_slave_arr = true;
-@@ -2079,11 +2087,13 @@ static void ad_enable_collecting_distributing(struct port *port,
- static void ad_disable_collecting_distributing(struct port *port,
- 					       bool *update_slave_arr)
- {
--	if (port->aggregator && __agg_has_partner(port->aggregator)) {
-+	struct aggregator *aggregator = rcu_dereference(port->aggregator);
-+
-+	if (aggregator && __agg_has_partner(aggregator)) {
- 		slave_dbg(port->slave->bond->dev, port->slave->dev,
- 			  "Disabling port %d (LAG %d)\n",
- 			  port->actor_port_number,
--			  port->aggregator->aggregator_identifier);
-+			  aggregator->aggregator_identifier);
- 		__disable_port(port);
- 		/* Slave array needs an update */
- 		*update_slave_arr = true;
-@@ -2323,7 +2333,7 @@ void bond_3ad_unbind_slave(struct slave *slave)
- 				 */
- 				for (temp_port = aggregator->lag_ports; temp_port;
- 				     temp_port = temp_port->next_port_in_aggregator) {
--					temp_port->aggregator = new_aggregator;
-+					rcu_assign_pointer(temp_port->aggregator, new_aggregator);
- 					temp_port->actor_port_aggregator_identifier = new_aggregator->aggregator_identifier;
- 				}
- 
-@@ -2792,15 +2802,16 @@ int bond_3ad_set_carrier(struct bonding *bond)
- int __bond_3ad_get_active_agg_info(struct bonding *bond,
- 				   struct ad_info *ad_info)
- {
--	struct aggregator *aggregator = NULL;
-+	struct aggregator *aggregator = NULL, *tmp;
- 	struct list_head *iter;
- 	struct slave *slave;
- 	struct port *port;
- 
- 	bond_for_each_slave_rcu(bond, slave, iter) {
- 		port = &(SLAVE_AD_INFO(slave)->port);
--		if (port->aggregator && port->aggregator->is_active) {
--			aggregator = port->aggregator;
-+		tmp = rcu_dereference(port->aggregator);
-+		if (tmp && tmp->is_active) {
-+			aggregator = tmp;
- 			break;
- 		}
- 	}
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 70718bf6e716c..029a7f001dd8a 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1394,7 +1394,7 @@ static void bond_poll_controller(struct net_device *bond_dev)
- 
- 		if (BOND_MODE(bond) == BOND_MODE_8023AD) {
- 			struct aggregator *agg =
--			    SLAVE_AD_INFO(slave)->port.aggregator;
-+			    rcu_dereference(SLAVE_AD_INFO(slave)->port.aggregator);
- 
- 			if (agg &&
- 			    agg->aggregator_identifier != ad_info.aggregator_id)
-@@ -5196,15 +5196,16 @@ int bond_update_slave_arr(struct bonding *bond, struct slave *skipslave)
- 		spin_unlock_bh(&bond->mode_lock);
- 		agg_id = ad_info.aggregator_id;
- 	}
-+	rcu_read_lock();
- 	bond_for_each_slave(bond, slave, iter) {
- 		if (skipslave == slave)
- 			continue;
- 
- 		all_slaves->arr[all_slaves->count++] = slave;
- 		if (BOND_MODE(bond) == BOND_MODE_8023AD) {
--			struct aggregator *agg;
-+			const struct aggregator *agg;
- 
--			agg = SLAVE_AD_INFO(slave)->port.aggregator;
-+			agg = rcu_dereference(SLAVE_AD_INFO(slave)->port.aggregator);
- 			if (!agg || agg->aggregator_identifier != agg_id)
- 				continue;
- 		}
-@@ -5216,6 +5217,7 @@ int bond_update_slave_arr(struct bonding *bond, struct slave *skipslave)
- 
- 		usable_slaves->arr[usable_slaves->count++] = slave;
- 	}
-+	rcu_read_unlock();
- 
- 	bond_set_slave_arr(bond, usable_slaves, all_slaves);
- 	return ret;
-diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
-index 086233dce9c8d..0eaf4b0e06ffb 100644
---- a/drivers/net/bonding/bond_netlink.c
-+++ b/drivers/net/bonding/bond_netlink.c
-@@ -65,27 +65,29 @@ static int bond_fill_slave_info(struct sk_buff *skb,
- 		const struct port *ad_port;
- 
- 		ad_port = &SLAVE_AD_INFO(slave)->port;
--		agg = SLAVE_AD_INFO(slave)->port.aggregator;
-+		rcu_read_lock();
-+		agg = rcu_dereference(SLAVE_AD_INFO(slave)->port.aggregator);
- 		if (agg) {
- 			if (nla_put_u16(skb, IFLA_BOND_SLAVE_AD_AGGREGATOR_ID,
- 					agg->aggregator_identifier))
--				goto nla_put_failure;
-+				goto nla_put_failure_rcu;
- 			if (nla_put_u8(skb,
- 				       IFLA_BOND_SLAVE_AD_ACTOR_OPER_PORT_STATE,
- 				       ad_port->actor_oper_port_state))
--				goto nla_put_failure;
-+				goto nla_put_failure_rcu;
- 			if (nla_put_u16(skb,
- 					IFLA_BOND_SLAVE_AD_PARTNER_OPER_PORT_STATE,
- 					ad_port->partner_oper.port_state))
--				goto nla_put_failure;
-+				goto nla_put_failure_rcu;
- 
- 			if (nla_put_u8(skb, IFLA_BOND_SLAVE_AD_CHURN_ACTOR_STATE,
- 				       ad_port->sm_churn_actor_state))
--				goto nla_put_failure;
-+				goto nla_put_failure_rcu;
- 			if (nla_put_u8(skb, IFLA_BOND_SLAVE_AD_CHURN_PARTNER_STATE,
- 				       ad_port->sm_churn_partner_state))
--				goto nla_put_failure;
-+				goto nla_put_failure_rcu;
- 		}
-+		rcu_read_unlock();
- 
- 		if (nla_put_u16(skb, IFLA_BOND_SLAVE_ACTOR_PORT_PRIO,
- 				SLAVE_AD_INFO(slave)->port_priority))
-@@ -94,6 +96,8 @@ static int bond_fill_slave_info(struct sk_buff *skb,
- 
- 	return 0;
- 
-+nla_put_failure_rcu:
-+	rcu_read_unlock();
- nla_put_failure:
- 	return -EMSGSIZE;
- }
-diff --git a/drivers/net/bonding/bond_procfs.c b/drivers/net/bonding/bond_procfs.c
-index 43be458422b3f..bc919814eb504 100644
---- a/drivers/net/bonding/bond_procfs.c
-+++ b/drivers/net/bonding/bond_procfs.c
-@@ -187,6 +187,7 @@ static void bond_info_show_master(struct seq_file *seq)
- 	}
+ /**
+  * iavf_get_num_vlans_added - get number of VLANs added
+@@ -1289,13 +1268,12 @@ static void iavf_up_complete(struct iavf_adapter *adapter)
  }
  
-+/* Note: runs under rcu_read_lock() */
- static void bond_info_show_slave(struct seq_file *seq,
- 				 const struct slave *slave)
+ /**
+- * iavf_clear_mac_vlan_filters - Remove mac and vlan filters not sent to PF
+- * yet and mark other to be removed.
++ * iavf_clear_mac_filters - Remove MAC filters not sent to PF yet and mark
++ * others to be removed.
+  * @adapter: board private structure
+  **/
+-static void iavf_clear_mac_vlan_filters(struct iavf_adapter *adapter)
++static void iavf_clear_mac_filters(struct iavf_adapter *adapter)
  {
-@@ -213,7 +214,7 @@ static void bond_info_show_slave(struct seq_file *seq,
+-	struct iavf_vlan_filter *vlf, *vlftmp;
+ 	struct iavf_mac_filter *f, *ftmp;
  
- 	if (BOND_MODE(bond) == BOND_MODE_8023AD) {
- 		const struct port *port = &SLAVE_AD_INFO(slave)->port;
--		const struct aggregator *agg = port->aggregator;
-+		const struct aggregator *agg = rcu_dereference(port->aggregator);
- 
- 		if (agg) {
- 			seq_printf(seq, "Aggregator ID: %d\n",
-diff --git a/drivers/net/bonding/bond_sysfs_slave.c b/drivers/net/bonding/bond_sysfs_slave.c
-index 313866f2c0e49..75df3e21b804d 100644
---- a/drivers/net/bonding/bond_sysfs_slave.c
-+++ b/drivers/net/bonding/bond_sysfs_slave.c
-@@ -62,10 +62,15 @@ static ssize_t ad_aggregator_id_show(struct slave *slave, char *buf)
- 	const struct aggregator *agg;
- 
- 	if (BOND_MODE(slave->bond) == BOND_MODE_8023AD) {
--		agg = SLAVE_AD_INFO(slave)->port.aggregator;
--		if (agg)
--			return sysfs_emit(buf, "%d\n",
--					  agg->aggregator_identifier);
-+		rcu_read_lock();
-+		agg = rcu_dereference(SLAVE_AD_INFO(slave)->port.aggregator);
-+		if (agg) {
-+			ssize_t res = sysfs_emit(buf, "%d\n",
-+						 agg->aggregator_identifier);
-+			rcu_read_unlock();
-+			return res;
-+		}
-+		rcu_read_unlock();
+ 	spin_lock_bh(&adapter->mac_vlan_list_lock);
+@@ -1314,11 +1292,6 @@ static void iavf_clear_mac_vlan_filters(struct iavf_adapter *adapter)
+ 		}
  	}
  
- 	return sysfs_emit(buf, "N/A\n");
-@@ -78,7 +83,7 @@ static ssize_t ad_actor_oper_port_state_show(struct slave *slave, char *buf)
+-	/* disable all VLAN filters */
+-	list_for_each_entry_safe(vlf, vlftmp, &adapter->vlan_filter_list,
+-				 list)
+-		vlf->state = IAVF_VLAN_DISABLE;
+-
+ 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
+ }
  
- 	if (BOND_MODE(slave->bond) == BOND_MODE_8023AD) {
- 		ad_port = &SLAVE_AD_INFO(slave)->port;
--		if (ad_port->aggregator)
-+		if (rcu_access_pointer(ad_port->aggregator))
- 			return sysfs_emit(buf, "%u\n",
- 				       ad_port->actor_oper_port_state);
- 	}
-@@ -93,7 +98,7 @@ static ssize_t ad_partner_oper_port_state_show(struct slave *slave, char *buf)
+@@ -1414,7 +1387,7 @@ void iavf_down(struct iavf_adapter *adapter)
+ 	iavf_napi_disable_all(adapter);
+ 	iavf_irq_disable(adapter);
  
- 	if (BOND_MODE(slave->bond) == BOND_MODE_8023AD) {
- 		ad_port = &SLAVE_AD_INFO(slave)->port;
--		if (ad_port->aggregator)
-+		if (rcu_access_pointer(ad_port->aggregator))
- 			return sysfs_emit(buf, "%u\n",
- 				       ad_port->partner_oper.port_state);
+-	iavf_clear_mac_vlan_filters(adapter);
++	iavf_clear_mac_filters(adapter);
+ 	iavf_clear_cloud_filters(adapter);
+ 	iavf_clear_fdir_filters(adapter);
+ 	iavf_clear_adv_rss_conf(adapter);
+@@ -1429,8 +1402,6 @@ void iavf_down(struct iavf_adapter *adapter)
+ 		 */
+ 		if (!list_empty(&adapter->mac_filter_list))
+ 			adapter->aq_required |= IAVF_FLAG_AQ_DEL_MAC_FILTER;
+-		if (!list_empty(&adapter->vlan_filter_list))
+-			adapter->aq_required |= IAVF_FLAG_AQ_DEL_VLAN_FILTER;
+ 		if (!list_empty(&adapter->cloud_filter_list))
+ 			adapter->aq_required |= IAVF_FLAG_AQ_DEL_CLOUD_FILTER;
+ 		if (!list_empty(&adapter->fdir_list_head))
+@@ -4295,8 +4266,6 @@ static int iavf_open(struct net_device *netdev)
+ 
+ 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
+ 
+-	/* Restore filters that were removed with IFF_DOWN */
+-	iavf_restore_filters(adapter);
+ 	iavf_restore_fdir_filters(adapter);
+ 
+ 	iavf_configure(adapter);
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+index bc8285f77a7be..1d03cc452df2c 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+@@ -800,22 +800,12 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
+ 	spin_lock_bh(&adapter->mac_vlan_list_lock);
+ 
+ 	list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
+-		/* since VLAN capabilities are not allowed, we dont want to send
+-		 * a VLAN delete request because it will most likely fail and
+-		 * create unnecessary errors/noise, so just free the VLAN
+-		 * filters marked for removal to enable bailing out before
+-		 * sending a virtchnl message
+-		 */
+ 		if (f->state == IAVF_VLAN_REMOVE &&
+ 		    !VLAN_FILTERING_ALLOWED(adapter)) {
+ 			list_del(&f->list);
+ 			kfree(f);
+ 			adapter->num_vlan_filters--;
+-		} else if (f->state == IAVF_VLAN_DISABLE &&
+-		    !VLAN_FILTERING_ALLOWED(adapter)) {
+-			f->state = IAVF_VLAN_INACTIVE;
+-		} else if (f->state == IAVF_VLAN_REMOVE ||
+-			   f->state == IAVF_VLAN_DISABLE) {
++		} else if (f->state == IAVF_VLAN_REMOVE) {
+ 			count++;
+ 		}
  	}
-diff --git a/include/net/bond_3ad.h b/include/net/bond_3ad.h
-index 84fe87314bd9c..728aec9bda4a4 100644
---- a/include/net/bond_3ad.h
-+++ b/include/net/bond_3ad.h
-@@ -239,7 +239,7 @@ typedef struct port {
- 	churn_state_t sm_churn_actor_state;
- 	churn_state_t sm_churn_partner_state;
- 	struct slave *slave;		/* pointer to the bond slave that this port belongs to */
--	struct aggregator *aggregator;	/* pointer to an aggregator that this port related to */
-+	struct aggregator __rcu *aggregator;	/* pointer to an aggregator that this port related to */
- 	struct port *next_port_in_aggregator;	/* Next port on the linked list of the parent aggregator */
- 	u32 transaction_id;		/* continuous number for identification of Marker PDU's; */
- 	struct lacpdu lacpdu;		/* the lacpdu that will be sent for this port */
+@@ -847,13 +837,7 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
+ 		vvfl->vsi_id = adapter->vsi_res->vsi_id;
+ 		vvfl->num_elements = count;
+ 		list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
+-			if (f->state == IAVF_VLAN_DISABLE) {
+-				vvfl->vlan_id[i] = f->vlan.vid;
+-				f->state = IAVF_VLAN_INACTIVE;
+-				i++;
+-				if (i == count)
+-					break;
+-			} else if (f->state == IAVF_VLAN_REMOVE) {
++			if (f->state == IAVF_VLAN_REMOVE) {
+ 				vvfl->vlan_id[i] = f->vlan.vid;
+ 				list_del(&f->list);
+ 				kfree(f);
+@@ -894,8 +878,7 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
+ 		vvfl_v2->vport_id = adapter->vsi_res->vsi_id;
+ 		vvfl_v2->num_elements = count;
+ 		list_for_each_entry_safe(f, ftmp, &adapter->vlan_filter_list, list) {
+-			if (f->state == IAVF_VLAN_DISABLE ||
+-			    f->state == IAVF_VLAN_REMOVE) {
++			if (f->state == IAVF_VLAN_REMOVE) {
+ 				struct virtchnl_vlan_supported_caps *filtering_support =
+ 					&adapter->vlan_v2_caps.filtering.filtering_support;
+ 				struct virtchnl_vlan *vlan;
+@@ -909,13 +892,9 @@ void iavf_del_vlans(struct iavf_adapter *adapter)
+ 				vlan->tci = f->vlan.vid;
+ 				vlan->tpid = f->vlan.tpid;
+ 
+-				if (f->state == IAVF_VLAN_DISABLE) {
+-					f->state = IAVF_VLAN_INACTIVE;
+-				} else {
+-					list_del(&f->list);
+-					kfree(f);
+-					adapter->num_vlan_filters--;
+-				}
++				list_del(&f->list);
++				kfree(f);
++				adapter->num_vlan_filters--;
+ 				i++;
+ 				if (i == count)
+ 					break;
 -- 
 2.53.0
 
