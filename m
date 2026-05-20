@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174853FBB45;
-	Wed, 20 May 2026 18:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A6B3FCB2F;
+	Wed, 20 May 2026 18:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300310; cv=none; b=AuGm7V6GegrG7IyH1hs7Vqp+mHXScLLtxkuOvaFiqbEp2njvMuL2FP0nzP0oUdzTUF+xy3watEjyf81znd9BNVP5Ae9JuFDl3jH2qKlxaDBCH4khDzB/d8vZcPHSxxjHLumGoyBCo07u+YC+Vzr5lOYfG20R7Oa3J+qdizbk+tc=
+	t=1779300313; cv=none; b=XnGoReJZ2p4HPU+wASPV+XMSQ0ES6/hJdGQPQIi1rtoT0YMsUFNDsz6w7SU7GXL+5IE5eRVMJXDQeKCD1U5CW+GTJXbf3hZKtjIwKQ4k6Vox68tUToh3MmNFsKfzecWtzwnx67TFL5Z9/p46GjBIVHPt0RQJKhKLlMrcX4CAyFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300310; c=relaxed/simple;
-	bh=kwpoyEP0iY8GrX1F6BH2OD301a7ikChkhvNzjudSfnc=;
+	s=arc-20240116; t=1779300313; c=relaxed/simple;
+	bh=fDxacHg9Xgt4gAu2pijvAsx7n5rIm8k/rgTexNP0lpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EG51sAGfzuRWBxEYshmXmYD1L5lFbdsG/tztc6SLchsXH8musoJEQ+mqRE68gLc+6HoZPk1gplo/fHQet//qXLz/UjHQzb9/p+7Knx5w4qJsX5Y33fm1fI0Zu0chGX6GVg9ypeetPiGjf8sG+03AWv/PyR4ObKCILI5D3UzY2jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNtsKN5n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CxJS4kLWI53+wpssv0HFk1SDiernQ+ekzWZDIKDi7Tw2+e64oLdqmNUSC7AyuX0UbK4wLNZPAiguDZBwMw012VsETDfWX5Cj03k3ebOLRdQKBtHd5y+tWekcB4BqN0h0UBkmnDZVO6LJiluDbQutM0yKMiyI7JVgH7g/C2dTRyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/HRVy96; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNtsKN5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BEA1F000E9;
-	Wed, 20 May 2026 18:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/HRVy96"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC121F000E9;
+	Wed, 20 May 2026 18:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300309;
-	bh=ckJmo+Yoe1kQtVEQ6n4Ku89C6eRw6eDMXcXFKnsEDZg=;
+	s=korg; t=1779300311;
+	bh=gE0fg5P/qkrsH3fCNnjExXMEZrT/iTv+I9lpGldffDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pNtsKN5nutDulGP2v7jj92JoZuDT6RA+060Gkn8Id0hWLgI4Kv/Gt9gTJACAqsniH
-	 1JJFTU1ZhCPuXnSQ7ttXy1vaqFzcXKI3kEgmINjHo6vrnnKt/LRcTQCxwFui/iPSkW
-	 JGnonztghD+Xdob6nhHV2i7CkqnT7aYtPqjaElGQ=
+	b=Y/HRVy96BrqaFUWGk5ijX4LZoeJb7ORsOk6fyjHdf3H7eQZkD2enrw36oSJxsRiJ9
+	 5H9RFZtJgJNxlFZCfLGt+K2lk36l2IlOb55AuAcbqcJr5wXd1MU5lzgyR5xEzKjO7N
+	 SWF8ewCsrrkX12SmioUmiuC0GUQRZn2nWIGWEqQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/666] net: bcmgenet: add bcmgenet_has_* helpers
-Date: Wed, 20 May 2026 18:14:45 +0200
-Message-ID: <20260520162112.834132111@linuxfoundation.org>
+Subject: [PATCH 6.12 120/666] ASoC: add symmetric_ prefix for dai->rate/channels/sample_bits
+Date: Wed, 20 May 2026 18:15:31 +0200
+Message-ID: <20260520162113.818399856@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,190 +51,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Berger <opendmb@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 07c1a756a50b1180a085ab61819a388bbb906a95 ]
+[ Upstream commit 1bd775da9ba919b87b2313a78d5957afc1a62dde ]
 
-Introduce helper functions to indicate whether the driver should
-make use of a particular feature that it supports. These helpers
-abstract the implementation of how the feature availability is
-encoded.
+snd_soc_dai has rate/channels/sample_bits parameter, but it is only valid
+if symmetry is being enforced by symmetric_xxx flag on driver.
 
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250306192643.2383632-3-opendmb@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5393b2b5bee2 ("net: bcmgenet: fix racing timeout handler")
+It is very difficult to know about it from current naming, and easy to
+misunderstand it. add symmetric_ prefix for it.
+
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87zfmd8bnf.wl-kuninori.morimoto.gx@renesas.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 07c774dd64ba ("ASoC: soc-compress: use function to clear symmetric params")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 20 +++++++-------
- .../net/ethernet/broadcom/genet/bcmgenet.h    | 27 ++++++++++++++++++-
- drivers/net/ethernet/broadcom/genet/bcmmii.c  |  6 ++---
- 3 files changed, 39 insertions(+), 14 deletions(-)
+ include/sound/soc-dai.h                     |  6 ++---
+ sound/soc/mediatek/mt8188/mt8188-dai-pcm.c  |  2 +-
+ sound/soc/mediatek/mt8195/mt8195-dai-pcm.c  |  2 +-
+ sound/soc/mediatek/mt8365/mt8365-dai-dmic.c |  6 ++---
+ sound/soc/mediatek/mt8365/mt8365-dai-pcm.c  |  2 +-
+ sound/soc/soc-compress.c                    |  4 +--
+ sound/soc/soc-pcm.c                         | 29 +++++++++++----------
+ 7 files changed, 26 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index ac9bd34f3b3ce..1767d96dd6546 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -104,7 +104,7 @@ static inline void dmadesc_set_addr(struct bcmgenet_priv *priv,
- 	 * the platform is explicitly configured for 64-bits/LPAE.
- 	 */
- #ifdef CONFIG_PHYS_ADDR_T_64BIT
--	if (priv->hw_params->flags & GENET_HAS_40BITS)
-+	if (bcmgenet_has_40bits(priv))
- 		bcmgenet_writel(upper_32_bits(addr), d + DMA_DESC_ADDRESS_HI);
- #endif
- }
-@@ -1644,9 +1644,9 @@ static int bcmgenet_power_down(struct bcmgenet_priv *priv,
+diff --git a/include/sound/soc-dai.h b/include/sound/soc-dai.h
+index 0d1b215f24f4f..4a3505674f2f2 100644
+--- a/include/sound/soc-dai.h
++++ b/include/sound/soc-dai.h
+@@ -450,9 +450,9 @@ struct snd_soc_dai {
+ 	struct snd_soc_dai_stream stream[SNDRV_PCM_STREAM_LAST + 1];
  
- 	case GENET_POWER_PASSIVE:
- 		/* Power down LED */
--		if (priv->hw_params->flags & GENET_HAS_EXT) {
-+		if (bcmgenet_has_ext(priv)) {
- 			reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
--			if (GENET_IS_V5(priv) && !priv->ephy_16nm)
-+			if (GENET_IS_V5(priv) && !bcmgenet_has_ephy_16nm(priv))
- 				reg |= EXT_PWR_DOWN_PHY_EN |
- 				       EXT_PWR_DOWN_PHY_RD |
- 				       EXT_PWR_DOWN_PHY_SD |
-@@ -1674,7 +1674,7 @@ static void bcmgenet_power_up(struct bcmgenet_priv *priv,
+ 	/* Symmetry data - only valid if symmetry is being enforced */
+-	unsigned int rate;
+-	unsigned int channels;
+-	unsigned int sample_bits;
++	unsigned int symmetric_rate;
++	unsigned int symmetric_channels;
++	unsigned int symmetric_sample_bits;
+ 
+ 	/* parent platform/codec */
+ 	struct snd_soc_component *component;
+diff --git a/sound/soc/mediatek/mt8188/mt8188-dai-pcm.c b/sound/soc/mediatek/mt8188/mt8188-dai-pcm.c
+index 5bc854a8f3df3..8ca7cc75e21dc 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-dai-pcm.c
++++ b/sound/soc/mediatek/mt8188/mt8188-dai-pcm.c
+@@ -128,7 +128,7 @@ static int mtk_dai_pcm_configure(struct snd_pcm_substream *substream,
+ 	unsigned int lrck_inv;
+ 	unsigned int bck_inv;
+ 	unsigned int fmt;
+-	unsigned int bit_width = dai->sample_bits;
++	unsigned int bit_width = dai->symmetric_sample_bits;
+ 	unsigned int val = 0;
+ 	unsigned int mask = 0;
+ 	int fs = 0;
+diff --git a/sound/soc/mediatek/mt8195/mt8195-dai-pcm.c b/sound/soc/mediatek/mt8195/mt8195-dai-pcm.c
+index 6d6d79300d512..cdc16057d50e2 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-dai-pcm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-dai-pcm.c
+@@ -127,7 +127,7 @@ static int mtk_dai_pcm_configure(struct snd_pcm_substream *substream,
+ 	unsigned int lrck_inv;
+ 	unsigned int bck_inv;
+ 	unsigned int fmt;
+-	unsigned int bit_width = dai->sample_bits;
++	unsigned int bit_width = dai->symmetric_sample_bits;
+ 	unsigned int val = 0;
+ 	unsigned int mask = 0;
+ 	int fs = 0;
+diff --git a/sound/soc/mediatek/mt8365/mt8365-dai-dmic.c b/sound/soc/mediatek/mt8365/mt8365-dai-dmic.c
+index f9945c2a2cd13..0bac143b48bfb 100644
+--- a/sound/soc/mediatek/mt8365/mt8365-dai-dmic.c
++++ b/sound/soc/mediatek/mt8365/mt8365-dai-dmic.c
+@@ -118,13 +118,13 @@ static int mt8365_dai_configure_dmic(struct mtk_base_afe *afe,
+ 	unsigned int clk_phase_sel_ch1 = dmic_data->clk_phase_sel_ch1;
+ 	unsigned int clk_phase_sel_ch2 = dmic_data->clk_phase_sel_ch2;
+ 	unsigned int val = 0;
+-	unsigned int rate = dai->rate;
+-	int reg = get_chan_reg(dai->channels);
++	unsigned int rate = dai->symmetric_rate;
++	int reg = get_chan_reg(dai->symmetric_channels);
+ 
+ 	if (reg < 0)
+ 		return -EINVAL;
+ 
+-	dmic_data->dmic_channel = dai->channels;
++	dmic_data->dmic_channel = dai->symmetric_channels;
+ 
+ 	val |= DMIC_TOP_CON_SDM3_LEVEL_MODE;
+ 
+diff --git a/sound/soc/mediatek/mt8365/mt8365-dai-pcm.c b/sound/soc/mediatek/mt8365/mt8365-dai-pcm.c
+index f85ec07249c3b..3373b88da28ea 100644
+--- a/sound/soc/mediatek/mt8365/mt8365-dai-pcm.c
++++ b/sound/soc/mediatek/mt8365/mt8365-dai-pcm.c
+@@ -44,7 +44,7 @@ static int mt8365_dai_configure_pcm1(struct snd_pcm_substream *substream,
+ 	bool lrck_inv = pcm_priv->lrck_inv;
+ 	bool bck_inv = pcm_priv->bck_inv;
+ 	unsigned int fmt = pcm_priv->format;
+-	unsigned int bit_width = dai->sample_bits;
++	unsigned int bit_width = dai->symmetric_sample_bits;
+ 	unsigned int val = 0;
+ 
+ 	if (!slave_mode) {
+diff --git a/sound/soc/soc-compress.c b/sound/soc/soc-compress.c
+index e692aa3b8b22f..f787f60a16a11 100644
+--- a/sound/soc/soc-compress.c
++++ b/sound/soc/soc-compress.c
+@@ -69,10 +69,10 @@ static int soc_compr_clean(struct snd_compr_stream *cstream, int rollback)
+ 	snd_soc_dai_digital_mute(codec_dai, 1, stream);
+ 
+ 	if (!snd_soc_dai_active(cpu_dai))
+-		cpu_dai->rate = 0;
++		cpu_dai->symmetric_rate = 0;
+ 
+ 	if (!snd_soc_dai_active(codec_dai))
+-		codec_dai->rate = 0;
++		codec_dai->symmetric_rate = 0;
+ 
+ 	snd_soc_link_compr_shutdown(cstream, rollback);
+ 
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 0e21ff9f7b74e..83e6a76da7e63 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -462,13 +462,13 @@ static void soc_pcm_set_dai_params(struct snd_soc_dai *dai,
+ 				   struct snd_pcm_hw_params *params)
  {
- 	u32 reg;
- 
--	if (!(priv->hw_params->flags & GENET_HAS_EXT))
-+	if (!bcmgenet_has_ext(priv))
- 		return;
- 
- 	reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
-@@ -1683,7 +1683,7 @@ static void bcmgenet_power_up(struct bcmgenet_priv *priv,
- 	case GENET_POWER_PASSIVE:
- 		reg &= ~(EXT_PWR_DOWN_DLL | EXT_PWR_DOWN_BIAS |
- 			 EXT_ENERGY_DET_MASK);
--		if (GENET_IS_V5(priv) && !priv->ephy_16nm) {
-+		if (GENET_IS_V5(priv) && !bcmgenet_has_ephy_16nm(priv)) {
- 			reg &= ~(EXT_PWR_DOWN_PHY_EN |
- 				 EXT_PWR_DOWN_PHY_RD |
- 				 EXT_PWR_DOWN_PHY_SD |
-@@ -2516,7 +2516,7 @@ static void bcmgenet_link_intr_enable(struct bcmgenet_priv *priv)
- 	} else if (priv->ext_phy) {
- 		int0_enable |= UMAC_IRQ_LINK_EVENT;
- 	} else if (priv->phy_interface == PHY_INTERFACE_MODE_MOCA) {
--		if (priv->hw_params->flags & GENET_HAS_MOCA_LINK_DET)
-+		if (bcmgenet_has_moca_link_det(priv))
- 			int0_enable |= UMAC_IRQ_LINK_EVENT;
+ 	if (params) {
+-		dai->rate	 = params_rate(params);
+-		dai->channels	 = params_channels(params);
+-		dai->sample_bits = snd_pcm_format_physical_width(params_format(params));
++		dai->symmetric_rate	   = params_rate(params);
++		dai->symmetric_channels	   = params_channels(params);
++		dai->symmetric_sample_bits = snd_pcm_format_physical_width(params_format(params));
+ 	} else {
+-		dai->rate	 = 0;
+-		dai->channels	 = 0;
+-		dai->sample_bits = 0;
++		dai->symmetric_rate	   = 0;
++		dai->symmetric_channels	   = 0;
++		dai->symmetric_sample_bits = 0;
  	}
- 	bcmgenet_intrl2_0_writel(priv, int0_enable, INTRL2_CPU_MASK_CLEAR);
-@@ -2581,7 +2581,7 @@ static void init_umac(struct bcmgenet_priv *priv)
- 	}
+ }
  
- 	/* Enable MDIO interrupts on GENET v3+ */
--	if (priv->hw_params->flags & GENET_HAS_MDIO_INTR)
-+	if (bcmgenet_has_mdio_intr(priv))
- 		int0_enable |= (UMAC_IRQ_MDIO_DONE | UMAC_IRQ_MDIO_ERROR);
+@@ -482,14 +482,14 @@ static int soc_pcm_apply_symmetry(struct snd_pcm_substream *substream,
+ 		return 0;
  
- 	bcmgenet_intrl2_0_writel(priv, int0_enable, INTRL2_CPU_MASK_CLEAR);
-@@ -3221,7 +3221,7 @@ static irqreturn_t bcmgenet_isr0(int irq, void *dev_id)
+ #define __soc_pcm_apply_symmetry(name, NAME)				\
+-	if (soc_dai->name && (soc_dai->driver->symmetric_##name ||	\
+-			      rtd->dai_link->symmetric_##name)) {	\
++	if (soc_dai->symmetric_##name &&				\
++	    (soc_dai->driver->symmetric_##name || rtd->dai_link->symmetric_##name)) { \
+ 		dev_dbg(soc_dai->dev, "ASoC: Symmetry forces %s to %d\n",\
+-			#name, soc_dai->name);				\
++			#name, soc_dai->symmetric_##name);		\
+ 									\
+ 		ret = snd_pcm_hw_constraint_single(substream->runtime,	\
+ 						   SNDRV_PCM_HW_PARAM_##NAME,\
+-						   soc_dai->name);	\
++						   soc_dai->symmetric_##name);	\
+ 		if (ret < 0) {						\
+ 			dev_err(soc_dai->dev,				\
+ 				"ASoC: Unable to apply %s constraint: %d\n",\
+@@ -525,9 +525,11 @@ static int soc_pcm_params_symmetry(struct snd_pcm_substream *substream,
+ 	if (symmetry)							\
+ 		for_each_rtd_cpu_dais(rtd, i, cpu_dai)			\
+ 			if (!snd_soc_dai_is_dummy(cpu_dai) &&		\
+-			    cpu_dai->xxx && cpu_dai->xxx != d.xxx) {	\
++			    cpu_dai->symmetric_##xxx &&			\
++			    cpu_dai->symmetric_##xxx != d.symmetric_##xxx) { \
+ 				dev_err(rtd->dev, "ASoC: unmatched %s symmetry: %s:%d - %s:%d\n", \
+-					#xxx, cpu_dai->name, cpu_dai->xxx, d.name, d.xxx); \
++					#xxx, cpu_dai->name, cpu_dai->symmetric_##xxx, \
++					d.name, d.symmetric_##xxx);	\
+ 				return -EINVAL;				\
+ 			}
+ 
+@@ -798,8 +800,7 @@ static int soc_pcm_clean(struct snd_soc_pcm_runtime *rtd,
+ 
+ 		/* Make sure DAI parameters cleared if the DAI becomes inactive */
+ 		for_each_rtd_dais(rtd, i, dai) {
+-			if (snd_soc_dai_active(dai) == 0 &&
+-			    (dai->rate || dai->channels || dai->sample_bits))
++			if (snd_soc_dai_active(dai) == 0)
+ 				soc_pcm_set_dai_params(dai, NULL);
  		}
  	}
- 
--	if ((priv->hw_params->flags & GENET_HAS_MDIO_INTR) &&
-+	if (bcmgenet_has_mdio_intr(priv) &&
- 		status & (UMAC_IRQ_MDIO_DONE | UMAC_IRQ_MDIO_ERROR)) {
- 		wake_up(&priv->wq);
- 	}
-@@ -3891,7 +3891,7 @@ static void bcmgenet_set_hw_params(struct bcmgenet_priv *priv)
- 	}
- 
- #ifdef CONFIG_PHYS_ADDR_T_64BIT
--	if (!(params->flags & GENET_HAS_40BITS))
-+	if (!bcmgenet_has_40bits(priv))
- 		pr_warn("GENET does not support 40-bits PA\n");
- #endif
- 
-@@ -4070,7 +4070,7 @@ static int bcmgenet_probe(struct platform_device *pdev)
- 	bcmgenet_set_hw_params(priv);
- 
- 	err = -EIO;
--	if (priv->hw_params->flags & GENET_HAS_40BITS)
-+	if (bcmgenet_has_40bits(priv))
- 		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(40));
- 	if (err)
- 		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.h b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-index c0005a0fff567..ed7402fb7fdaa 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0-only */
- /*
-- * Copyright (c) 2014-2024 Broadcom
-+ * Copyright (c) 2014-2025 Broadcom
-  */
- 
- #ifndef __BCMGENET_H__
-@@ -648,6 +648,31 @@ struct bcmgenet_priv {
- 	struct bcmgenet_mib_counters mib;
- };
- 
-+static inline bool bcmgenet_has_40bits(struct bcmgenet_priv *priv)
-+{
-+	return !!(priv->hw_params->flags & GENET_HAS_40BITS);
-+}
-+
-+static inline bool bcmgenet_has_ext(struct bcmgenet_priv *priv)
-+{
-+	return !!(priv->hw_params->flags & GENET_HAS_EXT);
-+}
-+
-+static inline bool bcmgenet_has_mdio_intr(struct bcmgenet_priv *priv)
-+{
-+	return !!(priv->hw_params->flags & GENET_HAS_MDIO_INTR);
-+}
-+
-+static inline bool bcmgenet_has_moca_link_det(struct bcmgenet_priv *priv)
-+{
-+	return !!(priv->hw_params->flags & GENET_HAS_MOCA_LINK_DET);
-+}
-+
-+static inline bool bcmgenet_has_ephy_16nm(struct bcmgenet_priv *priv)
-+{
-+	return priv->ephy_16nm;
-+}
-+
- #define GENET_IO_MACRO(name, offset)					\
- static inline u32 bcmgenet_##name##_readl(struct bcmgenet_priv *priv,	\
- 					u32 off)			\
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmmii.c b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-index 9beb65e6d0a96..eeb2aa75efdae 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-@@ -2,7 +2,7 @@
- /*
-  * Broadcom GENET MDIO routines
-  *
-- * Copyright (c) 2014-2024 Broadcom
-+ * Copyright (c) 2014-2025 Broadcom
-  */
- 
- #include <linux/acpi.h>
-@@ -151,7 +151,7 @@ void bcmgenet_phy_power_set(struct net_device *dev, bool enable)
- 	u32 reg = 0;
- 
- 	/* EXT_GPHY_CTRL is only valid for GENETv4 and onward */
--	if (GENET_IS_V4(priv) || priv->ephy_16nm) {
-+	if (GENET_IS_V4(priv) || bcmgenet_has_ephy_16nm(priv)) {
- 		reg = bcmgenet_ext_readl(priv, EXT_GPHY_CTRL);
- 		if (enable) {
- 			reg &= ~EXT_CK25_DIS;
-@@ -181,7 +181,7 @@ void bcmgenet_phy_power_set(struct net_device *dev, bool enable)
- 
- static void bcmgenet_moca_phy_setup(struct bcmgenet_priv *priv)
- {
--	if (priv->hw_params->flags & GENET_HAS_MOCA_LINK_DET)
-+	if (bcmgenet_has_moca_link_det(priv))
- 		fixed_phy_set_link_update(priv->dev->phydev,
- 					  bcmgenet_fixed_phy_link_update);
- }
 -- 
 2.53.0
 
