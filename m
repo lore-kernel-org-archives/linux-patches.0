@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7FA3368B6;
-	Wed, 20 May 2026 17:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470EF3EF0D7;
+	Wed, 20 May 2026 17:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297226; cv=none; b=evcCc1sm2BjGo0WhoQtzw2+mTc2Kcggk50Bx/a3bxiIbfGJ5v/yYazP+tYWieHwPbOL4Y/IrGjtiz+DC2aV/6zx/wtIsvHLa2v2qQJ0fjN9LQ+TuoATGwKU168pKXzJyNfaTvmumyj7DXaLoD5Le0ijt8LNSlSV8ZnYdQXgLIMc=
+	t=1779297229; cv=none; b=Uf3uvLhZsIfqRIV1A8g7ZlKgcW1ZN0GYbxNIOpCmTvwE5IU6Ah63t15b3Zaz6xhvoUVBnnODwF5+eOuIlXXKDgTogDdHrXA9yfRGqT+jGXmBztco6WA8RzwbNXBqU8yjzpmIIF/6T6T/cZX6Ob+PmqRNc9f7LfVmAMcOGZrnaNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297226; c=relaxed/simple;
-	bh=mLDYAx88zaXtU9gKv5l3ZyEdHHBuLspyjTKPpgmBCBY=;
+	s=arc-20240116; t=1779297229; c=relaxed/simple;
+	bh=ZufGhK4s+kfTNjdx6FzUPujytNQY7cuWYisG2GACvW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NeLJYw6eoJ5T7XzXDSYkROzRnfO3NW4xKrw+9K8bdi/4hSa05LksbFCcrScQRIkvMX7mhLbeb+AT78gc6WdG++w9MGGNuGb1td8+7Z8uo+s3O2b9hwUKunstrCsbKvQ8NoatIY0S7wdxHHyDLHlxm3796lmceI8Ap442zs9qqE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcP24yIU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aViugArZzkT+K5W+SBfHPpQSL2Bau+tCBYGROwJhjJHbM1uwUSTC7rZ8pQTQXgtpfM11EY6ZWy4YFeXp9AWwmRJVtgYLVDyQktju+sXaeI5F2JevyiL112R116Cc6J2aAumbqugsfuEvTdQNiGcXR/1ChZSj5r2jvUnxLwml37A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1q3FVp4l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcP24yIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5B31F000E9;
-	Wed, 20 May 2026 17:13:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1q3FVp4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A771F000E9;
+	Wed, 20 May 2026 17:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297225;
-	bh=v97Sl14cJzpgJeDVJO1fhfe+ysBZfPnaI1VcJ+SXjC8=;
+	s=korg; t=1779297228;
+	bh=rZZ0ku0+JX48NY5MSp0YOvJIDiYvFxpYwsCM+VqyV/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tcP24yIUELMr1kuJmmBm2gU5Zi36rQI/RGBfn1HaNJ6z3972W+3ihDjvyvgk5Tt+D
-	 xeuJlgB/ZsT+CCbi27wISluiv36QQdpQopSu3zbV6W+gcGsk7ScOxUfa7+M2JNs5Mc
-	 wrjtfb4vZvL71cgezmdCcx1AAlm5Nl0IKV9wwlb8=
+	b=1q3FVp4lKE4AMSuT8jw7HDbvkD4wDKgJuOdWJfItKJvstBuTK9Bxvn/hJlRkgDhrG
+	 cpLG3YpjrDbM5G6sfSrP43s+8eiBy35xIDFHGbuQsU4ROrb42pdXXAqFY9m7eADr/D
+	 /XMzUJpn1aP/09qzF0oxa89y42vE3K6aWrbU/Op4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan Kakulawaram <rohanka@google.com>,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	stable@kernel.org
-Subject: [PATCH 7.0 1099/1146] x86/kexec: Push kjump return address even for non-kjump kexec
-Date: Wed, 20 May 2026 18:22:29 +0200
-Message-ID: <20260520162213.113800215@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Hans Holmberg <hans.holmberg@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 7.0 1100/1146] xfs: fix memory leak on error in xfs_alloc_zone_info()
+Date: Wed, 20 May 2026 18:22:30 +0200
+Message-ID: <20260520162213.137431815@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,52 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Wilfred Mallawa <wilfred.mallawa@wdc.com>
 
-commit 786a45757dcdf8f2beb9d4a6db605db16c18b2b4 upstream.
+commit 592975da8c3ca87b043077e6eafa37665eae7936 upstream.
 
-The version of purgatory code shipped by kexec-tools attempts to look above
-the top of its stack to find a return address for a kjump, even in a non-kjump
-kexec.
+Currently, the 0th index of the zi_used_bucket_bitmap array is not freed
+on error due to the pre-decrement then evaluate semantic of the while
+loop used in xfs_alloc_zone_info(). Fix it by allowing for the i == 0
+case to be covered.
 
-After the commit in Fixes: the word above the stack might not be there,
-leading to a fault (which is at least now caught by my exception-handling code
-in kexec).
-
-That commit fixed things for the actual kjump path, but no longer
-"gratuitously" pushes the unused return address to the stack in the non-kjump
-path. Put that *back* in the non-kjump path, to prevent purgatory from
-crashing when trying to access it.
-
-Fixes: 2cacf7f23a02 ("x86/kexec: Fix stack and handling of re-entry point for ::preserve_context")
-Reported-by: Rohan Kakulawaram <rohanka@google.com>
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Rohan Kakulawaram <rohanka@google.com>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/32d627134143ffd957891cb697138e839c623211.camel@infradead.org
+Fixes: 080d01c41d44 ("xfs: implement zoned garbage collection")
+Cc: stable@vger.kernel.org # v6.15
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Wilfred Mallawa <wilfred.mallawa@wdc.com>
+Reviewed-by: Hans Holmberg <hans.holmberg@wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/relocate_kernel_64.S |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/xfs/xfs_zone_alloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/relocate_kernel_64.S
-+++ b/arch/x86/kernel/relocate_kernel_64.S
-@@ -136,6 +136,14 @@ SYM_CODE_START_LOCAL_NOALIGN(identity_ma
- 	 * %r13 original CR4 when relocate_kernel() was invoked
- 	 */
+--- a/fs/xfs/xfs_zone_alloc.c
++++ b/fs/xfs/xfs_zone_alloc.c
+@@ -1214,7 +1214,7 @@ xfs_alloc_zone_info(
+ 	return zi;
  
-+	/*
-+	 * Set return address to 0 if not preserving context. The purgatory
-+	 * shipped in kexec-tools will unconditionally look for the return
-+	 * address on the stack and set a kexec_jump_back_entry= command
-+	 * line option if it's non-zero. There's no other way that it can
-+	 * tell a preserve-context (kjump) kexec from a normal one.
-+	 */
-+	pushq	$0
- 	/* store the start address on the stack */
- 	pushq   %rdx
- 
+ out_free_bitmaps:
+-	while (--i > 0)
++	while (--i >= 0)
+ 		kvfree(zi->zi_used_bucket_bitmap[i]);
+ 	kfree(zi);
+ 	return NULL;
 
 
