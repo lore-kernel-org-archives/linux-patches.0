@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E8E29B8D0;
-	Wed, 20 May 2026 17:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF65A29B8D0;
+	Wed, 20 May 2026 17:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299683; cv=none; b=qh/unPQioc4nn9RLENwGk24ZMHtao2MuOBTOSh8bYx3YGLH15TVWao+g3oEbq5oZ3XtIcMtHEsCYMAEFAnU4VUGF/u9mG7bpNNMGqd+vCtXoUt9xo/bmqKJxMGfz0xrv9lm4hijDDSXLNz6EYxxvf6HEeeoKC5LhRu2B0aNXsFI=
+	t=1779299686; cv=none; b=FMFD77xwXvjy4oFVh9Zblm9i9jpt2P0aSY6K+Hcwtzfq1r7+tatyZNEVXeRHH3soTemuzIJzO1y9+s3HryeFlNwN8/d0l2OWtKU/DT37AQpzNd+AHPCA39sWPSCmPgd9idQUJAMkH/c8XD7ow34Ib5UiwiAffDC7GHPla8CqVlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299683; c=relaxed/simple;
-	bh=i6P86fPEQSEutgaIzzFu+3kwkjAktrSbnnCj50fVyUE=;
+	s=arc-20240116; t=1779299686; c=relaxed/simple;
+	bh=U6nuTh943wv3rPJdYuIbDH6zcre1rCcvNKTe4jMkv4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BjrPUYUgFWoQWrIGhu5iQHzJR2nBR7g1OF4BixR6SEdb8PwCsWLFANLwIsmueAMorlG5PxJ1QkOlp/wYZ9KnEp5BqN7+t73WJ/htgwNYi59wEfE+vYdgTrW9VlGDOFJ/Chdqr4ckoB6sSO/vjFwJhBqe648niECWh6tcS63r5uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMdJp4dV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NLjHR601tUqyT05ihpNjpM5pA89fx0I79w6vpk6+1Z3Y6CzPzFYpeJsF6ZZfAYAPadjVjvXB7PBqSsjI09fDVr+leZ3rG0GpvKB5xg10qPUJTd3HmHXtAhcMF+6fnCNPZ0kfyD3tIA//wyEvOP5mqu0tFffk7YJG1Vo/wH1Xr44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHbHX1rE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMdJp4dV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38541F000E9;
-	Wed, 20 May 2026 17:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHbHX1rE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9EF1F000E9;
+	Wed, 20 May 2026 17:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299682;
-	bh=negxEwu36E3rzB9Zdsn6hXB+vQLHxSDEDC4kXnM3d9w=;
+	s=korg; t=1779299684;
+	bh=mJB/089myfVlYur9I1VA2YfQyi1nZB5bRnCamA5Jmqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QMdJp4dVeUGeatE32qLREJ6H6vxScgj6K4NJJjgtd/w8EH8acp3Xz6FWchk6I/crJ
-	 fHOiKtfBrO2lEwHW5lfTTArOy1LhN4SETDLoTO6mCaSv6N9EnBUP2mZZAKLDhTNbIJ
-	 ykX5KdxuEKYcM00oU1PsPbtd2S7LhVfhxUTRmHfE=
+	b=lHbHX1rEZc5jPlZGfoObVd0DBBBXT427KdmDXAkL5n6Y+xxGsBsHJ84nJYEStmGdb
+	 RZh4gQfN5Vufc5iF4Ef9xjvm0z+LZQlMYyVLNE9NR+6Nmc0ozg0M/G6HTCdz4LO/g8
+	 BCMFUAn/5jvwXcp1Wh7e6yJ4bjIsFbxXteYDWhYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 865/957] net: airoha: Fix a copy and paste bug in probe()
-Date: Wed, 20 May 2026 18:22:28 +0200
-Message-ID: <20260520162153.325250107@linuxfoundation.org>
+Subject: [PATCH 6.18 866/957] fuse: fix race when disposing stale dentries
+Date: Wed, 20 May 2026 18:22:29 +0200
+Message-ID: <20260520162153.347426483@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,45 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Miklos Szeredi <mszeredi@redhat.com>
 
-[ Upstream commit 05e090620bacf317020f9591cfff8926093380bd ]
+[ Upstream commit cb8d2bdcb8241b66ca4ac4868f20e12cd6881ebc ]
 
-This code has a copy and paste bug where it accidentally checks "if (err)"
-instead of checking if "xsi_rsts" is NULL.  Also, as a free bonus, I
-changed the allocation from kzalloc() to  kcalloc() which is a kernel
-hardening measure to protect against integer overflows.
+In fuse_dentry_tree_work() just before d_dispose_if_unused() the dentry
+could get evicted, resulting in UAF.
 
-Fixes: 5863b4e065e2 ("net: airoha: Add airoha_eth_soc_data struct")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/aPtht6y5DRokn9zv@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Move unlocking dentry_hash[i].lock to after the dispose.  To do this,
+fuse_dentry_tree_del_node() needs to be moved from fuse_dentry_prune() to
+fuse_dentry_release() to prevent an ABBA deadlock.
+
+The lock ordering becomes:
+
+ -> dentry_bucket.lock
+    -> dentry.d_lock
+
+Reported-by: Al Viro <viro@zeniv.linux.org.uk>
+Closes: https://lore.kernel.org/all/20251206014242.GO1712166@ZenIV/
+Fixes: ab84ad597386 ("fuse: new work queue to periodically invalidate expired dentries")
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Link: https://patch.msgid.link/20260114145344.468856-2-mszeredi@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 1e2c1af1beb3 ("fuse: make sure dentry is evicted if stale")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/fuse/dir.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 81ecfc1a1094c..4364f4320428a 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -3097,11 +3097,11 @@ static int airoha_probe(struct platform_device *pdev)
- 		return err;
- 	}
+diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
+index 98b174bd802f0..b7a6a5b6bbc8a 100644
+--- a/fs/fuse/dir.c
++++ b/fs/fuse/dir.c
+@@ -172,8 +172,8 @@ static void fuse_dentry_tree_work(struct work_struct *work)
+ 			if (time_after64(get_jiffies_64(), fd->time)) {
+ 				rb_erase(&fd->node, &dentry_hash[i].tree);
+ 				RB_CLEAR_NODE(&fd->node);
+-				spin_unlock(&dentry_hash[i].lock);
+ 				d_dispose_if_unused(fd->dentry, &dispose);
++				spin_unlock(&dentry_hash[i].lock);
+ 				cond_resched();
+ 				spin_lock(&dentry_hash[i].lock);
+ 			} else
+@@ -464,18 +464,12 @@ static int fuse_dentry_init(struct dentry *dentry)
+ 	return 0;
+ }
  
--	xsi_rsts = devm_kzalloc(eth->dev,
--				eth->soc->num_xsi_rsts * sizeof(*xsi_rsts),
-+	xsi_rsts = devm_kcalloc(eth->dev,
-+				eth->soc->num_xsi_rsts, sizeof(*xsi_rsts),
- 				GFP_KERNEL);
--	if (err)
--		return err;
-+	if (!xsi_rsts)
-+		return -ENOMEM;
+-static void fuse_dentry_prune(struct dentry *dentry)
++static void fuse_dentry_release(struct dentry *dentry)
+ {
+ 	struct fuse_dentry *fd = dentry->d_fsdata;
  
- 	eth->xsi_rsts = xsi_rsts;
- 	for (i = 0; i < eth->soc->num_xsi_rsts; i++)
+ 	if (!RB_EMPTY_NODE(&fd->node))
+ 		fuse_dentry_tree_del_node(dentry);
+-}
+-
+-static void fuse_dentry_release(struct dentry *dentry)
+-{
+-	struct fuse_dentry *fd = dentry->d_fsdata;
+-
+ 	kfree_rcu(fd, rcu);
+ }
+ 
+@@ -512,7 +506,6 @@ const struct dentry_operations fuse_dentry_operations = {
+ 	.d_revalidate	= fuse_dentry_revalidate,
+ 	.d_delete	= fuse_dentry_delete,
+ 	.d_init		= fuse_dentry_init,
+-	.d_prune	= fuse_dentry_prune,
+ 	.d_release	= fuse_dentry_release,
+ 	.d_automount	= fuse_dentry_automount,
+ };
 -- 
 2.53.0
 
