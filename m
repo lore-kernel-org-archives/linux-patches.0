@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A553A3826;
-	Wed, 20 May 2026 17:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41ABF36F421;
+	Wed, 20 May 2026 17:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298142; cv=none; b=rmiPGuDzEamuvaay1v+QH0MC+GXT/Ezk1/E/73JFt/Q/ZhVyCOc8F4gZ1U1d0RRat8iydlCwjfTJfEhkqTLs3uLUy+LDwS286hXnqog9IqrrlySGPaq34RFz3IYN4LeSGSdFnEGx1mAujXYO8zVyhmLv2VpaWAR+OpJxGkxtkyw=
+	t=1779298145; cv=none; b=ZhZYYqK9x1IBVh732jlUvdTmm9KcL/5Eai0aVs0zZbaMip09dGqS2jK8eV06bvOpYkLivpGnor7X0tmjopofEyMegJHnSuRSYKvYNjbX9+KfPy/MI6ySRWL4/vDyPE9DNrtAsqKmb7hLFQIRWqZimv+QqGNwJJ9hC6Erk5zs7CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298142; c=relaxed/simple;
-	bh=gHKnIR4ZNDpjNtznWQMLOP0dtBY73VixJoTK/zIBYsk=;
+	s=arc-20240116; t=1779298145; c=relaxed/simple;
+	bh=uXrW/5mTZJ3Fcm0gH2JgUi/E8tl/QfYtJHWmsx+eD24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnrlBaHwWnfAeRX+tkrMBCHxiVoMKlpn7aXnyaXUfGFecx0t4iEgVNX1BEmQr0JRnYqP4cSLV5GMcNAVcRnOODazHStUOxWdSLFzc1YFv3CmG2o1EUHk94gxC/cizEhrCV7vfgRNYluQ/M0u7M8qf6HR+AfH3Sp9rB0kH28t8+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gj1LwZAf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vtej6tPLp05v3NZBTqxcJWFd9pr5YyxDeOE3c6RwzmCSPNhYUWUh/XU4DSgsv7RFnNkTfWIl+WVQAzQCvhGd2i/I4ZcwrNfmQNBdetlL63gFsHu4a40rGbY+/mY4MctLc0Joc9HSK4+plbW+2xLzq1NyyGM0y+DWOULO2ro00aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZ5h62+1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gj1LwZAf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071211F000E9;
-	Wed, 20 May 2026 17:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZ5h62+1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E701F00898;
+	Wed, 20 May 2026 17:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298141;
-	bh=+f/KsJ0AxUjKqHHw02/65W7tCUCI7c1hJzST+mVIu70=;
+	s=korg; t=1779298144;
+	bh=Uz62lImJyOSNNc1wzem6azP+w6gRp1bxuNMvOXDq40U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gj1LwZAfKzFtJuoIyYY/sOIKUsC6TbAC/93EG4XsPavmPI9sO+o07HNGWM0QINGSF
-	 Ffpn+bTiSpTqdQOf4KyMAz420sE842sIyrS04UWTL8dnYjGbakWaamBBj2Znj+2GEi
-	 6qffAY0ya6jHi6wN22Qqx4KXRS7KFIEqY00W98VI=
+	b=BZ5h62+1MkMw/tW7qq5pDpEd9bSxihIsFqJtqCzL6TQ3tPF8RHHdDhmHENv6SQ4Km
+	 2v1O/u3zu+XKBj7ZvlaOZVaSZso8Jmahk82XO6W1Q5x6TMHyhKefXNgCmzfnPQcAYa
+	 Z/sSKBTfe1kAosmgGf//1abDWToY1GsobZZXXANw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Zhang <18255117159@163.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 297/957] PCI: dwc: Fix type mismatch for kstrtou32_from_user() return value
-Date: Wed, 20 May 2026 18:13:00 +0200
-Message-ID: <20260520162140.975375398@linuxfoundation.org>
+Subject: [PATCH 6.18 298/957] crypto: qat - disable 4xxx AE cluster when lead engine is fused off
+Date: Wed, 20 May 2026 18:13:01 +0200
+Message-ID: <20260520162140.997042359@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,72 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Zhang <18255117159@163.com>
+From: Ahsan Atta <ahsan.atta@intel.com>
 
-[ Upstream commit 445588a3b18bb0702d746cb61f7a443639027651 ]
+[ Upstream commit b260d53561dd69b29505222ec44cf386ac2c2ca6 ]
 
-kstrtou32_from_user() returns int, but the return value was stored in
-a u32 variable 'val', risking sign loss. Use a dedicated int variable
-to correctly handle the return code.
+The get_ae_mask() function only disables individual engines based on
+the fuse register, but engines are organized in clusters of 4. If the
+lead engine of a cluster is fused off, the entire cluster must be
+disabled.
 
-Fixes: 4fbfa17f9a07 ("PCI: dwc: Add debugfs based Silicon Debug support for DWC")
-Signed-off-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260401023048.4182452-1-18255117159@163.com
+Replace the single bitmask inversion with explicit test_bit() checks
+on the lead engine of each group, disabling the full ADF_AE_GROUP
+when the lead bit is set.
+
+Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Fixes: 8c8268166e834 ("crypto: qat - add qat_4xxx driver")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../controller/dwc/pcie-designware-debugfs.c  | 21 +++++++++++--------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ .../crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c   | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-debugfs.c b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-index df98fee69892b..afcc08efe2531 100644
---- a/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-@@ -208,10 +208,11 @@ static ssize_t lane_detect_write(struct file *file, const char __user *buf,
- 	struct dw_pcie *pci = file->private_data;
- 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
- 	u32 lane, val;
-+	int ret;
+diff --git a/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c b/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c
+index 740f68a36ac51..900f19b90b2dc 100644
+--- a/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c
++++ b/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c
+@@ -100,9 +100,19 @@ static struct adf_hw_device_class adf_4xxx_class = {
  
--	val = kstrtou32_from_user(buf, count, 0, &lane);
--	if (val)
--		return val;
-+	ret = kstrtou32_from_user(buf, count, 0, &lane);
-+	if (ret)
-+		return ret;
+ static u32 get_ae_mask(struct adf_hw_device_data *self)
+ {
+-	u32 me_disable = self->fuses[ADF_FUSECTL4];
++	unsigned long fuses = self->fuses[ADF_FUSECTL4];
++	u32 mask = ADF_4XXX_ACCELENGINES_MASK;
  
- 	val = dw_pcie_readl_dbi(pci, rinfo->ras_cap_offset + SD_STATUS_L1LANE_REG);
- 	val &= ~(LANE_SELECT);
-@@ -347,10 +348,11 @@ static ssize_t counter_enable_write(struct file *file, const char __user *buf,
- 	struct dw_pcie *pci = pdata->pci;
- 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
- 	u32 val, enable;
-+	int ret;
+-	return ~me_disable & ADF_4XXX_ACCELENGINES_MASK;
++	if (test_bit(0, &fuses))
++		mask &= ~ADF_AE_GROUP_0;
++
++	if (test_bit(4, &fuses))
++		mask &= ~ADF_AE_GROUP_1;
++
++	if (test_bit(8, &fuses))
++		mask &= ~ADF_AE_GROUP_2;
++
++	return mask;
+ }
  
--	val = kstrtou32_from_user(buf, count, 0, &enable);
--	if (val)
--		return val;
-+	ret = kstrtou32_from_user(buf, count, 0, &enable);
-+	if (ret)
-+		return ret;
- 
- 	mutex_lock(&rinfo->reg_event_lock);
- 	set_event_number(pdata, pci, rinfo);
-@@ -408,10 +410,11 @@ static ssize_t counter_lane_write(struct file *file, const char __user *buf,
- 	struct dw_pcie *pci = pdata->pci;
- 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
- 	u32 val, lane;
-+	int ret;
- 
--	val = kstrtou32_from_user(buf, count, 0, &lane);
--	if (val)
--		return val;
-+	ret = kstrtou32_from_user(buf, count, 0, &lane);
-+	if (ret)
-+		return ret;
- 
- 	mutex_lock(&rinfo->reg_event_lock);
- 	set_event_number(pdata, pci, rinfo);
+ static u32 get_accel_cap(struct adf_accel_dev *accel_dev)
 -- 
 2.53.0
 
