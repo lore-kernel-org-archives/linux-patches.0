@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4CC356748;
-	Wed, 20 May 2026 17:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CBE36A352;
+	Wed, 20 May 2026 17:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297565; cv=none; b=JCGm2pDoUltCMYxqKNDFfcuw7Y5XKQulKUHGkxmBGHLri6HwzGDzdJBozBmNDTT/wib7+Qe1RFhZxmoIuWgTH/0Q9tOcU76hxNDrycnK8muh3FS9d93ie8XyWbk0OkBkHlj8WZZzo32jkHLXf2SMsmRU4lHKxrpGZ985ydqQ4ws=
+	t=1779297567; cv=none; b=TGUZbcUCN6uBlNZuTPvbApiNFbSMBB8oSyazrkDRbF7IenZ5S1L4dIUdZEqeiUnR43B+KGcSvcY0XBOs/9mHrJeSN74eM1cvtHl1s5PSbHZ9lHkkStgGQdYNOrFSdwIMIXyVw0HJlB510gfXN8t4vZoC6dJ10kaV+4zXuhdHyP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297565; c=relaxed/simple;
-	bh=ACqZcqs0mZQpMezPqIIY0ruasgstDi1V3N8GSQha1m8=;
+	s=arc-20240116; t=1779297567; c=relaxed/simple;
+	bh=XCMn7Zg2pLcU9KzZsNPBsK4K9cVBqIr7uCtIqa6G/A0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tGF/1eZC7W9dq6Te0gIRwFGvucCjQyI/pnpRb2etwicIP09NEJ98Fp/dQ3XIkDUFuwymQVU6LJD8Hj3U+PjCzQpoSCpGwnt5yn8jNG1TxXyuSaPdUmM9quIHj0mWqlBxG0mvcgeXI7gALxL+ipyLQ2yoGKReqGMG5d5aFlWZb1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKqn0t5l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qOrSdDfzWhCSXdQ+haD7KN4SYNybF4ukXxUocZJS0ZpwhnXp/LFPoH30fZFADhKEgC1Cn1u2zRmz5JXgHMfrOpDjq+skTOvzHZTM8IcX0/g8EkkUk/up1hD6tYws9reXG9BDLxqLXHGf0kY6cnFPanJ0zsq/yjmSqsQZjqGcKMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tV5ephii; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKqn0t5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FB81F000E9;
-	Wed, 20 May 2026 17:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tV5ephii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5201F00893;
+	Wed, 20 May 2026 17:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297564;
-	bh=QWAQlqR/AQjnb+JIILeZRyDz2m+g3FJ6Rtxl2gEuKCY=;
+	s=korg; t=1779297566;
+	bh=ijyqarZVSJ53DnxgW2rMWagGDelJPevMewQEYF9VkLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FKqn0t5lehpozoHz1pt6iQ0MgeO0MmVkYOov1wpLGZpI5jcKYKV3eipI3vc8vXB0o
-	 1+L8+M0PcJyTdNwrqrYWaHZOM+32ZzOzdLNg11rFBIkfjHI+JxfRAVue/M21H0sIa5
-	 CdmSLjUU+vNkhDaKUQbFGMwRyPGGV9QU1AkDUwpE=
+	b=tV5ephiiXgtaB2J+SHVb/BvHPlIDWHkN2EbGXqr9w+t3U6wDghUUhwtQTd/N92rBr
+	 bVqMfPnzXWGcWQ8zwk0r2GhlcF05wH2Dbqn4lXLPDs7mXhz+09wiX8FsilUNGD5NfH
+	 OHJs1XoeQ1GOCGEtDwfOuCtXQVj8TRhmgux3NuRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 077/957] wifi: mt76: mt7996: Reset mtxq->idx if primary link is removed in mt7996_vif_link_remove()
-Date: Wed, 20 May 2026 18:09:20 +0200
-Message-ID: <20260520162136.233002293@linuxfoundation.org>
+Subject: [PATCH 6.18 078/957] wifi: mt76: mt7996: Clear wcid pointer in mt7996_mac_sta_deinit_link()
+Date: Wed, 20 May 2026 18:09:21 +0200
+Message-ID: <20260520162136.254607060@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,58 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 751a2679b15e3a0fa8fc9175862f0ec40643db68 ]
+[ Upstream commit 88973240dc7c976dd320b36a9e6d925c9be083ae ]
 
-Reset WCID index in mt76_txq struct if primary link is removed in
-mt7996_vif_link_remove routine.
+Clear WCID pointer removing the sta link in mt7996_mac_sta_deinit_link
+routine.
 
-Fixes: a3316d2fc669f ("wifi: mt76: mt7996: set vif default link_id adding/removing vif links")
+Fixes: dd82a9e02c054 ("wifi: mt76: mt7996: Rely on mt7996_sta_link in sta_add/sta_remove callbacks")
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20251205-mt76-txq-wicd-fix-v2-2-f19ba48af7c1@kernel.org
+Link: https://patch.msgid.link/20251205-mt76-txq-wicd-fix-v2-4-f19ba48af7c1@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7996/main.c  | 21 ++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 44c52062c640b..5d4b1d8f3335b 100644
+index 5d4b1d8f3335b..589b228a4eb0c 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -402,17 +402,28 @@ void mt7996_vif_link_remove(struct mt76_phy *mphy, struct ieee80211_vif *vif,
+@@ -1032,6 +1032,7 @@ void mt7996_mac_sta_deinit_link(struct mt7996_dev *dev,
+ 		list_del_init(&msta_link->rc_list);
+ 	spin_unlock_bh(&dev->mt76.sta_poll_lock);
  
- 	rcu_assign_pointer(dev->mt76.wcid[idx], NULL);
- 
--	if (!mlink->wcid->offchannel &&
-+	if (vif->txq && !mlink->wcid->offchannel &&
- 	    mvif->mt76.deflink_id == link_conf->link_id) {
- 		struct ieee80211_bss_conf *iter;
-+		struct mt76_txq *mtxq;
- 		unsigned int link_id;
- 
- 		mvif->mt76.deflink_id = IEEE80211_LINK_UNSPECIFIED;
-+		mtxq = (struct mt76_txq *)vif->txq->drv_priv;
-+		/* Primary link will be removed, look for a new one */
- 		for_each_vif_active_link(vif, iter, link_id) {
--			if (link_id != IEEE80211_LINK_UNSPECIFIED) {
--				mvif->mt76.deflink_id = link_id;
--				break;
--			}
-+			struct mt7996_vif_link *link;
-+
-+			if (link_id == link_conf->link_id)
-+				continue;
-+
-+			link = mt7996_vif_link(dev, vif, link_id);
-+			if (!link)
-+				continue;
-+
-+			mtxq->wcid = link->msta_link.wcid.idx;
-+			mvif->mt76.deflink_id = link_id;
-+			break;
- 		}
- 	}
- 
++	rcu_assign_pointer(dev->mt76.wcid[msta_link->wcid.idx], NULL);
+ 	mt76_wcid_cleanup(&dev->mt76, &msta_link->wcid);
+ 	mt76_wcid_mask_clear(dev->mt76.wcid_mask, msta_link->wcid.idx);
+ }
 -- 
 2.53.0
 
