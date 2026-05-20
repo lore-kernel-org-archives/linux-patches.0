@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F06B346E5E;
-	Wed, 20 May 2026 17:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3C7346E5E;
+	Wed, 20 May 2026 17:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298103; cv=none; b=tQyqx81UrBVovgxSY5SSMwUkLhBefaKhmcQCtw04fdQBcO10Ve4czFn4KrTebW4JMoREPP87C/H42oF+EvsHN1Mcsn7Jmnmn2/6waEejkjMnu9CtVuTNJN6ufNtEOVtBF9vRLzAvDM8rejYjYCSBDVoZx4W47vnK9CIA0HSFplA=
+	t=1779298105; cv=none; b=kdKtxAyEuPKH8iCfsRydBvdSmi+ycmquBvxG+H8nqRrYFhTRWkJFp/jSzzQOlSVfVWb1L6fY8OVSRB43SzIjzfgki9pDjoXS4YAsWNBJ0YcqsnOK9KN9AcKuqcfKGZGvHc1ZIIlYYBAQ3A9k6rIsa1l9jbyslNeGqHqURiLYqDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298103; c=relaxed/simple;
-	bh=klrT1YGn9AM1wckBLFNMyLoYIEAfI1xTRyQc7HxNx7U=;
+	s=arc-20240116; t=1779298105; c=relaxed/simple;
+	bh=nDLrCp1JzZR5/EqQLdwli0qsTbIF5uMUNUyA08SSEi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WebW+vvf8ulgaqCjUotiHVfxcxL10UjVQfBzwqIonNzAXYFtpumPCZqUEf5UlEjoTL3w8lOiK0262j5GCjKhog/fYoKTxUMQbyaRfGq1vLAnWAGLo3TtTYo10lOeTyiVlMRlVT/L6Dr8Wp+ihrhEwmrigOo2dEnFfdIrQsL0rZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEKsMEVq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=THJjKP/fM7XUxC+eCvl4Yhe6O9Lo8Vt+8WUKXzw1kQGSxJnVrAaKf2KtlcXQ8F4kKPVV5OSg87TiV8tEOO5dJKvA9a00cTX1+S1lrL2RXfh1TcfBVR2AvTT9C/3+LzVEWAD37mwA1aOrB4hLqmVlwJgj+CzpDhuJL9NX51NGTC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KepRHpxz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEKsMEVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFAF1F000E9;
-	Wed, 20 May 2026 17:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KepRHpxz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6E91F000E9;
+	Wed, 20 May 2026 17:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298102;
-	bh=/rtrVaWBu9FOdst1WD1THyoo1407R09Q3mIE6eN8Y90=;
+	s=korg; t=1779298104;
+	bh=TcEqDSaKuf2pMP3LLiydQAKalJ3kYo6V9XCcsren9uA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OEKsMEVqVyW0U3v/wj3gMkb8eotXn73oDj4vOFHMQcaRwNcdYvptMCA/SKOoK/Cxh
-	 5hdtVN0Almx8RT5aAysF9O0Yp576Z0MOtYbp2DR8V99Rn8/7ZWwsVqH1xV0zFPx6bq
-	 bYY+TQakevZyR88Q/5QTP1MgxCgyTbNX7Qplcdho=
+	b=KepRHpxzdaq9jA65mR0NW9TcnCPXS+ktHMkwjA0BxpkfI/y/6dY+in8ylYVKf7KNT
+	 0S+8qykDnKsGs0X8vjfzacyoF8bu253ih3LdBkmZ8jLRQfleka7p9zXbBgGVr+Fqr7
+	 CsE+gj+sxhvqJi5aONDirKi7h0nErirVwvrEEFuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 283/957] drm/msm/dpu: drop INTF_0 on MSM8953
-Date: Wed, 20 May 2026 18:12:46 +0200
-Message-ID: <20260520162140.677367577@linuxfoundation.org>
+Subject: [PATCH 6.18 284/957] ASoC: fsl_micfil: Add access property for "VAD Detected"
+Date: Wed, 20 May 2026 18:12:47 +0200
+Message-ID: <20260520162140.698667577@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,41 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 7090420420d5a7d7c88b21d16962f2a230be3ef3 ]
+[ Upstream commit c7661bfc7422443df394c01e069ae4e5c3a7f04c ]
 
-There is no INTF_0 on MSM8953. Currently catalog lists dummy INTF_NONE
-entry for it. Drop it from the catalog.
+Add access property SNDRV_CTL_ELEM_ACCESS_READ for control "VAD
+Detected", which doesn't support put operation, otherwise there will be
+issue with mixer-test.
 
-Fixes: 7a6109ce1c2c ("drm/msm/dpu: Add support for MSM8953")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/713990/
-Link: https://lore.kernel.org/r/20260325-drop-8953-intf-v1-1-d80e214a1a75@oss.qualcomm.com
+Fixes: 29dbfeecab85 ("ASoC: fsl_micfil: Add Hardware Voice Activity Detector support")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260401094226.2900532-2-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h | 7 -------
- 1 file changed, 7 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
-index b44d02b48418f..2162ff917b0f8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
-@@ -121,13 +121,6 @@ static const struct dpu_dspp_cfg msm8953_dspp[] = {
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index cac26ba0aa4b0..ddc56f77f1455 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -424,7 +424,13 @@ static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
+ 	SOC_SINGLE("HWVAD ZCD Adjustment", REG_MICFIL_VAD0_ZCD, 8, 15, 0),
+ 	SOC_SINGLE("HWVAD ZCD And Behavior Switch",
+ 		   REG_MICFIL_VAD0_ZCD, 4, 1, 0),
+-	SOC_SINGLE_BOOL_EXT("VAD Detected", 0, hwvad_detected, NULL),
++	{
++		.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
++		.access = SNDRV_CTL_ELEM_ACCESS_READ | SNDRV_CTL_ELEM_ACCESS_VOLATILE,
++		.name = "VAD Detected",
++		.info = snd_soc_info_bool_ext,
++		.get = hwvad_detected,
++	},
+ };
  
- static const struct dpu_intf_cfg msm8953_intf[] = {
- 	{
--		.name = "intf_0", .id = INTF_0,
--		.base = 0x6a000, .len = 0x268,
--		.type = INTF_NONE,
--		.prog_fetch_lines_worst_case = 14,
--		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
--		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
--	}, {
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x268,
- 		.type = INTF_DSI,
+ static int fsl_micfil_use_verid(struct device *dev)
 -- 
 2.53.0
 
