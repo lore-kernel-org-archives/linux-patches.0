@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443AE40B6F7;
-	Wed, 20 May 2026 18:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB6240B6F7;
+	Wed, 20 May 2026 18:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302689; cv=none; b=Zo/uf4/rRAteVRWfEHlK+UAmB/4STNsPpZuxbULp4aPLQSLuvoTaqLNnCaHVCMFVZHYXQwNffAkvHe5fRhuxpMG0lZumvAsfTFZEDTKAQ+KxQRlOrJHC70qiwN+JXjzGjMvae6Sui0g9sxsJlGMVvilsThOjOCbwTWQeDcKHEIc=
+	t=1779302691; cv=none; b=RnbvIeHuxT/pFMUoyzv1zfNA4/X/i4LUKHVsimXbqSAAR8DB/SUGjn+M3b0wnty8NN4DubgNYhizBXAnqpFW0NVaVLb6UUa2y6RHi28poMNoncOMZvSEsrt4C0TEvu/fOXf0vS2tVJwllONkU5rTuKSqo466o1On5CRR40dR0jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302689; c=relaxed/simple;
-	bh=MMaZ5QjLUL7rLdD6AzzUeSeFbsomRMtyF0frsWf+xLE=;
+	s=arc-20240116; t=1779302691; c=relaxed/simple;
+	bh=MnzA05ItToMyOoTkXdiLXtELJdEhEvD62pV0mbAwS3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XxXjsSlak+qCF2sBXGReSmNjRGMYcJEF4235KtjaOkERBhWb8hc9NvIy35rpG9vRNCsU4mz+tCCPqC0o4oAEUfxOD+tZfRq84hsvbHJR7xNtKxza6WbqqHVZrpWpwmUOmonrBWJRc0jAj+VZYAm06illluPdNB4a1roXVDetj5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FucFaakp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=us7H01NMpaQ1kofPvgGu7XgGmU+VujdDQTJP1N34Urm83LQ58ToMuknfd4K1Yqd/9I6uHnkbeQS/hibIEMybNwOcjysr1jE5JFyhxgsUEJM57XJFlNsGbD4kaV2SV/DdRhd9/m6ci2KhwTtsEYOEPIr+foNYS5J0K4ZLe9Dgo9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZ/uD57U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FucFaakp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAF701F000E9;
-	Wed, 20 May 2026 18:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZ/uD57U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA391F000E9;
+	Wed, 20 May 2026 18:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302688;
-	bh=PrkgW+0tmUbrHrseAkom5KwpZJyvm0qizYawogvzjIc=;
+	s=korg; t=1779302690;
+	bh=n5KdEaNif8dugNSQML+OM25tLPG9toMvwPfuGfnt4x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FucFaakpIL2Jvg+q0ZDdzxd3/oVqCEPvIkewY8qqkbtr7xMN+ZPqhvkRoGKHsLLsg
-	 nytFEBgdmkfeUySzTyvpAEUmfg5rG40JTZ0xKFq9f4BeAL0RXvbHXnAs0nHiKdnY6S
-	 hlvS3BVnqrufHFJONWltokwKfea/aPzPV18KbqHs=
+	b=HZ/uD57UG0tNlrdCaHFwgfrjesZlnPmHgVxR2zd6pVTurlrdeyzjRYypFhbd5KWrL
+	 NMBVm3JRuDfGOsH2oEvVOgMwqeMt5vooatav3IFTTWD81ZCRfsFM6mg9iEoKSWZK2P
+	 YHj3Wr9oOxznv6CCTQkymMUFb0ZJMkQ33cEHdD1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 345/508] net/rds: zero per-item info buffer before handing it to visitors
-Date: Wed, 20 May 2026 18:22:48 +0200
-Message-ID: <20260520162106.108408293@linuxfoundation.org>
+Subject: [PATCH 6.6 363/508] mailbox: mailbox-test: initialize struct earlier
+Date: Wed, 20 May 2026 18:23:06 +0200
+Message-ID: <20260520162106.495298131@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -53,109 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit c88eb7e8d8397a8c1db59c425332c5a30b2a1682 ]
+[ Upstream commit bbcf9af68bfedb3d9cc3c7eae62f5c844d8b78b9 ]
 
-rds_for_each_conn_info() and rds_walk_conn_path_info() both hand a
-caller-allocated on-stack u64 buffer to a per-connection visitor and
-then copy the full item_len bytes back to user space via
-rds_info_copy() regardless of how much of the buffer the visitor
-actually wrote.
+The waitqueue must be initialized before the debugfs files are created
+because from that time, requests from userspace can already be made.
+Similarily, drvdata and spinlock needs to be initialized before we
+request the channel, otherwise dangling irqs might run into problems
+like a NULL pointer exception.
 
-rds_ib_conn_info_visitor() and rds6_ib_conn_info_visitor() only
-write a subset of their output struct when the underlying
-rds_connection is not in state RDS_CONN_UP (src/dst addr, tos, sl
-and the two GIDs via explicit memsets). Several u32 fields
-(max_send_wr, max_recv_wr, max_send_sge, rdma_mr_max, rdma_mr_size,
-cache_allocs) and the 2-byte alignment hole between sl and
-cache_allocs remain as whatever stack contents preceded the visitor
-call and are then memcpy_to_user()'d out to user space.
-
-struct rds_info_rdma_connection and struct rds6_info_rdma_connection
-are the only rds_info_* structs in include/uapi/linux/rds.h that are
-not marked __attribute__((packed)), so they have a real alignment
-hole. The other info visitors (rds_conn_info_visitor,
-rds6_conn_info_visitor, rds_tcp_tc_info, ...) write all fields of
-their packed output struct today and are not known to be vulnerable,
-but a future visitor that adds a conditional write-path would have
-the same bug.
-
-Reproduction on a kernel built without CONFIG_INIT_STACK_ALL_ZERO=y:
-a local unprivileged user opens AF_RDS, sets SO_RDS_TRANSPORT=IB,
-binds to a local address on an RDMA-capable netdev (rxe soft-RoCE on
-any netdev is sufficient), sendto()'s any peer on the same subnet
-(fails cleanly but installs an rds_connection in the global hash in
-RDS_CONN_CONNECTING), then calls getsockopt(SOL_RDS,
-RDS_INFO_IB_CONNECTIONS). The returned 68-byte item contains 26
-bytes of stack garbage including kernel text/data pointers:
-
-    0..7   0a 63 00 01 0a 63 00 02     src=10.99.0.1 dst=10.99.0.2
-    8..39  00 ...                      gids (memset-zeroed)
-    40..47 e0 92 a3 81 ff ff ff ff     kernel pointer (max_send_wr)
-    48..55 7f 37 b5 81 ff ff ff ff     kernel pointer (rdma_mr_max)
-    56..59 01 00 08 00                 rdma_mr_size (garbage)
-    60..61 00 00                       tos, sl
-    62..63 00 00                       alignment padding
-    64..67 18 00 00 00                 cache_allocs (garbage)
-
-Fix by zeroing the per-item buffer in both rds_for_each_conn_info()
-and rds_walk_conn_path_info() before invoking the visitor. This
-covers the IPv4/IPv6 IB visitors and hardens all current and future
-visitors against the same class of bug.
-
-No functional change for visitors that fully populate their output.
-
-Changes in v2:
-- retarget at the net tree (subject prefix "[PATCH net v2]",
-  net/rds: prefix in the title)
-- pick up Reviewed-by tags from Sharath Srinivasan and
-  Allison Henderson
-
-Fixes: ec16227e1414 ("RDS/IB: Infiniband transport")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Assisted-by: Claude:claude-opus-4-7
-Link: https://patch.msgid.link/20260418141047.3398203-1-michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/connection.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/mailbox/mailbox-test.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index 98c0d5ff9de9c..cd41f83863c89 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -673,6 +673,13 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
- 	     i++, head++) {
- 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index c06d128c44764..2c98c300ba33b 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -366,6 +366,12 @@ static int mbox_test_probe(struct platform_device *pdev)
+ 	if (!tdev)
+ 		return -ENOMEM;
  
-+			/* Zero the per-item buffer before handing it to the
-+			 * visitor so any field the visitor does not write -
-+			 * including implicit alignment padding - cannot leak
-+			 * stack contents to user space via rds_info_copy().
-+			 */
-+			memset(buffer, 0, item_len);
++	tdev->dev = &pdev->dev;
++	spin_lock_init(&tdev->lock);
++	mutex_init(&tdev->mutex);
++	init_waitqueue_head(&tdev->waitq);
++	platform_set_drvdata(pdev, tdev);
 +
- 			/* XXX no c_lock usage.. */
- 			if (!visitor(conn, buffer))
- 				continue;
-@@ -722,6 +729,13 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
- 			 */
- 			cp = conn->c_path;
+ 	/* It's okay for MMIO to be NULL */
+ 	tdev->tx_mmio = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 	if (PTR_ERR(tdev->tx_mmio) == -EBUSY) {
+@@ -395,12 +401,6 @@ static int mbox_test_probe(struct platform_device *pdev)
+ 	if (!tdev->rx_channel && (tdev->rx_mmio != tdev->tx_mmio))
+ 		tdev->rx_channel = tdev->tx_channel;
  
-+			/* Zero the per-item buffer for the same reason as
-+			 * rds_for_each_conn_info(): any byte the visitor
-+			 * does not write (including alignment padding) must
-+			 * not leak stack contents via rds_info_copy().
-+			 */
-+			memset(buffer, 0, item_len);
-+
- 			/* XXX no cp_lock usage.. */
- 			if (!visitor(cp, buffer))
- 				continue;
+-	tdev->dev = &pdev->dev;
+-	platform_set_drvdata(pdev, tdev);
+-
+-	spin_lock_init(&tdev->lock);
+-	mutex_init(&tdev->mutex);
+-
+ 	if (tdev->rx_channel) {
+ 		tdev->rx_buffer = devm_kzalloc(&pdev->dev,
+ 					       MBOX_MAX_MSG_LEN, GFP_KERNEL);
+@@ -414,7 +414,6 @@ static int mbox_test_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_free_chans;
+ 
+-	init_waitqueue_head(&tdev->waitq);
+ 	dev_info(&pdev->dev, "Successfully registered\n");
+ 
+ 	return 0;
 -- 
 2.53.0
 
