@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1704834EEF7;
-	Wed, 20 May 2026 18:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8548634EEF7;
+	Wed, 20 May 2026 18:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302513; cv=none; b=UC5mNoiCs4WVPv584ae5hOoNbIMflTAgH3W0HFUGKuVjFyaxg3J1posQPjIRaeWOGYTlTZFFBv9Vvtg90zELPiTKCzxjHXzyff3b/TnH+NA4jtzZg6BTaVZdcrDW0Z+OvU2Ol4KzL7mvn061KWXbdS+Hbq3JGl74bChzzLFjl6E=
+	t=1779302515; cv=none; b=YNSBd60l088umoTW3Td2eex+bvrDoLEFUdneFCnlJIHeqbleND7vWpV4IHE9GlAAQO2voK06GhCH0CYmUJwE/p6a0HIUnIwyg7BXATsYp9yjwXC1QGLIkpZk2VbjDKX4PGp56KwQX0IhUKiRwqwLtyGcReyKV2/lz3xOHqXG6O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302513; c=relaxed/simple;
-	bh=iTFmew2ifSlInJw8J8f8qX1GlmvKViku1/xp2FekjaE=;
+	s=arc-20240116; t=1779302515; c=relaxed/simple;
+	bh=UngvQd5qgJy3YgVy227pA8aaMXWOH+aLYeDvbpjOJi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1Ps0+xkMPnOBQNnkpZZSBuT1YvAFu9CMnfxAZh4yPzg7fmgVIhBppPPyaqJ+We+A/sZCFyDz1bfAXgor2iStUCcCiBChRi+5Is2UvlYs0KMBrS2IAUjA1T+5S7siRyVg02V7rdJX4TGg7bFryvWJGWYAfEsQTzUlKMu27lFj8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqoxq4+O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uctTaXzmkVWx2VmxZi5Sf2errg75vGCWU5/qs4KNqXGhLroPbhZlm8YwhvajOjv4zSVIhZBnMtoZ1SMoaVSr51KlRbgNfp1tdcUb7y3h5o2TmB2ZiQC4urzTU5mfPsolxPjPPtRSoHgvfFFzkMY+AmPmWCuWDX2LR93BemZpaNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAbW6pmO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqoxq4+O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560C01F000E9;
-	Wed, 20 May 2026 18:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAbW6pmO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA541F000E9;
+	Wed, 20 May 2026 18:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302511;
-	bh=sNpR3Q0vE5/tXnCr1PAFAad+vFOHCtcNrpDLO6CZl2E=;
+	s=korg; t=1779302514;
+	bh=Y2IBCAJhWkdCcBuvST3ByhjAoJsJ/KvtpAZRfHS2ZM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kqoxq4+ObirxzLEg+EqXye2MYqeVa2sL16eCw4GqA4c33AmKnMWXllU2Vg4litXJz
-	 P1BVUlnx1auP8ypNbUypJ4dr+ARGUu/7R1Bhfzd+JCnDMc54F3Z3q0OOV7i4jTLqnl
-	 0kL915awRCXdo+aA6tT5e4mUyadpsAyn+SSnaXi8=
+	b=fAbW6pmOxcbO1xiSbzh25s2yJgnzOcO5RORvM9aQmXgP6p/UcIvtB0GRm4kgJbYQi
+	 B8LY1HK/pSNw9A3LlVVcry6cOgHsd5d4SGmBDFWbogLf49QhexbVly9eZwaKxTrL4Y
+	 QdkgbwveuTdw/kdQt6T5m3hrT+fqOH9QAIuxcVtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Jorge Marques <jorge.marques@analog.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 258/508] i3c: master: Fix error codes at send_ccc_cmd
-Date: Wed, 20 May 2026 18:21:21 +0200
-Message-ID: <20260520162104.236146409@linuxfoundation.org>
+Subject: [PATCH 6.6 294/508] f2fs: protect extension_list reading with sb_lock in f2fs_sbi_show()
+Date: Wed, 20 May 2026 18:21:57 +0200
+Message-ID: <20260520162105.016359415@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -53,124 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jorge Marques <jorge.marques@analog.com>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-[ Upstream commit ef8b5229348f0719aca557c4ca5530630ae4d134 ]
+[ Upstream commit 5909bedbed38c558bee7cb6758ceedf9bc3a9194 ]
 
-i3c_master_send_ccc_cmd_locked() would propagate cmd->err (positive,
-Mx codes) to the ret variable, cascading down multiple methods until
-reaching methods that explicitly stated they would return 0 on success
-or negative error code. For example, the call chain:
+In f2fs_sbi_show(), the extension_list, extension_count and
+hot_ext_count are read without holding sbi->sb_lock. If a concurrent
+sysfs store modifies the extension list via f2fs_update_extension_list(),
+the show path may read inconsistent count and array contents, potentially
+leading to out-of-bounds access or displaying stale data.
 
-  i3c_device_enable_ibi <- i3c_dev_enable_ibi_locked <-
-  master->ops.enable_ibi <- i3c_master_enec_locked <-
-  i3c_master_enec_disec_locked <- i3c_master_send_ccc_cmd_locked
+Fix this by holding sb_lock around the entire extension list read
+and format operation.
 
-Fix this by returning the ret value, callers can still read the cmd->err
-value if ret is negative.
-
-All corner cases where the Mx codes do need to be handled individually,
-are resolved in previous commits. Those corner cases are all scenarios
-when I3C_ERROR_M2 is expected and acceptable.
-The prerequisite patches for the fix are:
-
-  i3c: master: Move rstdaa error suppression
-  i3c: master: Move entdaa error suppression
-  i3c: master: Move bus_init error suppression
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-iio/aYXvT5FW0hXQwhm_@stanley.mountain/
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Jorge Marques <jorge.marques@analog.com>
-Link: https://patch.msgid.link/20260323-ad4062-positive-error-fix-v3-4-30bdc68004be@analog.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: b6a06cbbb5f7 ("f2fs: support hot file extension")
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 32 +++++++++++++-------------------
- 1 file changed, 13 insertions(+), 19 deletions(-)
+ fs/f2fs/sysfs.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index f74ef65d257d7..84fe0de5a9bc7 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -792,11 +792,17 @@ static void i3c_ccc_cmd_init(struct i3c_ccc_cmd *cmd, bool rnw, u8 id,
- 	cmd->err = I3C_ERROR_UNKNOWN;
- }
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index 7d377da9c2631..4cd2d4bde217a 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -318,10 +318,12 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
+ 	if (!strcmp(a->attr.name, "extension_list")) {
+ 		__u8 (*extlist)[F2FS_EXTENSION_LEN] =
+ 					sbi->raw_super->extension_list;
+-		int cold_count = le32_to_cpu(sbi->raw_super->extension_count);
+-		int hot_count = sbi->raw_super->hot_ext_count;
++		int cold_count, hot_count;
+ 		int len = 0, i;
  
-+/**
-+ * i3c_master_send_ccc_cmd_locked() - send a CCC (Common Command Codes)
-+ * @master: master used to send frames on the bus
-+ * @cmd: command to send
-+ *
-+ * Return: 0 in case of success, or a negative error code otherwise.
-+ *         I3C Mx error codes are stored in cmd->err.
-+ */
- static int i3c_master_send_ccc_cmd_locked(struct i3c_master_controller *master,
- 					  struct i3c_ccc_cmd *cmd)
- {
--	int ret;
--
- 	if (!cmd || !master)
- 		return -EINVAL;
++		f2fs_down_read(&sbi->sb_lock);
++		cold_count = le32_to_cpu(sbi->raw_super->extension_count);
++		hot_count = sbi->raw_super->hot_ext_count;
+ 		len += sysfs_emit_at(buf, len, "cold file extension:\n");
+ 		for (i = 0; i < cold_count; i++)
+ 			len += sysfs_emit_at(buf, len, "%s\n", extlist[i]);
+@@ -329,6 +331,7 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
+ 		len += sysfs_emit_at(buf, len, "hot file extension:\n");
+ 		for (i = cold_count; i < cold_count + hot_count; i++)
+ 			len += sysfs_emit_at(buf, len, "%s\n", extlist[i]);
++		f2fs_up_read(&sbi->sb_lock);
  
-@@ -814,15 +820,7 @@ static int i3c_master_send_ccc_cmd_locked(struct i3c_master_controller *master,
- 	    !master->ops->supports_ccc_cmd(master, cmd))
- 		return -ENOTSUPP;
- 
--	ret = master->ops->send_ccc_cmd(master, cmd);
--	if (ret) {
--		if (cmd->err != I3C_ERROR_UNKNOWN)
--			return cmd->err;
--
--		return ret;
--	}
--
--	return 0;
-+	return master->ops->send_ccc_cmd(master, cmd);
- }
- 
- static struct i2c_dev_desc *
-@@ -926,8 +924,7 @@ static int i3c_master_rstdaa_locked(struct i3c_master_controller *master,
-  *
-  * This function must be called with the bus lock held in write mode.
-  *
-- * Return: 0 in case of success, a positive I3C error code if the error is
-- * one of the official Mx error codes, and a negative error code otherwise.
-+ * Return: 0 in case of success, or a negative error code otherwise.
-  */
- int i3c_master_entdaa_locked(struct i3c_master_controller *master)
- {
-@@ -979,8 +976,7 @@ static int i3c_master_enec_disec_locked(struct i3c_master_controller *master,
-  *
-  * This function must be called with the bus lock held in write mode.
-  *
-- * Return: 0 in case of success, a positive I3C error code if the error is
-- * one of the official Mx error codes, and a negative error code otherwise.
-+ * Return: 0 in case of success, or a negative error code otherwise.
-  */
- int i3c_master_disec_locked(struct i3c_master_controller *master, u8 addr,
- 			    u8 evts)
-@@ -1000,8 +996,7 @@ EXPORT_SYMBOL_GPL(i3c_master_disec_locked);
-  *
-  * This function must be called with the bus lock held in write mode.
-  *
-- * Return: 0 in case of success, a positive I3C error code if the error is
-- * one of the official Mx error codes, and a negative error code otherwise.
-+ * Return: 0 in case of success, or a negative error code otherwise.
-  */
- int i3c_master_enec_locked(struct i3c_master_controller *master, u8 addr,
- 			   u8 evts)
-@@ -1026,8 +1021,7 @@ EXPORT_SYMBOL_GPL(i3c_master_enec_locked);
-  *
-  * This function must be called with the bus lock held in write mode.
-  *
-- * Return: 0 in case of success, a positive I3C error code if the error is
-- * one of the official Mx error codes, and a negative error code otherwise.
-+ * Return: 0 in case of success, or a negative error code otherwise.
-  */
- int i3c_master_defslvs_locked(struct i3c_master_controller *master)
- {
+ 		return len;
+ 	}
 -- 
 2.53.0
 
