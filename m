@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAC63FCB1E;
-	Wed, 20 May 2026 17:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EAB3F58D6;
+	Wed, 20 May 2026 17:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299905; cv=none; b=iot5tO+SC561tPZ0tR8CyuUpNZSFQIWJVYOUpiNvs9YbRmkRZfVLMbjEHIrqaJC0oNxPMQ1zGr9XPCUcpdWkS+pWHGEFqPpBcjMlLhMEb03ttZXrEri5G7yRfxVE3i73t7+mhj9OWS4ulD1Yah3X4Am/3+yCNoATw4tTzPLV04g=
+	t=1779299907; cv=none; b=Cjvs6SQH8sqzs1ezhzVpydGMfMYMSqIufZ3KR3aWs31Iiqa9YC0JeQz3/kSYDaf7ko29/uO9XXUVMO/zOJWDZmilx0TbsOB4j2vKbsoQEk8ma56aeD4f4BWPkcMdCpRrXLcweM24YIT7XkGyWGcdzcYsE9pDKCEvk9Be+KsJCbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299905; c=relaxed/simple;
-	bh=Kv3HkD4XNO+7eUuVdEjpFoqOfVbdXWx6nO34BV8jUS8=;
+	s=arc-20240116; t=1779299907; c=relaxed/simple;
+	bh=cE1I/LT77D9VSQVoZA8SyC2bCqFbLnUDYym822bavqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMNTrPDdTQeCrCVef8jYev4wZGj1LqwTIBJqRvIqnHz8kevzqmxKx4OKk5CteY4vYZ5dy8SXFs4/tGqm3E0AH0RhEbfmpNni5fd3FlJzbQE2DnUC0UWHWYsr9p/sTsMR3d7K35/+m2QBkC/KAD3u+yhueFqhFBhyvp5BCrB/vOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEl8R9No; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r3EgtUkf64fjb2MF71wtEJq9GyPN1T6pWMjm/tBW8O1j0CIAH+V3qQSZpcyjMpqc+XjBZBLkQ8mJae9zyQp74z2MlxQlYjqU70jQWcZygkyUtAfBlgnvdxpV/Oxwun3gp+VMF26NTZljEGv2MB7/A2/lB+cBHP78ALqdj9TBBl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqHutNOB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEl8R9No"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92AE1F00896;
-	Wed, 20 May 2026 17:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqHutNOB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C92D1F000E9;
+	Wed, 20 May 2026 17:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299902;
-	bh=5sFGp3DZGhwEzMaQPXc4t5V1/Ty5XwehKCe5ircoMtk=;
+	s=korg; t=1779299905;
+	bh=BYgYVcvRe4LZa7IEnbk9xKZJkuGXQFhoKbb+N5jDgkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kEl8R9NoTUWZcDmB1sNRmhj82Lp/2l3wfESB7HGQEot2sGz8PQshGJIcZp5gCh76L
-	 gwKR2boTLpPxzRjbcB6j2XuDkcknOVX8g5FI3KLavzdMef+JNMS7Ke1tRe6X6OFBYk
-	 J+ht/s6HZ0+s6NjbGUOzCuy3bD5EkDjOWAYNZD+g=
+	b=NqHutNOBY3YEPETrFgumyxwee4sMAwgLAlUPxRS2mTgsPcr9MMpUakh4lzvoQ7V+t
+	 ac2ffvdDGlGHj+R1wf87zXU1sjbdFop22dLnpsOF08lwDKvd+lpmEOlWBtJJyDwuRQ
+	 nhQeqIicK1pZg23wFMgZZv179xhjcqhnfD3oJv9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Phillips <kim.phillips@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 888/957] Revert "ACPI: CPPC: Adjust debug messages in amd_set_max_freq_ratio() to warn"
-Date: Wed, 20 May 2026 18:22:51 +0200
-Message-ID: <20260520162153.827187278@linuxfoundation.org>
+	Li Xiasong <lixiasong1@huawei.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 889/957] netfilter: nft_ct: fix missing expect put in obj eval
+Date: Wed, 20 May 2026 18:22:52 +0200
+Message-ID: <20260520162153.849286708@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,51 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-commit db5dadb562cabb6da49959b473ed0d9645b6f2da upstream.
+commit 19f94b6fee75b3ef7fbc06f3745b9a771a8a19a4 upstream.
 
-Some older systems don't support CPPC in the firmware and this just makes
-noise for them when booting.  Drop back to debug.
+nft_ct_expect_obj_eval() allocates an expectation and may call
+nf_ct_expect_related(), but never drops its local reference.
 
-This reverts commit 21fb59ab4b9767085f4fe1edbdbe3177fbb9ec97.
+Add nf_ct_expect_put(exp) before return to balance allocation.
 
-Fixes: 21fb59ab4b976 ("ACPI: CPPC: Adjust debug messages in amd_set_max_freq_ratio() to warn")
-Suggested-by: Kim Phillips <kim.phillips@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Tested-by: Kim Phillips <kim.phillips@amd.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260504230141.484743-2-mario.limonciello@amd.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 857b46027d6f ("netfilter: nft_ct: add ct expectations support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/acpi/cppc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nft_ct.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kernel/acpi/cppc.c
-+++ b/arch/x86/kernel/acpi/cppc.c
-@@ -88,19 +88,19 @@ static void amd_set_max_freq_ratio(void)
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -1382,6 +1382,8 @@ static void nft_ct_expect_obj_eval(struc
  
- 	rc = cppc_get_perf_caps(0, &perf_caps);
- 	if (rc) {
--		pr_warn("Could not retrieve perf counters (%d)\n", rc);
-+		pr_debug("Could not retrieve perf counters (%d)\n", rc);
- 		return;
- 	}
+ 	if (nf_ct_expect_related(exp, 0) != 0)
+ 		regs->verdict.code = NF_DROP;
++
++	nf_ct_expect_put(exp);
+ }
  
- 	rc = amd_get_boost_ratio_numerator(0, &numerator);
- 	if (rc) {
--		pr_warn("Could not retrieve highest performance (%d)\n", rc);
-+		pr_debug("Could not retrieve highest performance (%d)\n", rc);
- 		return;
- 	}
- 	nominal_perf = perf_caps.nominal_perf;
- 
- 	if (!nominal_perf) {
--		pr_warn("Could not retrieve nominal performance\n");
-+		pr_debug("Could not retrieve nominal performance\n");
- 		return;
- 	}
- 
+ static const struct nla_policy nft_ct_expect_policy[NFTA_CT_EXPECT_MAX + 1] = {
 
 
