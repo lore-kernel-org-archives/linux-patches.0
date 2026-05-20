@@ -1,41 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EE53FF891;
-	Wed, 20 May 2026 11:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF643FF8B8;
+	Wed, 20 May 2026 11:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276073; cv=none; b=QKMhWkrb4JYu8cL8jFa+JClH0nJsNICbIgm2v3pm1h5huOKJ3xwLaCDrz6p41BWmXLXBA4bj8evDb0CjVm+lvEHgKlfXNalKwC31vMI43yOTxUpIjhaghk8Hy3/eWXD4eGed+OixheE2fGcX+GXGEVZi/qrqn2UX4c1L/MnYlFM=
+	t=1779276074; cv=none; b=WVG/2TekQnhqOKdvuGz7x5Z1Q+iRJbMnjeLBZ2oK/cJmlRCL0q/fp5b3waWfoEZKQ+vnsDw8+Ne1hAMGF1iGHhwVqzn1vh42eQ4YDPX+j7L5LfuF5l4DNykNGmnRbTiX0oF9/tKimW2rYe6DHDC9WlNdP9bTXjPw+eXjUK/vPeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276073; c=relaxed/simple;
-	bh=Cp+lBv8tQQFrjmMonLILwdwCH0R1yb5N2UCeb3mM/Y4=;
+	s=arc-20240116; t=1779276074; c=relaxed/simple;
+	bh=1HMRzZtg0k8/nvIgwDsX4uKJoe+7oD0VtaVUcCoOMMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z/xXLjVNJO3ST6xnyg3Pln0p+73QMUSSyrQt0eDY+2nqnlbfWyAe3bnrMlR2oGCxQpQH2JmGLDQZhM83QwlkVI91N2UOsHJtK1WFaCiU7Sdt8MTcLG/f3YdmO+2ppn8SYMW1wQSCDH2Ld3PhFbpFRXEs4hm/FzJ2KnWTWxDBDAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ep7KMfsH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UddcZy3Lh6c2fR01Ckf2LtHr/mk9FFU11OstUxQRQL5OGlsyfKHQDHVN1LtIVHsJWtaIbMjk1uiPjxhCkD51ZebBw4oQRUmllZiUpnglUNdoAFNhuch4W3/bM3xyXqFwG2njSZWTv2B3mW/h6Gg7cM4/a7lpEiupejDytpUHfxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AfIgnpHt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ep7KMfsH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999B01F00894;
-	Wed, 20 May 2026 11:21:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AfIgnpHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E591F00897;
+	Wed, 20 May 2026 11:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276071;
-	bh=mPBqWvhV0w+LojEY1Nxwbe6bI+MnpUqUyjd4Zb9cQtM=;
+	s=k20260515; t=1779276072;
+	bh=Gv5miD+o1YGPIScJ1iMcetGJMWveOFbCzrwfg9sI1vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ep7KMfsHYYn3FupZG2S6VBwh0vN4FtzAe2uea4LVwCdXDQRs/KYTt1cQi2LIwZxOm
-	 VknaJx1nmDAxmdPKjHrzXg3EVmfnM3VV+AuAG6QBns9tOHai6iSdDoh3uT0fwD8G8V
-	 1oQUuIa/5MgBO5LKQXCuu2i6Ky1E+7ver8FGGIYE7zJ8AafZ2YHwX7yJtHj8zwgrLA
-	 ULsWkxqBH8vt1N4QWaUXsY1lTt3ID0biQC6v4JTNIQV1FSamh7ZLmiL6uel+Lf9d3U
-	 2oJqdEKjNFddFV/35ifnOA8cT5AVf13TVFSD4iEQxHw0OHgrAxRjww85G8bFbQnIrT
-	 uTKL6v2CghBXA==
+	b=AfIgnpHtWSrTVa46gAAN8HRDPqy9DiRbhBiCihM2EjqSFLN0qNZHkUmC3im4rC6r8
+	 yOSISQazNxLv2gF/rKJUXgaPkR3OaOoUbJ90lQ6tOnqjIeftEKWVH2PZjP0CkFSoLq
+	 TC1nkgCrcJZd5oFB0p6tGeibooL2fvMpPxZRWpl4gpRtDWTfgWDOKE+SqcJj7VrwTq
+	 VVSO+NAm5Pt8gbvMLnJ5aydPNFE3jnJUdQapp93YUyZuUtG5smmsJZSTuumfwaD9UD
+	 mCdreGco17lc6Nn78ZAZHODon2Tdqg7QrA7pbWx9dU6SKFEybhgZ9nIX2KSVN7nR19
+	 X9ZwfTRXOzBew==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Breno Leitao <leitao@debian.org>,
-	Tejun Heo <tj@kernel.org>,
+Cc: Derek Fang <derek.fang@realtek.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] workqueue: Release PENDING in __queue_work() drain/destroy reject path
-Date: Wed, 20 May 2026 07:19:33 -0400
-Message-ID: <20260520111944.3424570-61-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] ASoC: sdw_utils: avoid the SDCA companion function not supported failure
+Date: Wed, 20 May 2026 07:19:34 -0400
+Message-ID: <20260520111944.3424570-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -51,262 +57,293 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Breno Leitao <leitao@debian.org>
+From: Derek Fang <derek.fang@realtek.com>
 
-[ Upstream commit a7488f089bdfa87c4fef1744d4dca9f4f8b46f8b ]
+[ Upstream commit 56d5a9eaf60af5c824a33a83e1468aa143627a62 ]
 
-The caller of __queue_work() owns WORK_STRUCT_PENDING, won via
-test_and_set_bit() in queue_work_on()/__queue_delayed_work(). The
-state machine documented above __queue_work() requires that owner
-to either hand the token to a pwq (insert_work() -> set_work_pwq()),
-hand it to a timer, or release it via set_work_pool_and_clear_pending().
-try_to_grab_pending() relies on this: when it observes
-"PENDING && off-queue" it busy-loops, trusting the current owner to
-make progress.
+Treat the companion amp as generic AMP until full support for companion
+amp is added.
 
-The (__WQ_DESTROYING | __WQ_DRAINING) early-return path violates that
-contract. It WARN_ONCE()s and bare-returns, leaving work->data with
-PENDING set, WORK_STRUCT_PWQ clear, and work->entry empty.
-
-The path is reachable without explicit API abuse: queue_delayed_work()
-arms a timer with PENDING set; if drain_workqueue() runs while the
-timer is still pending, delayed_work_timer_fn() -> __queue_work() in
-softirq context hits the WARN, current is not a wq worker so
-is_chained_work() is false, and the work is silently dropped with
-PENDING leaked.
-
-Mirror what clear_pending_if_disabled() already does on its analogous
-reject path: unpack the off-queue data and call
-set_work_pool_and_clear_pending() to release the token before
-returning.
-
-I was able to reproduce this by queueing several slow works on
-a max_active=1 wq, arm a delayed_work whose timer fires while
-drain_workqueue() is blocked, then call cancel_delayed_work_sync().
-Without this patch the cancel livelocks at 100% CPU; with it the cancel
-returns immediately.
-
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Derek Fang <derek.fang@realtek.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20260430121043.552241-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
-### Phase 1: Commit Message Forensics
-Record 1.1: Subsystem `workqueue`; action verb `Release`; intent: clear
-`WORK_STRUCT_PENDING` when `__queue_work()` rejects work during
-drain/destroy.
+## Phase 1: Commit Message Forensics
+Step 1.1 Record: subsystem `ASoC: sdw_utils`; action verb `avoid`;
+claimed intent is to avoid SDCA companion amp being treated as
+unsupported.
 
-Record 1.2: Commit tags: `Signed-off-by: Breno Leitao
-<leitao@debian.org>` and `Signed-off-by: Tejun Heo <tj@kernel.org>`. No
-committed `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`,
-`Acked-by:`, `Link:`, or `Cc: stable@vger.kernel.org`.
+Step 1.2 Record: tags present:
+- `Signed-off-by: Derek Fang <derek.fang@realtek.com>`
+- `Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>`
+- `Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>`
+- `Link: https://patch.msgid.link/20260430121043.552241-1-yung-
+  chuan.liao@linux.intel.com`
+- `Signed-off-by: Mark Brown <broonie@kernel.org>`
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Acked-by:`, or `Cc:
+stable@vger.kernel.org` tags were present.
 
-Record 1.3: The body describes a real state-machine bug:
-`__queue_work()` may return from the `__WQ_DESTROYING | __WQ_DRAINING`
-reject path with `PENDING` still set while the work is off-queue.
-`try_to_grab_pending()` then sees `PENDING && off-queue` and busy-
-retries. The verified failure mode is `cancel_delayed_work_sync()`
-livelocking at 100% CPU after a delayed timer fires during
-`drain_workqueue()`.
+Step 1.3 Record: the body says companion amps should be treated as
+generic amps until full companion-amp support exists. The user-visible
+symptom implied by the subject and code is an SDCA companion amp being
+classified as unsupported. No stack trace, crash, version statement, or
+bug report is included.
 
-Record 1.4: This is not a hidden cleanup; it is an explicit correctness
-fix for a leaked pending token causing livelock.
+Step 1.4 Record: this is a hidden bug fix. The verb “avoid” plus the
+one-line mapping change fixes incorrect handling of a valid SDCA
+function type that was already accepted elsewhere in the SDCA code.
 
-### Phase 2: Diff Analysis
-Record 2.1: One file changed: `kernel/workqueue.c`, 12 insertions. One
-function changed: `__queue_work()`. Scope: single-file surgical core
-workqueue fix.
+## Phase 2: Diff Analysis
+Step 2.1 Record: one file changed,
+`sound/soc/sdw_utils/soc_sdw_utils.c`, one line added. Modified
+function: `asoc_sdw_get_dai_type()`. Scope: single-file surgical logic
+fix.
 
-Record 2.2: Before: reject path warned and returned directly. After:
-reject path unpacks off-queue work data and calls
-`set_work_pool_and_clear_pending()` before returning.
+Step 2.2 Record: before the patch, `SDCA_FUNCTION_TYPE_COMPANION_AMP`
+fell through to `default` and returned `-EINVAL`. After the patch, it
+returns `SOC_SDW_DAI_TYPE_AMP`, like smart and simple amp function
+types. This affects SDCA endpoint detection and SOF SoundWire endpoint
+construction paths that call `asoc_sdw_get_dai_type()`.
 
-Record 2.3: Bug category: workqueue state-machine/token leak with a race
-between delayed-work timer execution and draining/destroying a
-workqueue. Mechanism: queued delayed work owns `PENDING`; timer callback
-enters `__queue_work()`; reject path drops the work but did not release
-`PENDING`.
+Step 2.3 Record: bug category is logic/correctness plus hardware
+compatibility. The broken mechanism is that a valid SDCA companion amp
+function type was known to SDCA parsing code but not known to the SDW
+DAI-type mapper, so amp endpoint matching could fail.
 
-Record 2.4: Fix quality is high. It mirrors the existing
-`clear_pending_if_disabled()` pattern in the same file and does not add
-an API or change normal queueing behavior. Regression risk is low; the
-change is limited to an already-rejecting path.
+Step 2.4 Record: the fix is obviously small and locally correct:
+“companion amp” is mapped into the existing amp class. Regression risk
+is very low; the only behavior change is for devices reporting
+`SDCA_FUNCTION_TYPE_COMPANION_AMP`.
 
-### Phase 3: Git History
-Record 3.1: `git blame` shows the PENDING/off-queue busy-loop contract
-comment came from `8930caba3dbd`; the drain reject mechanism is rooted
-in `9c5a2ba70251` (`v3.1`), and the destroy-side diagnostic flag came
-from `33e3f0a3358b` (`v6.3`). The bare reject `return` traces back to
-`e41e704bc4f4` (`v2.6.36-rc4` era).
+## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` on the pre-fix switch shows
+`asoc_sdw_get_dai_type()` and its default `-EINVAL` mapping came from
+`4f8ef33dd44a3d` (“ASoC: soc_sdw_utils: skip the endpoint that doesn't
+present”), first contained from v6.16. The actual companion-amp exposure
+came later from `f5cb3ee251b4f` (“ASoC: SDCA: Add companion amp
+Function”), first contained from v6.19.
 
-Record 3.2: No committed `Fixes:` tag. I inspected the patch-thread note
-suggesting `e41e704bc4f4`; that commit added the “warn and ignore”
-dying-workqueue behavior.
+Step 3.2 Record: no `Fixes:` tag is present, so no tag target exists to
+follow. The likely prerequisite/regression source was verified
+separately as `f5cb3ee251b4f`, which added
+`SDCA_FUNCTION_TYPE_COMPANION_AMP` to `include/sound/sdca_function.h`
+and `sound/soc/sdca/sdca_functions.c`.
 
-Record 3.3: Recent `kernel/workqueue.c` history shows nearby independent
-workqueue fixes and diagnostics; this patch is standalone, not a multi-
-patch series dependency.
+Step 3.3 Record: recent history for `soc_sdw_utils.c` shows active
+SDCA/SoundWire endpoint work. Related commits include `506cbe36a2ac7b`
+exporting `asoc_sdw_get_dai_type()`, `f5cb3ee251b4f` adding the
+companion amp function type, and later SDCA/sdw_utils fixes. This patch
+is standalone except that it only applies meaningfully to trees already
+containing the companion-amp enum.
 
-Record 3.4: Breno Leitao has multiple recent workqueue commits in
-`origin/master`; Tejun Heo, the workqueue maintainer, committed this
-patch.
+Step 3.4 Record: Derek Fang has multiple Realtek ASoC codec commits,
+including the RT1017 SDCA amplifier driver. Bard Liao has many
+SDW/SOF/ASoC commits in this area and is listed as an SDCA reviewer in
+`MAINTAINERS`.
 
-Record 3.5: Dependencies: conceptually standalone. Exact patch applies
-cleanly to `v6.18.32`, `v6.19.14`, `v7.0`, and `v7.0.9`; older trees
-need small backport adjustment because helper APIs and warning text
-differ.
+Step 3.5 Record: dependency identified:
+`SDCA_FUNCTION_TYPE_COMPANION_AMP` must exist. It is present in v6.19
+and v7.0, absent in v6.18. The patch should not be applied to older
+trees unless that enum support is also present.
 
-### Phase 4: Mailing List / External Research
-Record 4.1: `b4 dig -c a7488f089bdfa` found the original thread: `https:
-//patch.msgid.link/20260507-workqueue_pending-v1-1-
-3a53e2facf4e@debian.org`. Series revisions: v1 only.
+## Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c 56d5a9eaf60a` matched the original patch by
+exact patch-id at the supplied patch link. `b4 dig -a` found only v1 of
+a single-patch series. No newer revision was found.
 
-Record 4.2: Original recipients included Breno Leitao, Tejun Heo, Lai
-Jiangshan, `linux-kernel@vger.kernel.org`, `clm@meta.com`, and `kernel-
-team@meta.com`. Tejun replied that it was applied to `wq/for-7.1-fixes`.
+Step 4.2 Record: `b4 dig -w` showed the original recipients included
+Bard Liao, Mark Brown, Takashi Iwai, `linux-sound@vger.kernel.org`,
+Intel/Realtek audio contributors, and Derek Fang. The patch carries
+`Reviewed-by: Charles Keepax`, who is listed as an SDCA maintainer.
 
-Record 4.3: No external bug report or syzbot link in this commit. The
-bug report evidence is the author’s concrete reproducer in the
-commit/thread.
+Step 4.3 Record: no bug-report link or `Reported-by` tag exists.
+Web/lore fetches for the search pages were blocked by Anubis, but `b4`
+successfully fetched the actual thread. No syzbot or user bug report was
+found.
 
-Record 4.4: No related patch series found; b4 reports a single-patch v1.
+Step 4.4 Record: `b4 dig -a` shows this is not part of a multi-patch
+series. Local related-patch search found `f5cb3ee251b4f` as the
+companion-amp type addition, which is the important dependency/context.
 
-Record 4.5: Web search found no stable-specific discussion for this
-exact patch. Lore WebFetch was blocked by Anubis, but b4 successfully
-fetched the mbox.
+Step 4.5 Record: no stable-specific discussion was found in local stable
+tag history or web search. No reviewer stable nomination was found in
+the fetched thread.
 
-### Phase 5: Code Semantic Analysis
-Record 5.1: Modified function: `__queue_work()`.
+## Phase 5: Code Semantic Analysis
+Step 5.1 Record: modified function: `asoc_sdw_get_dai_type()`.
 
-Record 5.2: Callers verified in `kernel/workqueue.c`: `queue_work_on()`,
-`queue_work_node()`, `delayed_work_timer_fn()`, zero-delay
-`__queue_delayed_work()`, `rcu_work_rcufn()`, and requeue paths. The
-relevant caller is `delayed_work_timer_fn()`.
+Step 5.2 Record: callers found:
+- `is_sdca_endpoint_present()` in `sound/soc/sdw_utils/soc_sdw_utils.c`,
+  used while parsing SoundWire endpoints for ASoC machine drivers.
+- `is_endpoint_present()` in `sound/soc/sof/intel/hda.c`, present in
+  v7.0 and later, used while building default SoundWire machine
+  descriptions from detected peripherals.
 
-Record 5.3: Key callees: `is_chained_work()`, `work_offqd_unpack()`,
-`set_work_pool_and_clear_pending()`, and, on non-reject paths, pool
-selection plus `insert_work()`.
+Step 5.3 Record: key callees/side effects: `is_sdca_endpoint_present()`
+gets a SoundWire device by name, checks `slave->sdca_data`, loops over
+firmware-provided SDCA functions, and skips endpoints if no matching DAI
+type is found. The SOF HDA path similarly checks
+`sdw_device->sdca_data.function[]` before adding endpoints.
 
-Record 5.4: Verified call chain: `queue_delayed_work_on()` sets
-`PENDING`; `__queue_delayed_work()` arms the timer;
-`delayed_work_timer_fn()` calls `__queue_work()`; `drain_workqueue()`
-sets `__WQ_DRAINING`; `cancel_delayed_work_sync()` reaches
-`try_to_grab_pending()` through `work_grab_pending()` and can spin on
-`-EAGAIN`. Direct unprivileged trigger was not verified.
+Step 5.4 Record: reachability is verified through machine-driver setup
+paths: Intel `sof_sdw`, AMD ACP SDW SOF, and AMD ACP SDW legacy machine
+drivers call `asoc_sdw_parse_sdw_endpoints()`. The HDA default machine
+path calls `find_acpi_adr_device()` during SoundWire machine selection.
+This is boot/probe-time hardware enumeration, not an unprivileged
+syscall path.
 
-Record 5.5: Similar in-tree pattern verified:
-`clear_pending_if_disabled()` already unpacks off-queue data and clears
-pending in an analogous reject path.
+Step 5.5 Record: similar pattern search found
+`SDCA_FUNCTION_TYPE_COMPANION_AMP` handled in the SDCA name parser but
+missing from the DAI-type mapper before this patch. No other
+`asoc_sdw_get_dai_type()` companion mapping existed before the fix.
 
-### Phase 6: Stable Tree Analysis
-Record 6.1: The buggy drain reject path exists in checked tags from
-`v5.4`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.18`, `v6.19`, and
-`v7.0`. Drain behavior dates back to `v3.1`.
+## Phase 6: Stable Tree Analysis
+Step 6.1 Record: v6.18 has `asoc_sdw_get_dai_type()` but no
+`SDCA_FUNCTION_TYPE_COMPANION_AMP`. v6.19 and v7.0 contain the companion
+enum/name support but lack this mapper case. v7.1-rc3 contains the fix.
+Therefore the affected stable trees are v6.19.y and v7.0.y, not older
+trees lacking `f5cb3ee251b4f`.
 
-Record 6.2: Backport difficulty: clean for `v6.18+` and `v7.0`; minor
-manual backport for `v6.12`; more adjustment for `v6.6` and older
-because `work_offqd_unpack()`/flags helpers differ or are absent.
+Step 6.2 Record: `git apply --check` of the target patch succeeded on
+the current checkout, which is v7.0.5. The v6.19 helper context around
+`SDCA_FUNCTION_TYPE_SIMPLE_AMP` matches the same missing-case pattern,
+so expected v6.19 backport difficulty is clean or trivial.
 
-Record 6.3: I found no exact related fix already present by subject in
-checked stable branches.
+Step 6.3 Record: local stable history checks for v6.19.y and v7.0.y
+found no existing stable commit with this subject. v7.1-rc3 contains
+`56d5a9eaf60a`.
 
-### Phase 7: Subsystem Context
-Record 7.1: Subsystem is core workqueue infrastructure. Criticality:
-CORE, because workqueues are used throughout drivers, filesystems,
-networking, storage, GPU, and core kernel code.
+## Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: subsystem is ASoC SoundWire/SDCA audio support.
+Criticality is driver/platform-specific, important for affected
+SoundWire laptop/audio hardware but not universal core kernel code.
 
-Record 7.2: Workqueue is actively maintained, with recent commits by
-Breno Leitao and Tejun Heo, but the affected state machine is mature and
-present across long-lived stable lines.
+Step 7.2 Record: subsystem activity is high; recent history shows many
+SDCA and `sdw_utils` changes across v6.19 to v7.1. This is a newer,
+actively evolving area, which reinforces the dependency check.
 
-### Phase 8: Impact / Risk
-Record 8.1: Affected population: broad kernel users, but trigger-
-specific to users of delayed work on workqueues being drained or
-destroyed.
+## Phase 8: Impact And Risk Assessment
+Step 8.1 Record: affected users are systems with SoundWire SDCA devices
+reporting companion amp functions, especially Intel/AMD SoundWire laptop
+audio configurations using these helper paths.
 
-Record 8.2: Trigger: delayed-work timer fires while `drain_workqueue()`
-or destroy-time draining is active, followed by cancellation/grab of
-that delayed work. Commonness is workload dependent; direct unprivileged
-reachability was not verified.
+Step 8.2 Record: trigger condition is hardware/firmware enumeration
+where `slave->sdca_data.function[i].type` is
+`SDCA_FUNCTION_TYPE_COMPANION_AMP`. It happens during boot/probe/machine
+selection, not from unprivileged userspace.
 
-Record 8.3: Failure mode: livelock at 100% CPU in
-`cancel_delayed_work_sync()`. Severity: HIGH, potentially CRITICAL for
-teardown/suspend/remove paths that must complete.
+Step 8.3 Record: failure mode is endpoint/DAI detection failure: the
+companion amp can be treated as unsupported and skipped or not included
+in generated SoundWire endpoint data. Severity is medium for the general
+kernel, high for affected hardware because it can break audio amp
+availability.
 
-Record 8.4: Benefit high: prevents a real hang/livelock in core
-infrastructure. Risk low: 12-line change, reject path only, mirrors
-existing cleanup logic.
+Step 8.4 Record: benefit is high for affected hardware and low-risk
+globally. Risk is very low: one added switch case, no new API, no
+locking, no memory lifetime changes, and no behavior change for other
+function types.
 
-### Phase 9: Final Synthesis
-Record 9.1: Evidence for backporting: real reproduced livelock, core
-subsystem, broad stable-tree presence, small fix, maintainer-applied, no
-new API. Evidence against: exact patch does not cleanly apply to older
-stable trees and lacks independent `Tested-by`; older trees need careful
-helper-specific backports. Unresolved: no independent bug report found,
-no direct unprivileged trigger verified.
+## Phase 9: Final Synthesis
+Step 9.1 Record: evidence for backporting:
+- Fixes real incorrect handling of an already-defined SDCA companion amp
+  type.
+- Prevents affected SoundWire audio endpoints from being classified
+  unsupported.
+- One-line, single-function, single-file change.
+- Reviewed by Charles Keepax; applied by Mark Brown; relevant
+  maintainers/lists were included.
+- Applies to stable trees that already contain `f5cb3ee251b4f`, verified
+  for v6.19/v7.0 presence.
 
-Record 9.2: Stable rules: obviously correct and self-tested: yes; fixes
-real bug: yes; important issue: yes, livelock/hang; small and contained:
-yes, one function and 12 lines; no new features/APIs: yes; applies to
-stable: clean for newer stable, minor/manual for older.
+Evidence against backporting:
+- No crash, data corruption, security issue, syzbot report, or explicit
+  stable tag.
+- It is hardware/functionality enablement rather than a core reliability
+  fix.
+- It must not be applied to trees without
+  `SDCA_FUNCTION_TYPE_COMPANION_AMP`.
 
-Record 9.3: No exception category applies; this is a core bug fix, not a
-device ID, quirk, DT, build, or documentation change.
+Unresolved questions:
+- No external user bug report was found, so exact affected product count
+  is unverified.
+- I did not run a full v6.19 worktree apply test, but verified matching
+  context and dependency presence.
 
-Record 9.4: Decision: backport. The technical merit is strong: this
-fixes a verified workqueue livelock with a small, localized, maintainer-
-accepted change.
+Step 9.2 Stable rules:
+1. Obviously correct and tested? Yes for correctness by code inspection;
+   no explicit `Tested-by` on this patch.
+2. Fixes a real bug? Yes, incorrect mapping of a valid SDCA companion
+   amp function.
+3. Important issue? Yes for affected hardware audio functionality,
+   though not crash/security.
+4. Small and contained? Yes, one line in one function.
+5. No new feature/API? Yes, it uses an existing enum and existing DAI
+   type.
+6. Can apply to stable? Yes for v7.0.5 verified; expected trivial for
+   v6.19.y; not applicable to older trees lacking the enum.
+
+Step 9.3 Exception category: closest category is hardware
+compatibility/workaround for existing SoundWire SDCA audio support. It
+is not a new driver or new userspace API.
+
+Step 9.4 Decision: backport to stable trees that already include
+`f5cb3ee251b4f` (`SDCA_FUNCTION_TYPE_COMPANION_AMP`), notably v6.19.y
+and v7.0.y. Do not backport to older trees unless that prerequisite is
+intentionally present.
 
 ## Verification
-- Phase 1: Parsed `git show --format=fuller` for `a7488f089bdfa`;
-  confirmed tags and commit body.
-- Phase 2: Inspected the diff; confirmed only `kernel/workqueue.c`
-  changed with 12 insertions in `__queue_work()`.
-- Phase 3: Used `git blame`, `git show`, `git describe --contains`, and
-  path-limited `git log`; confirmed historical origins and stable
-  version presence.
-- Phase 4: Used `b4 dig -c`, `-a`, `-w`, and mbox fetch; confirmed v1
-  patch and Tejun’s apply reply. WebFetch to lore was blocked.
-- Phase 5: Used `rg` and `ReadFile` to trace callers/callees and the
-  delayed-work/cancel path.
-- Phase 6: Checked specific stable tags and ran patch apply checks in
-  temporary worktrees; confirmed clean apply for `v6.18+` and backport
-  needs for older trees.
-- Phase 7: Verified subsystem path and recent workqueue history.
-- Phase 8: Verified failure mode from commit body and matching code
-  path; unprivileged trigger remains unverified.
+- [Phase 1] Parsed commit `56d5a9eaf60a` with `git show`; confirmed
+  subject, body, tags, and one-file/one-line patch.
+- [Phase 2] Inspected diff; confirmed only `asoc_sdw_get_dai_type()`
+  adds `SDCA_FUNCTION_TYPE_COMPANION_AMP` to the amp cases.
+- [Phase 3] `git blame 56d5a9eaf60a^` showed the mapper switch came from
+  `4f8ef33dd44a3d`; `git show f5cb3ee251b4f` confirmed companion amp
+  enum/name support was added later.
+- [Phase 3] `git tag --contains f5cb3ee...` showed companion amp support
+  starts at v6.19; `git grep` confirmed absent in v6.18 and present in
+  v6.19/v7.0.
+- [Phase 4] `b4 dig -c 56d5a9eaf60a` found the original patch thread;
+  `b4 dig -a` showed only v1; `b4 dig -w` showed original recipients.
+- [Phase 4] Fetched the mbox with `b4`; confirmed Mark Brown applied it
+  to `sound.git for-7.1` and no NAK/objection appeared in the fetched
+  thread.
+- [Phase 5] `rg` found callers in `is_sdca_endpoint_present()` and SOF
+  HDA `is_endpoint_present()`; file reads verified endpoint filtering
+  behavior.
+- [Phase 6] `git grep` across v6.18/v6.19/v7.0/v7.1-rc3 verified where
+  the enum and fix exist.
+- [Phase 6] `git apply --check` verified the patch applies cleanly to
+  current v7.0.5.
+- [Phase 7] `MAINTAINERS` verified Mark Brown as ASoC maintainer and
+  Charles Keepax/Bard Liao as SDCA maintainer/reviewer contacts.
+- [Phase 8] Failure mode was verified from code paths that skip
+  endpoints when no matching DAI type is found.
+- UNVERIFIED: exact real-world affected laptop/device count; no public
+  bug report was found.
 
 **YES**
 
- kernel/workqueue.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/soc/sdw_utils/soc_sdw_utils.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index c6ea96d5b7167..2c512b4a74482 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -2281,6 +2281,18 @@ static void __queue_work(int cpu, struct workqueue_struct *wq,
- 	if (unlikely(wq->flags & (__WQ_DESTROYING | __WQ_DRAINING) &&
- 		     WARN_ONCE(!is_chained_work(wq), "workqueue: cannot queue %ps on wq %s\n",
- 			       work->func, wq->name))) {
-+		struct work_offq_data offqd;
-+
-+		/*
-+		 * State on entry: PENDING is set, work is off-queue (no
-+		 * insert_work() has run).
-+		 *
-+		 * Returning without clearing PENDING would leave the work
-+		 * in a weird state (PENDING=1, PWQ=0, entry empty)
-+		 */
-+		work_offqd_unpack(&offqd, *work_data_bits(work));
-+		set_work_pool_and_clear_pending(work, offqd.pool_id,
-+						work_offqd_pack_flags(&offqd));
- 		return;
- 	}
- 	rcu_read_lock();
+diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
+index 0e67d9f34cba3..2b4b54e8241e6 100644
+--- a/sound/soc/sdw_utils/soc_sdw_utils.c
++++ b/sound/soc/sdw_utils/soc_sdw_utils.c
+@@ -1400,6 +1400,7 @@ int asoc_sdw_get_dai_type(u32 type)
+ 	switch (type) {
+ 	case SDCA_FUNCTION_TYPE_SMART_AMP:
+ 	case SDCA_FUNCTION_TYPE_SIMPLE_AMP:
++	case SDCA_FUNCTION_TYPE_COMPANION_AMP:
+ 		return SOC_SDW_DAI_TYPE_AMP;
+ 	case SDCA_FUNCTION_TYPE_SMART_MIC:
+ 	case SDCA_FUNCTION_TYPE_SIMPLE_MIC:
 -- 
 2.53.0
 
