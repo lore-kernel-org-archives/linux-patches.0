@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE55931F9BE;
-	Wed, 20 May 2026 16:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F61356762;
+	Wed, 20 May 2026 16:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295744; cv=none; b=jwSouqb22LJc2Pk6T+bNNjGOLCnsNT3Nc1Wp2VxdZ7d9AAKWNrzHX133xJ1NOtVxZvjtIvV6b9eD4y3KF0b5rJVpkDuDVw0ZTrFG+v1hnylXqtmiOjf6jCUD2eUlQvb934qDiEVeVj9K9AXyvxYK0y5eyGf5Sid4D7uDoYN826E=
+	t=1779295746; cv=none; b=FX5XWkWiLUZnIYfdqL76XB1l7uXIzmQ7k1Lj7Ni8TNrwMjctyZVVBxgVUDsUDcOEUFVILYeKAn6X3Hgorw/0g53qsU6mTKoB4PXcOUk3kM6MPlvPnGMVw97daQu3Plwj3dB8RCfHTX6gtdUHdoy4frzYX0EpoExyuHQZGcqt1E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295744; c=relaxed/simple;
-	bh=Gh4gz/jwq/PlYIPSR6RnazzlegeDrGgEFsoivgt/kbA=;
+	s=arc-20240116; t=1779295746; c=relaxed/simple;
+	bh=DXV9cqYB5uEGYyDY0PUbq5MLWVZRHuxqhg8yDpRE86I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVQF8QahL9Eh+aDgE7qiX5dO0pLtPU2jJJjovBaKc49/HbBl475nkTSRzBmT/Nd/bnzpiKW+RkbwYBy56oXqKk7zqmjmBHeRBPSTtqz47uPQxcRnHj+gRXdf1c+39bofuRdF3HdrBKP0fPcRIUD9K+h1cfA1a5bTUFtToy8+UiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPV0rHBJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zgo4G0xBR23uv1/MuLWkXOMe33Bn5nB15lOIBM9W/ywN6rSIO+6F9WtJcJHwPIbznKRcN5Jn29ng7Len01PllP6kp0dwmH1W36kZ2qhH6qV8w5ttFXAGq1kSCamBjnzy1vh9gwQLrAeGRGX1cvvbwGcLNC4qlpqYmzKxwEFLLm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06UYSOoT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPV0rHBJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50AB51F000E9;
-	Wed, 20 May 2026 16:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06UYSOoT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01CF11F000E9;
+	Wed, 20 May 2026 16:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295742;
-	bh=3UccQxQEWTyNBJmIRvHZMBEg5gKYiPmqUcnfLPm2noo=;
+	s=korg; t=1779295745;
+	bh=yjze884ogqeEJNlrgd4p1AMFzYd3URBrHY331Bg2LS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JPV0rHBJPeocT0NyW/fOWpm7uvfaau+Jhq10t90AU+3D3VTdK2QWuRCtm5NNYa/Sh
-	 BJVvcRdJ3nhpUPm5/0v03eY9piyOMIG/Iv239rK46usWlKL3uHd1IXOJ+3M+UcSXcB
-	 P7aWoFyFUd+M/KFvVHi4zeJHZqnSLcQPg304qsGE=
+	b=06UYSOoTWYXwgRvzrcjoO0zhevKz3i2czjKUHSrC3xqtZEAz17zSRZ+EYfN8/Kea4
+	 CUJyeFBylpss/6HzSBUFN9i8GxfNTfNkbsSlNBd5ARsI8iq+L6uuSak3rR5EYXgDRS
+	 H27Y//Nmr8KkL9hwHuyW43we7Dus4iV1pqAnJh5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Nora Schiffer <nora.schiffer@ew.tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0535/1146] arm64: dts: ti: k3-am62-verdin: Fix SPI_1 GPIO CS pinctrl label
-Date: Wed, 20 May 2026 18:13:05 +0200
-Message-ID: <20260520162200.288619027@linuxfoundation.org>
+Subject: [PATCH 7.0 0536/1146] arm64: dts: freescale: imx8mp-tqma8mpql-mba8mp-ras314: fix UART1 RTS/CTS muxing
+Date: Wed, 20 May 2026 18:13:06 +0200
+Message-ID: <20260520162200.311768854@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,37 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Nora Schiffer <nora.schiffer@ew.tq-group.com>
 
-[ Upstream commit 944dffaec1ef0f21c203728de77b5618ed70df6e ]
+[ Upstream commit b8d785a9f360abcd6a6f8f10a2adf222f8494d66 ]
 
-Fix SPI_1_CS GPIO pinmux label, this is spi1_cs, not qspi1_io4.
+UART1 operates in DCE mode, but the RTS/CTS pins were incorrectly
+configured using the DTE pinmux setting.
 
-There are no user of this label yet, therefore this change does not
-create any compatibility issue.
+Correct the pinmux to match DCE mode. Switching the RTS and CTS signals
+is fine for this board, as UART1 is routed to a pin header. Existing
+functionality is unaffected, as RTS/CTS could never have worked with
+the incorrect pinmux.
 
-Fixes: fcb335934c51 ("arm64: dts: ti: verdin-am62: Improve spi1 chip-select pinctrl")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260324093705.26730-3-francesco@dolcini.it
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fixes: ddabb3ce3f90 ("arm64: dts: freescale: add TQMa8MPQL on MBa8MP-RAS314")
+Signed-off-by: Nora Schiffer <nora.schiffer@ew.tq-group.com>
+Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts     | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-index 09840a3b9fe75..20dbfa3001eac 100644
---- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
-@@ -278,7 +278,7 @@ AM62X_IOPAD(0x0018, PIN_INPUT, 7) /* (F24) OSPI0_D3.GPIO0_6 */ /* SODIMM 62 */
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts
+index b7f69c92b7748..1665a5030b993 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-tqma8mpql-mba8mp-ras314.dts
+@@ -848,8 +848,8 @@ pinctrl_tlv320aic3x04: tlv320aic3x04grp {
+ 	pinctrl_uart1: uart1grp {
+ 		fsl,pins = <MX8MP_IOMUXC_SAI2_RXFS__UART1_DCE_TX	0x14>,
+ 			   <MX8MP_IOMUXC_SAI2_RXC__UART1_DCE_RX		0x14>,
+-			   <MX8MP_IOMUXC_SAI2_RXD0__UART1_DTE_CTS	0x14>,
+-			   <MX8MP_IOMUXC_SAI2_TXFS__UART1_DTE_RTS	0x14>;
++			   <MX8MP_IOMUXC_SAI2_RXD0__UART1_DCE_RTS	0x14>,
++			   <MX8MP_IOMUXC_SAI2_TXFS__UART1_DCE_CTS	0x14>;
  	};
  
- 	/* Verdin SPI_1 CS as GPIO */
--	pinctrl_qspi1_io4_gpio: main-gpio0-7-default-pins {
-+	pinctrl_spi1_cs_gpio: main-gpio0-7-default-pins {
- 		pinctrl-single,pins = <
- 			AM62X_IOPAD(0x001c, PIN_INPUT, 7) /* (J23) OSPI0_D4.GPIO0_7 */ /* SODIMM 202 */
- 		>;
+ 	pinctrl_uart1_gpio: uart1gpiogrp {
 -- 
 2.53.0
 
