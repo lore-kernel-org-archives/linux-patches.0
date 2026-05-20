@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572153A453B;
-	Wed, 20 May 2026 16:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6064836CDF2;
+	Wed, 20 May 2026 16:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294380; cv=none; b=po5Shg5EFT3+/kQaIlsEsz+gHmRw3dcfE72w/H0xHg/gGYWxFBS6y+G+F2l1sd65PvnGdH8bB9W9qLyOpYhLQB4LlpJn45nb6AFDCd4rjFCSvg/ditZgzZzp3M9KFpBDy7LTMjRAXZ73957EgsHmSv8V8TObVC1GrxsuvjRK1Fc=
+	t=1779294385; cv=none; b=Y9zHEUzZhSjZkfABZLnp0QIWxG91idJaiFrbY5SJLdF1j0uQZZwsdyvaDUMncjfpmPtXzd5Y2ApwUeKk6ae8oJRXVMQI2AJMnhUFk7BDXbK4cB6XO5shHZBo1OfBZY5EwxzOX+0mn6ZUUqMLluWrDQTyPgCSrhNKWVgS1JDHNP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294380; c=relaxed/simple;
-	bh=DwP1T3eWa0lKCmyCCsKwqQii+s5rMfidXOnDV8aHWDM=;
+	s=arc-20240116; t=1779294385; c=relaxed/simple;
+	bh=N5S3u+KhO95pVS9+EpxReHegmej9DP4y/HzjQNWZp4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ScHfk0mQln8D/U1Qt0yF6ZgOqQnG5ODxNoAsiGOWE/Uvb4sTeUmu2OG2vYYBmGjMRSzc8cUeFxp329wnfarnojMX3SB1naL1yHVATen3MTjarFfKMV3CNYuoVy7Zb+jbYIGVqPtISu486MA4vtVSi2NKkg6dCrm2bOlMYxg3Hcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuNmxAAK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oXlsAmTdgK0KHTZLEn3YnCZlnbIyIkjCCQaagiXPvIqGFzYGI8nIGGqyVT20Ll/3s31Vd1znwbScDkyQ/mpRj3IfvbhLroz4B5ckvB4SWpX+A97XTiUcf9dVIWAmZdzBW5/qza1RYaSu6fNPUbRWWl8WhFyEbtsvqr9igi+aXHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJPLAQ0+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuNmxAAK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9235F1F000E9;
-	Wed, 20 May 2026 16:26:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJPLAQ0+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349F81F000E9;
+	Wed, 20 May 2026 16:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294379;
-	bh=eVkd3sGjci9nFMfN1MBJ9IKWOgkiIDoD2JsMx8z0spI=;
+	s=korg; t=1779294381;
+	bh=E02hpbDhzjv8ilhhyt9z8u53eQj+BkKUuhqINHO3+/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VuNmxAAKnf/hxuRfdeccHQtsIThEhkPrqZgx5I43Jei/XJ8L7EyrsjbAJZeSWYyYr
-	 M5YUgZfkJ1WtCwj32EpWqjzvmc23rLCre5ighl9MWE8F0YmBX2cQSGFy7o+EaFmvPd
-	 cCqQQiaRVPdp9jwst5A6GekGzCUtcZExuP37LVuw=
+	b=eJPLAQ0+l4N8dvxcDYTC8ym9BwlnlbXH3gv+FSL+31sgEQu4h5lJO0zg20aP+PgIt
+	 MsFHPCGy7JaMIvY4IBRkT12Yk57FJ2ZR2Px5x3bqsN6y89qy3+eCB1SDmg1BTP5hCn
+	 edyoLxBJDf+rOovkIgW3spDjbPpIAN7QcD5AHS5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0018/1146] erofs: handle 48-bit blocks/uniaddr for extra devices
-Date: Wed, 20 May 2026 18:04:28 +0200
-Message-ID: <20260520162148.800970609@linuxfoundation.org>
+Subject: [PATCH 7.0 0019/1146] md: remove unused static md_wq workqueue
+Date: Wed, 20 May 2026 18:04:29 +0200
+Message-ID: <20260520162148.822684440@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,81 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit 63c2f06198ca7513433f1c92f2c654869d72417e ]
+[ Upstream commit e4979f4fac4d6bbe757be50441b45e28e6bf7360 ]
 
-erofs_init_device() only reads blocks_lo and uniaddr_lo from the
-on-disk device slot, ignoring blocks_hi and uniaddr_hi that were
-introduced alongside the 48-bit block addressing feature.
+The md_wq workqueue is defined as static and initialized in md_init(),
+but it is not used anywhere within md.c.
 
-For the primary device (dif0), erofs_read_superblock() already handles
-this correctly by combining blocks_lo with blocks_hi when 48-bit
-layout is enabled.  But the same logic was not applied to extra
-devices.
+All asynchronous and deferred work in this file is handled via
+md_misc_wq or dedicated md threads.
 
-With a 48-bit EROFS image using extra devices whose uniaddr or blocks
-exceed 32-bit range, the truncated values cause erofs_map_dev() to
-compute wrong physical addresses, leading to silent data corruption.
-
-Fix this by reading blocks_hi and uniaddr_hi in erofs_init_device()
-when 48-bit layout is enabled, consistent with the primary device
-handling.  Also fix the erofs_deviceslot on-disk definition where
-blocks_hi was incorrectly declared as __le32 instead of __le16.
-
-Fixes: 61ba89b57905 ("erofs: add 48-bit block addressing on-disk support")
-Suggested-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: b75197e86e6d3 ("md: Remove flush handling")
+Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Link: https://lore.kernel.org/linux-raid/20260328193522.3624-1-abd.masalkhi@gmail.com/
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/erofs_fs.h | 4 ++--
- fs/erofs/super.c    | 8 ++++++--
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/md/md.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/fs/erofs/erofs_fs.h b/fs/erofs/erofs_fs.h
-index b80c6bb33a58c..7871b16c1d333 100644
---- a/fs/erofs/erofs_fs.h
-+++ b/fs/erofs/erofs_fs.h
-@@ -44,9 +44,9 @@ struct erofs_deviceslot {
- 	u8 tag[64];		/* digest(sha256), etc. */
- 	__le32 blocks_lo;	/* total blocks count of this device */
- 	__le32 uniaddr_lo;	/* unified starting block of this device */
--	__le32 blocks_hi;	/* total blocks count MSB */
-+	__le16 blocks_hi;	/* total blocks count MSB */
- 	__le16 uniaddr_hi;	/* unified starting block MSB */
--	u8 reserved[50];
-+	u8 reserved[52];
- };
- #define EROFS_DEVT_SLOT_SIZE	sizeof(struct erofs_deviceslot)
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index ecb9bd0e1b8f7..159af8d7ccf0b 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -84,7 +84,6 @@ static DEFINE_XARRAY(md_submodule);
+ static const struct kobj_type md_ktype;
  
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index 972a0c82198d7..802add6652fda 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -129,6 +129,7 @@ static int erofs_init_device(struct erofs_buf *buf, struct super_block *sb,
- 	struct erofs_fscache *fscache;
- 	struct erofs_deviceslot *dis;
- 	struct file *file;
-+	bool _48bit;
+ static DECLARE_WAIT_QUEUE_HEAD(resync_wait);
+-static struct workqueue_struct *md_wq;
  
- 	dis = erofs_read_metabuf(buf, sb, *pos, false);
- 	if (IS_ERR(dis))
-@@ -175,8 +176,11 @@ static int erofs_init_device(struct erofs_buf *buf, struct super_block *sb,
- 		dif->file = file;
- 	}
+ /*
+  * This workqueue is used for sync_work to register new sync_thread, and for
+@@ -10511,10 +10510,6 @@ static int __init md_init(void)
+ 		goto err_bitmap;
  
--	dif->blocks = le32_to_cpu(dis->blocks_lo);
--	dif->uniaddr = le32_to_cpu(dis->uniaddr_lo);
-+	_48bit = erofs_sb_has_48bit(sbi);
-+	dif->blocks = le32_to_cpu(dis->blocks_lo) |
-+		(_48bit ? (u64)le16_to_cpu(dis->blocks_hi) << 32 : 0);
-+	dif->uniaddr = le32_to_cpu(dis->uniaddr_lo) |
-+		(_48bit ? (u64)le16_to_cpu(dis->uniaddr_hi) << 32 : 0);
- 	sbi->total_blocks += dif->blocks;
- 	*pos += EROFS_DEVT_SLOT_SIZE;
- 	return 0;
+ 	ret = -ENOMEM;
+-	md_wq = alloc_workqueue("md", WQ_MEM_RECLAIM | WQ_PERCPU, 0);
+-	if (!md_wq)
+-		goto err_wq;
+-
+ 	md_misc_wq = alloc_workqueue("md_misc", WQ_PERCPU, 0);
+ 	if (!md_misc_wq)
+ 		goto err_misc_wq;
+@@ -10539,8 +10534,6 @@ static int __init md_init(void)
+ err_md:
+ 	destroy_workqueue(md_misc_wq);
+ err_misc_wq:
+-	destroy_workqueue(md_wq);
+-err_wq:
+ 	md_llbitmap_exit();
+ err_bitmap:
+ 	md_bitmap_exit();
+@@ -10849,7 +10842,6 @@ static __exit void md_exit(void)
+ 	spin_unlock(&all_mddevs_lock);
+ 
+ 	destroy_workqueue(md_misc_wq);
+-	destroy_workqueue(md_wq);
+ 	md_bitmap_exit();
+ }
+ 
 -- 
 2.53.0
 
