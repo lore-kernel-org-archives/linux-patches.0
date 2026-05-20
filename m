@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8F6372EDE;
-	Wed, 20 May 2026 16:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43ED63D810C;
+	Wed, 20 May 2026 16:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295085; cv=none; b=hJF9brESquOHRD+3fhHBjP8NqJAXkrKZvWCdAOf0fqNkK/wXcnqeD0VhTBTM8ezQqLJApC7slfvfFcBvhrGB6OO3ksKnQIwZdQJa4ywdkK9OndcOv9BzOaBLSqKd91NQ/nPV2pXLGmPBq5t0C4IOLGEPNqRJtoUSagytBHO4dNc=
+	t=1779295087; cv=none; b=Jsjjnz42cr70abkSd4zEINQORdBZD7tPSxVlQmWjsRGyTkUE96shtNLx/g89McdAg/cfxXbDnb4i8zujxfCqjh98LgISnBFYQm0WSHrDEl5YmrgB5qnbbzBlnwpA05xGECFf3SFMVOM+S8m2bvht/YuGg8wqFT2yPDa5Pcd6iNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295085; c=relaxed/simple;
-	bh=rRHYsbhMuXYAxZTdHol3x9qbvvS88JI5REfknus5x0k=;
+	s=arc-20240116; t=1779295087; c=relaxed/simple;
+	bh=+QDuyROuEIyNMj5uiL8c7VJG2rMpllNfF7qafdFtzqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ehUxw6h5kL8iYH09HTp5ShJhNKxxNsKdqJrM9SLT1Qygs3lbE5NGcj4SGdKslGBPtNR+mGmIIijguoaQDX4cCcY35IlSn4vrvm0eqCSac6dJBkOFW+diW6I9UqnAQTDxZWmF+HP2M8ZEwVPosv6i9yuxNXuk+qBlKIlhaalMqm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmDpiKbe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CwixaWKAt43p6JWmEjnDd/XK+t1TvHkp6InEgQEBuH8O0VyMc57GDdfyRhRoKURBLAfABX1no/DvhMm1ThqqR3lN3HqY8UYnVX/Xfa73AKW4rNW1rLpEXDLAjEWqGK7T2vjmChuNxGp7eVdc+Wzr6bmCtyRwLRweqGG7vE51L+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGEm1eXa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmDpiKbe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95AF1F000E9;
-	Wed, 20 May 2026 16:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGEm1eXa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6406E1F00893;
+	Wed, 20 May 2026 16:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295082;
-	bh=BM8nP0z+62NVLMjWA32Vo7dGefW6c97iN5OFqw3Qrv4=;
+	s=korg; t=1779295084;
+	bh=e1e/QeySaPwSUXHPmMs//uUJ+kyHL7ol7wuEpUdR4Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XmDpiKbefF1t3ro0HfKXQYMhK0PBHJ0GMOHGsHDufK/q6MisSH8pQVcyvHyzPK1zT
-	 MlwdUnYilf+BbY3EmuJcAkzK+OhHhdIjSjKycjdvj5Ts4cMn8FmenFNlUllwfMdpkF
-	 CLOLis5wQbmihHrmqCzbt5WYTrKwURdUXhO7p26k=
+	b=xGEm1eXapsQUqBwI18NHm13OSoy6qPkJcq8raOEB7NXJKI0+hX8Jhxt506d0HbEPK
+	 P/swNFW2ozI3el4D0euQb6Wd5trnwIABx37Drl8nsuXfa8qHgefkinANfQMARSgztE
+	 2aKdqoVyBQ1TCieqkkzcr5d8K6PmsePyKOCSajMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0283/1146] drm/v3d: Handle error from drm_sched_entity_init()
-Date: Wed, 20 May 2026 18:08:53 +0200
-Message-ID: <20260520162154.621625272@linuxfoundation.org>
+Subject: [PATCH 7.0 0284/1146] drm/sun4i: Fix resource leaks
+Date: Wed, 20 May 2026 18:08:54 +0200
+Message-ID: <20260520162154.644614418@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,71 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 8cf1bec37b27846ad3169744c9f1a89a06dcb3fa ]
+[ Upstream commit 127367ad2e0f4870de60c6d719ae82ecf68d674c ]
 
-drm_sched_entity_init() can fail but its return value is currently being
-ignored in v3d_open(). Check the return value and properly unwind
-on failure by destroying any already-initialized scheduler entities.
+Three clocks are not being released in devm_regmap_init_mmio() error
+path.
 
-Fixes: 57692c94dcbe ("drm/v3d: Introduce a new DRM driver for Broadcom V3D V3.x+")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260306-v3d-reset-locking-improv-v3-1-49864fe00692@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Add proper goto and set ret to the error code.
+
+Fixes: 8270249fbeaf0 ("drm/sun4i: backend: Create regmap after access is possible")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20260226163836.10335-1-ethantidmore06@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_drv.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/sun4i/sun4i_backend.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_drv.c b/drivers/gpu/drm/v3d/v3d_drv.c
-index dd60acdf52c2b..86e05fcf6cf65 100644
---- a/drivers/gpu/drm/v3d/v3d_drv.c
-+++ b/drivers/gpu/drm/v3d/v3d_drv.c
-@@ -131,7 +131,7 @@ v3d_open(struct drm_device *dev, struct drm_file *file)
- 	struct v3d_dev *v3d = to_v3d_dev(dev);
- 	struct v3d_file_priv *v3d_priv;
- 	struct drm_gpu_scheduler *sched;
--	int i;
-+	int i, ret;
+diff --git a/drivers/gpu/drm/sun4i/sun4i_backend.c b/drivers/gpu/drm/sun4i/sun4i_backend.c
+index 6391bdc94a5c2..e989f75c09b7d 100644
+--- a/drivers/gpu/drm/sun4i/sun4i_backend.c
++++ b/drivers/gpu/drm/sun4i/sun4i_backend.c
+@@ -881,7 +881,8 @@ static int sun4i_backend_bind(struct device *dev, struct device *master,
+ 						     &sun4i_backend_regmap_config);
+ 	if (IS_ERR(backend->engine.regs)) {
+ 		dev_err(dev, "Couldn't create the backend regmap\n");
+-		return PTR_ERR(backend->engine.regs);
++		ret = PTR_ERR(backend->engine.regs);
++		goto err_disable_ram_clk;
+ 	}
  
- 	v3d_priv = kzalloc_obj(*v3d_priv);
- 	if (!v3d_priv)
-@@ -141,9 +141,11 @@ v3d_open(struct drm_device *dev, struct drm_file *file)
- 
- 	for (i = 0; i < V3D_MAX_QUEUES; i++) {
- 		sched = &v3d->queue[i].sched;
--		drm_sched_entity_init(&v3d_priv->sched_entity[i],
--				      DRM_SCHED_PRIORITY_NORMAL, &sched,
--				      1, NULL);
-+		ret = drm_sched_entity_init(&v3d_priv->sched_entity[i],
-+					    DRM_SCHED_PRIORITY_NORMAL, &sched,
-+					    1, NULL);
-+		if (ret)
-+			goto err_sched;
- 
- 		memset(&v3d_priv->stats[i], 0, sizeof(v3d_priv->stats[i]));
- 		seqcount_init(&v3d_priv->stats[i].lock);
-@@ -153,6 +155,12 @@ v3d_open(struct drm_device *dev, struct drm_file *file)
- 	file->driver_priv = v3d_priv;
- 
- 	return 0;
-+
-+err_sched:
-+	for (i--; i >= 0; i--)
-+		drm_sched_entity_destroy(&v3d_priv->sched_entity[i]);
-+	kfree(v3d_priv);
-+	return ret;
- }
- 
- static void
+ 	list_add_tail(&backend->engine.list, &drv->engine_list);
 -- 
 2.53.0
 
