@@ -1,245 +1,275 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DED371063;
-	Wed, 20 May 2026 11:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF7A3976B2;
+	Wed, 20 May 2026 11:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779275988; cv=none; b=SCFr5ysT6gYv8Y5jeMlde7ExmmP/d4r6mZYZS9HR52RUOLCKk3vJiwcYzCs1aSAoPG8DC5zJxMbiDFNlZa2grlHr0LQAb2qFmQ7Z6YB/hhzGkoGoVcieHKRnJzPx+cTTs0F6kfDJ7/Z4FlnwxLSTSyDvHqdW/3Gs558rAyFjxAo=
+	t=1779275991; cv=none; b=IrlP+xNqmaOmRSbuqR8ZpgQScLJrcppHNMNGuRwzLZBLfQSEUQvvGsvKO3KG3PWN2z4u1ID31UpczC2TBzylr6XkhYDVjSwRzf3/qVMC8xt+TpRJGdyohYUsz5DLD1JvUO+VrtupvxOgiWdHBUkfcwt+QVp42LulMgmw9PQjsVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779275988; c=relaxed/simple;
-	bh=6wbf9BF3q/xIesg8TeBxP9DqAnvxK+OoEyV0GT1IuAE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=RNKTdgBhQJFNvDT6/3Ltf9nNJIWRnsLxYkwOtezQRU4AX0hmA5wuJfEYXPu+/T1WxfYS0FHB0tOvtHjujhaPFoWZrnbQCFZ22KxDOzlQi1G+hgjt4ys6jT/yDRu34aSAnZ0FFkVMStIuEPx9cCyfv/jahaeBhKuZmjomA1AbKrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nEPi/6dY; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779275991; c=relaxed/simple;
+	bh=13u2QvD9hyPqBZjwx0x3dGEFE4ptFUdjDMUqqa62g3o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=LvjjUKyTvh4rrOWrtcJCdqhoHZL+uF12I2z0OsJ6r4vLaks8xLTOSzRv+rzqE/20OaTpeVPktNQZvu0HOGS6JCcAwUw/jwxArwkpTxpWPbKNnheGqPflTlbBFmZgemMtz16WOwAX2elI+Adk+Meq6rLPvDou0YbPXJUgsHc6+YQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MvQF/Ydj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nEPi/6dY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5987B1F000E9;
-	Wed, 20 May 2026 11:19:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MvQF/Ydj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3D61F00894;
+	Wed, 20 May 2026 11:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779275986;
-	bh=1WFl4Cx4mIXHKcZn7CPnQGIKVMWkC9ofmYZI9SNyt6k=;
-	h=From:To:Cc:Subject:Date;
-	b=nEPi/6dY5F4aDTDMwymmYw4R9WNJnIH5NiKwhCzxJUx3njeU1S+x7Yf8Eh+pJm9z+
-	 ahpe4VNs5Mj1JvhDj/R23x1z1Gqo5OuFA+oKMz6qVl1vD/4xUyJpaB5vSH/zptp3ZD
-	 jlS2pTgsfWGorJjZSZ5mfNAqNlSwyPVCG6ssfhqhUiWA+DjJCAU2LUcL9f5qmCbxHp
-	 IZ9Ge7ZpfDVGRV/gXPIXMXE1t6Z68u7SMK/LBrGhEDP1C5l8f/E/7YP4U9a0/ZnfDX
-	 jXeUrRGPC0Lhn5t3wM5uOkP3RB8YzYEmveSvmGQ8y5ex3znO2PdhmXd6ZtfwaKOyrK
-	 OHHcyv/1sHDGw==
+	s=k20260515; t=1779275987;
+	bh=mcqkHPast5WaMmLnbX6eWr/yFuCYSCjUIJOTaNfPubo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=MvQF/YdjYaGupaCD3AK1UqEIAYBYB4qTSmkY8nRhJ4tw48PLl7E3BjjtykUtfjLqY
+	 hUlNTb9g+oR0j6wTmEsipCgy/1Af7DhHynfR5Z/uejlUO89a58Sb7l+bQO2Wtq341K
+	 Tc4+TOqm3ldyH01WT5DnQDn8eo78fi/MPLQZzNEz5N9yWOvn+Pkte0Pd4hYBZfkkN5
+	 cf7UCL+PTjLL2FO3HRsdPmH9x58+1TjTtzfJyb+uz+J/7qWVGoeWnPGCLerIsHLEN4
+	 p4FEzxyhqW/cjq+FIyKQ4kfT7XgZH65uRmUSv2Dxk3WW4Bz6NwMrvNa0yLrv9EPQI/
+	 HF+//0igbC/bw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alain Michaud <alainmichaud@google.com>,
-	Olivier Gay <ogay@logitech.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] HID: logitech-hidpp: Add support for newer Bluetooth keyboards
-Date: Wed, 20 May 2026 07:18:33 -0400
-Message-ID: <20260520111944.3424570-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] drm/amdgpu: remove deadlocks from amdgpu_userq_pre_reset
+Date: Wed, 20 May 2026 07:18:34 -0400
+Message-ID: <20260520111944.3424570-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
+References: <20260520111944.3424570-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alain Michaud <alainmichaud@google.com>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 64ffa2e5e02ff54b23221d0282155f37283fabea ]
+[ Upstream commit d5971c5c34303a00bf841a902ca00a703602c500 ]
 
-Add product IDs (PIDs) for several newer Logitech Bluetooth keyboards
-to the hidpp_devices matching table, enabling full HID++ support for
-them.
+The purpose of a GPU reset is to make sure that fence can be signaled
+again and the signal and resume workers can make progress again.
 
-The added keyboards are:
-- Logitech Signature K650 & B2B
-- Logitech Pebble Keys 2 K380S
-- Logitech Casa Pop-Up Desk & B2B
-- Logitech Wave Keys & B2B
-- Logitech Signature Slim K950 & B2B
-- Logitech MX Keys S & B2B
-- Logitech Keys-To-Go 2
-- Logitech Pop Icon Keys
-- Logitech MX Keys Mini & B2B
-- Logitech Signature Slim Solar+ K980 B2B
-- Logitech Bluetooth Keyboard K250/K251
-- Logitech Signature Comfort K880 & B2B
+So waiting for the resume worker or any fence in the GPU reset path is
+just utterly nonsense.
 
-Signed-off-by: Alain Michaud <alainmichaud@google.com>
-Reviewed-by: Olivier Gay <ogay@logitech.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Prike Liang <Prike.Liang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit fcd5f065eab46993af43442fd77ee8d9eb9c5bdf)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+## Decision Summary
+This should be backported for stable trees that contain
+`amdgpu_userq_pre_reset()`. It removes two blocking waits from the GPU
+reset path: `cancel_delayed_work_sync(&uqm->resume_work)` and
+`amdgpu_userq_wait_for_last_fence()`, where the latter waits on
+`dma_fence_wait_timeout(..., MAX_SCHEDULE_TIMEOUT)`. The reset path is
+precisely what is supposed to let those fences/workers make progress, so
+waiting there can deadlock GPU recovery.
+
+The patch is one-function, one-file, no new API, and `git apply --check`
+succeeds against this `7.0.y` checkout. Main concern: the review thread
+confirms broader queue-state locking concerns remain, but those are pre-
+existing and the accepted patch was explicitly scoped to removing the
+obvious deadlock.
+
 ## Phase Walkthrough
-**Phase 1 Record:** Subsystem `HID: logitech-hidpp`; action `Add`;
-intent is to add Bluetooth PIDs so newer Logitech keyboards bind to
-`hid-logitech-hidpp`. Tags: `Signed-off-by: Alain Michaud`, `Reviewed-
-by: Olivier Gay <ogay@logitech.com>`, `Signed-off-by: Jiri Kosina`; no
-`Fixes`, `Reported-by`, `Tested-by`, `Link`, or stable Cc. Body
-describes hardware enablement, not crash/security. Hidden bug fix: no,
-this is explicit device-ID enablement.
+Phase 1:
+- Record 1.1: subsystem `drm/amdgpu`; action `remove`; intent is to
+  remove deadlocks from `amdgpu_userq_pre_reset()`.
+- Record 1.2: tags present: `Signed-off-by: Christian König`, `Reviewed-
+  by: Prike Liang`, `Signed-off-by: Alex Deucher`; no `Fixes:`,
+  `Reported-by:`, `Tested-by:`, `Acked-by:`, `Link:`, or `Cc: stable`.
+- Record 1.3: commit body says GPU reset exists to allow fences and
+  signal/resume workers to progress; waiting for resume worker or fences
+  inside reset is wrong. Failure mode: reset can hang/deadlock.
+- Record 1.4: not hidden; it is explicitly a deadlock fix.
 
-**Phase 2 Record:** One file changed: `drivers/hid/hid-logitech-
-hidpp.c`, 38 insertions, all in `hidpp_devices[]`. Before: listed
-Logitech Bluetooth devices stopped at existing IDs such as
-`0xb391`/`0xb042`. After: adds 19
-`HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, pid)` entries. Bug
-category: hardware enablement/device IDs. Fix quality: mechanically
-simple, no code flow, locking, allocation, ABI, or API changes.
+Phase 2:
+- Record 2.1: one file, `drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c`,
+  `+12/-14`; only `amdgpu_userq_pre_reset()` changed; single-file
+  surgical fix.
+- Record 2.2: before, reset path canceled `resume_work` synchronously
+  and waited for `last_fence` before unmapping mapped queues. After, it
+  skips non-mapped queues and directly unmaps/marks hung/force-completes
+  mapped queues.
+- Record 2.3: bug category is deadlock/hang. Mechanism: reset path
+  waited on work/fences that may require reset progress to complete.
+- Record 2.4: fix is minimal. Regression risk is low-to-medium because
+  queue-state locking is still called out by the TODO and review
+  discussion, but no new API or broad behavior is added.
 
-**Phase 3 Record:** Upstream commit is
-`64ffa2e5e02ff54b23221d0282155f37283fabea`, contained by
-`v7.1-rc4~28^2`. Blame shows the new entries are from this commit;
-surrounding table entries are established prior HID++ Bluetooth IDs. No
-`Fixes:` tag to follow. Related history shows repeated prior Logitech
-HID++ Bluetooth ID additions, plus a prior broad “match all Logitech
-Bluetooth” approach that was reverted because it could bind unsupported
-mice and leave them dead. This supports the narrow-ID approach. Author
-has only this HID/HIDPP commit locally; reviewer/maintainer path is
-through HID maintainers.
+Phase 3:
+- Record 3.1: `git blame` shows the reset function came from
+  `290f46cf57265` (`drm/amdgpu: Implement user queue reset
+  functionality`); current textual lines were later touched by
+  `473f12f820956` and `dc21e39fd20c7` helper/signature cleanups. `git
+  describe --contains 290f46cf...` points to `v6.19-rc1`, so older
+  stable trees before v6.19 likely do not contain this exact code.
+- Record 3.2: no `Fixes:` tag, so no Fixes target to follow.
+- Record 3.3: recent file history shows active userq work and related
+  reset/fence changes; this patch applies standalone to current `7.0.y`.
+- Record 3.4: `MAINTAINERS` lists Christian König and Alex Deucher as
+  AMDGPU DRM maintainers; author/committer are subsystem maintainers.
+- Record 3.5: no compile dependency found; patch is part of an 11-patch
+  series but applies cleanly by itself.
 
-**Phase 4 Record:** `b4 dig -c 64ffa2e5e02f` found the original
-submission at `https://patch.msgid.link/20260512132244.2194556-1-
-alainmichaud@google.com`. `b4 dig -a` showed only v1. `b4 dig -w` showed
-Jiri Kosina, Benjamin Tissoires, HID++/Logitech reviewers, `linux-
-input`, and `linux-kernel` were included. Saved mbox shows Jiri replied
-“Applied, thanks.” No objections or stable nomination found in that
-mbox. WebFetch to lore/stable was blocked by Anubis, so stable-list
-search could not be verified externally.
+Phase 4:
+- Record 4.1: `b4 dig` failed because the commit object is absent
+  locally. Fallback found the original patch at
+  `lists.freedesktop.org/archives/amd-gfx/2026-April/143199.html`;
+  committed version matches the patch content with `Reviewed-by` added.
+- Record 4.2: `b4 -w` failed; lore thread shows Alex Deucher, Prike
+  Liang, Sunil Khatri, and `amd-gfx` were involved.
+- Record 4.3: no external bug report or syzbot link found.
+- Record 4.4: series context exists (`[PATCH 02/11]`), with later
+  userq/fence/reset cleanups, but no hard prerequisite was identified
+  for this specific deadlock removal.
+- Record 4.5: web search did not find stable-list discussion for this
+  exact patch.
 
-**Phase 5 Record:** Key changed object is `hidpp_devices[]`. It is
-assigned to `hidpp_driver.id_table`, exported via `MODULE_DEVICE_TABLE`,
-and registered by `module_hid_driver(hidpp_driver)`. HID core uses
-`hid_match_device()` -> `hid_match_id()` against `hdrv->id_table`,
-matching bus/vendor/product. `HID_BLUETOOTH_DEVICE` expands to
-`BUS_BLUETOOTH` plus vendor/product. Reachability: Bluetooth HID device
-enumeration/driver matching. Similar pattern: many existing Logitech
-Bluetooth HID++ IDs in the same table.
+Phase 5:
+- Record 5.1: modified function: `amdgpu_userq_pre_reset()`.
+- Record 5.2: callers: local search shows only
+  `amdgpu_device_halt_activities()`, called from
+  `amdgpu_device_gpu_recover()` and PCI error handling.
+- Record 5.3: affected callees include `userq_funcs->unmap()` and
+  `amdgpu_userq_fence_driver_force_completion()`; removed callees
+  include `cancel_delayed_work_sync()` and
+  `amdgpu_userq_wait_for_last_fence()`.
+- Record 5.4: reachable through AMDGPU recovery paths, including job
+  timeout/GPU recovery paths; exact unprivileged trigger policy was not
+  fully verified.
+- Record 5.5: similar wait/cancel patterns remain in non-reset paths
+  such as destroy/suspend/eviction, but the reset-path instance is the
+  one fixed here.
 
-**Phase 6 Record:** Checked tags `v5.10`, `v5.15`, `v6.1`, `v6.6`,
-`v6.12`, `v6.18`, `v6.19`, and `v7.0`: all have `hidpp_devices[]`,
-`MODULE_DEVICE_TABLE(hid, hidpp_devices)`, and `HID_BLUETOOTH_DEVICE`;
-all lack the candidate PIDs. Patch applies cleanly to current
-`stable/linux-7.0.y`; older trees likely need trivial context placement
-because some newer adjacent IDs are absent.
+Phase 6:
+- Record 6.1: buggy code exists in this `7.0.y` tree and appears
+  introduced for `v6.19-rc1`; likely relevant to v6.19+ stable trees
+  containing userq reset support.
+- Record 6.2: `git apply --check` succeeds against this checkout, so
+  current `7.0.y` backport difficulty is clean.
+- Record 6.3: no exact related stable replacement fix found locally or
+  in web stable search.
 
-**Phase 7 Record:** Subsystem is HID Logitech HID++ driver, under
-maintained HID/Input. Criticality: driver-specific, but for affected
-Logitech keyboard users it controls full HID++ support. Subsystem is
-active; recent history includes HIDPP fixes and other device-ID
-additions.
+Phase 7:
+- Record 7.1: subsystem is AMDGPU DRM driver; criticality is IMPORTANT,
+  driver-specific but for widely used GPU hardware.
+- Record 7.2: subsystem/file is active; recent history contains many
+  userq reset/fence fixes and refactors.
 
-**Phase 8 Record:** Affected users are owners of the listed Logitech
-Bluetooth keyboards on stable kernels. Trigger is pairing/using those
-devices over Bluetooth. Failure mode is missing enhanced HID++ driver
-support, not a crash; severity medium for affected hardware
-functionality. Benefit is high for those users and low system-wide risk.
-Risk is very low: data-only ID table entries, no behavioral change for
-non-matching devices.
+Phase 8:
+- Record 8.1: affected users are AMDGPU users with user queues enabled
+  who hit GPU reset/recovery.
+- Record 8.2: trigger is GPU reset while user queues have pending resume
+  work or unsignaled fences; commonality depends on userq usage and GPU
+  hangs.
+- Record 8.3: failure mode is GPU reset deadlock/hang; severity HIGH to
+  CRITICAL because recovery can stall.
+- Record 8.4: benefit is high for affected systems; risk is low-to-
+  medium due small scope but reset-path concurrency sensitivity. Ratio
+  favors backport.
 
-**Phase 9 Record:** Evidence for backporting: classic stable exception
-for adding device IDs to an existing driver; small and contained;
-reviewed by Logitech contact; applied by HID maintainer; code exists in
-active stable trees; prior history favors explicit IDs over broad
-matching. Evidence against: not a crash/security/data-corruption fix;
-product ID correctness is verified only by commit review, not an
-external public spec. Stable checklist: obviously correct yes; real
-user-visible hardware support issue yes; important under device-ID
-exception yes; small/contained yes; no new API yes; applies cleanly to
-7.0 and should be trivial elsewhere.
+Phase 9:
+- Record 9.1 FOR: fixes deadlock, reset-path hang, small one-function
+  diff, maintainer-authored, reviewed, applies cleanly. AGAINST: no
+  reported user bug, no stable tag, part of a larger userq series,
+  residual queue-state locking TODO. UNRESOLVED: no runtime
+  reproduction/build, exact applicability to every active stable branch
+  not verified.
+- Record 9.2 stable rules: obviously correct enough by code and
+  maintainer review: yes; fixes real bug: yes, deadlock; important
+  issue: yes, recovery hang; small/contained: yes; no new API/features:
+  yes; can apply to current stable tree: yes.
+- Record 9.3 exception category: none.
+- Record 9.4 decision: backport to stable trees containing this userq
+  reset code.
 
 ## Verification
-- [Phase 1] Parsed commit metadata with `git show --format=fuller`:
-  confirmed tags and no `Fixes`/`Reported-by`.
-- [Phase 2] Inspected full diff: 38 insertions only in
-  `hidpp_devices[]`.
-- [Phase 3] Used `git blame` around the table and `git log` on the file:
-  confirmed surrounding HID++ Bluetooth ID history and related revert of
-  broad Bluetooth matching.
-- [Phase 4] Used `b4 dig -c/-a/-w` and saved/read mbox: confirmed v1
-  thread, recipients, and maintainer “Applied, thanks.”
-- [Phase 5] Used code search/read of `hid-core.c`,
-  `include/linux/hid.h`, and `hid-logitech-hidpp.c`: confirmed driver
-  table matching path.
-- [Phase 6] Checked stable tags for table/macro/PID presence and ran
-  `git apply --check` on current 7.0 tree.
-- [Phase 7] Checked `MAINTAINERS` and recent HID/HIDPP logs.
-- [Phase 8] Impact/risk derived from verified diff and HID matching
-  path.
-- UNVERIFIED: lore stable-search results, because WebFetch was blocked
-  by Anubis.
-- UNVERIFIED: independent public confirmation of every Logitech PID
-  beyond the patch author/reviewer/maintainer record.
-
-This should be backported under the stable device-ID exception. It
-enables existing HID++ driver support for specific hardware with minimal
-regression risk.
+- [Phase 1] Parsed GitHub patch and lore message: confirmed subject,
+  body, tags, and lack of `Fixes`/`Cc stable`.
+- [Phase 2] Compared diff: confirmed one-file `+12/-14` change removing
+  `cancel_delayed_work_sync()` and `amdgpu_userq_wait_for_last_fence()`.
+- [Phase 3] `git blame`: confirmed reset code origin/refactor history
+  around `amdgpu_userq_pre_reset()`.
+- [Phase 3] `git describe --contains`: confirmed introduction is in the
+  v6.19 era.
+- [Phase 3] `MAINTAINERS`: confirmed Christian König and Alex Deucher
+  maintain AMDGPU DRM.
+- [Phase 4] `b4 dig -c/-a/-w`: failed because commit object is not in
+  this checkout.
+- [Phase 4] WebFetch GitHub patch and freedesktop lore: confirmed
+  original patch, review discussion, and `Reviewed-by: Prike Liang`.
+- [Phase 5] `rg` and file reads: confirmed caller path through
+  `amdgpu_device_halt_activities()` and `amdgpu_device_gpu_recover()`.
+- [Phase 6] `git apply --check`: confirmed clean application to current
+  `7.0.y`.
+- UNVERIFIED: no kernel build or runtime reproduction was performed;
+  exact applicability to all non-`7.0.y` stable trees was not fully
+  checked.
 
 **YES**
 
- drivers/hid/hid-logitech-hidpp.c | 38 ++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 26 +++++++++++------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index d1dea7297712d..68f055ef1f444 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4672,6 +4672,44 @@ static const struct hid_device_id hidpp_devices[] = {
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb391) },
- 	{ /* MX Master 4 mouse over Bluetooth */
- 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb042) },
-+	{ /* Logitech Signature K650 over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb36f) },
-+	{ /* Logitech Signature K650 B2B over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb370) },
-+	{ /* Logitech Pebble Keys 2 K380S over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb377) },
-+	{ /* Logitech Casa Pop-Up Desk over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb371) },
-+	{ /* Logitech Casa Pop-Up Desk B2B over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb374) },
-+	{ /* Logitech Wave Keys over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb383) },
-+	{ /* Logitech Wave Keys B2B over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb384) },
-+	{ /* Logitech Signature Slim K950 over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb386) },
-+	{ /* Logitech Signature Slim K950 B2B over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb388) },
-+	{ /* Logitech MX Keys S over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb378) },
-+	{ /* Logitech MX Keys S B2B over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb380) },
-+	{ /* Logitech Keys-To-Go 2 over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb38c) },
-+	{ /* Logitech Pop Icon Keys over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb38f) },
-+	{ /* Logitech MX Keys Mini over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb369) },
-+	{ /* Logitech MX Keys Mini B2B over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb36e) },
-+	{ /* Logitech Signature Slim Solar+ K980 B2B over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb394) },
-+	{ /* Logitech Bluetooth Keyboard K250/K251 over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb397) },
-+	{ /* Logitech Signature Comfort K880 over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb39c) },
-+	{ /* Logitech Signature Comfort K880 B2B over Bluetooth */
-+	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb39d) },
- 	{}
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+index 0a1b93259887a..6f49ba3bd0394 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
+@@ -1583,23 +1583,21 @@ void amdgpu_userq_pre_reset(struct amdgpu_device *adev)
+ {
+ 	const struct amdgpu_userq_funcs *userq_funcs;
+ 	struct amdgpu_usermode_queue *queue;
+-	struct amdgpu_userq_mgr *uqm;
+ 	unsigned long queue_id;
+ 
++	/* TODO: We probably need a new lock for the queue state */
+ 	xa_for_each(&adev->userq_doorbell_xa, queue_id, queue) {
+-		uqm = queue->userq_mgr;
+-		cancel_delayed_work_sync(&uqm->resume_work);
+-		if (queue->state == AMDGPU_USERQ_STATE_MAPPED) {
+-			amdgpu_userq_wait_for_last_fence(queue);
+-			userq_funcs = adev->userq_funcs[queue->queue_type];
+-			userq_funcs->unmap(queue);
+-			/* just mark all queues as hung at this point.
+-			 * if unmap succeeds, we could map again
+-			 * in amdgpu_userq_post_reset() if vram is not lost
+-			 */
+-			queue->state = AMDGPU_USERQ_STATE_HUNG;
+-			amdgpu_userq_fence_driver_force_completion(queue);
+-		}
++		if (queue->state != AMDGPU_USERQ_STATE_MAPPED)
++			continue;
++
++		userq_funcs = adev->userq_funcs[queue->queue_type];
++		userq_funcs->unmap(queue);
++		/* just mark all queues as hung at this point.
++		 * if unmap succeeds, we could map again
++		 * in amdgpu_userq_post_reset() if vram is not lost
++		 */
++		queue->state = AMDGPU_USERQ_STATE_HUNG;
++		amdgpu_userq_fence_driver_force_completion(queue);
+ 	}
+ }
  
 -- 
 2.53.0
