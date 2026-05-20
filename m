@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7AD33F54DB;
-	Wed, 20 May 2026 11:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1B73F44CD;
+	Wed, 20 May 2026 11:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276055; cv=none; b=juniZ39si0LtODDEYdsjdBAIQfh2ILEKvSduPvFW5+2fOTHV+vowZzLjnscCdxW4HGODvld2Za0Vb+z/LdXp8O12ocXVaEArwcV60yf2bQ+/cQQdn5YV+0mbKJPyPFvdohcgtG0LLMNIu/JK9yguS8pPxudUT7XgZSQzznBX1RQ=
+	t=1779276056; cv=none; b=Z3qQxnETNzBF45rvuWfvIBHhSmHRb+xsZg7XZ215TrIZVVCar3pbL8xeN2xFMqMlEDpBGxlw/BK55eDKBON32hp4CXvawU0D8b1hZmLIOMG6ETEmGjbRA2qK5FmCVUx4J6qcWQ7TEJHpVKSmobSpcLLg5NFdur3Xem6V5eQVDQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276055; c=relaxed/simple;
-	bh=MSSv7cZG4QR4CTe1tyXdoTYxertwGmgfBqtd9Nohg+Y=;
+	s=arc-20240116; t=1779276056; c=relaxed/simple;
+	bh=MNq/8U2j5eLB1h2VBZPHF+KZltfN65vY8n+9Z4aKw3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NJunGqjopsik5P0JPssvU4x4xgCXRvF5eHD7tdyT+MkOxo0l9XzBLNYH7754iy80XKZG0RQZ6rwKQDBZZurDpWyr2G/shI8lx8yVAJuAcOgVKRJSMn/7/If8FR045TXG5oaA+X0KpRPBZmFSZ7rRKwJgDsYR/ZyYQDJEuaBisjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rulbb9lA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ME/OEnDdxDt8WC7GDPyy7Osqbkax2Ou325NHK//aOsaqFCH29gneSLdgb+J35Pr8qB4+HLP5CajksRO+e///uu/QonKUm7tjHyTpUAkLhMsrbP8uJqqjUPBvbhwDFRmE7FYu/QJkPjGGkZXeWRv4nsFJAY40IwI1Rzf5PgRdmgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DQlcUA4Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rulbb9lA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E8A1F000E9;
-	Wed, 20 May 2026 11:20:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DQlcUA4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4AF1F00893;
+	Wed, 20 May 2026 11:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276053;
-	bh=vo7xLNpRRxHEcNbThS8imVCpKzJpc9GuQTSEECQtEYI=;
+	s=k20260515; t=1779276054;
+	bh=paqoOUCaaHOHHctHufFKjrS7rt6VgzjmcsNCFGativk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rulbb9lA0EbzBso6sdZzUlxWfynxQNJaCbdzGrqQPt3EYmMQhNWy6bzS90B7CI5LL
-	 K+MWJFOyi2ZGy7k2jkbT8ODmTPH1iJVV9f4ZTvjjMW7EWeLfPTBFbfwusbmH3Sdhcg
-	 RPasKQ30oTUGIChJlPKQe8dUI3YR9WQqr3cvwIXfJ1rIOs+Hohmj/xpcQCLc5t/7Kk
-	 mk5ngTNj1juVE2z1XDQijR1pQj35JWgBZvQ6h1DTr9aZ4Fh2DWN/K1uJZiZvqKQn1V
-	 vN36Fqmd9AkLdmXuud1UnNPNmohfTezHbkH+dBDfE4h7efXeM6GNWHAWM154Mi7i7A
-	 6UnKAakfsllEg==
+	b=DQlcUA4QdlocwEG1cIOSWNsJPdzXbAoK1ZGfNm+HlM2s88Pn7XZGjHnNvf+4OXvwm
+	 8UB5Iz9WWMaVsF6NKmkLnhFzRNSTeGExilNRppiGQrWUseOhh6iUVntwQtdqZHbXLX
+	 rQEJGLYT2/hxESD6VpmTYUaNzfGcrsWA4xCHQSYLkVR3cS57Cd6UTprBqSdH9PVvpz
+	 3x5AFS+kbmpLIbuIxYzUtUFUfldO4MI3No6eiKEalluD+WyGFsJTW+6BKZIdTWOiiO
+	 0CZ/JJaysgnTiUbo/uhDODsYP+w/P+xu0oMRv98iqHE4LXXIYKr7FfOcFDX1HublVr
+	 AIDyCXE9cGvUg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tomas Henzl <thenzl@redhat.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	James.Bottomley@HansenPartnership.com,
-	storagedev@microchip.com,
-	linux-scsi@vger.kernel.org,
+	io-uring@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] scsi: smartpqi: Silence a recursive lock warning
-Date: Wed, 20 May 2026 07:19:20 -0400
-Message-ID: <20260520111944.3424570-48-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] io_uring: defer linked-timeout chain splice out of hrtimer context
+Date: Wed, 20 May 2026 07:19:21 -0400
+Message-ID: <20260520111944.3424570-49-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -55,206 +51,249 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit d65efdf467ff935e35dfe6aa9a7ab93f17ac07ee ]
+[ Upstream commit 49ae66eb8c27375075ffa308cfd4bf25af335d41 ]
 
-On systems with multiple controllers debug kernel shows
+io_link_timeout_fn() is the hrtimer callback that fires when a linked
+timeout expires. It currently calls io_remove_next_linked(prev) under
+ctx->timeout_lock to splice the timeout request out of the link chain.
+This is the only chain-mutation site that runs without ctx->uring_lock,
+because hrtimer callbacks cannot take a mutex. Defer the splicing until
+the task_work callback.
 
-  WARNING: possible recursive locking detected
-
-during shutdown.
-
-Each controller does have its own ctrl_info (and mutex) and that isn't
-correctly recognized by debug kernel.  Suppress the warning by releasing
-the mutex at the end of pqi_shutdown().
-
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Acked-by: Don Brace <don.brace@microchip.com>
-Link: https://patch.msgid.link/20260414124118.23661-1-thenzl@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Decision Summary
-Backport this to stable trees that contain the mutex-based
-`pqi_ctrl_block_device_reset()` shutdown path, verified in `v5.15`,
-`v6.1`, `v6.6`, `v6.12`, `v6.16`, and `v6.19`. Do not apply it as-is to
-`v5.10`, where that helper only sets `block_device_reset = true` and no
-`pqi_ctrl_unblock_device_reset()` helper exists.
+## Phase 1: Commit Message Forensics
+Record: subsystem `io_uring`; action verb `defer`; intent is to move
+linked-timeout chain splicing out of `io_link_timeout_fn()` hrtimer
+context and into task_work.
 
-This is a one-line fix for an imbalanced `lun_reset_mutex` lock in
-`pqi_shutdown()`. The direct user-visible symptom is a lockdep “possible
-recursive locking detected” warning during shutdown/reboot on systems
-with multiple smartpqi controllers. The impact is mostly debug-kernel
-noise rather than data loss or a production crash, but the patch
-corrects real locking hygiene, is tiny, subsystem-reviewed, and has very
-low risk.
+Record: tags found only `Signed-off-by: Jens Axboe <axboe@kernel.dk>`.
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc: stable`,
+or external `Link:` in the upstream commit.
 
-## Phase Walkthrough
-Phase 1:
-- Record 1.1: subsystem `scsi: smartpqi`; action `Silence`; intent is to
-  stop a recursive lock warning during shutdown.
-- Record 1.2: tags present: `Signed-off-by: Tomas Henzl`, `Acked-by: Don
-  Brace`, `Link:
-  https://patch.msgid.link/20260414124118.23661-1-thenzl@redhat.com`,
-  `Signed-off-by: Martin K. Petersen`. No `Fixes:`, no `Reported-by:`,
-  no `Cc: stable`.
-- Record 1.3: message describes debug kernels warning on multi-
-  controller systems because distinct per-controller mutexes are not
-  recognized as distinct after shutdown leaves one held.
-- Record 1.4: hidden bug fix: yes. It is described as silencing a
-  warning, but the code adds a missing unlock for a mutex acquired
-  earlier in the same function.
+Record: the body describes a locking bug: `io_link_timeout_fn()` mutates
+the linked request chain under `ctx->timeout_lock` but without
+`ctx->uring_lock`; hrtimer callbacks cannot take the mutex, so mutation
+is deferred to task_work.
 
-Phase 2:
-- Record 2.1: one file, `drivers/scsi/smartpqi/smartpqi_init.c`, one
-  insertion in `pqi_shutdown()`. Single-file surgical fix.
-- Record 2.2: before, `pqi_shutdown()` locked
-  `ctrl_info->lun_reset_mutex` via `pqi_ctrl_block_device_reset()` and
-  returned after `pqi_reset()` without unlocking. After, it unlocks via
-  `pqi_ctrl_unblock_device_reset()`.
-- Record 2.3: bug category is synchronization/lock balancing. The
-  changed helper is verified as
-  `mutex_unlock(&ctrl_info->lun_reset_mutex)`.
-- Record 2.4: fix quality is high: one existing helper call, no new API,
-  no refactor. Main risk is allowing a reset waiter to proceed late in
-  shutdown; Tomas explicitly discussed this risk on-list and said he
-  checked it.
+Record: this is a real hidden bug fix despite not saying “fix”: it
+corrects an unsynchronized linked-list mutation in an hrtimer callback.
 
-Phase 3:
-- Record 3.1: blame shows the shutdown call to
-  `pqi_ctrl_block_device_reset()` is old, but `9fa8202336096` changed
-  the helper to a mutex-based block/unblock model. That is the relevant
-  introduction point for the missing unlock.
-- Record 3.2: no `Fixes:` tag, so no tagged introducing commit to
-  follow.
-- Record 3.3: recent file history shows normal smartpqi churn, including
-  fixes and device-ID updates; no prerequisite for this one-line helper
-  call was identified for v5.15+ style code.
-- Record 3.4: Tomas Henzl has SCSI commits in history but no recent
-  smartpqi commits found; Don Brace is listed as smartpqi maintainer and
-  acked the patch.
-- Record 3.5: dependency is the existing
-  `pqi_ctrl_unblock_device_reset()` helper. It exists in v5.15+ verified
-  tags, not in v5.10.
+## Phase 2: Diff Analysis
+Record: one file changed, `io_uring/timeout.c`, 14 insertions and 2
+deletions. Modified functions: `__io_disarm_linked_timeout()`,
+`io_req_task_link_timeout()`, `io_link_timeout_fn()`. Scope is single-
+file surgical locking/race fix.
 
-Phase 4:
-- Record 4.1: candidate commit hash was not available locally, so `b4
-  dig -c` could not be used for this candidate. `b4 mbox` and `b4 am`
-  using the Link fetched the original thread.
-- Record 4.2: original recipients were `linux-scsi` and Don Brace; Don
-  Brace acked it; Martin Petersen applied it.
-- Record 4.3: external thread and an earlier related LKML post show a
-  real lockdep splat with call trace through `__do_sys_reboot ->
-  device_shutdown -> pci_device_shutdown -> pqi_shutdown`.
-- Record 4.4: no newer v2/v3 was reported by `b4 mbox -c`; thread had
-  six messages. A separate 2025 lockdep-key proposal for the same
-  warning was found, but it is not present in this tree.
-- Record 4.5: web search found no relevant stable-list discussion.
+Record: before, `io_link_timeout_fn()` called
+`io_remove_next_linked(prev)` directly from hrtimer context under only
+`timeout_lock`. After, the timer claims the timeout, stores
+`timeout->prev`, and queues task_work; `io_req_task_link_timeout()` then
+splices `req` out of `prev->link` if the normal completion path did not
+already do so.
 
-Phase 5:
-- Record 5.1: modified function: `pqi_shutdown()`.
-- Record 5.2: caller is PCI driver `.shutdown = pqi_shutdown`; this is
-  reached from PCI/device shutdown during reboot/poweroff paths.
-- Record 5.3: relevant callees are `pqi_wait_until_ofa_finished()`,
-  `pqi_scsi_block_requests()`, `pqi_ctrl_block_device_reset()`,
-  `pqi_ctrl_block_requests()`, `pqi_ctrl_wait_until_quiesced()`,
-  `pqi_flush_cache()`, `pqi_crash_if_pending_command()`, `pqi_reset()`,
-  and now `pqi_ctrl_unblock_device_reset()`.
-- Record 5.4: verified external call trace reaches `pqi_shutdown()` from
-  reboot. Trigger requires multiple smartpqi controllers and a
-  debug/lockdep kernel.
-- Record 5.5: similar lock/unlock pairing exists in OFA and
-  suspend/resume paths; shutdown was the unmatched case.
+Record: `__io_disarm_linked_timeout()` now detects `timeout->head ==
+NULL`, meaning the timer already claimed the timeout, and avoids
+cancel/list removal in that race.
 
-Phase 6:
-- Record 6.1: verified `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.16`, and
-  `v6.19` have mutex-based block/unblock helpers and shutdown lacks the
-  final unblock. Verified `v5.10` does not have the mutex helper.
-- Record 6.2: expected backport difficulty is clean or trivial for
-  v5.15+ style trees because the exact helper and shutdown context
-  exist. v5.10 is not applicable as-is.
-- Record 6.3: no related fix already present in the checked local tree;
-  `lun_reset_key` proposal is absent.
+Record: bug category is synchronization/race on linked request chain
+mutation. Fix quality is good but series-sensitive: patch 3/3
+(`a65855ec34aed`) is needed to keep `io_kill_timeouts()` walking chains
+under `uring_lock` after this patch changes where splicing happens.
 
-Phase 7:
-- Record 7.1: subsystem is SCSI storage driver, `smartpqi`; criticality
-  is driver-specific but storage-related.
-- Record 7.2: subsystem is active; recent history shows ongoing fixes,
-  device IDs, and driver updates.
+## Phase 3: Git History Investigation
+Record: blame shows the relevant linked-timeout code and
+`io_remove_next_linked()` originated mainly from `59915143e89f`
+(“io_uring: move timeout opcodes and handling into its own file”), first
+contained around `v6.0-rc1`; later timeout-lock changes include
+`020b40f35624`, and `__io_disarm_linked_timeout()` changes include
+`78967aabf613`, first around `v6.16-rc1`.
 
-Phase 8:
-- Record 8.1: affected users are systems with Microchip/Microsemi
-  SmartPQI controllers, especially multiple controllers with
-  debug/lockdep kernels.
-- Record 8.2: trigger is shutdown/reboot. The verified external trace
-  shows reboot path; unprivileged triggerability was not verified.
-- Record 8.3: failure mode is lockdep warning/lock imbalance, severity
-  medium-low in production terms but valid for debug-kernel correctness.
-- Record 8.4: benefit is moderate for affected systems and CI/debug
-  kernels; risk is very low because this is one line using an existing
-  helper after a matching lock.
+Record: no `Fixes:` tag exists, so there was no tagged introducer to
+follow.
 
-Phase 9:
-- Record 9.1: evidence for backporting: real lock imbalance,
-  reproducible lockdep warning, one-line fix, maintainer ack, existing
-  helper, verified affected stable baselines v5.15+. Evidence against:
-  symptom is mainly debug warning, not crash/data corruption; v5.10 not
-  applicable as-is.
-- Record 9.2: stable rules: obviously correct yes; fixes a real bug yes;
-  important issue borderline but acceptable due lockdep warning and tiny
-  risk; small/contained yes; no new features/APIs yes; applies to v5.15+
-  style trees likely clean/trivial.
-- Record 9.3: no exception category applies.
-- Record 9.4: risk-benefit favors backporting for applicable stable
-  trees.
+Record: recent history shows this is patch 2/3 in a linked-request
+locking series:
+`20c39819a276` locks `io_wq_free_work()` chain walking,
+`49ae66eb8c27` defers linked-timeout splicing,
+`a65855ec34ae` keeps `uring_lock` across `io_kill_timeouts()`.
+
+Record: Jens Axboe is listed in `MAINTAINERS` as the `IO_URING`
+maintainer and authored the commit.
+
+## Phase 4: Mailing List And External Research
+Record: `b4 dig -c 49ae66eb8c27` found the lore submission at
+`https://patch.msgid.link/20260511182217.226763-3-axboe@kernel.dk`.
+
+Record: `b4 dig -a` found only v1 of the 3-patch series. `b4 dig -w`
+showed recipients were Jens Axboe and `io-uring@vger.kernel.org`.
+
+Record: the saved mbox contains the cover letter “[PATCHSET 0/3] Linked
+request fix”, stating chain iteration must hold either `uring_lock` or
+`timeout_lock`, and modification should be buttoned up. No replies,
+NAKs, review tags, or stable nominations were present in the mbox.
+
+Record: direct `WebFetch` of lore and stable search pages was blocked by
+Anubis, so no web-side stable discussion could be verified.
+
+## Phase 5: Code Semantic Analysis
+Record: key functions are `io_link_timeout_fn()`,
+`io_req_task_link_timeout()`, `__io_disarm_linked_timeout()`, and
+`io_remove_next_linked()`.
+
+Record: call/reachability tracing verified `IORING_OP_LINK_TIMEOUT` uses
+`io_link_timeout_prep()` in `io_uring/opdef.c`; prep installs
+`io_link_timeout_fn()` as the hrtimer callback, and linked timeouts are
+queued on `ctx->ltimeout_list`.
+
+Record: task_work runners in `io_uring/tw.c` execute callbacks while
+holding `ctx->uring_lock` in normal, fallback, and local-work paths.
+This verifies the deferred splice runs in a mutex-protected context.
+
+Record: similar pattern search found the hrtimer callback was the unique
+changed direct chain mutation site in this diff; the related series
+covers other chain walking gaps.
+
+## Phase 6: Stable Tree Analysis
+Record: `git merge-base --is-ancestor` verified the old timeout split
+commit exists in `v6.19.14` and `v6.6.140`; the candidate itself is not
+in `v7.0.9` or `v6.19.14`.
+
+Record: `git show`/`rg` verified the buggy `io_link_timeout_fn()`
+pattern exists in `v7.0.9`, `v6.19.14`, `v6.15`, `v6.12.90`, `v6.6.140`,
+and in older `v5.15` under `fs/io_uring.c`.
+
+Record: `git diff 49ae^..49ae | git apply --check` succeeded on the
+current `v7.0.9` checkout. Older trees have API/path differences such as
+task_work signature and `spin_lock` vs `raw_spin_lock`, so they need
+manual backporting.
+
+## Phase 7: Subsystem Context
+Record: subsystem is `io_uring`, a core async I/O userspace API.
+Criticality is IMPORTANT: not universal like MM/VFS, but reachable from
+userspace and widely used.
+
+Record: `git log origin/master --oneline -20 -- io_uring` shows high
+activity, including this linked-request locking series and other recent
+fixes.
+
+## Phase 8: Impact And Risk
+Record: affected users are systems using io_uring linked requests with
+`IORING_OP_LINK_TIMEOUT`.
+
+Record: trigger is a timing race between linked-timeout hrtimer expiry
+and other linked-chain completion/cancel paths; this is reachable from
+userspace via io_uring submissions.
+
+Record: verified failure class is unsynchronized linked-list/request-
+chain mutation. No crash report was verified, but the protected object
+is request-chain state, so the stability risk is request chain
+corruption, wrong cancellation/completion, or follow-on memory lifetime
+bugs.
+
+Record: benefit is high for affected io_uring users because it closes a
+real locking gap in request lifetime/chain handling. Risk is low-medium:
+the patch is small, but should be backported with the adjacent locking
+fixes, especially `a65855ec34aed`.
+
+## Phase 9: Final Synthesis
+Record: evidence for backporting: real race fix, userspace-reachable
+io_uring path, single-file 16-line patch, authored by subsystem
+maintainer, applies cleanly to `v7.0.9`, and the buggy pattern exists
+across active stable/LTS tags checked.
+
+Record: evidence against/concerns: no reporter/test tag, no explicit
+stable tag, no verified crash trace, and the commit is part of a 3-patch
+locking series; backporting only this patch without the follow-up
+cancel-path lock change can leave the locking story incomplete.
+
+Record: stable rules: obviously correct by code inspection with the
+series context; fixes a real synchronization bug; important because it
+affects request-chain mutation in a userspace API; small and contained;
+no new feature/API; applies cleanly to `v7.0.9`, with older trees
+needing backport adjustment.
+
+Record: no automatic exception category applies; this is not a device
+ID, quirk, DT, build, or documentation fix.
 
 ## Verification
-- Phase 1: Parsed supplied commit message and `b4 am` output; confirmed
-  tags and absence of `Fixes:`/stable/Reported-by.
-- Phase 2: Read `smartpqi_init.c`; confirmed
-  `pqi_ctrl_block_device_reset()` is `mutex_lock()` and
-  `pqi_ctrl_unblock_device_reset()` is `mutex_unlock()`.
-- Phase 3: Used `git blame`, `git show 0530736e40a069`, and `git show
-  9fa8202336096d`; confirmed helper semantics changed to mutex model in
-  the shutdown/suspend update.
-- Phase 4: `WebFetch` to `patch.msgid.link` was blocked by Anubis; `b4
-  mbox`/`b4 am` fetched the lore thread successfully. `b4 am` reported
-  the patch applies cleanly to current tree.
-- Phase 4: Read lore mirror; confirmed Bart’s “patch looks fine”
-  comment, Tomas’s risk discussion, Don Brace’s ack, and Martin
-  Petersen’s apply notice.
-- Phase 5: Used exact searches and file reads to trace `.shutdown =
-  pqi_shutdown`, SCSI reset handlers, and related lock users.
-- Phase 6: Used version tags to verify affected code in `v5.15+` and
-  non-applicability to `v5.10`.
-- Phase 7: Checked `MAINTAINERS`; confirmed Don Brace maintains
-  smartpqi.
-- Phase 8: External LKML mirror provided the concrete lockdep call trace
-  and trigger conditions.
-- Unverified: I did not build-test the patch and did not verify stable
-  branch-specific conflicts beyond version-tag code presence.
+- [Phase 1] `git show -s` confirmed subject, body, author, and absence
+  of tags beyond Jens’s SOB.
+- [Phase 2] `git show --patch 49ae66eb8c27` confirmed
+  `io_uring/timeout.c` only, 14 insertions/2 deletions.
+- [Phase 3] `git blame` confirmed relevant code history; `git describe
+  --contains` placed `59915143e89f` around `v6.0-rc1` and `78967aabf613`
+  around `v6.16-rc1`.
+- [Phase 3] `git log` confirmed related commits `20c39819a276` and
+  `a65855ec34ae`.
+- [Phase 4] `b4 dig` found the exact patch submission and v1 3-patch
+  series; saved mbox showed no review replies or stable nomination.
+- [Phase 5] `rg` and `git show` traced `IORING_OP_LINK_TIMEOUT` prep,
+  hrtimer setup, task_work execution, and task_work locking.
+- [Phase 6] stable tag checks verified the buggy pattern exists in
+  checked stable/LTS tags; `git apply --check` succeeded on current
+  `v7.0.9`.
+- [Phase 7] `MAINTAINERS` verified Jens Axboe maintains `IO_URING`.
+- [Phase 8] failure mode is verified as a locking/race bug; concrete
+  crash symptoms are UNVERIFIED.
+
+The commit should be backported, preferably together with the adjacent
+linked-request locking series commits needed for a complete invariant.
 
 **YES**
 
- drivers/scsi/smartpqi/smartpqi_init.c | 1 +
- 1 file changed, 1 insertion(+)
+ io_uring/timeout.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index b4ed991976d06..2026ac645d6ab 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -9427,6 +9427,7 @@ static void pqi_shutdown(struct pci_dev *pci_dev)
+diff --git a/io_uring/timeout.c b/io_uring/timeout.c
+index e3815e3465dde..4ee1c21e1b15f 100644
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -245,6 +245,10 @@ static struct io_kiocb *__io_disarm_linked_timeout(struct io_kiocb *req,
+ 	struct io_timeout *timeout = io_kiocb_to_cmd(link, struct io_timeout);
  
- 	pqi_crash_if_pending_command(ctrl_info);
- 	pqi_reset(ctrl_info);
-+	pqi_ctrl_unblock_device_reset(ctrl_info);
- }
+ 	io_remove_next_linked(req);
++
++	/* If this is NULL, then timer already claimed it and will complete it */
++	if (!timeout->head)
++		return NULL;
+ 	timeout->head = NULL;
+ 	if (hrtimer_try_to_cancel(&io->timer) != -1) {
+ 		list_del(&timeout->list);
+@@ -328,6 +332,14 @@ static void io_req_task_link_timeout(struct io_tw_req tw_req, io_tw_token_t tw)
+ 	int ret;
  
- static void pqi_process_lockup_action_param(void)
+ 	if (prev) {
++		/*
++		 * splice the linked timeout out of prev's chain if the regular
++		 * completion path didn't already do it.
++		 */
++		if (prev->link == req)
++			prev->link = req->link;
++		req->link = NULL;
++
+ 		if (!tw.cancel) {
+ 			struct io_cancel_data cd = {
+ 				.ctx		= req->ctx,
+@@ -362,10 +374,10 @@ static enum hrtimer_restart io_link_timeout_fn(struct hrtimer *timer)
+ 
+ 	/*
+ 	 * We don't expect the list to be empty, that will only happen if we
+-	 * race with the completion of the linked work.
++	 * race with the completion of the linked work. Splice of prev is
++	 * done in io_req_task_link_timeout(), if needed.
+ 	 */
+ 	if (prev) {
+-		io_remove_next_linked(prev);
+ 		if (!req_ref_inc_not_zero(prev))
+ 			prev = NULL;
+ 	}
 -- 
 2.53.0
 
