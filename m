@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA77283CB5;
-	Wed, 20 May 2026 18:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D2E3FE34B;
+	Wed, 20 May 2026 18:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302705; cv=none; b=DJHEgkNs6GGd0gLUinPbVCW5Js4C68UbBQJAHvoxLC1X6IxLRIxPFPNo6vOhm1YoFx2mmz/RFIUQgJqKNTe6Wi2cz44Hx2l/Yd6qUFPdRZ7T1pplCXYJWfyXsAcdv1YvniAEUPAJbTjRE9oTMP3f2q3bzpuQPzVvRb9CoChx3jM=
+	t=1779302706; cv=none; b=QIObQQxSBY9WCXuNrqyk1Az15PVYicYSwa+SoF4mHZxH7AQ15hUoXUnNtH/aOJLg+KwjRP+GNkAfJyIVCg6MkR8ld9q6cwCOVj0I25KAlyacg8h73upb7f+B9eh+gNFO5ywtd0DvkgjYPh+MmoUJ8aEtC6H3bXmQc0lsesS8+Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302705; c=relaxed/simple;
-	bh=fOSkIf3CNO0Ym84b5y9kcWaD7DSglncZ4sxFZ/7ehUQ=;
+	s=arc-20240116; t=1779302706; c=relaxed/simple;
+	bh=J0wM5RU2MBZ8o84SuQ+S8zS7nuoOhZnOsFAQK1/KYmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s/Zw6hW8e3CSLmKCuZdF3/916Z8YeXQseHLXEveddA9MLfBC6huJGBRwrhMjE6cJNjrtkFVP0L7NTHTqLgWfvExtpnNkTafkOGvOwOBRrQ8/0VTC3hBlZ9TftIwa51xs7f9cc49w7gRPh56UBm3Rvd14luq1ZvYzlBR7uReFZu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5ZY4kSZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o2GAbwZ39PGDj9CX3mx6pjECyGzalBvs2jESC6YwHSbm3YoEeCBMWdjk8ohf56l6HDMnrIkbewLzR8NnBdSgT0xsP+9aXKvjQ/uYyuMdCbPxIvDPow5H1fFn3ITER3HK5BN64tdLv/HT2tvvpyL7piLJ+wXuXkJ2rffRkhUD59g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsNMv5uo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5ZY4kSZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BB91F00893;
-	Wed, 20 May 2026 18:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsNMv5uo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D316B1F000E9;
+	Wed, 20 May 2026 18:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302704;
-	bh=b+Y+jw43ScKRdaCLbsZ2JilmOsjUJ87YJ38tYHULEkE=;
+	s=korg; t=1779302701;
+	bh=9WYHzNGcYL7iEy8lUf86jVyl+KBrL7swLCTlFDSCjKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c5ZY4kSZU13ccm1r4YyMU1AJxU1Y9mDE34ABTRz/v9C07xZo4IfRwcMumdqPI0nYL
-	 KZNyobZIUuQmTVdX1H4WfSuoZ6iIPOkxHFjk2hz96uz/PVed+ThAhaE37IuP9Yb+o/
-	 Os8AtRc4XQ1J2VdMt2NsLQMovRdCA65nhcMlcY0E=
+	b=BsNMv5uo3b/dy6HCfydDWOaSXssdsITwwYGdRxXXPJh3Y5YCff/xitCawccydXVh7
+	 gstKR9adMaKXFuHm8eyIENMJNdadlqR7KtgZOYgM+srMZimPbl0kxT/X5oObQGbxkl
+	 kczbDo+gOPer31tRXmkOQh86gzOkYX+sitzyzAww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Yunje Shin <ioerts@kookmin.ac.kr>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 368/508] netfilter: arp_tables: fix IEEE1394 ARP payload parsing
-Date: Wed, 20 May 2026 18:23:11 +0200
-Message-ID: <20260520162106.600982617@linuxfoundation.org>
+Subject: [PATCH 6.6 367/508] nvmet-tcp: propagate nvmet_tcp_build_pdu_iovec() errors to its callers
+Date: Wed, 20 May 2026 18:23:10 +0200
+Message-ID: <20260520162106.579253793@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,124 +54,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 1e8e3f449b1e73b73a843257635b9c50f0cc0f0a ]
+[ Upstream commit ea8e356acb165cb1fd75537a52e1f66e5e76c538 ]
 
-Weiming Shi says:
+Currently, when nvmet_tcp_build_pdu_iovec() detects an out-of-bounds
+PDU length or offset, it triggers nvmet_tcp_fatal_error(cmd->queue)
+and returns early. However, because the function returns void, the
+callers are entirely unaware that a fatal error has occurred and
+that the cmd->recv_msg.msg_iter was left uninitialized.
 
-"arp_packet_match() unconditionally parses the ARP payload assuming two
-hardware addresses are present (source and target). However,
-IPv4-over-IEEE1394 ARP (RFC 2734) omits the target hardware address
-field, and arp_hdr_len() already accounts for this by returning a
-shorter length for ARPHRD_IEEE1394 devices.
+Callers such as nvmet_tcp_handle_h2c_data_pdu() proceed to blindly
+overwrite the queue state with queue->rcv_state = NVMET_TCP_RECV_DATA
+Consequently, the socket receiving loop may attempt to read incoming
+network data into the uninitialized iterator.
 
-As a result, on IEEE1394 interfaces arp_packet_match() advances past a
-nonexistent target hardware address and reads the wrong bytes for both
-the target device address comparison and the target IP address. This
-causes arptables rules to match against garbage data, leading to
-incorrect filtering decisions: packets that should be accepted may be
-dropped and vice versa.
+Fix this by shifting the error handling responsibility to the callers.
 
-The ARP stack in net/ipv4/arp.c (arp_create and arp_process) already
-handles this correctly by skipping the target hardware address for
-ARPHRD_IEEE1394. Apply the same pattern to arp_packet_match()."
-
-Mangle the original patch to always return 0 (no match) in case user
-matches on the target hardware address which is never present in
-IEEE1394.
-
-Note that this returns 0 (no match) for either normal and inverse match
-because matching in the target hardware address in ARPHRD_IEEE1394 has
-never been supported by arptables. This is intentional, matching on the
-target hardware address should never evaluate true for ARPHRD_IEEE1394.
-
-Moreover, adjust arpt_mangle to drop the packet too as AI suggests:
-
-In arpt_mangle, the logic assumes a standard ARP layout. Because
-IEEE1394 (FireWire) omits the target hardware address, the linear
-pointer arithmetic miscalculates the offset for the target IP address.
-This causes mangling operations to write to the wrong location, leading
-to packet corruption. To ensure safety, this patch drops packets
-(NF_DROP) when mangling is requested for these fields on IEEE1394
-devices, as the current implementation cannot correctly map the FireWire
-ARP payload.
-
-This omits both mangling target hardware and IP address. Even if IP
-address mangling should be possible in IEEE1394, this would require
-to adjust arpt_mangle offset calculation, which has never been
-supported.
-
-Based on patch from Weiming Shi <bestswngs@gmail.com>.
-
-Fixes: 6752c8db8e0c ("firewire net, ipv4 arp: Extend hardware address and remove driver-level packet inspection.")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 52a0a9854934 ("nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec")
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Yunje Shin <ioerts@kookmin.ac.kr>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/arp_tables.c  | 18 +++++++++++++++---
- net/ipv4/netfilter/arpt_mangle.c |  8 ++++++++
- 2 files changed, 23 insertions(+), 3 deletions(-)
+ drivers/nvme/target/tcp.c | 51 ++++++++++++++++++++++-----------------
+ 1 file changed, 29 insertions(+), 22 deletions(-)
 
-diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
-index 14365b20f1c5c..564054123772a 100644
---- a/net/ipv4/netfilter/arp_tables.c
-+++ b/net/ipv4/netfilter/arp_tables.c
-@@ -110,13 +110,25 @@ static inline int arp_packet_match(const struct arphdr *arphdr,
- 	arpptr += dev->addr_len;
- 	memcpy(&src_ipaddr, arpptr, sizeof(u32));
- 	arpptr += sizeof(u32);
--	tgt_devaddr = arpptr;
--	arpptr += dev->addr_len;
-+
-+	if (IS_ENABLED(CONFIG_FIREWIRE_NET) && dev->type == ARPHRD_IEEE1394) {
-+		if (unlikely(memchr_inv(arpinfo->tgt_devaddr.mask, 0,
-+					sizeof(arpinfo->tgt_devaddr.mask))))
-+			return 0;
-+
-+		tgt_devaddr = NULL;
-+	} else {
-+		tgt_devaddr = arpptr;
-+		arpptr += dev->addr_len;
-+	}
- 	memcpy(&tgt_ipaddr, arpptr, sizeof(u32));
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 4d1f260ae60ab..5f85c4a812abc 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -335,7 +335,7 @@ static void nvmet_tcp_free_cmd_buffers(struct nvmet_tcp_cmd *cmd)
  
- 	if (NF_INVF(arpinfo, ARPT_INV_SRCDEVADDR,
- 		    arp_devaddr_compare(&arpinfo->src_devaddr, src_devaddr,
--					dev->addr_len)) ||
-+					dev->addr_len)))
+ static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue);
+ 
+-static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
++static int nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ {
+ 	struct bio_vec *iov = cmd->iov;
+ 	struct scatterlist *sg;
+@@ -348,22 +348,19 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ 	offset = cmd->rbytes_done;
+ 	cmd->sg_idx = offset / PAGE_SIZE;
+ 	sg_offset = offset % PAGE_SIZE;
+-	if (!cmd->req.sg_cnt || cmd->sg_idx >= cmd->req.sg_cnt) {
+-		nvmet_tcp_fatal_error(cmd->queue);
+-		return;
+-	}
++	if (!cmd->req.sg_cnt || cmd->sg_idx >= cmd->req.sg_cnt)
++		return -EPROTO;
++
+ 	sg = &cmd->req.sg[cmd->sg_idx];
+ 	sg_remaining = cmd->req.sg_cnt - cmd->sg_idx;
+ 
+ 	while (length) {
+-		if (!sg_remaining) {
+-			nvmet_tcp_fatal_error(cmd->queue);
+-			return;
+-		}
+-		if (!sg->length || sg->length <= sg_offset) {
+-			nvmet_tcp_fatal_error(cmd->queue);
+-			return;
+-		}
++		if (!sg_remaining)
++			return -EPROTO;
++
++		if (!sg->length || sg->length <= sg_offset)
++			return -EPROTO;
++
+ 		u32 iov_len = min_t(u32, length, sg->length - sg_offset);
+ 
+ 		bvec_set_page(iov, sg_page(sg), iov_len,
+@@ -378,6 +375,7 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ 
+ 	iov_iter_bvec(&cmd->recv_msg.msg_iter, ITER_DEST, cmd->iov,
+ 		      nr_pages, cmd->pdu_len);
++	return 0;
+ }
+ 
+ static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue)
+@@ -945,7 +943,7 @@ static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
+ 	return 0;
+ }
+ 
+-static void nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
++static int nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
+ 		struct nvmet_tcp_cmd *cmd, struct nvmet_req *req)
+ {
+ 	size_t data_len = le32_to_cpu(req->cmd->common.dptr.sgl.length);
+@@ -961,19 +959,23 @@ static void nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
+ 	if (!nvme_is_write(cmd->req.cmd) || !data_len ||
+ 	    data_len > cmd->req.port->inline_data_size) {
+ 		nvmet_prepare_receive_pdu(queue);
+-		return;
 +		return 0;
-+
-+	if (tgt_devaddr &&
- 	    NF_INVF(arpinfo, ARPT_INV_TGTDEVADDR,
- 		    arp_devaddr_compare(&arpinfo->tgt_devaddr, tgt_devaddr,
- 					dev->addr_len)))
-diff --git a/net/ipv4/netfilter/arpt_mangle.c b/net/ipv4/netfilter/arpt_mangle.c
-index a4e07e5e9c118..f65dd339208e8 100644
---- a/net/ipv4/netfilter/arpt_mangle.c
-+++ b/net/ipv4/netfilter/arpt_mangle.c
-@@ -40,6 +40,10 @@ target(struct sk_buff *skb, const struct xt_action_param *par)
  	}
- 	arpptr += pln;
- 	if (mangle->flags & ARPT_MANGLE_TDEV) {
-+		if (unlikely(IS_ENABLED(CONFIG_FIREWIRE_NET) &&
-+			     skb->dev->type == ARPHRD_IEEE1394))
-+			return NF_DROP;
-+
- 		if (ARPT_DEV_ADDR_LEN_MAX < hln ||
- 		   (arpptr + hln > skb_tail_pointer(skb)))
- 			return NF_DROP;
-@@ -47,6 +51,10 @@ target(struct sk_buff *skb, const struct xt_action_param *par)
+ 
+ 	ret = nvmet_tcp_map_data(cmd);
+ 	if (unlikely(ret)) {
+ 		pr_err("queue %d: failed to map data\n", queue->idx);
+ 		nvmet_tcp_fatal_error(queue);
+-		return;
++		return -EPROTO;
  	}
- 	arpptr += hln;
- 	if (mangle->flags & ARPT_MANGLE_TIP) {
-+		if (unlikely(IS_ENABLED(CONFIG_FIREWIRE_NET) &&
-+			     skb->dev->type == ARPHRD_IEEE1394))
-+			return NF_DROP;
+ 
+ 	queue->rcv_state = NVMET_TCP_RECV_DATA;
+-	nvmet_tcp_build_pdu_iovec(cmd);
+ 	cmd->flags |= NVMET_TCP_F_INIT_FAILED;
++	ret = nvmet_tcp_build_pdu_iovec(cmd);
++	if (unlikely(ret))
++		pr_err("queue %d: failed to build PDU iovec\n", queue->idx);
 +
- 		if (ARPT_MANGLE_ADDR_LEN_MAX < pln ||
- 		   (arpptr + pln > skb_tail_pointer(skb)))
- 			return NF_DROP;
++	return ret;
+ }
+ 
+ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+@@ -1025,7 +1027,10 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+ 		goto err_proto;
+ 	}
+ 	cmd->pdu_recv = 0;
+-	nvmet_tcp_build_pdu_iovec(cmd);
++	if (unlikely(nvmet_tcp_build_pdu_iovec(cmd))) {
++		pr_err("queue %d: failed to build PDU iovec\n", queue->idx);
++		goto err_proto;
++	}
+ 	queue->cmd = cmd;
+ 	queue->rcv_state = NVMET_TCP_RECV_DATA;
+ 
+@@ -1088,8 +1093,7 @@ static int nvmet_tcp_done_recv_pdu(struct nvmet_tcp_queue *queue)
+ 			req->cmd->common.opcode,
+ 			le32_to_cpu(req->cmd->common.dptr.sgl.length));
+ 
+-		nvmet_tcp_handle_req_failure(queue, queue->cmd, req);
+-		return 0;
++		return nvmet_tcp_handle_req_failure(queue, queue->cmd, req);
+ 	}
+ 
+ 	ret = nvmet_tcp_map_data(queue->cmd);
+@@ -1106,8 +1110,11 @@ static int nvmet_tcp_done_recv_pdu(struct nvmet_tcp_queue *queue)
+ 	if (nvmet_tcp_need_data_in(queue->cmd)) {
+ 		if (nvmet_tcp_has_inline_data(queue->cmd)) {
+ 			queue->rcv_state = NVMET_TCP_RECV_DATA;
+-			nvmet_tcp_build_pdu_iovec(queue->cmd);
+-			return 0;
++			ret = nvmet_tcp_build_pdu_iovec(queue->cmd);
++			if (unlikely(ret))
++				pr_err("queue %d: failed to build PDU iovec\n",
++					queue->idx);
++			return ret;
+ 		}
+ 		/* send back R2T */
+ 		nvmet_tcp_queue_response(&queue->cmd->req);
 -- 
 2.53.0
 
