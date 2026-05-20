@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6456317160;
-	Wed, 20 May 2026 16:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B09339844;
+	Wed, 20 May 2026 16:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296030; cv=none; b=JRmi/nGhxJXbB4dtszNfEIqFOdj9Ot/AnUuaAgiEO91GV4PEY1AaLnd+NyAo2iagenRe/Tz3MyGZtoPyvxcBkwvH4wHQhYX44qUun9kocKbkGLbZFhgp7HVTmpVph4ybQZGUCW72bBOuF5MzkU4xO1w1nR++Hir65GWPiFQUiR4=
+	t=1779296032; cv=none; b=SFPs+Cy0wet9LN6PxJbjMMP7olQw0Gds7eI+GxkYxLGydtSox9L1UTTTNjYFlI5yUR0a57a1g8ZWbUOQdO59qakfj1F6Ntg9fhu42VqcP0b1IjMTY13Gi0zoVV8WeLsPQUpBhw7DbEfRII2zdPnTALuQ4PpiYPqpNLBRu1fl20c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296030; c=relaxed/simple;
-	bh=wbcloYHsxYrskBXKxBB8DcXUmD86J3oYsZ3hMSJrW4k=;
+	s=arc-20240116; t=1779296032; c=relaxed/simple;
+	bh=mRh2xq+1iw+Yh69kGSPRyMPIn+CdGgNo8lg6+CaE/Q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=md1w229TVDyoaVM5tUtvJ/gqNMWTly8IrtMkMi8JNqrAeFDDixhvCXjkxL09+V6mxRENTsDFPe8Uh0IXo4GCU3qc5M3EDZqR7rUfEgqC32fo4GY6K1fZ6DXjQipWn5nZn6AAJ6Hx9+3dY1bo47JLXsnNCxQQY5heD5/FEar5wGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0WNpxqd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ENN+iU733NDCSkta62l124euOLMOpt/MIMs4HME26EMfNc02Uvr5mgGlQ+xOCisoejpLt02c7M+DVeqqo4UXqukoFiRA03/IqGezBbULh7YLajb8Cs0f9eFUYyyjjHBUMFCx72JPel0IgTtgq1QV6snCeNrJl3ZI82ryYB7AW4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xC0mIe0q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0WNpxqd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B801F000E9;
-	Wed, 20 May 2026 16:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xC0mIe0q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5A41F000E9;
+	Wed, 20 May 2026 16:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296028;
-	bh=gsCRdPgDZJzc3wnsNjKB9CHTRGLrea5odkOxRIeSiyc=;
+	s=korg; t=1779296031;
+	bh=zMpVlTvhWILFU5vCqpF3oUoCEPCbTuYxETtKXfqdbW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W0WNpxqdCNesgvX3Yc6olEQmrgomfelMt5BnCRjklFq4/DPZzu5ABWDmzkcAx8o87
-	 8ZOg9e8CeYcQ/0oKof5p8pNk5j6yEFN6fowXqoLb0kCU+mHgWIPqAgLtgdw5jqIWxC
-	 72PQaFNwv2jQY0XY3clwQxdnE44T3+Dq89zLDZzw=
+	b=xC0mIe0q4Ltgd7FLadpeuye8Z7KmKx6zzS236Ku9K287ogPiD1+8LhcStCN2Cq8N5
+	 c+DxCJC5KMbPIY2WXeTlF1W750Fc52bqC7dwQKKflXvX2hvm4zJvKH/Mww8xkaawBA
+	 jFEHCObGeR1CaN/e4gQOcI+kTgxRkAN0IgWa1M2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Thomas Falcon <thomas.falcon@intel.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Ian Rogers <irogers@google.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0642/1146] perf tools: Fix module symbol resolution for non-zero .text sh_addr
-Date: Wed, 20 May 2026 18:14:52 +0200
-Message-ID: <20260520162202.707416944@linuxfoundation.org>
+Subject: [PATCH 7.0 0643/1146] perf test: Fix ratio_to_prev event parsing test
+Date: Wed, 20 May 2026 18:14:53 +0200
+Message-ID: <20260520162202.729277956@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,75 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Thomas Falcon <thomas.falcon@intel.com>
 
-[ Upstream commit 9a82bfde4775b7a87cd1a7e791f46f83ae442848 ]
+[ Upstream commit 77cb9b443b7fff2a93d78cd2e309db030046772f ]
 
-When perf resolves symbols from kernel module ELF files (ET_REL),
-it converts symbol addresses to file offsets so that sample IPs
-can be matched to the correct symbol. The conversion adjusts each
-symbol's st_value:
+test__ratio_to_prev() assumed the first event in a group is the leader,
+which is not the case when the event is expanded into two event groups
+on hybrid PMU's with auto counter reload support. Instead, iterate over the
+event group generated for each core PMU. Also update "wrong leader" test to
+check that the subordinate event has the correct leader instead of checking
+that it is not the group leader. Finally, do not exit immediately if a PMU
+without auto counter reload support is found.
 
-  sym->st_value -= shdr->sh_addr - shdr->sh_offset;
-
-For vmlinux (ET_EXEC), st_value is a virtual address and sh_addr
-is the section's virtual base, so subtracting sh_addr and adding
-sh_offset correctly yields a file offset.
-
-For kernel modules (ET_REL), st_value is a section-relative
-offset. The module loader ignores sh_addr entirely and places
-symbols at module_base + st_value. Converting to file offset
-requires only adding sh_offset; subtracting sh_addr introduces an
-error equal to sh_addr bytes.
-
-When .text has sh_addr == 0 -- the historical norm for simple
-modules -- both formulas produce the same result and the bug is
-latent. As modules gain more metadata sections before .text (.note,
-.static_call.text, etc.), the linker assigns .text a non-zero
-sh_addr, exposing the defect. For example, nfsd.ko on this kernel
-has sh_addr=0xa80, kvm-intel.ko has sh_addr=0x1e90.
-
-The effect is that all .text symbols in affected modules
-shift by sh_addr bytes relative to sample IPs, causing perf
-report to attribute samples to incorrect, nearby symbols. This
-was observed as 13% of LLC-load-miss samples misattributed
-to nfsd_file_get_dio_attrs when the actual hot function was
-nfsd_cache_lookup, approximately 0xa80 bytes away in the symbol
-table.
-
-Use the existing dso__rel() flag (already set for ET_REL modules)
-to select the correct adjustment: add sh_offset for ET_REL,
-subtract (sh_addr - sh_offset) for ET_EXEC/ET_DYN.
-
-Fixes: 0131c4ec794a ("perf tools: Make it possible to read object code from kernel modules")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Thomas Falcon <thomas.falcon@intel.com>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Thomas Richter <tmricht@linux.ibm.com>
+Fixes: 56be0fe5f62c ("perf record: Add auto counter reload parse and regression tests")
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/perf/tests/parse-events.c | 49 +++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 21 deletions(-)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 76912c62b6a07..968e269d9be1f 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -1356,8 +1356,12 @@ static int dso__process_kernel_symbol(struct dso *dso, struct map *map,
- 	char dso_name[PATH_MAX];
+diff --git a/tools/perf/tests/parse-events.c b/tools/perf/tests/parse-events.c
+index 1d3cc224fbc27..05c3e899b4251 100644
+--- a/tools/perf/tests/parse-events.c
++++ b/tools/perf/tests/parse-events.c
+@@ -1796,31 +1796,38 @@ static bool test__acr_valid(void)
  
- 	/* Adjust symbol to map to file offset */
--	if (adjust_kernel_syms)
--		sym->st_value -= shdr->sh_addr - shdr->sh_offset;
-+	if (adjust_kernel_syms) {
-+		if (dso__rel(dso))
-+			sym->st_value += shdr->sh_offset;
-+		else
-+			sym->st_value -= shdr->sh_addr - shdr->sh_offset;
-+	}
+ static int test__ratio_to_prev(struct evlist *evlist)
+ {
+-	struct evsel *evsel;
++	struct evsel *evsel, *leader;
  
- 	if (strcmp(section_name, (dso__short_name(curr_dso) + dso__short_name_len(dso))) == 0)
- 		return 0;
+ 	TEST_ASSERT_VAL("wrong number of entries", 2 * perf_pmus__num_core_pmus() == evlist->core.nr_entries);
+ 
+-	 evlist__for_each_entry(evlist, evsel) {
+-		if (!perf_pmu__has_format(evsel->pmu, "acr_mask"))
+-			return TEST_OK;
+-
+-		if (evsel == evlist__first(evlist)) {
+-			TEST_ASSERT_VAL("wrong config2", 0 == evsel->core.attr.config2);
+-			TEST_ASSERT_VAL("wrong leader", evsel__is_group_leader(evsel));
+-			TEST_ASSERT_VAL("wrong core.nr_members", evsel->core.nr_members == 2);
+-			TEST_ASSERT_VAL("wrong group_idx", evsel__group_idx(evsel) == 0);
+-			TEST_ASSERT_EVSEL("unexpected event",
+-					evsel__match(evsel, HARDWARE, HW_CPU_CYCLES),
+-					evsel);
+-		} else {
+-			TEST_ASSERT_VAL("wrong config2", 0 == evsel->core.attr.config2);
+-			TEST_ASSERT_VAL("wrong leader", !evsel__is_group_leader(evsel));
+-			TEST_ASSERT_VAL("wrong core.nr_members", evsel->core.nr_members == 0);
+-			TEST_ASSERT_VAL("wrong group_idx", evsel__group_idx(evsel) == 1);
+-			TEST_ASSERT_EVSEL("unexpected event",
+-					evsel__match(evsel, HARDWARE, HW_INSTRUCTIONS),
+-					evsel);
++	evlist__for_each_entry(evlist, evsel) {
++		if (evsel != evsel__leader(evsel) ||
++		    !perf_pmu__has_format(evsel->pmu, "acr_mask")) {
++			continue;
+ 		}
++		leader = evsel;
++		/* cycles */
++		TEST_ASSERT_VAL("wrong config2", 0 == leader->core.attr.config2);
++		TEST_ASSERT_VAL("wrong core.nr_members", leader->core.nr_members == 2);
++		TEST_ASSERT_VAL("wrong group_idx", evsel__group_idx(leader) == 0);
++		TEST_ASSERT_EVSEL("unexpected event",
++				  evsel__match(leader, HARDWARE, HW_CPU_CYCLES),
++				  leader);
++		/*
++		 * The period value gets configured within evlist__config,
++		 * while this test executes only parse events method.
++		 */
++		TEST_ASSERT_VAL("wrong period", 0 == leader->core.attr.sample_period);
++
++		 /* instructions/period=200000,ratio-to-prev=2.0/ */
++		evsel = evsel__next(evsel);
++		TEST_ASSERT_VAL("wrong config2", 0 == evsel->core.attr.config2);
++		TEST_ASSERT_VAL("wrong leader", evsel__has_leader(evsel, leader));
++		TEST_ASSERT_VAL("wrong core.nr_members", evsel->core.nr_members == 0);
++		TEST_ASSERT_VAL("wrong group_idx", evsel__group_idx(evsel) == 1);
++		TEST_ASSERT_EVSEL("unexpected event",
++				  evsel__match(evsel, HARDWARE, HW_INSTRUCTIONS),
++				  evsel);
+ 		/*
+ 		 * The period value gets configured within evlist__config,
+ 		 * while this test executes only parse events method.
 -- 
 2.53.0
 
