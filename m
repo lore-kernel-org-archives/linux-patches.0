@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB25A369999;
-	Wed, 20 May 2026 17:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9C3366075;
+	Wed, 20 May 2026 17:21:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297675; cv=none; b=CGojGDj0DA5GLPG2a3Rrg+nedLiHvikc8PCLj5OlH+l9AjCf9yEHHAHXk6ARXCTcyTanJKJB8Mnx2qxLAulJ9gueWnf5WXEHuvBNStfKnVfY3Blz7V9UvpUnkL2wwW5JJNlxw2GVjACjInun/4Uu72W09EKYRAKYZuUfrP7FVPU=
+	t=1779297678; cv=none; b=T6RfYVermKObhSM59Bd2l2GG8g0GYqHkqpTHmcYCxbEOl42+Dqs6qjYO/Auv92zbhQIJeZoW7vmCFq0P49VnDI3iGdgsmYGADZs+rnvYhuYDA/u9OWl6RNwGWxENXQNE3Rb+dLFepzT2mlFmq0SMjau1HuspUdLZoEa3yXMWqSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297675; c=relaxed/simple;
-	bh=2W1Rv8p31WEpcQuqaL2q5ilpXZuJaprE7iGY/oveqag=;
+	s=arc-20240116; t=1779297678; c=relaxed/simple;
+	bh=9lhbT+c4LSWe1bi1PToXwgW9cYYQLkIXb/0JMd65QAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JS2bwL22VPbBGFujcfE7OiKFTkEC1bcDZjcs4NpTl5aGww0CdZwggmqYBBOWhZzfWDrO4Fx3onjVmRoivUnqbODOsimEtdXVxZDIwjhlDv/etvxB/9Hgb+mE+oyKCMJ+CijEe+OxFtCm5kJupt0lH5Mn4KeOHURgWGR5WGMj7Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATYtz9+E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BNCqbB85EZSyESGJDfhsQYXSnnG76kNzwMla5e1Ux9hrU1TlWsGAI39i7cyYqZlHaABwY38pbBXTr5HQbvBBxBdFl3JeU9ujoITPPWlhk3G5z38iBFnfXSNWj0yFG05D0sCEYTHOeZGYl3Kl4HrfOLPnqx2/3mS+hICTEMmPR3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDF85ESP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATYtz9+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C01E1F000E9;
-	Wed, 20 May 2026 17:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDF85ESP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98011F000E9;
+	Wed, 20 May 2026 17:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297674;
-	bh=pTDnYKsTxhrYtYD62xJ1NaMwGUhT1q8oRHZ7XGlBPIQ=;
+	s=korg; t=1779297677;
+	bh=IbxwSl9bGVWBxIRn4smkj2Sx17vDo1yHLgdcoWGCC2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ATYtz9+EzwRKq0HK1gdg/vY7Nyqp2tis2/0IW4HV6322igWCEsr10F6e9a0AAnMOk
-	 GA5dKhSxZoJ2dgEZ3y+D1K1lzzKGRUM6x1Q77fW+YEO7TpEsAHUTDU2C8y4Y2XSgaV
-	 crpkHqph50lM9z40O77QV0Ge4Tx5sWzzpJmjm4EI=
+	b=WDF85ESPvsuanSesl1+HXYbkIA3EuKiWhpM5RoH0C7ZMA9yLYe1Zvq5HBrL0HfBaR
+	 eC/5bcv285sYJ0JWSTe0bMIFONSDLZuxbW+3GU8QB7N/W4ak/SqGlc+9eL7btxQfoW
+	 j9xhV2hkjLJlHalUf/zSCqRnLHPjm/Twq1R7eV9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 120/957] macvlan: annotate data-races around port->bc_queue_len_used
-Date: Wed, 20 May 2026 18:10:03 +0200
-Message-ID: <20260520162137.161833826@linuxfoundation.org>
+Subject: [PATCH 6.18 121/957] bpf: fix end-of-list detection in cgroup_storage_get_next_key()
+Date: Wed, 20 May 2026 18:10:04 +0200
+Message-ID: <20260520162137.182960225@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,65 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 1ef5789d9906df3771c99b7f413caaf2bf473ca5 ]
+[ Upstream commit 5828b9e5b272ecff7cf5d345128d3de7324117f7 ]
 
-port->bc_queue_len_used is read and written locklessly,
-add READ_ONCE()/WRITE_ONCE() annotations.
+list_next_entry() never returns NULL -- when the current element is the
+last entry it wraps to the list head via container_of(). The subsequent
+NULL check is therefore dead code and get_next_key() never returns
+-ENOENT for the last element, instead reading storage->key from a bogus
+pointer that aliases internal map fields and copying the result to
+userspace.
 
-While WRITE_ONCE() in macvlan_fill_info() is not yet needed,
-it is a prereq for future RTNL avoidance.
+Replace it with list_entry_is_head() so the function correctly returns
+-ENOENT when there are no more entries.
 
-Fixes: d4bff72c8401 ("macvlan: Support for high multicast packet rate")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260401103809.3038139-2-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: de9cbbaadba5 ("bpf: introduce cgroup storage maps")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
+Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/20260403132951.43533-2-bestswngs@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macvlan.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ kernel/bpf/local_storage.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index 4433b8e95b6ac..e9d288a05e39e 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -352,6 +352,7 @@ static void macvlan_broadcast_enqueue(struct macvlan_port *port,
- 				      const struct macvlan_dev *src,
- 				      struct sk_buff *skb)
- {
-+	u32 bc_queue_len_used = READ_ONCE(port->bc_queue_len_used);
- 	struct sk_buff *nskb;
- 	int err = -ENOMEM;
+diff --git a/kernel/bpf/local_storage.c b/kernel/bpf/local_storage.c
+index c93a756e035c0..b8db4fbd3bd2a 100644
+--- a/kernel/bpf/local_storage.c
++++ b/kernel/bpf/local_storage.c
+@@ -259,7 +259,7 @@ static int cgroup_storage_get_next_key(struct bpf_map *_map, void *key,
+ 			goto enoent;
  
-@@ -362,7 +363,7 @@ static void macvlan_broadcast_enqueue(struct macvlan_port *port,
- 	MACVLAN_SKB_CB(nskb)->src = src;
- 
- 	spin_lock(&port->bc_queue.lock);
--	if (skb_queue_len(&port->bc_queue) < port->bc_queue_len_used) {
-+	if (skb_queue_len(&port->bc_queue) < bc_queue_len_used) {
- 		if (src)
- 			dev_hold(src->dev);
- 		__skb_queue_tail(&port->bc_queue, nskb);
-@@ -1727,7 +1728,8 @@ static int macvlan_fill_info(struct sk_buff *skb,
- 	}
- 	if (nla_put_u32(skb, IFLA_MACVLAN_BC_QUEUE_LEN, vlan->bc_queue_len_req))
- 		goto nla_put_failure;
--	if (nla_put_u32(skb, IFLA_MACVLAN_BC_QUEUE_LEN_USED, port->bc_queue_len_used))
-+	if (nla_put_u32(skb, IFLA_MACVLAN_BC_QUEUE_LEN_USED,
-+			READ_ONCE(port->bc_queue_len_used)))
- 		goto nla_put_failure;
- 	if (port->bc_cutoff != 1 &&
- 	    nla_put_s32(skb, IFLA_MACVLAN_BC_CUTOFF, port->bc_cutoff))
-@@ -1787,7 +1789,7 @@ static void update_port_bc_queue_len(struct macvlan_port *port)
- 		if (vlan->bc_queue_len_req > max_bc_queue_len_req)
- 			max_bc_queue_len_req = vlan->bc_queue_len_req;
- 	}
--	port->bc_queue_len_used = max_bc_queue_len_req;
-+	WRITE_ONCE(port->bc_queue_len_used, max_bc_queue_len_req);
- }
- 
- static int macvlan_device_event(struct notifier_block *unused,
+ 		storage = list_next_entry(storage, list_map);
+-		if (!storage)
++		if (list_entry_is_head(storage, &map->list, list_map))
+ 			goto enoent;
+ 	} else {
+ 		storage = list_first_entry(&map->list,
 -- 
 2.53.0
 
