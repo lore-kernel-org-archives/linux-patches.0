@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B5D342CBA;
-	Wed, 20 May 2026 16:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4ECC363C74;
+	Wed, 20 May 2026 16:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295391; cv=none; b=ObOeX7jWNm0w4St9+k83v8UjqzHenYESgJPzAmOB5unP2Bgi0DDh05iAikv8tY6VVjtli5QZEtLxGoF2dy1NgentaqgrBXIbKT1maUpuVyYQJvFE9SlSfRoYOTvglFeFphJAfzkgwiV9BQZNUdYnWKSzFfnm+ahtQtyv+ePXGU8=
+	t=1779295394; cv=none; b=kHpWDOOHMcxKvYhSRmcxmZusse7p1wxPVGd1kwlP/1TIfdvhR8vO22waEHmPkbgtNd++8V0mA4yHXvpZXa6n+zFEBK2HInS7to5aoL4sVIZDV5CUKlIIlv/+AjlXzlsBDvNyQCjbd0KJ0I/Ng6IlxEvi90Iv0iuSSVnDm3jnX6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295391; c=relaxed/simple;
-	bh=SkVnDH9lvTraXxb1AP4kOzNtSWl22detHosNXctXwjY=;
+	s=arc-20240116; t=1779295394; c=relaxed/simple;
+	bh=2U9nV3SBfr5g6D67siE8UdZShRBvFSvyqhjRmGpo/H4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3Z0xHThPrtp70JkIcThw/SpdeOj+uxU/7oCwJZ/G9O4B0kCvr9lhJe8xTpUSGRBxlRw/nmDBIuT+Yj4UhwEhxM9GBX1vrxmbVmyh9Ul6nGAAIsjSr1sReawCdXXMDTTq2apbr5ClzmRlBZflBvAAYlK9o0Fi3wa2r2vyn5OnBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xK1JYe9b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=T02zc3MWMXrgnlkDn9OMZG25ppFUN94iJUaeN8jQIvFiU6IU0M4eNuHL5Ts3G3Z4lkOl88NKb8WglnhONRY+Pfz8cppGJLL0lOnW4QyYS7ZsuWrm8pF2c4fQar3sX69jz7g7QgRbqWBlEy2z7Z1/WIRhaTP69UYoKkvKGvpMzic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZ9oEmlk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xK1JYe9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7D61F000E9;
-	Wed, 20 May 2026 16:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZ9oEmlk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7351F000E9;
+	Wed, 20 May 2026 16:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295390;
-	bh=/eUrGjIpUge8mQCCDRF3+DfKlTpmfemV3FR45OlqZUU=;
+	s=korg; t=1779295392;
+	bh=p//ucGcyw1uzZl0ZTzMVQUdGhHITA5D1a9FhHyuKgw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xK1JYe9bhM6QtdXFrvfJeb8ojAdL2OGno994pimTYIbUgiP7dfTAjCbLPYxytSI9D
-	 EbR1MlBDzvHTVlotb5ttvo6BVPwJc/sKP4X8y+2uLi486DmRf2xeHiaKUeBzWS5lw5
-	 ttjwn/ZiyN6XcY3UGG91pTSzEdH6lVKm+N5s3Ehg=
+	b=oZ9oEmlkpREWhdbYASne6bvkdeAdPaCpRyDvTaPpvWPRMsNEIl/eG6t4QZglHtims
+	 CThX4e3cW5jG+comgL5KPyEfz5qbpgMxVnWxudmdvtuDJIS5Rwid8dNr+MtaXF1AR3
+	 MCdCBozSsLhv+Iw7zWCsmbDUvkB5Ub1QVvtYsiIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Brian Geffon <bgeffon@google.com>,
-	gao xu <gaoxu2@honor.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shuah Khan <shuah@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0402/1146] zram: do not permit params change after init
-Date: Wed, 20 May 2026 18:10:52 +0200
-Message-ID: <20260520162157.297902549@linuxfoundation.org>
+Subject: [PATCH 7.0 0403/1146] selftest: memcg: skip memcg_sock test if address family not supported
+Date: Wed, 20 May 2026 18:10:53 +0200
+Message-ID: <20260520162157.320281189@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -49,73 +54,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 241f9005b1c81c2637eef2c836a03c83b4f3eeb9 ]
+[ Upstream commit 2d028f3e4bbbfd448928a8d3d2814b0b04c214f4 ]
 
-Patch series "zram: recompression cleanups and tweaks", v2.
+The test_memcg_sock test in memcontrol.c sets up an IPv6 socket and send
+data over it to consume memory and verify that memory.stat.sock and
+memory.current values are close.
 
-This series is a somewhat random mix of fixups, recompression cleanups and
-improvements partly based on internal conversations.  A few patches in the
-series remove unexpected or confusing behaviour, e.g.  auto correction of
-bad priority= param for recompression, which should have always been just
-an error.  Then it also removes "chain recompression" which has a tricky,
-unexpected and confusing behaviour at times.  We also unify and harden the
-handling of algo/priority params.  There is also an addition of missing
-device lock in algorithm_params_store() which previously permitted
-modification of algo params while the device is active.
+On systems where IPv6 isn't enabled or not configured to support
+SOCK_STREAM, the test_memcg_sock test always fails.  When the socket()
+call fails, there is no way we can test the memory consumption and verify
+the above claim.  I believe it is better to just skip the test in this
+case instead of reporting a test failure hinting that there may be
+something wrong with the memcg code.
 
-This patch (of 6):
-
-First, algorithm_params_store(), like any sysfs handler, should grab
-device lock.
-
-Second, like any write() sysfs handler, it should grab device lock in
-exclusive mode.
-
-Third, it should not permit change of algos' parameters after device init,
-as this doesn't make sense - we cannot compress with one C/D dict and then
-just change C/D dict to a different one, for example.
-
-Another thing to notice is that algorithm_params_store() accesses device's
-->comp_algs for algo priority lookup, which should be protected by device
-lock in exclusive mode in general.
-
-Link: https://lkml.kernel.org/r/20260311084312.1766036-1-senozhatsky@chromium.org
-Link: https://lkml.kernel.org/r/20260311084312.1766036-2-senozhatsky@chromium.org
-Fixes: 4eac932103a5 ("zram: introduce algorithm_params device attribute")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Acked-by: Brian Geffon <bgeffon@google.com>
-Cc: gao xu <gaoxu2@honor.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
+Link: https://lkml.kernel.org/r/20260311200526.885899-1-longman@redhat.com
+Fixes: 5f8f019380b8 ("selftests: cgroup/memcontrol: add basic test for socket accounting")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Michal Koutný <mkoutny@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Tejun Heo <tj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zram/zram_drv.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/testing/selftests/cgroup/test_memcontrol.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index 85943da0cdca8..aaaef8dd82538 100644
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1748,6 +1748,10 @@ static ssize_t algorithm_params_store(struct device *dev,
- 		}
- 	}
+diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
+index 2fb096a2a9f92..a25eb097b31c1 100644
+--- a/tools/testing/selftests/cgroup/test_memcontrol.c
++++ b/tools/testing/selftests/cgroup/test_memcontrol.c
+@@ -1280,8 +1280,11 @@ static int tcp_server(const char *cgroup, void *arg)
+ 	saddr.sin6_port = htons(srv_args->port);
  
-+	guard(rwsem_write)(&zram->dev_lock);
-+	if (init_done(zram))
-+		return -EBUSY;
+ 	sk = socket(AF_INET6, SOCK_STREAM, 0);
+-	if (sk < 0)
++	if (sk < 0) {
++		/* Pass back errno to the ctl_fd */
++		write(ctl_fd, &errno, sizeof(errno));
+ 		return ret;
++	}
+ 
+ 	if (setsockopt(sk, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) < 0)
+ 		goto cleanup;
+@@ -1412,6 +1415,12 @@ static int test_memcg_sock(const char *root)
+ 			goto cleanup;
+ 		close(args.ctl[0]);
+ 
++		/* Skip if address family not supported by protocol */
++		if (err == EAFNOSUPPORT) {
++			ret = KSFT_SKIP;
++			goto cleanup;
++		}
 +
- 	/* Lookup priority by algorithm name */
- 	if (algo) {
- 		s32 p;
+ 		if (!err)
+ 			break;
+ 		if (err != EADDRINUSE)
 -- 
 2.53.0
 
