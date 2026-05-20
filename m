@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2018E343880;
-	Wed, 20 May 2026 18:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3ED17A2FC;
+	Wed, 20 May 2026 18:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301923; cv=none; b=eu2x6/9cLzE2Fwgq5NimZpDj7m64YaM+IVTfAIlS4u6CmXAPuFgzOkfm83xzfwQnzfcgg3j+/2rrz5HNHvQxgtRpYWoa2gNAWaRRCXN18sm1i/G9RVnHhM1TKmDWEqxqhdZRQuPmdfiRnKwIxcN1O8mRxhQ/6+Vu3IolvtGC1ZE=
+	t=1779301925; cv=none; b=tBpBE/8VF4kk37fOf0svGuNTKLL9lh4YIbf9U/5itn1CF7qEuQN7xYqHWdinR8kWT2DWz1Xinm4iNezEg0NbRjw0s/mwGqbjcq7oIhKCkgUXd9sCSSjJ5kGP3NFyOdzokJRvHRFLwxyKRtsna0xb29cfwAIYWVHPWnUtxV1PsdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301923; c=relaxed/simple;
-	bh=fEl2Mw/aYRGDtY4MC2c7qMYLe0HaGwxRW2zLzepYbeQ=;
+	s=arc-20240116; t=1779301925; c=relaxed/simple;
+	bh=OgXzNIasbHgHto0JrY+9ugUUXCrPXl4egEylgMn6GAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asiNKZY41XiBot8OueBQa962N1BJX4lIl7VoJVV8Yaip3CDo7amEEtUpMj4xIubOcf1B0GK1zu4OumF8X6jztomDYFcnCNun0OdEAPWdpYTEytdGmxjbY+YyduJu+X9tOi5dsBUIRfP9QNYg2fNs/9wHm1hNGnzKthN31lbXLN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6iw5Oxx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SM5l1CTFW2Fu+VPpuU325ICpGQTwZHUzaoeuxcV9aM9fr43QtY4n75pOudMNtyB+nOzw4EeXz0LrQulrFyXxui3XuZT4qiA6En4BDlNV3gfVFjVNiyS6lYEYr16/DsI9geiBltBvZPSx3ogAnGoF5o4yCdir81M3K6x0SW/X8Ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VuOlGIn8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6iw5Oxx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854801F000E9;
-	Wed, 20 May 2026 18:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuOlGIn8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED631F000E9;
+	Wed, 20 May 2026 18:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301922;
-	bh=tUrPxu8ki9HQCWUWssmDObgkGadb+xush0ByGm8zKH4=;
+	s=korg; t=1779301924;
+	bh=TI7F3/ChF2AaV7fi55wD3kLav6SUd3qxs5OETAeBJBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q6iw5Oxxwjtc/ITd5ay9Hl+40yBKJD6GTfb0qDnzCSpNXxKtXm4CYMkwHzOD0pCWI
-	 ivmqxsiWpaxVsC8+fxsbCbyQUJqmRAmgFgAc4m2HcXk1qoJJ0WPcFuIVaX07XS5JaW
-	 gHsGSQpQOTfuCz/xA2xs/1uykba+0yJuhoDCuWvY=
+	b=VuOlGIn84KVmBKFGwT6AJp4IsR19OhlcN1I6Auut3m/rxRYhh9wZKryncEdhF4aeT
+	 /rH1vx9owp2U6BwRAWvMpo5fICOZup5xPIXU1pUHcod5NMx2X0g+UCcTwH5WMFSOBH
+	 Os3SvrNv90aDeQyMLN5ZfRdCBfaucOHx4pLKwds8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taegu Ha <hataegu0826@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/508] ppp: require CAP_NET_ADMIN in target netns for unattached ioctls
-Date: Wed, 20 May 2026 18:18:13 +0200
-Message-ID: <20260520162100.124286830@linuxfoundation.org>
+Subject: [PATCH 6.6 035/508] wifi: mt76: mt7996: fix FCS error flag check in RX descriptor
+Date: Wed, 20 May 2026 18:17:38 +0200
+Message-ID: <20260520162059.352876050@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,48 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taegu Ha <hataegu0826@gmail.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 2bb6379416fd19f44c3423a00bfd8626259f6067 ]
+[ Upstream commit d8db56142e531f060c938fa0b5175ed6c8cabb11 ]
 
-/dev/ppp open is currently authorized against file->f_cred->user_ns,
-while unattached administrative ioctls operate on current->nsproxy->net_ns.
+The mt7996 driver currently checks the MT_RXD3_NORMAL_FCS_ERR bit in
+rxd1 whereas other Connac3-based drivers(mt7925) correctly check this
+bit in rxd3.
 
-As a result, a local unprivileged user can create a new user namespace
-with CLONE_NEWUSER, gain CAP_NET_ADMIN only in that new user namespace,
-and still issue PPPIOCNEWUNIT, PPPIOCATTACH, or PPPIOCATTCHAN against
-an inherited network namespace.
+Since the MT_RXD3_NORMAL_FCS_ERR bit is defined in the fourth RX
+descriptor word (rxd3), update mt7996 to use the proper descriptor
+field. This change aligns mt7996 with mt7925 and the rest of the
+Connac3 family.
 
-Require CAP_NET_ADMIN in the user namespace that owns the target network
-namespace before handling unattached PPP administrative ioctls.
-
-This preserves normal pppd operation in the network namespace it is
-actually privileged in, while rejecting the userns-only inherited-netns
-case.
-
-Fixes: 273ec51dd7ce ("net: ppp_generic - introduce net-namespace functionality v2")
-Signed-off-by: Taegu Ha <hataegu0826@gmail.com>
-Link: https://patch.msgid.link/20260409071117.4354-1-hataegu0826@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20251013090826.753992-1-alok.a.tiwari@oracle.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 46ac51217114b..7c863cb99383b 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -1062,6 +1062,9 @@ static int ppp_unattached_ioctl(struct net *net, struct ppp_file *pf,
- 	struct ppp_net *pn;
- 	int __user *p = (int __user *)arg;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 3dd503b363ce0..9270a68e6a38d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -528,7 +528,7 @@ mt7996_mac_fill_rx(struct mt7996_dev *dev, struct sk_buff *skb)
+ 	    !(csum_status & (BIT(0) | BIT(2) | BIT(3))))
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
  
-+	if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
-+		return -EPERM;
-+
- 	switch (cmd) {
- 	case PPPIOCNEWUNIT:
- 		/* Create a new ppp unit */
+-	if (rxd1 & MT_RXD3_NORMAL_FCS_ERR)
++	if (rxd3 & MT_RXD3_NORMAL_FCS_ERR)
+ 		status->flag |= RX_FLAG_FAILED_FCS_CRC;
+ 
+ 	if (rxd1 & MT_RXD1_NORMAL_TKIP_MIC_ERR)
 -- 
 2.53.0
 
