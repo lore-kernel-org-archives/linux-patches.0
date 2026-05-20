@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CEE369D67;
-	Wed, 20 May 2026 17:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F391C3BFC;
+	Wed, 20 May 2026 17:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299086; cv=none; b=KE326BiYKQ6Jv3ZZBoXX1Gqz5L+7MRiRdlj4q9p3fGeL3ncPmvQoWPvfdi9K1YFUFcC//oSjgMMoxTYUAoMjX6tO/QrtFTT7fEcNqTvQhuPhr/MeIKUbQxacQtU861lC4AE4AUfH8/K9iipE60WSyRXKB7UU8zfX0K3hWcmnIIk=
+	t=1779299089; cv=none; b=PHGFzhCKIL7kV5WjZvhQ/f0S2RvoE9WmW6g9BO/3iqOg6D9wcPVevIZ9xnXowIJKGjI2xSiUU2qV4tSUyHtNR+MOIqQR7jJzT6GWL6wixS1KCvkInNShb17YIUtAdatTVCp1KeQ313YaKWCe1TVvPxK/G48fg8cQnLrb/YszNRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299086; c=relaxed/simple;
-	bh=2esuF5Ehx7XD8w64SlUEjhlTAtQ2CLwt9SA1Pv0dLq8=;
+	s=arc-20240116; t=1779299089; c=relaxed/simple;
+	bh=izHDFFXT9eArpBO7JORJDP6XdMrEa666SFSJAMlUFlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hdGasusl07JSM5G3duMvmLHf9ZWTm7/yqeRDhBAayd7JiS8WKb454wpreFLj32J7NMVTkiUNGIqE6lW2C4WSL82GwpP11TkDw82MCohdcbRbvHp6++ASDw3gSpmSJxvtoAx/6dj79GJldm/FS2J63nYRoBg/Ba6exsFstYdXMlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bca6WkwL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FrBQcYaz60erhlpulCyBeXb1IfHZmYMWDYTYyvLv3Lxbei3VCeDW2rUXa3uXDcOFdAf+XqOV+AE8p4cXAOh8fIrMZoUAxqNQDVBz1rcfmBeQQz1QR8vXEip0e2pEFFnKXsh8zm6WkakJBqmmauYSW24sUNO3gDz0UIvNNLMvqNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZxwowGp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bca6WkwL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A301F000E9;
-	Wed, 20 May 2026 17:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZxwowGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED791F000E9;
+	Wed, 20 May 2026 17:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299085;
-	bh=VJHFlvBQUoKsRDQ7PQqksov//dvyTdQjZ7gMpWKbBwo=;
+	s=korg; t=1779299088;
+	bh=D5aZGY6fyIK0yqooXj3FCM2D31dhDeNi39WLNNLuTx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bca6WkwLvUZWjQJIWtNq3sDBxFvZ7GwE44TmW5uiZRLcUX27dna0fp+1aTJ5RF3Us
-	 cond1/VXNrANFDTUvPvu9PSapzsaa+WGGItLl6eCBfxr7sgnUVHeAFFhMxV7Jk7pz/
-	 j6EIwd4xB1+7Wf3cHX7QUmAvC83aDAGTjkH3HS70=
+	b=sZxwowGp1U8K/oH/wRyACs0zSOJby295Ep5iDcqQPBKcDIzzUKm7XCv/QadFw2TTa
+	 xaEvTbWL7fVu4YyYoubeMuF6JOlUlt3JfmVzGQwOmGiEILf2aCvF1TCwXIM4uhm9TT
+	 JJQ88H8tsD63I5S4PVrZ7Rl0jjh5L+eoht0EibGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 620/957] net/sched: taprio: fix use-after-free in advance_sched() on schedule switch
-Date: Wed, 20 May 2026 18:18:23 +0200
-Message-ID: <20260520162147.978156321@linuxfoundation.org>
+Subject: [PATCH 6.18 656/957] pppoe: drop PFC frames
+Date: Wed, 20 May 2026 18:18:59 +0200
+Message-ID: <20260520162148.758807104@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,57 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 105425b1969c5affe532713cfac1c0b320d7ac2b ]
+[ Upstream commit cc1ff87bce1ccd38410ab10960f576dcd17db679 ]
 
-In advance_sched(), when should_change_schedules() returns true,
-switch_schedules() is called to promote the admin schedule to oper.
-switch_schedules() queues the old oper schedule for RCU freeing via
-call_rcu(), but 'next' still points into an entry of the old oper
-schedule. The subsequent 'next->end_time = end_time' and
-rcu_assign_pointer(q->current_entry, next) are use-after-free.
+RFC 2516 Section 7 states that Protocol Field Compression (PFC) is NOT
+RECOMMENDED for PPPoE. In practice, pppd does not support negotiating
+PFC for PPPoE sessions, and the current PPPoE driver assumes an
+uncompressed (2-byte) protocol field. However, the generic PPP layer
+function ppp_input() is not aware of the negotiation result, and still
+accepts PFC frames.
 
-Fix this by selecting 'next' from the new oper schedule immediately
-after switch_schedules(), and using its pre-calculated end_time.
-setup_first_end_time() sets the first entry's end_time to
-base_time + interval when the schedule is installed, so the value
-is already correct.
+If a peer with a broken implementation or an attacker sends a frame with
+a compressed (1-byte) protocol field, the subsequent PPP payload is
+shifted by one byte. This causes the network header to be 4-byte
+misaligned, which may trigger unaligned access exceptions on some
+architectures.
 
-The deleted 'end_time = sched_base_time(admin)' assignment was also
-harmful independently: it would overwrite the new first entry's
-pre-calculated end_time with just base_time.
+To reduce the attack surface, drop PPPoE PFC frames. Introduce
+ppp_skb_is_compressed_proto() helper function to be used in both
+ppp_generic.c and pppoe.c to avoid open-coding.
 
-Fixes: a3d43c0d56f1 ("taprio: Add support adding an admin schedule")
-Reported-by: Junxi Qian <qjx1298677004@gmail.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Fixes: 7fb1b8ca8fa1 ("ppp: Move PFC decompression to PPP generic layer")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260415022456.141758-2-qingfang.deng@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ppp/ppp_generic.c |  2 +-
+ drivers/net/ppp/pppoe.c       |  8 +++++++-
+ include/linux/ppp_defs.h      | 16 ++++++++++++++++
+ 3 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 39b735386996e..91b85360f8091 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -971,11 +971,12 @@ static enum hrtimer_restart advance_sched(struct hrtimer *timer)
- 	}
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 7ad6c241c3295..507d216256c0d 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -2240,7 +2240,7 @@ ppp_do_recv(struct ppp *ppp, struct sk_buff *skb, struct channel *pch)
+  */
+ static void __ppp_decompress_proto(struct sk_buff *skb)
+ {
+-	if (skb->data[0] & 0x01)
++	if (ppp_skb_is_compressed_proto(skb))
+ 		*(u8 *)skb_push(skb, 1) = 0x00;
+ }
  
- 	if (should_change_schedules(admin, oper, end_time)) {
--		/* Set things so the next time this runs, the new
--		 * schedule runs.
--		 */
--		end_time = sched_base_time(admin);
- 		switch_schedules(q, &admin, &oper);
-+		/* After changing schedules, the next entry is the first one
-+		 * in the new schedule, with a pre-calculated end_time.
-+		 */
-+		next = list_first_entry(&oper->entries, struct sched_entry, list);
-+		end_time = next->end_time;
- 	}
+diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
+index 4ac6afce267b9..dc6d139432387 100644
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -424,7 +424,7 @@ static int pppoe_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb_mac_header_len(skb) < ETH_HLEN)
+ 		goto drop;
  
- 	next->end_time = end_time;
+-	if (!pskb_may_pull(skb, sizeof(struct pppoe_hdr)))
++	if (!pskb_may_pull(skb, PPPOE_SES_HLEN))
+ 		goto drop;
+ 
+ 	ph = pppoe_hdr(skb);
+@@ -434,6 +434,12 @@ static int pppoe_rcv(struct sk_buff *skb, struct net_device *dev,
+ 	if (skb->len < len)
+ 		goto drop;
+ 
++	/* skb->data points to the PPP protocol header after skb_pull_rcsum.
++	 * Drop PFC frames.
++	 */
++	if (ppp_skb_is_compressed_proto(skb))
++		goto drop;
++
+ 	if (pskb_trim_rcsum(skb, len))
+ 		goto drop;
+ 
+diff --git a/include/linux/ppp_defs.h b/include/linux/ppp_defs.h
+index b7e57fdbd4139..b1d1f46d7d3be 100644
+--- a/include/linux/ppp_defs.h
++++ b/include/linux/ppp_defs.h
+@@ -8,6 +8,7 @@
+ #define _PPP_DEFS_H_
+ 
+ #include <linux/crc-ccitt.h>
++#include <linux/skbuff.h>
+ #include <uapi/linux/ppp_defs.h>
+ 
+ #define PPP_FCS(fcs, c) crc_ccitt_byte(fcs, c)
+@@ -25,4 +26,19 @@ static inline bool ppp_proto_is_valid(u16 proto)
+ 	return !!((proto & 0x0101) == 0x0001);
+ }
+ 
++/**
++ * ppp_skb_is_compressed_proto - checks if PPP protocol in a skb is compressed
++ * @skb: skb to check
++ *
++ * Check if the PPP protocol field is compressed (the least significant
++ * bit of the most significant octet is 1). skb->data must point to the PPP
++ * protocol header.
++ *
++ * Return: Whether the PPP protocol field is compressed.
++ */
++static inline bool ppp_skb_is_compressed_proto(const struct sk_buff *skb)
++{
++	return unlikely(skb->data[0] & 0x01);
++}
++
+ #endif /* _PPP_DEFS_H_ */
 -- 
 2.53.0
 
