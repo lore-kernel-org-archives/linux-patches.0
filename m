@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D671F1B7910;
-	Wed, 20 May 2026 18:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70283769E0;
+	Wed, 20 May 2026 18:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300062; cv=none; b=YV0zNTOxF95ZlIwGgmQzjPFfbtgjDBrLWiBbjqu63WIJNNoimxrk7q+mNYExj3sG6VzMSC41FQrPWh6RlFGfVQfF2BFA76Jk6mUZMoK0yWjTy6Du1v9p65KTRfAEj4EXtVyLmU/DENnA65yXWvC5b0ODZIc3OGuGeSD2YflWITI=
+	t=1779300064; cv=none; b=Mj+0QsErDcRhIFiahB4OUiEJhAeVSqMe6KaTf7izDQZAaBIGsRKdyS3DVl1tERVdu7TsHeooPJajprEBlDlIVpp5UcUTGYmrqKSOBJqudsgvHVnqAAoH2u90E2z46goJtY+cjOAki1j4GVW86nao7Vtg2itmiOs9PqOGGag7pxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300062; c=relaxed/simple;
-	bh=VRpKFPqIHWeDBpsrTRQw/b+J9rNUMKOcrpye26XRhOI=;
+	s=arc-20240116; t=1779300064; c=relaxed/simple;
+	bh=CHIHinllgzW1rle7f8oA7F1FZCPdfWsEPHlAt20zE2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UezWqtgsOyTeXmUH4ZxHQfdBWZgEPPaihL8xrVQpw6tj4TEAxrO9h/rEUD2bbibf6CirFjV9l6dV1vh9/SuWkV/KOiWJMe2Nn83WA3Ul7hqpOZr1TL0que12m8zqSFNefe1CqmfOJD/pMsZRDFMWxhVXX7zPNIjA7EwrDhEYR8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcqfQSvc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=irl33tu8HYZabezdsXtbvHYZh3zjSAhtE3WrRMm4BsoRSYoJ8pTLWoT5ThNUmckI/sJvReoZPtZeSbUFRF/hEhdvFiJRIy+AlnfiUips00BF6asrXQWzLcD4Qq25Wz9Rmjxngnd2aTrnOEA7emeLqeBE4+rT198Hy3ODx/CdUX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEEsDZu/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcqfQSvc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC1E1F000E9;
-	Wed, 20 May 2026 18:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEEsDZu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A801F000E9;
+	Wed, 20 May 2026 18:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300060;
-	bh=zhh14tUVcPIZ6rpWYwChdhm7veMvTYOp041QWvRYaSo=;
+	s=korg; t=1779300063;
+	bh=RZHwfq17Vf0X9DZJQgF1UNJTT5ynwD7YOfzltHQdchY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dcqfQSvcGbOHJf128uk0qSLlw/KQ19vktw986nLn0wFPUXZihHmJLgAEdBF+1BR/u
-	 L1keAQV5LqWqHEMnD6uMB8UINZ45PT8ujqVasdrL+wxiR32l9LnPjEBexrvbJ3vyvy
-	 lleEoEJ8D1/5OOySriSHP/gJfKwiqKikRrNFYI54=
+	b=IEEsDZu/Qk2tCEoEr6dVpTguLFEDNTtzX+Oid9zJnksfrsBgpP1wyRQQfBnML9gk/
+	 FJCPzzSYhkW7+jtXq8djPYC42yFr0obwb+eCf6RpYi0WI18ZyiXdR5Wn6mLBTlgjxU
+	 N2P1I7RuoK7IbjuRAZfImd3xxoeUZtAiG9YMu7dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Daan De Meyer <daan@amutable.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/666] drbd: Balance RCU calls in drbd_adm_dump_devices()
-Date: Wed, 20 May 2026 18:13:37 +0200
-Message-ID: <20260520162111.370251493@linuxfoundation.org>
+Subject: [PATCH 6.12 007/666] loop: fix partition scan race between udev and loop_reread_partitions()
+Date: Wed, 20 May 2026 18:13:38 +0200
+Message-ID: <20260520162111.392043001@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -48,61 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Daan De Meyer <daan.j.demeyer@gmail.com>
 
-[ Upstream commit 2b31e86387e60b3689339f0f0fbb4d3623d9d494 ]
+[ Upstream commit 267ec4d7223a783f029a980f41b93c39b17996da ]
 
-Make drbd_adm_dump_devices() call rcu_read_lock() before
-rcu_read_unlock() is called. This has been detected by the Clang
-thread-safety analyzer.
+When LOOP_CONFIGURE is called with LO_FLAGS_PARTSCAN, the following
+sequence occurs:
 
-Tested-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Cc: Andreas Gruenbacher <agruenba@redhat.com>
-Fixes: a55bbd375d18 ("drbd: Backport the "status" command")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260326214054.284593-1-bvanassche@acm.org
+  1. disk_force_media_change() sets GD_NEED_PART_SCAN
+  2. Uevent suppression is lifted and a KOBJ_CHANGE uevent is sent
+  3. loop_global_unlock() releases the lock
+  4. loop_reread_partitions() calls bdev_disk_changed() to scan
+
+There is a race between steps 2 and 4: when udev receives the uevent
+and opens the device before loop_reread_partitions() runs,
+blkdev_get_whole() in bdev.c sees GD_NEED_PART_SCAN set and calls
+bdev_disk_changed() for a first scan. Then loop_reread_partitions()
+does a second scan. The open_mutex serializes these two scans, but
+does not prevent both from running.
+
+The second scan in bdev_disk_changed() drops all partition devices
+from the first scan (via blk_drop_partitions()) before re-adding
+them, causing partition block devices to briefly disappear. This
+breaks any systemd unit with BindsTo= on the partition device: systemd
+observes the device going dead, fails the dependent units, and does
+not retry them when the device reappears.
+
+Fix this by removing the GD_NEED_PART_SCAN set from
+disk_force_media_change() entirely. None of the current callers need
+the lazy on-open partition scan triggered by this flag:
+
+  - floppy: sets GENHD_FL_NO_PART, so disk_has_partscan() is always
+    false and GD_NEED_PART_SCAN has no effect.
+  - loop (loop_configure, loop_change_fd): when LO_FLAGS_PARTSCAN is
+    set, loop_reread_partitions() performs an explicit scan. When not
+    set, GD_SUPPRESS_PART_SCAN prevents the lazy scan path.
+  - loop (__loop_clr_fd): calls bdev_disk_changed() explicitly if
+    LO_FLAGS_PARTSCAN is set.
+  - nbd (nbd_clear_sock_ioctl): capacity is set to zero immediately
+    after; nbd manages GD_NEED_PART_SCAN explicitly elsewhere.
+
+With GD_NEED_PART_SCAN no longer set by disk_force_media_change(),
+udev opening the loop device after the uevent no longer triggers a
+redundant scan in blkdev_get_whole(), and only the single explicit
+scan from loop_reread_partitions() runs.
+
+A regression test for this bug has been submitted to blktests:
+https://github.com/linux-blktests/blktests/pull/240.
+
+Fixes: 9f65c489b68d ("loop: raise media_change event")
+Signed-off-by: Daan De Meyer <daan@amutable.com>
+Acked-by: Christian Brauner <brauner@kernel.org>
+Link: https://patch.msgid.link/20260331105130.1077599-1-daan@amutable.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_nl.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ block/disk-events.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/drbd/drbd_nl.c b/drivers/block/drbd/drbd_nl.c
-index 8c12bf1b2a0d2..2e985101963e6 100644
---- a/drivers/block/drbd/drbd_nl.c
-+++ b/drivers/block/drbd/drbd_nl.c
-@@ -3377,8 +3377,10 @@ int drbd_adm_dump_devices(struct sk_buff *skb, struct netlink_callback *cb)
- 		if (resource_filter) {
- 			retcode = ERR_RES_NOT_KNOWN;
- 			resource = drbd_find_resource(nla_data(resource_filter));
--			if (!resource)
-+			if (!resource) {
-+				rcu_read_lock();
- 				goto put_result;
-+			}
- 			cb->args[0] = (long)resource;
- 		}
- 	}
-@@ -3627,8 +3629,10 @@ int drbd_adm_dump_peer_devices(struct sk_buff *skb, struct netlink_callback *cb)
- 		if (resource_filter) {
- 			retcode = ERR_RES_NOT_KNOWN;
- 			resource = drbd_find_resource(nla_data(resource_filter));
--			if (!resource)
-+			if (!resource) {
-+				rcu_read_lock();
- 				goto put_result;
-+			}
- 		}
- 		cb->args[0] = (long)resource;
- 	}
+diff --git a/block/disk-events.c b/block/disk-events.c
+index 2f697224386aa..868823915bdc6 100644
+--- a/block/disk-events.c
++++ b/block/disk-events.c
+@@ -290,13 +290,14 @@ EXPORT_SYMBOL(disk_check_media_change);
+  * Should be called when the media changes for @disk.  Generates a uevent
+  * and attempts to free all dentries and inodes and invalidates all block
+  * device page cache entries in that case.
++ *
++ * Callers that need a partition re-scan should arrange for one explicitly.
+  */
+ void disk_force_media_change(struct gendisk *disk)
+ {
+ 	disk_event_uevent(disk, DISK_EVENT_MEDIA_CHANGE);
+ 	inc_diskseq(disk);
+ 	bdev_mark_dead(disk->part0, true);
+-	set_bit(GD_NEED_PART_SCAN, &disk->state);
+ }
+ EXPORT_SYMBOL_GPL(disk_force_media_change);
+ 
 -- 
 2.53.0
 
