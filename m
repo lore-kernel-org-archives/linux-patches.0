@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C943C6A5C;
-	Wed, 20 May 2026 17:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F251335F619;
+	Wed, 20 May 2026 17:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297076; cv=none; b=hJ1U87NLHvNfCBTkQzF1Zy5pbPzBe9a2vT+H9EWUalsCv5iDww5B6PIFTYYWpEEnpDi1zkdQWtJIQ4v4RM5oD7ksYPdx0I+8ZZMnLtD7G9OzgTHUOo5BmjjKHIi/8xnMgCwSrRgksQkX/jBfuRfyp/X1Ao3TfUtFa/6pWROfnCM=
+	t=1779297079; cv=none; b=gBkaMfcIB+nNsXbFFVEHdivPA8pcbBkEbym4vmzkCZk+ttlnM7rT9O02jP16EsfCS/l2HXDbJ2TtxV3FemTbqCKvGN7gHg0v3H/FS3IYMUhVKQT0c9CcElgDLTPGa0u46rs1FxirsExabm4+OzWuvNDZz8aHHY5a3EsVIjFs1Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297076; c=relaxed/simple;
-	bh=QiuSIJks/im+KylqlSpOG7k6W1V75uJlUQcd47aAWZw=;
+	s=arc-20240116; t=1779297079; c=relaxed/simple;
+	bh=ML1HoFFDutZvZr1pZbwZrio2WGzyLPH8f2uNGUWvXSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kiL95TSL7flsVOSxI/AooVJmIYoVETYnC3G3NPeXqQePwouflxOMIasXGOD9fmNdxhRccTtUqJ6j2lthQGwMr0hO/ILzEB8PBA0xWggybDny40CogkiV2JmCmquB50axH8etIg2xxyQcvOVZxRDu9PNRw7tLFwNEIzo+C+pl0Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQWbEVWb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L5WnuVHiWLc8Iub7UcdWugS6/Y/qr3v+4mVVQeqMbBD5BmmjD4tBdin5q4ZTKy24L5apMuLtO9ge9d6GPrugWxOxdqPmx4E8/hUTGQ73H1tLAYXOgydV5ns7rsEAhX5VG65K3/jd67Ud6daZRZO/ud2LVD4BwChXX/AN9uy/vWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGHvHsi2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQWbEVWb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD331F000E9;
-	Wed, 20 May 2026 17:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGHvHsi2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637691F000E9;
+	Wed, 20 May 2026 17:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297075;
-	bh=Vztf8gTI/72N3pxenzds5pQ/H3nshz49csVWVPLeGq8=;
+	s=korg; t=1779297077;
+	bh=OqRaGXFs162IdTy+E+Q5X46YZu0j2s/BzJHpCPqz32I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VQWbEVWbmwXQerfqQKbVYv1pfovokyweKAdtGi3Vi4tUT+fP7lSwz++glgc3/IrdH
-	 An3oiBpmogoWJ4Rwtp7ZwYxQJsuZvAdC6dBzjSXAvbO+P08pMWLPfGniKGqJYMCHlN
-	 YFEft6qCcSHU4+RTh/gFsBhdAZRk4V7k78b8rGk8=
+	b=BGHvHsi27AJK6JFZBC9IuiG2AYHY2YUY4o31rqIt/nNSwqegIrQ/dDieQod9hexfs
+	 aUnH6rh+/CdnO0nyp/DIz6UCwCOHISVw9otyUvGAgleAq7RXBp8fGBz1IVyjpD0SnW
+	 fDMYFC9g7tmAPvDQnJWAXRxmvaAx2/VarDNOKUTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1039/1146] net/sched: sch_pie: annotate more data-races in pie_dump_stats()
-Date: Wed, 20 May 2026 18:21:29 +0200
-Message-ID: <20260520162211.744641532@linuxfoundation.org>
+Subject: [PATCH 7.0 1040/1146] sched/fair: Fix wakeup_preempt_fair() for not waking up task
+Date: Wed, 20 May 2026 18:21:30 +0200
+Message-ID: <20260520162211.767879912@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,80 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 6d4106e8df94c0c52cf3ca6a6a0d01567fb3844e ]
+[ Upstream commit 9f6d929ee2c6f0266edb564bcd2bd47fd6e884a8 ]
 
-My prior patch missed few READ_ONCE()/WRITE_ONCE() annotations.
+Make sure to only call pick_next_entity() on an non-empty cfs_rq.
 
-Fixes: 5154561d9b11 ("net/sched: sch_pie: annotate data-races in pie_dump_stats()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260430080056.35104-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The assumption that p is always enqueued and not delayed, is only true for
+wakeup. If p was moved while delayed, pick_next_entity() will dequeue it and
+the cfs might become empty. Test if there are still queued tasks before trying
+again to determine if p could be the next one to be picked.
+
+There are at least 2 cases:
+
+When cfs becomes idle, it tries to pull tasks but if those pulled tasks are
+delayed, they will be dequeued when attached to cfs. attach_tasks() ->
+attach_task() -> wakeup_preempt(rq, p, 0);
+
+A misfit task running on cfs A triggers a load balance to be pulled on a better
+cpu, the load balance on cfs B starts an active load balance to pulled the
+running misfit task. If there is a delayed dequeue task on cfs A, it can be
+pulled instead of the previously running misfit task. attach_one_task() ->
+attach_task() -> wakeup_preempt(rq, p, 0);
+
+Fixes: ac8e69e69363 ("sched/fair: Fix wakeup_preempt_fair() vs delayed dequeue")
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260503104503.1732682-1-vincent.guittot@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_pie.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ kernel/sched/fair.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index 73650200482f4..40149edecbd5a 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -219,16 +219,14 @@ void pie_process_dequeue(struct sk_buff *skb, struct pie_params *params,
- 	 * packet timestamp.
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 87200a22b3169..3bce48ad0bc5a 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -8922,9 +8922,10 @@ static void wakeup_preempt_fair(struct rq *rq, struct task_struct *p, int wake_f
+ 
+ 	/*
+ 	 * Because p is enqueued, nse being null can only mean that we
+-	 * dequeued a delayed task.
++	 * dequeued a delayed task. If there are still entities queued in
++	 * cfs, check if the next one will be p.
  	 */
- 	if (!params->dq_rate_estimator) {
--		vars->qdelay = now - pie_get_enqueue_time(skb);
-+		WRITE_ONCE(vars->qdelay,
-+			   backlog ? now - pie_get_enqueue_time(skb) : 0);
+-	if (!nse)
++	if (!nse && cfs_rq->nr_queued)
+ 		goto pick;
  
- 		if (vars->dq_tstamp != DTIME_INVALID)
- 			dtime = now - vars->dq_tstamp;
- 
- 		vars->dq_tstamp = now;
- 
--		if (backlog == 0)
--			vars->qdelay = 0;
--
- 		if (dtime == 0)
- 			return;
- 
-@@ -376,7 +374,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 	if (qdelay > (PSCHED_NS2TICKS(250 * NSEC_PER_MSEC)))
- 		delta += MAX_PROB / (100 / 2);
- 
--	vars->prob += delta;
-+	WRITE_ONCE(vars->prob, vars->prob + delta);
- 
- 	if (delta > 0) {
- 		/* prevent overflow */
-@@ -401,7 +399,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 
- 	if (qdelay == 0 && qdelay_old == 0 && update_prob)
- 		/* Reduce drop probability to 98.4% */
--		vars->prob -= vars->prob / 64;
-+		WRITE_ONCE(vars->prob, vars->prob - vars->prob / 64);
- 
- 	WRITE_ONCE(vars->qdelay, qdelay);
- 	vars->backlog_old = backlog;
-@@ -501,7 +499,7 @@ static int pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- {
- 	struct pie_sched_data *q = qdisc_priv(sch);
- 	struct tc_pie_xstats st = {
--		.prob		= q->vars.prob << BITS_PER_BYTE,
-+		.prob		= READ_ONCE(q->vars.prob) << BITS_PER_BYTE,
- 		.delay		= ((u32)PSCHED_TICKS2NS(READ_ONCE(q->vars.qdelay))) /
- 				   NSEC_PER_USEC,
- 		.packets_in	= READ_ONCE(q->stats.packets_in),
-@@ -512,7 +510,7 @@ static int pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 	};
- 
- 	/* avg_dq_rate is only valid if dq_rate_estimator is enabled */
--	st.dq_rate_estimating = q->params.dq_rate_estimator;
-+	st.dq_rate_estimating = READ_ONCE(q->params.dq_rate_estimator);
- 
- 	/* unscale and return dq_rate in bytes per sec */
- 	if (st.dq_rate_estimating)
+ 	if (sched_feat(RUN_TO_PARITY))
 -- 
 2.53.0
 
