@@ -1,102 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF68D369999;
-	Wed, 20 May 2026 17:28:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF215331220
+	for <patches@lists.linux.dev>; Wed, 20 May 2026 17:28:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298119; cv=none; b=nLFQPWKrWVHUVNbQwFf9WUEC5/ciso2x6+Klo7MdfFWCDX+JWwlntCtqHFudQkDslJydlCHj1dw69kGbyhRz3AOw++7tRhSQj1+Z3JwMFppqlcJuMTp+EtULuydVBwT0XjVlenHHPD8KUG/T1Nmq+9ELrcbWVnOabJZsbIo7YYY=
+	t=1779298120; cv=none; b=Y0MJNIqCpI7iIq0zNg1ti5A19GkxVsIzfLNsK6hlQW4QYDYr1akS8URtcvdZT6VYb8r2WvIF4XzRP5vEUEk2rsdd18U14emWxgBb8xZ0n33YncH9O3xm4PHJF7c6AeEzN8FyjaxdGAgdPk8V80tZ1I3GE3TvhHAHaN6f8uvwLC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298119; c=relaxed/simple;
-	bh=kphrayRDa5pagxXmdJo7bKiBwMkq5xK2MJVybDqVmZM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXOambfu8Lcn9ZD1tj8OgPLFQr2Dwjh/JTJFC1ZE9as8T1CWTf3WJHFHGxzI8AasQhoagLpFgbt9WOIHlL6J9hnpqgNRFe0Cf8IvFbjqLj4Zs4Ovzzug+0raq1kSyY4kUfBAvoZema5TjA5eVqyXhrzYdWtBzB4McbKQ5AQyATM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y46j4PxC; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779298120; c=relaxed/simple;
+	bh=1JoJ1pMrRta66xrnAqvPlRrU+s1jQQogKj7zLypIcR4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=G3coebfnpgH5zj8rDVD4Kp56Km8f/OzyxgZnhjygmnY0LwVeQFonqy2a6SNZu3HZYoXVDpiF2x6Zx02AzO2XmFvP4/Tlm5RMvv4NTxXhQ/+I7hJqGCftM6k9fhN4cbTm8vs9eZ40eQoUYYwxraOGpnxRg66e17cdNbDr0A+afyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XnZ/YSUa; arc=none smtp.client-ip=74.125.82.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y46j4PxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BED1F000E9;
-	Wed, 20 May 2026 17:28:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298117;
-	bh=RlhonkQXC8MGtLPKG+FwiHud/NE/Pp0vAoZI3iW7F4o=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y46j4PxC0P3BMQTTAv9zlhAdlNqBx1uckbZbHh614fxAkZOJHacKZGVLWBLm+gh66
-	 JqvVqJ2k1qhxjRSWacZPgFO4mkbcegji4uLv1WZdhfcWsfoTH/FqySUMEucwVrd+VD
-	 HdP+thLkQeuYe+N5MmaGNRnYM5fe57DyB+aHe9h0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 289/957] ASoC: fsl_xcvr: Fix event generation in fsl_xcvr_arc_mode_put()
-Date: Wed, 20 May 2026 18:12:52 +0200
-Message-ID: <20260520162140.805297652@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
-References: <20260520162134.554764788@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XnZ/YSUa"
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2f7020a928eso7438315eec.1
+        for <patches@lists.linux.dev>; Wed, 20 May 2026 10:28:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779298118; x=1779902918; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VuzZ4HzSRbjeOjIzQh3TiYGdA8Z6tPjiq5L3ytoki9Q=;
+        b=XnZ/YSUae+urHRYhDL+PCugocDr+3oDy3gYt8l6REvYuWouFPFx+j5M8iGeuokEicF
+         Kk5vEWbHbO+z1kTztnnhB1uTbo/M9uqslrQHNKRerK256UMNUwqsmXjJOPrIkZyCjt8e
+         7W8i+BRAa3xE7RKhJG37upytvFhMwopFWpbBR1EghsPj3zjEnCfP7KCYF/DSvwFOA8Zl
+         MIARVYK4TRdtfmfqY4ylrpe9Cjwk4QyBiKVOo184zYO+0VDmMthyB9wh/cTnBkalRbwI
+         RddnxHZ134lXCyev18II9rZJ8lo4qGIlL+lPFk1LHrBv3rym7xMh2Uc3IzFe1gGRWYt3
+         myoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779298118; x=1779902918;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VuzZ4HzSRbjeOjIzQh3TiYGdA8Z6tPjiq5L3ytoki9Q=;
+        b=ny3voFZdGAC/q27uQYyzbpLKfrWTObyNO1pkt5y02IaTW0moD0y6sPOpUmh4mLUVc1
+         htJ08dWDgrWPyY//Wi7OgB+CF2mlpe+Z2/HoExBlD5Z9vrNAvao8pj4bljilcweV8b72
+         Jxu1gF5gJL4W5K+O31dIAg4k4QVY/eTEtwSTv2TVCDeuSGR2yOYiWbY/dIMvF3IiWuIU
+         ElJTelKaPq/cgMafw5H9all1bJw8wPznyDKKtn5uwsjBYGhBlB/Wy69HcWeJeZdsP9AR
+         mbWjNpH+l1lqZar1F+lHtxJ8zrML6N6brGH9m8R43AIx5RW4TqafoR7usrgCtpHrqf58
+         n7aA==
+X-Gm-Message-State: AOJu0YwQ2tyApO6cBxvlfp5VESX7HHuIfHoqu77IdpGzK13B+1Q8fhrU
+	u1O2LH+airnha4cBs3yMMnt5GM1bTWXF4jNelpPalqJ5NlWELiz7iXaO
+X-Gm-Gg: Acq92OGZ8DdX9o1U21J+dX7lC15m6hJhygEB3LJGi9yMJA0l+eZBD3Y0Tx+18RGNICe
+	EbPb6WKbDLe0M8DuD3eS/Lk4utBrWsCf4j4bcnZkH6Qj3S+Q8+t2mCF26x1snfsYxg5dcZxABTR
+	VQt/qIfZ9TAIvT3VoxDbnKtVYbGG0Q5mXIdxID2azVnZN9sEpbgUcCMBUlF/vSwuV5cE7nQte//
+	cwnS7dzs5NuSGbY/hkHqKJlQtM0sP8dOHD0rw6zLwUGFX93bOZ6FACvKPgsHuXoj5bXcIGpJX3M
+	1cwmayHsC4WQPnW/Rjc5V94WXwdrH+tOTLr7uS6qWgf9xxYqLViatJVrZerih9hbsLBOAz6pqiL
+	SSl1tl5ljczB2Op2nlakNZ2k0l5FKSLJ+QfPj8pbOLcJdMCdUTwSASutBm2UWO6wmGnTvqak+y0
+	1kz8m5uhgNDKdun+KQHzXGty1voKsaxodt/bOSKKI14VHmOJIAeqjyb/UwBnrd
+X-Received: by 2002:a05:7300:b586:b0:2e1:e5c0:7992 with SMTP id 5a478bee46e88-303982ac675mr11233548eec.8.1779298117688;
+        Wed, 20 May 2026 10:28:37 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30296dcc458sm23876517eec.18.2026.05.20.10.28.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 May 2026 10:28:36 -0700 (PDT)
+Message-ID: <6151ce91-aeb9-4dfb-ac57-4223078066c2@gmail.com>
+Date: Wed, 20 May 2026 10:28:35 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.0 0000/1146] 7.0.10-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260520162148.390695140@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+On 5/20/26 09:04, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.0.10 release.
+> There are 1146 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 22 May 2026 16:20:16 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.10-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
-
-[ Upstream commit 1b61c8103c9317a9c37fe544c2d83cee1c281149 ]
-
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_xcvr_arc_mode_put() only returns 0 or a negative
-error code, causing ALSA to not generate any change events.
-
-Add a suitable check in the function before updating the arc_mode
-variable.
-
-Fixes: 28564486866f ("ASoC: fsl_xcvr: Add XCVR ASoC CPU DAI driver")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260401094226.2900532-8-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- sound/soc/fsl/fsl_xcvr.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
-index a268fb81a2f86..008e45009c83f 100644
---- a/sound/soc/fsl/fsl_xcvr.c
-+++ b/sound/soc/fsl/fsl_xcvr.c
-@@ -115,10 +115,17 @@ static int fsl_xcvr_arc_mode_put(struct snd_kcontrol *kcontrol,
- 	struct fsl_xcvr *xcvr = snd_soc_dai_get_drvdata(dai);
- 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
- 	unsigned int *item = ucontrol->value.enumerated.item;
-+	int val = snd_soc_enum_item_to_val(e, item[0]);
-+	int ret;
- 
--	xcvr->arc_mode = snd_soc_enum_item_to_val(e, item[0]);
-+	if (val < 0 || val > 1)
-+		return -EINVAL;
- 
--	return 0;
-+	ret = (xcvr->arc_mode != val);
-+
-+	xcvr->arc_mode = val;
-+
-+	return ret;
- }
- 
- static int fsl_xcvr_arc_mode_get(struct snd_kcontrol *kcontrol,
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-2.53.0
-
-
-
+Florian
