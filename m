@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508EE3F4DD8;
-	Wed, 20 May 2026 17:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA09E3A3833;
+	Wed, 20 May 2026 17:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297279; cv=none; b=LkkiEdAA4jYkU7rgjGWLIN5DuMgzAGojWd9hn7qNOB3+Ch9Y3MdFGZ45kTYfb34rKKxsqqwYu4OUbP0FnIZ/QCWfWcjxsxevPX1VwHkk+f+5FLNlE808IDDfW0u4gKaW/vi1ojmHL0IcPl/t1L8tNqWgu0+E5fam1BCkW9zUYnI=
+	t=1779297282; cv=none; b=Dv7/QZZ9ilbr96ag7y59Q1wLdZ0folnmbn+zhJNYNpqXdsjftigs0RXQVfEJWbZi8BnduQ+Cbn6pJX/dOuS4J1J4kqYc58mCwSe/TWvAA5SdDx3+d3WSANB+1M1rvvZu715cpkE7hslMuD0b+NQjN8PIZC0/+KZHxz68Xsk3HgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297279; c=relaxed/simple;
-	bh=Ao3EtdLE0yYHACkf9SjgRcenSGCyNdEOrePyiRE2GUw=;
+	s=arc-20240116; t=1779297282; c=relaxed/simple;
+	bh=Pb9EkSAfdKYYUB0ULC0G4KKOJ4YvX2a8csTHwJFxNB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TSIfrEIEHTa+OYWVXPF2ZOuxP1r8MXo0vmz/dXlgRy96xU7SCEiw+AaUwuLR4VmvALgfLbJqI2p+NBCn0QsTPv2uj5myjRbvWlhtdIPXE+7gpDxXRpy/dwSB+XXG4zjY5enrnCzv3+TKsTE8kaXDphtpDBCCWxc1ztlfYXXz9Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2OCc0uS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ucoFcDUVxmnUXj7qYJCZZBlWarQbjtBHpbbZd3zZ+sA6aCdsKz7+lBQPprjXQTW3hOOvQsc7LkPfB5KQPvbP36DYwAFronl3/SKukJEmFDEVojr784dqQlabBPNB2ct97lwQ6OxDgdTS9W7eT12fbHzhOEOByIBbR2wBNjMN0O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAf3VSMH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2OCc0uS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B031F000E9;
-	Wed, 20 May 2026 17:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAf3VSMH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C78F1F000E9;
+	Wed, 20 May 2026 17:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297278;
-	bh=3XCgqMu+VYtSBwDIheu9nt3gPgv+86GO84vupH2EXD0=;
+	s=korg; t=1779297280;
+	bh=6LMRrPcw4YWKmHAfHN6YrKULMNVWTzURLiZtYz4Az4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e2OCc0uShkurPklguuGXjeQV0RU2hTiRjSktQZ0ndnIgxUxTMTx5RDzWwm53o6kZ9
-	 wRaYKHNUsnZjnyZkXWHZq4tpxVyQE0mkrwKSXVttFIHhKnp32cXkwxLrjg47XbNH15
-	 Do7ogd+K/9qbntDWW7b9Ff0jPd1PrvO0sJuLa8uI=
+	b=gAf3VSMHzYw9ezYtS+lHdiHamksQuPyn8Gy+2yw2OpxmsZDwFChSLL4pQYsdMfcmt
+	 XxmlIMWCQRJVN5KeWue21/3hCaYULfTMpBH9SGtz+/TdGZSg7VYXoTDGOvO5cvG1MW
+	 vtLgnP0U3qevgkEz67To+FIqv6dHJyulekzqmasU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 1091/1146] ALSA: usb-audio: Bound MIDI endpoint descriptor scans
-Date: Wed, 20 May 2026 18:22:21 +0200
-Message-ID: <20260520162212.927544209@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 7.0 1118/1146] libceph: handle rbtree insertion error in decode_choose_args()
+Date: Wed, 20 May 2026 18:22:48 +0200
+Message-ID: <20260520162213.544777296@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -44,62 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit d6854daa67be623860f4e1873fd3d3c275aba4ed upstream.
+commit d289478cfc0bcf81c7914200d6abdcb78bd04ded upstream.
 
-snd_usbmidi_get_ms_info() validates the internal MIDIStreaming endpoint
-descriptor size before using baAssocJackID[], but the descriptor walker can
-still return a class-specific endpoint descriptor whose bLength exceeds the
-remaining bytes in the endpoint-extra scan.
+A message of type CEPH_MSG_OSD_MAP contains an OSD map that itself
+contains a CRUSH map. The received CRUSH map may optionally contain
+choose_args that get decoded in decode_choose_args(). In this function,
+num_choose_arg_maps is read from the message, and a corresponding number
+of crush_choose_arg_maps gets decoded afterwards. Each
+crush_choose_arg_map has a choose_args_index, which serves as the key
+when inserting it into the choose_args rbtree of the decoded crush_map.
+If a (potentially corrupted) message contains two crush_choose_arg_maps
+with the same index, the assertion in insert_choose_arg_map() triggers a
+kernel BUG when trying to insert the second crush_choose_arg_map.
 
-That leaves later flexible-array reads bounded by bLength, but not by the
-remaining bytes in the endpoint-extra scan.
+This patch fixes the issue by switching to the non-asserting rbtree
+insertion function and rejecting the message if the insertion fails.
 
-Stop walking when bLength is zero or
-extends past the remaining endpoint-extra scan.
+[ idryomov: changelog ]
 
-Fixes: 5c6cd7021a05 ("ALSA: usb-audio: Fix case when USB MIDI interface has more than one extra endpoint descriptor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260507-usb-midi-endpoint-scan-bounds-v1-1-329d7348160e@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/ceph/osdmap.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -1947,15 +1947,17 @@ static struct usb_ms_endpoint_descriptor
- 	while (extralen > 3) {
- 		struct usb_ms_endpoint_descriptor *ms_ep =
- 				(struct usb_ms_endpoint_descriptor *)extra;
-+		int length = ms_ep->bLength;
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -394,7 +394,10 @@ static int decode_choose_args(void **p,
+ 				goto e_inval;
+ 		}
  
--		if (ms_ep->bLength > 3 &&
-+		if (!length || length > extralen)
-+			break;
-+
-+		if (length > 3 &&
- 		    ms_ep->bDescriptorType == USB_DT_CS_ENDPOINT &&
- 		    ms_ep->bDescriptorSubtype == UAC_MS_GENERAL)
- 			return ms_ep;
--		if (!extra[0])
--			break;
--		extralen -= extra[0];
--		extra += extra[0];
-+		extralen -= length;
-+		extra += length;
+-		insert_choose_arg_map(&c->choose_args, arg_map);
++		if (!__insert_choose_arg_map(&c->choose_args, arg_map)) {
++			ret = -EEXIST;
++			goto fail;
++		}
  	}
- 	return NULL;
- }
+ 
+ 	return 0;
 
 
