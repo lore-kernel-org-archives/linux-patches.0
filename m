@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FB63F20FA;
-	Wed, 20 May 2026 17:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C13835C1A0;
+	Wed, 20 May 2026 17:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296426; cv=none; b=T2OftR3/qfTRRxP3NMG+IRaCwAIpXYZXoj4a////ff5iQoJaHnOJbWZrvbaYceVkW4Ek4BkwhVUm37Iet2U90ue1vCXNux51DxxRoQgGuQeWXjwApaZgVvviB1s6iU38A0yV33oV2PgWijHgyz7xYfeP6o8NC2SHntR/nVR4WOk=
+	t=1779296428; cv=none; b=nzm5UTZr/RAlzNOel58eEHbamqWunHuX65Cuy+VwDzToJiVx06nyqDLrS5nuvJwMogoZTLl8UuG5+lhqm/U6PkqPDjuOsGQVwpHy8WOpuz/Y0yFTEv6voIdw4qbqgyqC0TVm11g3E/9gQXEsU/KqgxnCh/3hVXu0zf2SW2O58s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296426; c=relaxed/simple;
-	bh=Ygj3DyHFJ1ERohfdExxFpyR0dxWaCFYoHIfnU2xwCKQ=;
+	s=arc-20240116; t=1779296428; c=relaxed/simple;
+	bh=bI+PmAh2zb6QwxFT11pdQiQA/kFuC/zxEu7t6v2yG+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4fDKZdsQxnbd//vLf/+aEny23eDxy7XV6NnVIpktdhr5tpMxQQRQZMy47VN2IQ15ZrILCmd6Hq7yZ0nszCUDz3it2tXQBiWOAAoofVVoLM8HtDgapIuKOWAW3dmA8LbIdj5KTUJfIQmrm6670MYeEW4/GlydfsXmze8D5yylyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0MWLnNi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GAGSKvgknIHBKARrww9aqleYzhvMKfMueIqA6463fKt4vYCYXwoKkwcvkmQgmKxZPi7O0YcW4l9BI1apW3sjrXLHvWpAAdshSx1wa6Zl9YUWeE9lNoTOJVyOrhbqdYDuEtEm9WiTvmborNgbc33Mc3juaKidW4MFzrF1drC76qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2mlcVu1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0MWLnNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E15C1F000E9;
-	Wed, 20 May 2026 17:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2mlcVu1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFFF1F000E9;
+	Wed, 20 May 2026 17:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296424;
-	bh=W12rUfy9ZHXrOXAZnLp7/S9E4CO0gOKmmj+Uy8InAys=;
+	s=korg; t=1779296427;
+	bh=v6zLduhtqxOSNLBkFVlmQPj1jPqWmFDIRgiRR3G2xQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p0MWLnNiRhxTIjTA2KEjZJU4RWTQkpflczfvK20N6k/UxMzSi/KLJr5Pu8Pp2DJxh
-	 SlMVP2SMU9pZiPAuo6e9fx6NFTncFIUa4jytkMBN3x+keMPmlNZPQLtMPr9z1vEDDW
-	 pliINo0p0HvCQ8APPgg9y9tqD9a1L6nRK+ChJbzE=
+	b=d2mlcVu116K58eY5PyaAQ6ZNV9AwVixtBIreKiyqDCmrQ74lLBQWEgjEi/iRO0GRg
+	 YF+6E6w3TjWJ84M42Q14inSVpYTS4+gRi2LrI3PhKGhoD/NVvSl+FhUIJG2S2ijDUY
+	 id6D3w0mpdc4LYM/Gaf0W8Z3/MduEjjeKq4SSnvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zoltan Fodor <zoltan.fodor@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0795/1146] ice: update PCS latency settings for E825 10G/25Gb modes
-Date: Wed, 20 May 2026 18:17:25 +0200
-Message-ID: <20260520162206.217763077@linuxfoundation.org>
+Subject: [PATCH 7.0 0796/1146] ice: fix double-free of tx_buf skb
+Date: Wed, 20 May 2026 18:17:26 +0200
+Message-ID: <20260520162206.241179053@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,84 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Grzegorz Nitka <grzegorz.nitka@intel.com>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit 05567e4052732d70c7ff9655217b3d14d25f639a ]
+[ Upstream commit 1a303baa715e6b78d6a406aaf335f87ff35acfcd ]
 
-Update MAC Rx/Tx offset registers settings (PHY_MAC_[RX|TX]_OFFSET
-registers) with the data obtained with the latest research. It applies
-to PCS latency settings for the following speeds/modes:
-* 10Gb NO-FEC
-        - TX latency changed from 71.25 ns to 73 ns
-        - RX latency changed from -25.6 ns to -28 ns
-* 25Gb NO-FEC
-	- TX latency changed from 28.17 ns to 33 ns
-        - RX latency changed from -12.45 ns to -12 ns
-* 25Gb RS-FEC
-        - TX latency changed from 64.5 ns to 69 ns
-        - RX latency changed from -3.6 ns to -3 ns
+If ice_tso() or ice_tx_csum() fail, the error path in
+ice_xmit_frame_ring() frees the skb, but the 'first' tx_buf still points
+to it and is marked as valid (ICE_TX_BUF_SKB).
+'next_to_use' remains unchanged, so the potential problem will
+likely fix itself when the next packet is transmitted and the tx_buf
+gets overwritten. But if there is no next packet and the interface is
+brought down instead, ice_clean_tx_ring() -> ice_unmap_and_free_tx_buf()
+will find the tx_buf and free the skb for the second time.
 
-The original data came from simulation and pre-production hardware.
-The new data measures the actual delays and as such is more accurate.
+The fix is to reset the tx_buf type to ICE_TX_BUF_EMPTY in the error
+path, so that ice_unmap_and_free_tx_buf().
+Move the initialization of 'first' up, to ensure it's already valid in
+case we hit the linearization error path.
 
-Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
-Co-developed-by: Zoltan Fodor <zoltan.fodor@intel.com>
-Signed-off-by: Zoltan Fodor <zoltan.fodor@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
+The bug was spotted by AI while I had it looking for something else.
+It also proposed an initial version of the patch.
+
+I reproduced the bug and tested the fix by adding code to inject
+failures, on a build with KASAN.
+
+I looked for similar bugs in related Intel drivers and did not find any.
+
+Fixes: d76a60ba7afb ("ice: Add support for VLANs and offloads")
+Assisted-by: Claude:claude-4.6-opus-high Cursor
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-2-686c33c9828d@intel.com
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-4-686c33c9828d@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp_consts.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_txrx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_consts.h b/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
-index 19dddd9b53ddd..4d298c27bfb27 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
-@@ -78,14 +78,14 @@ struct ice_eth56g_mac_reg_cfg eth56g_mac_cfg[NUM_ICE_ETH56G_LNK_SPD] = {
- 		.blktime = 0x666, /* 3.2 */
- 		.tx_offset = {
- 			.serdes = 0x234c, /* 17.6484848 */
--			.no_fec = 0x8e80, /* 71.25 */
-+			.no_fec = 0x93d9, /* 73 */
- 			.fc = 0xb4a4, /* 90.32 */
- 			.sfd = 0x4a4, /* 2.32 */
- 			.onestep = 0x4ccd /* 38.4 */
- 		},
- 		.rx_offset = {
- 			.serdes = 0xffffeb27, /* -10.42424 */
--			.no_fec = 0xffffcccd, /* -25.6 */
-+			.no_fec = 0xffffc7b6, /* -28 */
- 			.fc = 0xfffc557b, /* -469.26 */
- 			.sfd = 0x4a4, /* 2.32 */
- 			.bs_ds = 0x32 /* 0.0969697 */
-@@ -118,17 +118,17 @@ struct ice_eth56g_mac_reg_cfg eth56g_mac_cfg[NUM_ICE_ETH56G_LNK_SPD] = {
- 		.mktime = 0x147b, /* 10.24, only if RS-FEC enabled */
- 		.tx_offset = {
- 			.serdes = 0xe1e, /* 7.0593939 */
--			.no_fec = 0x3857, /* 28.17 */
-+			.no_fec = 0x4266, /* 33 */
- 			.fc = 0x48c3, /* 36.38 */
--			.rs = 0x8100, /* 64.5 */
-+			.rs = 0x8a00, /* 69 */
- 			.sfd = 0x1dc, /* 0.93 */
- 			.onestep = 0x1eb8 /* 15.36 */
- 		},
- 		.rx_offset = {
- 			.serdes = 0xfffff7a9, /* -4.1697 */
--			.no_fec = 0xffffe71a, /* -12.45 */
-+			.no_fec = 0xffffe700, /* -12 */
- 			.fc = 0xfffe894d, /* -187.35 */
--			.rs = 0xfffff8cd, /* -3.6 */
-+			.rs = 0xfffff8cc, /* -3 */
- 			.sfd = 0x1dc, /* 0.93 */
- 			.bs_ds = 0x14 /* 0.0387879, RS-FEC 0 */
- 		}
+diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
+index a2cd4cf377348..7be9c062949b8 100644
+--- a/drivers/net/ethernet/intel/ice/ice_txrx.c
++++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
+@@ -2158,6 +2158,9 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+ 
+ 	ice_trace(xmit_frame_ring, tx_ring, skb);
+ 
++	/* record the location of the first descriptor for this packet */
++	first = &tx_ring->tx_buf[tx_ring->next_to_use];
++
+ 	count = ice_xmit_desc_count(skb);
+ 	if (ice_chk_linearize(skb, count)) {
+ 		if (__skb_linearize(skb))
+@@ -2183,8 +2186,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+ 
+ 	offload.tx_ring = tx_ring;
+ 
+-	/* record the location of the first descriptor for this packet */
+-	first = &tx_ring->tx_buf[tx_ring->next_to_use];
+ 	first->skb = skb;
+ 	first->type = ICE_TX_BUF_SKB;
+ 	first->bytecount = max_t(unsigned int, skb->len, ETH_ZLEN);
+@@ -2249,6 +2250,7 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+ out_drop:
+ 	ice_trace(xmit_frame_ring_drop, tx_ring, skb);
+ 	dev_kfree_skb_any(skb);
++	first->type = ICE_TX_BUF_EMPTY;
+ 	return NETDEV_TX_OK;
+ }
+ 
 -- 
 2.53.0
 
