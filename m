@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA85343880;
-	Wed, 20 May 2026 18:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA0130DEAC;
+	Wed, 20 May 2026 18:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301870; cv=none; b=MdCcm6c0n5lerHyJys8Yh3H4xWhG7hPaqxhZ0m+foEXPamQE819oE0386mkm4VG9EGQS+Rud4zvTI+zZBpNhuBG6mbVUZbJqYg/odzDH/4Vq/m8KrfJXwLVPl3JZEMqo6wZiDFhiRX+qClVGp2BTCmvnBmYnBEhyHqFzYZoCVkw=
+	t=1779301873; cv=none; b=o/Mm0CJQ5YPi+TtjLbRQYhEwNc++Ikr4at95AYa2dI4VcvSijtc/wkK4sQWCW+JsgtMuzkVkWN14SxvvkE+suhyc28+973PPqxb52PxBTLYStndwu8G+hBfMSgK0ah+tYe/8xvmLTgjf/YUfgXP5fR4NQZ/95WWj5o4o/cZrsZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301870; c=relaxed/simple;
-	bh=9L42QXqvSmkWqiSMMp7Z/4Yz9cdn7t+1wIDB0tI9B58=;
+	s=arc-20240116; t=1779301873; c=relaxed/simple;
+	bh=88V0wQJNfzii9bs1GjvwStnfEEy2F3UwtQoHCczoiiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ktbUXV4nYF+8RJbukNSk0TL+lfCIqfU60X3NO7vP9qoOpxKv5w+kIld5dKOJkJrfNCChawTzJv/f/kT8IzvdJUrJ2y1fCeIME9lLBlMI2gWAj6INb92xRASI+G+CrUl4mMBkT2vKZpLidmH//9Pi9NOvXN0qTa+Ls3gXYr7Uq2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4jcSP4j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sv0lJ1YKtnAGPSbO0R4oBhacgWU8AP2mWiU24Rkvd++96vskvH7o7bsksFBsT6CWOWcMJN/9/7k9VILPKSe8eu8Br6s86AjFxpO1iVph+Ruc4QGYrCfjSQopEZ8Nwjhn8hMx6m6bjHSdcZhC3m960+AycvVCxvV+5ibffMF2qWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q49lAErD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4jcSP4j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AE311F000E9;
-	Wed, 20 May 2026 18:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q49lAErD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2181F00898;
+	Wed, 20 May 2026 18:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301869;
-	bh=2i5ij8Tl7cnmwOihSKyAdjVttYmAPCMNsB+3G/aERe8=;
+	s=korg; t=1779301871;
+	bh=M7qaXttPXA2c8FKeu6AX/B36BfFU+gux8TpAw7zFfWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w4jcSP4jYEHCsFwSNwXT2FuoSt5X58hnqN73lcgrmYu6nQlyLScv7WR8ckDkmab1+
-	 5UgZL3UqdgfJoBvHFWeCxnpk8c3cCHgPFM5tsB65ffI3xfmejqLmHHH55z8BQyLd8J
-	 wh+AXoPGPYRZiGmSpwbcR2xBhP8MrMyjRvZQCujY=
+	b=q49lAErDyR3lPlx9dLOK0WfwzW5emyRcvDi+GdIyqW4w3QCEsq1WnXPnMlMBZK/d4
+	 GVls/3wI9K/K8nvfHVlwJWH1+mp0CwO6j8zGUnDOeqAsc6bPJIyIBELf9jZEV4wzQ6
+	 wQ88yvbTzVD8IW8GAVHAEeMGxhpXyIN2ae95Zkvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Haoyu Lu <hechushiguitu666@gmail.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/508] bpf: reject negative CO-RE accessor indices in bpf_core_parse_spec()
-Date: Wed, 20 May 2026 18:17:54 +0200
-Message-ID: <20260520162059.701172023@linuxfoundation.org>
+Subject: [PATCH 6.6 052/508] ACPI: AGDI: fix missing newline in error message
+Date: Wed, 20 May 2026 18:17:55 +0200
+Message-ID: <20260520162059.724348370@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -54,72 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Haoyu Lu <hechushiguitu666@gmail.com>
 
-[ Upstream commit 1c22483a2c4bbf747787f328392ca3e68619c4dc ]
+[ Upstream commit b178330b67abb7293b6de28b2a49d49c83962db5 ]
 
-CO-RE accessor strings are colon-separated indices that describe a path
-from a root BTF type to a target field, e.g. "0:1:2" walks through
-nested struct members. bpf_core_parse_spec() parses each component with
-sscanf("%d"), so negative values like -1 are silently accepted.  The
-subsequent bounds checks (access_idx >= btf_vlen(t)) only guard the
-upper bound and always pass for negative values because C integer
-promotion converts the __u16 btf_vlen result to int, making the
-comparison (int)(-1) >= (int)(N) false for any positive N.
+Add the missing trailing newline to the dev_err() message
+printed when SDEI event registration fails.
 
-When -1 reaches btf_member_bit_offset() it gets cast to u32 0xffffffff,
-producing an out-of-bounds read far past the members array.  A crafted
-BPF program with a negative CO-RE accessor on any struct that exists in
-vmlinux BTF (e.g. task_struct) crashes the kernel deterministically
-during BPF_PROG_LOAD on any system with CONFIG_DEBUG_INFO_BTF=y
-(default on major distributions).  The bug is reachable with CAP_BPF:
+This keeps the error output as a properly terminated log line.
 
- BUG: unable to handle page fault for address: ffffed11818b6626
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- Oops: Oops: 0000 [#1] SMP KASAN NOPTI
- CPU: 0 UID: 0 PID: 85 Comm: poc Not tainted 7.0.0-rc6 #18 PREEMPT(full)
- RIP: 0010:bpf_core_parse_spec (tools/lib/bpf/relo_core.c:354)
- RAX: 00000000ffffffff
- Call Trace:
-  <TASK>
-  bpf_core_calc_relo_insn (tools/lib/bpf/relo_core.c:1321)
-  bpf_core_apply (kernel/bpf/btf.c:9507)
-  check_core_relo (kernel/bpf/verifier.c:19475)
-  bpf_check (kernel/bpf/verifier.c:26031)
-  bpf_prog_load (kernel/bpf/syscall.c:3089)
-  __sys_bpf (kernel/bpf/syscall.c:6228)
-  </TASK>
-
-CO-RE accessor indices are inherently non-negative (struct member index,
-array element index, or enumerator index), so reject them immediately
-after parsing.
-
-Fixes: ddc7c3042614 ("libbpf: implement BPF CO-RE offset relocation algorithm")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/20260404161221.961828-2-bestswngs@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: a2a591fb76e6 ("ACPI: AGDI: Add driver for Arm Generic Diagnostic Dump and Reset device")
+Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Signed-off-by: Haoyu Lu <hechushiguitu666@gmail.com>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/relo_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/acpi/arm64/agdi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/relo_core.c b/tools/lib/bpf/relo_core.c
-index 63a4d5ad12d1a..04c8febfc0aa7 100644
---- a/tools/lib/bpf/relo_core.c
-+++ b/tools/lib/bpf/relo_core.c
-@@ -293,6 +293,8 @@ int bpf_core_parse_spec(const char *prog_name, const struct btf *btf,
- 			++spec_str;
- 		if (sscanf(spec_str, "%d%n", &access_idx, &parsed_len) != 1)
- 			return -EINVAL;
-+		if (access_idx < 0)
-+			return -EINVAL;
- 		if (spec->raw_len == BPF_CORE_SPEC_MAX_LEN)
- 			return -E2BIG;
- 		spec_str += parsed_len;
+diff --git a/drivers/acpi/arm64/agdi.c b/drivers/acpi/arm64/agdi.c
+index 8b3c7d42b41bc..419a9f6c0a827 100644
+--- a/drivers/acpi/arm64/agdi.c
++++ b/drivers/acpi/arm64/agdi.c
+@@ -32,7 +32,7 @@ static int agdi_sdei_probe(struct platform_device *pdev,
+ 
+ 	err = sdei_event_register(adata->sdei_event, agdi_sdei_handler, pdev);
+ 	if (err) {
+-		dev_err(&pdev->dev, "Failed to register for SDEI event %d",
++		dev_err(&pdev->dev, "Failed to register for SDEI event %d\n",
+ 			adata->sdei_event);
+ 		return err;
+ 	}
 -- 
 2.53.0
 
