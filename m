@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578BB347515;
-	Wed, 20 May 2026 18:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9E0347515;
+	Wed, 20 May 2026 18:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300987; cv=none; b=latFmajXTy6Guq2FHJqNxQr115MiHW3cxbj1+TBBaiSDr2AYKytoSXjp4qi3KSaexM4f/evL8UjPYqqzKIlz+8hvZHGYY3bO1US7wiAdd/W0Ud2UMyrdxeMlCf/OeRbRuCjdHs21N5XD+auvqLI5w55L/gD0q6s4yUXyB2wtwuQ=
+	t=1779300990; cv=none; b=WXo3l+nLPm/bsbRDKN//KsBm3TWme5LNDWBzuokwbBxSyDmN/q6bDwXpWnAZl4IwfukmCfMYEg5AOwWZZ6v5w/AopbJIWx8toun9v6/L3Z0Za9McsokPtd7kRsD+WWRxkfOdcO6g/R8FdB7gU0jMcWUuMvmh0rhL1DKw+BoF63U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300987; c=relaxed/simple;
-	bh=/S6oqG/n8Fe1MtoAx6jxl0ne9uC4JN/8yVRodifPPI4=;
+	s=arc-20240116; t=1779300990; c=relaxed/simple;
+	bh=dvV5beroYmAAan+vHyJp2OxGZ4RL7svroNwiW72K4vE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z22INZqr5nrupoy04k9vfidxDqvq5TcLELNSTBK7z63aPsg7kXARlAMMjaJ6TS7Kydf5Vq/tN72G+Kh3/nHdQV9P3Wr7OzFHwRhfuF0VoFqAmf+GMxtZ7swOevXK/m/Y8d0SdMAYEcE79FWFgM3fe8ju+M0WR1Zag8+I/lYTJv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlEESlmS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GCYlThEomhGkJjhLpey1Q8OFT7VtYKiuVEBO3gtS9ZudfPq2pK88X6egusYye7AkCMjx3TwJly82Jn42CUJ4gmKIhuSdMuCsd1zCml4cai/V4goODPXCrmFJN/Nj4lGYZ6L50Pc0fLdDN1zeFPYv6kR8gbtE66EkOz1dLFLHCAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GumUzPjC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlEESlmS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65AEE1F000E9;
-	Wed, 20 May 2026 18:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GumUzPjC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A03C1F000E9;
+	Wed, 20 May 2026 18:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300985;
-	bh=/v0elAincpo1KRufQNgVp/9L08BJyeH97aNQkHHDzZE=;
+	s=korg; t=1779300988;
+	bh=Xrrfru7IZu+s35mgoofRI8Sn9nA35DZ+gUK95zWvAyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LlEESlmSMwh4FJOP2HC2Z1qPo+yiH3SNI+bam4UJIV+hUdXhvEnu6TH+mr68Te4zx
-	 +yDiotrP6524rC9ggoEHvADrts7uvnqcYOQt+ViTUoyxdzVkAAiRksiIQGRXhDvyCQ
-	 1aISOda+Ad/cKHJeJENGCVRemHU82JlCmHFFyy1s=
+	b=GumUzPjC4F/7X7haryGGPOen29lqNjeqmf/VbACtq69BlIKOsUFNBFEfKPZXNxegP
+	 p/DCIyu3+3sbQVAt+oNk+IHUL33IKRx0TQYMXIJdYl6DHbKcThsikz0IBOvanaCztw
+	 /AcQ9DI2oxhXFJ+OGA+w/WlZXPoR3+158xiqwQx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	Philipp Zabel <p.zabel@pengutronix.de>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 381/666] reset: Add devres helpers to request pre-deasserted reset controls
-Date: Wed, 20 May 2026 18:19:52 +0200
-Message-ID: <20260520162119.510742200@linuxfoundation.org>
+Subject: [PATCH 6.12 382/666] i3c: master: dw-i3c: Fix missing reset assertion in remove() callback
+Date: Wed, 20 May 2026 18:19:53 +0200
+Message-ID: <20260520162119.532657944@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -45,322 +47,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philipp Zabel <p.zabel@pengutronix.de>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit d872bed85036f5e60c66b0dd0994346b4ea6470c ]
+[ Upstream commit bef1eef667186cedb0bc6d152464acb3c97d5f72 ]
 
-Add devres helpers
+The reset line acquired during probe is currently left deasserted when
+the driver is unbound.
 
- - devm_reset_control_bulk_get_exclusive_deasserted
- - devm_reset_control_bulk_get_optional_exclusive_deasserted
- - devm_reset_control_bulk_get_optional_shared_deasserted
- - devm_reset_control_bulk_get_shared_deasserted
- - devm_reset_control_get_exclusive_deasserted
- - devm_reset_control_get_optional_exclusive_deasserted
- - devm_reset_control_get_optional_shared_deasserted
- - devm_reset_control_get_shared_deasserted
+Switch to devm_reset_control_get_optional_exclusive_deasserted() to
+ensure the reset is automatically re-asserted by the devres core when
+the driver is removed.
 
-to request and immediately deassert reset controls. During cleanup,
-reset_control_assert() will be called automatically on the returned
-reset controls.
-
-Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20240925-reset-get-deasserted-v2-2-b3601bbd0458@pengutronix.de
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Stable-dep-of: bef1eef66718 ("i3c: master: dw-i3c: Fix missing reset assertion in remove() callback")
+Fixes: 62fe9d06f570 ("i3c: dw: Add power management support")
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260320-dw-i3c-v3-1-477040c2e3f5@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/reset/core.c  |  48 +++++++++++++++++-
- include/linux/reset.h | 113 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 159 insertions(+), 2 deletions(-)
+ drivers/i3c/master/dw-i3c-master.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/reset/core.c b/drivers/reset/core.c
-index 682d61812852b..22f67fc77ae53 100644
---- a/drivers/reset/core.c
-+++ b/drivers/reset/core.c
-@@ -1236,23 +1236,46 @@ static void devm_reset_control_release(struct device *dev, void *res)
- 	reset_control_put(*(struct reset_control **)res);
+diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
+index 3453431e49a24..6c56e0b89b02d 100644
+--- a/drivers/i3c/master/dw-i3c-master.c
++++ b/drivers/i3c/master/dw-i3c-master.c
+@@ -1566,13 +1566,11 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ 	if (IS_ERR(master->pclk))
+ 		return PTR_ERR(master->pclk);
+ 
+-	master->core_rst = devm_reset_control_get_optional_exclusive(&pdev->dev,
+-								    "core_rst");
++	master->core_rst = devm_reset_control_get_optional_exclusive_deasserted(&pdev->dev,
++										"core_rst");
+ 	if (IS_ERR(master->core_rst))
+ 		return PTR_ERR(master->core_rst);
+ 
+-	reset_control_deassert(master->core_rst);
+-
+ 	spin_lock_init(&master->xferqueue.lock);
+ 	INIT_LIST_HEAD(&master->xferqueue.list);
+ 
+@@ -1584,7 +1582,7 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ 			       dw_i3c_master_irq_handler, 0,
+ 			       dev_name(&pdev->dev), master);
+ 	if (ret)
+-		goto err_assert_rst;
++		return ret;
+ 
+ 	platform_set_drvdata(pdev, master);
+ 
+@@ -1620,9 +1618,6 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 
+-err_assert_rst:
+-	reset_control_assert(master->core_rst);
+-
+ 	return ret;
  }
- 
-+static void devm_reset_control_release_deasserted(struct device *dev, void *res)
-+{
-+	struct reset_control *rstc = *(struct reset_control **)res;
-+
-+	reset_control_assert(rstc);
-+	reset_control_put(rstc);
-+}
-+
- struct reset_control *
- __devm_reset_control_get(struct device *dev, const char *id, int index,
- 			 enum reset_control_flags flags)
- {
- 	struct reset_control **ptr, *rstc;
-+	bool deasserted = flags & RESET_CONTROL_FLAGS_BIT_DEASSERTED;
- 
--	ptr = devres_alloc(devm_reset_control_release, sizeof(*ptr),
-+	ptr = devres_alloc(deasserted ? devm_reset_control_release_deasserted :
-+			   devm_reset_control_release, sizeof(*ptr),
- 			   GFP_KERNEL);
- 	if (!ptr)
- 		return ERR_PTR(-ENOMEM);
- 
-+	flags &= ~RESET_CONTROL_FLAGS_BIT_DEASSERTED;
-+
- 	rstc = __reset_control_get(dev, id, index, flags);
- 	if (IS_ERR_OR_NULL(rstc)) {
- 		devres_free(ptr);
- 		return rstc;
- 	}
- 
-+	if (deasserted) {
-+		int ret;
-+
-+		ret = reset_control_deassert(rstc);
-+		if (ret) {
-+			reset_control_put(rstc);
-+			devres_free(ptr);
-+			return ERR_PTR(ret);
-+		}
-+	}
-+
- 	*ptr = rstc;
- 	devres_add(dev, ptr);
- 
-@@ -1272,24 +1295,45 @@ static void devm_reset_control_bulk_release(struct device *dev, void *res)
- 	reset_control_bulk_put(devres->num_rstcs, devres->rstcs);
- }
- 
-+static void devm_reset_control_bulk_release_deasserted(struct device *dev, void *res)
-+{
-+	struct reset_control_bulk_devres *devres = res;
-+
-+	reset_control_bulk_assert(devres->num_rstcs, devres->rstcs);
-+	reset_control_bulk_put(devres->num_rstcs, devres->rstcs);
-+}
-+
- int __devm_reset_control_bulk_get(struct device *dev, int num_rstcs,
- 				  struct reset_control_bulk_data *rstcs,
- 				  enum reset_control_flags flags)
- {
- 	struct reset_control_bulk_devres *ptr;
-+	bool deasserted = flags & RESET_CONTROL_FLAGS_BIT_DEASSERTED;
- 	int ret;
- 
--	ptr = devres_alloc(devm_reset_control_bulk_release, sizeof(*ptr),
-+	ptr = devres_alloc(deasserted ? devm_reset_control_bulk_release_deasserted :
-+			   devm_reset_control_bulk_release, sizeof(*ptr),
- 			   GFP_KERNEL);
- 	if (!ptr)
- 		return -ENOMEM;
- 
-+	flags &= ~RESET_CONTROL_FLAGS_BIT_DEASSERTED;
-+
- 	ret = __reset_control_bulk_get(dev, num_rstcs, rstcs, flags);
- 	if (ret < 0) {
- 		devres_free(ptr);
- 		return ret;
- 	}
- 
-+	if (deasserted) {
-+		ret = reset_control_bulk_deassert(num_rstcs, rstcs);
-+		if (ret) {
-+			reset_control_bulk_put(num_rstcs, rstcs);
-+			devres_free(ptr);
-+			return ret;
-+		}
-+	}
-+
- 	ptr->num_rstcs = num_rstcs;
- 	ptr->rstcs = rstcs;
- 	devres_add(dev, ptr);
-diff --git a/include/linux/reset.h b/include/linux/reset.h
-index 30edaea2c8fb8..0ae6e9030d346 100644
---- a/include/linux/reset.h
-+++ b/include/linux/reset.h
-@@ -29,6 +29,7 @@ struct reset_control_bulk_data {
- #define RESET_CONTROL_FLAGS_BIT_SHARED		BIT(0)	/* not exclusive */
- #define RESET_CONTROL_FLAGS_BIT_OPTIONAL	BIT(1)
- #define RESET_CONTROL_FLAGS_BIT_ACQUIRED	BIT(2)	/* iff exclusive, not released */
-+#define RESET_CONTROL_FLAGS_BIT_DEASSERTED	BIT(3)
- 
- /**
-  * enum reset_control_flags - Flags that can be passed to the reset_control_get functions
-@@ -36,21 +37,35 @@ struct reset_control_bulk_data {
-  *                    These values cannot be OR'd.
-  *
-  * @RESET_CONTROL_EXCLUSIVE:				exclusive, acquired,
-+ * @RESET_CONTROL_EXCLUSIVE_DEASSERTED:			exclusive, acquired, deasserted
-  * @RESET_CONTROL_EXCLUSIVE_RELEASED:			exclusive, released,
-  * @RESET_CONTROL_SHARED:				shared
-+ * @RESET_CONTROL_SHARED_DEASSERTED:			shared, deasserted
-  * @RESET_CONTROL_OPTIONAL_EXCLUSIVE:			optional, exclusive, acquired
-+ * @RESET_CONTROL_OPTIONAL_EXCLUSIVE_DEASSERTED:	optional, exclusive, acquired, deasserted
-  * @RESET_CONTROL_OPTIONAL_EXCLUSIVE_RELEASED:		optional, exclusive, released
-  * @RESET_CONTROL_OPTIONAL_SHARED:			optional, shared
-+ * @RESET_CONTROL_OPTIONAL_SHARED_DEASSERTED:		optional, shared, deasserted
-  */
- enum reset_control_flags {
- 	RESET_CONTROL_EXCLUSIVE				= RESET_CONTROL_FLAGS_BIT_ACQUIRED,
-+	RESET_CONTROL_EXCLUSIVE_DEASSERTED		= RESET_CONTROL_FLAGS_BIT_ACQUIRED |
-+							  RESET_CONTROL_FLAGS_BIT_DEASSERTED,
- 	RESET_CONTROL_EXCLUSIVE_RELEASED		= 0,
- 	RESET_CONTROL_SHARED				= RESET_CONTROL_FLAGS_BIT_SHARED,
-+	RESET_CONTROL_SHARED_DEASSERTED			= RESET_CONTROL_FLAGS_BIT_SHARED |
-+							  RESET_CONTROL_FLAGS_BIT_DEASSERTED,
- 	RESET_CONTROL_OPTIONAL_EXCLUSIVE		= RESET_CONTROL_FLAGS_BIT_OPTIONAL |
- 							  RESET_CONTROL_FLAGS_BIT_ACQUIRED,
-+	RESET_CONTROL_OPTIONAL_EXCLUSIVE_DEASSERTED	= RESET_CONTROL_FLAGS_BIT_OPTIONAL |
-+							  RESET_CONTROL_FLAGS_BIT_ACQUIRED |
-+							  RESET_CONTROL_FLAGS_BIT_DEASSERTED,
- 	RESET_CONTROL_OPTIONAL_EXCLUSIVE_RELEASED	= RESET_CONTROL_FLAGS_BIT_OPTIONAL,
- 	RESET_CONTROL_OPTIONAL_SHARED			= RESET_CONTROL_FLAGS_BIT_OPTIONAL |
- 							  RESET_CONTROL_FLAGS_BIT_SHARED,
-+	RESET_CONTROL_OPTIONAL_SHARED_DEASSERTED	= RESET_CONTROL_FLAGS_BIT_OPTIONAL |
-+							  RESET_CONTROL_FLAGS_BIT_SHARED |
-+							  RESET_CONTROL_FLAGS_BIT_DEASSERTED,
- };
- 
- #ifdef CONFIG_RESET_CONTROLLER
-@@ -597,6 +612,25 @@ __must_check devm_reset_control_get_exclusive(struct device *dev,
- 	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_EXCLUSIVE);
- }
- 
-+/**
-+ * devm_reset_control_get_exclusive_deasserted - resource managed
-+ *                                    reset_control_get_exclusive() +
-+ *                                    reset_control_deassert()
-+ * @dev: device to be reset by the controller
-+ * @id: reset line name
-+ *
-+ * Managed reset_control_get_exclusive() + reset_control_deassert(). For reset
-+ * controllers returned from this function, reset_control_assert() +
-+ * reset_control_put() is called automatically on driver detach.
-+ *
-+ * See reset_control_get_exclusive() for more information.
-+ */
-+static inline struct reset_control * __must_check
-+devm_reset_control_get_exclusive_deasserted(struct device *dev, const char *id)
-+{
-+	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_EXCLUSIVE_DEASSERTED);
-+}
-+
- /**
-  * devm_reset_control_bulk_get_exclusive - resource managed
-  *                                         reset_control_bulk_get_exclusive()
-@@ -713,6 +747,25 @@ static inline struct reset_control *devm_reset_control_get_shared(
- 	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_SHARED);
- }
- 
-+/**
-+ * devm_reset_control_get_shared_deasserted - resource managed
-+ *                                            reset_control_get_shared() +
-+ *                                            reset_control_deassert()
-+ * @dev: device to be reset by the controller
-+ * @id: reset line name
-+ *
-+ * Managed reset_control_get_shared() + reset_control_deassert(). For reset
-+ * controllers returned from this function, reset_control_assert() +
-+ * reset_control_put() is called automatically on driver detach.
-+ *
-+ * See devm_reset_control_get_shared() for more information.
-+ */
-+static inline struct reset_control * __must_check
-+devm_reset_control_get_shared_deasserted(struct device *dev, const char *id)
-+{
-+	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_SHARED_DEASSERTED);
-+}
-+
- /**
-  * devm_reset_control_bulk_get_shared - resource managed
-  *                                      reset_control_bulk_get_shared()
-@@ -733,6 +786,28 @@ devm_reset_control_bulk_get_shared(struct device *dev, int num_rstcs,
- 	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs, RESET_CONTROL_SHARED);
- }
- 
-+/**
-+ * devm_reset_control_bulk_get_shared_deasserted - resource managed
-+ *                                                 reset_control_bulk_get_shared() +
-+ *                                                 reset_control_bulk_deassert()
-+ * @dev: device to be reset by the controller
-+ * @num_rstcs: number of entries in rstcs array
-+ * @rstcs: array of struct reset_control_bulk_data with reset line names set
-+ *
-+ * Managed reset_control_bulk_get_shared() + reset_control_bulk_deassert(). For
-+ * reset controllers returned from this function, reset_control_bulk_assert() +
-+ * reset_control_bulk_put() are called automatically on driver detach.
-+ *
-+ * See devm_reset_control_bulk_get_shared() for more information.
-+ */
-+static inline int __must_check
-+devm_reset_control_bulk_get_shared_deasserted(struct device *dev, int num_rstcs,
-+					      struct reset_control_bulk_data *rstcs)
-+{
-+	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs,
-+					     RESET_CONTROL_SHARED_DEASSERTED);
-+}
-+
- /**
-  * devm_reset_control_get_optional_exclusive - resource managed
-  *                                             reset_control_get_optional_exclusive()
-@@ -751,6 +826,25 @@ static inline struct reset_control *devm_reset_control_get_optional_exclusive(
- 	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_OPTIONAL_EXCLUSIVE);
- }
- 
-+/**
-+ * devm_reset_control_get_optional_exclusive_deasserted - resource managed
-+ *                                                        reset_control_get_optional_exclusive() +
-+ *                                                        reset_control_deassert()
-+ * @dev: device to be reset by the controller
-+ * @id: reset line name
-+ *
-+ * Managed reset_control_get_optional_exclusive() + reset_control_deassert().
-+ * For reset controllers returned from this function, reset_control_assert() +
-+ * reset_control_put() is called automatically on driver detach.
-+ *
-+ * See devm_reset_control_get_optional_exclusive() for more information.
-+ */
-+static inline struct reset_control *
-+devm_reset_control_get_optional_exclusive_deasserted(struct device *dev, const char *id)
-+{
-+	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_OPTIONAL_EXCLUSIVE_DEASSERTED);
-+}
-+
- /**
-  * devm_reset_control_bulk_get_optional_exclusive - resource managed
-  *                                                  reset_control_bulk_get_optional_exclusive()
-@@ -790,6 +884,25 @@ static inline struct reset_control *devm_reset_control_get_optional_shared(
- 	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_OPTIONAL_SHARED);
- }
- 
-+/**
-+ * devm_reset_control_get_optional_shared_deasserted - resource managed
-+ *                                                     reset_control_get_optional_shared() +
-+ *                                                     reset_control_deassert()
-+ * @dev: device to be reset by the controller
-+ * @id: reset line name
-+ *
-+ * Managed reset_control_get_optional_shared() + reset_control_deassert(). For
-+ * reset controllers returned from this function, reset_control_assert() +
-+ * reset_control_put() is called automatically on driver detach.
-+ *
-+ * See devm_reset_control_get_optional_shared() for more information.
-+ */
-+static inline struct reset_control *
-+devm_reset_control_get_optional_shared_deasserted(struct device *dev, const char *id)
-+{
-+	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_OPTIONAL_SHARED_DEASSERTED);
-+}
-+
- /**
-  * devm_reset_control_bulk_get_optional_shared - resource managed
-  *                                               reset_control_bulk_get_optional_shared()
+ EXPORT_SYMBOL_GPL(dw_i3c_common_probe);
 -- 
 2.53.0
 
