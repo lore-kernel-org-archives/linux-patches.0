@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBF83FB7FC;
-	Wed, 20 May 2026 18:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EA0400DF3;
+	Wed, 20 May 2026 18:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302810; cv=none; b=keAvOpIKiRJIjDAhs2785M5BOYUXt0eNKaIHE+k+kquZN8o+AdAJSqOUc7h/O99wsjP/QhvUF5BzEHdwZvxWpct/ZS9CCwUuP22SalFP9oeCuRSmYA4IXCWVvMpKgdXDQV568HRDlowf5jpVVRQKKyMYkJRTYITfwgs7ysNpd7s=
+	t=1779302813; cv=none; b=V7l3w2f2YRYqqPp/8ikTBjm7sOrT8PA9WkQpr5HWY2DVkmR1/q1J13J0YQ6JzH7ieaLO5sySABqzzje+l9v0qR44/RPeNxM6w22b2JaFvV6imxBSSxrCJCGe7GVYqmkzmOQug7+i8W44kHQG/RHyo9O5SdQjqHbVjtDEPdvRoJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302810; c=relaxed/simple;
-	bh=mWR1stull2nCENVrdaEfvP/Q1tGPHhBBX82Yr026+Ec=;
+	s=arc-20240116; t=1779302813; c=relaxed/simple;
+	bh=mbrtuUeRiEBX1uLAqGPbOZ2zQDsx4iFa/0p3LcRmB/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J0RY8+a0iRrfg0nSm7oEpdPZAXzVq+97HpYcl84kaU49nNPPMUEzgwbo5SZtUjeMUlGsRKiIUNPLKb/ZZWomLlk9EH11du9w4/Ybs89p3xevOR7vAwgcCJmwAx2TruJXGPkp27gpcoW7d2SEbqMORSZAcOYpccE/eaFr1DUNh/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Sz+hk5A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FTEgz7cFV+7bmsyMTTRJKZMNsBsX207pyG+EXWjc/qXwFOTRlpBwu4KyLErTqH6kWsr4qHCIHyZFqFP2rVhzIs+XjbzZu15foAIUea2fC6rrxLodCX7ftSZxJv1UGA+ZaiOvKH4tUifO4NCuNG06TJ/nvc2MofRaTOomD665EaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIRJKjxL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Sz+hk5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27BC1F000E9;
-	Wed, 20 May 2026 18:46:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIRJKjxL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BE01F000E9;
+	Wed, 20 May 2026 18:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302809;
-	bh=DEgrp1iSPaLTN68vzat4QHBYIjWXsoy3X9uzI4qUZeM=;
+	s=korg; t=1779302812;
+	bh=/ckFpunD4blgAJghYkVdTZz83oVArkYZe5nqVQDU+Ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Sz+hk5ADlGMBwKMGPP3hl7Avl6O0erpfU92fdusJjs2Q1O7xerF0uDpTwCDlRQbF
-	 6h2OgRWdC+fZk5oNKc9lcXevlCRXkvbC6Hx7b1Wa/Zr1MTQZFtux4HSducNQTyP+pj
-	 XQaOBPTt3x9K1VV6MT2xy+7j039/OYcdeJtCGwRE=
+	b=GIRJKjxL+FqDFwCEZ4WkFNlHFaMK85UMbSCrqNbC5wdY4eQEkM8TqQka0j7MwHz6K
+	 4GU4Hq71RuG2xUmAzRqIQjklVQ+ivoYOvZawBpOkYub2xy9W929xE3FxUPnvaLYbdJ
+	 3lNjxW/u1ZK9Bt6wNolt2cozI6+z00rs8cISQR7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <christian.ehrhardt@codasip.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 408/508] ASoC: codecs: ab8500: Fix casting of private data
-Date: Wed, 20 May 2026 18:23:51 +0200
-Message-ID: <20260520162107.450920959@linuxfoundation.org>
+Subject: [PATCH 6.6 409/508] netfilter: skip recording stale or retransmitted INIT
+Date: Wed, 20 May 2026 18:23:52 +0200
+Message-ID: <20260520162107.471104893@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -46,58 +47,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian A. Ehrhardt <christian.ehrhardt@codasip.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit a201aef1a88b675e9eb8487e27d14e2eef3cef80 ]
+[ Upstream commit 576a5d2bad4814c881a829576b1261b9b8159d2b ]
 
-ab8500_filter_controls[i].private_value is initialized using
+An INIT whose init_tag matches the peer's vtag does not provide new state
+information. It indicates either:
 
-	.private_value = (unsigned long)&(struct filter_control)
-		{.count = xcount, .min = xmin, .max = xmax}
+- a stale INIT (after INIT-ACK has already been seen on the same side), or
+- a retransmitted INIT (after INIT has already been recorded on the same
+  side).
 
-thus it's a pointer to a struct filter_control casted to unsigned long.
+In both cases, the INIT must not update ct->proto.sctp.init[] state, since
+it does not advance the handshake tracking and may otherwise corrupt
+INIT/INIT-ACK validation logic.
 
-So to get back that pointer .private_data must be cast back, not its
-address.
+Allow INIT processing only when the conntrack entry is newly created
+(SCTP_CONNTRACK_NONE), or when the init_tag differs from the stored peer
+vtag.
 
-Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
-Signed-off-by: Christian A. Ehrhardt <christian.ehrhardt@codasip.com>
-Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20260428192255.2294705-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Note it skips the check for the ct with old_state SCTP_CONNTRACK_NONE in
+nf_conntrack_sctp_packet(), as it is just created in sctp_new() where it
+set ct->proto.sctp.vtag[IP_CT_DIR_REPLY] = ih->init_tag.
+
+Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Acked-by: Florian Westphal <fw@strlen.de>
+Link: https://patch.msgid.link/ee56c3e416452b2a40589a2a85245ac2ad5e9f4b.1777214801.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ab8500-codec.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/netfilter/nf_conntrack_proto_sctp.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
-index 68342917419e4..42e448978c4a0 100644
---- a/sound/soc/codecs/ab8500-codec.c
-+++ b/sound/soc/codecs/ab8500-codec.c
-@@ -2496,13 +2496,13 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
- 		return status;
- 	}
- 	fc = (struct filter_control *)
--		&ab8500_filter_controls[AB8500_FILTER_ANC_FIR].private_value;
-+		ab8500_filter_controls[AB8500_FILTER_ANC_FIR].private_value;
- 	drvdata->anc_fir_values = (long *)fc->value;
- 	fc = (struct filter_control *)
--		&ab8500_filter_controls[AB8500_FILTER_ANC_IIR].private_value;
-+		ab8500_filter_controls[AB8500_FILTER_ANC_IIR].private_value;
- 	drvdata->anc_iir_values = (long *)fc->value;
- 	fc = (struct filter_control *)
--		&ab8500_filter_controls[AB8500_FILTER_SID_FIR].private_value;
-+		ab8500_filter_controls[AB8500_FILTER_SID_FIR].private_value;
- 	drvdata->sid_fir_values = (long *)fc->value;
+diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
+index fabb2c1ca00ab..0dd55d3fba38d 100644
+--- a/net/netfilter/nf_conntrack_proto_sctp.c
++++ b/net/netfilter/nf_conntrack_proto_sctp.c
+@@ -471,9 +471,13 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
+ 			if (!ih)
+ 				goto out_unlock;
  
- 	snd_soc_dapm_disable_pin(dapm, "ANC Configure Input");
+-			if (ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir])
+-				ct->proto.sctp.init[!dir] = 0;
+-			ct->proto.sctp.init[dir] = 1;
++			/* Do not record INIT matching peer vtag (stale or retransmitted INIT). */
++			if (old_state == SCTP_CONNTRACK_NONE ||
++			    ct->proto.sctp.vtag[!dir] != ih->init_tag) {
++				if (ct->proto.sctp.init[dir] && ct->proto.sctp.init[!dir])
++					ct->proto.sctp.init[!dir] = 0;
++				ct->proto.sctp.init[dir] = 1;
++			}
+ 
+ 			pr_debug("Setting vtag %x for dir %d\n", ih->init_tag, !dir);
+ 			ct->proto.sctp.vtag[!dir] = ih->init_tag;
 -- 
 2.53.0
 
