@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1DF42B738;
-	Wed, 20 May 2026 18:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A676436378;
+	Wed, 20 May 2026 18:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302345; cv=none; b=QSQMucmGwcwJakZ6MbHi/CXfFAeC2zSPfyzDrg8s9/pENoCU4odp0+l/yNL4RdeUi2E20hKqLeAktLkZi+Woj4VNVWmmvZ+dCo/pFza99G//rlKxUfRRwryPueqMMP0/BKDQuNXOhSFqPhVEkA18WLVh6r9CSeU8QIPZucXZ+Jc=
+	t=1779302347; cv=none; b=U2PCTQHxvvUDQwAZrUOYsgqViOS4/5ry8cjWZZ2IEpdEgyk8RtKepUohv9vQ4MBebIc7bdiqwlc5RpjkHSKTZkjS1hV1CDE8YvBL2XBukHpb4jCsua02UCpiRWF9Je8Q8CkWS72MxsOXPu2WoC2OrvM4hEjQUqB0u8tTI7NL2q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302345; c=relaxed/simple;
-	bh=866RifDa9UBz7hNQky8AnSw674N3LtbtSDXwsSdDmp0=;
+	s=arc-20240116; t=1779302347; c=relaxed/simple;
+	bh=6oCnVgV58vMqJKnKh9xStUe8PWgTRBwWMsxMHwyJXms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGPbwv/mxt/0wmd/937LUFqgNB7ep6rLeIiTaLBoH2OyQu8DfvKjegXKwlCfpE6fplh1PVrvXf8O1pHt3TVOanZWszDuaCoqMleP638ttRWH9U6JEEUW1ulLxzPYIRbpO+Wwr6+4UzyKR7I+nOHtbF9080uBciCgJ11G528rDC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLjRg6Dy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sdsdKh6parvnAHKZpzhVum6tgjS4JAdDfqWdztrCdmgzOuefSHfVKHluUR0/+7sMyaxSw+3RKp93Gs5GOtCDLe2KgAbmrkXiAWofYRjU9EBAAa8ZF0AOt4XhRIFwqrUZi2mvoA2LinPKNShxP9LtGQxp9PM3W9YJ1xMbGY8TEnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctP9+ir/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLjRg6Dy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE1D1F02831;
-	Wed, 20 May 2026 18:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctP9+ir/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC541F02831;
+	Wed, 20 May 2026 18:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302343;
-	bh=ZCH9ujvE7Hkjk5As3eOcOaqTdffdqMWWE9hW48R1mYk=;
+	s=korg; t=1779302345;
+	bh=zFIMV5ZTlAqdCuz81AfjyKxzQph9WsIdATJE5/IrUOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HLjRg6DyYnAjlvoNBoJq8Jidi6nFGDRem1Oyr0QvHk3x8o6FpYHPc1gFtL4uJQNTp
-	 uw31p0UkXT5NjA58cdkdjGz14GXinRIfo2AseTNKnCHUPIt8p/ZYC5WOfXRPjGdLr3
-	 FSZugQqBLEc9ej18nwU9gor+KYKBhgENgEcxE60s=
+	b=ctP9+ir/COqScbPqn4k6cXyDDSGp/E+r3S4XNx22cDwhjNzoRXXwKcXn6nInMqUfK
+	 BZNwwUwVGQp/f7faxifgUuFXArI9lVEA+nAJMtUvevvNYYpe7K/c1PksWEvxYRdm5s
+	 fF4jRA4cNdESfELigKgfWhn/nfAGX3MFTacXcyak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 231/508] mtd: parsers: ofpart: call of_node_put() only in ofpart_fail path
-Date: Wed, 20 May 2026 18:20:54 +0200
-Message-ID: <20260520162103.655709648@linuxfoundation.org>
+Subject: [PATCH 6.6 232/508] mtd: parsers: ofpart: call of_node_get() for dedicated subpartitions
+Date: Wed, 20 May 2026 18:20:55 +0200
+Message-ID: <20260520162103.677392913@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -54,19 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-[ Upstream commit 0c87dea1aab86116211cb37387c404c9e9231c39 ]
+[ Upstream commit e882626c1747653f1f01ea9d12e278e613b11d0f ]
 
-ofpart_none can only be reached after the for_each_child_of_node() loop
-finishes. for_each_child_of_node() correctly calls of_node_put() for all
-device nodes it iterates over as long as we don't break or jump out of
-the loop.
+In order to parse sub-partitions, add_mtd_partitions() calls
+parse_mtd_partitions() for all previously found partitions.
 
-Calling of_node_put() inside the ofpart_none path will wrongly decrement
-the ref count of the last node in the for_each_child_of_node() loop.
+Each partition will end up being passed to parse_fixed_partitions(), and
+its of_node will be treated as the ofpart_node.
 
-Move the call to of_node_put() under the ofpart_fail label to fix this.
+Commit 7cce81df7d26 ("mtd: parsers: ofpart: fix OF node refcount leak in
+parse_fixed_partitions()") added of_node_put() calls for ofpart_node on
+all exit paths.
 
-Fixes: ebd5a74db74e ("mtd: ofpart: Check availability of reg property instead of name property")
+In the case where the partition passed to parse_fixed_partitions() has a
+parent, it is treated as a dedicated partitions node, and of_node_put()
+is wrongly called for it, even if of_node_get() was not called
+explicitly.
+
+On repeated bind / unbinds of the MTD, the extra of_node_put() ends up
+decrementing the refcount down to 0, which should never happen,
+resulting in the following error:
+
+OF: ERROR: of_node_release() detected bad of_node_put() on
+/soc/spi@80007000/flash@0/partitions/partition@0
+
+Call of_node_get() to balance the call to of_node_put() done for
+dedicated partitions nodes.
+
+Fixes: 7cce81df7d26 ("mtd: parsers: ofpart: fix OF node refcount leak in parse_fixed_partitions()")
 Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
@@ -76,22 +91,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/mtd/parsers/ofpart_core.c b/drivers/mtd/parsers/ofpart_core.c
-index 3cf75b56d5a2e..110994b1e02f5 100644
+index 110994b1e02f5..c18fa1b3e3276 100644
 --- a/drivers/mtd/parsers/ofpart_core.c
 +++ b/drivers/mtd/parsers/ofpart_core.c
-@@ -191,11 +191,11 @@ static int parse_fixed_partitions(struct mtd_info *master,
- ofpart_fail:
- 	pr_err("%s: error parsing ofpart partition %pOF (%pOF)\n",
- 	       master->name, pp, mtd_node);
-+	of_node_put(pp);
- 	ret = -EINVAL;
- ofpart_none:
- 	if (dedicated)
- 		of_node_put(ofpart_node);
--	of_node_put(pp);
- 	kfree(parts);
- 	return ret;
- }
+@@ -71,7 +71,7 @@ static int parse_fixed_partitions(struct mtd_info *master,
+ 			dedicated = false;
+ 		}
+ 	} else { /* Partition */
+-		ofpart_node = mtd_node;
++		ofpart_node = of_node_get(mtd_node);
+ 	}
+ 
+ 	of_id = of_match_node(parse_ofpart_match_table, ofpart_node);
 -- 
 2.53.0
 
