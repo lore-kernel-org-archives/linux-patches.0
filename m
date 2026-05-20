@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095DB36C9D2;
-	Wed, 20 May 2026 16:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DE733B97A;
+	Wed, 20 May 2026 16:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294920; cv=none; b=Bd4vVfcZgR2MOL6xmArVT71dEjA+AH46RU401+LqeWxzTzv3hrlEWV9RSzeRkvm2zHwVzi0hA2XiL+Y+gPp/rYWEGg84kxm3RxXvkEw/N7iZceuxHK6vskTSu/m21DnaWlrcG+ttuOn/GZLWLEnjrKiHyaE1TW57+TDBs+njxoA=
+	t=1779294922; cv=none; b=udciXkcB/GvVdiYcPs/pNKj6cJ7UxIYvsvbwG1fCxUagzSbcCn+zMX/NLy/4x9I0BNUKOp7/dhSxlw7eIQ808HPsmkyOfwa5aJuOgmS41qQS+wLtQJYl0gitU3inTyVOz9j4ZDAcTrMwdrcEAU0a+ck8l+a8XP/WUZGlKtAEyjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294920; c=relaxed/simple;
-	bh=jk+LPptQOaptZnqUQ8q8kazhOB+3GGcIk+v3CVWBZaQ=;
+	s=arc-20240116; t=1779294922; c=relaxed/simple;
+	bh=9c6Seqnqj56K+F7LP7rvO+y4ncSza9ITXY/bm4ELNMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gKVXXvarWHGDuoerioE0ppWUzKugjnVUU9zawBKJcH/3eO4yuyjEELNgilrj/ssaYfsGOWhPA02TK2w0a6jPZ57Ak9FymNotP8aM24w1EFgYHct45u7KQXerSqyh0vY42P88XAZNX2Y1mEEeYp1KNThLvX3VvPc+MC4t84RGDwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vw17yLy3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LPbjAIvmBpLK7RO6l+lZM44r+JLKO5OJ1U9lC5g9PDzRAazAskMhlxfPFItKohx+/tIAIYz10o1xKTVvIH1dVMHj8ct9LUEOcJ7n8rk11AT8htOmuyS2O8rX6ZnQB/F9u95SeugvZ30EXnyZZ++6s7g66Acp0jKcFGaLOA+Q6UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqUkc/4j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vw17yLy3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7FF1F000E9;
-	Wed, 20 May 2026 16:35:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqUkc/4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DF41F000E9;
+	Wed, 20 May 2026 16:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294918;
-	bh=rlQGyZ70UWOroG81O2e86MzQFdTgRupLfP17tXVJsh0=;
+	s=korg; t=1779294921;
+	bh=HZmPUUvA/v4y50bSlCvgTgbaZTER7YwwtEhpHahxkqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vw17yLy3/C12zCo6yDXJ/zVP8L9e//kKNiB5K3OYb5fZy46EOPB+25DOnSdw3bO0b
-	 TYhcslx+sLI2J72adqPv8E6+2ITTv+g2ptSkqTDRy5Wfx2QzSLkRGPGqT+m1oip/xn
-	 z1D7qnAQReIHzdmuGLmfwCTM+ibRjtEp8Lz3r6cw=
+	b=AqUkc/4jKP406bqU7okOlYqKY1LlD69x4Ogq86YptzYaWR4cr9DRBsNNC90D8mW3e
+	 kdGfDQ5URx9ezQZAFHZixTUkTRgnSKemLWOGsvvXzbQTL5hh0lVXHHLFm3tNzz3HCX
+	 kZ+mT4ojIeNmklq764RGYhrC0QVSk951fPQOfZbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0223/1146] net: airoha: Fix VIP configuration for AN7583 SoC
-Date: Wed, 20 May 2026 18:07:53 +0200
-Message-ID: <20260520162153.302271306@linuxfoundation.org>
+Subject: [PATCH 7.0 0224/1146] net: airoha: Add missing PPE configurations in airoha_ppe_hw_init()
+Date: Wed, 20 May 2026 18:07:54 +0200
+Message-ID: <20260520162153.324432960@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,172 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 1acdfbdb516b32165a8ecd1d5f8c68e4eac64637 ]
+[ Upstream commit b9d8b856689d2b968495d79fe653d87fcb8ad98c ]
 
-EN7581 and AN7583 SoCs have different VIP definitions. Introduce
-get_vip_port callback in airoha_eth_soc_data struct in order to take
-into account EN7581 and AN7583 VIP register layout and definition
-differences.
-Introduce nbq parameter in airoha_gdm_port struct. At the moment nbq
-is set statically to value previously used in airhoha_set_gdm2_loopback
-routine and it will be read from device tree in subsequent patches.
+Add the following PPE configuration in airoha_ppe_hw_init routine:
+- 6RD hw offloading is currently not supported by Netfilter flowtable.
+  Disable explicitly PPE 6RD offloading in order to prevent PPE to learn
+  6RD flows and eventually interrupt the traffic.
+- Add missing PPE bind rate configuration for L3 and L2 traffic.
+  PPE bind rate configuration specifies the pps threshold to move a PPE
+  entry state from UNBIND to BIND. Without this configuration this value
+  is random.
+- Set ageing thresholds to the values used in the vendor SDK in order to
+  improve connection stability under load and avoid packet loss caused by
+  fast aging.
 
-Fixes: e4e5ce823bdd ("net: airoha: Add AN7583 SoC support")
+Fixes: 00a7678310fe3 ("net: airoha: Introduce flowtable offload support")
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260412-airoha-7583-vip-fix-v1-1-c35e02b054bb@kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260412-airoha_ppe_hw_init-missing-bits-v1-1-06ac670819e3@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 66 ++++++++++++++++++------
- drivers/net/ethernet/airoha/airoha_eth.h |  2 +
- 2 files changed, 51 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/airoha/airoha_ppe.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 9e995094c32af..f484835af703c 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -107,19 +107,7 @@ static int airoha_set_vip_for_gdm_port(struct airoha_gdm_port *port,
- 	struct airoha_eth *eth = port->qdma->eth;
- 	u32 vip_port;
+diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
+index c2c32b6833df9..62cfffb4f0e55 100644
+--- a/drivers/net/ethernet/airoha/airoha_ppe.c
++++ b/drivers/net/ethernet/airoha/airoha_ppe.c
+@@ -111,13 +111,13 @@ static void airoha_ppe_hw_init(struct airoha_ppe *ppe)
+ 		airoha_fe_rmw(eth, REG_PPE_BND_AGE0(i),
+ 			      PPE_BIND_AGE0_DELTA_NON_L4 |
+ 			      PPE_BIND_AGE0_DELTA_UDP,
+-			      FIELD_PREP(PPE_BIND_AGE0_DELTA_NON_L4, 1) |
+-			      FIELD_PREP(PPE_BIND_AGE0_DELTA_UDP, 12));
++			      FIELD_PREP(PPE_BIND_AGE0_DELTA_NON_L4, 60) |
++			      FIELD_PREP(PPE_BIND_AGE0_DELTA_UDP, 60));
+ 		airoha_fe_rmw(eth, REG_PPE_BND_AGE1(i),
+ 			      PPE_BIND_AGE1_DELTA_TCP_FIN |
+ 			      PPE_BIND_AGE1_DELTA_TCP,
+ 			      FIELD_PREP(PPE_BIND_AGE1_DELTA_TCP_FIN, 1) |
+-			      FIELD_PREP(PPE_BIND_AGE1_DELTA_TCP, 7));
++			      FIELD_PREP(PPE_BIND_AGE1_DELTA_TCP, 60));
  
--	switch (port->id) {
--	case AIROHA_GDM3_IDX:
--		/* FIXME: handle XSI_PCIE1_PORT */
--		vip_port = XSI_PCIE0_VIP_PORT_MASK;
--		break;
--	case AIROHA_GDM4_IDX:
--		/* FIXME: handle XSI_USB_PORT */
--		vip_port = XSI_ETH_VIP_PORT_MASK;
--		break;
--	default:
--		return 0;
--	}
--
-+	vip_port = eth->soc->ops.get_vip_port(port, port->nbq);
- 	if (enable) {
- 		airoha_fe_set(eth, REG_FE_VIP_PORT_EN, vip_port);
- 		airoha_fe_set(eth, REG_FE_IFC_PORT_EN, vip_port);
-@@ -1710,7 +1698,7 @@ static int airoha_dev_set_macaddr(struct net_device *dev, void *p)
- static int airhoha_set_gdm2_loopback(struct airoha_gdm_port *port)
- {
- 	struct airoha_eth *eth = port->qdma->eth;
--	u32 val, pse_port, chan, nbq;
-+	u32 val, pse_port, chan;
- 	int src_port;
+ 		airoha_fe_rmw(eth, REG_PPE_TB_HASH_CFG(i),
+ 			      PPE_SRAM_TABLE_EN_MASK |
+@@ -145,7 +145,15 @@ static void airoha_ppe_hw_init(struct airoha_ppe *ppe)
+ 			      FIELD_PREP(PPE_DRAM_TB_NUM_ENTRY_MASK,
+ 					 dram_num_entries));
  
- 	/* Forward the traffic to the proper GDM port */
-@@ -1740,9 +1728,7 @@ static int airhoha_set_gdm2_loopback(struct airoha_gdm_port *port)
- 	airoha_fe_clear(eth, REG_FE_VIP_PORT_EN, BIT(AIROHA_GDM2_IDX));
- 	airoha_fe_clear(eth, REG_FE_IFC_PORT_EN, BIT(AIROHA_GDM2_IDX));
- 
--	/* XXX: handle XSI_USB_PORT and XSI_PCE1_PORT */
--	nbq = port->id == AIROHA_GDM3_IDX && airoha_is_7581(eth) ? 4 : 0;
--	src_port = eth->soc->ops.get_src_port_id(port, nbq);
-+	src_port = eth->soc->ops.get_src_port_id(port, port->nbq);
- 	if (src_port < 0)
- 		return src_port;
- 
-@@ -2951,6 +2937,8 @@ static int airoha_alloc_gdm_port(struct airoha_eth *eth,
- 	port->qdma = qdma;
- 	port->dev = dev;
- 	port->id = id;
-+	/* XXX: Read nbq from DTS */
-+	port->nbq = id == AIROHA_GDM3_IDX && airoha_is_7581(eth) ? 4 : 0;
- 	eth->ports[p] = port;
- 
- 	return airoha_metadata_dst_alloc(port);
-@@ -3152,6 +3140,28 @@ static int airoha_en7581_get_src_port_id(struct airoha_gdm_port *port, int nbq)
- 	return -EINVAL;
- }
- 
-+static u32 airoha_en7581_get_vip_port(struct airoha_gdm_port *port, int nbq)
-+{
-+	switch (port->id) {
-+	case AIROHA_GDM3_IDX:
-+		if (nbq == 4)
-+			return XSI_PCIE0_VIP_PORT_MASK;
-+		if (nbq == 5)
-+			return XSI_PCIE1_VIP_PORT_MASK;
-+		break;
-+	case AIROHA_GDM4_IDX:
-+		if (!nbq)
-+			return XSI_ETH_VIP_PORT_MASK;
-+		if (nbq == 1)
-+			return XSI_USB_VIP_PORT_MASK;
-+		break;
-+	default:
-+		break;
-+	}
++		airoha_fe_rmw(eth, REG_PPE_BIND_RATE(i),
++			      PPE_BIND_RATE_L2B_BIND_MASK |
++			      PPE_BIND_RATE_BIND_MASK,
++			      FIELD_PREP(PPE_BIND_RATE_L2B_BIND_MASK, 0x1e) |
++			      FIELD_PREP(PPE_BIND_RATE_BIND_MASK, 0x1e));
 +
-+	return 0;
-+}
-+
- static const char * const an7583_xsi_rsts_names[] = {
- 	"xsi-mac",
- 	"hsi0-mac",
-@@ -3181,6 +3191,26 @@ static int airoha_an7583_get_src_port_id(struct airoha_gdm_port *port, int nbq)
- 	return -EINVAL;
- }
+ 		airoha_fe_wr(eth, REG_PPE_HASH_SEED(i), PPE_HASH_SEED);
++		airoha_fe_clear(eth, REG_PPE_PPE_FLOW_CFG(i),
++				PPE_FLOW_CFG_IP6_6RD_MASK);
  
-+static u32 airoha_an7583_get_vip_port(struct airoha_gdm_port *port, int nbq)
-+{
-+	switch (port->id) {
-+	case AIROHA_GDM3_IDX:
-+		if (!nbq)
-+			return XSI_ETH_VIP_PORT_MASK;
-+		break;
-+	case AIROHA_GDM4_IDX:
-+		if (!nbq)
-+			return XSI_PCIE0_VIP_PORT_MASK;
-+		if (nbq == 1)
-+			return XSI_USB_VIP_PORT_MASK;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
- static const struct airoha_eth_soc_data en7581_soc_data = {
- 	.version = 0x7581,
- 	.xsi_rsts_names = en7581_xsi_rsts_names,
-@@ -3188,6 +3218,7 @@ static const struct airoha_eth_soc_data en7581_soc_data = {
- 	.num_ppe = 2,
- 	.ops = {
- 		.get_src_port_id = airoha_en7581_get_src_port_id,
-+		.get_vip_port = airoha_en7581_get_vip_port,
- 	},
- };
- 
-@@ -3198,6 +3229,7 @@ static const struct airoha_eth_soc_data an7583_soc_data = {
- 	.num_ppe = 1,
- 	.ops = {
- 		.get_src_port_id = airoha_an7583_get_src_port_id,
-+		.get_vip_port = airoha_an7583_get_vip_port,
- 	},
- };
- 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
-index a97903569335f..8bcd809e6f53e 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.h
-+++ b/drivers/net/ethernet/airoha/airoha_eth.h
-@@ -536,6 +536,7 @@ struct airoha_gdm_port {
- 	struct airoha_qdma *qdma;
- 	struct net_device *dev;
- 	int id;
-+	int nbq;
- 
- 	struct airoha_hw_stats stats;
- 
-@@ -576,6 +577,7 @@ struct airoha_eth_soc_data {
- 	int num_ppe;
- 	struct {
- 		int (*get_src_port_id)(struct airoha_gdm_port *port, int nbq);
-+		u32 (*get_vip_port)(struct airoha_gdm_port *port, int nbq);
- 	} ops;
- };
- 
+ 		for (p = 0; p < ARRAY_SIZE(eth->ports); p++)
+ 			airoha_fe_rmw(eth, REG_PPE_MTU(i, p),
 -- 
 2.53.0
 
