@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644F63C870E;
-	Wed, 20 May 2026 17:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D733C870E;
+	Wed, 20 May 2026 17:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298132; cv=none; b=gvBI8ToTPjVsgph15+iU1gV/Jok84/88v+WAL7XLXXmu3zsL7yHzTVRpw15AIzLulmRIwPklUUVbg0JG14sEIO/hBa+Y+3Cf4MqREDjpDlXbPPTuqjXamo3OVvXhAA1EZs8/ixvxqAVMqFwbtRlEXa78I4C0EzqHW5ZjGzhAHJc=
+	t=1779298134; cv=none; b=dKvTrnFoIIFycPtu846LZrEe6v+ApYnHEsHg9BPeyvUqaRtRfIEVGZ1w1ABxwjDKtYZjryj4hQ3fQ2Xd8kBZbycJ9YZlZuP2n6vzKVx/+08hwTfX1YwlYNBUZhVWvv/F7/8wr9ZLJc8IYc9MP/IT73aSmLgR52rwsgaB+dfqbik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298132; c=relaxed/simple;
-	bh=5yG3Vgscy2IZL5EWldH4U/EYZ//TfORosFNE1AHyQHo=;
+	s=arc-20240116; t=1779298134; c=relaxed/simple;
+	bh=9JVDEeTqHJy9azlKZRnYQD1bUvMJBVvXSFTHA7Mrke8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbEY2Nhy8lyU/PqpMvYJ2syxxiO/P15mX1shk1PPOlOPoDZX1QdSK7jSL8zKSHNCiiuPlCPuAzsINGEaswk5yi3xvbdXGBbUD3EexFLtpSWJgxP3i7fN40BFosQljkMkB5S44+hUgTjPN+SRcB9zD0YNrxOPdBkX+sojtFYWlY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opao6T6X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gyQOkdSt5/tuexilVE4OvzotIsmvFD8q3OtbSmRhZH4Mt3+5Yjvrr/kYVLUXP5HSs78hfJpXAVArC1i8nKumpCD7g2IxpXCrM1ew/kpRsYdloU25miocRGGzT4ZIhTDcm4FaUgbRpeUhoC5WdJKStNGIkSpuSgQ1VwL3ynCePvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/dlaBZt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opao6T6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8F31F000E9;
-	Wed, 20 May 2026 17:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/dlaBZt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260DB1F000E9;
+	Wed, 20 May 2026 17:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298131;
-	bh=rTcP0Q+ATvGk737mwYLbVc3XW+fef4fded6HjdKjqs8=;
+	s=korg; t=1779298133;
+	bh=cFb3UQk623rhhmMlZULpKUpHevfv8QacbPoukC10ifw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=opao6T6X0D5gyx8NBHd5lpjUt6qmGVlkZXTTZCu924wke/2eFvEnENRZrSRySSwc5
-	 ZTdAdLScvFlj7XK/O9adIZkMUQlA/6FTeZ30/Ry8CJ5MknfQvF+RaXHUKwnz9eBHbw
-	 16eySvcXjanREsTjMoVXcoIlF1/3jsk6lO25bnC8=
+	b=l/dlaBZtotqh5CDPXlM5KME33xwroLQQK6ebFWW+2ZmWr/7LkX8bSirz1lZ9QdRxK
+	 T9oonOlFEj0CQWAzU8g7FGyUFsIBIBBGg6v6oAqGW1TiBGxV++ht0Xj9bsp0uXieWJ
+	 3AE06TRYAbBojdfgtOIh5o8KrU6yCnDENCPGuuTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 293/957] ASoC: fsl_easrc: Change the type for iec958 channel status controls
-Date: Wed, 20 May 2026 18:12:56 +0200
-Message-ID: <20260520162140.890131302@linuxfoundation.org>
+Subject: [PATCH 6.18 294/957] iommu/amd: Fix clone_alias() to use the original devices devid
+Date: Wed, 20 May 2026 18:12:57 +0200
+Message-ID: <20260520162140.912535079@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,187 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 47f28a5bd154a95d5aa563dde02a801bd32ddb81 ]
+[ Upstream commit faad224fe0f0857a04ff2eb3c90f0de57f47d0f3 ]
 
-Use the type SNDRV_CTL_ELEM_TYPE_IEC958 for iec958 channel status
-controls, the original type will cause mixer-test to iterate all 32bit
-values, which costs a lot of time. And using IEC958 type can reduce the
-control numbers.
+Currently clone_alias() assumes first argument (pdev) is always the
+original device pointer. This function is called by
+pci_for_each_dma_alias() which based on topology decides to send
+original or alias device details in first argument.
 
-Also enable pm runtime before updating registers to make the regmap cache
-data align with the value in hardware.
+This meant that the source devid used to look up and copy the DTE
+may be incorrect, leading to wrong or stale DTE entries being
+propagated to alias device.
 
-Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260401094226.2900532-12-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by passing the original pdev as the opaque data argument to
+both the direct clone_alias() call and pci_for_each_dma_alias(). Inside
+clone_alias(), retrieve the original device from data and compute devid
+from it.
+
+Fixes: 3332364e4ebc ("iommu/amd: Support multiple PCI DMA aliases in device table")
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_easrc.c | 118 +++++++++++++++++++++++++++-----------
- 1 file changed, 84 insertions(+), 34 deletions(-)
+ drivers/iommu/amd/iommu.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index 725c7b65fe6b8..59cdf18731a0a 100644
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -78,17 +78,47 @@ static int fsl_easrc_iec958_get_bits(struct snd_kcontrol *kcontrol,
- 	return 0;
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 4beef73139611..5afd1621d715e 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -381,11 +381,12 @@ struct iommu_dev_data *search_dev_data(struct amd_iommu *iommu, u16 devid)
+ 	return NULL;
  }
  
-+static int fsl_easrc_iec958_info(struct snd_kcontrol *kcontrol,
-+				 struct snd_ctl_elem_info *uinfo)
-+{
-+	uinfo->type = SNDRV_CTL_ELEM_TYPE_IEC958;
-+	uinfo->count = 1;
-+	return 0;
-+}
-+
- static int fsl_easrc_get_reg(struct snd_kcontrol *kcontrol,
- 			     struct snd_ctl_elem_value *ucontrol)
+-static int clone_alias(struct pci_dev *pdev, u16 alias, void *data)
++static int clone_alias(struct pci_dev *pdev_origin, u16 alias, void *data)
  {
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct soc_mreg_control *mc =
- 		(struct soc_mreg_control *)kcontrol->private_value;
--	unsigned int regval;
-+	struct fsl_asrc *easrc = snd_soc_component_get_drvdata(component);
-+	unsigned int *regval = (unsigned int *)ucontrol->value.iec958.status;
-+	int ret;
-+
-+	ret = regmap_read(easrc->regmap, REG_EASRC_CS0(mc->regbase), &regval[0]);
-+	if (ret)
-+		return ret;
-+
-+	ret = regmap_read(easrc->regmap, REG_EASRC_CS1(mc->regbase), &regval[1]);
-+	if (ret)
-+		return ret;
-+
-+	ret = regmap_read(easrc->regmap, REG_EASRC_CS2(mc->regbase), &regval[2]);
-+	if (ret)
-+		return ret;
+ 	struct dev_table_entry new;
+ 	struct amd_iommu *iommu;
+ 	struct iommu_dev_data *dev_data, *alias_data;
++	struct pci_dev *pdev = data;
+ 	u16 devid = pci_dev_id(pdev);
+ 	int ret = 0;
  
--	regval = snd_soc_component_read(component, mc->regbase);
-+	ret = regmap_read(easrc->regmap, REG_EASRC_CS3(mc->regbase), &regval[3]);
-+	if (ret)
-+		return ret;
-+
-+	ret = regmap_read(easrc->regmap, REG_EASRC_CS4(mc->regbase), &regval[4]);
-+	if (ret)
-+		return ret;
+@@ -432,9 +433,9 @@ static void clone_aliases(struct amd_iommu *iommu, struct device *dev)
+ 	 * part of the PCI DMA aliases if it's bus differs
+ 	 * from the original device.
+ 	 */
+-	clone_alias(pdev, iommu->pci_seg->alias_table[pci_dev_id(pdev)], NULL);
++	clone_alias(pdev, iommu->pci_seg->alias_table[pci_dev_id(pdev)], pdev);
  
--	ucontrol->value.integer.value[0] = regval;
-+	ret = regmap_read(easrc->regmap, REG_EASRC_CS5(mc->regbase), &regval[5]);
-+	if (ret)
-+		return ret;
- 
- 	return 0;
- }
-@@ -100,22 +130,62 @@ static int fsl_easrc_set_reg(struct snd_kcontrol *kcontrol,
- 	struct soc_mreg_control *mc =
- 		(struct soc_mreg_control *)kcontrol->private_value;
- 	struct fsl_asrc *easrc = snd_soc_component_get_drvdata(component);
--	unsigned int regval = ucontrol->value.integer.value[0];
--	bool changed;
-+	unsigned int *regval = (unsigned int *)ucontrol->value.iec958.status;
-+	bool changed, changed_all = false;
- 	int ret;
- 
--	ret = regmap_update_bits_check(easrc->regmap, mc->regbase,
--				       GENMASK(31, 0), regval, &changed);
--	if (ret != 0)
-+	ret = pm_runtime_resume_and_get(component->dev);
-+	if (ret)
- 		return ret;
- 
--	return changed;
-+	ret = regmap_update_bits_check(easrc->regmap, REG_EASRC_CS0(mc->regbase),
-+				       GENMASK(31, 0), regval[0], &changed);
-+	if (ret != 0)
-+		goto err;
-+	changed_all |= changed;
-+
-+	ret = regmap_update_bits_check(easrc->regmap, REG_EASRC_CS1(mc->regbase),
-+				       GENMASK(31, 0), regval[1], &changed);
-+	if (ret != 0)
-+		goto err;
-+	changed_all |= changed;
-+
-+	ret = regmap_update_bits_check(easrc->regmap, REG_EASRC_CS2(mc->regbase),
-+				       GENMASK(31, 0), regval[2], &changed);
-+	if (ret != 0)
-+		goto err;
-+	changed_all |= changed;
-+
-+	ret = regmap_update_bits_check(easrc->regmap, REG_EASRC_CS3(mc->regbase),
-+				       GENMASK(31, 0), regval[3], &changed);
-+	if (ret != 0)
-+		goto err;
-+	changed_all |= changed;
-+
-+	ret = regmap_update_bits_check(easrc->regmap, REG_EASRC_CS4(mc->regbase),
-+				       GENMASK(31, 0), regval[4], &changed);
-+	if (ret != 0)
-+		goto err;
-+	changed_all |= changed;
-+
-+	ret = regmap_update_bits_check(easrc->regmap, REG_EASRC_CS5(mc->regbase),
-+				       GENMASK(31, 0), regval[5], &changed);
-+	if (ret != 0)
-+		goto err;
-+	changed_all |= changed;
-+err:
-+	pm_runtime_put_autosuspend(component->dev);
-+
-+	if (ret != 0)
-+		return ret;
-+	else
-+		return changed_all;
+-	pci_for_each_dma_alias(pdev, clone_alias, NULL);
++	pci_for_each_dma_alias(pdev, clone_alias, pdev);
  }
  
- #define SOC_SINGLE_REG_RW(xname, xreg) \
- {	.iface = SNDRV_CTL_ELEM_IFACE_PCM, .name = (xname), \
- 	.access = SNDRV_CTL_ELEM_ACCESS_READWRITE, \
--	.info = snd_soc_info_xr_sx, .get = fsl_easrc_get_reg, \
-+	.info = fsl_easrc_iec958_info, .get = fsl_easrc_get_reg, \
- 	.put = fsl_easrc_set_reg, \
- 	.private_value = (unsigned long)&(struct soc_mreg_control) \
- 		{ .regbase = xreg, .regcount = 1, .nbits = 32, \
-@@ -146,30 +216,10 @@ static const struct snd_kcontrol_new fsl_easrc_snd_controls[] = {
- 	SOC_SINGLE_VAL_RW("Context 2 IEC958 Bits Per Sample", 2),
- 	SOC_SINGLE_VAL_RW("Context 3 IEC958 Bits Per Sample", 3),
- 
--	SOC_SINGLE_REG_RW("Context 0 IEC958 CS0", REG_EASRC_CS0(0)),
--	SOC_SINGLE_REG_RW("Context 1 IEC958 CS0", REG_EASRC_CS0(1)),
--	SOC_SINGLE_REG_RW("Context 2 IEC958 CS0", REG_EASRC_CS0(2)),
--	SOC_SINGLE_REG_RW("Context 3 IEC958 CS0", REG_EASRC_CS0(3)),
--	SOC_SINGLE_REG_RW("Context 0 IEC958 CS1", REG_EASRC_CS1(0)),
--	SOC_SINGLE_REG_RW("Context 1 IEC958 CS1", REG_EASRC_CS1(1)),
--	SOC_SINGLE_REG_RW("Context 2 IEC958 CS1", REG_EASRC_CS1(2)),
--	SOC_SINGLE_REG_RW("Context 3 IEC958 CS1", REG_EASRC_CS1(3)),
--	SOC_SINGLE_REG_RW("Context 0 IEC958 CS2", REG_EASRC_CS2(0)),
--	SOC_SINGLE_REG_RW("Context 1 IEC958 CS2", REG_EASRC_CS2(1)),
--	SOC_SINGLE_REG_RW("Context 2 IEC958 CS2", REG_EASRC_CS2(2)),
--	SOC_SINGLE_REG_RW("Context 3 IEC958 CS2", REG_EASRC_CS2(3)),
--	SOC_SINGLE_REG_RW("Context 0 IEC958 CS3", REG_EASRC_CS3(0)),
--	SOC_SINGLE_REG_RW("Context 1 IEC958 CS3", REG_EASRC_CS3(1)),
--	SOC_SINGLE_REG_RW("Context 2 IEC958 CS3", REG_EASRC_CS3(2)),
--	SOC_SINGLE_REG_RW("Context 3 IEC958 CS3", REG_EASRC_CS3(3)),
--	SOC_SINGLE_REG_RW("Context 0 IEC958 CS4", REG_EASRC_CS4(0)),
--	SOC_SINGLE_REG_RW("Context 1 IEC958 CS4", REG_EASRC_CS4(1)),
--	SOC_SINGLE_REG_RW("Context 2 IEC958 CS4", REG_EASRC_CS4(2)),
--	SOC_SINGLE_REG_RW("Context 3 IEC958 CS4", REG_EASRC_CS4(3)),
--	SOC_SINGLE_REG_RW("Context 0 IEC958 CS5", REG_EASRC_CS5(0)),
--	SOC_SINGLE_REG_RW("Context 1 IEC958 CS5", REG_EASRC_CS5(1)),
--	SOC_SINGLE_REG_RW("Context 2 IEC958 CS5", REG_EASRC_CS5(2)),
--	SOC_SINGLE_REG_RW("Context 3 IEC958 CS5", REG_EASRC_CS5(3)),
-+	SOC_SINGLE_REG_RW("Context 0 IEC958 CS", 0),
-+	SOC_SINGLE_REG_RW("Context 1 IEC958 CS", 1),
-+	SOC_SINGLE_REG_RW("Context 2 IEC958 CS", 2),
-+	SOC_SINGLE_REG_RW("Context 3 IEC958 CS", 3),
- };
- 
- /*
+ static void setup_aliases(struct amd_iommu *iommu, struct device *dev)
 -- 
 2.53.0
 
