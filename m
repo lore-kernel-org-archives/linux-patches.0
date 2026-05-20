@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39663F1AD9;
-	Wed, 20 May 2026 17:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3373F23A4;
+	Wed, 20 May 2026 17:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299499; cv=none; b=QZPMINvtzhR6mTzWxK6YJRPwpUSr123YWR0mby9swfd/jCHU6ISc/YKFTuwhZd4ljIGoGpoiZuLds4BG/NYSWmLBkeCzWXI4fIqF0/5C73US+PfIWYoV129Auplp7rgv0NQy0Dz34IMDsWzXWSFnnAAqCBEjU+il1t844j1yJoM=
+	t=1779299502; cv=none; b=Oghmq91Nxlb3c9sYbkBKY1K9lyFe4EoBJ3IckOqkDr35bW7Sm0b+/iQc5H3L1NcxI/6gkprNqUhs8O1Hxgm/2Unw6OqSGLcdzS5T0a/ecryJ+QS5tBsPdWBgvQrg3C53bCBe3LBZPg/Ld93+w4KzdtI8T7YFrJ0NBaHGZDnUbGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299499; c=relaxed/simple;
-	bh=TIRj1GifDqPGPNtWQT3DbuWrZ+zzbaB2LqYVv8cgrGs=;
+	s=arc-20240116; t=1779299502; c=relaxed/simple;
+	bh=dfA/dqqt+elDXVAtWAPLklYKwyhqlEbxjcyokH9tT88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMxtZvi4BWt/ncMQ9dAS81VkrnkxupvYvj0/At7euefpOCqyf8ov96UDDDPuLPZIx5N49j81T4iJFdjf8ge+BLas62JK0OH1NtDv2/PUkAK9YTHDx5NWWw5w4xiymAxpGnkHDClr5Ewt2m7gobBBT/827s12RrtGiA06ip9CK54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTtRrNZ8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UADIdOyjBrzvyTDNtQGt389w547Ih7+A5kWBhAU70b1Ij5HfE+OOKj+bRh42GE+KBrEbBBjXVWBIsB9zoFP+Hxkn6hcGU6V9Kz3EOqzVMz2sDJVIhdt0Jm4LLNadJ4M0ppLQRP0t6QrvmeWrTguqcNNYKQ5WHzrDajXzLPJv4+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gG5/mG6q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTtRrNZ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CF61F000E9;
-	Wed, 20 May 2026 17:51:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gG5/mG6q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2341F000E9;
+	Wed, 20 May 2026 17:51:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299497;
-	bh=ygzInL6wOqXBZFQQl5oXWSEs65cTNxnHAOb0QMQJ6fs=;
+	s=korg; t=1779299500;
+	bh=iEfqpM+s2NwV2Gv04Wvt0JABknFotIfuZDR/APHPKmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pTtRrNZ8qw97fKuIgMmDbgTQjIDdRY2q6S1oe7llu2pn5QL8W+crSLJZcboEUY8zv
-	 p808PVOHF2TR/xcmZM+ZCHu7RVe3mBzPAgpAhIBp7kzLgfhgz8mMJLHta1yxblJ+Di
-	 An1+sJODMzFldFSCTh1bbxqA2UfIY5WiwedPLPdo=
+	b=gG5/mG6q0B6y6YnKIfBf8jYQVsixPUuVDkxUE54vMDWLVoblz4R+sTo/A1Qss3ycm
+	 yXMIWf4kq4jiKC6yFcRODrBztHzsyfLFqKFrn1iX/W+T6nyFjpmgvVDCi8NYERs8yc
+	 zd6Vm4/rqOIAys4o+6C/0OpMaCM0lIMQOoPhzGlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Su Yue <glass.su@suse.com>,
 	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 793/957] md: factor bitmap creation away from sysfs handling
-Date: Wed, 20 May 2026 18:21:16 +0200
-Message-ID: <20260520162151.761963310@linuxfoundation.org>
+Subject: [PATCH 6.18 794/957] md/md-bitmap: split bitmap sysfs groups
+Date: Wed, 20 May 2026 18:21:17 +0200
+Message-ID: <20260520162151.783330531@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,172 +53,183 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai@fnnas.com>
 
-[ Upstream commit 8776d342cf8fa0b98ca5e6fb2d956966fb5ca364 ]
+[ Upstream commit aba3d6d6cb55c6e1116d1215140559dd7ecdf9a9 ]
 
-Factor bitmap creation and destruction into helpers that do not touch
-bitmap sysfs registration.
+Split the classic bitmap sysfs files into a common bitmap group with
+the location attribute and a separate internal bitmap group for the
+remaining files.
 
-This prepares the bitmap sysfs rework so callers such as the sysfs
-bitmap location path can create or destroy a bitmap backend without
-coupling that to sysfs group lifetime management.
+At the same time, convert bitmap operations from a single sysfs group
+to a sysfs group array so backends can share part of their sysfs
+layout while adding backend-specific attributes separately.
+
+Switch the bitmap sysfs helpers to use sysfs_update_groups() for the
+add and update path, and remove groups in reverse order so shared named
+groups are unmerged before the last group removes the directory.
+
+Also make bitmap operation lookup depend only on the currently selected
+bitmap id matching the installed backend. This prepares the lookup path
+for a later registered none backend.
 
 Reviewed-by: Su Yue <glass.su@suse.com>
-Link: https://lore.kernel.org/r/20260425024615.1696892-2-yukuai@fnnas.com
+Link: https://lore.kernel.org/r/20260425024615.1696892-3-yukuai@fnnas.com
 Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Stable-dep-of: f2926a533d03 ("md/md-bitmap: add a none backend for bitmap grow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 78 +++++++++++++++++++++++++++++++------------------
- 1 file changed, 49 insertions(+), 29 deletions(-)
+ drivers/md/md-bitmap.c   | 23 +++++++++++++++++++----
+ drivers/md/md-bitmap.h   |  2 +-
+ drivers/md/md-llbitmap.c |  7 ++++++-
+ drivers/md/md.c          | 21 ++++++++++++++-------
+ 4 files changed, 40 insertions(+), 13 deletions(-)
 
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 7bb56d0491a2f..7a96600949139 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -2956,8 +2956,12 @@ static struct md_sysfs_entry max_backlog_used =
+ __ATTR(max_backlog_used, S_IRUGO | S_IWUSR,
+        behind_writes_used_show, behind_writes_used_reset);
+ 
+-static struct attribute *md_bitmap_attrs[] = {
++static struct attribute *md_bitmap_common_attrs[] = {
+ 	&bitmap_location.attr,
++	NULL
++};
++
++static struct attribute *md_bitmap_internal_attrs[] = {
+ 	&bitmap_space.attr,
+ 	&bitmap_timeout.attr,
+ 	&bitmap_backlog.attr,
+@@ -2968,9 +2972,20 @@ static struct attribute *md_bitmap_attrs[] = {
+ 	NULL
+ };
+ 
+-static struct attribute_group md_bitmap_group = {
++static struct attribute_group md_bitmap_common_group = {
++	.name = "bitmap",
++	.attrs = md_bitmap_common_attrs,
++};
++
++static struct attribute_group md_bitmap_internal_group = {
+ 	.name = "bitmap",
+-	.attrs = md_bitmap_attrs,
++	.attrs = md_bitmap_internal_attrs,
++};
++
++static const struct attribute_group *bitmap_groups[] = {
++	&md_bitmap_common_group,
++	&md_bitmap_internal_group,
++	NULL,
+ };
+ 
+ static struct bitmap_operations bitmap_ops = {
+@@ -3014,7 +3029,7 @@ static struct bitmap_operations bitmap_ops = {
+ 	.set_pages		= bitmap_set_pages,
+ 	.free			= md_bitmap_free,
+ 
+-	.group			= &md_bitmap_group,
++	.groups			= bitmap_groups,
+ };
+ 
+ int md_bitmap_init(void)
+diff --git a/drivers/md/md-bitmap.h b/drivers/md/md-bitmap.h
+index b42a28fa83a0f..214f623c7e790 100644
+--- a/drivers/md/md-bitmap.h
++++ b/drivers/md/md-bitmap.h
+@@ -125,7 +125,7 @@ struct bitmap_operations {
+ 	void (*set_pages)(void *data, unsigned long pages);
+ 	void (*free)(void *data);
+ 
+-	struct attribute_group *group;
++	const struct attribute_group **groups;
+ };
+ 
+ /* the bitmap API */
+diff --git a/drivers/md/md-llbitmap.c b/drivers/md/md-llbitmap.c
+index 0526e742062ac..50eeddf7f539b 100644
+--- a/drivers/md/md-llbitmap.c
++++ b/drivers/md/md-llbitmap.c
+@@ -1562,6 +1562,11 @@ static struct attribute_group md_llbitmap_group = {
+ 	.attrs = md_llbitmap_attrs,
+ };
+ 
++static const struct attribute_group *md_llbitmap_groups[] = {
++	&md_llbitmap_group,
++	NULL,
++};
++
+ static struct bitmap_operations llbitmap_ops = {
+ 	.head = {
+ 		.type	= MD_BITMAP,
+@@ -1598,7 +1603,7 @@ static struct bitmap_operations llbitmap_ops = {
+ 	.dirty_bits		= llbitmap_dirty_bits,
+ 	.write_all		= llbitmap_write_all,
+ 
+-	.group			= &md_llbitmap_group,
++	.groups			= md_llbitmap_groups,
+ };
+ 
+ int md_llbitmap_init(void)
 diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 4520c485c0c06..3061370e959b3 100644
+index 3061370e959b3..213221abc44c3 100644
 --- a/drivers/md/md.c
 +++ b/drivers/md/md.c
-@@ -686,7 +686,25 @@ static void active_io_release(struct percpu_ref *ref)
+@@ -688,7 +688,7 @@ static void no_op(struct percpu_ref *r) {}
  
- static void no_op(struct percpu_ref *r) {}
- 
--static bool mddev_set_bitmap_ops(struct mddev *mddev)
-+static void md_bitmap_sysfs_add(struct mddev *mddev)
-+{
-+	if (sysfs_create_group(&mddev->kobj, mddev->bitmap_ops->group))
-+		pr_warn("md: cannot register extra bitmap attributes for %s\n",
-+			mdname(mddev));
-+	else
-+		/*
-+		 * Inform user with KOBJ_CHANGE about new bitmap
-+		 * attributes.
-+		 */
-+		kobject_uevent(&mddev->kobj, KOBJ_CHANGE);
-+}
-+
-+static void md_bitmap_sysfs_del(struct mddev *mddev)
-+{
-+	sysfs_remove_group(&mddev->kobj, mddev->bitmap_ops->group);
-+}
-+
-+static bool mddev_set_bitmap_ops_nosysfs(struct mddev *mddev)
+ static void md_bitmap_sysfs_add(struct mddev *mddev)
  {
- 	struct bitmap_operations *old = mddev->bitmap_ops;
+-	if (sysfs_create_group(&mddev->kobj, mddev->bitmap_ops->group))
++	if (sysfs_update_groups(&mddev->kobj, mddev->bitmap_ops->groups))
+ 		pr_warn("md: cannot register extra bitmap attributes for %s\n",
+ 			mdname(mddev));
+ 	else
+@@ -701,16 +701,23 @@ static void md_bitmap_sysfs_add(struct mddev *mddev)
+ 
+ static void md_bitmap_sysfs_del(struct mddev *mddev)
+ {
+-	sysfs_remove_group(&mddev->kobj, mddev->bitmap_ops->group);
++	int nr_groups = 0;
++
++	for (nr_groups = 0; mddev->bitmap_ops->groups[nr_groups]; nr_groups++)
++		;
++
++	while (--nr_groups >= 1)
++		sysfs_unmerge_group(&mddev->kobj,
++				    mddev->bitmap_ops->groups[nr_groups]);
++	sysfs_remove_group(&mddev->kobj, mddev->bitmap_ops->groups[0]);
+ }
+ 
+ static bool mddev_set_bitmap_ops_nosysfs(struct mddev *mddev)
+ {
+-	struct bitmap_operations *old = mddev->bitmap_ops;
  	struct md_submodule_head *head;
-@@ -710,18 +728,6 @@ static bool mddev_set_bitmap_ops(struct mddev *mddev)
  
- 	mddev->bitmap_ops = (void *)head;
- 	xa_unlock(&md_submodule);
--
--	if (!mddev_is_dm(mddev) && mddev->bitmap_ops->group) {
--		if (sysfs_create_group(&mddev->kobj, mddev->bitmap_ops->group))
--			pr_warn("md: cannot register extra bitmap attributes for %s\n",
--				mdname(mddev));
--		else
--			/*
--			 * Inform user with KOBJ_CHANGE about new bitmap
--			 * attributes.
--			 */
--			kobject_uevent(&mddev->kobj, KOBJ_CHANGE);
--	}
- 	return true;
+-	if (mddev->bitmap_id == ID_BITMAP_NONE ||
+-	    (old && old->head.id == mddev->bitmap_id))
++	if (mddev->bitmap_ops &&
++	    mddev->bitmap_ops->head.id == mddev->bitmap_id)
+ 		return true;
  
- err:
-@@ -729,15 +735,6 @@ static bool mddev_set_bitmap_ops(struct mddev *mddev)
- 	return false;
- }
+ 	xa_lock(&md_submodule);
+@@ -6454,7 +6461,7 @@ static int md_bitmap_create(struct mddev *mddev)
+ 	if (err)
+ 		return err;
  
--static void mddev_clear_bitmap_ops(struct mddev *mddev)
--{
--	if (!mddev_is_dm(mddev) && mddev->bitmap_ops &&
+-	if (!mddev_is_dm(mddev) && mddev->bitmap_ops->group)
++	if (!mddev_is_dm(mddev) && mddev->bitmap_ops->groups)
+ 		md_bitmap_sysfs_add(mddev);
+ 
+ 	return 0;
+@@ -6472,7 +6479,7 @@ static void md_bitmap_destroy_nosysfs(struct mddev *mddev)
+ static void md_bitmap_destroy(struct mddev *mddev)
+ {
+ 	if (!mddev_is_dm(mddev) && mddev->bitmap_ops &&
 -	    mddev->bitmap_ops->group)
--		sysfs_remove_group(&mddev->kobj, mddev->bitmap_ops->group);
--
--	mddev->bitmap_ops = NULL;
--}
--
- int mddev_init(struct mddev *mddev)
- {
- 	int err = 0;
-@@ -6404,7 +6401,7 @@ static enum md_submodule_id md_bitmap_get_id_from_sb(struct mddev *mddev)
- 	return id;
- }
++	    mddev->bitmap_ops->groups)
+ 		md_bitmap_sysfs_del(mddev);
  
--static int md_bitmap_create(struct mddev *mddev)
-+static int md_bitmap_create_nosysfs(struct mddev *mddev)
- {
- 	enum md_submodule_id orig_id = mddev->bitmap_id;
- 	enum md_submodule_id sb_id;
-@@ -6413,7 +6410,7 @@ static int md_bitmap_create(struct mddev *mddev)
- 	if (mddev->bitmap_id == ID_BITMAP_NONE)
- 		return -EINVAL;
- 
--	if (!mddev_set_bitmap_ops(mddev))
-+	if (!mddev_set_bitmap_ops_nosysfs(mddev))
- 		return -ENOENT;
- 
- 	err = mddev->bitmap_ops->create(mddev);
-@@ -6425,7 +6422,7 @@ static int md_bitmap_create(struct mddev *mddev)
- 	 * doesn't match, and mdadm is not the latest version to set
- 	 * bitmap_type, set bitmap_ops based on the disk version.
- 	 */
--	mddev_clear_bitmap_ops(mddev);
-+	mddev->bitmap_ops = NULL;
- 
- 	sb_id = md_bitmap_get_id_from_sb(mddev);
- 	if (sb_id == ID_BITMAP_NONE || sb_id == orig_id)
-@@ -6435,27 +6432,50 @@ static int md_bitmap_create(struct mddev *mddev)
- 		mdname(mddev), orig_id, sb_id);
- 
- 	mddev->bitmap_id = sb_id;
--	if (!mddev_set_bitmap_ops(mddev)) {
-+	if (!mddev_set_bitmap_ops_nosysfs(mddev)) {
- 		mddev->bitmap_id = orig_id;
- 		return -ENOENT;
- 	}
- 
- 	err = mddev->bitmap_ops->create(mddev);
- 	if (err) {
--		mddev_clear_bitmap_ops(mddev);
-+		mddev->bitmap_ops = NULL;
- 		mddev->bitmap_id = orig_id;
- 	}
- 
- 	return err;
- }
- 
--static void md_bitmap_destroy(struct mddev *mddev)
-+static int md_bitmap_create(struct mddev *mddev)
-+{
-+	int err;
-+
-+	err = md_bitmap_create_nosysfs(mddev);
-+	if (err)
-+		return err;
-+
-+	if (!mddev_is_dm(mddev) && mddev->bitmap_ops->group)
-+		md_bitmap_sysfs_add(mddev);
-+
-+	return 0;
-+}
-+
-+static void md_bitmap_destroy_nosysfs(struct mddev *mddev)
- {
- 	if (!md_bitmap_registered(mddev))
- 		return;
- 
- 	mddev->bitmap_ops->destroy(mddev);
--	mddev_clear_bitmap_ops(mddev);
-+	mddev->bitmap_ops = NULL;
-+}
-+
-+static void md_bitmap_destroy(struct mddev *mddev)
-+{
-+	if (!mddev_is_dm(mddev) && mddev->bitmap_ops &&
-+	    mddev->bitmap_ops->group)
-+		md_bitmap_sysfs_del(mddev);
-+
-+	md_bitmap_destroy_nosysfs(mddev);
- }
- 
- int md_run(struct mddev *mddev)
+ 	md_bitmap_destroy_nosysfs(mddev);
 -- 
 2.53.0
 
