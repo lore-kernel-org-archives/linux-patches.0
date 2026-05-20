@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387E5375ACB;
-	Wed, 20 May 2026 16:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF28375ACB;
+	Wed, 20 May 2026 16:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294999; cv=none; b=LTrKF8BVwhLnJ+vEnMzieCRiVIaP1lhHTh+jLttXU+3F224DNIG/0BV/xHPi2YycYJ9xkDqy8mxnlagUo5UvpVktS69oJlC0gDLcMu2bizG7/maUfDYr6HTukYv3J8d3D047vqHl3SDpyCnFYm72ngl4g9zfUom3Us7OY81SAEE=
+	t=1779295001; cv=none; b=D6sBtiDc65KQS/Dq+oXaef0DcWxo65oepX59cR+BMNsnjzkrfhKyO//agCgn372+3eWz8tTxqjPP+DkoXBrVHX4KQvHzbd7+o/+/oWqxrQox2y8mTBqTU8w6cb6nM5VMCR2WlfScezacNujfLcsWCj7skkd92U4CfBw/RYEf/rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294999; c=relaxed/simple;
-	bh=n0ybVxE0/cu+3jY/LidqQuDblRYCjIOBSV6hp7e0Hnk=;
+	s=arc-20240116; t=1779295001; c=relaxed/simple;
+	bh=bcO688jFA5sMK3+6HZitp+iw44zQpdzsyf6qUtDj6Wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jAL9JCnJfZsHzRJeINXBslset05hAC2e+0w5AzMNLNAkIr5AGR1iOZT19iPvYwbg88lVT+6DsQG/KVlALCeZjp+h5NVzmjn6+qFV2rVKLUfxBVbNCVUYnxKFy1j9p5x7Ps3ad89W8LNqO8XVy1rn0LfcDiqm2+Mv7579rjjaTj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iyGgRtIl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q+9Mqypt+DQouop1ODEfKfxm+FsryNej6gVCukWUsd5haDvG5RWZBxmieRFubmxhvSH7u8GESuzrKR39M0UpKo51zpyMl/ly6jduUFHVZDXdOYg8yI1EGWzF3GX5d3zamKEugX6wmIZ35QTSa9QOb4mvWoDixeEigBTH3zDPI4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMNcW83p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iyGgRtIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8631F000E9;
-	Wed, 20 May 2026 16:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMNcW83p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0170C1F000E9;
+	Wed, 20 May 2026 16:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294997;
-	bh=F8gAANpuckwEWdkvbO52SvXl8S2L5RjqjUWA8DLg9ao=;
+	s=korg; t=1779295000;
+	bh=ZdCGm7/iV84o//A07vUbWFW6iFYPp8h0FqBJrUvjl4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iyGgRtIlshpuhxCF+qNB81RyvsQDct4ylPjHMMDfvHTyjotjx5t3opDKzYk0FYjKH
-	 4dX+FX854vpZDz2lVlTVaHS5SRHMtWZYMFnhubmBhVf1JdIPD0K+y/7Dp/YPky+Xtb
-	 eIYOezK4n1Iq3S97GT6JJZSc+wzmkL1YRsorXQpg=
+	b=uMNcW83pJhwNOoOKXjk7Pk6kFv8ODV5zCgvUWHuGZ2Sx91BQCVTaBqepHLLOw5UFH
+	 R9DI+JaxjoLkech+qbYymWzx+RAmCpjuWjymouKo0FRWPPkihdKZUygWeAASzigU+F
+	 kQizZgnU7KcopTvdZERPG3SlFUL/jyLwC1JB4BQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming-Hung Tsai <mtsai@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0250/1146] dm cache: fix null-deref with concurrent writes in passthrough mode
-Date: Wed, 20 May 2026 18:08:20 +0200
-Message-ID: <20260520162153.892172047@linuxfoundation.org>
+Subject: [PATCH 7.0 0251/1146] dm cache: fix write path cache coherency in passthrough mode
+Date: Wed, 20 May 2026 18:08:21 +0200
+Message-ID: <20260520162153.914660321@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,26 +53,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit 7d1f98d668ee34c1d15bdc0420fdd062f24a27c0 ]
+[ Upstream commit 0c5eef0aad508231d8e43ff8392692925e131b68 ]
 
-In passthrough mode, when dm-cache starts to invalidate a cache
-entry and bio prison cell lock fails due to concurrent write to
-the same cached block, mg->cell remains NULL. The error path in
-invalidate_complete() attempts to unlock and free the cell
-unconditionally, causing a NULL pointer dereference:
-
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 0 UID: 0 PID: 134 Comm: fio Not tainted 6.19.0-rc7 #3 PREEMPT
-RIP: 0010:dm_cell_unlock_v2+0x3f/0x210
-<snip>
-Call Trace:
- invalidate_complete+0xef/0x430
- map_bio+0x130f/0x1a10
- cache_map+0x320/0x6b0
- __map_bio+0x458/0x510
- dm_submit_bio+0x40e/0x16d0
- __submit_bio+0x419/0x870
-<snip>
+In passthrough mode, dm-cache defers write bio submission until cache
+invalidation completes to maintain existing coherency, requiring the
+target map function to return DM_MAPIO_SUBMITTED. The current map_bio()
+returns DM_MAPIO_REMAPPED, violating the required ordering constraint.
 
 Reproduce steps:
 
@@ -85,7 +71,7 @@ dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
 dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
 /dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
 
-2. Promote the first data block into cache
+2. Promote the first data block into the cache
 
 fio --filename=/dev/mapper/cache --name=populate --rw=write --bs=4k \
 --direct=1 --size=64k
@@ -97,38 +83,51 @@ dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
 /dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
 dmsetup resume cache
 
-4. Write to the first cached block concurrently
+4. Write to the first data block, and check io ordering using ftrace
 
-fio --filename=/dev/mapper/cache --name test --rw=randwrite --bs=4k \
---randrepeat=0 --direct=1 --numjobs=2 --size 64k
+echo 1 > /sys/kernel/debug/tracing/events/block/block_bio_queue/enable
+echo 1 > /sys/kernel/debug/tracing/events/block/block_bio_complete/enable
+echo 1 > /sys/kernel/debug/tracing/events/block/block_rq_complete/enable
+fio --filename=/dev/mapper/cache --name=test --rw=write --bs=64k \
+--direct=1 --size 64k
 
-Fix by checking if mg->cell is valid before attempting to unlock it.
+5. ftrace logs show that write operations to the cache origin (252:2)
+   and metadata operations (252:0) are unsynchronized: the origin write
+   occurs before metadata commit.
+
+ <snip>
+       fio-146  [000] .....  420.139562: block_bio_queue: 252,3 WS 0 + 128 [fio]
+       fio-146  [000] .....  420.149395: block_bio_queue: 252,2 WS 0 + 128 [fio]
+       fio-146  [000] .....  420.149763: block_bio_queue: 8,32 WS 262144 + 128 [fio]
+       fio-146  [000] dNh1.  420.151446: block_rq_complete: 8,32 WS () 262144 + 128 be,0,4 [0]
+       fio-146  [000] dNh1.  420.152731: block_bio_complete: 252,2 WS 0 + 128 [0]
+       fio-146  [000] dNh1.  420.154229: block_bio_complete: 252,3 WS 0 + 128 [0]
+ kworker/0:0-9  [000] .....  420.160530: block_bio_queue: 252,0 W 408 + 8 [kworker/0:0]
+ kworker/0:0-9  [000] .....  420.161641: block_bio_queue: 8,32 W 408 + 8 [kworker/0:0]
+ kworker/0:0-9  [000] .....  420.162533: block_bio_queue: 252,0 W 416 + 8 [kworker/0:0]
+ kworker/0:0-9  [000] .....  420.162821: block_bio_queue: 8,32 W 416 + 8 [kworker/0:0]
+ <snip>
 
 Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
 Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/md/dm-cache-target.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index 935ab79b1d0cd..ae1edffd14eaa 100644
+index ae1edffd14eaa..b608e88acd511 100644
 --- a/drivers/md/dm-cache-target.c
 +++ b/drivers/md/dm-cache-target.c
-@@ -1462,8 +1462,10 @@ static void invalidate_complete(struct dm_cache_migration *mg, bool success)
- 	struct cache *cache = mg->cache;
- 
- 	bio_list_init(&bios);
--	if (dm_cell_unlock_v2(cache->prison, mg->cell, &bios))
--		free_prison_cell(cache, mg->cell);
-+	if (mg->cell) {
-+		if (dm_cell_unlock_v2(cache->prison, mg->cell, &bios))
-+			free_prison_cell(cache, mg->cell);
-+	}
- 
- 	if (!success && mg->overwrite_bio)
- 		bio_io_error(mg->overwrite_bio);
+@@ -1703,6 +1703,7 @@ static int map_bio(struct cache *cache, struct bio *bio, dm_oblock_t block,
+ 				bio_drop_shared_lock(cache, bio);
+ 				atomic_inc(&cache->stats.demotion);
+ 				invalidate_start(cache, cblock, block, bio);
++				return DM_MAPIO_SUBMITTED;
+ 			} else
+ 				remap_to_origin_clear_discard(cache, bio, block);
+ 		} else {
 -- 
 2.53.0
 
