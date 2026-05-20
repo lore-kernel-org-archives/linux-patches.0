@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C873C3458;
-	Wed, 20 May 2026 16:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903313CC9E9;
+	Wed, 20 May 2026 16:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294679; cv=none; b=HPWjROAr3GDN7QbM4LzvOt/G6X7TQzACPRrwZvRb5SmloO+82seBVJbbZA/YW1VQOoUnCVGzkI6K7EIdumurHnf/HJg5bSiixbevT7hb50BHkSdBR3utlJHwuceka1xPVzIMuF0TIrSCjLjzh7Od/QiP/LfCmVb1qjAwvcBMgUc=
+	t=1779294680; cv=none; b=Rh7QZ7OMfYLTHUoK8KJvhm1V3E0vkqUESA2zXNVoWlIRjWEQRShzNFNuHLIzDhupMWkyaNvsXbdggSsDIpfHJapzki8D9ak9iMeEVOvxB7VqLSFC62aLOOBOuaEXTrTHsvqM9HH9mLyyLhROM9oXJTvU3ux8kJ2Omjtr1eqDwu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294679; c=relaxed/simple;
-	bh=jlX4HIRSkuQ2qm9aR6g7x9qMVFCc+cDOqfggpZCS+wg=;
+	s=arc-20240116; t=1779294680; c=relaxed/simple;
+	bh=Gmvux0jRIJqCAZHFRkxbJ/Dm/6HTkxpe4kZ9GI2YMug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DPoBleHf69rwSOeKCqgdz315ZxajR7MJ683maYbwiyfYODOD14WRR4u77tj4uTM1nrhWvwjKZ2OgFM2DxQbNQhQNtL8koAx5yS30GKwNhhArVVrxgrjLqDCXa/G86lmuWxx/Soc/KfiQVbFz/P7uAxKApVPInq1qFRiHRA6IwO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dyi72T4w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eTtnQosP9YLT5w9Yp6fAg8jlB32+8UXs1qArZki1hWaptEFa9GaB+p/UPo7SYR1NU3hmjKmaTMa4lYX3FW4eWLMboeiLwB1yzDqGfLXWT5OKkf56mbqifd6nh3/gttY+xhMienohle4oSU2HnBfoigtyDMWqrlCcupzSgAI7hvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YNNTjVK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dyi72T4w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5832C1F000E9;
-	Wed, 20 May 2026 16:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YNNTjVK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021291F00893;
+	Wed, 20 May 2026 16:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294676;
-	bh=B1QIgliA26mV4bg4vdCkXaa+5oc/o6O8b/Yau1pjnOQ=;
+	s=korg; t=1779294679;
+	bh=202LZ7FkOgKBzIOE0vhQcM7mCkSrfsZZWCqWgf2QIA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dyi72T4w464MHv+7uxl7xjPqQWQQ3jp/Mw2nMpHYlCD3IqGT3iHPrY86mjH1XJJeP
-	 9mxsKF/7WIF1ESMPG97PPmAN/zhz64SdBEt1Gm/bqWsJ3aJWEZA5puI4QlN8y5QAiR
-	 6gnz6igT+TlC6CJjlcyEJxIgQ/XGopU+vjM3stZs=
+	b=2YNNTjVKJKdm8Ci8dW4hwyA3rzf1ZDJM1VK2lam3aQAurbZQ0ipc9Nv6tgUrUIwON
+	 bWAKgy+s/0udYnCWXvcxtVlNqpurTlCLf+rqQNxg2lR0CC1bk3VCUr23tv58VBVQWv
+	 bhe2VYci5Vfqj4k6qlw7D4ZqYgRyZqqnYU0iBFEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Felix Fietkau <nbd@nbd.name>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0123/1146] wifi: mt76: mt7996: fix use-after-free bugs in mt7996_mac_dump_work()
-Date: Wed, 20 May 2026 18:06:13 +0200
-Message-ID: <20260520162151.113889879@linuxfoundation.org>
+Subject: [PATCH 7.0 0132/1146] selftests/bpf: Fix sockmap_multi_channels reliability
+Date: Wed, 20 May 2026 18:06:22 +0200
+Message-ID: <20260520162151.312656839@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,51 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit c8f62f73bbced3a79894655bdb0b625462d956fc ]
+[ Upstream commit d9d7125e445dc06c2d9bd3dbd070dcbcd41a540f ]
 
-When the mt7996 pci chip is detaching, the mt7996_crash_data is
-released in mt7996_coredump_unregister(). However, the work item
-dump_work may still be running or pending, leading to UAF bugs
-when the already freed crash_data is dereferenced again in
-mt7996_mac_dump_work().
+Previously I added a FIONREAD test for sockmap, but it can occasionally
+fail in CI [1].
 
-The race condition can occur as follows:
+The test sends 10 bytes in two segments (2 + 8). For UDP, FIONREAD only
+reports the length of the first datagram, not the total queued data.
+The original code used recv_timeout() expecting all 10 bytes, but under
+high system load, the second datagram may not yet be processed by the
+protocol stack, so recv would only return the first 2-byte datagram,
+causing a size mismatch failure.
 
-CPU 0 (removal path)               | CPU 1 (workqueue)
-mt7996_pci_remove()                | mt7996_sys_recovery_set()
- mt7996_unregister_device()        |  mt7996_reset()
-  mt7996_coredump_unregister()     |   queue_work()
-   vfree(dev->coredump.crash_data) | mt7996_mac_dump_work()
-                                   |  crash_data-> // UAF
+Fix this by receiving exactly the expected bytes (matching FIONREAD) in
+the first recv. The remaining datagram is then consumed in a second recv
+block, which is only reachable for UDP since TCP's expected already
+equals sizeof(buf).
 
-Fix this by ensuring dump_work is properly canceled before
-the crash_data is deallocated. Add cancel_work_sync() in
-mt7996_unregister_device() to synchronize with any pending
-or executing dump work.
+Test:
+./test_progs -a sockmap_basic
+410/1   sockmap_basic/sockmap create_update_free:OK
+...
+Summary: 1/35 PASSED, 0 SKIPPED, 0 FAILED
 
-Fixes: 878161d5d4a4 ("wifi: mt76: mt7996: enable coredump support")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://patch.msgid.link/20260131024731.18741-1-duoming@zju.edu.cn
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[1] https://github.com/kernel-patches/bpf/actions/runs/22919385910/job/66515395423
+
+Cc: Jiayuan Chen <jiayuan.chen@linux.dev>
+Fixes: 17e2ce02bf56 ("selftests/bpf: Add tests for FIONREAD and copied_seq")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://lore.kernel.org/r/20260312072549.6766-1-jiayuan.chen@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../selftests/bpf/prog_tests/sockmap_basic.c    | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index 20d4c8d5b3e89..6a0c199ce3622 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -1741,6 +1741,7 @@ int mt7996_register_device(struct mt7996_dev *dev)
+diff --git a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
+index dd3c757859f6b..d2846579285f2 100644
+--- a/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
++++ b/tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
+@@ -1298,10 +1298,23 @@ static void test_sockmap_multi_channels(int sotype)
+ 	avail = wait_for_fionread(p1, expected, IO_TIMEOUT_SEC);
+ 	ASSERT_EQ(avail, expected, "ioctl(FIONREAD) full return");
  
- void mt7996_unregister_device(struct mt7996_dev *dev)
- {
-+	cancel_work_sync(&dev->dump_work);
- 	cancel_work_sync(&dev->wed_rro.work);
- 	mt7996_unregister_phy(mt7996_phy3(dev));
- 	mt7996_unregister_phy(mt7996_phy2(dev));
+-	recvd = recv_timeout(p1, rcv, sizeof(rcv), MSG_DONTWAIT, 1);
+-	if (!ASSERT_EQ(recvd, sizeof(buf), "recv_timeout(p1)") ||
++	recvd = recv_timeout(p1, rcv, expected, MSG_DONTWAIT, 1);
++	if (!ASSERT_EQ(recvd, expected, "recv_timeout(p1)") ||
+ 	    !ASSERT_OK(memcmp(buf, rcv, recvd), "data mismatch"))
+ 		goto end;
++
++	/* process remaining data for udp if secondary data is available */
++	expected = sizeof(buf) - expected;
++	if (expected) {
++		avail = wait_for_fionread(p1, expected, IO_TIMEOUT_SEC);
++		ASSERT_EQ(avail, expected, "second ioctl(FIONREAD) full return");
++
++		recvd = recv_timeout(p1, rcv, expected, MSG_DONTWAIT, 1);
++		if (!ASSERT_EQ(recvd, expected, "second recv_timeout(p1)") ||
++		    !ASSERT_OK(memcmp(buf + sizeof(buf) - expected, rcv, recvd),
++			       "second data mismatch"))
++			goto end;
++	}
+ end:
+ 	if (c0 >= 0)
+ 		close(c0);
 -- 
 2.53.0
 
