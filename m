@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FADE3F7ABC;
-	Wed, 20 May 2026 18:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EBE37DE8A;
+	Wed, 20 May 2026 18:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301703; cv=none; b=pfUbM8FbNPNti3iUkvOeGKF4PvFMix5BHGGtGxmA4qSy+tQ9R8yNv5/7+rXtsI+1uMqdij3Ll+/mlzlAfv+sOKXdJJhH/+bLjDW04QsUo7vnom3IoEW0Ght5qQykFw2+u/aim/A1lUUICBLvwwHHdjXB4KJLBQq54RGCDDr8Xl0=
+	t=1779301706; cv=none; b=WhNUz0V3GPUvqcqpFH0zNSTIafpVkFtBAfYVOqSwmJfscqs9mm4HDNxuKYZoBfdNAH3hKLk6WMivZYdYsjA4jAMSVNrh5sPwOW+PnH7y6a5K4Ol8fpzIA0xrYF29UrkZCaZkK6P0PCnooeC5yIZsjD3UI+JOGO8euzPhMOgYQYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301703; c=relaxed/simple;
-	bh=It9YfZcBTt5ozID7Jfg83bD12PXHu8ijwuV6KoKwm6U=;
+	s=arc-20240116; t=1779301706; c=relaxed/simple;
+	bh=51tfWaPowrlTlzuItnz2jwxMI0bEfOm4JPPRrX04NKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M/sCv1KHXqoEkrfe1Lq2dQjlsrjRcg/Ykgx1yxFhclyqMXF5yzNhUGzXgjng+aiqmX1VHyA44peoCNuJgpVUcXL91tgXfSWIvJ4nL0lfqnGmdZACaLgWLPRf9tWqG7nO5waDJXY8jahtnItuyvZqcWl04CiGArkzCPHJlZcuKko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dM4gn52j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G4MsFRD3hhrE3ihYPc+CQgJTaowtbWQ3xVBxCXvwaqlUZo5ro7mtm/yb+Z9SNwxwcWya6z5R5qbKakNvlFbicxvJaAZvABFFWA3N8/5UTe3mXzO2fc0yw+Gg1AK/5h1Qk3WQESMta9R+8kfyHDXYaevH9a9wc3Dz49J8duMWaKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8TJqX6r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dM4gn52j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C675F1F000E9;
-	Wed, 20 May 2026 18:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8TJqX6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9BB1F000E9;
+	Wed, 20 May 2026 18:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301702;
-	bh=IjJ553zKZ/LYNyCN4ogHGtRo5aYwdVvyAOdsvuRrAYo=;
+	s=korg; t=1779301704;
+	bh=fFqxO0+DqhKq262CgPb+clJFkzS05l21OLU0jfX48G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dM4gn52jrONQ7dfDHhfVH3aaoEyh3PGm7Vq6z/6bISpfh+jLBVEnnFOqXKgjxmdV8
-	 ZkIN3crJDLeyR7uGGqGdFGeeqgEFRCV84pvmgT7nzsoiRo5jBhiWvtoh+lNMoazR6V
-	 GVE8MoSJ4bMViCCXiFaDU9NK1FuVfwxsAlP7LoQA=
+	b=v8TJqX6r+SQZyRWkTyDifhthRKzsFFY55TN20sXW4JsExvbYe8cqcKSa8mQb1JoSD
+	 7q2nJ2HzRkeBt+ac3bx1eixU32F3V8X/emYwQ0gGGpE0jeKaBGZhagI7Iop3pwhOh+
+	 h00W5hX4TEivB238Vjs7N2qamtIj78QphhwxH698=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.12 613/666] netfilter: nf_conntrack_sip: get helper before allocating expectation
-Date: Wed, 20 May 2026 18:23:44 +0200
-Message-ID: <20260520162124.557608413@linuxfoundation.org>
+	Ricardo Robaina <rrobaina@redhat.com>,
+	Sergio Correia <scorreia@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.12 614/666] audit: fix incorrect inheritable capability in CAPSET records
+Date: Wed, 20 May 2026 18:23:45 +0200
+Message-ID: <20260520162124.579082564@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -50,50 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Sergio Correia <scorreia@redhat.com>
 
-commit eb6317739b1ea3ab28791e1f91b24781905fa815 upstream.
+commit e4a640475e43f406fdfd56d370b1f34b0cbbc18d upstream.
 
-process_register_request() allocates an expectation and then checks
-whether a conntrack helper is available. If helper lookup fails, the
-function returns early and the allocated expectation is left behind.
+__audit_log_capset() records the effective capability set into the
+inheritable field due to a copy-paste error. Every CAPSET audit
+record therefore reports cap_pi (process inheritable) with the value
+of cap_effective instead of cap_inheritable.
 
-Reorder the code to fetch and validate helper before calling
-nf_ct_expect_alloc(). This keeps the logic simpler and removes the leak
-path while preserving existing behavior.
+This silently corrupts audit data used for compliance and forensic
+analysis: an attacker who modifies inheritable capabilities to
+prepare for a privilege-escalating exec would have the change masked
+in the audit trail.
 
-Fixes: e14575fa7529 ("netfilter: nf_conntrack: use rcu accessors where needed")
+The bug has been present since the original introduction of CAPSET
+audit records in 2008.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: e68b75a027bb ("When the capset syscall is used it is not possible for audit to record the actual capbilities being added/removed.  This patch adds a new record type which emits the target pid and the eff, inh, and perm cap sets.")
+Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Sergio Correia <scorreia@redhat.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_sip.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/auditsc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -1367,6 +1367,10 @@ static int process_register_request(stru
- 		goto store_cseq;
- 	}
+--- a/kernel/auditsc.c
++++ b/kernel/auditsc.c
+@@ -2845,7 +2845,7 @@ void __audit_log_capset(const struct cre
  
-+	helper = rcu_dereference(nfct_help(ct)->helper);
-+	if (!helper)
-+		return NF_DROP;
-+
- 	exp = nf_ct_expect_alloc(ct);
- 	if (!exp) {
- 		nf_ct_helper_log(skb, ct, "cannot alloc expectation");
-@@ -1377,10 +1381,6 @@ static int process_register_request(stru
- 	if (sip_direct_signalling)
- 		saddr = &ct->tuplehash[!dir].tuple.src.u3;
- 
--	helper = rcu_dereference(nfct_help(ct)->helper);
--	if (!helper)
--		return NF_DROP;
--
- 	nf_ct_expect_init(exp, SIP_EXPECT_SIGNALLING, nf_ct_l3num(ct),
- 			  saddr, &daddr, proto, NULL, &port);
- 	exp->timeout.expires = sip_timeout * HZ;
+ 	context->capset.pid = task_tgid_nr(current);
+ 	context->capset.cap.effective   = new->cap_effective;
+-	context->capset.cap.inheritable = new->cap_effective;
++	context->capset.cap.inheritable = new->cap_inheritable;
+ 	context->capset.cap.permitted   = new->cap_permitted;
+ 	context->capset.cap.ambient     = new->cap_ambient;
+ 	context->type = AUDIT_CAPSET;
 
 
