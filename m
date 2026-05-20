@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6093F3C3458;
-	Wed, 20 May 2026 16:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0332036A352;
+	Wed, 20 May 2026 16:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294696; cv=none; b=FDwZ67Cf7Oc+jPcERM8gC600bZHXr+CfwJeap3KDOFRxtJE45qZODDXMSMGYba8lyLDg6Hu4odZKMR9N1NZ6tEi57Kadvm5CiQo7BcKmFOZI06yDWGROs59guPy6OUyKCgywHkQi0CB3ml9GE/KgQ6r1DXlfMJxXkSjOFwuwAoo=
+	t=1779294699; cv=none; b=P1zzdG+7BlTmL9rnrxoW57ylTJeXi1XmAmF7PYfejkssnhvLDg8tQ0Q+ENOUPVAW2u57RHT3xnHXr/j+qnZrYuBaBukytlytPWUZYcx1DU1Bar7nSQjuDQRefVfc6RW0A3UwT0MW28SncThXOaM+B3UxSRqFhm/8uXYJwmboIms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294696; c=relaxed/simple;
-	bh=DK0IlJoTvGfgycoXf8NQ48p/zaT9nFJ0okpf+JApnz4=;
+	s=arc-20240116; t=1779294699; c=relaxed/simple;
+	bh=TRwKEexaDKNNAX3ELrWHqmjZdd2twbS91TsIputCXGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QbQhGr2wn3V6eKKT+GbTPN30by85aCN+1jxaKR66lkaQe/2ur2gUbCIawEyjYL+RFnRjb77FtKRWepeGabymXKXsEdCVoUtd8MhA31cOXkC2O5gtT0LjQyyH1Q97MerE1AbTwr8uLhs+9B931nAkTI5KhRXwteHYu1v3FdhhGI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqAj887i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OdAGSfmNMi3Kl1gAOsHwYBgnm8uv2fzuFLHnVVnLBE4my5xSHy8wt6gBbs8RnIY23qJ6/VVVZL7zfDWzoXf+nRFFjkakuLtUsAsWaKjY56eUIA1TllYWnP6tNaLCMM2dlcU1yK0HcvWaIcxII1ITwuzgl0bNsSVyja+RtJY3aeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8z4Y94a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqAj887i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59F41F000E9;
-	Wed, 20 May 2026 16:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8z4Y94a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB551F00894;
+	Wed, 20 May 2026 16:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294695;
-	bh=yolM2qp7mZZsM6feCcudGihGxpHjbhc16SPdO7RhJdQ=;
+	s=korg; t=1779294697;
+	bh=wFLZNB4YAGML7eGv5AHHPljoBiDnCQ4mAzwJQqp9RYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WqAj887imqx5ItKHGTwGskJTrW6PvWTzKRd0uLjUUVssHsZMQkD7pCZqMDLHkstBf
-	 TB93dcyYaErfhJJvUsR4hvliXV6Ii8GReo3tXwyyePvrrtmlgL7PhO5HfzAiRCWe5E
-	 zcRK7bbqF4ugp8JQOh9DXSHs3tj/qXiBGYqN0/zY=
+	b=H8z4Y94acGrV08vLse1ttIQtdkV+P4KNpw+YxCPzy4BmaBE7uUz6sn0leDb21tqCF
+	 vU7PmIDmGZr6ANeElugjqibS1ztbLMs7nMJAC8VOruMbVGjlzKwm/yx0e/cLjkNRis
+	 XgTdEPlbHlupwwe26q67PNLcUBkzObeppib9nebk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Alex Williamson <alex@shazbot.org>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0138/1146] wifi: rtw89: phy: fix uninitialized variable access in rtw89_phy_cfo_set_crystal_cap()
-Date: Wed, 20 May 2026 18:06:28 +0200
-Message-ID: <20260520162151.440322526@linuxfoundation.org>
+Subject: [PATCH 7.0 0139/1146] drivers/vfio_pci_core: Change PXD_ORDER check from switch case to if/else block
+Date: Wed, 20 May 2026 18:06:29 +0200
+Message-ID: <20260520162151.461152411@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,51 +48,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit 047cddf88c611e616d49a00311d4722e46286234 ]
+[ Upstream commit 948b71aa81cd89b222942db6055e8d9c51c54e78 ]
 
-In the rtw89_phy_cfo_set_crystal_cap() function, for chips other than
-RTL8852A/RTL8851B, the values read by rtw89_mac_read_xtal_si() are
-stored into the local variables sc_xi_val and sc_xo_val. If either
-read fails, these variables remain uninitialized, they are later
-used to update cfo->crystal_cap and in debug print statements. This
-can lead to undefined behavior.
+Architectures like PowerPC uses runtime defined values for
+PMD_ORDER/PUD_ORDER. This is because it can use either RADIX or HASH MMU
+at runtime using kernel cmdline. So the pXd_index_size is not known at
+compile time. Without this fix, when we add huge pfn support on powerpc
+in the next patch, vfio_pci_core driver compilation can fail with the
+following errors.
 
-Fix the issue by initializing sc_xi_val and sc_xo_val to zero,
-like is implemented in vendor driver.
+  CC [M]  drivers/vfio/vfio_main.o
+  CC [M]  drivers/vfio/group.o
+  CC [M]  drivers/vfio/container.o
+  CC [M]  drivers/vfio/virqfd.o
+  CC [M]  drivers/vfio/vfio_iommu_spapr_tce.o
+  CC [M]  drivers/vfio/pci/vfio_pci_core.o
+  CC [M]  drivers/vfio/pci/vfio_pci_intrs.o
+  CC [M]  drivers/vfio/pci/vfio_pci_rdwr.o
+  CC [M]  drivers/vfio/pci/vfio_pci_config.o
+  CC [M]  drivers/vfio/pci/vfio_pci.o
+  AR      kernel/built-in.a
+../drivers/vfio/pci/vfio_pci_core.c: In function ‘vfio_pci_vmf_insert_pfn’:
+../drivers/vfio/pci/vfio_pci_core.c:1678:9: error: case label does not reduce to an integer constant
+ 1678 |         case PMD_ORDER:
+      |         ^~~~
+../drivers/vfio/pci/vfio_pci_core.c:1682:9: error: case label does not reduce to an integer constant
+ 1682 |         case PUD_ORDER:
+      |         ^~~~
+make[6]: *** [../scripts/Makefile.build:289: drivers/vfio/pci/vfio_pci_core.o] Error 1
+make[6]: *** Waiting for unfinished jobs....
+make[5]: *** [../scripts/Makefile.build:546: drivers/vfio/pci] Error 2
+make[5]: *** Waiting for unfinished jobs....
+make[4]: *** [../scripts/Makefile.build:546: drivers/vfio] Error 2
+make[3]: *** [../scripts/Makefile.build:546: drivers] Error 2
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 8379fa611536 ("rtw89: 8852c: add write/read crystal function in CFO tracking")
-Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260323140613.1615574-1-a.velichayshiy@ispras.ru
+Fixes: f9e54c3a2f5b7 ("vfio/pci: implement huge_fault support")
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Reviewed-by: Alex Williamson <alex@shazbot.org>
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/b155e19993ee1f5584c72050192eb468b31c5029.1773058761.git.ritesh.list@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/phy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vfio/pci/vfio_pci_core.c | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
-index ee6ab2136b9a7..ee8a36003e5da 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.c
-+++ b/drivers/net/wireless/realtek/rtw89/phy.c
-@@ -4860,7 +4860,7 @@ static void rtw89_phy_cfo_set_crystal_cap(struct rtw89_dev *rtwdev,
- {
- 	struct rtw89_cfo_tracking_info *cfo = &rtwdev->cfo_tracking;
- 	const struct rtw89_chip_info *chip = rtwdev->chip;
--	u8 sc_xi_val, sc_xo_val;
-+	u8 sc_xi_val = 0, sc_xo_val = 0;
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index 460852f79f29b..3fea064d00de2 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -1670,21 +1670,16 @@ vm_fault_t vfio_pci_vmf_insert_pfn(struct vfio_pci_core_device *vdev,
+ 	if (vdev->pm_runtime_engaged || !__vfio_pci_memory_enabled(vdev))
+ 		return VM_FAULT_SIGBUS;
  
- 	if (!force && cfo->crystal_cap == crystal_cap)
- 		return;
+-	switch (order) {
+-	case 0:
++	if (!order)
+ 		return vmf_insert_pfn(vmf->vma, vmf->address, pfn);
+-#ifdef CONFIG_ARCH_SUPPORTS_PMD_PFNMAP
+-	case PMD_ORDER:
++
++	if (IS_ENABLED(CONFIG_ARCH_SUPPORTS_PMD_PFNMAP) && order == PMD_ORDER)
+ 		return vmf_insert_pfn_pmd(vmf, pfn, false);
+-#endif
+-#ifdef CONFIG_ARCH_SUPPORTS_PUD_PFNMAP
+-	case PUD_ORDER:
++
++	if (IS_ENABLED(CONFIG_ARCH_SUPPORTS_PUD_PFNMAP) && order == PUD_ORDER)
+ 		return vmf_insert_pfn_pud(vmf, pfn, false);
+-		break;
+-#endif
+-	default:
+-		return VM_FAULT_FALLBACK;
+-	}
++
++	return VM_FAULT_FALLBACK;
+ }
+ EXPORT_SYMBOL_GPL(vfio_pci_vmf_insert_pfn);
+ 
 -- 
 2.53.0
 
