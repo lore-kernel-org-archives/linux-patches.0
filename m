@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E433403F4;
-	Wed, 20 May 2026 17:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9295E347512;
+	Wed, 20 May 2026 17:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297419; cv=none; b=pzNYRM9AZi1EwIjReSzqLBWIPHRXGNjnf/HWlN2Zd4KeK02m72Z6QgAoafVBWKExh6ykeJwKLq5yE3ghoaIWJsk7McrSn9SLBSxWqMVlznblbjgJDq+n0tO1FTNJCViN8XqZ91/oTsQcw5DXqRBMoLvR0jRro/bYCXWVAKSngCs=
+	t=1779297421; cv=none; b=GsFi3F31qTNbcmihWHBRx1MqTvIB8ORXAcClXWBYsMFqngu03rTYy0ZJ7KOHNCMpVCXBqemSqx1OvlIpoD7qkWzsnqD72l6v48Mc1HNgtihwYgpfuR5e/4q+sQuwr+A3DPmV4Fe+MX54qhJQ1cVxRru7G35KQVgAsR8clcUb5xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297419; c=relaxed/simple;
-	bh=2WCeXEIeAlyMxVuvq2w52vVrk+c/s8USXJTF/EEzxvE=;
+	s=arc-20240116; t=1779297421; c=relaxed/simple;
+	bh=+Clh+3mq9bBX+HFglWyytg4i4VEeiJGCPLSHifec3FQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tsXNHL+JN49+FPU5+jHI3PqItuh/1PDAvcTldMtjIjoWvDMS4z/HSxPWsuN/O/Zsmfuc1a3a7l/X7RaHY5SizvWSd0tqKWImTKSVepId0ZHJBg2w6bniaZFmX1p/oT5wGUuLNpT9m7/WzfjJgQg263IbZPKqW1ILhvv44fFtTmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVw4k6tT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IAqGpvI9uInmxHme/2/ZdvRy4ozYcxp6BY+7KPl3gSxfuyyZBcQtGNRlO+RMruRdvi/2iPeiKRmPHENJ1lRiNxw6kBKCFeK8UdwNu09UlkOMZIMMkFgRFP3hQwGHOYtbuxinop5iww+XGYzVrzrlVFF/59uOPrgrczNcEG1SoTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSkMwOUX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVw4k6tT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EA61F000E9;
-	Wed, 20 May 2026 17:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSkMwOUX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6C21F000E9;
+	Wed, 20 May 2026 17:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297417;
-	bh=HQyz4tQ10m4Azo6GxUEtqy7y2EQEIqHrSEI2qeCqK6o=;
+	s=korg; t=1779297420;
+	bh=eyg0IkLSEi2VeJvdbtB8jnd8xRTWZ2mthapPLCcTFfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HVw4k6tTiCrLOzqfpW5NguSAFkxHylr93++3Dg39ArEs7a2BfQOQrTzYzpDvH295p
-	 d078GtXBtU6jc5VpnvHw7VCBkUx59wZDKMY88J5sTCVpavObHS2eb2rFMzfnJrXGX+
-	 dbBsVn+EvYNGTdd/gaokO94YUiPno4iDBH826R0Y=
+	b=bSkMwOUXhzNKKAlcKvPSA3zYU5DgaOe0U7TBNTw+aGU9TClmWv0WUeEZdHEXuNMtd
+	 mahTwwoxuNliXYjuH94fiSD34bLXFtcvqr55zW6TDbgcgRTrMBWNFp9mkPaffWh8wj
+	 /f5SNbaI3l38WdhQwsGva3j30SSWJ88KItuBRhUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangshiguang <yangshiguang@xiaomi.com>,
 	Gui-Dong Han <hanguidong02@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 024/957] debugfs: check for NULL pointer in debugfs_create_str()
-Date: Wed, 20 May 2026 18:08:27 +0200
-Message-ID: <20260520162135.083289057@linuxfoundation.org>
+Subject: [PATCH 6.18 025/957] debugfs: fix placement of EXPORT_SYMBOL_GPL for debugfs_create_str()
+Date: Wed, 20 May 2026 18:08:28 +0200
+Message-ID: <20260520162135.104765652@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,48 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 31de83980d3764d784f79ff1bc93c42b324f4013 ]
+[ Upstream commit 4afc929c0f74c4f22b055a82b371d50586da58ca ]
 
-Passing a NULL pointer to debugfs_create_str() leads to a NULL pointer
-dereference when the debugfs file is read. Following upstream
-discussions, forbid the creation of debugfs string files with NULL
-pointers. Add a WARN_ON() to expose offending callers and return early.
+The EXPORT_SYMBOL_GPL() for debugfs_create_str was placed incorrectly
+away from the function definition. Move it immediately below the
+debugfs_create_str() function where it belongs.
 
-Fixes: 9af0440ec86e ("debugfs: Implement debugfs_create_str()")
-Reported-by: yangshiguang <yangshiguang@xiaomi.com>
-Closes: https://lore.kernel.org/lkml/2025122221-gag-malt-75ba@gregkh/
-Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d60b59b96795 ("debugfs: Export debugfs_create_str symbol")
 Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260323085930.88894-2-hanguidong02@gmail.com
+Link: https://patch.msgid.link/20260323085930.88894-3-hanguidong02@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/debugfs/file.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/debugfs/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index 3ec3324c20603..252fca572eb76 100644
+index 252fca572eb76..880a8a9deacfe 100644
 --- a/fs/debugfs/file.c
 +++ b/fs/debugfs/file.c
-@@ -1127,7 +1127,7 @@ static const struct file_operations fops_str_wo = {
-  *          directory dentry if set.  If this parameter is %NULL, then the
-  *          file will be created in the root of the debugfs filesystem.
-  * @value: a pointer to the variable that the file should read to and write
-- *         from.
-+ *         from. This pointer and the string it points to must not be %NULL.
-  *
-  * This function creates a file in debugfs with the given name that
-  * contains the value of the variable @value.  If the @mode variable is so
-@@ -1136,6 +1136,9 @@ static const struct file_operations fops_str_wo = {
- void debugfs_create_str(const char *name, umode_t mode,
- 			struct dentry *parent, char **value)
- {
-+	if (WARN_ON(!value || !*value))
-+		return;
-+
+@@ -1047,7 +1047,6 @@ ssize_t debugfs_read_file_str(struct file *file, char __user *user_buf,
+ 
+ 	return ret;
+ }
+-EXPORT_SYMBOL_GPL(debugfs_create_str);
+ 
+ static ssize_t debugfs_write_file_str(struct file *file, const char __user *user_buf,
+ 				      size_t count, loff_t *ppos)
+@@ -1142,6 +1141,7 @@ void debugfs_create_str(const char *name, umode_t mode,
  	debugfs_create_mode_unsafe(name, mode, parent, value, &fops_str,
  				   &fops_str_ro, &fops_str_wo);
  }
++EXPORT_SYMBOL_GPL(debugfs_create_str);
+ 
+ static ssize_t read_file_blob(struct file *file, char __user *user_buf,
+ 			      size_t count, loff_t *ppos)
 -- 
 2.53.0
 
