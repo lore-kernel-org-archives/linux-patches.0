@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123E73F39D7;
-	Wed, 20 May 2026 17:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B0730675C;
+	Wed, 20 May 2026 17:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299935; cv=none; b=AD942dJdx0oSlFtWWsUWdl/BzobkPUR9pAAim8tWrLcO54hg7ohCFDJ8hpoftYfDazjyLro+artfQ7BTR0Bt5rvckTcACR8VUWrRHvEbqm2GU3+qOKtUbsi+p5KKMXj7E8foD+2feGSuDXfdPKtGNhyNwCRwVBYPgjGF72GLhE0=
+	t=1779299937; cv=none; b=V6i66sjK4J2sYdQfEC5BJzuocdoufjJYD2NGXtK3NOUhNW/Te8gb/G4Oku4alHmZGQcMUdPsEZG66jrD8q9TGRqDJ/apEgvSVnh27ScJ8v45/z9ayH+J9HLJNIvREb346VnEKq3rkdhzFHuewSyc0IEXTuRBnMnv1Ng9OdryHrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299935; c=relaxed/simple;
-	bh=afVZMrF8bapjY8D9/Yz86BuF9tR80ik/ZgcVlEQKZaU=;
+	s=arc-20240116; t=1779299937; c=relaxed/simple;
+	bh=Jj2DZ3GIYaiYcIB+FrG+aaXoP5Z1Nahb+jHnfXFu6zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kTO3nvIZTcDFsoIrIXJQ45jeQx68UNhZAieJ7VbJ0B7OI7WruUKBRxSM1GPVdiL/X6qiMKoNAwkcc4WhREKJJUfAdsR/+0BchH7kiRalZxeSngxAVrfZIVGCKMJ9mi8Bu1/jyfVxxa/pZZjvnza3piTUVpcdi3dppba6Zu+tD0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMmrptxr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TgYWqgqHGRUoQDhQryaKMpN/xi1BsOdVAiKwcKvNDcKruLiXMUEQefV0V52b5RMhnrOUKEMB2VHnAX2cTXTSaujO6GwjF3qz5sT7UGQj7J4x4rf9v4+FO7Dfz4PrsIqseWWdOuPzj0HYqzumjM7TMfbhp/tOwKY8kjsc7A6RQ7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZWCr2eI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMmrptxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B931F000E9;
-	Wed, 20 May 2026 17:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZWCr2eI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE4D1F000E9;
+	Wed, 20 May 2026 17:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299934;
-	bh=WjAEi5pxFPc+Hw7GhbQQOQPz5KKmvBgKQa9xGtOQHOU=;
+	s=korg; t=1779299936;
+	bh=KmII14Q4iAsySlNF3g37ylRU9+NXih6R0HpwrGXsy/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UMmrptxr/qf/wLBDhPDVdA1BvGWUMnSIgQYXVBM4fJtNmNjzJMj+Qn3Rw0pAvXchd
-	 jUa0a+23jVXX38+cb98nqvt+yUrU8g/WbcRPJk0ly0iz4X3DiRRw0DMpjL+zYomqL/
-	 65lU9d27QRXTS7ucWARIOiRAyCIc1trep9Mis6m4=
+	b=vZWCr2eIu+LHP0RC9wSg8exRrlop1XQeqCKLHolHKCjDVoos5U29dtJk4r3rwgmvW
+	 plYEqS/GMuM5zyXk4Lszg6hf+Oo8+LQ5mw5JwN4m/+1f0N0IrnShE/063kESdE/4qR
+	 DVgS/dO2P+O74IA6MDLjtJNdCJt30/j861aEkgvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	Maarten Lankhorst <dev@lankhorst.se>,
+	Tejun Heo <tj@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Christian Koenig <christian.koenig@amd.com>,
+	dri-devel@lists.freedesktop.org,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.18 943/957] drm/xe/dma-buf: fix UAF with retry loop
-Date: Wed, 20 May 2026 18:23:46 +0200
-Message-ID: <20260520162155.049388588@linuxfoundation.org>
+	Maarten Lankhorst <dev@lankhrost.se>
+Subject: [PATCH 6.18 944/957] drm/ttm: Convert -EAGAIN from dmem_cgroup_try_charge to -ENOSPC
+Date: Wed, 20 May 2026 18:23:47 +0200
+Message-ID: <20260520162155.072238355@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,136 +57,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit 155a372a1cc50fa93387c5d3cdfd614a61e1afd1 upstream.
+commit 591711b32681a04b57d00c2a404658f8419a081c upstream.
 
-Retry doesn't work here, since bo will be freed on error, leading to
-UAF. However, now that we do the alloc & init before the attach, we can
-now combine this as one unit and have the init do the alloc for us. This
-should make the retry safe.
+dmem_cgroup_try_charge() returns -EAGAIN when the cgroup limit is
+hit and the charge fails. TTM has no concept of -EAGAIN from resource
+allocation; -ENOSPC is the canonical error meaning "no space, try
+eviction". Convert at the source in ttm_resource_alloc() so no caller
+needs to handle an unexpected error code, and clean up the now-redundant
+-EAGAIN check in ttm_bo_alloc_resource().
 
-Reported by Sashiko.
+Without this, -EAGAIN escaping ttm_resource_alloc() during an eviction
+walk causes the walk to terminate early instead of continuing to the
+next candidate.
 
-v2: Fix up the error unwind (CI)
-
-Closes: https://sashiko.dev/#/patchset/20260506184332.86743-2-matthew.auld%40intel.com
-Fixes: eb289a5f6cc6 ("drm/xe: Convert xe_dma_buf.c for exhaustive eviction")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.18+
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://patch.msgid.link/20260508102635.149172-4-matthew.auld@intel.com
-(cherry picked from commit 479669418253e0f27f8cf5db01a731352ea592e7)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Friedrich Vock <friedrich.vock@gmx.de>
+Cc: Maarten Lankhorst <dev@lankhorst.se>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.14+
+Fixes: 2b624a2c1865 ("drm/ttm: Handle cgroup based eviction in TTM")
+Assisted-by: GitHub_Copilot:claude-sonnet-4.6
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Maarten Lankhorst <dev@lankhrost.se>
+Link: https://patch.msgid.link/20260508160920.230339-1-thomas.hellstrom@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_dma_buf.c |   49 +++++++++-------------------------------
- 1 file changed, 12 insertions(+), 37 deletions(-)
+ drivers/gpu/drm/ttm/ttm_bo.c       |    2 +-
+ drivers/gpu/drm/ttm/ttm_resource.c |    5 ++++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_dma_buf.c
-+++ b/drivers/gpu/drm/xe/xe_dma_buf.c
-@@ -227,16 +227,8 @@ struct dma_buf *xe_gem_prime_export(stru
- 	return buf;
- }
+--- a/drivers/gpu/drm/ttm/ttm_bo.c
++++ b/drivers/gpu/drm/ttm/ttm_bo.c
+@@ -739,7 +739,7 @@ static int ttm_bo_alloc_resource(struct
+ 		may_evict = (force_space && place->mem_type != TTM_PL_SYSTEM);
+ 		ret = ttm_resource_alloc(bo, place, res, force_space ? &limit_pool : NULL);
+ 		if (ret) {
+-			if (ret != -ENOSPC && ret != -EAGAIN) {
++			if (ret != -ENOSPC) {
+ 				dmem_cgroup_pool_state_put(limit_pool);
+ 				return ret;
+ 			}
+--- a/drivers/gpu/drm/ttm/ttm_resource.c
++++ b/drivers/gpu/drm/ttm/ttm_resource.c
+@@ -384,8 +384,11 @@ int ttm_resource_alloc(struct ttm_buffer
  
--/*
-- * Takes ownership of @storage: on success it is transferred to the returned
-- * drm_gem_object; on failure it is freed before returning the error.
-- * This matches the contract of xe_bo_init_locked() which frees @storage on
-- * its error paths, so callers need not (and must not) free @storage after
-- * this call.
-- */
- static struct drm_gem_object *
--xe_dma_buf_init_obj(struct drm_device *dev, struct xe_bo *storage,
--		    struct dma_buf *dma_buf)
-+xe_dma_buf_create_obj(struct drm_device *dev, struct dma_buf *dma_buf)
- {
- 	struct dma_resv *resv = dma_buf->resv;
- 	struct xe_device *xe = to_xe_device(dev);
-@@ -247,10 +239,8 @@ xe_dma_buf_init_obj(struct drm_device *d
- 	int ret = 0;
- 
- 	dummy_obj = drm_gpuvm_resv_object_alloc(&xe->drm);
--	if (!dummy_obj) {
--		xe_bo_free(storage);
-+	if (!dummy_obj)
- 		return ERR_PTR(-ENOMEM);
--	}
- 
- 	dummy_obj->resv = resv;
- 	xe_validation_guard(&ctx, &xe->val, &exec, (struct xe_val_flags) {}, ret) {
-@@ -259,8 +249,7 @@ xe_dma_buf_init_obj(struct drm_device *d
- 		if (ret)
- 			break;
- 
--		/* xe_bo_init_locked() frees storage on error */
--		bo = xe_bo_init_locked(xe, storage, NULL, resv, NULL, dma_buf->size,
-+		bo = xe_bo_init_locked(xe, NULL, NULL, resv, NULL, dma_buf->size,
- 				       0, /* Will require 1way or 2way for vm_bind */
- 				       ttm_bo_type_sg, XE_BO_FLAG_SYSTEM, &exec);
- 		drm_exec_retry_on_contention(&exec);
-@@ -311,7 +300,6 @@ struct drm_gem_object *xe_gem_prime_impo
- 	const struct dma_buf_attach_ops *attach_ops;
- 	struct dma_buf_attachment *attach;
- 	struct drm_gem_object *obj;
--	struct xe_bo *bo;
- 
- 	if (dma_buf->ops == &xe_dmabuf_ops) {
- 		obj = dma_buf->priv;
-@@ -326,22 +314,14 @@ struct drm_gem_object *xe_gem_prime_impo
- 		}
+ 	if (man->cg) {
+ 		ret = dmem_cgroup_try_charge(man->cg, bo->base.size, &pool, ret_limit_pool);
+-		if (ret)
++		if (ret) {
++			if (ret == -EAGAIN)
++				ret = -ENOSPC;
+ 			return ret;
++		}
  	}
  
--	bo = xe_bo_alloc();
--	if (IS_ERR(bo))
--		return ERR_CAST(bo);
--
- 	/*
--	 * xe_dma_buf_init_obj() takes ownership of the raw bo, so do not touch
--	 * on fail, since it will already take care of cleanup. On success we
--	 * still need to drop the ref, if something later fails.
--	 *
--	 * In addition this needs to happen before the attach, since
--	 * it will create a new attachment for this, and add it to the list of
--	 * attachments, at which point it is globally visible, and at any point
--	 * the export side can call into on invalidate_mappings callback, which
--	 * require a working object.
-+	 * This needs to happen before the attach, since it will create a new
-+	 * attachment for this, and add it to the list of attachments, at which
-+	 * point it is globally visible, and at any point the export side can
-+	 * call into on invalidate_mappings callback, which require a working
-+	 * object.
- 	 */
--	obj = xe_dma_buf_init_obj(dev, bo, dma_buf);
-+	obj = xe_dma_buf_create_obj(dev, dma_buf);
- 	if (IS_ERR(obj))
- 		return obj;
- 
-@@ -351,20 +331,15 @@ struct drm_gem_object *xe_gem_prime_impo
- 		attach_ops = test->attach_ops;
- #endif
- 
--	attach = dma_buf_dynamic_attach(dma_buf, dev->dev, attach_ops, &bo->ttm.base);
-+	attach = dma_buf_dynamic_attach(dma_buf, dev->dev, attach_ops, obj);
- 	if (IS_ERR(attach)) {
--		obj = ERR_CAST(attach);
--		goto out_err;
-+		xe_bo_put(gem_to_xe_bo(obj));
-+		return ERR_CAST(attach);
- 	}
- 
- 	get_dma_buf(dma_buf);
- 	obj->import_attach = attach;
- 	return obj;
--
--out_err:
--	xe_bo_put(bo);
--
--	return obj;
- }
- 
- #if IS_ENABLED(CONFIG_DRM_XE_KUNIT_TEST)
+ 	ret = man->func->alloc(man, bo, place, res_ptr);
 
 
