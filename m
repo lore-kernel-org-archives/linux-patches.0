@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5880E39B483;
-	Wed, 20 May 2026 17:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016513F54D1;
+	Wed, 20 May 2026 17:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299567; cv=none; b=Rn7/wLls6kd0lcPbXB5EKVbjgGBenEXSCnB25Q0qMxJGuO6oJ5voM4+HpO7HJrNxLI7aPuU/WYJuWKMYTHWqHjr0XsGIppxerv/iHsF20VTXcNf/LxcCktGioRWcj+wZfYywDA6au3OZF3/nU7QupqYmjUZDnrMbEseszemqDGE=
+	t=1779299570; cv=none; b=OZNqXd0bF4trlAS8wXl+l/RcHHdl7bUAth8OBHyXXNp7rljoJVBbbkuIZLnjKQry5i6E22k8m8ma1dGmNGNuQsS6FR1aSWj0jRNtvJ+ZqRUhnY50cP+Bt+N8QIsT1AloUx92FBY4YiNk4yutvzHgxRJObZv/B3qAlmlutXLwLk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299567; c=relaxed/simple;
-	bh=252haq5RdNGqIqfXGIZMsMw854rsBTdz+bnmvlgcTvw=;
+	s=arc-20240116; t=1779299570; c=relaxed/simple;
+	bh=eQiTRXDChfW3yO7JF3uvQoqEpQoDr68XbyDR4+jo36Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kqVeKmHL3MZXVRilcdxEYsmob20dXpqVmwBi5paEdVTqVyE7+s7xbxvNMUyzenpLLqcVsHv8EMZ1/ULZqvrexQSzpaor8glF6KrzclSZUu8abyLPyyT0C6d8RJuj5ncSjPcKquH8tqBT+8a3Ax/chlei+1xJa0opzek0iT0JWuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZGMa+3a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=O9xFKH4ONUTRScgCQhd6AiYjxpxVx9QjGF/GplnegsY8TZ98bqNHEUGTT+jLJ/XXR34ykSPJ+9PmEezfLCkpKUTy3JDhVex5Y8IRtw9YPLOlBhLA7t2ekZcO81AT52rLNlKghIwB3ANmVTp+3ZdmxniCfu7w8sayr6IKz3rETbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbWRkg3F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZGMa+3a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0981F000E9;
-	Wed, 20 May 2026 17:52:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbWRkg3F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D531F000E9;
+	Wed, 20 May 2026 17:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299566;
-	bh=MGb1EqYWy/wzFFCxnZrAGyxyCie1JDPwl2XgVght2s0=;
+	s=korg; t=1779299568;
+	bh=GBgFlJDt6exBJyBxKM1qiESQqCphvwvBJj04WOex8Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HZGMa+3aCNUYeRTneo2rWrp97RzLGVgt7s1LzMOqSIRo6beth1oyLRPVVyKNWZHSZ
-	 zk2lteoWlsjQu3IbL6h8J4pDkg+8LZ4Z+l9GqwG9S4mXODDHbW4lZbWJi2Ddjx+Ut0
-	 se1jQuIMrVLiS39dyJUB29LlT4+rQ2exd203e+sQ=
+	b=CbWRkg3FQMuiK78upzfwtoZqIyYrlfkmIBmcGaY/VDYEn/if5MN9G7epFN75fCNcM
+	 WroXrAuxPws2Z23U79qdotuFiDF0AqdcVF/NHxF/ltmnh57gPnqR/g+/vrYcj4imAz
+	 PzDHsZptEkPBdXcxfQFfeTF1z36Gh9FhXJJ+OCWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 821/957] net/sched: sch_cake: annotate data-races in cake_dump_stats() (III)
-Date: Wed, 20 May 2026 18:21:44 +0200
-Message-ID: <20260520162152.372994576@linuxfoundation.org>
+Subject: [PATCH 6.18 822/957] net/sched: sch_cake: annotate data-races in cake_dump_stats() (V)
+Date: Wed, 20 May 2026 18:21:45 +0200
+Message-ID: <20260520162152.395254557@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -55,132 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 276a98a434964088fccd4745db5b34d6e831e358 ]
+[ Upstream commit a6c95b833dc17e84d16a8ac0f40fd0931616a52d ]
 
 cake_dump_stats() runs without qdisc spinlock being held.
 
-In this third patch, I add READ_ONCE()/WRITE_ONCE() annotations
-for the following fields:
-
-- packets
-- tin_dropped
-- tin_ecn_mark
-- ack_drops
-- peak_delay
-- avge_delay
-- base_delay
-
-Other annotations are added in following patches, to ease code review.
+In this final patch, I add READ_ONCE()/WRITE_ONCE() annotations
+for cparams.target and cparams.interval.
 
 Fixes: 046f6fd5daef ("sched: Add Common Applications Kept Enhanced (cake) qdisc")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Acked-by: "Toke Høiland-Jørgensen" <toke@toke.dk>
-Link: https://patch.msgid.link/20260427083606.459355-4-edumazet@google.com
+Link: https://patch.msgid.link/20260427083606.459355-6-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 38 ++++++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+ net/sched/sch_cake.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index 1a2023cd55109..7b97f6b57cb17 100644
+index 7b97f6b57cb17..f2ad946a519c2 100644
 --- a/net/sched/sch_cake.c
 +++ b/net/sched/sch_cake.c
-@@ -1590,7 +1590,7 @@ static unsigned int cake_drop(struct Qdisc *sch, struct sk_buff **to_free)
- 	sch->qstats.backlog -= len;
+@@ -2305,10 +2305,11 @@ static void cake_set_rate(struct cake_tin_data *b, u64 rate, u32 mtu,
  
- 	flow->dropped++;
--	b->tin_dropped++;
-+	WRITE_ONCE(b->tin_dropped, b->tin_dropped + 1);
+ 	byte_target_ns = (byte_target * rate_ns) >> rate_shft;
  
- 	if (q->rate_flags & CAKE_FLAG_INGRESS)
- 		cake_advance_shaper(q, b, skb, now, true);
-@@ -1808,7 +1808,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			numsegs++;
- 			slen += segs->len;
- 			q->buffer_used += segs->truesize;
--			b->packets++;
-+			WRITE_ONCE(b->packets, b->packets + 1);
- 		}
+-	b->cparams.target = max((byte_target_ns * 3) / 2, target_ns);
+-	b->cparams.interval = max(rtt_est_ns +
+-				     b->cparams.target - target_ns,
+-				     b->cparams.target * 2);
++	WRITE_ONCE(b->cparams.target,
++		   max((byte_target_ns * 3) / 2, target_ns));
++	WRITE_ONCE(b->cparams.interval,
++		   max(rtt_est_ns + b->cparams.target - target_ns,
++		       b->cparams.target * 2));
+ 	b->cparams.mtu_time = byte_target_ns;
+ 	b->cparams.p_inc = 1 << 24; /* 1/256 */
+ 	b->cparams.p_dec = 1 << 20; /* 1/4096 */
+@@ -2938,9 +2939,9 @@ static int cake_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ 		PUT_TSTAT_U32(BACKLOG_BYTES, b->tin_backlog);
  
- 		/* stats */
-@@ -1832,7 +1832,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			ack = cake_ack_filter(q, flow);
- 
- 		if (ack) {
--			b->ack_drops++;
-+			WRITE_ONCE(b->ack_drops, b->ack_drops + 1);
- 			sch->qstats.drops++;
- 			ack_pkt_len = qdisc_pkt_len(ack);
- 			b->bytes += ack_pkt_len;
-@@ -1848,7 +1848,7 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		}
- 
- 		/* stats */
--		b->packets++;
-+		WRITE_ONCE(b->packets, b->packets + 1);
- 		b->bytes	    += len - ack_pkt_len;
- 		b->backlogs[idx]    += len - ack_pkt_len;
- 		b->tin_backlog      += len - ack_pkt_len;
-@@ -2191,7 +2191,7 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
- 			b->tin_deficit -= len;
- 		}
- 		flow->dropped++;
--		b->tin_dropped++;
-+		WRITE_ONCE(b->tin_dropped, b->tin_dropped + 1);
- 		qdisc_tree_reduce_backlog(sch, 1, qdisc_pkt_len(skb));
- 		qdisc_qstats_drop(sch);
- 		kfree_skb_reason(skb, reason);
-@@ -2199,16 +2199,18 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
- 			goto retry;
- 	}
- 
--	b->tin_ecn_mark += !!flow->cvars.ecn_marked;
-+	WRITE_ONCE(b->tin_ecn_mark, b->tin_ecn_mark + !!flow->cvars.ecn_marked);
- 	qdisc_bstats_update(sch, skb);
- 
- 	/* collect delay stats */
- 	delay = ktime_to_ns(ktime_sub(now, cobalt_get_enqueue_time(skb)));
--	b->avge_delay = cake_ewma(b->avge_delay, delay, 8);
--	b->peak_delay = cake_ewma(b->peak_delay, delay,
--				  delay > b->peak_delay ? 2 : 8);
--	b->base_delay = cake_ewma(b->base_delay, delay,
--				  delay < b->base_delay ? 2 : 8);
-+	WRITE_ONCE(b->avge_delay, cake_ewma(b->avge_delay, delay, 8));
-+	WRITE_ONCE(b->peak_delay,
-+		   cake_ewma(b->peak_delay, delay,
-+			     delay > b->peak_delay ? 2 : 8));
-+	WRITE_ONCE(b->base_delay,
-+		   cake_ewma(b->base_delay, delay,
-+			     delay < b->base_delay ? 2 : 8));
- 
- 	len = cake_advance_shaper(q, b, skb, now, false);
- 	flow->deficit -= len;
-@@ -2940,17 +2942,17 @@ static int cake_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ 		PUT_TSTAT_U32(TARGET_US,
+-			      ktime_to_us(ns_to_ktime(b->cparams.target)));
++			      ktime_to_us(ns_to_ktime(READ_ONCE(b->cparams.target))));
  		PUT_TSTAT_U32(INTERVAL_US,
- 			      ktime_to_us(ns_to_ktime(b->cparams.interval)));
+-			      ktime_to_us(ns_to_ktime(b->cparams.interval)));
++			      ktime_to_us(ns_to_ktime(READ_ONCE(b->cparams.interval))));
  
--		PUT_TSTAT_U32(SENT_PACKETS, b->packets);
--		PUT_TSTAT_U32(DROPPED_PACKETS, b->tin_dropped);
--		PUT_TSTAT_U32(ECN_MARKED_PACKETS, b->tin_ecn_mark);
--		PUT_TSTAT_U32(ACKS_DROPPED_PACKETS, b->ack_drops);
-+		PUT_TSTAT_U32(SENT_PACKETS, READ_ONCE(b->packets));
-+		PUT_TSTAT_U32(DROPPED_PACKETS, READ_ONCE(b->tin_dropped));
-+		PUT_TSTAT_U32(ECN_MARKED_PACKETS, READ_ONCE(b->tin_ecn_mark));
-+		PUT_TSTAT_U32(ACKS_DROPPED_PACKETS, READ_ONCE(b->ack_drops));
- 
- 		PUT_TSTAT_U32(PEAK_DELAY_US,
--			      ktime_to_us(ns_to_ktime(b->peak_delay)));
-+			      ktime_to_us(ns_to_ktime(READ_ONCE(b->peak_delay))));
- 		PUT_TSTAT_U32(AVG_DELAY_US,
--			      ktime_to_us(ns_to_ktime(b->avge_delay)));
-+			      ktime_to_us(ns_to_ktime(READ_ONCE(b->avge_delay))));
- 		PUT_TSTAT_U32(BASE_DELAY_US,
--			      ktime_to_us(ns_to_ktime(b->base_delay)));
-+			      ktime_to_us(ns_to_ktime(READ_ONCE(b->base_delay))));
- 
- 		PUT_TSTAT_U32(WAY_INDIRECT_HITS, b->way_hits);
- 		PUT_TSTAT_U32(WAY_MISSES, b->way_misses);
+ 		PUT_TSTAT_U32(SENT_PACKETS, READ_ONCE(b->packets));
+ 		PUT_TSTAT_U32(DROPPED_PACKETS, READ_ONCE(b->tin_dropped));
 -- 
 2.53.0
 
