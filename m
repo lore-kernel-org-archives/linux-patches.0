@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99D733B97A;
-	Wed, 20 May 2026 18:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E20F3F889E;
+	Wed, 20 May 2026 18:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300830; cv=none; b=fOuY5PiDpDo3R+wvjQRbdRvrfm6vTe23h9JTvOqBKMZX2ea76zay7YilV3vwc/GAFS/dlT+3zqyT5/OtGLBoxHFLDd3dbAr+LqgYpV67q6dv5G0pnWczqp5Xo2ACj7WqwXVi64k3kSjBFjaRislcd8LrwgDAfGa8wIEe51OugfI=
+	t=1779300833; cv=none; b=KwdQak2O1FvFH9PCl1VoLYyNAdKnPUJ5ihXJLh+fH1KvG0VgyJmrPnoKAfeTMzezmWGd89nuPbCl+n0n2miFoYi+eWBhHEUFNmR/EvO/vx6rpdvulqY9rSH7/n8WbDhd6yk/b+6SPY8eRUChtTlshqzSdlVGoDiDG08rzAWZgxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300830; c=relaxed/simple;
-	bh=nwGYYHSgDfINggeHCbjpvfGZxrMDKtcKblu6S51nkQo=;
+	s=arc-20240116; t=1779300833; c=relaxed/simple;
+	bh=9fYxDJj/d8UkUxzzBJx3OYLCHG3fsFQJtZtPTqG6HHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmrpws56KNFXwkC5faH/bbQalTvRukpHVlBaOPHwuyPvy1M36L71QA5D364xEcC+ABJpmWSP6EOSf7a0LpIU7ngWHZSM+UXDFtIPY05ugNaTl/gt0j28702bx9BbHMnygbhtBzuLo1S854XZzfF9v5Ga7Jw3kZH31Jlc25muJB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXRkPfGp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VfP8/V/1ASK7ZmBWaIdHwjEkUSYH/iYHPJtLt1hgdNsnlphIWVC6fQGGjBZnorOYYqL06G7GCjruIWPOXUTAJW/KegaYadE7Quhb9oaZm7hsND7uzbMdbtl7akLon1ypMIIPgoiWhDHInjUd+t46IoB37pAxIyvshYcj9waV4B0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgQAsW3U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXRkPfGp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA611F000E9;
-	Wed, 20 May 2026 18:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgQAsW3U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45651F000E9;
+	Wed, 20 May 2026 18:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300829;
-	bh=6AY0IG+KRF0fRcRC0pUtQHDs7AQeUBabFWqvKjka2HA=;
+	s=korg; t=1779300832;
+	bh=iI3DjGFvv6pr+PtFmn3j7oorAVWqL6zF1GLMf4U6s7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VXRkPfGpUOdcXPGc3+wijq87Hl4o3ZjsX/AKl6zbQSXMPWoWDY0tj1FqqB+149agQ
-	 s+gNzkCh17FFPQkgvNLCnAziF/LCZuYtqczO/7rvj6BuFlBJFimaRVG6EEZqVdgntJ
-	 gcaOQg56PYzpVVtaSScEQxxnilldh5xPDd14hydY=
+	b=fgQAsW3UjWyfM37IlcnpkauXJx9qATUcJvq4M4t9FCGdqaO4HW/0hbE8hxA6Yj7T3
+	 s0OICYJdOlXkfb3g8tktBfEdgIbmBprWmHP9Syba6icuq+l3d9RYMNJfG0x7s62p3e
+	 o5zy17TsubttFBp+JxdF3eJZDjKqsi0T8ldjqop0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>,
-	Dipen Patel <dipenp@nvidia.com>,
+	Tim Michals <tcmichals@yahoo.com>,
+	Tanmay Shah <tanmay.shah@amd.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 324/666] hte: tegra194: remove Kconfig dependency on Tegra194 SoC
-Date: Wed, 20 May 2026 18:18:55 +0200
-Message-ID: <20260520162118.246806400@linuxfoundation.org>
+Subject: [PATCH 6.12 325/666] remoteproc: xlnx: Fix sram property parsing
+Date: Wed, 20 May 2026 18:18:56 +0200
+Message-ID: <20260520162118.268976226@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,45 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Tim Michals <tcmichals@yahoo.com>
 
-[ Upstream commit 92dfd92f747698352b256cd9ddd7497bb7ebe9c8 ]
+[ Upstream commit d116bccf6f1c199b27c9ebdf07cc3cfe868f919c ]
 
-This driver runs also on other Tegra SoCs (e.g. Tegra234).
-Replace Kconfig dependency on Tegra194 with more generic dependency on
-Tegra, and amend the Kconfig help text to reflect the fact that this
-driver works on SoCs other than Tegra194.
+As per sram bindings, "sram" property can be list of phandles.
+When more than one sram phandles are listed, driver can't parse second
+phandle's address correctly. Because, phandle index is passed to the API
+instead of offset of address from reg property which is always 0 as per
+sram.yaml bindings. Fix it by passing 0 to the API instead of sram
+phandle index.
 
-Fixes: b003fb5c9df8 ("hte: Add Tegra234 provider")
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Acked-by: Dipen Patel <dipenp@nvidia.com>
-Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+Fixes: 77fcdf51b8ca ("remoteproc: xlnx: Add sram support")
+Signed-off-by: Tim Michals <tcmichals@yahoo.com>
+Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
+Link: https://lore.kernel.org/r/20260204202730.3729984-1-tanmay.shah@amd.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hte/Kconfig | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/remoteproc/xlnx_r5_remoteproc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hte/Kconfig b/drivers/hte/Kconfig
-index 641af722b555d..f57bad67deef0 100644
---- a/drivers/hte/Kconfig
-+++ b/drivers/hte/Kconfig
-@@ -16,13 +16,13 @@ if HTE
+diff --git a/drivers/remoteproc/xlnx_r5_remoteproc.c b/drivers/remoteproc/xlnx_r5_remoteproc.c
+index 6a64e5909f6ae..d1c069704da8d 100644
+--- a/drivers/remoteproc/xlnx_r5_remoteproc.c
++++ b/drivers/remoteproc/xlnx_r5_remoteproc.c
+@@ -990,7 +990,7 @@ static int zynqmp_r5_get_sram_banks(struct zynqmp_r5_core *r5_core)
+ 		}
  
- config HTE_TEGRA194
- 	tristate "NVIDIA Tegra194 HTE Support"
--	depends on (ARCH_TEGRA_194_SOC || COMPILE_TEST)
-+	depends on (ARCH_TEGRA || COMPILE_TEST)
- 	depends on GPIOLIB
- 	help
- 	  Enable this option for integrated hardware timestamping engine also
- 	  known as generic timestamping engine (GTE) support on NVIDIA Tegra194
--	  systems-on-chip. The driver supports 352 LIC IRQs and 39 AON GPIOs
--	  lines for timestamping in realtime.
-+	  and later systems-on-chip. The driver supports 352 LIC IRQs and 39
-+	  AON GPIOs lines for timestamping in realtime.
- 
- config HTE_TEGRA194_TEST
-         tristate "NVIDIA Tegra194 HTE Test"
+ 		/* Get SRAM device address */
+-		ret = of_property_read_reg(sram_np, i, &abs_addr, &size);
++		ret = of_property_read_reg(sram_np, 0, &abs_addr, &size);
+ 		if (ret) {
+ 			dev_err(dev, "failed to get reg property\n");
+ 			goto fail_sram_get;
 -- 
 2.53.0
 
