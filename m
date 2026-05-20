@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BFC40315E;
-	Wed, 20 May 2026 18:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA35402B87;
+	Wed, 20 May 2026 18:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302956; cv=none; b=sJx+5cky+mfD1RMr9hWpVNxrp7FInKF8jwIxIHFtc0yryebktNNdAvCTpdz3qbIysm6FMHL/1Q39eeT2oZRdAaVjVb9w0ddmNM911TjAHAiSd5rTDmqLFL99254nSUL9nLXskpP4p+KXnjJo2ypyGBiiYRHaZR4tutQB5w/AN/A=
+	t=1779302959; cv=none; b=evxVa8u0xNQA4o1l8fjIXb2B0GimLbtN8Ov4GiiXcnXyMGxsOrKsm/JQgXbjfCpqnMDM/YInVq1TfRDQT8gGTgFep0uTNhPANCrvr8Un/QbB9JeReEaM3msj8mau7lt7bKX/mG+ysYYmoTPg1tqzwPO9WSJzV1CnSgrKV9+8nvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302956; c=relaxed/simple;
-	bh=cyq466VDDgWbCofvKSKrfoL0QfLs7+krejn5ggRWfOo=;
+	s=arc-20240116; t=1779302959; c=relaxed/simple;
+	bh=Ux1x5Dn405RwQpkUnpMbpuYGMFS37Hw/Bw0opNgag50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOOW0QSweNQfbH2noXwskhuzw+0THZXIal8ycSNlgmnMWAUyl7ke1uOEBdSv4QV2ycjLI1SqpZYplxK9tsqSVV6g3rbnYcOHZGQVFTxjFy3MjCGEHrnYMbXQ0RhHjXhe3wRyRKe2fAz9w8EUAC9gvt9VgFO0A5RmOeeuPHjxL30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vberfzya; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TZavbi4vRV2cXU+WMFPe7iI6VI3EM/OB7ZEQlzjmrb2fk3ZjxWAPSNlSTErAXrpVB8mqbScnnJacn0wT0zOoRWn3pKzUFmFRQQX249yzGi573pVCXZ2AyC1+ksqQBy7VTfEfDWO9GSfqOhrp4LzNQMdFJJhlL+2mwvY5zlugB0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sl6qBBOa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vberfzya"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA081F00893;
-	Wed, 20 May 2026 18:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sl6qBBOa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6BAA1F000E9;
+	Wed, 20 May 2026 18:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302953;
-	bh=YMrTVCDsp1v+w06FhuFiDapu9M2NH5IKe5kVJzWX+zs=;
+	s=korg; t=1779302956;
+	bh=TAorVrldkDVZJbPgsEWwufmoX7FFi+obyfvtkXWjXRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vberfzyarp0KnoXhTlsElfhJWsGMl8VV6s9ysZ+Pzurm8sw3Rii46VRAYJ+2wbVe4
-	 KRa1Yn4DrT4fcueG4Js2/3kTGd8A9DKL7PIjZZKu2AXHsIVPFKj6Jq7qhVViTujikc
-	 XQV3HGJGBdaTe6PCIy0DXsrJn8Alyxy6BXfGZSa0=
+	b=sl6qBBOagok6ZDScEbxkvFVbd1GYCsO81fSZECLQmSFRnD+Y0Yk4VBJ6SslHQVZwB
+	 rep4kylYi2tHU0gFIC0YiLptphYmOO80ALrii9f8QCGvjssGcGLeK/aWUtJ1dKoO//
+	 udM7uzqJNFQOj83sDp6/NMVpuIR4HQEUZHUnIiOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inseo An <y0un9sa@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Li hongliang <1468888505@139.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alva Lan <alvalan9@foxmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 462/508] netfilter: nf_tables: unconditionally bump set->nelems before insertion
-Date: Wed, 20 May 2026 18:24:45 +0200
-Message-ID: <20260520162108.608447515@linuxfoundation.org>
+Subject: [PATCH 6.6 463/508] ASoC: SOF: Intel: hda-dai: remove dspless special case
+Date: Wed, 20 May 2026 18:24:46 +0200
+Message-ID: <20260520162108.630070460@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -47,102 +48,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit def602e498a4f951da95c95b1b8ce8ae68aa733a ]
+[ Upstream commit daa09d0615ce9c781777802874cffa4380f883c3 ]
 
-In case that the set is full, a new element gets published then removed
-without waiting for the RCU grace period, while RCU reader can be
-walking over it already.
+The existing code forces a parameter to be NULL but that parameter is
+not used yet. Remove the special case in preparation for additional
+changes.
 
-To address this issue, add the element transaction even if set is full,
-but toggle the set_full flag to report -ENFILE so the abort path safely
-unwinds the set to its previous state.
-
-As for element updates, decrement set->nelems to restore it.
-
-A simpler fix is to call synchronize_rcu() in the error path.
-However, with a large batch adding elements to already maxed-out set,
-this could cause noticeable slowdown of such batches.
-
-Fixes: 35d0ac9070ef ("netfilter: nf_tables: fix set->nelems counting with no NLM_F_EXCL")
-Reported-by: Inseo An <y0un9sa@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-[ Minor conflict resolved. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://msgid.link/r/20240213101247.28887-9-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ sound/soc/sof/intel/hda-dai.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index a0914a92e07dd..6fc88bf511092 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6803,6 +6803,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	struct nft_data_desc desc;
- 	enum nft_registers dreg;
- 	struct nft_trans *trans;
-+	bool set_full = false;
- 	u64 timeout;
- 	u64 expiration;
- 	int err, i;
-@@ -7095,10 +7096,18 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	if (err < 0)
- 		goto err_elem_free;
+diff --git a/sound/soc/sof/intel/hda-dai.c b/sound/soc/sof/intel/hda-dai.c
+index 19ec1a45737ea..f5bfa17bf6505 100644
+--- a/sound/soc/sof/intel/hda-dai.c
++++ b/sound/soc/sof/intel/hda-dai.c
+@@ -83,12 +83,8 @@ hda_dai_get_ops(struct snd_pcm_substream *substream, struct snd_soc_dai *cpu_dai
  
-+	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
-+		unsigned int max = nft_set_maxsize(set), nelems;
-+
-+		nelems = atomic_inc_return(&set->nelems);
-+		if (nelems > max)
-+			set_full = true;
-+	}
-+
- 	trans = nft_trans_elem_alloc(ctx, NFT_MSG_NEWSETELEM, set);
- 	if (trans == NULL) {
- 		err = -ENOMEM;
--		goto err_elem_free;
-+		goto err_set_size;
- 	}
+ 	sdev = widget_to_sdev(w);
  
- 	ext->genmask = nft_genmask_cur(ctx->net);
-@@ -7130,23 +7139,16 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 		goto err_element_clash;
- 	}
+-	/*
+-	 * The swidget parameter of hda_select_dai_widget_ops() is ignored in
+-	 * case of DSPless mode
+-	 */
+ 	if (sdev->dspless_mode_selected)
+-		return hda_select_dai_widget_ops(sdev, NULL);
++		return hda_select_dai_widget_ops(sdev, swidget);
  
--	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
--		unsigned int max = nft_set_maxsize(set);
--
--		if (!atomic_add_unless(&set->nelems, 1, max)) {
--			err = -ENFILE;
--			goto err_set_full;
--		}
--	}
--
- 	nft_trans_elem(trans) = elem;
- 	nft_trans_commit_list_add_tail(ctx->net, trans);
--	return 0;
+ 	sdai = swidget->private;
  
--err_set_full:
--	nft_setelem_remove(ctx->net, set, &elem);
-+	return set_full ? -ENFILE : 0;
-+
- err_element_clash:
- 	kfree(trans);
-+err_set_size:
-+	if (!(flags & NFT_SET_ELEM_CATCHALL))
-+		atomic_dec(&set->nelems);
- err_elem_free:
- 	nf_tables_set_elem_destroy(ctx, set, elem.priv);
- err_parse_data:
 -- 
 2.53.0
 
