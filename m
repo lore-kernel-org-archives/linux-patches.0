@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A72F3F7ABB;
-	Wed, 20 May 2026 17:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207D93F7ABB;
+	Wed, 20 May 2026 17:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297171; cv=none; b=guyXJpQcg98naVwwPNko4cESwSWR+gg8lDsKjiQrJglMH6+EBUtBt4OvuqmudAo18+JqXPitr3O9hUh/Ac9KoWQBZ2qm9jQ5njyjEraRUfRZg+BHeI8o+DJKFoOG4PjbRgf9xQ6eSXPKRmGjXNSE1yHRZtPlEhOosjGTDTzQYek=
+	t=1779297174; cv=none; b=kW2h6/OYq/28jSvAeO0ixiKYwGPf5yC9WyV2TWAedpfdccG2NuKb/h98uGXqxaBHf/hZXmvQ2A1OIwxJXj0tOTMl9dpZR4QSJR57e/CMtP2zzbj/T+6r/LJGG2lGpxjfaBUr7JQeWN6GihbpfROfGsNPzyRNMCmGgGFufqqNwIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297171; c=relaxed/simple;
-	bh=UmxF0jwYXJmSqJbya8jIw6YMr9l4wuywaeBWsIf7f7E=;
+	s=arc-20240116; t=1779297174; c=relaxed/simple;
+	bh=xGPIeFi9VR1jt28jVF6mh0me6g0L6IAMcn8iZY1BjM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqgHQsgi3RPqSoOc7V4bLZdq+d3x4BFgCdv3idfuKk7RbRWocej3yFR9T7XyUnghYJ+O0HwZIQGwg0HRSbrHwCnb72qcyFURcGEQP/v0IuQuCTCf1EKC/1RYsqQzZXKRlqev51vMKqN0XrusEMF+Prfp3Y1WIw+FeMVfPs/MWjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUeGmv1o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TJ9MqI5wZ8gFKOXycWRPW7FOLJWxyW0d8rqq4JpH25NO9U2tUiFpBs2PwkZefzxlC1qoFLfVNy06EFk9GoBzDwVUhfeoInwGg08oI7AaBfQNNNrs6+GTADZrt6uir+Ju6BkH85IwbH+yQkdb1NebQmi3ExaZiQNPHZvFQlQWfIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjVXT2Z1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUeGmv1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51FC1F000E9;
-	Wed, 20 May 2026 17:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjVXT2Z1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5889E1F000E9;
+	Wed, 20 May 2026 17:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297170;
-	bh=WG91hzEwJqRKaRqq+kHWrP+y3Mg4Bs77a4GcvSgB/LU=;
+	s=korg; t=1779297172;
+	bh=uT5wMTCDA+xPSDJcEyj8k3m6s0Yt79U587ci3stT4Vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vUeGmv1oJYgS9knt877OIV5EaGUR80xRXxFlR7vXm3Xa6XBv1Z4/qLUCOg1j8LtVs
-	 fZOJjHY75H6DaCvPeCMBb3W1wyzBLNGcqGdQVSSHoK3XaibdGwqQECxAzKF8mxSvCV
-	 zMKCHJEKvUrGnJ3XBPrf8BLF1mYClt9IsyAdosKU=
+	b=MjVXT2Z1wrep7OIsa82DLKPuLo1V+bdQf4LNqfA/yyt1BGfGWHJUFASw52k/j6jUb
+	 EetLxfMJfIkmbURkFeuFdQqRGl7FePmNbMSbRUHVmCKhzIs5rdF0AjtAMXrxGIy018
+	 5993h2YZ17eEOu7tbG9QErsjI9lQOYw4fQSF9X4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	James Lin <pinglei.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 1076/1146] drm/amd/display: Wrap DCN32 phantom-plane allocation in DC_RUN_WITH_PREEMPTION_ENABLED
-Date: Wed, 20 May 2026 18:22:06 +0200
-Message-ID: <20260520162212.584867081@linuxfoundation.org>
+	Jatin Kataria <jkataria@netflix.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	dri-devel@lists.freedesktop.org,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Boqun Feng <boqun@kernel.org>
+Subject: [PATCH 7.0 1077/1146] drm/ttm: Fix ttm_bo_swapout() infinite LRU walk on swapout failure
+Date: Wed, 20 May 2026 18:22:07 +0200
+Message-ID: <20260520162212.608402858@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -47,71 +48,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit 183182235f6d53bac62c6c39014738a54a68dfa6 upstream.
+commit b2ed01e7ad3de80333e9b962a44024b094bc0b2b upstream.
 
-[Why]
-dcn32_validate_bandwidth() wraps dcn32_internal_validate_bw() with
-DC_FP_START()/DC_FP_END(). In x86 non-RT, DC_FP_START takes fpregs_lock(),
-which disables local softirqs.
+When ttm_tt_swapout() fails, the current code calls
+ttm_resource_add_bulk_move() followed by ttm_resource_move_to_lru_tail()
+to restore the resource's bulk_move membership.
 
-The DML1 path through dcn32_enable_phantom_plane() calls kvzalloc() to
-allocate ~335 KiB for dc_plane_state. This triggers the vmalloc path,
-which calls BUG_ON(in_interrupt()) because it's invoked within the
-FPU-enabled (softirq disabled) region, leading to a kernel crash.
+However, ttm_resource_move_to_lru_tail() places the resource at the tail
+of the LRU list which, relative to the walk cursor's hitch node (placed
+immediately after the resource when it was yielded), puts the resource
+*in front of the* the hitch. The next list_for_each_entry_continue() from
+the hitch finds the same resource again, causing an infinite loop.
 
-[How]
-Wrap the dc_state_create_phantom_plane() call with the
-DC_RUN_WITH_PREEMPTION_ENABLED() macro to allow preemption during
-this memory allocation.
+Fix by deferring del_bulk_move to the success path only.
 
-Fixes: 235c67634230 ("drm/amd/display: add DCN32/321 specific files for Display Core")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/4470
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: James Lin <pinglei.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 885ccbef7b94a8b38f69c4211c679021aa27ad11)
-Cc: stable@vger.kernel.org
+On the success path, TTM_TT_FLAG_SWAPPED has just been set by
+ttm_tt_swapout() but the resource is still tracked in the bulk_move range,
+so ttm_resource_del_bulk_move()'s !ttm_resource_unevictable() guard would
+incorrectly skip the removal. Introduce
+ttm_resource_del_bulk_move_unevictable() which bypasses that guard.
+
+Reported-by: Jatin Kataria <jkataria@netflix.com>
+Fixes: fc5d96670eb2 ("drm/ttm: Move swapped objects off the manager's LRU list")
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <dri-devel@lists.freedesktop.org>
+Cc: <stable@vger.kernel.org> # v6.13+
+Assisted-by: GitHub_Copilot:claude-sonnet-4.6
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Tested-by: Boqun Feng <boqun@kernel.org>
+Link: https://patch.msgid.link/20260428094442.16985-1-thomas.hellstrom@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_bo.c       |   16 ++++++----------
+ drivers/gpu/drm/ttm/ttm_resource.c |   13 +++++++++++++
+ include/drm/ttm/ttm_resource.h     |    2 ++
+ 3 files changed, 21 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
-@@ -92,9 +92,14 @@
- #include "dml/dcn32/dcn32_fpu.h"
+--- a/drivers/gpu/drm/ttm/ttm_bo.c
++++ b/drivers/gpu/drm/ttm/ttm_bo.c
+@@ -1178,17 +1178,13 @@ ttm_bo_swapout_cb(struct ttm_lru_walk *w
+ 		bdev->funcs->swap_notify(bo);
  
- #include "dc_state_priv.h"
-+#include "dc_fpu.h"
+ 	if (ttm_tt_is_populated(tt)) {
+-		spin_lock(&bdev->lru_lock);
+-		ttm_resource_del_bulk_move(bo->resource, bo);
+-		spin_unlock(&bdev->lru_lock);
+-
+ 		ret = ttm_tt_swapout(bdev, tt, swapout_walk->gfp_flags);
+-
+-		spin_lock(&bdev->lru_lock);
+-		if (ret)
+-			ttm_resource_add_bulk_move(bo->resource, bo);
+-		ttm_resource_move_to_lru_tail(bo->resource);
+-		spin_unlock(&bdev->lru_lock);
++		if (!ret) {
++			spin_lock(&bdev->lru_lock);
++			ttm_resource_del_bulk_move_unevictable(bo->resource, bo);
++			ttm_resource_move_to_lru_tail(bo->resource);
++			spin_unlock(&bdev->lru_lock);
++		}
+ 	}
  
- #include "dml2_0/dml2_wrapper.h"
+ out:
+--- a/drivers/gpu/drm/ttm/ttm_resource.c
++++ b/drivers/gpu/drm/ttm/ttm_resource.c
+@@ -292,6 +292,19 @@ void ttm_resource_del_bulk_move(struct t
+ 		ttm_lru_bulk_move_del(bo->bulk_move, res);
+ }
  
-+#if !defined(DC_RUN_WITH_PREEMPTION_ENABLED)
-+#define DC_RUN_WITH_PREEMPTION_ENABLED(code) code
-+#endif
++/*
++ * Remove a resource from its bulk_move, bypassing the unevictable check.
++ * Use only when the resource is known to still be tracked in the range despite
++ * the BO having just become unevictable; asserts that this is the case.
++ */
++void ttm_resource_del_bulk_move_unevictable(struct ttm_resource *res,
++					    struct ttm_buffer_object *bo)
++{
++	WARN_ON_ONCE(!ttm_resource_unevictable(res, bo));
++	if (bo->bulk_move)
++		ttm_lru_bulk_move_del(bo->bulk_move, res);
++}
 +
- #define DC_LOGGER_INIT(logger)
+ /* Move a resource to the LRU or bulk tail */
+ void ttm_resource_move_to_lru_tail(struct ttm_resource *res)
+ {
+--- a/include/drm/ttm/ttm_resource.h
++++ b/include/drm/ttm/ttm_resource.h
+@@ -448,6 +448,8 @@ void ttm_resource_add_bulk_move(struct t
+ 				struct ttm_buffer_object *bo);
+ void ttm_resource_del_bulk_move(struct ttm_resource *res,
+ 				struct ttm_buffer_object *bo);
++void ttm_resource_del_bulk_move_unevictable(struct ttm_resource *res,
++					    struct ttm_buffer_object *bo);
+ void ttm_resource_move_to_lru_tail(struct ttm_resource *res);
  
- enum dcn32_clk_src_array_id {
-@@ -1684,7 +1689,8 @@ static void dcn32_enable_phantom_plane(s
- 		if (curr_pipe->top_pipe && curr_pipe->top_pipe->plane_state == curr_pipe->plane_state)
- 			phantom_plane = prev_phantom_plane;
- 		else
--			phantom_plane = dc_state_create_phantom_plane(dc, context, curr_pipe->plane_state);
-+			DC_RUN_WITH_PREEMPTION_ENABLED(phantom_plane =
-+				dc_state_create_phantom_plane(dc, context, curr_pipe->plane_state));
- 
- 		if (!phantom_plane)
- 			continue;
+ void ttm_resource_init(struct ttm_buffer_object *bo,
 
 
