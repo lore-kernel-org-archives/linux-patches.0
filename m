@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0137D33F59D;
-	Wed, 20 May 2026 17:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A72F3F7ABB;
+	Wed, 20 May 2026 17:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297169; cv=none; b=Y0/DJygB3cFpXzVcMqfPZ2OWeJGD8V4ZBBHeV5Hjnh1fjQyy1Y0nGCkihm6WfF8IvmOt0Dg8Th8PzxkomwErrhVrH5mvksKINAJf7GBNfqgMK+7clykD4xwXWXEe5TYrDVZ1ql7hUvOtzbNiiU/tq1aUJ7DT80gzrrM4vUjonsE=
+	t=1779297171; cv=none; b=guyXJpQcg98naVwwPNko4cESwSWR+gg8lDsKjiQrJglMH6+EBUtBt4OvuqmudAo18+JqXPitr3O9hUh/Ac9KoWQBZ2qm9jQ5njyjEraRUfRZg+BHeI8o+DJKFoOG4PjbRgf9xQ6eSXPKRmGjXNSE1yHRZtPlEhOosjGTDTzQYek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297169; c=relaxed/simple;
-	bh=RHkQ/6XUl9TSb/2j5VGW2SirKm+JY2pqEYBttG4jCjw=;
+	s=arc-20240116; t=1779297171; c=relaxed/simple;
+	bh=UmxF0jwYXJmSqJbya8jIw6YMr9l4wuywaeBWsIf7f7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZnq/4Znd5trXLeLOF80KzMeW8B8KbCAp2TMbDBou6pcm0xF7ef+NNXhFJQXPtLYscm6Knzk0da/xCbwATIM4fGVtJ6hYJRmWTKWrcHaUo1vU7yEAdEPTJH6+l7y6IgcyIz5OLhSVATmNyLJ1NOI7QShG5XxD0QVP4MkKF0RXSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykAR/nWc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nqgHQsgi3RPqSoOc7V4bLZdq+d3x4BFgCdv3idfuKk7RbRWocej3yFR9T7XyUnghYJ+O0HwZIQGwg0HRSbrHwCnb72qcyFURcGEQP/v0IuQuCTCf1EKC/1RYsqQzZXKRlqev51vMKqN0XrusEMF+Prfp3Y1WIw+FeMVfPs/MWjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUeGmv1o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykAR/nWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA3D1F000E9;
-	Wed, 20 May 2026 17:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUeGmv1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51FC1F000E9;
+	Wed, 20 May 2026 17:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297167;
-	bh=6E/yF+OH3lL3QnDlg9kAftR0IRK8RKqpr7kyJl36sRo=;
+	s=korg; t=1779297170;
+	bh=WG91hzEwJqRKaRqq+kHWrP+y3Mg4Bs77a4GcvSgB/LU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ykAR/nWcTjczeqgfcFPNdi3yBREMwAE9BLqYAN7jl7pqbg/ZcmUkZk+XX1VBd2e4U
-	 AUT75Er4DFoMOQSnVMsnex/0zBU+K5xT90VNHEshrTURK4nHHgR7phO3PMTKGldhK0
-	 x/cd2AgpaxzjNRg7ZGLzFrHBS5J7S+u5tUCobodc=
+	b=vUeGmv1oJYgS9knt877OIV5EaGUR80xRXxFlR7vXm3Xa6XBv1Z4/qLUCOg1j8LtVs
+	 fZOJjHY75H6DaCvPeCMBb3W1wyzBLNGcqGdQVSSHoK3XaibdGwqQECxAzKF8mxSvCV
+	 zMKCHJEKvUrGnJ3XBPrf8BLF1mYClt9IsyAdosKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DeepChirp <DeepChirp@outlook.com>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 7.0 1075/1146] drm/i915/dp: Fix VSC dynamic range signaling for RGB formats
-Date: Wed, 20 May 2026 18:22:05 +0200
-Message-ID: <20260520162212.560714769@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	James Lin <pinglei.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.0 1076/1146] drm/amd/display: Wrap DCN32 phantom-plane allocation in DC_RUN_WITH_PREEMPTION_ENABLED
+Date: Wed, 20 May 2026 18:22:06 +0200
+Message-ID: <20260520162212.584867081@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,55 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit 1ae15b6c7965d137eef21f2cc7d367b29cb88369 upstream.
+commit 183182235f6d53bac62c6c39014738a54a68dfa6 upstream.
 
-For RGB, set dynamic_range to CTA or VESA based on
-crtc_state->limited_color_range so sinks apply correct
-quantization. YCbCr remains limited (CTA) range.
-(DP v1.4, Table 5-1)
+[Why]
+dcn32_validate_bandwidth() wraps dcn32_internal_validate_bw() with
+DC_FP_START()/DC_FP_END(). In x86 non-RT, DC_FP_START takes fpregs_lock(),
+which disables local softirqs.
 
-v2:
-- Added Reported-by and Tested-by tags
+The DML1 path through dcn32_enable_phantom_plane() calls kvzalloc() to
+allocate ~335 KiB for dc_plane_state. This triggers the vmalloc path,
+which calls BUG_ON(in_interrupt()) because it's invoked within the
+FPU-enabled (softirq disabled) region, leading to a kernel crash.
 
-v3:
-- Add back YCbCr comment(Suraj)
+[How]
+Wrap the dc_state_create_phantom_plane() call with the
+DC_RUN_WITH_PREEMPTION_ENABLED() macro to allow preemption during
+this memory allocation.
 
-Cc: stable@vger.kernel.org #v5.8+
-Reported-by: DeepChirp <DeepChirp@outlook.com>
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15874
-Tested-by: DeepChirp <DeepChirp@outlook.com>
-Fixes: 9799c4c3b76e ("drm/i915/dp: Add compute routine for DP VSC SDP")
-Assisted-by: GitHub-Copilot:GPT-5.4
-Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260505090920.2479112-1-chaitanya.kumar.borah@intel.com
-(cherry picked from commit 38e10ddae6f8d42a2e8437fcd25a1cac51106c64)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Fixes: 235c67634230 ("drm/amd/display: add DCN32/321 specific files for Display Core")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/4470
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: James Lin <pinglei.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 885ccbef7b94a8b38f69c4211c679021aa27ad11)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -2981,8 +2981,13 @@ static void intel_dp_compute_vsc_colorim
- 	drm_WARN_ON(display->drm,
- 		    vsc->bpc == 6 && vsc->pixelformat != DP_PIXELFORMAT_RGB);
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
+@@ -92,9 +92,14 @@
+ #include "dml/dcn32/dcn32_fpu.h"
  
--	/* all YCbCr are always limited range */
--	vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
-+	/* All YCbCr formats are always limited range. */
-+	if (vsc->pixelformat == DP_PIXELFORMAT_RGB)
-+		vsc->dynamic_range = crtc_state->limited_color_range ?
-+			DP_DYNAMIC_RANGE_CTA : DP_DYNAMIC_RANGE_VESA;
-+	else
-+		vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
+ #include "dc_state_priv.h"
++#include "dc_fpu.h"
+ 
+ #include "dml2_0/dml2_wrapper.h"
+ 
++#if !defined(DC_RUN_WITH_PREEMPTION_ENABLED)
++#define DC_RUN_WITH_PREEMPTION_ENABLED(code) code
++#endif
 +
- 	vsc->content_type = DP_CONTENT_TYPE_NOT_DEFINED;
- }
+ #define DC_LOGGER_INIT(logger)
  
+ enum dcn32_clk_src_array_id {
+@@ -1684,7 +1689,8 @@ static void dcn32_enable_phantom_plane(s
+ 		if (curr_pipe->top_pipe && curr_pipe->top_pipe->plane_state == curr_pipe->plane_state)
+ 			phantom_plane = prev_phantom_plane;
+ 		else
+-			phantom_plane = dc_state_create_phantom_plane(dc, context, curr_pipe->plane_state);
++			DC_RUN_WITH_PREEMPTION_ENABLED(phantom_plane =
++				dc_state_create_phantom_plane(dc, context, curr_pipe->plane_state));
+ 
+ 		if (!phantom_plane)
+ 			continue;
 
 
