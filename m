@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D25634216C;
-	Wed, 20 May 2026 16:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC30C318EC7;
+	Wed, 20 May 2026 16:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295885; cv=none; b=R/zkt4SxTjc26VKOLLZtj0CZR8qZ89UcvkXcoOBFvDbvVLJiKxqvLXmQFVEUQAOG8PPwT1tZLFqou58QI1cdSDjzy12Z1To9Txz1o9GRPIY+PkuhlrabozpxKtmnO9qwYKKEsgu0BB2KKrKpJIYHD+YawRvSYXweZ30Y+mzkgZs=
+	t=1779295887; cv=none; b=dy4YwYH3hzQCAjjDWKvvOavo+Ni8MHu6zJWk2e0cw//k5DPjzBID30NfZOOIK1C2Nf0Ec8wpmnyN37BQi5XiVC51J+LPM7JVpyrFY6YfPoc7z2I3JJv5xWYRxFO6/EHgv7YhnEgBP4ExdB5hpdTUgpjl/VpujoaU/Vu4xAQb/tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295885; c=relaxed/simple;
-	bh=BTWFesk1beKv3F36natY6Ytx6VFxeLscbvFQElAEJr4=;
+	s=arc-20240116; t=1779295887; c=relaxed/simple;
+	bh=BADr2ZxAUoQ0v8z7kW+ISEddcTDVFYWlvZ9DsB5ZD0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nGIR5icojIHd+y2L5i7WpqQleqGAGSDXp6IJARLV/GLrVwSv3MPJ8OKkRw1WJBkrhMt6ouK9mYnkaXesMvDpSDicKUgOomVIC0pi6AERMNWNO1UEUFBIEUID8Ix8Yv+YldQmyJFJ5Ld1D4HcDm+HHm5ytt5ukx9cxSt91iPYEEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dk3MguT0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BcSPTwl4c7ovHP4bCsQSEdC66ElIit9cG6s/alBf/zszkCYQo+djY3tu/u36zX05yOGVo8ZFafOqJix9La6g+NhhtA+XDB0RdoThza2017eBgTMPa8XBki/Ihg2gvqosnPTr751vgnHle2Z9VVrA5a5gIy77fbKxSe5C2dt4Ui0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IC+LOigv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dk3MguT0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83E461F000E9;
-	Wed, 20 May 2026 16:51:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IC+LOigv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA6D1F000E9;
+	Wed, 20 May 2026 16:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295884;
-	bh=ri1pJujgAl8nFzRSHVdgc1cmMIslzWK6EWl+wnZSVZo=;
+	s=korg; t=1779295886;
+	bh=3jWvKiZJGR7HYdr+7AkuCbPNJpEomfHnYpx798460zY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dk3MguT0mstbUYN/1FufFN0zKmPTrM0ZV1scgHAD9oGKDh4eS7uBUhEHTdNKYhvJm
-	 4c5J4krA1KcYcEWlMrascTcqaGl1lG1tuYBmngiok+eVHiGHCcGTC4tkNA935MLzH6
-	 JUSVmAq4KCxDwPzNc8E98p5HiEstViISd+LEdUD4=
+	b=IC+LOigvQ5iVsB6d+t4l6z5+4vJd9p/fGALmcWickB789WThZDCAiIq0fgVIAb+Cs
+	 Y3/9v2g6j4XDy4BV5G93UcdWLE0U0RZj6j1q4e+o1jwlmsHaAT57k0v9TQaLugLCmC
+	 UI17A9zjkaJfgNPZuZAb6pDxbK8DxDOLPAB/rSgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Koskovich <akoskovich@pm.me>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0562/1146] arm64: dts: qcom: sm8250: Add missing CPU7 3.09GHz OPP
-Date: Wed, 20 May 2026 18:13:32 +0200
-Message-ID: <20260520162200.901154131@linuxfoundation.org>
+Subject: [PATCH 7.0 0589/1146] power: supply: max77705: Drop duplicated IRQ error message
+Date: Wed, 20 May 2026 18:13:59 +0200
+Message-ID: <20260520162201.508315837@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Koskovich <AKoskovich@pm.me>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit b683730e27ba4f91986c4c92f5cb7297f1e01a6d ]
+[ Upstream commit 2064c64ceb1996ee02a6bbb1de05fd6e8028e3e4 ]
 
-This resolves the following error seen on the ASUS ROG Phone 3:
+Core already prints error message on devm_request_threaded_irq()
+failure, so no need to do that second time.
 
-cpu cpu7: Voltage update failed freq=3091200
-cpu cpu7: failed to update OPP for freq=3091200
-
-Fixes: 8e0e8016cb79 ("arm64: dts: qcom: sm8250: Add CPU opp tables")
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260307-sm8250-cpu7-opp-v1-1-435f5f6628a1@pm.me
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260305-workqueue-devm-v2-3-66a38741c652@oss.qualcomm.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: 1e668baadefb ("power: supply: max77705: Free allocated workqueue and fix removal order")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/power/supply/max77705_charger.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index c7dffa4400740..37c41cc1abdd0 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -665,6 +665,11 @@ cpu7_opp20: opp-2841600000 {
- 			opp-hz = /bits/ 64 <2841600000>;
- 			opp-peak-kBps = <8368000 51609600>;
- 		};
-+
-+		cpu7_opp21: opp-3091200000 {
-+			opp-hz = /bits/ 64 <3091200000>;
-+			opp-peak-kBps = <8368000 51609600>;
-+		};
- 	};
+diff --git a/drivers/power/supply/max77705_charger.c b/drivers/power/supply/max77705_charger.c
+index 5dd02f658f5bd..0dfe4ab10919f 100644
+--- a/drivers/power/supply/max77705_charger.c
++++ b/drivers/power/supply/max77705_charger.c
+@@ -666,19 +666,15 @@ static int max77705_charger_probe(struct i2c_client *i2c)
+ 					NULL, max77705_chgin_irq,
+ 					IRQF_TRIGGER_NONE,
+ 					"chgin-irq", chg);
+-	if (ret) {
+-		dev_err_probe(dev, ret, "Failed to Request chgin IRQ\n");
++	if (ret)
+ 		goto destroy_wq;
+-	}
  
- 	firmware {
+ 	ret = devm_request_threaded_irq(dev, regmap_irq_get_virq(irq_data, MAX77705_AICL_I),
+ 					NULL, max77705_aicl_irq,
+ 					IRQF_TRIGGER_NONE,
+ 					"aicl-irq", chg);
+-	if (ret) {
+-		dev_err_probe(dev, ret, "Failed to Request aicl IRQ\n");
++	if (ret)
+ 		goto destroy_wq;
+-	}
+ 
+ 	ret = max77705_charger_enable(chg);
+ 	if (ret) {
 -- 
 2.53.0
 
