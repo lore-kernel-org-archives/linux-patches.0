@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3903036405A;
-	Wed, 20 May 2026 17:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5E83F1661;
+	Wed, 20 May 2026 17:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299068; cv=none; b=SjhFYqRd7B2D3FwCfRz5FYugcY+up2nWVi+urUDkanNFZqDDxr5KMGauT1ubEzRcD4AC4EU9YYQ0S5NvpKsbQKNJOUfh7nXMJncQvTyUVblh1+NSlaaWAnrbZdpteXay/VJgQ2eEBpT4N+apN7m3U7tGGpXOork7nFFbk509OOs=
+	t=1779299071; cv=none; b=g537YX82tK2bl5F4rQNgYkdkSequr9ZK3U0im3G3kd7fte/JAO3KIuqNAqoWo7AMOWzjA9Rb3+jIGl9qQf000LTfxnMOfVd6F5os1sfjgd5pIRAoLjj072kBz9ukac5spNw7oTmhiiYKo5W2dYPZdxSvKE4miXIxVdQ6KNwKXcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299068; c=relaxed/simple;
-	bh=oZQRMgEnYEJwvMtiAfubwSkrGf+D0aJisEkVAZa5sNw=;
+	s=arc-20240116; t=1779299071; c=relaxed/simple;
+	bh=n7hhxb6d571N31UD2FkpG17Mlu4ghRA2lN/jR3U/bME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t9mkwYw6UtJUq6UY4mamkkt/Aohik4+hbfT/jlDsmMghNwZu6JoacZTU+PwSNnr6rpsY9Ld5LUm9E1wly39ANI0tep1jFGYenWaPVul3Zf843dHJd4b8DoR7LP6LtRTVcJp6JUg/aLb4R8C2eT1ZXCsPtGG/Dse22snrDBjeIEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIGM0/7n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UDsJe7pnUEDuFs60yY3+aVB2h6IpRM7oREOE1XHFkZXIsrOOZ1hc2TJd5XCpVV+KB1g6/ohrPP0Ztc2trs8icA8opCBNTlJ5Jr7INGovBmCg+ZfY3K5Qz98HMvYusIUiVEKGT9E5jJ+tGzjHbRldusun3E9xOt78Tswl0E3Zytg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scH8r1Rp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIGM0/7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0EF1F000E9;
-	Wed, 20 May 2026 17:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scH8r1Rp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448B51F000E9;
+	Wed, 20 May 2026 17:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299067;
-	bh=DZ3Tiw+ekTmu02V9IidQRy4nJW3czdHZaSBwgzjbqLE=;
+	s=korg; t=1779299069;
+	bh=99NwfUpP1g8+vr2FpB5sjFgxgTU4rPHZMfKXGx/GFpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VIGM0/7nkrWjMMvKKRVqnO8ZVaCyFgqXPvGCSGEksMcqJ9dJCHH7/OZBa4bgRvXfK
-	 7G/63AlGtk7vWAQGZ3sdH254KUuY6h5Ronf8JLB1eof/gP3cULOViTVpl79U/EUer1
-	 m0RI6dEnsIE4iVrPP1wNpl/8WCLh5+XrwHCLZeuQ=
+	b=scH8r1Rpm7qUFcsOQJ3GATcPvIwbg+PvnC+ws7O/wd1LAIX5tIJtakkxwUsAbf/8t
+	 3fZo2d7bYbUGORDHdkjvobMz6Sw5ZP1z1faO4Giz5OgK5eqj2kc/BsW/JoYg285kRN
+	 ePZWDIxbsfR1QcnHnvBD0jz1+L1mjALoAZOKVsm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
+	Paul Greenwalt <paul.greenwalt@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 649/957] ice: fix double-free of tx_buf skb
-Date: Wed, 20 May 2026 18:18:52 +0200
-Message-ID: <20260520162148.604993708@linuxfoundation.org>
+Subject: [PATCH 6.18 650/957] ice: fix ICE_AQ_LINK_SPEED_M for 200G
+Date: Wed, 20 May 2026 18:18:53 +0200
+Message-ID: <20260520162148.626569322@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,74 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Paul Greenwalt <paul.greenwalt@intel.com>
 
-[ Upstream commit 1a303baa715e6b78d6a406aaf335f87ff35acfcd ]
+[ Upstream commit 4a3a940059e98539de293a6e36e464094c2e875b ]
 
-If ice_tso() or ice_tx_csum() fail, the error path in
-ice_xmit_frame_ring() frees the skb, but the 'first' tx_buf still points
-to it and is marked as valid (ICE_TX_BUF_SKB).
-'next_to_use' remains unchanged, so the potential problem will
-likely fix itself when the next packet is transmitted and the tx_buf
-gets overwritten. But if there is no next packet and the interface is
-brought down instead, ice_clean_tx_ring() -> ice_unmap_and_free_tx_buf()
-will find the tx_buf and free the skb for the second time.
+When setting PHY configuration during driver initialization, 200G link
+speed is not being advertised even when the PHY is capable. This is
+because the get PHY capabilities link speed response is being masked by
+ICE_AQ_LINK_SPEED_M, which does not include the 200G link speed bit.
 
-The fix is to reset the tx_buf type to ICE_TX_BUF_EMPTY in the error
-path, so that ice_unmap_and_free_tx_buf().
-Move the initialization of 'first' up, to ensure it's already valid in
-case we hit the linearization error path.
+ICE_AQ_LINK_SPEED_200GB is defined as BIT(11), but the mask 0x7FF only
+covers bits 0-10. Fix ICE_AQ_LINK_SPEED_M to use GENMASK(11, 0) so
+that it covers all defined link speed bits including 200G.
 
-The bug was spotted by AI while I had it looking for something else.
-It also proposed an initial version of the patch.
-
-I reproduced the bug and tested the fix by adding code to inject
-failures, on a build with KASAN.
-
-I looked for similar bugs in related Intel drivers and did not find any.
-
-Fixes: d76a60ba7afb ("ice: Add support for VLANs and offloads")
-Assisted-by: Claude:claude-4.6-opus-high Cursor
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Fixes: 24407a01e57c ("ice: Add 200G speed/phy type use")
+Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-4-686c33c9828d@intel.com
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-6-686c33c9828d@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_adminq_cmd.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 90dbe5266ce78..e0774a640955d 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -2594,6 +2594,9 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
- 
- 	ice_trace(xmit_frame_ring, tx_ring, skb);
- 
-+	/* record the location of the first descriptor for this packet */
-+	first = &tx_ring->tx_buf[tx_ring->next_to_use];
-+
- 	count = ice_xmit_desc_count(skb);
- 	if (ice_chk_linearize(skb, count)) {
- 		if (__skb_linearize(skb))
-@@ -2619,8 +2622,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
- 
- 	offload.tx_ring = tx_ring;
- 
--	/* record the location of the first descriptor for this packet */
--	first = &tx_ring->tx_buf[tx_ring->next_to_use];
- 	first->skb = skb;
- 	first->type = ICE_TX_BUF_SKB;
- 	first->bytecount = max_t(unsigned int, skb->len, ETH_ZLEN);
-@@ -2685,6 +2686,7 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
- out_drop:
- 	ice_trace(xmit_frame_ring_drop, tx_ring, skb);
- 	dev_kfree_skb_any(skb);
-+	first->type = ICE_TX_BUF_EMPTY;
- 	return NETDEV_TX_OK;
- }
- 
+diff --git a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+index 859e9c66f3e7e..3cbb1b0582e32 100644
+--- a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
++++ b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+@@ -1252,7 +1252,7 @@ struct ice_aqc_get_link_status_data {
+ #define ICE_AQ_LINK_PWR_QSFP_CLASS_3	2
+ #define ICE_AQ_LINK_PWR_QSFP_CLASS_4	3
+ 	__le16 link_speed;
+-#define ICE_AQ_LINK_SPEED_M		0x7FF
++#define ICE_AQ_LINK_SPEED_M		GENMASK(11, 0)
+ #define ICE_AQ_LINK_SPEED_10MB		BIT(0)
+ #define ICE_AQ_LINK_SPEED_100MB		BIT(1)
+ #define ICE_AQ_LINK_SPEED_1000MB	BIT(2)
 -- 
 2.53.0
 
