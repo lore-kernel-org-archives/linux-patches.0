@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C031E370D43;
-	Wed, 20 May 2026 16:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6137537D101;
+	Wed, 20 May 2026 16:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294594; cv=none; b=eibVjh0KFmPovSH/rJ+EK5awB7SXX2QfWWVgEt1DARr0/3AvEAaxKvxKJdJvmIz7hOQSozJRwzSYNXMuS1zGL2b/sA3EURB0QDaLc/F8N/qwsbxRvZI5MmmIotuF5JKRPlK9REpPhIUf+W2MDEkB4R/b8Y5/bi9iJLNviGaw7/U=
+	t=1779294596; cv=none; b=Knup86h4yaH8Jk+f0svtCMEUZY004uHO7I4oskPlmztk9vWZ/PrQhIfXzS28p0AtubBEQklpZ+Ri4CHDNNIGj9TQjLE9XL+zVT6uENt9WhW0L5sQjn6aoxyQ40ZMpVCm8acVOrhxjLYX/Zu7a4PUudKijvcuiSq1nMhCh7Qgajw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294594; c=relaxed/simple;
-	bh=5LtLX3zo8mn+fOnvXi+n8RnKLrBWRL8bAT7jc0H2xlo=;
+	s=arc-20240116; t=1779294596; c=relaxed/simple;
+	bh=X0CRVXQicRXox4z1L26XcnQ8Ybjky1wxrhtZ/T2Ls5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NegDN4LUXo7Ro6NVFnr1jMaY0YNZJG6DfN/C9Tt4rT+ZkiIF47tlcKGfiasxQxxzElvhsEDQYQ3f3734I2gQ3OxNfen/1HWmvDlDa7trV2/vNYb96wYl/FPYjBXDDbQFdqItHz2FRl+Gqb5a6O8Icm6pe/WSCVurWWwKmCsQEug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IC+eD83h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LeNsUIQl2hg/BXbo7kLcard5yvXrRHb7bnHJUQpusrY1W+I9J87pWu2QTxK1ybX8RNoy8h23rCNmAM1b0Mwqp/4wtg+ZkOpC+W6qGKH9JJtO0ffdQRH4T6P8oVHkch3xxMQOvCGUAsFJXT/KPlETxTfeb+9++LXpJeg9slA8YQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4XbScnb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IC+eD83h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313A41F000E9;
-	Wed, 20 May 2026 16:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4XbScnb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85531F000E9;
+	Wed, 20 May 2026 16:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294592;
-	bh=ESaPmnV34o7FfFAxOx8RNUCxu48WKIuCMan89RG0TBo=;
+	s=korg; t=1779294595;
+	bh=wbTV1iPiOt+SniDxEAEELlBBZIGFa9Wc9oOPFl9ZTNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IC+eD83hwvLq0lSU/p7kto3GQ2aZ1haguuB4cDrN0y7DSC5XG+G+ZwcQtOrUUHprw
-	 p5S5cvjj2PfENb4RLkm4M/qfjLpS8j1Jw4dAfqSqGToa8l6PDXQj8sdWGZBXcoFmD5
-	 BkoLGbXRpFODLzgE/5k8lAMqr211tjodAz1Hlwog=
+	b=M4XbScnbnZpBp16BZzSIEeCZZoTpDCptTB9G9k0ifqvz1oLVDAAHJw7HIxtJiCN+p
+	 La+2gvX5S4BYTBNHrd8H/UlEYbfm4ZqM8CZ48gGTXif6zRt4St456A3J2EHoAqtUbb
+	 AyUwxWhfon95ug3BIjOQRxfab8lkjpuv66lYx7k4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0081/1146] powerpc/pgtable-frag: Fix bad page state in pte_frag_destroy
-Date: Wed, 20 May 2026 18:05:31 +0200
-Message-ID: <20260520162150.186043004@linuxfoundation.org>
+Subject: [PATCH 7.0 0099/1146] wifi: mt76: mt7996: Reset ampdu_state state in case of failure in mt7996_tx_check_aggr()
+Date: Wed, 20 May 2026 18:05:49 +0200
+Message-ID: <20260520162150.586140122@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,87 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit fda4d71651f71c44b35829d13f3c8bf920032f77 ]
+[ Upstream commit c0747db7c10c2dfbdcff0e8e97021e3df1f1e362 ]
 
-powerpc uses pt_frag_refcount as a reference counter for tracking it's
-pte and pmd page table fragments. For PTE table, in case of Hash with
-64K pagesize, we have 16 fragments of 4K size in one 64K page.
+Reset the ampdu_state configured state if ieee80211_start_tx_ba_session
+routine fails in mt7996_tx_check_aggr()
 
-Patch series [1] "mm: free retracted page table by RCU"
-added pte_free_defer() to defer the freeing of PTE tables when
-retract_page_tables() is called for madvise MADV_COLLAPSE on shmem
-range.
-[1]: https://lore.kernel.org/all/7cd843a9-aa80-14f-5eb2-33427363c20@google.com/
-
-pte_free_defer() sets the active flag on the corresponding fragment's
-folio & calls pte_fragment_free(), which reduces the pt_frag_refcount.
-When pt_frag_refcount reaches 0 (no active fragment using the folio), it
-checks if the folio active flag is set, if set, it calls call_rcu to
-free the folio, it the active flag is unset then it calls pte_free_now().
-
-Now, this can lead to following problem in a corner case...
-
-[  265.351553][  T183] BUG: Bad page state in process a.out  pfn:20d62
-[  265.353555][  T183] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x20d62
-[  265.355457][  T183] flags: 0x3ffff800000100(active|node=0|zone=0|lastcpupid=0x7ffff)
-[  265.358719][  T183] raw: 003ffff800000100 0000000000000000 5deadbeef0000122 0000000000000000
-[  265.360177][  T183] raw: 0000000000000000 c0000000119caf58 00000000ffffffff 0000000000000000
-[  265.361438][  T183] page dumped because: PAGE_FLAGS_CHECK_AT_FREE flag(s) set
-[  265.362572][  T183] Modules linked in:
-[  265.364622][  T183] CPU: 0 UID: 0 PID: 183 Comm: a.out Not tainted 6.18.0-rc3-00141-g1ddeaaace7ff-dirty #53 VOLUNTARY
-[  265.364785][  T183] Hardware name: IBM pSeries (emulated by qemu) POWER10 (architected) 0x801200 0xf000006 of:SLOF,git-ee03ae pSeries
-[  265.364908][  T183] Call Trace:
-[  265.364955][  T183] [c000000011e6f7c0] [c000000001cfaa18] dump_stack_lvl+0x130/0x148 (unreliable)
-[  265.365202][  T183] [c000000011e6f7f0] [c000000000794758] bad_page+0xb4/0x1c8
-[  265.365384][  T183] [c000000011e6f890] [c00000000079c020] __free_frozen_pages+0x838/0xd08
-[  265.365554][  T183] [c000000011e6f980] [c0000000000a70ac] pte_frag_destroy+0x298/0x310
-[  265.365729][  T183] [c000000011e6fa30] [c0000000000aa764] arch_exit_mmap+0x34/0x218
-[  265.365912][  T183] [c000000011e6fa80] [c000000000751698] exit_mmap+0xb8/0x820
-[  265.366080][  T183] [c000000011e6fc30] [c0000000001b1258] __mmput+0x98/0x300
-[  265.366244][  T183] [c000000011e6fc80] [c0000000001c81f8] do_exit+0x470/0x1508
-[  265.366421][  T183] [c000000011e6fd70] [c0000000001c95e4] do_group_exit+0x88/0x148
-[  265.366602][  T183] [c000000011e6fdc0] [c0000000001c96ec] pid_child_should_wake+0x0/0x178
-[  265.366780][  T183] [c000000011e6fdf0] [c00000000003a270] system_call_exception+0x1b0/0x4e0
-[  265.366958][  T183] [c000000011e6fe50] [c00000000000d05c] system_call_vectored_common+0x15c/0x2ec
-
-The bad page state error occurs when such a folio gets freed (with
-active flag set), from do_exit() path in parallel.
-
-... this can happen when the pte fragment was allocated from this folio,
-but when all the fragments get freed, the pte_frag_refcount still had some
-unused fragments. Now, if this process exits, with such folio as it's cached
-pte_frag in mm->context, then during pte_frag_destroy(), we simply call
-pagetable_dtor() and pagetable_free(), meaning it doesn't clear the
-active flag. This, can lead to the above bug. Since we are anyway in
-do_exit() path, then if the refcount is 0, then I guess it should be
-ok to simply clear the folio active flag before calling pagetable_dtor()
-& pagetable_free().
-
-Fixes: 32cc0b7c9d50 ("powerpc: add pte_free_defer() for pgtables sharing page")
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/ee13e7f99b8f258019da2b37655b998e73e5ef8b.1773078178.git.ritesh.list@gmail.com
+Fixes: 98686cd21624c ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20251214-mt7996-aggr-check-fix-v1-1-33a8b62ec0fc@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/pgtable-frag.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/mm/pgtable-frag.c b/arch/powerpc/mm/pgtable-frag.c
-index 77e55eac16e42..ae742564a3d56 100644
---- a/arch/powerpc/mm/pgtable-frag.c
-+++ b/arch/powerpc/mm/pgtable-frag.c
-@@ -25,6 +25,7 @@ void pte_frag_destroy(void *pte_frag)
- 	count = ((unsigned long)pte_frag & ~PAGE_MASK) >> PTE_FRAG_SIZE_SHIFT;
- 	/* We allow PTE_FRAG_NR fragments from a PTE page */
- 	if (atomic_sub_and_test(PTE_FRAG_NR - count, &ptdesc->pt_frag_refcount)) {
-+		folio_clear_active(ptdesc_folio(ptdesc));
- 		pagetable_dtor(ptdesc);
- 		pagetable_free(ptdesc);
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 5e0c85066803d..d6ef2f8003269 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -1270,8 +1270,9 @@ mt7996_tx_check_aggr(struct ieee80211_link_sta *link_sta,
+ 	if (unlikely(fc != (IEEE80211_FTYPE_DATA | IEEE80211_STYPE_QOS_DATA)))
+ 		return;
+ 
+-	if (!test_and_set_bit(tid, &wcid->ampdu_state))
+-		ieee80211_start_tx_ba_session(link_sta->sta, tid, 0);
++	if (!test_and_set_bit(tid, &wcid->ampdu_state) &&
++	    ieee80211_start_tx_ba_session(link_sta->sta, tid, 0))
++		clear_bit(tid, &wcid->ampdu_state);
+ }
+ 
+ static void
 -- 
 2.53.0
 
