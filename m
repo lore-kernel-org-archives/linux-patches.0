@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B4C3F4114;
-	Wed, 20 May 2026 17:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82473F44CD;
+	Wed, 20 May 2026 17:03:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296597; cv=none; b=Xc17bEKlS1+62HEi7gMG7imftZICPCC9vJd0VQ56Bgbc53jGs/WOO1EecupQDqCRBjvQOU4eMuht8C3PXAcBsSUDY8rlZUs3zpTXPSpnZQpA0NS+2Fsbd7kJAVoF8SCtPxBm+xME9YMkrVKCxlEniuK4IcVUJOOuSg/HdEX4kgM=
+	t=1779296599; cv=none; b=aU8uIDxh8OG915BlAPEbN3iMMescRPqHo8Ki1lVWbgJ/G2sm2vByePgTUQjDuQ2Ix6IC1xT1mka3vczo1Vj4DWwcLe3AXf7eb+Cwe/yxztYj7IM/BbfHdOUxFmfjWGPo4nV4y9Y74yz1ASond/1KjPWG/AzdVuswDQ96V0i17Ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296597; c=relaxed/simple;
-	bh=VI//Vnt5Yfd5xlk0gCn66FUnZeYbzWNQqyAW8O5jsoI=;
+	s=arc-20240116; t=1779296599; c=relaxed/simple;
+	bh=QVkxKqt2r6rXyT6GNSyMAsOJfCW9QP/11Pq/dZ/SLUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eWlJEPkfrD8pzjml59PdSRZL9nBKc1YuazWNBSXIpkC46Ja1T6pQHo5tAGthB/Vu73CaN9rTJtr+SDmHwsr6AItr4oxLlBYVmLUSzQPj/ASk03danvTQGE1mTPpkzbmg5dSYwBQCxeWnSocBNZViDVwn6yLDej+P+nxls3AMC9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiLUzYYz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QpJiVXWv4pPOz0o3TetxvNRjlb4pKH/SfS4yVpCu2XnK/Xre8eoxHVWKRJhW/fG0wwpYJtyCGjOxqfELtJBJWsJWsz6il3k+RCih/s2GOEnc4WuAVxicvPUz5OXhF+FWujbEIfqzitzE+jwdZwE8wE9VZJ+VdLgK4etJRwRrb+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkiUaci7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiLUzYYz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7D91F000E9;
-	Wed, 20 May 2026 17:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkiUaci7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F9A1F00893;
+	Wed, 20 May 2026 17:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296595;
-	bh=/dcnPKswT5K/Ccxu/sXoRvqdjIViaFfQmwamXWBFXcM=;
+	s=korg; t=1779296598;
+	bh=H5yrrVKiv7DROouxisnXSOp5W5qpjzG9Vm3JMRgqkBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UiLUzYYz3K99nY5l2vR78bIfADYVpx7oaT3zdF3K5wDcJ9a6AdkzRv5CfBk0pWLbU
-	 vDecw0vRlV0SdMtiNw9l5h0/D9Nw5D0wLzzDIOaz0FC/odoYzdav7e9IsfXR7DGzeD
-	 guA7ydunZkvQATDQKY5vdryZFBfK5kSVBlZ5cm4w=
+	b=GkiUaci7aHHR32Mg24GamO2ZvpmSpKPGBOXfaBOrkzIJoPXtCCEKHKlCLXs8bE9hl
+	 Ik16vg4AGGFlD1YedaBAJIom3g/LN8HCR95J0A/cyrI6Gz+Pr+pbTAdoa0mzZh0Pop
+	 h8yzid5SfFACwojRJ9HFh4yueGhSY/5CD/48jIyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Lee Jones <lee@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0858/1146] tcp: send a challenge ACK on SEG.ACK > SND.NXT
-Date: Wed, 20 May 2026 18:18:28 +0200
-Message-ID: <20260520162207.657460616@linuxfoundation.org>
+Subject: [PATCH 7.0 0859/1146] tipc: fix double-free in tipc_buf_append()
+Date: Wed, 20 May 2026 18:18:29 +0200
+Message-ID: <20260520162207.679324914@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,85 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 42726ec644cbdde0035c3e0417fee8ed9547e120 ]
+[ Upstream commit d293ca716e7d5dffdaecaf6b9b2f857a33dc3d3a ]
 
-RFC 5961 Section 5.2 validates an incoming segment's ACK value
-against the range [SND.UNA - MAX.SND.WND, SND.NXT] and states:
+tipc_msg_validate() can potentially reallocate the skb it is validating,
+freeing the old one.  In tipc_buf_append(), it was being called with a
+pointer to a local variable which was a copy of the caller's skb
+pointer.
 
-  "All incoming segments whose ACK value doesn't satisfy the above
-   condition MUST be discarded and an ACK sent back."
+If the skb was reallocated and validation subsequently failed, the error
+handling path would free the original skb pointer, which had already
+been freed, leading to double-free.
 
-Commit 354e4aa391ed ("tcp: RFC 5961 5.2 Blind Data Injection Attack
-Mitigation") opted Linux into this mitigation and implements the
-challenge ACK on the lower side (SEG.ACK < SND.UNA - MAX.SND.WND),
-but the symmetric upper side (SEG.ACK > SND.NXT) still takes the
-pre-RFC-5961 path and silently returns
-SKB_DROP_REASON_TCP_ACK_UNSENT_DATA, even though RFC 793 Section 3.9
-(now RFC 9293 Section 3.10.7.4) has always required:
+Fix this by checking if head now points to a newly allocated reassembled
+skb.  If it does, reassign *headbuf for later freeing operations.
 
-  "If the ACK acknowledges something not yet sent (SEG.ACK > SND.NXT)
-   then send an ACK, drop the segment, and return."
-
-Complete the mitigation by sending a challenge ACK on that branch,
-reusing the existing tcp_send_challenge_ack() path which already
-enforces the per-socket RFC 5961 Section 7 rate limit via
-__tcp_oow_rate_limited().  FLAG_NO_CHALLENGE_ACK is honoured for
-symmetry with the lower-edge case.
-
-Update the existing tcp_ts_recent_invalid_ack.pkt selftest, which
-drives this exact path, to consume the new challenge ACK.
-
-Fixes: 354e4aa391ed ("tcp: RFC 5961 5.2 Blind Data Injection Attack Mitigation")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260422123605.320000-2-jiayuan.chen@linux.dev
+Fixes: d618d09a68e4 ("tipc: enforce valid ratio between skb truesize and contents")
+Suggested-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c                                   | 10 +++++++---
- .../net/packetdrill/tcp_ts_recent_invalid_ack.pkt      |  4 +++-
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ net/tipc/msg.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index c6c55c51a6409..cb4bcc5a85787 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -4288,11 +4288,15 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
- 		goto old_ack;
- 	}
+diff --git a/net/tipc/msg.c b/net/tipc/msg.c
+index 76284fc538ebd..b0bba0feef564 100644
+--- a/net/tipc/msg.c
++++ b/net/tipc/msg.c
+@@ -177,8 +177,20 @@ int tipc_buf_append(struct sk_buff **headbuf, struct sk_buff **buf)
  
--	/* If the ack includes data we haven't sent yet, discard
--	 * this segment (RFC793 Section 3.9).
-+	/* If the ack includes data we haven't sent yet, drop the
-+	 * segment.  RFC 793 Section 3.9 and RFC 5961 Section 5.2
-+	 * require us to send an ACK back in that case.
- 	 */
--	if (after(ack, tp->snd_nxt))
-+	if (after(ack, tp->snd_nxt)) {
-+		if (!(flag & FLAG_NO_CHALLENGE_ACK))
-+			tcp_send_challenge_ack(sk, false);
- 		return -SKB_DROP_REASON_TCP_ACK_UNSENT_DATA;
-+	}
- 
- 	if (after(ack, prior_snd_una)) {
- 		flag |= FLAG_SND_UNA_ADVANCED;
-diff --git a/tools/testing/selftests/net/packetdrill/tcp_ts_recent_invalid_ack.pkt b/tools/testing/selftests/net/packetdrill/tcp_ts_recent_invalid_ack.pkt
-index 174ce9a1bfc07..ee6baf7c36cfa 100644
---- a/tools/testing/selftests/net/packetdrill/tcp_ts_recent_invalid_ack.pkt
-+++ b/tools/testing/selftests/net/packetdrill/tcp_ts_recent_invalid_ack.pkt
-@@ -19,7 +19,9 @@
- 
- // bad packet with high tsval (its ACK sequence is above our sndnxt)
-    +0 < F. 1:1(0) ack 9999 win 20000 <nop,nop,TS val 200000 ecr 100>
--
-+// Challenge ACK for SEG.ACK > SND.NXT (RFC 5961 5.2 / RFC 793 3.9).
-+// ecr=200 (not 200000) proves ts_recent was not updated from the bad packet.
-+   +0 > . 1:1(0) ack 1 <nop,nop,TS val 200 ecr 200>
- 
-    +0 < . 1:1001(1000) ack 1 win 20000 <nop,nop,TS val 201 ecr 100>
-    +0 > . 1:1(0) ack 1001 <nop,nop,TS val 200 ecr 201>
+ 	if (fragid == LAST_FRAGMENT) {
+ 		TIPC_SKB_CB(head)->validated = 0;
+-		if (unlikely(!tipc_msg_validate(&head)))
++
++		/* If the reassembled skb has been freed in
++		 * tipc_msg_validate() because of an invalid truesize,
++		 * then head will point to a newly allocated reassembled
++		 * skb, while *headbuf points to freed reassembled skb.
++		 * In such cases, correct *headbuf for freeing the newly
++		 * allocated reassembled skb later.
++		 */
++		if (unlikely(!tipc_msg_validate(&head))) {
++			if (head != *headbuf)
++				*headbuf = head;
+ 			goto err;
++		}
++
+ 		*buf = head;
+ 		TIPC_SKB_CB(head)->tail = NULL;
+ 		*headbuf = NULL;
 -- 
 2.53.0
 
