@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D1A3164C3;
-	Wed, 20 May 2026 17:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1878136A352;
+	Wed, 20 May 2026 17:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296454; cv=none; b=DRXQ2qKQMgNIeeYrNjWDbpqZX9lSg7oW6+NhkgnBXdqj8KEBK+QqcrrespE9m+VbNa0VYBHnAO3Mf9UL/CqMtC/C3FiQN9YWtw9Rc824osT/JRhCkF0BgXEIxKedqwByGgRRoAk+fJzp1W9Noa+Tm5cDq/rCBfAErWYmHYLykTg=
+	t=1779296457; cv=none; b=DUOhnfFgLQbk8r5abEyBPcD2VT+Qse4MWgIhwkxflsEqE1zbrXWCqytlJyrKDMdY5NyY9/dqk1v1grR1bFSds09IWTERSXjFXU3+g4Q1PtO9BTsz91+Di2gtLlTnpfm+wg1Zhf+tPsPSBVXsFnEXSn52/1r14oAo4ZpsUS8qf0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296454; c=relaxed/simple;
-	bh=oBc1RLvNvb2ezckIL+kDLCFj4NAme7dNIK0+VS80uqU=;
+	s=arc-20240116; t=1779296457; c=relaxed/simple;
+	bh=B8LXd1OH0E5o1/LXhKrzzBm7NlwCV8amPF5pjK69dKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gk2rENUm5uhluOeoclzU4yZujYsmH33JRQ+R1OrF4o3dJeTVDoMOteP4DkKNQP45nC0cYH7gf8Yt2gOZnld9BUzAleBBb96m+aSFtWvhdBPGY/B3sQpILgkXaTIoNhyZWOh56FINpqJ9vUxnNi8ggl/1bztTA1iJnYsw4SU1MxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNhxY9ib; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KD3YOykya4oxD3NDme/r5Thhc1QL38xLzPV3KPVXthweP0xWBDASnHOj4bv9e3vxptYidQJvyguKkvkOofble6LcmjP2cBuvwot/fQGmqQpfch0/k5bALQQzHtxRs7s6Uuc3//LR4OrCEi5WAHsXMjOi8x4WASDCKm00huWOu4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evPZwItZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNhxY9ib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6F01F000E9;
-	Wed, 20 May 2026 17:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evPZwItZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1FD1F000E9;
+	Wed, 20 May 2026 17:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296453;
-	bh=1jFRtaWWXbNvs6CXItHJ1qRxN6GZo/UlSxdzbieGzqE=;
+	s=korg; t=1779296456;
+	bh=CkBPEhSKDZIhV1VBks4DD9NFnf+bWoPdyxuQ3mhPw8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rNhxY9ibfaX1U3RO4b9rgw26Y0ltn/NVTC7jdlikd02SGP5agxZEKXudUBpuGXkNq
-	 soOPU6k+jULpVFWLNPRiOre3ZXoy3wmj2D6aiyE3fU6T9atRv0rzHokzr8IIqzKoGW
-	 mcGhKzvXcu3ORDS+Tyuaqz281C9wwqjfyjjhBwbI=
+	b=evPZwItZOmuo6T6Qszj2EliLCpYVX2Zc7n7FFNMPzqq5pBRLLMxeUGCvVTK46ahsA
+	 YmklXQdYtaMuuM8BvVV3l8PeaaHSAsScPan6cwU6tDPSs5CSwVyvRXvJm5hpRl3Wn2
+	 y5hyLMNUPBMAXhm5+WrHoE5InCu9TBl0dVWZJ4pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0805/1146] af_unix: Drop all SCM attributes for SOCKMAP.
-Date: Wed, 20 May 2026 18:17:35 +0200
-Message-ID: <20260520162206.444604788@linuxfoundation.org>
+Subject: [PATCH 7.0 0806/1146] sctp: fix OOB write to userspace in sctp_getsockopt_peer_auth_chunks
+Date: Wed, 20 May 2026 18:17:36 +0200
+Message-ID: <20260520162206.466831079@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,177 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 965dc93481d1b80d341bdd16c27b16fe197175ee ]
+[ Upstream commit 0cf004ffb61cd32d140531c3a84afe975f9fc7ea ]
 
-SOCKMAP can hide inflight fd from AF_UNIX GC.
+sctp_getsockopt_peer_auth_chunks() checks that the caller's optval
+buffer is large enough for the peer AUTH chunk list with
 
-When a socket in SOCKMAP receives skb with inflight fd,
-sk_psock_verdict_data_ready() looks up the mapped socket and
-enqueue skb to its psock->ingress_skb.
+    if (len < num_chunks)
+            return -EINVAL;
 
-Since neither the old nor the new GC can inspect the psock
-queue, the hidden skb leaks the inflight sockets.  Note that
-this cannot be detected via kmemleak because inflight sockets
-are linked to a global list.
+but then writes num_chunks bytes to p->gauth_chunks, which lives
+at offset offsetof(struct sctp_authchunks, gauth_chunks) == 8
+inside optval.  The check is missing the sizeof(struct
+sctp_authchunks) = 8-byte header.  When the caller supplies
+len == num_chunks (for any num_chunks > 0) the test passes but
+copy_to_user() writes sizeof(struct sctp_authchunks) = 8 bytes
+past the declared buffer.
 
-In addition, SOCKMAP redirect breaks the Tarjan-based GC's
-assumption that unix_edge.successor is always alive, which
-is no longer true once skb is redirected, resulting in
-use-after-free below. [0]
+The sibling function sctp_getsockopt_local_auth_chunks() at the
+next line already has the correct check:
 
-Moreover, SOCKMAP does not call scm_stat_del() properly,
-so unix_show_fdinfo() could report an incorrect fd count.
+    if (len < sizeof(struct sctp_authchunks) + num_chunks)
+            return -EINVAL;
 
-sk_msg_recvmsg() does not support any SCM attributes in the
-first place.
+Align the peer variant with its sibling.
 
-Let's drop all SCM attributes before passing skb to the
-SOCKMAP layer.
+Reproducer confirms on v7.0-13-generic: an unprivileged userspace
+caller that opens a loopback SCTP association with AUTH enabled,
+queries num_chunks with a short optval, then issues the real
+getsockopt with len == num_chunks and sentinel bytes painted past
+the buffer observes those sentinel bytes overwritten with the
+peer's AUTH chunk type.  The bytes written are under the peer's
+control but land in the caller's own userspace; this is not a
+kernel memory corruption, but it is a kernel-side contract
+violation that can silently corrupt adjacent userspace data.
 
-[0]:
-BUG: KASAN: slab-use-after-free in unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
-Read of size 8 at addr ffff888125362670 by task kworker/56:1/496
-
-CPU: 56 UID: 0 PID: 496 Comm: kworker/56:1 Not tainted 7.0.0-rc7-00263-gb9d8b856689d #3 PREEMPT(lazy)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-Workqueue: events sk_psock_backlog
-Call Trace:
- <TASK>
- dump_stack_lvl (lib/dump_stack.c:122)
- print_report (mm/kasan/report.c:379)
- kasan_report (mm/kasan/report.c:597)
- unix_del_edges (net/unix/garbage.c:118 net/unix/garbage.c:181 net/unix/garbage.c:251)
- unix_destroy_fpl (net/unix/garbage.c:317)
- unix_destruct_scm (./include/net/scm.h:80 ./include/net/scm.h:86 net/unix/af_unix.c:1976)
- sk_psock_backlog (./include/linux/skbuff.h:?)
- process_scheduled_works (kernel/workqueue.c:?)
- worker_thread (kernel/workqueue.c:?)
- kthread (kernel/kthread.c:438)
- ret_from_fork (arch/x86/kernel/process.c:164)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
- </TASK>
-
-Allocated by task 955:
- kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
- __kasan_slab_alloc (mm/kasan/common.c:369)
- kmem_cache_alloc_noprof (mm/slub.c:4539)
- sk_prot_alloc (net/core/sock.c:2240)
- sk_alloc (net/core/sock.c:2301)
- unix_create1 (net/unix/af_unix.c:1099)
- unix_create (net/unix/af_unix.c:1169)
- __sock_create (net/socket.c:1606)
- __sys_socketpair (net/socket.c:1811)
- __x64_sys_socketpair (net/socket.c:1863 net/socket.c:1860 net/socket.c:1860)
- do_syscall_64 (arch/x86/entry/syscall_64.c:?)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-Freed by task 496:
- kasan_save_track (mm/kasan/common.c:58 mm/kasan/common.c:78)
- kasan_save_free_info (mm/kasan/generic.c:587)
- __kasan_slab_free (mm/kasan/common.c:287)
- kmem_cache_free (mm/slub.c:6165)
- __sk_destruct (net/core/sock.c:2282 net/core/sock.c:2384)
- sk_psock_destroy (./include/net/sock.h:?)
- process_scheduled_works (kernel/workqueue.c:?)
- worker_thread (kernel/workqueue.c:?)
- kthread (kernel/kthread.c:438)
- ret_from_fork (arch/x86/kernel/process.c:164)
- ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
-
-Fixes: c63829182c37 ("af_unix: Implement ->psock_update_sk_prot()")
-Fixes: 77462de14a43 ("af_unix: Add read_sock for stream socket types")
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260415184830.3988432-1-kuniyu@google.com
+Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260416031903.1447072-1-michael.bommarito@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 35 +++++++++++++++++++++++++++--------
- 1 file changed, 27 insertions(+), 8 deletions(-)
+ net/sctp/socket.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 660c7c441e0db..001f6602a6659 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1964,16 +1964,19 @@ static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 48759da0a0261..6c58ad092e512 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -7042,7 +7042,7 @@ static int sctp_getsockopt_peer_auth_chunks(struct sock *sk, int len,
  
- static void unix_destruct_scm(struct sk_buff *skb)
- {
--	struct scm_cookie scm;
-+	struct scm_cookie scm = {};
-+
-+	swap(scm.pid, UNIXCB(skb).pid);
+ 	/* See if the user provided enough room for all the data */
+ 	num_chunks = ntohs(ch->param_hdr.length) - sizeof(struct sctp_paramhdr);
+-	if (len < num_chunks)
++	if (len < sizeof(struct sctp_authchunks) + num_chunks)
+ 		return -EINVAL;
  
--	memset(&scm, 0, sizeof(scm));
--	scm.pid = UNIXCB(skb).pid;
- 	if (UNIXCB(skb).fp)
- 		unix_detach_fds(&scm, skb);
- 
--	/* Alas, it calls VFS */
--	/* So fscking what? fput() had been SMP-safe since the last Summer */
- 	scm_destroy(&scm);
-+}
-+
-+static void unix_wfree(struct sk_buff *skb)
-+{
-+	unix_destruct_scm(skb);
- 	sock_wfree(skb);
- }
- 
-@@ -1989,7 +1992,7 @@ static int unix_scm_to_skb(struct scm_cookie *scm, struct sk_buff *skb, bool sen
- 	if (scm->fp && send_fds)
- 		err = unix_attach_fds(scm, skb);
- 
--	skb->destructor = unix_destruct_scm;
-+	skb->destructor = unix_wfree;
- 	return err;
- }
- 
-@@ -2066,6 +2069,13 @@ static void scm_stat_del(struct sock *sk, struct sk_buff *skb)
- 	}
- }
- 
-+static void unix_orphan_scm(struct sock *sk, struct sk_buff *skb)
-+{
-+	scm_stat_del(sk, skb);
-+	unix_destruct_scm(skb);
-+	skb->destructor = sock_wfree;
-+}
-+
- /*
-  *	Send AF_UNIX data.
-  */
-@@ -2679,10 +2689,16 @@ static int unix_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- 	int err;
- 
- 	mutex_lock(&u->iolock);
-+
- 	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
--	mutex_unlock(&u->iolock);
--	if (!skb)
-+	if (!skb) {
-+		mutex_unlock(&u->iolock);
- 		return err;
-+	}
-+
-+	unix_orphan_scm(sk, skb);
-+
-+	mutex_unlock(&u->iolock);
- 
- 	return recv_actor(sk, skb);
- }
-@@ -2882,6 +2898,9 @@ static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- #endif
- 
- 	spin_unlock(&queue->lock);
-+
-+	unix_orphan_scm(sk, skb);
-+
- 	mutex_unlock(&u->iolock);
- 
- 	return recv_actor(sk, skb);
+ 	if (copy_to_user(to, ch->chunks, num_chunks))
 -- 
 2.53.0
 
