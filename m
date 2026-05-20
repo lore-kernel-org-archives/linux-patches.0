@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF6D3F9F21;
-	Wed, 20 May 2026 18:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E563E95A4;
+	Wed, 20 May 2026 18:05:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300349; cv=none; b=ttw2pdE961w2XGf892T5ZmqqExUmhZcGX1vkSI/1r0jLjcCUOfyrExZkIc2PUf7rhCsYuh3O3A69GuOTbNnemGxTgrENG8KxWgH6uqwdtf70kphnzI29rsz0vW4jdtL8DwDeF/H8C+/IOkZ9BtLRVCx6Kx4akH/bXhTZwRv3RbU=
+	t=1779300352; cv=none; b=AM96hltlcncAyzMsDMPr2a8g20yxtTb/FRGBBJfHyW8799FNGhpSiH0OypiJxz840fJsdvN/Peesvta3oPs8YVA4R4ngKn/CNBuyH63l7rEfvtMHxZH7ETBZm/iKsdg2Nuxl6J6exAY595E5vyNuH0d6WE4C3XecDMrrDIdG+n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300349; c=relaxed/simple;
-	bh=gUdgA/dIuy2PMkZyPTCxZ/3VNlzrYKXnr+jcrMnpExE=;
+	s=arc-20240116; t=1779300352; c=relaxed/simple;
+	bh=PWBCjXcOyxuVMRQb5yvzEy5X4Mugw880jR5VM1cmRq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s+mhccmZe7PJS5Owao8GthhWn3K9bcI5KqSlTFv7dr89bTHN9czxoQavjCqYNhvWP40Q4n99LNOk9Qc2EU8CJKPw1bXGl8mbwcyyZedBM4sXznbHxhFBfXybuafxYglFgNffmnh9NcrQ9nz8ICuuH5FwcYnkqkfa0NQ0Z3YlEs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4L2d3Hb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t1plCQoDMU4Qg+mku0A8gjS3eHAVqsAH8azGLhrGAFOd+6ejp9Yv85ROWNwK5fF30ggJrlXne2glzJrk3RFC3VGkkwwS2wvQDRMtaMJQDc6p0im8lELvljQADXJ6N52+8NciZt8WiJynfjDpbg5gePrptf/fv1xUJKVHs4D7Yg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plmNlkqb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4L2d3Hb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024F81F000E9;
-	Wed, 20 May 2026 18:05:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plmNlkqb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9D11F00893;
+	Wed, 20 May 2026 18:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300348;
-	bh=xWjD552C5yL5KL48IGp9M0HZEps90MgWrMjackxcb8s=;
+	s=korg; t=1779300351;
+	bh=IsCMqE4/C9ON5YZ9FFqOh4ntL9MfVTTQoX9bG4+ZpHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k4L2d3Hbk07O0g+OT8BUeYoV5p3gMMpA3L6yTORATdu9OMGlLZZd4J15cETou2Ft+
-	 6NygWleDzO9i+ROBP3XTR3xa9K9DIbbQZ7ZkGVE01Q1XRpSQY80smw0g/ZVxWj7P5G
-	 EpZWoHGnKlk3Tbd5bnOSfaO0L+cg+P1aT3cOo6YU=
+	b=plmNlkqb03yxo3Gk4UVF/+YAd7R9M1d3GRvfyBB5MlRNUsucZEETdkvF4r3LsVtdl
+	 tmezy74RnAAGptkiNihH/gby/7tavYB9A27LFAPDxLqXOPLb/dnGi4rHd/d7t6im18
+	 s7jnIHccAlqHKBdfMkB/T2r+AJgJ5kAqcKvmHFss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harikrishna Shenoy <h-shenoy@ti.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Han Xu <han.xu@nxp.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 141/666] drm/bridge: cadence: cdns-mhdp8546-core: Handle HDCP state in bridge atomic check
-Date: Wed, 20 May 2026 18:15:52 +0200
-Message-ID: <20260520162114.266581669@linuxfoundation.org>
+Subject: [PATCH 6.12 142/666] spi: spi-nxp-fspi: enable runtime pm for fspi
+Date: Wed, 20 May 2026 18:15:53 +0200
+Message-ID: <20260520162114.287421608@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,72 +52,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harikrishna Shenoy <h-shenoy@ti.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit 4a8edd658489ec2a3d7e20482fa9e8d366153d8d ]
+[ Upstream commit 97be4b919a609fc8c4bd1118502b5d26cc2f77c4 ]
 
-Now that we have DRM_BRIDGE_ATTACH_NO_CONNECTOR framework, handle the
-HDCP state change in bridge atomic check as well to enable correct
-functioning for HDCP in both DRM_BRIDGE_ATTACH_NO_CONNECTOR and
-!DRM_BRIDGE_ATTACH_NO_CONNECTOR case.
+Enable the runtime PM in fspi driver.
+Also for system PM, On some board like i.MX8ULP-EVK board,
+after system suspend, IOMUX module will lost power, so all
+the pinctrl setting will lost when system resume back, need
+driver to save/restore the pinctrl setting.
 
-Without this patch, when using DRM_BRIDGE_ATTACH_NO_CONNECTOR flag, HDCP
-state changes would not be properly handled during atomic commits,
-potentially leading to HDCP authentication failures or incorrect
-protection status for content requiring HDCP encryption.
-
-Fixes: 6a3608eae6d33 ("drm: bridge: cdns-mhdp8546: Enable HDCP")
-Signed-off-by: Harikrishna Shenoy <h-shenoy@ti.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patch.msgid.link/20251209120332.3559893-4-h-shenoy@ti.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Link: https://patch.msgid.link/20250428-flexspipatch-v3-2-61d5e8f591bc@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 68c8c93fdb0d ("spi: nxp-fspi: Use reinit_completion() for repeated operations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/bridge/cadence/cdns-mhdp8546-core.c   | 23 +++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/spi/spi-nxp-fspi.c | 93 +++++++++++++++++++++++++++++++-------
+ 1 file changed, 76 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-index d56466e9b155f..3c4ea9bdefbea 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-@@ -2193,6 +2193,10 @@ static int cdns_mhdp_atomic_check(struct drm_bridge *bridge,
- {
- 	struct cdns_mhdp_device *mhdp = bridge_to_mhdp(bridge);
- 	const struct drm_display_mode *mode = &crtc_state->adjusted_mode;
-+	struct drm_connector_state *old_state, *new_state;
-+	struct drm_atomic_state *state = crtc_state->state;
-+	struct drm_connector *conn = mhdp->connector_ptr;
-+	u64 old_cp, new_cp;
+diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
+index a43540d7995ef..67bcc6d351326 100644
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -48,6 +48,8 @@
+ #include <linux/mutex.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
++#include <linux/pinctrl/consumer.h>
++#include <linux/pm_runtime.h>
+ #include <linux/pm_qos.h>
+ #include <linux/regmap.h>
+ #include <linux/sizes.h>
+@@ -57,6 +59,9 @@
+ #include <linux/spi/spi.h>
+ #include <linux/spi/spi-mem.h>
  
- 	mutex_lock(&mhdp->link_mutex);
- 
-@@ -2212,6 +2216,25 @@ static int cdns_mhdp_atomic_check(struct drm_bridge *bridge,
- 	if (mhdp->info)
- 		bridge_state->input_bus_cfg.flags = *mhdp->info->input_bus_flags;
- 
-+	if (conn && mhdp->hdcp_supported) {
-+		old_state = drm_atomic_get_old_connector_state(state, conn);
-+		new_state = drm_atomic_get_new_connector_state(state, conn);
-+		old_cp = old_state->content_protection;
-+		new_cp = new_state->content_protection;
++/* runtime pm timeout */
++#define FSPI_RPM_TIMEOUT 50	/* 50ms */
 +
-+		if (old_state->hdcp_content_type != new_state->hdcp_content_type &&
-+		    new_cp != DRM_MODE_CONTENT_PROTECTION_UNDESIRED) {
-+			new_state->content_protection = DRM_MODE_CONTENT_PROTECTION_DESIRED;
-+			crtc_state = drm_atomic_get_new_crtc_state(state, new_state->crtc);
-+			crtc_state->mode_changed = true;
-+		}
-+
-+		if (!new_state->crtc) {
-+			if (old_cp == DRM_MODE_CONTENT_PROTECTION_ENABLED)
-+				new_state->content_protection = DRM_MODE_CONTENT_PROTECTION_DESIRED;
-+		}
+ /* Registers used by the driver */
+ #define FSPI_MCR0			0x00
+ #define FSPI_MCR0_AHB_TIMEOUT(x)	((x) << 24)
+@@ -396,6 +401,8 @@ struct nxp_fspi {
+ 	struct mutex lock;
+ 	struct pm_qos_request pm_qos_req;
+ 	int selected;
++#define FSPI_NEED_INIT		(1 << 0)
++	int flags;
+ };
+ 
+ static inline int needs_ip_only(struct nxp_fspi *f)
+@@ -935,6 +942,13 @@ static int nxp_fspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ 
+ 	mutex_lock(&f->lock);
+ 
++	err = pm_runtime_get_sync(f->dev);
++	if (err < 0) {
++		mutex_unlock(&f->lock);
++		dev_err(f->dev, "Failed to enable clock %d\n", __LINE__);
++		return err;
 +	}
 +
- 	mutex_unlock(&mhdp->link_mutex);
+ 	/* Wait for controller being ready. */
+ 	err = fspi_readl_poll_tout(f, f->iobase + FSPI_STS0,
+ 				   FSPI_STS0_ARB_IDLE, 1, POLL_TOUT, true);
+@@ -963,8 +977,10 @@ static int nxp_fspi_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ 	/* Invalidate the data in the AHB buffer. */
+ 	nxp_fspi_invalid(f);
+ 
+-	mutex_unlock(&f->lock);
++	pm_runtime_mark_last_busy(f->dev);
++	pm_runtime_put_autosuspend(f->dev);
+ 
++	mutex_unlock(&f->lock);
+ 	return err;
+ }
+ 
+@@ -1231,9 +1247,14 @@ static int nxp_fspi_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return dev_err_probe(dev, irq, "Failed to get irq source");
+ 
+-	ret = nxp_fspi_clk_prep_enable(f);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "Can't enable the clock\n");
++	pm_runtime_enable(dev);
++	pm_runtime_set_autosuspend_delay(dev, FSPI_RPM_TIMEOUT);
++	pm_runtime_use_autosuspend(dev);
++
++	/* enable clock */
++	ret = pm_runtime_get_sync(f->dev);
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "Failed to enable clock");
+ 
+ 	/* Clear potential interrupts */
+ 	reg = fspi_readl(f, f->iobase + FSPI_INTR);
+@@ -1242,12 +1263,14 @@ static int nxp_fspi_probe(struct platform_device *pdev)
+ 
+ 	nxp_fspi_default_setup(f);
+ 
++	ret = pm_runtime_put_sync(dev);
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "Failed to disable clock");
++
+ 	ret = devm_request_irq(dev, irq,
+ 			nxp_fspi_irq_handler, 0, pdev->name, f);
+-	if (ret) {
+-		nxp_fspi_clk_disable_unprep(f);
++	if (ret)
+ 		return dev_err_probe(dev, ret, "Failed to request irq\n");
+-	}
+ 
+ 	ret = devm_mutex_init(dev, &f->lock);
+ 	if (ret)
+@@ -1271,29 +1294,70 @@ static void nxp_fspi_remove(struct platform_device *pdev)
+ {
+ 	struct nxp_fspi *f = platform_get_drvdata(pdev);
+ 
++	/* enable clock first since there is reigster access */
++	pm_runtime_get_sync(f->dev);
++
+ 	/* disable the hardware */
+ 	fspi_writel(f, FSPI_MCR0_MDIS, f->iobase + FSPI_MCR0);
+ 
++	pm_runtime_disable(f->dev);
++	pm_runtime_put_noidle(f->dev);
+ 	nxp_fspi_clk_disable_unprep(f);
+ 
+ 	if (f->ahb_addr)
+ 		iounmap(f->ahb_addr);
+ }
+ 
+-static int nxp_fspi_suspend(struct device *dev)
++static int nxp_fspi_runtime_suspend(struct device *dev)
+ {
++	struct nxp_fspi *f = dev_get_drvdata(dev);
++
++	nxp_fspi_clk_disable_unprep(f);
++
  	return 0;
  }
+ 
+-static int nxp_fspi_resume(struct device *dev)
++static int nxp_fspi_runtime_resume(struct device *dev)
+ {
+ 	struct nxp_fspi *f = dev_get_drvdata(dev);
++	int ret;
+ 
+-	nxp_fspi_default_setup(f);
++	ret = nxp_fspi_clk_prep_enable(f);
++	if (ret)
++		return ret;
+ 
+-	return 0;
++	if (f->flags & FSPI_NEED_INIT) {
++		nxp_fspi_default_setup(f);
++		ret = pinctrl_pm_select_default_state(dev);
++		if (ret)
++			dev_err(dev, "select flexspi default pinctrl failed!\n");
++		f->flags &= ~FSPI_NEED_INIT;
++	}
++
++	return ret;
+ }
+ 
++static int nxp_fspi_suspend(struct device *dev)
++{
++	struct nxp_fspi *f = dev_get_drvdata(dev);
++	int ret;
++
++	ret = pinctrl_pm_select_sleep_state(dev);
++	if (ret) {
++		dev_err(dev, "select flexspi sleep pinctrl failed!\n");
++		return ret;
++	}
++
++	f->flags |= FSPI_NEED_INIT;
++
++	return pm_runtime_force_suspend(dev);
++}
++
++static const struct dev_pm_ops nxp_fspi_pm_ops = {
++	RUNTIME_PM_OPS(nxp_fspi_runtime_suspend, nxp_fspi_runtime_resume, NULL)
++	SYSTEM_SLEEP_PM_OPS(nxp_fspi_suspend, pm_runtime_force_resume)
++};
++
+ static const struct of_device_id nxp_fspi_dt_ids[] = {
+ 	{ .compatible = "nxp,lx2160a-fspi", .data = (void *)&lx2160a_data, },
+ 	{ .compatible = "nxp,imx8mm-fspi", .data = (void *)&imx8mm_data, },
+@@ -1313,17 +1377,12 @@ static const struct acpi_device_id nxp_fspi_acpi_ids[] = {
+ MODULE_DEVICE_TABLE(acpi, nxp_fspi_acpi_ids);
+ #endif
+ 
+-static const struct dev_pm_ops nxp_fspi_pm_ops = {
+-	.suspend	= nxp_fspi_suspend,
+-	.resume		= nxp_fspi_resume,
+-};
+-
+ static struct platform_driver nxp_fspi_driver = {
+ 	.driver = {
+ 		.name	= "nxp-fspi",
+ 		.of_match_table = nxp_fspi_dt_ids,
+ 		.acpi_match_table = ACPI_PTR(nxp_fspi_acpi_ids),
+-		.pm =   &nxp_fspi_pm_ops,
++		.pm = pm_ptr(&nxp_fspi_pm_ops),
+ 	},
+ 	.probe          = nxp_fspi_probe,
+ 	.remove_new	= nxp_fspi_remove,
 -- 
 2.53.0
 
