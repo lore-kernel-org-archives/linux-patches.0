@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FA53F1AD9;
-	Wed, 20 May 2026 17:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA1A3F4DC0;
+	Wed, 20 May 2026 17:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299577; cv=none; b=J2Gu5uHc0fxTZfn+WGw/2oHL0bpS8GLVnJzpgbgR9EymDB4OQ3+6gO85H3eygZFYJcjgmng2tTSMXhIN/3BpSUaZbN++NeBxJecflBrA7rl1nnUDsZqrvxPV3W7ACc1A//pANBRj6YA0FJwae0p2KGRTNsuyTtITFXbPhi4WTbc=
+	t=1779299582; cv=none; b=IEMfbH4F8/5DZtWHQn2skqrwloJBiSNRV6/+FNKgD2WNEkPvgJ7u0tEDdwrN60NX/qrF6JTGACy7PrrkqJCRZ18/27OaHW5vFIPq4zbbVsiw4xV51oRlkMy0LHYAZ0gqwcQ5XlElOu3ix07IRqcIaKWxHKbyuaXVBmAKr6LqMZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299577; c=relaxed/simple;
-	bh=9WTdIIw6W/arQBVn6rUZoPO1wNo2S149QWaCz+6nmH4=;
+	s=arc-20240116; t=1779299582; c=relaxed/simple;
+	bh=5YPheWmDFDXtVupUi/JLXk0OT0gHYcrkkasSv3TfNmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EWBy+az7rTSNBaI3Qm4dsl1yt7qJiHJ6QH31LD25t7IgNo16MBGw41EADxsrhhuU2h3n3MEe9jU7QoIbIStNrvwG+qR5UngpHf0rm4GuBnAfNQ11LvF9BmvudKw++CSY7SJRvq/0QNzKvJ3mBWPcMBE0iDgwTXROq1sqRpAI2oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJirtHLe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hu+htWip4K5TIdBP3C/pchxTRBjpJjjuXYJcbp739rggJ/hBzekFlI+uCThd12G6sJk4Le8vryE5glYNf/7kLQw4LWzWbWf9HjMVaoFgIDnFCsiu8YJVKhgLh9R3+4IFMxJVpc9ZxNGhswdeaVP4f/giS2+gf2fyxvWnG+VIoVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pu0k2h4N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJirtHLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 529741F000E9;
-	Wed, 20 May 2026 17:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pu0k2h4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F317B1F000E9;
+	Wed, 20 May 2026 17:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299576;
-	bh=V3gL7yQ1zytJKO4OiZB384DR0aipPT4SXGLuJ9weTvI=;
+	s=korg; t=1779299579;
+	bh=l6/2VSPdepYx7ZuvKOGMX3vQqsdaDln/0cusH+MBjco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TJirtHLesgFvvtTqIOHM0BMpkx4qJRYM7N3Cvcs03G2ytR9LVjeWee9ztSkWL6hKU
-	 nDfo0ARje5mlO6sOJtmsOwmIVegxH824b5bqNO09SHyZ05tbzukpSzJO/k24e/mPZB
-	 6hWDM2i5pIHIiu8uIGUwUmCdP8+majGD44/aRBRM=
+	b=pu0k2h4NuYmpwilv7sAlOwO3RJFY8Myqka2P9Sehc3polC85O3RgQwzITOnSKbpFL
+	 B584w2Ljnoxa1iEK2oHcP/k+4HBpDI38s4S7Lz305OhMFarOZboAhOY+C9Q7ZBaasq
+	 jj1dGrJjKexjxURdhVUUmMFF1r9lqshQDrYlz1EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Yinjie Yao <yinjie.yao@amd.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 798/957] drm/amdgpu/vcn: set no_user_fence for VCN v2.0 enc/dec rings
-Date: Wed, 20 May 2026 18:21:21 +0200
-Message-ID: <20260520162151.869491333@linuxfoundation.org>
+Subject: [PATCH 6.18 825/957] ALSA: hda: cs35l56: Fix uninitialized value in cs35l56_hda_read_acpi()
+Date: Wed, 20 May 2026 18:21:48 +0200
+Message-ID: <20260520162152.460177823@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,51 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yinjie Yao <yinjie.yao@amd.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 8d80b293b41fcb5e9396db93e788b0f4ebcbafb7 ]
+[ Upstream commit 90df4957a3271adf391b3432cd76a40887cf3273 ]
 
-VCN encoder and decoder rings do not support 64-bit user fence writes,
-reject CS submissions with user fences.
+Eliminate the uninitialized 'nval' in cs35l56_hda_read_acpi() if a
+system-specific quirk overrides processing of the dev-index property.
+The value is now stored in a new 'num_amps' member of struct cs35l56_hda
+so that the quirk handler can set the value.
 
-Fixes: 1b61de45dfaf ("drm/amdgpu: add initial VCN2.0 support (v2)")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e2b5499fca55f1a32960a311bbb62e35891eaf73)
+The quirk for the Lenovo Yoga Book 9i GenX  replaces the values from the
+dev-index property with hardcoded indexes. So cs35l56_hda_read_acpi() would
+then skip reading the property. But this left the 'nval' local variable
+uninitialized when it is later passed to cirrus_scodec_get_speaker_id().
+
+Fixes: 40b1c2f9b299 ("ALSA: hda/cs35l56: Workaround bad dev-index on Lenovo Yoga Book 9i GenX")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/linux-sound/aenFesLAStjrVNy8@stanley.mountain/T/#u
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260428130531.169600-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/codecs/side-codecs/cs35l56_hda.c | 12 +++++++-----
+ sound/hda/codecs/side-codecs/cs35l56_hda.h |  1 +
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-index e35fae9cdaf66..0442bfcfd384d 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
-@@ -2113,6 +2113,7 @@ static const struct amd_ip_funcs vcn_v2_0_ip_funcs = {
- static const struct amdgpu_ring_funcs vcn_v2_0_dec_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCN_DEC,
- 	.align_mask = 0xf,
-+	.no_user_fence = true,
- 	.secure_submission_supported = true,
- 	.get_rptr = vcn_v2_0_dec_ring_get_rptr,
- 	.get_wptr = vcn_v2_0_dec_ring_get_wptr,
-@@ -2145,6 +2146,7 @@ static const struct amdgpu_ring_funcs vcn_v2_0_enc_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCN_ENC,
- 	.align_mask = 0x3f,
- 	.nop = VCN_ENC_CMD_NO_OP,
-+	.no_user_fence = true,
- 	.get_rptr = vcn_v2_0_enc_ring_get_rptr,
- 	.get_wptr = vcn_v2_0_enc_ring_get_wptr,
- 	.set_wptr = vcn_v2_0_enc_ring_set_wptr,
+diff --git a/sound/hda/codecs/side-codecs/cs35l56_hda.c b/sound/hda/codecs/side-codecs/cs35l56_hda.c
+index 82b7352e7ea97..79c15e21d4bcb 100644
+--- a/sound/hda/codecs/side-codecs/cs35l56_hda.c
++++ b/sound/hda/codecs/side-codecs/cs35l56_hda.c
+@@ -884,6 +884,7 @@ static int cs35l56_hda_system_resume(struct device *dev)
+ static int cs35l56_hda_fixup_yoga9(struct cs35l56_hda *cs35l56, int *bus_addr)
+ {
+ 	/* The cirrus,dev-index property has the wrong values */
++	cs35l56->num_amps = 2;
+ 	switch (*bus_addr) {
+ 	case 0x30:
+ 		cs35l56->index = 1;
+@@ -933,7 +934,6 @@ static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
+ 	char hid_string[8];
+ 	struct acpi_device *adev;
+ 	const char *property, *sub;
+-	size_t nval;
+ 	int i, ret;
+ 
+ 	/*
+@@ -969,13 +969,14 @@ static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
+ 			ret = -EINVAL;
+ 			goto err;
+ 		}
+-		nval = ret;
++		cs35l56->num_amps = ret;
+ 
+-		ret = device_property_read_u32_array(cs35l56->base.dev, property, values, nval);
++		ret = device_property_read_u32_array(cs35l56->base.dev, property, values,
++						     cs35l56->num_amps);
+ 		if (ret)
+ 			goto err;
+ 
+-		for (i = 0; i < nval; i++) {
++		for (i = 0; i < cs35l56->num_amps; i++) {
+ 			if (values[i] == id) {
+ 				cs35l56->index = i;
+ 				break;
+@@ -998,7 +999,8 @@ static int cs35l56_hda_read_acpi(struct cs35l56_hda *cs35l56, int hid, int id)
+ 			 "Read ACPI _SUB failed(%ld): fallback to generic firmware\n",
+ 			 PTR_ERR(sub));
+ 	} else {
+-		ret = cirrus_scodec_get_speaker_id(cs35l56->base.dev, cs35l56->index, nval, -1);
++		ret = cirrus_scodec_get_speaker_id(cs35l56->base.dev, cs35l56->index,
++						   cs35l56->num_amps, -1);
+ 		if (ret == -ENOENT) {
+ 			cs35l56->system_name = sub;
+ 		} else if (ret >= 0) {
+diff --git a/sound/hda/codecs/side-codecs/cs35l56_hda.h b/sound/hda/codecs/side-codecs/cs35l56_hda.h
+index 38d94fb213a50..0074e8f5f18cb 100644
+--- a/sound/hda/codecs/side-codecs/cs35l56_hda.h
++++ b/sound/hda/codecs/side-codecs/cs35l56_hda.h
+@@ -25,6 +25,7 @@ struct cs35l56_hda {
+ 	struct work_struct dsp_work;
+ 
+ 	int index;
++	int num_amps;
+ 	const char *system_name;
+ 	const char *amp_name;
+ 
 -- 
 2.53.0
 
