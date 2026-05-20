@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF18372B24;
-	Wed, 20 May 2026 16:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92011CDFCA;
+	Wed, 20 May 2026 16:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295095; cv=none; b=G8bS+UzeLhs0ZiQe9zwDJ1+4qIJ0bAQP6AcDoliZw6bu4/6CIIACCGIk/bqNfYnkiAFNxQniQaABC/eZZiSpmF8yQ6sPhXmrYV5xlomYx5dlPskJVC6utDj7rkpxWaA+WB7dhzPKMYqQOETASEzqsMkNPCPKqs2n7CFkpW4ZxOE=
+	t=1779295097; cv=none; b=ekL4NitXd7tod50jE6A4dLKQXZaZN8jyUZuzAiZCkYtrDMTwXPFmQZvU0yOVUZ0r61LppyjQn2zt1EmgTxE7jxnpUwQXgMnNyW8ooUaX1MlPOCMCGoWfa8nAKZb7cnatPG7p7v0ZNPlNeGkCZw+ic6YoeTGuaNFCkY/K00Vn5eA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295095; c=relaxed/simple;
-	bh=xoARVbZwN/xguzliu/lptYh9aJcBzFEalZMmUJJy3xQ=;
+	s=arc-20240116; t=1779295097; c=relaxed/simple;
+	bh=D7pXPqYAvtvPtP6BwTOAxNAkDTP/d7rucvs3TCYoPUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTatJUql9RQR2Z8Yozk6m9zZLEFCtzuKxi2sr95p99pCSNQ5NMpLvsMFTSnSIcFfeWcaqQXU7P6JxCXvhtPAUIiTtvL5B3ImCji12NzDYw8FKlTNp2U+Zc5pdUlsegucnYHHHwGbpKtluqyCRIhpRUweD4dUqEbewFpeNnk2BX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qpca/dwf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Id6nsHhjmCUR6VPo6Bb86Jhu9bJ4NWdxHTxBeVFj4FIA8ocqnUEq7xuNI9Be5/lj8AGC/0H1Ua3qR1fLWQPY0UQeUXOrrKYidnrUG+x4ksdWFeMqScTi3WwOvrIg4dLTtKo3G4QlBXxdqRRLpeDM5eVoYpgfHU+SVq3RVrooOgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xu+nZSu3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qpca/dwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B211F00893;
-	Wed, 20 May 2026 16:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xu+nZSu3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCDF1F000E9;
+	Wed, 20 May 2026 16:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295092;
-	bh=ux1qQfkXfaKs2FRn2dnNJZo56pPmrB8IImzSaDKMhuk=;
+	s=korg; t=1779295095;
+	bh=fWgbj9Msah27PbJ6umVZveFKk1z6OEyJz5uSTMT+Q24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qpca/dwfuc9oIM94xT/18rzEfWwmt8EIvNrZEnw+3ILzPxqe4wOp1JidKmYoqAW1J
-	 KIsUHKwgXHbAppweAd3eax37ZvqKC9Me8pnQSyED+rr/s7RfCzFLZWGRd8UVgB37U7
-	 1XsibbG1ko8qnjPjTz0yrtF0q6Im/i2P0hrfauMM=
+	b=xu+nZSu3KsRph3B+b6byQf5tyTZS+Bv1rpV2H9vVnynHndiwi3J//y7lZ37ZnDD9l
+	 fh7hx8CQ735/7a5lQf8/jbdWAeZHxnjcPMhMrqKImNVurvn0DIy1Rq3eG3chXn0qgH
+	 D+MMyDuKyl3zB/YGDA/TTTIP0SfaI/YgBVmSgEz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	John Madieu <john.madieu.xa@bp.renesas.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Subject: [PATCH 7.0 0287/1146] PCI: rzg3s-host: Reorder reset assertion during suspend
-Date: Wed, 20 May 2026 18:08:57 +0200
-Message-ID: <20260520162154.711751027@linuxfoundation.org>
+Subject: [PATCH 7.0 0288/1146] dt-bindings: PCI: renesas,r9a08g045s33-pcie: Fix naming properties
+Date: Wed, 20 May 2026 18:08:58 +0200
+Message-ID: <20260520162154.734697739@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,79 +56,103 @@ Content-Transfer-Encoding: 8bit
 
 From: John Madieu <john.madieu.xa@bp.renesas.com>
 
-[ Upstream commit 34735f63748daa2ea27544259c3042b4948376bf ]
+[ Upstream commit bb1b0f47f6822864c1689f46348efa42c5d4074c ]
 
-Reorder the reset assertion sequence during suspend from
-power_resets -> cfg_resets to cfg_resets -> power_resets.
-This change ensures the suspend sequence follows the reverse order
-of the probe/init sequence, where power_resets are deasserted first
-followed by cfg_resets.
+Fix a typo in interrupt-names: "ser_cor" should be "serr_cor" (System
+Error Correctable).
 
-Additionally, this ordering is required for RZ/G3E support where
-cfg resets are controlled through PCIe AXI registers (offset 0x310h).
-According to the RZ/G3E hardware manual (Rev.1.15, section 6.6.6.1.1
-"Changing the Initial Values of the Registers"), AXI register access
-requires ARESETn to be de-asserted and the clock to be supplied.
-Since ARESETn is part of power_resets, cfg_resets must be asserted
-before power_resets, otherwise the AXI registers become inaccessible.
+Also convert interrupt-names, clock-names, and reset-names properties
+from "description" to "const" to enable proper validation with
+dtbs_check.
 
-Fixes: 7ef502fb35b2 ("PCI: Add Renesas RZ/G3S host controller driver")
+Fixes: e7534e790557 ("dt-bindings: PCI: Add Renesas RZ/G3S PCIe controller binding")
 Signed-off-by: John Madieu <john.madieu.xa@bp.renesas.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com> # RZ/V2N EVK
 Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://patch.msgid.link/20260306143423.19562-3-john.madieu.xa@bp.renesas.com
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20260306143423.19562-6-john.madieu.xa@bp.renesas.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-rzg3s-host.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ .../bindings/pci/renesas,r9a08g045-pcie.yaml  | 50 +++++++++----------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-rzg3s-host.c b/drivers/pci/controller/pcie-rzg3s-host.c
-index 7a80455aad366..986f0a319b3ce 100644
---- a/drivers/pci/controller/pcie-rzg3s-host.c
-+++ b/drivers/pci/controller/pcie-rzg3s-host.c
-@@ -1624,31 +1624,31 @@ static int rzg3s_pcie_suspend_noirq(struct device *dev)
+diff --git a/Documentation/devicetree/bindings/pci/renesas,r9a08g045-pcie.yaml b/Documentation/devicetree/bindings/pci/renesas,r9a08g045-pcie.yaml
+index d668782546a23..d1eb92995e2c3 100644
+--- a/Documentation/devicetree/bindings/pci/renesas,r9a08g045-pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/renesas,r9a08g045-pcie.yaml
+@@ -41,22 +41,22 @@ properties:
  
- 	clk_disable_unprepare(port->refclk);
+   interrupt-names:
+     items:
+-      - description: serr
+-      - description: ser_cor
+-      - description: serr_nonfatal
+-      - description: serr_fatal
+-      - description: axi_err
+-      - description: inta
+-      - description: intb
+-      - description: intc
+-      - description: intd
+-      - description: msi
+-      - description: link_bandwidth
+-      - description: pm_pme
+-      - description: dma
+-      - description: pcie_evt
+-      - description: msg
+-      - description: all
++      - const: serr
++      - const: serr_cor
++      - const: serr_nonfatal
++      - const: serr_fatal
++      - const: axi_err
++      - const: inta
++      - const: intb
++      - const: intc
++      - const: intd
++      - const: msi
++      - const: link_bandwidth
++      - const: pm_pme
++      - const: dma
++      - const: pcie_evt
++      - const: msg
++      - const: all
  
--	ret = reset_control_bulk_assert(data->num_power_resets,
--					host->power_resets);
-+	ret = reset_control_bulk_assert(data->num_cfg_resets,
-+					host->cfg_resets);
- 	if (ret)
- 		goto refclk_restore;
+   interrupt-controller: true
  
--	ret = reset_control_bulk_assert(data->num_cfg_resets,
--					host->cfg_resets);
-+	ret = reset_control_bulk_assert(data->num_power_resets,
-+					host->power_resets);
- 	if (ret)
--		goto power_resets_restore;
-+		goto cfg_resets_restore;
+@@ -67,8 +67,8 @@ properties:
  
- 	ret = regmap_update_bits(sysc, RZG3S_SYS_PCIE_RST_RSM_B,
- 				 RZG3S_SYS_PCIE_RST_RSM_B_MASK,
- 				 FIELD_PREP(RZG3S_SYS_PCIE_RST_RSM_B_MASK, 0));
- 	if (ret)
--		goto cfg_resets_restore;
-+		goto power_resets_restore;
+   clock-names:
+     items:
+-      - description: aclk
+-      - description: pm
++      - const: aclk
++      - const: pm
  
- 	return 0;
+   resets:
+     items:
+@@ -82,13 +82,13 @@ properties:
  
- 	/* Restore the previous state if any error happens */
--cfg_resets_restore:
--	reset_control_bulk_deassert(data->num_cfg_resets,
--				    host->cfg_resets);
- power_resets_restore:
- 	reset_control_bulk_deassert(data->num_power_resets,
- 				    host->power_resets);
-+cfg_resets_restore:
-+	reset_control_bulk_deassert(data->num_cfg_resets,
-+				    host->cfg_resets);
- refclk_restore:
- 	clk_prepare_enable(port->refclk);
- 	pm_runtime_resume_and_get(dev);
+   reset-names:
+     items:
+-      - description: aresetn
+-      - description: rst_b
+-      - description: rst_gp_b
+-      - description: rst_ps_b
+-      - description: rst_rsm_b
+-      - description: rst_cfg_b
+-      - description: rst_load_b
++      - const: aresetn
++      - const: rst_b
++      - const: rst_gp_b
++      - const: rst_ps_b
++      - const: rst_rsm_b
++      - const: rst_cfg_b
++      - const: rst_load_b
+ 
+   power-domains:
+     maxItems: 1
 -- 
 2.53.0
 
