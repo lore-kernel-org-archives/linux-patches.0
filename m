@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0E4351C2F;
-	Wed, 20 May 2026 16:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFF731F9BE;
+	Wed, 20 May 2026 16:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295908; cv=none; b=osoco2EBmlyM/Xbip4ssxnq0pCMuskQgEp3vkym/OAq71aSnkvfKDJARcV7okuqNeB/1belc0fYdRXD48LtokhbKRehYCA9qPMqKcXSbNspcztJOPWeYCBivxKnHGCM0a4WXO5SphDmawzcmQT7lWyVl+DrkWYBiFz6+j/f8r6g=
+	t=1779295911; cv=none; b=jefNRni5/hE86w3dAGGOwkOEcPMpia5ZGO4zAp9Yf+1hom4jMMvUwJz0tVAgjac1b5bGMunkDlKZirB1W/v6mH2tDEXVPJdOt0qgjQsBoc/ihd50S/FBQpfuHJt7jiqgOKfyu61AWF5Rrq8hlPqfuhrW0g1OUmr5wis91Q5P2ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295908; c=relaxed/simple;
-	bh=LtQiVsdjqpoSxOts/QWSR0j8lS+ZXxw9zrGQmXvPw2M=;
+	s=arc-20240116; t=1779295911; c=relaxed/simple;
+	bh=V/uH4oaX0BbOsTbsdJulD1r8pDs3mAoL/7m39dkmRIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8QtPbsB2q/jVGPOkCrflYIIJBC2EnVVLQMMNGnnLMQhdZN6u1MjQfF8GZe45a6L6GQeQUO0o6FRRZtw2hCkjkjMFpYgKW1Qcv7iBIy+s3QjqJ92BDE9c7+eu09adwxPV/DPVZ/eLZrTJ3JHdXDxvq1Rl7jmEirXo2XjiE5Lf6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJ7WSeGe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZwGKpyLoVGkUcTvTqNsphBfShJtZ5a5oM0Wmqm25MI0i5Mrqkud7LMpugVc0wvIdSOWP2cntaDqDObz31FFbOU7xQLXeMOis5nHUdhk417NiXWWdO1UTJGrYPFcIlmh4eHdpaaqN3Ey0Hf9Bs+Z9OnaBGIWI7u6GQNIu1T8OAyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H60Z7vl1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJ7WSeGe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA491F000E9;
-	Wed, 20 May 2026 16:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H60Z7vl1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D995E1F000E9;
+	Wed, 20 May 2026 16:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295907;
-	bh=vsEzOc2vyGXG8M8quEH7GJ54PTzJ/GgSUIjNKLh4V6U=;
+	s=korg; t=1779295910;
+	bh=2DdSyT0/ofYlCiZOClBQ7bTQXq1bMyJKj4ou0yiBtgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UJ7WSeGez5KogibqyLeVgSkMvBWaM9p0KJN3ONtNuSuM+gvQ1s1aB68tsDkRT9Bv7
-	 FGJgWeBJl90zew/6CXUHfYWb1++XY8DPJ9vvyV6oYPdXOkaSdPwKZlLAGIXrc3eNCZ
-	 glDbcLPuQSBfh8MRGih7rN85c+9a+NWR2t6lXjK4=
+	b=H60Z7vl17yiGLdPNzxrjw9vHgXTRz3rI4Gy1VeI+z7Z30Hw4UsEaarNs8/gUARulg
+	 ByrX4vQkIltBYhRAOUjHsC1IBSMKWVrUTG6u94KSX7ZUmDNnWIV3cqq3Td31VXehoS
+	 3UXfrDPGF1RC92FkS8p28EtYMh3ED48+m4RIC/yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Michael Walle <mwalle@kernel.org>,
+	Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>,
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0597/1146] mtd: spi-nor: swp: check SR_TB flag when getting tb_mask
-Date: Wed, 20 May 2026 18:14:07 +0200
-Message-ID: <20260520162201.688299275@linuxfoundation.org>
+Subject: [PATCH 7.0 0598/1146] mtd: parsers: ofpart: call of_node_put() only in ofpart_fail path
+Date: Wed, 20 May 2026 18:14:08 +0200
+Message-ID: <20260520162201.711830134@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,39 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiji Yang <yangshiji66@outlook.com>
+From: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
 
-[ Upstream commit 94645aa41bf9ecb87c2ce78b1c3405bfb6074a37 ]
+[ Upstream commit 0c87dea1aab86116211cb37387c404c9e9231c39 ]
 
-When the chip does not support top/bottom block protect, the tb_mask
-must be set to 0, otherwise SR1 bit5 will be unexpectedly modified.
+ofpart_none can only be reached after the for_each_child_of_node() loop
+finishes. for_each_child_of_node() correctly calls of_node_put() for all
+device nodes it iterates over as long as we don't break or jump out of
+the loop.
 
-Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
-Fixes: 3dd8012a8eeb ("mtd: spi-nor: add TB (Top/Bottom) protect support")
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Calling of_node_put() inside the ofpart_none path will wrongly decrement
+the ref count of the last node in the for_each_child_of_node() loop.
+
+Move the call to of_node_put() under the ofpart_fail label to fix this.
+
+Fixes: ebd5a74db74e ("mtd: ofpart: Check availability of reg property instead of name property")
+Signed-off-by: Cosmin Tanislav <cosmin-gabriel.tanislav.xa@renesas.com>
+Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/swp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mtd/parsers/ofpart_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/spi-nor/swp.c b/drivers/mtd/spi-nor/swp.c
-index 9b07f83aeac76..e67a81dbb6bf6 100644
---- a/drivers/mtd/spi-nor/swp.c
-+++ b/drivers/mtd/spi-nor/swp.c
-@@ -28,8 +28,10 @@ static u8 spi_nor_get_sr_tb_mask(struct spi_nor *nor)
- {
- 	if (nor->flags & SNOR_F_HAS_SR_TB_BIT6)
- 		return SR_TB_BIT6;
--	else
-+	else if (nor->flags & SNOR_F_HAS_SR_TB)
- 		return SR_TB_BIT5;
-+	else
-+		return 0;
+diff --git a/drivers/mtd/parsers/ofpart_core.c b/drivers/mtd/parsers/ofpart_core.c
+index 0029bda165bde..181ae9616b2e3 100644
+--- a/drivers/mtd/parsers/ofpart_core.c
++++ b/drivers/mtd/parsers/ofpart_core.c
+@@ -195,11 +195,11 @@ static int parse_fixed_partitions(struct mtd_info *master,
+ ofpart_fail:
+ 	pr_err("%s: error parsing ofpart partition %pOF (%pOF)\n",
+ 	       master->name, pp, mtd_node);
++	of_node_put(pp);
+ 	ret = -EINVAL;
+ ofpart_none:
+ 	if (dedicated)
+ 		of_node_put(ofpart_node);
+-	of_node_put(pp);
+ 	kfree(parts);
+ 	return ret;
  }
- 
- static u64 spi_nor_get_min_prot_length_sr(struct spi_nor *nor)
 -- 
 2.53.0
 
