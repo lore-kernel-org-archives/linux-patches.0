@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D53134041C;
-	Wed, 20 May 2026 16:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B53532F0C62;
+	Wed, 20 May 2026 16:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295236; cv=none; b=Dlw96F5+2dLVcLKstieuxGaOO4pnGLabK6dbIYynkYE7OSZknd85bSg6CWV3buzwlKy4jC6FpJZiTey2+yXXe/tkZs1KBMWM/cAtaPBc6pmcLBnxswO4dJec+067tNQVKFgcDRnICAcLZiHBOLzAvfA+DpGOPmWYzmNKwMwFwz8=
+	t=1779295238; cv=none; b=TnjsV5NfK/+7PzZOiNMBkRAVEfVLYzcsMBLnffIOCc4fS1Up7WXecTY48/CI17rJAbiDEsqJ4iQq07miZQGOpsa/JqnTPDcgC2I24ylema9TdCIC/E0gAuwLRmoGWAz/sUT7E0lgVCbZ+9WCwa+3RINt4aCbWmGcDNajGlasj8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295236; c=relaxed/simple;
-	bh=Q3i36q1kgRsG7cJLuy9/nu9RQSWCpO9t7BkX9jixEFI=;
+	s=arc-20240116; t=1779295238; c=relaxed/simple;
+	bh=ymF8jMN+rgIW3jVZJTYVkmBle5XF9rYUEPxNV81VsTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSzUSzcPp/dy1EYOzhA253YqPowj5nsTtw0Xe2Yv30QW1sof6QCJUWPTU86yOhEzwEDvOeIeVri1zioE1hbULtmEyrWbJdupCvfM50XYH14lEaRT0RDnVB+/vvalnN6BPKXZnCHz4Sf3mPIZk4jftlJvVMWnvE2Y2CGXQ3FrkXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFsopgd9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p+1mcE59zaWCZbmbtpOYrdJXsx0G/vuaQThE1bYmviZXRDQ4xzgB8nvgRtqao9sTYPLtJFoA4XvjrE7qkaXF+kYlHBJeQS/WGviFwNo/6CUAFaH1bTKlFn+jLUafX38n1vfTODrGblSATpavDYqeKWzuXq6yi3GOHLQHbBHARTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtzeckDi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFsopgd9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813141F000E9;
-	Wed, 20 May 2026 16:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtzeckDi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 262941F000E9;
+	Wed, 20 May 2026 16:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295235;
-	bh=5nmiPH7L1md3w0OrDWAVa3Z0CAhFvWAVVfvdYxJ9uyI=;
+	s=korg; t=1779295237;
+	bh=Xuqs7OTAxYOyQ759RMCIsoVlOwyfLhndpTtuKkRu6Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NFsopgd9d+bXJczTR2VwVelg9hYZqsl1c0hPNLbpP5G+CqFRCuA7X1UiJWnzXHfln
-	 0Ek7gaGaB50LDET2zAcgsON+tPXorEApVYSB34mNE2HCkycPgf53/8lvuP6nq4QcIN
-	 ND0f6/5TqQyPhaZgpqWdU/MrkaJVtC8wSso8m0jQ=
+	b=CtzeckDipN9K+AngBslk4oKl32UUGQ7VhXHSblRtFJUx91ZyaV1SpjIAnw4zwXg93
+	 kxZFmSpWjVzK5taKEQnA2y334EJlP/vgJBlGZpbQQtyUKri6Dzm+xlsQ2GUq2Id5Kd
+	 P/nMlIal04IuqWVKLxytmbNOh4kWvoMLGCWBCSaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	Helge Deller <deller@gmx.de>,
+	Wesley Atwell <atwellwea@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0302/1146] fbdev: matroxfb: Mark variable with __maybe_unused to avoid W=1 build break
-Date: Wed, 20 May 2026 18:09:12 +0200
-Message-ID: <20260520162155.043530322@linuxfoundation.org>
+Subject: [PATCH 7.0 0303/1146] crypto: simd - reject compat registrations without __ prefixes
+Date: Wed, 20 May 2026 18:09:13 +0200
+Message-ID: <20260520162155.065670704@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,68 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Wesley Atwell <atwellwea@gmail.com>
 
-[ Upstream commit caf6144053b4e1c815aa56afb54745a176f999df ]
+[ Upstream commit e0ce97f781c78b717b00493630a9e34caf04f79b ]
 
-Clang is not happy about set but unused variable:
+simd_register_skciphers_compat() and simd_register_aeads_compat()
+derive the wrapper algorithm names by stripping the __ prefix from the
+internal algorithm names.
 
-drivers/video/fbdev/matrox/g450_pll.c:412:18: error: variable 'mnp' set but not used
-   412 |         unsigned int mnp;
-       |                      ^
-1 error generated.
+Currently they only WARN if cra_name or cra_driver_name lacks that prefix,
+but they still continue and unconditionally add 2 to both strings. That
+registers wrapper algorithms with incorrectly truncated names after a
+violated precondition.
 
-Since the commit 7b987887f97b ("video: fbdev: matroxfb: remove dead code
-and set but not used variable") the 'mnp' became unused, but eliminating
-that code might have side-effects. The question here is what should we do
-with 'mnp'? The easiest way out is just mark it with __maybe_unused which
-will shut the compiler up and won't change any possible IO flow. So does
-this change.
+Reject such inputs with -EINVAL before registering anything, while keeping
+the warning so invalid internal API usage is still visible.
 
-A dive into the history of the driver:
-
-The problem was revealed when the #if 0 guarded code along with unused
-pixel_vco variable was removed. That code was introduced in the original
-commit 213d22146d1f ("[PATCH] (1/3) matroxfb for 2.5.3"). And then guarded
-in the commit 705e41f82988 ("matroxfb DVI updates: Handle DVI output on
-G450/G550. Powerdown unused portions of G450/G550 DAC. Split G450/G550 DAC
-from older DAC1064 handling. Modify PLL setting when both CRTCs use same
-pixel clocks.").
-
-NOTE: The two commits mentioned above pre-date Git era and available in
-history.git repository for archaeological purposes.
-
-Even without that guard the modern compilers may see that the pixel_vco
-wasn't ever used and seems a leftover after some debug or review made
-25 years ago.
-
-The g450_mnp2vco() doesn't have any IO and as Jason said doesn't seem
-to have any side effects either than some unneeded CPU processing during
-runtime. I agree that's unlikely that timeout (or heating up the CPU) has
-any effect on the HW (GPU/display) functionality.
-
-Fixes: 7b987887f97b ("video: fbdev: matroxfb: remove dead code and set but not used variable")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: d14f0a1fc488 ("crypto: simd - allow registering multiple algorithms at once")
+Fixes: 1661131a0479 ("crypto: simd - support wrapping AEAD algorithms")
+Assisted-by: Codex:GPT-5
+Signed-off-by: Wesley Atwell <atwellwea@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/matrox/g450_pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ crypto/simd.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/video/fbdev/matrox/g450_pll.c b/drivers/video/fbdev/matrox/g450_pll.c
-index e2c1478aa47f9..6a08f78cd1acb 100644
---- a/drivers/video/fbdev/matrox/g450_pll.c
-+++ b/drivers/video/fbdev/matrox/g450_pll.c
-@@ -409,7 +409,7 @@ static int __g450_setclk(struct matrox_fb_info *minfo, unsigned int fout,
- 		case M_VIDEO_PLL:
- 			{
- 				u_int8_t tmp;
--				unsigned int mnp;
-+				unsigned int mnp __maybe_unused;
- 				unsigned long flags;
+diff --git a/crypto/simd.c b/crypto/simd.c
+index f71c4a334c7d0..4e6f437e9e778 100644
+--- a/crypto/simd.c
++++ b/crypto/simd.c
+@@ -214,13 +214,17 @@ int simd_register_skciphers_compat(struct skcipher_alg *algs, int count,
+ 	const char *basename;
+ 	struct simd_skcipher_alg *simd;
  
- 				matroxfb_DAC_lock_irqsave(flags);
++	for (i = 0; i < count; i++) {
++		if (WARN_ON(strncmp(algs[i].base.cra_name, "__", 2) ||
++			    strncmp(algs[i].base.cra_driver_name, "__", 2)))
++			return -EINVAL;
++	}
++
+ 	err = crypto_register_skciphers(algs, count);
+ 	if (err)
+ 		return err;
+ 
+ 	for (i = 0; i < count; i++) {
+-		WARN_ON(strncmp(algs[i].base.cra_name, "__", 2));
+-		WARN_ON(strncmp(algs[i].base.cra_driver_name, "__", 2));
+ 		algname = algs[i].base.cra_name + 2;
+ 		drvname = algs[i].base.cra_driver_name + 2;
+ 		basename = algs[i].base.cra_driver_name;
+@@ -437,13 +441,17 @@ int simd_register_aeads_compat(struct aead_alg *algs, int count,
+ 	const char *basename;
+ 	struct simd_aead_alg *simd;
+ 
++	for (i = 0; i < count; i++) {
++		if (WARN_ON(strncmp(algs[i].base.cra_name, "__", 2) ||
++			    strncmp(algs[i].base.cra_driver_name, "__", 2)))
++			return -EINVAL;
++	}
++
+ 	err = crypto_register_aeads(algs, count);
+ 	if (err)
+ 		return err;
+ 
+ 	for (i = 0; i < count; i++) {
+-		WARN_ON(strncmp(algs[i].base.cra_name, "__", 2));
+-		WARN_ON(strncmp(algs[i].base.cra_driver_name, "__", 2));
+ 		algname = algs[i].base.cra_name + 2;
+ 		drvname = algs[i].base.cra_driver_name + 2;
+ 		basename = algs[i].base.cra_driver_name;
 -- 
 2.53.0
 
