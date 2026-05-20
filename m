@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2175D342CB3;
-	Wed, 20 May 2026 18:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887C736EA8B;
+	Wed, 20 May 2026 18:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302242; cv=none; b=f8YzqNr7Co9y89fuzDq2IxBdgn3dHkKUs5RSop3ss35hj/gDCt6cup+pxfWBCH72Lk5zv+Z61hd3R4QGVKh5uhSOaqPoELMnrokXZhf+IJmeBd9RU+NZMngpP/4i98YqYx5aKuzpQzdKyLfM+bu44BJgDou73FVtt5c2uAHQu5g=
+	t=1779302244; cv=none; b=kLgQsZcvKDcFPl6XcxI00xhEk7N1ymZ2ajBlKiIg0XEIh66csuVTX4WcwBlJyfQJ5zynUB3OcfU/CGDI4/AJBN3uE4z0o2UsZDhrIluH1rcN3V+LnoLVpBrRe6pNPo56CRyOjD1FQxqj+Io/mNP26hs/rl0PK1KOf11f5foShCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302242; c=relaxed/simple;
-	bh=6MO6VTzrWHH5SFYhjug5WNfOKi1D/HvkoOaGw8xWB1w=;
+	s=arc-20240116; t=1779302244; c=relaxed/simple;
+	bh=JuW3CCx2oYQNVmcdTw3soBrwIIr1VPfT4EI+emJGEA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HI2cPSrOHuYjO8rYSHKzKlvJzqTnajCyidLGUqD91JYljsZJdaDZHm398fltNoXudPmbJxAhcLE4uWPKoprfMh7Lgbl/qGciQFK29Vj28ZbD/OAEC38ZNeRZ7dHIGNRM3tw+P7R3X+386MVowr4MgzH4w8LKTTyCOj8x2v2ce3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJxh30Ul; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RH5mC7mQtFPN7dYhOlv+e+ziQCAxjfXBgAHO5chs0P29FFBTMGG+Kcrn6b7yp+cxszKxNNGDwy26T47fvwK4Rzfd6iS1IxuQZm1kPlXB4NdAK1Q/L0YuWy72Ti6F65mTMh8i0gf3wXOdgVWpN4d5e86M39s1rwWy/R//wZB7U3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q122qxdT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJxh30Ul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DBA61F000E9;
-	Wed, 20 May 2026 18:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q122qxdT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA051F000E9;
+	Wed, 20 May 2026 18:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302240;
-	bh=21fW8T2q63p49/t+YNnTmj0Z3Wp2cR/sw7wGwNlkiIg=;
+	s=korg; t=1779302243;
+	bh=VbUG/U+v/qiGiEUdYHHy2wvU1njB8CjLh0DtDYMO67w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wJxh30UlgKK7BIu0V2+TQoCc/i3WRZU/7LS6YN7DrYd8JLdk/slw8UA/MYLjOM4lh
-	 1IaOsdpqAA3VaesSlP4TGA6zQCn34+en1qJLdPw23L1DorCjDHUhvc5rEdFBvONxFX
-	 6QhE4Qv0Q9qGZkyLljWQmFAEK1t1I175GBv1s5jM=
+	b=q122qxdTdCCIzAO65A4LUN+DrsTlWssuoleklCKW6t1N5cKkzmSNhER0h3S+qxDaw
+	 I2eZfa0B49jg6H+eMeHBkMR3dwCkXETsCfp2HNdyzNIR+hE3ZYblC4fe1UIRkQLm8A
+	 IAm6/WpO9grDbmGeicj7cmTbaZgT1haL64jjipsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 192/508] soc: qcom: ocmem: use scoped device node handling to simplify error paths
-Date: Wed, 20 May 2026 18:20:15 +0200
-Message-ID: <20260520162102.795431071@linuxfoundation.org>
+Subject: [PATCH 6.6 193/508] soc: qcom: ocmem: register reasons for probe deferrals
+Date: Wed, 20 May 2026 18:20:16 +0200
+Message-ID: <20260520162102.817315438@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,49 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit f4c1c19f5c0e5cf2870df91dedc6b40400fd9c8a ]
+[ Upstream commit 9dfd69cd89cd6afa4723be9098979abeef3bb8c6 ]
 
-Obtain the device node reference with scoped/cleanup.h to reduce error
-handling and make the code a bit simpler.
+Instead of printing messages to the dmesg, let the message be recorded
+as a reason for the OCMEM client deferral.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240813-b4-cleanup-h-of-node-put-other-v1-4-cfb67323a95c@linaro.org
+Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260323-ocmem-v1-2-ad9bcae44763@oss.qualcomm.com
+[bjorn: s/ERR_PTR(dev_err_probe)/dev_err_ptr_probe/
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 9dfd69cd89cd ("soc: qcom: ocmem: register reasons for probe deferrals")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ocmem.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/soc/qcom/ocmem.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-index c5fc6db9870a2..697c8a6a400b1 100644
+index 697c8a6a400b1..b37f21793687c 100644
 --- a/drivers/soc/qcom/ocmem.c
 +++ b/drivers/soc/qcom/ocmem.c
-@@ -185,23 +185,20 @@ static void update_range(struct ocmem *ocmem, struct ocmem_buf *buf,
- struct ocmem *of_get_ocmem(struct device *dev)
- {
- 	struct platform_device *pdev;
--	struct device_node *devnode;
- 	struct ocmem *ocmem;
- 
--	devnode = of_parse_phandle(dev->of_node, "sram", 0);
-+	struct device_node *devnode __free(device_node) = of_parse_phandle(dev->of_node,
-+									   "sram", 0);
- 	if (!devnode || !devnode->parent) {
- 		dev_err(dev, "Cannot look up sram phandle\n");
--		of_node_put(devnode);
- 		return ERR_PTR(-ENODEV);
+@@ -195,10 +195,10 @@ struct ocmem *of_get_ocmem(struct device *dev)
  	}
  
  	pdev = of_find_device_by_node(devnode->parent);
- 	if (!pdev) {
- 		dev_err(dev, "Cannot find device node %s\n", devnode->name);
--		of_node_put(devnode);
- 		return ERR_PTR(-EPROBE_DEFER);
- 	}
--	of_node_put(devnode);
+-	if (!pdev) {
+-		dev_err(dev, "Cannot find device node %s\n", devnode->name);
+-		return ERR_PTR(-EPROBE_DEFER);
+-	}
++	if (!pdev)
++		return dev_err_ptr_probe(dev, -EPROBE_DEFER,
++					 "Cannot find device node %s\n",
++					 devnode->name);
  
  	ocmem = platform_get_drvdata(pdev);
  	put_device(&pdev->dev);
