@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF883D75AB;
-	Wed, 20 May 2026 18:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A7B4F5E0;
+	Wed, 20 May 2026 18:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300539; cv=none; b=F44kw+cxcHRuHRD0bUpTFaGF4pDTG+hcTQRghIyovt1eVYmzQTHRGAcPtbGnmyQA1exTdqEFPBjEBGUdk47k4u74vEfzZ37k1XYXNIIfL3DJiwu2ECdVmMt1kK7ZZr9V78pyVnqEjibaHpawH5mRLodFV6sZYC3uxXM385bplfI=
+	t=1779300542; cv=none; b=b83MgzLcNynxKH075CLZERA8Q1ezJr+tE1ReKvfxQ8fu85pNDaZEVKqQFVg9vchyUwww/20UTstdEASG5GZMKMmoXpr7kWJAJI4FyxtxfrziToRyNYPxe+cMpJYzWu/DDWRS+VMcPzO+UxwzOBzsRkP6MDIDlq6ZhfE9uZN4NK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300539; c=relaxed/simple;
-	bh=SrshqF2KWPZFXafJ0dSIvQnOLNUh0kO8KYQxKvr0JQc=;
+	s=arc-20240116; t=1779300542; c=relaxed/simple;
+	bh=AqLSt0IJ0ftwTmu4ag0ZLIa6wRG1BpLrF7gVbGabYvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KytSEiGqznTeka3gFuQZAyzETaID/8nIYyq4z+fCUAB+omW3vawFfkt6xEF9dztxR+YfFwwqdGcAPtBtwowB3q/WJYAoYUyKed/v4VZRaE9rVqsoBVLJLbHo6zKlNqyrH5bl3BsOUYReUCfHcv++FQM7wsi2kMsjM8ergsPke7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gn4HuepO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KeGORe4rRYx7eYIG819ayYyUCqoAO0RntuIiI/OTp2Ut3n+5G9dCl6zXphJehOCjv9tmJB/YMavd+pQsJqGbXR2SzXYWiVwwMpUDmdFiitGLPbGxY9BspSoEVfRurncruQVuOUUSWakHQRq3A/kZ4+5JKLnBShfplhG3C0a48jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V3qfNMwp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gn4HuepO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9DB1F000E9;
-	Wed, 20 May 2026 18:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V3qfNMwp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC8A1F000E9;
+	Wed, 20 May 2026 18:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300538;
-	bh=pZyKIRoJNDHYQ+H7Yv058AK42DG8dLrmz8d/3axQ5Gw=;
+	s=korg; t=1779300541;
+	bh=XModA0aWiYGauiodQw2SYnvaqb9UpzgwEVxK2/7ZqRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gn4HuepOyJZOmRMIRATL3tGpS1lPa6RzLPd+498B+Wq6SonzLKN+hM5qRA78NTdRV
-	 ynru16sc9k+02jTNdSAEZFyBhEEQRM1XPEJ+SdC1dFz1xMD/ue4AqjpLOQVpvS+2mc
-	 jNc8br81jnN70HHJBAxl/m0jwLjQTYzkB0ir/DZA=
+	b=V3qfNMwpHHFwJfjVndh+G/wiYxkWDPhGpWjNCxZnPNslC9CH3jsug8ksxx4PiXf5K
+	 aNmhzr2eFvKJ/kR8x1qoVPxHAeOWCq2BhxhQMRIJtKN1eUtEevxczbo95kHtXOYWAC
+	 ZevY3xTY43WytiO+RhDsOZ4/qmeafbf1ZDNnaefI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Alexander Koskovich <akoskovich@pm.me>,
+	Douglas Anderson <dianders@chromium.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 171/666] drm/msm/dsi: rename MSM8998 DSI version from V2_2_0 to V2_0_0
-Date: Wed, 20 May 2026 18:16:22 +0200
-Message-ID: <20260520162114.910030046@linuxfoundation.org>
+Subject: [PATCH 6.12 172/666] drm/panel: sharp-ls043t1le01: make use of prepare_prev_first
+Date: Wed, 20 May 2026 18:16:23 +0200
+Message-ID: <20260520162114.931650086@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,60 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Koskovich <akoskovich@pm.me>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 913a709dea0eff9c7b2e9470f8c8594b9a0114ab ]
+[ Upstream commit c222177d7c7e1b2e0433d9e47ec2da7015345d50 ]
 
-The MSM8998 DSI controller is v2.0.0 as stated in commit 7b8c9e203039
-("drm/msm/dsi: Add support for MSM8998 DSI controller"). The value was
-always correct just the name was wrong.
+The DSI link must be powered up to let panel driver to talk to the panel
+during prepare() callback execution. Set the prepare_prev_first flag to
+guarantee this.
 
-Rename and reorder to maintain version sorting.
-
-Fixes: 7b8c9e203039 ("drm/msm/dsi: Add support for MSM8998 DSI controller")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-Patchwork: https://patchwork.freedesktop.org/patch/713717/
-Link: https://lore.kernel.org/r/20260324-dsi-rgb101010-support-v5-3-ff6afc904115@pm.me
+Fixes: 9e15123eca79 ("drm/msm/dsi: Stop unconditionally powering up DSI hosts at modeset")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260323-panel-fix-v1-1-9f12b09161e8@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 4 ++--
- drivers/gpu/drm/msm/dsi/dsi_cfg.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index 10ba7d153d1cf..8bf3266d13831 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -278,10 +278,10 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
- 		&msm8996_dsi_cfg, &msm_dsi_6g_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V1_4_2,
- 		&msm8976_dsi_cfg, &msm_dsi_6g_host_ops},
-+	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_0_0,
-+		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_1_0,
- 		&sdm660_dsi_cfg, &msm_dsi_6g_v2_host_ops},
--	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_0,
--		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
- 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_3_0,
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-index 4c9b4b37681b0..2c9ed626f7909 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-@@ -19,8 +19,8 @@
- #define MSM_DSI_6G_VER_MINOR_V1_3_1	0x10030001
- #define MSM_DSI_6G_VER_MINOR_V1_4_1	0x10040001
- #define MSM_DSI_6G_VER_MINOR_V1_4_2	0x10040002
-+#define MSM_DSI_6G_VER_MINOR_V2_0_0	0x20000000
- #define MSM_DSI_6G_VER_MINOR_V2_1_0	0x20010000
--#define MSM_DSI_6G_VER_MINOR_V2_2_0	0x20000000
- #define MSM_DSI_6G_VER_MINOR_V2_2_1	0x20020001
- #define MSM_DSI_6G_VER_MINOR_V2_3_0	0x20030000
- #define MSM_DSI_6G_VER_MINOR_V2_4_0	0x20040000
+diff --git a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
+index 729cbb0d8403f..bc3e13b5a1f76 100644
+--- a/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
++++ b/drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c
+@@ -212,6 +212,7 @@ static int sharp_nt_panel_add(struct sharp_nt_panel *sharp_nt)
+ 
+ 	drm_panel_init(&sharp_nt->base, &sharp_nt->dsi->dev,
+ 		       &sharp_nt_panel_funcs, DRM_MODE_CONNECTOR_DSI);
++	sharp_nt->base.prepare_prev_first = true;
+ 
+ 	ret = drm_panel_of_backlight(&sharp_nt->base);
+ 	if (ret)
 -- 
 2.53.0
 
