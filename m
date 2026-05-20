@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EB12F363F;
-	Wed, 20 May 2026 18:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A6F3FA5EB;
+	Wed, 20 May 2026 18:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300736; cv=none; b=M/IPjvcGzx4w1L7e3H72ELlvSSzr7h/XmMEo8zZJkRL+wrq0LdKgAdAPr+6pIpnNWQv3PplT3Lp1gSPVKUMEyWfsuEfSQaIVjQaeKngj7D9L4OQkmJcDokTKmr3Stv5knVtfxLo7fLVWD8/xmMw8KPT6ebOETw0zyM73TU7R2ug=
+	t=1779300739; cv=none; b=kaKFW3e21DOETvsCG6XJjy7yV/c4G+QcbKlqgtBIr/dAM8x8UsPyD2riWEpuQZhYMEfhtNjvKH16YKgM9iTf16nFZxqoaJVB4L6NP0OeCAd1Y1u1PkNJeDKVy58jEq06EhodEcwolrwjvm9p2FaNAyirtG9isvPGvVwqo7BaTak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300736; c=relaxed/simple;
-	bh=1EoOIwCPAPp9papE0WXkNIrE6BkCzfqwtByPFRnts2I=;
+	s=arc-20240116; t=1779300739; c=relaxed/simple;
+	bh=H8dYVYYjYtnPdrJGuiVpiJilxa+VzqUocLXppYqSoUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+Q0hT3OfM4timEwVFDcgVKZVGbgN3Q/G3ASSoKOb1pGfxUUPsHmATFpn+coE7fJEON9Y0ylqL+J28XYGDRfIuFAwe3HRs695ImdKKLDoIZwbxSynC3HMsCBvR1RRBRwFCm+Ou6HnINQtRdHO6Z/OJX34gKVoxA95RR3Fpi/rqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shWk1/cA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F6X47uJ+tVfX4RevHkEIPmhZWWAw++qiBsRorPCQgykWq+cKFRh5P64LyMn+Mzm29wtwVBQS/4CmajtwcJ1ajzq0ZAGz3cxO4hpvQjKj0Kk+/vLkDjyKDiRyf4jnDB23WRxgXgp5PWOg/4AraylmbxZMDAftERUW3gyDkgeR7U8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvDUkGZO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shWk1/cA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FCC1F000E9;
-	Wed, 20 May 2026 18:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvDUkGZO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52CA1F000E9;
+	Wed, 20 May 2026 18:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300735;
-	bh=Sim9d2YL2xQxqlsEUfbaKMcFrEAz7/KMNm3tTT4k/Dw=;
+	s=korg; t=1779300738;
+	bh=n6N0Ss8ajuP8ZfbS0tKJgVuqZqSt2FxBgfpYHWyjq3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=shWk1/cAjZsaJtV6htdB6uspAZYGrX3ZNFa4O/NYoR/SnpulBTrqOrh+2pzHoc6na
-	 529+TrbZKagskExdvPa3gP1jGRe0Ul24zFjQuVSt8x5uKKof6IYq4RPonVBKQDvlxQ
-	 kgu8cj5oFc06zLNtCzzoEJ5LuqOlnH2Shn44nwbo=
+	b=VvDUkGZOgux+Ls1cpmiMxw1QLYzFfLyogtyIIJtIL/5QbnEWfM2vEP+ERo/vssbjt
+	 Ij4Bf+yZnoakUpJW2ZmoiytYivpJ+oBID9WK1R4pU58t6k5ifyHKdA6jesQtjlYcVm
+	 j3lPBDhskaCBTOOIDiAMVDbLKmbG48HVsO6aAwo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 287/666] arm64: dts: qcom: sm8650: Fix xo clock supply of SD host controller
-Date: Wed, 20 May 2026 18:18:18 +0200
-Message-ID: <20260520162117.437284399@linuxfoundation.org>
+Subject: [PATCH 6.12 288/666] arm64: dts: qcom: sm8450: Enable UHS-I SDR50 and SDR104 SD card modes
+Date: Wed, 20 May 2026 18:18:19 +0200
+Message-ID: <20260520162117.458884620@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,41 +55,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 390903efaa057c44fd80e7d9839419c50092018e ]
+[ Upstream commit db0c5ef1abda6effdc5c85d6688fb6af2b351ae5 ]
 
-The expected frequency of SD host controller core supply clock is 19.2MHz,
-while RPMH_CXO_CLK clock frequency on SM8650 platform is 38.4MHz.
+The reported problem of some non-working UHS-I speed modes on SM8450
+originates in commit 0a631a36f724 ("arm64: dts: qcom: Add device tree
+for Sony Xperia 1 IV"), and then it was spread to all SM8450 powered
+platforms by commit 9d561dc4e5cc ("arm64: dts: qcom: sm8450: disable
+SDHCI SDR104/SDR50 on all boards").
 
-Apparently the overclocked supply clock could be good enough on some
-boards and even with the most of SD cards, however some low-end UHS-I
-SD cards in SDR104 mode of the host controller produce I/O errors in
-runtime, fortunately this problem is gone, if the "xo" clock frequency
-matches the expected 19.2MHz clock rate.
+The tests show that the rootcause of the problem was related to an
+overclocking of SD cards, and it's fixed later on by commit a27ac3806b0a
+("clk: qcom: gcc-sm8450: Use floor ops for SDCC RCGs").
 
-Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Since then both SDR50 and SDR104 speed modes are working fine on SM8450,
+tested on SM8450-HDK:
+
+SDR50 speed mode:
+
+    mmc0: new UHS-I speed SDR50 SDHC card at address 0001
+    mmcblk0: mmc0:0001 00000 14.6 GiB
+     mmcblk0: p1
+
+    % dd if=/dev/mmcblk0p1 of=/dev/null bs=1M count=1024
+    1024+0 records in
+    1024+0 records out
+    1073741824 bytes (1.1 GB, 1.0 GiB) copied, 24.6254 s, 43.6 MB/s
+
+SDR104 speed mode:
+
+    mmc0: new UHS-I speed SDR104 SDHC card at address 59b4
+    mmcblk0: mmc0:59b4 USDU1 28.3 GiB
+     mmcblk0: p1
+
+    % dd if=/dev/mmcblk0p1 of=/dev/null bs=1M count=1024
+    1024+0 records in
+    1024+0 records out
+    1073741824 bytes (1.1 GB, 1.0 GiB) copied, 12.3266 s, 87.1 MB/s
+
+Remove the restrictions on SD card speed modes from the SM8450 platform
+dtsi file and enable UHS-I speed modes.
+
+Fixes: 9d561dc4e5cc ("arm64: dts: qcom: sm8450: disable SDHCI SDR104/SDR50 on all boards")
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20260314023715.357512-3-vladimir.zapolskiy@linaro.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Link: https://lore.kernel.org/r/20260314023715.357512-5-vladimir.zapolskiy@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index d38d44438477f..72a75dec13c73 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -3423,7 +3423,7 @@ sdhc_2: mmc@8804000 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index cfa880c577a40..f5be69e3be997 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -4599,9 +4599,6 @@ sdhc_2: mmc@8804000 {
+ 			bus-width = <4>;
+ 			dma-coherent;
  
- 			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
- 				 <&gcc GCC_SDCC2_APPS_CLK>,
--				 <&rpmhcc RPMH_CXO_CLK>;
-+				 <&bi_tcxo_div2>;
- 			clock-names = "iface",
- 				      "core",
- 				      "xo";
+-			/* Forbid SDR104/SDR50 - broken hw! */
+-			sdhci-caps-mask = <0x3 0x0>;
+-
+ 			status = "disabled";
+ 
+ 			sdhc2_opp_table: opp-table {
 -- 
 2.53.0
 
