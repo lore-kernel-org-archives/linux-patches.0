@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D2A334C1D;
-	Wed, 20 May 2026 16:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FE33403FA;
+	Wed, 20 May 2026 16:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295667; cv=none; b=eli6HwsJS8JQUJqK6Q+ezA7g8xKEWjoIlYsY2/xfs3u28P7xaF/uUVGnFBQqZQfZiVh33caMvW6oIHZf0ImcbFB386cTkuwFagrtmxhd4m4lYnuIqa09kczIST2PkoisZwUvMXNTrM5n8FjFepjRfMsd+iiWTK3a7783ZjcmvCk=
+	t=1779295669; cv=none; b=C4Tq6cPiF0/MWolplR880Ws511KmD/c9jL/x2bOQ1meaeUnkuRJasEPDBCAXitIOuxlDm/ayHiflVfyvXc/DZ7IjYmpT4d6pzLut9sidYzE85gFSKIMackT40vPRHFSX2FHqA9dqS1VeJA5ioVwZXW9GbAXgZOAE2VOctGotnZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295667; c=relaxed/simple;
-	bh=RP2ccKYokauqL/Y2fTsxisIl+jsO62VBOfVqMcdPKuk=;
+	s=arc-20240116; t=1779295669; c=relaxed/simple;
+	bh=3YoDBBssKO4QMhZL96YgBdUGYyujdharwYD/sVM3bfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BaEfHGI0BYVWnQv0DkI9SJ94iERcIS+JqZqcYdTmYPMJwrpYtJ3PEJV65+XBm8A45DOlGDVmALC3mTvkQby8Ia38fi4oweVqCRO9JIdqxUU+lFblraOL6fYONDYdITMzk/A/MiVk0untJmbp1M+CEoTrj+Q/VOqPRh4s6koSvrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idaYMhUD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=C1y4sAxjjXZS15IvTLDsx2HR8gDEXF1wVG69vmmf1dYjcSOhikqcbsxag+Kb6vWetFfmSFzLUMdiYI/oHAyqQld86d4NFPdxUIrIwjNU6xpY7RCgVAYgcKjgzOwluG/4Wvf8DsRC3Odr+Tji1+NH1Ps3VvBKYkyC335Tf784j/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aawXArf2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idaYMhUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBCC1F000E9;
-	Wed, 20 May 2026 16:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aawXArf2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5390C1F000E9;
+	Wed, 20 May 2026 16:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295666;
-	bh=dEl5hT9sYsz4hMO9vdvY1oxg9rNsgfyi2zZ33XrI7k0=;
+	s=korg; t=1779295668;
+	bh=YMzsRknZgFYcezn6/Vh8bYPupR1KTOE3I/0d3NbHhOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=idaYMhUDxyGTK+2jWsllhrqE1EeD3dd11XUgqAcBi/ycO/KD9zdHkrO0COF3+mnZ/
-	 S1LOEZ8jDjNE4p9aEUN6dODOdngPl5YSmRR92vI+OJ2aFDKSTcN3ejbLYCtrCVO72z
-	 PG34Cx+kbwuCgDbGM/fVnO0IEhJE5oKLVMWLstHM=
+	b=aawXArf2W0YHtB6ooEUMEGupa+lvf7RfFU2ZxoOwoyYzwWdD6iEC1MDk923tO0gZt
+	 ScJ0B8xq1TGdxR7TLE3/L3dZYiS9zIwR7jmI0ERUnSLrNmPHxXdYaviJPl/Vrd1eLa
+	 Em+txpGxXev6caHbj+YqarJApyaQYXEUg8PJpsMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Yixun Lan <dlan@kernel.org>,
+	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20 ?= <Yeking@Red54.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0505/1146] riscv: dts: spacemit: drop incorrect pinctrl for combo PHY
-Date: Wed, 20 May 2026 18:12:35 +0200
-Message-ID: <20260520162159.618426226@linuxfoundation.org>
+Subject: [PATCH 7.0 0506/1146] arm64: dts: rockchip: Fix RK3562 EVB2 model name
+Date: Wed, 20 May 2026 18:12:36 +0200
+Message-ID: <20260520162159.640008169@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,48 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
 
-[ Upstream commit c68360c0d636dae71f766b7b296ddfcf2827ccc7 ]
+[ Upstream commit ede6a05606892bab4f6d785ffcfc124150c2eb32 ]
 
-The combo PHY on the Banana Pi F3 is used for the USB 3.0 port. The high
-speed differential lanes are always configured as such, and do not
-require a pinctrl entry.
+The model name should be "Rockchip RK3562 EVB2 V10 Board".
 
-The existing pinctrl entry only configures PCIe secondary pins, which
-are unused for USB and instead routed to the MIPI CSI1 connector.
-
-Remove this incorrect pinctrl entry.
-
-Fixes: 0be016a4b5d1b9 ("riscv: dts: spacemit: PCIe and PHY-related updates")
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: Yixun Lan <dlan@kernel.org>
-Link: https://lore.kernel.org/r/20260322202502.2205755-1-aurelien@aurel32.net
-Signed-off-by: Yixun Lan <dlan@kernel.org>
+Fixes: ceb6ef1ea900 ("arm64: dts: rockchip: Add RK3562 evb2 devicetree")
+Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+Link: https://patch.msgid.link/tencent_78E7E3F6991FB4403D5ADC9E6A6BC3BF8307@qq.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3562-evb2-v10.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-index 51f6c6a774b0d..48c034736aa5a 100644
---- a/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-+++ b/arch/riscv/boot/dts/spacemit/k1-bananapi-f3.dts
-@@ -81,8 +81,6 @@ usb3_hub_5v: usb3-hub-5v {
- };
+diff --git a/arch/arm64/boot/dts/rockchip/rk3562-evb2-v10.dts b/arch/arm64/boot/dts/rockchip/rk3562-evb2-v10.dts
+index 6a84db154a7d5..387062eea5208 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3562-evb2-v10.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3562-evb2-v10.dts
+@@ -13,7 +13,7 @@
+ #include "rk3562.dtsi"
  
- &combo_phy {
--	pinctrl-names = "default";
--	pinctrl-0 = <&pcie0_3_cfg>;
- 	status = "okay";
- };
+ / {
+-	model = "Rockchip RK3562 EVB V20 Board";
++	model = "Rockchip RK3562 EVB2 V10 Board";
+ 	compatible = "rockchip,rk3562-evb2-v10", "rockchip,rk3562";
  
+ 	chosen: chosen {
 -- 
 2.53.0
 
