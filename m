@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE01E372EDE;
-	Wed, 20 May 2026 16:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A17036EAB8;
+	Wed, 20 May 2026 16:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295541; cv=none; b=RBAyr2GbxfK5RTimXjZ59US+/IVwBFlYipfn2XinVPXOCgAlD3ER0OQuKYjaBl6s1apHYioqR/4PqLiVzQ7BCIThoY26ScuriyoBUINQU40bL3bS5O+0GjnJhCszNNgq82U6p1PBOtEhTROL9iga2mJ/RqN49Z/NnVN4Vg4s+7k=
+	t=1779295543; cv=none; b=OEiH9LTHwS8TkAqdHSraWKvBuINeMCdFJCEBNY3F9Wmcm3IKS17mgbGnR2Rqt0jaUJcUO6ZOMC6pOLZ+03ccjSd/PT4vlCZNEdCdpJhgQm7reQKXK3ohHSS+1x6dqpoWxQ9srrtiz0JfWay6S0sUm0jnOtrlj3++XKxH4Mlm8wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295541; c=relaxed/simple;
-	bh=EEpL5uyuexjGKhN9JkX9mEvP3AixClF3OO3ogYuBj2s=;
+	s=arc-20240116; t=1779295543; c=relaxed/simple;
+	bh=f5oDWkDl47cNYkSIJmtYDDvlaYbAGQfwdimhXIaXJaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTWY681Nfuo0TRTB3w7lEARnNDSs+/LWE7XsIjKFZek58EYIVMBG59DPA3Vk+mQLsYmFaX+DZ//QC38iQezWVu7fySjmHEsEqIUgyaX5SUATEPacCruHgMNmjSMqPF638mVF/mXaq0+//dEuBZ+kMC3eEPv+8He2/jsCnLSeA6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8I81elF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g2bvmhsmROWEUDWUoHPjear9Dn0znZaRAtJwiI0aUrJ7EDpj1du3/HBRh9S/FxAmjNzXQID7bJ0EfKodgLt+LRYGalh8Fmz9nPsnLpahgviLVbtHbaIfZ+JTKNpbWn/oadg5y0COKUQxXBSACe/qYlnGZ5d8S8LH0Unpi4x3Bq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rj0Mev1H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8I81elF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFCB1F000E9;
-	Wed, 20 May 2026 16:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rj0Mev1H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC8E1F000E9;
+	Wed, 20 May 2026 16:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295539;
-	bh=190O2ElUI8ZTXI8kGcrSxKcLFiw5MhyNc+YtSTkgeh8=;
+	s=korg; t=1779295542;
+	bh=v60S4fv0Zn0qotkaQBHIRUsa8iksAFNRt6k8CvrNv10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W8I81elFAx9SKx/iHPIeirvdev6a6vDEux3XbTu6edE0geYD/WHA7bz3pbZXI/hwu
-	 Gxqe1dkqWMVyzxMy5M3vOO9zS0AYwxnU9ZAUVAKcp/HBkmluB1pMEruq8WpigSwqg0
-	 5yW4TDbxGieOS7AWoUIeYa6xMlJo3JjKuUGNXX2U=
+	b=Rj0Mev1HUQTXfCgEPPSgYyCAkaMHhLQzGHZ4Rfh3vnoS/1rDMwF16I0SshAFWXuCn
+	 gchS9QRRCSkPT29fpXNzaCoa2oHFRAcJN6QXcXkpN26yE3/f0e2OEpfIev/2o6N2dg
+	 RpLA/5r2Q8pNq2m3p+oDEpFSkkMpv8wpFbp6akq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
-	Tomas Glozar <tglozar@redhat.com>,
+	Matt Evans <mattev@meta.com>,
+	Ted Logan <tedlogan@fb.com>,
+	David Matlack <dmatlack@google.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0457/1146] rtla: Fix segfault on multiple SIGINTs
-Date: Wed, 20 May 2026 18:11:47 +0200
-Message-ID: <20260520162158.540982416@linuxfoundation.org>
+Subject: [PATCH 7.0 0458/1146] vfio: selftests: Build tests on aarch64
+Date: Wed, 20 May 2026 18:11:48 +0200
+Message-ID: <20260520162158.561956307@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,66 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Glozar <tglozar@redhat.com>
+From: Ted Logan <tedlogan@fb.com>
 
-[ Upstream commit be8058f31b4e237604e4ce7599593ab68dc69ae7 ]
+[ Upstream commit 1347a742a1e1b080e2e8d200312ae45b8d6ac859 ]
 
-Detach stop_trace() from SIGINT/SIGALRM on tool clean-up to prevent it
-from crashing RTLA by accessing freed memory.
+Fix vfio selftests on aarch64, allowing native builds on aarch64 hosts.
 
-This prevents a crash when multiple SIGINTs are received.
-
-Fixes: d6899e560366 ("rtla/timerlat_hist: Abort event processing on second signal")
-Fixes: 80967b354a76 ("rtla/timerlat_top: Abort event processing on second signal")
-Reviewed-by: Wander Lairson Costa <wander@redhat.com>
-Link: https://lore.kernel.org/r/20260310160725.144443-1-tglozar@redhat.com
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Reported-by: Matt Evans <mattev@meta.com>
+Closes: https://lore.kernel.org/all/e51b4ff2-13c4-47d4-b781-3dcbd740d274@meta.com/
+Fixes: a55d4bbbe644 ("vfio: selftests: only build tests on arm64 and x86_64")
+Signed-off-by: Ted Logan <tedlogan@fb.com>
+Reviewed-by: David Matlack <dmatlack@google.com>
+Link: https://lore.kernel.org/r/20260319-vfio-selftests-aarch64-v2-1-bb2621c24dc4@fb.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/common.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ tools/testing/selftests/vfio/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/tracing/rtla/src/common.c b/tools/tracing/rtla/src/common.c
-index f310b0d59ad3e..839c78c065e12 100644
---- a/tools/tracing/rtla/src/common.c
-+++ b/tools/tracing/rtla/src/common.c
-@@ -39,6 +39,18 @@ static void set_signals(struct common_params *params)
- 	}
- }
+diff --git a/tools/testing/selftests/vfio/Makefile b/tools/testing/selftests/vfio/Makefile
+index 8e90e409e91d8..0684932d91bfc 100644
+--- a/tools/testing/selftests/vfio/Makefile
++++ b/tools/testing/selftests/vfio/Makefile
+@@ -1,6 +1,6 @@
+ ARCH ?= $(shell uname -m)
  
-+/*
-+ * unset_signals - unsets the signals to stop the tool
-+ */
-+static void unset_signals(struct common_params *params)
-+{
-+	signal(SIGINT, SIG_DFL);
-+	if (params->duration) {
-+		alarm(0);
-+		signal(SIGALRM, SIG_DFL);
-+	}
-+}
-+
- /*
-  * getopt_auto - auto-generates optstring from long_options
-  */
-@@ -314,7 +326,7 @@ int run_tool(struct tool_ops *ops, int argc, char *argv[])
- 
- 	retval = ops->main(tool);
- 	if (retval)
--		goto out_trace;
-+		goto out_signals;
- 
- 	if (params->user_workload && !params->user.stopped_running) {
- 		params->user.should_run = 0;
-@@ -336,6 +348,8 @@ int run_tool(struct tool_ops *ops, int argc, char *argv[])
- 	if (ops->analyze)
- 		ops->analyze(tool, stopped);
- 
-+out_signals:
-+	unset_signals(params);
- out_trace:
- 	trace_events_destroy(&tool->record->trace, params->events);
- 	params->events = NULL;
+-ifeq (,$(filter $(ARCH),arm64 x86_64))
++ifeq (,$(filter $(ARCH),aarch64 arm64 x86_64))
+ # Do nothing on unsupported architectures
+ include ../lib.mk
+ else
 -- 
 2.53.0
 
