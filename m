@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02826348C55;
-	Wed, 20 May 2026 18:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990EB347515;
+	Wed, 20 May 2026 18:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301195; cv=none; b=OgBlUGg311EAakAKCpveUqHiMkFDRr4aDspAD2FylmNQpxycIQIy+qYCKifMvL4+vhsqp4ghy1bQizV74lpGobAGdWQy+kagEF4zyn5OWT+7O2WDStxhkewB3VVf+TOfvcqfsh5L1gpkNPwMVRNloRjAkd9Xl4Hbo++2giJId28=
+	t=1779301197; cv=none; b=M7VRlO2ySJrgHAGdCU7uMUjOZUKPoIgoKgWOFF1DIFHntF9Du1SE+DLY1BzdtDO5G2UuODIwXuLxgySFQlx9zn08fpEu31CgPYOtrZiA7mPk8m2zf6HbdAo1/rk6QtIDkHOFWlsCvbB84k30WDkNylhrE/D6zw1mbFTQyvWazZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301195; c=relaxed/simple;
-	bh=7QwN/e/dFteMV0XjoKn9XZB6JFZQ5ER+dAXXIO3YHPM=;
+	s=arc-20240116; t=1779301197; c=relaxed/simple;
+	bh=3ElX9vmnrk5Yz4DEM8+bQlCgUWLfvTwTsYDO18oX/m8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+xRwnpn29sZB4CT0V4FHhp508dN48bGDhtuSO4OBrkjyOYoAf17H/HrbWkeam5fYZhkg0AfRbf5ic4MAhyAibZo7DVqLp6mOtSsabztEVUZ6fot6+yxy3OIijGS6Lw4xR10VHvfN7vGIJyp/2fAzyM33V2Rcyo2BsxGgHnxosU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTdb2/WM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VnjH/OGBY3MHPF92f+XNZ1TRs5xExB0nWKH3Re8zABdPbai5ZR9iH8xA+OmPTKn2QAUu0SIhNJ8C8euXJyhfA6cGwnXeouGAdSdlIVYnGpAC2JUIGO6zjyBqL7npNsW70UwJs5/jcOWd5i7qNHjRzXsggMugB9zQHiabl1c4t14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYBSFNNb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTdb2/WM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C891F000E9;
-	Wed, 20 May 2026 18:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYBSFNNb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0271F000E9;
+	Wed, 20 May 2026 18:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301193;
-	bh=PGHm+zKm0fpdjFDUL/FxKLtHkYFs+qxYorKbm1QP0cU=;
+	s=korg; t=1779301196;
+	bh=dcXQkmuSMWwWR3ponfDCHvZpZ2V6qZXW7z7LEoExF7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nTdb2/WMOk8YjdbJcNQRN7ILJmeW6fwMrNj7EYhIbroBX44G762gKuwkjA+nQHYYo
-	 P1eZGRB6kUcXd0N3yswxMGYQIAtr5SbPkhuL7BOlJ8Lg5eIOQWxGlhMqda6Vu8Cnzu
-	 CbBEvDIJsXn2blkjlawGn60R1d1kwpBHA9fIoB/E=
+	b=xYBSFNNbeM7he+20WwyRZeuW7NBxu+MbTCLkCMeL9uikey+TXRhcDtEHZzyLD49lL
+	 MP+qb0/3emdiJq9HlJWT0zfnkl6h6pyeTN8g5FVaE47/GKSASfcvydEdu8dkYqGkNN
+	 9+7iPqZoaGycf+WKJDp1hIRhyUJxgsU8if3f7hdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Vollrath <tactii@gmail.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Joe Damato <joe@dama.to>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 461/666] e1000e: Unroll PTP in probe error handling
-Date: Wed, 20 May 2026 18:21:12 +0200
-Message-ID: <20260520162121.262234630@linuxfoundation.org>
+Subject: [PATCH 6.12 462/666] ipv6: fix possible UAF in icmpv6_rcv()
+Date: Wed, 20 May 2026 18:21:13 +0200
+Message-ID: <20260520162121.283509402@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,39 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Vollrath <tactii@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit aa3f7fe409350857c25d050482a2eef2cfd69b58 ]
+[ Upstream commit f996edd7615e686ada141b7f3395025729ff8ccb ]
 
-If probe fails after registering the PTP clock and its delayed work,
-these resources must be released.
+Caching saddr and daddr before pskb_pull() is problematic
+since skb->head can change.
 
-This was not an issue until a 2016 fix moved the e1000e_ptp_init() call
-before the jump to err_register.
+Remove these temporary variables:
 
-Fixes: aa524b66c5ef ("e1000e: don't modify SYSTIM registers during SIOCSHWTSTAMP ioctl")
-Signed-off-by: Matt Vollrath <tactii@gmail.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-12-686c33c9828d@intel.com
+- We only access &ipv6_hdr(skb)->saddr and &ipv6_hdr(skb)->daddr
+  when net_dbg_ratelimited() is called in the slow path.
+
+- Avoid potential future misuse after pskb_pull() call.
+
+Fixes: 4b3418fba0fe ("ipv6: icmp: include addresses in debug messages")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Joe Damato <joe@dama.to>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260416103505.2380753-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/netdev.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/icmp.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index 4d9dcb0001d21..3f0dd19ba399c 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -7700,6 +7700,7 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- err_register:
- 	if (!(adapter->flags & FLAG_HAS_AMT))
- 		e1000e_release_hw_control(adapter);
-+	e1000e_ptp_remove(adapter);
- err_eeprom:
- 	if (hw->phy.ops.check_reset_block && !hw->phy.ops.check_reset_block(hw))
- 		e1000_phy_hw_reset(&adapter->hw);
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index 387400829b207..229ae205450d3 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -910,7 +910,6 @@ static int icmpv6_rcv(struct sk_buff *skb)
+ 	struct net *net = dev_net_rcu(skb->dev);
+ 	struct net_device *dev = icmp6_dev(skb);
+ 	struct inet6_dev *idev = __in6_dev_get(dev);
+-	const struct in6_addr *saddr, *daddr;
+ 	struct icmp6hdr *hdr;
+ 	u8 type;
+ 
+@@ -941,12 +940,10 @@ static int icmpv6_rcv(struct sk_buff *skb)
+ 
+ 	__ICMP6_INC_STATS(dev_net_rcu(dev), idev, ICMP6_MIB_INMSGS);
+ 
+-	saddr = &ipv6_hdr(skb)->saddr;
+-	daddr = &ipv6_hdr(skb)->daddr;
+-
+ 	if (skb_checksum_validate(skb, IPPROTO_ICMPV6, ip6_compute_pseudo)) {
+ 		net_dbg_ratelimited("ICMPv6 checksum failed [%pI6c > %pI6c]\n",
+-				    saddr, daddr);
++				    &ipv6_hdr(skb)->saddr,
++				    &ipv6_hdr(skb)->daddr);
+ 		goto csum_error;
+ 	}
+ 
+@@ -1029,7 +1026,8 @@ static int icmpv6_rcv(struct sk_buff *skb)
+ 			break;
+ 
+ 		net_dbg_ratelimited("icmpv6: msg of unknown type [%pI6c > %pI6c]\n",
+-				    saddr, daddr);
++				    &ipv6_hdr(skb)->saddr,
++				    &ipv6_hdr(skb)->daddr);
+ 
+ 		/*
+ 		 * error of unknown type.
 -- 
 2.53.0
 
