@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E70372B31;
-	Wed, 20 May 2026 16:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81324373BEB;
+	Wed, 20 May 2026 16:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295971; cv=none; b=N/gTzzk/mFiGF34JOZM6T3PzxmHJnZ4P+WH0qOkatoluVtMA8lCpwmqRWAmmastuon6cEiIRz8BITjSO8J5w+KrHY634pciMy+6ekOXu2W/y+OeaEqWyzT3QzoUFkdtso44b66MRs5IBfE3Kj21ICS6zBz4kKi/2qo7HMaQkAis=
+	t=1779295974; cv=none; b=k0UJl2+I/iIIPlJHbCkBU/j5aIMPIepZe/YOY/ObIDI4rCBGCrko4E4XnMUZ/fbhr8zUnIlK9HjfU2adQhBCYLm3gQTusi4RkPm+oVgiRpNYREmisU2/SGPNkHw0h6BxgluFlne9+eUfgFI2i6MKE10uhmV6HngLfu/Ka6Ojptg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295971; c=relaxed/simple;
-	bh=n0H50bmamBUehvnTNWJXsVmniQmf8s0mHxejOWrZigw=;
+	s=arc-20240116; t=1779295974; c=relaxed/simple;
+	bh=BUKl2ch9K5jlBOo3RoAH3E/Z1f3+BzlcRBTRb/8OLWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PBEWbRAVmIwLNboEijZnLtcoMkMpPjkJzoUU7bfTO3mFoCCV5+wp/Ob/G1YJjD6eI04CnyNumLvFz9/LUsZ+0J5E/oIuWktotfAaC9xM5kfTmG35M9Jgdx+HtnrqRTKeeMaX6dlmyrYYJUf5MObeCx8K7O1IA9DxkES98bkNXds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEUVBJOj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YrHTqgJyGsO+VycKQT4/ZoBmE/aXZga5pDfNbp3OysfmT0dluZcmXR+7QrwnmaadH2BXH311btDOYW5i2kOBKrfUzK2sI+d1+of/wni7OZTkjBaLte0DIDX3vKG7zr+1PL1kTNbUSDU4Jr4YhGiFIFqLFpE5GVS+ei93PvsaZlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2lFJHtb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEUVBJOj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472D71F000E9;
-	Wed, 20 May 2026 16:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2lFJHtb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60E61F000E9;
+	Wed, 20 May 2026 16:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295970;
-	bh=Wn95Ba/PWkRDBaiXM0PdaY7b3fTJuLj6i6XhKJoYSY8=;
+	s=korg; t=1779295973;
+	bh=iYHwDpgoFJnWmLPy2AGmGZ8/hSp+KHG5y3G7KJIqelY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KEUVBJOjHCqbs8NZYvg9ywcD9UOvZxnQ6dSZ4VSKxnxQNfIMgJPFKpiDvuwq2nzt8
-	 /it2I8+nwt/id4JxI5jVqJnLqOqavyYGf30RX+xSZQHHWFLFvj6mrypyCMTBIf2q49
-	 LBkZsxnDi8OJPZn4nh8tAj2r2O97XEjFAGP5RM84=
+	b=I2lFJHtb4VYk9hg+8bB0FPgQ9sCFh9ZBEktT0/KSeSVhy16jxqMUgXvwX2z4aUrPN
+	 0Zr7jmw8Mjqnk97e50Q5TcQQakCIw7lQ2teR0ZyevBotWNs6M2+Hd7+mITPHCVNuDw
+	 ERdV5JZRKZL7g8gDDh7ta01XqE9W/xmO+8eLV+H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangguangju <wangguangju@hygon.cn>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0622/1146] perf trace: Fix IS_ERR() vs NULL check bug
-Date: Wed, 20 May 2026 18:14:32 +0200
-Message-ID: <20260520162202.259760360@linuxfoundation.org>
+Subject: [PATCH 7.0 0623/1146] dt-bindings: pinctrl: marvell,armada3710-xb-pinctrl: add missing items keyword
+Date: Wed, 20 May 2026 18:14:33 +0200
+Message-ID: <20260520162202.283501345@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,39 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangguangju <wangguangju@hygon.cn>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 96f202eab8133f94479b14a32902c636e9bdf6af ]
+[ Upstream commit a92b75100826b1ea27e6b8a678e53970ad4736d7 ]
 
-The alloc_syscall_stats() function always returns an error pointer
-(ERR_PTR) on failure.
+Even though the type of the 'groups' property of a pinmux node is
+specified as string-array in pinmux-node.yaml, but trying to use
+multiple strings causes dtbs_check warnings.
 
-So replace NULL check with IS_ERR() check after calling
-delete_syscall_stats() function.
+For example, checking the following dts ...
 
-Fixes: ef2da619b132c6f74 ("perf trace: Convert syscall_stats to hashmap")
-Signed-off-by: wangguangju <wangguangju@hygon.cn>
-Reviewed-by: Howard Chu <howardchu95@gmail.com>
-Acked-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+  $ cat arch/arm64/boot/dts/marvell/armada-3720-test.dts
+  /dts-v1/;
+
+  #include "armada-372x.dtsi"
+
+  &pinctrl_nb {
+          pwm-gpio-pins {
+                  groups = "pwm0", "pwm1", "pwm2", "pwm3";
+                  function = "gpio";
+          };
+  };
+
+... results in this warning:
+
+  arch/arm64/boot/dts/marvell/armada-3720-test.dtb: pinctrl@13800 (marvell,armada3710-nb-pinctrl): pwm-gpio-pins:groups: ['pwm0', 'pwm1', 'pwm2', 'pwm3'] is too long
+	  from schema $id: http://devicetree.org/schemas/pinctrl/marvell,armada3710-xb-pinctrl.yaml
+
+Add the missing 'items' keyword to the schema to allow using multiple
+strings without such warnings. Also adjust the indentation of the next
+statements accordingly.
+
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: c1c9641a04e83 ("dt-bindings: pinctrl: Convert marvell,armada-3710-(sb|nb)-pinctrl to DT schema")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../pinctrl/marvell,armada3710-xb-pinctrl.yaml        | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 311d9da9896a4..295b272c6c299 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1573,7 +1573,7 @@ static void delete_syscall_stats(struct hashmap *syscall_stats)
- 	struct hashmap_entry *pos;
- 	size_t bkt;
+diff --git a/Documentation/devicetree/bindings/pinctrl/marvell,armada3710-xb-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/marvell,armada3710-xb-pinctrl.yaml
+index 4f9013d368749..727da7fb490ce 100644
+--- a/Documentation/devicetree/bindings/pinctrl/marvell,armada3710-xb-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/marvell,armada3710-xb-pinctrl.yaml
+@@ -84,11 +84,12 @@ patternProperties:
  
--	if (syscall_stats == NULL)
-+	if (IS_ERR(syscall_stats))
- 		return;
+     properties:
+       groups:
+-        enum: [ emmc_nb, i2c1, i2c2, jtag, mii_col, onewire, pcie1,
+-                pcie1_clkreq, pcie1_wakeup, pmic0, pmic1, ptp, ptp_clk,
+-                ptp_trig, pwm0, pwm1, pwm2, pwm3, rgmii, sdio0, sdio_sb, smi,
+-                spi_cs1, spi_cs2, spi_cs3, spi_quad, uart1, uart2,
+-                usb2_drvvbus1, usb32_drvvbus0 ]
++        items:
++          enum: [ emmc_nb, i2c1, i2c2, jtag, mii_col, onewire, pcie1,
++                  pcie1_clkreq, pcie1_wakeup, pmic0, pmic1, ptp, ptp_clk,
++                  ptp_trig, pwm0, pwm1, pwm2, pwm3, rgmii, sdio0, sdio_sb,
++                  smi, spi_cs1, spi_cs2, spi_cs3, spi_quad, uart1, uart2,
++                  usb2_drvvbus1, usb32_drvvbus0 ]
  
- 	hashmap__for_each_entry(syscall_stats, pos, bkt)
+       function:
+         enum: [ drvbus, emmc, gpio, i2c, jtag, led, mii, mii_err, onewire,
 -- 
 2.53.0
 
