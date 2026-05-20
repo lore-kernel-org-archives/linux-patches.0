@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FC53563E1;
-	Wed, 20 May 2026 18:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6533D1CC6;
+	Wed, 20 May 2026 18:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301796; cv=none; b=n6sI6O7kXlIbdNi++GdYKmYHdp/cTOQXharJYvDO1RTZRyrLPnzKLKnHqEmhecWyWQosmf8ROjWkT/ZpDaM0YC+NwrOsqTVlA7YybEqS1x72ZtRP8TKDnYJFazA4BXG1TnSAtAWyX5zngPXXeN22lyAX/qdXboH1UxJaWsApwzc=
+	t=1779301799; cv=none; b=Z56tyJp/Xg6vRYI1ZbyirY20gOxkEOp44EJGLG0kEyf+Q14GPyYuAJ67jEqallY+H1A8yYP47O+xZHGR9xxMhX+0g41luwh8qWrRfECkvhLVdS72Fm3MhewCHR0IozG/msyIJfAnKP0rR+LRCtlM/6CaH4xOIxfHl+VyHaypaOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301796; c=relaxed/simple;
-	bh=V3awu4NbF9Mbz0fNesogh4Q6zRqKLC1UacLtE/D/m4g=;
+	s=arc-20240116; t=1779301799; c=relaxed/simple;
+	bh=zf1SpcqoQCX0c4Bl6vPmQb3eIaNogy+P9qaY1Umtvgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qhh0HtUuN0GuFYjXp66r72cWPqv5edaIaAdTxr3GtJmI6uOWr+P0hdJcDvgJ10ojkgxkv94zxlUh58D4F6bXyBH91WjFgNfyvipfWsmvzKPVjSmt8/5l0XWUWZM9fQ8m0n3SnSQELhCEMNZEwG5PmdGPEdoajN8+ovmvuxVncPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTrmE17H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IVPtoI4Uii98qNLXeOJWqhpwYG4LgOSTQ50UtgLWae9qAcQv77CnSCvAOvbak2NpATyJ2k/dVCphrhb15Gz7PGIg1jnj76W47dAvmneh3+jfecwUb/n6c0//J15wkEO8nBSza2PNPjtjNzrSiktebLxEf9Fe1C+Du1djt2hY20s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCqGD5Iz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTrmE17H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F9A81F000E9;
-	Wed, 20 May 2026 18:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCqGD5Iz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B4571F000E9;
+	Wed, 20 May 2026 18:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301795;
-	bh=VRA7HqknC73juWiN51bGo/oz1ME8CVm1GsmjulZCLlg=;
+	s=korg; t=1779301797;
+	bh=UpInOkIM80u3SkqttUuVW8iCPXotPPp6FmwqK55VqcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NTrmE17HhmYGpObmHxbxxLzaNZXXT7qCN9hq5vkdKFpgBenezy6JtLcmH9Vppp1rm
-	 hgi6laklNBBraTereCJMoFYte3r70FnUSJq9z/mf4kcGdjyYbS7pPi+6qxvYdZAZfy
-	 Cm0VlrGP+voA0va3XC368eKSr2bbz+5SwoNHF9aw=
+	b=wCqGD5IzIyHbP2RZdDXtbQowp2KC4aM3hgWTOMuUOAnD8SwdRqLSiWIoEM8LUNyaX
+	 e9QFPIZQ2c/3eYPpd9eOr3LIW1egUbnFy8YbFqDRmKPli3UlW28tWi2vef8QAT2vWo
+	 T2yHBNSPVL2r9JWednrjE+CRkR1g4s2hMsr30qag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Jeff Chen <jeff.chen_1@nxp.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/508] wifi: mwifiex: Fix memory leak in mwifiex_11n_aggregate_pkt()
-Date: Wed, 20 May 2026 18:17:26 +0200
-Message-ID: <20260520162059.091900620@linuxfoundation.org>
+Subject: [PATCH 6.6 024/508] wifi: rtlwifi: pci: fix possible use-after-free caused by unfinished irq_prepare_bcn_tasklet
+Date: Wed, 20 May 2026 18:17:27 +0200
+Message-ID: <20260520162059.114752990@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,46 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 990a73dec3fdc145fef6c827c29205437d533ece ]
+[ Upstream commit 039cd522dc70151da13329a5e3ae19b1736f468a ]
 
-In mwifiex_11n_aggregate_pkt(), skb_aggr is allocated via
-mwifiex_alloc_dma_align_buf(). If mwifiex_is_ralist_valid() returns false,
-the function currently returns -1 immediately without freeing the
-previously allocated skb_aggr, causing a memory leak.
+The irq_prepare_bcn_tasklet is initialized in rtl_pci_init() and
+scheduled when RTL_IMR_BCNINT interrupt is triggered by hardware.
+But it is never killed in rtl_pci_deinit(). When the rtlwifi card
+probe fails or is being detached, the ieee80211_hw is deallocated.
+However, irq_prepare_bcn_tasklet may still be running or pending,
+leading to use-after-free when the freed ieee80211_hw is accessed
+in _rtl_pci_prepare_bcn_tasklet().
 
-Since skb_aggr has not yet been queued via skb_queue_tail(), no other
-references to this memory exist. Therefore, it has to be freed locally
-before returning the error.
+Similar to irq_tasklet, add tasklet_kill() in rtl_pci_deinit() to
+ensure that irq_prepare_bcn_tasklet is properly terminated before
+the ieee80211_hw is released.
 
-Fix this by calling mwifiex_write_data_complete() to free skb_aggr before
-returning the error status.
+The issue was identified through static analysis.
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
-
-Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
-Link: https://patch.msgid.link/20260119092625.1349934-1-zilin@seu.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260223045522.48377-1-duoming@zju.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/11n_aggr.c | 1 +
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/11n_aggr.c b/drivers/net/wireless/marvell/mwifiex/11n_aggr.c
-index 34b4b34276d6d..042b1fe5f0d67 100644
---- a/drivers/net/wireless/marvell/mwifiex/11n_aggr.c
-+++ b/drivers/net/wireless/marvell/mwifiex/11n_aggr.c
-@@ -203,6 +203,7 @@ mwifiex_11n_aggregate_pkt(struct mwifiex_private *priv,
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 40112b2c37775..b978d31e47ca9 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -1675,6 +1675,7 @@ static void rtl_pci_deinit(struct ieee80211_hw *hw)
  
- 		if (!mwifiex_is_ralist_valid(priv, pra_list, ptrindex)) {
- 			spin_unlock_bh(&priv->wmm.ra_list_spinlock);
-+			mwifiex_write_data_complete(adapter, skb_aggr, 1, -1);
- 			return -1;
- 		}
+ 	synchronize_irq(rtlpci->pdev->irq);
+ 	tasklet_kill(&rtlpriv->works.irq_tasklet);
++	tasklet_kill(&rtlpriv->works.irq_prepare_bcn_tasklet);
+ 	cancel_work_sync(&rtlpriv->works.lps_change_work);
+ }
  
 -- 
 2.53.0
