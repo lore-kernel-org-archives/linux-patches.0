@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A09836CE19;
-	Wed, 20 May 2026 18:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FEB3EAC82;
+	Wed, 20 May 2026 18:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300323; cv=none; b=p/q7k55qS/1aJz1irkn6aCNUtrg+2h3Yorlc6I4ygpqbv9z634q+MQ5TSwj7GonI6hk24RWzTCLlIog/+FDv65VAkSklp/R1J7MYl+kE1Rvklyhf/TTM7mDT3UEgCawvScVar5nWHtzes7IwmFWcSrTpxxttflwDabOK86K4kGA=
+	t=1779300326; cv=none; b=e/1FwdCdGitpymh52Of0KI4dAPzBZ2IFixB3jBp/eZu2V50bikNxYje9e9mlLM1IkRQV2GZ0rCKjbq8wxpzZB2ol/tb2nwSgQ+18HWpqGhrXelLo/a+zVBzd7pVYNcXViDnzYFivRM+QX+BkTAoG8V+2Nzl2RbLnOw/CF3LqF8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300323; c=relaxed/simple;
-	bh=i1QGFnKo3+b0ELCZEUDG0ckJwRFVsB4H1SK8tkZekgw=;
+	s=arc-20240116; t=1779300326; c=relaxed/simple;
+	bh=dSUYuF8DWphRrkc9fzSv1+tSFxa0kTQph7eYwNoARTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CpgtoQtrMoH1MZtvmQxSTMYiep+UrT/6YwZRiw5WhXaoWopWuJZ6qeX9K2lXsLPEiPHsasy5XwlyKmKA3A5DG0ezFj5ZrUdEem+c4eQU9Ao0tmVsKBIRmUAxYjIoKYL6FWW2LvLvhSvjVjx/3/Xq8A6KdTgwADvaEGBLbGUK7Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqYI8pl6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MII+EyyY4dzgGkRHf9e8ilZLI+7hYyfCOLw+CIn2w8yksOBiXm9ttl4A7emz5aGV2WAxPA95n+ryTX9LNTcjlLiuly0DlGPi21qyVIZ46Rc4XkT8nwMeo7xhW0heDOigtpsf1F8JSXt2ulZ9Q4GbISnlHGYxRr+G2zwTG1+QdMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUEiiE09; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqYI8pl6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12A71F000E9;
-	Wed, 20 May 2026 18:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUEiiE09"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BCE1F000E9;
+	Wed, 20 May 2026 18:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300322;
-	bh=fJ36C18NinXox6c4hqQR/hV/HbOI/fBoKaNK2x6Aeng=;
+	s=korg; t=1779300324;
+	bh=8+RgxKkvYryLYJJ4FYWl6brN7sSB0lFkYF7bWnLRUpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JqYI8pl6lHVnAh5l/VpQ5gi8cmlcZcQUVCQfKZHnXcFrIKuJzN9VT/kIXXVEShD/o
-	 KFm4Cs/8BnGD+tyu3fWy3bCtxdRMfSxH0pFhYcUfYop8UH0fS2CKuRCz4ZJsrCz4gr
-	 7JTwIbjr8ricbH1fI0uHCAMSaW/kgDWFWRjX6Ubc=
+	b=HUEiiE09HMbljOcSjMijaRAkzAZ5gss6bsm0ciyLGu0uJfOgDG7WiWrm9HMca96QH
+	 sBaWN6VAKa640KRNFNBBI/Dbj0kJxBDkNJIHeGhv0IxZbiF/VaOEr54Bx4sjWfdu5b
+	 gyfVP6Dl7H8N79sqy1fMwCMe3Z8R4gMY9Av07bPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 132/666] platform/chrome: chromeos_tbmc: Drop wakeup source on remove
-Date: Wed, 20 May 2026 18:15:43 +0200
-Message-ID: <20260520162114.073593025@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>,
+	stable+noautosel@kernel.org
+Subject: [PATCH 6.12 133/666] PCI: endpoint: Align pci_epc_set_msix(), pci_epc_ops::set_msix() nr_irqs encoding
+Date: Wed, 20 May 2026 18:15:44 +0200
+Message-ID: <20260520162114.094862659@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,47 +53,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 5d441a4bc93642ed6f41da87327a39946b4e1455 ]
+[ Upstream commit de0321bcc5fdd83631f0c2a6fdebfe0ad4e23449 ]
 
-The wakeup source added by device_init_wakeup() in chromeos_tbmc_add()
-needs to be dropped during driver removal, so add a .remove() callback
-to the driver for this purpose.
+The kdoc for pci_epc_set_msix() says:
+"Invoke to set the required number of MSI-X interrupts."
 
-Fixes: 0144c00ed86b ("platform/chrome: chromeos_tbmc: Report wake events")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/6151957.MhkbZ0Pkbq@rafael.j.wysocki
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+The kdoc for the callback pci_epc_ops->set_msix() says:
+"ops to set the requested number of MSI-X interrupts in the MSI-X
+capability register"
+
+pci_epc_ops::set_msix() does however expect the parameter 'interrupts' to
+be in the encoding as defined by the Table Size field. Nowhere in the
+kdoc does it say that the number of interrupts should be in Table Size
+encoding.
+
+It is very confusing that the API pci_epc_set_msix() and the callback
+function pci_epc_ops::set_msix() both take a parameter named 'interrupts',
+but they expect completely different encodings.
+
+Clean up the API and the callback function to have the same semantics,
+i.e. the parameter represents the number of interrupts, regardless of the
+internal encoding of that value.
+
+Also rename the parameter 'interrupts' to 'nr_irqs', in both the wrapper
+function and the callback function, such that the name is unambiguous.
+
+[bhelgaas: more specific subject]
+
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable+noautosel@kernel.org # this is simply a cleanup
+Link: https://patch.msgid.link/20250514074313.283156-14-cassel@kernel.org
+Stable-dep-of: 271d0b1f058a ("PCI: dwc: ep: Fix MSI-X Table Size configuration in dw_pcie_ep_set_msix()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/chromeos_tbmc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pci/controller/cadence/pcie-cadence-ep.c |  8 +++-----
+ drivers/pci/controller/dwc/pcie-designware-ep.c  |  7 +++----
+ drivers/pci/endpoint/pci-epc-core.c              | 11 +++++------
+ include/linux/pci-epc.h                          |  6 +++---
+ 4 files changed, 14 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/platform/chrome/chromeos_tbmc.c b/drivers/platform/chrome/chromeos_tbmc.c
-index d1cf8f3463ce3..e248567c0a182 100644
---- a/drivers/platform/chrome/chromeos_tbmc.c
-+++ b/drivers/platform/chrome/chromeos_tbmc.c
-@@ -95,6 +95,11 @@ static int chromeos_tbmc_add(struct acpi_device *adev)
- 	return 0;
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-ep.c b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+index f700e8c490822..55bd13a2496e5 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-ep.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-ep.c
+@@ -285,21 +285,19 @@ static int cdns_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
  }
  
-+static void chromeos_tbmc_remove(struct acpi_device *adev)
-+{
-+	device_init_wakeup(&adev->dev, false);
-+}
-+
- static const struct acpi_device_id chromeos_tbmc_acpi_device_ids[] = {
- 	{ ACPI_DRV_NAME, 0 },
- 	{ }
-@@ -110,6 +115,7 @@ static struct acpi_driver chromeos_tbmc_driver = {
- 	.ids = chromeos_tbmc_acpi_device_ids,
- 	.ops = {
- 		.add = chromeos_tbmc_add,
-+		.remove = chromeos_tbmc_remove,
- 		.notify = chromeos_tbmc_notify,
- 	},
- 	.drv.pm = &chromeos_tbmc_pm_ops,
+ static int cdns_pcie_ep_set_msix(struct pci_epc *epc, u8 fn, u8 vfn,
+-				 u16 interrupts, enum pci_barno bir,
+-				 u32 offset)
++				 u16 nr_irqs, enum pci_barno bir, u32 offset)
+ {
+ 	struct cdns_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct cdns_pcie *pcie = &ep->pcie;
+ 	u32 cap = CDNS_PCIE_EP_FUNC_MSIX_CAP_OFFSET;
+ 	u32 val, reg;
+-	u16 actual_interrupts = interrupts + 1;
+ 
+ 	fn = cdns_pcie_get_fn_from_vfn(pcie, fn, vfn);
+ 
+ 	reg = cap + PCI_MSIX_FLAGS;
+ 	val = cdns_pcie_ep_fn_readw(pcie, fn, reg);
+ 	val &= ~PCI_MSIX_FLAGS_QSIZE;
+-	val |= interrupts; /* 0's based value */
++	val |= nr_irqs - 1; /* encoded as N-1 */
+ 	cdns_pcie_ep_fn_writew(pcie, fn, reg, val);
+ 
+ 	/* Set MSIX BAR and offset */
+@@ -309,7 +307,7 @@ static int cdns_pcie_ep_set_msix(struct pci_epc *epc, u8 fn, u8 vfn,
+ 
+ 	/* Set PBA BAR and offset.  BAR must match MSIX BAR */
+ 	reg = cap + PCI_MSIX_PBA;
+-	val = (offset + (actual_interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
++	val = (offset + (nr_irqs * PCI_MSIX_ENTRY_SIZE)) | bir;
+ 	cdns_pcie_ep_fn_writel(pcie, fn, reg, val);
+ 
+ 	return 0;
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 189675747b2bc..a23af31d1e2c3 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -406,13 +406,12 @@ static int dw_pcie_ep_get_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
+ }
+ 
+ static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+-			       u16 interrupts, enum pci_barno bir, u32 offset)
++			       u16 nr_irqs, enum pci_barno bir, u32 offset)
+ {
+ 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+ 	struct dw_pcie_ep_func *ep_func;
+ 	u32 val, reg;
+-	u16 actual_interrupts = interrupts + 1;
+ 
+ 	ep_func = dw_pcie_ep_get_func_from_ep(ep, func_no);
+ 	if (!ep_func || !ep_func->msix_cap)
+@@ -423,7 +422,7 @@ static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 	reg = ep_func->msix_cap + PCI_MSIX_FLAGS;
+ 	val = dw_pcie_ep_readw_dbi(ep, func_no, reg);
+ 	val &= ~PCI_MSIX_FLAGS_QSIZE;
+-	val |= interrupts; /* 0's based value */
++	val |= nr_irqs - 1; /* encoded as N-1 */
+ 	dw_pcie_writew_dbi(pci, reg, val);
+ 
+ 	reg = ep_func->msix_cap + PCI_MSIX_TABLE;
+@@ -431,7 +430,7 @@ static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 	dw_pcie_ep_writel_dbi(ep, func_no, reg, val);
+ 
+ 	reg = ep_func->msix_cap + PCI_MSIX_PBA;
+-	val = (offset + (actual_interrupts * PCI_MSIX_ENTRY_SIZE)) | bir;
++	val = (offset + (nr_irqs * PCI_MSIX_ENTRY_SIZE)) | bir;
+ 	dw_pcie_ep_writel_dbi(ep, func_no, reg, val);
+ 
+ 	dw_pcie_dbi_ro_wr_dis(pci);
+diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+index 75c6688290034..03d6949447141 100644
+--- a/drivers/pci/endpoint/pci-epc-core.c
++++ b/drivers/pci/endpoint/pci-epc-core.c
+@@ -382,29 +382,28 @@ EXPORT_SYMBOL_GPL(pci_epc_get_msix);
+  * @epc: the EPC device on which MSI-X has to be configured
+  * @func_no: the physical endpoint function number in the EPC device
+  * @vfunc_no: the virtual endpoint function number in the physical function
+- * @interrupts: number of MSI-X interrupts required by the EPF
++ * @nr_irqs: number of MSI-X interrupts required by the EPF
+  * @bir: BAR where the MSI-X table resides
+  * @offset: Offset pointing to the start of MSI-X table
+  *
+  * Invoke to set the required number of MSI-X interrupts.
+  */
+-int pci_epc_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+-		     u16 interrupts, enum pci_barno bir, u32 offset)
++int pci_epc_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no, u16 nr_irqs,
++		     enum pci_barno bir, u32 offset)
+ {
+ 	int ret;
+ 
+ 	if (!pci_epc_function_is_valid(epc, func_no, vfunc_no))
+ 		return -EINVAL;
+ 
+-	if (interrupts < 1 || interrupts > 2048)
++	if (nr_irqs < 1 || nr_irqs > 2048)
+ 		return -EINVAL;
+ 
+ 	if (!epc->ops->set_msix)
+ 		return 0;
+ 
+ 	mutex_lock(&epc->lock);
+-	ret = epc->ops->set_msix(epc, func_no, vfunc_no, interrupts - 1, bir,
+-				 offset);
++	ret = epc->ops->set_msix(epc, func_no, vfunc_no, nr_irqs, bir, offset);
+ 	mutex_unlock(&epc->lock);
+ 
+ 	return ret;
+diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+index de8cc3658220b..8a275df496fb3 100644
+--- a/include/linux/pci-epc.h
++++ b/include/linux/pci-epc.h
+@@ -103,7 +103,7 @@ struct pci_epc_ops {
+ 			   u8 interrupts);
+ 	int	(*get_msi)(struct pci_epc *epc, u8 func_no, u8 vfunc_no);
+ 	int	(*set_msix)(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+-			    u16 interrupts, enum pci_barno, u32 offset);
++			    u16 nr_irqs, enum pci_barno, u32 offset);
+ 	int	(*get_msix)(struct pci_epc *epc, u8 func_no, u8 vfunc_no);
+ 	int	(*raise_irq)(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 			     unsigned int type, u16 interrupt_num);
+@@ -283,8 +283,8 @@ void pci_epc_unmap_addr(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ int pci_epc_set_msi(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 		    u8 interrupts);
+ int pci_epc_get_msi(struct pci_epc *epc, u8 func_no, u8 vfunc_no);
+-int pci_epc_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+-		     u16 interrupts, enum pci_barno, u32 offset);
++int pci_epc_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no, u16 nr_irqs,
++		     enum pci_barno, u32 offset);
+ int pci_epc_get_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no);
+ int pci_epc_map_msi_irq(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 			phys_addr_t phys_addr, u8 interrupt_num,
 -- 
 2.53.0
 
