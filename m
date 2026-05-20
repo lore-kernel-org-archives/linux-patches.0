@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E85E3FD133;
-	Wed, 20 May 2026 18:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C515F3FD133;
+	Wed, 20 May 2026 18:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302663; cv=none; b=pLfGRX2jt3rZbjdjl8iugA8/hggCj/6Ynad64HQ/2hV3mqMWteETG2bRF8/Zpy3TjqV/WNPrt2vbV/I/FeyOawV8F/7hDUN1CWAfNnQqF3Xv4CHLSDXDuyKqGbO9w5zz58KdkbKIouVENW+7Nm+kuXqZ1UJ70VF+4fC3n0u3VEM=
+	t=1779302665; cv=none; b=c06Tr2iBXuIYJrBMBFY+Gor2w8BGrjYzv8cyyVb4h2/yVemZdP6TWzozOc8741H0kAe+7AfwM39uJtSlYkrxuO2rr7zi1bioVHklDG+ZwGVqXVifkzM54YfbPN6WRfkZGRP7u0yzJ7e5Z2OdWsJ7yxJ/xFpOUw+ZB61tU0r56fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302663; c=relaxed/simple;
-	bh=JhEJd7EkPEMdY8slBurffaT74xvBh9tqMMb3kyC+8PI=;
+	s=arc-20240116; t=1779302665; c=relaxed/simple;
+	bh=390IE5xO26ZfABZET5oNPqnVv+DQHejY8RfPu2gLYRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rrPSiFt8ijYz9eFtpkaXhT7rVJmQDKT0qDQ4fugoVTq19Whv2vf5b35KY5xjt1EM/9XIo1710Ncg5jkCN3uEXSSV83bd4W4npwa0XE3qo+nK9gTPEdWUcpgfMv8Z6qALqd9a5NMF0xLcvqM3wTxJxW6ltFL6phQBmi8FxKdcZhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6ULKfmC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QphU/pnhzPfquFQ7YzwXPZu9HQRWMPgBDytvg3SJLwiOOKgpkXKfAWdRd7SACkhIhxnEp3a8VmIQmpAL3Q8sRT1qzyCnVx2+8o7elCEb4+I33JaOnj5wtkRgpEyTlrzQqSjv68NyC0J5HqCPBdRIlY96uybXWYdxiYDXU5uOTss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bM84Rc8G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6ULKfmC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFD61F000E9;
-	Wed, 20 May 2026 18:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bM84Rc8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D0B1F000E9;
+	Wed, 20 May 2026 18:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302661;
-	bh=aat2M74zt6fE+7I4lfBiSgv5qpBxTfmCdRCtuztoaW4=;
+	s=korg; t=1779302664;
+	bh=NsFtirGl4BAe2HxLXsJRHW4KK7fm2yiboKhj2XzjIbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6ULKfmCZkQcssLZSK/S8naNDcS1MFgsdM3ZgsLpDC1Nu1FNoKfnItS9eVovw6eSU
-	 r0v6V2EDj+MU2/lPyruKSsB5vJbb5SB9ltv5fTCQJOb4zObt4HrpguKm/B0Bs3ZROj
-	 IaS51vltL0WIyvbqeYczBFmvSMFgdv87l/FRQd2A=
+	b=bM84Rc8G0/vARaPnISelNqi4I5m8+K8AqMFWfTcz1OSt5nWLZQ8KMHSACPT2feSpi
+	 rgjrGqeAsd79HdWVgfXYGi7F7KElFOTQHWd8njfec7jfy8Tn9HitDSld6kLZjTH07X
+	 2U6jHd5oVi0awVWRKw4t3/4+uKuTGui+70nIbsAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Lee Jones <lee@kernel.org>,
+	syzbot+6985cb8e543ea90ba8ee@syzkaller.appspotmail.com,
+	Kohei Enju <kohei@enjuk.jp>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 353/508] tipc: fix double-free in tipc_buf_append()
-Date: Wed, 20 May 2026 18:22:56 +0200
-Message-ID: <20260520162106.283901990@linuxfoundation.org>
+Subject: [PATCH 6.6 354/508] vhost_net: fix sleeping with preempt-disabled in vhost_net_busy_poll()
+Date: Wed, 20 May 2026 18:22:57 +0200
+Message-ID: <20260520162106.304855349@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,58 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Kohei Enju <kohei@enjuk.jp>
 
-[ Upstream commit d293ca716e7d5dffdaecaf6b9b2f857a33dc3d3a ]
+[ Upstream commit e08a9fac5cf8c3fecf4755e7e3ac059f78b8f83d ]
 
-tipc_msg_validate() can potentially reallocate the skb it is validating,
-freeing the old one.  In tipc_buf_append(), it was being called with a
-pointer to a local variable which was a copy of the caller's skb
-pointer.
+syzbot reported "sleeping function called from invalid context" in
+vhost_net_busy_poll().
 
-If the skb was reallocated and validation subsequently failed, the error
-handling path would free the original skb pointer, which had already
-been freed, leading to double-free.
+Commit 030881372460 ("vhost_net: basic polling support") introduced a
+busy-poll loop and preempt_{disable,enable}() around it, where each
+iteration calls a sleepable function inside the loop.
 
-Fix this by checking if head now points to a newly allocated reassembled
-skb.  If it does, reassign *headbuf for later freeing operations.
+The purpose of disabling preemption was to keep local_clock()-based
+timeout accounting on a single CPU, rather than as a requirement of
+busy-poll itself:
 
-Fixes: d618d09a68e4 ("tipc: enforce valid ratio between skb truesize and contents")
-Suggested-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+https://lore.kernel.org/1448435489-5949-4-git-send-email-jasowang@redhat.com
+
+>From this perspective, migrate_disable() is sufficient here, so replace
+preempt_disable() with migrate_disable(), avoiding sleepable accesses
+from a preempt-disabled context.
+
+Fixes: 030881372460 ("vhost_net: basic polling support")
+Tested-by: syzbot+6985cb8e543ea90ba8ee@syzkaller.appspotmail.com
+Reported-by: syzbot+6985cb8e543ea90ba8ee@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69e6a414.050a0220.24bfd3.002d.GAE@google.com/T/
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/msg.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/vhost/net.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/msg.c b/net/tipc/msg.c
-index 76284fc538ebd..b0bba0feef564 100644
---- a/net/tipc/msg.c
-+++ b/net/tipc/msg.c
-@@ -177,8 +177,20 @@ int tipc_buf_append(struct sk_buff **headbuf, struct sk_buff **buf)
+diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
+index 5ad237d77a9a9..b26d9a8e4e055 100644
+--- a/drivers/vhost/net.c
++++ b/drivers/vhost/net.c
+@@ -547,7 +547,7 @@ static void vhost_net_busy_poll(struct vhost_net *net,
+ 	busyloop_timeout = poll_rx ? rvq->busyloop_timeout:
+ 				     tvq->busyloop_timeout;
  
- 	if (fragid == LAST_FRAGMENT) {
- 		TIPC_SKB_CB(head)->validated = 0;
--		if (unlikely(!tipc_msg_validate(&head)))
-+
-+		/* If the reassembled skb has been freed in
-+		 * tipc_msg_validate() because of an invalid truesize,
-+		 * then head will point to a newly allocated reassembled
-+		 * skb, while *headbuf points to freed reassembled skb.
-+		 * In such cases, correct *headbuf for freeing the newly
-+		 * allocated reassembled skb later.
-+		 */
-+		if (unlikely(!tipc_msg_validate(&head))) {
-+			if (head != *headbuf)
-+				*headbuf = head;
- 			goto err;
-+		}
-+
- 		*buf = head;
- 		TIPC_SKB_CB(head)->tail = NULL;
- 		*headbuf = NULL;
+-	preempt_disable();
++	migrate_disable();
+ 	endtime = busy_clock() + busyloop_timeout;
+ 
+ 	while (vhost_can_busy_poll(endtime)) {
+@@ -564,7 +564,7 @@ static void vhost_net_busy_poll(struct vhost_net *net,
+ 		cpu_relax();
+ 	}
+ 
+-	preempt_enable();
++	migrate_enable();
+ 
+ 	if (poll_rx || sock_has_rx_data(sock))
+ 		vhost_net_busy_poll_try_queue(net, vq);
 -- 
 2.53.0
 
