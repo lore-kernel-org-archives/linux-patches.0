@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A283F6619;
-	Wed, 20 May 2026 18:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4540B3D75C7;
+	Wed, 20 May 2026 18:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300159; cv=none; b=H1uheDIGvj/G+fc6zN0+S+3ooT5TiyBFz4rYupCX/J6BfyvctvR3nDz68jDPjHKQ8ECL4Lo4V7KNz0KY8oJham+NfpIVFh+r/+OmRstu5BpvlhRHgdpRrRXL3kxOpZm1WHezb3DJlghxhJE2B0/m3H9jJ1oh1+Rl1nchQEI9y3U=
+	t=1779300162; cv=none; b=gcXWhh2dDrGdsEjMvKFdvwfqo0hiag/3AIjgubSe7teXP6/5PAckDa/aiBT4Z4wTiAp/aWtj57oRFBc9/BDyGtGHqU4P7wgLoWUIOXZPkmv23OPAvTYHKEqYN9akMMCSemWZYvqXhr0sw4divjLAC0YZ07gJ+sSMmP4mUxnzqd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300159; c=relaxed/simple;
-	bh=ANT7gatbiLbt6U5UXnQyHU8wuu+SymJntrx7GC3BzIw=;
+	s=arc-20240116; t=1779300162; c=relaxed/simple;
+	bh=YisQn0RfaRR2UNmGQ31JPvt0GMHk+dZX6i9Us5YiKNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ci4KVppZJIhhDcg9mqxjlc88+etqlhbpi/lOKEgo/m+2hzkmLnhLYG9OgLRbc3Sdj78x8EKxIjWKu8gbhwiLMukAhL/AvWHB+UbvXJOhSFL10WABqbOG8w7E5sTz5aHthLnrSVSG2MOZ69Q3k6WG3eR4jj61fwynNtAtV9wZk5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ra3f0/NF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nik1vc3nmeJ+l0OQUGA5M7SekH4YaV6JYiszEFihahT9tohnPZO058kJND2IXXcxA3Zj+JY4T0j26Ap1KytpnPKb7STIofj7zmx7tV+ae88UCt7My4aCs93pe7uciHdAAZNWNFkH/vJAklRxaRcYNhuBV0Z1CGR6xnU7IyMj4No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzLp1twH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ra3f0/NF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127E21F000E9;
-	Wed, 20 May 2026 18:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzLp1twH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0971F000E9;
+	Wed, 20 May 2026 18:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300158;
-	bh=IXp5OFCthmsmvjPoKBu2LeCjDGMjj8xs7wt4btt85UM=;
+	s=korg; t=1779300161;
+	bh=6hv9AYGztws1ao6ChNoIy+PZbL8ZDhTxZDONjGzG0/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ra3f0/NFtvT5QN9sAeX/ST65WJsGtkHVIzse/Rfr4ridPclxckz9BciMN+koAVXqN
-	 yBi3MD5bInAzdEcI3EREQtash5XRqYZ6xoxyMbsQnplG3a6fIDAa8IahOCyQRaZnsR
-	 xakgCMtM75FuN3rx6WX2n0EgLAdIkqbVMGyYGavQ=
+	b=KzLp1twH/OmR0697uhxxaf/UHpohbbmraL2OxtBqirmurZxrdLX0RzifngAqsLVmF
+	 5sBRFKx/pvzR2mbtxMbOFcGTkTMYH5SH6cLxH9jsX0OfOVQQ1DiESXsgjT+WhvUceY
+	 WI5AhGVoytH1gDE2hh/26b9JezBUXWTPAdsYxKBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Sun <2022090917019@std.uestc.edu.cn>,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Jean Delvare <jdelvare@suse.de>,
+	Yazen Ghannam <yazen.ghannam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 068/666] bpf: Drop task_to_inode and inet_conn_established from lsm sleepable hooks
-Date: Wed, 20 May 2026 18:14:39 +0200
-Message-ID: <20260520162112.704454423@linuxfoundation.org>
+Subject: [PATCH 6.12 033/666] firmware: dmi: Correct an indexing error in dmi.h
+Date: Wed, 20 May 2026 18:14:04 +0200
+Message-ID: <20260520162111.951809788@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -49,55 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit beaf0e96b1da74549a6cabd040f9667d83b2e97e ]
+[ Upstream commit c064abc68e009d2cc18416e7132d9c25e03125b6 ]
 
-bpf_lsm_task_to_inode() is called under rcu_read_lock() and
-bpf_lsm_inet_conn_established() is called from softirq context, so
-neither hook can be used by sleepable LSM programs.
+The entries later in enum dmi_entry_type don't match the SMBIOS
+specification¹.
 
-Fixes: 423f16108c9d8 ("bpf: Augment the set of sleepable LSM hooks")
-Reported-by: Quan Sun <2022090917019@std.uestc.edu.cn>
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
-Closes: https://lore.kernel.org/bpf/3ab69731-24d1-431a-a351-452aafaaf2a5@std.uestc.edu.cn/T/#u
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260407122334.344072-1-jiayuan.chen@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The entry for type 33: `64-Bit Memory Error Information` is not present and
+thus the index for all later entries is incorrect.
+
+Add it.
+
+Also, add missing entry types 43-46, while at it.
+
+  ¹ Search for "System Management BIOS (SMBIOS) Reference Specification"
+
+  [ bp: Drop the flaky SMBIOS spec URL. ]
+
+Fixes: 93c890dbe5287 ("firmware: Add DMI entry types to the headers")
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Jean Delvare <jdelvare@suse.de>
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Link: https://patch.msgid.link/20260307141024.819807-2-superm1@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_lsm.c | 3 ---
- 1 file changed, 3 deletions(-)
+ include/linux/dmi.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
-index 3bc61628ab251..0849453b36176 100644
---- a/kernel/bpf/bpf_lsm.c
-+++ b/kernel/bpf/bpf_lsm.c
-@@ -355,8 +355,6 @@ BTF_ID(func, bpf_lsm_sb_umount)
- BTF_ID(func, bpf_lsm_settime)
- 
- #ifdef CONFIG_SECURITY_NETWORK
--BTF_ID(func, bpf_lsm_inet_conn_established)
--
- BTF_ID(func, bpf_lsm_socket_accept)
- BTF_ID(func, bpf_lsm_socket_bind)
- BTF_ID(func, bpf_lsm_socket_connect)
-@@ -379,7 +377,6 @@ BTF_ID(func, bpf_lsm_current_getsecid_subj)
- BTF_ID(func, bpf_lsm_task_getsecid_obj)
- BTF_ID(func, bpf_lsm_task_prctl)
- BTF_ID(func, bpf_lsm_task_setscheduler)
--BTF_ID(func, bpf_lsm_task_to_inode)
- BTF_ID(func, bpf_lsm_userns_create)
- BTF_SET_END(sleepable_lsm_hooks)
- 
+diff --git a/include/linux/dmi.h b/include/linux/dmi.h
+index 927f8a8b7a1dd..2eedf44e68012 100644
+--- a/include/linux/dmi.h
++++ b/include/linux/dmi.h
+@@ -60,6 +60,7 @@ enum dmi_entry_type {
+ 	DMI_ENTRY_OOB_REMOTE_ACCESS,
+ 	DMI_ENTRY_BIS_ENTRY,
+ 	DMI_ENTRY_SYSTEM_BOOT,
++	DMI_ENTRY_64_MEM_ERROR,
+ 	DMI_ENTRY_MGMT_DEV,
+ 	DMI_ENTRY_MGMT_DEV_COMPONENT,
+ 	DMI_ENTRY_MGMT_DEV_THRES,
+@@ -69,6 +70,10 @@ enum dmi_entry_type {
+ 	DMI_ENTRY_ADDITIONAL,
+ 	DMI_ENTRY_ONBOARD_DEV_EXT,
+ 	DMI_ENTRY_MGMT_CONTROLLER_HOST,
++	DMI_ENTRY_TPM_DEVICE,
++	DMI_ENTRY_PROCESSOR_ADDITIONAL,
++	DMI_ENTRY_FIRMWARE_INVENTORY,
++	DMI_ENTRY_STRING_PROPERTY,
+ 	DMI_ENTRY_INACTIVE = 126,
+ 	DMI_ENTRY_END_OF_TABLE = 127,
+ };
 -- 
 2.53.0
 
