@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198C43F9F2D;
-	Wed, 20 May 2026 18:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5923E95A4;
+	Wed, 20 May 2026 18:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300215; cv=none; b=ly+VqEKPgKZ2BPJ5984nT6+9nw4/TPBCKcmmKhawG15zzuJEz/ilQKX7/KJjaAsX0QrQb0TLQPa7XO7MlD/BSljqsymKhg8XoneHk6FplZdLdARyCD4cFmOvNxBdzAfLeaJ0wseZ8GuRVN5xftoIHxOLG9b8pWA8sLTXuAG9pTk=
+	t=1779300217; cv=none; b=Xr9zGP7KAEgzWPNDtQnyhlyCMz+nDTrhIe2WNA1GnwplAhWPGRngDeT9QbtYVx3pTYPrcspwtmOn/+QadFvhvtjyE6TPabCajOnC4P7BYNRI6cyW3fTIat+AtnZgAw/4hcOThEWb9PKBdzszuLKpoYveibVApCdk0eMK7ukMVcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300215; c=relaxed/simple;
-	bh=NxHSAT35AhvaXL1bAvdSh9bW5VdOupnaNxsu9S/wDYA=;
+	s=arc-20240116; t=1779300217; c=relaxed/simple;
+	bh=i6cbsgP9ED9xxD+HrfMXY+A3gQOenJk7fmIgoLuT9DY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDRvu7gCe0dfpQ8ZYvr/iCSj3oo+QTJlFdoUAgTdA+uJTG+cl0mjp1IWijpGDWNE0jzYpurCo+Hrgbv4IsGwotLrzAPIPiQlkirRKlZPQZ6UUcjn7zOmXX+d44kSlCBe3bJ7B5cFyMZl38S7tcmfXfW05RpF7Uw6Bwuen1n7Evw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zo1nUX2s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O63JyPk/i+L/q/yFTzjpqC7H0/MOYnQJ1e+oELLsYqcOXwxIE72pOUgFFQqD/bBv6If1N68ILIIZly1ESY76cFAlbLrCiIO23qfIpGkfPZpRr4z3IWU06eVuJFyQPfs/bu/+PD0BoOILKEN9+g4vyQCHALz9kRf+yUBdJLYDZwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpy9vvAF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zo1nUX2s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F69F1F00893;
-	Wed, 20 May 2026 18:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpy9vvAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249BB1F000E9;
+	Wed, 20 May 2026 18:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300214;
-	bh=a3wkagAWGdQJSY48WKsiYzzHcaIiIqz74VS3pzEnhok=;
+	s=korg; t=1779300216;
+	bh=msYA/8Y6P40jvZ3+BUXjGFvu1C/YBuIndcGc3o38pgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zo1nUX2sDs1iXMCKMz6rSycD9UVdLpW/6NLLLRBRNabJ/yRC8pBCPeJ83VqOTyyRt
-	 sUtLe2WQanI9Fhw1KgTKABz2Ci9PwYI07qXQ6t2JeqbyzdNfRhr5XW6XVy1dpNVhBf
-	 +oU5PaYFf2EdCuIoKMr30ZeYCqcqBm3Aa7NL+uIk=
+	b=mpy9vvAF/RoFSZXyDAW8seDSC3YEcwvFP6ty6cqws5WNZzDu/miYZwfOSL0RxqG6t
+	 ltWsxB0q60CWxlsbrPYu2BTH7sf66wPB8C8ymJj1JZMOsDjHtZQFyoLD5IUinPk75U
+	 sYKo4iQa+iCmq5mg3qeDFuLVHQCviwmnxW9cixh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 091/666] selftests: netfilter: nft_tproxy.sh: adjust to socat changes
-Date: Wed, 20 May 2026 18:15:02 +0200
-Message-ID: <20260520162113.197945222@linuxfoundation.org>
+Subject: [PATCH 6.12 092/666] net: airoha: Implement BQL support
+Date: Wed, 20 May 2026 18:15:03 +0200
+Message-ID: <20260520162113.219625243@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,84 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 61119542663cac70898aef532eb57ee41ea9b477 ]
+[ Upstream commit 1d304174106c93ce05f6088813ad7203b3eb381a ]
 
-Like e65d8b6f3092 ("selftests: drv-net: adjust to socat changes") we
-need to add shut-none for this test too.
+Introduce BQL support in the airoha_eth driver reporting to the kernel
+info about tx hw DMA queues in order to avoid bufferbloat and keep the
+latency small.
 
-The extra 0-packet can trigger a second (unexpected) reply from the server.
-
-Fixes: 7e37e0eacd22 ("selftests: netfilter: nft_tproxy.sh: add tcp tests")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/netdev/20260408152432.24b8ad0d@kernel.org/
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Link: https://patch.msgid.link/20260409224506.27072-1-fw@strlen.de
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20241012-en7581-bql-v2-1-4deb4efdb60b@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 656121b15503 ("net: airoha: Add missing RX_CPU_IDX() configuration in airoha_qdma_cleanup_rx_queue()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/netfilter/nft_tproxy_udp.sh      | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mediatek/airoha_eth.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/netfilter/nft_tproxy_udp.sh b/tools/testing/selftests/net/netfilter/nft_tproxy_udp.sh
-index d16de13fe5a75..1dc7b04501459 100755
---- a/tools/testing/selftests/net/netfilter/nft_tproxy_udp.sh
-+++ b/tools/testing/selftests/net/netfilter/nft_tproxy_udp.sh
-@@ -190,13 +190,13 @@ table inet filter {
- }
- EOF
+diff --git a/drivers/net/ethernet/mediatek/airoha_eth.c b/drivers/net/ethernet/mediatek/airoha_eth.c
+index 7a85550e5ecb3..268d3050c0178 100644
+--- a/drivers/net/ethernet/mediatek/airoha_eth.c
++++ b/drivers/net/ethernet/mediatek/airoha_eth.c
+@@ -1729,9 +1729,11 @@ static int airoha_qdma_tx_napi_poll(struct napi_struct *napi, int budget)
+ 			WRITE_ONCE(desc->msg1, 0);
  
--	timeout "$timeout" ip netns exec "$nsrouter" socat -u "$socat_ipproto" udp-listen:12345,fork,ip-transparent,reuseport udp:"$ns1_ip_port",ip-transparent,reuseport,bind="$ns2_ip_port" 2>/dev/null &
-+	timeout "$timeout" ip netns exec "$nsrouter" socat -u "$socat_ipproto" udp-listen:12345,fork,ip-transparent,reuseport,shut-none udp:"$ns1_ip_port",ip-transparent,reuseport,bind="$ns2_ip_port",shut-none 2>/dev/null &
- 	local tproxy_pid=$!
+ 			if (skb) {
++				u16 queue = skb_get_queue_mapping(skb);
+ 				struct netdev_queue *txq;
  
--	timeout "$timeout" ip netns exec "$ns2" socat "$socat_ipproto" udp-listen:8080,fork SYSTEM:"echo PONG_NS2" 2>/dev/null &
-+	timeout "$timeout" ip netns exec "$ns2" socat "$socat_ipproto" udp-listen:8080,fork,shut-none SYSTEM:"echo PONG_NS2" 2>/dev/null &
- 	local server2_pid=$!
+-				txq = netdev_get_tx_queue(skb->dev, qid);
++				txq = netdev_get_tx_queue(skb->dev, queue);
++				netdev_tx_completed_queue(txq, 1, skb->len);
+ 				if (netif_tx_queue_stopped(txq) &&
+ 				    q->ndesc - q->queued >= q->free_thr)
+ 					netif_tx_wake_queue(txq);
+@@ -2510,7 +2512,9 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 	q->queued += i;
  
--	timeout "$timeout" ip netns exec "$ns3" socat "$socat_ipproto" udp-listen:8080,fork SYSTEM:"echo PONG_NS3" 2>/dev/null &
-+	timeout "$timeout" ip netns exec "$ns3" socat "$socat_ipproto" udp-listen:8080,fork,shut-none SYSTEM:"echo PONG_NS3" 2>/dev/null &
- 	local server3_pid=$!
- 
- 	busywait "$BUSYWAIT_TIMEOUT" listener_ready "$nsrouter" 12345 "-u"
-@@ -205,7 +205,7 @@ EOF
- 
- 	local result
- 	# request from ns1 to ns2 (forwarded traffic)
--	result=$(echo I_M_PROXIED | ip netns exec "$ns1" socat -t 2 -T 2 STDIO udp:"$ns2_ip_port",sourceport=18888)
-+	result=$(echo I_M_PROXIED | ip netns exec "$ns1" socat -t 2 -T 2 STDIO udp:"$ns2_ip_port",sourceport=18888,shut-none)
- 	if [ "$result" == "$expect_ns1_ns2" ] ;then
- 		echo "PASS: tproxy test $testname: ns1 got reply \"$result\" connecting to ns2"
- 	else
-@@ -214,7 +214,7 @@ EOF
- 	fi
- 
- 	# request from ns1 to ns3 (forwarded traffic)
--	result=$(echo I_M_PROXIED | ip netns exec "$ns1" socat -t 2 -T 2 STDIO udp:"$ns3_ip_port")
-+	result=$(echo I_M_PROXIED | ip netns exec "$ns1" socat -t 2 -T 2 STDIO udp:"$ns3_ip_port",shut-none)
- 	if [ "$result" = "$expect_ns1_ns3" ] ;then
- 		echo "PASS: tproxy test $testname: ns1 got reply \"$result\" connecting to ns3"
- 	else
-@@ -223,7 +223,7 @@ EOF
- 	fi
- 
- 	# request from nsrouter to ns2 (localy originated traffic)
--	result=$(echo I_M_PROXIED | ip netns exec "$nsrouter" socat -t 2 -T 2 STDIO udp:"$ns2_ip_port")
-+	result=$(echo I_M_PROXIED | ip netns exec "$nsrouter" socat -t 2 -T 2 STDIO udp:"$ns2_ip_port",shut-none)
- 	if [ "$result" == "$expect_nsrouter_ns2" ] ;then
- 		echo "PASS: tproxy test $testname: nsrouter got reply \"$result\" connecting to ns2"
- 	else
-@@ -232,7 +232,7 @@ EOF
- 	fi
- 
- 	# request from nsrouter to ns3 (localy originated traffic)
--	result=$(echo I_M_PROXIED | ip netns exec "$nsrouter" socat -t 2 -T 2 STDIO udp:"$ns3_ip_port")
-+	result=$(echo I_M_PROXIED | ip netns exec "$nsrouter" socat -t 2 -T 2 STDIO udp:"$ns3_ip_port",shut-none)
- 	if [ "$result" = "$expect_nsrouter_ns3" ] ;then
- 		echo "PASS: tproxy test $testname: nsrouter got reply \"$result\" connecting to ns3"
- 	else
+ 	skb_tx_timestamp(skb);
+-	if (!netdev_xmit_more())
++	netdev_tx_sent_queue(txq, skb->len);
++
++	if (netif_xmit_stopped(txq) || !netdev_xmit_more())
+ 		airoha_qdma_rmw(qdma, REG_TX_CPU_IDX(qid),
+ 				TX_RING_CPU_IDX_MASK,
+ 				FIELD_PREP(TX_RING_CPU_IDX_MASK, q->head));
 -- 
 2.53.0
 
