@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487F83D8138;
-	Wed, 20 May 2026 16:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1575F3E1D1B;
+	Wed, 20 May 2026 16:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295357; cv=none; b=J3v0alWMPnGrcefAy83xNs3FMnZSfH+M9EnHNu2pGT9GnUy0GPxKBgxb0fdoTdNnSd0fwBdD+38NSgDMKs4FUEquI6py0+AbMvzy4m0KuDz5oQtH35ct9r5CaGzp5NFD83mV/xjzAMQCK35B2L0/TwklyOb8tb810Z/QDeKEmmk=
+	t=1779295360; cv=none; b=TSp263vvPGpovCMpUv2fUjkBahGcCFsdCEORa42iTbRLina0/+XxvlUniNMhZOJ5RpdeBJy8dyzsqFqhKh/cGAMdrK2RbKMIzHRkCpfwg8KeH1fA5nNJhZJt/eWCG8JZDBGAt8ncM/ONBiRavUKBNUWCk9ug7p8pK/tqYQt2x/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295357; c=relaxed/simple;
-	bh=HUu1BniarOmVnoquqi0k0tvuq0weD/KdKtKZcFD4Ung=;
+	s=arc-20240116; t=1779295360; c=relaxed/simple;
+	bh=qP0Pka6aP3IiUvA0C7ZOOcYbYa4AVK0EZwc6AEjQ1Ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xxv3BbQjXB6yTzJe49mTP25RlRHDi0/te+DipgTfMf+VtJpoosP/KolTA/obs/Dn/1G66wSVdvjn9YsqWJuGgGdkVbGvm9O7GYicIWXwbdQaywBZHH5xPlpMNCHpdIjtXteTnJ5cRHA/1QQTlL1pvQY68fCV0crrd+Sk693OB1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjOT+KTN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iQuvZInh/MkzzRz59veB8xVIQi4mYE0kJVTAOkS0qI7uAZDYKAV9/iETEIi+A/ae1f1C2vZJlHrLN3hEgnUU4yYAH2Z4mXBkyek237OBnd8HcFu0xYxLquDW4VpoyItmsuQd4hDnX3KPtjTCp3cnvH4Tq20lRrx+O3r3mfFXlgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJKDboWO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjOT+KTN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD5F1F000E9;
-	Wed, 20 May 2026 16:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJKDboWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5140E1F000E9;
+	Wed, 20 May 2026 16:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295356;
-	bh=SvBoTLinesxSRd3b2z6ONPalBwM55IAjQaUdykyABTg=;
+	s=korg; t=1779295358;
+	bh=xN+VTsTZrgpD9w8frbtH0wt3P3CWYZWjkPX2tLKOMls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sjOT+KTNlf+tUrnQ22VFy0Jpn0dgehotiJO6qUfR6pfYRBboTn4M/PmK0pXdgdL3a
-	 6TXJxPwqDqT/+M3j9bGom0dEXmTvZvOndU4Kg+DgFu2YYyVelrCliFiTUb4AGyXqlA
-	 18Fkqs3OxxLYETpBiPP1eW4e5+DRa+25HlIKUGUM=
+	b=pJKDboWOtv8A6XSH2/wJdBLpx6CAi8zqy3USzFbdGIfFhBCjTsWynrR53nHS+pUgO
+	 XSOtD/YKSchqXXGWQd6+6UWDOCksLLZgA+IGnrUXvnWnmh/MG/hOPkUwjbxzfy+7yX
+	 qAreWj5nIp3NMdmUhnIZcye4wyhy2QM3iM9TQ4nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Lei Huang <huanglei@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0347/1146] hwmon: (aspeed-g6-pwm-tach): remove redundant driver remove callback
-Date: Wed, 20 May 2026 18:09:57 +0200
-Message-ID: <20260520162156.053625675@linuxfoundation.org>
+Subject: [PATCH 7.0 0348/1146] ALSA: hda/realtek: fix bad indentation for alc269
+Date: Wed, 20 May 2026 18:09:58 +0200
+Message-ID: <20260520162156.075486177@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,49 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Lei Huang <huanglei@kylinos.cn>
 
-[ Upstream commit 46fef8583daa1bf78fda7eaa523c64d4440322ac ]
+[ Upstream commit c1258a2924d3a2453a6e7a6581acd8d6e5c6ba70 ]
 
-Drops the remove callback as it only asserts reset and the probe already
-registers a devres action (devm_add_action_or_reset()) to call
-aspeed_pwm_tach_reset_assert().
+Mention complains about this coding style:
 
-Fixes: 7e1449cd15d1 ("hwmon: (aspeed-g6-pwm-tacho): Support for ASPEED g6 PWM/Fan tach")
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Link: https://lore.kernel.org/r/20260309-pwm_fixes-v2-1-ca9768e70470@aspeedtech.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  ERROR: code indent should use tabs where possible
+  #6640: FILE: sound/hda/codecs/realtek/alc269.c:6640:
+  +        [ALC233_FIXUP_LENOVO_GPIO2_MIC_HOTKEY] = {$
+
+fix it up.
+
+Fixes: 5de5db35350d ("ALSA: hda/realtek - Enable Mute LED for Lenovo platform")
+Signed-off-by: Lei Huang <huanglei@kylinos.cn>
+Link: https://patch.msgid.link/20260331024036.30782-1-huanglei814@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aspeed-g6-pwm-tach.c | 8 --------
- 1 file changed, 8 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/aspeed-g6-pwm-tach.c b/drivers/hwmon/aspeed-g6-pwm-tach.c
-index 44e1ecba205d7..4f6e6d440dd40 100644
---- a/drivers/hwmon/aspeed-g6-pwm-tach.c
-+++ b/drivers/hwmon/aspeed-g6-pwm-tach.c
-@@ -517,13 +517,6 @@ static int aspeed_pwm_tach_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static void aspeed_pwm_tach_remove(struct platform_device *pdev)
--{
--	struct aspeed_pwm_tach_data *priv = platform_get_drvdata(pdev);
--
--	reset_control_assert(priv->reset);
--}
--
- static const struct of_device_id aspeed_pwm_tach_match[] = {
- 	{
- 		.compatible = "aspeed,ast2600-pwm-tach",
-@@ -537,7 +530,6 @@ MODULE_DEVICE_TABLE(of, aspeed_pwm_tach_match);
- 
- static struct platform_driver aspeed_pwm_tach_driver = {
- 	.probe = aspeed_pwm_tach_probe,
--	.remove = aspeed_pwm_tach_remove,
- 	.driver	= {
- 		.name = "aspeed-g6-pwm-tach",
- 		.of_match_table = aspeed_pwm_tach_match,
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index ded6e78142a07..8e135bcaa28e6 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6657,10 +6657,10 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc288_fixup_surface_swap_dacs,
+ 	},
+-        [ALC233_FIXUP_LENOVO_GPIO2_MIC_HOTKEY] = {
+-                .type = HDA_FIXUP_FUNC,
+-                .v.func = alc233_fixup_lenovo_gpio2_mic_hotkey,
+-        },
++	[ALC233_FIXUP_LENOVO_GPIO2_MIC_HOTKEY] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc233_fixup_lenovo_gpio2_mic_hotkey,
++	},
+ 	[ALC245_FIXUP_BASS_HP_DAC] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		/* Borrow the DAC routing selected for those Thinkpads */
 -- 
 2.53.0
 
