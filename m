@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4CE37DE8A;
-	Wed, 20 May 2026 18:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813013E123F;
+	Wed, 20 May 2026 18:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301016; cv=none; b=mok67FoIjcUtFzyL81nlecIVvuF12awpmHotzOItPqWOKFWI9NflhsSDxL6vijNeubsdPXFG8VqBNFnkGE9IcDCnPQhG3mIZOEDjCxq3dr9Q2c5o0beAzj2edZy4aFCYWh7gAT5dKljYka08Ucf9YtJ9mqY9WHTW0RKIPmaUQik=
+	t=1779301018; cv=none; b=sbamWpbIO6AUEmVRejc8Xf5AHH8xLxxkbjm/tR8Uh9Zi1NJiZSD97kBTq4YMpIbyewRAHCL90tH2+YVb3r+1czHHKk1KnFiDd5NGMr8tM6Nvd7isVdC9RaUL73vUXf2snNDDHdewizicP8qSBD87ErxvfKA9VWQiXXJHQA9zUUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301016; c=relaxed/simple;
-	bh=SvVVxWDo2kH5kI5MRClKhot9a3VTEwW6ynOHtAOsuZE=;
+	s=arc-20240116; t=1779301018; c=relaxed/simple;
+	bh=ADxmBs7Oiha4f1W1dY1e9hbcopU9WWF61SD/CKe7PwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBs4tb+ynE005GdoNEWjMvgwELukQjtU9BW5tuW1Ryi7j2G1fUAP42Yg/9PVCytfF9xRNSzSs2AsyYLDR5uy0gums2JmGk3ND+DjCzmppXo0udtXO8SmRL7M5tBejv3MYUDgifBixeou1atPSc5BzGybSfsVMzs7JC0g+L1iawQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/uz0S6z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X7LrpX8OeOTBjvAWE9mcQNZ8il4Fm3WQQJcNCxAfptuUNyKWRXURErtePnqTZltfjh40NZsyV+gdsOawV1S+W5iQ82XdyAqqBGr4rLruBmaH1x1UooZcwo5KxSCLZ0+5oZO4ha7qqVnPhKhatKW2hR/WTmw6GrcsY73RpzK11O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHxARED+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/uz0S6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6301F00893;
-	Wed, 20 May 2026 18:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHxARED+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A5D1F000E9;
+	Wed, 20 May 2026 18:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301014;
-	bh=phOWArra3esdRPNvnM25QsXxy9bazT75m7jz5I2+PvE=;
+	s=korg; t=1779301017;
+	bh=Ra4f0gQNHCh1A+RNSrKnwgavUVaAUdLZPQR7MRpHovI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B/uz0S6zuQT1xzKTGsZAynV0e2h+8i+a+TZ93JePIDayYHwSkqLxmt95ikf3BaSL5
-	 SadTx4arXkglJ6nlMkOqx7HruzDhqlO8IW6i5QplGlTykudVt8CyldA6P3HJ7Ubc64
-	 hf5vs4Q4vb0PgoiV7dXgN45fMIIfBBM8RARQ08aA=
+	b=vHxARED+awM4rzmBYLTuDVJHmAwfv4g4/lntfjkUiZz7VWA8IBjNoit7nR6i93sXE
+	 Ys9tV3E9aBzDN6+RDqujm8ubH/EWpmWjEeOZAH0gqtIuMswRUH1skktF/UtbakuW/E
+	 aSuwKvFew0f2NuTwftfDImljxmRebAe2kLISv37Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Thomas Bogendoerfer <tbogendoerfer@suse.de>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 395/666] tty: serial: ip22zilog: Fix section mispatch warning
-Date: Wed, 20 May 2026 18:20:06 +0200
-Message-ID: <20260520162119.818659439@linuxfoundation.org>
+Subject: [PATCH 6.12 396/666] fs/ntfs3: terminate the cached volume label after UTF-8 conversion
+Date: Wed, 20 May 2026 18:20:07 +0200
+Message-ID: <20260520162119.841213912@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,37 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bogendoerfer <tbogendoerfer@suse.de>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit a1a81aef99e853dec84241d701fbf587d713eb5b ]
+[ Upstream commit a6cd43fe9b083fa23fe1595666d5738856cb261a ]
 
-ip22zilog_prepare() is now called by driver probe routine, so it
-shouldn't be in the __init section any longer.
+ntfs_fill_super() loads the on-disk volume label with utf16s_to_utf8s()
+and stores the result in sbi->volume.label. The converted label is later
+exposed through ntfs3_label_show() using %s, but utf16s_to_utf8s() only
+returns the number of bytes written and does not add a trailing NUL.
 
-Fixes: 3fc36ae6abd2 ("tty: serial: ip22zilog: Use platform device for probing")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202604020945.c9jAvCPs-lkp@intel.com/
-Signed-off-by: Thomas Bogendoerfer <tbogendoerfer@suse.de>
-Link: https://patch.msgid.link/20260402102154.136620-1-tbogendoerfer@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If the converted label fills the entire fixed buffer,
+ntfs3_label_show() can read past the end of sbi->volume.label while
+looking for a terminator.
+
+Terminate the cached label explicitly after a successful conversion and
+clamp the exact-full case to the last byte of the buffer.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/ip22zilog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/super.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/ip22zilog.c b/drivers/tty/serial/ip22zilog.c
-index 6e19c6713849a..a12101dc05546 100644
---- a/drivers/tty/serial/ip22zilog.c
-+++ b/drivers/tty/serial/ip22zilog.c
-@@ -1025,7 +1025,7 @@ static struct uart_driver ip22zilog_reg = {
- #endif
- };
- 
--static void __init ip22zilog_prepare(struct uart_ip22zilog_port *up)
-+static void ip22zilog_prepare(struct uart_ip22zilog_port *up)
- {
- 	unsigned char sysrq_on = IS_ENABLED(CONFIG_SERIAL_IP22_ZILOG_CONSOLE);
- 	int brg;
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index 89d126c155c7d..1af1500ec24b6 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -1235,8 +1235,13 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 				      le32_to_cpu(attr->res.data_size) >> 1,
+ 				      UTF16_LITTLE_ENDIAN, sbi->volume.label,
+ 				      sizeof(sbi->volume.label));
+-		if (err < 0)
++		if (err < 0) {
+ 			sbi->volume.label[0] = 0;
++		} else if (err >= sizeof(sbi->volume.label)) {
++			sbi->volume.label[sizeof(sbi->volume.label) - 1] = 0;
++		} else {
++			sbi->volume.label[err] = 0;
++		}
+ 	} else {
+ 		/* Should we break mounting here? */
+ 		//err = -EINVAL;
 -- 
 2.53.0
 
