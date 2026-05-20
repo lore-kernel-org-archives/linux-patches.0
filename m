@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AC14028CB;
-	Wed, 20 May 2026 18:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF44E400E09;
+	Wed, 20 May 2026 18:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302916; cv=none; b=AULa6iaD5SVBd68UwbCQjspEs7BBpVD8ARIvq352mGrbk7BCFbK4dEJWWvy+jyL/geQcjZpR/uYUxJN1ea16VkpfX/RY83GSGTo5Q4nHGaZ9APdfK9Ksq3FmIV3PX4I0Lu1V5XGYSG/B5iAcLgQ9kjtXkkRkXO1GB6HM3NN0MAA=
+	t=1779302919; cv=none; b=hFm6ZVri2yM+vJQlOn0u9JshPUh6hNSS4vqPWZjHT9tVmCykFIe033UEaQeOuamstPsXQQ1CtKaN0ryOg+W86EN7yz+JKQBRhYAbozXqmDQa9TjJBOTi2dy6lu8FFTh0eglobMTlCegBtlIR5u+oiUkn0gUA9d5wyRjekhNAMC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302916; c=relaxed/simple;
-	bh=x0/BCerZvb+srI3O6BmnKYIXSz4I2E9rw2Gbpvsl3+o=;
+	s=arc-20240116; t=1779302919; c=relaxed/simple;
+	bh=EYIvuIxASjM8lB0DrTvetkLJqGOAfXf9vG0rH6Ju+ss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VddHRrwEn/F1ETkTXOxFT+5ElXqVjuyTvcBlXiL3RggD3PRcZ3vDuGPz0GWbg9K+gjbjdpnAa+LohX40k8Iapu+Vpw0xqsSxbkFblfq4mTjkoRXisbV2Iw9CbFWPs60aydWRmqNtOlO7UHidTVgWCDolfdASxmgJz8895/b4iKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgkKzOXh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sTulmCYHTVlZH736Fs93OzkPpQOo6pLzaOgrLzizhbR6thA+xM3NVVv+QvN/Qg1TaTF4hFvutvJev8h7gj0fJo8d1t3okp8/xK5BNv20VR3OCzLo1oSS0CGPIb/FttJ/+UFn2r12B7CfjY+44BTXxrmO3sW0JYeF3C6BIWkTUvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYaXuYX1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgkKzOXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4A41F00893;
-	Wed, 20 May 2026 18:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYaXuYX1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E081F000E9;
+	Wed, 20 May 2026 18:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302914;
-	bh=D8tevLGrTjGvkYpHnnmh0qa73c+CqwU/O79J0blw2FA=;
+	s=korg; t=1779302917;
+	bh=V4l5xTNxGoQQL2B5qcJoPAqIiLDsovhXUkE/Vt93KXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cgkKzOXhMr082/aLdOXIs05btmZxEGJvIsydPt9jgZmULVI7qA3+b3CMr5v6sHw/y
-	 TRSsNgeVIscFYyFSICjzlX5MsXnys/vLxv+dJk1zgGJWJL3mQzvUR6kyf97AeMzhiT
-	 ILT9VCELc7ATVyFnHpxBezhIgjNDcTKvcw1g8VT4=
+	b=tYaXuYX1qeW0f2dd2wRMB+aBwWN/7ayPhuy4U1+ADHgHImFnSCrmFvXnIUERuTDkY
+	 AiwWTzwkexZBsVKt1ik3j6F7nIiOQCkBYzksv0okGTRySmrp45IcvuznmHAA+VXY8H
+	 KG8S5vhx48NHS1EV2G3p5Xb/ELd3V5h5SOm3l3x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Gustavo Luiz Duarte <gustavold@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Liang Li <liali@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 449/508] netconsole: avoid out-of-bounds access on empty string in trim_newline()
-Date: Wed, 20 May 2026 18:24:32 +0200
-Message-ID: <20260520162108.325310282@linuxfoundation.org>
+Subject: [PATCH 6.6 450/508] bonding: fix NULL pointer dereference in actor_port_prio setting
+Date: Wed, 20 May 2026 18:24:33 +0200
+Message-ID: <20260520162108.346487527@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -47,61 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 7079c8c13f2d33992bc846240517d88f4ab07781 ]
+[ Upstream commit 067bf016e99ad72aa4ff869d6dec1fd62a9c6202 ]
 
-trim_newline() unconditionally dereferences s[len - 1] after computing
-len = strnlen(s, maxlen). When the string is empty, len is 0 and the
-expression underflows to s[(size_t)-1], reading (and potentially
-writing) one byte before the buffer.
+Liang reported an issue where setting a slave’s actor_port_prio to
+predefined values such as 0, 255, or 65535 would cause a system crash.
 
-The two callers feed trim_newline() with the result of strscpy() from
-configfs store callbacks (dev_name_store, userdatum_value_store).
-configfs guarantees count >= 1 reaches the callback, but the byte
-itself can be NUL: a userspace write(fd, "\0", 1) leaves the
-destination empty after strscpy() and triggers the underflow. The OOB
-write only fires if the adjacent byte happens to be '\n', so this is
-not a security issue, but the access is undefined behaviour either way.
+The problem occurs because in bond_opt_parse(), when the provided value
+matches a predefined table entry, the function returns that table entry,
+which does not contain slave information. Later, in
+bond_option_actor_port_prio_set(), calling bond_slave_get_rtnl() leads
+to a NULL pointer dereference.
 
-This pattern is commonly flagged by LLM-based code reviewers. While it
-is not a security fix, the underlying access is undefined behaviour and
-the change is small and self-contained, so it is a reasonable candidate
-for the stable trees.
+Since actor_port_prio is defined as a u16 and initialized to the default
+value of 255 in ad_initialize_port(), there is no need for the
+bond_actor_port_prio_tbl. Using the BOND_OPTFLAG_RAWVAL flag is sufficient.
 
-Guard the dereference on a non-zero length.
-
-Fixes: ae001dc67907 ("net: netconsole: move newline trimming to function")
-Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Gustavo Luiz Duarte <gustavold@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260420-netcons_trim_newline-v1-1-dc35889aeedf@debian.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6b6dc81ee7e8 ("bonding: add support for per-port LACP actor priority")
+Reported-by: Liang Li <liali@redhat.com>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20251105072620.164841-1-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netconsole.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/bonding/bond_options.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/net/netconsole.c b/drivers/net/netconsole.c
-index f58643bdafc5c..fffffa3658d22 100644
---- a/drivers/net/netconsole.c
-+++ b/drivers/net/netconsole.c
-@@ -278,6 +278,8 @@ static void trim_newline(char *s, size_t maxlen)
- 	size_t len;
+diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
+index f4ad0fc624c98..5b6c01b31f985 100644
+--- a/drivers/net/bonding/bond_options.c
++++ b/drivers/net/bonding/bond_options.c
+@@ -225,13 +225,6 @@ static const struct bond_opt_value bond_ad_actor_sys_prio_tbl[] = {
+ 	{ NULL,      -1,    0},
+ };
  
- 	len = strnlen(s, maxlen);
-+	if (!len)
-+		return;
- 	if (s[len - 1] == '\n')
- 		s[len - 1] = '\0';
- }
+-static const struct bond_opt_value bond_actor_port_prio_tbl[] = {
+-	{ "minval",  0,     BOND_VALFLAG_MIN},
+-	{ "maxval",  65535, BOND_VALFLAG_MAX},
+-	{ "default", 255,   BOND_VALFLAG_DEFAULT},
+-	{ NULL,      -1,    0},
+-};
+-
+ static const struct bond_opt_value bond_ad_user_port_key_tbl[] = {
+ 	{ "minval",  0,     BOND_VALFLAG_MIN | BOND_VALFLAG_DEFAULT},
+ 	{ "maxval",  1023,  BOND_VALFLAG_MAX},
+@@ -497,7 +490,7 @@ static const struct bond_option bond_opts[BOND_OPT_LAST] = {
+ 		.id = BOND_OPT_ACTOR_PORT_PRIO,
+ 		.name = "actor_port_prio",
+ 		.unsuppmodes = BOND_MODE_ALL_EX(BIT(BOND_MODE_8023AD)),
+-		.values = bond_actor_port_prio_tbl,
++		.flags = BOND_OPTFLAG_RAWVAL,
+ 		.set = bond_option_actor_port_prio_set,
+ 	},
+ 	[BOND_OPT_AD_ACTOR_SYSTEM] = {
 -- 
 2.53.0
 
