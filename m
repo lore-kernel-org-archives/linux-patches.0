@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604C33BD63C;
-	Wed, 20 May 2026 16:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745C03CAE61;
+	Wed, 20 May 2026 16:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294905; cv=none; b=J3/DEqy+ET3uw9ceb/VOBukYgLJk0uXI0oxMpN/DQzkYK397a7tmv4ECgiAkdDTHJKkxp3qiveJljwmEteTkbwiLqQeMjxut/EY7B+GW6dW+JryFduPqq9E60mBr5+xtZy1hH5LM+K/5/QtkMacSDajtuwjBwV3vwgTdhn811Dc=
+	t=1779294908; cv=none; b=K/cra5haSmxudHoXLGGRkdYGtwm5O39Pk2jnj4JdcKdx5qLNRuWBzCs7YWEtaTwxfE60Xg41QZ5hkKNi2vM3wFVCwa9HmjAGrUS+IgnIpNAX8SoehAtm9eP6lAY4WEs7G3rx4BLA2e/z5yQN4fUuJdKNUm4edKUppauBIbYaU+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294905; c=relaxed/simple;
-	bh=VQKi9IxRDb/ULUQnL9cFNXY2pMucMoXT7wB6Jtew/vo=;
+	s=arc-20240116; t=1779294908; c=relaxed/simple;
+	bh=y9i+/5zyaNm78YWwxYmnSwVeUd9ZXuaTkZlkgVow9UQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EPDOosi9CSLzUeR1g7bvBnmnJbDi7pntjfJCvIaklDaBPrLXs5Gks9mOjLAyF1rHrm0T9BUvVGN8Lz1mCk//cJ5He/3NdItToW8q4c65IWe4E6FJvd16QeHSvLVee2eEo23KryRGi9/rSmc34iNiOuwViocy3J2B/Bu2dJoP0Ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/p1EjjO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T85smftxgwC5+7OK2zd85Q+Q3e/VxSbCRPWbRDmr8Ek8lFlwM2XM/N0iLZ+GLJQ7MQFoGH44sTlqoi0LbGCDBH2YADdngBc0J9pcwBiCHw8eBoWb/CTL4P9MritGr5Ee5ML/6KDsj3M0KDxRTJblqPmnpQabN5HUuZ0sn0A5Ltc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftYoVKSd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/p1EjjO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9420F1F000E9;
-	Wed, 20 May 2026 16:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftYoVKSd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8FA1F00894;
+	Wed, 20 May 2026 16:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294903;
-	bh=2pj7VcDUxjD68h7Fl2vNva2SxByewJ3ffTRRICRcaFE=;
+	s=korg; t=1779294905;
+	bh=MQC7+b+IGq6etbc1aiqIbZD+7SeYoORqrOhQb/GVSpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z/p1EjjOTOZq2BzHGX7Y0A2vgeRJ6HIsEhhff7Drs92b5AMHmGS70moeA8FEWfWMC
-	 r6PpAh5zeSDtfQg4dpaRin5UMD6ALa+aMdQOr2MfGqR0arDl18SMWXRq8RKFNY3X7Q
-	 VHYrwM5ZSbvPrJPznNMaTuBGJ42uJMmlYRRZeklY=
+	b=ftYoVKSdRaX4z0TqEOIY9v5QFFE6vqRxsFOaAb665MtCD+6dPFLBVP1xAptanwlri
+	 QX7x+c3Bi1MIoDfw0ph92fvVRYsy9rpKYMNCCdHABZltd3/HKxfrcWoUIO/saSL4Mg
+	 cqsVVRWJyiUbsv7C5/x1rOYC0fWoHoqBaPZs1Vu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Haoyu Lu <hechushiguitu666@gmail.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	syzbot+619b9ef527f510a57cfc@syzkaller.appspotmail.com,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0165/1146] ACPI: AGDI: fix missing newline in error message
-Date: Wed, 20 May 2026 18:06:55 +0200
-Message-ID: <20260520162152.025706034@linuxfoundation.org>
+Subject: [PATCH 7.0 0210/1146] bpf: reject short IPv4/IPv6 inputs in bpf_prog_test_run_skb
+Date: Wed, 20 May 2026 18:07:40 +0200
+Message-ID: <20260520162153.017639569@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,38 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoyu Lu <hechushiguitu666@gmail.com>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-[ Upstream commit b178330b67abb7293b6de28b2a49d49c83962db5 ]
+[ Upstream commit 12bec2bd4b76d81c5d3996bd14ec1b7f4d983747 ]
 
-Add the missing trailing newline to the dev_err() message
-printed when SDEI event registration fails.
+bpf_prog_test_run_skb() calls eth_type_trans() first and then uses
+skb->protocol to initialize sk family and address fields for the test
+run.
 
-This keeps the error output as a properly terminated log line.
+For IPv4 and IPv6 packets, it may access ip_hdr(skb) or ipv6_hdr(skb)
+even when the provided test input only contains an Ethernet header.
 
-Fixes: a2a591fb76e6 ("ACPI: AGDI: Add driver for Arm Generic Diagnostic Dump and Reset device")
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Signed-off-by: Haoyu Lu <hechushiguitu666@gmail.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Reject the input earlier if the Ethernet frame carries IPv4/IPv6
+EtherType but the L3 header is too short.
+
+Fold the IPv4/IPv6 header length checks into the existing protocol
+switch and return -EINVAL before accessing the network headers.
+
+Fixes: fa5cb548ced6 ("bpf: Setup socket family and addresses in bpf_prog_test_run_skb")
+Reported-by: syzbot+619b9ef527f510a57cfc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=619b9ef527f510a57cfc
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Link: https://lore.kernel.org/r/20260408034623.180320-2-sun.jian.kdev@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/arm64/agdi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bpf/test_run.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/acpi/arm64/agdi.c b/drivers/acpi/arm64/agdi.c
-index feb4b2cb4618e..0c2d9d6c160be 100644
---- a/drivers/acpi/arm64/agdi.c
-+++ b/drivers/acpi/arm64/agdi.c
-@@ -36,7 +36,7 @@ static int agdi_sdei_probe(struct platform_device *pdev,
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 56bc8dc1e2811..2988175a47f26 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -1120,19 +1120,23 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
  
- 	err = sdei_event_register(adata->sdei_event, agdi_sdei_handler, pdev);
- 	if (err) {
--		dev_err(&pdev->dev, "Failed to register for SDEI event %d",
-+		dev_err(&pdev->dev, "Failed to register for SDEI event %d\n",
- 			adata->sdei_event);
- 		return err;
- 	}
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+-		sk->sk_family = AF_INET;
+-		if (sizeof(struct iphdr) <= skb_headlen(skb)) {
+-			sk->sk_rcv_saddr = ip_hdr(skb)->saddr;
+-			sk->sk_daddr = ip_hdr(skb)->daddr;
++		if (skb_headlen(skb) < sizeof(struct iphdr)) {
++			ret = -EINVAL;
++			goto out;
+ 		}
++		sk->sk_family = AF_INET;
++		sk->sk_rcv_saddr = ip_hdr(skb)->saddr;
++		sk->sk_daddr = ip_hdr(skb)->daddr;
+ 		break;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case htons(ETH_P_IPV6):
+-		sk->sk_family = AF_INET6;
+-		if (sizeof(struct ipv6hdr) <= skb_headlen(skb)) {
+-			sk->sk_v6_rcv_saddr = ipv6_hdr(skb)->saddr;
+-			sk->sk_v6_daddr = ipv6_hdr(skb)->daddr;
++		if (skb_headlen(skb) < sizeof(struct ipv6hdr)) {
++			ret = -EINVAL;
++			goto out;
+ 		}
++		sk->sk_family = AF_INET6;
++		sk->sk_v6_rcv_saddr = ipv6_hdr(skb)->saddr;
++		sk->sk_v6_daddr = ipv6_hdr(skb)->daddr;
+ 		break;
+ #endif
+ 	default:
 -- 
 2.53.0
 
