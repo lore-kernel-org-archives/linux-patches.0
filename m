@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84972C15AB;
-	Wed, 20 May 2026 16:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1C22F0C62;
+	Wed, 20 May 2026 16:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294532; cv=none; b=e8OTTElfoofm1TNlSLUsMBsV8qflowwrrMYwxPjm/AIbHp0OEu1Y41Acncy93gbSA4u6hjo5lxahKve5rup0k8c86Nkb/b3DNOY715UePb4CPUgWWdRpfphPPP2y5+2rZwmLBow8nvNtCW5lg+qnYX0iozH5WUe/EelzeYQJwD0=
+	t=1779294533; cv=none; b=LjrrZkqo6ummjyqQ5V8fZPq7GW2bbMLt0O7cfrvET6gTl6m4nVAfVuCXYoTnvbbTEjNWmefEZWN2ng5JlFLSbge2Q8lB0q2vtbECijNul0cfA42D8F708FjR4xCGTesemjB1xI70ds8Cr21iNv37tT/wFD6j7sV82LDDdsW6MXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294532; c=relaxed/simple;
-	bh=dQFQbrlYD0DDD2wgbTfE3ApSx4uGCxXcGer0rVq7CGo=;
+	s=arc-20240116; t=1779294533; c=relaxed/simple;
+	bh=/xUh0bIj6reN96g8YS7lIMTurLBYQXqilVq6aVcmpLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eyEGsBEkLK8YVOGWW/tXdcfoPCsKvQrYF0U3eH8+ZdJyN4N5beYTY1S+uhgmdc9Fq6TyGiU/WRr4EbixLdayoBB7fWBqsQNf0C0EPnT91pusB2kOZdQuokGgCcQ3uVlguaHy3KaFni9ISL9TDdNgXdvnkTf3MXm6e0VxXg5fJ+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fec7A07D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XsGas3KL4hXkdzOIZdNEs6xons0J0ZBlaYSG8bhU0MmG7wjB//YHL8PC5hDpUKuqghr7bR1Mslc5Xbyw8CkO6QMwb7LEUgDgrXoxIDzY5SV+y8RftEWPM9LVAtB97YKqHlEm5qlZ4Q2Ko9lKZPO06soyQ75D3AlCyY+Lqkq4Myk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Udv0Tf53; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fec7A07D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A8F1F00893;
-	Wed, 20 May 2026 16:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Udv0Tf53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B186F1F000E9;
+	Wed, 20 May 2026 16:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294529;
-	bh=QqjpXyd636RsnEPrE09hBbBivq4n8O8P8CdqwzVWXY4=;
+	s=korg; t=1779294532;
+	bh=8PgoReTN2XLYEa2rhyDguwxWGnViR/nWpk1Bz90qRi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fec7A07D5G0fgRfM5iylsP+yswBUQgFC4jiFO8uYim8W5n3y6/8lh95kz3E7GNJ8y
-	 pjDm4plXKsTprViTcOkwihrUhYYUiUrKZfoGTzTna1MEREyeBYDTcuOpoBTtwQX5to
-	 EMMi7Jjbj4D0q/7Z/seIKoDXa26SNCYEbgo1R+ro=
+	b=Udv0Tf532qG2V9mgY9rB++aDeChkkMBg+bC/tgFMd3N3Y4HubOQROnmXpjbtDxOqv
+	 oGhIzopLrJDffxIz1g5JIStJXcE6fD8BQL1CnCO1c+j0GF03+LftH/9Lrktv0AJicb
+	 UyY9DDAAR3I/Pm0c4Mg/i15el6QX/Y6AWU6SLRCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Yun Lu <luyun@kylinos.cn>,
-	Feng Yang <yangfeng@kylinos.cn>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	syzbot@syzkaller.appspotmail.com,
+	Sarika Sharma <sarika.sharma@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0073/1146] bpf: test_run: Fix the null pointer dereference issue in bpf_lwt_xmit_push_encap
-Date: Wed, 20 May 2026 18:05:23 +0200
-Message-ID: <20260520162150.009251098@linuxfoundation.org>
+Subject: [PATCH 7.0 0074/1146] wifi: ath12k: account TX stats only when ACK/BA status is present
+Date: Wed, 20 May 2026 18:05:24 +0200
+Message-ID: <20260520162150.031011930@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,97 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Feng Yang <yangfeng@kylinos.cn>
+From: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
 
-[ Upstream commit 972787479ee73006fddb5e59ab5c8e733810ff42 ]
+[ Upstream commit 1635ecc61a24597f893d057d004051a535c1c643 ]
 
-The bpf_lwt_xmit_push_encap helper needs to access skb_dst(skb)->dev to
-calculate the needed headroom:
+The fields tx_retry_failed, tx_retry_count, and tx_duration are
+currently updated outside the HTT_PPDU_STATS_TAG_USR_COMPLTN_ACK_BA_STATUS
+flag check. In certain scenarios, firmware delivers multiple PPDU
+statistics for the same PPDU, first without BA/ACK information, and
+later with BA/ACK status once it becomes available. As the same PPDU
+is processed again, these counters are updated a second time,
+resulting in duplicate TX statistics.
 
-	err = skb_cow_head(skb,
-			   len + LL_RESERVED_SPACE(skb_dst(skb)->dev));
+To address this, move the accounting of tx_retry_failed and
+tx_retry_count under the ACK/BA status flag check, and similarly gate
+tx_duration on the same path. This ensures that each PPDU contributes
+to these counters exactly once, avoids double counting, and provides
+consistent reporting in userspace tools such as station dump.
 
-But skb->_skb_refdst may not be initialized when the skb is set up by
-bpf_prog_test_run_skb function. Executing bpf_lwt_push_ip_encap function
-in this scenario will trigger null pointer dereference, causing a kernel
-crash as Yinhao reported:
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
 
-[  105.186365] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[  105.186382] #PF: supervisor read access in kernel mode
-[  105.186388] #PF: error_code(0x0000) - not-present page
-[  105.186393] PGD 121d3d067 P4D 121d3d067 PUD 106c83067 PMD 0
-[  105.186404] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[  105.186412] CPU: 3 PID: 3250 Comm: poc Kdump: loaded Not tainted 6.19.0-rc5 #1
-[  105.186423] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[  105.186427] RIP: 0010:bpf_lwt_push_ip_encap+0x1eb/0x520
-[  105.186443] Code: 0f 84 de 01 00 00 0f b7 4a 04 66 85 c9 0f 85 47 01 00 00 31 c0 5b 5d 41 5c 41 5d 41 5e c3 cc cc cc cc 48 8b 73 58 48 83 e6 fe <48> 8b 36 0f b7 be ec 00 00 00 0f b7 b6 e6 00 00 00 01 fe 83 e6 f0
-[  105.186449] RSP: 0018:ffffbb0e0387bc50 EFLAGS: 00010246
-[  105.186455] RAX: 000000000000004e RBX: ffff94c74e036500 RCX: ffff94c74874da00
-[  105.186460] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff94c74e036500
-[  105.186463] RBP: 0000000000000001 R08: 0000000000000002 R09: 0000000000000000
-[  105.186467] R10: ffffbb0e0387bd50 R11: 0000000000000000 R12: ffffbb0e0387bc98
-[  105.186471] R13: 0000000000000014 R14: 0000000000000000 R15: 0000000000000002
-[  105.186484] FS:  00007f166aa4d680(0000) GS:ffff94c8b7780000(0000) knlGS:0000000000000000
-[  105.186490] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  105.186494] CR2: 0000000000000000 CR3: 000000015eade001 CR4: 0000000000770ee0
-[  105.186499] PKRU: 55555554
-[  105.186502] Call Trace:
-[  105.186507]  <TASK>
-[  105.186513]  bpf_lwt_xmit_push_encap+0x2b/0x40
-[  105.186522]  bpf_prog_a75eaad51e517912+0x41/0x49
-[  105.186536]  ? kvm_clock_get_cycles+0x18/0x30
-[  105.186547]  ? ktime_get+0x3c/0xa0
-[  105.186554]  bpf_test_run+0x195/0x320
-[  105.186563]  ? bpf_test_run+0x10f/0x320
-[  105.186579]  bpf_prog_test_run_skb+0x2f5/0x4f0
-[  105.186590]  __sys_bpf+0x69c/0xa40
-[  105.186603]  __x64_sys_bpf+0x1e/0x30
-[  105.186611]  do_syscall_64+0x59/0x110
-[  105.186620]  entry_SYSCALL_64_after_hwframe+0x76/0xe0
-[  105.186649] RIP: 0033:0x7f166a97455d
-
-Temporarily add the setting of skb->_skb_refdst before bpf_test_run to resolve the issue.
-
-Fixes: 52f278774e79 ("bpf: implement BPF_LWT_ENCAP_IP mode in bpf_lwt_push_encap")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Closes: https://groups.google.com/g/hust-os-kernel-patches/c/8-a0kPpBW2s
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Tested-by: syzbot@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20260304094429.168521-2-yangfeng59949@163.com
+Fixes: a0b963e1da5b ("wifi: ath12k: fetch tx_retry and tx_failed from htt_ppdu_stats_user_cmpltn_common_tlv")
+Signed-off-by: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260226051947.1379716-1-sarika.sharma@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/wireless/ath/ath12k/dp_htt.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 178c4738e63be..56bc8dc1e2811 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -1156,6 +1156,21 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 		skb->ip_summed = CHECKSUM_COMPLETE;
- 	}
+diff --git a/drivers/net/wireless/ath/ath12k/dp_htt.c b/drivers/net/wireless/ath/ath12k/dp_htt.c
+index e71bb71a6020e..9c19d9707abfb 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_htt.c
++++ b/drivers/net/wireless/ath/ath12k/dp_htt.c
+@@ -205,16 +205,9 @@ ath12k_update_per_peer_tx_stats(struct ath12k_pdev_dp *dp_pdev,
+ 	if (!(usr_stats->tlv_flags & BIT(HTT_PPDU_STATS_TAG_USR_RATE)))
+ 		return;
  
-+	if (prog->type == BPF_PROG_TYPE_LWT_XMIT) {
-+		if (!ipv6_bpf_stub) {
-+			pr_warn_once("Please test this program with the IPv6 module loaded\n");
-+			ret = -EOPNOTSUPP;
-+			goto out;
+-	if (usr_stats->tlv_flags & BIT(HTT_PPDU_STATS_TAG_USR_COMPLTN_COMMON)) {
++	if (usr_stats->tlv_flags & BIT(HTT_PPDU_STATS_TAG_USR_COMPLTN_COMMON))
+ 		is_ampdu =
+ 			HTT_USR_CMPLTN_IS_AMPDU(usr_stats->cmpltn_cmn.flags);
+-		tx_retry_failed =
+-			__le16_to_cpu(usr_stats->cmpltn_cmn.mpdu_tried) -
+-			__le16_to_cpu(usr_stats->cmpltn_cmn.mpdu_success);
+-		tx_retry_count =
+-			HTT_USR_CMPLTN_LONG_RETRY(usr_stats->cmpltn_cmn.flags) +
+-			HTT_USR_CMPLTN_SHORT_RETRY(usr_stats->cmpltn_cmn.flags);
+-	}
+ 
+ 	if (usr_stats->tlv_flags &
+ 	    BIT(HTT_PPDU_STATS_TAG_USR_COMPLTN_ACK_BA_STATUS)) {
+@@ -223,10 +216,19 @@ ath12k_update_per_peer_tx_stats(struct ath12k_pdev_dp *dp_pdev,
+ 					  HTT_PPDU_STATS_ACK_BA_INFO_NUM_MSDU_M);
+ 		tid = le32_get_bits(usr_stats->ack_ba.info,
+ 				    HTT_PPDU_STATS_ACK_BA_INFO_TID_NUM);
+-	}
+ 
+-	if (common->fes_duration_us)
+-		tx_duration = le32_to_cpu(common->fes_duration_us);
++		if (usr_stats->tlv_flags & BIT(HTT_PPDU_STATS_TAG_USR_COMPLTN_COMMON)) {
++			tx_retry_failed =
++				__le16_to_cpu(usr_stats->cmpltn_cmn.mpdu_tried) -
++				__le16_to_cpu(usr_stats->cmpltn_cmn.mpdu_success);
++			tx_retry_count =
++				HTT_USR_CMPLTN_LONG_RETRY(usr_stats->cmpltn_cmn.flags) +
++				HTT_USR_CMPLTN_SHORT_RETRY(usr_stats->cmpltn_cmn.flags);
 +		}
-+#if IS_ENABLED(CONFIG_IPV6)
-+		/* For CONFIG_IPV6=n, ipv6_bpf_stub is NULL which is
-+		 * handled by the above if statement.
-+		 */
-+		dst_hold(&net->ipv6.ip6_null_entry->dst);
-+		skb_dst_set(skb, &net->ipv6.ip6_null_entry->dst);
-+#endif
-+	}
 +
- 	ret = bpf_test_run(prog, skb, repeat, &retval, &duration, false);
- 	if (ret)
- 		goto out;
++		if (common->fes_duration_us)
++			tx_duration = le32_to_cpu(common->fes_duration_us);
++	}
+ 
+ 	user_rate = &usr_stats->rate;
+ 	flags = HTT_USR_RATE_PREAMBLE(user_rate->rate_flags);
 -- 
 2.53.0
 
