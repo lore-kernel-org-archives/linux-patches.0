@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F95C3D8104;
-	Wed, 20 May 2026 17:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F0E3F20FF;
+	Wed, 20 May 2026 17:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296757; cv=none; b=jEkOzo2K3feqFd5G0mOYHx32iLm1ya+QC/YW+F5TQTU8ZmBPfUKpWR3pkRgHJXXwKGunkvLcnymO/mb4IgZi2JKxsW+DandiGfPnVkQLsJ7612+g5USx9USWd69mQrskCqDIEvzgerekM5CMa/2GcKqL5vtM2DKS0gFQ0ptlXoI=
+	t=1779296760; cv=none; b=OKPzAphlY8GhBdBOfPRpmJ5wT86JjbXbqrTiQQLklZZa79Lsx8FKFUdBoxQQqCbYMPXqNPbdH8slEYnv4v+tKdaRxMtRG8Vp5jZpLhIEcQKuwWBi6O1fZQlic757mfSVvvISkGk7Pzqv3XojOoSlIuDPRR4Qek5YNb2mJLruAL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296757; c=relaxed/simple;
-	bh=ChLxA/W9cBQXWNuRydn6KxlHyxnmn+Q385dZp2n9vxM=;
+	s=arc-20240116; t=1779296760; c=relaxed/simple;
+	bh=Wh6NjJ6D9HJf4JuzLBuoU9o14eskb3SvL9SALeR1jeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ty9ye3uPMV6YUoXMxYyrC8b5kCVBxbKX1zLb27hWEcuezfTEJf0ErVY/78zGqdoT5g1TnH3dho6aEPO+EAV1OJ84vzLvIz6jZcIV6HpHob3CP/O9CxdbasReVwqPHTOEkY/96TKK8ZHTN23G2MZKllySPi+WK9NBac04Bq73bTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJXZxnVw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YTeLtV9DK3LxkoJmmpuN+v//QvxZ5q6SCX36eloJBrUkbiyQhqtRkUUtpT5wU22AUCQD48KmMtelSWxCjZGIHKui1l+ZFIMv+nWyDOal48N7K8Nx57d4LJcxY0aOFnnceTNAfVmHHDoZNrNZhavSZdkm7iwrVcXbKCb4+hjolRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+chJpIC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJXZxnVw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BC01F000E9;
-	Wed, 20 May 2026 17:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+chJpIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCF11F000E9;
+	Wed, 20 May 2026 17:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296756;
-	bh=Gq4PHINNAks04CQP5uGH0rpgEQ/9t1ythEANsJ1NR/g=;
+	s=korg; t=1779296759;
+	bh=jlNCntuHsuTkFnerGxTJpRaIYEhZzVBYtkCztTXmzrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BJXZxnVw4uSTkz8syqO6IjblIfjazGh11q56FkXeUIEm7c4mDZHO2oNF2fRv//EK4
-	 q5SPAapmP9KZgty7ZqJEqgCMMPxzs2rjvr1LJcS3dpvjUH2PiZgFX6ZLMyHsvCjKh7
-	 nUdHcvUhELeW8DKF5wgt0ErB3CuKdw+osJAnhvbE=
+	b=Y+chJpICVB354u31cFSB2InVYwdGGtqar5XH2jkWcDAEpjmp2zR/k7OpbZs2Z4b1C
+	 HkNLlcIAztI/K6mViNqr/QT4jYw+Z+rF/NOrkV/gpzkm+qZYGHqYAJplgTVZ5dcRLv
+	 0rI+r08X360ZPW4Y1pPh0IWfSQ80qmCQxJRLXTlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0921/1146] mtd: spinand: winbond: Set the packed page read flag to W35N02/04JW
-Date: Wed, 20 May 2026 18:19:31 +0200
-Message-ID: <20260520162209.082785838@linuxfoundation.org>
+Subject: [PATCH 7.0 0922/1146] mtd: spinand: winbond: Fix ODTR write VCR on W35NxxJW
+Date: Wed, 20 May 2026 18:19:32 +0200
+Message-ID: <20260520162209.106678349@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,42 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 8d655748aba1b603c54053a20322401dc1e5d782 ]
+[ Upstream commit 135ac3b84bcedae1860e7a9512d63166f42b736e ]
 
-Both W35N02JW and W35N04JW diverge from W35N01JW when it comes to the
-"data read" operation in ODTR mode. In order to stuff more address
-bits (up to 18), the second command byte is replaced by the most
-significant address bits, keeping the number of address bytes to 2.
+In most scenarios this variant is actually unused (VCR is written in
+SSDR mode), but we need to provide an octal variant. The address is 24
+bits but is sent over 4 bytes MSB first. This means we need to shift the
+register address by one extra byte for the address to be correct.
+
+I didn't catch this initially because the volatile register region is
+256 bytes wide, so the write-then-read procedure did work with the small
+register addresses I was using at that time: 0 and 1.
 
 Fixes: 44a2f49b9bdc ("mtd: spinand: winbond: W35N octal DTR support")
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/spi/winbond.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/spi/winbond.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/mtd/nand/spi/winbond.c b/drivers/mtd/nand/spi/winbond.c
-index ad22774096e61..ea62fecea661d 100644
+index ea62fecea661d..7cc0f0091430c 100644
 --- a/drivers/mtd/nand/spi/winbond.c
 +++ b/drivers/mtd/nand/spi/winbond.c
-@@ -518,7 +518,7 @@ static const struct spinand_info winbond_spinand_table[] = {
- 		     SPINAND_INFO_OP_VARIANTS(&read_cache_octal_variants,
- 					      &write_cache_octal_variants,
- 					      &update_cache_octal_variants),
--		     0,
-+		     SPINAND_ODTR_PACKED_PAGE_READ,
- 		     SPINAND_INFO_VENDOR_OPS(&winbond_w35_ops),
- 		     SPINAND_ECCINFO(&w35n01jw_ooblayout, NULL),
- 		     SPINAND_CONFIGURE_CHIP(w35n0xjw_vcr_cfg)),
-@@ -529,7 +529,7 @@ static const struct spinand_info winbond_spinand_table[] = {
- 		     SPINAND_INFO_OP_VARIANTS(&read_cache_octal_variants,
- 					      &write_cache_octal_variants,
- 					      &update_cache_octal_variants),
--		     0,
-+		     SPINAND_ODTR_PACKED_PAGE_READ,
- 		     SPINAND_INFO_VENDOR_OPS(&winbond_w35_ops),
- 		     SPINAND_ECCINFO(&w35n01jw_ooblayout, NULL),
- 		     SPINAND_CONFIGURE_CHIP(w35n0xjw_vcr_cfg)),
+@@ -99,7 +99,7 @@ static SPINAND_OP_VARIANTS(update_cache_variants,
+ 
+ #define SPINAND_WINBOND_WRITE_VCR_8D_8D_8D(reg, buf)			\
+ 	SPI_MEM_OP(SPI_MEM_DTR_OP_RPT_CMD(0x81, 8),			\
+-		   SPI_MEM_DTR_OP_ADDR(4, reg, 8),			\
++		   SPI_MEM_DTR_OP_ADDR(4, reg << 8, 8),			\
+ 		   SPI_MEM_OP_NO_DUMMY,					\
+ 		   SPI_MEM_DTR_OP_DATA_OUT(2, buf, 8))
+ 
 -- 
 2.53.0
 
