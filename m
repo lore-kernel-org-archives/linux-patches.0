@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE22369D4E;
-	Wed, 20 May 2026 16:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547021E7660;
+	Wed, 20 May 2026 16:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295514; cv=none; b=FcL6Duap3dm5NLxeHQe9lCjsV4WL0D/PNJRXQyEHVySCdXgGmXeFDXOx4zRrdxnE/Bog7R9tIadF8akO6mepeWFqV+9Jx1ST5gYz7VMT80ZNamtTR9D6b9xlT+7/Gws71ECfSvpm0aoSOEk9M+J6pH3BJsCnOEUZCGYGG1WbQtU=
+	t=1779295517; cv=none; b=g4Qn0fEka2aN7cXKLqS0djItMLoEKfiB5oZy1t7UZoUdpwbc1wxuv8KWkfnBVvtxq6BYvbY6ilRDrInEBMTc+gew9oIsMfyRDIz0hGA7M1gtqys09ez+MjWlpmQZAWT/yn1wiSz24ER4JkHEEHCdVKfieaxYwoL02FEVW6TibfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295514; c=relaxed/simple;
-	bh=9Os9toDZ6USY7j1saS0mS51c1AU5Ffwr1yM64reuoZs=;
+	s=arc-20240116; t=1779295517; c=relaxed/simple;
+	bh=KWKdB8gWlV7zMhGwXOau6kL1Bb4gAK51mF7nAH27Xqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OfXv8wd32srE9oUhS/8PkLSnFsJFS3j4dHyAiCZ9P0MgP8yQ4850vnhbkldexsk1VyDWUxYJlRVDgUagOj3SnsbggzUbspuPtVpuH0o0lwTM2wkqAEZkg751AtJbGLuizCLuzBGfmNz/G0gxHCiu0hjBGGKDr7bhLjNuyTB7Bpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AInr8E85; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mk9WHMQW3v4p7MQUuc7Ky1y8d4nxpsPa4ySSvgXHBfY+iX02Pd5DCkhpuQjG37zhY47cFbvEuJRfEF4N836LrtSt98zx+bx/Xi1lxYGm7DkFY4ooo/ZJK+7tP2lNazOfekVl7Eaz0VrCWiWa+Is2Cb2T2DEJ4x4vM70sl4/VHKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qL+l0TiI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AInr8E85"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A051F000E9;
-	Wed, 20 May 2026 16:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qL+l0TiI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67201F00893;
+	Wed, 20 May 2026 16:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295513;
-	bh=hm4YumpZbBT4n0L93MpQ36eRq7rJFtZAb4XbnhJsMJY=;
+	s=korg; t=1779295516;
+	bh=0lxRM2uYszT9jfDz3Pc18UNMywLnZ4SCzKkNMV6+avg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AInr8E85VxrIgrZMZds8Hh37aQukcyQNnJfUhHFAFJ1gMC34em8hjIjqgNNhM/WpK
-	 DHe3W8ClWSouxy9/X7Yks2k9qfMqXjkFZG03K3tpNmOy36sincq7y51AcKOWQHCgv4
-	 wEd/SxadNDDulBnIp+kKj5zbkS8bgkg7N79zRPso=
+	b=qL+l0TiIFo78D6YLHXU8tdok4dgSx4YIKB/pBF1NzQcK2cXJWBD8RWOYVJWHMT39h
+	 atRHlo96JXLcVaBs8j/iizPnNDMWNSHKngWXHpsHo93NyKJlR9mxFetPj+y0sRi2/B
+	 Ao5JUCAsz2fnb2uwqfzEJmITwfn2ntgG0tw7JlFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -36,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0448/1146] ktest: Avoid undef warning when WARNINGS_FILE is unset
-Date: Wed, 20 May 2026 18:11:38 +0200
-Message-ID: <20260520162158.338195841@linuxfoundation.org>
+Subject: [PATCH 7.0 0449/1146] ktest: Honor empty per-test option overrides
+Date: Wed, 20 May 2026 18:11:39 +0200
+Message-ID: <20260520162158.360020830@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -60,13 +60,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 057854f8a595160656fe77ed7bf0d2403724b915 ]
+[ Upstream commit a2de57a3c8192dcd67cccaff6c341b93748d799b ]
 
-check_buildlog() probes $warnings_file with -f even when WARNINGS_FILE is
-not configured. Perl warns about the uninitialized value and adds noise to
-the test log, which can hide the output we actually care about.
+A per-test override can clear an inherited default option by assigning an
+empty value, but __set_test_option() still used option_defined() to decide
+whether a per-test key existed. That turned an empty per-test assignment
+back into "fall back to the default", so tests still could not clear
+inherited settings.
 
-Check that WARNINGS_FILE is defined before testing whether the file exists.
+For example:
+
+  DEFAULTS
+  (...)
+  LOG_FILE = /tmp/ktest-empty-override.log
+  CLEAR_LOG = 1
+  ADD_CONFIG = /tmp/.config
+
+  TEST_START
+  TEST_TYPE = build
+  BUILD_TYPE = nobuild
+  ADD_CONFIG =
+
+This would run the test with ADD_CONFIG[1] = /tmp/.config
+
+Fix by checking whether the per-test key exists before falling back. If it
+does exist but is empty, treat it as unset for that test and stop the
+fallback chain there.
 
 Cc: John Hawley <warthog9@eaglescrag.net>
 Cc: Andrea Righi <arighi@nvidia.com>
@@ -74,28 +93,39 @@ Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
 Cc: Matthieu Baerts <matttbe@kernel.org>
 Cc: Fernando Fernandez Mancera <fmancera@suse.de>
 Cc: Pedro Falcato <pfalcato@suse.de>
-Link: https://patch.msgid.link/20260307-ktest-fixes-v1-1-565d412f4925@suse.com
-Fixes: 4283b169abfb ("ktest: Add make_warnings_file and process full warnings")
+Link: https://patch.msgid.link/20260307-ktest-fixes-v1-4-565d412f4925@suse.com
+Fixes: 22c37a9ac49d ("ktest: Allow tests to undefine default options")
 Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/ktest/ktest.pl | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index 88de775097fef..28643812184bc 100755
+index 28643812184bc..924e17df56f74 100755
 --- a/tools/testing/ktest/ktest.pl
 +++ b/tools/testing/ktest/ktest.pl
-@@ -2508,7 +2508,7 @@ sub check_buildlog {
-     my $save_no_reboot = $no_reboot;
-     $no_reboot = 1;
+@@ -4183,7 +4183,8 @@ sub __set_test_option {
  
--    if (-f $warnings_file) {
-+    if (defined($warnings_file) && -f $warnings_file) {
- 	open(IN, $warnings_file) or
- 	    dodie "Error opening $warnings_file";
+     my $option = "$name\[$i\]";
  
+-    if (option_defined($option)) {
++    if (exists($opt{$option})) {
++	return undef if (!option_defined($option));
+ 	return $opt{$option};
+     }
+ 
+@@ -4191,7 +4192,8 @@ sub __set_test_option {
+ 	if ($i >= $test &&
+ 	    $i < $test + $repeat_tests{$test}) {
+ 	    $option = "$name\[$test\]";
+-	    if (option_defined($option)) {
++	    if (exists($opt{$option})) {
++		return undef if (!option_defined($option));
+ 		return $opt{$option};
+ 	    }
+ 	}
 -- 
 2.53.0
 
