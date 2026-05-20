@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63C73E277C;
-	Wed, 20 May 2026 18:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7892F3CB2F8;
+	Wed, 20 May 2026 18:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302296; cv=none; b=XhiQShV8jQowoCNgfxKOWOuea1tfNDOiNYgafQPq+6mX+CSuU2q0Mhz/TpKhzCTG6dJ1ooCYcphgZHxnAJjUo5/X0TR+TkjLAfeORyTbeif5nOQsA0uksG6+qRtQCBW4lYC+CSkaueDUljMHY9FN8CyaeRkIk6X/RIttHUtqXTw=
+	t=1779302299; cv=none; b=iSWFlcmDSzQwt7byMsEXLjbi0PTMH0Idsy2IZRmZOe3m7q1Do8caWWgIGeu2GBAg3nZUm4NtX9UokWeOUvccDi0y/C8UU8ec+UQN4+LiiufTVCNo/TdB5sh9LtjYTNjVJ+JLjCPCAd9chZdD+93RAaZwzdp4Te8oKR2j+S+edGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302296; c=relaxed/simple;
-	bh=2a6aCUz0zYyq+X9SJt7UEHzIQwzWSc3ELWC23qNdfwU=;
+	s=arc-20240116; t=1779302299; c=relaxed/simple;
+	bh=hJMhkFoDQFosnG7i9M582Kh4pMdHIy35mZK4RCtp3Uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kdeb+v6k50IhtY1UAIOyLK94YqNghChy4dcWM/PwkncULZw/OWHUYbNne/Vyrttf1A4dGk9w8Qddvk4cv2w+Cjfw9rn+pue6ia8IdYCEednX+NwnihYX38HAiVcKh52Yh5ivcqO6NK7MUHs/bjnZn7L6T+b1t7FJgafUBnR4vCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PlOK8zj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EyOzZX4lhQ9PqZUT3wN2YTyz5tvff6ksic22b2tfDbkiljMYb9d6piV0TB0960XqiepQFhBQqsSkA6/qS8AKEQF4BtJJzlZSEFVnxQsV6bcz5Fv+1HgkoZdWhjxoFE6SV2s/Xj2YEIkiyZVGBKBP1tWCKiUkPa7zfX6pgn83fUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHcIV2Q6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PlOK8zj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 424681F000E9;
-	Wed, 20 May 2026 18:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHcIV2Q6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F761F000E9;
+	Wed, 20 May 2026 18:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302295;
-	bh=9zGl7Fr4g4dUndDGeyUpwcAXBWgYZIy1XTfnM4/Lz8A=;
+	s=korg; t=1779302298;
+	bh=01f5KsAVJBJ+QZsKDZvCtdOqGsQ8sIoKNV95Px6yPPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1PlOK8zjMgwq73rXU8xsB9ynT90OHadMa06rJw2sfyLvrn8kXgJmt2P8Hc2wAgDYV
-	 UcUAkEnamTh6doRxl3uctJCb4ZVcdrJjvaznMkns9LkUlKtpkDD7pFR6UD9zWVEMbF
-	 2zbSePXHaTr6fsdiKhY4FrBDx4Dl+8lRapaxvQe8=
+	b=fHcIV2Q6RgS7Syztl4wPs4v4jDHJmBOwJHQ3FPguXhXfncv8tJ9LqLarRLDNY9cNX
+	 vnU26zeeI8xhPHOluvy/vJqmy2zM3mGrqx9bkt0Z4XUeDUeW07aESjiPIh+xnZ5RAl
+	 4+IrCMN21qbadsbEoTemG1g3EQFQW7gYltmjNn2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0ea5108a1f5fb4fcc2d8@syzkaller.appspotmail.com,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	John Hawley <warthog9@eaglescrag.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 172/508] gfs2: Call unlock_new_inode before d_instantiate
-Date: Wed, 20 May 2026 18:19:55 +0200
-Message-ID: <20260520162102.364971216@linuxfoundation.org>
+Subject: [PATCH 6.6 173/508] ktest: Avoid undef warning when WARNINGS_FILE is unset
+Date: Wed, 20 May 2026 18:19:56 +0200
+Message-ID: <20260520162102.386938437@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,52 +51,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 2ff7cf7e0640ff071ebc5c7e3dc2df024a7c91e6 ]
+[ Upstream commit 057854f8a595160656fe77ed7bf0d2403724b915 ]
 
-As Neil Brown describes in detail in the link referenced below, new
-inodes must be unlocked before they can be instantiated.
+check_buildlog() probes $warnings_file with -f even when WARNINGS_FILE is
+not configured. Perl warns about the uninitialized value and adds noise to
+the test log, which can hide the output we actually care about.
 
-An even better fix is to use d_instantiate_new(), which combines
-d_instantiate() and unlock_new_inode().
+Check that WARNINGS_FILE is defined before testing whether the file exists.
 
-Fixes: 3d36e57ff768 ("gfs2: gfs2_create_inode rework")
-Reported-by: syzbot+0ea5108a1f5fb4fcc2d8@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-fsdevel/177153754005.8396.8777398743501764194@noble.neil.brown.name/
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: John Hawley <warthog9@eaglescrag.net>
+Cc: Andrea Righi <arighi@nvidia.com>
+Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Link: https://patch.msgid.link/20260307-ktest-fixes-v1-1-565d412f4925@suse.com
+Fixes: 4283b169abfb ("ktest: Add make_warnings_file and process full warnings")
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/inode.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/ktest/ktest.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index 45040622d316e..18f75beea0890 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -805,7 +805,7 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
- 		goto fail_gunlock4;
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index e93ac83270dad..4eca66310d9b4 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2472,7 +2472,7 @@ sub check_buildlog {
+     my $save_no_reboot = $no_reboot;
+     $no_reboot = 1;
  
- 	mark_inode_dirty(inode);
--	d_instantiate(dentry, inode);
-+	d_instantiate_new(dentry, inode);
- 	/* After instantiate, errors should result in evict which will destroy
- 	 * both inode and iopen glocks properly. */
- 	if (file) {
-@@ -817,7 +817,6 @@ static int gfs2_create_inode(struct inode *dir, struct dentry *dentry,
- 	gfs2_glock_dq_uninit(&gh);
- 	gfs2_glock_put(io_gl);
- 	gfs2_qa_put(dip);
--	unlock_new_inode(inode);
- 	return error;
+-    if (-f $warnings_file) {
++    if (defined($warnings_file) && -f $warnings_file) {
+ 	open(IN, $warnings_file) or
+ 	    dodie "Error opening $warnings_file";
  
- fail_gunlock4:
 -- 
 2.53.0
 
