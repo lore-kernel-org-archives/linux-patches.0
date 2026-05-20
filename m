@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821923A4526;
-	Wed, 20 May 2026 17:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2373528DC4;
+	Wed, 20 May 2026 17:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297039; cv=none; b=IdMsdT9BjbnbGMvSsg5ZyQdrQ17tsyEuKDmkWnrmktC9MaosW7GoVRSLdQUsSzrqSQ76I5OOcRRVP4Sh5pMtyymdaHR467G886Ti5Kpu/rtwCnisQu2vEDRvNQD9PvDUxmgKAy+Nb6QIeO7neuyM6AsUZX9iKckM27w6rrpWbKQ=
+	t=1779297042; cv=none; b=Y8zwpdDzur3kCs6aUmnsasFfohP/NrRBbjVYiS4dt4rleqyLUujOHTnZ0Q5Tl19d6GFizPSB+HaGdhqrjthLesIsiCZJsIRQ1k4/C4uz8nu4nv6ymlrdOGlSgMVwjbJC94vHLqLLIue79U0N+R18w6loPJeFJwO449Pcr5SrGiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297039; c=relaxed/simple;
-	bh=pRMo647xnhVF4xcTloFUZuk61ATQ413WJbetDJHCFxg=;
+	s=arc-20240116; t=1779297042; c=relaxed/simple;
+	bh=Sr3JIbgdu8Q0irVgpxcbfd2HGjmKOEqqsHKiZwCuHPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKaXNalZO7lrr1GYVL9X2qvfBDObV4A3du9O6MsjisYvjHDhOsThd8gnx3D247SgeMMYivsBy+yPVGikyPeOK6hzAo53t6CT56U59GLbOkS8G8QqAX/R9qMtWrJc5CAIFfBpfq0INwWzyzqjAuRuS1qJr4ysz4MHSmAB72hld/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDqY9GtP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DVlWyMhZPH1v56n5UMFoHtxBE9S8SKNIIWp1galyNjegibQeFd6LC7NxySV4oEJc7X3two8upYKD0dLFFtk0eq0+SAf7j/frlg/zYYD+LTj5wKdjPqKWppG0ag1MVWidyd3MXk3SaUoEwQ+xHWbxMIONIF+quBElRrHJqFqz1AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PO+SitZ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDqY9GtP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3A71F000E9;
-	Wed, 20 May 2026 17:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PO+SitZ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F01C1F000E9;
+	Wed, 20 May 2026 17:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297038;
-	bh=ha5tRcaKHahVjTi6HJUmA3vDTPrHjrpYDNblmyXoL5U=;
+	s=korg; t=1779297041;
+	bh=dXGPR/e6wwv+RmYOjIenf5rsdB3CxWbVf4mUBsJeqEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pDqY9GtPm3oZFAKPYlbuNonIkHxtJMHPzco3KXJrlUTcalHXkJEe+VcF/DCZn08Y2
-	 Ul9fcJHhPoUqGZrHwunUAKxIZ0BzknXZ3WFRoCHPADW8yfS3K/sh8cfZqi2quxj9yV
-	 WpkTKXzhQlTUmAsxCDXkptPnCG0MEpFQbBoH60SY=
+	b=PO+SitZ9mdHi9qlXg6yaJX+UFnXC665zpA66KejaLvrg+zNwsbvnov9XL8cxfUCsb
+	 Yyyhfm6KTlPiLBEO02ilJKVjLla2Z+Eu96/zk9Db48OoXmMbzWDmpGfOBt4FY2A+q9
+	 1v9gLvkGG7+3W+3YILvJtSPsdNKJrN1hOGWCJ1uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,14 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Petr Oros <poros@redhat.com>,
 	Alexander Nowlin <alexander.nowlin@intel.com>,
 	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Ivan Vecera <ivecera@redhat.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1027/1146] ice: fix SMA and U.FL pin state changes affecting paired pin
-Date: Wed, 20 May 2026 18:21:17 +0200
-Message-ID: <20260520162211.472329091@linuxfoundation.org>
+Subject: [PATCH 7.0 1028/1146] ice: fix missing dpll notifications for SW pins
+Date: Wed, 20 May 2026 18:21:18 +0200
+Message-ID: <20260520162211.494186798@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -56,136 +58,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit 6f9d8393c9f50fbc68b9c9e99f78ca5a7b43ff44 ]
+[ Upstream commit 1a41b58fd4dc80dca16c717e6e77c88b9d4e83a7 ]
 
-SMA and U.FL pins share physical signal paths in pairs (SMA1/U.FL1 and
-SMA2/U.FL2) controlled by the PCA9575 GPIO expander.  Each pair can
-only have one active pin at a time: SMA1 output and U.FL1 output share
-the same CGU output, SMA2 input and U.FL2 input share the same CGU
-input.  The PCA9575 register bits determine which connector in each
-pair owns the signal path.
+The SMA/U.FL pin redesign (commit 2dd5d03c77e2 ("ice: redesign dpll
+sma/u.fl pins control")) introduced software-controlled pins that wrap
+backing CGU input/output pins, but never updated the notification and
+data paths to propagate pin events to these SW wrappers.
 
-The driver does not account for this pairing in two places:
+The periodic work sends dpll_pin_change_ntf() only for direct CGU input
+pins.  SW pins that wrap these inputs never receive change or phase
+offset notifications, so userspace consumers such as synce4l monitoring
+SMA pins via dpll netlink never learn about state transitions or phase
+offset updates.  Similarly, ice_dpll_phase_offset_get() reads the SW
+pin's own phase_offset field which is never updated; the PPS monitor
+writes to the backing CGU input's field instead.
 
-ice_dpll_ufl_pin_state_set() modifies PCA9575 bits and disables the
-backing CGU pin without checking whether the U.FL pin is currently
-active.  Disconnecting an already inactive U.FL pin flips bits that
-the paired SMA pin relies on, breaking its connection.
-
-ice_dpll_sma_direction_set() does not propagate direction changes to
-the paired U.FL pin.  For SMA2/U.FL2 the ICE_SMA2_UFL2_RX_DIS bit is
-never managed, so U.FL2 stays disconnected after SMA2 switches to
-output.  For both pairs the backing CGU pin of the U.FL side is never
-enabled when a direction change activates it, so userspace sees the
-pin as disconnected even though the routing is correct.
-
-Fix by guarding the U.FL disconnect path against inactive pins and by
-updating the paired U.FL pin fully on SMA direction changes: manage
-ICE_SMA2_UFL2_RX_DIS for the SMA2/U.FL2 pair and enable the backing
-CGU pin whenever the peer becomes active.
+Fix by introducing ice_dpll_pin_ntf(), a wrapper around
+dpll_pin_change_ntf() that also notifies any registered SMA/U.FL pin
+whose backing CGU input matches.  Replace all direct
+dpll_pin_change_ntf() calls in the periodic notification paths with
+this wrapper.  Fix ice_dpll_phase_offset_get() to return the backing
+CGU input's phase_offset for input-direction SW pins.
 
 Fixes: 2dd5d03c77e2 ("ice: redesign dpll sma/u.fl pins control")
 Signed-off-by: Petr Oros <poros@redhat.com>
 Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
 Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Ivan Vecera <ivecera@redhat.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-8-cdcb48303fd8@intel.com
+Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-10-cdcb48303fd8@intel.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_dpll.c | 50 ++++++++++++++++++++++-
- 1 file changed, 49 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_dpll.c | 47 +++++++++++++++++------
+ 1 file changed, 36 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
-index 498ec2c045f38..3f8cd5b8298b5 100644
+index 3f8cd5b8298b5..721a3f4d6a28f 100644
 --- a/drivers/net/ethernet/intel/ice/ice_dpll.c
 +++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
-@@ -1171,6 +1171,8 @@ static int ice_dpll_sma_direction_set(struct ice_dpll_pin *p,
- 				      enum dpll_pin_direction direction,
- 				      struct netlink_ext_ack *extack)
- {
-+	struct ice_dplls *d = &p->pf->dplls;
-+	struct ice_dpll_pin *peer;
- 	u8 data;
- 	int ret;
- 
-@@ -1189,8 +1191,9 @@ static int ice_dpll_sma_direction_set(struct ice_dpll_pin *p,
- 	case ICE_DPLL_PIN_SW_2_IDX:
- 		if (direction == DPLL_PIN_DIRECTION_INPUT) {
- 			data &= ~ICE_SMA2_DIR_EN;
-+			data |= ICE_SMA2_UFL2_RX_DIS;
- 		} else {
--			data &= ~ICE_SMA2_TX_EN;
-+			data &= ~(ICE_SMA2_TX_EN | ICE_SMA2_UFL2_RX_DIS);
- 			data |= ICE_SMA2_DIR_EN;
- 		}
- 		break;
-@@ -1202,6 +1205,34 @@ static int ice_dpll_sma_direction_set(struct ice_dpll_pin *p,
- 		ret = ice_dpll_pin_state_update(p->pf, p,
- 						ICE_DPLL_PIN_TYPE_SOFTWARE,
- 						extack);
-+	if (ret)
-+		return ret;
-+
-+	/* When a direction change activates the paired U.FL pin, enable
-+	 * its backing CGU pin so the pin reports as connected. Without
-+	 * this the U.FL routing is correct but the CGU pin stays disabled
-+	 * and userspace sees the pin as disconnected.  Do not disable the
-+	 * backing pin when U.FL becomes inactive because the SMA pin may
-+	 * still be using it.
-+	 */
-+	peer = &d->ufl[p->idx];
-+	if (peer->active) {
-+		struct ice_dpll_pin *target;
-+		enum ice_dpll_pin_type type;
-+
-+		if (peer->output) {
-+			target = peer->output;
-+			type = ICE_DPLL_PIN_TYPE_OUTPUT;
-+		} else {
-+			target = peer->input;
-+			type = ICE_DPLL_PIN_TYPE_INPUT;
-+		}
-+		ret = ice_dpll_pin_enable(&p->pf->hw, target,
-+					  d->eec.dpll_idx, type, extack);
-+		if (!ret)
-+			ret = ice_dpll_pin_state_update(p->pf, target,
-+							type, extack);
-+	}
- 
- 	return ret;
+@@ -1963,7 +1963,10 @@ ice_dpll_phase_offset_get(const struct dpll_pin *pin, void *pin_priv,
+ 				       d->active_input == p->input->pin))
+ 		*phase_offset = d->phase_offset * ICE_DPLL_PHASE_OFFSET_FACTOR;
+ 	else if (d->phase_offset_monitor_period)
+-		*phase_offset = p->phase_offset * ICE_DPLL_PHASE_OFFSET_FACTOR;
++		*phase_offset = (p->input &&
++				 p->direction == DPLL_PIN_DIRECTION_INPUT ?
++				 p->input->phase_offset :
++				 p->phase_offset) * ICE_DPLL_PHASE_OFFSET_FACTOR;
+ 	else
+ 		*phase_offset = 0;
+ 	mutex_unlock(&pf->dplls.lock);
+@@ -2657,6 +2660,27 @@ static u64 ice_generate_clock_id(struct ice_pf *pf)
+ 	return pci_get_dsn(pf->pdev);
  }
-@@ -1253,6 +1284,14 @@ ice_dpll_ufl_pin_state_set(const struct dpll_pin *pin, void *pin_priv,
- 			data &= ~ICE_SMA1_MASK;
- 			enable = true;
- 		} else if (state == DPLL_PIN_STATE_DISCONNECTED) {
-+			/* Skip if U.FL1 is not active, setting TX_EN
-+			 * while DIR_EN is set would also deactivate
-+			 * the paired SMA1 output.
-+			 */
-+			if (data & (ICE_SMA1_DIR_EN | ICE_SMA1_TX_EN)) {
-+				ret = 0;
-+				goto unlock;
-+			}
- 			data |= ICE_SMA1_TX_EN;
- 			enable = false;
- 		} else {
-@@ -1267,6 +1306,15 @@ ice_dpll_ufl_pin_state_set(const struct dpll_pin *pin, void *pin_priv,
- 			data &= ~ICE_SMA2_UFL2_RX_DIS;
- 			enable = true;
- 		} else if (state == DPLL_PIN_STATE_DISCONNECTED) {
-+			/* Skip if U.FL2 is not active, setting
-+			 * UFL2_RX_DIS could also disable the paired
-+			 * SMA2 input.
-+			 */
-+			if (!(data & ICE_SMA2_DIR_EN) ||
-+			    (data & ICE_SMA2_UFL2_RX_DIS)) {
-+				ret = 0;
-+				goto unlock;
-+			}
- 			data |= ICE_SMA2_UFL2_RX_DIS;
- 			enable = false;
- 		} else {
+ 
++/**
++ * ice_dpll_pin_ntf - notify pin change including any SW pin wrappers
++ * @dplls: pointer to dplls struct
++ * @pin: the dpll_pin that changed
++ *
++ * Send a change notification for @pin and for any registered SMA/U.FL pin
++ * whose backing CGU input matches @pin.
++ */
++static void ice_dpll_pin_ntf(struct ice_dplls *dplls, struct dpll_pin *pin)
++{
++	dpll_pin_change_ntf(pin);
++	for (int i = 0; i < ICE_DPLL_PIN_SW_NUM; i++) {
++		if (dplls->sma[i].pin && dplls->sma[i].input &&
++		    dplls->sma[i].input->pin == pin)
++			dpll_pin_change_ntf(dplls->sma[i].pin);
++		if (dplls->ufl[i].pin && dplls->ufl[i].input &&
++		    dplls->ufl[i].input->pin == pin)
++			dpll_pin_change_ntf(dplls->ufl[i].pin);
++	}
++}
++
+ /**
+  * ice_dpll_notify_changes - notify dpll subsystem about changes
+  * @d: pointer do dpll
+@@ -2665,6 +2689,7 @@ static u64 ice_generate_clock_id(struct ice_pf *pf)
+  */
+ static void ice_dpll_notify_changes(struct ice_dpll *d)
+ {
++	struct ice_dplls *dplls = &d->pf->dplls;
+ 	bool pin_notified = false;
+ 
+ 	if (d->prev_dpll_state != d->dpll_state) {
+@@ -2673,17 +2698,17 @@ static void ice_dpll_notify_changes(struct ice_dpll *d)
+ 	}
+ 	if (d->prev_input != d->active_input) {
+ 		if (d->prev_input)
+-			dpll_pin_change_ntf(d->prev_input);
++			ice_dpll_pin_ntf(dplls, d->prev_input);
+ 		d->prev_input = d->active_input;
+ 		if (d->active_input) {
+-			dpll_pin_change_ntf(d->active_input);
++			ice_dpll_pin_ntf(dplls, d->active_input);
+ 			pin_notified = true;
+ 		}
+ 	}
+ 	if (d->prev_phase_offset != d->phase_offset) {
+ 		d->prev_phase_offset = d->phase_offset;
+ 		if (!pin_notified && d->active_input)
+-			dpll_pin_change_ntf(d->active_input);
++			ice_dpll_pin_ntf(dplls, d->active_input);
+ 	}
+ }
+ 
+@@ -2712,6 +2737,7 @@ static bool ice_dpll_is_pps_phase_monitor(struct ice_pf *pf)
+ 
+ /**
+  * ice_dpll_pins_notify_mask - notify dpll subsystem about bulk pin changes
++ * @dplls: pointer to dplls struct
+  * @pins: array of ice_dpll_pin pointers registered within dpll subsystem
+  * @pin_num: number of pins
+  * @phase_offset_ntf_mask: bitmask of pin indexes to notify
+@@ -2721,15 +2747,14 @@ static bool ice_dpll_is_pps_phase_monitor(struct ice_pf *pf)
+  *
+  * Context: Must be called while pf->dplls.lock is released.
+  */
+-static void ice_dpll_pins_notify_mask(struct ice_dpll_pin *pins,
++static void ice_dpll_pins_notify_mask(struct ice_dplls *dplls,
++				      struct ice_dpll_pin *pins,
+ 				      u8 pin_num,
+ 				      u32 phase_offset_ntf_mask)
+ {
+-	int i = 0;
+-
+-	for (i = 0; i < pin_num; i++)
+-		if (phase_offset_ntf_mask & (1 << i))
+-			dpll_pin_change_ntf(pins[i].pin);
++	for (int i = 0; i < pin_num; i++)
++		if (phase_offset_ntf_mask & BIT(i))
++			ice_dpll_pin_ntf(dplls, pins[i].pin);
+ }
+ 
+ /**
+@@ -2905,7 +2930,7 @@ static void ice_dpll_periodic_work(struct kthread_work *work)
+ 	ice_dpll_notify_changes(de);
+ 	ice_dpll_notify_changes(dp);
+ 	if (phase_offset_ntf)
+-		ice_dpll_pins_notify_mask(d->inputs, d->num_inputs,
++		ice_dpll_pins_notify_mask(d, d->inputs, d->num_inputs,
+ 					  phase_offset_ntf);
+ 
+ resched:
 -- 
 2.53.0
 
