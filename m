@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711343F789B;
-	Wed, 20 May 2026 18:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549433F8707;
+	Wed, 20 May 2026 18:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300854; cv=none; b=GUb1U0ImT5GjdhU1Hcy/vRNLAJtIF6A3a7dxQqMSinepXM4lPhsMR7XoTA27rTxH/67pg7hrpfWn1kmC8Yuj7wmPeqNICbNQArVLIar2w6lU8aKkAB8DiMOYbcE2SvGPBH/sb0jikm/67xC6gf6n+K3NJ2nSTgarWiAWc+LR6oc=
+	t=1779300857; cv=none; b=RXl4hJ6q2AZhfwTuYl2VPETyGvRFYUg8KHsvNggt1EyYIAdqkyYpuJb0DBj89TUsGtHopw8oULbM1Gs4kpiBsbeQRcsgsiQg2hjiyzeoTKQfdP28xoqHlpWMA3DrCErpMoo6ZmFfUnkMvIjbLbjahTcBhSDeq+/V5UNrVnoqg/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300854; c=relaxed/simple;
-	bh=K5PJWq2S0myoA47uaQ5hdn6IcGq8bhN9ouiUO0Gwvao=;
+	s=arc-20240116; t=1779300857; c=relaxed/simple;
+	bh=ayB5LISmOZllfjWqZGowuRiticb7P12YdZXVlEMThb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJ7D9Wx/bGClfKdk8xOwfhiMZgUer2aM8kE9oLTGuTnVJ7kfzi9qwOhNhLdtjTP0XfRUK1ln5Khev/jJQTa2uu5J2ByXqHgm9bgFoZLjih1qo46dxH3BXyKx/4h0hziBTxSlOZRlploJ3FqhChpGcFLgnWudpuL1cvcWBUGGtqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyFUBPUP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fMgbHH/It/oXHRK7Z9s0dRbQSH03Own1MIn8Yiry1f/kQwWYJWI8r3cIimUzu0FeZ7KlAApZNtsSz8tqth0mHXNdgIUcnXnVu6+8AeEKPwnY8VE85kbI9vfsA66wCjRyaEHwzZEku+Zs+bmxSM+vpulAstyptwMO5SXIA6v0AtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wu6xTk04; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyFUBPUP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1811F000E9;
-	Wed, 20 May 2026 18:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wu6xTk04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA3D1F000E9;
+	Wed, 20 May 2026 18:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300853;
-	bh=jLIjt5pk9Ye+XJm7BhM1Eu97yKXBf+hvskKPGJRMKro=;
+	s=korg; t=1779300856;
+	bh=ekJRZH5AaLc1hasOvQzyuU/hgGecOe2ne8waqosiSho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NyFUBPUP7rHCCx2NIezBYRX6COBhKl5RdaufYQnUhEgexowlq8LpvwFLnCnYauoh7
-	 ERTuDqDTWIZ/p206QdQ/24+ZhxWWllqOL3dwy3FtAgKjteYoy105fnrwY0m9YkksqY
-	 q0qmjG4vtmYrM1tKNdAsvL2ut78kTr5E6bDRQylc=
+	b=Wu6xTk04sbkFA45KUFgpFDMxGPzBpOE/M8hUDZK+t4Kd14groGfgZakBiv/Kgm+cY
+	 7WwoOFBgGbCfR2s52k03dWNXtnu74LSWvtyO/h3fa0I4vlq5hxJaeF0qV7OJ5DcWj3
+	 yCRac2gwvzDZzG5LXLdTrAJ5Z0hK3nw4dESOTS0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Safonov <dima@arista.com>,
-	Enrico Bravi <enrico.bravi@polito.it>,
-	Silvia Sisinni <silvia.sisinni@polito.it>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Marc Zyngier <maz@kernel.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 332/666] ima_fs: Correctly create securityfs files for unsupported hash algos
-Date: Wed, 20 May 2026 18:19:03 +0200
-Message-ID: <20260520162118.425384929@linuxfoundation.org>
+Subject: [PATCH 6.12 333/666] dt-bindings: interrupt-controller: arm,gic-v3: Fix EPPI range
+Date: Wed, 20 May 2026 18:19:04 +0200
+Message-ID: <20260520162118.448567996@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -54,128 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Safonov <dima@arista.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit d7bd8cf0b348d3edae7bee33e74a32b21668b181 ]
+[ Upstream commit 15cfc8984defc17e5e4de1f58db7b993240fcbda ]
 
-ima_tpm_chip->allocated_banks[i].crypto_id is initialized to
-HASH_ALGO__LAST if the TPM algorithm is not supported. However there
-are places relying on the algorithm to be valid because it is accessed
-by hash_algo_name[].
+According to the "Arm Generic Interrupt Controller (GIC) Architecture
+Specification, v3 and v4", revision H.b[1], there can be only 64
+Extended PPI interrupts.
 
-On 6.12.40 I observe the following read out-of-bounds in hash_algo_name:
-  ==================================================================
-  BUG: KASAN: global-out-of-bounds in create_securityfs_measurement_lists+0x396/0x440
-  Read of size 8 at addr ffffffff83e18138 by task swapper/0/1
+[1] https://developer.arm.com/documentation/ihi0069/hb/
 
-  CPU: 4 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.40 #3
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x61/0x90
-   print_report+0xc4/0x580
-   ? kasan_addr_to_slab+0x26/0x80
-   ? create_securityfs_measurement_lists+0x396/0x440
-   kasan_report+0xc2/0x100
-   ? create_securityfs_measurement_lists+0x396/0x440
-   create_securityfs_measurement_lists+0x396/0x440
-   ima_fs_init+0xa3/0x300
-   ima_init+0x7d/0xd0
-   init_ima+0x28/0x100
-   do_one_initcall+0xa6/0x3e0
-   kernel_init_freeable+0x455/0x740
-   kernel_init+0x24/0x1d0
-   ret_from_fork+0x38/0x80
-   ret_from_fork_asm+0x11/0x20
-   </TASK>
-
-  The buggy address belongs to the variable:
-   hash_algo_name+0xb8/0x420
-
-  Memory state around the buggy address:
-   ffffffff83e18000: 00 01 f9 f9 f9 f9 f9 f9 00 01 f9 f9 f9 f9 f9 f9
-   ffffffff83e18080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  >ffffffff83e18100: 00 00 00 00 00 00 00 f9 f9 f9 f9 f9 00 05 f9 f9
-                                          ^
-   ffffffff83e18180: f9 f9 f9 f9 00 00 00 00 00 00 00 04 f9 f9 f9 f9
-   ffffffff83e18200: 00 00 00 00 00 00 00 00 04 f9 f9 f9 f9 f9 f9 f9
-  ==================================================================
-
-Seems like the TPM chip supports sha3_256, which isn't yet in
-tpm_algorithms:
-  tpm tpm0: TPM with unsupported bank algorithm 0x0027
-
-That's TPM_ALG_SHA3_256 == 0x0027 from "Trusted Platform Module 2.0
-Library Part 2: Structures", page 51 [1].
-See also the related U-Boot algorithms update [2].
-
-Thus solve the problem by creating a file name with "_tpm_alg_<ID>"
-postfix if the crypto algorithm isn't initialized.
-
-This is how it looks on the test machine (patch ported to v6.12 release):
-  # ls -1 /sys/kernel/security/ima/
-  ascii_runtime_measurements
-  ascii_runtime_measurements_tpm_alg_27
-  ascii_runtime_measurements_sha1
-  ascii_runtime_measurements_sha256
-  binary_runtime_measurements
-  binary_runtime_measurements_tpm_alg_27
-  binary_runtime_measurements_sha1
-  binary_runtime_measurements_sha256
-  policy
-  runtime_measurements_count
-  violations
-
-[1]: https://trustedcomputinggroup.org/wp-content/uploads/Trusted-Platform-Module-2.0-Library-Part-2-Version-184_pub.pdf
-[2]: https://lists.denx.de/pipermail/u-boot/2024-July/558835.html
-
-Fixes: 9fa8e7625008 ("ima: add crypto agility support for template-hash algorithm")
-Signed-off-by: Dmitry Safonov <dima@arista.com>
-Cc: Enrico Bravi <enrico.bravi@polito.it>
-Cc: Silvia Sisinni <silvia.sisinni@polito.it>
-Cc: Roberto Sassu <roberto.sassu@huawei.com>
-Cc: Mimi Zohar <zohar@linux.ibm.com>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Tested-by: Roberto Sassu <roberto.sassu@huawei.com>
-Link: https://github.com/linux-integrity/linux/issues/14
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: 4b049063e0bcbfd3 ("dt-bindings: interrupt-controller: arm,gic-v3: Describe EPPI range support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Brain-farted-by: Marc Zyngier <maz@kernel.org>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/3e49a63c6b2b6ee48e3737adee87781f9c136c5f.1772792753.git.geert+renesas@glider.be
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_fs.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ .../devicetree/bindings/interrupt-controller/arm,gic-v3.yaml    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/integrity/ima/ima_fs.c b/security/integrity/ima/ima_fs.c
-index 87045b09f1206..25970867f594e 100644
---- a/security/integrity/ima/ima_fs.c
-+++ b/security/integrity/ima/ima_fs.c
-@@ -404,16 +404,24 @@ static int __init create_securityfs_measurement_lists(void)
- 		char file_name[NAME_MAX + 1];
- 		struct dentry *dentry;
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml b/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml
+index 5f051c666cbe5..9deaf132d0e9b 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml
+@@ -50,7 +50,7 @@ properties:
+       The 2nd cell contains the interrupt number for the interrupt type.
+       SPI interrupts are in the range [0-987]. PPI interrupts are in the
+       range [0-15]. Extended SPI interrupts are in the range [0-1023].
+-      Extended PPI interrupts are in the range [0-127].
++      Extended PPI interrupts are in the range [0-63].
  
--		sprintf(file_name, "ascii_runtime_measurements_%s",
--			hash_algo_name[algo]);
-+		if (algo == HASH_ALGO__LAST)
-+			sprintf(file_name, "ascii_runtime_measurements_tpm_alg_%x",
-+				ima_tpm_chip->allocated_banks[i].alg_id);
-+		else
-+			sprintf(file_name, "ascii_runtime_measurements_%s",
-+				hash_algo_name[algo]);
- 		dentry = securityfs_create_file(file_name, S_IRUSR | S_IRGRP,
- 						ima_dir, (void *)(uintptr_t)i,
- 						&ima_ascii_measurements_ops);
- 		if (IS_ERR(dentry))
- 			return PTR_ERR(dentry);
- 
--		sprintf(file_name, "binary_runtime_measurements_%s",
--			hash_algo_name[algo]);
-+		if (algo == HASH_ALGO__LAST)
-+			sprintf(file_name, "binary_runtime_measurements_tpm_alg_%x",
-+				ima_tpm_chip->allocated_banks[i].alg_id);
-+		else
-+			sprintf(file_name, "binary_runtime_measurements_%s",
-+				hash_algo_name[algo]);
- 		dentry = securityfs_create_file(file_name, S_IRUSR | S_IRGRP,
- 						ima_dir, (void *)(uintptr_t)i,
- 						&ima_measurements_ops);
+       The 3rd cell is the flags, encoded as follows:
+       bits[3:0] trigger type and level flags.
 -- 
 2.53.0
 
