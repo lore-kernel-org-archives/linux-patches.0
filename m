@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29116376A0C;
-	Wed, 20 May 2026 17:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193293EC2DB;
+	Wed, 20 May 2026 17:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298710; cv=none; b=aXn7++bbqCWLhtF+2Pd/oLTNPnMq4uFkjj8GuHsCxgWOSb1eA4v/vjN/uC4R6Jdib+Kmhrdy+KHy6K9Ydq9c/tYDHR5mrRb3dzhW/RHRouwUmYsrmzUHlsCEixNb7j+X9c2ZOVZe3EfSeM8Kf1a7pXKFpPfcOKg9k0z9pIvj/q4=
+	t=1779298713; cv=none; b=RxLkGplMD4dEKD1tKiQ0qvS7BpN/NNtU5ix0b9LQOaLyVFrbg9ZLVmhjynG9lUV3v+pEGJ/SBnw8HIHIw+lFH+UxLCNeXcWLwB7rWLI/ZTl8dsyrCUOZRmu+WgJeETpWwkgvQTGYuSV5wv7yi9xRFq5Okh8ofiGxlV/Y6wDyHE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298710; c=relaxed/simple;
-	bh=12aYwnQGjDkOZyNXwGmHmNqaDjoLHUZkK76QSFE6rX4=;
+	s=arc-20240116; t=1779298713; c=relaxed/simple;
+	bh=bujyJXahSibZa6Wk/rxg01V3xsyEaXMulNx3Qz7IpV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9PjcEqW1zPHvpuQdUGXUR+XzfjWlu7leqfvhVSo/gH3zzN961ns/yxuvySRIWToN7kCidD2cH4+rGEIgG2v+AvK0AM9BITvp8EQcW/UcXu+DvU/d3dNIR1RmwT+itkw5nYoD6mGDeoyxJ6JSrZZwR+/+o/zSusSYv10m/IbQf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXXQz50Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q4CEEYorVGxXMJ3UfRXZhLiQOBYlt90ziRoxYvsrRR/mSwhi5MdJBL71d48DT8QUeelSAtrnu6vbYqc1hqcp3+jC5nbFd3mJaMlhSNIu9dJzOJKYFM+CCBTxQWB7p8gqj5lZBEGYwUcZWHBA27KANSJvkJf+y6cwUfqhU+GvsiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P31wOB6k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXXQz50Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4E41F000E9;
-	Wed, 20 May 2026 17:38:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P31wOB6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A6E1F000E9;
+	Wed, 20 May 2026 17:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298709;
-	bh=iGYMJiELae5sqbHUxWbV77O7tmKIMxiTWzD8GdLVTYo=;
+	s=korg; t=1779298711;
+	bh=NgBYQ9agorpr6wjhG6RL0+bQonirOVxxrf5cl8uz9X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uXXQz50YepRJahFjszu178rn7DK70aTIL3m+L9ur+cnF0tcskpTdd14koYHkvrOP8
-	 AC7A1mPOJxgNYLjteDK5TrOhAiWZsFnQql+W2l+5Jaj31vZXARTS/VIQGYR4nkhnAR
-	 dWu2Jb0yxV1FyDUizSBxbzDd8pFS+InM9JzNfdl0=
+	b=P31wOB6k6iJXdv+2l2vegaK/WJvLY6Yf8lrzR6rxdPRGCb3esefmC5Yfm0vQ0yH63
+	 SqqbXst+2HycFYwTbfRZn4b9GPpVvSiWLNXnrtT92oi5KnOd6le7mSNoq99VS9JtMk
+	 QZB6qAUXK99K7DJGySeGWnK5vdgjOOOgDy22VbGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Jian Zhang <zhangjian.3032@bytedance.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 513/957] perf expr: Return -EINVAL for syntax error in expr__find_ids()
-Date: Wed, 20 May 2026 18:16:36 +0200
-Message-ID: <20260520162145.661939301@linuxfoundation.org>
+Subject: [PATCH 6.18 514/957] ipmi: ssif_bmc: fix missing check for copy_to_user() partial failure
+Date: Wed, 20 May 2026 18:16:37 +0200
+Message-ID: <20260520162145.683327874@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,55 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Jian Zhang <zhangjian.3032@bytedance.com>
 
-[ Upstream commit 3a61fd866ef9aaa1d3158b460f852b74a2df07f4 ]
+[ Upstream commit ea641be7a4faee4351f9c5ed6b188e1bbf5586a6 ]
 
-expr__find_ids() propagates the parser return value directly.  For syntax
-errors, the parser can return a positive value, but callers treat it as
-success, e.g., for below case on Arm64 platform:
+copy_to_user() returns the number of bytes that could not be copied,
+with a non-zero value indicating a partial or complete failure. The
+current code only checks for negative return values and treats all
+non-negative results as success.
 
-  metric expr 100 * (STALL_SLOT_BACKEND / (CPU_CYCLES * #slots) - BR_MIS_PRED * 3 / CPU_CYCLES) for backend_bound
-  parsing metric: 100 * (STALL_SLOT_BACKEND / (CPU_CYCLES * #slots) - BR_MIS_PRED * 3 / CPU_CYCLES)
-  Failure to read '#slots' literal: #slots = nan
-  syntax error
+Treating any positive return value from copy_to_user() as
+an error and returning -EFAULT.
 
-Convert positive parser returns in expr__find_ids() to -EINVAL, as a
-result, the error value will be respected by callers.
-
-Before:
-
-  perf stat -C 5
-  Failure to read '#slots'Failure to read '#slots'Failure to read '#slots'Failure to read '#slots'Segmentation fault
-
-After:
-
-  perf stat -C 5
-  Failure to read '#slots'Cannot find metric or group `Default'
-
-Fixes: ded80bda8bc9 ("perf expr: Migrate expr ids table to a hashmap")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: dd2bc5cc9e25 ("ipmi: ssif_bmc: Add SSIF BMC driver")
+Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
+Message-ID: <20260403090603.3988423-2-zhangjian.3032@bytedance.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/expr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/char/ipmi/ssif_bmc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/util/expr.c b/tools/perf/util/expr.c
-index 7fda0ff89c168..0893c88a4ef83 100644
---- a/tools/perf/util/expr.c
-+++ b/tools/perf/util/expr.c
-@@ -376,7 +376,8 @@ int expr__find_ids(const char *expr, const char *one,
- 	if (one)
- 		expr__del_id(ctx, one);
+diff --git a/drivers/char/ipmi/ssif_bmc.c b/drivers/char/ipmi/ssif_bmc.c
+index 7a52e3ea49ed8..6cc5c210799ca 100644
+--- a/drivers/char/ipmi/ssif_bmc.c
++++ b/drivers/char/ipmi/ssif_bmc.c
+@@ -163,6 +163,8 @@ static ssize_t ssif_bmc_read(struct file *file, char __user *buf, size_t count,
+ 		spin_unlock_irqrestore(&ssif_bmc->lock, flags);
  
--	return ret;
-+	/* A positive value means syntax error, convert to -EINVAL */
-+	return ret > 0 ? -EINVAL : ret;
- }
+ 		ret = copy_to_user(buf, &msg, count);
++		if (ret > 0)
++			ret = -EFAULT;
+ 	}
  
- double expr_id_data__value(const struct expr_id_data *data)
+ 	return (ret < 0) ? ret : count;
 -- 
 2.53.0
 
