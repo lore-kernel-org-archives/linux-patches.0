@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9351C3F8704;
-	Wed, 20 May 2026 18:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3DC331A41;
+	Wed, 20 May 2026 18:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302123; cv=none; b=IH6RMEVbC2gsl79XRmSUpck315CApgM570uqmH+DY4HU+b7vh1qzfIKirp6g1zRU8tg2eBNatRZM1QSYFj2QFfoV+R0K6GIwcXKU1/h8hf+0b5aYcWNvOHcP6I/VWD7vb5LC8HUC4br+k84SnN1IbS9mElOdpEAWEeJofJBwbb4=
+	t=1779302126; cv=none; b=PN4Cm+w42tDn+FzdoNVq6oTMSW7//qxDvUDqPGOUL8qONX9C5qUWZhDV2jBsTpk1cHdH41N2TeK+OT7WY9loBcwKmCn3vAq/4SIoLRKxOMK38iK39S1OcTMviP+XChCtXfnsYua1sF3yuyXvVkJpN5nrdFJJchWfElfV/WcFkts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302123; c=relaxed/simple;
-	bh=Q+v/oamsfqLTnP5sA6cc4yW+Qqa/kmplzE0YcGYmM8M=;
+	s=arc-20240116; t=1779302126; c=relaxed/simple;
+	bh=60VGjSFeVR/Fw3uJEaERG5fQ/TUbUo4335PAaBI5K5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZxuclvMHaO3ePTgUteRg3WPmqI0HrvQvTlsIbVsThCIdKfB97SKysVu+vbuUQgM1wJ7oSbGo/uFY4VFaewlvHDtJs+DYlMelca6XjqyVXSOuciiQKQzx+slBUqHU0gqXLxQIcfF6yIZf40s/ZVrFqN+Pe4QpOzkhGekmQefGMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3I3bU0n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQkohXrUO9lkguyhoaUZlCDTPcll5fo8MNf31RT0pSFpxoRLRpfPO2BSxYlmGLvbg4fqeFTpayUkp2C27kyuaulBuR9838TzoDyZczVO+XH7jRq8GZNd84iWcEnA88qP2RvCnXN7hhbT1bqmmzzB3gOprZ6IM0KDSMV3Btph3Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJ7egtOe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3I3bU0n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 041391F000E9;
-	Wed, 20 May 2026 18:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJ7egtOe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B381F000E9;
+	Wed, 20 May 2026 18:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302122;
-	bh=6DOqR1biFMVFPcwxQ+5vLdQ2CCn9jo9DtZhV7RTHRWY=;
+	s=korg; t=1779302125;
+	bh=N11CdETJ0bsK5WH/2zu0CHSOoboLzPJ0TqQ+MZs67mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n3I3bU0n9MtX6RiT51OG3l8SHc+TmSEEslXhPdOmDBfBxEKWMWezA1yIagqVfW2Mk
-	 nc9SpIn9KDXo1arFLaKA+OSO+/wji25+6JcSIfW4TnkY+vgEaiZbdU5NoPDoCu1oI8
-	 91efZlcapUtEHTFtkEGAOH34gtQoIO9lZlMowAoM=
+	b=sJ7egtOeU1Q6OCe1SQRi3DV2yy0XwK1euDRyTvxBgk83O31WusHZmuzgcpYdOROLt
+	 gfzohaDt2+RtllPSuBdb2enWHML8EtOkAl1olLPdfNCSdXjvsW4mJ6jiPt96/yXy89
+	 kV3yEtT1ikGDRFzn9jJ/dBlt7RxAnPM3CxFJDsMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Denis Rastyogin <gerben@altlinux.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 147/508] crypto: qat - use swab32 macro
-Date: Wed, 20 May 2026 18:19:30 +0200
-Message-ID: <20260520162101.815378725@linuxfoundation.org>
+Subject: [PATCH 6.6 148/508] ASoC: rsnd: Fix potential out-of-bounds access of component_dais[]
+Date: Wed, 20 May 2026 18:19:31 +0200
+Message-ID: <20260520162101.843188819@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,80 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Denis Rastyogin <gerben@altlinux.org>
 
-[ Upstream commit 35ecb77ae0749a2f1b04872c9978d9d7ddbbeb79 ]
+[ Upstream commit f9e437cddf6cf9e603bdaefe148c1f4792aaf39c ]
 
-Replace __builtin_bswap32() with swab32 in icp_qat_hw_20_comp.h to fix
-the following build errors on architectures without native byte-swap
-support:
+component_dais[RSND_MAX_COMPONENT] is initially zero-initialized
+and later populated in rsnd_dai_of_node(). However, the existing boundary check:
+  if (i >= RSND_MAX_COMPONENT)
 
-   alpha-linux-ld: drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.o: in function `adf_gen4_build_decomp_block':
-   drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h:141:(.text+0xeec): undefined reference to `__bswapsi2'
-   alpha-linux-ld: drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h:141:(.text+0xef8): undefined reference to `__bswapsi2'
-   alpha-linux-ld: drivers/crypto/intel/qat/qat_common/adf_gen4_hw_data.o: in function `adf_gen4_build_comp_block':
-   drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h:57:(.text+0xf64): undefined reference to `__bswapsi2'
-   alpha-linux-ld: drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h:57:(.text+0xf7c): undefined reference to `__bswapsi2'
+does not guarantee that the last valid element remains zero. As a result,
+the loop can rely on component_dais[RSND_MAX_COMPONENT] being zero,
+which may lead to an out-of-bounds access.
 
-Fixes: 5b14b2b307e4 ("crypto: qat - enable deflate for QAT GEN4")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202603290259.Ig9kDOmI-lkp@intel.com/
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 547b02f74e4a ("ASoC: rsnd: enable multi Component support for Audio Graph Card/Card2")
+Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/20260327103311.459239-1-gerben@altlinux.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h   | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/soc/sh/rcar/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h b/drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h
-index 7ea8962272f2f..d28732225c9e0 100644
---- a/drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h
-+++ b/drivers/crypto/intel/qat/qat_common/icp_qat_hw_20_comp.h
-@@ -3,6 +3,8 @@
- #ifndef _ICP_QAT_HW_20_COMP_H_
- #define _ICP_QAT_HW_20_COMP_H_
+diff --git a/sound/soc/sh/rcar/core.c b/sound/soc/sh/rcar/core.c
+index 3cd14fbca28ea..68f91fc543493 100644
+--- a/sound/soc/sh/rcar/core.c
++++ b/sound/soc/sh/rcar/core.c
+@@ -1995,7 +1995,7 @@ static int rsnd_probe(struct platform_device *pdev)
+ 	 *	asoc register
+ 	 */
+ 	ci = 0;
+-	for (i = 0; priv->component_dais[i] > 0; i++) {
++	for (i = 0; i < RSND_MAX_COMPONENT && priv->component_dais[i] > 0; i++) {
+ 		int nr = priv->component_dais[i];
  
-+#include <linux/swab.h>
-+
- #include "icp_qat_hw_20_comp_defs.h"
- #include "icp_qat_fw.h"
- 
-@@ -54,7 +56,7 @@ ICP_QAT_FW_COMP_20_BUILD_CONFIG_LOWER(struct icp_qat_hw_comp_20_config_csr_lower
- 	QAT_FIELD_SET(val32, csr.abd, ICP_QAT_HW_COMP_20_CONFIG_CSR_ABD_BITPOS,
- 		      ICP_QAT_HW_COMP_20_CONFIG_CSR_ABD_MASK);
- 
--	return __builtin_bswap32(val32);
-+	return swab32(val32);
- }
- 
- struct icp_qat_hw_comp_20_config_csr_upper {
-@@ -106,7 +108,7 @@ ICP_QAT_FW_COMP_20_BUILD_CONFIG_UPPER(struct icp_qat_hw_comp_20_config_csr_upper
- 		      ICP_QAT_HW_COMP_20_CONFIG_CSR_NICE_PARAM_BITPOS,
- 		      ICP_QAT_HW_COMP_20_CONFIG_CSR_NICE_PARAM_MASK);
- 
--	return __builtin_bswap32(val32);
-+	return swab32(val32);
- }
- 
- struct icp_qat_hw_decomp_20_config_csr_lower {
-@@ -138,7 +140,7 @@ ICP_QAT_FW_DECOMP_20_BUILD_CONFIG_LOWER(struct icp_qat_hw_decomp_20_config_csr_l
- 		      ICP_QAT_HW_DECOMP_20_CONFIG_CSR_LZ4_BLOCK_CHECKSUM_PRESENT_BITPOS,
- 		      ICP_QAT_HW_DECOMP_20_CONFIG_CSR_LZ4_BLOCK_CHECKSUM_PRESENT_MASK);
- 
--	return __builtin_bswap32(val32);
-+	return swab32(val32);
- }
- 
- struct icp_qat_hw_decomp_20_config_csr_upper {
-@@ -158,7 +160,7 @@ ICP_QAT_FW_DECOMP_20_BUILD_CONFIG_UPPER(struct icp_qat_hw_decomp_20_config_csr_u
- 		      ICP_QAT_HW_DECOMP_20_CONFIG_CSR_MINI_CAM_CONTROL_BITPOS,
- 		      ICP_QAT_HW_DECOMP_20_CONFIG_CSR_MINI_CAM_CONTROL_MASK);
- 
--	return __builtin_bswap32(val32);
-+	return swab32(val32);
- }
- 
- #endif
+ 		ret = devm_snd_soc_register_component(dev, &rsnd_soc_component,
 -- 
 2.53.0
 
