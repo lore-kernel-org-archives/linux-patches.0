@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B52400DEE;
-	Wed, 20 May 2026 11:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DCBC400E17;
+	Wed, 20 May 2026 11:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276076; cv=none; b=eQb9pYBLvfbKLexTRsIM3XHp63VyJ7GAW1id2uhrfZHRhZckoFCXv/0zb4ThNW2yhZVHiTk4Z0gVFvEVQoVW6oXvvAtVbudMJBURZr3KUAPytuaawk/uJK+iXVfqge84zah60mIXuBSstNdoI8Fj2yIQ3ukVeCdIAXTutFGs9z8=
+	t=1779276077; cv=none; b=bn05Ty1/rInG5pQCv3xQ6qaIudxR7GmjZ5Njuz0Oxgmr4jO6UtqqKttL4AewrD9KBoMxIo+d2r9ed1VP6cBXccH4zrHpKhBDqkXyw2I3AR6+ocWbsEAxolajnBJuLouPwY6OsscFFhbS1r1/n9LKj/qbSa5SbpZVsrKVerPSepk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276076; c=relaxed/simple;
-	bh=y30KC3srFv+XseZMDrzuM4GMU5XpEdlU5cHxgx2MAqo=;
+	s=arc-20240116; t=1779276077; c=relaxed/simple;
+	bh=B4blOnHXdI+jGuEKFGOxpG/izqDXLDPkIG4KXfH8Axc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VU3llZibhX8YIeMBt9bcIRRj4whH1YIg4UK74qGtomT04xXBBayxVprgQiccIgmobNHOYXsFla+Ly8ty1kKffFskSFjmRfouUsvbO2xakFltkA7cR+9pqcTuakqhxVUwjN8QTe8YLch4oHeNwOneSrfFp6+RFtbNCv9I8MGJFzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqXB+1CB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=K0RIo5w/Xn4wFzUQZXaa14T8xxQA+ZK5N9hUhlMqvttn/kFq2UW0lMs3mhbrx6x0HffDSUs2kDCAieYtTMD5uFwSWk8trqc0CYKESJFKYYECN0jv+wCl2AM5vf2C1m5e84ffQg2EWCwQ5LLcZP/OAas8AWp4yWfO0l+89NkKf2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dILIBQf1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqXB+1CB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5AC1F00898;
-	Wed, 20 May 2026 11:21:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dILIBQf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52951F00893;
+	Wed, 20 May 2026 11:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276074;
-	bh=vVYITuU5ayYDZ6nr6e6Lv1gWsOSA/WdMxHpJrzkPSpo=;
+	s=k20260515; t=1779276075;
+	bh=SCmueEPDpuN64ioI9XEvbENRMV04N6Cn8zg40gHVn6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gqXB+1CBA9UEm3EDO1dw0mOgboAG4qsRV/vwMX6Ci93oXY6kk0dSdPeBNtlP5TGnq
-	 8mrCIAV4I8BNEuGxjDJqVt2bqfrFNgRCWqhRknw19DAQDJtcMKCVk68RroNrohtr9/
-	 poImP4Uvn8qyVOv8y68012RUGCIeKkYScg8ABiZeQhGqTZNTArpCsd/uRQggV/rp4M
-	 k7HOSWUe2mKZVmzs+/j1r+xXxtLieCC5L/LhMLVi61s1WfJSh4p1F85y8Q+aCHz5Sr
-	 X/eipuXtcVMu0g+p3/jg8K8mDuDW2WnixwH43dRcIdcYGTx0HyrmcxKh0vIM7SyRNU
-	 eII3d91VR1cMg==
+	b=dILIBQf1dCTSqcGvB2nVPIhNnkrt/Tq92um0jyz9WyP45dISP6sQ8U2RmtJQa9L8d
+	 dhet9WGAUr6uFD58XCMS1thW2RNiquoEV2Rxtixs0x8loEF5mkjkpmF/3zDVEjlhd+
+	 H6DI4iXaOxOSBDFfQGKYPeUm9XnNF4VzmIur5DsYzN2/m3qAU7hINSrV25pG+np6sR
+	 PfOnV2GIBAKM4jdnZ5vDXZEPG5RuGXLFAOcXQLGyhISbm+BS9ZT3FKJGSBS+UvED12
+	 QMT85vONpIGkpIp75kmddASHRv806OrnzuMa2kg+wjo0mq7m0NGM2mv4HDzMhpKSVm
+	 ozk69/VLkY0Kw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Willy Tarreau <w@1wt.eu>,
-	Greg KH <gregkh@linuxfoundation.org>,
-	Leon Romanovsky <leon@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+Cc: Maoyi Xie <maoyixie.tju@gmail.com>,
+	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	security@kernel.org,
-	workflows@vger.kernel.org,
-	linux-doc@vger.kernel.org,
+	io-uring@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] Documentation: security-bugs: do not systematically Cc the security team
-Date: Wed, 20 May 2026 07:19:35 -0400
-Message-ID: <20260520111944.3424570-63-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] io_uring/fdinfo: translate SqThread PID through caller's pid_ns
+Date: Wed, 20 May 2026 07:19:36 -0400
+Message-ID: <20260520111944.3424570-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -56,266 +53,211 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Willy Tarreau <w@1wt.eu>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit aed3c3346765e4317bb2ec6ff872e1c952e128ab ]
+[ Upstream commit 3799c2570982577551023ae035f5a786cf39a76e ]
 
-With the increase of automated reports, the security team is dealing
-with way more messages than really needed. The reporting process works
-well with most teams so there is no need to systematically involve the
-security team in reports.
+SQPOLL stores current->pid (init_pid_ns view) in sqd->task_pid
+at thread creation. fdinfo prints it raw via
+seq_printf("SqThread:\t%d\n", sq_pid). A reader inside a
+non-initial pid_ns sees the host PID, not the kthread's PID in
+the reader's own pid_ns.
 
-Let's suggest to keep it for small lists of recipients and new reporters
-only. This should continue to cover the risk of lost messages while
-reducing the volume from prolific reporters.
+The SQPOLL kthread is created with CLONE_THREAD and no
+CLONE_NEW*, so it lives in the submitter's pid_ns. An
+unprivileged user_ns + pid_ns submitter can read fdinfo and
+learn the host PID of a kthread whose in-namespace PID is
+different.
 
-Cc: Greg KH <gregkh@linuxfoundation.org>
-Cc: Leon Romanovsky <leon@kernel.org>
-Reviewed-by: Leon Romanovsky <leon@kernel.org>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Willy Tarreau <w@1wt.eu>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260509094755.2838-2-w@1wt.eu>
+Reproducer (mainline 7.0, KASAN): unshare CLONE_NEWUSER |
+CLONE_NEWPID | CLONE_NEWNS, mount a private /proc, then have a
+grandchild that is pid 1 in the new pid_ns open an io_uring
+ring with IORING_SETUP_SQPOLL. /proc/self/task lists {1, 2};
+the SQPOLL kthread is pid 2. Before: fdinfo prints
+SqThread = <host pid>. After: SqThread = 2.
+
+Use task_pid_nr_ns() against the proc inode's pid_ns to compute
+sq_pid, instead of reading the stored sq->task_pid (which holds
+the init_pid_ns view). pidfd_show_fdinfo() in kernel/pid.c
+follows the same pattern.
+
+Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+Link: https://patch.msgid.link/20260510084119.457578-1-maoyi.xie@ntu.edu.sg
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Record 1.1: Subsystem `Documentation/process/security-bugs`; action verb
-`do not`; intent is to update security bug reporting instructions so
-reporters do not always Cc the security team.
+## Phase Walkthrough
+Phase 1, commit message forensics:
+- Record 1.1: subsystem `io_uring/fdinfo`; action verb `translate`;
+  intent is to report `SqThread` in the proc fdinfo reader’s PID
+  namespace.
+- Record 1.2: tags are `Signed-off-by: Maoyi Xie
+  <maoyi.xie@ntu.edu.sg>`, `Link: https://patch.msgid.link/2026051008411
+  9.457578-1-maoyi.xie@ntu.edu.sg`, and `Signed-off-by: Jens Axboe
+  <axboe@kernel.dk>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
+  `Reviewed-by:`, `Acked-by:`, or `Cc: stable`.
+- Record 1.3: the bug is a namespace information leak: `SqThread`
+  reports the init-namespace/host PID to a reader inside a non-initial
+  PID namespace. The message includes a concrete reproducer using
+  unprivileged user/pid/mount namespaces and an SQPOLL ring.
+- Record 1.4: this is not hidden cleanup; it is an explicit namespace
+  correctness and information disclosure fix.
 
-Record 1.2: Tags present: `Cc: Greg KH <gregkh@linuxfoundation.org>`,
-`Cc: Leon Romanovsky <leon@kernel.org>`, `Reviewed-by: Leon Romanovsky
-<leon@kernel.org>`, `Reviewed-by: Greg Kroah-Hartman
-<gregkh@linuxfoundation.org>`, `Signed-off-by: Willy Tarreau
-<w@1wt.eu>`, `Signed-off-by: Jonathan Corbet <corbet@lwn.net>`,
-`Message-ID: <20260509094755.2838-2-w@1wt.eu>`. No `Fixes:`, no
-`Reported-by:`, no `Tested-by:`, no `Cc: stable`.
+Phase 2, diff analysis:
+- Record 2.1: one file, `io_uring/fdinfo.c`, with 2 insertions and 1
+  deletion in `__io_uring_show_fdinfo()`. Scope is a single-function
+  surgical fix.
+- Record 2.2: before, fdinfo used stored `sq->task_pid`; after, it
+  computes `sq_pid = task_pid_nr_ns(tsk,
+  proc_pid_ns(file_inode(m->file)->i_sb))`.
+- Record 2.3: bug category is logic/security namespace translation. The
+  broken value was a raw task PID; the fix translates the live SQPOLL
+  task into the proc fdinfo file’s PID namespace.
+- Record 2.4: fix quality is high: minimal, uses existing helpers, keeps
+  the existing task lifetime protection, and follows the verified
+  `pidfd_show_fdinfo()` pattern. Regression risk is very low; host/init
+  namespace output remains equivalent.
 
-Record 1.3: The body describes a process/documentation problem:
-increased automated reports create more mail to the security team than
-needed. Symptom is excess security-team involvement, not a kernel
-runtime crash or data corruption. No affected kernel versions are named.
+Phase 3, git history:
+- Record 3.1: blame shows the current `sq_pid = sq->task_pid` line last
+  touched by `606559dc4fa36a`, while the semantic change to store/print
+  `sq->task_pid` came from `a0d45c3f596be`, first contained around
+  `v6.7-rc2`.
+- Record 3.2: no `Fixes:` tag is present, so there was no tagged
+  introducing commit to follow.
+- Record 3.3: recent `io_uring/fdinfo.c` history includes multiple
+  fdinfo correctness fixes, including SQPOLL lifetime/UAF fixes and SQE
+  display fixes. No prerequisite series was found for this patch.
+- Record 3.4: local history shows no other `Maoyi Xie` commits under
+  `io_uring`; `Jens Axboe` is the listed `IO_URING` maintainer and
+  committed/applied the patch.
+- Record 3.5: dependencies `task_pid_nr_ns()` and `proc_pid_ns()` exist
+  in relevant stable branches checked. The patch applies cleanly to
+  `p-6.12`, `p-6.18`, `p-6.19`, and `p-7.0`.
 
-Record 1.4: This is not a hidden code bug fix. It is an explicit
-documentation/process update that corrects now-overbroad guidance.
+Phase 4, mailing list research:
+- Record 4.1: `b4 dig -c 3799c2570982577551023ae035f5a786cf39a76e` found
+  the lore thread at the supplied patch.msgid link. `b4 dig -a` found
+  only v1.
+- Record 4.2: original recipients included Jens Axboe, Pavel Begunkov,
+  `io-uring@vger.kernel.org`, and `linux-kernel@vger.kernel.org`.
+- Record 4.3: no separate bug-report link or reporter tag was present;
+  the bug evidence is the commit’s reproducer.
+- Record 4.4: no multi-patch series or related required patches were
+  found by b4.
+- Record 4.5: no stable-specific discussion was verified. WebFetch hit
+  Anubis protection; web search did not produce usable stable discussion
+  for this exact patch.
 
-## Phase 2: Diff Analysis
-Record 2.1: One file changed: `Documentation/process/security-bugs.rst`,
-9 insertions and 1 deletion in the submitted patch. No functions are
-modified. Scope is single-file documentation-only.
+Phase 5, semantic analysis:
+- Record 5.1: modified function is `__io_uring_show_fdinfo()`.
+- Record 5.2: caller chain is `/proc/*/fdinfo` read in `fs/proc/fd.c` ->
+  `file->f_op->show_fdinfo()` -> `io_uring_show_fdinfo()` ->
+  `__io_uring_show_fdinfo()`.
+- Record 5.3: relevant callees are `rcu_dereference()`,
+  `get_task_struct()`, `io_sq_cpu_usec()`, `task_pid_nr_ns()`,
+  `proc_pid_ns()`, and `seq_printf()`.
+- Record 5.4: reachable from userspace by creating an
+  `IORING_SETUP_SQPOLL` ring and reading `/proc/self/fdinfo/<fd>`.
+  Current code has global `io_uring_allowed()` gating, but no SQPOLL-
+  specific capability check was found in the flag validation path.
+- Record 5.5: similar verified pattern exists in `pidfd_show_fdinfo()`,
+  which derives the namespace from `file_inode(m->file)->i_sb`.
 
-Record 2.2: Before: reports “must” be sent to maintainers with the
-security team in Cc. After: reports still go to maintainers, but
-security-team Cc is mandatory only for two-or-fewer recipients, advised
-for early reports or specific help, and no longer necessary for
-comfortable reporters sending to large teams.
+Phase 6, stable tree analysis:
+- Record 6.1: `p-6.12`, `p-6.18`, `p-6.19`, and `p-7.0` contain the
+  exact `sq->task_pid` fdinfo pattern. `p-6.6` also contains
+  `sq->task_pid`; `p-6.1` uses `task_pid_nr(sq->thread)`, which also
+  returns `tsk->pid` in the checked header. `p-5.10` and `p-5.15` did
+  not show `SqThread` fdinfo matches in checked paths.
+- Record 6.2: exact patch applies cleanly to `p-6.12+` branches checked.
+  Older `p-6.1`/`p-6.6` need backport adjustment due code shape
+  differences.
+- Record 6.3: no existing stable fix for this specific namespace
+  translation was found in checked stable branch code.
 
-Record 2.3: Bug category is documentation/process correctness. No
-resource leak, race, memory safety, refcount, initialization, endian, or
-hardware quirk mechanism exists.
+Phase 7, subsystem context:
+- Record 7.1: subsystem is `io_uring`, an important syscall-facing
+  kernel I/O subsystem; affected surface is SQPOLL fdinfo, not the core
+  I/O data path.
+- Record 7.2: file history shows active fdinfo development and recent
+  fixes. Maintainer metadata verifies Jens Axboe as `IO_URING`
+  maintainer.
 
-Record 2.4: Fix quality is high for its scope: small, reviewed,
-documentation-only, no runtime behavior. Regression risk is limited to
-possibly changing reporter behavior; no kernel runtime regression is
-possible from the diff itself.
+Phase 8, impact and risk:
+- Record 8.1: affected users are container/pid-namespace users who
+  create SQPOLL io_uring rings and read proc fdinfo.
+- Record 8.2: trigger is straightforward where io_uring is allowed:
+  create SQPOLL in non-init pid namespace and read fdinfo. It is not
+  timing-dependent.
+- Record 8.3: failure mode is host PID information disclosure and pid
+  namespace isolation violation. Severity is medium
+  security/correctness, not crash/corruption.
+- Record 8.4: benefit is meaningful for namespace isolation; risk is
+  very low due a 3-line localized proc-output fix.
 
-## Phase 3: Git History Investigation
-Record 3.1: `git blame` shows the replaced sentence was introduced by
-`a72b832a482372` (“Documentation: explain how to find maintainers
-addresses for security reports”), first contained by `v7.0-rc7~8^2~2`.
-
-Record 3.2: No `Fixes:` tag is present, so there is no Fixes target to
-follow.
-
-Record 3.3: Recent history of `Documentation/process/security-bugs.rst`
-shows a series of security-reporting documentation updates by Willy
-Tarreau, including contact/process clarifications and typo fixes. This
-patch is standalone at the diff level but part of a three-patch
-documentation series.
-
-Record 3.4: The author has multiple recent commits in
-`Documentation/process/security-bugs.rst`. Maintainer lookup identifies
-`Security Officers <security@kernel.org>` and `Jonathan Corbet
-<corbet@lwn.net>` for this file.
-
-Record 3.5: No code dependencies or functions exist. The exact patch
-depends on the newer rewritten security-bugs document layout present in
-`7.0.y`; older stable branches do not contain `a72b832a482372`.
-
-## Phase 4: Mailing List And External Research
-Record 4.1: `b4 dig -c` could not be used because no candidate commit
-SHA was available locally or in the prompt, and local `master`, `docs-
-next`, and `all-next` searches did not find the commit object. Using the
-supplied Message-ID, `b4 am` found the original submission at
-`https://patch.msgid.link/20260509094755.2838-1-w@1wt.eu`.
-
-Record 4.2: `b4 am` and the mbox show v3 of a 3-patch series, 33 thread
-messages, sent to Greg KH, Leon Romanovsky, Jonathan Corbet, Shuah Khan,
-`security@kernel.org`, `workflows@vger.kernel.org`, `linux-
-doc@vger.kernel.org`, and `linux-kernel@vger.kernel.org`.
-
-Record 4.3: No bug report link, syzbot report, Bugzilla report, or user
-crash report exists. Lore WebFetch was blocked by Anubis, but `b4`
-successfully fetched the mbox.
-
-Record 4.4: Series context: patch 1/3 is this Cc guidance change; patch
-2/3 adds security-bug/threat-model documentation; patch 3/3 clarifies
-AI-assisted reports. Cover letter says v2 reworded the “when to Cc” part
-based on Greg’s feedback; v3 included wording/structure feedback and
-added reviews.
-
-Record 4.5: I found no stable-specific discussion or stable nomination
-in the fetched thread. Jonathan Corbet said he applied the series to
-`docs-fixes` after short linux-next exposure.
-
-## Phase 5: Code Semantic Analysis
-Record 5.1: No functions modified; documentation only.
-
-Record 5.2: No callers; affected audience is readers of
-`Documentation/process/security-bugs.rst`.
-
-Record 5.3: No callees or side effects.
-
-Record 5.4: Reachability is not runtime reachability. The path is
-“reporter reads stable-tree documentation and follows reporting
-instructions.”
-
-Record 5.5: `rg` found the old mandatory-Cc sentence only in
-`Documentation/process/security-bugs.rst`; related security-team
-references remain elsewhere in the same document.
-
-## Phase 6: Cross-Referencing And Stable Tree Analysis
-Record 6.1: `a72b832a482372` is an ancestor of `stable/linux-7.0.y` but
-not of local `stable/linux-5.15.y`, `stable/linux-6.1.y`,
-`stable/linux-6.6.y`, `stable/linux-6.12.y`, `stable/linux-6.18.y`, or
-`stable/linux-6.19.y`. So this exact buggy/obsolete sentence is
-confirmed in `7.0.y`; older local stable trees have older document
-layouts.
-
-Record 6.2: `b4` reports the series base applies cleanly to the current
-tree, which is `stable/linux-7.0.y`. Older stable trees would need a
-different documentation backport if maintainers wanted equivalent
-guidance there.
-
-Record 6.3: No related stable fix for this exact wording was found in
-local history.
-
-## Phase 7: Subsystem And Maintainer Context
-Record 7.1: Subsystem is documentation/process, specifically security
-bug reporting. Criticality is process-important, not runtime
-core/driver/filesystem criticality.
-
-Record 7.2: The file has active recent development, with several
-2025-2026 security-reporting documentation updates.
-
-## Phase 8: Impact And Risk Assessment
-Record 8.1: Affected population is documentation readers: security bug
-reporters, maintainers, and the kernel security team. No running kernel
-users are directly affected.
-
-Record 8.2: Trigger is following the stable tree’s security-bug
-reporting documentation. This can be done by any reporter, but it is not
-a syscall or kernel execution path.
-
-Record 8.3: Failure mode severity is low for runtime stability, but
-medium for security-process efficiency: the old wording can
-unnecessarily add the private security team to large-team reports.
-
-Record 8.4: Benefit is moderate for keeping security reporting guidance
-current and reducing unnecessary private-list traffic. Risk is very low
-because the patch is documentation-only and reviewed.
-
-## Phase 9: Final Synthesis
-Record 9.1: Evidence for backporting: documentation-only; zero runtime
-regression risk; corrects overbroad/obsolete reporting guidance;
-reviewed by Leon Romanovsky and Greg Kroah-Hartman; applied by
-documentation maintainer Jonathan Corbet; relevant to security reporting
-workflow; clean for `7.0.y`.
-
-Evidence against: it does not fix a kernel runtime bug, crash, security
-vulnerability, corruption, or deadlock; older stable trees do not
-contain the exact rewritten section, so this exact patch is mainly
-applicable to `7.0.y`.
-
-Unresolved: I could not run `b4 dig -c` without a commit SHA, and
-WebFetch of lore was blocked by Anubis. The `b4` Message-ID fetch
-supplied the needed thread content.
-
-Record 9.2: Stable rules: obviously correct and reviewed: yes. Fixes
-real user-visible runtime bug: no. Important
-crash/security/corruption/deadlock: no. Small and contained: yes, one
-documentation file. No new feature/API: yes. Applies to stable: yes for
-`7.0.y`; older branches need separate handling.
-
-Record 9.3: Exception category: documentation fix/update. This is the
-reason it qualifies despite not being a runtime bug.
-
-Record 9.4: Decision: backport where the affected documentation exists,
-especially `7.0.y`. The runtime benefit is nonexistent, but the risk is
-also nonexistent, and stable policy exceptions allow documentation fixes
-that correct obsolete guidance.
+Phase 9, synthesis:
+- Record 9.1: evidence for backporting: real reproducer, unprivileged
+  namespace information leak, tiny fix, maintainer-applied, uses
+  established proc namespace helper pattern, clean applies to multiple
+  stable branches. Evidence against: no crash/data corruption; older
+  stable branches need adapted backports.
+- Record 9.2: stable rules: obviously correct yes; fixes real user-
+  visible bug yes; important enough as security/isolation info leak yes;
+  small and contained yes; no new feature/API yes; applies cleanly to
+  checked `p-6.12+`, with older-tree rework as noted.
+- Record 9.3: no automatic exception category applies.
+- Record 9.4: decision is to backport.
 
 ## Verification
-- Phase 1: Parsed supplied commit tags and b4 patch headers; confirmed
-  no `Fixes:`, `Reported-by:`, `Tested-by`, or `Cc: stable`.
-- Phase 2: Read supplied diff and b4 patch; confirmed one documentation
-  file, 9 insertions/1 deletion, no code.
-- Phase 3: Ran `git blame -L 148,152 -- Documentation/process/security-
-  bugs.rst`; old sentence introduced by `a72b832a482372`.
-- Phase 3: Ran `git describe --contains a72b832a482372`; first contained
-  around `v7.0-rc7~8^2~2`.
-- Phase 3: Ran file and author history commands; confirmed recent
-  related docs updates by Willy Tarreau.
-- Phase 4: Local `git log` searches on current history, `master`, `docs-
-  next`, and `all-next` did not find the candidate commit object.
-- Phase 4: `b4 am -o /tmp/security-bugs-b4
-  20260509094755.2838-2-w@1wt.eu` found a v3 3-patch series, 33
-  messages, and reported clean apply to current tree.
-- Phase 4: `b4 mbox` saved the thread mbox; `rg` found no stable
-  nomination or NAK for this patch.
-- Phase 4: WebFetch of lore URLs was blocked by Anubis; not used for the
-  final decision.
-- Phase 5: `rg` over `Documentation` confirmed the exact mandatory-Cc
-  sentence appears in `Documentation/process/security-bugs.rst`.
-- Phase 6: `git merge-base --is-ancestor a72b832a482372
-  stable/linux-7.0.y` returned true; checks for `5.15.y`, `6.1.y`,
-  `6.6.y`, `6.12.y`, `6.18.y`, and `6.19.y` returned false.
-- Phase 7: `./scripts/get_maintainer.pl` identified Security Officers
-  and Jonathan Corbet for the file; `MAINTAINERS` confirms
-  `DOCUMENTATION PROCESS`, `SECURITY CONTACT`, and `STABLE BRANCH`
-  entries.
-- Phase 8: Failure mode verified from commit text and diff only:
-  documentation/process burden, not runtime failure.
+- Phase 1: `git show --format=fuller --patch
+  3799c2570982577551023ae035f5a786cf39a76e` verified the commit message,
+  trailers, and 3-line diff.
+- Phase 2: local `io_uring/fdinfo.c` read verified the pre-patch
+  `sq->task_pid` fdinfo output and task reference context.
+- Phase 3: `git blame`, `git show a0d45c3f596be`, `git describe
+  --contains`, and file logs verified history and first-release context.
+- Phase 4: `b4 dig -c`, `b4 dig -a`, `b4 dig -w`, and `b4 mbox` verified
+  the lore thread, v1-only submission, recipients, and Jens “Applied,
+  thanks” reply with commit `3799c257...`.
+- Phase 5: reads of `fs/proc/fd.c`, `io_uring/io_uring.c`,
+  `io_uring/sqpoll.c`, `kernel/fork.c`, `include/linux/pid.h`,
+  `kernel/pid.c`, and `fs/pidfs.c` verified reachability, helper
+  semantics, SQPOLL creation flags, and the pidfd fdinfo pattern.
+- Phase 6: checked `p-6.1`, `p-6.6`, `p-6.12`, `p-6.18`, `p-6.19`,
+  `p-7.0`, and `stable/linux-7.0.y` code; worktree `git apply --check`
+  verified clean application to `p-6.12`, `p-6.18`, `p-6.19`, and
+  `p-7.0`.
+- Unverified: no kernel build or runtime reproducer was run; stable-list
+  discussion could not be verified because direct lore WebFetch was
+  blocked and search found no usable exact stable thread.
+
+This is stable material: it fixes a concrete namespace information leak
+with a tiny, conventional, low-risk change.
 
 **YES**
 
- Documentation/process/security-bugs.rst | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ io_uring/fdinfo.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/process/security-bugs.rst b/Documentation/process/security-bugs.rst
-index 27b028e858610..6dc525858125e 100644
---- a/Documentation/process/security-bugs.rst
-+++ b/Documentation/process/security-bugs.rst
-@@ -148,7 +148,15 @@ run additional tests.  Reports where the reporter does not respond promptly
- or cannot effectively discuss their findings may be abandoned if the
- communication does not quickly improve.
- 
--The report must be sent to maintainers, with the security team in ``Cc:``.
-+The report must be sent to maintainers.  If there are two or fewer
-+recipients in your message, you must also always Cc: the Linux kernel
-+security team who will ensure the message is delivered to the proper
-+people, and will be able to assist small maintainer teams with processes
-+they may not be familiar with.  For larger teams, Cc: the Linux kernel
-+security team for your first few reports or when seeking specific help,
-+such as when resending a message which got no response within a week.
-+Once you have become comfortable with the process for a few reports, it is
-+no longer necessary to Cc: the security list when sending to large teams.
- The Linux kernel security team can be contacted by email at
- <security@kernel.org>.  This is a private list of security officers
- who will help verify the bug report and assist developers working on a fix.
+diff --git a/io_uring/fdinfo.c b/io_uring/fdinfo.c
+index c2d3e45544bb4..001fb542dc11a 100644
+--- a/io_uring/fdinfo.c
++++ b/io_uring/fdinfo.c
+@@ -190,8 +190,9 @@ static void __io_uring_show_fdinfo(struct io_ring_ctx *ctx, struct seq_file *m)
+ 			get_task_struct(tsk);
+ 			rcu_read_unlock();
+ 			usec = io_sq_cpu_usec(tsk);
++			sq_pid = task_pid_nr_ns(tsk,
++						proc_pid_ns(file_inode(m->file)->i_sb));
+ 			put_task_struct(tsk);
+-			sq_pid = sq->task_pid;
+ 			sq_cpu = sq->sq_cpu;
+ 			sq_total_time = usec;
+ 			sq_work_time = sq->work_time;
 -- 
 2.53.0
 
