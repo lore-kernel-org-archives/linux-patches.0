@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379C637754D;
-	Wed, 20 May 2026 17:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB25A369999;
+	Wed, 20 May 2026 17:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297673; cv=none; b=KUX/wngPfca633gBvOCGIxpSEG/bqqnp9CWGNpvP12V+yupESf8Mb9H43JeFgR51EhxCzJ7fN1mxETOIxWgcGrkXu5YPZZaI8jEPJo5AF9kHK7gm7AzeXxptOLS50HKvZEVEIfxksVC0l2zZwkJGAfDipHMgqOw6+WYZLFP3bnE=
+	t=1779297675; cv=none; b=CGojGDj0DA5GLPG2a3Rrg+nedLiHvikc8PCLj5OlH+l9AjCf9yEHHAHXk6ARXCTcyTanJKJB8Mnx2qxLAulJ9gueWnf5WXEHuvBNStfKnVfY3Blz7V9UvpUnkL2wwW5JJNlxw2GVjACjInun/4Uu72W09EKYRAKYZuUfrP7FVPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297673; c=relaxed/simple;
-	bh=dCx4iCdgy8VMgP0F7+3yPNjzI83kf/QmVZYDeGp4vtA=;
+	s=arc-20240116; t=1779297675; c=relaxed/simple;
+	bh=2W1Rv8p31WEpcQuqaL2q5ilpXZuJaprE7iGY/oveqag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PE3TXPfI7ccZKz5oLZQ5HqC3YOrKlgkT8tF0EBjr7EdpckPoDNP969qDJurYgsdVgvEWuGJ9X1ODGYEfm9vO891iPxFAAyOEVhi2lqelInnPJJ0y95YH/0GDmRPfVgLKPJCUyFyiD/DYvE3tOGxlnT7/UjWpsuPzSTzD+QLknUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvPMkwIR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JS2bwL22VPbBGFujcfE7OiKFTkEC1bcDZjcs4NpTl5aGww0CdZwggmqYBBOWhZzfWDrO4Fx3onjVmRoivUnqbODOsimEtdXVxZDIwjhlDv/etvxB/9Hgb+mE+oyKCMJ+CijEe+OxFtCm5kJupt0lH5Mn4KeOHURgWGR5WGMj7Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATYtz9+E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvPMkwIR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B651F000E9;
-	Wed, 20 May 2026 17:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATYtz9+E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C01E1F000E9;
+	Wed, 20 May 2026 17:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297672;
-	bh=12BalTkcldi3pefJUN2YDQwNktKxI/LSeJvK9aEjuvM=;
+	s=korg; t=1779297674;
+	bh=pTDnYKsTxhrYtYD62xJ1NaMwGUhT1q8oRHZ7XGlBPIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TvPMkwIRrnphPIcD1Ks3pRfQAegzLf9FN8iwz31OMjRLN3kkQYvgJnYdG+X+Em0vM
-	 oA5rP6UIi04JNuNN9QPsg5teDu8FscjWTsBud8a+b0gSn3ro5F//do+6505CUE7LLx
-	 UGooCe60sLA6s0iJiunBvJymqk3c1X9cz8UYZG8s=
+	b=ATYtz9+EzwRKq0HK1gdg/vY7Nyqp2tis2/0IW4HV6322igWCEsr10F6e9a0AAnMOk
+	 GA5dKhSxZoJ2dgEZ3y+D1K1lzzKGRUM6x1Q77fW+YEO7TpEsAHUTDU2C8y4Y2XSgaV
+	 crpkHqph50lM9z40O77QV0Ge4Tx5sWzzpJmjm4EI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 119/957] bpf: Fix abuse of kprobe_write_ctx via freplace
-Date: Wed, 20 May 2026 18:10:02 +0200
-Message-ID: <20260520162137.140608167@linuxfoundation.org>
+Subject: [PATCH 6.18 120/957] macvlan: annotate data-races around port->bc_queue_len_used
+Date: Wed, 20 May 2026 18:10:03 +0200
+Message-ID: <20260520162137.161833826@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,80 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 611fe4b79af72d00d80f2223354284447daafae9 ]
+[ Upstream commit 1ef5789d9906df3771c99b7f413caaf2bf473ca5 ]
 
-uprobe programs are allowed to modify struct pt_regs.
+port->bc_queue_len_used is read and written locklessly,
+add READ_ONCE()/WRITE_ONCE() annotations.
 
-Since the actual program type of uprobe is KPROBE, it can be abused to
-modify struct pt_regs via kprobe+freplace when the kprobe attaches to
-kernel functions.
+While WRITE_ONCE() in macvlan_fill_info() is not yet needed,
+it is a prereq for future RTNL avoidance.
 
-For example,
-
-SEC("?kprobe")
-int kprobe(struct pt_regs *regs)
-{
-	return 0;
-}
-
-SEC("?freplace")
-int freplace_kprobe(struct pt_regs *regs)
-{
-	regs->di = 0;
-	return 0;
-}
-
-freplace_kprobe prog will attach to kprobe prog.
-kprobe prog will attach to a kernel function.
-
-Without this patch, when the kernel function runs, its first arg will
-always be set as 0 via the freplace_kprobe prog.
-
-To fix the abuse of kprobe_write_ctx=true via kprobe+freplace, disallow
-attaching freplace programs on kprobe programs with different
-kprobe_write_ctx values.
-
-Fixes: 7384893d970e ("bpf: Allow uprobe program to change context registers")
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Song Liu <song@kernel.org>
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/r/20260331145353.87606-2-leon.hwang@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: d4bff72c8401 ("macvlan: Support for high multicast packet rate")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260401103809.3038139-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/net/macvlan.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 586ece78f783a..ff268fd2ff8b5 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -3708,6 +3708,23 @@ static int bpf_tracing_prog_attach(struct bpf_prog *prog,
- 		tr = prog->aux->dst_trampoline;
- 		tgt_prog = prog->aux->dst_prog;
- 	}
-+	/*
-+	 * It is to prevent modifying struct pt_regs via kprobe_write_ctx=true
-+	 * freplace prog. Without this check, kprobe_write_ctx=true freplace
-+	 * prog is allowed to attach to kprobe_write_ctx=false kprobe prog, and
-+	 * then modify the registers of the kprobe prog's target kernel
-+	 * function.
-+	 *
-+	 * This also blocks the combination of uprobe+freplace, because it is
-+	 * unable to recognize the use of the tgt_prog as an uprobe or a kprobe
-+	 * by tgt_prog itself. At attach time, uprobe/kprobe is recognized by
-+	 * the target perf event flags in __perf_event_set_bpf_prog().
-+	 */
-+	if (prog->type == BPF_PROG_TYPE_EXT &&
-+	    prog->aux->kprobe_write_ctx != tgt_prog->aux->kprobe_write_ctx) {
-+		err = -EINVAL;
-+		goto out_unlock;
-+	}
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index 4433b8e95b6ac..e9d288a05e39e 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -352,6 +352,7 @@ static void macvlan_broadcast_enqueue(struct macvlan_port *port,
+ 				      const struct macvlan_dev *src,
+ 				      struct sk_buff *skb)
+ {
++	u32 bc_queue_len_used = READ_ONCE(port->bc_queue_len_used);
+ 	struct sk_buff *nskb;
+ 	int err = -ENOMEM;
  
- 	err = bpf_link_prime(&link->link.link, &link_primer);
- 	if (err)
+@@ -362,7 +363,7 @@ static void macvlan_broadcast_enqueue(struct macvlan_port *port,
+ 	MACVLAN_SKB_CB(nskb)->src = src;
+ 
+ 	spin_lock(&port->bc_queue.lock);
+-	if (skb_queue_len(&port->bc_queue) < port->bc_queue_len_used) {
++	if (skb_queue_len(&port->bc_queue) < bc_queue_len_used) {
+ 		if (src)
+ 			dev_hold(src->dev);
+ 		__skb_queue_tail(&port->bc_queue, nskb);
+@@ -1727,7 +1728,8 @@ static int macvlan_fill_info(struct sk_buff *skb,
+ 	}
+ 	if (nla_put_u32(skb, IFLA_MACVLAN_BC_QUEUE_LEN, vlan->bc_queue_len_req))
+ 		goto nla_put_failure;
+-	if (nla_put_u32(skb, IFLA_MACVLAN_BC_QUEUE_LEN_USED, port->bc_queue_len_used))
++	if (nla_put_u32(skb, IFLA_MACVLAN_BC_QUEUE_LEN_USED,
++			READ_ONCE(port->bc_queue_len_used)))
+ 		goto nla_put_failure;
+ 	if (port->bc_cutoff != 1 &&
+ 	    nla_put_s32(skb, IFLA_MACVLAN_BC_CUTOFF, port->bc_cutoff))
+@@ -1787,7 +1789,7 @@ static void update_port_bc_queue_len(struct macvlan_port *port)
+ 		if (vlan->bc_queue_len_req > max_bc_queue_len_req)
+ 			max_bc_queue_len_req = vlan->bc_queue_len_req;
+ 	}
+-	port->bc_queue_len_used = max_bc_queue_len_req;
++	WRITE_ONCE(port->bc_queue_len_used, max_bc_queue_len_req);
+ }
+ 
+ static int macvlan_device_event(struct notifier_block *unused,
 -- 
 2.53.0
 
