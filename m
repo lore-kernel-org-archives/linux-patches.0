@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B283EE1EC;
-	Wed, 20 May 2026 11:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF293F0AA3;
+	Wed, 20 May 2026 11:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276041; cv=none; b=hqqJokkX11iUWrbcVOb0dNHAijLjUfApayRdvG2sZxSssXIk2EQcnQdwnZ3pwc8BlbokJ2fSIgeR4fN9ek/4Dnr0A9UStpbVUlTL8+cXyzJwui1vZWR5Jc/haFFdgpDEYMMePio94tjtbnj+qAo2+1FiGUVTll4YZaDO2nQqu2o=
+	t=1779276042; cv=none; b=rbA9yNZp+WJm0PvNyvISBVXHki5uoKlEdmmqNcEKW6ooh2awfJ4M7C8P4m7StY8oPEiMCp5qDtV6lABd5RtO++juvxirIDx23kDkFZ+qg+nEbVUNlpbnk2K9uCRQCpXTg4wAlMxJ+cLH7AkXncdY5kJGDPgiznflBDiVcWJh5jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276041; c=relaxed/simple;
-	bh=R0CXG/sR2XzcTICPaASs4rIpFuUDTo6aKtSJf/5vWx0=;
+	s=arc-20240116; t=1779276042; c=relaxed/simple;
+	bh=FdxaTCru6hrfGquTDBaLS5mWfPunr3FQyhpxgFvekzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OAYsAvOkieLE4KlkAC11N4tGOpTykOnh1YhAggtX5f2G4/kJEUmlbV8drqdHDETjXZKX44K/BhvUbF1sfc+873BiXHIijEr4PHVSnuiZeeCgvwCcsXuVN0NLse/PwVZN+zm16VpRmH20gji4Nag2Y7bJimX8NsNf3ytXKxuI9Cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UdE5gZrN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dmQbMfmnXBj5hA0zXvuOLHiHH0+CdIU5Ar/JZ/XmGDlz2WnaY8vJaj2ShAxfxoNg8urdBPK9NlYlYCQ+Co1ziyh0Dxwv+27N7CWfFo8aMhXFok1UczSmGH0TS7CzENpQfRrP5YTnaIiwMl7zDZ/FGTpyIcBRJXQqJABbYjboLRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WEkUYSAy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UdE5gZrN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703CE1F00894;
-	Wed, 20 May 2026 11:20:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WEkUYSAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B942C1F00896;
+	Wed, 20 May 2026 11:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276039;
-	bh=BasMEeDW6XPs7A/N3atABlk5j0/nIx2aBYDkA9++MyI=;
+	s=k20260515; t=1779276040;
+	bh=cInCMzdvIkClR5l3HNMTXvE1JYiwOvHOF8R1wdwpNGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UdE5gZrNLjmPSdqojUnXV5QQ8ADfTnnDFVCzgSgidcLgPUbAEXXIdwPobi8m5aJ0f
-	 LjV8ABsei4zGMVvmLq5B2bxw7XKMe6lFq1JfK4T3VF4bDOxYec8oYJ2R+h7uaxNelg
-	 GXmoWOKj57wWk8Avt3dVmHTwVDNqdsn/Kc+ygUg6VAJs9fxuxGR9DeyEvH8UoRImoH
-	 wOVKPjQfqtmzW7S9P0/U52ZHxb/rHJ/+yBytn+fKeGLismDnsxFKbv6cqFeS6+38/q
-	 sSpolIzOJWp5aFmng42dhhFz3+pqVBa24oB24WWGOg2IvYfp8ILbuGLNpfNoSbISju
-	 FIe+CC7bmZ2gQ==
+	b=WEkUYSAyboltHIWK5JyWcQmx4iOj8wBbPt5thNAVeZ3kaA1aDuhmo9rXUnf2pwBSH
+	 tHJ8P9NkQw0x6wFmB7mUp+noywhelkaR1ufh5A61jvBhv1vdX0mqrj39AD1ycYIdas
+	 M/JHMCOYweyOJuF5tv1a8AcpDMwP+IvcOdgm1fO2fBbjcX5jzjdfQO3Mt8KJhWrXpj
+	 QKWJXMIPTX1aA7d2PmoTGpEIC++hw/hw8ETznubRIGq2caePMzTUtC3orCQZOKPAYG
+	 TIWod7oqut/Gzcmr2A6kelOCRMw1/eEpuqA7VZQ9a24TeSVZNSQxmzIZaB+d5owFWN
+	 3HI4CZjUve1kQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: ZhengYuan Huang <gality369@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Anton Swart <anton.swart.jhb@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] btrfs: fix check_chunk_block_group_mappings() to iterate all chunk maps
-Date: Wed, 20 May 2026 07:19:10 -0400
-Message-ID: <20260520111944.3424570-38-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] ALSA: usb-audio: Add quirk flags for AlphaTheta EUPHONIA
+Date: Wed, 20 May 2026 07:19:11 -0400
+Message-ID: <20260520111944.3424570-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -50,347 +51,376 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Anton Swart <anton.swart.jhb@gmail.com>
 
-[ Upstream commit fc51cba3ebae67f967120e27162e94cfb8594479 ]
+[ Upstream commit f80785888f7c0980a49545b87a80e3817c9ed7c6 ]
 
-[BUG]
-A corrupted image with a chunk present in the chunk tree but whose
-corresponding block group item is missing from the extent tree can be
-mounted successfully, even though check_chunk_block_group_mappings()
-is supposed to catch exactly this corruption at mount time.  Once
-mounted, running btrfs balance with a usage filter (-dusage=N or
--dusage=min..max) triggers a null-ptr-deref:
+The AlphaTheta EUPHONIA (VID 0x2b73, PID 0x0047) is a USB Audio
+Class 2 DJ mixer that requires implicit feedback for full-duplex
+operation. The capture endpoint (0x83 IN, interface 2) acts as the
+implicit feedback source for the playback endpoint (0x03 OUT,
+interface 1), and the device firmware does not send isochronous
+data on the capture endpoint unless the host is simultaneously
+sending data on the playback endpoint, i.e. playback must be
+started first.
 
-  KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
-    RIP: 0010:chunk_usage_filter fs/btrfs/volumes.c:3874 [inline]
-    RIP: 0010:should_balance_chunk fs/btrfs/volumes.c:4018 [inline]
-    RIP: 0010:__btrfs_balance fs/btrfs/volumes.c:4172 [inline]
-    RIP: 0010:btrfs_balance+0x2024/0x42b0 fs/btrfs/volumes.c:4604
+Without QUIRK_FLAG_PLAYBACK_FIRST the kernel waits for capture URBs
+before submitting playback URBs, creating a deadlock: the device
+waits for playback data and the host waits for capture data.
+Without QUIRK_FLAG_GENERIC_IMPLICIT_FB the kernel does not detect
+the implicit feedback relationship between the two interfaces.
 
-[CAUSE]
-The crash occurs because __btrfs_balance() iterates the on-disk chunk
-tree, finds the orphaned chunk, calls chunk_usage_filter() (or
-chunk_usage_range_filter()), which queries the in-memory block group
-cache via btrfs_lookup_block_group().  Since no block group was ever
-inserted for this chunk, the lookup returns NULL, and the subsequent
-dereference of cache->used crashes.
+The same flag combination is already used for the Behringer UMC202HD,
+UMC204HD and UMC404HD (0x1397:0x0507/0x0508/0x0509), which exhibit
+the identical implicit-feedback topology.
 
-check_chunk_block_group_mappings() uses btrfs_find_chunk_map() to
-iterate the in-memory chunk map (fs_info->mapping_tree):
+Tested on Raspberry Pi 5 with kernel 6.12.75; continuous full-duplex
+streaming at 96 kHz / 24-bit, zero XRUNs.
 
-  map = btrfs_find_chunk_map(fs_info, start, 1);
-
-With @start = 0 and @length = 1, btrfs_find_chunk_map() looks for a
-chunk map that *contains* the logical address 0. If no chunk contains
-logical address 0, btrfs_find_chunk_map(fs_info, 0, 1) returns NULL
-immediately and the loop breaks after the very first iteration,
-having checked zero chunks. The entire verification function is therefore
-a no-op, and the corrupted image passes the mount-time check undetected.
-
-[FIX]
-Replace the btrfs_find_chunk_map() based loop with a direct in-order
-walk of fs_info->mapping_tree using rb_first_cached() + rb_next().
-This guarantees that every chunk map in the tree is visited regardless
-of the logical addresses involved.
-
-No lock is taken around the traversal. This function is called during
-mount from btrfs_read_block_groups(), which is invoked from open_ctree()
-before any background threads (cleaner, transaction kthread, etc.) are
-started. There are therefore no concurrent writers that could modify
-mapping_tree at this point. An analogous lockless direct traversal of
-mapping_tree already exists in fill_dummy_bgs() in the same file.
-
-Since we walk the rb-tree directly via rb_entry() without going through
-btrfs_find_chunk_map(), no reference is taken on each map entry, so the
-btrfs_free_chunk_map() calls are also removed.
-
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Anton Swart <anton.swart.jhb@gmail.com>
+Link: https://patch.msgid.link/20260503211517.14332-1-anton.swart.jhb@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Record: Subsystem is `btrfs`; action verb is `fix`; claimed intent is to
-make `check_chunk_block_group_mappings()` actually visit all chunk maps.
 
-Record: Tags found in the committed version: `Signed-off-by: ZhengYuan
-Huang <gality369@gmail.com>`, `Reviewed-by: David Sterba
-<dsterba@suse.com>`, `Signed-off-by: David Sterba <dsterba@suse.com>`.
-No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc:
-stable@vger.kernel.org` tag was present.
+### Step 1.1: Subject
+Record: Subsystem: `ALSA: usb-audio`. Action verb: `Add`. Claimed
+intent: add device-specific quirk flags for AlphaTheta EUPHONIA.
 
-Record: The commit describes a real mount-time corruption validation
-bug: a chunk can exist in the chunk tree while the matching block group
-item is missing from the extent tree. Because the verifier may check
-zero chunks, the corrupted filesystem can mount, and later `btrfs
-balance -dusage=...` can hit a NULL dereference in
-`chunk_usage_filter()` / `chunk_usage_range_filter()`.
+### Step 1.2: Tags
+Record:
+- `Signed-off-by: Anton Swart <anton.swart.jhb@gmail.com>`: author
+  signoff.
+- `Link: https://patch.msgid.link/20260503211517.14332-1-
+  anton.swart.jhb@gmail.com`: original patch submission.
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>`: supplied commit message
+  says ALSA maintainer applied/signed off.
+- No `Fixes:` tag.
+- No `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
+  stable@vger.kernel.org` tags.
+- The patch body says it was tested on Raspberry Pi 5 with kernel
+  `6.12.75`, but this is not a formal `Tested-by:` tag.
 
-Record: This is not hidden cleanup. It is an explicit NULL-deref /
-corruption-detection fix.
+### Step 1.3: Commit Body
+Record: The bug is a device-specific full-duplex startup deadlock for
+AlphaTheta EUPHONIA USB Audio Class 2 mixer `VID:PID 0x2b73:0x0047`. The
+capture endpoint is the implicit feedback source, but firmware does not
+emit capture isochronous data until playback is already sending.
+Symptom: full-duplex streaming cannot start because host waits for
+capture feedback while device waits for playback data. Version info:
+tested on `6.12.75`. Root cause: kernel does not both detect generic
+implicit feedback and start playback first for this device.
+
+### Step 1.4: Hidden Bug Fix
+Record: Yes. Although phrased as “Add quirk flags”, this is a hardware
+workaround fixing real device malfunction. It falls under the stable
+hardware-quirk exception.
 
 ## Phase 2: Diff Analysis
-Record: One file changed: `fs/btrfs/block-group.c`, 8 insertions and 15
-deletions in the committed object. Modified function:
-`check_chunk_block_group_mappings()`. Scope: single-file surgical fix.
 
-Record: Before, the function started at logical address 0 and repeatedly
-called `btrfs_find_chunk_map(fs_info, start, 1)`. If no chunk
-intersected `[0,1)`, the first lookup returned NULL and the loop exited
-without checking any chunk. After, it walks `fs_info->mapping_tree`
-directly with `rb_first_cached()` and `rb_next()`.
+### Step 2.1: Inventory
+Record:
+- File changed: `sound/usb/quirks.c`
+- Scope: 2 lines added, 0 removed.
+- Function/data object modified: `quirk_flags_table[]`.
+- Classification: single-file, table-only, surgical hardware quirk.
 
-Record: Bug category is logic/correctness with memory-safety
-consequence. The broken verifier allows filesystem corruption through
-mount; later balance can dereference a NULL block group pointer.
+### Step 2.2: Code Flow Change
+Record:
+- Before: device `0x2b73:0x0047` had no built-in quirk flag entry.
+- After: matching USB audio devices get `QUIRK_FLAG_PLAYBACK_FIRST |
+  QUIRK_FLAG_GENERIC_IMPLICIT_FB`.
+- Affected path: USB audio device probe initializes `chip->quirk_flags`
+  from `quirk_flags_table[]`; stream parsing and endpoint start then use
+  those flags.
+- Path type: initialization/probe plus later stream-start behavior.
 
-Record: Fix quality is good: small, direct, reviewed by the btrfs
-maintainer, and it removes `btrfs_free_chunk_map()` calls because direct
-`rb_entry()` traversal does not acquire chunk-map references. Regression
-risk is low; the main concern is lockless traversal, but code and commit
-context verify this runs during mount before cleaner/transaction
-kthreads start.
+### Step 2.3: Bug Mechanism
+Record:
+- Category: hardware workaround / USB audio implicit feedback startup
+  ordering.
+- `QUIRK_FLAG_GENERIC_IMPLICIT_FB` is verified in `sound/usb/implicit.c`
+  to trigger `add_generic_implicit_fb()` when the generic implicit-
+  feedback flag is set.
+- `QUIRK_FLAG_PLAYBACK_FIRST` is verified in `sound/usb/endpoint.c` to
+  skip the normal “do not submit playback URBs until feedback arrives”
+  behavior for implicit-feedback sinks.
+- Together they fix the described stream-start deadlock for this device.
+
+### Step 2.4: Fix Quality
+Record: The fix is obviously minimal and consistent with existing
+entries. The same exact flag combination is already present for
+Behringer UMC202HD/UMC204HD/UMC404HD in `sound/usb/quirks.c`. Regression
+risk is very low because the new behavior is limited to exact USB ID
+`0x2b73:0x0047`.
 
 ## Phase 3: Git History Investigation
-Record: `git blame` on the pre-fix function shows the verifier loop
-originated from `4358d9635a16` (`btrfs: migrate the block group
-read/creation code`), first contained in `v5.4-rc1`. Later chunk-map
-conversion came from `7dc66abb5a47` in `v6.8-rc1`.
 
-Record: No `Fixes:` tag is present, so there was no Fixes target to
-follow.
+### Step 3.1: Blame Changed Area
+Record: `git blame` on the insertion area showed neighboring quirk
+entries are longstanding table entries, including Fiero SC-01 entries
+introduced by `668abe6dc7b619` (`ALSA: usb-audio: Sort quirk table
+entries`). Local history is partly grafted, so I did not rely on graft-
+boundary blame for introduction of the whole mechanism.
 
-Record: Recent `fs/btrfs/block-group.c` history shows normal btrfs
-churn, but no prior fix for `check_chunk_block_group_mappings()` except
-this commit. `git log --grep=check_chunk_block_group_mappings
-origin/master` found only `fc51cba3ebae`.
+### Step 3.2: Fixes Tag
+Record: Not applicable. There is no `Fixes:` tag.
 
-Record: Author history in `fs/btrfs` shows ZhengYuan Huang has other
-btrfs fixes; the patch was reviewed and committed by David Sterba, who
-is listed in `MAINTAINERS` as a btrfs maintainer.
+### Step 3.3: File History
+Record: Recent `sound/usb/quirks.c` history contains many similar
+device-specific quirk additions/fixes. No prerequisite patch is
+referenced by the commit message. This patch is standalone for trees
+that already have `QUIRK_FLAG_GENERIC_IMPLICIT_FB` and
+`QUIRK_FLAG_PLAYBACK_FIRST`.
 
-Record: The commit was submitted as patch 4/4, but the final mainline
-history contains this verifier fix independently. The earlier balance
-hardening patches were not found in `origin/master`; this patch still
-has standalone value because it prevents the corrupted state from
-passing mount.
+### Step 3.4: Author History
+Record: `git log --author='Anton Swart' -10 -- sound/usb` found no local
+prior commits. `MAINTAINERS` verifies Takashi Iwai is a listed `SOUND`
+maintainer, and the supplied commit message has his signoff.
+
+### Step 3.5: Dependencies
+Record: The patch depends on existing `QUIRK_FLAG_GENERIC_IMPLICIT_FB`
+and `QUIRK_FLAG_PLAYBACK_FIRST` infrastructure. Verified present in
+`v6.1`, `v6.6`, `v6.12`, and `v7.0.5`. Verified `v5.15` has
+`PLAYBACK_FIRST` but not `GENERIC_IMPLICIT_FB`, so this exact patch is
+not directly applicable to `5.15.y`.
 
 ## Phase 4: Mailing List And External Research
-Record: `b4 dig -c fc51cba3ebae...` found the original lore submission:
-`https://patch.msgid.link/20260325004339.2323838-5-gality369@gmail.com`.
 
-Record: `b4 dig -a` found v2 and v3 series. v3 is the committed/latest
-revision found by `b4`.
+### Step 4.1: Original Discussion
+Record: No upstream commit hash was available locally, so `b4 dig -c
+<commit>` could not be used. I used the supplied message-id link with
+`b4 am`. It found the patch at `https://lore.kernel.org/all/202605032115
+17.14332-1-anton.swart.jhb@gmail.com/`, one patch, two messages in
+thread, zero code-review messages analyzed, DKIM signed by Gmail.
+`WebFetch` to lore was blocked by Anubis.
 
-Record: `b4 dig -w` showed the patch was sent to David Sterba, Chris
-Mason, Ilya Dryomov, `linux-btrfs`, and `linux-kernel`.
+### Step 4.2: Reviewers / Recipients
+Record: `b4 am --cc-trailers` showed recipients: `alsa-devel@alsa-
+project.org`, Jaroslav Kysela, Takashi Iwai, and `linux-
+kernel@vger.kernel.org`. These are appropriate ALSA/kernel recipients.
+No reviewer trailers were found in the b4-processed thread.
 
-Record: Direct `WebFetch` of lore was blocked by Anubis, so I used `b4`
-mbox content and Patchew. The v3 mbox includes David Sterba saying he
-added the fixes to `for-next`; the committed patch has his `Reviewed-
-by`.
+### Step 4.3: Bug Report
+Record: No separate bug report or `Reported-by:` tag found. The patch
+itself gives a concrete device topology, failure mode, and test result.
+Web search found AlphaTheta product/support pages but no separate kernel
+bug report for this quirk.
 
-Record: Patchew v2 discussion records David Sterba saying block group
-lookup checks make sense in general, and the author clarified the bug is
-reproducible with a crafted filesystem image and normal syscalls, not
-only fuzzing. No NAKs were found. No stable-specific discussion was
-found by web search.
+### Step 4.4: Related Series
+Record: `b4 am` found a single-patch submission, not a multi-patch
+series. No series dependency found.
+
+### Step 4.5: Stable Mailing List
+Record: `WebFetch` searches for lore stable/all were blocked by Anubis.
+Web search did not find stable-list discussion for this exact patch. No
+evidence found of a stable-specific objection.
 
 ## Phase 5: Code Semantic Analysis
-Record: Modified function: `check_chunk_block_group_mappings()`.
 
-Record: Caller trace verified: `open_ctree()` calls
-`btrfs_read_block_groups()`, which calls
-`check_chunk_block_group_mappings()`. In `disk-io.c`,
-`btrfs_read_block_groups()` occurs before the cleaner and transaction
-kthreads are started.
+### Step 5.1: Key Functions/Data
+Record: Modified object: `quirk_flags_table[]`. Affected functions
+verified:
+- `snd_usb_init_quirk_flags_table()`
+- `snd_usb_init_quirk_flags()`
+- `snd_usb_audio_create()`
+- `audioformat_playback_quirk()`
+- `add_generic_implicit_fb()`
+- `snd_usb_endpoint_start()`
 
-Record: Crash path verified: `BTRFS_IOC_BALANCE_V2` reaches
-`btrfs_ioctl_balance()`, then `btrfs_balance()`, `__btrfs_balance()`,
-`should_balance_chunk()`, then usage filters. Current code dereferences
-`cache->used` immediately after `btrfs_lookup_block_group()`.
+### Step 5.2: Callers
+Record: `usb_audio_probe()` calls `snd_usb_audio_create()`, which
+initializes quirk flags. ALSA PCM ops call `snd_usb_pcm_prepare()` and
+playback/capture trigger callbacks, which call `start_endpoints()`,
+which calls `snd_usb_endpoint_start()`.
 
-Record: Key callees: `rb_first_cached()`, `rb_next()`, `rb_entry()`,
-`btrfs_lookup_block_group()`, `btrfs_put_block_group()`, and error
-reporting via `btrfs_err()`.
+### Step 5.3: Callees
+Record: `snd_usb_init_quirk_flags_table()` scans `quirk_flags_table[]`
+and ORs flags into `chip->quirk_flags`. `audioformat_playback_quirk()`
+calls `add_generic_implicit_fb()` when `QUIRK_FLAG_GENERIC_IMPLICIT_FB`
+is set. `snd_usb_endpoint_start()` changes URB submission behavior based
+on `QUIRK_FLAG_PLAYBACK_FIRST`.
 
-Record: Similar safe direct mapping-tree traversal already exists in
-`fill_dummy_bgs()` in the same file, and other mapping-tree traversal
-code exists elsewhere with appropriate locking/context.
+### Step 5.4: Call Chain / Reachability
+Record: Reachable when the matching USB audio device is probed and
+userspace opens/starts ALSA PCM full-duplex streams. I did not verify
+whether an unprivileged user can trigger it on a given distribution;
+ALSA device permissions are policy-dependent.
 
-## Phase 6: Cross-Referencing And Stable Tree Analysis
-Record: Buggy code exists in stable branches. `stable/linux-6.8.y`
-through `stable/linux-6.19.y` contain the `btrfs_find_chunk_map(fs_info,
-start, 1)` pattern. `stable/linux-5.4.y`, `5.10.y`, `5.15.y`, `6.1.y`,
-`6.6.y`, and `6.7.y` contain the older analogous
-`lookup_extent_mapping(map_tree, start, 1)` pattern.
+### Step 5.5: Similar Patterns
+Record: Verified existing exact flag combination for Behringer
+`0x1397:0x0507`, `0x0508`, and `0x0509`. Verified
+`QUIRK_FLAG_GENERIC_IMPLICIT_FB` appears in ten quirk-table entries in
+current `7.0.y`.
 
-Record: The upstream patch applies cleanly to the current `7.0` tree
-with `git apply --check`.
+## Phase 6: Stable Tree Analysis
 
-Record: Older pre-`6.8` stable trees likely need an adjusted backport
-because they use `extent_map` / `map_lookup` rather than `struct
-btrfs_chunk_map`. The bug mechanism is still verified there by the
-strict intersection semantics in `extent_map.c`.
+### Step 6.1: Buggy Code Exists
+Record:
+- `v7.0.5`: quirk infrastructure exists; EUPHONIA entry absent.
+- `v6.12.75`: quirk infrastructure exists; EUPHONIA entry absent.
+- `v6.6`: quirk infrastructure exists; EUPHONIA entry absent.
+- `v6.1`: quirk infrastructure exists; EUPHONIA entry absent.
+- `v5.15`: `GENERIC_IMPLICIT_FB` flag absent, so this exact patch is not
+  applicable.
 
-Record: I found no related stable branch commit already fixing this
-issue by subject/grep.
+### Step 6.2: Backport Difficulty
+Record:
+- `v7.0.5`: index-only `git apply --check` passes.
+- `v6.12.75`: index-only `git apply --check` passes.
+- `v6.6` and `v6.1`: exact patch does not apply because nearby context
+  differs, but the same table and flags exist; expected minor context-
+  only backport.
+- `v5.15`: exact patch does not apply and lacks required generic flag
+  infrastructure.
 
-## Phase 7: Subsystem And Maintainer Context
-Record: Subsystem is btrfs filesystem code under `fs/btrfs/`.
-Criticality is IMPORTANT to CORE-for-users-of-btrfs because filesystem
-corruption handling and kernel crashes are involved.
+### Step 6.3: Related Fixes Already Stable
+Record: No existing `0x2b73:0x0047` or `AlphaTheta EUPHONIA` entry found
+in the local tree. No local history match for this device.
 
-Record: Subsystem is actively maintained; recent `origin/master --
-fs/btrfs` history shows many btrfs fixes. David Sterba is listed as a
-btrfs maintainer and reviewed/committed this fix.
+## Phase 7: Subsystem Context
 
-## Phase 8: Impact And Risk Assessment
-Record: Affected users are btrfs users with a corrupted or crafted
-filesystem image containing a chunk without a corresponding block group
-item.
+### Step 7.1: Subsystem Criticality
+Record: Subsystem is ALSA USB audio, under `sound/usb`. Criticality:
+important for users of affected USB audio hardware, but not
+universal/core kernel.
 
-Record: Trigger is mount of that corrupted image followed by balance
-with usage filters for the crash path; the patched behavior rejects the
-inconsistency at mount time with `-EUCLEAN`. Patchew discussion says it
-is reproducible with crafted filesystem image plus normal syscalls.
-Balance ioctl requires `CAP_SYS_ADMIN`, verified in
-`btrfs_ioctl_balance()`.
+### Step 7.2: Activity
+Record: `sound/usb` is actively maintained; recent history shows
+multiple ALSA USB fixes and quirk updates. Maintainer context verified
+through `MAINTAINERS`.
 
-Record: Failure mode is HIGH/CRITICAL: KASAN NULL pointer dereference in
-filesystem balance code, i.e. kernel crash/oops risk, and the underlying
-issue is missed filesystem corruption detection.
+## Phase 8: Impact And Risk
 
-Record: Benefit is high: prevents corrupted btrfs images from mounting
-silently and avoids a later NULL dereference. Risk is low for `6.8+`
-style trees: one contained verifier loop change during mount. Risk is
-medium-low for older trees only because the backport needs translation
-to the older extent-map data structure.
+### Step 8.1: Affected Users
+Record: Driver/hardware-specific: users of AlphaTheta EUPHONIA USB audio
+mixer on kernels with this usb-audio quirk infrastructure.
+
+### Step 8.2: Trigger Conditions
+Record: Trigger is full-duplex streaming where capture endpoint acts as
+implicit feedback and playback must start first. The commit message
+reports testing continuous full-duplex 96 kHz / 24-bit on Raspberry Pi 5
+with kernel `6.12.75`.
+
+### Step 8.3: Failure Severity
+Record: Failure mode is a device/stream-start deadlock: audio full-
+duplex streaming does not start. Severity: medium-high for affected
+hardware users. It is not verified as a system-wide kernel
+deadlock/panic.
+
+### Step 8.4: Risk / Benefit
+Record: Benefit is high for affected hardware because it makes full-
+duplex operation work. Risk is very low: exact USB-ID match, 2-line
+table addition, no API or shared logic change.
 
 ## Phase 9: Final Synthesis
-Record: Evidence for backporting: real NULL-deref crash path, crafted-
-image reproducibility, filesystem corruption detection failure, small
-one-function fix, maintainer review, code present across stable trees,
-and clean apply to current `7.0` tree.
 
-Record: Evidence against backporting: no `Fixes:`/`Cc: stable` tag;
-older stable trees need adjusted backports; the exact patch is not
-directly applicable to pre-`6.8` extent-map code. These do not outweigh
-the bug severity.
+### Step 9.1: Evidence
+Record: Evidence for backporting:
+- Real hardware malfunction with concrete topology and failure mode.
+- Hardware quirk category is explicitly stable-suitable.
+- 2-line exact-device table addition.
+- Existing identical flag combination for similar implicit-feedback
+  devices.
+- Tested on `6.12.75`.
+- Appropriate ALSA maintainers/lists were CC’d; supplied commit has
+  Takashi Iwai signoff.
 
-Record: Stable rules checklist: obviously correct and reviewed: yes;
-fixes real user-visible bug: yes; important issue: yes, NULL deref and
-missed corruption detection; small and contained: yes; no new
-feature/API: yes; stable application: clean for current `7.0`, likely
-straightforward for `6.8+`, adjusted backport needed for older trees.
+Evidence against:
+- No separate `Reported-by:` or formal `Tested-by:` tag.
+- `v6.6`/`v6.1` need minor context backport.
+- `v5.15` lacks `QUIRK_FLAG_GENERIC_IMPLICIT_FB`, so this exact patch
+  should not be applied there without additional analysis/prerequisites.
 
-Record: Exception category: none. This is a normal bug fix, not a device
-ID, quirk, DT, build, or documentation-only patch.
+Unresolved:
+- Lore web UI could not be fetched due Anubis.
+- No upstream commit hash was available locally, so `b4 dig -c` could
+  not be performed.
+- No independent bug report was found.
+
+### Step 9.2: Stable Rules
+Record:
+1. Obviously correct and tested: yes, for applicable trees; 2-line
+   exact-ID quirk and patch body reports testing.
+2. Fixes a real bug: yes, full-duplex stream startup deadlock for
+   specific hardware.
+3. Important issue: yes for affected hardware; device full-duplex
+   operation is broken without it.
+4. Small and contained: yes, one file, two lines.
+5. No new APIs/features: yes. This is a hardware quirk, not a new
+   interface.
+6. Applies to stable trees: cleanly to `v7.0.5` and `v6.12.75`; minor
+   context backport for `v6.6`/`v6.1`; not directly to `v5.15`.
+
+### Step 9.3: Exception Category
+Record: Hardware quirk/workaround for a broken/nonstandard USB audio
+device. This is one of the strong stable-appropriate exception
+categories.
+
+### Step 9.4: Decision
+This should be backported to stable trees that already have the generic
+implicit-feedback quirk flag infrastructure, especially `6.12.y`,
+`6.6.y`, `6.1.y`, and `7.0.y` if applicable. For `5.15.y`, do not apply
+this exact patch without separate prerequisite/backport work because the
+required `QUIRK_FLAG_GENERIC_IMPLICIT_FB` flag is absent.
 
 ## Verification
-- [Phase 1] `git show --format=fuller --stat fc51cba3ebae...`: confirmed
-  commit message, tags, author, reviewer, and one-file diff.
-- [Phase 2] `git show --no-ext-diff fc51cba3ebae... -- fs/btrfs/block-
-  group.c`: confirmed the loop replacement and removal of
-  `btrfs_free_chunk_map()` calls.
-- [Phase 3] `git blame -L ... fc51cba3ebae^ -- fs/btrfs/block-group.c`:
-  identified `4358d9635a16` as the original verifier-loop source and
-  `7dc66abb5a47` as later chunk-map conversion.
-- [Phase 3] `git show 4358d9635a16` and `git describe --contains`:
-  confirmed first appearance around `v5.4-rc1`.
-- [Phase 3] `git log --grep=check_chunk_block_group_mappings
-  origin/master`: found no prior related fix except this commit.
-- [Phase 4] `b4 dig -c`, `-a`, `-w`, and `-m`: found v3 lore submission,
-  v2/v3 revision history, recipients, and maintainer response.
-- [Phase 4] Patchew v2 fetch: confirmed David Sterba review discussion
-  and author statement that crafted images plus normal syscalls
-  reproduce the issue.
-- [Phase 5] `rg`/file reads in `disk-io.c`, `block-group.c`,
-  `volumes.c`, and `ioctl.c`: verified mount-time call path and balance
-  NULL-deref path.
-- [Phase 6] `git grep` on stable branches: confirmed the buggy lookup
-  pattern in `6.8.y` through `6.19.y` and analogous extent-map pattern
-  in older stable branches.
-- [Phase 6] `git apply --check` against the current tree: confirmed
-  clean application to the current `7.0` checkout.
-- [Phase 7] `MAINTAINERS`: confirmed David Sterba as btrfs maintainer.
-- UNVERIFIED: I did not run a runtime reproducer or mount a crafted
-  btrfs image.
-- UNVERIFIED: I did not prove exact clean application to every older
-  stable branch; pre-`6.8` trees require an adjusted extent-map
-  backport.
 
-The technical merit is strong: this is a small, reviewed btrfs
-corruption-detection fix that prevents a real NULL-deref crash path and
-should be backported, with adjusted backports for older extent-map based
-stable trees.
+- Phase 1: Parsed supplied subject, body, and tags; verified original
+  patch body with `b4 am` mbox.
+- Phase 2: Verified diff is 2 insertions in `sound/usb/quirks.c`.
+- Phase 2/5: Read `sound/usb/quirks.c`, `sound/usb/usbaudio.h`,
+  `sound/usb/implicit.c`, `sound/usb/endpoint.c`, `sound/usb/card.c`,
+  `sound/usb/pcm.c`, and `sound/usb/stream.c`.
+- Phase 3: Ran `git blame` around the insertion area and similar
+  Behringer entries; noted grafted history limits.
+- Phase 3: Ran file and author history searches without `--all`.
+- Phase 4: Ran `b4 am` on the supplied patch link; found one patch and
+  DKIM-signed submission.
+- Phase 4: Ran `b4 am --cc-trailers`; verified ALSA maintainers/lists
+  were CC’d.
+- Phase 4: Tried `WebFetch` for lore and stable queries; blocked by
+  Anubis.
+- Phase 4: Ran web searches; found no separate stable discussion or
+  independent bug report.
+- Phase 5: Verified caller path from USB probe to quirk flag
+  initialization and from ALSA PCM prepare/trigger to endpoint start.
+- Phase 5: Verified same flag combination already exists for Behringer
+  UMC202HD/UMC204HD/UMC404HD.
+- Phase 6: Checked `v7.0.5`, `v6.12.75`, `v6.6`, `v6.1`, and `v5.15` for
+  relevant flags/context.
+- Phase 6: Ran index-only apply checks: applies to `v7.0.5` and
+  `v6.12.75`; does not apply as-is to `v6.6`, `v6.1`, or `v5.15`.
+- Phase 7: Verified `MAINTAINERS` lists Takashi Iwai as a `SOUND`
+  maintainer.
+- Phase 8: Failure mode and tested hardware/kernel are verified from the
+  patch message; unprivileged triggerability is unverified.
 
 **YES**
 
- fs/btrfs/block-group.c | 23 ++++++++---------------
- 1 file changed, 8 insertions(+), 15 deletions(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index c0d17a369bda5..acb55b6f1e550 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -2374,29 +2374,25 @@ static struct btrfs_block_group *btrfs_create_block_group(
-  */
- static int check_chunk_block_group_mappings(struct btrfs_fs_info *fs_info)
- {
--	u64 start = 0;
-+	struct rb_node *node;
- 	int ret = 0;
- 
--	while (1) {
-+	/*
-+	 * This is called during mount from btrfs_read_block_groups(), before
-+	 * any background threads are started, so no concurrent writers can
-+	 * modify the mapping_tree. No lock is needed here.
-+	 */
-+	for (node = rb_first_cached(&fs_info->mapping_tree); node; node = rb_next(node)) {
- 		struct btrfs_chunk_map *map;
- 		struct btrfs_block_group *bg;
- 
--		/*
--		 * btrfs_find_chunk_map() will return the first chunk map
--		 * intersecting the range, so setting @length to 1 is enough to
--		 * get the first chunk.
--		 */
--		map = btrfs_find_chunk_map(fs_info, start, 1);
--		if (!map)
--			break;
--
-+		map = rb_entry(node, struct btrfs_chunk_map, rb_node);
- 		bg = btrfs_lookup_block_group(fs_info, map->start);
- 		if (unlikely(!bg)) {
- 			btrfs_err(fs_info,
- 	"chunk start=%llu len=%llu doesn't have corresponding block group",
- 				     map->start, map->chunk_len);
- 			ret = -EUCLEAN;
--			btrfs_free_chunk_map(map);
- 			break;
- 		}
- 		if (unlikely(bg->start != map->start || bg->length != map->chunk_len ||
-@@ -2409,12 +2405,9 @@ static int check_chunk_block_group_mappings(struct btrfs_fs_info *fs_info)
- 				bg->start, bg->length,
- 				bg->flags & BTRFS_BLOCK_GROUP_TYPE_MASK);
- 			ret = -EUCLEAN;
--			btrfs_free_chunk_map(map);
- 			btrfs_put_block_group(bg);
- 			break;
- 		}
--		start = map->start + map->chunk_len;
--		btrfs_free_chunk_map(map);
- 		btrfs_put_block_group(bg);
- 	}
- 	return ret;
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 148bf7e4e4d72..2ffc69b57ab49 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2401,6 +2401,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x2b53, 0x0031, /* Fiero SC-01 (firmware v1.1.0) */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
++	DEVICE_FLG(0x2b73, 0x0047, /* AlphaTheta EUPHONIA */
++		   QUIRK_FLAG_PLAYBACK_FIRST | QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x2d95, 0x8011, /* VIVO USB-C HEADSET */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
 -- 
 2.53.0
 
