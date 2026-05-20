@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A203FC5C9;
-	Wed, 20 May 2026 17:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F863F1AB8;
+	Wed, 20 May 2026 17:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297108; cv=none; b=lv1eQ7ckrU4bCFT+fMufexkX+4w2+/7BaZOmdQ+qePy1QY9lbdACJJqeimjDHyttgWvpPtsZShyarhFriQC5J2nwn4ge5EggQ5cGN7H7NvA5caetzUvzIxlJNyQMtQmHEHEI1dbi63TnbFO3hevhUwTkCvCZxl89FMAAWioTh1M=
+	t=1779297110; cv=none; b=gishhg5LLZpOgQk0hAxVrUOARE1+EyR4G7wIEE54C4FJc81hxumUjZFcF/K5tiDapHPRLE1aqpsxajM9PvoRuKRtiRxZ/UZnnFcehzs1E1Kh7OtG4yxIpbzJ0VxdS3YILcqWcYMFa99fKJO7F04m69R9R1jOjQOYKhgDpt6FnL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297108; c=relaxed/simple;
-	bh=2MBdCMfR1P7AOeT0PB7jSIHI/EzIfYvDV67hs83rh0w=;
+	s=arc-20240116; t=1779297110; c=relaxed/simple;
+	bh=Fmwvy0NG1ybcSj+cd7jLg7ybgkfki3ETxcXtqV5cRds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T53d76/zG+nn7YcL7vmzZKka/UOgpszgcPjp0YryfmoD4oEcBz64+MQ3wliqdoMdI8gyqmFE/AE3d9Ugq/ZkSJEY6QoGaGOPgOp+rJjZDjvePb3sC8f43qPvMqiyZr5xFFQlSSXrv5VKZ7OqXAe7hhAYJniou0EIXPEkkg2JsHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRUtxg53; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JGZGcIIubFmt/nqAmQSGaCVpdqUO8XnR9S4gZjs6C+3D6nROuqBOTlhR1U+/0eNjw+iPfxRAG9l6juiwD6tZr2YcMtjCtnFUB9pUMOK2kZmn72zuC21ZU8Y4YpF+loO/97htBpfyPa9O7DRzivqy1do98XxGOZ7kV/z1v+JR1UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cS+RXJ4t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRUtxg53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF651F000E9;
-	Wed, 20 May 2026 17:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cS+RXJ4t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D5F1F000E9;
+	Wed, 20 May 2026 17:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297106;
-	bh=s95XHHRWLwdM9NAIZ5Jj5fYngGCTrEimpfgo6BtZT+M=;
+	s=korg; t=1779297109;
+	bh=K37OC/lAEZgPeMmV6qS7CuerJ43f9fPXUeWkoNf+rOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BRUtxg53T2Yu4ns/oZi1qoOqIgG+LrOFOUh4O4luuYo5kkbbL1bxomNi+BzrkJz1z
-	 nZwQTUJzWhjVxeWZ9cqp/D0YpEKTKKXswCUGLVIOOsroa1FND3CveZLKtkCaupu6rp
-	 cpXJmVpvSUCFC0zFCftyvFhYyRsZGWiBX6jXiIQ0=
+	b=cS+RXJ4t5/mq7YfISMqQNgZd9cJkb/55jtoJDRQgskWtXbp4MfiKg1CdQ5f0L+6cQ
+	 AMWa4eJDNmSZHEXNz6y2HkJUqWXp3LZouTP9ph9tLM1jxplX1xeNQoKqnP6c8QbcDw
+	 h8BxN4xglz5vYsBl3le8wlccPtFJZ6JD75APUMJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zoran Ilievski <goodboy@rexbytes.com>,
-	Sukhdeep Singh <sukhdeeps@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 1054/1146] net: atlantic: preserve PCI wake-from-D3 on shutdown when WOL enabled
-Date: Wed, 20 May 2026 18:21:44 +0200
-Message-ID: <20260520162212.088605041@linuxfoundation.org>
+	Ricardo Robaina <rrobaina@redhat.com>,
+	Sergio Correia <scorreia@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 7.0 1055/1146] audit: enforce AUDIT_LOCKED for AUDIT_TRIM and AUDIT_MAKE_EQUIV
+Date: Wed, 20 May 2026 18:21:45 +0200
+Message-ID: <20260520162212.110873935@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,50 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zoran Ilievski <goodboy@rexbytes.com>
+From: Sergio Correia <scorreia@redhat.com>
 
-commit 2c308cf34284420963607d677d576a2b4124d8bd upstream.
+commit f9e1c1324b4d98d591a6f7568fdebf5cf456dfc2 upstream.
 
-The shutdown handler aq_pci_shutdown() unconditionally calls
-pci_wake_from_d3(pdev, false), clearing the PCI PME_En bit even when
-wake-on-LAN has been configured. While aq_nic_shutdown() correctly
-programs the NIC firmware via aq_nic_set_power() to listen for magic
-packets, the PCI subsystem will not propagate the resulting PME wake
-event from D3, so the system never wakes after poweroff.
+AUDIT_ADD_RULE and AUDIT_DEL_RULE correctly check for AUDIT_LOCKED
+and return -EPERM, but AUDIT_TRIM and AUDIT_MAKE_EQUIV do not. This
+allows a process with CAP_AUDIT_CONTROL to modify directory tree
+watches and equivalence mappings even when the audit configuration
+has been locked, undermining the purpose of the lock.
 
-WOL from suspend (S3) is unaffected because aq_suspend_common() does
-not touch pci_wake_from_d3() and relies on the PM core's wake
-configuration via device_may_wakeup().
+Add AUDIT_LOCKED checks to both commands.
 
-This affects all atlantic-supported NICs (AQC107/108/111/112/113);
-users have reported that WOL works if the atlantic driver is never
-loaded, but breaks once it has run its shutdown path.
-
-Pass the configured WOL state to pci_wake_from_d3() instead of a
-literal false, so the PCI PME_En bit is preserved when the user has
-armed WOL via ethtool.
-
-Fixes: 90869ddfefeb ("net: aquantia: Implement pci shutdown callback")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zoran Ilievski <goodboy@rexbytes.com>
-Reviewed-by: Sukhdeep Singh <sukhdeeps@marvell.com>
-Link: https://patch.msgid.link/20260511064002.1857-1-goodboy@rexbytes.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Sergio Correia <scorreia@redhat.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/audit.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-@@ -371,7 +371,7 @@ static void aq_pci_shutdown(struct pci_d
- 	pci_disable_device(pdev);
+--- a/kernel/audit.c
++++ b/kernel/audit.c
+@@ -1466,6 +1466,8 @@ static int audit_receive_msg(struct sk_b
+ 		err = audit_list_rules_send(skb, seq);
+ 		break;
+ 	case AUDIT_TRIM:
++		if (audit_enabled == AUDIT_LOCKED)
++			return -EPERM;
+ 		audit_trim_trees();
+ 		audit_log_common_recv_msg(audit_context(), &ab,
+ 					  AUDIT_CONFIG_CHANGE);
+@@ -1478,6 +1480,8 @@ static int audit_receive_msg(struct sk_b
+ 		size_t msglen = data_len;
+ 		char *old, *new;
  
- 	if (system_state == SYSTEM_POWER_OFF) {
--		pci_wake_from_d3(pdev, false);
-+		pci_wake_from_d3(pdev, self->aq_hw->aq_nic_cfg->wol);
- 		pci_set_power_state(pdev, PCI_D3hot);
- 	}
- }
++		if (audit_enabled == AUDIT_LOCKED)
++			return -EPERM;
+ 		err = -EINVAL;
+ 		if (msglen < 2 * sizeof(u32))
+ 			break;
 
 
