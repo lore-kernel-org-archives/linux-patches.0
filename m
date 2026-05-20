@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E15A34A3BF;
-	Wed, 20 May 2026 17:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96BB2609FD;
+	Wed, 20 May 2026 17:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296686; cv=none; b=CEb4pR/TFvfw7ulJB954dMAgD200MHgzcH4uVLO75kiPNbvtw+mZZsNBitWlt0fRMzE6s+JIxjdpmZRgw4W4G9if/DNUX2tRA2m1CiN2X+maAihMNMBkuvbzZ+EMVHCGOeLTSQ2orunNKr8sIbTKRLnfLjNVoiRYAe1Tr+OIan8=
+	t=1779296692; cv=none; b=K9a7qYVatk4EuAtFWyQFXlYOrxBHJ1ldfKMz2fqZTVD7YnhSvxFyTYwTSAf9+fWYsoSjFsGzY/P3VGo46ARkHRK6QNUuptTuyq7vM+mWnO3ayFS7jYpIIAgZJXdA08rw076cQzJ7kkVLLLQ5mFW8FbgMnOt39z6XCaMBVTfBTgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296686; c=relaxed/simple;
-	bh=lbPO1nTDg9t9o2bDTBN3aqedNw/kZcSIoOmlfbZay5Y=;
+	s=arc-20240116; t=1779296692; c=relaxed/simple;
+	bh=fY+WCWMjMYp9L0neUnT8LJMVRsRr2Ey2XBQa9CDxHGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQXByjXN8ZoS0jwZ4kQA5xEXAIqpq7nRra6TGy7TK+SWydoEDGpg5UIjGOdeAvUyVGzcDiEEk0dHzJoyZG64wnV9SwEcuEQv1FeGYuKuMF5L7oxSmXCdbb0EyMkwoYFk5eGlEU/mPfpeCmk988NkwDl/Yi4h1u8jckW/l0M8zZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIFocUyR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbXmMQq+3Q2GcAz/CQoIA02cx7Ot92W6bYAlJattGaINkC6jLUniuxhNpXV4e+wF8oPMarqMaoDhHyJROrVPwYzfB54HsKzzP5jyt7JHtARm0Iw8MzhNCU6lW0rs8JkR7ocSlL9Y9UcqyHO2j6NSBAhA0Rq8jfPzR6gY7rD6QD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4JVgRl1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIFocUyR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C641F000E9;
-	Wed, 20 May 2026 17:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4JVgRl1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8951F00893;
+	Wed, 20 May 2026 17:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296685;
-	bh=s1xyHrSjB/tk4HCWt0AXIdyFuLweI/jy6tQTlmCDQ6Y=;
+	s=korg; t=1779296690;
+	bh=TxGfP630dtWvoNckIKRArHlVxoetI4ycRyGsEnRM0FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tIFocUyRHUNjPzkHx58FzPtu+4Ew40QXrIWQd7HyqKMGv9GwepH23ehaEDqn5wibZ
-	 PD4zQthOvj7kE19SqS2vgwWHqAg8zpUYIGaGRG6EychKbrUiobBghRvfWso9282/ww
-	 RdmkZw4BqliGPy6vLMltu0+m6x08dheCyF/ydtMo=
+	b=F4JVgRl1/woe9TtGY6XXihS2udnNzKhtLo1/o+82EXwLDXqVn/NCAREe3jtyaw+CK
+	 MxjZN6CXLmhsvlKUohHAywWIZX5QS5QGPehcFbyFyRkjHfDyBp1gdQuyiUapqmRcfX
+	 NMKFeGElfLy5gyp0z7WXVSke7GvdW4JpNT9u/ZTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Ingo Molnar <mingo@elte.hu>,
-	Frederic Weisbecker <fweisbec@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0893/1146] tracing: branch: Fix inverted check on stat tracer registration
-Date: Wed, 20 May 2026 18:19:03 +0200
-Message-ID: <20260520162208.446263850@linuxfoundation.org>
+Subject: [PATCH 7.0 0895/1146] netfilter: arp_tables: fix IEEE1394 ARP payload parsing
+Date: Wed, 20 May 2026 18:19:05 +0200
+Message-ID: <20260520162208.492125016@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,67 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 3b75dd76e64a04771861bb5647951c264919e563 ]
+[ Upstream commit 1e8e3f449b1e73b73a843257635b9c50f0cc0f0a ]
 
-init_annotated_branch_stats() and all_annotated_branch_stats() check the
-return value of register_stat_tracer() with "if (!ret)", but
-register_stat_tracer() returns 0 on success and a negative errno on
-failure. The inverted check causes the warning to be printed on every
-successful registration, e.g.:
+Weiming Shi says:
 
-  Warning: could not register annotated branches stats
+"arp_packet_match() unconditionally parses the ARP payload assuming two
+hardware addresses are present (source and target). However,
+IPv4-over-IEEE1394 ARP (RFC 2734) omits the target hardware address
+field, and arp_hdr_len() already accounts for this by returning a
+shorter length for ARPHRD_IEEE1394 devices.
 
-while leaving real failures silent. The initcall also returned a
-hard-coded 1 instead of the actual error.
+As a result, on IEEE1394 interfaces arp_packet_match() advances past a
+nonexistent target hardware address and reads the wrong bytes for both
+the target device address comparison and the target IP address. This
+causes arptables rules to match against garbage data, leading to
+incorrect filtering decisions: packets that should be accepted may be
+dropped and vice versa.
 
-Invert the check and propagate ret so that the warning fires on real
-errors and the initcall reports the correct status.
+The ARP stack in net/ipv4/arp.c (arp_create and arp_process) already
+handles this correctly by skipping the target hardware address for
+ARPHRD_IEEE1394. Apply the same pattern to arp_packet_match()."
 
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Ingo Molnar <mingo@elte.hu>
-Cc: Frederic Weisbecker <fweisbec@gmail.com>
-Link: https://patch.msgid.link/20260420-tracing-v1-1-d8f4cd0d6af1@debian.org
-Fixes: 002bb86d8d42 ("tracing/ftrace: separate events tracing and stats tracing engine")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Mangle the original patch to always return 0 (no match) in case user
+matches on the target hardware address which is never present in
+IEEE1394.
+
+Note that this returns 0 (no match) for either normal and inverse match
+because matching in the target hardware address in ARPHRD_IEEE1394 has
+never been supported by arptables. This is intentional, matching on the
+target hardware address should never evaluate true for ARPHRD_IEEE1394.
+
+Moreover, adjust arpt_mangle to drop the packet too as AI suggests:
+
+In arpt_mangle, the logic assumes a standard ARP layout. Because
+IEEE1394 (FireWire) omits the target hardware address, the linear
+pointer arithmetic miscalculates the offset for the target IP address.
+This causes mangling operations to write to the wrong location, leading
+to packet corruption. To ensure safety, this patch drops packets
+(NF_DROP) when mangling is requested for these fields on IEEE1394
+devices, as the current implementation cannot correctly map the FireWire
+ARP payload.
+
+This omits both mangling target hardware and IP address. Even if IP
+address mangling should be possible in IEEE1394, this would require
+to adjust arpt_mangle offset calculation, which has never been
+supported.
+
+Based on patch from Weiming Shi <bestswngs@gmail.com>.
+
+Fixes: 6752c8db8e0c ("firewire net, ipv4 arp: Extend hardware address and remove driver-level packet inspection.")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_branch.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv4/netfilter/arp_tables.c  | 18 +++++++++++++++---
+ net/ipv4/netfilter/arpt_mangle.c |  8 ++++++++
+ 2 files changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/trace_branch.c b/kernel/trace/trace_branch.c
-index 6809b370e991d..d1564db95a8f5 100644
---- a/kernel/trace/trace_branch.c
-+++ b/kernel/trace/trace_branch.c
-@@ -373,10 +373,10 @@ __init static int init_annotated_branch_stats(void)
- 	int ret;
+diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
+index 1cdd9c28ab2da..97ead883e4a13 100644
+--- a/net/ipv4/netfilter/arp_tables.c
++++ b/net/ipv4/netfilter/arp_tables.c
+@@ -110,13 +110,25 @@ static inline int arp_packet_match(const struct arphdr *arphdr,
+ 	arpptr += dev->addr_len;
+ 	memcpy(&src_ipaddr, arpptr, sizeof(u32));
+ 	arpptr += sizeof(u32);
+-	tgt_devaddr = arpptr;
+-	arpptr += dev->addr_len;
++
++	if (IS_ENABLED(CONFIG_FIREWIRE_NET) && dev->type == ARPHRD_IEEE1394) {
++		if (unlikely(memchr_inv(arpinfo->tgt_devaddr.mask, 0,
++					sizeof(arpinfo->tgt_devaddr.mask))))
++			return 0;
++
++		tgt_devaddr = NULL;
++	} else {
++		tgt_devaddr = arpptr;
++		arpptr += dev->addr_len;
++	}
+ 	memcpy(&tgt_ipaddr, arpptr, sizeof(u32));
  
- 	ret = register_stat_tracer(&annotated_branch_stats);
--	if (!ret) {
-+	if (ret) {
- 		printk(KERN_WARNING "Warning: could not register "
- 				    "annotated branches stats\n");
--		return 1;
-+		return ret;
+ 	if (NF_INVF(arpinfo, ARPT_INV_SRCDEVADDR,
+ 		    arp_devaddr_compare(&arpinfo->src_devaddr, src_devaddr,
+-					dev->addr_len)) ||
++					dev->addr_len)))
++		return 0;
++
++	if (tgt_devaddr &&
+ 	    NF_INVF(arpinfo, ARPT_INV_TGTDEVADDR,
+ 		    arp_devaddr_compare(&arpinfo->tgt_devaddr, tgt_devaddr,
+ 					dev->addr_len)))
+diff --git a/net/ipv4/netfilter/arpt_mangle.c b/net/ipv4/netfilter/arpt_mangle.c
+index a4e07e5e9c118..f65dd339208e8 100644
+--- a/net/ipv4/netfilter/arpt_mangle.c
++++ b/net/ipv4/netfilter/arpt_mangle.c
+@@ -40,6 +40,10 @@ target(struct sk_buff *skb, const struct xt_action_param *par)
  	}
- 	return 0;
- }
-@@ -438,10 +438,10 @@ __init static int all_annotated_branch_stats(void)
- 	int ret;
- 
- 	ret = register_stat_tracer(&all_branch_stats);
--	if (!ret) {
-+	if (ret) {
- 		printk(KERN_WARNING "Warning: could not register "
- 				    "all branches stats\n");
--		return 1;
-+		return ret;
+ 	arpptr += pln;
+ 	if (mangle->flags & ARPT_MANGLE_TDEV) {
++		if (unlikely(IS_ENABLED(CONFIG_FIREWIRE_NET) &&
++			     skb->dev->type == ARPHRD_IEEE1394))
++			return NF_DROP;
++
+ 		if (ARPT_DEV_ADDR_LEN_MAX < hln ||
+ 		   (arpptr + hln > skb_tail_pointer(skb)))
+ 			return NF_DROP;
+@@ -47,6 +51,10 @@ target(struct sk_buff *skb, const struct xt_action_param *par)
  	}
- 	return 0;
- }
+ 	arpptr += hln;
+ 	if (mangle->flags & ARPT_MANGLE_TIP) {
++		if (unlikely(IS_ENABLED(CONFIG_FIREWIRE_NET) &&
++			     skb->dev->type == ARPHRD_IEEE1394))
++			return NF_DROP;
++
+ 		if (ARPT_MANGLE_ADDR_LEN_MAX < pln ||
+ 		   (arpptr + pln > skb_tail_pointer(skb)))
+ 			return NF_DROP;
 -- 
 2.53.0
 
