@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C403ED3B8;
-	Wed, 20 May 2026 18:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6E83F4DC0;
+	Wed, 20 May 2026 18:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300204; cv=none; b=Z1YLxh2JjRw5vdxllGIGI6dtit6K6IPg65DLuq3qEeO/TwU5W9rufM/2XcYTQOLhszsYFNczTlJrDIKKwagg654g07C8UWccA3slGXDtEAf457aEyp0JkFxVV5mPGuPrmk9OZdFlwa+S/bLiuT0P6kpqpLURrCZRiNpspZRI/H8=
+	t=1779300207; cv=none; b=tE/CFULUcfibuLnkZso13zjWhHTyYeKiZ0UPzMthAbGsLLqntZbmFsYDYOnzGaWwTdvIsLoyXyJ3T/zxpNI8+ZCBRpde+NA7nzLEDLVk0p4HhBwsLj/c8r3QG2B5F2F5MjBJuB2JfVhdjOHnj6pmknfptDY2WNCBstP6gsrsTZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300204; c=relaxed/simple;
-	bh=9Qmy7kh5044NbsJ9Y6Usl1/0TqcdDQW/T+JZPxo8fVc=;
+	s=arc-20240116; t=1779300207; c=relaxed/simple;
+	bh=OannJ61j3ckLldH791Up8MSnHmKLrczvGAZH1tkWgwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8a4HYzE9/92J9PjkXvd87uw9QpZBbkUT5wGmQsIqtG/iZ1P0qn0wDjJ6uzIGiKzkVHGrMj+491x4Bz5nvwUNEdGoEVGB8bGRT1qP52UGObjIAWAACYlJxfmhqDgNentUG21Lrqm0EutUdb5yDz0OTkL4Qa7Uo5PDLIOyFIagGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6iVSN8n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uCZO94bQ7lGL8WsiDfZ9vY+16JDqG8RmBG/jeH7WqcAyGlSYMlR6o2Z8MkZ+zYkP39EQ5rbB4L+qGe1VojPzHOLT0QqrKRso2paeipo08oXzdLTyqZv3efaFJSfEJNsl0iEOGwM77rSeYDRxPCzjuiag6XHVKbqI+kvws+KDMuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1njZiOhn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6iVSN8n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024D11F000E9;
-	Wed, 20 May 2026 18:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1njZiOhn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0A221F000E9;
+	Wed, 20 May 2026 18:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300203;
-	bh=aNwo12LEfTMnbXx57JLepaSBcFxBH5xiorrDaLXWBjk=;
+	s=korg; t=1779300206;
+	bh=z5HDuthEeKSv7PePbW/PrNI5TR/qJBQ4p6R4RYrxDc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g6iVSN8nnIE2nM2NYhal1aIhoipry1suVBJZfEAgDJSSIRR5EPMwsu3bZz90qbEDi
-	 rOO/8GDezSv40CgarA/QOv0KlEALx/Oi3ySSv+w4n5sm5jcMeZTsDYWOfZEwoUiP6F
-	 USZbYyEa4kWQpYFthIti+qHwSb8ju3qjh66TBR3o=
+	b=1njZiOhnwELpFVTK52f1BqTtb4cvtCfvTjJ9jwGzjUcCc03KXHT+6qTUiEldvS/3b
+	 B1VnXNQ6mlBjzLnEjHL4yCXSjJT8tEX1gHnOnFihgYTQwNLWTRtISiovHLktuB+nFp
+	 Izow2EJm0JgU1yB5ySja5wBam2KwJex/rbSm3dzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
+	STAR Labs SG <info@starlabs.sg>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/666] bpf: Relax scalar id equivalence for state pruning
-Date: Wed, 20 May 2026 18:14:58 +0200
-Message-ID: <20260520162113.114490263@linuxfoundation.org>
+Subject: [PATCH 6.12 088/666] bpf: Enforce regsafe base id consistency for BPF_ADD_CONST scalars
+Date: Wed, 20 May 2026 18:14:59 +0200
+Message-ID: <20260520162113.135221489@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,170 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit b0388bafa4949bd30af7b3be5ee415f2a25ac014 ]
+[ Upstream commit 2f2ec8e7730e21fc9bd49e0de9cdd58213ea24d0 ]
 
-Scalar register IDs are used by the verifier to track relationships
-between registers and enable bounds propagation across those
-relationships. Once an ID becomes singular (i.e. only a single
-register/stack slot carries it), it can no longer contribute to bounds
-propagation and effectively becomes stale. The previous commit makes the
-verifier clear such ids before caching the state.
+When regsafe() compares two scalar registers that both carry
+BPF_ADD_CONST, check_scalar_ids() maps their full compound id
+(aka base | BPF_ADD_CONST flag) as one idmap entry. However,
+it never verifies that the underlying base ids, that is, with
+the flag stripped are consistent with existing idmap mappings.
 
-When comparing the current and cached states for pruning, these stale
-IDs can cause technically equivalent states to be considered different
-and thus prevent pruning.
+This allows construction of two verifier states where the old
+state has R3 = R2 + 10 (both sharing base id A) while the current
+state has R3 = R4 + 10 (base id C, unrelated to R2). The idmap
+creates two independent entries: A->B (for R2) and A|flag->C|flag
+(for R3), without catching that A->C conflicts with A->B. State
+pruning then incorrectly succeeds.
 
-For example, in the selftest added in the next commit, two registers -
-r6 and r7 are not linked to any other registers and get cached with
-id=0, in the current state, they are both linked to each other with
-id=A.  Before this commit, check_scalar_ids would give temporary ids to
-r6 and r7 (say tid1 and tid2) and then check_ids() would map tid1->A,
-and when it would see tid2->A, it would not consider these state
-equivalent.
+Fix this by additionally verifying base ID mapping consistency
+whenever BPF_ADD_CONST is set: after mapping the compound ids,
+also invoke check_ids() on the base IDs (flag bits stripped).
+This ensures that if A was already mapped to B from comparing
+the source register, any ADD_CONST derivative must also derive
+from B, not an unrelated C.
 
-Relax scalar ID equivalence by treating rold->id == 0 as "independent":
-if the old state did not rely on any ID relationships for a register,
-then any ID/linking present in the current state only adds constraints
-and is always safe to accept for pruning. Implement this by returning
-true immediately in check_scalar_ids() when old_id == 0.
-
-Maintain correctness for the opposite direction (old_id != 0 && cur_id
-== 0) by still allocating a temporary ID for cur_id == 0. This avoids
-incorrectly allowing multiple independent current registers (id==0) to
-satisfy a single linked old ID during mapping.
-
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Link: https://lore.kernel.org/r/20260203165102.2302462-5-puranjay@kernel.org
+Fixes: 98d7ca374ba4 ("bpf: Track delta between "linked" registers.")
+Reported-by: STAR Labs SG <info@starlabs.sg>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260410232651.559778-1-daniel@iogearbox.net
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 2f2ec8e7730e ("bpf: Enforce regsafe base id consistency for BPF_ADD_CONST scalars")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                         | 63 +++++++++++++++----
- .../selftests/bpf/progs/verifier_scalar_ids.c |  8 ++-
- 2 files changed, 56 insertions(+), 15 deletions(-)
+ kernel/bpf/verifier.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index feb90c6e94620..87d631917f4dd 100644
+index 87d631917f4dd..f5e9ee63fff99 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -17425,13 +17425,29 @@ static bool check_ids(u32 old_id, u32 cur_id, struct bpf_idmap *idmap)
- 	return false;
- }
- 
--/* Similar to check_ids(), but allocate a unique temporary ID
-- * for 'old_id' or 'cur_id' of zero.
-- * This makes pairs like '0 vs unique ID', 'unique ID vs 0' valid.
-+/*
-+ * Compare scalar register IDs for state equivalence.
+@@ -17442,6 +17442,13 @@ static bool check_ids(u32 old_id, u32 cur_id, struct bpf_idmap *idmap)
+  * and r7.id=0 (both independent), without temp IDs both would map old_id=X
+  * to cur_id=0 and pass. With temp IDs: r6 maps X->temp1, r7 tries to map
+  * X->temp2, but X is already mapped to temp1, so the check fails correctly.
 + *
-+ * When old_id == 0, the old register is independent - not linked to any
-+ * other register. Any linking in the current state only adds constraints,
-+ * making it more restrictive. Since the old state didn't rely on any ID
-+ * relationships for this register, it's always safe to accept cur regardless
-+ * of its ID. Hence, return true immediately.
-+ *
-+ * When old_id != 0 but cur_id == 0, we need to ensure that different
-+ * independent registers in cur don't incorrectly satisfy the ID matching
-+ * requirements of linked registers in old.
-+ *
-+ * Example: if old has r6.id=X and r7.id=X (linked), but cur has r6.id=0
-+ * and r7.id=0 (both independent), without temp IDs both would map old_id=X
-+ * to cur_id=0 and pass. With temp IDs: r6 maps X->temp1, r7 tries to map
-+ * X->temp2, but X is already mapped to temp1, so the check fails correctly.
++ * When old_id has BPF_ADD_CONST set, the compound id (base | flag) and the
++ * base id (flag stripped) must both map consistently. Example: old has
++ * r2.id=A, r3.id=A|flag (r3 = r2 + delta), cur has r2.id=B, r3.id=C|flag
++ * (r3 derived from unrelated r4). Without the base check, idmap gets two
++ * independent entries A->B and A|flag->C|flag, missing that A->C conflicts
++ * with A->B. The base ID cross-check catches this.
   */
  static bool check_scalar_ids(u32 old_id, u32 cur_id, struct bpf_idmap *idmap)
  {
--	old_id = old_id ? old_id : ++idmap->tmp_id_gen;
-+	if (!old_id)
-+		return true;
-+
+@@ -17450,7 +17457,15 @@ static bool check_scalar_ids(u32 old_id, u32 cur_id, struct bpf_idmap *idmap)
+ 
  	cur_id = cur_id ? cur_id : ++idmap->tmp_id_gen;
  
- 	return check_ids(old_id, cur_id, idmap);
-@@ -17600,11 +17616,21 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
- 		}
- 		if (!rold->precise && exact == NOT_EXACT)
- 			return true;
--		if ((rold->id & BPF_ADD_CONST) != (rcur->id & BPF_ADD_CONST))
--			return false;
--		if ((rold->id & BPF_ADD_CONST) && (rold->off != rcur->off))
--			return false;
--		/* Why check_ids() for scalar registers?
-+		/*
-+		 * Linked register tracking uses rold->id to detect relationships.
-+		 * When rold->id == 0, the register is independent and any linking
-+		 * in rcur only adds constraints. When rold->id != 0, we must verify
-+		 * id mapping and (for BPF_ADD_CONST) offset consistency.
-+		 *
-+		 * +------------------+-----------+------------------+---------------+
-+		 * |                  | rold->id  | rold + ADD_CONST | rold->id == 0 |
-+		 * |------------------+-----------+------------------+---------------|
-+		 * | rcur->id         | range,ids | false            | range         |
-+		 * | rcur + ADD_CONST | false     | range,ids,off    | range         |
-+		 * | rcur->id == 0    | range,ids | false            | range         |
-+		 * +------------------+-----------+------------------+---------------+
-+		 *
-+		 * Why check_ids() for scalar registers?
- 		 *
- 		 * Consider the following BPF code:
- 		 *   1: r6 = ... unbound scalar, ID=a ...
-@@ -17628,9 +17654,22 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
- 		 * ---
- 		 * Also verify that new value satisfies old value range knowledge.
- 		 */
--		return range_within(rold, rcur) &&
--		       tnum_in(rold->var_off, rcur->var_off) &&
--		       check_scalar_ids(rold->id, rcur->id, idmap);
-+
-+		/* ADD_CONST mismatch: different linking semantics */
-+		if ((rold->id & BPF_ADD_CONST) && !(rcur->id & BPF_ADD_CONST))
+-	return check_ids(old_id, cur_id, idmap);
++	if (!check_ids(old_id, cur_id, idmap))
++		return false;
++	if (old_id & BPF_ADD_CONST) {
++		old_id &= ~BPF_ADD_CONST;
++		cur_id &= ~BPF_ADD_CONST;
++		if (!check_ids(old_id, cur_id, idmap))
 +			return false;
-+
-+		if (rold->id && !(rold->id & BPF_ADD_CONST) && (rcur->id & BPF_ADD_CONST))
-+			return false;
-+
-+		/* Both have offset linkage: offsets must match */
-+		if ((rold->id & BPF_ADD_CONST) && rold->off != rcur->off)
-+			return false;
-+
-+		if (!check_scalar_ids(rold->id, rcur->id, idmap))
-+			return false;
-+
-+		return range_within(rold, rcur) && tnum_in(rold->var_off, rcur->var_off);
- 	case PTR_TO_MAP_KEY:
- 	case PTR_TO_MAP_VALUE:
- 	case PTR_TO_MEM:
-diff --git a/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c b/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
-index 7c5e5e6d10ebc..dc65218e93c47 100644
---- a/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
-@@ -723,9 +723,9 @@ __success __log_level(2)
- /* The exit instruction should be reachable from two states,
-  * use two matches and "processed .. insns" to ensure this.
-  */
--__msg("13: (95) exit")
--__msg("13: (95) exit")
--__msg("processed 18 insns")
-+__msg("15: (95) exit")
-+__msg("15: (95) exit")
-+__msg("processed 20 insns")
- __flag(BPF_F_TEST_STATE_FREQ)
- __naked void two_old_ids_one_cur_id(void)
- {
-@@ -734,9 +734,11 @@ __naked void two_old_ids_one_cur_id(void)
- 	"call %[bpf_ktime_get_ns];"
- 	"r0 &= 0xff;"
- 	"r6 = r0;"
-+	"r8 = r0;"
- 	"call %[bpf_ktime_get_ns];"
- 	"r0 &= 0xff;"
- 	"r7 = r0;"
-+	"r9 = r0;"
- 	"r0 = 0;"
- 	/* Maybe make r{6,7} IDs identical */
- 	"if r6 > r7 goto l0_%=;"
++	}
++	return true;
+ }
+ 
+ static void clean_func_state(struct bpf_verifier_env *env,
 -- 
 2.53.0
 
