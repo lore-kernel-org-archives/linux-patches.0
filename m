@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B603F4DD6;
-	Wed, 20 May 2026 18:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB8F3F8706;
+	Wed, 20 May 2026 18:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301056; cv=none; b=P5UWSssZSX5fMq1YKUtEebIiDZos+7hgaEA6N4LEjSS8HS9mKKQVq+fFjUGOA4nnWP1hnmsUGONns7Hf+u20cCufNkD/Z/lfiSS5nFIeYyjW4BVHRJSwGwi7jguS8DZY+xliBb/ps1QPPcyTaNMhqg564+r1nIZCfjd7iCLVF/I=
+	t=1779301059; cv=none; b=SArSiPFE7OQgXTm3yX4ye4gw3M0OTid9qB+ESXBSvHTRTZcHzMxv6CfeBsStTogbRKco0eVhCVbzylye+IVgUsKFFH1VD9FuqUqpA1sqG+M11C5TamjaYNtIAKDB+qm1xKaBoAf77RHA3rtb+5bcbBP9FE9tlaXjHNG+eZeS4iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301056; c=relaxed/simple;
-	bh=j5qoe8ZRj9Hej2H4P8DTo0yj/7Cu1wGIRhEsTRQAm60=;
+	s=arc-20240116; t=1779301059; c=relaxed/simple;
+	bh=b3c3t9NBsxOKE9fjI9nezoJ98J20eCf8d7mVckSnRek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T7kPgj8F1a0gkzxqM9TuapHPsnWFQPScJ73RmCI7J5wUPHhD9EL4Ca3AqP05TZi4L1cI9c20IbAzr4rQNYrRfj8aLozUtUUxjxFmzo9HOCyFW94mGAivhlMvDyoADyUhIRHHYOpMr9Xhk3VWeKo/k8Hr7aM5v70MQn7MGDstq3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+3vxnWQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AC53mAdYhPJnXXzyJIqwgFrEqx0A82agJ6YtvI3AXPpzdXqiAgOFfTgOshzkcBQVxM4dsdKkDfazK9FJ8sgga16/cM0+GRl/gwaCDMq2zcFsvDvykuO0CzuESFBFSifg49ipKOFBGGatnPjCGz7JmZPjamlkHeOOk9jl8/cydds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmG06say; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+3vxnWQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D991F000E9;
-	Wed, 20 May 2026 18:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmG06say"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABF01F00893;
+	Wed, 20 May 2026 18:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301054;
-	bh=Xv/Kz9bmbt2xnHVlbmLN3PuvgEw3RXaIDzWQs7/um+w=;
+	s=korg; t=1779301056;
+	bh=YZObuzNKi4MZ6d1i/Gb3ueZ3XY+cFPCa4GMVOjifFQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j+3vxnWQo44ZSYDsEnyWl1GRohbpZIF0/+vWBvZhZgxZ6NbWA1IQDMzIe1q6QiS4Q
-	 jJ6aKu5IwUhUwNBL76s2qJ4q93jBZAnqBfhYB7zJ2z1OrrCumLYvmqUrLNIPpOSjF4
-	 YLe5P1hAIyNOBpxGro2YVowmHAVudxoq5H6vL+E0=
+	b=AmG06say2T9zW12GBvtUlT/iAJsp9g01EbhfKJpi0AK0JoUdAtJzkCZk6M2mk4Ar+
+	 Od46dIvA0rGXrK8n6W1Xtu2/8nS7IbCFTWg5KanyTsfnvTe7hAnE3uEZhfezkM2G2T
+	 EXGWqMAn/oWMHikfDX8Z0bWwDDgGUQq5w/VodLgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Val Packett <val@packett.cool>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 409/666] clk: qcom: gcc-sc8180x: Use retention for PCIe power domains
-Date: Wed, 20 May 2026 18:20:20 +0200
-Message-ID: <20260520162120.126551640@linuxfoundation.org>
+Subject: [PATCH 6.12 410/666] clk: qcom: dispcc-sm8250: Use shared ops on the mdss vsync clk
+Date: Wed, 20 May 2026 18:20:21 +0200
+Message-ID: <20260520162120.147969807@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -56,68 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Val Packett <val@packett.cool>
 
-[ Upstream commit ccb92c78b42edd26225b4d5920847dfee3e1b093 ]
+[ Upstream commit 8c522da70f0c2e5148c4c13ccb1c64cca57a6fdb ]
 
-As the PCIe host controller driver does not yet support dealing with the
-loss of state during suspend, use retention for relevant GDSCs.
+mdss_gdsc can get stuck on boot due to RCGs being left on from last boot.
+As a fix, commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
+registration") introduced a callback to ensure the RCG is off upon init.
+However, the fix depends on all shared RCGs being marked as such in code.
 
-This fixes the link not surviving upon resume:
+For SM8150/SC8180X/SM8250 the MDSS vsync clock was using regular ops,
+unlike the same clock in the SC7180 code. This was causing display to
+frequently fail to initialize after rebooting on the Surface Pro X.
+Fix by using shared ops for this clock.
 
-    nvme 0002:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
-    nvme nvme0: controller is down; will reset: CSTS=0xffffffff, PCI_STATUS read failed (134)
-    nvme 0002:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
-    nvme nvme0: Disabling device after reset failure: -19
-
-Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
 Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://lore.kernel.org/r/20260312112321.370983-5-val@packett.cool
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260312112321.370983-8-val@packett.cool
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sc8180x.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/dispcc-sm8250.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-sc8180x.c b/drivers/clk/qcom/gcc-sc8180x.c
-index b116a9c0b2d94..4095a1f54a099 100644
---- a/drivers/clk/qcom/gcc-sc8180x.c
-+++ b/drivers/clk/qcom/gcc-sc8180x.c
-@@ -4199,7 +4199,7 @@ static struct gdsc pcie_0_gdsc = {
- 	.pd = {
- 		.name = "pcie_0_gdsc",
+diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+index 884bbd3fb3057..b21d16b094667 100644
+--- a/drivers/clk/qcom/dispcc-sm8250.c
++++ b/drivers/clk/qcom/dispcc-sm8250.c
+@@ -632,7 +632,7 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src = {
+ 		.parent_data = disp_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
  	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- 	.flags = POLL_CFG_GDSCR,
- };
- 
-@@ -4226,7 +4226,7 @@ static struct gdsc pcie_1_gdsc = {
- 	.pd = {
- 		.name = "pcie_1_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- 	.flags = POLL_CFG_GDSCR,
- };
- 
-@@ -4235,7 +4235,7 @@ static struct gdsc pcie_2_gdsc = {
- 	.pd = {
- 		.name = "pcie_2_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- 	.flags = POLL_CFG_GDSCR,
- };
- 
-@@ -4253,7 +4253,7 @@ static struct gdsc pcie_3_gdsc = {
- 	.pd = {
- 		.name = "pcie_3_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- 	.flags = POLL_CFG_GDSCR,
  };
  
 -- 
