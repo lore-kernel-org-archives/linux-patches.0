@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8C53D75C7;
-	Wed, 20 May 2026 17:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA1030BF68;
+	Wed, 20 May 2026 17:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298063; cv=none; b=SK0+qBU0baRa8aHkzbVXgT/N6FZndkrWr/L3tbxZHzIIzpt4LK0mI1Sm4W0/+yT/0/1gygpKLVvT8RPbdOS4I0oyvj6bMgnWlnZ1Z3a4/41Uk2qUjJhmRb8AlfxBBQfynZKZ/jhx3UzNDppi8pQYauMgJ+i5XCXfxb66UtDyK7A=
+	t=1779298066; cv=none; b=KOCrbBpTgLqtBGmaPNgqCWWrRk5QSLSqQqM4b9lj2a5bZSqJ+e7rl90GbEnISuF4dckGyL3vAe4i2tLK2ea6YZYpoukf54Ku3PxZs3EHqx404HZ6KcZe2Bkb9hvGdWpx5ZvGhEqfdyP3vO313NKhwec+lcktVfe4cyej0fiODRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298063; c=relaxed/simple;
-	bh=3fsWRVvaWHD2arSZRKXiQSzd8PGNUSBN3BG0YjKVyl4=;
+	s=arc-20240116; t=1779298066; c=relaxed/simple;
+	bh=K2PRpfPkchbHBnTbp1tSWGpWPqxhdBkaHoTvKn5A/sY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ClpdbmoHkhDGEF4p1VF8TBkBX+8aT9USYe0DvzxUgdZ7t0QnLwo1zrIa5S4xTIXbgXv3fL/9vo3yCS2edV2Thd/PjduRPKW2OiyzmMgPB/T/21at9Y5V/eatD0b+BobA2XMo0auhTkiKMHBoo13sXgHcRvCeuXdIf7aFMd2JWjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmkxFdqE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UgMnWTC30Lyt/GNru1P4TFGK8WA0H0GZG5LUf7q0pQrfnLJeKRQu4NDNjiEE/vUkDd6Iu4s8RkS377R5bOs2g/M+XLunBuyeUD1NplFC3S22h2k7lhO9mnxfCFIAjghHqw7Y4eNr/JkPQkvaOYoB39uPX1HY/XzIKYYdrBzdg0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3CMKPVx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmkxFdqE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F441F000E9;
-	Wed, 20 May 2026 17:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3CMKPVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F151F000E9;
+	Wed, 20 May 2026 17:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298062;
-	bh=w2N75WeOJ7QLDhE73zkzEshDhosSY5dgZk8h+IgS/Ps=;
+	s=korg; t=1779298065;
+	bh=La4cttabI4k74o+xZgezc4stZjJ/BgSG2ceOty5gbdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mmkxFdqENUF1qcS+A1KkLKCVeJcqGkXwHRy2F2PJTz4Rfq8lgs9y5lVMeXV240Fsf
-	 De1dEpTQTRdiZzKEUtbVN2GoeZ/4ItBIPzG8po/d6ryKINcw7ZGG9+0M/8So+OFYwX
-	 s4dW6cQNsnqGS7YXLtmUcgNg5X9oUDjKvb2walbY=
+	b=W3CMKPVxobnL2kBjdMeVfRDfHQDblKkfQaxGBz3lcCUw9Rwf0WEZ1x/buBNdaPBIz
+	 QVKkmTZ5dkR8KrpTJQ/xPYW+Q9YTk4xorCOcy4LibuAdD7EeEpVKC1f3A11coEENgt
+	 +UAy9bmcHn2OWaYd0ybgVnMMwJzHvF+DoZ2nJZmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Lei Huang <huanglei@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 261/957] drm/amd/pm/ci: Disable MCLK DPM on problematic CI ASICs
-Date: Wed, 20 May 2026 18:12:24 +0200
-Message-ID: <20260520162140.204551889@linuxfoundation.org>
+Subject: [PATCH 6.18 270/957] ALSA: hda/realtek: fix code style (ERROR: else should follow close brace })
+Date: Wed, 20 May 2026 18:12:33 +0200
+Message-ID: <20260520162140.399222989@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -45,69 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Lei Huang <huanglei@kylinos.cn>
 
-[ Upstream commit 9851f29cb06c09f7dad3867d8b0feec3fc71b6c8 ]
+[ Upstream commit d1888bf848ade6a9e71c7ba516fd215aa1bd8d65 ]
 
-There are two known cases where MCLK DPM can causes issues:
+Fix checkpatch code style errors:
 
-Radeon R9 M380 found in iMac computers from 2015.
-The SMU in this GPU just hangs as soon as we send it the
-PPSMC_MSG_MCLKDPM_Enable command, even when MCLK switching is
-disabled, and even when we only populate one MCLK DPM level.
-Apply workaround to all devices with the same subsystem ID.
+  ERROR: else should follow close brace '}'
+  #2300: FILE: sound/hda/codecs/realtek/alc269.c:2300:
+  +       }
+  +       else
 
-Radeon R7 260X due to old memory controller microcode.
-We only flash the MC ucode when it isn't set up by the VBIOS,
-therefore there is no way to make sure that it has the correct
-ucode version.
-
-I verified that this patch fixes the SMU hang on the R9 M380
-which would previously fail to boot. This also fixes the UVD
-initialization error on that GPU which happened because the
-SMU couldn't ungate the UVD after it hung.
-
-Fixes: 86457c3b21cb ("drm/amd/powerplay: Add support for CI asics to hwmgr")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 31278997add6 ("ALSA: hda/realtek - Add headset quirk for Dell DT")
+Signed-off-by: Lei Huang <huanglei@kylinos.cn>
+Link: https://patch.msgid.link/20260331075405.78148-1-huanglei814@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-index 2b5ac21fee399..1d6e30269d567 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-@@ -104,6 +104,21 @@ int hwmgr_early_init(struct pp_hwmgr *hwmgr)
- 					 PP_GFXOFF_MASK);
- 		hwmgr->pp_table_version = PP_TABLE_V0;
- 		hwmgr->od_enabled = false;
-+		switch (hwmgr->chip_id) {
-+		case CHIP_BONAIRE:
-+			/* R9 M380 in iMac 2015: SMU hangs when enabling MCLK DPM
-+			 * R7 260X cards with old MC ucode: MCLK DPM is unstable
-+			 */
-+			if (adev->pdev->subsystem_vendor == 0x106B ||
-+			    adev->pdev->device == 0x6658) {
-+				dev_info(adev->dev, "disabling MCLK DPM on quirky ASIC");
-+				adev->pm.pp_feature &= ~PP_MCLK_DPM_MASK;
-+				hwmgr->feature_mask &= ~PP_MCLK_DPM_MASK;
-+			}
-+			break;
-+		default:
-+			break;
-+		}
- 		smu7_init_function_pointers(hwmgr);
- 		break;
- 	case AMDGPU_FAMILY_CZ:
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 844c4650230cd..a2ecbe1412632 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -2237,9 +2237,9 @@ static void alc_fixup_headset_mode_alc255_no_hp_mic(struct hda_codec *codec,
+ 		struct alc_spec *spec = codec->spec;
+ 		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
+ 		alc255_set_default_jack_type(codec);
+-	}
+-	else
++	} else {
+ 		alc_fixup_headset_mode(codec, fix, action);
++	}
+ }
+ 
+ static void alc288_update_headset_jack_cb(struct hda_codec *codec,
 -- 
 2.53.0
 
