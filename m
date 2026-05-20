@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5E5371CEA;
-	Wed, 20 May 2026 18:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE04403E9A;
+	Wed, 20 May 2026 18:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302536; cv=none; b=B/cCs0IxJzyPLC8cKlMr1BHDot5zzNGEOO1aWhx72zAREFBJuJ8wZo9Vn8iqtl++OfxpBilwtOZzk855OprjGzALVK8J6QgVIzBgau5c1Q41f+/x3Xf5wLm/ct7cqa8M+qzMXKNbosCFoVxl4AhmTJnNFm8g1Wc5VzjCW2LNvpM=
+	t=1779302539; cv=none; b=sAiFgm6jsi0rb6HSz41tcSX/47U2Fam0yLJeFMRDGWzSLOjKVjjvS7dthLYPftt0z7ymA0Lc5h5Y0FATwUn729zKlF9+BQyM8MG9shf21twwZvve6iFkra6DUISGMr3R3HBAVaxAg18TCsWq/33dRQj8EdrW3iiBkiVMrlpbz80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302536; c=relaxed/simple;
-	bh=Ku84J4QbyqjXPkJL+/hgfIxQEL9iKiMPNTguQj4dkVQ=;
+	s=arc-20240116; t=1779302539; c=relaxed/simple;
+	bh=Y5jjhHQBVyU3ln0jY7ZMxgBwePHLibxVxjRTpumW0sU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JgH9AZ5lpBS2koU8iKnGE45D10Xvwlqg34Qsz+X73UMjjUbmvGl71QZgpMzT+Fv1ezrs+V8s5b7KZYzOGLjl7Otm7nkIbpx6j7nD6uEQqnFRuz+ibyvWD5i/1vZurZ4/3Y+WB2NqqikIhgHiQOF5jCrO4kKj0Dv7y3yFjxyO5aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMbMmTH7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IaKt+Gf77RX4aObD4Rxh8c/dAeMJsrvfZeFTl2gprESR7/ZOLQqWm2mxPW5MBNdox6pL5IRfvgwKerbx5H53mGlLa8+qYBTOGMBXYDG4r7Un4tgA1FozlpxALY2Ty/ELb/X9iLVaaKnaEgS0jUDqkGZZP5Qm0X5x34yF9IOxGC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSn5XAvj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMbMmTH7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168A21F000E9;
-	Wed, 20 May 2026 18:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSn5XAvj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55E61F000E9;
+	Wed, 20 May 2026 18:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302535;
-	bh=KaueG1DFh4yZI0lpTV4G1pcQixjGRo2U7D90FcseRqw=;
+	s=korg; t=1779302538;
+	bh=3QOVZ4NyW5PiIKEAhrSbxi6xk7DAhaNm0UzzGt8MWAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aMbMmTH7N5ZkUf1eXBVy9JU1qohQ/Dn5qOxDQEoVuSxIJgpKG6+8TeB8t3LU69mtX
-	 hzdkuDhq74hhTpJsv47kZrZeQ2eHTVS0PSHyjz7SJaMkU2G+xUzRaG0r5naIY+dyuw
-	 FMwHM4bU8zXgVExNRXDNd6WrQ5LM+FMN3TggHL7M=
+	b=fSn5XAvjKvwHPdKNWuP907MZWXnyJdYKVSUXh1j/st44bwug2BCvv2huVE3Jn60Wz
+	 mFv1t29T1Ccv+i5XafnLhqI1NKWslg8B0xI0FJWGerwR3GLt+7AUAr0UP2weIctszt
+	 a4e3nzW8uwMD0+BisS5q49T0DdoFxFYn7AlbS36g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 262/508] platform/surface: surfacepro3_button: Drop wakeup source on remove
-Date: Wed, 20 May 2026 18:21:25 +0200
-Message-ID: <20260520162104.322074261@linuxfoundation.org>
+Subject: [PATCH 6.6 263/508] leds: lgm-sso: Remove duplicate assignments for priv->mmap
+Date: Wed, 20 May 2026 18:21:26 +0200
+Message-ID: <20260520162104.343872900@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,43 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 1410a228ab2d36fe2b383415a632ae12048d4f3a ]
+[ Upstream commit 7186d0330c3f3e86de577687a82f4ebd96dcb5ac ]
 
-The wakeup source added by device_init_wakeup() in surface_button_add()
-needs to be dropped during driver removal, so update the driver to do
-that.
+Remove duplicate assignment of priv->mmap in intel_sso_led_probe().
 
-Fixes: 19351f340765 ("platform/x86: surfacepro3: Support for wakeup from suspend-to-idle")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/4368848.1IzOArtZ34@rafael.j.wysocki
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: fba8a6f2263b ("leds: lgm-sso: Fix clock handling")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Link: https://patch.msgid.link/20260226033048.3715915-1-nichen@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/surface/surfacepro3_button.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/leds/blink/leds-lgm-sso.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/platform/surface/surfacepro3_button.c b/drivers/platform/surface/surfacepro3_button.c
-index 2755601f979cd..7c7622f8f8716 100644
---- a/drivers/platform/surface/surfacepro3_button.c
-+++ b/drivers/platform/surface/surfacepro3_button.c
-@@ -243,6 +243,7 @@ static void surface_button_remove(struct acpi_device *device)
- {
- 	struct surface_button *button = acpi_driver_data(device);
+diff --git a/drivers/leds/blink/leds-lgm-sso.c b/drivers/leds/blink/leds-lgm-sso.c
+index 35c61311e7fd8..e104010345b18 100644
+--- a/drivers/leds/blink/leds-lgm-sso.c
++++ b/drivers/leds/blink/leds-lgm-sso.c
+@@ -806,8 +806,6 @@ static int intel_sso_led_probe(struct platform_device *pdev)
  
-+	device_init_wakeup(&device->dev, false);
- 	input_unregister_device(button->input);
- 	kfree(button);
- }
+ 	priv->fpid_clkrate = clk_get_rate(priv->clocks[1].clk);
+ 
+-	priv->mmap = syscon_node_to_regmap(dev->of_node);
+-
+ 	priv->mmap = syscon_node_to_regmap(dev->of_node);
+ 	if (IS_ERR(priv->mmap)) {
+ 		dev_err(dev, "Failed to map iomem!\n");
 -- 
 2.53.0
 
