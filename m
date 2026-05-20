@@ -1,45 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08CD3E92B1;
-	Wed, 20 May 2026 11:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B62439D6E2;
+	Wed, 20 May 2026 11:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276027; cv=none; b=ZhLF7QHPGjqFQuHkbvzH6EMxVWvr1qeenv4t8HvA2ABv+nWv9DovNMTX/7ArwfrKhUgN1KuQYyPjZWdV0v+Wp+E4p7tDtTNbW/0awG1fVyF3ojJaB4ucDdu2pIjjQRZwLhgFO+sqPZwd6xDdL2xCHRZPTRzaMWZeSTE0n0Llr5c=
+	t=1779276028; cv=none; b=XyN9OynOtjo6DIyWmVPmFnFnRIHX5AJt8CX4pLEYZASsKQjJDeZh+DIDKi7NXtWioeJngwhDE0thzrFKABeB6gwVbx8AVi3HD2c73UYXyYyNAf3ZCCD3Jg2WM7ImmV/Ibb/b5tgxYKBy3LdFEydwpM8HR5SERBknp0jinfZVKVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276027; c=relaxed/simple;
-	bh=Mbybqoe/DAcr0H/nDiwCoFO0HzCxS6CuRjqNYO8GzHM=;
+	s=arc-20240116; t=1779276028; c=relaxed/simple;
+	bh=LRN2672r35IyVec++JGBaiETnqJv8Sk5nTuKiSNxa8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B2H9XxpAsZS1dLMln+ZAmRvMPpNMGH/TJJe8oVTMnsds1Wy1JBO4ZapjVXA1AOzXus5tSrteXWCYxbxyj+Tnbw01hO63AAjzvezS/uDNTjH5F7arhEZUtmyD4QUDBufFnZdDuXR++C4OvVgr58lQR7fUoU45rHuvvjHBUPi26zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DzVb2QT7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sjLne0DAi5kl+hOA4Va5GNYlp15QgzzL+m3pe+Ykmwc2ruJg/J0GoaUm54eN+wge1FRex/ghKmNHrBE+SMdjFCP1cXFhxwmrtBAGsH7ws8x0ak7Bu7OJTRf+8gsGh4ft0J/IguOR0vbsJtxtbKCqZZJpC8bmY2HFRI8Tr6sBBfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DqWkldPq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DzVb2QT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D836A1F00896;
-	Wed, 20 May 2026 11:20:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DqWkldPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6EE1F00897;
+	Wed, 20 May 2026 11:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276024;
-	bh=qOUwqq2SuZrhRFe3GLopBTiqUYjaGIz7bg+xEkeYtAk=;
+	s=k20260515; t=1779276026;
+	bh=Awnos86qn1nOZLrjiQeDKSX5qCUuZjhkaj+6eONAsSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DzVb2QT7Wh7NvVJvQQOeY8ZqX4o6JSesZUGAadz9fSykuEuJ00ZltcxJVfyVXEu3d
-	 g0OfJpjJfINNnM9zteJ0v1liqvhqdYsiPTHvHftJIKZo1i+A8I8ZZLr/5D4oC0mnsI
-	 dyQVO/Cs7ZdX0/a8KDRZv+hczcqZFOj5+opJ1wBtuEPgZtCrH1Yk6hTKEVMmR6S7n4
-	 V8R9JCCTn7LedPbkpPqtHwe/WNzR5nc1oAJQNoVOZUOjS4ubjYRcUJfJAbM+x5xwIb
-	 H/AyFZWefg1hduzZOAAeYKYsJiAwLSajTpfF5dCakmu5ihePI8ibTlq6sZXn6JzE+8
-	 zSmz0hW+DwARQ==
+	b=DqWkldPqCO9shgs18fFncUaZJppA0Hy5/IivQGaN+7SsYDBo5wxCa1hiyX6Eo7CxM
+	 HmaIOco1eTf6/cOq9kbtZrntWqCAYcN+TA8rBLCDQ3cnKFnWEZUYBXJb2OK6ZAmxCW
+	 WaPG/a31nc2CYWzgsTq0fNzna+Q6y/D8VwEvOK1rMZz/GoZmccFBaVB5foSdRBWZSE
+	 vTfbHRf14Cpe/OOc0ZySNe6KHMXMThqlTPFtcXVfzPupChiSRASusS4ydX7pGRzkM4
+	 t2wu6GRtpwiGwTxNCFnyd+RacghFG9yOJy/XPn+U7ea2gjZpQTO9gMioPUXdgPtOOT
+	 uHAMTFhCD4GNw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Damien Dejean <damiendejean@google.com>,
-	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@google.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	rfoss@kernel.org,
+	todor.too@gmail.com,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] HID: elan: Add support for ELAN SB974D touchpad
-Date: Wed, 20 May 2026 07:19:00 -0400
-Message-ID: <20260520111944.3424570-28-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] media: qcom: camss: avoid format string warning
+Date: Wed, 20 May 2026 07:19:01 -0400
+Message-ID: <20260520111944.3424570-29-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -49,264 +52,273 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Dejean <damiendejean@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 55ce1858848132ed074fe907f00b5ce1ccab0ce1 ]
+[ Upstream commit 23c39cb598977f10909a2387c5e5f34afc1d6933 ]
 
-Elan SB974D touchpad uses ELAN_MT_I2C format to send HID reports. Add an
-entry to match for the device and parse its vendor specific format.
+clang-22 warns about csiphy_match_clock_name() taking a variable format
+string that is not checked against the 'int index' argument:
 
-Signed-off-by: Damien Dejean <damiendejean@google.com>
-Signed-off-by: Kornel Dulęba <korneld@google.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+drivers/media/platform/qcom/camss/camss-csiphy.c:566:44: error: diagnostic behavior may be improved by
+      adding the 'format(printf, 2, 3)' attribute to the declaration of 'csiphy_match_clock_name'
+      [-Werror,-Wmissing-format-attribute]
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      | __attribute__((format(printf, 2, 3)))
+  562 |                                     int index)
+  563 | {
+  564 |         char name[16]; /* csiphyXXX_timer\0 */
+  565 |
+  566 |         snprintf(name, sizeof(name), format, index);
+      |                                                   ^
+drivers/media/platform/qcom/camss/camss-csiphy.c:561:13: note: 'csiphy_match_clock_name' declared here
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      |             ^
+
+Change the function to use a snprintf() style format string that allows this
+to be checked at the call site.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+## Phase Walkthrough
 
-Step 1.1 Record: subsystem `HID: elan`; action verb `Add support`;
-intent is to add ELAN SB974D touchpad matching so the existing ELAN HID
-driver parses its vendor-specific I2C multitouch reports.
+### Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem is `media: qcom: camss`; action verb is
+`avoid`; claimed intent is to avoid a clang-22 format-string build
+warning/error in `csiphy_match_clock_name()`.
 
-Step 1.2 Record: tags are:
-- `Signed-off-by: Damien Dejean <damiendejean@google.com>`
-- `Signed-off-by: Kornel Dulęba <korneld@google.com>`
-- `Signed-off-by: Jiri Kosina <jkosina@suse.com>`
-No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
-`Cc: stable`, or `Link:` tags are present.
+Step 1.2 Record: Verified fetched commit
+`2211e826bd69c041534093735241182013dde7bc` has:
+- `Signed-off-by: Arnd Bergmann <arnd@arndb.de>`
+- `Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>`
+- `Signed-off-by: Bryan O'Donoghue <bod@kernel.org>`
 
-Step 1.3 Record: the body says SB974D uses `ELAN_MT_I2C` report format
-and needs an ID table entry so `hid-elan` handles and parses that
-format. Symptom is unsupported or generic handling of this touchpad, not
-a crash. No affected-version statement.
+The original lore submission also has `Fixes: 0727615fb975 ("media:
+qcom: camss: Functionally decompose CSIPHY clock lookups")`. No
+`Reported-by`, `Tested-by`, `Cc: stable`, or bug-report `Link` was
+verified.
 
-Step 1.4 Record: this is not a hidden memory/race/crash fix. It is a
-hardware enablement/device-ID addition to an existing driver, which is a
-stable exception category.
+Step 1.3 Record: The body describes a clang-22 diagnostic promoted to
+error: `[-Werror,-Wmissing-format-attribute]`. The root cause is that
+`csiphy_match_clock_name()` takes a `const char *format` and passes it
+to `snprintf()` with a fixed `int index`, but the helper itself lacks a
+checkable printf-style prototype.
 
-## Phase 2: Diff Analysis
+Step 1.4 Record: This is not a hidden runtime bug fix. It is a build-
+warning/build-error fix for newer clang plus warning-as-error
+configurations.
 
-Step 2.1 Record: two files changed, 2 insertions total:
-- `drivers/hid/hid-elan.c`: adds one `HID_I2C_DEVICE()` entry to
-  `elan_devices`.
-- `drivers/hid/hid-ids.h`: adds `USB_DEVICE_ID_SB974D 0x0400`.
-Modified data structure: `elan_devices[]`. Scope: single-driver,
-surgical ID addition.
+### Phase 2: Diff Analysis
+Step 2.1 Record: One file changed:
+`drivers/media/platform/qcom/camss/camss-csiphy.c`, `7 insertions(+), 3
+deletions(-)`. One function modified: `csiphy_match_clock_name()`. Scope
+is single-file surgical.
 
-Step 2.2 Record: before, ELAN I2C product `0x0400` did not match `hid-
-elan`; after, BUS_I2C vendor `0x04f3` product `0x0400` matches `hid-
-elan` and uses existing probe/raw-event paths.
+Step 2.2 Record: Before, the helper accepted `format, int index` and
+called `snprintf(name, sizeof(name), format, index)`. After, it is
+declared `__printf(2, 3)`, accepts varargs, uses `va_start()`,
+`vsnprintf()`, and `va_end()`. Call sites remain unchanged.
 
-Step 2.3 Record: bug category is hardware support/device ID addition. No
-new parser, locking, memory management, or API change. The fix works by
-routing this specific I2C HID device to already-existing `ELAN_MT_I2C`
-handling.
+Step 2.3 Record: Bug category is build fix / compiler diagnostic fix. It
+does not fix memory safety, locking, refcounting, or runtime logic.
 
-Step 2.4 Record: fix quality is high: two-line addition, localized,
-mirrors the existing Toshiba I2C ELAN entry, and has very low regression
-risk. Main possible risk is binding product `0x0400` to `hid-elan`, but
-the commit message and external fwupd discussion verify `04f3:0400` is
-an ELAN touchpad PID.
+Step 2.4 Record: The fix is mechanically correct and minimal. Existing
+callers pass literal format strings plus `csiphy->id`, so behavior is
+preserved while allowing compiler format checking. Regression risk is
+very low; the only meaningful risk is varargs misuse, but current call
+sites were verified unchanged and simple.
 
-## Phase 3: Git History Investigation
+### Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the helper body was introduced by
+`0727615fb975f6`, authored by Bryan O'Donoghue on 2023-09-25. `git
+describe --contains` places it at `v6.7-rc1~51^2~149`.
 
-Step 3.1 Record: `git blame` shows `elan_devices[]` was introduced by
-`9a6a4193d65b` in v4.17-rc1 range; the existing I2C Toshiba entry was
-introduced by `e7ad3dc9f4a2` in v4.19-rc1 range. This means the required
-driver and I2C-format support are old and present in long-term stable
-lines.
+Step 3.2 Record: The final fetched commit lacks a `Fixes:` trailer, but
+the original lore submission includes `Fixes: 0727615fb975`. I inspected
+that commit; it introduced the helper and the `snprintf(..., format,
+index)` pattern.
 
-Step 3.2 Record: no `Fixes:` tag, so no introducing bug commit to
-follow.
+Step 3.3 Record: Recent file history includes later CAMSS/CSIPHY
+changes, especially `74cae7794341` changing callers to use `csiphy->id`.
+No prerequisite for this format-warning fix was found beyond the helper
+existing.
 
-Step 3.3 Record: recent history shows this commit is standalone; only
-later related file change found was unrelated `HID: i2c-hid: add reset
-quirk for BLTP7853 touchpad`.
+Step 3.4 Record: Arnd Bergmann has prior CAMSS build/undefined-behavior
+fixes in history. Bryan O'Donoghue, who reviewed the patch, is listed as
+a CAMSS maintainer in `MAINTAINERS`.
 
-Step 3.4 Record: author Damien Dejean has only this HID commit in the
-checked `origin/master` HID history. Jiri Kosina committed/applied it;
-`MAINTAINERS` lists Jiri Kosina and Benjamin Tissoires as HID core
-maintainers.
+Step 3.5 Record: No dependent commits were found. The patch only needs
+the existing helper and kernel `__printf`/`va_list` support, both
+present in the checked tree.
 
-Step 3.5 Record: no prerequisite commits found beyond the existing `hid-
-elan` driver and I2C parser, both already present in checked stable
-branches.
+### Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c 2211e826...` found the original patch at
+`https://patch.msgid.link/20260320151828.3456863-1-arnd@kernel.org`. `b4
+dig -a` found only v1.
 
-## Phase 4: Mailing List And External Research
+Step 4.2 Record: `b4 dig -w` shows relevant maintainers/lists were
+included: CAMSS maintainers, media maintainers, `linux-media`, `linux-
+arm-msm`, `linux-kernel`, and `llvm`.
 
-Step 4.1 Record: `b4 dig -c 55ce185884813` found the original patch at `
-https://patch.msgid.link/20260414133858.3992799-1-
-damiendejean@google.com`. `b4 dig -a` showed only v1, no later
-revisions.
+Step 4.3 Record: No separate bug report was present. The concrete report
+is the compiler diagnostic embedded in the patch.
 
-Step 4.2 Record: `b4 dig -w` showed recipients included Jiri Kosina,
-Benjamin Tissoires, `linux-input@vger.kernel.org`, `linux-
-kernel@vger.kernel.org`, Damien Dejean, and Kornel Dulęba.
+Step 4.4 Record: This is a standalone one-patch fix, not part of a
+multi-patch series.
 
-Step 4.3 Record: no `Reported-by` or bug-report `Link:`. The lore thread
-mbox contains Jiri Kosina’s “Applied to hid.git#for-7.1/upstream-fixes,
-thanks.” No NAKs or concerns in the saved thread.
+Step 4.5 Record: Direct lore stable search was blocked by Anubis; web
+search did not find stable-specific discussion for this exact patch.
 
-Step 4.4 Record: no multi-patch series; standalone patch.
+### Phase 5: Code Semantic Analysis
+Step 5.1 Record: Modified function: `csiphy_match_clock_name()`.
 
-Step 4.5 Record: lore WebFetch hit Anubis, but `b4` successfully fetched
-the mbox. Stable branch grep found no existing `SB974D` backport in
-`stable/linux-7.0.y` or `stable/linux-6.19.y`.
+Step 5.2 Record: Callers are only within `msm_csiphy_subdev_init()`, at
+the three verified clock-name checks: `"csiphy%d_timer"`, `"csi%d_phy"`,
+and `"csiphy%d"`.
 
-## Phase 5: Code Semantic Analysis
+Step 5.3 Record: The helper calls formatting and string comparison
+functions: previously `snprintf()` and `strcmp()`, after patch
+`vsnprintf()` and `strcmp()`.
 
-Step 5.1 Record: modified table is `elan_devices[]`; functional paths
-affected are existing callbacks `elan_probe`, `elan_input_mapping`,
-`elan_input_configured`, and `elan_raw_event`.
+Step 5.4 Record: The affected path is CAMSS device probe:
+`camss_probe()` calls `camss_init_subdevices()`, which calls
+`msm_csiphy_subdev_init()`. Runtime behavior remains equivalent for the
+verified call sites.
 
-Step 5.2 Record: `hid_match_device()` matches `hdrv->id_table`;
-`hid_device_probe()` calls the matched driver’s `.probe`;
-`hid_input_report()` calls `.raw_event`. Thus the new ID makes this
-hardware reach existing `hid-elan` probe and report parsing.
+Step 5.5 Record: Nearby CAMSS code has no other `const char *format`
+helper or `vsnprintf()`/`__printf()` pattern matching this issue.
 
-Step 5.3 Record: relevant callees include `hid_parse`, `hid_hw_start`,
-`elan_start_multitouch`, and for I2C reports `elan_i2c_report_input`.
+### Phase 6: Stable Tree Analysis
+Step 6.1 Record: The buggy helper exists from `v6.7` onward. Verified
+absent in `v6.6`, present in `v6.12`, and present in `v7.0`.
 
-Step 5.4 Record: reachability is hardware enumeration and HID input
-report delivery. Users of the SB974D touchpad hit this during device
-probe and normal touch input.
+Step 6.2 Record: `git apply --check` succeeds against the current
+`7.0.5` checkout. For `v6.12`, the same helper and `snprintf(name,
+sizeof(name), format, index)` pattern are present, but I did not run a
+separate worktree apply check.
 
-Step 5.5 Record: similar pattern exists in the same driver for
-`USB_DEVICE_ID_TOSHIBA_CLICK_L9W`, also using `HID_I2C_DEVICE()` and the
-existing `ELAN_MT_I2C` path.
+Step 6.3 Record: No related stable-specific fix for this exact CAMSS
+warning was found in local targeted searches or public web search.
 
-## Phase 6: Stable Tree Analysis
+### Phase 7: Subsystem Context
+Step 7.1 Record: Subsystem is Qualcomm CAMSS media driver under
+`drivers/media/platform/qcom/camss/`. Criticality is peripheral/driver-
+specific, but build failures affect anyone building this driver or
+COMPILE_TEST coverage.
 
-Step 6.1 Record: checked stable branches `5.10.y`, `5.15.y`, `6.1.y`,
-`6.6.y`, `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y`; all contain
-`CONFIG_HID_ELAN`, `drivers/hid/hid-elan.c`, and the existing
-`TOSHIBA_CLICK_L9W` I2C ELAN entry.
+Step 7.2 Record: CAMSS is actively developed; recent history shows many
+CAMSS commits, including fixes and new platform support.
 
-Step 6.2 Record: `git apply --check` succeeded on current `7.0.y`,
-`6.19.y`, and representative older stable worktrees `5.10.y`, `5.15.y`,
-`6.1.y`, `6.6.y`, `6.12.y`, `6.18.y`.
+### Phase 8: Impact And Risk
+Step 8.1 Record: Affected population is config-specific: builders with
+`CONFIG_VIDEO_QCOM_CAMSS`, including `COMPILE_TEST`, using clang-22 with
+`-Wmissing-format-attribute` and warnings-as-errors.
 
-Step 6.3 Record: no related `SB974D` fix already present in checked
-stable branches.
+Step 8.2 Record: Trigger is build-time, not runtime.
+`scripts/Makefile.warn` verifies `-Wmissing-format-attribute` is under
+`W=1`; `-Werror` is enabled by `W=e` or `CONFIG_WERROR`.
 
-## Phase 7: Subsystem Context
+Step 8.3 Record: Failure mode is build failure, not
+crash/corruption/security. Severity is medium, but build fixes are an
+accepted stable exception.
 
-Step 7.1 Record: subsystem is HID input driver support. Criticality is
-driver-specific/peripheral, affecting users of this ELAN SB974D touchpad
-hardware.
+Step 8.4 Record: Benefit is moderate: keeps affected stable builds
+working with newer clang warning behavior. Risk is very low: 10-line
+single-function mechanical change, no API change, call sites unchanged.
 
-Step 7.2 Record: HID is actively maintained; this patch was applied
-through `hid.git#for-7.1/upstream-fixes` by HID maintainer Jiri Kosina.
+### Phase 9: Final Synthesis
+Evidence for backporting:
+- Real build failure mode documented in commit and lore.
+- Fits stable build-fix exception.
+- Very small, contained, reviewed by CAMSS maintainer.
+- Applies cleanly to current `7.0.5`; buggy code exists in `v6.12+` and
+  `v7.0`.
 
-## Phase 8: Impact And Risk
+Evidence against backporting:
+- Not a runtime correctness, crash, data corruption, or security fix.
+- Trigger requires specific compiler/warning-as-error build settings.
+- Not relevant to `v6.6` and older because the helper is absent there.
 
-Step 8.1 Record: affected population is hardware-specific: systems with
-ELAN SB974D I2C touchpad and `CONFIG_HID_ELAN`.
+Stable rules checklist:
+1. Obviously correct and tested: yes for code review/readability; no
+   local clang-22 build reproduction.
+2. Fixes a real bug: yes, a verified build diagnostic/error path.
+3. Important issue: medium; build failure, not runtime failure.
+4. Small and contained: yes, one function, one file, 7+/3-.
+5. No new feature/API: yes.
+6. Can apply to stable: verified for current `7.0.5`; likely
+   straightforward for `v6.12+`, not applicable to `v6.6` and older.
 
-Step 8.2 Record: trigger is device enumeration and normal touchpad input
-on that hardware. No evidence found that unprivileged users can trigger
-a security issue; this is hardware functionality.
-
-Step 8.3 Record: failure mode without the patch is lack of proper `hid-
-elan` handling for this touchpad’s vendor-specific `ELAN_MT_I2C` report
-format. Severity is medium for affected hardware because touchpad
-functionality is user-visible, but not a crash/corruption/security
-issue.
-
-Step 8.4 Record: benefit is high for affected hardware and low globally.
-Risk is very low: two lines, no behavior change for unrelated device
-IDs, no API change, and clean apply to checked stable branches.
-
-## Phase 9: Final Synthesis
-
-Evidence for backporting: this is exactly the stable exception for
-adding a new device ID to an existing driver; the driver and parser
-already exist in stable; the patch is tiny, cleanly applies, and was
-accepted by the HID maintainer. Evidence against: it is hardware
-enablement rather than a conventional critical bug fix, and there is no
-user bug report or `Tested-by` tag in the commit.
-
-Stable rules:
-1. Obviously correct and tested? Code is obviously correct by
-   inspection; explicit testing tag absent.
-2. Fixes a real user-visible issue? Yes for affected SB974D systems:
-   proper touchpad driver binding/report parsing.
-3. Important issue? Medium hardware functionality issue, not
-   crash/corruption/security.
-4. Small and contained? Yes, 2 insertions in HID.
-5. No new APIs/features? No API; hardware ID addition only.
-6. Can apply to stable? Yes, verified across representative active
-   stable branches.
-
-Exception category: new device ID added to an existing driver. This is
-stable-suitable.
+Exception category: Build fix.
 
 ## Verification
+- Phase 1: `git show` verified candidate commit metadata and exact diff
+  for `2211e826bd69...`.
+- Phase 2: `git diff --shortstat` verified `1 file changed, 7
+  insertions(+), 3 deletions(-)`.
+- Phase 3: `git blame` verified helper introduced by `0727615fb975`;
+  `git show` inspected that commit.
+- Phase 3/6: `git describe --contains` and tag containment checks
+  verified introduction in `v6.7`, presence in `v6.12+`, absence from
+  `v6.6`.
+- Phase 4: `b4 dig`, `b4 dig -a`, `b4 dig -w`, and saved mbox verified
+  original lore thread, v1-only series, recipients, `Fixes:` trailer,
+  and Bryan’s review.
+- Phase 5: `rg` and file reads verified call sites and probe call chain.
+- Phase 6: `git apply --check` verified clean apply to current `7.0.5`.
+- Phase 7: `MAINTAINERS` verified Bryan O'Donoghue is a CAMSS
+  maintainer.
+- Phase 8: `scripts/Makefile.warn` verified when `-Wmissing-format-
+  attribute` and `-Werror` are enabled.
+- UNVERIFIED: I did not reproduce the clang-22 build failure locally.
+- UNVERIFIED: I did not perform an actual `git apply --check` in a
+  separate `v6.12` worktree.
 
-- Phase 1: `git show --format=fuller 55ce185884813` verified subject,
-  body, author, committer, and tags.
-- Phase 2: `git show --stat` and full diff verified exactly 2 insertions
-  in `hid-elan.c` and `hid-ids.h`.
-- Phase 3: `git blame` verified table history; `git describe --contains`
-  placed original driver support around v4.17-rc1 and I2C support around
-  v4.19-rc1.
-- Phase 3: `git log --oneline` checks found no dependent SB974D series
-  and only this author’s HID commit in the checked range.
-- Phase 4: `b4 dig`, `b4 dig -a`, and `b4 dig -w` verified original lore
-  submission, single v1, recipients, and maintainer application.
-- Phase 4: WebFetch to lore/stable was blocked by Anubis; the saved `b4`
-  mbox was used instead.
-- Phase 5: `ReadFile` and `rg` verified `elan_probe`, `elan_raw_event`,
-  `elan_i2c_report_input`, `hid_match_device`, and `hid_input_report`
-  call paths.
-- Phase 6: `git grep` verified relevant stable branches contain
-  `HID_ELAN` and the existing ELAN I2C entry.
-- Phase 6: `git apply --check` verified clean application to `7.0.y`,
-  `6.19.y`, `6.18.y`, `6.12.y`, `6.6.y`, `6.1.y`, `5.15.y`, and
-  `5.10.y`.
-- Phase 7: `MAINTAINERS` verified Jiri Kosina and Benjamin Tissoires as
-  HID maintainers.
-- Phase 8: no sanitizer report, crash report, or security impact was
-  found; decision is driven by the verified device-ID stable exception.
+This is stable-worthy as a low-risk build fix for stable trees that
+contain the helper, especially `v6.12+`/`v7.0` era trees, and should be
+skipped for older trees where the code does not exist.
 
 **YES**
 
- drivers/hid/hid-elan.c | 1 +
- drivers/hid/hid-ids.h  | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/media/platform/qcom/camss/camss-csiphy.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-elan.c b/drivers/hid/hid-elan.c
-index 76d93fc48f6a2..0190ad567ce4d 100644
---- a/drivers/hid/hid-elan.c
-+++ b/drivers/hid/hid-elan.c
-@@ -513,6 +513,7 @@ static const struct hid_device_id elan_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_HP_X2_10_COVER),
- 	  .driver_data = ELAN_HAS_LED },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_TOSHIBA_CLICK_L9W) },
-+	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_SB974D) },
- 	{ }
- };
- MODULE_DEVICE_TABLE(hid, elan_devices);
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index c1e4a6ce96317..c371721826dcc 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -455,6 +455,7 @@
- #define USB_DEVICE_ID_EDIFIER_QR30	0xa101	/* EDIFIER Hal0 2.0 SE */
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 62623393f4144..78a1b568dbae6 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -558,12 +558,16 @@ static int csiphy_init_formats(struct v4l2_subdev *sd,
+ 	return csiphy_set_format(sd, fh ? fh->state : NULL, &format);
+ }
  
- #define USB_VENDOR_ID_ELAN		0x04f3
-+#define USB_DEVICE_ID_SB974D            0x0400
- #define USB_DEVICE_ID_TOSHIBA_CLICK_L9W	0x0401
- #define USB_DEVICE_ID_HP_X2		0x074d
- #define USB_DEVICE_ID_HP_X2_10_COVER	0x0755
+-static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+-				    int index)
++static bool __printf(2, 3)
++csiphy_match_clock_name(const char *clock_name, const char *format, ...)
+ {
+ 	char name[16]; /* csiphyXXX_timer\0 */
++	va_list args;
++
++	va_start(args, format);
++	vsnprintf(name, sizeof(name), format, args);
++	va_end(args);
+ 
+-	snprintf(name, sizeof(name), format, index);
+ 	return !strcmp(clock_name, name);
+ }
+ 
 -- 
 2.53.0
 
