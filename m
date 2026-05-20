@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40264318ED6;
-	Wed, 20 May 2026 18:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2175D342CB3;
+	Wed, 20 May 2026 18:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302239; cv=none; b=PIQTLIEdRUtKVXfObJO4e5Dgm2DCVvc+qXvH9SvxkDNmwQ8+CG1ytIZNxMebSHBi+VW4+6Hlgb+ShGg/HY0yVALQ2LCjmuSeGGtJ7f1OpiYybaNncvpmafCDdGM31vvNCyr1knm/0ZuzNzeP0Pv5f8wM1S9iq8xZMKkoRE+THHI=
+	t=1779302242; cv=none; b=f8YzqNr7Co9y89fuzDq2IxBdgn3dHkKUs5RSop3ss35hj/gDCt6cup+pxfWBCH72Lk5zv+Z61hd3R4QGVKh5uhSOaqPoELMnrokXZhf+IJmeBd9RU+NZMngpP/4i98YqYx5aKuzpQzdKyLfM+bu44BJgDou73FVtt5c2uAHQu5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302239; c=relaxed/simple;
-	bh=se84nEmj9GmMjhcCBN8Md7wbwMnah6goi51Ek0nA8xo=;
+	s=arc-20240116; t=1779302242; c=relaxed/simple;
+	bh=6MO6VTzrWHH5SFYhjug5WNfOKi1D/HvkoOaGw8xWB1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jSKjeK4QsI4iGsicd2/Ed/KoL9oltb+oe0IeAgVjJAA9q83BUqLSE3gCVYlvfjXcOyjpLpYriRw1SQoSWjLOw3WjRezHkvj5fXVeFp06RTBS4D4hg5I6MWoMSsJUjob7InG4trOyZD7nzourHGV0eta7731SUZOvygejSs+DOFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXYgjKHv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HI2cPSrOHuYjO8rYSHKzKlvJzqTnajCyidLGUqD91JYljsZJdaDZHm398fltNoXudPmbJxAhcLE4uWPKoprfMh7Lgbl/qGciQFK29Vj28ZbD/OAEC38ZNeRZ7dHIGNRM3tw+P7R3X+386MVowr4MgzH4w8LKTTyCOj8x2v2ce3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJxh30Ul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXYgjKHv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E241F000E9;
-	Wed, 20 May 2026 18:37:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJxh30Ul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DBA61F000E9;
+	Wed, 20 May 2026 18:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302238;
-	bh=2nCCUCOsIowl/EcHumg75Q0XOYMjykuuzDiTfyva7Fo=;
+	s=korg; t=1779302240;
+	bh=21fW8T2q63p49/t+YNnTmj0Z3Wp2cR/sw7wGwNlkiIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TXYgjKHv8nvzNo26dnLDESJ40aSXqmhONK2Ms4mXQx4NOKin0QfmopNqacguWBWSV
-	 EjEZFjrDdrJufRPZLJnPI2klnYrDAnHtUK9gDnBzvQbqRC9HbA+r72N05IXwmXAXuM
-	 Co0DBsbtFELwbttZVt1yAdqzLjsUDqKPpruCWjW0=
+	b=wJxh30UlgKK7BIu0V2+TQoCc/i3WRZU/7LS6YN7DrYd8JLdk/slw8UA/MYLjOM4lh
+	 1IaOsdpqAA3VaesSlP4TGA6zQCn34+en1qJLdPw23L1DorCjDHUhvc5rEdFBvONxFX
+	 6QhE4Qv0Q9qGZkyLljWQmFAEK1t1I175GBv1s5jM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 191/508] soc: qcom: ocmem: make the core clock optional
-Date: Wed, 20 May 2026 18:20:14 +0200
-Message-ID: <20260520162102.773271640@linuxfoundation.org>
+Subject: [PATCH 6.6 192/508] soc: qcom: ocmem: use scoped device node handling to simplify error paths
+Date: Wed, 20 May 2026 18:20:15 +0200
+Message-ID: <20260520162102.795431071@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,39 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit e8a61c51417c679d1a599fb36695e9d3b8d95514 ]
+[ Upstream commit f4c1c19f5c0e5cf2870df91dedc6b40400fd9c8a ]
 
-OCMEM's core clock (aka RPM bus 2 clock) is being handled internally by
-the interconnect driver. Corresponding clock has been dropped from the
-SMD RPM clock driver. The users of the ocmem will vote on the ocmemnoc
-interconnect paths, making sure that ocmem is on. Make the clock
-optional, keeping it for compatibility with older DT.
+Obtain the device node reference with scoped/cleanup.h to reduce error
+handling and make the code a bit simpler.
 
-Fixes: d6edc31f3a68 ("clk: qcom: smd-rpm: Separate out interconnect bus clocks")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260323-ocmem-v1-1-ad9bcae44763@oss.qualcomm.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240813-b4-cleanup-h-of-node-put-other-v1-4-cfb67323a95c@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 9dfd69cd89cd ("soc: qcom: ocmem: register reasons for probe deferrals")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ocmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/qcom/ocmem.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-index 1511d19643d41..c5fc6db9870a2 100644
+index c5fc6db9870a2..697c8a6a400b1 100644
 --- a/drivers/soc/qcom/ocmem.c
 +++ b/drivers/soc/qcom/ocmem.c
-@@ -313,7 +313,7 @@ static int ocmem_dev_probe(struct platform_device *pdev)
- 	ocmem->dev = dev;
- 	ocmem->config = device_get_match_data(dev);
+@@ -185,23 +185,20 @@ static void update_range(struct ocmem *ocmem, struct ocmem_buf *buf,
+ struct ocmem *of_get_ocmem(struct device *dev)
+ {
+ 	struct platform_device *pdev;
+-	struct device_node *devnode;
+ 	struct ocmem *ocmem;
  
--	ocmem->core_clk = devm_clk_get(dev, "core");
-+	ocmem->core_clk = devm_clk_get_optional(dev, "core");
- 	if (IS_ERR(ocmem->core_clk))
- 		return dev_err_probe(dev, PTR_ERR(ocmem->core_clk),
- 				     "Unable to get core clock\n");
+-	devnode = of_parse_phandle(dev->of_node, "sram", 0);
++	struct device_node *devnode __free(device_node) = of_parse_phandle(dev->of_node,
++									   "sram", 0);
+ 	if (!devnode || !devnode->parent) {
+ 		dev_err(dev, "Cannot look up sram phandle\n");
+-		of_node_put(devnode);
+ 		return ERR_PTR(-ENODEV);
+ 	}
+ 
+ 	pdev = of_find_device_by_node(devnode->parent);
+ 	if (!pdev) {
+ 		dev_err(dev, "Cannot find device node %s\n", devnode->name);
+-		of_node_put(devnode);
+ 		return ERR_PTR(-EPROBE_DEFER);
+ 	}
+-	of_node_put(devnode);
+ 
+ 	ocmem = platform_get_drvdata(pdev);
+ 	put_device(&pdev->dev);
 -- 
 2.53.0
 
