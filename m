@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815EC35C1A0;
-	Wed, 20 May 2026 17:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EADC36A376;
+	Wed, 20 May 2026 17:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297482; cv=none; b=mWijparVmJZBX1LWbdLlaGwT5NBHuOcKgH9A9k5a1+hfJ2d/NKZUR9af13tu3UvFugiHHYRRckwhYexCHEZo5XP84RTCDklRoQeQncD3Bda1Xv0QXeCpbLLZCUH0vWumHsiTnFcFEkjBRAD7+9oe4Yd/GFY04DZ2eJbxeokQhh0=
+	t=1779297485; cv=none; b=PauDWFUIF7f/fewKxcfhb9XwSWpKSzzxmQ2HXooABpCP6rtesJ5i7uBNT9QH0ZHZQAua2AIlHF/VOzyIiJkawuv44vznizCZ5veDKjG3iTDwcRhjEMMY+Oh7mpedf3PHwAqDDFMcyy6ttQTYe5EcyiiBecWO2U+NBfvSqY5zsJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297482; c=relaxed/simple;
-	bh=WSs0proA4pVZUB4bVEHydbaQSrx44H7ffM20dTtDLmA=;
+	s=arc-20240116; t=1779297485; c=relaxed/simple;
+	bh=/JwOkqPz4/pNru3Bx3EOJbaIscCq7iRma0VIrE4w2Qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pgHYoa1A/uVjxud07z28Wz3vU+Kj7XN/LWhAXrJruTCFZuht0KzgaLcFeUYqYuyUYyN3whk0A9rJU5S2BFAXW46dje6tgJqyPOGIxaHuMquxKhFuP+J4jJTxFl17B6MePByk6+5+tscrvm4W3M/4NIBazOvse2ElvO6Id/p10Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3kZKjk7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=A5lGZOdSzVERcNpzgkGOUAkc1aI/8zSTCC80CNz2QqUJ/iQ9aQN5TF3R9/5bNuFqCiF78Uahj4rfc3ncX7UUHmtLpdF7IGo/ZusCR69JsigiPgokgb8u+M7iz18+hMGqmN9/dkiT+oVNX4un/WksmSWdn04l+Xq/5YaJjSgBo0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/KSFjis; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3kZKjk7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E703F1F000E9;
-	Wed, 20 May 2026 17:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/KSFjis"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 911121F000E9;
+	Wed, 20 May 2026 17:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297481;
-	bh=UpZrHIlP6fEGqpREuuae1TyjBNgfAdywwvHRBZFOl8w=;
+	s=korg; t=1779297484;
+	bh=1d6nuZAG4mInZGnoBHmdlKsBQdMobxpbxnEZ9Fs/SwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I3kZKjk7DZmSsTSKEJGWucMoOPJfY9gdsix65x2fDn/pn/oTjEgt1olbJ3mrZle6u
-	 amvaq9poSuLRbWHHftJOk/SXC9ILlvTTHxqpkqwYDLESCkplB7C1lqB0ezZVrFWixy
-	 XaBDRxXI4yTvT/r0q7kju/YZJWwzOZW/DguPtVKc=
+	b=G/KSFjiszYd+ZYLCF18uURY+2AwAULlFs2f4WGiS4ZNPSf0GF2W5oumY9G/srsUlO
+	 ZSQUkuFQlQQ/nEXoE9ASaUJJWhzMo42C7UuEWE+zfs37LJeiy3VbNcwLKdJxozlzYn
+	 CSC6w5v+fs64HuAALCjTybYRrt0SDBui7npooUzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed S. Darwish" <darwi@linutronix.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 049/957] ASoC: Intel: avs: Include CPUID header at file scope
-Date: Wed, 20 May 2026 18:08:52 +0200
-Message-ID: <20260520162135.621612929@linuxfoundation.org>
+Subject: [PATCH 6.18 050/957] x86/vdso: Clean up remnants of VDSO32_NOTE_MASK
+Date: Wed, 20 May 2026 18:08:53 +0200
+Message-ID: <20260520162135.644162696@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,120 +48,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed S. Darwish <darwi@linutronix.de>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 7f78e0b46e9984e955cb73ffada8dace8b4dd059 ]
+[ Upstream commit 6517f293b2c6774d21b6e7e26a55fae60c6ec4cf ]
 
-Commit
+VDSO32_NOTE_MASK is not used or provided anymore, remove it.
 
-    cbe37a4d2b3c ("ASoC: Intel: avs: Configure basefw on TGL-based platforms")
-
-includes the main CPUID header from within a C function.  This works by
-luck and forbids valid refactoring inside that header.
-
-Include the CPUID header at file scope instead.
-
-Remove the COMPILE_TEST build flag so that the CONFIG_X86 conditionals can
-be removed.  The driver gets enough compilation testing already on x86.
-
-For clarity, refactor the CPUID(0x15) code into its own function without
-changing any of the driver's logic.
-
-Fixes: cbe37a4d2b3c ("ASoC: Intel: avs: Configure basefw on TGL-based platforms")
-Suggested-by: Borislav Petkov <bp@alien8.de>		# CONFIG_X86 removal
-Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/all/20250612234010.572636-3-darwi@linutronix.de
+Fixes: a13f2ef168cb ("x86/xen: remove 32-bit Xen PV guest support")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Cc: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20260330-vdso-x86-vdso32_note_mask-v1-1-2f5c473327bf@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/Kconfig   |  2 +-
- sound/soc/intel/avs/tgl.c | 37 ++++++++++++++++++++++++-------------
- 2 files changed, 25 insertions(+), 14 deletions(-)
+ arch/x86/entry/vdso/vdso2c.c | 1 -
+ arch/x86/include/asm/vdso.h  | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/sound/soc/intel/Kconfig b/sound/soc/intel/Kconfig
-index 412555e626b81..63367364916ae 100644
---- a/sound/soc/intel/Kconfig
-+++ b/sound/soc/intel/Kconfig
-@@ -95,7 +95,7 @@ config SND_SOC_INTEL_KEEMBAY
+diff --git a/arch/x86/entry/vdso/vdso2c.c b/arch/x86/entry/vdso/vdso2c.c
+index f84e8f8fa5fe6..b8a555763f437 100644
+--- a/arch/x86/entry/vdso/vdso2c.c
++++ b/arch/x86/entry/vdso/vdso2c.c
+@@ -75,7 +75,6 @@ struct vdso_sym {
+ };
  
- config SND_SOC_INTEL_AVS
- 	tristate "Intel AVS driver"
--	depends on X86 || COMPILE_TEST
-+	depends on X86
- 	depends on PCI
- 	depends on COMMON_CLK
- 	select ACPI_NHLT if ACPI
-diff --git a/sound/soc/intel/avs/tgl.c b/sound/soc/intel/avs/tgl.c
-index 4649d749b41e0..a7123639de431 100644
---- a/sound/soc/intel/avs/tgl.c
-+++ b/sound/soc/intel/avs/tgl.c
-@@ -7,6 +7,7 @@
- //
+ struct vdso_sym required_syms[] = {
+-	{"VDSO32_NOTE_MASK", true},
+ 	{"__kernel_vsyscall", true},
+ 	{"__kernel_sigreturn", true},
+ 	{"__kernel_rt_sigreturn", true},
+diff --git a/arch/x86/include/asm/vdso.h b/arch/x86/include/asm/vdso.h
+index b7253ef3205a6..7bc290ae99334 100644
+--- a/arch/x86/include/asm/vdso.h
++++ b/arch/x86/include/asm/vdso.h
+@@ -18,7 +18,6 @@ struct vdso_image {
+ 	unsigned long extable_base, extable_len;
+ 	const void *extable;
  
- #include <linux/pci.h>
-+#include <asm/cpuid/api.h>
- #include "avs.h"
- #include "debug.h"
- #include "messages.h"
-@@ -38,28 +39,38 @@ static int avs_tgl_dsp_core_stall(struct avs_dev *adev, u32 core_mask, bool stal
- 	return avs_dsp_core_stall(adev, core_mask, stall);
- }
- 
--static int avs_tgl_config_basefw(struct avs_dev *adev)
-+/*
-+ * Succeed if CPUID(0x15) is not available, or if the nominal core crystal clock
-+ * frequency cannot be enumerated from it.  There is nothing to do in both cases.
-+ */
-+static int avs_tgl_set_xtal_freq(struct avs_dev *adev)
- {
--	struct pci_dev *pci = adev->base.pci;
--	struct avs_bus_hwid hwid;
-+	unsigned int freq;
- 	int ret;
--#ifdef CONFIG_X86
--	unsigned int ecx;
--
--#include <asm/cpuid/api.h>
- 
- 	if (boot_cpu_data.cpuid_level < CPUID_LEAF_TSC)
--		goto no_cpuid;
-+		return 0;
- 
--	ecx = cpuid_ecx(CPUID_LEAF_TSC);
--	if (ecx) {
--		ret = avs_ipc_set_fw_config(adev, 1, AVS_FW_CFG_XTAL_FREQ_HZ, sizeof(ecx), &ecx);
-+	freq = cpuid_ecx(CPUID_LEAF_TSC);
-+	if (freq) {
-+		ret = avs_ipc_set_fw_config(adev, 1, AVS_FW_CFG_XTAL_FREQ_HZ, sizeof(freq), &freq);
- 		if (ret)
- 			return AVS_IPC_RET(ret);
- 	}
--#endif
- 
--no_cpuid:
-+	return 0;
-+}
-+
-+static int avs_tgl_config_basefw(struct avs_dev *adev)
-+{
-+	struct pci_dev *pci = adev->base.pci;
-+	struct avs_bus_hwid hwid;
-+	int ret;
-+
-+	ret = avs_tgl_set_xtal_freq(adev);
-+	if (ret)
-+		return ret;
-+
- 	hwid.device = pci->device;
- 	hwid.subsystem = pci->subsystem_vendor | (pci->subsystem_device << 16);
- 	hwid.revision = pci->revision;
+-	long sym_VDSO32_NOTE_MASK;
+ 	long sym___kernel_sigreturn;
+ 	long sym___kernel_rt_sigreturn;
+ 	long sym___kernel_vsyscall;
 -- 
 2.53.0
 
