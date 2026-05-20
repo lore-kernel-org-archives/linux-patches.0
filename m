@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67C8331220;
-	Wed, 20 May 2026 17:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DD6364E89;
+	Wed, 20 May 2026 17:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297808; cv=none; b=A3CeKjM7C86T/dp2fzG1vCB7j6gPl67OmT3Qrxk+wFIBPpL4fq8oUUB8rirDbg77LYDsoXIdUVnSQ+feKoxaJsMeXyIxjMzvWadmnWiHesE+BW5epf/iGQW4ONOL21Wi7L0nrFHzCyYKpw3hYNsdQ/uv3A9Ni76mHFRFtQIw6kU=
+	t=1779297810; cv=none; b=QVWhf95CWyoLCs5Xcaijz1OJUhqicHfN9XSJKc7HRUHRdaXcXzHlYGuuhgexkO6P9VQw9FZ4m/G4REizYRueYnroIOzp3Hv+Q+pwwtNtMR3we3lKV5icUY/gfYzuvgQTd8emQB6HMeuamC4U0M6pVRW7OUTFYxNi2yUh0rnQxc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297808; c=relaxed/simple;
-	bh=AqUSZ+N9MnklwzZsk4N6o3mIH/3xfDC3HQvPxBZQSes=;
+	s=arc-20240116; t=1779297810; c=relaxed/simple;
+	bh=Ylyuydj0sHMzJKL8hfAQnyV/1IWZEzmNJ0VEVW6t6gM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJDnHoNupbJ22wnoBaMEGHol6EvbRv8U2oYZPWGyBsrGLvxlKcRwl5S3GCxg2fO6Q73T5a6fMh3enjDXyjU4TKb41mr+knRYUDkEV4h13NyIKxEewLaz38qPzwfXM/PZoJPVmuS03diyUniB/nyrEsBsa+ZjxQaB1fE8XNM0Wac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXEYK9FW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jsz1tjvSxGb0FRE9GFIMjchR1b138pX1UFfEXmO8UMQHg8lR1/6QkPg83OaLz4AybkPjWQkKBB467mwiWdd8E7EFJjQviV0rP9HFgDEDpHeemzoCw67gCpKUci9LMPuDjzyyNn6qz0syH0dxVq4cLdyIHH2PTgkmf+y8om2apTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jb3lzj1g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXEYK9FW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574C81F00893;
-	Wed, 20 May 2026 17:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jb3lzj1g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0498D1F000E9;
+	Wed, 20 May 2026 17:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297806;
-	bh=He/+PFplIzpyf6DPQV6lkdqu9s7+dhP6j32wOVjtPNg=;
+	s=korg; t=1779297809;
+	bh=lz9sD+WN1e6JJv5Wp63F9aB2HkArT52Fi4KjQme6qAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bXEYK9FWUiQzy+BNaHwfw9weC/5rebkFcLtV63vuYZ7+9ASdeprXZWXfTmSwmNXMQ
-	 klMrs50bxxLOtzE4FhbnifksXS0dYp8pbqFvqR60zppW+uXnNMRI5cmfxi23iuIICB
-	 /Jgn1fUDscqlxvDIK/+9vLMZEB+YlwwBaWzbDCaU=
+	b=Jb3lzj1gZba3+Z6A10XcRhtf5yLfH3jMG+NSoED5OEtm/ViAbbh3ce1HLjfUgMpAy
+	 aIUl026ClOJVA7VNZLHJiOf7XpWAuEw0oDLHNBB+P2PxEEqbjDhqP0sZxbBTS7fd8B
+	 /4piednSTE07vpnrn8UB+4K3svnbMB8GIB42FF5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Charles Perry <charles.perry@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 169/957] dt-bindings: net: dsa: nxp,sja1105: make spi-cpol optional for sja1110
-Date: Wed, 20 May 2026 18:10:52 +0200
-Message-ID: <20260520162138.218991678@linuxfoundation.org>
+Subject: [PATCH 6.18 170/957] net: phy: fix a return path in get_phy_c45_ids()
+Date: Wed, 20 May 2026 18:10:53 +0200
+Message-ID: <20260520162138.240914373@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,44 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Charles Perry <charles.perry@microchip.com>
 
-[ Upstream commit 600f01dc4bd0c736b3ffea9f7976136d8bf1b136 ]
+[ Upstream commit 6f533abe7bbad2eef1e42c639b6bb9dad2b02362 ]
 
-Currently, the binding requires 'spi-cpha' for SJA1105 and 'spi-cpol'
-for SJA1110.
+The return value of phy_c45_probe_present() is stored in "ret", not
+"phy_reg", fix this. "phy_reg" always has a positive value if we reach
+this return path (since it would have returned earlier otherwise), which
+means that the original goal of the patch of not considering -ENODEV
+fatal wasn't achieved.
 
-However, the SJA1110 supports both SPI modes 0 and 2. Mode 2
-(cpha=0, cpol=1) is used by the NXP LX2160 Bluebox 3.
-
-On the SolidRun i.MX8DXL HummingBoard Telematics, mode 0 is stable,
-while forcing mode 2 introduces CRC errors especially during bursts.
-
-Drop the requirement on spi-cpol for SJA1110.
-
-Fixes: af2eab1a8243 ("dt-bindings: net: nxp,sja1105: document spi-cpol/cpha")
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://patch.msgid.link/20260409-imx8dxl-sr-som-v2-1-83ff20629ba0@solid-run.com
+Fixes: 17b447539408 ("net: phy: c45 scanning: Don't consider -ENODEV fatal")
+Signed-off-by: Charles Perry <charles.perry@microchip.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20260409133654.3203336-1-charles.perry@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/net/dsa/nxp,sja1105.yaml | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/phy/phy_device.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/net/dsa/nxp,sja1105.yaml b/Documentation/devicetree/bindings/net/dsa/nxp,sja1105.yaml
-index e9dd914b0734c..941f9a25bbea0 100644
---- a/Documentation/devicetree/bindings/net/dsa/nxp,sja1105.yaml
-+++ b/Documentation/devicetree/bindings/net/dsa/nxp,sja1105.yaml
-@@ -140,8 +140,6 @@ allOf:
-     else:
-       properties:
-         spi-cpha: false
--      required:
--        - spi-cpol
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 2353d6eced68d..dea8b94286d15 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -963,8 +963,8 @@ static int get_phy_c45_ids(struct mii_bus *bus, int addr,
+ 				/* returning -ENODEV doesn't stop bus
+ 				 * scanning
+ 				 */
+-				return (phy_reg == -EIO ||
+-					phy_reg == -ENODEV) ? -ENODEV : -EIO;
++				return (ret == -EIO ||
++					ret == -ENODEV) ? -ENODEV : -EIO;
  
- unevaluatedProperties: false
- 
+ 			if (!ret)
+ 				continue;
 -- 
 2.53.0
 
