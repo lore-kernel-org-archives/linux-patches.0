@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDE1221F2F;
-	Wed, 20 May 2026 16:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C794221F2F;
+	Wed, 20 May 2026 16:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295201; cv=none; b=BE7CbCsJAi3dHSJy1SI95nSdK2p8fzJcJCSNxYW/8POyew8XSQcLdTswY3DuCMKH5ztnWg6gB4srHnnaUJSZ9/aB+C5qTeBZD3Z1Ls5uJkKjc0x87CDPiGVefNx1nLqIrHa/OPAk285Nf61uOZ2reNn/GTt1WRwhvG/sTljsUbc=
+	t=1779295204; cv=none; b=jO3P11iK6L652ci0T4kH1/QMF7N4An2lZji6Zii7hNMWaRtiLv0LhcWmtFncSvNP2SOlcDBgeBLagihhIr6Y3Kz/rg0McKMslJRxmuKozVBv4Icq0tbuMAlsPllrAqfSrqqXG5lkzKkgz+mpraJlzD9KbBubGNpqACAainQlMmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295201; c=relaxed/simple;
-	bh=oUeIEVKcbrJwqRKDAnX06e9/T+f5zkgkQ+ELeBu0fIg=;
+	s=arc-20240116; t=1779295204; c=relaxed/simple;
+	bh=t9VM728qd/TFMhbmtgTXVqOIBLcDC55Y9ZY90OfLEhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kJ27I17Bc8MixX5s+Ig2GIH67ZeeGGwsU6PJg1tAx8XxsHqBVoRXpQdrE5gcS1axQIwr2IhXifyXArk/EF3UyaMOoIuYSn411CG48eFGV4E5fw0awC0fJ1kNgknLsNPzLo3DMIC1xpBHTdOyMhi+PdOxLMbf1TRCk8Upf4eD75g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYLlJQwU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FSCWLKo9LSX6M4GzmhHmS8d9wnftsvM9o7Nsg+Zdgjki1UluVS7u8s7RV2ejynIEDTYvplrC5jW4dOmJSlfYcCF/mk6x6h/qwdiTwuHwaqJsWNgGhkhMBzzRFKARh0X3HBygxA+sZDNm+0vkl71Wlcqs8BjVH/5LDmc4dOUdb+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxjVVs8h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYLlJQwU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402AA1F000E9;
-	Wed, 20 May 2026 16:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxjVVs8h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F9E1F000E9;
+	Wed, 20 May 2026 16:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295200;
-	bh=p/okGHPdhzBiGKfUqJtzDMyUchg9mayqSknqRuWfMaA=;
+	s=korg; t=1779295203;
+	bh=GtkoCc94NdwJkIffZeCiRpaTaSzNc83pg+jskIB9NqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QYLlJQwUjiCkfXJlfKKv9hKbvc6MUgpJY2ta88tTtRHswRw7WSbQgc1caZTbrUVW5
-	 ac/ir0TNl+nGOiuqGEIcry4lijpolgFHXdQybAoacJ4nU2pWXZk9CLXpCzmb2YHfTL
-	 7kmZviJJ3KbGq6y6NjoYsQEi1CpewRVFbDtsxTfk=
+	b=MxjVVs8hXYHH75YijlzO6vB5V/tsxgJXCH90Rnr2yq5VCbvAASWTe6LXGcuACkSdn
+	 l9O+wEDYHYWKy+OXu/lUmt33hqoMhznxYyu1Z4whcXcs99fRuvuGmbYpNR70kbguWK
+	 azFHEYz+y2vN33q5WlbU5msCn0u6MpJ7RYAQXxsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Ian Ray <ian.ray@gehealthcare.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0328/1146] drm/panel: simple: Correct G190EAN01 prepare timing
-Date: Wed, 20 May 2026 18:09:38 +0200
-Message-ID: <20260520162155.620553889@linuxfoundation.org>
+Subject: [PATCH 7.0 0329/1146] PCI: qcom: Advertise Hotplug Slot Capability with no Command Completion support
+Date: Wed, 20 May 2026 18:09:39 +0200
+Message-ID: <20260520162155.642689283@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,39 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 
-[ Upstream commit f1080f82570b797598c1ba7e9c800ae9e94aafc6 ]
+[ Upstream commit 33a76fc3c3e61386524479b99f35423bd3d9a895 ]
 
-The prepare timing specified by the G190EAN01 datasheet should be
-between 30 and 50 ms. Considering it might take some time for the
-LVDS encoder to enable the signal, we should only wait the min.
-required time in the panel driver and not the max. allowed time.
+Qcom PCIe Root Ports advertise hotplug capability in hardware, but do not
+support hotplug command completion. As a result, the hotplug commands
+issued by the pciehp driver never gets completion notification, leading to
+repeated timeout warnings and multi-second delays during boot and
+suspend/resume.
 
-Fixes: 2f7b832fc992 ("drm/panel: simple: Add support for AUO G190EAN01 panel")
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260217142528.68613-1-ian.ray@gehealthcare.com
+Commit a54db86ddc153 ("PCI: qcom: Do not advertise hotplug capability for
+IPs v2.7.0 and v1.9.0") mistakenly assumed that the Root Ports doesn't
+support Hotplug due to timeouts and disabled the Hotplug functionality
+altogether. But the Root Ports does support reporting Hotplug events like
+DL_Up/Down events.
+
+So to fix the command completion timeout issues, just set the No Command
+Completed Support (NCCS) bit and enable Hotplug in Slot Capability field
+back.
+
+Fixes: a54db86ddc153 ("PCI: qcom: Do not advertise hotplug capability for IPs v2.7.0 and v1.9.0")
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+[mani: renamed function, commit log and added comment]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # Hamoa CRD, tunneled link
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260314-hotplug-v1-1-96ac87d93867@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-qcom.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 91ab280869bac..a242ae284db5a 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -1295,7 +1295,7 @@ static const struct panel_desc auo_g190ean01 = {
- 		.height = 301,
- 	},
- 	.delay = {
--		.prepare = 50,
-+		.prepare = 30,
- 		.enable = 200,
- 		.disable = 110,
- 		.unprepare = 1000,
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 67a16af69ddc7..9fdfc88ac1512 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -350,15 +350,20 @@ static void qcom_pcie_clear_aspm_l0s(struct dw_pcie *pci)
+ 	dw_pcie_dbi_ro_wr_dis(pci);
+ }
+ 
+-static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
++static void qcom_pcie_set_slot_nccs(struct dw_pcie *pci)
+ {
+ 	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+ 	u32 val;
+ 
+ 	dw_pcie_dbi_ro_wr_en(pci);
+ 
++	/*
++	 * Qcom PCIe Root Ports do not support generating command completion
++	 * notifications for the Hot-Plug commands. So set the NCCS field to
++	 * avoid waiting for the completions.
++	 */
+ 	val = readl(pci->dbi_base + offset + PCI_EXP_SLTCAP);
+-	val &= ~PCI_EXP_SLTCAP_HPC;
++	val |= PCI_EXP_SLTCAP_NCCS;
+ 	writel(val, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+ 
+ 	dw_pcie_dbi_ro_wr_dis(pci);
+@@ -558,7 +563,7 @@ static int qcom_pcie_post_init_2_1_0(struct qcom_pcie *pcie)
+ 	writel(CFG_BRIDGE_SB_INIT,
+ 	       pci->dbi_base + AXI_MSTR_RESP_COMP_CTRL1);
+ 
+-	qcom_pcie_clear_hpc(pcie->pci);
++	qcom_pcie_set_slot_nccs(pcie->pci);
+ 
+ 	return 0;
+ }
+@@ -638,7 +643,7 @@ static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
+ 		writel(val, pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT);
+ 	}
+ 
+-	qcom_pcie_clear_hpc(pcie->pci);
++	qcom_pcie_set_slot_nccs(pcie->pci);
+ 
+ 	return 0;
+ }
+@@ -731,7 +736,7 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
+ 	val |= EN;
+ 	writel(val, pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT_V2);
+ 
+-	qcom_pcie_clear_hpc(pcie->pci);
++	qcom_pcie_set_slot_nccs(pcie->pci);
+ 
+ 	return 0;
+ }
+@@ -1037,7 +1042,7 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+ 		writel(WR_NO_SNOOP_OVERRIDE_EN | RD_NO_SNOOP_OVERRIDE_EN,
+ 				pcie->parf + PARF_NO_SNOOP_OVERRIDE);
+ 
+-	qcom_pcie_clear_hpc(pcie->pci);
++	qcom_pcie_set_slot_nccs(pcie->pci);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
