@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6D83A3E9C;
-	Wed, 20 May 2026 17:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1706F3D6CB5;
+	Wed, 20 May 2026 17:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297092; cv=none; b=Vnsi3FAG3scsRQ1zm7CGmBkgNTw6OMxJQBtFqaUHcYfP8L36tkCndSJ1Wd38jPI6aHcayfIdvjkxsA0D+3kxoO2+cWnhuhFxvHHMxu/C4GF6YUt4JG2zojOOg0wWP/qTTWuW42oFh3pzbykkeLLk22uObZidyKbtdVaEN9v5Pac=
+	t=1779297095; cv=none; b=KCjUJVHfmeRd6lY9xtJI6KljX5vkUC9gAu2NyVex9fhJ0eAvn1IXgcHfAKebZ5GTUW/9gB37rAkDIm+EtLY/GFXWU8kz9PcNh+GjBYWhIHq+Wpr13lsmNZ5r7tYe74QNQ1ScycM7gzLC3Sr9j3hUuyeLPPrv2++IM/eR4Fowa0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297092; c=relaxed/simple;
-	bh=vIbxgXd3ZSUlcnKTeIE2H0u+pxnO/r9sr+kNtg+3G1Q=;
+	s=arc-20240116; t=1779297095; c=relaxed/simple;
+	bh=N9nUzjo4ycSrOdS9sBhi2214K8YWYgZRy/M3WaCQHbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BmudrkJ0MrXbAJLRJpa7PuVyFPKdHBye0aPfEvsnXhtp4edTCB1YKxmZfI8AC3U31XFhh0G4T30RJxtGH6AOulT66IwRSAyB2GF5KY+++OSni9m4D2/ArhOVdhofDg6SEWGau2Ce7gG/lN35E+XK90HBhAuih6M7gELE4L/BU08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtDe89Vu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MI22mMd9StoO/hY8QdVSA43ICRUKkPWT1MSU+rgJLzaKkOzJS8mrVOBvvkCHHu8+viLviQd/TYewOy8iNUDAOm6oW/ogTTNCB6/dpZMl+rMsU84DFT4HQgeUufSkrr4xPtJNzT2hC7ecsKNWrMAwHUEjTVBM3LMJ0+35IUP4lTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0Fz730Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtDe89Vu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CAF1F000E9;
-	Wed, 20 May 2026 17:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0Fz730Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384B61F000E9;
+	Wed, 20 May 2026 17:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297091;
-	bh=g+i8/F+pfm84AR0xGU8jEjQuKsb/+U5QK30zQHPje80=;
+	s=korg; t=1779297093;
+	bh=EAcJekvNM0f//r+tZk0fn24z2TA7PKsbQaTeOfQ/uF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KtDe89VuOsJAAb8PVZfDNotNjlpqxb6aepU4L88aJHABCLYgIIqAgqpUYsT/zwsSY
-	 kMIMYbBzQ7RhvsWX+r4yfvQP32XKTAgs6o6gKe0v8aRc3unDLZzELl+x9aKZbXZXx6
-	 Ncsd93ik4txiE7tWABOrMpuPBB3JowvKyPbqWiSA=
+	b=h0Fz730Qy2BHu6Hvpyx9o0EeIsMOMoF7ec9VmGNXclEtsHaNO5sGvi6oL1T2nV6zj
+	 QZqoCGVQrZRMYzDG5Yz6tVbYyebCUQGSqx1Njd7HRKEgawIiBaAsR7JJ0hq0tJ3X+k
+	 hW36yEp5R85SvrAbS+e4CM+rb6Jiege+mDRcwPoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1006/1146] drm/amd/display: Read EDID from VBIOS embedded panel info
-Date: Wed, 20 May 2026 18:20:56 +0200
-Message-ID: <20260520162211.000955989@linuxfoundation.org>
+Subject: [PATCH 7.0 1007/1146] drm/amd/display: Use EDID from VBIOS embedded panel info
+Date: Wed, 20 May 2026 18:20:57 +0200
+Message-ID: <20260520162211.022879304@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,130 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 9ea16f64189bf7b6ba50fc7f0325b3c1f836d105 ]
+[ Upstream commit 019155e2bd3e2cec425553195e9f9bc76bb0f848 ]
 
-Some board manufacturers hardcode the EDID for the embedded
-panel in the VBIOS. This EDID should be used when the panel
-doesn't have a DDC.
+When an embedded panel has no DDC, read the EDID from
+the VBIOS embedded panel info and use that.
 
-For reference, see the legacy non-DC display code:
-amdgpu_atombios_encoder_get_lcd_info()
-
-This is necessary to support embedded connectors without DDC.
-
-Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
+Fixes: 7c7f5b15be65 ("drm/amd/display: Refactor edid read.")
 Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/5192
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit eb105e63b474c11ef6a84a1c6b18100d851ff364)
+(cherry picked from commit 399b9abc353c62f6e37d38325edbdb6c2c00411c)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/bios/bios_parser.c | 62 +++++++++++++++++++
- .../display/include/grph_object_ctrl_defs.h   |  4 ++
- 2 files changed, 66 insertions(+)
+ .../amd/display/amdgpu_dm/amdgpu_dm_helpers.c | 44 +++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-index 73e3c45eeeba6..bbd8d52330b55 100644
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-@@ -1295,6 +1295,60 @@ static enum bp_result bios_parser_get_embedded_panel_info(
- 	return BP_RESULT_FAILURE;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+index a09761f9882d1..5b0245eb5fdb2 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -993,6 +993,45 @@ dm_helpers_read_acpi_edid(struct amdgpu_dm_connector *aconnector)
+ 	return drm_edid_read_custom(connector, dm_helpers_probe_acpi_edid, connector);
  }
  
-+static enum bp_result get_embedded_panel_extra_info(
-+	struct bios_parser *bp,
-+	struct embedded_panel_info *info,
-+	const uint32_t table_offset)
++static const struct drm_edid *
++dm_helpers_read_vbios_hardcoded_edid(struct dc_link *link, struct amdgpu_dm_connector *aconnector)
 +{
-+	uint8_t *record = bios_get_image(&bp->base, table_offset, 1);
-+	ATOM_PANEL_RESOLUTION_PATCH_RECORD *panel_res_record;
-+	ATOM_FAKE_EDID_PATCH_RECORD *fake_edid_record;
++	struct dc_bios *bios = link->ctx->dc_bios;
++	struct embedded_panel_info info;
++	const struct drm_edid *edid;
++	enum bp_result r;
 +
-+	while (*record != ATOM_RECORD_END_TYPE) {
-+		switch (*record) {
-+		case LCD_MODE_PATCH_RECORD_MODE_TYPE:
-+			record += sizeof(ATOM_PATCH_RECORD_MODE);
-+			break;
-+		case LCD_RTS_RECORD_TYPE:
-+			record += sizeof(ATOM_LCD_RTS_RECORD);
-+			break;
-+		case LCD_CAP_RECORD_TYPE:
-+			record += sizeof(ATOM_LCD_MODE_CONTROL_CAP);
-+			break;
-+		case LCD_FAKE_EDID_PATCH_RECORD_TYPE:
-+			fake_edid_record = (ATOM_FAKE_EDID_PATCH_RECORD *)record;
-+			if (fake_edid_record->ucFakeEDIDLength) {
-+				if (fake_edid_record->ucFakeEDIDLength == 128)
-+					info->fake_edid_size =
-+						fake_edid_record->ucFakeEDIDLength;
-+				else
-+					info->fake_edid_size =
-+						fake_edid_record->ucFakeEDIDLength * 128;
++	if (!dc_is_embedded_signal(link->connector_signal) ||
++	    !bios->funcs->get_embedded_panel_info)
++		return NULL;
 +
-+				info->fake_edid = fake_edid_record->ucFakeEDIDString;
++	memset(&info, 0, sizeof(info));
++	r = bios->funcs->get_embedded_panel_info(bios, &info);
 +
-+				record += struct_size(fake_edid_record,
-+						      ucFakeEDIDString,
-+						      info->fake_edid_size);
-+			} else {
-+				/* empty fake edid record must be 3 bytes long */
-+				record += sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
-+			}
-+			break;
-+		case LCD_PANEL_RESOLUTION_RECORD_TYPE:
-+			panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
-+			info->panel_width_mm = panel_res_record->usHSize;
-+			info->panel_height_mm = panel_res_record->usVSize;
-+			record += sizeof(ATOM_PANEL_RESOLUTION_PATCH_RECORD);
-+			break;
-+		default:
-+			return BP_RESULT_BADBIOSTABLE;
-+		}
++	if (r != BP_RESULT_OK) {
++		dm_error("Error when reading embedded panel info: %u\n", r);
++		return NULL;
 +	}
 +
-+	return BP_RESULT_OK;
++	if (!info.fake_edid || !info.fake_edid_size) {
++		dm_error("Embedded panel info doesn't contain an EDID\n");
++		return NULL;
++	}
++
++	edid = drm_edid_alloc(info.fake_edid, info.fake_edid_size);
++
++	if (!drm_edid_valid(edid)) {
++		dm_error("EDID from embedded panel info is invalid\n");
++		drm_edid_free(edid);
++		return NULL;
++	}
++
++	aconnector->base.display_info.width_mm = info.panel_width_mm;
++	aconnector->base.display_info.height_mm = info.panel_height_mm;
++
++	return edid;
 +}
 +
- static enum bp_result get_embedded_panel_info_v1_2(
- 	struct bios_parser *bp,
- 	struct embedded_panel_info *info)
-@@ -1411,6 +1465,10 @@ static enum bp_result get_embedded_panel_info_v1_2(
- 	if (ATOM_PANEL_MISC_API_ENABLED & lvds->ucLVDS_Misc)
- 		info->lcd_timing.misc_info.API_ENABLED = true;
+ void populate_hdmi_info_from_connector(struct drm_hdmi_info *hdmi, struct dc_edid_caps *edid_caps)
+ {
+ 	edid_caps->scdc_present = hdmi->scdc.supported;
+@@ -1013,6 +1052,9 @@ enum dc_edid_status dm_helpers_read_local_edid(
  
-+	if (lvds->usExtInfoTableOffset)
-+		return get_embedded_panel_extra_info(bp, info,
-+			le16_to_cpu(lvds->usExtInfoTableOffset) + DATA_TABLES(LCD_Info));
-+
- 	return BP_RESULT_OK;
- }
+ 	if (link->aux_mode)
+ 		ddc = &aconnector->dm_dp_aux.aux.ddc;
++	else if (link->ddc_hw_inst == GPIO_DDC_LINE_UNKNOWN &&
++		 dc_is_embedded_signal(link->connector_signal))
++		ddc = NULL;
+ 	else
+ 		ddc = &aconnector->i2c->base;
  
-@@ -1536,6 +1594,10 @@ static enum bp_result get_embedded_panel_info_v1_3(
- 			(uint32_t) (ATOM_PANEL_MISC_V13_GREY_LEVEL &
- 				lvds->ucLCD_Misc) >> ATOM_PANEL_MISC_V13_GREY_LEVEL_SHIFT;
- 
-+	if (lvds->usExtInfoTableOffset)
-+		return get_embedded_panel_extra_info(bp, info,
-+			le16_to_cpu(lvds->usExtInfoTableOffset) + DATA_TABLES(LCD_Info));
-+
- 	return BP_RESULT_OK;
- }
- 
-diff --git a/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h b/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
-index 38a77fa9b4afd..a0f03fb67605e 100644
---- a/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
-+++ b/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
-@@ -153,6 +153,10 @@ struct embedded_panel_info {
- 	uint32_t drr_enabled;
- 	uint32_t min_drr_refresh_rate;
- 	bool realtek_eDPToLVDS;
-+	uint16_t panel_width_mm;
-+	uint16_t panel_height_mm;
-+	uint16_t fake_edid_size;
-+	const uint8_t *fake_edid;
- };
- 
- struct dc_firmware_info {
+@@ -1023,6 +1065,8 @@ enum dc_edid_status dm_helpers_read_local_edid(
+ 		drm_edid = dm_helpers_read_acpi_edid(aconnector);
+ 		if (drm_edid)
+ 			drm_info(connector->dev, "Using ACPI provided EDID for %s\n", connector->name);
++		else if (!ddc)
++			drm_edid = dm_helpers_read_vbios_hardcoded_edid(link, aconnector);
+ 		else
+ 			drm_edid = drm_edid_read_ddc(connector, ddc);
+ 		drm_edid_connector_update(connector, drm_edid);
 -- 
 2.53.0
 
