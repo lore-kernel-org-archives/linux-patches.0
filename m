@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BB83D1CA0;
-	Wed, 20 May 2026 18:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A37E371CEA;
+	Wed, 20 May 2026 18:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302279; cv=none; b=PbNG2WJr/9aIUHcN0cXwXUmCRxeuAYczhDAnv8I2mu/vbTjGbkPh7yKNgPH3e2fQoFAs+dlO0u9mWuFzskp7SL8XlSEdPz9xgskIOL6hCtLX9mjVVyo43BySeX5MVzdJKpRQNprc6aDR4TA/yGRxbS3QifPWvIc2sQF/3SlRxiA=
+	t=1779302281; cv=none; b=tssq4q6Q+yQV5521zjRNsNfZZmOd6RPvJt9Tbvay7PjEYY6kqpc2mtktqTTLIrY4vBATHRYqSGNtJj4XopmMlFh84GImV4g7s6pfM8JUSNCYq6QmhMM7p+1obVsTMIebbq9FM1S2/taseA3iPUxvp3zNTHFXZL2XIltXWyaON0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302279; c=relaxed/simple;
-	bh=9wcMQnuQPiwsrjOGpj7p+R7lS2fPwG/D5UBqto9A4hs=;
+	s=arc-20240116; t=1779302281; c=relaxed/simple;
+	bh=4/mLik9VOA4Q4zTnqVcEdjEYv1NGcL1ix7HaiDPgUXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JELA3fio8+iwPirfnFla5AsRtK5s4o4ND5ZYzm4t/cgG3wZCT6/bZ5ttIymBxMEP3ox/NbXQBfqP2ezxn3Q2HZ8r5UmL7Tg/0oR+pCAjC9scHVTXoKfE4yaSvm1DeZxVARXnSno0Dx3JPRA+twBNTOvZMrKKBpZFFUIJjkps79M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kT/Mpemk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZekDcO096lhH8LMqXPspw0YDyyeUFiLMwpffpLmfCkZWsjTLOZfSKh6+E0RcsLXsbHEZ8dd1D24jovoMyo4ZaMoFEJEdK9E8CqnjsRrt7tJsOsay1XeXkXjnRLFwPdsgEYvfoSUFuLaZ67lpGVL+iVgMqJcSerNAIMHi8B0G2Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9eR9V84; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kT/Mpemk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E551F000E9;
-	Wed, 20 May 2026 18:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9eR9V84"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84001F00893;
+	Wed, 20 May 2026 18:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302277;
-	bh=7I7ZWSvUN80x60LCwK7eE+n4reeJzPVyReoZnrGwd68=;
+	s=korg; t=1779302280;
+	bh=uFeJdN+qpwYHWAtSPNoiV9UOAH5/qZ5335VQiLg7uPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kT/MpemkXo35cxH3bQMS0rUrGvH92RiR5CLM99hix6jsiLTomEk0fDZs25JIY2ybE
-	 rbwYVGK2LoZItrPp8zyFAl4I1cNgZ73trIc2uMA9LzjFMy59ncojxXZDhX1QA94XlY
-	 U4zzJ+il9Ym1lC1nFmsK0bVlUt58EGu0+xjxfk3s=
+	b=w9eR9V84AT9ckIMzCSAbKI9ZpiUhcUtSD85s5DDteEfAI6dmSsROLR+wDJ9GQcl/3
+	 UdnD+kSdltDSrHZ/AB0/Co1x74Wws86r9K0ji2YDWypU9vp98FNOt+P9rChqMoDyjA
+	 H5lLt6kdRQSxhAE9as3nZqE91srg4eaTVhqQshYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 169/508] ALSA: sc6000: Keep the programmed board state in card-private data
-Date: Wed, 20 May 2026 18:19:52 +0200
-Message-ID: <20260520162102.299689011@linuxfoundation.org>
+Subject: [PATCH 6.6 205/508] ocfs2/dlm: validate qr_numregions in dlm_match_regions()
+Date: Wed, 20 May 2026 18:20:28 +0200
+Message-ID: <20260520162103.078044148@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,291 +53,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit fb79bf127ac2577b4876132da6dba768018aad4c ]
+[ Upstream commit 7ab3fbb01bc6d79091bc375e5235d360cd9b78be ]
 
-The driver may auto-select IRQ and DMA resources at probe time, but
-sc6000_init_board() still derives the SC-6000 soft configuration from
-the module parameter arrays.  When irq=auto or dma=auto is used, the
-codec is created with the selected resources while the board is
-programmed with the unresolved values.
+Patch series "ocfs2/dlm: fix two bugs in dlm_match_regions()".
 
-Store the mapped ports and generated SC-6000 board configuration in
-card-private data, build that configuration from the live probe
-results instead of the raw module parameters, and keep the probe-time
-board programming in a shared helper.
+In dlm_match_regions(), the qr_numregions field from a DLM_QUERY_REGION
+network message is used to drive loops over the qr_regions buffer without
+sufficient validation.  This series fixes two issues:
 
-This fixes the resource-programming mismatch and leaves the driver
-with a stable board-state block that can be reused by suspend/resume.
+- Patch 1 adds a bounds check to reject messages where qr_numregions
+  exceeds O2NM_MAX_REGIONS. The o2net layer only validates message
+  byte length; it does not constrain field values, so a crafted message
+  can set qr_numregions up to 255 and trigger out-of-bounds reads past
+  the 1024-byte qr_regions buffer.
 
-Fixes: c282866101bf ("ALSA: sc6000: add support for SC-6600 and SC-7000")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260410-alsa-sc6000-pm-v1-1-4d9e95493d26@gmail.com
+- Patch 2 fixes an off-by-one in the local-vs-remote comparison loop,
+  which uses '<=' instead of '<', reading one entry past the valid range
+  even when qr_numregions is within bounds.
+
+This patch (of 2):
+
+The qr_numregions field from a DLM_QUERY_REGION network message is used
+directly as loop bounds in dlm_match_regions() without checking against
+O2NM_MAX_REGIONS.  Since qr_regions is sized for at most O2NM_MAX_REGIONS
+(32) entries, a crafted message with qr_numregions > 32 causes
+out-of-bounds reads past the qr_regions buffer.
+
+Add a bounds check for qr_numregions before entering the loops.
+
+Link: https://lkml.kernel.org/r/SYBPR01MB7881A334D02ACEE5E0645801AF7BA@SYBPR01MB7881.ausprd01.prod.outlook.com
+Link: https://lkml.kernel.org/r/SYBPR01MB788166F524AD04E262E174BEAF7BA@SYBPR01MB7881.ausprd01.prod.outlook.com
+Fixes: ea2034416b54 ("ocfs2/dlm: Add message DLM_QUERY_REGION")
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/isa/sc6000.c | 152 +++++++++++++++++++++++++++------------------
- 1 file changed, 92 insertions(+), 60 deletions(-)
+ fs/ocfs2/dlm/dlmdomain.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/isa/sc6000.c b/sound/isa/sc6000.c
-index 3115c32b4061b..4066b68a102e2 100644
---- a/sound/isa/sc6000.c
-+++ b/sound/isa/sc6000.c
-@@ -100,6 +100,15 @@ MODULE_PARM_DESC(joystick, "Enable gameport.");
- #define PFX "sc6000: "
- #define DRV_NAME "SC-6000"
- 
-+struct snd_sc6000 {
-+	char __iomem *vport;
-+	char __iomem *vmss_port;
-+	u8 mss_config;
-+	u8 config;
-+	u8 hw_cfg[2];
-+	bool old_dsp;
-+};
-+
- /* hardware dependent functions */
- 
- /*
-@@ -267,7 +276,7 @@ static int sc6000_dsp_reset(char __iomem *vport)
- 
- /* detection and initialization */
- static int sc6000_hw_cfg_write(struct device *devptr,
--			       char __iomem *vport, const int *cfg)
-+			       char __iomem *vport, const u8 *cfg)
- {
- 	if (sc6000_write(devptr, vport, COMMAND_6C) < 0) {
- 		dev_warn(devptr, "CMD 0x%x: failed!\n", COMMAND_6C);
-@@ -353,8 +362,7 @@ static int sc6000_init_mss(struct device *devptr,
- 	return 0;
- }
- 
--static void sc6000_hw_cfg_encode(struct device *devptr,
--				 char __iomem *vport, int *cfg,
-+static void sc6000_hw_cfg_encode(struct device *devptr, u8 *cfg,
- 				 long xport, long xmpu,
- 				 long xmss_port, int joystick)
- {
-@@ -376,27 +384,83 @@ static void sc6000_hw_cfg_encode(struct device *devptr,
- 	dev_dbg(devptr, "hw cfg %x, %x\n", cfg[0], cfg[1]);
- }
- 
--static int sc6000_init_board(struct device *devptr,
--			     char __iomem *vport,
--			     char __iomem *vmss_port, int dev)
-+static void sc6000_prepare_board(struct device *devptr,
-+				 struct snd_sc6000 *sc6000,
-+				 unsigned int dev, int xirq, int xdma)
-+{
-+	sc6000->mss_config = sc6000_irq_to_softcfg(xirq) |
-+			     sc6000_dma_to_softcfg(xdma);
-+	sc6000->config = sc6000->mss_config |
-+			 sc6000_mpu_irq_to_softcfg(mpu_irq[dev]);
-+	sc6000_hw_cfg_encode(devptr, sc6000->hw_cfg, port[dev], mpu_port[dev],
-+			     mss_port[dev], joystick[dev]);
-+}
-+
-+static void sc6000_detect_old_dsp(struct device *devptr,
-+				  struct snd_sc6000 *sc6000)
-+{
-+	sc6000_write(devptr, sc6000->vport, COMMAND_5C);
-+	sc6000->old_dsp = sc6000_read(sc6000->vport) < 0;
-+}
-+
-+static int sc6000_program_board(struct device *devptr,
-+				struct snd_sc6000 *sc6000)
-+{
-+	int err;
-+
-+	if (!sc6000->old_dsp) {
-+		if (sc6000_hw_cfg_write(devptr, sc6000->vport,
-+					sc6000->hw_cfg) < 0) {
-+			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
-+			return -EIO;
-+		}
-+	}
-+
-+	err = sc6000_setup_board(devptr, sc6000->vport, sc6000->config);
-+	if (err < 0) {
-+		dev_err(devptr, "sc6000_setup_board: failed!\n");
-+		return -ENODEV;
-+	}
-+
-+	sc6000_dsp_reset(sc6000->vport);
-+
-+	if (!sc6000->old_dsp) {
-+		sc6000_write(devptr, sc6000->vport, COMMAND_60);
-+		sc6000_write(devptr, sc6000->vport, 0x02);
-+		sc6000_dsp_reset(sc6000->vport);
-+	}
-+
-+	err = sc6000_setup_board(devptr, sc6000->vport, sc6000->config);
-+	if (err < 0) {
-+		dev_err(devptr, "sc6000_setup_board: failed!\n");
-+		return -ENODEV;
-+	}
-+
-+	err = sc6000_init_mss(devptr, sc6000->vport, sc6000->config,
-+			      sc6000->vmss_port, sc6000->mss_config);
-+	if (err < 0) {
-+		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
-+		return -ENODEV;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc6000_init_board(struct device *devptr, struct snd_sc6000 *sc6000)
- {
- 	char answer[15];
- 	char version[2];
--	int mss_config = sc6000_irq_to_softcfg(irq[dev]) |
--			 sc6000_dma_to_softcfg(dma[dev]);
--	int config = mss_config |
--		     sc6000_mpu_irq_to_softcfg(mpu_irq[dev]);
- 	int err;
--	int old = 0;
- 
--	err = sc6000_dsp_reset(vport);
-+	err = sc6000_dsp_reset(sc6000->vport);
- 	if (err < 0) {
- 		dev_err(devptr, "sc6000_dsp_reset: failed!\n");
- 		return err;
+diff --git a/fs/ocfs2/dlm/dlmdomain.c b/fs/ocfs2/dlm/dlmdomain.c
+index 5c04dde99981c..5b6c893d9f489 100644
+--- a/fs/ocfs2/dlm/dlmdomain.c
++++ b/fs/ocfs2/dlm/dlmdomain.c
+@@ -980,6 +980,14 @@ static int dlm_match_regions(struct dlm_ctxt *dlm,
+ 		goto bail;
  	}
  
- 	memset(answer, 0, sizeof(answer));
--	err = sc6000_dsp_get_answer(devptr, vport, GET_DSP_COPYRIGHT, answer, 15);
-+	err = sc6000_dsp_get_answer(devptr, sc6000->vport, GET_DSP_COPYRIGHT,
-+				    answer, 15);
- 	if (err <= 0) {
- 		dev_err(devptr, "sc6000_dsp_copyright: failed!\n");
- 		return -ENODEV;
-@@ -408,54 +472,17 @@ static int sc6000_init_board(struct device *devptr,
- 	if (strncmp("SC-6000", answer, 7))
- 		dev_warn(devptr, "Warning: non SC-6000 audio card!\n");
- 
--	if (sc6000_dsp_get_answer(devptr, vport, GET_DSP_VERSION, version, 2) < 2) {
-+	if (sc6000_dsp_get_answer(devptr, sc6000->vport,
-+				  GET_DSP_VERSION, version, 2) < 2) {
- 		dev_err(devptr, "sc6000_dsp_version: failed!\n");
- 		return -ENODEV;
- 	}
- 	dev_info(devptr, "Detected model: %s, DSP version %d.%d\n",
- 		answer, version[0], version[1]);
- 
--	/* set configuration */
--	sc6000_write(devptr, vport, COMMAND_5C);
--	if (sc6000_read(vport) < 0)
--		old = 1;
--
--	if (!old) {
--		int cfg[2];
--		sc6000_hw_cfg_encode(devptr,
--				     vport, &cfg[0], port[dev], mpu_port[dev],
--				     mss_port[dev], joystick[dev]);
--		if (sc6000_hw_cfg_write(devptr, vport, cfg) < 0) {
--			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
--			return -EIO;
--		}
--	}
--	err = sc6000_setup_board(devptr, vport, config);
--	if (err < 0) {
--		dev_err(devptr, "sc6000_setup_board: failed!\n");
--		return -ENODEV;
--	}
--
--	sc6000_dsp_reset(vport);
--
--	if (!old) {
--		sc6000_write(devptr, vport, COMMAND_60);
--		sc6000_write(devptr, vport, 0x02);
--		sc6000_dsp_reset(vport);
--	}
-+	sc6000_detect_old_dsp(devptr, sc6000);
- 
--	err = sc6000_setup_board(devptr, vport, config);
--	if (err < 0) {
--		dev_err(devptr, "sc6000_setup_board: failed!\n");
--		return -ENODEV;
--	}
--	err = sc6000_init_mss(devptr, vport, config, vmss_port, mss_config);
--	if (err < 0) {
--		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
--		return -ENODEV;
--	}
--
--	return 0;
-+	return sc6000_program_board(devptr, sc6000);
- }
- 
- static int snd_sc6000_mixer(struct snd_wss *chip)
-@@ -538,10 +565,10 @@ static int snd_sc6000_match(struct device *devptr, unsigned int dev)
- 
- static void snd_sc6000_free(struct snd_card *card)
- {
--	char __iomem *vport = (char __force __iomem *)card->private_data;
-+	struct snd_sc6000 *sc6000 = card->private_data;
- 
--	if (vport)
--		sc6000_setup_board(card->dev, vport, 0);
-+	if (sc6000->vport)
-+		sc6000_setup_board(card->dev, sc6000->vport, 0);
- }
- 
- static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
-@@ -552,15 +579,17 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 	int xirq = irq[dev];
- 	int xdma = dma[dev];
- 	struct snd_card *card;
-+	struct snd_sc6000 *sc6000;
- 	struct snd_wss *chip;
- 	struct snd_opl3 *opl3;
- 	char __iomem *vport;
- 	char __iomem *vmss_port;
- 
- 	err = snd_devm_card_new(devptr, index[dev], id[dev], THIS_MODULE,
--				0, &card);
-+				sizeof(*sc6000), &card);
- 	if (err < 0)
- 		return err;
-+	sc6000 = card->private_data;
- 
- 	if (xirq == SNDRV_AUTO_IRQ) {
- 		xirq = snd_legacy_find_free_irq(possible_irqs);
-@@ -587,7 +616,7 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 		dev_err(devptr, "I/O port cannot be iomapped.\n");
- 		return -EBUSY;
- 	}
--	card->private_data = (void __force *)vport;
-+	sc6000->vport = vport;
- 
- 	/* to make it marked as used */
- 	if (!devm_request_region(devptr, mss_port[dev], 4, DRV_NAME)) {
-@@ -600,12 +629,15 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 		dev_err(devptr, "MSS port I/O cannot be iomapped.\n");
- 		return -EBUSY;
- 	}
-+	sc6000->vmss_port = vmss_port;
- 
- 	dev_dbg(devptr, "Initializing BASE[0x%lx] IRQ[%d] DMA[%d] MIRQ[%d]\n",
- 		port[dev], xirq, xdma,
- 		mpu_irq[dev] == SNDRV_AUTO_IRQ ? 0 : mpu_irq[dev]);
- 
--	err = sc6000_init_board(devptr, vport, vmss_port, dev);
-+	sc6000_prepare_board(devptr, sc6000, dev, xirq, xdma);
++	if (qr->qr_numregions > O2NM_MAX_REGIONS) {
++		mlog(ML_ERROR, "Domain %s: Joining node %d has invalid "
++		     "number of heartbeat regions %u\n",
++		     qr->qr_domain, qr->qr_node, qr->qr_numregions);
++		status = -EINVAL;
++		goto bail;
++	}
 +
-+	err = sc6000_init_board(devptr, sc6000);
- 	if (err < 0)
- 		return err;
- 	card->private_free = snd_sc6000_free;
+ 	r = remote;
+ 	for (i = 0; i < qr->qr_numregions; ++i) {
+ 		mlog(0, "Region %.*s\n", O2HB_MAX_REGION_NAME_LEN, r);
 -- 
 2.53.0
 
