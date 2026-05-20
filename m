@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FCF3F7A9C;
-	Wed, 20 May 2026 17:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27633F39C9;
+	Wed, 20 May 2026 17:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299546; cv=none; b=QEoNwbmcnH+eUAyJ/kUx95H91ouJlJcdNLL7U7xLFngwNX7yWNf8j1JQa4jywQj9Jp8VZSL26RdgRglXZccBcU4L+NCXK2vXNsTTQEDaMW938ty28MT+F92OeLrP+zKDw1hJNQxpdrCBkZIfO8T859x4tydh7E2NTlZ5VYRD4Ns=
+	t=1779299549; cv=none; b=aQz+BuShWbS1BJQ09j7G4roPywUV4ZCKpc3jVQwsg1zuuyrdL+AMM/i3kCAEM+FRp92YVb6ux5wLrihCGc1Kf6K4Hj7ThF9vgI5VEB2bkCeI+Net9eunwppPp7lhMWJi0JXDGclA8BWfGpM75oyYgbNfsccCaajl3B3c5y2Nkqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299546; c=relaxed/simple;
-	bh=v3g2JfrU+Xa6nOVAxrpmJMBkMj94xxWoU66+Ey+LSEg=;
+	s=arc-20240116; t=1779299549; c=relaxed/simple;
+	bh=KkzlHWn6qOHZxBWlD3alGDA/OwzhGrP+JlbBADbB9Jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cWtf/qN/V4raWjwMKCMYkzv8XQBIFW+8XcnXi2sfGEOZoeqrYMQ8Z3qekXZwMQHb9a4lt0XU+TVVXHdUuaDyVy3DJylPxMoUCXqs0LUGCkHu6OswxoqEfNTWRvEuR6vf/RfeQgT4toygGfcinnjUmTLkYPIw0J87aTRekDCRUZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdqX9mXp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G0RKkq5tNeIKmyJBNc+zbX/vxEqt7CPzOtL7FJr0OCM2frIsPwv+wUj1XQrqNbfiBYa6b5TcfxL4QcUhxnzThhZGVClnVwaCFUa9bXNdQ4Xgvk67Ml6OEC2B5/FBGV6gYC77qO6UQ3Wc+4jF/SZmSsfKeyg5W1KjcC1B157Ykhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=anx6klq4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdqX9mXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6A61F000E9;
-	Wed, 20 May 2026 17:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anx6klq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643FC1F000E9;
+	Wed, 20 May 2026 17:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299545;
-	bh=tIqUePO3uNrD832heCUMOtcXaNL8z+937jMMqSFdxZo=;
+	s=korg; t=1779299547;
+	bh=KF/6GXUtrZStfdI8P1JSOCaVLC2wF55Q4p2OJFtxsuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdqX9mXpvnbadNHrH5+/W31B84STBP8fgMQzRaqi8vV9iWgl6SdbdllC0j3svF3Wn
-	 8fMC46wReuO0ELblDvqROIQvj6zj2UZvS/dSyV/HdIRTm0ONxDVb86yVeF81BNQ+IF
-	 agXYZCyzsfKHZvwdkbgfL8L1Segyw7nDysrOeXzM=
+	b=anx6klq43SSbA5Ua0fNGnCg7sJhxVvCg9o5Ilqfa9ZrpFeivR+4lgkG60A6s24iSv
+	 yFhyblGHGg+YCrzeT7/Ot0VfuaY7kTKZDubR8jweLa4j9zTwzMHjPxmBzh+7fQ+O8P
+	 HYk4kFGbqFFxavGf5BNzdMe5jUXGWtnILyp5Cwmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Heiko Schocher <hs@nabladev.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 814/957] io_uring/napi: cap busy_poll_to 10 msec
-Date: Wed, 20 May 2026 18:21:37 +0200
-Message-ID: <20260520162152.220684476@linuxfoundation.org>
+Subject: [PATCH 6.18 797/957] net: phy: dp83869: fix setting CLK_O_SEL field.
+Date: Wed, 20 May 2026 18:21:20 +0200
+Message-ID: <20260520162151.847498613@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -50,39 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Heiko Schocher <hs@nabladev.com>
 
-[ Upstream commit df8599ee18c0e5fe343ffe0b4c379636b8bb839a ]
+[ Upstream commit 46f74a3f7d57d9cc0110b09cbc8163fa0a01afa2 ]
 
-Currently there's no cap on the maximum amount of time that napi is
-allowed to poll if no events are found, which can lead to kernel
-complaints on a task being stuck as there's no conditional rescheduling
-done within that loop.
+Table 7-121 in datasheet says we have to set register 0xc6
+to value 0x10 before CLK_O_SEL can be modified. No more infos
+about this field found in datasheet. With this fix, setting
+of CLK_O_SEL field in IO_MUX_CFG register worked through dts
+property "ti,clk-output-sel" on a DP83869HMRGZR.
 
-Just cap it to 10 msec in total, that's already way above any kind of
-sane value that will reap any benefits, yet low enough that it's
-nowhere near being able to trigger preemption complaints.
-
-Fixes: 8d0c12a80cde ("io-uring: add napi busy poll support")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Heiko Schocher <hs@nabladev.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 01db923e8377 ("net: phy: dp83869: Add TI dp83869 phy")
+Link: https://patch.msgid.link/20260425031339.3318-1-hs@nabladev.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/napi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/phy/dp83869.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/napi.c b/io_uring/napi.c
-index 4a10de03e4269..8d68366a4b903 100644
---- a/io_uring/napi.c
-+++ b/io_uring/napi.c
-@@ -276,6 +276,8 @@ static int io_napi_register_napi(struct io_ring_ctx *ctx,
- 	/* clean the napi list for new settings */
- 	io_napi_free(ctx);
- 	WRITE_ONCE(ctx->napi_track_mode, napi->op_param);
-+	/* cap NAPI at 10 msec of spin time */
-+	napi->busy_poll_to = min(10000, napi->busy_poll_to);
- 	WRITE_ONCE(ctx->napi_busy_poll_dt, napi->busy_poll_to * NSEC_PER_USEC);
- 	WRITE_ONCE(ctx->napi_prefer_busy_poll, !!napi->prefer_busy_poll);
- 	return 0;
+diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
+index 1f381d7b13ff3..96a7d255f50fd 100644
+--- a/drivers/net/phy/dp83869.c
++++ b/drivers/net/phy/dp83869.c
+@@ -31,6 +31,7 @@
+ #define DP83869_RGMIICTL	0x0032
+ #define DP83869_STRAP_STS1	0x006e
+ #define DP83869_RGMIIDCTL	0x0086
++#define DP83869_ANA_PLL_PROG_PI	0x00c6
+ #define DP83869_RXFCFG		0x0134
+ #define DP83869_RXFPMD1		0x0136
+ #define DP83869_RXFPMD2		0x0137
+@@ -826,12 +827,22 @@ static int dp83869_config_init(struct phy_device *phydev)
+ 		dp83869_config_port_mirroring(phydev);
+ 
+ 	/* Clock output selection if muxing property is set */
+-	if (dp83869->clk_output_sel != DP83869_CLK_O_SEL_REF_CLK)
++	if (dp83869->clk_output_sel != DP83869_CLK_O_SEL_REF_CLK) {
++		/*
++		 * Table 7-121 in datasheet says we have to set register 0xc6
++		 * to value 0x10 before CLK_O_SEL can be modified.
++		 */
++		ret = phy_write_mmd(phydev, DP83869_DEVADDR,
++				    DP83869_ANA_PLL_PROG_PI, 0x10);
++		if (ret)
++			return ret;
++
+ 		ret = phy_modify_mmd(phydev,
+ 				     DP83869_DEVADDR, DP83869_IO_MUX_CFG,
+ 				     DP83869_IO_MUX_CFG_CLK_O_SEL_MASK,
+ 				     dp83869->clk_output_sel <<
+ 				     DP83869_IO_MUX_CFG_CLK_O_SEL_SHIFT);
++	}
+ 
+ 	if (phy_interface_is_rgmii(phydev)) {
+ 		ret = phy_write_mmd(phydev, DP83869_DEVADDR, DP83869_RGMIIDCTL,
 -- 
 2.53.0
 
