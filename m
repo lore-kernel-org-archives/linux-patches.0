@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4336D3FE352;
-	Wed, 20 May 2026 18:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E475240243A;
+	Wed, 20 May 2026 18:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302439; cv=none; b=NpZ8vl7fK4+mUikMntfDcPCATj75pql7/JjCfWQQ86xKmj4jQwsqEbPW3iLc0b9bCKEhSRbMY9Sg1hSKIyPXx8/1+brEvhLsjSRMOdUYIURMKmh4sTjN3JGYdu9E4+S4IB85/JUNhQ+Z2S/zRoQTBUamphLohzN7jHSjD1zEm+0=
+	t=1779302442; cv=none; b=IZq9Hok0505EnKrdjRiswFuuyyrP7KJ/6lwNS+ktX/LZWtbsfP4e6LuUlpQy38bnlQJhyOdj6Mt8xMiqvpMD4+NNVOKwemtyNQ1Fe1UNlHMW/ybRcwqhtoUWDxNDh6gmOGqZ+Ha7nxwm6PG5aLtaUAytLn7dUlxgOFCtF4Tm+58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302439; c=relaxed/simple;
-	bh=99uApC/8eMRWYVAMlEXFdSGF0b0AoimQu9TqPISqwMs=;
+	s=arc-20240116; t=1779302442; c=relaxed/simple;
+	bh=dIV+uXyx7M7xr97xoOrOqOXfw/vLaZt9zckJ8h+djkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lcje+3tLdQ1gLkDl0B1soSFoCazhwsplp++VE+R6WnfQ38yykPXvLy73IO/5j1CzC91v1Q5z0Cqv3HBwVGgaB6jxWpCx/1DpqTZ8uePHA+HaaEM9V68cDKOr8WDO5t2qFJ+EZd1vqrp2RLlVwNC+Z14tJTdH7R1Qyw/SISpCCzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hf3fngdN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HvSpwFKmdZM+LjOJ2FzxlgGwXo/VQJSs/oGprGA6HlGM+WJ68hHaAtQUjTLu53KZ2kIhawvGDQHegm7mhGmKEU4RY0zc8e/r17t4V0X7lA2HdJriASGek4ohXQPz9wLOVicpPNXSJJ7HrOKk56dqtAjkeetU5ecxyD2t9I1aj/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyI5Kk5I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hf3fngdN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4601F00896;
-	Wed, 20 May 2026 18:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyI5Kk5I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5506E1F000E9;
+	Wed, 20 May 2026 18:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302438;
-	bh=Vy/+WAr+ukmcXbgeSL9MQHOsdmmIbRvcAALepxasdu8=;
+	s=korg; t=1779302440;
+	bh=ckyfd/i6Yga6tC2FOKILv7ULjMseyKO8p7Oa6P8btwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hf3fngdN8dOBaZuEQnQofyPmrv1n9Dl0KH/kzBHPxgxEIzxFv1gsrlpBJxAL9xqzz
-	 JqCgvgpXBmipSbyFOsvY+4VPq0IcllDpkVsrtqOWl/6Pe81Al9HR8fdvBhaaA6qiUg
-	 LQqdXXuvdnnuTtaQoX71rfQYpnhISWMNX2dTP9I0=
+	b=vyI5Kk5I9ZqYdrKEKAgVjRdoWfNUtsxLqduQ64alEZMpphCe2G6LoXDBcIGyUl727
+	 v5g6ppphKH6NbB1TC1vWRSfAn4s2a3vg923mnDX0NLu/4eex2J7gltbr9WWcH4fAUn
+	 UxJbCLmUV1YzfnHEZ0qGNieDtVvfwA1Q/KZyv1XQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 268/508] fs/ntfs3: terminate the cached volume label after UTF-8 conversion
-Date: Wed, 20 May 2026 18:21:31 +0200
-Message-ID: <20260520162104.453092553@linuxfoundation.org>
+Subject: [PATCH 6.6 269/508] platform/x86: dell_rbu: avoid uninit value usage in packet_size_write()
+Date: Wed, 20 May 2026 18:21:32 +0200
+Message-ID: <20260520162104.474679313@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,55 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit a6cd43fe9b083fa23fe1595666d5738856cb261a ]
+[ Upstream commit f8fd138c2363c0e2d3235c32bfb4fb5c6474e4ae ]
 
-ntfs_fill_super() loads the on-disk volume label with utf16s_to_utf8s()
-and stores the result in sbi->volume.label. The converted label is later
-exposed through ntfs3_label_show() using %s, but utf16s_to_utf8s() only
-returns the number of bytes written and does not add a trailing NUL.
+Ensure the temp value has been properly parsed from the user-provided
+buffer and initialized to be used in later operations.  While at it,
+prefer a convenient kstrtoul() helper.
 
-If the converted label fills the entire fixed buffer,
-ntfs3_label_show() can read past the end of sbi->volume.label while
-looking for a terminator.
+Found by Linux Verification Center (linuxtesting.org) with Svace static
+analysis tool.
 
-Terminate the cached label explicitly after a successful conversion and
-clamp the exact-full case to the last byte of the buffer.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: ad6ce87e5bd4 ("[PATCH] dell_rbu: changes in packet update mechanism")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20260403134240.604837-1-pchelkin@ispras.ru
+[ij: add include]
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/platform/x86/dell/dell_rbu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 0b96d0f995c61..a4cc56df549a6 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1228,8 +1228,13 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 				      le32_to_cpu(attr->res.data_size) >> 1,
- 				      UTF16_LITTLE_ENDIAN, sbi->volume.label,
- 				      sizeof(sbi->volume.label));
--		if (err < 0)
-+		if (err < 0) {
- 			sbi->volume.label[0] = 0;
-+		} else if (err >= sizeof(sbi->volume.label)) {
-+			sbi->volume.label[sizeof(sbi->volume.label) - 1] = 0;
-+		} else {
-+			sbi->volume.label[err] = 0;
-+		}
- 	} else {
- 		/* Should we break mounting here? */
- 		//err = -EINVAL;
+diff --git a/drivers/platform/x86/dell/dell_rbu.c b/drivers/platform/x86/dell/dell_rbu.c
+index fee20866b41e4..9039e494131fd 100644
+--- a/drivers/platform/x86/dell/dell_rbu.c
++++ b/drivers/platform/x86/dell/dell_rbu.c
+@@ -30,6 +30,7 @@
+ #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/init.h>
++#include <linux/kstrtox.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+@@ -617,9 +618,12 @@ static ssize_t packet_size_write(struct file *filp, struct kobject *kobj,
+ 				 char *buffer, loff_t pos, size_t count)
+ {
+ 	unsigned long temp;
++
++	if (kstrtoul(buffer, 10, &temp))
++		return -EINVAL;
++
+ 	spin_lock(&rbu_data.lock);
+ 	packet_empty_list();
+-	sscanf(buffer, "%lu", &temp);
+ 	if (temp < 0xffffffff)
+ 		rbu_data.packetsize = temp;
+ 
 -- 
 2.53.0
 
