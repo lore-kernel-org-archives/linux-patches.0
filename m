@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9423DD504;
-	Wed, 20 May 2026 17:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661E415E8B;
+	Wed, 20 May 2026 17:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298662; cv=none; b=W8SHXLKGu9a/BQsd4U4/15+0uO+Y//meSgm6Fb95+zien5k8b92NdXiKbYeGacHEV1IwZTbDjetlScU0L/DjhNVEBBNDHw+lRhNs9V6ZYwHz9gzEOBtV4EjgyKIpIiOrsKkSsHmgSoQG1gDBX39gZlU2PgOE6xdaKbSf/36E2Y0=
+	t=1779298665; cv=none; b=f4EJ9zp3j73kmmoz6Ff17CK4s7luJpLjNzvOkqk6vyO+zB+fIDXqv2B+tzahdVNqh8n98p8VGp4JTdj9KyQjuNjN+ikF66sUleQJo5c3E+HO6hlqgXo8lj3AU1o/1GIUQOfuFTzOjCRZESsFuX4TCXrwM8gZeMDfNb8tQOeiTPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298662; c=relaxed/simple;
-	bh=onGJtGgq0GZpxbE0eSTDgv3ehYs4PEiWrA27isNNRMw=;
+	s=arc-20240116; t=1779298665; c=relaxed/simple;
+	bh=SpDZ2iF6JovlNmW+ldJwWiFbzzG+grB21GdnJ9/4S88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tkVydww8KJuhqF49De+Kh+ail3OYCppQKGkPFhcZytBPgMJwiUR+kGyZ6l2WWAsu9FcJu8BEUWGKL6YYQOLACpIaK04YODAUpsc6W4Z1W+bfawUFUh70B8PGSDeXX3fjBNDVI+Ck7cwYEmmA4TrkryjpDkiF0RXuGttg41forpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKlA2mkl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iQ7pWx2o5E7u+b9N7BAYMDTSDwWGxQgu8FzOwTPPzxJPKn09jMDmys1dC77riCxmPOh1BFRpR53Fe9Ki3nJlN6yODZ5tj1LpqGtnfVvSH2A8+4U0GnOajwVJkDDkWNqAyvG1COIOegcM/v2phoApVbKCUeNVy9jMd+iRM5vGOQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjCs04oC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKlA2mkl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D91C1F000E9;
-	Wed, 20 May 2026 17:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjCs04oC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3F91F000E9;
+	Wed, 20 May 2026 17:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298661;
-	bh=yzGZCfiTu7IGFz0FjadZjH6bxx9GlvXkx4c17ndZP4g=;
+	s=korg; t=1779298664;
+	bh=H7mM3c+UuxzIetol5tjNnKebZb4gBSQtgat5kx+SPyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zKlA2mklldQHcmCxp5MWgJEZlo10uwJ8XDQga+8xohGUaa+1NEGvGr0GJGCTgTD53
-	 pqrBJCHhKzTirC/Zt1hczok/BqojuN4xExt2cafuVL2NRFfMVIDm9qacJsN6wv/Pfy
-	 7hw2+72uRxIQDWQ3O+VLy6odpXwGqgvHZs5CyLNQ=
+	b=AjCs04oC3dlLukbgJFjBCJv8pq+KGuVsMA6nqXDVZxYECju6tHdPkUMBHJ6Z+V+Yg
+	 ka54FNzOBwbUE9Uz5JbwV77xM/AeGeTcJ65vPNAugZnZma/4oBNhDYP3EEU7xRHIAc
+	 +d86sbBS+ZHMCI0WPkW3af7QsmIPWCAQtIjvEww4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangguangju <wangguangju@hygon.cn>,
-	Howard Chu <howardchu95@gmail.com>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 497/957] perf trace: Fix IS_ERR() vs NULL check bug
-Date: Wed, 20 May 2026 18:16:20 +0200
-Message-ID: <20260520162145.303790945@linuxfoundation.org>
+Subject: [PATCH 6.18 498/957] pinctrl: pinctrl-pic32: Fix resource leak
+Date: Wed, 20 May 2026 18:16:21 +0200
+Message-ID: <20260520162145.324804455@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,39 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangguangju <wangguangju@hygon.cn>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 96f202eab8133f94479b14a32902c636e9bdf6af ]
+[ Upstream commit fe5560688f3ba98364c7de7b4f8dc240ffd1ff75 ]
 
-The alloc_syscall_stats() function always returns an error pointer
-(ERR_PTR) on failure.
+Fix three possible resource leaks by using the devres version of
+clk_prepare_enable(). Also, update error message accordingly.
 
-So replace NULL check with IS_ERR() check after calling
-delete_syscall_stats() function.
+Detected by Smatch:
+drivers/pinctrl/pinctrl-pic32.c:2211 pic32_pinctrl_probe() warn:
+'pctl->clk' from clk_prepare_enable() not released on lines: 2208.
 
-Fixes: ef2da619b132c6f74 ("perf trace: Convert syscall_stats to hashmap")
-Signed-off-by: wangguangju <wangguangju@hygon.cn>
-Reviewed-by: Howard Chu <howardchu95@gmail.com>
-Acked-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+drivers/pinctrl/pinctrl-pic32.c:2274 pic32_gpio_probe() warn:
+'bank->clk' from clk_prepare_enable() not released on lines: 2264,2272.
+
+Fixes: 2ba384e6c3810 ("pinctrl: pinctrl-pic32: Add PIC32 pin control driver")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-pic32.c | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index c607f39b8c8bb..1f0b9ba3cdc15 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1573,7 +1573,7 @@ static void delete_syscall_stats(struct hashmap *syscall_stats)
- 	struct hashmap_entry *pos;
- 	size_t bkt;
+diff --git a/drivers/pinctrl/pinctrl-pic32.c b/drivers/pinctrl/pinctrl-pic32.c
+index e8b481e87c779..506e95793adf3 100644
+--- a/drivers/pinctrl/pinctrl-pic32.c
++++ b/drivers/pinctrl/pinctrl-pic32.c
+@@ -2175,16 +2175,10 @@ static int pic32_pinctrl_probe(struct platform_device *pdev)
+ 	if (IS_ERR(pctl->reg_base))
+ 		return PTR_ERR(pctl->reg_base);
  
--	if (syscall_stats == NULL)
-+	if (IS_ERR(syscall_stats))
- 		return;
+-	pctl->clk = devm_clk_get(&pdev->dev, NULL);
++	pctl->clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(pctl->clk)) {
+ 		ret = PTR_ERR(pctl->clk);
+-		dev_err(&pdev->dev, "clk get failed\n");
+-		return ret;
+-	}
+-
+-	ret = clk_prepare_enable(pctl->clk);
+-	if (ret) {
+-		dev_err(&pdev->dev, "clk enable failed\n");
++		dev_err(&pdev->dev, "Failed to get and enable clock\n");
+ 		return ret;
+ 	}
  
- 	hashmap__for_each_entry(syscall_stats, pos, bkt)
+@@ -2240,16 +2234,10 @@ static int pic32_gpio_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		return irq;
+ 
+-	bank->clk = devm_clk_get(&pdev->dev, NULL);
++	bank->clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(bank->clk)) {
+ 		ret = PTR_ERR(bank->clk);
+-		dev_err(&pdev->dev, "clk get failed\n");
+-		return ret;
+-	}
+-
+-	ret = clk_prepare_enable(bank->clk);
+-	if (ret) {
+-		dev_err(&pdev->dev, "clk enable failed\n");
++		dev_err(&pdev->dev, "Failed to get and enable clock\n");
+ 		return ret;
+ 	}
+ 
 -- 
 2.53.0
 
