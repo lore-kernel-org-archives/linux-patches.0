@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4DB33BBAF;
-	Wed, 20 May 2026 17:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B30033BBAF;
+	Wed, 20 May 2026 17:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297413; cv=none; b=f1NkJZqwMwY0xwSa3NAW+ceCyoBqwXqkttzsViZzJuD8yN/+mCX0tcGd05AEVZbe/EKfhAmFDOttpWqwu0BaCNH2sWHbi7mNBv29Yr3cGl+oCrVVt0aEjKiZI3JidgA1o8RtNfZnwlAV1J1gnPNZaL0nlpfNkdIykhKnSPRT3Rk=
+	t=1779297416; cv=none; b=X2nl1oyhKFbc6DIqgEASOA3TcIfC337ufX4otmB/C1I28wD9wGUkpSHa4zTQgOymYhzwAYaYnXDXfI0St/3IONUTDucpP3bQfc3s2dhSaWGbTwloYZf7A8CVSSQiEjNKGdoShbaHqFke0bnFBtU0xXZdee6dkMiuJFNICReNFfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297413; c=relaxed/simple;
-	bh=3e0SiiXT8S1URB/5OEwtjNtc/DJyZf9WmkGyduON0nM=;
+	s=arc-20240116; t=1779297416; c=relaxed/simple;
+	bh=eAJZq5kxVSirTYPvLk0yvRFIcIjMwo6GLznjJmrU31E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SdzP+R3n2AHtYTnYoXsceSD2h4E7GK/4e0OKA6CihRWLCyN26zFVzWEZ3tVGh3quIqTcbuiI/Ys9LqzWslBolA3w4XEzFNU8iuWsaNOI8fHnh4QB6F3y5ra4HXD52XkomvEKX1nsj0jLBnhO7XpnFBPUkuM82bsbtBFqadC9yPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qutoYyaz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LgUa7mVeycHRyDdcYUKEIjf4t5H0unUkhTNXjXRD8BRaqr5MvevhUNYWm4OUOLok4WMfZ3BLM9MwH9/5RboUEmlqRnQ4iJBlTKpB/Np01kAcSELhDUDSd4eOpUcVj9qOEGhp9vd8bCpzVeCweDMLOtY+EBhR2Hp+9QT+JL/IJx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01SyFk+m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qutoYyaz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1061E1F000E9;
-	Wed, 20 May 2026 17:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01SyFk+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF28F1F000E9;
+	Wed, 20 May 2026 17:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297412;
-	bh=CgztJkNO0PZS5phY54eKgKs8cu0VO+XOfGpAOJswAWg=;
+	s=korg; t=1779297415;
+	bh=ku4pi0ZbVyek84rRlZ91RTaiOyfkJ50S3aCtrGi+lbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qutoYyazIjdpflhrHSvLAKcOCNp+9kII5R5TCbGgImu+SHjR2+eazWCgBysbwHcAL
-	 TN58XC43iVa1yA/q5pVOtohziXEeQ+Lh3Du3UT8L9YjfQuXLgPnUV0ZqJiMvvDo9Mp
-	 lY1Ne/os730TruRbhmRL+GfUuRlMHkIA+8J+NpmY=
+	b=01SyFk+mHRhHc/eEQ9o8LJ+6AZYy2NzGggePQEGtEHOV6TsUT+l0vMSbTY2f7XLhM
+	 3gibXmlFuLJNt1qOaS5FBSdfaRw6HaaYUWbtFTSB2Bqf2BjfN+xzhTWE1qLgrBQU4G
+	 vS2ZN29myDgpcFiws55Aykl8MPgl93e2Uq/KPL2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
+	Gopi Krishna Menon <krishnagopi487@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 022/957] devres: fix missing node debug info in devm_krealloc()
-Date: Wed, 20 May 2026 18:08:25 +0200
-Message-ID: <20260520162135.041687076@linuxfoundation.org>
+Subject: [PATCH 6.18 023/957] thermal/drivers/spear: Fix error condition for reading st,thermal-flags
+Date: Wed, 20 May 2026 18:08:26 +0200
+Message-ID: <20260520162135.062145672@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -50,35 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Gopi Krishna Menon <krishnagopi487@gmail.com>
 
-[ Upstream commit f813ec9e84b4d0ca81ec1da94ab07bfb4a29266c ]
+[ Upstream commit da2c4f332a0504d9c284e7626a561d343c8d6f57 ]
 
-Fix missing call to set_node_dbginfo() for new devres nodes created by
-devm_krealloc().
+of_property_read_u32 returns 0 on success. The current check returns
+-EINVAL if the property is read successfully.
 
-Fixes: f82485722e5d ("devres: provide devm_krealloc()")
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/20260202235210.55176-2-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fix the check by removing ! from of_property_read_u32
+
+Fixes: b9c7aff481f1 ("drivers/thermal/spear_thermal.c: add Device Tree probing capability")
+Signed-off-by: Gopi Krishna Menon <krishnagopi487@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Suggested-by: Daniel Baluta <daniel.baluta@nxp.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/20260327090526.59330-1-krishnagopi487@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/devres.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thermal/spear_thermal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/devres.c b/drivers/base/devres.c
-index c948c88d39560..9893d656302d9 100644
---- a/drivers/base/devres.c
-+++ b/drivers/base/devres.c
-@@ -940,6 +940,8 @@ void *devm_krealloc(struct device *dev, void *ptr, size_t new_size, gfp_t gfp)
- 	if (!new_dr)
- 		return NULL;
+diff --git a/drivers/thermal/spear_thermal.c b/drivers/thermal/spear_thermal.c
+index 603dadcd3df58..5e3e9c1f32f8e 100644
+--- a/drivers/thermal/spear_thermal.c
++++ b/drivers/thermal/spear_thermal.c
+@@ -93,7 +93,7 @@ static int spear_thermal_probe(struct platform_device *pdev)
+ 	struct device_node *np = pdev->dev.of_node;
+ 	int ret = 0, val;
  
-+	set_node_dbginfo(&new_dr->node, "devm_krealloc_release", new_size);
-+
- 	/*
- 	 * The spinlock protects the linked list against concurrent
- 	 * modifications but not the resource itself.
+-	if (!np || !of_property_read_u32(np, "st,thermal-flags", &val)) {
++	if (!np || of_property_read_u32(np, "st,thermal-flags", &val)) {
+ 		dev_err(&pdev->dev, "Failed: DT Pdata not passed\n");
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
