@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C493BE165;
-	Wed, 20 May 2026 17:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0137D33F59D;
+	Wed, 20 May 2026 17:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297166; cv=none; b=hW/KqvoE/u9gjY706KTxFoLhUnou+SF9rv5d9StcNJtYn4cNZvPDQKa/21bKJf48aF2zpFm+bOCPUF+QtUr3Y9/OISaEN3H8BYvyrw4CdxrP+cRl4lt9csSkkkvcQQfpRzVYmCz5wiQDX4nCAiev5n/OvoJf8REWMap8uHKDwmg=
+	t=1779297169; cv=none; b=Y0/DJygB3cFpXzVcMqfPZ2OWeJGD8V4ZBBHeV5Hjnh1fjQyy1Y0nGCkihm6WfF8IvmOt0Dg8Th8PzxkomwErrhVrH5mvksKINAJf7GBNfqgMK+7clykD4xwXWXEe5TYrDVZ1ql7hUvOtzbNiiU/tq1aUJ7DT80gzrrM4vUjonsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297166; c=relaxed/simple;
-	bh=inblWgbzYzxkuV0EOWEvqFx3B13aD8KM5+1uyYequLw=;
+	s=arc-20240116; t=1779297169; c=relaxed/simple;
+	bh=RHkQ/6XUl9TSb/2j5VGW2SirKm+JY2pqEYBttG4jCjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tMcZr+eZPO4ni/agUx10K28iNVKuDXGB1y8Kl4kiDWj0FNLhTVDuP1/+LDQIml6GeXxsEX5yDVuUXjiQ2DJvbKhV7+RuCHH2zcoPVrpXRVkZYsMG08in0tfufHFD0agORhksmtUYS6eCq+JamYpZv46KtN4uKSZaRDdezEq/1Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOeLudgf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cZnq/4Znd5trXLeLOF80KzMeW8B8KbCAp2TMbDBou6pcm0xF7ef+NNXhFJQXPtLYscm6Knzk0da/xCbwATIM4fGVtJ6hYJRmWTKWrcHaUo1vU7yEAdEPTJH6+l7y6IgcyIz5OLhSVATmNyLJ1NOI7QShG5XxD0QVP4MkKF0RXSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykAR/nWc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOeLudgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4E81F000E9;
-	Wed, 20 May 2026 17:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykAR/nWc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA3D1F000E9;
+	Wed, 20 May 2026 17:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297165;
-	bh=wY7LznnS6Gr0+HXBi7yBCZECpag+xV+UIIvSbVKhmBw=;
+	s=korg; t=1779297167;
+	bh=6E/yF+OH3lL3QnDlg9kAftR0IRK8RKqpr7kyJl36sRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TOeLudgfLUN5QHdC3s/HB+Yfa+Zg6bfzm3Y4+QuXSIcDidexTLAdxeoUuOTinsrus
-	 d5YTrv48u6Tt0zvj1NJbQOdbVCIZMZtAW+XvAYLmxzv5uClzCDypSKqKXx4JfHOVPQ
-	 MrrNaJ3jenFLV1CNFhVXirkzzkAgX7dabD+1xW2Y=
+	b=ykAR/nWcTjczeqgfcFPNdi3yBREMwAE9BLqYAN7jl7pqbg/ZcmUkZk+XX1VBd2e4U
+	 AUT75Er4DFoMOQSnVMsnex/0zBU+K5xT90VNHEshrTURK4nHHgR7phO3PMTKGldhK0
+	 x/cd2AgpaxzjNRg7ZGLzFrHBS5J7S+u5tUCobodc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Ying <victor.liu@nxp.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>
-Subject: [PATCH 7.0 1074/1146] drm/bridge: imx8qxp-pxl2dpi: avoid ERR_PTR with device_node cleanup
-Date: Wed, 20 May 2026 18:22:04 +0200
-Message-ID: <20260520162212.537270960@linuxfoundation.org>
+	DeepChirp <DeepChirp@outlook.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 7.0 1075/1146] drm/i915/dp: Fix VSC dynamic range signaling for RGB formats
+Date: Wed, 20 May 2026 18:22:05 +0200
+Message-ID: <20260520162212.560714769@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,120 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-commit 53597deca0e38c30e6cd4ba2114fa42d2bcd85bb upstream.
+commit 1ae15b6c7965d137eef21f2cc7d367b29cb88369 upstream.
 
-imx8qxp_pxl2dpi_get_available_ep_from_port() returns ERR_PTR()
-on errors. imx8qxp_pxl2dpi_find_next_bridge() stores its return
-value in a __free(device_node) variable before checking IS_ERR().
-When the function returns on the error path, the cleanup action calls
-of_node_put() on the ERR_PTR() value.
+For RGB, set dynamic_range to CTA or VESA based on
+crtc_state->limited_color_range so sinks apply correct
+quantization. YCbCr remains limited (CTA) range.
+(DP v1.4, Table 5-1)
 
-Do not let a device_node cleanup variable hold error pointers. Change
-imx8qxp_pxl2dpi_get_available_ep_from_port() to return an int and pass
-the endpoint node through an output argument. Initialize the output
-argument to NULL so callers hold either NULL on error paths or a valid
-device_node pointer on successful path.
+v2:
+- Added Reported-by and Tested-by tags
 
-Fixes: ceea3f7806a10 ("drm/bridge: imx8qxp-pxl2dpi: simplify put of device_node pointers")
-Cc: stable@vger.kernel.org
-Reviewed-by: Liu Ying <victor.liu@nxp.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260507100604.667731-1-lgs201920130244@gmail.com
-Signed-off-by: Liu Ying <victor.liu@nxp.com>
+v3:
+- Add back YCbCr comment(Suraj)
+
+Cc: stable@vger.kernel.org #v5.8+
+Reported-by: DeepChirp <DeepChirp@outlook.com>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/15874
+Tested-by: DeepChirp <DeepChirp@outlook.com>
+Fixes: 9799c4c3b76e ("drm/i915/dp: Add compute routine for DP VSC SDP")
+Assisted-by: GitHub-Copilot:GPT-5.4
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260505090920.2479112-1-chaitanya.kumar.borah@intel.com
+(cherry picked from commit 38e10ddae6f8d42a2e8437fcd25a1cac51106c64)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/imx/imx8qxp-pxl2dpi.c |   40 +++++++++++++++------------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/bridge/imx/imx8qxp-pxl2dpi.c
-+++ b/drivers/gpu/drm/bridge/imx/imx8qxp-pxl2dpi.c
-@@ -222,52 +222,58 @@ static const struct drm_bridge_funcs imx
- 			imx8qxp_pxl2dpi_bridge_atomic_get_output_bus_fmts,
- };
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -2981,8 +2981,13 @@ static void intel_dp_compute_vsc_colorim
+ 	drm_WARN_ON(display->drm,
+ 		    vsc->bpc == 6 && vsc->pixelformat != DP_PIXELFORMAT_RGB);
  
--static struct device_node *
-+static int
- imx8qxp_pxl2dpi_get_available_ep_from_port(struct imx8qxp_pxl2dpi *p2d,
--					   u32 port_id)
-+					   u32 port_id,
-+					   struct device_node **ep)
- {
--	struct device_node *port, *ep;
-+	struct device_node *port;
-+	int ret = 0;
- 	int ep_cnt;
- 
-+	*ep = NULL;
+-	/* all YCbCr are always limited range */
+-	vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
++	/* All YCbCr formats are always limited range. */
++	if (vsc->pixelformat == DP_PIXELFORMAT_RGB)
++		vsc->dynamic_range = crtc_state->limited_color_range ?
++			DP_DYNAMIC_RANGE_CTA : DP_DYNAMIC_RANGE_VESA;
++	else
++		vsc->dynamic_range = DP_DYNAMIC_RANGE_CTA;
 +
- 	port = of_graph_get_port_by_id(p2d->dev->of_node, port_id);
- 	if (!port) {
- 		DRM_DEV_ERROR(p2d->dev, "failed to get port@%u\n", port_id);
--		return ERR_PTR(-ENODEV);
-+		return -ENODEV;
- 	}
- 
- 	ep_cnt = of_get_available_child_count(port);
- 	if (ep_cnt == 0) {
- 		DRM_DEV_ERROR(p2d->dev, "no available endpoints of port@%u\n",
- 			      port_id);
--		ep = ERR_PTR(-ENODEV);
-+		ret = -ENODEV;
- 		goto out;
- 	} else if (ep_cnt > 1) {
- 		DRM_DEV_ERROR(p2d->dev,
- 			      "invalid available endpoints of port@%u\n",
- 			      port_id);
--		ep = ERR_PTR(-EINVAL);
-+		ret = -EINVAL;
- 		goto out;
- 	}
- 
--	ep = of_get_next_available_child(port, NULL);
--	if (!ep) {
-+	*ep = of_get_next_available_child(port, NULL);
-+	if (!*ep) {
- 		DRM_DEV_ERROR(p2d->dev,
- 			      "failed to get available endpoint of port@%u\n",
- 			      port_id);
--		ep = ERR_PTR(-ENODEV);
-+		ret = -ENODEV;
- 		goto out;
- 	}
- out:
- 	of_node_put(port);
--	return ep;
-+	return ret;
+ 	vsc->content_type = DP_CONTENT_TYPE_NOT_DEFINED;
  }
  
- static int imx8qxp_pxl2dpi_find_next_bridge(struct imx8qxp_pxl2dpi *p2d)
- {
--	struct device_node *ep __free(device_node) =
--		imx8qxp_pxl2dpi_get_available_ep_from_port(p2d, 1);
--	if (IS_ERR(ep))
--		return PTR_ERR(ep);
-+	struct device_node *ep __free(device_node) = NULL;
-+	int ret;
-+
-+	ret = imx8qxp_pxl2dpi_get_available_ep_from_port(p2d, 1, &ep);
-+	if (ret)
-+		return ret;
- 
- 	struct device_node *remote __free(device_node) = of_graph_get_remote_port_parent(ep);
- 	if (!remote || !of_device_is_available(remote)) {
-@@ -291,9 +297,9 @@ static int imx8qxp_pxl2dpi_set_pixel_lin
- 	struct of_endpoint endpoint;
- 	int ret;
- 
--	ep = imx8qxp_pxl2dpi_get_available_ep_from_port(p2d, 0);
--	if (IS_ERR(ep))
--		return PTR_ERR(ep);
-+	ret = imx8qxp_pxl2dpi_get_available_ep_from_port(p2d, 0, &ep);
-+	if (ret)
-+		return ret;
- 
- 	ret = of_graph_parse_endpoint(ep, &endpoint);
- 	if (ret) {
 
 
