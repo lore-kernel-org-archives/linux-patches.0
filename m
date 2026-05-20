@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDBD366542;
-	Wed, 20 May 2026 16:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BB63A3833;
+	Wed, 20 May 2026 16:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295795; cv=none; b=Hz2JEo1woUxOOAX6/InYwEZ68YDeRcxratqXhwN1G/9E0k/8fU0F8ZnaXOXn3BstTrIw+gBjJpAP8ErcXlzZNL7eWT1JqOi+KFcbsyct5RPInBbqe5u6ZTdAYjqlfl517PqzvmDXI5i8EO6xKfcVqsGAvfvehIJ9AJ6JHosR/vQ=
+	t=1779295797; cv=none; b=ur9dy7ZAJ2jg6QA4CLRKBk63x/ORoWXvCk5ImVW+DIC2Bs4PCNTcBlMvRRELAlnP6SqN3qAEK4IOilV4iFKguUZKqArCRFl9jf3D3TIYe+kpaWObd7lUNzIQsrRzHo3vSaf0q3tSRTow0/q8uLc9vx9BAu1hM/yaJpiLPmWBaqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295795; c=relaxed/simple;
-	bh=TfJJvGyhRsqN/rPf36Cm7wFX1Sy8PqGkQNNsQSidCuo=;
+	s=arc-20240116; t=1779295797; c=relaxed/simple;
+	bh=OhwNnaojFxoe3BHjBZUpv/6gRdgqqSpfvgeQiExuhiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvbP2RArUBetidhsRXk8+A4fulqRjiOGM5k4Qun4rVsVK9hwLkeWypYs0Kc8eQ8hTEDACSK2FHyXpz06sjWbXS8JL1sS/oI4pD0KDfPauleNICzEYgJ9qu/jKrWNO7ufBI/5AB5P9UspV4MQKNnp4cgFAZqGVgSrfemxknenqMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4pP9d06; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iqmjjvUVnqrq+QfQ7OYhxrqwE2X3289WJkTOL4E6S9aD760q0qfPvsgn2geCkkPiYpBqBr/tdGMddybawFPBTbLxOPbeDDGR5frwB8Q3kW5X3U+pSqpDBQTscpIE/DYQCvLyA/k++WwpD5YE88klJAgp/yscKdDcJphd1bJpPiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZBIt102; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4pP9d06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9BC1F000E9;
-	Wed, 20 May 2026 16:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZBIt102"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BBF1F00893;
+	Wed, 20 May 2026 16:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295792;
-	bh=2VJfe0Ec41lboINjqccO0QqN8EUq14RiSiZliX4Y6b8=;
+	s=korg; t=1779295795;
+	bh=LPz6Cj2KU+YNgaM62bqKl1nM5iZT5ClOGrV+S9FIyYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d4pP9d06GhrBD/oz1WxLNxWATyjnvplt5HCwKCq6K25uRlL/v5Re4eb8c5NQD80ZT
-	 NEiglA/UvUdEhoNF53EXqq58XXkXCuMA9ORoVx4Bm1CQ3VK5qc30ax8pqwoBVk7WDD
-	 yYuGY6jfsbfj3x0EiMIAkSoHVW8GkYYBVmOUdOm4=
+	b=sZBIt102vYe7hZ5pOqTOXpaTwtZcMW1fPAQOnrgRIEgzLOGgGN8REPsAAjVYZJlyH
+	 IjFLne1Gsk32hS3JX+eGCH+FmnTVTvH9YIfklA1UJJ1YvZZSYyrljzQfL4QI6lSaWP
+	 Rx/SHcKs/fi7onubWDLBD8A5hUPfaMsRhtDZ39sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jon Hunter <jonathanh@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0553/1146] soc/tegra: pmc: Add kerneldoc for reboot notifier
-Date: Wed, 20 May 2026 18:13:23 +0200
-Message-ID: <20260520162200.694822814@linuxfoundation.org>
+Subject: [PATCH 7.0 0554/1146] soc/tegra: pmc: Correct function names in kerneldoc
+Date: Wed, 20 May 2026 18:13:24 +0200
+Message-ID: <20260520162200.717797859@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,33 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 21669619e4c17a5f097e0415bc64b1d400c54fcb ]
+[ Upstream commit ec0e4da5d679f9da1cc198927951f70fdf28f001 ]
 
-Commit 48b7f802fb78 ("soc/tegra: pmc: Embed reboot notifier in PMC
-context") added the reboot_notifier structure to the PMC SoC structure
-but did not update the kerneldoc accordingly. Add this missing kerneldoc
-description to fix this.
+Commit 70f752ebb08c ("soc/tegra: pmc: Add PMC contextual functions")
+added the functions devm_tegra_pmc_get() and
+tegra_pmc_io_pad_power_enable(), but the names of the functions in the
+associated kerneldoc is incorrect. Update the kerneldoc for these
+functions to correct their names.
 
-Fixes: 48b7f802fb78 ("soc/tegra: pmc: Embed reboot notifier in PMC context")
+Fixes: 70f752ebb08c ("soc/tegra: pmc: Add PMC contextual functions")
 Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/pmc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/tegra/pmc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index a1a2966512d1a..8268a41c471a9 100644
+index 8268a41c471a9..b889c44f8fddf 100644
 --- a/drivers/soc/tegra/pmc.c
 +++ b/drivers/soc/tegra/pmc.c
-@@ -437,6 +437,7 @@ struct tegra_pmc_soc {
-  * @wake_sw_status_map: Bitmap to hold raw status of wakes without mask
-  * @wake_cntrl_level_map: Bitmap to hold wake levels to be programmed in
-  *     cntrl register associated with each wake during system suspend.
-+ * @reboot_notifier: PMC reboot notifier handler
-  * @syscore: syscore suspend/resume callbacks
-  */
- struct tegra_pmc {
+@@ -1005,7 +1005,7 @@ static struct tegra_pmc *tegra_pmc_get(struct device *dev)
+ }
+ 
+ /**
+- * tegra_pmc_get() - find the PMC for a given device
++ * devm_tegra_pmc_get() - find the PMC for a given device
+  * @dev: device for which to find the PMC
+  *
+  * Returns a pointer to the PMC on success or an ERR_PTR()-encoded error code
+@@ -1747,7 +1747,7 @@ static void tegra_io_pad_unprepare(struct tegra_pmc *pmc)
+ }
+ 
+ /**
+- * tegra_io_pad_power_enable() - enable power to I/O pad
++ * tegra_pmc_io_pad_power_enable() - enable power to I/O pad
+  * @pmc: power management controller
+  * @id: Tegra I/O pad ID for which to enable power
+  *
 -- 
 2.53.0
 
