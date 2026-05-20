@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800433E0C70;
-	Wed, 20 May 2026 17:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23734231842;
+	Wed, 20 May 2026 17:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296723; cv=none; b=q/EEMoglvx/e6Tumn0I/U0jkxQG4XlW5sf7ty28MtWLnzm01rwEjTZKnzPH3g/q2Unp6KMhV9WrqNt8m04zwlDRwRR20L8+uNY/eSuB29PBI893wGvIZbvZaD8OSTMR3gwulKv1LGLsidjUCfbsFV7wfCrv4G6PJeC+3Y8ZVPF0=
+	t=1779296726; cv=none; b=VyG05W7nSI7sCYYNKrWy9CfnC6GepWi2y8e11XGTL3ReysLz8lQ26MzU3I8L4PsILdUCjTTuJQ5bCTIvu+rnFZ5jOlwc3K7bbUFldXViAQ3EaFG+/y/Dmt/5pc24/qNa44awYN/lvACaX5r2qDBPC2MSHY0U+nvTREVKTyH6BqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296723; c=relaxed/simple;
-	bh=FgURfTNWx3AMIdyDyVa+vIz/hYWdog3B6298yq7ZP/g=;
+	s=arc-20240116; t=1779296726; c=relaxed/simple;
+	bh=Ltv86XuFc/rB7P5DwXOhxk8tDVVm2Nsiytpm8KcyzGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Se/fvJTeNnxuoltfKFDvwwxC8HykRt89YZeCMUUMTtDnsF7X5jToy3SdzSsIU4JtNgBCmOPVPm8HxrP9fq5bvMnN7C32S1tRAhz1FXDZUKLrKqIjWMmqNFX8dvhZiYTQNOUH3k2zaOL8YdXdEX7gbiRc5J94ST1MkC4Ml1io6AE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuJ9kCz+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MuTwzFlkz8sFjtZKQV9KOix6lAHG7csCddvOxO3nnIMP11xKA2y8frRJGGFc7Ps6Nh3XFXCbTEKWcVk7udXn40AL1qv64fSsU5lYLZ3gIT6R9ZXeGB3X5KbPTYBKMPWBTdeyifhjkaTWmO7vHPIIOzmpZ7zdVGmOvnXKpwQGw9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOT4pCvq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuJ9kCz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C6A1F000E9;
-	Wed, 20 May 2026 17:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOT4pCvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9C71F000E9;
+	Wed, 20 May 2026 17:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296722;
-	bh=Ljo+mf1Cu7tC4IYrNRrxBjkMWLNVHnnoV6he+8YYHkY=;
+	s=korg; t=1779296725;
+	bh=3hxRkNQPBIcxDH37Z6ZuAjwKO8vpiHj0xNqELqXyW+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MuJ9kCz+ihn0OkaUDe2Y6JWgC06qaSPN2DuMu1D5tUAyfq6zIcB5N1qmnZkGs3nO0
-	 c6j9rQXDlaaQh1gCWYbDyzncqsYhs2PZdM6iwqMUNJ1nELxyewl3OOPZmbe+jFiumU
-	 YZPpbnF6ugiWORTFs4MExOgzKSqvuJJ+4nRMdrzw=
+	b=SOT4pCvqsZxz2wbdFahu2F1FN0eCblIlVJO+Bj7mhoBHEfpHs1olanJxrUXeMAvH0
+	 5g2o7wSzFqvR4mh3hgA5ezZHLiDlqOnyhnEfXLKJkQHYReQ+Kr0hWM0eY1ThW+Dwi7
+	 gdWTlgUGgCCl5rqJGj85hrOGEL6Qy/y+7oUc02tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Krause <minipli@grsecurity.net>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0870/1146] kbuild: builddeb - avoid recompiles for non-cross-compiles
-Date: Wed, 20 May 2026 18:18:40 +0200
-Message-ID: <20260520162207.927543971@linuxfoundation.org>
+Subject: [PATCH 7.0 0906/1146] drm/amdgpu/gfx6: Support harvested SI chips with disabled TCCs (v2)
+Date: Wed, 20 May 2026 18:19:16 +0200
+Message-ID: <20260520162208.742774462@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -47,61 +46,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Krause <minipli@grsecurity.net>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 2452dcf4d740effff5aa71b7f6529ee8c04fd8f6 ]
+[ Upstream commit fe2b84f9228e2a0903221a4d0d8c350b018e9c0c ]
 
-Commit e2c318225ac1 ("kbuild: deb-pkg: add
-pkg.linux-upstream.nokernelheaders build profile") changed how
-install-extmod-build gets called, making it always rebuild the host
-programs below scripts/ if HOSTCC wasn't specified with its full triplet
-on the make command line. That is, apparently, needed to fix up commit
-f1d87664b82a ("kbuild: cross-compile linux-headers package when
-possible") for cross-compiles. However, in the much more common case of
-non-cross-compile builds this will lead to unnecessary rebuilding of
-host tools including gcc plugins. This, in turn, will lead to a full
-kernel rebuild on the next 'make bindeb-pkg' which is unfortunate.
+This commit fixes amdgpu to work on the Radeon HD 7870 XT
+which has never worked with the Linux open source drivers before.
 
-Avoid that by only triggering the rebuild of host tools for actual
-cross-compile builds.
+Some boards have "harvested" chips, meaning that some parts of
+the chip are disabled and fused, and it's sold for cheaper and
+under a different marketing name.
+On a harvested chip, any of the following can be disabled:
+- CUs (Compute Units)
+- RBs (Render Backend, aka. ROP)
+- Memory channels (ie. the chip has a lower bandwidth)
+- TCCs (ie. less L2 cache)
 
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-Fixes: e2c318225ac1 ("kbuild: deb-pkg: add pkg.linux-upstream.nokernelheaders build profile")
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20260402145116.1010901-1-minipli@grsecurity.net
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Handle chips with harvested TCCs by patching the registers
+that configure how TCCs are mapped.
+
+If some TCCs are disabled, we need to make sure that
+the disabled TCCs are not used, and the remaining TCCs
+are used optimally.
+
+TCP_CHAN_STEER_LO/HI control which TCC is used by TCP channels.
+TCP_ADDR_CONFIG.NUM_TCC_BANKS controls how many channels are used.
+
+Note that the TCC configuration is highly relevant to performance.
+Suboptimal configuration (eg. CHAN_STEER=0) can significantly
+reduce gaming performance.
+
+For optimal performance:
+- Rely on the CHAN_STEER from the golden registers table,
+  only skip disabled TCCs but keep the mapping order.
+- Limit NUM_TCC_BANKS to number of active TCCs to avoid thrashing,
+  which performs better than using the same TCC twice.
+
+v2:
+- Also consider CGTS_USER_TCC_DISABLE for disabled TCCs.
+
+Link: https://bugs.freedesktop.org/show_bug.cgi?id=60879
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/2664
+Fixes: 2cd46ad22383 ("drm/amdgpu: add graphic pipeline implementation for si v8")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 00218d15528fab9f6b31241fe5904eea4fcaa30d)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/package/builddeb | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 66 +++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/scripts/package/builddeb b/scripts/package/builddeb
-index 3627ca227e5a5..ba1defc616524 100755
---- a/scripts/package/builddeb
-+++ b/scripts/package/builddeb
-@@ -139,7 +139,13 @@ install_kernel_headers () {
- 	pdir=debian/$1
- 	version=${1#linux-headers-}
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+index 73223d97a87f5..ac90d8e9d86a8 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+@@ -1571,6 +1571,71 @@ static void gfx_v6_0_setup_spi(struct amdgpu_device *adev)
+ 	mutex_unlock(&adev->grbm_idx_mutex);
+ }
  
--	CC="${DEB_HOST_GNU_TYPE}-gcc" "${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
-+	# Override $CC only for cross-compiles, to not unnecessarily rebuild
-+	# scripts/ including plugins, which may lead to a full kernel rebuild.
-+	if [ -n "${CROSS_COMPILE}" ]; then
-+		CC="${DEB_HOST_GNU_TYPE}-gcc" "${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
-+	else
-+		"${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
-+	fi
++/**
++ * gfx_v6_0_setup_tcc() - setup which TCCs are used
++ *
++ * @adev: amdgpu_device pointer
++ *
++ * Verify whether the current GPU has any TCCs disabled,
++ * which can happen when the GPU is harvested and some
++ * memory channels are disabled, reducing the memory bus width.
++ * For example, on the Radeon HD 7870 XT (Tahiti LE).
++ *
++ * If some TCCs are disabled, we need to make sure that
++ * the disabled TCCs are not used, and the remaining TCCs
++ * are used optimally.
++ *
++ * TCP_CHAN_STEER_LO/HI control which TCC is used by TCP channels.
++ * TCP_ADDR_CONFIG.NUM_TCC_BANKS controls how many channels are used.
++ *
++ * For optimal performance:
++ * - Rely on the CHAN_STEER from the golden registers table,
++ *   only skip disabled TCCs but keep the mapping order.
++ * - Limit NUM_TCC_BANKS to number of active TCCs to avoid thrashing,
++ *   which performs better than using the same TCC twice.
++ */
++static void gfx_v6_0_setup_tcc(struct amdgpu_device *adev)
++{
++	u32 i, tcc, tcp_addr_config, num_active_tcc = 0;
++	u64 chan_steer, patched_chan_steer = 0;
++	const u32 num_max_tcc = adev->gfx.config.max_texture_channel_caches;
++	const u32 dis_tcc_mask =
++		amdgpu_gfx_create_bitmask(num_max_tcc) &
++		(REG_GET_FIELD(RREG32(mmCGTS_TCC_DISABLE),
++			       CGTS_TCC_DISABLE, TCC_DISABLE) |
++		 REG_GET_FIELD(RREG32(mmCGTS_USER_TCC_DISABLE),
++			       CGTS_USER_TCC_DISABLE, TCC_DISABLE));
++
++	/* When no TCC is disabled, the golden registers table already has optimal TCC setup */
++	if (!dis_tcc_mask)
++		return;
++
++	/* Each 4-bit nibble contains the index of a TCC used by all TCPs */
++	chan_steer = RREG32(mmTCP_CHAN_STEER_LO) | ((u64)RREG32(mmTCP_CHAN_STEER_HI) << 32ull);
++
++	/* Patch the TCP to TCC mapping to skip disabled TCCs */
++	for (i = 0; i < num_max_tcc; ++i) {
++		tcc = (chan_steer >> (u64)(4 * i)) & 0xf;
++
++		if (!((1 << tcc) & dis_tcc_mask)) {
++			/* Copy enabled TCC indices to the patched register value. */
++			patched_chan_steer |= (u64)tcc << (u64)(4 * num_active_tcc);
++			++num_active_tcc;
++		}
++	}
++
++	WARN_ON(num_active_tcc != num_max_tcc - hweight32(dis_tcc_mask));
++
++	/* Patch number of TCCs used by TCPs */
++	tcp_addr_config = REG_SET_FIELD(RREG32(mmTCP_ADDR_CONFIG),
++					TCP_ADDR_CONFIG, NUM_TCC_BANKS,
++					num_active_tcc - 1);
++
++	WREG32(mmTCP_ADDR_CONFIG, tcp_addr_config);
++	WREG32(mmTCP_CHAN_STEER_HI, upper_32_bits(patched_chan_steer));
++	WREG32(mmTCP_CHAN_STEER_LO, lower_32_bits(patched_chan_steer));
++}
++
+ static void gfx_v6_0_config_init(struct amdgpu_device *adev)
+ {
+ 	adev->gfx.config.double_offchip_lds_buf = 0;
+@@ -1729,6 +1794,7 @@ static void gfx_v6_0_constants_init(struct amdgpu_device *adev)
+ 	gfx_v6_0_tiling_mode_table_init(adev);
  
- 	mkdir -p $pdir/lib/modules/$version/
- 	ln -s /usr/src/linux-headers-$version $pdir/lib/modules/$version/build
+ 	gfx_v6_0_setup_rb(adev);
++	gfx_v6_0_setup_tcc(adev);
+ 
+ 	gfx_v6_0_setup_spi(adev);
+ 
 -- 
 2.53.0
 
