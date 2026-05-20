@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33613546D9;
-	Wed, 20 May 2026 16:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35671352016;
+	Wed, 20 May 2026 16:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295501; cv=none; b=hIsdaQadDTmaLVtSK1Y2cL3C3ZVLUAmugT1nyy5+gfANl8zVdLSgIGzaF4pvv3e72yucxMVeqmvljlsBI9ElcnPcivVCA3c3OA+V5Yzj7ZyCj8ESAPo3e08Ly3b+XzL/kY6LL8Ok5zW8FOP+De/wzz+9NBaotb+SXoQYkYk/k0A=
+	t=1779295504; cv=none; b=owjrHxqmu8fWXWUvTOk80nxmODPuJpfY/iym1UyMHtinmqBwjS7LuxINclW3Gv9ylYT87+sDZbO1cC/0lksplXIResC6OBg2HmGB9pn+gzWsCgp4+SYGUD8RHtp79KHUlPQG7tzkt+OrQKe6QO2KFPbypF5O4T9C+oLpjSaoVXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295501; c=relaxed/simple;
-	bh=XifkKyNTYQs6QgV3iVMJKRZXtk9C92ojaJwqFB0eqXU=;
+	s=arc-20240116; t=1779295504; c=relaxed/simple;
+	bh=1gcqyFoQYOTt0Er6zuMajpL/ZsM5MqnAPitMMB35gHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dLym7ynfoTRcflvsLZFR155PLCpMgvL8Aj8nIPZlioSvGBTe+Myw3IICzmkqZUTRSgYLu3DQXh7pxZZMLCotB4nUxf9AKEXSaHjk+373535FtS1UcxI5SGg6NCrZKoUtmQQqLHn9y72/K0UX/t5sXFaA3FP9VU7JD8snDDna9Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnTgGp4S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eKRGsBgJ7POiG13XzD2Xyg5XAtNBlzLlWv6Hyzc0vkaymKVGhxJACaPSZ8oKTF3Izy/x4p1/scFe0AkpXMmjArFbFa3fZ/HusdT6GV3k5BKUSdPHPB5hdWfVkC5ekybyjqd5Cb8e6Uhth/C2Jyk8wQUhZ4NpE8/r93hTqZYe3iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhTErNmp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnTgGp4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A3D1F000E9;
-	Wed, 20 May 2026 16:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhTErNmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C209F1F00893;
+	Wed, 20 May 2026 16:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295500;
-	bh=ehiHBCdYl6OH4EnTClmuJhll00FHMMS+EWLrqlC7UCA=;
+	s=korg; t=1779295503;
+	bh=FF+nKnUpaxJ1I9G/2G1jjJmj186VKeGVwGDWZVYj4Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GnTgGp4S3D0jKm8zzk4BbtxqgqZIhSnP4FpP0jrwfRqbe99SeRjxekrteOQmUoKqB
-	 +HBsI7dlk53I+toi3zKMIN3MjG/aW4Qgqar+VzSPrVd5MpTkfo+JBwKfFL2Zo3bbJt
-	 w550erTg97pl4ZsNS6Ia9CC0s0mBp1giaLvCXw88=
+	b=hhTErNmpd9m+sUHsO7+8Q9aPWlV23UuFpKxrDHS+awObhdboUJKtxc2SDB1CGKDsi
+	 pZjxiIUKZnQBp7abbLTSSb4+Sz+FrBos1szZQI1GAMuIIG/mlKikvZp19052p+qu86
+	 yqzoR8F+40+yHqo3gqhhbPpSU1kljZlV0MYapZaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ondrej Mosnacek <omosnace@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
 	Amir Goldstein <amir73il@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0444/1146] fanotify: avoid/silence premature LSM capability checks
-Date: Wed, 20 May 2026 18:11:34 +0200
-Message-ID: <20260520162158.246488041@linuxfoundation.org>
+Subject: [PATCH 7.0 0445/1146] fanotify: call fanotify_events_supported() before path_permission() and security_path_notify()
+Date: Wed, 20 May 2026 18:11:35 +0200
+Message-ID: <20260520162158.270129836@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,72 +55,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit 0d5ee3373426395478c355f3e93ba4b1118a04e9 ]
+[ Upstream commit 66052a768d4726a31e939b5ac902f2b0b452c8d5 ]
 
-Make sure calling capable()/ns_capable() actually leads to access denied
-when false is returned, because these functions emit an audit record
-when a Linux Security Module denies the capability, which makes it
-difficult to avoid allowing/silencing unnecessary permissions in
-security policies (namely with SELinux).
+The latter trigger LSM (e.g. SELinux) checks, which will log a denial
+when permission is denied, so it's better to do them after validity
+checks to avoid logging a denial when the operation would fail anyway.
 
-Where the return value just used to set a flag, use the non-auditing
-ns_capable_noaudit() instead.
-
-Fixes: 7cea2a3c505e ("fanotify: support limited functionality for unprivileged users")
+Fixes: 0b3b094ac9a7 ("fanotify: Disallow permission events for proc filesystem")
 Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
 Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20260216150625.793013-2-omosnace@redhat.com
+Reviewed-by: Paul Moore <paul@paul-moore.com>
+Link: https://patch.msgid.link/20260216150625.793013-3-omosnace@redhat.com
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ fs/notify/fanotify/fanotify_user.c | 25 ++++++++++---------------
+ 1 file changed, 10 insertions(+), 15 deletions(-)
 
 diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index c2dcb25151deb..5d030fbb2dffe 100644
+index 5d030fbb2dffe..ae904451dfc09 100644
 --- a/fs/notify/fanotify/fanotify_user.c
 +++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1615,17 +1615,18 @@ SYSCALL_DEFINE2(fanotify_init, unsigned int, flags, unsigned int, event_f_flags)
- 	pr_debug("%s: flags=%x event_f_flags=%x\n",
- 		 __func__, flags, event_f_flags);
+@@ -1210,6 +1210,7 @@ static int fanotify_find_path(int dfd, const char __user *filename,
  
--	if (!capable(CAP_SYS_ADMIN)) {
--		/*
--		 * An unprivileged user can setup an fanotify group with
--		 * limited functionality - an unprivileged group is limited to
--		 * notification events with file handles or mount ids and it
--		 * cannot use unlimited queue/marks.
--		 */
--		if ((flags & FANOTIFY_ADMIN_INIT_FLAGS) ||
--		    !(flags & (FANOTIFY_FID_BITS | FAN_REPORT_MNT)))
--			return -EPERM;
-+	/*
-+	 * An unprivileged user can setup an fanotify group with limited
-+	 * functionality - an unprivileged group is limited to notification
-+	 * events with file handles or mount ids and it cannot use unlimited
-+	 * queue/marks.
-+	 */
-+	if (((flags & FANOTIFY_ADMIN_INIT_FLAGS) ||
-+	     !(flags & (FANOTIFY_FID_BITS | FAN_REPORT_MNT))) &&
-+	    !capable(CAP_SYS_ADMIN))
-+		return -EPERM;
+ 		*path = fd_file(f)->f_path;
+ 		path_get(path);
++		ret = 0;
+ 	} else {
+ 		unsigned int lookup_flags = 0;
  
-+	if (!ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN)) {
- 		/*
- 		 * Setting the internal flag FANOTIFY_UNPRIV on the group
- 		 * prevents setting mount/filesystem marks on this group and
-@@ -1990,8 +1991,8 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
- 	 * A user is allowed to setup sb/mount/mntns marks only if it is
- 	 * capable in the user ns where the group was created.
- 	 */
--	if (!ns_capable(group->user_ns, CAP_SYS_ADMIN) &&
--	    mark_type != FAN_MARK_INODE)
-+	if (mark_type != FAN_MARK_INODE &&
-+	    !ns_capable(group->user_ns, CAP_SYS_ADMIN))
- 		return -EPERM;
+@@ -1219,22 +1220,7 @@ static int fanotify_find_path(int dfd, const char __user *filename,
+ 			lookup_flags |= LOOKUP_DIRECTORY;
  
- 	/*
+ 		ret = user_path_at(dfd, filename, lookup_flags, path);
+-		if (ret)
+-			goto out;
+ 	}
+-
+-	/* you can only watch an inode if you have read permissions on it */
+-	ret = path_permission(path, MAY_READ);
+-	if (ret) {
+-		path_put(path);
+-		goto out;
+-	}
+-
+-	ret = security_path_notify(path, mask, obj_type);
+-	if (ret)
+-		path_put(path);
+-
+-out:
+ 	return ret;
+ }
+ 
+@@ -2058,6 +2044,15 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
+ 			goto path_put_and_out;
+ 	}
+ 
++	/* you can only watch an inode if you have read permissions on it */
++	ret = path_permission(&path, MAY_READ);
++	if (ret)
++		goto path_put_and_out;
++
++	ret = security_path_notify(&path, mask, obj_type);
++	if (ret)
++		goto path_put_and_out;
++
+ 	if (fid_mode) {
+ 		ret = fanotify_test_fsid(path.dentry, flags, &__fsid);
+ 		if (ret)
 -- 
 2.53.0
 
