@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F5E36405A;
-	Wed, 20 May 2026 17:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5308F36405A;
+	Wed, 20 May 2026 17:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299052; cv=none; b=ZU99D4Qg92MtINZN9pneYmCpk0KzhaiUH2IygMA3M7w7qVFGKZLfeNpFJbPQo+m/5NzGqVp/5zthm3jetAi6HMb+vY6JqYP/JyLU3XJWomUkoB08Vr7UikrG+enbmGitRfZHZ6ksFd2YRITKJBrklGw20GZ1QYhhEl1rLRLira0=
+	t=1779299055; cv=none; b=krz9gyzVuvyXpFEpPJr5PMYpGAUVcynZR+sCgOcNqDumaP7mqgyf0lv0mN+7+FWZHHaKb8JvzP/DbWTDrY9Io4kFB9N7LlrJUrQQIVfSbtUBA6Pm5YJtqi5VzgRDqrueQAjo6ktum6JUnUi053EvqRIhoIYxt1gb9QGp3NFBoN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299052; c=relaxed/simple;
-	bh=UoTj+jyDGXFx/Co02jM9q6njvdB2twx/vLsSGWJDhb8=;
+	s=arc-20240116; t=1779299055; c=relaxed/simple;
+	bh=JZ2UvwZE1yK1w5bQTc2P6nqzvD7ysZh2OxQXowdWXzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ni8ETz6miBfb7vKkBn5S8cuszgqke5WV9AcNavPCtkTuGhk41gY+7vM7WBIy8WGz57X8Of347F2SQALcl3u1X4GFqAzR7LuTLu761qsmocqi33bjeRpzlIGuKhI/LwJoayhyyJpaqe/8vmyxNeIUvvCOQ9WgGVnabkcxFMNT+Xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuCfHJ7t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zt8ZfxRgy2ItVZaxHISDJfxtgiFyG+fNnb1Kny3DIvOovWWUog7PJ+coC39Mzxco4z3Z7JMM349TK0uZWoMihPSLtb6qZH6f8zfgu3/L6Ld7LAzdS2t8Fvy7901GX3QEBafHQf/knuoRHaczSN+Km9MahtxfNdCiHPJkzpuO8Fc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDro5tmk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuCfHJ7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65A51F000E9;
-	Wed, 20 May 2026 17:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDro5tmk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD9C1F000E9;
+	Wed, 20 May 2026 17:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299051;
-	bh=fI8UZCVUorgAIOIK5xGSsWjfYaePxLxmO9hQDMIk1LU=;
+	s=korg; t=1779299054;
+	bh=xy2OZ2c8Wfg6pKLBB5SJnF+CvCHxcO+5Kfkx/95lcKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HuCfHJ7tNHYiOpLvjywv8jIc9Sht+0/BlvwUINmO+zKsWjffZeZgllgWTrxBTzxp/
-	 CCgV4ZDCdFnbLUNkVUGpOuSjVVVB+QTjgPR1VIMTbGSIwcutJBipGmbw8kzcqQJl/n
-	 GS8ZIhK1MY0rfsNdqM48gDGOeBPzXIVEicQqciHQ=
+	b=hDro5tmkvWMD62b968UikkF2YFSg6XiTLIwjrpCpXKm4U6wDb1jPuRzGDFMSvTE9V
+	 qwwHwkbPBqSbmOLLkVlhMXuOMNjO9pTPNM131o7LIXylR45NCXoCi2AcoCIHum0F18
+	 WVwkIBsBmM3IbWmOJANvJBttv9CewQUfxfxhojTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 644/957] tcp: annotate data-races around (tp->write_seq - tp->snd_nxt)
-Date: Wed, 20 May 2026 18:18:47 +0200
-Message-ID: <20260520162148.494118149@linuxfoundation.org>
+Subject: [PATCH 6.18 645/957] tcp: annotate data-races around tp->plb_rehash
+Date: Wed, 20 May 2026 18:18:48 +0200
+Message-ID: <20260520162148.516101585@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,36 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3a63b3d160560ef51e43fb4c880a5cde8078053c ]
+[ Upstream commit 9e89b9d03a2d2e30dcca166d5af52f9a8eceab25 ]
 
 tcp_get_timestamping_opt_stats() intentionally runs lockless, we must
-add READ_ONCE() annotations to keep KCSAN happy.
+add READ_ONCE() and WRITE_ONCE() annotations to keep KCSAN happy.
 
-WRITE_ONCE() annotations are already present.
-
-Fixes: e08ab0b377a1 ("tcp: add bytes not sent to SCM_TIMESTAMPING_OPT_STATS")
+Fixes: 29c1c44646ae ("tcp: add u32 counter in tcp_sock and an SNMP counter for PLB")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260416200319.3608680-14-edumazet@google.com
+Link: https://patch.msgid.link/20260416200319.3608680-15-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/tcp.c     | 3 ++-
+ net/ipv4/tcp_plb.c | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 888fe31e42f0b..fe91675ae5678 100644
+index fe91675ae5678..2de4748269ca9 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -4447,7 +4447,8 @@ struct sk_buff *tcp_get_timestamping_opt_stats(const struct sock *sk,
- 	nla_put_u16(stats, TCP_NLA_TIMEOUT_REHASH,
- 		    READ_ONCE(tp->timeout_rehash));
- 	nla_put_u32(stats, TCP_NLA_BYTES_NOTSENT,
--		    max_t(int, 0, tp->write_seq - tp->snd_nxt));
-+		    max_t(int, 0,
-+			  READ_ONCE(tp->write_seq) - READ_ONCE(tp->snd_nxt)));
- 	nla_put_u64_64bit(stats, TCP_NLA_EDT, orig_skb->skb_mstamp_ns,
- 			  TCP_NLA_PAD);
- 	if (ack_skb)
+@@ -4455,7 +4455,8 @@ struct sk_buff *tcp_get_timestamping_opt_stats(const struct sock *sk,
+ 		nla_put_u8(stats, TCP_NLA_TTL,
+ 			   tcp_skb_ttl_or_hop_limit(ack_skb));
+ 
+-	nla_put_u32(stats, TCP_NLA_REHASH, tp->plb_rehash + tp->timeout_rehash);
++	nla_put_u32(stats, TCP_NLA_REHASH,
++		    READ_ONCE(tp->plb_rehash) + READ_ONCE(tp->timeout_rehash));
+ 	return stats;
+ }
+ 
+diff --git a/net/ipv4/tcp_plb.c b/net/ipv4/tcp_plb.c
+index 4bcf7eff95e39..b7f9b60d8991f 100644
+--- a/net/ipv4/tcp_plb.c
++++ b/net/ipv4/tcp_plb.c
+@@ -79,7 +79,7 @@ void tcp_plb_check_rehash(struct sock *sk, struct tcp_plb_state *plb)
+ 
+ 	sk_rethink_txhash(sk);
+ 	plb->consec_cong_rounds = 0;
+-	tcp_sk(sk)->plb_rehash++;
++	WRITE_ONCE(tcp_sk(sk)->plb_rehash, tcp_sk(sk)->plb_rehash + 1);
+ 	NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPPLBREHASH);
+ }
+ EXPORT_SYMBOL_GPL(tcp_plb_check_rehash);
 -- 
 2.53.0
 
