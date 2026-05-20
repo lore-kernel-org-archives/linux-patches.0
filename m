@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B98E3EAC82;
-	Wed, 20 May 2026 18:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E493EEAD8;
+	Wed, 20 May 2026 18:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302291; cv=none; b=s8gnYLTzRURRrKkVTg8LFq8WqWPCsrq33fL3B6WibGFRKliWje4KVzQyWhzuz7/a5OinqTmR1CKsQ4+p3mYWW263v6HJnu/nxM8Dj6n1PHeHLSws8XVVbZ/vG4xlFb1+98K9zviFcavQL+ZyMTe5/Iuab/W0k//j1rZ8ttOu45k=
+	t=1779302294; cv=none; b=n0lKDgjZCEc9aQxzgsVB+vkFaQSX3oIxsZXIppEPbOKnkvx98cXG51P//BHSYu/Kb9jv3k3mhcQVtdf+etVNd5sHBzzt47Cwm8yeLzYIJK64A325oM/L+b9SOc++mVbAJzDwmXsRo8fkQAE8a8mCGP/X3pviy99RqOcNGOLNpyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302291; c=relaxed/simple;
-	bh=ppHzCBZgux5alLI5EpZejDkf1CoSZDH6QiORKTzXv9U=;
+	s=arc-20240116; t=1779302294; c=relaxed/simple;
+	bh=2B518yxfsGdxMB5Uti+o/vRY8NBNhw2RQ2u3mqWf9CM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvbRWlS0T5lENrAyuDUUEZI4ZyBUit8C48xorJtCECqDms+PrOy25U6w+Gf4RJ3osP4jHEoGEQasopMvkkYk8JAT7kpY4YNeXuxDMdpGMIlHfqInU+ikchs5VCAVWktcuSwjKGHhhtEsUwdXCxQD7GvX65aIHwZWEvHdMR3FQgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8MPQl7x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JJi5CqQrj0bpj8nHQc20LI0emVsroqWZXHmXhz4L7RiFd0kLZsfq2Fn4SwVpxKnCz3bHXP5evhqlc1KhxAp21gkFYM8EvCssoYF1Yh6yaRwyEV3NmvfNHwsZom+gw4amUwvbR0eTFmM2xpHOi7JBXMzjx8iC3xd1mIwardFm+q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffxmPOQr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8MPQl7x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC471F000E9;
-	Wed, 20 May 2026 18:38:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffxmPOQr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A543E1F000E9;
+	Wed, 20 May 2026 18:38:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302290;
-	bh=W6l3a6hnRRFWgbx6qU8z3//6XrojrW0p/TIkN5pDPqU=;
+	s=korg; t=1779302293;
+	bh=bmGcnoBdAJi1cnqmEmWZ/cDr0ZmQQdLs8fk/M9ykbFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w8MPQl7x6SMJFcFpqye2MYrDo0BxM2sjPHkSFLyLw9/aV96HbQuzoRRy2bxmx72sI
-	 z8uceBB2mMlMgTLaa+GVXF1PmW+1PFICzFwWYG6tH9I/zzCge5+ByxvunWUCuZJV/5
-	 6MHEe/zqCRGqnMi1ythk8w40sOCkDt0S4HK96tdM=
+	b=ffxmPOQrouGzFZWrIF247q0k59aW6tv2wHmMJDHjpthEmbnSXAtYf5uoWPqfeq3cU
+	 LfZ7+UjFbkNfTVg5FoIYdPMaICDVr7TPV60n7AIMNk+n6GxDM/jkvI+l/GBx1eSD+/
+	 9KdYkbiSGgECTExYIk7+//LZn7a75GYfRt0AMFRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Haixin Xu <jerryxucs@gmail.com>,
+	Stephan Mueller <smueller@chronox.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 170/508] dm cache: fix missing return in invalidate_committeds error path
-Date: Wed, 20 May 2026 18:19:53 +0200
-Message-ID: <20260520162102.321573518@linuxfoundation.org>
+Subject: [PATCH 6.6 171/508] crypto: jitterentropy - replace long-held spinlock with mutex
+Date: Wed, 20 May 2026 18:19:54 +0200
+Message-ID: <20260520162102.343593920@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,49 +56,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Haixin Xu <jerryxucs@gmail.com>
 
-[ Upstream commit 8c0ee19db81f0fa1ff25fd75b22b17c0cc2acde3 ]
+[ Upstream commit 01d798e9feb30212952d4e992801ba6bd6a82351 ]
 
-In passthrough mode, dm-cache defers write submission until after
-metadata commit completes via the invalidate_committed() continuation.
-On commit error, invalidate_committed() calls invalidate_complete() to
-end the bio and free the migration struct, after which it should return
-immediately.
+jent_kcapi_random() serializes the shared jitterentropy state, but it
+currently holds a spinlock across the jent_read_entropy() call. That
+path performs expensive jitter collection and SHA3 conditioning, so
+parallel readers can trigger stalls as contending waiters spin for
+the same lock.
 
-The patch 4ca8b8bd952d ("dm cache: fix write hang in passthrough mode")
-omitted this early return, causing execution to fall through into the
-success path on error. This results in use-after-free on the migration
-struct in the subsequent calls.
+To prevent non-preemptible lock hold, replace rng->jent_lock with a
+mutex so contended readers sleep instead of spinning on a shared lock
+held across expensive entropy generation.
 
-Fix by adding the missing return after the invalidate_complete() call.
-
-Fixes: 4ca8b8bd952d ("dm cache: fix write hang in passthrough mode")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/dm-devel/adjMq6T5RRjv_uxM@stanley.mountain/
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: bb5530e40824 ("crypto: jitterentropy - add jitterentropy RNG")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Haixin Xu <jerryxucs@gmail.com>
+Reviewed-by: Stephan Mueller <smueller@chronox.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ crypto/jitterentropy-kcapi.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index 8db906ea3bef0..5522f8e9443f2 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1523,8 +1523,10 @@ static void invalidate_committed(struct work_struct *ws)
- 	struct bio *bio = mg->overwrite_bio;
- 	struct per_bio_data *pb = get_per_bio_data(bio);
+diff --git a/crypto/jitterentropy-kcapi.c b/crypto/jitterentropy-kcapi.c
+index dd05faf00571f..8ae5245081f6a 100644
+--- a/crypto/jitterentropy-kcapi.c
++++ b/crypto/jitterentropy-kcapi.c
+@@ -42,6 +42,7 @@
+ #include <linux/fips.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/slab.h>
+ #include <linux/time.h>
+ #include <crypto/internal/rng.h>
+@@ -182,7 +183,7 @@ int jent_read_random_block(void *hash_state, char *dst, unsigned int dst_len)
+  ***************************************************************************/
  
--	if (mg->k.input)
-+	if (mg->k.input) {
- 		invalidate_complete(mg, false);
-+		return;
-+	}
+ struct jitterentropy {
+-	spinlock_t jent_lock;
++	struct mutex jent_lock;
+ 	struct rand_data *entropy_collector;
+ 	struct crypto_shash *tfm;
+ 	struct shash_desc *sdesc;
+@@ -192,7 +193,7 @@ static void jent_kcapi_cleanup(struct crypto_tfm *tfm)
+ {
+ 	struct jitterentropy *rng = crypto_tfm_ctx(tfm);
  
- 	init_continuation(&mg->k, invalidate_completed);
- 	remap_to_origin_clear_discard(cache, bio, mg->invalidate_oblock);
+-	spin_lock(&rng->jent_lock);
++	mutex_lock(&rng->jent_lock);
+ 
+ 	if (rng->sdesc) {
+ 		shash_desc_zero(rng->sdesc);
+@@ -207,7 +208,7 @@ static void jent_kcapi_cleanup(struct crypto_tfm *tfm)
+ 	if (rng->entropy_collector)
+ 		jent_entropy_collector_free(rng->entropy_collector);
+ 	rng->entropy_collector = NULL;
+-	spin_unlock(&rng->jent_lock);
++	mutex_unlock(&rng->jent_lock);
+ }
+ 
+ static int jent_kcapi_init(struct crypto_tfm *tfm)
+@@ -217,7 +218,7 @@ static int jent_kcapi_init(struct crypto_tfm *tfm)
+ 	struct shash_desc *sdesc;
+ 	int size, ret = 0;
+ 
+-	spin_lock_init(&rng->jent_lock);
++	mutex_init(&rng->jent_lock);
+ 
+ 	/*
+ 	 * Use SHA3-256 as conditioner. We allocate only the generic
+@@ -252,7 +253,6 @@ static int jent_kcapi_init(struct crypto_tfm *tfm)
+ 		goto err;
+ 	}
+ 
+-	spin_lock_init(&rng->jent_lock);
+ 	return 0;
+ 
+ err:
+@@ -267,7 +267,7 @@ static int jent_kcapi_random(struct crypto_rng *tfm,
+ 	struct jitterentropy *rng = crypto_rng_ctx(tfm);
+ 	int ret = 0;
+ 
+-	spin_lock(&rng->jent_lock);
++	mutex_lock(&rng->jent_lock);
+ 
+ 	ret = jent_read_entropy(rng->entropy_collector, rdata, dlen);
+ 
+@@ -293,7 +293,7 @@ static int jent_kcapi_random(struct crypto_rng *tfm,
+ 		ret = -EINVAL;
+ 	}
+ 
+-	spin_unlock(&rng->jent_lock);
++	mutex_unlock(&rng->jent_lock);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
