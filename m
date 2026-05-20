@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DC43F4DDB;
-	Wed, 20 May 2026 18:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505ED3F4DDB;
+	Wed, 20 May 2026 18:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300012; cv=none; b=OJ27aF+/fhBvVDV7ib1nxjbEY1IPm8s1hRsdEJbgE+zEuISbyvE2L9chd0xDlEagpw0ytG15RsLgUdC5cNgM4+mj0V6t+dai4tJBfq5dC6n6bLnxuCuVdADI5U3ietjIWqoRU1e3cPpxPwn/o7S6nO12l30nsrFW62bYHYPtUuA=
+	t=1779300014; cv=none; b=oz3UYiU6X07x+bjdBm7WldS7yJni05LJHdl2Ib2mlb4tPLBGgYV5ZVE7NuOlLZzx/UmUepOeN+bfUfnhU2WjNuwJtqaUz+ho61tGfD3+0qsPCzlW27oWrNgiVsGg2HXOoM2sS1it+SlQcJy5mkcztV1ZFVyCgcXZtSdqtJnQC0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300012; c=relaxed/simple;
-	bh=uUEx/OaSWjf+y7HuCl6S++ECP5DhJXGpDsmOD7e7I04=;
+	s=arc-20240116; t=1779300014; c=relaxed/simple;
+	bh=CH1wc/myQIyBKiTH+dgAGacBzTIEMikQsYrENv/FOhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mhn1Q2rTnaUXx0ZY+Qb7yq/9WXTCzYy4Zm2iQHx71b/1U2NnN8dkltF7YJ8YoWOu4cqfpw98L7KQj+EZceO5Rtt2jVQnjRO3mZXnZ7m2IU6UVbMkVJoGYTq/X/eLCj3CTGpnKnuGXmVMATpRSgUoSO3/jTIFuRuWfjHvuRJkB6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dzjsw2KD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uNbXbz9mZzYIhQDP1s+aEduMUj9SzVZLfAPaZWFEJxc+UUgaE4A8g7tItL8KcH18Dbmn5OpPVgtt3xftTkVOfW6rUnG7PW/SNCw7yVv9IpWiBAxEJihAdIBhaQpombDVs9c6LiKGY3ceft2upvAh8nLBC4HCNmDNuqjrzrsFUZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm4oRde7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dzjsw2KD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168281F00893;
-	Wed, 20 May 2026 18:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm4oRde7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41421F000E9;
+	Wed, 20 May 2026 18:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300010;
-	bh=guCTFz1Mdsx61yT8dHFcbDazyqzXEW/JnZfQlkuzvNg=;
+	s=korg; t=1779300013;
+	bh=EduMAv1dTlRx4YWXO/dGW0v9S9/iPKi66yUaOS4pQi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dzjsw2KDuzDPbgORe3+7dwhPxIqjsXcyEv+RHZG55J2N6ioByHyanzdBODZkoS6wS
-	 CuVYjePgGV0isd8mxC62IhAtbq374qmdf6QbAFpyNLGhSBQ6rAiq5eILjs8MZ/Gk13
-	 xh2cbVoMu/Z0B0+klF+yIEKbJ3iqJzjM1g02EvUQ=
+	b=zm4oRde7S6SY89jezsgQGhv1fLPTSKwJ0ashOe0km1dh905PQ+GgDw0fb1fgZGTqk
+	 N0ZP1lRMY0o5ETb03VnHWQhC9HoAnzc6UzYXOl/N8fPPuqz5WbBlO+0c3sEsPRgx42
+	 ghPVc3uZpgpRadgx73l+YWL1g7z2xxaUxwB09bxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/666] btrfs: fix deadlock between reflink and transaction commit when using flushoncommit
-Date: Wed, 20 May 2026 18:13:45 +0200
-Message-ID: <20260520162111.541722771@linuxfoundation.org>
+Subject: [PATCH 6.12 015/666] ACPI: x86: cmos_rtc: Clean up address space handler driver
+Date: Wed, 20 May 2026 18:13:46 +0200
+Message-ID: <20260520162111.562344583@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,213 +50,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b48c980b6a7e409050bb3067165db31cc6205e3e ]
+[ Upstream commit ba0b236736dde4059bdcb8e99beaa50d6e5b6e7e ]
 
-When using the flushoncommit mount option, we can have a deadlock between
-a transaction commit and a reflink operation that copied an inline extent
-to an offset beyond the current i_size of the destination node.
+Make multiple changes that do not alter functionality to the CMOS RTC
+ACPI address space handler driver, including the following:
 
-The deadlock happens like this:
+ - Drop the unused .detach() callback from cmos_rtc_handler.
 
-1) Task A clones an inline extent from inode X to an offset of inode Y
-   that is beyond Y's current i_size. This means we copied the inline
-   extent's data to a folio of inode Y that is beyond its EOF, using a
-   call to copy_inline_to_page();
+ - Rename acpi_cmos_rtc_attach_handler() to acpi_cmos_rtc_attach().
 
-2) Task B starts a transaction commit and calls
-   btrfs_start_delalloc_flush() to flush delalloc;
+ - Rearrange acpi_cmos_rtc_space_handler() to reduce the number of
+   redundant checks and make white space follow the coding style.
 
-3) The delalloc flushing sees the new dirty folio of inode Y and when it
-   attempts to flush it, it ends up at extent_writepage() and sees that
-   the offset of the folio is beyond the i_size of inode Y, so it attempts
-   to invalidate the folio by calling folio_invalidate(), which ends up at
-   btrfs' folio invalidate callback - btrfs_invalidate_folio(). There it
-   tries to lock the folio's range in inode Y's extent io tree, but it
-   blocks since it's currently locked by task A - during a reflink we lock
-   the inodes and the source and destination ranges after flushing all
-   delalloc and waiting for ordered extent completion - after that we
-   don't expect to have dirty folios in the ranges, the exception is if
-   we have to copy an inline extent's data (because the destination offset
-   is not zero);
+ - Adjust an error message in acpi_install_cmos_rtc_space_handler()
+   and make the white space follow the coding style.
 
-4) Task A then attempts to start a transaction to update the inode item,
-   and then it's blocked since the current transaction is in the
-   TRANS_STATE_COMMIT_START state. Therefore task A has to wait for the
-   current transaction to become unblocked (its state >=
-   TRANS_STATE_UNBLOCKED).
+ - Rearrange acpi_remove_cmos_rtc_space_handler() and adjust an error
+   message in it.
 
-   So task A is waiting for the transaction commit done by task B, and
-   the later waiting on the extent lock of inode Y that is currently
-   held by task A.
+No intentional functional impact.
 
-Syzbot recently reported this with the following stack traces:
-
-  INFO: task kworker/u8:7:1053 blocked for more than 143 seconds.
-        Not tainted syzkaller #0
-  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-  task:kworker/u8:7    state:D stack:23520 pid:1053  tgid:1053  ppid:2      task_flags:0x4208060 flags:0x00080000
-  Workqueue: writeback wb_workfn (flush-btrfs-46)
-  Call Trace:
-   <TASK>
-   context_switch kernel/sched/core.c:5298 [inline]
-   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
-   __schedule_loop kernel/sched/core.c:6993 [inline]
-   schedule+0x164/0x360 kernel/sched/core.c:7008
-   wait_extent_bit fs/btrfs/extent-io-tree.c:811 [inline]
-   btrfs_lock_extent_bits+0x59c/0x700 fs/btrfs/extent-io-tree.c:1914
-   btrfs_lock_extent fs/btrfs/extent-io-tree.h:152 [inline]
-   btrfs_invalidate_folio+0x43d/0xc40 fs/btrfs/inode.c:7704
-   extent_writepage fs/btrfs/extent_io.c:1852 [inline]
-   extent_write_cache_pages fs/btrfs/extent_io.c:2580 [inline]
-   btrfs_writepages+0x12ff/0x2440 fs/btrfs/extent_io.c:2713
-   do_writepages+0x32e/0x550 mm/page-writeback.c:2554
-   __writeback_single_inode+0x133/0x11a0 fs/fs-writeback.c:1750
-   writeback_sb_inodes+0x995/0x19d0 fs/fs-writeback.c:2042
-   wb_writeback+0x456/0xb70 fs/fs-writeback.c:2227
-   wb_do_writeback fs/fs-writeback.c:2374 [inline]
-   wb_workfn+0x41a/0xf60 fs/fs-writeback.c:2414
-   process_one_work kernel/workqueue.c:3276 [inline]
-   process_scheduled_works+0xb6e/0x18c0 kernel/workqueue.c:3359
-   worker_thread+0xa53/0xfc0 kernel/workqueue.c:3440
-   kthread+0x388/0x470 kernel/kthread.c:436
-   ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-   </TASK>
-  INFO: task syz.4.64:6910 blocked for more than 143 seconds.
-        Not tainted syzkaller #0
-  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-  task:syz.4.64        state:D stack:22752 pid:6910  tgid:6905  ppid:5944   task_flags:0x400140 flags:0x00080002
-  Call Trace:
-   <TASK>
-   context_switch kernel/sched/core.c:5298 [inline]
-   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
-   __schedule_loop kernel/sched/core.c:6993 [inline]
-   schedule+0x164/0x360 kernel/sched/core.c:7008
-   wait_current_trans+0x39f/0x590 fs/btrfs/transaction.c:535
-   start_transaction+0x6a7/0x1650 fs/btrfs/transaction.c:705
-   clone_copy_inline_extent fs/btrfs/reflink.c:299 [inline]
-   btrfs_clone+0x128a/0x24d0 fs/btrfs/reflink.c:529
-   btrfs_clone_files+0x271/0x3f0 fs/btrfs/reflink.c:750
-   btrfs_remap_file_range+0x76b/0x1320 fs/btrfs/reflink.c:903
-   vfs_copy_file_range+0xda7/0x1390 fs/read_write.c:1600
-   __do_sys_copy_file_range fs/read_write.c:1683 [inline]
-   __se_sys_copy_file_range+0x2fb/0x480 fs/read_write.c:1650
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f5f73afc799
-  RSP: 002b:00007f5f7315e028 EFLAGS: 00000246 ORIG_RAX: 0000000000000146
-  RAX: ffffffffffffffda RBX: 00007f5f73d75fa0 RCX: 00007f5f73afc799
-  RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000005
-  RBP: 00007f5f73b92c99 R08: 0000000000000863 R09: 0000000000000000
-  R10: 00002000000000c0 R11: 0000000000000246 R12: 0000000000000000
-  R13: 00007f5f73d76038 R14: 00007f5f73d75fa0 R15: 00007fff138a5068
-   </TASK>
-  INFO: task syz.4.64:6975 blocked for more than 143 seconds.
-        Not tainted syzkaller #0
-  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-  task:syz.4.64        state:D stack:24736 pid:6975  tgid:6905  ppid:5944   task_flags:0x400040 flags:0x00080002
-  Call Trace:
-   <TASK>
-   context_switch kernel/sched/core.c:5298 [inline]
-   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
-   __schedule_loop kernel/sched/core.c:6993 [inline]
-   schedule+0x164/0x360 kernel/sched/core.c:7008
-   wb_wait_for_completion+0x3e8/0x790 fs/fs-writeback.c:227
-   __writeback_inodes_sb_nr+0x24c/0x2d0 fs/fs-writeback.c:2838
-   try_to_writeback_inodes_sb+0x9a/0xc0 fs/fs-writeback.c:2886
-   btrfs_start_delalloc_flush fs/btrfs/transaction.c:2175 [inline]
-   btrfs_commit_transaction+0x82e/0x31a0 fs/btrfs/transaction.c:2364
-   btrfs_ioctl+0xca7/0xd00 fs/btrfs/ioctl.c:5206
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:597 [inline]
-   __se_sys_ioctl+0xff/0x170 fs/ioctl.c:583
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f5f73afc799
-  RSP: 002b:00007f5f7313d028 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-  RAX: ffffffffffffffda RBX: 00007f5f73d76090 RCX: 00007f5f73afc799
-  RDX: 0000000000000000 RSI: 0000000000009408 RDI: 0000000000000004
-  RBP: 00007f5f73b92c99 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-  R13: 00007f5f73d76128 R14: 00007f5f73d76090 R15: 00007fff138a5068
-   </TASK>
-
-Fix this by updating the i_size of the destination inode of a reflink
-operation after we copy an inline extent's data to an offset beyond the
-i_size and before attempting to start a transaction to update the inode's
-item.
-
-Reported-by: syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/69bba3fe.050a0220.227207.002f.GAE@google.com/
-Fixes: 05a5a7621ce6 ("Btrfs: implement full reflink support for inline extents")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5094429.31r3eYUQgx@rafael.j.wysocki
+Stable-dep-of: 6cee29ad9d7e ("ACPI: x86: cmos_rtc: Improve coordination with ACPI TAD driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/reflink.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ drivers/acpi/x86/cmos_rtc.c | 61 +++++++++++++++++++------------------
+ 1 file changed, 32 insertions(+), 29 deletions(-)
 
-diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
-index 8640dbf1aefa4..e86df9c83aba5 100644
---- a/fs/btrfs/reflink.c
-+++ b/fs/btrfs/reflink.c
-@@ -320,6 +320,51 @@ static int clone_copy_inline_extent(struct btrfs_inode *inode,
+diff --git a/drivers/acpi/x86/cmos_rtc.c b/drivers/acpi/x86/cmos_rtc.c
+index 51643ff6fe5fc..977234da9fc11 100644
+--- a/drivers/acpi/x86/cmos_rtc.c
++++ b/drivers/acpi/x86/cmos_rtc.c
+@@ -24,31 +24,35 @@ static const struct acpi_device_id acpi_cmos_rtc_ids[] = {
+ 	{}
+ };
  
- 	ret = copy_inline_to_page(inode, new_key->offset,
- 				  inline_data, size, datal, comp_type);
+-static acpi_status
+-acpi_cmos_rtc_space_handler(u32 function, acpi_physical_address address,
+-		      u32 bits, u64 *value64,
+-		      void *handler_context, void *region_context)
++static acpi_status acpi_cmos_rtc_space_handler(u32 function,
++					       acpi_physical_address address,
++					       u32 bits, u64 *value64,
++					       void *handler_context,
++					       void *region_context)
+ {
+-	int i;
++	unsigned int i, bytes = DIV_ROUND_UP(bits, 8);
+ 	u8 *value = (u8 *)value64;
+ 
+ 	if (address > 0xff || !value64)
+ 		return AE_BAD_PARAMETER;
+ 
+-	if (function != ACPI_WRITE && function != ACPI_READ)
+-		return AE_BAD_PARAMETER;
++	guard(spinlock_irq)(&rtc_lock);
 +
-+	/*
-+	 * If we copied the inline extent data to a page/folio beyond the i_size
-+	 * of the destination inode, then we need to increase the i_size before
-+	 * we start a transaction to update the inode item. This is to prevent a
-+	 * deadlock when the flushoncommit mount option is used, which happens
-+	 * like this:
-+	 *
-+	 * 1) Task A clones an inline extent from inode X to an offset of inode
-+	 *    Y that is beyond Y's current i_size. This means we copied the
-+	 *    inline extent's data to a folio of inode Y that is beyond its EOF,
-+	 *    using the call above to copy_inline_to_page();
-+	 *
-+	 * 2) Task B starts a transaction commit and calls
-+	 *    btrfs_start_delalloc_flush() to flush delalloc;
-+	 *
-+	 * 3) The delalloc flushing sees the new dirty folio of inode Y and when
-+	 *    it attempts to flush it, it ends up at extent_writepage() and sees
-+	 *    that the offset of the folio is beyond the i_size of inode Y, so
-+	 *    it attempts to invalidate the folio by calling folio_invalidate(),
-+	 *    which ends up at btrfs' folio invalidate callback -
-+	 *    btrfs_invalidate_folio(). There it tries to lock the folio's range
-+	 *    in inode Y's extent io tree, but it blocks since it's currently
-+	 *    locked by task A - during reflink we lock the inodes and the
-+	 *    source and destination ranges after flushing all delalloc and
-+	 *    waiting for ordered extent completion - after that we don't expect
-+	 *    to have dirty folios in the ranges, the exception is if we have to
-+	 *    copy an inline extent's data (because the destination offset is
-+	 *    not zero);
-+	 *
-+	 * 4) Task A then does the 'goto out' below and attempts to start a
-+	 *    transaction to update the inode item, and then it's blocked since
-+	 *    the current transaction is in the TRANS_STATE_COMMIT_START state.
-+	 *    Therefore task A has to wait for the current transaction to become
-+	 *    unblocked (its state >= TRANS_STATE_UNBLOCKED).
-+	 *
-+	 * This leads to a deadlock - the task committing the transaction
-+	 * waiting for the delalloc flushing which is blocked during folio
-+	 * invalidation on the inode's extent lock and the reflink task waiting
-+	 * for the current transaction to be unblocked so that it can start a
-+	 * a new one to update the inode item (while holding the extent lock).
-+	 */
-+	if (ret == 0 && new_key->offset + datal > i_size_read(&inode->vfs_inode))
-+		i_size_write(&inode->vfs_inode, new_key->offset + datal);
-+
- 	goto out;
++	if (function == ACPI_WRITE) {
++		for (i = 0; i < bytes; i++, address++, value++)
++			CMOS_WRITE(*value, address);
+ 
+-	spin_lock_irq(&rtc_lock);
++		return AE_OK;
++	}
+ 
+-	for (i = 0; i < DIV_ROUND_UP(bits, 8); ++i, ++address, ++value)
+-		if (function == ACPI_READ)
++	if (function == ACPI_READ) {
++		for (i = 0; i < bytes; i++, address++, value++)
+ 			*value = CMOS_READ(address);
+-		else
+-			CMOS_WRITE(*value, address);
+ 
+-	spin_unlock_irq(&rtc_lock);
++		return AE_OK;
++	}
+ 
+-	return AE_OK;
++	return AE_BAD_PARAMETER;
  }
  
+ int acpi_install_cmos_rtc_space_handler(acpi_handle handle)
+@@ -56,11 +60,11 @@ int acpi_install_cmos_rtc_space_handler(acpi_handle handle)
+ 	acpi_status status;
+ 
+ 	status = acpi_install_address_space_handler(handle,
+-			ACPI_ADR_SPACE_CMOS,
+-			&acpi_cmos_rtc_space_handler,
+-			NULL, NULL);
++						    ACPI_ADR_SPACE_CMOS,
++						    acpi_cmos_rtc_space_handler,
++						    NULL, NULL);
+ 	if (ACPI_FAILURE(status)) {
+-		pr_err("Error installing CMOS-RTC region handler\n");
++		pr_err("Failed to install CMOS-RTC address space handler\n");
+ 		return -ENODEV;
+ 	}
+ 
+@@ -70,26 +74,25 @@ EXPORT_SYMBOL_GPL(acpi_install_cmos_rtc_space_handler);
+ 
+ void acpi_remove_cmos_rtc_space_handler(acpi_handle handle)
+ {
+-	if (ACPI_FAILURE(acpi_remove_address_space_handler(handle,
+-			ACPI_ADR_SPACE_CMOS, &acpi_cmos_rtc_space_handler)))
+-		pr_err("Error removing CMOS-RTC region handler\n");
++	acpi_status status;
++
++	status = acpi_remove_address_space_handler(handle,
++						   ACPI_ADR_SPACE_CMOS,
++						   acpi_cmos_rtc_space_handler);
++	if (ACPI_FAILURE(status))
++		pr_err("Failed to remove CMOS-RTC address space handler\n");
+ }
+ EXPORT_SYMBOL_GPL(acpi_remove_cmos_rtc_space_handler);
+ 
+-static int acpi_cmos_rtc_attach_handler(struct acpi_device *adev, const struct acpi_device_id *id)
++static int acpi_cmos_rtc_attach(struct acpi_device *adev,
++				const struct acpi_device_id *id)
+ {
+ 	return acpi_install_cmos_rtc_space_handler(adev->handle);
+ }
+ 
+-static void acpi_cmos_rtc_detach_handler(struct acpi_device *adev)
+-{
+-	acpi_remove_cmos_rtc_space_handler(adev->handle);
+-}
+-
+ static struct acpi_scan_handler cmos_rtc_handler = {
+ 	.ids = acpi_cmos_rtc_ids,
+-	.attach = acpi_cmos_rtc_attach_handler,
+-	.detach = acpi_cmos_rtc_detach_handler,
++	.attach = acpi_cmos_rtc_attach,
+ };
+ 
+ void __init acpi_cmos_rtc_init(void)
 -- 
 2.53.0
 
