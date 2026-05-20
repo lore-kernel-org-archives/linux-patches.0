@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1335B37754D;
-	Wed, 20 May 2026 17:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7523264EB;
+	Wed, 20 May 2026 17:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297216; cv=none; b=U1swEybWylV4IAkEIlFpQ4dKINMfqDJqF+yN1VqcEPAxVWFr0L75LrbPustaKoMR3ht1zO1uQNp9HbzQZzy72N5PqySDphH//bbe6aARYv3/TlZOLBzgkaZBLdiIXluuV6YrTH3f5EjgopVZIuWlvdpP57H+Z2ITFogAtTceJL8=
+	t=1779297218; cv=none; b=tMSAcxxqmpruqCWLaVlPtN+aqjeB2BdKeUu7YGzVOxp4YyOzcFEyQ+7/2FgiH2XGasJh8HASvFmwAT9pzOH4OSbQEAAvkjy9XMqKP4eapF2xbmViJdOha9euKYhn5A4vU53RpCDODtnEC+3HhmXiDVyakhfA3g+IXJ2vh7TBuS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297216; c=relaxed/simple;
-	bh=YU6v6q2tFIP2eFNbH6M8+Dq9zXiDdCz0bztS9bfnp4o=;
+	s=arc-20240116; t=1779297218; c=relaxed/simple;
+	bh=r5OcfKQtyktDa/yAfIeRkHGlUuiAnO4aB38hv1v4a80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f36c7FqDGGZsHE98kXol/yQii2qRXjeD9s6tOnWh3uPsBVPlonMnKGEB0vP+C795xuFGjxBn5ATd4axuavTte4QwuMQ7BhVQAv8xv9sqL1adrxROM5upR9MQx4KIWaiRuqN2q+LV7gGG29byAX7BbEYhwwL9g7Ii8ZH35MXPlk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/KZ2Viz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UDA5U4P26rJ/b48T84rifVZ4QQcrRCZ8KMI2meY5J92LcNNLH3/euvlUscPi4XhG+1ng5+RrTeIGkOXaAPDY19gk3+X+kZvvs1B92u09cpAHOf4mpUMP9d0HxkKIWmXkLtehfhOuNKhRNFg4X0EP14qE0rJ8t3jJWOZ5Rf4hBOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqSbICp2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/KZ2Viz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7902E1F000E9;
-	Wed, 20 May 2026 17:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqSbICp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2243D1F000E9;
+	Wed, 20 May 2026 17:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297215;
-	bh=YRl7rS6FQG9NsljOE9jPBfRb7wvrjQ/KgYuE7c00Y3c=;
+	s=korg; t=1779297217;
+	bh=zdLT1kCVkhmsRIFGy/z0tnTxxa9D2I7JqcuUlNHQ8kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F/KZ2Viz//p/NmiNn73FOsq8Dh/LZfTffHDpwfOSVE1rwtxUIc8E6ysPs5FZV9bJM
-	 SEszst6VTpbF9OSptNLgjdjkwjOhhF+PGwqHaj7Z68H9Ib8tciv1yO5YDg99d2Iq3E
-	 Xr/42ay5lyJs8+qJNrx1YftLX5MOubyaAxDTEboA=
+	b=iqSbICp2CE7JwjFAiJ+bS0XNgNnrKUZ8q2RLHUygBeTHzln/qfeZ4PkP2paOpO4sB
+	 Qp00UAypBLrQvN9wGb/3+lSv1bBa6CBzmOvXuliv2qR69Md5iWj0i1I2Llq3z1s09f
+	 1pPo5lkNFgnCAKcILbrM7OcbcJaIuET0Iawzm3F0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Phillips <kim.phillips@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.0 1052/1146] Revert "ACPI: CPPC: Adjust debug messages in amd_set_max_freq_ratio() to warn"
-Date: Wed, 20 May 2026 18:21:42 +0200
-Message-ID: <20260520162212.044822786@linuxfoundation.org>
+	stable@kernel.org,
+	Breno Leitao <leitao@debian.org>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 7.0 1043/1146] workqueue: Fix wq->cpu_pwq leak in alloc_and_link_pwqs() WQ_UNBOUND path
+Date: Wed, 20 May 2026 18:21:33 +0200
+Message-ID: <20260520162211.835124774@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,51 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit db5dadb562cabb6da49959b473ed0d9645b6f2da upstream.
+commit 0143033dc22cdff912cfc13419f5db92fea3b4cb upstream.
 
-Some older systems don't support CPPC in the firmware and this just makes
-noise for them when booting.  Drop back to debug.
+For WQ_UNBOUND workqueues, alloc_and_link_pwqs() allocates wq->cpu_pwq
+via alloc_percpu() and then calls apply_workqueue_attrs_locked(). On
+failure it returns the error directly, bypassing the enomem: label
+which holds the only free_percpu(wq->cpu_pwq) in this function.
 
-This reverts commit 21fb59ab4b9767085f4fe1edbdbe3177fbb9ec97.
+The caller's error path kfree()s wq without touching wq->cpu_pwq,
+leaking one percpu pointer table (nr_cpu_ids * sizeof(void *) bytes) per
+failed call.
 
-Fixes: 21fb59ab4b976 ("ACPI: CPPC: Adjust debug messages in amd_set_max_freq_ratio() to warn")
-Suggested-by: Kim Phillips <kim.phillips@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Tested-by: Kim Phillips <kim.phillips@amd.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260504230141.484743-2-mario.limonciello@amd.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+If kmemleak is enabled, we can see:
+
+  unreferenced object (percpu) 0xc0fffa5b121048 (size 8):
+    comm "insmod", pid 776, jiffies 4294682844
+    backtrace (crc 0):
+      pcpu_alloc_noprof+0x665/0xac0
+      __alloc_workqueue+0x33f/0xa20
+      alloc_workqueue_noprof+0x60/0x100
+
+Route the error through the existing enomem: cleanup and any error
+before this one.
+
+Cc: stable@kernel.org
+Fixes: 636b927eba5b ("workqueue: Make unbound workqueues to use per-cpu pool_workqueues")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/acpi/cppc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/workqueue.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/acpi/cppc.c
-+++ b/arch/x86/kernel/acpi/cppc.c
-@@ -88,19 +88,19 @@ static void amd_set_max_freq_ratio(void)
- 
- 	rc = cppc_get_perf_caps(0, &perf_caps);
- 	if (rc) {
--		pr_warn("Could not retrieve perf counters (%d)\n", rc);
-+		pr_debug("Could not retrieve perf counters (%d)\n", rc);
- 		return;
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -5629,7 +5629,9 @@ static int alloc_and_link_pwqs(struct wo
+ 		ret = apply_workqueue_attrs_locked(wq, unbound_std_wq_attrs[highpri]);
  	}
  
- 	rc = amd_get_boost_ratio_numerator(0, &numerator);
- 	if (rc) {
--		pr_warn("Could not retrieve highest performance (%d)\n", rc);
-+		pr_debug("Could not retrieve highest performance (%d)\n", rc);
- 		return;
- 	}
- 	nominal_perf = perf_caps.nominal_perf;
+-	return ret;
++	if (ret)
++		goto enomem;
++	return 0;
  
- 	if (!nominal_perf) {
--		pr_warn("Could not retrieve nominal performance\n");
-+		pr_debug("Could not retrieve nominal performance\n");
- 		return;
- 	}
- 
+ enomem:
+ 	if (wq->cpu_pwq) {
 
 
