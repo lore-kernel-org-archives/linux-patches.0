@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD5B333441;
-	Wed, 20 May 2026 18:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA6E343880;
+	Wed, 20 May 2026 18:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301857; cv=none; b=I2tfftz0cA3EhRwDrcTmc7midKLnnEzbGvhYQ0e86TqZ9FjKa+IMtpHsIZZkVkOIgAs3OVH2t5q5LNFSsDIkArUfXgqrmlwBFkJD390RVAWF+vTshrFgOI7Phoz1/NK1vndurcBePaEuI/sPgiplQrZekigJ8JYABJLpM+PpTo4=
+	t=1779301859; cv=none; b=Hna4/zFoiOLl7w4yEXAdpRW7T/8mf8VUWCPFRDZTr8wnDZF5pAPJzhScld/ZSWyRzn8zIy35zW7+xf6gJnshezGAeUicg6E8u4l138UxxkSwNxcRkpLKiRVbTg9qjRqgrYk8G8jRzeVjWZZ0vwrsuf7TKnfCpIuolOgoK7eWahE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301857; c=relaxed/simple;
-	bh=X7n71KhfY5pb1r9XgZStxC8oCA2Y5rWJFqFCf5vidcU=;
+	s=arc-20240116; t=1779301859; c=relaxed/simple;
+	bh=yEmYS3weftUjkMRpzSplNbfJFZSfL15WyUAboaL/71E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJeR3voTAbKoLfHESuzbAiLwpl9jVF/EhMR9ccUgkHlGjlZlfLxsNYB0mWOjN35ugl9AUnereNhW0CqHpQXmuAQXui+wnBgTsZHN95gUlhqxClwSMf8TtBauvhEduTyq3nY15Fm2eo3vuqxjM7ePCS/AkjsxWq9u4X/qWDcURCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dr6zU/De; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lLp+ezOEpf6PBq2PlXH4OOTbHhne85yJlLF4G2tPM+MGkcbI+0ORr8jmJfmN7isFoYIO/5++4tdtIQFAwijlxAJ5CqvbNMx6saOcdGrnzJUZcUBqgDqxtlc2TTKYuMxd7N6EPGrTqyauP3eMLNM9T9Jp0mojaFa7v+8b9Ec4lRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJsMLdyt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dr6zU/De"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C1F1F000E9;
-	Wed, 20 May 2026 18:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJsMLdyt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6251F000E9;
+	Wed, 20 May 2026 18:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301856;
-	bh=4Wquuh3oS9EldlWhZbir0n8Xr6SwNP3Go9lmfN4LCHc=;
+	s=korg; t=1779301858;
+	bh=jmBMr1au7sQViUF1SZ+YMxqxU4fBX5Ae34m9ptg3JCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dr6zU/DenTzkDbId2W6gb35A/yfXCcYoRfiTjlGmiUdOljNdylKC/WB2WjUaaMN13
-	 +Raccz/iEQp+/WkpCjGoVMQe7GbaqJbUsgMzdxJaKcOK4oecJ1KDuKuFDl6IUAgwQk
-	 mfsLc3bLkuPPDxcbRPrLVa8e343EmH3mao4XRNRY=
+	b=XJsMLdytme6Os+eHiiJEsSuoJYMjM5k+b8HMXCwDDv3Tip8JO5emY94m3GchJ/qKj
+	 UgCU4K4U7HLpXE1OecwIfaN40zHHQJLoSaVc/Qfo+6EaS5jmkkFX6/ZBrdZlb7vwuw
+	 CmppYcsw16RfMFXSWsY8o8MuNmqq0EpKu36PVBVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
+	MingTao Huang <mintaohuang@tencent.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/508] bpf: fix end-of-list detection in cgroup_storage_get_next_key()
-Date: Wed, 20 May 2026 18:17:50 +0200
-Message-ID: <20260520162059.614361255@linuxfoundation.org>
+Subject: [PATCH 6.6 048/508] bpf: Fix stale offload->prog pointer after constant blinding
+Date: Wed, 20 May 2026 18:17:51 +0200
+Message-ID: <20260520162059.636386153@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -54,45 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: MingTao Huang <mintaohuang@tencent.com>
 
-[ Upstream commit 5828b9e5b272ecff7cf5d345128d3de7324117f7 ]
+[ Upstream commit a1aa9ef47c299c5bbc30594d3c2f0589edf908e6 ]
 
-list_next_entry() never returns NULL -- when the current element is the
-last entry it wraps to the list head via container_of(). The subsequent
-NULL check is therefore dead code and get_next_key() never returns
--ENOENT for the last element, instead reading storage->key from a bogus
-pointer that aliases internal map fields and copying the result to
-userspace.
+When a dev-bound-only BPF program (BPF_F_XDP_DEV_BOUND_ONLY) undergoes
+JIT compilation with constant blinding enabled (bpf_jit_harden >= 2),
+bpf_jit_blind_constants() clones the program. The original prog is then
+freed in bpf_jit_prog_release_other(), which updates aux->prog to point
+to the surviving clone, but fails to update offload->prog.
 
-Replace it with list_entry_is_head() so the function correctly returns
--ENOENT when there are no more entries.
+This leaves offload->prog pointing to the freed original program. When
+the network namespace is subsequently destroyed, cleanup_net() triggers
+bpf_dev_bound_netdev_unregister(), which iterates ondev->progs and calls
+__bpf_prog_offload_destroy(offload->prog). Accessing the freed prog
+causes a page fault:
 
-Fixes: de9cbbaadba5 ("bpf: introduce cgroup storage maps")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Sun Jian <sun.jian.kdev@gmail.com>
-Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/20260403132951.43533-2-bestswngs@gmail.com
+BUG: unable to handle page fault for address: ffffc900085f1038
+Workqueue: netns cleanup_net
+RIP: 0010:__bpf_prog_offload_destroy+0xc/0x80
+Call Trace:
+__bpf_offload_dev_netdev_unregister+0x257/0x350
+bpf_dev_bound_netdev_unregister+0x4a/0x90
+unregister_netdevice_many_notify+0x2a2/0x660
+...
+cleanup_net+0x21a/0x320
+
+The test sequence that triggers this reliably is:
+
+1. Set net.core.bpf_jit_harden=2 (echo 2 > /proc/sys/net/core/bpf_jit_harden)
+2. Run xdp_metadata selftest, which creates a dev-bound-only XDP
+   program on a veth inside a netns (./test_progs -t xdp_metadata)
+3. cleanup_net -> page fault in __bpf_prog_offload_destroy
+
+Dev-bound-only programs are unique in that they have an offload structure
+but go through the normal JIT path instead of bpf_prog_offload_compile().
+This means they are subject to constant blinding's prog clone-and-replace,
+while also having offload->prog that must stay in sync.
+
+Fix this by updating offload->prog in bpf_jit_prog_release_other(),
+alongside the existing aux->prog update. Both are back-pointers to
+the prog that must be kept in sync when the prog is replaced.
+
+Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
+Signed-off-by: MingTao Huang <mintaohuang@tencent.com>
+Link: https://lore.kernel.org/r/tencent_BCF692F45859CCE6C22B7B0B64827947D406@qq.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/local_storage.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/bpf/local_storage.c b/kernel/bpf/local_storage.c
-index a04f505aefe9b..c8b8dcc37ed4a 100644
---- a/kernel/bpf/local_storage.c
-+++ b/kernel/bpf/local_storage.c
-@@ -259,7 +259,7 @@ static int cgroup_storage_get_next_key(struct bpf_map *_map, void *key,
- 			goto enoent;
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 3011add7c4a88..d708cf3e6207f 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -1422,6 +1422,8 @@ void bpf_jit_prog_release_other(struct bpf_prog *fp, struct bpf_prog *fp_other)
+ 	 * know whether fp here is the clone or the original.
+ 	 */
+ 	fp->aux->prog = fp;
++	if (fp->aux->offload)
++		fp->aux->offload->prog = fp;
+ 	bpf_prog_clone_free(fp_other);
+ }
  
- 		storage = list_next_entry(storage, list_map);
--		if (!storage)
-+		if (list_entry_is_head(storage, &map->list, list_map))
- 			goto enoent;
- 	} else {
- 		storage = list_first_entry(&map->list,
 -- 
 2.53.0
 
