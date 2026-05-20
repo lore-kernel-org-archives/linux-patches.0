@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FAE3BE165;
-	Wed, 20 May 2026 17:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBF736A376;
+	Wed, 20 May 2026 17:22:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297742; cv=none; b=u9jzqOieGaQyPUT9vVjKniRIiYgpthXpH/FrG/PLY4eL5WMsPu/L0MrqQ4F5qD7ALDY5i5r69ltS9SyOXvcaEwwho9XEc+41pFYviS20HdM52XfuDvTN2sW+Cj78vRQgDB8mVO++hCNbN2Yc2YH1hDbwljcqnPF2KPv9M4R2BCg=
+	t=1779297744; cv=none; b=S/BZkktHQt+CY0E6MCw9hKrxs4y/wuSOlnIazUdi6dfKPkL48J4npy7ZCo1oRfSU5R/M6NfLgMJbfFSCfM9rinkvtHPBL2Dujy7+scuZ5EBTMbQ6pf4lfDGqviYEeHo++EanAR047kklysTu52X5F36Fw41FsxugI6p0Lb6YkSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297742; c=relaxed/simple;
-	bh=aEOnOGIIOHXVz3SAzdulmm/Gsza24RgN0hvLV2GvJMA=;
+	s=arc-20240116; t=1779297744; c=relaxed/simple;
+	bh=Snm2xwcU6qN5GeCO5sbyXd6RINUojXWf91RoJA3nanU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UNVm0o9ZE38rgBbhfWeKCDTr4FGX7anIwpE4BHuIUeakNb3W8wtWhQH2cErFoBjNQzk5ZCqZ+HJmbWb3zNjTy3iGCRiUEqF+o1k3z9LkMXcEGJamblzP98bt+upt3PZ0tiXfFLE8WrdYaVBMBnnt+4n70esU0WLaVT0eJF2WneU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBSiymU3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Iekfs/eD8CbIJVqfmcHbdIRqaNbuJNyebnaXb1Wl4Wl3UWm0He6RNbJcSwYmlOYl09sWcNSrRSbxQn2GdKc+S+ENbFr2yoY32YKNSG/KRorgxZpsveAmiCultGPRTuntN38YqU3krbRpFW5Gd0JeWnkQa2jj6UBZHM4wJnOwR2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fE8/oQY0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBSiymU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E5C1F00894;
-	Wed, 20 May 2026 17:22:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fE8/oQY0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1D71F000E9;
+	Wed, 20 May 2026 17:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297740;
-	bh=lRCT1jBOwpvsceAZqHtoLlrfElDHjgWxYJU2E9b2tBs=;
+	s=korg; t=1779297743;
+	bh=0jMU6AruDtpkQkt+yachUh12lrdlDJfp1IvXoxj9VNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LBSiymU3imDAjg8wKA7HboG4FfWLNrJb9icF+4YJhC2kFWnx8gRkTxOWtiF3z0Vpl
-	 GLvCztdK7dwLgZDp2L+pX+piB3zp/wbMZ2lcU7o1O8/vVFyC1E529M9Q+tONJThnhA
-	 0e3xALkXGgeZ0QpueE9iLeTPMjlJ9QchILF97/sI=
+	b=fE8/oQY0JJEuk1sGgPJPoN1IZlArUoZ28b2w/pUZxCLDS3tttN6GtsItF0w0ul1kl
+	 Gx1Q7ZKK+fkpYZrw7HHsRKgPG1LDky+TbNyg/XwZp1FAk8BpdJC8Ff0rb1eXRwBPVP
+	 8HlBQoykqkZgQnqiHtre4yl19Lk1jS45mU7Ke5fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	syzbot+ecdb8c9878a81eb21e54@syzkaller.appspotmail.com,
+	Mashiro Chen <mashiro.chen@mailbox.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 129/957] wifi: ath10k: fix station lookup failure during disconnect
-Date: Wed, 20 May 2026 18:10:12 +0200
-Message-ID: <20260520162137.353278742@linuxfoundation.org>
+Subject: [PATCH 6.18 147/957] net: hamradio: 6pack: fix uninit-value in sixpack_receive_buf
+Date: Wed, 20 May 2026 18:10:30 +0200
+Message-ID: <20260520162137.741828222@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,138 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Mashiro Chen <mashiro.chen@mailbox.org>
 
-[ Upstream commit 9a34a59c6086ae731a06b3e61b0951feef758648 ]
+[ Upstream commit bf9a38803b2626b01cc769aaf13485d8650f576f ]
 
-Recent commit [1] moved station statistics collection to an earlier stage
-of the disconnect flow. With this change in place, ath10k fails to resolve
-the station entry when handling a peer stats event triggered during
-disconnect, resulting in log messages such as:
+sixpack_receive_buf() does not properly skip bytes with TTY error flags.
+The while loop iterates through the flags buffer but never advances the
+data pointer (cp), and passes the original count (including error bytes)
+to sixpack_decode(). This causes sixpack_decode() to process bytes that
+should have been skipped due to TTY errors.  The TTY layer does not
+guarantee that cp[i] holds a meaningful value when fp[i] is set, so
+passing those positions to sixpack_decode() results in KMSAN reporting
+an uninit-value read.
 
-wlp58s0: deauthenticating from 74:1a:e0:e7:b4:c8 by local choice (Reason: 3=DEAUTH_LEAVING)
-ath10k_pci 0000:3a:00.0: not found station for peer stats
-ath10k_pci 0000:3a:00.0: failed to parse stats info tlv: -22
+Fix this by processing bytes one at a time, advancing cp on each
+iteration, and only passing valid (non-error) bytes to sixpack_decode().
+This matches the pattern used by slip_receive_buf() and
+mkiss_receive_buf() for the same purpose.
 
-The failure occurs because ath10k relies on ieee80211_find_sta_by_ifaddr()
-for station lookup. That function uses local->sta_hash, but by the time
-the peer stats request is triggered during disconnect, mac80211 has
-already removed the station from that hash table, leading to lookup
-failure.
-
-Before commit [1], this issue was not visible because the transition from
-IEEE80211_STA_NONE to IEEE80211_STA_NOTEXIST prevented ath10k from sending
-a peer stats request at all: ath10k_mac_sta_get_peer_stats_info() would
-fail early to find the peer and skip requesting statistics.
-
-Fix this by switching the lookup path to ath10k_peer_find(), which queries
-ath10k's internal peer table. At the point where the firmware emits the
-peer stats event, the peer entry is still present in the driver's list,
-ensuring lookup succeeds.
-
-Tested-on: QCA6174 hw3.2 PCI WLAN.RM.4.4.1-00309-QCARMSWPZ-1
-
-Fixes: a203dbeeca15 ("wifi: mac80211: collect station statistics earlier when disconnect") # [1]
-Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Closes: https://lore.kernel.org/ath10k/57671b89-ec9f-4e6c-992c-45eb8e75929c@molgen.mpg.de
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Link: https://patch.msgid.link/20260325-ath10k-station-lookup-failure-v1-1-2e0c970f25d5@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reported-by: syzbot+ecdb8c9878a81eb21e54@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ecdb8c9878a81eb21e54
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Mashiro Chen <mashiro.chen@mailbox.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260407173101.107352-1-mashiro.chen@mailbox.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/wmi-tlv.c | 26 +++++++++++++----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ drivers/net/hamradio/6pack.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/wmi-tlv.c b/drivers/net/wireless/ath/ath10k/wmi-tlv.c
-index 16d07d619b4df..ba1294c8ee39f 100644
---- a/drivers/net/wireless/ath/ath10k/wmi-tlv.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi-tlv.c
-@@ -3,7 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-- * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- #include "core.h"
- #include "debug.h"
-@@ -14,6 +14,7 @@
- #include "wmi-tlv.h"
- #include "p2p.h"
- #include "testmode.h"
-+#include "txrx.h"
- #include <linux/bitfield.h>
- 
- /***************/
-@@ -224,8 +225,9 @@ static int ath10k_wmi_tlv_parse_peer_stats_info(struct ath10k *ar, u16 tag, u16
- 						const void *ptr, void *data)
+diff --git a/drivers/net/hamradio/6pack.c b/drivers/net/hamradio/6pack.c
+index 885992951e8a6..c8b2dc5c1becc 100644
+--- a/drivers/net/hamradio/6pack.c
++++ b/drivers/net/hamradio/6pack.c
+@@ -391,7 +391,6 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
+ 				const u8 *fp, size_t count)
  {
- 	const struct wmi_tlv_peer_stats_info *stat = ptr;
--	struct ieee80211_sta *sta;
-+	u32 vdev_id = *(u32 *)data;
- 	struct ath10k_sta *arsta;
-+	struct ath10k_peer *peer;
+ 	struct sixpack *sp;
+-	size_t count1;
  
- 	if (tag != WMI_TLV_TAG_STRUCT_PEER_STATS_INFO)
- 		return -EPROTO;
-@@ -241,20 +243,20 @@ static int ath10k_wmi_tlv_parse_peer_stats_info(struct ath10k *ar, u16 tag, u16
- 		   __le32_to_cpu(stat->last_tx_rate_code),
- 		   __le32_to_cpu(stat->last_tx_bitrate_kbps));
+ 	if (!count)
+ 		return;
+@@ -401,16 +400,16 @@ static void sixpack_receive_buf(struct tty_struct *tty, const u8 *cp,
+ 		return;
  
--	rcu_read_lock();
--	sta = ieee80211_find_sta_by_ifaddr(ar->hw, stat->peer_macaddr.addr, NULL);
--	if (!sta) {
--		rcu_read_unlock();
--		ath10k_warn(ar, "not found station for peer stats\n");
-+	guard(spinlock_bh)(&ar->data_lock);
-+
-+	peer = ath10k_peer_find(ar, vdev_id, stat->peer_macaddr.addr);
-+	if (!peer || !peer->sta) {
-+		ath10k_warn(ar, "not found %s with vdev id %u mac addr %pM for peer stats\n",
-+			    peer ? "sta" : "peer", vdev_id, stat->peer_macaddr.addr);
- 		return -EINVAL;
+ 	/* Read the characters out of the buffer */
+-	count1 = count;
+-	while (count) {
+-		count--;
++	while (count--) {
+ 		if (fp && *fp++) {
+ 			if (!test_and_set_bit(SIXPF_ERROR, &sp->flags))
+ 				sp->dev->stats.rx_errors++;
++			cp++;
+ 			continue;
+ 		}
++		sixpack_decode(sp, cp, 1);
++		cp++;
  	}
+-	sixpack_decode(sp, cp, count1);
  
--	arsta = (struct ath10k_sta *)sta->drv_priv;
-+	arsta = (struct ath10k_sta *)peer->sta->drv_priv;
- 	arsta->rx_rate_code = __le32_to_cpu(stat->last_rx_rate_code);
- 	arsta->rx_bitrate_kbps = __le32_to_cpu(stat->last_rx_bitrate_kbps);
- 	arsta->tx_rate_code = __le32_to_cpu(stat->last_tx_rate_code);
- 	arsta->tx_bitrate_kbps = __le32_to_cpu(stat->last_tx_bitrate_kbps);
--	rcu_read_unlock();
- 
- 	return 0;
+ 	tty_unthrottle(tty);
  }
-@@ -266,6 +268,7 @@ static int ath10k_wmi_tlv_op_pull_peer_stats_info(struct ath10k *ar,
- 	const struct wmi_tlv_peer_stats_info_ev *ev;
- 	const void *data;
- 	u32 num_peer_stats;
-+	u32 vdev_id;
- 	int ret;
- 
- 	tb = ath10k_wmi_tlv_parse_alloc(ar, skb->data, skb->len, GFP_ATOMIC);
-@@ -284,15 +287,16 @@ static int ath10k_wmi_tlv_op_pull_peer_stats_info(struct ath10k *ar,
- 	}
- 
- 	num_peer_stats = __le32_to_cpu(ev->num_peers);
-+	vdev_id = __le32_to_cpu(ev->vdev_id);
- 
- 	ath10k_dbg(ar, ATH10K_DBG_WMI,
- 		   "wmi tlv peer stats info update peer vdev id %d peers %i more data %d\n",
--		   __le32_to_cpu(ev->vdev_id),
-+		   vdev_id,
- 		   num_peer_stats,
- 		   __le32_to_cpu(ev->more_data));
- 
- 	ret = ath10k_wmi_tlv_iter(ar, data, ath10k_wmi_tlv_len(data),
--				  ath10k_wmi_tlv_parse_peer_stats_info, NULL);
-+				  ath10k_wmi_tlv_parse_peer_stats_info, &vdev_id);
- 	if (ret)
- 		ath10k_warn(ar, "failed to parse stats info tlv: %d\n", ret);
- 
 -- 
 2.53.0
 
