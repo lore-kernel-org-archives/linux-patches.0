@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FE837754D;
-	Wed, 20 May 2026 17:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1335B37754D;
+	Wed, 20 May 2026 17:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297213; cv=none; b=VXq2bnRLRnH+/SwRvgJZwQ7yjX+OsdC8LybRQp0fsa3GJmrZUYBYriKQuzVoxF2IMM8esll8d4izlWOiBqG0IcosRbM1DN2d+IQE4wU0+/2RfUkxDiYu8qet/jW7iCeymNjMg1hB2SiKZ9TUJomE7qEXEgcc+C5KWTC0K3km9gM=
+	t=1779297216; cv=none; b=U1swEybWylV4IAkEIlFpQ4dKINMfqDJqF+yN1VqcEPAxVWFr0L75LrbPustaKoMR3ht1zO1uQNp9HbzQZzy72N5PqySDphH//bbe6aARYv3/TlZOLBzgkaZBLdiIXluuV6YrTH3f5EjgopVZIuWlvdpP57H+Z2ITFogAtTceJL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297213; c=relaxed/simple;
-	bh=YVo4Wsr68sWao8PuxzpHb4nJde0OTLb3ETDC+rBmpBk=;
+	s=arc-20240116; t=1779297216; c=relaxed/simple;
+	bh=YU6v6q2tFIP2eFNbH6M8+Dq9zXiDdCz0bztS9bfnp4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCCw1QhKSMhBo8jyRc1hy+nCx5JPb66pT5HQlfBOGdArUN1jKnAvrWf/qHOpcfkORwZPuztDpTblP7Yc5h0RxfhdZRYCUvTMmO0DnAklhQOYqBrqsT+kEdm0ixk0HkUZY0GW+tQqnQ+C0W1A16qLPCfRLmHlpLCBC49YqLkrG7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDl54tOk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f36c7FqDGGZsHE98kXol/yQii2qRXjeD9s6tOnWh3uPsBVPlonMnKGEB0vP+C795xuFGjxBn5ATd4axuavTte4QwuMQ7BhVQAv8xv9sqL1adrxROM5upR9MQx4KIWaiRuqN2q+LV7gGG29byAX7BbEYhwwL9g7Ii8ZH35MXPlk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/KZ2Viz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDl54tOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C7E1F000E9;
-	Wed, 20 May 2026 17:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/KZ2Viz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7902E1F000E9;
+	Wed, 20 May 2026 17:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297212;
-	bh=DhDlChK3csQO/bGIe+5YQIq7wxXW/tuOe0n8XLShSKk=;
+	s=korg; t=1779297215;
+	bh=YRl7rS6FQG9NsljOE9jPBfRb7wvrjQ/KgYuE7c00Y3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QDl54tOk/hc+FL7aYR4yHRUnDmpLVa/oEgs/jpHJc0Coakq1wKYP/XBIl9ghdy4xW
-	 QmZfdUWsSFWS/BdzjF0y6EvhjunKLzfafGooTYmLEvoC0vIq+rhD6xd1bBPaFz+Pw9
-	 MlBxk+C+p7KOQDm9SpFHcmZQyykTKKxMN83P4dX0=
+	b=F/KZ2Viz//p/NmiNn73FOsq8Dh/LZfTffHDpwfOSVE1rwtxUIc8E6ysPs5FZV9bJM
+	 SEszst6VTpbF9OSptNLgjdjkwjOhhF+PGwqHaj7Z68H9Ib8tciv1yO5YDg99d2Iq3E
+	 Xr/42ay5lyJs8+qJNrx1YftLX5MOubyaAxDTEboA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Waiman Long <longman@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.0 1051/1146] cgroup/cpuset: Reserve DL bandwidth only for root-domain moves
-Date: Wed, 20 May 2026 18:21:41 +0200
-Message-ID: <20260520162212.020924615@linuxfoundation.org>
+	Kim Phillips <kim.phillips@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 7.0 1052/1146] Revert "ACPI: CPPC: Adjust debug messages in amd_set_max_freq_ratio() to warn"
+Date: Wed, 20 May 2026 18:21:42 +0200
+Message-ID: <20260520162212.044822786@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,167 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 5dd74441cbf42c22e874450eb6a6bbb19390a216 upstream.
+commit db5dadb562cabb6da49959b473ed0d9645b6f2da upstream.
 
-cpuset_can_attach() currently adds the bandwidth of all migrating
-SCHED_DEADLINE tasks to sum_migrate_dl_bw. If the source and destination
-cpuset effective CPU masks do not overlap, the whole sum is then
-reserved in the destination root domain.
+Some older systems don't support CPPC in the firmware and this just makes
+noise for them when booting.  Drop back to debug.
 
-set_cpus_allowed_dl(), however, subtracts bandwidth from the source
-root domain only when the affinity change really moves the task between
-root domains. A DL task can move between cpusets that are still in the
-same root domain, so including that task in sum_migrate_dl_bw can reserve
-destination bandwidth without a matching source-side subtraction.
+This reverts commit 21fb59ab4b9767085f4fe1edbdbe3177fbb9ec97.
 
-Share the root-domain move test with set_cpus_allowed_dl(). Keep
-nr_migrate_dl_tasks counting all migrating deadline tasks for cpuset DL
-task accounting, but add to sum_migrate_dl_bw only for tasks that need a
-root-domain bandwidth move. Keep using the destination cpuset effective
-CPU mask and leave the broader can_attach()/attach() transaction model
-unchanged.
-
-Fixes: 2ef269ef1ac0 ("cgroup/cpuset: Free DL BW in case can_attach() fails")
-Cc: stable@vger.kernel.org # v6.10+
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Acked-by: Juri Lelli <juri.lelli@redhat.com>
-Tested-by: Juri Lelli <juri.lelli@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 21fb59ab4b976 ("ACPI: CPPC: Adjust debug messages in amd_set_max_freq_ratio() to warn")
+Suggested-by: Kim Phillips <kim.phillips@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Tested-by: Kim Phillips <kim.phillips@amd.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260504230141.484743-2-mario.limonciello@amd.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched/deadline.h  |    9 +++++++++
- kernel/cgroup/cpuset-internal.h |    1 +
- kernel/cgroup/cpuset.c          |   33 ++++++++++++++++++---------------
- kernel/sched/deadline.c         |   13 ++++++++++---
- 4 files changed, 38 insertions(+), 18 deletions(-)
+ arch/x86/kernel/acpi/cppc.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/include/linux/sched/deadline.h
-+++ b/include/linux/sched/deadline.h
-@@ -33,6 +33,15 @@ struct root_domain;
- extern void dl_add_task_root_domain(struct task_struct *p);
- extern void dl_clear_root_domain(struct root_domain *rd);
- extern void dl_clear_root_domain_cpu(int cpu);
-+/*
-+ * Return whether moving DL task @p to @new_mask requires moving DL
-+ * bandwidth accounting between root domains. This helper is specific to
-+ * DL bandwidth move accounting semantics and is shared by
-+ * cpuset_can_attach() and set_cpus_allowed_dl() so both paths use the
-+ * same source root-domain test.
-+ */
-+extern bool dl_task_needs_bw_move(struct task_struct *p,
-+				  const struct cpumask *new_mask);
+--- a/arch/x86/kernel/acpi/cppc.c
++++ b/arch/x86/kernel/acpi/cppc.c
+@@ -88,19 +88,19 @@ static void amd_set_max_freq_ratio(void)
  
- extern u64 dl_cookie;
- extern bool dl_bw_visited(int cpu, u64 cookie);
---- a/kernel/cgroup/cpuset-internal.h
-+++ b/kernel/cgroup/cpuset-internal.h
-@@ -167,6 +167,7 @@ struct cpuset {
- 	 */
- 	int nr_deadline_tasks;
- 	int nr_migrate_dl_tasks;
-+	/* DL bandwidth that needs destination reservation for this attach. */
- 	u64 sum_migrate_dl_bw;
- 	/*
- 	 * CPU used for temporary DL bandwidth allocation during attach;
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2993,7 +2993,7 @@ static int cpuset_can_attach(struct cgro
- 	struct cpuset *cs, *oldcs;
- 	struct task_struct *task;
- 	bool setsched_check;
--	int ret;
-+	int cpu, ret;
- 
- 	/* used later by cpuset_attach() */
- 	cpuset_attach_old_cs = task_cs(cgroup_taskset_first(tset, &css));
-@@ -3038,28 +3038,31 @@ static int cpuset_can_attach(struct cgro
- 		}
- 
- 		if (dl_task(task)) {
-+			/*
-+			 * Count all migrating DL tasks for cpuset task accounting.
-+			 * Only tasks that need a root-domain bandwidth move
-+			 * contribute to sum_migrate_dl_bw.
-+			 */
- 			cs->nr_migrate_dl_tasks++;
--			cs->sum_migrate_dl_bw += task->dl.dl_bw;
-+			if (dl_task_needs_bw_move(task, cs->effective_cpus))
-+				cs->sum_migrate_dl_bw += task->dl.dl_bw;
- 		}
+ 	rc = cppc_get_perf_caps(0, &perf_caps);
+ 	if (rc) {
+-		pr_warn("Could not retrieve perf counters (%d)\n", rc);
++		pr_debug("Could not retrieve perf counters (%d)\n", rc);
+ 		return;
  	}
  
--	if (!cs->nr_migrate_dl_tasks)
-+	if (!cs->sum_migrate_dl_bw)
- 		goto out_success;
+ 	rc = amd_get_boost_ratio_numerator(0, &numerator);
+ 	if (rc) {
+-		pr_warn("Could not retrieve highest performance (%d)\n", rc);
++		pr_debug("Could not retrieve highest performance (%d)\n", rc);
+ 		return;
+ 	}
+ 	nominal_perf = perf_caps.nominal_perf;
  
--	if (!cpumask_intersects(oldcs->effective_cpus, cs->effective_cpus)) {
--		int cpu = cpumask_any_and(cpu_active_mask, cs->effective_cpus);
--
--		if (unlikely(cpu >= nr_cpu_ids)) {
--			ret = -EINVAL;
--			goto out_unlock;
--		}
-+	cpu = cpumask_any_and(cpu_active_mask, cs->effective_cpus);
-+	if (unlikely(cpu >= nr_cpu_ids)) {
-+		ret = -EINVAL;
-+		goto out_unlock;
-+	}
+ 	if (!nominal_perf) {
+-		pr_warn("Could not retrieve nominal performance\n");
++		pr_debug("Could not retrieve nominal performance\n");
+ 		return;
+ 	}
  
--		ret = dl_bw_alloc(cpu, cs->sum_migrate_dl_bw);
--		if (ret)
--			goto out_unlock;
-+	ret = dl_bw_alloc(cpu, cs->sum_migrate_dl_bw);
-+	if (ret)
-+		goto out_unlock;
- 
--		cs->dl_bw_cpu = cpu;
--	}
-+	cs->dl_bw_cpu = cpu;
- 
- out_success:
- 	/*
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -3106,20 +3106,18 @@ static void task_woken_dl(struct rq *rq,
- static void set_cpus_allowed_dl(struct task_struct *p,
- 				struct affinity_context *ctx)
- {
--	struct root_domain *src_rd;
- 	struct rq *rq;
- 
- 	WARN_ON_ONCE(!dl_task(p));
- 
- 	rq = task_rq(p);
--	src_rd = rq->rd;
- 	/*
- 	 * Migrating a SCHED_DEADLINE task between exclusive
- 	 * cpusets (different root_domains) entails a bandwidth
- 	 * update. We already made space for us in the destination
- 	 * domain (see cpuset_can_attach()).
- 	 */
--	if (!cpumask_intersects(src_rd->span, ctx->new_mask)) {
-+	if (dl_task_needs_bw_move(p, ctx->new_mask)) {
- 		struct dl_bw *src_dl_b;
- 
- 		src_dl_b = dl_bw_of(cpu_of(rq));
-@@ -3136,6 +3134,15 @@ static void set_cpus_allowed_dl(struct t
- 	set_cpus_allowed_common(p, ctx);
- }
- 
-+bool dl_task_needs_bw_move(struct task_struct *p,
-+			   const struct cpumask *new_mask)
-+{
-+	if (!dl_task(p))
-+		return false;
-+
-+	return !cpumask_intersects(task_rq(p)->rd->span, new_mask);
-+}
-+
- /* Assumes rq->lock is held */
- static void rq_online_dl(struct rq *rq)
- {
 
 
