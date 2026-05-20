@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707D03F0A83;
-	Wed, 20 May 2026 17:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6403546C8;
+	Wed, 20 May 2026 17:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299115; cv=none; b=B0PR5i0oeVT6YBu39dUagqLYlM29jOuoJN1CYonYouOqGcE9EEDq8LGLG1bZD6O//zX7rf8Yd3hE7BZlMKiYgOieC0b27ljBWupBT0xW79SXKNdp3sj1MB36bLjcml/Z4ZfCfAY6aO+UkVDnoq4+FxFV/FlfDOpqiL2Uc1BlHAg=
+	t=1779299118; cv=none; b=ANFJUdn1wjfAEXnrseBo4oVn0GEmMnsHXORz09Ahey2uZLy7/IZunKrOp6hSVBT5elRcORbPlShLeFXAUnkCvI/xjSwwTANlfO9tyvqClUBEOZ65F0qVmE/bOaPwFDyzO/B8ExnujrR0FV6kFhdqezQvkF8lIrNYmxlnqaOtgIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299115; c=relaxed/simple;
-	bh=XBlm2zds2r9fEuWWGgy3ZmPYlyUYQ9mAT1lQxUwrlaw=;
+	s=arc-20240116; t=1779299118; c=relaxed/simple;
+	bh=2FnBSiLTAHV+x5z6M70shJCF3P44MR4e5Eql7pS7VN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtVr9nfteAVgPiOrkV88iAAvKa2X0JiPCyaB+f6UhI60G+Q1TurhJ11nnWDhpylMJtYpXBIFqEw3dgrId6WYiUpBqO9ZI8FRfeS3uIH1zcsi6wVexvXwLEqcI49YnxHRWuDZJ0kaxDAbQJFKU1BF02vaQTXwlj3s5wQ3ddZ5E8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=As8d2ZD1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LnkG30GTiTJKgUydvIVnWSn/TUR6Jyzlbe+foVETEb87ggBZDwEWanN+mulTrmEvTkV2lVr0qBQy5TUnuD9wK9zi5neyhpX3s64awWdosd3Wzx3oP/2R/4nedfZMpxoBqHI4P2o4wuQBXfS7o0met2ckmy+qKyBVTpPR06fOxZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZsyBIVk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="As8d2ZD1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36431F000E9;
-	Wed, 20 May 2026 17:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZsyBIVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819E01F000E9;
+	Wed, 20 May 2026 17:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299114;
-	bh=U3inOPqVkBJx3i580ZWaZE/bkZ1IRv7G2jHwta0Scg0=;
+	s=korg; t=1779299117;
+	bh=2I7vgzVkdVr1oKsTX32Wx2B4PhQnjApSQd/x6HxXvCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=As8d2ZD1OFX9X9YJkqrbaAMVLJqS3OGrorOlh4tbl5ElRytdo9NSvHVcMEptK5o7F
-	 /1q4/A+j6hxo9Im8/aFCwPRSj1MbaCRaW8jLok7DF+tRSiddW1QPkMygfKT9b5JTZ/
-	 I0gaeEldvabc5SG73Gm3tUky0ofEfCf+EDp5vqLo=
+	b=BZsyBIVkgE/ilwLbfS7viZ8j/ZlZF3tXbdmNdG+Wklv6lPjRTyVRQPur4XxjSNj0h
+	 i0tb0KLTzI90b7DjN1Nr5eBYUSuZauWYpF2mjh5pXoWqgY8bh1NWeMfAZmc8N2TboJ
+	 zw4YogUHKgfSqTzSyqAGDNXQDy1iObTq8x5K+QIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 616/957] macvlan: fix macvlan_get_size() not reserving space for IFLA_MACVLAN_BC_CUTOFF
-Date: Wed, 20 May 2026 18:18:19 +0200
-Message-ID: <20260520162147.893389492@linuxfoundation.org>
+Subject: [PATCH 6.18 662/957] netfilter: conntrack: remove sprintf usage
+Date: Wed, 20 May 2026 18:19:05 +0200
+Message-ID: <20260520162148.887913526@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,53 +52,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit fa92a77b0ed4d5f11a71665a232ac5a54a4b055d ]
+[ Upstream commit 6e7066bdb481a87fe88c4fa563e348c03b2d373d ]
 
-macvlan_get_size() does not account for IFLA_MACVLAN_BC_CUTOFF, but
-macvlan_fill_info() conditionally includes it when port->bc_cutoff != 1.
-This causes nla_put_s32() to fail with -EMSGSIZE when the netlink skb
-runs out of space, triggering a WARN_ON in rtnetlink and preventing the
-interface from being dumped.
+Replace it with scnprintf, the buffer sizes are expected to be large enough
+to hold the result, no need for snprintf+overflow check.
 
-The bug can be reproduced with:
+Increase buffer size in mangle_content_len() while at it.
 
-  ip link add macvlan0 link eth0 type macvlan mode bridge
-  ip link set macvlan0 type macvlan bc_cutoff 0
-  ip -d link show macvlan0   # fails with -EMSGSIZE
+BUG: KASAN: stack-out-of-bounds in vsnprintf+0xea5/0x1270
+Write of size 1 at addr [..]
+ vsnprintf+0xea5/0x1270
+ sprintf+0xb1/0xe0
+ mangle_content_len+0x1ac/0x280
+ nf_nat_sdp_session+0x1cc/0x240
+ process_sdp+0x8f8/0xb80
+ process_invite_request+0x108/0x2b0
+ process_sip_msg+0x5da/0xf50
+ sip_help_tcp+0x45e/0x780
+ nf_confirm+0x34d/0x990
+ [..]
 
-The bc_cutoff feature was added in commit 954d1fa1ac93 ("macvlan: Add
-netlink attribute for broadcast cutoff"), which added the nla_put_s32()
-call in macvlan_fill_info() but missed adding the corresponding
-nla_total_size(4) in macvlan_get_size(). A follow-up commit
-55cef78c244d ("macvlan: add forgotten nla_policy for
-IFLA_MACVLAN_BC_CUTOFF") fixed the missing nla_policy entry but still
-did not fix the size calculation.
-
-Fixes: 954d1fa1ac93 ("macvlan: Add netlink attribute for broadcast cutoff")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260413085349.73977-1-phx0fer@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 9fafcd7b2032 ("[NETFILTER]: nf_conntrack/nf_nat: add SIP helper port")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macvlan.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_nat_amanda.c |  2 +-
+ net/netfilter/nf_nat_sip.c    | 33 ++++++++++++++++++---------------
+ 2 files changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index e9d288a05e39e..35dcaa985cfdc 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -1682,6 +1682,7 @@ static size_t macvlan_get_size(const struct net_device *dev)
- 		+ macvlan_get_size_mac(vlan) /* IFLA_MACVLAN_MACADDR */
- 		+ nla_total_size(4) /* IFLA_MACVLAN_BC_QUEUE_LEN */
- 		+ nla_total_size(4) /* IFLA_MACVLAN_BC_QUEUE_LEN_USED */
-+		+ nla_total_size(4) /* IFLA_MACVLAN_BC_CUTOFF */
- 		);
+diff --git a/net/netfilter/nf_nat_amanda.c b/net/netfilter/nf_nat_amanda.c
+index 98deef6cde694..8f1054920a857 100644
+--- a/net/netfilter/nf_nat_amanda.c
++++ b/net/netfilter/nf_nat_amanda.c
+@@ -50,7 +50,7 @@ static unsigned int help(struct sk_buff *skb,
+ 		return NF_DROP;
+ 	}
+ 
+-	sprintf(buffer, "%u", port);
++	snprintf(buffer, sizeof(buffer), "%u", port);
+ 	if (!nf_nat_mangle_udp_packet(skb, exp->master, ctinfo,
+ 				      protoff, matchoff, matchlen,
+ 				      buffer, strlen(buffer))) {
+diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
+index cf4aeb299bdef..c845b6d1a2bdf 100644
+--- a/net/netfilter/nf_nat_sip.c
++++ b/net/netfilter/nf_nat_sip.c
+@@ -68,25 +68,27 @@ static unsigned int mangle_packet(struct sk_buff *skb, unsigned int protoff,
  }
  
+ static int sip_sprintf_addr(const struct nf_conn *ct, char *buffer,
++			    size_t size,
+ 			    const union nf_inet_addr *addr, bool delim)
+ {
+ 	if (nf_ct_l3num(ct) == NFPROTO_IPV4)
+-		return sprintf(buffer, "%pI4", &addr->ip);
++		return scnprintf(buffer, size, "%pI4", &addr->ip);
+ 	else {
+ 		if (delim)
+-			return sprintf(buffer, "[%pI6c]", &addr->ip6);
++			return scnprintf(buffer, size, "[%pI6c]", &addr->ip6);
+ 		else
+-			return sprintf(buffer, "%pI6c", &addr->ip6);
++			return scnprintf(buffer, size, "%pI6c", &addr->ip6);
+ 	}
+ }
+ 
+ static int sip_sprintf_addr_port(const struct nf_conn *ct, char *buffer,
++				 size_t size,
+ 				 const union nf_inet_addr *addr, u16 port)
+ {
+ 	if (nf_ct_l3num(ct) == NFPROTO_IPV4)
+-		return sprintf(buffer, "%pI4:%u", &addr->ip, port);
++		return scnprintf(buffer, size, "%pI4:%u", &addr->ip, port);
+ 	else
+-		return sprintf(buffer, "[%pI6c]:%u", &addr->ip6, port);
++		return scnprintf(buffer, size, "[%pI6c]:%u", &addr->ip6, port);
+ }
+ 
+ static int map_addr(struct sk_buff *skb, unsigned int protoff,
+@@ -119,7 +121,7 @@ static int map_addr(struct sk_buff *skb, unsigned int protoff,
+ 	if (nf_inet_addr_cmp(&newaddr, addr) && newport == port)
+ 		return 1;
+ 
+-	buflen = sip_sprintf_addr_port(ct, buffer, &newaddr, ntohs(newport));
++	buflen = sip_sprintf_addr_port(ct, buffer, sizeof(buffer), &newaddr, ntohs(newport));
+ 	return mangle_packet(skb, protoff, dataoff, dptr, datalen,
+ 			     matchoff, matchlen, buffer, buflen);
+ }
+@@ -212,7 +214,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
+ 					       &addr, true) > 0 &&
+ 		    nf_inet_addr_cmp(&addr, &ct->tuplehash[dir].tuple.src.u3) &&
+ 		    !nf_inet_addr_cmp(&addr, &ct->tuplehash[!dir].tuple.dst.u3)) {
+-			buflen = sip_sprintf_addr(ct, buffer,
++			buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer),
+ 					&ct->tuplehash[!dir].tuple.dst.u3,
+ 					true);
+ 			if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
+@@ -229,7 +231,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
+ 					       &addr, false) > 0 &&
+ 		    nf_inet_addr_cmp(&addr, &ct->tuplehash[dir].tuple.dst.u3) &&
+ 		    !nf_inet_addr_cmp(&addr, &ct->tuplehash[!dir].tuple.src.u3)) {
+-			buflen = sip_sprintf_addr(ct, buffer,
++			buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer),
+ 					&ct->tuplehash[!dir].tuple.src.u3,
+ 					false);
+ 			if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
+@@ -247,7 +249,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
+ 		    htons(n) == ct->tuplehash[dir].tuple.dst.u.udp.port &&
+ 		    htons(n) != ct->tuplehash[!dir].tuple.src.u.udp.port) {
+ 			__be16 p = ct->tuplehash[!dir].tuple.src.u.udp.port;
+-			buflen = sprintf(buffer, "%u", ntohs(p));
++			buflen = scnprintf(buffer, sizeof(buffer), "%u", ntohs(p));
+ 			if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
+ 					   poff, plen, buffer, buflen)) {
+ 				nf_ct_helper_log(skb, ct, "cannot mangle rport");
+@@ -418,7 +420,8 @@ static unsigned int nf_nat_sip_expect(struct sk_buff *skb, unsigned int protoff,
+ 
+ 	if (!nf_inet_addr_cmp(&exp->tuple.dst.u3, &exp->saved_addr) ||
+ 	    exp->tuple.dst.u.udp.port != exp->saved_proto.udp.port) {
+-		buflen = sip_sprintf_addr_port(ct, buffer, &newaddr, port);
++		buflen = sip_sprintf_addr_port(ct, buffer, sizeof(buffer),
++					       &newaddr, port);
+ 		if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
+ 				   matchoff, matchlen, buffer, buflen)) {
+ 			nf_ct_helper_log(skb, ct, "cannot mangle packet");
+@@ -438,8 +441,8 @@ static int mangle_content_len(struct sk_buff *skb, unsigned int protoff,
+ {
+ 	enum ip_conntrack_info ctinfo;
+ 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
++	char buffer[sizeof("4294967295")];
+ 	unsigned int matchoff, matchlen;
+-	char buffer[sizeof("65536")];
+ 	int buflen, c_len;
+ 
+ 	/* Get actual SDP length */
+@@ -454,7 +457,7 @@ static int mangle_content_len(struct sk_buff *skb, unsigned int protoff,
+ 			      &matchoff, &matchlen) <= 0)
+ 		return 0;
+ 
+-	buflen = sprintf(buffer, "%u", c_len);
++	buflen = scnprintf(buffer, sizeof(buffer), "%u", c_len);
+ 	return mangle_packet(skb, protoff, dataoff, dptr, datalen,
+ 			     matchoff, matchlen, buffer, buflen);
+ }
+@@ -491,7 +494,7 @@ static unsigned int nf_nat_sdp_addr(struct sk_buff *skb, unsigned int protoff,
+ 	char buffer[INET6_ADDRSTRLEN];
+ 	unsigned int buflen;
+ 
+-	buflen = sip_sprintf_addr(ct, buffer, addr, false);
++	buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer), addr, false);
+ 	if (mangle_sdp_packet(skb, protoff, dataoff, dptr, datalen,
+ 			      sdpoff, type, term, buffer, buflen))
+ 		return 0;
+@@ -509,7 +512,7 @@ static unsigned int nf_nat_sdp_port(struct sk_buff *skb, unsigned int protoff,
+ 	char buffer[sizeof("nnnnn")];
+ 	unsigned int buflen;
+ 
+-	buflen = sprintf(buffer, "%u", port);
++	buflen = scnprintf(buffer, sizeof(buffer), "%u", port);
+ 	if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
+ 			   matchoff, matchlen, buffer, buflen))
+ 		return 0;
+@@ -529,7 +532,7 @@ static unsigned int nf_nat_sdp_session(struct sk_buff *skb, unsigned int protoff
+ 	unsigned int buflen;
+ 
+ 	/* Mangle session description owner and contact addresses */
+-	buflen = sip_sprintf_addr(ct, buffer, addr, false);
++	buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer), addr, false);
+ 	if (mangle_sdp_packet(skb, protoff, dataoff, dptr, datalen, sdpoff,
+ 			      SDP_HDR_OWNER, SDP_HDR_MEDIA, buffer, buflen))
+ 		return 0;
 -- 
 2.53.0
 
