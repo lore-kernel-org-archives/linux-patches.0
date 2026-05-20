@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963423A3833;
-	Wed, 20 May 2026 17:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465F336CE19;
+	Wed, 20 May 2026 17:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297662; cv=none; b=Vs/z1D9Nn0k2mT8gO5pmwkeurTUojPOVI1+GU1hHw72BzcLzP3i6TqnVJJzAj//7tgJO8gqdY8pSSlmaZqUqQJFFJA+cAd+6D3KK72cTc/if3EhUNFlhWHdXDtLilQ0E1nHvh6hFimbJLz2lCo9ZGNf/PqVWwnYZ3jF+//6eawc=
+	t=1779297665; cv=none; b=sAW0zCBXOl3AVPFy04xQvyObW0Oz5uVpYIFavVDwTgwMoU+37PT1q4pia522GOLvbbo1CZp/Xzn1CNtmj0EpIgZAX1EeS1NkmWf6RBSCq9tub/qIFRSpGLqP2BwzpdDUMkCOLN4SKHvl1F8DotrUSzfX/6u5b3e26zUgipLB/1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297662; c=relaxed/simple;
-	bh=0cXroyIsqXPmrLAvMrjIg2Ng8cjW/P74j3jOhP8vTy4=;
+	s=arc-20240116; t=1779297665; c=relaxed/simple;
+	bh=e5EVsNGeUoB00f0gwgIV+E+yxGI/36FPUVzdoziME1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MAeZSVszlG5F8WF1MKwMz9wJqN0Hzgxks8sDuJEyGqRjAJGeV+X3/8I3m1uMRjmA2/H1Yvklj/mE+nMjEB1iGg4WD2bKSY+N4hl9KnwtRwnB9BVG4afTKC+gAKsjCC55umiQ1nY2LNzHj3Jc1IzVXFN3/LJcPP5q/+9Qx5+nUnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAj7l3V4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UWDFXtLPN2sbjIduJMyuOltMCFcm1sELrmQXfDzw0kasZBl6u9Gkl2sF0Nx0j/yFu+OBMS+9NDNKSEongWU5nj++N6VE5+AP25JsRmsHp7jA9F1MquFshpH2UcHxPZsseYIF/rWYG39hVl3vZfdO6nlIlAVF1ZtudT0vCSlUn4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxu50RIy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAj7l3V4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047D21F00896;
-	Wed, 20 May 2026 17:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxu50RIy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F911F000E9;
+	Wed, 20 May 2026 17:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297661;
-	bh=M8ojpxKSqfcL5BpaA2lhjb1g5In+OtGUOIaozHEOPJM=;
+	s=korg; t=1779297664;
+	bh=JrW8Np9FIBiYmJlPcECH7b6Gi+gOu9McRBUElCRmHXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wAj7l3V41A1ou4En5xWX6grHl27cZ2sYggeyTu01PjN3Tc6QIVcRrzZqqRXG9Ubt9
-	 AI7rOKtymkMcsr7r5AuF/2hS7g5xbjvS8U3tFxNKDv6SeTNrL0mRWmM4mBjwKFtoH+
-	 ZWrbmdEV6mR8czSlKTT3e0RgfMNc/CcPRVIA7b5I=
+	b=qxu50RIysB5VZRRt7xorb0YMs5JKTsO0VZ5WETU9tV4Qq3LOJaUm2riNisVTwjJw6
+	 4kL/L+Qgc5RaFNElaCnjFAAKf4NYVRIuxd97wAL59oyvifov4DTPdpouXo+GUMe5LK
+	 xRR4VVUBfPfUfkPXnmtCdqkqgy/OrVSItsJTD+4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih Kai Hsu <hsu.chih.kai@realtek.com>,
-	Hayes Wang <hayeswang@realtek.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Aditya Gupta <adityag@linux.ibm.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 115/957] r8152: fix incorrect register write to USB_UPHY_XTAL
-Date: Wed, 20 May 2026 18:09:58 +0200
-Message-ID: <20260520162137.052855004@linuxfoundation.org>
+Subject: [PATCH 6.18 116/957] powerpc/crash: fix backup region offset update to elfcorehdr
+Date: Wed, 20 May 2026 18:09:59 +0200
+Message-ID: <20260520162137.075004870@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,45 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chih Kai Hsu <hsu.chih.kai@realtek.com>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-[ Upstream commit 48afd5124fd6129c46fd12cb06155384b1c4a0c4 ]
+[ Upstream commit 789335cacdf37da93bb7c70322dff8c7e82881df ]
 
-The old code used ocp_write_byte() to clear the OOBS_POLLING bit
-(BIT(8)) in the USB_UPHY_XTAL register, but this doesn't correctly
-clear a bit in the upper byte of the 16-bit register.
+update_backup_region_phdr() in file_load_64.c iterates over all the
+program headers in the kdump kernel’s elfcorehdr and updates the
+p_offset of the program header whose physical address starts at 0.
 
-Fix this by using ocp_write_word() instead.
+However, the loop logic is incorrect because the program header pointer
+is not updated during iteration. Since elfcorehdr typically contains
+PT_NOTE entries first, the PT_LOAD program header with physical address
+0 is never reached. As a result, its p_offset is not updated to point to
+the backup region.
 
-Fixes: 195aae321c82 ("r8152: support new chips")
-Signed-off-by: Chih Kai Hsu <hsu.chih.kai@realtek.com>
-Reviewed-by: Hayes Wang <hayeswang@realtek.com>
-Link: https://patch.msgid.link/20260326073925.32976-454-nic_swsd@realtek.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Because of this behavior, the capture kernel exports the first 64 KB of
+the crashed kernel’s memory at offset 0, even though that memory
+actually lives in the backup region. When a crash happens, purgatory
+copies the first 64 KB of the crashed kernel’s memory into the backup
+region so the capture kernel can safely use it.
+
+This has not caused problems so far because the first 64 KB is usually
+identical in both the crashed and capture kernels. However, this is
+just an assumption and is not guaranteed to always hold true.
+
+Fix update_backup_region_phdr() to correctly update the p_offset of the
+program header with a starting physical address of 0 by correcting the
+logic used to iterate over the program headers.
+
+Fixes: cb350c1f1f86 ("powerpc/kexec_file: Prepare elfcore header for crashing kernel")
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260312083051.1935737-2-sourabhjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/r8152.c | 2 +-
+ arch/powerpc/kexec/file_load_64.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index 357f5c733d0b5..d610741782794 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -3896,7 +3896,7 @@ static void r8156_ups_en(struct r8152 *tp, bool enable)
- 		case RTL_VER_15:
- 			ocp_data = ocp_read_word(tp, MCU_TYPE_USB, USB_UPHY_XTAL);
- 			ocp_data &= ~OOBS_POLLING;
--			ocp_write_byte(tp, MCU_TYPE_USB, USB_UPHY_XTAL, ocp_data);
-+			ocp_write_word(tp, MCU_TYPE_USB, USB_UPHY_XTAL, ocp_data);
- 			break;
- 		default:
- 			break;
+diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
+index 5f6d50e4c3d45..a7db7eca0481b 100644
+--- a/arch/powerpc/kexec/file_load_64.c
++++ b/arch/powerpc/kexec/file_load_64.c
+@@ -391,7 +391,7 @@ static void update_backup_region_phdr(struct kimage *image, Elf64_Ehdr *ehdr)
+ 	unsigned int i;
+ 
+ 	phdr = (Elf64_Phdr *)(ehdr + 1);
+-	for (i = 0; i < ehdr->e_phnum; i++) {
++	for (i = 0; i < ehdr->e_phnum; i++, phdr++) {
+ 		if (phdr->p_paddr == BACKUP_SRC_START) {
+ 			phdr->p_offset = image->arch.backup_start;
+ 			kexec_dprintk("Backup region offset updated to 0x%lx\n",
 -- 
 2.53.0
 
