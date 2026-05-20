@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039333FE343;
-	Wed, 20 May 2026 18:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDBC3FE345;
+	Wed, 20 May 2026 18:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302355; cv=none; b=nLzD5a+cbU4lF7UagPvEMcIyScPozbRtyT3mhzODgZqJ6JJ+IvnTabdwXPIX+FsSdDEFnBa8FqxXO1SdwhyP+F9LZ8udrnRJmC3kYNhxQhgak3dvi2QV6/JR+4iYm3XzbPac23BbINwFf7TErRDhspIuoAPw4LRF1dzTHyqxrSs=
+	t=1779302358; cv=none; b=AAcc27ZhucmD/rqDU/gxFq+6m2YcKmLMLAx9oUuFBH5qjBrryt+Y1N8qxuuf7JlwMOIGOeLHsCvcSLwhM7jb7nr727CKAo0u/bfb4POTCMRP/44uR+PKsibEGVrki1Op2CDfbbk3V+ykFLMfluHmB0f/NDC923y7hNDt5lqOMc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302355; c=relaxed/simple;
-	bh=QiD2yw+hENOS2GcA7KDPsJpTyTvhPN8mYSskm5A7Vk4=;
+	s=arc-20240116; t=1779302358; c=relaxed/simple;
+	bh=zegP+j/Fz3MW8P0DyLeWA67rHXrN8gzuuSCg46dgtVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i4+ywvRjCg2gVgkN8uFZhlj3sugbmKEk+4zey3Ohzx7PNAyvrfnh6d6zV3LNa+g2UcSecBmXaSKf3015uGF15JoSywh369U8E7C1t2DZ056s9ra4lB9hBDII/K/tfR+fmb/wQV4fLs/DQ7Uti5qxji1ZRhO8u0tk6Dl9UNiWfQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itS7aYy9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IUKPaCg3VScFiKLwqEwSmZhannZuydAs3SUOHEJ0Ek5cJ9EAzgclsz41t0R2+Hur3gfMR++TO7ITodV03b6lxEBOxGtbBukHEl9eJVheTAL8QHIWJ2sRJIjeyaAsrNN+AlOo1eMhDUH0ghsm3CHcAXldqJb6MfS0cCsjjQwClVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B34VJ6GR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itS7aYy9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6836D1F00893;
-	Wed, 20 May 2026 18:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B34VJ6GR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186A81F000E9;
+	Wed, 20 May 2026 18:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302353;
-	bh=Nhe61at3AyZPCk3cnVd26vtX5epnMawlNY5XgT2mDJU=;
+	s=korg; t=1779302356;
+	bh=vVnXyuFqR9roJkfNJGBF+xjZ7QzhGmo1IMZnodvmRpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=itS7aYy94YqtyEIQ+a7iWMYdvnq7lZi5YLzFS1H6uGoyOqAC7q9GpDKxYArnqR034
-	 PmycoTWohL7ICmciI70BfiYDRTH8IvI3y8WI3zmQpTQRukiFjeeM8O8MstBFRLE7gH
-	 lLKJKzSfUYknhmXWPkEmVdUPIc5Xl0CcddFs+Wf4=
+	b=B34VJ6GRuXmSKRA5saqJPD4UJ0X2APTgStdNre4LgsH811tE6Xlz81YGRz+2e35LH
+	 PgtmPCrJMVFcpNmHZ4sVgLkAlLF7ZKtK8wuTVSsWEGIiazhSKZy+u1SIJGWlFvvqBy
+	 nn3CJsX5YPUntJR7qWHuMXp61mdvEWIahAShKJgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Song Liu <song@kernel.org>,
 	Puranjay Mohan <puranjay@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 235/508] bpf, arm64: Fix off-by-one in check_imm signed range check
-Date: Wed, 20 May 2026 18:20:58 +0200
-Message-ID: <20260520162103.742194897@linuxfoundation.org>
+Subject: [PATCH 6.6 236/508] bpf, riscv: Remove redundant bpf_flush_icache() after pack allocator finalize
+Date: Wed, 20 May 2026 18:20:59 +0200
+Message-ID: <20260520162103.763789990@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -46,59 +48,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Puranjay Mohan <puranjay@kernel.org>
 
-[ Upstream commit 1dd8be4ec722ce54e4cace59f3a4ba658111b3ec ]
+[ Upstream commit 46ee1342b887c9387a933397d846ff6c9584322c ]
 
-check_imm(bits, imm) is used in the arm64 BPF JIT to verify that
-a branch displacement (in arm64 instruction units) fits into the
-signed N-bit immediate field of a B, B.cond or CBZ/CBNZ encoding
-before it is handed to the encoder. The macro currently tests for
-(imm > 0 && imm >> bits) || (imm < 0 && ~imm >> bits) which admits
-values in [-2^N, 2^N) — effectively a signed (N+1)-bit range. A
-signed N-bit field only holds [-2^(N-1), 2^(N-1)), so the check
-admits one extra bit of range on each side.
+bpf_flush_icache() calls flush_icache_range() to clean the data cache
+and invalidate the instruction cache for the JITed code region. However,
+since commit 48a8f78c50bd ("bpf, riscv: use prog pack allocator in the
+BPF JIT"), this flush is redundant.
 
-In particular, for check_imm19(), values in [2^18, 2^19) slip past
-the check but do not fit into the 19-bit signed imm19 field of
-B.cond. aarch64_insn_encode_immediate() then masks the raw value
-into the 19-bit field, setting bit 18 (the sign bit) and flipping
-a forward branch into a backward one. Same class of issue exists
-for check_imm26() and the B/BL encoding. Shift by (bits - 1)
-instead of bits so the actual signed N-bit range is enforced.
+bpf_jit_binary_pack_finalize() copies the JITed instructions to the ROX
+region via bpf_arch_text_copy() -> patch_text_nosync(), and
+patch_text_nosync() already calls flush_icache_range() on the written
+range. The subsequent bpf_flush_icache() repeats the same cache
+maintenance on an overlapping range.
 
-Fixes: e54bcde3d69d ("arm64: eBPF JIT compiler")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
-Link: https://lore.kernel.org/r/20260415121403.639619-2-daniel@iogearbox.net
+Remove the redundant bpf_flush_icache() call and its now-unused
+definition.
+
+Fixes: 48a8f78c50bd ("bpf, riscv: use prog pack allocator in the BPF JIT")
+Acked-by: Song Liu <song@kernel.org>
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Tested-by: Paul Chaignon <paul.chaignon@gmail.com>
+Link: https://lore.kernel.org/r/20260413191111.3426023-3-puranjay@kernel.org
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/net/bpf_jit.h      | 6 ------
+ arch/riscv/net/bpf_jit_core.c | 7 -------
+ 2 files changed, 13 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index f11de7484ced8..9fd0b658e4602 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -33,8 +33,8 @@
- #define FP_BOTTOM (MAX_BPF_JIT_REG + 4)
+diff --git a/arch/riscv/net/bpf_jit.h b/arch/riscv/net/bpf_jit.h
+index a5ce1ab76ecee..c444c79596703 100644
+--- a/arch/riscv/net/bpf_jit.h
++++ b/arch/riscv/net/bpf_jit.h
+@@ -11,7 +11,6 @@
  
- #define check_imm(bits, imm) do {				\
--	if ((((imm) > 0) && ((imm) >> (bits))) ||		\
--	    (((imm) < 0) && (~(imm) >> (bits)))) {		\
-+	if ((((imm) > 0) && ((imm) >> ((bits) - 1))) ||		\
-+	    (((imm) < 0) && (~(imm) >> ((bits) - 1)))) {	\
- 		pr_info("[%2d] imm=%d(0x%x) out of range\n",	\
- 			i, imm, imm);				\
- 		return -EINVAL;					\
+ #include <linux/bpf.h>
+ #include <linux/filter.h>
+-#include <asm/cacheflush.h>
+ 
+ static inline bool rvc_enabled(void)
+ {
+@@ -97,11 +96,6 @@ static inline void bpf_fill_ill_insns(void *area, unsigned int size)
+ 	memset(area, 0, size);
+ }
+ 
+-static inline void bpf_flush_icache(void *start, void *end)
+-{
+-	flush_icache_range((unsigned long)start, (unsigned long)end);
+-}
+-
+ /* Emit a 4-byte riscv instruction. */
+ static inline void emit(const u32 insn, struct rv_jit_context *ctx)
+ {
+diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
+index 7b70ccb7fec34..f57b95e830ac0 100644
+--- a/arch/riscv/net/bpf_jit_core.c
++++ b/arch/riscv/net/bpf_jit_core.c
+@@ -182,13 +182,6 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
+ 			prog = orig_prog;
+ 			goto out_offset;
+ 		}
+-		/*
+-		 * The instructions have now been copied to the ROX region from
+-		 * where they will execute.
+-		 * Write any modified data cache blocks out to memory and
+-		 * invalidate the corresponding blocks in the instruction cache.
+-		 */
+-		bpf_flush_icache(jit_data->ro_header, ctx->ro_insns + ctx->ninsns);
+ 		for (i = 0; i < prog->len; i++)
+ 			ctx->offset[i] = ninsns_rvoff(ctx->offset[i]);
+ 		bpf_prog_fill_jited_linfo(prog, ctx->offset);
 -- 
 2.53.0
 
