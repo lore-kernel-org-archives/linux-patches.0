@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AF0233933;
-	Wed, 20 May 2026 17:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236B42F363F;
+	Wed, 20 May 2026 17:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299409; cv=none; b=Md1sHaRjPStVFvZEQUkk/1+x2eHUXFAlyP62yv7xns/GGgIkI+cMz3gQYgBO8B31iFlGd11wi2N6Knb1Q6dAmbB4qVHRjjyIzDkPhUomDg3A4sUjjpQMKQUa3vh0pxCdUjCqOXjNpp3V0UH0oxbZ7Eeo9c0jcsn7EzZhXctkc5I=
+	t=1779299412; cv=none; b=fJQxUDKwq/1arp1cAbF5+qQT8RMDNNNWeJtFNV2ZKZSQL2YRDdxxW/mFkd6cOuN0mEB/vO+F8+jACTJLjLVsUvA0M933oSYjY5T1s8SAr6LpPg9JOE3P1hzDqJmXFJmW6vBgnuEyRXODYC5j7ZMJbxDG/xO8xOwKulo0PcLc5H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299409; c=relaxed/simple;
-	bh=zXODaSm2KyzCbjLgbCODiLVEhMxjV9jo1XsPL+LBBYU=;
+	s=arc-20240116; t=1779299412; c=relaxed/simple;
+	bh=Td8vEbrQlZDVpsa/JhnuKZ42lGp8Gzq/28quYYpFtcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ajbdCvOaNedJiEJBlU+Fb1ZzsjTkYjZhTE4O0yWo5YxtfJ6HEKtRcoMppsUCvFQBHReTAPCVQjtr/QeUBmUHero1F4vFqG8kqZEim68PFzm6e4vx+hi4IwQN172YmgXz7UifUhR8JvJ3Z4AovgX6j3D49jqmujVi7iiBP2kVyaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1sqYAEy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EqFAOzpuJtUrgAJsZhle88stmyR9g0F2XTUS2KLaNHbbJ3cemVzP6DPSyJDdCGSiIgEokiMzbmFfVRFuE/S/V28CdnN+kvmmu8DTOOqr2boNMKSwj8U1s/F/BLLDCW2rn9YAbD9AeAQhuVjd3oxhi0ub4ZmB9LN6YJtO/xVaO/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLiudnvq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1sqYAEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C491F000E9;
-	Wed, 20 May 2026 17:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLiudnvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878201F00893;
+	Wed, 20 May 2026 17:50:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299408;
-	bh=I6RltGYRRWLIYFvGKWvNIYF6CkLsHCy8n5tSp/0Ep7U=;
+	s=korg; t=1779299411;
+	bh=dKLXRpnpke8X59CoPaNJZ61+6d8Q+TN/r9vHUU4w004=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u1sqYAEyz+66ClStSLLrrzygfaPdqEUhBxnHlDxLaUp6UisIkaAK0lRP4JS0QPflf
-	 DJgx+gEjdjcevfrg9dO9QHkMtf2E8qNXEeSC1hzi18gClB5z9v+fmHNatFwF9Qu6dj
-	 031KvplwYAlBYOoIVbJrOm1Q9idbO9p75ZA8U82U=
+	b=PLiudnvq4Aa8ICkz7Pi6KvoBIvwgFr+lTjGNm8I4wVfVPaaCM1ExCMvsWYkQBDOGl
+	 HTheU0CAt6Y05V7AFj7qAH6H83QqsAcZsO9Raj8huE3RqMhlGr2pP4qGdSmUdrwkF7
+	 zqakh55YNJx27Ij26lalDIa3gIGboUPob4iWvTAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko <sashiko@sashiko.dev>,
-	Herman Li <herman.li@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
-	"Lai, Yi1" <yi1.lai@intel.com>,
-	Jiaqi Yan <jiaqiyan@google.com>,
-	Zaid Alali <zaidal@os.amperecomputing.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Daan De Meyer <daan@amutable.com>,
+	Phillip Potter <phil@philpotter.co.uk>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 762/957] ACPI: APEI: EINJ: Fix EINJV2 memory error injection
-Date: Wed, 20 May 2026 18:20:45 +0200
-Message-ID: <20260520162151.088767870@linuxfoundation.org>
+Subject: [PATCH 6.18 763/957] cdrom, scsi: sr: propagate read-only status to block layer via set_disk_ro()
+Date: Wed, 20 May 2026 18:20:46 +0200
+Message-ID: <20260520162151.110552288@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -56,133 +53,234 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Luck <tony.luck@intel.com>
+From: Daan De Meyer <daan@amutable.com>
 
-[ Upstream commit 0c00cfbcfcffa7085e4f0c7fd7a4caada4e7a90f ]
+[ Upstream commit 0898a817621a2f0cddca8122d9b974003fe5036d ]
 
-Error types in EINJV2 use different bit positions for each flavor of
-injection from legacy EINJ.
+The cdrom core never calls set_disk_ro() for a registered device, so
+BLKROGET on a CD-ROM device always returns 0 (writable), even when the
+drive has no write capabilities and writes will inevitably fail. This
+causes problems for userspace that relies on BLKROGET to determine
+whether a block device is read-only. For example, systemd's loop device
+setup uses BLKROGET to decide whether to create a loop device with
+LO_FLAGS_READ_ONLY. Without the read-only flag, writes pass through the
+loop device to the CD-ROM and fail with I/O errors. systemd-fsck
+similarly checks BLKROGET to decide whether to run fsck in no-repair
+mode (-n).
 
-Two issues:
+The write-capability bits in cdi->mask come from two different sources:
+CDC_DVD_RAM and CDC_CD_RW are populated by the driver from the MODE
+SENSE capabilities page (page 0x2A) before register_cdrom() is called,
+while CDC_MRW_W and CDC_RAM require the MMC GET CONFIGURATION command
+and were only probed by cdrom_open_write() at device open time. This
+meant that any attempt to compute the writable state from the full
+mask at probe time was incorrect, because the GET CONFIGURATION bits
+were still unset (and cdi->mask is initialized such that capabilities
+are assumed present).
 
- 1) The address sanity checks in einj_error_inject() were skipped for
-    EINJV2 injections. Noted by sashiko[1]
- 2) __einj_error_trigger() failed to drop the entry of the target
-    physical address from the list of resources that need to be
-    requested.
+Fix this by factoring the GET CONFIGURATION probing out of
+cdrom_open_write() into a new exported helper,
+cdrom_probe_write_features(), and having sr call it from sr_probe()
+right after get_capabilities() has populated the MODE SENSE bits.
+register_cdrom() then calls set_disk_ro() based on the full
+write-capability mask (CDC_DVD_RAM | CDC_MRW_W | CDC_RAM | CDC_CD_RW)
+so the block layer reflects the drive's actual write support. The
+feature queries used (CDF_MRW and CDF_RWRT via GET CONFIGURATION with
+RT=00) report drive-level capabilities that are persistent across
+media, so a single probe before register_cdrom() is sufficient and the
+redundant probe at open time is dropped.
 
-Add a helper function that checks if an injection is to memory and use it
-to solve each of these issues.
+With set_disk_ro() now accurate, the long-vestigial cd->writeable flag
+in sr can go: get_capabilities() used to set cd->writeable based on
+the same four mask bits, but because CDC_MRW_W and CDC_RAM default to
+"capability present" in cdi->mask and aren't touched by MODE SENSE,
+the condition that gated cd->writeable was always true, making it
+unconditionally 1. Replace the corresponding gate in sr_init_command()
+with get_disk_ro(cd->disk), which turns a previously no-op check into
+a real one and also catches kernel-internal bio writers that bypass
+blkdev_write_iter()'s bdev_read_only() check.
 
-Note that the old test in __einj_error_trigger() checked that param2 was
-not zero. This isn't needed because the sanity checks in einj_error_inject()
-reject memory injections with param2 == 0.
+The sd driver (SCSI disks) does not have this problem because it
+checks the MODE SENSE Write Protect bit and calls set_disk_ro()
+accordingly. The sr driver cannot use the same approach because the
+MMC specification does not define the WP bit in the MODE SENSE
+device-specific parameter byte for CD-ROM devices.
 
-Fixes: b47610296d17 ("ACPI: APEI: EINJ: Enable EINJv2 error injections")
-Reported-by: sashiko <sashiko@sashiko.dev>
-Reported-by: Herman Li <herman.li@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Tested-by: "Lai, Yi1" <yi1.lai@intel.com>
-Link: https://sashiko.dev/#/patchset/20260415163620.12957-1-tony.luck%40intel.com # [1]
-Reviewed-by: Jiaqi Yan <jiaqiyan@google.com>
-Reviewed-by: Zaid Alali <zaidal@os.amperecomputing.com>
-Link: https://patch.msgid.link/20260421150216.11666-3-tony.luck@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Daan De Meyer <daan@amutable.com>
+Reviewed-by: Phillip Potter <phil@philpotter.co.uk>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Phillip Potter <phil@philpotter.co.uk>
+Link: https://patch.msgid.link/20260427210139.1400-2-phil@philpotter.co.uk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/einj-core.c | 45 +++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 20 deletions(-)
+ drivers/cdrom/cdrom.c | 73 ++++++++++++++++++++++++++++---------------
+ drivers/scsi/sr.c     | 11 ++-----
+ drivers/scsi/sr.h     |  1 -
+ include/linux/cdrom.h |  1 +
+ 4 files changed, 51 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/acpi/apei/einj-core.c b/drivers/acpi/apei/einj-core.c
-index 305c240a303f6..02b81b7b5a2e2 100644
---- a/drivers/acpi/apei/einj-core.c
-+++ b/drivers/acpi/apei/einj-core.c
-@@ -401,8 +401,18 @@ static struct acpi_generic_address *einj_get_trigger_parameter_region(
+diff --git a/drivers/cdrom/cdrom.c b/drivers/cdrom/cdrom.c
+index 31ba1f8c1f786..e30414f0d4560 100644
+--- a/drivers/cdrom/cdrom.c
++++ b/drivers/cdrom/cdrom.c
+@@ -631,6 +631,16 @@ int register_cdrom(struct gendisk *disk, struct cdrom_device_info *cdi)
  
- 	return NULL;
- }
-+
-+static bool is_memory_injection(u32 type, u32 flags)
-+{
-+	if (flags & SETWA_FLAGS_EINJV2)
-+		return !!(type & ACPI_EINJV2_MEMORY);
-+	if (type & ACPI5_VENDOR_BIT)
-+		return !!(vendor_flags & SETWA_FLAGS_MEM);
-+	return !!(type & MEM_ERROR_MASK) || !!(flags & SETWA_FLAGS_MEM);
-+}
-+
- /* Execute instructions in trigger error action table */
--static int __einj_error_trigger(u64 trigger_paddr, u32 type,
-+static int __einj_error_trigger(u64 trigger_paddr, u32 type, u32 flags,
- 				u64 param1, u64 param2)
- {
- 	struct acpi_einj_trigger trigger_tab;
-@@ -480,7 +490,7 @@ static int __einj_error_trigger(u64 trigger_paddr, u32 type,
- 	 * This will cause resource conflict with regular memory.  So
- 	 * remove it from trigger table resources.
- 	 */
--	if ((param_extension || acpi5) && (type & MEM_ERROR_MASK) && param2) {
-+	if ((param_extension || acpi5) && is_memory_injection(type, flags)) {
- 		struct apei_resources addr_resources;
- 
- 		apei_resources_init(&addr_resources);
-@@ -660,7 +670,7 @@ static int __einj_error_inject(u32 type, u32 flags, u64 param1, u64 param2,
- 		return rc;
- 	trigger_paddr = apei_exec_ctx_get_output(&ctx);
- 	if (notrigger == 0) {
--		rc = __einj_error_trigger(trigger_paddr, type, param1, param2);
-+		rc = __einj_error_trigger(trigger_paddr, type, flags, param1, param2);
- 		if (rc)
- 			return rc;
- 	}
-@@ -718,35 +728,30 @@ int einj_error_inject(u32 type, u32 flags, u64 param1, u64 param2, u64 param3,
- 		      SETWA_FLAGS_PCIE_SBDF | SETWA_FLAGS_EINJV2)))
- 		return -EINVAL;
+ 	WARN_ON(!cdo->generic_packet);
  
 +	/*
-+	 * Injections targeting a CXL 1.0/1.1 port have to be injected
-+	 * via the einj_cxl_rch_error_inject() path as that does the proper
-+	 * validation of the given RCRB base (MMIO) address.
++	 * Propagate the drive's write support to the block layer so BLKROGET
++	 * reflects actual write capability. Drivers that use GET CONFIGURATION
++	 * features (CDC_MRW_W, CDC_RAM) must have called
++	 * cdrom_probe_write_features() before register_cdrom() so the mask is
++	 * complete here.
 +	 */
-+	if (einj_is_cxl_error_type(type) && (flags & SETWA_FLAGS_MEM))
-+		return -EINVAL;
++	set_disk_ro(disk, !CDROM_CAN(CDC_DVD_RAM | CDC_MRW_W | CDC_RAM |
++				     CDC_CD_RW));
 +
- 	/* check if type is a valid EINJv2 error type */
- 	if (is_v2) {
- 		if (!(type & available_error_type_v2))
- 			return -EINVAL;
- 	}
+ 	cd_dbg(CD_REG_UNREG, "drive \"/dev/%s\" registered\n", cdi->name);
+ 	mutex_lock(&cdrom_mutex);
+ 	list_add(&cdi->list, &cdrom_list);
+@@ -742,6 +752,44 @@ static int cdrom_is_random_writable(struct cdrom_device_info *cdi, int *write)
+ 	return 0;
+ }
+ 
++/*
++ * Probe write-related MMC features via GET CONFIGURATION and update
++ * cdi->mask accordingly. Drivers that populate cdi->mask from the MODE SENSE
++ * capabilities page (e.g. sr) should call this after those MODE SENSE bits
++ * have been set but before register_cdrom(), so that the full set of
++ * write-capability bits is known by the time register_cdrom() decides on the
++ * initial read-only state of the disk.
++ */
++void cdrom_probe_write_features(struct cdrom_device_info *cdi)
++{
++	int mrw, mrw_write, ram_write;
++
++	mrw = 0;
++	if (!cdrom_is_mrw(cdi, &mrw_write))
++		mrw = 1;
++
++	if (CDROM_CAN(CDC_MO_DRIVE))
++		ram_write = 1;
++	else
++		(void) cdrom_is_random_writable(cdi, &ram_write);
++
++	if (mrw)
++		cdi->mask &= ~CDC_MRW;
++	else
++		cdi->mask |= CDC_MRW;
++
++	if (mrw_write)
++		cdi->mask &= ~CDC_MRW_W;
++	else
++		cdi->mask |= CDC_MRW_W;
++
++	if (ram_write)
++		cdi->mask &= ~CDC_RAM;
++	else
++		cdi->mask |= CDC_RAM;
++}
++EXPORT_SYMBOL(cdrom_probe_write_features);
++
+ static int cdrom_media_erasable(struct cdrom_device_info *cdi)
+ {
+ 	disc_information di;
+@@ -894,33 +942,8 @@ static int cdrom_is_dvd_rw(struct cdrom_device_info *cdi)
+  */
+ static int cdrom_open_write(struct cdrom_device_info *cdi)
+ {
+-	int mrw, mrw_write, ram_write;
+ 	int ret = 1;
+ 
+-	mrw = 0;
+-	if (!cdrom_is_mrw(cdi, &mrw_write))
+-		mrw = 1;
+-
+-	if (CDROM_CAN(CDC_MO_DRIVE))
+-		ram_write = 1;
+-	else
+-		(void) cdrom_is_random_writable(cdi, &ram_write);
+-	
+-	if (mrw)
+-		cdi->mask &= ~CDC_MRW;
+-	else
+-		cdi->mask |= CDC_MRW;
+-
+-	if (mrw_write)
+-		cdi->mask &= ~CDC_MRW_W;
+-	else
+-		cdi->mask |= CDC_MRW_W;
+-
+-	if (ram_write)
+-		cdi->mask &= ~CDC_RAM;
+-	else
+-		cdi->mask |= CDC_RAM;
+-
+ 	if (CDROM_CAN(CDC_MRW_W))
+ 		ret = cdrom_mrw_open_write(cdi);
+ 	else if (CDROM_CAN(CDC_DVD_RAM))
+diff --git a/drivers/scsi/sr.c b/drivers/scsi/sr.c
+index add13e3068983..803fc9c132298 100644
+--- a/drivers/scsi/sr.c
++++ b/drivers/scsi/sr.c
+@@ -395,7 +395,7 @@ static blk_status_t sr_init_command(struct scsi_cmnd *SCpnt)
+ 
+ 	switch (req_op(rq)) {
+ 	case REQ_OP_WRITE:
+-		if (!cd->writeable)
++		if (get_disk_ro(cd->disk))
+ 			goto out;
+ 		SCpnt->cmnd[0] = WRITE_10;
+ 		cd->cdi.media_written = 1;
+@@ -681,6 +681,7 @@ static int sr_probe(struct device *dev)
+ 	error = -ENOMEM;
+ 	if (get_capabilities(cd))
+ 		goto fail_minor;
++	cdrom_probe_write_features(&cd->cdi);
+ 	sr_vendor_init(cd);
+ 
+ 	set_capacity(disk, cd->capacity);
+@@ -899,14 +900,6 @@ static int get_capabilities(struct scsi_cd *cd)
+ 	/*else    I don't think it can close its tray
+ 		cd->cdi.mask |= CDC_CLOSE_TRAY; */
+ 
 -	/*
--	 * We need extra sanity checks for memory errors.
--	 * Other types leap directly to injection.
+-	 * if DVD-RAM, MRW-W or CD-RW, we are randomly writable
 -	 */
- 
- 	/* ensure param1/param2 existed */
- 	if (!(param_extension || acpi5))
- 		goto inject;
- 
--	/* ensure injection is memory related */
--	if (type & ACPI5_VENDOR_BIT) {
--		if (vendor_flags != SETWA_FLAGS_MEM)
--			goto inject;
--	} else if (!(type & MEM_ERROR_MASK) && !(flags & SETWA_FLAGS_MEM)) {
--		goto inject;
+-	if ((cd->cdi.mask & (CDC_DVD_RAM | CDC_MRW_W | CDC_RAM | CDC_CD_RW)) !=
+-			(CDC_DVD_RAM | CDC_MRW_W | CDC_RAM | CDC_CD_RW)) {
+-		cd->writeable = 1;
 -	}
 -
- 	/*
--	 * Injections targeting a CXL 1.0/1.1 port have to be injected
--	 * via the einj_cxl_rch_error_inject() path as that does the proper
--	 * validation of the given RCRB base (MMIO) address.
-+	 * We need extra sanity checks for memory errors.
-+	 * Other types leap directly to injection.
- 	 */
--	if (einj_is_cxl_error_type(type) && (flags & SETWA_FLAGS_MEM))
--		return -EINVAL;
-+	if (!is_memory_injection(type, flags))
-+		goto inject;
+ 	kfree(buffer);
+ 	return 0;
+ }
+diff --git a/drivers/scsi/sr.h b/drivers/scsi/sr.h
+index dc899277b3a44..2d92f9cb6fec7 100644
+--- a/drivers/scsi/sr.h
++++ b/drivers/scsi/sr.h
+@@ -35,7 +35,6 @@ typedef struct scsi_cd {
+ 	struct scsi_device *device;
+ 	unsigned int vendor;	/* vendor code, see sr_vendor.c         */
+ 	unsigned long ms_offset;	/* for reading multisession-CD's        */
+-	unsigned writeable : 1;
+ 	unsigned use:1;		/* is this device still supportable     */
+ 	unsigned xa_flag:1;	/* CD has XA sectors ? */
+ 	unsigned readcd_known:1;	/* drive supports READ_CD (0xbe) */
+diff --git a/include/linux/cdrom.h b/include/linux/cdrom.h
+index b907e6c2307d8..260d7968cf720 100644
+--- a/include/linux/cdrom.h
++++ b/include/linux/cdrom.h
+@@ -108,6 +108,7 @@ int cdrom_ioctl(struct cdrom_device_info *cdi, struct block_device *bdev,
+ extern unsigned int cdrom_check_events(struct cdrom_device_info *cdi,
+ 				       unsigned int clearing);
  
- 	/*
- 	 * Disallow crazy address masks that give BIOS leeway to pick
++extern void cdrom_probe_write_features(struct cdrom_device_info *cdi);
+ extern int register_cdrom(struct gendisk *disk, struct cdrom_device_info *cdi);
+ extern void unregister_cdrom(struct cdrom_device_info *cdi);
+ 
 -- 
 2.53.0
 
