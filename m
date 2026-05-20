@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1659436B05E;
-	Wed, 20 May 2026 16:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B650B36A357;
+	Wed, 20 May 2026 16:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295273; cv=none; b=HfxawJGi6gLwDvHQTgzCxYRBx1y2Y7LoOJyGapS5UaUNan14VbsqA26712Jy93KrDCVLWd/r2SnELOBxLffEv/XAuwJ9zxJ9/SWvzE+QH+hW+amGkVAd9WjQQxmkyUGGKeAHKLeVfbT6wc3U5utehYU2f7Xc3Dm5EcVUPb4p5sU=
+	t=1779295275; cv=none; b=rYgRXeJIEbAkwVYw5wa0BdKem4A5OWiZyBK/rBSWZ3fxdtHbpm28rwJKL4aeLrAADLdmnZAVpUUEY2Bootk13kM0tpK2AGA8fyTaE/tjo5pS9cuNDC45q4bU+jbrOISOodJ8yUTqrbTGJnL4rqC3Bodf0/3xg1ou/K66UEQQ2lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295273; c=relaxed/simple;
-	bh=7xOt70/IWiQ+qLGqDtpYyd16dLTKwwUlhxFvYGbt05g=;
+	s=arc-20240116; t=1779295275; c=relaxed/simple;
+	bh=8V3gd7zFT/XiNpNaTdl4+/AcIC/BzBwwYyxE6TYG4Hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jgWFp3s9ZtN1ZsvAeWH3IjwWgvhPTxS/PfydYbweO+q7vnclpn+eEUOXB8i+oPZlHVcfo1qbVJPmocRNdsgZB2iQ1nAd1XX768Kk17zAPROAt78Yv6zKdTBy+SKy/faS4IubO2B7dOuOfONZc1I65cH27b9Sq2F4CrNbplMK+JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rK8akIUu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cHfJvdIyIvvqUDuHrNfEyGBr+NjkgDd+S9WYVEUcIj7sZAVLSX3QLenJH0KCnlrQOo/VNyXuc8/+OzqXo+slQZVOtfhj+1VA6jG/pMtY1NmPZKW8pFOb/zk1p7zAtvGuJrjXSblLDKNaxtr5nICmdpD41J9C4vyzB5wv4PVFI4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tz60AGoL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rK8akIUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4B01F000E9;
-	Wed, 20 May 2026 16:41:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tz60AGoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2666E1F000E9;
+	Wed, 20 May 2026 16:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295272;
-	bh=7vkzVM3tlNEuVox6UFJzPl488IHyR/1V9VW0+UvOYNY=;
+	s=korg; t=1779295274;
+	bh=M97ErmvWD3NrCXy171ltdkrLMRLnQ5EBPsZEL1wr+iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rK8akIUuh/JBgRbRsDk9JtkMj9PmmAJqIdhp+IdQdA0QXGC4zOROix2lDaKkjxDtB
-	 hulDDh7w7+9KvS6WdBmImnKn8uqYZfEOQGFxsX3UzOXmc5UpjdxguNR1e1WQF3x7aP
-	 +Eeep6H1POgXywKm9G+tFEUvTfS5vXmQHPT/n7oQ=
+	b=Tz60AGoLGBWda1D4z1amOuGDxJd2lBblACd57DFqzAPFrzF+vtXAxGYgJ1L1y5oko
+	 s3BB0ZfMWqIiLBvtHaptittV2eRBw8lM22R0a1ZE89hvVocu1+mNwUSTyI3JHP/KEN
+	 w0oO094zNXbgmYPKJfv7kTzXUeA6rIi80ae4KWp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Connor Abbott <cwabbott0@gmail.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0357/1146] drm/msm/a6xx: Fix dumping A650+ debugbus blocks
-Date: Wed, 20 May 2026 18:10:07 +0200
-Message-ID: <20260520162156.281775320@linuxfoundation.org>
+Subject: [PATCH 7.0 0358/1146] drm/msm/a6xx: Use barriers while updating HFI Q headers
+Date: Wed, 20 May 2026 18:10:08 +0200
+Message-ID: <20260520162156.303947169@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,68 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Connor Abbott <cwabbott0@gmail.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit cc83f71c9be0715fe93b963ffa9767d5d84354ed ]
+[ Upstream commit dc78b35d5ec09d1b0b8a937e6e640d2c5a030915 ]
 
-These should be appended after the existing debugbus blocks, instead of
-replacing them.
+To avoid harmful compiler optimizations and IO reordering in the HW, use
+barriers and READ/WRITE_ONCE helpers as necessary while accessing the HFI
+queue index variables.
 
-Fixes: 1e05bba5e2b8 ("drm/msm/a6xx: Update a6xx gpu coredump")
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/714270/
-Message-ID: <20260325-drm-msm-a650-debugbus-v1-1-dfbf358890a7@gmail.com>
+Fixes: 4b565ca5a2cb ("drm/msm: Add A6XX device support")
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/714653/
+Message-ID: <20260327-a8xx-gpu-batch2-v2-1-2b53c38d2101@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 72c4bb360acd5..e9a23d471f374 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -361,7 +361,7 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
- 			sizeof(*a6xx_state->debugbus));
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+index 53cfdf4e6c346..4f5dbf46132ba 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+@@ -34,7 +34,7 @@ static int a6xx_hfi_queue_read(struct a6xx_gmu *gmu,
+ 	struct a6xx_hfi_queue_header *header = queue->header;
+ 	u32 i, hdr, index = header->read_index;
  
- 	if (a6xx_state->debugbus) {
--		int i;
-+		int i, j;
- 
- 		for (i = 0; i < ARRAY_SIZE(a6xx_debugbus_blocks); i++)
- 			a6xx_get_debugbus_block(gpu,
-@@ -369,8 +369,6 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
- 				&a6xx_debugbus_blocks[i],
- 				&a6xx_state->debugbus[i]);
- 
--		a6xx_state->nr_debugbus = ARRAY_SIZE(a6xx_debugbus_blocks);
--
- 		/*
- 		 * GBIF has same debugbus as of other GPU blocks, fall back to
- 		 * default path if GPU uses GBIF, also GBIF uses exactly same
-@@ -381,17 +379,19 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
- 				&a6xx_gbif_debugbus_block,
- 				&a6xx_state->debugbus[i]);
- 
--			a6xx_state->nr_debugbus += 1;
-+			i++;
- 		}
- 
- 
- 		if (adreno_is_a650_family(to_adreno_gpu(gpu))) {
--			for (i = 0; i < ARRAY_SIZE(a650_debugbus_blocks); i++)
-+			for (j = 0; j < ARRAY_SIZE(a650_debugbus_blocks); i++, j++)
- 				a6xx_get_debugbus_block(gpu,
- 					a6xx_state,
--					&a650_debugbus_blocks[i],
-+					&a650_debugbus_blocks[j],
- 					&a6xx_state->debugbus[i]);
- 		}
-+
-+		a6xx_state->nr_debugbus = i;
+-	if (header->read_index == header->write_index) {
++	if (header->read_index == READ_ONCE(header->write_index)) {
+ 		header->rx_request = 1;
+ 		return 0;
  	}
+@@ -62,7 +62,10 @@ static int a6xx_hfi_queue_read(struct a6xx_gmu *gmu,
+ 	if (!gmu->legacy)
+ 		index = ALIGN(index, 4) % header->size;
+ 
+-	header->read_index = index;
++	/* Ensure all memory operations are complete before updating the read index */
++	dma_mb();
++
++	WRITE_ONCE(header->read_index, index);
+ 	return HFI_HEADER_SIZE(hdr);
  }
  
+@@ -74,7 +77,7 @@ static int a6xx_hfi_queue_write(struct a6xx_gmu *gmu,
+ 
+ 	spin_lock(&queue->lock);
+ 
+-	space = CIRC_SPACE(header->write_index, header->read_index,
++	space = CIRC_SPACE(header->write_index, READ_ONCE(header->read_index),
+ 		header->size);
+ 	if (space < dwords) {
+ 		header->dropped++;
+@@ -95,7 +98,10 @@ static int a6xx_hfi_queue_write(struct a6xx_gmu *gmu,
+ 			queue->data[index] = 0xfafafafa;
+ 	}
+ 
+-	header->write_index = index;
++	/* Ensure all memory operations are complete before updating the write index */
++	dma_mb();
++
++	WRITE_ONCE(header->write_index, index);
+ 	spin_unlock(&queue->lock);
+ 
+ 	gmu_write(gmu, REG_A6XX_GMU_HOST2GMU_INTR_SET, 0x01);
 -- 
 2.53.0
 
