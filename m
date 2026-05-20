@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3373F23A4;
-	Wed, 20 May 2026 17:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4711F3F7A9F;
+	Wed, 20 May 2026 17:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299502; cv=none; b=Oghmq91Nxlb3c9sYbkBKY1K9lyFe4EoBJ3IckOqkDr35bW7Sm0b+/iQc5H3L1NcxI/6gkprNqUhs8O1Hxgm/2Unw6OqSGLcdzS5T0a/ecryJ+QS5tBsPdWBgvQrg3C53bCBe3LBZPg/Ld93+w4KzdtI8T7YFrJ0NBaHGZDnUbGk=
+	t=1779299504; cv=none; b=P3zz1kh9IYCY4R1GO4QkJDrIPIy0t6kl4LAH3r0CxperALvnCucpBhuCIXUZpehDSdUovpp5butq48id41iywSlQMB6fBWy98Ngxl+fxzeQclTqeXMlF+GQ14K/9e1KfX6UY6Zpz9MvCu1iJVaWcvjDNVCWlWsBA0I0M+G9Nl00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299502; c=relaxed/simple;
-	bh=dfA/dqqt+elDXVAtWAPLklYKwyhqlEbxjcyokH9tT88=;
+	s=arc-20240116; t=1779299504; c=relaxed/simple;
+	bh=5INQm0SyC41KZy0iXIwNE7Haci4c1suepJRoKAcq5pg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UADIdOyjBrzvyTDNtQGt389w547Ih7+A5kWBhAU70b1Ij5HfE+OOKj+bRh42GE+KBrEbBBjXVWBIsB9zoFP+Hxkn6hcGU6V9Kz3EOqzVMz2sDJVIhdt0Jm4LLNadJ4M0ppLQRP0t6QrvmeWrTguqcNNYKQ5WHzrDajXzLPJv4+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gG5/mG6q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M0c4MnabHNG/0cXuonkOCTtq9Y35eEoLY0A8aBKCjDSRfCbDQQNeQW00flElNRg4amSrqtty9gLXfaP0ORm2sOq1jOuWM7m/JV8NHAWFsxr0WeKlajMgYDISd66enLPMIj0QYHXEoIIxa3kS/wiNnlOIgeVANFcgRCXJ0l8M36A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IernF0Cw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gG5/mG6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2341F000E9;
-	Wed, 20 May 2026 17:51:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IernF0Cw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1B51F000E9;
+	Wed, 20 May 2026 17:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299500;
-	bh=iEfqpM+s2NwV2Gv04Wvt0JABknFotIfuZDR/APHPKmk=;
+	s=korg; t=1779299503;
+	bh=kz/W8+of0kfzJ7UVOGsoXuxsuU3WgVE/oi34L3xDx+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gG5/mG6q0B6y6YnKIfBf8jYQVsixPUuVDkxUE54vMDWLVoblz4R+sTo/A1Qss3ycm
-	 yXMIWf4kq4jiKC6yFcRODrBztHzsyfLFqKFrn1iX/W+T6nyFjpmgvVDCi8NYERs8yc
-	 zd6Vm4/rqOIAys4o+6C/0OpMaCM0lIMQOoPhzGlY=
+	b=IernF0CwZhAmme+RMxOUiuPepA6YjauCRxVnbkSoNvAwoET0SuVBS3Vyi7xI1FoF9
+	 CqFFyxNKd8DJH8y0Obx1ekjJX1NXd+xBz77BN+vVmHVMFTcyUjHB8P26vXkavYp6iD
+	 JkKrKjR+C1E8gNAnfjdRvdzf76vkXRBmslmFNcis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Yue <glass.su@suse.com>,
-	Yu Kuai <yukuai@fnnas.com>,
+	John Madieu <john.madieu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 794/957] md/md-bitmap: split bitmap sysfs groups
-Date: Wed, 20 May 2026 18:21:17 +0200
-Message-ID: <20260520162151.783330531@linuxfoundation.org>
+Subject: [PATCH 6.18 755/957] spi: rockchip: Read ISR, not IMR, to detect cs-inactive IRQ
+Date: Wed, 20 May 2026 18:20:38 +0200
+Message-ID: <20260520162150.938670203@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,185 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: John Madieu <john.madieu@gmail.com>
 
-[ Upstream commit aba3d6d6cb55c6e1116d1215140559dd7ecdf9a9 ]
+[ Upstream commit b4683a239a409d65f88052f5630c748a8ba070cd ]
 
-Split the classic bitmap sysfs files into a common bitmap group with
-the location attribute and a separate internal bitmap group for the
-remaining files.
+rockchip_spi_isr() decides whether the current interrupt was the
+cs-inactive event by reading IMR:
 
-At the same time, convert bitmap operations from a single sysfs group
-to a sysfs group array so backends can share part of their sysfs
-layout while adding backend-specific attributes separately.
+	if (rs->cs_inactive &&
+	    readl_relaxed(rs->regs + ROCKCHIP_SPI_IMR) & INT_CS_INACTIVE)
+		ctlr->target_abort(ctlr);
 
-Switch the bitmap sysfs helpers to use sysfs_update_groups() for the
-add and update path, and remove groups in reverse order so shared named
-groups are unmerged before the last group removes the directory.
+IMR is the interrupt mask register: it tells which sources are enabled,
+not which one fired. In the PIO path, rockchip_spi_prepare_irq() enables
+both INT_RF_FULL and INT_CS_INACTIVE in IMR when rs->cs_inactive is true:
 
-Also make bitmap operation lookup depend only on the currently selected
-bitmap id matching the installed backend. This prepares the lookup path
-for a later registered none backend.
+	if (rs->cs_inactive)
+		writel_relaxed(INT_RF_FULL | INT_CS_INACTIVE,
+			       rs->regs + ROCKCHIP_SPI_IMR);
 
-Reviewed-by: Su Yue <glass.su@suse.com>
-Link: https://lore.kernel.org/r/20260425024615.1696892-3-yukuai@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
-Stable-dep-of: f2926a533d03 ("md/md-bitmap: add a none backend for bitmap grow")
+so the IMR check is always true once cs_inactive is enabled, and every
+PIO interrupt - including normal RF_FULL completions - is dispatched to
+ctlr->target_abort(), aborting the transfer. The bug is reachable on
+ROCKCHIP_SPI_VER2_TYPE2 in target mode with a DMA-capable controller
+when the transfer is short enough to fall back to PIO
+(rockchip_spi_can_dma() returns false below fifo_len).
+
+Read ISR (which is RISR masked by IMR) so the check actually reflects
+which interrupt fired, and parenthesise the expression for clarity while
+at it.
+
+Fixes: 869f2c94db92 ("spi: rockchip: Stop spi slave dma receiver when cs inactive")
+Signed-off-by: John Madieu <john.madieu@gmail.com>
+Link: https://patch.msgid.link/20260425092936.2590132-2-john.madieu@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c   | 23 +++++++++++++++++++----
- drivers/md/md-bitmap.h   |  2 +-
- drivers/md/md-llbitmap.c |  7 ++++++-
- drivers/md/md.c          | 21 ++++++++++++++-------
- 4 files changed, 40 insertions(+), 13 deletions(-)
+ drivers/spi/spi-rockchip.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
-index 7bb56d0491a2f..7a96600949139 100644
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -2956,8 +2956,12 @@ static struct md_sysfs_entry max_backlog_used =
- __ATTR(max_backlog_used, S_IRUGO | S_IWUSR,
-        behind_writes_used_show, behind_writes_used_reset);
+diff --git a/drivers/spi/spi-rockchip.c b/drivers/spi/spi-rockchip.c
+index 45b1ad40a7efc..f7001c7bbe109 100644
+--- a/drivers/spi/spi-rockchip.c
++++ b/drivers/spi/spi-rockchip.c
+@@ -357,7 +357,8 @@ static irqreturn_t rockchip_spi_isr(int irq, void *dev_id)
+ 	struct rockchip_spi *rs = spi_controller_get_devdata(ctlr);
  
--static struct attribute *md_bitmap_attrs[] = {
-+static struct attribute *md_bitmap_common_attrs[] = {
- 	&bitmap_location.attr,
-+	NULL
-+};
-+
-+static struct attribute *md_bitmap_internal_attrs[] = {
- 	&bitmap_space.attr,
- 	&bitmap_timeout.attr,
- 	&bitmap_backlog.attr,
-@@ -2968,9 +2972,20 @@ static struct attribute *md_bitmap_attrs[] = {
- 	NULL
- };
- 
--static struct attribute_group md_bitmap_group = {
-+static struct attribute_group md_bitmap_common_group = {
-+	.name = "bitmap",
-+	.attrs = md_bitmap_common_attrs,
-+};
-+
-+static struct attribute_group md_bitmap_internal_group = {
- 	.name = "bitmap",
--	.attrs = md_bitmap_attrs,
-+	.attrs = md_bitmap_internal_attrs,
-+};
-+
-+static const struct attribute_group *bitmap_groups[] = {
-+	&md_bitmap_common_group,
-+	&md_bitmap_internal_group,
-+	NULL,
- };
- 
- static struct bitmap_operations bitmap_ops = {
-@@ -3014,7 +3029,7 @@ static struct bitmap_operations bitmap_ops = {
- 	.set_pages		= bitmap_set_pages,
- 	.free			= md_bitmap_free,
- 
--	.group			= &md_bitmap_group,
-+	.groups			= bitmap_groups,
- };
- 
- int md_bitmap_init(void)
-diff --git a/drivers/md/md-bitmap.h b/drivers/md/md-bitmap.h
-index b42a28fa83a0f..214f623c7e790 100644
---- a/drivers/md/md-bitmap.h
-+++ b/drivers/md/md-bitmap.h
-@@ -125,7 +125,7 @@ struct bitmap_operations {
- 	void (*set_pages)(void *data, unsigned long pages);
- 	void (*free)(void *data);
- 
--	struct attribute_group *group;
-+	const struct attribute_group **groups;
- };
- 
- /* the bitmap API */
-diff --git a/drivers/md/md-llbitmap.c b/drivers/md/md-llbitmap.c
-index 0526e742062ac..50eeddf7f539b 100644
---- a/drivers/md/md-llbitmap.c
-+++ b/drivers/md/md-llbitmap.c
-@@ -1562,6 +1562,11 @@ static struct attribute_group md_llbitmap_group = {
- 	.attrs = md_llbitmap_attrs,
- };
- 
-+static const struct attribute_group *md_llbitmap_groups[] = {
-+	&md_llbitmap_group,
-+	NULL,
-+};
-+
- static struct bitmap_operations llbitmap_ops = {
- 	.head = {
- 		.type	= MD_BITMAP,
-@@ -1598,7 +1603,7 @@ static struct bitmap_operations llbitmap_ops = {
- 	.dirty_bits		= llbitmap_dirty_bits,
- 	.write_all		= llbitmap_write_all,
- 
--	.group			= &md_llbitmap_group,
-+	.groups			= md_llbitmap_groups,
- };
- 
- int md_llbitmap_init(void)
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 3061370e959b3..213221abc44c3 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -688,7 +688,7 @@ static void no_op(struct percpu_ref *r) {}
- 
- static void md_bitmap_sysfs_add(struct mddev *mddev)
- {
--	if (sysfs_create_group(&mddev->kobj, mddev->bitmap_ops->group))
-+	if (sysfs_update_groups(&mddev->kobj, mddev->bitmap_ops->groups))
- 		pr_warn("md: cannot register extra bitmap attributes for %s\n",
- 			mdname(mddev));
- 	else
-@@ -701,16 +701,23 @@ static void md_bitmap_sysfs_add(struct mddev *mddev)
- 
- static void md_bitmap_sysfs_del(struct mddev *mddev)
- {
--	sysfs_remove_group(&mddev->kobj, mddev->bitmap_ops->group);
-+	int nr_groups = 0;
-+
-+	for (nr_groups = 0; mddev->bitmap_ops->groups[nr_groups]; nr_groups++)
-+		;
-+
-+	while (--nr_groups >= 1)
-+		sysfs_unmerge_group(&mddev->kobj,
-+				    mddev->bitmap_ops->groups[nr_groups]);
-+	sysfs_remove_group(&mddev->kobj, mddev->bitmap_ops->groups[0]);
- }
- 
- static bool mddev_set_bitmap_ops_nosysfs(struct mddev *mddev)
- {
--	struct bitmap_operations *old = mddev->bitmap_ops;
- 	struct md_submodule_head *head;
- 
--	if (mddev->bitmap_id == ID_BITMAP_NONE ||
--	    (old && old->head.id == mddev->bitmap_id))
-+	if (mddev->bitmap_ops &&
-+	    mddev->bitmap_ops->head.id == mddev->bitmap_id)
- 		return true;
- 
- 	xa_lock(&md_submodule);
-@@ -6454,7 +6461,7 @@ static int md_bitmap_create(struct mddev *mddev)
- 	if (err)
- 		return err;
- 
--	if (!mddev_is_dm(mddev) && mddev->bitmap_ops->group)
-+	if (!mddev_is_dm(mddev) && mddev->bitmap_ops->groups)
- 		md_bitmap_sysfs_add(mddev);
- 
- 	return 0;
-@@ -6472,7 +6479,7 @@ static void md_bitmap_destroy_nosysfs(struct mddev *mddev)
- static void md_bitmap_destroy(struct mddev *mddev)
- {
- 	if (!mddev_is_dm(mddev) && mddev->bitmap_ops &&
--	    mddev->bitmap_ops->group)
-+	    mddev->bitmap_ops->groups)
- 		md_bitmap_sysfs_del(mddev);
- 
- 	md_bitmap_destroy_nosysfs(mddev);
+ 	/* When int_cs_inactive comes, spi target abort */
+-	if (rs->cs_inactive && readl_relaxed(rs->regs + ROCKCHIP_SPI_IMR) & INT_CS_INACTIVE) {
++	if (rs->cs_inactive &&
++	    (readl_relaxed(rs->regs + ROCKCHIP_SPI_ISR) & INT_CS_INACTIVE)) {
+ 		ctlr->target_abort(ctlr);
+ 		writel_relaxed(0, rs->regs + ROCKCHIP_SPI_IMR);
+ 		writel_relaxed(0xffffffff, rs->regs + ROCKCHIP_SPI_ICR);
 -- 
 2.53.0
 
