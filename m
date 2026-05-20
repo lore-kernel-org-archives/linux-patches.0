@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15DF2C11FE;
-	Wed, 20 May 2026 18:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD09348C55;
+	Wed, 20 May 2026 18:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301281; cv=none; b=odI33zwfZp5t2F1MbAGT7m1KJ8fuquCWoffVV6uiIu+tz96YPQ4T1Wp2BHqXyBGXOGRG1as6rKjmrHaYEqrTIfPFP4yp44y07t4RashK3umgU9UMKrfxQFO/uvBo/xybeho9XVLLVOiCyS4c2pN0DDND52uz/Gaf0yE//xZhKDg=
+	t=1779301284; cv=none; b=PEyvkTLzU25Rg31Yaeq1VL4iOCrK+PjNvunUlH5ex8rT10MzL49Ly8O+Q3utJoH47jaUtmvD7pTnG9toF8aOeLCV5zMPkuJSJ8xPOb1BNIj9UvKyyhNPzreZyECLFn1A0tbFe0nuQkR83Sz7Xj9FsEHxEzM27RYimx92b7lt1j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301281; c=relaxed/simple;
-	bh=NWzs4Sf/r9dAR1tk69Y+fwypcbDMDgWziDbu89R5DjQ=;
+	s=arc-20240116; t=1779301284; c=relaxed/simple;
+	bh=l2lnxLzoXMyV/ePa3u+Goo7SB0rN6XCnlVnMzzqmrxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fDAq3HNFjiKPogZAe5cpc4/BoR+cO/qOqx+7rzBXxoA40qCCs34XdU8k0BYK+Ek0z9AEZ8G5x0ipBQV9jDZfjOWa3j5fsRybI0RqmuJwzra9a7KNnJlghdq4VgYRCi/EwGbXxC4nxPvskBDVHCFdMde/lCDuN+NlW0Da2fyDMes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bUNwnyZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gzcmCxizY7JKlg82HER+z8+nGOCDg1CFwjDPppzdB+nZ9mcfl2yALJaaw5FIGb8T5tfQab8NtFXVW5JeyAHHQtcXIyVFBZBlefuY4gnOXWV3/Ws54+DLPALzYxj0TYP+ub4NRioc0vbj8iXkzT55mLYWQ47UZJhtI6VAGIlxcaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rin6Blvq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bUNwnyZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 225BF1F000E9;
-	Wed, 20 May 2026 18:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rin6Blvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13431F000E9;
+	Wed, 20 May 2026 18:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301280;
-	bh=qY3W1iOV5OUrQ18xUQOrPCDABXktSJdKlCq63PjzCx0=;
+	s=korg; t=1779301283;
+	bh=fgsUCEg5THUqvkhEw7odli5jtBZS1lZ5Aqs6538CAKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2bUNwnyZHbRfXU8ahIsURe8HHO9FCTLCFg6B6bsC7rblMJIhHRi97KB3t/hGpKj6J
-	 1gFdHyXbdJ0xl3BVIJQts1VP3kY+Z6TPxRC0pLYU0QTGDTd+Y+7xQ+/shC92sCNbvb
-	 VWRHJ51Z62UJZDsTuD9VsuH/K8kpLYgp7S2nr2Fg=
+	b=Rin6Blvq6nFkyW+qz6yQ+UgI6MCwYnZjCfVKHPAXkqmyHJ+5wjnmFnXr7ffMQo3bZ
+	 e1GvFCiqcQxBIuQkMMgriUOT1GufCnnAPeikhdCMEJ55afzXTigcVp5uCNNi5x4H73
+	 vD5sQs/I52DppSGQAqjZa5t13KRWf8xXmf4LF1NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Creeley <brett.creeley@amd.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 495/666] virtio_net: sync rss_trailer.max_tx_vq on queue_pairs change via VQ_PAIRS_SET
-Date: Wed, 20 May 2026 18:21:46 +0200
-Message-ID: <20260520162121.990595195@linuxfoundation.org>
+Subject: [PATCH 6.12 496/666] nfp: fix swapped arguments in nfp_encode_basic_qdr() calls
+Date: Wed, 20 May 2026 18:21:47 +0200
+Message-ID: <20260520162122.011809496@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,60 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit 3bc06da858ef17cfe94b49efc0d9713727012835 ]
+[ Upstream commit 4078c5611d7585548b249377ebd60c272e410490 ]
 
-When netif_is_rxfh_configured() is true (i.e., the user has explicitly
-configured the RSS indirection table), virtnet_set_queues() skips the
-RSS update path and falls through to the VIRTIO_NET_CTRL_MQ_VQ_PAIRS_SET
-command to change the number of queue pairs. However, it does not update
-vi->rss_trailer.max_tx_vq to reflect the new queue_pairs value.
+There is a mismatch between the passed arguments and the actual
+nfp_encode_basic_qdr() function parameter names:
 
-This causes a mismatch between vi->curr_queue_pairs and
-vi->rss_trailer.max_tx_vq. Any subsequent RSS reconfiguration (e.g.,
-via ethtool -X) calls virtnet_commit_rss_command(), which sends the
-stale max_tx_vq to the device, silently reverting the queue count.
+  static int nfp_encode_basic_qdr(u64 addr, int dest_island, int cpp_tgt,
+                                  int mode, bool addr40, int isld1,
+                                  int isld0)
+  {
+      ...
 
-Reproduction:
-1. User configured RSS
-  ethtool -X eth0 equal 8
-2. VQ_PAIRS_SET path; max_tx_vq stays 16
-  ethtool -L eth0 combined 12
-3. RSS commit uses max_tx_vq=16 instead of 12
-  ethtool -X eth0 equal 4
+But "dest_island" and "cpp_tgt" are swapped at every call-site.
+For example:
 
-Fix this by updating vi->rss_trailer.max_tx_vq after a successful
-VQ_PAIRS_SET command when RSS is enabled, keeping it in sync with
-curr_queue_pairs.
+  return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
+                              mode, addr40, isld1, isld0);
 
-Fixes: 50bfcaedd78e ("virtio_net: Update rss when set queue")
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260416212121.29073-1-brett.creeley@amd.com
+As a result, nfp_encode_basic_qdr() receives "dest_island" as CPP target
+type, which is always NFP_CPP_TARGET_QDR(2) for these calls, and "cpp_tgt"
+as the destination island ID, which can accidentally match or be outside
+the valid NFP_CPP_TARGET_* types (e.g. '-1' for any destination).
+
+Since code already worked for years, also add extra pr_warn() to error
+paths in nfp_encode_basic_qdr() to help identify any potential address
+verification failures.
+
+Detected using the static analysis tool - Svace.
+
+Fixes: 4cb584e0ee7d ("nfp: add CPP access core")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Link: https://patch.msgid.link/20260422160536.61855-1-aleksei.kodanev@bell-sw.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../ethernet/netronome/nfp/nfpcore/nfp_target.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 7aa1832672942..324802cef40b4 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3517,6 +3517,12 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
- 			 queue_pairs);
+diff --git a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
+index 79470f198a62a..9cf19446657c6 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
++++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_target.c
+@@ -435,12 +435,17 @@ static int nfp_encode_basic_qdr(u64 addr, int dest_island, int cpp_tgt,
+ 
+ 	/* Full Island ID and channel bits overlap? */
+ 	ret = nfp_decode_basic(addr, &v, cpp_tgt, mode, addr40, isld1, isld0);
+-	if (ret)
++	if (ret) {
++		pr_warn("%s: decode dest_island failed: %d\n", __func__, ret);
+ 		return ret;
++	}
+ 
+ 	/* The current address won't go where expected? */
+-	if (dest_island != -1 && dest_island != v)
++	if (dest_island != -1 && dest_island != v) {
++		pr_warn("%s: dest_island mismatch: current (%d) != decoded (%d)\n",
++			__func__, dest_island, v);
  		return -EINVAL;
- 	}
-+
-+	/* Keep max_tx_vq in sync so that a later RSS command does not
-+	 * revert queue_pairs to a stale value.
-+	 */
-+	if (vi->has_rss)
-+		vi->rss_trailer.max_tx_vq = cpu_to_le16(queue_pairs);
- succ:
- 	vi->curr_queue_pairs = queue_pairs;
- 	/* virtnet_open() will refill when device is going to up. */
++	}
+ 
+ 	/* If dest_island was -1, we don't care where it goes. */
+ 	return 0;
+@@ -493,7 +498,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
+ 			 * the address but we can verify if the existing
+ 			 * contents will point to a valid island.
+ 			 */
+-			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
++			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
+ 						    mode, addr40, isld1, isld0);
+ 
+ 		iid_lsb = addr40 ? 34 : 26;
+@@ -504,7 +509,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
+ 		return 0;
+ 	case 1:
+ 		if (cpp_tgt == NFP_CPP_TARGET_QDR && !addr40)
+-			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
++			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
+ 						    mode, addr40, isld1, isld0);
+ 
+ 		idx_lsb = addr40 ? 39 : 31;
+@@ -530,7 +535,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
+ 			 * be set before hand and with them select an island.
+ 			 * So we need to confirm that it's at least plausible.
+ 			 */
+-			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
++			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
+ 						    mode, addr40, isld1, isld0);
+ 
+ 		/* Make sure we compare against isldN values
+@@ -551,7 +556,7 @@ static int nfp_encode_basic(u64 *addr, int dest_island, int cpp_tgt,
+ 			 * iid<1> = addr<30> = channel<0>
+ 			 * channel<1> = addr<31> = Index
+ 			 */
+-			return nfp_encode_basic_qdr(*addr, cpp_tgt, dest_island,
++			return nfp_encode_basic_qdr(*addr, dest_island, cpp_tgt,
+ 						    mode, addr40, isld1, isld0);
+ 
+ 		isld[0] &= ~3;
 -- 
 2.53.0
 
