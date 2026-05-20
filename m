@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E1D36C9D2;
-	Wed, 20 May 2026 17:33:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9C8359A6F;
+	Wed, 20 May 2026 17:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298382; cv=none; b=ukOzr+I7nrciAFlFKWaXz5IP7kR4LKPJj94sikHTr8JTVotY64nYr+p1BIgFzb9yay7K3siqgzB3//znpjcc6mAgYfpuR7ZhznUjQ+8uGayxHRqq2hYgs+NRz1tPcI8yp9kEl5Aaja+t1zK5kK9xVs9jRg9RffdJWS62GCNiUDc=
+	t=1779298385; cv=none; b=UHhPEXosjF7h3HzsGRe8d5EXKvtgT27gurLJgzO0yzBFhZfnDrfFOBQzfFbvXMbUKqL89vkMmKez+/wfQkAdxn/5xh0hzBox7XutV2cisnA+FyJgwT7q4e+WOufgL1CByx0a7DcNmGXvOCH0fiX6jQNbTnZL1XapShdAAd2NAOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298382; c=relaxed/simple;
-	bh=S0CXRPXfaGyadFfDi8gcAMx+P/CIF92+HT7iND9R/Eo=;
+	s=arc-20240116; t=1779298385; c=relaxed/simple;
+	bh=YdDCVFDRrMxGwCK0LHYW/ME6uo0d6/fLxbmbK5Oy/o8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qw61IaO3FeokP4c9LF9ANOicmmj8wViRdurNoGc/Hha7pNRBKrM93sre0vYoePaJz8BpAg0XjSOjnMPI56E7CIKAYHJFlweffrseABHOpGYLRY9GhlbCOGnamEF8SyA04TkmsTT+EShLgUiG3L+puimJQ2hoKYh8jQWdONLg/yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=107lVdV2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WC2jZmB/RqnOmIBq7lh86+GCDSC3/r0s6FniBRZbpVuWk9RRZIwBl30d9qsBonXLJo1ZL08jBQ/YDmA2xkHEflE8ff54oW2sGuQEwyQZMrnzrwaGvO8zcaYyzQdj09RorGOQCoJJ1UlIFBTXJuGbxY2bnNUY+vUG7vXxJLi1gWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHFpjVCC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="107lVdV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33DF1F000E9;
-	Wed, 20 May 2026 17:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHFpjVCC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F72E1F000E9;
+	Wed, 20 May 2026 17:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298381;
-	bh=vAA+D7AIRBMHiaZiXvjl8wkwWt6aMD20qQvjN0fmWNc=;
+	s=korg; t=1779298383;
+	bh=1T+uoeduzESvfSaGfCimT1i2IwScA5hHHTbOUbu4A5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=107lVdV2pvMHimypZCAryI4KwtyfQitNnPoNmR753Akp2bFb+5h5Tq72xYOt28EjA
-	 8FuNv3JKuPZfSMS8fdc5NvCb7wfb4grcQUwOss0TKmRv6zYt7BXUz2rsRN0O6tQ03e
-	 WXMkHt+OBZ+FhHboHm/KQ+5GoJoPpCX4bdwiV7nI=
+	b=VHFpjVCCxZ9mbaXIWQEqbgbyQ+al9o5JLNk5JHfxI1Tot+QWCtMsjexj82oZrJ827
+	 JJKLybybfS67oerTqQ5KHjLwZFyCO6iDG1atPd/F5IzyK+/4SYP2HEXWkBGTG/hTR6
+	 /hk35ZP3x9XmojFwayWqXYxlCCtAwoPPw4AxCtTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sydarn <sydarn@proton.me>,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 388/957] arm64: dts: rockchip: Correct Joystick Axes on Gameforce Ace
-Date: Wed, 20 May 2026 18:14:31 +0200
-Message-ID: <20260520162142.941820740@linuxfoundation.org>
+Subject: [PATCH 6.18 353/957] rtla/utils: Fix resource leak in set_comm_sched_attr()
+Date: Wed, 20 May 2026 18:13:56 +0200
+Message-ID: <20260520162142.185829300@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,68 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit c337c1b561c1c3016d30776d7dc2032ea4979334 ]
+[ Upstream commit 5b6dc659ad792c72b3ff1be8039ae2945e030928 ]
 
-The Gameforce Ace's joystick axes were set incorrectly initially,
-getting the X/Y and RX/RY axes backwards. Additionally, correct the
-RY axis so that it is inverted.
+The set_comm_sched_attr() function opens the /proc directory via
+opendir() but fails to call closedir() on its successful exit path.
+If the function iterates through all processes without error, it
+returns 0 directly, leaking the DIR stream pointer.
 
-All axes tested with evtest and outputting correct values.
+Fix this by refactoring the function to use a single exit path. A
+retval variable is introduced to track the success or failure status.
+All exit points now jump to a unified out label that calls closedir()
+before the function returns, ensuring the resource is always freed.
 
-Fixes: 4e946c447a04 ("arm64: dts: rockchip: Add GameForce Ace")
-Reported-by: sydarn <sydarn@proton.me>
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://patch.msgid.link/20260310134919.550023-1-macroalpha82@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: dada03db9bb19 ("rtla: Remove procps-ng dependency")
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Link: https://lore.kernel.org/r/20260309195040.1019085-18-wander@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/tracing/rtla/src/utils.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-index ef8805219ea16..afac54ba58318 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-@@ -60,8 +60,8 @@ axis@0 {
- 			reg = <0>;
- 			abs-flat = <40>;
- 			abs-fuzz = <30>;
--			abs-range = <0 4095>;
--			linux,code = <ABS_RX>;
-+			abs-range = <4095 0>;
-+			linux,code = <ABS_RY>;
- 		};
+diff --git a/tools/tracing/rtla/src/utils.c b/tools/tracing/rtla/src/utils.c
+index 6b7717fcd142b..bf20077cca742 100644
+--- a/tools/tracing/rtla/src/utils.c
++++ b/tools/tracing/rtla/src/utils.c
+@@ -347,22 +347,23 @@ int set_comm_sched_attr(const char *comm_prefix, struct sched_attr *attr)
  
- 		axis@1 {
-@@ -69,7 +69,7 @@ axis@1 {
- 			abs-flat = <40>;
- 			abs-fuzz = <30>;
- 			abs-range = <0 4095>;
--			linux,code = <ABS_RY>;
-+			linux,code = <ABS_RX>;
- 		};
+ 		if (strtoi(proc_entry->d_name, &pid)) {
+ 			err_msg("'%s' is not a valid pid", proc_entry->d_name);
+-			goto out_err;
++			retval = 1;
++			goto out;
+ 		}
+ 		/* procfs_is_workload_pid confirmed it is a pid */
+ 		retval = __set_sched_attr(pid, attr);
+ 		if (retval) {
+ 			err_msg("Error setting sched attributes for pid:%s\n", proc_entry->d_name);
+-			goto out_err;
++			goto out;
+ 		}
  
- 		axis@2 {
-@@ -77,7 +77,7 @@ axis@2 {
- 			abs-flat = <40>;
- 			abs-fuzz = <30>;
- 			abs-range = <0 4095>;
--			linux,code = <ABS_Y>;
-+			linux,code = <ABS_X>;
- 		};
+ 		debug_msg("Set sched attributes for pid:%s\n", proc_entry->d_name);
+ 	}
+-	return 0;
  
- 		axis@3 {
-@@ -85,7 +85,7 @@ axis@3 {
- 			abs-flat = <40>;
- 			abs-fuzz = <30>;
- 			abs-range = <0 4095>;
--			linux,code = <ABS_X>;
-+			linux,code = <ABS_Y>;
- 		};
- 	};
+-out_err:
++	retval = 0;
++out:
+ 	closedir(procfs);
+-	return 1;
++	return retval;
+ }
  
+ #define INVALID_VAL	(~0L)
 -- 
 2.53.0
 
