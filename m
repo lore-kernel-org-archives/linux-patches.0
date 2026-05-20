@@ -1,103 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93903BA237;
-	Wed, 20 May 2026 18:45:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005F53FE34C
+	for <patches@lists.linux.dev>; Wed, 20 May 2026 18:45:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302723; cv=none; b=Ogd4PB3q0TXT+KLgVZ34h+hR+caKtlG+jYTbGC0o9we3J1JnM7Ei5V8vX4nchP3VeWRXvNbQ3D7j3nGKbJugdx9S5Oue7ByUeLl4e0GvK8zaddeCEPCOF5KIKtCbc/6Zn4fHs20ByHhzBZCZZ03m4OFfyqb8j+W1HRyC3XHwBpA=
+	t=1779302725; cv=none; b=cdJds3ShOhQnADZWXI5cWJPAHD547W9fgq6RmMlQ6L4Dmz31sxh+ftay3c/ggrakGouCum0aNhL7edUZ4zwOg7yFNXbmez8mIhMwErEK/6jRTb+fhSbN/9vs9ZtofNTfXM3SR8NW6k9b8FvoE86Em+3pllZV4xzsoJ9FBH/rJEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302723; c=relaxed/simple;
-	bh=/Fn2ZHVTywNw2spFbeQWViNmcYePJTiSy20M4tneRyc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ke8xHWqVaOufCDtdxwiWCfMtmhr4q5th40PALbtKMui4/LXN+vpsnHVdMBSFCtli6OmqHwmWIB+EAMs+KkkUVHRXlAZNFti+pKpf07w9DgiktUW3nLF5hvDv+7qaFOWpCupUhbvZBJ4H2r/hhKkpFxwjvb7xHq1tfzYCbuqk4DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9JMI2aQ; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779302725; c=relaxed/simple;
+	bh=MBu9X2B8pymxnAWSnFXaGPij6bRewxrEGR1tIUkT9+Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qy0W6rZEHHkPfX3uuGn8sasbeRJevwcsjTomhRIqkLDmCbaf76u7QaRVpjpSJZtuBKYkZIBHCqGxrFvBuyD5m8Q0y/OuO0ds+owub9DbYJUZMuWv/4ujWyMKrIPMqqxJZpMkcHCzkSF7cmYZQTS2rVg9s23CMeKG9/9huvyByhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=T91oALKn; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9JMI2aQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67811F000E9;
-	Wed, 20 May 2026 18:45:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302722;
-	bh=fRbiLUckcJEYD++oFf652b599CL3NEPAj1vfhC3p90c=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i9JMI2aQKCbZFfXp1Rzhkir8mXh0h074WMeZHZJfQXf4y2dH4BOH0uF/BEGlcVNod
-	 3KbklBh/r70a7Qgm25Ip64c8w4LjlicZxINGxQgkYPxr5MXXlA9kkZSFxhdthMsnzZ
-	 5aRXoIMAAZdzOxK17dINlI+RZGZ8knYXMrS2vOpM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Jiexun Wang <wangjiexun2025@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 374/508] netfilter: xt_policy: fix strict mode inbound policy matching
-Date: Wed, 20 May 2026 18:23:17 +0200
-Message-ID: <20260520162106.727926591@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
-References: <20260520162058.573354582@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="T91oALKn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1779302723;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FkQN7Jz3dmlcVLBByrLAHFF/AIIFafPxC3BLvbAjDyA=;
+	b=T91oALKnKucS7BLpnxvi2SsWj0bcnV6mwhzHIUBcvY5Ux8zSxezj/vpgniHfKBI0DUzihk
+	KlXfQ0x0ffaXm2XPkB4AbpHhPT5KtFn0gwMZDAjQ/mMW1eW1RGt+WEcy+g3fRe/QL/LAlx
+	blB/vFoiQ93IlKt6e3G2HlErzv92TmI=
+Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
+ [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-331-fO0CtZPIOO23v83lga8Eug-1; Wed, 20 May 2026 14:45:21 -0400
+X-MC-Unique: fO0CtZPIOO23v83lga8Eug-1
+X-Mimecast-MFC-AGG-ID: fO0CtZPIOO23v83lga8Eug_1779302721
+Received: by mail-yx1-f71.google.com with SMTP id 956f58d0204a3-65c7091141aso11883353d50.1
+        for <patches@lists.linux.dev>; Wed, 20 May 2026 11:45:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779302721; x=1779907521;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=FkQN7Jz3dmlcVLBByrLAHFF/AIIFafPxC3BLvbAjDyA=;
+        b=hblxHy/dRRugsaNcg+7faA+i2NDc2E+kTmUCqZ8+kwFAOVIWOennahKRse3DMiQbHb
+         PWMGS83sa2gJsBnu5DCzwODWx8xGRubORjJSkRAJRKnS5pV18CpfX9k3IxF35sxC3o1z
+         4BqNHpWn/4RPnTVOz2ycPwPOiqw4OFxTf6aywDcvhny9eA8FpEPN8dBnanDnDfQrOJIr
+         KHebeQD5kxkizXhKleaD75BbC6y6j6nOyKosif5VSXgUfILWVNYm1cIYRdR8ZSrBeI3G
+         i7askABIgazPnVzYR6PtCvWpNuiqzrGVNdpm+In9T8qpFlRCQa3BcyfMPmE1BKw2/VUW
+         wy1w==
+X-Forwarded-Encrypted: i=1; AFNElJ8w7fvWdBWPlit4g2izIUUMyc1zp+Ywt4PeL+plDKlnhAU09YfJ98ijIfnWY9vlF17MJxgXASb9@lists.linux.dev
+X-Gm-Message-State: AOJu0YzCPioPwZm5vsWY2skK6i1SUrY2+lxiMwwSvsyCHICmnBgJyKWF
+	vMyOn0s0qkEivEwlGFRN/QdfEgfeaLbtKGZ47SKTw+XHIlSrQlFQj3x355Kirspy48nreUllZiR
+	7TRTT2yIlN/7kUFZkfn22JILbSZYAKCoJ+sukdxCKeNgHBTa6cLGLr9B+m/uxKZzplMpscH4gxg
+	AvHIO9uDPD3/UTsx9WFzHgYmaBZuGmPZ/k7w==
+X-Gm-Gg: Acq92OFcuqwIjJJPmImlD+ujiXeWvDl/NLYh/mRfuZYSZV08Q1wNFUiRXEVe3VMtCYA
+	9OgxOyykhj1CztUG3ZA42x5NTpENzmKTArUQN8+2TdfCxv90XjXNONTJW8QqifZRfL7DlL0U0mZ
+	eKMq5YvR8ZFzbV2RBEuhEwMJK6xVdQ9nOT6sxLibKfITFzecoMHo99obYixtL+wkx+zykG4ceyR
+	0uerA==
+X-Received: by 2002:a05:690e:4191:b0:658:e840:d5b4 with SMTP id 956f58d0204a3-65e22751c15mr21641909d50.29.1779302720879;
+        Wed, 20 May 2026 11:45:20 -0700 (PDT)
+X-Received: by 2002:a05:690e:4191:b0:658:e840:d5b4 with SMTP id
+ 956f58d0204a3-65e22751c15mr21641898d50.29.1779302720454; Wed, 20 May 2026
+ 11:45:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260520162134.554764788@linuxfoundation.org> <20260520162142.034488466@linuxfoundation.org>
+In-Reply-To: <20260520162142.034488466@linuxfoundation.org>
+From: Miklos Szeredi <mszeredi@redhat.com>
+Date: Wed, 20 May 2026 20:45:09 +0200
+X-Gm-Features: AVHnY4Jc1nrTQbkUAir959qNNC65RhEgclffoM9HfcQTtbhYMpE5PAufxLoYQik
+Message-ID: <CAOssrKcqmVW3kJ131tRF3LCJVQUtdRB31B5HENDfpgrq6r=jEA@mail.gmail.com>
+Subject: Re: [PATCH 6.18 346/957] fuse: new work queue to periodically
+ invalidate expired dentries
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Luis Henriques <luis@igalia.com>, Sasha Levin <sashal@kernel.org>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: hd8yXFxSNJNNH4CuMROQ8GGgfe9jPsakiHBaz1FXLHw_1779302721
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+On Wed, May 20, 2026 at 7:31=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 6.18-stable review patch.  If anyone has any objections, please let me kn=
+ow.
 
-------------------
+This is not stable material, and I don't think the dependency is real.
 
-From: Jiexun Wang <wangjiexun2025@gmail.com>
+Just need to resolve the trivial conflict when applying 5a6baf204610
+("fuse: fix uninit-value in fuse_dentry_revalidate()")
 
-[ Upstream commit 4b2b4d7d4e203c92db8966b163edfacb1f0e1e29 ]
-
-match_policy_in() walks sec_path entries from the last transform to the
-first one, but strict policy matching needs to consume info->pol[] in
-the same forward order as the rule layout.
-
-Derive the strict-match policy position from the number of transforms
-already consumed so that multi-element inbound rules are matched
-consistently.
-
-Fixes: c4b885139203 ("[NETFILTER]: x_tables: replace IPv4/IPv6 policy match by address family independant version")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/netfilter/xt_policy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/net/netfilter/xt_policy.c b/net/netfilter/xt_policy.c
-index cb6e8279010a4..b5fa65558318f 100644
---- a/net/netfilter/xt_policy.c
-+++ b/net/netfilter/xt_policy.c
-@@ -63,7 +63,7 @@ match_policy_in(const struct sk_buff *skb, const struct xt_policy_info *info,
- 		return 0;
- 
- 	for (i = sp->len - 1; i >= 0; i--) {
--		pos = strict ? i - sp->len + 1 : 0;
-+		pos = strict ? sp->len - i - 1 : 0;
- 		if (pos >= info->len)
- 			return 0;
- 		e = &info->pol[pos];
--- 
-2.53.0
-
-
+Thanks,
+Miklos
 
