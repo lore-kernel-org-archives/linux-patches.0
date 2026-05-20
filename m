@@ -1,49 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25C83D3331;
-	Wed, 20 May 2026 11:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA15B3D3002;
+	Wed, 20 May 2026 11:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276020; cv=none; b=oIgjRDkY/wZP+LkoRKE3aFM9KA8CQjSa2EETrgC00lq0xk72d7EkQTAUK+wlixXDCWAj5yqVw02KS16KGJ4gNBZY5plFYhG+EgFF8Lcs8EMH955ih3MtSJ2id7WslIdKFn1ojU8XGu6wC49A71Z+QoEkF5e7ptIEAIwCo+B0CcE=
+	t=1779276020; cv=none; b=KdiUhvEtvxURB47KSlzFVxbpX6LwuMIZlyi6lFlS0kBsG6O+G5JWYkhxsoybIfPGJPbb1EM4UW39yaGiFFxTonc+KDGtmmRJ3HCOGDSa5XsQ5hGCtWNu8z6qXDCia0YToKmOsLNuPDczxWuUuHY8PG30R6M5RcLoHyXmX0Oa+go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779276020; c=relaxed/simple;
-	bh=StSi6BZ9tPFZYFVEtKopTaOMa3/qwblWeYX5FI6jpAc=;
+	bh=zGb5XWpc6ZIDpU9QwhdmaqYvZSeao8Zu2vRfr5h3CZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B02b0uVehA1YN5UgBC3h7IQ0kgQQamCSzJx2TFc8B/HeJPyKyQorBD2eswxosV3sQZqoLnChoP9olI25RluODQTMo9vdDQIXkkIinZtkh8/Am1wNezL39gIrKzCIzbAWWmb1RyoQozwAQ+V1J7LPArMdvb8Qi/0BN14jTIwyRbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iMjATvW/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AE+7xmjI6y4V8kFijcbdQPfFwmCzNujLjSUL0y0+wCpiXBICCuIZK9iZ7STAEVkPQfm5keHBIz9cd+2z3c4FMZrkxBsBDiAb1F7JHPdV9VZD1N8VNpzH2EouKy3Hr6v5I5D+hntuRLtwW9zkI57Si+UMxVH/7ftFRlT4w56nLrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZUtTWfy5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iMjATvW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC271F00899;
-	Wed, 20 May 2026 11:20:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZUtTWfy5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4ED1F00896;
+	Wed, 20 May 2026 11:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276012;
-	bh=6VykRIHdxdqHJvKeS5smWojHHGioyEj9mP+MkRt6f/w=;
+	s=k20260515; t=1779276016;
+	bh=jUTfMqqDDJxFfr+dLoEBVtFnN+A04vnvH69Uzit7gWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iMjATvW/ud/EWOQrd9BVditiPKV/X9FsC/O43TSo5JgAshdN2b584a4KUbLXe1ea/
-	 6+iJcRu906TtKXiah/4m3mb4pQBmuKWeL0QzD/hEwvcWOIO2qIioza4lawMQArQx/l
-	 tPlDe5Z+ZjpKXMRa/YQBkP0pFOyhctH+uJBrvIHZDH6rFufprWSj6E7xB1VjEdzQ5h
-	 rS8wfe5OS0BejrkB2c3GKk99hpgmDKMyOARhZb2TIaKZjM7tuCAcNozSgsCqWliDYP
-	 DP5hv3rQjfWbwknccHzzd2FGu8LOWR2rKong9Mr05LdIsKcET/4RjIoIb8vq0M4GXn
-	 oL28G1YwQINrA==
+	b=ZUtTWfy51U0NJxlxaugirdw+0fmsVFQ8+vxLbr8GQXW7RV7Ny7ldQ9sovvF66hmvd
+	 ZV4hThAMsb6gsNlTdx8YA9i+YnFGAPyZTXW4TUs7ZLYkt9KoReko24owclmvVU4P/O
+	 xMKMuBUUWapGIAdlVDry2SEJ3oZvvhNVxeSwqHbs4pX1EP+7+xvTAudQmLw9cuByUJ
+	 lgYWHIG7xL37+zMG6QqRmv4OTqT1vZe1Rta9b09sHOavnp9MpOR6/KJEYTCnCNlg/5
+	 k4KMco/mxVpxo7maGJU2fIq6KogB9nym2uJYcxreefZrKOQYUhOMIq4NCCL6O+JGvW
+	 4fmG8x9EfYQWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Cheema <alex@exolabs.net>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	oliver@neukum.org,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	linux-usb@vger.kernel.org,
-	netdev@vger.kernel.org,
+	mpe@ellerman.id.au,
+	linuxppc-dev@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] net: usb: cdc_ncm: add Apple Mac USB-C direct networking quirk
-Date: Wed, 20 May 2026 07:18:51 -0400
-Message-ID: <20260520111944.3424570-19-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] powerpc/vmx: avoid KASAN instrumentation in enter_vmx_ops() for kexec
+Date: Wed, 20 May 2026 07:18:54 -0400
+Message-ID: <20260520111944.3424570-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -59,276 +55,366 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Cheema <alex@exolabs.net>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-[ Upstream commit a5148bc2fa27092862ac4b9e7b5c8340d60cff34 ]
+[ Upstream commit 38e989d504fc52900a3786b7144fb53cd67e0389 ]
 
-Apple Silicon Macs expose two CDC NCM "private" data interfaces over
-USB-C with VID:PID 0x05ac:0x1905 and product string "Mac". This is the
-same protocol Apple already ships on iPhone (0x05ac:0x12a8) and iPad
-(0x05ac:0x12ab) for RemoteXPC since iOS 17 -- both data interfaces lack
-an interrupt status endpoint, so they rely on the FLAG_LINK_INTR-
-conditional bind path introduced in commit 3ec8d7572a69 ("CDC-NCM: add
-support for Apple's private interface").
+The kexec sequence invokes enter_vmx_ops() via copy_page() with the MMU
+disabled. In this context, code must not rely on normal virtual address
+translations or trigger page faults.
 
-The id_table currently has entries for iPhone and iPad but not for the
-Mac. Without a match, cdc_ncm falls through to the generic CDC NCM
-class-match entry, which uses the FLAG_LINK_INTR-having cdc_ncm_info
-struct, so bind_common() fails on the missing status endpoint and no
-netdev appears.
+With KASAN enabled, functions get instrumented and may access shadow
+memory using regular address translation. When executed with the MMU
+off, this can lead to page faults (bad_page_fault) from which the
+kernel cannot recover in the kexec path, resulting in a hang.
 
-Add id_table entries for both interface numbers (0 and 2) of the Mac,
-bound to the existing apple_private_interface_info driver_info.
+The kexec path sets preempt_count to HARDIRQ_OFFSET before entering
+the MMU-off copy sequence.
 
-Verified empirically on a Mac Studio M3 Ultra running macOS 26.5: when
-a Mac is connected via USB-C, ioreg shows VID 0x05ac, PID 0x1905,
-product string "Mac", with two NCM data interfaces at numbers 0 and 2.
-The same PID is presented by all current Apple Silicon Mac models
-(MacBook Pro/Air, Mac mini, Mac Studio across the M-series), mirroring
-Apple's single-PID-per-family pattern from iPhone/iPad.
+current_thread_info()->preempt_count = HARDIRQ_OFFSET
+  kexec_sequence(..., copy_with_mmu_off = 1)
+    -> kexec_copy_flush(image)
+         copy_segments()
+           -> copy_page(dest, addr)
+	         bl enter_vmx_ops()
+                   if (in_interrupt())
+                     return 0
+	         beq .Lnonvmx_copy
 
-After this patch, plugging a Mac into a Linux host running the patched
-kernel produces two enx... interfaces (one per data interface),
-"ip -br link" lists them as UP, and standard userspace networking
-(DHCP, NetworkManager shared mode, etc.) works without any modprobe
-overrides or out-of-tree modules.
+Since kexec sets preempt_count to HARDIRQ_OFFSET, in_interrupt()
+evaluates to true and enter_vmx_ops() returns early.
 
-Signed-off-by: Alex Cheema <alex@exolabs.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260429175739.34426-1-alex@exolabs.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As in_interrupt() (and preempt_count()) are always inlined, mark
+enter_vmx_ops() with __no_sanitize_address to avoid KASAN
+instrumentation and shadow memory access with MMU disabled, helping
+kexec boot fine with KASAN enabled.
+
+Reported-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260407124349.1698552-2-sourabhjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
+## Phase 1: Commit Message Forensics
+Record: subsystem `powerpc/vmx`; action verb `avoid`; intent is to
+prevent KASAN instrumentation of `enter_vmx_ops()` when it is reached
+from the kexec MMU-off copy path.
 
-### Phase 1: Commit Message Forensics
-Record: Subsystem is `net: usb: cdc_ncm`; action verb is `add`; intent
-is to add an Apple Mac USB-C direct networking quirk/device match.
+Record: tags parsed from the candidate message:
+- `Reported-by: Aboorva Devarajan <aboorvad@linux.ibm.com>`
+- `Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>`
+- `Tested-by: Aboorva Devarajan <aboorvad@linux.ibm.com>`
+- `Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>`
+- `Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>`
+- `Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>`
+- `Link: https://patch.msgid.link/20260407124349.1698552-2-
+  sourabhjain@linux.ibm.com`
+- No `Fixes:` tag in this commit. Absence is not a negative signal.
 
-Record: Tags verified from `git show a5148bc2fa27` and `b4`:
-`Signed-off-by: Alex Cheema <alex@exolabs.net>`, `Reviewed-by: Simon
-Horman <horms@kernel.org>`, `Link:
-https://patch.msgid.link/20260429175739.34426-1-alex@exolabs.net`,
-`Signed-off-by: Jakub Kicinski <kuba@kernel.org>`. No `Fixes:`,
-`Reported-by:`, `Tested-by:`, or `Cc: stable@vger.kernel.org`.
+Record: bug description from the message: `kexec_sequence()` may call
+`copy_page()` with the MMU disabled; on PowerPC Book3S this can enter
+`copypage_power7.S`, which calls `enter_vmx_ops()`. If KASAN instruments
+`enter_vmx_ops()`, the instrumentation may access shadow memory using
+normal virtual translation, which is invalid with MMU off and can cause
+an unrecoverable `bad_page_fault`/hang in kexec.
 
-Record: The body describes a real functional failure: Apple Silicon Macs
-with VID:PID `05ac:1905` expose private CDC NCM interfaces without
-interrupt status endpoints. Without specific IDs, they match the generic
-CDC NCM entry, use `cdc_ncm_info` with `FLAG_LINK_INTR`, fail endpoint
-collection in `cdc_ncm_bind_common()`, and no netdev appears. The author
-reports empirical testing on Mac Studio M3 Ultra.
+Record: hidden bug fix: yes. Although phrased as “avoid
+instrumentation,” this fixes a real boot/hang failure in the kexec/kdump
+path under KASAN.
 
-Record: This is not a hidden memory-safety bug; it is an explicit
-hardware ID/quirk fix for already-supported Apple private CDC NCM
-handling.
+## Phase 2: Diff Analysis
+Record: one file changed: `arch/powerpc/lib/vmx-helper.c`, with 8
+insertions and 1 deletion in the fetched v3 patch. The only functional
+change is changing `int enter_vmx_ops(void)` to `int
+__no_sanitize_address enter_vmx_ops(void)`; the remaining additions are
+explanatory comments.
 
-### Phase 2: Diff Analysis
-Record: One file changed: `drivers/net/usb/cdc_ncm.c`, 8 insertions, 0
-deletions. No functions modified; only `cdc_devs[]` gets two entries.
-Scope is single-file, surgical, device-ID style.
+Record: modified function: `enter_vmx_ops()`.
 
-Record: Before: Mac interfaces could fall through to the generic CDC NCM
-class entry using `cdc_ncm_info`. After: interface numbers `0` and `2`
-for `05ac:1905` bind to existing `apple_private_interface_info`.
+Record: before behavior: `enter_vmx_ops()` could be KASAN-instrumented.
+During kexec with MMU off, the function first checks `in_interrupt()`
+and should return `0`, but KASAN prologue/body instrumentation can run
+before or around normal code and touch shadow memory.
 
-Record: Bug category is hardware quirk/device ID addition. The local
-code verifies `apple_private_interface_info` omits `FLAG_LINK_INTR`,
-while `cdc_ncm_info` includes it, and `cdc_ncm_bind_common()` rejects
-devices with no status endpoint when `FLAG_LINK_INTR` is set.
+Record: after behavior: `__no_sanitize_address` suppresses KASAN
+instrumentation for this function, preserving the intended early return
+path when `preempt_count` contains `HARDIRQ_OFFSET`.
 
-Record: Fix quality is high: two exact USB interface-number matches,
-reused existing driver_info, no new code path beyond selecting an
-existing quirk. Regression risk is very low and limited to Apple VID:PID
-`05ac:1905` interfaces `0` and `2`.
+Record: bug category: sanitizer/real-mode correctness bug causing kexec
+hang. This is a crash/hang class fix, not a cleanup.
 
-### Phase 3: Git History
-Record: `git blame` shows `apple_private_interface_info` and the
-iPhone/iPad Apple table entries were introduced by `3ec8d7572a69` in
-2024.
+Record: fix quality: small, surgical, and low risk. It does not alter
+normal logic, public API, data structures, or userspace-visible
+behavior. The only behavioral effect is disabling KASAN instrumentation
+for one helper that can run in an MMU-off path.
 
-Record: No `Fixes:` tag is present, but the commit body references
-`3ec8d7572a69`; `git show` confirms that commit introduced Apple private
-support and the conditional missing-status-endpoint handling.
+## Phase 3: Git History Investigation
+Record: local `HEAD` is a stable release commit, not the candidate. `git
+log --grep` on current history, `master`, and `power-next` did not find
+the candidate commit locally, so there was no commit hash available for
+`b4 dig -c`.
 
-Record: Recent `cdc_ncm.c` history shows unrelated
-bounds/filtering/refactor changes; no prerequisite besides the
-referenced Apple private support was found.
+Record: `git blame` on current `arch/powerpc/lib/vmx-helper.c` shows the
+unannotated `enter_vmx_ops()` present in the local tree; due this
+repository’s history shape, blame attributes the original lines to a
+merge/root history point, so the exact original introduction commit was
+not verifiable locally.
 
-Record: `git log --author="Alex Cheema" -10 -- drivers/net/usb` found no
-prior local subsystem commits by the author. The patch was reviewed by
-Simon Horman and committed by Jakub Kicinski.
+Record: no candidate `Fixes:` tag to follow. The companion patch in the
+same series has `Fixes: 2ab2d5794f14 ("powerpc/kasan: Disable address
+sanitization in kexec paths")`; `git show` confirms that commit disabled
+sanitization for PowerPC kexec real-mode paths in 2022.
 
-Record: Dependency found: stable trees must already contain
-`3ec8d7572a69` or an equivalent `apple_private_interface_info`; older
-trees without that support will not take this patch standalone.
+Record: related recent local history: `6bc9c0a905228` changed VMX
+usercopy flow and added export context around the same file. That
+affects hunk context for older stable trees, but not the actual one-line
+fix.
 
-### Phase 4: Mailing List And External Research
-Record: `b4 dig -c a5148bc2fa27` found the original submission at the
-patch.msgid.link URL.
+Record: author context: `git log --author="Sourabh Jain" --
+arch/powerpc/...` shows multiple PowerPC kexec/crash/fadump commits.
+`MAINTAINERS` lists Madhavan Srinivasan and Michael Ellerman as PowerPC
+maintainers; Madhavan signed off the candidate.
 
-Record: `b4 dig -c a5148bc2fa27 -a` found only v1; no later revision.
+Record: dependencies: no source-level prerequisite for the annotation
+itself. Function `enter_vmx_ops()` and `__no_sanitize_address` exist in
+checked stable tags. Functional completeness is best with the companion
+patch fixing `KASAN_SANITIZE_core_$(BITS).o`, because review/test
+discussion says both patches together make KASAN kexec succeed.
 
-Record: `b4 dig -c a5148bc2fa27 -w` showed the right net/USB maintainers
-and lists were included, including Oliver Neukum, Bjørn Mork, Jakub
-Kicinski, netdev, and linux-usb.
+## Phase 4: Mailing List And External Research
+Record: `b4 am` for message id
+`20260407124349.1698552-2-sourabhjain@linux.ibm.com` fetched a v3 two-
+patch series. It reported total patches: 2, current tree apply clean,
+and DKIM signature valid for patch 2.
 
-Record: Full thread via `b4 mbox` had three messages: the patch, Simon
-Horman’s `Reviewed-by`, and patchwork-bot saying Jakub applied it to
-`netdev/net.git` as `a5148bc2fa27`. No NAKs or concerns observed.
+Record: `b4 am -c` checked for newer revisions and did not report a
+newer v4. v3 appears to be the latest fetched revision.
 
-Record: WebFetch of lore/stable was blocked by Anubis, so stable-
-specific web discussion could not be independently checked. No stable
-nomination appeared in the fetched thread.
+Record: `b4 mbox` fetched the v3 thread. Patch 2 was addressed to
+`linuxppc-dev` and CC’d PowerPC/kexec stakeholders including Michael
+Ellerman, Madhavan Srinivasan, Mahesh Salgaonkar, Hari Bathini, Daniel
+Axtens, Venkat Rao Bagalkote, Aboorva Devarajan, and Ritesh Harjani.
 
-### Phase 5: Code Semantic Analysis
-Record: Modified object is `cdc_devs[]`; no function body changed.
+Record: `WebFetch` of lore URLs was blocked by Anubis, but `b4` and the
+`yhbt.net` lore mirror provided the thread content.
 
-Record: Call/reachability path verified: `cdc_ncm_driver.id_table =
-cdc_devs`, `.probe = usbnet_probe`; `usbnet_probe()` reads
-`prod->driver_info`, sets `dev->driver_info`, then calls `info->bind`,
-which is `cdc_ncm_bind()`, which calls `cdc_ncm_bind_common()`.
+Record: v2 review discussion verified:
+- Ritesh Harjani reviewed patch 2 and said “LGTM,” granting `Reviewed-
+  by`.
+- Aboorva Devarajan reported an actual KASAN-enabled kexec hang on
+  pseries PowerVM: system reached “kexec: Starting switchover sequence”
+  and then hung.
+- Aboorva tested that “with both the patches applied, kexec completes
+  successfully with KASAN enabled.”
+- v1 annotated both `enter_vmx_ops()` and `exit_vmx_ops()`; v2 removed
+  `exit_vmx_ops()` annotation and added the explanatory comment. This
+  shows review-driven narrowing of the fix.
 
-Record: Key callees are endpoint discovery and bind setup in
-`cdc_ncm_bind_common()`, especially the verified endpoint check
-requiring status only when `FLAG_LINK_INTR` is set.
+Record: stable-specific discussion: Ritesh explicitly suggested `Cc:
+stable@vger.kernel.org` for patch 1. I did not find a direct stable
+nomination for patch 2, but patch 2 was reviewed and tested as part of
+the same two-patch functional fix.
 
-Record: User reachability is USB device enumeration/probe when an
-affected Mac is connected to a Linux host. This is not syscall-triggered
-by an unprivileged local user; it is hardware-triggered.
+## Phase 5: Code Semantic Analysis
+Record: modified function: `enter_vmx_ops()`.
 
-Record: Similar pattern found: existing iPhone/iPad Apple entries
-already bind private interfaces to `apple_private_interface_info`.
+Record: callers found by exact search:
+- `arch/powerpc/lib/copypage_power7.S`
+- `arch/powerpc/lib/memcpy_power7.S`
+- `arch/powerpc/lib/memcmp_64.S`
 
-### Phase 6: Stable Tree Analysis
-Record: `git merge-base --is-ancestor 3ec8d7572a69 <tag>` verified
-`3ec8d7572a69` is absent from `v5.15`, `v6.1`, `v6.6`, `v6.9`, and
-`v6.10`, but present in `v6.11`, `v6.12`, and `v7.0`.
+Record: relevant kexec call chain verified in code:
+`reboot(LINUX_REBOOT_CMD_KEXEC)` -> `kernel_kexec()` ->
+`machine_kexec()` -> `default_machine_kexec()` -> `kexec_sequence()` ->
+`kexec_copy_flush()` -> `copy_segments()` -> `copy_page()` ->
+`copypage_power7.S` -> `enter_vmx_ops()`.
 
-Record: `git show <tag>:drivers/net/usb/cdc_ncm.c | rg ...` verified
-`v6.11+` have `apple_private_interface_info` and iPhone/iPad Apple
-entries, but not the Mac `0x1905` entries.
+Record: key callees/logic in `enter_vmx_ops()`: `in_interrupt()`,
+`preempt_disable()`, and `enable_kernel_altivec()`. In the kexec MMU-off
+path, `default_machine_kexec()` sets
+`current_thread_info()->preempt_count = HARDIRQ_OFFSET`, and
+`include/linux/preempt.h` defines `in_interrupt()` via `irq_count()`,
+which observes the hardirq bits.
 
-Record: `git apply --check` succeeded against the current `7.0.5` tree.
-Backport should be clean for trees with the same Apple-private support;
-older trees need the prerequisite and are not standalone targets.
+Record: reachability: reachable from privileged kexec/kdump paths. It is
+not unprivileged-user reachable, but kdump reliability is operationally
+important.
 
-Record: No alternate related stable fix was found locally.
+Record: similar patterns: PowerPC already disables KASAN for sensitive
+real-mode/interrupt code in multiple Makefiles and uses
+`__no_sanitize_address` in PowerPC interrupt/stack code, so the
+attribute is consistent with local practice.
 
-### Phase 7: Subsystem Context
-Record: Subsystem is USB networking driver code, under
-`drivers/net/usb`. Criticality is important for users of this hardware,
-not core/universal.
+## Phase 6: Cross-Referencing And Stable Tree Analysis
+Record: buggy code exists in stable tags checked: `v5.4`, `v5.10`,
+`v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.18`, `v6.19`, and `v7.0` all have
+`enter_vmx_ops()` without `__no_sanitize_address`.
 
-Record: `scripts/get_maintainer.pl -f drivers/net/usb/cdc_ncm.c`
-confirmed the patch was sent to the relevant USB CDC Ethernet and
-networking maintainers/lists. Recent `drivers/net/usb` history shows
-active maintenance.
+Record: the kexec `copy_segments()` -> `copy_page()` path and
+`preempt_count = HARDIRQ_OFFSET` were verified in `v5.4`, `v5.10`,
+`v5.15`, `v6.1`, and current/v7.0-era code.
 
-### Phase 8: Impact And Risk
-Record: Affected users are Linux hosts connecting to Apple Silicon Macs
-via USB-C direct CDC NCM networking.
+Record: `copypage_power7.S` calls `enter_vmx_ops()` in `v5.4`, `v5.10`,
+`v5.15`, and current code.
 
-Record: Trigger is plugging in the matching Mac USB device. The failure
-is likely whenever the unsupported `05ac:1905` private interfaces are
-exposed and lack the interrupt status endpoint, based on the commit body
-and verified bind logic.
+Record: `__no_sanitize_address` exists in compiler headers in checked
+stable tags, including `v5.4`, `v5.10`, `v6.1`, `v6.6`, and current.
 
-Record: Failure mode is functional loss: no netdev appears. Severity is
-medium by generic bug severity, but it fits the stable exception for new
-device IDs/hardware quirks.
+Record: backport difficulty: clean on current `7.0.y` per `git apply
+--check` and `b4`. Older stable trees may need a tiny context adjustment
+because `EXPORT_SYMBOL(exit_vmx_usercopy)` is not present in older
+versions, but the actual function signature is present and the backport
+is straightforward.
 
-Record: Benefit is high for affected hardware users: direct networking
-works without overrides/out-of-tree modules. Risk is very low: two
-exact-match USB ID entries selecting existing behavior.
+Record: related fixes already in stable: not verified as already
+present; local stable tags checked do not contain the candidate
+annotation.
 
-### Phase 9: Final Synthesis
-Evidence for backporting: it is a classic stable-acceptable hardware
-quirk/device ID addition; it fixes a verified bind failure mechanism; it
-is tiny and contained; it reuses existing Apple private CDC NCM support;
-it was reviewed and applied by netdev maintainership; it applies cleanly
-to the current stable-style tree.
+## Phase 7: Subsystem And Maintainer Context
+Record: subsystem is PowerPC architecture library/kexec path:
+`arch/powerpc/lib` and `arch/powerpc/kexec`.
 
-Evidence against backporting: it is not a crash/security/data-corruption
-fix, and it is not standalone for stable trees older than `v6.11` unless
-`3ec8d7572a69` is also present.
+Record: criticality: important/platform-specific. It affects PowerPC
+systems using kexec/kdump with KASAN enabled, especially pseries/PowerVM
+cases verified in review. It is not universal across all architectures.
+
+Record: subsystem activity: local history shows recent PowerPC VMX
+usercopy and kexec/crash/fadump activity, and the patch was handled
+through the PowerPC maintainer path.
+
+## Phase 8: Impact And Risk Assessment
+Record: affected users: PowerPC Book3S/PowerVM-style systems using
+kexec/kdump with KASAN-enabled kernels and VMX copy paths.
+
+Record: trigger conditions: kexec/kdump switchover, MMU-off copy path,
+KASAN enabled, and `copy_page()` selecting the Power7 VMX copy path. The
+triggering operation is privileged, but the failure impacts crash dump
+capture and reboot into the new kernel.
+
+Record: failure mode: system hang during kexec/kdump. Review discussion
+includes an observed hang after “kexec: Starting switchover sequence,”
+and the commit message explains unrecoverable `bad_page_fault` risk with
+MMU off. Severity: HIGH to CRITICAL for affected debug/crash-dump
+deployments.
+
+Record: benefit: high for affected PowerPC KASAN/kdump users because it
+prevents a hard hang and restores kexec completion.
+
+Record: risk: very low. One function annotation plus comment; no logic
+change. The main concern is that stable maintainers should also take the
+companion Makefile fix for full KASAN/kexec coverage.
+
+## Phase 9: Final Synthesis
+Record: evidence for backporting:
+- Fixes a real, reviewed, and tested kexec hang with KASAN enabled.
+- Aboorva Devarajan reported and tested the failure/fix.
+- Ritesh Harjani reviewed the final approach.
+- The fix is one function attribute and explanatory comment.
+- It affects a serious operational path: kexec/kdump boot into a
+  new/capture kernel.
+- The buggy code and call path exist across active stable versions
+  checked.
+- Backport is clean for current `7.0.y` and trivial for older stable
+  trees.
+
+Record: evidence against backporting:
+- The issue is config/platform specific: PowerPC plus KASAN plus
+  kexec/kdump plus VMX copy path.
+- Older stable trees may require minor context adjustment.
+- The commit is part of a two-patch series; the companion Makefile KASAN
+  fix should be included for the tested complete fix.
+
+Record: unresolved questions:
+- Exact original introduction commit for `enter_vmx_ops()` could not be
+  verified from local history.
+- Direct lore `WebFetch` was blocked by Anubis; I used `b4` and a lore
+  mirror instead.
+- I did not build-test the backport.
 
 Stable rules checklist:
-1. Obviously correct and tested: yes; exact ID entries, author-tested,
-   reviewer accepted.
-2. Fixes a real bug: yes; no netdev appears for matching hardware.
-3. Important issue: yes under hardware support/quirk exception, though
-   not critical severity.
-4. Small and contained: yes, 8 insertions in one table.
-5. No new APIs/features: yes, no API or new driver; only IDs for
-   existing behavior.
-6. Applies to stable: yes for trees with Apple private support; older
-   trees need prerequisite handling.
+1. Obviously correct and tested: yes. The annotation directly suppresses
+   KASAN instrumentation on the one helper that can execute with MMU
+   off; tested-by is present.
+2. Fixes a real bug: yes. Review discussion reports an actual kexec hang
+   with KASAN.
+3. Important issue: yes. Failure mode is kexec/kdump hang.
+4. Small and contained: yes. One file, one function annotation.
+5. No new features/APIs: yes.
+6. Can apply to stable: yes for current `7.0.y`; older trees may need
+   trivial context adjustment.
 
-Exception category: new USB device ID / hardware quirk for an existing
-driver path.
+Exception category: not a device ID/quirk/build/doc exception. It is a
+normal stability fix.
 
 ## Verification
-- [Phase 1] Parsed `git show a5148bc2fa27`: confirmed subject, body,
-  trailers, reviewed-by, link, and maintainer signoff.
-- [Phase 2] Read `drivers/net/usb/cdc_ncm.c`: confirmed `cdc_ncm_info`
-  has `FLAG_LINK_INTR`, `apple_private_interface_info` does not, and
-  `cdc_ncm_bind_common()` fails missing status endpoints when
-  `FLAG_LINK_INTR` is set.
-- [Phase 3] `git blame` confirmed Apple private support and existing
-  Apple IDs came from `3ec8d7572a69`.
-- [Phase 3] `git show 3ec8d7572a69` confirmed it introduced Apple
-  private CDC NCM support and the conditional endpoint check.
-- [Phase 4] `b4 dig -c a5148bc2fa27`: found the original lore
-  submission.
-- [Phase 4] `b4 dig -a`: only v1 found.
-- [Phase 4] `b4 dig -w`: confirmed relevant maintainers/lists were
-  included.
-- [Phase 4] `b4 mbox`: confirmed Simon Horman review and patchwork
-  application by Jakub Kicinski.
-- [Phase 5] `rg` and `ReadFile` traced `cdc_devs[]` to `usbnet_probe()`
-  to `cdc_ncm_bind()` to `cdc_ncm_bind_common()`.
-- [Phase 6] Tag ancestry checks confirmed prerequisite exists in
-  `v6.11+` but not `v6.10` and older checked tags.
-- [Phase 6] `git apply --check` confirmed clean apply to current tree.
-- UNVERIFIED: Independent confirmation that all current Apple Silicon
-  Macs use PID `0x1905`; this is author-stated in the patch, not
-  independently verified here.
-- UNVERIFIED: Stable mailing-list search via WebFetch was blocked by
-  Anubis; no stable-specific discussion was visible in the fetched `b4`
-  thread.
+- [Phase 1] Parsed the supplied commit message and fetched patch mbox;
+  confirmed tags, no `Fixes:` tag in patch 2, and the linked message id.
+- [Phase 2] Inspected fetched v3 diff; confirmed `arch/powerpc/lib/vmx-
+  helper.c` has 8 insertions and 1 deletion, changing only
+  `enter_vmx_ops()`.
+- [Phase 3] Ran `git log --grep` on current history, `master`, and
+  `power-next`; candidate not present locally.
+- [Phase 3] Ran `git blame` around `enter_vmx_ops()`; local history
+  could not identify true original introduction beyond repository
+  history shape.
+- [Phase 3] Ran `git show 2ab2d5794f14`; confirmed related PowerPC kexec
+  KASAN sanitization commit from 2022.
+- [Phase 4] Ran `b4 am` and `b4 am -c`; fetched v3 two-patch series, no
+  newer revision reported, patch 2 DKIM valid.
+- [Phase 4] Ran `b4 mbox`; confirmed original recipients and patch
+  content.
+- [Phase 4] Used lore mirror for v2 thread; confirmed Ritesh review,
+  Aboorva tested-by/reported hang, and v1-to-v2 narrowing.
+- [Phase 5] Searched call sites; confirmed `copypage_power7.S`,
+  `memcpy_power7.S`, and `memcmp_64.S` call `enter_vmx_ops()`.
+- [Phase 5] Read kexec and assembly code; confirmed kexec path reaches
+  `copy_page()` with MMU-off logic and `preempt_count = HARDIRQ_OFFSET`.
+- [Phase 6] Checked stable tags `v5.4` through `v7.0`; confirmed
+  `enter_vmx_ops()` exists without the annotation and the relevant
+  kexec/copy path exists in checked trees.
+- [Phase 6] Ran `git apply --check` on current tree for patch 2 and the
+  series; clean on current `7.0.y`.
+- [Phase 7] Checked `MAINTAINERS`; confirmed PowerPC maintainers and
+  that Madhavan Srinivasan is listed for PowerPC.
+- [Phase 8] Verified failure mode from review discussion: KASAN-enabled
+  kexec hangs after switchover; with both patches applied, kexec
+  completes.
 
-This should be backported to stable trees that already contain the Apple
-private CDC NCM support, because it is a low-risk hardware ID/quirk fix
-that restores networking for real hardware.
+This should be backported, ideally together with the companion
+`powerpc/kdump: fix KASAN sanitization flag for core_$(BITS).o` patch
+for the tested complete KASAN/kexec fix.
 
 **YES**
 
- drivers/net/usb/cdc_ncm.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/powerpc/lib/vmx-helper.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
-index bb9929727eb93..0223a172851ec 100644
---- a/drivers/net/usb/cdc_ncm.c
-+++ b/drivers/net/usb/cdc_ncm.c
-@@ -2012,6 +2012,14 @@ static const struct usb_device_id cdc_devs[] = {
- 		.driver_info = (unsigned long)&apple_private_interface_info,
- 	},
+diff --git a/arch/powerpc/lib/vmx-helper.c b/arch/powerpc/lib/vmx-helper.c
+index 554b248002b4f..57e897b60db86 100644
+--- a/arch/powerpc/lib/vmx-helper.c
++++ b/arch/powerpc/lib/vmx-helper.c
+@@ -52,7 +52,14 @@ int exit_vmx_usercopy(void)
+ }
+ EXPORT_SYMBOL(exit_vmx_usercopy);
  
-+	/* Mac */
-+	{ USB_DEVICE_INTERFACE_NUMBER(0x05ac, 0x1905, 0),
-+		.driver_info = (unsigned long)&apple_private_interface_info,
-+	},
-+	{ USB_DEVICE_INTERFACE_NUMBER(0x05ac, 0x1905, 2),
-+		.driver_info = (unsigned long)&apple_private_interface_info,
-+	},
-+
- 	/* Ericsson MBM devices like F5521gw */
- 	{ .match_flags = USB_DEVICE_ID_MATCH_INT_INFO
- 		| USB_DEVICE_ID_MATCH_VENDOR,
+-int enter_vmx_ops(void)
++/*
++ * Can be called from kexec copy_page() path with MMU off. The kexec
++ * code sets preempt_count to HARDIRQ_OFFSET so we return early here.
++ * Since in_interrupt() is always inline, __no_sanitize_address on this
++ * function is sufficient to avoid KASAN shadow memory accesses in real
++ * mode.
++ */
++int __no_sanitize_address enter_vmx_ops(void)
+ {
+ 	if (in_interrupt())
+ 		return 0;
 -- 
 2.53.0
 
