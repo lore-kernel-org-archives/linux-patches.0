@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D627233933;
-	Wed, 20 May 2026 16:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCCB369D6E;
+	Wed, 20 May 2026 16:39:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295185; cv=none; b=auk9GZjahdXHMF0rXjB42foDHOfB500SWozJ0tlvNNGFyjbcOGKTrATDTfW/fOMZ6U+O3oiqRPGhDWc9dxJtbkK5zzdmXp1iGS5a8nkVzVRWE9q1EeCF0ALaeAhFKnxfROVe7qAYeLg9/H51VRULcC5pvFqAzRlnGMOTfd61gnE=
+	t=1779295187; cv=none; b=dDPpwjJTd444oWqu5DX2EWWgsenV6kwzwkeQjX91Q/cYKwFXjRbKPXLuOaKfq2SXI1BBOU1izxLBg4vVkAL+jlbmcUpqBqimQVzSKXLjdIfGbcYONgo9BODImOwTAW7JcKS4h8QBOghJvnqWOs7ixzUxK51pN8G9qPtq4g/S5AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295185; c=relaxed/simple;
-	bh=n+Yr8AZtceA25GTou57WQ1rlB0QdjV4bxMgvBGxBhFI=;
+	s=arc-20240116; t=1779295187; c=relaxed/simple;
+	bh=9SKUJ0d1ZA6Hw+5tyc/ZSuY6nocdPEmzfBxuSatdxTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TrSpEfCLNXi0yuVO4hX8znTh/71C0RBJZgLmbpcHXFw764J5neDRiRV2HnZeX4hMQYKssvFY9li6X7NFHMxFdgIsKMZpblV7jdDKE3dNT42yFr+8WjFtYpiFRcLzDS2LsxFS0lpmsFCPF3nRhxIW7Xc1TQIyo8oKujZO2kFr1Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBjgeHzd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pjYRTGaANd7eRO01bkeftBs86V47QJTtzwpYoWPNdRLmmGl15BEq5MQwzUmvMSa1ya+0QDGgLbgO+4UhQZsLQrbVAlKFq/PWjrjNDi+aIoy0vniIuisrWLrQWy5dtL+6XuMiugh4d3cfENE6nnQaKooXeDLF/WnP+U/TElVUIC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRaq9vuh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBjgeHzd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7A61F00893;
-	Wed, 20 May 2026 16:39:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRaq9vuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D31A1F000E9;
+	Wed, 20 May 2026 16:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295182;
-	bh=af0Z/FtizL7ovlOLeOc6+KgLs1BwOTslE+563TZ5JsI=;
+	s=korg; t=1779295184;
+	bh=MGNu2Cdtd/9Y2sH8XmDkG/ZEI+/f8JT+uzoXuYuuCtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBjgeHzdLRbOe5rJ0rncePiRE4OkPRh7EgYj4zCEqFhNkpsc3SWlQGYiRTNM/ndV1
-	 neLHi2EpE3uXbn8YFQNj3wv+kSLX9FkO1tNKIMV+a8EkANAnCcdHa3IfpnNVizf6HM
-	 UiSYhIJbntUjUjZp5qIJcH623kgKu9EvH+HTVuNY=
+	b=JRaq9vuhh8XTti6yASyAZgq+Q1AWnx5rMzCFpSbLjZm10orKQjceT+rRoYE0VZ2Ip
+	 3pJP4l8+f3BwvU+0rBO8Se2F1QIFTVxl/bXGjGKgoso72VDe+bjU3fid4uQ4Q1qg88
+	 wmqJ0rlNOiXdmg5foJ7mDYywCHXBSsfU/yMPUgIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengyu Luo <mitltlatltl@gmail.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0322/1146] drm/msm/dsi: fix bits_per_pclk
-Date: Wed, 20 May 2026 18:09:32 +0200
-Message-ID: <20260520162155.487380772@linuxfoundation.org>
+Subject: [PATCH 7.0 0323/1146] drm/msm/dsi: fix hdisplay calculation for CMD mode panel
+Date: Wed, 20 May 2026 18:09:33 +0200
+Message-ID: <20260520162155.509604048@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,34 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengyu Luo <mitltlatltl@gmail.com>
 
-[ Upstream commit 2d51cfb77daa30b10bc68c403f8ace35783d2922 ]
+[ Upstream commit 82159db4371f5cef56444ebd0b8f96e2a6d709ff ]
 
-mipi_dsi_pixel_format_to_bpp return dst bpp not src bpp, dst bpp may
-not be the uncompressed data size. use src bpc * 3 to get src bpp,
-this aligns with pclk rate calculation.
+Commit ac47870fd795 ("drm/msm/dsi: fix hdisplay calculation when
+programming dsi registers") incorrecly broke hdisplay calculation for
+CMD mode by specifying incorrect number of bytes per transfer, fix it.
 
 Fixes: ac47870fd795 ("drm/msm/dsi: fix hdisplay calculation when programming dsi registers")
 Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/709916/
-Link: https://lore.kernel.org/r/20260307111250.105772-1-mitltlatltl@gmail.com
+Patchwork: https://patchwork.freedesktop.org/patch/709917/
+Link: https://lore.kernel.org/r/20260307111250.105772-2-mitltlatltl@gmail.com
+[DB: fixed commit message]
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 6cb634590e7a7..3efcc3f6c381c 100644
+index 3efcc3f6c381c..1c0841a1c1013 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1048,7 +1048,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+@@ -1034,8 +1034,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 		/*
+ 		 * DPU sends 3 bytes per pclk cycle to DSI. If widebus is
+ 		 * enabled, MDP always sends out 48-bit compressed data per
+-		 * pclk and on average, DSI consumes an amount of compressed
+-		 * data equivalent to the uncompressed pixel depth per pclk.
++		 * pclk and on average, for video mode, DSI consumes only an
++		 * amount of compressed data equivalent to the uncompressed
++		 * pixel depth per pclk.
+ 		 *
+ 		 * Calculate the number of pclks needed to transmit one line of
+ 		 * the compressed data.
+@@ -1047,10 +1048,14 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 		 * unused anyway.
  		 */
  		h_total -= hdisplay;
- 		if (wide_bus_enabled)
--			bits_per_pclk = mipi_dsi_pixel_format_to_bpp(msm_host->format);
-+			bits_per_pclk = dsc->bits_per_component * 3;
- 		else
+-		if (wide_bus_enabled)
+-			bits_per_pclk = dsc->bits_per_component * 3;
+-		else
++		if (wide_bus_enabled) {
++			if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO)
++				bits_per_pclk = dsc->bits_per_component * 3;
++			else
++				bits_per_pclk = 48;
++		} else {
  			bits_per_pclk = 24;
++		}
+ 
+ 		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc) * 8, bits_per_pclk);
  
 -- 
 2.53.0
