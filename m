@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57B034DCE4;
-	Wed, 20 May 2026 18:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874D23E832A;
+	Wed, 20 May 2026 18:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300186; cv=none; b=D7+xK7B48D/zPKup9mA+rL7EF+MdQGzLkHEKzv7JwXFJuz34v+IY3RBuSK3gjKBB1WJxV/qzTYmZ/pJetQ9TOfQsuLFZUEGodGPmdEWH6ONaxeGeO6hyBUjGR/p8WGNq0er6kIW62AHL8D6739qe3CLe/9i6xBo7a1cla5SjqQA=
+	t=1779300188; cv=none; b=OYWmLVUwp2UbOqd7QnGU+vRNPYRWp7JRLdd14LE3X9yNyPAZLLqdl7KCQoy936FDXHpbADR9hPp1O0VpXVKxOM2eNVSr3yKs3O0Lk5XWw8MdRFhawC/iffVCsLXViGZ/U5qGgNTpQDfEXulfRahXKBItXKuwCpnIWlHCpOP6uR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300186; c=relaxed/simple;
-	bh=mzpXFxfG0QnrFWwHV31pbgxHHWqQjbgl7hSvd8OBkzs=;
+	s=arc-20240116; t=1779300188; c=relaxed/simple;
+	bh=ZabyJAIM17S7zvcf/BImerIe2RqQPGL0e0bk1/3FmMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sN1ODJ/UCs+dNE6ZrfMdBwRv7gJJva1s/leZPX3YPWsCQEApOoplg5nZTg+tgFmDzmOhuAZzHsGQGvPC0IVZYXgowUEwsQ5l9+wl4G9i3DoYHpvI9gW8OtGxdSdtdhg37p1f+XSF9yufYKPjIdboYsvqUkJVB/+GT3cH+XGUsT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNFtu83z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QfRQA1ac7IrxlqEykypGL7dBvW/1sF6RXu2Hf4WInd96/rMWos7v/X4NfFKLcSFz8FyHbhKSFpAW4vjIXHqGm14tI9uAQNuNkdVcE38TZJZoI3IyNtZSCmC91lYLU88xRqXUhEYE1pCG9oGjPGOG6E6YZOhDQHKTk6bw7s68jts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FkDomZn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNFtu83z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C741F00893;
-	Wed, 20 May 2026 18:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FkDomZn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2E41F00894;
+	Wed, 20 May 2026 18:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300184;
-	bh=gAE/pLK2CL+xnTPhoaU1eAPf6sSjOouvRMyJcNTXzTE=;
+	s=korg; t=1779300187;
+	bh=aaiWixhW9CUqMrwdDCSLHsA4KMwcCCoPyPYVpxtpxpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aNFtu83zTV9ZH13d0IuUwYaFnJaxTd0lUXq/XD8Ha5b2bbMSVmvuESiR/CmVir6VZ
-	 Fljw1BHPhCLfvgWQHSSyzJj5OH5pUABCNBgU2kIvWxZ0+5YsEa9jzjt9UONiAmA+sg
-	 O6FmIaq71jX5wJmWdlT0xMO+ypaH/uIdf2nTQjkw=
+	b=0FkDomZneMLOpB1lhsgVp3KFcZlK4PSXdNIlzyxWCZ6UwxOzbzh2RiqzF70+Blh4+
+	 P+9S9SlXscXLKVRiyhdBtNwNEtDRdYojE6p7Ic8Ck0xshYIsvfd3kNXmtt79kGa6Zv
+	 gDu6hQYol2Y8m6PYbi3ZlRom2UoSaUbtQwyS42sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cai Xinchen <caixinchen1@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/666] dpaa2: add independent dependencies for FSL_DPAA2_SWITCH
-Date: Wed, 20 May 2026 18:14:08 +0200
-Message-ID: <20260520162112.042778940@linuxfoundation.org>
+Subject: [PATCH 6.12 038/666] dpaa2: compile dpaa2 even CONFIG_FSL_DPAA2_ETH=n
+Date: Wed, 20 May 2026 18:14:09 +0200
+Message-ID: <20260520162112.064253131@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -54,50 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Cai Xinchen <caixinchen1@huawei.com>
 
-[ Upstream commit 12589892f41c4c645c80ef9f036f7451a6045624 ]
+[ Upstream commit 97daf00745f7f9f261b0e91418de6e79d7826c36 ]
 
-Since the commit 84cba72956fd ("dpaa2-switch: integrate
-the MAC endpoint support") included dpaa2-mac.o in the driver,
-but it didn't select PCS_LYNX, PHYLINK and FSL_XGMAC_MDIO. it
-will lead to link error, such as
-undefined reference to `phylink_ethtool_ksettings_set'
-undefined reference to `lynx_pcs_create_fwnode'
+CONFIG_FSL_DPAA2_ETH and CONFIG_FSL_DPAA2_SWITCH are not
+associated, but the compilation of FSL_DPAA2_SWITCH depends on
+the compilation of the dpaa2 folder. The files controlled by
+CONFIG_FSL_DPAA2_SWITCH in the dpaa2 folder are not controlled
+by CONFIG_FSL_DPAA2_ETH, except for the files controlled by
+CONFIG_FSL_DPAA2_SWITCH. Therefore, removing the restriction will
+not affect the compilation of the files in the directory.
 
-And the same reason as the commit d2624e70a2f53 ("dpaa2-eth: select
-XGMAC_MDIO for MDIO bus support"), enable the FSL_XGMAC_MDIO Kconfig
-option in order to have MDIO access to internal and external PHYs.
-
-Because dpaa2-switch uses fsl_mc_driver APIs, add depends on FSL_MC_BUS
-&& FSL_MC_DPIO as FSL_DPAA2_SWITCH do.
-
-FSL_XGMAC_MDIO and FSL_MC_BUS depend on OF, thus the dependence of
-FSL_MC_BUS can satisfy FSL_XGMAC_MDIO's OF requirement.
-
-Fixes: 84cba72956fd ("dpaa2-switch: integrate the MAC endpoint support")
+Fixes: f48298d3fbfaa ("staging: dpaa2-switch: move the driver out of staging")
 Suggested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
-Link: https://patch.msgid.link/20260312065907.476663-2-caixinchen1@huawei.com
+Link: https://patch.msgid.link/20260312065907.476663-3-caixinchen1@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/Kconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/freescale/Makefile | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/Kconfig b/drivers/net/ethernet/freescale/dpaa2/Kconfig
-index d029b69c3f183..36280e5d99e1f 100644
---- a/drivers/net/ethernet/freescale/dpaa2/Kconfig
-+++ b/drivers/net/ethernet/freescale/dpaa2/Kconfig
-@@ -34,6 +34,10 @@ config FSL_DPAA2_SWITCH
- 	tristate "Freescale DPAA2 Ethernet Switch"
- 	depends on BRIDGE || BRIDGE=n
- 	depends on NET_SWITCHDEV
-+	depends on FSL_MC_BUS && FSL_MC_DPIO
-+	select PHYLINK
-+	select PCS_LYNX
-+	select FSL_XGMAC_MDIO
- 	help
- 	  Driver for Freescale DPAA2 Ethernet Switch. This driver manages
- 	  switch objects discovered on the Freeescale MC bus.
+diff --git a/drivers/net/ethernet/freescale/Makefile b/drivers/net/ethernet/freescale/Makefile
+index de7b318422330..d0a259e47960f 100644
+--- a/drivers/net/ethernet/freescale/Makefile
++++ b/drivers/net/ethernet/freescale/Makefile
+@@ -22,6 +22,5 @@ ucc_geth_driver-objs := ucc_geth.o ucc_geth_ethtool.o
+ obj-$(CONFIG_FSL_FMAN) += fman/
+ obj-$(CONFIG_FSL_DPAA_ETH) += dpaa/
+ 
+-obj-$(CONFIG_FSL_DPAA2_ETH) += dpaa2/
+-
++obj-y += dpaa2/
+ obj-y += enetc/
 -- 
 2.53.0
 
