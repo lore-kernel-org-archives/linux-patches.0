@@ -1,98 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mail-43100.protonmail.ch (mail-43100.protonmail.ch [185.70.43.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1237B36D9EA;
-	Wed, 20 May 2026 16:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA6034216C
+	for <patches@lists.linux.dev>; Wed, 20 May 2026 16:52:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295935; cv=none; b=HRZ2hqJn5YX2PbePn22E6njmqczFqCkGf3JyKx3BvksBP4O1Znz5aPQQ1yaArk5HW+sAczRn8hKK6XNG7w2sgRoycacwVequRL9Nv5Lw5C/Cga9RNgaU9bRVAssKo4aK7/i3cLaUqHiACagiRkXyw57/DGfcTyq6DxyvoAHB7GM=
+	t=1779295935; cv=none; b=UaW/G7p7YNjaoqgIIeNHS7AlgKsU1J8Klj+H9c9AGAJ2k0MSYCSMNLZ6I2JhtrQJS6pQPyxZolmQgoFWvLv4L0JItYMnoNS/gxyoTxAx1aFz1TBm9hoF4yJi0U+4KdxSFKIpDOZ469Y8AMkgb9u+s0FJN6inmh0RNzAC0VZmmKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779295935; c=relaxed/simple;
-	bh=D6aQgEtLC+dGoYRLW7Ycx3nLWOBqYp5W5EajzqgCXeI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rEOYUY7a/U1a9IXcbt/kjsaAOwsUCd13HepmYW6vqh9XWfqgd7R7Au8e9k4rcpSrpnUCI1rlI9Plhwc6rbctXnTPZXDXisdtqwJY/t2tnwc2vX80c4cjuV9nDD6040WejznhGfNRvsSrANtyN1nmffhvgmCqkhHvwqe2L69ykNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+DAupIS; arc=none smtp.client-ip=100.103.45.18
+	bh=+Rr0ISzy0ssrmZl04gRbEuVRjYfX8LKr4q0WEoB66Dg=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=tF1p8ANnt5EZSsV05aeiUSFcr8PHlVqDlQFHQ8+XLMz8j/faz/bhK+vmBFWZkwbREiRLurr3jAogJARi02oYuC/vCKs7gG/+SHU8XzBL/7/CsQh2Ew/OrrD1wCzzQqHLu8yTBntrlXaIEmQyZkiVOBQ/AxIZ+mU/Y0VLvN6BTZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=bkzGvkgq; arc=none smtp.client-ip=185.70.43.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+DAupIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780E41F000E9;
-	Wed, 20 May 2026 16:52:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295934;
-	bh=KLZ2UisTsf7I0oSbRIWZF+EiY2l9eP48GWBak9GiuwY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x+DAupISmwphNj9Jy/xlzhEXBTlYsbxogOHdEJvyNPQz76pYtxIXEw5/GjJep8vNx
-	 a6CriAuGuxt493zoFGNe+Ewx5sDuMkoJJQ6ocq+aZeHuQsbxjI3uKK3GEcaUiEnPB6
-	 ex8E98yX6TdxOu6ALVpMJCQaCXMUIJx/Py0utgYI=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Richard Cheng <icheng@nvidia.com>,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0568/1146] fwctl: Fix class init ordering to avoid NULL pointer dereference on device removal
-Date: Wed, 20 May 2026 18:13:38 +0200
-Message-ID: <20260520162201.039686504@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
-References: <20260520162148.390695140@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="bkzGvkgq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1779295923; x=1779555123;
+	bh=P9sCHsSL31H/tsSPytPmPu0bk1prX7Ymi40wZ1txJcU=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=bkzGvkgqNyUM1mMJZkvLp5HnQqwhqEJcGyV2dRqWceRljkJKjt5TMcH4xm3SrACaP
+	 5lWCfjZdYeZAWAYbrYWPrclmOv2TXitc+hiG2m1pHOqi/dJKP6INtWhBHI7QTwPPzC
+	 q3EsN1w5pE/kMG2nEvVi0rIMYQsHpDNh78ggpOHZ/eMG/T5m7TQ2HuMEl3Z8XnnML8
+	 EYTsIZZqeiCPHZl1d42I2tVh0neVEvzyHs8eZNxc+DmtGOc+Jg5B/E7sBAzM1dY/8D
+	 3KGHWTglyTTbttEIQ28mtzS3TL3O42poAOzrLRcehZMSXcWWgpU70yHy0UQvKr1OsB
+	 wpEsmmuYlXw+g==
+Date: Wed, 20 May 2026 16:51:57 +0000
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+From: Tj <tj.iam.tj@proton.me>
+Cc: patches@lists.linux.dev, Chen Cheng <chencheng@fnnas.com>, Paul Menzel <pmenzel@molgen.mpg.de>, Yu Kuai <yukuai@fnnas.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 7.0 0002/1146] md: suppress spurious superblock update error message for dm-raid
+Message-ID: <e08a970e-777d-49af-9981-6dde0ced4738@proton.me>
+In-Reply-To: <20260520162148.451131860@linuxfoundation.org>
+References: <20260520162148.390695140@linuxfoundation.org> <20260520162148.451131860@linuxfoundation.org>
+Feedback-ID: 113488376:user:proton
+X-Pm-Message-ID: 171538a3e7a1fb733f50972d0ad093ebcbee26f2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+Tested on v7.0.9 - looks good:
 
-------------------
+$ journalctl --dmesg --grep md/raid1
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
+May 20 16:48:56 sunny kernel: md/raid1:mdX: active with 2 out of 2 mirrors
 
-From: Richard Cheng <icheng@nvidia.com>
+Tested-by: Tj <tj.iam.tj@proton.me>
 
-[ Upstream commit a55f80233f384dc89ef3425b2e1dd0e6d44bcf29 ]
-
-CXL is linked before fwctl in drivers/Makefile. Both use `module_init, so
-`cxl_pci_driver_init()` runs first. When `cxl_pci_probe()` calls
-`fwctl_register()` and then `device_add()`, fwctl_class is not yet
-registered because fwctl_init() hasn't run, causing `class_to_subsys()` to
-return NULL and skip knode_class initialization.
-
-On device removal, `class_to_subsys()` returns non-NULL, and
-`device_del()` calls `klist_del()` on the uninitialized knode, triggering
-a NULL pointer dereference.
-
-Fixes: 858ce2f56b52 ("cxl: Add FWCTL support to CXL")
-Link: https://patch.msgid.link/r/20260409051902.40218-1-icheng@nvidia.com
-Signed-off-by: Richard Cheng <icheng@nvidia.com>
-Reviewed-by: Kai-Heng Feng <kaihengf@nvidia.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/fwctl/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/fwctl/main.c b/drivers/fwctl/main.c
-index bc6378506296c..098c3824ad751 100644
---- a/drivers/fwctl/main.c
-+++ b/drivers/fwctl/main.c
-@@ -415,7 +415,7 @@ static void __exit fwctl_exit(void)
- 	unregister_chrdev_region(fwctl_dev, FWCTL_MAX_DEVICES);
- }
- 
--module_init(fwctl_init);
-+subsys_initcall(fwctl_init);
- module_exit(fwctl_exit);
- MODULE_DESCRIPTION("fwctl device firmware access framework");
- MODULE_LICENSE("GPL");
--- 
-2.53.0
-
+On 20/05/2026 16:04, Greg Kroah-Hartman wrote:
+> 7.0-stable review patch.  If anyone has any objections, please let me kno=
+w.
+>
+> ------------------
+>
+> From: Chen Cheng <chencheng@fnnas.com>
+>
+> [ Upstream commit eff0d74c6c8fd358bc9474c05002e51fa5aa56ad ]
+>
+> dm-raid has external metadata management (mddev->external =3D 1) and
+> no persistent superblock (mddev->persistent =3D 0). For these arrays,
+> there's no superblock to update, so the error message is spurious.
+>
+> The error appears as:
+> md_update_sb: can't update sb for read-only array md0
+>
+> Fixes: 8c9e376b9d1a ("md: warn about updating super block failure")
+> Reported-by: Tj <tj.iam.tj@proton.me>
+> Closes: https://lore.kernel.org/all/20260128082430.96788-1-tj.iam.tj@prot=
+on.me/
+> Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+> Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+> Link: https://lore.kernel.org/linux-raid/20260210133847.269986-1-chenchen=
+g@fnnas.com
+> Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>   drivers/md/md.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/md/md.c b/drivers/md/md.c
+> index 3ce6f9e9d38e6..c2cc2302d727d 100644
+> --- a/drivers/md/md.c
+> +++ b/drivers/md/md.c
+> @@ -2788,7 +2788,9 @@ void md_update_sb(struct mddev *mddev, int force_ch=
+ange)
+>   =09if (!md_is_rdwr(mddev)) {
+>   =09=09if (force_change)
+>   =09=09=09set_bit(MD_SB_CHANGE_DEVS, &mddev->sb_flags);
+> -=09=09pr_err("%s: can't update sb for read-only array %s\n", __func__, m=
+dname(mddev));
+> +=09=09if (!mddev_is_dm(mddev))
+> +=09=09=09pr_err_ratelimited("%s: can't update sb for read-only array %s\=
+n",
+> +=09=09=09=09=09   __func__, mdname(mddev));
+>   =09=09return;
+>   =09}
+>
+> --
+> 2.53.0
+>
+>
+>
 
 
