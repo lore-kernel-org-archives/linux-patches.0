@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABA43EFFAD;
-	Wed, 20 May 2026 11:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B283EE1EC;
+	Wed, 20 May 2026 11:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276040; cv=none; b=URouRSqCl0D2JcVg8Or908up5PmlEQo8AzsYr3xNfcWuARIrECv3wWCP57htiJQSZQzZNfpqKBipNex2p4Q+Cu1+ySfwJQbFP1X7RUCCMhJmPwkL2AIP5SAa8By9jK13BdyKhc30xQbnters0GTX1rywtv3jiOBQVX6eALqOImA=
+	t=1779276041; cv=none; b=hqqJokkX11iUWrbcVOb0dNHAijLjUfApayRdvG2sZxSssXIk2EQcnQdwnZ3pwc8BlbokJ2fSIgeR4fN9ek/4Dnr0A9UStpbVUlTL8+cXyzJwui1vZWR5Jc/haFFdgpDEYMMePio94tjtbnj+qAo2+1FiGUVTll4YZaDO2nQqu2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276040; c=relaxed/simple;
-	bh=4fOVrUuTrav5pheYljQuSEd/aOqmHoT/0xyQx/qnjMk=;
+	s=arc-20240116; t=1779276041; c=relaxed/simple;
+	bh=R0CXG/sR2XzcTICPaASs4rIpFuUDTo6aKtSJf/5vWx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=msRp1MxLYYcLvLBSgvW9Sk/HiB1+/+WVeazhMS2j58z4ajbYBXcIJU46zWhZw1VMztrEUCSyVpHrsI5D+VBrc2ZuLJ733lJfsP1fQKHTDfazB2M5oSCRQ+3Fw10Jx85atpcezoY/tG2zX2TABoSiOfJ/tbGPCVhU+FIh3M5Emwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MctOf1Ir; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OAYsAvOkieLE4KlkAC11N4tGOpTykOnh1YhAggtX5f2G4/kJEUmlbV8drqdHDETjXZKX44K/BhvUbF1sfc+873BiXHIijEr4PHVSnuiZeeCgvwCcsXuVN0NLse/PwVZN+zm16VpRmH20gji4Nag2Y7bJimX8NsNf3ytXKxuI9Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UdE5gZrN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MctOf1Ir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173991F00893;
-	Wed, 20 May 2026 11:20:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UdE5gZrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703CE1F00894;
+	Wed, 20 May 2026 11:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276038;
-	bh=nYf18S/il4tNpuIL0hg4+CsH4a4a6W2wR/OcVfeJQyI=;
+	s=k20260515; t=1779276039;
+	bh=BasMEeDW6XPs7A/N3atABlk5j0/nIx2aBYDkA9++MyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MctOf1IrG4PzetdC0X1d4Ndbpz/x2YoP43mhvRxBDD65EodWioiF10skzdc+gULvg
-	 09Ob/K2LpnHxbBmwbotA4rFXHXZqU7JgrPRqGytXcDChwLt3NeZpVPJZW+kFshU0cL
-	 iU/DXD1klwEAkQkkZcujmCDn6g7v6U4CuRtgTcGDf9Xr1+D7f2nN8ASK6dFvsFak1/
-	 quWcUUOxb6sR2EXPr+jzJfDGaF8Q2faa2MQA/vowKtLINlriMRdzUeWIaZCekYiSut
-	 c4giDwfIRhH0f3/Vo5YnF7OXpQJGb6vi0cBSTvTh/AYOqcItoCdCaZfd1U793L9p7E
-	 s6mcUDDD6UwJQ==
+	b=UdE5gZrNLjmPSdqojUnXV5QQ8ADfTnnDFVCzgSgidcLgPUbAEXXIdwPobi8m5aJ0f
+	 LjV8ABsei4zGMVvmLq5B2bxw7XKMe6lFq1JfK4T3VF4bDOxYec8oYJ2R+h7uaxNelg
+	 GXmoWOKj57wWk8Avt3dVmHTwVDNqdsn/Kc+ygUg6VAJs9fxuxGR9DeyEvH8UoRImoH
+	 wOVKPjQfqtmzW7S9P0/U52ZHxb/rHJ/+yBytn+fKeGLismDnsxFKbv6cqFeS6+38/q
+	 sSpolIzOJWp5aFmng42dhhFz3+pqVBa24oB24WWGOg2IvYfp8ILbuGLNpfNoSbISju
+	 FIe+CC7bmZ2gQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rodrigo Faria <rodrigofilipefaria@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: ZhengYuan Huang <gality369@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] ALSA: hda/realtek: Add mute LED fixup for HP Pavilion 15-cs1xxx
-Date: Wed, 20 May 2026 07:19:09 -0400
-Message-ID: <20260520111944.3424570-37-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] btrfs: fix check_chunk_block_group_mappings() to iterate all chunk maps
+Date: Wed, 20 May 2026 07:19:10 -0400
+Message-ID: <20260520111944.3424570-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -51,293 +50,347 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Faria <rodrigofilipefaria@gmail.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit 01801e20d69346e1e6cec0d908f1cea3a49e51b5 ]
+[ Upstream commit fc51cba3ebae67f967120e27162e94cfb8594479 ]
 
-Add a new fixup for the mute LED on the HP Pavilion 15-cs1xxx series
-using the VREF on NID 0x1b.
+[BUG]
+A corrupted image with a chunk present in the chunk tree but whose
+corresponding block group item is missing from the extent tree can be
+mounted successfully, even though check_chunk_block_group_mappings()
+is supposed to catch exactly this corruption at mount time.  Once
+mounted, running btrfs balance with a usage filter (-dusage=N or
+-dusage=min..max) triggers a null-ptr-deref:
 
-The BIOS on these models (tested up to F.32) incorrectly reports
-the mute LED on NID 0x18 via DMI OEM strings, which lacks VREF
-capabilities. This fixup overrides the LED pin to the correct
-NID 0x1b.
+  KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
+    RIP: 0010:chunk_usage_filter fs/btrfs/volumes.c:3874 [inline]
+    RIP: 0010:should_balance_chunk fs/btrfs/volumes.c:4018 [inline]
+    RIP: 0010:__btrfs_balance fs/btrfs/volumes.c:4172 [inline]
+    RIP: 0010:btrfs_balance+0x2024/0x42b0 fs/btrfs/volumes.c:4604
 
-Signed-off-by: Rodrigo Faria <rodrigofilipefaria@gmail.com>
-Link: https://patch.msgid.link/20260505185518.23625-1-rodrigofilipefaria@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[CAUSE]
+The crash occurs because __btrfs_balance() iterates the on-disk chunk
+tree, finds the orphaned chunk, calls chunk_usage_filter() (or
+chunk_usage_range_filter()), which queries the in-memory block group
+cache via btrfs_lookup_block_group().  Since no block group was ever
+inserted for this chunk, the lookup returns NULL, and the subsequent
+dereference of cache->used crashes.
+
+check_chunk_block_group_mappings() uses btrfs_find_chunk_map() to
+iterate the in-memory chunk map (fs_info->mapping_tree):
+
+  map = btrfs_find_chunk_map(fs_info, start, 1);
+
+With @start = 0 and @length = 1, btrfs_find_chunk_map() looks for a
+chunk map that *contains* the logical address 0. If no chunk contains
+logical address 0, btrfs_find_chunk_map(fs_info, 0, 1) returns NULL
+immediately and the loop breaks after the very first iteration,
+having checked zero chunks. The entire verification function is therefore
+a no-op, and the corrupted image passes the mount-time check undetected.
+
+[FIX]
+Replace the btrfs_find_chunk_map() based loop with a direct in-order
+walk of fs_info->mapping_tree using rb_first_cached() + rb_next().
+This guarantees that every chunk map in the tree is visited regardless
+of the logical addresses involved.
+
+No lock is taken around the traversal. This function is called during
+mount from btrfs_read_block_groups(), which is invoked from open_ctree()
+before any background threads (cleaner, transaction kthread, etc.) are
+started. There are therefore no concurrent writers that could modify
+mapping_tree at this point. An analogous lockless direct traversal of
+mapping_tree already exists in fill_dummy_bgs() in the same file.
+
+Since we walk the rb-tree directly via rb_entry() without going through
+btrfs_find_chunk_map(), no reference is taken on each map entry, so the
+btrfs_free_chunk_map() calls are also removed.
+
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Decision Summary
-This should be backported. It is a small, model-specific ALSA HDA
-Realtek hardware workaround for an HP Pavilion 15-cs1xxx BIOS quirk: the
-BIOS reports the mute LED on NID `0x18`, but that pin lacks VREF
-capability; the patch routes the existing HP VREF mute-LED handling to
-NID `0x1b`. It affects only systems matching PCI SSID `103c:856a`.
+## Phase 1: Commit Message Forensics
+Record: Subsystem is `btrfs`; action verb is `fix`; claimed intent is to
+make `check_chunk_block_group_mappings()` actually visit all chunk maps.
 
-## Phase Walkthrough
-### Phase 1: Commit Message Forensics
-Record: Subsystem is `ALSA: hda/realtek`; action is `Add`; intent is
-adding a mute LED fixup for HP Pavilion 15-cs1xxx.
+Record: Tags found in the committed version: `Signed-off-by: ZhengYuan
+Huang <gality369@gmail.com>`, `Reviewed-by: David Sterba
+<dsterba@suse.com>`, `Signed-off-by: David Sterba <dsterba@suse.com>`.
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Link:`, or `Cc:
+stable@vger.kernel.org` tag was present.
 
-Record: Tags present: `Signed-off-by: Rodrigo Faria
-<rodrigofilipefaria@gmail.com>`, `Link: https://patch.msgid.link/2026050
-5185518.23625-1-rodrigofilipefaria@gmail.com`, `Signed-off-by: Takashi
-Iwai <tiwai@suse.de>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
-`Reviewed-by`, or `Cc: stable`.
+Record: The commit describes a real mount-time corruption validation
+bug: a chunk can exist in the chunk tree while the matching block group
+item is missing from the extent tree. Because the verifier may check
+zero chunks, the corrupted filesystem can mount, and later `btrfs
+balance -dusage=...` can hit a NULL dereference in
+`chunk_usage_filter()` / `chunk_usage_range_filter()`.
 
-Record: Bug described is incorrect BIOS/DMI OEM mute LED pin reporting.
-Symptom is mute LED control using the wrong NID, so the mute LED does
-not work correctly on this model. Version info: BIOS tested up to F.32.
-Root cause: reported NID `0x18` lacks VREF capability; correct NID is
-`0x1b`.
+Record: This is not hidden cleanup. It is an explicit NULL-deref /
+corruption-detection fix.
 
-Record: This is a hardware quirk/fixup, not a hidden memory-safety bug.
-It fixes incorrect hardware description/firmware behavior.
+## Phase 2: Diff Analysis
+Record: One file changed: `fs/btrfs/block-group.c`, 8 insertions and 15
+deletions in the committed object. Modified function:
+`check_chunk_block_group_mappings()`. Scope: single-file surgical fix.
 
-### Phase 2: Diff Analysis
-Record: One file changed: `sound/hda/codecs/realtek/alc269.c`, 21
-insertions, no removals. Modified areas: new helper
-`alc295_fixup_hp_pavilion_mute_led_1b`, enum entry, fixup table entry,
-PCI SSID quirk entry. Scope: single-file, surgical driver quirk.
+Record: Before, the function started at logical address 0 and repeatedly
+called `btrfs_find_chunk_map(fs_info, start, 1)`. If no chunk
+intersected `[0,1)`, the first lookup returned NULL and the loop exited
+without checking any chunk. After, it walks `fs_info->mapping_tree`
+directly with `rb_first_cached()` and `rb_next()`.
 
-Record: Before: HP vendor/DMI mute LED handling could derive the wrong
-LED NID from BIOS OEM string. After: for PCI SSID `103c:856a`, the
-driver selects a dedicated fixup that calls existing
-`alc269_fixup_hp_mute_led()` and then overrides `spec->mute_led_nid =
-0x1b`.
+Record: Bug category is logic/correctness with memory-safety
+consequence. The broken verifier allows filesystem corruption through
+mount; later balance can dereference a NULL block group pointer.
 
-Record: Bug category is hardware workaround / quirk. Specific mechanism:
-reuse existing VREF mute LED cdev setup, but force the pin to the
-verified VREF-capable NID.
+Record: Fix quality is good: small, direct, reviewed by the btrfs
+maintainer, and it removes `btrfs_free_chunk_map()` calls because direct
+`rb_entry()` traversal does not acquire chunk-map references. Regression
+risk is low; the main concern is lockless traversal, but code and commit
+context verify this runs during mount before cleaner/transaction
+kthreads start.
 
-Record: Fix quality is good: small, contained, uses existing Realtek HDA
-LED infrastructure, only selected for one HP subsystem ID. Regression
-risk is very low and limited to that model.
+## Phase 3: Git History Investigation
+Record: `git blame` on the pre-fix function shows the verifier loop
+originated from `4358d9635a16` (`btrfs: migrate the block group
+read/creation code`), first contained in `v5.4-rc1`. Later chunk-map
+conversion came from `7dc66abb5a47` in `v6.8-rc1`.
 
-### Phase 3: Git History Investigation
-Record: Local exact-subject `git log` found no commit hash in this
-checkout, so `b4 dig -c <hash>` could not be run against the target
-commit. The patch was analyzed by message-id instead.
+Record: No `Fixes:` tag is present, so there was no Fixes target to
+follow.
 
-Record: `git blame` on nearby current-tree lines shows this repository’s
-Realtek split file was imported through a grafted/snapshot-style commit,
-so blame was not useful for the original upstream introduction of the
-generic HP LED code.
+Record: Recent `fs/btrfs/block-group.c` history shows normal btrfs
+churn, but no prior fix for `check_chunk_block_group_mappings()` except
+this commit. `git log --grep=check_chunk_block_group_mappings
+origin/master` found only `fc51cba3ebae`.
 
-Record: Related local history contains similar model-specific HP
-Pavilion mute LED quirk commits: `2f388b4e8fdd6`, `068641bc9dc3d`, and
-`ab2be3af8c4ea`, each one-line Pavilion mute LED quirk additions.
+Record: Author history in `fs/btrfs` shows ZhengYuan Huang has other
+btrfs fixes; the patch was reviewed and committed by David Sterba, who
+is listed in `MAINTAINERS` as a btrfs maintainer.
 
-Record: Author history for Rodrigo Faria in this file returned no local
-commits. Maintainer handling was verified from the mailing-list thread:
-Takashi Iwai replied “Applied now.”
+Record: The commit was submitted as patch 4/4, but the final mainline
+history contains this verifier fix independently. The earlier balance
+hardening patches were not found in `origin/master`; this patch still
+has standalone value because it prevents the corrupted state from
+passing mount.
 
-Record: Dependencies: no hard functional dependency beyond existing
-Realtek HDA HP mute LED infrastructure. That infrastructure exists in
-checked stable tags, though older trees use
-`sound/pci/hda/patch_realtek.c` and may need manual path/context
-backporting.
+## Phase 4: Mailing List And External Research
+Record: `b4 dig -c fc51cba3ebae...` found the original lore submission:
+`https://patch.msgid.link/20260325004339.2323838-5-gality369@gmail.com`.
 
-### Phase 4: Mailing List And External Research
-Record: `b4 am` by message-id found `[PATCH v3] ALSA: hda/realtek: Add
-mute LED fixup for HP Pavilion 15-cs1xxx`, 1 patch, 2 messages in
-thread, DKIM-signed.
+Record: `b4 dig -a` found v2 and v3 series. v3 is the committed/latest
+revision found by `b4`.
 
-Record: Full thread shows the patch was sent to Takashi Iwai, Jaroslav
-Kysela, `linux-sound`, and `linux-kernel`; Takashi replied “Applied
-now.” No NAKs, objections, or stable nomination were found in the
-fetched thread.
+Record: `b4 dig -w` showed the patch was sent to David Sterba, Chris
+Mason, Ilya Dryomov, `linux-btrfs`, and `linux-kernel`.
 
-Record: `b4 am -v 2` could not find revision 2 from this message-id; web
-searches also did not locate earlier cs1xxx revisions. The subject says
-v3, but earlier revision discussion remains unverified.
+Record: Direct `WebFetch` of lore was blocked by Anubis, so I used `b4`
+mbox content and Patchew. The v3 mbox includes David Sterba saying he
+added the fixes to `for-next`; the committed patch has his `Reviewed-
+by`.
 
-Record: External search found public evidence of HP Pavilion 15-cs-
-series systems using ALC295 audio, but no separate cs1xxx-specific bug
-report was found.
+Record: Patchew v2 discussion records David Sterba saying block group
+lookup checks make sense in general, and the author clarified the bug is
+reproducible with a crafted filesystem image and normal syscalls, not
+only fuzzing. No NAKs were found. No stable-specific discussion was
+found by web search.
 
-Record: Stable-list searches found no cs1xxx-specific stable discussion,
-but did find similar ALSA Realtek HP Pavilion mute LED quirks appearing
-in stable discussion/results.
+## Phase 5: Code Semantic Analysis
+Record: Modified function: `check_chunk_block_group_mappings()`.
 
-### Phase 5: Code Semantic Analysis
-Record: Modified/added key function:
-`alc295_fixup_hp_pavilion_mute_led_1b`.
+Record: Caller trace verified: `open_ctree()` calls
+`btrfs_read_block_groups()`, which calls
+`check_chunk_block_group_mappings()`. In `disk-io.c`,
+`btrfs_read_block_groups()` occurs before the cleaner and transaction
+kthreads are started.
 
-Record: Callers: the new function is referenced from `alc269_fixups[]`;
-that fixup is selected by `snd_hda_pick_fixup()` during Realtek codec
-probe, using the PCI SSID quirk table. This is device
-probe/configuration path, not a syscall hot path.
+Record: Crash path verified: `BTRFS_IOC_BALANCE_V2` reaches
+`btrfs_ioctl_balance()`, then `btrfs_balance()`, `__btrfs_balance()`,
+`should_balance_chunk()`, then usage filters. Current code dereferences
+`cache->used` immediately after `btrfs_lookup_block_group()`.
 
-Record: Callees: `alc269_fixup_hp_mute_led()` scans HP DMI OEM strings,
-sets LED polarity/NID, registers the mute LED cdev through
-`snd_hda_gen_add_mute_led_cdev()`, and installs `led_power_filter`. The
-new helper then overrides `spec->mute_led_nid`.
+Record: Key callees: `rb_first_cached()`, `rb_next()`, `rb_entry()`,
+`btrfs_lookup_block_group()`, `btrfs_put_block_group()`, and error
+reporting via `btrfs_err()`.
 
-Record: Reachability: affected path is reachable during HDA codec probe
-on matching HP hardware and later through the LED audio mute
-trigger/cdev callback.
+Record: Similar safe direct mapping-tree traversal already exists in
+`fill_dummy_bgs()` in the same file, and other mapping-tree traversal
+code exists elsewhere with appropriate locking/context.
 
-Record: Similar patterns: many existing HP Realtek quirks use
-`ALC269_FIXUP_HP_MUTE_LED_MIC3`, `ALC295_FIXUP_HP_MUTE_LED_COEFBIT11`,
-and related model-specific entries.
+## Phase 6: Cross-Referencing And Stable Tree Analysis
+Record: Buggy code exists in stable branches. `stable/linux-6.8.y`
+through `stable/linux-6.19.y` contain the `btrfs_find_chunk_map(fs_info,
+start, 1)` pattern. `stable/linux-5.4.y`, `5.10.y`, `5.15.y`, `6.1.y`,
+`6.6.y`, and `6.7.y` contain the older analogous
+`lookup_extent_mapping(map_tree, start, 1)` pattern.
 
-### Phase 6: Stable Tree Analysis
-Record: Checked tags `v6.19`, `v6.18`, `v6.17`, `v6.16`, `v6.12`, and
-`v6.6` exist locally.
+Record: The upstream patch applies cleanly to the current `7.0` tree
+with `git apply --check`.
 
-Record: `v6.19` and `v6.18` use `sound/hda/codecs/realtek/alc269.c`;
-`v6.6` uses older `sound/pci/hda/patch_realtek.c`.
+Record: Older pre-`6.8` stable trees likely need an adjusted backport
+because they use `extent_map` / `map_lookup` rather than `struct
+btrfs_chunk_map`. The bug mechanism is still verified there by the
+strict intersection semantics in `extent_map.c`.
 
-Record: Generic HP VREF mute LED infrastructure exists in `v6.6` and
-newer checked tags. `ALC295_FIXUP_HP_MUTE_LED_COEFBIT11` exists in
-`v6.16+`, but not in `v6.12`/`v6.6`; the new fixup itself does not
-depend on that helper, only on nearby placement/context.
+Record: I found no related stable branch commit already fixing this
+issue by subject/grep.
 
-Record: `git apply --check` succeeds on current `7.0.5` checkout. It
-fails on a temporary `v6.18` worktree due to context drift, so stable
-backports likely need minor manual adjustment. Older stable trees need
-path adjustment to `sound/pci/hda/patch_realtek.c`.
+## Phase 7: Subsystem And Maintainer Context
+Record: Subsystem is btrfs filesystem code under `fs/btrfs/`.
+Criticality is IMPORTANT to CORE-for-users-of-btrfs because filesystem
+corruption handling and kernel crashes are involved.
 
-### Phase 7: Subsystem And Maintainer Context
-Record: Subsystem is ALSA HDA Realtek codec driver under sound.
-Criticality: peripheral/driver-specific, affecting HP Pavilion 15-cs1xxx
-users.
+Record: Subsystem is actively maintained; recent `origin/master --
+fs/btrfs` history shows many btrfs fixes. David Sterba is listed as a
+btrfs maintainer and reviewed/committed this fix.
 
-Record: The file is actively maintained and frequently receives model-
-specific quirks. Recent local history includes multiple ALSA Realtek
-HP/Lenovo/ASUS/Samsung quirk commits.
+## Phase 8: Impact And Risk Assessment
+Record: Affected users are btrfs users with a corrupted or crafted
+filesystem image containing a chunk without a corresponding block group
+item.
 
-### Phase 8: Impact And Risk
-Record: Affected users are specific to HP Pavilion 15-cs1xxx / PCI SSID
-`103c:856a` with Realtek ALC295-class HDA audio.
+Record: Trigger is mount of that corrupted image followed by balance
+with usage filters for the crash path; the patched behavior rejects the
+inconsistency at mount time with `-EUCLEAN`. Patchew discussion says it
+is reproducible with crafted filesystem image plus normal syscalls.
+Balance ioctl requires `CAP_SYS_ADMIN`, verified in
+`btrfs_ioctl_balance()`.
 
-Record: Trigger condition is normal codec probe and mute LED operation
-on that hardware. No evidence found that unprivileged users can trigger
-a crash or security issue; the user-visible effect is
-incorrect/nonfunctional mute LED.
+Record: Failure mode is HIGH/CRITICAL: KASAN NULL pointer dereference in
+filesystem balance code, i.e. kernel crash/oops risk, and the underlying
+issue is missed filesystem corruption detection.
 
-Record: Failure severity is LOW to MEDIUM: not a crash or data
-corruption issue, but a real hardware functionality regression/quirk.
+Record: Benefit is high: prevents corrupted btrfs images from mounting
+silently and avoids a later NULL dereference. Risk is low for `6.8+`
+style trees: one contained verifier loop change during mount. Risk is
+medium-low for older trees only because the backport needs translation
+to the older extent-map data structure.
 
-Record: Benefit is medium for affected users because it restores correct
-mute LED behavior. Risk is very low because the quirk is model-specific
-and uses existing LED control paths.
+## Phase 9: Final Synthesis
+Record: Evidence for backporting: real NULL-deref crash path, crafted-
+image reproducibility, filesystem corruption detection failure, small
+one-function fix, maintainer review, code present across stable trees,
+and clean apply to current `7.0` tree.
 
-### Phase 9: Final Synthesis
-Record: Evidence for backporting: hardware quirk category, fixes real
-BIOS misreporting, limited to one PCI SSID, small patch, uses
-established ALSA Realtek fixup patterns, accepted by ALSA maintainer,
-and similar HP mute LED quirks are common stable material.
+Record: Evidence against backporting: no `Fixes:`/`Cc: stable` tag;
+older stable trees need adjusted backports; the exact patch is not
+directly applicable to pre-`6.8` extent-map code. These do not outweigh
+the bug severity.
 
-Record: Evidence against backporting: no crash/security/data corruption;
-no explicit stable tag; current patch does not apply cleanly to at least
-`v6.18` without minor context adjustment; older trees need file-
-path/context adjustment.
+Record: Stable rules checklist: obviously correct and reviewed: yes;
+fixes real user-visible bug: yes; important issue: yes, NULL deref and
+missed corruption detection; small and contained: yes; no new
+feature/API: yes; stable application: clean for current `7.0`, likely
+straightforward for `6.8+`, adjusted backport needed for older trees.
 
-Record: Stable rules: obviously correct enough by inspection; fixes a
-real hardware bug; small and contained; no new public API; no new
-feature beyond hardware-specific workaround; stable application may
-require minor backport edits.
-
-Record: Exception category applies: hardware-specific quirk/workaround
-in an existing driver.
+Record: Exception category: none. This is a normal bug fix, not a device
+ID, quirk, DT, build, or documentation-only patch.
 
 ## Verification
-- [Phase 1] Parsed subject, body, and tags from supplied commit message
-  and fetched mbox.
-- [Phase 2] Verified patch is 21 insertions in
-  `sound/hda/codecs/realtek/alc269.c`.
-- [Phase 3] Ran local `git log` by exact subject: no matching commit
-  hash found.
-- [Phase 3] Ran `git blame` around affected code: local history is
-  snapshot/grafted, limiting original-introduction analysis.
-- [Phase 4] Ran `b4 am` by message-id: found v3 patch, 2-message thread,
-  DKIM-signed.
-- [Phase 4] Read full mbox: Takashi Iwai replied “Applied now”; no
-  objections found.
-- [Phase 5] Traced quirk selection through `snd_hda_pick_fixup()` and
-  Realtek probe path.
-- [Phase 6] Checked stable tags and paths: `v6.18+` split path, `v6.6`
-  old `patch_realtek.c` path.
-- [Phase 6] Checked relevant symbols in stable tags: HP VREF LED
-  infrastructure exists in checked stable trees.
-- [Phase 6] Ran `git apply --check`: applies to current checkout, not
-  cleanly to `v6.18` due context drift.
-- [Phase 8] Verified failure mode from commit body and code: wrong LED
-  NID affects mute LED behavior, not memory safety.
-- UNVERIFIED: exact applied upstream commit SHA, because it was not
-  present in local `git log`.
-- UNVERIFIED: earlier v1/v2 review discussion, because `b4` and web
-  search did not locate those revisions.
-- UNVERIFIED: exact applicability to every active older LTS tree beyond
-  the checked tags.
+- [Phase 1] `git show --format=fuller --stat fc51cba3ebae...`: confirmed
+  commit message, tags, author, reviewer, and one-file diff.
+- [Phase 2] `git show --no-ext-diff fc51cba3ebae... -- fs/btrfs/block-
+  group.c`: confirmed the loop replacement and removal of
+  `btrfs_free_chunk_map()` calls.
+- [Phase 3] `git blame -L ... fc51cba3ebae^ -- fs/btrfs/block-group.c`:
+  identified `4358d9635a16` as the original verifier-loop source and
+  `7dc66abb5a47` as later chunk-map conversion.
+- [Phase 3] `git show 4358d9635a16` and `git describe --contains`:
+  confirmed first appearance around `v5.4-rc1`.
+- [Phase 3] `git log --grep=check_chunk_block_group_mappings
+  origin/master`: found no prior related fix except this commit.
+- [Phase 4] `b4 dig -c`, `-a`, `-w`, and `-m`: found v3 lore submission,
+  v2/v3 revision history, recipients, and maintainer response.
+- [Phase 4] Patchew v2 fetch: confirmed David Sterba review discussion
+  and author statement that crafted images plus normal syscalls
+  reproduce the issue.
+- [Phase 5] `rg`/file reads in `disk-io.c`, `block-group.c`,
+  `volumes.c`, and `ioctl.c`: verified mount-time call path and balance
+  NULL-deref path.
+- [Phase 6] `git grep` on stable branches: confirmed the buggy lookup
+  pattern in `6.8.y` through `6.19.y` and analogous extent-map pattern
+  in older stable branches.
+- [Phase 6] `git apply --check` against the current tree: confirmed
+  clean application to the current `7.0` checkout.
+- [Phase 7] `MAINTAINERS`: confirmed David Sterba as btrfs maintainer.
+- UNVERIFIED: I did not run a runtime reproducer or mount a crafted
+  btrfs image.
+- UNVERIFIED: I did not prove exact clean application to every older
+  stable branch; pre-`6.8` trees require an adjusted extent-map
+  backport.
+
+The technical merit is strong: this is a small, reviewed btrfs
+corruption-detection fix that prevents a real NULL-deref crash path and
+should be backported, with adjusted backports for older extent-map based
+stable trees.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ fs/btrfs/block-group.c | 23 ++++++++---------------
+ 1 file changed, 8 insertions(+), 15 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index a55b73ced81d6..7e0289a1a1ca7 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -1676,6 +1676,21 @@ static void alc295_fixup_hp_mute_led_coefbit11(struct hda_codec *codec,
- 	}
- }
- 
-+/* Override wrong pin to NID 0x1b (F.32 BIOS reports 0x18 via DMI OEM string)
-+ * on HP pavilion 15-cs1xxx laptops
-+ */
-+static void alc295_fixup_hp_pavilion_mute_led_1b(struct hda_codec *codec,
-+						 const struct hda_fixup *fix,
-+						 int action)
-+{
-+	struct alc_spec *spec = codec->spec;
-+
-+	alc269_fixup_hp_mute_led(codec, fix, action);
-+
-+	if (action == HDA_FIXUP_ACT_PRE_PROBE)
-+		spec->mute_led_nid = 0x1b;
-+}
-+
- static void alc233_fixup_lenovo_coef_micmute_led(struct hda_codec *codec,
- 				const struct hda_fixup *fix, int action)
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index c0d17a369bda5..acb55b6f1e550 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -2374,29 +2374,25 @@ static struct btrfs_block_group *btrfs_create_block_group(
+  */
+ static int check_chunk_block_group_mappings(struct btrfs_fs_info *fs_info)
  {
-@@ -3872,6 +3887,7 @@ enum {
- 	ALC290_FIXUP_SUBWOOFER,
- 	ALC290_FIXUP_SUBWOOFER_HSJACK,
- 	ALC295_FIXUP_HP_MUTE_LED_COEFBIT11,
-+	ALC295_FIXUP_HP_PAVILION_MUTE_LED_1B,
- 	ALC269_FIXUP_THINKPAD_ACPI,
- 	ALC269_FIXUP_LENOVO_XPAD_ACPI,
- 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
-@@ -5715,6 +5731,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc295_fixup_hp_mute_led_coefbit11,
- 	},
-+	[ALC295_FIXUP_HP_PAVILION_MUTE_LED_1B] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc295_fixup_hp_pavilion_mute_led_1b,
-+	},
- 	[ALC298_FIXUP_SAMSUNG_AMP] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc298_fixup_samsung_amp,
-@@ -6912,6 +6932,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8537, "HP ProBook 440 G6", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8548, "HP EliteBook x360 830 G6", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x854a, "HP EliteBook 830 G6", ALC285_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x856a, "HP Pavilion 15-cs1xxx", ALC295_FIXUP_HP_PAVILION_MUTE_LED_1B),
- 	SND_PCI_QUIRK(0x103c, 0x85c6, "HP Pavilion x360 Convertible 14-dy1xxx", ALC295_FIXUP_HP_MUTE_LED_COEFBIT11),
- 	SND_PCI_QUIRK(0x103c, 0x85de, "HP Envy x360 13-ar0xxx", ALC285_FIXUP_HP_ENVY_X360),
- 	SND_PCI_QUIRK(0x103c, 0x8603, "HP Omen 17-cb0xxx", ALC285_FIXUP_HP_MUTE_LED),
+-	u64 start = 0;
++	struct rb_node *node;
+ 	int ret = 0;
+ 
+-	while (1) {
++	/*
++	 * This is called during mount from btrfs_read_block_groups(), before
++	 * any background threads are started, so no concurrent writers can
++	 * modify the mapping_tree. No lock is needed here.
++	 */
++	for (node = rb_first_cached(&fs_info->mapping_tree); node; node = rb_next(node)) {
+ 		struct btrfs_chunk_map *map;
+ 		struct btrfs_block_group *bg;
+ 
+-		/*
+-		 * btrfs_find_chunk_map() will return the first chunk map
+-		 * intersecting the range, so setting @length to 1 is enough to
+-		 * get the first chunk.
+-		 */
+-		map = btrfs_find_chunk_map(fs_info, start, 1);
+-		if (!map)
+-			break;
+-
++		map = rb_entry(node, struct btrfs_chunk_map, rb_node);
+ 		bg = btrfs_lookup_block_group(fs_info, map->start);
+ 		if (unlikely(!bg)) {
+ 			btrfs_err(fs_info,
+ 	"chunk start=%llu len=%llu doesn't have corresponding block group",
+ 				     map->start, map->chunk_len);
+ 			ret = -EUCLEAN;
+-			btrfs_free_chunk_map(map);
+ 			break;
+ 		}
+ 		if (unlikely(bg->start != map->start || bg->length != map->chunk_len ||
+@@ -2409,12 +2405,9 @@ static int check_chunk_block_group_mappings(struct btrfs_fs_info *fs_info)
+ 				bg->start, bg->length,
+ 				bg->flags & BTRFS_BLOCK_GROUP_TYPE_MASK);
+ 			ret = -EUCLEAN;
+-			btrfs_free_chunk_map(map);
+ 			btrfs_put_block_group(bg);
+ 			break;
+ 		}
+-		start = map->start + map->chunk_len;
+-		btrfs_free_chunk_map(map);
+ 		btrfs_put_block_group(bg);
+ 	}
+ 	return ret;
 -- 
 2.53.0
 
