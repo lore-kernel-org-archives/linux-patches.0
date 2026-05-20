@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D18347512;
-	Wed, 20 May 2026 17:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3DF347512;
+	Wed, 20 May 2026 17:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297337; cv=none; b=AhnqBGqqu5fItU4rE0UTcPLpVLGzHk85cm5BOEXAWWYRjDozuhF0jpDFCN3YyOYO5DbELfpgYocD8iQl/GCFl63hIJrqx0Pk/Li9CUV6wWR3hvg8CqCmuCOnFTnsL+HilEOTuEhlET/k2PEkOMoJcNEPn54smpFkZJaLMTxBZCg=
+	t=1779297340; cv=none; b=nebV38ZuyR2NXWqcN6jUvghfbnccZwyuXhb/3ynCswDUguQOaZw+98KBeD0xuR54emY+vo5CcdJSS4jt7BZaCFFZ7j7gmoXRZI/dUODCnRIffttrw8HIMrNHxDMQLfrAPCCoSgIVi3QqTUa8yGJ27OG4m9WQe6so7QT5AK/QZ3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297337; c=relaxed/simple;
-	bh=X4/WeDS7VSO7ZvjK0M0/b24Ud0ISeBJHCf3zKevNdXU=;
+	s=arc-20240116; t=1779297340; c=relaxed/simple;
+	bh=Fi18PsZ44FndpZ1IFXwn2vLbNW0x+zRU7lW2qG5oAtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a9rPkCYOD5bP6oJFp+NITU1Iwmg4iAwsYTwS2AIWnzNQKT5eQeDEDr2g5GQinCvyqIS0uXhQ9+m/LnbIpvT/qI/YpC1gF1Bgx9B4kAn+rDShsrm9cbN+JA8738ly/q+jqkuQ70ITCsFDnhDfqOvVS6ma+eY5XGtuL5ypk9xseFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgnUC/Ld; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kc49eLuJg4n7kXjNuL99Qr30dXRC8bChwVj/Bm3uO91JuywShNJq22tq0xaUJ73ap9zsL9Uea28t4ujtWDomsYqJpAtYEpfugLtMdNyOOuvyoEUNMSve7fkIVcUsYUgn55NEW12DGkevzaQRyxHo9C4Wa7Lg90qT1C/HCAPclPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QalYpRWY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgnUC/Ld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E08E1F00893;
-	Wed, 20 May 2026 17:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QalYpRWY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245EF1F0089A;
+	Wed, 20 May 2026 17:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297336;
-	bh=2gjZmZCviHuawBNnpoS7CFujlo9II6+xEUM9DY+wGyU=;
+	s=korg; t=1779297338;
+	bh=NVTcdb3FiKJ5zpdN9NdxEAGlFzTy+nxUe1ifEo9XUm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NgnUC/LdPEnfJFiYR/SEI+bTM10IRj7f90WoNexvXMJmtAWbFJP3YL+V8D+ga69wq
-	 +7MhyghpWi8Clunff1QW5kwus27RLn50c877UhytR+2Q1FMPQqAqS0vRN7g1gRGRF5
-	 oUwN8mKiONEAVAhmipHvAWT+KwJpA3+T3QfPR3K0=
+	b=QalYpRWYr4DxVqoUHALLKpAYzImgFKTSSY4oHyN9CkG1kczUW4cnm76AKDAkyrQIB
+	 DPkgPEKMTfZIwF146iOK8Zt8bbz3hmL9oWOHHEg7PajlxXSLEneMlo8AG026yg8e/O
+	 hFp6zMbfcCAIMRiuvJWPcF+sU19XZyTzhUxojBBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Friedrich Vock <friedrich.vock@gmx.de>,
-	Maarten Lankhorst <dev@lankhorst.se>,
-	Tejun Heo <tj@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Christian Koenig <christian.koenig@amd.com>,
-	dri-devel@lists.freedesktop.org,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Maarten Lankhorst <dev@lankhrost.se>
-Subject: [PATCH 7.0 1133/1146] drm/ttm: Convert -EAGAIN from dmem_cgroup_try_charge to -ENOSPC
-Date: Wed, 20 May 2026 18:23:03 +0200
-Message-ID: <20260520162213.891807759@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.0 1142/1146] eventfs: Simplify code using guard()s
+Date: Wed, 20 May 2026 18:23:12 +0200
+Message-ID: <20260520162214.100461112@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,71 +46,237 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 591711b32681a04b57d00c2a404658f8419a081c upstream.
+[ Upstream commit 4d9b262031ffef203243e53577a90ae6e1090e67 ]
 
-dmem_cgroup_try_charge() returns -EAGAIN when the cgroup limit is
-hit and the charge fails. TTM has no concept of -EAGAIN from resource
-allocation; -ENOSPC is the canonical error meaning "no space, try
-eviction". Convert at the source in ttm_resource_alloc() so no caller
-needs to handle an unexpected error code, and clean up the now-redundant
--EAGAIN check in ttm_bo_alloc_resource().
+Use guard(mutex), scoped_guard(mutex) and guard(src) to simplify the code
+and remove a lot of the jumps to "out:" labels.
 
-Without this, -EAGAIN escaping ttm_resource_alloc() during an eviction
-walk causes the walk to terminate early instead of continuing to the
-next candidate.
-
-Cc: Friedrich Vock <friedrich.vock@gmx.de>
-Cc: Maarten Lankhorst <dev@lankhorst.se>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Christian Koenig <christian.koenig@amd.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.14+
-Fixes: 2b624a2c1865 ("drm/ttm: Handle cgroup based eviction in TTM")
-Assisted-by: GitHub_Copilot:claude-sonnet-4.6
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Maarten Lankhorst <dev@lankhrost.se>
-Link: https://patch.msgid.link/20260508160920.230339-1-thomas.hellstrom@linux.intel.com
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20250604151625.250d13e1@gandalf.local.home
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Stable-dep-of: f67950b2887f ("eventfs: Use list_add_tail_rcu() for SRCU-protected children list")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ttm/ttm_bo.c       |    2 +-
- drivers/gpu/drm/ttm/ttm_resource.c |    5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ fs/tracefs/event_inode.c |   96 +++++++++++++++++------------------------------
+ 1 file changed, 36 insertions(+), 60 deletions(-)
 
---- a/drivers/gpu/drm/ttm/ttm_bo.c
-+++ b/drivers/gpu/drm/ttm/ttm_bo.c
-@@ -740,7 +740,7 @@ static int ttm_bo_alloc_resource(struct
- 		may_evict = (force_space && place->mem_type != TTM_PL_SYSTEM);
- 		ret = ttm_resource_alloc(bo, place, res, force_space ? &limit_pool : NULL);
- 		if (ret) {
--			if (ret != -ENOSPC && ret != -EAGAIN) {
-+			if (ret != -ENOSPC) {
- 				dmem_cgroup_pool_state_put(limit_pool);
- 				return ret;
- 			}
---- a/drivers/gpu/drm/ttm/ttm_resource.c
-+++ b/drivers/gpu/drm/ttm/ttm_resource.c
-@@ -398,8 +398,11 @@ int ttm_resource_alloc(struct ttm_buffer
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -180,29 +180,25 @@ static int eventfs_set_attr(struct mnt_i
+ 	const char *name;
+ 	int ret;
  
- 	if (man->cg) {
- 		ret = dmem_cgroup_try_charge(man->cg, bo->base.size, &pool, ret_limit_pool);
--		if (ret)
-+		if (ret) {
-+			if (ret == -EAGAIN)
-+				ret = -ENOSPC;
- 			return ret;
-+		}
+-	mutex_lock(&eventfs_mutex);
++	guard(mutex)(&eventfs_mutex);
+ 	ei = dentry->d_fsdata;
+-	if (ei->is_freed) {
+-		/* Do not allow changes if the event is about to be removed. */
+-		mutex_unlock(&eventfs_mutex);
++	/* Do not allow changes if the event is about to be removed. */
++	if (ei->is_freed)
+ 		return -ENODEV;
+-	}
+ 
+ 	/* Preallocate the children mode array if necessary */
+ 	if (!(dentry->d_inode->i_mode & S_IFDIR)) {
+ 		if (!ei->entry_attrs) {
+ 			ei->entry_attrs = kzalloc_objs(*ei->entry_attrs,
+ 						       ei->nr_entries, GFP_NOFS);
+-			if (!ei->entry_attrs) {
+-				ret = -ENOMEM;
+-				goto out;
+-			}
++			if (!ei->entry_attrs)
++				return -ENOMEM;
+ 		}
  	}
  
- 	ret = man->func->alloc(man, bo, place, res_ptr);
+ 	ret = simple_setattr(idmap, dentry, iattr);
+ 	if (ret < 0)
+-		goto out;
++		return ret;
+ 
+ 	/*
+ 	 * If this is a dir, then update the ei cache, only the file
+@@ -225,8 +221,6 @@ static int eventfs_set_attr(struct mnt_i
+ 			}
+ 		}
+ 	}
+- out:
+-	mutex_unlock(&eventfs_mutex);
+ 	return ret;
+ }
+ 
+@@ -530,26 +524,24 @@ static struct dentry *eventfs_root_looku
+ 	struct tracefs_inode *ti;
+ 	struct eventfs_inode *ei;
+ 	const char *name = dentry->d_name.name;
+-	struct dentry *result = NULL;
+ 
+ 	ti = get_tracefs(dir);
+ 	if (WARN_ON_ONCE(!(ti->flags & TRACEFS_EVENT_INODE)))
+ 		return ERR_PTR(-EIO);
+ 
+-	mutex_lock(&eventfs_mutex);
++	guard(mutex)(&eventfs_mutex);
+ 
+ 	ei = ti->private;
+ 	if (!ei || ei->is_freed)
+-		goto out;
++		return NULL;
+ 
+ 	list_for_each_entry(ei_child, &ei->children, list) {
+ 		if (strcmp(ei_child->name, name) != 0)
+ 			continue;
+ 		/* A child is freed and removed from the list at the same time */
+ 		if (WARN_ON_ONCE(ei_child->is_freed))
+-			goto out;
+-		result = lookup_dir_entry(dentry, ei, ei_child);
+-		goto out;
++			return NULL;
++		return lookup_dir_entry(dentry, ei, ei_child);
+ 	}
+ 
+ 	for (int i = 0; i < ei->nr_entries; i++) {
+@@ -563,14 +555,12 @@ static struct dentry *eventfs_root_looku
+ 
+ 		data = ei->data;
+ 		if (entry->callback(name, &mode, &data, &fops) <= 0)
+-			goto out;
++			return NULL;
++
++		return lookup_file_dentry(dentry, ei, i, mode, data, fops);
+ 
+-		result = lookup_file_dentry(dentry, ei, i, mode, data, fops);
+-		goto out;
+ 	}
+- out:
+-	mutex_unlock(&eventfs_mutex);
+-	return result;
++	return NULL;
+ }
+ 
+ /*
+@@ -586,7 +576,6 @@ static int eventfs_iterate(struct file *
+ 	struct eventfs_inode *ei;
+ 	const char *name;
+ 	umode_t mode;
+-	int idx;
+ 	int ret = -EINVAL;
+ 	int ino;
+ 	int i, r, c;
+@@ -600,16 +589,13 @@ static int eventfs_iterate(struct file *
+ 
+ 	c = ctx->pos - 2;
+ 
+-	idx = srcu_read_lock(&eventfs_srcu);
++	guard(srcu)(&eventfs_srcu);
+ 
+-	mutex_lock(&eventfs_mutex);
+-	ei = READ_ONCE(ti->private);
+-	if (ei && ei->is_freed)
+-		ei = NULL;
+-	mutex_unlock(&eventfs_mutex);
+-
+-	if (!ei)
+-		goto out;
++	scoped_guard(mutex, &eventfs_mutex) {
++		ei = READ_ONCE(ti->private);
++		if (!ei || ei->is_freed)
++			return -EINVAL;
++	}
+ 
+ 	/*
+ 	 * Need to create the dentries and inodes to have a consistent
+@@ -624,21 +610,19 @@ static int eventfs_iterate(struct file *
+ 		entry = &ei->entries[i];
+ 		name = entry->name;
+ 
+-		mutex_lock(&eventfs_mutex);
+ 		/* If ei->is_freed then just bail here, nothing more to do */
+-		if (ei->is_freed) {
+-			mutex_unlock(&eventfs_mutex);
+-			goto out;
++		scoped_guard(mutex, &eventfs_mutex) {
++			if (ei->is_freed)
++				return -EINVAL;
++			r = entry->callback(name, &mode, &cdata, &fops);
+ 		}
+-		r = entry->callback(name, &mode, &cdata, &fops);
+-		mutex_unlock(&eventfs_mutex);
+ 		if (r <= 0)
+ 			continue;
+ 
+ 		ino = EVENTFS_FILE_INODE_INO;
+ 
+ 		if (!dir_emit(ctx, name, strlen(name), ino, DT_REG))
+-			goto out;
++			return -EINVAL;
+ 	}
+ 
+ 	/* Subtract the skipped entries above */
+@@ -661,19 +645,13 @@ static int eventfs_iterate(struct file *
+ 
+ 		ino = eventfs_dir_ino(ei_child);
+ 
+-		if (!dir_emit(ctx, name, strlen(name), ino, DT_DIR))
+-			goto out_dec;
++		if (!dir_emit(ctx, name, strlen(name), ino, DT_DIR)) {
++			/* Incremented ctx->pos without adding something, reset it */
++			ctx->pos--;
++			return -EINVAL;
++		}
+ 	}
+-	ret = 1;
+- out:
+-	srcu_read_unlock(&eventfs_srcu, idx);
+-
+-	return ret;
+-
+- out_dec:
+-	/* Incremented ctx->pos without adding something, reset it */
+-	ctx->pos--;
+-	goto out;
++	return 1;
+ }
+ 
+ /**
+@@ -730,11 +708,10 @@ struct eventfs_inode *eventfs_create_dir
+ 	INIT_LIST_HEAD(&ei->children);
+ 	INIT_LIST_HEAD(&ei->list);
+ 
+-	mutex_lock(&eventfs_mutex);
+-	if (!parent->is_freed)
+-		list_add_tail(&ei->list, &parent->children);
+-	mutex_unlock(&eventfs_mutex);
+-
++	scoped_guard(mutex, &eventfs_mutex) {
++		if (!parent->is_freed)
++			list_add_tail(&ei->list, &parent->children);
++	}
+ 	/* Was the parent freed? */
+ 	if (list_empty(&ei->list)) {
+ 		cleanup_ei(ei);
+@@ -880,9 +857,8 @@ void eventfs_remove_dir(struct eventfs_i
+ 	if (!ei)
+ 		return;
+ 
+-	mutex_lock(&eventfs_mutex);
++	guard(mutex)(&eventfs_mutex);
+ 	eventfs_remove_rec(ei, 0);
+-	mutex_unlock(&eventfs_mutex);
+ }
+ 
+ /**
 
 
