@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6BE1C3BFC;
-	Wed, 20 May 2026 17:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4153F20FA;
+	Wed, 20 May 2026 17:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299060; cv=none; b=UX2O6XPVG81/mS5M5ylLShc4SQzwdpsEVu6yYcmnCeBGKSfoSx+Ad6pdp6yt7VesvFMXKS7PqFUh7u89aGbqJpYzLcBMMw60x6vnX+DBEf6gNL0bySR+evFwEDZ14pnS4QnY9bs2qW2rIxzKMCCa6EhaL1IbZYj2VlPgNRphGQs=
+	t=1779299063; cv=none; b=LT1QPPCYgJ0wGvCrDCXcgBhQrsyqmM1Og8zgWk2cGVR39IXJKNa9K4hgEAjJ65UWqi0L/SzWOJOBwkWK2Pfyx5j+96MjeQOKrlxBD5MOKL6VQaImWsVeuj1b1NMskX3FXqqVRLiu/XnW2dvA9pfjPoUyMj6yxTk2eRfVhBwqm+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299060; c=relaxed/simple;
-	bh=9bJ2pE/1R6VeU7MIIGGJzlKzLP/EcIp7F50mxV8Dea8=;
+	s=arc-20240116; t=1779299063; c=relaxed/simple;
+	bh=h3Osl3BhJ+l/U1EvODaO/14qVQHg0tuOKY8TZuuhNiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ri+rreuFv6p8jSL2GXJPAaZQX1NKkcvcs1fGnpgq093VWxITcF7zZ7nKsnw0N63ZJ8CkbJcR0XCOghkkGa104mSbD3jEhYrdFHXoTrnP0ya7XnToN1/pkjjhjDl2DoMaSRknYTuRi0KvnC0p9qT4ffHx7QOmnVADQiwI6dpD8sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHp8jKeB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sSfOgs85scgmlObjBwRYWcpQyi0W57aKbh03SxNVIFCrQwffrKIdAY7SWezqJuUoR4xr/wgZR1qsAnUqPjcpUpr6hRHfz6VVDKepZ4ht3273jeSifBajGXLyLyFlEB4NM/NdFtjEuSRYW6byLPs4RJFqcDeESWXMWR76LeiQdvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+Zlm7ph; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHp8jKeB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31FC1F00893;
-	Wed, 20 May 2026 17:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+Zlm7ph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631331F000E9;
+	Wed, 20 May 2026 17:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299059;
-	bh=Sb4IwxocFjBKhO1/U4l072zp3ebjqazcet54nuRRz/o=;
+	s=korg; t=1779299061;
+	bh=R+v1zywOEu99Zu+hO4/xf0n8t7buynTbNVJ8V6sSGbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EHp8jKeB+1G/WUg+mWU9QPwzrvh2wDQH3wyMXn4RacOZMLrlW4NVAY5hM0dcx/nv/
-	 FxN8Y67+Zw7tZaFKEMrOPXyH0bU3kl7tAfHu+PmMSLoDhdHbw7dWuIwI8+0zSRCHl3
-	 SOAYwyLw4a5MM8Ol65/UmQLNOA1SMfZfQN1K9ucE=
+	b=X+Zlm7phGIqA/o6T02Zdgm5AW87IaxG52wMT0IMwtkOGrnYJj592K0X6q+UWOmp9U
+	 cmaFodYeAYozQoN1rBKlKKZRMC7Qc2XqPyKxjp4R7RIqox2JAWuCxpPAZeSpi3MaAU
+	 0AdKpOBD8wIFD9o1QV/ol5tSvORBzgdmgm42AXc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zoltan Fodor <zoltan.fodor@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 646/957] ice: fix adjust timer programming for E830 devices
-Date: Wed, 20 May 2026 18:18:49 +0200
-Message-ID: <20260520162148.538343459@linuxfoundation.org>
+Subject: [PATCH 6.18 647/957] ice: update PCS latency settings for E825 10G/25Gb modes
+Date: Wed, 20 May 2026 18:18:50 +0200
+Message-ID: <20260520162148.560056009@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -49,7 +49,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -58,67 +57,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit 885c5e57924dc040b23d0ad0d8388f0e35772159 ]
+[ Upstream commit 05567e4052732d70c7ff9655217b3d14d25f639a ]
 
-Fix incorrect 'adjust the timer' programming sequence for E830 devices
-series. Only shadow registers GLTSYN_SHADJ were programmed in the
-current implementation. According to the specification [1], write to
-command GLTSYN_CMD register is also required with CMD field set to
-"Adjust the Time" value, for the timer adjustment to take the effect.
+Update MAC Rx/Tx offset registers settings (PHY_MAC_[RX|TX]_OFFSET
+registers) with the data obtained with the latest research. It applies
+to PCS latency settings for the following speeds/modes:
+* 10Gb NO-FEC
+        - TX latency changed from 71.25 ns to 73 ns
+        - RX latency changed from -25.6 ns to -28 ns
+* 25Gb NO-FEC
+	- TX latency changed from 28.17 ns to 33 ns
+        - RX latency changed from -12.45 ns to -12 ns
+* 25Gb RS-FEC
+        - TX latency changed from 64.5 ns to 69 ns
+        - RX latency changed from -3.6 ns to -3 ns
 
-The flow was broken for the adjustment less than S32_MAX/MIN range
-(around +/- 2 seconds). For bigger adjustment, non-atomic programming
-flow is used, involving set timer programming. Non-atomic flow is
-implemented correctly.
+The original data came from simulation and pre-production hardware.
+The new data measures the actual delays and as such is more accurate.
 
-Testing hints:
-Run command:
-	phc_ctl /dev/ptpX get adj 2 get
-Expected result:
-	Returned timestamps differ at least by 2 seconds
-
-[1] Intel® Ethernet Controller E830 Datasheet rev 1.3, chapter 9.7.5.4
-https://cdrdv2.intel.com/v1/dl/getContent/787353?explicitVersion=true
-
-Fixes: f00307522786 ("ice: Implement PTP support for E830 devices")
+Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
+Co-developed-by: Zoltan Fodor <zoltan.fodor@intel.com>
+Signed-off-by: Zoltan Fodor <zoltan.fodor@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rinitha S <sx.rinitha@intel.com>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-1-686c33c9828d@intel.com
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-2-686c33c9828d@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ptp_consts.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-index 35680dbe4a7f7..161a0ae8599c1 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-@@ -5381,8 +5381,8 @@ int ice_ptp_write_incval_locked(struct ice_hw *hw, u64 incval)
-  */
- int ice_ptp_adj_clock(struct ice_hw *hw, s32 adj)
- {
-+	int err = 0;
- 	u8 tmr_idx;
--	int err;
- 
- 	tmr_idx = hw->func_caps.ts_func_info.tmr_index_owned;
- 
-@@ -5399,8 +5399,8 @@ int ice_ptp_adj_clock(struct ice_hw *hw, s32 adj)
- 		err = ice_ptp_prep_phy_adj_e810(hw, adj);
- 		break;
- 	case ICE_MAC_E830:
--		/* E830 sync PHYs automatically after setting GLTSYN_SHADJ */
--		return 0;
-+		/* E830 sync PHYs automatically after setting cmd register */
-+		break;
- 	case ICE_MAC_GENERIC:
- 		err = ice_ptp_prep_phy_adj_e82x(hw, adj);
- 		break;
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_consts.h b/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
+index 19dddd9b53ddd..4d298c27bfb27 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
+@@ -78,14 +78,14 @@ struct ice_eth56g_mac_reg_cfg eth56g_mac_cfg[NUM_ICE_ETH56G_LNK_SPD] = {
+ 		.blktime = 0x666, /* 3.2 */
+ 		.tx_offset = {
+ 			.serdes = 0x234c, /* 17.6484848 */
+-			.no_fec = 0x8e80, /* 71.25 */
++			.no_fec = 0x93d9, /* 73 */
+ 			.fc = 0xb4a4, /* 90.32 */
+ 			.sfd = 0x4a4, /* 2.32 */
+ 			.onestep = 0x4ccd /* 38.4 */
+ 		},
+ 		.rx_offset = {
+ 			.serdes = 0xffffeb27, /* -10.42424 */
+-			.no_fec = 0xffffcccd, /* -25.6 */
++			.no_fec = 0xffffc7b6, /* -28 */
+ 			.fc = 0xfffc557b, /* -469.26 */
+ 			.sfd = 0x4a4, /* 2.32 */
+ 			.bs_ds = 0x32 /* 0.0969697 */
+@@ -118,17 +118,17 @@ struct ice_eth56g_mac_reg_cfg eth56g_mac_cfg[NUM_ICE_ETH56G_LNK_SPD] = {
+ 		.mktime = 0x147b, /* 10.24, only if RS-FEC enabled */
+ 		.tx_offset = {
+ 			.serdes = 0xe1e, /* 7.0593939 */
+-			.no_fec = 0x3857, /* 28.17 */
++			.no_fec = 0x4266, /* 33 */
+ 			.fc = 0x48c3, /* 36.38 */
+-			.rs = 0x8100, /* 64.5 */
++			.rs = 0x8a00, /* 69 */
+ 			.sfd = 0x1dc, /* 0.93 */
+ 			.onestep = 0x1eb8 /* 15.36 */
+ 		},
+ 		.rx_offset = {
+ 			.serdes = 0xfffff7a9, /* -4.1697 */
+-			.no_fec = 0xffffe71a, /* -12.45 */
++			.no_fec = 0xffffe700, /* -12 */
+ 			.fc = 0xfffe894d, /* -187.35 */
+-			.rs = 0xfffff8cd, /* -3.6 */
++			.rs = 0xfffff8cc, /* -3 */
+ 			.sfd = 0x1dc, /* 0.93 */
+ 			.bs_ds = 0x14 /* 0.0387879, RS-FEC 0 */
+ 		}
 -- 
 2.53.0
 
