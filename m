@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358BD3F166E;
-	Wed, 20 May 2026 17:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1522C3EEAC6;
+	Wed, 20 May 2026 17:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296926; cv=none; b=hYtTnEqmAmBMRllNX8fxdvPTe7IMr0bamkrBKbs9pVr405XEWNAezKiYkf/fBKXuhQBo89Q+FBO91BhbPVkiIkvaapuDgsYOotN6xaJE7GX/ADIZcM42TPX1Tni56gXggT2UQHmC70rwMmNmL0icgXd0aCr7Wwyn4HG1JbdLFRk=
+	t=1779296929; cv=none; b=GRCSATokzveRZkYM+mw8zM3NUhCSCcz9CADVTBopJgY0QkaT4zdBEeau1xgwhUkJsgbqwBTcHt7VwwbPFxvvTepGb8Hi3Dlc6likRsNotoUdFOQyCjufBL0OWn1g9FtvMBJYSvqavEYq+l5VeTaz+FdB2ks6O9umAyuStS2hlNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296926; c=relaxed/simple;
-	bh=Nu7S6odUZptSA6rOOyO2hTgr4liN/I8mz5gJMTyOvEI=;
+	s=arc-20240116; t=1779296929; c=relaxed/simple;
+	bh=JK35KytxAdQlQym8N5IoSUgIMqb/u37RcP52GhjvOFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=glBVNU32MY2bfXJ8JcUAg42ReBl/m86qjxefI/dQf6Em3hFXGAluOe5ifLfK6DM+eUZ1q2e0g0+9n5uRXF8FvjpjyfTS1ySRlsz6ZRx0g+g+4JewaqD2WsBvC+WwwkgrtGEm9ErGbgGhw32EVXaKlOs+tmBmQWheya2xwfBY1oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqxQ2Ddi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l3QSvpeh2Jnjf9JZ/yqe0vqjLTlPRRLQU0WdY1uz0acZe09XnH4pMLa5yXSPgHvQlo1e6WS1BpZ1LOiH3eancEv7OokhfYtQjGFqdSeRoVJQ07YMsjUqEpIX8V8JmXE9Pp6ld+kZAXKMklXulGWMhZU8zqK1nm8WzDQLYFKQ4go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uyHf3fBC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqxQ2Ddi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF0C1F000E9;
-	Wed, 20 May 2026 17:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uyHf3fBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B8E1F000E9;
+	Wed, 20 May 2026 17:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296925;
-	bh=OpBGHl+xQ9VvulrZNyvVVS02Ev5Zthmrxr346b3J4KA=;
+	s=korg; t=1779296927;
+	bh=SXdZtVQYDLS7x4tic5GenVGSJ+k2wKa01hI6cl9UEWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NqxQ2DdiSTQrF0AK/fPzRqgMKdZ7/WRIr9li0jyHkJawzYEVLPpuDYWc7WNl0N4q2
-	 7GcQcWM9RGyXQ3ksgETyMTxytLeJ3Sityx3sd4d+pYCkE4mDK3zMoIWqshomQp+TTx
-	 8G3o2CDjAwX/Tf2ZWKCtp5QR2JvfjQXiE29ikMDU=
+	b=uyHf3fBC32OtgGlzg4r4MJSDMzHfaOk5ubtMyn2qY2IWh9G+bUm8t+GorfqHtjXyX
+	 IMrBZ04mKqegVz1EPzBBmo4DhOKlGnH0DnvnroqRtmnJZT756XtwJrMYEZlzzYNMi3
+	 xREvIqqNyVm/FV/yy59VXWEm4sbR/hPHKJ7PHbkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Yue <glass.su@suse.com>,
-	Yu Kuai <yukuai@fnnas.com>,
+	Daniel Zahka <daniel.zahka@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0957/1146] md: factor bitmap creation away from sysfs handling
-Date: Wed, 20 May 2026 18:20:07 +0200
-Message-ID: <20260520162209.891876310@linuxfoundation.org>
+Subject: [PATCH 7.0 0984/1146] net: psp: require admin permission for dev-set and key-rotate
+Date: Wed, 20 May 2026 18:20:34 +0200
+Message-ID: <20260520162210.500939701@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,174 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 8776d342cf8fa0b98ca5e6fb2d956966fb5ca364 ]
+[ Upstream commit b718342a7fbaa2dff5fefc31988c07af8c6cbc21 ]
 
-Factor bitmap creation and destruction into helpers that do not touch
-bitmap sysfs registration.
+The dev-set and key-rotate netlink operations modify shared device
+state (PSP version configuration and cryptographic key material,
+respectively) but do not require CAP_NET_ADMIN. The only access
+control is psp_dev_check_access() which merely verifies netns
+membership.
 
-This prepares the bitmap sysfs rework so callers such as the sysfs
-bitmap location path can create or destroy a bitmap backend without
-coupling that to sysfs group lifetime management.
-
-Reviewed-by: Su Yue <glass.su@suse.com>
-Link: https://lore.kernel.org/r/20260425024615.1696892-2-yukuai@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
-Stable-dep-of: f2926a533d03 ("md/md-bitmap: add a none backend for bitmap grow")
+Fixes: 00c94ca2b99e ("psp: base PSP device support")
+Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260427195856.401223-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 78 +++++++++++++++++++++++++++++++------------------
- 1 file changed, 49 insertions(+), 29 deletions(-)
+ Documentation/netlink/specs/psp.yaml | 2 ++
+ net/psp/psp-nl-gen.c                 | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 99a5ba1485565..3b58d94c1c7aa 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -688,7 +688,25 @@ static void active_io_release(struct percpu_ref *ref)
- 
- static void no_op(struct percpu_ref *r) {}
- 
--static bool mddev_set_bitmap_ops(struct mddev *mddev)
-+static void md_bitmap_sysfs_add(struct mddev *mddev)
-+{
-+	if (sysfs_create_group(&mddev->kobj, mddev->bitmap_ops->group))
-+		pr_warn("md: cannot register extra bitmap attributes for %s\n",
-+			mdname(mddev));
-+	else
-+		/*
-+		 * Inform user with KOBJ_CHANGE about new bitmap
-+		 * attributes.
-+		 */
-+		kobject_uevent(&mddev->kobj, KOBJ_CHANGE);
-+}
-+
-+static void md_bitmap_sysfs_del(struct mddev *mddev)
-+{
-+	sysfs_remove_group(&mddev->kobj, mddev->bitmap_ops->group);
-+}
-+
-+static bool mddev_set_bitmap_ops_nosysfs(struct mddev *mddev)
- {
- 	struct bitmap_operations *old = mddev->bitmap_ops;
- 	struct md_submodule_head *head;
-@@ -712,18 +730,6 @@ static bool mddev_set_bitmap_ops(struct mddev *mddev)
- 
- 	mddev->bitmap_ops = (void *)head;
- 	xa_unlock(&md_submodule);
--
--	if (!mddev_is_dm(mddev) && mddev->bitmap_ops->group) {
--		if (sysfs_create_group(&mddev->kobj, mddev->bitmap_ops->group))
--			pr_warn("md: cannot register extra bitmap attributes for %s\n",
--				mdname(mddev));
--		else
--			/*
--			 * Inform user with KOBJ_CHANGE about new bitmap
--			 * attributes.
--			 */
--			kobject_uevent(&mddev->kobj, KOBJ_CHANGE);
--	}
- 	return true;
- 
- err:
-@@ -731,15 +737,6 @@ static bool mddev_set_bitmap_ops(struct mddev *mddev)
- 	return false;
- }
- 
--static void mddev_clear_bitmap_ops(struct mddev *mddev)
--{
--	if (!mddev_is_dm(mddev) && mddev->bitmap_ops &&
--	    mddev->bitmap_ops->group)
--		sysfs_remove_group(&mddev->kobj, mddev->bitmap_ops->group);
--
--	mddev->bitmap_ops = NULL;
--}
--
- int mddev_init(struct mddev *mddev)
- {
- 	int err = 0;
-@@ -6540,7 +6537,7 @@ static enum md_submodule_id md_bitmap_get_id_from_sb(struct mddev *mddev)
- 	return id;
- }
- 
--static int md_bitmap_create(struct mddev *mddev)
-+static int md_bitmap_create_nosysfs(struct mddev *mddev)
- {
- 	enum md_submodule_id orig_id = mddev->bitmap_id;
- 	enum md_submodule_id sb_id;
-@@ -6549,7 +6546,7 @@ static int md_bitmap_create(struct mddev *mddev)
- 	if (mddev->bitmap_id == ID_BITMAP_NONE)
- 		return -EINVAL;
- 
--	if (!mddev_set_bitmap_ops(mddev))
-+	if (!mddev_set_bitmap_ops_nosysfs(mddev))
- 		return -ENOENT;
- 
- 	err = mddev->bitmap_ops->create(mddev);
-@@ -6561,7 +6558,7 @@ static int md_bitmap_create(struct mddev *mddev)
- 	 * doesn't match, and mdadm is not the latest version to set
- 	 * bitmap_type, set bitmap_ops based on the disk version.
- 	 */
--	mddev_clear_bitmap_ops(mddev);
-+	mddev->bitmap_ops = NULL;
- 
- 	sb_id = md_bitmap_get_id_from_sb(mddev);
- 	if (sb_id == ID_BITMAP_NONE || sb_id == orig_id)
-@@ -6571,27 +6568,50 @@ static int md_bitmap_create(struct mddev *mddev)
- 		mdname(mddev), orig_id, sb_id);
- 
- 	mddev->bitmap_id = sb_id;
--	if (!mddev_set_bitmap_ops(mddev)) {
-+	if (!mddev_set_bitmap_ops_nosysfs(mddev)) {
- 		mddev->bitmap_id = orig_id;
- 		return -ENOENT;
- 	}
- 
- 	err = mddev->bitmap_ops->create(mddev);
- 	if (err) {
--		mddev_clear_bitmap_ops(mddev);
-+		mddev->bitmap_ops = NULL;
- 		mddev->bitmap_id = orig_id;
- 	}
- 
- 	return err;
- }
- 
--static void md_bitmap_destroy(struct mddev *mddev)
-+static int md_bitmap_create(struct mddev *mddev)
-+{
-+	int err;
-+
-+	err = md_bitmap_create_nosysfs(mddev);
-+	if (err)
-+		return err;
-+
-+	if (!mddev_is_dm(mddev) && mddev->bitmap_ops->group)
-+		md_bitmap_sysfs_add(mddev);
-+
-+	return 0;
-+}
-+
-+static void md_bitmap_destroy_nosysfs(struct mddev *mddev)
- {
- 	if (!md_bitmap_registered(mddev))
- 		return;
- 
- 	mddev->bitmap_ops->destroy(mddev);
--	mddev_clear_bitmap_ops(mddev);
-+	mddev->bitmap_ops = NULL;
-+}
-+
-+static void md_bitmap_destroy(struct mddev *mddev)
-+{
-+	if (!mddev_is_dm(mddev) && mddev->bitmap_ops &&
-+	    mddev->bitmap_ops->group)
-+		md_bitmap_sysfs_del(mddev);
-+
-+	md_bitmap_destroy_nosysfs(mddev);
- }
- 
- int md_run(struct mddev *mddev)
+diff --git a/Documentation/netlink/specs/psp.yaml b/Documentation/netlink/specs/psp.yaml
+index f3a57782d2cf4..49b7563f705f1 100644
+--- a/Documentation/netlink/specs/psp.yaml
++++ b/Documentation/netlink/specs/psp.yaml
+@@ -188,6 +188,7 @@ operations:
+       name: dev-set
+       doc: Set the configuration of a PSP device.
+       attribute-set: dev
++      flags: [admin-perm]
+       do:
+         request:
+           attributes:
+@@ -207,6 +208,7 @@ operations:
+       name: key-rotate
+       doc: Rotate the device key.
+       attribute-set: dev
++      flags: [admin-perm]
+       do:
+         request:
+           attributes:
+diff --git a/net/psp/psp-nl-gen.c b/net/psp/psp-nl-gen.c
+index 22a48d0fa378c..953309952cef7 100644
+--- a/net/psp/psp-nl-gen.c
++++ b/net/psp/psp-nl-gen.c
+@@ -76,7 +76,7 @@ static const struct genl_split_ops psp_nl_ops[] = {
+ 		.post_doit	= psp_device_unlock,
+ 		.policy		= psp_dev_set_nl_policy,
+ 		.maxattr	= PSP_A_DEV_PSP_VERSIONS_ENA,
+-		.flags		= GENL_CMD_CAP_DO,
++		.flags		= GENL_ADMIN_PERM | GENL_CMD_CAP_DO,
+ 	},
+ 	{
+ 		.cmd		= PSP_CMD_KEY_ROTATE,
+@@ -85,7 +85,7 @@ static const struct genl_split_ops psp_nl_ops[] = {
+ 		.post_doit	= psp_device_unlock,
+ 		.policy		= psp_key_rotate_nl_policy,
+ 		.maxattr	= PSP_A_DEV_ID,
+-		.flags		= GENL_CMD_CAP_DO,
++		.flags		= GENL_ADMIN_PERM | GENL_CMD_CAP_DO,
+ 	},
+ 	{
+ 		.cmd		= PSP_CMD_RX_ASSOC,
 -- 
 2.53.0
 
