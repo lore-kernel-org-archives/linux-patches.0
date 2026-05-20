@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103883CD8C7;
-	Wed, 20 May 2026 16:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D24352016;
+	Wed, 20 May 2026 16:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295452; cv=none; b=XSnjhtM58Kj68CKBHmRYp5cJtQWF2Zh4WPuFj2tLPYvepJLO8hR+btwED6jCYNYoMW8sKJ4gdDchk6x6MPk7FKv457QjbBN43VUHfuc3bVOx4uDNIYNVmRDM0BCBWzBZxu8QDinZ0/oHoalKboQgexgdGIYIRROm98WMJPc7ajQ=
+	t=1779295454; cv=none; b=pjkbODrLJ6D+2fRbYPlmEscEACdBqzY0H6CbcV7PiCCzNycwRf0v28nSyTNOfsbXwGtRYz7xuQ+4MLxgJR12P8UBDeIKS/Oq7Y1X3rnjSfwlf0QmMpuDF2mBcNn6m5NlGolqOVR7mTPfltU0JmZZF1XrGv7iC1pPBK1OQKWFVyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295452; c=relaxed/simple;
-	bh=UcWvSLz8XuLYSgObHYU5xE2dpC37KCWHWq1ulJAnanY=;
+	s=arc-20240116; t=1779295454; c=relaxed/simple;
+	bh=coorjHFbkY+MsUBYDvxPK30Hj1p+tQlJ9Fn/QJEa0j4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SG/MScDEYTLkREhTUboAWOfkU7JdApbrhU55NqV+Of+ZtSk0re41alKdRSjhBHJkMElc/mkU11SuCtZaZk5l7VOHjKThYOlSuUt6lOJwhksAMNFFcamSyBC99YZcm6u1kcsEJ4o2IT34reUB74UODsxWm2Hv8tq/+/pgRm/mCNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcMXE7mM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r7vxoCXRlUq2ygmKoTFKgrhVIuvyvkzgdXXTe1G4li2Yc58q3YYWAJ3k7LarbFg+iDvpC9TR6MHVyn/29sJq7LGr1PvKivSxEDIg1Stvi2CgKktleIysPvzip4bqzhtsgOygT/6hOAkaa2XATmuJz4srHfrupUEO3OqJd5DjzGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hn6wTe9b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcMXE7mM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D98B1F000E9;
-	Wed, 20 May 2026 16:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hn6wTe9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01411F000E9;
+	Wed, 20 May 2026 16:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295450;
-	bh=X8jcr5U796KDMg2zR/YtI7g+Zkvzh4SlvrGjEGtvDS0=;
+	s=korg; t=1779295453;
+	bh=5u3tjGgS8X2edg+MLtdB3TtU1uC+X5R39C95fJzYbow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fcMXE7mM15nu6r+vkksBqCJB9N/X1xmKyzkJnEl7r1+qo7MgWDMRbVmQvpUYPY+9n
-	 2le/v4SuYuUz4p2J7ovivLX9PZx/Zd0Zz0gDaFlzxZmN+zPyuoiSUzZuotqMHdHGO6
-	 4gX5bFNEQJiACuOq2NJGpsgGxjVgKrYQY1zeps5w=
+	b=hn6wTe9bK9Lq4Dx29Q5vzdOuD3ATrifGaS0lXA3AVmwsE1bLnss7sW0Qeh9lWkdpr
+	 drSDtFThj5RayczSkNL9w/BQikjNhOz+G4jyOLmatt96jE3thf5uOFAc/bWbbLNwBo
+	 d8bZrjnXYi+oaMsN9ecL7m1RdSVjuHAqpEIQxJOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0423/1146] PCI: tegra194: Allow system suspend when the Endpoint link is not up
-Date: Wed, 20 May 2026 18:11:13 +0200
-Message-ID: <20260520162157.766907556@linuxfoundation.org>
+Subject: [PATCH 7.0 0388/1146] crypto: iaa - fix per-node CPU counter reset in rebalance_wq_table()
+Date: Wed, 20 May 2026 18:10:38 +0200
+Message-ID: <20260520162156.980561271@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,106 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vidya Sagar <vidyas@nvidia.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit c76f8eae7d4695b1176c4ea5eb93c17e16a20272 ]
+[ Upstream commit 590fa5d69c27cfaecd2e8287aec78f902417c877 ]
 
-Host software initiates the L2 sequence. PCIe link is kept in L2 state
-during suspend. If Endpoint mode is enabled and the link is up, the
-software cannot proceed with suspend. However, when the PCIe Endpoint
-driver is probed, but the PCIe link is not up, Tegra can go into suspend
-state. So, allow system to suspend in this case.
+The cpu counter used to compute the IAA device index is reset to zero
+at the start of each NUMA node iteration. This causes CPUs on every
+node to map starting from IAA index 0 instead of continuing from the
+previous node's last index. On multi-node systems, this results in all
+nodes mapping their CPUs to the same initial set of IAA devices,
+leaving higher-indexed devices unused.
 
-Fixes: de2bbf2b71bb ("PCI: tegra194: Don't allow suspend when Tegra PCIe is in EP mode")
-Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
-Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
-Link: https://patch.msgid.link/20260324190755.1094879-10-mmaddireddy@nvidia.com
+Move the cpu counter initialization before the for_each_node_with_cpus()
+loop so that the IAA index computation accumulates correctly across all
+nodes.
+
+Fixes: 714ca27e9bf4 ("crypto: iaa - Optimize rebalance_wq_table()")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c | 31 +++++++++++++++++-----
- 1 file changed, 25 insertions(+), 6 deletions(-)
+ drivers/crypto/intel/iaa/iaa_crypto_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index 95dbf2102c898..06742796c332f 100644
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -2270,16 +2270,28 @@ static void tegra_pcie_dw_remove(struct platform_device *pdev)
- 		gpiod_set_value(pcie->pex_refclk_sel_gpiod, 0);
- }
- 
--static int tegra_pcie_dw_suspend_late(struct device *dev)
-+static int tegra_pcie_dw_suspend(struct device *dev)
- {
- 	struct tegra_pcie_dw *pcie = dev_get_drvdata(dev);
--	u32 val;
- 
- 	if (pcie->of_data->mode == DW_PCIE_EP_TYPE) {
--		dev_err(dev, "Failed to Suspend as Tegra PCIe is in EP mode\n");
--		return -EPERM;
-+		if (pcie->ep_state == EP_STATE_ENABLED) {
-+			dev_err(dev, "Tegra PCIe is in EP mode, suspend not allowed\n");
-+			return -EPERM;
-+		}
-+
-+		disable_irq(pcie->pex_rst_irq);
-+		return 0;
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+index 547abf453d4a2..f62b994e18e58 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
++++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+@@ -906,8 +906,8 @@ static void rebalance_wq_table(void)
+ 		return;
  	}
  
-+	return 0;
-+}
-+
-+static int tegra_pcie_dw_suspend_late(struct device *dev)
-+{
-+	struct tegra_pcie_dw *pcie = dev_get_drvdata(dev);
-+	u32 val;
-+
- 	if (!pcie->link_state)
- 		return 0;
++	cpu = 0;
+ 	for_each_node_with_cpus(node) {
+-		cpu = 0;
+ 		node_cpus = cpumask_of_node(node);
  
-@@ -2299,6 +2311,9 @@ static int tegra_pcie_dw_suspend_noirq(struct device *dev)
- {
- 	struct tegra_pcie_dw *pcie = dev_get_drvdata(dev);
- 
-+	if (pcie->of_data->mode == DW_PCIE_EP_TYPE)
-+		return 0;
-+
- 	if (!pcie->link_state)
- 		return 0;
- 
-@@ -2313,6 +2328,9 @@ static int tegra_pcie_dw_resume_noirq(struct device *dev)
- 	struct tegra_pcie_dw *pcie = dev_get_drvdata(dev);
- 	int ret;
- 
-+	if (pcie->of_data->mode == DW_PCIE_EP_TYPE)
-+		return 0;
-+
- 	if (!pcie->link_state)
- 		return 0;
- 
-@@ -2345,8 +2363,8 @@ static int tegra_pcie_dw_resume_early(struct device *dev)
- 	u32 val;
- 
- 	if (pcie->of_data->mode == DW_PCIE_EP_TYPE) {
--		dev_err(dev, "Suspend is not supported in EP mode");
--		return -ENOTSUPP;
-+		enable_irq(pcie->pex_rst_irq);
-+		return 0;
- 	}
- 
- 	if (!pcie->link_state)
-@@ -2451,6 +2469,7 @@ static const struct of_device_id tegra_pcie_dw_of_match[] = {
- };
- 
- static const struct dev_pm_ops tegra_pcie_dw_pm_ops = {
-+	.suspend = tegra_pcie_dw_suspend,
- 	.suspend_late = tegra_pcie_dw_suspend_late,
- 	.suspend_noirq = tegra_pcie_dw_suspend_noirq,
- 	.resume_noirq = tegra_pcie_dw_resume_noirq,
+ 		for_each_cpu(node_cpu, node_cpus) {
 -- 
 2.53.0
 
