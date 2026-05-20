@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D74336D9EA;
-	Wed, 20 May 2026 17:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317F53E9C3D;
+	Wed, 20 May 2026 17:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298865; cv=none; b=Q3f1khfZtaCCiESvpi45GZTATEK3A0jFjTOCoktQT0f/qoEA0EKIKSa9uhKB9cCpnZnosZs/valIsJi1GZfQr1Yvgl12gLVS8scJAcPiTVqedqUvHwUcUw5pl1CuUZQMVGA3exh7w+E4l7uEjONECCP2Ob8TeOv5rjL7EeLC724=
+	t=1779298868; cv=none; b=uRkQlW4AZNbaMe4/PeIh9mDCumC8C3gXOeaRRCVHKpviu5cDPSZCJRqkAQnIvwL5ibdW3sEnpqszib7r2hfIbXaBYea5w+89xG2gCaOWBUEOaJ2x7TiuatinI+6srDxx9VWDPVblRV3YyeEcZpnwk0JDzgeeJEL5fPRee4sK30c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298865; c=relaxed/simple;
-	bh=mqRF9lr5ddDgmMNQdPgt3DryfjpETRcvVSzRvW4yAPU=;
+	s=arc-20240116; t=1779298868; c=relaxed/simple;
+	bh=owq5UvBM1ShicPa2/29/FMs/NTB8LS4RO3fIBRIkn+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/oTuKQ3Taj7nC4LI84OprvezheOYe7QcbplIOruxMaHymlzwd7ytYk5BS9Qn7yW77AvOpY+RKnRukIvIa7rd317aeWo2xQfdmeQyLwJGIKTcRejKpHJYLbjDHSfQbvNQX72laV+YjLdKUjtCBmAgq4W6G0BGSw1aiSc1K1Viio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNEk63au; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oD36rDhE22YE2883a8T++FJO89MpNq8f/EAgtOtdDJQN28qC6tZDMBVpF2s8kruC850w+rKcqpGuVJrUE8ipBxy/UtF0Ha/Cl6694saRherxFDGZGci/55GP3vECN+YyXr2P4jbQhN/nExG1AGUkA1San+Vv4SwclqI7rPvn9L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfOYYNED; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNEk63au"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F0B1F00893;
-	Wed, 20 May 2026 17:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfOYYNED"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EAA1F00893;
+	Wed, 20 May 2026 17:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298864;
-	bh=K93w9lcbx7cofnxtyvswu6Ne9deJLFRWgLLwJQDuhoM=;
+	s=korg; t=1779298867;
+	bh=WhkoSjLr6c/8Sl9i+hpXPb4FX4loWAb+Oqy//ZdFtDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QNEk63auymEdb3qD+ke488Ipqt4dFklzRcbwX0e2tDuBb6ktYvU2G+fxlKwkmqBOV
-	 Dv0S3scXzSNTHlQus0a54gpBt3rE6loZFPP9A4YB7e5bWQKZUvlEDZAwDMdbbC39Nj
-	 FK+fhaYRmtjj8Ih9sOY0kaBjU/wM0Hf3WeQaKh1w=
+	b=wfOYYNEDWfmi1mHvZODawo20O2sbYCPiXi///jukLvUOs61koqNJGnOU7NrE7s3d9
+	 EvqpJbzSy1Y071V2GP837izJupVh2rliNYx0RnBYIQ8ftkNKs4yU3TgrH3xt9OR1Uw
+	 SMeCpgguTUfXUm3h6BEg1ecLnGrmVaOeFsODB/7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 571/957] clk: imx: imx6q: Fix device node reference leak in pll6_bypassed()
-Date: Wed, 20 May 2026 18:17:34 +0200
-Message-ID: <20260520162146.914379120@linuxfoundation.org>
+Subject: [PATCH 6.18 532/957] usb: typec: Fix error pointer dereference
+Date: Wed, 20 May 2026 18:16:55 +0200
+Message-ID: <20260520162146.070386365@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,54 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 4b84d496c804b470124cd3a08e928df6801d8eae ]
+[ Upstream commit f2529d08fcb429ea01bb87c326342f41483f8b2f ]
 
-The function pll6_bypassed() calls of_parse_phandle_with_args()
-but never calls of_node_put() to release the reference, causing
-a memory leak.
+The variable tps->partner is checked for an error pointer and then if it
+is, it sends an error message but does not return and then immediately
+dereferenced a few lines below:
 
-Fix this by adding proper cleanup calls on all exit paths.
+tps->partner = typec_register_partner(tps->port, &desc);
+if (IS_ERR(tps->partner))
+	dev_warn(tps->dev, "%s: failed to register partnet\n", __func__);
 
-Fixes: 3cc48976e9763 ("clk: imx6q: handle ENET PLL bypass")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20260203-clk-imx6q-v3-1-6cd2696bb371@gmail.com
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+if (desc.identity) {
+	typec_partner_set_identity(tps->partner);
+	cd321x->cur_partner_identity = st.partner_identity;
+}
+
+Add early return and fix spelling mistake in error message.
+
+Detected by Smatch:
+drivers/usb/typec/tipd/core.c:827 cd321x_update_work() error:
+'tps->partner' dereferencing possible ERR_PTR()
+
+Fixes: 82432bbfb9e83 ("usb: typec: tipd: Handle mode transitions for CD321x")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260218214621.38154-1-ethantidmore06@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx6q.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/typec/tipd/core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx6q.c b/drivers/clk/imx/clk-imx6q.c
-index bf4c1d9c99287..ba696cf34fe3b 100644
---- a/drivers/clk/imx/clk-imx6q.c
-+++ b/drivers/clk/imx/clk-imx6q.c
-@@ -238,8 +238,11 @@ static bool pll6_bypassed(struct device_node *node)
- 			return false;
+diff --git a/drivers/usb/typec/tipd/core.c b/drivers/usb/typec/tipd/core.c
+index 2b1049c9a6f3c..01c657bc84e68 100644
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -814,8 +814,10 @@ static void cd321x_update_work(struct work_struct *work)
+ 			desc.identity = &st.partner_identity;
  
- 		if (clkspec.np == node &&
--		    clkspec.args[0] == IMX6QDL_PLL6_BYPASS)
-+		    clkspec.args[0] == IMX6QDL_PLL6_BYPASS) {
-+			of_node_put(clkspec.np);
- 			break;
+ 		tps->partner = typec_register_partner(tps->port, &desc);
+-		if (IS_ERR(tps->partner))
+-			dev_warn(tps->dev, "%s: failed to register partnet\n", __func__);
++		if (IS_ERR(tps->partner)) {
++			dev_warn(tps->dev, "%s: failed to register partner\n", __func__);
++			return;
 +		}
-+		of_node_put(clkspec.np);
- 	}
  
- 	/* PLL6 bypass is not part of the assigned clock list */
-@@ -249,6 +252,9 @@ static bool pll6_bypassed(struct device_node *node)
- 	ret = of_parse_phandle_with_args(node, "assigned-clock-parents",
- 					 "#clock-cells", index, &clkspec);
- 
-+	if (!ret)
-+		of_node_put(clkspec.np);
-+
- 	if (clkspec.args[0] != IMX6QDL_CLK_PLL6)
- 		return true;
- 
+ 		if (desc.identity) {
+ 			typec_partner_set_identity(tps->partner);
 -- 
 2.53.0
 
