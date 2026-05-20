@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8FF221F2F;
-	Wed, 20 May 2026 16:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A30B33F5BA;
+	Wed, 20 May 2026 16:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295225; cv=none; b=WZj4y4n3NYwN8TuAGawDd7QyLX06fQE23i28PUrnhjGYWqtWV1bDvso6d5oGjSk9G01lz8MyQhfI7/qsCOIqWIWEvKQsOn8kAdHTw76ykFpGXU874QpVzWFQPirkq7dVUT3v5a0FEatmv6uePpoV3HrqntEIjEm8jj5inVYM/JI=
+	t=1779295228; cv=none; b=heG0iWpj2kHXn6lqMSN5MkQORq6XXHSWCnwHnCV6Nd4tIsfUTej8wNfFIu/AwhlpBdgx4RJ73azBnHW5rX0ngtw0q0rcTPiA3BO+kcdXgBAKxgyd5abNJ2mzNfolpOaKnCh2Ct/oF1rDqBYYjabQYy0byM+oSAmN0HyJtRZ0Vng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295225; c=relaxed/simple;
-	bh=iX1IWoK9B0t7Y1zBGvCvviJ6ZarSyoeu+eNg+fpeTNA=;
+	s=arc-20240116; t=1779295228; c=relaxed/simple;
+	bh=vh6sSxOCadek0UFcca7yAHm+rUAF2KmcFRv3cBiQ7ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fPIUrkDtelcr+HHC6q/QhGz8AfT63M9raTzCJLYoue0BCogtdHRmFbH8DuSj/Qthqm9G/jfJY4374m1atxBPTUquX+LVa78NPMkSr4/bjR7ruF3uYs2mi1XfRIsV7hYLJ/uQbm+LVQc3lcrEspMyj5IKOGxmFpRUuviNR18i+yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBhWO2QK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YkS0kZJHB1kE2iqe0DuNvY1IPAaujP2x0jG5l1cUQDiBOMD4Xe02OHGk1zdiVm66OfIYAIh61cFxwigYKJrjiszZyPnQuIDo/MjEX15OxHFmNbXjFXfeOkz44usJlwrnLaeAak9E/fureYi2gbHb9+38kLVZSbC0GE4WLZ9/neQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNQrmWYh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBhWO2QK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D9E1F000E9;
-	Wed, 20 May 2026 16:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNQrmWYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E35D1F000E9;
+	Wed, 20 May 2026 16:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295224;
-	bh=JqoCCR/MPuGfdE2Mn1sI9rvJPKZc+kbmM2zR8rtwsM0=;
+	s=korg; t=1779295227;
+	bh=Pwb4dWj5+GVA94kbo/qAmv/ghdTb/+Um+SY4JMbdyiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GBhWO2QKrAOyTRYcDyHvpCiVy70uaPk5NW8KmuXe0GRNwNqL/7rzk8Mfy1J6etaj0
-	 GiqKXnZk9xnc/ZftWqAXzTymgs7Ve3K3xTdw9bUuXpOwbStxVia6PD4LO92DFMR3Lh
-	 3atEz5mtuppLGdgyMAfrwMBBv8K4gCvoc/gu65x4=
+	b=mNQrmWYhDfgz2LGAq/m3k/d3G7a9a1sopVliq1f8b3unDieAik5sHT540N+pHe8uc
+	 jSR+Ozvqg4+CuTIST0GHIS0x+gTIsDpIcdxZerKzS17m8+b8Cm8hXoAp3VOxjju18b
+	 NGxFX5RgR/LxCqpYcMXQAFmbd9Kv72mzCVRZohl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Gonnet <ggonnet.linux@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0301/1146] dm init: ensure device probing has finished in dm-mod.waitfor=
-Date: Wed, 20 May 2026 18:09:11 +0200
-Message-ID: <20260520162155.021151462@linuxfoundation.org>
+Subject: [PATCH 7.0 0337/1146] ASoC: amd: acp: update dmic_num logic for acp pdm dmic
+Date: Wed, 20 May 2026 18:09:47 +0200
+Message-ID: <20260520162155.827502632@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,56 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Gonnet <ggonnet.linux@gmail.com>
+From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
 
-[ Upstream commit 99a2312f69805f4ba92d98a757625e0300a747ab ]
+[ Upstream commit 5902e1f3c501375797dcd7ca21b58e2c9abbe317 ]
 
-The early_lookup_bdev() function returns successfully when the disk
-device is present but not necessarily its partitions. In this situation,
-dm_early_create() fails as the partition block device does not exist
-yet.
+Currently there is no mechanism to read dmic_num in mach_params
+structure. In this scenario mach_params->dmic_num check always
+returns 0 which fails to add component string for dmic.
+Update the condition check with acp pdm dmic quirk check and
+pass the dmic_num as 1.
 
-In my case, this phenomenon occurs quite often because the device is
-an SD card with slow reading times, on which kernel takes time to
-enumerate available partitions.
+Fixes: 2981d9b0789c ("ASoC: amd: acp: add soundwire machine driver for legacy stack")
 
-Fortunately, the underlying device is back to "probing" state while
-enumerating partitions. Waiting for all probing to end is enough to fix
-this issue.
-
-That's also the reason why this problem never occurs with rootwait=
-parameter: the while loop inside wait_for_root() explicitly waits for
-probing to be done and then the function calls async_synchronize_full().
-These lines were omitted in 035641b, even though the commit says it's
-based on the rootwait logic...
-
-Anyway, calling wait_for_device_probe() after our while loop does the
-job (it both waits for probing and calls async_synchronize_full).
-
-Fixes: 035641b01e72 ("dm init: add dm-mod.waitfor to wait for asynchronously probed block devices")
-Signed-off-by: Guillaume Gonnet <ggonnet.linux@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/20260330072431.3512358-2-Vijendar.Mukunda@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-init.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/amd/acp/acp-sdw-legacy-mach.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-init.c b/drivers/md/dm-init.c
-index 7403823384c57..c1bacba92c65c 100644
---- a/drivers/md/dm-init.c
-+++ b/drivers/md/dm-init.c
-@@ -303,8 +303,10 @@ static int __init dm_init_init(void)
- 		}
+diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+index cd7b1acc7216d..a9c8d9545281e 100644
+--- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
++++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
+@@ -551,11 +551,11 @@ static int mc_probe(struct platform_device *pdev)
+ 					  " cfg-amp:%d", amp_num);
+ 	if (!card->components)
+ 		return -ENOMEM;
+-	if (mach->mach_params.dmic_num) {
++	if (soc_sdw_quirk & ASOC_SDW_ACP_DMIC) {
+ 		card->components = devm_kasprintf(card->dev, GFP_KERNEL,
+ 						  "%s mic:dmic cfg-mics:%d",
+ 						  card->components,
+-						  mach->mach_params.dmic_num);
++						  1);
+ 		if (!card->components)
+ 			return -ENOMEM;
  	}
- 
--	if (waitfor[0])
-+	if (waitfor[0]) {
-+		wait_for_device_probe();
- 		DMINFO("all devices available");
-+	}
- 
- 	list_for_each_entry(dev, &devices, list) {
- 		if (dm_early_create(&dev->dmi, dev->table,
 -- 
 2.53.0
 
