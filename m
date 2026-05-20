@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D163D75D3;
-	Wed, 20 May 2026 17:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981203D8129;
+	Wed, 20 May 2026 17:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296486; cv=none; b=BL1FKq5Uwsn2T7KOuCxcItKB3/iuhrWA70XRRNMd1061G80DCzqPFhO3NZmKUTshC6+glyyYxYQI/YBbeT/5YlLUpTD8kFO8aYf76wrT8+1+s++3B0D8bbzlwFmrqu5491ZX7AFxTSUrLOZktUezEIGq8L66u37dn9L+bJy7gR8=
+	t=1779296488; cv=none; b=llU2i/YOB8l33X0dE19kVLZPNXHKF2yMKfiARCO377pOZY7op2i0xACX0ah1t2mt6uIEu1d7wM73j3IaZaa7IV/p4/cCccrHRVondAHLgCLlfuBoyw7dbSWDHAoiCyfFMJ+BJ3igDHkK//X2K4FyALNIRsE+HwcqdH7sW+ll8hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296486; c=relaxed/simple;
-	bh=ndov55ukpfyT3Pn4Ym9OGXDLNKJkJxqV7lE3hkxm71c=;
+	s=arc-20240116; t=1779296488; c=relaxed/simple;
+	bh=10WUarqBQaELT1Dkkl5XDL9j9D1fhcr6ufsA68ZKy+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sEdNVCsNPTibSt9QehwYuSJ/mJZKMqGuZOPFCARaycp7oqr4rprOqveToBfXHZ1/eQoABPdZ5MjJfebszYun98lYiJQE89KpyYc3m/HC8WOLzxnzDjPS4UdOv7tEVPH5pmsz42yODg103bZ10q9APrfZZuhZPhoMnhkrB5NZrvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BN0mwC8i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MHye4OTKb7MdhGFAnfoT99byXCNNlsKK3CSwOISS7dON705UxCwAY+OVnraFUwjocb6tjRNzJrJc3DI+jV2W7+AHSx+SEERxUdgtvJbya5QWOzOoH4QWqt1uedbjRkRli6gpPRaMANF/ENxcjUYBNddXWnAAOekPTHG3p6LIuG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPCrUiu5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BN0mwC8i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DA21F000E9;
-	Wed, 20 May 2026 17:01:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPCrUiu5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A96B1F000E9;
+	Wed, 20 May 2026 17:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296484;
-	bh=2Elnzs48jdYzD53LI/OKF82zsG8LXy1EKqvsSrxDmKM=;
+	s=korg; t=1779296487;
+	bh=m6Ni/CdFDw/gzcFtH+ExzYjwIVMAf3Zr1KDO+WDf9U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BN0mwC8i+59WKP1zAoDlQUfeNjMksDADkw/rfKd6ZHdv7icJlD8W9RPW8mkeJPjiV
-	 Y5odWWTWcj3tksJdRLKtmUiCFZeRSRqbg5VZWvQyiTpoRqDSHGmFSRpn0PdFYT9Fft
-	 ZyUmtYM4Msip39r3Xh4Ejytt+1V4PSO+n3QBZ+ys=
+	b=mPCrUiu5Ar5x0xuT1KX0Y8/dPgazU+bPgZov0GMwhaFK33n2yc36oiZHV+qwbrYYH
+	 Q4SkP3imY2fjBL8TlDnfuxoUHrwxYvDD83WuX93ur/k98NfMQzhZOiPUZBBc3KA/e5
+	 9k28IetCgh2vB7jE/KkcVnjl/+An/rV/LWKeRmyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingnan Zhang <342144303@qq.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0816/1146] ipvs: fix MTU check for GSO packets in tunnel mode
-Date: Wed, 20 May 2026 18:17:46 +0200
-Message-ID: <20260520162206.693939731@linuxfoundation.org>
+Subject: [PATCH 7.0 0781/1146] tcp: add data-race annotations around tp->data_segs_out and tp->total_retrans
+Date: Wed, 20 May 2026 18:17:11 +0200
+Message-ID: <20260520162205.890393582@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,95 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingnan Zhang <342144303@qq.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 67bf42cae41d847fd6e5749eb68278ca5d748b25 ]
+[ Upstream commit 21e92a38cfd891538598ba8f805e0165a820d532 ]
 
-Currently, IPVS skips MTU checks for GSO packets by excluding them with
-the !skb_is_gso(skb) condition. This creates problems when IPVS tunnel
-mode encapsulates GSO packets with IPIP headers.
+tcp_get_timestamping_opt_stats() intentionally runs lockless, we must
+add READ_ONCE() and WRITE_ONCE() annotations to keep KCSAN happy.
 
-The issue manifests in two ways:
-
-1. MTU violation after encapsulation:
-   When a GSO packet passes through IPVS tunnel mode, the original MTU
-   check is bypassed. After adding the IPIP tunnel header, the packet
-   size may exceed the outgoing interface MTU, leading to unexpected
-   fragmentation at the IP layer.
-
-2. Fragmentation with problematic IP IDs:
-   When net.ipv4.vs.pmtu_disc=1 and a GSO packet with multiple segments
-   is fragmented after encapsulation, each segment gets a sequentially
-   incremented IP ID (0, 1, 2, ...). This happens because:
-
-   a) The GSO packet bypasses MTU check and gets encapsulated
-   b) At __ip_finish_output, the oversized GSO packet is split into
-      separate SKBs (one per segment), with IP IDs incrementing
-   c) Each SKB is then fragmented again based on the actual MTU
-
-   This sequential IP ID allocation differs from the expected behavior
-   and can cause issues with fragment reassembly and packet tracking.
-
-Fix this by properly validating GSO packets using
-skb_gso_validate_network_len(). This function correctly validates
-whether the GSO segments will fit within the MTU after segmentation. If
-validation fails, send an ICMP Fragmentation Needed message to enable
-proper PMTU discovery.
-
-Fixes: 4cdd34084d53 ("netfilter: nf_conntrack_ipv6: improve fragmentation handling")
-Signed-off-by: Yingnan Zhang <342144303@qq.com>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 7e98102f4897 ("tcp: record pkts sent and retransmistted")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260416200319.3608680-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_xmit.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ net/ipv4/tcp.c        | 4 ++--
+ net/ipv4/tcp_output.c | 8 +++++---
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index 3601eb86d0250..7c570f48ade28 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -102,6 +102,18 @@ __ip_vs_dst_check(struct ip_vs_dest *dest)
- 	return dest_dst;
- }
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index a8ff76c40f79b..d1953c6376f8b 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -4468,9 +4468,9 @@ struct sk_buff *tcp_get_timestamping_opt_stats(const struct sock *sk,
+ 	nla_put_u64_64bit(stats, TCP_NLA_SNDBUF_LIMITED,
+ 			  info.tcpi_sndbuf_limited, TCP_NLA_PAD);
+ 	nla_put_u64_64bit(stats, TCP_NLA_DATA_SEGS_OUT,
+-			  tp->data_segs_out, TCP_NLA_PAD);
++			  READ_ONCE(tp->data_segs_out), TCP_NLA_PAD);
+ 	nla_put_u64_64bit(stats, TCP_NLA_TOTAL_RETRANS,
+-			  tp->total_retrans, TCP_NLA_PAD);
++			  READ_ONCE(tp->total_retrans), TCP_NLA_PAD);
  
-+/* Based on ip_exceeds_mtu(). */
-+static bool ip_vs_exceeds_mtu(const struct sk_buff *skb, unsigned int mtu)
-+{
-+	if (skb->len <= mtu)
-+		return false;
-+
-+	if (skb_is_gso(skb) && skb_gso_validate_network_len(skb, mtu))
-+		return false;
-+
-+	return true;
-+}
-+
- static inline bool
- __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
- {
-@@ -111,10 +123,9 @@ __mtu_check_toobig_v6(const struct sk_buff *skb, u32 mtu)
- 		 */
- 		if (IP6CB(skb)->frag_max_size > mtu)
- 			return true; /* largest fragment violate MTU */
--	}
--	else if (skb->len > mtu && !skb_is_gso(skb)) {
-+	} else if (ip_vs_exceeds_mtu(skb, mtu))
- 		return true; /* Packet size violate MTU size */
--	}
-+
- 	return false;
- }
+ 	rate = READ_ONCE(sk->sk_pacing_rate);
+ 	rate64 = (rate != ~0UL) ? rate : ~0ULL;
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 7b8a2c8213e18..87fa26603276c 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -1668,7 +1668,8 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
  
-@@ -232,7 +243,7 @@ static inline bool ensure_mtu_is_adequate(struct netns_ipvs *ipvs, int skb_af,
- 			return true;
+ 	if (skb->len != tcp_header_size) {
+ 		tcp_event_data_sent(tp, sk);
+-		tp->data_segs_out += tcp_skb_pcount(skb);
++		WRITE_ONCE(tp->data_segs_out,
++			   tp->data_segs_out + tcp_skb_pcount(skb));
+ 		tp->bytes_sent += skb->len - tcp_header_size;
+ 	}
  
- 		if (unlikely(ip_hdr(skb)->frag_off & htons(IP_DF) &&
--			     skb->len > mtu && !skb_is_gso(skb) &&
-+			     ip_vs_exceeds_mtu(skb, mtu) &&
- 			     !ip_vs_iph_icmp(ipvsh))) {
- 			icmp_send(skb, ICMP_DEST_UNREACH, ICMP_FRAG_NEEDED,
- 				  htonl(mtu));
+@@ -3624,7 +3625,7 @@ int __tcp_retransmit_skb(struct sock *sk, struct sk_buff *skb, int segs)
+ 	TCP_ADD_STATS(sock_net(sk), TCP_MIB_RETRANSSEGS, segs);
+ 	if (TCP_SKB_CB(skb)->tcp_flags & TCPHDR_SYN)
+ 		__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPSYNRETRANS);
+-	tp->total_retrans += segs;
++	WRITE_ONCE(tp->total_retrans, tp->total_retrans + segs);
+ 	tp->bytes_retrans += skb->len;
+ 
+ 	/* make sure skb->data is aligned on arches that require it
+@@ -4628,7 +4629,8 @@ int tcp_rtx_synack(const struct sock *sk, struct request_sock *req)
+ 			 * However in this case, we are dealing with a passive fastopen
+ 			 * socket thus we can change total_retrans value.
+ 			 */
+-			tcp_sk_rw(sk)->total_retrans++;
++			WRITE_ONCE(tcp_sk_rw(sk)->total_retrans,
++				   tcp_sk_rw(sk)->total_retrans + 1);
+ 		}
+ 		trace_tcp_retransmit_synack(sk, req);
+ 		WRITE_ONCE(req->num_retrans, req->num_retrans + 1);
 -- 
 2.53.0
 
