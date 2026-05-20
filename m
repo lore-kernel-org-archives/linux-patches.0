@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC21F3F5BF0;
-	Wed, 20 May 2026 17:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C493BE165;
+	Wed, 20 May 2026 17:12:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297163; cv=none; b=FAZgf8hzldKzMQc0a6O1aDsXcWPDEanef3SCYvNaMfsDlmxTvb/Wtfovk5t18vcmnhw0w7ZuBib1W0v7mHhSDL3hveY56QKzIk9g5U5cbmvWW8DZTsqs6hIBlLZqRwbxTPnqHRLQs9BBo+/xoh1QNfZgHqPGWaoOjPHrY5OdBhY=
+	t=1779297166; cv=none; b=hW/KqvoE/u9gjY706KTxFoLhUnou+SF9rv5d9StcNJtYn4cNZvPDQKa/21bKJf48aF2zpFm+bOCPUF+QtUr3Y9/OISaEN3H8BYvyrw4CdxrP+cRl4lt9csSkkkvcQQfpRzVYmCz5wiQDX4nCAiev5n/OvoJf8REWMap8uHKDwmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297163; c=relaxed/simple;
-	bh=U/gB07a1CRPu5ljdVNXEA4Mspw5RMELf9Dce3nLb0Lw=;
+	s=arc-20240116; t=1779297166; c=relaxed/simple;
+	bh=inblWgbzYzxkuV0EOWEvqFx3B13aD8KM5+1uyYequLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4eyg4hHep4YP26InBY/Gky8Rxe3bjxvu+HuzIGMm1RNtYkTpjZExf/lvZEQlJLx8+uzB3x7KjXmltfAenJsM5LMZK2B/Lt4z1YonQY2VgfYeOt1w4zWIC3KTXMwwwWBm1bLNT3XW8xXkeOM4U8nZr+avgyru6z3Dyj/Hv+9aIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JROqxA+U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tMcZr+eZPO4ni/agUx10K28iNVKuDXGB1y8Kl4kiDWj0FNLhTVDuP1/+LDQIml6GeXxsEX5yDVuUXjiQ2DJvbKhV7+RuCHH2zcoPVrpXRVkZYsMG08in0tfufHFD0agORhksmtUYS6eCq+JamYpZv46KtN4uKSZaRDdezEq/1Kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TOeLudgf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JROqxA+U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FBD1F000E9;
-	Wed, 20 May 2026 17:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TOeLudgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4E81F000E9;
+	Wed, 20 May 2026 17:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297162;
-	bh=bcy6PmKCc+jqcgUOnRFg1uy9xccwpefezNPjYnV+wys=;
+	s=korg; t=1779297165;
+	bh=wY7LznnS6Gr0+HXBi7yBCZECpag+xV+UIIvSbVKhmBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JROqxA+UaI79TcRmyNINUU37V6P1qIcQIQVL70XvADcJW7PZhfwbJN731n8K207/0
-	 L/8/cdaIGbGXnba4M9h3G01KkB5wp/NE9bSt5fCZDfKK3T7HkZHNVpXbagc28uvm/w
-	 F2MGRMTtpe0HSkT9AO/mpuP1qmTPdbguDj0rAc1A=
+	b=TOeLudgfLUN5QHdC3s/HB+Yfa+Zg6bfzm3Y4+QuXSIcDidexTLAdxeoUuOTinsrus
+	 d5YTrv48u6Tt0zvj1NJbQOdbVCIZMZtAW+XvAYLmxzv5uClzCDypSKqKXx4JfHOVPQ
+	 MrrNaJ3jenFLV1CNFhVXirkzzkAgX7dabD+1xW2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 7.0 1073/1146] drm: Replace old pointer to new idr
-Date: Wed, 20 May 2026 18:22:03 +0200
-Message-ID: <20260520162212.514166782@linuxfoundation.org>
+	Liu Ying <victor.liu@nxp.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>
+Subject: [PATCH 7.0 1074/1146] drm/bridge: imx8qxp-pxl2dpi: avoid ERR_PTR with device_node cleanup
+Date: Wed, 20 May 2026 18:22:04 +0200
+Message-ID: <20260520162212.537270960@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,72 +50,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit dc366607c41c45fd0ae6f3db090f31dd611b644a upstream.
+commit 53597deca0e38c30e6cd4ba2114fa42d2bcd85bb upstream.
 
-Commit 5e28b7b94408 introduced a logical error by failing to replace the
-newly generated IDR pointer to old id's pointer at the correct location
-within the "change handle" logic; this resulted in the issue reported by
-syzbot [1].
+imx8qxp_pxl2dpi_get_available_ep_from_port() returns ERR_PTR()
+on errors. imx8qxp_pxl2dpi_find_next_bridge() stores its return
+value in a __free(device_node) variable before checking IS_ERR().
+When the function returns on the error path, the cleanup action calls
+of_node_put() on the ERR_PTR() value.
 
-Specifically, the new IDR object pointer is intended to replace the original
-id's pointer during the normal execution flow.
+Do not let a device_node cleanup variable hold error pointers. Change
+imx8qxp_pxl2dpi_get_available_ep_from_port() to return an int and pass
+the endpoint node through an output argument. Initialize the output
+argument to NULL so callers hold either NULL on error paths or a valid
+device_node pointer on successful path.
 
-Additionally, an unnecessary conditional check for the ret exit path has
-been removed.
-
-[1]
-!RB_EMPTY_ROOT(&prime_fpriv->dmabufs)
-WARNING: drivers/gpu/drm/drm_prime.c:224 at drm_prime_destroy_file_private+0x48/0x60 drivers/gpu/drm/drm_prime.c:224, CPU#0: syz.0.17/5833
-Call Trace:
- drm_file_free.part.0+0x7e6/0xcc0 drivers/gpu/drm/drm_file.c:269
- drm_file_free drivers/gpu/drm/drm_file.c:237 [inline]
- drm_close_helper.isra.0+0x186/0x200 drivers/gpu/drm/drm_file.c:290
- drm_release+0x1ab/0x360 drivers/gpu/drm/drm_file.c:438
-
-Fixes: 5e28b7b94408 ("drm: Set old handle to NULL before prime swap in change_handle")
-Reported-by: syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d7c9eed171647e421013
+Fixes: ceea3f7806a10 ("drm/bridge: imx8qxp-pxl2dpi: simplify put of device_node pointers")
 Cc: stable@vger.kernel.org
-Tested-by: syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/tencent_C267296443AAA4567771176886DFF364A305@qq.com
+Reviewed-by: Liu Ying <victor.liu@nxp.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260507100604.667731-1-lgs201920130244@gmail.com
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gem.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/bridge/imx/imx8qxp-pxl2dpi.c |   40 +++++++++++++++------------
+ 1 file changed, 23 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/drm_gem.c
-+++ b/drivers/gpu/drm/drm_gem.c
-@@ -1049,17 +1049,12 @@ int drm_gem_change_handle_ioctl(struct d
+--- a/drivers/gpu/drm/bridge/imx/imx8qxp-pxl2dpi.c
++++ b/drivers/gpu/drm/bridge/imx/imx8qxp-pxl2dpi.c
+@@ -222,52 +222,58 @@ static const struct drm_bridge_funcs imx
+ 			imx8qxp_pxl2dpi_bridge_atomic_get_output_bus_fmts,
+ };
  
- 	spin_unlock(&file_priv->table_lock);
+-static struct device_node *
++static int
+ imx8qxp_pxl2dpi_get_available_ep_from_port(struct imx8qxp_pxl2dpi *p2d,
+-					   u32 port_id)
++					   u32 port_id,
++					   struct device_node **ep)
+ {
+-	struct device_node *port, *ep;
++	struct device_node *port;
++	int ret = 0;
+ 	int ep_cnt;
  
--	if (ret < 0)
--		goto out_unlock;
--
- 	if (obj->dma_buf) {
- 		ret = drm_prime_add_buf_handle(&file_priv->prime, obj->dma_buf,
- 					       handle);
- 		if (ret < 0) {
- 			spin_lock(&file_priv->table_lock);
- 			idr_remove(&file_priv->object_idr, handle);
--			idrobj = idr_replace(&file_priv->object_idr, obj, handle);
--			WARN_ON(idrobj != NULL);
- 			spin_unlock(&file_priv->table_lock);
- 			goto out_unlock;
- 		}
-@@ -1071,7 +1066,9 @@ int drm_gem_change_handle_ioctl(struct d
++	*ep = NULL;
++
+ 	port = of_graph_get_port_by_id(p2d->dev->of_node, port_id);
+ 	if (!port) {
+ 		DRM_DEV_ERROR(p2d->dev, "failed to get port@%u\n", port_id);
+-		return ERR_PTR(-ENODEV);
++		return -ENODEV;
+ 	}
  
- 	spin_lock(&file_priv->table_lock);
- 	idr_remove(&file_priv->object_idr, args->handle);
-+	idrobj = idr_replace(&file_priv->object_idr, obj, handle);
- 	spin_unlock(&file_priv->table_lock);
-+	WARN_ON(idrobj != NULL);
+ 	ep_cnt = of_get_available_child_count(port);
+ 	if (ep_cnt == 0) {
+ 		DRM_DEV_ERROR(p2d->dev, "no available endpoints of port@%u\n",
+ 			      port_id);
+-		ep = ERR_PTR(-ENODEV);
++		ret = -ENODEV;
+ 		goto out;
+ 	} else if (ep_cnt > 1) {
+ 		DRM_DEV_ERROR(p2d->dev,
+ 			      "invalid available endpoints of port@%u\n",
+ 			      port_id);
+-		ep = ERR_PTR(-EINVAL);
++		ret = -EINVAL;
+ 		goto out;
+ 	}
  
- out_unlock:
- 	mutex_unlock(&file_priv->prime.lock);
+-	ep = of_get_next_available_child(port, NULL);
+-	if (!ep) {
++	*ep = of_get_next_available_child(port, NULL);
++	if (!*ep) {
+ 		DRM_DEV_ERROR(p2d->dev,
+ 			      "failed to get available endpoint of port@%u\n",
+ 			      port_id);
+-		ep = ERR_PTR(-ENODEV);
++		ret = -ENODEV;
+ 		goto out;
+ 	}
+ out:
+ 	of_node_put(port);
+-	return ep;
++	return ret;
+ }
+ 
+ static int imx8qxp_pxl2dpi_find_next_bridge(struct imx8qxp_pxl2dpi *p2d)
+ {
+-	struct device_node *ep __free(device_node) =
+-		imx8qxp_pxl2dpi_get_available_ep_from_port(p2d, 1);
+-	if (IS_ERR(ep))
+-		return PTR_ERR(ep);
++	struct device_node *ep __free(device_node) = NULL;
++	int ret;
++
++	ret = imx8qxp_pxl2dpi_get_available_ep_from_port(p2d, 1, &ep);
++	if (ret)
++		return ret;
+ 
+ 	struct device_node *remote __free(device_node) = of_graph_get_remote_port_parent(ep);
+ 	if (!remote || !of_device_is_available(remote)) {
+@@ -291,9 +297,9 @@ static int imx8qxp_pxl2dpi_set_pixel_lin
+ 	struct of_endpoint endpoint;
+ 	int ret;
+ 
+-	ep = imx8qxp_pxl2dpi_get_available_ep_from_port(p2d, 0);
+-	if (IS_ERR(ep))
+-		return PTR_ERR(ep);
++	ret = imx8qxp_pxl2dpi_get_available_ep_from_port(p2d, 0, &ep);
++	if (ret)
++		return ret;
+ 
+ 	ret = of_graph_parse_endpoint(ep, &endpoint);
+ 	if (ret) {
 
 
