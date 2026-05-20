@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0D229B78D;
-	Wed, 20 May 2026 18:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E87A3E5ECF;
+	Wed, 20 May 2026 18:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301247; cv=none; b=ZmRUKvr7SW907xdYfUdupy9qNgLef+8kktxQpqYO4XvNzuTo+EeB2+d+XQvWCg8beA44ooAypHpwcXIqidYMlpxAbZ/YeZSagKO7dkESt662gI4hkmI+F3jg3xNDjgsrc5D4MTLyzU6fQHOqr0JTj0ABdB8peK/AjuRE7i/xWIw=
+	t=1779301250; cv=none; b=Qt6y/Lgg+QzFFMKXNDcE27W3olFwajYnoIvLv0rqP7OZOrG/IpSZfkXfuIrDVWwL7etLVlr/lFrZRsd4Le/2btSkgfDqGErOTIigkxnOwQIBJDyGVCnhIpIDnl1dwfltAK0JwKTdmxrQXM7+rXWFLURMA4qY1Ig5FJEiWZQFo14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301247; c=relaxed/simple;
-	bh=M52S+j+nEFc9r0nYdygcoHQ4pruCBtcPAwLxJznnEyc=;
+	s=arc-20240116; t=1779301250; c=relaxed/simple;
+	bh=ASlDtfbbH/xO2OFtp5DIuHnSp+zLBJQPn06kvQFSvA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/L+kHnyEjQFXbJN45Np/nefacQrg9iWxQ47/UV2MO6u/DNXS+IKLHUxcLtd9G0PgwGDadJArpHSAFPxYUDej/RPjWHHL1zgbR6bZYWLoRAovVIDoay28vzC+mseuYHnt2c5KP5zg7OFWD36aNu8ok7sj+P+nhrM+GpKM4/ZSwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4gHcgLo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GJV2xKLT5UkzNMsV+vXVJTZjsXs1TLZiYn6BKxX+/7Hvu32yLL5bp0x2e1e5JC2LP1XeCnRcxMdQOV4WtoZz2IV8ojH4Y4GsxrfVIkjf74OMRNSsfD57gGujB0OuOsLrIjsU23FVr+xgwy1zQXQTDoouBcdgJ3/v2JMJ0XppE8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4X/DXMA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4gHcgLo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9AE1F00893;
-	Wed, 20 May 2026 18:20:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4X/DXMA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A488E1F000E9;
+	Wed, 20 May 2026 18:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301246;
-	bh=Wj2rTFLtYtjYkiJ7rjE4gP3p28LTHvOA2bnC+UXqw3I=;
+	s=korg; t=1779301249;
+	bh=Fv8AQJeMhe3FeMIYBEHWEVZG/DS7gOIZgi5SP0J85wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E4gHcgLoZsRWWIhwIeI/6XwwPKjRNsYy1623D+IVibqboaXgx4t+rOTlt4lG4nwqu
-	 9qMf6atjNAvTDc6SGlFpCQSebiNYh40VKeIKBZgwPpOK1dBffGM5Jy00fz2ATP6tAm
-	 48Jc5ItDEofnYaZQSen2N5nIVSG6B65i8dEzEvN4=
+	b=k4X/DXMApCWpiNk/hml7GpngWmd14ow/8uDmuyyYI5y60VghWaWWPvXVwifShLtb+
+	 Zl8XcyUg4n7S2fk0xtddiL/LXg8jBffanhdZiK6LZ8GqgGUKLtMXyeF6zZwJmWY7rj
+	 MJK3YPxGINHGuWTBZFY7CeyuV/VqVMyd2oCo6zRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongbo Li <lihongbo22@huawei.com>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Jun Yan <jerrysteve1101@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 430/666] erofs: do sanity check on m->type in z_erofs_load_compact_lcluster()
-Date: Wed, 20 May 2026 18:20:41 +0200
-Message-ID: <20260520162120.592463572@linuxfoundation.org>
+Subject: [PATCH 6.12 476/666] arm64: dts: meson-gxl-p230: fix ethernet PHY interrupt number
+Date: Wed, 20 May 2026 18:21:27 +0200
+Message-ID: <20260520162121.585122987@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,176 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Jun Yan <jerrysteve1101@gmail.com>
 
-[ Upstream commit 1a5223c182fdb3bb3c0ca85cec101c740f685ab6 ]
+[ Upstream commit 174a0ef3b33434f475c87e66f37980e39b73805a ]
 
-All below functions will do sanity check on m->type, let's move sanity
-check to z_erofs_load_compact_lcluster() for cleanup.
-- z_erofs_map_blocks_fo
-- z_erofs_get_extent_compressedlen
-- z_erofs_get_extent_decompressedlen
-- z_erofs_extent_lookback
+Correct the interrupt number assigned to the Realtek PHY in the p230
 
-Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20250708110928.3110375-1-chao@kernel.org
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Stable-dep-of: 2d8c7edcb661 ("erofs: unify lcn as u64 for 32-bit platforms")
+following the same logic as commit 3106507e1004 ("ARM64: dts: meson-gxm:
+fix q200 interrupt number"),as reported in [PATCH 0/2] Ethernet PHY
+interrupt improvements [1].
+
+[1] https://lore.kernel.org/all/20171202214037.17017-1-martin.blumenstingl@googlemail.com/
+
+Fixes: b94d22d94ad2 ("ARM64: dts: meson-gx: add external PHY interrupt on some platforms")
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20260330145111.115318-1-jerrysteve1101@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 103 +++++++++++++++++++-----------------------------
- 1 file changed, 41 insertions(+), 62 deletions(-)
+ arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index a03700cbd2c1c..fe193a7e83a85 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -240,6 +240,13 @@ static int z_erofs_load_compact_lcluster(struct z_erofs_maprecorder *m,
- static int z_erofs_load_lcluster_from_disk(struct z_erofs_maprecorder *m,
- 					   unsigned int lcn, bool lookahead)
- {
-+	if (m->type >= Z_EROFS_LCLUSTER_TYPE_MAX) {
-+		erofs_err(m->inode->i_sb, "unknown type %u @ lcn %u of nid %llu",
-+				m->type, lcn, EROFS_I(m->inode)->nid);
-+		DBG_BUGON(1);
-+		return -EOPNOTSUPP;
-+	}
-+
- 	switch (EROFS_I(m->inode)->datalayout) {
- 	case EROFS_INODE_COMPRESSED_FULL:
- 		return z_erofs_load_full_lcluster(m, lcn);
-@@ -265,12 +272,7 @@ static int z_erofs_extent_lookback(struct z_erofs_maprecorder *m,
- 		if (err)
- 			return err;
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
+index c1470416faade..36e97ed585ae7 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s905d-p230.dts
+@@ -84,7 +84,8 @@ external_phy: ethernet-phy@0 {
+ 		reset-gpios = <&gpio GPIOZ_14 GPIO_ACTIVE_LOW>;
  
--		if (m->type >= Z_EROFS_LCLUSTER_TYPE_MAX) {
--			erofs_err(sb, "unknown type %u @ lcn %lu of nid %llu",
--				  m->type, lcn, vi->nid);
--			DBG_BUGON(1);
--			return -EOPNOTSUPP;
--		} else if (m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD) {
-+		if (m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD) {
- 			lookback_distance = m->delta[0];
- 			if (!lookback_distance)
- 				break;
-@@ -325,25 +327,18 @@ static int z_erofs_get_extent_compressedlen(struct z_erofs_maprecorder *m,
- 	DBG_BUGON(lcn == initial_lcn &&
- 		  m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD);
- 
--	if (m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD) {
--		if (m->delta[0] != 1) {
--			erofs_err(sb, "bogus CBLKCNT @ lcn %lu of nid %llu", lcn, vi->nid);
--			DBG_BUGON(1);
--			return -EFSCORRUPTED;
--		}
--		if (m->compressedblks)
--			goto out;
--	} else if (m->type < Z_EROFS_LCLUSTER_TYPE_MAX) {
--		/*
--		 * if the 1st NONHEAD lcluster is actually PLAIN or HEAD type
--		 * rather than CBLKCNT, it's a 1 block-sized pcluster.
--		 */
--		m->compressedblks = 1;
--		goto out;
-+	if (m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD && m->delta[0] != 1) {
-+		erofs_err(sb, "bogus CBLKCNT @ lcn %lu of nid %llu", lcn, vi->nid);
-+		DBG_BUGON(1);
-+		return -EFSCORRUPTED;
- 	}
--	erofs_err(sb, "cannot found CBLKCNT @ lcn %lu of nid %llu", lcn, vi->nid);
--	DBG_BUGON(1);
--	return -EFSCORRUPTED;
-+
-+	/*
-+	 * if the 1st NONHEAD lcluster is actually PLAIN or HEAD type rather
-+	 * than CBLKCNT, it's a 1 block-sized pcluster.
-+	 */
-+	if (m->type != Z_EROFS_LCLUSTER_TYPE_NONHEAD || !m->compressedblks)
-+		m->compressedblks = 1;
- out:
- 	m->map->m_plen = erofs_pos(sb, m->compressedblks);
- 	return 0;
-@@ -379,11 +374,6 @@ static int z_erofs_get_extent_decompressedlen(struct z_erofs_maprecorder *m)
- 			if (lcn != headlcn)
- 				break;	/* ends at the next HEAD lcluster */
- 			m->delta[1] = 1;
--		} else {
--			erofs_err(inode->i_sb, "unknown type %u @ lcn %llu of nid %llu",
--				  m->type, lcn, vi->nid);
--			DBG_BUGON(1);
--			return -EOPNOTSUPP;
- 		}
- 		lcn += m->delta[1];
- 	}
-@@ -421,44 +411,33 @@ static int z_erofs_do_map_blocks(struct inode *inode,
- 	map->m_flags = EROFS_MAP_MAPPED | EROFS_MAP_ENCODED;
- 	end = (m.lcn + 1ULL) << lclusterbits;
- 
--	switch (m.type) {
--	case Z_EROFS_LCLUSTER_TYPE_PLAIN:
--	case Z_EROFS_LCLUSTER_TYPE_HEAD1:
--	case Z_EROFS_LCLUSTER_TYPE_HEAD2:
--		if (endoff >= m.clusterofs) {
--			m.headtype = m.type;
--			map->m_la = (m.lcn << lclusterbits) | m.clusterofs;
--			/*
--			 * For ztailpacking files, in order to inline data more
--			 * effectively, special EOF lclusters are now supported
--			 * which can have three parts at most.
--			 */
--			if (ztailpacking && end > inode->i_size)
--				end = inode->i_size;
--			break;
--		}
--		/* m.lcn should be >= 1 if endoff < m.clusterofs */
--		if (!m.lcn) {
--			erofs_err(sb, "invalid logical cluster 0 at nid %llu",
--				  vi->nid);
--			err = -EFSCORRUPTED;
--			goto unmap_out;
-+	if (m.type != Z_EROFS_LCLUSTER_TYPE_NONHEAD && endoff >= m.clusterofs) {
-+		m.headtype = m.type;
-+		map->m_la = (m.lcn << lclusterbits) | m.clusterofs;
-+		/*
-+		 * For ztailpacking files, in order to inline data more
-+		 * effectively, special EOF lclusters are now supported
-+		 * which can have three parts at most.
-+		 */
-+		if (ztailpacking && end > inode->i_size)
-+			end = inode->i_size;
-+	} else {
-+		if (m.type != Z_EROFS_LCLUSTER_TYPE_NONHEAD) {
-+			/* m.lcn should be >= 1 if endoff < m.clusterofs */
-+			if (!m.lcn) {
-+				erofs_err(sb, "invalid logical cluster 0 at nid %llu",
-+					  vi->nid);
-+				err = -EFSCORRUPTED;
-+				goto unmap_out;
-+			}
-+			end = (m.lcn << lclusterbits) | m.clusterofs;
-+			map->m_flags |= EROFS_MAP_FULL_MAPPED;
-+			m.delta[0] = 1;
- 		}
--		end = (m.lcn << lclusterbits) | m.clusterofs;
--		map->m_flags |= EROFS_MAP_FULL_MAPPED;
--		m.delta[0] = 1;
--		fallthrough;
--	case Z_EROFS_LCLUSTER_TYPE_NONHEAD:
- 		/* get the corresponding first chunk */
- 		err = z_erofs_extent_lookback(&m, m.delta[0]);
- 		if (err)
- 			goto unmap_out;
--		break;
--	default:
--		erofs_err(sb, "unknown type %u @ offset %llu of nid %llu",
--			  m.type, ofs, vi->nid);
--		err = -EOPNOTSUPP;
--		goto unmap_out;
- 	}
- 	if (m.partialref)
- 		map->m_flags |= EROFS_MAP_PARTIAL_REF;
+ 		interrupt-parent = <&gpio_intc>;
+-		interrupts = <29 IRQ_TYPE_LEVEL_LOW>;
++		/* MAC_INTR on GPIOZ_15 */
++		interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
+ 		eee-broken-1000t;
+ 	};
+ };
 -- 
 2.53.0
 
