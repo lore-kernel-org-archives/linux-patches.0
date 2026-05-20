@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F273F4124;
-	Wed, 20 May 2026 17:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957543F4124;
+	Wed, 20 May 2026 17:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297929; cv=none; b=GQ5zoqrzXbbh7TMSc49mAX6o9WrV1A9RltmZymWP2hEywYq+KuizUdYOgEmowNZPGQ3b0mcUX6OWhq6mBvsP5pH5mBUpjxjHFkUHHmr3r608drK75kRl6xxaF2by38qy3CqHyIoYC874WRlkm3WwCfh4YSUqZc6LJ6UuFBWFa+0=
+	t=1779297931; cv=none; b=eEsnbtBH3Ii+rSkflxvQmD1mv87TTL6BGTzHCaclzaRBZuEAlNTu+71iSElExqGss49X1VvkOLiZYiLfF/PnFszt27y2sfl1wkeAnkWdknFtCPqFQiRGVby19k1xwGwzF59TOfbli7YGlc/43JEekT+3HsYPjpu19ATIcwT0//8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297929; c=relaxed/simple;
-	bh=AXVHIOfgstHdeMZDcTzmaOfXjVt87eqMOEWSbUXrs9U=;
+	s=arc-20240116; t=1779297931; c=relaxed/simple;
+	bh=MdIUxbu31B0RO3MOHyCBkX1N42bOGRHlWkKJKBk9bSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IODOuq3bbHg81KF0bqbfhVYmleXHZTFFnCLYk8Epo7LksLsAQ16TkpadfZnF4up/IIlHAkXopWo+Ofy4mmUz08N3udXpx9WpsBUm8MXB51U9RXR8fGJmTZ6xa1zf6/PGQhGAmw4ovBVYTEGZbkBk81P18LjmnU4Lr0mCvC06jiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LA5yy1PC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z5PIF5/3fzIJbEncP+LlZZnILKlgXvxgxt/xrCJdb0qMdzpVPkjHYOsVIf98KfuVpt+I++GwlyjlkghCxGx0JAlGNxq18kzCSrM8y9eH67u/SfCIo1D1xR6Q7jcogHaL95vmYd4EeHwFDTonwI3JUOz2RccqecWj3pCTtNwejnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtkgsrVK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LA5yy1PC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B72C1F000E9;
-	Wed, 20 May 2026 17:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtkgsrVK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065011F000E9;
+	Wed, 20 May 2026 17:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297927;
-	bh=mcNDrDmBstKrAuojUtQsbuMIJ2sffocQB2LumpnuC14=;
+	s=korg; t=1779297930;
+	bh=yiCK2qKO5T/QXBgmmCFADnsJ4xp/v/is1Sll6hlNVj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LA5yy1PC53Jiu2WqIQgLvtIN6iBIwuZdZNxuigqx0WFPBACjASXTNE5gRKST1XWBh
-	 Je7Ob1saAQSWAxQvU9D9+jy7d5IS7xVPmpj5KNcY4ws93E+0qkXZjvxJy7xhTA8vYp
-	 fX8E4oehXuMif8GxMB2n8QG4MBo4ceWohUbKUVfg=
+	b=JtkgsrVKU/YfdVJDGg9vfVjEOVYSwD7NCX2EIishVvBarV9Z0a8PJ+I5OsqcrjUO1
+	 Kg6LgCKieVeW53kUWPbYRto64FxKgmW7/3D8GJ9w21ti5OalSaH3drObV5CLb2aNci
+	 ILeKBfDOtVN0V2zguhICSzNsug/SOwe9SJXl6Tow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Dudu Lu <phx0fer@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 176/957] Bluetooth: fix locking in hci_conn_request_evt() with HCI_PROTO_DEFER
-Date: Wed, 20 May 2026 18:10:59 +0200
-Message-ID: <20260520162138.370956810@linuxfoundation.org>
+Subject: [PATCH 6.18 177/957] Bluetooth: l2cap: Add missing chan lock in l2cap_ecred_reconf_rsp
+Date: Wed, 20 May 2026 18:11:00 +0200
+Message-ID: <20260520162138.392707636@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,50 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 5c7209a341ff2ac338b2b0375c34a307b37c9ac2 ]
+[ Upstream commit 42776497cdbc9a665b384a6dcb85f0d4bd927eab ]
 
-When protocol sets HCI_PROTO_DEFER, hci_conn_request_evt() calls
-hci_connect_cfm(conn) without hdev->lock. Generally hci_connect_cfm()
-assumes it is held, and if conn is deleted concurrently -> UAF.
+l2cap_ecred_reconf_rsp() calls l2cap_chan_del() without holding
+l2cap_chan_lock(). Every other l2cap_chan_del() caller in the file
+acquires the lock first. A remote BLE device can send a crafted
+L2CAP ECRED reconfiguration response to corrupt the channel list
+while another thread is iterating it.
 
-Only SCO and ISO set HCI_PROTO_DEFER and only for defer setup listen,
-and HCI_EV_CONN_REQUEST is not generated for ISO.  In the non-deferred
-listening socket code paths, hci_connect_cfm(conn) is called with
-hdev->lock held.
+Add l2cap_chan_hold() and l2cap_chan_lock() before l2cap_chan_del(),
+and l2cap_chan_unlock() and l2cap_chan_put() after, matching the
+pattern used in l2cap_ecred_conn_rsp() and l2cap_conn_del().
 
-Fix by holding the lock.
-
-Fixes: 70c464256310 ("Bluetooth: Refactor connection request handling")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 3 ---
- 1 file changed, 3 deletions(-)
+ net/bluetooth/l2cap_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 6f77ab2629d65..b6b52b81b7b9c 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3309,8 +3309,6 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 7664723a34d0a..bcb13ce531099 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5473,7 +5473,13 @@ static inline int l2cap_ecred_reconf_rsp(struct l2cap_conn *conn,
+ 		if (chan->ident != cmd->ident)
+ 			continue;
  
- 	memcpy(conn->dev_class, ev->dev_class, 3);
- 
--	hci_dev_unlock(hdev);
--
- 	if (ev->link_type == ACL_LINK ||
- 	    (!(flags & HCI_PROTO_DEFER) && !lmp_esco_capable(hdev))) {
- 		struct hci_cp_accept_conn_req cp;
-@@ -3344,7 +3342,6 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
- 		hci_connect_cfm(conn, 0);
++		l2cap_chan_hold(chan);
++		l2cap_chan_lock(chan);
++
+ 		l2cap_chan_del(chan, ECONNRESET);
++
++		l2cap_chan_unlock(chan);
++		l2cap_chan_put(chan);
  	}
  
--	return;
- unlock:
- 	hci_dev_unlock(hdev);
- }
+ 	return 0;
 -- 
 2.53.0
 
