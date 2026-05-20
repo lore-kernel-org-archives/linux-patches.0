@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A853D3DCD9C;
-	Wed, 20 May 2026 11:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60E83DC4CF;
+	Wed, 20 May 2026 11:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276012; cv=none; b=I8dNUSvUD8NIwlSOOdOnAZ57K9URAPAMV266zW8SvmvFPI3S9AT/tR3yXO+F7coigMp7OT3cN9nnBGYcGNNHfsgl+NFcSssuHE8WwbwfgMhfN639LT9F5JS6BrjazcH+QTfJNisYG4h9AgzwrTu3COsRCJn9esrkGLQkPJpUaQU=
+	t=1779276014; cv=none; b=BCiHq1sHoJ1ob1PkGD9OqbbEpQt5E0x7u7HTnrqGZt34v4IBwRAWcSIHLOHDJbryl6gwBL4YlOljXDEhrdOkPdSLkW4jj3G0kQn59dwC8d8pMqRA0LdDrU6KefbbzsoDf6r8S625w4yIvbGxl18JFJsfqoC04PoMYC8XsDVQbz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276012; c=relaxed/simple;
-	bh=v4e5a/aMz1v6YR6+cednVDxQr9k3Oa+VodsgFCUyhVw=;
+	s=arc-20240116; t=1779276014; c=relaxed/simple;
+	bh=bYEAJZLZvjaQGGWWgBivvYd49X8IbAv/9B2lQ9MS10E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g0stWTCIYrJAqDzIYp7Kid5+/0iLrJOlgJFzIQb9QrBG+lHEbEFJj2CahXKsHZlb2Z35ZSMxPksc9SH9iZbmC1xjuZdZO30u+u0+my/zq771Y3UsWM+/jRH/5kqdpBZ5ah8qxwHAiMWcWCgoOHh13Zv98T7At2MnIqk8KDspgow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k5LPF1J/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Pc2bSxk0ynrPzlGT7qVi06Hc1JRpVck9xVAcVh3kP3VtxLuRjHkxBun1VVNzVDFatVhqn6O+PpPX+xGHh/aDQKaf6py9GryQOY7upje4Yd16IitLeqOzyIy8321YzXJ5vtWrWH3lfpKH9DTd62dBY84MxcKjr/tvYSRgcqP5xJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PyP/9Fdz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k5LPF1J/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638791F00894;
-	Wed, 20 May 2026 11:20:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PyP/9Fdz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC04D1F00898;
+	Wed, 20 May 2026 11:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276007;
-	bh=wh2vO+k2OhSXHw9Yg21L+HN+Ur8L1oQbLmdePBB+R98=;
+	s=k20260515; t=1779276008;
+	bh=WwcJ4MhtGZGnFzVpPs2B/62wLXslgGAVo58iwceQ0YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k5LPF1J/4TewEoUQVfXgXu+kBGKHoDoWw8ETg/KWpZh0ZQ83roQKF5Sb2LV/Do4/p
-	 1c5p9Iq6jquG2tUQr/eEbo59BEH1jdbeD73tBpw6X1VzrtJy373WkDQgyr3XRDjuhf
-	 RxS0Xc8QBqtP8SSv2VpJwWvJRPGweJJrvyz3I9mLWOfFynSxqQV0UYc5+O34IWaSkE
-	 aAjzyuPPmAzqFknLqlZGwQM+/HuJ2Ln4zSONAVHFDfVVspwuyG+PIIqTkLZgDVkqg8
-	 3vNh/utmkddK0AzpwJRvslCGdLsHusfojp81Yzx8tRe5BkC5uEmRvD6u1Chxl6Sq2C
-	 96/ncE5/qBGMg==
+	b=PyP/9FdzwEsIuYy/mBhttkZh/b8oNhDS36L4EbxnhS+V6ngY8rX2VB9HKga0sad1+
+	 SagshktGzeWuPrOSzum2l0TYRFhENwsn2ajMJtaBkX+ZnB/ksVX0NzXYlYcxX9YvxM
+	 tE01j78oL3QjfrRQnfru+9xJruoUgVuw9v6t3bQFuFVzjV2aYdlBzAsVCIijQDYyIq
+	 sQskYeNvwed2vfYCquoiesk35bNla9ABRzyL9ednq/P5vmEWD+28TnbWsiQqXSnnTb
+	 vw83uetvJftG0LzfjAzJuDpYO5igGLfcEKjYTjVocPorRj2UVnPq5yGkOGD4QyrNgL
+	 41Qi6mzOjZnWg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen-Shi-Hong <eric039eric@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+Cc: Jackie Dong <xy-jackie@139.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	corbet@lwn.net,
-	linux-hwmon@vger.kernel.org,
-	linux-doc@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] docs: hwmon: sy7636a: fix temperature sysfs attribute name
-Date: Wed, 20 May 2026 07:18:48 -0400
-Message-ID: <20260520111944.3424570-16-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] ALSA: hda/realtek: ALC269 fixup for Lenovo Yoga Pro 7 15ASH111 audio
+Date: Wed, 20 May 2026 07:18:49 -0400
+Message-ID: <20260520111944.3424570-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -54,214 +54,184 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Shi-Hong <eric039eric@gmail.com>
+From: Jackie Dong <xy-jackie@139.com>
 
-[ Upstream commit 51f57607e30bee282a1d40845f89a311cbb26481 ]
+[ Upstream commit 83dca2530fb3ba63f47bad339d890bc30aa06ab5 ]
 
-The hwmon sysfs naming convention uses
-temp[1-*]_input for temperature channels.
+Volume control for the speakers on the Lenovo Yoga Pro 7 15ASH11 laptop
+doesn't work.
+The DAC routing is the same as on the ThinkPad X1 Gen7 function, so reuse
+the alc285_fixup_thinkpad_x1_gen7 to get it working.
 
-Documentation/hwmon/sy7636a-hwmon.rst currently documents
-temp0_input, while the driver uses the standard hwmon
-temperature channel interface.
-
-Update the documentation to use temp1_input.
-
-Signed-off-by: Chen-Shi-Hong <eric039eric@gmail.com>
-Link: https://lore.kernel.org/r/20260514154108.1937-1-eric039eric@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Jackie Dong <xy-jackie@139.com>
+Link: https://patch.msgid.link/20260514153940.7320-1-xy-jackie@139.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Record: Subsystem is `docs: hwmon: sy7636a`. Action verb is `fix`.
-Claimed intent is to correct the documented temperature sysfs attribute
-name from `temp0_input` to `temp1_input`.
+## Phase Walkthrough
+Phase 1 Record:
+1. Subject: subsystem `ALSA: hda/realtek`; action `fixup`; intent is to
+   fix Lenovo Yoga Pro 7 15ASH11 speaker volume control.
+2. Tags: `Signed-off-by: Jackie Dong`, `Link:
+   https://patch.msgid.link/20260514153940.7320-1-xy-jackie@139.com`,
+   `Signed-off-by: Takashi Iwai`. No `Fixes`, `Reported-by`, `Tested-
+   by`, `Reviewed-by`, or stable Cc tag.
+3. Body: the reported bug is that speaker volume control does not work
+   on Lenovo Yoga Pro 7 15ASH11. Root cause explanation given: DAC
+   routing matches the ThinkPad X1 Gen7 routing case, so the existing
+   routing fixup is reused.
+4. Hidden bug fix: yes. Although phrased as a “fixup”, this is a
+   hardware-specific quirk correcting broken speaker mixer/routing
+   behavior.
 
-Record: Tags present: `Signed-off-by: Chen-Shi-Hong
-<eric039eric@gmail.com>`, `Link:
-https://lore.kernel.org/r/20260514154108.1937-1-eric039eric@gmail.com`,
-`Signed-off-by: Guenter Roeck <linux@roeck-us.net>`. No `Fixes:`,
-`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
-stable`.
+Phase 2 Record:
+1. Inventory: one file, `sound/hda/codecs/realtek/alc269.c`; one line
+   added to `alc269_fixup_tbl`; single-file surgical hardware quirk.
+2. Hunk behavior: before, PCI SSID `17aa:38fc` had no matching Realtek
+   fixup entry. After, it maps to `ALC245_FIXUP_BASS_HP_DAC`.
+3. Bug mechanism: hardware workaround / audio codec quirk. Verified
+   `ALC245_FIXUP_BASS_HP_DAC` calls `alc285_fixup_thinkpad_x1_gen7`,
+   which overrides DAC routing for NID `0x17`, sets preferred DAC pairs,
+   and renames confusing volume controls.
+4. Fix quality: obviously small and contained. Regression risk is very
+   low because matching is limited to Lenovo PCI SSID `17aa:38fc`.
 
-Record: The commit describes a documentation bug: the sy7636a hwmon
-document names `temp0_input`, while hwmon temperature channels are named
-`temp[1-*]_input`. No crash, data corruption, or runtime bug is claimed.
+Phase 3 Record:
+1. Blame: the added line is from candidate commit `83dca2530fb3b`;
+   adjacent Lenovo quirk-table entries mostly come from earlier Realtek
+   table history. Candidate is contained in `v7.1-rc4`.
+2. Fixes tag: none, so no introducing commit to follow.
+3. Related file history: recent `alc269.c` history is dominated by
+   similar Realtek laptop quirk fixes. Related Lenovo Yoga Pro 7 quirks
+   exist for 14IMH9 and 14IAH10.
+4. Author history: Jackie Dong has this one Realtek commit in the
+   checked history. Takashi Iwai committed it; `MAINTAINERS` lists
+   Takashi Iwai as SOUND maintainer.
+5. Dependencies: `ALC245_FIXUP_BASS_HP_DAC` was introduced by
+   `e347430182492` in mainline and exists in `stable/linux-7.0.y`;
+   `stable/linux-6.19.y` has an equivalent backport `3c756e813f212`.
+   Older checked stable branches lack that symbol and need a
+   dependency/backport adjustment.
 
-Record: This is not a hidden runtime bug fix. It is an explicit
-documentation correctness fix.
+Phase 4 Record:
+1. `b4 dig -c 83dca2530fb3b` found the original thread at the supplied
+   patch URL.
+2. `b4 dig -a` found v1 and v2; v2 is the committed version. The v2
+   change was “Use `ALC245_FIXUP_BASS_HP_DAC` instead of creating a new
+   quirk.”
+3. `b4 dig -w` showed ALSA maintainers/lists and Lenovo contact were
+   included.
+4. Saved thread shows Takashi Iwai replied “Applied now”, with only a
+   minor subject-line modification. No NAKs or risk objections were
+   present in the matched thread.
+5. Lore WebFetch searches were blocked by Anubis; WebSearch found
+   related Yoga Pro audio issues but no additional specific 15ASH11
+   report. Stable-list WebFetch was also blocked.
 
-## Phase 2: Diff Analysis
-Record: One file changed: `Documentation/hwmon/sy7636a-hwmon.rst`, 1
-insertion and 1 deletion. No functions modified. Scope is a single-file
-documentation-only surgical fix.
+Phase 5 Record:
+1. Modified object: `alc269_fixup_tbl` static quirk table.
+2. Callers: `alc269_probe()` calls `snd_hda_pick_fixup()` with
+   `alc269_fixup_tbl`; `alc269_probe()` is installed via
+   `alc269_codec_ops`; ALC245 is listed in `snd_hda_id_alc269`.
+3. Callees/effects: `snd_hda_pick_fixup()` matches PCI SSID first, then
+   selects the fixup ID. `snd_hda_apply_fixup(...PRE_PROBE)` applies it
+   before auto-parse.
+4. Reachability: reachable during HDA codec probe on systems with
+   Realtek ALC245/compatible hardware and PCI SSID `17aa:38fc`; normal
+   boot/device initialization path.
+5. Similar patterns: the table contains many Lenovo and other laptop
+   Realtek quirks; `ALC245_FIXUP_BASS_HP_DAC` is already used for
+   Minisforum V3 SE.
 
-Record: Before, the document told users to read `temp0_input`. After, it
-tells users to read `temp1_input`. No normal/error/init runtime path
-changes.
+Phase 6 Record:
+1. Stable presence: `stable/linux-7.0.y` and `stable/linux-6.19.y`
+   contain the generic fixup but lack the new `17aa:38fc` entry.
+   `stable/linux-6.18.y` and older checked branches lack
+   `ALC245_FIXUP_BASS_HP_DAC`, though they do have ALC245 support and
+   the underlying ThinkPad routing helper.
+2. Backport difficulty: clean/simple for 7.0.y and 6.19.y. Older
+   branches need either the generic fixup dependency or a small
+   equivalent backport, and 6.12.y/older use
+   `sound/pci/hda/patch_realtek.c` rather than the split path.
+3. Related stable fixes: searches of 7.0.y and 6.19.y found no existing
+   15ASH11 quirk.
 
-Record: Bug category is documentation/API-description correctness.
-Verified against `Documentation/hwmon/sysfs-interface.rst`, which
-documents `temp[1-*]_input`, and `drivers/hwmon/hwmon.c`, where
-temperature attributes use `temp%d_input` with base index `1`.
+Phase 7 Record:
+1. Subsystem: ALSA HDA Realtek codec driver, driver-specific but common
+   laptop audio path; criticality is important for affected hardware,
+   not core-wide.
+2. Activity: recent history shows many similar Realtek laptop quirk
+   fixes, so this fits active subsystem practice.
 
-Record: Fix quality is obviously correct and minimal. Runtime regression
-risk is zero because no code changes.
+Phase 8 Record:
+1. Affected users: owners of Lenovo Yoga Pro 7 15ASH11 with PCI SSID
+   `17aa:38fc`.
+2. Trigger: normal audio use after codec probe; users see speaker volume
+   control not working. No verified security or crash trigger.
+3. Severity: medium functional regression/hardware enablement issue; not
+   a panic/corruption bug.
+4. Risk-benefit: benefit is high for the affected laptop; risk is very
+   low because the change is a single SSID-scoped quirk using an
+   existing fixup.
 
-## Phase 3: Git History Investigation
-Record: `git blame` shows `temp0_input` was introduced by
-`de34a40532507` when the sy7636a hwmon driver/doc was added. Ancestry
-checks show that commit is not in `v5.17` but is in `v5.18`, so the
-documentation bug exists from v5.18 onward where the driver exists.
+Phase 9 Record:
+1. Evidence for: real user-visible audio control failure, hardware-
+   specific quirk exception, one-line scoped change, existing fixup
+   reused, ALSA maintainer applied, v2 incorporated review feedback.
+2. Evidence against: not a crash/security/data-corruption fix; older
+   stable branches may need prerequisite/backport adjustment.
+3. Stable rules: obviously correct yes; fixes real user-visible bug yes;
+   important issue yes under hardware quirk/workaround policy; small and
+   contained yes; no new API yes; applies cleanly to trees with existing
+   `ALC245_FIXUP_BASS_HP_DAC`, otherwise needs minor dependency
+   handling.
+4. Exception category: hardware-specific audio codec quirk. Decision:
+   backport.
 
-Record: No `Fixes:` tag is present, so there was no Fixes target to
-follow.
+## Verification
+- [Phase 1] `git show --format=fuller 83dca2530fb3b` verified subject,
+  body, tags, author, committer, and one-line diff.
+- [Phase 2] Diff verified one insertion in `alc269_fixup_tbl`:
+  `SND_PCI_QUIRK(0x17aa, 0x38fc, ..., ALC245_FIXUP_BASS_HP_DAC)`.
+- [Phase 3] `git blame origin/master -L 7762,7768` verified the
+  candidate line attribution.
+- [Phase 3] `git describe --contains 83dca2530fb3b` verified inclusion
+  in `v7.1-rc4`.
+- [Phase 3] `git log -S"ALC245_FIXUP_BASS_HP_DAC"` verified the generic
+  fixup came from `e347430182492`.
+- [Phase 4] `b4 dig -c`, `-a`, `-w`, and saved mbox verified the v1/v2
+  thread, recipients, and Takashi’s “Applied now” reply.
+- [Phase 5] Reads of `alc269.c` and `auto_parser.c` verified probe-time
+  PCI SSID matching and fixup application.
+- [Phase 6] Stable branch checks verified 7.0.y and 6.19.y have the
+  generic fixup and lack `17aa:38fc`; older checked branches lack the
+  generic fixup symbol.
+- [Phase 8] Failure mode is verified from the commit body: speaker
+  volume control does not work. No crash/security impact was verified.
 
-Record: Related file history on `origin/master`: `51f57607e30be` doc
-attribute fix, `2f88425ef590b` regulator-enable leak fix,
-`68c2a8b59d231` sensor description doc fix, `80038a758b7fc` alias
-addition, `5b5d8ae019543` constification, `a96f688b4e446` underline
-warning fix, `de34a40532507` driver addition. This patch is standalone
-for trees with the current doc context.
-
-Record: Author history under hwmon/doc paths shows only this commit from
-Chen-Shi-Hong in the checked history. Guenter Roeck, the hwmon
-maintainer, committed/applied it.
-
-Record: No functional dependencies. For older stable trees that do not
-contain `68c2a8b59d231`, the exact patch context differs and needs a
-trivial manual backport.
-
-## Phase 4: Mailing List And External Research
-Record: `b4 dig -c 51f57607e30be` found the original submission at
-`https://patch.msgid.link/20260514154108.1937-1-eric039eric@gmail.com`.
-
-Record: `b4 dig -a` found only v1 of a single-patch series. No newer
-unapplied revision found.
-
-Record: `b4 dig -w` showed recipients included Chen-Shi-Hong, Guenter
-Roeck, Jonathan Corbet, Shuah Khan, `linux-hwmon`, `linux-doc`, and
-`linux-kernel`.
-
-Record: The b4-fetched thread contains Guenter Roeck replying “Applied.”
-No NAKs, objections, or stable-specific nomination were found in that
-thread. Lore `WebFetch` was blocked by Anubis, but `b4` successfully
-retrieved the thread.
-
-## Phase 5: Code Semantic Analysis
-Record: No code functions are modified.
-
-Record: Manual code tracing verified the documentation claim:
-`drivers/hwmon/sy7636a-hwmon.c` registers `HWMON_CHANNEL_INFO(temp,
-HWMON_T_INPUT)`. `drivers/hwmon/hwmon.c` formats temperature attributes
-with `temp%d_input`, and `hwmon_attr_base()` returns `1` for temperature
-sensors. Therefore the first temperature channel is `temp1_input`.
-
-Record: Callers/callees are not applicable to the patch because it
-changes documentation only. The affected “path” is users reading the
-hwmon documentation.
-
-Record: Similar pattern check found the generic hwmon documentation and
-many hwmon docs use `temp1_input`, supporting the correction.
-
-## Phase 6: Stable Tree Analysis
-Record: `v5.15` does not contain `Documentation/hwmon/sy7636a-hwmon.rst`
-or `drivers/hwmon/sy7636a-hwmon.c`, so the patch is not applicable
-there.
-
-Record: `v6.1`, `v6.6`, and `v6.12` contain the sy7636a driver and the
-wrong `temp0_input` documentation. `v7.0` contains the wrong attribute
-name with the newer “external NTC” text.
-
-Record: The exact patch applies cleanly to the current
-`stable/linux-7.0.y` checkout. It does not apply cleanly to `v6.1` or
-`v6.6` because the surrounding description text differs before the later
-doc description fix; a trivial one-line context-adjusted backport is
-needed there.
-
-Record: No alternate fix for this exact documentation bug was found in
-local stable history.
-
-## Phase 7: Subsystem Context
-Record: Subsystem is hwmon documentation. Criticality is low for
-runtime, but it documents a userspace-visible sysfs ABI path for sy7636a
-hardware users.
-
-Record: The sy7636a hwmon files have low churn and only a handful of
-targeted fixes since introduction.
-
-## Phase 8: Impact And Risk
-Record: Affected population is sy7636a hardware users and anyone writing
-scripts or instructions based on
-`Documentation/hwmon/sy7636a-hwmon.rst`.
-
-Record: Trigger is reading/following the documentation. If followed
-literally, users look for a non-existent `temp0_input` instead of the
-actual `temp1_input`.
-
-Record: Failure severity is LOW: documentation/user guidance bug, not a
-kernel crash or data corruption issue.
-
-Record: Benefit is modest but real: correct stable documentation for a
-userspace-visible hwmon attribute. Risk is effectively zero: one
-documentation line, no code, no ABI change.
-
-## Phase 9: Final Synthesis
-Evidence for backporting: verified documentation is wrong; verified
-driver/core generate `temp1_input`; patch is one-line documentation-
-only; hwmon maintainer applied it; documentation fixes are an allowed
-stable exception with no runtime regression risk.
-
-Evidence against backporting: it is not a serious runtime bug, security
-issue, crash, or data corruption fix. Older stable trees before the
-sensor-description doc change need a trivial context adjustment.
-
-Stable rules checklist: obviously correct, yes; fixes a real
-documentation bug, yes; important runtime issue, no; small and
-contained, yes; no new feature/API, yes; stable applicability, yes for
-v7.0 cleanly and older applicable with minor backport adjustment.
-Exception category: documentation fix.
-
-Verification:
-- [Phase 1] Parsed exact commit `51f57607e30be` from `origin/master` and
-  confirmed tags/message.
-- [Phase 2] Inspected exact diff: one doc line changes `temp0_input` to
-  `temp1_input`.
-- [Phase 3] `git blame` confirmed `temp0_input` came from
-  `de34a40532507`; ancestry checks place it first in v5.18.
-- [Phase 4] `b4 dig` found the original patch; `b4 dig -a` showed v1
-  only; `b4 dig -w` showed appropriate hwmon/doc recipients; b4 mbox
-  showed Guenter replied “Applied.”
-- [Phase 5] Read sy7636a driver and hwmon core; confirmed first
-  temperature channel is named `temp1_input`.
-- [Phase 6] Checked `v5.15`, `v6.1`, `v6.6`, `v6.12`, and `v7.0`
-  content; exact patch applies to current 7.0 stable, not directly to
-  v6.1/v6.6 due context.
-- [Phase 8] Confirmed no runtime code changes, so regression risk is
-  zero.
-
-This should be backported where the sy7636a documentation exists, with
-trivial context adjustment for older trees as needed.
+This should be backported, with dependency/backport adjustment for trees
+that do not yet have `ALC245_FIXUP_BASS_HP_DAC`.
 
 **YES**
 
- Documentation/hwmon/sy7636a-hwmon.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/hwmon/sy7636a-hwmon.rst b/Documentation/hwmon/sy7636a-hwmon.rst
-index 0143ce0e5db76..03d866aba6e81 100644
---- a/Documentation/hwmon/sy7636a-hwmon.rst
-+++ b/Documentation/hwmon/sy7636a-hwmon.rst
-@@ -22,5 +22,5 @@ The following sensors are supported
- sysfs-Interface
- ---------------
- 
--temp0_input
-+temp1_input
- 	- Temperature of external NTC (milli-degree C)
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 7e0289a1a1ca7..4e0885c1fc496 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7722,6 +7722,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x38df, "Y990 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38f9, "Thinkbook 16P Gen5", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
+ 	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
++	SND_PCI_QUIRK(0x17aa, 0x38fc, "Lenovo Yoga Pro 7 15ASH11", ALC245_FIXUP_BASS_HP_DAC),
+ 	SND_PCI_QUIRK(0x17aa, 0x38fd, "ThinkBook plus Gen5 Hybrid", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
 -- 
 2.53.0
 
