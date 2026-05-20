@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA923F23C5;
-	Wed, 20 May 2026 18:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B6D29B78D;
+	Wed, 20 May 2026 18:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301076; cv=none; b=gY8pMC4FMsjk7tnABMFkmTA27VR/1+GrcWofXTtHSrqDTyOfRtR59zBxrc1B/aPY4/L5KJEa/u9Q8ulyiP77/CseEROaZV0VO4TgpBqEF3BIqOK4z7PfcuE9FHiA3JMKhS6jzhSRF94xe2R7gpw8o1TYwx8EFbxcegyeq7Svdqk=
+	t=1779301079; cv=none; b=istQDXt5IR/NvQEWzQD1gQlMGo3hjndKl4M0wirZiHYcabJD1dQ6YuDniilRLroLo55kzvpJmSo14xtjjX3YZH8Wd7AjT4mmsILN0+f01et1jqnAAD0IW9Y2pl8n6QEGvqwOjatlRdcwDRF3QyIf2+Vcj9F/pLyVG3+U1sQLipg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301076; c=relaxed/simple;
-	bh=uEm+g9YunSQYtmpRNDKQ0uSBGWc2rvxwd+zzYVt9O+0=;
+	s=arc-20240116; t=1779301079; c=relaxed/simple;
+	bh=l8AuJuOthgaPCRG+2cHQuLsuq5GKXJJXJJrQPO91s5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UByiCEEUdy7BwFpG2vOKFRlc5YAxN4E/QTZG415MOTljx/ik9st9zMKkYxspB5fxhv3wUwNKSPlyYnOUWplLDwIKJrLXRR1dDXz5NxhG8DbtjVX60fbTLa7R6xnViFejU94ir88kwjyuqDlyYwA1S/Bn1IHrzXAlIx+pp1hb7A8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2k+DGtHR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aQOiXa5RydrP1nmkmS7RLfs4NbVUjPgMNsQ3YIDflV9tG4rY/qK9jjAyFdG/b3FRVhgMQri8RMqCvbQvZUr8K1pPcLdSEq3INOUhVAdfLb9ISL8Xd4rrwiXqnil3vhv72AqqFyq19S5WOAL0Vu6wbeNKmoE/nLHbHEYvAZfs/ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bW+yejku; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2k+DGtHR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31801F000E9;
-	Wed, 20 May 2026 18:17:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bW+yejku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0A01F000E9;
+	Wed, 20 May 2026 18:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301075;
-	bh=atJg9WthQOb7Y+yTv/wQFiBDGfYqzSv8sB14KJkJMIo=;
+	s=korg; t=1779301077;
+	bh=GmlxSOOpep6cKv7nyU/gVKOWt9uzBvUM0G48rs5W/jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2k+DGtHR/FiYsZxBnXKktXtGZLZAXzv8bDldFgQJCX8yhlHvHHyTqUKUThU4sHUxf
-	 YEsXY2/SRq/HQAzFjUgNjJXZECQAnJVZDl1j6PDdJ35MTYnRBYsSrC5ATxc4JfE6H+
-	 dQ+xryRUQnJ1T9Y3OqpEFs8guoRyWIt240sJohw8=
+	b=bW+yejkutx9Ji0szRDMUMK23liJjamKEIhPNQEBKW+eHsZVKwhhSyayiQ1BzSQVzM
+	 0vqmcfAfqZ6mQIOBtMHDJJmSVvfvnsmdIsjdrdS5MBmLRYiN8phpHgi2nNmdCmJ8FK
+	 BME4SP55b6lSTLgck+9Fx7seQaj23x1GBQUTi6EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kees Cook <kees@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 416/666] x86/um: fix vDSO installation
-Date: Wed, 20 May 2026 18:20:27 +0200
-Message-ID: <20260520162120.281377166@linuxfoundation.org>
+Subject: [PATCH 6.12 417/666] clk: qoriq: avoid format string warning
+Date: Wed, 20 May 2026 18:20:28 +0200
+Message-ID: <20260520162120.304367704@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -45,59 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d1895c15fc7d90a615bc8c455feb02acaf08ef1e ]
+[ Upstream commit 096abbb6682ee031a0f5ce9f4c71ead9fa63d31e ]
 
-The generic vDSO installation logic used by 'make vdso_install' requires
-that $(vdso-install-y) is defined by the top-level architecture Makefile
-and that it contains a path relative to the root of the tree.
-For UML neither of these is satisfied.
+clang-22 warns about the use of non-variadic format arguments passed into
+snprintf():
 
-Move the definition of $(vdso-install-y) to a place which is included by
-the arch/um/Makefile and use the full relative path.
+drivers/clk/clk-qoriq.c:925:39: error: diagnostic behavior may be improved by adding the
+      'format(printf, 7, 8)' attribute to the declaration of 'create_mux_common' [-Werror,-Wmissing-format-attribute]
+  910 | static struct clk * __init create_mux_common(struct clockgen *cg,
+      | __attribute__((format(printf, 7, 8)))
+  911 |                                              struct mux_hwclock *hwc,
+  912 |                                              const struct clk_ops *ops,
+  913 |                                              unsigned long min_rate,
+  914 |                                              unsigned long max_rate,
+  915 |                                              unsigned long pct80_rate,
+  916 |                                              const char *fmt, int idx)
+  917 | {
+  918 |         struct clk_init_data init = {};
+  919 |         struct clk *clk;
+  920 |         const struct clockgen_pll_div *div;
+  921 |         const char *parent_names[NUM_MUX_PARENTS];
+  922 |         char name[32];
+  923 |         int i, j;
+  924 |
+  925 |         snprintf(name, sizeof(name), fmt, idx);
+      |                                              ^
+drivers/clk/clk-qoriq.c:910:28: note: 'create_mux_common' declared here
+  910 | static struct clk * __init create_mux_common(struct clockgen *cg,
 
-Fixes: f1c2bb8b9964 ("um: implement a x86_64 vDSO")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://patch.msgid.link/20260318-um-vdso-install-v1-1-26a4ca5c4210@weissschuh.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Rework this to pass the 'int idx' as a varargs argument, allowing the
+format string to be verified at the caller location.
+
+Fixes: 0dfc86b3173f ("clk: qoriq: Move chip-specific knowledge into driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Makefile.um      | 2 ++
- arch/x86/um/vdso/Makefile | 2 --
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/clk-qoriq.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/Makefile.um b/arch/x86/Makefile.um
-index c86cbd9cbba38..19c13afa474e9 100644
---- a/arch/x86/Makefile.um
-+++ b/arch/x86/Makefile.um
-@@ -60,4 +60,6 @@ ELF_FORMAT := elf64-x86-64
- LINK-$(CONFIG_LD_SCRIPT_DYN_RPATH) += -Wl,-rpath,/lib64
- LINK-y += -m64
+diff --git a/drivers/clk/clk-qoriq.c b/drivers/clk/clk-qoriq.c
+index 4dcde305944c4..318acd176a2ef 100644
+--- a/drivers/clk/clk-qoriq.c
++++ b/drivers/clk/clk-qoriq.c
+@@ -906,13 +906,11 @@ static const struct clockgen_pll_div *get_pll_div(struct clockgen *cg,
+ 	return &cg->pll[pll].div[div];
+ }
  
-+vdso-install-y += arch/x86/um/vdso/vdso.so.dbg
-+
- endif
-diff --git a/arch/x86/um/vdso/Makefile b/arch/x86/um/vdso/Makefile
-index b3dfd60619e8a..bde42fac402ca 100644
---- a/arch/x86/um/vdso/Makefile
-+++ b/arch/x86/um/vdso/Makefile
-@@ -3,8 +3,6 @@
- # Building vDSO images for x86.
- #
+-static struct clk * __init create_mux_common(struct clockgen *cg,
+-					     struct mux_hwclock *hwc,
+-					     const struct clk_ops *ops,
+-					     unsigned long min_rate,
+-					     unsigned long max_rate,
+-					     unsigned long pct80_rate,
+-					     const char *fmt, int idx)
++static struct clk * __init __printf(7, 8)
++create_mux_common(struct clockgen *cg, struct mux_hwclock *hwc,
++		  const struct clk_ops *ops, unsigned long min_rate,
++		  unsigned long max_rate, unsigned long pct80_rate,
++		  const char *fmt, ...)
+ {
+ 	struct clk_init_data init = {};
+ 	struct clk *clk;
+@@ -920,8 +918,11 @@ static struct clk * __init create_mux_common(struct clockgen *cg,
+ 	const char *parent_names[NUM_MUX_PARENTS];
+ 	char name[32];
+ 	int i, j;
++	va_list args;
  
--vdso-install-y += vdso.so
--
- # files to link into the vdso
- vobjs-y := vdso-note.o um_vdso.o
+-	snprintf(name, sizeof(name), fmt, idx);
++	va_start(args, fmt);
++	vsnprintf(name, sizeof(name), fmt, args);
++	va_end(args);
  
+ 	for (i = 0, j = 0; i < NUM_MUX_PARENTS; i++) {
+ 		unsigned long rate;
 -- 
 2.53.0
 
