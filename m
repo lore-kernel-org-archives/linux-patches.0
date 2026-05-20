@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E86136D9EA;
-	Wed, 20 May 2026 17:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C37F3E123F;
+	Wed, 20 May 2026 17:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298886; cv=none; b=g3BmmJGPGbENx4JpKoK/b+mh5XrUa06Td/WihnK1PRLiPuIy8IwHjqwShRKTjrKK1qkRwWW3RpZsmgNXfDR6RjQ5s4jMqRC15K5LVVxX8AY1n+jLxSFHDSjwqkUsD0MVNxTmtTKmnDj4O6ExoOVdrIm9lkk/7CczfyGDoG/FOMI=
+	t=1779298889; cv=none; b=d+/LWwKZYiPR5YYMvQB8TJTRGDktwRcMEuzjCReEsSnz/T/UkaAdYGkMBui2af1Py6TmpFD5o62BSKHl2OHPWLl5rcFkshLy1XQJl6Vj2IqK7xLxUIqOhWOuX/8G4YLzVX/kztWLP9gsPeWai0J8jhhMJejlgb1wzRbuf1etBAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298886; c=relaxed/simple;
-	bh=0hE2ThKPmysHhnzzSGtaOrXCWtiU0QqJw5LGUrkA4JM=;
+	s=arc-20240116; t=1779298889; c=relaxed/simple;
+	bh=CqDyb5hodgn2MmWFEP7TUt5gowsa6cK4kyuxwLugshM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbcdveP0oLoSYVH/GUZ8EekmilOWOSwgOjdIOXS8yR6DaErjNdIwlRvveAuCew75ZWvhxTOPcIX0CRBKbeMCZJ45Xipqb7tu4/PT4kde8U8auQhkKpVUMPAOIreTq+s1B72Rv4ySgpQW31Wp9UyHtJzwgQ1WS9GLkwciNUJpNeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ue656zcW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=njyh7vQOKKp+PoJHYKZaCPZ5BRF9DWJFs+/VnXxOzyaQHGH/ewXxMnrjOH3EaMBsxsXKIXjQBLjpZxvCPS6/ul3JJQrMMKty7vryMVWdTHx4oD3aPAGPRjMPgAFA9QzXnanwnpCtXvfJ/qwd/mpHjVBVNxLC88WeYxwhzfKNaO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eP5Mcgrr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ue656zcW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CE41F00893;
-	Wed, 20 May 2026 17:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eP5Mcgrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1801F00893;
+	Wed, 20 May 2026 17:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298885;
-	bh=dNNVo1aIPYOfltmSFV1CZH2rJf/7kGYUxkJQN3ZqAfE=;
+	s=korg; t=1779298888;
+	bh=Lv/8NpoFn/bAUGSt3ImQmJVU49qqLVaOzvUVhEhpEwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ue656zcWl7f+XRBpM/k04QEEcAb91ocu8LxgyE+kKC4UhZbtpOqW68NmpCASG6iy6
-	 HFvuBdKixK700k0dDUrJkYstkVjf4DFGD50wCWl9IlGo17ohDvXjCPwWkDoq1u4mTk
-	 shkU+zBDZhPhiyZHkpem7SLM1E8jZajJUAQGZe4Y=
+	b=eP5McgrrPULcMI+w0jSYlLA3dFkBQSrheB5tP+ApkfTbEDO5SlT5k9pF1ASJHJAl5
+	 Is5Wcye92CeU+xF20pBwVm5wnVCqt1lRc1Kxq1TJopZhhxO9L11DTu5BHjqBzf3Kos
+	 rEkVanFkeVCau792Sme98AnnFJzgp5ZNTNLPdeBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianan Huang <huangjianan@xiaomi.com>,
-	Sheng Yong <shengyong1@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 582/957] f2fs: avoid reading already updated pages during GC
-Date: Wed, 20 May 2026 18:17:45 +0200
-Message-ID: <20260520162147.152290612@linuxfoundation.org>
+Subject: [PATCH 6.18 583/957] clk: qcom: gdsc: Fix error path on registration of multiple pm subdomains
+Date: Wed, 20 May 2026 18:17:46 +0200
+Message-ID: <20260520162147.173816591@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,93 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianan Huang <huangjianan@xiaomi.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 570e2ccc7cb35fe720106964e65060602d3d2ac4 ]
+[ Upstream commit 16ba98dace9e7cfe25ad8a314e34befacd91f86f ]
 
-We found the following issue during fuzz testing:
+Some pm subdomains may be left in added to a parent domain state, if
+gdsc_add_subdomain_list() function fails in the middle and bails from
+a GDSC power domain controller registration out.
 
-page: refcount:3 mapcount:0 mapping:00000000b6e89c65 index:0x18b2dc pfn:0x161ba9
-memcg:f8ffff800e269c00
-aops:f2fs_meta_aops ino:2
-flags: 0x52880000000080a9(locked|waiters|uptodate|lru|private|zone=1|kasantag=0x4a)
-raw: 52880000000080a9 fffffffec6e17588 fffffffec0ccc088 a7ffff8067063618
-raw: 000000000018b2dc 0000000000000009 00000003ffffffff f8ffff800e269c00
-page dumped because: VM_BUG_ON_FOLIO(folio_test_uptodate(folio))
-page_owner tracks the page as allocated
- post_alloc_hook+0x58c/0x5ec
- prep_new_page+0x34/0x284
- get_page_from_freelist+0x2dcc/0x2e8c
- __alloc_pages_noprof+0x280/0x76c
- __folio_alloc_noprof+0x18/0xac
- __filemap_get_folio+0x6bc/0xdc4
- pagecache_get_page+0x3c/0x104
- do_garbage_collect+0x5c78/0x77a4
- f2fs_gc+0xd74/0x25f0
- gc_thread_func+0xb28/0x2930
- kthread+0x464/0x5d8
- ret_from_fork+0x10/0x20
-------------[ cut here ]------------
-kernel BUG at mm/filemap.c:1563!
- folio_end_read+0x140/0x168
- f2fs_finish_read_bio+0x5c4/0xb80
- f2fs_read_end_io+0x64c/0x708
- bio_endio+0x85c/0x8c0
- blk_update_request+0x690/0x127c
- scsi_end_request+0x9c/0xb8c
- scsi_io_completion+0xf0/0x250
- scsi_finish_command+0x430/0x45c
- scsi_complete+0x178/0x6d4
- blk_mq_complete_request+0xcc/0x104
- scsi_done_internal+0x214/0x454
- scsi_done+0x24/0x34
-
-which is similar to the problem reported by syzbot:
-https://syzkaller.appspot.com/bug?extid=3686758660f980b402dc
-
-This case is consistent with the description in commit 9bf1a3f
-("f2fs: avoid GC causing encrypted file corrupted"):
-Page 1 is moved from blkaddr A to blkaddr B by move_data_block, and after
-being written it is marked as uptodate. Then, Page 1 is moved from blkaddr
-B to blkaddr C, VM_BUG_ON_FOLIO was triggered in the endio initiated by
-ra_data_block.
-
-There is no need to read Page 1 again from blkaddr B, since it has already
-been updated. Therefore, avoid initiating I/O in this case.
-
-Fixes: 6aa58d8ad20a ("f2fs: readahead encrypted block during GC")
-Signed-off-by: Jianan Huang <huangjianan@xiaomi.com>
-Signed-off-by: Sheng Yong <shengyong1@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: b489235b4dc0 ("clk: qcom: Support attaching GDSCs to multiple parents")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bod@kernel.org>
+Link: https://lore.kernel.org/r/20260328012619.832770-1-vladimir.zapolskiy@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gdsc.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 5647e76c6bdb0..3d9f326ae840a 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1222,7 +1222,7 @@ static int ra_data_block(struct inode *inode, pgoff_t index)
- 		.encrypted_page = NULL,
- 		.in_list = 0,
- 	};
--	int err;
-+	int err = 0;
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 7deabf8400cf6..95aa071202455 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -518,10 +518,20 @@ static int gdsc_add_subdomain_list(struct dev_pm_domain_list *pd_list,
  
- 	folio = f2fs_grab_cache_folio(mapping, index, true);
- 	if (IS_ERR(folio))
-@@ -1275,6 +1275,9 @@ static int ra_data_block(struct inode *inode, pgoff_t index)
+ 		ret = pm_genpd_add_subdomain(genpd, subdomain);
+ 		if (ret)
+-			return ret;
++			goto remove_added_subdomains;
+ 	}
  
- 	fio.encrypted_page = &efolio->page;
- 
-+	if (folio_test_uptodate(efolio))
-+		goto put_encrypted_page;
+ 	return 0;
 +
- 	err = f2fs_submit_page_bio(&fio);
- 	if (err)
- 		goto put_encrypted_page;
++remove_added_subdomains:
++	for (i--; i >= 0; i--) {
++		struct device *dev = pd_list->pd_devs[i];
++		struct generic_pm_domain *genpd = pd_to_genpd(dev->pm_domain);
++
++		pm_genpd_remove_subdomain(genpd, subdomain);
++	}
++
++	return ret;
+ }
+ 
+ static void gdsc_remove_subdomain_list(struct dev_pm_domain_list *pd_list,
 -- 
 2.53.0
 
