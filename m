@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D021D3EBF35;
-	Wed, 20 May 2026 17:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF343EEAC4;
+	Wed, 20 May 2026 17:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296473; cv=none; b=Y+nCMRyLtftmD2rY7sE8YZcuMDz+jFKEPye/mQm/DUHPO7ENfwrkhHuZjBaSVz4+LUeTae7L70E8aZjc38Q3OTzLsry/daAJnNBwRffe/DDl7gMcMnA1M/e1haThICHEFzlA8G2I4mnOqRcwemr57JU4zzUXrGsOVlStRmJngAs=
+	t=1779296476; cv=none; b=HVCi/37C5RKSvpXuMn4ncfSwMh3e3j0KZuOOIYMaGvC89L71IT43D7MEIDHYNercFvUqkKeQNDMWQ9OGSnQuf//fgoRWROCF5UxERCZ7kcsoTsy2Nw9Q8VDIiwUB95/+h/sPeX54i2e3XmIooMYoWtYQeforc0kWIXJVpkWC/rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296473; c=relaxed/simple;
-	bh=FSWk2sBvcfItKPVvd8l8XLOKVPOVXrtbyNHmbU/5Q5o=;
+	s=arc-20240116; t=1779296476; c=relaxed/simple;
+	bh=zqu5Y6zpkjGk3iHA/zzJcV/2vgBRKYXkFiYQR8yH5VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQr3Gca0Fxm57u44N6FlnTSim3hb9/pV/ZZLqdLsJ90tKOXJ6wGTPQqWqjeCPuS5i0M62r7zfruOWXrz6Uan5XHxm36beQZk6ZIrzmS1KUW2b/jKFOqVCV0ZVq6uyV/PVVZu4Uvpyaoi20vv39a0R44v+wzZ0bYkQ7vO8nnrfMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYZQ5SWX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cscBrqP3oRlMEwi4dJ/xvgleudv0Fg/d5dI5XgCVeMtV6Nfk40cQSlCFRO8zPfxPd5B+85Tya7bw9ZvfcNYKAHLtQ9/uzIAcRsz1yxJ5AOqm+W6gfRRXXLScwtp8lhqY/WRH9xl+xamX3NN+i2Q+k92yIqD1OBghnWkGCg/niVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDVfnKji; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYZQ5SWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4227B1F000E9;
-	Wed, 20 May 2026 17:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDVfnKji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8381F000E9;
+	Wed, 20 May 2026 17:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296471;
-	bh=N/NWkYxGRf9N4Gzbj+UltbBMzEA2klVhxJkLFXO+7J4=;
+	s=korg; t=1779296474;
+	bh=EyeX+tj/D+Vq2YVSdWGivtWM4PNCc9mtpB/1Cuhh9Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NYZQ5SWXPXRs0B0ZHvqJ19uAfUU3Vzl3LfVb6/XrgeWgVHc7DoYHA5NFOOHgB4tGN
-	 wV1uHI9/a7wCDxnSlewAQaz+MYe6z1IV8L/rsj5nnoINdxJ8qgbExBMMQr5VRMJP19
-	 GSKhp19sQIKvP0Z4+h49aUYSSTb8cBBz6i7vbDBs=
+	b=lDVfnKjijqXCesMTO3Sm/x+QvDTU/N33nzeynr54vAzNm+GEhOx3XOPfKbwd7K7tj
+	 Ygeo01fQTdge3cFJbg63EeIQlDo7ZDpN7kY78WrPySH/MGZkzJZZ2uGOl8hFieF3Ko
+	 lTIo9BcXl0OjbsD3ueYCegOPFg6HGBisR+wsHTz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Weiming Shi <bestswngs@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0811/1146] netfilter: nft_osf: restrict it to ipv4
-Date: Wed, 20 May 2026 18:17:41 +0200
-Message-ID: <20260520162206.579939921@linuxfoundation.org>
+Subject: [PATCH 7.0 0812/1146] netfilter: nfnetlink_osf: fix divide-by-zero in OSF_WSS_MODULO
+Date: Wed, 20 May 2026 18:17:42 +0200
+Message-ID: <20260520162206.602108895@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,45 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit b336fdbb7103fb1484e1dcb6741151d4b5a41e35 ]
+[ Upstream commit 2195574dc6d9017d32ac346987e12659f931d932 ]
 
-This expression only supports for ipv4, restrict it.
+nf_osf_match_one() computes ctx->window % f->wss.val in the
+OSF_WSS_MODULO branch with no guard for f->wss.val == 0. A
+CAP_NET_ADMIN user can add such a fingerprint via nfnetlink; a
+subsequent matching TCP SYN divides by zero and panics the kernel.
 
-Fixes: b96af92d6eaf ("netfilter: nf_tables: implement Passive OS fingerprint module in nft_osf")
-Acked-by: Florian Westphal <fw@strlen.de>
+Reject the bogus fingerprint in nfnl_osf_add_callback() above the
+per-option for-loop. f->wss is per-fingerprint, not per-option, so
+the check must run regardless of f->opt_num (including 0). Also
+reject wss.wc >= OSF_WSS_MAX; nf_osf_match_one() already treats that
+as "should not happen".
+
+Crash:
+ Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+ RIP: 0010:nf_osf_match_one (net/netfilter/nfnetlink_osf.c:98)
+ Call Trace:
+ <IRQ>
+  nf_osf_match (net/netfilter/nfnetlink_osf.c:220)
+  xt_osf_match_packet (net/netfilter/xt_osf.c:32)
+  ipt_do_table (net/ipv4/netfilter/ip_tables.c:348)
+  nf_hook_slow (net/netfilter/core.c:622)
+  ip_local_deliver (net/ipv4/ip_input.c:265)
+  ip_rcv (include/linux/skbuff.h:1162)
+  __netif_receive_skb_one_core (net/core/dev.c:6181)
+  process_backlog (net/core/dev.c:6642)
+  __napi_poll (net/core/dev.c:7710)
+  net_rx_action (net/core/dev.c:7945)
+  handle_softirqs (kernel/softirq.c:622)
+
+Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Suggested-by: Florian Westphal <fw@strlen.de>
+Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
 Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_osf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/netfilter/nfnetlink_osf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/nft_osf.c b/net/netfilter/nft_osf.c
-index 1c0b493ef0a99..bdc2f6c90e2f7 100644
---- a/net/netfilter/nft_osf.c
-+++ b/net/netfilter/nft_osf.c
-@@ -28,6 +28,11 @@ static void nft_osf_eval(const struct nft_expr *expr, struct nft_regs *regs,
- 	struct nf_osf_data data;
- 	struct tcphdr _tcph;
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index 45d9ad231a920..70172ca078585 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -320,6 +320,10 @@ static int nfnl_osf_add_callback(struct sk_buff *skb,
+ 	if (f->opt_num > ARRAY_SIZE(f->opt))
+ 		return -EINVAL;
  
-+	if (nft_pf(pkt) != NFPROTO_IPV4) {
-+		regs->verdict.code = NFT_BREAK;
-+		return;
-+	}
++	if (f->wss.wc >= OSF_WSS_MAX ||
++	    (f->wss.wc == OSF_WSS_MODULO && f->wss.val == 0))
++		return -EINVAL;
 +
- 	if (pkt->tprot != IPPROTO_TCP) {
- 		regs->verdict.code = NFT_BREAK;
- 		return;
-@@ -114,7 +119,6 @@ static int nft_osf_validate(const struct nft_ctx *ctx,
- 
- 	switch (ctx->family) {
- 	case NFPROTO_IPV4:
--	case NFPROTO_IPV6:
- 	case NFPROTO_INET:
- 		hooks = (1 << NF_INET_LOCAL_IN) |
- 			(1 << NF_INET_PRE_ROUTING) |
+ 	for (i = 0; i < f->opt_num; i++) {
+ 		if (!f->opt[i].length || f->opt[i].length > MAX_IPOPTLEN)
+ 			return -EINVAL;
 -- 
 2.53.0
 
