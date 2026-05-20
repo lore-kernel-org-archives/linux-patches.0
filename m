@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C823F39D7;
-	Wed, 20 May 2026 17:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0200231842;
+	Wed, 20 May 2026 17:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297152; cv=none; b=rgXtyvFFwpcuK82oXt/Vj3ly46akoWQXMrDETALk/imEmSawa3Jx9hdCRf6/zUqqwy22SuxuxfIFLMw4k+sUQwJRVEFLOuczumSlh6phoPMZxPeKIw78nsvV1JeowL5dCMNJ8YoJSNPyrch2bzYEFVXNoDeI2xqZNk4ckwzo7oU=
+	t=1779297155; cv=none; b=R3t90COriWfJgfNNt2C/JGcn1a6E71/yUSRqBMKhgrkD9rHDIrSkeH7V1c3TFn6F6TTAN8ZYXOBUlGKi274EWoZfENabyUgteO4ybgXG5xi+OsTD9NjhjM/KRx5QOx8c+yomyjWkMlwX/fwb6rGW5URFJB22RF4CPlbO2OMjM9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297152; c=relaxed/simple;
-	bh=gjGmxZb129nCov9wmKDhJOBAzOeQ+SD0bHJ5ap7oUwk=;
+	s=arc-20240116; t=1779297155; c=relaxed/simple;
+	bh=bVZD0pBxdKG/RTrRmigCkWsu8a78QqdvScnkUT7vwV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EbJM07DO83fkdbdiWzOx8RlKIlB6VrsGhJyYbdH4lpzyEsfIOvEbPURkCA/mFzqrkVu0/Iuv5EH3SaS9z1Ll/Pi+TuypBF2uStZBLOOHAmz4gDmL9Ghn+hmFm0ykc4bGvIdlhj1kfNuSnd33Xn6c7Gdm0nhpDyQ+gChQh3QbI+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11lAVWlq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BN2oMg+ErtN+h5uUMp2W62c//dFJ46rNfxOsCU7sGYPBGWeivp3c9HtXbDSqRBFUbtLOVKzFjBPcMM0myVEt21EsNmBKiyWUyAQcYucxMKUJP8jfqB541dgVSdXDOJhzgxcTsYb+eDcg3NWhATm6A3jAlBiP74F49Mo9haNZ+8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUKDUUI7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11lAVWlq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551361F000E9;
-	Wed, 20 May 2026 17:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUKDUUI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B171F000E9;
+	Wed, 20 May 2026 17:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297151;
-	bh=G5KAOXNXaYbF1oy7Nj3XitwCT9yrcsY1Yc33icSyyDM=;
+	s=korg; t=1779297154;
+	bh=Qe3Lc8Yod/qCto8EeXP69v3PfXlkQdL1gtC6IGthEDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=11lAVWlq+F86lpjH6oT50557E+LL6vivfkQVcl612vXdDfTaCE4XIaCCelrQAdFQu
-	 WuaLkmWZo9zXC+zPAgL/zc2kw1amKXW1fTRfSJaT4fwAVP62P3MM4IozBW3vH2sPfe
-	 yk8yqF8JO1kTUrhCY1Bktu7Zo2/irYrhs18aTSBI=
+	b=WUKDUUI7w5vZ/ni1l8fgvb1GorWrH7nGH916cSw96Arbo1K51ftGa0YEo6KdZpq/R
+	 DUfmCOrBZ+OKC6RSKGs2Pqw6NGeevvik19oWe6cX81wkMoI720NoGdth5dTRCVc0e0
+	 2OxADe6IWpXX+4MBghg0qQjDhgTylWPGtqgB0cLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuriy Havrylyuk <yhavry@gmail.com>,
-	Sven Peter <sven@kernel.org>,
-	Nick Chan <towinchenmi@gmail.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 7.0 1070/1146] nvme-apple: Reset q->sq_tail during queue init
-Date: Wed, 20 May 2026 18:22:00 +0200
-Message-ID: <20260520162212.447891265@linuxfoundation.org>
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Ye Bin <yebin10@huawei.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.0 1071/1146] smb/client: fix possible infinite loop and oob read in symlink_data()
+Date: Wed, 20 May 2026 18:22:01 +0200
+Message-ID: <20260520162212.470044075@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,35 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Chan <towinchenmi@gmail.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit a6ab75639e23169a741b0b2e12191fd8acb32c73 upstream.
+commit 7d9a7f1f96cd617ee9e75bb22217c709038e26b8 upstream.
 
-Fixes a "duplicate tag error for tag 0" firmware crash during controller
-reset while setting up a  queue on Apple A11 / T8015 caused by stale
-entries in the submission queue due to an invalid sq_tail offset after
-reset.
+On 32-bit architectures, the infinite loop is as follows:
 
-Fixes: 04d8ecf37b5e ("nvme: apple: Add Apple A11 support")
+  len = p->ErrorDataLength == 0xfffffff8
+  u8 *next = p->ErrorContextData + len
+  next == p
+
+On 32-bit architectures, the out-of-bounds read is as follows:
+
+  len = p->ErrorDataLength == 0xfffffff0
+  u8 *next = p->ErrorContextData + len
+  next == (u8 *)p - 8
+
+Reported-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
 Cc: stable@vger.kernel.org
-Suggested-by: Yuriy Havrylyuk <yhavry@gmail.com>
-Reviewed-by: Sven Peter <sven@kernel.org>
-Signed-off-by: Nick Chan <towinchenmi@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/apple.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/smb2file.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/nvme/host/apple.c
-+++ b/drivers/nvme/host/apple.c
-@@ -1009,6 +1009,7 @@ static void apple_nvme_init_queue(struct
- 	unsigned int depth = apple_nvme_queue_depth(q);
- 	struct apple_nvme *anv = queue_to_apple_nvme(q);
+--- a/fs/smb/client/smb2file.c
++++ b/fs/smb/client/smb2file.c
+@@ -49,6 +49,9 @@ static struct smb2_symlink_err_rsp *syml
+ 				 __func__, le32_to_cpu(p->ErrorId));
  
-+	q->sq_tail = 0;
- 	q->cq_head = 0;
- 	q->cq_phase = 1;
- 	if (anv->hw->has_lsq_nvmmu)
+ 			len = ALIGN(le32_to_cpu(p->ErrorDataLength), 8);
++			if (len > end - ((u8 *)p + sizeof(*p)))
++				return ERR_PTR(-EINVAL);
++
+ 			p = (struct smb2_error_context_rsp *)(p->ErrorContextData + len);
+ 		}
+ 	} else if (le32_to_cpu(err->ByteCount) >= sizeof(*sym) &&
 
 
