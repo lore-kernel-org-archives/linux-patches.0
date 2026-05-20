@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395313FBECB;
-	Wed, 20 May 2026 18:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73FE3FBEC0;
+	Wed, 20 May 2026 18:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302489; cv=none; b=lfuvcT7y/VbKzsjgtIWbQPvOVnhNV3LIbxfRl1O0GWuXj8vbTkzdAfxG1SuWOYPzKVUJRLNhvR/jYmKC150nzTRhG0aLAO+btoNK/8rmJo4/nhSEeTMFBXGGGaTWSZtJ0zkyTTPafgZYcuxDtUm8O+8IaFBDM2kpsrkFJ08/fJQ=
+	t=1779302491; cv=none; b=r8+8uJhjDjpdhL+QB1iRFlfXjOOAeA92ZJfFTaj0HFA6isSLxUZsQWJp9J6GoovKrWjHsK71ONj9KY0hPgSkcGnFmA4vosHrvUvHkAVTqeWKJ96Zk+7dV0a0QTJBR4fmwmZVlkF/3E5dX+YKAyQxSOM6OeHoAmrXOKZUcvw6EC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302489; c=relaxed/simple;
-	bh=HWuwGoUZeKvMB9vhQ9RHXQvqI+i3sn4gGYOiF9T2d5M=;
+	s=arc-20240116; t=1779302491; c=relaxed/simple;
+	bh=2NVOIGLM49XTsMAv+uXv5xA/RK79ziLcP1Dbm7Vdado=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpmNkKqpjPB+IlaPsTleBjI4HFnqPuRhBTaMW84DIf5O1Url0Gf092odF5kVHm6+BAGsTOhuWCkqxTrb4FTXh2VhN8ymOUOkXRWBKeRu8Q6GlW7QPEz5w1qw+WhjFiNmD3Xm4LBgD4ouKiNBpYcFiPVD5NDOm0exMsW8a/JmYjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckNesny3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MqZRppfiuajmQP6qMi4bvaN7GcQeiiUKzcwd9LdbNZmINj98laqZbVclyk1ht/gAbKKItFw0JN63W1AKqu45f8BQfbUHPlqsmGJMD6V8OhBaIraPoDZ59ggfqakhclz44pjKr/c1ZiGOWB7SibbzUKIgXvdWBiXjPXxLrGqFXS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbrU43Uf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckNesny3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E89F1F000E9;
-	Wed, 20 May 2026 18:41:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbrU43Uf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492A71F000E9;
+	Wed, 20 May 2026 18:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302488;
-	bh=sl0j5pIdBCEB7u8H+9nQqJg3kL2WSgDUdAkZlxouLyM=;
+	s=korg; t=1779302490;
+	bh=7gOi9haTN+XuP7UirlaMHA5acOKmT53COBshtn9BIG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ckNesny3xNQOkWKb6KtN7K4wiSOgS30IcHdlFAjyUypT/MzB0KZdpRVd7Y9T5NPom
-	 L7qg6DINHvpJJkUQkHlUB6pvt6xTBxE8PVOT/vdV/XUrBEfZE394DmdajC50MJhv+g
-	 secFE7cTCf/0BMKICpf9ojAYGW1Uqv99zgonKrx8=
+	b=QbrU43Uf2IqXaszXJ7eOr2471SGfyo8BLf85Tl6yC4eXaLGHYcocOiw33SPALwV69
+	 WYV1esYvC/tEWDg6mNzux6tpyFZOWFzncQ44F+gXFIeYxHLZb3KDHXpiHuSYvPFvUw
+	 uEO6xTpkGRYdRpRfbgN+gyrSFhGN5qE3/x3vVGDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
 	Peng Fan <peng.fan@nxp.com>,
 	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 285/508] clk: imx: imx6q: Fix device node reference leak in of_assigned_ldb_sels()
-Date: Wed, 20 May 2026 18:21:48 +0200
-Message-ID: <20260520162104.818680889@linuxfoundation.org>
+Subject: [PATCH 6.6 286/508] clk: imx8mq: Correct the CSI PHY sels
+Date: Wed, 20 May 2026 18:21:49 +0200
+Message-ID: <20260520162104.840271015@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -53,55 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-[ Upstream commit 9faf207208951460f3f7eefbc112246c8d28ff1b ]
+[ Upstream commit d16f57caa78776e6e8a88b96cb2597797b376138 ]
 
-The function of_assigned_ldb_sels() calls of_parse_phandle_with_args()
-but never calls of_node_put() to release the reference, causing a memory
-leak.
+According to i.MX 8M Quad Reference Manual (Section 5.1.2 Table 5-1)
+MIPI_CSI1_PHY_REF_CLK_ROOT and MIPI_CSI2_PHY_REF_CLK_ROOT have
+SYSTEM_PLL2_DIV3 available as their second source, which corresponds
+to sys2_pll_333m rather than sys2_pll_125m.
 
-Fix this by adding proper cleanup calls on all exit paths.
-
-Fixes: 5d283b083800 ("clk: imx6: Fix procedure to switch the parent of LDB_DI_CLK")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: b80522040cd3 ("clk: imx: Add clock driver for i.MX8MQ CCM")
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20260203-clk-imx6q-v3-2-6cd2696bb371@gmail.com
+Link: https://patch.msgid.link/20260128-imx8mq-csi-clk-v1-1-ac028ed26e8c@puri.sm
 Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx6q.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/imx/clk-imx8mq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx6q.c b/drivers/clk/imx/clk-imx6q.c
-index ba696cf34fe3b..048e2ddba490b 100644
---- a/drivers/clk/imx/clk-imx6q.c
-+++ b/drivers/clk/imx/clk-imx6q.c
-@@ -188,9 +188,11 @@ static void of_assigned_ldb_sels(struct device_node *node,
- 		}
- 		if (clkspec.np != node || clkspec.args[0] >= IMX6QDL_CLK_END) {
- 			pr_err("ccm: parent clock %d not in ccm\n", index);
-+			of_node_put(clkspec.np);
- 			return;
- 		}
- 		parent = clkspec.args[0];
-+		of_node_put(clkspec.np);
+diff --git a/drivers/clk/imx/clk-imx8mq.c b/drivers/clk/imx/clk-imx8mq.c
+index f70ed231b92d6..cedc8a02aa1f0 100644
+--- a/drivers/clk/imx/clk-imx8mq.c
++++ b/drivers/clk/imx/clk-imx8mq.c
+@@ -237,7 +237,7 @@ static const char * const imx8mq_dsi_esc_sels[] = {"osc_25m", "sys2_pll_100m", "
+ static const char * const imx8mq_csi1_core_sels[] = {"osc_25m", "sys1_pll_266m", "sys2_pll_250m", "sys1_pll_800m",
+ 					      "sys2_pll_1000m", "sys3_pll_out", "audio_pll2_out", "video_pll1_out", };
  
- 		rc = of_parse_phandle_with_args(node, "assigned-clocks",
- 				"#clock-cells", index, &clkspec);
-@@ -198,9 +200,11 @@ static void of_assigned_ldb_sels(struct device_node *node,
- 			return;
- 		if (clkspec.np != node || clkspec.args[0] >= IMX6QDL_CLK_END) {
- 			pr_err("ccm: child clock %d not in ccm\n", index);
-+			of_node_put(clkspec.np);
- 			return;
- 		}
- 		child = clkspec.args[0];
-+		of_node_put(clkspec.np);
+-static const char * const imx8mq_csi1_phy_sels[] = {"osc_25m", "sys2_pll_125m", "sys2_pll_100m", "sys1_pll_800m",
++static const char * const imx8mq_csi1_phy_sels[] = {"osc_25m", "sys2_pll_333m", "sys2_pll_100m", "sys1_pll_800m",
+ 					     "sys2_pll_1000m", "clk_ext2", "audio_pll2_out", "video_pll1_out", };
  
- 		if (child != IMX6QDL_CLK_LDB_DI0_SEL &&
- 		    child != IMX6QDL_CLK_LDB_DI1_SEL)
+ static const char * const imx8mq_csi1_esc_sels[] = {"osc_25m", "sys2_pll_100m", "sys1_pll_80m", "sys1_pll_800m",
+@@ -246,7 +246,7 @@ static const char * const imx8mq_csi1_esc_sels[] = {"osc_25m", "sys2_pll_100m",
+ static const char * const imx8mq_csi2_core_sels[] = {"osc_25m", "sys1_pll_266m", "sys2_pll_250m", "sys1_pll_800m",
+ 					      "sys2_pll_1000m", "sys3_pll_out", "audio_pll2_out", "video_pll1_out", };
+ 
+-static const char * const imx8mq_csi2_phy_sels[] = {"osc_25m", "sys2_pll_125m", "sys2_pll_100m", "sys1_pll_800m",
++static const char * const imx8mq_csi2_phy_sels[] = {"osc_25m", "sys2_pll_333m", "sys2_pll_100m", "sys1_pll_800m",
+ 					     "sys2_pll_1000m", "clk_ext2", "audio_pll2_out", "video_pll1_out", };
+ 
+ static const char * const imx8mq_csi2_esc_sels[] = {"osc_25m", "sys2_pll_100m", "sys1_pll_80m", "sys1_pll_800m",
 -- 
 2.53.0
 
