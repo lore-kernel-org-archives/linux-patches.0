@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113BF403E8D;
-	Wed, 20 May 2026 18:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA574028DA;
+	Wed, 20 May 2026 18:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302948; cv=none; b=WcsXHHsKv1+ExULg6zhS9Pt8VhXFrCjavJt+vP/hoxfdD6tXYPSB5tjmhsEktBCruc3aviy7r4vtGAI/cm1zW4xUsEpXzIA27kQmlimZpwD4foMEgDm2oHQUf5SqAI1Hf/oBuinuTTIZcRZTw5W21pR6B6xbA1OuHVAwdpioDso=
+	t=1779302951; cv=none; b=FJQ1n6GfrMpsnFMNqHgu2G5KdQFcL1KzrwEGo5CMeGzpB7vFF9vSAPzjO5Uq69l9fbgJof1u1AS3PO6LsKe4zkBJUCSl+hng+FyDw2H30CF0+9oDNVrMR6aB0FRfbtg4Gu4Ed9jzXTplF+cJp+/h5nBDFUEw5G/UzABB4biADBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302948; c=relaxed/simple;
-	bh=FMgADcuitNzM4kuHBRL7SDFYFONRf0HCrxQqvkIkFtY=;
+	s=arc-20240116; t=1779302951; c=relaxed/simple;
+	bh=LI/dEXyZVk1mqD9BfYhJvoPlkGio3xdXDYKSXJu9w0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIjAhf3C3FCwLKOuXn7cXhoawxtDI4EyOunikauHjk/YaOwRiVA/tp4u9Z88MDnSLCwBPrv1yYTXG3uonOwE9a+rxbr+yNvmzG4P+hRXQ7AFnTXQcdj9fv6WYwDFeQfPcT+nPoQk8CoiIfd3gHCkucCapwzutL2+yWRSLhS3GV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v72ewBO9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tQ+0ddKa5pDQ7HppKZy4yD40QJXT+SrRWZAmOWfqe2Behr/leQO+j9wkfMYvH7haxpd7QxK1SpPPI5OXE2a1FNxLPfQk1zo6MHRGnWLT+UnneUlzngQVFKYoFmUWjDw94HKPf9xMr4DGfg1Pa9WjLrktpc2k93eYoZo6IhhhjBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJnmeDPL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v72ewBO9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF6F1F000E9;
-	Wed, 20 May 2026 18:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJnmeDPL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077F81F00893;
+	Wed, 20 May 2026 18:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302945;
-	bh=D6Bq0yXvSVWB+spxQHI3BpzEbEAYEr/BaBvdtD3f91o=;
+	s=korg; t=1779302948;
+	bh=GeeH2UqhAtSHrfjTUz8UqXmByGNkYKMC4DuOryPhYqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v72ewBO9dEhYSNC57QXVJd0QiFEeWhollM/alfDz9GsdA0bkXhlCyg6xncLm+RfqY
-	 sOiru3TY19hWt83orCfqCjxMyd5g7PgXo/Mu9cTv6Jfnm9O/D4kxAnZrsjulb/OEmm
-	 IEdw37n2xaG5brAmBccQnVz+7ARruW7UcqlWpbFw=
+	b=uJnmeDPL1L3XLWIqBLAS9er6XR2eb3RawmwhYPG5pIjYkePqYR9PAKTR6k24aP7Hk
+	 8xCYupfbf5Q2oCfivDxOELaJGlnqOcaQ3QzVIIXEeTGbnvfneKivSNPdR5HVEl+axs
+	 6VhOsuMdWLcKIdi0f43ERh1RjXjUSdSBHhMjl2T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: [PATCH 6.6 460/508] KVM: s390: pci: fix GAIT table indexing due to double-scaling pointer arithmetic
-Date: Wed, 20 May 2026 18:24:43 +0200
-Message-ID: <20260520162108.565213784@linuxfoundation.org>
+	Qiang Ma <maqianga@uniontech.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.6 461/508] KVM: x86: Fix Xen hypercall tracepoint argument assignment
+Date: Wed, 20 May 2026 18:24:44 +0200
+Message-ID: <20260520162108.587158342@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,70 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Qiang Ma <maqianga@uniontech.com>
 
-commit 16d990a15491cf76cd6eef0846e1b4100e63261a upstream.
+commit 2b72f1674e427c56e3772c5ccf785fdda2138820 upstream.
 
-kvm_s390_pci_aif_enable(), kvm_s390_pci_aif_disable(), and
-aen_host_forward() index the GAIT by manually multiplying the index
-with sizeof(struct zpci_gaite).
+TRACE_EVENT(kvm_xen_hypercall) stores a5 in __entry->a4 instead of
+__entry->a5.
 
-Since aift->gait is already a struct zpci_gaite pointer, this
-double-scales the offset, accessing element aisb*16 instead of aisb.
+That overwrites the recorded a4 argument and leaves a5 unset in the
+trace entry. Fix the typo so both arguments are captured correctly.
 
-This causes out-of-bounds accesses when aisb >= 32 (with
-ZPCI_NR_DEVICES=512)
-
-Fix by removing the erroneous sizeof multiplication.
-
-Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
-Fixes: 73f91b004321 ("KVM: s390: pci: enable host forwarding of Adapter Event Notifications")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Link: https://patch.msgid.link/20260512015313.1685784-1-maqianga@uniontech.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/interrupt.c |    3 +--
- arch/s390/kvm/pci.c       |    6 ++----
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ arch/x86/kvm/trace.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/kvm/interrupt.c
-+++ b/arch/s390/kvm/interrupt.c
-@@ -3329,8 +3329,7 @@ static void aen_host_forward(unsigned lo
- 	struct zpci_gaite *gaite;
- 	struct kvm *kvm;
+--- a/arch/x86/kvm/trace.h
++++ b/arch/x86/kvm/trace.h
+@@ -140,7 +140,7 @@ TRACE_EVENT(kvm_xen_hypercall,
+ 		__entry->a2 = a2;
+ 		__entry->a3 = a3;
+ 		__entry->a4 = a4;
+-		__entry->a4 = a5;
++		__entry->a5 = a5;
+ 	),
  
--	gaite = (struct zpci_gaite *)aift->gait +
--		(si * sizeof(struct zpci_gaite));
-+	gaite = aift->gait + si;
- 	if (gaite->count == 0)
- 		return;
- 	if (gaite->aisb != 0)
---- a/arch/s390/kvm/pci.c
-+++ b/arch/s390/kvm/pci.c
-@@ -292,8 +292,7 @@ static int kvm_s390_pci_aif_enable(struc
- 				    phys_to_virt(fib->fmt0.aibv));
- 
- 	spin_lock_irq(&aift->gait_lock);
--	gaite = (struct zpci_gaite *)aift->gait + (zdev->aisb *
--						   sizeof(struct zpci_gaite));
-+	gaite = aift->gait + zdev->aisb;
- 
- 	/* If assist not requested, host will get all alerts */
- 	if (assist)
-@@ -359,8 +358,7 @@ static int kvm_s390_pci_aif_disable(stru
- 	if (zdev->kzdev->fib.fmt0.aibv == 0)
- 		goto out;
- 	spin_lock_irq(&aift->gait_lock);
--	gaite = (struct zpci_gaite *)aift->gait + (zdev->aisb *
--						   sizeof(struct zpci_gaite));
-+	gaite = aift->gait + zdev->aisb;
- 	isc = gaite->gisc;
- 	gaite->count--;
- 	if (gaite->count == 0) {
+ 	TP_printk("cpl %d nr 0x%lx a0 0x%lx a1 0x%lx a2 0x%lx a3 0x%lx a4 0x%lx a5 %lx",
 
 
