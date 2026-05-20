@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9202127E045;
-	Wed, 20 May 2026 16:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4368A3ED3A9;
+	Wed, 20 May 2026 16:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296261; cv=none; b=tjwNnAKXuliyZsyiOOJjjE/a+1aVqiR46kpvx2M3b1drl7CH/CH/GXA+RZ7d0+3smrUj7fpoqZE/7CwSqplpKFCHdXcq3f9nZ81Ik3nGHVGHFlTpVHrp6QRpUOznsoPvIVn9W0gXJ7n/hFW9agK8tgbEy4f9CeEu+BGxoqo7W1g=
+	t=1779296264; cv=none; b=s5IBKsvWZD/y/i5UvTn2j7x2U+u01bUDfDeXczAi+2AbnFJ/Xp3NDN+tmNZLSKBe4QkEdnM4rzU8MpWaGANXka4y7CdabXL7jt9BvGRJ8RuUQkP6tkBgVGT60+fj5+djjiCTrCDVKTZYEndefCYMQqYjfCuwlLVZnsdb6MfQn18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296261; c=relaxed/simple;
-	bh=YA/Q/MnB+BbtLl5EzWbFwbNBJs4qhmoDTc79qcZ9uYw=;
+	s=arc-20240116; t=1779296264; c=relaxed/simple;
+	bh=ix9ig+XPAw1pgUP6JfrcVqEnjEX6PJJHmWoSUndM6lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZszsW5Sl/XfBqu91xAoTZ9QMHD5kfpjfILg1LhEIw3nZYvgzMNCqA2neeXk8ynYJ7kYDsCq4im3eRDU2yEXbmOH3UkyhSmQ/36FM7bS+xK+rUerkuX2pe3w7xcERACeYOqN/qiUrqmz7kBsM8g8DO8gdZmvvgYdHrZyV5G4nEao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7cwZ8Ml; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I4/tbMx0N2tCk4Go7JQDEciEK7YGUcctCeWJV92fVy66zA1lYVtIGbpTVmPWPk1/diHg5DbjAnO8bSYetX/Ncz/hknVLCSTkJzw2qAoW93NwNZjFlcuxuSpzP9wgrM8jNeVsUs39Pg3JnmEMCFIRA7AmgW+Lx057h4heSy7gpWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ksu/hS5R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7cwZ8Ml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043781F000E9;
-	Wed, 20 May 2026 16:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ksu/hS5R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0ABC1F000E9;
+	Wed, 20 May 2026 16:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296260;
-	bh=NmWkiWeSrusF9ZDvoz0aEkpz1sW/OsFGdaawBTWIXck=;
+	s=korg; t=1779296263;
+	bh=/4UayRqN+N5WufoDfMVF3vWsLrCSXiqXrytoyy8s/A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M7cwZ8MliuUDLGM+CXm/6yfyNuxfDGQwDl69atiBwnjDDBgar85g6BueakF1MsTJi
-	 vt0EYTg2FzcS+FetfTGsXTOZfFI+901YHjw4skxIUQceTFSizPxtysO/bs7PM0pCdP
-	 t/uoZlT11blskOf1qH+GwTXp4VPkJT3jD2xqO6Pc=
+	b=Ksu/hS5RhUQljLuz5QDUrb9badYP3wkKxSawhJ2LyrIvYX0seAd/geTaw53drdRsm
+	 KRuqtkYIVaICk5W87d5fafdIYQ//lic/MiKIyBHAVpzyxw6I3OCePSYmFGwzuSs4D3
+	 Ql6RKxKq3UwFgA0zYNGqRi1SLFg/+AHlvyWtHL7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Petr Mladek <pmladek@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0730/1146] clk: qcom: gdsc: Fix error path on registration of multiple pm subdomains
-Date: Wed, 20 May 2026 18:16:20 +0200
-Message-ID: <20260520162204.727177293@linuxfoundation.org>
+Subject: [PATCH 7.0 0731/1146] lib/hexdump: print_hex_dump_bytes() calls print_hex_dump_debug()
+Date: Wed, 20 May 2026 18:16:21 +0200
+Message-ID: <20260520162204.748118815@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,51 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 16ba98dace9e7cfe25ad8a314e34befacd91f86f ]
+[ Upstream commit 36776b7f8a8955b4e75b5d490a75fee0c7a2a7ef ]
 
-Some pm subdomains may be left in added to a parent domain state, if
-gdsc_add_subdomain_list() function fails in the middle and bails from
-a GDSC power domain controller registration out.
+print_hex_dump_bytes() claims to be a simple wrapper around
+print_hex_dump(), but it actally calls print_hex_dump_debug(), which
+means no output is printed if (dynamic) DEBUG is disabled.
 
-Fixes: b489235b4dc0 ("clk: qcom: Support attaching GDSCs to multiple parents")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bod@kernel.org>
-Link: https://lore.kernel.org/r/20260328012619.832770-1-vladimir.zapolskiy@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Update the documentation to match the implementation.
+
+Fixes: 091cb0994edd20d6 ("lib/hexdump: make print_hex_dump_bytes() a nop on !DEBUG builds")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://patch.msgid.link/3d5c3069fd9102ecaf81d044b750cd613eb72a08.1774970392.git.geert+renesas@glider.be
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ include/linux/printk.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index 7deabf8400cf6..95aa071202455 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -518,10 +518,20 @@ static int gdsc_add_subdomain_list(struct dev_pm_domain_list *pd_list,
+diff --git a/include/linux/printk.h b/include/linux/printk.h
+index 54e3c621fec37..f594c1266bfd4 100644
+--- a/include/linux/printk.h
++++ b/include/linux/printk.h
+@@ -815,7 +815,8 @@ static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
+ #endif
  
- 		ret = pm_genpd_add_subdomain(genpd, subdomain);
- 		if (ret)
--			return ret;
-+			goto remove_added_subdomains;
- 	}
- 
- 	return 0;
-+
-+remove_added_subdomains:
-+	for (i--; i >= 0; i--) {
-+		struct device *dev = pd_list->pd_devs[i];
-+		struct generic_pm_domain *genpd = pd_to_genpd(dev->pm_domain);
-+
-+		pm_genpd_remove_subdomain(genpd, subdomain);
-+	}
-+
-+	return ret;
- }
- 
- static void gdsc_remove_subdomain_list(struct dev_pm_domain_list *pd_list,
+ /**
+- * print_hex_dump_bytes - shorthand form of print_hex_dump() with default params
++ * print_hex_dump_bytes - shorthand form of print_hex_dump_debug() with default
++ *                        params
+  * @prefix_str: string to prefix each line with;
+  *  caller supplies trailing spaces for alignment if desired
+  * @prefix_type: controls whether prefix of an offset, address, or none
+@@ -823,7 +824,7 @@ static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
+  * @buf: data blob to dump
+  * @len: number of bytes in the @buf
+  *
+- * Calls print_hex_dump(), with log level of KERN_DEBUG,
++ * Calls print_hex_dump_debug(), with log level of KERN_DEBUG,
+  * rowsize of 16, groupsize of 1, and ASCII output included.
+  */
+ #define print_hex_dump_bytes(prefix_str, prefix_type, buf, len)	\
 -- 
 2.53.0
 
