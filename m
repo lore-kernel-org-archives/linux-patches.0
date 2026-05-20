@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D8A3FE352;
-	Wed, 20 May 2026 18:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162E4401A29;
+	Wed, 20 May 2026 18:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302431; cv=none; b=gGiSf6xPDmiLvMIZ3MVwmY+PEN8fXSOTwsQCXMZHUOsrqsSEyJhE4ypkDbDCbq48L4kv12cTMbmgyYIdRS3Fyy38gwK9fy/EURDLWb3WyLNcAHmaEZGgsswfZH8oKcb75k6TSsU9NSPZ7mXq8v8kA7zO+BnXAxEHnXx+541S9Hw=
+	t=1779302434; cv=none; b=rZ/RJLOcMpU0s+X41PwNndYC7hTK/OaFwaozuacCxDEQanP8rhbIlx7n0rAMZbvkN1KlFKQ2BvHq27rMVfHffONVoMKhyuaKYzLwx1KzTW7NBx7xep9Uyo1RWdom1D80JYyzVZFzgznJtoWIbOxcFEoN91JzWnfXd61yLdpKTuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302431; c=relaxed/simple;
-	bh=looRX9ufzxudajCiSRlU7v3pAqsrpHFPWV9yD+rnwXw=;
+	s=arc-20240116; t=1779302434; c=relaxed/simple;
+	bh=7BzQkVt7QD+LUcqKEjahK2Mah/IzUBDs7W0t5jj3CQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gXSKGnZdmPwxlQGtXHaNrOh0bN9CxGggZNZGzxrk8z9YeYuDf51pKWBoZlVWe22avQor//NHqckQNOepO43/C6GHvryNp2pB8LxPC0IgqaDpXRgAr6BvLKE+pPaGIFnWTE66Fmpr1himGEh2/SCRBXuaTCcwFKTa7/nfVTEG50Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qop/pQPA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pqwCmTkw+Klc1tAasMExehuZT4BbqG0vWP/qG8LyGdWff+27l/N9ovbMeJmrm/QnPriLhZKsodBZ4fMjp+1NGEIsYuGAaLFIB7IwQKpcQmaQwl+Oy4YpOyvr412bo2Uc3fNV8h2MWMvFjNZTJ9cgZIxpYfLgpiiXjvJcnTSOQII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpPySArp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qop/pQPA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26DD1F000E9;
-	Wed, 20 May 2026 18:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpPySArp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBFB1F000E9;
+	Wed, 20 May 2026 18:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302430;
-	bh=H1/FjnwBYEo/ZFjC27HkZgwLtFOpSEFnOMP2TUieAQc=;
+	s=korg; t=1779302432;
+	bh=yUbRGIwaxeK+iDIDlK4SQ7+Ru6OWAP5Pj8p9tqEbowI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qop/pQPAiocYFuuhy89zLRFG/kAdJKPEm5bttAlt/QNQf7msDBtl7YMojmvYazDcG
-	 uh0+4sfxkPyatlCW73pG0oskkX+p8LApirbh8pyJFfCzIqFAVZw6xfaj/aOlhy0qPz
-	 VffVmLyHCpfkdrFXvX1tKhjEWFT8wn7ipRF2EMPQ=
+	b=TpPySArp6aeN4OJJ7sNLmVLQ3VhnKuNe2p8Oe/b4pTRiDpnvwT+tCAHlNSy+WAlrb
+	 cbe5U9IM76xoogHXM2c1Nh0wjYadmUK1zfCQz+XTr2DjPAQIK4sTVP+Jger5ejevM5
+	 GXmwRvzdVlv6Br4ohw0dp97rXv4ZONuymWRbVSvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 265/508] platform/x86: panasonic-laptop: Fix OPTD notifier registration and cleanup
-Date: Wed, 20 May 2026 18:21:28 +0200
-Message-ID: <20260520162104.387515655@linuxfoundation.org>
+Subject: [PATCH 6.6 266/508] mfd: mc13xxx-core: Fix memory leak in mc13xxx_add_subdevice_pdata()
+Date: Wed, 20 May 2026 18:21:29 +0200
+Message-ID: <20260520162104.409519342@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,67 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 8baeff2c1d33dad8572216c6ad3a7425852507d4 ]
+[ Upstream commit a5a65a7fb2f7796bbe492cd6be59c92cb64377d1 ]
 
-An ACPI notify handler is leaked if device_create_file() returns an
-error in acpi_pcc_hotkey_add().
+The memory allocated for cell.name using kmemdup() is not freed when
+mfd_add_devices() fails. Fix that by using devm_kmemdup().
 
-Also, it is pointless to call pcc_unregister_optd_notifier() in
-acpi_pcc_hotkey_remove() if pcc->platform is NULL and it is better
-to arrange the cleanup code in that function in the same order as
-the rollback code in acpi_pcc_hotkey_add().
-
-Address the above by placing the pcc_register_optd_notifier() call in
-acpi_pcc_hotkey_add() after the device_create_file() return value
-check and placing the pcc_unregister_optd_notifier() call in
-acpi_pcc_hotkey_remove() right before the device_remove_file() call.
-
-Fixes: d5a81d8e864b ("platform/x86: panasonic-laptop: Add support for optical driver power in Y and W series")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2411055.ElGaqSPkdT@rafael.j.wysocki
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 8e00593557c3 ("mfd: Add mc13892 support to mc13xxx")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://patch.msgid.link/20260120102622.66921-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/panasonic-laptop.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/mfd/mc13xxx-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/panasonic-laptop.c b/drivers/platform/x86/panasonic-laptop.c
-index ad907c558997a..f6dcf8d6a1dbb 100644
---- a/drivers/platform/x86/panasonic-laptop.c
-+++ b/drivers/platform/x86/panasonic-laptop.c
-@@ -1081,9 +1081,10 @@ static int acpi_pcc_hotkey_add(struct acpi_device *device)
- 		}
- 		result = device_create_file(&pcc->platform->dev,
- 			&dev_attr_cdpower);
--		pcc_register_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
- 		if (result)
- 			goto out_platform;
-+
-+		pcc_register_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
- 	} else {
- 		pcc->platform = NULL;
- 	}
-@@ -1117,10 +1118,10 @@ static void acpi_pcc_hotkey_remove(struct acpi_device *device)
- 	i8042_remove_filter(panasonic_i8042_filter);
+diff --git a/drivers/mfd/mc13xxx-core.c b/drivers/mfd/mc13xxx-core.c
+index 1000572761a84..ddc90cbb7be52 100644
+--- a/drivers/mfd/mc13xxx-core.c
++++ b/drivers/mfd/mc13xxx-core.c
+@@ -377,7 +377,7 @@ static int mc13xxx_add_subdevice_pdata(struct mc13xxx *mc13xxx,
+ 	if (snprintf(buf, sizeof(buf), format, name) > sizeof(buf))
+ 		return -E2BIG;
  
- 	if (pcc->platform) {
-+		pcc_unregister_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
- 		device_remove_file(&pcc->platform->dev, &dev_attr_cdpower);
- 		platform_device_unregister(pcc->platform);
- 	}
--	pcc_unregister_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
- 
- 	sysfs_remove_group(&device->dev.kobj, &pcc_attr_group);
+-	cell.name = kmemdup(buf, strlen(buf) + 1, GFP_KERNEL);
++	cell.name = devm_kmemdup(mc13xxx->dev, buf, strlen(buf) + 1, GFP_KERNEL);
+ 	if (!cell.name)
+ 		return -ENOMEM;
  
 -- 
 2.53.0
