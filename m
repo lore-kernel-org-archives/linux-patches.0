@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8203D8137;
-	Wed, 20 May 2026 16:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE22369D4E;
+	Wed, 20 May 2026 16:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295512; cv=none; b=MdsoXOW6//f1gJqUaef9w4F7TCwVB9F7ZqfIX2UhmZlC/FlU5PasHyefd7oSk1r3Q9+QdPaRMlmsdBjbMngLo6Uyz1nDQeifeJrBL1Xa5hrHPAORe7hBs93y0dlHqa9/2SrkkMI7APMMhy7BhT/J2tV7WmWOBKlk3+CoEXHmvSg=
+	t=1779295514; cv=none; b=FcL6Duap3dm5NLxeHQe9lCjsV4WL0D/PNJRXQyEHVySCdXgGmXeFDXOx4zRrdxnE/Bog7R9tIadF8akO6mepeWFqV+9Jx1ST5gYz7VMT80ZNamtTR9D6b9xlT+7/Gws71ECfSvpm0aoSOEk9M+J6pH3BJsCnOEUZCGYGG1WbQtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295512; c=relaxed/simple;
-	bh=29D2/oF99WgrzlaLv07vnbY/2183lgeYDw9N71FTpKA=;
+	s=arc-20240116; t=1779295514; c=relaxed/simple;
+	bh=9Os9toDZ6USY7j1saS0mS51c1AU5Ffwr1yM64reuoZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vw5oQKOlAIuMjsgnO4EyFdmp9K3cP1b+kp5HV+0o7gAHXj8123c/Xm43qANeVUkNXntVeFh/mmLyt3fyT4XfAaHyDYl66N4ZwG79NBImf6QAo3J9xFU27jgZWCnzh7r/6VriY173iWlkTbdN1Z8YLPw6QNWXURkC9lSyVeHvLQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9whAWyj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OfXv8wd32srE9oUhS/8PkLSnFsJFS3j4dHyAiCZ9P0MgP8yQ4850vnhbkldexsk1VyDWUxYJlRVDgUagOj3SnsbggzUbspuPtVpuH0o0lwTM2wkqAEZkg751AtJbGLuizCLuzBGfmNz/G0gxHCiu0hjBGGKDr7bhLjNuyTB7Bpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AInr8E85; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9whAWyj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3C71F000E9;
-	Wed, 20 May 2026 16:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AInr8E85"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A051F000E9;
+	Wed, 20 May 2026 16:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295511;
-	bh=QR50ekvir0RjoSKGLYtga2WBARPF/5sc85F6g18WsI4=;
+	s=korg; t=1779295513;
+	bh=hm4YumpZbBT4n0L93MpQ36eRq7rJFtZAb4XbnhJsMJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V9whAWyjTAEQ4aslAGmBUDLL5NWUtv3+EAT/96rFx5MuUonm+tGmwzjnNRUL1DZmk
-	 6rjrpMyVw4uaqP8F2WozEALVkQYOwcCm9YwVR/uhox+UZrxH74BtjN/3CTvqbJiBeD
-	 9SqTfbxBFJk4WjzxyrtfwKBU/BWY3NRlhnNPBr/o=
+	b=AInr8E85VxrIgrZMZds8Hh37aQukcyQNnJfUhHFAFJ1gMC34em8hjIjqgNNhM/WpK
+	 DHe3W8ClWSouxy9/X7Yks2k9qfMqXjkFZG03K3tpNmOy36sincq7y51AcKOWQHCgv4
+	 wEd/SxadNDDulBnIp+kKj5zbkS8bgkg7N79zRPso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fdebb2dc960aa56c600a@syzkaller.appspotmail.com,
-	Luis Henriques <luis@igalia.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	John Hawley <warthog9@eaglescrag.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0447/1146] fuse: fix uninit-value in fuse_dentry_revalidate()
-Date: Wed, 20 May 2026 18:11:37 +0200
-Message-ID: <20260520162158.315026164@linuxfoundation.org>
+Subject: [PATCH 7.0 0448/1146] ktest: Avoid undef warning when WARNINGS_FILE is unset
+Date: Wed, 20 May 2026 18:11:38 +0200
+Message-ID: <20260520162158.338195841@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,69 +51,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luis Henriques <luis@igalia.com>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 5a6baf204610589f8a5b5a1cd69d1fe661d9d3cd ]
+[ Upstream commit 057854f8a595160656fe77ed7bf0d2403724b915 ]
 
-fuse_dentry_revalidate() may be called with a dentry that didn't had
-->d_time initialised.  The issue was found with KMSAN, where lookup_open()
-calls __d_alloc(), followed by d_revalidate(), as shown below:
+check_buildlog() probes $warnings_file with -f even when WARNINGS_FILE is
+not configured. Perl warns about the uninitialized value and adds noise to
+the test log, which can hide the output we actually care about.
 
-=====================================================
-BUG: KMSAN: uninit-value in fuse_dentry_revalidate+0x150/0x13d0 fs/fuse/dir.c:394
- fuse_dentry_revalidate+0x150/0x13d0 fs/fuse/dir.c:394
- d_revalidate fs/namei.c:1030 [inline]
- lookup_open fs/namei.c:4405 [inline]
- open_last_lookups fs/namei.c:4583 [inline]
- path_openat+0x1614/0x64c0 fs/namei.c:4827
- do_file_open+0x2aa/0x680 fs/namei.c:4859
-[...]
+Check that WARNINGS_FILE is defined before testing whether the file exists.
 
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:4466 [inline]
- slab_alloc_node mm/slub.c:4788 [inline]
- kmem_cache_alloc_lru_noprof+0x382/0x1280 mm/slub.c:4807
- __d_alloc+0x55/0xa00 fs/dcache.c:1740
- d_alloc_parallel+0x99/0x2740 fs/dcache.c:2604
- lookup_open fs/namei.c:4398 [inline]
- open_last_lookups fs/namei.c:4583 [inline]
- path_openat+0x135f/0x64c0 fs/namei.c:4827
- do_file_open+0x2aa/0x680 fs/namei.c:4859
-[...]
-=====================================================
-
-Reported-by: syzbot+fdebb2dc960aa56c600a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69917e0d.050a0220.340abe.02e2.GAE@google.com
-Fixes: 2396356a945b ("fuse: add more control over cache invalidation behaviour")
-Signed-off-by: Luis Henriques <luis@igalia.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Cc: John Hawley <warthog9@eaglescrag.net>
+Cc: Andrea Righi <arighi@nvidia.com>
+Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Link: https://patch.msgid.link/20260307-ktest-fixes-v1-1-565d412f4925@suse.com
+Fixes: 4283b169abfb ("ktest: Add make_warnings_file and process full warnings")
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dir.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/testing/ktest/ktest.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
-index 7ac6b232ef123..d3acfd346ab52 100644
---- a/fs/fuse/dir.c
-+++ b/fs/fuse/dir.c
-@@ -481,6 +481,11 @@ static int fuse_dentry_init(struct dentry *dentry)
- 	fd->dentry = dentry;
- 	RB_CLEAR_NODE(&fd->node);
- 	dentry->d_fsdata = fd;
-+	/*
-+	 * Initialising d_time (epoch) to '0' ensures the dentry is invalid
-+	 * if compared to fc->epoch, which is initialized to '1'.
-+	 */
-+	dentry->d_time = 0;
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 88de775097fef..28643812184bc 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2508,7 +2508,7 @@ sub check_buildlog {
+     my $save_no_reboot = $no_reboot;
+     $no_reboot = 1;
  
- 	return 0;
- }
+-    if (-f $warnings_file) {
++    if (defined($warnings_file) && -f $warnings_file) {
+ 	open(IN, $warnings_file) or
+ 	    dodie "Error opening $warnings_file";
+ 
 -- 
 2.53.0
 
