@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65043E832A;
-	Wed, 20 May 2026 18:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3273E832A;
+	Wed, 20 May 2026 18:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300101; cv=none; b=LcKq0+uAKKW5OXBcurr/TtMffxpSmYD9HfMrxiKYrl2mTCZW1J03wkfr1pWilvzPLxcMtqfQz/1RUch3mk9wJUsfUvupt9chGQZUrB59kTkX++N7KOo4T6fF2LYWosB6rTJQAzjK3W/z7pjpiQyginM9CFooZeXFUZ36jaGtZyQ=
+	t=1779300104; cv=none; b=lP/aOsIHm+7ulOiG9eaffwh2CqkOblm08wSIuHRB9pHm1ov+lHfoQVgMus9QYHfpO1gbeB9JpCqvbdPWVB974aABogMvFD99/1yPrF+I2/lGgpcFWVopYKF2oeTDaLdmCYq+rTgZ0fyJsOVy16ZglghEi+joQzK2PzoRVCWcXds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300101; c=relaxed/simple;
-	bh=kBfP1hD8AwzK6hGXongp6RcgJb/iumEd6TrCPNg6Dg0=;
+	s=arc-20240116; t=1779300104; c=relaxed/simple;
+	bh=WN7AILZe9iX22WCHJJtTFFruiImDVcJYZzj+HTPOwNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CgjyoBZ/zm/2XUSiGAF8JYn2MpWHX2JqnXRxUHBYGfsFpoV868YTIVCezD2H5uTZ0HBVyJTQECETB65o3huLs939jAZpaGXFNQw/VMGazXykicYfCDUafMmHSY8ud6NAmwuj6+kA982Q3nkzziVK7DJCg456rkinKsioXi6+kqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oiF0ZTPu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EXocW8ZC727Bbu5ncp/JidTNZwujG6jfeGPLtJqlhS7o0gF0G4ncO5Mve/nspeW1nhdmQ/43nkPjR9ItaUd7WSslCyYZuDH5Ah4OnQFwJzV3X8vZOO3PBBT8rDLFqvw8KuOA3JJeGYRzfxD+9etlpfJiD2/ebg5Dzqvy1Uj/CTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3WMkJHZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oiF0ZTPu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481011F000E9;
-	Wed, 20 May 2026 18:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3WMkJHZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44611F000E9;
+	Wed, 20 May 2026 18:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300100;
-	bh=MiGpaamwPPvHpdf1rYGBLcWrbKa3vPO1ONllvCnHXNY=;
+	s=korg; t=1779300103;
+	bh=+/hYWDvTlmJZlU7Y+N9xD9a8TB1hULVTIMEFU74omSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oiF0ZTPu/yt9H0R+ffOI4rZXNLRcfOR4VjuUzAKL/Px9SI7p71z6g/JzFQeBVa4X/
-	 9UpRdgiCV4zeNY0KAyJbBFmjyodckytJM3fY7im+a0H/3cG7BIx2mBAtf5PI8dAZPU
-	 HQNTbattXfNM0PpTgTK5caZ/fKCTUWgzoEfZ4WWU=
+	b=j3WMkJHZ7OUZIxUYivN+SjIyK/Nf0R95vz5PLFJbjwTADBUfc5o7t8UQs92N4IUkZ
+	 OHsU1AJts9IgD6GnulZdMT/pFZvnoa4kYGsb6ka5VHeya4U86SexDxDTjMY94daMmU
+	 cUwjX3xJgpoxnOrvSTtvu26Er9jhfSy8NYdYbhzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Arnd Bergmann <arnd@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/666] wifi: mt76: mt7996: fix FCS error flag check in RX descriptor
-Date: Wed, 20 May 2026 18:14:19 +0200
-Message-ID: <20260520162112.283583625@linuxfoundation.org>
+Subject: [PATCH 6.12 031/666] sparc64: vdso: Link with -z noexecstack
+Date: Wed, 20 May 2026 18:14:02 +0200
+Message-ID: <20260520162111.909414566@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,48 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit d8db56142e531f060c938fa0b5175ed6c8cabb11 ]
+[ Upstream commit acc4f131d5d57c2aa89db914aeb6f7bb0ab4eb4a ]
 
-The mt7996 driver currently checks the MT_RXD3_NORMAL_FCS_ERR bit in
-rxd1 whereas other Connac3-based drivers(mt7925) correctly check this
-bit in rxd3.
+The vDSO stack does not need to be executable. Prevent the linker from
+creating executable. For more background see commit ffcf9c5700e4 ("x86:
+link vdso and boot with -z noexecstack --no-warn-rwx-segments").
 
-Since the MT_RXD3_NORMAL_FCS_ERR bit is defined in the fourth RX
-descriptor word (rxd3), update mt7996 to use the proper descriptor
-field. This change aligns mt7996 with mt7925 and the rest of the
-Connac3 family.
+Also prevent the following warning from the linker:
+sparc64-linux-ld: warning: arch/sparc/vdso/vdso-note.o: missing .note.GNU-stack section implies executable stack
+sparc64-linux-ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20251013090826.753992-1-alok.a.tiwari@oracle.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 9a08862a5d2e ("vDSO for sparc")
+Suggested-by: Arnd Bergmann <arnd@kernel.org>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Andreas Larsson <andreas@gaisler.com>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Acked-by: Andreas Larsson <andreas@gaisler.com>
+Link: https://lore.kernel.org/lkml/20250707144726.4008707-1-arnd@kernel.org/
+Link: https://patch.msgid.link/20260304-vdso-sparc64-generic-2-v6-4-d8eb3b0e1410@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 2 +-
+ arch/sparc/vdso/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index b7a5426c933d0..6f8167bb86136 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -501,7 +501,7 @@ mt7996_mac_fill_rx(struct mt7996_dev *dev, enum mt76_rxq_id q,
- 	    !(csum_status & (BIT(0) | BIT(2) | BIT(3))))
- 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+diff --git a/arch/sparc/vdso/Makefile b/arch/sparc/vdso/Makefile
+index c7697884975ea..fc3ada4269f1a 100644
+--- a/arch/sparc/vdso/Makefile
++++ b/arch/sparc/vdso/Makefile
+@@ -103,4 +103,4 @@ quiet_cmd_vdso = VDSO    $@
+ 		       $(VDSO_LDFLAGS) $(VDSO_LDFLAGS_$(filter %.lds,$(^F))) \
+ 		       -T $(filter %.lds,$^) $(filter %.o,$^)
  
--	if (rxd1 & MT_RXD3_NORMAL_FCS_ERR)
-+	if (rxd3 & MT_RXD3_NORMAL_FCS_ERR)
- 		status->flag |= RX_FLAG_FAILED_FCS_CRC;
- 
- 	if (rxd1 & MT_RXD1_NORMAL_TKIP_MIC_ERR)
+-VDSO_LDFLAGS = -shared --hash-style=both --build-id=sha1 -Bsymbolic --no-undefined
++VDSO_LDFLAGS = -shared --hash-style=both --build-id=sha1 -Bsymbolic --no-undefined -z noexecstack
 -- 
 2.53.0
 
