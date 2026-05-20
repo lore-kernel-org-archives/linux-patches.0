@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133722F0C62;
-	Wed, 20 May 2026 17:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1FB2F0C62;
+	Wed, 20 May 2026 17:44:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299092; cv=none; b=RVWwIaym+QWMSxv+w2pgRNLdVkCOwbOjyDbcdNuHDQGa0gumGH0v39/zMYBFDlDwWanv3un/UHYSMMl89tBcj6P/jPf0mbAeX6FOFHft/GQoVeUaKtrVofQ9B7Ii4SyIJo6de//3CRnvlQw7GTa5Ow6WwKRLOnpW2gUcNhXNof4=
+	t=1779299094; cv=none; b=MRhC83fKYalBaUA9qCUaIyigLCTYW7e6zIKYfDrc4QottgKwzBMgqJrlIcBXlF5hcOX1MFyE7RRFmuIMiwFG/utBqy9qZ6MGj62A519b/4Ahtqd2AWkoZ35vl54SJlUhNSI6gfUoJ1GMhK8EeZB35IXbW2wrwn2rCjvvFiP6wpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299092; c=relaxed/simple;
-	bh=y66fZv33uUSNqplkrZwl+umEEKMj2jat4eH+4cLCBPg=;
+	s=arc-20240116; t=1779299094; c=relaxed/simple;
+	bh=nTu56Bo7sE4fdvNjOCTktiDs+KaCuRmRF8toGUYv4HY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XzS3376wPvUQlx6HLC5iUEADo1XS6WmXMeshWA8EhGUViG6NeXDyJSgiuegP6xm0qfx1MgukX5qi8cJUdkwcZElGHKXNIC46cB0A1lMCT7Akpwf8OdXDoRTYHIJlHUE0DEzp/G563iAXX64YfJlRt7Z61LpmP/5aVmaJ1ukISV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzEXinQX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=inendExvyJdMPz46o5lACEs2M1aT5HNwk2KymRusK/3hu7sLwlUNL4S0aILcm1uAeRbq89yYJZVzPmCDd4Bx3ZEBVQOK/U7gDd2Zf+fESQyWIFZr7cFeW2XtL3DFpNbXmiFdfNnulMY8lFApMzJRvoS1Z1LENMh6qVICQZJG4yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKyE2P85; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzEXinQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F8F1F000E9;
-	Wed, 20 May 2026 17:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKyE2P85"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC45A1F000E9;
+	Wed, 20 May 2026 17:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299090;
-	bh=z6KFDTbjVkcom1I8qkvEV85ucsDIC1iJPT+juekRH6I=;
+	s=korg; t=1779299093;
+	bh=GIln1AT3Mf/lWjHM18AJG252IImhEoacyUpWH6gv/C8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rzEXinQX+ZazVVsvVrJs1zOOAEqmrdFiBCMKZvhi8H8pMsQOmzkjcRMfsxet6/2/J
-	 9ngCE+QSLoroUgqx6J9GGTNhcTXKgTLqnhga1UT7DAZ3tLSvJuvpOzu5O9eKlPW/A2
-	 QACseF7LUifxWq7vq5VRU3AOO3LjcW1nq0HEW1Ms=
+	b=YKyE2P85Q1GrqdIotSFXaPFHWL6gjZD2yrgvp5sJ2nwGq6k7NRQkBvHpECrRrqQLh
+	 CufHYldaXAcoueWtRc3nyg3xgLVLJaunwyIfGUSMlaQoz3O6dJswGXvNkFtXGoNMkC
+	 RW8ke6sbWm2a7G4+q6diGXIcqCY8wflwMPjrfxzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 657/957] net/mlx5: Fix HCA caps leak on notifier init failure
-Date: Wed, 20 May 2026 18:19:00 +0200
-Message-ID: <20260520162148.780425222@linuxfoundation.org>
+Subject: [PATCH 6.18 658/957] openvswitch: cap upcall PID array size and pre-size vport replies
+Date: Wed, 20 May 2026 18:19:01 +0200
+Message-ID: <20260520162148.801948597@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,51 +53,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit d03fc81a57956248383efec99967d0ae627390a8 ]
+[ Upstream commit 2091c6aa0df6aba47deb5c8ab232b1cb60af3519 ]
 
-mlx5_mdev_init() allocates HCA caps via mlx5_hca_caps_alloc() before
-calling mlx5_notifiers_init(). If notifier initialization fails, the
-error path jumps to err_hca_caps and skips mlx5_hca_caps_free(), leaking
-allocated caps.
+The vport netlink reply helpers allocate a fixed-size skb with
+nlmsg_new(NLMSG_DEFAULT_SIZE, ...) but serialize the full upcall PID
+array via ovs_vport_get_upcall_portids().  Since
+ovs_vport_set_upcall_portids() accepts any non-zero multiple of
+sizeof(u32) with no upper bound, a CAP_NET_ADMIN user can install a PID
+array large enough to overflow the reply buffer, causing nla_put() to
+fail with -EMSGSIZE and hitting BUG_ON(err < 0).  On systems with
+unprivileged user namespaces enabled (e.g., Ubuntu default), this is
+reachable via unshare -Urn since OVS vport mutation operations use
+GENL_UNS_ADMIN_PERM.
 
-Add a dedicated unwind label for notifier-init failure that frees HCA
-caps before continuing the existing cleanup sequence.
+ kernel BUG at net/openvswitch/datapath.c:2414!
+ Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+ CPU: 1 UID: 0 PID: 65 Comm: poc Not tainted 7.0.0-rc7-00195-geb216e422044 #1
+ RIP: 0010:ovs_vport_cmd_set+0x34c/0x400
+ Call Trace:
+  <TASK>
+  genl_family_rcv_msg_doit (net/netlink/genetlink.c:1116)
+  genl_rcv_msg (net/netlink/genetlink.c:1194)
+  netlink_rcv_skb (net/netlink/af_netlink.c:2550)
+  genl_rcv (net/netlink/genetlink.c:1219)
+  netlink_unicast (net/netlink/af_netlink.c:1344)
+  netlink_sendmsg (net/netlink/af_netlink.c:1894)
+  __sys_sendto (net/socket.c:2206)
+  __x64_sys_sendto (net/socket.c:2209)
+  do_syscall_64 (arch/x86/entry/syscall_64.c:63)
+  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+  </TASK>
+ Kernel panic - not syncing: Fatal exception
 
-Fixes: b6b03097f982 ("net/mlx5: Initialize events outside devlink lock")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260415005022.34764-1-prathameshdeshpande7@gmail.com
+Reject attempts to set more PIDs than nr_cpu_ids in
+ovs_vport_set_upcall_portids(), and pre-compute the worst-case reply
+size in ovs_vport_cmd_msg_size() based on that bound, similar to the
+existing ovs_dp_cmd_msg_size().  nr_cpu_ids matches the cap already
+used by the per-CPU dispatch configuration on the datapath side
+(ovs_dp_cmd_fill_info() serialises at most nr_cpu_ids PIDs), so the
+two sides stay consistent.
+
+Fixes: 5cd667b0a456 ("openvswitch: Allow each vport to have an array of 'port_id's.")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20260416024653.153456-2-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/openvswitch/datapath.c | 35 +++++++++++++++++++++++++++++++++--
+ net/openvswitch/vport.c    |  3 +++
+ 2 files changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 5903a4af9173b..6e10a6de8ebcc 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1878,7 +1878,7 @@ int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index d5b6e2002bc1f..2304c8e3be4f7 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -2186,9 +2186,40 @@ static int ovs_vport_cmd_fill_info(struct vport *vport, struct sk_buff *skb,
+ 	return err;
+ }
  
- 	err = mlx5_notifiers_init(dev);
- 	if (err)
--		goto err_hca_caps;
-+		goto err_notifiers_init;
++static size_t ovs_vport_cmd_msg_size(void)
++{
++	size_t msgsize = NLMSG_ALIGN(sizeof(struct ovs_header));
++
++	msgsize += nla_total_size(sizeof(u32)); /* OVS_VPORT_ATTR_PORT_NO */
++	msgsize += nla_total_size(sizeof(u32)); /* OVS_VPORT_ATTR_TYPE */
++	msgsize += nla_total_size(IFNAMSIZ);    /* OVS_VPORT_ATTR_NAME */
++	msgsize += nla_total_size(sizeof(u32)); /* OVS_VPORT_ATTR_IFINDEX */
++	msgsize += nla_total_size(sizeof(s32)); /* OVS_VPORT_ATTR_NETNSID */
++
++	/* OVS_VPORT_ATTR_STATS */
++	msgsize += nla_total_size_64bit(sizeof(struct ovs_vport_stats));
++
++	/* OVS_VPORT_ATTR_UPCALL_STATS(OVS_VPORT_UPCALL_ATTR_SUCCESS +
++	 *                             OVS_VPORT_UPCALL_ATTR_FAIL)
++	 */
++	msgsize += nla_total_size(nla_total_size_64bit(sizeof(u64)) +
++				  nla_total_size_64bit(sizeof(u64)));
++
++	/* OVS_VPORT_ATTR_UPCALL_PID */
++	msgsize += nla_total_size(nr_cpu_ids * sizeof(u32));
++
++	/* OVS_VPORT_ATTR_OPTIONS(OVS_TUNNEL_ATTR_DST_PORT +
++	 *                        OVS_TUNNEL_ATTR_EXTENSION(OVS_VXLAN_EXT_GBP))
++	 */
++	msgsize += nla_total_size(nla_total_size(sizeof(u16)) +
++				  nla_total_size(nla_total_size(0)));
++
++	return msgsize;
++}
++
+ static struct sk_buff *ovs_vport_cmd_alloc_info(void)
+ {
+-	return nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
++	return genlmsg_new(ovs_vport_cmd_msg_size(), GFP_KERNEL);
+ }
  
- 	/* The conjunction of sw_vhca_id with sw_owner_id will be a global
- 	 * unique id per function which uses mlx5_core.
-@@ -1894,6 +1894,8 @@ int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
+ /* Called with ovs_mutex, only via ovs_dp_notify_wq(). */
+@@ -2198,7 +2229,7 @@ struct sk_buff *ovs_vport_cmd_build_info(struct vport *vport, struct net *net,
+ 	struct sk_buff *skb;
+ 	int retval;
  
- 	return 0;
+-	skb = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
++	skb = ovs_vport_cmd_alloc_info();
+ 	if (!skb)
+ 		return ERR_PTR(-ENOMEM);
  
-+err_notifiers_init:
-+	mlx5_hca_caps_free(dev);
- err_hca_caps:
- 	mlx5_adev_cleanup(dev);
- err_adev_init:
+diff --git a/net/openvswitch/vport.c b/net/openvswitch/vport.c
+index f0ce8ce1dce0e..1f0c86a9f43b0 100644
+--- a/net/openvswitch/vport.c
++++ b/net/openvswitch/vport.c
+@@ -407,6 +407,9 @@ int ovs_vport_set_upcall_portids(struct vport *vport, const struct nlattr *ids)
+ 	if (!nla_len(ids) || nla_len(ids) % sizeof(u32))
+ 		return -EINVAL;
+ 
++	if (nla_len(ids) / sizeof(u32) > nr_cpu_ids)
++		return -EINVAL;
++
+ 	old = ovsl_dereference(vport->upcall_portids);
+ 
+ 	vport_portids = kmalloc(sizeof(*vport_portids) + nla_len(ids),
 -- 
 2.53.0
 
