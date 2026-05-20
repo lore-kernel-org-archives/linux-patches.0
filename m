@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54D8400E05;
-	Wed, 20 May 2026 18:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225153148BB;
+	Wed, 20 May 2026 18:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302831; cv=none; b=co8Xbmq/q6cFkKv/9u2i5ohYEQaSh+r+lcso8ukrSF3AosHoFlIOK1dV1m56ZrHn4517t5Da4BD+wV2kP7Y8lsYIYFUycun+6GGtF1FgKXw3vALpTMHS40MAeSQF1RqmpJWY8j+MkYxxugPeOFQEcMdMtfZL3ia5RBXu7bddZXY=
+	t=1779302834; cv=none; b=eKFZW4ro3CZPtSZhhjJcoGSt3MjMEHBlRLuNVlsFHsnWr3Zaoo1NeIGZpKUI7XHRcTjVm6/sUXIFdOwnK1wwvq9NJE7nbvPJwVlOwhBdqBRfIc5Kn7WsmMpvlogL86noTp/ioYVud3/k95lC4eZVq84ysoofyu5LzES6bp1S6ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302831; c=relaxed/simple;
-	bh=Rwk4Sz7Mci7yEIRMYIh2BKuc7WbLuY09MDvScpeV5y4=;
+	s=arc-20240116; t=1779302834; c=relaxed/simple;
+	bh=s9yODbOXksXWk096PKvKrybEnsF2yyKpk5OEr8g+F6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d9/d3j/ILXNYU10CMmWu+qXjsIOS8Fy61Cj7IntweAX2c45q05KYIX1xAUbwOewWqYcZOJbRcMxop10K3cdvTcVHVs6chs/BzXefiFSZqtPoEJSDZ0FVFGS+PcHF4cG21tUDKvAKrzkTZHUpijKbKl7UbTVNHzz7EiKI8QOohds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yOLI9xe3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L8is7Nv/PcSH9kdHXiTWXhrMWbS55c2RiAybuo7VXiwkF38ZX5GZuHx8Ynkc6WSPVKDQ4EwvNZ5x5Vjq1w/8zmaP9GvotldguC8pE9Cm9SIvIPNlJgUkvfzhHRSxzlQev1h+I4vv10i1scC0VODZOfBapWGLCBFZKfiClyG0Jfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRkzA9lb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yOLI9xe3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0281F000E9;
-	Wed, 20 May 2026 18:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRkzA9lb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880EA1F000E9;
+	Wed, 20 May 2026 18:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302830;
-	bh=OzOEujIx4LcoqGsiGt6+NHSXhnUdxIh5Ds+MY7N9E6Y=;
+	s=korg; t=1779302833;
+	bh=nAtwtMYVBRJu3eFpSttFMbydUaoILjYCfuMjN1BiexY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yOLI9xe3nydNVbn6fLGygIbjHMUYunjFPN8aOmUIlaqWhHwuF+GUfLd1+c4W20dwI
-	 eQPsthOZ7riENgZlx3HukkehEkDBhcdt3fHxvS/AlyK2qu6FqYzMcFqSxVxqL29dBh
-	 yNlXT9hSa5iiv7eP0uFZ1gBAkPSbq9t2J+RaJme0=
+	b=eRkzA9lb+zXNHjnOMi5J4s75uYx994GSMNdK2Y0aha5rQ0OmKH4cpAECA3Rz/k8lt
+	 mbtNg5qU0yY3AXzqDS15JAvWtFwF/l0TGMPDvKZpXA9QMK+7RbApfYQbpsgmOnG1nI
+	 +Q6LIUGj6ddmWuRuZ/aRy6LD9nQTxBfT4NCZlREc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	syzbot+3f46c095ac0ca048cb71@syzkaller.appspotmail.com,
+	Andrew Lunn <andrew@lunn.ch>,
+	Zhan Jun <zhanjun@uniontech.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 416/508] net/sched: sch_cake: annotate data-races in cake_dump_stats() (V)
-Date: Wed, 20 May 2026 18:23:59 +0200
-Message-ID: <20260520162107.622156543@linuxfoundation.org>
+Subject: [PATCH 6.6 390/508] net: usb: rtl8150: fix use-after-free in rtl8150_start_xmit()
+Date: Wed, 20 May 2026 18:23:33 +0200
+Message-ID: <20260520162107.067053508@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -46,64 +47,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zhan Jun <zhanjun@uniontech.com>
 
-[ Upstream commit a6c95b833dc17e84d16a8ac0f40fd0931616a52d ]
+[ Upstream commit 23f0e34c64acba15cad4d23e50f41f533da195fa ]
 
-cake_dump_stats() runs without qdisc spinlock being held.
+syzbot reported a KASAN slab-use-after-free read in rtl8150_start_xmit()
+when accessing skb->len for tx statistics after usb_submit_urb() has
+been called:
 
-In this final patch, I add READ_ONCE()/WRITE_ONCE() annotations
-for cparams.target and cparams.interval.
+  BUG: KASAN: slab-use-after-free in rtl8150_start_xmit+0x71f/0x760
+    drivers/net/usb/rtl8150.c:712
+  Read of size 4 at addr ffff88810eb7a930 by task kworker/0:4/5226
 
-Fixes: 046f6fd5daef ("sched: Add Common Applications Kept Enhanced (cake) qdisc")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: "Toke Høiland-Jørgensen" <toke@toke.dk>
-Link: https://patch.msgid.link/20260427083606.459355-6-edumazet@google.com
+The URB completion handler write_bulk_callback() frees the skb via
+dev_kfree_skb_irq(dev->tx_skb). The URB may complete on another CPU
+in softirq context before usb_submit_urb() returns in the submitter,
+so by the time the submitter reads skb->len the skb has already been
+queued to the per-CPU completion_queue and freed by net_tx_action():
+
+  CPU A (xmit)                      CPU B (USB completion softirq)
+  ------------                      ------------------------------
+  dev->tx_skb = skb;
+  usb_submit_urb()      --+
+                          |-------> write_bulk_callback()
+                          |           dev_kfree_skb_irq(dev->tx_skb)
+                          |         net_tx_action()
+                          |           napi_skb_cache_put()   <-- free
+  netdev->stats.tx_bytes  |
+    += skb->len;          <-- UAF read
+
+Fix it by caching skb->len before submitting the URB and using the
+cached value when updating the tx_bytes counter.
+
+The pre-existing tx_bytes semantics are preserved: the counter tracks
+the original frame length (skb->len), not the ETH_ZLEN/USB-alignment
+padded "count" value that is handed to the device.  Changing that
+would be a user-visible accounting change and is out of scope for
+this UAF fix.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+3f46c095ac0ca048cb71@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69e69ee7.050a0220.24bfd3.002b.GAE@google.com/
+Closes: https://syzkaller.appspot.com/bug?extid=3f46c095ac0ca048cb71
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Zhan Jun <zhanjun@uniontech.com>
+Link: https://patch.msgid.link/809895186B866C10+20260423004913.136655-1-zhangdandan@uniontech.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/usb/rtl8150.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index 55e8b682ec14c..0b85971165d2a 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -2314,10 +2314,11 @@ static void cake_set_rate(struct cake_tin_data *b, u64 rate, u32 mtu,
+diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
+index e40b0669d9f4b..8700ae392b10a 100644
+--- a/drivers/net/usb/rtl8150.c
++++ b/drivers/net/usb/rtl8150.c
+@@ -685,6 +685,7 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
+ 					    struct net_device *netdev)
+ {
+ 	rtl8150_t *dev = netdev_priv(netdev);
++	unsigned int skb_len;
+ 	int count, res;
  
- 	byte_target_ns = (byte_target * rate_ns) >> rate_shft;
+ 	/* pad the frame and ensure terminating USB packet, datasheet 9.2.3 */
+@@ -696,6 +697,8 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
+ 		return NETDEV_TX_OK;
+ 	}
  
--	b->cparams.target = max((byte_target_ns * 3) / 2, target_ns);
--	b->cparams.interval = max(rtt_est_ns +
--				     b->cparams.target - target_ns,
--				     b->cparams.target * 2);
-+	WRITE_ONCE(b->cparams.target,
-+		   max((byte_target_ns * 3) / 2, target_ns));
-+	WRITE_ONCE(b->cparams.interval,
-+		   max(rtt_est_ns + b->cparams.target - target_ns,
-+		       b->cparams.target * 2));
- 	b->cparams.mtu_time = byte_target_ns;
- 	b->cparams.p_inc = 1 << 24; /* 1/256 */
- 	b->cparams.p_dec = 1 << 20; /* 1/4096 */
-@@ -2931,9 +2932,9 @@ static int cake_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 		PUT_TSTAT_U32(BACKLOG_BYTES, b->tin_backlog);
++	skb_len = skb->len;
++
+ 	netif_stop_queue(netdev);
+ 	dev->tx_skb = skb;
+ 	usb_fill_bulk_urb(dev->tx_urb, dev->udev, usb_sndbulkpipe(dev->udev, 2),
+@@ -711,7 +714,7 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
+ 		}
+ 	} else {
+ 		netdev->stats.tx_packets++;
+-		netdev->stats.tx_bytes += skb->len;
++		netdev->stats.tx_bytes += skb_len;
+ 		netif_trans_update(netdev);
+ 	}
  
- 		PUT_TSTAT_U32(TARGET_US,
--			      ktime_to_us(ns_to_ktime(b->cparams.target)));
-+			      ktime_to_us(ns_to_ktime(READ_ONCE(b->cparams.target))));
- 		PUT_TSTAT_U32(INTERVAL_US,
--			      ktime_to_us(ns_to_ktime(b->cparams.interval)));
-+			      ktime_to_us(ns_to_ktime(READ_ONCE(b->cparams.interval))));
- 
- 		PUT_TSTAT_U32(SENT_PACKETS, b->packets);
- 		PUT_TSTAT_U32(DROPPED_PACKETS, b->tin_dropped);
 -- 
 2.53.0
 
