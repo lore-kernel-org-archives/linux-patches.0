@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC6F2609FD;
-	Wed, 20 May 2026 17:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8479136405A;
+	Wed, 20 May 2026 17:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298561; cv=none; b=IU2QdRHx0X7cGzEc8oBzbG72vNu9PxKI9hgT4x5qfNs6rG4hBTST/UOw9Fgx95tZqJx+uB3Qk1sNeuekZgD3w21j9OXpB0ixjF5NPIhMr+5FcwVYLh25T+2AGEQiaX43cKvBNpVad51cZOp8zW1tjhn0S4AaPR0CiBscF9hqwSw=
+	t=1779298563; cv=none; b=GWh5sbDTCLbyzq5gnGSjyyTppG5YSnTKhec7n7OpRCOdq81Cp+NCCAmjQNJwELLwPWjJ41bvhEoeesvSkP+/FFtpAb+sZPtLJ4FVyGrbiTiq6EA4cjshOKLtxPB8faalEl1TeR58yWIk9aC1hNM5f1bpJbczxzugMIQS6ZWHDWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298561; c=relaxed/simple;
-	bh=A1Bzyb0dXuZicNXCZsWVfNh1a5IpEt9DlavcIeybYRY=;
+	s=arc-20240116; t=1779298563; c=relaxed/simple;
+	bh=e/CPLpCvbVRaL7fiCZaTFd95mHrbjURfG50GpiI+Fno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfM9yQQByp/P3pKOZ4nUT5fZKT3Bsyiehb6mNfyjBBCQwQ1KOEB9OGZd71SHfmR2qwSFWCbBT1GnL6DrqdwWc0rYZ+BW/vxBYDUSZ1uXM/oIcFOmxpIND7JEtnXwKrHbfpYoBO0QiI28J4rLb209Jtauld63yegFTin4Lx70g+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEqkYRdt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TNJ+72RnNofYuTdASG1n7iTViiHxA+GL9tS5q9yv8Iq/f6FMx+GRWN3Kvm9494qEXmSWcHZ5LfZo+iALBvZ6rY5OKL8MzA7uZtpLXEUINVHWVCSGNp2WMzG4T2uVUI/XJDO1dW9yO32Xvr8wjhzzcD+QwnqS3lJeAnRAGM2/z8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7ZghZCA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEqkYRdt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E131F000E9;
-	Wed, 20 May 2026 17:35:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7ZghZCA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DB21F000E9;
+	Wed, 20 May 2026 17:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298559;
-	bh=kxqYtC1EgImmB+di19PRfzrZuTToAt0Lt+xS2byMYhI=;
+	s=korg; t=1779298562;
+	bh=Kdpg6A65bT0HgbGEPxbG6aT3uZV3q5wlwwhKdgWp54s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cEqkYRdtvWPL3wVJyg1QICCD9/u+cVcDb0CXddRotEe5uD7mvVjasRt5l0+U6W3ox
-	 atcByOVgGMJSkjQly/zk+RiFwuuosoOZHFxhTQHgiqFmq84exoXNM8hf0VA2SLH5VI
-	 +qNQQ6veeGMzwWlE15rUqWk36zV5NgFZgZPa8xUM=
+	b=Z7ZghZCAtesnI7ONqqDcZVG57VLXy3R/lW+V7Sc8JJLwIhOrnfczTNO2cCNb6CSka
+	 j7JgOdtz/QVwGeiqE9PmBH1pS45mFKVSEott392CIdFx27p3VoJugvp2YzafnWEji3
+	 nFDzroW6QjDJvbADE9Nv/BF3tsNRYGDjpExjHvN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 440/957] ARM: dts: imx27-eukrea: replace interrupts with interrupts-extended
-Date: Wed, 20 May 2026 18:15:23 +0200
-Message-ID: <20260520162144.063775579@linuxfoundation.org>
+Subject: [PATCH 6.18 458/957] remoteproc: imx_rproc: Check return value of regmap_attach_dev() in imx_rproc_mmio_detect_mode()
+Date: Wed, 20 May 2026 18:15:41 +0200
+Message-ID: <20260520162144.454855268@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -50,74 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 0477a6b31e2874e554e3bcfac9883684b8f8ca2d ]
+[ Upstream commit a48c6676912fb808d2af1b8344d8656815a3e108 ]
 
-The property interrupts use default interrupt controllers. But pass down
-gpio<n> as phandle. Correct it by use interrupts-extended.
+Add error checking for regmap_attach_dev() call in
+imx_rproc_mmio_detect_mode() function to ensure proper error
+propagation.
 
-Fixes: d8cae888aa2bc ("ARM: dts: Add support for the cpuimx27 board from Eukrea and its baseboard")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Return the value of regmap_attach_dev() if it fails to prevent
+proceeding with an incomplete regmap setup.
+
+Suggested-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Fixes: e14168bf3493 ("remoteproc: imx_rproc: Simplify IMX_RPROC_MMIO switch case")
+Link: https://lore.kernel.org/r/20260209051407.1467660-1-nichen@iscas.ac.cn
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi      | 8 ++++----
- .../boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/remoteproc/imx_rproc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-index c7e9235848782..9f0e65526d5f9 100644
---- a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-@@ -106,7 +106,7 @@ uart8250@3,200000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 23 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 23 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x200000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-@@ -119,7 +119,7 @@ uart8250@3,400000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 22 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 22 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x400000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-@@ -132,7 +132,7 @@ uart8250@3,800000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 27 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 27 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x800000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-@@ -145,7 +145,7 @@ uart8250@3,1000000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 30 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 30 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x1000000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-diff --git a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
-index d78793601306c..c71f802983304 100644
---- a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
-@@ -76,7 +76,7 @@ ads7846@0 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_touch>;
- 		reg = <0>;
--		interrupts = <&gpio4 25 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio4 25 IRQ_TYPE_LEVEL_LOW>;
- 		spi-cpol;
- 		spi-max-frequency = <1500000>;
- 		ti,keep-vref-on;
+diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
+index 7ef99eac37f1a..8fa81d3779849 100644
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -899,7 +899,11 @@ static int imx_rproc_mmio_detect_mode(struct rproc *rproc)
+ 	}
+ 
+ 	priv->regmap = regmap;
+-	regmap_attach_dev(dev, regmap, &config);
++	ret = regmap_attach_dev(dev, regmap, &config);
++	if (ret) {
++		dev_err(dev, "regmap attach failed\n");
++		return ret;
++	}
+ 
+ 	if (priv->gpr) {
+ 		ret = regmap_read(priv->gpr, dcfg->gpr_reg, &val);
 -- 
 2.53.0
 
