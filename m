@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB9C3F39EE;
-	Wed, 20 May 2026 17:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646C33F20FA;
+	Wed, 20 May 2026 17:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299348; cv=none; b=jXZJMyc47zGSDvTm24cf54HhojwfBx6fwUuO+WEDiqY7FkxGrrf6EWc+m79YT/txCxJyMBDQHL3mVjCwBGdIzYv8faz+iyg37PSDe6wfJ2HqWEgx8bMcng9/MuL6FEsTjCDwejWxpbQscl1g70G2wCruQJz87bQdgAYpZFL+Bts=
+	t=1779299349; cv=none; b=kvKo7zpLcErU4q62GqOl4oF7FEt5k6kWyhKAXbDObjIPYYpyLUOlWmu2ucdcfRSKTELuU41s8kheJ1zBrTBRwyDbbA1rEkxPBAZEsIv/pOu+nmtCOhZhFSaK7vO74pOptSb4yQtPNrT7W6gIAtbYiMJv/9vVytZSle1PaaOGNnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299348; c=relaxed/simple;
-	bh=mRZfdbYwgEQb8v7pUCj3NudVx/8RzSZlN3ZpOILSE1k=;
+	s=arc-20240116; t=1779299349; c=relaxed/simple;
+	bh=/egC5AV5pQm8I84vuP4J3+fBvIfseKy/ezeX5BLtZ3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oDi0t4u3MpolMiDySanF65gZfneRkriOU83zR1ERSZSxYHUZuvKeeE5FE9V+FZ2EdC28eqW1xEAFL2LN59JG4pCu2GtkCvUznfkzK5+4unpNFwvdCbBu38TkRCE10jEE3InGEqkV0bhPjJORtbSdv93fdZII5DYsmP82gkUU8UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cTK+hKl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A6HCzZvoV6gNuY/3ZGEuK+o9/Qf3Qf47uybVxl8PY6xj6YiTEoB6Gjafr84FYs+A4CStKBfeGaWTzrr0+bcCLmLidTORZmD4E4HFYCiYQf8y6yYxLd0GFN7pZH1FSHC90ddkWm1CHEMCXYxUw1u5J1RiAMoV2LFeMlXUzed4VPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RF7wMFkA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cTK+hKl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6221F000E9;
-	Wed, 20 May 2026 17:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RF7wMFkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705F31F00893;
+	Wed, 20 May 2026 17:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299345;
-	bh=alYdLh4LgRgDkoCi4gJBqdIu5hiSfxozDaoOvDeb5JE=;
+	s=korg; t=1779299347;
+	bh=4E3xp3EXro9SqvsT4piSMn2t5pSMWUUoLMSJ4WFn578=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1cTK+hKlr1Tetj1bee4QmCwfTxi3PXVjYizzWQWJ6FKtKIvRiaP7EfNoXN/eG8Dtx
-	 SHxveQ8+NywhF6QjX8pxdldL7ckVeXIYog64ldlI6gPPJk4e2R29AhGQJGz9CYKwDB
-	 Q2ZeeEn7EC78ISPUg1pZ2UQfGYHXPXx6PJKNiLDA=
+	b=RF7wMFkAEEY6sTfFqjt+xUo0I835pDdNWV+HyR56bCk+EILBSyVj+AJBs036b9+Ll
+	 d/VqxfX8nlLGPad/mh/ZgsdaBX/1IswsFUau9+dKWgQMOgQ95bbhAUUdYpuV9XJBJJ
+	 Rn/9sUv9x2nB9jDJWFiASwR2FFtT9Nrvgq6dJqXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 736/957] mailbox: add sanity check for channel array
-Date: Wed, 20 May 2026 18:20:19 +0200
-Message-ID: <20260520162150.521559110@linuxfoundation.org>
+Subject: [PATCH 6.18 737/957] mailbox: mailbox-test: dont free the reused channel
+Date: Wed, 20 May 2026 18:20:20 +0200
+Message-ID: <20260520162150.543575526@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,36 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit c1aad75595fb67edc7fda8af249d3b886efa1be9 ]
+[ Upstream commit 88ebadbf0deefdaccdab868b44ff70a0a257f473 ]
 
-Fail gracefully if there is no channel array attached to the mailbox
-controller. Otherwise the later dereference will cause an OOPS which
-might not be seen because mailbox controllers might instantiate very
-early. Remove the comment explaining the obvious while here.
+The RX channel can be aliased to the TX channel if it has a different
+MMIO. This special case needs to be handled when freeing the channels
+otherwise a double-free occurs.
 
-Fixes: 2b6d83e2b8b7 ("mailbox: Introduce framework for mailbox")
+Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
 Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/mailbox/mailbox-test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
-index 617ba505691d3..b77162db509f2 100644
---- a/drivers/mailbox/mailbox.c
-+++ b/drivers/mailbox/mailbox.c
-@@ -505,8 +505,7 @@ int mbox_controller_register(struct mbox_controller *mbox)
- {
- 	int i, txdone;
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index 197cad7b3d401..210f6077f475c 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -422,7 +422,7 @@ static int mbox_test_probe(struct platform_device *pdev)
+ err_free_chans:
+ 	if (tdev->tx_channel)
+ 		mbox_free_channel(tdev->tx_channel);
+-	if (tdev->rx_channel)
++	if (tdev->rx_channel && tdev->rx_channel != tdev->tx_channel)
+ 		mbox_free_channel(tdev->rx_channel);
+ 	return ret;
+ }
+@@ -435,7 +435,7 @@ static void mbox_test_remove(struct platform_device *pdev)
  
--	/* Sanity check */
--	if (!mbox || !mbox->dev || !mbox->ops || !mbox->num_chans)
-+	if (!mbox || !mbox->dev || !mbox->ops || !mbox->chans || !mbox->num_chans)
- 		return -EINVAL;
+ 	if (tdev->tx_channel)
+ 		mbox_free_channel(tdev->tx_channel);
+-	if (tdev->rx_channel)
++	if (tdev->rx_channel && tdev->rx_channel != tdev->tx_channel)
+ 		mbox_free_channel(tdev->rx_channel);
+ }
  
- 	if (mbox->txdone_irq)
 -- 
 2.53.0
 
