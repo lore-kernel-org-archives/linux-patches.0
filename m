@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E661C3C3C1C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EE33C198D;
 	Wed, 20 May 2026 11:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779275998; cv=none; b=OjRR7nOCdfu2zc7BhVk6Qnw3JflON3wjfQgqj5l+lalFtsKJyzS8uic/iCNidDj8JSMBEi4JjOW9Zdr474C5OLOA3AEzvYPa1It221neFltWykxXaTU4+bI+a3zJt+pa/mKfNuOLGBZu5VSyO/mWKGXYOfFGcHVmOR4c58XYhOg=
+	t=1779275998; cv=none; b=lJVno780vGzb8DdcMVrYn1mZXe1et7oOwM9fHLrfx/KOupP/UpXTr5aYGiXT5Hg1Bkv+EK5iOrAmiW+unvN4OMU1DFGSxst7f8YqYZVyr5AmGGgkC9LB5pz+EHJ9TZCwt9+i88L6RnfLL9NnmqsoZK/t/fDUit1kibrSJPH7ak8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779275998; c=relaxed/simple;
-	bh=CnTY8TCe4XhDblSh7LHCw5vJCcGfjIK7cE3NRSFm09E=;
+	bh=IX/Repa1aySqfY4fx8TzeX6rhq3yO0kNzFJX8DguvF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eunwtrglLPyfkRRB8E/kQO3D4EpNTkbw+kEeWCJpBSHWOLkxyI0B8shDq3Dzs96vAGhdBC7ov8igUhMVRlU2ZcIznWQdSVQ1aouRJPKB7zlDqj6K7vsEN4m4cps100kL/ji/x1AUUsMzixJT2d835dypbqjUqw6RC9dbJPK+l6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oz+1FkNV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cOo4cl0daVx+gOYFLaNMByJ0ubUHu8h7JHTamef/06vKOKd73YR+1u64QM6JeL0y+LctrdmubJUdlBfywxHN/bup912y9ICd4P2embgK5PPzIr0da0woC0X8+DmA/NGWYxJLKjZlUqRYaniVSlbLffmqimrDECBRxr67XlGpVn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T1CKjdrB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oz+1FkNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07851F00897;
-	Wed, 20 May 2026 11:19:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T1CKjdrB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF3F1F00893;
+	Wed, 20 May 2026 11:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779275993;
-	bh=2EmGlUeCTz0s9sqrvcVXILR/f6rFvrw/kcITTMO5Niw=;
+	s=k20260515; t=1779275992;
+	bh=nPgcOEOH3FWn/QWW6rJHvWeVUMHCsPNHcUfOAvcXkmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oz+1FkNVlgES5VGnWZEWoH1eaLZ6e3ERcEgsldtbq3iG4VBv/bzLn57BACjfG6Ybt
-	 tNwTDvWfkNfANItuZQZvjeSmLWW2jP3AQ7K8jO1d4SThPgCHvuON1VnPp+SHrf1DYa
-	 4xNt3CRLHqY8ApwnipoCNkiN5KFLDJAEG1/ej4937Ml/41eST+WE4drTWbTrgID/YU
-	 j5f1L6YhVRHUaE7+j3xuAhnv2GAuIgGMWmsXwgmOe572HphDCUln9MG83g+U1JmVbP
-	 m548sHZvPJu+a9vyZKeJQAmABOiaaTVEl8Esro32wFDu5/wUeyooNO5pJ8YyXWfGF+
-	 9lyF6Y8g62ltA==
+	b=T1CKjdrBfEctzDWIN2DCA1s5d78Nh3QouL68n7qOw8aZUPgHbikOF9elmBcnSB/vF
+	 viJL6P2Pup4Jymbh39qaQtaNjHYk5UMUA6QqiKGn4HWSyrtvWpRbGHjZM8cCzlyCnq
+	 dpyL3/ehJc8dGkErkZu+3k+cU1UhvVALnf2J5NXjMlEHOHv+OYJdFjfiuMDr3xXhI1
+	 1HE9gZdxrRW2FVN9YLk9R/j0bIBdtA74cqx5PR0lW2evN3fXoPVRHKmnoeIuXte+ZN
+	 TlGYS8WAigzDP5q9v5HQOWvk2ty7oY7fxaGKYaN3abGH761JqHGoARBmMmLkGhRIrF
+	 fzG86/xAsXCBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lianqin Hu <hulianqin@vivo.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Christian Van <cvan20191@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	jagan@amarulasolutions.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] ALSA: usb-audio: Add iface reset and delay quirk for TTGK Technology USB-C Audio
-Date: Wed, 20 May 2026 07:18:38 -0400
-Message-ID: <20260520111944.3424570-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] drm/panel: feiyang-fy07024di26a30d: return display-on error
+Date: Wed, 20 May 2026 07:18:37 -0400
+Message-ID: <20260520111944.3424570-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -54,234 +58,280 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lianqin Hu <hulianqin@vivo.com>
+From: Christian Van <cvan20191@gmail.com>
 
-[ Upstream commit 2149c011510cbdcf183a13b26756e4a02071f0f2 ]
+[ Upstream commit c67e8787f6743101c90c7a9c4bb7cf6f1f739f83 ]
 
-Setting up the interface when suspended/resumeing fail on this card.
-Adding a reset and delay quirk will eliminate this problem.
+mipi_dsi_dcs_set_display_on() returns an error code, but feiyang_enable()
+currently ignores it and always reports success.
 
-usb 1-1: new full-speed USB device number 2 using xhci-hcd
-usb 1-1: New USB device found, idVendor=3302, idProduct=17c2
-usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-usb 1-1: Product: USB-C Audio
-usb 1-1: Manufacturer: TTGK Technology
-usb 1-1: SerialNumber: 170120210706
+Return the DCS command result so callers can observe enable failures.
 
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/TYUPR06MB621720E4E8F99A42E162FD51D23D2@TYUPR06MB6217.apcprd06.prod.outlook.com
+Signed-off-by: Christian Van <cvan20191@gmail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260425053948.117714-1-cvan20191@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Record: Subsystem is `ALSA: usb-audio`; action verb is `Add`; intent is
-adding an interface reset plus interface delay quirk for TTGK Technology
-USB-C Audio `3302:17c2`.
+Step 1.1 Record: subsystem `drm/panel`, action verb `return`, summary:
+`feiyang-fy07024di26a30d` should propagate the MIPI DSI display-on
+command error instead of reporting success.
 
-Record: Tags present in the provided commit/message: `Signed-off-by:
-Lianqin Hu <hulianqin@vivo.com>`, `Signed-off-by: Takashi Iwai
-<tiwai@suse.de>`, `Link: https://patch.msgid.link/TYUPR06MB621720E4E8F99
-A42E162FD51D23D2@TYUPR06MB6217.apcprd06.prod.outlook.com`. No `Fixes:`,
-`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Cc: stable`.
+Step 1.2 Record: tags verified:
+- `Signed-off-by: Christian Van <cvan20191@gmail.com>`
+- `Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>`
+- `Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>`
+- `Link:
+  https://patch.msgid.link/20260425053948.117714-1-cvan20191@gmail.com`
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Cc: stable`, syzbot, or
+sanitizer tags were present.
 
-Record: Commit body describes a real device-specific failure: interface
-setup fails when the card is suspended/resumed. The included USB
-enumeration log verifies the target device ID `3302:17c2`, product
-`USB-C Audio`, manufacturer `TTGK Technology`.
+Step 1.3 Record: the body says `mipi_dsi_dcs_set_display_on()` returns
+an error but `feiyang_enable()` ignores it and always returns success.
+Verified in `drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c`.
+Symptom: DRM panel core cannot observe a failed display-on command and
+may continue the enable sequence as if the panel enabled successfully.
+No user report, stack trace, or affected-version statement was found.
 
-Record: This is not a hidden cleanup fix; it is an explicit hardware
-workaround/quirk for a suspend/resume interface setup failure.
+Step 1.4 Record: yes, this is a hidden bug fix: it fixes ignored error
+handling in a panel enable path. It is not cleanup or refactoring.
 
 ## Phase 2: Diff Analysis
-Record: One file changed: `sound/usb/quirks.c`, 2 insertions. Modified
-area: `quirk_flags_table[]`. Scope: single-file surgical hardware quirk.
+Step 2.1 Record: one file changed, `drivers/gpu/drm/panel/panel-feiyang-
+fy07024di26a30d.c`; 1 insertion, 3 deletions. Modified function:
+`feiyang_enable()`. Scope: single-file surgical driver fix.
 
-Record: Before: device `3302:17c2` had no built-in quirk flags. After:
-it gets `QUIRK_FLAG_FORCE_IFACE_RESET | QUIRK_FLAG_IFACE_DELAY`.
+Step 2.2 Record: before, `feiyang_enable()` called
+`mipi_dsi_dcs_set_display_on(ctx->dsi)` and always returned `0`. After,
+it returns the DCS command result directly. Affected path: normal panel
+enable path, after the 200 ms enable delay.
 
-Record: Bug category is hardware workaround. Verified semantics:
-`QUIRK_FLAG_IFACE_DELAY` adds 50 ms after `usb_set_interface()` in
-`endpoint_set_interface()`, and `QUIRK_FLAG_FORCE_IFACE_RESET` marks
-playback endpoints for re-prepare/interface setup after stop/restart.
+Step 2.3 Record: bug category is logic/error-propagation correctness.
+The broken mechanism was an ignored negative return from
+`mipi_dsi_dcs_set_display_on()`. Verified that
+`mipi_dsi_dcs_set_display_on()` returns `0` on success or a negative
+error code on failure.
 
-Record: Fix quality is high: exact VID/PID match, existing flag
-mechanisms, no new API, no broad behavior change. Regression risk is
-very low and limited to this USB device ID.
+Step 2.4 Record: fix quality is high: minimal, obviously correct, no new
+API, no locking, no data structure change. Regression risk is very low;
+the only behavior change is that a real display-on failure prevents
+`drm_panel_enable()` from marking the panel enabled and enabling
+backlight/followers.
 
 ## Phase 3: Git History Investigation
-Record: `git blame` around the insertion area shows the quirk table is
-established and contains many adjacent hardware-specific entries; nearby
-entries are from existing ALSA USB-audio quirk commits.
+Step 3.1 Record: `git blame` shows the ignored return was introduced
+with the original driver commit
+`69dc678abc2b9d36ff005413ca6e9edabe4c369a` (`drm/panel: Add Feiyang
+FY07024DI26A30-D MIPI-DSI LCD panel`), first contained in `v5.2-rc1`.
 
-Record: No `Fixes:` tag, so no introducing commit to follow.
+Step 3.2 Record: no `Fixes:` tag was present, so there was no tag to
+follow. I inspected the original driver commit anyway; it added the
+driver and already ignored this display-on return.
 
-Record: Recent file history shows many similar stable-style quirks,
-including `ALSA: usb-audio: Add iface reset and delay quirk for AB17X
-USB Audio`, `SPACETOUCH USB Audio`, `AB13X USB Audio`, and `GHW-123P`.
+Step 3.3 Record: recent file history shows mostly unrelated panel API
+conversions and cleanup. The candidate patch is standalone and only
+needs the existing `feiyang_enable()` and
+`mipi_dsi_dcs_set_display_on()` code.
 
-Record: Author history under `sound/usb` shows Lianqin Hu has submitted
-multiple similar USB-audio delay/reset quirk patches.
+Step 3.4 Record: no other `Christian Van` commits under
+`drivers/gpu/drm/panel` were found in checked `master` or `graphics-
+next`. Neil Armstrong is listed as DRM panel maintainer in `MAINTAINERS`
+and reviewed/applied the patch.
 
-Record: Dependency check: `QUIRK_FLAG_IFACE_DELAY` exists since
-v5.15-era code, but `QUIRK_FLAG_FORCE_IFACE_RESET` appears from
-v6.2-rc1. Therefore v6.6+ style trees have the required infrastructure;
-v6.1/v5.15 do not have the reset flag without additional
-prerequisite/adaptation.
+Step 3.5 Record: no dependencies found. The patch applies directly to
+`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`; `v5.4`
+contains the buggy code but needs a trivial context backport.
 
 ## Phase 4: Mailing List And External Research
-Record: No local commit hash was found on `master`, `sound-next`, or
-`all-next`, so `b4 dig -c <commit>` could not be used. I used the
-provided `Link:` with `b4 am`/`b4 mbox`.
+Step 4.1 Record: `b4 dig -c c67e8787f6743101c90c7a9c4bb7cf6f1f739f83`
+found the original submission at
+`https://patch.msgid.link/20260425053948.117714-1-cvan20191@gmail.com`.
+`b4 dig -a` found only v1, so the committed version is the only revision
+found.
 
-Record: `b4 am` found one patch and a two-message thread. `b4 am -c`
-checked for newer revisions and did not report a newer version.
+Step 4.2 Record: `b4 dig -w` showed the original recipients included
+Christian Van, Jagan Teki, Neil Armstrong, Jessica Zhang, Maarten
+Lankhorst, Maxime Ripard, Thomas Zimmermann, David Airlie, Simona
+Vetter, `dri-devel`, and `linux-kernel`. Neil Armstrong reviewed it and
+later applied it to `drm-misc-fixes`.
 
-Record: Full thread shows Takashi Iwai replied: “Applied now. Thanks.”
-No objections, NAKs, or risk concerns were present in the fetched
-thread.
+Step 4.3 Record: no `Reported-by` or bug-report link exists. WebFetch
+for lore URLs was blocked by Anubis, but `b4 mbox` fetched the thread
+successfully. The thread contained Neil’s `Reviewed-by` reply and an
+applied notice.
 
-Record: Original recipients included ALSA maintainers/lists: Jaroslav
-Kysela, Takashi Iwai, `linux-sound@vger.kernel.org`, and `linux-
-kernel@vger.kernel.org`.
+Step 4.4 Record: no multi-patch series found; this is a standalone
+1-patch series.
 
-Record: Stable-specific web search did not find usable stable-list
-discussion; lore web pages were blocked by Anubis, and search results
-did not reveal a stable objection.
+Step 4.5 Record: WebFetch searches of `lore.kernel.org/stable` were
+blocked by Anubis. Local pending/stable candidate branches searched did
+not show this patch already present.
 
 ## Phase 5: Code Semantic Analysis
-Record: Key affected function/data is `quirk_flags_table[]`; consumers
-are `snd_usb_init_quirk_flags_table()`, `endpoint_set_interface()`,
-`snd_usb_endpoint_stop()`, and `snd_usb_endpoint_prepare()`.
+Step 5.1 Record: modified function: `feiyang_enable()`.
 
-Record: Callers: `usb_audio_probe()` creates the USB audio card, calls
-`snd_usb_audio_create()`, which initializes quirk flags from the built-
-in table. PCM prepare paths call `snd_usb_endpoint_prepare()`, and PCM
-stop paths call `snd_usb_endpoint_stop()`.
+Step 5.2 Record: `feiyang_enable()` is installed as `.enable` in
+`feiyang_funcs`. `drm_panel_enable()` calls
+`panel->funcs->enable(panel)` and checks negative returns. Multiple DRM
+bridge/host drivers call `drm_panel_enable()`.
 
-Record: Callees/effects: `endpoint_set_interface()` calls
-`usb_set_interface()` and then delays if `QUIRK_FLAG_IFACE_DELAY` is
-set. `snd_usb_endpoint_stop()` sets `need_prepare`/`need_setup` for
-playback endpoints if `QUIRK_FLAG_FORCE_IFACE_RESET` is set.
+Step 5.3 Record: key callees are `msleep(200)` and
+`mipi_dsi_dcs_set_display_on(ctx->dsi)`. The latter calls
+`mipi_dsi_dcs_write()` and returns a negative error on write failure.
 
-Record: Reachability is verified through USB device probe and normal
-ALSA PCM suspend/resume/stream restart paths for this hardware.
+Step 5.4 Record: reachable through DRM panel enable paths during display
+modeset/enable for systems using this panel. This is driver/hardware-
+specific, not universal. No in-tree DTS user of
+`feiyang,fy07024di26a30d` was found beyond the binding example and
+driver match table.
 
-Record: Similar patterns exist in the same table for several devices
-using the same two flags, so this follows established local practice.
+Step 5.5 Record: many other panel drivers already check and return or
+handle `mipi_dsi_dcs_set_display_on()` errors, confirming this driver
+was an outlier.
 
-## Phase 6: Stable Tree Analysis
-Record: The generic USB-audio quirk table exists in v5.15, v6.1, v6.6,
-v6.12, and v7.0 tags checked.
+## Phase 6: Cross-Referencing And Stable Tree Analysis
+Step 6.1 Record: buggy code exists in `v5.4`, `v5.10`, `v5.15`, `v6.1`,
+`v6.6`, `v6.12`, `v6.19`, and `v7.0`. The driver was introduced for
+`v5.2-rc1`, so all active stable trees at or after that point likely
+contain it.
 
-Record: Required reset-flag infrastructure exists in v6.6, v6.12, and
-v7.0; it is absent in v6.1/v5.15 tags checked.
+Step 6.2 Record: expected backport difficulty is clean for `v5.10+`
+based on apply checks. `v5.4` failed direct apply due to context drift
+but contains the same ignored call and should need only a trivial one-
+function backport.
 
-Record: Textual `git apply --check` failed on v6.6, v6.12, v6.1, and
-current 7.0 checkout because nearby table context differs. `git apply
---check --3way` on current 7.0 succeeded cleanly; representative
-release-tag worktrees reported conflicts with three-way check, so older
-backports need minor context adjustment.
+Step 6.3 Record: no related stable-side fix for this same issue was
+found in the checked stable/pending branches.
 
-Record: No related `TTGK` or `3302:17c2` entry exists locally under
-`sound/usb`.
+## Phase 7: Subsystem And Maintainer Context
+Step 7.1 Record: subsystem is DRM panel driver, criticality
+`PERIPHERAL`/driver-specific. It affects users of Feiyang
+FY07024DI26A30-D MIPI-DSI panels.
 
-## Phase 7: Subsystem Context
-Record: Subsystem is ALSA USB audio, an important driver subsystem for
-USB audio peripherals.
+Step 7.2 Record: DRM panel is maintained and active. The file has had
+several API-conversion commits since introduction, but this fix is not
+dependent on those conversions for `v5.10+`.
 
-Record: Activity level is high: recent history in `sound/usb/quirks.c`
-contains multiple hardware quirk additions and USB-audio behavior fixes.
+## Phase 8: Impact And Risk Assessment
+Step 8.1 Record: affected population is driver-specific/config-specific:
+kernels with `CONFIG_DRM_PANEL_FEIYANG_FY07024DI26A30D` and hardware
+described with `feiyang,fy07024di26a30d`.
 
-## Phase 8: Impact And Risk
-Record: Affected users are owners of TTGK Technology USB-C Audio device
-`3302:17c2`.
+Step 8.2 Record: trigger is a failure of the DSI `SET_DISPLAY_ON`
+command during panel enable. I did not verify a specific real-world
+reporter, so frequency is unverified. It is not shown to be
+unprivileged-user-triggerable.
 
-Record: Trigger condition is using this device across suspend/resume or
-stream restart/interface setup paths. The commit message explicitly
-reports interface setup failure in that scenario.
+Step 8.3 Record: failure mode is user-visible display enable
+misreporting: before the patch, the panel core could treat the panel as
+enabled despite the failed display-on command. Severity: `MEDIUM` for
+affected hardware, because it can leave display/backlight state wrong,
+but no crash, memory corruption, deadlock, or security issue was
+verified.
 
-Record: Failure mode is device malfunction after suspend/resume, not a
-kernel crash. Severity is medium for the kernel generally but high for
-affected hardware users because audio can fail after power-management
-transitions.
-
-Record: Benefit is high for affected hardware and low-risk for everyone
-else. Risk is very low because the change is an exact VID/PID quirk
-using existing flags.
+Step 8.4 Record: benefit is moderate for affected hardware; risk is very
+low because the patch only returns an existing error code from a
+function that already has an `int` return type.
 
 ## Phase 9: Final Synthesis
-Record: Evidence for backporting: real hardware failure, exact device
-ID, standard quirk exception category, two-line contained patch,
-existing flag behavior, maintainer applied it, no API/feature expansion
-beyond a device-specific workaround.
+Step 9.1 Record:
+Evidence for backporting: real ignored-error bug; affects display enable
+correctness; original buggy code dates to `v5.2-rc1`; one-line surgical
+fix; maintainer reviewed/applied to `drm-misc-fixes`; clean apply to
+`v5.10+`; no new API or feature.
+Evidence against backporting: no user report, crash, security issue,
+data corruption, syzbot report, or `Fixes:` tag; affected population is
+limited to one panel driver; `v5.4` needs a trivial manual backport.
+Unresolved: actual field frequency of DSI display-on failures was not
+verified.
 
-Record: Evidence against: no external bug report or Tested-by tag found;
-exact mail patch needs context adjustment for stable trees; v6.1/v5.15
-lack `QUIRK_FLAG_FORCE_IFACE_RESET`, so those trees would need a
-deliberate adaptation or prerequisite decision.
+Step 9.2 Record:
+1. Obviously correct and tested? Correct by inspection; reviewed by DRM
+   panel maintainer. No explicit `Tested-by`.
+2. Fixes a real bug? Yes, ignored negative return from a hardware
+   command.
+3. Important issue? Moderate: display enable state correctness for
+   affected hardware, not a critical kernel-wide failure.
+4. Small and contained? Yes, one function, one file, 1 insertion/3
+   deletions.
+5. No new features/APIs? Yes.
+6. Can apply to stable? Yes for `v5.10+`; trivial backport needed for
+   `v5.4`.
 
-Record: Stable rules: obviously correct: yes; fixes a real user-visible
-hardware bug: yes; important enough for affected users: yes; small and
-contained: yes; no new API/feature: yes; applies cleanly: not textually
-everywhere, but trivial/minor for v6.6+ style trees.
+Step 9.3 Record: no automatic exception category applies; this is not a
+device ID, quirk, DT, build, or documentation patch.
 
-Record: Exception category: hardware quirk/workaround for a broken USB
-audio device. This is a standard stable-acceptable category.
+Step 9.4 Record: I recommend backporting. Although the impact is driver-
+specific and not a crash-class bug, the fix is a genuine hardware enable
+error propagation fix, very small, maintainer-reviewed, and low risk.
+Stable users with this panel should not have the panel core mark the
+panel enabled after the display-on command failed.
 
 ## Verification
-- [Phase 1] Parsed provided subject, tags, commit body, and USB
-  enumeration log.
-- [Phase 2] Verified diff is two inserted lines in `sound/usb/quirks.c`.
-- [Phase 2/5] Verified `QUIRK_FLAG_IFACE_DELAY` and
-  `QUIRK_FLAG_FORCE_IFACE_RESET` definitions and consumers in
-  `sound/usb/usbaudio.h` and `sound/usb/endpoint.c`.
-- [Phase 3] Ran `git blame` around the table insertion area and recent
-  `git log` for `sound/usb/quirks.c`.
-- [Phase 3] Verified similar reset/delay quirk commits and Lianqin Hu’s
-  related ALSA USB-audio quirk history.
-- [Phase 4] `b4 am` fetched the patch from the provided message-id link;
-  `b4 mbox` fetched the two-message thread.
-- [Phase 4] Verified Takashi Iwai’s maintainer reply: “Applied now.
-  Thanks.”
-- [Phase 4] `b4 am -c` did not report newer revisions.
-- [Phase 5] Traced quirk flag initialization from `usb_audio_probe()` to
-  `snd_usb_audio_create()` to `snd_usb_init_quirk_flags_table()`.
-- [Phase 6] Checked v5.15, v6.1, v6.6, v6.12, and v7.0 tag contents for
-  flag availability.
-- [Phase 6] Verified `FORCE_IFACE_RESET` absent in v6.1/v5.15 and
-  present in v6.6+.
-- [Phase 6] Verified plain apply fails due context; current 7.0 three-
-  way apply check succeeds without modifying the worktree.
-- UNVERIFIED: exact upstream commit SHA, because the commit was not
-  present on checked local branches and web search did not find it.
-
-This should be backported to stable trees that already contain the
-quirk-flag infrastructure, especially v6.6+ style trees. For older
-v6.1/v5.15 trees, it should not be applied verbatim unless maintainers
-choose a small adapted backport or also carry the reset-flag
-infrastructure.
+- Phase 1: Parsed commit `c67e8787f6743101c90c7a9c4bb7cf6f1f739f83` with
+  `git show`; confirmed subject, body, trailers, and diff.
+- Phase 2: Read `panel-feiyang-fy07024di26a30d.c`; confirmed old
+  `feiyang_enable()` ignored `mipi_dsi_dcs_set_display_on()` and
+  returned `0`.
+- Phase 2: Read `drm_mipi_dsi.c`; confirmed
+  `mipi_dsi_dcs_set_display_on()` returns a negative error on failure.
+- Phase 3: Ran `git blame -L 94,104`; confirmed buggy lines came from
+  `69dc678abc2b9d`.
+- Phase 3: Ran `git describe --contains 69dc678abc2b9d`; confirmed first
+  containing version `v5.2-rc1`.
+- Phase 3: Inspected original commit `69dc678abc2b9d`; confirmed the
+  ignored return existed from driver introduction.
+- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, and `b4 dig -w`; confirmed one
+  v1 patch, original lore URL, and recipient list.
+- Phase 4: Ran `b4 mbox`; confirmed Neil Armstrong reviewed and applied
+  it to `drm-misc-fixes`.
+- Phase 4: WebFetch lore and stable searches were blocked by Anubis;
+  this limitation did not drive the final decision.
+- Phase 5: Read `drm_panel.c`; confirmed `drm_panel_enable()` checks
+  negative `.enable` return and skips enabled/backlight/follower path on
+  failure.
+- Phase 5: Searched for `feiyang_enable`; confirmed it is used via
+  `.enable = feiyang_enable`.
+- Phase 5: Searched panel drivers for `mipi_dsi_dcs_set_display_on()`;
+  confirmed many peers handle its return.
+- Phase 6: Used `git grep` against stable tags; confirmed the ignored
+  call exists in `v5.4`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.19`, and
+  `v7.0`.
+- Phase 6: Apply-checked the patch in detached worktrees; clean for
+  `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`; failed
+  direct apply on `v5.4` due to context only.
+- Phase 7: Checked `MAINTAINERS`; confirmed Neil Armstrong maintains DRM
+  panel drivers.
+- Phase 8: Checked Kconfig and compatible strings; confirmed impact is
+  limited to the Feiyang panel driver/config and no in-tree board DTS
+  use was found.
+- UNVERIFIED: no actual user report or frequency of display-on command
+  failures was found.
 
 **YES**
 
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 2ffc69b57ab49..1428a0b620d37 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2417,6 +2417,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x3255, 0x0000, /* Luxman D-10X */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
-+	DEVICE_FLG(0x3302, 0x17c2, /* TTGK Technology USB-C Audio */
-+		   QUIRK_FLAG_FORCE_IFACE_RESET | QUIRK_FLAG_IFACE_DELAY),
- 	DEVICE_FLG(0x339b, 0x3a07, /* Synaptics HONOR USB-C HEADSET */
- 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
- 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
+diff --git a/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c b/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c
+index 4f8d6d8c07e4d..dbdb7e3cb7b62 100644
+--- a/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c
++++ b/drivers/gpu/drm/panel/panel-feiyang-fy07024di26a30d.c
+@@ -98,9 +98,7 @@ static int feiyang_enable(struct drm_panel *panel)
+ 	/* T12 (video & logic signal rise + backlight rise) T12 >= 200ms */
+ 	msleep(200);
+ 
+-	mipi_dsi_dcs_set_display_on(ctx->dsi);
+-
+-	return 0;
++	return mipi_dsi_dcs_set_display_on(ctx->dsi);
+ }
+ 
+ static int feiyang_disable(struct drm_panel *panel)
 -- 
 2.53.0
 
