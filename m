@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C8E369999;
-	Wed, 20 May 2026 17:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3783BE165;
+	Wed, 20 May 2026 17:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297652; cv=none; b=p681TdZ1+RHugQx5J0pR7eQE4zijdRfoAygCWXNvOgV7/ztuaBDdgyP5Z6oWl8YzT8wL6CMz+95yXJr0qrCgGGOm/E/41/MHa8FSu4SI5MpxFTgDfWFwaJAW0yrfVF7LYIpi0SgewyeKDR0EDdDMclzpi+IoDS1ofvOpSWxj8E4=
+	t=1779297654; cv=none; b=SxfcNJCSlFJ2xfXwbaG/amtLrQ+fmFmayCVA+Cwq6WZdgFXdidZ/S2Ta7AE2h8dObN+hkMCN03lYaPFHNW6G/jRRIdVE3PG9nuMM7taNrpVa2RB1NWifbE3swt5dQ0SGAY398QXJGeRraJm5r+kXuK7ruiUecieEyLlGlIrc/vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297652; c=relaxed/simple;
-	bh=VHT/WHa4O75MmOt22FzYl1vJy4XRpSjRJsTSZn4Wv/M=;
+	s=arc-20240116; t=1779297654; c=relaxed/simple;
+	bh=rWTV6soQ7aL4pM43nn/dEOv3pSkU4L159g9qvNryLk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwqRLwzASicg8SYX4+A7sgT06O51vZ4EgA/fKgrNF27/Ejm9dQFo0k414Dl0acDRdraHjUfrz9sX948Y66vhmQnCJD6KCYaC2/Md0Nuga1K2chZXDJ2gnnu5kRBH0HnaFueCD3In4Y9RwqU7AgRH81zLF4lI+pwO0YhqwBdgVxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBDZrzlb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rX7quIVlIwRIXCBT2YQLxIob7pGC8tgzC5zFtb/Hx6AfhntGIitu6Y0j9seFt/waqLSB4e4TjTTOWpf7U8AON3IFGhbtj6lV6RVWixccnALzqjhvQRzfA977sNcBN3QiW8QN9aLbANnKLERmC4Q8xCNMNUXc5UyOVB9rWYI5Yrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twdKQoCS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBDZrzlb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7423C1F00897;
-	Wed, 20 May 2026 17:20:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twdKQoCS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1DF1F000E9;
+	Wed, 20 May 2026 17:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297651;
-	bh=tOXr/5UhgGf0L/A04Ibn1U+DAWc+MxYLQ4WZnvUHHdQ=;
+	s=korg; t=1779297653;
+	bh=WuiQ3bZyM55afwibOEj2XjE7CW8y1T2zpLErupdI/9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBDZrzlbm9UhU3NDZ2Wsf62/mJuIY4EGjNvKFvJMneQe6s1HLri7lMRGBXiobQiE3
-	 /1F4ZrArdblCaszcXHDArUFZzia9cO0jPIxK0UREJKNRZ15fQDRFhEktOk8s5soj9K
-	 iWyD75Q/g5uAY5dWlTScEqJVI5ZH1QfM3RtZiXlw=
+	b=twdKQoCSs63hqY1HyI9BhVztJppkI97fVp6GnoUZdmvlmbNMfl4BXxux8MU3iALQv
+	 bLI0Ww15icnE6THfMf3V0RSjw19BotVmVh3m6Ju+txaYwjMoZ4C89k4Yd+2afLD+RK
+	 jTfDUUoa4ftBjGeClyiKUyGgqDG2cS2kh+y0LNtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Alexey Velichayshiy <a.velichayshiy@ispras.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 085/957] wifi: mt76: mt7925: prevent NULL vif dereference in mt7925_mac_write_txwi
-Date: Wed, 20 May 2026 18:09:28 +0200
-Message-ID: <20260520162136.403738277@linuxfoundation.org>
+Subject: [PATCH 6.18 112/957] wifi: rtw89: phy: fix uninitialized variable access in rtw89_phy_cfo_set_crystal_cap()
+Date: Wed, 20 May 2026 18:09:55 +0200
+Message-ID: <20260520162136.989460884@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,38 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
 
-[ Upstream commit 962eb04e67552be406c906c83099c1d736aae3b6 ]
+[ Upstream commit 047cddf88c611e616d49a00311d4722e46286234 ]
 
-Check for a NULL `vif` before accessing `ieee80211_vif_is_mld(vif)` to
-avoid a potential kernel panic in scenarios where `vif` might not be
-initialized.
+In the rtw89_phy_cfo_set_crystal_cap() function, for chips other than
+RTL8852A/RTL8851B, the values read by rtw89_mac_read_xtal_si() are
+stored into the local variables sc_xi_val and sc_xo_val. If either
+read fails, these variables remain uninitialized, they are later
+used to update cfo->crystal_cap and in debug print statements. This
+can lead to undefined behavior.
 
-Fixes: ebb1406813c6 ("wifi: mt76: mt7925: add link handling to txwi")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250904030649.655436-3-mingyen.hsieh@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fix the issue by initializing sc_xi_val and sc_xo_val to zero,
+like is implemented in vendor driver.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 8379fa611536 ("rtw89: 8852c: add write/read crystal function in CFO tracking")
+Signed-off-by: Alexey Velichayshiy <a.velichayshiy@ispras.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260323140613.1615574-1-a.velichayshiy@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/phy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-index f12b8db739653..0608f0c1fd2c2 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -803,8 +803,8 @@ mt7925_mac_write_txwi(struct mt76_dev *dev, __le32 *txwi,
- 	txwi[5] = cpu_to_le32(val);
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
+index ba7feadd75828..36dee482bc34b 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.c
++++ b/drivers/net/wireless/realtek/rtw89/phy.c
+@@ -4499,7 +4499,7 @@ static void rtw89_phy_cfo_set_crystal_cap(struct rtw89_dev *rtwdev,
+ {
+ 	struct rtw89_cfo_tracking_info *cfo = &rtwdev->cfo_tracking;
+ 	const struct rtw89_chip_info *chip = rtwdev->chip;
+-	u8 sc_xi_val, sc_xo_val;
++	u8 sc_xi_val = 0, sc_xo_val = 0;
  
- 	val = MT_TXD6_DAS | FIELD_PREP(MT_TXD6_MSDU_CNT, 1);
--	if (!ieee80211_vif_is_mld(vif) ||
--	    (q_idx >= MT_LMAC_ALTX0 && q_idx <= MT_LMAC_BCN0))
-+	if (vif && (!ieee80211_vif_is_mld(vif) ||
-+	    (q_idx >= MT_LMAC_ALTX0 && q_idx <= MT_LMAC_BCN0)))
- 		val |= MT_TXD6_DIS_MAT;
- 	txwi[6] = cpu_to_le32(val);
- 	txwi[7] = 0;
+ 	if (!force && cfo->crystal_cap == crystal_cap)
+ 		return;
 -- 
 2.53.0
 
