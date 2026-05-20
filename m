@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9DB3F39C9;
-	Wed, 20 May 2026 17:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FF236405A;
+	Wed, 20 May 2026 17:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299678; cv=none; b=OHp+9223yFMm/miqHwybO1XxbLty9qcrSDzdFFlxe4Ocqp9H0I/5S2wDvqNK7Qsqdur5iHapIYye0mDX0Vk4XoGAcAdN06c05WisMVrAg6Mset91iymv2TEe87l8UTvgSb6bv4vwsaGy/6LQHKhbO4oaeD5R3Y/DG35N6L65B0Y=
+	t=1779299680; cv=none; b=B4MKXzGhL+bXaZc0R8KbSO3kVAM6AswCOtJy42H8tbEXzriJWA6h2KCJ+uuTMqtJZLLTW+vigWLinz25ayt7i6ZUZ0Kxf5RYwLeDTWufikLIpqa44oS1jPxwSqDOzHzhXcBdr7ONVpTyIqTAFP3C+CEsMweHYA3wHbXlxB6N7cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299678; c=relaxed/simple;
-	bh=pgeBajgwko9YJ8aooNthGAARFu1trpbG4JC2IOtatvU=;
+	s=arc-20240116; t=1779299680; c=relaxed/simple;
+	bh=xeC5DanbDuAqMhrGdphYIi9aSjOCmP0GwaVNaYdJGWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aw0ZvAw3RDR4d37RlPjQdq6KssGNw1kqx7R9v0Yr4nT4tew5L3dTogK3oBtAqPj+Ku4qFI0y9EdWCv1kwk6pebIIPL2HfnH4jjfw8p4XxpAICQhOckf37hC7aj05NsR2QYnh/qsqnVxupEtqLdHJ4dRX+q0+3hsK6TL/oQDrVVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uphp0pV4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dc+udf933hJTeizNLcPOHsmj6UFeJndgsjC8iYSDGFnN6z+mtm+eNsXVbZyotfoDqfoIYpOmhIjamNT87SRfVA+DlTqTcytncCxd1W3iUTLWHb050F6+JLMSdxc8jNSSz9EW8zsi1s31bcRcoPa8FZJUSBWrIXsvjT368mPUpx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXXeFUKt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uphp0pV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A311F000E9;
-	Wed, 20 May 2026 17:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXXeFUKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2C81F000E9;
+	Wed, 20 May 2026 17:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299677;
-	bh=vczTOpyEeisYkzrPdiCPOmMm/e+0Xz/vZBMYR8O3cKo=;
+	s=korg; t=1779299679;
+	bh=jI93fEztf4amiAlwJC4EbEUMPhIsah4YdXMaEVgyFSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uphp0pV4dELq7x+NGE/D8h6PMDDrfcTzksqKcTUZa2txdM4KT/g/bwdSdmSKbcgmR
-	 ocMEt0pt/kJIfUik+RPjWCAR12xtY2rnZnAz0Rv/iP/psMe8LKr2CD/9GVAwXxpA0M
-	 1JtAOEE4uhPjaWUzo/6AAAzAt3uIUlyHdC2nIrME=
+	b=hXXeFUKtcn041f3WGgsjo0zMiqbPo6o2Pea9g2YbBxljyfrSEX0NvSAqNUq/96YeU
+	 NU5FEO+YTMZ4ojocpxT+SczUFL6mop9ybHS4MmVNTp2iUAwp3oAVDXyMrrxYhSn1kc
+	 LFixaZ0c7Oww+BuuVFtEyWeqB2486PFUPCPLnhRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Jenny Guanni Qu <qguanni@gmail.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 863/957] erofs: fix offset truncation when shifting pgoff on 32-bit platforms
-Date: Wed, 20 May 2026 18:22:26 +0200
-Message-ID: <20260520162153.281388122@linuxfoundation.org>
+Subject: [PATCH 6.18 864/957] bpf: Fix sync_linked_regs regarding BPF_ADD_CONST32 zext propagation
+Date: Wed, 20 May 2026 18:22:27 +0200
+Message-ID: <20260520162153.304028325@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,53 +54,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit c99493ce409c3b98fec1616dbcf24c102e006deb ]
+[ Upstream commit bc308be380c136800e1e94c6ce49cb53141d6506 ]
 
-On 32-bit platforms, pgoff_t is 32 bits wide, so left-shifting
-large arbitrary pgoff_t values by PAGE_SHIFT performs 32-bit arithmetic
-and silently truncates the result for pages beyond the 4 GiB boundary.
+Jenny reported that in sync_linked_regs() the BPF_ADD_CONST32 flag is
+checked on known_reg (the register narrowed by a conditional branch)
+instead of reg (the linked target register created by an alu32 operation).
 
-Cast the page index to loff_t before shifting to produce a correct
-64-bit byte offset.
+Example case with reg:
 
-Fixes: 386292919c25 ("erofs: introduce readmore decompression strategy")
-Fixes: 307210c262a2 ("erofs: verify metadata accesses for file-backed mounts")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+  1. r6 = bpf_get_prandom_u32()
+  2. r7 = r6 (linked, same id)
+  3. w7 += 5 (alu32 -- r7 gets BPF_ADD_CONST32, zero-extended by CPU)
+  4. if w6 < 0xFFFFFFFC goto safe (narrows r6 to [0xFFFFFFFC, 0xFFFFFFFF])
+  5. sync_linked_regs() propagates to r7 but does NOT call zext_32_to_64()
+  6. Verifier thinks r7 is [0x100000001, 0x100000004] instead of [1, 4]
+
+Since known_reg above does not have BPF_ADD_CONST32 set above, zext_32_to_64()
+is never called on alu32-derived linked registers. This causes the verifier
+to track incorrect 64-bit bounds, while the CPU correctly zero-extends the
+32-bit result.
+
+The code checking known_reg->id was correct however (see scalars_alu32_wrap
+selftest case), but the real fix needs to handle both directions - zext
+propagation should be done when either register has BPF_ADD_CONST32, since
+the linked relationship involves a 32-bit operation regardless of which
+side has the flag.
+
+Example case with known_reg (exercised also by scalars_alu32_wrap):
+
+  1. r1 = r0; w1 += 0x100 (alu32 -- r1 gets BPF_ADD_CONST32)
+  2. if r1 > 0x80 - known_reg = r1 (has BPF_ADD_CONST32), reg = r0 (doesn't)
+
+Hence, fix it by checking for (reg->id | known_reg->id) & BPF_ADD_CONST32.
+
+Moreover, sync_linked_regs() also has a soundness issue when two linked
+registers used different ALU widths: one with BPF_ADD_CONST32 and the
+other with BPF_ADD_CONST64. The delta relationship between linked registers
+assumes the same arithmetic width though. When one register went through
+alu32 (CPU zero-extends the 32-bit result) and the other went through
+alu64 (no zero-extension), the propagation produces incorrect bounds.
+
+Example:
+
+  r6 = bpf_get_prandom_u32()     // fully unknown
+  if r6 >= 0x100000000 goto out  // constrain r6 to [0, U32_MAX]
+  r7 = r6
+  w7 += 1                        // alu32: r7.id = N | BPF_ADD_CONST32
+  r8 = r6
+  r8 += 2                        // alu64: r8.id = N | BPF_ADD_CONST64
+  if r7 < 0xFFFFFFFF goto out    // narrows r7 to [0xFFFFFFFF, 0xFFFFFFFF]
+
+At the branch on r7, sync_linked_regs() runs with known_reg=r7
+(BPF_ADD_CONST32) and reg=r8 (BPF_ADD_CONST64). The delta path
+computes:
+
+  r8 = r7 + (delta_r8 - delta_r7) = 0xFFFFFFFF + (2 - 1) = 0x100000000
+
+Then, because known_reg->id has BPF_ADD_CONST32, zext_32_to_64(r8) is
+called, truncating r8 to [0, 0]. But r8 used a 64-bit ALU op -- the
+CPU does NOT zero-extend it. The actual CPU value of r8 is
+0xFFFFFFFE + 2 = 0x100000000, not 0. The verifier now underestimates
+r8's 64-bit bounds, which is a soundness violation.
+
+Fix sync_linked_regs() by skipping propagation when the two registers
+have mixed ALU widths (one BPF_ADD_CONST32, the other BPF_ADD_CONST64).
+
+Lastly, fix regsafe() used for path pruning: the existing checks used
+"& BPF_ADD_CONST" to test for offset linkage, which treated
+BPF_ADD_CONST32 and BPF_ADD_CONST64 as equivalent.
+
+Fixes: 7a433e519364 ("bpf: Support negative offsets, BPF_SUB, and alu32 for linked register tracking")
+Reported-by: Jenny Guanni Qu <qguanni@gmail.com>
+Co-developed-by: Puranjay Mohan <puranjay@kernel.org>
+Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260319211507.213816-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/data.c  | 2 +-
- fs/erofs/zdata.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/fs/erofs/data.c b/fs/erofs/data.c
-index 58aea2b48580c..d685ee1d9c554 100644
---- a/fs/erofs/data.c
-+++ b/fs/erofs/data.c
-@@ -38,7 +38,7 @@ void *erofs_bread(struct erofs_buf *buf, erofs_off_t offset, bool need_kmap)
- 	 * However, the data access range must be verified here in advance.
- 	 */
- 	if (buf->file) {
--		fpos = index << PAGE_SHIFT;
-+		fpos = (loff_t)index << PAGE_SHIFT;
- 		err = rw_verify_area(READ, buf->file, &fpos, PAGE_SIZE);
- 		if (err < 0)
- 			return ERR_PTR(err);
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 71f01f0a07435..0f09f3ba32149 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -1869,7 +1869,7 @@ static void z_erofs_pcluster_readmore(struct z_erofs_frontend *f,
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index ebfa27d4002c5..3dcf591acd50d 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -16913,6 +16913,12 @@ static void sync_linked_regs(struct bpf_verifier_state *vstate, struct bpf_reg_s
+ 			continue;
+ 		if ((reg->id & ~BPF_ADD_CONST) != (known_reg->id & ~BPF_ADD_CONST))
+ 			continue;
++		/*
++		 * Skip mixed 32/64-bit links: the delta relationship doesn't
++		 * hold across different ALU widths.
++		 */
++		if (((reg->id ^ known_reg->id) & BPF_ADD_CONST) == BPF_ADD_CONST)
++			continue;
+ 		if ((!(reg->id & BPF_ADD_CONST) && !(known_reg->id & BPF_ADD_CONST)) ||
+ 		    reg->off == known_reg->off) {
+ 			s32 saved_subreg_def = reg->subreg_def;
+@@ -16940,7 +16946,7 @@ static void sync_linked_regs(struct bpf_verifier_state *vstate, struct bpf_reg_s
+ 			scalar32_min_max_add(reg, &fake_reg);
+ 			scalar_min_max_add(reg, &fake_reg);
+ 			reg->var_off = tnum_add(reg->var_off, fake_reg.var_off);
+-			if (known_reg->id & BPF_ADD_CONST32)
++			if ((reg->id | known_reg->id) & BPF_ADD_CONST32)
+ 				zext_32_to_64(reg);
+ 			reg_bounds_sync(reg);
+ 		}
+@@ -19056,11 +19062,14 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
+ 		 * Also verify that new value satisfies old value range knowledge.
+ 		 */
  
- 		if (cur < PAGE_SIZE)
- 			break;
--		cur = (index << PAGE_SHIFT) - 1;
-+		cur = ((loff_t)index << PAGE_SHIFT) - 1;
- 	}
- }
+-		/* ADD_CONST mismatch: different linking semantics */
+-		if ((rold->id & BPF_ADD_CONST) && !(rcur->id & BPF_ADD_CONST))
+-			return false;
+-
+-		if (rold->id && !(rold->id & BPF_ADD_CONST) && (rcur->id & BPF_ADD_CONST))
++		/*
++		 * ADD_CONST flags must match exactly: BPF_ADD_CONST32 and
++		 * BPF_ADD_CONST64 have different linking semantics in
++		 * sync_linked_regs() (alu32 zero-extends, alu64 does not),
++		 * so pruning across different flag types is unsafe.
++		 */
++		if (rold->id &&
++		    (rold->id & BPF_ADD_CONST) != (rcur->id & BPF_ADD_CONST))
+ 			return false;
  
+ 		/* Both have offset linkage: offsets must match */
 -- 
 2.53.0
 
