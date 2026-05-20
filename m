@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4816536EAB8;
-	Wed, 20 May 2026 16:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A3733BBBA;
+	Wed, 20 May 2026 16:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296214; cv=none; b=Y/20Ha+z+2ZlHss3qWXWQMwaXCkCsifxTueOlToE32+74WTBol7rCi02aGa0ibTQUqpzpQn2vUIGCuvZe6prpfclW4gC02RY8FNmuRkEe8Yvyg3jhPKMp0cQtwhG6cTwOtjbjBZaFaO6g/cd0sE/EFs+BT4f1A8waZagpGBm3MI=
+	t=1779296217; cv=none; b=JCFeJI1pYB9fsadUxvs9JezZzvGRpZT6ZtW9auGOOERmPElsibtIjqhL1TrNiHDfy9ciG7Dbzvo4IrSAiadsV3hEJAtJeAYsyAGKRBFKUubgE+0P4+36xkCY9tL1ljEVAJBwE4KXmH0TRdJU3PSuclZwJO2vm4zlXtIpehRst9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296214; c=relaxed/simple;
-	bh=4j8CtymLnJhgM7lCo//J87sbyZNAqK2VW678MiCKyQs=;
+	s=arc-20240116; t=1779296217; c=relaxed/simple;
+	bh=Tfj8t+moexJC4yjnSS6KtI9FesCkkL1i4CDC8c5mXak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVmeSqUy7lZqckyudn9o55j4iZqCIqzUPcrzTxEYtEUlzRlhyvE+l5f4svU9h6zvYT6wL9E9hPjKxOXzffjX8GeUnpdQscKwEaX/LxmwAznhGlYTPYDQH/1GXe6C2WW+IpwSAwBKnl5rbvg3unxBNNS8S+NzYUKHsxKe5SSap9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUhQwkxt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FvDykADasoiJuBftWaJi0oomXJg2fhmXnubh3UKZBVFJespCQmt3pjJxPGvt36HbSVipLGkTbc4WqNaEguO2Wcwuj/KWGRtgT6qP5jl1CQCrKiN150wRSOkcNRBNMsGHRSfWqtfrYeF2NYsCYEuvgw8fDYgq/52mjscG5isvxOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0m4wFf51; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUhQwkxt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3211F000E9;
-	Wed, 20 May 2026 16:56:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0m4wFf51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AE51F000E9;
+	Wed, 20 May 2026 16:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296213;
-	bh=yVe+SmtOddPf4FOLgeYbgSNetfqcIpf6IFcGDW7eTJM=;
+	s=korg; t=1779296215;
+	bh=dAeUvSxRgmWYqfcq1cE4/Zjz4QZnsDsrPkrTgqw9f+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XUhQwkxtIjWRx7eOsdmp5kOujiyOYrEWoP8YbAx9bYeI0q6E8LNifLO18UJ/Kla4B
-	 MUXXrqMcdq51qbBq8HEF0txQ7LHCF2whkgoON7dna6GFKB2EtJz6luphay94XB8+Cg
-	 q+lD8IeBAA63NfenCs5KC6T14tUV+s/YABFgVq7c=
+	b=0m4wFf51Nb+qjlrYmPWw531eayTr7YMxgrDPyEqCkzsnCqlIXacNn5IwRX7GmcuPx
+	 keXtOrQQdhyVWmqKHlKuMHcq4NtIxvchTtlBVvZDUgcTC6CuVAt2BRLhvEyYnlxYw1
+	 6MaoYMxv/OQBOfbHWU4PIOKFiGxKxncp2Ys8s2Pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Val Packett <val@packett.cool>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0714/1146] dt-bindings: clock: qcom,gcc-sc8180x: Add missing GDSCs
-Date: Wed, 20 May 2026 18:16:04 +0200
-Message-ID: <20260520162204.345862715@linuxfoundation.org>
+Subject: [PATCH 7.0 0715/1146] clk: qcom: gcc-sc8180x: Add missing GDSCs
+Date: Wed, 20 May 2026 18:16:05 +0200
+Message-ID: <20260520162204.368313843@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,36 +55,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Val Packett <val@packett.cool>
 
-[ Upstream commit 76404ffbf07f28a5ec04748e18fce3dac2e78ef6 ]
+[ Upstream commit 3565741eb985a8a7cc6656eb33496195468cb99e ]
 
 There are 5 more GDSCs that we were ignoring and not putting to sleep,
 which are listed in downstream DTS. Add them.
 
+Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Val Packett <val@packett.cool>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260312112321.370983-2-val@packett.cool
+Link: https://lore.kernel.org/r/20260312112321.370983-3-val@packett.cool
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 3565741eb985 ("clk: qcom: gcc-sc8180x: Add missing GDSCs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/dt-bindings/clock/qcom,gcc-sc8180x.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/clk/qcom/gcc-sc8180x.c | 50 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
-diff --git a/include/dt-bindings/clock/qcom,gcc-sc8180x.h b/include/dt-bindings/clock/qcom,gcc-sc8180x.h
-index b9d8438a15ffb..9ed7b794aacc4 100644
---- a/include/dt-bindings/clock/qcom,gcc-sc8180x.h
-+++ b/include/dt-bindings/clock/qcom,gcc-sc8180x.h
-@@ -322,5 +322,10 @@
- #define USB30_MP_GDSC						8
- #define USB30_PRIM_GDSC						9
- #define USB30_SEC_GDSC						10
-+#define HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC		11
-+#define HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC		12
-+#define HLOS1_VOTE_MMNOC_MMU_TBU_SF_GDSC		13
-+#define HLOS1_VOTE_TURING_MMU_TBU0_GDSC			14
-+#define HLOS1_VOTE_TURING_MMU_TBU1_GDSC			15
+diff --git a/drivers/clk/qcom/gcc-sc8180x.c b/drivers/clk/qcom/gcc-sc8180x.c
+index 31e788e22ab4a..55dabf6259b29 100644
+--- a/drivers/clk/qcom/gcc-sc8180x.c
++++ b/drivers/clk/qcom/gcc-sc8180x.c
+@@ -4266,6 +4266,51 @@ static struct gdsc usb30_mp_gdsc = {
+ 	.flags = POLL_CFG_GDSCR,
+ };
  
- #endif
++static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
++	.gdscr = 0x7d050,
++	.pd = {
++		.name = "hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
++};
++
++static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc = {
++	.gdscr = 0x7d058,
++	.pd = {
++		.name = "hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
++};
++
++static struct gdsc hlos1_vote_mmnoc_mmu_tbu_sf_gdsc = {
++	.gdscr = 0x7d054,
++	.pd = {
++		.name = "hlos1_vote_mmnoc_mmu_tbu_sf_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
++};
++
++static struct gdsc hlos1_vote_turing_mmu_tbu0_gdsc = {
++	.gdscr = 0x7d05c,
++	.pd = {
++		.name = "hlos1_vote_turing_mmu_tbu0_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
++};
++
++static struct gdsc hlos1_vote_turing_mmu_tbu1_gdsc = {
++	.gdscr = 0x7d060,
++	.pd = {
++		.name = "hlos1_vote_turing_mmu_tbu1_gdsc",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE,
++};
++
+ static struct clk_regmap *gcc_sc8180x_clocks[] = {
+ 	[GCC_AGGRE_NOC_PCIE_TBU_CLK] = &gcc_aggre_noc_pcie_tbu_clk.clkr,
+ 	[GCC_AGGRE_UFS_CARD_AXI_CLK] = &gcc_aggre_ufs_card_axi_clk.clkr,
+@@ -4595,6 +4640,11 @@ static struct gdsc *gcc_sc8180x_gdscs[] = {
+ 	[USB30_MP_GDSC] = &usb30_mp_gdsc,
+ 	[USB30_PRIM_GDSC] = &usb30_prim_gdsc,
+ 	[USB30_SEC_GDSC] = &usb30_sec_gdsc,
++	[HLOS1_VOTE_MMNOC_MMU_TBU_HF0_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc,
++	[HLOS1_VOTE_MMNOC_MMU_TBU_HF1_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_hf1_gdsc,
++	[HLOS1_VOTE_MMNOC_MMU_TBU_SF_GDSC] = &hlos1_vote_mmnoc_mmu_tbu_sf_gdsc,
++	[HLOS1_VOTE_TURING_MMU_TBU0_GDSC] = &hlos1_vote_turing_mmu_tbu0_gdsc,
++	[HLOS1_VOTE_TURING_MMU_TBU1_GDSC] = &hlos1_vote_turing_mmu_tbu1_gdsc,
+ };
+ 
+ static const struct regmap_config gcc_sc8180x_regmap_config = {
 -- 
 2.53.0
 
