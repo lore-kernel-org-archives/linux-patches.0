@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5650E3F7884;
-	Wed, 20 May 2026 18:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CE23F8707;
+	Wed, 20 May 2026 18:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300718; cv=none; b=XNDwM8l87tezk5DHXsRWJp1LUdPmXSJE5y9H5xx9KfbkIUUN2qHxZ64RYp/CJP5CrY8bXNjVKN81QR2AIfYAk6nDD84uVXJKTKrd07NMWFDUX6fU/3QJs2AhOGLf2kANnbZOuqNk7PY5BgynSG9JkN1MPz+ELT7qgDiKTlFRKVE=
+	t=1779300721; cv=none; b=TV/S5HeGgKjRXuUmYim6K2t3e6NvjjJbThg0JwloXziDJgYFN5CQn+kyD0OvhyxHi5DTnBx/g1bcZ6qwcWSl/t22axhBJr0JY72kwXMaqwAzgy/gYUSz+sj3h+6dL+D7joZVEYjhejrlBrY/b92SUZHc/ZfTiT9MDOQUTe4Gc4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300718; c=relaxed/simple;
-	bh=blefAHbzxWMQGWW5JtoVDpBED8qoUWr5xOH3Y8XM2co=;
+	s=arc-20240116; t=1779300721; c=relaxed/simple;
+	bh=OSHpTPLFvicpeMkHhA/vd23uPy6epF4FB9KhIm3SAPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pNBS76oZ6ahHETTgds+p4Z30aI2uZrgYe0ZkNTm0K7XysQL6NGl6JICaTXFRQmJ076Jio+LnS73IUr/7QEeeIkfqxyLnpQ+yti+ImbH16eERwPzwBXnB1PVklq5o4EtVtMo4L9eleJf6dmH9Xrz78nXaFBbLjGWDTBnBQTchv4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmxgEDtF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=R6cpcCqPpqoHT1Rgl01odU+ATDNMvJCsR/RnHB1oRyMurjQyKv89DKLTOlS+n5cQT776P/eQ/xR+ztLWYAZkzscHweshWr6y1FrEtl6smHKFzqT6QNTtknEBt/op6wi44AoC+QX48pHUbLldvqkOEVJHmW2keLvwtG5Azh6MxZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iq9Bo6s5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmxgEDtF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4911F000E9;
-	Wed, 20 May 2026 18:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iq9Bo6s5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CC21F000E9;
+	Wed, 20 May 2026 18:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300717;
-	bh=D9yAgfvyUJQmGxPibCSzgqd9ffti4vy5eTinGleL+vg=;
+	s=korg; t=1779300719;
+	bh=UEqvJnXY67gjs7Bfh+nROpMjHoD/C1zOf2XzBb3YlbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EmxgEDtFibn5OAqaB2xxX2fgJPQ42Fu6YJOMvPygHSls99TdFD2zngrLemmp3KmMy
-	 HN1MtwyEHQTRBCtfVZVLwuGBideDInan+RZtNAxNTSJP68kw9phkvhfbD9RpueIM/s
-	 nVJhR0LESG9DP6T1NHoNhe8On5CqgWJYAwxgJ9p0=
+	b=Iq9Bo6s57KwYZLsqkmqFfeOCaA4qO0IGfeqIc34ySlS9iNoqFRxsZUIIAqR8nkv8v
+	 3ue+UwM15qcufDgDIfbIndqtL+B1cBda7XfWBuuuisAs++Xpele7kBSMQAcXYdPBEj
+	 m/s04sL+z70sV4rCyi2fLjMSqilTIs7v1uL0hqsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	John Hawley <warthog9@eaglescrag.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 281/666] soc: qcom: ocmem: return -EPROBE_DEFER is ocmem is not available
-Date: Wed, 20 May 2026 18:18:12 +0200
-Message-ID: <20260520162117.304745996@linuxfoundation.org>
+Subject: [PATCH 6.12 255/666] ktest: Avoid undef warning when WARNINGS_FILE is unset
+Date: Wed, 20 May 2026 18:17:46 +0200
+Message-ID: <20260520162116.743459086@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,50 +51,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 91b59009c7d48b58dbc50fecb27f2ad20749a05a ]
+[ Upstream commit 057854f8a595160656fe77ed7bf0d2403724b915 ]
 
-If OCMEM is declared in DT, it is expected that it is present and
-handled by the driver. The GPU driver will ignore -ENODEV error, which
-typically means that OCMEM isn't defined in DT. Let ocmem return
--EPROBE_DEFER if it supposed to be used, but it is not probed (yet).
+check_buildlog() probes $warnings_file with -f even when WARNINGS_FILE is
+not configured. Perl warns about the uninitialized value and adds noise to
+the test log, which can hide the output we actually care about.
 
-Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260323-ocmem-v1-3-ad9bcae44763@oss.qualcomm.com
-[bjorn: s/ERR_PTR(dev_err_probe)/dev_err_ptr_probe/
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Check that WARNINGS_FILE is defined before testing whether the file exists.
+
+Cc: John Hawley <warthog9@eaglescrag.net>
+Cc: Andrea Righi <arighi@nvidia.com>
+Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Link: https://patch.msgid.link/20260307-ktest-fixes-v1-1-565d412f4925@suse.com
+Fixes: 4283b169abfb ("ktest: Add make_warnings_file and process full warnings")
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ocmem.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ tools/testing/ktest/ktest.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-index ed77fdc76c9b2..37ea6b86aebcb 100644
---- a/drivers/soc/qcom/ocmem.c
-+++ b/drivers/soc/qcom/ocmem.c
-@@ -203,10 +203,9 @@ struct ocmem *of_get_ocmem(struct device *dev)
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 3242a216af9e7..b18ea351c8b16 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2483,7 +2483,7 @@ sub check_buildlog {
+     my $save_no_reboot = $no_reboot;
+     $no_reboot = 1;
  
- 	ocmem = platform_get_drvdata(pdev);
- 	put_device(&pdev->dev);
--	if (!ocmem) {
--		dev_err(dev, "Cannot get ocmem\n");
--		return ERR_PTR(-ENODEV);
--	}
-+	if (!ocmem)
-+		return dev_err_ptr_probe(dev, -EPROBE_DEFER, "Cannot get ocmem\n");
-+
- 	return ocmem;
- }
- EXPORT_SYMBOL_GPL(of_get_ocmem);
+-    if (-f $warnings_file) {
++    if (defined($warnings_file) && -f $warnings_file) {
+ 	open(IN, $warnings_file) or
+ 	    dodie "Error opening $warnings_file";
+ 
 -- 
 2.53.0
 
