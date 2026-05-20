@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01C0402BBA;
-	Wed, 20 May 2026 18:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F4C403E98;
+	Wed, 20 May 2026 18:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302528; cv=none; b=Kw7aktnCD9KoZZY/NDZltmqH5qqEGeGbp01CDbhbkFwSeDX2a0ng06GqRyhM9U5IIwjbJuK1MReTxHPEmttTPHkXXbQbhfmC2bxhAIHmwd9A/jreDyFU7kCDqge8u0KU5O3fTa+NzXVcCkkMMjmvPjqx5BYCwtLi1YGXKi1WnZE=
+	t=1779302531; cv=none; b=j4ihk0bwb8+HeCoE+yJMJHlXv6A+5BPoVLK4yENVSDe3z9rl6XocGhs6Rd+CP7bdqjheqB1vZ1IezgQpe9zhFhh2zwzLgpc9/q7TqAGl2DEDuoVZ6LctojGGMbNINhBTRMKYFzgaUKFaUoZsb8WX9KRfFUHDr9LUc94+nOX639Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302528; c=relaxed/simple;
-	bh=tHNgIn63Y+Fy3KU6sbQ6rXib69vJbUNGHjaZTBzJ4jI=;
+	s=arc-20240116; t=1779302531; c=relaxed/simple;
+	bh=mEM5kq3J2UWIKxYvbZkaU9Oba105qBRIXjWsR5nYkeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hs383Pyol0r84vqHF330NsrvwS2tD84Jerjb+YDqIQEuMYiQXL4Te+Jn6brREzDk3Js4A/aytj4D3Z4tyZ0E/9cJwfF7ALNWYCfMz415aHtOpnQOKLyX0xLaOcEO+L5MzeELLOAz3xEEwWZJTQsmYbvnIWx12XSOUoCAiBrNlJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROegsIzX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PBogVI3Xp0Dio6mKTCJ0GuZGMSmlkazv2sziNWUF3cYlHWME8D4GPBBMwkW1cZf1Qnw35xaypMsyh0s7ccPZcUWAUFITzgh8f6PFgZ1SjT3N29JZHUBRckexBKQZhJYlMwSGKY7yA/K4jmbLD1EIDW7TT4JGzVbskhdOZQhkob8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuRwdWU3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROegsIzX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303621F000E9;
-	Wed, 20 May 2026 18:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuRwdWU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98F21F000E9;
+	Wed, 20 May 2026 18:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302527;
-	bh=+ehfE6mTBBdjstgch4RlLQNSPhyubFENLld27kuJytQ=;
+	s=korg; t=1779302530;
+	bh=E/xMauHoY74qThbtbss7RmP5nZBeJbas4h0I2W9Doe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ROegsIzXrF6pibMdSFBXbPcQV3BIt6p1O3v5rIZSKh6n7NRkfiPYOvuZUqe5CDAqK
-	 sBdL5J9aVnXuE0wEmhIBZzMvlTO9BBpvzPXQY98Eg2P1NhqYMM6eOxY5qYDazKWWp1
-	 pKOKZ8rZUf3ulPBD8fs/wryNXuZ0SN1VbytLAm3w=
+	b=JuRwdWU3nvu/0GzLs9l4g+kRhQRdcDuz8KPHF2JY7ow5JpnBAdwLYkJjX53aD9T7z
+	 veIP3ZZfEiUBq4WtpO3mAZ8UAx3gMlH3AQ/q/0oUDU8EXeC9gIqPFRrWYmaoFCth+E
+	 0SFneRnDpW7KK2CWLjqc4+goIm9IQ+KDDv/BIy/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 259/508] i3c: mipi-i3c-hci: fix IBI payload length calculation for final status
-Date: Wed, 20 May 2026 18:21:22 +0200
-Message-ID: <20260520162104.258843817@linuxfoundation.org>
+Subject: [PATCH 6.6 260/508] dev_printk: add new dev_err_probe() helpers
+Date: Wed, 20 May 2026 18:21:23 +0200
+Message-ID: <20260520162104.279433370@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,53 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit d35a6db887eeae7c57b719521e39d64f929c6dc3 ]
+[ Upstream commit dbbe7eaf0e4795bf003ac06872aaf52b6b6b1310 ]
 
-In DMA mode, the IBI status descriptor encodes the payload using
-CHUNKS (number of chunks) and DATA_LENGTH (valid bytes in the last
-chunk). All preceding chunks are implicitly full-sized.
+This is similar to dev_err_probe() but for cases where an ERR_PTR() or
+ERR_CAST() is to be returned simplifying patterns like:
 
-The current code accumulates full chunk sizes for non-final status
-descriptors, but for the final status descriptor it only adds
-DATA_LENGTH. This ignores the contribution of the preceding full
-chunks described by the same final status entry.
+	dev_err_probe(dev, ret, ...);
+	return ERR_PTR(ret)
+or
+	dev_err_probe(dev, PTR_ERR(ptr), ...);
+	return ERR_CAST(ptr)
 
-As a result, the computed IBI payload length is truncated whenever
-the final status spans multiple chunks. For example, with a chunk
-size of 4 bytes, CHUNKS=2 and DATA_LENGTH=1 should result in a total
-payload size of 5 bytes, but the current code reports only 1 byte.
-
-Fix the calculation by adding the size of (CHUNKS - 1) full chunks
-plus DATA_LENGTH for the last chunk.
-
-Fixes: 9ad9a52cce28 ("i3c/master: introduce the mipi-i3c-hci driver")
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260407-i3c-hci-dma-v2-1-a583187b9d22@aspeedtech.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20240606-dev-add_dev_errp_probe-v3-1-51bb229edd79@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 797cc011ae02 ("backlight: sky81452-backlight: Check return value of devm_gpiod_get_optional() in sky81452_bl_parse_dt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/dev_printk.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index e270fcd0f7c38..624d00b853a51 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -636,7 +636,10 @@ static void hci_dma_process_ibi(struct i3c_hci *hci, struct hci_rh_data *rh)
- 		if (!(ibi_status & IBI_LAST_STATUS)) {
- 			ibi_size += chunks * rh->ibi_chunk_sz;
- 		} else {
--			ibi_size += FIELD_GET(IBI_DATA_LENGTH, ibi_status);
-+			if (chunks) {
-+				ibi_size += (chunks - 1) * rh->ibi_chunk_sz;
-+				ibi_size += FIELD_GET(IBI_DATA_LENGTH, ibi_status);
-+			}
- 			last_ptr = ptr;
- 			break;
- 		}
+diff --git a/include/linux/dev_printk.h b/include/linux/dev_printk.h
+index ae80a303c216b..ca32b5bb28eb5 100644
+--- a/include/linux/dev_printk.h
++++ b/include/linux/dev_printk.h
+@@ -277,4 +277,12 @@ do {									\
+ 
+ __printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
+ 
++/* Simple helper for dev_err_probe() when ERR_PTR() is to be returned. */
++#define dev_err_ptr_probe(dev, ___err, fmt, ...) \
++	ERR_PTR(dev_err_probe(dev, ___err, fmt, ##__VA_ARGS__))
++
++/* Simple helper for dev_err_probe() when ERR_CAST() is to be returned. */
++#define dev_err_cast_probe(dev, ___err_ptr, fmt, ...) \
++	ERR_PTR(dev_err_probe(dev, PTR_ERR(___err_ptr), fmt, ##__VA_ARGS__))
++
+ #endif /* _DEVICE_PRINTK_H_ */
 -- 
 2.53.0
 
