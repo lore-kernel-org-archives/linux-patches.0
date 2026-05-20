@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2338366075;
-	Wed, 20 May 2026 16:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033EE36EAB8;
+	Wed, 20 May 2026 16:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296098; cv=none; b=mfDrQGpR+Pb4IR3bmXEPRypCWIlzZZW6vF3roL6vMISiP0EuF+RGTImK6MoozhNUfQXErTFoSUmb7jHJ7DJ1eFhilK5LvmE6+63FBNGLpgHRj1c+m3fvmxvtbz5Z3PgEyDNXKmGvDxC7qOrEXC1L/Z2b0owLiKi1YYx7aDeNtHw=
+	t=1779296101; cv=none; b=RrqpefFIpi9hVS0fohTThjZzWtHQvSpTXm6WS1S/PlJsPjp9WvX93Eh6swTz3L7sJ0yg6RwRlhXxDxzXjfJIkA5yPtXGrph0m1JNwOxJPZ4+HuL4ONC+aW/i2MN++ajjVEIQNrrIoFyK93r161DT2/ACmbzUhmScMM0OddT8yV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296098; c=relaxed/simple;
-	bh=0bMxfswXrd3qN36qHwf6ZcMtLn72gMugQymJBf9rSOI=;
+	s=arc-20240116; t=1779296101; c=relaxed/simple;
+	bh=6JWb5/ShN4kqOuuO5QcgOWC7sau5/y4siZxi1GQRwYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b0pVhgfW4M/jPYO7fo7cbQwuFNBMrmayBjkyhE678CvmvQY2u0AxeVUWXvR+nJjIznxxM6qflq/baSY3xzlPW5Iy28HfSXtezVy5CJOAag5ggE7irIy40fKBb5U/WjSZ/6OE4hyFjV20w7KLH4ZJauUsKneooxow4HuBkrwhceA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Do3WYXXR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Fxp9Pc7Ly+CkJ0wR0IByEIvhwNwG4BPWZQa0QYdjM6g/R//1BUesDZMKzOUib5fvbWvwzphNviARlxPcdCm1fqnEgxfWcjEHTujEZe5P0+m2QhpU1wPsii+OcypOIqDnGGoYJl3zISDvSFRfd5rbIiqtwM2FIfgN7cmFciDgQZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2e/LMP/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Do3WYXXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8FB1F000E9;
-	Wed, 20 May 2026 16:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2e/LMP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED401F000E9;
+	Wed, 20 May 2026 16:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296097;
-	bh=1dHMfp81xrFvGHOKe/+aBB5WRtRuePjhY9wBFXCYALw=;
+	s=korg; t=1779296099;
+	bh=6L08o+UDx3kIrQsWLLlukYgp/6fuu4nhGnWuuv5DvE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Do3WYXXRnu9jYHEa90DJrPMVNVLownDTeegGqqeQ1860d6qZQEt6WnJHBp0DZp5Iz
-	 wAoTzhs4OwVUeUoheZV3t4Ry65uKEB5mF3rRm1VUdQSdIVGGIIcStbHh9stozzwUka
-	 SLkQ5Uz1zkFvJ6fg8I1U3EizrVyqiSmHA95Y6CkY=
+	b=U2e/LMP/hKa6LMSmixv/RzsiCAFUK8axgOstRKpYAJ1iRUljviKEbt91O1gslyPhl
+	 ig8KKmWJnq8QQQefDxGnRXWZzgdVhnbTvKPf+/nVjtDT7FFtgyyAxndA01qiN5Zohb
+	 iTyCiz8QQkfw85uaosDlKPYZNz1Dh97cYqiYjCH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0670/1146] platform/x86: panasonic-laptop: Fix OPTD notifier registration and cleanup
-Date: Wed, 20 May 2026 18:15:20 +0200
-Message-ID: <20260520162203.349503146@linuxfoundation.org>
+Subject: [PATCH 7.0 0671/1146] platform/x86: barco-p50-gpio: normalize return value of gpio_get
+Date: Wed, 20 May 2026 18:15:21 +0200
+Message-ID: <20260520162203.371408013@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,60 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 8baeff2c1d33dad8572216c6ad3a7425852507d4 ]
+[ Upstream commit 1c9d30d37aaffe3454d70b89a77f8aaecda257bf ]
 
-An ACPI notify handler is leaked if device_create_file() returns an
-error in acpi_pcc_hotkey_add().
+The GPIO get callback is expected to return 0 or 1 (or a negative error
+code). Ensure that the value returned by p50_gpio_get() is normalized
+to the [0, 1] range.
 
-Also, it is pointless to call pcc_unregister_optd_notifier() in
-acpi_pcc_hotkey_remove() if pcc->platform is NULL and it is better
-to arrange the cleanup code in that function in the same order as
-the rollback code in acpi_pcc_hotkey_add().
-
-Address the above by placing the pcc_register_optd_notifier() call in
-acpi_pcc_hotkey_add() after the device_create_file() return value
-check and placing the pcc_unregister_optd_notifier() call in
-acpi_pcc_hotkey_remove() right before the device_remove_file() call.
-
-Fixes: d5a81d8e864b ("platform/x86: panasonic-laptop: Add support for optical driver power in Y and W series")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/2411055.ElGaqSPkdT@rafael.j.wysocki
+Fixes: 86ef402d805d606a ("gpiolib: sanitize the return value of gpio_chip::get()")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260318-barco-p50-gpio-set-v2-1-c0a4a6416163@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/panasonic-laptop.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/platform/x86/barco-p50-gpio.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/panasonic-laptop.c b/drivers/platform/x86/panasonic-laptop.c
-index d923ddaa48496..97c0c51b5a4c3 100644
---- a/drivers/platform/x86/panasonic-laptop.c
-+++ b/drivers/platform/x86/panasonic-laptop.c
-@@ -1093,9 +1093,10 @@ static int acpi_pcc_hotkey_add(struct acpi_device *device)
- 		}
- 		result = device_create_file(&pcc->platform->dev,
- 			&dev_attr_cdpower);
--		pcc_register_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
- 		if (result)
- 			goto out_platform;
-+
-+		pcc_register_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
- 	} else {
- 		pcc->platform = NULL;
- 	}
-@@ -1129,10 +1130,10 @@ static void acpi_pcc_hotkey_remove(struct acpi_device *device)
- 	i8042_remove_filter(panasonic_i8042_filter);
+diff --git a/drivers/platform/x86/barco-p50-gpio.c b/drivers/platform/x86/barco-p50-gpio.c
+index 6f13e81f98fbb..360ffd8505d6c 100644
+--- a/drivers/platform/x86/barco-p50-gpio.c
++++ b/drivers/platform/x86/barco-p50-gpio.c
+@@ -275,8 +275,11 @@ static int p50_gpio_get(struct gpio_chip *gc, unsigned int offset)
+ 	mutex_lock(&p50->lock);
  
- 	if (pcc->platform) {
-+		pcc_unregister_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
- 		device_remove_file(&pcc->platform->dev, &dev_attr_cdpower);
- 		platform_device_unregister(pcc->platform);
- 	}
--	pcc_unregister_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
+ 	ret = p50_send_mbox_cmd(p50, P50_MBOX_CMD_READ_GPIO, gpio_params[offset], 0);
+-	if (ret == 0)
++	if (ret == 0) {
+ 		ret = p50_read_mbox_reg(p50, P50_MBOX_REG_DATA);
++		if (ret >= 0)
++			ret = !!ret;
++	}
  
- 	sysfs_remove_group(&device->dev.kobj, &pcc_attr_group);
+ 	mutex_unlock(&p50->lock);
  
 -- 
 2.53.0
