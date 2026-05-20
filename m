@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8243F660B;
-	Wed, 20 May 2026 18:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566D13D1CC6;
+	Wed, 20 May 2026 18:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301311; cv=none; b=YF4rwBtjP2YetdwzUpcg5oW05bNMxm2QGa0sYrGRZ7s2yUUQeybP/Q1MiwoCJk27kPa/UmtUEyDGAE9aYo+GseKYzu74R0FaMx3gc1CygQw7hrUYss6w0fMIg/shVTAj79XTEgm+1ROWnBcahSf23rMvQ/+dBv3blERqMgroHSU=
+	t=1779301313; cv=none; b=k7UwRltHfIqbCQDVWKjmvpARUMe+dk1P3v5s53jMYe7j92ZV54cjY2/P2Opd0eSuSeJ1o5mwguMeNTEJrhBNrZiwRrELPBlBiuFYIbyn31rqNx8mL0YOjt6VQRZKrpzzT41MGuRzg6O0dP82jJ1tgOn/y68ILrbON/7TQxTynFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301311; c=relaxed/simple;
-	bh=utH/vLgmrPIsOOigCjMZX0I6ta7qtWKuJ2ZMcS/P0tU=;
+	s=arc-20240116; t=1779301313; c=relaxed/simple;
+	bh=klJQDkh4QaQ3UEwCCL1mO1mLQtDWgvaI1AHHoAzWCCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k3DZTgJSWcIpcwnEyA4Z0zK9+0ooy511cRr2EXFlM06TxKsuNxU7PWW2tR7KgmRLgw5JG4dNAvtrqSAzADG6Y52eT8I5tGVT/xzM8bHFYl1UbVkGhUzQK/1sOK59OKEzHb9LAc/JFHPxdh6uMv8r6dlTrWIji3EkvD7GdosxGkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIkkbOK1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DnA68TKN3pTjazgD+PC348ZbWcVplomCf1vJi0C4NEYJBNS76xEl4C2wrgChI31z6HwaDbLNeMSA6wy4LfD4Lf2iSGRE/W57lXBa/N6Irml1bnOeOK5UUBeN0joRdFwJOxqZVZxrRsNXkLos4Vz+b7ey1R4B5DtdXKJUMm1g+Sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoBLteRj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIkkbOK1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255321F000E9;
-	Wed, 20 May 2026 18:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoBLteRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC9471F00893;
+	Wed, 20 May 2026 18:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301309;
-	bh=LLwaqJmqFUlctvJntk/bw9baU/NDOTi+f9yUIX/3GoQ=;
+	s=korg; t=1779301312;
+	bh=B1rAajSTlimMwgMnmEXybhTNXE64nNERqkslCMR2Ii4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hIkkbOK1BCLMakZqaSU1HNJNWaxwKQhE1/9Nu2ZSLi/XI/u1plYaCxTzSNknr+0ca
-	 EM/k1k3UTOzL72+rUGwliymf9c9hJImmqXlpZB4i30+/R1+LUkwMB454iexewLy2JZ
-	 FEMdadApHSaWlt7LPgoquJs61RzgPKXdvKwzcRXA=
+	b=MoBLteRjOI3vDW3CdM59U5mCx0ABwfW4bnUtSMz9TcSV9ztYVNgHgv1Vm5XGc0dz9
+	 ROJVRdezQi4R1MDkTHrPg35q5ZTrKgwzcyIEB2CYtWXOTyPuhIHKrXnKCxt6luRgkC
+	 fY2snHNoAUsCb/89v/H/FcDQawEJApNlWGGflhG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Chen Ridong <chenridong@huaweicloud.com>,
+	cuitao <cuitao@kylinos.cn>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 505/666] sched/psi: fix race between file release and pressure write
-Date: Wed, 20 May 2026 18:21:56 +0200
-Message-ID: <20260520162122.206605865@linuxfoundation.org>
+Subject: [PATCH 6.12 506/666] cgroup/rdma: fix integer overflow in rdmacg_try_charge()
+Date: Wed, 20 May 2026 18:21:57 +0200
+Message-ID: <20260520162122.228199025@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -47,188 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: cuitao <cuitao@kylinos.cn>
 
-[ Upstream commit a5b98009f16d8a5fb4a8ff9a193f5735515c38fa ]
+[ Upstream commit c802f460dd485c1332b5a35e7adcfb2bc22536a2 ]
 
-A potential race condition exists between pressure write and cgroup file
-release regarding the priv member of struct kernfs_open_file, which
-triggers the uaf reported in [1].
+The expression `rpool->resources[index].usage + 1` is computed in int
+arithmetic before being assigned to s64 variable `new`. When usage equals
+INT_MAX (the default "max" value), the addition overflows to INT_MIN.
+This negative value then passes the `new > max` check incorrectly,
+allowing a charge that should be rejected and corrupting usage to
+negative.
 
-Consider the following scenario involving execution on two separate CPUs:
+Fix by casting usage to s64 before the addition so the arithmetic is
+done in 64-bit.
 
-   CPU0					CPU1
-   ====					====
-					vfs_rmdir()
-					kernfs_iop_rmdir()
-					cgroup_rmdir()
-					cgroup_kn_lock_live()
-					cgroup_destroy_locked()
-					cgroup_addrm_files()
-					cgroup_rm_file()
-					kernfs_remove_by_name()
-					kernfs_remove_by_name_ns()
- vfs_write()				__kernfs_remove()
- new_sync_write()			kernfs_drain()
- kernfs_fop_write_iter()		kernfs_drain_open_files()
- cgroup_file_write()			kernfs_release_file()
- pressure_write()			cgroup_file_release()
- ctx = of->priv;
-					kfree(ctx);
- 					of->priv = NULL;
-					cgroup_kn_unlock()
- cgroup_kn_lock_live()
- cgroup_get(cgrp)
- cgroup_kn_unlock()
- if (ctx->psi.trigger)  // here, trigger uaf for ctx, that is of->priv
-
-The cgroup_rmdir() is protected by the cgroup_mutex, it also safeguards
-the memory deallocation of of->priv performed within cgroup_file_release().
-However, the operations involving of->priv executed within pressure_write()
-are not entirely covered by the protection of cgroup_mutex. Consequently,
-if the code in pressure_write(), specifically the section handling the
-ctx variable executes after cgroup_file_release() has completed, a uaf
-vulnerability involving of->priv is triggered.
-
-Therefore, the issue can be resolved by extending the scope of the
-cgroup_mutex lock within pressure_write() to encompass all code paths
-involving of->priv, thereby properly synchronizing the race condition
-occurring between cgroup_file_release() and pressure_write().
-
-And, if an live kn lock can be successfully acquired while executing
-the pressure write operation, it indicates that the cgroup deletion
-process has not yet reached its final stage; consequently, the priv
-pointer within open_file cannot be NULL. Therefore, the operation to
-retrieve the ctx value must be moved to a point *after* the live kn
-lock has been successfully acquired.
-
-In another situation, specifically after entering cgroup_kn_lock_live()
-but before acquiring cgroup_mutex, there exists a different class of
-race condition:
-
-CPU0: write memory.pressure               CPU1: write cgroup.pressure=0
-===========================		  =============================
-
-kernfs_fop_write_iter()
- kernfs_get_active_of(of)
- pressure_write()
-   cgroup_kn_lock_live(memory.pressure)
-     cgroup_tryget(cgrp)
-     kernfs_break_active_protection(kn)
-     ... blocks on cgroup_mutex
-
-                                     	  cgroup_pressure_write()
-                                     	  cgroup_kn_lock_live(cgroup.pressure)
-                                     	  cgroup_file_show(memory.pressure, false)
-                                     	    kernfs_show(false)
-                                     	      kernfs_drain_open_files()
-                                     	        cgroup_file_release(of)
-                                     	          kfree(ctx)
-                                     	            of->priv = NULL
-                                     	  cgroup_kn_unlock()
-
-   ... acquires cgroup_mutex
-   ctx = of->priv;        // may now be NULL
-   if (ctx->psi.trigger)  // NULL dereference
-
-Consequently, there is a possibility that of->priv is NULL, the pressure
-write needs to check for this.
-
-Now that the scope of the cgroup_mutex has been expanded, the original
-explicit cgroup_get/put operations are no longer necessary, this is
-because acquiring/releasing the live kn lock inherently executes a
-cgroup get/put operation.
-
-[1]
-BUG: KASAN: slab-use-after-free in pressure_write+0xa4/0x210 kernel/cgroup/cgroup.c:4011
-Call Trace:
- pressure_write+0xa4/0x210 kernel/cgroup/cgroup.c:4011
- cgroup_file_write+0x36f/0x790 kernel/cgroup/cgroup.c:4311
- kernfs_fop_write_iter+0x3b0/0x540 fs/kernfs/file.c:352
-
-Allocated by task 9352:
- cgroup_file_open+0x90/0x3a0 kernel/cgroup/cgroup.c:4256
- kernfs_fop_open+0x9eb/0xcb0 fs/kernfs/file.c:724
- do_dentry_open+0x83d/0x13e0 fs/open.c:949
-
-Freed by task 9353:
- cgroup_file_release+0xd6/0x100 kernel/cgroup/cgroup.c:4283
- kernfs_release_file fs/kernfs/file.c:764 [inline]
- kernfs_drain_open_files+0x392/0x720 fs/kernfs/file.c:834
- kernfs_drain+0x470/0x600 fs/kernfs/dir.c:525
-
-Fixes: 0e94682b73bf ("psi: introduce psi monitor")
-Reported-by: syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=33e571025d88efd1312c
-Tested-by: syzbot+33e571025d88efd1312c@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reviewed-by: Chen Ridong <chenridong@huaweicloud.com>
+Fixes: 39d3e7584a68 ("rdmacg: Added rdma cgroup controller")
+Signed-off-by: cuitao <cuitao@kylinos.cn>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ kernel/cgroup/rdma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 046f671532b04..0914a1a189ee1 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -3876,33 +3876,41 @@ static int cgroup_cpu_pressure_show(struct seq_file *seq, void *v)
- static ssize_t pressure_write(struct kernfs_open_file *of, char *buf,
- 			      size_t nbytes, enum psi_res res)
- {
--	struct cgroup_file_ctx *ctx = of->priv;
-+	struct cgroup_file_ctx *ctx;
- 	struct psi_trigger *new;
- 	struct cgroup *cgrp;
- 	struct psi_group *psi;
-+	ssize_t ret = 0;
- 
- 	cgrp = cgroup_kn_lock_live(of->kn, false);
- 	if (!cgrp)
- 		return -ENODEV;
- 
--	cgroup_get(cgrp);
--	cgroup_kn_unlock(of->kn);
-+	ctx = of->priv;
-+	if (!ctx) {
-+		ret = -ENODEV;
-+		goto out_unlock;
-+	}
- 
- 	/* Allow only one trigger per file descriptor */
- 	if (ctx->psi.trigger) {
--		cgroup_put(cgrp);
--		return -EBUSY;
-+		ret = -EBUSY;
-+		goto out_unlock;
- 	}
- 
- 	psi = cgroup_psi(cgrp);
- 	new = psi_trigger_create(psi, buf, res, of->file, of);
- 	if (IS_ERR(new)) {
--		cgroup_put(cgrp);
--		return PTR_ERR(new);
-+		ret = PTR_ERR(new);
-+		goto out_unlock;
- 	}
- 
- 	smp_store_release(&ctx->psi.trigger, new);
--	cgroup_put(cgrp);
-+
-+out_unlock:
-+	cgroup_kn_unlock(of->kn);
-+	if (ret)
-+		return ret;
- 
- 	return nbytes;
- }
+diff --git a/kernel/cgroup/rdma.c b/kernel/cgroup/rdma.c
+index ef5878fb20057..d544a747f3954 100644
+--- a/kernel/cgroup/rdma.c
++++ b/kernel/cgroup/rdma.c
+@@ -283,7 +283,7 @@ int rdmacg_try_charge(struct rdma_cgroup **rdmacg,
+ 			ret = PTR_ERR(rpool);
+ 			goto err;
+ 		} else {
+-			new = rpool->resources[index].usage + 1;
++			new = (s64)rpool->resources[index].usage + 1;
+ 			if (new > rpool->resources[index].max) {
+ 				ret = -EAGAIN;
+ 				goto err;
 -- 
 2.53.0
 
