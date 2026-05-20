@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990F5347512;
-	Wed, 20 May 2026 17:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4447B372691;
+	Wed, 20 May 2026 17:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297197; cv=none; b=p57Jo/P2ImkMENmyjcrX1O57to4QwdaKXeYeaUOA2OjSv+anCbPGSNKBi+GC68gHLf++hbqBup+ioJ/g+WtfDfNw905dW7M3fHsilrXzZx9IMYi6c7ec9ZVyLf3Z5i8+amplHJJfEHaW25tcSEVivpEJiEXR0vsDoctHcgjhuMY=
+	t=1779297200; cv=none; b=KH9Yey31Ht5J8IU6trVtlnQ+k0B5wVwwWmP+MKvhtyQQCBA1EVkJJa1KdMPL746toCyccAXu/ZtM38igHB1r7Grl0DKGvEvRg0JIE4mfyZoHoNqQ+cX9U+xlWeXBDpQs+m1WCelgb2mX+qAo0tew/9tOnXIMUGg636r3NBMN3vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297197; c=relaxed/simple;
-	bh=DDas/yM9F0z6OB+BfMLaw+Djg2C8a2P8QYlFLTxu4cM=;
+	s=arc-20240116; t=1779297200; c=relaxed/simple;
+	bh=bPHks68DfYr/pXOPT15kcbcsjUr9FNQBbDlkLkozEHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qJkJqXXmJI0luCGuFQuxNEW4XtRSEbt8vJGTSkQUyvHAK61GjNB0fRWfb2LzW0MxslFVI+yvrOY/FKPrh2PTFz80f09R0rWIDDDM2vV+d5gLCXDaY0ZN0jJNJLaKDoOVltcyJuRuo2J7ddipnk4nVMxXZIfQeGeMdAJhCVB4wcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ee4pe5Lc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=i3gKEeeKjzbEOXBYsJotTly+UC8HiQvJOdrbL/yKTLAkAAj+Kdvn2DxtmCbWa1B7DFn83kndEpRByiy7tfPwlFMIzc0Gi6kvkqHZ/cY0g0btH+so6cG2cGn2Pl1Lj1Mnqb5/eswLl824IS6Y6ZSbGrBC9cNUwpIfpr0UoriLAJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=il0M+lJZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ee4pe5Lc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7A71F000E9;
-	Wed, 20 May 2026 17:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="il0M+lJZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A965C1F000E9;
+	Wed, 20 May 2026 17:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297196;
-	bh=6qqJ/kQyjnp0rhD+87p6a15zZ2gL4Dl/asT18ZW5TSg=;
+	s=korg; t=1779297199;
+	bh=Q0kDc5RgP4n7iZe1x10j/zV90FvQxvQdaVbQuh5nCYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ee4pe5LczWinVeDkFOKEy/My/URzPKd3QCzi0oSzQqeP1YrEmkyvVzroKBybopU99
-	 8xBsKLANmfalt/s/53PvMX0C7p/sKyjWcztUk/QzRFOgXgxYQHU28hxwOpxV9em7Cp
-	 uZxhwb9WMciAE2DwnSsNwZPYnbUiGsTiaA2WjrD4=
+	b=il0M+lJZ7T0H6hyTyXGGy/+HZVMZUkc9Ljmt2SZIOuv2+X3lI49ORqm1OOyomLSj4
+	 8qq5/TQYbWEmDYxYgEexrP3BKjho5sz7ztpeYBisek/Ol7h459HQHLwmQk+fO/IJNQ
+	 v4hzA2BM/kfyocgLvUbz57kiXfgKJYIFC0/6qEqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kurt Borja <kuurtb@gmail.com>,
 	Rong Zhang <i@rong.moe>,
 	Mark Pearson <mpearson-lenovo@squebb.ca>,
 	"Derek J. Clark" <derekjohn.clark@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.0 1085/1146] platform/x86: lenovo-wmi-other: Add Attribute ID helper functions
-Date: Wed, 20 May 2026 18:22:15 +0200
-Message-ID: <20260520162212.790564587@linuxfoundation.org>
+Subject: [PATCH 7.0 1086/1146] platform/x86: lenovo-wmi-other: Limit adding attributes to supported devices
+Date: Wed, 20 May 2026 18:22:16 +0200
+Message-ID: <20260520162212.812721643@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,221 +56,191 @@ Content-Transfer-Encoding: 8bit
 
 From: Derek J. Clark <derekjohn.clark@gmail.com>
 
-commit 30a4ad208a7f7bdb790cd31d368595890045334f upstream.
+commit 03bb5147da083cb91e5c8c2599fcb2f8fd05cb8f upstream.
 
-Adds lwmi_attr_id() function. In the same vein as LWMI_ATTR_ID_FAN_RPM(),
-but as a generic, to de-duplicate attribute_id assignment boilerplate.
+Adds lwmi_is_attr_01_supported, and only creates the attribute subfolder
+if the attribute is supported by the hardware. Due to some poorly
+implemented BIOS this is a multi-step sequence of events. This is
+because:
+- Some BIOS support getting the capability data from custom mode (0xff),
+  while others only support it in no-mode (0x00).
+- Some BIOS support get/set for the current value from custom mode (0xff),
+  while others only support it in no-mode (0x00).
+- Some BIOS report capability data for a method that is not fully
+  implemented.
+- Some BIOS have methods fully implemented, but no complimentary
+  capability data.
 
-Adds tunable_attr_01_id() function that breaks out the members of a
-tunable_attr_01 struct and passes them to lwmi_attr_id().
+To ensure we only expose fully implemented methods with corresponding
+capability data, we check each outcome before reporting that an
+attribute can be supported.
 
-No functional change intended.
+Checking for lwmi_is_attr_01_supported during remove is not done to
+ensure that we don't attempt to call cd01 or send WMI events if one of
+the interfaces being removed was the cause of the driver unloading.
 
+Fixes: edc4b183b794 ("platform/x86: Add Lenovo Other Mode WMI Driver")
+Reported-by: Kurt Borja <kuurtb@gmail.com>
+Closes: https://lore.kernel.org/platform-driver-x86/DG60P3SHXR8H.3NSEHMZ6J7XRC@gmail.com/
 Cc: stable@vger.kernel.org
 Reviewed-by: Rong Zhang <i@rong.moe>
 Tested-by: Rong Zhang <i@rong.moe>
 Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
 Signed-off-by: Derek J. Clark <derekjohn.clark@gmail.com>
-Link: https://patch.msgid.link/20260510042546.436874-9-derekjohn.clark@gmail.com
+Link: https://patch.msgid.link/20260510042546.436874-10-derekjohn.clark@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/lenovo/wmi-capdata.c |    8 ++--
- drivers/platform/x86/lenovo/wmi-capdata.h |   20 ++++++++++++
- drivers/platform/x86/lenovo/wmi-other.c   |   49 ++++++++++++------------------
- 3 files changed, 44 insertions(+), 33 deletions(-)
+ drivers/platform/x86/lenovo/wmi-other.c |   92 ++++++++++++++++++++++++++++++--
+ 1 file changed, 88 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/x86/lenovo/wmi-capdata.c
-+++ b/drivers/platform/x86/lenovo/wmi-capdata.c
-@@ -27,7 +27,6 @@
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
- 
- #include <linux/acpi.h>
--#include <linux/bitfield.h>
- #include <linux/bug.h>
- #include <linux/cleanup.h>
- #include <linux/component.h>
-@@ -48,6 +47,7 @@
- #include <linux/wmi.h>
- 
- #include "wmi-capdata.h"
-+#include "wmi-helpers.h"
- 
- #define LENOVO_CAPABILITY_DATA_00_GUID "362A3AFE-3D96-4665-8530-96DAD5BB300E"
- #define LENOVO_CAPABILITY_DATA_01_GUID "7A8F5407-CB67-4D6E-B547-39B3BE018154"
-@@ -58,9 +58,9 @@
- 
- #define LWMI_FEATURE_ID_FAN_TEST 0x05
- 
--#define LWMI_ATTR_ID_FAN_TEST							\
--	(FIELD_PREP(LWMI_ATTR_DEV_ID_MASK, LWMI_DEVICE_ID_FAN) |		\
--	 FIELD_PREP(LWMI_ATTR_FEAT_ID_MASK, LWMI_FEATURE_ID_FAN_TEST))
-+#define LWMI_ATTR_ID_FAN_TEST                                      \
-+	lwmi_attr_id(LWMI_DEVICE_ID_FAN, LWMI_FEATURE_ID_FAN_TEST, \
-+		     LWMI_GZ_THERMAL_MODE_NONE, LWMI_TYPE_ID_NONE)
- 
- enum lwmi_cd_type {
- 	LENOVO_CAPABILITY_DATA_00,
---- a/drivers/platform/x86/lenovo/wmi-capdata.h
-+++ b/drivers/platform/x86/lenovo/wmi-capdata.h
-@@ -6,6 +6,7 @@
- #define _LENOVO_WMI_CAPDATA_H_
- 
- #include <linux/bits.h>
-+#include <linux/bitfield.h>
- #include <linux/types.h>
- 
- #define LWMI_SUPP_VALID		BIT(0)
-@@ -19,6 +20,8 @@
- 
- #define LWMI_DEVICE_ID_FAN	0x04
- 
-+#define LWMI_TYPE_ID_NONE 0x00
-+
- struct component_match;
- struct device;
- struct cd_list;
-@@ -57,6 +60,23 @@ struct lwmi_cd_binder {
- 	cd_list_cb_t cd_fan_list_cb;
- };
- 
-+/**
-+ * lwmi_attr_id() - Formats a capability data attribute ID
-+ * @dev_id: The u8 corresponding to the device ID.
-+ * @feat_id: The u8 corresponding to the feature ID on the device.
-+ * @mode_id: The u8 corresponding to the wmi-gamezone mode for set/get.
-+ * @type_id: The u8 corresponding to the sub-device.
-+ *
-+ * Return: encoded capability data attribute ID.
-+ */
-+static inline u32 lwmi_attr_id(u8 dev_id, u8 feat_id, u8 mode_id, u8 type_id)
-+{
-+	return (FIELD_PREP(LWMI_ATTR_DEV_ID_MASK, dev_id)   |
-+		FIELD_PREP(LWMI_ATTR_FEAT_ID_MASK, feat_id) |
-+		FIELD_PREP(LWMI_ATTR_MODE_ID_MASK, mode_id) |
-+		FIELD_PREP(LWMI_ATTR_TYPE_ID_MASK, type_id));
-+}
-+
- void lwmi_cd_match_add_all(struct device *master, struct component_match **matchptr);
- int lwmi_cd00_get_data(struct cd_list *list, u32 attribute_id, struct capdata00 *output);
- int lwmi_cd01_get_data(struct cd_list *list, u32 attribute_id, struct capdata01 *output);
 --- a/drivers/platform/x86/lenovo/wmi-other.c
 +++ b/drivers/platform/x86/lenovo/wmi-other.c
-@@ -61,8 +61,6 @@
- 
- #define LWMI_FEATURE_ID_FAN_RPM 0x03
- 
--#define LWMI_TYPE_ID_NONE 0x00
--
- #define LWMI_FEATURE_VALUE_GET 17
- #define LWMI_FEATURE_VALUE_SET 18
- 
-@@ -70,13 +68,12 @@
- #define LWMI_FAN_NR 4
- #define LWMI_FAN_ID(x) ((x) + LWMI_FAN_ID_BASE)
- 
--#define LWMI_ATTR_ID_FAN_RPM(x)						\
--	(FIELD_PREP(LWMI_ATTR_DEV_ID_MASK, LWMI_DEVICE_ID_FAN) |	\
--	 FIELD_PREP(LWMI_ATTR_FEAT_ID_MASK, LWMI_FEATURE_ID_FAN_RPM) |	\
--	 FIELD_PREP(LWMI_ATTR_TYPE_ID_MASK, LWMI_FAN_ID(x)))
--
- #define LWMI_FAN_DIV 100
- 
-+#define LWMI_ATTR_ID_FAN_RPM(x)                                   \
-+	lwmi_attr_id(LWMI_DEVICE_ID_FAN, LWMI_FEATURE_ID_FAN_RPM, \
-+		     LWMI_GZ_THERMAL_MODE_NONE, LWMI_FAN_ID(x))
-+
- #define LWMI_OM_FW_ATTR_BASE_PATH "lenovo-wmi-other"
- #define LWMI_OM_HWMON_NAME "lenovo_wmi_other"
- 
-@@ -551,6 +548,18 @@ struct tunable_attr_01 {
+@@ -546,6 +546,8 @@ struct tunable_attr_01 {
+ 	u8 feature_id;
+ 	u8 device_id;
  	u8 type_id;
++	u8 cd_mode_id; /* mode arg for searching capdata */
++	u8 cv_mode_id; /* mode arg for set/get current_value */
  };
  
-+/**
-+ * tunable_attr_01_id() - Formats a tunable_attr_01 to a capdata attribute ID
-+ * @attr: The tunable_attr_01 to format.
-+ * @mode: The u8 corresponding to the wmi-gamezone mode for set/get.
-+ *
-+ * Return: encoded capability data attribute ID.
-+ */
-+static u32 tunable_attr_01_id(struct tunable_attr_01 *attr, u8 mode)
-+{
-+	return lwmi_attr_id(attr->device_id, attr->feature_id, mode, attr->type_id);
-+}
-+
- static struct tunable_attr_01 ppt_pl1_spl = {
- 	.device_id = LWMI_DEVICE_ID_CPU,
- 	.feature_id = LWMI_FEATURE_ID_CPU_SPL,
-@@ -714,12 +723,7 @@ static ssize_t attr_capdata01_show(struc
+ /**
+@@ -723,7 +725,7 @@ static ssize_t attr_capdata01_show(struc
  	u32 attribute_id;
  	int value, ret;
  
--	attribute_id =
--		FIELD_PREP(LWMI_ATTR_DEV_ID_MASK, tunable_attr->device_id) |
--		FIELD_PREP(LWMI_ATTR_FEAT_ID_MASK, tunable_attr->feature_id) |
--		FIELD_PREP(LWMI_ATTR_MODE_ID_MASK,
--			   LWMI_GZ_THERMAL_MODE_CUSTOM) |
--		FIELD_PREP(LWMI_ATTR_TYPE_ID_MASK, tunable_attr->type_id);
-+	attribute_id = tunable_attr_01_id(tunable_attr, LWMI_GZ_THERMAL_MODE_CUSTOM);
+-	attribute_id = tunable_attr_01_id(tunable_attr, LWMI_GZ_THERMAL_MODE_CUSTOM);
++	attribute_id = tunable_attr_01_id(tunable_attr, tunable_attr->cd_mode_id);
  
  	ret = lwmi_cd01_get_data(priv->cd01_list, attribute_id, &capdata);
  	if (ret)
-@@ -774,7 +778,6 @@ static ssize_t attr_current_value_store(
- 	struct wmi_method_args_32 args = {};
- 	struct capdata01 capdata;
- 	enum thermal_mode mode;
--	u32 attribute_id;
- 	u32 value;
- 	int ret;
- 
-@@ -785,13 +788,9 @@ static ssize_t attr_current_value_store(
+@@ -788,7 +790,7 @@ static ssize_t attr_current_value_store(
  	if (mode != LWMI_GZ_THERMAL_MODE_CUSTOM)
  		return -EBUSY;
  
--	attribute_id =
--		FIELD_PREP(LWMI_ATTR_DEV_ID_MASK, tunable_attr->device_id) |
--		FIELD_PREP(LWMI_ATTR_FEAT_ID_MASK, tunable_attr->feature_id) |
--		FIELD_PREP(LWMI_ATTR_MODE_ID_MASK, mode) |
--		FIELD_PREP(LWMI_ATTR_TYPE_ID_MASK, tunable_attr->type_id);
-+	args.arg0 = tunable_attr_01_id(tunable_attr, mode);
+-	args.arg0 = tunable_attr_01_id(tunable_attr, mode);
++	args.arg0 = tunable_attr_01_id(tunable_attr, tunable_attr->cd_mode_id);
  
--	ret = lwmi_cd01_get_data(priv->cd01_list, attribute_id, &capdata);
-+	ret = lwmi_cd01_get_data(priv->cd01_list, args.arg0, &capdata);
+ 	ret = lwmi_cd01_get_data(priv->cd01_list, args.arg0, &capdata);
  	if (ret)
- 		return ret;
- 
-@@ -802,7 +801,6 @@ static ssize_t attr_current_value_store(
+@@ -801,6 +803,7 @@ static ssize_t attr_current_value_store(
  	if (value < capdata.min_value || value > capdata.max_value)
  		return -EINVAL;
  
--	args.arg0 = attribute_id;
++	args.arg0 = tunable_attr_01_id(tunable_attr, tunable_attr->cv_mode_id);
  	args.arg1 = value;
  
  	ret = lwmi_dev_evaluate_int(priv->wdev, 0x0, LWMI_FEATURE_VALUE_SET,
-@@ -836,7 +834,6 @@ static ssize_t attr_current_value_show(s
- 	struct lwmi_om_priv *priv = dev_get_drvdata(tunable_attr->dev);
- 	struct wmi_method_args_32 args = {};
- 	enum thermal_mode mode;
--	u32 attribute_id;
- 	int retval;
- 	int ret;
- 
-@@ -844,13 +841,7 @@ static ssize_t attr_current_value_show(s
+@@ -841,6 +844,10 @@ static ssize_t attr_current_value_show(s
  	if (ret)
  		return ret;
  
--	attribute_id =
--		FIELD_PREP(LWMI_ATTR_DEV_ID_MASK, tunable_attr->device_id) |
--		FIELD_PREP(LWMI_ATTR_FEAT_ID_MASK, tunable_attr->feature_id) |
--		FIELD_PREP(LWMI_ATTR_MODE_ID_MASK, mode) |
--		FIELD_PREP(LWMI_ATTR_TYPE_ID_MASK, tunable_attr->type_id);
--
--	args.arg0 = attribute_id;
-+	args.arg0 = tunable_attr_01_id(tunable_attr, mode);
++	/* If "no-mode" is the supported mode, ensure we never send current mode */
++	if (tunable_attr->cv_mode_id == LWMI_GZ_THERMAL_MODE_NONE)
++		mode = tunable_attr->cv_mode_id;
++
+ 	args.arg0 = tunable_attr_01_id(tunable_attr, mode);
  
  	ret = lwmi_dev_evaluate_int(priv->wdev, 0x0, LWMI_FEATURE_VALUE_GET,
- 				    (unsigned char *)&args, sizeof(args),
+@@ -852,6 +859,81 @@ static ssize_t attr_current_value_show(s
+ 	return sysfs_emit(buf, "%d\n", retval);
+ }
+ 
++/**
++ * lwmi_attr_01_is_supported() - Determine if the given attribute is supported.
++ * @tunable_attr: The attribute to verify.
++ *
++ * For an attribute to be supported it must have a functional get/set method,
++ * as well as associated capability data stored in the capdata01 table.
++ *
++ * First check if the attribute has a corresponding data table under custom mode
++ * (0xff), then under no mode (0x00). If either of those passes, check if the
++ * supported field of the capdata struct is > 0. If it is supported, store the
++ * successful mode in the cd_mode_id field of tunable_attr.
++ *
++ * If the attribute capdata shows it is supported, attempt to determine the mode
++ * for the current value property get/set methods using a similar pattern to the
++ * capdata table check. If the value returned by either mode is 0 or an error,
++ * assume that mode is not supported. Otherwise, store the successful mode in the
++ * cv_mode_id field of tunable_attr.
++ *
++ * If any of the above checks fail then the attribute is not fully supported.
++ *
++ * Return: true if capdata and set/get modes are found, otherwise false.
++ */
++static bool lwmi_attr_01_is_supported(struct tunable_attr_01 *tunable_attr)
++{
++	u8 modes[2] = { LWMI_GZ_THERMAL_MODE_CUSTOM, LWMI_GZ_THERMAL_MODE_NONE };
++	struct lwmi_om_priv *priv = dev_get_drvdata(tunable_attr->dev);
++	struct wmi_method_args_32 args = {};
++	bool cd_mode_found = false;
++	bool cv_mode_found = false;
++	struct capdata01 capdata;
++	int retval, ret, i;
++
++	/* Determine tunable_attr->cd_mode_id */
++	for (i = 0; i < ARRAY_SIZE(modes); i++) {
++		args.arg0 = tunable_attr_01_id(tunable_attr, modes[i]);
++
++		ret = lwmi_cd01_get_data(priv->cd01_list, args.arg0, &capdata);
++		if (ret || !capdata.supported)
++			continue;
++
++		tunable_attr->cd_mode_id = modes[i];
++		cd_mode_found = true;
++		break;
++	}
++
++	if (!cd_mode_found)
++		return cd_mode_found;
++
++	dev_dbg(tunable_attr->dev,
++		"cd_mode_id: %#010x\n", args.arg0);
++
++	/* Determine tunable_attr->cv_mode_id, returns 1 if supported */
++	for (i = 0; i < ARRAY_SIZE(modes); i++) {
++		args.arg0 = tunable_attr_01_id(tunable_attr, modes[i]);
++
++		ret = lwmi_dev_evaluate_int(priv->wdev, 0x0, LWMI_FEATURE_VALUE_GET,
++					    (u8 *)&args, sizeof(args),
++					    &retval);
++		if (ret || !retval)
++			continue;
++
++		tunable_attr->cv_mode_id = modes[i];
++		cv_mode_found = true;
++		break;
++	}
++
++	if (!cv_mode_found)
++		return cv_mode_found;
++
++	dev_dbg(tunable_attr->dev, "cv_mode_id: %#010x, attribute support level: %#010x\n",
++		args.arg0, capdata.supported);
++
++	return capdata.supported > 0;
++}
++
+ /* Lenovo WMI Other Mode Attribute macros */
+ #define __LWMI_ATTR_RO(_func, _name)                                  \
+ 	{                                                             \
+@@ -975,12 +1057,14 @@ static void lwmi_om_fw_attr_add(struct l
+ 	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(cd01_attr_groups) - 1; i++) {
++		cd01_attr_groups[i].tunable_attr->dev = &priv->wdev->dev;
++		if (!lwmi_attr_01_is_supported(cd01_attr_groups[i].tunable_attr))
++			continue;
++
+ 		err = sysfs_create_group(&priv->fw_attr_kset->kobj,
+ 					 cd01_attr_groups[i].attr_group);
+ 		if (err)
+ 			goto err_remove_groups;
+-
+-		cd01_attr_groups[i].tunable_attr->dev = &priv->wdev->dev;
+ 	}
+ 	return;
+ 
 
 
