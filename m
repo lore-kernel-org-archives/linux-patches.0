@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C794221F2F;
-	Wed, 20 May 2026 16:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A532D12EE;
+	Wed, 20 May 2026 16:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295204; cv=none; b=jO3P11iK6L652ci0T4kH1/QMF7N4An2lZji6Zii7hNMWaRtiLv0LhcWmtFncSvNP2SOlcDBgeBLagihhIr6Y3Kz/rg0McKMslJRxmuKozVBv4Icq0tbuMAlsPllrAqfSrqqXG5lkzKkgz+mpraJlzD9KbBubGNpqACAainQlMmg=
+	t=1779295207; cv=none; b=BbqhIg3Uis6XAI1vuaBGSqhdBpyyuLYwDkE8YhCMMwhbCIwLSZA13jeX505Fnd2X5tS2H4lzjJFb1OQJX6lwG0zg/qxiQaT9/lrdqYTVgZjqwzpTpsUJ8p9CdHRixIp4bsIPkHJZJ5pN1x8I+HFFrZTjm/WAb90PgTT6lvAGB9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295204; c=relaxed/simple;
-	bh=t9VM728qd/TFMhbmtgTXVqOIBLcDC55Y9ZY90OfLEhk=;
+	s=arc-20240116; t=1779295207; c=relaxed/simple;
+	bh=KV/5/6d5W527gnGAM58lQRmAShbr8Sq3pJJTzryBp4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSCWLKo9LSX6M4GzmhHmS8d9wnftsvM9o7Nsg+Zdgjki1UluVS7u8s7RV2ejynIEDTYvplrC5jW4dOmJSlfYcCF/mk6x6h/qwdiTwuHwaqJsWNgGhkhMBzzRFKARh0X3HBygxA+sZDNm+0vkl71Wlcqs8BjVH/5LDmc4dOUdb+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxjVVs8h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=o2ddRf6qUOB9LAAeAVltY99qYvBkzDU50Y1e/XKSyFOr+8k79DvYdu1BvBaBgjRi2IQzy7Np/GSXb7T0/4Fh/srGOkj9UQdABv94XTsfernM6ZNzuoRW1GGQV6hUvKAEV5k4zR2EaKq4d/OKAXJQX2Cx3xUjdQQr5ijuBpf3p3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsIt6BKZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxjVVs8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F9E1F000E9;
-	Wed, 20 May 2026 16:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsIt6BKZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFD91F000E9;
+	Wed, 20 May 2026 16:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295203;
-	bh=GtkoCc94NdwJkIffZeCiRpaTaSzNc83pg+jskIB9NqM=;
+	s=korg; t=1779295206;
+	bh=X1/FFulbl1rquXocq5YwLMjE82z4v5chU//tgwyruUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MxjVVs8hXYHH75YijlzO6vB5V/tsxgJXCH90Rnr2yq5VCbvAASWTe6LXGcuACkSdn
-	 l9O+wEDYHYWKy+OXu/lUmt33hqoMhznxYyu1Z4whcXcs99fRuvuGmbYpNR70kbguWK
-	 azFHEYz+y2vN33q5WlbU5msCn0u6MpJ7RYAQXxsM=
+	b=qsIt6BKZ6/OMxyZkvytxekDvWOalX1FEVf6WnFiHOl1HvfSfteXE9fT/oUqXNTX0b
+	 OcHdNOsg8cYIg3fPcwRnWz0ZTyArkToA/frTPQCd1NHJISErFmaw7r+eArpD4N0MXS
+	 0NbmVCn3EFskCHizHxXb1etSOzOFrkHn6PPyyC8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Steve Oswald <stevepeter.oswald@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0329/1146] PCI: qcom: Advertise Hotplug Slot Capability with no Command Completion support
-Date: Wed, 20 May 2026 18:09:39 +0200
-Message-ID: <20260520162155.642689283@linuxfoundation.org>
+Subject: [PATCH 7.0 0330/1146] PCI: Prevent shrinking bridge window from its required size
+Date: Wed, 20 May 2026 18:09:40 +0200
+Message-ID: <20260520162155.665744238@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,107 +46,212 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 33a76fc3c3e61386524479b99f35423bd3d9a895 ]
+[ Upstream commit dc4b4d04e1caa3552f000d84d832779ebe51b093 ]
 
-Qcom PCIe Root Ports advertise hotplug capability in hardware, but do not
-support hotplug command completion. As a result, the hotplug commands
-issued by the pciehp driver never gets completion notification, leading to
-repeated timeout warnings and multi-second delays during boot and
-suspend/resume.
+Steve reported an eGPU (either Radeon Instinct MI50 32GB or NVIDIA 3080
+10GB) connected via Thunderbolt was not assigned sufficient BAR space in
+v6.11, so the amdgpu and nvidia drivers were unable to initialize the
+device.
 
-Commit a54db86ddc153 ("PCI: qcom: Do not advertise hotplug capability for
-IPs v2.7.0 and v1.9.0") mistakenly assumed that the Root Ports doesn't
-support Hotplug due to timeouts and disabled the Hotplug functionality
-altogether. But the Root Ports does support reporting Hotplug events like
-DL_Up/Down events.
+pci_bridge_distribute_available_resources() -> ... ->
+adjust_bridge_window() is called between __pci_bus_size_bridges()
+and assigning the resources. Since the commit 948675736a77 ("PCI: Allow
+adjust_bridge_window() to shrink resource if necessary")
+adjust_bridge_window() can also shrink the bridge window.  The shrunken
+size, however, conflicts with what __pci_bus_size_bridges() ->
+pbus_size_mem() calculated as the required bridge window size. By shrinking
+the size, adjust_bridge_window() prevents the rest of the resource fitting
+algorithm from working as intended.  Resource fitting logic is expecting
+assignment failures when bridge windows need resizing, but there are cases
+where failures are no longer happening after the commit 948675736a77 ("PCI:
+Allow adjust_bridge_window() to shrink resource if necessary").
 
-So to fix the command completion timeout issues, just set the No Command
-Completed Support (NCCS) bit and enable Hotplug in Slot Capability field
-back.
+The commit 948675736a77 ("PCI: Allow adjust_bridge_window() to shrink
+resource if necessary") justifies the change by the extra reservation
+made due to hpmemsize parameter, however, the kernel code contradicts
+that statement. (For simplicity, finer-grained hpmmiosize and hpmmiopref
+parameters that can be used to the same effect as hpmemsize are ignored in
+this description.)
 
-Fixes: a54db86ddc153 ("PCI: qcom: Do not advertise hotplug capability for IPs v2.7.0 and v1.9.0")
-Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-[mani: renamed function, commit log and added comment]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # Hamoa CRD, tunneled link
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260314-hotplug-v1-1-96ac87d93867@oss.qualcomm.com
+pbus_size_mem() calls calculate_memsize() twice. First with add_size=0
+to find out the minimal required resource size. The second call occurs
+with add_size=hpmemsize (effectively) but the result does not directly
+affect the resource size only resulting in an entry on the realloc_head
+list (a.k.a. add_list). Yet, adjust_bridge_window() directly changes
+the resource size which does not include what is reserved due to
+hpmemsize. Also, if the required size for the bridge window exceeds
+hpmemsize, the parameter does not have any effect even on the second
+size calculation made by pbus_size_mem(); from calculate_memsize():
+
+  size = max(size, add_size) + children_add_size;
+
+The commit ae4611f1d7e9 ("PCI: Set resource size directly in
+adjust_bridge_window()") that precedes the commit 948675736a77 ("PCI:
+Allow adjust_bridge_window() to shrink resource if necessary") is also
+related to causing this problem. Its changelog explicitly states
+adjust_bridge_window() wants to "guarantee" allocation success.
+Guaranteed allocations, however, are incompatible with how the other
+parts of the resource fitting algorithm work. The given justification
+fails to explain why guaranteed allocations at this stage are required
+nor why forcing window to a smaller value than what was calculated by
+pbus_size_mem() is correct. While the change might have worked by chance
+in some test scenario, too small bridge window does not "guarantee"
+success from the point of view of the endpoint device resource
+assignments. No issue is mentioned within the changelog so it's unclear
+if the change was made to fix some observed issue nor and what that
+issue was.
+
+The unwanted shrinking of a bridge window occurs, e.g., when a device with
+large BARs such as eGPU is attached using Thunderbolt and the Root Port
+holds less than enough resource space for the eGPU. The GPU resources are
+in order of GBs and the default hotplug allocation is a mere 2MB
+(DEFAULT_HOTPLUG_MMIO_PREF_SIZE). The problem is illustrated by this log
+(filtered to the relevant content only):
+
+  pci 0000:00:07.0: PCI bridge to [bus 03-2c]
+  pci 0000:00:07.0:   bridge window [mem 0x6000000000-0x601bffffff 64bit pref]
+  pci 0000:03:00.0: PCI bridge to [bus 00]
+  pci 0000:03:00.0:   bridge window [mem 0x00000000-0x000fffff 64bit pref]
+  pci 0000:03:00.0: bridge configuration invalid ([bus 00-00]), reconfiguring
+  pci 0000:03:00.0: PCI bridge to [bus 04-2c]
+  pcieport 0000:00:07.0: Assigned bridge window [mem 0x6000000000-0x601bffffff 64bit pref] to [bus 03-2c] cannot fit 0xc00000000 required for 0000:03:00.0 bridging to [bus 04-2c]
+  pci 0000:03:00.0: bridge window [mem 0x800000000-0x10003fffff 64bit pref] to [bus 04-2c] add_size 100000 add_align 100000
+  pcieport 0000:00:07.0: distributing available resources
+  pci 0000:03:00.0: bridge window [mem 0x800000000-0x10003fffff 64bit pref] shrunken by 0x00000007e4400000
+  pci 0000:03:00.0: bridge window [mem 0x6000000000-0x601bffffff 64bit pref]: assigned
+
+The initial size of the Root Port's window is 448MB (0x601bffffff -
+0x6000000000). __pci_bus_size_bridges() -> pbus_size_mem() calculates the
+required size to be 32772 MB (0x10003fffff - 0x800000000) which would fit
+the eGPU resources. adjust_bridge_window() then shrinks the bridge window
+down to what is guaranteed to fit into the Root Port's bridge window. The
+bridge window for 03:00.0 is also eliminated from the add_list (a.k.a.
+realloc_head) list by adjust_bridge_window().
+
+After adjustment, the resources are assigned and as the bridge window for
+03:00.0 is assigned successfully, no failure is recorded. Without a
+failure, no attempt to resize the window of the Root Port is required.  The
+end result is eGPU not having large enough resources to work.
+
+The commit 948675736a77 ("PCI: Allow adjust_bridge_window() to shrink
+resource if necessary") also claims nested bridge windows are sized the
+same, which is false. pbus_size_mem() calculates the size for the parent
+bridge window by summing all the downstream resources so the resource
+fitting calculates larger bridge window for the parent to accommodate the
+childen. That is, hpmemsize does not result the same size for the case
+where there are nested bridge windows.
+
+In order to fix the most immediate problem, don't shrink the resource size
+in adjust_bridge_window() as hpmemsize had nothing to do with it.  When
+considering add_size, only reduce it up to what is added due to hpmemsize
+(if required size is larger than hpmemsize, the parameter has no impact,
+see calculate_memsize()). Unfortunately, if the tail of the bridge window
+was aligned in calculate_memsize() from below hpmemsize to above it, the
+size check will falsely match but the check at least errs to the side of
+caution. There's not enough information available in adjust_bridge_window()
+to know the calculated size precisely.
+
+This is not exactly a revert of the commits e4611f1d7e9 ("PCI: Set resource
+size directly in adjust_bridge_window()") and 948675736a77 ("PCI: Allow
+adjust_bridge_window() to shrink resource if necessary") as shrinking still
+remains in place but is implemented differently, and the end result behaves
+very differently.
+
+It is possible that those two commits fixed some other issue that is not
+described with enough detail in the changelog and undoing parts of them
+results in another regression due to behavioral change.  Nonetheless, as
+described above, the solution by those two commits was flawed and the
+issue, if one exists, should be solved in a way that is compatible with the
+rest of the resource fitting algorithm instead of working against it.
+
+Besides shrinking, the case where adjust_bridge_window() expands the bridge
+window is likely somewhat wrong as well because it removes the entry from
+add_list (a.k.a. realloc_head), but it is less damaging as that only
+impacts optional resources and may have no impact if expanding by hpmemsize
+is larger than what add_size was. Fixing it is left as further work.
+
+Fixes: 948675736a77 ("PCI: Allow adjust_bridge_window() to shrink resource if necessary")
+Fixes: ae4611f1d7e9 ("PCI: Set resource size directly in adjust_bridge_window()")
+Reported-by: Steve Oswald <stevepeter.oswald@gmail.com>
+Closes: https://lore.kernel.org/linux-pci/CAN95MYEaO8QYYL=5cN19nv_qDGuuP5QOD17pD_ed6a7UqFVZ-g@mail.gmail.com/
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260219153951.68869-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/pci/setup-bus.c | 42 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 40 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 67a16af69ddc7..9fdfc88ac1512 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -350,15 +350,20 @@ static void qcom_pcie_clear_aspm_l0s(struct dw_pcie *pci)
- 	dw_pcie_dbi_ro_wr_dis(pci);
- }
- 
--static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
-+static void qcom_pcie_set_slot_nccs(struct dw_pcie *pci)
+diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
+index 61f769aaa2f6c..1f87b018799f9 100644
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -1837,6 +1837,7 @@ static void adjust_bridge_window(struct pci_dev *bridge, struct resource *res,
+ 				 resource_size_t new_size)
  {
- 	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
- 	u32 val;
+ 	resource_size_t add_size, size = resource_size(res);
++	struct pci_dev_resource *dev_res;
  
- 	dw_pcie_dbi_ro_wr_en(pci);
- 
-+	/*
-+	 * Qcom PCIe Root Ports do not support generating command completion
-+	 * notifications for the Hot-Plug commands. So set the NCCS field to
-+	 * avoid waiting for the completions.
-+	 */
- 	val = readl(pci->dbi_base + offset + PCI_EXP_SLTCAP);
--	val &= ~PCI_EXP_SLTCAP_HPC;
-+	val |= PCI_EXP_SLTCAP_NCCS;
- 	writel(val, pci->dbi_base + offset + PCI_EXP_SLTCAP);
- 
- 	dw_pcie_dbi_ro_wr_dis(pci);
-@@ -558,7 +563,7 @@ static int qcom_pcie_post_init_2_1_0(struct qcom_pcie *pcie)
- 	writel(CFG_BRIDGE_SB_INIT,
- 	       pci->dbi_base + AXI_MSTR_RESP_COMP_CTRL1);
- 
--	qcom_pcie_clear_hpc(pcie->pci);
-+	qcom_pcie_set_slot_nccs(pcie->pci);
- 
- 	return 0;
- }
-@@ -638,7 +643,7 @@ static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
- 		writel(val, pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT);
+ 	if (resource_assigned(res))
+ 		return;
+@@ -1849,9 +1850,46 @@ static void adjust_bridge_window(struct pci_dev *bridge, struct resource *res,
+ 		pci_dbg(bridge, "bridge window %pR extended by %pa\n", res,
+ 			&add_size);
+ 	} else if (new_size < size) {
++		int idx = pci_resource_num(bridge, res);
++
++		/*
++		 * hpio/mmio/mmioprefsize hasn't been included at all? See the
++		 * add_size param at the callsites of calculate_memsize().
++		 */
++		if (!add_list)
++			return;
++
++		/* Only shrink if the hotplug extra relates to window size. */
++		switch (idx) {
++			case PCI_BRIDGE_IO_WINDOW:
++				if (size > pci_hotplug_io_size)
++					return;
++				break;
++			case PCI_BRIDGE_MEM_WINDOW:
++				if (size > pci_hotplug_mmio_size)
++					return;
++				break;
++			case PCI_BRIDGE_PREF_MEM_WINDOW:
++				if (size > pci_hotplug_mmio_pref_size)
++					return;
++				break;
++			default:
++				break;
++		}
++
++		dev_res = res_to_dev_res(add_list, res);
+ 		add_size = size - new_size;
+-		pci_dbg(bridge, "bridge window %pR shrunken by %pa\n", res,
+-			&add_size);
++		if (add_size < dev_res->add_size) {
++			dev_res->add_size -= add_size;
++			pci_dbg(bridge, "bridge window %pR optional size shrunken by %pa\n",
++				res, &add_size);
++		} else {
++			pci_dbg(bridge, "bridge window %pR optional size removed\n",
++				res);
++			pci_dev_res_remove_from_list(add_list, res);
++		}
++		return;
++
+ 	} else {
+ 		return;
  	}
- 
--	qcom_pcie_clear_hpc(pcie->pci);
-+	qcom_pcie_set_slot_nccs(pcie->pci);
- 
- 	return 0;
- }
-@@ -731,7 +736,7 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
- 	val |= EN;
- 	writel(val, pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT_V2);
- 
--	qcom_pcie_clear_hpc(pcie->pci);
-+	qcom_pcie_set_slot_nccs(pcie->pci);
- 
- 	return 0;
- }
-@@ -1037,7 +1042,7 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
- 		writel(WR_NO_SNOOP_OVERRIDE_EN | RD_NO_SNOOP_OVERRIDE_EN,
- 				pcie->parf + PARF_NO_SNOOP_OVERRIDE);
- 
--	qcom_pcie_clear_hpc(pcie->pci);
-+	qcom_pcie_set_slot_nccs(pcie->pci);
- 
- 	return 0;
- }
 -- 
 2.53.0
 
