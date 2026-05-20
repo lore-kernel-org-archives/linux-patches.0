@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5D7348C55;
-	Wed, 20 May 2026 18:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E609348C55;
+	Wed, 20 May 2026 18:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301268; cv=none; b=Xuougo1nSVkBLpvfxKYN9rEmEaHzqn5kjvsXfmq/xg0xje1oX3bH5N6/qO4udeXvP/NCITwm3cX+2DNYY0CiLP3rN1kVtFHtjxRMiWzktb+wBcPGpDxsJ/DCmQ4t28XU1LKEs3mtnmUNz5I3hUGxjzPG24r9uuM7f4WSHi/Y3J4=
+	t=1779301271; cv=none; b=At0BNwD8grqpKUsHpXoh3+L75ezVqsyyE1SoXKWL68MzJFFaW4DcYW/fbWfQMf3U87V7y9heeJuBOQ1SYehn6bT2J+BG/+U7RZr4Bkz90Vn1nitzcfSiQ+1TkFNhC03puSvtBIg5QErXgloKDhXKD0U/0tesVT7bfO3zSJT5f4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301268; c=relaxed/simple;
-	bh=Wiwfo94+zByYsja3zGolDYm5Vsfs3LsaArYi9pXRE2U=;
+	s=arc-20240116; t=1779301271; c=relaxed/simple;
+	bh=SyWXhLy0TE3UspBn92qQnp4NM9N5wJdOYpV666kc/vE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ja4kEwAjdFR9o2E1lacfQmte7VtqqaHY8vY1EI9eVmwvddAx5pne5W4iGvYTcL0muoS0OvlUCqdlo6xucepiVgZHwwWCb5ONRTFiXgaM5tzGT2Hu2dQzT8dOrCuFsBFfclVg1iXs+VcR2gNJX9cz8UD3K1p3ZaesXESxoKvhpPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvYllkhj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ik1oc+wmKzKc25y9vOlBcpnUNdzmPnCLtWcbeW17fJa5I1G3R0VDYZ2pLzEr6Hq/QkT4YczjZtprhSTB7n4Smj7lPOPCN7LZ6L3XwvZzy2eJyU3U99vWbaOcUNT2gcUCG0T8QJyIfCxSaAZRAEP1GZ1iFikct2yFaCsfJ71WdfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qG9/3zQB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvYllkhj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0057B1F000E9;
-	Wed, 20 May 2026 18:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qG9/3zQB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997F81F000E9;
+	Wed, 20 May 2026 18:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301267;
-	bh=JBdUogOLU//82YqFmPJme2/lH/XvTIkarKOtQdZTZtw=;
+	s=korg; t=1779301270;
+	bh=JWdtBCzCdCk4J6dIQUXRxV3Y1KFq+waCRv5iiEk2qXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lvYllkhja/MZ2b557iQZFZ8TsmgrwYZJvkGtpM4e5CottZRjv5HRUmUihgf6HjPqL
-	 SjW/8a+1McOWqSgKSIo5OcxdqR5NFgMt34wjkGcDET+ES2ClUe4FRNpQ+xzCHf5AwU
-	 PpAhvY3AE1cvmNzjNRtVmmr9jHA/vYpaeD/yykLI=
+	b=qG9/3zQBIrZS1kjOEXyQIzo8OBMUL8CWqcboK1mplmO9n9cErQhBq2TK+CWYUSenR
+	 J8xh1/AkhAWFX4Yk/NqgBRKz5PX0ol3LsIHLq5zthXx/ACUeYa0b5D0uOUsXkD0ah2
+	 BDmIyk7h9xndVtpcT+CZg0fhpydkqV3jL8HhsJLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Akihiko Odaki <akihiko.odaki@daynix.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Lei Yang <leiyang@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 491/666] net: airoha: Move ndesc initialization at end of airoha_qdma_init_rx_queue()
-Date: Wed, 20 May 2026 18:21:42 +0200
-Message-ID: <20260520162121.905819753@linuxfoundation.org>
+Subject: [PATCH 6.12 492/666] virtio_net: Split struct virtio_net_rss_config
+Date: Wed, 20 May 2026 18:21:43 +0200
+Message-ID: <20260520162121.927113263@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,68 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-[ Upstream commit 379050947a1828826ad7ea50c95245a56929b35a ]
+[ Upstream commit 976c2696b71da376d42e63ca3802eb2aafc164eb ]
 
-If queue entry or DMA descriptor list allocation fails in
-airoha_qdma_init_rx_queue routine, airoha_qdma_cleanup() will trigger a
-NULL pointer dereference running netif_napi_del() for RX queue NAPIs
-since netif_napi_add() has never been executed to this particular RX NAPI.
-The issue is due to the early ndesc initialization in
-airoha_qdma_init_rx_queue() since airoha_qdma_cleanup() relies on ndesc
-value to check if the queue is properly initialized. Fix the issue moving
-ndesc initialization at end of airoha_qdma_init_tx routine.
-Move page_pool allocation after descriptor list allocation in order to
-avoid memory leaks if desc allocation fails.
+struct virtio_net_rss_config was less useful in actual code because of a
+flexible array placed in the middle. Add new structures that split it
+into two to avoid having a flexible array in the middle.
 
-Fixes: 23020f049327 ("net: airoha: Introduce ethernet support for EN7581 SoC")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260420-airoha_qdma_init_rx_queue-fix-v2-1-d99347e5c18d@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Link: https://patch.msgid.link/20250321-virtio-v2-1-33afb8f4640b@daynix.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 3bc06da858ef ("virtio_net: sync rss_trailer.max_tx_vq on queue_pairs change via VQ_PAIRS_SET")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/airoha_eth.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ include/uapi/linux/virtio_net.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/airoha_eth.c b/drivers/net/ethernet/mediatek/airoha_eth.c
-index d8af267f64f71..7b929b20fe64b 100644
---- a/drivers/net/ethernet/mediatek/airoha_eth.c
-+++ b/drivers/net/ethernet/mediatek/airoha_eth.c
-@@ -1574,14 +1574,18 @@ static int airoha_qdma_init_rx_queue(struct airoha_queue *q,
- 	dma_addr_t dma_addr;
+diff --git a/include/uapi/linux/virtio_net.h b/include/uapi/linux/virtio_net.h
+index ac9174717ef13..963540deae66a 100644
+--- a/include/uapi/linux/virtio_net.h
++++ b/include/uapi/linux/virtio_net.h
+@@ -327,6 +327,19 @@ struct virtio_net_rss_config {
+ 	__u8 hash_key_data[/* hash_key_length */];
+ };
  
- 	q->buf_size = PAGE_SIZE / 2;
--	q->ndesc = ndesc;
- 	q->qdma = qdma;
- 
--	q->entry = devm_kzalloc(eth->dev, q->ndesc * sizeof(*q->entry),
-+	q->entry = devm_kzalloc(eth->dev, ndesc * sizeof(*q->entry),
- 				GFP_KERNEL);
- 	if (!q->entry)
- 		return -ENOMEM;
- 
-+	q->desc = dmam_alloc_coherent(eth->dev, ndesc * sizeof(*q->desc),
-+				      &dma_addr, GFP_KERNEL);
-+	if (!q->desc)
-+		return -ENOMEM;
++struct virtio_net_rss_config_hdr {
++	__le32 hash_types;
++	__le16 indirection_table_mask;
++	__le16 unclassified_queue;
++	__le16 indirection_table[/* 1 + indirection_table_mask */];
++};
 +
- 	q->page_pool = page_pool_create(&pp_params);
- 	if (IS_ERR(q->page_pool)) {
- 		int err = PTR_ERR(q->page_pool);
-@@ -1590,11 +1594,7 @@ static int airoha_qdma_init_rx_queue(struct airoha_queue *q,
- 		return err;
- 	}
++struct virtio_net_rss_config_trailer {
++	__le16 max_tx_vq;
++	__u8 hash_key_length;
++	__u8 hash_key_data[/* hash_key_length */];
++};
++
+  #define VIRTIO_NET_CTRL_MQ_RSS_CONFIG          1
  
--	q->desc = dmam_alloc_coherent(eth->dev, q->ndesc * sizeof(*q->desc),
--				      &dma_addr, GFP_KERNEL);
--	if (!q->desc)
--		return -ENOMEM;
--
-+	q->ndesc = ndesc;
- 	netif_napi_add(eth->napi_dev, &q->napi, airoha_qdma_rx_napi_poll);
- 
- 	airoha_qdma_wr(qdma, REG_RX_RING_BASE(qid), dma_addr);
+ /*
 -- 
 2.53.0
 
