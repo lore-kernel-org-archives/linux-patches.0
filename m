@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860783F2115;
-	Wed, 20 May 2026 17:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615F12BD5B9;
+	Wed, 20 May 2026 17:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299107; cv=none; b=qKNzPmQS+o4jlxCuo8x1K8JtO07wFadvmxRLkHQpZTmCkPxz/S+PEXEjhOi3UtIhl2ep7GQL4X4SOXmXcIofdbfbROFpJISdXQhksDE+bAc2QR/CN5buKjK0lvQnE2ckN20x/WPsTvzcBQLNmBfbTg9IIejs2pBieDujcMa3BhE=
+	t=1779299110; cv=none; b=KY6Cvi1v/to1H4jZWiEANgBP/B+QV495tElP5luchHlcY6CpjbTB+5HITtPFZatmEAMM+EUwqXl/jOlU9JHtDQ4GEZv96L/n3rd/F6UIvtT/HAS6YMgsFPzzZZLaii7Z8O2AI2AekEpLgUtlA+NNGM0DAhjXojbSq631TK5QJp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299107; c=relaxed/simple;
-	bh=oLHWKQfHHMb5nxIMCoAn5q4ss3kk/o+1aLX2fHy/EnY=;
+	s=arc-20240116; t=1779299110; c=relaxed/simple;
+	bh=8K66T0PXzYmD5gWT9lHDtK9rDv8nirpXiAArZlAtIco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqMXerlR9DJ2JJW1t1GZsrOYEhOpK1c+qXciN1ArvUxI4FDGZ850EkP5QEXuIiZ5FAMtVXDVINuQbMRzj7eegKYUY6fe628hTpI1lCy6JpVhd0v6E4wFmLGbZEDmVZLDcyy+0k+gipfV0to21/Zbohy4vAb4xWPn++XHmZFJTO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYofV0eM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nff+Se8cQEaHVfPJPGrXK6J0RZpAQK9BWCjSFpwLv/wJ1DjbGRev9Wu/GPO67cJjQzQVlGsie+8XptpUIVxqarrxnrIHw64wnfB/pUNlVBFOHVpJE2VjpHvaworV0Wp1tmoSylf7kMKCB0+IRLk01rJaFDxQJyXM4LA2CO+W/B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvGv04ff; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYofV0eM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2061F000E9;
-	Wed, 20 May 2026 17:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvGv04ff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AA71F000E9;
+	Wed, 20 May 2026 17:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299106;
-	bh=LdPnEGyFSpek7f0EepYEXvUayvjDZoMMGM2HlJ617m8=;
+	s=korg; t=1779299109;
+	bh=39kPdvTN+/2QAbpC62sj2GxxJdbglc3F7SNN+jtEx+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KYofV0eMJdaccemeeUNG4fqCD66506U/WSLrQQwaeZ35V8bbD/8HWPmiXGF2slaKC
-	 pooGJyC7E5AjL3EYOFYaAZMkhykK6qidc5RpZWkOky+4rHhgsa7nApa9nQpTViX2Ye
-	 J5hE28CXNkzIVTu8JPEU+ejEMPTJ16PHjXBC7PHE=
+	b=EvGv04ff1/1N2MEfu45Ahd9ub5/+yilm8v2eq8WB0uTx2Ukbskuor4bJs8DLRs28j
+	 rsRBQkXWjHoVu+GNFteR/VQRLTWxawM9ZeJburd3AzV5KvhmoYgRGzQiSa32Y10/eF
+	 iUVQvhp4pg0PR+gvcxOpvPqjXgQ0P33rliq/5Zdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 623/957] net: dsa: append ethtool counters of all hidden ports to conduit
-Date: Wed, 20 May 2026 18:18:26 +0200
-Message-ID: <20260520162148.041661058@linuxfoundation.org>
+Subject: [PATCH 6.18 624/957] net: dsa: remove redundant netdev_lock_ops() from conduit ethtool ops
+Date: Wed, 20 May 2026 18:18:27 +0200
+Message-ID: <20260520162148.062461498@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,220 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit f647ed2ca78ec4efcc436915b441da9de0974926 ]
+[ Upstream commit 0f99e0c3e19badaf3fdced0d3feba623e59eed41 ]
 
-Currently there is no way to see packet counters on cascade ports, and
-no clarity on how the API for that would look like.
+DSA replaces the conduit (master) device's ethtool_ops with its own
+wrappers that aggregate stats from both the conduit and DSA switch
+ports. Taking the lock again inside the DSA wrappers causes a deadlock.
 
-Because it's something that is currently needed, just extend the hack
-where ethtool -S on the conduit interface dumps CPU port counters, and
-also use it to dump counters of cascade ports.
+Stumbled upon this when booting qemu with fbnic and CONFIG_NET_DSA_LOOP=y
+(which looks like some kind of testing device that auto-populates the ports
+of eth0). `ethtool -i` is enough to deadlock. This means we have basically zero
+coverage for DSA stuff with real ops locked devs.
 
-Note that the "pXX_" naming convention changes to "sXX_pYY", to
-distinguish between ports having the same index but belonging to
-different switches. This has a slight chance of causing regressions to
-existing tooling:
+Remove the redundant netdev_lock_ops()/netdev_unlock_ops() calls from
+the DSA conduit ethtool wrappers.
 
-- grepping for "p04_counter_name" still works, but might return more
-  than one string now
-- grepping for "    p04_counter_name" no longer works
-
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20251122112311.138784-4-vladimir.oltean@nxp.com
+Fixes: 2bcf4772e45a ("net: ethtool: try to protect all callback with netdev instance lock")
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260414231035.1917035-1-sdf@fomichev.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 0f99e0c3e19b ("net: dsa: remove redundant netdev_lock_ops() from conduit ethtool ops")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/conduit.c | 126 ++++++++++++++++++++++++++++++++++------------
- 1 file changed, 93 insertions(+), 33 deletions(-)
+ net/dsa/conduit.c | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
 diff --git a/net/dsa/conduit.c b/net/dsa/conduit.c
-index c210e31296558..a1b044467bd6f 100644
+index a1b044467bd6f..8398d72d7e4d3 100644
 --- a/net/dsa/conduit.c
 +++ b/net/dsa/conduit.c
-@@ -87,25 +87,51 @@ static void dsa_conduit_get_regs(struct net_device *dev,
- 	}
- }
+@@ -27,9 +27,7 @@ static int dsa_conduit_get_regs_len(struct net_device *dev)
+ 	int len;
  
-+static ssize_t dsa_conduit_append_port_stats(struct dsa_switch *ds, int port,
-+					     u64 *data, size_t start)
-+{
-+	int count;
-+
-+	if (!ds->ops->get_sset_count)
-+		return 0;
-+
-+	count = ds->ops->get_sset_count(ds, port, ETH_SS_STATS);
-+	if (count < 0)
-+		return count;
-+
-+	if (ds->ops->get_ethtool_stats)
-+		ds->ops->get_ethtool_stats(ds, port, data + start);
-+
-+	return count;
-+}
-+
- static void dsa_conduit_get_ethtool_stats(struct net_device *dev,
- 					  struct ethtool_stats *stats,
- 					  u64 *data)
- {
--	struct dsa_port *cpu_dp = dev->dsa_ptr;
-+	struct dsa_port *dp, *cpu_dp = dev->dsa_ptr;
- 	const struct ethtool_ops *ops = cpu_dp->orig_ethtool_ops;
--	struct dsa_switch *ds = cpu_dp->ds;
--	int port = cpu_dp->index;
--	int count = 0;
-+	struct dsa_switch_tree *dst = cpu_dp->dst;
-+	int count, mcount = 0;
+ 	if (ops && ops->get_regs_len) {
+-		netdev_lock_ops(dev);
+ 		len = ops->get_regs_len(dev);
+-		netdev_unlock_ops(dev);
+ 		if (len < 0)
+ 			return len;
+ 		ret += len;
+@@ -60,15 +58,11 @@ static void dsa_conduit_get_regs(struct net_device *dev,
+ 	int len;
+ 
+ 	if (ops && ops->get_regs_len && ops->get_regs) {
+-		netdev_lock_ops(dev);
+ 		len = ops->get_regs_len(dev);
+-		if (len < 0) {
+-			netdev_unlock_ops(dev);
++		if (len < 0)
+ 			return;
+-		}
+ 		regs->len = len;
+ 		ops->get_regs(dev, regs, data);
+-		netdev_unlock_ops(dev);
+ 		data += regs->len;
+ 	}
+ 
+@@ -115,10 +109,8 @@ static void dsa_conduit_get_ethtool_stats(struct net_device *dev,
+ 	int count, mcount = 0;
  
  	if (ops && ops->get_sset_count && ops->get_ethtool_stats) {
- 		netdev_lock_ops(dev);
--		count = ops->get_sset_count(dev, ETH_SS_STATS);
-+		mcount = ops->get_sset_count(dev, ETH_SS_STATS);
+-		netdev_lock_ops(dev);
+ 		mcount = ops->get_sset_count(dev, ETH_SS_STATS);
  		ops->get_ethtool_stats(dev, stats, data);
- 		netdev_unlock_ops(dev);
+-		netdev_unlock_ops(dev);
  	}
  
--	if (ds->ops->get_ethtool_stats)
--		ds->ops->get_ethtool_stats(ds, port, data + count);
-+	list_for_each_entry(dp, &dst->ports, list) {
-+		if (!dsa_port_is_dsa(dp) && !dsa_port_is_cpu(dp))
-+			continue;
-+
-+		count = dsa_conduit_append_port_stats(dp->ds, dp->index,
-+						      data, mcount);
-+		if (count < 0)
-+			return;
-+
-+		mcount += count;
-+	}
- }
+ 	list_for_each_entry(dp, &dst->ports, list) {
+@@ -149,10 +141,8 @@ static void dsa_conduit_get_ethtool_phy_stats(struct net_device *dev,
+ 		if (count >= 0)
+ 			phy_ethtool_get_stats(dev->phydev, stats, data);
+ 	} else if (ops && ops->get_sset_count && ops->get_ethtool_phy_stats) {
+-		netdev_lock_ops(dev);
+ 		count = ops->get_sset_count(dev, ETH_SS_PHY_STATS);
+ 		ops->get_ethtool_phy_stats(dev, stats, data);
+-		netdev_unlock_ops(dev);
+ 	}
  
- static void dsa_conduit_get_ethtool_phy_stats(struct net_device *dev,
-@@ -136,11 +162,18 @@ static void dsa_conduit_get_ethtool_phy_stats(struct net_device *dev,
- 		ds->ops->get_ethtool_phy_stats(ds, port, data + count);
- }
- 
-+static void dsa_conduit_append_port_sset_count(struct dsa_switch *ds, int port,
-+					       int sset, int *count)
-+{
-+	if (ds->ops->get_sset_count)
-+		*count += ds->ops->get_sset_count(ds, port, sset);
-+}
-+
- static int dsa_conduit_get_sset_count(struct net_device *dev, int sset)
- {
--	struct dsa_port *cpu_dp = dev->dsa_ptr;
-+	struct dsa_port *dp, *cpu_dp = dev->dsa_ptr;
- 	const struct ethtool_ops *ops = cpu_dp->orig_ethtool_ops;
--	struct dsa_switch *ds = cpu_dp->ds;
-+	struct dsa_switch_tree *dst = cpu_dp->dst;
+ 	if (count < 0)
+@@ -176,13 +166,11 @@ static int dsa_conduit_get_sset_count(struct net_device *dev, int sset)
+ 	struct dsa_switch_tree *dst = cpu_dp->dst;
  	int count = 0;
  
- 	netdev_lock_ops(dev);
-@@ -154,26 +187,57 @@ static int dsa_conduit_get_sset_count(struct net_device *dev, int sset)
+-	netdev_lock_ops(dev);
+ 	if (sset == ETH_SS_PHY_STATS && dev->phydev &&
+ 	    (!ops || !ops->get_ethtool_phy_stats))
+ 		count = phy_ethtool_get_sset_count(dev->phydev);
+ 	else if (ops && ops->get_sset_count)
+ 		count = ops->get_sset_count(dev, sset);
+-	netdev_unlock_ops(dev);
+ 
  	if (count < 0)
  		count = 0;
+@@ -239,7 +227,6 @@ static void dsa_conduit_get_strings(struct net_device *dev, u32 stringset,
+ 	struct dsa_switch_tree *dst = cpu_dp->dst;
+ 	int count, mcount = 0;
  
--	if (ds->ops->get_sset_count)
--		count += ds->ops->get_sset_count(ds, cpu_dp->index, sset);
-+	list_for_each_entry(dp, &dst->ports, list) {
-+		if (!dsa_port_is_dsa(dp) && !dsa_port_is_cpu(dp))
-+			continue;
-+
-+		dsa_conduit_append_port_sset_count(dp->ds, dp->index, sset,
-+						   &count);
-+	}
- 
- 	return count;
- }
- 
--static void dsa_conduit_get_strings(struct net_device *dev, u32 stringset,
--				    u8 *data)
-+static ssize_t dsa_conduit_append_port_strings(struct dsa_switch *ds, int port,
-+					       u32 stringset, u8 *data,
-+					       size_t start)
- {
--	struct dsa_port *cpu_dp = dev->dsa_ptr;
--	const struct ethtool_ops *ops = cpu_dp->orig_ethtool_ops;
--	struct dsa_switch *ds = cpu_dp->ds;
--	int port = cpu_dp->index;
- 	int len = ETH_GSTRING_LEN;
--	int mcount = 0, count, i;
--	u8 pfx[4], *ndata;
-+	u8 pfx[8], *ndata;
-+	int count, i;
-+
-+	if (!ds->ops->get_strings)
-+		return 0;
- 
--	snprintf(pfx, sizeof(pfx), "p%.2d", port);
-+	snprintf(pfx, sizeof(pfx), "s%.2d_p%.2d", ds->index, port);
- 	/* We do not want to be NULL-terminated, since this is a prefix */
- 	pfx[sizeof(pfx) - 1] = '_';
-+	ndata = data + start * len;
-+	/* This function copies ETH_GSTRINGS_LEN bytes, we will mangle
-+	 * the output after to prepend our CPU port prefix we
-+	 * constructed earlier
-+	 */
-+	ds->ops->get_strings(ds, port, stringset, ndata);
-+	count = ds->ops->get_sset_count(ds, port, stringset);
-+	if (count < 0)
-+		return count;
-+
-+	for (i = 0; i < count; i++) {
-+		memmove(ndata + (i * len + sizeof(pfx)),
-+			ndata + i * len, len - sizeof(pfx));
-+		memcpy(ndata + i * len, pfx, sizeof(pfx));
-+	}
-+
-+	return count;
-+}
-+
-+static void dsa_conduit_get_strings(struct net_device *dev, u32 stringset,
-+				    u8 *data)
-+{
-+	struct dsa_port *dp, *cpu_dp = dev->dsa_ptr;
-+	const struct ethtool_ops *ops = cpu_dp->orig_ethtool_ops;
-+	struct dsa_switch_tree *dst = cpu_dp->dst;
-+	int count, mcount = 0;
- 
- 	netdev_lock_ops(dev);
+-	netdev_lock_ops(dev);
  	if (stringset == ETH_SS_PHY_STATS && dev->phydev &&
-@@ -191,21 +255,17 @@ static void dsa_conduit_get_strings(struct net_device *dev, u32 stringset,
+ 	    !ops->get_ethtool_phy_stats) {
+ 		mcount = phy_ethtool_get_sset_count(dev->phydev);
+@@ -253,7 +240,6 @@ static void dsa_conduit_get_strings(struct net_device *dev, u32 stringset,
+ 			mcount = 0;
+ 		ops->get_strings(dev, stringset, data);
  	}
- 	netdev_unlock_ops(dev);
+-	netdev_unlock_ops(dev);
  
--	if (ds->ops->get_strings) {
--		ndata = data + mcount * len;
--		/* This function copies ETH_GSTRINGS_LEN bytes, we will mangle
--		 * the output after to prepend our CPU port prefix we
--		 * constructed earlier
--		 */
--		ds->ops->get_strings(ds, port, stringset, ndata);
--		count = ds->ops->get_sset_count(ds, port, stringset);
-+	list_for_each_entry(dp, &dst->ports, list) {
-+		if (!dsa_port_is_dsa(dp) && !dsa_port_is_cpu(dp))
-+			continue;
-+
-+		count = dsa_conduit_append_port_strings(dp->ds, dp->index,
-+							stringset, data,
-+							mcount);
- 		if (count < 0)
- 			return;
--		for (i = 0; i < count; i++) {
--			memmove(ndata + (i * len + sizeof(pfx)),
--				ndata + i * len, len - sizeof(pfx));
--			memcpy(ndata + i * len, pfx, sizeof(pfx));
--		}
-+
-+		mcount += count;
- 	}
- }
- 
+ 	list_for_each_entry(dp, &dst->ports, list) {
+ 		if (!dsa_port_is_dsa(dp) && !dsa_port_is_cpu(dp))
 -- 
 2.53.0
 
