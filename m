@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A5D3F0773;
-	Wed, 20 May 2026 17:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94473F660B;
+	Wed, 20 May 2026 17:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296655; cv=none; b=hS5GF6KQhxsB9oUFNf0WKJo/ZvzX744xsZdczo1VaWbptD5jl5MlP6GsU9SQamD1w/OQc6/zjvEzMW+5OBreLb8v8mHxuUB+ahmJ7RhCQTD2NR+nQ9//O1QiNIXVWMj9MkoZYB379/z8SoOHXgrkQfQGo/RwBgXClLW2WaOajWM=
+	t=1779296658; cv=none; b=Tigec/O06r1QtRHKhA+212lvlwn3y/2glZzma98NGKAQ3IJuEjI+jTA3sFpYjjG9D0tDNfr4y1be8hgS3sHTlxjAImOpn1bB/pqJ9qB1JgV+DqJizmgIrUnnPdeDKmcuEK3W39sQaoIl8L0TVKkCYiwtC1jY9QPhNvrsgLSHi2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296655; c=relaxed/simple;
-	bh=UE8jsOts6OgcflGg8nN6XdrNp6PtFizQUPcH/E4BtRI=;
+	s=arc-20240116; t=1779296658; c=relaxed/simple;
+	bh=OleFYEpppXabVZ/zr7Mn68p3Y5a2rXBjfyndeIWfaD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRK7EBZ8y0xtAXVC79Y37Ztcrtb/SjpuAWqZZz7wlCBImufo//xsV9h1cqBPRcGpgBXpLcDhg7IoQU41ZdOvw6myFwM3KuXRxtjd9Rlv924VfmBZ0nr2X2XWLATlgMIBYIN6+SNJ1ZGWRMnDwL4sg3X68rgMi9vfuixZ4hYgZr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HScTJVkH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uHT95EfWToIOQHmbgEcuMxwNCZLAT/VJ4+qSYpy7hFSOlfWe+a8jGFpkKmtgfuXNTaEKFXO8pJnyLl/EX0LB2lvR4qy8l4cWVtjhQSU6nlRCfRbQlfrJC0IwEoBJ0bpFDfk9neio8Rqi/NaGb69nXAUwkM8UBL1ERxtUCVrw6Xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rs/02Tlc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HScTJVkH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644E71F000E9;
-	Wed, 20 May 2026 17:04:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rs/02Tlc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048851F000E9;
+	Wed, 20 May 2026 17:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296653;
-	bh=DRMi9S+6rnurRxIdgJ2NghaIPtqUwfaLlFn6SzhCnzg=;
+	s=korg; t=1779296656;
+	bh=Wtag2Ti3XBrrwdeDa2+4XAX0GvsZgK/3KOtLs1lQjq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HScTJVkHcDL4DZ9wbCBkcxb8fIMaF4vTr6tDJvyr5htASYetJtz9lSOhq4xsUukFr
-	 yPbg7cOxXKQI1/dT+Ypt+xDG6wl8LHAwiBxD45VShgeTlkpOOA+Gvluo1c5A5ANzAu
-	 IM5HZ4TyG6J404cY4LBMVa39gW23Ybz7GDnrxmy8=
+	b=Rs/02TlcK56Fe1RwWRWN4J1UmiG63herx1qvJigj+jeQaGF2yEa3ihMmkX/oD4fml
+	 HxGFM+vm5+hQ6nWj624jquusdQ0o7Q4AOypo2GrRhoOBRZHXB2mrJGx8GcE/cYGPAx
+	 Speu6xEIVeNDXPQLETVFMmfXVJx6MvALxfXaMCKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0882/1146] cgroup/cpuset: record DL BW alloc CPU for attach rollback
-Date: Wed, 20 May 2026 18:18:52 +0200
-Message-ID: <20260520162208.199307138@linuxfoundation.org>
+Subject: [PATCH 7.0 0883/1146] mailbox: add sanity check for channel array
+Date: Wed, 20 May 2026 18:18:53 +0200
+Message-ID: <20260520162208.222230865@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,105 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 41d701ddc36d5301b44ea79529f3cf03c541c1e1 ]
+[ Upstream commit c1aad75595fb67edc7fda8af249d3b886efa1be9 ]
 
-cpuset_can_attach() allocates DL bandwidth only when migrating
-deadline tasks to a disjoint CPU mask, but cpuset_cancel_attach()
-rolls back based only on nr_migrate_dl_tasks. This makes the DL
-bandwidth alloc/free paths asymmetric: rollback can call dl_bw_free()
-even when no dl_bw_alloc() was done.
+Fail gracefully if there is no channel array attached to the mailbox
+controller. Otherwise the later dereference will cause an OOPS which
+might not be seen because mailbox controllers might instantiate very
+early. Remove the comment explaining the obvious while here.
 
-Rollback also needs to undo the reservation against the same CPU/root
-domain that was charged. Record the CPU used by dl_bw_alloc() and use
-that state in cpuset_cancel_attach(). If no allocation happened,
-dl_bw_cpu stays at -1 and rollback skips dl_bw_free(). If allocation
-did happen, bandwidth is returned to the same CPU/root domain.
-
-Successful attach paths are unchanged. This only fixes failed attach
-rollback accounting.
-
-Fixes: 2ef269ef1ac0 ("cgroup/cpuset: Free DL BW in case can_attach() fails")
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 2b6d83e2b8b7 ("mailbox: Introduce framework for mailbox")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset-internal.h |  5 +++++
- kernel/cgroup/cpuset.c          | 13 +++++++++----
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/mailbox/mailbox.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
-index fd7d19842ded7..bb4e692bea300 100644
---- a/kernel/cgroup/cpuset-internal.h
-+++ b/kernel/cgroup/cpuset-internal.h
-@@ -168,6 +168,11 @@ struct cpuset {
- 	int nr_deadline_tasks;
- 	int nr_migrate_dl_tasks;
- 	u64 sum_migrate_dl_bw;
-+	/*
-+	 * CPU used for temporary DL bandwidth allocation during attach;
-+	 * -1 if no DL bandwidth was allocated in the current attach.
-+	 */
-+	int dl_bw_cpu;
- 
- 	/* Invalid partition error code, not lock protected */
- 	enum prs_errcode prs_err;
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 1335e437098e8..e3a081a07c6d5 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -288,6 +288,7 @@ struct cpuset top_cpuset = {
- 	.flags = BIT(CS_CPU_EXCLUSIVE) |
- 		 BIT(CS_MEM_EXCLUSIVE) | BIT(CS_SCHED_LOAD_BALANCE),
- 	.partition_root_state = PRS_ROOT,
-+	.dl_bw_cpu = -1,
- };
- 
- /**
-@@ -579,6 +580,8 @@ static struct cpuset *dup_or_alloc_cpuset(struct cpuset *cs)
- 	if (!trial)
- 		return NULL;
- 
-+	trial->dl_bw_cpu = -1;
-+
- 	/* Setup cpumask pointer array */
- 	cpumask_var_t *pmask[4] = {
- 		&trial->cpus_allowed,
-@@ -2980,6 +2983,7 @@ static void reset_migrate_dl_data(struct cpuset *cs)
+diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
+index 617ba505691d3..b77162db509f2 100644
+--- a/drivers/mailbox/mailbox.c
++++ b/drivers/mailbox/mailbox.c
+@@ -505,8 +505,7 @@ int mbox_controller_register(struct mbox_controller *mbox)
  {
- 	cs->nr_migrate_dl_tasks = 0;
- 	cs->sum_migrate_dl_bw = 0;
-+	cs->dl_bw_cpu = -1;
- }
+ 	int i, txdone;
  
- /* Called by cgroups to determine if a cpuset is usable; cpuset_mutex held */
-@@ -3056,6 +3060,8 @@ static int cpuset_can_attach(struct cgroup_taskset *tset)
- 			reset_migrate_dl_data(cs);
- 			goto out_unlock;
- 		}
-+
-+		cs->dl_bw_cpu = cpu;
- 	}
+-	/* Sanity check */
+-	if (!mbox || !mbox->dev || !mbox->ops || !mbox->num_chans)
++	if (!mbox || !mbox->dev || !mbox->ops || !mbox->chans || !mbox->num_chans)
+ 		return -EINVAL;
  
- out_success:
-@@ -3080,12 +3086,11 @@ static void cpuset_cancel_attach(struct cgroup_taskset *tset)
- 	mutex_lock(&cpuset_mutex);
- 	dec_attach_in_progress_locked(cs);
- 
--	if (cs->nr_migrate_dl_tasks) {
--		int cpu = cpumask_any(cs->effective_cpus);
-+	if (cs->dl_bw_cpu >= 0)
-+		dl_bw_free(cs->dl_bw_cpu, cs->sum_migrate_dl_bw);
- 
--		dl_bw_free(cpu, cs->sum_migrate_dl_bw);
-+	if (cs->nr_migrate_dl_tasks)
- 		reset_migrate_dl_data(cs);
--	}
- 
- 	mutex_unlock(&cpuset_mutex);
- }
+ 	if (mbox->txdone_irq)
 -- 
 2.53.0
 
