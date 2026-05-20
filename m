@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491F436CE19;
-	Wed, 20 May 2026 16:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CF3369D64;
+	Wed, 20 May 2026 16:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294954; cv=none; b=XmNOLuJi2ca8Tr3Ova3fRKwH3bUO9C0er24u/0tm6Da0UrCgCyhrdLeZq3LRQoa+FtZbuEwytYtX/Hfva+zGG1DGASdLEec3qHyVqdT4CmgI+8YRGHw8dRhynOcToQHb8wCyOJlxEEUzu1B+Y666nDcPMzhyG2r6AB4VgizqbnQ=
+	t=1779294957; cv=none; b=JuqthXWZqNJngGkGHMxndQUaOz63kx7c9pE87flHUEmdBp/RN4DJQqIgskA4QCzgd2Rey2acqvuyaaI5nmtAbxTrDsQQjjWTy9FKoQqH26VhSUO+Z8IWLjsmSdJzKo5w6gNhKaTxtPbYnzTZP+/W3BzIKDXAFXhDvwaiCJeN2JU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294954; c=relaxed/simple;
-	bh=co7Ft017AoLTb5K7Hf2Q48MVOvgi154QybTuHGVXLCA=;
+	s=arc-20240116; t=1779294957; c=relaxed/simple;
+	bh=PwVev8MQ5Yj5SjItCSjbEnRHr1F5yp2t6biU87xDsmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVzOtGKmNssb8zrK7VIjEGfn96PiDfIpNDZRVisvugjitAPYDy75MuHA/y1f4ePuxZeJHpDzTL6JoCEWjj6LBEwmjs8a/qSp/3Bz18OINZp2pRrcfDCS6Gms4xZK9XLyWKdfwOPATwF2hf/NUv7mgiv+rGrkBL1IVa63XUpjwKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N54OXk53; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lTZG9/Sex1t9/p9xbFAm1d9CANus8e19Rqf3RvYqgEWddm/TN88BEOin6Hhej/k0lToG8fdTeOn11P3ITEaQwKTIjEPM6FAret5L7sIuV2SjPXazm5jddZoK8StGoZbNXomLxdRdnOapn4Ap040H95Zv/L6ELQHM/KnkuEbnEG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=biZgWiaS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N54OXk53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF72C1F000E9;
-	Wed, 20 May 2026 16:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="biZgWiaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528091F000E9;
+	Wed, 20 May 2026 16:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294953;
-	bh=TI9T/9/nQ/fUsKhKBT8g7a7uSFDZ83sM5e7eAVBPnxE=;
+	s=korg; t=1779294955;
+	bh=d3qbTJe3iXplJ2BLBDzzp2NNF9Uu5KXyL0BAfSW2Hfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N54OXk53DNK155LEjEJNp8c3WDOYQDdMdzxFZucibr7UVtSBqlA49s2m2nypL3OpY
-	 MW1FGnK0Jcpu5Awmu5t6fgUFTzUgpRVG3iUGXUMojZkolGKQ+CX3m/DRZFAQeVucb3
-	 ezed3T6aGlgW6NwsDJ48Ng3+iR/ogIwQBB5fwhyE=
+	b=biZgWiaSATufTdllOzFeoPFzzfZQ7SZ7HJUfnhzAOcj3z3uMIgrXtFqMGD6aqy21s
+	 9lBvBYKN7i4Bl/jjYCbA5FS/ep8xbU4lZqiPV5adcBhUtFX/BOGxzHO1k4rjweLUce
+	 GRhZ8Wk1KxRg5QLSUNelwpV6s1ZrwMs6AsWC1CJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0235/1146] PCI: endpoint: pci-ep-msi: Fix error unwind and prevent double alloc
-Date: Wed, 20 May 2026 18:08:05 +0200
-Message-ID: <20260520162153.565377045@linuxfoundation.org>
+Subject: [PATCH 7.0 0236/1146] drm/sun4i: mixer: Fix layer init code
+Date: Wed, 20 May 2026 18:08:06 +0200
+Message-ID: <20260520162153.586929564@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,55 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 1cba96c0a795124c3229293ed7b5b5765e66f259 ]
+[ Upstream commit 744629904c68bde847c31819f23482d09152f810 ]
 
-pci_epf_alloc_doorbell() stores the allocated doorbell message array in
-epf->db_msg/epf->num_db before requesting MSI vectors. If MSI allocation
-fails, the array is freed but the EPF state may still point to freed
-memory.
+Code refactoring dropped extra NULL sentinel entry at the end of the drm
+planes array.
 
-Clear epf->db_msg and epf->num_db on the MSI allocation failure path so
-that later cleanup cannot double-free the array and callers can retry
-allocation.
+Add it back.
 
-Also return -EBUSY when doorbells have already been allocated to prevent
-leaking or overwriting an existing allocation.
-
-Fixes: 1c3b002c6bf6 ("PCI: endpoint: Add RC-to-EP doorbell support using platform MSI controller")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260217063856.3759713-4-den@valinux.co.jp
+Reported-by: Chen-Yu Tsai <wens@kernel.org>
+Closes: https://lore.kernel.org/linux-sunxi/CAGb2v65wY2pF6sR+0JgnpLa4ysvjght5hAKDa1RUyo=zEKXreg@mail.gmail.com/
+Fixes: 4fa45b04a47d ("drm/sun4i: layer: move num of planes calc out of layer code")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/20260218183454.7881-1-jernej.skrabec@gmail.com
+[wens@kernel.org: Fix "Fixes" commit hash]
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/pci-ep-msi.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/sun4i/sun8i_mixer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/pci-ep-msi.c b/drivers/pci/endpoint/pci-ep-msi.c
-index 51c19942a81ef..1395919571f83 100644
---- a/drivers/pci/endpoint/pci-ep-msi.c
-+++ b/drivers/pci/endpoint/pci-ep-msi.c
-@@ -50,6 +50,9 @@ int pci_epf_alloc_doorbell(struct pci_epf *epf, u16 num_db)
- 		return -EINVAL;
- 	}
+diff --git a/drivers/gpu/drm/sun4i/sun8i_mixer.c b/drivers/gpu/drm/sun4i/sun8i_mixer.c
+index ce9c155bfad7f..02acc7cbdb979 100644
+--- a/drivers/gpu/drm/sun4i/sun8i_mixer.c
++++ b/drivers/gpu/drm/sun4i/sun8i_mixer.c
+@@ -321,7 +321,7 @@ static struct drm_plane **sun8i_layers_init(struct drm_device *drm,
+ 	unsigned int phy_index;
+ 	int i;
  
-+	if (epf->db_msg)
-+		return -EBUSY;
-+
- 	domain = of_msi_map_get_device_domain(epc->dev.parent, 0,
- 					      DOMAIN_BUS_PLATFORM_MSI);
- 	if (!domain) {
-@@ -79,6 +82,8 @@ int pci_epf_alloc_doorbell(struct pci_epf *epf, u16 num_db)
- 	if (ret) {
- 		dev_err(dev, "Failed to allocate MSI\n");
- 		kfree(msg);
-+		epf->db_msg = NULL;
-+		epf->num_db = 0;
- 		return ret;
- 	}
+-	planes = devm_kcalloc(drm->dev, plane_cnt, sizeof(*planes), GFP_KERNEL);
++	planes = devm_kcalloc(drm->dev, plane_cnt + 1, sizeof(*planes), GFP_KERNEL);
+ 	if (!planes)
+ 		return ERR_PTR(-ENOMEM);
  
 -- 
 2.53.0
