@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B703370D54;
-	Wed, 20 May 2026 18:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65043E832A;
+	Wed, 20 May 2026 18:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300099; cv=none; b=f0UuSVrYKSol9FhtHwkDeYDEN/j7W5q4Bu8CWZku0WcMRrdDN7gk4KzBkBlzrg6VPOX7aRn9cBJRs/1whXDpXupCauTG65ioW60gJMycaEu97v9H3WhKMJf8II9xc7RWdL2YB+HlgL2Jfvb4BWnU0OOKEAK8f7XeKSwp3zEAd90=
+	t=1779300101; cv=none; b=LcKq0+uAKKW5OXBcurr/TtMffxpSmYD9HfMrxiKYrl2mTCZW1J03wkfr1pWilvzPLxcMtqfQz/1RUch3mk9wJUsfUvupt9chGQZUrB59kTkX++N7KOo4T6fF2LYWosB6rTJQAzjK3W/z7pjpiQyginM9CFooZeXFUZ36jaGtZyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300099; c=relaxed/simple;
-	bh=rbzqTV2OUoyweVcqSPcAVweRjBx6JfIO+lAgg8Hwbkc=;
+	s=arc-20240116; t=1779300101; c=relaxed/simple;
+	bh=kBfP1hD8AwzK6hGXongp6RcgJb/iumEd6TrCPNg6Dg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCusZwcEdC0nBYTsWZYlXmOiTKgPl5M/oB8+KcIZeF/Cn/xZuz0TU8jiIo6KB4kfG5LQ8bgWdvOYcnG+3B2yHXgwayIYFsihc0dR8EFnzdJnANFiuI1wfa5DhN5gMv/JkBcn85vC0LrMa0Lr5mVAS5L/sj1hLdxp6KpWwgBORh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zs9Kn/Vs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CgjyoBZ/zm/2XUSiGAF8JYn2MpWHX2JqnXRxUHBYGfsFpoV868YTIVCezD2H5uTZ0HBVyJTQECETB65o3huLs939jAZpaGXFNQw/VMGazXykicYfCDUafMmHSY8ud6NAmwuj6+kA982Q3nkzziVK7DJCg456rkinKsioXi6+kqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oiF0ZTPu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zs9Kn/Vs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14CF1F000E9;
-	Wed, 20 May 2026 18:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oiF0ZTPu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481011F000E9;
+	Wed, 20 May 2026 18:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300098;
-	bh=cTpMtFOpl+X2jHjqCVZ6e0o7vvz/Fy1G2Xasz+eSI30=;
+	s=korg; t=1779300100;
+	bh=MiGpaamwPPvHpdf1rYGBLcWrbKa3vPO1ONllvCnHXNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zs9Kn/VsB6Gv6ohc7StYJwVVGRjkh0cXRgYob/786DQqQfixT0Q9MBEP9tYHc+vrI
-	 w2YUrboJ8ld/RL7I6zzOXDmYLP6/93vQ7TRi0Zq0LBBgEFKFk6wgue/1NBSs/rybqA
-	 Fmbje4On9OQDsZJNjQzIGSD5u9q82qd/RhY4NgSo=
+	b=oiF0ZTPu/yt9H0R+ffOI4rZXNLRcfOR4VjuUzAKL/Px9SI7p71z6g/JzFQeBVa4X/
+	 9UpRdgiCV4zeNY0KAyJbBFmjyodckytJM3fY7im+a0H/3cG7BIx2mBAtf5PI8dAZPU
+	 HQNTbattXfNM0PpTgTK5caZ/fKCTUWgzoEfZ4WWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 047/666] wifi: mt76: mt7925: prevent NULL vif dereference in mt7925_mac_write_txwi
-Date: Wed, 20 May 2026 18:14:18 +0200
-Message-ID: <20260520162112.259821368@linuxfoundation.org>
+Subject: [PATCH 6.12 048/666] wifi: mt76: mt7996: fix FCS error flag check in RX descriptor
+Date: Wed, 20 May 2026 18:14:19 +0200
+Message-ID: <20260520162112.283583625@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,38 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 962eb04e67552be406c906c83099c1d736aae3b6 ]
+[ Upstream commit d8db56142e531f060c938fa0b5175ed6c8cabb11 ]
 
-Check for a NULL `vif` before accessing `ieee80211_vif_is_mld(vif)` to
-avoid a potential kernel panic in scenarios where `vif` might not be
-initialized.
+The mt7996 driver currently checks the MT_RXD3_NORMAL_FCS_ERR bit in
+rxd1 whereas other Connac3-based drivers(mt7925) correctly check this
+bit in rxd3.
 
-Fixes: ebb1406813c6 ("wifi: mt76: mt7925: add link handling to txwi")
-Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
-Link: https://patch.msgid.link/20250904030649.655436-3-mingyen.hsieh@mediatek.com
+Since the MT_RXD3_NORMAL_FCS_ERR bit is defined in the fourth RX
+descriptor word (rxd3), update mt7996 to use the proper descriptor
+field. This change aligns mt7996 with mt7925 and the rest of the
+Connac3 family.
+
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20251013090826.753992-1-alok.a.tiwari@oracle.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-index e308c97b574b8..e5de05a91aee7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -807,8 +807,8 @@ mt7925_mac_write_txwi(struct mt76_dev *dev, __le32 *txwi,
- 	txwi[5] = cpu_to_le32(val);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index b7a5426c933d0..6f8167bb86136 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -501,7 +501,7 @@ mt7996_mac_fill_rx(struct mt7996_dev *dev, enum mt76_rxq_id q,
+ 	    !(csum_status & (BIT(0) | BIT(2) | BIT(3))))
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
  
- 	val = MT_TXD6_DAS | FIELD_PREP(MT_TXD6_MSDU_CNT, 1);
--	if (!ieee80211_vif_is_mld(vif) ||
--	    (q_idx >= MT_LMAC_ALTX0 && q_idx <= MT_LMAC_BCN0))
-+	if (vif && (!ieee80211_vif_is_mld(vif) ||
-+	    (q_idx >= MT_LMAC_ALTX0 && q_idx <= MT_LMAC_BCN0)))
- 		val |= MT_TXD6_DIS_MAT;
- 	txwi[6] = cpu_to_le32(val);
- 	txwi[7] = 0;
+-	if (rxd1 & MT_RXD3_NORMAL_FCS_ERR)
++	if (rxd3 & MT_RXD3_NORMAL_FCS_ERR)
+ 		status->flag |= RX_FLAG_FAILED_FCS_CRC;
+ 
+ 	if (rxd1 & MT_RXD1_NORMAL_TKIP_MIC_ERR)
 -- 
 2.53.0
 
