@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C906330BF68;
-	Wed, 20 May 2026 17:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE8A36405A;
+	Wed, 20 May 2026 17:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298568; cv=none; b=hEJ1mD9aIw3RDpmTyjzr5Jv8f6EiSjtoXbMXW9XkWPDrlB+zim4WcPfN+AoVcd6NmTpZMzeCEVF6ct5eIg8wOjX9LQvK1POqzAxC/2rJH9zEUmgkVNl/DHEdXpkfiqTHwQDuuIKUyAt1gB2DGvxfuk7R9p3/w8Wrgu7dBvGEjqY=
+	t=1779298571; cv=none; b=AkuDaRMInVp48ZLI/6NzDdlFMAcMa57qPoeZYSadFkVJDM4RMd787WiQPXPcvUItxyv/yH3eRwypH4th8fR4/mItp22GotUTURd0txmPnE531clnHPaxuBfFe5cjLRxs5y+hOAHWkdlH8qzU2OObvUsmkqGmSYQiak6W6uH1Jmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298568; c=relaxed/simple;
-	bh=MGMijEROD0c661F0NOT70OOQ1g9ggT4/bU+TbjYxDDg=;
+	s=arc-20240116; t=1779298571; c=relaxed/simple;
+	bh=OmislN2xC8IPDbunB6iwlnLCsyVH45wLjBZHyKMVeYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xr/deAfBlZOl/KbtbMIkB8exQtkh0yhwD8CiGkR04Yfy2jQ9x5e0oDntXXxPgvd/yhBtMc/VraGZWO22NQCIEc/W4GLhvN8LCH1TDImuUdajtYjSYUX3wrPDGXz3mCDa98tXMPkryftHGkTbymXlPE6+ptNHXNNV2dLxd2wGowg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kv7GvdnF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kqn8mQTlVX9pxS26aNDyPUiawIwp3jE+agSb2MUGirV6bhTZbUprK9a9HgbUERongAGdt/U24dxoOyUi+/ZoZd364XXsYWWTZ5Eq2HhpRC33/OEa677Lw6YV1iKpVkYaS/sOWV6HYMb1se12np4Yiu4Ejl1w7vRw4fGS8qkzYGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZYTY6bz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kv7GvdnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CCE1F000E9;
-	Wed, 20 May 2026 17:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZYTY6bz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BB91F000E9;
+	Wed, 20 May 2026 17:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298567;
-	bh=MFMpDyJZLVQXFTLUhAWVolTif3Yw4vdXVYYXxGrMYsA=;
+	s=korg; t=1779298570;
+	bh=g3cEXKdQ5rTuwc2Yavbuw6ttaR3GgEGVXC/yWLu816E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kv7GvdnFlVqRDx3uebOgembRWbi/uJMJG+CkEihlayfJjV/X2McL3gVMYsQ6lgp/K
-	 qfKJ9Fsh+E0E4xmLEnqsjYpSfY0X/9uU2in/VzDMGi1ua68PGnutpBdcde4h/l//RX
-	 m3QmOzTeJ8M75wUT8RyQslsIefsF+S3lulQt80dk=
+	b=hZYTY6bzUTV86meAXbtui1GPZEYQjnobLjLtLDMHX0/eLL1vhwILgoRnn74CaQ7Hd
+	 AyahpM1ZYG65DOKmGdPcqw8aBBkOmhatS0yEnvCztfOEKFI+nn1x1pEDqnsBwyylY6
+	 G6Aku13WEDI/OQwuwvF2WesFaBrfZuiaG/2B1PNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Denis Benato <denis.benato@linux.dev>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 460/957] HID: asus: make asus_resume adhere to linux kernel coding standards
-Date: Wed, 20 May 2026 18:15:43 +0200
-Message-ID: <20260520162144.498405124@linuxfoundation.org>
+Subject: [PATCH 6.18 461/957] HID: asus: do not abort probe when not necessary
+Date: Wed, 20 May 2026 18:15:44 +0200
+Message-ID: <20260520162144.520311684@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,33 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Denis Benato <denis.benato@linux.dev>
 
-[ Upstream commit 51d33b42b8ae23da92819d28439fdd5636c45186 ]
+[ Upstream commit 7253091766ded0fd81fe8d8be9b8b835495b06e8 ]
 
-Linux kernel coding standars requires functions opening brackets to be in
-a newline: move the opening bracket of asus_resume in its own line.
+In order to avoid dereferencing a NULL pointer asus_probe is aborted early
+and control of some asus devices is transferred over hid-generic after
+erroring out even when such NULL dereference cannot happen: only early
+abort when the NULL dereference can happen.
 
-Fixes: 546edbd26cff ("HID: hid-asus: reset the backlight brightness level on resume")
+Also make the code shorter and more adherent to coding standards
+removing square brackets enclosing single-line if-else statements.
+
+Fixes: d3af6ca9a8c3 ("HID: asus: fix UAF via HID_CLAIMED_INPUT validation")
 Signed-off-by: Denis Benato <denis.benato@linux.dev>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/hid-asus.c | 25 ++++++++++---------------
+ 1 file changed, 10 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index 5a068f6fd2ce5..b9dfb38b0df4f 100644
+index b9dfb38b0df4f..1746e8ea50ddf 100644
 --- a/drivers/hid/hid-asus.c
 +++ b/drivers/hid/hid-asus.c
-@@ -1095,7 +1095,8 @@ static int asus_start_multitouch(struct hid_device *hdev)
+@@ -1223,22 +1223,17 @@ static int asus_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	 * were freed during registration due to no usages being mapped,
+ 	 * leaving drvdata->input pointing to freed memory.
+ 	 */
+-	if (!drvdata->input || !(hdev->claimed & HID_CLAIMED_INPUT)) {
+-		hid_err(hdev, "Asus input not registered\n");
+-		ret = -ENOMEM;
+-		goto err_stop_hw;
+-	}
+-
+-	if (drvdata->tp) {
+-		drvdata->input->name = "Asus TouchPad";
+-	} else {
+-		drvdata->input->name = "Asus Keyboard";
+-	}
++	if (drvdata->input && (hdev->claimed & HID_CLAIMED_INPUT)) {
++		if (drvdata->tp)
++			drvdata->input->name = "Asus TouchPad";
++		else
++			drvdata->input->name = "Asus Keyboard";
+ 
+-	if (drvdata->tp) {
+-		ret = asus_start_multitouch(hdev);
+-		if (ret)
+-			goto err_stop_hw;
++		if (drvdata->tp) {
++			ret = asus_start_multitouch(hdev);
++			if (ret)
++				goto err_stop_hw;
++		}
+ 	}
+ 
  	return 0;
- }
- 
--static int __maybe_unused asus_resume(struct hid_device *hdev) {
-+static int __maybe_unused asus_resume(struct hid_device *hdev)
-+{
- 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
- 	int ret = 0;
- 
 -- 
 2.53.0
 
