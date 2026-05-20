@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1C22F0C62;
-	Wed, 20 May 2026 16:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE03356754;
+	Wed, 20 May 2026 16:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294533; cv=none; b=LjrrZkqo6ummjyqQ5V8fZPq7GW2bbMLt0O7cfrvET6gTl6m4nVAfVuCXYoTnvbbTEjNWmefEZWN2ng5JlFLSbge2Q8lB0q2vtbECijNul0cfA42D8F708FjR4xCGTesemjB1xI70ds8Cr21iNv37tT/wFD6j7sV82LDDdsW6MXQ=
+	t=1779294536; cv=none; b=f7cZlDNmPutb+I0G+pg9esgu25UTWkInsGbBFqMNVR81/qGc2LTeHllRBbY7ZFSsEw2H2txJnT6Lb/rxkP0lk9oV4T/8iMJpDXmA5lOp7TPlFr1Ii9SG0Awyd//N4u8ubB/K/sIU40etsx+FpCejbceC9G0/Wm2XfYB1Orh/SH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294533; c=relaxed/simple;
-	bh=/xUh0bIj6reN96g8YS7lIMTurLBYQXqilVq6aVcmpLI=;
+	s=arc-20240116; t=1779294536; c=relaxed/simple;
+	bh=TiC+OBPymeKcDGPLCfrHQpBfgZJFicQQTvZ60amCTPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XsGas3KL4hXkdzOIZdNEs6xons0J0ZBlaYSG8bhU0MmG7wjB//YHL8PC5hDpUKuqghr7bR1Mslc5Xbyw8CkO6QMwb7LEUgDgrXoxIDzY5SV+y8RftEWPM9LVAtB97YKqHlEm5qlZ4Q2Ko9lKZPO06soyQ75D3AlCyY+Lqkq4Myk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Udv0Tf53; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mKwPFNXhAKZzR3UB+QMYDsI+44hziyYjllsQeBbU4jarSOa+/Mb46NH7lMRNwKWcRtLuC3J05Sux+/E7Yv1AgSrirLrQJcd6vTV0nLTQqbxGMlBB/QAUtL2Pt0++yD4v40eVTofqZWKdUDtuH7ciRDScXdPFJSdflmRc6EkDDx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGF+HT+c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Udv0Tf53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B186F1F000E9;
-	Wed, 20 May 2026 16:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGF+HT+c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7941F000E9;
+	Wed, 20 May 2026 16:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294532;
-	bh=8PgoReTN2XLYEa2rhyDguwxWGnViR/nWpk1Bz90qRi4=;
+	s=korg; t=1779294534;
+	bh=GR4szUdE+9ZHOEs3SqM2n+3bGd1tFFmo13DlLxb3gDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Udv0Tf532qG2V9mgY9rB++aDeChkkMBg+bC/tgFMd3N3Y4HubOQROnmXpjbtDxOqv
-	 oGhIzopLrJDffxIz1g5JIStJXcE6fD8BQL1CnCO1c+j0GF03+LftH/9Lrktv0AJicb
-	 UyY9DDAAR3I/Pm0c4Mg/i15el6QX/Y6AWU6SLRCY=
+	b=hGF+HT+cmHNmuTOMTnfgVIHuv/6DbfjAt5OtBaNp6iILjfOcZx/SxheLMdtpedKtd
+	 gbG47YRsEMoZFXsubKFL0V7art7j6JaN5Z8B1Cfoh22CW578fFCAW1heymclPw8zbz
+	 ig/3uEuxZLtjLWeZacPzRgb14tYbCXyOKC7tyjgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarika Sharma <sarika.sharma@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0074/1146] wifi: ath12k: account TX stats only when ACK/BA status is present
-Date: Wed, 20 May 2026 18:05:24 +0200
-Message-ID: <20260520162150.031011930@linuxfoundation.org>
+Subject: [PATCH 7.0 0039/1146] vdpa: use generic driver_override infrastructure
+Date: Wed, 20 May 2026 18:04:49 +0200
+Message-ID: <20260520162149.267015111@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -47,88 +47,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 1635ecc61a24597f893d057d004051a535c1c643 ]
+[ Upstream commit 85bb534ff12aab6916058897b39c748940a7a4c6 ]
 
-The fields tx_retry_failed, tx_retry_count, and tx_duration are
-currently updated outside the HTT_PPDU_STATS_TAG_USR_COMPLTN_ACK_BA_STATUS
-flag check. In certain scenarios, firmware delivers multiple PPDU
-statistics for the same PPDU, first without BA/ACK information, and
-later with BA/ACK status once it becomes available. As the same PPDU
-is processed again, these counters are updated a second time,
-resulting in duplicate TX statistics.
+When a driver is probed through __driver_attach(), the bus' match()
+callback is called without the device lock held, thus accessing the
+driver_override field without a lock, which can cause a UAF.
 
-To address this, move the accounting of tx_retry_failed and
-tx_retry_count under the ACK/BA status flag check, and similarly gate
-tx_duration on the same path. This ensures that each PPDU contributes
-to these counters exactly once, avoids double counting, and provides
-consistent reporting in userspace tools such as station dump.
+Fix this by using the driver-core driver_override infrastructure taking
+care of proper locking internally.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
+Note that calling match() from __driver_attach() without the device lock
+held is intentional. [1]
 
-Fixes: a0b963e1da5b ("wifi: ath12k: fetch tx_retry and tx_failed from htt_ppdu_stats_user_cmpltn_common_tlv")
-Signed-off-by: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260226051947.1379716-1-sarika.sharma@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Fixes: 539fec78edb4 ("vdpa: add driver_override support")
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20260324005919.2408620-9-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_htt.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/vdpa/vdpa.c  | 48 +++++---------------------------------------
+ include/linux/vdpa.h |  4 ----
+ 2 files changed, 5 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_htt.c b/drivers/net/wireless/ath/ath12k/dp_htt.c
-index e71bb71a6020e..9c19d9707abfb 100644
---- a/drivers/net/wireless/ath/ath12k/dp_htt.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_htt.c
-@@ -205,16 +205,9 @@ ath12k_update_per_peer_tx_stats(struct ath12k_pdev_dp *dp_pdev,
- 	if (!(usr_stats->tlv_flags & BIT(HTT_PPDU_STATS_TAG_USR_RATE)))
- 		return;
+diff --git a/drivers/vdpa/vdpa.c b/drivers/vdpa/vdpa.c
+index 34874beb0152e..caf0ee5d6856c 100644
+--- a/drivers/vdpa/vdpa.c
++++ b/drivers/vdpa/vdpa.c
+@@ -67,57 +67,20 @@ static void vdpa_dev_remove(struct device *d)
  
--	if (usr_stats->tlv_flags & BIT(HTT_PPDU_STATS_TAG_USR_COMPLTN_COMMON)) {
-+	if (usr_stats->tlv_flags & BIT(HTT_PPDU_STATS_TAG_USR_COMPLTN_COMMON))
- 		is_ampdu =
- 			HTT_USR_CMPLTN_IS_AMPDU(usr_stats->cmpltn_cmn.flags);
--		tx_retry_failed =
--			__le16_to_cpu(usr_stats->cmpltn_cmn.mpdu_tried) -
--			__le16_to_cpu(usr_stats->cmpltn_cmn.mpdu_success);
--		tx_retry_count =
--			HTT_USR_CMPLTN_LONG_RETRY(usr_stats->cmpltn_cmn.flags) +
--			HTT_USR_CMPLTN_SHORT_RETRY(usr_stats->cmpltn_cmn.flags);
--	}
+ static int vdpa_dev_match(struct device *dev, const struct device_driver *drv)
+ {
+-	struct vdpa_device *vdev = dev_to_vdpa(dev);
++	int ret;
  
- 	if (usr_stats->tlv_flags &
- 	    BIT(HTT_PPDU_STATS_TAG_USR_COMPLTN_ACK_BA_STATUS)) {
-@@ -223,10 +216,19 @@ ath12k_update_per_peer_tx_stats(struct ath12k_pdev_dp *dp_pdev,
- 					  HTT_PPDU_STATS_ACK_BA_INFO_NUM_MSDU_M);
- 		tid = le32_get_bits(usr_stats->ack_ba.info,
- 				    HTT_PPDU_STATS_ACK_BA_INFO_TID_NUM);
--	}
+ 	/* Check override first, and if set, only use the named driver */
+-	if (vdev->driver_override)
+-		return strcmp(vdev->driver_override, drv->name) == 0;
++	ret = device_match_driver_override(dev, drv);
++	if (ret >= 0)
++		return ret;
  
--	if (common->fes_duration_us)
--		tx_duration = le32_to_cpu(common->fes_duration_us);
-+		if (usr_stats->tlv_flags & BIT(HTT_PPDU_STATS_TAG_USR_COMPLTN_COMMON)) {
-+			tx_retry_failed =
-+				__le16_to_cpu(usr_stats->cmpltn_cmn.mpdu_tried) -
-+				__le16_to_cpu(usr_stats->cmpltn_cmn.mpdu_success);
-+			tx_retry_count =
-+				HTT_USR_CMPLTN_LONG_RETRY(usr_stats->cmpltn_cmn.flags) +
-+				HTT_USR_CMPLTN_SHORT_RETRY(usr_stats->cmpltn_cmn.flags);
-+		}
-+
-+		if (common->fes_duration_us)
-+			tx_duration = le32_to_cpu(common->fes_duration_us);
-+	}
+ 	/* Currently devices must be supported by all vDPA bus drivers */
+ 	return 1;
+ }
  
- 	user_rate = &usr_stats->rate;
- 	flags = HTT_USR_RATE_PREAMBLE(user_rate->rate_flags);
+-static ssize_t driver_override_store(struct device *dev,
+-				     struct device_attribute *attr,
+-				     const char *buf, size_t count)
+-{
+-	struct vdpa_device *vdev = dev_to_vdpa(dev);
+-	int ret;
+-
+-	ret = driver_set_override(dev, &vdev->driver_override, buf, count);
+-	if (ret)
+-		return ret;
+-
+-	return count;
+-}
+-
+-static ssize_t driver_override_show(struct device *dev,
+-				    struct device_attribute *attr, char *buf)
+-{
+-	struct vdpa_device *vdev = dev_to_vdpa(dev);
+-	ssize_t len;
+-
+-	device_lock(dev);
+-	len = sysfs_emit(buf, "%s\n", vdev->driver_override);
+-	device_unlock(dev);
+-
+-	return len;
+-}
+-static DEVICE_ATTR_RW(driver_override);
+-
+-static struct attribute *vdpa_dev_attrs[] = {
+-	&dev_attr_driver_override.attr,
+-	NULL,
+-};
+-
+-static const struct attribute_group vdpa_dev_group = {
+-	.attrs  = vdpa_dev_attrs,
+-};
+-__ATTRIBUTE_GROUPS(vdpa_dev);
+-
+ static const struct bus_type vdpa_bus = {
+ 	.name  = "vdpa",
+-	.dev_groups = vdpa_dev_groups,
++	.driver_override = true,
+ 	.match = vdpa_dev_match,
+ 	.probe = vdpa_dev_probe,
+ 	.remove = vdpa_dev_remove,
+@@ -132,7 +95,6 @@ static void vdpa_release_dev(struct device *d)
+ 		ops->free(vdev);
+ 
+ 	ida_free(&vdpa_index_ida, vdev->index);
+-	kfree(vdev->driver_override);
+ 	kfree(vdev);
+ }
+ 
+diff --git a/include/linux/vdpa.h b/include/linux/vdpa.h
+index 2bfe3baa63f42..782c42d25db16 100644
+--- a/include/linux/vdpa.h
++++ b/include/linux/vdpa.h
+@@ -72,9 +72,6 @@ struct vdpa_mgmt_dev;
+  * struct vdpa_device - representation of a vDPA device
+  * @dev: underlying device
+  * @vmap: the metadata passed to upper layer to be used for mapping
+- * @driver_override: driver name to force a match; do not set directly,
+- *                   because core frees it; use driver_set_override() to
+- *                   set or clear it.
+  * @config: the configuration ops for this device.
+  * @map: the map ops for this device
+  * @cf_lock: Protects get and set access to configuration layout.
+@@ -90,7 +87,6 @@ struct vdpa_mgmt_dev;
+ struct vdpa_device {
+ 	struct device dev;
+ 	union virtio_map vmap;
+-	const char *driver_override;
+ 	const struct vdpa_config_ops *config;
+ 	const struct virtio_map_ops *map;
+ 	struct rw_semaphore cf_lock; /* Protects get/set config */
 -- 
 2.53.0
 
