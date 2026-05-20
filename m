@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA641BD9D0;
-	Wed, 20 May 2026 16:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFBD1BD9D0;
+	Wed, 20 May 2026 16:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295588; cv=none; b=tb1eRo5d7A1QKQ70on2B9fPTyisFy3qmXwaPkNChLuOII0ABnPa6AYmXGDa33g8W77rTc/Z46TPAGy6yc+Sb0rHSb8l9sLQAJBxHRNIe6su2wMZPaWrxYbbvtKeW4l0racnKuIqHpQ/2jgwQl4TVTBDv0CsW9coYzxfLv+3QfUQ=
+	t=1779295591; cv=none; b=NltGoHqq1E+wfuKTiv/p59NRtY4CmySRe17LdxFA0VizgFSKC5RFiqj9BC+7R+JhMYE+rqX7g0F/+Fc+gLo+qGpPAWax1hyrKrsWQWpglYBK281qCsxinZCNyjtbonarkk7tLDQnfNjM71JCrtIYZ8GGs4XHu5qtUZSP+Jl446I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295588; c=relaxed/simple;
-	bh=oSW7ygrdRvSYPFQKTfA51zlG1AdhuWPkBMd2kuv1VC4=;
+	s=arc-20240116; t=1779295591; c=relaxed/simple;
+	bh=AqidraC83xNTXbib9cWyCfGTkge4lCs+Rwux8m06rPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GiX1uLV7ZyFp7GYn/y/im8/oDpZQRcOAzhW9wAG6CNB2K1mwVGU/3pL6TmGW30h3TsUFJJLv94+eVCaXvaBXqwk9+2gpdwW2PlJGVKDMEymHSwa4fZiWaa7+8t6VsKzM7UtUFxofXGQ8/62/S3rAI/W5CJZOE8oFC2noWvJBccs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kp1LyfH/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mya1ioQEC1cCi/hduK9G8ap4OWCiOYfmBDChk7U4TaGVp1wqe2NXueI9FbeLjm08gkmjDKMyNuIfWKMYDR+E9tXHE6khcFMH7KIzuSqXm7+G9Kl5VXI3c+QC49/GALX1420jDD5La8/m061CbPmxW2r7PxxEJ1bOgAjcolW0f1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cm0GCQ+N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kp1LyfH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B366A1F000E9;
-	Wed, 20 May 2026 16:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cm0GCQ+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FB71F000E9;
+	Wed, 20 May 2026 16:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295587;
-	bh=RjD6f/8O2PXE5kKp+CswhEBaazX0hOBk5GFJNEtdpfo=;
+	s=korg; t=1779295589;
+	bh=xZZkADcHy9Q0CeEkda4T+NYB53tB2rDOaPej7Qq/1dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kp1LyfH/2q4a9Lzh06uAnQMvAklnIFLZA60TNWaDWRTtS120fmYP520dxPEAIvpxY
-	 hUmWItR5OMUbIP4PohvuzxjO7wLVNbNAgBZzTeT7SBhewmBULplTj06RWLpG+HMmSz
-	 +XSNYe6Nm3fskUHcGReWnygn5JE19WSUjAGpHcv8=
+	b=Cm0GCQ+N+tXlQ6iGEvc47Wkta+T125Hjc8uSuPh7ug6lY9pTR3lZbovDPu5zHxWN3
+	 riUeKoC8tg5Jg6UauOq2ASdkQz4O4tMhxB8p9C/77enuv9pT7eodo1fAsCYlyp99MW
+	 TKgysEo+xmGTx52PrQ5+R41cdJIJzPzcf6MZvsDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Dan Carpenter <error27@gmail.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0435/1146] ALSA: sc6000: Keep the programmed board state in card-private data
-Date: Wed, 20 May 2026 18:11:25 +0200
-Message-ID: <20260520162158.042126551@linuxfoundation.org>
+Subject: [PATCH 7.0 0436/1146] dm cache: fix missing return in invalidate_committeds error path
+Date: Wed, 20 May 2026 18:11:26 +0200
+Message-ID: <20260520162158.066273816@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,291 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit fb79bf127ac2577b4876132da6dba768018aad4c ]
+[ Upstream commit 8c0ee19db81f0fa1ff25fd75b22b17c0cc2acde3 ]
 
-The driver may auto-select IRQ and DMA resources at probe time, but
-sc6000_init_board() still derives the SC-6000 soft configuration from
-the module parameter arrays.  When irq=auto or dma=auto is used, the
-codec is created with the selected resources while the board is
-programmed with the unresolved values.
+In passthrough mode, dm-cache defers write submission until after
+metadata commit completes via the invalidate_committed() continuation.
+On commit error, invalidate_committed() calls invalidate_complete() to
+end the bio and free the migration struct, after which it should return
+immediately.
 
-Store the mapped ports and generated SC-6000 board configuration in
-card-private data, build that configuration from the live probe
-results instead of the raw module parameters, and keep the probe-time
-board programming in a shared helper.
+The patch 4ca8b8bd952d ("dm cache: fix write hang in passthrough mode")
+omitted this early return, causing execution to fall through into the
+success path on error. This results in use-after-free on the migration
+struct in the subsequent calls.
 
-This fixes the resource-programming mismatch and leaves the driver
-with a stable board-state block that can be reused by suspend/resume.
+Fix by adding the missing return after the invalidate_complete() call.
 
-Fixes: c282866101bf ("ALSA: sc6000: add support for SC-6600 and SC-7000")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260410-alsa-sc6000-pm-v1-1-4d9e95493d26@gmail.com
+Fixes: 4ca8b8bd952d ("dm cache: fix write hang in passthrough mode")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/dm-devel/adjMq6T5RRjv_uxM@stanley.mountain/
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/isa/sc6000.c | 152 +++++++++++++++++++++++++++------------------
- 1 file changed, 92 insertions(+), 60 deletions(-)
+ drivers/md/dm-cache-target.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/isa/sc6000.c b/sound/isa/sc6000.c
-index 6d618cc2ba457..9949e06403f61 100644
---- a/sound/isa/sc6000.c
-+++ b/sound/isa/sc6000.c
-@@ -100,6 +100,15 @@ MODULE_PARM_DESC(joystick, "Enable gameport.");
- #define PFX "sc6000: "
- #define DRV_NAME "SC-6000"
+diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
+index e479ac22b97cc..af7a2571988b4 100644
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -1521,8 +1521,10 @@ static void invalidate_committed(struct work_struct *ws)
+ 	struct bio *bio = mg->overwrite_bio;
+ 	struct per_bio_data *pb = get_per_bio_data(bio);
  
-+struct snd_sc6000 {
-+	char __iomem *vport;
-+	char __iomem *vmss_port;
-+	u8 mss_config;
-+	u8 config;
-+	u8 hw_cfg[2];
-+	bool old_dsp;
-+};
-+
- /* hardware dependent functions */
- 
- /*
-@@ -267,7 +276,7 @@ static int sc6000_dsp_reset(char __iomem *vport)
- 
- /* detection and initialization */
- static int sc6000_hw_cfg_write(struct device *devptr,
--			       char __iomem *vport, const int *cfg)
-+			       char __iomem *vport, const u8 *cfg)
- {
- 	if (sc6000_write(devptr, vport, COMMAND_6C) < 0) {
- 		dev_warn(devptr, "CMD 0x%x: failed!\n", COMMAND_6C);
-@@ -353,8 +362,7 @@ static int sc6000_init_mss(struct device *devptr,
- 	return 0;
- }
- 
--static void sc6000_hw_cfg_encode(struct device *devptr,
--				 char __iomem *vport, int *cfg,
-+static void sc6000_hw_cfg_encode(struct device *devptr, u8 *cfg,
- 				 long xport, long xmpu,
- 				 long xmss_port, int joystick)
- {
-@@ -376,27 +384,83 @@ static void sc6000_hw_cfg_encode(struct device *devptr,
- 	dev_dbg(devptr, "hw cfg %x, %x\n", cfg[0], cfg[1]);
- }
- 
--static int sc6000_init_board(struct device *devptr,
--			     char __iomem *vport,
--			     char __iomem *vmss_port, int dev)
-+static void sc6000_prepare_board(struct device *devptr,
-+				 struct snd_sc6000 *sc6000,
-+				 unsigned int dev, int xirq, int xdma)
-+{
-+	sc6000->mss_config = sc6000_irq_to_softcfg(xirq) |
-+			     sc6000_dma_to_softcfg(xdma);
-+	sc6000->config = sc6000->mss_config |
-+			 sc6000_mpu_irq_to_softcfg(mpu_irq[dev]);
-+	sc6000_hw_cfg_encode(devptr, sc6000->hw_cfg, port[dev], mpu_port[dev],
-+			     mss_port[dev], joystick[dev]);
-+}
-+
-+static void sc6000_detect_old_dsp(struct device *devptr,
-+				  struct snd_sc6000 *sc6000)
-+{
-+	sc6000_write(devptr, sc6000->vport, COMMAND_5C);
-+	sc6000->old_dsp = sc6000_read(sc6000->vport) < 0;
-+}
-+
-+static int sc6000_program_board(struct device *devptr,
-+				struct snd_sc6000 *sc6000)
-+{
-+	int err;
-+
-+	if (!sc6000->old_dsp) {
-+		if (sc6000_hw_cfg_write(devptr, sc6000->vport,
-+					sc6000->hw_cfg) < 0) {
-+			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
-+			return -EIO;
-+		}
+-	if (mg->k.input)
++	if (mg->k.input) {
+ 		invalidate_complete(mg, false);
++		return;
 +	}
-+
-+	err = sc6000_setup_board(devptr, sc6000->vport, sc6000->config);
-+	if (err < 0) {
-+		dev_err(devptr, "sc6000_setup_board: failed!\n");
-+		return -ENODEV;
-+	}
-+
-+	sc6000_dsp_reset(sc6000->vport);
-+
-+	if (!sc6000->old_dsp) {
-+		sc6000_write(devptr, sc6000->vport, COMMAND_60);
-+		sc6000_write(devptr, sc6000->vport, 0x02);
-+		sc6000_dsp_reset(sc6000->vport);
-+	}
-+
-+	err = sc6000_setup_board(devptr, sc6000->vport, sc6000->config);
-+	if (err < 0) {
-+		dev_err(devptr, "sc6000_setup_board: failed!\n");
-+		return -ENODEV;
-+	}
-+
-+	err = sc6000_init_mss(devptr, sc6000->vport, sc6000->config,
-+			      sc6000->vmss_port, sc6000->mss_config);
-+	if (err < 0) {
-+		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
-+		return -ENODEV;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc6000_init_board(struct device *devptr, struct snd_sc6000 *sc6000)
- {
- 	char answer[15];
- 	char version[2];
--	int mss_config = sc6000_irq_to_softcfg(irq[dev]) |
--			 sc6000_dma_to_softcfg(dma[dev]);
--	int config = mss_config |
--		     sc6000_mpu_irq_to_softcfg(mpu_irq[dev]);
- 	int err;
--	int old = 0;
  
--	err = sc6000_dsp_reset(vport);
-+	err = sc6000_dsp_reset(sc6000->vport);
- 	if (err < 0) {
- 		dev_err(devptr, "sc6000_dsp_reset: failed!\n");
- 		return err;
- 	}
- 
- 	memset(answer, 0, sizeof(answer));
--	err = sc6000_dsp_get_answer(devptr, vport, GET_DSP_COPYRIGHT, answer, 15);
-+	err = sc6000_dsp_get_answer(devptr, sc6000->vport, GET_DSP_COPYRIGHT,
-+				    answer, 15);
- 	if (err <= 0) {
- 		dev_err(devptr, "sc6000_dsp_copyright: failed!\n");
- 		return -ENODEV;
-@@ -408,54 +472,17 @@ static int sc6000_init_board(struct device *devptr,
- 	if (strncmp("SC-6000", answer, 7))
- 		dev_warn(devptr, "Warning: non SC-6000 audio card!\n");
- 
--	if (sc6000_dsp_get_answer(devptr, vport, GET_DSP_VERSION, version, 2) < 2) {
-+	if (sc6000_dsp_get_answer(devptr, sc6000->vport,
-+				  GET_DSP_VERSION, version, 2) < 2) {
- 		dev_err(devptr, "sc6000_dsp_version: failed!\n");
- 		return -ENODEV;
- 	}
- 	dev_info(devptr, "Detected model: %s, DSP version %d.%d\n",
- 		answer, version[0], version[1]);
- 
--	/* set configuration */
--	sc6000_write(devptr, vport, COMMAND_5C);
--	if (sc6000_read(vport) < 0)
--		old = 1;
--
--	if (!old) {
--		int cfg[2];
--		sc6000_hw_cfg_encode(devptr,
--				     vport, &cfg[0], port[dev], mpu_port[dev],
--				     mss_port[dev], joystick[dev]);
--		if (sc6000_hw_cfg_write(devptr, vport, cfg) < 0) {
--			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
--			return -EIO;
--		}
--	}
--	err = sc6000_setup_board(devptr, vport, config);
--	if (err < 0) {
--		dev_err(devptr, "sc6000_setup_board: failed!\n");
--		return -ENODEV;
--	}
--
--	sc6000_dsp_reset(vport);
--
--	if (!old) {
--		sc6000_write(devptr, vport, COMMAND_60);
--		sc6000_write(devptr, vport, 0x02);
--		sc6000_dsp_reset(vport);
--	}
-+	sc6000_detect_old_dsp(devptr, sc6000);
- 
--	err = sc6000_setup_board(devptr, vport, config);
--	if (err < 0) {
--		dev_err(devptr, "sc6000_setup_board: failed!\n");
--		return -ENODEV;
--	}
--	err = sc6000_init_mss(devptr, vport, config, vmss_port, mss_config);
--	if (err < 0) {
--		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
--		return -ENODEV;
--	}
--
--	return 0;
-+	return sc6000_program_board(devptr, sc6000);
- }
- 
- static int snd_sc6000_mixer(struct snd_wss *chip)
-@@ -538,10 +565,10 @@ static int snd_sc6000_match(struct device *devptr, unsigned int dev)
- 
- static void snd_sc6000_free(struct snd_card *card)
- {
--	char __iomem *vport = (char __force __iomem *)card->private_data;
-+	struct snd_sc6000 *sc6000 = card->private_data;
- 
--	if (vport)
--		sc6000_setup_board(card->dev, vport, 0);
-+	if (sc6000->vport)
-+		sc6000_setup_board(card->dev, sc6000->vport, 0);
- }
- 
- static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
-@@ -552,15 +579,17 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 	int xirq = irq[dev];
- 	int xdma = dma[dev];
- 	struct snd_card *card;
-+	struct snd_sc6000 *sc6000;
- 	struct snd_wss *chip;
- 	struct snd_opl3 *opl3;
- 	char __iomem *vport;
- 	char __iomem *vmss_port;
- 
- 	err = snd_devm_card_new(devptr, index[dev], id[dev], THIS_MODULE,
--				0, &card);
-+				sizeof(*sc6000), &card);
- 	if (err < 0)
- 		return err;
-+	sc6000 = card->private_data;
- 
- 	if (xirq == SNDRV_AUTO_IRQ) {
- 		xirq = snd_legacy_find_free_irq(possible_irqs);
-@@ -587,7 +616,7 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 		dev_err(devptr, "I/O port cannot be iomapped.\n");
- 		return -EBUSY;
- 	}
--	card->private_data = (void __force *)vport;
-+	sc6000->vport = vport;
- 
- 	/* to make it marked as used */
- 	if (!devm_request_region(devptr, mss_port[dev], 4, DRV_NAME)) {
-@@ -600,12 +629,15 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 		dev_err(devptr, "MSS port I/O cannot be iomapped.\n");
- 		return -EBUSY;
- 	}
-+	sc6000->vmss_port = vmss_port;
- 
- 	dev_dbg(devptr, "Initializing BASE[0x%lx] IRQ[%d] DMA[%d] MIRQ[%d]\n",
- 		port[dev], xirq, xdma,
- 		mpu_irq[dev] == SNDRV_AUTO_IRQ ? 0 : mpu_irq[dev]);
- 
--	err = sc6000_init_board(devptr, vport, vmss_port, dev);
-+	sc6000_prepare_board(devptr, sc6000, dev, xirq, xdma);
-+
-+	err = sc6000_init_board(devptr, sc6000);
- 	if (err < 0)
- 		return err;
- 	card->private_free = snd_sc6000_free;
+ 	init_continuation(&mg->k, invalidate_completed);
+ 	remap_to_origin_clear_discard(cache, bio, mg->invalidate_oblock);
 -- 
 2.53.0
 
