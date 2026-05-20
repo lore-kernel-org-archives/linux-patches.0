@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2E128DC4;
-	Wed, 20 May 2026 17:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB10636405A;
+	Wed, 20 May 2026 17:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298414; cv=none; b=GVEMEbEafjqty4O1+BzT3ljF0JGA0m6cyha3cCd70RtWAlpnvxB7/nhOx64W7623HF/xnTr8ngIYAAEUfeX1pY9AaGQNSWK6mKnPGoQdE/gFcEdDUOAtAUM/pMPd8iN8ycS3H3al3c2NP8RQIInEeie6q21+QLoXV6/WX1PEoco=
+	t=1779298416; cv=none; b=YuIolgl53mOw0FtNlQ0XZB0wdm6ZTgq3XpblwztdNRAWNEvrgjiCBNYHjAU3jLsUsAsl6n5rxz2rcvAyeRzspuHbwpXmMt+hH0CVW/3vzMbgIKBpAKp++YSmbPDO1ZunTR9taDdLT9SSohXdhaHe2U3YCJrBTIbiLMEmZdbnqWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298414; c=relaxed/simple;
-	bh=8sAaN/Mde+PyAchN68k5WjREjYJaEtAxmOO4wi6061c=;
+	s=arc-20240116; t=1779298416; c=relaxed/simple;
+	bh=RoAujxKLkTd+qwQeicByL7UDrBQU6iF1f/7a+N+bV88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ksg421Lcl/nzLadKrCoVxSaLwdOxWOXhnraecTeqxTJLr6J6ExMy4FOlvWDe9AE/XhOc9wNnlxXw8lZvhqtH42MPV249UnPudrbIIvHCaxnm9IzV//4yzUoSlSLerV3qErqTG+9tbEHg4eN9FkqB9txiPTsak7yMaYUrymIpgoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbDdZ1uN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ichnd9Fa6eDE9I8YB9D8jy8MDaGsIwRwFuBXTNKcAg4Y1lDTnbnYGpUs3jHibNVzus5b4pO9ZEUF1zm7HFWp0cK/3uUPfYbPqvGop198F+uLQJlX/zSqp/5XdMGX6Acm++f8kghclXK+IyRw7XfqQIdl6TXiXi3AhqFZ4lJbWIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cymM+e6M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbDdZ1uN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790181F000E9;
-	Wed, 20 May 2026 17:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cymM+e6M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF6E1F000E9;
+	Wed, 20 May 2026 17:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298412;
-	bh=MoFZDdnfOautIcwZXhgfoqeMBMHD3dQHdVP6OXyVBxw=;
+	s=korg; t=1779298415;
+	bh=QyCOwMGEBd+LURqbsMG3IT+yzIZYN3RjvOfXcwMVjD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QbDdZ1uN97nSxNRKU7dr2+2Xm0vQKzcNygkv775ENzlOFETwf/DTbnFM1B83hsA/0
-	 DQFhnKTw8n9sJ0U6Mg2dzf5XsXtyKBFoEEtoZBcbDbFqn9RezmkPeca2LrsGFNQEJK
-	 mr7wzmiqZ/ue7Lcq3oP1lvMY6BSPteE2yWdtsdKY=
+	b=cymM+e6Mc7eESUMcwh5FqO9LsPxVafPvw6anIpncjsiTuHPt2HRtjkwzZ8W4KUDYM
+	 BY96SVCgG5SiV4FA8vySpSbf1TT2Av63SiUg8W06Zm0udCDMyZzCDegkZVmj2GUKFf
+	 jqeuhmJjrFgATiEANBE8/c5XviHshpHpahY79RtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Hawley <warthog9@eaglescrag.net>,
-	Andrea Righi <arighi@nvidia.com>,
-	Marcos Paulo de Souza <mpdesouza@suse.com>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 349/957] ktest: Honor empty per-test option overrides
-Date: Wed, 20 May 2026 18:13:52 +0200
-Message-ID: <20260520162142.099736780@linuxfoundation.org>
+Subject: [PATCH 6.18 395/957] arm64: dts: qcom: hamoa: correct Iris corners for the MXC rail
+Date: Wed, 20 May 2026 18:14:38 +0200
+Message-ID: <20260520162143.093343527@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,81 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit a2de57a3c8192dcd67cccaff6c341b93748d799b ]
+[ Upstream commit baac8b5e43f42b632b912a6a837d94fd5bca48f2 ]
 
-A per-test override can clear an inherited default option by assigning an
-empty value, but __set_test_option() still used option_defined() to decide
-whether a per-test key existed. That turned an empty per-test assignment
-back into "fall back to the default", so tests still could not clear
-inherited settings.
+The corners of the MVS0 / MVS0C clocks on the MMCX rail don't always
+match the PLL corners on the MXC rail. Correct the performance corners
+for the MXC rail following the PLL documentation.
 
-For example:
-
-  DEFAULTS
-  (...)
-  LOG_FILE = /tmp/ktest-empty-override.log
-  CLEAR_LOG = 1
-  ADD_CONFIG = /tmp/.config
-
-  TEST_START
-  TEST_TYPE = build
-  BUILD_TYPE = nobuild
-  ADD_CONFIG =
-
-This would run the test with ADD_CONFIG[1] = /tmp/.config
-
-Fix by checking whether the per-test key exists before falling back. If it
-does exist but is empty, treat it as unset for that test and stop the
-fallback chain there.
-
-Cc: John Hawley <warthog9@eaglescrag.net>
-Cc: Andrea Righi <arighi@nvidia.com>
-Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
-Cc: Matthieu Baerts <matttbe@kernel.org>
-Cc: Fernando Fernandez Mancera <fmancera@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Link: https://patch.msgid.link/20260307-ktest-fixes-v1-4-565d412f4925@suse.com
-Fixes: 22c37a9ac49d ("ktest: Allow tests to undefine default options")
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 9065340ac04d ("arm64: dts: qcom: x1e80100: Add IRIS video codec")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260313-iris-fix-corners-v1-1-32a393c25dda@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index 28643812184bc..924e17df56f74 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -4183,7 +4183,8 @@ sub __set_test_option {
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index efe8d5e7079fe..66c31c1799421 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -5297,19 +5297,19 @@ opp-338000000 {
  
-     my $option = "$name\[$i\]";
+ 				opp-366000000 {
+ 					opp-hz = /bits/ 64 <366000000>;
+-					required-opps = <&rpmhpd_opp_svs_l1>,
++					required-opps = <&rpmhpd_opp_svs>,
+ 							<&rpmhpd_opp_svs_l1>;
+ 				};
  
--    if (option_defined($option)) {
-+    if (exists($opt{$option})) {
-+	return undef if (!option_defined($option));
- 	return $opt{$option};
-     }
+ 				opp-444000000 {
+ 					opp-hz = /bits/ 64 <444000000>;
+-					required-opps = <&rpmhpd_opp_nom>,
++					required-opps = <&rpmhpd_opp_svs_l1>,
+ 							<&rpmhpd_opp_nom>;
+ 				};
  
-@@ -4191,7 +4192,8 @@ sub __set_test_option {
- 	if ($i >= $test &&
- 	    $i < $test + $repeat_tests{$test}) {
- 	    $option = "$name\[$test\]";
--	    if (option_defined($option)) {
-+	    if (exists($opt{$option})) {
-+		return undef if (!option_defined($option));
- 		return $opt{$option};
- 	    }
- 	}
+ 				opp-481000000 {
+ 					opp-hz = /bits/ 64 <481000000>;
+-					required-opps = <&rpmhpd_opp_turbo>,
++					required-opps = <&rpmhpd_opp_svs_l1>,
+ 							<&rpmhpd_opp_turbo>;
+ 				};
+ 			};
 -- 
 2.53.0
 
