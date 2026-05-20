@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89193A3E90;
-	Wed, 20 May 2026 16:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFDE3A4526;
+	Wed, 20 May 2026 16:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295756; cv=none; b=osem9D0AWABUgftyWzl/0QzxR8XPdVJnoZtpf7QG6qdnj4pNLRT22DXIoPOve7W0Fiz9tNnyYq2ikj9/1QSPybv1lj1Zla3I3rLVpQTDN7HTw2l1L1RB5Y2nkcPXcU3fELyGvinRx0k906q66YUzeCGMeEEikhJF0JaKseWeSUc=
+	t=1779295757; cv=none; b=r6zuiBceLHbyWrqx8rUvTGsMo8vHEjRCluEVeHkeGspFkVqnJG/Kp9JXIdzM07TBn3REA0g9mYorzkqTmvZeI0VftlLOQ1RadIMQeGpbcqsJz/KwZ+7qARhgGnLioxWYoT89xcab8bmmpOuoPwr3Utg2noRd+zcaUIVBdDxosDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295756; c=relaxed/simple;
-	bh=koxleYiYkV+jgvAuoqbabCaCiQb1wnJirJKH1i58r3E=;
+	s=arc-20240116; t=1779295757; c=relaxed/simple;
+	bh=/jCplC8oKKKzOhpnzo86HEECaVbOeSXkfqq0xfNcMjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lAN6vd46TyMyUjywGbYxPpiYo0jAhRHRUZhxKZcDfAX2LoOnjFEHnotnAXGLMBmlEr3QUdciOo2SQRL9Fqc7n9sziNvf0vdOS0iNMCHhf/WcEMpEHgIfIl5Ln6khJfJqHt8TBcsgHpStzUQ7pw2Fcc5GpccakS6Vl+RYtJNfV8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrlptJql; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YXGLHYp7p9y5fO5jyaT6oGUS6D9ZPJPS4iFI1WOvaA1DXKnWCVieWtSVf8CB6RsGb9w8eEEOjvpEJzmST2D/gWM9dDKvLh7O0B4sbQt2KS9puFE+7byt4ZvOanZc3EMjcKU7Vmn3flcUlB4CZNX2ElkjMRkM88uxgQQhWQ5DGGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPh6u72V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrlptJql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D763F1F00893;
-	Wed, 20 May 2026 16:49:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPh6u72V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804D61F00894;
+	Wed, 20 May 2026 16:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295753;
-	bh=rjWZuHSCYSEhf+jMEb0zRUAGgwIggotaEpy6WUgFlVk=;
+	s=korg; t=1779295756;
+	bh=yjyFUOpkXK5rpAf8o9VSNTJikFy0bhA2gC5j+LMd7dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LrlptJqlMm5Duo6T96lkown1K/NOnFmoOVLNA4KgUQimgo7wDij0RZauKj5aOz41s
-	 Lv1zO38ew79vWdKbed9EGXIov1fZxJrYBEpdrC4OwEsdd+2o9J2GpLQVK+/YP/Hq0/
-	 +EzNbjhmNtW/liEG6P1OOJM+H0qAeVZj939Btn9g=
+	b=vPh6u72VSUDnC6kskZnLCjjNd41E9BDn/2RaToPk6Y0CowpZNq1OI+CDpK4WVR4gJ
+	 1Ql/Ro6/UD2KckLA8/5XWsnSEkbeOP/jPC5rMSZSEP1MC24/pLoqxJwyF9tWt6H1iN
+	 5skhl6Vd5r7+ql9KMA8KMQlGzpuLjX0iK/4cK2Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Liu Ying <victor.liu@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0539/1146] arm64: dts: imx8dxl-evk: Use audio-graph-card2 for wm8960-2 and wm8960-3
-Date: Wed, 20 May 2026 18:13:09 +0200
-Message-ID: <20260520162200.378521798@linuxfoundation.org>
+Subject: [PATCH 7.0 0540/1146] arm64: dts: imx8mp-evk: Specify ADV7535 register addresses
+Date: Wed, 20 May 2026 18:13:10 +0200
+Message-ID: <20260520162200.403752149@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,186 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Liu Ying <victor.liu@nxp.com>
 
-[ Upstream commit e8341b0245736619f8d6a2cc311c9e8ad8e82390 ]
+[ Upstream commit bfb91be0eba426913f2950ed8b3d963f0de53fcc ]
 
-The sound card wm8960-2 and wm8960-3 only support capture mode for the
-reason of connection on the EVK board. But fsl-asoc-card don't support
-capture_only setting, the sound card creation will fail.
+MIPI DSI to HDMI bridge ADV7535 CEC default register address is 0x3c
+on an I2C bus.  And, OV5640 camera uses the same address on the same
+I2C bus.  To resolve this conflict, use 0x3b as ADV7535 CEC register
+address by specifying all ADV7535 register addresses.
 
-fsl-sai 59060000.sai: Missing dma channel for stream: 0
-fsl-sai 59060000.sai: ASoC error (-22): at snd_soc_pcm_component_new() on 59060000.sai
-fsl-sai 59070000.sai: Missing dma channel for stream: 0
-fsl-sai 59070000.sai: ASoC error (-22): at snd_soc_pcm_component_new() on 59070000.sai
-
-so switch to use audio-graph-card2 which supports 'capture_only'
-property for wm8960-2 and wm8960-3 cards.
-
-Fixes: b41c45eb990a ("arm64: dts: imx8dxl-evk: add audio nodes")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Fixes: 6f6c18cba16f ("arm64: dts: imx8mp-evk: add camera ov5640 and related nodes")
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8dxl-evk.dts | 114 ++++++++++++++----
- 1 file changed, 90 insertions(+), 24 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-evk.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts b/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
-index 5c68d33e19f22..bc62ae5ca812d 100644
---- a/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts
-@@ -259,33 +259,37 @@ sound-wm8960-1 {
- 	};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
+index 31f03436137dc..f981504f019d1 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-evk.dts
+@@ -595,7 +595,8 @@ ov5640_mipi_0_ep: endpoint {
  
- 	sound-wm8960-2 {
--		compatible = "fsl,imx-audio-wm8960";
--		model = "wm8960-audio-2";
--		audio-cpu = <&sai2>;
--		audio-codec = <&wm8960_2>;
--		audio-routing = "Headphone Jack", "HP_L",
--				"Headphone Jack", "HP_R",
--				"Ext Spk", "SPK_LP",
--				"Ext Spk", "SPK_LN",
--				"Ext Spk", "SPK_RP",
--				"Ext Spk", "SPK_RN",
--				"LINPUT1", "Mic Jack",
--				"Mic Jack", "MICB";
-+		compatible = "audio-graph-card2";
-+		label = "wm8960-audio-2";
-+		links = <&sai2_port2>;
-+		routing = "Headphones", "HP_L",
-+			"Headphones", "HP_R",
-+			"Ext Spk", "SPK_LP",
-+			"Ext Spk", "SPK_LN",
-+			"Ext Spk", "SPK_RP",
-+			"Ext Spk", "SPK_RN",
-+			"LINPUT1", "Mic Jack",
-+			"Mic Jack", "MICB";
-+		widgets = "Headphone", "Headphones",
-+			"Speaker", "Ext Spk",
-+			"Microphone", "Mic Jack";
- 	};
- 
- 	sound-wm8960-3 {
--		compatible = "fsl,imx-audio-wm8960";
--		model = "wm8960-audio-3";
--		audio-cpu = <&sai3>;
--		audio-codec = <&wm8960_3>;
--		audio-routing = "Headphone Jack", "HP_L",
--				"Headphone Jack", "HP_R",
--				"Ext Spk", "SPK_LP",
--				"Ext Spk", "SPK_LN",
--				"Ext Spk", "SPK_RP",
--				"Ext Spk", "SPK_RN",
--				"LINPUT1", "Mic Jack",
--				"Mic Jack", "MICB";
-+		compatible = "audio-graph-card2";
-+		label = "wm8960-audio-3";
-+		links = <&sai3_port2>;
-+		routing = "Headphones", "HP_L",
-+			"Headphones", "HP_R",
-+			"Ext Spk", "SPK_LP",
-+			"Ext Spk", "SPK_LN",
-+			"Ext Spk", "SPK_RP",
-+			"Ext Spk", "SPK_RN",
-+			"LINPUT1", "Mic Jack",
-+			"Mic Jack", "MICB";
-+		widgets = "Headphone", "Headphones",
-+			"Speaker", "Ext Spk",
-+			"Microphone", "Mic Jack";
- 	};
- };
- 
-@@ -481,6 +485,16 @@ wm8960_2: audio-codec@1a {
- 				DCVDD-supply = <&reg_audio_1v8>;
- 				SPKVDD1-supply = <&reg_audio_5v>;
- 				SPKVDD2-supply = <&reg_audio_5v>;
-+
-+				port {
-+					capture-only;
-+
-+					wm8960_2_ep: endpoint {
-+						bitclock-master;
-+						frame-master;
-+						remote-endpoint = <&sai2_endpoint2>;
-+					};
-+				};
- 			};
- 		};
- 
-@@ -510,6 +524,16 @@ wm8960_3: audio-codec@1a {
- 				DCVDD-supply = <&reg_audio_1v8>;
- 				SPKVDD1-supply = <&reg_audio_5v>;
- 				SPKVDD2-supply = <&reg_audio_5v>;
-+
-+				port {
-+					capture-only;
-+
-+					wm8960_3_ep: endpoint {
-+						bitclock-master;
-+						frame-master;
-+						remote-endpoint = <&sai3_endpoint2>;
-+					};
-+				};
- 			};
- 		};
- 
-@@ -700,6 +724,27 @@ &sai2 {
- 	pinctrl-0 = <&pinctrl_sai2>;
- 	fsl,sai-asynchronous;
- 	status = "okay";
-+
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		sai2_port1: port@1 {
-+			reg = <1>;
-+			endpoint { /* not used */ };
-+		};
-+
-+		sai2_port2: port@2 {
-+			reg = <2>;
-+			capture-only;
-+
-+			sai2_endpoint2: endpoint {
-+				dai-format = "i2s";
-+				remote-endpoint = <&wm8960_2_ep>;
-+				system-clock-direction-out;
-+			};
-+		};
-+	};
- };
- 
- &sai3 {
-@@ -712,6 +757,27 @@ &sai3 {
- 	pinctrl-0 = <&pinctrl_sai3>;
- 	fsl,sai-asynchronous;
- 	status = "okay";
-+
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		sai3_port1: port@1 {
-+			reg = <1>;
-+			endpoint { /* not used */ };
-+		};
-+
-+		sai3_port2: port@2 {
-+			reg = <2>;
-+			capture-only;
-+
-+			sai3_endpoint2: endpoint {
-+				dai-format = "i2s";
-+				remote-endpoint = <&wm8960_3_ep>;
-+				system-clock-direction-out;
-+			};
-+		};
-+	};
- };
- 
- &thermal_zones {
+ 	hdmi@3d {
+ 		compatible = "adi,adv7535";
+-		reg = <0x3d>;
++		reg = <0x3d>, <0x3f>, <0x3b>, <0x38>;
++		reg-names = "main", "edid", "cec", "packet";
+ 		interrupt-parent = <&gpio1>;
+ 		interrupts = <9 IRQ_TYPE_EDGE_FALLING>;
+ 		adi,dsi-lanes = <4>;
 -- 
 2.53.0
 
