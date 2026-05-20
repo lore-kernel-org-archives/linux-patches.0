@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE14361FFE;
-	Wed, 20 May 2026 16:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7223451CC;
+	Wed, 20 May 2026 16:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295102; cv=none; b=uPxHAq5XkpfuSr1wdKJh1WJ9g19caHxd8mRCMV/p0Gk3db/k1/5/NfydUoLrGuoAG4y2la9N6wS++LGY8c41R7IJK6MlKmcfr4eCnsU2FZ42fnF+jt5WJqzy8ERWwEEDTRLoL7/Dage9EtnIzzP83LhEAKpo563jY1WN3L2LRaY=
+	t=1779295104; cv=none; b=LgDohFzulW4AMV4FxmC5Uj5qFqbc7Gdf5HSzVw+ISHphT0pKJy1xj+5XR0gN7uEqxJ0PnU760drOiItPczltiwOxl92U+N16AsA91NKQgZyIentBBFIYwjaA2mOY6pdGgr+6w1vMiK6nBUUp/dZVRo2WViuvKYIjLfziBvzkzR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295102; c=relaxed/simple;
-	bh=j5xAfxZn3ZGyI2OWXh8POXxbPecU+7e1htkHYq6AeK0=;
+	s=arc-20240116; t=1779295104; c=relaxed/simple;
+	bh=nemYUtHdLehWnwQF6n7K65O2zGO9fAFSyn1Cutm9hBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKdWGMjyqsbVM5UIB6D6zwSo/wy7PQDOseRRefH2TfxeMJcuVroH4pknM16hMB7uVUEbKgH9kvbRIbqCZNOQ3FM0aNZnKBeHDG7lIXhaR9nNa9D2CJhn8+jr69ZwNM/As+tc98EZVTm1fK6oT6wejBWZ3RTTcK8+XfTFxCOHSfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7NhgjXp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ORDS1jMj2yC4B0eG2mpaCYniYtqIQSpsoHXXC0XWaIpYmEZ0NbtBonnwsOeIPvYIxLKlEwL/PxerqY4HmbxYZstlNWDABNILsKWttje6oUvi6fmvm+iDe2u0snaSJq6nRJJ06mmticPKibV/ZNkOPxt2fmPmhuDPZa2IbKavw7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pi/w4OVC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7NhgjXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6B71F000E9;
-	Wed, 20 May 2026 16:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pi/w4OVC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D420C1F000E9;
+	Wed, 20 May 2026 16:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295100;
-	bh=iJLlBoG4H4w9hKmUNqLMDoeOZ4DAdBfiTvk8qgjGdng=;
+	s=korg; t=1779295103;
+	bh=jdI7jbEz32GmJvdqmx2zPHZHo1Xq9kQ5Zjhp7J4mMRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t7NhgjXpNPzr0yz/8UzXoDITcMNxX5FxzChHjro4iK/eZwDQ9kGAzbMkaiRvrTM+S
-	 hwDfnZFX038BrwQ80qT6x9rvovi+rmUXNfpIITyrPor5N78kcedKsVyfLSxIbADIIZ
-	 LJPYyjxVjv0GainLujzkO+FuSLnaOzfH9ZOno2u4=
+	b=Pi/w4OVCPvAtlaFu+zxRJJX8aQWW8F/D4vdtRgrSBwxSC7ZKlnC69urWauZ+8ZiuW
+	 CZ0JWeUVgpUv/fEZaAsDtKeu09pqb38lMcHehC5n2K8Kyf2RTpJiJ1/OdDoQ/QZ3+1
+	 8yyw1OkicSe57Q7GxpdygFNeJ2E5zGsxWmhBspDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaxing Guo <guoyaxing@bosc.ac.cn>,
-	Andrew Jones <andrew.jones@oss.qualcomm.com>,
+	Vincent Chen <vincent.chen@sifive.com>,
+	Tomasz Jeznach <tjeznach@rivosinc.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0290/1146] iommu/riscv: Skip IRQ count check when using MSI interrupts
-Date: Wed, 20 May 2026 18:09:00 +0200
-Message-ID: <20260520162154.779716211@linuxfoundation.org>
+Subject: [PATCH 7.0 0291/1146] iommu/riscv: Add missing GENERIC_MSI_IRQ
+Date: Wed, 20 May 2026 18:09:01 +0200
+Message-ID: <20260520162154.801580157@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,64 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yaxing Guo <guoyaxing@bosc.ac.cn>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 7217cee35aadbb07e12673bcf1dcf729e1b2f6c9 ]
+[ Upstream commit c70d20b25ca30d68b377b9363a2adca6eb2538e3 ]
 
-In RISC-V IOMMU platform devices that use MSI interrupts (indicated by the
-presence of 'msi-parent' in the device tree), there are no wired interrupt
-lines, so calling platform_get_irq_count() returns 0 or -ENXIO, causing the
-driver to fail during probe.
+The commit below added MSI related calls to the driver that depends on
+GENERIC_MSI_IRQ. It is possible to build RISC-V without this selected.
 
-However, MSI interrupts are allocated dynamically via the MSI subsystem and
-do not appear in the device tree 'interrupts' property. Therefore, the
-driver should not require a non-zero IRQ count when 'msi-parent' is present.
+This is also necessary to make the driver COMPILE_TEST.
 
-This patch fixes the bug where probe fails when using MSI interrupts
- (which do not have an 'interrupts' property in the device tree)..
-
-Fixes: <d5f88acdd6ff> ("iommu/riscv: Add support for platform msi")
-
-Signed-off-by: Yaxing Guo <guoyaxing@bosc.ac.cn>
-Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Fixes: d5f88acdd6ff ("iommu/riscv: Add support for platform msi")
+Tested-by: Vincent Chen <vincent.chen@sifive.com>
+Tested-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/riscv/iommu-platform.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/iommu/riscv/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iommu/riscv/iommu-platform.c b/drivers/iommu/riscv/iommu-platform.c
-index 83a28c83f9914..8f15b06e84997 100644
---- a/drivers/iommu/riscv/iommu-platform.c
-+++ b/drivers/iommu/riscv/iommu-platform.c
-@@ -68,12 +68,7 @@ static int riscv_iommu_platform_probe(struct platform_device *pdev)
- 	iommu->caps = riscv_iommu_readq(iommu, RISCV_IOMMU_REG_CAPABILITIES);
- 	iommu->fctl = riscv_iommu_readl(iommu, RISCV_IOMMU_REG_FCTL);
- 
--	iommu->irqs_count = platform_irq_count(pdev);
--	if (iommu->irqs_count <= 0)
--		return dev_err_probe(dev, -ENODEV,
--				     "no IRQ resources provided\n");
--	if (iommu->irqs_count > RISCV_IOMMU_INTR_COUNT)
--		iommu->irqs_count = RISCV_IOMMU_INTR_COUNT;
-+	iommu->irqs_count = RISCV_IOMMU_INTR_COUNT;
- 
- 	igs = FIELD_GET(RISCV_IOMMU_CAPABILITIES_IGS, iommu->caps);
- 	switch (igs) {
-@@ -120,6 +115,13 @@ static int riscv_iommu_platform_probe(struct platform_device *pdev)
- 		fallthrough;
- 
- 	case RISCV_IOMMU_CAPABILITIES_IGS_WSI:
-+		iommu->irqs_count = platform_irq_count(pdev);
-+		if (iommu->irqs_count <= 0)
-+			return dev_err_probe(dev, -ENODEV,
-+					     "no IRQ resources provided\n");
-+		if (iommu->irqs_count > RISCV_IOMMU_INTR_COUNT)
-+			iommu->irqs_count = RISCV_IOMMU_INTR_COUNT;
-+
- 		for (vec = 0; vec < iommu->irqs_count; vec++)
- 			iommu->irqs[vec] = platform_get_irq(pdev, vec);
- 
+diff --git a/drivers/iommu/riscv/Kconfig b/drivers/iommu/riscv/Kconfig
+index c071816f59a67..fb8e217edc3d3 100644
+--- a/drivers/iommu/riscv/Kconfig
++++ b/drivers/iommu/riscv/Kconfig
+@@ -4,6 +4,7 @@
+ config RISCV_IOMMU
+ 	bool "RISC-V IOMMU Support"
+ 	depends on RISCV && 64BIT
++	depends on GENERIC_MSI_IRQ
+ 	default y
+ 	select IOMMU_API
+ 	help
 -- 
 2.53.0
 
