@@ -1,173 +1,122 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C356A3BE64B;
-	Wed, 20 May 2026 18:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3283348C55;
+	Wed, 20 May 2026 18:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301273; cv=none; b=jFiR31Q4FmQqpgeHW7BKTFfp2XSUwqY67Urv9LQO0XM6zM50TcwFXgsTOistK5AKRvUqxgkmsCP7o95gOo5O1KBP1QsYfvh+ASIDWy+0MtYLHdTvY5gW7PxuHHziKLrdhs3veui16L5mcNq9Ut5VtxF9VyS0otKneEvGHT4dIMI=
+	t=1779301275; cv=none; b=XI/0QWa6Gdhizj2bfmJ7fY/VEE2023W+FTrKaPqJ3IChLNyRr2B8PKr/SRjjG+ZcZbPjMQ6yhuw9PpKWnFG/EHMkq25HqtiopiKEqVRtE+qyUa9aJF8a+gE/puBY69W6IJ6GTGFa8ENyJ5jWGqkmFvAe6FU/j5LE04bPXvY58O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301273; c=relaxed/simple;
-	bh=apJrqdEMFGiHLeXSfgZiI4Qq3auqS2UFiKEXpExbv/U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tzT2UKfWaL8L8Gxt2MksOn+/V2DZOJZJiHqS+mKAK+YLsn4zLpfX1CO3F8NXl65+i4P/Z1v69lo9doBFvB+wZVnPU2CD8ax3YYgIjCtFY0Kv8uYCslvE2mBM0jbce7yEXgGTKUTbOJG3NMJOn/DFNc+RQXtPIRA0dDpsbnVGluo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I89wszfA; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779301275; c=relaxed/simple;
+	bh=T0F3yG+11uxj+1P/vNrg+2C71fzu0Z8eZceliFJ+oPQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bRQslLxFzFCEtiEj76jFt2mQp7Z/orKxSOq7iHlHzF78DuakQXN2hb7sVS/26/cFBUXzz94oOkgSlpL7utPQ6pcP52LboLbEvYyxbyq+c/fqMj0ZvqRIXtTqyxAtz41RQ8Q88u51tYDebTcRW73+bI81+9Ksd02DO52p1tdzhLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gg60MDAY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I89wszfA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C03B1F00893;
-	Wed, 20 May 2026 18:21:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301272;
-	bh=3V9GqY/RTJHxdEaoxzeRwgFHiYX0ftuXyxyQHcc+UKQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I89wszfAcHKX95TYgeiNCIHqTcfYEk1xxVRhSzu53t2DT68IgXN++NdsbHxo+QX0R
-	 wazdAy36fjrQuyKE89DOWa9bwr/Z+7onXDwjX0xYopMcaNocPiI6zf3t/9mtHD3xTR
-	 vGo4y9PuRa1dd4z6uBPGeb8db3aw29M9wEUwNxLc=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Akihiko Odaki <akihiko.odaki@daynix.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Lei Yang <leiyang@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gg60MDAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42441F000E9;
+	Wed, 20 May 2026 18:21:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779301273;
+	bh=hAeACngJkQf4FLu5lKLPnlHaL+G/6grH03HBIB/iFa4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=gg60MDAY17O3tqaRfXL2LGk5E5o677rsnNPrFGwmTR0bML5XJVB55IjGXFPM3jOTY
+	 GM1tDAist0BE6tYr6QOo4PVCfNUvMpuUFtTY6zqOa1qrtP1Ja8o6MEJOEexSuZDMvI
+	 SzliCPjYTWJVVdOIb4/wqcdc8bX5yvqAtLcT9CseAsl5E10gmtoLPQx1fFeyd0DSLT
+	 a+9sHy+m3J9siZXj7pqTuyVEahOjEC0RooN4hWrwfS5h1rrg9T96+oVVKxQJK7dlUZ
+	 3Kw7gitn6O1rUtABO1DURE+HvspgvaOuD0r9s92WkKCqSV4VDXYNqHzjsOLSYwxW2w
+	 tM0Ehr3xeb51w==
+Date: Thu, 21 May 2026 02:21:09 +0800
+From: Gao Xiang <xiang@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Amir Goldstein <amir73il@gmail.com>,
+	Chunhai Guo <guochunhai@vivo.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 493/666] virtio_net: Fix endian with virtio_net_ctrl_rss
-Date: Wed, 20 May 2026 18:21:44 +0200
-Message-ID: <20260520162121.947625931@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
+Subject: Re: [PATCH 6.12 011/666] erofs: verify metadata accesses for
+ file-backed mounts
+Message-ID: <ag37lbajmtyv9xBd@debian>
 References: <20260520162111.222830634@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+ <20260520162111.476779194@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260520162111.476779194@linuxfoundation.org>
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+Hi Greg,
 
-------------------
+On Wed, May 20, 2026 at 06:13:42PM +0200, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Could you please help drop this too, the same reason as:
+https://lore.kernel.org/r/ag3qlMOcTYM2FBUQ@debian
 
-[ Upstream commit 97841341e302eac13d54eb5e968570b5626196a7 ]
+I will address this backport manually later.
 
-Mark the fields of struct virtio_net_ctrl_rss as little endian as
-they are in struct virtio_net_rss_config, which it follows.
+Thanks,
+Gao Xiang
 
-Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
-Link: https://patch.msgid.link/20250321-virtio-v2-2-33afb8f4640b@daynix.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 3bc06da858ef ("virtio_net: sync rss_trailer.max_tx_vq on queue_pairs change via VQ_PAIRS_SET")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/virtio_net.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
-
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 5c83983f0eb3f..05b50a4626b85 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -373,15 +373,15 @@ struct receive_queue {
-  */
- #define VIRTIO_NET_RSS_MAX_KEY_SIZE     40
- struct virtio_net_ctrl_rss {
--	u32 hash_types;
--	u16 indirection_table_mask;
--	u16 unclassified_queue;
--	u16 hash_cfg_reserved; /* for HASH_CONFIG (see virtio_net_hash_config for details) */
--	u16 max_tx_vq;
-+	__le32 hash_types;
-+	__le16 indirection_table_mask;
-+	__le16 unclassified_queue;
-+	__le16 hash_cfg_reserved; /* for HASH_CONFIG (see virtio_net_hash_config for details) */
-+	__le16 max_tx_vq;
- 	u8 hash_key_length;
- 	u8 key[VIRTIO_NET_RSS_MAX_KEY_SIZE];
- 
--	u16 *indirection_table;
-+	__le16 *indirection_table;
- };
- 
- /* Control VQ buffers: protected by the rtnl lock */
-@@ -3477,9 +3477,9 @@ static void virtnet_rss_update_by_qpairs(struct virtnet_info *vi, u16 queue_pair
- 
- 	for (; i < vi->rss_indir_table_size; ++i) {
- 		indir_val = ethtool_rxfh_indir_default(i, queue_pairs);
--		vi->rss.indirection_table[i] = indir_val;
-+		vi->rss.indirection_table[i] = cpu_to_le16(indir_val);
- 	}
--	vi->rss.max_tx_vq = queue_pairs;
-+	vi->rss.max_tx_vq = cpu_to_le16(queue_pairs);
- }
- 
- static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
-@@ -3998,10 +3998,10 @@ static bool virtnet_commit_rss_command(struct virtnet_info *vi)
- 
- static void virtnet_init_default_rss(struct virtnet_info *vi)
- {
--	vi->rss.hash_types = vi->rss_hash_types_supported;
-+	vi->rss.hash_types = cpu_to_le32(vi->rss_hash_types_supported);
- 	vi->rss_hash_types_saved = vi->rss_hash_types_supported;
- 	vi->rss.indirection_table_mask = vi->rss_indir_table_size
--						? vi->rss_indir_table_size - 1 : 0;
-+						? cpu_to_le16(vi->rss_indir_table_size - 1) : 0;
- 	vi->rss.unclassified_queue = 0;
- 
- 	virtnet_rss_update_by_qpairs(vi, vi->curr_queue_pairs);
-@@ -4119,7 +4119,7 @@ static bool virtnet_set_hashflow(struct virtnet_info *vi, struct ethtool_rxnfc *
- 
- 	if (new_hashtypes != vi->rss_hash_types_saved) {
- 		vi->rss_hash_types_saved = new_hashtypes;
--		vi->rss.hash_types = vi->rss_hash_types_saved;
-+		vi->rss.hash_types = cpu_to_le32(vi->rss_hash_types_saved);
- 		if (vi->dev->features & NETIF_F_RXHASH)
- 			return virtnet_commit_rss_command(vi);
- 	}
-@@ -5291,7 +5291,7 @@ static int virtnet_get_rxfh(struct net_device *dev,
- 
- 	if (rxfh->indir) {
- 		for (i = 0; i < vi->rss_indir_table_size; ++i)
--			rxfh->indir[i] = vi->rss.indirection_table[i];
-+			rxfh->indir[i] = le16_to_cpu(vi->rss.indirection_table[i]);
- 	}
- 
- 	if (rxfh->key)
-@@ -5319,7 +5319,7 @@ static int virtnet_set_rxfh(struct net_device *dev,
- 			return -EOPNOTSUPP;
- 
- 		for (i = 0; i < vi->rss_indir_table_size; ++i)
--			vi->rss.indirection_table[i] = rxfh->indir[i];
-+			vi->rss.indirection_table[i] = cpu_to_le16(rxfh->indir[i]);
- 		update = true;
- 	}
- 
-@@ -5945,9 +5945,9 @@ static int virtnet_set_features(struct net_device *dev,
- 
- 	if ((dev->features ^ features) & NETIF_F_RXHASH) {
- 		if (features & NETIF_F_RXHASH)
--			vi->rss.hash_types = vi->rss_hash_types_saved;
-+			vi->rss.hash_types = cpu_to_le32(vi->rss_hash_types_saved);
- 		else
--			vi->rss.hash_types = VIRTIO_NET_HASH_REPORT_NONE;
-+			vi->rss.hash_types = cpu_to_le32(VIRTIO_NET_HASH_REPORT_NONE);
- 
- 		if (!virtnet_commit_rss_command(vi))
- 			return -EINVAL;
--- 
-2.53.0
-
-
-
+> ------------------
+> 
+> From: Gao Xiang <hsiangkao@linux.alibaba.com>
+> 
+> [ Upstream commit 307210c262a29f41d7177851295ea1703bd04175 ]
+> 
+> For file-backed mounts, metadata is fetched via the page cache of
+> backing inodes to avoid double caching and redundant copy ops out
+> of RO uptodate folios, which is used by Android APEXes, ComposeFS,
+> containerd.  However, rw_verify_area() was missing prior to
+> metadata accesses.
+> 
+> Similar to vfs_iocb_iter_read(), fix this by:
+>  - Enabling fanotify pre-content hooks on metadata accesses;
+>  - security_file_permission() for security modules.
+> 
+> Verified that fanotify pre-content hooks now works correctly.
+> 
+> Fixes: fb176750266a ("erofs: add file-backed mount support")
+> Acked-by: Amir Goldstein <amir73il@gmail.com>
+> Reviewed-by: Chunhai Guo <guochunhai@vivo.com>
+> Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  fs/erofs/data.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/fs/erofs/data.c b/fs/erofs/data.c
+> index 91182d5e3a66c..192c7ed885acd 100644
+> --- a/fs/erofs/data.c
+> +++ b/fs/erofs/data.c
+> @@ -30,6 +30,20 @@ void *erofs_bread(struct erofs_buf *buf, erofs_off_t offset,
+>  {
+>  	pgoff_t index = offset >> PAGE_SHIFT;
+>  	struct folio *folio = NULL;
+> +	loff_t fpos;
+> +	int err;
+> +
+> +	/*
+> +	 * Metadata access for file-backed mounts reuses page cache of backing
+> +	 * fs inodes (only folio data will be needed) to prevent double caching.
+> +	 * However, the data access range must be verified here in advance.
+> +	 */
+> +	if (buf->file) {
+> +		fpos = index << PAGE_SHIFT;
+> +		err = rw_verify_area(READ, buf->file, &fpos, PAGE_SIZE);
+> +		if (err < 0)
+> +			return ERR_PTR(err);
+> +	}
+>  
+>  	if (buf->page) {
+>  		folio = page_folio(buf->page);
+> -- 
+> 2.53.0
+> 
+> 
+> 
