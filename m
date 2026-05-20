@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90D33EBF0F;
-	Wed, 20 May 2026 11:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397753ED101;
+	Wed, 20 May 2026 11:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276030; cv=none; b=UDSWqAkA4S/fBBZuFyOgW6qwHjBKg8BjHPWdElUaxLXdPp7Zic5L5I0j8E+yE7iCcITeGiDP/VA7SMzBwZs1K/p+GdD/q3jg7jae9mk1DybTIlZbul4pKtXQMv/T6jRYb1TJOycJc03+/D/Gs34dpNjMEVlqshUVocUArZGSwqc=
+	t=1779276031; cv=none; b=Jz/B8JDWif+LoUgld1JnUoFNqSm/To8IgztJ4Mf11KHvloDfN76nlnV66yLiwHvyMYKS+F5EeFghj21P+m//okCdGKoFkzw5/hAkK+CZuNiYaGymrmbwhH7xtN6qzDjD2Hx/GyLAG4hOYzyk4oNFvVH3pO02RoshmGeoJdM4Fsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276030; c=relaxed/simple;
-	bh=KRKHu4WJoa0DmBrPO2Rq6iggehoAGmF7JjHx2Qe0fZg=;
+	s=arc-20240116; t=1779276031; c=relaxed/simple;
+	bh=/f1dkoMOYh2RR1CObnbD2BmpdshIha+UVPZO2IBiPlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLzeeIjoSijCZYMDP39dQUOxLVVdoZ33Zc9T8TsJ0eCpJIOtvoM0KJvF/cpHS10wTDJ48BbbTHMiJyBgAi5KYCh5yGr+7xnPgrGjeoee6wSs2/bqdXkxXpSUQGC5+Bfe86NBmCWN6g/L03SHdPoNtanalqCqVuC3nvgpsCBQD4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ju1naoQw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gDQfI22nloFEscwASYkcwje/5zbf7MurQPKhT0+wOkyt7hkUNXDCLxDjVPWMXgoknxVEKMb68FUmMbeLonPOHLQmtR2TCff9SiDCMc0Gqos+kfjkhRw2sQobTFd0z3Mfww7dCKr7KJWtaUY/pFXju9QEbgfLhwjBLSnN4TfL/88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BjJnj0Iu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ju1naoQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E816D1F000E9;
-	Wed, 20 May 2026 11:20:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BjJnj0Iu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2151F00893;
+	Wed, 20 May 2026 11:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276027;
-	bh=TebGB/gW42Lw0MfSZeNASHalsW2sx4OdFUJ7gXRZD2s=;
+	s=k20260515; t=1779276029;
+	bh=Uh5pQeh7zolaDZ4VFIzk+6i9+Br/yH8uwlk6r6E+oBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ju1naoQwm2OouaUlTSYbgQFoIrSzSQpYa/PuknOE0svysQiSgAPiFd85MLfkE9LNt
-	 LMOfIgaByF5iAsQUqDnEklX2uvv5CNr6dhCj50z0aUSNWzYOZ7Y+c1Z7unAI8sZpaf
-	 hA+pfbWiygnQUfNzDMFx33d98SgavaXCk3SSrx6N+PmybwkXzMlYTRgaC3Pg22N2mb
-	 3Cgcre64+WemdOZnqdcX6f71oA19pyDkfK1MRutoMc792sll6eJQRI8Oo+92d6O95+
-	 Niwe6Ty1PhNnsjwMVLTBYVU/B7+MZFQO2gKvitmp+oi99dDQVnhlNxmY0kTaXlPH68
-	 lNIIt5YNHkRLQ==
+	b=BjJnj0IuCsjdRVU+nzbLTEyfrYZzN0Co3TNTEtmyOEcjtxjk0gVV4GCnE6HsIRAOd
+	 qB3DYUV/LfjbOdQpNByhegAmxtwmeB2NWRX0C5/G47oGFit7U2HNSjrGcwMDyYWE/K
+	 PO/z8H6b+ZKZlvREyaSnL82fw0THPCuJMrreqj3qAIwKCNMoKlTSNe4qb6tmXOEBhk
+	 VZ8dPT0d2uY6nLCjZZC0utaoaBDwD14wfRCaP8NMM3k3wyaHDey5j+Qr9teNZePRm7
+	 ARhaCswPnfB22qugJJWEKj/bLqE7n5rAZkYzuIpaYl70OKFBLH68VOItu5ipH+SA3H
+	 hR8lmWMyWNsIQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xu Rao <raoxu@uniontech.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] HID: i2c-hid: add reset quirk for BLTP7853 touchpad
-Date: Wed, 20 May 2026 07:19:02 -0400
-Message-ID: <20260520111944.3424570-30-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] ALSA: hda/realtek: Limit mic boost on Positivo DN50E
+Date: Wed, 20 May 2026 07:19:03 -0400
+Message-ID: <20260520111944.3424570-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -51,254 +51,220 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-[ Upstream commit a991aa5e89365ba1959fae6847fd288125b209e5 ]
+[ Upstream commit d02d2d51a50d1bbf44a50eda094aa2b10fecf023 ]
 
-The BLTP7853 I2C HID touchpad may fail to probe after reboot or
-reprobe because reset completion is not signalled to the host. The
-driver then waits for the reset-complete interrupt until it times out
-and the device probe fails:
+The internal mic boost on the Positivo DN50E is too high.
+Fix this by applying the ALC269_FIXUP_LIMIT_INT_MIC_BOOST fixup to the machine
+to limit the gain.
 
-  i2c_hid i2c-BLTP7853:00: failed to reset device.
-  i2c_hid i2c-BLTP7853:00: can't add hid device: -61
-  i2c_hid: probe of i2c-BLTP7853:00 failed with error -61
-
-Add I2C_HID_QUIRK_NO_IRQ_AFTER_RESET for the device so i2c-hid does
-not wait for a reset interrupt that may never arrive.
-
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Link: https://patch.msgid.link/20260511181558.670563-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
+## Stable Backport Analysis
 
 ### Phase 1: Commit Message Forensics
-Record: subsystem `HID: i2c-hid`; action verb `add`; intent is to add a
-reset-handling quirk for the BLTP7853 touchpad.
+Record 1.1: Subsystem is `ALSA: hda/realtek`; action is “Limit” / “Fix”;
+claimed intent is to cap excessive internal microphone boost on Positivo
+DN50E.
 
-Record: tags present are `Signed-off-by: Xu Rao <raoxu@uniontech.com>`
-and `Signed-off-by: Jiri Kosina <jkosina@suse.com>`. No `Fixes:`,
-`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, `Link:`, or
-`Cc: stable@vger.kernel.org` tags are present in the supplied message.
+Record 1.2: Tags present are `Signed-off-by: Edson Juliano Drosdeck`,
+`Link: https://patch.msgid.link/20260511181558.670563-1-
+edson.drosdeck@gmail.com`, and `Signed-off-by: Takashi Iwai`. No
+`Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or
+`Cc: stable` tag was present.
 
-Record: the commit message describes a real probe failure: the device
-may not signal reset completion after reboot or reprobe, the driver
-waits for reset completion, and probe fails with `-61` / `-ENODATA`. The
-root cause given is missing reset-complete IRQ from the device.
+Record 1.3: The described bug is excessive internal mic boost on this
+machine. The existing fixup comment verifies the mechanism: boost levels
+2 and 3 are “too noisy” on internal mic input, so the fixup limits boost
+to levels 0 or 1.
 
-Record: this is not hidden as cleanup; it is explicitly a hardware
-workaround for a probe failure.
+Record 1.4: This is not a hidden bug fix; it is an explicit hardware
+quirk for a user-visible audio problem.
 
 ### Phase 2: Diff Analysis
-Record: files changed are `drivers/hid/hid-ids.h` with 3 additions and
-`drivers/hid/i2c-hid/i2c-hid-core.c` with 2 additions. Total scope: 5
-added lines, no removals. No function body is changed; the modified
-object is the private `i2c_hid_quirks[]` table.
+Record 2.1: One file changes: `sound/hda/codecs/realtek/alc269.c`, 1
+insertion, no deletions. The modified object is the `alc269_fixup_tbl`
+quirk table. Scope is a single-line, single-driver hardware quirk.
 
-Record: before the patch, vendor/product `0x36b6/0xc001` had no private
-i2c-hid quirk entry, so the reset path used normal reset-ack waiting.
-After the patch, `i2c_hid_lookup_quirk()` can match the BLTP7853 IDs and
-set `I2C_HID_QUIRK_NO_IRQ_AFTER_RESET`.
+Record 2.2: Before the change, PCI SSID `0x1e50:0x7007` had no matching
+quirk. After the change, `snd_hda_pick_fixup()` can select
+`ALC269_FIXUP_LIMIT_INT_MIC_BOOST` for Positivo DN50E.
 
-Record: in current code, `I2C_HID_QUIRK_NO_IRQ_AFTER_RESET` makes
-`i2c_hid_finish_hwreset()` sleep 100 ms and clear
-`I2C_HID_RESET_PENDING` instead of waiting for a reset IRQ. In older
-stable code, the same quirk skips the 5 second wait path that returns
-`-ENODATA`.
+Record 2.3: Bug category is hardware quirk/workaround. The existing
+fixup runs at `HDA_FIXUP_ACT_PROBE`, finds internal mic pins, and calls
+`snd_hda_override_amp_caps()` to limit mic boost steps.
 
-Record: bug category is hardware workaround / quirk. Specific mechanism:
-a device that does not raise the expected reset-complete interrupt is
-handled through an existing no-IRQ-after-reset path.
-
-Record: fix quality is high: tiny table-only change, uses existing
-infrastructure, no new API, no locking change, no cross-subsystem
-behavior. Regression risk is very low and limited to devices reporting
-exactly the new vendor/product pair.
+Record 2.4: Fix quality is high: one table entry, no new logic, no API
+change. Regression risk is very low and limited to machines with that
+exact PCI SSID.
 
 ### Phase 3: Git History Investigation
-Record: exact candidate subject was not found in local `git log` on
-`master`, `all-next`, `fixes-next`, `input-next`, `pending-7.0`, or
-`for-greg/7.0-200`; no candidate commit hash was available to blame the
-newly added lines.
+Record 3.1: There is no buggy code line to blame; the bug is a missing
+quirk entry. I verified the existing `ALC269_FIXUP_LIMIT_INT_MIC_BOOST`
+machinery is present in checked stable tags including `v4.19`, `v5.4`,
+`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`.
 
-Record: existing no-IRQ reset quirk support was introduced by
-`402946a8ef71e` (`HID: i2c-hid: Add no-irq-after-reset quirk for
-0911:5288 device`), contained since `v4.15-rc1`. Related Voyo quirk
-`fc6a31b007393` shows the same failure pattern: repeated `failed to
-reset device` and final `can't add hid device: -61`.
+Record 3.2: No `Fixes:` tag is present, so there was no introducing
+commit to follow.
 
-Record: no `Fixes:` tag is present, so Step 3.2 is not applicable.
+Record 3.3: Recent history of this file shows frequent Realtek HDA quirk
+additions and fixes. No prerequisite commit was identified for this
+patch beyond the already-existing fixup.
 
-Record: recent history contains normal HID/i2c-hid quirk and fix
-activity. Relevant related changes include `7bcf9ebb50f2a` (`Turn
-missing reset ack into a warning`) and older device-specific no-IRQ
-quirks. No prerequisite was identified beyond existing
-`I2C_HID_QUIRK_NO_IRQ_AFTER_RESET` support.
+Record 3.4: The author has multiple prior accepted Realtek HDA quirks
+for Positivo and VAIO systems, including Positivo ARN50, P15X, K116J,
+C6400, and SU C1400.
 
-Record: local `git log --author="Xu Rao" -- drivers/hid` found no HID
-commits on `master`. `MAINTAINERS` confirms Jiri Kosina is an HID core
-maintainer, and he signed off the supplied commit.
+Record 3.5: The patch is functionally standalone. Older stable trees
+before the 2025 file move use `sound/pci/hda/patch_realtek.c`, so those
+need a path/context backport. A direct `git apply --check` against the
+current checked-out 7.0 stable tree failed due context drift, not
+missing functionality.
 
 ### Phase 4: Mailing List And External Research
-Record: candidate `b4 dig` could not be performed because the exact
-candidate commit hash is unavailable and the subject is not present in
-local reachable history.
+Record 4.1: The exact standalone commit hash was not present in local
+history, so `b4 dig -c <commit>` could not be used as specified. `b4 am`
+by message-id found one patch and a two-message thread. The maintainer
+reply from Takashi Iwai says “Applied now. Thanks.” No NAKs or concerns
+were present.
 
-Record: `b4 dig -c 402946a8ef71e` found the original related no-IRQ-
-after-reset quirk submission at
-`https://patch.msgid.link/20171107122800.23196-1-hdegoede@redhat.com`;
-`b4 dig -a` showed v1 and v2; `b4 dig -w` showed HID maintainers and
-`linux-input@vger.kernel.org` were included.
+Record 4.2: The original recipients included Takashi Iwai, Jaroslav
+Kysela, Zhang Heng, Stefan Binding, Kailang Yang, `linux-
+sound@vger.kernel.org`, and `linux-kernel@vger.kernel.org`.
 
-Record: `b4 dig -c 7bcf9ebb50f2a` found the reset-ack warning patch as
-`[PATCH v3 5/7]`.
+Record 4.3: No separate bug report was found. Web search confirmed
+public hardware data for Positivo DN50E and related Positivo mic-boost
+patches.
 
-Record: web searches for the exact BLTP7853 reset-quirk subject and
-stable-list discussion found no direct candidate thread. Searches did
-find related BLTP7853 touchpad reports, but not independent confirmation
-of this exact `0x36b6/0xc001` reset failure.
+Record 4.4: Related patches exist for the same fixup pattern, including
+Positivo ARN50 and N14AP7 in git history, plus a public Positivo DN50F
+patch using the same fixup.
+
+Record 4.5: I found no stable-specific discussion or explicit stable
+nomination.
 
 ### Phase 5: Code Semantic Analysis
-Record: modified key object is `i2c_hid_quirks[]`; relevant functions
-are `i2c_hid_lookup_quirk()`, `__i2c_hid_core_probe()`,
-`i2c_hid_finish_hwreset()`, and older-branch `i2c_hid_command()`
-behavior.
+Record 5.1: No function body is modified. Affected code paths are
+`alc269_fixup_tbl`, `snd_hda_pick_fixup()`, `snd_hda_apply_fixup()`, and
+`alc269_fixup_limit_int_mic_boost()`.
 
-Record: callers verified: `i2c_hid_core_probe()` is called from ACPI,
-OF, ELAN, and Goodix i2c-hid probe drivers. `__i2c_hid_core_probe()`
-reads HID descriptor vendor/product IDs and calls
-`i2c_hid_lookup_quirk()`.
+Record 5.2: `alc269_probe()` calls `snd_hda_pick_fixup()` with
+`alc269_fixup_tbl`, then later calls `snd_hda_apply_fixup(codec,
+HDA_FIXUP_ACT_PROBE)`.
 
-Record: call chain is device enumeration/probe: platform driver probe ->
-`i2c_hid_core_probe()` -> `__i2c_hid_core_probe()` ->
-`i2c_hid_lookup_quirk()` -> HID registration -> reset during HID parse.
-This is reachable during boot, reboot, and reprobe for affected
-hardware.
+Record 5.3: Key callees are `snd_hda_codec_get_pincfg()`,
+`snd_hda_get_input_pin_attr()`, and `snd_hda_override_amp_caps()`.
 
-Record: similar patterns exist for HANTICK, ITE/Voyo, and Raydium
-devices already using `I2C_HID_QUIRK_NO_IRQ_AFTER_RESET`.
+Record 5.4: The path is reached automatically during HDA codec probe on
+matching hardware. The bad behavior affects internal mic capture; it is
+not a syscall-triggered crash/security issue.
+
+Record 5.5: Similar uses of `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` are
+already present for many laptops, including other Positivo systems.
 
 ### Phase 6: Stable Tree Analysis
-Record: `I2C_HID_QUIRK_NO_IRQ_AFTER_RESET` exists in active checked
-stable branches `5.10.y`, `5.15.y`, `6.1.y`, `6.6.y`, `6.12.y`,
-`6.18.y`, `6.19.y`, and `7.0.y`.
+Record 6.1: The reusable fixup exists in all checked stable tags from
+`v4.19` through `v7.0`; the DN50E entry itself was absent in checked
+tags.
 
-Record: BLTP-specific IDs from this patch are not present in those
-checked branches or `master`.
+Record 6.2: Backport difficulty is low but not always clean apply:
+`v6.19+` uses `sound/hda/codecs/realtek/alc269.c`, while older trees use
+`sound/pci/hda/patch_realtek.c`.
 
-Record: `5.10.y`, `5.15.y`, `6.1.y`, and `6.6.y` still have the reset-
-ack timeout returning `-ENODATA`, matching the commit-message failure.
-`6.12.y` and newer checked branches contain `7bcf9ebb50f2a`, where
-missing reset ack is downgraded to a warning, so the benefit there is
-mostly avoiding a delay/warning rather than fixing probe failure.
+Record 6.3: I found no existing DN50E fix in checked stable tags or
+current local history.
 
-Record: patch applies cleanly to current `stable/linux-7.0.y` when
-checked with `git apply --check`. Older stable trees may need minor
-context adjustment due to file layout differences, but the required
-quirk mechanism exists.
+### Phase 7: Subsystem Context
+Record 7.1: Subsystem is ALSA HDA Realtek codec support. Criticality is
+driver-specific, but important for affected laptop audio users.
 
-### Phase 7: Subsystem And Maintainer Context
-Record: subsystem is HID/i2c-hid under `drivers/hid/`, criticality
-`IMPORTANT` for users of affected laptop touchpad hardware.
-
-Record: subsystem is actively maintained; `MAINTAINERS` lists HID core
-as maintained by Jiri Kosina and Benjamin Tissoires.
+Record 7.2: The subsystem is active, with many recent quirk additions in
+the same file. The pattern is mature and widely used.
 
 ### Phase 8: Impact And Risk
-Record: affected population is hardware-specific: systems with an I2C
-HID device reporting the BLTP7853 IDs added by this patch.
+Record 8.1: Affected population is users of Positivo DN50E systems with
+Realtek HDA audio.
 
-Record: trigger condition is probe/reprobe after reboot or reprobe, as
-described by the commit message and matched to the older stable reset
-path.
+Record 8.2: Trigger is normal codec probe plus internal microphone use.
+It is not an unprivileged security trigger.
 
-Record: failure severity is HIGH for older stable branches because the
-touchpad can fail to bind at all. For newer branches with
-`7bcf9ebb50f2a`, severity is LOW-MEDIUM because generic handling avoids
-probe failure but still waits/logs.
+Record 8.3: Failure mode is user-visible broken audio quality from
+excessive internal mic gain/noise. Severity is medium for affected
+hardware, not crash-level.
 
-Record: benefit is high for older stable users with this hardware; risk
-is very low because the change is a narrow hardware quirk table entry.
+Record 8.4: Benefit is high for affected hardware users. Risk is very
+low because this adds one exact-match PCI SSID quirk using existing
+code.
 
 ### Phase 9: Final Synthesis
-Evidence for backporting: real device probe failure, existing quirk
-mechanism, tiny hardware-specific change, no new API, maintainer sign-
-off, and older stable branches demonstrably still have the failing reset
-timeout behavior.
+Record 9.1: Evidence for backporting: hardware quirk exception, one-line
+targeted change, existing tested fixup machinery, maintainer applied it,
+related Positivo fixes use the same pattern. Evidence against: no
+separate bug report/test tag and direct apply may need context/path
+adjustment. Unresolved: exact upstream commit hash was not available
+locally, and no independent DN50E test report beyond the submitter’s
+patch text was found.
 
-Evidence against backporting: no direct candidate lore thread or
-external bug report could be verified; exact hardware ID `0x36b6/0xc001`
-was only verified from the supplied patch, not an external hardware
-database. Newer stable branches already have generic missing-reset-ack
-handling, reducing urgency there.
+Record 9.2: Stable rules: obviously correct: yes; fixes a real user-
+visible hardware bug: yes; important enough under hardware-quirk
+exception: yes; small and contained: yes; no new APIs/features: yes;
+stable apply: yes with likely minor path/context adjustment on older
+trees.
 
-Stable rules: obviously correct by inspection, fixes a real hardware
-probe failure on older stable branches, small and contained, no new
-feature/API, and falls under the accepted hardware quirk exception.
-Backport difficulty should be clean or minor.
+Record 9.3: Exception category applies: hardware-specific
+quirk/workaround in an existing driver.
+
+Record 9.4: This should be backported. The patch is exactly the type of
+low-risk Realtek HDA laptop quirk that stable trees routinely carry.
 
 ## Verification
-- [Phase 1] Parsed supplied message and tags: only Xu Rao and Jiri
-  Kosina Signed-off-by tags present.
-- [Phase 2] Read `drivers/hid/i2c-hid/i2c-hid-core.c`: verified quirk
-  table and reset handling.
-- [Phase 3] Searched local histories without `--all`: exact candidate
-  not found; related no-IRQ quirk commits found.
-- [Phase 3] Inspected `402946a8ef71e`, `fc6a31b007393`, and
-  `7bcf9ebb50f2a`: confirmed same reset-ack quirk mechanism and later
-  generic warning behavior.
-- [Phase 4] Ran `b4 dig` for related commits; candidate `b4 dig` was not
-  possible without a candidate hash.
-- [Phase 5] Traced callers with `rg` and read ACPI/OF probe files:
-  confirmed probe-time reachability.
-- [Phase 6] Checked active stable branches: quirk support exists in all
-  checked branches; old reset failure path exists through `6.6.y`;
-  `6.12.y+` has generic warning handling.
-- [Phase 6] Ran `git apply --check` against current `7.0.y`: patch shape
-  applies cleanly.
-- UNVERIFIED: original candidate lore discussion, independent bug
-  report, and exact external hardware database confirmation for
-  `0x36b6/0xc001`.
+- Phase 1: Parsed the supplied commit message and b4 mbox; confirmed
+  tags and absence of `Fixes:` / stable / reporter tags.
+- Phase 2: Read the patch mbox; confirmed 1 insertion in
+  `alc269_fixup_tbl`.
+- Phase 3: Used `git grep` across stable tags to confirm
+  `ALC269_FIXUP_LIMIT_INT_MIC_BOOST` exists and DN50E is absent.
+- Phase 3: Checked author history; found multiple accepted Positivo/VAIO
+  Realtek HDA quirk commits.
+- Phase 4: `b4 am` found the patch and thread; full mbox showed Takashi
+  Iwai replied “Applied now.”
+- Phase 4: Web searches found related Positivo DN50F/ARN50 mic-boost
+  patches and a DN50E hardware listing.
+- Phase 5: Read `snd_hda_pick_fixup()`, `snd_hda_apply_fixup()`,
+  `alc269_probe()`, and `alc269_fixup_limit_int_mic_boost()` to verify
+  call flow and behavior.
+- Phase 6: Checked `v4.19`, `v5.4`, `v5.10`, `v5.15`, `v6.1`, `v6.6`,
+  `v6.12`, `v6.19`, and `v7.0` for fixup availability and file paths.
+- Unverified: exact final upstream commit hash was not available in
+  local history, and no separate user bug report was found.
 
 **YES**
 
- drivers/hid/hid-ids.h              | 3 +++
- drivers/hid/i2c-hid/i2c-hid-core.c | 2 ++
- 2 files changed, 5 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index c371721826dcc..559040e47f3c7 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -277,6 +277,9 @@
- #define USB_VENDOR_ID_BIGBEN	0x146b
- #define USB_DEVICE_ID_BIGBEN_PS3OFMINIPAD	0x0902
- 
-+#define I2C_VENDOR_ID_BLTP		0x36b6
-+#define I2C_PRODUCT_ID_BLTP7853		0xc001
-+
- #define USB_VENDOR_ID_BTC		0x046e
- #define USB_DEVICE_ID_BTC_EMPREX_REMOTE	0x5578
- #define USB_DEVICE_ID_BTC_EMPREX_REMOTE_2	0x5577
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 5a183af3d5c6a..baff2728603ec 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -149,6 +149,8 @@ static const struct i2c_hid_quirks {
- 		 I2C_HID_QUIRK_BOGUS_IRQ },
- 	{ I2C_VENDOR_ID_GOODIX, I2C_DEVICE_ID_GOODIX_0D42,
- 		 I2C_HID_QUIRK_DELAY_WAKEUP_AFTER_RESUME },
-+	{ I2C_VENDOR_ID_BLTP, I2C_PRODUCT_ID_BLTP7853,
-+		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
- 	{ 0, 0 }
- };
- 
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 4e0885c1fc496..b1fb5e1cf0078 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7799,6 +7799,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1e39, 0xca14, "MEDION NM14LNL", ALC233_FIXUP_MEDION_MTL_SPK),
++	SND_PCI_QUIRK(0x1e50, 0x7007, "Positivo DN50E", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x1ee7, 0x2078, "HONOR BRB-X M1010", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1f4c, 0xe001, "Minisforum V3 (SE)", ALC245_FIXUP_BASS_HP_DAC),
+ 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.53.0
 
