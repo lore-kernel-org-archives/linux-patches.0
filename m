@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B84D33ADB9;
-	Wed, 20 May 2026 16:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A3433ADB9;
+	Wed, 20 May 2026 16:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294741; cv=none; b=LLoDVhVNacHE+rkVf6qcz3iYiJlG5PFrtxrcP8gJDYrTcqfc+YvdF6KEh7d5Ibvxl1oVPyTvjKLBYfWIO3xonwUhOi4FnMwfgPscppvuPcnT+ddcvJrWNrjo9Qy517vQJHU50a7dBmpFkAUhQK9paLlZJTFkEWijhWNMjD1MW9o=
+	t=1779294743; cv=none; b=cZ+HnX9Z2xyEwxjSefXDa9LEP+flA64A7OhQfethiZ7k1LUiW1PvtLEAxCSFC5ysmr19xJ1jWVKlCZ28lFt+gQEXomZ/lpAz5g3viECLiZxE0t/wEHn8z5BZbTIV61n9obaKic3QFX4rwlMlan6O+VuuPBK6jK/3ptlu3XEmYqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294741; c=relaxed/simple;
-	bh=8LYJDvDy5EO32gmDv69cG9UYpQBGRdA+znuEps3v7RM=;
+	s=arc-20240116; t=1779294743; c=relaxed/simple;
+	bh=3fO5Qbg4br3SvvgB2E+xXLUMPcrCPIiDtYSZSu3Z2cE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HDMvdP67HrXEiRVSefr2R2yYpcufaGNLHFJo8tmJgNFyc6NlEcL7a6K66ORygLeST6LRF1ENduRJA98wKtflg5qgBne9il2+U2Uze0kS51TyxoEu/MG3NxSdLEabLOzrrTPJUhG/QwbP+aWAEjr6C9fKpzc985pZJRNuxF7Quoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8+IrOyC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RilgKBhXvxT2YHW4hSYGjkaaL0e25B2hhFqEXim7SJwVy/sSbp5oTzNBNNtb+5Nhtvwj4pN7pgk+VdxbT057mnzMsePJT1RMdWd3WZ1xxEqgTv8SnU4XvsFqBcv0IZGTgSlvggl2afktCMaRpqyTPbdQ09eYXKXIUq1ghQANB2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KKfFrhM0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8+IrOyC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A152D1F000E9;
-	Wed, 20 May 2026 16:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKfFrhM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481EE1F000E9;
+	Wed, 20 May 2026 16:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294740;
-	bh=Xmof3vPyqtLcJsLaM91EHKGUnNS7+l/oli5iqEiEzPc=;
+	s=korg; t=1779294742;
+	bh=7bsP8bKpfqIGuI9eSYWn8mxLVUH0p9LDr8SO0hJkNVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f8+IrOyClkxXKBTGHaFqFPbJk1QVjTS2RlD7gekcHx41ato5Xdxt8ZfhgXXGzU/C0
-	 c4Hoc+Y+pYhy/vh1Y2ssVY6upSPr2C2O83cHt11S16Ke2PvgF5wVtFOmifxh3c9r2+
-	 LbZX5347aDr85NtFv7zmrLZ+mSKUdrCNjgNYtJCE=
+	b=KKfFrhM0pUgdbB7vpkFeqYHL29c9Fd3P/TA2/oGFailMFwO3DW/xBmnd7HEM3l3Ew
+	 5JNyh1+4YP4ae6TYDTXo3u0EUxnwwJFhh7nJSYS4Xz9+jr5LbcyDojPgIs/Ark51/2
+	 JxGHJoLBKHZjV+KTwAtMGfAsqNAtnFyP1Uzgjc54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Nicolas Escande <nico.escande@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0153/1146] wifi: brcmfmac: Fix error pointer dereference
-Date: Wed, 20 May 2026 18:06:43 +0200
-Message-ID: <20260520162151.766590918@linuxfoundation.org>
+Subject: [PATCH 7.0 0154/1146] wifi: mac80211: handle VHT EXT NSS in ieee80211_determine_our_sta_mode()
+Date: Wed, 20 May 2026 18:06:44 +0200
+Message-ID: <20260520162151.788264188@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,78 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit dd8592fc6007a451c3e4b9025de365e39de8178a ]
+[ Upstream commit b5b8e295973083abf823fb66647a7c702a8db8a7 ]
 
-The function brcmf_chip_add_core() can return an error pointer and is
-not checked. Add checks for error pointer.
+A station which has a NSS ratio on the number of streams it is capable of
+in 160MHz VHT operation is supposed to use the 'Extended NSS BW Support'
+as defined by section '9.4.2.156.2 VHT Capabilities Information field'.
 
-Detected by Smatch:
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1010 brcmf_chip_recognition() error:
-'core' dereferencing possible ERR_PTR()
+This was missing in ieee80211_determine_our_sta_mode() and so we would
+wrongfully downgrade our bandwidth when connecting to an AP that supported
+160MHz with messages such as:
 
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1013 brcmf_chip_recognition() error:
-'core' dereferencing possible ERR_PTR()
+	[   37.638346] wlan1: AP XX:XX:XX:XX:XX:XX changed bandwidth in assoc response, new used config is 5280.000 MHz, width 3 (5290.000/0 MHz)
 
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1016 brcmf_chip_recognition() error:
-'core' dereferencing possible ERR_PTR()
-
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1019 brcmf_chip_recognition() error:
-'core' dereferencing possible ERR_PTR()
-
-drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1022 brcmf_chip_recognition() error:
-'core' dereferencing possible ERR_PTR()
-
-Fixes: cb7cf7be9eba7 ("brcmfmac: make chip related functions host interface independent")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260217023043.73631-1-ethantidmore06@gmail.com
-[add missing wifi: prefix]
+Fixes: 310c8387c638 ("wifi: mac80211: clean up connection process")
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Link: https://patch.msgid.link/20260327100256.3101348-1-nico.escande@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/broadcom/brcm80211/brcmfmac/chip.c   | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ net/mac80211/mlme.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-index a790f1693b82e..4adc0d0e4251b 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-@@ -1007,18 +1007,33 @@ static int brcmf_chip_recognition(struct brcmf_chip_priv *ci)
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 6a0e2896b54c7..53bd98646e33e 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -6009,7 +6009,8 @@ ieee80211_determine_our_sta_mode(struct ieee80211_sub_if_data *sdata,
  
- 		core = brcmf_chip_add_core(ci, BCMA_CORE_CHIPCOMMON,
- 					   SI_ENUM_BASE_DEFAULT, 0);
-+		if (IS_ERR(core))
-+			return PTR_ERR(core);
-+
- 		brcmf_chip_sb_corerev(ci, core);
- 		core = brcmf_chip_add_core(ci, BCMA_CORE_SDIO_DEV,
- 					   BCM4329_CORE_BUS_BASE, 0);
-+		if (IS_ERR(core))
-+			return PTR_ERR(core);
-+
- 		brcmf_chip_sb_corerev(ci, core);
- 		core = brcmf_chip_add_core(ci, BCMA_CORE_INTERNAL_MEM,
- 					   BCM4329_CORE_SOCRAM_BASE, 0);
-+		if (IS_ERR(core))
-+			return PTR_ERR(core);
-+
- 		brcmf_chip_sb_corerev(ci, core);
- 		core = brcmf_chip_add_core(ci, BCMA_CORE_ARM_CM3,
- 					   BCM4329_CORE_ARM_BASE, 0);
-+		if (IS_ERR(core))
-+			return PTR_ERR(core);
-+
- 		brcmf_chip_sb_corerev(ci, core);
- 
- 		core = brcmf_chip_add_core(ci, BCMA_CORE_80211, 0x18001000, 0);
-+		if (IS_ERR(core))
-+			return PTR_ERR(core);
-+
- 		brcmf_chip_sb_corerev(ci, core);
- 	} else if (socitype == SOCI_AI) {
- 		ci->iscoreup = brcmf_chip_ai_iscoreup;
+ 	if (is_5ghz &&
+ 	    !(vht_cap.cap & (IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160MHZ |
+-			     IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160_80PLUS80MHZ))) {
++			     IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160_80PLUS80MHZ |
++			     IEEE80211_VHT_CAP_EXT_NSS_BW_MASK))) {
+ 		conn->bw_limit = IEEE80211_CONN_BW_LIMIT_80;
+ 		mlme_link_id_dbg(sdata, link_id,
+ 				 "no VHT 160 MHz capability on 5 GHz, limiting to 80 MHz");
 -- 
 2.53.0
 
