@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CF3369D64;
-	Wed, 20 May 2026 16:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2DF33AD9D;
+	Wed, 20 May 2026 16:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294957; cv=none; b=JuqthXWZqNJngGkGHMxndQUaOz63kx7c9pE87flHUEmdBp/RN4DJQqIgskA4QCzgd2Rey2acqvuyaaI5nmtAbxTrDsQQjjWTy9FKoQqH26VhSUO+Z8IWLjsmSdJzKo5w6gNhKaTxtPbYnzTZP+/W3BzIKDXAFXhDvwaiCJeN2JU=
+	t=1779294959; cv=none; b=WKoAqoW6woJYKOiPGHMZ8S7yWSCLY6di6QtA4DVIJcBzO5QYrp/Yu20jgr+UgJDUK8ueknAM1/TrC4We6XjnxCZeRUOSrMiYQ6d1anCbT5TLsXknUwHOCUk+oHakA7e5d4VNUbyQzgxiCc4FEN7Re0JI/ZNq5Z1tiLthhkBcZDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294957; c=relaxed/simple;
-	bh=PwVev8MQ5Yj5SjItCSjbEnRHr1F5yp2t6biU87xDsmI=;
+	s=arc-20240116; t=1779294959; c=relaxed/simple;
+	bh=8kH0VraLF1Z85q5l0fCW/xr3AM5JzO5ZRNH9N+oB3+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lTZG9/Sex1t9/p9xbFAm1d9CANus8e19Rqf3RvYqgEWddm/TN88BEOin6Hhej/k0lToG8fdTeOn11P3ITEaQwKTIjEPM6FAret5L7sIuV2SjPXazm5jddZoK8StGoZbNXomLxdRdnOapn4Ap040H95Zv/L6ELQHM/KnkuEbnEG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=biZgWiaS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ouqIw0Wo6XZEhows5M0/EI2h36Etl95+kj43sDQs8dpVXchavy19uzRSkadaMXk6on2yBQz/2Ab20l2vnSd+2epB70A7oHMgmFce2mBgPEjJdjQI8nwJW8iM1WDPnAzDtwGj00bRRN3IjnSVg/cjDrefIcTXWf7tNj9eevjdVh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnQd/cRn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="biZgWiaS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528091F000E9;
-	Wed, 20 May 2026 16:35:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnQd/cRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E934E1F00893;
+	Wed, 20 May 2026 16:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294955;
-	bh=d3qbTJe3iXplJ2BLBDzzp2NNF9Uu5KXyL0BAfSW2Hfk=;
+	s=korg; t=1779294958;
+	bh=4LiDQrExSLHulBSqBgFX3JyQHsFkXQEtYmpgAmC0Xho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=biZgWiaSATufTdllOzFeoPFzzfZQ7SZ7HJUfnhzAOcj3z3uMIgrXtFqMGD6aqy21s
-	 9lBvBYKN7i4Bl/jjYCbA5FS/ep8xbU4lZqiPV5adcBhUtFX/BOGxzHO1k4rjweLUce
-	 GRhZ8Wk1KxRg5QLSUNelwpV6s1ZrwMs6AsWC1CJc=
+	b=pnQd/cRnItXv56cpKugAiC0woGYVWzq7gHNDXkh80//d3scxg7nYIK9bnCGj09Jyw
+	 A7PxtAjhxc1nCd73ka6D9npS5shgE3WFKeust9Wlh0AsNdfNpeqQ73KS9yanKX9CWf
+	 8ei3ndf+YcwoJBp82KbITmO4PbRqbmHg9trl1EX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
 	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0236/1146] drm/sun4i: mixer: Fix layer init code
-Date: Wed, 20 May 2026 18:08:06 +0200
-Message-ID: <20260520162153.586929564@linuxfoundation.org>
+Subject: [PATCH 7.0 0237/1146] drm/sun4i: backend: fix error pointer dereference
+Date: Wed, 20 May 2026 18:08:07 +0200
+Message-ID: <20260520162153.609179911@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,41 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 744629904c68bde847c31819f23482d09152f810 ]
+[ Upstream commit 06277983eca4a31d3c2114fa33d99a6e82484b11 ]
 
-Code refactoring dropped extra NULL sentinel entry at the end of the drm
-planes array.
+The function drm_atomic_get_plane_state() can return an error pointer
+and is not checked for it. Add error pointer check.
 
-Add it back.
+Detected by Smatch:
+drivers/gpu/drm/sun4i/sun4i_backend.c:496 sun4i_backend_atomic_check() error:
+'plane_state' dereferencing possible ERR_PTR()
 
-Reported-by: Chen-Yu Tsai <wens@kernel.org>
-Closes: https://lore.kernel.org/linux-sunxi/CAGb2v65wY2pF6sR+0JgnpLa4ysvjght5hAKDa1RUyo=zEKXreg@mail.gmail.com/
-Fixes: 4fa45b04a47d ("drm/sun4i: layer: move num of planes calc out of layer code")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Fixes: 96180dde23b79 ("drm/sun4i: backend: Add a custom atomic_check for the frontend")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
 Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/20260218183454.7881-1-jernej.skrabec@gmail.com
-[wens@kernel.org: Fix "Fixes" commit hash]
+Link: https://patch.msgid.link/20260217014801.60760-1-ethantidmore06@gmail.com
 Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun8i_mixer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/sun4i/sun4i_backend.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/sun4i/sun8i_mixer.c b/drivers/gpu/drm/sun4i/sun8i_mixer.c
-index ce9c155bfad7f..02acc7cbdb979 100644
---- a/drivers/gpu/drm/sun4i/sun8i_mixer.c
-+++ b/drivers/gpu/drm/sun4i/sun8i_mixer.c
-@@ -321,7 +321,7 @@ static struct drm_plane **sun8i_layers_init(struct drm_device *drm,
- 	unsigned int phy_index;
- 	int i;
- 
--	planes = devm_kcalloc(drm->dev, plane_cnt, sizeof(*planes), GFP_KERNEL);
-+	planes = devm_kcalloc(drm->dev, plane_cnt + 1, sizeof(*planes), GFP_KERNEL);
- 	if (!planes)
- 		return ERR_PTR(-ENOMEM);
- 
+diff --git a/drivers/gpu/drm/sun4i/sun4i_backend.c b/drivers/gpu/drm/sun4i/sun4i_backend.c
+index 40405a52a073a..6391bdc94a5c2 100644
+--- a/drivers/gpu/drm/sun4i/sun4i_backend.c
++++ b/drivers/gpu/drm/sun4i/sun4i_backend.c
+@@ -491,6 +491,9 @@ static int sun4i_backend_atomic_check(struct sunxi_engine *engine,
+ 	drm_for_each_plane_mask(plane, drm, crtc_state->plane_mask) {
+ 		struct drm_plane_state *plane_state =
+ 			drm_atomic_get_plane_state(state, plane);
++		if (IS_ERR(plane_state))
++			return PTR_ERR(plane_state);
++
+ 		struct sun4i_layer_state *layer_state =
+ 			state_to_sun4i_layer_state(plane_state);
+ 		struct drm_framebuffer *fb = plane_state->fb;
 -- 
 2.53.0
 
