@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E3E3F54D1;
-	Wed, 20 May 2026 18:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF6E3F871A;
+	Wed, 20 May 2026 18:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300817; cv=none; b=dBfz3HxZbF2LBWMy/ZCWi1QtM0AtXDW4eT0xUkASy1I0KiwRgj/kpnu9899QXSgd7oDVSwr/DoEGniMFb035sSnxxUdPOP0rfP4Lx2u7Lj0mDgOyZ2XTEfSugdp6Z4l/yUc/fnyM3046kCMuAL8j2oPDBin2vfhovm/eSeyFQk8=
+	t=1779300820; cv=none; b=MzYrQHu08ASPbzd3niu8plk8RpiYnVJt61tjBnpadJcqaujkYlB0bZDAENMKjv+sYTiNrkYrQ3zN5sJH4pfb5u4Oh8BFqTNijNw5OHOnw1d6O3bKvvzNN8IPDI7GVhaOhmqam9FhPbYGIQgdkwlSh0hLQCCzRGYIkVJKdrDG/Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300817; c=relaxed/simple;
-	bh=t6OMZUi3fZ/M0PH2lKFtGsaRifuEnM0Fg4vrmzPzrPM=;
+	s=arc-20240116; t=1779300820; c=relaxed/simple;
+	bh=ivxqdsc9yhzFHDr7gO6ueaVcRqyTOrPEGrnE7uKaykU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtZ3viJVkL5l5Wy23CLBOpQkfeE+pEoyNrR6Fz4gs3ZIL6liLRz2E/V/qXhK/qG7LZ4IkSjLokV7d8qn6hYLvPF0G0scihB5/ehMG64WswHIJF5iz0JUmnd4Sx39HIvuGpAErMLm8rfupqpPMoBd26VRzzd4GsQuuA00LZ2K0N4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leSIyFg/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CF165gJnOswpiFGqwFMBGfzuLxQvpEOuQg2iN5Gx0IQXrDyEXZOToyeNQ7sHx6+I2uFSEFI5dBXMiKo/lPgDtsxyC9UTOtxf/1G/vx09avv+tJpiTHAuzcXSHkPPw/QzNCT2Vjpo0AJcgbBlXozEBzfXh8Z3GqFI4JNjgskgV8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEQkHRB0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leSIyFg/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131F21F000E9;
-	Wed, 20 May 2026 18:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEQkHRB0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F151F00894;
+	Wed, 20 May 2026 18:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300816;
-	bh=n86tQmq0zlcVKrXmbw0AlQWnQRkJZSLgVstmtSz+MWA=;
+	s=korg; t=1779300819;
+	bh=6qGaTF2ZQe1vVgBeCXNqCX18+zSVFp5H2EuoBsUbubE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=leSIyFg/cOsKPXEB4AYNbvw9lRrJcMAOqgbXrYDoKa1tENWv0qbCxLERnf714y6jS
-	 WcPCP5fNcTr+/L5tZ1YI58x8BCyRJ/uPvojHPuJMUOX0p7/6gj0kBMgxUehjdp1IgA
-	 XbGFsDPOy4Y9uqwHvZUnPbPiYLQu+gZKU9FGKHbc=
+	b=KEQkHRB06LfueJnZH73Uyxbo//ulWi0EuHpQZnLhY5adqL7nQb5aFeUSHdJWMVzQm
+	 UHijJxql8T3UK01hRDWSzeG3fAKCSkxY/wa/L2pgwXAQKZDKrbbB08YXtSJYuRerM9
+	 ssXs8i81DyKsMJySGWETwNBH52lazjQPvgpCHEdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Khairul Anuar Romli <karom.9560@gmail.com>,
+	Cole Leavitt <cole@unwrap.rs>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 319/666] dmaengine: dw-axi-dmac: Remove unnecessary return statement from void function
-Date: Wed, 20 May 2026 18:18:50 +0200
-Message-ID: <20260520162118.135984111@linuxfoundation.org>
+Subject: [PATCH 6.12 320/666] soundwire: bus: demote UNATTACHED state warnings to dev_dbg()
+Date: Wed, 20 May 2026 18:18:51 +0200
+Message-ID: <20260520162118.158531143@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,47 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Khairul Anuar Romli <karom.9560@gmail.com>
+From: Cole Leavitt <cole@unwrap.rs>
 
-[ Upstream commit 48278a72fce8a8d30efaedeb206c9c3f05c1eb3f ]
+[ Upstream commit 2c96956fe764f8224f9ec93b2a9160a578949a7a ]
 
-checkpatch.pl --strict reports a WARNING in dw-axi-dmac-platform.c:
+The dev_warn() messages in sdw_handle_slave_status() for UNATTACHED
+transitions were added in commit d1b328557058 ("soundwire: bus: add
+dev_warn() messages to track UNATTACHED devices") to debug attachment
+failures with dynamic debug enabled.
 
-  WARNING: void function return statements are not generally useful
-  FILE: drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+These warnings fire during normal operation -- for example when a codec
+driver triggers a hardware reset after firmware download, causing the
+device to momentarily go UNATTACHED before re-attaching -- producing
+misleading noise on every boot.
 
-According to Linux kernel coding style [Documentation/process/
-coding-style.rst], explicit "return;" statements at the end of void
-functions are redundant and should be omitted. The function will
-automatically return upon reaching the closing brace, so the extra
-statement adds unnecessary clutter without functional benefit.
+Demote the messages to dev_dbg() so they remain available via dynamic
+debug for diagnosing real attachment failures without alarming users
+during expected initialization sequences.
 
-This patch removes the superfluous "return;" statement in
-dw_axi_dma_set_hw_channel() to comply with kernel coding standards and
-eliminate the checkpatch warning.
-
-Fixes: 32286e279385 ("dmaengine: dw-axi-dmac: Remove free slot check algorithm in dw_axi_dma_set_hw_channel")
-Signed-off-by: Khairul Anuar Romli <karom.9560@gmail.com>
-Link: https://patch.msgid.link/20260202060224.12616-4-karom.9560@gmail.com
+Fixes: d1b328557058 ("soundwire: bus: add dev_warn() messages to track UNATTACHED devices")
+Signed-off-by: Cole Leavitt <cole@unwrap.rs>
+Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260218180210.9263-1-cole@unwrap.rs
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/soundwire/bus.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index fffafa86d964e..adef111aca31e 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -592,8 +592,6 @@ static void dw_axi_dma_set_hw_channel(struct axi_dma_chan *chan, bool set)
- 			(chan->id * DMA_APB_HS_SEL_BIT_SIZE));
- 	reg_value |= (val << (chan->id * DMA_APB_HS_SEL_BIT_SIZE));
- 	lo_hi_writeq(reg_value, chip->apb_regs + DMAC_APB_HW_HS_SEL_0);
--
--	return;
- }
+diff --git a/drivers/soundwire/bus.c b/drivers/soundwire/bus.c
+index 6c7989e2079e0..25efafd89c036 100644
+--- a/drivers/soundwire/bus.c
++++ b/drivers/soundwire/bus.c
+@@ -1866,8 +1866,8 @@ int sdw_handle_slave_status(struct sdw_bus *bus,
  
- /*
+ 		if (status[i] == SDW_SLAVE_UNATTACHED &&
+ 		    slave->status != SDW_SLAVE_UNATTACHED) {
+-			dev_warn(&slave->dev, "Slave %d state check1: UNATTACHED, status was %d\n",
+-				 i, slave->status);
++			dev_dbg(&slave->dev, "Slave %d state check1: UNATTACHED, status was %d\n",
++			i, slave->status);
+ 			sdw_modify_slave_status(slave, SDW_SLAVE_UNATTACHED);
+ 
+ 			/* Ensure driver knows that peripheral unattached */
+@@ -1918,8 +1918,8 @@ int sdw_handle_slave_status(struct sdw_bus *bus,
+ 			if (slave->status == SDW_SLAVE_UNATTACHED)
+ 				break;
+ 
+-			dev_warn(&slave->dev, "Slave %d state check2: UNATTACHED, status was %d\n",
+-				 i, slave->status);
++			dev_dbg(&slave->dev, "Slave %d state check2: UNATTACHED, status was %d\n",
++			i, slave->status);
+ 
+ 			sdw_modify_slave_status(slave, SDW_SLAVE_UNATTACHED);
+ 			break;
 -- 
 2.53.0
 
