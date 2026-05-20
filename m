@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836FE285061;
-	Wed, 20 May 2026 16:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3E9285061;
+	Wed, 20 May 2026 16:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295551; cv=none; b=HFQklKOGq60k1BYpPScQ2C5eF6qbO1bCmy4+N136PYiLa/YJ7PrFkXowFH/MNwB5vJGQtMOluCML/NB8T9gIYjZM++4uuugXJsUyQ2icP+gbrAyMhF0eWAO1I6XfvrhzVs+1TrBcVuxQ/apYzGb7YhpcZj8UHbsOUt+FilJmbM8=
+	t=1779295554; cv=none; b=JHZ2DY+rg79Pf0kIp2028P4TR7Xx096t6nqKrdqDLJUO5qPBtux2nPHuhxQ11z+0BjNzi2Xs7nbrL0b8DYFP+igLW3ItQxwjiBSUY92IthLvGPEOO/o88C9ufBxusei3OtKYm9yaqax+d95uPGnqngLiLJLPCg73PagJP08kuQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295551; c=relaxed/simple;
-	bh=y3b2iVbDttGZ8kNW+IbHPGASZf3lYArUBOQu2lBgfqA=;
+	s=arc-20240116; t=1779295554; c=relaxed/simple;
+	bh=ljNQMoK15rqBdBQZdlRTvKd8DNMqZROiU6eyrVRIuzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TpLypKiZAXhdb4hct34p99mFgDPwlbN5xcdcRLNL7SqI/W0fFcI4CN+k2Iz2nKqmFMy7Dndn5ocp2cETwvWtFVVjV93rOFU1RglE7v/K7/7c9v8DSeMLapROO8CGphRYOOJN+HoA1T+Xjy6fY8445HPY0dKANWoQKMXWXaDxka4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlMPgErl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=joag4za3uBunaANeYnu0nxa4jSBI9NZI6+OPxcOIx1RqWKU4rP+y40RKWVk8w9i/GTcumqygOrVECqbt2oGdQ7Y7W0Db8QDl2fD9TBDXOr6loyynkkMpq4Mm8wfL2adAkmI9n9Ry1U6tfxAXp0oZOxlo0fh2pIKc3qzX0WQ/ABU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RwklLG5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlMPgErl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B201F000E9;
-	Wed, 20 May 2026 16:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RwklLG5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908221F000E9;
+	Wed, 20 May 2026 16:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295550;
-	bh=BAz2siFvpJoLq9LwMLXKmbVBydjIP4f9FtrrxR+U/GY=;
+	s=korg; t=1779295553;
+	bh=V6IT6l2/k6qG6qW9f9qN+gJwniX9ENj5C9UWsR72OKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mlMPgErlGus2w93ba/U7Z6seYwqC76qk/XHpU7JntRecUYg9wS8f3hZFR0P8mzvM7
-	 FKzAS/pq8pKR0Ra5FnoNvYLG7Iei+xTlObAobN881VWdxgkPPtwmVPHbOdO3h5KAz1
-	 xtNSzDT6DO5A26TBF2h5q8NapMUKYUcl7UoDZbuk=
+	b=1RwklLG5tkLlYsWn1dFtuVhcdSM/nlVA4fSUNb8TW84IlFnDshllNdt5iQsoWRVd0
+	 sidZeT3SOj6VmhJ0CbhucSzxBxFnh1JAlfJSkiVo73FdjIwpBEXlo+tQaSXFsGWvcs
+	 /fF0CmTKKazLvscm4fi7ld+T8SW9qpR/tAPJKX3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alex Williamson <alex@shazbot.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0461/1146] vfio: unhide vdev->debug_root
-Date: Wed, 20 May 2026 18:11:51 +0200
-Message-ID: <20260520162158.630603524@linuxfoundation.org>
+Subject: [PATCH 7.0 0462/1146] gfs2: add some missing log locking
+Date: Wed, 20 May 2026 18:11:52 +0200
+Message-ID: <20260520162158.652869674@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,48 +50,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 555aa178f8d22261d71da74df6267e6e6e97f95a ]
+[ Upstream commit fe2c8d051150b90b3ccb85f89e3b1d636cb88ec8 ]
 
-When debugfs is disabled, the hisilicon driver now fails to build:
+Function gfs2_logd() calls the log flushing functions gfs2_ail1_start(),
+gfs2_ail1_wait(), and gfs2_ail1_empty() without holding sdp->sd_log_flush_lock,
+but these functions require exclusion against concurrent transactions.
 
-drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c: In function 'hisi_acc_vfio_debug_init':
-drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c:1671:62: error: 'struct vfio_device' has no member named 'debug_root'
- 1671 |         vfio_dev_migration = debugfs_lookup("migration", vdev->debug_root);
-      |                                                              ^~
+To fix that, add a non-locking __gfs2_log_flush() function.  Then, in
+gfs2_logd(), take sdp->sd_log_flush_lock before calling the above mentioned log
+flushing functions and __gfs2_log_flush().
 
-The driver otherwise relies on dead-code elimination, but this reference
-fails. The single struct member is not going to make much of a difference
-for memory consumption, so just keep this visible unconditionally.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Fixes: b398f91779b8 ("hisi_acc_vfio_pci: register debugfs for hisilicon migration driver")
-Link: https://lore.kernel.org/r/20260327165521.3779707-1-arnd@kernel.org
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Fixes: 5e4c7632aae1c ("gfs2: Issue revokes more intelligently")
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/vfio.h | 2 --
- 1 file changed, 2 deletions(-)
+ fs/gfs2/log.c | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/include/linux/vfio.h b/include/linux/vfio.h
-index e90859956514a..ef02a4996d451 100644
---- a/include/linux/vfio.h
-+++ b/include/linux/vfio.h
-@@ -72,13 +72,11 @@ struct vfio_device {
- 	u8 iommufd_attached:1;
- #endif
- 	u8 cdev_opened:1;
--#ifdef CONFIG_DEBUG_FS
- 	/*
- 	 * debug_root is a static property of the vfio_device
- 	 * which must be set prior to registering the vfio_device.
- 	 */
- 	struct dentry *debug_root;
--#endif
- };
+diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
+index 347df29d610e6..41a70fbee82f4 100644
+--- a/fs/gfs2/log.c
++++ b/fs/gfs2/log.c
+@@ -1018,14 +1018,15 @@ static void trans_drain(struct gfs2_trans *tr)
+ }
  
  /**
+- * gfs2_log_flush - flush incore transaction(s)
++ * __gfs2_log_flush - flush incore transaction(s)
+  * @sdp: The filesystem
+  * @gl: The glock structure to flush.  If NULL, flush the whole incore log
+  * @flags: The log header flags: GFS2_LOG_HEAD_FLUSH_* and debug flags
+  *
+  */
+ 
+-void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
++static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
++			     u32 flags)
+ {
+ 	struct gfs2_trans *tr = NULL;
+ 	unsigned int reserved_blocks = 0, used_blocks = 0;
+@@ -1033,7 +1034,6 @@ void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
+ 	unsigned int first_log_head;
+ 	unsigned int reserved_revokes = 0;
+ 
+-	down_write(&sdp->sd_log_flush_lock);
+ 	trace_gfs2_log_flush(sdp, 1, flags);
+ 
+ repeat:
+@@ -1145,7 +1145,6 @@ void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
+ 		gfs2_assert_withdraw(sdp, used_blocks < reserved_blocks);
+ 		gfs2_log_release(sdp, reserved_blocks - used_blocks);
+ 	}
+-	up_write(&sdp->sd_log_flush_lock);
+ 	gfs2_trans_free(sdp, tr);
+ 	trace_gfs2_log_flush(sdp, 0, flags);
+ 	return;
+@@ -1166,6 +1165,13 @@ void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
+ 	goto out_end;
+ }
+ 
++void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
++{
++	down_write(&sdp->sd_log_flush_lock);
++	__gfs2_log_flush(sdp, gl, flags);
++	up_write(&sdp->sd_log_flush_lock);
++}
++
+ /**
+  * gfs2_merge_trans - Merge a new transaction into a cached transaction
+  * @sdp: the filesystem
+@@ -1297,19 +1303,25 @@ int gfs2_logd(void *data)
+ 			break;
+ 
+ 		if (gfs2_jrnl_flush_reqd(sdp) || t == 0) {
++			down_write(&sdp->sd_log_flush_lock);
+ 			gfs2_ail1_empty(sdp, 0);
+-			gfs2_log_flush(sdp, NULL, GFS2_LOG_HEAD_FLUSH_NORMAL |
+-						  GFS2_LFC_LOGD_JFLUSH_REQD);
++			__gfs2_log_flush(sdp, NULL,
++					 GFS2_LOG_HEAD_FLUSH_NORMAL |
++					 GFS2_LFC_LOGD_JFLUSH_REQD);
++			up_write(&sdp->sd_log_flush_lock);
+ 		}
+ 
+ 		if (test_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags) ||
+ 		    gfs2_ail_flush_reqd(sdp)) {
+ 			clear_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags);
++			down_write(&sdp->sd_log_flush_lock);
+ 			gfs2_ail1_start(sdp);
+ 			gfs2_ail1_wait(sdp);
+ 			gfs2_ail1_empty(sdp, 0);
+-			gfs2_log_flush(sdp, NULL, GFS2_LOG_HEAD_FLUSH_NORMAL |
+-						  GFS2_LFC_LOGD_AIL_FLUSH_REQD);
++			__gfs2_log_flush(sdp, NULL,
++					 GFS2_LOG_HEAD_FLUSH_NORMAL |
++					 GFS2_LFC_LOGD_AIL_FLUSH_REQD);
++			up_write(&sdp->sd_log_flush_lock);
+ 		}
+ 
+ 		t = gfs2_tune_get(sdp, gt_logd_secs) * HZ;
 -- 
 2.53.0
 
