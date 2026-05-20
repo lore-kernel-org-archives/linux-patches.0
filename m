@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBF935F619;
-	Wed, 20 May 2026 17:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5DB372EDE;
+	Wed, 20 May 2026 17:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296918; cv=none; b=ewOQ9l18roxUQQutb3am1r8MrDTrkO+zvzP2nBkwFr+bIq6Qm42CX9yPV1JhGYi54NSVnz/f43h/Ny/+SP9vcAs0uJHIOQjsZq4lbglUISLe9nEmZNN9XTC+JSbmS5ogV/34aYXYOLG61hWQWHKGC+Rcu5DYDEKkwd6GyGMIpFw=
+	t=1779296921; cv=none; b=GPfGshbKnQrr853LSasggijMebPWr5IT54hRXLCaoNUZMFRSaK1Ev3EKaj+UW8SQ9XQ6l6htJKUwDOJsD2qoc9CIEBFx78h75tE6F9RQsTAalo0rdl7LzMVJJOymVxs+H0zXznxH44SBh195xg9WK2nhCxhanHhL/6JcPqucsPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296918; c=relaxed/simple;
-	bh=ruHPjE31c7miDdDPWSBGz2sp4MtuprIInDD1nDC03jk=;
+	s=arc-20240116; t=1779296921; c=relaxed/simple;
+	bh=mRR8o8S9ajFHXUBF+CPDoe9mMVSnp/WYf7P7d4CxMPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDnM9BIg3VEhnojt22vK4ch67Rr7UuWHE4jnE24bC3PRXc+z8voTbhA8mkrP6JQNMTmILSTK9LYLY8+cUjer4k+iSBMDDmCwmIzOBKiKIPG9OJiu3z8Wttowiy3U5CgCZmuPNfDOLsApRqD5JcGKZJkkrM9SB2+x9X2zQLUv9vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+ED+Jn3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VgEcEZV06mneMpTtdw//iYCQg8+GsPNMjqqWqKjUc1hA50El3YA94/L6NhMUWUkTKrj6km/J2JWVNHi4exKft3Wn5/l9q8+C6i3aAYg/2SDjy0VeFYC9EtxPbym5PrE9wnVH8+Iuos7sEJnzH21cNSoRV2UmPmGJJe2cc1GXryE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2fB6PgF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+ED+Jn3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58021F000E9;
-	Wed, 20 May 2026 17:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2fB6PgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF0C1F00894;
+	Wed, 20 May 2026 17:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296917;
-	bh=R3J3uJCgcW4775jifyJAo4w1Ji4FKXyL4yzTBFIAeyI=;
+	s=korg; t=1779296919;
+	bh=pcGOw+FYt26YkCg1jmsw2HEyA1wkoA3xAOM203fBMgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+ED+Jn3EzBC2pq4hAzbMKBESZX7niW74KQarVs//Voyl0UR3bNZNqN+ca5yGHZgz
-	 RqZ05FGcJT70/GEtYZLY1vzDrz6Mfo0BvhMedLTr2LpHSjXlBiVEfwFma0EfH5+KYe
-	 2/rKWvDbvDWsor62KmSZhOeq02fER68fJhQaUork=
+	b=W2fB6PgFUkBdI6QLIByromyUuAHkLKzTilIzXELx20txsCXucr5uj57Rin+/ghh2g
+	 Bz+QGmFukRhu9iTMhQyTSApy4CBpE1ya1SDEtfsLEEau7zcckrTan5puZ0cWgwzRv0
+	 Vk+nCb0LkT5ot93gIc1aQ3cN/FSSWjDwrN4Pmzks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0981/1146] io_uring/napi: cap busy_poll_to 10 msec
-Date: Wed, 20 May 2026 18:20:31 +0200
-Message-ID: <20260520162210.432959245@linuxfoundation.org>
+Subject: [PATCH 7.0 0982/1146] ASoC: cs35l56: Fix illegal writes to OTP_MEM registers
+Date: Wed, 20 May 2026 18:20:32 +0200
+Message-ID: <20260520162210.455087659@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,39 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit df8599ee18c0e5fe343ffe0b4c379636b8bb839a ]
+[ Upstream commit be102efb832ef7e30e4cd4c2edf22bbf64ddf35a ]
 
-Currently there's no cap on the maximum amount of time that napi is
-allowed to poll if no events are found, which can lead to kernel
-complaints on a task being stuck as there's no conditional rescheduling
-done within that loop.
+Mark the OTP_MEM registers as volatile so that regcache_sync() will not
+attempt to write to them.
 
-Just cap it to 10 msec in total, that's already way above any kind of
-sane value that will reap any benefits, yet low enough that it's
-nowhere near being able to trigger preemption complaints.
+These registers hold a constant, and originally they were marked as
+readable non-volatile so that this value would be read into the regmap
+cache. The problem with this is regcache_sync() issues a write for any
+cached register that does not have a reg_default.
 
-Fixes: 8d0c12a80cde ("io-uring: add napi busy poll support")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Though these registers are constants and writing them in normal use
+cannot change OTP, it is illegal for the host to write to them.
+
+Fixes: e1830f66f6c6 ("ASoC: cs35l56: Add helper functions for amp calibration")
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260428115228.158252-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/napi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/cs35l56-shared.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/io_uring/napi.c b/io_uring/napi.c
-index 4a10de03e4269..8d68366a4b903 100644
---- a/io_uring/napi.c
-+++ b/io_uring/napi.c
-@@ -276,6 +276,8 @@ static int io_napi_register_napi(struct io_ring_ctx *ctx,
- 	/* clean the napi list for new settings */
- 	io_napi_free(ctx);
- 	WRITE_ONCE(ctx->napi_track_mode, napi->op_param);
-+	/* cap NAPI at 10 msec of spin time */
-+	napi->busy_poll_to = min(10000, napi->busy_poll_to);
- 	WRITE_ONCE(ctx->napi_busy_poll_dt, napi->busy_poll_to * NSEC_PER_USEC);
- 	WRITE_ONCE(ctx->napi_prefer_busy_poll, !!napi->prefer_busy_poll);
- 	return 0;
+diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
+index af87ebae98cb0..0ddf9a8d39a07 100644
+--- a/sound/soc/codecs/cs35l56-shared.c
++++ b/sound/soc/codecs/cs35l56-shared.c
+@@ -108,8 +108,6 @@ int cs35l56_set_patch(struct cs35l56_base *cs35l56_base)
+ EXPORT_SYMBOL_NS_GPL(cs35l56_set_patch, "SND_SOC_CS35L56_SHARED");
+ 
+ static const struct reg_default cs35l56_reg_defaults[] = {
+-	/* no defaults for OTP_MEM - first read populates cache */
+-
+ 	{ CS35L56_ASP1_ENABLES1,		0x00000000 },
+ 	{ CS35L56_ASP1_CONTROL1,		0x00000028 },
+ 	{ CS35L56_ASP1_CONTROL2,		0x18180200 },
+@@ -138,8 +136,6 @@ static const struct reg_default cs35l56_reg_defaults[] = {
+ };
+ 
+ static const struct reg_default cs35l63_reg_defaults[] = {
+-	/* no defaults for OTP_MEM - first read populates cache */
+-
+ 	{ CS35L56_ASP1_ENABLES1,		0x00000000 },
+ 	{ CS35L56_ASP1_CONTROL1,		0x00000028 },
+ 	{ CS35L56_ASP1_CONTROL2,		0x18180200 },
+@@ -282,6 +278,9 @@ static bool cs35l56_common_volatile_reg(unsigned int reg)
+ 	case CS35L56_GLOBAL_ENABLES:		   /* owned by firmware */
+ 	case CS35L56_BLOCK_ENABLES:		   /* owned by firmware */
+ 	case CS35L56_BLOCK_ENABLES2:		   /* owned by firmware */
++	case CS35L56_OTP_MEM_53:
++	case CS35L56_OTP_MEM_54:
++	case CS35L56_OTP_MEM_55:
+ 	case CS35L56_SYNC_GPIO1_CFG ... CS35L56_ASP2_DIO_GPIO13_CFG:
+ 	case CS35L56_UPDATE_REGS:
+ 	case CS35L56_REFCLK_INPUT:		   /* owned by firmware */
 -- 
 2.53.0
 
