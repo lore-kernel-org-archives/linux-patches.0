@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ECA3A6B6D;
-	Wed, 20 May 2026 18:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81A73A6B6D;
+	Wed, 20 May 2026 18:06:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300368; cv=none; b=Us5Av78H9uupvF7Qq10PuNukQfjvLgR/6Eh4E23vR05dZU1O5w0iOVmKMA/xLSm9Tu9+q1WpOERAkI0odEYsp7kmNVvS6P3HT6wsCp+Wv9gkxQZ9tfgVlANF7sAwrhij/aQtC+tHaMIJuVa8q+Yq19rdq9nQAQODqaVaB6eyjBE=
+	t=1779300370; cv=none; b=oH2TL299GyDZu6ektD6jIomZ3GX/g1f44BY2r8gQfyPIRSXfEOVP+6xHKHOxUuKwMCmHw5Exdhd+Gar3cXrBDr5Kg4xNg+rzKInoHreRyuayq0a6sP48piC0M8BqcqRdu3MXoqY1H4e68WViBUs068icZxo+b91t0hqYPRMv/50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300368; c=relaxed/simple;
-	bh=elli8Cl7h58DqJ8YFtXPG0MBn1oKFtbuToVkCWYSmTI=;
+	s=arc-20240116; t=1779300370; c=relaxed/simple;
+	bh=g4yBgNbakceQEpSegLmwK8jkxr1MUmvhE7j70wwmdr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZWNCoR8GsXuWqnBkrd51IoVrOKMatjx6BHMv4MEQvOTNXkSaeajGoTinEkmypdx9ZDReeNSataC0JdtMST7ARHaKJpTKDX7poQsdX4CnUNPn62HnuNUsD0QYg7pzv2vlx2955dQGTU6nqOV4CcHB09r9DNepn+60z9ctLC7Bvbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ntJJdy1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dAFQ/XrRg5MyNcMtk1ViHz1AVif/m/ozOD2/phMGpvGzMVH+n/b5q28ocvaLv+oYTpSAMvZBWA33FK+c38H0VuF3OaT6MSZ0n6U64snfW5nKzCAzmD+RW8/d4YhFK/5EpqS1zSTOtbzYYlR8YglmyLa5WQ0XZaTOO7LU1bORGOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xY3ORxPw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ntJJdy1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AAA21F000E9;
-	Wed, 20 May 2026 18:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xY3ORxPw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2564A1F000E9;
+	Wed, 20 May 2026 18:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300367;
-	bh=StLKibK//ohnSNXAuN7LyvQw3Uvd3meHgwvL6On+o9Y=;
+	s=korg; t=1779300369;
+	bh=uJn1KePT1vx3VOV/+fWqbvtQ1twjbpWQ+kguB9gt2Ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ntJJdy10EOxd/8y7ifx7563Wz181IHGzJQ9/xfJyOKfynODwkPZnteVV0hE7tuOk
-	 9bdxqDu6FL1iPLz8EbUhfZ/zFoDSGlY9DnAX2orl+olRHuHsLJVpuk3YViHuHGCtT/
-	 CaioTeM8XHbS/yB84MEKnx/E1u2RAHR1U6MdjFmI=
+	b=xY3ORxPwXLhk8GddZBGzqy2BsKzVl3BcQu2kQ0NLJDIJaEU1GnrRrkgFFcUTIiw/j
+	 Vsjs9/YY3MUcn/d/3Csg9S+Hk5aAN1JHm4l/X3BHJ4pzbDnBVTg67uCcSFdQSrAWGZ
+	 rLbDEfw0BYViYq+TgD7lRcvApYPO9F9vPjQHYCUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 148/666] drm/v3d: Handle error from drm_sched_entity_init()
-Date: Wed, 20 May 2026 18:15:59 +0200
-Message-ID: <20260520162114.417039096@linuxfoundation.org>
+Subject: [PATCH 6.12 122/666] drm/sun4i: backend: fix error pointer dereference
+Date: Wed, 20 May 2026 18:15:33 +0200
+Message-ID: <20260520162113.861868090@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -45,71 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit 8cf1bec37b27846ad3169744c9f1a89a06dcb3fa ]
+[ Upstream commit 06277983eca4a31d3c2114fa33d99a6e82484b11 ]
 
-drm_sched_entity_init() can fail but its return value is currently being
-ignored in v3d_open(). Check the return value and properly unwind
-on failure by destroying any already-initialized scheduler entities.
+The function drm_atomic_get_plane_state() can return an error pointer
+and is not checked for it. Add error pointer check.
 
-Fixes: 57692c94dcbe ("drm/v3d: Introduce a new DRM driver for Broadcom V3D V3.x+")
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260306-v3d-reset-locking-improv-v3-1-49864fe00692@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Detected by Smatch:
+drivers/gpu/drm/sun4i/sun4i_backend.c:496 sun4i_backend_atomic_check() error:
+'plane_state' dereferencing possible ERR_PTR()
+
+Fixes: 96180dde23b79 ("drm/sun4i: backend: Add a custom atomic_check for the frontend")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/20260217014801.60760-1-ethantidmore06@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_drv.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/sun4i/sun4i_backend.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_drv.c b/drivers/gpu/drm/v3d/v3d_drv.c
-index f45fdd7d542f6..e0272acad2a89 100644
---- a/drivers/gpu/drm/v3d/v3d_drv.c
-+++ b/drivers/gpu/drm/v3d/v3d_drv.c
-@@ -109,7 +109,7 @@ v3d_open(struct drm_device *dev, struct drm_file *file)
- 	struct v3d_dev *v3d = to_v3d_dev(dev);
- 	struct v3d_file_priv *v3d_priv;
- 	struct drm_gpu_scheduler *sched;
--	int i;
-+	int i, ret;
- 
- 	v3d_priv = kzalloc(sizeof(*v3d_priv), GFP_KERNEL);
- 	if (!v3d_priv)
-@@ -119,9 +119,11 @@ v3d_open(struct drm_device *dev, struct drm_file *file)
- 
- 	for (i = 0; i < V3D_MAX_QUEUES; i++) {
- 		sched = &v3d->queue[i].sched;
--		drm_sched_entity_init(&v3d_priv->sched_entity[i],
--				      DRM_SCHED_PRIORITY_NORMAL, &sched,
--				      1, NULL);
-+		ret = drm_sched_entity_init(&v3d_priv->sched_entity[i],
-+					    DRM_SCHED_PRIORITY_NORMAL, &sched,
-+					    1, NULL);
-+		if (ret)
-+			goto err_sched;
- 
- 		memset(&v3d_priv->stats[i], 0, sizeof(v3d_priv->stats[i]));
- 		seqcount_init(&v3d_priv->stats[i].lock);
-@@ -131,6 +133,12 @@ v3d_open(struct drm_device *dev, struct drm_file *file)
- 	file->driver_priv = v3d_priv;
- 
- 	return 0;
+diff --git a/drivers/gpu/drm/sun4i/sun4i_backend.c b/drivers/gpu/drm/sun4i/sun4i_backend.c
+index e89eb96d31317..a7c256e2c632b 100644
+--- a/drivers/gpu/drm/sun4i/sun4i_backend.c
++++ b/drivers/gpu/drm/sun4i/sun4i_backend.c
+@@ -490,6 +490,9 @@ static int sun4i_backend_atomic_check(struct sunxi_engine *engine,
+ 	drm_for_each_plane_mask(plane, drm, crtc_state->plane_mask) {
+ 		struct drm_plane_state *plane_state =
+ 			drm_atomic_get_plane_state(state, plane);
++		if (IS_ERR(plane_state))
++			return PTR_ERR(plane_state);
 +
-+err_sched:
-+	for (i--; i >= 0; i--)
-+		drm_sched_entity_destroy(&v3d_priv->sched_entity[i]);
-+	kfree(v3d_priv);
-+	return ret;
- }
- 
- static void
+ 		struct sun4i_layer_state *layer_state =
+ 			state_to_sun4i_layer_state(plane_state);
+ 		struct drm_framebuffer *fb = plane_state->fb;
 -- 
 2.53.0
 
