@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D8B3DC4DA;
-	Wed, 20 May 2026 17:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16B335F619;
+	Wed, 20 May 2026 17:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297403; cv=none; b=k3xakmoRubDfloQclSq1rskBorZbXgbz5VrIHYQv7DJk2PHCj3VqAg4VVXTz8Nvs+9noDqJI/mdClgvVpbMyheEquAosxbYCmkyYXttLlQbXMORbhea1W20v/Z7JcfsQz1bqr8sujwvj+IP0rK2att6HO7dhPMDxNphlCepcQjQ=
+	t=1779297406; cv=none; b=QfL7qq+PcFBmNwCze4AgKx6FTUHb6G00IBd8qwSyoZSQPwqvx1+W3VeJxxs6shdw1nUVqaKl9mwUqBR97FdFeW5USbL8MAC088m8z2TO6WMOxrATt4Q2moxjxze1jmBDwnyhVWqkTCUlOgDrBOd46m65fy+l/JEawxJwnnNSvTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297403; c=relaxed/simple;
-	bh=9IKl3NTpmZdrZRzB/N/HPDK9/+/Lxw9HwC4LGeVmVDU=;
+	s=arc-20240116; t=1779297406; c=relaxed/simple;
+	bh=5fyaSUIMzmM57b3l6W9iLWBmN9dZONvZZp1WtVu9YHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2/Gh2arhiyEZevukcEAOeNTP0YdaKC6ZXCMpr4LE3JQe8Ty7tRLjvcoKNhXg2HX3p8bABHgUNAcjI+utdl5b/GdLzyVcZ2zBCI61gUJKlj2W//ziLWnqEYugv5MwXTPKmUw7+vFEq2dJSbxVOAVwZbTtwV0a8XsLjNWhkmVdxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Spx2aMv2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jG8o2+X58KzrbyAZQF4UWaYEW3Or/+ZExoWp8Z1Yryc5eWCkTmucFrgfjpExvrga72tFsH+1ifOBxYbcygZOO0bMQBIiMwq0rUlIuFzWn3+tlZEmnRJjLq0NSUWONkQbZiGp1R1VqxE9ZQTzywEL5sc1ibLs14wjA93638FalBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kupyufnT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Spx2aMv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7021F000E9;
-	Wed, 20 May 2026 17:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kupyufnT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CD21F000E9;
+	Wed, 20 May 2026 17:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297402;
-	bh=Cp3ZyUqpvZ0bdNKCOHjla6dS10YvFgEgKByyak00wcA=;
+	s=korg; t=1779297404;
+	bh=D9zqkVdWRamgseCAMzFGPRlwAEJn1ruFXYYOQ+auI1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Spx2aMv2bT7/h23u5YnDnYl4b4YK0NLnQikpT0SZXiULjUkNJ0eZ0/02zmkGwmTUZ
-	 /VFyAKwRUb2oVL0TUbGlJ342EhFOLP21Y1+c9i2ap9Gapm81X8NqWI18JypKjFcLGQ
-	 NbYxloouceyNe1phl/DM63eZpTXEPPQMTTcNmSlM=
+	b=kupyufnTarBfudMJKBJfto23DPtRKsqZJE0+aQ+lai6cTZKPvSwcQEYud8ygxOUQU
+	 UrVil/N892/KUyMERvtYFhLDYYI0IMWlXbEFbkwNIWp+TcLRiDRyxM4fuTm1u9bNe4
+	 UP9jLoUY8TnsDFIWGTk3kDIFt3iuLoxdfY7IJNQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Hyungjung Joo <jhj140711@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 019/957] OPP: Move break out of scoped_guard in dev_pm_opp_xlate_required_opp()
-Date: Wed, 20 May 2026 18:08:22 +0200
-Message-ID: <20260520162134.977680055@linuxfoundation.org>
+Subject: [PATCH 6.18 002/957] fs/omfs: reject s_sys_blocksize smaller than OMFS_DIR_START
+Date: Wed, 20 May 2026 18:08:05 +0200
+Message-ID: <20260520162134.613714756@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,41 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: HyungJung Joo <jhj140711@gmail.com>
 
-[ Upstream commit 3d2398f44a2d48fb1c575a6e0bc6b38f3e689e22 ]
+[ Upstream commit 0621c385fda1376e967f37ccd534c26c3e511d14 ]
 
-The commit ff9c512041f2 ("OPP: Use mutex locking guards")
-unintentionally made the for loop run longer than required.
+omfs_fill_super() rejects oversized s_sys_blocksize values (> PAGE_SIZE),
+but it does not reject values smaller than OMFS_DIR_START (0x1b8 = 440).
 
-scoped_guard() is implemented as a for loop. The break statement now
-breaks out out the scoped_guard() and not out of the outer for loop.
-The outer loop always iterates to completion.
+Later, omfs_make_empty() uses
 
-Fix it.
+    sbi->s_sys_blocksize - OMFS_DIR_START
 
-Fixes: ff9c512041f2 ("OPP: Use mutex locking guards")
-Reported-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+as the length argument to memset().  Since s_sys_blocksize is u32,
+a crafted filesystem image with s_sys_blocksize < OMFS_DIR_START causes
+an unsigned underflow there, wrapping to a value near 2^32.  That drives
+a ~4 GiB memset() from bh->b_data + OMFS_DIR_START and overwrites kernel
+memory far beyond the backing block buffer.
+
+Add the corresponding lower-bound check alongside the existing upper-bound
+check in omfs_fill_super(), so that malformed images are rejected during
+superblock validation before any filesystem data is processed.
+
+Fixes: a3ab7155ea21 ("omfs: add directory routines")
+Signed-off-by: Hyungjung Joo <jhj140711@gmail.com>
+Link: https://patch.msgid.link/20260317054827.1822061-1-jhj140711@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/omfs/inode.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index 775d4a36f2f54..157c84b689feb 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -2741,8 +2741,8 @@ struct dev_pm_opp *dev_pm_opp_xlate_required_opp(struct opp_table *src_table,
- 					break;
- 				}
- 			}
--			break;
- 		}
-+		break;
+diff --git a/fs/omfs/inode.c b/fs/omfs/inode.c
+index 135c49c5d848c..31218d89b7580 100644
+--- a/fs/omfs/inode.c
++++ b/fs/omfs/inode.c
+@@ -512,6 +512,12 @@ static int omfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		goto out_brelse_bh;
  	}
  
- 	if (IS_ERR(dest_opp)) {
++	if (sbi->s_sys_blocksize < OMFS_DIR_START) {
++		printk(KERN_ERR "omfs: sysblock size (%d) is too small\n",
++			sbi->s_sys_blocksize);
++		goto out_brelse_bh;
++	}
++
+ 	if (sbi->s_blocksize < sbi->s_sys_blocksize ||
+ 	    sbi->s_blocksize > OMFS_MAX_BLOCK_SIZE) {
+ 		printk(KERN_ERR "omfs: block size (%d) is out of range\n",
 -- 
 2.53.0
 
