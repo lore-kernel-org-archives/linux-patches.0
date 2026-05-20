@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C13835C1A0;
-	Wed, 20 May 2026 17:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E74331220;
+	Wed, 20 May 2026 17:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296428; cv=none; b=nzm5UTZr/RAlzNOel58eEHbamqWunHuX65Cuy+VwDzToJiVx06nyqDLrS5nuvJwMogoZTLl8UuG5+lhqm/U6PkqPDjuOsGQVwpHy8WOpuz/Y0yFTEv6voIdw4qbqgyqC0TVm11g3E/9gQXEsU/KqgxnCh/3hVXu0zf2SW2O58s4=
+	t=1779296431; cv=none; b=KnMfCJoGknHlwsVqwFoAF9ZAJotV6PhG7EcCtZbk8vDPtQPlLM6bUoCsXHmGKxoA7rkckL+21S1Wvg0ZLooRYeoIq4fY82cyyKtlwEAAUKWTn/R4Sh1Z05Dk2gZYUpQOnVMrQu9nFv1Rp2+VXyKWseQI9wqpn5RbdAFGJqqfpS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296428; c=relaxed/simple;
-	bh=bI+PmAh2zb6QwxFT11pdQiQA/kFuC/zxEu7t6v2yG+M=;
+	s=arc-20240116; t=1779296431; c=relaxed/simple;
+	bh=C1t+ABc+O/zACDdA5naC1IEZfgmIa2z80yla8+ft2OI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAGSKvgknIHBKARrww9aqleYzhvMKfMueIqA6463fKt4vYCYXwoKkwcvkmQgmKxZPi7O0YcW4l9BI1apW3sjrXLHvWpAAdshSx1wa6Zl9YUWeE9lNoTOJVyOrhbqdYDuEtEm9WiTvmborNgbc33Mc3juaKidW4MFzrF1drC76qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2mlcVu1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MQhlTEvgmxhueVyYmGpMd0rZpdupqum4EUqpmHqJICvjVeck/v6zKUx+LSweaS7FqU6aRKJoXmbN7SzRxDdD+Ax62BNK4CyqLdx3tK2O1rxVqK7NmZ2ERcqUmQ+jJbVGVqPl3x5sG6jMbWyWk/SYwha17jrRuNggmcjhamfTwxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrPcvY/E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2mlcVu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFFF1F000E9;
-	Wed, 20 May 2026 17:00:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrPcvY/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481CC1F000E9;
+	Wed, 20 May 2026 17:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296427;
-	bh=v6zLduhtqxOSNLBkFVlmQPj1jPqWmFDIRgiRR3G2xQA=;
+	s=korg; t=1779296429;
+	bh=70J+rOjdQlaR2Rsumglu/egxVoYQOeTbf8gH+idFwk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d2mlcVu116K58eY5PyaAQ6ZNV9AwVixtBIreKiyqDCmrQ74lLBQWEgjEi/iRO0GRg
-	 YF+6E6w3TjWJ84M42Q14inSVpYTS4+gRi2LrI3PhKGhoD/NVvSl+FhUIJG2S2ijDUY
-	 id6D3w0mpdc4LYM/Gaf0W8Z3/MduEjjeKq4SSnvA=
+	b=rrPcvY/ETQB7s3lvOcysXxVPsGTuQFOBpta08Eeo/cscePkoYJVfUY5FI5CdVmTWz
+	 rd18lB+QQqxbYbZkoUxYNr6/Nj7mFu9fn87CXlq5SsEejcAho3uLQ4Z71EsuDVPSso
+	 +gi8rVYhR9y547Yxl2Nu3JjUjzWjkw5BKFDB2ZCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0796/1146] ice: fix double-free of tx_buf skb
-Date: Wed, 20 May 2026 18:17:26 +0200
-Message-ID: <20260520162206.241179053@linuxfoundation.org>
+Subject: [PATCH 7.0 0779/1146] tcp: inline tcp_chrono_start()
+Date: Wed, 20 May 2026 18:17:09 +0200
+Message-ID: <20260520162205.844743032@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,74 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1a303baa715e6b78d6a406aaf335f87ff35acfcd ]
+[ Upstream commit d6d4ff335db2d9242937ca474d292010acd35c38 ]
 
-If ice_tso() or ice_tx_csum() fail, the error path in
-ice_xmit_frame_ring() frees the skb, but the 'first' tx_buf still points
-to it and is marked as valid (ICE_TX_BUF_SKB).
-'next_to_use' remains unchanged, so the potential problem will
-likely fix itself when the next packet is transmitted and the tx_buf
-gets overwritten. But if there is no next packet and the interface is
-brought down instead, ice_clean_tx_ring() -> ice_unmap_and_free_tx_buf()
-will find the tx_buf and free the skb for the second time.
+tcp_chrono_start() is small enough, and used in TCP sendmsg()
+fast path (from tcp_skb_entail()).
 
-The fix is to reset the tx_buf type to ICE_TX_BUF_EMPTY in the error
-path, so that ice_unmap_and_free_tx_buf().
-Move the initialization of 'first' up, to ensure it's already valid in
-case we hit the linearization error path.
+Note clang is already inlining it from functions in tcp_output.c.
 
-The bug was spotted by AI while I had it looking for something else.
-It also proposed an initial version of the patch.
+Inlining it improves performance and reduces bloat :
 
-I reproduced the bug and tested the fix by adding code to inject
-failures, on a build with KASAN.
+$ scripts/bloat-o-meter -t vmlinux.old vmlinux.new
+add/remove: 0/2 grow/shrink: 1/0 up/down: 1/-84 (-83)
+Function                                     old     new   delta
+tcp_skb_entail                               280     281      +1
+__pfx_tcp_chrono_start                        16       -     -16
+tcp_chrono_start                              68       -     -68
+Total: Before=25192434, After=25192351, chg -0.00%
 
-I looked for similar bugs in related Intel drivers and did not find any.
+Note that tcp_chrono_stop() is too big.
 
-Fixes: d76a60ba7afb ("ice: Add support for VLANs and offloads")
-Assisted-by: Claude:claude-4.6-opus-high Cursor
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-4-686c33c9828d@intel.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Link: https://patch.msgid.link/20260308123549.2924460-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 267bf3cf9a6f ("tcp: annotate data-races in tcp_get_info_chrono_stats()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/net/tcp.h     | 25 ++++++++++++++++++++++++-
+ net/ipv4/tcp_output.c | 24 ------------------------
+ 2 files changed, 24 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index a2cd4cf377348..7be9c062949b8 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -2158,6 +2158,9 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 978eea2d5df04..905587114d444 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -2156,7 +2156,30 @@ enum tcp_chrono {
+ 	__TCP_CHRONO_MAX,
+ };
  
- 	ice_trace(xmit_frame_ring, tx_ring, skb);
- 
-+	/* record the location of the first descriptor for this packet */
-+	first = &tx_ring->tx_buf[tx_ring->next_to_use];
+-void tcp_chrono_start(struct sock *sk, const enum tcp_chrono type);
++static inline void tcp_chrono_set(struct tcp_sock *tp, const enum tcp_chrono new)
++{
++	const u32 now = tcp_jiffies32;
++	enum tcp_chrono old = tp->chrono_type;
 +
- 	count = ice_xmit_desc_count(skb);
- 	if (ice_chk_linearize(skb, count)) {
- 		if (__skb_linearize(skb))
-@@ -2183,8 +2186,6 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
++	if (old > TCP_CHRONO_UNSPEC)
++		tp->chrono_stat[old - 1] += now - tp->chrono_start;
++	tp->chrono_start = now;
++	tp->chrono_type = new;
++}
++
++static inline void tcp_chrono_start(struct sock *sk, const enum tcp_chrono type)
++{
++	struct tcp_sock *tp = tcp_sk(sk);
++
++	/* If there are multiple conditions worthy of tracking in a
++	 * chronograph then the highest priority enum takes precedence
++	 * over the other conditions. So that if something "more interesting"
++	 * starts happening, stop the previous chrono and start a new one.
++	 */
++	if (type > tp->chrono_type)
++		tcp_chrono_set(tp, type);
++}
++
+ void tcp_chrono_stop(struct sock *sk, const enum tcp_chrono type);
  
- 	offload.tx_ring = tx_ring;
- 
--	/* record the location of the first descriptor for this packet */
--	first = &tx_ring->tx_buf[tx_ring->next_to_use];
- 	first->skb = skb;
- 	first->type = ICE_TX_BUF_SKB;
- 	first->bytecount = max_t(unsigned int, skb->len, ETH_ZLEN);
-@@ -2249,6 +2250,7 @@ ice_xmit_frame_ring(struct sk_buff *skb, struct ice_tx_ring *tx_ring)
- out_drop:
- 	ice_trace(xmit_frame_ring_drop, tx_ring, skb);
- 	dev_kfree_skb_any(skb);
-+	first->type = ICE_TX_BUF_EMPTY;
- 	return NETDEV_TX_OK;
+ /* This helper is needed, because skb->tcp_tsorted_anchor uses
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 326b58ff1118d..7b8a2c8213e18 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -2878,30 +2878,6 @@ static bool tcp_small_queue_check(struct sock *sk, const struct sk_buff *skb,
+ 	return false;
  }
  
+-static void tcp_chrono_set(struct tcp_sock *tp, const enum tcp_chrono new)
+-{
+-	const u32 now = tcp_jiffies32;
+-	enum tcp_chrono old = tp->chrono_type;
+-
+-	if (old > TCP_CHRONO_UNSPEC)
+-		tp->chrono_stat[old - 1] += now - tp->chrono_start;
+-	tp->chrono_start = now;
+-	tp->chrono_type = new;
+-}
+-
+-void tcp_chrono_start(struct sock *sk, const enum tcp_chrono type)
+-{
+-	struct tcp_sock *tp = tcp_sk(sk);
+-
+-	/* If there are multiple conditions worthy of tracking in a
+-	 * chronograph then the highest priority enum takes precedence
+-	 * over the other conditions. So that if something "more interesting"
+-	 * starts happening, stop the previous chrono and start a new one.
+-	 */
+-	if (type > tp->chrono_type)
+-		tcp_chrono_set(tp, type);
+-}
+-
+ void tcp_chrono_stop(struct sock *sk, const enum tcp_chrono type)
+ {
+ 	struct tcp_sock *tp = tcp_sk(sk);
 -- 
 2.53.0
 
