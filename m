@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FAB3F6C4C;
-	Wed, 20 May 2026 18:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DC43F4DDB;
+	Wed, 20 May 2026 18:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300009; cv=none; b=V5WHUWJ1+0ZNXbPLaG/JM9Mtrcc7GFafwBIh5y5V1oWPdLpFPVcgyEhbIItl6J8sep3P6fXOZeXFoeBE+7avFNwJrKLhiJRGrugZVT1V5hnjwhHVqjPORtmjRkEEa1nSheOs4ogmSjEKPvebH4i2xNVy+pnwPIyNAaH5zTW6syc=
+	t=1779300012; cv=none; b=OJ27aF+/fhBvVDV7ib1nxjbEY1IPm8s1hRsdEJbgE+zEuISbyvE2L9chd0xDlEagpw0ytG15RsLgUdC5cNgM4+mj0V6t+dai4tJBfq5dC6n6bLnxuCuVdADI5U3ietjIWqoRU1e3cPpxPwn/o7S6nO12l30nsrFW62bYHYPtUuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300009; c=relaxed/simple;
-	bh=freQma6BfS7Lj5jdm5nQuVtsKB1ZaD6OXPufZSbQRxU=;
+	s=arc-20240116; t=1779300012; c=relaxed/simple;
+	bh=uUEx/OaSWjf+y7HuCl6S++ECP5DhJXGpDsmOD7e7I04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9LyFWOvFkQpyOeidtJK2HpM6iOAElDakG09EYTBii7yW0lDpi5IuDy0jkCQWrAILUHxa172Nf62KScZcMmwTnF/SU+6u/RVV8Ch37vlJe/qmAiVU8b7pBYSTLj7J6KJD6txHjV+gZUwDGr5FPGHcgkOYVvwnuIYr8h71nWtGiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abA4Ln8p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mhn1Q2rTnaUXx0ZY+Qb7yq/9WXTCzYy4Zm2iQHx71b/1U2NnN8dkltF7YJ8YoWOu4cqfpw98L7KQj+EZceO5Rtt2jVQnjRO3mZXnZ7m2IU6UVbMkVJoGYTq/X/eLCj3CTGpnKnuGXmVMATpRSgUoSO3/jTIFuRuWfjHvuRJkB6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dzjsw2KD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abA4Ln8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2BC1F000E9;
-	Wed, 20 May 2026 18:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dzjsw2KD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168281F00893;
+	Wed, 20 May 2026 18:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300007;
-	bh=tT/mrnIG78VP5genPm6vRQdlQcx6Qlc2j19742gRlAY=;
+	s=korg; t=1779300010;
+	bh=guCTFz1Mdsx61yT8dHFcbDazyqzXEW/JnZfQlkuzvNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=abA4Ln8pwZAdgjygxO5ro2q1snS3giukL4zH77RYnZ9mWoQ/5S2awBK2ogiFL0YNB
-	 CdEs8MpHaSIZkpQuMf3EZgwZFxMrEG2DS9Ibze0gPwdb/GsuwFp5HiHeAFzqXajevz
-	 2yb4FqPOlgn2SXgLPop1jGUWXz4nf9CvQFRz+1EE=
+	b=Dzjsw2KDuzDPbgORe3+7dwhPxIqjsXcyEv+RHZG55J2N6ioByHyanzdBODZkoS6wS
+	 CuVYjePgGV0isd8mxC62IhAtbq374qmdf6QbAFpyNLGhSBQ6rAiq5eILjs8MZ/Gk13
+	 xh2cbVoMu/Z0B0+klF+yIEKbJ3iqJzjM1g02EvUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/666] btrfs: pass struct btrfs_inode to clone_copy_inline_extent()
-Date: Wed, 20 May 2026 18:13:44 +0200
-Message-ID: <20260520162111.519483821@linuxfoundation.org>
+Subject: [PATCH 6.12 014/666] btrfs: fix deadlock between reflink and transaction commit when using flushoncommit
+Date: Wed, 20 May 2026 18:13:45 +0200
+Message-ID: <20260520162111.541722771@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,127 +53,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 65a66afd1ee5b2770fde296663baa0f79af56bc7 ]
+[ Upstream commit b48c980b6a7e409050bb3067165db31cc6205e3e ]
 
-Pass a struct btrfs_inode to clone_copy_inline_extent() as it's an
-internal interface, allowing to remove some use of BTRFS_I.
+When using the flushoncommit mount option, we can have a deadlock between
+a transaction commit and a reflink operation that copied an inline extent
+to an offset beyond the current i_size of the destination node.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+The deadlock happens like this:
+
+1) Task A clones an inline extent from inode X to an offset of inode Y
+   that is beyond Y's current i_size. This means we copied the inline
+   extent's data to a folio of inode Y that is beyond its EOF, using a
+   call to copy_inline_to_page();
+
+2) Task B starts a transaction commit and calls
+   btrfs_start_delalloc_flush() to flush delalloc;
+
+3) The delalloc flushing sees the new dirty folio of inode Y and when it
+   attempts to flush it, it ends up at extent_writepage() and sees that
+   the offset of the folio is beyond the i_size of inode Y, so it attempts
+   to invalidate the folio by calling folio_invalidate(), which ends up at
+   btrfs' folio invalidate callback - btrfs_invalidate_folio(). There it
+   tries to lock the folio's range in inode Y's extent io tree, but it
+   blocks since it's currently locked by task A - during a reflink we lock
+   the inodes and the source and destination ranges after flushing all
+   delalloc and waiting for ordered extent completion - after that we
+   don't expect to have dirty folios in the ranges, the exception is if
+   we have to copy an inline extent's data (because the destination offset
+   is not zero);
+
+4) Task A then attempts to start a transaction to update the inode item,
+   and then it's blocked since the current transaction is in the
+   TRANS_STATE_COMMIT_START state. Therefore task A has to wait for the
+   current transaction to become unblocked (its state >=
+   TRANS_STATE_UNBLOCKED).
+
+   So task A is waiting for the transaction commit done by task B, and
+   the later waiting on the extent lock of inode Y that is currently
+   held by task A.
+
+Syzbot recently reported this with the following stack traces:
+
+  INFO: task kworker/u8:7:1053 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:kworker/u8:7    state:D stack:23520 pid:1053  tgid:1053  ppid:2      task_flags:0x4208060 flags:0x00080000
+  Workqueue: writeback wb_workfn (flush-btrfs-46)
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wait_extent_bit fs/btrfs/extent-io-tree.c:811 [inline]
+   btrfs_lock_extent_bits+0x59c/0x700 fs/btrfs/extent-io-tree.c:1914
+   btrfs_lock_extent fs/btrfs/extent-io-tree.h:152 [inline]
+   btrfs_invalidate_folio+0x43d/0xc40 fs/btrfs/inode.c:7704
+   extent_writepage fs/btrfs/extent_io.c:1852 [inline]
+   extent_write_cache_pages fs/btrfs/extent_io.c:2580 [inline]
+   btrfs_writepages+0x12ff/0x2440 fs/btrfs/extent_io.c:2713
+   do_writepages+0x32e/0x550 mm/page-writeback.c:2554
+   __writeback_single_inode+0x133/0x11a0 fs/fs-writeback.c:1750
+   writeback_sb_inodes+0x995/0x19d0 fs/fs-writeback.c:2042
+   wb_writeback+0x456/0xb70 fs/fs-writeback.c:2227
+   wb_do_writeback fs/fs-writeback.c:2374 [inline]
+   wb_workfn+0x41a/0xf60 fs/fs-writeback.c:2414
+   process_one_work kernel/workqueue.c:3276 [inline]
+   process_scheduled_works+0xb6e/0x18c0 kernel/workqueue.c:3359
+   worker_thread+0xa53/0xfc0 kernel/workqueue.c:3440
+   kthread+0x388/0x470 kernel/kthread.c:436
+   ret_from_fork+0x51e/0xb90 arch/x86/kernel/process.c:158
+   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+   </TASK>
+  INFO: task syz.4.64:6910 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:syz.4.64        state:D stack:22752 pid:6910  tgid:6905  ppid:5944   task_flags:0x400140 flags:0x00080002
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wait_current_trans+0x39f/0x590 fs/btrfs/transaction.c:535
+   start_transaction+0x6a7/0x1650 fs/btrfs/transaction.c:705
+   clone_copy_inline_extent fs/btrfs/reflink.c:299 [inline]
+   btrfs_clone+0x128a/0x24d0 fs/btrfs/reflink.c:529
+   btrfs_clone_files+0x271/0x3f0 fs/btrfs/reflink.c:750
+   btrfs_remap_file_range+0x76b/0x1320 fs/btrfs/reflink.c:903
+   vfs_copy_file_range+0xda7/0x1390 fs/read_write.c:1600
+   __do_sys_copy_file_range fs/read_write.c:1683 [inline]
+   __se_sys_copy_file_range+0x2fb/0x480 fs/read_write.c:1650
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f5f73afc799
+  RSP: 002b:00007f5f7315e028 EFLAGS: 00000246 ORIG_RAX: 0000000000000146
+  RAX: ffffffffffffffda RBX: 00007f5f73d75fa0 RCX: 00007f5f73afc799
+  RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000005
+  RBP: 00007f5f73b92c99 R08: 0000000000000863 R09: 0000000000000000
+  R10: 00002000000000c0 R11: 0000000000000246 R12: 0000000000000000
+  R13: 00007f5f73d76038 R14: 00007f5f73d75fa0 R15: 00007fff138a5068
+   </TASK>
+  INFO: task syz.4.64:6975 blocked for more than 143 seconds.
+        Not tainted syzkaller #0
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:syz.4.64        state:D stack:24736 pid:6975  tgid:6905  ppid:5944   task_flags:0x400040 flags:0x00080002
+  Call Trace:
+   <TASK>
+   context_switch kernel/sched/core.c:5298 [inline]
+   __schedule+0x1553/0x5240 kernel/sched/core.c:6911
+   __schedule_loop kernel/sched/core.c:6993 [inline]
+   schedule+0x164/0x360 kernel/sched/core.c:7008
+   wb_wait_for_completion+0x3e8/0x790 fs/fs-writeback.c:227
+   __writeback_inodes_sb_nr+0x24c/0x2d0 fs/fs-writeback.c:2838
+   try_to_writeback_inodes_sb+0x9a/0xc0 fs/fs-writeback.c:2886
+   btrfs_start_delalloc_flush fs/btrfs/transaction.c:2175 [inline]
+   btrfs_commit_transaction+0x82e/0x31a0 fs/btrfs/transaction.c:2364
+   btrfs_ioctl+0xca7/0xd00 fs/btrfs/ioctl.c:5206
+   vfs_ioctl fs/ioctl.c:51 [inline]
+   __do_sys_ioctl fs/ioctl.c:597 [inline]
+   __se_sys_ioctl+0xff/0x170 fs/ioctl.c:583
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f5f73afc799
+  RSP: 002b:00007f5f7313d028 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00007f5f73d76090 RCX: 00007f5f73afc799
+  RDX: 0000000000000000 RSI: 0000000000009408 RDI: 0000000000000004
+  RBP: 00007f5f73b92c99 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 00007f5f73d76128 R14: 00007f5f73d76090 R15: 00007fff138a5068
+   </TASK>
+
+Fix this by updating the i_size of the destination inode of a reflink
+operation after we copy an inline extent's data to an offset beyond the
+i_size and before attempting to start a transaction to update the inode's
+item.
+
+Reported-by: syzbot+63056bf627663701bbbf@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/69bba3fe.050a0220.227207.002f.GAE@google.com/
+Fixes: 05a5a7621ce6 ("Btrfs: implement full reflink support for inline extents")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: b48c980b6a7e ("btrfs: fix deadlock between reflink and transaction commit when using flushoncommit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/reflink.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ fs/btrfs/reflink.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
 diff --git a/fs/btrfs/reflink.c b/fs/btrfs/reflink.c
-index f0824c948cb70..8640dbf1aefa4 100644
+index 8640dbf1aefa4..e86df9c83aba5 100644
 --- a/fs/btrfs/reflink.c
 +++ b/fs/btrfs/reflink.c
-@@ -165,7 +165,7 @@ static int copy_inline_to_page(struct btrfs_inode *inode,
-  * the source inode to destination inode when possible. When not possible we
-  * copy the inline extent's data into the respective page of the inode.
-  */
--static int clone_copy_inline_extent(struct inode *dst,
-+static int clone_copy_inline_extent(struct btrfs_inode *inode,
- 				    struct btrfs_path *path,
- 				    struct btrfs_key *new_key,
- 				    const u64 drop_start,
-@@ -175,8 +175,8 @@ static int clone_copy_inline_extent(struct inode *dst,
- 				    char *inline_data,
- 				    struct btrfs_trans_handle **trans_out)
- {
--	struct btrfs_fs_info *fs_info = inode_to_fs_info(dst);
--	struct btrfs_root *root = BTRFS_I(dst)->root;
-+	struct btrfs_root *root = inode->root;
-+	struct btrfs_fs_info *fs_info = root->fs_info;
- 	const u64 aligned_end = ALIGN(new_key->offset + datal,
- 				      fs_info->sectorsize);
- 	struct btrfs_trans_handle *trans = NULL;
-@@ -185,12 +185,12 @@ static int clone_copy_inline_extent(struct inode *dst,
- 	struct btrfs_key key;
+@@ -320,6 +320,51 @@ static int clone_copy_inline_extent(struct btrfs_inode *inode,
  
- 	if (new_key->offset > 0) {
--		ret = copy_inline_to_page(BTRFS_I(dst), new_key->offset,
-+		ret = copy_inline_to_page(inode, new_key->offset,
- 					  inline_data, size, datal, comp_type);
- 		goto out;
- 	}
- 
--	key.objectid = btrfs_ino(BTRFS_I(dst));
-+	key.objectid = btrfs_ino(inode);
- 	key.type = BTRFS_EXTENT_DATA_KEY;
- 	key.offset = 0;
- 	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
-@@ -205,7 +205,7 @@ static int clone_copy_inline_extent(struct inode *dst,
- 				goto copy_inline_extent;
- 		}
- 		btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);
--		if (key.objectid == btrfs_ino(BTRFS_I(dst)) &&
-+		if (key.objectid == btrfs_ino(inode) &&
- 		    key.type == BTRFS_EXTENT_DATA_KEY) {
- 			/*
- 			 * There's an implicit hole at file offset 0, copy the
-@@ -214,7 +214,7 @@ static int clone_copy_inline_extent(struct inode *dst,
- 			ASSERT(key.offset > 0);
- 			goto copy_to_page;
- 		}
--	} else if (i_size_read(dst) <= datal) {
-+	} else if (i_size_read(&inode->vfs_inode) <= datal) {
- 		struct btrfs_file_extent_item *ei;
- 
- 		ei = btrfs_item_ptr(path->nodes[0], path->slots[0],
-@@ -236,7 +236,7 @@ static int clone_copy_inline_extent(struct inode *dst,
- 	 * We have no extent items, or we have an extent at offset 0 which may
- 	 * or may not be inlined. All these cases are dealt the same way.
- 	 */
--	if (i_size_read(dst) > datal) {
-+	if (i_size_read(&inode->vfs_inode) > datal) {
- 		/*
- 		 * At the destination offset 0 we have either a hole, a regular
- 		 * extent or an inline extent larger then the one we want to
-@@ -270,7 +270,7 @@ static int clone_copy_inline_extent(struct inode *dst,
- 	drop_args.start = drop_start;
- 	drop_args.end = aligned_end;
- 	drop_args.drop_cache = true;
--	ret = btrfs_drop_extents(trans, root, BTRFS_I(dst), &drop_args);
-+	ret = btrfs_drop_extents(trans, root, inode, &drop_args);
- 	if (ret)
- 		goto out;
- 	ret = btrfs_insert_empty_item(trans, root, path, new_key, size);
-@@ -281,9 +281,9 @@ static int clone_copy_inline_extent(struct inode *dst,
- 			    btrfs_item_ptr_offset(path->nodes[0],
- 						  path->slots[0]),
- 			    size);
--	btrfs_update_inode_bytes(BTRFS_I(dst), datal, drop_args.bytes_found);
--	btrfs_set_inode_full_sync(BTRFS_I(dst));
--	ret = btrfs_inode_set_file_extent_range(BTRFS_I(dst), 0, aligned_end);
-+	btrfs_update_inode_bytes(inode, datal, drop_args.bytes_found);
-+	btrfs_set_inode_full_sync(inode);
-+	ret = btrfs_inode_set_file_extent_range(inode, 0, aligned_end);
- out:
- 	if (!ret && !trans) {
- 		/*
-@@ -318,7 +318,7 @@ static int clone_copy_inline_extent(struct inode *dst,
- 	 */
- 	btrfs_release_path(path);
- 
--	ret = copy_inline_to_page(BTRFS_I(dst), new_key->offset,
-+	ret = copy_inline_to_page(inode, new_key->offset,
+ 	ret = copy_inline_to_page(inode, new_key->offset,
  				  inline_data, size, datal, comp_type);
++
++	/*
++	 * If we copied the inline extent data to a page/folio beyond the i_size
++	 * of the destination inode, then we need to increase the i_size before
++	 * we start a transaction to update the inode item. This is to prevent a
++	 * deadlock when the flushoncommit mount option is used, which happens
++	 * like this:
++	 *
++	 * 1) Task A clones an inline extent from inode X to an offset of inode
++	 *    Y that is beyond Y's current i_size. This means we copied the
++	 *    inline extent's data to a folio of inode Y that is beyond its EOF,
++	 *    using the call above to copy_inline_to_page();
++	 *
++	 * 2) Task B starts a transaction commit and calls
++	 *    btrfs_start_delalloc_flush() to flush delalloc;
++	 *
++	 * 3) The delalloc flushing sees the new dirty folio of inode Y and when
++	 *    it attempts to flush it, it ends up at extent_writepage() and sees
++	 *    that the offset of the folio is beyond the i_size of inode Y, so
++	 *    it attempts to invalidate the folio by calling folio_invalidate(),
++	 *    which ends up at btrfs' folio invalidate callback -
++	 *    btrfs_invalidate_folio(). There it tries to lock the folio's range
++	 *    in inode Y's extent io tree, but it blocks since it's currently
++	 *    locked by task A - during reflink we lock the inodes and the
++	 *    source and destination ranges after flushing all delalloc and
++	 *    waiting for ordered extent completion - after that we don't expect
++	 *    to have dirty folios in the ranges, the exception is if we have to
++	 *    copy an inline extent's data (because the destination offset is
++	 *    not zero);
++	 *
++	 * 4) Task A then does the 'goto out' below and attempts to start a
++	 *    transaction to update the inode item, and then it's blocked since
++	 *    the current transaction is in the TRANS_STATE_COMMIT_START state.
++	 *    Therefore task A has to wait for the current transaction to become
++	 *    unblocked (its state >= TRANS_STATE_UNBLOCKED).
++	 *
++	 * This leads to a deadlock - the task committing the transaction
++	 * waiting for the delalloc flushing which is blocked during folio
++	 * invalidation on the inode's extent lock and the reflink task waiting
++	 * for the current transaction to be unblocked so that it can start a
++	 * a new one to update the inode item (while holding the extent lock).
++	 */
++	if (ret == 0 && new_key->offset + datal > i_size_read(&inode->vfs_inode))
++		i_size_write(&inode->vfs_inode, new_key->offset + datal);
++
  	goto out;
  }
-@@ -526,7 +526,7 @@ static int btrfs_clone(struct inode *src, struct inode *inode,
- 				goto out;
- 			}
  
--			ret = clone_copy_inline_extent(inode, path, &new_key,
-+			ret = clone_copy_inline_extent(BTRFS_I(inode), path, &new_key,
- 						       drop_start, datal, size,
- 						       comp, buf, &trans);
- 			if (ret)
 -- 
 2.53.0
 
