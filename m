@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990B237754D;
-	Wed, 20 May 2026 17:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D06A369999;
+	Wed, 20 May 2026 17:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297981; cv=none; b=eoZyydl25XQI87TlaQZQ+fXIQ4r7PPpEOpQOwYv9dYtnTYY0Tj/YSdCe47pyNxTo7SPHCZ8lbnx3oea2CL3l7ejmQoWeNgvOuAlAb7ecu9YlSeV0h+axGE3ZF82oiNFjiNHZo5UCitU1tPR030Uh2yESghjH+/B6vFrXwpyqi74=
+	t=1779297984; cv=none; b=QYrTZNHZoZJFwxxpYgxvg+pNsTBYX9Nmuke+tesNgY0NR4N6v5zgym0GfNS72p5w/Mj8+kQHaaFiO+kU7VSGeci2sm5DziZNBH7/A4Dw+cuLTi3A7nPSMH2Ob/iooKVT5yUR2PgIrHgUiIPcsO2nww+8mYT6EqXQvxwy/VFCY4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297981; c=relaxed/simple;
-	bh=E8YMW/OhzBPlw19vQ9Hx2zDHrvznFEjdJfHfRysFRcY=;
+	s=arc-20240116; t=1779297984; c=relaxed/simple;
+	bh=3bKkWcQVK2h/EtFal/9xMb6NKMdCyguO8Hx1/hONyWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pP1bgNeIPrPDQLHty9LMaBOQmM7qXM2CjNbQ5crDgyMT5t8pM38I8TZf5y88iwkmlyocUI9DsnVLE7+/nR6TFNCuDVsUEWPtinhWo+uqUuKM7YrMCrDAgzX82Z7hV0qRxx/ozjH3vUu20ZFDUL6jOeaYppIh3kuNDzbDjGDxrdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=beyeVNb7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cmN31OUD/pKge+CiDYxs9R7YG4APMCTGJf1Ql9dBNw9Qz1SEs13Dzm08rRMzVLeY4UC64XcFn84hXSwZoDPgwQYDQ15DZFc/cQKTDZRA2nw5OQn2It1vjV9oF8urpCZZ7h4dTX4l4YVgywMKwqcuK3nHyaZgoCRDT64UvA4x1G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUuz/A8e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="beyeVNb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4DF1F000E9;
-	Wed, 20 May 2026 17:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUuz/A8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A392E1F000E9;
+	Wed, 20 May 2026 17:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297980;
-	bh=0k0a5B8oKqQ/dOC1Ama8Dmk+GS6um9wafbj7v0Ot4vg=;
+	s=korg; t=1779297983;
+	bh=heHOKXe6lpGil16lavXXBW+Y16i0DtFmuSFj+LIzpMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=beyeVNb7CK8WwdiXuuseMoNOcFL58SZpSrSMH0fhtsnu4okFvs1A7Ims3cgVZMvCG
-	 7OiWngJAZ7Y/69/jM7Wp53VfTADHAJAwC6pWfG8fglLt9ov/n2OZ4t279T8FLJnys3
-	 1Hz+a5Gk3BuXPpKpAj3rwJ/Xu35+sWe3rctVJu8c=
+	b=NUuz/A8eKGBmDK9QOv7Xsa4b2NoXMSR9yDoWnIyN4HljW5z9YQE2h4ktkkNPWj6Cn
+	 HqgmSaoIGEgzP2Z/y7uw5GvN6Kh/0E3nnilrDbZAt1FY+V6rQV+N651tAjd8buQSeu
+	 uFaknT1jZXGpcpQkFDgiexLgg4kQ0WVDQyV5/caQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Alexandru Dadu <alexandru.dadu@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 237/957] spi: hisi-kunpeng: prevent infinite while() loop in hisi_spi_flush_fifo
-Date: Wed, 20 May 2026 18:12:00 +0200
-Message-ID: <20260520162139.681509851@linuxfoundation.org>
+Subject: [PATCH 6.18 238/957] drm/imagination: Switch reset_reason fields from enum to u32
+Date: Wed, 20 May 2026 18:12:01 +0200
+Message-ID: <20260520162139.703362731@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,51 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Alexandru Dadu <alexandru.dadu@imgtec.com>
 
-[ Upstream commit 9f61daf2c2debe9f5cf4e1a4471e56a89a6fe45a ]
+[ Upstream commit d2f83a6cd598bf413f1acf34153bd1d71023fbab ]
 
-The hisi_spi_flush_fifo()'s inner while loop that lacks any timeout
-mechanism. Maybe the hardware never becomes empty, the loop will spin
-forever, causing the CPU to hang.
+Update the reset_reason fwif structure fields from enum to u32 to remove
+any ambiguity from the interface (enum is not a fixed size thus is unfit
+for the purpose of the data type).
 
-Fix this by adding a inner_limit based on loops_per_jiffy. The inner loop
-now exits after approximately one jiffy if the FIFO remains non-empty, logs
-a ratelimited warning, and breaks out of the outer loop. Additionally, add
-a cpu_relax() inside the busy loop to improve power efficiency.
-
-Fixes: c770d8631e18 ("spi: Add HiSilicon SPI Controller Driver for Kunpeng SoCs")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://patch.msgid.link/d834ce28172886bfaeb9c8ca00cfd9bf1c65d5a1.1773889292.git.xiaopei01@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a26f067feac1f ("drm/imagination: Add FWIF headers")
+Signed-off-by: Alexandru Dadu <alexandru.dadu@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://patch.msgid.link/20260323-b4-firmware-context-reset-notification-handling-v3-2-1a66049a9a65@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-hisi-kunpeng.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/imagination/pvr_rogue_fwif.h        | 8 ++++++--
+ drivers/gpu/drm/imagination/pvr_rogue_fwif_shared.h | 6 +++++-
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
-index 80a1a15de0bc3..a38dcae6271ff 100644
---- a/drivers/spi/spi-hisi-kunpeng.c
-+++ b/drivers/spi/spi-hisi-kunpeng.c
-@@ -196,8 +196,18 @@ static void hisi_spi_flush_fifo(struct hisi_spi *hs)
- 	unsigned long limit = loops_per_jiffy << 1;
+diff --git a/drivers/gpu/drm/imagination/pvr_rogue_fwif.h b/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
+index 172886be4c820..5d590c4c25663 100644
+--- a/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
++++ b/drivers/gpu/drm/imagination/pvr_rogue_fwif.h
+@@ -1347,8 +1347,12 @@ struct rogue_fwif_fwccb_cmd_freelists_reconstruction_data {
+ struct rogue_fwif_fwccb_cmd_context_reset_data {
+ 	/* Context affected by the reset */
+ 	u32 server_common_context_id;
+-	/* Reason for reset */
+-	enum rogue_context_reset_reason reset_reason;
++	/*
++	 * Reason for reset
++	 * The valid values for reset_reason are the ones from
++	 * enum rogue_context_reset_reason
++	 */
++	u32 reset_reason;
+ 	/* Data Master affected by the reset */
+ 	u32 dm;
+ 	/* Job ref running at the time of reset */
+diff --git a/drivers/gpu/drm/imagination/pvr_rogue_fwif_shared.h b/drivers/gpu/drm/imagination/pvr_rogue_fwif_shared.h
+index 6c09c15bf9bd8..f95acd5a1f8e8 100644
+--- a/drivers/gpu/drm/imagination/pvr_rogue_fwif_shared.h
++++ b/drivers/gpu/drm/imagination/pvr_rogue_fwif_shared.h
+@@ -249,7 +249,11 @@ enum rogue_context_reset_reason {
+ };
  
- 	do {
--		while (hisi_spi_rx_not_empty(hs))
-+		unsigned long inner_limit = loops_per_jiffy;
-+
-+		while (hisi_spi_rx_not_empty(hs) && --inner_limit) {
- 			readl(hs->regs + HISI_SPI_DOUT);
-+			cpu_relax();
-+		}
-+
-+		if (!inner_limit) {
-+			dev_warn_ratelimited(hs->dev, "RX FIFO flush timeout\n");
-+			break;
-+		}
-+
- 	} while (hisi_spi_busy(hs) && limit--);
- }
+ struct rogue_context_reset_reason_data {
+-	enum rogue_context_reset_reason reset_reason;
++	/*
++	 * The valid values for reset_reason are the ones from
++	 * enum rogue_context_reset_reason
++	 */
++	u32 reset_reason;
+ 	u32 reset_ext_job_ref;
+ };
  
 -- 
 2.53.0
