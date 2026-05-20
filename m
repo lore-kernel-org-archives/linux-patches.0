@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDC73F20F9;
-	Wed, 20 May 2026 17:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B411D3F1AD9;
+	Wed, 20 May 2026 17:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299512; cv=none; b=KqCCF5mVMQBPldhII5ZpoG2SaM6kYiRXeg/ZlbH+9K9gsUbRuY5dviS2BWCwzTtDcm0IHq2BSq0WPjQv3st2Eyqidz497MbqIXo9TXe0Xxly9sSkqyXmkE8NUa58qSf9YqB22mkR6mFxqsSrRTTCWr+smgIxIXqdNF+c0rx7C9U=
+	t=1779299514; cv=none; b=OANWqWYVdIuMy5YApw8qlZgXxcRytgF919jyB/WtJqat9YZfwNyF/m5VwR0lelTq//7bDuA0kNXHi7eA7QR33JM0bru8uvwXqtejK/ZRaJSZheFjGtxzYnqNsGnSdQJN9UezTb7RRKuXneWFFgD9a2P4o6E6jWOkFtqOtCjSfBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299512; c=relaxed/simple;
-	bh=bTyF2UEYgbalQIGuqIWSmnbX4PooXmkds2vuoeWg2kg=;
+	s=arc-20240116; t=1779299514; c=relaxed/simple;
+	bh=SMSDYw2J7V3qKPXLSmbTRL7UDKK846hd26A+wUu5DdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N8Rgum+9bVhGoxFFLQ2gTfFx4Orf1H07O+54rZ6jWSyoQ22J6HmIme6QsNlHethf4/az+Y2sCKykm2Sn26hm7l41Gk3IDAYVB8z5QfmWnmscKk/cfvvvCw+RlG2+3R4J4VoHvsIlP5dyxXazKnTwsOzeqoL559fSWzshOg6UP/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqdzz60v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kbuYH4K7FbebNQZMcLdTrprhN/jef8gD5c2hd7eZ2YynrOoiApuhBpCiPkv/M6PVSW2Adudqr2y+WEjJDSgCHaF1hhKuv0vwnCDkWXyHSGCdv1Y8YtYdg1Lhl8Kc3y+Ep0wKISa2HywZz3KWLoPQEaFJeAztyngviyz8fYM0xw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tl9A/QtC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqdzz60v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A08C1F00893;
-	Wed, 20 May 2026 17:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tl9A/QtC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276BC1F000E9;
+	Wed, 20 May 2026 17:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299511;
-	bh=xLIXmDOIkCon/ZwSl29HCtPNbCmuEXAJESD2vG5rh4c=;
+	s=korg; t=1779299513;
+	bh=BCwZnC0L2LL7abEVYJEyfo7yS9kee8FUDhp7Yrd66SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gqdzz60vTAv7TDiQ6f2Wwe8wL+/WFdxXTMgohxrIuKpFyr2D45dL742YtndVeJ1K2
-	 RzIZBS8MMEpxO0u0OaVmAKgS3TiHc1NVQxeuOgSJCEj9B8hp7yEKCcWDvCbAltUH3B
-	 5bDPODWi4LOAZ4mAN/AupwzMBGRX5/QtIMdkdTYM=
+	b=Tl9A/QtCav09pfl7STcDR6pFuIbf11BYZ6gJE4IDkTz/zrfK1GG6kQDd9msEGk8ua
+	 Z4nRMASyuRflc8//qiiLX76m4LZ1SZRkEqi6cDknujQXzO6PcHMWcnOwpD9Wf3GrGO
+	 iDfT8MBr4mpjuekPrjM5JksH5YTDTb80sAQ0MWcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Ijae Kim <ae878000@gmail.com>,
-	Taegyu Kim <tmk5904@psu.edu>,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 758/957] drm/sysfb: ofdrm: fix PCI device reference leaks
-Date: Wed, 20 May 2026 18:20:41 +0200
-Message-ID: <20260520162151.003842052@linuxfoundation.org>
+Subject: [PATCH 6.18 759/957] drm/color-mgmt: Typo s/R332/RGB332/
+Date: Wed, 20 May 2026 18:20:42 +0200
+Message-ID: <20260520162151.024635812@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,53 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 4aa8110000b0d215deef8eed283565dd0c1def88 ]
+[ Upstream commit 9d5a2b8f6281f6090002517fb9272ea07038afe8 ]
 
-display_get_pci_dev_of() gets a referenced PCI device via
-pci_get_device(). Drop that reference when pci_enable_device() fails and
-release it during the managed teardown path after pci_disable_device().
+Fix a typo of "RGB332" in kerneldoc for the drm_crtc_fill_palette_332()
+helper.
 
-Without that, ofdrm leaks the pci_dev reference on both the error path
-and the normal cleanup path.
-
-Fixes: c8a17756c425 ("drm/ofdrm: Add ofdrm for Open Firmware framebuffers")
-Co-developed-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Co-developed-by: Taegyu Kim <tmk5904@psu.edu>
-Signed-off-by: Taegyu Kim <tmk5904@psu.edu>
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Fixes: 7ff61177b7116825 ("drm/color-mgmt: Prepare for RGB332 palettes")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
 Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260420002513.216-1-dbgh9129@gmail.com
+Link: https://patch.msgid.link/c413e45c8f752a532a4ff377f7a8b9eaab4a082a.1776757681.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sysfb/ofdrm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_color_mgmt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/sysfb/ofdrm.c b/drivers/gpu/drm/sysfb/ofdrm.c
-index 8d8ab39c5f363..f94fddea897a5 100644
---- a/drivers/gpu/drm/sysfb/ofdrm.c
-+++ b/drivers/gpu/drm/sysfb/ofdrm.c
-@@ -349,6 +349,7 @@ static void ofdrm_pci_release(void *data)
- 	struct pci_dev *pcidev = data;
- 
- 	pci_disable_device(pcidev);
-+	pci_dev_put(pcidev);
+diff --git a/drivers/gpu/drm/drm_color_mgmt.c b/drivers/gpu/drm/drm_color_mgmt.c
+index 131c1c9ae92fc..302a32d050a6d 100644
+--- a/drivers/gpu/drm/drm_color_mgmt.c
++++ b/drivers/gpu/drm/drm_color_mgmt.c
+@@ -831,7 +831,7 @@ static void fill_palette_332(struct drm_crtc *crtc, u16 r, u16 g, u16 b,
  }
  
- static int ofdrm_device_init_pci(struct ofdrm_device *odev)
-@@ -374,6 +375,7 @@ static int ofdrm_device_init_pci(struct ofdrm_device *odev)
- 	if (ret) {
- 		drm_err(dev, "pci_enable_device(%s) failed: %d\n",
- 			dev_name(&pcidev->dev), ret);
-+		pci_dev_put(pcidev);
- 		return ret;
- 	}
- 	ret = devm_add_action_or_reset(&pdev->dev, ofdrm_pci_release, pcidev);
+ /**
+- * drm_crtc_fill_palette_332 - Programs a default palette for R332-like formats
++ * drm_crtc_fill_palette_332 - Programs a default palette for RGB332-like formats
+  * @crtc: The displaying CRTC
+  * @set_palette: Callback for programming the hardware gamma LUT
+  *
 -- 
 2.53.0
 
