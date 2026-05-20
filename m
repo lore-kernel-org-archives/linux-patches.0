@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF123F6619;
-	Wed, 20 May 2026 17:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FF43F20E9;
+	Wed, 20 May 2026 17:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299988; cv=none; b=mdDMFWL3cwavvDq3Dq52CNL5PHaOhHgO+Ce1ZPFT/B810deoo1pnXQZ+mLGEwgphpDl8WxV/oJDiK8DfBZBliS9Br9MLY4rtjCEjdV8GxJkxh1Yw2y/NyjwtXvjvsc1nykRwOaF36NVH6wrcSuOdz3469vGKBso6h32yYLvLe0k=
+	t=1779299989; cv=none; b=ghyl7ldl168jtspy5XqWBDxNyMkgp5nDwBnTd1QmUsvQrJzHdEDxxXeHHGVkqfPZMCjpVKmi0yLx6gOxtbzGOAGKf0DQLGWHdJ6fsB/r+eamDJcA1PbxfMyAC7+WtsuGJSoIaL6Ti+7MEKY50jHkuNcWjkvL8C6P7Mah3SCxGes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299988; c=relaxed/simple;
-	bh=2KLlaYLiwA/57A+EDRHf4Wycrq5IJTINBmlK50sE9BA=;
+	s=arc-20240116; t=1779299989; c=relaxed/simple;
+	bh=6yYJ/3kF6Saff8SRp8XuTRNTHyH7D+wIRpaQZ8oZSyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=puaQGH1+CrFTo88Cnt1JbpgC5L8slQ43RpC741DDLdvw3QsrKMq8ftK9zecYTfUO72pYd39zNiUvHLV8AfzsLHBygpRpQQUsJd7ovU8NjFOQq8N5+fFrgfs7S8auYPJgJ6SC037H/VFk8HTuUt/O52I0IOhWs7R0nlBLGFjELOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w3uV9yh8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KBZwF+TONW/5lyNaHkE4yjyJVw6tsxVfhdMuB3ELsW4sE2Rm3UwCc+9/AjoIjN9w4XV+//kaXaKQheCCFZtpzMY99ejZNEZdHSxWUYHQburT8idmWRJq+aUbhbldo4eTtUIb6F4rRT9flKSZOpJTEeL1kkMH6Yx14bG9alvDGg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvUWCRFz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w3uV9yh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BF81F00893;
-	Wed, 20 May 2026 17:59:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvUWCRFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509D41F000E9;
+	Wed, 20 May 2026 17:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299984;
-	bh=XWApp8atlEo2B7KOZAbWhB7UGtnzx+8qDaIEW3B8fzw=;
+	s=korg; t=1779299986;
+	bh=XzeNZvnuIk1Etoyq8KSJSVT8ewvZbjKql1AJvFV83dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w3uV9yh8cDC3lRcjWgr0ATASb9aD3J7g7XMcPGNWfk2m9oZpQiVmMKC2aOE7RdmRW
-	 VWBZW7A1tkymV2zBo6KFc+3OiBzW6VIz6hFo1VHKNM7Wbx46FYhvESoGvadx6LdbUl
-	 Hq4rvnIhTUWeNC/0xkHNojuoqviml4PPGNYA9gcI=
+	b=TvUWCRFz2x5/mpvzJCAWYrj5BxWQGK7jeYLUoBtA/1ftD2RKtNjF4bv6t9pxR3jk+
+	 o5BEeceF1EdsteasU4zHgAHaRJFFexsGdnB+HhEAeEBB98ATU5+N8ru0EpnTldC/+T
+	 LrWef1ibRf84cwQRuGsRwx3YLk2G4NOMxlYV3NwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 934/957] libceph: Fix potential null-ptr-deref in decode_choose_args()
-Date: Wed, 20 May 2026 18:23:37 +0200
-Message-ID: <20260520162154.844824304@linuxfoundation.org>
+Subject: [PATCH 6.18 935/957] libceph: Fix potential out-of-bounds access in crush_decode()
+Date: Wed, 20 May 2026 18:23:38 +0200
+Message-ID: <20260520162154.868666120@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,24 +52,25 @@ Content-Transfer-Encoding: 8bit
 
 From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 28b0a2ab8c82d0bbdeb8013029c67c978ce6e4bf upstream.
+commit 4c79fc2d598694bda845b46229c9d48b65042970 upstream.
 
-A message of type CEPH_MSG_OSD_MAP contains an OSD map that itself
-contains a CRUSH map. When decoding this CRUSH map in crush_decode(), an
-array of max_buckets CRUSH buckets is decoded, where some indices may
-not refer to actual buckets and are therefore set to NULL. The received
-CRUSH map may optionally contain choose_args that get decoded in
-decode_choose_args(). When decoding a crush_choose_arg_map, a series of
-choose_args for different buckets is decoded, with the bucket_index
-being read from the incoming message. It is only checked that the bucket
-index does not exceed max_buckets, but not that it doesn't point to an
-index with a NULL bucket. If a (potentially corrupted) message contains
-a crush_choose_arg_map including such a bucket_index, a null pointer
-dereference may occur in the subsequent processing when attempting to
-access the bucket with the given index.
+A message of type CEPH_MSG_OSD_MAP containing a crush map with at least
+one bucket has two fields holding the bucket algorithm. If the values
+in these two fields differ, an out-of-bounds access can occur. This is
+the case because the first algorithm field (alg) is used to allocate
+the correct amount of memory for a bucket of this type, while the second
+algorithm field inside the bucket (b->alg) is used in the subsequent
+processing.
 
-This patch fixes the issue by extending the affected check. Now, it is
-only attempted to access the bucket if it is not NULL.
+This patch fixes the issue by adding a check that compares alg and
+b->alg and aborts the processing in case they differ. Furthermore,
+b->alg is set to 0 in this case, because the destruction of the crush
+map also uses this field to determine the bucket type, which can again
+result in an out-of-bounds access when trying to free the memory pointed
+to by the fields of the bucket. To correctly free the memory allocated
+for the bucket in such a case, the corresponding call to kfree is moved
+from the algorithm-specific crush_destroy_bucket functions to the
+generic crush_destroy_bucket().
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
@@ -77,20 +78,70 @@ Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ceph/crush/crush.c |    6 +-----
+ net/ceph/osdmap.c      |    4 ++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
+--- a/net/ceph/crush/crush.c
++++ b/net/ceph/crush/crush.c
+@@ -47,7 +47,6 @@ int crush_get_bucket_item_weight(const s
+ void crush_destroy_bucket_uniform(struct crush_bucket_uniform *b)
+ {
+ 	kfree(b->h.items);
+-	kfree(b);
+ }
+ 
+ void crush_destroy_bucket_list(struct crush_bucket_list *b)
+@@ -55,14 +54,12 @@ void crush_destroy_bucket_list(struct cr
+ 	kfree(b->item_weights);
+ 	kfree(b->sum_weights);
+ 	kfree(b->h.items);
+-	kfree(b);
+ }
+ 
+ void crush_destroy_bucket_tree(struct crush_bucket_tree *b)
+ {
+ 	kfree(b->h.items);
+ 	kfree(b->node_weights);
+-	kfree(b);
+ }
+ 
+ void crush_destroy_bucket_straw(struct crush_bucket_straw *b)
+@@ -70,14 +67,12 @@ void crush_destroy_bucket_straw(struct c
+ 	kfree(b->straws);
+ 	kfree(b->item_weights);
+ 	kfree(b->h.items);
+-	kfree(b);
+ }
+ 
+ void crush_destroy_bucket_straw2(struct crush_bucket_straw2 *b)
+ {
+ 	kfree(b->item_weights);
+ 	kfree(b->h.items);
+-	kfree(b);
+ }
+ 
+ void crush_destroy_bucket(struct crush_bucket *b)
+@@ -99,6 +94,7 @@ void crush_destroy_bucket(struct crush_b
+ 		crush_destroy_bucket_straw2((struct crush_bucket_straw2 *)b);
+ 		break;
+ 	}
++	kfree(b);
+ }
+ 
+ /**
 --- a/net/ceph/osdmap.c
 +++ b/net/ceph/osdmap.c
-@@ -390,7 +390,8 @@ static int decode_choose_args(void **p,
- 				goto fail;
- 
- 			if (arg->ids_size &&
--			    arg->ids_size != c->buckets[bucket_index]->size)
-+			    (!c->buckets[bucket_index] ||
-+			     arg->ids_size != c->buckets[bucket_index]->size))
- 				goto e_inval;
- 		}
- 
+@@ -518,6 +518,10 @@ static struct crush_map *crush_decode(vo
+ 		b->id = ceph_decode_32(p);
+ 		b->type = ceph_decode_16(p);
+ 		b->alg = ceph_decode_8(p);
++		if (b->alg != alg) {
++			b->alg = 0;
++			goto bad;
++		}
+ 		b->hash = ceph_decode_8(p);
+ 		b->weight = ceph_decode_32(p);
+ 		b->size = ceph_decode_32(p);
 
 
