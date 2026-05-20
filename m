@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8887F3CCFB0;
-	Wed, 20 May 2026 18:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF7C3F8706;
+	Wed, 20 May 2026 18:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301563; cv=none; b=u1KaT5/ZauXTbhR+V+jhR1jMZYZ7DeEGuCje/addOAi3fPkcbbaVetwxYNn2j6zNKIVSUgL3jc9VykaP1iL+6kDzGNE9qc2FfHQkVOmXePjlTLND0Ww0QGrNMHMkJraIqNPzk6KYBVOFMVANgwtzKlNFZOgKLjaz/MDja6ZBY2A=
+	t=1779301566; cv=none; b=XI7J3YZ0YOX4gXSImBwCVGDavvtTFmsyeb9WfRue169VPfVEqfvhaiT3oehqT6WYzRPBU5AII40EjU3bKNuOq5oAKJOJ9e8uN8syc4oci+TCVz8tc0LZSxgDkzDC/x84SMR/7/OR13a8WNnlXr/sdaWyHCcuLg285yLwr+Yv3UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301563; c=relaxed/simple;
-	bh=JBiIdKRNhnkBnzAUJ6sqVE2EEJdZsaCGwQySFcJ+oF4=;
+	s=arc-20240116; t=1779301566; c=relaxed/simple;
+	bh=3XQitr4h9EKiu3n3pW187cYzhfPbmJGG+H+v+dSgBLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+o9Q568Ppqj2vDgzDbsT6AT97/4kRl9AyNgdDLZf5FvxZxrWBEQtgSrNi4uXTHEelXGgyEuS64v7X6Sha+LTvVa1c56htV/aN0YRD7m3Vq4xrNkX5XeZLx+a8OrroX2eSFMtfuGo+63L3wPYB/nV+Iv8rgMBO39uKdrTHFDBRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1PzFbn1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YuEIzMC8JhBWnIcA11VFDGF8Cvvg3eLejFo115uhCGaCDb82YpsFjurKgyu6o5sJhkRmVSaBhI/jegWhf7aedJ1HBB8RDeHTBD24s3w7h1IwazsIhMM59SJ4PpZ0prK9rG1tlCJC052a10Whiud0tTqoiqD1C27OoSvLJVepvzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEZeLiu/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1PzFbn1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7CC1F000E9;
-	Wed, 20 May 2026 18:26:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEZeLiu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C961F000E9;
+	Wed, 20 May 2026 18:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301562;
-	bh=UEcavC/hC0th4dPIMmxVnXshKhFhGCuu2H7nu5QapPU=;
+	s=korg; t=1779301565;
+	bh=Vwge2Pq2W6PZol2+jPeyA0A+1jMdIQVMfTsojqBDTkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L1PzFbn1E5/08rkKuAm8XerHGISOOU7TSYRMsze3KA4JT8IYhvhDET8YraIXqlDyL
-	 fAYXenqemg9nvb2BvZIDxXETfcCPr311c8c0sjufslcBFteUBVR7tDOlo2Qem4bhZe
-	 62pf1ayhkKi0m9Ll6RuD37BzK2KUhklumOZmH1XI=
+	b=JEZeLiu/kFiN82wEfxHWPrHuUjgJ6oYNAe/qxaZ2MYPBx0HQHBrPCS0yJuKuXaurm
+	 wSf8c8tUVb+CyCOYKgwr9BIkxc2Osyu8GKF8hBjVqEiT9ElTMGl4Mw1LBVGH7LOZIT
+	 XnFFnvdz/8Fmm7Owf7M0GJ9gR23lW3K4IsV1hahU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Justin Chen <justin.chen@broadcom.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ryo Takakura <ryotkkr98@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 601/666] net: bcmgenet: Initialize u64 stats seq counter
-Date: Wed, 20 May 2026 18:23:32 +0200
-Message-ID: <20260520162124.293398106@linuxfoundation.org>
+Subject: [PATCH 6.12 602/666] net: bcmgenet: fix leaking free_bds
+Date: Wed, 20 May 2026 18:23:33 +0200
+Message-ID: <20260520162124.315702814@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,80 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryo Takakura <ryotkkr98@gmail.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit ffc2c8c4a714df53a715827d6334ab9474424f6a ]
+[ Upstream commit 3f3168300efb839028328d720ab3962f91d6a0d0 ]
 
-Initialize u64 stats as it uses seq counter on 32bit machines
-as suggested by lockdep below.
+While reclaiming the tx queue we fast forward the write pointer to
+drop any data in flight. These dropped frames are not added back
+to the pool of free bds. We also need to tell the netdev that we
+are dropping said data.
 
-[    1.830953][    T1] INFO: trying to register non-static key.
-[    1.830993][    T1] The code is fine but needs lockdep annotation, or maybe
-[    1.831027][    T1] you didn't initialize this object before use?
-[    1.831057][    T1] turning off the locking correctness validator.
-[    1.831090][    T1] CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Tainted: G        W           6.16.0-rc2-v7l+ #1 PREEMPT
-[    1.831097][    T1] Tainted: [W]=WARN
-[    1.831099][    T1] Hardware name: BCM2711
-[    1.831101][    T1] Call trace:
-[    1.831104][    T1]  unwind_backtrace from show_stack+0x18/0x1c
-[    1.831120][    T1]  show_stack from dump_stack_lvl+0x8c/0xcc
-[    1.831129][    T1]  dump_stack_lvl from register_lock_class+0x9e8/0x9fc
-[    1.831141][    T1]  register_lock_class from __lock_acquire+0x420/0x22c0
-[    1.831154][    T1]  __lock_acquire from lock_acquire+0x130/0x3f8
-[    1.831166][    T1]  lock_acquire from bcmgenet_get_stats64+0x4a4/0x4c8
-[    1.831176][    T1]  bcmgenet_get_stats64 from dev_get_stats+0x4c/0x408
-[    1.831184][    T1]  dev_get_stats from rtnl_fill_stats+0x38/0x120
-[    1.831193][    T1]  rtnl_fill_stats from rtnl_fill_ifinfo+0x7f8/0x1890
-[    1.831203][    T1]  rtnl_fill_ifinfo from rtmsg_ifinfo_build_skb+0xd0/0x138
-[    1.831214][    T1]  rtmsg_ifinfo_build_skb from rtmsg_ifinfo+0x48/0x8c
-[    1.831225][    T1]  rtmsg_ifinfo from register_netdevice+0x8c0/0x95c
-[    1.831237][    T1]  register_netdevice from register_netdev+0x28/0x40
-[    1.831247][    T1]  register_netdev from bcmgenet_probe+0x690/0x6bc
-[    1.831255][    T1]  bcmgenet_probe from platform_probe+0x64/0xbc
-[    1.831263][    T1]  platform_probe from really_probe+0xd0/0x2d4
-[    1.831269][    T1]  really_probe from __driver_probe_device+0x90/0x1a4
-[    1.831273][    T1]  __driver_probe_device from driver_probe_device+0x38/0x11c
-[    1.831278][    T1]  driver_probe_device from __driver_attach+0x9c/0x18c
-[    1.831282][    T1]  __driver_attach from bus_for_each_dev+0x84/0xd4
-[    1.831291][    T1]  bus_for_each_dev from bus_add_driver+0xd4/0x1f4
-[    1.831303][    T1]  bus_add_driver from driver_register+0x88/0x120
-[    1.831312][    T1]  driver_register from do_one_initcall+0x78/0x360
-[    1.831320][    T1]  do_one_initcall from kernel_init_freeable+0x2bc/0x314
-[    1.831331][    T1]  kernel_init_freeable from kernel_init+0x1c/0x144
-[    1.831339][    T1]  kernel_init from ret_from_fork+0x14/0x20
-[    1.831344][    T1] Exception stack(0xf082dfb0 to 0xf082dff8)
-[    1.831349][    T1] dfa0:                                     00000000 00000000 00000000 00000000
-[    1.831353][    T1] dfc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
-[    1.831356][    T1] dfe0: 00000000 00000000 00000000 00000000 00000013 00000000
-
-Fixes: 59aa6e3072aa ("net: bcmgenet: switch to use 64bit statistics")
+Fixes: f1bacae8b655 ("net: bcmgenet: support reclaiming unsent Tx packets")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Ryo Takakura <ryotkkr98@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250702092417.46486-1-ryotkkr98@gmail.com
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Tested-by: Nicolai Buchwitz <nb@tipi-net.de>
+Link: https://patch.msgid.link/20260406175756.134567-3-justin.chen@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index f012025a517dd..1cad32ba101bb 100644
+index 1cad32ba101bb..1263d00058736 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -4075,6 +4075,12 @@ static int bcmgenet_probe(struct platform_device *pdev)
- 	for (i = 0; i <= priv->hw_params->rx_queues; i++)
- 		priv->rx_rings[i].rx_max_coalesced_frames = 1;
- 
-+	/* Initialize u64 stats seq counter for 32bit machines */
-+	for (i = 0; i <= priv->hw_params->rx_queues; i++)
-+		u64_stats_init(&priv->rx_rings[i].stats64.syncp);
-+	for (i = 0; i <= priv->hw_params->tx_queues; i++)
-+		u64_stats_init(&priv->tx_rings[i].stats64.syncp);
-+
- 	/* libphy will determine the link state */
- 	netif_carrier_off(dev);
- 
+@@ -1933,6 +1933,7 @@ static unsigned int bcmgenet_tx_reclaim(struct net_device *dev,
+ 		drop = (ring->prod_index - ring->c_index) & DMA_C_INDEX_MASK;
+ 		released += drop;
+ 		ring->prod_index = ring->c_index & DMA_C_INDEX_MASK;
++		ring->free_bds += drop;
+ 		while (drop--) {
+ 			cb_ptr = bcmgenet_put_txcb(priv, ring);
+ 			skb = cb_ptr->skb;
+@@ -1944,6 +1945,7 @@ static unsigned int bcmgenet_tx_reclaim(struct net_device *dev,
+ 		}
+ 		if (skb)
+ 			dev_consume_skb_any(skb);
++		netdev_tx_reset_queue(netdev_get_tx_queue(dev, ring->index));
+ 		bcmgenet_tdma_ring_writel(priv, ring->index,
+ 					  ring->prod_index, TDMA_PROD_INDEX);
+ 		wr_ptr = ring->write_ptr * WORDS_PER_BD(priv);
 -- 
 2.53.0
 
