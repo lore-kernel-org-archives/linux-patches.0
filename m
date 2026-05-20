@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9FF371048;
-	Wed, 20 May 2026 18:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023AA3FA5D5;
+	Wed, 20 May 2026 18:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301371; cv=none; b=B7so2pBFeRTmrSQ0hDRy7pC2wbfscO0e2FxuSt1tmiahZzbhFJHEWTIzCL9NIWYjtig0R77GM3zYBGSkwFsnjQ1OZx4EHbIWkcKHqrBk9RddodAmhHGQBFUYSDsImwUZ9jNA5olngVZSoQJ+JBiViGkmSdWBDijLkt8aSlXyLn4=
+	t=1779301374; cv=none; b=iWuBjpXF5xQ1SC1sXnPYjQHGkD88Ny9UyVyu8bBWmjcklcS/yIkvRrKGk/LE9KGpHzZ9qgUZhUCK+FGYkPeHmMPbZ2SdtwkJ5dlzKvAPuzt+Rp+foO1R2V4Zi9AJYmYyxgh6H5c285MH+bvl9xtPco47fVsdeGgVHpAHLkq7s1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301371; c=relaxed/simple;
-	bh=6eJ1d44CI+QjP8zbouJh+Yq6cf7aNN7AL3fwNT98WO0=;
+	s=arc-20240116; t=1779301374; c=relaxed/simple;
+	bh=kxPy10/HM84R3Re4I//jt/tK3ykGGneNSBrTeWZGguM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2DJ48UamRJlM+sAiLHeE1/i9JlaXNyVLgMpvZmmnzGHVbaM0+62Z8qyrWknv+jM+EThxR77i6kWiq5QrnxrS2YGBFWg7oL3+rP06sXfvyNZr6Dw26AuTJL3m+V1PTIMP5SwqWjQ2+gyDerB/+Zp23hrh6lXKP0ZcslWl3Jgkc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GixwXoBZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Aol2NkcUCn6PfCmr3lVqZrDKLFcDF81DuIpoTQMhsCxv8xdZlzyh+2dW+BZF4X8LvkJsQzPFBMtWKlgVsiJgeyewKBPLGaZYbAEfO9Nndo+hJs0IqnI1Ld/S8HI97UyngothdvfjX9zbQGhL5NPr1GuPLlBXR/w17BmxNUxQzvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxMqawbP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GixwXoBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A003B1F000E9;
-	Wed, 20 May 2026 18:22:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxMqawbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4473B1F000E9;
+	Wed, 20 May 2026 18:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301370;
-	bh=c7+UDEdgKFIIyW/K4st0n+Tm6+2Esx1ldMJ2MIdcFE0=;
+	s=korg; t=1779301372;
+	bh=8k21Q/8PESwRsC039oiHfqR3nhRhlijsS6FDcDPRGnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GixwXoBZ2JyzUcsNtC2pkvWl0pORapIIRNJ3qFzDamBVEOrThwQ3GVsJRnaHMAeTt
-	 zyvmO45Hypcd7W51Wx8XMEBjsNGWRqb9XD3bITg3KtxNLfAbA+DjyxzYJsoAjf7CIv
-	 GEztywZITOXW3o1jVqdzaZqdlAvE+x44H+KzCUPs=
+	b=wxMqawbPCGkR/quqq/nB7AUKIA21I4lQawelRNljQeppgxmmfWrkFixrI4OtTKiTN
+	 J3xh3DMDrC25ffqZPwjE9iatC3SirLRJKqWGnZmY0XA/o1Ilg2QrAW1opKbm8jyUAW
+	 G5tbzMjbqLJYO8Jr3s3frtbkIAID1ezjbzZ29Dxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 530/666] netdevsim: zero initialize struct iphdr in dummy sk_buff
-Date: Wed, 20 May 2026 18:22:21 +0200
-Message-ID: <20260520162122.758847754@linuxfoundation.org>
+Subject: [PATCH 6.12 531/666] net/sched: netem: fix probability gaps in 4-state loss model
+Date: Wed, 20 May 2026 18:22:22 +0200
+Message-ID: <20260520162122.781095436@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,41 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikola Z. Ivanov <zlatistiv@gmail.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit 35eaa6d8d6c2ee65e96f507add856e0eacf24591 ]
+[ Upstream commit 732b463449fd0ef90acd13cda68eab1c91adb00c ]
 
-Syzbot reports a KMSAN uninit-value originating from
-nsim_dev_trap_skb_build, with the allocation also
-being performed in the same function.
+The 4-state Markov chain in loss_4state() has gaps at the boundaries
+between transition probability ranges. The comparisons use:
 
-Fix this by calling skb_put_zero instead of skb_put to
-guarantee zero initialization of the whole IP header.
+  if (rnd < a4)
+  else if (a4 < rnd && rnd < a1 + a4)
 
-Closes: https://syzkaller.appspot.com/bug?extid=23d7fcd204e3837866ff
-Fixes: da58f90f11f5 ("netdevsim: Add devlink-trap support")
-Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260426201434.742030-1-zlatistiv@gmail.com
+When rnd equals a boundary value exactly, neither branch matches and
+no state transition occurs. The redundant lower-bound check (a4 < rnd)
+is already implied by being in the else branch.
+
+Remove the unnecessary lower-bound comparisons so the ranges are
+contiguous and every random value produces a transition, matching
+the GI (General and Intuitive) loss model specification.
+
+This bug goes back to original implementation of this model.
+
+Fixes: 661b79725fea ("netem: revised correlated loss generator")
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260418032027.900913-2-stephen@networkplumber.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_netem.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/netdevsim/dev.c b/drivers/net/netdevsim/dev.c
-index 2614d6509954c..daec92570c2e3 100644
---- a/drivers/net/netdevsim/dev.c
-+++ b/drivers/net/netdevsim/dev.c
-@@ -758,7 +758,7 @@ static struct sk_buff *nsim_dev_trap_skb_build(void)
- 	skb->protocol = htons(ETH_P_IP);
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 825c398aa1232..add20b1ab79b2 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -226,10 +226,10 @@ static bool loss_4state(struct netem_sched_data *q)
+ 		if (rnd < clg->a4) {
+ 			clg->state = LOST_IN_GAP_PERIOD;
+ 			return true;
+-		} else if (clg->a4 < rnd && rnd < clg->a1 + clg->a4) {
++		} else if (rnd < clg->a1 + clg->a4) {
+ 			clg->state = LOST_IN_BURST_PERIOD;
+ 			return true;
+-		} else if (clg->a1 + clg->a4 < rnd) {
++		} else {
+ 			clg->state = TX_IN_GAP_PERIOD;
+ 		}
  
- 	skb_set_network_header(skb, skb->len);
--	iph = skb_put(skb, sizeof(struct iphdr));
-+	iph = skb_put_zero(skb, sizeof(struct iphdr));
- 	iph->protocol = IPPROTO_UDP;
- 	iph->saddr = in_aton("192.0.2.1");
- 	iph->daddr = in_aton("198.51.100.1");
+@@ -246,9 +246,9 @@ static bool loss_4state(struct netem_sched_data *q)
+ 	case LOST_IN_BURST_PERIOD:
+ 		if (rnd < clg->a3)
+ 			clg->state = TX_IN_BURST_PERIOD;
+-		else if (clg->a3 < rnd && rnd < clg->a2 + clg->a3) {
++		else if (rnd < clg->a2 + clg->a3) {
+ 			clg->state = TX_IN_GAP_PERIOD;
+-		} else if (clg->a2 + clg->a3 < rnd) {
++		} else {
+ 			clg->state = LOST_IN_BURST_PERIOD;
+ 			return true;
+ 		}
 -- 
 2.53.0
 
