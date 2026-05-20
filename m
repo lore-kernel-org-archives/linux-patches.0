@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D6936F421;
-	Wed, 20 May 2026 17:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B8F2DC76C;
+	Wed, 20 May 2026 17:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297323; cv=none; b=SeRrh1vX37zKBkyvNIjO5qqOcvECdcKoQAmUumxpZP5sm9XvULYVElKbyit7csofK/85pSPyD1ROcu977DU011aRciHZCj5aZz2m6CFnFMRytTtRu0eFj5ST6CywEY+UIBgkVmBILwOyQQ0sUZOS4AHZji/xMspMKmlkRI4TmD8=
+	t=1779297326; cv=none; b=apOoj1/m7JbsYmoIyUk8cgw2Sj0dyc9yYH9lnaYar415En9kKxWgSrevk4lTD6CUR5z8C8dMpOS9RvbQ8SUdIWDlSJkeWySpX9jl/adoieIs7Pqk3kfzdeM+Mi7qbbX4Kn0xBHSKXIQiHugvCHGRZ5AXPKWyoJ352AQFMxp5+OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297323; c=relaxed/simple;
-	bh=8lPfHbOnLo3mfgPC42n+avaCRGbSFCfUo4VSdy0+2lc=;
+	s=arc-20240116; t=1779297326; c=relaxed/simple;
+	bh=cytRK+rkRaHlBI3v9b/ALoQFn9r1Pfkg/RFk2BpzhLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gMd2FkAB3a0d0GVNJ/5I8MqBoB23nX4KqoQwp1hjCzLWZS4nfIrvksS+RBFnNATr93MrlIsMCWf6o/UMe+1SYM2+R90fxMefI1DpB4+JhePVoPWfqyE3HLlffQAJH3mCheY43TXhXktGM573V2N3aHZdRsdNjZAamYi25NLWbqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUGDw/Gv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lsKUT4b9FEtPFi3LfqQ1HXAX1n0tbzyMZU0cs8XIwHZlm5xcNUxL6Nv4/tOhkR0H1W3jlZZyfqs/e5P9H28HwLdayL05I/1nK99i1Q14gl4qK6yd0IJa+5yBsgZmqad3AG2zOcc8FuzumFjmtJbra/0OBoAqv73CMKiwxaZ0EwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZ9vvzks; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUGDw/Gv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586B01F000E9;
-	Wed, 20 May 2026 17:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZ9vvzks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0DD1F000E9;
+	Wed, 20 May 2026 17:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297322;
-	bh=YD2dWraivMyHmgaE+G9GNTU5lBrtTSBP/HEny8O00W4=;
+	s=korg; t=1779297325;
+	bh=6jxHqOxjLskxbrIaSI79jj5Fl5OIpgDFtklP671Uv5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nUGDw/GvHPB7cvuQuRJbXPNBAt8wjsXtfOW8laFYN2iUa4Ifgki7GNB8RPgWi12s8
-	 F0pp3el5VkSARVyVyIBGYK7ucjv0XupAdTWBfKRo9b3F3EKGODCRditHf4y2Zgu/Uw
-	 t6/ZtNm0tvk38s43qy0ecfi3HXRoK3ZN2LJ4lnkA=
+	b=vZ9vvzkseGDPVElig3mNLbF5s4OQWOMpFjvFuyOXrHAJi+iu7Z7LiYpEIvV0v2K96
+	 8tGkidOrcPyaXyQ0Rdza5K5bMO4JR3QTOfg8KIziB6tNJzjkRlgRvG2UBiFjtYERWr
+	 CDqnsbyX0uZySZVW9o8DK0gLRdKrdvH/Q2Sy/4bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.0 1094/1146] ceph: fix a buffer leak in __ceph_setxattr()
-Date: Wed, 20 May 2026 18:22:24 +0200
-Message-ID: <20260520162212.999149337@linuxfoundation.org>
+Subject: [PATCH 7.0 1095/1146] ceph: fix BUG_ON in __ceph_build_xattrs_blob() due to stale blob size
+Date: Wed, 20 May 2026 18:22:25 +0200
+Message-ID: <20260520162213.022667026@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,32 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-commit 5d3cc36b4e77a27ce7b686b7c59c7072bcb3fa8e upstream.
+commit 0c22d9511cbde746622f8e4c11aaa63fe76d45f9 upstream.
 
-The old_blob in __ceph_setxattr() can store
-ci->i_xattrs.prealloc_blob value during the retry.
-However, it is never called the ceph_buffer_put()
-for the old_blob object. This patch fixes the issue of
-the buffer leak.
+The generic/642 test-case can reproduce the kernel crash:
+
+[40243.605254] ------------[ cut here ]------------
+[40243.605956] kernel BUG at fs/ceph/xattr.c:918!
+[40243.607142] Oops: invalid opcode: 0000 [#1] SMP PTI
+[40243.608067] CPU: 7 UID: 0 PID: 498762 Comm: kworker/7:1 Not tainted 7.0.0-rc7+ #3 PREEMPT(full)
+[40243.609700] Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[40243.611820] Workqueue: ceph-msgr ceph_con_workfn
+[40243.612715] RIP: 0010:__ceph_build_xattrs_blob+0x1b8/0x1e0
+[40243.613731] Code: 0f 84 82 fe ff ff e9 cf 8e 56 ff 48 8d 65 e8 31 c0 5b 41 5c 41 5d 5d 31 d2 31 c9 31 f6 31 ff 45 31 c0 45 31 c9 c3 cc cc cc cc <0f> 0b 4c 8b 62 08 41 8b 85 24 07 00 00 49 83 c4 04 41 89 44 24 fc
+[40243.616888] RSP: 0018:ffffcc80c4d4b688 EFLAGS: 00010287
+[40243.617773] RAX: 0000000000010026 RBX: 0000000000000001 RCX: 0000000000000000
+[40243.618928] RDX: ffff8a773798dee0 RSI: 0000000000000000 RDI: 0000000000000000
+[40243.620158] RBP: ffffcc80c4d4b6a0 R08: 0000000000000000 R09: 0000000000000000
+[40243.621573] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8a75f3b58000
+[40243.622907] R13: ffff8a75f3b58000 R14: 0000000000000080 R15: 000000000000bffd
+[40243.624054] FS:  0000000000000000(0000) GS:ffff8a787d1b4000(0000) knlGS:0000000000000000
+[40243.625331] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[40243.626269] CR2: 000072f390b623c0 CR3: 000000011c02a003 CR4: 0000000000372ef0
+[40243.627408] Call Trace:
+[40243.627839]  <TASK>
+[40243.628188]  __prep_cap+0x3fd/0x4a0
+[40243.628789]  ? do_raw_spin_unlock+0x4e/0xe0
+[40243.629474]  ceph_check_caps+0x46a/0xc80
+[40243.630094]  ? __lock_acquire+0x4a2/0x2650
+[40243.630773]  ? find_held_lock+0x31/0x90
+[40243.631347]  ? handle_cap_grant+0x79f/0x1060
+[40243.632068]  ? lock_release+0xd9/0x300
+[40243.632696]  ? __mutex_unlock_slowpath+0x3e/0x340
+[40243.633429]  ? lock_release+0xd9/0x300
+[40243.634052]  handle_cap_grant+0xcf6/0x1060
+[40243.634745]  ceph_handle_caps+0x122b/0x2110
+[40243.635415]  mds_dispatch+0x5bd/0x2160
+[40243.636034]  ? ceph_con_process_message+0x65/0x190
+[40243.636828]  ? lock_release+0xd9/0x300
+[40243.637431]  ceph_con_process_message+0x7a/0x190
+[40243.638184]  ? kfree+0x311/0x4f0
+[40243.638749]  ? kfree+0x311/0x4f0
+[40243.639268]  process_message+0x16/0x1a0
+[40243.639915]  ? sg_free_table+0x39/0x90
+[40243.640572]  ceph_con_v2_try_read+0xf58/0x2120
+[40243.641255]  ? lock_acquire+0xc8/0x300
+[40243.641863]  ceph_con_workfn+0x151/0x820
+[40243.642493]  process_one_work+0x22f/0x630
+[40243.643093]  ? process_one_work+0x254/0x630
+[40243.643770]  worker_thread+0x1e2/0x400
+[40243.644332]  ? __pfx_worker_thread+0x10/0x10
+[40243.645020]  kthread+0x109/0x140
+[40243.645560]  ? __pfx_kthread+0x10/0x10
+[40243.646125]  ret_from_fork+0x3f8/0x480
+[40243.646752]  ? __pfx_kthread+0x10/0x10
+[40243.647316]  ? __pfx_kthread+0x10/0x10
+[40243.647919]  ret_from_fork_asm+0x1a/0x30
+[40243.648556]  </TASK>
+[40243.648902] Modules linked in: overlay hctr2 libpolyval chacha libchacha adiantum libnh libpoly1305 essiv intel_rapl_msr intel_rapl_common intel_uncore_frequency_common skx_edac_common nfit kvm_intel kvm irqbypass joydev ghash_clmulni_intel aesni_intel rapl input_leds mac_hid psmouse vga16fb serio_raw vgastate floppy i2c_piix4 pata_acpi bochs qemu_fw_cfg i2c_smbus sch_fq_codel rbd dm_crypt msr parport_pc ppdev lp parport efi_pstore
+[40243.654766] ---[ end trace 0000000000000000 ]---
+
+Commit d93231a6bc8a ("ceph: prevent a client from exceeding the MDS
+maximum xattr size") moved the required_blob_size computation to before
+the __build_xattrs() call, introducing a race.
+
+__build_xattrs() releases and reacquires i_ceph_lock during execution.
+In that window, handle_cap_grant() may update i_xattrs.blob with a
+newer MDS-provided blob and bump i_xattrs.version.  When
+__build_xattrs() detects that index_version < version, it destroys and
+rebuilds the entire xattr rb-tree from the new blob, potentially
+increasing count, names_size, and vals_size.
+
+The prealloc_blob size check that follows still uses the stale
+required_blob_size computed before the rebuild, so it passes even when
+prealloc_blob is too small for the now-larger tree. After __set_xattr()
+adds one more xattr on top, __ceph_build_xattrs_blob() is called from
+the cap flush path and hits:
+
+    BUG_ON(need > ci->i_xattrs.prealloc_blob->alloc_len);
+
+Fix this by recomputing required_blob_size after __build_xattrs()
+returns, using the current tree state. Also re-validate against
+m_max_xattr_size to fall back to the sync path if the rebuilt tree now
+exceeds the MDS limit.
 
 Cc: stable@vger.kernel.org
+Fixes: d93231a6bc8a ("ceph: prevent a client from exceeding the MDS maximum xattr size")
 Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/xattr.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ceph/xattr.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 --- a/fs/ceph/xattr.c
 +++ b/fs/ceph/xattr.c
-@@ -1294,6 +1294,7 @@ retry:
+@@ -1254,6 +1254,22 @@ retry:
+ 	      ceph_vinop(inode), name, ceph_cap_string(issued));
+ 	__build_xattrs(inode);
  
- do_sync:
- 	spin_unlock(&ci->i_ceph_lock);
-+	ceph_buffer_put(old_blob);
- do_sync_unlocked:
- 	if (lock_snap_rwsem)
- 		up_read(&mdsc->snap_rwsem);
++	/*
++	 * __build_xattrs() may have released and reacquired i_ceph_lock,
++	 * during which handle_cap_grant() could have replaced i_xattrs.blob
++	 * with a newer MDS-provided blob and bumped i_xattrs.version. If that
++	 * caused __build_xattrs() to rebuild the rb-tree from the new blob,
++	 * count/names_size/vals_size may now be larger than when
++	 * required_blob_size was computed above. Recompute it here so the
++	 * prealloc_blob size check below reflects the current tree state.
++	 */
++	required_blob_size = __get_required_blob_size(ci, name_len, val_len);
++	if (required_blob_size > mdsc->mdsmap->m_max_xattr_size) {
++		doutc(cl, "sync (size too large): %d > %llu\n",
++		      required_blob_size, mdsc->mdsmap->m_max_xattr_size);
++		goto do_sync;
++	}
++
+ 	if (!ci->i_xattrs.prealloc_blob ||
+ 	    required_blob_size > ci->i_xattrs.prealloc_blob->alloc_len) {
+ 		struct ceph_buffer *blob;
 
 
