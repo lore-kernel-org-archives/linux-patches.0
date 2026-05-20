@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A69352038;
-	Wed, 20 May 2026 16:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3803BCD2A;
+	Wed, 20 May 2026 16:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295491; cv=none; b=qDs3lsfgt0S0y5o8t9zVQZFQhAvtAyiHWI94syY6ezZZXk9AZSs5dr9WvH+jxnIAnOXCXSE+7Z956Ad8YC5twMNiQH9Krk39skkL9VcvHN1fo7EHk8dlrgtAxpVOMTPROGhCnHraC3b7K75o7K4z3jT97ULPgEKToXURp84pFcQ=
+	t=1779295493; cv=none; b=PFDnrHSMOrwt8P4EJ6ns5vqRivdsiX2GFCw4WrtTLCo62qpCXKDIH/oIfZVIYs5Yt95besRppCqVSowKJZ9qHoZmRKmK1cgRmZWf8Sc1czpbMjO3uG9IX2PmGFZj8TX01VwiCGQtMyKs/7JbazF7tL6OmwGo59JCah4HOFnYBM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295491; c=relaxed/simple;
-	bh=UhV401g20Ej5kBnwi6lJS7RUgZ4ehTzLoJfHYucLRH8=;
+	s=arc-20240116; t=1779295493; c=relaxed/simple;
+	bh=lVhXZK72qh+Be/D7KF8De3Fr1EnjQWYDwZN0hezIzkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4cOVHqK0+hncXWG59Xyh9r4rh5RfaeEZpaqqPRWpeNj9kqBwEQFXI7DgOwxFTN0Ypqdv3P7YLfDwQLQeRElE0FtmkJhYCOFyV+LwO7DSEENeD//tje5YHlZQNdsLBJtW5gzNg6YItXX3uMUvCkg+FmBLYl/pWNaM+BoBjnD44s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKsgYaOi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H1KZbOQHnAT4D8IpAuupDamkeCNy8cYAgPRMEiekDE4v0E8j7MYk8sueolJ5ez2hNNAnhOB9fhUjLA12eegs29SzgREbr5EdNWBQZiZ4UQROI2FpqAWb97WHPSRcrLng3hqbgzxnjeQsKVKPlxpm7SIsFsRZlHy39dojWlYOjyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRZYBK5w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKsgYaOi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3751F000E9;
-	Wed, 20 May 2026 16:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRZYBK5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7D31F000E9;
+	Wed, 20 May 2026 16:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295490;
-	bh=jEfEl4nMqSSjgM2Z/GI40u9Nn7wCxfWkhTSO1cj7zEk=;
+	s=korg; t=1779295492;
+	bh=FD9t3FS2c8R3AsQ2vck8AxOu/WPDY9N2uflGkhuXUJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JKsgYaOisM3Yw5+Iky+DtsBT+YjEekgGZUCq+tZSOgVFmB/r4Ra8DOMdVm0p3MSdg
-	 uNU/yO7u2BpZ/LstRpkOIBJfbvlwgTvBglzmkPqwHaJv8agiHJ6yvEEKKFq5aQ61Da
-	 xqTlxzaFoOF/NaqeZFpBiWPkQ3hrZD2GqplUFRJI=
+	b=XRZYBK5wHvYI2Tsye2+GfyHW+AGr2NLT4mX4wU15kI/f+SPLhZl2+YO9SHUjpFgY0
+	 svq+FGZIz/OZ0MZHUyH5Z2kV00bTe6YEnuBoREpVFMDgTAOT4x4spHtFhXxMJgDGoi
+	 FGlAsOtxr4Ra4+vaRjZXbI6Pr6BS1vU0honVkSiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Haixin Xu <jerryxucs@gmail.com>,
-	Stephan Mueller <smueller@chronox.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0440/1146] crypto: jitterentropy - replace long-held spinlock with mutex
-Date: Wed, 20 May 2026 18:11:30 +0200
-Message-ID: <20260520162158.157545272@linuxfoundation.org>
+Subject: [PATCH 7.0 0441/1146] ALSA: usb-audio: Exclude Scarlett 18i20 1st Gen from SKIP_IFACE_SETUP
+Date: Wed, 20 May 2026 18:11:31 +0200
+Message-ID: <20260520162158.179208266@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -56,107 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haixin Xu <jerryxucs@gmail.com>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-[ Upstream commit 01d798e9feb30212952d4e992801ba6bd6a82351 ]
+[ Upstream commit a47306a74c31557b1e5cab54642950bbb20294cb ]
 
-jent_kcapi_random() serializes the shared jitterentropy state, but it
-currently holds a spinlock across the jent_read_entropy() call. That
-path performs expensive jitter collection and SHA3 conditioning, so
-parallel readers can trigger stalls as contending waiters spin for
-the same lock.
+Same issue as the other 1st Gen Scarletts: QUIRK_FLAG_SKIP_IFACE_SETUP
+causes distorted audio on the Scarlett 18i20 1st Gen (1235:800c).
 
-To prevent non-preemptible lock hold, replace rng->jent_lock with a
-mutex so contended readers sleep instead of spinning on a shared lock
-held across expensive entropy generation.
-
-Fixes: bb5530e40824 ("crypto: jitterentropy - add jitterentropy RNG")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Haixin Xu <jerryxucs@gmail.com>
-Reviewed-by: Stephan Mueller <smueller@chronox.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 38c322068a26 ("ALSA: usb-audio: Add QUIRK_FLAG_SKIP_IFACE_SETUP")
+Reported-by: tucktuckg00se [https://github.com/geoffreybennett/linux-fcp/issues/54]
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Link: https://patch.msgid.link/ad0ozNnkcFrcjVQz@m.b4.vu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/jitterentropy-kcapi.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ sound/usb/quirks.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/crypto/jitterentropy-kcapi.c b/crypto/jitterentropy-kcapi.c
-index 7c880cf34c523..5edc6d285aa14 100644
---- a/crypto/jitterentropy-kcapi.c
-+++ b/crypto/jitterentropy-kcapi.c
-@@ -42,6 +42,7 @@
- #include <linux/fips.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/slab.h>
- #include <linux/time.h>
- #include <crypto/internal/rng.h>
-@@ -193,7 +194,7 @@ int jent_read_random_block(void *hash_state, char *dst, unsigned int dst_len)
-  ***************************************************************************/
- 
- struct jitterentropy {
--	spinlock_t jent_lock;
-+	struct mutex jent_lock;
- 	struct rand_data *entropy_collector;
- 	struct crypto_shash *tfm;
- 	struct shash_desc *sdesc;
-@@ -203,7 +204,7 @@ static void jent_kcapi_cleanup(struct crypto_tfm *tfm)
- {
- 	struct jitterentropy *rng = crypto_tfm_ctx(tfm);
- 
--	spin_lock(&rng->jent_lock);
-+	mutex_lock(&rng->jent_lock);
- 
- 	if (rng->sdesc) {
- 		shash_desc_zero(rng->sdesc);
-@@ -218,7 +219,7 @@ static void jent_kcapi_cleanup(struct crypto_tfm *tfm)
- 	if (rng->entropy_collector)
- 		jent_entropy_collector_free(rng->entropy_collector);
- 	rng->entropy_collector = NULL;
--	spin_unlock(&rng->jent_lock);
-+	mutex_unlock(&rng->jent_lock);
- }
- 
- static int jent_kcapi_init(struct crypto_tfm *tfm)
-@@ -228,7 +229,7 @@ static int jent_kcapi_init(struct crypto_tfm *tfm)
- 	struct shash_desc *sdesc;
- 	int size, ret = 0;
- 
--	spin_lock_init(&rng->jent_lock);
-+	mutex_init(&rng->jent_lock);
- 
- 	/* Use SHA3-256 as conditioner */
- 	hash = crypto_alloc_shash(JENT_CONDITIONING_HASH, 0, 0);
-@@ -257,7 +258,6 @@ static int jent_kcapi_init(struct crypto_tfm *tfm)
- 		goto err;
- 	}
- 
--	spin_lock_init(&rng->jent_lock);
- 	return 0;
- 
- err:
-@@ -272,7 +272,7 @@ static int jent_kcapi_random(struct crypto_rng *tfm,
- 	struct jitterentropy *rng = crypto_rng_ctx(tfm);
- 	int ret = 0;
- 
--	spin_lock(&rng->jent_lock);
-+	mutex_lock(&rng->jent_lock);
- 
- 	ret = jent_read_entropy(rng->entropy_collector, rdata, dlen);
- 
-@@ -298,7 +298,7 @@ static int jent_kcapi_random(struct crypto_rng *tfm,
- 		ret = -EINVAL;
- 	}
- 
--	spin_unlock(&rng->jent_lock);
-+	mutex_unlock(&rng->jent_lock);
- 
- 	return ret;
- }
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 4cfa24c06fcdf..6f2a053d971c9 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2435,6 +2435,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_VALIDATE_RATES),
+ 	DEVICE_FLG(0x1235, 0x8006, 0), /* Focusrite Scarlett 2i2 1st Gen */
+ 	DEVICE_FLG(0x1235, 0x800a, 0), /* Focusrite Scarlett 2i4 1st Gen */
++	DEVICE_FLG(0x1235, 0x800c, 0), /* Focusrite Scarlett 18i20 1st Gen */
+ 	DEVICE_FLG(0x1235, 0x8016, 0), /* Focusrite Scarlett 2i2 1st Gen */
+ 	DEVICE_FLG(0x1235, 0x801c, 0), /* Focusrite Scarlett Solo 1st Gen */
+ 	VENDOR_FLG(0x1235, /* Focusrite Novation */
 -- 
 2.53.0
 
