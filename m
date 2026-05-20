@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91C73264EB;
-	Wed, 20 May 2026 17:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5643264EB;
+	Wed, 20 May 2026 17:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297297; cv=none; b=jcMdT9NYBw8zg2vYODsNl3SOfv8lNttOY3aixwMarPTEkM9LgLIQzVg5fE5bDwa5vkLO7IQ9B9zYj9rY1/+gXgQRqxPw0m+7dfVoUhGl/D1622otg0hDGIXXWYlY2RpnNE/5+aRiwWQLeHRpA2n6oErvL0uBN9OVIpL1SogxPRk=
+	t=1779297300; cv=none; b=BXGVLyv+8igofnaf2Wl/qIfa2eWyqN5bdtt4xXNtOsoHy98A9m7H/GMKpGMKabzFILQsq9kvdomF2DNW/bpudjrGbnH6bgQ5JsL/wzb0L9j0BWjAegLAU15kVc+ry8wYK9wb77NqZkLG3Peq1eLbldGdeITtSI7kTYR3bqPKaJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297297; c=relaxed/simple;
-	bh=D9RySgZvD/HVXFzlfjWG0TmbBTUqTVkSmuS3q1PXFtA=;
+	s=arc-20240116; t=1779297300; c=relaxed/simple;
+	bh=AEjltkYe/dvH+2Q1afqYNljooLVduQ30DKbnApRAcWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tqrlAWXhWV4pgXi1rtZo8+txDJYoABL7HA6f88zlQYT7pxKgR7JpqdlbVIUn4pmR2+SkMFHt8vtm8P2CYewEuzduoVHIdO1KLU3rg4bA3JW8kmJ5BMy9zvnTMMAihlv14Vu9wtC6vbQhZ3TRPbc2XuehswTAa0ou1CVLGCZb+Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuYhAjpF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RfKi2p7HPQv4QJC3rgD8QWBxfWFX6Vqnu/BXAAIjeubuRkXHsAQytnQbcx50bD4XTefoDAup24skY+ltP10joSE5Ya4mPOkvpxazobbHq7mWiRufx0421ueSyonfzHLEOuYqB38rzHIJ/WMVO1r5YtdwkWsbqU+snl/oWzkBV6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfjwW9jg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuYhAjpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8241F000E9;
-	Wed, 20 May 2026 17:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfjwW9jg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C466E1F00894;
+	Wed, 20 May 2026 17:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297296;
-	bh=tlMj+JAE8qPcEDDBtDUMY9hCKSTvdCIhz0rgE2X8IHM=;
+	s=korg; t=1779297299;
+	bh=5UkC8DslZ0J8KrnHAirCf5TMh/IiIiwSrvqZgvOwNrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QuYhAjpFOVUWKATG5FGlbNbDLV53Jd4hHELp5srDEXULpqeAMOqTSQQX5m7WiKqhR
-	 juujxb/9TakttHUI2xhxHaGjMcnxnstzN2vjwP5CPWjQiiGDMOOtJnHdYg1bXOMaOU
-	 64cD6YpsHbGZ2XGBgFbHHsD/8FwRQeQ9pjaaoOQQ=
+	b=vfjwW9jgLD704J49gv48/nWRv5W26fUlyWi+D31Rq0i+rw3mG+Q9/+7x2uYz1JR67
+	 DTfgvrB1JcxGgJ0RZJKEwaeMQDMFosjW7ZRiVQO5YV3Y1tGi6fJBb/zQJv9mV7rpqo
+	 oeePGFAi9yMayJsSTSCZIkpU7rX/eBbVgkTWfDgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Kevin Tian <kevin.tian@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
 	Nicolin Chen <nicolinc@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 7.0 1124/1146] iommu: Fix WARN_ON in __iommu_group_set_domain_nofail() due to reset
-Date: Wed, 20 May 2026 18:22:54 +0200
-Message-ID: <20260520162213.682564750@linuxfoundation.org>
+Subject: [PATCH 7.0 1125/1146] iommu: Fix pasid attach in pci_dev_reset_iommu_prepare/done()
+Date: Wed, 20 May 2026 18:22:55 +0200
+Message-ID: <20260520162213.705092494@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,65 +56,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 5474e6e17a262db45c60575c73f70210f5c7001f upstream.
+commit 1615e8896a8f6d7b2adf6495e538a81bf6cea3e0 upstream.
 
-In __iommu_group_set_domain_internal(), concurrent domain attachments are
-rejected when any device in the group is recovering. This is necessary to
-fence concurrent attachments to a multi-device group where devices might
-share the same RID due to PCI DMA alias quirks, but triggers the WARN_ON in
-__iommu_group_set_domain_nofail().
+Now the helpers handle per-gdev resets. Replace __iommu_set_group_pasid()
+with set_dev_pasid() accordingly, in the pci_dev_reset_iommu_done().
 
-Other IOMMU_SET_DOMAIN_MUST_SUCCEED callers in detach/teardown paths, such
-as __iommu_group_set_core_domain and __iommu_release_dma_ownership, should
-not be rejected, as the domain would be freed anyway in these nofail paths
-while group->domain is still pointing to it. So pci_dev_reset_iommu_done()
-could trigger a UAF when re-attaching group->domain.
-
-Honor the IOMMU_SET_DOMAIN_MUST_SUCCEED flag, allowing the callers through
-the group->recovery_cnt fence, so as to update the group->domain pointer.
-Instead add a gdev->blocked check in the device iteration loop, to prevent
-any concurrent per-device detachment.
+Also add max_pasids check as other callers.
 
 Fixes: c279e83953d9 ("iommu: Introduce pci_dev_reset_iommu_prepare/done()")
 Cc: stable@vger.kernel.org
-Closes: https://sashiko.dev/#/patchset/20260407194644.171304-1-nicolinc%40nvidia.com
+Reported-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Closes: https://lore.kernel.org/all/ad858513-09fc-455e-bbc5-fe38a225cc78@linux.alibaba.com/
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommu.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/iommu/iommu.c |   25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
 --- a/drivers/iommu/iommu.c
 +++ b/drivers/iommu/iommu.c
-@@ -2472,9 +2472,10 @@ static int __iommu_group_set_domain_inte
- 
- 	/*
- 	 * This is a concurrent attach during device recovery. Reject it until
--	 * pci_dev_reset_iommu_done() attaches the device to group->domain.
-+	 * pci_dev_reset_iommu_done() attaches the device to group->domain, if
-+	 * IOMMU_SET_DOMAIN_MUST_SUCCEED is not set.
+@@ -4044,9 +4044,14 @@ int pci_dev_reset_iommu_prepare(struct p
+ 	 * The pasid_array is mostly fenced by group->mutex, except one reader
+ 	 * in iommu_attach_handle_get(), so it's safe to read without xa_lock.
  	 */
--	if (group->recovery_cnt)
-+	if (group->recovery_cnt && !(flags & IOMMU_SET_DOMAIN_MUST_SUCCEED))
- 		return -EBUSY;
+-	xa_for_each_start(&group->pasid_array, pasid, entry, 1)
+-		iommu_remove_dev_pasid(&pdev->dev, pasid,
+-				       pasid_array_entry_to_domain(entry));
++	if (pdev->dev.iommu->max_pasids > 0) {
++		xa_for_each_start(&group->pasid_array, pasid, entry, 1) {
++			struct iommu_domain *pasid_dom =
++				pasid_array_entry_to_domain(entry);
++
++			iommu_remove_dev_pasid(&pdev->dev, pasid, pasid_dom);
++		}
++	}
  
- 	/*
-@@ -2485,6 +2486,13 @@ static int __iommu_group_set_domain_inte
+ 	group->recovery_cnt++;
+ 	return ret;
+@@ -4113,10 +4118,16 @@ void pci_dev_reset_iommu_done(struct pci
+ 	 * The pasid_array is mostly fenced by group->mutex, except one reader
+ 	 * in iommu_attach_handle_get(), so it's safe to read without xa_lock.
  	 */
- 	result = 0;
- 	for_each_group_device(group, gdev) {
-+		/*
-+		 * Device under recovery is attached to group->blocking_domain.
-+		 * Don't change that. pci_dev_reset_iommu_done() will re-attach
-+		 * its domain to the updated group->domain, after the recovery.
-+		 */
-+		if (gdev->blocked)
-+			continue;
- 		ret = __iommu_device_set_domain(group, gdev->dev, new_domain,
- 						group->domain, flags);
- 		if (ret) {
+-	xa_for_each_start(&group->pasid_array, pasid, entry, 1)
+-		WARN_ON(__iommu_set_group_pasid(
+-			pasid_array_entry_to_domain(entry), group, pasid,
+-			group->blocking_domain));
++	if (pdev->dev.iommu->max_pasids > 0) {
++		xa_for_each_start(&group->pasid_array, pasid, entry, 1) {
++			struct iommu_domain *pasid_dom =
++				pasid_array_entry_to_domain(entry);
++
++			WARN_ON(pasid_dom->ops->set_dev_pasid(
++				pasid_dom, &pdev->dev, pasid,
++				group->blocking_domain));
++		}
++	}
+ 
+ 	if (!WARN_ON(group->recovery_cnt == 0))
+ 		group->recovery_cnt--;
 
 
