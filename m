@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037A33546C8;
-	Wed, 20 May 2026 17:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A008C3F1AB8;
+	Wed, 20 May 2026 17:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299126; cv=none; b=hFJC63MQdfOHr8zBfUyDrqIBHHVlUGt+fMOYTaNj7d/svEpnS1LIuHQaPSDrrKtTQj8wuwdis0BogRthgFhFr+sNiItVARvC0nLxt2BDNzfDvW24iFqZ7mkP/gXDegmhgre64hMDkj9FqvM0MyqIfqz9GrQ2TFeYCGh/qLW5WBg=
+	t=1779299128; cv=none; b=CZ29rrhPoa9wfN7Iks3t43Ie6qfHhZq2BDYj0lLEpDwrQLqs1G1vXmJrknu02XiU8tvcynkwYbGONXGxwTbxyBIFR2cXimGgMcHEPYhBJdf3nNXA+JyCPG5KQLEeQBfFngRplI3SFbTQDVbrgSyVEK2nSSX7+OsHrWGPgDs32pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299126; c=relaxed/simple;
-	bh=213OWZrwTYKuUpR/aH2nG90Kp/4OV3Dmzt5zfg+FLfw=;
+	s=arc-20240116; t=1779299128; c=relaxed/simple;
+	bh=UHDDRYk0nmnpJuE3LvDwB6Ep9bvcN3w0Vbll6FRYgzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O6gw+WPyTy1X3ZSHFZD/EDNj8uUmLgCclS8XuLWCV79rcyds+GS9y4Lrx7uZ1gcChxasjYnBKjEkG8DAXwUfGcZO/3aGs+bbBnG9TqKbExTCBZUXQx/C07CQZyPttAHiB2I7B1cCvAyd0Dya4HbtWfzHC0vysxrCfVBn9bK+WyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IsMcxGIT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GCrHBUr0A9PGUL0T1OyW1vQ5FkZh0faxAtCJVNW864ZZb6YaHMDc6IarsKb6jGYyJ0VeVn9TXVPLGJ5ZIdJ+5rebH2VHadkD8U6Y+ppzHZezxrwPVDDRXz5xJ0dYaSo8AG88DUiG+sVSTT7E8FXuAsxVLDoQ1lQp8Z+zWK9+Lwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wqz3/pZU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IsMcxGIT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A651F000E9;
-	Wed, 20 May 2026 17:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wqz3/pZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112501F000E9;
+	Wed, 20 May 2026 17:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299124;
-	bh=myE3IhbyglyX+kdOOJsf1wWrWx3QSv0ZGjmlhlg9ImA=;
+	s=korg; t=1779299127;
+	bh=Bc3Ixdcehf51fEq3PHBwgju+bRkaEoA08uSEwwe78BY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IsMcxGITx4tnGkLysBP2YSFyh+hmUafpu0X4jLqVHvh4zxz63/NJJ3U1otz9JbyJX
-	 hZ4/H/NkqjpSMzgYPWsI/6C/sbxBEPrLRbJdtPqq1F6LA7jezRSCeGQMSKjtMNMTfG
-	 i41gsccbwYJK2Xgpu8+rqiofp8O/rpwY5skgnCF4=
+	b=Wqz3/pZUTnn+K7l2nYW/MM+3cF92/fCZOl2ARoP5d1e/n5AYPouKnfDvPUJw9Glor
+	 onblI3X5z6s9OSHQzuiQQ6MOhEDIfrAx0eMm+31WbbBkuRVABZOYOKgJCWF/SRY59M
+	 o/zVS1xIJpqTzhJmA+C2u/h2ZKzrGxUvEOwPXZ/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangyun Kim <sangyun.kim@snu.ac.kr>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	DaeMyung Kang <charsyam@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 673/957] pwm: atmel-tcb: Cache clock rates and mark chip as atomic
-Date: Wed, 20 May 2026 18:19:16 +0200
-Message-ID: <20260520162149.133268252@linuxfoundation.org>
+Subject: [PATCH 6.18 674/957] ksmbd: destroy tree_conn_ida in ksmbd_session_destroy()
+Date: Wed, 20 May 2026 18:19:17 +0200
+Message-ID: <20260520162149.154584877@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -45,141 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sangyun Kim <sangyun.kim@snu.ac.kr>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-[ Upstream commit 68637b68afcc3cb4d56aca14a3a1d1b47b879369 ]
+[ Upstream commit c049ee14eb4343b69b6f7755563f961f5e153423 ]
 
-atmel_tcb_pwm_apply() holds tcbpwmc->lock as a spinlock via
-guard(spinlock)() and then calls atmel_tcb_pwm_config(), which calls
-clk_get_rate() twice. clk_get_rate() acquires clk_prepare_lock (a
-mutex), so this is a sleep-in-atomic-context violation.
+When per-session tree_conn_ida was converted from a dynamically
+allocated ksmbd_ida to an embedded struct ida, ksmbd_ida_free() was
+removed from ksmbd_session_destroy() but no matching ida_destroy()
+was added.  The session is therefore freed with the IDA's backing
+xarray still intact.
 
-On CONFIG_DEBUG_ATOMIC_SLEEP kernels every pwm_apply_state() that
-enables or reconfigures the PWM triggers a "BUG: sleeping function
-called from invalid context" warning.
+The kernel IDA API expects ida_init() and ida_destroy() to be paired
+over an object's lifetime, so add the missing cleanup before the
+enclosing session is freed.
 
-Acquire exclusive control over the clock rates with
-clk_rate_exclusive_get() at probe time and cache the rates in struct
-atmel_tcb_pwm_chip, then read the cached rates from
-atmel_tcb_pwm_config(). This keeps the spinlock-based mutual exclusion
-introduced in commit 37f7707077f5 ("pwm: atmel-tcb: Fix race condition
-and convert to guards") and removes the sleeping calls from the atomic
-section.
+Also move ida_init() to right after the session is allocated so that
+it is always paired with the destroy call even on the early error
+paths of __session_create() (ksmbd_init_file_table() or
+__init_smb2_session() failures), both of which jump to the error
+label and invoke ksmbd_session_destroy() on a partially initialised
+session.
 
-With no sleeping calls left in .apply() and the regmap-mmio bus already
-running with fast_io=true, also mark the chip as atomic so consumers
-can use pwm_apply_atomic() from atomic context.
+No leak has been observed in testing; this is a pairing fix to match
+the IDA lifetime rules, not a response to a reproduced regression.
 
-Fixes: 37f7707077f5 ("pwm: atmel-tcb: Fix race condition and convert to guards")
-Signed-off-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
-Link: https://patch.msgid.link/20260419080838.3192357-1-sangyun.kim@snu.ac.kr
-[ukleinek: Ensure .clk is enabled before calling clk_get_rate on it.]
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: d40012a83f87 ("cifsd: declare ida statically")
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-atmel-tcb.c | 38 +++++++++++++++++++++++++++++++++----
- 1 file changed, 34 insertions(+), 4 deletions(-)
+ fs/smb/server/mgmt/user_session.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-atmel-tcb.c b/drivers/pwm/pwm-atmel-tcb.c
-index f9ff78ba122d4..3d30aeab507e0 100644
---- a/drivers/pwm/pwm-atmel-tcb.c
-+++ b/drivers/pwm/pwm-atmel-tcb.c
-@@ -50,6 +50,8 @@ struct atmel_tcb_pwm_chip {
- 	spinlock_t lock;
- 	u8 channel;
- 	u8 width;
-+	unsigned long rate;
-+	unsigned long slow_rate;
- 	struct regmap *regmap;
- 	struct clk *clk;
- 	struct clk *gclk;
-@@ -266,7 +268,7 @@ static int atmel_tcb_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	int slowclk = 0;
- 	unsigned period;
- 	unsigned duty;
--	unsigned rate = clk_get_rate(tcbpwmc->clk);
-+	unsigned long rate = tcbpwmc->rate;
- 	unsigned long long min;
- 	unsigned long long max;
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index ed343807660fa..afa0daa3f5d88 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -170,6 +170,7 @@ void ksmbd_session_destroy(struct ksmbd_session *sess)
+ 	free_channel_list(sess);
+ 	kfree(sess->Preauth_HashValue);
+ 	ksmbd_release_id(&session_ida, sess->id);
++	ida_destroy(&sess->tree_conn_ida);
+ 	kfree(sess);
+ }
  
-@@ -294,7 +296,7 @@ static int atmel_tcb_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	 */
- 	if (i == ARRAY_SIZE(atmel_tcb_divisors)) {
- 		i = slowclk;
--		rate = clk_get_rate(tcbpwmc->slow_clk);
-+		rate = tcbpwmc->slow_rate;
- 		min = div_u64(NSEC_PER_SEC, rate);
- 		max = min << tcbpwmc->width;
+@@ -444,6 +445,8 @@ static struct ksmbd_session *__session_create(int protocol)
+ 	if (!sess)
+ 		return NULL;
  
-@@ -431,24 +433,49 @@ static int atmel_tcb_pwm_probe(struct platform_device *pdev)
- 	}
- 
- 	chip->ops = &atmel_tcb_pwm_ops;
-+	chip->atomic = true;
- 	tcbpwmc->channel = channel;
- 	tcbpwmc->width = config->counter_width;
- 
--	err = clk_prepare_enable(tcbpwmc->slow_clk);
-+	err = clk_prepare_enable(tcbpwmc->clk);
- 	if (err)
- 		goto err_gclk;
- 
-+	err = clk_prepare_enable(tcbpwmc->slow_clk);
-+	if (err)
-+		goto err_disable_clk;;
++	ida_init(&sess->tree_conn_ida);
 +
-+	err = clk_rate_exclusive_get(tcbpwmc->clk);
-+	if (err)
-+		goto err_disable_slow_clk;
-+
-+	err = clk_rate_exclusive_get(tcbpwmc->slow_clk);
-+	if (err)
-+		goto err_clk_unlock;
-+
-+	tcbpwmc->rate = clk_get_rate(tcbpwmc->clk);
-+	tcbpwmc->slow_rate = clk_get_rate(tcbpwmc->slow_clk);
-+
- 	spin_lock_init(&tcbpwmc->lock);
+ 	if (ksmbd_init_file_table(&sess->file_table))
+ 		goto error;
  
- 	err = pwmchip_add(chip);
- 	if (err < 0)
--		goto err_disable_clk;
-+		goto err_slow_clk_unlock;
+@@ -463,8 +466,6 @@ static struct ksmbd_session *__session_create(int protocol)
+ 	if (ret)
+ 		goto error;
  
- 	platform_set_drvdata(pdev, chip);
- 
- 	return 0;
- 
-+err_slow_clk_unlock:
-+	clk_rate_exclusive_put(tcbpwmc->slow_clk);
-+
-+err_clk_unlock:
-+	clk_rate_exclusive_put(tcbpwmc->clk);
-+
- err_disable_clk:
-+	clk_disable_unprepare(tcbpwmc->clk);
-+
-+err_disable_slow_clk:
- 	clk_disable_unprepare(tcbpwmc->slow_clk);
- 
- err_gclk:
-@@ -470,6 +497,9 @@ static void atmel_tcb_pwm_remove(struct platform_device *pdev)
- 
- 	pwmchip_remove(chip);
- 
-+	clk_rate_exclusive_put(tcbpwmc->slow_clk);
-+	clk_rate_exclusive_put(tcbpwmc->clk);
-+	clk_disable_unprepare(tcbpwmc->clk);
- 	clk_disable_unprepare(tcbpwmc->slow_clk);
- 	clk_put(tcbpwmc->gclk);
- 	clk_put(tcbpwmc->clk);
+-	ida_init(&sess->tree_conn_ida);
+-
+ 	down_write(&sessions_table_lock);
+ 	hash_add(sessions_table, &sess->hlist, sess->id);
+ 	up_write(&sessions_table_lock);
 -- 
 2.53.0
 
