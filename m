@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2CE369D6E;
-	Wed, 20 May 2026 16:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA8030567F;
+	Wed, 20 May 2026 16:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295520; cv=none; b=GqaLQNUkwUPschzUt4ub+tYCLqeSGmT7AUS5hzGrtFrMJRDm2hb267+iS0wmjpJi/mRvKSME93VOGyU4ZrW7AKAdBtCeSWrD4q2Cut2kz4gGWKYBEfOGuC8Ms2gj9Trb9gM5cwx4yageVAR+wHUQ9V7/loxE+FZEeKA4pVTIH/c=
+	t=1779295522; cv=none; b=GRV+kA2sdsE5/A1xbhsrz4SDAHUt+nB8fTedxvuH0lO0komqkLGlg+xdev3sGCGjm2gB7ksHVlO8XcxgT1Vpl2uogvHx6cmxHR8rmzCoWkqNJtjvdl12lHAA+tS63dUmoMWMb5boDn5xFQN20gSNFeoDQtVZzH/Oq5lJ6R9J4Fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295520; c=relaxed/simple;
-	bh=jI5lknLLOYCc0Q+jzKNBUDEVbs7oVkfcM8AQScxhq30=;
+	s=arc-20240116; t=1779295522; c=relaxed/simple;
+	bh=0erGHXYNKhQg98VrRFdnCrNJKt4Xi4BktqnsIbAhNg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u/h6FNE1QwhtjfJKWZvwRrl2f8A272rnveRe9XiDUWVjMAicTvAZJEXxA7BeASwZ2DESz9dKXD0EStbmHpbFcJ7sriiWtlCz0T2PibuOt1aWVGbbtgK5EeUEqZD/pScWXjXoKcInghg9fiULmf9qgU3Lhk6XDP3YRU5I0ImoR4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHQr0vDS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eO6jwUY5J8AXt6x+21y7GnxKsdOlSL9lvwqzIlyGQF3r1TChNNUNtiag8h9r/bOspCaMQdAUnRIhq3fNgwgaUuMZ395vQVf81B4b1g6ttq65z7APzSADQ1mSa8d03Nbg7rlF9WcacfPdVkmcRzqp+2ovyqHq+AHh/XtWBxW3fRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIlDtzj+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHQr0vDS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A621F000E9;
-	Wed, 20 May 2026 16:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIlDtzj+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED46C1F000E9;
+	Wed, 20 May 2026 16:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295518;
-	bh=livAhtDYhBV++n0DQXHmyW8oxcRVXt+BV1i+IOljGgk=;
+	s=korg; t=1779295521;
+	bh=VqtYGTv5AjPKb2h2EPjKXQG7tRJdnB537DUGOyq4eRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HHQr0vDSNpu71MLX7VwAG/iSGNFk8d26/mn3C7/hsi5U0QzYMo1UDUpXRrFWgg/Sh
-	 MMuQubdLY+CiaAEwVlhTOSk/L+DlHrkBuw4nPzPJ18zzAyPi6+8lNbfyuKKpMOGHQq
-	 3qRteY/k/3U4ATXQsbt3iZIQKlSu86Bjhjmtopr4=
+	b=NIlDtzj+dwqbXSIgBY+4+IzQy57uDI12Z32PHWToLkarLivoPS31q077bjWYPJH7p
+	 BkdOKPmLueYAC/C9BFdqUDH5gRgO8pJPfN6cMFYYXSdpRH1TtcbMUQlq0jOA1C4gmU
+	 +vfuwdwLHhBr2P2b0kgFAZ3u8ysbr7pNu3EW64JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Hawley <warthog9@eaglescrag.net>,
-	Andrea Righi <arighi@nvidia.com>,
-	Marcos Paulo de Souza <mpdesouza@suse.com>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Alex Mastro <amastro@fb.com>,
+	David Matlack <dmatlack@google.com>,
+	Yuan Yao <yaoyuan@linux.alibaba.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0450/1146] ktest: Run POST_KTEST hooks on failure and cancellation
-Date: Wed, 20 May 2026 18:11:40 +0200
-Message-ID: <20260520162158.381622883@linuxfoundation.org>
+Subject: [PATCH 7.0 0451/1146] vfio: selftests: fix crash in vfio_dma_mapping_mmio_test
+Date: Wed, 20 May 2026 18:11:41 +0200
+Message-ID: <20260520162158.404873972@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,107 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Alex Mastro <amastro@fb.com>
 
-[ Upstream commit bc6e165a452da909cef0efbc286e6695624db372 ]
+[ Upstream commit f183963891b4b0126f19aa0993ed931f3f3f9520 ]
 
-PRE_KTEST can be useful for setting up the environment and POST_KTEST to
-tear it down, however POST_KTEST only runs on the normal end-of-run path.
-It is skipped when ktest exits through dodie() or cancel_test(). Final
-cleanup hooks are skipped.
+Remove the __iommu_unmap() call on a region that was never mapped.
+When __iommu_map() fails (expected for MMIO vaddrs in non-VFIO
+modes), the region is not added to the dma_regions list, leaving its
+list_head zero-initialized. If the unmap ioctl returns success,
+__iommu_unmap() calls list_del_init() on this zeroed node and crashes.
 
-Factor the final hook execution into run_post_ktest(), call it from the
-normal exit path and from the early exit paths, and guard it so the hook
-runs at most once.
+This fixes the iommufd_compat_type1 and iommufd_compat_type1v2
+test variants.
 
-Cc: John Hawley <warthog9@eaglescrag.net>
-Cc: Andrea Righi <arighi@nvidia.com>
-Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
-Cc: Matthieu Baerts <matttbe@kernel.org>
-Cc: Fernando Fernandez Mancera <fmancera@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Link: https://patch.msgid.link/20260307-ktest-fixes-v1-8-565d412f4925@suse.com
-Fixes: 921ed4c7208e ("ktest: Add PRE/POST_KTEST and TEST options")
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 080723f4d4c3 ("vfio: selftests: Add vfio_dma_mapping_mmio_test")
+Signed-off-by: Alex Mastro <amastro@fb.com>
+Reviewed-by: David Matlack <dmatlack@google.com>
+Reviewed-by: Yuan Yao <yaoyuan@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20260303-fix-mmio-test-v1-1-78b4a9e46a4e@fb.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ tools/testing/selftests/vfio/vfio_dma_mapping_mmio_test.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index 924e17df56f74..17bdce9cafac2 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -100,6 +100,7 @@ my $test_type;
- my $build_type;
- my $build_options;
- my $final_post_ktest;
-+my $post_ktest_done = 0;
- my $pre_ktest;
- my $post_ktest;
- my $pre_test;
-@@ -1575,6 +1576,24 @@ sub get_test_name() {
-     return $name;
+diff --git a/tools/testing/selftests/vfio/vfio_dma_mapping_mmio_test.c b/tools/testing/selftests/vfio/vfio_dma_mapping_mmio_test.c
+index 957a89ce7b3a0..d7f25ef776715 100644
+--- a/tools/testing/selftests/vfio/vfio_dma_mapping_mmio_test.c
++++ b/tools/testing/selftests/vfio/vfio_dma_mapping_mmio_test.c
+@@ -100,7 +100,6 @@ static void do_mmio_map_test(struct iommu *iommu,
+ 		iommu_unmap(iommu, &region);
+ 	} else {
+ 		VFIO_ASSERT_NE(__iommu_map(iommu, &region), 0);
+-		VFIO_ASSERT_NE(__iommu_unmap(iommu, &region, NULL), 0);
+ 	}
  }
  
-+sub run_post_ktest {
-+    my $cmd;
-+
-+    return if ($post_ktest_done);
-+
-+    if (defined($final_post_ktest)) {
-+	$cmd = $final_post_ktest;
-+    } elsif (defined($post_ktest)) {
-+	$cmd = $post_ktest;
-+    } else {
-+	return;
-+    }
-+
-+    my $cp_post_ktest = eval_kernel_version($cmd);
-+    run_command $cp_post_ktest;
-+    $post_ktest_done = 1;
-+}
-+
- sub dodie {
-     # avoid recursion
-     return if ($in_die);
-@@ -1634,6 +1653,7 @@ sub dodie {
-     if (defined($post_test)) {
- 	run_command $post_test;
-     }
-+    run_post_ktest;
- 
-     die @_, "\n";
- }
-@@ -4300,6 +4320,7 @@ sub cancel_test {
- 	send_email("KTEST: Your [$name] test was cancelled",
- 	    "Your test started at $script_start_time was cancelled: sig int");
-     }
-+    run_post_ktest;
-     die "\nCaught Sig Int, test interrupted: $!\n"
- }
- 
-@@ -4661,11 +4682,7 @@ for (my $i = 1; $i <= $opt{"NUM_TESTS"}; $i++) {
-     success $i;
- }
- 
--if (defined($final_post_ktest)) {
--
--    my $cp_final_post_ktest = eval_kernel_version $final_post_ktest;
--    run_command $cp_final_post_ktest;
--}
-+run_post_ktest;
- 
- if ($opt{"POWEROFF_ON_SUCCESS"}) {
-     halt;
 -- 
 2.53.0
 
