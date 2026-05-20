@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2E3372EDE;
-	Wed, 20 May 2026 16:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683863EFD22;
+	Wed, 20 May 2026 16:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296145; cv=none; b=cH3cldXTBjIs2zmUf8Dn77ZdwA1kvn1xoemarZeaDMJONnt8Cr9Qf4zvdRq4GRBv2aAj556rt2BEJXBm0fqL44c9k9wFGyzyYCOvFoLrX1GUh/qte3dK9hDfcRrC2qq0v7ma781xCu0VKZktcxTAdP1klRijZj3WkXnXCn9xvr4=
+	t=1779296148; cv=none; b=pMQnmpttDTSUuEZ7YU9K1di2l3aiQvGQaYotOP43OMmDJoHrCwXvTaJzHMgyWnB+hQSyZKcR2lhW8qHxqG+jVShyCvAuh4pOCLxXWddNZ/CUGOmEC55uAyxlrsL1fP8swme2JYkYwBfYrNPT8dFcZbpKSqKdFx+gUxu6oHhuYRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296145; c=relaxed/simple;
-	bh=CFwTchjEbKNlTYp9pWPCgu0c7xtHGATFuN0rl3wNIbE=;
+	s=arc-20240116; t=1779296148; c=relaxed/simple;
+	bh=Isp3wXgVb1VQA2JEDeI/s8JHc1kVjXW/y2a7/B9vUlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L1sRXg6TQOP7B6Xpbf+CDupdEOVgIhrebZyLBpETTAUay4pawz6buqtmKHGFzkAe39sx01qJo323aRgLy/WajUZLGC2IPVVL8q3q3PrYPOdyR3t1yH2/8OZWe4BN6T/0yh6FoSc/lDsUR7oaJCaXtTDKZMjmR+WgzPesVOmlp0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eh6uqtE7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=G+e1d4I3iV5MYrMvSLPNDgti+u/S6SFvJ8PxdVoO5xxD6TSjUd3QSFyXVSyT2uJBsmBZUTuN8jQsoHwPMlRwWWZ5hmTcd7eOnzhNxUGEkR4PkY+2foIadOljLs/SJFjGMWhk80MLznorIL5STlPuvvwSaSOm8cC7fUF37A4V9Ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WquDUJA9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eh6uqtE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDB71F000E9;
-	Wed, 20 May 2026 16:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WquDUJA9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC191F000E9;
+	Wed, 20 May 2026 16:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296144;
-	bh=SXKi89bsWlJoaKnovl/EvKuNIYHi6mwMS9+Xaw5Tjys=;
+	s=korg; t=1779296147;
+	bh=0s2vxNfkKBJsMiF5bwdIJ3PCqNZ9n88umPtiydvjxO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eh6uqtE7X+DCOEgpdjRMqoKvLQPpjNJ9f0rX+4YZTe9AHzl+ZKVayS+ANgVpqIEt5
-	 K+M9sxVKqywvfHvpUjXtauGHKPqZaj6gfWyhgD9PHG6hGr8/Evts5hztRfo36pbUUO
-	 3Z7O5aNSEi1EFD9/1mzdJ7Mklu4FuF+NZjQxNMWY=
+	b=WquDUJA9OJHmQ1duVTpVFsodA5AdchMMT24/jYlZnqn8ka7bfabL2/s75JgGkMXlk
+	 Xp0YhF0nMzQUihcg+dflJm0Lr56E2lKI4Tx3DFD0PN72GYrtyIwNpGkeBZjHbV6AIo
+	 j92mKK+hAtSCwmCoiljzInJeEo/OUpQSH4j7c2hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Emre Cecanpunar <emreleno@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0686/1146] platform/x86: hp-wmi: fix ignored return values in fan settings
-Date: Wed, 20 May 2026 18:15:36 +0200
-Message-ID: <20260520162203.715965123@linuxfoundation.org>
+Subject: [PATCH 7.0 0687/1146] platform/x86: hp-wmi: avoid cancel_delayed_work_sync from work handler
+Date: Wed, 20 May 2026 18:15:37 +0200
+Message-ID: <20260520162203.737935159@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,95 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Emre Cecanpunar <emreleno@gmail.com>
 
-[ Upstream commit 7265b57fbc32782d02bdb8d865ba0d8efa209c8c ]
+[ Upstream commit 249ddba9c0ba4453c0a6bc0e3626e7864751d940 ]
 
-hp_wmi_get_fan_count_userdefine_trigger() can fail, but its return
-value was silently ignored in hp_wmi_apply_fan_settings() for
-PWM_MODE_MAX/AUTO. Propagate these errors consistently.
+hp_wmi_apply_fan_settings() uses cancel_delayed_work_sync() to stop
+the keep-alive timer in AUTO mode. However, since
+hp_wmi_apply_fan_settings() is also called from the keep-alive
+handler, a race condition with a sysfs write can cause the handler to
+wait on itself, leading to a deadlock.
 
-Additionally, handle the return value of hp_wmi_apply_fan_settings()
-in its callers by adding appropriate warnings on failure, and remove an
-unreachable "return 0" at the end of the function.
+Replace cancel_delayed_work_sync() with cancel_delayed_work() in
+hp_wmi_apply_fan_settings() to avoid the self-flush deadlock.
 
-Fixes: 46be1453e6e6 ("platform/x86: hp-wmi: add manual fan control for Victus S models")
+Fixes: c203c59fb5de ("platform/x86: hp-wmi: implement fan keep-alive")
 Signed-off-by: Emre Cecanpunar <emreleno@gmail.com>
-Link: https://patch.msgid.link/20260407142515.20683-2-emreleno@gmail.com
+Link: https://patch.msgid.link/20260407142515.20683-3-emreleno@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index 62fd2fe0d8d0e..c9fe740d8933e 100644
+index c9fe740d8933e..4dd7e4a118ea4 100644
 --- a/drivers/platform/x86/hp/hp-wmi.c
 +++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -2358,8 +2358,11 @@ static int hp_wmi_apply_fan_settings(struct hp_wmi_hwmon_priv *priv)
- 
- 	switch (priv->mode) {
- 	case PWM_MODE_MAX:
--		if (is_victus_s_thermal_profile())
--			hp_wmi_get_fan_count_userdefine_trigger();
-+		if (is_victus_s_thermal_profile()) {
-+			ret = hp_wmi_get_fan_count_userdefine_trigger();
-+			if (ret < 0)
-+				return ret;
-+		}
- 		ret = hp_wmi_fan_speed_max_set(1);
+@@ -2389,7 +2389,7 @@ static int hp_wmi_apply_fan_settings(struct hp_wmi_hwmon_priv *priv)
+ 		}
  		if (ret < 0)
  			return ret;
-@@ -2377,7 +2380,9 @@ static int hp_wmi_apply_fan_settings(struct hp_wmi_hwmon_priv *priv)
+-		cancel_delayed_work_sync(&priv->keep_alive_dwork);
++		cancel_delayed_work(&priv->keep_alive_dwork);
  		return 0;
- 	case PWM_MODE_AUTO:
- 		if (is_victus_s_thermal_profile()) {
--			hp_wmi_get_fan_count_userdefine_trigger();
-+			ret = hp_wmi_get_fan_count_userdefine_trigger();
-+			if (ret < 0)
-+				return ret;
- 			ret = hp_wmi_fan_speed_max_reset(priv);
- 		} else {
- 			ret = hp_wmi_fan_speed_max_set(0);
-@@ -2390,8 +2395,6 @@ static int hp_wmi_apply_fan_settings(struct hp_wmi_hwmon_priv *priv)
+ 	default:
  		/* shouldn't happen */
- 		return -EINVAL;
- 	}
--
--	return 0;
- }
- 
- static umode_t hp_wmi_hwmon_is_visible(const void *data,
-@@ -2533,6 +2536,7 @@ static void hp_wmi_hwmon_keep_alive_handler(struct work_struct *work)
- {
- 	struct delayed_work *dwork;
- 	struct hp_wmi_hwmon_priv *priv;
-+	int ret;
- 
- 	dwork = to_delayed_work(work);
- 	priv = container_of(dwork, struct hp_wmi_hwmon_priv, keep_alive_dwork);
-@@ -2540,7 +2544,10 @@ static void hp_wmi_hwmon_keep_alive_handler(struct work_struct *work)
- 	 * Re-apply the current hwmon context settings.
- 	 * NOTE: hp_wmi_apply_fan_settings will handle the re-scheduling.
- 	 */
--	hp_wmi_apply_fan_settings(priv);
-+	ret = hp_wmi_apply_fan_settings(priv);
-+	if (ret)
-+		pr_warn_ratelimited("keep-alive failed to refresh fan settings: %d\n",
-+				    ret);
- }
- 
- static int hp_wmi_setup_fan_settings(struct hp_wmi_hwmon_priv *priv)
-@@ -2602,7 +2609,9 @@ static int hp_wmi_hwmon_init(void)
- 
- 	INIT_DELAYED_WORK(&priv->keep_alive_dwork, hp_wmi_hwmon_keep_alive_handler);
- 	platform_set_drvdata(hp_wmi_platform_dev, priv);
--	hp_wmi_apply_fan_settings(priv);
-+	ret = hp_wmi_apply_fan_settings(priv);
-+	if (ret)
-+		dev_warn(dev, "Failed to apply initial fan settings: %d\n", ret);
- 
- 	return 0;
- }
 -- 
 2.53.0
 
