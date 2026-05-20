@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D7A3D75C7;
-	Wed, 20 May 2026 17:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38F23D75C7;
+	Wed, 20 May 2026 17:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298673; cv=none; b=bafSxAkE0M+XsR0fGhRMCLBqNmPKv5po4ABpGYDwq2xxNtRdIjchn8Vi7kAeV8J0Gw5+elU2KV8sYckMpvoueXA14OlpHD21/caxVNeOwaB9amMOf/I+4NTUlZki/Pj9XABzhEsKOOFyvUhIsTDtzCFtDOA8OaJamXzm3itBAwI=
+	t=1779298676; cv=none; b=pQvz0FgNe4KdaWeYlDlg4GpPEDUkr3kzixtEpN30tHKFp35RMVbZJ5Ia6JiJHnb/MTQH4pNGOqn1KcFwxYmrMOVxju0ADTpOPNfAedgeVmZ7S9AnZG8Qcsobl9hA7JhgHSJglO4ASEUzyzLxyXOi67IuMtbdisokdxnCvhfHs20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298673; c=relaxed/simple;
-	bh=uTAI5lFnfuCP+cyR8I28+Z0lBj003QHNTYIK2fkmPFk=;
+	s=arc-20240116; t=1779298676; c=relaxed/simple;
+	bh=kC/05GeiEpv/P03t/gswNTn0MjgC9Kxluxt1MDkLGj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wb0B1p1Io1qyNLkVjqLPWMZUSyFU2ublozPvWjVOx/sR+3ApgI0o2BwfTl1KoSkva35ZwqBiQhXPX1BZkiUVK37LexK+bxcBsVn155JV+IL3rcPxq+KOddum5pNxHJ+h3zQOq/dv9r6cUW9Jk8sQixn+JcB95hQUtJOWNrchQb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbpIkwAm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fhRd6JxOCmxyem3xheGjQ1pWvKxB3V/w59aHt0gTmNVZBR5MX1lsK3KGOiexV59KsgTwRZho0sf7Wyh35hQCizmdIOPCqprnh3Ql6AlUoYjYJG4QlbD+IyKeAogB/0qVVDdV/CbFulzy9ZxVeVY7KBj/VkXZveIeTLJIs0DF+ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbOY3QOe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbpIkwAm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97E11F00898;
-	Wed, 20 May 2026 17:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbOY3QOe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649151F000E9;
+	Wed, 20 May 2026 17:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298672;
-	bh=dbn4A2wRMW82GHxtvptwcNqMZ3WaowtwfgOyUOilXHI=;
+	s=korg; t=1779298674;
+	bh=sy0thtYoTeFBh10N3ay9GH+AtBkqtLFA34Xww4JFJJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tbpIkwAmaGqHHnf/SrhHEZ5xOlMh3ednzeDBfBSOTE8Lh6zT0ely8L3ix9Uu+gTiI
-	 W7ib1pIjVC/4pOodHRqVAAiCIMoQBYWRT9YaKiz+brHl3SkEQK2Q6W8/+VcsJszUdt
-	 v5JscY8HRZsbJTMWMs6sGkWdn40Iofq2NwBgrqE4=
+	b=PbOY3QOeZNshpnM/wTObQnORJVHdw0dbW947ZdGyB/M1jStOQexzcsx9cKo/z47aM
+	 IXfCGrIVtzDOL/Z9nKJqLl1kdekJd3puExADRCGhmagC0Ou56Gmldz4JTBcTeu3SQM
+	 TIbtmBGCxIK5fdeqUuOTOXZGdWdYq4PC1kh7fZYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Ye Bin <yebin10@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 501/957] pinctrl: cy8c95x0: Unify messages with help of dev_err_probe()
-Date: Wed, 20 May 2026 18:16:24 +0200
-Message-ID: <20260520162145.394765174@linuxfoundation.org>
+Subject: [PATCH 6.18 484/957] ext4: fix possible null-ptr-deref in mbt_kunit_exit()
+Date: Wed, 20 May 2026 18:16:07 +0200
+Message-ID: <20260520162145.020608032@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,38 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 014884732095b982412d13d3220c3fe8483b9b3e ]
+[ Upstream commit 22f53f08d9eb837ce69b1a07641d414aac8d045f ]
 
-Unify error messages that might appear during probe phase by
-switching to use dev_err_probe().
+There's issue as follows:
+    # test_new_blocks_simple: failed to initialize: -12
+KASAN: null-ptr-deref in range [0x0000000000000638-0x000000000000063f]
+Tainted: [E]=UNSIGNED_MODULE, [N]=TEST
+RIP: 0010:mbt_kunit_exit+0x5e/0x3e0 [ext4_test]
+Call Trace:
+ <TASK>
+ kunit_try_run_case_cleanup+0xbc/0x100 [kunit]
+ kunit_generic_run_threadfn_adapter+0x89/0x100 [kunit]
+ kthread+0x408/0x540
+ ret_from_fork+0xa76/0xdf0
+ ret_from_fork_asm+0x1a/0x30
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Stable-dep-of: 5ad32c3607cf ("pinctrl: cy8c95x0: Avoid returning positive values to user space")
+If mbt_kunit_init() init testcase failed will lead to null-ptr-deref.
+So add test if 'sb' is inited success in mbt_kunit_exit().
+
+Fixes: 7c9fa399a369 ("ext4: add first unit test for ext4_mb_new_blocks_simple in mballoc")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20260330133035.287842-6-yebin@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-cy8c95x0.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ext4/mballoc-test.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-cy8c95x0.c b/drivers/pinctrl/pinctrl-cy8c95x0.c
-index c0f1d964f8397..14d927035bc0f 100644
---- a/drivers/pinctrl/pinctrl-cy8c95x0.c
-+++ b/drivers/pinctrl/pinctrl-cy8c95x0.c
-@@ -1319,10 +1319,8 @@ static int cy8c95x0_irq_setup(struct cy8c95x0_pinctrl *chip, int irq)
+diff --git a/fs/ext4/mballoc-test.c b/fs/ext4/mballoc-test.c
+index 4abb40d4561ce..68aab8e45bc37 100644
+--- a/fs/ext4/mballoc-test.c
++++ b/fs/ext4/mballoc-test.c
+@@ -362,7 +362,6 @@ static int mbt_kunit_init(struct kunit *test)
+ 		return ret;
+ 	}
  
- 	/* Read IRQ status register to clear all pending interrupts */
- 	ret = cy8c95x0_irq_pending(chip, pending_irqs);
--	if (ret) {
--		dev_err(chip->dev, "failed to clear irq status register\n");
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to clear irq status register\n");
+-	test->priv = sb;
+ 	kunit_activate_static_stub(test,
+ 				   ext4_read_block_bitmap_nowait,
+ 				   ext4_read_block_bitmap_nowait_stub);
+@@ -383,6 +382,8 @@ static int mbt_kunit_init(struct kunit *test)
+ 		return -ENOMEM;
+ 	}
  
- 	/* Mask all interrupts */
- 	bitmap_fill(chip->irq_mask, MAX_LINE);
++	test->priv = sb;
++
+ 	return 0;
+ }
+ 
+@@ -390,6 +391,9 @@ static void mbt_kunit_exit(struct kunit *test)
+ {
+ 	struct super_block *sb = (struct super_block *)test->priv;
+ 
++	if (!sb)
++		return;
++
+ 	mbt_mb_release(sb);
+ 	mbt_ctx_release(sb);
+ 	mbt_ext4_free_super_block(sb);
 -- 
 2.53.0
 
