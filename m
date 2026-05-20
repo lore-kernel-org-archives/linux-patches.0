@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239AA36A352;
-	Wed, 20 May 2026 17:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27313F20E5;
+	Wed, 20 May 2026 17:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297129; cv=none; b=AE8PS77gfHN5GL0e8nOaDzJpCEsSJd7+xEG6O9eS7dyJBWm7xr2dadQcZp1m1kwgqOU1lmRrkGCoGqkoRzZ17JukbAiOt0GmbhrHkckQxlxCw/G35rbMPSnwPrWnPw5tcQO5R4hNpAXip/bFlQR7B5R9vDhHy96B4JurylqYMys=
+	t=1779297131; cv=none; b=BHWrb1Cn3Iw5eUpBq3XEh8zKkq5zCe6mVpaydRrHoHCk7b4rcmc222in/NuTVY3VPOqCHwcqJc5Sh57IYdP9dSnpaZadwundSyVGroyQckdrf0aJQUc495tAVGfTd9b5GhJgi41rpw8P4xOwrImQ+9+Yz7L42het738drriFmfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297129; c=relaxed/simple;
-	bh=XVYtPWoWJTvgNUPn9LjIFuN61aedRm4EvgiwmNL90hk=;
+	s=arc-20240116; t=1779297131; c=relaxed/simple;
+	bh=zx6CxE2u0LMykU+6oGju41hnNOwR4FC5rV7qQsTkQ8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NTcyEoUF4HLUxgLFMw7A/cB/rzgsR34LdU/EYaGs0wKioxQghV55Ymu6YqivDaSDH/TVuTu9GZ88eo25+CVgo2s9XeytSFjx26s5I2PwBIw1XUaYSe6U8SRe+yYb2mw4rOoWtU1d2HxUVjDQxLnWOXMn5/uxODO0cZ9eovb72yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsnpO2a0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J8z5rHOR2iI3EcgLIg4QGyNX1OTLnwczMSUcUuUrkDueVbvwoNlrR+6WZrGqnhFi/9uPJZlA/rEAYoTACVmrMmC2NGU5PYSBwQ4O3lP1Efb9SloagjHPgf1KYiAgFG9H2skmtytVCoaQvbJ/J1sTDtrvs2J1+LXSqLiIWxkgKcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8O16RWk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsnpO2a0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892811F000E9;
-	Wed, 20 May 2026 17:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8O16RWk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A6D1F000E9;
+	Wed, 20 May 2026 17:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297128;
-	bh=1S5cXIKmPSblh64Iiy+cBdLCz4XW1PtRTD8ixAbInIE=;
+	s=korg; t=1779297130;
+	bh=KJzUEDvMQam8dFoEpbU+oVY7zYn9nuqHzPEs3mQ8n74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NsnpO2a0xOseqfb8YgiEnDXGrbEeBSXJvg8chOUBShUXHM4VQ1oZStEsJ31W0CvVJ
-	 8Vqv5mxYNUllqFXxBdTX0yuLFCJ42Vd6ovZS5WeYnZw4XX7YhPqumIw5XL6U5wysUz
-	 ITviSp/S5G4EvoGtRk8Fuyb+glyDXDrII7XQrTz0=
+	b=k8O16RWk4V3ecq4oU4GNq+uwNhyeephPQhEGZOSG7nnfVIeYZUruV9xJRS9kmajlM
+	 M5M6EuSctpA/aTlylHVPEEmgA0ZDSJr6xjyvWX30DWqktNqVJDBzNmq6p6gKnyG3Tn
+	 T+ZJ7VGcIHfkj06L1A6NIiVHWu9u9PhE1jazhim4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1062/1146] HID: core: introduce hid_safe_input_report()
-Date: Wed, 20 May 2026 18:21:52 +0200
-Message-ID: <20260520162212.267956150@linuxfoundation.org>
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
+	Chen Ridong <chenridong@huaweicloud.com>,
+	Waiman Long <longman@redhat.com>
+Subject: [PATCH 7.0 1045/1146] cgroup/cpuset: Reset DL migration state on can_attach() failure
+Date: Wed, 20 May 2026 18:21:35 +0200
+Message-ID: <20260520162211.879461501@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,137 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-[ Upstream commit 206342541fc887ae919774a43942dc883161fece ]
+commit 4a39eda5fdd867fc39f3c039714dd432cee00268 upstream.
 
-hid_input_report() is used in too many places to have a commit that
-doesn't cross subsystem borders. Instead of changing the API, introduce
-a new one when things matters in the transport layers:
-- usbhid
-- i2chid
+cpuset_can_attach() accumulates temporary SCHED_DEADLINE migration
+state in the destination cpuset while walking the taskset.
 
-This effectively revert to the old behavior for those two transport
-layers.
+If a later task_can_attach() or security_task_setscheduler() check
+fails, cgroup_migrate_execute() treats cpuset as the failing subsystem
+and does not call cpuset_cancel_attach() for it. The partially
+accumulated state is then left behind and can be consumed by a later
+attach, corrupting cpuset DL task accounting and pending DL bandwidth
+accounting.
 
-Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reset the pending DL migration state from the common error exit when
+ret is non-zero. Successful can_attach() keeps the state for
+cpuset_attach() or cpuset_cancel_attach().
+
+Fixes: 2ef269ef1ac0 ("cgroup/cpuset: Free DL BW in case can_attach() fails")
+Cc: stable@vger.kernel.org # v6.10+
+Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Chen Ridong <chenridong@huaweicloud.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c             | 25 +++++++++++++++++++++++++
- drivers/hid/i2c-hid/i2c-hid-core.c |  7 ++++---
- drivers/hid/usbhid/hid-core.c      | 11 ++++++-----
- include/linux/hid.h                |  2 ++
- 4 files changed, 37 insertions(+), 8 deletions(-)
+ kernel/cgroup/cpuset.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 93a3393cf1476..eaac6c84377e3 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2177,6 +2177,7 @@ static int __hid_input_report(struct hid_device *hid, enum hid_report_type type,
-  * @interrupt: distinguish between interrupt and control transfers
-  *
-  * This is data entry for lower layers.
-+ * Legacy, please use hid_safe_input_report() instead.
-  */
- int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data, u32 size,
- 		     int interrupt)
-@@ -2187,6 +2188,30 @@ int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data
- }
- EXPORT_SYMBOL_GPL(hid_input_report);
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -3050,16 +3050,13 @@ static int cpuset_can_attach(struct cgro
+ 		int cpu = cpumask_any_and(cpu_active_mask, cs->effective_cpus);
  
-+/**
-+ * hid_safe_input_report - report data from lower layer (usb, bt...)
-+ *
-+ * @hid: hid device
-+ * @type: HID report type (HID_*_REPORT)
-+ * @data: report contents
-+ * @bufsize: allocated size of the data buffer
-+ * @size: useful size of data parameter
-+ * @interrupt: distinguish between interrupt and control transfers
-+ *
-+ * This is data entry for lower layers.
-+ * Please use this function instead of the non safe version because we provide
-+ * here the size of the buffer, allowing hid-core to make smarter decisions
-+ * regarding the incoming buffer.
-+ */
-+int hid_safe_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
-+			  size_t bufsize, u32 size, int interrupt)
-+{
-+	return __hid_input_report(hid, type, data, bufsize, size, interrupt, 0,
-+				  false, /* from_bpf */
-+				  false /* lock_already_taken */);
-+}
-+EXPORT_SYMBOL_GPL(hid_safe_input_report);
-+
- bool hid_match_one_id(const struct hid_device *hdev,
- 		      const struct hid_device_id *id)
- {
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 5a183af3d5c6a..e0a302544cef4 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -574,9 +574,10 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
- 		if (ihid->hid->group != HID_GROUP_RMI)
- 			pm_wakeup_event(&ihid->client->dev, 0);
+ 		if (unlikely(cpu >= nr_cpu_ids)) {
+-			reset_migrate_dl_data(cs);
+ 			ret = -EINVAL;
+ 			goto out_unlock;
+ 		}
  
--		hid_input_report(ihid->hid, HID_INPUT_REPORT,
--				ihid->inbuf + sizeof(__le16),
--				ret_size - sizeof(__le16), 1);
-+		hid_safe_input_report(ihid->hid, HID_INPUT_REPORT,
-+				      ihid->inbuf + sizeof(__le16),
-+				      ihid->bufsize - sizeof(__le16),
-+				      ret_size - sizeof(__le16), 1);
+ 		ret = dl_bw_alloc(cpu, cs->sum_migrate_dl_bw);
+-		if (ret) {
+-			reset_migrate_dl_data(cs);
++		if (ret)
+ 			goto out_unlock;
+-		}
+ 
+ 		cs->dl_bw_cpu = cpu;
  	}
- 
- 	return;
-diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
-index fd3e1aedc5cbc..047d390d5aae1 100644
---- a/drivers/hid/usbhid/hid-core.c
-+++ b/drivers/hid/usbhid/hid-core.c
-@@ -283,9 +283,9 @@ static void hid_irq_in(struct urb *urb)
- 			break;
- 		usbhid_mark_busy(usbhid);
- 		if (!test_bit(HID_RESUME_RUNNING, &usbhid->iofl)) {
--			hid_input_report(urb->context, HID_INPUT_REPORT,
--					 urb->transfer_buffer,
--					 urb->actual_length, 1);
-+			hid_safe_input_report(urb->context, HID_INPUT_REPORT,
-+					      urb->transfer_buffer, urb->transfer_buffer_length,
-+					      urb->actual_length, 1);
- 			/*
- 			 * autosuspend refused while keys are pressed
- 			 * because most keyboards don't wake up when
-@@ -482,9 +482,10 @@ static void hid_ctrl(struct urb *urb)
- 	switch (status) {
- 	case 0:			/* success */
- 		if (usbhid->ctrl[usbhid->ctrltail].dir == USB_DIR_IN)
--			hid_input_report(urb->context,
-+			hid_safe_input_report(urb->context,
- 				usbhid->ctrl[usbhid->ctrltail].report->type,
--				urb->transfer_buffer, urb->actual_length, 0);
-+				urb->transfer_buffer, urb->transfer_buffer_length,
-+				urb->actual_length, 0);
- 		break;
- 	case -ESHUTDOWN:	/* unplug */
- 		unplug = 1;
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index ddf9291d945c1..101e05acf931a 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -998,6 +998,8 @@ struct hid_field *hid_find_field(struct hid_device *hdev, unsigned int report_ty
- int hid_set_field(struct hid_field *, unsigned, __s32);
- int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data, u32 size,
- 		     int interrupt);
-+int hid_safe_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
-+			  size_t bufsize, u32 size, int interrupt);
- struct hid_field *hidinput_get_led_field(struct hid_device *hid);
- unsigned int hidinput_count_leds(struct hid_device *hid);
- __s32 hidinput_calc_abs_res(const struct hid_field *field, __u16 code);
--- 
-2.53.0
-
+@@ -3070,7 +3067,10 @@ out_success:
+ 	 * changes which zero cpus/mems_allowed.
+ 	 */
+ 	cs->attach_in_progress++;
++
+ out_unlock:
++	if (ret)
++		reset_migrate_dl_data(cs);
+ 	mutex_unlock(&cpuset_mutex);
+ 	return ret;
+ }
 
 
