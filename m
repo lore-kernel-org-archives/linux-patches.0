@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA23331A575;
-	Wed, 20 May 2026 16:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6625F334C1D;
+	Wed, 20 May 2026 16:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295656; cv=none; b=t1RdI1rpk7euRCBKOf4zzaGwMsyzeZXg2gGcqFi0eH/+mHcCT6hpIUUYuIdRc6uAcvtOHLAO7NRv7fuOYxoBGEm9Zx6VkTvKc6ulxVlDJklpUBsIK9FZVMorEpG52WDvfNeZ0J30qiBaQXrVkhTOe6n1ihD1lp4+qt3GHzBJqWw=
+	t=1779295659; cv=none; b=uqpT7T0N6qGxd4xaUpEKyZ8R2+bQ9bO2cSud7Hi6lGsg3jxxomJiLe59HXI18gmUTAUv/dox9UzopVYGe5Wmbi/Tm06n9m859nwlNfT9nWlzviP8FZhGWxzQ/mTbUeiRsePCSLwuEYr9LVKiiVsM3jjmGKvuzEPdqNkJpOLiPTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295656; c=relaxed/simple;
-	bh=YA2cHZeFdXr+2CK2zY+/wmjFqPJ3qCRZBSnh4NDPLgM=;
+	s=arc-20240116; t=1779295659; c=relaxed/simple;
+	bh=M2rCYXydpGOwQGsBtXfqrU+GLSzIa2+GC6/Yq164wZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrWtqHA6D2IbNhnu1dBqmE5nAYDwEz36ubb65XB0vmBVIbTc/bpiU5AdG4yEhKU5S8YBgTZVjfVNOS19k/9AHmVUEnloE5YiVCwgvz/ahpko0FDb8K0Q+DbU/3O2VfEV0Ulylah9Rd54v8h+MyTBHYPMB1JrQbAE1RGXGbMf6nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPLniiPF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hCjpaZpUTYWNbf3tKydtXUGDeiAqLih8d5Cs4/0+jZYNFn8K0AbD1GvuiFksvBW2xLri5Y9+zS8vPrrXFwU6hge07Xvz45H0vIBRAc4s5z5kqeufOiDDeGma8LUkXAjTrKfq55D0nuZW0f7xreh1Jn29bs7Jx0vYsGRRggG3sIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6mP97aH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPLniiPF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC7E1F000E9;
-	Wed, 20 May 2026 16:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6mP97aH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABC11F000E9;
+	Wed, 20 May 2026 16:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295655;
-	bh=Bpred82wrVWRZNe6T34gcliCCDqYsH5g0spnSlR5NCI=;
+	s=korg; t=1779295658;
+	bh=MG3G5yxzfyaIGAeD/f2g075Cn0ATXsfxcCIgJYrKAiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DPLniiPF1R0PsZSZYFHcPmBnqtWAaC9ms7QYDyyyjYPP3TLUF2lACBpvzWnmFOeft
-	 K/Lr2bWxLHmoqmh9ZywRpg801ElnmKyoiuOem6RLjEcq/siKIOjZcohBaUnUsbkj2L
-	 qXqL5MrU0dmIUdgBBLLIvAYpvfHKmmItCvyBvnQ8=
+	b=Z6mP97aHEQICgEtRsE6XK5KRWO4ZywSkocLCsOEMsjlCnb2NET4RWhiVCGPlPSK9R
+	 1Kl61wJZ4RVNEtLQhxuI7ogzufVWpPZyjrxRmdrVRicWbY6sTZrCVr6lN7Khc/fkEf
+	 vfwwwkfD5eb1RKYyZvcNSg97DIUiiopX0fGbCVu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sydarn <sydarn@proton.me>,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0501/1146] arm64: dts: rockchip: Correct Joystick Axes on Gameforce Ace
-Date: Wed, 20 May 2026 18:12:31 +0200
-Message-ID: <20260520162159.528318328@linuxfoundation.org>
+Subject: [PATCH 7.0 0502/1146] soc: qcom: ocmem: make the core clock optional
+Date: Wed, 20 May 2026 18:12:32 +0200
+Message-ID: <20260520162159.551496728@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,68 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit c337c1b561c1c3016d30776d7dc2032ea4979334 ]
+[ Upstream commit e8a61c51417c679d1a599fb36695e9d3b8d95514 ]
 
-The Gameforce Ace's joystick axes were set incorrectly initially,
-getting the X/Y and RX/RY axes backwards. Additionally, correct the
-RY axis so that it is inverted.
+OCMEM's core clock (aka RPM bus 2 clock) is being handled internally by
+the interconnect driver. Corresponding clock has been dropped from the
+SMD RPM clock driver. The users of the ocmem will vote on the ocmemnoc
+interconnect paths, making sure that ocmem is on. Make the clock
+optional, keeping it for compatibility with older DT.
 
-All axes tested with evtest and outputting correct values.
-
-Fixes: 4e946c447a04 ("arm64: dts: rockchip: Add GameForce Ace")
-Reported-by: sydarn <sydarn@proton.me>
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://patch.msgid.link/20260310134919.550023-1-macroalpha82@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: d6edc31f3a68 ("clk: qcom: smd-rpm: Separate out interconnect bus clocks")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260323-ocmem-v1-1-ad9bcae44763@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/soc/qcom/ocmem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-index 59d2494c45100..89618394c0bfb 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-@@ -60,8 +60,8 @@ axis@0 {
- 			reg = <0>;
- 			abs-flat = <40>;
- 			abs-fuzz = <30>;
--			abs-range = <0 4095>;
--			linux,code = <ABS_RX>;
-+			abs-range = <4095 0>;
-+			linux,code = <ABS_RY>;
- 		};
+diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
+index 6a23f18b02812..dd46bb14b7be3 100644
+--- a/drivers/soc/qcom/ocmem.c
++++ b/drivers/soc/qcom/ocmem.c
+@@ -308,7 +308,7 @@ static int ocmem_dev_probe(struct platform_device *pdev)
+ 	ocmem->dev = dev;
+ 	ocmem->config = device_get_match_data(dev);
  
- 		axis@1 {
-@@ -69,7 +69,7 @@ axis@1 {
- 			abs-flat = <40>;
- 			abs-fuzz = <30>;
- 			abs-range = <0 4095>;
--			linux,code = <ABS_RY>;
-+			linux,code = <ABS_RX>;
- 		};
- 
- 		axis@2 {
-@@ -77,7 +77,7 @@ axis@2 {
- 			abs-flat = <40>;
- 			abs-fuzz = <30>;
- 			abs-range = <0 4095>;
--			linux,code = <ABS_Y>;
-+			linux,code = <ABS_X>;
- 		};
- 
- 		axis@3 {
-@@ -85,7 +85,7 @@ axis@3 {
- 			abs-flat = <40>;
- 			abs-fuzz = <30>;
- 			abs-range = <0 4095>;
--			linux,code = <ABS_X>;
-+			linux,code = <ABS_Y>;
- 		};
- 	};
- 
+-	ocmem->core_clk = devm_clk_get(dev, "core");
++	ocmem->core_clk = devm_clk_get_optional(dev, "core");
+ 	if (IS_ERR(ocmem->core_clk))
+ 		return dev_err_probe(dev, PTR_ERR(ocmem->core_clk),
+ 				     "Unable to get core clock\n");
 -- 
 2.53.0
 
