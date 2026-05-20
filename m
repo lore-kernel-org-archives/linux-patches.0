@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA43E3D8129;
-	Wed, 20 May 2026 17:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821973F58CC;
+	Wed, 20 May 2026 17:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296845; cv=none; b=YVnnVGBufRwh0bWRVoEV2dApZQWq1N8sII3M2DIIMRVxAAjpPVrGJ9ne+/wGmtK+7JaMgERDuKRhlVruksOMtJtMRPKkywuQ41xH6k7pJZlpy3KHSPfjwUEFwShXjW9N+WDckMntDaW0CJHFBonz24hSHrjVYQ62ginBx/rRo8s=
+	t=1779296848; cv=none; b=ROcuUhQlkUnYNTc8F2ER02Kuvea35j3NiND3uWvtBmce0J84+22w68uV5njtVC0qj2ERbsNWEkRAuEcrrh10+JOIKTvfqRvzndyCv0H03ylrKptQC+dxVs5Y5Zp33PHwYdJL7A3Fa2QwK0vjPaBVJgD+9I0LSzukwQiJ6zbuEGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296845; c=relaxed/simple;
-	bh=RbTlRE73DINY6yoydVv/y0zCi06kSnlfAb1jpmz8etU=;
+	s=arc-20240116; t=1779296848; c=relaxed/simple;
+	bh=jp3andc19psJ27ZAEnIXgu9rPS2lqGttJ8OiKC+wr0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gUsfc0NS3JzjwQnfHYoTajJm47T7x6Is7nf9JpjGDzVBAj/l52u2aHMRcT9ALms+CVcPFu7JDC5MMwNMPXio2FjVpMfwzw7I2p43N1lvma08mQabShojdf3V0GUt8SGtmhr68kRe3+ZD6pYw/qgUGiPn0xWvg/PGTWCKrujjNtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQsrKcbd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RYKGrUTKMD8xDdtA02OtK45FqorMX9ct6wKlyxnGtca5Bi2+uOvJr3eq6Ux63ATKYT9Qjo+Y0kFq61XY3tbXn1maN/CsyZbDk1/7xNTgqO5YbjwI5Sq+oR7UwtxK4hg5pqT3Zj63BuQH1XfrKuEni0BgtfCQ4r/s/ajHXoGth44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HstDPP1h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQsrKcbd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82521F000E9;
-	Wed, 20 May 2026 17:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HstDPP1h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3281F000E9;
+	Wed, 20 May 2026 17:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296843;
-	bh=K0nEmt1rvjdUQDOYL9lV0W8FNdA/iPJDfaqTnOfKan4=;
+	s=korg; t=1779296846;
+	bh=2pc8QnsUhhSMZMfdchLNgzC/fKTdfyia5D1dqZgWuqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xQsrKcbdQnBLgE+F8O096dBjp1WdAhIe7pLqZzJrmJsVWwigp7eXRgqbhqeeBYdRX
-	 bdxi+WqxZYjiNE/eEUqOc2EeZ8nxOtrgc7pOdQXHluDkicvhIJTf0GuG0K4nTy/tyX
-	 OLb5fUK4ym/lI1XCdoK27kvBoYUtHE8qVrsJG/qU=
+	b=HstDPP1hzcSE2uRPv2Ny3nLPyeAd3AZ+z8kf4VdrDNDOzrij1VEafuaLQoFE8vLyz
+	 qZajIknH6yuwnMkfW73RbwTopayBBXrilz4THJ7wGR9Bu2kocohomSna5TwduiIi0b
+	 h4BeArYVYVBK0OHEy3bcA11UrA7hLS4T3UvRvrZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0951/1146] ALSA: usb-audio: Fix potential leak of pd at parsing UAC3 streams
-Date: Wed, 20 May 2026 18:20:01 +0200
-Message-ID: <20260520162209.757136471@linuxfoundation.org>
+Subject: [PATCH 7.0 0952/1146] sched/fair: Fix wakeup_preempt_fair() vs delayed dequeue
+Date: Wed, 20 May 2026 18:20:02 +0200
+Message-ID: <20260520162209.778326966@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,203 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit c39f0bc03f84ba64c9144c95714df1dc36150f6d ]
+[ Upstream commit ac8e69e693631689d74d8f1ebee6f84f737f797f ]
 
-At parsing UAC3 streams, we allocate a PD object at each time, and
-either assign or free it.  But there is a case where the PD object may
-be leaked; namely, in __snd_usb_parse_audio_interface() loop, when an
-audioformat shares the same endpoint with others, it's put to a link
-and returns from snd_usb_add_audio_stream(), but the PD is forgotten
-afterwards.  Overall, the treatment of PD object in the parser code is
-a bit flaky, and we should be more careful about the object ownership.
+Similar to how pick_next_entity() must dequeue delayed entities, so too must
+wakeup_preempt_fair(). Any delayed task being found means it is eligible and
+hence past the 0-lag point, ready for removal.
 
-This patch tries to fix the above case and improve the code a bit.
-The pd object is now managed with the auto-cleanup in the loop, and
-the ownership is updated when the pd object gets assigned to the
-stream, which guarantees the release of the leftover object.
+Worse, by not removing delayed entities from consideration, it can skew the
+preemption decision, with the end result that a short slice wakeup will not
+result in a preemption.
 
-Fixes: 7edf3b5e6a45 ("ALSA: usb-audio: AudioStreaming Power Domain parsing")
-Link: https://patch.msgid.link/20260427151508.12544-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+                     tip/sched/core  tip/sched/core    +this patch
+cyclictest slice  (ms) (default)2.8             8               8
+hackbench slice   (ms) (default)2.8            20              20
+Total Samples          |    22559           22595           22683
+Average           (us) |      157              64( 59%)        59(  8%)
+Median (P50)      (us) |       57              57(  0%)        58(- 2%)
+90th Percentile   (us) |       64              60(  6%)        60(  0%)
+99th Percentile   (us) |     2407              67( 97%)        67(  0%)
+99.9th Percentile (us) |     3400            2288( 33%)       727( 68%)
+Maximum           (us) |     5037            9252(-84%)      7461( 19%)
+
+Fixes: f12e148892ed ("sched/fair: Prepare pick_next_task() for delayed dequeue")
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260422093400.319251-1-vincent.guittot@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c |  2 +-
- sound/usb/stream.c | 58 ++++++++++++++++++----------------------------
- sound/usb/stream.h |  3 ++-
- 3 files changed, 25 insertions(+), 38 deletions(-)
+ kernel/sched/fair.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 6f2a053d971c9..e8ae3464887b2 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -122,7 +122,7 @@ static int add_audio_stream_from_fixed_fmt(struct snd_usb_audio *chip,
- 
- 	snd_usb_audioformat_set_sync_ep(chip, fp);
- 
--	err = snd_usb_add_audio_stream(chip, stream, fp);
-+	err = snd_usb_add_audio_stream(chip, stream, fp, NULL);
- 	if (err < 0)
- 		return err;
- 
-diff --git a/sound/usb/stream.c b/sound/usb/stream.c
-index b07e2ec661c16..03a939cdd07ac 100644
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -79,7 +79,7 @@ static void snd_usb_audio_pcm_free(struct snd_pcm *pcm)
- static void snd_usb_init_substream(struct snd_usb_stream *as,
- 				   int stream,
- 				   struct audioformat *fp,
--				   struct snd_usb_power_domain *pd)
-+				   struct snd_usb_power_domain **pdptr)
- {
- 	struct snd_usb_substream *subs = &as->substream[stream];
- 
-@@ -105,10 +105,11 @@ static void snd_usb_init_substream(struct snd_usb_stream *as,
- 	if (fp->channels > subs->channels_max)
- 		subs->channels_max = fp->channels;
- 
--	if (pd) {
--		subs->str_pd = pd;
-+	if (pdptr && *pdptr) {
-+		subs->str_pd = *pdptr;
-+		*pdptr = NULL; /* assigned */
- 		/* Initialize Power Domain to idle status D1 */
--		snd_usb_power_domain_set(subs->stream->chip, pd,
-+		snd_usb_power_domain_set(subs->stream->chip, subs->str_pd,
- 					 UAC3_PD_STATE_D1);
- 	}
- 
-@@ -486,11 +487,14 @@ snd_pcm_chmap_elem *convert_chmap_v3(struct uac3_cluster_header_descriptor
-  * if not, create a new pcm stream. note, fp is added to the substream
-  * fmt_list and will be freed on the chip instance release. do not free
-  * fp or do remove it from the substream fmt_list to avoid double-free.
-+ *
-+ * pdptr is optional and can be NULL.  When it's non-NULL and the PD gets
-+ * assigned to the stream, *pdptr is cleared to NULL upon return.
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index ab4114712be74..87200a22b3169 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -1007,7 +1007,7 @@ static inline void cancel_protect_slice(struct sched_entity *se)
+  *
+  * Which allows tree pruning through eligibility.
   */
--static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
--				      int stream,
--				      struct audioformat *fp,
--				      struct snd_usb_power_domain *pd)
-+int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
-+			     int stream,
-+			     struct audioformat *fp,
-+			     struct snd_usb_power_domain **pdptr)
- 
+-static struct sched_entity *__pick_eevdf(struct cfs_rq *cfs_rq, bool protect)
++static struct sched_entity *pick_eevdf(struct cfs_rq *cfs_rq, bool protect)
  {
- 	struct snd_usb_stream *as;
-@@ -523,7 +527,7 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
- 		err = snd_pcm_new_stream(as->pcm, stream, 1);
- 		if (err < 0)
- 			return err;
--		snd_usb_init_substream(as, stream, fp, pd);
-+		snd_usb_init_substream(as, stream, fp, pdptr);
- 		return add_chmap(as->pcm, stream, subs);
- 	}
- 
-@@ -552,7 +556,7 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
- 	else
- 		strscpy(pcm->name, "USB Audio");
- 
--	snd_usb_init_substream(as, stream, fp, pd);
-+	snd_usb_init_substream(as, stream, fp, pdptr);
- 
- 	/*
- 	 * Keep using head insertion for M-Audio Audiophile USB (tm) which has a
-@@ -570,21 +574,6 @@ static int __snd_usb_add_audio_stream(struct snd_usb_audio *chip,
- 	return add_chmap(pcm, stream, &as->substream[stream]);
+ 	struct rb_node *node = cfs_rq->tasks_timeline.rb_root.rb_node;
+ 	struct sched_entity *se = __pick_first_entity(cfs_rq);
+@@ -1078,11 +1078,6 @@ static struct sched_entity *__pick_eevdf(struct cfs_rq *cfs_rq, bool protect)
+ 	return best;
  }
  
--int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
--			     int stream,
--			     struct audioformat *fp)
+-static struct sched_entity *pick_eevdf(struct cfs_rq *cfs_rq)
 -{
--	return __snd_usb_add_audio_stream(chip, stream, fp, NULL);
+-	return __pick_eevdf(cfs_rq, true);
 -}
 -
--static int snd_usb_add_audio_stream_v3(struct snd_usb_audio *chip,
--				       int stream,
--				       struct audioformat *fp,
--				       struct snd_usb_power_domain *pd)
--{
--	return __snd_usb_add_audio_stream(chip, stream, fp, pd);
--}
--
- static int parse_uac_endpoint_attributes(struct snd_usb_audio *chip,
- 					 struct usb_host_interface *alts,
- 					 int protocol, int iface_no)
-@@ -1107,8 +1096,7 @@ snd_usb_get_audioformat_uac3(struct snd_usb_audio *chip,
- 		}
- 	}
+ struct sched_entity *__pick_last_entity(struct cfs_rq *cfs_rq)
+ {
+ 	struct rb_node *last = rb_last(&cfs_rq->tasks_timeline.rb_root);
+@@ -5540,11 +5535,11 @@ static int dequeue_entities(struct rq *rq, struct sched_entity *se, int flags);
+  * 4) do not run the "skip" process, if something else is available
+  */
+ static struct sched_entity *
+-pick_next_entity(struct rq *rq, struct cfs_rq *cfs_rq)
++pick_next_entity(struct rq *rq, struct cfs_rq *cfs_rq, bool protect)
+ {
+ 	struct sched_entity *se;
  
--	if (pd)
--		*pd_out = pd;
-+	*pd_out = pd;
- 
- 	return fp;
- }
-@@ -1123,7 +1111,6 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
- 	struct usb_interface_descriptor *altsd;
- 	int i, altno, err, stream;
- 	struct audioformat *fp = NULL;
--	struct snd_usb_power_domain *pd = NULL;
- 	bool set_iface_first;
- 	int num, protocol;
- 
-@@ -1165,6 +1152,12 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
- 		if (snd_usb_apply_interface_quirk(chip, iface_no, altno))
- 			continue;
- 
-+		/* pd may be allocated at snd_usb_get_audioformat_uac3() and
-+		 * assigned at snd_usb_add_audio_stream(); otherwise it'll be
-+		 * freed automatically by cleanup at each loop.
-+		 */
-+		struct snd_usb_power_domain *pd __free(kfree) = NULL;
-+
+-	se = pick_eevdf(cfs_rq);
++	se = pick_eevdf(cfs_rq, protect);
+ 	if (se->sched_delayed) {
+ 		dequeue_entities(rq, se, DEQUEUE_SLEEP | DEQUEUE_DELAYED);
  		/*
- 		 * Roland audio streaming interfaces are marked with protocols
- 		 * 0/1/2, but are UAC 1 compatible.
-@@ -1220,23 +1213,16 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
- 			*has_non_pcm = true;
- 		if ((fp->fmt_type == UAC_FORMAT_TYPE_I) == non_pcm) {
- 			audioformat_free(fp);
--			kfree(pd);
- 			fp = NULL;
--			pd = NULL;
- 			continue;
- 		}
+@@ -8809,7 +8804,7 @@ static void wakeup_preempt_fair(struct rq *rq, struct task_struct *p, int wake_f
+ {
+ 	enum preempt_wakeup_action preempt_action = PREEMPT_WAKEUP_PICK;
+ 	struct task_struct *donor = rq->donor;
+-	struct sched_entity *se = &donor->se, *pse = &p->se;
++	struct sched_entity *nse, *se = &donor->se, *pse = &p->se;
+ 	struct cfs_rq *cfs_rq = task_cfs_rq(donor);
+ 	int cse_is_idle, pse_is_idle;
  
- 		snd_usb_audioformat_set_sync_ep(chip, fp);
+@@ -8920,11 +8915,17 @@ static void wakeup_preempt_fair(struct rq *rq, struct task_struct *p, int wake_f
+ 	}
  
- 		dev_dbg(&dev->dev, "%u:%d: add audio endpoint %#x\n", iface_no, altno, fp->endpoint);
--		if (protocol == UAC_VERSION_3)
--			err = snd_usb_add_audio_stream_v3(chip, stream, fp, pd);
--		else
--			err = snd_usb_add_audio_stream(chip, stream, fp);
--
-+		err = snd_usb_add_audio_stream(chip, stream, fp, &pd);
- 		if (err < 0) {
- 			audioformat_free(fp);
--			kfree(pd);
- 			return err;
- 		}
+ pick:
++	nse = pick_next_entity(rq, cfs_rq, preempt_action != PREEMPT_WAKEUP_SHORT);
++	/* If @p has become the most eligible task, force preemption */
++	if (nse == pse)
++		goto preempt;
++
+ 	/*
+-	 * If @p has become the most eligible task, force preemption.
++	 * Because p is enqueued, nse being null can only mean that we
++	 * dequeued a delayed task.
+ 	 */
+-	if (__pick_eevdf(cfs_rq, preempt_action != PREEMPT_WAKEUP_SHORT) == pse)
+-		goto preempt;
++	if (!nse)
++		goto pick;
  
-diff --git a/sound/usb/stream.h b/sound/usb/stream.h
-index d92e18d5818fe..61b9a133da018 100644
---- a/sound/usb/stream.h
-+++ b/sound/usb/stream.h
-@@ -7,7 +7,8 @@ int snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
+ 	if (sched_feat(RUN_TO_PARITY))
+ 		update_protect_slice(cfs_rq, se);
+@@ -8959,7 +8960,7 @@ static struct task_struct *pick_task_fair(struct rq *rq, struct rq_flags *rf)
  
- int snd_usb_add_audio_stream(struct snd_usb_audio *chip,
- 			     int stream,
--			     struct audioformat *fp);
-+			     struct audioformat *fp,
-+			     struct snd_usb_power_domain **pdptr);
+ 		throttled |= check_cfs_rq_runtime(cfs_rq);
  
- #endif /* __USBAUDIO_STREAM_H */
- 
+-		se = pick_next_entity(rq, cfs_rq);
++		se = pick_next_entity(rq, cfs_rq, true);
+ 		if (!se)
+ 			goto again;
+ 		cfs_rq = group_cfs_rq(se);
 -- 
 2.53.0
 
