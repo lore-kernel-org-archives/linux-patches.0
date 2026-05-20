@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4F829D26E;
-	Wed, 20 May 2026 17:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF353C870E;
+	Wed, 20 May 2026 17:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298552; cv=none; b=YagD+uIk2YPo7wSk9tPvbLYZU+crFEUdGoZcjh9KTl5V8YwQujG9LnF8223a+Q6B7R118sudKN07Ry51Pt4wwOe9Ri5JIU8WE3y23qn1rivi9BdSAYYe/SD+OM6tTgfU0IEWeH3h/wPQsEQaeXwOgKflLB+X8JCnbEd9JgGYxks=
+	t=1779298556; cv=none; b=tHmdmucUPUt2b/Z0onN92t0q2cVZI9DO1vVcawp7EkFGqBx9xs+tyEVUpsQlogU4V2HkZ+E/EtVdDFXKXSdnAgDF9lPYwL1br3ANFiQ1ltgH2Wqnr4RKAPnyHUt/MQ8PyidgT0vI0QIfKuFHDk/M9KX8ge/H6/+6VyHw4hz0fOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298552; c=relaxed/simple;
-	bh=wiDSfII5W+JzbM1vQw1IMtbe0tB5WhVh2oPMPgLL/Pk=;
+	s=arc-20240116; t=1779298556; c=relaxed/simple;
+	bh=Q0etmJpfj3iKhfJXh77TxHiAmrG8QHL3Ob+k/koD0+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GKigwO6t4QvrXf+Hk6RLtONxAXfpnLPFJLXt6cNvCcG/nvNxa6h9mbgGi6wbBZ8lwIa+fJY5jrLOTntmp2JGGgsZZ4Z0rXFKe/SqCh8qGGZBPVxDTeZXJVHH7HG2D/o6nmN+8yYpyWn5SpYict6tolmKlt/otF0B1eM3RTmB3eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8G38Ic3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eQ5khol+Pctt7C43e1kRFGj89+B2i3UmAIaF9GpIUfxAOgn3fEaN2T3xd4OWz0hLzOrjA7C2grunG6yYJNOyoE5j4QyGdw7Sv+gNA80HJkPTOobGwoF4WlnAtqUh6DQJpocRFPFuve0whZV4Qn8OIo1ZO54Qi0nGtmtVh/lK2Js=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bmx8/nWl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8G38Ic3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4BF1F000E9;
-	Wed, 20 May 2026 17:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bmx8/nWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CDF1F00893;
+	Wed, 20 May 2026 17:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298549;
-	bh=sJzSBO7fXUCkRRmPYGIETvHzIqEifgtpLLml7kKp8Zk=;
+	s=korg; t=1779298551;
+	bh=j+U8A/kyOQ9op2/1JRc3OCpFKnN7s/0GS4kMVYr5Xek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N8G38Ic3V20FMWRxkYcAFg0QiU1pSmmjeo9vJInOFzn/IhZXgkjaNpqOnBOPr2IKd
-	 jSRdtjwDjTu+nGBSlnF8w2UYCLafyWuTHDFOTo8zJITeiJZ9ZSLVNq7wt7QJZRHdSG
-	 9/qbteuH0zIhl+7KOylAfgMYLoBtMdR29EFc42Pc=
+	b=Bmx8/nWl0ZfslObb2bcCsxgpZEb79kO2OnT2+HXtdW3kFR/FkndH0rPj0rbEHsj0m
+	 AClaRbRLBtUeXVMvVE8970cJvmqNLPpG4btzQRwECiBFH1Ryg7vV8kNT221O/Oo3dU
+	 JsDZ9jO/WAI/LiUHcNYhJXnyHAQ71z3kMGQQtA4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Zanussi <zanussi@kernel.org>,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Francesco Lavra <flavra@baylibre.com>,
+	Dipen Patel <dipenp@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 454/957] tracing: Rebuild full_name on each hist_field_name() call
-Date: Wed, 20 May 2026 18:15:37 +0200
-Message-ID: <20260520162144.367988606@linuxfoundation.org>
+Subject: [PATCH 6.18 455/957] hte: tegra194: remove Kconfig dependency on Tegra194 SoC
+Date: Wed, 20 May 2026 18:15:38 +0200
+Message-ID: <20260520162144.390685974@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,54 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Francesco Lavra <flavra@baylibre.com>
 
-[ Upstream commit 5ec1d1e97de134beed3a5b08235a60fc1c51af96 ]
+[ Upstream commit 92dfd92f747698352b256cd9ddd7497bb7ebe9c8 ]
 
-hist_field_name() uses a static MAX_FILTER_STR_VAL buffer for fully
-qualified variable-reference names, but it currently appends into that
-buffer with strcat() without rebuilding it first. As a result, repeated
-calls append a new "system.event.field" name onto the previous one,
-which can eventually run past the end of full_name.
+This driver runs also on other Tegra SoCs (e.g. Tegra234).
+Replace Kconfig dependency on Tegra194 with more generic dependency on
+Tegra, and amend the Kconfig help text to reflect the fact that this
+driver works on SoCs other than Tegra194.
 
-Build the name with snprintf() on each call and return NULL if the fully
-qualified name does not fit in MAX_FILTER_STR_VAL.
-
-Link: https://patch.msgid.link/20260401112224.85582-1-pengpeng@iscas.ac.cn
-Fixes: 067fe038e70f ("tracing: Add variable reference handling to hist triggers")
-Reviewed-by: Tom Zanussi <zanussi@kernel.org>
-Tested-by: Tom Zanussi <zanussi@kernel.org>
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: b003fb5c9df8 ("hte: Add Tegra234 provider")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Acked-by: Dipen Patel <dipenp@nvidia.com>
+Signed-off-by: Dipen Patel <dipenp@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/hte/Kconfig | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 2a0726e1bc97f..cb9e067138683 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1355,12 +1355,14 @@ static const char *hist_field_name(struct hist_field *field,
- 		 field->flags & HIST_FIELD_FL_VAR_REF) {
- 		if (field->system) {
- 			static char full_name[MAX_FILTER_STR_VAL];
-+			int len;
-+
-+			len = snprintf(full_name, sizeof(full_name), "%s.%s.%s",
-+				       field->system, field->event_name,
-+				       field->name);
-+			if (len >= sizeof(full_name))
-+				return NULL;
+diff --git a/drivers/hte/Kconfig b/drivers/hte/Kconfig
+index 641af722b555d..f57bad67deef0 100644
+--- a/drivers/hte/Kconfig
++++ b/drivers/hte/Kconfig
+@@ -16,13 +16,13 @@ if HTE
  
--			strcat(full_name, field->system);
--			strcat(full_name, ".");
--			strcat(full_name, field->event_name);
--			strcat(full_name, ".");
--			strcat(full_name, field->name);
- 			field_name = full_name;
- 		} else
- 			field_name = field->name;
+ config HTE_TEGRA194
+ 	tristate "NVIDIA Tegra194 HTE Support"
+-	depends on (ARCH_TEGRA_194_SOC || COMPILE_TEST)
++	depends on (ARCH_TEGRA || COMPILE_TEST)
+ 	depends on GPIOLIB
+ 	help
+ 	  Enable this option for integrated hardware timestamping engine also
+ 	  known as generic timestamping engine (GTE) support on NVIDIA Tegra194
+-	  systems-on-chip. The driver supports 352 LIC IRQs and 39 AON GPIOs
+-	  lines for timestamping in realtime.
++	  and later systems-on-chip. The driver supports 352 LIC IRQs and 39
++	  AON GPIOs lines for timestamping in realtime.
+ 
+ config HTE_TEGRA194_TEST
+         tristate "NVIDIA Tegra194 HTE Test"
 -- 
 2.53.0
 
