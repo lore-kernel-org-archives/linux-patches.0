@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379003FD133;
-	Wed, 20 May 2026 18:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02A43FD134;
+	Wed, 20 May 2026 18:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302668; cv=none; b=aKIFwKTxrS+EchKggckQP0Gkq++aBplI9uMFv+83doy08VC5qQkhvKvE4CY2c8k4nH4Ds8lHE0WXI0p0YIOr6vn6xLJ/aO86qG4HcqOQ3LUa/b15hkcIlPfxwHXdmp2WMjYzM9A8OvshFDVkZ6ho6ECv0aQvrYU5v147TNSf3I0=
+	t=1779302670; cv=none; b=ELGI5a+3t3Hr0xNgYWpEQM5IHx6cXcmwbvcZkba45LXgj1l/mn1N9tXSWpNNrjNKEw1XpStTtEYbJigIrhnU/V3eeV5f5fnfHyngwO/CQN0W+XBT/QRuKLBbOgpmRrDpAtZCocLzxfUCOl5BFXfHtDABZFtnPAvpKqVvpR0MY74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302668; c=relaxed/simple;
-	bh=WnJw1nF3IGwPKKqZ5K3QSJ610iJYKfGohcrfu/VW8AU=;
+	s=arc-20240116; t=1779302670; c=relaxed/simple;
+	bh=wOFeHspqU8kVIr6vjR5XzlFee4MgPebUKkjTihhfR1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjOUhEgwoUuv7t/S1pZ0JBFEv436T5oHy8f8t3cOIgAlncK+YkZ3edZcb1VaI5UThvUEfn0rKTqMV2rK6SskzNhsLShNxRHJi56o7S8dGN8hrVKFeINmZVzw97HiUr62Zi0BCz+FG7enmv/WsqfzqJSO0zK2A92mv/FS+3s5RJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TehzHQEE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KK3yhRJwqkNYplTCpEobOvbss4oJKylLUuztuCUOJm7XZ4ymB1TnyJd+fpknOqT8C6jYnfUAUFk+CDiBat95UfIzHjIbZ+o/tMjkVwgYJm9qzQDlnMw9FF6iTgVbnKZ4xXnMXyvlq6qZPfXK9NNI5BXWkr8RCJAQyjH+2baoLgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9l5vZuj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TehzHQEE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D08C1F000E9;
-	Wed, 20 May 2026 18:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9l5vZuj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4299C1F000E9;
+	Wed, 20 May 2026 18:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302667;
-	bh=HKcpvFYY+44aynlOacJSiL0Ro0wrrRGdfq6xwAax+yo=;
+	s=korg; t=1779302669;
+	bh=8tgTAhkFi+9EU4/BziNcfm0BLZ8f6sA+ZLEWfmemOqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TehzHQEEwMzIG4UYblEivClxBGQP5qoKpZjP1COsYIX/O7rgjpzElOr0WlMMpuAQy
-	 Jb1qhjjXbV0Ti7Nlzzys2ZBV+jgGf//0gcIXru9caTUOvw75YqhOK6k3v+S+2vv4Ek
-	 k9oe6f3vHe8tebVEwAM9E4Cxczq1xxFjR+yLUlRU=
+	b=L9l5vZujlMA0oqPimDNZ8urV/r0aGkCxJoejCEfQOjEbL2dgHP8EIZ5ej8w4qVCZu
+	 N/ypp6zZvWS4zdemD0OSYx8wcfM9+1d4qSr6vVeI4NZ0Ggwm/4uQElXeSiq22GWsob
+	 1Zt+IRt6A+3s3kWwCX/iIaff92oOHlruUi/U6S04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bae Yeonju <iwasbaeyz@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Anthony Pighin <anthony.pighin@nokia.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 355/508] fs/adfs: validate nzones in adfs_validate_bblk()
-Date: Wed, 20 May 2026 18:22:58 +0200
-Message-ID: <20260520162106.325140786@linuxfoundation.org>
+Subject: [PATCH 6.6 356/508] rtc: abx80x: Disable alarm feature if no interrupt attached
+Date: Wed, 20 May 2026 18:22:59 +0200
+Message-ID: <20260520162106.346265973@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,46 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bae Yeonju <iwasbaeyz@gmail.com>
+From: Anthony Pighin (Nokia) <anthony.pighin@nokia.com>
 
-[ Upstream commit dd9d3e16c2d5fa166e13dce07413be51f42c8f5d ]
+[ Upstream commit 0fedce7244e4b85c049ce579c87e298a1b0b811d ]
 
-Reject ADFS disc records with a zero zone count during boot block
-validation, before the disc record is used.
+Commit 795cda8338ea ("rtc: interface: Fix long-standing race when setting
+alarm") exposed an issue where the rtc-abx80x driver does not clear the
+alarm feature bit, but instead relies on the set_alarm operation to return
+invalid.
 
-When nzones is 0, adfs_read_map() passes it to kmalloc_array(0, ...)
-which returns ZERO_SIZE_PTR, and adfs_map_layout() then writes to
-dm[-1], causing an out-of-bounds write before the allocated buffer.
+For example, when a RTC_UIE_ON ioctl is handled, it should abort at the
+feature validation. Instead, it proceeds to the rtc_timer_enqueue(),
+which used to return an error from the set_alarm call. However,
+following the race condition handling, which likely should not be
+discarding predecing errors, a success condition is returned to the
+ioctl() caller. This results in (for example):
+    hwclock: select() to /dev/rtc0 to wait for clock tick timed out
 
-adfs_validate_dr0() already rejects nzones != 1 for old-format
-images.  Add the equivalent check to adfs_validate_bblk() for
-new-format images so that a crafted image with nzones == 0 is
-rejected at probe time.
+Notwithstanding the validity of the race condition handling, if an interrupt
+wasn't specified, or could not be attached, the driver should clear the
+alarm feature bit.
 
-Found by syzkaller.
-
-Fixes: f6f14a0d71b0 ("fs/adfs: map: move map-specific sb initialisation to map.c")
-Signed-off-by: Bae Yeonju <iwasbaeyz@gmail.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
+Signed-off-by: Anthony Pighin <anthony.pighin@nokia.com>
+Link: https://patch.msgid.link/BN0PR08MB69510928028C933749F4139383D1A@BN0PR08MB6951.namprd08.prod.outlook.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/adfs/super.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/rtc/rtc-abx80x.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/adfs/super.c b/fs/adfs/super.c
-index e8bfc38239cd5..76e37c6d4cad4 100644
---- a/fs/adfs/super.c
-+++ b/fs/adfs/super.c
-@@ -343,6 +343,9 @@ static int adfs_validate_bblk(struct super_block *sb, struct buffer_head *bh,
- 	if (adfs_checkdiscrecord(dr))
- 		return -EILSEQ;
+diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
+index 3fee27914ba80..5f3a3e60a19d0 100644
+--- a/drivers/rtc/rtc-abx80x.c
++++ b/drivers/rtc/rtc-abx80x.c
+@@ -933,6 +933,8 @@ static int abx80x_probe(struct i2c_client *client)
+ 			client->irq = 0;
+ 		}
+ 	}
++	if (client->irq <= 0)
++		clear_bit(RTC_FEATURE_ALARM, priv->rtc->features);
  
-+	if ((dr->nzones | dr->nzones_high << 8) == 0)
-+		return -EILSEQ;
-+
- 	*drp = dr;
- 	return 0;
- }
+ 	err = rtc_add_group(priv->rtc, &rtc_calib_attr_group);
+ 	if (err) {
 -- 
 2.53.0
 
