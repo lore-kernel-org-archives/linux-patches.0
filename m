@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458683E120A;
-	Wed, 20 May 2026 17:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64673E120A;
+	Wed, 20 May 2026 17:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296834; cv=none; b=GlYKvVIv/0/KvdXqpcoEqgVtkMxrzm2Hz9sJ+YgAAqmQYsn9jVZw8A4FHjo6YMFsKbaL35+ElsY1SPMYjCl0L9BI6nl5ieIjh9EYZqDx4GoFGqcArBdT5AYGivS3CVBT5iKkFuy7Wvd6oW1sNDouk35dkim82Zi/1XhDIw6EOME=
+	t=1779296837; cv=none; b=G6HQwfFrzvcuIqBSSZAiNoUSYAE4N91mc3o5yg9bXQuQr/J+QQ51WLhj0U/7lN3HdwEcZJszLQDUFS9ZDAfBACAeH6grN06zMW5X4uWOg+XyR0TVqhdKZW0djd4XrjKPBC/4f6QOag/wDOLWz62I+cHDq7AN0KZc61f1ryNZnLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296834; c=relaxed/simple;
-	bh=SDxH1Sav63f4JtB4BbyNj+dClnNg3HadiyVjW71kvcA=;
+	s=arc-20240116; t=1779296837; c=relaxed/simple;
+	bh=56pwM5rWVhP5bXdM8xvP+lKxFcsDqx5Rf1QWtViqiSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XVjzI6PjH/cp+yQz8bqT0XdcEk+ZXli9tExtMSw1Ydt58iKxhAYw64RfGiq04NkSIPO5Qp1LD/zQBhm3FCa2ooqS1iIL7XWSx12QIpaEAbokE34lEKHa4zM2ZEJrfbbFWK3t0HEPQYuUz7vefHFIrxsbDqFsagOovggnDuPlOB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRHbhctR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S8IbQcuWH+TpSgPtQ2hEM06Wc5A0z8CJzELtZ2BFCa4qypxmDkNdvYiAXur45bY0K8NuYvfW+40pmvS51bVFwOdXj7cJFdje3Xk6FTmD2oaMrWX0dxavccrnRXLimaCEfj/O/A3Vf+40OkRz9W2kGGOBcrqV+JtvA6kBzfPOits=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeW5Kcqz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRHbhctR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702CB1F00893;
-	Wed, 20 May 2026 17:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeW5Kcqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1410A1F000E9;
+	Wed, 20 May 2026 17:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296832;
-	bh=cwTSPPrqj9t8X5/pdqji1y+qpy7S1TlCWSGRPVjgq5s=;
+	s=korg; t=1779296835;
+	bh=XuIylzQnWMSbLaf2LRDewZ2a6PS/pZJUp847g8mqXpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tRHbhctRRSfSgR6X6Vy3glbKjx5r5qnhm8hZEqJiBdZ0xZolesOsxHxoiuMJT2ezY
-	 qVLvpLUNIVFTtAbNab3l0uB92wLvK6dKMeuQ21TVdUhUxZ4SeN9lDVVqlpmxMqEqbh
-	 yerUtYmleFf398mwV/oG/Q1B/VhxZRre+sMq/n1s=
+	b=GeW5Kcqzzss5RI15sYflYQdVjuyfiUU+7zx/CZJodtq2eQNLv0deIcTM8fQQotmUc
+	 1gRBoHLN7HoasVpMfV0gwNSo5CtoQf/MvrG5qrzUsgGD24G0CNj0bpMheuIKooUFye
+	 DXFWEgdh8Ua04S5+IGwgx6v82lZ5X+wL7OkRvvfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Altan Hacigumus <ahacigu.linux@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0948/1146] neigh: let neigh_xmit take skb ownership
-Date: Wed, 20 May 2026 18:19:58 +0200
-Message-ID: <20260520162209.688744807@linuxfoundation.org>
+Subject: [PATCH 7.0 0949/1146] tcp: make probe0 timer handle expired user timeout
+Date: Wed, 20 May 2026 18:19:59 +0200
+Message-ID: <20260520162209.710385689@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,72 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Altan Hacigumus <ahacigu.linux@gmail.com>
 
-[ Upstream commit 4438113be604ee67a7bf4f81da6e1cca41332ce4 ]
+[ Upstream commit 2b9f6f7065d4cfb65ba19126e0b35ac4544c3f3a ]
 
-neigh_xmit always releases the skb, except when no neighbour table is
-found. But even the first added user of neigh_xmit (mpls) relied on
-neigh_xmit to release the skb (or queue it for tx).
+tcp_clamp_probe0_to_user_timeout() computes remaining time in jiffies
+using subtraction with an unsigned lvalue.  If elapsed probing time
+exceeds the configured TCP_USER_TIMEOUT, the underflow yields a large
+value.
 
-sashiko reported:
- If neigh_xmit() is called with an uninitialized neighbor table (for
- example, NEIGH_ND_TABLE when IPv6 is disabled), it returns -EAFNOSUPPORT
- and bypasses its internal out_kfree_skb error path.  Because the return
- value of neigh_xmit() is ignored here, does this leak the SKB?
+This ends up re-arming the probe timer for a full backoff interval
+instead of expiring immediately, delaying connection teardown beyond
+the configured timeout.
 
-Assume full ownership and remove the last code path that doesn't
-xmit or free skb.
+Fix this by preventing underflow so user-set timeout expiration is
+handled correctly without extending the probe timer.
 
-Fixes: 4fd3d7d9e868 ("neigh: Add helper function neigh_xmit")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260424145843.74055-1-fw@strlen.de
+Fixes: 344db93ae3ee ("tcp: make TCP_USER_TIMEOUT accurate for zero window probes")
+Link: https://lore.kernel.org/r/20260414013634.43997-1-ahacigu.linux@gmail.com
+Signed-off-by: Altan Hacigumus <ahacigu.linux@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260424014639.54110-1-ahacigu.linux@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/ipv4/tcp_timer.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index c56a4e7bf790c..5a9cc7268521c 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -3211,8 +3211,10 @@ int neigh_xmit(int index, struct net_device *dev,
+diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
+index 153c5888580ca..61631a2dcea7f 100644
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -50,7 +50,8 @@ static u32 tcp_clamp_rto_to_user_timeout(const struct sock *sk)
+ u32 tcp_clamp_probe0_to_user_timeout(const struct sock *sk, u32 when)
+ {
+ 	const struct inet_connection_sock *icsk = inet_csk(sk);
+-	u32 remaining, user_timeout;
++	u32 user_timeout;
++	s32 remaining;
+ 	s32 elapsed;
  
- 		rcu_read_lock();
- 		tbl = rcu_dereference(neigh_tables[index]);
--		if (!tbl)
--			goto out_unlock;
-+		if (!tbl) {
-+			rcu_read_unlock();
-+			goto out_kfree_skb;
-+		}
- 		if (index == NEIGH_ARP_TABLE) {
- 			u32 key = *((u32 *)addr);
+ 	user_timeout = READ_ONCE(icsk->icsk_user_timeout);
+@@ -61,7 +62,7 @@ u32 tcp_clamp_probe0_to_user_timeout(const struct sock *sk, u32 when)
+ 	if (unlikely(elapsed < 0))
+ 		elapsed = 0;
+ 	remaining = msecs_to_jiffies(user_timeout) - elapsed;
+-	remaining = max_t(u32, remaining, TCP_TIMEOUT_MIN);
++	remaining = max_t(int, remaining, TCP_TIMEOUT_MIN);
  
-@@ -3228,7 +3230,6 @@ int neigh_xmit(int index, struct net_device *dev,
- 			goto out_kfree_skb;
- 		}
- 		err = READ_ONCE(neigh->output)(neigh, skb);
--out_unlock:
- 		rcu_read_unlock();
- 	}
- 	else if (index == NEIGH_LINK_TABLE) {
-@@ -3238,11 +3239,10 @@ int neigh_xmit(int index, struct net_device *dev,
- 			goto out_kfree_skb;
- 		err = dev_queue_xmit(skb);
- 	}
--out:
- 	return err;
- out_kfree_skb:
- 	kfree_skb(skb);
--	goto out;
-+	return err;
+ 	return min_t(u32, remaining, when);
  }
- EXPORT_SYMBOL(neigh_xmit);
- 
 -- 
 2.53.0
 
