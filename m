@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800EF28DC4;
-	Wed, 20 May 2026 17:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390983A3E9C;
+	Wed, 20 May 2026 17:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298973; cv=none; b=WIbRTkbpPBNVSNcO4ywuXeOuq4WXH4th5oQTlfgq+yBycWsNjPItrPu6yUet5jbj/B6zFYbP8es56zxGniJJ98Rqhany2Z7SzC6zMOWgoiy6MMFudap4VOySPjnV7o9hSxIVEm697YWghgYbNt8NvyTca7xpm3LIx/b4d1dP84M=
+	t=1779298976; cv=none; b=tlD51vae8Y61D+haO4C/IX0XPfZV/ldXSbgShdJ6f9mtmcpkWfOUwkiaeHB5KVbixDpe+Oz359HtZdxv99V92el/fP1rCAxRCMZQ6fGjMdmMMaBDyRRh/wu679f0TJYpN3DT91VHleTJ6vWgm7fJD47D/8i6gjVBZgisWWfw2zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298973; c=relaxed/simple;
-	bh=2tknn6+Pxck4RRbCzt+Xnl8RBuFEFT8TVVRu1TMZ6OY=;
+	s=arc-20240116; t=1779298976; c=relaxed/simple;
+	bh=6gBJkxLLP+LhJ8jK6fzhofnyGnzFU9zqF1O2Lmoo5Hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utOvXjL9x2kG3I6xpf/TW4hychLpNwcUcZzVpWY//+I6UvKaD7ptQxMSYUU2s0inX7pIDlBEjbhl3eRcmaNpGcbPxbIIlID807Mvhq7OOy04CThFGYxC+gJMnJSqocOSgKRqkJ8D/AV/hC7vBNIkcVRvIvS7URkIaN6+odUzJ2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gh3OdmXV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nDQHA6mZ2FBnIzuRmsOmmiZlqa3OlKidEqSOdFhsYlsRNJota42c6jrV4Z7gGFoBP06jBa8hThEdj9s6zoZNIzLntVDUvkK2r7AQWcIiKfnJpE+ZqqoaHTO4H8odHsp/gcbqnVpV2n9Qy3EJe33udaqFNJkeynneMo2NC0uLH9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0nFY4ld; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gh3OdmXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58CC1F000E9;
-	Wed, 20 May 2026 17:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0nFY4ld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907BB1F000E9;
+	Wed, 20 May 2026 17:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298972;
-	bh=M8KN2xAZT4ccp07q64EWwhi+VvPRnJDQ99mZgm1YVSs=;
+	s=korg; t=1779298975;
+	bh=aBnL7ClRyHKUbz/IJ1y9l2cFNTgTRVmiiQ4C/7Pnkeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gh3OdmXV9wsFlfasKUNxlyMrrQ+b/ZBZ8VKe0lz0M62XmziffRsNMGomeGhdovbWK
-	 SSt4XtvQEY+yc9wQbO4NuPV1V1orw3APK5DZO77Vn1+Iv/AAGsfVoIBAG6Rrkwm+SI
-	 acxOi5GMegeRZ7e2TPZ+P4EuAtajVO5/V7zjRxMY=
+	b=F0nFY4ldNK3yPe0aPA1WJYsqNteFuM6+G080e090mOqqWnYR9rZCf6riallgiR3fs
+	 mPylVBtUTs0J298YJvhNH1p7KKaHKGB6me+s6WdaSc64YWBPj0A3DqgWWSSeR30DeS
+	 wejAbzjLn0fjPQpV1Asppf8zhLcM5tKJTlc/CR8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 612/957] arm64: dts: imx8mm-tqma8mqml: Correct PAD settings for PMIC_nINT
-Date: Wed, 20 May 2026 18:18:15 +0200
-Message-ID: <20260520162147.807095940@linuxfoundation.org>
+Subject: [PATCH 6.18 613/957] arm64: dts: marvell: armada-37xx: use usb2-phy in USB3 controllers phy-names
+Date: Wed, 20 May 2026 18:18:16 +0200
+Message-ID: <20260520162147.828587849@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,35 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 42a9f5a16328ed78a88e0498556965b6c6ec515c ]
+[ Upstream commit 0fef19844624f8bc07651b4d26088d8940affba3 ]
 
-With commit 5d0efaf47ee90 ("regulator: pca9450: Correct interrupt type"),
-there might be interrupt storm for this board. Need to set PAD PUE and PU
-together to make pull up work properly.
+Instead of the generic 'usb2-phy' name, the Armada 37xx device trees
+are using a custom 'usb2-utmi-otg-phy' name for the USB2 PHY in the USB3
+controller node. Since commit 53a2d95df836 ("usb: core: add phy notify
+connect and disconnect"), this triggers a bug [1] in the USB core which
+causes double use of the USB3 PHY.
 
-Fixes: dfcd1b6f7620e ("arm64: dts: freescale: add initial device tree for TQMa8MQML with i.MX8MM")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Change the PHY name to 'usb2-phy' in the SoC and in the uDPU specific
+dtsi files in order to avoid triggering the bug and also to keep the
+names in line with the ones used by other platforms.
+
+Link: https://lore.kernel.org/r/20260330-usb-avoid-usb3-phy-double-use-v1-1-d2113aecb535@gmail.com # [1]
+Fixes: 53a2d95df836 ("usb: core: add phy notify connect and disconnect")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi | 2 +-
+ arch/arm64/boot/dts/marvell/armada-37xx.dtsi      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml.dtsi
-index b82e9790ea205..a0e8b158c4edf 100644
---- a/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mm-tqma8mqml.dtsi
-@@ -291,7 +291,7 @@ pinctrl_i2c1_gpio: i2c1gpiogrp {
- 	};
+diff --git a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
+index cd856c0aba71e..12deacb741ccb 100644
+--- a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
++++ b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
+@@ -161,7 +161,7 @@ &eth1 {
+ &usb3 {
+ 	status = "okay";
+ 	phys = <&usb2_utmi_otg_phy>;
+-	phy-names = "usb2-utmi-otg-phy";
++	phy-names = "usb2-phy";
+ };
  
- 	pinctrl_pmic: pmicgrp {
--		fsl,pins = <MX8MM_IOMUXC_GPIO1_IO08_GPIO1_IO8		0x94>;
-+		fsl,pins = <MX8MM_IOMUXC_GPIO1_IO08_GPIO1_IO8		0x1d4>;
- 	};
+ &uart0 {
+diff --git a/arch/arm64/boot/dts/marvell/armada-37xx.dtsi b/arch/arm64/boot/dts/marvell/armada-37xx.dtsi
+index c612317043ea7..a66157cb439b4 100644
+--- a/arch/arm64/boot/dts/marvell/armada-37xx.dtsi
++++ b/arch/arm64/boot/dts/marvell/armada-37xx.dtsi
+@@ -373,7 +373,7 @@ usb3: usb@58000 {
+ 				interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&sb_periph_clk 12>;
+ 				phys = <&comphy0 0>, <&usb2_utmi_otg_phy>;
+-				phy-names = "usb3-phy", "usb2-utmi-otg-phy";
++				phy-names = "usb3-phy", "usb2-phy";
+ 				status = "disabled";
+ 			};
  
- 	pinctrl_reg_usdhc2_vmmc: regusdhc2vmmcgrp {
 -- 
 2.53.0
 
