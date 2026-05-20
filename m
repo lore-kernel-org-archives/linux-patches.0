@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98183F7AA9;
-	Wed, 20 May 2026 11:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CBB3F8896;
+	Wed, 20 May 2026 11:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276061; cv=none; b=OtpmvwfKq9kI9sHkIJ5SYx28YzWmiWkfa7AXtL+MHnaCAfMHKjeB9gKyNE92q2DGJdaJcoDOdY5uO23WWMNtmBMCcUdvirUtXtOFsw56+Vrz0Lt+nkD7AM+m7aUCn+Y0Bib1J70lnKgFkqNOInOUpwznprWZgnNN9/Fq0ylqquM=
+	t=1779276062; cv=none; b=uL8+S2qoB1omhTrqi6/na2LmWA6vBVoWd4hwkmRAS0im5bqbdXgDNQKTeCXvzAAv6DC2F+4UsV4rMUKpMBHz+z2APDp51csgpYrRZ7znCpw1p1a18cRv2aqzkqMyEFowRYVXKPvgQtuQzJ+0z073rzf5FNZU2PjUfxZIk9M8uyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276061; c=relaxed/simple;
-	bh=0xxZol44F4hcM8ECcpKTGhNLkaDUQS+6DnHRlwMRPZc=;
+	s=arc-20240116; t=1779276062; c=relaxed/simple;
+	bh=7bG2LaLW5S3D7RFVsdj9HsqmpVA+4H+heSjNo+HHAUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h/EkL9lagp0pYoPcOxXMG3yk5M4fHyXSEGFtUjaM9rDvBcPp1cbEPu5gVU9BC/5ldgq7sXje1jklwwvns2kyItC76lKutaCVgfIui6ZxUwqxZ9iok2m1KDYX1Flr64b4zRK9ijz6ikEG+PvTtpIP+vcQyyDccZMeQXXXX93/vjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ApmKzAEK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rr8FNLsySocQcN40/Rsi44mNesszVIpRYAF8RtnEgCAOVkNAI3nVLWqKDDbnlhYSpl1p2Hu5z1o+K/j2/0vJpXiXYkKh0FYY+5L/OH2cHxSHJHODEC5bcjPd/nfqntoyUIJ9r21sfgoeN60EJpQV7osbEBzMnnj79E3wpBvrKPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S/6pkiT6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ApmKzAEK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561CE1F00894;
-	Wed, 20 May 2026 11:20:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S/6pkiT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F651F00896;
+	Wed, 20 May 2026 11:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276057;
-	bh=A6I+UaJfx4VtYeDC9wXibAsHX+VrY8JE84i64An35Y8=;
+	s=k20260515; t=1779276060;
+	bh=Exl5QkWaEPxGTQBd53MIR7zcxCQrQ2MMursm2F/UCeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ApmKzAEKDa5pVBXe6qoTmfpb0Duk98ldyllpvToCZ6LEmf3YFqDz9SteUOTTLKIVY
-	 bK3E5ZN95NlqB7jMzz/40+FCP4+7c1Q1mgWuo2FygcSueV//gyIUpbjUgnShH7rCAh
-	 gI+YXhl7LUnH/Iv2ppmf3qd44qfSG/nOTrAlc0rk9SOaWRcd3hXSixvGynDqsrPnz3
-	 e556K6JaR9T49dOouwHcYaIBEzQNToEEvU3JocWtmrRvebb+/lgm+tZ4VigmlxHug0
-	 gPudeXox6p4t/Hx/ODFqwWwHxTJQlbF+N5d74OpEIvhzOOOGpZiMSN1Lj4LIYQ1+R3
-	 +djfOqI3EnlPQ==
+	b=S/6pkiT6dKc415qVPlzzuuVgPITckBVZOgj/6stismRnm/FsVPKJZ3dq8H3iSBh8M
+	 YIp9TBW0KboE1o61fi4ygUQaSU5EuJ+HMNKt6/UzBKribINpYnEUtofMR9hkBlqbVy
+	 AUM0v8mR6TN7ClBu+atxpgjGbo16rUAv/zWvHwOlnoBXGHiTMAFtQpmy19KnFs9DuG
+	 I8yg+BynENbcNapiKWy9vKK4OG6dw8SlsqCYkbM6XQXoovr4gqd1wd3fQonHL+SX64
+	 f77OH1osFGs9S0EKhR8pplrggLR5xpPnMtrFgJ3FxYJ5kbOQuzcP+IbocWyexDrYEi
+	 1JmuJQhoY6MJQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Paolo Pisati <p.pisati@gmail.com>,
-	Denis Benato <denis.benato@linux.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Rosalie Wanders <rosalie@mailbox.org>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	corentin.chary@gmail.com,
-	luke@ljones.dev,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.12] platform/x86: asus-nb-wmi: add DMI quirk for ASUS Zenbook Duo UX8407AA
-Date: Wed, 20 May 2026 07:19:23 -0400
-Message-ID: <20260520111944.3424570-51-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] HID: sony: add missing size validation for SMK-Link remotes
+Date: Wed, 20 May 2026 07:19:25 -0400
+Message-ID: <20260520111944.3424570-53-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -50,247 +48,177 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Pisati <p.pisati@gmail.com>
+From: Rosalie Wanders <rosalie@mailbox.org>
 
-[ Upstream commit 2997606dd17729404cef9821ce66dd037b6019eb ]
+[ Upstream commit a4170b63eda999d20ad6dc39ddc3ce5c1ac619e6 ]
 
-Use the existing zenbook duo keyboard quirk for the UX8407AA model too.
+This commit adds the missing size validation for SMK-Link remotes in
+sony_raw_event(), this prevents a malicious device from allowing
+hid-sony to read out of bounds of the provided buffer.
 
-Signed-off-by: Paolo Pisati <p.pisati@gmail.com>
-Reviewed-by: Denis Benato <denis.benato@linux.dev>
-Link: https://patch.msgid.link/20260508070956.62201-1-p.pisati@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+I do not own these devices so the size check only forces that the buffer
+is large enough for nsg_mrxu_parse_report().
+
+Signed-off-by: Rosalie Wanders <rosalie@mailbox.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem `platform/x86: asus-nb-wmi`; action verb
-`add`; intent is to add a DMI match for `ASUS Zenbook Duo UX8407AA` to
-reuse an existing Zenbook Duo keyboard quirk.
+## Phase Walkthrough
 
-Step 1.2 Record: Tags found: `Signed-off-by: Paolo Pisati`, `Reviewed-
-by: Denis Benato`, `Link:
-https://patch.msgid.link/20260508070956.62201-1-p.pisati@gmail.com`,
-`Reviewed-by: Ilpo Järvinen`, `Signed-off-by: Ilpo Järvinen`. No
-`Fixes:` tag and no explicit stable tag in the commit.
+Phase 1, commit message forensics. Record: subsystem `HID: sony`; action
+`add`; intent is missing size validation for SMK-Link remotes. Tags
+present: `Signed-off-by: Rosalie Wanders`, `Signed-off-by: Jiri Kosina`;
+no `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
+`Link:`, or `Cc: stable`. Body says a malicious device can make `hid-
+sony` read beyond the provided buffer in `sony_raw_event()`. This is a
+direct memory-safety bug, not a hidden cleanup.
 
-Step 1.3 Record: The commit body says only: “Use the existing zenbook
-duo keyboard quirk for the UX8407AA model too.” The underlying quirk was
-verified in local history: it suppresses spurious WLAN key events on
-Zenbook Duo keyboards, avoiding unintended wireless/rfkill behavior.
+Phase 2, diff analysis. Record: one file, `drivers/hid/hid-sony.c`, 2
+insertions and 3 deletions; only `sony_raw_event()` changes. Before: any
+`NSG_MRXU_REMOTE` report with `rd[0] == 0x02` called
+`nsg_mrxu_parse_report()`. After: it only does so when `size >= 12`.
+`nsg_mrxu_parse_report()` reads through `rd[11]`, including `rd[offset +
+10]` with `offset = 1`, so the minimum size is verified by code. Bug
+category: bounds check / out-of-bounds read. Fix quality: surgical and
+obviously correct; the only behavioral change is rejecting malformed
+short reports before parsing.
 
-Step 1.4 Record: This is a hardware quirk addition, not disguised
-cleanup. It fixes model-specific behavior by making an already-existing
-workaround apply to another DMI-identified ASUS model.
+Phase 3, git history. Record: upstream commit is
+`a4170b63eda999d20ad6dc39ddc3ce5c1ac619e6`, authored by Rosalie Wanders
+and committed by HID maintainer Jiri Kosina. Blame shows the NSG-MRxU
+parser and unchecked call were introduced by `b7289cb1cf99d` (`HID:
+sony: Add touchpad support for NSG-MR5U and NSG-MR7U remotes`), first
+described by `git describe` as `v4.17-rc1~118^2~2^2`. No `Fixes:` tag to
+follow. Recent history shows an adjacent independent HID Sony size-
+validation fix for Rock Band 3 Pro instruments, but no dependency for
+this patch. Author has multiple recent `hid-sony` commits.
 
-## Phase 2: Diff Analysis
-Step 2.1 Record: One file changed: `drivers/platform/x86/asus-nb-wmi.c`,
-9 insertions, no removals. Modified area: `asus_quirks[]` DMI table.
-Scope: single-file surgical hardware quirk.
+Phase 4, mailing list and external research. Record: `b4 dig -c
+a4170b63eda99` found the exact lore submission at
+`https://patch.msgid.link/20260412010806.7997-2-rosalie@mailbox.org`.
+`b4 dig -a` showed only v1, no later revision. `b4 dig -w` showed Jiri
+Kosina, Benjamin Tissoires, `linux-input`, and `linux-kernel` were
+included. Full thread mbox shows Jiri replied: “Applied to
+hid.git#for-7.1/upstream-fixes, thanks.” No NAKs, objections, explicit
+stable request, or reviewer-suggested changes found. Direct WebFetch to
+lore was blocked by Anubis, but `b4` fetched the thread successfully.
 
-Step 2.2 Record: Before, UX8407AA did not match `asus_quirks[]`, so
-`quirk_asus_zenbook_duo_kbd` was not selected for that model. After,
-matching DMI vendor/product strings select `quirk_asus_zenbook_duo_kbd`.
+Phase 5, semantic analysis. Record: key functions are `sony_raw_event()`
+and `nsg_mrxu_parse_report()`. `sony_raw_event()` is registered as the
+HID driver `.raw_event` callback. HID core calls `.raw_event` from
+`__hid_input_report()` before `hid_report_raw_event()`’s later report-
+size validation, so driver-local parsing must validate `size` itself.
+Lower HID layers such as USB HID call `hid_input_report()` with device-
+provided lengths. `nsg_mrxu_parse_report()` is only called from
+`sony_raw_event()` in this file. Similar pattern found: adjacent
+upstream commit `12bd440b66ed8` adds a size check before another `rd[]`
+access in the same function.
 
-Step 2.3 Record: Bug category is hardware workaround/DMI quirk. Verified
-quirk behavior: `quirk_asus_zenbook_duo_kbd` sets `key_wlan_event =
-ASUS_WMI_KEY_IGNORE`; `asus_nb_wmi_key_filter()` maps WMI codes `0x5D`,
-`0x5E`, and `0x5F` to that quirk value when set; without the quirk,
-those codes remain `KEY_WLAN` events.
+Phase 6, stable tree analysis. Record: the buggy NSG code exists in
+checked stable branches `4.19.y`, `5.4.y`, `5.10.y`, `5.15.y`, `6.1.y`,
+`6.6.y`, `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y`; `git merge-base
+--is-ancestor b7289cb1cf99d4 <branch>` confirmed the introducing commit
+is in each. Exact patch apply-check succeeded on `7.0.y`; older branches
+failed exact context due file drift, but the required backport is a
+trivial one-condition change at the same unchecked call site. No
+existing stable branch log entry for this exact SMK-Link fix was found
+in the checked branches.
 
-Step 2.4 Record: Fix quality is high: 9-line DMI table entry, no new
-API, no shared logic change. Regression risk is very low and limited to
-systems whose DMI strings match `DMI_SYS_VENDOR=ASUS` and
-`DMI_PRODUCT_NAME=Zenbook Duo UX8407AA`.
+Phase 7, subsystem context. Record: subsystem is HID input driver code,
+specifically `drivers/hid/hid-sony.c`; criticality is driver-specific
+but security-relevant for systems using or exposed to spoofed SMK-
+Link/Sony HID devices. `MAINTAINERS` lists HID core as maintained by
+Jiri Kosina and Benjamin Tissoires; Jiri committed and applied the
+patch. The file has moderate recent activity, including HID Sony fixes
+and device support work.
 
-## Phase 3: Git History Investigation
-Step 3.1 Record: Blame around the table showed the existing UX8406MA
-quirk entry came from `9286dfd5735b` and UX8406CA from `7dc6b2d3b550`.
-Blame of the quirk definition showed `quirk_asus_zenbook_duo_kbd` was
-introduced by `9286dfd5735b`, later converted to `key_wlan_event =
-ASUS_WMI_KEY_IGNORE` by `132bfcd24925`.
+Phase 8, impact and risk. Record: affected users are `CONFIG_HID_SONY`
+systems with SMK-Link NSG-MR5U/NSG-MR7U remote support, or systems that
+accept a malicious/spoofed matching HID device. Trigger is a report with
+ID byte `0x02` and length below 12. Failure mode is an out-of-bounds
+read from the supplied report buffer; severity HIGH because it is
+device-triggerable kernel memory-safety behavior. Benefit is high for
+affected systems; risk is very low because valid reports of length >= 12
+keep identical behavior and malformed short reports stop before unsafe
+parsing.
 
-Step 3.2 Record: No `Fixes:` tag is present, so there is no introducer
-tag to follow.
+Phase 9, synthesis. Evidence for backporting: real OOB read, malicious-
+device trigger described in commit body, parser byte accesses verify the
+needed bound, bug exists since v4.17-era code and is present in many
+stable branches, fix is a one-line functional bounds check, maintainer
+applied it to HID upstream fixes. Evidence against: no explicit `Tested-
+by`, author says they do not own the hardware, and older stable trees
+need a small context backport. Unresolved: no public crash report or
+syzbot report found; no hardware test evidence found.
 
-Step 3.3 Record: Recent related history includes `9286dfd5735b` fixing
-spurious rfkill on UX8406MA, `7dc6b2d3b550` adding UX8406CA, and later
-key handling fixes `132bfcd24925` and `225d1ee0f5ba`. The candidate is
-standalone where `quirk_asus_zenbook_duo_kbd` exists.
+## Stable Rules
 
-Step 3.4 Record: `git log --author="Paolo Pisati" -10 --
-drivers/platform/x86` showed no prior local platform-x86 commits by this
-author. The patch was reviewed by Denis Benato and Ilpo Järvinen; Ilpo
-committed it.
+1. Obviously correct and tested: obviously correct by code inspection;
+   no explicit `Tested-by` and no hardware ownership, but maintainer
+   accepted it as an upstream fix.
+2. Fixes a real bug: yes, verified unchecked parser reads up to
+   `rd[11]`.
+3. Important issue: yes, device-triggerable kernel out-of-bounds read.
+4. Small and contained: yes, one function in one driver.
+5. No new features/APIs: yes.
+6. Can apply to stable: yes for `7.0.y` directly; older stable branches
+   need trivial context adjustment.
 
-Step 3.5 Record: Dependency is the existing Zenbook Duo keyboard quirk.
-Verified present in releases `v6.12` and newer in this repo; absent from
-`v6.6`.
-
-## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 2997606dd17729404cef9821ce66dd037b6019eb`
-found the exact lore thread at the patch message-id URL. `b4 dig -a`
-showed only v1, so no newer revision was found.
-
-Step 4.2 Record: `b4 dig -w` showed recipients included Corentin Chary,
-Luke D. Jones, Denis Benato, Hans de Goede, Ilpo Järvinen, and
-`platform-driver-x86@vger.kernel.org`. The patch received `Reviewed-by`
-from Denis Benato and Ilpo Järvinen.
-
-Step 4.3 Record: No separate bug report or `Reported-by` tag was found
-in the commit. The b4-fetched thread contained Denis’s review and Ilpo’s
-applied notice, but no detailed user report.
-
-Step 4.4 Record: No multi-patch series; b4 identified this as a single-
-patch v1 series. Related local commits are the previous Zenbook Duo
-quirk additions and key handling corrections.
-
-Step 4.5 Record: Direct `WebFetch` searches on lore/stable were blocked
-by Anubis. I could not verify stable-list discussion via WebFetch. `b4`
-did successfully fetch the exact patch thread.
-
-## Phase 5: Code Semantic Analysis
-Step 5.1 Record: Modified data structure: `asus_quirks[]`. Existing
-functions involved by flow: `dmi_matched()`, `asus_nb_wmi_quirks()`,
-`asus_nb_wmi_key_filter()`, and `asus_wmi_handle_event_code()`.
-
-Step 5.2 Record: `asus_nb_wmi_quirks()` is wired through
-`.detect_quirks` in `asus_nb_wmi_driver`; `asus_wmi_add()` calls
-`detect_quirks()` during driver probe. `asus_nb_wmi_key_filter()` is
-wired through `.key_filter`; `asus_wmi_handle_event_code()` calls it
-before reporting input events.
-
-Step 5.3 Record: Key callees/operations: `dmi_check_system(asus_quirks)`
-performs DMI matching; `dmi_matched()` assigns `quirks =
-dmi->driver_data`; event handling calls `sparse_keymap_report_event()`
-unless the filter changes the code to `ASUS_WMI_KEY_IGNORE`.
-
-Step 5.4 Record: Reachability is from ASUS WMI platform driver probe and
-ACPI/WMI event notifications on matching ASUS notebook hardware. This is
-hardware/model-specific, not a general syscall-triggered path.
-
-Step 5.5 Record: Similar patterns found: UX8406MA and UX8406CA already
-use `quirk_asus_zenbook_duo_kbd`; ROG Z13 uses the same DMI table
-pattern with vendor `ASUS`.
-
-## Phase 6: Stable Tree Analysis
-Step 6.1 Record: `git grep` over tags showed
-`quirk_asus_zenbook_duo_kbd` exists in `v6.12`, `v6.15`, `v6.16`,
-`v6.17`, `v6.18`, `v6.19`, and `v7.0`; it was not present in `v6.1` or
-`v6.6`. UX8406CA exists from `v6.16`; ROG Z13 context exists from
-`v6.17`.
-
-Step 6.2 Record: `git apply --check` against the current tree succeeded.
-Expected backport difficulty: clean for trees with matching nearby
-context; minor context adjustment for trees where UX8406CA or ROG Z13
-entries are absent, but the quirk symbol exists.
-
-Step 6.3 Record: No existing UX8407AA entry or related UX8407AA fix was
-found in local `git log --grep="UX8407AA"`.
-
-## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: Subsystem is `drivers/platform/x86`, ASUS notebook WMI
-driver. Criticality: peripheral/driver-specific, affecting users of the
-ASUS Zenbook Duo UX8407AA.
-
-Step 7.2 Record: The subsystem and file are active: recent local history
-includes multiple ASUS WMI quirk/keymap fixes and platform-x86 changes.
-
-## Phase 8: Impact And Risk
-Step 8.1 Record: Affected population is driver-specific: users of ASUS
-Zenbook Duo UX8407AA with `asus-nb-wmi`.
-
-Step 8.2 Record: Trigger is hardware-specific WMI keyboard attach/detach
-or wireless-console events. I verified the relevant event codes are
-mapped as `KEY_WLAN` unless the quirk rewrites them to ignore.
-
-Step 8.3 Record: Failure mode is unintended WLAN/rfkill-style input
-events on this model. Severity is medium: user-visible connectivity
-disruption, not a crash, data corruption, or security issue.
-
-Step 8.4 Record: Benefit is high for affected hardware and low globally.
-Risk is very low: a DMI-only quirk entry using existing behavior,
-isolated to one model string.
-
-## Phase 9: Final Synthesis
-Evidence for backporting: this is exactly the stable-accepted hardware
-quirk category; it is small, reviewed, isolated, uses existing code, and
-fixes real model-specific input/rfkill behavior for affected hardware.
-
-Evidence against backporting: no explicit `Cc: stable`, no separate bug
-report in the thread, and older stable trees without
-`quirk_asus_zenbook_duo_kbd` need prerequisites or are not applicable.
-
-Stable rules checklist: obviously correct: yes; fixes real hardware
-behavior: yes; important enough for affected users: yes, though not
-critical; small and contained: yes, 9 insertions in one DMI table; no
-new APIs/features: yes; applies to stable: yes for current tree, likely
-minor context-only adjustments for some older applicable trees.
-
-Exception category: hardware-specific DMI quirk/workaround, which is a
-standard stable exception.
+No exception category is needed; this is a normal memory-safety fix.
 
 ## Verification
-- [Phase 1] Parsed commit metadata from `git show
-  2997606dd17729404cef9821ce66dd037b6019eb`.
-- [Phase 2] Verified diff is one DMI entry in
-  `drivers/platform/x86/asus-nb-wmi.c`.
-- [Phase 3] Ran `git blame` on the DMI table and quirk definition;
-  identified existing quirk history.
-- [Phase 3] Checked related commits `9286dfd5735b`, `7dc6b2d3b550`,
-  `132bfcd24925`, `225d1ee0f5ba`.
-- [Phase 4] Ran `b4 dig -c`, `b4 dig -a`, `b4 dig -w`; found exact v1
-  patch thread and recipients.
-- [Phase 4] Ran `b4 mbox`/`b4 am` by message-id; confirmed Denis review
-  and Ilpo applied notice.
-- [Phase 5] Used `rg` and file reads to trace `detect_quirks`,
-  `key_filter`, and event reporting.
-- [Phase 6] Used `git grep` over version tags to verify which releases
-  contain the existing quirk machinery.
-- [Phase 6] Ran `git apply --check`; candidate applies cleanly to the
-  current tree.
-- UNVERIFIED: Direct lore/stable search results, because WebFetch was
-  blocked by Anubis.
-- UNVERIFIED: Actual UX8407AA firmware DMI strings beyond the submitted
-  patch and maintainer review.
 
-This should be backported to stable trees where the existing Zenbook Duo
-keyboard quirk is present, with trivial context adjustment if needed.
+- Phase 1: parsed `git show a4170b63eda99`; confirmed tags and absence
+  of `Fixes:`, reports, review, stable Cc.
+- Phase 2: inspected diff and `nsg_mrxu_parse_report()`; confirmed
+  `rd[11]` maximum access and added `size >= 12`.
+- Phase 3: ran `git blame`, `git log -S`, `git show b7289cb1cf99d4`, and
+  author history checks.
+- Phase 4: ran `b4 dig -c`, `-a`, `-w`, `b4 am`, and full `b4 mbox`;
+  confirmed v1-only thread and maintainer apply reply.
+- Phase 5: used `rg` and `ReadFile` on HID core and `hid-sony`;
+  confirmed `.raw_event` call path and lower-layer `hid_input_report()`
+  entry.
+- Phase 6: checked stable branch code, ancestry of `b7289cb1cf99d4`,
+  exact apply-checks, and stable logs for this subject.
+- Phase 7: checked `MAINTAINERS` for HID maintainers and subsystem
+  ownership.
+- Phase 8: mapped trigger and severity from verified parser accesses and
+  HID input path.
+- Unverified: actual hardware testing on SMK-Link remotes; exact clean
+  application to older stable trees without a tiny backport adjustment.
 
 **YES**
 
- drivers/platform/x86/asus-nb-wmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hid/hid-sony.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index b4677c5bba5b4..8005c088e9eee 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -544,6 +544,15 @@ static const struct dmi_system_id asus_quirks[] = {
- 		},
- 		.driver_data = &quirk_asus_zenbook_duo_kbd,
- 	},
-+	{
-+		.callback = dmi_matched,
-+		.ident = "ASUS Zenbook Duo UX8407AA",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUS"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Zenbook Duo UX8407AA"),
-+		},
-+		.driver_data = &quirk_asus_zenbook_duo_kbd,
-+	},
- 	{
- 		.callback = dmi_matched,
- 		.ident = "ASUS ROG Z13",
+diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
+index a89af14e4acc6..02baaf84e9792 100644
+--- a/drivers/hid/hid-sony.c
++++ b/drivers/hid/hid-sony.c
+@@ -1035,10 +1035,9 @@ static int sony_raw_event(struct hid_device *hdev, struct hid_report *report,
+ 		sixaxis_parse_report(sc, rd, size);
+ 	} else if ((sc->quirks & MOTION_CONTROLLER_BT) && rd[0] == 0x01 && size == 49) {
+ 		sixaxis_parse_report(sc, rd, size);
+-	} else if ((sc->quirks & NAVIGATION_CONTROLLER) && rd[0] == 0x01 &&
+-			size == 49) {
++	} else if ((sc->quirks & NAVIGATION_CONTROLLER) && rd[0] == 0x01 && size == 49) {
+ 		sixaxis_parse_report(sc, rd, size);
+-	} else if ((sc->quirks & NSG_MRXU_REMOTE) && rd[0] == 0x02) {
++	} else if ((sc->quirks & NSG_MRXU_REMOTE) && rd[0] == 0x02 && size >= 12) {
+ 		nsg_mrxu_parse_report(sc, rd, size);
+ 		return 1;
+ 	} else if ((sc->quirks & RB4_GUITAR_PS4_USB) && rd[0] == 0x01 && size == 64) {
 -- 
 2.53.0
 
