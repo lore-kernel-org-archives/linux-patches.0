@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EB63F4124;
-	Wed, 20 May 2026 17:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F09028DC4;
+	Wed, 20 May 2026 17:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297318; cv=none; b=Rww74pJmqj1hMwiWvhfeTYBB8Nv35T7gwo3jUAvcVFTXDnE5EAVqWWvcodpSgW8eTHYvo1UE795hPkh5jDXZJP839+d1wCxsxaZ3KWLhiq/Smbu6cNAo0r3MIO60ao+yTvG9yK+iJqI8yFuf0XOyalZ48nd8PO8etNI3zrC2l1U=
+	t=1779297321; cv=none; b=SrcecTn3yhSOKCROEZW5UNpNZo4CfaCWJHyXCzJFNCDVwj/ka8LI4QneivCLQ4U+zK4jUVD84V1ZkWzm4tRCGyDbSVLXgz9bp1IuJg/Erofyauhy9fLXU92+1WAl4ri76zO9MMTgiBtSLAZ+JEewhySj0bLSrALUId2GLP0dTb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297318; c=relaxed/simple;
-	bh=JbuXwgGM7CEtYNX51LrVaWIh2KOkoDFbuJOVQS1AMp8=;
+	s=arc-20240116; t=1779297321; c=relaxed/simple;
+	bh=ey7R/E12OIKzT7T5jhY1u3ZlITpxfODVKKCBTjis7IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=daHhKhBiljmuQ4RXGymWkcnIb8BoKOgPyytrr4wc4V9BC5f5CVztTyHipTIXLSDn3juo/nkJhh07Y2JqEcLUjLOQYNJPFRgiA7aKnqDLC92AQW9LwKbr/HpxIjllEs8ruJaxY4KS7eNVPBrwGxHzlgXCr4iE4cLwa/s9KKXPEv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xFr3naOt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MZd2HGp76vq4XCVGUqvGWgKn2B3mZa+6yUad+0bJ9kVnLnt24vbe/Z2O+skVkhIyBo5wf7j7c4BmO2PIP3xd6uk0hPBX3YxNaXKjAtdI/xqetcXZZUtKjZQAQ+560hgihLoF7YyQUQaeBjyleyiIlIsUOWM1zOkImFLeigwz7kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfRbRSKU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFr3naOt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3BC1F000E9;
-	Wed, 20 May 2026 17:15:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfRbRSKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D281F000E9;
+	Wed, 20 May 2026 17:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297317;
-	bh=WwAqJumgLCwRlY6ufzNlvF+J2iCCUT3JTE61L5XV7lI=;
+	s=korg; t=1779297320;
+	bh=6vJhqz8zq07VxkqjgyA47ZupviApOyagd5W2KpNVAvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xFr3naOtwSoO/DM6ucBEyC+NVoykYxLXZZEV4oqjt0Z8hAKJTGYjhpXC7HxnJ/d3+
-	 HL1rpCQAmeb1EYGz64uKaiqx7tF+pf1hQRo2AChIhUjzn9AlQCzoy2ikvi3mM6mT96
-	 X+iyu/LeM9HXn1CcuRhZ2l3Putx/y9eUMb0LAnt8=
+	b=VfRbRSKUX0HexuVhtmfyR7LLEIyW/uCO+Hp4ckko6zVt4CRtGCp+XULrFIyv57hHf
+	 Aw+bDZ/4bWUjZgMkZAnTmwp0YzFNiKFn1vqp2wHsTgjYz9k8fa6o5+rrF7HMxBYhiR
+	 gUknpYRL9qSR1trcHhmX6G2pcT3xmfmm3H38nTBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 7.0 1131/1146] drm/xe/dma-buf: fix UAF with retry loop
-Date: Wed, 20 May 2026 18:23:01 +0200
-Message-ID: <20260520162213.845393082@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 7.0 1093/1146] btrfs: only release the dirty pages io tree after successful writes
+Date: Wed, 20 May 2026 18:22:23 +0200
+Message-ID: <20260520162212.973942681@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,143 +45,158 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 155a372a1cc50fa93387c5d3cdfd614a61e1afd1 upstream.
+commit 4066c55e109475a06d18a1f127c939d551211956 upstream.
 
-Retry doesn't work here, since bo will be freed on error, leading to
-UAF. However, now that we do the alloc & init before the attach, we can
-now combine this as one unit and have the init do the alloc for us. This
-should make the retry safe.
+[WARNING]
+With extra warning on dirty extent buffers at umount (aka, the next
+patch in the series), test case generic/388 can trigger the following
+warning about dirty extent buffers at unmount time:
 
-Reported by Sashiko.
+  BTRFS critical (device dm-2 state E): emergency shutdown
+  BTRFS error (device dm-2 state E): error while writing out transaction: -30
+  BTRFS warning (device dm-2 state E): Skipping commit of aborted transaction.
+  BTRFS error (device dm-2 state EA): Transaction 9 aborted (error -30)
+  BTRFS: error (device dm-2 state EA) in cleanup_transaction:2068: errno=-30 Readonly filesystem
+  BTRFS info (device dm-2 state EA): forced readonly
+  BTRFS info (device dm-2 state EA): last unmount of filesystem 4fbf2e15-f941-49a0-bc7c-716315d2777c
+  ------------[ cut here ]------------
+  WARNING: disk-io.c:3311 at invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs], CPU#8: umount/914368
+  CPU: 8 UID: 0 PID: 914368 Comm: umount Tainted: G           OE       7.1.0-rc1-custom+ #372 PREEMPT(full)  2de38db8d1deae71fde295430a0ff3ab98ccf596
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+  RIP: 0010:invalidate_and_check_btree_folios+0xfd/0x1ca [btrfs]
+  Call Trace:
+   <TASK>
+   close_ctree+0x52e/0x574 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
+   generic_shutdown_super+0x89/0x1a0
+   kill_anon_super+0x16/0x40
+   btrfs_kill_super+0x16/0x20 [btrfs d2f0b1cd330d1287e7a9919d112eadfc0e914efd]
+   deactivate_locked_super+0x2d/0xb0
+   cleanup_mnt+0xdc/0x140
+   task_work_run+0x5a/0xa0
+   exit_to_user_mode_loop+0x123/0x4b0
+   do_syscall_64+0x243/0x7c0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30539776 owner 9 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30621696 owner 257 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30638080 owner 258 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30654464 owner 7 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30703616 owner 2 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30720000 owner 10 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30736384 owner 4 gen 9 refs 2 flags 0x7
+  BTRFS warning (device dm-2 state EA): unable to release extent buffer 30752768 owner 11 gen 9 refs 2 flags 0x7
 
-v2: Fix up the error unwind (CI)
+I'm using a stripped down version, which seems to trigger the warning
+more reliably:
 
-Closes: https://sashiko.dev/#/patchset/20260506184332.86743-2-matthew.auld%40intel.com
-Fixes: eb289a5f6cc6 ("drm/xe: Convert xe_dma_buf.c for exhaustive eviction")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: <stable@vger.kernel.org> # v6.18+
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://patch.msgid.link/20260508102635.149172-4-matthew.auld@intel.com
-(cherry picked from commit 479669418253e0f27f8cf5db01a731352ea592e7)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+  _fsstress_pid=""
+  workload()
+  {
+  	dmesg -C
+  	mkfs.btrfs -f -K $dev > /dev/null
+  	echo 1 > /sys/kernel/debug/clear_warn_once
+  	mount $dev $mnt
+  	$fsstress -w -n 1024 -p 4 -d $mnt &
+  	_fsstress_pid=$!
+  	sleep 0
+  	$godown $mnt
+  	pkill --echo -PIPE fsstress > /dev/null
+  	wait $_fsstress_pid
+  	unset _fsstress_pid
+  	umount $mnt
+
+  	if dmesg | grep -q "WARNING"; then
+  		fail
+  	fi
+  }
+
+  for (( i = 0; i < $runtime; i++ )); do
+  	echo "=== $i/$runtime ==="
+  	workload
+  done
+
+[CAUSE]
+Inside btrfs_write_and_wait_transaction(), we first try to write all
+dirty ebs, then wait for them to finish.
+
+After that we call btrfs_extent_io_tree_release() to free all
+extent states from dirty_pages io tree.
+
+However if we hit an error from btrfs_write_marked_extent(), then we
+still call btrfs_extent_io_tree_release() to clear that dirty_pages io
+tree, which may contain dirty records that we haven't yet submitted.
+
+Furthermore, the later transaction cleanup path will utilize that
+dirty_pages io tree to properly cleanup those dirty ebs, but since it's
+already empty, no dirty ebs are properly cleaned up, thus will later
+trigger the warnings inside invalidate_btree_folios().
+
+[FIX]
+Normally such dirty ebs won't cause problems, as when the iput() is
+called on the btree inode, the dirty ebs will be forcibly written back,
+and since the fs is already in an error status, such writeback will not
+reach disk and finish immediately.
+
+But it's still better to get rid of such dirty ebs, if we ended up with
+dirty ebs but the fs is not in an error status, then such writeback at
+iput() time will be too late, as all workers are already stopped but
+writeback will utilize workers, which will lead to NULL pointer
+dereferences.
+
+Instead of unconditionally calling btrfs_extent_io_tree_release(), only
+call it if btrfs_write_and_wait_transaction() finished successfully, so
+that @dirty_pages extent io tree is kept untouched for transaction
+cleanup.
+
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_dma_buf.c |   49 +++++++++-------------------------------
- 1 file changed, 12 insertions(+), 37 deletions(-)
+ fs/btrfs/disk-io.c     |    1 +
+ fs/btrfs/transaction.c |    9 ++++-----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_dma_buf.c
-+++ b/drivers/gpu/drm/xe/xe_dma_buf.c
-@@ -238,16 +238,8 @@ struct dma_buf *xe_gem_prime_export(stru
- 	return buf;
- }
- 
--/*
-- * Takes ownership of @storage: on success it is transferred to the returned
-- * drm_gem_object; on failure it is freed before returning the error.
-- * This matches the contract of xe_bo_init_locked() which frees @storage on
-- * its error paths, so callers need not (and must not) free @storage after
-- * this call.
-- */
- static struct drm_gem_object *
--xe_dma_buf_init_obj(struct drm_device *dev, struct xe_bo *storage,
--		    struct dma_buf *dma_buf)
-+xe_dma_buf_create_obj(struct drm_device *dev, struct dma_buf *dma_buf)
- {
- 	struct dma_resv *resv = dma_buf->resv;
- 	struct xe_device *xe = to_xe_device(dev);
-@@ -258,10 +250,8 @@ xe_dma_buf_init_obj(struct drm_device *d
- 	int ret = 0;
- 
- 	dummy_obj = drm_gpuvm_resv_object_alloc(&xe->drm);
--	if (!dummy_obj) {
--		xe_bo_free(storage);
-+	if (!dummy_obj)
- 		return ERR_PTR(-ENOMEM);
--	}
- 
- 	dummy_obj->resv = resv;
- 	xe_validation_guard(&ctx, &xe->val, &exec, (struct xe_val_flags) {}, ret) {
-@@ -270,8 +260,7 @@ xe_dma_buf_init_obj(struct drm_device *d
- 		if (ret)
- 			break;
- 
--		/* xe_bo_init_locked() frees storage on error */
--		bo = xe_bo_init_locked(xe, storage, NULL, resv, NULL, dma_buf->size,
-+		bo = xe_bo_init_locked(xe, NULL, NULL, resv, NULL, dma_buf->size,
- 				       0, /* Will require 1way or 2way for vm_bind */
- 				       ttm_bo_type_sg, XE_BO_FLAG_SYSTEM, &exec);
- 		drm_exec_retry_on_contention(&exec);
-@@ -322,7 +311,6 @@ struct drm_gem_object *xe_gem_prime_impo
- 	const struct dma_buf_attach_ops *attach_ops;
- 	struct dma_buf_attachment *attach;
- 	struct drm_gem_object *obj;
--	struct xe_bo *bo;
- 
- 	if (dma_buf->ops == &xe_dmabuf_ops) {
- 		obj = dma_buf->priv;
-@@ -337,22 +325,14 @@ struct drm_gem_object *xe_gem_prime_impo
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4709,6 +4709,7 @@ static void btrfs_destroy_marked_extents
+ 			free_extent_buffer_stale(eb);
  		}
  	}
- 
--	bo = xe_bo_alloc();
--	if (IS_ERR(bo))
--		return ERR_CAST(bo);
--
- 	/*
--	 * xe_dma_buf_init_obj() takes ownership of the raw bo, so do not touch
--	 * on fail, since it will already take care of cleanup. On success we
--	 * still need to drop the ref, if something later fails.
--	 *
--	 * In addition this needs to happen before the attach, since
--	 * it will create a new attachment for this, and add it to the list of
--	 * attachments, at which point it is globally visible, and at any point
--	 * the export side can call into on invalidate_mappings callback, which
--	 * require a working object.
-+	 * This needs to happen before the attach, since it will create a new
-+	 * attachment for this, and add it to the list of attachments, at which
-+	 * point it is globally visible, and at any point the export side can
-+	 * call into on invalidate_mappings callback, which require a working
-+	 * object.
- 	 */
--	obj = xe_dma_buf_init_obj(dev, bo, dma_buf);
-+	obj = xe_dma_buf_create_obj(dev, dma_buf);
- 	if (IS_ERR(obj))
- 		return obj;
- 
-@@ -362,20 +342,15 @@ struct drm_gem_object *xe_gem_prime_impo
- 		attach_ops = test->attach_ops;
- #endif
- 
--	attach = dma_buf_dynamic_attach(dma_buf, dev->dev, attach_ops, &bo->ttm.base);
-+	attach = dma_buf_dynamic_attach(dma_buf, dev->dev, attach_ops, obj);
- 	if (IS_ERR(attach)) {
--		obj = ERR_CAST(attach);
--		goto out_err;
-+		xe_bo_put(gem_to_xe_bo(obj));
-+		return ERR_CAST(attach);
- 	}
- 
- 	get_dma_buf(dma_buf);
- 	obj->import_attach = attach;
- 	return obj;
--
--out_err:
--	xe_bo_put(bo);
--
--	return obj;
++	btrfs_extent_io_tree_release(dirty_pages);
  }
  
- #if IS_ENABLED(CONFIG_DRM_XE_KUNIT_TEST)
+ static void btrfs_destroy_pinned_extent(struct btrfs_fs_info *fs_info,
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -1275,14 +1275,13 @@ static int btrfs_write_and_wait_transact
+ 	blk_finish_plug(&plug);
+ 	ret2 = btrfs_wait_extents(fs_info, dirty_pages);
+ 
+-	btrfs_extent_io_tree_release(&trans->transaction->dirty_pages);
+-
+ 	if (ret)
+ 		return ret;
+-	else if (ret2)
++	if (ret2)
+ 		return ret2;
+-	else
+-		return 0;
++
++	btrfs_extent_io_tree_release(&trans->transaction->dirty_pages);
++	return 0;
+ }
+ 
+ /*
 
 
