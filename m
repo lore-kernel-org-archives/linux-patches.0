@@ -1,127 +1,127 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1D12DC76C;
-	Wed, 20 May 2026 17:21:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2102369999
+	for <patches@lists.linux.dev>; Wed, 20 May 2026 17:21:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297712; cv=none; b=cCWS7k6mHivdupD4Q/S2hGw4Y26swlVlo8/HgbaUaQhxXlDxRS2foyCwp5CbNAmVUCPRdKG011Rk+nTGl/uIQC8JyilnBmStiCSC875gxGpmWZBN03/y3qg7IjLKK+Qri0yFtXteeo/aPQ8nnuFbfSmEQKBE9DdFt0/76paaIdU=
+	t=1779297714; cv=none; b=J0WNzwaMNhU9WNFoWYnOR/U1XDJeTuaB3ludGRLH2VpiiPzrDmw8y4B4B9Av6ScRWVveyWiIGcmO4wY0y5BAIXeZIy1OhLlTLaZ/lBHeQ4rnD1NOIA1aZTOjWSilVe7WyzWfrq3QTdhjYRwNJJNcKyS+jyN1Fxi0U5RZgl+RJoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297712; c=relaxed/simple;
-	bh=e2VzfnZX6viPxKKXuabAYq5x/sMBvN1BMVlWUPHvNFs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rWAJ4QH7xUP/Rb8ulnPijrhveM4VtOOxXHnFz/uEregdAfXMcPXoGKvJujHYlVVur+pyPzJlKzC7rUNlIcYnWRLbhkkByG2qiXkpDiTuYtKJC2WHyPyQLE+k6vQnLqMrUz93lbJvaKCeM3bl2uoWFXbFA7i4ParWTnjpklbIQ6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuDKfK3E; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1779297714; c=relaxed/simple;
+	bh=KEZN0tIdJ/tpCnij4TRWiS6/Ddt+vaax6cRZrbqB+lE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=atGrkAbHn9TOY96lIV31ORsl767sps/2SCtsPs9zjLdfilC2/RQpnTXjRY/eUvvhl70XqbpccDGInyM0jRjNVskiKUtrNjHjRrdKHIeJXEatiUs9DJg5wLCcOO0yQDYccjX/AggdpqG+Kb+MeUsMsUBJEmS7FTTvoS1lbGgStko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LILcFKhS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DfmZeMtM; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuDKfK3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428AD1F000E9;
-	Wed, 20 May 2026 17:21:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297711;
-	bh=RnduVIsa8MVcxRsf0HZ04KZH1z3cdPIFyaQGd0e5wQM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JuDKfK3EFPqIWLpf7TKW3JyckUGgcR9h4uQYI1i/TjCJ6XJX1n6zWN99T5OEQZiXd
-	 0RFyvWGOKdpZ1AQyYJzuCeg4XeLjc4lbFchcOWr9/Kce6OwvckGVh/GzFkrjtNyAPu
-	 0PaMy6SNlVxyhHcCCAXLCiW535jrzNBgA7F25Swc=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 128/957] bpf: reject negative CO-RE accessor indices in bpf_core_parse_spec()
-Date: Wed, 20 May 2026 18:10:11 +0200
-Message-ID: <20260520162137.331906003@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
-References: <20260520162134.554764788@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LILcFKhS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DfmZeMtM"
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 432CD1400143;
+	Wed, 20 May 2026 13:21:51 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 20 May 2026 13:21:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1779297711;
+	 x=1779384111; bh=Bz1xSwgN2zbeFw3q55uypEc+uWclnHWl86UYq0jDTxE=; b=
+	LILcFKhSlxV7+szc9tP1JuwIuYSBRaUqp35i5Fk+COOoIP9pwJLAIMjEfn07hXd/
+	EW+TmE884jnaAxoMeIdR7gbLhg3Fw4wPpR/OlaFnDwNvA6Hqfm1/k8TEVo4T1J4x
+	4TsHYr86MIqFa9AnW+DGa6rnmqW2h1XUHjNku01JTfkyadanVb/8B0eSVrKX+4Mp
+	TypL2WJ1VpIgc2ZSnXq+uS7jOaFYcXvZ4C9ylNbJV4lmtviOog5QnoBVGv4bNeAN
+	nzX7W21vL9zEUXY9JuYlzLikqnkyMP+KOmbru8VW4HNA+ecZtM9l6GkbmXjbK/Hi
+	MXZ8u2jASdWvrxbeCzBXWA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779297711; x=
+	1779384111; bh=Bz1xSwgN2zbeFw3q55uypEc+uWclnHWl86UYq0jDTxE=; b=D
+	fmZeMtMrRvwH6NwZDxbBUvSLMHX2uELHAYfUYEMuQEK0n2IqrnnOUWKJcb4bNUxG
+	5mhrRTu6RQ5VaNaPg1mB7ZD1byeoKziMakJomNMMrO8ncycP3Eb4b+tbdkwbjTjd
+	9lUvYb/sb5GwV5T5O6yTPfbYrPX+DLj/pjsiyvtO8BEngHLwi5SKu9OBITnElQby
+	u2HlMrV24Ze2Ac3TKUa4U/Jshp4EoYn8P0jenavQrx4RRiC9MRmUqmPN+SAguXam
+	aWEt2SYovg5efvpUawXOdQWrLKOaTRKbcLJNPqjLhExbDeqvK5tsNJnyVnArGKtU
+	xphfcEIkxE2cWt72OA7rQ==
+X-ME-Sender: <xms:ru0Nao8S5_la2d9xmVWtiN0AAauCz45gEg0M-z379erESvshWWfpCA>
+    <xme:ru0NauZH9ygbZBZyNFPnFOK79iY9k2_yeVyuVrY_SQB8XJCECARzZQJ0OkQLFZ39g
+    ktd9Q68cJ-7EjxEP6C-jr277wrSRVo-8Jc9eX380BL6B4brOzPoZLY>
+X-ME-Received: <xmr:ru0NavwqXaubKKRHUAzokGH_ok3xMRb66vOse6N66DVBHxnokWiMDvsIXasitJSkA4CP-icW_B9pheuw_Gmyw2kw5Xvy0hLd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeehvdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpedfuegrrhhr
+    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
+    frrghtthgvrhhnpeefleehkeehleekjeelffefhfdvleejteehledtieduffevteffleet
+    gefgfefhjeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggrrhhrhihnsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopedvtddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohep
+    shhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrthgthh
+    gvsheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdhkvghr
+    nhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhrvhgrlhgush
+    eslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheprghkphhmsehl
+    ihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehlihhnuhigsehroh
+    gvtghkqdhushdrnhgvthdprhgtphhtthhopehshhhurghhsehkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehprghttghhvghssehkvghrnhgvlhgtihdrohhrgh
+X-ME-Proxy: <xmx:ru0Nak9uBU-PUjvj6Mg9LnMHo3T8Q1Tjf3_hR-VoUFeKYE8FljdZHw>
+    <xmx:ru0NajyImnn1qGtZ0O1V572lo9-oV0X5O8VkuqTosG0GAzL71h40NQ>
+    <xmx:ru0NahsLTEa6_xHVsCn2xZpp0Da-pgcQcxRSg4V6Mit4gA0jneVU6A>
+    <xmx:ru0Naq2wTbEK8zeQuRW5LMaNt_2F9il1IqbmFB-7-fL7P6vPhJm6sg>
+    <xmx:r-0NanYV3prfm3ULh4jKA2mUUiMYo8cl_f42MkwUDrHpitlyFcfNGxff>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 20 May 2026 13:21:48 -0400 (EDT)
+Message-ID: <a30bbf1a-5f0e-4e28-a775-142d75494c83@pobox.com>
+Date: Wed, 20 May 2026 10:21:46 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 000/957] 6.18.32-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260520162134.554764788@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+On 5/20/26 9:08 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.32 release.
+> There are 957 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 22 May 2026 16:20:16 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.32-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+I hope you don't mind me asking, but shouldn't this be 6.18.33-rc1, since
+6.18.32 was released a few days ago?  I think you forgot to increment
+the version number.
 
-From: Weiming Shi <bestswngs@gmail.com>
-
-[ Upstream commit 1c22483a2c4bbf747787f328392ca3e68619c4dc ]
-
-CO-RE accessor strings are colon-separated indices that describe a path
-from a root BTF type to a target field, e.g. "0:1:2" walks through
-nested struct members. bpf_core_parse_spec() parses each component with
-sscanf("%d"), so negative values like -1 are silently accepted.  The
-subsequent bounds checks (access_idx >= btf_vlen(t)) only guard the
-upper bound and always pass for negative values because C integer
-promotion converts the __u16 btf_vlen result to int, making the
-comparison (int)(-1) >= (int)(N) false for any positive N.
-
-When -1 reaches btf_member_bit_offset() it gets cast to u32 0xffffffff,
-producing an out-of-bounds read far past the members array.  A crafted
-BPF program with a negative CO-RE accessor on any struct that exists in
-vmlinux BTF (e.g. task_struct) crashes the kernel deterministically
-during BPF_PROG_LOAD on any system with CONFIG_DEBUG_INFO_BTF=y
-(default on major distributions).  The bug is reachable with CAP_BPF:
-
- BUG: unable to handle page fault for address: ffffed11818b6626
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- Oops: Oops: 0000 [#1] SMP KASAN NOPTI
- CPU: 0 UID: 0 PID: 85 Comm: poc Not tainted 7.0.0-rc6 #18 PREEMPT(full)
- RIP: 0010:bpf_core_parse_spec (tools/lib/bpf/relo_core.c:354)
- RAX: 00000000ffffffff
- Call Trace:
-  <TASK>
-  bpf_core_calc_relo_insn (tools/lib/bpf/relo_core.c:1321)
-  bpf_core_apply (kernel/bpf/btf.c:9507)
-  check_core_relo (kernel/bpf/verifier.c:19475)
-  bpf_check (kernel/bpf/verifier.c:26031)
-  bpf_prog_load (kernel/bpf/syscall.c:3089)
-  __sys_bpf (kernel/bpf/syscall.c:6228)
-  </TASK>
-
-CO-RE accessor indices are inherently non-negative (struct member index,
-array element index, or enumerator index), so reject them immediately
-after parsing.
-
-Fixes: ddc7c3042614 ("libbpf: implement BPF CO-RE offset relocation algorithm")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Acked-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/20260404161221.961828-2-bestswngs@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- tools/lib/bpf/relo_core.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/tools/lib/bpf/relo_core.c b/tools/lib/bpf/relo_core.c
-index 6eea5edba58a5..0ccc8f548cbaa 100644
---- a/tools/lib/bpf/relo_core.c
-+++ b/tools/lib/bpf/relo_core.c
-@@ -292,6 +292,8 @@ int bpf_core_parse_spec(const char *prog_name, const struct btf *btf,
- 			++spec_str;
- 		if (sscanf(spec_str, "%d%n", &access_idx, &parsed_len) != 1)
- 			return -EINVAL;
-+		if (access_idx < 0)
-+			return -EINVAL;
- 		if (spec->raw_len == BPF_CORE_SPEC_MAX_LEN)
- 			return -E2BIG;
- 		spec_str += parsed_len;
 -- 
-2.53.0
-
-
-
+-Barry K. Nathan  <barryn@pobox.com>
