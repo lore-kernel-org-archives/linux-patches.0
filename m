@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B141CDFCA;
-	Wed, 20 May 2026 16:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A381CDFCA;
+	Wed, 20 May 2026 16:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295583; cv=none; b=lkUAD6bKa9mwNhXCxom0ohCYhWsyr7HTqErf0/909Y86c/6qYVO32cRQl9o6PiOjmgHNR7uug1l05SXYj4/Ta8ahiHC5JtiwwrBpj7TuvBSogHppJWfDK6SlIj/Up0+8LpAPFUAHdVsh74Erb/w3IL8QUAZWsjmWLAOKn64AGmw=
+	t=1779295585; cv=none; b=KMTPUNCGxvUVhUvXjPuvVwEgt3ceaskKD2xB/vCbKuO1EtdE3Y2v7XPcq8F1tvsAV4Jbjmsdas0Xlj1Ca2CfVXbSjnJF+d2/otA3fLxQeniFTl5VsiONwSxAajCHjqJXflNJ/N2WtQYzCg7wwbrW3Fa1svGo2i7A8im+M5qpFGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295583; c=relaxed/simple;
-	bh=afaziNe9Wa72upal9ggb14hheJ1mySysJo3SK/r5y6Y=;
+	s=arc-20240116; t=1779295585; c=relaxed/simple;
+	bh=HStzBdvHbx35AKvvAT0iVBCfoirHS6nt8HyGMH/kGB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dU7bLPdJVmm/KRAvFDovSFwhu2PQE8BSo8IgNOhm+q9IWFnVLnjdWw6yaIJqzs3gV39rX/tvtKH6Py0Q1a/lV6PllY+xd9p8gRB58cfj6e/H/8m6IiBmsMS+84PU2K+ZlbO+yCWaX1QItuq75bnUW6cWE6ZKxng7+Jj+jG8/mMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orSQoc6p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e0w6sGBLPyASWJUQ6dwUfaxUnILF0EGOKmQIcsZYwQNVCqRq2ILP5nwgtoJcrLW9VsV7iCtw6P5dBidSJ7/H9BklHvBGPz55LP4/sXpNOlHSXInmxPvhmbsawCErXSdLhXHzh6Z8VpVwZUgyV2SWXUZgVp76zKGv2bJNFgUBmDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fI8XyVfE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orSQoc6p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED5B1F00896;
-	Wed, 20 May 2026 16:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI8XyVfE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B3A1F000E9;
+	Wed, 20 May 2026 16:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295581;
-	bh=hNfRVCRERKhxUhTU/5z4WqQAUMhQpQKXmUiTnwEntYk=;
+	s=korg; t=1779295584;
+	bh=YmkP0rjXypqSoqokMrPohMb/nHo3wicXhRb7SEsEhpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=orSQoc6peOr72Fhh7SiMZTjoSIYQg13d+tQ+gE1CgQozcqJZTKlhj4z+7PFLzNn5c
-	 YOWxPUzmhQYWJTPGkMBsmO3yJHc2kU4D86B91nbSFKRjzIt9bWUEm3Amvcb169wVVl
-	 wbLpwePt/cbcudQYBqc+G0eq9j9R4H2YKGr3ZAYU=
+	b=fI8XyVfEBhg0jAwqSRMSJBrOpVFYyjoHxRH4vwjeAmQUaFJCFlAuldFhI+6D+O98v
+	 JkWFXbyZMuHbpdqNEryCBaDFsFtSfABfmTLjcH3uDjJ8Csq0Qqf5xl7nXmAUB7Xu52
+	 4Q2/bn+1x02ya5zYPYmovBaKiKh/ODSYCKyDLo9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0433/1146] spi: rzv2h-rspi: Fix invalid SPR=0/BRDV=0 clock configuration
-Date: Wed, 20 May 2026 18:11:23 +0200
-Message-ID: <20260520162157.998816826@linuxfoundation.org>
+Subject: [PATCH 7.0 0434/1146] spi: mtk-snfi: unregister ECC engine on probe failure and remove() callback
+Date: Wed, 20 May 2026 18:11:24 +0200
+Message-ID: <20260520162158.021133342@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,87 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 0335767dd8e7ade8a8e3028d08c4621515d47388 ]
+[ Upstream commit ab00febad191d7a4400aa1c3468279fb508258d4 ]
 
-The combination of SPR=0 and BRDV=0 results in the minimum division
-ratio of 2, producing the maximum possible bit rate for a given clock
-source. This combination is not supported in two cases:
+mtk_snand_probe() registers the on-host NAND ECC engine, but teardown was
+missing from both probe unwind and remove-time cleanup. Add a devm cleanup
+action after successful registration so
+nand_ecc_unregister_on_host_hw_engine() runs automatically on probe
+failures and during device removal.
 
-- On RZ/G3E, RZ/G3L, RZ/V2H(P) and RZ/V2N, RSPI_n_TCLK is fixed at
-  200MHz, which would yield 100Mbps. The next hardware manual update
-  will explicitly state that since the maximum frequency of the
-  RSPICKn clock signal is 50MHz, settings with N=0 and n=0 resulting
-  in 100Mbps are prohibited.
-
-- On RZ/T2H and RZ/N2H, when PCLK (125MHz) is used as the clock
-  source, SPR=0 and BRDV=0 is explicitly listed as unsupported in
-  the hardware manual (Table 36.7).
-
-Skip the SPR=0/BRDV=0 combination in rzv2h_rspi_find_rate_fixed() to
-prevent the driver from selecting an invalid clock configuration on the
-affected SoCs.
-
-Additionally, remove the now redundant RSPI_SPBR_SPR_PCLK_MIN define
-which was previously set to 1 to work around the PCLK restriction, but
-was overly broad as it incorrectly blocked valid combinations such as
-SPR=0/BRDV=1 (31.25Mbps on PCLK=125MHz).
-
-Fixes: 8b61c8919dff ("spi: Add driver for the RZ/V2H(P) RSPI IP")
-Fixes: 1ce3e8adc7d0 ("spi: rzv2h-rspi: add support for using PCLK for transfer clock")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://patch.msgid.link/20260410080517.2405700-3-prabhakar.mahadev-lad.rj@bp.renesas.com
+Fixes: 764f1b748164 ("spi: add driver for MTK SPI NAND Flash Interface")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/20263f885f1a9c9d559f95275298cd6de4b11ed5.1775546401.git.xiaopei01@kylinos.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rzv2h-rspi.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/spi/spi-mtk-snfi.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/spi/spi-rzv2h-rspi.c b/drivers/spi/spi-rzv2h-rspi.c
-index 23f0e92ae208e..d6b9b558932dd 100644
---- a/drivers/spi/spi-rzv2h-rspi.c
-+++ b/drivers/spi/spi-rzv2h-rspi.c
-@@ -50,7 +50,6 @@
+diff --git a/drivers/spi/spi-mtk-snfi.c b/drivers/spi/spi-mtk-snfi.c
+index 437edbd658aa2..73fa84475f0e4 100644
+--- a/drivers/spi/spi-mtk-snfi.c
++++ b/drivers/spi/spi-mtk-snfi.c
+@@ -1303,6 +1303,13 @@ static const struct spi_controller_mem_caps mtk_snand_mem_caps = {
+ 	.ecc = true,
+ };
  
- /* Register SPBR */
- #define RSPI_SPBR_SPR_MIN	0
--#define RSPI_SPBR_SPR_PCLK_MIN	1
- #define RSPI_SPBR_SPR_MAX	255
- 
- /* Register SPCMD */
-@@ -533,6 +532,17 @@ static void rzv2h_rspi_find_rate_fixed(struct clk *clk, u32 hz,
- 	for (brdv = RSPI_SPCMD_BRDV_MIN; brdv <= RSPI_SPCMD_BRDV_MAX; brdv++) {
- 		spr = DIV_ROUND_UP(clk_rate, hz * (1 << (brdv + 1)));
- 		spr--;
-+		/*
-+		 * Skip SPR=0 and BRDV=0 as it is not a valid combination:
-+		 * - On RZ/G3E, RZ/G3L, RZ/V2H(P) and RZ/V2N, RSPI_n_TCLK is
-+		 *   fixed at 200MHz and SPR=0 and BRDV=0 results in the maximum
-+		 *   bit rate of 100Mbps which is prohibited.
-+		 * - On RZ/T2H and RZ/N2H, when PCLK (125MHz) is used as
-+		 *   the clock source, SPR=0 and BRDV=0 is explicitly listed
-+		 *   as unsupported in the hardware manual (Table 36.7).
-+		 */
-+		if (!spr && !brdv)
-+			continue;
- 		if (spr >= spr_min && spr <= spr_max)
- 			goto clock_found;
++static void mtk_unregister_ecc_engine(void *data)
++{
++	struct nand_ecc_engine *eng = data;
++
++	nand_ecc_unregister_on_host_hw_engine(eng);
++}
++
+ static irqreturn_t mtk_snand_irq(int irq, void *id)
+ {
+ 	struct mtk_snand *snf = id;
+@@ -1443,6 +1450,13 @@ static int mtk_snand_probe(struct platform_device *pdev)
+ 		goto release_ecc;
  	}
-@@ -566,12 +576,8 @@ static u32 rzv2h_rspi_setup_clock(struct rzv2h_rspi_priv *rspi, u32 hz)
- 	rspi->info->find_tclk_rate(rspi->tclk, hz, RSPI_SPBR_SPR_MIN,
- 				   RSPI_SPBR_SPR_MAX, &best_clock);
  
--	/*
--	 * T2H and N2H can also use PCLK as a source, which is 125MHz, but not
--	 * when both SPR and BRDV are 0.
--	 */
- 	if (best_clock.error && rspi->info->find_pclk_rate)
--		rspi->info->find_pclk_rate(rspi->pclk, hz, RSPI_SPBR_SPR_PCLK_MIN,
-+		rspi->info->find_pclk_rate(rspi->pclk, hz, RSPI_SPBR_SPR_MIN,
- 					   RSPI_SPBR_SPR_MAX, &best_clock);
- 
- 	if (!best_clock.clk_rate)
++	ret = devm_add_action_or_reset(&pdev->dev, mtk_unregister_ecc_engine,
++				       &ms->ecc_eng);
++	if (ret) {
++		dev_err_probe(&pdev->dev, ret, "failed to add ECC unregister action\n");
++		goto release_ecc;
++	}
++
+ 	ctlr->num_chipselect = 1;
+ 	ctlr->mem_ops = &mtk_snand_mem_ops;
+ 	ctlr->mem_caps = &mtk_snand_mem_caps;
 -- 
 2.53.0
 
