@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B10C245005;
-	Wed, 20 May 2026 17:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B713F1AC4;
+	Wed, 20 May 2026 17:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296420; cv=none; b=PSECqeMQrPd+h8hxcmu9vsEyZr3XGSXy1G6nhxEI8uf1YmboOm4UNj8t+0unBDN/n38aj0lXsFM5A2s62WPERlZ6CjRM0+fEDLxmRjDLg71bgFNmZKtNadaos0lciNlJhTKDNY+NrN6JL1vMJuHDKWyUxEPvVXg9NBKSkO/R4Rw=
+	t=1779296423; cv=none; b=tScsgG1ThOiebkAvWqSEtQ29EIOzbBSu+L9UGbL9df0x4qcWxw5sDMUBKiAFDShNL+6F5+UTnpzjfPmk1crWu4iVwxcal1tgyTPuRb7tuyFP7hQOZy5Ci8zzl2EM+m86XIz4LTfjMngo8HAq25wKghLc2wmCvl+HbNy7Hr+lSoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296420; c=relaxed/simple;
-	bh=NEiCBwolEqckGnWaL3vsmSoWo87k8sSunt9X+cm4ojc=;
+	s=arc-20240116; t=1779296423; c=relaxed/simple;
+	bh=i5GirM/KuNsYXDGWE+BATTxYbEnE0utKCsc8ua9F8V0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GUQB6dTaphWCJ6ALqKR6EvPifb0WHzP0uy215mFSbMAh8Y6sGqkkK23FGhTRPJepQVY1ovocEfLfnSEbbvksbyDxHNakgmDvuj1MFgGkK4wXBRhf9JcC/iLXMmTHKkbAF3em64stM4r9aQvGLG75Yi8c7USoDqZwrCGLVq5W9xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUTh/iD7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HOWdAU32IoxmXAr8U04PgppU/BFTEzGfy5eBx2t2dqOU6ohlFlDXTZ133pFGYBQuhcpN84QQJUosjiIYKGlGbI40i6Q7nREAf70CH11ehUyMnAx/NWDkMpfIaYUq50Fe7GnZBe9hRTdtVIGuBpowGCkBAHlEbIyRvp8klzzoxow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qx15kUlM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUTh/iD7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4F61F000E9;
-	Wed, 20 May 2026 17:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qx15kUlM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712461F000E9;
+	Wed, 20 May 2026 17:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296419;
-	bh=YIAYl2aU4bR6k6RrYEGpfsmyFIdelcSM+aUW89MHFMk=;
+	s=korg; t=1779296421;
+	bh=ak7bq0RQrTJjfDplLXyJe13InKK+E5dAgj+6XxS+ZkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WUTh/iD7CmMgLThdFlaGd0KhN5py/Wy98fbfuStpovEhirIHSIS94FnWOiD3lYkV0
-	 SMLqLdHtzFgQaCIflF0dF6/ElKpYOx1z1iEh3rMYCIEKWtI1udKGYAVE9QP6Tbm/DP
-	 TLcESqiwKjlCfWjs63RPYaHt91JMHHIxTgLNVoy8=
+	b=Qx15kUlMLkpn3xkPXFCvR1C5CGJpZt6BRWmBY1QuIFXvGLfpLkDzeP7GtXLx9EiMy
+	 go2qPIM5b9IZvnz+24vpLWSsihHmiamnb3k985eGC75/GvF5jSnykOHJYvnZq+M5Od
+	 gXL2/+vgIgToKXRR0cW7Jzo4ccg+s6cWOiTQkcH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0793/1146] tcp: annotate data-races around tp->plb_rehash
-Date: Wed, 20 May 2026 18:17:23 +0200
-Message-ID: <20260520162206.172239457@linuxfoundation.org>
+Subject: [PATCH 7.0 0794/1146] ice: fix adjust timer programming for E830 devices
+Date: Wed, 20 May 2026 18:17:24 +0200
+Message-ID: <20260520162206.194063874@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,56 +49,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit 9e89b9d03a2d2e30dcca166d5af52f9a8eceab25 ]
+[ Upstream commit 885c5e57924dc040b23d0ad0d8388f0e35772159 ]
 
-tcp_get_timestamping_opt_stats() intentionally runs lockless, we must
-add READ_ONCE() and WRITE_ONCE() annotations to keep KCSAN happy.
+Fix incorrect 'adjust the timer' programming sequence for E830 devices
+series. Only shadow registers GLTSYN_SHADJ were programmed in the
+current implementation. According to the specification [1], write to
+command GLTSYN_CMD register is also required with CMD field set to
+"Adjust the Time" value, for the timer adjustment to take the effect.
 
-Fixes: 29c1c44646ae ("tcp: add u32 counter in tcp_sock and an SNMP counter for PLB")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260416200319.3608680-15-edumazet@google.com
+The flow was broken for the adjustment less than S32_MAX/MIN range
+(around +/- 2 seconds). For bigger adjustment, non-atomic programming
+flow is used, involving set timer programming. Non-atomic flow is
+implemented correctly.
+
+Testing hints:
+Run command:
+	phc_ctl /dev/ptpX get adj 2 get
+Expected result:
+	Returned timestamps differ at least by 2 seconds
+
+[1] Intel® Ethernet Controller E830 Datasheet rev 1.3, chapter 9.7.5.4
+https://cdrdv2.intel.com/v1/dl/getContent/787353?explicitVersion=true
+
+Fixes: f00307522786 ("ice: Implement PTP support for E830 devices")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-1-686c33c9828d@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c     | 3 ++-
- net/ipv4/tcp_plb.c | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index c27bee7b31146..cee51749df16c 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4514,7 +4514,8 @@ struct sk_buff *tcp_get_timestamping_opt_stats(const struct sock *sk,
- 		nla_put_u8(stats, TCP_NLA_TTL,
- 			   tcp_skb_ttl_or_hop_limit(ack_skb));
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+index 61c0a0d93ea89..5a5c511ccbb6e 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+@@ -5381,8 +5381,8 @@ int ice_ptp_write_incval_locked(struct ice_hw *hw, u64 incval)
+  */
+ int ice_ptp_adj_clock(struct ice_hw *hw, s32 adj)
+ {
++	int err = 0;
+ 	u8 tmr_idx;
+-	int err;
  
--	nla_put_u32(stats, TCP_NLA_REHASH, tp->plb_rehash + tp->timeout_rehash);
-+	nla_put_u32(stats, TCP_NLA_REHASH,
-+		    READ_ONCE(tp->plb_rehash) + READ_ONCE(tp->timeout_rehash));
- 	return stats;
- }
+ 	tmr_idx = hw->func_caps.ts_func_info.tmr_index_owned;
  
-diff --git a/net/ipv4/tcp_plb.c b/net/ipv4/tcp_plb.c
-index 4bcf7eff95e39..b7f9b60d8991f 100644
---- a/net/ipv4/tcp_plb.c
-+++ b/net/ipv4/tcp_plb.c
-@@ -79,7 +79,7 @@ void tcp_plb_check_rehash(struct sock *sk, struct tcp_plb_state *plb)
- 
- 	sk_rethink_txhash(sk);
- 	plb->consec_cong_rounds = 0;
--	tcp_sk(sk)->plb_rehash++;
-+	WRITE_ONCE(tcp_sk(sk)->plb_rehash, tcp_sk(sk)->plb_rehash + 1);
- 	NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPPLBREHASH);
- }
- EXPORT_SYMBOL_GPL(tcp_plb_check_rehash);
+@@ -5399,8 +5399,8 @@ int ice_ptp_adj_clock(struct ice_hw *hw, s32 adj)
+ 		err = ice_ptp_prep_phy_adj_e810(hw, adj);
+ 		break;
+ 	case ICE_MAC_E830:
+-		/* E830 sync PHYs automatically after setting GLTSYN_SHADJ */
+-		return 0;
++		/* E830 sync PHYs automatically after setting cmd register */
++		break;
+ 	case ICE_MAC_GENERIC:
+ 		err = ice_ptp_prep_phy_adj_e82x(hw, adj);
+ 		break;
 -- 
 2.53.0
 
