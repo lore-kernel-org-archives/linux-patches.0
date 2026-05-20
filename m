@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7838F3EE1EC;
-	Wed, 20 May 2026 11:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355BE3EF0D7;
+	Wed, 20 May 2026 11:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276035; cv=none; b=PkUQzZd90aLZKzmCi1L2KAhGT4f5P7j3VlFzbQusgSZ9q8A4vmI9iBEN6T0onsg8RrfSBjwN0JO1LXfxaLv45QJ2KuIrUQQLAKJjC7PreFTZYSbHfm5JPPRJ4Gw6bRviWn7BBpB/MMKZ8irUKI9TNacYyFJJjZzKsxce59A7BOs=
+	t=1779276036; cv=none; b=YNSC2EPM02qOWhLXND/bQUGsFe+VqJHXOVn+CvIZrh2pzjFiCFxmByZCjokALsH/qqytzihWZACcXZxRRgjqdEiUAH68ecaI6wmtCJ5RxL1fxvZJff5jf/SQENFgAZLHloXekCgvrvGkph1prXJRry3yct7JqsjdtuRsbHmdcwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276035; c=relaxed/simple;
-	bh=aHOj9Nlf2N+XoJD52ZtRFWgr+BO8IfzdwXTBS2M1Rn4=;
+	s=arc-20240116; t=1779276036; c=relaxed/simple;
+	bh=n1kjMAH6n1QMvxL4tue2EW0MTKmqqXgsAPBhnmI6cDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jOenSkk2JxyTVJTSr3moDjsglYowvLXqFJ/hQZQPWNErEdKqlx3n7elekctBcN3MkkqcxPw63h1hW8wHO/IsQ5MUEROwZpAGC9WcMmcuzBgQ6njDNA7Yg5fgMoJuQC2UEJ4TmAc5A8r59HUHUQlrek2wK9xZJabQbyEDww67Gvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MyE9j4ju; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dt87yVpMTSwCo3KwyHABYo6yas0egSaC1nV54f/kGcZohlHI2x353deCZmlsQXTgw7G4KD1tqPUhgXtJlxGxDMWKyPnv6hmwZBQHGq7NzAIpnDI4klOeWJAkI4ip1TUHI3UXHCRcGWZ64p3fjoumetpv0i5j0hqv35AlKzzBYHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g2yzupuq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MyE9j4ju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670431F000E9;
-	Wed, 20 May 2026 11:20:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g2yzupuq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F0B1F00893;
+	Wed, 20 May 2026 11:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276033;
-	bh=SWbezCywpdNUVFp25XhJr2eKjtkK+ElxPwKt99tOrEY=;
+	s=k20260515; t=1779276035;
+	bh=RHBeMpolU18H6R9xI+OllTBmCQa7/WTbYDEkch01KQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MyE9j4ju5eyZtifIMhw5WVNT1B4x2Z4jq0+5dyzpyKlUUWAU+9drGrZisvRKEnWYd
-	 KOQ2/w2Z/2SVhvjv8CyqWAkLdQZcP1DgFJg4u/liZgqaJsN8S7Ofa6+JggR+xSnHW+
-	 qVsWb0qq73sP4XW3E5KPlXG6pF4VHYSLaREahss5bbWUts7H0OQtHH90T3fQNfWqY3
-	 VAKWrcMvrXxDaYI4I87JM2E7kyf0zJp/pHOv+cdwPBNwxE2cPt8dvmPLKvRvUwcyWh
-	 sEWcNgWlwVk84dmR7y9OejVcKLeRNviNEzcLR6wl7FU7eGfKrqy1UHRubZjBVUc2ff
-	 edFptGdznhgYg==
+	b=g2yzupuqlhDYk0ELmJvw4WZiQAlQoU9Zkc5PzktTLANeyHydFOkXLoBdH6Jol/rKa
+	 qQvjJE1VaH62EXFiFNfJvuVGE1M6XwtNBqo3JKQPJFHZdXSt0I5fldJSQEiazG4cP/
+	 hYQRznDBUie9oJLZpI3Wuy+ucRkPkYG+tAYoS/iGKYF69f6GF8994um8CsX2q8hw9h
+	 hPMvO35tKo3JD4AWWLbU9ufhQohtj0WKvv9NmqF815dkj+lKfMT0zmXKm2Pm9koiAA
+	 JMkTSlNEamaF+HSPMgaDOxy1VAZ7dB0Tt7doe6Gk3+NDAP/4LdDl230rijkoJYuXhF
+	 Yj7673rEc0tjA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Myeonghun Pak <mhun512@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	david.rhodes@cirrus.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	corbet@lwn.net,
+	linux-sound@vger.kernel.org,
+	patches@opensource.cirrus.com,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.1] HID: google: hammer: stop hardware on devres action failure
-Date: Wed, 20 May 2026 07:19:06 -0400
-Message-ID: <20260520111944.3424570-34-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] ALSA: doc: cs35l56: Update path to HDA driver source
+Date: Wed, 20 May 2026 07:19:07 -0400
+Message-ID: <20260520111944.3424570-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -51,201 +55,224 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit b08665fe80fab0956e64741c07d9bbcec635c34d ]
+[ Upstream commit 74e8409821ac8cda70bf23eb593f2c7f6e3b5a2f ]
 
-hammer_probe() starts the HID hardware before registering the devres
-action that stops it. If devm_add_action() fails, probe returns an
-error with the hardware still started because the cleanup action was
-never registered and the driver's remove callback is not called after a
-failed probe.
+The HDA drivers were moved to sound/hda/... so update a Documentation
+reference that still pointed to the old location.
 
-Use devm_add_action_or_reset() so the stop action runs immediately on
-registration failure while preserving the existing devres-managed cleanup
-path for later probe failures and remove.
-
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260511104148.36382-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
+## Phase 1: Commit Message Forensics
+Record 1.1: Subsystem `ALSA: doc: cs35l56`; action verb `Update`;
+intent: correct a stale documentation path to the HDA driver source.
 
-### Phase 1: Commit Message Forensics
-- Step 1.1 Record: subsystem `HID: google: hammer`; action verb `stop`;
-  intent is to stop HID hardware if devres action registration fails.
-- Step 1.2 Record: tags in committed
-  `b08665fe80fab0956e64741c07d9bbcec635c34d`: `Signed-off-by: Myeonghun
-  Pak <mhun512@gmail.com>` and `Signed-off-by: Jiri Kosina
-  <jkosina@suse.com>`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
-  `Reviewed-by:`, `Acked-by:`, `Link:`, or `Cc: stable`.
-- Step 1.3 Record: bug is an error-path cleanup failure.
-  `hammer_probe()` calls `hid_hw_start()` before registering
-  `hammer_stop` with devres; if `devm_add_action()` returns `-ENOMEM`,
-  probe fails and no registered cleanup action calls `hid_hw_stop()`.
-- Step 1.4 Record: yes, this is a hidden bug fix: a one-line
-  devres/error-path cleanup fix preventing started HID hardware from
-  being left active after failed probe.
+Record 1.2: Tags present in supplied message: `Signed-off-by: Richard
+Fitzgerald <rf@opensource.cirrus.com>`, `Link: https://patch.msgid.link/
+20260511104148.36382-1-rf@opensource.cirrus.com`, `Signed-off-by:
+Takashi Iwai <tiwai@suse.de>`. No `Fixes:`, `Reported-by:`, `Tested-
+by:`, `Reviewed-by:`, `Acked-by:`, or `Cc: stable`.
 
-### Phase 2: Diff Analysis
-- Step 2.1 Record: one file, `drivers/hid/hid-google-hammer.c`; 1
-  insertion, 1 deletion; modified function `hammer_probe()`; single-file
-  surgical fix.
-- Step 2.2 Record: before, failure of `devm_add_action()` returned
-  directly after `hid_hw_start()` succeeded. After,
-  `devm_add_action_or_reset()` runs `hammer_stop(hdev)` immediately if
-  action registration fails.
-- Step 2.3 Record: bug category is error-path resource cleanup. The
-  broken state is missing `hid_hw_stop()` after successful
-  `hid_hw_start()` when devres action allocation fails.
-- Step 2.4 Record: fix quality is high: it uses the kernel helper whose
-  inline definition calls the action on registration failure. No
-  unrelated changes, no public API change, and no normal-path behavior
-  change when registration succeeds.
+Record 1.3: The body says the HDA drivers moved to `sound/hda/...`,
+leaving this documentation reference pointing at the old
+`sound/pci/hda/...` location. Symptom is incorrect documentation only;
+no runtime failure, crash, data corruption, or security impact is
+described.
 
-### Phase 3: Git History Investigation
-- Step 3.1 Record: blame shows `devm_add_action(&hdev->dev, hammer_stop,
-  hdev)` came from `d950db3f80a801` (`HID: google: switch to devm when
-  registering keyboard backlight LED`), first contained by `v5.18-rc1`.
-- Step 3.2 Record: no `Fixes:` tag. I followed the blamed introducing
-  commit instead; `d950db3f80a801` added `hammer_stop()` and moved stop
-  cleanup into devres.
-- Step 3.3 Record: recent file history shows related Google HID
-  cleanup/device-ID/vivaldi work, but no intermediate fix for this exact
-  missed cleanup.
-- Step 3.4 Record: candidate author has only this HID commit in
-  `origin/master` in the checked history. Jiri Kosina is listed in
-  `MAINTAINERS` for HID core and applied/signed the commit.
-- Step 3.5 Record: no dependency found. The replacement helper exists in
-  affected stable branches checked.
+Record 1.4: This is not a hidden runtime bug fix. It is a direct
+documentation correction.
 
-### Phase 4: Mailing List And External Research
-- Step 4.1 Record: `b4 dig -c b08665fe80fab` found the original patch at
-  `https://patch.msgid.link/20260424125043.52639-1-
-  pakmyeonghun@bagmyeonghun-ui-MacBookPro.local`. `b4 dig -a` found only
-  v1.
-- Step 4.2 Record: `b4 dig -w` showed the original recipients were
-  Myeonghun Pak, Jiri Kosina, Benjamin Tissoires, `linux-
-  input@vger.kernel.org`, and `linux-kernel@vger.kernel.org`.
-- Step 4.3 Record: no separate bug report or `Reported-by` tag was
-  present.
-- Step 4.4 Record: thread had 3 messages; Jiri replied, “Makes sense,
-  thanks for catching it. Applied.” No NAKs or objections found in the
-  fetched mbox.
-- Step 4.5 Record: direct lore stable web search was blocked by Anubis;
-  local stable branch log search did not find this commit already
-  present.
+## Phase 2: Diff Analysis
+Record 2.1: One file changed: `Documentation/sound/codecs/cs35l56.rst`,
+1 insertion and 1 deletion. No functions modified. Scope: single-file
+documentation-only surgical change.
 
-### Phase 5: Code Semantic Analysis
-- Step 5.1 Record: modified function is `hammer_probe()`.
-- Step 5.2 Record: `hammer_probe()` is registered as `.probe` in
-  `hammer_driver`; HID core reaches it via `hid_device_probe()` ->
-  `__hid_device_probe()` -> `hdrv->probe(hdev, id)`.
-- Step 5.3 Record: key callees are `hid_parse()`, `hid_hw_start()`,
-  `devm_add_action_or_reset()`, `hid_hw_open()`, and
-  `hammer_register_leds()`. `hid_hw_start()` documentation says
-  `hid_hw_stop()` must be called after success.
-- Step 5.4 Record: path is reachable during HID device probe for Google
-  Hammer-family USB IDs in the driver table. Trigger for the bug is
-  allocation failure inside `devm_add_action()` after hardware start.
-- Step 5.5 Record: no other `hammer_stop` pattern found. Nearby HID
-  drivers commonly call `hid_hw_stop()` on probe-error paths, supporting
-  that this cleanup is expected.
+Record 2.2: Before: HDA users were pointed to
+`sound/pci/hda/cs35l56_hda.c`. After: they are pointed to
+`sound/hda/codecs/side-codecs/cs35l56_hda.c`.
 
-### Phase 6: Stable Tree Analysis
-- Step 6.1 Record: buggy code exists in `stable/linux-6.1.y`, `6.6.y`,
-  `6.12.y`, `6.15.y`, `6.16.y`, `6.17.y`, `6.18.y`, and `6.19.y`; not in
-  `stable/linux-5.15.y`.
-- Step 6.2 Record: patch applied cleanly with `git apply --check` on
-  temporary worktrees for `6.1.y`, `6.6.y`, `6.12.y`, and `6.19.y`.
-- Step 6.3 Record: no related stable fix with the same subject was found
-  in checked stable branch logs.
+Record 2.3: Bug category: documentation correctness fix. Verified
+current tree has `sound/hda/codecs/side-codecs/cs35l56_hda.c`;
+`sound/pci/hda` does not exist in this checkout.
 
-### Phase 7: Subsystem Context
-- Step 7.1 Record: subsystem is HID driver code, specifically Google
-  Hammer HID devices; criticality is driver-specific/peripheral.
-- Step 7.2 Record: HID is actively maintained; recent `drivers/hid`
-  history includes multiple fixes and quirks, and the candidate was
-  merged through the HID tree.
+Record 2.4: Fix quality is obvious and minimal. Regression risk is
+runtime zero, but backport targeting matters: applying it to older trees
+where the driver is still under `sound/pci/hda` would make the
+documentation wrong.
 
-### Phase 8: Impact And Risk
-- Step 8.1 Record: affected users are users of Google Hammer-family HID
-  hardware on stable kernels containing `d950db3f80a801`.
-- Step 8.2 Record: trigger is uncommon but real: memory/devres
-  allocation failure during device probe after `hid_hw_start()`
-  succeeds. I did not verify unprivileged syscall reachability.
-- Step 8.3 Record: failure mode is leaked/active HID hardware state
-  after failed probe, not a verified crash or data corruption. Severity
-  is medium, with higher concern under memory pressure because cleanup
-  is explicitly required by HID core semantics.
-- Step 8.4 Record: benefit is moderate for affected hardware and error
-  recovery correctness; risk is very low because the successful path is
-  unchanged and the failure path calls the already intended cleanup
-  function.
+## Phase 3: Git History Investigation
+Record 3.1: `git blame` shows the stale documentation line was
+introduced by `088fb4ee17fc4` (`ALSA: doc: cs35l56: Add information
+about Cirrus Logic CS35L54/56/57`). The line became stale when
+`6014e9021b28e` moved HDA codec drivers into `sound/hda/codecs`.
 
-### Phase 9: Final Synthesis
-- Step 9.1 Record: evidence for backporting: real cleanup bug, affected
-  maintained stable trees, one-line obviously correct fix, uses existing
-  helper, applies cleanly, maintainer accepted it. Evidence against: no
-  reported user crash, rare trigger, driver-specific impact. Unresolved:
-  no runtime test report or concrete field failure report found.
-- Step 9.2 Record: stable rules: obviously correct yes; fixes real bug
-  yes; important enough as resource/hardware-state leak on failed probe
-  yes, though not crash-class; small and contained yes; no new
-  feature/API yes; applies to stable yes for checked branches.
-- Step 9.3 Record: no automatic exception category; this is not a device
-  ID, quirk, DT, build, or documentation patch.
-- Step 9.4 Record: risk-benefit favors backporting because the fix is a
-  minimal correction to a verified cleanup bug in stable-present code.
+Record 3.2: No `Fixes:` tag is present, so there was no Fixes target to
+follow.
+
+Record 3.3: Recent file history shows only CS35L56 documentation
+updates. Related source movement is `6014e9021b28e`, which renamed
+`sound/pci/hda/cs35l56_hda.c` to `sound/hda/codecs/side-
+codecs/cs35l56_hda.c`.
+
+Record 3.4: Author Richard Fitzgerald has multiple recent CS35L56/HDA-
+related commits in this subsystem, including documentation and HDA
+driver fixes.
+
+Record 3.5: Dependency identified: this patch is correct only in trees
+that already contain the HDA move commit `6014e9021b28e`.
+
+## Phase 4: Mailing List And External Research
+Record 4.1: `b4 am` using message ID
+`20260511104148.36382-1-rf@opensource.cirrus.com` found a single patch
+submission and reported no newer revision. Direct `WebFetch` to
+lore/patch.msgid.link was blocked by Anubis, but `b4` retrieved the
+mbox.
+
+Record 4.2: `b4 dig -c` could not be run for the candidate commit
+because no candidate commit hash was supplied and the commit was not
+found on checked named branches searched. `b4 am` verified author DKIM
+signatures and the patch metadata. `b4 dig -c 6014e9021b28e -w` verified
+the prerequisite move patch was an ALSA HDA series sent to `linux-sound`
+and relevant HDA/Cirrus recipients.
+
+Record 4.3: No bug report, syzbot report, crash report, or user report
+is linked.
+
+Record 4.4: Candidate is standalone as a documentation update, but
+semantically depends on the prior source-tree move.
+
+Record 4.5: Web searches and local pending branch searches found no
+stable-specific discussion for this exact documentation patch.
+
+## Phase 5: Code Semantic Analysis
+Record 5.1: No functions modified; documentation text only.
+
+Record 5.2: No callers; this is not runtime code.
+
+Record 5.3: No callees; no allocations, locks, I/O, or side effects.
+
+Record 5.4: No userspace-triggerable kernel execution path. Impact is
+limited to readers of the documentation.
+
+Record 5.5: Search found the old path only in
+`Documentation/sound/codecs/cs35l56.rst` among `.rst` files checked.
+
+## Phase 6: Stable Tree Analysis
+Record 6.1: Tag containment shows the documentation exists from
+`v6.13+`; the HDA move exists from `v6.17+`. Therefore the stale-path
+documentation issue exists only in trees containing both, i.e.
+approximately `v6.17+` and later.
+
+Record 6.2: `git apply --check` confirms the patch applies cleanly to
+the current `7.0.y` tree. Backport difficulty is trivial for affected
+trees, but it must not be applied to trees where the HDA driver still
+lives under `sound/pci/hda`.
+
+Record 6.3: No related stable fix for this exact path correction was
+found in local pending branches.
+
+## Phase 7: Subsystem And Maintainer Context
+Record 7.1: Subsystem is ALSA sound documentation for Cirrus CS35L56
+HDA/SoundWire amplifiers. Criticality: peripheral/documentation, not
+runtime core.
+
+Record 7.2: Sound documentation and HDA side-codec areas are actively
+maintained; recent logs show multiple CS35L56/HDA commits.
+
+## Phase 8: Impact And Risk Assessment
+Record 8.1: Affected population: developers, maintainers, integrators,
+and users consulting this CS35L56 documentation in kernels where the HDA
+source has moved.
+
+Record 8.2: Trigger condition: reading the documentation. Not
+triggerable as a kernel runtime fault.
+
+Record 8.3: Failure mode: stale documentation path. Severity LOW, but
+documentation fixes are explicitly acceptable stable material due zero
+runtime risk.
+
+Record 8.4: Benefit is modest but real for affected trees; risk is very
+low if limited to trees with `6014e9021b28e`, but negative for older
+trees where the old path is still correct.
+
+## Phase 9: Final Synthesis
+Record 9.1: Evidence for backporting: fixes an objectively wrong
+documentation reference, one-line contained patch, no runtime regression
+risk, applies cleanly to current `7.0.y`, documentation/comment fixes
+are an accepted stable exception. Evidence against: no runtime bug, no
+important crash/security/corruption impact, and it must be branch-
+limited. Unresolved: exact upstream candidate commit hash was not
+available locally.
+
+Record 9.2: Stable rules: obviously correct: yes; tested: `b4` says
+applies cleanly and local `git apply --check` passed; fixes a real bug:
+yes, documentation bug; important runtime issue: no; small and
+contained: yes, 1 line; no new feature/API: yes; applies to affected
+stable trees: yes, for trees after the HDA move.
+
+Record 9.3: Exception category: documentation fix.
+
+Record 9.4: Decision: backport is appropriate, but only to stable trees
+that already contain the HDA source move to `sound/hda/codecs/side-
+codecs`. Do not apply to older stable trees where
+`sound/pci/hda/cs35l56_hda.c` remains the correct path.
 
 ## Verification
-- Phase 1: inspected `git show --stat --no-ext-diff b08665fe80fab`;
-  confirmed subject, body, tags, and 1-line diff.
-- Phase 2: inspected full candidate diff; confirmed only
-  `devm_add_action()` -> `devm_add_action_or_reset()` in
-  `hammer_probe()`.
-- Phase 3: ran blame on changed area; confirmed introducing commit
-  `d950db3f80a801`, first contained by `v5.18-rc1`.
-- Phase 3: inspected `d950db3f80a801`; confirmed it added devres-managed
-  `hammer_stop()`.
-- Phase 4: ran `b4 dig -c`, `-a`, and `-w`; confirmed original patch
-  URL, v1 only, maintainers/lists included.
-- Phase 4: fetched full thread with `b4 mbox`; confirmed Jiri Kosina
-  replied that the patch made sense and was applied.
-- Phase 5: read HID core and devres code; confirmed `hid_hw_start()`
-  requires `hid_hw_stop()`, and `devm_add_action_or_reset()` invokes the
-  action on failure.
-- Phase 6: checked stable branches with `git grep`; confirmed buggy line
-  in `6.1.y` through `6.19.y`, not `5.15.y`.
-- Phase 6: ran `git apply --check` in temporary worktrees for `6.1.y`,
-  `6.6.y`, `6.12.y`, and `6.19.y`; all passed.
-- UNVERIFIED: no separate user bug report, crash report, or runtime test
-  result was found.
+- [Phase 1] Parsed supplied commit message and downloaded mbox:
+  confirmed subject, author, message ID, and one-line documentation
+  rationale.
+- [Phase 2] Read `Documentation/sound/codecs/cs35l56.rst`: confirmed old
+  path is present.
+- [Phase 2] Checked filesystem: confirmed `sound/hda/codecs/side-
+  codecs/cs35l56_hda.c` exists and `sound/pci/hda` does not in current
+  tree.
+- [Phase 3] `git blame -L 35,45`: confirmed stale line came from
+  `088fb4ee17fc4`.
+- [Phase 3] `git show 6014e9021b28e`: confirmed HDA codecs, including
+  `cs35l56_hda.c`, were moved from `sound/pci/hda` to
+  `sound/hda/codecs/side-codecs`.
+- [Phase 4] `b4 am`: retrieved the patch, found one patch, no newer
+  revision, DKIM signed.
+- [Phase 4] `b4 dig -c <msgid>`: failed because `b4 dig` requires a
+  commit-ish, not a message ID.
+- [Phase 4] WebFetch to lore/patch.msgid.link: blocked by Anubis.
+- [Phase 6] `git tag --contains`: documentation starts at `v6.13+`; HDA
+  move starts at `v6.17+`.
+- [Phase 6] `git apply --check`: candidate patch applies cleanly to
+  current tree.
+- [Phase 6] `git ls-tree`: `v6.6`/`v6.12` have old HDA source path and
+  no affected doc; `v6.18` has both affected doc and new HDA source
+  path.
+- UNVERIFIED: Candidate final upstream commit hash, because it was not
+  found on searched local named branches and was not provided.
 
 **YES**
 
- drivers/hid/hid-google-hammer.c | 2 +-
+ Documentation/sound/codecs/cs35l56.rst | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-google-hammer.c b/drivers/hid/hid-google-hammer.c
-index 1af477e58480b..c99c3c0d442e1 100644
---- a/drivers/hid/hid-google-hammer.c
-+++ b/drivers/hid/hid-google-hammer.c
-@@ -496,7 +496,7 @@ static int hammer_probe(struct hid_device *hdev,
- 	if (error)
- 		return error;
+diff --git a/Documentation/sound/codecs/cs35l56.rst b/Documentation/sound/codecs/cs35l56.rst
+index d5363b08f5152..b3f8c1c238518 100644
+--- a/Documentation/sound/codecs/cs35l56.rst
++++ b/Documentation/sound/codecs/cs35l56.rst
+@@ -40,7 +40,7 @@ There are two drivers in the kernel
  
--	error = devm_add_action(&hdev->dev, hammer_stop, hdev);
-+	error = devm_add_action_or_reset(&hdev->dev, hammer_stop, hdev);
- 	if (error)
- 		return error;
+ *For systems using SoundWire*: sound/soc/codecs/cs35l56.c and associated files
  
+-*For systems using HDA*: sound/pci/hda/cs35l56_hda.c
++*For systems using HDA*: sound/hda/codecs/side-codecs/cs35l56_hda.c
+ 
+ Firmware
+ ========
 -- 
 2.53.0
 
