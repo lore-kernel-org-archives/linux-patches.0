@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4143C6A5C;
-	Wed, 20 May 2026 17:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D073D6673;
+	Wed, 20 May 2026 17:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297855; cv=none; b=CbHMZmUA4OCnOOjN7O6e6PIzzCN5JTjQjFhy4lydTWETMMIQdmJzj7Wn5UrbSS5kDxLHwEEMrUwR8Gf49rFtDab3u6++O7A1xqW6nrk73+C+nUqgWXQcrCV4kCcMITR2/dOvjomPqLxPBxnVnQrdO5duK5MxVgaEOcDVOPdKr/g=
+	t=1779297858; cv=none; b=Ukl50wRHSFZ+31KC/RrI8aQ/iL5SSv8rM1wmWQcmdCxNS7pktFQltWHEVpyb1NucTkHDE2QJK+SAheVvBIEHZQ6ZKUw6WonKrbWwvbrKhn4j0XE/j2fXFM8wjscNygRHf1HLADGqwaxyCoV5aTDgVVfCcvhUU7iZPOu8OLAgQoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297855; c=relaxed/simple;
-	bh=yONtwd2sXc32gcL0hYIu7xRGcFIjUQBHc85m21oMvvc=;
+	s=arc-20240116; t=1779297858; c=relaxed/simple;
+	bh=7XpovQe+dD3ZBJ2oOeSo+Q+jUkyeiGcSnopPU8SKgp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fc8e0/voeuaG42hn0oTHcYr8zYW5rCaE4p3nl5rsyi/xwGYKXIBFoGPw3gKC+TxAa0Lb+wjywLNGca5cHIwr2daB3bMfM1HJW23vfnj6JogDcz4KrDhTb0gDJQDROulMoQ5KzlLYdLIvI8R2OKwDMm0qFV8lb27AzY6yszmBsMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXcJu3Xa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zk4bo80lxbgjkwwlDAJl+iqzl79wFlrqbNAIY9IXbFGF9+4DsjbKokOi9Cykpz49XZpCK+Pe9DvbQPemTUYModcN4aDyOmeLoHJu2p3nEM3DSG7Du/LE/8TXwVaX9Dfg8X6NUTiTwxQnhI84KAufiHTcOJMmcXFT2HcqW5Soi+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Um0jtsa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXcJu3Xa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C351C1F000E9;
-	Wed, 20 May 2026 17:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Um0jtsa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695B21F000E9;
+	Wed, 20 May 2026 17:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297854;
-	bh=3Eysv3huewARJZwhy5WyFdJ5TTIydHXAcHdhuSz/gHk=;
+	s=korg; t=1779297856;
+	bh=Ib4CzhFkPyAkC+0pZkL0v46Ty63HOLBWdPPyuyFsuX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rXcJu3Xad7TEacmFkFjnrhSXoyYVyQlAdQnF9okQe2K5NS/S0SARVlSgk/DaZNQYX
-	 +0HJM7lbH0FINsLz1/y6E5oUd6GyD58VTcD14P4s/1EmIAjY70pqjmyZwgi1KFkWzq
-	 K18DFQ+QKggDxmbm9hpBmRVah0ITKalMaRcarfss=
+	b=1Um0jtsay4ZGO8SPOj5v46ZQ8dgMywsGCkaXFaVvPI/6kt4nszwBquZNSX+lo6aSZ
+	 mx7mpBMuczFFi/1roHPv8OgWLhIHVEulCrn0blE5xT8SzJNmQ6Q4Wwp1nQ8tpPd6jf
+	 btYwjrSqjE00Dl2Z0CqTRlm/T8A/b6I3hKx/xEpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	syzbot+619b9ef527f510a57cfc@syzkaller.appspotmail.com,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 190/957] PCI: endpoint: pci-epf-test: Dont free doorbell IRQ unless requested
-Date: Wed, 20 May 2026 18:11:13 +0200
-Message-ID: <20260520162138.671699646@linuxfoundation.org>
+Subject: [PATCH 6.18 173/957] bpf: reject short IPv4/IPv6 inputs in bpf_prog_test_run_skb
+Date: Wed, 20 May 2026 18:10:56 +0200
+Message-ID: <20260520162138.306507736@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,75 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-[ Upstream commit e81fa70179aac6ac3a6636565d5d35968dca3900 ]
+[ Upstream commit 12bec2bd4b76d81c5d3996bd14ec1b7f4d983747 ]
 
-pci_epf_test_doorbell_cleanup() unconditionally calls free_irq() for the
-doorbell virq, which can trigger "Trying to free already-free IRQ"
-warnings when the IRQ was never requested or when request_threaded_irq()
-failed.
+bpf_prog_test_run_skb() calls eth_type_trans() first and then uses
+skb->protocol to initialize sk family and address fields for the test
+run.
 
-Move free_irq() out of pci_epf_test_doorbell_cleanup() and invoke it
-only after a successful request, so that free_irq() is not called for
-an unrequested IRQ.
+For IPv4 and IPv6 packets, it may access ip_hdr(skb) or ipv6_hdr(skb)
+even when the provided test input only contains an Ethernet header.
 
-Fixes: eff0c286aa91 ("PCI: endpoint: pci-epf-test: Add doorbell test support")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260217063856.3759713-3-den@valinux.co.jp
+Reject the input earlier if the Ethernet frame carries IPv4/IPv6
+EtherType but the L3 header is too short.
+
+Fold the IPv4/IPv6 header length checks into the existing protocol
+switch and return -EINVAL before accessing the network headers.
+
+Fixes: fa5cb548ced6 ("bpf: Setup socket family and addresses in bpf_prog_test_run_skb")
+Reported-by: syzbot+619b9ef527f510a57cfc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=619b9ef527f510a57cfc
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Link: https://lore.kernel.org/r/20260408034623.180320-2-sun.jian.kdev@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/bpf/test_run.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index b05e8db575c35..9bc6d283eae25 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -704,7 +704,6 @@ static void pci_epf_test_doorbell_cleanup(struct pci_epf_test *epf_test)
- 	struct pci_epf_test_reg *reg = epf_test->reg[epf_test->test_reg_bar];
- 	struct pci_epf *epf = epf_test->epf;
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 65d7f8d51823e..963fee5d01e24 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -1057,19 +1057,23 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
  
--	free_irq(epf->db_msg[0].virq, epf_test);
- 	reg->doorbell_bar = cpu_to_le32(NO_BAR);
- 
- 	pci_epf_free_doorbell(epf);
-@@ -748,7 +747,7 @@ static void pci_epf_test_enable_doorbell(struct pci_epf_test *epf_test,
- 					 &epf_test->db_bar.phys_addr, &offset);
- 
- 	if (ret)
--		goto err_doorbell_cleanup;
-+		goto err_free_irq;
- 
- 	reg->doorbell_offset = cpu_to_le32(offset);
- 
-@@ -758,12 +757,14 @@ static void pci_epf_test_enable_doorbell(struct pci_epf_test *epf_test,
- 
- 	ret = pci_epc_set_bar(epc, epf->func_no, epf->vfunc_no, &epf_test->db_bar);
- 	if (ret)
--		goto err_doorbell_cleanup;
-+		goto err_free_irq;
- 
- 	status |= STATUS_DOORBELL_ENABLE_SUCCESS;
- 	reg->status = cpu_to_le32(status);
- 	return;
- 
-+err_free_irq:
-+	free_irq(epf->db_msg[0].virq, epf_test);
- err_doorbell_cleanup:
- 	pci_epf_test_doorbell_cleanup(epf_test);
- set_status_err:
-@@ -783,6 +784,7 @@ static void pci_epf_test_disable_doorbell(struct pci_epf_test *epf_test,
- 	if (bar < BAR_0)
- 		goto set_status_err;
- 
-+	free_irq(epf->db_msg[0].virq, epf_test);
- 	pci_epf_test_doorbell_cleanup(epf_test);
- 
- 	/*
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+-		sk->sk_family = AF_INET;
+-		if (sizeof(struct iphdr) <= skb_headlen(skb)) {
+-			sk->sk_rcv_saddr = ip_hdr(skb)->saddr;
+-			sk->sk_daddr = ip_hdr(skb)->daddr;
++		if (skb_headlen(skb) < sizeof(struct iphdr)) {
++			ret = -EINVAL;
++			goto out;
+ 		}
++		sk->sk_family = AF_INET;
++		sk->sk_rcv_saddr = ip_hdr(skb)->saddr;
++		sk->sk_daddr = ip_hdr(skb)->daddr;
+ 		break;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case htons(ETH_P_IPV6):
+-		sk->sk_family = AF_INET6;
+-		if (sizeof(struct ipv6hdr) <= skb_headlen(skb)) {
+-			sk->sk_v6_rcv_saddr = ipv6_hdr(skb)->saddr;
+-			sk->sk_v6_daddr = ipv6_hdr(skb)->daddr;
++		if (skb_headlen(skb) < sizeof(struct ipv6hdr)) {
++			ret = -EINVAL;
++			goto out;
+ 		}
++		sk->sk_family = AF_INET6;
++		sk->sk_v6_rcv_saddr = ipv6_hdr(skb)->saddr;
++		sk->sk_v6_daddr = ipv6_hdr(skb)->daddr;
+ 		break;
+ #endif
+ 	default:
 -- 
 2.53.0
 
