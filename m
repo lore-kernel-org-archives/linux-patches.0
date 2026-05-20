@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346163DA7C6;
-	Wed, 20 May 2026 17:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6268372EDE;
+	Wed, 20 May 2026 17:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296553; cv=none; b=EvQ7ZppInMyqWIiBGLPrWDQ+Z5WAHFuuKLeJEpNTHsvQl2ltf5nsOoQz66Bw4GHXqxybKL8uUXlfyK30VTyNXFTWoYoNbFIle8CUrcdpAaLFz54SqGw0ysmIKaGiySApZn6nGwUmLLIzSylarv2unrYOVWj5zw3xUWu/pWBP0aw=
+	t=1779296556; cv=none; b=hA85EJMFJMJP6PcjwzF19PJndnBTNwAbd8nBMNMeqqfyUV6PMWQMfcLq1ViUOPMeHByPhQ0GFvUWYDT4Cl4elfaQjUVrLQVZw4arDRs+mYN4A52AdCAb1jChLGvoLvgSXHnSak+WNIPPFqNrMVlCa8j8KL20z9ttHEZHcLkDmzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296553; c=relaxed/simple;
-	bh=r7RsjlJZTyHPBa7eZ8Z7TpciEWvBfPy/z5xmv4V8EAE=;
+	s=arc-20240116; t=1779296556; c=relaxed/simple;
+	bh=GwlTHzi55nxljxoc+w5jbnlayWKUSq4db5XYmUKl5jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SD5TqdyNTdaLO9rKzS4skPrbh1Hem7ACoZUlDtMDiSj8dmuRM5IPSj9kmatZ9sswJRmUMCXFZJBcYc30mx5eAORYbGBWoASCrTrQWoxewtvgutLMhDhjk5CDrBvoDGShazI3Bdb3w+u1y7Z/3UfTi0x+Nh9Vb58L3VgkSTfkFWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BieEDwDD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=emSYsp8FtFQUg88eT+ldIEBrHw9QsIIprkS6GYg/fzDfiSidx29sDvBeimExgYdGjmu+iSbOk2fNFZDVsQhKASFnJQduwr4+8j3P/ZEcJakGwE4i+C2R+EnMAo0N5nl0o+hX5DTCCvYf/PYee07xkFT9IEvQkGTmRL8DbR1Z72A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKhGiuuv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BieEDwDD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645621F00893;
-	Wed, 20 May 2026 17:02:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKhGiuuv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A521F000E9;
+	Wed, 20 May 2026 17:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296550;
-	bh=yRn9t95SN8fHaMB8Kv2MYRTggMTYTYK8xgYY3U5MlR0=;
+	s=korg; t=1779296553;
+	bh=VwCHS40u3h1gYN/pR2Z1dLcmFzGbD2xkt55FkVKrDGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BieEDwDDykn6igeu3APd5ZrNHUopIDyjvwZyQCKci3ytf9RmKj5L64EsA9uyM4v9M
-	 fX2SGmZyRDxADzS2OkM5wiYmawQgU5WxcdKmzzcby9NVVKYrQjy0tD1v5+CuaINuSH
-	 NqM3Wt4jeJV7XD5x1jvBgqJDJ5pfwuimomVrLkY4=
+	b=fKhGiuuvGVfE/6vA+DI/w0INPnkJsqbmVtSe7vQjwWEjfqM3Bk70/AsGf/4LEiuI0
+	 4sSgSiAEzsLC/PWEl2Ub/Ge1hRcbv3YFsmu6PJ90YKMukq/BMwZkfadm8K55BxM4NS
+	 HpSBOm95Mgi8aJu85rtUMHZbVoZ3nvmgwivNWftQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0842/1146] net/sched: sch_red: annotate data-races in red_dump_stats()
-Date: Wed, 20 May 2026 18:18:12 +0200
-Message-ID: <20260520162207.290245598@linuxfoundation.org>
+Subject: [PATCH 7.0 0843/1146] net/sched: sch_sfb: annotate data-races in sfb_dump_stats()
+Date: Wed, 20 May 2026 18:18:13 +0200
+Message-ID: <20260520162207.311836815@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,9 +53,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a8f5192809caf636d05ba47c144f282cfd0e3839 ]
+[ Upstream commit 1ada03fdef82d3d7d2edb9dcd3acc91917675e48 ]
 
-red_dump_stats() only runs with RTNL held,
+sfb_dump_stats() only runs with RTNL held,
 reading fields that can be changed in qdisc fast path.
 
 Add READ_ONCE()/WRITE_ONCE() annotations.
@@ -64,98 +63,155 @@ Add READ_ONCE()/WRITE_ONCE() annotations.
 Alternative would be to acquire the qdisc spinlock, but our long-term
 goal is to make qdisc dump operations lockless as much as we can.
 
-tc_red_xstats fields don't need to be latched atomically,
+tc_sfb_xstats fields don't need to be latched atomically,
 otherwise this bug would have been caught earlier.
 
 Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260421142309.3964322-1-edumazet@google.com
+Link: https://patch.msgid.link/20260421141655.3953721-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_red.c | 31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+ net/sched/sch_sfb.c | 54 +++++++++++++++++++++++++++------------------
+ 1 file changed, 32 insertions(+), 22 deletions(-)
 
-diff --git a/net/sched/sch_red.c b/net/sched/sch_red.c
-index 68ee41ce78c50..86651a68d4015 100644
---- a/net/sched/sch_red.c
-+++ b/net/sched/sch_red.c
-@@ -90,17 +90,20 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	case RED_PROB_MARK:
+diff --git a/net/sched/sch_sfb.c b/net/sched/sch_sfb.c
+index d2835f1168e1d..00286c930b8de 100644
+--- a/net/sched/sch_sfb.c
++++ b/net/sched/sch_sfb.c
+@@ -130,7 +130,7 @@ static void increment_one_qlen(u32 sfbhash, u32 slot, struct sfb_sched_data *q)
+ 
+ 		sfbhash >>= SFB_BUCKET_SHIFT;
+ 		if (b[hash].qlen < 0xFFFF)
+-			b[hash].qlen++;
++			WRITE_ONCE(b[hash].qlen, b[hash].qlen + 1);
+ 		b += SFB_NUMBUCKETS; /* next level */
+ 	}
+ }
+@@ -159,7 +159,7 @@ static void decrement_one_qlen(u32 sfbhash, u32 slot,
+ 
+ 		sfbhash >>= SFB_BUCKET_SHIFT;
+ 		if (b[hash].qlen > 0)
+-			b[hash].qlen--;
++			WRITE_ONCE(b[hash].qlen, b[hash].qlen - 1);
+ 		b += SFB_NUMBUCKETS; /* next level */
+ 	}
+ }
+@@ -179,12 +179,12 @@ static void decrement_qlen(const struct sk_buff *skb, struct sfb_sched_data *q)
+ 
+ static void decrement_prob(struct sfb_bucket *b, struct sfb_sched_data *q)
+ {
+-	b->p_mark = prob_minus(b->p_mark, q->decrement);
++	WRITE_ONCE(b->p_mark, prob_minus(b->p_mark, q->decrement));
+ }
+ 
+ static void increment_prob(struct sfb_bucket *b, struct sfb_sched_data *q)
+ {
+-	b->p_mark = prob_plus(b->p_mark, q->increment);
++	WRITE_ONCE(b->p_mark, prob_plus(b->p_mark, q->increment));
+ }
+ 
+ static void sfb_zero_all_buckets(struct sfb_sched_data *q)
+@@ -202,11 +202,14 @@ static u32 sfb_compute_qlen(u32 *prob_r, u32 *avgpm_r, const struct sfb_sched_da
+ 	const struct sfb_bucket *b = &q->bins[q->slot].bins[0][0];
+ 
+ 	for (i = 0; i < SFB_LEVELS * SFB_NUMBUCKETS; i++) {
+-		if (qlen < b->qlen)
+-			qlen = b->qlen;
+-		totalpm += b->p_mark;
+-		if (prob < b->p_mark)
+-			prob = b->p_mark;
++		u32 b_qlen = READ_ONCE(b->qlen);
++		u32 b_mark = READ_ONCE(b->p_mark);
++
++		if (qlen < b_qlen)
++			qlen = b_qlen;
++		totalpm += b_mark;
++		if (prob < b_mark)
++			prob = b_mark;
+ 		b++;
+ 	}
+ 	*prob_r = prob;
+@@ -295,7 +298,8 @@ static int sfb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 
+ 	if (unlikely(sch->q.qlen >= q->limit)) {
  		qdisc_qstats_overlimit(sch);
- 		if (!red_use_ecn(q)) {
--			q->stats.prob_drop++;
-+			WRITE_ONCE(q->stats.prob_drop,
-+				   q->stats.prob_drop + 1);
- 			goto congestion_drop;
- 		}
+-		q->stats.queuedrop++;
++		WRITE_ONCE(q->stats.queuedrop,
++			   q->stats.queuedrop + 1);
+ 		goto drop;
+ 	}
  
- 		if (INET_ECN_set_ce(skb)) {
--			q->stats.prob_mark++;
-+			WRITE_ONCE(q->stats.prob_mark,
-+				   q->stats.prob_mark + 1);
- 			skb = tcf_qevent_handle(&q->qe_mark, sch, skb, to_free, &ret);
- 			if (!skb)
- 				return NET_XMIT_CN | ret;
- 		} else if (!red_use_nodrop(q)) {
--			q->stats.prob_drop++;
-+			WRITE_ONCE(q->stats.prob_drop,
-+				   q->stats.prob_drop + 1);
- 			goto congestion_drop;
- 		}
+@@ -348,7 +352,8 @@ static int sfb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  
-@@ -111,17 +114,20 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		reason = SKB_DROP_REASON_QDISC_OVERLIMIT;
+ 	if (unlikely(minqlen >= q->max)) {
  		qdisc_qstats_overlimit(sch);
- 		if (red_use_harddrop(q) || !red_use_ecn(q)) {
--			q->stats.forced_drop++;
-+			WRITE_ONCE(q->stats.forced_drop,
-+				   q->stats.forced_drop + 1);
- 			goto congestion_drop;
- 		}
+-		q->stats.bucketdrop++;
++		WRITE_ONCE(q->stats.bucketdrop,
++			   q->stats.bucketdrop + 1);
+ 		goto drop;
+ 	}
  
+@@ -374,7 +379,8 @@ static int sfb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		}
+ 		if (sfb_rate_limit(skb, q)) {
+ 			qdisc_qstats_overlimit(sch);
+-			q->stats.penaltydrop++;
++			WRITE_ONCE(q->stats.penaltydrop,
++				   q->stats.penaltydrop + 1);
+ 			goto drop;
+ 		}
+ 		goto enqueue;
+@@ -390,14 +396,17 @@ static int sfb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			 * In either case, we want to start dropping packets.
+ 			 */
+ 			if (r < (p_min - SFB_MAX_PROB / 2) * 2) {
+-				q->stats.earlydrop++;
++				WRITE_ONCE(q->stats.earlydrop,
++					   q->stats.earlydrop + 1);
+ 				goto drop;
+ 			}
+ 		}
  		if (INET_ECN_set_ce(skb)) {
--			q->stats.forced_mark++;
-+			WRITE_ONCE(q->stats.forced_mark,
-+				   q->stats.forced_mark + 1);
- 			skb = tcf_qevent_handle(&q->qe_mark, sch, skb, to_free, &ret);
- 			if (!skb)
- 				return NET_XMIT_CN | ret;
- 		} else if (!red_use_nodrop(q)) {
--			q->stats.forced_drop++;
-+			WRITE_ONCE(q->stats.forced_drop,
-+				   q->stats.forced_drop + 1);
- 			goto congestion_drop;
+-			q->stats.marked++;
++			WRITE_ONCE(q->stats.marked,
++				   q->stats.marked + 1);
+ 		} else {
+-			q->stats.earlydrop++;
++			WRITE_ONCE(q->stats.earlydrop,
++				   q->stats.earlydrop + 1);
+ 			goto drop;
  		}
- 
-@@ -135,7 +141,8 @@ static int red_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		sch->qstats.backlog += len;
+ 	}
+@@ -410,7 +419,8 @@ static int sfb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
  		sch->q.qlen++;
+ 		increment_qlen(&cb, q);
  	} else if (net_xmit_drop_count(ret)) {
--		q->stats.pdrop++;
-+		WRITE_ONCE(q->stats.pdrop,
-+			   q->stats.pdrop + 1);
+-		q->stats.childdrop++;
++		WRITE_ONCE(q->stats.childdrop,
++			   q->stats.childdrop + 1);
  		qdisc_qstats_drop(sch);
  	}
  	return ret;
-@@ -463,9 +470,13 @@ static int red_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 		dev->netdev_ops->ndo_setup_tc(dev, TC_SETUP_QDISC_RED,
- 					      &hw_stats_request);
- 	}
--	st.early = q->stats.prob_drop + q->stats.forced_drop;
--	st.pdrop = q->stats.pdrop;
--	st.marked = q->stats.prob_mark + q->stats.forced_mark;
-+	st.early = READ_ONCE(q->stats.prob_drop) +
-+		   READ_ONCE(q->stats.forced_drop);
-+
-+	st.pdrop = READ_ONCE(q->stats.pdrop);
-+
-+	st.marked = READ_ONCE(q->stats.prob_mark) +
-+		    READ_ONCE(q->stats.forced_mark);
+@@ -599,12 +609,12 @@ static int sfb_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ {
+ 	struct sfb_sched_data *q = qdisc_priv(sch);
+ 	struct tc_sfb_xstats st = {
+-		.earlydrop = q->stats.earlydrop,
+-		.penaltydrop = q->stats.penaltydrop,
+-		.bucketdrop = q->stats.bucketdrop,
+-		.queuedrop = q->stats.queuedrop,
+-		.childdrop = q->stats.childdrop,
+-		.marked = q->stats.marked,
++		.earlydrop = READ_ONCE(q->stats.earlydrop),
++		.penaltydrop = READ_ONCE(q->stats.penaltydrop),
++		.bucketdrop = READ_ONCE(q->stats.bucketdrop),
++		.queuedrop = READ_ONCE(q->stats.queuedrop),
++		.childdrop = READ_ONCE(q->stats.childdrop),
++		.marked = READ_ONCE(q->stats.marked),
+ 	};
  
- 	return gnet_stats_copy_app(d, &st, sizeof(st));
- }
+ 	st.maxqlen = sfb_compute_qlen(&st.maxprob, &st.avgprob, q);
 -- 
 2.53.0
 
