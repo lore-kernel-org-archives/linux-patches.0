@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CE436F40C;
-	Wed, 20 May 2026 16:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0B2352038;
+	Wed, 20 May 2026 16:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295134; cv=none; b=I/va3NMUkb/WeUfaN7d+i2fUaHeSzFpwvGp7nISUh7ZMJiC40iHEEQednAFIzJ4q19/VsehQVNR/EtcXq5BeWk6/wij+WTs+eb6oBqEtDxu8NqH2sLXikG5ITBAADWAcG6ER36Fc0/H2YoRVCA39LypaCD8sl00lvaVuK4+BU8c=
+	t=1779295136; cv=none; b=ZWKIGWRSbiso8gHJ7uaXIa3jXqar3iKimRRSeUQ0H8FS7SmJjNe6SlVbuGna5sj4miSppu12kjeEZwED+8xJgDO926flw1kYE1qFiyiANwsBbutiWfP/OeVdYTdQ0mXnvYrvFEhV2r6XDNIxc5uwZkF+DyHMY5DP3iut8nRsEn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295134; c=relaxed/simple;
-	bh=SZAgAfkgc0uKB0TxDzFsXrG9rusBL/QzB3QX5QZyq9o=;
+	s=arc-20240116; t=1779295136; c=relaxed/simple;
+	bh=RYJlkF38/e3HaERwAY7t7ApuA3+fB9ssYpSZ1J/fxBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BrrqFYxAyrl9IBaMb+eucOA1Lr8+wgSMEqPvoWYtioePJCZXhC9Ox5JkVwWUSFXGggnFOCWOERWYlSHqDwkID6yeA5d4iw6z4jbdDW2h6mYnSzEj0GGRCst+0ByYAT+C5dohnQvnxd9eZFyG1KXmcuiVogzfp58ndyElNTHz+Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhtUGA1R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gdzcYxBoiN8Gx27DKnRkMu0biagtszM5Cw3PV4Hm965qAsBHjXWlKvAi+8bszD0ul7KaM2maqvDHCYFjScI5/pRyFK9xhcwzyl92vRJK4z8HFMXGWATR675LOD6o2EwszeRwO7UUWWgL1sqrhbnZZQd/tEyy8JaBoJYvu38QY0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nc1Ht9+r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhtUGA1R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA41D1F000E9;
-	Wed, 20 May 2026 16:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nc1Ht9+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2831F00893;
+	Wed, 20 May 2026 16:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295132;
-	bh=bv/K3AVUuvodRATwAGKWdVLVrjrAAI5Ps+hzvFxlZ+o=;
+	s=korg; t=1779295134;
+	bh=8Y48zKJsM4/qdH17tEUJZRcwFq7wq+N6DWOl4Kotd8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fhtUGA1Rcys5JAwyAU1R5ucWHGqXGV1rK6PtsB+i4xpYsuNVyZMYNwvK2I6mmWTtr
-	 ZSamlkS4fMraNYU1bMUf9zNymY/+ViUPmW4k8SMoqOoOmTFLasxFwsStYZemK3vQNH
-	 wEXeJfIsexG0mQ3t2m5GB09Ogtp9JinvE61Apni0=
+	b=nc1Ht9+ra+Ov8lPqeOsZK/O+00XR1bD+iLcKdZWUIqKSobUoIlOPhPmi59PHkEcAC
+	 aLljg0xeFYbTjgJXZ8D/59P6tykPclGdOVg835th+zPne6WzqQu14nMGFxDLIa4xqA
+	 3unFGfa7eEcG+Br6LMoWmSwXg/ye/33mH/t45sUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eliot Courtney <ecourtney@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Alexandre Courbot <acourbot@nvidia.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0262/1146] gpu: nova-core: create falcon firmware DMA objects lazily
-Date: Wed, 20 May 2026 18:08:32 +0200
-Message-ID: <20260520162154.157574433@linuxfoundation.org>
+Subject: [PATCH 7.0 0253/1146] dm cache policy smq: fix missing locks in invalidating cache blocks
+Date: Wed, 20 May 2026 18:08:23 +0200
+Message-ID: <20260520162153.959563739@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,577 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Courbot <acourbot@nvidia.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit bc9de9e1af2f05461460e1b215a6d209ee62d65a ]
+[ Upstream commit 2d1f7b65f5deedd2e6b09fdc6ea27f8375f24b45 ]
 
-When DMA was the only loading option for falcon firmwares, we decided to
-store them in DMA objects as soon as they were loaded from disk and
-patch them in-place to avoid having to do an extra copy.
+In passthrough mode, the policy invalidate_mapping operation is called
+simultaneously from multiple workers, thus it should be protected by a
+lock. Otherwise, we might end up with data races on the allocated blocks
+counter, or even use-after-free issues with internal data structures
+when doing concurrent writes.
 
-This decision complicates the PIO loading patch considerably, and
-actually does not even stand on its own when put into perspective with
-the fact that it requires 8 unsafe statements in the code that wouldn't
-exist if we stored the firmware into a `KVVec` and copied it into a DMA
-object at the last minute.
+Note that the existing FIXME in smq_invalidate_mapping() doesn't affect
+passthrough mode since migration tasks don't exist there, but would need
+attention if supporting fast device shrinking via suspend/resume without
+target reloading.
 
-The cost of the copy is, as can be expected, imperceptible at runtime.
-Thus, switch to a lazy DMA object creation model and simplify our code
-a bit. This will also have the nice side-effect of being more fit for
-PIO loading.
+Reproduce steps:
 
-Reviewed-by: Eliot Courtney <ecourtney@nvidia.com>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/20260306-turing_prep-v11-1-8f0042c5d026@nvidia.com
-[acourbot@nvidia.com: add TODO item to switch back to a coherent
-allocation when it becomes convenient to do so.]
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
-Stable-dep-of: 17d7c97f73c7 ("gpu: nova-core: firmware: fix and explain v2 header offsets computations")
+1. Create a cache device consisting of 1024 cache entries
+
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
+dmsetup create corig --table "0 262144 linear /dev/sdc 262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dmsetup create cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+
+2. Populate the cache, and record the number of cached blocks
+
+fio --name=populate --filename=/dev/mapper/cache --rw=randwrite --bs=4k \
+--size=64m --direct=1
+nr_cached=$(dmsetup status cache | awk '{split($7, a, "/"); print a[1]}')
+
+3. Reload the cache into passthrough mode
+
+dmsetup suspend cache
+dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 passthrough smq 0"
+dmsetup resume cache
+
+4. Write to the passthrough cache. By setting multiple jobs with I/O
+   size equal to the cache block size, cache blocks are invalidated
+   concurrently from different workers.
+
+fio --filename=/dev/mapper/cache --name=test --rw=randwrite --bs=64k \
+--direct=1 --numjobs=2 --randrepeat=0 --size=64m
+
+5. Check if demoted matches cached block count. These numbers should
+   match but may differ due to the data race.
+
+nr_demoted=$(dmsetup status cache | awk '{print $12}')
+echo "$nr_cached, $nr_demoted"
+
+Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/nova-core/falcon.rs          |  57 ++++++++-----
- drivers/gpu/nova-core/firmware.rs        |  40 ++++-----
- drivers/gpu/nova-core/firmware/booter.rs |  33 +++-----
- drivers/gpu/nova-core/firmware/fwsec.rs  | 103 ++++++++---------------
- drivers/gpu/nova-core/gsp/boot.rs        |   2 +-
- 5 files changed, 108 insertions(+), 127 deletions(-)
+ drivers/md/dm-cache-policy-smq.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/nova-core/falcon.rs b/drivers/gpu/nova-core/falcon.rs
-index 37bfee1d09492..8d444cf9d55c1 100644
---- a/drivers/gpu/nova-core/falcon.rs
-+++ b/drivers/gpu/nova-core/falcon.rs
-@@ -2,12 +2,13 @@
+diff --git a/drivers/md/dm-cache-policy-smq.c b/drivers/md/dm-cache-policy-smq.c
+index b328d9601046b..dd77a93fd68d2 100644
+--- a/drivers/md/dm-cache-policy-smq.c
++++ b/drivers/md/dm-cache-policy-smq.c
+@@ -1589,14 +1589,18 @@ static int smq_invalidate_mapping(struct dm_cache_policy *p, dm_cblock_t cblock)
+ {
+ 	struct smq_policy *mq = to_smq_policy(p);
+ 	struct entry *e = get_entry(&mq->cache_alloc, from_cblock(cblock));
++	unsigned long flags;
  
- //! Falcon microprocessor base support
+ 	if (!e->allocated)
+ 		return -ENODATA;
  
--use core::ops::Deref;
--
- use hal::FalconHal;
- 
- use kernel::{
--    device,
-+    device::{
-+        self,
-+        Device, //
-+    },
-     dma::{
-         DmaAddress,
-         DmaMask, //
-@@ -15,9 +16,7 @@ use kernel::{
-     io::poll::read_poll_timeout,
-     prelude::*,
-     sync::aref::ARef,
--    time::{
--        Delta, //
--    },
-+    time::Delta,
- };
- 
- use crate::{
-@@ -351,6 +350,9 @@ pub(crate) struct FalconBromParams {
- 
- /// Trait for providing load parameters of falcon firmwares.
- pub(crate) trait FalconLoadParams {
-+    /// Returns the firmware data as a slice of bytes.
-+    fn as_slice(&self) -> &[u8];
++	spin_lock_irqsave(&mq->lock, flags);
+ 	// FIXME: what if this block has pending background work?
+ 	del_queue(mq, e);
+ 	h_remove(&mq->table, e);
+ 	free_entry(&mq->cache_alloc, e);
++	spin_unlock_irqrestore(&mq->lock, flags);
 +
-     /// Returns the load parameters for Secure `IMEM`.
-     fn imem_sec_load_params(&self) -> FalconLoadTarget;
- 
-@@ -370,9 +372,8 @@ pub(crate) trait FalconLoadParams {
- 
- /// Trait for a falcon firmware.
- ///
--/// A falcon firmware can be loaded on a given engine, and is presented in the form of a DMA
--/// object.
--pub(crate) trait FalconFirmware: FalconLoadParams + Deref<Target = DmaObject> {
-+/// A falcon firmware can be loaded on a given engine.
-+pub(crate) trait FalconFirmware: FalconLoadParams {
-     /// Engine on which this firmware is to be loaded.
-     type Target: FalconEngine;
- }
-@@ -415,10 +416,10 @@ impl<E: FalconEngine + 'static> Falcon<E> {
-     /// `target_mem`.
-     ///
-     /// `sec` is set if the loaded firmware is expected to run in secure mode.
--    fn dma_wr<F: FalconFirmware<Target = E>>(
-+    fn dma_wr(
-         &self,
-         bar: &Bar0,
--        fw: &F,
-+        dma_obj: &DmaObject,
-         target_mem: FalconMem,
-         load_offsets: FalconLoadTarget,
-     ) -> Result {
-@@ -430,11 +431,11 @@ impl<E: FalconEngine + 'static> Falcon<E> {
-         // For DMEM we can fold the start offset into the DMA handle.
-         let (src_start, dma_start) = match target_mem {
-             FalconMem::ImemSecure | FalconMem::ImemNonSecure => {
--                (load_offsets.src_start, fw.dma_handle())
-+                (load_offsets.src_start, dma_obj.dma_handle())
-             }
-             FalconMem::Dmem => (
-                 0,
--                fw.dma_handle_with_offset(load_offsets.src_start.into_safe_cast())?,
-+                dma_obj.dma_handle_with_offset(load_offsets.src_start.into_safe_cast())?,
-             ),
-         };
-         if dma_start % DmaAddress::from(DMA_LEN) > 0 {
-@@ -466,7 +467,7 @@ impl<E: FalconEngine + 'static> Falcon<E> {
-                 dev_err!(self.dev, "DMA transfer length overflow\n");
-                 return Err(EOVERFLOW);
-             }
--            Some(upper_bound) if usize::from_safe_cast(upper_bound) > fw.size() => {
-+            Some(upper_bound) if usize::from_safe_cast(upper_bound) > dma_obj.size() => {
-                 dev_err!(self.dev, "DMA transfer goes beyond range of DMA object\n");
-                 return Err(EINVAL);
-             }
-@@ -515,7 +516,12 @@ impl<E: FalconEngine + 'static> Falcon<E> {
-     }
- 
-     /// Perform a DMA load into `IMEM` and `DMEM` of `fw`, and prepare the falcon to run it.
--    fn dma_load<F: FalconFirmware<Target = E>>(&self, bar: &Bar0, fw: &F) -> Result {
-+    fn dma_load<F: FalconFirmware<Target = E>>(
-+        &self,
-+        dev: &Device<device::Bound>,
-+        bar: &Bar0,
-+        fw: &F,
-+    ) -> Result {
-         // The Non-Secure section only exists on firmware used by Turing and GA100, and
-         // those platforms do not use DMA.
-         if fw.imem_ns_load_params().is_some() {
-@@ -523,14 +529,22 @@ impl<E: FalconEngine + 'static> Falcon<E> {
-             return Err(EINVAL);
-         }
- 
-+        // Create DMA object with firmware content as the source of the DMA engine.
-+        let dma_obj = DmaObject::from_data(dev, fw.as_slice())?;
-+
-         self.dma_reset(bar);
-         regs::NV_PFALCON_FBIF_TRANSCFG::update(bar, &E::ID, 0, |v| {
-             v.set_target(FalconFbifTarget::CoherentSysmem)
-                 .set_mem_type(FalconFbifMemType::Physical)
-         });
- 
--        self.dma_wr(bar, fw, FalconMem::ImemSecure, fw.imem_sec_load_params())?;
--        self.dma_wr(bar, fw, FalconMem::Dmem, fw.dmem_load_params())?;
-+        self.dma_wr(
-+            bar,
-+            &dma_obj,
-+            FalconMem::ImemSecure,
-+            fw.imem_sec_load_params(),
-+        )?;
-+        self.dma_wr(bar, &dma_obj, FalconMem::Dmem, fw.dmem_load_params())?;
- 
-         self.hal.program_brom(self, bar, &fw.brom_params())?;
- 
-@@ -641,9 +655,14 @@ impl<E: FalconEngine + 'static> Falcon<E> {
-     }
- 
-     // Load a firmware image into Falcon memory
--    pub(crate) fn load<F: FalconFirmware<Target = E>>(&self, bar: &Bar0, fw: &F) -> Result {
-+    pub(crate) fn load<F: FalconFirmware<Target = E>>(
-+        &self,
-+        dev: &Device<device::Bound>,
-+        bar: &Bar0,
-+        fw: &F,
-+    ) -> Result {
-         match self.hal.load_method() {
--            LoadMethod::Dma => self.dma_load(bar, fw),
-+            LoadMethod::Dma => self.dma_load(dev, bar, fw),
-             LoadMethod::Pio => Err(ENOTSUPP),
-         }
-     }
-diff --git a/drivers/gpu/nova-core/firmware.rs b/drivers/gpu/nova-core/firmware.rs
-index 68779540aa284..be911d0a38276 100644
---- a/drivers/gpu/nova-core/firmware.rs
-+++ b/drivers/gpu/nova-core/firmware.rs
-@@ -15,7 +15,6 @@ use kernel::{
- };
- 
- use crate::{
--    dma::DmaObject,
-     falcon::{
-         FalconFirmware,
-         FalconLoadTarget, //
-@@ -292,7 +291,7 @@ impl SignedState for Unsigned {}
- struct Signed;
- impl SignedState for Signed {}
- 
--/// A [`DmaObject`] containing a specific microcode ready to be loaded into a falcon.
-+/// Microcode to be loaded into a specific falcon.
- ///
- /// This is module-local and meant for sub-modules to use internally.
- ///
-@@ -300,34 +299,35 @@ impl SignedState for Signed {}
- /// before it can be loaded (with an exception for development hardware). The
- /// [`Self::patch_signature`] and [`Self::no_patch_signature`] methods are used to transition the
- /// firmware to its [`Signed`] state.
--struct FirmwareDmaObject<F: FalconFirmware, S: SignedState>(DmaObject, PhantomData<(F, S)>);
-+// TODO: Consider replacing this with a coherent memory object once `CoherentAllocation` supports
-+// temporary CPU-exclusive access to the object without unsafe methods.
-+struct FirmwareObject<F: FalconFirmware, S: SignedState>(KVVec<u8>, PhantomData<(F, S)>);
- 
- /// Trait for signatures to be patched directly into a given firmware.
- ///
- /// This is module-local and meant for sub-modules to use internally.
- trait FirmwareSignature<F: FalconFirmware>: AsRef<[u8]> {}
- 
--impl<F: FalconFirmware> FirmwareDmaObject<F, Unsigned> {
--    /// Patches the firmware at offset `sig_base_img` with `signature`.
-+impl<F: FalconFirmware> FirmwareObject<F, Unsigned> {
-+    /// Patches the firmware at offset `signature_start` with `signature`.
-     fn patch_signature<S: FirmwareSignature<F>>(
-         mut self,
-         signature: &S,
--        sig_base_img: usize,
--    ) -> Result<FirmwareDmaObject<F, Signed>> {
-+        signature_start: usize,
-+    ) -> Result<FirmwareObject<F, Signed>> {
-         let signature_bytes = signature.as_ref();
--        if sig_base_img + signature_bytes.len() > self.0.size() {
--            return Err(EINVAL);
--        }
--
--        // SAFETY: We are the only user of this object, so there cannot be any race.
--        let dst = unsafe { self.0.start_ptr_mut().add(sig_base_img) };
-+        let signature_end = signature_start
-+            .checked_add(signature_bytes.len())
-+            .ok_or(EOVERFLOW)?;
-+        let dst = self
-+            .0
-+            .get_mut(signature_start..signature_end)
-+            .ok_or(EINVAL)?;
- 
--        // SAFETY: `signature` and `dst` are valid, properly aligned, and do not overlap.
--        unsafe {
--            core::ptr::copy_nonoverlapping(signature_bytes.as_ptr(), dst, signature_bytes.len())
--        };
-+        // PANIC: `dst` and `signature_bytes` have the same length.
-+        dst.copy_from_slice(signature_bytes);
- 
--        Ok(FirmwareDmaObject(self.0, PhantomData))
-+        Ok(FirmwareObject(self.0, PhantomData))
-     }
- 
-     /// Mark the firmware as signed without patching it.
-@@ -335,8 +335,8 @@ impl<F: FalconFirmware> FirmwareDmaObject<F, Unsigned> {
-     /// This method is used to explicitly confirm that we do not need to sign the firmware, while
-     /// allowing us to continue as if it was. This is typically only needed for development
-     /// hardware.
--    fn no_patch_signature(self) -> FirmwareDmaObject<F, Signed> {
--        FirmwareDmaObject(self.0, PhantomData)
-+    fn no_patch_signature(self) -> FirmwareObject<F, Signed> {
-+        FirmwareObject(self.0, PhantomData)
-     }
+ 	return 0;
  }
  
-diff --git a/drivers/gpu/nova-core/firmware/booter.rs b/drivers/gpu/nova-core/firmware/booter.rs
-index 86556cee8e67b..ab7956602e758 100644
---- a/drivers/gpu/nova-core/firmware/booter.rs
-+++ b/drivers/gpu/nova-core/firmware/booter.rs
-@@ -4,10 +4,7 @@
- //! running on [`Sec2`], that is used on Turing/Ampere to load the GSP firmware into the GSP falcon
- //! (and optionally unload it through a separate firmware image).
- 
--use core::{
--    marker::PhantomData,
--    ops::Deref, //
--};
-+use core::marker::PhantomData;
- 
- use kernel::{
-     device,
-@@ -16,7 +13,6 @@ use kernel::{
- };
- 
- use crate::{
--    dma::DmaObject,
-     driver::Bar0,
-     falcon::{
-         sec2::Sec2,
-@@ -28,7 +24,7 @@ use crate::{
-     },
-     firmware::{
-         BinFirmware,
--        FirmwareDmaObject,
-+        FirmwareObject,
-         FirmwareSignature,
-         Signed,
-         Unsigned, //
-@@ -261,12 +257,15 @@ pub(crate) struct BooterFirmware {
-     // BROM falcon parameters.
-     brom_params: FalconBromParams,
-     // Device-mapped firmware image.
--    ucode: FirmwareDmaObject<Self, Signed>,
-+    ucode: FirmwareObject<Self, Signed>,
- }
- 
--impl FirmwareDmaObject<BooterFirmware, Unsigned> {
--    fn new_booter(dev: &device::Device<device::Bound>, data: &[u8]) -> Result<Self> {
--        DmaObject::from_data(dev, data).map(|ucode| Self(ucode, PhantomData))
-+impl FirmwareObject<BooterFirmware, Unsigned> {
-+    fn new_booter(data: &[u8]) -> Result<Self> {
-+        let mut ucode = KVVec::new();
-+        ucode.extend_from_slice(data, GFP_KERNEL)?;
-+
-+        Ok(Self(ucode, PhantomData))
-     }
- }
- 
-@@ -320,7 +319,7 @@ impl BooterFirmware {
-         let ucode = bin_fw
-             .data()
-             .ok_or(EINVAL)
--            .and_then(|data| FirmwareDmaObject::<Self, _>::new_booter(dev, data))?;
-+            .and_then(FirmwareObject::<Self, _>::new_booter)?;
- 
-         let ucode_signed = {
-             let mut signatures = hs_fw.signatures_iter()?.peekable();
-@@ -392,6 +391,10 @@ impl BooterFirmware {
- }
- 
- impl FalconLoadParams for BooterFirmware {
-+    fn as_slice(&self) -> &[u8] {
-+        self.ucode.0.as_slice()
-+    }
-+
-     fn imem_sec_load_params(&self) -> FalconLoadTarget {
-         self.imem_sec_load_target.clone()
-     }
-@@ -417,14 +420,6 @@ impl FalconLoadParams for BooterFirmware {
-     }
- }
- 
--impl Deref for BooterFirmware {
--    type Target = DmaObject;
--
--    fn deref(&self) -> &Self::Target {
--        &self.ucode.0
--    }
--}
--
- impl FalconFirmware for BooterFirmware {
-     type Target = Sec2;
- }
-diff --git a/drivers/gpu/nova-core/firmware/fwsec.rs b/drivers/gpu/nova-core/firmware/fwsec.rs
-index df3d8de14ca14..7fff3acdaa735 100644
---- a/drivers/gpu/nova-core/firmware/fwsec.rs
-+++ b/drivers/gpu/nova-core/firmware/fwsec.rs
-@@ -10,10 +10,7 @@
- //! - The command to be run, as this firmware can perform several tasks ;
- //! - The ucode signature, so the GSP falcon can run FWSEC in HS mode.
- 
--use core::{
--    marker::PhantomData,
--    ops::Deref, //
--};
-+use core::marker::PhantomData;
- 
- use kernel::{
-     device::{
-@@ -28,7 +25,6 @@ use kernel::{
- };
- 
- use crate::{
--    dma::DmaObject,
-     driver::Bar0,
-     falcon::{
-         gsp::Gsp,
-@@ -40,7 +36,7 @@ use crate::{
-     },
-     firmware::{
-         FalconUCodeDesc,
--        FirmwareDmaObject,
-+        FirmwareObject,
-         FirmwareSignature,
-         Signed,
-         Unsigned, //
-@@ -174,52 +170,21 @@ impl AsRef<[u8]> for Bcrt30Rsa3kSignature {
- 
- impl FirmwareSignature<FwsecFirmware> for Bcrt30Rsa3kSignature {}
- 
--/// Reinterpret the area starting from `offset` in `fw` as an instance of `T` (which must implement
--/// [`FromBytes`]) and return a reference to it.
--///
--/// # Safety
--///
--/// * Callers must ensure that the device does not read/write to/from memory while the returned
--///   reference is live.
--/// * Callers must ensure that this call does not race with a write to the same region while
--///   the returned reference is live.
--unsafe fn transmute<T: Sized + FromBytes>(fw: &DmaObject, offset: usize) -> Result<&T> {
--    // SAFETY: The safety requirements of the function guarantee the device won't read
--    // or write to memory while the reference is alive and that this call won't race
--    // with writes to the same memory region.
--    T::from_bytes(unsafe { fw.as_slice(offset, size_of::<T>())? }).ok_or(EINVAL)
--}
--
--/// Reinterpret the area starting from `offset` in `fw` as a mutable instance of `T` (which must
--/// implement [`FromBytes`]) and return a reference to it.
--///
--/// # Safety
--///
--/// * Callers must ensure that the device does not read/write to/from memory while the returned
--///   slice is live.
--/// * Callers must ensure that this call does not race with a read or write to the same region
--///   while the returned slice is live.
--unsafe fn transmute_mut<T: Sized + FromBytes + AsBytes>(
--    fw: &mut DmaObject,
--    offset: usize,
--) -> Result<&mut T> {
--    // SAFETY: The safety requirements of the function guarantee the device won't read
--    // or write to memory while the reference is alive and that this call won't race
--    // with writes or reads to the same memory region.
--    T::from_bytes_mut(unsafe { fw.as_slice_mut(offset, size_of::<T>())? }).ok_or(EINVAL)
--}
--
- /// The FWSEC microcode, extracted from the BIOS and to be run on the GSP falcon.
- ///
- /// It is responsible for e.g. carving out the WPR2 region as the first step of the GSP bootflow.
- pub(crate) struct FwsecFirmware {
-     /// Descriptor of the firmware.
-     desc: FalconUCodeDesc,
--    /// GPU-accessible DMA object containing the firmware.
--    ucode: FirmwareDmaObject<Self, Signed>,
-+    /// Object containing the firmware binary.
-+    ucode: FirmwareObject<Self, Signed>,
- }
- 
- impl FalconLoadParams for FwsecFirmware {
-+    fn as_slice(&self) -> &[u8] {
-+        self.ucode.0.as_slice()
-+    }
-+
-     fn imem_sec_load_params(&self) -> FalconLoadTarget {
-         self.desc.imem_sec_load_params()
-     }
-@@ -245,23 +210,15 @@ impl FalconLoadParams for FwsecFirmware {
-     }
- }
- 
--impl Deref for FwsecFirmware {
--    type Target = DmaObject;
--
--    fn deref(&self) -> &Self::Target {
--        &self.ucode.0
--    }
--}
--
- impl FalconFirmware for FwsecFirmware {
-     type Target = Gsp;
- }
- 
--impl FirmwareDmaObject<FwsecFirmware, Unsigned> {
--    fn new_fwsec(dev: &Device<device::Bound>, bios: &Vbios, cmd: FwsecCommand) -> Result<Self> {
-+impl FirmwareObject<FwsecFirmware, Unsigned> {
-+    fn new_fwsec(bios: &Vbios, cmd: FwsecCommand) -> Result<Self> {
-         let desc = bios.fwsec_image().header()?;
--        let ucode = bios.fwsec_image().ucode(&desc)?;
--        let mut dma_object = DmaObject::from_data(dev, ucode)?;
-+        let mut ucode = KVVec::new();
-+        ucode.extend_from_slice(bios.fwsec_image().ucode(&desc)?, GFP_KERNEL)?;
- 
-         let hdr_offset = desc
-             .imem_load_size()
-@@ -269,8 +226,11 @@ impl FirmwareDmaObject<FwsecFirmware, Unsigned> {
-             .map(usize::from_safe_cast)
-             .ok_or(EINVAL)?;
- 
--        // SAFETY: we have exclusive access to `dma_object`.
--        let hdr: &FalconAppifHdrV1 = unsafe { transmute(&dma_object, hdr_offset) }?;
-+        let hdr = ucode
-+            .get(hdr_offset..)
-+            .and_then(FalconAppifHdrV1::from_bytes_prefix)
-+            .ok_or(EINVAL)?
-+            .0;
- 
-         if hdr.version != 1 {
-             return Err(EINVAL);
-@@ -284,8 +244,11 @@ impl FirmwareDmaObject<FwsecFirmware, Unsigned> {
-                 .and_then(|o| o.checked_add(i.checked_mul(usize::from(hdr.entry_size))?))
-                 .ok_or(EINVAL)?;
- 
--            // SAFETY: we have exclusive access to `dma_object`.
--            let app: &FalconAppifV1 = unsafe { transmute(&dma_object, entry_offset) }?;
-+            let app = ucode
-+                .get(entry_offset..)
-+                .and_then(FalconAppifV1::from_bytes_prefix)
-+                .ok_or(EINVAL)?
-+                .0;
- 
-             if app.id != NVFW_FALCON_APPIF_ID_DMEMMAPPER {
-                 continue;
-@@ -298,9 +261,11 @@ impl FirmwareDmaObject<FwsecFirmware, Unsigned> {
-                 .map(usize::from_safe_cast)
-                 .ok_or(EINVAL)?;
- 
--            let dmem_mapper: &mut FalconAppifDmemmapperV3 =
--                // SAFETY: we have exclusive access to `dma_object`.
--                unsafe { transmute_mut(&mut dma_object, dmem_mapper_offset) }?;
-+            let dmem_mapper = ucode
-+                .get_mut(dmem_mapper_offset..)
-+                .and_then(FalconAppifDmemmapperV3::from_bytes_mut_prefix)
-+                .ok_or(EINVAL)?
-+                .0;
- 
-             dmem_mapper.init_cmd = match cmd {
-                 FwsecCommand::Frts { .. } => NVFW_FALCON_APPIF_DMEMMAPPER_CMD_FRTS,
-@@ -314,9 +279,11 @@ impl FirmwareDmaObject<FwsecFirmware, Unsigned> {
-                 .map(usize::from_safe_cast)
-                 .ok_or(EINVAL)?;
- 
--            let frts_cmd: &mut FrtsCmd =
--                // SAFETY: we have exclusive access to `dma_object`.
--                unsafe { transmute_mut(&mut dma_object, frts_cmd_offset) }?;
-+            let frts_cmd = ucode
-+                .get_mut(frts_cmd_offset..)
-+                .and_then(FrtsCmd::from_bytes_mut_prefix)
-+                .ok_or(EINVAL)?
-+                .0;
- 
-             frts_cmd.read_vbios = ReadVbios {
-                 ver: 1,
-@@ -340,7 +307,7 @@ impl FirmwareDmaObject<FwsecFirmware, Unsigned> {
-             }
- 
-             // Return early as we found and patched the DMEMMAPPER region.
--            return Ok(Self(dma_object, PhantomData));
-+            return Ok(Self(ucode, PhantomData));
-         }
- 
-         Err(ENOTSUPP)
-@@ -357,7 +324,7 @@ impl FwsecFirmware {
-         bios: &Vbios,
-         cmd: FwsecCommand,
-     ) -> Result<Self> {
--        let ucode_dma = FirmwareDmaObject::<Self, _>::new_fwsec(dev, bios, cmd)?;
-+        let ucode_dma = FirmwareObject::<Self, _>::new_fwsec(bios, cmd)?;
- 
-         // Patch signature if needed.
-         let desc = bios.fwsec_image().header()?;
-@@ -429,7 +396,7 @@ impl FwsecFirmware {
-             .reset(bar)
-             .inspect_err(|e| dev_err!(dev, "Failed to reset GSP falcon: {:?}\n", e))?;
-         falcon
--            .load(bar, self)
-+            .load(dev, bar, self)
-             .inspect_err(|e| dev_err!(dev, "Failed to load FWSEC firmware: {:?}\n", e))?;
-         let (mbox0, _) = falcon
-             .boot(bar, Some(0), None)
-diff --git a/drivers/gpu/nova-core/gsp/boot.rs b/drivers/gpu/nova-core/gsp/boot.rs
-index 94833f7996e8a..62ffed5f25a15 100644
---- a/drivers/gpu/nova-core/gsp/boot.rs
-+++ b/drivers/gpu/nova-core/gsp/boot.rs
-@@ -183,7 +183,7 @@ impl super::Gsp {
-         );
- 
-         sec2_falcon.reset(bar)?;
--        sec2_falcon.load(bar, &booter_loader)?;
-+        sec2_falcon.load(dev, bar, &booter_loader)?;
-         let wpr_handle = wpr_meta.dma_handle();
-         let (mbox0, mbox1) = sec2_falcon.boot(
-             bar,
 -- 
 2.53.0
 
