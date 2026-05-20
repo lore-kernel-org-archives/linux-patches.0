@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E423F4DCC;
-	Wed, 20 May 2026 17:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E94356748;
+	Wed, 20 May 2026 17:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297332; cv=none; b=MFbCsFQciujYXYm8UwntMhVXOn4uFWoKa+ftMy9zG7ByL4ksIrhveKedZM+KQPUfDaJfBweLeO3PzcPWqbRpbIqE668GIx+V9B95jZYbT8WV03KzbhP1AGYNP47sGKy8Q3N0046WqKkaHwQUK3qzH1zn0mOvm/UOpoKrKPwN99I=
+	t=1779297334; cv=none; b=tLFnPL+6JXMg1NkNZvY9WVyvUsKBBxkZcMnAp+Q8134sYMCsA1MQ/eTEAqvL5XmGlKdefcr69A6+Y7AXoge9JFOspNZ296r7imw+ahSXgEXpdLJY0uk/VJOEJ70UmhA48zrTb0TXzihrJJE4RnQnlW1iMcuBwy+Pu0+v4UPsuVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297332; c=relaxed/simple;
-	bh=gk95xzrhW1HS+n3nui6aOvQRvfmCvenr8W60NHPsOvE=;
+	s=arc-20240116; t=1779297334; c=relaxed/simple;
+	bh=kJW4sIe7+VU7AzbTv4zSSUJbnBHP6xruPswCAFLGu3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJRtPd7CyjtX5jiyTwqaxjwdbhPUFr7zQsAiK3eyOMO92ycsjdfj3PVwWnW0zLYx08nKdg9WydTX0Or6xw8sy4XDYY4guZQQnE01nqd/mZ/dW+JkVnrnfDIkvCvrfN/p4X9QmA8GHgcnhPX0SL5NtmBpPzsq9Oqz0ITz8Eg+lxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xu4ikFQA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OtoPIjgMv4KSteN8XzP6yDnh1jb9gELZNBjC8zkqGasCNzF5YwJJykyZ9n42IQuXh2dD/BIJ344alb9sqBnSf/mJXlgZJPQC/rdke24iuefpk4y9nOf10WV+dtC0BbhlKoEK33zd4tXX7iT9S+ddlurgayHz5VBIqY9Yzg+WucQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDuiuiri; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xu4ikFQA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396811F000E9;
-	Wed, 20 May 2026 17:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDuiuiri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C721F000E9;
+	Wed, 20 May 2026 17:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297330;
-	bh=AL8J+QawhwppXMlPloe8fJNk4EBfUr6aai3Th4STYDE=;
+	s=korg; t=1779297333;
+	bh=OiVE337kF7WYb7LweRadhXasAMLeQRBL+RZ9Vw4GhiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xu4ikFQAeRBwrUFnYG/v+SXYemeOC8boB+qTqgXcJ4boPZHEm/1bi9auaOBBsDMEQ
-	 FSr1uAoNlJcio+3zrNUeMzZLl3m69HhqcGJdILR/gRu50YQSn2J89ziILbEm+4/HQz
-	 0fsPXewMJCkaXekTQKQx/zRuZTyF+CVYP92sobS4=
+	b=rDuiuirikUVdwEL9C0imdpm/FcSEcdn4b/k+NKMXz/sUES9/0G1h5yoEqzyCvzV/j
+	 Qp9KkAW4WRb52HJrmNRqToO985u8XEPUBZUT4PHxAWcN8/e+VXPwGPTGVeWe3w0TjQ
+	 A0qqkkym7p7mMIrTnQpAAuRXmS6PLUPUmouKQEWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <nicholas@carlini.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.0 1097/1146] io-wq: check that the predecessor is hashed in io_wq_remove_pending()
-Date: Wed, 20 May 2026 18:22:27 +0200
-Message-ID: <20260520162213.069088714@linuxfoundation.org>
+	Adrien Burnett <an.arctic.pigeon@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.0 1088/1146] ALSA: hda/realtek: Add mute LED quirk for HP Pavilion Laptop 16-ag0xxx
+Date: Wed, 20 May 2026 18:22:18 +0200
+Message-ID: <20260520162212.859052906@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,52 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Carlini <nicholas@carlini.com>
+From: Adrien Burnett <an.arctic.pigeon@gmail.com>
 
-commit d6a2d7b04b5a093021a7a0e2e69e9d5237dfa8cc upstream.
+commit 7d1051ad68df3d584b5f24bfa1fb19f3a24db278 upstream.
 
-io_wq_remove_pending() needs to fix up wq->hash_tail[] if the cancelled
-work was the tail of its hash bucket. When doing this, it checks whether
-the preceding entry in acct->work_list has the same hash value, but
-never checks that the predecessor is hashed at all. io_get_work_hash()
-is simply atomic_read(&work->flags) >> IO_WQ_HASH_SHIFT, and the hash
-bits are never set for non-hashed work, so it returns 0. Thus, when a
-hashed bucket-0 work is cancelled while a non-hashed work is its list
-predecessor, the check spuriously passes and a pointer to the non-hashed
-io_kiocb is stored in wq->hash_tail[0].
+Add a SND_PCI_QUIRK entry for the HP Pavilion Laptop 16-ag0xxx
+(subsystem 0x103c:0x8cbc, Realtek ALC245). The
+ALC245_FIXUP_HP_X360_MUTE_LEDS fixup is already used by the
+neighbouring HP Pavilion Aero Laptop 13-bg0xxx (0x103c:0x8cbd);
+it chains the master-mute COEF handler with the GPIO mic-mute
+LED handler, which is what this machine needs.
 
-Because non-hashed work is dequeued via the fast path in
-io_get_next_work(), which never touches hash_tail[], the stale pointer
-is never cleared. Therefore, after the non-hashed io_kiocb completes and
-is freed back to req_cachep, wq->hash_tail[0] is a dangling pointer. The
-io_wq is per-task (tctx->io_wq) and survives ring open/close, so the
-dangling pointer persists for the lifetime of the task; the next hashed
-bucket-0 enqueue dereferences it in io_wq_insert_work() and
-wq_list_add_after() writes through freed memory.
+Tested on the affected hardware: both the mute and mic-mute key
+LEDs respond correctly to the keyboard hotkeys after this change.
 
-Add the missing io_wq_is_hashed() check so a non-hashed predecessor
-never inherits a hash_tail[] slot.
-
-Cc: stable@vger.kernel.org
-Fixes: 204361a77f40 ("io-wq: fix hang after cancelling pending hashed work")
-Signed-off-by: Nicholas Carlini <nicholas@carlini.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Adrien Burnett <an.arctic.pigeon@gmail.com>
+Link: https://patch.msgid.link/20260514165905.21175-1-an.arctic.pigeon@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -1124,7 +1124,8 @@ static inline void io_wq_remove_pending(
- 	if (io_wq_is_hashed(work) && work == wq->hash_tail[hash]) {
- 		if (prev)
- 			prev_work = container_of(prev, struct io_wq_work, list);
--		if (prev_work && io_get_work_hash(prev_work) == hash)
-+		if (prev_work && io_wq_is_hashed(prev_work) &&
-+		    io_get_work_hash(prev_work) == hash)
- 			wq->hash_tail[hash] = prev_work;
- 		else
- 			wq->hash_tail[hash] = NULL;
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7146,6 +7146,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8ca4, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ca7, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8caf, "HP Elite mt645 G8 Mobile Thin Client", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8cbc, "HP Pavilion Laptop 16-ag0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8cbd, "HP Pavilion Aero Laptop 13-bg0xxx", ALC245_FIXUP_HP_X360_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8cdd, "HP Spectre", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x8cde, "HP OmniBook Ultra Flip Laptop 14t", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
 
 
