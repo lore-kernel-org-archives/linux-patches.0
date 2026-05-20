@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398003FDC00;
-	Wed, 20 May 2026 18:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74528371048;
+	Wed, 20 May 2026 18:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301440; cv=none; b=hIDMHNiBIyTY6HdlWSk1KYSBbV8FhPHzfmgi0RCHICPZWjCpk7dQuyVyG+44lub/b8N1JVTQNnRW6bEBJGaw/iST0QlbLek/CWEmoQSUxRi52Dg1TqF4EGfCjnzC0D9n0NO7TeTra7OA2aSIsyHDgeEB+1dneUoNu8uAsEuQ9jg=
+	t=1779301442; cv=none; b=IzSeGige5s/YqbBV2Kkw+CRqlCM3CmDuQoKl9/t+phwiQkxdRmVn8mshCxx61jO+oL+mbaTYXLsBgNdkWhkkq+Vjdt+jE2FO5AxwrY04UZtXhN53jahtHgRlDD5zQfXk4qRJlzHiF03UoOnfpXYzVd4WzqmCJkMapUhnV+3IEFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301440; c=relaxed/simple;
-	bh=XtxISad3kFIJMghku5VwpB8koa28ZuUfc7Xf5dg3TNU=;
+	s=arc-20240116; t=1779301442; c=relaxed/simple;
+	bh=lYHqfg+GGMRyR4UU6iiMDyiz1dkxump6patEJ369if4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5rxIxzW+mkMUxP2k90QT/Ch2XASnzNatkm5oogpQ7W+ytvx00lcIFzYnvFKyuLcQmVmr6CYHMHfJmAKIiCLCwYjlIwH12k4lJX7FPUCm/peKhKffPKbHfmIHcKPKv3ngzR1tlX9VZC9qxAS15jbXF/rbslf0sjy11E5MYR8v/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eenCHNGj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g5etXV6l0Y65wuy23u4+/Fl8VHXxStXfQD2Pr88Y4QN8JGxsNNOJxy5dB2wW4P1NIY/gH9FvmJrWVtEG04irGszfaLNbfaitGFE+foDfoWD2bCvolKBU340+MQQTXp0udlznVMuXe2/uhQeHfm+BEyoK0BJTsnSy3vbWb/xfPqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoztNbI9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eenCHNGj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0D31F000E9;
-	Wed, 20 May 2026 18:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoztNbI9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D922D1F000E9;
+	Wed, 20 May 2026 18:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301438;
-	bh=dOrrQXivXCkY3ePLncHb1BXci+IvdPTttJqMvjCXU40=;
+	s=korg; t=1779301441;
+	bh=RsZQoOo5mkW0pQ5v7UGMcaXf3ZEvKkjYz30RGuyHET0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eenCHNGjY8WKGrZ846SGB8xWL8fbf9cZlXgALpvOWiKEFOps4zch/+geGiyuwmsXo
-	 v3lKs2jYZhuUjs5eL+cegcmHIfdxNx/wB5v6pTPXI9Xg/B5dlWs6BZPW/5to6L1qHK
-	 rVREDkk61/ypq1EQ5PgdbkyrrLpytnta2GCZiayQ=
+	b=NoztNbI9pq8/sXaR0AlRAuG2LRvADmyK6iUQ7YPgw4JalDGCKi38ppagUYGSIwB5x
+	 lXlelkcIHIig579Zm4/2pYJPfk2qEGj0l36TRn4TcSbJNJSLrFPf9g7Hf5Sj7LcN+h
+	 DUais0hayJkLsmA0H2/+ehVx7+8w9jwvXg3h9T2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Schocher <hs@nabladev.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Yinjie Yao <yinjie.yao@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 554/666] net: phy: dp83869: fix setting CLK_O_SEL field.
-Date: Wed, 20 May 2026 18:22:45 +0200
-Message-ID: <20260520162123.274541960@linuxfoundation.org>
+Subject: [PATCH 6.12 555/666] drm/amdgpu/vcn: set no_user_fence for VCN v2.0 enc/dec rings
+Date: Wed, 20 May 2026 18:22:46 +0200
+Message-ID: <20260520162123.295758634@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,68 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Schocher <hs@nabladev.com>
+From: Yinjie Yao <yinjie.yao@amd.com>
 
-[ Upstream commit 46f74a3f7d57d9cc0110b09cbc8163fa0a01afa2 ]
+[ Upstream commit 8d80b293b41fcb5e9396db93e788b0f4ebcbafb7 ]
 
-Table 7-121 in datasheet says we have to set register 0xc6
-to value 0x10 before CLK_O_SEL can be modified. No more infos
-about this field found in datasheet. With this fix, setting
-of CLK_O_SEL field in IO_MUX_CFG register worked through dts
-property "ti,clk-output-sel" on a DP83869HMRGZR.
+VCN encoder and decoder rings do not support 64-bit user fence writes,
+reject CS submissions with user fences.
 
-Signed-off-by: Heiko Schocher <hs@nabladev.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: 01db923e8377 ("net: phy: dp83869: Add TI dp83869 phy")
-Link: https://patch.msgid.link/20260425031339.3318-1-hs@nabladev.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1b61de45dfaf ("drm/amdgpu: add initial VCN2.0 support (v2)")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit e2b5499fca55f1a32960a311bbb62e35891eaf73)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83869.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
-index b6b38caf9c0ed..96e5b8b03083a 100644
---- a/drivers/net/phy/dp83869.c
-+++ b/drivers/net/phy/dp83869.c
-@@ -31,6 +31,7 @@
- #define DP83869_RGMIICTL	0x0032
- #define DP83869_STRAP_STS1	0x006e
- #define DP83869_RGMIIDCTL	0x0086
-+#define DP83869_ANA_PLL_PROG_PI	0x00c6
- #define DP83869_RXFCFG		0x0134
- #define DP83869_RXFPMD1		0x0136
- #define DP83869_RXFPMD2		0x0137
-@@ -827,12 +828,22 @@ static int dp83869_config_init(struct phy_device *phydev)
- 		dp83869_config_port_mirroring(phydev);
- 
- 	/* Clock output selection if muxing property is set */
--	if (dp83869->clk_output_sel != DP83869_CLK_O_SEL_REF_CLK)
-+	if (dp83869->clk_output_sel != DP83869_CLK_O_SEL_REF_CLK) {
-+		/*
-+		 * Table 7-121 in datasheet says we have to set register 0xc6
-+		 * to value 0x10 before CLK_O_SEL can be modified.
-+		 */
-+		ret = phy_write_mmd(phydev, DP83869_DEVADDR,
-+				    DP83869_ANA_PLL_PROG_PI, 0x10);
-+		if (ret)
-+			return ret;
-+
- 		ret = phy_modify_mmd(phydev,
- 				     DP83869_DEVADDR, DP83869_IO_MUX_CFG,
- 				     DP83869_IO_MUX_CFG_CLK_O_SEL_MASK,
- 				     dp83869->clk_output_sel <<
- 				     DP83869_IO_MUX_CFG_CLK_O_SEL_SHIFT);
-+	}
- 
- 	if (phy_interface_is_rgmii(phydev)) {
- 		ret = phy_write_mmd(phydev, DP83869_DEVADDR, DP83869_RGMIIDCTL,
+diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
+index 5431b2589ed61..29f5f6b1eb0a4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_0.c
+@@ -2127,6 +2127,7 @@ static const struct amd_ip_funcs vcn_v2_0_ip_funcs = {
+ static const struct amdgpu_ring_funcs vcn_v2_0_dec_ring_vm_funcs = {
+ 	.type = AMDGPU_RING_TYPE_VCN_DEC,
+ 	.align_mask = 0xf,
++	.no_user_fence = true,
+ 	.secure_submission_supported = true,
+ 	.get_rptr = vcn_v2_0_dec_ring_get_rptr,
+ 	.get_wptr = vcn_v2_0_dec_ring_get_wptr,
+@@ -2158,6 +2159,7 @@ static const struct amdgpu_ring_funcs vcn_v2_0_enc_ring_vm_funcs = {
+ 	.type = AMDGPU_RING_TYPE_VCN_ENC,
+ 	.align_mask = 0x3f,
+ 	.nop = VCN_ENC_CMD_NO_OP,
++	.no_user_fence = true,
+ 	.get_rptr = vcn_v2_0_enc_ring_get_rptr,
+ 	.get_wptr = vcn_v2_0_enc_ring_get_wptr,
+ 	.set_wptr = vcn_v2_0_enc_ring_set_wptr,
 -- 
 2.53.0
 
