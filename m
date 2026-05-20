@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C5028DC4;
-	Wed, 20 May 2026 17:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45937364EB0;
+	Wed, 20 May 2026 17:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297147; cv=none; b=OjEgijKIDUhsiRmM0V1NsFATv05myLjXVix0HyzFb0hbtqlmK7BB5WPdQlTgtIwNc9HdfeujCt2fUgVkwZg8n8dusmQ4mVe0Un3s+FUt9z151LXf+Xp6dnezvbDZ80d6dlsFeT8xawwcyy1tuuN7N38UfujWH1YmxV29hQb/Nn8=
+	t=1779297150; cv=none; b=VceYewdLawHyOXhuRDE8KDkWUTHX0iLwsLExXpVX/YNXZFPzd7YhOfdZWF8Iai0MEhK9oy3X7jQGA/NaV2yZaHyquaVE/vb7fpQwKXuvuoB7Vqx4NTKuvF86TrUy5lOWCcpuv5ZGCPbeAUfJwYyiuUXffcGSGdg/Xic1BfNKqLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297147; c=relaxed/simple;
-	bh=rde69B2c8cslsi3Q4FJW8dmH3+tcL01qhNKxRqzs4TE=;
+	s=arc-20240116; t=1779297150; c=relaxed/simple;
+	bh=mZsZSEurYH8iX/bXSIaNpPeucQJQ08XoH3KE6fwz+VM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H6SGJrEhRMVeNUPMor3peMftcFUiQIQQ2OEfQGBzmTE49s/DZ9KTv8+4FlT9sJDNluMmRpGgjdrbTv6Xjn+whAiC1Pr/Mbn6ZLNsQwJCPsKGvgH1DhIV8flWLeQSERzelSsikxThx75PBZ4wgZnoXsnxaAykKUwXG+AgfhBQ3sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f81DRM5z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pn2Z958JXvAxNK33a/NyvmaR6wIbb/FWUgZMWeNZpNskK5CEXaif1IYablUBnpTzfo69rRufE/mbVL60ucOjVsPlRf50+XLKobNYsy396MqvAzil34cwmTZPRZhlaSff4dTp7tWAt/OERCBfKpL7UTsBYlHB9tVztHAt0VgRR7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9iyCPkP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f81DRM5z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FB01F000E9;
-	Wed, 20 May 2026 17:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9iyCPkP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC14D1F000E9;
+	Wed, 20 May 2026 17:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297146;
-	bh=K34Kw7b5k5bxXhPXF2Pm3Ou36KoLNIcv/jv2fdwW84I=;
+	s=korg; t=1779297149;
+	bh=zpCLM3epaJIWSrKfATFimcymIDbQu20CxeHjYeHpfIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f81DRM5ztJDQi1K3p4JAmqzi42g4MxWV7TlGboclrYEM2o29YfM/GJ1E/pYIeAI6h
-	 KmAswPKKkCWTDl134LVQri5+cuhcvm2ERgp+0NIVyb1sEAhBw566jJtGYKyLsgVNQ4
-	 WNO+RepkurVpE3XZnZIUXvVTXWcmPhsokMPT2C8M=
+	b=P9iyCPkPge3u/YSiFnZ06OSQUh1EVFDF3PtxipbImpl5xKCKt8wnn3WTsSJ7h0ulg
+	 nC7gTEJy+FrzJ3D7yIKG4TQqNuQVHjwGR2u7h1ebFaVmft6pTeEyE21VNUWbKD0hm0
+	 mMc5pTnRay4BbkkbBWoihhPI12z8LdzYYp6ghqfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Frank Li <Frank.Li@nxp.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1068/1146] media: staging: imx: configure src_mux in csi_start
-Date: Wed, 20 May 2026 18:21:58 +0200
-Message-ID: <20260520162212.401925482@linuxfoundation.org>
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Subject: [PATCH 7.0 1069/1146] Bluetooth: btmtk: accept too short WMT FUNC_CTRL events
+Date: Wed, 20 May 2026 18:21:59 +0200
+Message-ID: <20260520162212.424949650@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,125 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Tretter <m.tretter@pengutronix.de>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit ebeec2b000a90cd8aae86d1931ff5ef23af8284e ]
+commit e3ac0d9f1a205f33a43fba3b79ef74d2f604c78b upstream.
 
-After media_pipeline_start() was called, the media graph is assumed to
-be validated. It won't be validated again if a second stream starts.
+MT7925 (USB ID 0e8d:e025) on fw version 20260106153314 sends WMT
+FUNC_CTRL events that are missing the status field.
 
-The imx-media-csi driver, however, changes hardware configuration in the
-link_validate() callback. This can result in started streams with
-misconfigured hardware.
+Prior to commit 006b9943b982 ("Bluetooth: btmtk: validate WMT event SKB
+length before struct access") the status was read from out-of-bounds of
+SKB data, which usually would result to success with
+BTMTK_WMT_ON_UNDONE, although I don't know the intent here.  The bounds
+check added in that commit returns with error instead, producing
+"Bluetooth: hci0: Failed to send wmt func ctrl (-22)" and makes the
+device unusable.
 
-In the concrete example, the ipu2_csi1 is driven by a parallel video
-input. After the media pipeline has been started with this
-configuration, a second stream is configured to use ipu1_csi0 with
-MIPI-CSI input from imx6-mipi-csi2. This may require the reconfiguration
-of ipu1_csi0 with ipu_set_csi_src_mux(). Since the media pipeline is
-already running, link_validate won't be called, and the ipu1_csi0 won't
-be reconfigured. The resulting video is broken, because the ipu1_csi0 is
-misconfigured, but no error is reported.
+Fix the regression by interpreting too short packet as status
+BTMTK_WMT_ON_UNDONE, which makes the device work normally again.
 
-Move ipu_set_csi_src_mux from csi_link_validate to csi_start to ensure
-that input to ipu1_csi0 is configured correctly when starting the
-stream. This is a local reconfiguration in ipu1_csi0 and is possible
-while the media pipeline is running.
-
-Since csi_start() is called with priv->lock already locked,
-csi_set_src() must not lock priv->lock again. Thus, the mutex_lock() is
-dropped.
-
-Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
-Fixes: 4a34ec8e470c ("[media] media: imx: Add CSI subdev driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 634a4408c061 ("Bluetooth: btmtk: validate WMT event SKB length before struct access")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com> # MT7922 (0489:e0e2)
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/imx/imx-media-csi.c | 44 ++++++++++++-----------
- 1 file changed, 24 insertions(+), 20 deletions(-)
+ drivers/bluetooth/btmtk.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/media/imx/imx-media-csi.c b/drivers/staging/media/imx/imx-media-csi.c
-index 55a7d8f38465b..1bc644f73a9d1 100644
---- a/drivers/staging/media/imx/imx-media-csi.c
-+++ b/drivers/staging/media/imx/imx-media-csi.c
-@@ -744,6 +744,28 @@ static int csi_setup(struct csi_priv *priv,
- 	return 0;
- }
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -678,8 +678,8 @@ static int btmtk_usb_hci_wmt_sync(struct
+ 	case BTMTK_WMT_FUNC_CTRL:
+ 		if (!skb_pull_data(data->evt_skb,
+ 				   sizeof(wmt_evt_funcc->status))) {
+-			err = -EINVAL;
+-			goto err_free_skb;
++			status = BTMTK_WMT_ON_UNDONE;
++			break;
+ 		}
  
-+static void csi_set_src(struct csi_priv *priv,
-+			struct v4l2_mbus_config *mbus_cfg)
-+{
-+	bool is_csi2;
-+
-+	is_csi2 = !is_parallel_bus(mbus_cfg);
-+	if (is_csi2) {
-+		/*
-+		 * NOTE! It seems the virtual channels from the mipi csi-2
-+		 * receiver are used only for routing by the video mux's,
-+		 * or for hard-wired routing to the CSI's. Once the stream
-+		 * enters the CSI's however, they are treated internally
-+		 * in the IPU as virtual channel 0.
-+		 */
-+		ipu_csi_set_mipi_datatype(priv->csi, 0,
-+					  &priv->format_mbus[CSI_SINK_PAD]);
-+	}
-+
-+	/* select either parallel or MIPI-CSI2 as input to CSI */
-+	ipu_set_csi_src_mux(priv->ipu, priv->csi_id, is_csi2);
-+}
-+
- static int csi_start(struct csi_priv *priv)
- {
- 	struct v4l2_mbus_config mbus_cfg = { .type = 0 };
-@@ -760,6 +782,8 @@ static int csi_start(struct csi_priv *priv)
- 	input_fi = &priv->frame_interval[CSI_SINK_PAD];
- 	output_fi = &priv->frame_interval[priv->active_output_pad];
- 
-+	csi_set_src(priv, &mbus_cfg);
-+
- 	/* start upstream */
- 	ret = v4l2_subdev_call(priv->src_sd, video, s_stream, 1);
- 	ret = (ret && ret != -ENOIOCTLCMD) ? ret : 0;
-@@ -1130,7 +1154,6 @@ static int csi_link_validate(struct v4l2_subdev *sd,
- {
- 	struct csi_priv *priv = v4l2_get_subdevdata(sd);
- 	struct v4l2_mbus_config mbus_cfg = { .type = 0 };
--	bool is_csi2;
- 	int ret;
- 
- 	ret = v4l2_subdev_link_validate_default(sd, link,
-@@ -1145,25 +1168,6 @@ static int csi_link_validate(struct v4l2_subdev *sd,
- 		return ret;
- 	}
- 
--	mutex_lock(&priv->lock);
--
--	is_csi2 = !is_parallel_bus(&mbus_cfg);
--	if (is_csi2) {
--		/*
--		 * NOTE! It seems the virtual channels from the mipi csi-2
--		 * receiver are used only for routing by the video mux's,
--		 * or for hard-wired routing to the CSI's. Once the stream
--		 * enters the CSI's however, they are treated internally
--		 * in the IPU as virtual channel 0.
--		 */
--		ipu_csi_set_mipi_datatype(priv->csi, 0,
--					  &priv->format_mbus[CSI_SINK_PAD]);
--	}
--
--	/* select either parallel or MIPI-CSI2 as input to CSI */
--	ipu_set_csi_src_mux(priv->ipu, priv->csi_id, is_csi2);
--
--	mutex_unlock(&priv->lock);
- 	return ret;
- }
- 
--- 
-2.53.0
-
+ 		wmt_evt_funcc = (struct btmtk_hci_wmt_evt_funcc *)wmt_evt;
 
 
