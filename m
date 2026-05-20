@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746F53D75DA;
-	Wed, 20 May 2026 17:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8DA36A36A;
+	Wed, 20 May 2026 17:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298029; cv=none; b=Bw+DG0zsqf9FkbdlGPQ9othwVyyFrv+CFjHia+/sysnm2dPWuk4mDODPrQ/ESrcSwOdiMv74I3jTJ7loqEBB6oWje8PYYuxHBr6AL0Od2V+/bGMGjN5T3jtditcJuaWossEK0AncwnLlgM+/7mhDEXsvbggpAoqv9GNZr620QBs=
+	t=1779298031; cv=none; b=rm184FrRM8efeIUfn0aYbJbfBISQK2yCSDuKdT8BkMPcrV7/lKjQoSlX0wMKTg4yuMJUJriM200t7s+mJZeuFy8vTGNY1Pme+ETDoLAvZw/Zw/jHSryWkjCwA9dIbOnVZHJCXAc+dI7cjkkXyT+47Ffz3LjBIvfuW4tzMUjxSok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298029; c=relaxed/simple;
-	bh=6lTilhFJUACOG1QW5K/hsvHR7TEcC8dVe2GhORPYvyo=;
+	s=arc-20240116; t=1779298031; c=relaxed/simple;
+	bh=qxHRYBSsM8alJHtak0KtnkwbHAzZyjWYtYJXeH3Pgcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GHlREopQ/0dSZzhTbgcnVimsOUMD0/+QWBlYui3lbZ0OC9WGn+sgmplAVxC7vH696J1GI5THb1Nnv7uo0bqgLy1FsStk+P3Pqz5TEap+EJhrTMKoOieqRXL682zKScdoa1S5nno5lEtPMy4L8cL8o/B3aPJCDWOJ0fRuqm+xoFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PyIRE4I3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h2aT7TdBqK7K1aTb63961wf/FZVisHDZst0kNr0SK8Qi8k2LoBl7YaLOfwgvhNR3ESm/2S7z3kP9I1x2AB/KVicHnwbPXIwFCWXDUFyhsNWuIkJkiG2cbQe80Z16zOwJCzE1ICp85RPXxdOYrOMaRQNUdODF5CSBINYHNRYrE28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xA/ezMGZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PyIRE4I3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E101F000E9;
-	Wed, 20 May 2026 17:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xA/ezMGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1E91F000E9;
+	Wed, 20 May 2026 17:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298028;
-	bh=IDirwOMY8xXSKlqWzIU4d6EtxpFGW9P8n5ZwszIllbY=;
+	s=korg; t=1779298030;
+	bh=CX3FcvWLjdTPQ3BCdnFDwDdJ+c/kH9kyqmekbtssWNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PyIRE4I3UEXyNXN0FdMmta4xf1OSz9miRS9P8QzeOR2hT5booyg1qHZUQXecM6fsy
-	 US/ucQYLZQHaNbqhblzy+KVnPpcDjDfjXeAxpwtNUyl/nyh2jg+TIF72BRjpXLnrAp
-	 W0SWoKnFdsA3rpRW0bXx1Cqe/qTKOPHhBv0qczQg=
+	b=xA/ezMGZdMnQPzCbgIToaDzwSRmR8FcQIFBSVw/D9qK3bzmuvGiRKglx30XmtaATL
+	 o4fyu9+kTV6nWRjtJp3yA6ojbn8hKdq7Z3iGgCuLREiXdve96/cfMiL3/k/cpfY97s
+	 ZSMFYAGflaX/aUsCxq62s0PO+qKCpcaeD2wh9nzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenkai Lin <linwenkai6@hisilicon.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	David Carlier <devnexen@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 254/957] crypto: hisilicon/sec2 - prevent req used-after-free for sec
-Date: Wed, 20 May 2026 18:12:17 +0200
-Message-ID: <20260520162140.051933147@linuxfoundation.org>
+Subject: [PATCH 6.18 219/957] selftests/sched_ext: Add missing error check for exit__load()
+Date: Wed, 20 May 2026 18:11:42 +0200
+Message-ID: <20260520162139.291211195@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,39 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenkai Lin <linwenkai6@hisilicon.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 67b53a660e6bf0da2fa8d8872e897a14d8059eaf ]
+[ Upstream commit 1d02346fec8d13b05e54296ddc6ae29b7e1067df ]
 
-During packet transmission, if the system is under heavy load,
-the hardware might complete processing the packet and free the
-request memory (req) before the transmission function finishes.
-If the software subsequently accesses this req, a use-after-free
-error will occur. The qp_ctx memory exists throughout the packet
-sending process, so replace the req with the qp_ctx.
+exit__load(skel) was called without checking its return value.
+Every other test in the suite wraps the load call with
+SCX_FAIL_IF(). Add the missing check to be consistent with the
+rest of the test suite.
 
-Fixes: f0ae287c5045 ("crypto: hisilicon/sec2 - implement full backlog mode for sec")
-Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: a5db7817af78 ("sched_ext: Add selftests")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 2 +-
+ tools/testing/selftests/sched_ext/exit.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index c462b58d30343..2d0b248c59ebd 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -230,7 +230,7 @@ static int qp_send_message(struct sec_req *req)
- 
- 	spin_unlock_bh(&qp_ctx->req_lock);
- 
--	atomic64_inc(&req->ctx->sec->debug.dfx.send_cnt);
-+	atomic64_inc(&qp_ctx->ctx->sec->debug.dfx.send_cnt);
- 	return -EINPROGRESS;
- }
- 
+diff --git a/tools/testing/selftests/sched_ext/exit.c b/tools/testing/selftests/sched_ext/exit.c
+index ee25824b1cbe6..b987611789d16 100644
+--- a/tools/testing/selftests/sched_ext/exit.c
++++ b/tools/testing/selftests/sched_ext/exit.c
+@@ -33,7 +33,7 @@ static enum scx_test_status run(void *ctx)
+ 		skel = exit__open();
+ 		SCX_ENUM_INIT(skel);
+ 		skel->rodata->exit_point = tc;
+-		exit__load(skel);
++		SCX_FAIL_IF(exit__load(skel), "Failed to load skel");
+ 		link = bpf_map__attach_struct_ops(skel->maps.exit_ops);
+ 		if (!link) {
+ 			SCX_ERR("Failed to attach scheduler");
 -- 
 2.53.0
 
