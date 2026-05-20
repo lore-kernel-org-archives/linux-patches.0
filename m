@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CC83F23D9;
-	Wed, 20 May 2026 16:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F82F3F7884;
+	Wed, 20 May 2026 16:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295247; cv=none; b=tIUqhHMTV1mjeJr3nmZynGrdVVy4wg+WLJmlx6HerB6Su8KeErfSoGFEBEttsKl5ZIfw/kKpv495OKmPUjwFYdHw9v4fHDWn0njRJ+ac8bijd9l+EXIw6di5HMnb/eUbFLTsmaBezGUCKxHfxBQo7a8ZJunQj8Bbp5/jwKEWiOs=
+	t=1779295250; cv=none; b=R8jZM+re+W28T3MpaRxsK+p2K4hqgsIvqygbiFagzSqaOgVylFf99MVkGKAXcBKY0vP5c/o6fT/JS/rO4MfSjhXv6BMIrBXGVfdCi0mWh/YKkELU7GP8XsxlMCPb2qO6x694GWZfIfcodtIILS2h2BSaYoUPGu4ofXm7ne+4rNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295247; c=relaxed/simple;
-	bh=tolPyuDMUUwxPRw6na+FFrmWlLdolsiK+Ee3F+awOTk=;
+	s=arc-20240116; t=1779295250; c=relaxed/simple;
+	bh=UhjtGArI0vnLgqKMDzmpV0cum73ynWraGi5ndqEVqHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iILgTIz59PbdLo37/Qc0ZtcRXD3G4JS669Se0xEOjWF8zUvm/U572k/Y7HbA9gbkG8A0UUe8/h2eyR3q2sjp/1kJGH0gF8OogyCUvX7i2QIdlvD23Opcxdyf357oa4fOXquZ279LgBbQRzhJUhJOOU0m5MQM9xkPrecbXlYO7Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jNrz8kZp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kd6+jrF3jpeDcatr/XO9a5GiBj4pMVRr4nh1N/Kyrz8d8zKHyJlPG/2IjVH5NifVVJVy7iiBhk6eoMq/MFlPtuAA5Y2YOKWlfpReu9Phv0xqqIuRbeOatKw9xhbOEJePb5+0c0n4RV0FYCKAZBjQZrZ/e9PZaQiE8BW7Z5k8eCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/XsTZF8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jNrz8kZp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084381F000E9;
-	Wed, 20 May 2026 16:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/XsTZF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A458D1F00893;
+	Wed, 20 May 2026 16:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295245;
-	bh=zKmBitMb+wQnlT4Jsg6YNyzwQ5xgOn7NbvyQ2RtC+Bc=;
+	s=korg; t=1779295248;
+	bh=o16cjMQgYyuZiREbMJTmDhpaYdH1q5XmaBtSFabe4Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jNrz8kZplcWWVCTSRvv7lwl88LkTBx14smKsqzE+rpU0xm0P3liqiRtQ2ZzrPkpAu
-	 gHuJYLwNSPm4MrkSaVnW9F1MSJnCmQUW5cLPJxz8r9QCy6PIxSztGa2rd0lDio0gym
-	 1oxWRZIuNBdlCZEVT3rAFwnKjOo3KXFpJhAyA9Ms=
+	b=u/XsTZF8ytdYFVcETF0AOf7+xT47/e8hnUOSl6vgkEYLv1yYIZ/xbcQjqjapHkSBc
+	 FNweDBukSLs14bz1i5EcHIOMLoAnzxMGS5AxfxhCX37zy7Qpc14+Pm1unXE76Ws9fz
+	 HQ6Smjb2y4FXArOAP0JU1s2+3TA3fKlI85tpW+Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuyi Zhou <zhouchuyi@bytedance.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Robby Cai <robby.cai@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0306/1146] padata: Remove cpu online check from cpu add and removal
-Date: Wed, 20 May 2026 18:09:16 +0200
-Message-ID: <20260520162155.131801673@linuxfoundation.org>
+Subject: [PATCH 7.0 0297/1146] regulator: fp9931: Fix handling of mandatory "vin" supply
+Date: Wed, 20 May 2026 18:09:07 +0200
+Message-ID: <20260520162154.933815696@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,77 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuyi Zhou <zhouchuyi@bytedance.com>
+From: Robby Cai <robby.cai@nxp.com>
 
-[ Upstream commit 73117ea6470dca787f70f33c001f9faf437a1c0b ]
+[ Upstream commit 58068932402c7f5bf26489e01ae8e8bb89802d1e ]
 
-During the CPU offline process, the dying CPU is cleared from the
-cpu_online_mask in takedown_cpu(). After this step, various CPUHP_*_DEAD
-callbacks are executed to perform cleanup jobs for the dead CPU, so this
-cpu online check in padata_cpu_dead() is unnecessary.
+The FP9931 requires a mandatory "vin" power supply to operate.
+Replace devm_regulator_get_optional() with devm_regulator_get() to
+enforce this mandatory dependency.
 
-Similarly, when executing padata_cpu_online() during the
-CPUHP_AP_ONLINE_DYN phase, the CPU has already been set in the
-cpu_online_mask, the action even occurs earlier than the
-CPUHP_AP_ONLINE_IDLE stage.
-
-Remove this unnecessary cpu online check in __padata_add_cpu() and
-__padata_remove_cpu().
-
-Signed-off-by: Chuyi Zhou <zhouchuyi@bytedance.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: c8c4a2972f83 ("padata: Put CPU offline callback in ONLINE section to allow failure")
+Fixes: 12d821bd13d42 ("regulator: Add FP9931/JD9930 driver")
+Signed-off-by: Robby Cai <robby.cai@nxp.com>
+Link: https://patch.msgid.link/20260313133102.2749890-3-robby.cai@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 26 ++++++++------------------
- 1 file changed, 8 insertions(+), 18 deletions(-)
+ drivers/regulator/fp9931.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index 8657e6e0c224a..9e7cfa5ed55bc 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -732,32 +732,22 @@ EXPORT_SYMBOL(padata_set_cpumask);
+diff --git a/drivers/regulator/fp9931.c b/drivers/regulator/fp9931.c
+index abea3b69d8a08..002b41f53eff8 100644
+--- a/drivers/regulator/fp9931.c
++++ b/drivers/regulator/fp9931.c
+@@ -446,7 +446,7 @@ static int fp9931_probe(struct i2c_client *client)
+ 		return dev_err_probe(&client->dev, PTR_ERR(data->regmap),
+ 				     "failed to allocate regmap!\n");
  
- static int __padata_add_cpu(struct padata_instance *pinst, int cpu)
- {
--	int err = 0;
--
--	if (cpumask_test_cpu(cpu, cpu_online_mask)) {
--		err = padata_replace(pinst);
-+	int err = padata_replace(pinst);
- 
--		if (padata_validate_cpumask(pinst, pinst->cpumask.pcpu) &&
--		    padata_validate_cpumask(pinst, pinst->cpumask.cbcpu))
--			__padata_start(pinst);
--	}
-+	if (padata_validate_cpumask(pinst, pinst->cpumask.pcpu) &&
-+	    padata_validate_cpumask(pinst, pinst->cpumask.cbcpu))
-+		__padata_start(pinst);
- 
- 	return err;
- }
- 
- static int __padata_remove_cpu(struct padata_instance *pinst, int cpu)
- {
--	int err = 0;
--
--	if (!cpumask_test_cpu(cpu, cpu_online_mask)) {
--		if (!padata_validate_cpumask(pinst, pinst->cpumask.pcpu) ||
--		    !padata_validate_cpumask(pinst, pinst->cpumask.cbcpu))
--			__padata_stop(pinst);
--
--		err = padata_replace(pinst);
--	}
-+	if (!padata_validate_cpumask(pinst, pinst->cpumask.pcpu) ||
-+	    !padata_validate_cpumask(pinst, pinst->cpumask.cbcpu))
-+		__padata_stop(pinst);
- 
--	return err;
-+	return padata_replace(pinst);
- }
- 
- static inline int pinst_has_cpu(struct padata_instance *pinst, int cpu)
+-	data->vin_reg = devm_regulator_get_optional(&client->dev, "vin");
++	data->vin_reg = devm_regulator_get(&client->dev, "vin");
+ 	if (IS_ERR(data->vin_reg))
+ 		return dev_err_probe(&client->dev, PTR_ERR(data->vin_reg),
+ 				     "failed to get vin regulator\n");
 -- 
 2.53.0
 
