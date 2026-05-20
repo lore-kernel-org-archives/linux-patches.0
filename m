@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82D93F58D6;
-	Wed, 20 May 2026 18:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AE83EAC82;
+	Wed, 20 May 2026 18:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300428; cv=none; b=kxJ2Z7Dv5xeOrdB1WVTX9LxSwcjWPmq6cq7sYZBXd3lmIRlnMomB5ufkAuDgJFzVop41UQBGiaaY3ahSQN10uIxYO/upY8c5FgrCoGch9XKyc6nO0UD3N1q4h22omZq17LgSYCzuigdkzrGNYuGscaJwHu887N5UMqnTgac5Va4=
+	t=1779300431; cv=none; b=Tvjs9m0O2rQgbkUbrMz+g1w/sHHKn2v8VL6hOO24QqfYkCsnLQ29sssBTV+Br2UbhVtioRhujWnW1iRHozR+bCp2FNmRKjsfiLwRvywUpksayuV2GLuBPhOMfNXs1I6dyXwP9ovDYW5foyCGAAesa0BwVu1shySZe2wlQ6yFPeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300428; c=relaxed/simple;
-	bh=sa8QYCSi470vYglnrL7va3lXifgUNya5uNmKpCCQ1Rc=;
+	s=arc-20240116; t=1779300431; c=relaxed/simple;
+	bh=ybetXSr5sxW237+j86bPRJzJ/Ab7uv0brKnar+yzebI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWMLfLjUetVT86nAViQQE/3iC8Oy9vC2ytcjIxa2+E++LWhfAtB33Mzr9m9ylh196LFCRrCzEgHr8IVFPfyvIu/LI20yyn9GLWZVjG0p314gfOJc0q93n2yB8Wr0bhQnJ00h7LZBhfGKS9epl0USL2+jXMPIg61RFfBoYPkHDhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spwpyp3D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VOW3eNynWFDsm4TxSq1MI7+dOr+CdEkhxeNNve26U5AfB7tJSgduPpyHhiaUcWqbdMjpKpxrsLU4kV/PFUqGomqHZ0HVdREdvFSOb5/g9CmbkXazrwCYG+QLi518kaB7J87/kMwu5hZAWKn03JgFJZ6hpVuckaBtChvw5fcBcss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w45knjnt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spwpyp3D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399961F000E9;
-	Wed, 20 May 2026 18:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w45knjnt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B781F000E9;
+	Wed, 20 May 2026 18:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300427;
-	bh=KItrRBqLVTEVThbBvmKToR5UCeBnd/wp3QxDZMp//HA=;
+	s=korg; t=1779300430;
+	bh=YOpLNBTI6g5RhMi9rZQ4x/Uw8+wSgJihYdxH44O7O5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=spwpyp3D0c3g+RsCTy4BO1RNlbAJ4ybUw1SmTwHmglku/Y14AkKaG/ri8p+uR59LK
-	 h6APGWN3HuYzVfaX9DkaY5hfLdrtcYU9lcWgNU1pRP23LhvXXM5sK3NqYeS3D4c9H+
-	 zOk4QUhsGJQl04WXnpsY1rBmzIfNnfRZxdrdBeyE=
+	b=w45knjnt0zCWo2m9jbh/3AG8sjPjU0TIBlgluNMDLvfcD3eSP1q7rtp/N5YSxG0HS
+	 dqN0aV11zYqcGkcVFEIFWLC/TkJHxClkByP7fTwV5v+7odRg8Bebnl982H3MLMNSsb
+	 Bb/34e4uxlJwEYl0hLL+Qa8rExZl9fGWkJd0VYqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ian Ray <ian.ray@gehealthcare.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 164/666] spi: hisi-kunpeng: prevent infinite while() loop in hisi_spi_flush_fifo
-Date: Wed, 20 May 2026 18:16:15 +0200
-Message-ID: <20260520162114.761559782@linuxfoundation.org>
+Subject: [PATCH 6.12 173/666] drm/panel: simple: Correct G190EAN01 prepare timing
+Date: Wed, 20 May 2026 18:16:24 +0200
+Message-ID: <20260520162114.952684628@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,52 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 9f61daf2c2debe9f5cf4e1a4471e56a89a6fe45a ]
+[ Upstream commit f1080f82570b797598c1ba7e9c800ae9e94aafc6 ]
 
-The hisi_spi_flush_fifo()'s inner while loop that lacks any timeout
-mechanism. Maybe the hardware never becomes empty, the loop will spin
-forever, causing the CPU to hang.
+The prepare timing specified by the G190EAN01 datasheet should be
+between 30 and 50 ms. Considering it might take some time for the
+LVDS encoder to enable the signal, we should only wait the min.
+required time in the panel driver and not the max. allowed time.
 
-Fix this by adding a inner_limit based on loops_per_jiffy. The inner loop
-now exits after approximately one jiffy if the FIFO remains non-empty, logs
-a ratelimited warning, and breaks out of the outer loop. Additionally, add
-a cpu_relax() inside the busy loop to improve power efficiency.
-
-Fixes: c770d8631e18 ("spi: Add HiSilicon SPI Controller Driver for Kunpeng SoCs")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://patch.msgid.link/d834ce28172886bfaeb9c8ca00cfd9bf1c65d5a1.1773889292.git.xiaopei01@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2f7b832fc992 ("drm/panel: simple: Add support for AUO G190EAN01 panel")
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260217142528.68613-1-ian.ray@gehealthcare.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-hisi-kunpeng.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-simple.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
-index f0a50f40a3ba1..77526f7940688 100644
---- a/drivers/spi/spi-hisi-kunpeng.c
-+++ b/drivers/spi/spi-hisi-kunpeng.c
-@@ -196,8 +196,18 @@ static void hisi_spi_flush_fifo(struct hisi_spi *hs)
- 	unsigned long limit = loops_per_jiffy << 1;
- 
- 	do {
--		while (hisi_spi_rx_not_empty(hs))
-+		unsigned long inner_limit = loops_per_jiffy;
-+
-+		while (hisi_spi_rx_not_empty(hs) && --inner_limit) {
- 			readl(hs->regs + HISI_SPI_DOUT);
-+			cpu_relax();
-+		}
-+
-+		if (!inner_limit) {
-+			dev_warn_ratelimited(hs->dev, "RX FIFO flush timeout\n");
-+			break;
-+		}
-+
- 	} while (hisi_spi_busy(hs) && limit--);
- }
- 
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 32d876f6684e2..a0e2da2953768 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -1260,7 +1260,7 @@ static const struct panel_desc auo_g190ean01 = {
+ 		.height = 301,
+ 	},
+ 	.delay = {
+-		.prepare = 50,
++		.prepare = 30,
+ 		.enable = 200,
+ 		.disable = 110,
+ 		.unprepare = 1000,
 -- 
 2.53.0
 
