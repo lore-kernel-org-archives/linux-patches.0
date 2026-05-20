@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17D43E120E;
-	Wed, 20 May 2026 16:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD65A3E120E;
+	Wed, 20 May 2026 16:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294433; cv=none; b=Ig1L8wkvkdU6v1N5HlD5sBX+TjeedLIfynbQXGqIPvkFdBzH3usGy3m8DQF6oklvifEqpnI+I6eKYT9HDtutXCoERF348dCRGw9TRfdrOAOX43HeGN0ZmTLDMk2nRGt/jpzbfvEdynqdK1KInFoM9iGJJHSbtEEU6XXNc4ktnpg=
+	t=1779294437; cv=none; b=CUqOra7aI6zg5qM+pLtIobs6WdMd6wQF4KkwNAwolHS4WF40e8l82xaQe7x4rQcPF+T41BpC8403GQYjjS5EMGVWLiQol6LyAFmjkyJxcvp7+1Rfe2bcgpr3VT/XJ/CjKDNpH5xZ1E3hyCRKNDkk5jhc9806LL3wQ/N1mVfa/a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294433; c=relaxed/simple;
-	bh=b3Ejh19jUAzqqLQ/Alhu5hb3UbHTQg3JneC+hYrWfbo=;
+	s=arc-20240116; t=1779294437; c=relaxed/simple;
+	bh=/Dv7dwc7GR8sN+9XzzSx6igoGLyMdtfpT6F3EwKR7cg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XTkipB6gr3iIv0eqDiBtmsI8sePcQVtuyXvefOaXn5aSQTeQC9x6LMqpJSWqCo+HGXaSksGtHbcre9FsAy3N6KJ24d62woQDFY6ypNC3x+pp5kA3RI9o+/XWgk7Arkhllkv5mXK2oLl80jSYPU/dbJq5wFNF80o+xjxS6tvzLEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMD5n9rf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dxv1jkRA5XNZoCTw7jQyDEbfAsxW/yGBWz8mAw4rIXDwInD2jyRPzaG6TwQvgI7AIMKMaRjxS71d5l9lla7iH5cZ8y4z/BLiXX+CLLFN+gnqo6JVROwrYJeiH9czWl+5VnSK2ogjl6/VYpLb4VI2aC3H7Fe8v/CEZ0VGqYSGxrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISNEO8os; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMD5n9rf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC9B1F00898;
-	Wed, 20 May 2026 16:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISNEO8os"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BA11F00898;
+	Wed, 20 May 2026 16:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294431;
-	bh=EmiD+vczLu10SQuKF1DbsdnbKGO03++CN84ZsSUWYm0=;
+	s=korg; t=1779294434;
+	bh=fTqCRrbYgG2EVFlxdJt2bxDL8xKr8YTpn6lzP2Va7AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NMD5n9rfsv7IhA6TAgXQMhF28Ew2THMQKAMmU1ChQgzjesLUZUlfWfe//LZmg7LRk
-	 KlxmV/8REXBqAZT0g1sBgif+J1CpySK8KRtKXBhX6U+o6ZPHmAPD2M4CznGMKaYO2r
-	 JP+vEb6oKhBJtPX+A7VivYcvBSfVr0WX/INrsKT8=
+	b=ISNEO8osPcgyowd/D+zu97oyb/clX5BlhzTtu+EgRONYZC6XINoRN/8QBkvUBtbX9
+	 t1lLWjMM1r44yGQLw3X8r/ZAw9vnqgMo0xepENZHNOg7ENRGu4/e3GQNeVvYne0Jn7
+	 gHpP9tBJ4qrK9YijOg6QgSdRBCxFRQFSr8mn8Rcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Ni <xni@redhat.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0005/1146] md/raid1: fix the comparing region of interval tree
-Date: Wed, 20 May 2026 18:04:15 +0200
-Message-ID: <20260520162148.516529317@linuxfoundation.org>
+Subject: [PATCH 7.0 0006/1146] fs: fix archiecture-specific compat_ftruncate64
+Date: Wed, 20 May 2026 18:04:16 +0200
+Message-ID: <20260520162148.538361617@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,48 +52,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Ni <xni@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit de3544d2e5ea99064498de3c21ba490155864657 ]
+[ Upstream commit e43dce8a0bc09083ea1145a1a0c61d83cbe72d97 ]
 
-Interval tree uses [start, end] as a region which stores in the tree.
-In raid1, it uses the wrong end value. For example:
-bio(A,B) is too big and needs to be split to bio1(A,C-1), bio2(C,B).
-The region of bio1 is [A,C] and the region of bio2 is [C,B]. So bio1 and
-bio2 overlap which is not right.
+The "small" argument to do_sys_ftruncate indicates if > 32-bit size
+should be reject, but all the arch-specific compat ftruncate64
+implementations get this wrong.  Merge do_sys_ftruncate and
+ksys_ftruncate, replace the integer as boolean small flag with a
+descriptive one about LFS semantics, and use it correctly in the
+architecture-specific ftruncate64 implementations.
 
-Fix this problem by using right end value of the region.
-
-Fixes: d0d2d8ba0494 ("md/raid1: introduce wait_for_serialization")
-Signed-off-by: Xiao Ni <xni@redhat.com>
-Link: https://lore.kernel.org/linux-raid/20260305011839.5118-2-xni@redhat.com/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 3dd681d944f6 ("arm64: 32-bit (compat) applications support")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260323070205.2939118-2-hch@lst.de
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/sys32.c       |  2 +-
+ arch/mips/kernel/linux32.c      |  2 +-
+ arch/parisc/kernel/sys_parisc.c |  4 ++--
+ arch/powerpc/kernel/sys_ppc32.c |  2 +-
+ arch/sparc/kernel/sys_sparc32.c |  2 +-
+ arch/x86/kernel/sys_ia32.c      |  3 ++-
+ fs/internal.h                   |  1 -
+ fs/open.c                       | 12 ++++++------
+ include/linux/syscalls.h        |  8 ++------
+ 9 files changed, 16 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 181400e147c0d..be2565dee4202 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -62,7 +62,7 @@ static int check_and_add_serial(struct md_rdev *rdev, struct r1bio *r1_bio,
- 	unsigned long flags;
- 	int ret = 0;
- 	sector_t lo = r1_bio->sector;
--	sector_t hi = lo + r1_bio->sectors;
-+	sector_t hi = lo + r1_bio->sectors - 1;
- 	struct serial_in_rdev *serial = &rdev->serial[idx];
+diff --git a/arch/arm64/kernel/sys32.c b/arch/arm64/kernel/sys32.c
+index 96bcfb9074430..12a948f3a5043 100644
+--- a/arch/arm64/kernel/sys32.c
++++ b/arch/arm64/kernel/sys32.c
+@@ -89,7 +89,7 @@ COMPAT_SYSCALL_DEFINE4(aarch32_truncate64, const char __user *, pathname,
+ COMPAT_SYSCALL_DEFINE4(aarch32_ftruncate64, unsigned int, fd, u32, __pad,
+ 		       arg_u32p(length))
+ {
+-	return ksys_ftruncate(fd, arg_u64(length));
++	return ksys_ftruncate(fd, arg_u64(length), FTRUNCATE_LFS);
+ }
  
- 	spin_lock_irqsave(&serial->serial_lock, flags);
-@@ -452,7 +452,7 @@ static void raid1_end_write_request(struct bio *bio)
- 	int mirror = find_bio_disk(r1_bio, bio);
- 	struct md_rdev *rdev = conf->mirrors[mirror].rdev;
- 	sector_t lo = r1_bio->sector;
--	sector_t hi = r1_bio->sector + r1_bio->sectors;
-+	sector_t hi = r1_bio->sector + r1_bio->sectors - 1;
- 	bool ignore_error = !raid1_should_handle_error(bio) ||
- 		(bio->bi_status && bio_op(bio) == REQ_OP_DISCARD);
+ COMPAT_SYSCALL_DEFINE5(aarch32_readahead, int, fd, u32, __pad,
+diff --git a/arch/mips/kernel/linux32.c b/arch/mips/kernel/linux32.c
+index a0c0a7a654e94..fe9a787db5694 100644
+--- a/arch/mips/kernel/linux32.c
++++ b/arch/mips/kernel/linux32.c
+@@ -60,7 +60,7 @@ SYSCALL_DEFINE4(32_truncate64, const char __user *, path,
+ SYSCALL_DEFINE4(32_ftruncate64, unsigned long, fd, unsigned long, __dummy,
+ 	unsigned long, a2, unsigned long, a3)
+ {
+-	return ksys_ftruncate(fd, merge_64(a2, a3));
++	return ksys_ftruncate(fd, merge_64(a2, a3), FTRUNCATE_LFS);
+ }
+ 
+ SYSCALL_DEFINE5(32_llseek, unsigned int, fd, unsigned int, offset_high,
+diff --git a/arch/parisc/kernel/sys_parisc.c b/arch/parisc/kernel/sys_parisc.c
+index b2cdbb8a12b16..fcb0d80691392 100644
+--- a/arch/parisc/kernel/sys_parisc.c
++++ b/arch/parisc/kernel/sys_parisc.c
+@@ -216,7 +216,7 @@ asmlinkage long parisc_truncate64(const char __user * path,
+ asmlinkage long parisc_ftruncate64(unsigned int fd,
+ 					unsigned int high, unsigned int low)
+ {
+-	return ksys_ftruncate(fd, (long)high << 32 | low);
++	return ksys_ftruncate(fd, (long)high << 32 | low, FTRUNCATE_LFS);
+ }
+ 
+ /* stubs for the benefit of the syscall_table since truncate64 and truncate 
+@@ -227,7 +227,7 @@ asmlinkage long sys_truncate64(const char __user * path, unsigned long length)
+ }
+ asmlinkage long sys_ftruncate64(unsigned int fd, unsigned long length)
+ {
+-	return ksys_ftruncate(fd, length);
++	return ksys_ftruncate(fd, length, FTRUNCATE_LFS);
+ }
+ asmlinkage long sys_fcntl64(unsigned int fd, unsigned int cmd, unsigned long arg)
+ {
+diff --git a/arch/powerpc/kernel/sys_ppc32.c b/arch/powerpc/kernel/sys_ppc32.c
+index d451a8229223a..03fa487f26147 100644
+--- a/arch/powerpc/kernel/sys_ppc32.c
++++ b/arch/powerpc/kernel/sys_ppc32.c
+@@ -101,7 +101,7 @@ PPC32_SYSCALL_DEFINE4(ppc_ftruncate64,
+ 		       unsigned int, fd, u32, reg4,
+ 		       unsigned long, len1, unsigned long, len2)
+ {
+-	return ksys_ftruncate(fd, merge_64(len1, len2));
++	return ksys_ftruncate(fd, merge_64(len1, len2), FTRUNCATE_LFS);
+ }
+ 
+ PPC32_SYSCALL_DEFINE6(ppc32_fadvise64,
+diff --git a/arch/sparc/kernel/sys_sparc32.c b/arch/sparc/kernel/sys_sparc32.c
+index f84a02ab6bf90..04432b82b9e3e 100644
+--- a/arch/sparc/kernel/sys_sparc32.c
++++ b/arch/sparc/kernel/sys_sparc32.c
+@@ -58,7 +58,7 @@ COMPAT_SYSCALL_DEFINE3(truncate64, const char __user *, path, u32, high, u32, lo
+ 
+ COMPAT_SYSCALL_DEFINE3(ftruncate64, unsigned int, fd, u32, high, u32, low)
+ {
+-	return ksys_ftruncate(fd, ((u64)high << 32) | low);
++	return ksys_ftruncate(fd, ((u64)high << 32) | low, FTRUNCATE_LFS);
+ }
+ 
+ static int cp_compat_stat64(struct kstat *stat,
+diff --git a/arch/x86/kernel/sys_ia32.c b/arch/x86/kernel/sys_ia32.c
+index 6cf65397d2257..610a1c2f45191 100644
+--- a/arch/x86/kernel/sys_ia32.c
++++ b/arch/x86/kernel/sys_ia32.c
+@@ -61,7 +61,8 @@ SYSCALL_DEFINE3(ia32_truncate64, const char __user *, filename,
+ SYSCALL_DEFINE3(ia32_ftruncate64, unsigned int, fd,
+ 		unsigned long, offset_low, unsigned long, offset_high)
+ {
+-	return ksys_ftruncate(fd, ((loff_t) offset_high << 32) | offset_low);
++	return ksys_ftruncate(fd, ((loff_t) offset_high << 32) | offset_low,
++			FTRUNCATE_LFS);
+ }
+ 
+ /* warning: next two assume little endian */
+diff --git a/fs/internal.h b/fs/internal.h
+index 77e90e4124e09..8c1f6c548dbfd 100644
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -200,7 +200,6 @@ extern int build_open_flags(const struct open_how *how, struct open_flags *op);
+ struct file *file_close_fd_locked(struct files_struct *files, unsigned fd);
+ 
+ int do_ftruncate(struct file *file, loff_t length, int small);
+-int do_sys_ftruncate(unsigned int fd, loff_t length, int small);
+ int chmod_common(const struct path *path, umode_t mode);
+ int do_fchownat(int dfd, const char __user *filename, uid_t user, gid_t group,
+ 		int flag);
+diff --git a/fs/open.c b/fs/open.c
+index 91f1139591abe..412d0d6fbaa75 100644
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -197,7 +197,7 @@ int do_ftruncate(struct file *file, loff_t length, int small)
+ 				   ATTR_MTIME | ATTR_CTIME, file);
+ }
+ 
+-int do_sys_ftruncate(unsigned int fd, loff_t length, int small)
++int ksys_ftruncate(unsigned int fd, loff_t length, unsigned int flags)
+ {
+ 	if (length < 0)
+ 		return -EINVAL;
+@@ -205,18 +205,18 @@ int do_sys_ftruncate(unsigned int fd, loff_t length, int small)
+ 	if (fd_empty(f))
+ 		return -EBADF;
+ 
+-	return do_ftruncate(fd_file(f), length, small);
++	return do_ftruncate(fd_file(f), length, !(flags & FTRUNCATE_LFS));
+ }
+ 
+ SYSCALL_DEFINE2(ftruncate, unsigned int, fd, off_t, length)
+ {
+-	return do_sys_ftruncate(fd, length, 1);
++	return ksys_ftruncate(fd, length, 0);
+ }
+ 
+ #ifdef CONFIG_COMPAT
+ COMPAT_SYSCALL_DEFINE2(ftruncate, unsigned int, fd, compat_off_t, length)
+ {
+-	return do_sys_ftruncate(fd, length, 1);
++	return ksys_ftruncate(fd, length, 0);
+ }
+ #endif
+ 
+@@ -229,7 +229,7 @@ SYSCALL_DEFINE2(truncate64, const char __user *, path, loff_t, length)
+ 
+ SYSCALL_DEFINE2(ftruncate64, unsigned int, fd, loff_t, length)
+ {
+-	return do_sys_ftruncate(fd, length, 0);
++	return ksys_ftruncate(fd, length, FTRUNCATE_LFS);
+ }
+ #endif /* BITS_PER_LONG == 32 */
+ 
+@@ -245,7 +245,7 @@ COMPAT_SYSCALL_DEFINE3(truncate64, const char __user *, pathname,
+ COMPAT_SYSCALL_DEFINE3(ftruncate64, unsigned int, fd,
+ 		       compat_arg_u64_dual(length))
+ {
+-	return ksys_ftruncate(fd, compat_arg_u64_glue(length));
++	return ksys_ftruncate(fd, compat_arg_u64_glue(length), FTRUNCATE_LFS);
+ }
+ #endif
+ 
+diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
+index 02bd6ddb62782..8787b3511c86c 100644
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -1283,12 +1283,8 @@ static inline long ksys_lchown(const char __user *filename, uid_t user,
+ 			     AT_SYMLINK_NOFOLLOW);
+ }
+ 
+-int do_sys_ftruncate(unsigned int fd, loff_t length, int small);
+-
+-static inline long ksys_ftruncate(unsigned int fd, loff_t length)
+-{
+-	return do_sys_ftruncate(fd, length, 1);
+-}
++#define FTRUNCATE_LFS	(1u << 0)	/* allow truncating > 32-bit */
++int ksys_ftruncate(unsigned int fd, loff_t length, unsigned int flags);
+ 
+ int do_sys_truncate(const char __user *pathname, loff_t length);
  
 -- 
 2.53.0
