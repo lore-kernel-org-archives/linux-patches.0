@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5203F44D0;
-	Wed, 20 May 2026 17:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEBA828DC4;
+	Wed, 20 May 2026 17:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297034; cv=none; b=jF05VY21Jtj0NL8g1DdH3nC3S1R8i6leMuvYPVTyLJUYvdCDoqurVkhd+BqRNP+dB+WGh9/XHSdDu697HhOQkogHNhAuObzPgxGvc0uJuZuh44Ru2Dmz7oSJ/6BVN0ZDdNvmUOP+sWye01k6Z0zAz4X18WMVaIaXoXcfSCAt4QQ=
+	t=1779297037; cv=none; b=UzVKrP2EVI8brBr5B2njPX4pXaEOKIe1LBNAdXRBp+Tz53jQojMgOdUJB7rakJaebZmFLTAonLQhxkT3UsIGlWTi52srTToQKNDt1KaWbZPXgLvRrlxY1jFMdDhX6k3ltjD+EtKJlpCQMW6UFlUcgnZdpxYHzB0Q5OvuQoBAoAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297034; c=relaxed/simple;
-	bh=1dcyuBDWAgkH60ONtql2+TOA1Ock+feNL1OE91RiXzY=;
+	s=arc-20240116; t=1779297037; c=relaxed/simple;
+	bh=qTDChCfsK9D/e61SlpOmj+Y7Dx5gWVV21WAH5EXUAEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNFrbHvfdO0pRMVfA2Y5PSf7zviIGdrNtt24oIj5g41atdau4VQwFehPh0OQ3/u9p+oheKIlnpmMAYk+7GGsmC7mfldXjvVCe2PdgUu+GTWJWOBCgJWSmPoj1h5NUputHDdQFkXKTjYbmNMFryOfHS31FCVeC8lTUdeyMWhA8eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOZG8Jjs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=V6y6Qorimgafal1SyEvctpfgzjfiR7HU9NfKItR7AyDBuAFaHvKqaxx08lnVoAyjyGUk7e2AbdirNt2qpQ/VZzpk+5Pm5LtvHEfc4Fcl92EYWpwVYGW162SiZK7wtGrVfNIIIKn5gDEanE+oSwJcAcUybqdnosinxIkOGMYWdmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiOJJC8f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOZG8Jjs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB5F1F000E9;
-	Wed, 20 May 2026 17:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiOJJC8f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FB01F000E9;
+	Wed, 20 May 2026 17:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297033;
-	bh=s8MPOW5TWZ1eXP4QVZNPZBCBAOz7eykI/tgBxQYsVpY=;
+	s=korg; t=1779297035;
+	bh=b7bLYnD/gxgByWTybJBoS51PSZSeuHEIq5B6nCbRvWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rOZG8Jjsvd2XNHlpX6J8fBg2NXCWeSTwZvjrA6TZ7lVA5awV+gzvlnrR6n7mfgYd9
-	 FIsU9J2aD1M31Apc3yIJ9zVselu68rj2TJOAK3BMwuJXtTr3IiaT85OJDZJ3AzLxwa
-	 0QlJybKueg1esjMshWmFfnCwJvTFM1OANZ+yoOfE=
+	b=wiOJJC8f7fUDKHq5JGHHuYqoplqNEeMAte0Ja8EQm/PJRokLGvY8oas1oYhjcCB31
+	 w6Mj82Hb3sxDdk/zZ14jJsYnFDL0Ww9SJnrqgk8I7LKyT6k1yRfV6Dw8Lga6Zk1gIa
+	 kVYSGvMMEheq9E40JGfPmPbMPDW15iQuKrGh1V54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Petr Oros <poros@redhat.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
 	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1025/1146] ice: fix infinite recursion in ice_cfg_tx_topo via ice_init_dev_hw
-Date: Wed, 20 May 2026 18:21:15 +0200
-Message-ID: <20260520162211.426484459@linuxfoundation.org>
+Subject: [PATCH 7.0 1026/1146] ice: fix missing SMA pin initialization in DPLL subsystem
+Date: Wed, 20 May 2026 18:21:16 +0200
+Message-ID: <20260520162211.448817000@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,6 +49,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
@@ -58,101 +58,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit 70ad216411e030f67b1743774e245601194aee6a ]
+[ Upstream commit 56a643aed0f0af5c29ebb4593d4917b78344dd48 ]
 
-On certain E810 configurations where firmware supports Tx scheduler
-topology switching (tx_sched_topo_comp_mode_en), ice_cfg_tx_topo()
-may need to apply a new 5-layer or 9-layer topology from the DDP
-package. If the AQ command to set the topology fails (e.g. due to
-invalid DDP data or firmware limitations), the global configuration
-lock must still be cleared via a CORER reset.
+The DPLL SMA/U.FL pin redesign introduced ice_dpll_sw_pin_frequency_get()
+which gates frequency reporting on the pin's active flag. This flag is
+determined by ice_dpll_sw_pins_update() from the PCA9575 GPIO expander
+state. Before the redesign, SMA pins were exposed as direct HW
+input/output pins and ice_dpll_frequency_get() returned the CGU
+frequency unconditionally — the PCA9575 state was never consulted.
 
-Commit 86aae43f21cf ("ice: don't leave device non-functional if Tx
-scheduler config fails") correctly fixed this by refactoring
-ice_cfg_tx_topo() to always trigger CORER after acquiring the global
-lock and re-initialize hardware via ice_init_hw() afterwards.
+The PCA9575 powers on with all outputs high, setting ICE_SMA1_DIR_EN,
+ICE_SMA1_TX_EN, ICE_SMA2_DIR_EN and ICE_SMA2_TX_EN. Nothing in the
+driver writes the register during initialization, so
+ice_dpll_sw_pins_update() sees all pins as inactive and
+ice_dpll_sw_pin_frequency_get() permanently returns 0 Hz for every
+SW pin.
 
-However, commit 8a37f9e2ff40 ("ice: move ice_deinit_dev() to the end
-of deinit paths") later moved ice_init_dev_hw() into ice_init_hw(),
-breaking the reinit path introduced by 86aae43f21cf. This creates an
-infinite recursive call chain:
+Fix this by writing a default SMA configuration in
+ice_dpll_init_info_sw_pins(): clear all SMA bits, then set SMA1 and
+SMA2 as active inputs (DIR_EN=0) with U.FL1 output and U.FL2 input
+disabled. Each SMA/U.FL pair shares a physical signal path so only
+one pin per pair can be active at a time. U.FL pins still report
+frequency 0 after this fix: U.FL1 (output-only) is disabled by
+ICE_SMA1_TX_EN which keeps the TX output buffer off, and U.FL2
+(input-only) is disabled by ICE_SMA2_UFL2_RX_DIS. They can be
+activated by changing the corresponding SMA pin direction via dpll
+netlink.
 
-  ice_init_hw()
-    ice_init_dev_hw()
-      ice_cfg_tx_topo()         # topology change needed
-        ice_deinit_hw()
-        ice_init_hw()           # reinit after CORER
-          ice_init_dev_hw()     # recurse
-            ice_cfg_tx_topo()
-              ...               # stack overflow
-
-Fix by moving ice_init_dev_hw() back out of ice_init_hw() and calling
-it explicitly from ice_probe() and ice_devlink_reinit_up(). The third
-caller, ice_cfg_tx_topo(), intentionally does not need ice_init_dev_hw()
-during its reinit, it only needs the core HW reinitialization. This
-breaks the recursion cleanly without adding flags or guards.
-
-The deinit ordering changes from commit 8a37f9e2ff40 ("ice: move
-ice_deinit_dev() to the end of deinit paths") which fixed slow rmmod
-are preserved, only the init-side placement of ice_init_dev_hw() is
-reverted.
-
-Fixes: 8a37f9e2ff40 ("ice: move ice_deinit_dev() to the end of deinit paths")
+Fixes: 2dd5d03c77e2 ("ice: redesign dpll sma/u.fl pins control")
 Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
 Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-6-cdcb48303fd8@intel.com
+Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-7-cdcb48303fd8@intel.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/devlink/devlink.c | 2 ++
- drivers/net/ethernet/intel/ice/ice_common.c      | 2 --
- drivers/net/ethernet/intel/ice/ice_main.c        | 2 ++
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_dpll.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/devlink/devlink.c b/drivers/net/ethernet/intel/ice/devlink/devlink.c
-index 6144cee8034d7..641d6e289d5ce 100644
---- a/drivers/net/ethernet/intel/ice/devlink/devlink.c
-+++ b/drivers/net/ethernet/intel/ice/devlink/devlink.c
-@@ -1245,6 +1245,8 @@ static int ice_devlink_reinit_up(struct ice_pf *pf)
- 		return err;
+diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
+index 62f75701d6520..498ec2c045f38 100644
+--- a/drivers/net/ethernet/intel/ice/ice_dpll.c
++++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
+@@ -4014,6 +4014,7 @@ static int ice_dpll_init_info_sw_pins(struct ice_pf *pf)
+ 	struct ice_dpll_pin *pin;
+ 	u32 phase_adj_max, caps;
+ 	int i, ret;
++	u8 data;
+ 
+ 	if (pf->hw.device_id == ICE_DEV_ID_E810C_QSFP)
+ 		input_idx_offset = ICE_E810_RCLK_PINS_NUM;
+@@ -4073,6 +4074,22 @@ static int ice_dpll_init_info_sw_pins(struct ice_pf *pf)
+ 		}
+ 		ice_dpll_phase_range_set(&pin->prop.phase_range, phase_adj_max);
  	}
- 
-+	ice_init_dev_hw(pf);
 +
- 	/* load MSI-X values */
- 	ice_set_min_max_msix(pf);
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
-index ce11fea122d03..b617a6bff8913 100644
---- a/drivers/net/ethernet/intel/ice/ice_common.c
-+++ b/drivers/net/ethernet/intel/ice/ice_common.c
-@@ -1126,8 +1126,6 @@ int ice_init_hw(struct ice_hw *hw)
- 	if (status)
- 		goto err_unroll_fltr_mgmt_struct;
- 
--	ice_init_dev_hw(hw->back);
--
- 	mutex_init(&hw->tnl_lock);
- 	ice_init_chk_recipe_reuse_support(hw);
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index ce3a0afe302d2..055968485af6c 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -5245,6 +5245,8 @@ ice_probe(struct pci_dev *pdev, const struct pci_device_id __always_unused *ent)
- 		return err;
- 	}
- 
-+	ice_init_dev_hw(pf);
++	/* Initialize the SMA control register to a known-good default state.
++	 * Without this write the PCA9575 GPIO expander retains its power-on
++	 * default (all outputs high) which makes all SW pins appear inactive.
++	 * Set SMA1 and SMA2 as active inputs, disable U.FL1 output and
++	 * U.FL2 input.
++	 */
++	ret = ice_read_sma_ctrl(&pf->hw, &data);
++	if (ret)
++		return ret;
++	data &= ~ICE_ALL_SMA_MASK;
++	data |= ICE_SMA1_TX_EN | ICE_SMA2_TX_EN | ICE_SMA2_UFL2_RX_DIS;
++	ret = ice_write_sma_ctrl(&pf->hw, data);
++	if (ret)
++		return ret;
 +
- 	adapter = ice_adapter_get(pdev);
- 	if (IS_ERR(adapter)) {
- 		err = PTR_ERR(adapter);
+ 	ret = ice_dpll_pin_state_update(pf, pin, ICE_DPLL_PIN_TYPE_SOFTWARE,
+ 					NULL);
+ 	if (ret)
 -- 
 2.53.0
 
