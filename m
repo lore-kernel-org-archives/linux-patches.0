@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5C13D5647;
-	Wed, 20 May 2026 18:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD54C33B97A;
+	Wed, 20 May 2026 18:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300789; cv=none; b=fAjnZSkl58Lw4f4VtH/k8m3ggET/ju/gE/zx8RldMwzQX+v03IA1bfm5oMLZSwbkTelHGMhk8mgRsorh2U2V+YdAMM2V4aIUjeft5sOkYlIaUlLzPBpIi1ktZ5dwu0cr7FWFxv/5OxRmuXc5ZbKJcLyx6owRpmlxNxPhQmFIbEU=
+	t=1779300791; cv=none; b=X0nphP0Mrdn0Tj7CH9jiDiZvnaKXQoAA5YkbleOp70+R1oAgmFiUdaU3zFtAbeuf6HiSGeVP0cN6XhwCT0Dc7kqkPuAf30pLPDS26SHOzSL+9McL8Az0ECZszk0cBMrNXiCg6qs9mzS6rnyrR1LSSv6FlxUJhYX9I4LaeRBMRGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300789; c=relaxed/simple;
-	bh=2A5Pt145JLoSPQSMxitasV0mdMv0bUyEt4hYt/zZU7U=;
+	s=arc-20240116; t=1779300791; c=relaxed/simple;
+	bh=7Doxv2gg7s4no+jIVfQsTb83/TNXX986jFmykH5uXE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICJJ0nvmoPVIrw4umO3Ahn5hscMt7pE/dNvkMqMdkNkuDG1uqFHr7WRYzYjUeqJdBynqCf1LiJrbMJWRm8wlRlDqt2yW8GiGMhZSpZuBg3rhCsY//t3HM5iro7O3Ez1/Droet9PNpvdJgA9RmDFhFIz2Mgx4RRbVz/yNK9RFObk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzbzvxC1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eIE5SQDZ2kfb85GsZoCEW3NqeRh2F8iWJgqzkefWhIi/dGnEx4AnuhLh8+MLOk6iO2pA7m3C9VTFaOd80a/6D5nFU7XnLazh7BrbNpw/FJYzi7G6OqKPY16suAEgNcVYHESmiXf55BZuFht/wxbohuQ5gcrJGMr6C200a99wnBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2q1fbT9b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzbzvxC1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BCA1F000E9;
-	Wed, 20 May 2026 18:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2q1fbT9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9CC1F000E9;
+	Wed, 20 May 2026 18:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300788;
-	bh=90DzSI+fivlVug/1MaaF9S3fVb1rML2NF+5riTXVBrk=;
+	s=korg; t=1779300790;
+	bh=1sBAwiANU/hjx1tHf4xmXFVLF9y6xsuN6yiFHRuDZ2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YzbzvxC1yoOLP+HuyCua7pEJvngsmm4ApK30NCaDigiFCYtU10UWjJUqD22+fEU09
-	 Mukp01gE5jCSb9E6g1qcdqPuYCktaW49eXiNfmwFQyphi+JxKaycar+lgAmGV5wfDK
-	 XV/BM64W7i6SahEso8N+qZCne6KFr1Pd3QnG/inM=
+	b=2q1fbT9bnWtnMjTyIQK9vpvt6QF3596VDCJZ1cOLizcWOEd37oAkqGiwtcbIJbbcz
+	 vQK6HzLOqqPQsaaYeaXM15CZD7fRF+wOaRvQA0ezwM98PEXp1mgcn85elq77zwZ+YB
+	 r0gbSgzBuWNBfQOFxsijnOV0djxtwiSMOp2/VebE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 309/666] soc: qcom: llcc: fix v1 SB syndrome register offset
-Date: Wed, 20 May 2026 18:18:40 +0200
-Message-ID: <20260520162117.918854862@linuxfoundation.org>
+Subject: [PATCH 6.12 310/666] soc: qcom: aoss: compare against normalized cooling state
+Date: Wed, 20 May 2026 18:18:41 +0200
+Message-ID: <20260520162117.941053301@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,41 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 24e7625df5ce065393249b78930781be593bc381 ]
+[ Upstream commit cd3c4670db3ffe997be9548c7a9db3952563cf14 ]
 
-The llcc_v1_edac_reg_offset table uses 0x2304c for trp_ecc_sb_err_syn0,
-which is inconsistent with the surrounding TRP ECC registers (0x2034x)
-and with llcc_v2_1_edac_reg_offset, where trp_ecc_sb_err_syn0 is 0x2034c
-adjacent to trp_ecc_error_status0/1 at 0x20344/0x20348.
+qmp_cdev_set_cur_state() normalizes the requested state to a boolean
+(cdev_state = !!state). The existing early-return check compares
+qmp_cdev->state == state, which can be wrong if state is non-boolean
+(any non-zero value). Compare qmp_cdev->state against cdev_state instead,
+so the check matches the effective state and avoids redundant updates.
 
-Use 0x2034c for llcc v1 so the SB syndrome register follows the expected
-+0x4 progression from trp_ecc_error_status1. This fixes EDAC reading the
-wrong register for SB syndrome reporting.
-
-Fixes: c13d7d261e36 ("soc: qcom: llcc: Pass LLCC version based register offsets to EDAC driver")
 Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Fixes: 05589b30b21a ("soc: qcom: Extend AOSS QMP driver to support resources that are used to wake up the SoC.")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260330095118.2657362-1-alok.a.tiwari@oracle.com
+Link: https://lore.kernel.org/r/20260329195333.1478090-1-alok.a.tiwari@oracle.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 2 +-
+ drivers/soc/qcom/qcom_aoss.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 0278e1854af06..5de1a72c077c3 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -2584,7 +2584,7 @@ static const struct llcc_slice_config x1e80100_data[] = {
- static const struct llcc_edac_reg_offset llcc_v1_edac_reg_offset = {
- 	.trp_ecc_error_status0 = 0x20344,
- 	.trp_ecc_error_status1 = 0x20348,
--	.trp_ecc_sb_err_syn0 = 0x2304c,
-+	.trp_ecc_sb_err_syn0 = 0x2034c,
- 	.trp_ecc_db_err_syn0 = 0x20370,
- 	.trp_ecc_error_cntr_clear = 0x20440,
- 	.trp_interrupt_0_status = 0x20480,
+diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+index 0320ad3b91483..d7cd449c57b69 100644
+--- a/drivers/soc/qcom/qcom_aoss.c
++++ b/drivers/soc/qcom/qcom_aoss.c
+@@ -354,7 +354,7 @@ static int qmp_cdev_set_cur_state(struct thermal_cooling_device *cdev,
+ 	/* Normalize state */
+ 	cdev_state = !!state;
+ 
+-	if (qmp_cdev->state == state)
++	if (qmp_cdev->state == cdev_state)
+ 		return 0;
+ 
+ 	ret = qmp_send(qmp_cdev->qmp, "{class: volt_flr, event:zero_temp, res:%s, value:%s}",
 -- 
 2.53.0
 
