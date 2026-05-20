@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA0130DEAC;
-	Wed, 20 May 2026 18:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792D43F660B;
+	Wed, 20 May 2026 18:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301873; cv=none; b=o/Mm0CJQ5YPi+TtjLbRQYhEwNc++Ikr4at95AYa2dI4VcvSijtc/wkK4sQWCW+JsgtMuzkVkWN14SxvvkE+suhyc28+973PPqxb52PxBTLYStndwu8G+hBfMSgK0ah+tYe/8xvmLTgjf/YUfgXP5fR4NQZ/95WWj5o4o/cZrsZ8=
+	t=1779301875; cv=none; b=geQdfErssxkdSclyDcu8SKg1yW0HGo85XAMi+FQ4O2XzsO/1OK2pORO50Bem7QJPXual7ghmgw0LvSV5nhIt9XIr5ZnofqzRvEX6o5ajd0sB8/SJIZHAL3XMwM4d+T8QIzyEMaYISK9/PqIGqEC5bwDpYs43Pbw8gKuKn9oB54w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301873; c=relaxed/simple;
-	bh=88V0wQJNfzii9bs1GjvwStnfEEy2F3UwtQoHCczoiiA=;
+	s=arc-20240116; t=1779301875; c=relaxed/simple;
+	bh=ctq6gEY4DQiMAkUS/rCMQ7nKA+y5xg1a3cxhSRQY170=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sv0lJ1YKtnAGPSbO0R4oBhacgWU8AP2mWiU24Rkvd++96vskvH7o7bsksFBsT6CWOWcMJN/9/7k9VILPKSe8eu8Br6s86AjFxpO1iVph+Ruc4QGYrCfjSQopEZ8Nwjhn8hMx6m6bjHSdcZhC3m960+AycvVCxvV+5ibffMF2qWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q49lAErD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E3qEIo4BZlvVqVJX7AAY3cKMySgxn7FHbb8qYgTsGiZxgeMMrbNlIyenl7msgavZX+zsmD9bmiaknlLhq7TiEXe+Xpw/f5PYQipKz1xfBg90NJ3zLLubavquB/w4zL4Ic07cSqhlV8tEOymCL/3iXn16cQ60GEjnOnkoQcPMA9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NB2Mertw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q49lAErD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2181F00898;
-	Wed, 20 May 2026 18:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NB2Mertw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF55C1F000E9;
+	Wed, 20 May 2026 18:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301871;
-	bh=M7qaXttPXA2c8FKeu6AX/B36BfFU+gux8TpAw7zFfWU=;
+	s=korg; t=1779301874;
+	bh=rlxNzf4Qll8DcIxf4koH85wB3gFBWiWDFq9D9YGl06w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q49lAErDyR3lPlx9dLOK0WfwzW5emyRcvDi+GdIyqW4w3QCEsq1WnXPnMlMBZK/d4
-	 GVls/3wI9K/K8nvfHVlwJWH1+mp0CwO6j8zGUnDOeqAsc6bPJIyIBELf9jZEV4wzQ6
-	 wQ88yvbTzVD8IW8GAVHAEeMGxhpXyIN2ae95Zkvg=
+	b=NB2MertwGn2/lArIkM5adksUUgmIWXWMfUJ43w/byW8bWLTt4of3hqetgDG6TOs1/
+	 YY6SAmnjPgXT6OMs4wAhHj53I8gJkANd3gxdi/Xu6mVkxWwYEB1yl8M/icsaHdVHZ5
+	 PlgVz4eqhAihgngdaBRbq9t1/Q0k4P6qwC7UX2O4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Haoyu Lu <hechushiguitu666@gmail.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
+	Wang Wensheng <wsw9603@163.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/508] ACPI: AGDI: fix missing newline in error message
-Date: Wed, 20 May 2026 18:17:55 +0200
-Message-ID: <20260520162059.724348370@linuxfoundation.org>
+Subject: [PATCH 6.6 053/508] arm64: kexec: Remove duplicate allocation for trans_pgd
+Date: Wed, 20 May 2026 18:17:56 +0200
+Message-ID: <20260520162059.747345629@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -53,38 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoyu Lu <hechushiguitu666@gmail.com>
+From: Wang Wensheng <wsw9603@163.com>
 
-[ Upstream commit b178330b67abb7293b6de28b2a49d49c83962db5 ]
+[ Upstream commit ee020bf6f14094c9ae434bb37e6957a1fdad513c ]
 
-Add the missing trailing newline to the dev_err() message
-printed when SDEI event registration fails.
+trans_pgd would be allocated in trans_pgd_create_copy(), so remove the
+duplicate allocation before calling trans_pgd_create_copy().
 
-This keeps the error output as a properly terminated log line.
-
-Fixes: a2a591fb76e6 ("ACPI: AGDI: Add driver for Arm Generic Diagnostic Dump and Reset device")
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Signed-off-by: Haoyu Lu <hechushiguitu666@gmail.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Fixes: 3744b5280e67 ("arm64: kexec: install a copy of the linear-map")
+Signed-off-by: Wang Wensheng <wsw9603@163.com>
+Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/arm64/agdi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/machine_kexec.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/acpi/arm64/agdi.c b/drivers/acpi/arm64/agdi.c
-index 8b3c7d42b41bc..419a9f6c0a827 100644
---- a/drivers/acpi/arm64/agdi.c
-+++ b/drivers/acpi/arm64/agdi.c
-@@ -32,7 +32,7 @@ static int agdi_sdei_probe(struct platform_device *pdev,
- 
- 	err = sdei_event_register(adata->sdei_event, agdi_sdei_handler, pdev);
- 	if (err) {
--		dev_err(&pdev->dev, "Failed to register for SDEI event %d",
-+		dev_err(&pdev->dev, "Failed to register for SDEI event %d\n",
- 			adata->sdei_event);
- 		return err;
+diff --git a/arch/arm64/kernel/machine_kexec.c b/arch/arm64/kernel/machine_kexec.c
+index 078910db77a41..9307a1421d67e 100644
+--- a/arch/arm64/kernel/machine_kexec.c
++++ b/arch/arm64/kernel/machine_kexec.c
+@@ -143,9 +143,6 @@ int machine_kexec_post_load(struct kimage *kimage)
  	}
+ 
+ 	/* Create a copy of the linear map */
+-	trans_pgd = kexec_page_alloc(kimage);
+-	if (!trans_pgd)
+-		return -ENOMEM;
+ 	rc = trans_pgd_create_copy(&info, &trans_pgd, PAGE_OFFSET, PAGE_END);
+ 	if (rc)
+ 		return rc;
 -- 
 2.53.0
 
