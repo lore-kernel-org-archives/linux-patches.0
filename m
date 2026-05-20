@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9077D363C79;
-	Wed, 20 May 2026 16:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8B5366566;
+	Wed, 20 May 2026 16:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294647; cv=none; b=DGfy/vByUrj/Xd5piEVhqGMvEVB+xWfbuzWfKRPRu/3QKuJxQplQR7fgSG6TRjWlMwxmg3MwbwQ5BNzQpQk+tYt0ULdQHhhOy/k3iymqi+9cXnlvoCLnWGzBwJ4FoZ1Rp1IDjTUh5tG/dIwffgyavXsRsKcoiepSlhTvecxvhA8=
+	t=1779294649; cv=none; b=q5SPttMf+l4Uy/5LufedCMCAT13ekpVREHg8y5Va4Vm7MWfH6nzp+4L+RR337A/O1M3HG4TE7vWNOgexQ6l+bOzEwgdqhNXZYi53YSYuhD0lEwLNHzEvcq8xOAvihgJz/eHzzlAO752yCmFZUtMPx7JL9H3m4qv6jRWhswW+e5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294647; c=relaxed/simple;
-	bh=5dHlVFmAsWhUObFIHTG6c3cRvtPck/mx+hcqY+a+/f4=;
+	s=arc-20240116; t=1779294649; c=relaxed/simple;
+	bh=o5oMFBQY/b+V96+0PMFYoxKlNxaXPdbqOCD0vtfCfpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r0BLLwUv1jYk6WmIZx0/HEuJQ/uMVzWEOOvOK7YoTkCENup0fRKyijI0ph5zTVu4M/1OvexFKP+BMF3HmdANzSu6nNgwqC1Eu3YoIEfSNcQSQH9KcJnfxr+PCQivNx85lfKGrqZNHRvPvGF3LwTtggarvOhH8KGkbNBUVHwTsxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgIPdk1U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=urPmbnHSs3LfvAiyR+v4dJDDi2AKyqmOMDrWmnLkoX9fGBoxI4wEcJllkIaccGUCHBV/BX7GYf7ApjxfZ1vZNKl2w94uVhMTHo90yPg4iqWXYlNIil8LdGVVRqgQJ9XuAT3Mf0Yt5gQR222OgLjIPrPsbBf62VWkg8mbbouz4BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfQ+pukT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgIPdk1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE271F000E9;
-	Wed, 20 May 2026 16:30:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfQ+pukT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 715771F000E9;
+	Wed, 20 May 2026 16:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294645;
-	bh=YEC2cCGRqxud9I2WqLJPaXue4xmCWTZbfRjg5uLoqa8=;
+	s=korg; t=1779294647;
+	bh=czQX1F/RYoQy4DjbfUhd/Z86MKv7wTs2Wj5qAtg0//0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RgIPdk1UvXZ0wghpXWnzQEnteNYE5ZRdARDhvQiQBeFVELwIZkhOkpVHAFIjr5fy+
-	 pBtYW1JKajf59Q2jcWyR/YHkQo4QiN1LgeG4BU5MZ5N0d1RwvXoHLHJyM7O1spaBd8
-	 5ex/fGFUNPbpHUdnnD1xQ8HdWIMr3fIr/aeAQD1k=
+	b=WfQ+pukTfnlVIlHpaxLftAWJIXgXktjlnkO97otNUuW6Jv1scC5OzwCQMY+xxY5XK
+	 gFtfcG5oz7u00Va7JcG6QX1TvbDhu1eJ6PLWxvxO5Pj8otpE1vXiCa8qpYvjem8/45
+	 K5am+xL/zBQtI1Yl+z0JRJJmhB55wyoo71tee26c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allen Ye <allen.ye@mediatek.com>,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	James Clark <james.clark@linaro.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Colton Lewis <coltonlewis@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0117/1146] wifi: mt76: fix backoff fields and max_power calculation
-Date: Wed, 20 May 2026 18:06:07 +0200
-Message-ID: <20260520162150.982375152@linuxfoundation.org>
+Subject: [PATCH 7.0 0118/1146] arm64: cpufeature: Make PMUVer and PerfMon unsigned
+Date: Wed, 20 May 2026 18:06:08 +0200
+Message-ID: <20260520162151.005193141@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,282 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allen Ye <allen.ye@mediatek.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 37d5b68ab57c5b4fb1c40e62c6b32376c6a2ca2c ]
+[ Upstream commit d1dcc20bcc40efe1f1c71639376c91dafa489222 ]
 
-The maximum power value may exist in either the data or backoff field.
-Previously, backoff power limits were not considered in txpower reporting.
-This patch ensures mt76 also considers backoff values in the SKU table.
+On the host, this change doesn't make a difference because the fields
+are defined as FTR_EXACT. However, KVM allows userspace to set these
+fields for a guest and overrides the type to be FTR_LOWER_SAFE. And
+while KVM used to do an unsigned comparison to validate that the new
+value is lower than what the hardware provides, since the linked commit
+it uses the generic sanitization framework which does a signed
+comparison.
 
-Also, each RU entry (RU26, RU52, RU106, BW20, ...) in the DTS corresponds
-to 10 stream combinations (1T1ss, 2T1ss, 3T1ss, 4T1ss, 2T2ss, 3T2ss,
-4T2ss, 3T3ss, 4T3ss, 4T4ss).
+Fix it by defining these fields as unsigned. In theory, without this
+fix, userspace could set a higher PMU version than the hardware supports
+by providing any value with the top bit set.
 
-For beamforming tables:
-- In connac2, beamforming entries for BW20~BW160, and OFDM do not include
-  1T1ss.
-- In connac3, beamforming entries for BW20~BW160, and RU include 1T1ss,
-  but OFDM beamforming does not include 1T1ss.
-
-Non-beamforming and RU entries for both connac2 and connac3 include 1T1ss.
-
-Fixes: b05ab4be9fd7 ("wifi: mt76: mt7915: add bf backoff limit table support")
-Signed-off-by: Allen Ye <allen.ye@mediatek.com>
-Co-developed-by: Ryder Lee <ryder.lee@mediatek.com>
-Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
-Link: https://patch.msgid.link/8fa8ec500b3d4de7b1966c6887f1dfbe5c46a54c.1771205424.git.ryder.lee@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: c118cead07a7 ("KVM: arm64: Use generic sanitisation for ID_(AA64)DFR0_EL1")
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Colton Lewis <coltonlewis@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/eeprom.c | 154 ++++++++++++++------
- drivers/net/wireless/mediatek/mt76/mt76.h   |   1 -
- 2 files changed, 109 insertions(+), 46 deletions(-)
+ arch/arm64/kernel/cpufeature.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/eeprom.c b/drivers/net/wireless/mediatek/mt76/eeprom.c
-index 573400d57ce72..afdb73661866e 100644
---- a/drivers/net/wireless/mediatek/mt76/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/eeprom.c
-@@ -9,6 +9,13 @@
- #include <linux/nvmem-consumer.h>
- #include <linux/etherdevice.h>
- #include "mt76.h"
-+#include "mt76_connac.h"
-+
-+enum mt76_sku_type {
-+	MT76_SKU_RATE,
-+	MT76_SKU_BACKOFF,
-+	MT76_SKU_BACKOFF_BF_OFFSET,
-+};
+diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
+index 32c2dbcc0c641..348197d9b6017 100644
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -565,7 +565,7 @@ static const struct arm64_ftr_bits ftr_id_aa64dfr0[] = {
+ 	 * We can instantiate multiple PMU instances with different levels
+ 	 * of support.
+ 	 */
+-	S_ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_AA64DFR0_EL1_PMUVer_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_AA64DFR0_EL1_PMUVer_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_EXACT, ID_AA64DFR0_EL1_DebugVer_SHIFT, 4, 0x6),
+ 	ARM64_FTR_END,
+ };
+@@ -709,7 +709,7 @@ static const struct arm64_ftr_bits ftr_id_pfr2[] = {
  
- static int mt76_get_of_eeprom_data(struct mt76_dev *dev, void *eep, int len)
- {
-@@ -292,7 +299,6 @@ mt76_find_channel_node(struct device_node *np, struct ieee80211_channel *chan)
- }
- EXPORT_SYMBOL_GPL(mt76_find_channel_node);
- 
--
- static s8
- mt76_get_txs_delta(struct device_node *np, u8 nss)
- {
-@@ -306,9 +312,24 @@ mt76_get_txs_delta(struct device_node *np, u8 nss)
- 	return be32_to_cpu(val[nss - 1]);
- }
- 
-+static inline u8 mt76_backoff_n_chains(struct mt76_dev *dev, u8 idx)
-+{
-+	/* 0:1T1ss, 1:2T1ss, ..., 14:5T5ss */
-+	static const u8 connac3_table[] = {
-+		1, 2, 3, 4, 5, 2, 3, 4, 5, 3, 4, 5, 4, 5, 5};
-+	static const u8 connac2_table[] = {
-+		1, 2, 3, 4, 2, 3, 4, 3, 4, 4, 0, 0, 0, 0, 0};
-+
-+	if (idx >= ARRAY_SIZE(connac3_table))
-+		return 0;
-+
-+	return is_mt799x(dev) ? connac3_table[idx] : connac2_table[idx];
-+}
-+
- static void
--mt76_apply_array_limit(s8 *pwr, size_t pwr_len, const s8 *data,
--		       s8 target_power, s8 nss_delta, s8 *max_power)
-+mt76_apply_array_limit(struct mt76_dev *dev, s8 *pwr, size_t pwr_len,
-+		       const s8 *data, s8 target_power, s8 nss_delta,
-+		       s8 *max_power, int n_chains, enum mt76_sku_type type)
- {
- 	int i;
- 
-@@ -316,18 +337,51 @@ mt76_apply_array_limit(s8 *pwr, size_t pwr_len, const s8 *data,
- 		return;
- 
- 	for (i = 0; i < pwr_len; i++) {
--		pwr[i] = min_t(s8, target_power, data[i] + nss_delta);
-+		u8 backoff_chain_idx = i;
-+		int backoff_n_chains;
-+		s8 backoff_delta;
-+		s8 delta;
-+
-+		switch (type) {
-+		case MT76_SKU_RATE:
-+			delta = 0;
-+			backoff_delta = 0;
-+			backoff_n_chains = 0;
-+			break;
-+		case MT76_SKU_BACKOFF_BF_OFFSET:
-+			backoff_chain_idx += 1;
-+			fallthrough;
-+		case MT76_SKU_BACKOFF:
-+			delta = mt76_tx_power_path_delta(n_chains);
-+			backoff_n_chains = mt76_backoff_n_chains(dev, backoff_chain_idx);
-+			backoff_delta = mt76_tx_power_path_delta(backoff_n_chains);
-+			break;
-+		default:
-+			return;
-+		}
-+
-+		pwr[i] = min_t(s8, target_power + delta - backoff_delta, data[i] + nss_delta);
-+
-+		/* used for padding, doesn't need to be considered */
-+		if (data[i] >= S8_MAX - 1)
-+			continue;
-+
-+		/* only consider backoff value for the configured chain number */
-+		if (type != MT76_SKU_RATE && n_chains != backoff_n_chains)
-+			continue;
-+
- 		*max_power = max(*max_power, pwr[i]);
- 	}
- }
- 
- static void
--mt76_apply_multi_array_limit(s8 *pwr, size_t pwr_len, s8 pwr_num,
--			     const s8 *data, size_t len, s8 target_power,
--			     s8 nss_delta)
-+mt76_apply_multi_array_limit(struct mt76_dev *dev, s8 *pwr, size_t pwr_len,
-+			     s8 pwr_num, const s8 *data, size_t len,
-+			     s8 target_power, s8 nss_delta, s8 *max_power,
-+			     int n_chains, enum mt76_sku_type type)
- {
-+	static const int connac2_backoff_ru_idx = 2;
- 	int i, cur;
--	s8 max_power = -128;
- 
- 	if (!data)
- 		return;
-@@ -337,8 +391,26 @@ mt76_apply_multi_array_limit(s8 *pwr, size_t pwr_len, s8 pwr_num,
- 		if (len < pwr_len + 1)
- 			break;
- 
--		mt76_apply_array_limit(pwr + pwr_len * i, pwr_len, data + 1,
--				       target_power, nss_delta, &max_power);
-+		/* Each RU entry (RU26, RU52, RU106, BW20, ...) in the DTS
-+		 * corresponds to 10 stream combinations (1T1ss, 2T1ss, 3T1ss,
-+		 * 4T1ss, 2T2ss, 3T2ss, 4T2ss, 3T3ss, 4T3ss, 4T4ss).
-+		 *
-+		 * For beamforming tables:
-+		 * - In connac2, beamforming entries for BW20~BW160 and OFDM
-+		 *   do not include 1T1ss.
-+		 * - In connac3, beamforming entries for BW20~BW160 and RU
-+		 *   include 1T1ss, but OFDM beamforming does not include 1T1ss.
-+		 *
-+		 * Non-beamforming and RU entries for both connac2 and connac3
-+		 * include 1T1ss.
-+		 */
-+		if (!is_mt799x(dev) && type == MT76_SKU_BACKOFF &&
-+		    i > connac2_backoff_ru_idx)
-+			type = MT76_SKU_BACKOFF_BF_OFFSET;
-+
-+		mt76_apply_array_limit(dev, pwr + pwr_len * i, pwr_len, data + 1,
-+				       target_power, nss_delta, max_power,
-+				       n_chains, type);
- 		if (--cur > 0)
- 			continue;
- 
-@@ -360,18 +432,11 @@ s8 mt76_get_rate_power_limits(struct mt76_phy *phy,
- 	struct device_node *np;
- 	const s8 *val;
- 	char name[16];
--	u32 mcs_rates = dev->drv->mcs_rates;
--	u32 ru_rates = ARRAY_SIZE(dest->ru[0]);
- 	char band;
- 	size_t len;
--	s8 max_power = 0;
--	s8 max_power_backoff = -127;
-+	s8 max_power = -127;
- 	s8 txs_delta;
- 	int n_chains = hweight16(phy->chainmask);
--	s8 target_power_combine = target_power + mt76_tx_power_path_delta(n_chains);
--
--	if (!mcs_rates)
--		mcs_rates = 10;
- 
- 	memset(dest, target_power, sizeof(*dest) - sizeof(dest->path));
- 	memset(&dest->path, 0, sizeof(dest->path));
-@@ -409,46 +474,45 @@ s8 mt76_get_rate_power_limits(struct mt76_phy *phy,
- 	txs_delta = mt76_get_txs_delta(np, hweight16(phy->chainmask));
- 
- 	val = mt76_get_of_array_s8(np, "rates-cck", &len, ARRAY_SIZE(dest->cck));
--	mt76_apply_array_limit(dest->cck, ARRAY_SIZE(dest->cck), val,
--			       target_power, txs_delta, &max_power);
-+	mt76_apply_array_limit(dev, dest->cck, ARRAY_SIZE(dest->cck), val,
-+			       target_power, txs_delta, &max_power, n_chains, MT76_SKU_RATE);
- 
--	val = mt76_get_of_array_s8(np, "rates-ofdm",
--				   &len, ARRAY_SIZE(dest->ofdm));
--	mt76_apply_array_limit(dest->ofdm, ARRAY_SIZE(dest->ofdm), val,
--			       target_power, txs_delta, &max_power);
-+	val = mt76_get_of_array_s8(np, "rates-ofdm", &len, ARRAY_SIZE(dest->ofdm));
-+	mt76_apply_array_limit(dev, dest->ofdm, ARRAY_SIZE(dest->ofdm), val,
-+			       target_power, txs_delta, &max_power, n_chains, MT76_SKU_RATE);
- 
--	val = mt76_get_of_array_s8(np, "rates-mcs", &len, mcs_rates + 1);
--	mt76_apply_multi_array_limit(dest->mcs[0], ARRAY_SIZE(dest->mcs[0]),
--				     ARRAY_SIZE(dest->mcs), val, len,
--				     target_power, txs_delta);
-+	val = mt76_get_of_array_s8(np, "rates-mcs", &len, ARRAY_SIZE(dest->mcs[0]) + 1);
-+	mt76_apply_multi_array_limit(dev, dest->mcs[0], ARRAY_SIZE(dest->mcs[0]),
-+				     ARRAY_SIZE(dest->mcs), val, len, target_power,
-+				     txs_delta, &max_power, n_chains, MT76_SKU_RATE);
- 
--	val = mt76_get_of_array_s8(np, "rates-ru", &len, ru_rates + 1);
--	mt76_apply_multi_array_limit(dest->ru[0], ARRAY_SIZE(dest->ru[0]),
--				     ARRAY_SIZE(dest->ru), val, len,
--				     target_power, txs_delta);
-+	val = mt76_get_of_array_s8(np, "rates-ru", &len, ARRAY_SIZE(dest->ru[0]) + 1);
-+	mt76_apply_multi_array_limit(dev, dest->ru[0], ARRAY_SIZE(dest->ru[0]),
-+				     ARRAY_SIZE(dest->ru), val, len, target_power,
-+				     txs_delta, &max_power, n_chains, MT76_SKU_RATE);
- 
--	max_power_backoff = max_power;
- 	val = mt76_get_of_array_s8(np, "paths-cck", &len, ARRAY_SIZE(dest->path.cck));
--	mt76_apply_array_limit(dest->path.cck, ARRAY_SIZE(dest->path.cck), val,
--			       target_power_combine, txs_delta, &max_power_backoff);
-+	mt76_apply_array_limit(dev, dest->path.cck, ARRAY_SIZE(dest->path.cck), val,
-+			       target_power, txs_delta, &max_power, n_chains, MT76_SKU_BACKOFF);
- 
- 	val = mt76_get_of_array_s8(np, "paths-ofdm", &len, ARRAY_SIZE(dest->path.ofdm));
--	mt76_apply_array_limit(dest->path.ofdm, ARRAY_SIZE(dest->path.ofdm), val,
--			       target_power_combine, txs_delta, &max_power_backoff);
-+	mt76_apply_array_limit(dev, dest->path.ofdm, ARRAY_SIZE(dest->path.ofdm), val,
-+			       target_power, txs_delta, &max_power, n_chains, MT76_SKU_BACKOFF);
- 
- 	val = mt76_get_of_array_s8(np, "paths-ofdm-bf", &len, ARRAY_SIZE(dest->path.ofdm_bf));
--	mt76_apply_array_limit(dest->path.ofdm_bf, ARRAY_SIZE(dest->path.ofdm_bf), val,
--			       target_power_combine, txs_delta, &max_power_backoff);
-+	mt76_apply_array_limit(dev, dest->path.ofdm_bf, ARRAY_SIZE(dest->path.ofdm_bf), val,
-+			       target_power, txs_delta, &max_power, n_chains,
-+			       MT76_SKU_BACKOFF_BF_OFFSET);
- 
- 	val = mt76_get_of_array_s8(np, "paths-ru", &len, ARRAY_SIZE(dest->path.ru[0]) + 1);
--	mt76_apply_multi_array_limit(dest->path.ru[0], ARRAY_SIZE(dest->path.ru[0]),
--				     ARRAY_SIZE(dest->path.ru), val, len,
--				     target_power_combine, txs_delta);
-+	mt76_apply_multi_array_limit(dev, dest->path.ru[0], ARRAY_SIZE(dest->path.ru[0]),
-+				     ARRAY_SIZE(dest->path.ru), val, len, target_power,
-+				     txs_delta, &max_power, n_chains, MT76_SKU_BACKOFF);
- 
- 	val = mt76_get_of_array_s8(np, "paths-ru-bf", &len, ARRAY_SIZE(dest->path.ru_bf[0]) + 1);
--	mt76_apply_multi_array_limit(dest->path.ru_bf[0], ARRAY_SIZE(dest->path.ru_bf[0]),
--				     ARRAY_SIZE(dest->path.ru_bf), val, len,
--				     target_power_combine, txs_delta);
-+	mt76_apply_multi_array_limit(dev, dest->path.ru_bf[0], ARRAY_SIZE(dest->path.ru_bf[0]),
-+				     ARRAY_SIZE(dest->path.ru_bf), val, len, target_power,
-+				     txs_delta, &max_power, n_chains, MT76_SKU_BACKOFF);
- 
- 	return max_power;
- }
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index d05e83ea1cacc..32876eab23a84 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -540,7 +540,6 @@ struct mt76_driver_ops {
- 	u32 survey_flags;
- 	u16 txwi_size;
- 	u16 token_size;
--	u8 mcs_rates;
- 
- 	unsigned int link_data_size;
- 
+ static const struct arm64_ftr_bits ftr_id_dfr0[] = {
+ 	/* [31:28] TraceFilt */
+-	S_ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_DFR0_EL1_PerfMon_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_NONSTRICT, FTR_EXACT, ID_DFR0_EL1_PerfMon_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_MProfDbg_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_MMapTrc_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_DFR0_EL1_CopTrc_SHIFT, 4, 0),
 -- 
 2.53.0
 
