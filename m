@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06BC3EFFB8;
-	Wed, 20 May 2026 18:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD833F9F21;
+	Wed, 20 May 2026 18:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301469; cv=none; b=Zltmwo7kuORtYfg7xTdft+/AgRJcFozkyyCD1DXOnl0EIDlXapUTLjsMKWy98MhfUlfyc8nEbJjuS/Gv0/hSnamQHfgvbU/dwBfxIQ6VQ2muTCLHlhnV7nBgJasEyjHWC32ew5w9L2aFV0plEJBKOY+Qzvk+/5yxcgPM084hdqc=
+	t=1779301471; cv=none; b=PkRbvhfPq2j1V5nE0yIAp/ZHv/mrpzamTdq5XiH/94FEqJbJu5NLSu5EU4qT8e3e8dybyMtv56cEQlOLKF7ShufGhNnKI6QJKjRVO/ZtjtpctzR+tWWG8IC0jVdg/bA5btV/lGVXwqHV0c1QJ4FPhItoHSByLLtT/BXNCgy5hXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301469; c=relaxed/simple;
-	bh=P5ZxbvNzVPG0KZj0i2u7HhlnSRX42NnJfhsp8FaXzoo=;
+	s=arc-20240116; t=1779301471; c=relaxed/simple;
+	bh=daTqXE3U1eYNBR7XXRtDgVhJf+5xwpUO2JY09SC0vxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bCuX0J0fjo1aTpDkyl/F45HlOdsHgAkqSxwwEoZqJS9O3nJbKji0A9zJU9m6m0osjPfIPoMwd//EeYXyJmpUIJzO456KA1uKavX3qXvlWjM6GefpTyn8DlV8zsSohmixaSv71RLPsOxKOhdipa0sUqS5VGPn58w6qwn2KQZBxq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uINlJNue; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BGMPxWMQqMfTKca7lOVEDzL5g/38I0Sk3NTP4ijPrUg8BxFuC6iAFDqnstFuWvu+hI3kNEUH4DNivAXyqtDQjqemarIWfznHP/ZJZGAS73pjfDqslaBNqM++93+Qh4l0P+Xd5JMbf16rlqTrULdOAv6ywMx5IgBEbdWDtDvCIcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcpYdqku; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uINlJNue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7C91F000E9;
-	Wed, 20 May 2026 18:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcpYdqku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC0F1F000E9;
+	Wed, 20 May 2026 18:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301467;
-	bh=31/lfeoA0YlCK4VSbmFBuKAA9WgJWsx+3KlTCxyQWDY=;
+	s=korg; t=1779301470;
+	bh=TcaDgZEpoj7UgOFf9nSSyeS5/GRNM5in1LqVhqerJ/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uINlJNued+KJg2+6D61/5c8tClUnUgfMvpXtMHxTYILXDyg4Sca7wUBEAYZ3b4B6C
-	 6NzEHjdsLjHbsn/uaj01MNiDZqRduaQU9kjGC4CBl0XNh73YsZyuu+lZTJB9bNoqAc
-	 QgggsIVUU2yIZQZhkgUBVq7tOXKemLgppUkLuYII=
+	b=CcpYdqkucci5mYSNOwh68LNQpYBEKbY53S8B3kbNY53oPfPoI5z3itMCFP/KgTh5D
+	 lj4d/Ga4oo5yu6R13VUHOgNtviuf2RoiUg477c2aApCqtJVIIaouakOICp0eDfSOzo
+	 DjbSEdMxCdhG1Dvp0RZVlTnYgQ3y3/xHd4kd5/48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaudia Kloc <klaudia@vidocsecurity.com>,
-	=?UTF-8?q?Dawid=20Moczad=C5=82o?= <dawid@vidocsecurity.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Jenny Guanni Qu <qguanni@gmail.com>
-Subject: [PATCH 6.12 524/666] netfilter: nf_conntrack_sip: dont use simple_strtoul
-Date: Wed, 20 May 2026 18:22:15 +0200
-Message-ID: <20260520162122.622686941@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Robert Beckett <bob.beckett@collabora.com>,
+	Umang Jain <uajain@igalia.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Melissa Wen <mwen@igalia.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 525/666] ASoC: amd: acp: Add DMI quirk for Valve Steam Deck OLED
+Date: Wed, 20 May 2026 18:22:16 +0200
+Message-ID: <20260520162122.647350972@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -48,354 +50,181 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-[ Upstream commit 8cf6809cddcbe301aedfc6b51bcd4944d45795f6 ]
+[ Upstream commit b0f6f4ac7d5d04fe2adcdd63ed1cd1ad505b8958 ]
 
-Replace unsafe port parsing in epaddr_len(), ct_sip_parse_header_uri(),
-and ct_sip_parse_request() with a new sip_parse_port() helper that
-validates each digit against the buffer limit, eliminating the use of
-simple_strtoul() which assumes NUL-terminated strings.
+Commit 671dd2ffbd8b ("ASoC: amd: acp: Add new cpu dai and dailink creation for I2S BT instance")
+introduced a change that "broke" Steam Deck's audio probe, in the OLED
+model, as observed in the following dmesg snippet:
 
-The previous code dereferenced pointers without bounds checks after
-sip_parse_addr() and relied on simple_strtoul() on non-NUL-terminated
-skb data. A port that reaches the buffer limit without a trailing
-character is also rejected as malformed.
+[...]
+snd_sof_amd_vangogh 0000:04:00.5: Topology: ABI 3:26:0 Kernel ABI 3:23:1
+sof_mach nau8821-max: ASoC: physical link acp-bt-codec (id 2) not exist
+sof_mach nau8821-max: ASoC: topology: could not load header: -22
+snd_sof_amd_vangogh 0000:04:00.5: tplg amd/sof-tplg/sof-vangogh-nau8821-max.tplg component load failed -22
+snd_sof_amd_vangogh 0000:04:00.5: error: failed to load DSP topology -22
+snd_sof_amd_vangogh 0000:04:00.5: ASoC error (-22): at snd_soc_component_probe() on 0000:04:00.5
+sof_mach nau8821-max: ASoC: failed to instantiate card -22
+sof_mach nau8821-max: error -EINVAL: Failed to register card(sof-nau8821-max)
+sof_mach nau8821-max: probe with driver sof_mach failed with error -22
+[...]
 
-Also get rid of all simple_strtoul() usage in conntrack, prefer a
-stricter version instead.  There are intentional changes:
+Notice the quotes in "broke": it's not really a bug in such commit,
+but instead a problem with a topology file from Steam Deck OLED. This
+was discussed to great extent in [1], and Cristian proposed a pretty
+simple and functional change that resolved the issue for the Deck's
+issue. That change, though, would break other devices, so it wasn't
+accepted upstream. And the proper suggested solution (fix the topology)
+was never implemented, so Valve's kernel (and anyone that wants to boot
+the mainline on Steam Deck OLED) is carrying that fix downstream.
 
-- Bail out if number is > UINT_MAX and indicate a failure, same for
-  too long sequences.
-  While we do accept 05535 as port 5535, we will not accept e.g.
-  'sip:10.0.0.1:005060'.  While its syntactically valid under RFC 3261,
-  we should restrict this to not waste cycles when presented with
-  malformed packets with 64k '0' characters.
+So, we propose hereby a different approach: a DMI quirk, as many already
+present in the sound drivers, to address this issue solely on Steam Deck
+OLED, not breaking other devices and as a bonus, allowing simple patch
+up in case eventually the topology file gets fixed (we'd just need to
+check against any DMI info reflecting that or the topology/FW versions).
 
-- Force base 10 in ct_sip_parse_numerical_param(). This is used to fetch
-  'expire=' and 'rports='; both are expected to use base-10.
+The motivation of such upstream quirk is related to users that want
+to test latest kernel trees on their devices and get no only non-working
+sound device, but seems some games (like Ori and the Blind Forest)
+can't properly work without a proper functional audio device.
+Example of such report can be seen at [2].
 
-- In nf_nat_sip.c, only accept the parsed value if its within the 1k-64k
-  range.
-
-- epaddr_len now returns 0 if the port is invalid, as it already does
-  for invalid ip addresses.  This is intentional. nf_conntrack_sip
-  performs lots of guesswork to find the right parts of the message
-  to parse.  Being stricter could break existing setups.
-  Connection tracking helpers are designed to allow traffic to
-  pass, not to block it.
-
-Based on an earlier patch from Jenny Guanni Qu <qguanni@gmail.com>.
-
-Fixes: 05e3ced297fe ("[NETFILTER]: nf_conntrack_sip: introduce SIP-URI parsing helper")
-Reported-by: Klaudia Kloc <klaudia@vidocsecurity.com>
-Reported-by: Dawid Moczadło <dawid@vidocsecurity.com>
-Reported-by: Jenny Guanni Qu <qguanni@gmail.com>.
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Robert Beckett <bob.beckett@collabora.com>
+Cc: Umang Jain <uajain@igalia.com>
+Fixes: 671dd2ffbd8b ("ASoC: amd: acp: Add new cpu dai and dailink creation for I2S BT instance")
+Link: https://lore.kernel.org/r/20231209205351.880797-11-cristian.ciocaltea@collabora.com/ [1]
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218677 [2]
+Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Tested-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Link: https://patch.msgid.link/20260423183505.116445-1-gpiccoli@igalia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_sip.c | 152 ++++++++++++++++++++++++-------
- net/netfilter/nf_nat_sip.c       |   1 +
- 2 files changed, 119 insertions(+), 34 deletions(-)
+ sound/soc/amd/acp/acp-legacy-mach.c |  2 +-
+ sound/soc/amd/acp/acp-mach-common.c | 22 +++++++++++++++++++---
+ sound/soc/amd/acp/acp-mach.h        |  4 ++++
+ sound/soc/amd/acp/acp-sof-mach.c    |  2 +-
+ 4 files changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
-index fda6fc1fc4c58..4b32ee408ea15 100644
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -181,6 +181,57 @@ static int sip_parse_addr(const struct nf_conn *ct, const char *cp,
- 	return 1;
- }
+diff --git a/sound/soc/amd/acp/acp-legacy-mach.c b/sound/soc/amd/acp/acp-legacy-mach.c
+index d104f7e8fdcd8..4221fc0f081b8 100644
+--- a/sound/soc/amd/acp/acp-legacy-mach.c
++++ b/sound/soc/amd/acp/acp-legacy-mach.c
+@@ -174,7 +174,7 @@ static int acp_asoc_probe(struct platform_device *pdev)
+ 		acp_card_drvdata->platform =  *((int *)dev->platform_data);
  
-+/* Parse optional port number after IP address.
-+ * Returns false on malformed input, true otherwise.
-+ * If port is non-NULL, stores parsed port in network byte order.
-+ * If no port is present, sets *port to default SIP port.
-+ */
-+static bool sip_parse_port(const char *dptr, const char **endp,
-+			   const char *limit, __be16 *port)
-+{
-+	unsigned int p = 0;
-+	int len = 0;
-+
-+	if (dptr >= limit)
-+		return false;
-+
-+	if (*dptr != ':') {
-+		if (port)
-+			*port = htons(SIP_PORT);
-+		if (endp)
-+			*endp = dptr;
-+		return true;
-+	}
-+
-+	dptr++; /* skip ':' */
-+
-+	while (dptr < limit && isdigit(*dptr)) {
-+		p = p * 10 + (*dptr - '0');
-+		dptr++;
-+		len++;
-+		if (len > 5) /* max "65535" */
-+			return false;
-+	}
-+
-+	if (len == 0)
-+		return false;
-+
-+	/* reached limit while parsing port */
-+	if (dptr >= limit)
-+		return false;
-+
-+	if (p < 1024 || p > 65535)
-+		return false;
-+
-+	if (port)
-+		*port = htons(p);
-+
-+	if (endp)
-+		*endp = dptr;
-+
-+	return true;
-+}
-+
- /* skip ip address. returns its length. */
- static int epaddr_len(const struct nf_conn *ct, const char *dptr,
- 		      const char *limit, int *shift)
-@@ -193,11 +244,8 @@ static int epaddr_len(const struct nf_conn *ct, const char *dptr,
- 		return 0;
- 	}
+ 	dmi_id = dmi_first_match(acp_quirk_table);
+-	if (dmi_id && dmi_id->driver_data)
++	if (dmi_id && dmi_id->driver_data == (void *)QUIRK_TDM_MODE_ENABLE)
+ 		acp_card_drvdata->tdm_mode = dmi_id->driver_data;
  
--	/* Port number */
--	if (*dptr == ':') {
--		dptr++;
--		dptr += digits_len(ct, dptr, limit, shift);
--	}
-+	if (!sip_parse_port(dptr, &dptr, limit, NULL))
-+		return 0;
- 	return dptr - aux;
- }
+ 	ret = acp_legacy_dai_links_create(card);
+diff --git a/sound/soc/amd/acp/acp-mach-common.c b/sound/soc/amd/acp/acp-mach-common.c
+index e9ff4815c12c8..6c0a92d76b54d 100644
+--- a/sound/soc/amd/acp/acp-mach-common.c
++++ b/sound/soc/amd/acp/acp-mach-common.c
+@@ -20,6 +20,7 @@
+ #include <sound/soc.h>
+ #include <linux/input.h>
+ #include <linux/module.h>
++#include <linux/dmi.h>
  
-@@ -228,6 +276,51 @@ static int skp_epaddr_len(const struct nf_conn *ct, const char *dptr,
- 	return epaddr_len(ct, dptr, limit, shift);
- }
+ #include "../../codecs/rt5682.h"
+ #include "../../codecs/rt1019.h"
+@@ -37,15 +38,21 @@
+ #define NAU8821_FREQ_OUT	12288000
+ #define MAX98388_CODEC_DAI	"max98388-aif1"
  
-+/* simple_strtoul stops after first non-number character.
-+ * But as we're not dealing with c-strings, we can't rely on
-+ * hitting \r,\n,\0 etc. before moving past end of buffer.
-+ *
-+ * This is a variant of simple_strtoul, but doesn't require
-+ * a c-string.
-+ *
-+ * If value exceeds UINT_MAX, 0 is returned.
-+ */
-+static unsigned int sip_strtouint(const char *cp, unsigned int len, char **endp)
-+{
-+	const unsigned int max = sizeof("4294967295");
-+	unsigned int olen = len;
-+	const char *s = cp;
-+	u64 result = 0;
-+
-+	if (len > max)
-+		len = max;
-+
-+	while (olen > 0 && isdigit(*s)) {
-+		unsigned int value;
-+
-+		if (len == 0)
-+			goto err;
-+
-+		value = *s - '0';
-+		result = result * 10 + value;
-+
-+		if (result > UINT_MAX)
-+			goto err;
-+		s++;
-+		len--;
-+		olen--;
-+	}
-+
-+	if (endp)
-+		*endp = (char *)s;
-+
-+	return result;
-+err:
-+	if (endp)
-+		*endp = (char *)cp;
-+	return 0;
-+}
-+
- /* Parse a SIP request line of the form:
-  *
-  * Request-Line = Method SP Request-URI SP SIP-Version CRLF
-@@ -241,7 +334,6 @@ int ct_sip_parse_request(const struct nf_conn *ct,
- {
- 	const char *start = dptr, *limit = dptr + datalen, *end;
- 	unsigned int mlen;
--	unsigned int p;
- 	int shift = 0;
+-#define TDM_MODE_ENABLE 1
+-
+ const struct dmi_system_id acp_quirk_table[] = {
+ 	{
+ 		/* Google skyrim proto-0 */
+ 		.matches = {
+ 			DMI_EXACT_MATCH(DMI_PRODUCT_FAMILY, "Google_Skyrim"),
+ 		},
+-		.driver_data = (void *)TDM_MODE_ENABLE,
++		.driver_data = (void *)QUIRK_TDM_MODE_ENABLE,
++	},
++	{
++		/* Valve Steam Deck OLED */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Valve"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Galileo"),
++		},
++		.driver_data = (void *)QUIRK_REMAP_DMIC_BT,
+ 	},
+ 	{}
+ };
+@@ -1385,6 +1392,7 @@ int acp_sofdsp_dai_links_create(struct snd_soc_card *card)
+ 	struct snd_soc_dai_link *links;
+ 	struct device *dev = card->dev;
+ 	struct acp_card_drvdata *drv_data = card->drvdata;
++	const struct dmi_system_id *dmi_id = dmi_first_match(acp_quirk_table);
+ 	int i = 0, num_links = 0;
  
- 	/* Skip method and following whitespace */
-@@ -267,14 +359,8 @@ int ct_sip_parse_request(const struct nf_conn *ct,
- 
- 	if (!sip_parse_addr(ct, dptr, &end, addr, limit, true))
- 		return -1;
--	if (end < limit && *end == ':') {
--		end++;
--		p = simple_strtoul(end, (char **)&end, 10);
--		if (p < 1024 || p > 65535)
--			return -1;
--		*port = htons(p);
--	} else
--		*port = htons(SIP_PORT);
-+	if (!sip_parse_port(end, &end, limit, port))
-+		return -1;
- 
- 	if (end == dptr)
- 		return 0;
-@@ -509,7 +595,6 @@ int ct_sip_parse_header_uri(const struct nf_conn *ct, const char *dptr,
- 			    union nf_inet_addr *addr, __be16 *port)
- {
- 	const char *c, *limit = dptr + datalen;
--	unsigned int p;
- 	int ret;
- 
- 	ret = ct_sip_walk_headers(ct, dptr, dataoff ? *dataoff : 0, datalen,
-@@ -520,14 +605,8 @@ int ct_sip_parse_header_uri(const struct nf_conn *ct, const char *dptr,
- 
- 	if (!sip_parse_addr(ct, dptr + *matchoff, &c, addr, limit, true))
- 		return -1;
--	if (*c == ':') {
--		c++;
--		p = simple_strtoul(c, (char **)&c, 10);
--		if (p < 1024 || p > 65535)
--			return -1;
--		*port = htons(p);
--	} else
--		*port = htons(SIP_PORT);
-+	if (!sip_parse_port(c, &c, limit, port))
-+		return -1;
- 
- 	if (dataoff)
- 		*dataoff = c - dptr;
-@@ -609,7 +688,7 @@ int ct_sip_parse_numerical_param(const struct nf_conn *ct, const char *dptr,
- 		return 0;
- 
- 	start += strlen(name);
--	*val = simple_strtoul(start, &end, 0);
-+	*val = sip_strtouint(start, limit - start, (char **)&end);
- 	if (start == end)
- 		return -1;
- 	if (matchoff && matchlen) {
-@@ -1065,6 +1144,8 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
- 
- 	mediaoff = sdpoff;
- 	for (i = 0; i < ARRAY_SIZE(sdp_media_types); ) {
-+		char *end;
-+
- 		if (ct_sip_get_sdp_header(ct, *dptr, mediaoff, *datalen,
- 					  SDP_HDR_MEDIA, SDP_HDR_UNSPEC,
- 					  &mediaoff, &medialen) <= 0)
-@@ -1080,8 +1161,8 @@ static int process_sdp(struct sk_buff *skb, unsigned int protoff,
- 		mediaoff += t->len;
- 		medialen -= t->len;
- 
--		port = simple_strtoul(*dptr + mediaoff, NULL, 10);
--		if (port == 0)
-+		port = sip_strtouint(*dptr + mediaoff, *datalen - mediaoff, (char **)&end);
-+		if (port == 0 || *dptr + mediaoff == end)
- 			continue;
- 		if (port < 1024 || port > 65535) {
- 			nf_ct_helper_log(skb, ct, "wrong port %u", port);
-@@ -1255,7 +1336,7 @@ static int process_register_request(struct sk_buff *skb, unsigned int protoff,
- 	 */
- 	if (ct_sip_get_header(ct, *dptr, 0, *datalen, SIP_HDR_EXPIRES,
- 			      &matchoff, &matchlen) > 0)
--		expires = simple_strtoul(*dptr + matchoff, NULL, 10);
-+		expires = sip_strtouint(*dptr + matchoff, *datalen - matchoff, NULL);
- 
- 	ret = ct_sip_parse_header_uri(ct, *dptr, NULL, *datalen,
- 				      SIP_HDR_CONTACT, NULL,
-@@ -1359,7 +1440,7 @@ static int process_register_response(struct sk_buff *skb, unsigned int protoff,
- 
- 	if (ct_sip_get_header(ct, *dptr, 0, *datalen, SIP_HDR_EXPIRES,
- 			      &matchoff, &matchlen) > 0)
--		expires = simple_strtoul(*dptr + matchoff, NULL, 10);
-+		expires = sip_strtouint(*dptr + matchoff, *datalen - matchoff, NULL);
- 
- 	while (1) {
- 		unsigned int c_expires = expires;
-@@ -1419,10 +1500,12 @@ static int process_sip_response(struct sk_buff *skb, unsigned int protoff,
- 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
- 	unsigned int matchoff, matchlen, matchend;
- 	unsigned int code, cseq, i;
-+	char *end;
- 
- 	if (*datalen < strlen("SIP/2.0 200"))
- 		return NF_ACCEPT;
--	code = simple_strtoul(*dptr + strlen("SIP/2.0 "), NULL, 10);
-+	code = sip_strtouint(*dptr + strlen("SIP/2.0 "),
-+			     *datalen - strlen("SIP/2.0 "), NULL);
- 	if (!code) {
- 		nf_ct_helper_log(skb, ct, "cannot get code");
- 		return NF_DROP;
-@@ -1433,8 +1516,8 @@ static int process_sip_response(struct sk_buff *skb, unsigned int protoff,
- 		nf_ct_helper_log(skb, ct, "cannot parse cseq");
- 		return NF_DROP;
- 	}
--	cseq = simple_strtoul(*dptr + matchoff, NULL, 10);
--	if (!cseq && *(*dptr + matchoff) != '0') {
-+	cseq = sip_strtouint(*dptr + matchoff, *datalen - matchoff, (char **)&end);
-+	if (*dptr + matchoff == end) {
- 		nf_ct_helper_log(skb, ct, "cannot get cseq");
- 		return NF_DROP;
- 	}
-@@ -1483,6 +1566,7 @@ static int process_sip_request(struct sk_buff *skb, unsigned int protoff,
- 
- 	for (i = 0; i < ARRAY_SIZE(sip_handlers); i++) {
- 		const struct sip_handler *handler;
-+		char *end;
- 
- 		handler = &sip_handlers[i];
- 		if (handler->request == NULL)
-@@ -1499,8 +1583,8 @@ static int process_sip_request(struct sk_buff *skb, unsigned int protoff,
- 			nf_ct_helper_log(skb, ct, "cannot parse cseq");
- 			return NF_DROP;
+ 	if (drv_data->hs_cpu_id)
+@@ -1562,6 +1570,9 @@ int acp_sofdsp_dai_links_create(struct snd_soc_card *card)
+ 			links[i].codecs = &snd_soc_dummy_dlc;
+ 			links[i].num_codecs = 1;
  		}
--		cseq = simple_strtoul(*dptr + matchoff, NULL, 10);
--		if (!cseq && *(*dptr + matchoff) != '0') {
-+		cseq = sip_strtouint(*dptr + matchoff, *datalen - matchoff, (char **)&end);
-+		if (*dptr + matchoff == end) {
- 			nf_ct_helper_log(skb, ct, "cannot get cseq");
- 			return NF_DROP;
- 		}
-@@ -1576,7 +1660,7 @@ static int sip_help_tcp(struct sk_buff *skb, unsigned int protoff,
- 				      &matchoff, &matchlen) <= 0)
- 			break;
++
++		if (dmi_id && dmi_id->driver_data == (void *)QUIRK_REMAP_DMIC_BT)
++			links[i].id = DMIC_BE_ID;
+ 		i++;
+ 	}
  
--		clen = simple_strtoul(dptr + matchoff, (char **)&end, 10);
-+		clen = sip_strtouint(dptr + matchoff, datalen - matchoff, (char **)&end);
- 		if (dptr + matchoff == end)
- 			break;
+@@ -1577,6 +1588,11 @@ int acp_sofdsp_dai_links_create(struct snd_soc_card *card)
+ 		links[i].dpcm_capture = 1;
+ 		links[i].nonatomic = true;
+ 		links[i].no_pcm = 1;
++
++		if (dmi_id && dmi_id->driver_data == (void *)QUIRK_REMAP_DMIC_BT) {
++			links[i].id = BT_BE_ID;
++			dev_dbg(dev, "quirk REMAP_DMIC_BT enabled\n");
++		}
+ 	}
  
-diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
-index c845b6d1a2bdf..9fbfc6bff0c22 100644
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -246,6 +246,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
- 		if (ct_sip_parse_numerical_param(ct, *dptr, matchend, *datalen,
- 						 "rport=", &poff, &plen,
- 						 &n) > 0 &&
-+		    n >= 1024 && n <= 65535 &&
- 		    htons(n) == ct->tuplehash[dir].tuple.dst.u.udp.port &&
- 		    htons(n) != ct->tuplehash[!dir].tuple.src.u.udp.port) {
- 			__be16 p = ct->tuplehash[!dir].tuple.src.u.udp.port;
+ 	card->dai_link = links;
+diff --git a/sound/soc/amd/acp/acp-mach.h b/sound/soc/amd/acp/acp-mach.h
+index 93d9e3886b7ec..4b255cbde9ff4 100644
+--- a/sound/soc/amd/acp/acp-mach.h
++++ b/sound/soc/amd/acp/acp-mach.h
+@@ -24,6 +24,10 @@
+ 
+ #define acp_get_drvdata(card) ((struct acp_card_drvdata *)(card)->drvdata)
+ 
++/* List of DMI quirks - check acp-mach-common.c for usage. */
++#define QUIRK_TDM_MODE_ENABLE 1
++#define QUIRK_REMAP_DMIC_BT 2
++
+ enum be_id {
+ 	HEADSET_BE_ID = 0,
+ 	AMP_BE_ID,
+diff --git a/sound/soc/amd/acp/acp-sof-mach.c b/sound/soc/amd/acp/acp-sof-mach.c
+index f36750167fa29..4c069a34fbe17 100644
+--- a/sound/soc/amd/acp/acp-sof-mach.c
++++ b/sound/soc/amd/acp/acp-sof-mach.c
+@@ -113,7 +113,7 @@ static int acp_sof_probe(struct platform_device *pdev)
+ 
+ 	acp_card_drvdata = card->drvdata;
+ 	dmi_id = dmi_first_match(acp_quirk_table);
+-	if (dmi_id && dmi_id->driver_data)
++	if (dmi_id && dmi_id->driver_data == (void *)QUIRK_TDM_MODE_ENABLE)
+ 		acp_card_drvdata->tdm_mode = dmi_id->driver_data;
+ 
+ 	ret = acp_sofdsp_dai_links_create(card);
 -- 
 2.53.0
 
