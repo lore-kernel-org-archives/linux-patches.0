@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236B42F363F;
-	Wed, 20 May 2026 17:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035F32F363F;
+	Wed, 20 May 2026 17:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299412; cv=none; b=fJQxUDKwq/1arp1cAbF5+qQT8RMDNNNWeJtFNV2ZKZSQL2YRDdxxW/mFkd6cOuN0mEB/vO+F8+jACTJLjLVsUvA0M933oSYjY5T1s8SAr6LpPg9JOE3P1hzDqJmXFJmW6vBgnuEyRXODYC5j7ZMJbxDG/xO8xOwKulo0PcLc5H0=
+	t=1779299415; cv=none; b=n/+PLZKfMneVNsE6/5eyQGp3QUggp2gtwQ3ODvTmDFfBa30Cnwt0PiXihYC1iKONvU2xS2v0ZMRDJ6Maj+12blYN4EI0j2nWCazmMTdwiVKmNNiOnxoBRcfJO70SqnsJZcsZJo/W94pqQa1ogb6d6VdfH4vqXXGgEDbZCcL9qhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299412; c=relaxed/simple;
-	bh=Td8vEbrQlZDVpsa/JhnuKZ42lGp8Gzq/28quYYpFtcI=;
+	s=arc-20240116; t=1779299415; c=relaxed/simple;
+	bh=By95oAWtBYsI8gOK/X9DdUU50cfWQ8ulK1ghoMSZGrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EqFAOzpuJtUrgAJsZhle88stmyR9g0F2XTUS2KLaNHbbJ3cemVzP6DPSyJDdCGSiIgEokiMzbmFfVRFuE/S/V28CdnN+kvmmu8DTOOqr2boNMKSwj8U1s/F/BLLDCW2rn9YAbD9AeAQhuVjd3oxhi0ub4ZmB9LN6YJtO/xVaO/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLiudnvq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dZnMYwOnwp5fkNX3+00FgGtTmoCg/QHy1yRnFmlT4pAkz4EpWNBC9JypQhsm52xG/4pUgntmQhEbWngKd++h8i1t0AdKZ/aWJBD4pSM9s7JshArO5Ffex1Ng9tn2WRtL3eXX5/XjOEgHMDTqsCizGvMN9kTRvlo6YZ4uqrSuhuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DB0kwlhG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLiudnvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878201F00893;
-	Wed, 20 May 2026 17:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DB0kwlhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEF21F000E9;
+	Wed, 20 May 2026 17:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299411;
-	bh=dKLXRpnpke8X59CoPaNJZ61+6d8Q+TN/r9vHUU4w004=;
+	s=korg; t=1779299413;
+	bh=rPS+h+PcT9GlnmKtvk4k/RoSocRnqE0LYf7TEQiAfkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLiudnvq4Aa8ICkz7Pi6KvoBIvwgFr+lTjGNm8I4wVfVPaaCM1ExCMvsWYkQBDOGl
-	 HTheU0CAt6Y05V7AFj7qAH6H83QqsAcZsO9Raj8huE3RqMhlGr2pP4qGdSmUdrwkF7
-	 zqakh55YNJx27Ij26lalDIa3gIGboUPob4iWvTAo=
+	b=DB0kwlhGGXVTvvBG/KdUML6gxS0ZIbdpL2LfL4cpcCqsh1WPGTLyplQ67Ubbcov25
+	 R9K8XD0XwsiC7tOv63DSmGAJ+S5WSgXeLIGH/a///9XjDYmHQN/lw7VkKe6Y67B3A7
+	 OBodLh20d+l0R4qxvh4Rpr0cqPLGKur4bqmmDkPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daan De Meyer <daan@amutable.com>,
-	Phillip Potter <phil@philpotter.co.uk>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 763/957] cdrom, scsi: sr: propagate read-only status to block layer via set_disk_ro()
-Date: Wed, 20 May 2026 18:20:46 +0200
-Message-ID: <20260520162151.110552288@linuxfoundation.org>
+Subject: [PATCH 6.18 764/957] netdevsim: zero initialize struct iphdr in dummy sk_buff
+Date: Wed, 20 May 2026 18:20:47 +0200
+Message-ID: <20260520162151.132508262@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,234 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daan De Meyer <daan@amutable.com>
+From: Nikola Z. Ivanov <zlatistiv@gmail.com>
 
-[ Upstream commit 0898a817621a2f0cddca8122d9b974003fe5036d ]
+[ Upstream commit 35eaa6d8d6c2ee65e96f507add856e0eacf24591 ]
 
-The cdrom core never calls set_disk_ro() for a registered device, so
-BLKROGET on a CD-ROM device always returns 0 (writable), even when the
-drive has no write capabilities and writes will inevitably fail. This
-causes problems for userspace that relies on BLKROGET to determine
-whether a block device is read-only. For example, systemd's loop device
-setup uses BLKROGET to decide whether to create a loop device with
-LO_FLAGS_READ_ONLY. Without the read-only flag, writes pass through the
-loop device to the CD-ROM and fail with I/O errors. systemd-fsck
-similarly checks BLKROGET to decide whether to run fsck in no-repair
-mode (-n).
+Syzbot reports a KMSAN uninit-value originating from
+nsim_dev_trap_skb_build, with the allocation also
+being performed in the same function.
 
-The write-capability bits in cdi->mask come from two different sources:
-CDC_DVD_RAM and CDC_CD_RW are populated by the driver from the MODE
-SENSE capabilities page (page 0x2A) before register_cdrom() is called,
-while CDC_MRW_W and CDC_RAM require the MMC GET CONFIGURATION command
-and were only probed by cdrom_open_write() at device open time. This
-meant that any attempt to compute the writable state from the full
-mask at probe time was incorrect, because the GET CONFIGURATION bits
-were still unset (and cdi->mask is initialized such that capabilities
-are assumed present).
+Fix this by calling skb_put_zero instead of skb_put to
+guarantee zero initialization of the whole IP header.
 
-Fix this by factoring the GET CONFIGURATION probing out of
-cdrom_open_write() into a new exported helper,
-cdrom_probe_write_features(), and having sr call it from sr_probe()
-right after get_capabilities() has populated the MODE SENSE bits.
-register_cdrom() then calls set_disk_ro() based on the full
-write-capability mask (CDC_DVD_RAM | CDC_MRW_W | CDC_RAM | CDC_CD_RW)
-so the block layer reflects the drive's actual write support. The
-feature queries used (CDF_MRW and CDF_RWRT via GET CONFIGURATION with
-RT=00) report drive-level capabilities that are persistent across
-media, so a single probe before register_cdrom() is sufficient and the
-redundant probe at open time is dropped.
-
-With set_disk_ro() now accurate, the long-vestigial cd->writeable flag
-in sr can go: get_capabilities() used to set cd->writeable based on
-the same four mask bits, but because CDC_MRW_W and CDC_RAM default to
-"capability present" in cdi->mask and aren't touched by MODE SENSE,
-the condition that gated cd->writeable was always true, making it
-unconditionally 1. Replace the corresponding gate in sr_init_command()
-with get_disk_ro(cd->disk), which turns a previously no-op check into
-a real one and also catches kernel-internal bio writers that bypass
-blkdev_write_iter()'s bdev_read_only() check.
-
-The sd driver (SCSI disks) does not have this problem because it
-checks the MODE SENSE Write Protect bit and calls set_disk_ro()
-accordingly. The sr driver cannot use the same approach because the
-MMC specification does not define the WP bit in the MODE SENSE
-device-specific parameter byte for CD-ROM devices.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Daan De Meyer <daan@amutable.com>
-Reviewed-by: Phillip Potter <phil@philpotter.co.uk>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Phillip Potter <phil@philpotter.co.uk>
-Link: https://patch.msgid.link/20260427210139.1400-2-phil@philpotter.co.uk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Closes: https://syzkaller.appspot.com/bug?extid=23d7fcd204e3837866ff
+Fixes: da58f90f11f5 ("netdevsim: Add devlink-trap support")
+Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260426201434.742030-1-zlatistiv@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cdrom/cdrom.c | 73 ++++++++++++++++++++++++++++---------------
- drivers/scsi/sr.c     | 11 ++-----
- drivers/scsi/sr.h     |  1 -
- include/linux/cdrom.h |  1 +
- 4 files changed, 51 insertions(+), 35 deletions(-)
+ drivers/net/netdevsim/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cdrom/cdrom.c b/drivers/cdrom/cdrom.c
-index 31ba1f8c1f786..e30414f0d4560 100644
---- a/drivers/cdrom/cdrom.c
-+++ b/drivers/cdrom/cdrom.c
-@@ -631,6 +631,16 @@ int register_cdrom(struct gendisk *disk, struct cdrom_device_info *cdi)
+diff --git a/drivers/net/netdevsim/dev.c b/drivers/net/netdevsim/dev.c
+index 56a47c060f2e1..4064c488439b4 100644
+--- a/drivers/net/netdevsim/dev.c
++++ b/drivers/net/netdevsim/dev.c
+@@ -773,7 +773,7 @@ static struct sk_buff *nsim_dev_trap_skb_build(void)
+ 	skb->protocol = htons(ETH_P_IP);
  
- 	WARN_ON(!cdo->generic_packet);
- 
-+	/*
-+	 * Propagate the drive's write support to the block layer so BLKROGET
-+	 * reflects actual write capability. Drivers that use GET CONFIGURATION
-+	 * features (CDC_MRW_W, CDC_RAM) must have called
-+	 * cdrom_probe_write_features() before register_cdrom() so the mask is
-+	 * complete here.
-+	 */
-+	set_disk_ro(disk, !CDROM_CAN(CDC_DVD_RAM | CDC_MRW_W | CDC_RAM |
-+				     CDC_CD_RW));
-+
- 	cd_dbg(CD_REG_UNREG, "drive \"/dev/%s\" registered\n", cdi->name);
- 	mutex_lock(&cdrom_mutex);
- 	list_add(&cdi->list, &cdrom_list);
-@@ -742,6 +752,44 @@ static int cdrom_is_random_writable(struct cdrom_device_info *cdi, int *write)
- 	return 0;
- }
- 
-+/*
-+ * Probe write-related MMC features via GET CONFIGURATION and update
-+ * cdi->mask accordingly. Drivers that populate cdi->mask from the MODE SENSE
-+ * capabilities page (e.g. sr) should call this after those MODE SENSE bits
-+ * have been set but before register_cdrom(), so that the full set of
-+ * write-capability bits is known by the time register_cdrom() decides on the
-+ * initial read-only state of the disk.
-+ */
-+void cdrom_probe_write_features(struct cdrom_device_info *cdi)
-+{
-+	int mrw, mrw_write, ram_write;
-+
-+	mrw = 0;
-+	if (!cdrom_is_mrw(cdi, &mrw_write))
-+		mrw = 1;
-+
-+	if (CDROM_CAN(CDC_MO_DRIVE))
-+		ram_write = 1;
-+	else
-+		(void) cdrom_is_random_writable(cdi, &ram_write);
-+
-+	if (mrw)
-+		cdi->mask &= ~CDC_MRW;
-+	else
-+		cdi->mask |= CDC_MRW;
-+
-+	if (mrw_write)
-+		cdi->mask &= ~CDC_MRW_W;
-+	else
-+		cdi->mask |= CDC_MRW_W;
-+
-+	if (ram_write)
-+		cdi->mask &= ~CDC_RAM;
-+	else
-+		cdi->mask |= CDC_RAM;
-+}
-+EXPORT_SYMBOL(cdrom_probe_write_features);
-+
- static int cdrom_media_erasable(struct cdrom_device_info *cdi)
- {
- 	disc_information di;
-@@ -894,33 +942,8 @@ static int cdrom_is_dvd_rw(struct cdrom_device_info *cdi)
-  */
- static int cdrom_open_write(struct cdrom_device_info *cdi)
- {
--	int mrw, mrw_write, ram_write;
- 	int ret = 1;
- 
--	mrw = 0;
--	if (!cdrom_is_mrw(cdi, &mrw_write))
--		mrw = 1;
--
--	if (CDROM_CAN(CDC_MO_DRIVE))
--		ram_write = 1;
--	else
--		(void) cdrom_is_random_writable(cdi, &ram_write);
--	
--	if (mrw)
--		cdi->mask &= ~CDC_MRW;
--	else
--		cdi->mask |= CDC_MRW;
--
--	if (mrw_write)
--		cdi->mask &= ~CDC_MRW_W;
--	else
--		cdi->mask |= CDC_MRW_W;
--
--	if (ram_write)
--		cdi->mask &= ~CDC_RAM;
--	else
--		cdi->mask |= CDC_RAM;
--
- 	if (CDROM_CAN(CDC_MRW_W))
- 		ret = cdrom_mrw_open_write(cdi);
- 	else if (CDROM_CAN(CDC_DVD_RAM))
-diff --git a/drivers/scsi/sr.c b/drivers/scsi/sr.c
-index add13e3068983..803fc9c132298 100644
---- a/drivers/scsi/sr.c
-+++ b/drivers/scsi/sr.c
-@@ -395,7 +395,7 @@ static blk_status_t sr_init_command(struct scsi_cmnd *SCpnt)
- 
- 	switch (req_op(rq)) {
- 	case REQ_OP_WRITE:
--		if (!cd->writeable)
-+		if (get_disk_ro(cd->disk))
- 			goto out;
- 		SCpnt->cmnd[0] = WRITE_10;
- 		cd->cdi.media_written = 1;
-@@ -681,6 +681,7 @@ static int sr_probe(struct device *dev)
- 	error = -ENOMEM;
- 	if (get_capabilities(cd))
- 		goto fail_minor;
-+	cdrom_probe_write_features(&cd->cdi);
- 	sr_vendor_init(cd);
- 
- 	set_capacity(disk, cd->capacity);
-@@ -899,14 +900,6 @@ static int get_capabilities(struct scsi_cd *cd)
- 	/*else    I don't think it can close its tray
- 		cd->cdi.mask |= CDC_CLOSE_TRAY; */
- 
--	/*
--	 * if DVD-RAM, MRW-W or CD-RW, we are randomly writable
--	 */
--	if ((cd->cdi.mask & (CDC_DVD_RAM | CDC_MRW_W | CDC_RAM | CDC_CD_RW)) !=
--			(CDC_DVD_RAM | CDC_MRW_W | CDC_RAM | CDC_CD_RW)) {
--		cd->writeable = 1;
--	}
--
- 	kfree(buffer);
- 	return 0;
- }
-diff --git a/drivers/scsi/sr.h b/drivers/scsi/sr.h
-index dc899277b3a44..2d92f9cb6fec7 100644
---- a/drivers/scsi/sr.h
-+++ b/drivers/scsi/sr.h
-@@ -35,7 +35,6 @@ typedef struct scsi_cd {
- 	struct scsi_device *device;
- 	unsigned int vendor;	/* vendor code, see sr_vendor.c         */
- 	unsigned long ms_offset;	/* for reading multisession-CD's        */
--	unsigned writeable : 1;
- 	unsigned use:1;		/* is this device still supportable     */
- 	unsigned xa_flag:1;	/* CD has XA sectors ? */
- 	unsigned readcd_known:1;	/* drive supports READ_CD (0xbe) */
-diff --git a/include/linux/cdrom.h b/include/linux/cdrom.h
-index b907e6c2307d8..260d7968cf720 100644
---- a/include/linux/cdrom.h
-+++ b/include/linux/cdrom.h
-@@ -108,6 +108,7 @@ int cdrom_ioctl(struct cdrom_device_info *cdi, struct block_device *bdev,
- extern unsigned int cdrom_check_events(struct cdrom_device_info *cdi,
- 				       unsigned int clearing);
- 
-+extern void cdrom_probe_write_features(struct cdrom_device_info *cdi);
- extern int register_cdrom(struct gendisk *disk, struct cdrom_device_info *cdi);
- extern void unregister_cdrom(struct cdrom_device_info *cdi);
- 
+ 	skb_set_network_header(skb, skb->len);
+-	iph = skb_put(skb, sizeof(struct iphdr));
++	iph = skb_put_zero(skb, sizeof(struct iphdr));
+ 	iph->protocol = IPPROTO_UDP;
+ 	iph->saddr = in_aton("192.0.2.1");
+ 	iph->daddr = in_aton("198.51.100.1");
 -- 
 2.53.0
 
