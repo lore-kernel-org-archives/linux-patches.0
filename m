@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6A7372B31;
-	Wed, 20 May 2026 16:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A693A3E90;
+	Wed, 20 May 2026 16:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295283; cv=none; b=nfcr8hs76oWaRgxVxtcVIpUsrTGrdxWZUYUkR0uC3SXIipQ4Bf6if85Q2en8qxAFKKPGyg2tnvRhd573qV+YPTIcbHxHKnqfwjjSSgDiP/3+10WIoDkaH1fy82xImzbjBBsTf35O6G4MHeRbteoV5lLUt6nLHxwlxTladtHkGAg=
+	t=1779295286; cv=none; b=bSRWkpxwa3WSKJcXbGfPdZz7aJMQE/1skfwf7KXTy7AZAUejFhaDA/sxNXU6TKON/m+Qe3L2TK9m3ZbT+l6dee6x+x0RvQJLGqEuQnVYv3HQ3mWKlzjNHbsHK63yazyJhI74cTpRp/0alSI9E70G0DY539wJaG9SAkSWwFYJkec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295283; c=relaxed/simple;
-	bh=MyPls/gySHitaSjVyym3xRlC7v51WZqH/GF84C153Q8=;
+	s=arc-20240116; t=1779295286; c=relaxed/simple;
+	bh=JHjo2OvuxdcO4gpQSWgri+e4Bt15IDecadMizOLqQ3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRd1L0EG0uCZ0ZL6bCflqXNO2/EPn0MhD1hV7xP6CVEj3+N3CI8g6SvPLLu+aW9pqyyIGK5zRy4XgLfGlSbD+6N3G85x6sgjU7IyPevovF6/I7UqocHIkBsZjN8f3ryq6p7QpEFDe0XUM48zsSWifG9w2HYFr2w1vHYHH/X6e+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeW39Ql1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MfHxPG8j8NW2V4x8GKK6vo2UPWW79KhSqeFdaFex6qLcXrmOuPnXGc/1kaimBmOTtU2N1Rnkozo6uVYlZ7QUTx/XMTaV35YctX5lWz97UTz9CTRQS7z/OMpn/vVI002sz/SwNY+llR3lJ0FULegRTr/dXQWV7XlyM0c/l0ys79E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzkZUJHh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeW39Ql1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EACC1F000E9;
-	Wed, 20 May 2026 16:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzkZUJHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7DD1F000E9;
+	Wed, 20 May 2026 16:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295282;
-	bh=I32KpGJqADVRlRD7mBbvZ1OhtNHhPoqNi0HmoKAJD94=;
+	s=korg; t=1779295285;
+	bh=W969MT7GZyWVsa8JocxVcxrS/HLxMFq/DekBNroSCYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zeW39Ql1f1zl3C36bElH6CxpETm5ywQYbkyL6nuCHi87AGGLuF0mYlNWRf4BDsdwx
-	 /HkrHdVN782JjLSj14rKIcziQlvSrV9LkBQoQ6G5fZxl+yZdfTTqfE/ZOXNBuP1evP
-	 +etAQCn5Az78cbR6BpwEMQIoNbJTdjQOlvH1hldY=
+	b=uzkZUJHh4eDyzWw81O5YeFE5xU1MgaAUNZ8Ytks4Q33J1bngdbi1gRejOzxglMcmW
+	 Fx8iJg97G+KNUf76QHH/RuNhUU0h2zti4KdqGVaKcGUfdKUDii9vWbnQFNKVUJZYF3
+	 pxTv54EHU4BekKt42+moIRF76b1EIjQf+icuAi+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0360/1146] drm/msm/a6xx: Switch to preemption safe AO counter
-Date: Wed, 20 May 2026 18:10:10 +0200
-Message-ID: <20260520162156.348320201@linuxfoundation.org>
+Subject: [PATCH 7.0 0361/1146] drm/msm/a6xx: Correct OOB usage
+Date: Wed, 20 May 2026 18:10:11 +0200
+Message-ID: <20260520162156.371029477@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,80 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit 0c59f258ffd4c9c2a6bd37d71a0ade1db8bc03b7 ]
+[ Upstream commit d34b6919798c1a8c93e1d7cca297d0e068146bd5 ]
 
-CP_ALWAYS_ON_COUNTER is not save-restored during preemption, so it won't
-provide accurate data about the 'submit' when preemption is enabled.
-Switch to CP_ALWAYS_ON_CONTEXT which is preemption safe.
+During the GMU resume sequence, using another OOB other than OOB_GPU may
+confuse the internal state of GMU firmware. To align more strictly with
+the downstream sequence, move the sysprof related OOB setup after the
+OOB_GPU is cleared.
 
-Fixes: e7ae83da4a28 ("drm/msm/a6xx: Implement preemption for a7xx targets")
+Fixes: 62cd0fa6990b ("drm/msm/adreno: Disable IFPC when sysprof is active")
 Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/714657/
-Message-ID: <20260327-a8xx-gpu-batch2-v2-3-2b53c38d2101@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/714659/
+Message-ID: <20260327-a8xx-gpu-batch2-v2-4-2b53c38d2101@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 5 -----
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 6 ++++++
+ drivers/gpu/drm/msm/adreno/a8xx_gpu.c | 6 ++++++
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 9662201cd2e9d..690d3e53e2738 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1236,11 +1236,6 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+ 	/* Set the GPU to the current freq */
+ 	a6xx_gmu_set_initial_freq(gpu, gmu);
+ 
+-	if (refcount_read(&gpu->sysprof_active) > 1) {
+-		ret = a6xx_gmu_set_oob(gmu, GMU_OOB_PERFCOUNTER_SET);
+-		if (!ret)
+-			set_bit(GMU_STATUS_OOB_PERF_SET, &gmu->status);
+-	}
+ out:
+ 	/* On failure, shut down the GMU to leave it in a good state */
+ 	if (ret) {
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 4fe2b86e7a839..eeecde88e549f 100644
+index eeecde88e549f..4e0d67e3acb7e 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -347,7 +347,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	 * GPU registers so we need to add 0x1a800 to the register value on A630
- 	 * to get the right value from PM4.
+@@ -1605,6 +1605,12 @@ static int hw_init(struct msm_gpu *gpu)
+ 		a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_BOOT_SLUMBER);
+ 	}
+ 
++	if (!ret && (refcount_read(&gpu->sysprof_active) > 1)) {
++		ret = a6xx_gmu_set_oob(gmu, GMU_OOB_PERFCOUNTER_SET);
++		if (!ret)
++			set_bit(GMU_STATUS_OOB_PERF_SET, &gmu->status);
++	}
++
+ 	return ret;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+index 840af9c4d718c..fafeac62aebf5 100644
+--- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+@@ -711,6 +711,12 @@ static int hw_init(struct msm_gpu *gpu)
  	 */
--	get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_COUNTER,
-+	get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_CONTEXT,
- 		rbmemptr_stats(ring, index, alwayson_start));
+ 	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
  
- 	/* Invalidate CCU depth and color */
-@@ -388,7 +388,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
++	if (!ret && (refcount_read(&gpu->sysprof_active) > 1)) {
++		ret = a6xx_gmu_set_oob(gmu, GMU_OOB_PERFCOUNTER_SET);
++		if (!ret)
++			set_bit(GMU_STATUS_OOB_PERF_SET, &gmu->status);
++	}
++
+ 	return ret;
+ }
  
- 	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP(0),
- 		rbmemptr_stats(ring, index, cpcycles_end));
--	get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_COUNTER,
-+	get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_CONTEXT,
- 		rbmemptr_stats(ring, index, alwayson_end));
- 
- 	/* Write the fence to the scratch register */
-@@ -457,7 +457,7 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
- 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
- 	struct msm_ringbuffer *ring = submit->ring;
--	u32 rbbm_perfctr_cp0, cp_always_on_counter;
-+	u32 rbbm_perfctr_cp0, cp_always_on_context;
- 	unsigned int i, ibs = 0;
- 
- 	adreno_check_and_reenable_stall(adreno_gpu);
-@@ -480,14 +480,14 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 
- 	if (adreno_is_a8xx(adreno_gpu)) {
- 		rbbm_perfctr_cp0 = REG_A8XX_RBBM_PERFCTR_CP(0);
--		cp_always_on_counter = REG_A8XX_CP_ALWAYS_ON_COUNTER;
-+		cp_always_on_context = REG_A8XX_CP_ALWAYS_ON_CONTEXT;
- 	} else {
- 		rbbm_perfctr_cp0 = REG_A7XX_RBBM_PERFCTR_CP(0);
--		cp_always_on_counter = REG_A6XX_CP_ALWAYS_ON_COUNTER;
-+		cp_always_on_context = REG_A6XX_CP_ALWAYS_ON_CONTEXT;
- 	}
- 
- 	get_stats_counter(ring, rbbm_perfctr_cp0, rbmemptr_stats(ring, index, cpcycles_start));
--	get_stats_counter(ring, cp_always_on_counter, rbmemptr_stats(ring, index, alwayson_start));
-+	get_stats_counter(ring, cp_always_on_context, rbmemptr_stats(ring, index, alwayson_start));
- 
- 	OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
- 	OUT_RING(ring, CP_SET_THREAD_BOTH);
-@@ -535,7 +535,7 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	}
- 
- 	get_stats_counter(ring, rbbm_perfctr_cp0, rbmemptr_stats(ring, index, cpcycles_end));
--	get_stats_counter(ring, cp_always_on_counter, rbmemptr_stats(ring, index, alwayson_end));
-+	get_stats_counter(ring, cp_always_on_context, rbmemptr_stats(ring, index, alwayson_end));
- 
- 	/* Write the fence to the scratch register */
- 	if (adreno_is_a8xx(adreno_gpu)) {
 -- 
 2.53.0
 
