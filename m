@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA352352022;
-	Wed, 20 May 2026 16:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B800369D6A;
+	Wed, 20 May 2026 16:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294870; cv=none; b=OV1ER1Fg4rRmslWOVqT3dtuGWiN9plz2RyFAMJDNmlyYATrxqkZZ2WayV0amydUZeMxn5Wv1cgPpbzVm0nw9ctjz/SARAj2g/1c8bCNra6qtUcs6mIQ1pgMr+oa/sdKrutGj0189zJGyEBdfWMXidu9gmMHMumFJeD62xPQYkHA=
+	t=1779294872; cv=none; b=FsAtTLB8b4BriSGbvoEhZgHC5zybNBUZIQV631VOVmM/A5qDc+k6XChuBtpdRC4aefcNUxcEO/2357k+NnLQAQPyeBqbcssu4u1Sjiqjna3t2WXUDwmtgU+aLwctLIg7o5IvRp2h2wEerTlL8/53vcy640gWSicLsefd1Lzl34M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294870; c=relaxed/simple;
-	bh=EVUnyIMe+uskJAIwS4wTbg4YWQIb6V/xwibQzMGk4T0=;
+	s=arc-20240116; t=1779294872; c=relaxed/simple;
+	bh=6kY3a52+/kBe+WcrGJzyjpybnD9iY6RLvH8480IPysw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WbHGRS9vVWcBNKsExc8HiIFE8uU4RS9AwhTtVhJ4X5j7/JDh7fy609sAsjXQhbfyHcnZYSiURN9RKMkIHN2L/y9CM87TRybpVquYrX09QU4w6PmYSJ66hvzEhLqIf8sIGohOncjKnOCsvZuLMtJHsa5NivGFUz/zUu3p739Lh88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLYY3Cjx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GQ1ZXSEih4JwHi+6rvsHrniiwMluPvGb52oEXYeT067kelg5T2JAFKzJzpmJDv7enTBIN+7MjYky3Ohsy12u8kXgjPNZk2enLPnvJTZTfTQEIymM9ubQxkP6etgeNjPAIXpXTjOYDPPCoxJjrcgkI7b0pl38h9waDzQqe1R1Lwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6ECY0ir; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLYY3Cjx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFC01F000E9;
-	Wed, 20 May 2026 16:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6ECY0ir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F223A1F000E9;
+	Wed, 20 May 2026 16:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294868;
-	bh=1WiZr5aYaVXI7dgdN0tRMQNovlXUXz6gfaybFE1Gb7Y=;
+	s=korg; t=1779294871;
+	bh=I0ZUCAa213aRY+vHqVcfAF8qn4bsfo9fd9tc9wXGZzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nLYY3Cjxw/H0C7fWt02muP7o16nTrbZcoiX6XO+1719FLXAFjDVGmp5JFJx/oviYJ
-	 OiMjIuq0hq7b812XbfAkuWpRQp8hrmEIHuWJmg64OgGTFifZL1u55dDpaHhrB4XTpE
-	 wVDcgv8GzsB402g7Al6PJ0HV7Hqad2IOmHYXIpEE=
+	b=h6ECY0irtMfjOJ/6X5rUvfFNe4tXISXbyATEHHUU4M6pQX8DboTY17+pPHSGjrP5t
+	 Sltm/UOLX7phnD7Ww82p821ru6mNgiOBoADgrBMtuZIffksALnqzf0mWwH8lKG4l2V
+	 CqmHWq2MLUcj1hw3LsgXMfoXMrFK+Q///7OaPifI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0202/1146] net: ipa: Fix programming of QTIME_TIMESTAMP_CFG
-Date: Wed, 20 May 2026 18:07:32 +0200
-Message-ID: <20260520162152.841996227@linuxfoundation.org>
+Subject: [PATCH 7.0 0203/1146] net: ipa: Fix decoding EV_PER_EE for IPA v5.0+
+Date: Wed, 20 May 2026 18:07:33 +0200
+Message-ID: <20260520162152.864007445@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,47 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit de08f9585692813bd41ee654fca0487664c4de30 ]
+[ Upstream commit 1335b903cf2e8aeaca87fd665683384c731ec941 ]
 
-The 'val' variable gets overwritten multiple times, discarding previous
-values. Looking at the git log shows these should be combined with |=
-instead.
+Initially 'reg' and 'val' are assigned from HW_PARAM_2.
 
-Fixes: 9265a4f0f0b4 ("net: ipa: define even more IPA register fields")
-Link: https://sashiko.dev/#/patchset/20260403-milos-ipa-v1-0-01e9e4e03d3e%40fairphone.com?part=4
+But since IPA v5.0+ takes EV_PER_EE from HW_PARAM_4 (instead of
+NUM_EV_PER_EE from HW_PARAM_2), we not only need to re-assign 'reg' but
+also read the register value of that register into 'val' so that
+reg_decode() works on the correct value.
+
+Fixes: f651334e1ef5 ("net: ipa: add HW_PARAM_4 GSI register")
+Link: https://sashiko.dev/#/patchset/20260403-milos-ipa-v1-0-01e9e4e03d3e%40fairphone.com?part=2
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260409-ipa-fixes-v1-1-a817c30678ac@fairphone.com
+Link: https://patch.msgid.link/20260409-ipa-fixes-v1-2-a817c30678ac@fairphone.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/ipa_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ipa/gsi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
-index edead9c48d1fe..216506eeef1fb 100644
---- a/drivers/net/ipa/ipa_main.c
-+++ b/drivers/net/ipa/ipa_main.c
-@@ -361,7 +361,7 @@ static void ipa_qtime_config(struct ipa *ipa)
- {
- 	const struct reg *reg;
- 	u32 offset;
--	u32 val;
-+	u32 val = 0;
- 
- 	/* Timer clock divider must be disabled when we change the rate */
- 	reg = ipa_reg(ipa, TIMERS_XO_CLK_DIV_CFG);
-@@ -374,8 +374,8 @@ static void ipa_qtime_config(struct ipa *ipa)
- 		val |= reg_bit(reg, DPL_TIMESTAMP_SEL);
+diff --git a/drivers/net/ipa/gsi.c b/drivers/net/ipa/gsi.c
+index 4c3227e77898c..624649484d627 100644
+--- a/drivers/net/ipa/gsi.c
++++ b/drivers/net/ipa/gsi.c
+@@ -2044,6 +2044,7 @@ static int gsi_ring_setup(struct gsi *gsi)
+ 		count = reg_decode(reg, NUM_EV_PER_EE, val);
+ 	} else {
+ 		reg = gsi_reg(gsi, HW_PARAM_4);
++		val = ioread32(gsi->virt + reg_offset(reg));
+ 		count = reg_decode(reg, EV_PER_EE, val);
  	}
- 	/* Configure tag and NAT Qtime timestamp resolution as well */
--	val = reg_encode(reg, TAG_TIMESTAMP_LSB, TAG_TIMESTAMP_SHIFT);
--	val = reg_encode(reg, NAT_TIMESTAMP_LSB, NAT_TIMESTAMP_SHIFT);
-+	val |= reg_encode(reg, TAG_TIMESTAMP_LSB, TAG_TIMESTAMP_SHIFT);
-+	val |= reg_encode(reg, NAT_TIMESTAMP_LSB, NAT_TIMESTAMP_SHIFT);
- 
- 	iowrite32(val, ipa->reg_virt + reg_offset(reg));
- 
+ 	if (!count) {
 -- 
 2.53.0
 
