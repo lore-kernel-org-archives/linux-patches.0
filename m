@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E68369211;
-	Wed, 20 May 2026 16:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4062366065;
+	Wed, 20 May 2026 16:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294628; cv=none; b=Ms7u666Ye5dukEoMQ4GEIKOHJzA3PDbA/VP/8UQe2MBowIQMleT55uR2p3GJVNybwRXquRuQsRWZ1kZ7FgnDUHZBBr2uv0rU++rOp5yK1ygG81MvDxIrjvzdmzvs8ENfRZMeJWilMo4PUk1I5fJ6zmPGW7gKMq9keaf4qfby2Ho=
+	t=1779294630; cv=none; b=m31ydiS5GdZjI3yOyWuv0nea52Dx8v2qF47HZ6mZmI+SiFQHo8spYj8qWk20w9suMd8KDSqgctzLzEPYWfw2WQavKV8O7O9couiJbtZGkWkWAUl6VE+d1aKB964oJSnU7h0BFbti6XgEPiU/AOhS86Rm3ZkBqAkc8GoWjmCWjP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294628; c=relaxed/simple;
-	bh=jEgAba/8mqzLYMcsIDEhAJrytIn7F/DKaqNtZ9KRhjQ=;
+	s=arc-20240116; t=1779294630; c=relaxed/simple;
+	bh=45usnLQ3XNM+bqkMXYGSk9ctG+vSVAB+zpyiPOJgsI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WhTG4Hszg83B6zvtUox7n+akMrJCH13t9D8WUI5/mYd/5l+O1N1ybsF8ABQxiqo3shtGcmT+9oX2uvQHERSDCPJM3o4L5VUUqNwnIfWKoImZ2hA9BHItKHU6zHxP0TBU7E7HE883xxpdA5Tx1pM2Fao5f3vu/17CDTmgcaSlsr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IF1arS5Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RbGEL0IERTZCRQ2J8d30toRbUl+NrV5ICVxkYR29vcjErraUGQNNkk4lCOWzwlEIGhRGWIOPPcbUb5+us+hf8oDRe1iCHyhdcVKyqe3l87Is7hrnT0W0Qfxh9znaZqUNPilvnGGwYhQCy+EvFO9CQGOem1Tb3akJifAymNkjiCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAunwCpZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IF1arS5Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6021F000E9;
-	Wed, 20 May 2026 16:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAunwCpZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B171F000E9;
+	Wed, 20 May 2026 16:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294626;
-	bh=AaBZe2u83A+GuO1kq7ccTIntSWfeBniiY154Ph/WYyw=;
+	s=korg; t=1779294629;
+	bh=lCrccU87wLcdVlBe3n0bDsU/xIW83VaK9qSUp2QEXcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IF1arS5ZJ8ug5YKnbrt10JA2cH0dhjqv07Y2+rmOiY0A73wacWbBMGK08M0VAp7gZ
-	 5grINk0Am6/Ym9a41wFmpJz7/Dip/mGtJx0yhT7vCUgLD6+5KY0+Ar9qfCeIL3LfD7
-	 jtziCTO2yoqNrnfhfm9GwKfeJtnM5yTiggjnx6NI=
+	b=yAunwCpZQ+JsZB29CTkZpXowlH0KE/AUysh47VKEP4tpujDWJpfTHXO02RjsUi45O
+	 nQzn3u8Dyn9l+wZlPuvi+Q1TSVROzq3BVH8ruH3F/wWwqxR4xp0mxMlLHTbwbv08ND
+	 sgZ2aAILEAUL5QWL8sUNeMnhBqKmtzmHO3eJtadg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@airoha.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Sean Wang <sean.wang@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0110/1146] wifi: mt76: npu: Add missing rx_token_size initialization
-Date: Wed, 20 May 2026 18:06:00 +0200
-Message-ID: <20260520162150.828476608@linuxfoundation.org>
+Subject: [PATCH 7.0 0111/1146] wifi: mt76: mt7925: drop puncturing handling from BSS change path
+Date: Wed, 20 May 2026 18:06:01 +0200
+Message-ID: <20260520162150.850427024@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,34 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 25e3203a2192f2b0d697b2410126bad87e62d4f0 ]
+[ Upstream commit 59a1864509d084a4b34117e693951c06b846b00a ]
 
-Add missing rx_token_size initialization for NPU offloading.
+IEEE80211_CHANCTX_CHANGE_PUNCTURING is a channel context change
+flag and should not be checked in the BSS change handler, where
+the changed mask represents enum ieee80211_bss_change.
 
-Fixes: 7fb554b1b623 ("wifi: mt76: Introduce the NPU generic layer")
-Tested-by: Kang Yang <kang.yang@airoha.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260122-mt76-npu-eagle-offload-v2-2-2374614c0de6@kernel.org
+Remove the puncturing handling from the BSS path and rely on
+mt7925_change_chanctx() to update puncturing configuration.
+
+Fixes: cadebdad959b ("wifi: mt76: mt7925: add EHT preamble puncturing")
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20251216022017.23870-1-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/npu.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/npu.c b/drivers/net/wireless/mediatek/mt76/npu.c
-index ec36975f6dc94..9679237f73984 100644
---- a/drivers/net/wireless/mediatek/mt76/npu.c
-+++ b/drivers/net/wireless/mediatek/mt76/npu.c
-@@ -457,6 +457,7 @@ int mt76_npu_init(struct mt76_dev *dev, phys_addr_t phy_addr, int type)
- 	dev->mmio.npu_type = type;
- 	/* NPU offloading requires HW-RRO for RX packet reordering. */
- 	dev->hwrro_mode = MT76_HWRRO_V3_1;
-+	dev->rx_token_size = 32768;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index d99a60ae063e8..3d622c066ac76 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1894,10 +1894,8 @@ static void mt7925_link_info_changed(struct ieee80211_hw *hw,
+ 	struct mt792x_phy *phy = mt792x_hw_phy(hw);
+ 	struct mt792x_dev *dev = mt792x_hw_dev(hw);
+ 	struct mt792x_bss_conf *mconf;
+-	struct ieee80211_bss_conf *link_conf;
  
- 	rcu_assign_pointer(dev->mmio.npu, npu);
- 	rcu_assign_pointer(dev->mmio.ppe_dev, ppe_dev);
+ 	mconf = mt792x_vif_to_link(mvif, info->link_id);
+-	link_conf = mt792x_vif_to_bss_conf(vif, mconf->link_id);
+ 
+ 	mt792x_mutex_acquire(dev);
+ 
+@@ -1939,10 +1937,6 @@ static void mt7925_link_info_changed(struct ieee80211_hw *hw,
+ 		mvif->mlo_pm_state = MT792x_MLO_CHANGED_PS;
+ 	}
+ 
+-	if (changed & IEEE80211_CHANCTX_CHANGE_PUNCTURING)
+-		mt7925_mcu_set_eht_pp(mvif->phy->mt76, &mconf->mt76,
+-				      link_conf, NULL);
+-
+ 	if (changed & BSS_CHANGED_CQM)
+ 		mt7925_mcu_set_rssimonitor(dev, vif);
+ 
 -- 
 2.53.0
 
