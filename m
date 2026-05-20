@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8463E95A4;
-	Wed, 20 May 2026 18:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6030334DCE4;
+	Wed, 20 May 2026 18:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300151; cv=none; b=dxEEMB+n7eLNUmUcPgY8X3xscgw6DJNLRg7tbPNWhvZ9maE2Vo1XuvQZAfFupRMhYGWBHlQ669EFDwHYYpsep4B9hcnKXvtcu0BKQNIM96HAon46f6nLxCAi0GLpa6Iy8jX8FynbNuen0lq+S7EgmCMFVksgZBJNVuB3M9jwqMo=
+	t=1779300154; cv=none; b=PiWDyJZgvs75vL1ugNw9WjMglCO8paRs2NbjPz7BRVkSmYAZsfbxXRS9GFf3CkBbtW0WVcFyaxHx2IzFL+kZXiFDQgO9oz3alqm6FRI/Vea1lTE0XtAQT3Aub8yz18CH1eWCcpS0B9h+ZxSu9iAHU6cYblnGD9+Mf4q9bp8uyGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300151; c=relaxed/simple;
-	bh=1fOP63Sfd/teFdVzjC8TpERffJHQXRlvMzR/FjplYz4=;
+	s=arc-20240116; t=1779300154; c=relaxed/simple;
+	bh=BHC7uI1Vxn38qpgMsYOHg5/EhocVUUIxHivxIjTvTBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F044dti2iMU4MZLefmY9ACBajZQWWaeNeuutkdUtVFTFF1EyJ4Ao3VfHpCdq3V95PP5RzpU7CmAULQPKliWqg+y8S0DCWicuaP/3v9rPKzyzbGtE37MT2ZgUxcyoxfhYYubIGmFdpCASLUyslfwEuWPwWvne1vliAW0a3Af1UcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxQe1/g7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qp+lP7sciYf5gjrgLKvWYGMOh/VxC83VPHmrPK76iUWMuLVXe3oCyjVzlaVAr651c44Kv5eB532prZQD2tswgtq+BzZXP3kULTyg0G9QWMmAgJFXXFUeynyDWIhNm9YllQdgUG4DeT0MT+eHqpU7o5wAdaZYp37PBBk5YeFNoyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBBpB3I9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxQe1/g7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5CD1F000E9;
-	Wed, 20 May 2026 18:02:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBBpB3I9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C697B1F000E9;
+	Wed, 20 May 2026 18:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300150;
-	bh=xCFF8kF8YfpkUdch0XUk771rOE5zDjLGIfxOMDYAFiA=;
+	s=korg; t=1779300153;
+	bh=Mrjw1bHXVg4az3yVbT7YNcIBf9NCPkoVpQrj0U1DyhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RxQe1/g72sLi3FAQLtkWNlbu1hAgoXR9e0OID1ce03bRpAxqrc++jG/KEzk72zhx5
-	 Wo8KQL1y3Gbux35bZ7gI0JO8BxhpTWc099RDtX75/hUKWZhOUFhK6MZP98JmUeknze
-	 2/mXo2naOdywTgrIeMnVQ5yCdKOu9WOaIpjXv1Zk=
+	b=jBBpB3I91UtNoPHqJW3H8uOiC63nRWPAdVbe6OQ0Gqj4SzcIph657/bUwYt9R681G
+	 joqWkequCmH3zZBDMTLAGmWecYKOSIuJJFWrbRVo96ofpagBBa6gj7srJyIwuIIvR0
+	 3U0InPWQiALjEKZhtyncfOjqRF+Wwi1+y52LF4Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MingTao Huang <mintaohuang@tencent.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Ethan Tidmore <ethantidmore06@gmail.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 065/666] bpf: Fix stale offload->prog pointer after constant blinding
-Date: Wed, 20 May 2026 18:14:36 +0200
-Message-ID: <20260520162112.640454503@linuxfoundation.org>
+Subject: [PATCH 6.12 066/666] wifi: brcmfmac: Fix error pointer dereference
+Date: Wed, 20 May 2026 18:14:37 +0200
+Message-ID: <20260520162112.661599810@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,70 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: MingTao Huang <mintaohuang@tencent.com>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-[ Upstream commit a1aa9ef47c299c5bbc30594d3c2f0589edf908e6 ]
+[ Upstream commit dd8592fc6007a451c3e4b9025de365e39de8178a ]
 
-When a dev-bound-only BPF program (BPF_F_XDP_DEV_BOUND_ONLY) undergoes
-JIT compilation with constant blinding enabled (bpf_jit_harden >= 2),
-bpf_jit_blind_constants() clones the program. The original prog is then
-freed in bpf_jit_prog_release_other(), which updates aux->prog to point
-to the surviving clone, but fails to update offload->prog.
+The function brcmf_chip_add_core() can return an error pointer and is
+not checked. Add checks for error pointer.
 
-This leaves offload->prog pointing to the freed original program. When
-the network namespace is subsequently destroyed, cleanup_net() triggers
-bpf_dev_bound_netdev_unregister(), which iterates ondev->progs and calls
-__bpf_prog_offload_destroy(offload->prog). Accessing the freed prog
-causes a page fault:
+Detected by Smatch:
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1010 brcmf_chip_recognition() error:
+'core' dereferencing possible ERR_PTR()
 
-BUG: unable to handle page fault for address: ffffc900085f1038
-Workqueue: netns cleanup_net
-RIP: 0010:__bpf_prog_offload_destroy+0xc/0x80
-Call Trace:
-__bpf_offload_dev_netdev_unregister+0x257/0x350
-bpf_dev_bound_netdev_unregister+0x4a/0x90
-unregister_netdevice_many_notify+0x2a2/0x660
-...
-cleanup_net+0x21a/0x320
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1013 brcmf_chip_recognition() error:
+'core' dereferencing possible ERR_PTR()
 
-The test sequence that triggers this reliably is:
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1016 brcmf_chip_recognition() error:
+'core' dereferencing possible ERR_PTR()
 
-1. Set net.core.bpf_jit_harden=2 (echo 2 > /proc/sys/net/core/bpf_jit_harden)
-2. Run xdp_metadata selftest, which creates a dev-bound-only XDP
-   program on a veth inside a netns (./test_progs -t xdp_metadata)
-3. cleanup_net -> page fault in __bpf_prog_offload_destroy
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1019 brcmf_chip_recognition() error:
+'core' dereferencing possible ERR_PTR()
 
-Dev-bound-only programs are unique in that they have an offload structure
-but go through the normal JIT path instead of bpf_prog_offload_compile().
-This means they are subject to constant blinding's prog clone-and-replace,
-while also having offload->prog that must stay in sync.
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c:1022 brcmf_chip_recognition() error:
+'core' dereferencing possible ERR_PTR()
 
-Fix this by updating offload->prog in bpf_jit_prog_release_other(),
-alongside the existing aux->prog update. Both are back-pointers to
-the prog that must be kept in sync when the prog is replaced.
-
-Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
-Signed-off-by: MingTao Huang <mintaohuang@tencent.com>
-Link: https://lore.kernel.org/r/tencent_BCF692F45859CCE6C22B7B0B64827947D406@qq.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: cb7cf7be9eba7 ("brcmfmac: make chip related functions host interface independent")
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260217023043.73631-1-ethantidmore06@gmail.com
+[add missing wifi: prefix]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../wireless/broadcom/brcm80211/brcmfmac/chip.c   | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index b58833e99969a..517710c89fa50 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -1489,6 +1489,8 @@ void bpf_jit_prog_release_other(struct bpf_prog *fp, struct bpf_prog *fp_other)
- 	 * know whether fp here is the clone or the original.
- 	 */
- 	fp->aux->prog = fp;
-+	if (fp->aux->offload)
-+		fp->aux->offload->prog = fp;
- 	bpf_prog_clone_free(fp_other);
- }
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
+index 2ef92ef25517e..4dbb1898f3065 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
+@@ -1006,18 +1006,33 @@ static int brcmf_chip_recognition(struct brcmf_chip_priv *ci)
  
+ 		core = brcmf_chip_add_core(ci, BCMA_CORE_CHIPCOMMON,
+ 					   SI_ENUM_BASE_DEFAULT, 0);
++		if (IS_ERR(core))
++			return PTR_ERR(core);
++
+ 		brcmf_chip_sb_corerev(ci, core);
+ 		core = brcmf_chip_add_core(ci, BCMA_CORE_SDIO_DEV,
+ 					   BCM4329_CORE_BUS_BASE, 0);
++		if (IS_ERR(core))
++			return PTR_ERR(core);
++
+ 		brcmf_chip_sb_corerev(ci, core);
+ 		core = brcmf_chip_add_core(ci, BCMA_CORE_INTERNAL_MEM,
+ 					   BCM4329_CORE_SOCRAM_BASE, 0);
++		if (IS_ERR(core))
++			return PTR_ERR(core);
++
+ 		brcmf_chip_sb_corerev(ci, core);
+ 		core = brcmf_chip_add_core(ci, BCMA_CORE_ARM_CM3,
+ 					   BCM4329_CORE_ARM_BASE, 0);
++		if (IS_ERR(core))
++			return PTR_ERR(core);
++
+ 		brcmf_chip_sb_corerev(ci, core);
+ 
+ 		core = brcmf_chip_add_core(ci, BCMA_CORE_80211, 0x18001000, 0);
++		if (IS_ERR(core))
++			return PTR_ERR(core);
++
+ 		brcmf_chip_sb_corerev(ci, core);
+ 	} else if (socitype == SOCI_AI) {
+ 		ci->iscoreup = brcmf_chip_ai_iscoreup;
 -- 
 2.53.0
 
