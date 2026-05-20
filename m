@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3DF3ED3B8;
-	Wed, 20 May 2026 18:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461E23ED3B8;
+	Wed, 20 May 2026 18:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300056; cv=none; b=YsAI8ogcrabNdPgzrsY5Ba6vRs0VlwVqpiLg2qPo1fwXfpFM3xUxK+PwWqnShHW7cfBkH4V/XIV1vjXoCQDUVTmq3/+G5q681xCMuNs9RDjRVDlRPK8bXVflkRxcQCjrNhp8FmAU1XSw9FCX5z+IpluJ2XrdiqrZGh3lfUzAKl8=
+	t=1779300059; cv=none; b=k1Uj99EE6dBoOJyfHS2usQkmPi1aD6iTmiT637108QCLda4u6eizPIQ3Wa/9AlUM8q1MIYQkP92dYwNKmKZpdJQ6hkT/O9t+8Zu4IzDtwrLWz+6LRa5Df4+XB1bsJhkDeYdz3xZIacKXxrqG+2+xYdA5/c7S6E9Dd2s74jF/yxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300056; c=relaxed/simple;
-	bh=XRkybAT4SSqWVme+2Bqdx4qib0I9frD6tvdpEX6FXeY=;
+	s=arc-20240116; t=1779300059; c=relaxed/simple;
+	bh=4n9ATU97h79/4N4qS+CrWJDigEBMI2bkoCRms3AX1rk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t7imumO0+Yt4pOdrVlySwFYQhLn7DGDh24jjly7tWJT5XfJZUwBLAtmGcUOtK8oSgYQsV0rj59jhhkojTQv+GeCoyPUppM1dr6Th0Dv0opwDEfNgD/9TrL9KLm29meXA3cWd127OHvAPIZecktfidGeXV5zis0hZUljLCwNyoKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwldTLky; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VMsH4XnHrR+ZNL8rp2KPvBxHqXmn9t0aNq3LJ6M1V8AUjabiBXAhW+f/vP0pdcrCorniPVFe2C268xTEZobznGUb+aZe3sxgxG9m7omxZuQxvrjlutPIRR0lk0x0igRzhgvV0E7kk4RxMVGsPgdUyG6IYhvAQCFa4da3mfOKcyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CG+GLaZ4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwldTLky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA571F000E9;
-	Wed, 20 May 2026 18:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CG+GLaZ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB241F000E9;
+	Wed, 20 May 2026 18:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300055;
-	bh=4L7jBQ0ZeWsNWhHZiQZijO3ovg31L8N9Ixc1cVL7kyg=;
+	s=korg; t=1779300058;
+	bh=s4iGKR0+n223SsluzaL2aCSjC9r18boxoB0UhC+LzBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UwldTLkywJWo2ViY+zFvz1d62CEOfPg92v7+OWzB54hABmGNhu4a4vgeTbLyMjLhZ
-	 2Ydx9BBdIsX3AkESavLjqvUeVTaTXSENKQsMHnM3lkL+bIOUjzM+D5ChZjMuThgx0U
-	 hr5pZV6Iy/5F9XZM86DwCEKTVqHHhSDKR1Yw3Vsw=
+	b=CG+GLaZ4VNAsqpeI+v4Q9f8x/sK14ICx4tc2QwTEzd7JVz+8HzNkMrMRTfvhwOHwp
+	 C7WI+maW0QmwEEtac5Awxh4bRjJ8Lgs4mdRvfkWDRvs/QHb2Z7XoqomQGjLMS2AmDQ
+	 47HYS9dWCd6IC59O9tqRRDKEgxdyLSOabbYFBR2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyungjung Joo <jhj140711@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Xiao Ni <xni@redhat.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/666] fs/mbcache: cancel shrink work before destroying the cache
-Date: Wed, 20 May 2026 18:13:35 +0200
-Message-ID: <20260520162111.326029999@linuxfoundation.org>
+Subject: [PATCH 6.12 005/666] md/raid1: fix the comparing region of interval tree
+Date: Wed, 20 May 2026 18:13:36 +0200
+Message-ID: <20260520162111.348203440@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,47 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyungJung Joo <jhj140711@gmail.com>
+From: Xiao Ni <xni@redhat.com>
 
-[ Upstream commit d227786ab1119669df4dc333a61510c52047cce4 ]
+[ Upstream commit de3544d2e5ea99064498de3c21ba490155864657 ]
 
-mb_cache_destroy() calls shrinker_free() and then frees all cache
-entries and the cache itself, but it does not cancel the pending
-c_shrink_work work item first.
+Interval tree uses [start, end] as a region which stores in the tree.
+In raid1, it uses the wrong end value. For example:
+bio(A,B) is too big and needs to be split to bio1(A,C-1), bio2(C,B).
+The region of bio1 is [A,C] and the region of bio2 is [C,B]. So bio1 and
+bio2 overlap which is not right.
 
-If mb_cache_entry_create() schedules c_shrink_work via schedule_work()
-and the work item is still pending or running when mb_cache_destroy()
-runs, mb_cache_shrink_worker() will access the cache after its memory
-has been freed, causing a use-after-free.
+Fix this problem by using right end value of the region.
 
-This is only reachable by a privileged user (root or CAP_SYS_ADMIN)
-who can trigger the last put of a mounted ext2/ext4/ocfs2 filesystem.
-
-Cancel the work item with cancel_work_sync() before calling
-shrinker_free(), ensuring the worker has finished and will not be
-rescheduled before the cache is torn down.
-
-Fixes: c2f3140fe2ec ("mbcache2: limit cache size")
-Signed-off-by: Hyungjung Joo <jhj140711@gmail.com>
-Link: https://patch.msgid.link/20260317054556.1821600-1-jhj140711@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: d0d2d8ba0494 ("md/raid1: introduce wait_for_serialization")
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Link: https://lore.kernel.org/linux-raid/20260305011839.5118-2-xni@redhat.com/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/mbcache.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid1.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/mbcache.c b/fs/mbcache.c
-index e60a840999aa9..90b0564c62d0b 100644
---- a/fs/mbcache.c
-+++ b/fs/mbcache.c
-@@ -408,6 +408,7 @@ void mb_cache_destroy(struct mb_cache *cache)
- {
- 	struct mb_cache_entry *entry, *next;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 093b04e6be675..eb583df45ecbc 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -61,7 +61,7 @@ static int check_and_add_serial(struct md_rdev *rdev, struct r1bio *r1_bio,
+ 	unsigned long flags;
+ 	int ret = 0;
+ 	sector_t lo = r1_bio->sector;
+-	sector_t hi = lo + r1_bio->sectors;
++	sector_t hi = lo + r1_bio->sectors - 1;
+ 	struct serial_in_rdev *serial = &rdev->serial[idx];
  
-+	cancel_work_sync(&cache->c_shrink_work);
- 	shrinker_free(cache->c_shrink);
+ 	spin_lock_irqsave(&serial->serial_lock, flags);
+@@ -453,7 +453,7 @@ static void raid1_end_write_request(struct bio *bio)
+ 	int mirror = find_bio_disk(r1_bio, bio);
+ 	struct md_rdev *rdev = conf->mirrors[mirror].rdev;
+ 	sector_t lo = r1_bio->sector;
+-	sector_t hi = r1_bio->sector + r1_bio->sectors;
++	sector_t hi = r1_bio->sector + r1_bio->sectors - 1;
+ 	bool ignore_error = !raid1_should_handle_error(bio) ||
+ 		(bio->bi_status && bio_op(bio) == REQ_OP_DISCARD);
  
- 	/*
 -- 
 2.53.0
 
