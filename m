@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B3E36D9EA;
-	Wed, 20 May 2026 18:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E886429B78D;
+	Wed, 20 May 2026 18:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301142; cv=none; b=jUR9PXRx2N7XoeqqZbd+2qmiTzJmMFbPcXULaUIE659GYXWCF6WJu90l7ywAnxHHOkfDYhc2RtZwqp63SRZOLvr6Xtu/MggoP/wqHvWxGtvb6Wka+91gatAKqYING9Af1e1OsRPk2QbSnBpzThsQF/Yj2Qijg3K5n0v7BGCTgzg=
+	t=1779301145; cv=none; b=n1EmNXVD7HJK64psTQFv0LsvwSjAllUd1iC5y0YytKsyu5BuZtZEO6T6eMEjEATzhfnyKfNCJKgJxOmHDiBz/AxN0zFpAYrNskbc2pdUKXyaov6LYYUoJcbdEF7cuqpCZxWt5i0dy8vqIuGAeztCL9RVQ5eRTBilsigoRggwO8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301142; c=relaxed/simple;
-	bh=f+Oj9vj3Zwg7sG6FLzskgdjASBgNEdogucl3mIttwUs=;
+	s=arc-20240116; t=1779301145; c=relaxed/simple;
+	bh=d232ufAf8t3RrWUPgVBglohy3PbUBQt3bp65ld975oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vDoYqxFl+VBV8vhCxuAuxxk3dUtVOoMi+YVjnDyP88AU919Ih/cbT4CZeZcRgyfMQZ580+7twZwZ4aVCAuMHl/N0uoJyCel8hegAZenZg2kgB8t6em4zd70OxKVlEPv2XpxGeqE+1OUBgFN+qorsPh63/9yaFaoITetylDCuMH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sr5LcaeM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eDoUi06DRDfq7xBPhbukQ7qIGCz+hr1OlWtZJtVkzQHr136O4W1SrO4JfrwlG0D+Pgv6gwJ0gRUlkaIV71J2b7g2zcASJs19Th2nUJrKz614/lF9N7pK3FZ4RzUYd+FCTWBuWF3W7Gw70lYm6UttTD3riWQK/8Pc6GBwniNYYeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRpfGOhG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sr5LcaeM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2F71F000E9;
-	Wed, 20 May 2026 18:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRpfGOhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A49E1F000E9;
+	Wed, 20 May 2026 18:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301141;
-	bh=QrmcneeExR1LWSTEFzyUzZ+BL/xcKxTSpo8Ik1mfEkE=;
+	s=korg; t=1779301143;
+	bh=yf6dKVe6Sucr9MymKkUeYDivLrcrMa8eMkV5nmDsfqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sr5LcaeMrFnN2FLRBUU+EyoWue9xH2wF1rC0+DiyR583it5vqI9M8aBY9bcodujZK
-	 DiDBl5CNaDXrkCcLqo6ccTyggZpafIsGCQa3VAm76aCTqIro7ppfhWtB0RmRbFOH0V
-	 4C4q9/zcRjoS7HvbyrJISGsyiJynjSvpbJpNxeY8=
+	b=jRpfGOhG/U7vsQVOfaaigL/W2NDmVHAkWkg4aS8Kb2VptnUY1Zh1MXqyoemt7cJX3
+	 orHzzsdqcGFlmW0YHnJ5KxXuAnXVCfbwa5YfFtg14LRTYoIuQVDT0fzuujvGfJ5zmH
+	 ezos/4yU2P5c/NiDS1lSC/WrYPunG0Op7BAgodZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Dudu Lu <phx0fer@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 443/666] arm64: dts: marvell: armada-37xx: use usb2-phy in USB3 controllers phy-names
-Date: Wed, 20 May 2026 18:20:54 +0200
-Message-ID: <20260520162120.874066383@linuxfoundation.org>
+Subject: [PATCH 6.12 444/666] net/sched: act_mirred: fix wrong device for mac_header_xmit check in tcf_blockcast_redir
+Date: Wed, 20 May 2026 18:20:55 +0200
+Message-ID: <20260520162120.894792140@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -45,62 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 0fef19844624f8bc07651b4d26088d8940affba3 ]
+[ Upstream commit 4510d140524ca7d6e772db962e013f26f09a63b1 ]
 
-Instead of the generic 'usb2-phy' name, the Armada 37xx device trees
-are using a custom 'usb2-utmi-otg-phy' name for the USB2 PHY in the USB3
-controller node. Since commit 53a2d95df836 ("usb: core: add phy notify
-connect and disconnect"), this triggers a bug [1] in the USB core which
-causes double use of the USB3 PHY.
+In tcf_blockcast_redir(), when iterating block ports to redirect
+packets to multiple devices, the mac_header_xmit flag is queried
+from the wrong device. The loop sends to dev_prev but queries
+dev_is_mac_header_xmit(dev) — which is the NEXT device in the
+iteration, not the one being sent to.
 
-Change the PHY name to 'usb2-phy' in the SoC and in the uDPU specific
-dtsi files in order to avoid triggering the bug and also to keep the
-names in line with the ones used by other platforms.
+This causes tcf_mirred_to_dev() to make incorrect decisions about
+whether to push or pull the MAC header. When the block contains
+mixed device types (e.g., an ethernet veth and a tunnel device),
+intermediate devices get the wrong mac_header_xmit flag, leading to
+skb header corruption. In the worst case, skb_push_rcsum with an
+incorrect mac_len can exhaust headroom and panic.
 
-Link: https://lore.kernel.org/r/20260330-usb-avoid-usb3-phy-double-use-v1-1-d2113aecb535@gmail.com # [1]
-Fixes: 53a2d95df836 ("usb: core: add phy notify connect and disconnect")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+The last device in the loop is handled correctly (line 365-366 uses
+dev_is_mac_header_xmit(dev_prev)), confirming this is a copy-paste
+oversight for the intermediate devices.
+
+Fix by using dev_prev instead of dev for the mac_header_xmit query,
+consistent with the device actually being sent to.
+
+Fixes: 42f39036cda8 ("net/sched: act_mirred: Allow mirred to block")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260413084927.71353-1-phx0fer@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi | 2 +-
- arch/arm64/boot/dts/marvell/armada-37xx.dtsi      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/sched/act_mirred.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
-index cd856c0aba71e..12deacb741ccb 100644
---- a/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
-+++ b/arch/arm64/boot/dts/marvell/armada-3720-uDPU.dtsi
-@@ -161,7 +161,7 @@ &eth1 {
- &usb3 {
- 	status = "okay";
- 	phys = <&usb2_utmi_otg_phy>;
--	phy-names = "usb2-utmi-otg-phy";
-+	phy-names = "usb2-phy";
- };
+diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
+index 5b38143659249..b1b0049d7a0e9 100644
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -348,7 +348,7 @@ static int tcf_blockcast_redir(struct sk_buff *skb, struct tcf_mirred *m,
+ 			goto assign_prev;
  
- &uart0 {
-diff --git a/arch/arm64/boot/dts/marvell/armada-37xx.dtsi b/arch/arm64/boot/dts/marvell/armada-37xx.dtsi
-index 9603223dd761f..16b2b70529506 100644
---- a/arch/arm64/boot/dts/marvell/armada-37xx.dtsi
-+++ b/arch/arm64/boot/dts/marvell/armada-37xx.dtsi
-@@ -375,7 +375,7 @@ usb3: usb@58000 {
- 				interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&sb_periph_clk 12>;
- 				phys = <&comphy0 0>, <&usb2_utmi_otg_phy>;
--				phy-names = "usb3-phy", "usb2-utmi-otg-phy";
-+				phy-names = "usb3-phy", "usb2-phy";
- 				status = "disabled";
- 			};
- 
+ 		tcf_mirred_to_dev(skb, m, dev_prev,
+-				  dev_is_mac_header_xmit(dev),
++				  dev_is_mac_header_xmit(dev_prev),
+ 				  mirred_eaction, retval);
+ assign_prev:
+ 		dev_prev = dev;
 -- 
 2.53.0
 
