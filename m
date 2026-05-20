@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143C83E95A4;
-	Wed, 20 May 2026 18:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B0C3F7ABC;
+	Wed, 20 May 2026 18:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300090; cv=none; b=R6BW6u/vkzrWW9OsxvELKzRsljFZtN3ZEuzawuQnCoOdef0rKC+Qkq8DIegMLkLZFub+ixcaHowrLTHPKZMLhtBgeBOKwPmWz8UpByjHJnZ/uyUy0PXcxWkD5yvGiOM6Ybj9ANQyweCySFAtqr78WY33fFmOhq1qZzXFCh4s6Dk=
+	t=1779300093; cv=none; b=fxrsYWvRZSc66vPzN8rtexlRlPDwWqI7HavYQMNLxiE9SuVsXUE/P4JxbcvIQX4BmSDFimPeRRzibd8boY6zW9vaJBrSCn9duO70vWsJedE2kajoGx3ctI4eYlGzzzrV46bASs3jkCpMAlAg2Ven9RgZOKj3DeTCib/2waXXEPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300090; c=relaxed/simple;
-	bh=QJfb90qmd4TR5evsvZm6BjdU523Y+9kIiVq+f16o4HY=;
+	s=arc-20240116; t=1779300093; c=relaxed/simple;
+	bh=MErqE/TxEj53v3N3g/8HJxHGS8Iy7aXbLGlEphUbc1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uxr8NDStFx3gkGqBohpNvbiqL5nm7hIbg6nU/0NjaPAMn0IP1RPvusBTxuVSQrG8/gAdcVpP5nbhB0ASOZBVM60aExEsrIFdlz/AssnmRzPL2ZgtiZ0ewbFM3ev/aN1Pa6sNiaJYV0P06ege+EhaGFSx/zpkADUZZxqkjpPFOsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9mSQjzD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hv07lza4cx3Pk+eDuCMPhm++mIsPCQoOloAIR6pyiSRhQmP2GyjuOggTpgG4pycH3LsThfz/dm/4X0LyjZ2ig/90cJjE9n3YHDAZ/iC5aq/9Thrv0VVik4P034vbZThoyX1Y7gz6TLYRg8Evq5EXErqmKeH7j/pDm/CLUiyAfug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zd6qmOUp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9mSQjzD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273A71F000E9;
-	Wed, 20 May 2026 18:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zd6qmOUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20E91F00893;
+	Wed, 20 May 2026 18:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300087;
-	bh=Iv/lFLNbm+jhGpP1j81wnghSxTPfXoikBpPdrlfIQPA=;
+	s=korg; t=1779300090;
+	bh=4mS5EnVZqBrBWhxhydE/WgEm2oqj81aj23YpVJ7LZmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a9mSQjzDgZtzE3usc24vHf+lVvXmH4gGX82Twtsd1unrCY3ZMS9lmi9aV8lPiXLzy
-	 BBi4mIvhwj+ymx4Nc3FuQasQ76vtR9IOWEHuGefBenCtmV73FrRcPACPqlZhRS6hhZ
-	 JdpLQaFNGotONO4Q8RuuEnRGuVqNR32IDGWaCcH4=
+	b=Zd6qmOUpVvP+IoQYSfkE9VDoPei920XHiZL8sBZakBUkVDEZN3SGmYxpv573hMjOe
+	 T3jMLWu5jcZP2tBl5mwwb3sQrzu4rGZy7kbv5rn6mjwOt58GuByvPG2OEE47QSR4pg
+	 O8N6GbisKTwZZYhBz8Lx2j0Iv7L5X4qeiP7YWiRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Yen <leon.yen@mediatek.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/666] wifi: mt76: mt7925: Fix incorrect MLO mode in firmware control
-Date: Wed, 20 May 2026 18:14:14 +0200
-Message-ID: <20260520162112.173206885@linuxfoundation.org>
+Subject: [PATCH 6.12 044/666] wifi: mt76: mt7615: fix use_cts_prot support
+Date: Wed, 20 May 2026 18:14:15 +0200
+Message-ID: <20260520162112.194409218@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,87 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Yen <leon.yen@mediatek.com>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit 1695f662329faa07c860c73453c097823852df28 ]
+[ Upstream commit 1974a67d9b65c29a0a9426e32e8cd8c056de48b7 ]
 
-The selection of MLO mode should depend on the capabilities of the STA
-rather than those of the peer AP to avoid compatibility issues with
-certain APs, such as Xiaomi BE5000 WiFi7 router.
+Driver should not directly write WTBL to prevent overwritten issues.
 
-Fixes: 69acd6d910b0c ("wifi: mt76: mt7925: add mt7925_change_vif_links")
-Signed-off-by: Leon Yen <leon.yen@mediatek.com>
-Link: https://patch.msgid.link/20251211123836.4169436-1-leon.yen@mediatek.com
+With this fix, when driver needs to adjust its behavior for compatibility,
+especially concerning older 11g/n devices, by enabling or disabling CTS
+protection frames, often for hidden SSIDs or to manage legacy clients.
+
+Fixes: e34235ccc5e3 ("wifi: mt76: mt7615: enable use_cts_prot support")
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Link: https://patch.msgid.link/edb87088b0111b32fafc6c4179f54a5286dd37d8.1768879119.git.ryder.lee@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c   | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c    | 9 ++++++---
- drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h | 4 ++--
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7615/mac.c   | 15 ------
+ .../net/wireless/mediatek/mt76/mt7615/main.c  |  7 +--
+ .../net/wireless/mediatek/mt76/mt7615/mcu.c   | 47 +++++++++++++++++++
+ .../wireless/mediatek/mt76/mt7615/mt7615.h    |  5 +-
+ .../net/wireless/mediatek/mt76/mt7615/regs.h  |  2 -
+ 5 files changed, 53 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 59d4357819eda..5fc95c8623647 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -535,7 +535,7 @@ static int mt7925_set_mlo_roc(struct mt792x_phy *phy,
- 
- 	phy->roc_grant = false;
- 
--	err = mt7925_mcu_set_mlo_roc(mconf, sel_links, 5, ++phy->roc_token_id);
-+	err = mt7925_mcu_set_mlo_roc(phy, mconf, sel_links, 5, ++phy->roc_token_id);
- 	if (err < 0) {
- 		clear_bit(MT76_STATE_ROC, &phy->mt76->state);
- 		goto out;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 0e7ea02574de0..1f113a618515e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -1245,8 +1245,8 @@ int mt7925_mcu_add_key(struct mt76_dev *dev, struct ieee80211_vif *vif,
- 	return mt76_mcu_skb_send_msg(dev, skb, mcu_cmd, true);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+index 7ba789834e8df..1e473f490b4bd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+@@ -1174,21 +1174,6 @@ void mt7615_mac_set_rates(struct mt7615_phy *phy, struct mt7615_sta *sta,
  }
+ EXPORT_SYMBOL_GPL(mt7615_mac_set_rates);
  
--int mt7925_mcu_set_mlo_roc(struct mt792x_bss_conf *mconf, u16 sel_links,
--			   int duration, u8 token_id)
-+int mt7925_mcu_set_mlo_roc(struct mt792x_phy *phy, struct mt792x_bss_conf *mconf,
-+			   u16 sel_links, int duration, u8 token_id)
- {
- 	struct mt792x_vif *mvif = mconf->vif;
- 	struct ieee80211_vif *vif = container_of((void *)mvif,
-@@ -1281,6 +1281,8 @@ int mt7925_mcu_set_mlo_roc(struct mt792x_bss_conf *mconf, u16 sel_links,
- 			.roc[1].len = cpu_to_le16(sizeof(struct roc_acquire_tlv))
- 	};
- 
-+	struct wiphy *wiphy = phy->mt76->hw->wiphy;
-+
- 	if (!mconf || hweight16(vif->valid_links) < 2 ||
- 	    hweight16(sel_links) != 2)
- 		return -EPERM;
-@@ -1303,7 +1305,8 @@ int mt7925_mcu_set_mlo_roc(struct mt792x_bss_conf *mconf, u16 sel_links,
- 		is_AG_band |= links[i].chan->band == NL80211_BAND_2GHZ;
+-void mt7615_mac_enable_rtscts(struct mt7615_dev *dev,
+-			      struct ieee80211_vif *vif, bool enable)
+-{
+-	struct mt7615_vif *mvif = (struct mt7615_vif *)vif->drv_priv;
+-	u32 addr;
+-
+-	addr = mt7615_mac_wtbl_addr(dev, mvif->sta.wcid.idx) + 3 * 4;
+-
+-	if (enable)
+-		mt76_set(dev, addr, MT_WTBL_W3_RTS);
+-	else
+-		mt76_clear(dev, addr, MT_WTBL_W3_RTS);
+-}
+-EXPORT_SYMBOL_GPL(mt7615_mac_enable_rtscts);
+-
+ static int
+ mt7615_mac_wtbl_update_key(struct mt7615_dev *dev, struct mt76_wcid *wcid,
+ 			   struct ieee80211_key_conf *key,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/main.c b/drivers/net/wireless/mediatek/mt76/mt7615/main.c
+index 4f0c840ef93de..f747285a1a5dd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/main.c
+@@ -584,9 +584,6 @@ static void mt7615_bss_info_changed(struct ieee80211_hw *hw,
+ 		}
  	}
  
--	if (vif->cfg.eml_cap & IEEE80211_EML_CAP_EMLSR_SUPP)
-+	if (!(wiphy->iftype_ext_capab[0].mld_capa_and_ops &
-+	      IEEE80211_MLD_CAP_OP_MAX_SIMUL_LINKS))
- 		type = is_AG_band ? MT7925_ROC_REQ_MLSR_AG :
- 				    MT7925_ROC_REQ_MLSR_AA;
- 	else
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-index 27680ad28b600..bc8d38782a81a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-@@ -324,8 +324,8 @@ int mt7925_set_tx_sar_pwr(struct ieee80211_hw *hw,
- int mt7925_mcu_regval(struct mt792x_dev *dev, u32 regidx, u32 *val, bool set);
- int mt7925_mcu_set_clc(struct mt792x_dev *dev, u8 *alpha2,
- 		       enum environment_cap env_cap);
--int mt7925_mcu_set_mlo_roc(struct mt792x_bss_conf *mconf, u16 sel_links,
--			   int duration, u8 token_id);
-+int mt7925_mcu_set_mlo_roc(struct mt792x_phy *phy, struct mt792x_bss_conf *mconf,
-+			   u16 sel_links, int duration, u8 token_id);
- int mt7925_mcu_set_roc(struct mt792x_phy *phy, struct mt792x_bss_conf *mconf,
- 		       struct ieee80211_channel *chan, int duration,
- 		       enum mt7925_roc_req type, u8 token_id);
+-	if (changed & BSS_CHANGED_ERP_CTS_PROT)
+-		mt7615_mac_enable_rtscts(dev, vif, info->use_cts_prot);
+-
+ 	if (changed & BSS_CHANGED_BEACON_ENABLED && info->enable_beacon) {
+ 		mt7615_mcu_add_bss_info(phy, vif, NULL, true);
+ 		mt7615_mcu_sta_add(phy, vif, NULL, true);
+@@ -599,6 +596,10 @@ static void mt7615_bss_info_changed(struct ieee80211_hw *hw,
+ 		       BSS_CHANGED_BEACON_ENABLED))
+ 		mt7615_mcu_add_beacon(dev, hw, vif, info->enable_beacon);
+ 
++	if (changed & BSS_CHANGED_HT || changed & BSS_CHANGED_ERP_CTS_PROT)
++		mt7615_mcu_set_protection(phy, vif, info->ht_operation_mode,
++					  info->use_cts_prot);
++
+ 	if (changed & BSS_CHANGED_PS)
+ 		mt76_connac_mcu_set_vif_ps(&dev->mt76, vif);
+ 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
+index 40e15a0ba95a9..ac831422d4c77 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
+@@ -2564,3 +2564,50 @@ int mt7615_mcu_set_roc(struct mt7615_phy *phy, struct ieee80211_vif *vif,
+ 	return mt76_mcu_send_msg(&dev->mt76, MCU_CE_CMD(SET_ROC),
+ 				 &req, sizeof(req), false);
+ }
++
++int mt7615_mcu_set_protection(struct mt7615_phy *phy, struct ieee80211_vif *vif,
++			      u8 ht_mode, bool use_cts_prot)
++{
++	struct mt7615_dev *dev = phy->dev;
++	struct {
++		u8 prot_idx;
++		u8 band;
++		u8 rsv[2];
++
++		bool long_nav;
++		bool prot_mm;
++		bool prot_gf;
++		bool prot_bw40;
++		bool prot_rifs;
++		bool prot_bw80;
++		bool prot_bw160;
++		u8 prot_erp_mask;
++	} __packed req = {
++		.prot_idx = 0x2,
++		.band = phy != &dev->phy,
++	};
++
++	switch (ht_mode & IEEE80211_HT_OP_MODE_PROTECTION) {
++	case IEEE80211_HT_OP_MODE_PROTECTION_NONMEMBER:
++	case IEEE80211_HT_OP_MODE_PROTECTION_NONHT_MIXED:
++		req.prot_mm = true;
++		req.prot_gf = true;
++		fallthrough;
++	case IEEE80211_HT_OP_MODE_PROTECTION_20MHZ:
++		req.prot_bw40 = true;
++		break;
++	}
++
++	if (ht_mode & IEEE80211_HT_OP_MODE_NON_GF_STA_PRSNT)
++		req.prot_gf = true;
++
++	if (use_cts_prot) {
++		struct mt7615_vif *mvif = (struct mt7615_vif *)vif->drv_priv;
++		u8 i = mvif->mt76.omac_idx > HW_BSSID_MAX ? HW_BSSID_0 : mvif->mt76.omac_idx;
++
++		req.prot_erp_mask = BIT(i);
++	}
++
++	return mt76_mcu_send_msg(&dev->mt76, MCU_EXT_CMD(PROTECT_CTRL), &req,
++				 sizeof(req), true);
++}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h b/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h
+index 530da48ce3ea9..aac748fee257f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mt7615.h
+@@ -466,8 +466,6 @@ void mt7615_mac_reset_counters(struct mt7615_phy *phy);
+ void mt7615_mac_cca_stats_reset(struct mt7615_phy *phy);
+ void mt7615_mac_set_scs(struct mt7615_phy *phy, bool enable);
+ void mt7615_mac_enable_nf(struct mt7615_dev *dev, bool ext_phy);
+-void mt7615_mac_enable_rtscts(struct mt7615_dev *dev,
+-			      struct ieee80211_vif *vif, bool enable);
+ void mt7615_mac_sta_poll(struct mt7615_dev *dev);
+ int mt7615_mac_write_txwi(struct mt7615_dev *dev, __le32 *txwi,
+ 			  struct sk_buff *skb, struct mt76_wcid *wcid,
+@@ -522,7 +520,8 @@ int mt7615_mcu_set_sku_en(struct mt7615_phy *phy, bool enable);
+ int mt7615_mcu_apply_rx_dcoc(struct mt7615_phy *phy);
+ int mt7615_mcu_apply_tx_dpd(struct mt7615_phy *phy);
+ int mt7615_dfs_init_radar_detector(struct mt7615_phy *phy);
+-
++int mt7615_mcu_set_protection(struct mt7615_phy *phy, struct ieee80211_vif *vif,
++			      u8 ht_mode, bool use_cts_prot);
+ int mt7615_mcu_set_roc(struct mt7615_phy *phy, struct ieee80211_vif *vif,
+ 		       struct ieee80211_channel *chan, int duration);
+ 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/regs.h b/drivers/net/wireless/mediatek/mt76/mt7615/regs.h
+index 806b3887c541c..9e6d55c91b269 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/regs.h
+@@ -455,8 +455,6 @@ enum mt7615_reg_base {
+ #define MT_WTBL_RIUCR3_RATE6		GENMASK(19, 8)
+ #define MT_WTBL_RIUCR3_RATE7		GENMASK(31, 20)
+ 
+-#define MT_WTBL_W3_RTS			BIT(22)
+-
+ #define MT_WTBL_W5_CHANGE_BW_RATE	GENMASK(7, 5)
+ #define MT_WTBL_W5_SHORT_GI_20		BIT(8)
+ #define MT_WTBL_W5_SHORT_GI_40		BIT(9)
 -- 
 2.53.0
 
