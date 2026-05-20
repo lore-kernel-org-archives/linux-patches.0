@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980AD349AFF;
-	Wed, 20 May 2026 17:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4727D349AFF;
+	Wed, 20 May 2026 17:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299186; cv=none; b=tVrtzz1Embe+ZYldFK4gonBm/25jv1Zi/aNA5h8Pm6xmcqJzwwHCeusNZbNHS88pfGOY9RmXKr73DNQLO9FdcxgJQd3ETcsNUQ4cy0YuNNMV8AmkB9oSbHI7OZh3ESheBbCiUHg84DT4ZF0+MF4r/GDRrLIbDBO8V+Xr3QWIQew=
+	t=1779299189; cv=none; b=B51vrUXQSiEwWTFhIDsud/PzIR9VpAfVibe0bRqAg+qbRnzUlq75l3gP3H5CC7Xv/hl6FcKdr8Zh2k8nPIAARYgFBCP+z0DOFE67v3pV2L+Z2X5zrZ1X5NnDZ/uo90b+b4UEB56ThVnGgth4DomClfeZSNAjlI68IHG2XyRDxgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299186; c=relaxed/simple;
-	bh=bCXnBLZjz50MFqe4o99bjkMQRfYMrb/EoqHWWBt48t4=;
+	s=arc-20240116; t=1779299189; c=relaxed/simple;
+	bh=NXQzTl2SmRJpZBAzXvWFqzB39aOnwSV62RLytGIwGFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=diFJckbmWaip6yGDNnO/pSMp6wS1qqPKaie57paaswKpwyT2vyGOlN+mEu8Zcb0E1Nm0dJBSYSVfN4N4n4/6ELI7YMc2uKyRX2fqJp1J9UoaRcPcqChyv6o1W/oGrOi4lvo/J1UQygDZKlFEPuwVYRDmDCiCfL2vY1fNyidwKqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V13qH++H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q9xmE5CMzmhuyI8HP32QSllZF/VkMMOfM9eY+WX/lYSt7JlZpN6Vysl46d3vaF+/A8EYJVM/LAO024UADwtrlF4kAjdbkIuJtStiJllTbewsbCx3oVgvopV4ZRGpyawNLAnl/57QY/T8D87HqKlQSWUzSB2ITzk49uHBZ4Kwvt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJZyFflK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V13qH++H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088E01F000E9;
-	Wed, 20 May 2026 17:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJZyFflK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA95E1F000E9;
+	Wed, 20 May 2026 17:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299185;
-	bh=ZmRGgSb3pOo8QVjiMicaNSF/AFgpDruchqTGus3DOyk=;
+	s=korg; t=1779299188;
+	bh=LauGtPk/E5xq9EtBm90rNWQ+Pykq1H953yGGXfi8/oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V13qH++HxTon8YO4voPcrJ/mwqphY7ox1iJ5D/jbSVMV14IusJeCVDnjaFNS0azRq
-	 1H1+7ETZ0lXgVYbBiTEH9VV6bvHXzmQihnM0eI646s8ILjKcviVRkLzrBTOpn5oAn8
-	 GirO3ZBTRNx3LpA+FCwgCD2QwOvnl7ChaOIMGAIk=
+	b=yJZyFflKhrFKH9aVH3aEHJIua/ArOba6f7pYlSfzHZoKURlENNSTP+UC3FetiEBsQ
+	 sXkEfVutZuqjpI0tN8b/o6VUwfwT2mPB2vTX5GP7MK6lTgG7Gh+tR66qs+MCisR6eZ
+	 6j3xSLIyz4IyF5uTbiRg3x3+H7UyJqYSylv96kSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
+	Xuegang Lu <xuegang.lu@airoha.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 694/957] net: airoha: Add AN7583 SoC support
-Date: Wed, 20 May 2026 18:19:37 +0200
-Message-ID: <20260520162149.590781495@linuxfoundation.org>
+Subject: [PATCH 6.18 695/957] net: airoha: Add the capability to consume out-of-order DMA tx descriptors
+Date: Wed, 20 May 2026 18:19:38 +0200
+Message-ID: <20260520162149.612318752@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,196 +55,253 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit e4e5ce823bdd4601bd75ae7c206ae35e7c2fa60b ]
+[ Upstream commit 3f47e67dff1f7266e112c50313d63824f6f17102 ]
 
-Introduce support for AN7583 ethernet controller to airoha-eth dirver.
+EN7581 and AN7583 SoCs are capable of DMA mapping non-linear tx skbs on
+non-consecutive DMA descriptors. This feature is useful when multiple
+flows are queued on the same hw tx queue since it allows to fully utilize
+the available tx DMA descriptors and to avoid the starvation of
+high-priority flow we have in the current codebase due to head-of-line
+blocking introduced by low-priority flows.
 
-Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Xuegang Lu <xuegang.lu@airoha.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20251017-an7583-eth-support-v3-13-f28319666667@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20251106-airoha-tx-linked-list-v2-1-0706d4a322bd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 3309965fe44c ("net: airoha: Add missing bits in airoha_qdma_cleanup_tx_queue()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 68 ++++++++++++++++++++++--
- drivers/net/ethernet/airoha/airoha_eth.h | 11 ++++
- drivers/net/ethernet/airoha/airoha_ppe.c |  3 ++
- 3 files changed, 77 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 85 +++++++++++-------------
+ drivers/net/ethernet/airoha/airoha_eth.h |  7 +-
+ 2 files changed, 45 insertions(+), 47 deletions(-)
 
 diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 6e7f816cd7edb..55de295e3acf2 100644
+index 55de295e3acf2..9f6f517b5fdf9 100644
 --- a/drivers/net/ethernet/airoha/airoha_eth.c
 +++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -1753,10 +1753,8 @@ static int airoha_dev_set_macaddr(struct net_device *dev, void *p)
+@@ -952,19 +952,13 @@ static int airoha_qdma_tx_napi_poll(struct napi_struct *napi, int budget)
  
- static int airhoha_set_gdm2_loopback(struct airoha_gdm_port *port)
- {
--	u32 val, pse_port, chan = port->id == AIROHA_GDM3_IDX ? 4 : 0;
- 	struct airoha_eth *eth = port->qdma->eth;
--	/* XXX: handle XSI_USB_PORT and XSI_PCE1_PORT */
--	u32 nbq = port->id == AIROHA_GDM3_IDX ? 4 : 0;
-+	u32 val, pse_port, chan, nbq;
- 	int src_port;
- 
- 	/* Forward the traffic to the proper GDM port */
-@@ -1768,6 +1766,8 @@ static int airhoha_set_gdm2_loopback(struct airoha_gdm_port *port)
- 	/* Enable GDM2 loopback */
- 	airoha_fe_wr(eth, REG_GDM_TXCHN_EN(2), 0xffffffff);
- 	airoha_fe_wr(eth, REG_GDM_RXCHN_EN(2), 0xffff);
+ 		dma_unmap_single(eth->dev, e->dma_addr, e->dma_len,
+ 				 DMA_TO_DEVICE);
+-		memset(e, 0, sizeof(*e));
++		e->dma_addr = 0;
++		list_add_tail(&e->list, &q->tx_list);
 +
-+	chan = port->id == AIROHA_GDM3_IDX ? airoha_is_7581(eth) ? 4 : 3 : 0;
- 	airoha_fe_rmw(eth, REG_GDM_LPBK_CFG(2),
- 		      LPBK_CHAN_MASK | LPBK_MODE_MASK | LPBK_EN_MASK,
- 		      FIELD_PREP(LPBK_CHAN_MASK, chan) |
-@@ -1782,6 +1782,8 @@ static int airhoha_set_gdm2_loopback(struct airoha_gdm_port *port)
- 	airoha_fe_clear(eth, REG_FE_VIP_PORT_EN, BIT(2));
- 	airoha_fe_clear(eth, REG_FE_IFC_PORT_EN, BIT(2));
+ 		WRITE_ONCE(desc->msg0, 0);
+ 		WRITE_ONCE(desc->msg1, 0);
+ 		q->queued--;
  
-+	/* XXX: handle XSI_USB_PORT and XSI_PCE1_PORT */
-+	nbq = port->id == AIROHA_GDM3_IDX && airoha_is_7581(eth) ? 4 : 0;
- 	src_port = eth->soc->ops.get_src_port_id(port, nbq);
- 	if (src_port < 0)
- 		return src_port;
-@@ -1795,7 +1797,7 @@ static int airhoha_set_gdm2_loopback(struct airoha_gdm_port *port)
- 		      SP_CPORT_MASK(val),
- 		      FE_PSE_PORT_CDM2 << __ffs(SP_CPORT_MASK(val)));
+-		/* completion ring can report out-of-order indexes if hw QoS
+-		 * is enabled and packets with different priority are queued
+-		 * to same DMA ring. Take into account possible out-of-order
+-		 * reports incrementing DMA ring tail pointer
+-		 */
+-		while (q->tail != q->head && !q->entry[q->tail].dma_addr)
+-			q->tail = (q->tail + 1) % q->ndesc;
+-
+ 		if (skb) {
+ 			u16 queue = skb_get_queue_mapping(skb);
+ 			struct netdev_queue *txq;
+@@ -1018,6 +1012,7 @@ static int airoha_qdma_init_tx_queue(struct airoha_queue *q,
+ 	q->ndesc = size;
+ 	q->qdma = qdma;
+ 	q->free_thr = 1 + MAX_SKB_FRAGS;
++	INIT_LIST_HEAD(&q->tx_list);
  
--	if (port->id != AIROHA_GDM3_IDX)
-+	if (port->id != AIROHA_GDM3_IDX && airoha_is_7581(eth))
- 		airoha_fe_rmw(eth, REG_SRC_PORT_FC_MAP6,
- 			      FC_ID_OF_SRC_PORT24_MASK,
- 			      FIELD_PREP(FC_ID_OF_SRC_PORT24_MASK, 2));
-@@ -1951,6 +1953,22 @@ static bool airoha_dev_tx_queue_busy(struct airoha_queue *q, u32 nr_frags)
- 	return index >= tail;
- }
+ 	q->entry = devm_kzalloc(eth->dev, q->ndesc * sizeof(*q->entry),
+ 				GFP_KERNEL);
+@@ -1030,9 +1025,9 @@ static int airoha_qdma_init_tx_queue(struct airoha_queue *q,
+ 		return -ENOMEM;
  
-+static int airoha_get_fe_port(struct airoha_gdm_port *port)
-+{
-+	struct airoha_qdma *qdma = port->qdma;
-+	struct airoha_eth *eth = qdma->eth;
-+
-+	switch (eth->soc->version) {
-+	case 0x7583:
-+		return port->id == AIROHA_GDM3_IDX ? FE_PSE_PORT_GDM3
-+						   : port->id;
-+	case 0x7581:
-+	default:
-+		return port->id == AIROHA_GDM4_IDX ? FE_PSE_PORT_GDM4
-+						   : port->id;
-+	}
-+}
-+
- static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
- 				   struct net_device *dev)
- {
-@@ -1991,7 +2009,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
- 		}
+ 	for (i = 0; i < q->ndesc; i++) {
+-		u32 val;
++		u32 val = FIELD_PREP(QDMA_DESC_DONE_MASK, 1);
+ 
+-		val = FIELD_PREP(QDMA_DESC_DONE_MASK, 1);
++		list_add_tail(&q->entry[i].list, &q->tx_list);
+ 		WRITE_ONCE(q->desc[i].ctrl, cpu_to_le32(val));
  	}
  
--	fport = port->id == 4 ? FE_PSE_PORT_GDM4 : port->id;
-+	fport = airoha_get_fe_port(port);
- 	msg1 = FIELD_PREP(QDMA_ETH_TXMSG_FPORT_MASK, fport) |
- 	       FIELD_PREP(QDMA_ETH_TXMSG_METER_MASK, 0x7f);
+@@ -1042,9 +1037,9 @@ static int airoha_qdma_init_tx_queue(struct airoha_queue *q,
  
-@@ -3164,6 +3182,35 @@ static int airoha_en7581_get_src_port_id(struct airoha_gdm_port *port, int nbq)
- 	return -EINVAL;
+ 	airoha_qdma_wr(qdma, REG_TX_RING_BASE(qid), dma_addr);
+ 	airoha_qdma_rmw(qdma, REG_TX_CPU_IDX(qid), TX_RING_CPU_IDX_MASK,
+-			FIELD_PREP(TX_RING_CPU_IDX_MASK, q->head));
++			FIELD_PREP(TX_RING_CPU_IDX_MASK, 0));
+ 	airoha_qdma_rmw(qdma, REG_TX_DMA_IDX(qid), TX_RING_DMA_IDX_MASK,
+-			FIELD_PREP(TX_RING_DMA_IDX_MASK, q->head));
++			FIELD_PREP(TX_RING_DMA_IDX_MASK, 0));
+ 
+ 	return 0;
+ }
+@@ -1100,17 +1095,21 @@ static int airoha_qdma_init_tx(struct airoha_qdma *qdma)
+ static void airoha_qdma_cleanup_tx_queue(struct airoha_queue *q)
+ {
+ 	struct airoha_eth *eth = q->qdma->eth;
++	int i;
+ 
+ 	spin_lock_bh(&q->lock);
+-	while (q->queued) {
+-		struct airoha_queue_entry *e = &q->entry[q->tail];
++	for (i = 0; i < q->ndesc; i++) {
++		struct airoha_queue_entry *e = &q->entry[i];
++
++		if (!e->dma_addr)
++			continue;
+ 
+ 		dma_unmap_single(eth->dev, e->dma_addr, e->dma_len,
+ 				 DMA_TO_DEVICE);
+ 		dev_kfree_skb_any(e->skb);
++		e->dma_addr = 0;
+ 		e->skb = NULL;
+-
+-		q->tail = (q->tail + 1) % q->ndesc;
++		list_add_tail(&e->list, &q->tx_list);
+ 		q->queued--;
+ 	}
+ 	spin_unlock_bh(&q->lock);
+@@ -1939,20 +1938,6 @@ static u32 airoha_get_dsa_tag(struct sk_buff *skb, struct net_device *dev)
+ #endif
  }
  
-+static const char * const an7583_xsi_rsts_names[] = {
-+	"xsi-mac",
-+	"hsi0-mac",
-+	"hsi1-mac",
-+	"xfp-mac",
-+};
-+
-+static int airoha_an7583_get_src_port_id(struct airoha_gdm_port *port, int nbq)
-+{
-+	switch (port->id) {
-+	case 3:
-+		/* 7583 SoC supports eth serdes on GDM3 port */
-+		if (!nbq)
-+			return HSGMII_LAN_7583_ETH_SRCPORT;
-+		break;
-+	case 4:
-+		/* 7583 SoC supports PCIe and USB serdes on GDM4 port */
-+		if (!nbq)
-+			return HSGMII_LAN_7583_PCIE_SRCPORT;
-+		if (nbq == 1)
-+			return HSGMII_LAN_7583_USB_SRCPORT;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return -EINVAL;
-+}
-+
- static const struct airoha_eth_soc_data en7581_soc_data = {
- 	.version = 0x7581,
- 	.xsi_rsts_names = en7581_xsi_rsts_names,
-@@ -3174,8 +3221,19 @@ static const struct airoha_eth_soc_data en7581_soc_data = {
- 	},
- };
+-static bool airoha_dev_tx_queue_busy(struct airoha_queue *q, u32 nr_frags)
+-{
+-	u32 tail = q->tail <= q->head ? q->tail + q->ndesc : q->tail;
+-	u32 index = q->head + nr_frags;
+-
+-	/* completion napi can free out-of-order tx descriptors if hw QoS is
+-	 * enabled and packets with different priorities are queued to the same
+-	 * DMA ring. Take into account possible out-of-order reports checking
+-	 * if the tx queue is full using circular buffer head/tail pointers
+-	 * instead of the number of queued packets.
+-	 */
+-	return index >= tail;
+-}
+-
+ static int airoha_get_fe_port(struct airoha_gdm_port *port)
+ {
+ 	struct airoha_qdma *qdma = port->qdma;
+@@ -1975,8 +1960,10 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 	struct airoha_gdm_port *port = netdev_priv(dev);
+ 	struct airoha_qdma *qdma = port->qdma;
+ 	u32 nr_frags, tag, msg0, msg1, len;
++	struct airoha_queue_entry *e;
+ 	struct netdev_queue *txq;
+ 	struct airoha_queue *q;
++	LIST_HEAD(tx_list);
+ 	void *data;
+ 	int i, qid;
+ 	u16 index;
+@@ -2022,7 +2009,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 	txq = netdev_get_tx_queue(dev, qid);
+ 	nr_frags = 1 + skb_shinfo(skb)->nr_frags;
  
-+static const struct airoha_eth_soc_data an7583_soc_data = {
-+	.version = 0x7583,
-+	.xsi_rsts_names = an7583_xsi_rsts_names,
-+	.num_xsi_rsts = ARRAY_SIZE(an7583_xsi_rsts_names),
-+	.num_ppe = 1,
-+	.ops = {
-+		.get_src_port_id = airoha_an7583_get_src_port_id,
-+	},
-+};
+-	if (airoha_dev_tx_queue_busy(q, nr_frags)) {
++	if (q->queued + nr_frags >= q->ndesc) {
+ 		/* not enough space in the queue */
+ 		netif_tx_stop_queue(txq);
+ 		q->txq_stopped = true;
+@@ -2032,11 +2019,13 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 
+ 	len = skb_headlen(skb);
+ 	data = skb->data;
+-	index = q->head;
 +
- static const struct of_device_id of_airoha_match[] = {
- 	{ .compatible = "airoha,en7581-eth", .data = &en7581_soc_data },
-+	{ .compatible = "airoha,an7583-eth", .data = &an7583_soc_data },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, of_airoha_match);
++	e = list_first_entry(&q->tx_list, struct airoha_queue_entry,
++			     list);
++	index = e - q->entry;
+ 
+ 	for (i = 0; i < nr_frags; i++) {
+ 		struct airoha_qdma_desc *desc = &q->desc[index];
+-		struct airoha_queue_entry *e = &q->entry[index];
+ 		skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
+ 		dma_addr_t addr;
+ 		u32 val;
+@@ -2046,7 +2035,14 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 		if (unlikely(dma_mapping_error(dev->dev.parent, addr)))
+ 			goto error_unmap;
+ 
+-		index = (index + 1) % q->ndesc;
++		list_move_tail(&e->list, &tx_list);
++		e->skb = i ? NULL : skb;
++		e->dma_addr = addr;
++		e->dma_len = len;
++
++		e = list_first_entry(&q->tx_list, struct airoha_queue_entry,
++				     list);
++		index = e - q->entry;
+ 
+ 		val = FIELD_PREP(QDMA_DESC_LEN_MASK, len);
+ 		if (i < nr_frags - 1)
+@@ -2059,15 +2055,9 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 		WRITE_ONCE(desc->msg1, cpu_to_le32(msg1));
+ 		WRITE_ONCE(desc->msg2, cpu_to_le32(0xffff));
+ 
+-		e->skb = i ? NULL : skb;
+-		e->dma_addr = addr;
+-		e->dma_len = len;
+-
+ 		data = skb_frag_address(frag);
+ 		len = skb_frag_size(frag);
+ 	}
+-
+-	q->head = index;
+ 	q->queued += i;
+ 
+ 	skb_tx_timestamp(skb);
+@@ -2076,7 +2066,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 	if (netif_xmit_stopped(txq) || !netdev_xmit_more())
+ 		airoha_qdma_rmw(qdma, REG_TX_CPU_IDX(qid),
+ 				TX_RING_CPU_IDX_MASK,
+-				FIELD_PREP(TX_RING_CPU_IDX_MASK, q->head));
++				FIELD_PREP(TX_RING_CPU_IDX_MASK, index));
+ 
+ 	if (q->ndesc - q->queued < q->free_thr) {
+ 		netif_tx_stop_queue(txq);
+@@ -2088,10 +2078,13 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
+ 
+ error_unmap:
+-	for (i--; i >= 0; i--) {
+-		index = (q->head + i) % q->ndesc;
+-		dma_unmap_single(dev->dev.parent, q->entry[index].dma_addr,
+-				 q->entry[index].dma_len, DMA_TO_DEVICE);
++	while (!list_empty(&tx_list)) {
++		e = list_first_entry(&tx_list, struct airoha_queue_entry,
++				     list);
++		dma_unmap_single(dev->dev.parent, e->dma_addr, e->dma_len,
++				 DMA_TO_DEVICE);
++		e->dma_addr = 0;
++		list_move_tail(&e->list, &q->tx_list);
+ 	}
+ 
+ 	spin_unlock_bh(&q->lock);
 diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
-index 8a2c68781e94b..203e6ce29dbe0 100644
+index 203e6ce29dbe0..28dfa35a3abed 100644
 --- a/drivers/net/ethernet/airoha/airoha_eth.h
 +++ b/drivers/net/ethernet/airoha/airoha_eth.h
-@@ -73,6 +73,12 @@ enum {
- 	HSGMII_LAN_7581_USB_SRCPORT,
+@@ -169,7 +169,10 @@ enum trtcm_param {
+ struct airoha_queue_entry {
+ 	union {
+ 		void *buf;
+-		struct sk_buff *skb;
++		struct {
++			struct list_head list;
++			struct sk_buff *skb;
++		};
+ 	};
+ 	dma_addr_t dma_addr;
+ 	u16 dma_len;
+@@ -194,6 +197,8 @@ struct airoha_queue {
+ 	struct napi_struct napi;
+ 	struct page_pool *page_pool;
+ 	struct sk_buff *skb;
++
++	struct list_head tx_list;
  };
  
-+enum {
-+	HSGMII_LAN_7583_ETH_SRCPORT	= 0x16,
-+	HSGMII_LAN_7583_PCIE_SRCPORT	= 0x18,
-+	HSGMII_LAN_7583_USB_SRCPORT,
-+};
-+
- enum {
- 	XSI_PCIE0_VIP_PORT_MASK	= BIT(22),
- 	XSI_PCIE1_VIP_PORT_MASK	= BIT(23),
-@@ -630,6 +636,11 @@ static inline bool airoha_is_7581(struct airoha_eth *eth)
- 	return eth->soc->version == 0x7581;
- }
- 
-+static inline bool airoha_is_7583(struct airoha_eth *eth)
-+{
-+	return eth->soc->version == 0x7583;
-+}
-+
- bool airoha_is_valid_gdm_port(struct airoha_eth *eth,
- 			      struct airoha_gdm_port *port);
- 
-diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
-index 239c43248b4f4..6cd5febce6b59 100644
---- a/drivers/net/ethernet/airoha/airoha_ppe.c
-+++ b/drivers/net/ethernet/airoha/airoha_ppe.c
-@@ -37,6 +37,9 @@ static int airoha_ppe_get_num_stats_entries(struct airoha_ppe *ppe)
- 	if (!IS_ENABLED(CONFIG_NET_AIROHA_FLOW_STATS))
- 		return -EOPNOTSUPP;
- 
-+	if (airoha_is_7583(ppe->eth))
-+		return -EOPNOTSUPP;
-+
- 	return PPE_STATS_NUM_ENTRIES;
- }
- 
+ struct airoha_tx_irq_queue {
 -- 
 2.53.0
 
