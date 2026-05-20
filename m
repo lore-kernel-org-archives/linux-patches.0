@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546222628D;
-	Wed, 20 May 2026 17:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525E2312825;
+	Wed, 20 May 2026 17:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298237; cv=none; b=dtAI7v+UfIyy5GLcn+3Vie2e/jvxTAxBDrB/e4dJazBmwncd/+p+ya+wP60V6flHqeq5yMhYgy1tQ0ug1cIMuqJQbxGa7vZ3Yiog0c1JyYYO343SF9ps7ylx3txZznL2Shm9f8XDTmk/v4rulnRNl0V4E12vkpJHP+Pkb36Vl4U=
+	t=1779298241; cv=none; b=pwyJaFsE35XsNWfwiRdsOENwZcnlwPNAaxVWSHsNblmZ1kI0dlhWiSJEmOctrCtL4JUikKU5VSvxgj9GxNyu2IU0WvsibjOKvUpkKbfMzdC+rsEiPmP5foTQNBOhSis9sd+nLETr65NYpQtzBPSdyo9tAgYX2YWI/X/eedmY7do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298237; c=relaxed/simple;
-	bh=dUjDRf1QNhCAwjImsQJkEqRPjtZuFPdiZpj0GU4hbFk=;
+	s=arc-20240116; t=1779298241; c=relaxed/simple;
+	bh=mdFSOz6rWOQ1oAVJe64kHchABr3oAHYTgovCUOShLG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OuYdK3ZJxS/v5r91/KRa9eBm5piUtoKEjTNVXjlmaM+DlGF02kr+k8qzmspbTpJN7MkzsnfDMVGJhazQ4LqOR8qudk10n3Txx1NHzr2Tdf//Msy6ndxH779wtZqB/6j0Fng8cPKMJMtDEYrHfSIKl9IeXrA0PtFrXyW9MGnhiLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LPhCOVS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JsKTyVigQUivLKu6Pe+i4cRywhj4pte48x9iTA8Npd1fzfFIaZZSVxrd2fWtCpCZH/5psmRmunLYPTSzHLSHubhuHIhYX9F3Kp3KifcG1k1LE7qLfcr/zZylxqGowROIDkpA8lTRCavLIHdtXiw+jYp5OkNSYgvJDyg7cJEKS+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxVaHHdq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LPhCOVS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA671F000E9;
-	Wed, 20 May 2026 17:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxVaHHdq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5075F1F000E9;
+	Wed, 20 May 2026 17:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298236;
-	bh=GaDXCjATXjAXPUdo2VdaZ5rFoFrkqBGUOm2ocPRmabo=;
+	s=korg; t=1779298239;
+	bh=XsWfTnqCBkxYuSDaM4nmLZE1muL+ppCtctahwJLcPIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2LPhCOVSvPSMM+wHp4WQGFvWlkBNXEmmDwhwrdRiomRg80rodF6jLFtEHhXEgQnzM
-	 2dy2W7CpbmXVa7BfzS10Gb8D2CGy+Zik8xBUj7qghSHkPRygU4dm9Dqkm20O4WszjC
-	 KHbs2eVq+D09vzmHjr3bYfMOO0DcCpT1gwRpCjXk=
+	b=xxVaHHdqQX4hI/4OKSTnBRTrDJ62Jx6e/X7ItehDxw70Cl8l6/8k3kH09yGao2h0V
+	 AbNv3ItUwNdUiReWEWZ1Uuni4vCr/v/pbN/+PkrtPP0lPOVm64k9Tzz+o6iUUuyHPZ
+	 9+OfIaTSgT03wqqB6ERSp/ykV0C446d403Pq2NTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Elle Rhumsaa <elle@weathered-steel.dev>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Edwin Peer <epeer@nvidia.com>,
+	Joel Fernandes <joelagnelf@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 334/957] ALSA: sc6000: Keep the programmed board state in card-private data
-Date: Wed, 20 May 2026 18:13:37 +0200
-Message-ID: <20260520162141.774389822@linuxfoundation.org>
+Subject: [PATCH 6.18 308/957] gpu: nova-core: bitfield: Move bitfield-specific code from register! into new macro
+Date: Wed, 20 May 2026 18:13:11 +0200
+Message-ID: <20260520162141.210680817@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -45,291 +47,704 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Joel Fernandes <joelagnelf@nvidia.com>
 
-[ Upstream commit fb79bf127ac2577b4876132da6dba768018aad4c ]
+[ Upstream commit 71ea85be25b4f54a53ec03d5deaed52f5ee65da8 ]
 
-The driver may auto-select IRQ and DMA resources at probe time, but
-sc6000_init_board() still derives the SC-6000 soft configuration from
-the module parameter arrays.  When irq=auto or dma=auto is used, the
-codec is created with the selected resources while the board is
-programmed with the unresolved values.
+Move the bitfield-specific code from the register macro into a new macro
+called bitfield. This will be used to define structs with bitfields,
+similar to C language.
 
-Store the mapped ports and generated SC-6000 board configuration in
-card-private data, build that configuration from the live probe
-results instead of the raw module parameters, and keep the probe-time
-board programming in a shared helper.
-
-This fixes the resource-programming mismatch and leaves the driver
-with a stable board-state block that can be reused by suspend/resume.
-
-Fixes: c282866101bf ("ALSA: sc6000: add support for SC-6600 and SC-7000")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260410-alsa-sc6000-pm-v1-1-4d9e95493d26@gmail.com
+Reviewed-by: Elle Rhumsaa <elle@weathered-steel.dev>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Edwin Peer <epeer@nvidia.com>
+Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Message-ID: <20251016151323.1201196-3-joelagnelf@nvidia.com>
+Stable-dep-of: de0aca13509b ("gpu: nova-core: bitfield: fix broken Default implementation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/isa/sc6000.c | 152 +++++++++++++++++++++++++++------------------
- 1 file changed, 92 insertions(+), 60 deletions(-)
+ drivers/gpu/nova-core/bitfield.rs    | 319 +++++++++++++++++++++++++++
+ drivers/gpu/nova-core/nova_core.rs   |   3 +
+ drivers/gpu/nova-core/regs/macros.rs | 259 +---------------------
+ 3 files changed, 332 insertions(+), 249 deletions(-)
+ create mode 100644 drivers/gpu/nova-core/bitfield.rs
 
-diff --git a/sound/isa/sc6000.c b/sound/isa/sc6000.c
-index 6d618cc2ba457..9949e06403f61 100644
---- a/sound/isa/sc6000.c
-+++ b/sound/isa/sc6000.c
-@@ -100,6 +100,15 @@ MODULE_PARM_DESC(joystick, "Enable gameport.");
- #define PFX "sc6000: "
- #define DRV_NAME "SC-6000"
- 
-+struct snd_sc6000 {
-+	char __iomem *vport;
-+	char __iomem *vmss_port;
-+	u8 mss_config;
-+	u8 config;
-+	u8 hw_cfg[2];
-+	bool old_dsp;
-+};
+diff --git a/drivers/gpu/nova-core/bitfield.rs b/drivers/gpu/nova-core/bitfield.rs
+new file mode 100644
+index 0000000000000..fb60800898c55
+--- /dev/null
++++ b/drivers/gpu/nova-core/bitfield.rs
+@@ -0,0 +1,319 @@
++// SPDX-License-Identifier: GPL-2.0
 +
- /* hardware dependent functions */
- 
- /*
-@@ -267,7 +276,7 @@ static int sc6000_dsp_reset(char __iomem *vport)
- 
- /* detection and initialization */
- static int sc6000_hw_cfg_write(struct device *devptr,
--			       char __iomem *vport, const int *cfg)
-+			       char __iomem *vport, const u8 *cfg)
- {
- 	if (sc6000_write(devptr, vport, COMMAND_6C) < 0) {
- 		dev_warn(devptr, "CMD 0x%x: failed!\n", COMMAND_6C);
-@@ -353,8 +362,7 @@ static int sc6000_init_mss(struct device *devptr,
- 	return 0;
- }
- 
--static void sc6000_hw_cfg_encode(struct device *devptr,
--				 char __iomem *vport, int *cfg,
-+static void sc6000_hw_cfg_encode(struct device *devptr, u8 *cfg,
- 				 long xport, long xmpu,
- 				 long xmss_port, int joystick)
- {
-@@ -376,27 +384,83 @@ static void sc6000_hw_cfg_encode(struct device *devptr,
- 	dev_dbg(devptr, "hw cfg %x, %x\n", cfg[0], cfg[1]);
- }
- 
--static int sc6000_init_board(struct device *devptr,
--			     char __iomem *vport,
--			     char __iomem *vmss_port, int dev)
-+static void sc6000_prepare_board(struct device *devptr,
-+				 struct snd_sc6000 *sc6000,
-+				 unsigned int dev, int xirq, int xdma)
-+{
-+	sc6000->mss_config = sc6000_irq_to_softcfg(xirq) |
-+			     sc6000_dma_to_softcfg(xdma);
-+	sc6000->config = sc6000->mss_config |
-+			 sc6000_mpu_irq_to_softcfg(mpu_irq[dev]);
-+	sc6000_hw_cfg_encode(devptr, sc6000->hw_cfg, port[dev], mpu_port[dev],
-+			     mss_port[dev], joystick[dev]);
++//! Bitfield library for Rust structures
++//!
++//! Support for defining bitfields in Rust structures. Also used by the [`register!`] macro.
++
++/// Defines a struct with accessors to access bits within an inner unsigned integer.
++///
++/// # Syntax
++///
++/// ```rust
++/// use nova_core::bitfield;
++///
++/// #[derive(Debug, Clone, Copy, Default)]
++/// enum Mode {
++///     #[default]
++///     Low = 0,
++///     High = 1,
++///     Auto = 2,
++/// }
++///
++/// impl TryFrom<u8> for Mode {
++///     type Error = u8;
++///     fn try_from(value: u8) -> Result<Self, Self::Error> {
++///         match value {
++///             0 => Ok(Mode::Low),
++///             1 => Ok(Mode::High),
++///             2 => Ok(Mode::Auto),
++///             _ => Err(value),
++///         }
++///     }
++/// }
++///
++/// impl From<Mode> for u8 {
++///     fn from(mode: Mode) -> u8 {
++///         mode as u8
++///     }
++/// }
++///
++/// #[derive(Debug, Clone, Copy, Default)]
++/// enum State {
++///     #[default]
++///     Inactive = 0,
++///     Active = 1,
++/// }
++///
++/// impl From<bool> for State {
++///     fn from(value: bool) -> Self {
++///         if value { State::Active } else { State::Inactive }
++///     }
++/// }
++///
++/// impl From<State> for bool {
++///     fn from(state: State) -> bool {
++///         match state {
++///             State::Inactive => false,
++///             State::Active => true,
++///         }
++///     }
++/// }
++///
++/// bitfield! {
++///     struct ControlReg {
++///         7:7 state as bool => State;
++///         3:0 mode as u8 ?=> Mode;
++///     }
++/// }
++/// ```
++///
++/// This generates a struct with:
++/// - Field accessors: `mode()`, `state()`, etc.
++/// - Field setters: `set_mode()`, `set_state()`, etc. (supports chaining with builder pattern).
++/// - Debug and Default implementations.
++///
++/// Fields are defined as follows:
++///
++/// - `as <type>` simply returns the field value casted to <type>, typically `u32`, `u16`, `u8` or
++///   `bool`. Note that `bool` fields must have a range of 1 bit.
++/// - `as <type> => <into_type>` calls `<into_type>`'s `From::<<type>>` implementation and returns
++///   the result.
++/// - `as <type> ?=> <try_into_type>` calls `<try_into_type>`'s `TryFrom::<<type>>` implementation
++///   and returns the result. This is useful with fields for which not all values are valid.
++macro_rules! bitfield {
++    // Main entry point - defines the bitfield struct with fields
++    (struct $name:ident $(, $comment:literal)? { $($fields:tt)* }) => {
++        bitfield!(@core $name $(, $comment)? { $($fields)* });
++    };
++
++    // All rules below are helpers.
++
++    // Defines the wrapper `$name` type, as well as its relevant implementations (`Debug`,
++    // `Default`, `BitOr`, and conversion to the value type) and field accessor methods.
++    (@core $name:ident $(, $comment:literal)? { $($fields:tt)* }) => {
++        $(
++        #[doc=$comment]
++        )?
++        #[repr(transparent)]
++        #[derive(Clone, Copy)]
++        pub(crate) struct $name(u32);
++
++        impl ::core::ops::BitOr for $name {
++            type Output = Self;
++
++            fn bitor(self, rhs: Self) -> Self::Output {
++                Self(self.0 | rhs.0)
++            }
++        }
++
++        impl ::core::convert::From<$name> for u32 {
++            fn from(val: $name) -> u32 {
++                val.0
++            }
++        }
++
++        bitfield!(@fields_dispatcher $name { $($fields)* });
++    };
++
++    // Captures the fields and passes them to all the implementers that require field information.
++    //
++    // Used to simplify the matching rules for implementers, so they don't need to match the entire
++    // complex fields rule even though they only make use of part of it.
++    (@fields_dispatcher $name:ident {
++        $($hi:tt:$lo:tt $field:ident as $type:tt
++            $(?=> $try_into_type:ty)?
++            $(=> $into_type:ty)?
++            $(, $comment:literal)?
++        ;
++        )*
++    }
++    ) => {
++        bitfield!(@field_accessors $name {
++            $(
++                $hi:$lo $field as $type
++                $(?=> $try_into_type)?
++                $(=> $into_type)?
++                $(, $comment)?
++            ;
++            )*
++        });
++        bitfield!(@debug $name { $($field;)* });
++        bitfield!(@default $name { $($field;)* });
++    };
++
++    // Defines all the field getter/setter methods for `$name`.
++    (
++        @field_accessors $name:ident {
++        $($hi:tt:$lo:tt $field:ident as $type:tt
++            $(?=> $try_into_type:ty)?
++            $(=> $into_type:ty)?
++            $(, $comment:literal)?
++        ;
++        )*
++        }
++    ) => {
++        $(
++            bitfield!(@check_field_bounds $hi:$lo $field as $type);
++        )*
++
++        #[allow(dead_code)]
++        impl $name {
++            $(
++            bitfield!(@field_accessor $name $hi:$lo $field as $type
++                $(?=> $try_into_type)?
++                $(=> $into_type)?
++                $(, $comment)?
++                ;
++            );
++            )*
++        }
++    };
++
++    // Boolean fields must have `$hi == $lo`.
++    (@check_field_bounds $hi:tt:$lo:tt $field:ident as bool) => {
++        #[allow(clippy::eq_op)]
++        const _: () = {
++            ::kernel::build_assert!(
++                $hi == $lo,
++                concat!("boolean field `", stringify!($field), "` covers more than one bit")
++            );
++        };
++    };
++
++    // Non-boolean fields must have `$hi >= $lo`.
++    (@check_field_bounds $hi:tt:$lo:tt $field:ident as $type:tt) => {
++        #[allow(clippy::eq_op)]
++        const _: () = {
++            ::kernel::build_assert!(
++                $hi >= $lo,
++                concat!("field `", stringify!($field), "`'s MSB is smaller than its LSB")
++            );
++        };
++    };
++
++    // Catches fields defined as `bool` and convert them into a boolean value.
++    (
++        @field_accessor $name:ident $hi:tt:$lo:tt $field:ident as bool => $into_type:ty
++            $(, $comment:literal)?;
++    ) => {
++        bitfield!(
++            @leaf_accessor $name $hi:$lo $field
++            { |f| <$into_type>::from(if f != 0 { true } else { false }) }
++            bool $into_type => $into_type $(, $comment)?;
++        );
++    };
++
++    // Shortcut for fields defined as `bool` without the `=>` syntax.
++    (
++        @field_accessor $name:ident $hi:tt:$lo:tt $field:ident as bool $(, $comment:literal)?;
++    ) => {
++        bitfield!(@field_accessor $name $hi:$lo $field as bool => bool $(, $comment)?;);
++    };
++
++    // Catches the `?=>` syntax for non-boolean fields.
++    (
++        @field_accessor $name:ident $hi:tt:$lo:tt $field:ident as $type:tt ?=> $try_into_type:ty
++            $(, $comment:literal)?;
++    ) => {
++        bitfield!(@leaf_accessor $name $hi:$lo $field
++            { |f| <$try_into_type>::try_from(f as $type) } $type $try_into_type =>
++            ::core::result::Result<
++                $try_into_type,
++                <$try_into_type as ::core::convert::TryFrom<$type>>::Error
++            >
++            $(, $comment)?;);
++    };
++
++    // Catches the `=>` syntax for non-boolean fields.
++    (
++        @field_accessor $name:ident $hi:tt:$lo:tt $field:ident as $type:tt => $into_type:ty
++            $(, $comment:literal)?;
++    ) => {
++        bitfield!(@leaf_accessor $name $hi:$lo $field
++            { |f| <$into_type>::from(f as $type) } $type $into_type => $into_type $(, $comment)?;);
++    };
++
++    // Shortcut for non-boolean fields defined without the `=>` or `?=>` syntax.
++    (
++        @field_accessor $name:ident $hi:tt:$lo:tt $field:ident as $type:tt
++            $(, $comment:literal)?;
++    ) => {
++        bitfield!(@field_accessor $name $hi:$lo $field as $type => $type $(, $comment)?;);
++    };
++
++    // Generates the accessor methods for a single field.
++    (
++        @leaf_accessor $name:ident $hi:tt:$lo:tt $field:ident
++            { $process:expr } $prim_type:tt $to_type:ty => $res_type:ty $(, $comment:literal)?;
++    ) => {
++        ::kernel::macros::paste!(
++        const [<$field:upper _RANGE>]: ::core::ops::RangeInclusive<u8> = $lo..=$hi;
++        const [<$field:upper _MASK>]: u32 = ((((1 << $hi) - 1) << 1) + 1) - ((1 << $lo) - 1);
++        const [<$field:upper _SHIFT>]: u32 = Self::[<$field:upper _MASK>].trailing_zeros();
++        );
++
++        $(
++        #[doc="Returns the value of this field:"]
++        #[doc=$comment]
++        )?
++        #[inline(always)]
++        pub(crate) fn $field(self) -> $res_type {
++            ::kernel::macros::paste!(
++            const MASK: u32 = $name::[<$field:upper _MASK>];
++            const SHIFT: u32 = $name::[<$field:upper _SHIFT>];
++            );
++            let field = ((self.0 & MASK) >> SHIFT);
++
++            $process(field)
++        }
++
++        ::kernel::macros::paste!(
++        $(
++        #[doc="Sets the value of this field:"]
++        #[doc=$comment]
++        )?
++        #[inline(always)]
++        pub(crate) fn [<set_ $field>](mut self, value: $to_type) -> Self {
++            const MASK: u32 = $name::[<$field:upper _MASK>];
++            const SHIFT: u32 = $name::[<$field:upper _SHIFT>];
++            let value = (u32::from($prim_type::from(value)) << SHIFT) & MASK;
++            self.0 = (self.0 & !MASK) | value;
++
++            self
++        }
++        );
++    };
++
++    // Generates the `Debug` implementation for `$name`.
++    (@debug $name:ident { $($field:ident;)* }) => {
++        impl ::kernel::fmt::Debug for $name {
++            fn fmt(&self, f: &mut ::kernel::fmt::Formatter<'_>) -> ::kernel::fmt::Result {
++                f.debug_struct(stringify!($name))
++                    .field("<raw>", &::kernel::prelude::fmt!("{:#x}", &self.0))
++                $(
++                    .field(stringify!($field), &self.$field())
++                )*
++                    .finish()
++            }
++        }
++    };
++
++    // Generates the `Default` implementation for `$name`.
++    (@default $name:ident { $($field:ident;)* }) => {
++        /// Returns a value for the bitfield where all fields are set to their default value.
++        impl ::core::default::Default for $name {
++            fn default() -> Self {
++                #[allow(unused_mut)]
++                let mut value = Self(Default::default());
++
++                ::kernel::macros::paste!(
++                $(
++                value.[<set_ $field>](Default::default());
++                )*
++                );
++
++                value
++            }
++        }
++    };
 +}
-+
-+static void sc6000_detect_old_dsp(struct device *devptr,
-+				  struct snd_sc6000 *sc6000)
-+{
-+	sc6000_write(devptr, sc6000->vport, COMMAND_5C);
-+	sc6000->old_dsp = sc6000_read(sc6000->vport) < 0;
-+}
-+
-+static int sc6000_program_board(struct device *devptr,
-+				struct snd_sc6000 *sc6000)
-+{
-+	int err;
-+
-+	if (!sc6000->old_dsp) {
-+		if (sc6000_hw_cfg_write(devptr, sc6000->vport,
-+					sc6000->hw_cfg) < 0) {
-+			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
-+			return -EIO;
-+		}
-+	}
-+
-+	err = sc6000_setup_board(devptr, sc6000->vport, sc6000->config);
-+	if (err < 0) {
-+		dev_err(devptr, "sc6000_setup_board: failed!\n");
-+		return -ENODEV;
-+	}
-+
-+	sc6000_dsp_reset(sc6000->vport);
-+
-+	if (!sc6000->old_dsp) {
-+		sc6000_write(devptr, sc6000->vport, COMMAND_60);
-+		sc6000_write(devptr, sc6000->vport, 0x02);
-+		sc6000_dsp_reset(sc6000->vport);
-+	}
-+
-+	err = sc6000_setup_board(devptr, sc6000->vport, sc6000->config);
-+	if (err < 0) {
-+		dev_err(devptr, "sc6000_setup_board: failed!\n");
-+		return -ENODEV;
-+	}
-+
-+	err = sc6000_init_mss(devptr, sc6000->vport, sc6000->config,
-+			      sc6000->vmss_port, sc6000->mss_config);
-+	if (err < 0) {
-+		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
-+		return -ENODEV;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sc6000_init_board(struct device *devptr, struct snd_sc6000 *sc6000)
- {
- 	char answer[15];
- 	char version[2];
--	int mss_config = sc6000_irq_to_softcfg(irq[dev]) |
--			 sc6000_dma_to_softcfg(dma[dev]);
--	int config = mss_config |
--		     sc6000_mpu_irq_to_softcfg(mpu_irq[dev]);
- 	int err;
--	int old = 0;
+diff --git a/drivers/gpu/nova-core/nova_core.rs b/drivers/gpu/nova-core/nova_core.rs
+index fffcaee2249fe..112277c7921eb 100644
+--- a/drivers/gpu/nova-core/nova_core.rs
++++ b/drivers/gpu/nova-core/nova_core.rs
+@@ -2,6 +2,9 @@
  
--	err = sc6000_dsp_reset(vport);
-+	err = sc6000_dsp_reset(sc6000->vport);
- 	if (err < 0) {
- 		dev_err(devptr, "sc6000_dsp_reset: failed!\n");
- 		return err;
- 	}
+ //! Nova Core GPU Driver
  
- 	memset(answer, 0, sizeof(answer));
--	err = sc6000_dsp_get_answer(devptr, vport, GET_DSP_COPYRIGHT, answer, 15);
-+	err = sc6000_dsp_get_answer(devptr, sc6000->vport, GET_DSP_COPYRIGHT,
-+				    answer, 15);
- 	if (err <= 0) {
- 		dev_err(devptr, "sc6000_dsp_copyright: failed!\n");
- 		return -ENODEV;
-@@ -408,54 +472,17 @@ static int sc6000_init_board(struct device *devptr,
- 	if (strncmp("SC-6000", answer, 7))
- 		dev_warn(devptr, "Warning: non SC-6000 audio card!\n");
++#[macro_use]
++mod bitfield;
++
+ mod dma;
+ mod driver;
+ mod falcon;
+diff --git a/drivers/gpu/nova-core/regs/macros.rs b/drivers/gpu/nova-core/regs/macros.rs
+index 1c54a4533822e..945d15a2c529d 100644
+--- a/drivers/gpu/nova-core/regs/macros.rs
++++ b/drivers/gpu/nova-core/regs/macros.rs
+@@ -8,7 +8,8 @@
+ //!
+ //! The `register!` macro in this module provides an intuitive and readable syntax for defining a
+ //! dedicated type for each register. Each such type comes with its own field accessors that can
+-//! return an error if a field's value is invalid.
++//! return an error if a field's value is invalid. Please look at the [`bitfield`] macro for the
++//! complete syntax of fields definitions.
  
--	if (sc6000_dsp_get_answer(devptr, vport, GET_DSP_VERSION, version, 2) < 2) {
-+	if (sc6000_dsp_get_answer(devptr, sc6000->vport,
-+				  GET_DSP_VERSION, version, 2) < 2) {
- 		dev_err(devptr, "sc6000_dsp_version: failed!\n");
- 		return -ENODEV;
- 	}
- 	dev_info(devptr, "Detected model: %s, DSP version %d.%d\n",
- 		answer, version[0], version[1]);
+ /// Trait providing a base address to be added to the offset of a relative register to obtain
+ /// its actual offset.
+@@ -54,15 +55,6 @@ pub(crate) trait RegisterBase<T> {
+ /// BOOT_0::alter(&bar, |r| r.set_major_revision(3).set_minor_revision(10));
+ /// ```
+ ///
+-/// Fields are defined as follows:
+-///
+-/// - `as <type>` simply returns the field value casted to <type>, typically `u32`, `u16`, `u8` or
+-///   `bool`. Note that `bool` fields must have a range of 1 bit.
+-/// - `as <type> => <into_type>` calls `<into_type>`'s `From::<<type>>` implementation and returns
+-///   the result.
+-/// - `as <type> ?=> <try_into_type>` calls `<try_into_type>`'s `TryFrom::<<type>>` implementation
+-///   and returns the result. This is useful with fields for which not all values are valid.
+-///
+ /// The documentation strings are optional. If present, they will be added to the type's
+ /// definition, or the field getter and setter methods they are attached to.
+ ///
+@@ -284,25 +276,25 @@ pub(crate) trait RegisterBase<T> {
+ macro_rules! register {
+     // Creates a register at a fixed offset of the MMIO space.
+     ($name:ident @ $offset:literal $(, $comment:literal)? { $($fields:tt)* } ) => {
+-        register!(@core $name $(, $comment)? { $($fields)* } );
++        bitfield!(struct $name $(, $comment)? { $($fields)* } );
+         register!(@io_fixed $name @ $offset);
+     };
  
--	/* set configuration */
--	sc6000_write(devptr, vport, COMMAND_5C);
--	if (sc6000_read(vport) < 0)
--		old = 1;
+     // Creates an alias register of fixed offset register `alias` with its own fields.
+     ($name:ident => $alias:ident $(, $comment:literal)? { $($fields:tt)* } ) => {
+-        register!(@core $name $(, $comment)? { $($fields)* } );
++        bitfield!(struct $name $(, $comment)? { $($fields)* } );
+         register!(@io_fixed $name @ $alias::OFFSET);
+     };
+ 
+     // Creates a register at a relative offset from a base address provider.
+     ($name:ident @ $base:ty [ $offset:literal ] $(, $comment:literal)? { $($fields:tt)* } ) => {
+-        register!(@core $name $(, $comment)? { $($fields)* } );
++        bitfield!(struct $name $(, $comment)? { $($fields)* } );
+         register!(@io_relative $name @ $base [ $offset ]);
+     };
+ 
+     // Creates an alias register of relative offset register `alias` with its own fields.
+     ($name:ident => $base:ty [ $alias:ident ] $(, $comment:literal)? { $($fields:tt)* }) => {
+-        register!(@core $name $(, $comment)? { $($fields)* } );
++        bitfield!(struct $name $(, $comment)? { $($fields)* } );
+         register!(@io_relative $name @ $base [ $alias::OFFSET ]);
+     };
+ 
+@@ -313,7 +305,7 @@ macro_rules! register {
+         }
+     ) => {
+         static_assert!(::core::mem::size_of::<u32>() <= $stride);
+-        register!(@core $name $(, $comment)? { $($fields)* } );
++        bitfield!(struct $name $(, $comment)? { $($fields)* } );
+         register!(@io_array $name @ $offset [ $size ; $stride ]);
+     };
+ 
+@@ -334,7 +326,7 @@ macro_rules! register {
+             $(, $comment:literal)? { $($fields:tt)* }
+     ) => {
+         static_assert!(::core::mem::size_of::<u32>() <= $stride);
+-        register!(@core $name $(, $comment)? { $($fields)* } );
++        bitfield!(struct $name $(, $comment)? { $($fields)* } );
+         register!(@io_relative_array $name @ $base [ $offset [ $size ; $stride ] ]);
+     };
+ 
+@@ -356,7 +348,7 @@ macro_rules! register {
+         }
+     ) => {
+         static_assert!($idx < $alias::SIZE);
+-        register!(@core $name $(, $comment)? { $($fields)* } );
++        bitfield!(struct $name $(, $comment)? { $($fields)* } );
+         register!(@io_relative $name @ $base [ $alias::OFFSET + $idx * $alias::STRIDE ] );
+     };
+ 
+@@ -365,241 +357,10 @@ macro_rules! register {
+     // to avoid it being interpreted in place of the relative register array alias rule.
+     ($name:ident => $alias:ident [ $idx:expr ] $(, $comment:literal)? { $($fields:tt)* }) => {
+         static_assert!($idx < $alias::SIZE);
+-        register!(@core $name $(, $comment)? { $($fields)* } );
++        bitfield!(struct $name $(, $comment)? { $($fields)* } );
+         register!(@io_fixed $name @ $alias::OFFSET + $idx * $alias::STRIDE );
+     };
+ 
+-    // All rules below are helpers.
 -
--	if (!old) {
--		int cfg[2];
--		sc6000_hw_cfg_encode(devptr,
--				     vport, &cfg[0], port[dev], mpu_port[dev],
--				     mss_port[dev], joystick[dev]);
--		if (sc6000_hw_cfg_write(devptr, vport, cfg) < 0) {
--			dev_err(devptr, "sc6000_hw_cfg_write: failed!\n");
--			return -EIO;
--		}
--	}
--	err = sc6000_setup_board(devptr, vport, config);
--	if (err < 0) {
--		dev_err(devptr, "sc6000_setup_board: failed!\n");
--		return -ENODEV;
--	}
+-    // Defines the wrapper `$name` type, as well as its relevant implementations (`Debug`,
+-    // `Default`, `BitOr`, and conversion to the value type) and field accessor methods.
+-    (@core $name:ident $(, $comment:literal)? { $($fields:tt)* }) => {
+-        $(
+-        #[doc=$comment]
+-        )?
+-        #[repr(transparent)]
+-        #[derive(Clone, Copy)]
+-        pub(crate) struct $name(u32);
 -
--	sc6000_dsp_reset(vport);
+-        impl ::core::ops::BitOr for $name {
+-            type Output = Self;
 -
--	if (!old) {
--		sc6000_write(devptr, vport, COMMAND_60);
--		sc6000_write(devptr, vport, 0x02);
--		sc6000_dsp_reset(vport);
--	}
-+	sc6000_detect_old_dsp(devptr, sc6000);
- 
--	err = sc6000_setup_board(devptr, vport, config);
--	if (err < 0) {
--		dev_err(devptr, "sc6000_setup_board: failed!\n");
--		return -ENODEV;
--	}
--	err = sc6000_init_mss(devptr, vport, config, vmss_port, mss_config);
--	if (err < 0) {
--		dev_err(devptr, "Cannot initialize Microsoft Sound System mode.\n");
--		return -ENODEV;
--	}
+-            fn bitor(self, rhs: Self) -> Self::Output {
+-                Self(self.0 | rhs.0)
+-            }
+-        }
 -
--	return 0;
-+	return sc6000_program_board(devptr, sc6000);
- }
- 
- static int snd_sc6000_mixer(struct snd_wss *chip)
-@@ -538,10 +565,10 @@ static int snd_sc6000_match(struct device *devptr, unsigned int dev)
- 
- static void snd_sc6000_free(struct snd_card *card)
- {
--	char __iomem *vport = (char __force __iomem *)card->private_data;
-+	struct snd_sc6000 *sc6000 = card->private_data;
- 
--	if (vport)
--		sc6000_setup_board(card->dev, vport, 0);
-+	if (sc6000->vport)
-+		sc6000_setup_board(card->dev, sc6000->vport, 0);
- }
- 
- static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
-@@ -552,15 +579,17 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 	int xirq = irq[dev];
- 	int xdma = dma[dev];
- 	struct snd_card *card;
-+	struct snd_sc6000 *sc6000;
- 	struct snd_wss *chip;
- 	struct snd_opl3 *opl3;
- 	char __iomem *vport;
- 	char __iomem *vmss_port;
- 
- 	err = snd_devm_card_new(devptr, index[dev], id[dev], THIS_MODULE,
--				0, &card);
-+				sizeof(*sc6000), &card);
- 	if (err < 0)
- 		return err;
-+	sc6000 = card->private_data;
- 
- 	if (xirq == SNDRV_AUTO_IRQ) {
- 		xirq = snd_legacy_find_free_irq(possible_irqs);
-@@ -587,7 +616,7 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 		dev_err(devptr, "I/O port cannot be iomapped.\n");
- 		return -EBUSY;
- 	}
--	card->private_data = (void __force *)vport;
-+	sc6000->vport = vport;
- 
- 	/* to make it marked as used */
- 	if (!devm_request_region(devptr, mss_port[dev], 4, DRV_NAME)) {
-@@ -600,12 +629,15 @@ static int __snd_sc6000_probe(struct device *devptr, unsigned int dev)
- 		dev_err(devptr, "MSS port I/O cannot be iomapped.\n");
- 		return -EBUSY;
- 	}
-+	sc6000->vmss_port = vmss_port;
- 
- 	dev_dbg(devptr, "Initializing BASE[0x%lx] IRQ[%d] DMA[%d] MIRQ[%d]\n",
- 		port[dev], xirq, xdma,
- 		mpu_irq[dev] == SNDRV_AUTO_IRQ ? 0 : mpu_irq[dev]);
- 
--	err = sc6000_init_board(devptr, vport, vmss_port, dev);
-+	sc6000_prepare_board(devptr, sc6000, dev, xirq, xdma);
-+
-+	err = sc6000_init_board(devptr, sc6000);
- 	if (err < 0)
- 		return err;
- 	card->private_free = snd_sc6000_free;
+-        impl ::core::convert::From<$name> for u32 {
+-            fn from(reg: $name) -> u32 {
+-                reg.0
+-            }
+-        }
+-
+-        register!(@fields_dispatcher $name { $($fields)* });
+-    };
+-
+-    // Captures the fields and passes them to all the implementers that require field information.
+-    //
+-    // Used to simplify the matching rules for implementers, so they don't need to match the entire
+-    // complex fields rule even though they only make use of part of it.
+-    (@fields_dispatcher $name:ident {
+-        $($hi:tt:$lo:tt $field:ident as $type:tt
+-            $(?=> $try_into_type:ty)?
+-            $(=> $into_type:ty)?
+-            $(, $comment:literal)?
+-        ;
+-        )*
+-    }
+-    ) => {
+-        register!(@field_accessors $name {
+-            $(
+-                $hi:$lo $field as $type
+-                $(?=> $try_into_type)?
+-                $(=> $into_type)?
+-                $(, $comment)?
+-            ;
+-            )*
+-        });
+-        register!(@debug $name { $($field;)* });
+-        register!(@default $name { $($field;)* });
+-    };
+-
+-    // Defines all the field getter/methods methods for `$name`.
+-    (
+-        @field_accessors $name:ident {
+-        $($hi:tt:$lo:tt $field:ident as $type:tt
+-            $(?=> $try_into_type:ty)?
+-            $(=> $into_type:ty)?
+-            $(, $comment:literal)?
+-        ;
+-        )*
+-        }
+-    ) => {
+-        $(
+-            register!(@check_field_bounds $hi:$lo $field as $type);
+-        )*
+-
+-        #[allow(dead_code)]
+-        impl $name {
+-            $(
+-            register!(@field_accessor $name $hi:$lo $field as $type
+-                $(?=> $try_into_type)?
+-                $(=> $into_type)?
+-                $(, $comment)?
+-                ;
+-            );
+-            )*
+-        }
+-    };
+-
+-    // Boolean fields must have `$hi == $lo`.
+-    (@check_field_bounds $hi:tt:$lo:tt $field:ident as bool) => {
+-        #[allow(clippy::eq_op)]
+-        const _: () = {
+-            ::kernel::build_assert!(
+-                $hi == $lo,
+-                concat!("boolean field `", stringify!($field), "` covers more than one bit")
+-            );
+-        };
+-    };
+-
+-    // Non-boolean fields must have `$hi >= $lo`.
+-    (@check_field_bounds $hi:tt:$lo:tt $field:ident as $type:tt) => {
+-        #[allow(clippy::eq_op)]
+-        const _: () = {
+-            ::kernel::build_assert!(
+-                $hi >= $lo,
+-                concat!("field `", stringify!($field), "`'s MSB is smaller than its LSB")
+-            );
+-        };
+-    };
+-
+-    // Catches fields defined as `bool` and convert them into a boolean value.
+-    (
+-        @field_accessor $name:ident $hi:tt:$lo:tt $field:ident as bool => $into_type:ty
+-            $(, $comment:literal)?;
+-    ) => {
+-        register!(
+-            @leaf_accessor $name $hi:$lo $field
+-            { |f| <$into_type>::from(if f != 0 { true } else { false }) }
+-            bool $into_type => $into_type $(, $comment)?;
+-        );
+-    };
+-
+-    // Shortcut for fields defined as `bool` without the `=>` syntax.
+-    (
+-        @field_accessor $name:ident $hi:tt:$lo:tt $field:ident as bool $(, $comment:literal)?;
+-    ) => {
+-        register!(@field_accessor $name $hi:$lo $field as bool => bool $(, $comment)?;);
+-    };
+-
+-    // Catches the `?=>` syntax for non-boolean fields.
+-    (
+-        @field_accessor $name:ident $hi:tt:$lo:tt $field:ident as $type:tt ?=> $try_into_type:ty
+-            $(, $comment:literal)?;
+-    ) => {
+-        register!(@leaf_accessor $name $hi:$lo $field
+-            { |f| <$try_into_type>::try_from(f as $type) } $type $try_into_type =>
+-            ::core::result::Result<
+-                $try_into_type,
+-                <$try_into_type as ::core::convert::TryFrom<$type>>::Error
+-            >
+-            $(, $comment)?;);
+-    };
+-
+-    // Catches the `=>` syntax for non-boolean fields.
+-    (
+-        @field_accessor $name:ident $hi:tt:$lo:tt $field:ident as $type:tt => $into_type:ty
+-            $(, $comment:literal)?;
+-    ) => {
+-        register!(@leaf_accessor $name $hi:$lo $field
+-            { |f| <$into_type>::from(f as $type) } $type $into_type => $into_type $(, $comment)?;);
+-    };
+-
+-    // Shortcut for non-boolean fields defined without the `=>` or `?=>` syntax.
+-    (
+-        @field_accessor $name:ident $hi:tt:$lo:tt $field:ident as $type:tt
+-            $(, $comment:literal)?;
+-    ) => {
+-        register!(@field_accessor $name $hi:$lo $field as $type => $type $(, $comment)?;);
+-    };
+-
+-    // Generates the accessor methods for a single field.
+-    (
+-        @leaf_accessor $name:ident $hi:tt:$lo:tt $field:ident
+-            { $process:expr } $prim_type:tt $to_type:ty => $res_type:ty $(, $comment:literal)?;
+-    ) => {
+-        ::kernel::macros::paste!(
+-        const [<$field:upper _RANGE>]: ::core::ops::RangeInclusive<u8> = $lo..=$hi;
+-        const [<$field:upper _MASK>]: u32 = ((((1 << $hi) - 1) << 1) + 1) - ((1 << $lo) - 1);
+-        const [<$field:upper _SHIFT>]: u32 = Self::[<$field:upper _MASK>].trailing_zeros();
+-        );
+-
+-        $(
+-        #[doc="Returns the value of this field:"]
+-        #[doc=$comment]
+-        )?
+-        #[inline(always)]
+-        pub(crate) fn $field(self) -> $res_type {
+-            ::kernel::macros::paste!(
+-            const MASK: u32 = $name::[<$field:upper _MASK>];
+-            const SHIFT: u32 = $name::[<$field:upper _SHIFT>];
+-            );
+-            let field = ((self.0 & MASK) >> SHIFT);
+-
+-            $process(field)
+-        }
+-
+-        ::kernel::macros::paste!(
+-        $(
+-        #[doc="Sets the value of this field:"]
+-        #[doc=$comment]
+-        )?
+-        #[inline(always)]
+-        pub(crate) fn [<set_ $field>](mut self, value: $to_type) -> Self {
+-            const MASK: u32 = $name::[<$field:upper _MASK>];
+-            const SHIFT: u32 = $name::[<$field:upper _SHIFT>];
+-            let value = (u32::from($prim_type::from(value)) << SHIFT) & MASK;
+-            self.0 = (self.0 & !MASK) | value;
+-
+-            self
+-        }
+-        );
+-    };
+-
+-    // Generates the `Debug` implementation for `$name`.
+-    (@debug $name:ident { $($field:ident;)* }) => {
+-        impl ::kernel::fmt::Debug for $name {
+-            fn fmt(&self, f: &mut ::kernel::fmt::Formatter<'_>) -> ::kernel::fmt::Result {
+-                f.debug_struct(stringify!($name))
+-                    .field("<raw>", &::kernel::prelude::fmt!("{:#x}", &self.0))
+-                $(
+-                    .field(stringify!($field), &self.$field())
+-                )*
+-                    .finish()
+-            }
+-        }
+-    };
+-
+-    // Generates the `Default` implementation for `$name`.
+-    (@default $name:ident { $($field:ident;)* }) => {
+-        /// Returns a value for the register where all fields are set to their default value.
+-        impl ::core::default::Default for $name {
+-            fn default() -> Self {
+-                #[allow(unused_mut)]
+-                let mut value = Self(Default::default());
+-
+-                ::kernel::macros::paste!(
+-                $(
+-                value.[<set_ $field>](Default::default());
+-                )*
+-                );
+-
+-                value
+-            }
+-        }
+-    };
+-
+     // Generates the IO accessors for a fixed offset register.
+     (@io_fixed $name:ident @ $offset:expr) => {
+         #[allow(dead_code)]
 -- 
 2.53.0
 
