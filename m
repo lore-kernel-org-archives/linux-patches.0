@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0603A3E9C;
-	Wed, 20 May 2026 16:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05A62BE02A;
+	Wed, 20 May 2026 16:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294783; cv=none; b=hTpSO1wAi/4Z32K3r5rSXrRLXImlQgSU9zhFLXj7fSZVA5m+VMIM4v90EScnVvjlbzLzE2scNE7gZnZjg/f4ZSR6iTHkzWmK637ShRActaaFIOePBKTHAInZjd7afWPZZ57SXA4pGZHaBq8iZbAn+Di/2BJMQ9OClAn72WPBCcA=
+	t=1779294786; cv=none; b=U0iCP3MUVl4W1+Ls9Vpe9Ux0Es5h37CtlPwBsBOALAGacGN/1h2/EjLQhmQp/cvRf9+fWncD1gUziI54Rmnf1LVMOUZBj2gK4qvFUjxWTIGnjqW+ihnOqRGh7lCx7ClUjKBP2Ribiop8rzxq1kE9JqWKQG+lFbOjTtqZiRy+Cbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294783; c=relaxed/simple;
-	bh=cdQzdCpFAgMc2Wj+8JD9IUYhkKHMg6izUvnGLeTfZ4k=;
+	s=arc-20240116; t=1779294786; c=relaxed/simple;
+	bh=X+SOnrVgkrH6izXsVbOE63MvZzaYhMGy0XmPDq1E84I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JJA/enyaAsxNwUJMmEuQj49vc4qzqSE2/F7Oznfjirj2bOrWJAEma0WQG5+rYqvTOS/Q+XlC4tjutDIGdJ81Cbstkycw16SrPmiI+Jx5uhj17LWzfz9pX6JnI24og8V7smNEvC+ARVYEkW9m+QS4RQwPdU5ZVhKpYTvaCjod/5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DeRVgheT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YwO/HIi4j7Gce/Vxw+i+1GTuwWvvlB3nT1JiNLFBdsRkhgv4ASVZxjRIsvfSi9vKdw0nFBRgSCFWKTCY74PzlHWNJ2X9PrR2ETEUQ42OCGt2NLuPuI6CFxddVsPtVNuYp0HWh0mLlyh2I4bRLQjmhTgj0Nyq2qr9KH9Yb6J8Vq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWn/H62E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DeRVgheT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3361F000E9;
-	Wed, 20 May 2026 16:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWn/H62E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E8E1F000E9;
+	Wed, 20 May 2026 16:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294782;
-	bh=2KzXhfL1yNvsqO+EVr8udgfs8ZoQPrx43UCUhlFKhDM=;
+	s=korg; t=1779294784;
+	bh=Myzlm5m7UybRV0YKv5Pi6oUlZ2OTYyXMZ3eRZRk1WnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DeRVgheTC9AyEjxm2aNt1PZtSOPQsds/Fy/nC89nTChzPj2ysaU5lZBJ6u63VADGz
-	 H5YtWW8dDBVJq0w5kfAFQk0Cu50Yzx9qWnM4EwcMMpIyRG9WKy7hc2hPjSt5e3M3c/
-	 itSKZjRrZQTugVSXzrwiV766JsghwgLRaQkM3VE8=
+	b=uWn/H62EW/bOY4XInkFrn4uth/Ws3TfYxikmlQb3ki10wQxJJ8JEFZfV0hjxP1J3d
+	 bODoJ1OjJIQJbSPvNd/EOMxUiaspqEfNmJFgEjljUR9o5elzUd9U9+bAStG9N/0Pie
+	 bV+RQQZH/mh2zaDJ6fk9EGoIRNWz3mTBCKeZWmWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chiu <chui-hao.chiu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Amery Hung <ameryhung@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0130/1146] wifi: mt76: mt7996: fix RRO EMU configuration
-Date: Wed, 20 May 2026 18:06:20 +0200
-Message-ID: <20260520162151.266708611@linuxfoundation.org>
+Subject: [PATCH 7.0 0131/1146] bpf: Fix refcount check in check_struct_ops_btf_id()
+Date: Wed, 20 May 2026 18:06:21 +0200
+Message-ID: <20260520162151.290315836@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,52 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Chiu <chui-hao.chiu@mediatek.com>
+From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
 
-[ Upstream commit 73b46379e5231138025b271ce8e158d2a8aa0768 ]
+[ Upstream commit 25e3e1f1096089a64901ae1faa7b7b13446653db ]
 
-Use the correct helper to update specific bitfields instead of
-overwriting the entire register.
+The current implementation only checks whether the first argument is
+refcounted. Fix this by iterating over all arguments.
 
-Fixes: eedb427eb260 ("wifi: mt76: mt7996: Enable HW RRO for MT7992 chipset")
-Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260312095724.2117448-1-shayne.chen@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+Fixes: 38f1e66abd184 ("bpf: Do not allow tail call in strcut_ops program with __ref argument")
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Acked-by: Amery Hung <ameryhung@gmail.com>
+Link: https://lore.kernel.org/r/20260320130219.63711-1-keisuke.nishimura@inria.fr
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 3 +--
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c  | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ kernel/bpf/verifier.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index ca671dabf00ab..fca2d84493b9b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -858,8 +858,7 @@ void mt7996_rro_hw_init(struct mt7996_dev *dev)
- 			}
- 		} else {
- 			/* set emul 3.0 function */
--			mt76_wr(dev, MT_RRO_3_0_EMU_CONF,
--				MT_RRO_3_0_EMU_CONF_EN_MASK);
-+			mt76_set(dev, MT_RRO_3_0_EMU_CONF, MT_RRO_3_0_EMU_CONF_EN_MASK);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index e3814152b52f8..23b35605ae377 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -24897,7 +24897,7 @@ static int check_struct_ops_btf_id(struct bpf_verifier_env *env)
+ 	}
  
- 			mt76_wr(dev, MT_RRO_ADDR_ARRAY_BASE0,
- 				dev->wed_rro.addr_elem[0].phy_addr);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index bf3fb9b734e85..fc08ef94df637 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -2599,7 +2599,7 @@ void mt7996_mac_reset_work(struct work_struct *work)
- 	mt7996_dma_start(dev, false, false);
- 
- 	if (!is_mt7996(&dev->mt76) && dev->mt76.hwrro_mode == MT76_HWRRO_V3)
--		mt76_wr(dev, MT_RRO_3_0_EMU_CONF, MT_RRO_3_0_EMU_CONF_EN_MASK);
-+		mt76_set(dev, MT_RRO_3_0_EMU_CONF, MT_RRO_3_0_EMU_CONF_EN_MASK);
- 
- 	if (mtk_wed_device_active(&dev->mt76.mmio.wed)) {
- 		u32 wed_irq_mask = MT_INT_TX_DONE_BAND2 |
+ 	for (i = 0; i < st_ops_desc->arg_info[member_idx].cnt; i++) {
+-		if (st_ops_desc->arg_info[member_idx].info->refcounted) {
++		if (st_ops_desc->arg_info[member_idx].info[i].refcounted) {
+ 			has_refcounted_arg = true;
+ 			break;
+ 		}
 -- 
 2.53.0
 
