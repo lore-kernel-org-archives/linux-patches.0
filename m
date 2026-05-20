@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C1829B8D0;
-	Wed, 20 May 2026 17:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDAC29B8D0;
+	Wed, 20 May 2026 17:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299699; cv=none; b=hPzXsskk6C5hd0CkVjOam3sqdAUCDVGcofQhNbX0p3Ga5rZ1CkSGMHWXqnBJfZIoqpu8vOFqT1f1cZ1O1IjPGuDmLoVb5oDPCscff6SLhk/rg53TD3I9Tp6UcCkF0HcfVlUB2vgKU7uK8TpUMWf6R0blyoBUrR9PteGdwTHJ37Y=
+	t=1779299701; cv=none; b=JbH2Zl+SQyA5dNrGgDKMy1nqNQ4X0xGsynbfd24xwfbQVZSnJ21Glc4fjis3ue21H3tqHaE6Ko+KXlQaiu0bmmOjVEOsdIgzuLggtLZPwO30Id0sMqnrGQn2Vg5+cjQHH+w5uIHafOdLrzUdk2+3ylWfDOYD8rc8FUGIuYmCNVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299699; c=relaxed/simple;
-	bh=gt1wBtAwCimi8lYUovj7SF/18uRUwN6imhWFCvIRgzE=;
+	s=arc-20240116; t=1779299701; c=relaxed/simple;
+	bh=YDQ5BrifFKzCCMqeCv6U91V0WLDeNTUTxXwdPW2TLUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/+qBLV7f7wdouM0mPQijkx5f45L9/bzH0oicBNkON8MBcvDURqhDPIjuF7RHlMQ6xFwUay7ULtmlPylrkanPfiYh8o+4lax8cyYbONeb4WDKzN8PBrz6lpOzZU1XDND3X/rz4Lpikp8IFyoFAxxHyFh/GiHeR1YRi3yba1Lbbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjwoOeBd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=upt/63FFKjXSEtFMnzhJi+sK4ZtNK4T/jnuEB6ZgJwA472NkmvvPTjb/DwJk/cDe/j0II7xdYzAk/ksHxvw2wiZQEKAkqS3zKi3YXcZsmn38fWg31S+VBmXO8bsSLyVWyv/eEL9MEp1/6RMYXYrN6maVyFtTQXTYAsXhhcpKKrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKMQPrmU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjwoOeBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C6FF1F000E9;
-	Wed, 20 May 2026 17:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKMQPrmU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6B01F000E9;
+	Wed, 20 May 2026 17:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299698;
-	bh=5Pi8rpgMBaD3/tY9Rcfe5kqe9x95+pOwdJ2FHVHMw58=;
+	s=korg; t=1779299700;
+	bh=iBZpTvXYadTSsoMNTpp8dyr4QfGyg1nepZn6vR94JKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MjwoOeBdBCO2wRHPHk6hKJyc+c1VQlVCwv41cKRkt8rM/HhrndVC3YRK8tWbEsy8N
-	 Lh05FRq9rdCi1VfsfoiD4qcZvySMF2BVlQN3AkE9TCWoZXfr5NwdI6b2N9CoguuLT9
-	 SxXbbZGEHx899JRn7J+Qeba/kuI1VIappBtwTnnc=
+	b=sKMQPrmUpXZD7RE5FYYEVrUHVmOMSj9qSLWNx1YaYCX5H7Oa02cTyk0rRf0EQQ6oQ
+	 Ilco0IA5yhdyYATAuWVqT++8cVWh1bRS3KSDE2HggaEa9nDHgOgWhY0tvVu7AEPPon
+	 grk0D0zVtVlh3M4NOxb94LvmvcfZHPXA0Dck/L5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 870/957] net: airoha: Move ndesc initialization at end of airoha_qdma_init_tx()
-Date: Wed, 20 May 2026 18:22:33 +0200
-Message-ID: <20260520162153.434319374@linuxfoundation.org>
+Subject: [PATCH 6.18 871/957] net/sched: sch_pie: annotate more data-races in pie_dump_stats()
+Date: Wed, 20 May 2026 18:22:34 +0200
+Message-ID: <20260520162153.455913436@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,62 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f329924bb49458c65297f1361f545816a5b90998 ]
+[ Upstream commit 6d4106e8df94c0c52cf3ca6a6a0d01567fb3844e ]
 
-If queue entry list allocation fails in airoha_qdma_init_tx_queue routine,
-airoha_qdma_cleanup_tx_queue() will trigger a NULL pointer dereference
-accessing the queue entry array. The issue is due to the early ndesc
-initialization in airoha_qdma_init_tx_queue(). Fix the issue moving ndesc
-initialization at end of airoha_qdma_init_tx routine.
+My prior patch missed few READ_ONCE()/WRITE_ONCE() annotations.
 
-Fixes: 3f47e67dff1f7 ("net: airoha: Add the capability to consume out-of-order DMA tx descriptors")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260417-airoha_qdma_cleanup_tx_queue-fix-net-v4-1-e04bcc2c9642@kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 5154561d9b11 ("net/sched: sch_pie: annotate data-races in pie_dump_stats()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260430080056.35104-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/sched/sch_pie.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index b4dfab2702cb9..3f97a0135f7f8 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -1019,27 +1019,27 @@ static int airoha_qdma_init_tx_queue(struct airoha_queue *q,
- 	dma_addr_t dma_addr;
+diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
+index 73650200482f4..40149edecbd5a 100644
+--- a/net/sched/sch_pie.c
++++ b/net/sched/sch_pie.c
+@@ -219,16 +219,14 @@ void pie_process_dequeue(struct sk_buff *skb, struct pie_params *params,
+ 	 * packet timestamp.
+ 	 */
+ 	if (!params->dq_rate_estimator) {
+-		vars->qdelay = now - pie_get_enqueue_time(skb);
++		WRITE_ONCE(vars->qdelay,
++			   backlog ? now - pie_get_enqueue_time(skb) : 0);
  
- 	spin_lock_init(&q->lock);
--	q->ndesc = size;
- 	q->qdma = qdma;
- 	q->free_thr = 1 + MAX_SKB_FRAGS;
- 	INIT_LIST_HEAD(&q->tx_list);
+ 		if (vars->dq_tstamp != DTIME_INVALID)
+ 			dtime = now - vars->dq_tstamp;
  
--	q->entry = devm_kzalloc(eth->dev, q->ndesc * sizeof(*q->entry),
-+	q->entry = devm_kzalloc(eth->dev, size * sizeof(*q->entry),
- 				GFP_KERNEL);
- 	if (!q->entry)
- 		return -ENOMEM;
+ 		vars->dq_tstamp = now;
  
--	q->desc = dmam_alloc_coherent(eth->dev, q->ndesc * sizeof(*q->desc),
-+	q->desc = dmam_alloc_coherent(eth->dev, size * sizeof(*q->desc),
- 				      &dma_addr, GFP_KERNEL);
- 	if (!q->desc)
- 		return -ENOMEM;
+-		if (backlog == 0)
+-			vars->qdelay = 0;
+-
+ 		if (dtime == 0)
+ 			return;
  
--	for (i = 0; i < q->ndesc; i++) {
-+	for (i = 0; i < size; i++) {
- 		u32 val = FIELD_PREP(QDMA_DESC_DONE_MASK, 1);
+@@ -376,7 +374,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
+ 	if (qdelay > (PSCHED_NS2TICKS(250 * NSEC_PER_MSEC)))
+ 		delta += MAX_PROB / (100 / 2);
  
- 		list_add_tail(&q->entry[i].list, &q->tx_list);
- 		WRITE_ONCE(q->desc[i].ctrl, cpu_to_le32(val));
- 	}
-+	q->ndesc = size;
+-	vars->prob += delta;
++	WRITE_ONCE(vars->prob, vars->prob + delta);
  
- 	/* xmit ring drop default setting */
- 	airoha_qdma_set(qdma, REG_TX_RING_BLOCKING(qid),
+ 	if (delta > 0) {
+ 		/* prevent overflow */
+@@ -401,7 +399,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
+ 
+ 	if (qdelay == 0 && qdelay_old == 0 && update_prob)
+ 		/* Reduce drop probability to 98.4% */
+-		vars->prob -= vars->prob / 64;
++		WRITE_ONCE(vars->prob, vars->prob - vars->prob / 64);
+ 
+ 	WRITE_ONCE(vars->qdelay, qdelay);
+ 	vars->backlog_old = backlog;
+@@ -501,7 +499,7 @@ static int pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ {
+ 	struct pie_sched_data *q = qdisc_priv(sch);
+ 	struct tc_pie_xstats st = {
+-		.prob		= q->vars.prob << BITS_PER_BYTE,
++		.prob		= READ_ONCE(q->vars.prob) << BITS_PER_BYTE,
+ 		.delay		= ((u32)PSCHED_TICKS2NS(READ_ONCE(q->vars.qdelay))) /
+ 				   NSEC_PER_USEC,
+ 		.packets_in	= READ_ONCE(q->stats.packets_in),
+@@ -512,7 +510,7 @@ static int pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
+ 	};
+ 
+ 	/* avg_dq_rate is only valid if dq_rate_estimator is enabled */
+-	st.dq_rate_estimating = q->params.dq_rate_estimator;
++	st.dq_rate_estimating = READ_ONCE(q->params.dq_rate_estimator);
+ 
+ 	/* unscale and return dq_rate in bytes per sec */
+ 	if (st.dq_rate_estimating)
 -- 
 2.53.0
 
