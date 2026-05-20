@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162FC2D0603;
-	Wed, 20 May 2026 16:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6593164C3;
+	Wed, 20 May 2026 16:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295951; cv=none; b=LqUJvToz+/prNSSGA2dGpSog/1O0I7B/DZymEqVKhr4IYnsyBwoTWtSnMhqgFvl55if4d9JJetFyXWsPk+Yp7URypiwotpzV+R+ULsdnvY+bN88rOOtcK7coOV3E0GDHZz8BKFMdsOqbu3KtnzJqpzjvCREH/MSHnNe5pAR0osw=
+	t=1779295953; cv=none; b=JUGat/YQfA/Nx62oNjuEHOtgF9VRUedO7TRHJSphvYVL0pLgEDMv31r2FmIpUlPjp5if6uishov1Dena6wPW+Kq4iyyLKA3R4J/07y71axAohQ/fIHQQRMYvDBhucjP2yaYBxe9cxDjtH3UnLB22HyjMbOL9AwTNfNFFbyfxUx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295951; c=relaxed/simple;
-	bh=rpK6NZZFf+UJQlOW/obboveF0owSaJWqMccI0Uk76c0=;
+	s=arc-20240116; t=1779295953; c=relaxed/simple;
+	bh=gBed/N+d4kujpxU32M9fgmoMWGoaP6BV0YJp3yLzBtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAj8CVB5UjrzJQ3nmlDmm/3iAp9Zd8496aWHlnJJH7jeeIR/O6glT9sXF6aW57A3oC4n8WftXfsvGfin2cbBUwmBDEhh5ieePCVnOMkR2XEhBMQSnjNVecwcv1GQZhT4LW7hxuph1AH/4zppDDQepIkXdxYBPm6c14JsAnfMo8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9leJtVc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jVJJXAu3hJmHScP50gVD5jDTya5DEjInbKgUNPCGoLV5gUl1SQmSsOFiR62b4SPPPGP/qDg4Ean/gnk8xr4LGIZH2YaGtX9KTPLxYUeDQMFW8F9TdVHjFyaEho3uZMkZLGvHEVwVgvxtrvLeSmmtyhytF8ZyLfFb3SaUkxvsndM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5aky5f5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9leJtVc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E341F000E9;
-	Wed, 20 May 2026 16:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5aky5f5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35F41F000E9;
+	Wed, 20 May 2026 16:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295949;
-	bh=NgTinCjZ9rsD4cftL2sEZtH18R94cJblARuMbC4ss8c=;
+	s=korg; t=1779295952;
+	bh=SEpqY6+gs7JQreNFh2eta5dUSynZ353X86Jk96NLluw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K9leJtVcdqFqopGdTYQW11LHtQhK9eCBR2eHi7A3ZzFb9TirxlNKKklhrY6wQZYRM
-	 MG4FCmbdb6ennI0g6SSsvww+LgCy/vKR3/jlHOnPqJU+UdVn2hFdlknsgodi4CxV7T
-	 +e47RQja6nxSqLhEBqoJJHyMbqdjZrtP5psirnDs=
+	b=N5aky5f5J21VV8siYHlFSSpcNvOWMpUvlKZIIWyliQ7My5yzhjLvR7iAMqV178eRI
+	 Zfa+YS1N8f1gBhBIHylbzWEfswYdglxH8DeTg5REE51554K/3U2W6BIrnUzPsl5NVN
+	 nxbl7njR1lC5ASnAPbEF1hLHGMym8RgASniX8CLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0615/1146] bpf, sockmap: Take state lock for af_unix iter
-Date: Wed, 20 May 2026 18:14:25 +0200
-Message-ID: <20260520162202.101999917@linuxfoundation.org>
+Subject: [PATCH 7.0 0616/1146] bpf: Fix precedence bug in convert_bpf_ld_abs alignment check
+Date: Wed, 20 May 2026 18:14:26 +0200
+Message-ID: <20260520162202.124475252@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,113 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 64c2f93fc3254d3bf5de4445fb732ee5c451edb6 ]
+[ Upstream commit e5f635edd393aeaa7cad9e42831d397e6e2e1eed ]
 
-When a BPF iterator program updates a sockmap, there is a race condition in
-unix_stream_bpf_update_proto() where the `peer` pointer can become stale[1]
-during a state transition TCP_ESTABLISHED -> TCP_CLOSE.
+Fix an operator precedence issue in convert_bpf_ld_abs() where the
+expression offset + ip_align % size evaluates as offset + (ip_align % size)
+due to % having higher precedence than +. That latter evaluation does
+not make any sense. The intended check is (offset + ip_align) % size == 0
+to verify that the packet load offset is properly aligned for direct
+access.
 
-        CPU0 bpf                          CPU1 close
-        --------                          ----------
-// unix_stream_bpf_update_proto()
-sk_pair = unix_peer(sk)
-if (unlikely(!sk_pair))
-   return -EINVAL;
-                                     // unix_release_sock()
-                                     skpair = unix_peer(sk);
-                                     unix_peer(sk) = NULL;
-                                     sock_put(skpair)
-sock_hold(sk_pair) // UaF
+With NET_IP_ALIGN == 2, the bug causes the inline fast-path for direct
+packet loads to almost never be taken on !CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
+platforms. This forces nearly all cBPF BPF_LD_ABS packet loads through
+the bpf_skb_load_helper slow path on the affected archs.
 
-More practically, this fix guarantees that the iterator program is
-consistently provided with a unix socket that remains stable during
-iterator execution.
-
-[1]:
-BUG: KASAN: slab-use-after-free in unix_stream_bpf_update_proto+0x155/0x490
-Write of size 4 at addr ffff8881178c9a00 by task test_progs/2231
-Call Trace:
- dump_stack_lvl+0x5d/0x80
- print_report+0x170/0x4f3
- kasan_report+0xe4/0x1c0
- kasan_check_range+0x125/0x200
- unix_stream_bpf_update_proto+0x155/0x490
- sock_map_link+0x71c/0xec0
- sock_map_update_common+0xbc/0x600
- sock_map_update_elem+0x19a/0x1f0
- bpf_prog_bbbf56096cdd4f01_selective_dump_unix+0x20c/0x217
- bpf_iter_run_prog+0x21e/0xae0
- bpf_iter_unix_seq_show+0x1e0/0x2a0
- bpf_seq_read+0x42c/0x10d0
- vfs_read+0x171/0xb20
- ksys_read+0xff/0x200
- do_syscall_64+0xf7/0x5e0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Allocated by task 2236:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- __kasan_slab_alloc+0x63/0x80
- kmem_cache_alloc_noprof+0x1d5/0x680
- sk_prot_alloc+0x59/0x210
- sk_alloc+0x34/0x470
- unix_create1+0x86/0x8a0
- unix_stream_connect+0x318/0x15b0
- __sys_connect+0xfd/0x130
- __x64_sys_connect+0x72/0xd0
- do_syscall_64+0xf7/0x5e0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Freed by task 2236:
- kasan_save_stack+0x30/0x50
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x70
- __kasan_slab_free+0x47/0x70
- kmem_cache_free+0x11c/0x590
- __sk_destruct+0x432/0x6e0
- unix_release_sock+0x9b3/0xf60
- unix_release+0x8a/0xf0
- __sock_release+0xb0/0x270
- sock_close+0x18/0x20
- __fput+0x36e/0xac0
- fput_close_sync+0xe5/0x1a0
- __x64_sys_close+0x7d/0xd0
- do_syscall_64+0xf7/0x5e0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Fixes: 2c860a43dd77 ("bpf: af_unix: Implement BPF iterator for UNIX domain socket.")
-Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260414-unix-proto-update-null-ptr-deref-v4-5-2af6fe97918e@rbox.co
+Fixes: e0cea7ce988c ("bpf: implement ld_abs/ld_ind in native bpf")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260416122719.661033-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/filter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index b1ec96512bf72..660c7c441e0db 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -3740,6 +3740,7 @@ static int bpf_iter_unix_seq_show(struct seq_file *seq, void *v)
- 		return 0;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 90ae4f314b6c3..d4fe9e4a45d11 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -508,7 +508,7 @@ static bool convert_bpf_ld_abs(struct sock_filter *fp, struct bpf_insn **insnp)
+ 	    ((unaligned_ok && offset >= 0) ||
+ 	     (!unaligned_ok && offset >= 0 &&
+ 	      offset + ip_align >= 0 &&
+-	      offset + ip_align % size == 0))) {
++	      (offset + ip_align) % size == 0))) {
+ 		bool ldx_off_ok = offset <= S16_MAX;
  
- 	lock_sock(sk);
-+	unix_state_lock(sk);
- 
- 	if (unlikely(sock_flag(sk, SOCK_DEAD))) {
- 		ret = SEQ_SKIP;
-@@ -3751,6 +3752,7 @@ static int bpf_iter_unix_seq_show(struct seq_file *seq, void *v)
- 	prog = bpf_iter_get_info(&meta, false);
- 	ret = unix_prog_seq_show(prog, &meta, v, uid);
- unlock:
-+	unix_state_unlock(sk);
- 	release_sock(sk);
- 	return ret;
- }
+ 		*insn++ = BPF_MOV64_REG(BPF_REG_TMP, BPF_REG_H);
 -- 
 2.53.0
 
