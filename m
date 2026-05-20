@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E7D28DC4;
-	Wed, 20 May 2026 17:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1CB28DC4;
+	Wed, 20 May 2026 17:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298944; cv=none; b=bG5Q+YxFh9q2lPpmYucUiTvQ0kQmyROhLWGd3NzI6fRmYgld5Yo1Yd3WBJnbDLLW1ak5eFJc7Um5reSZpoqnTNFelgKV3XCP34fm8QE7yedxqqetfwZL031G1tHLb6RmgWV6PhbRrupM8upl4oqAdoAylvP6zkSpo6W+sBLTAYM=
+	t=1779298947; cv=none; b=At7wWVowYRFxdIa2sJoYS7SKqGOfU7zQPm3kNo5M1t122s9Ln/a5zsu6po47GxWwOwkHwwPpdRDjn3KRHOTU0aw0VACLjC12h3XvIgOVivKpM0HlLksTblNaBzp70Z/W851s/ifJRyXjXFZg6gvkk7u+URuvePyr5TYny9LND/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298944; c=relaxed/simple;
-	bh=aTRSL7337HFqREK1p3s0HnL/joKU0MNI0iW8amINwTk=;
+	s=arc-20240116; t=1779298947; c=relaxed/simple;
+	bh=9E3ht2MOUpHjQup1Hko3DSVobQMyRHM56vaScfmqzbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kL9vLRFD3oAxunSYVp5hlmnO69EIeZ+rXLeP0P9gDfy4lBYfEVUIzLnnJfcjmZmfPvSwREb7LS4B3MaF0kb0cSlTEFNSsLpSQ9oqjewbM9zgsbYRZf/FvJiiaHoopKDQHWI9f7bz0N682WKeOkE7WHP17vGSH0ex2cSfXnh6Uls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tje42umW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=saEs5bpSqirsj2XHiR5vFGjB1QD/ZNGzQ31HS89+2oUIp6bes/+EgumUPfB7meLMuhDR1jrpzGaJfMo1AaejwTgehZyA9i7Dmef03HQA/YU4JtLapqeI79j+NjngZtKth9syvnjURgwYZ9mppIxIdUsd0l+cUsR3KrGjH3Ul/gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WE8QTuXz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tje42umW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E807B1F000E9;
-	Wed, 20 May 2026 17:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WE8QTuXz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928071F000E9;
+	Wed, 20 May 2026 17:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298943;
-	bh=ZBAof2mAs5ogskCI1UF9YKpS7KVagzinEN5iLI1Ps8c=;
+	s=korg; t=1779298946;
+	bh=VdS12/iP5OBX1A4tTyiyOcyjAVJ6jjwz/0CgKyvP0rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tje42umWR9FOKoEuXuCZ1vT9y+1W21PaHJ7qOEDTJ5vYLXz9ItFiXiCHGMluOjoI+
-	 QnfafFX+XLp+kJ0ShiGc1OmshwKV8LCe9TJeusRelF40K7f2enW59ocPjCAX+byjCa
-	 pPZzHcwLGFKw5zBFzWpZi6dN6Cg0nc3i0BBD1ocQ=
+	b=WE8QTuXzq+0X/4/1KLsOvghUcoS+7eZNtVhaI1iaPzTXQ+7w8nTWz5fStHBOr7gCk
+	 t/Lb0Dl1wB7vmhWU2p4qztVBVNfs8qI2rH86uPxFFEqNKqjNhXtV8kN5+XVX9pK5hk
+	 x3ao8Kj/LPI48SQMpAyY5QpQSOuSfXUlpCtCXaIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peng Fan <peng.fan@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 602/957] arm64: dts: imx8mp-aristainetos3a-som-v1: Correct PAD settings for PMIC_nINT
-Date: Wed, 20 May 2026 18:18:05 +0200
-Message-ID: <20260520162147.589273521@linuxfoundation.org>
+Subject: [PATCH 6.18 603/957] arm64: dts: imx8mp-nitrogen-som: Correct PAD settings for PMIC_nINT
+Date: Wed, 20 May 2026 18:18:06 +0200
+Message-ID: <20260520162147.610993291@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,30 +53,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit e6d2d8e49ca34bb39126a69128794d08ffd7c83e ]
+[ Upstream commit 16611eda2c7584a1a7d6f80511d825e5108f026c ]
 
 With commit 5d0efaf47ee90 ("regulator: pca9450: Correct interrupt type"),
 there might be interrupt storm for this board. Need to set PAD PUE and PU
 together to make pull up work properly.
 
-Fixes: eead8f3536d5c ("arm64: dts: imx8mp: add aristainetos3 board support")
+Fixes: ab4d874c9f44e ("arm64: dts: imx8mp: Add device tree for Nitrogen8M Plus ENC Carrier Board")
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-aristainetos3a-som-v1.dtsi | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mp-nitrogen-som.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-aristainetos3a-som-v1.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-aristainetos3a-som-v1.dtsi
-index f654d866e58c0..e7666e54310be 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-aristainetos3a-som-v1.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-aristainetos3a-som-v1.dtsi
-@@ -903,7 +903,7 @@ MX8MP_IOMUXC_SAI1_MCLK__GPIO4_IO20	0x41
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-nitrogen-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-nitrogen-som.dtsi
+index f658309612eff..8465b36d440ae 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-nitrogen-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-nitrogen-som.dtsi
+@@ -296,7 +296,7 @@ MX8MP_IOMUXC_I2C4_SDA__I2C4_SDA		0x400001c3
  
- 	pinctrl_pmic: aristainetos3-pmic-grp {
+ 	pinctrl_pmic: pmicirqgrp {
  		fsl,pins = <
--			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03	0x41
-+			MX8MP_IOMUXC_GPIO1_IO03__GPIO1_IO03	0x1c0
+-			MX8MP_IOMUXC_NAND_ALE__GPIO3_IO00	0x41
++			MX8MP_IOMUXC_NAND_ALE__GPIO3_IO00	0x1c0
  		>;
  	};
  
