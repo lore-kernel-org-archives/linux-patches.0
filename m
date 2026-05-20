@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627CC373BEB;
-	Wed, 20 May 2026 16:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F21D3D6CA5;
+	Wed, 20 May 2026 16:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295075; cv=none; b=DL5HDvDtoctEMgcHB1/2EQdkcbYQtzw+v3xTxagoOLo7UpQ1P/ZlIn4gsLdm3thmbUcUU0WdKVnhyYASL+VbY5J9k0k9kVaeAz3I/tAFKIrce0Ze0t1gcLQlc2PI+LzpabKkyST3MYjPZKPB64Cg9/ogZrU2MxPZmCowMUBkfPU=
+	t=1779295078; cv=none; b=TwqZ70p6LLVXYcNLbwFBTWrmF1x64ECNJrtn/YJ7vddIE5Mud3Samd40jDm2ovZrhkFOIFu8Wu11845phtOepCwHw68HQpOxQIxXgVf5MdSVNHs8a5i4H6rTcXOAOiAXM0IHCi6udoSao7o3gtgEhEmMqwObgBLCtNiH1EV2tM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295075; c=relaxed/simple;
-	bh=T5FD6XFPyv/MdubG2NrivpxnaCwos4euYP5jGynDIUc=;
+	s=arc-20240116; t=1779295078; c=relaxed/simple;
+	bh=7VGdNyMgn8efsaoWOZ7lFUQuOZxepuG5LTaNfuFPjWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nzcy9f8BrCI07rXlHtbD9KGwQsMJumnbU15Z4PuGi1luyBf75bg2SdoNcgmrfz4z5R40ArBvSPIgyKU3vOz915EDCLZH23geFUq4tl2K3Z42VLoLC2uPsprXH0lcQYMF7rOY11VwH+fyblw+e3O3s+7/tBHsLkEYgOn1piZmawE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bokxJI3N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PX2uSEUF0e1COy4pk1sU5TD0lz7A2Dps+HumA+jk4kIvz0gonKZoafRE0mmkf3CeHQGpOZxNtm32fIgpAVl9mXDOrw9/JSmkCs06zwnCfxDx6gGWC2HYHOpH7DxppLQoa1NFpQi0TtONU/i5dh2tz1KEgObGiYlyxfqGv5f2jIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hww0axJ/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bokxJI3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D761F000E9;
-	Wed, 20 May 2026 16:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hww0axJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E88C1F000E9;
+	Wed, 20 May 2026 16:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295074;
-	bh=yNm0ryTY5cF6Bqg/pHC8wkuY2SP1WIlLt1lJLv8NPuQ=;
+	s=korg; t=1779295076;
+	bh=N1zTPwrQScrai0NqInlBo6qpMVAl8wya+eiLJGEUw0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bokxJI3Nw8c7w4eO/N6peQo7Lxvlt91szIQCrMvs8bQw8FA89APoIEi2KCKCybX0L
-	 EBTpoOAwW4aqmZP1KPH95LUDXRH3PPYVPVr2aFZNfocNBHFQE8Ws4VFmIf1Yp5bg0N
-	 R9HqD/d2NVEh/IrRsQKUO9UWj02YEGEfJ75vqPdo=
+	b=Hww0axJ/Qf/3zW/zVe32u2zqKvcIOM/6t7mFeywnlg4WImP7uoFuUPomeFV6xL+xr
+	 1ld3ddnIGbA2Zxjk/zFCaPRaXJiAj22JbKohoO85ZdE7qgQDonXKW4QvQ66e99gOe3
+	 4aVtBNFMKnKh9Qw4O4lgaHgmlF1rzBN2+UrJGJJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	David Carlier <devnexen@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0281/1146] spi: atcspi200: fix mutex initialization order
-Date: Wed, 20 May 2026 18:08:51 +0200
-Message-ID: <20260520162154.575348582@linuxfoundation.org>
+Subject: [PATCH 7.0 0282/1146] selftests/sched_ext: Add missing error check for exit__load()
+Date: Wed, 20 May 2026 18:08:52 +0200
+Message-ID: <20260520162154.599273312@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,58 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 869d5b4b2a8012f6ef6058a1055cac6922c2cb55 ]
+[ Upstream commit 1d02346fec8d13b05e54296ddc6ae29b7e1067df ]
 
-The atcspi_exec_mem_op() function may call mutex_lock() on the
-driver's mutex before it is properly initialized if a SPI memory
-operation is initiated immediately after devm_spi_register_controller()
-is called. The mutex initialization currently occurs after the
-controller registration, which leaves a window where the mutex could
-be used uninitialized.
+exit__load(skel) was called without checking its return value.
+Every other test in the suite wraps the load call with
+SCX_FAIL_IF(). Add the missing check to be consistent with the
+rest of the test suite.
 
-Move the mutex initialization to the beginning of the probe function,
-before any registration or resource allocation.
-
-Fixes: 34e3815ea459 ("spi: atcspi200: Add ATCSPI200 SPI controller driver")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://patch.msgid.link/15a71241affc25108a97d40d9d3dd1bc3d2d69ed.1773282905.git.xiaopei01@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a5db7817af78 ("sched_ext: Add selftests")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-atcspi200.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/sched_ext/exit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-atcspi200.c b/drivers/spi/spi-atcspi200.c
-index 2665f31a49ceb..02517af9e3987 100644
---- a/drivers/spi/spi-atcspi200.c
-+++ b/drivers/spi/spi-atcspi200.c
-@@ -567,6 +567,8 @@ static int atcspi_probe(struct platform_device *pdev)
- 	spi->dev = &pdev->dev;
- 	dev_set_drvdata(&pdev->dev, host);
- 
-+	mutex_init(&spi->mutex_lock);
-+
- 	ret = atcspi_init_resources(pdev, spi, &mem_res);
- 	if (ret)
- 		goto free_controller;
-@@ -597,7 +599,6 @@ static int atcspi_probe(struct platform_device *pdev)
- 		else
- 			spi->use_dma = true;
- 	}
--	mutex_init(&spi->mutex_lock);
- 
- 	return 0;
- 
-@@ -605,6 +606,7 @@ static int atcspi_probe(struct platform_device *pdev)
- 	clk_disable_unprepare(spi->clk);
- 
- free_controller:
-+	mutex_destroy(&spi->mutex_lock);
- 	spi_controller_put(host);
- 	return ret;
- }
+diff --git a/tools/testing/selftests/sched_ext/exit.c b/tools/testing/selftests/sched_ext/exit.c
+index ee25824b1cbe6..b987611789d16 100644
+--- a/tools/testing/selftests/sched_ext/exit.c
++++ b/tools/testing/selftests/sched_ext/exit.c
+@@ -33,7 +33,7 @@ static enum scx_test_status run(void *ctx)
+ 		skel = exit__open();
+ 		SCX_ENUM_INIT(skel);
+ 		skel->rodata->exit_point = tc;
+-		exit__load(skel);
++		SCX_FAIL_IF(exit__load(skel), "Failed to load skel");
+ 		link = bpf_map__attach_struct_ops(skel->maps.exit_ops);
+ 		if (!link) {
+ 			SCX_ERR("Failed to attach scheduler");
 -- 
 2.53.0
 
