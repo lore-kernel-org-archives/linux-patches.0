@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321453F1AD9;
-	Wed, 20 May 2026 17:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCAE3F1ADC;
+	Wed, 20 May 2026 17:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299155; cv=none; b=BHB3nk+hKR5E5usak5220SBJ7LniamBetAvh3XA3W00uZ7nbJ61a62Vf7MO3k98LnIJtMF8ziGC7tGckNCuNgIrP2/qCvctpsCutOlhyvde1HvlZBhLoOeWIzePAqdXKDRAViyy+WM54snkuqomgzS/+UABv++nrqUeKq4SiSm4=
+	t=1779299158; cv=none; b=B2+1Y5fsRwl0yT57cCp+/nUPXPK7iwsvau5a4guGgxZ6QmgqrPNL/Jv4qRMChOqwgb8KIxK6iocKYHT4X7rweVncKZAsIO+nOAQD+FPrEpqCpXJmVEJUcUPAMdiZUXv6RLexUVMg6sgS7xIJH3uCIWtYFJVtN6otCHyXfdCNhDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299155; c=relaxed/simple;
-	bh=3Z3HoFdp638EmGeG4nXnfrq6H13dDiE+wXxh82puoEo=;
+	s=arc-20240116; t=1779299158; c=relaxed/simple;
+	bh=Eb8Ejcn9GLn/IJKYSUisn71jjZnklICnJcm0Z8q9s7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XI2eEhg3jAshh8yigu0Y7HDcfJH74csXZP0OnTHIdEl5ZRYiKgl2mpNWHS8++6dty9qGaTJ0/DlitnCZ84wlY5e2IwmiPBlTN+Xq7rAnxPP9t41vulQDHml/bOem1rv8s54vk2js+3X392e8ydPo51m5aH9wDyAwPfzVm/rFbws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfRElpeo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=STQpGNrPSeBV4RTMWhiazxx18kJAsdqTazyuSfu5NjrHG/zivrF8xsqOJ7rftn4bwGBN4SyjwLdstfVWtP+bDUv7HgSidWsk8eVNDDhKxV18YUhkHAIQPNMir2ftCdkSPn9MNIMoIlR8aDG37wA18JV7jfzuaXjBZVd1WuNX5hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gsf87jIW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfRElpeo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6063A1F000E9;
-	Wed, 20 May 2026 17:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gsf87jIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 009461F000E9;
+	Wed, 20 May 2026 17:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299153;
-	bh=eDhsWzX1ugULquEz7GGUtN/VtcNg+qZ0DuLsRlK66rQ=;
+	s=korg; t=1779299156;
+	bh=La/FwI4xZ8CbQvA1pbBTcig7WKw7k8orOiUrXhj5OaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AfRElpeo6c0ooGCj+935iDQ+i0A9mms7crrIxBI6PrkPwuFmMLXFBUSicC19cpgtP
-	 w6lAo0fuh07v/q/AIyl0RExNibRFYyjiVskWkTnv/4ujTEh193/qkbgCTyvMSvf9m8
-	 0Rjn5O3iyykqQrN58ZoIn5NF9f5vxw8eFBt0x35k=
+	b=Gsf87jIWgkBIi4hWR+CMJduH3DE3zKJ3e1vPxB+dppj44wg8uhHMPhhJDDXYdQlhp
+	 z4o7DENnmyo2mfhlUjk/zgYG3GpdtVXTNBWuSwqo5d8dKr1pUlaGXBwre35/YPlB5T
+	 eufGWD+sm2UsWB4bf2Gcmu0k1InnGpX2LuY4Lx2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timothy Miskell <timothy.miskell@intel.com>,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Petr Oros <poros@redhat.com>,
 	Sunitha Mekala <sunithax.d.mekala@intel.com>,
@@ -36,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 683/957] ice: perform PHY soft reset for E825C ports at initialization
-Date: Wed, 20 May 2026 18:19:26 +0200
-Message-ID: <20260520162149.350968589@linuxfoundation.org>
+Subject: [PATCH 6.18 684/957] ice: fix ready bitmap check for non-E822 devices
+Date: Wed, 20 May 2026 18:19:27 +0200
+Message-ID: <20260520162149.373742031@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -57,199 +55,341 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Grzegorz Nitka <grzegorz.nitka@intel.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 3ec46e157c7fa420c77dfc23f7030e61f2f3fd55 ]
+[ Upstream commit 359dc1d41358c88955eeff1b75aee55da7a415d3 ]
 
-In some cases the PHY timestamp block of the E825C can become stuck. This
-is known to occur if the software writes 0 to the Tx timestamp threshold,
-and with older versions of the ice driver the threshold configuration is
-buggy and can race in such that hardware briefly operates with a zero
-threshold enabled. There are no other known ways to trigger this behavior,
-but once it occurs, the hardware is not recovered by normal reset, a driver
-reload, or even a warm power cycle of the system. A cold power cycle is
-sufficient to recover hardware, but this is extremely invasive and can
-result in significant downtime on customer deployments.
+The E800 hardware (apart from E810) has a ready bitmap for the PHY
+indicating which timestamp slots currently have an outstanding timestamp
+waiting to be read by software.
 
-The PHY for each port has a timestamping block which has its own reset
-functionality accessible by programming the PHY_REG_GLOBAL register.
-Writing to the PHY_REG_GLOBAL_SOFT_RESET_BIT triggers the hardware to
-perform a complete reset of the timestamping block of the PHY. This
-includes clearing the timestamp status for the port, clearing all
-outstanding timestamps in the memory bank, and resetting the PHY timer.
+This bitmap is checked in multiple places using the
+ice_get_phy_tx_tstamp_ready():
 
-The new ice_ptp_phy_soft_reset_eth56g() function toggles the
-PHY_REG_GLOBAL soft reset bit with the required delays, ensuring the
-PHY is properly reinitialized without requiring a full device reset.
-The sequence clears the reset bit, asserts it, then clears it again,
-with short waits between transitions to allow hardware stabilization.
+ * ice_ptp_process_tx_tstamp() calls it to determine which timestamps to
+   attempt reading from the PHY
+ * ice_ptp_tx_tstamps_pending() calls it in a loop at the end of the
+   miscellaneous IRQ to check if new timestamps came in while the interrupt
+   handler was executing.
+ * ice_ptp_maybe_trigger_tx_interrupt() calls it in the auxiliary work task
+   to trigger a software interrupt in the event that the hardware logic
+   gets stuck.
 
-Call this function in the new ice_ptp_init_phc_e825c(), implementing the
-E825C device specific variant of the ice_ptp_init_phc(). Note that if
-ice_ptp_init_phc() fails, PTP functionality may be disabled, but the driver
-will still load to allow basic functionality to continue.
+For E82X devices, multiple PHYs share the same block, and the parameter
+passed to the ready bitmap is a block number associated with the given
+port. For E825-C devices, the PHYs have their own independent blocks and do
+not share, so the parameter passed needs to be the port number. For E810
+devices, the ice_get_phy_tx_tstamp_ready() always returns all 1s regardless
+of what port, since this hardware does not have a ready bitmap. Finally,
+for E830 devices, each PF has its own ready bitmap accessible via register,
+and the block parameter is unused.
 
-This causes the clock owning PF driver to perform a PHY soft reset for
-every port during initialization. This ensures the driver begins life in a
-known functional state regardless of how it was previously programmed.
+The first call correctly uses the Tx timestamp tracker block parameter to
+check the appropriate timestamp block. This works because the tracker is
+setup correctly for each timestamp device type.
 
-This ensures that we properly reconfigure the hardware after a device reset
-or when loading the driver, even if it was previously misconfigured with an
-out-of-date or modified driver.
+The second two callers behave incorrectly for all device types other than
+the older E822 devices. They both iterate in a loop using
+ICE_GET_QUAD_NUM() which is a macro only used by E822 devices. This logic
+is incorrect for devices other than the E822 devices.
+
+For E810 the calls would always return true, causing E810 devices to always
+attempt to trigger a software interrupt even when they have no reason to.
+For E830, this results in duplicate work as the ready bitmap is checked
+once per number of quads. Finally, for E825-C, this results in the pending
+checks failing to detect timestamps on ports other than the first two.
+
+Fix this by introducing a new hardware API function to ice_ptp_hw.c,
+ice_check_phy_tx_tstamp_ready(). This function will check if any timestamps
+are available and returns a positive value if any timestamps are pending.
+For E810, the function always returns false, so that the re-trigger checks
+never happen. For E830, check the ready bitmap just once. For E82x
+hardware, check each quad. Finally, for E825-C, check every port.
+
+The interface function returns an integer to enable reporting of error code
+if the driver is unable read the ready bitmap. This enables callers to
+handle this case properly. The previous implementation assumed that
+timestamps are available if they failed to read the bitmap. This is
+problematic as it could lead to continuous software IRQ triggering if the
+PHY timestamp registers somehow become inaccessible.
+
+This change is especially important for E825-C devices, as the missing
+checks could leave a window open where a new timestamp could arrive while
+the existing timestamps aren't completed. As a result, the hardware
+threshold logic would not trigger a new interrupt. Without the check, the
+timestamp is left unhandled, and new timestamps will not cause an interrupt
+again until the timestamp is handled. Since both the interrupt check and
+the backup check in the auxiliary task do not function properly, the device
+may have Tx timestamps permanently stuck failing on a given port.
+
+The faulty checks originate from commit d938a8cca88a ("ice: Auxbus devices
+& driver for E822 TS") and commit 712e876371f8 ("ice: periodically kick Tx
+timestamp interrupt"), however at the time of the original coding, both
+functions only operated on E822 hardware. This is no longer the case, and
+hasn't been since the introduction of the ETH56G PHY model in commit
+7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
 
 Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
-Signed-off-by: Timothy Miskell <timothy.miskell@intel.com>
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Reviewed-by: Petr Oros <poros@redhat.com>
 Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260420-jk-iwl-net-2026-04-20-ptp-e825c-phy-interrupt-fixes-v1-2-bc2240f42251@intel.com
+Link: https://patch.msgid.link/20260420-jk-iwl-net-2026-04-20-ptp-e825c-phy-interrupt-fixes-v1-3-bc2240f42251@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 90 ++++++++++++++++++++-
- drivers/net/ethernet/intel/ice/ice_ptp_hw.h |  4 +
- 2 files changed, 93 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_ptp.c    |  44 +++-----
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 117 ++++++++++++++++++++
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.h |   1 +
+ 3 files changed, 136 insertions(+), 26 deletions(-)
 
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+index 02517772fb5f4..86eb3d0315a27 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+@@ -2669,7 +2669,7 @@ static bool ice_any_port_has_timestamps(struct ice_pf *pf)
+ bool ice_ptp_tx_tstamps_pending(struct ice_pf *pf)
+ {
+ 	struct ice_hw *hw = &pf->hw;
+-	unsigned int i;
++	int ret;
+ 
+ 	/* Check software indicator */
+ 	switch (pf->ptp.tx_interrupt_mode) {
+@@ -2690,16 +2690,19 @@ bool ice_ptp_tx_tstamps_pending(struct ice_pf *pf)
+ 	}
+ 
+ 	/* Check hardware indicator */
+-	for (i = 0; i < ICE_GET_QUAD_NUM(hw->ptp.num_lports); i++) {
+-		u64 tstamp_ready = 0;
+-		int err;
+-
+-		err = ice_get_phy_tx_tstamp_ready(&pf->hw, i, &tstamp_ready);
+-		if (err || tstamp_ready)
+-			return true;
++	ret = ice_check_phy_tx_tstamp_ready(hw);
++	if (ret < 0) {
++		dev_dbg(ice_pf_to_dev(pf), "Unable to read PHY Tx timestamp ready bitmap, err %d\n",
++			ret);
++		/* Stop triggering IRQs if we're unable to read PHY */
++		return false;
+ 	}
+ 
+-	return false;
++	/* ice_check_phy_tx_tstamp_ready() returns 1 if there are timestamps
++	 * available, 0 if there are no waiting timestamps, and a negative
++	 * value if there was an error (which we checked for above).
++	 */
++	return ret > 0;
+ }
+ 
+ /**
+@@ -2783,8 +2786,7 @@ static void ice_ptp_maybe_trigger_tx_interrupt(struct ice_pf *pf)
+ {
+ 	struct device *dev = ice_pf_to_dev(pf);
+ 	struct ice_hw *hw = &pf->hw;
+-	bool trigger_oicr = false;
+-	unsigned int i;
++	int ret;
+ 
+ 	if (!pf->ptp.port.tx.has_ready_bitmap)
+ 		return;
+@@ -2792,21 +2794,11 @@ static void ice_ptp_maybe_trigger_tx_interrupt(struct ice_pf *pf)
+ 	if (!ice_pf_src_tmr_owned(pf))
+ 		return;
+ 
+-	for (i = 0; i < ICE_GET_QUAD_NUM(hw->ptp.num_lports); i++) {
+-		u64 tstamp_ready;
+-		int err;
+-
+-		err = ice_get_phy_tx_tstamp_ready(&pf->hw, i, &tstamp_ready);
+-		if (!err && tstamp_ready) {
+-			trigger_oicr = true;
+-			break;
+-		}
+-	}
+-
+-	if (trigger_oicr) {
+-		/* Trigger a software interrupt, to ensure this data
+-		 * gets processed.
+-		 */
++	ret = ice_check_phy_tx_tstamp_ready(hw);
++	if (ret < 0) {
++		dev_dbg(dev, "PTP periodic task unable to read PHY timestamp ready bitmap, err %d\n",
++			ret);
++	} else if (ret) {
+ 		dev_dbg(dev, "PTP periodic task detected waiting timestamps. Triggering Tx timestamp interrupt now.\n");
+ 
+ 		wr32(hw, PFINT_OICR, PFINT_OICR_TSYN_TX_M);
 diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-index 0a20ae0c2901b..1ae795405ac3c 100644
+index 1ae795405ac3c..22d6df06b0bc7 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
 +++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-@@ -377,6 +377,31 @@ static void ice_ptp_cfg_sync_delay(const struct ice_hw *hw, u32 delay)
-  * The following functions operate on devices with the ETH 56G PHY.
-  */
+@@ -2168,6 +2168,35 @@ int ice_start_phy_timer_eth56g(struct ice_hw *hw, u8 port)
+ 	return 0;
+ }
  
 +/**
-+ * ice_ptp_init_phc_e825c - Perform E825C specific PHC initialization
-+ * @hw: pointer to HW struct
++ * ice_check_phy_tx_tstamp_ready_eth56g - Check Tx memory status for all ports
++ * @hw: pointer to the HW struct
 + *
-+ * Perform E825C-specific PTP hardware clock initialization steps.
++ * Check the PHY_REG_TX_MEMORY_STATUS for all ports. A set bit indicates
++ * a waiting timestamp.
 + *
-+ * Return: 0 on success, or a negative error value on failure.
++ * Return: 1 if any port has at least one timestamp ready bit set,
++ * 0 otherwise, and a negative error code if unable to read the bitmap.
 + */
-+static int ice_ptp_init_phc_e825c(struct ice_hw *hw)
++static int ice_check_phy_tx_tstamp_ready_eth56g(struct ice_hw *hw)
 +{
-+	int err;
++	int port;
 +
-+	/* Soft reset all ports, to ensure everything is at a clean state */
-+	for (int port = 0; port < hw->ptp.num_lports; port++) {
-+		err = ice_ptp_phy_soft_reset_eth56g(hw, port);
-+		if (err) {
-+			ice_debug(hw, ICE_DBG_PTP, "Failed to soft reset port %d, err %d\n",
-+				  port, err);
++	for (port = 0; port < hw->ptp.num_lports; port++) {
++		u64 tstamp_ready;
++		int err;
++
++		err = ice_get_phy_tx_tstamp_ready(hw, port, &tstamp_ready);
++		if (err)
 +			return err;
-+		}
++
++		if (tstamp_ready)
++			return 1;
 +	}
 +
 +	return 0;
 +}
 +
  /**
-  * ice_ptp_get_dest_dev_e825 - get destination PHY for given port number
+  * ice_ptp_read_tx_hwtstamp_status_eth56g - Get TX timestamp status
   * @hw: pointer to the HW struct
-@@ -2179,6 +2204,69 @@ int ice_ptp_read_tx_hwtstamp_status_eth56g(struct ice_hw *hw, u32 *ts_status)
+@@ -4318,6 +4347,35 @@ ice_get_phy_tx_tstamp_ready_e82x(struct ice_hw *hw, u8 quad, u64 *tstamp_ready)
  	return 0;
  }
  
 +/**
-+ * ice_ptp_phy_soft_reset_eth56g - Perform a PHY soft reset on ETH56G
-+ * @hw: pointer to the HW structure
-+ * @port: PHY port number
++ * ice_check_phy_tx_tstamp_ready_e82x - Check Tx memory status for all quads
++ * @hw: pointer to the HW struct
 + *
-+ * Trigger a soft reset of the ETH56G PHY by toggling the soft reset
-+ * bit in the PHY global register. The reset sequence consists of:
-+ *   1. Clearing the soft reset bit
-+ *   2. Asserting the soft reset bit
-+ *   3. Clearing the soft reset bit again
++ * Check the Q_REG_TX_MEMORY_STATUS for all quads. A set bit indicates
++ * a waiting timestamp.
 + *
-+ * Short delays are inserted between each step to allow the hardware
-+ * to settle. This provides a controlled way to reinitialize the PHY
-+ * without requiring a full device reset.
-+ *
-+ * Return: 0 on success, or a negative error code on failure when
-+ *         reading or writing the PHY register.
++ * Return: 1 if any quad has at least one timestamp ready bit set,
++ * 0 otherwise, and a negative error value if unable to read the bitmap.
 + */
-+int ice_ptp_phy_soft_reset_eth56g(struct ice_hw *hw, u8 port)
++static int ice_check_phy_tx_tstamp_ready_e82x(struct ice_hw *hw)
 +{
-+	u32 global_val;
-+	int err;
++	int quad;
 +
-+	err = ice_read_ptp_reg_eth56g(hw, port, PHY_REG_GLOBAL, &global_val);
-+	if (err) {
-+		ice_debug(hw, ICE_DBG_PTP, "Failed to read PHY_REG_GLOBAL for port %d, err %d\n",
-+			  port, err);
-+		return err;
++	for (quad = 0; quad < ICE_GET_QUAD_NUM(hw->ptp.num_lports); quad++) {
++		u64 tstamp_ready;
++		int err;
++
++		err = ice_get_phy_tx_tstamp_ready(hw, quad, &tstamp_ready);
++		if (err)
++			return err;
++
++		if (tstamp_ready)
++			return 1;
 +	}
 +
-+	global_val &= ~PHY_REG_GLOBAL_SOFT_RESET_M;
-+	ice_debug(hw, ICE_DBG_PTP, "Clearing soft reset bit for port %d, val: 0x%x\n",
-+		  port, global_val);
-+	err = ice_write_ptp_reg_eth56g(hw, port, PHY_REG_GLOBAL, global_val);
-+	if (err) {
-+		ice_debug(hw, ICE_DBG_PTP, "Failed to write PHY_REG_GLOBAL for port %d, err %d\n",
-+			  port, err);
-+		return err;
-+	}
-+
-+	usleep_range(5000, 6000);
-+
-+	global_val |= PHY_REG_GLOBAL_SOFT_RESET_M;
-+	ice_debug(hw, ICE_DBG_PTP, "Set soft reset bit for port %d, val: 0x%x\n",
-+		  port, global_val);
-+	err = ice_write_ptp_reg_eth56g(hw, port, PHY_REG_GLOBAL, global_val);
-+	if (err) {
-+		ice_debug(hw, ICE_DBG_PTP, "Failed to write PHY_REG_GLOBAL for port %d, err %d\n",
-+			  port, err);
-+		return err;
-+	}
-+	usleep_range(5000, 6000);
-+
-+	global_val &= ~PHY_REG_GLOBAL_SOFT_RESET_M;
-+	ice_debug(hw, ICE_DBG_PTP, "Clear soft reset bit for port %d, val: 0x%x\n",
-+		  port, global_val);
-+	err = ice_write_ptp_reg_eth56g(hw, port, PHY_REG_GLOBAL, global_val);
-+	if (err)
-+		ice_debug(hw, ICE_DBG_PTP, "Failed to write PHY_REG_GLOBAL for port %d, err %d\n",
-+			  port, err);
-+	return err;
++	return 0;
 +}
 +
  /**
-  * ice_get_phy_tx_tstamp_ready_eth56g - Read the Tx memory status register
+  * ice_phy_cfg_intr_e82x - Configure TX timestamp interrupt
   * @hw: pointer to the HW struct
-@@ -5592,7 +5680,7 @@ int ice_ptp_init_phc(struct ice_hw *hw)
- 	case ICE_MAC_GENERIC:
- 		return ice_ptp_init_phc_e82x(hw);
- 	case ICE_MAC_GENERIC_3K_E825:
--		return 0;
-+		return ice_ptp_init_phc_e825c(hw);
- 	default:
- 		return -EOPNOTSUPP;
+@@ -4871,6 +4929,23 @@ ice_get_phy_tx_tstamp_ready_e810(struct ice_hw *hw, u8 port, u64 *tstamp_ready)
+ 	return 0;
+ }
+ 
++/**
++ * ice_check_phy_tx_tstamp_ready_e810 - Check Tx memory status register
++ * @hw: pointer to the HW struct
++ *
++ * The E810 devices do not have a Tx memory status register. Note this is
++ * intentionally different behavior from ice_get_phy_tx_tstamp_ready_e810
++ * which always says that all bits are ready. This function is called in cases
++ * where code will trigger interrupts if timestamps are waiting, and should
++ * not be called for E810 hardware.
++ *
++ * Return: 0.
++ */
++static int ice_check_phy_tx_tstamp_ready_e810(struct ice_hw *hw)
++{
++	return 0;
++}
++
+ /* E810 SMA functions
+  *
+  * The following functions operate specifically on E810 hardware and are used
+@@ -5125,6 +5200,21 @@ static void ice_get_phy_tx_tstamp_ready_e830(const struct ice_hw *hw, u8 port,
+ 	*tstamp_ready |= rd32(hw, E830_PRTMAC_TS_TX_MEM_VALID_L);
+ }
+ 
++/**
++ * ice_check_phy_tx_tstamp_ready_e830 - Check Tx memory status register
++ * @hw: pointer to the HW struct
++ *
++ * Return: 1 if the device has waiting timestamps, 0 otherwise.
++ */
++static int ice_check_phy_tx_tstamp_ready_e830(struct ice_hw *hw)
++{
++	u64 tstamp_ready;
++
++	ice_get_phy_tx_tstamp_ready_e830(hw, 0, &tstamp_ready);
++
++	return !!tstamp_ready;
++}
++
+ /**
+  * ice_ptp_init_phy_e830 - initialize PHY parameters
+  * @ptp: pointer to the PTP HW struct
+@@ -5717,6 +5807,33 @@ int ice_get_phy_tx_tstamp_ready(struct ice_hw *hw, u8 block, u64 *tstamp_ready)
  	}
+ }
+ 
++/**
++ * ice_check_phy_tx_tstamp_ready - Check PHY Tx timestamp memory status
++ * @hw: pointer to the HW struct
++ *
++ * Check the PHY for Tx timestamp memory status on all ports. If you need to
++ * see individual timestamp status for each index, use
++ * ice_get_phy_tx_tstamp_ready() instead.
++ *
++ * Return: 1 if any port has timestamps available, 0 if there are no timestamps
++ * available, and a negative error code on failure.
++ */
++int ice_check_phy_tx_tstamp_ready(struct ice_hw *hw)
++{
++	switch (hw->mac_type) {
++	case ICE_MAC_E810:
++		return ice_check_phy_tx_tstamp_ready_e810(hw);
++	case ICE_MAC_E830:
++		return ice_check_phy_tx_tstamp_ready_e830(hw);
++	case ICE_MAC_GENERIC:
++		return ice_check_phy_tx_tstamp_ready_e82x(hw);
++	case ICE_MAC_GENERIC_3K_E825:
++		return ice_check_phy_tx_tstamp_ready_eth56g(hw);
++	default:
++		return -EOPNOTSUPP;
++	}
++}
++
+ /**
+  * ice_cgu_get_pin_desc_e823 - get pin description array
+  * @hw: pointer to the hw struct
 diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
-index 5896b346e5790..9d7acc7eb2ceb 100644
+index 9d7acc7eb2ceb..1b58b054f4a5b 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
 +++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
-@@ -374,6 +374,7 @@ int ice_stop_phy_timer_eth56g(struct ice_hw *hw, u8 port, bool soft_reset);
- int ice_start_phy_timer_eth56g(struct ice_hw *hw, u8 port);
- int ice_phy_cfg_intr_eth56g(struct ice_hw *hw, u8 port, bool ena, u8 threshold);
- int ice_phy_cfg_ptp_1step_eth56g(struct ice_hw *hw, u8 port);
-+int ice_ptp_phy_soft_reset_eth56g(struct ice_hw *hw, u8 port);
+@@ -300,6 +300,7 @@ void ice_ptp_reset_ts_memory(struct ice_hw *hw);
+ int ice_ptp_init_phc(struct ice_hw *hw);
+ void ice_ptp_init_hw(struct ice_hw *hw);
+ int ice_get_phy_tx_tstamp_ready(struct ice_hw *hw, u8 block, u64 *tstamp_ready);
++int ice_check_phy_tx_tstamp_ready(struct ice_hw *hw);
+ int ice_ptp_one_port_cmd(struct ice_hw *hw, u8 configured_port,
+ 			 enum ice_ptp_tmr_cmd configured_cmd);
  
- #define ICE_ETH56G_NOMINAL_INCVAL	0x140000000ULL
- #define ICE_ETH56G_NOMINAL_PCS_REF_TUS	0x100000000ULL
-@@ -676,6 +677,9 @@ static inline u64 ice_get_base_incval(struct ice_hw *hw)
- #define ICE_P0_GNSS_PRSNT_N	BIT(4)
- 
- /* ETH56G PHY register addresses */
-+#define PHY_REG_GLOBAL			0x0
-+#define PHY_REG_GLOBAL_SOFT_RESET_M	BIT(11)
-+
- /* Timestamp PHY incval registers */
- #define PHY_REG_TIMETUS_L		0x8
- #define PHY_REG_TIMETUS_U		0xC
 -- 
 2.53.0
 
