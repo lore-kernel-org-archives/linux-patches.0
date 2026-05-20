@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11273F787E;
-	Wed, 20 May 2026 17:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF133FC5A1;
+	Wed, 20 May 2026 17:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299951; cv=none; b=HHBHJZ5X00dqyE4+IXPs0gZrWJVqz6UHUr3SOH9fNY0puWptSb8jkWApcX7R32yZs2EN7bjd7EsQEqMCddxS/BiSwmUuD581GhDeloUFcHt3cQSSXRFCcxeDyKJqKYoRgafKybamjhHYdl0itGF7d3IelXf9RfOUbWrzCc7oB3M=
+	t=1779299955; cv=none; b=CC17AdvP+ZmILc3X9BD0LH0ljy4szPaRHfIYf5Po6io7e3xzvRGJv/ZY0QfiO//Gir8bQIpqLGxyUJxPrOhJ6IlXsYhBS9597lHyE8k4fr377mXdF3Ja/AcKWQ8I6+Rato1wMoORabAjV23+jQw0T5QP01OW2cyEALC8M7wKtD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299951; c=relaxed/simple;
-	bh=/FviS/uLb854I5XQtjk9pu2aduC803yELpUEMFqHB1s=;
+	s=arc-20240116; t=1779299955; c=relaxed/simple;
+	bh=HBcLyaU5r2REbPdBj83p2bYyj0Fwc8k27HJeAYkJviA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fu2USB42VKsAaZDbSN/8igoKG8UyjiRId9+QIFmoUDyHQFrWJEi2LdNLcwV6kCSSqgYogpB7t1VdCa0PFy7VGI5HlI8sJWDWH6vhZstdA1RVtMrFKvlS5/aOT/Y7cJKyvuC3h0DiwVjfmzmveUa/hjcGE9m7QnpqjmEN5F6L4A0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rV/IKenW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tQXGciFUnfJwesdMZEiIAxjmZImpAknlrmVQ6J5tm5iWIhZaEDTyf1XA/o/UV2uyD9z2PljCDecRlvWYZUzHdVuQRzgsWyz8wOnOCPMHnAEidHHOk/WDRsLIQ3nSKThcU9uf+Nb7fZabwgG3G/TpSbH8rgsqCdw/5CGFhAE+F98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kx21cfz/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rV/IKenW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486E81F000E9;
-	Wed, 20 May 2026 17:59:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kx21cfz/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E632A1F000E9;
+	Wed, 20 May 2026 17:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299949;
-	bh=PBF4Z17LWK0SigoYf7eCx/N83MZ3cklmnvYgltWnGoc=;
+	s=korg; t=1779299952;
+	bh=YlG4eCTPIgO74EPgNphgP/vb01bCAm64vmePgFQ6TvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rV/IKenW0X+D/lot5MgDEijpD2bBVwM8fOUFuB6lbS6FHHV9UhrIW+4brM33Wtnkk
-	 tiCW+w/a2NRi9pbl7qZ/LPW7W2blykjn6Lkmuw9S2M4VDkyGo9VPNcr7B82jO0UV+x
-	 NQ9n7lbGmSgHBJo3rMOnUTol+stXFv7YcplCKh60=
+	b=kx21cfz/pIntaVN9Ggh5i69WCUFDertkskYkPZsnpP7ExjaITGjXCWM4lX4GtjCWH
+	 FH67VTAMeKBxakfDt5njCn0n3ySxyngfhQpl+18qJ6M1RZ5B/OG6tRU7WHAwGpCyKZ
+	 8/nI4b6SCrz5oG4TOQysbUBjFlX4RLEQrHVDCzmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.18 948/957] drm/v3d: Reject empty multisync extension to prevent infinite loop
-Date: Wed, 20 May 2026 18:23:51 +0200
-Message-ID: <20260520162155.160265419@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 949/957] eventfs: Use list_add_tail_rcu() for SRCU-protected children list
+Date: Wed, 20 May 2026 18:23:52 +0200
+Message-ID: <20260520162155.181389415@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -44,60 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit fb44d589bf3148e13452185a6e772a7efbf2d684 upstream.
+[ Upstream commit f67950b2887fa10df50c4317a1fe98a65bc6875b ]
 
-v3d_get_extensions() walks a userspace-provided singly-linked list of
-ioctl extensions without any bound on the chain length. A local user
-can craft a self-referential extension (ext->next == &ext) with zero
-in_sync_count and out_sync_count, which bypasses the existing duplicate-
-extension guard:
+Commit d2603279c7d6 ("eventfs: Use list_del_rcu() for SRCU protected
+list variable") converted the removal side to pair with the
+list_for_each_entry_srcu() walker in eventfs_iterate(). The insertion
+in eventfs_create_dir() was left as a plain list_add_tail(), which on
+weakly-ordered architectures can expose a new entry to the SRCU reader
+before its list pointers and fields are observable.
 
-    if (se->in_sync_count || se->out_sync_count)
-            return -EINVAL;
+Use list_add_tail_rcu() so the publication pairs with the existing
+list_del_rcu() and list_for_each_entry_srcu().
 
-The guard never fires because v3d_get_multisync_post_deps() returns
-immediately when count is zero, leaving both fields at zero on every
-iteration. The result is an infinite loop in kernel context, blocking
-the calling thread and pegging a CPU core indefinitely.
-
-Fix this by rejecting a multisync extension where both in_sync_count
-and out_sync_count are zero in v3d_get_multisync_submit_deps(). An
-empty multisync carries no synchronization information and serves no
-useful purpose, so returning -EINVAL for such an extension is the
-correct defense against this attack vector.
-
-Fixes: e4165ae8304e ("drm/v3d: add multiple syncobjs support")
+Fixes: 43aa6f97c2d0 ("eventfs: Get rid of dentry pointers without refcounts")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
-Link: https://patch.msgid.link/20260415050000.3816128-1-ashutoshdesai993@gmail.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patch.msgid.link/20260418152251.199343-1-devnexen@gmail.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+[ adapted scoped_guard(mutex, &eventfs_mutex) block to explicit mutex_lock()/mutex_unlock() pair ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_submit.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/tracefs/event_inode.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/v3d/v3d_submit.c
-+++ b/drivers/gpu/drm/v3d/v3d_submit.c
-@@ -390,6 +390,11 @@ v3d_get_multisync_submit_deps(struct drm
- 	if (multisync.pad)
- 		return -EINVAL;
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -732,7 +732,7 @@ struct eventfs_inode *eventfs_create_dir
  
-+	if (!multisync.in_sync_count && !multisync.out_sync_count) {
-+		DRM_DEBUG("Empty multisync extension\n");
-+		return -EINVAL;
-+	}
-+
- 	ret = v3d_get_multisync_post_deps(file_priv, se, multisync.out_sync_count,
- 					  multisync.out_syncs);
- 	if (ret)
+ 	mutex_lock(&eventfs_mutex);
+ 	if (!parent->is_freed)
+-		list_add_tail(&ei->list, &parent->children);
++		list_add_tail_rcu(&ei->list, &parent->children);
+ 	mutex_unlock(&eventfs_mutex);
+ 
+ 	/* Was the parent freed? */
 
 
