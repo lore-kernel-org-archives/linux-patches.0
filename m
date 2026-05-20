@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FF42DC76C;
-	Wed, 20 May 2026 17:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906FA36A376;
+	Wed, 20 May 2026 17:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297683; cv=none; b=fDYgEDrP2QmXpJ5GdRXzmf8RKbS9kiQb0qlsb+Vou8H/t/794wsibhryHAtpbcuOXEdZbNRCYzc0WzSGDNhvQ0YvtL//HlTOVAwfcAr2oSn2JC+3sdpgQjmIfikxu923OYKfyjFnjqtskgXuGIIc3Hxm+riewJvyZb0fB3m7Kc8=
+	t=1779297686; cv=none; b=mIbrbCKjt1qwgPiWcoX632hvbSzju9WZpoB1t90yb/s3XLPNXjb01P6/H1Ng8fgYg17h/srmbHP5acqeEFQJGLlN6uE2yRTDLIqnQ5tPPN/z8LgabDOx458ocdDMSyIGBFRexhlR8KTUya+PTHJB2317PImL1lUbLmZUvPvYdXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297683; c=relaxed/simple;
-	bh=0MxombyVQxDkid9JkTz540AOEiExFKz1K2abTH7YBA0=;
+	s=arc-20240116; t=1779297686; c=relaxed/simple;
+	bh=/zRLFd9oYaPH/C5HqvIkLurqLQiqFTIJtdyKIlHfYRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bSXkF51+R5Nptr9zbZYAGFA4n5Jh0wCF4glvrKEzvyH/041BkQLEjTXaY/MRUjuhWS013Lv6p0MBh+QQjxvz/eGM4dlhDlgyMLhL/L62riDpua3ycvA+cwexEw9jjCWJ2J0sIdbaSDDqJg31p0DmR5okAmXmoElWWBohiIqSXUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bO0eJwz7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hmdmVXT9LaveGa1yKemw0rZyTT18GZcHSZPsauaMByVAaAs+4rrZNWa1IAwtUDJaDihqYKwVS8mnFYwfLd/E7nJdb9/bVnsooP3dQcKjVgGOnXQBOjsOinae0Hb9wyiXM+EcgUwX7ZUs0wshumKLhPXICwi6ki9/kCzdYOtQjxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCsr9TS7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bO0eJwz7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4771F000E9;
-	Wed, 20 May 2026 17:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCsr9TS7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B307A1F000E9;
+	Wed, 20 May 2026 17:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297682;
-	bh=5yDQDCF8ifZEKNN6IoPrwRpRUuaoHD2KLh/328PUBK8=;
+	s=korg; t=1779297685;
+	bh=Y/WV111Tj5es1hjRinFn/HWzu4esc3F5T5FsSJEb3T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bO0eJwz7YLSOhUzPR3ryZw7QGjOl4hTVaAhMY5TdtraWzwg72J3pbo2WOO+47rcIy
-	 dD8Ybr/+JmCQEEHQ8Rrr8DGu0l0kzaZum8cJmYmo4PB+QPFM3oi+5W2FSGNvhLF2cq
-	 Vtn9Xz0uMRbSIq17ZR9Ir6Rfo6vbAPno5aoqU12w=
+	b=RCsr9TS7/nbAIYE4LdsnJj4qHn7udO55lCFUZCFLh6fXNLweDXLBNLK8JMANZ4Vf8
+	 rhyscSRHjPC9dLVtLsrHXUSu8Hggel/NS83e+4e3Jj5JqDAyDA+PF4E3/f/13Lk/OP
+	 yMLGEAMqmGPIOwhdmfouey2N5YMHxSWZWZPvcMnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MingTao Huang <mintaohuang@tencent.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 122/957] bpf: Fix stale offload->prog pointer after constant blinding
-Date: Wed, 20 May 2026 18:10:05 +0200
-Message-ID: <20260520162137.204961618@linuxfoundation.org>
+Subject: [PATCH 6.18 123/957] net: ethernet: ti-cpsw:: rename soft_reset() function
+Date: Wed, 20 May 2026 18:10:06 +0200
+Message-ID: <20260520162137.225711662@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,70 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: MingTao Huang <mintaohuang@tencent.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a1aa9ef47c299c5bbc30594d3c2f0589edf908e6 ]
+[ Upstream commit 961f3c535608df64553f61d64ca086aa9f371bdd ]
 
-When a dev-bound-only BPF program (BPF_F_XDP_DEV_BOUND_ONLY) undergoes
-JIT compilation with constant blinding enabled (bpf_jit_harden >= 2),
-bpf_jit_blind_constants() clones the program. The original prog is then
-freed in bpf_jit_prog_release_other(), which updates aux->prog to point
-to the surviving clone, but fails to update offload->prog.
+While looking at the glob symbols shared between the cpsw drivers,
+I noticed that soft_reset() is the only one that is missing a proper
+namespace prefix, and will pollute the kernel namespace, so rename
+it to be consistent with the other symbols.
 
-This leaves offload->prog pointing to the freed original program. When
-the network namespace is subsequently destroyed, cleanup_net() triggers
-bpf_dev_bound_netdev_unregister(), which iterates ondev->progs and calls
-__bpf_prog_offload_destroy(offload->prog). Accessing the freed prog
-causes a page fault:
-
-BUG: unable to handle page fault for address: ffffc900085f1038
-Workqueue: netns cleanup_net
-RIP: 0010:__bpf_prog_offload_destroy+0xc/0x80
-Call Trace:
-__bpf_offload_dev_netdev_unregister+0x257/0x350
-bpf_dev_bound_netdev_unregister+0x4a/0x90
-unregister_netdevice_many_notify+0x2a2/0x660
-...
-cleanup_net+0x21a/0x320
-
-The test sequence that triggers this reliably is:
-
-1. Set net.core.bpf_jit_harden=2 (echo 2 > /proc/sys/net/core/bpf_jit_harden)
-2. Run xdp_metadata selftest, which creates a dev-bound-only XDP
-   program on a veth inside a netns (./test_progs -t xdp_metadata)
-3. cleanup_net -> page fault in __bpf_prog_offload_destroy
-
-Dev-bound-only programs are unique in that they have an offload structure
-but go through the normal JIT path instead of bpf_prog_offload_compile().
-This means they are subject to constant blinding's prog clone-and-replace,
-while also having offload->prog that must stay in sync.
-
-Fix this by updating offload->prog in bpf_jit_prog_release_other(),
-alongside the existing aux->prog update. Both are back-pointers to
-the prog that must be kept in sync when the prog is replaced.
-
-Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
-Signed-off-by: MingTao Huang <mintaohuang@tencent.com>
-Link: https://lore.kernel.org/r/tencent_BCF692F45859CCE6C22B7B0B64827947D406@qq.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260402184726.3746487-1-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: df75bd552a87 ("net: ethernet: ti-cpsw: fix linking built-in code to modules")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/ti/cpsw.c      | 2 +-
+ drivers/net/ethernet/ti/cpsw_new.c  | 2 +-
+ drivers/net/ethernet/ti/cpsw_priv.c | 2 +-
+ drivers/net/ethernet/ti/cpsw_priv.h | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 8de006d388f67..931a4ddd8530c 100644
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -1468,6 +1468,8 @@ void bpf_jit_prog_release_other(struct bpf_prog *fp, struct bpf_prog *fp_other)
- 	 * know whether fp here is the clone or the original.
- 	 */
- 	fp->aux->prog = fp;
-+	if (fp->aux->offload)
-+		fp->aux->offload->prog = fp;
- 	bpf_prog_clone_free(fp_other);
+diff --git a/drivers/net/ethernet/ti/cpsw.c b/drivers/net/ethernet/ti/cpsw.c
+index b0e18bdc2c851..aa3531e844e87 100644
+--- a/drivers/net/ethernet/ti/cpsw.c
++++ b/drivers/net/ethernet/ti/cpsw.c
+@@ -706,7 +706,7 @@ static void cpsw_init_host_port(struct cpsw_priv *priv)
+ 	struct cpsw_common *cpsw = priv->cpsw;
+ 
+ 	/* soft reset the controller and initialize ale */
+-	soft_reset("cpsw", &cpsw->regs->soft_reset);
++	cpsw_soft_reset("cpsw", &cpsw->regs->soft_reset);
+ 	cpsw_ale_start(cpsw->ale);
+ 
+ 	/* switch to vlan aware mode */
+diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
+index fd3931d667021..c6cf7a0375e08 100644
+--- a/drivers/net/ethernet/ti/cpsw_new.c
++++ b/drivers/net/ethernet/ti/cpsw_new.c
+@@ -573,7 +573,7 @@ static void cpsw_init_host_port(struct cpsw_priv *priv)
+ 	u32 control_reg;
+ 
+ 	/* soft reset the controller and initialize ale */
+-	soft_reset("cpsw", &cpsw->regs->soft_reset);
++	cpsw_soft_reset("cpsw", &cpsw->regs->soft_reset);
+ 	cpsw_ale_start(cpsw->ale);
+ 
+ 	/* switch to vlan aware mode */
+diff --git a/drivers/net/ethernet/ti/cpsw_priv.c b/drivers/net/ethernet/ti/cpsw_priv.c
+index bc4fdf17a99ec..c6eb6b785b0b5 100644
+--- a/drivers/net/ethernet/ti/cpsw_priv.c
++++ b/drivers/net/ethernet/ti/cpsw_priv.c
+@@ -275,7 +275,7 @@ void cpsw_set_slave_mac(struct cpsw_slave *slave, struct cpsw_priv *priv)
+ 	slave_write(slave, mac_lo(priv->mac_addr), SA_LO);
  }
  
+-void soft_reset(const char *module, void __iomem *reg)
++void cpsw_soft_reset(const char *module, void __iomem *reg)
+ {
+ 	unsigned long timeout = jiffies + HZ;
+ 
+diff --git a/drivers/net/ethernet/ti/cpsw_priv.h b/drivers/net/ethernet/ti/cpsw_priv.h
+index acb6181c5c9e1..fddd7a79f4b0f 100644
+--- a/drivers/net/ethernet/ti/cpsw_priv.h
++++ b/drivers/net/ethernet/ti/cpsw_priv.h
+@@ -458,7 +458,7 @@ int cpsw_tx_poll(struct napi_struct *napi_tx, int budget);
+ int cpsw_rx_mq_poll(struct napi_struct *napi_rx, int budget);
+ int cpsw_rx_poll(struct napi_struct *napi_rx, int budget);
+ void cpsw_rx_vlan_encap(struct sk_buff *skb);
+-void soft_reset(const char *module, void __iomem *reg);
++void cpsw_soft_reset(const char *module, void __iomem *reg);
+ void cpsw_set_slave_mac(struct cpsw_slave *slave, struct cpsw_priv *priv);
+ void cpsw_ndo_tx_timeout(struct net_device *ndev, unsigned int txqueue);
+ int cpsw_need_resplit(struct cpsw_common *cpsw);
 -- 
 2.53.0
 
