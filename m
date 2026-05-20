@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148A9349AFF;
-	Wed, 20 May 2026 17:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEAAC3B0AD6;
+	Wed, 20 May 2026 17:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299226; cv=none; b=UWBIx1oeBJb72tLg4OPP7NjP9S7/UqLhmVxGp8Aay+W8zhTIvQcgUnoCQMIp64Tln3FiFO53t1NJgQgh8+OjrfbKpYwjSXHFL7OoDHt5cx1uaxMT3GlRhGgUOikcR0ehiGKf6aOkysZP1zevEDCTeQO/TfgcZCik+LOOgR3bDJ0=
+	t=1779299228; cv=none; b=fVTuqlwH7EEjcoyQBuIcIZhT5n/VFO29FaK3iqUDDiUFubhjhGLplgB6kSw+20w2SoKQ+9chEPyHeilduLGVgJoN/yGzv6y+kbmJxnsqshM5+PD4++uRF0mIDqCkoyycUIhfez87h49PMrBCkHkubHuaiI5gQUcGdLMIFJP5WVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299226; c=relaxed/simple;
-	bh=SAVwSXkZ0BOYD5hLkjAvHpCNz253ECNHs942hThI8TM=;
+	s=arc-20240116; t=1779299228; c=relaxed/simple;
+	bh=11TwPq0JSmy+6W/eIHOGnkICgMZ8yY2k9GfMbuWUi9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQ+RfgLNN8acs59Z5MPWG2aQnjPqqwmq/dm2lmsN7ZA2JH1zYv0HQBDlhMuPFYJQfWmJ+mYaPULGDnj2PvFeboKABpo795YKo8oQCOi98friUBnh52Ptc+RJ/NvaRoO9zl4mddK30WWQj0LvQEJ3GVvVomwpp6+WKkgse8o9lKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJ3/CayD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KzAlb2831+I4cj5PXavdZDIKntzndKwpKTCDAKLRi/5nU46xqSBjfUGfurw0UO6Ckr49vOfKo22r69lzq9kI1Tx2o1odmLCVJ+DuROwf/Z4S/iATdrZ3nuXdPzcXm3BpcY3GxVOaLZYOC09C6YL+VSx0udMOTjvfGZJrYt/aPvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rT3cFQCj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJ3/CayD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1601F000E9;
-	Wed, 20 May 2026 17:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rT3cFQCj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FCF01F000E9;
+	Wed, 20 May 2026 17:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299225;
-	bh=I0sP2bPYFg76MlS5k9Ueb+lQa3pgWI4mnz0LLpAsRQg=;
+	s=korg; t=1779299227;
+	bh=WO1r7LvNEu5Fz/2/+KmuwR/7cyYILqPy8qXjsVTpbac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gJ3/CayDOjg6Yc+mEa3FCHORpiRXPogpeM3gvmIRR62A64jb1VHIre6HWyJKklzuu
-	 LsCbHzOUa2rr3mCjY+3kReexLCpUTxdStPexJOwv9h8AUWkYbGaWdyoNvnWnRSuXjj
-	 NDnRV4eVyoYatnjOarBRw6E6UAFs9KvnL7Xyp/Eg=
+	b=rT3cFQCjHmVkjZ74KdrLkVaqaZkLZLYy0qEyz4QO6a6wjsb8IpFyWXfJ9G4o+4QG6
+	 KLyU/G/HMSbcENmGHEW5tUudC5URd3Sdicncy47y7bZ5DjsEkORppzQUtXbV8+Ga6n
+	 gOX1ggaPafXw36z7lfXdi3OTOnXtzGf7Nwe/0XBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Weiming Shi <bestswngs@gmail.com>,
+	"Kito Xu (veritas501)" <hxzene@gmail.com>,
+	Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 669/957] slip: bound decode() reads against the compressed packet length
-Date: Wed, 20 May 2026 18:19:12 +0200
-Message-ID: <20260520162149.043022938@linuxfoundation.org>
+Subject: [PATCH 6.18 670/957] net/sched: sch_dualpi2: drain both C-queue and L-queue in dualpi2_change()
+Date: Wed, 20 May 2026 18:19:13 +0200
+Message-ID: <20260520162149.066051904@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,156 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
 
-[ Upstream commit 4c1367a2d7aad643a6f87c6931b13cc1a25e8ca7 ]
+[ Upstream commit 478ed6b7d2577439c610f91fa8759a4c878a4264 ]
 
-slhc_uncompress() parses a VJ-compressed TCP header by advancing a
-pointer through the packet via decode() and pull16(). Neither helper
-bounds-checks against isize, and decode() masks its return with
-& 0xffff so it can never return the -1 that callers test for -- those
-error paths are dead code.
+Fix dualpi2_change() to correctly enforce updated limit and memlimit
+values after a configuration change of the dualpi2 qdisc.
 
-A short compressed frame whose change byte requests optional fields
-lets decode() read past the end of the packet. The over-read bytes
-are folded into the cached cstate and reflected into subsequent
-reconstructed packets.
+Before this patch, dualpi2_change() always attempted to dequeue packets
+via the root qdisc (C-queue) when reducing backlog or memory usage, and
+unconditionally assumed that a valid skb will be returned. When traffic
+classification results in packets being queued in the L-queue while the
+C-queue is empty, this leads to a NULL skb dereference during limit or
+memlimit enforcement.
 
-Make decode() and pull16() take the packet end pointer and return -1
-when exhausted. Add a bounds check before the TCP-checksum read.
-The existing == -1 tests now do what they were always meant to.
+This is fixed by first dequeuing from the C-queue path if it is
+non-empty. Once the C-queue is empty, packets are dequeued directly from
+the L-queue. Return values from qdisc_dequeue_internal() are checked for
+both queues. When dequeuing from the L-queue, the parent qdisc qlen and
+backlog counters are updated explicitly to keep overall qdisc statistics
+consistent.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Simon Horman <horms@kernel.org>
-Closes: https://lore.kernel.org/netdev/20260414134126.758795-2-horms@kernel.org/
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260416100147.531855-5-bestswngs@gmail.com
+Fixes: 320d031ad6e4 ("sched: Struct definition and parsing of dualpi2 qdisc")
+Reported-by: "Kito Xu (veritas501)" <hxzene@gmail.com>
+Closes: https://lore.kernel.org/netdev/20260413075740.2234828-1-hxzene@gmail.com/
+Signed-off-by: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
+Link: https://patch.msgid.link/20260417152551.71648-1-chia-yu.chang@nokia-bell-labs.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/slip/slhc.c | 43 ++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 18 deletions(-)
+ net/sched/sch_dualpi2.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/slip/slhc.c b/drivers/net/slip/slhc.c
-index fcb3eebe7311c..daf086c283423 100644
---- a/drivers/net/slip/slhc.c
-+++ b/drivers/net/slip/slhc.c
-@@ -80,9 +80,9 @@
- #include <linux/unaligned.h>
+diff --git a/net/sched/sch_dualpi2.c b/net/sched/sch_dualpi2.c
+index 4b975feb52b1f..efa32240c5a95 100644
+--- a/net/sched/sch_dualpi2.c
++++ b/net/sched/sch_dualpi2.c
+@@ -871,11 +871,35 @@ static int dualpi2_change(struct Qdisc *sch, struct nlattr *opt,
+ 	old_backlog = sch->qstats.backlog;
+ 	while (qdisc_qlen(sch) > sch->limit ||
+ 	       q->memory_used > q->memory_limit) {
+-		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
++		struct sk_buff *skb = NULL;
  
- static unsigned char *encode(unsigned char *cp, unsigned short n);
--static long decode(unsigned char **cpp);
-+static long decode(unsigned char **cpp, const unsigned char *end);
- static unsigned char * put16(unsigned char *cp, unsigned short x);
--static unsigned short pull16(unsigned char **cpp);
-+static long pull16(unsigned char **cpp, const unsigned char *end);
- 
- /* Allocate compression data structure
-  *	slots must be in range 0 to 255 (zero meaning no compression)
-@@ -190,30 +190,34 @@ encode(unsigned char *cp, unsigned short n)
- 	return cp;
- }
- 
--/* Pull a 16-bit integer in host order from buffer in network byte order */
--static unsigned short
--pull16(unsigned char **cpp)
-+/* Pull a 16-bit integer in host order from buffer in network byte order.
-+ * Returns -1 if the buffer is exhausted, otherwise the 16-bit value.
-+ */
-+static long
-+pull16(unsigned char **cpp, const unsigned char *end)
- {
--	short rval;
-+	long rval;
- 
-+	if (*cpp + 2 > end)
-+		return -1;
- 	rval = *(*cpp)++;
- 	rval <<= 8;
- 	rval |= *(*cpp)++;
- 	return rval;
- }
- 
--/* Decode a number */
-+/* Decode a number. Returns -1 if the buffer is exhausted. */
- static long
--decode(unsigned char **cpp)
-+decode(unsigned char **cpp, const unsigned char *end)
- {
- 	int x;
- 
-+	if (*cpp >= end)
-+		return -1;
- 	x = *(*cpp)++;
--	if(x == 0){
--		return pull16(cpp) & 0xffff;	/* pull16 returns -1 on error */
--	} else {
--		return x & 0xff;		/* -1 if PULLCHAR returned error */
--	}
-+	if (x == 0)
-+		return pull16(cpp, end);
-+	return x & 0xff;
- }
- 
- /*
-@@ -499,6 +503,7 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- 	struct cstate *cs;
- 	int len, hdrlen;
- 	unsigned char *cp = icp;
-+	const unsigned char *end = icp + isize;
- 
- 	/* We've got a compressed packet; read the change byte */
- 	comp->sls_i_compressed++;
-@@ -536,6 +541,8 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- 	thp = &cs->cs_tcp;
- 	ip = &cs->cs_ip;
- 
-+	if (cp + 2 > end)
-+		goto bad;
- 	thp->check = *(__sum16 *)cp;
- 	cp += 2;
- 
-@@ -566,26 +573,26 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- 	default:
- 		if(changes & NEW_U){
- 			thp->urg = 1;
--			if((x = decode(&cp)) == -1) {
-+			if((x = decode(&cp, end)) == -1) {
- 				goto bad;
- 			}
- 			thp->urg_ptr = htons(x);
- 		} else
- 			thp->urg = 0;
- 		if(changes & NEW_W){
--			if((x = decode(&cp)) == -1) {
-+			if((x = decode(&cp, end)) == -1) {
- 				goto bad;
- 			}
- 			thp->window = htons( ntohs(thp->window) + x);
- 		}
- 		if(changes & NEW_A){
--			if((x = decode(&cp)) == -1) {
-+			if((x = decode(&cp, end)) == -1) {
- 				goto bad;
- 			}
- 			thp->ack_seq = htonl( ntohl(thp->ack_seq) + x);
- 		}
- 		if(changes & NEW_S){
--			if((x = decode(&cp)) == -1) {
-+			if((x = decode(&cp, end)) == -1) {
- 				goto bad;
- 			}
- 			thp->seq = htonl( ntohl(thp->seq) + x);
-@@ -593,7 +600,7 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- 		break;
+-		q->memory_used -= skb->truesize;
+-		qdisc_qstats_backlog_dec(sch, skb);
+-		rtnl_qdisc_drop(skb, sch);
++		if (qdisc_qlen(sch) > qdisc_qlen(q->l_queue)) {
++			skb = qdisc_dequeue_internal(sch, true);
++			if (unlikely(!skb)) {
++				WARN_ON_ONCE(1);
++				break;
++			}
++			q->memory_used -= skb->truesize;
++			rtnl_qdisc_drop(skb, sch);
++		} else if (qdisc_qlen(q->l_queue)) {
++			skb = qdisc_dequeue_internal(q->l_queue, true);
++			if (unlikely(!skb)) {
++				WARN_ON_ONCE(1);
++				break;
++			}
++			/* L-queue packets are counted in both sch and
++			 * l_queue on enqueue; qdisc_dequeue_internal()
++			 * handled l_queue, so we further account for sch.
++			 */
++			--sch->q.qlen;
++			qdisc_qstats_backlog_dec(sch, skb);
++			q->memory_used -= skb->truesize;
++			rtnl_qdisc_drop(skb, q->l_queue);
++			qdisc_qstats_drop(sch);
++		} else {
++			WARN_ON_ONCE(1);
++			break;
++		}
  	}
- 	if(changes & NEW_I){
--		if((x = decode(&cp)) == -1) {
-+		if((x = decode(&cp, end)) == -1) {
- 			goto bad;
- 		}
- 		ip->id = htons (ntohs (ip->id) + x);
+ 	qdisc_tree_reduce_backlog(sch, old_qlen - qdisc_qlen(sch),
+ 				  old_backlog - sch->qstats.backlog);
 -- 
 2.53.0
 
