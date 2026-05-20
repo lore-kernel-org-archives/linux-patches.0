@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9AF331220;
-	Wed, 20 May 2026 18:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82D93F58D6;
+	Wed, 20 May 2026 18:07:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300426; cv=none; b=EkMuES1AjbBxEeylHtv2qkEPMk8FAZzm8iRuHhJde/q+w2kk0HgmcCS3wmH5KY9rLdO46U/UUzMPI4o3eB2Xki5j7TUQvBD5tCsUkz7xLLm8Iw6HpLhU4wwubvGEIlqXFmeRppCHXANC1zaVlep5UXWMbg0aPfu30qhIJAQHJ5g=
+	t=1779300428; cv=none; b=kxJ2Z7Dv5xeOrdB1WVTX9LxSwcjWPmq6cq7sYZBXd3lmIRlnMomB5ufkAuDgJFzVop41UQBGiaaY3ahSQN10uIxYO/upY8c5FgrCoGch9XKyc6nO0UD3N1q4h22omZq17LgSYCzuigdkzrGNYuGscaJwHu887N5UMqnTgac5Va4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300426; c=relaxed/simple;
-	bh=G0ttr6sph585/H5ALdAlRYWr0m1Qn8z87cyLMQZHyz0=;
+	s=arc-20240116; t=1779300428; c=relaxed/simple;
+	bh=sa8QYCSi470vYglnrL7va3lXifgUNya5uNmKpCCQ1Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7rP3p3i9wrD78yIfRpPnk7jrBMsnGYIZqW09/P7ptTo7YTSNsIPQ8Ln6n3fVEgK6FclqvrlvDXEmvlpoj6K0CId0AdjI+fIZcVLpwmFB16QRdhBRcat71faK8kVbiHwdc1hqXMpRyDtBh7V/zA5P5Iog9bNuMS7+v/jxT9CHNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8lsGh3W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oWMLfLjUetVT86nAViQQE/3iC8Oy9vC2ytcjIxa2+E++LWhfAtB33Mzr9m9ylh196LFCRrCzEgHr8IVFPfyvIu/LI20yyn9GLWZVjG0p314gfOJc0q93n2yB8Wr0bhQnJ00h7LZBhfGKS9epl0USL2+jXMPIg61RFfBoYPkHDhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spwpyp3D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8lsGh3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9113C1F000E9;
-	Wed, 20 May 2026 18:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spwpyp3D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399961F000E9;
+	Wed, 20 May 2026 18:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300425;
-	bh=jMgY1cGEvZ4Suz03RLADJHlnmgC2HaPG3apLtUiOj6o=;
+	s=korg; t=1779300427;
+	bh=KItrRBqLVTEVThbBvmKToR5UCeBnd/wp3QxDZMp//HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8lsGh3WUd8uleE2wOQGrH9hsYg3RhuU4YK4oEZvhOngU7tI28i7xQ7bTbetnZ7pv
-	 BS2O5SWtloBA6ikzOCLNKHdefsODXh0y0f7fTuQkl4Wuq4jVDTvDPGAp/yP3AJginb
-	 GKMuuoW9oFzkdocOy0tai7iEmaTfClsh7IjMSH9Y=
+	b=spwpyp3D0c3g+RsCTy4BO1RNlbAJ4ybUw1SmTwHmglku/Y14AkKaG/ri8p+uR59LK
+	 h6APGWN3HuYzVfaX9DkaY5hfLdrtcYU9lcWgNU1pRP23LhvXXM5sK3NqYeS3D4c9H+
+	 zOk4QUhsGJQl04WXnpsY1rBmzIfNnfRZxdrdBeyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Baluta <daniel.baluta@nxp.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/666] ASoC: SOF: ipc3: Use standard dev_dbg API
-Date: Wed, 20 May 2026 18:15:30 +0200
-Message-ID: <20260520162113.797102020@linuxfoundation.org>
+Subject: [PATCH 6.12 164/666] spi: hisi-kunpeng: prevent infinite while() loop in hisi_spi_flush_fifo
+Date: Wed, 20 May 2026 18:16:15 +0200
+Message-ID: <20260520162114.761559782@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,35 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Baluta <daniel.baluta@nxp.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 55c39835ee0ef94593a78f6ea808138d476f3b81 ]
+[ Upstream commit 9f61daf2c2debe9f5cf4e1a4471e56a89a6fe45a ]
 
-Use standard dev_dbg API because it gives better debugging
-information and allows dynamic control of prints.
+The hisi_spi_flush_fifo()'s inner while loop that lacks any timeout
+mechanism. Maybe the hardware never becomes empty, the loop will spin
+forever, causing the CPU to hang.
 
-Signed-off-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://patch.msgid.link/20240926090252.106040-1-daniel.baluta@nxp.com
+Fix this by adding a inner_limit based on loops_per_jiffy. The inner loop
+now exits after approximately one jiffy if the FIFO remains non-empty, logs
+a ratelimited warning, and breaks out of the outer loop. Additionally, add
+a cpu_relax() inside the busy loop to improve power efficiency.
+
+Fixes: c770d8631e18 ("spi: Add HiSilicon SPI Controller Driver for Kunpeng SoCs")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/d834ce28172886bfaeb9c8ca00cfd9bf1c65d5a1.1773889292.git.xiaopei01@kylinos.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 07c774dd64ba ("ASoC: soc-compress: use function to clear symmetric params")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-hisi-kunpeng.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/ipc3.c b/sound/soc/sof/ipc3.c
-index 83c22d4a48304..7de5e3d285e73 100644
---- a/sound/soc/sof/ipc3.c
-+++ b/sound/soc/sof/ipc3.c
-@@ -226,7 +226,7 @@ static inline void ipc3_log_header(struct device *dev, u8 *text, u32 cmd)
- static void sof_ipc3_dump_payload(struct snd_sof_dev *sdev,
- 				  void *ipc_data, size_t size)
- {
--	printk(KERN_DEBUG "Size of payload following the header: %zu\n", size);
-+	dev_dbg(sdev->dev, "Size of payload following the header: %zu\n", size);
- 	print_hex_dump_debug("Message payload: ", DUMP_PREFIX_OFFSET,
- 			     16, 4, ipc_data, size, false);
+diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
+index f0a50f40a3ba1..77526f7940688 100644
+--- a/drivers/spi/spi-hisi-kunpeng.c
++++ b/drivers/spi/spi-hisi-kunpeng.c
+@@ -196,8 +196,18 @@ static void hisi_spi_flush_fifo(struct hisi_spi *hs)
+ 	unsigned long limit = loops_per_jiffy << 1;
+ 
+ 	do {
+-		while (hisi_spi_rx_not_empty(hs))
++		unsigned long inner_limit = loops_per_jiffy;
++
++		while (hisi_spi_rx_not_empty(hs) && --inner_limit) {
+ 			readl(hs->regs + HISI_SPI_DOUT);
++			cpu_relax();
++		}
++
++		if (!inner_limit) {
++			dev_warn_ratelimited(hs->dev, "RX FIFO flush timeout\n");
++			break;
++		}
++
+ 	} while (hisi_spi_busy(hs) && limit--);
  }
+ 
 -- 
 2.53.0
 
