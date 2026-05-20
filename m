@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACB42673AA;
-	Wed, 20 May 2026 16:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0133517A309;
+	Wed, 20 May 2026 16:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296391; cv=none; b=AIE7hmH5V7UAIoKE5ec1arr0oJHFBPMZc40t+j7ag3U5W8AKZX+9+XiNs+JbivZMjbnn7IufHD6WDZBjFjLggu9dTccyvdXxB/YuXXIem4MlLzidUZJ1SUDmfjbndvbOSTLSShj/y7oG/r9d09nv2BB3vX5ldFVqqQMFAQYQHc4=
+	t=1779296394; cv=none; b=nL+HhfVZg+JL/PP7k6j4HguZWaaMxXxawwLKNg7cnI3mJggW913DbkLdL0qOevlIaHVCu62YcjjWfI/Gtwp+lhJGo6gz8Mdf8nEaZDDysMQNAaFbwt6bORDLzOes/LJsu3JRGtEWR5wb68SiLhO1CgJ5YsUYNmA6GKs8d6Pi2lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296391; c=relaxed/simple;
-	bh=xieXD+My4eMmShUlb3gvWS8T1hqo7i83NS4iieCo64E=;
+	s=arc-20240116; t=1779296394; c=relaxed/simple;
+	bh=05Ce+VxtUOJscwka6BwSjU9CGTrGD0o5ntYEHIEyEu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LkReFZ0m3kJwvsKuAPcS6iJ1myt3eUE18wfn0APXyBwiO4THqEcp9SAUh1FHWOQwUudEvykTsY5GHGa4tpuNMlX+ah6n2+flHYlYYizO6cOGtxZpvZSJgPNOsXwCtX65sBA9CqMQsT3p1nn9UVG21xzyuGGTSl8w9Y49cESp7h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hf5k5UxN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uLS8+MJc/qXWUZi1DEucHSri05dYLuHBWawe8+ho3H3KlDOtaFEin+UqcHSBsutEwD4y6JJFHqEv8zjlYoc8GbioD4PIMNW8Ye3ffqXAhqR6QR9FiEmE2BZhiR3vjkABFVW+4x0wG8cEBEFhbO2NKeHkxaLFlgelitRG6YDhM2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GF39Pa+V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hf5k5UxN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F6B81F000E9;
-	Wed, 20 May 2026 16:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GF39Pa+V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD771F000E9;
+	Wed, 20 May 2026 16:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296390;
-	bh=YLuL/5W5UZjHeCglf62LebxollI9NtOfdnyI5jf5Q1Y=;
+	s=korg; t=1779296392;
+	bh=7R9g+03oD7lbx6+RMYmZexFCTacJ+N+aLjJUbgCVMjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hf5k5UxN98dD5XgJq/014P8x97860b0xLrs2sZY4xqgw8rwA+TByjit9gnnLXqkKH
-	 vA1rwZ8cNLCNI30NOpqJuo660tb5IQBQ7i4xBceUlL+J49XmTjnOayd/BpWjH9meNU
-	 ifglT2Uwa3F8dOSXV/C5+Pm1a5ql58CJ4c4NqKbk=
+	b=GF39Pa+VnvR+qfkp0LpABD7dXOfSQLjGlmCTOcKKlfQEIrED6CDPrigi5HYMgcp4p
+	 r64+lFFLMlL4qBvj3WDATmyiXaz4TVbGpN3nsG5IssiPhfJaF2MWwj/DC4ACTOkNYN
+	 jeEVMykTReJThKz+WDk9ZN091YG3Sm6L/seyVOnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Vinod Govindapillai <vinod.govindapillai@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Sami Mujawar <sami.mujawar@arm.com>,
+	Jagdish Gediya <Jagdish.Gediya@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0740/1146] drm/i915/wm: Verify the correct plane DDB entry
-Date: Wed, 20 May 2026 18:16:30 +0200
-Message-ID: <20260520162204.954425575@linuxfoundation.org>
+Subject: [PATCH 7.0 0741/1146] virt: arm-cca-guest: fix error check for RSI_INCOMPLETE
+Date: Wed, 20 May 2026 18:16:31 +0200
+Message-ID: <20260520162204.977029773@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,46 +50,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Sami Mujawar <sami.mujawar@arm.com>
 
-[ Upstream commit a97c88a176b6b8d116f4d3f508f3bd02bc77b462 ]
+[ Upstream commit e534e9d13d0b7bdbb2cccdace7b96b769a10540e ]
 
-Actually verify the DDB entry for the plane we're looking
-at instead of always verifying the cursor DDB.
+The RSI interface can return RSI_INCOMPLETE when a report spans
+multiple granules. This is an expected condition and should not be
+treated as a fatal error.
 
-Fixes: 7d4561722c3b ("drm/i915: Tweak plane ddb allocation tracking")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260324134843.2364-5-ville.syrjala@linux.intel.com
-Reviewed-by: Vinod Govindapillai <vinod.govindapillai@intel.com>
-(cherry picked from commit f002f7c7439de18117a31ca84dc87a59719c3dd6)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Currently, arm_cca_report_new() checks for `info.result != RSI_SUCCESS`
+and bails out, which incorrectly flags RSI_INCOMPLETE as a failure.
+Fix the check to only break out on results other than RSI_SUCCESS or
+RSI_INCOMPLETE.
+
+This ensures partial reports are handled correctly and avoids spurious
+-ENXIO errors when generating attestation reports.
+
+Fixes: 7999edc484ca ("virt: arm-cca-guest: TSM_REPORT support for realms")
+Signed-off-by: Sami Mujawar <sami.mujawar@arm.com>
+Reported-by: Jagdish Gediya <Jagdish.Gediya@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/skl_watermark.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/virt/coco/arm-cca-guest/arm-cca-guest.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/skl_watermark.c b/drivers/gpu/drm/i915/display/skl_watermark.c
-index f5a6fae815d1d..fa51f976ea725 100644
---- a/drivers/gpu/drm/i915/display/skl_watermark.c
-+++ b/drivers/gpu/drm/i915/display/skl_watermark.c
-@@ -3980,8 +3980,8 @@ void intel_wm_state_verify(struct intel_atomic_state *state,
- 		}
+diff --git a/drivers/virt/coco/arm-cca-guest/arm-cca-guest.c b/drivers/virt/coco/arm-cca-guest/arm-cca-guest.c
+index 0c9ea24a200c9..66d00b6ceb789 100644
+--- a/drivers/virt/coco/arm-cca-guest/arm-cca-guest.c
++++ b/drivers/virt/coco/arm-cca-guest/arm-cca-guest.c
+@@ -157,7 +157,8 @@ static int arm_cca_report_new(struct tsm_report *report, void *data)
+ 		} while (info.result == RSI_INCOMPLETE &&
+ 			 info.offset < RSI_GRANULE_SIZE);
  
- 		/* DDB */
--		hw_ddb_entry = &hw->ddb[PLANE_CURSOR];
--		sw_ddb_entry = &new_crtc_state->wm.skl.plane_ddb[PLANE_CURSOR];
-+		hw_ddb_entry = &hw->ddb[plane->id];
-+		sw_ddb_entry = &new_crtc_state->wm.skl.plane_ddb[plane->id];
- 
- 		if (!skl_ddb_entry_equal(hw_ddb_entry, sw_ddb_entry)) {
- 			drm_err(display->drm,
+-		if (info.result != RSI_SUCCESS) {
++		/* Break out in case of failure */
++		if (info.result != RSI_SUCCESS && info.result != RSI_INCOMPLETE) {
+ 			ret = -ENXIO;
+ 			token_size = 0;
+ 			goto exit_free_granule_page;
 -- 
 2.53.0
 
