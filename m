@@ -1,56 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78023EAC82;
-	Wed, 20 May 2026 18:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30081331220;
+	Wed, 20 May 2026 18:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300891; cv=none; b=jNPvrwjF7aFr+fqawvmy/kK++CnYVB+rwpkAvMarbFNPI9+T8vsFHwqwHPJjK8DOiC8GpkAUALpABvvm50azo5UQF+BJq6/rttvEYBnuuKa1NzMavkY2k7D/CBm03UKFdZocv0+fwWrhnwuR8px4/CCfeKu2IsZpUW+2taL89XE=
+	t=1779300894; cv=none; b=KQCl9TYBcbdC872oFT72CBwnkha1sy4wAGU+v1p5KIuWcVW/I5QIpfnKiPdsU2aStzUUlPYARii/+0jh6FXY3hvkTNZJ9XMu9ymb2DKWktF6n67ma2Ki5wyXay/4b7BtOOByiLzoLxBn/qmWO+gFiSOYxPXqDjgB6B/rUhT/py0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300891; c=relaxed/simple;
-	bh=UO4HBjaRzRF83C+l6Ehwn6p2G06IYbvbx4ydyw4ciAw=;
+	s=arc-20240116; t=1779300894; c=relaxed/simple;
+	bh=j3eTz9o7G+cbpsDigSRSnImtF0dXnvioZUEq8hbHkbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eA0x6wQphOpQ24l8bBx5zSN/t/dp1x4izJqRs4LkWpN+23Q6wRCE+Xd/U2KzFkcovHPEH0btDXTfGrn3KiPbNT7wB1vGFaOXGVJiqJkmN2AlNdZJaVzt+4+fjxw/HznSYW4NOKkpaj/Rg1+kn0QUypiAhoFr4HFti/WmIA8+zOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeR9gkii; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ukTqtdponP1hzNbDK+I/dQoMI5KExyaCY9j1uoiCrj7aNy47oKLiTJnXFqjE0DTbTm7YvUoggTTJFEiVo4Iytz6wIcz6I+rkjdGbxHk4hZyjbx1I9Ettfgo8iubsDcizgCaF84SQjRh1cIhIusDHWEPhQq7VK+uUelCWXeSyx50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5Bv3ZkJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeR9gkii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A071F000E9;
-	Wed, 20 May 2026 18:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5Bv3ZkJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835B81F000E9;
+	Wed, 20 May 2026 18:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300890;
-	bh=vx3qJtWiWSYMRlrbtNi+jpgQ5lDyao/FJ6/mSaQNvV0=;
+	s=korg; t=1779300893;
+	bh=ZETdfsikSd9IChhCksthAvntS5QazxfP/3PBHPotfVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IeR9gkiiwMqA+LW4AZu85nnL6/Iid2Hj+Li7DdyGBJrm0sZ+LJkVf9LJriN/FyzxG
-	 lRyjdXsDDpwoupUrw46KE/GqxVjw/0QetdnXDIiTyhMY3fWVq3fZS7ZoaWPDr9Fp6k
-	 K7i4D5i0iMnA8yH4ya+fPNp4QKDPZBZW8hqRefTE=
+	b=I5Bv3ZkJUVmsFKO7KKaj+kHo1MK0Qgq+ewrRI75nTEJoG7gYmds6hWeCte6gvUZuG
+	 EdV1wiBJ3/dAzkOTjaVRiQmVAwB9/FNp9D9nU956YlSr5a1rvj9DtMC9wkTYjBBSAw
+	 GTQIOEgz+2e8WVeMJZ2txyL3xoVouUg8grfvT9dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Grzedzicki <mge@meta.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Alexey Gladkov (Intel)" <legion@kernel.org>,
-	Ben Segall <bsegall@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Kees Cook <kees@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
-	Mel Gorman <mgorman@suse.de>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Josua Mayer <josua@solid-run.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 306/666] unshare: fix nsproxy leak in ksys_unshare() on set_cred_ucounts() failure
-Date: Wed, 20 May 2026 18:18:37 +0200
-Message-ID: <20260520162117.853261730@linuxfoundation.org>
+Subject: [PATCH 6.12 297/666] arm64: dts: lx2160a: change i2c0 (iic1) pinmux mask to one bit
+Date: Wed, 20 May 2026 18:18:28 +0200
+Message-ID: <20260520162117.652957402@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -69,88 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Grzedzicki <mge@meta.com>
+From: Josua Mayer <josua@solid-run.com>
 
-[ Upstream commit a98621a0f187a934c115dcfe79a49520ae892111 ]
+[ Upstream commit 7a3cc49ad1fc8d063abb7f5de8f1b981b99d2978 ]
 
-When set_cred_ucounts() fails in ksys_unshare() new_nsproxy is leaked.
+LX2160A pinmux is done in groups by various length bitfields within
+configuration registers.
 
-Let's call put_nsproxy() if that happens.
+The first i2c bus (called IIC1 in reference manual) is configured through
+field IIC1_PMUX in register RCWSR14 bit 10 which is described in the
+reference manual as a single bit, unlike the other i2c buses.
 
-Link: https://lkml.kernel.org/r/20260213193959.2556730-1-mge@meta.com
-Fixes: 905ae01c4ae2 ("Add a reference to ucounts for each cred")
-Signed-off-by: Michal Grzedzicki <mge@meta.com>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Alexey Gladkov (Intel) <legion@kernel.org>
-Cc: Ben Segall <bsegall@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
-Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Change the bitmask for the pinmux nodes from 0x7 to 0x1 to ensure only
+single bit is modified.
+
+Further change the zero in the same line to hexadecimal format for
+consistency.
+
+Align with documentation by avoiding writes to reserved bits. No functional
+change, as writing the extra two reserved bits is not known to cause
+issues.
+
+Fixes: 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to support bus recovery")
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index c6415bb0abf59..c4955cffcb6f4 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -3348,11 +3348,10 @@ int ksys_unshare(unsigned long unshare_flags)
- 					 new_cred, new_fs);
- 	if (err)
- 		goto bad_unshare_cleanup_cred;
--
- 	if (new_cred) {
- 		err = set_cred_ucounts(new_cred);
- 		if (err)
--			goto bad_unshare_cleanup_cred;
-+			goto bad_unshare_cleanup_nsproxy;
- 	}
+diff --git a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
+index 97f2ed267d698..e2c32f5b6a521 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
+@@ -1790,11 +1790,11 @@ i2c7_scl_gpio: i2c7-scl-gpio-pins {
+ 			};
  
- 	if (new_fs || new_fd || do_sysvsem || new_cred || new_nsproxy) {
-@@ -3368,8 +3367,10 @@ int ksys_unshare(unsigned long unshare_flags)
- 			shm_init_task(current);
- 		}
+ 			i2c0_scl: i2c0-scl-pins {
+-				pinctrl-single,bits = <0x8 0 (0x7 << 10)>;
++				pinctrl-single,bits = <0x8 0x0 (0x1 << 10)>;
+ 			};
  
--		if (new_nsproxy)
-+		if (new_nsproxy) {
- 			switch_task_namespaces(current, new_nsproxy);
-+			new_nsproxy = NULL;
-+		}
+ 			i2c0_scl_gpio: i2c0-scl-gpio-pins {
+-				pinctrl-single,bits = <0x8 (0x1 << 10) (0x7 << 10)>;
++				pinctrl-single,bits = <0x8 (0x1 << 10) (0x1 << 10)>;
+ 			};
+ 		};
  
- 		task_lock(current);
- 
-@@ -3398,13 +3399,15 @@ int ksys_unshare(unsigned long unshare_flags)
- 
- 	perf_event_namespaces(current);
- 
-+bad_unshare_cleanup_nsproxy:
-+	if (new_nsproxy)
-+		put_nsproxy(new_nsproxy);
- bad_unshare_cleanup_cred:
- 	if (new_cred)
- 		put_cred(new_cred);
- bad_unshare_cleanup_fd:
- 	if (new_fd)
- 		put_files_struct(new_fd);
--
- bad_unshare_cleanup_fs:
- 	if (new_fs)
- 		free_fs_struct(new_fs);
 -- 
 2.53.0
 
