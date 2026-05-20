@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A7E342CB3;
-	Wed, 20 May 2026 18:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44732333441;
+	Wed, 20 May 2026 18:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301936; cv=none; b=N2/fAkLR9GdrSuaOcmXiN5fU3qf1uAQWiBFuupHvsGnA5WmLUoaMZnfPxscvqA0ifKOjE84B2NsVlVch7C7LxNLBgqsV7HZfVs8DpEKeC86Rcsxv1eNxQuVTSjDGKZJ8XrOgezMfrfbiVz1SYDHrz9zs4ndJtV1FHBGJhlp3SA4=
+	t=1779301939; cv=none; b=QWUElxGOBhqrC8DpQGp+I/k8xYikdqXnJ1o7ZqFG/wDdlxpjX8HY70Tjubn46Jp27VkIxkibn9qiqKMIrLA/8Iz+RjdAdlXT/gmVms8ZlIYPDU0egJFS/Oj1K75BuE3pvy/QdIIDuGiktLB37cFgf4xDIE5Nw+gu8dNhXADTjLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301936; c=relaxed/simple;
-	bh=SOFA8i0ifdydJ+Kahcj+ugxpr48k+bYp3KoEEWM4Ouc=;
+	s=arc-20240116; t=1779301939; c=relaxed/simple;
+	bh=2SkxW0X0Xm+p9hJk88Z0kWQg7S0pKyzOMOgDgMuZcqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d3vUSYilWls8MDVDM+mT14FooiCEo0VM2NXa+1x8cjTPSEUOCHygJxzoaDPYnXHi5RBZ7AM+g3Iv9XWDEvbG/1N+ohh4MJPVtAp2f9JGdacqWR9xJgQoJagCQ6aznHVexSro3t5mR52neOBf1q767/NMFQjN/B349cyEZRp79mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SO4SZoUq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bFWTEbdWQSmbgmPeqdlLYzZdz+0PIQV8Wfgjj7ntAkJiIYdyn11B0ESPNcT7lUQykWnP/KomzueIzkwT2p0l181pU275lCAudVfW623+iI6hTtBCF+Tr2QyD9OV/lUcheqOnmOZ4TMwyM3MB7Dc25F9yKMVjP/GtTgtxher7tv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UM22Q8Tc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SO4SZoUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B457C1F00898;
-	Wed, 20 May 2026 18:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UM22Q8Tc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BAD1F000E9;
+	Wed, 20 May 2026 18:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301935;
-	bh=wuPJ6pPiSdt863jJlbkXgYHklrrQ/YeojmVDA5h/zcM=;
+	s=korg; t=1779301937;
+	bh=z+/ZB1eFABty94ATjNNfoaww+I5HnEYVAUMBn2e0ziw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SO4SZoUq5mjHDlQDF8Sep3TMM7531iNThfZ7o4NNS4KJW3GcvwpF4T7J7eDxDUbo3
-	 A0qfOERb/n4/v+yLks90P0kuIvb64YXTAvvkRkKG4ruaAq0i7W3hAADM4Ze2ln+Rk5
-	 oZcjvAcSWSelU5tIw3tadkqU4ZdyGFv3WGEOaAqI=
+	b=UM22Q8TcXFMHLmVezLG5A+82sF7nqAsz4tbbKk6spcFTYwi34sJPQp9gEROIBv0r3
+	 lTZOx/Jv3Xygof8gyqzsooqB+3b+CHLt9QrRX8riFyoUnzm4GcxXyq3ky4tsbHQHzI
+	 Zc36YOwHa9AnU25Vhex35+FxD2HKLjDVAEXavKQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gal Pressman <gal@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/508] net/mlx5e: Fix features not applied during netdev registration
-Date: Wed, 20 May 2026 18:18:17 +0200
-Message-ID: <20260520162100.210872270@linuxfoundation.org>
+Subject: [PATCH 6.6 075/508] net/mlx5e: IPsec, fix ASO poll timeout with read_poll_timeout_atomic()
+Date: Wed, 20 May 2026 18:18:18 +0200
+Message-ID: <20260520162100.233057849@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -55,59 +55,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 9994ad4df82d64e57135c0f0906897685f5a9e87 ]
+[ Upstream commit edccdd1eb94712da97a6ce71123ec27890add754 ]
 
-mlx5e_fix_features() returns early when the netdevice is not present.
-This is correct during profile transitions where priv is cleared, but it
-also incorrectly blocks feature fixups during register_netdev(), when
-the device is also not yet present.
+The do-while poll loop uses jiffies for its timeout:
+  expires = jiffies + msecs_to_jiffies(10);
 
-It is not trivial to distinguish between both cases as we cannot use
-priv to carry state, and in both cases reg_state == NETREG_REGISTERED.
+jiffies is sampled at an arbitrary point within the current tick, so the
+first partial tick contributes anywhere from a full tick down to nearly
+zero real time. For small msecs_to_jiffies() results this is
+significant, the effective poll window can be much shorter than the
+requested 10ms, and in the worst case the loop exits after a single
+iteration (e.g., when HZ=100), well before the device has delivered the
+CQE.
 
-Force a netdev features update after register_netdev() completes, where
-the device is present and fix_features() can actually work.
+Replace the loop with read_poll_timeout_atomic(), which counts elapsed
+time via udelay() accounting rather than jiffies, guaranteeing the full
+poll window regardless of HZ.
 
-This is not a pretty solution, as it results in an additional features
-update call (register_netdevice() already calls
-__netdev_update_features() internally), but it is the simplest,
-cleanest, and most robust way I found to fix this issue after multiple
-attempts.
+Additionally, read_poll_timeout_atomic() executes the poll operation one
+more time after the timeout has expired, giving the CQE a final chance
+to be detected. The old do-while loop could exit without a final poll if
+the timeout expired during the udelay() between iterations.
 
-This fixes an issue on systems where CQE compression is enabled by
-default, RXHASH remains enabled after registration despite the two
-features being mutually exclusive.
-
-Fixes: ab4b01bfdaa6 ("net/mlx5e: Verify dev is present for fix features ndo")
+Fixes: 76e463f6508b ("net/mlx5e: Overcome slow response for first IPsec ASO WQE")
 Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260409202852.158059-2-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260409202852.158059-3-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ .../mellanox/mlx5/core/en_accel/ipsec_offload.c      | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 71749497ec27a..97fa2095498cc 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -6093,6 +6093,14 @@ static int mlx5e_probe(struct auxiliary_device *adev,
- 		goto err_resume;
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
+index fd03aa4f47b5a..004cf295eb249 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
+@@ -1,6 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB
+ /* Copyright (c) 2017, Mellanox Technologies inc. All rights reserved. */
  
-+	/* mlx5e_fix_features() returns early when the device is not present
-+	 * to avoid dereferencing cleared priv during profile changes.
-+	 * This also causes it to be a no-op during register_netdev(), where
-+	 * the device is not yet present.
-+	 * Trigger an additional features update that will actually work.
-+	 */
-+	mlx5e_update_features(netdev);
++#include <linux/iopoll.h>
 +
- 	mlx5e_dcbnl_init_app(priv);
- 	mlx5_core_uplink_netdev_set(mdev, netdev);
- 	mlx5e_params_print_info(mdev, &priv->channels.params);
+ #include "mlx5_core.h"
+ #include "en.h"
+ #include "ipsec.h"
+@@ -591,7 +593,6 @@ int mlx5e_ipsec_aso_query(struct mlx5e_ipsec_sa_entry *sa_entry,
+ 	struct mlx5_wqe_aso_ctrl_seg *ctrl;
+ 	struct mlx5e_hw_objs *res;
+ 	struct mlx5_aso_wqe *wqe;
+-	unsigned long expires;
+ 	u8 ds_cnt;
+ 	int ret;
+ 
+@@ -613,13 +614,8 @@ int mlx5e_ipsec_aso_query(struct mlx5e_ipsec_sa_entry *sa_entry,
+ 	mlx5e_ipsec_aso_copy(ctrl, data);
+ 
+ 	mlx5_aso_post_wqe(aso->aso, false, &wqe->ctrl);
+-	expires = jiffies + msecs_to_jiffies(10);
+-	do {
+-		ret = mlx5_aso_poll_cq(aso->aso, false);
+-		if (ret)
+-			/* We are in atomic context */
+-			udelay(10);
+-	} while (ret && time_is_after_jiffies(expires));
++	read_poll_timeout_atomic(mlx5_aso_poll_cq, ret, !ret, 10,
++				 10 * USEC_PER_MSEC, false, aso->aso, false);
+ 	if (!ret)
+ 		memcpy(sa_entry->ctx, aso->ctx, MLX5_ST_SZ_BYTES(ipsec_aso));
+ 	spin_unlock_bh(&aso->lock);
 -- 
 2.53.0
 
