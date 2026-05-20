@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20143C4576;
-	Wed, 20 May 2026 17:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748613BE64B;
+	Wed, 20 May 2026 17:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299810; cv=none; b=enafBya8mCYjZRAHAy1Mw3aHp6fO1VCK9ZXTwMC/I5ANSfh3pzJgG3W8INeSThx1CK1xKrBZktVmBRYb65jotHBVTwazRc15pubqIZnPR/laY0ZtrKKcZqLiE12C/FDi92Mh6uNrYm0guk/txtEWje60RpfYxrcWMsr2mRXapm8=
+	t=1779299812; cv=none; b=jC/KReHtl3Duy9XEFadGZZxsiK3gzJA/k+aS5lENSkI/bRFevSgLslgu4dnggu9eUalMqC4lMjhQEZlWLpPTXRXdMkcKXsDZgHqrCQdCktf4b66GcIvO9P4uIjQiEK/B/S26YhxTnO4VRIY+h+Cua9cW1J7XV3rvJdmjvF7pTZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299810; c=relaxed/simple;
-	bh=Fs9kg5OdX5q3L1vaXL43bzkvSVEqzVFDnhL4SyiM8h0=;
+	s=arc-20240116; t=1779299812; c=relaxed/simple;
+	bh=uM//zdkOZDZRRP8MX6jW/Jvan9RGjh5AZxYjQj5dUnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0Vkujygdj/94usY8QkvmLcXDTnnFjf+ifsCFA3eL/lq6DGjRsK1RxOoCc3EjmpFbY+FtUvPS8wKbAoxeubkuXDSdhNRWeq62L6BHTFI1P6s7IjlD1GChN1dknyrc7kHKT3pYFYpLMnb8ZpS37+O6TsM4WtL6wnkxEFTS/NK7dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3Ljxb61; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F0hctvDXKAcRHaj5qt24PrWDzFvK1burhBEThqIdg/n01bs2in1/BUcsGicY3E1IkN3rsHIH/gF5KSslBAygi4FDO5K6tgQl1/kI+XuQ9n9sQ/mEiJhA7uatqIf+ngGae5rTb9BytXUVI7PQoO3InQqcREmrQ7q0v9eIbq38lRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gErlmNDS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3Ljxb61"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41CF1F000E9;
-	Wed, 20 May 2026 17:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gErlmNDS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C60A1F00893;
+	Wed, 20 May 2026 17:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299807;
-	bh=SwKkTmEI9QDvjPz7Uam8D1NP8hCceTC1ZhRKadoQsGM=;
+	s=korg; t=1779299810;
+	bh=9Xkfb838FoQNzerqBuQAwlveUIlcs9Bx1318L27h/FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y3Ljxb6144nVt8D2Y9Rbc6IsCMNlZWehNIMKA5ef0U6hTF4RfLoka7kEi8A84Utgh
-	 yGbR59qOfr5S0/hJoBcqyN2LArhurTAldw2pvMa5g6X458S+tmAsT2+A4Cgzz4Kz/o
-	 i8ySesmU5i9sv8P8HgSViAR7WL+OUMka7UtthqcQ=
+	b=gErlmNDSmA6dlhMScHVsZEFNrahzoiKHfkeWdrySkYhErpq2tCB/KleAcdvNxMcCR
+	 8O2cGZojuLf6fr2WaCBYS6kvIl4OSzGHwyRs+IwCIZ2mifEXKn9VAVStAQexT3cwqF
+	 YgvDgVS5SmBb/jHw+kY9qSZd85md8cBqv0MknTIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Benjamin Tissoires <bentiss@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 895/957] HID: pass the buffer size to hid_report_raw_event
-Date: Wed, 20 May 2026 18:22:58 +0200
-Message-ID: <20260520162153.981563670@linuxfoundation.org>
+Subject: [PATCH 6.18 896/957] HID: core: introduce hid_safe_input_report()
+Date: Wed, 20 May 2026 18:22:59 +0200
+Message-ID: <20260520162154.003809940@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,359 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit 2c85c61d1332e1e16f020d76951baf167dcb6f7a ]
+[ Upstream commit 206342541fc887ae919774a43942dc883161fece ]
 
-commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
-bogus memset()") enforced the provided data to be at least the size of
-the declared buffer in the report descriptor to prevent a buffer
-overflow. However, we can try to be smarter by providing both the buffer
-size and the data size, meaning that hid_report_raw_event() can make
-better decision whether we should plaining reject the buffer (buffer
-overflow attempt) or if we can safely memset it to 0 and pass it to the
-rest of the stack.
+hid_input_report() is used in too many places to have a commit that
+doesn't cross subsystem borders. Instead of changing the API, introduce
+a new one when things matters in the transport layers:
+- usbhid
+- i2chid
+
+This effectively revert to the old behavior for those two transport
+layers.
 
 Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Acked-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Stable-dep-of: 206342541fc8 ("HID: core: introduce hid_safe_input_report()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/bpf/hid_bpf_dispatch.c |  6 +++--
- drivers/hid/hid-core.c             | 42 ++++++++++++++++++++----------
- drivers/hid/hid-gfrm.c             |  4 +--
- drivers/hid/hid-logitech-hidpp.c   |  2 +-
- drivers/hid/hid-multitouch.c       |  2 +-
- drivers/hid/hid-primax.c           |  2 +-
- drivers/hid/hid-vivaldi-common.c   |  2 +-
- drivers/hid/wacom_sys.c            |  6 ++---
- drivers/staging/greybus/hid.c      |  2 +-
- include/linux/hid.h                |  4 +--
- include/linux/hid_bpf.h            | 14 ++++++----
- 11 files changed, 53 insertions(+), 33 deletions(-)
+ drivers/hid/hid-core.c             | 25 +++++++++++++++++++++++++
+ drivers/hid/i2c-hid/i2c-hid-core.c |  7 ++++---
+ drivers/hid/usbhid/hid-core.c      | 11 ++++++-----
+ include/linux/hid.h                |  2 ++
+ 4 files changed, 37 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hid/bpf/hid_bpf_dispatch.c b/drivers/hid/bpf/hid_bpf_dispatch.c
-index cf465a5fe43af..eb9f40c988d02 100644
---- a/drivers/hid/bpf/hid_bpf_dispatch.c
-+++ b/drivers/hid/bpf/hid_bpf_dispatch.c
-@@ -24,7 +24,8 @@ EXPORT_SYMBOL(hid_ops);
- 
- u8 *
- dispatch_hid_bpf_device_event(struct hid_device *hdev, enum hid_report_type type, u8 *data,
--			      u32 *size, int interrupt, u64 source, bool from_bpf)
-+			      size_t *buf_size, u32 *size, int interrupt, u64 source,
-+			      bool from_bpf)
- {
- 	struct hid_bpf_ctx_kern ctx_kern = {
- 		.ctx = {
-@@ -74,6 +75,7 @@ dispatch_hid_bpf_device_event(struct hid_device *hdev, enum hid_report_type type
- 		*size = ret;
- 	}
- 
-+	*buf_size = ctx_kern.ctx.allocated_size;
- 	return ctx_kern.data;
- }
- EXPORT_SYMBOL_GPL(dispatch_hid_bpf_device_event);
-@@ -508,7 +510,7 @@ __hid_bpf_input_report(struct hid_bpf_ctx *ctx, enum hid_report_type type, u8 *b
- 	if (ret)
- 		return ret;
- 
--	return hid_ops->hid_input_report(ctx->hid, type, buf, size, 0, (u64)(long)ctx, true,
-+	return hid_ops->hid_input_report(ctx->hid, type, buf, size, size, 0, (u64)(long)ctx, true,
- 					 lock_already_taken);
- }
- 
 diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 8be4e06af4636..9e8eb727c6c98 100644
+index 9e8eb727c6c98..e67ea3a7d1395 100644
 --- a/drivers/hid/hid-core.c
 +++ b/drivers/hid/hid-core.c
-@@ -2029,24 +2029,32 @@ int __hid_request(struct hid_device *hid, struct hid_report *report,
- }
- EXPORT_SYMBOL_GPL(__hid_request);
- 
--int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *data, u32 size,
--			 int interrupt)
-+int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *data,
-+			 size_t bufsize, u32 size, int interrupt)
- {
- 	struct hid_report_enum *report_enum = hid->report_enum + type;
- 	struct hid_report *report;
- 	struct hid_driver *hdrv;
- 	int max_buffer_size = HID_MAX_BUFFER_SIZE;
- 	u32 rsize, csize = size;
-+	size_t bsize = bufsize;
- 	u8 *cdata = data;
- 	int ret = 0;
- 
- 	report = hid_get_report(report_enum, data);
- 	if (!report)
--		goto out;
-+		return 0;
-+
-+	if (unlikely(bsize < csize)) {
-+		hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %ld)\n",
-+				     report->id, csize, bsize);
-+		return -EINVAL;
-+	}
- 
- 	if (report_enum->numbered) {
- 		cdata++;
- 		csize--;
-+		bsize--;
- 	}
- 
- 	rsize = hid_compute_report_size(report);
-@@ -2059,11 +2067,16 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
- 	else if (rsize > max_buffer_size)
- 		rsize = max_buffer_size;
- 
-+	if (bsize < rsize) {
-+		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %ld)\n",
-+				     report->id, rsize, bsize);
-+		return -EINVAL;
-+	}
-+
- 	if (csize < rsize) {
--		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %d)\n",
--				     report->id, rsize, csize);
--		ret = -EINVAL;
--		goto out;
-+		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
-+			csize, rsize);
-+		memset(cdata + csize, 0, rsize - csize);
- 	}
- 
- 	if ((hid->claimed & HID_CLAIMED_HIDDEV) && hid->hiddev_report_event)
-@@ -2071,7 +2084,7 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
- 	if (hid->claimed & HID_CLAIMED_HIDRAW) {
- 		ret = hidraw_report_event(hid, data, size);
- 		if (ret)
--			goto out;
-+			return ret;
- 	}
- 
- 	if (hid->claimed != HID_CLAIMED_HIDRAW && report->maxfield) {
-@@ -2083,15 +2096,15 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
- 
- 	if (hid->claimed & HID_CLAIMED_INPUT)
- 		hidinput_report_event(hid, report);
--out:
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(hid_report_raw_event);
- 
- 
- static int __hid_input_report(struct hid_device *hid, enum hid_report_type type,
--			      u8 *data, u32 size, int interrupt, u64 source, bool from_bpf,
--			      bool lock_already_taken)
-+			      u8 *data, size_t bufsize, u32 size, int interrupt, u64 source,
-+			      bool from_bpf, bool lock_already_taken)
- {
- 	struct hid_report_enum *report_enum;
- 	struct hid_driver *hdrv;
-@@ -2116,7 +2129,8 @@ static int __hid_input_report(struct hid_device *hid, enum hid_report_type type,
- 	report_enum = hid->report_enum + type;
- 	hdrv = hid->driver;
- 
--	data = dispatch_hid_bpf_device_event(hid, type, data, &size, interrupt, source, from_bpf);
-+	data = dispatch_hid_bpf_device_event(hid, type, data, &bufsize, &size, interrupt,
-+					     source, from_bpf);
- 	if (IS_ERR(data)) {
- 		ret = PTR_ERR(data);
- 		goto unlock;
-@@ -2145,7 +2159,7 @@ static int __hid_input_report(struct hid_device *hid, enum hid_report_type type,
- 			goto unlock;
- 	}
- 
--	ret = hid_report_raw_event(hid, type, data, size, interrupt);
-+	ret = hid_report_raw_event(hid, type, data, bufsize, size, interrupt);
- 
- unlock:
- 	if (!lock_already_taken)
-@@ -2167,7 +2181,7 @@ static int __hid_input_report(struct hid_device *hid, enum hid_report_type type,
+@@ -2177,6 +2177,7 @@ static int __hid_input_report(struct hid_device *hid, enum hid_report_type type,
+  * @interrupt: distinguish between interrupt and control transfers
+  *
+  * This is data entry for lower layers.
++ * Legacy, please use hid_safe_input_report() instead.
+  */
  int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data, u32 size,
  		     int interrupt)
+@@ -2187,6 +2188,30 @@ int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data
+ }
+ EXPORT_SYMBOL_GPL(hid_input_report);
+ 
++/**
++ * hid_safe_input_report - report data from lower layer (usb, bt...)
++ *
++ * @hid: hid device
++ * @type: HID report type (HID_*_REPORT)
++ * @data: report contents
++ * @bufsize: allocated size of the data buffer
++ * @size: useful size of data parameter
++ * @interrupt: distinguish between interrupt and control transfers
++ *
++ * This is data entry for lower layers.
++ * Please use this function instead of the non safe version because we provide
++ * here the size of the buffer, allowing hid-core to make smarter decisions
++ * regarding the incoming buffer.
++ */
++int hid_safe_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
++			  size_t bufsize, u32 size, int interrupt)
++{
++	return __hid_input_report(hid, type, data, bufsize, size, interrupt, 0,
++				  false, /* from_bpf */
++				  false /* lock_already_taken */);
++}
++EXPORT_SYMBOL_GPL(hid_safe_input_report);
++
+ bool hid_match_one_id(const struct hid_device *hdev,
+ 		      const struct hid_device_id *id)
  {
--	return __hid_input_report(hid, type, data, size, interrupt, 0,
-+	return __hid_input_report(hid, type, data, size, size, interrupt, 0,
- 				  false, /* from_bpf */
- 				  false /* lock_already_taken */);
- }
-diff --git a/drivers/hid/hid-gfrm.c b/drivers/hid/hid-gfrm.c
-index 699186ff2349e..d2a56bf92b416 100644
---- a/drivers/hid/hid-gfrm.c
-+++ b/drivers/hid/hid-gfrm.c
-@@ -66,7 +66,7 @@ static int gfrm_raw_event(struct hid_device *hdev, struct hid_report *report,
- 	switch (data[1]) {
- 	case GFRM100_SEARCH_KEY_DOWN:
- 		ret = hid_report_raw_event(hdev, HID_INPUT_REPORT, search_key_dn,
--					   sizeof(search_key_dn), 1);
-+					   sizeof(search_key_dn), sizeof(search_key_dn), 1);
- 		break;
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 5a183af3d5c6a..e0a302544cef4 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -574,9 +574,10 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
+ 		if (ihid->hid->group != HID_GROUP_RMI)
+ 			pm_wakeup_event(&ihid->client->dev, 0);
  
- 	case GFRM100_SEARCH_KEY_AUDIO_DATA:
-@@ -74,7 +74,7 @@ static int gfrm_raw_event(struct hid_device *hdev, struct hid_report *report,
- 
- 	case GFRM100_SEARCH_KEY_UP:
- 		ret = hid_report_raw_event(hdev, HID_INPUT_REPORT, search_key_up,
--					   sizeof(search_key_up), 1);
-+					   sizeof(search_key_up), sizeof(search_key_up), 1);
- 		break;
- 
- 	default:
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index faef80cb2adbd..2eb67d0caebb2 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -3664,7 +3664,7 @@ static int hidpp10_consumer_keys_raw_event(struct hidpp_device *hidpp,
- 	memcpy(&consumer_report[1], &data[3], 4);
- 	/* We are called from atomic context */
- 	hid_report_raw_event(hidpp->hid_dev, HID_INPUT_REPORT,
--			     consumer_report, 5, 1);
-+			     consumer_report, sizeof(consumer_report), 5, 1);
- 
- 	return 1;
- }
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 21bfaf9bbd733..a543d48221070 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -531,7 +531,7 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
- 		}
- 
- 		ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, buf,
--					   size, 0);
-+					   size, size, 0);
- 		if (ret)
- 			dev_warn(&hdev->dev, "failed to report feature\n");
- 	}
-diff --git a/drivers/hid/hid-primax.c b/drivers/hid/hid-primax.c
-index e44d79dff8de6..8db054280afbc 100644
---- a/drivers/hid/hid-primax.c
-+++ b/drivers/hid/hid-primax.c
-@@ -44,7 +44,7 @@ static int px_raw_event(struct hid_device *hid, struct hid_report *report,
- 			data[0] |= (1 << (data[idx] - 0xE0));
- 			data[idx] = 0;
- 		}
--		hid_report_raw_event(hid, HID_INPUT_REPORT, data, size, 0);
-+		hid_report_raw_event(hid, HID_INPUT_REPORT, data, size, size, 0);
- 		return 1;
- 
- 	default:	/* unknown report */
-diff --git a/drivers/hid/hid-vivaldi-common.c b/drivers/hid/hid-vivaldi-common.c
-index bf734055d4b69..b12bb5cc091aa 100644
---- a/drivers/hid/hid-vivaldi-common.c
-+++ b/drivers/hid/hid-vivaldi-common.c
-@@ -85,7 +85,7 @@ void vivaldi_feature_mapping(struct hid_device *hdev,
+-		hid_input_report(ihid->hid, HID_INPUT_REPORT,
+-				ihid->inbuf + sizeof(__le16),
+-				ret_size - sizeof(__le16), 1);
++		hid_safe_input_report(ihid->hid, HID_INPUT_REPORT,
++				      ihid->inbuf + sizeof(__le16),
++				      ihid->bufsize - sizeof(__le16),
++				      ret_size - sizeof(__le16), 1);
  	}
  
- 	ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, report_data,
--				   report_len, 0);
-+				   report_len, report_len, 0);
- 	if (ret) {
- 		dev_warn(&hdev->dev, "failed to report feature %d\n",
- 			 field->report->id);
-diff --git a/drivers/hid/wacom_sys.c b/drivers/hid/wacom_sys.c
-index 9a57504e51a19..a448cfcca4c47 100644
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -90,7 +90,7 @@ static void wacom_wac_queue_flush(struct hid_device *hdev,
- 			kfree(buf);
- 			continue;
- 		}
--		err = hid_report_raw_event(hdev, HID_INPUT_REPORT, buf, size, false);
-+		err = hid_report_raw_event(hdev, HID_INPUT_REPORT, buf, size, size, false);
- 		if (err) {
- 			hid_warn(hdev, "%s: unable to flush event due to error %d\n",
- 				 __func__, err);
-@@ -334,7 +334,7 @@ static void wacom_feature_mapping(struct hid_device *hdev,
- 					       data, n, WAC_CMD_RETRIES);
- 			if (ret == n && features->type == HID_GENERIC) {
- 				ret = hid_report_raw_event(hdev,
--					HID_FEATURE_REPORT, data, n, 0);
-+					HID_FEATURE_REPORT, data, n, n, 0);
- 			} else if (ret == 2 && features->type != HID_GENERIC) {
- 				features->touch_max = data[1];
- 			} else {
-@@ -395,7 +395,7 @@ static void wacom_feature_mapping(struct hid_device *hdev,
- 					data, n, WAC_CMD_RETRIES);
- 		if (ret == n) {
- 			ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT,
--						   data, n, 0);
-+						   data, n, n, 0);
- 		} else {
- 			hid_warn(hdev, "%s: could not retrieve sensor offsets\n",
- 				 __func__);
-diff --git a/drivers/staging/greybus/hid.c b/drivers/staging/greybus/hid.c
-index 63c77a3df5911..afa78c96ede89 100644
---- a/drivers/staging/greybus/hid.c
-+++ b/drivers/staging/greybus/hid.c
-@@ -201,7 +201,7 @@ static void gb_hid_init_report(struct gb_hid *ghid, struct hid_report *report)
- 	 * we just need to setup the input fields, so using
- 	 * hid_report_raw_event is safe.
- 	 */
--	hid_report_raw_event(ghid->hid, report->type, ghid->inbuf, size, 1);
-+	hid_report_raw_event(ghid->hid, report->type, ghid->inbuf, ghid->bufsize, size, 1);
- }
- 
- static void gb_hid_init_reports(struct gb_hid *ghid)
+ 	return;
+diff --git a/drivers/hid/usbhid/hid-core.c b/drivers/hid/usbhid/hid-core.c
+index df3cc89dfb37f..4a493b46d9ee7 100644
+--- a/drivers/hid/usbhid/hid-core.c
++++ b/drivers/hid/usbhid/hid-core.c
+@@ -283,9 +283,9 @@ static void hid_irq_in(struct urb *urb)
+ 			break;
+ 		usbhid_mark_busy(usbhid);
+ 		if (!test_bit(HID_RESUME_RUNNING, &usbhid->iofl)) {
+-			hid_input_report(urb->context, HID_INPUT_REPORT,
+-					 urb->transfer_buffer,
+-					 urb->actual_length, 1);
++			hid_safe_input_report(urb->context, HID_INPUT_REPORT,
++					      urb->transfer_buffer, urb->transfer_buffer_length,
++					      urb->actual_length, 1);
+ 			/*
+ 			 * autosuspend refused while keys are pressed
+ 			 * because most keyboards don't wake up when
+@@ -482,9 +482,10 @@ static void hid_ctrl(struct urb *urb)
+ 	switch (status) {
+ 	case 0:			/* success */
+ 		if (usbhid->ctrl[usbhid->ctrltail].dir == USB_DIR_IN)
+-			hid_input_report(urb->context,
++			hid_safe_input_report(urb->context,
+ 				usbhid->ctrl[usbhid->ctrltail].report->type,
+-				urb->transfer_buffer, urb->actual_length, 0);
++				urb->transfer_buffer, urb->transfer_buffer_length,
++				urb->actual_length, 0);
+ 		break;
+ 	case -ESHUTDOWN:	/* unplug */
+ 		unplug = 1;
 diff --git a/include/linux/hid.h b/include/linux/hid.h
-index a4ddb94e3ee56..d29efcf2e0789 100644
+index d29efcf2e0789..204ada8d12e5c 100644
 --- a/include/linux/hid.h
 +++ b/include/linux/hid.h
-@@ -1258,8 +1258,8 @@ static inline u32 hid_report_len(struct hid_report *report)
- 	return DIV_ROUND_UP(report->size, 8) + (report->id > 0);
- }
- 
--int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *data, u32 size,
--			 int interrupt);
-+int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *data,
-+			 size_t bufsize, u32 size, int interrupt);
- 
- /* HID quirks API */
- unsigned long hid_lookup_quirk(const struct hid_device *hdev);
-diff --git a/include/linux/hid_bpf.h b/include/linux/hid_bpf.h
-index a2e47dbcf82c8..19fffa4574a47 100644
---- a/include/linux/hid_bpf.h
-+++ b/include/linux/hid_bpf.h
-@@ -72,8 +72,8 @@ struct hid_ops {
- 	int (*hid_hw_output_report)(struct hid_device *hdev, __u8 *buf, size_t len,
- 				    u64 source, bool from_bpf);
- 	int (*hid_input_report)(struct hid_device *hid, enum hid_report_type type,
--				u8 *data, u32 size, int interrupt, u64 source, bool from_bpf,
--				bool lock_already_taken);
-+				u8 *data, size_t bufsize, u32 size, int interrupt, u64 source,
-+				bool from_bpf, bool lock_already_taken);
- 	struct module *owner;
- 	const struct bus_type *bus_type;
- };
-@@ -200,7 +200,8 @@ struct hid_bpf {
- 
- #ifdef CONFIG_HID_BPF
- u8 *dispatch_hid_bpf_device_event(struct hid_device *hid, enum hid_report_type type, u8 *data,
--				  u32 *size, int interrupt, u64 source, bool from_bpf);
-+				  size_t *buf_size, u32 *size, int interrupt, u64 source,
-+				  bool from_bpf);
- int dispatch_hid_bpf_raw_requests(struct hid_device *hdev,
- 				  unsigned char reportnum, __u8 *buf,
- 				  u32 size, enum hid_report_type rtype,
-@@ -215,8 +216,11 @@ int hid_bpf_device_init(struct hid_device *hid);
- const u8 *call_hid_bpf_rdesc_fixup(struct hid_device *hdev, const u8 *rdesc, unsigned int *size);
- #else /* CONFIG_HID_BPF */
- static inline u8 *dispatch_hid_bpf_device_event(struct hid_device *hid, enum hid_report_type type,
--						u8 *data, u32 *size, int interrupt,
--						u64 source, bool from_bpf) { return data; }
-+						u8 *data, size_t *buf_size, u32 *size,
-+						int interrupt, u64 source, bool from_bpf)
-+{
-+	return data;
-+}
- static inline int dispatch_hid_bpf_raw_requests(struct hid_device *hdev,
- 						unsigned char reportnum, u8 *buf,
- 						u32 size, enum hid_report_type rtype,
+@@ -990,6 +990,8 @@ struct hid_field *hid_find_field(struct hid_device *hdev, unsigned int report_ty
+ int hid_set_field(struct hid_field *, unsigned, __s32);
+ int hid_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data, u32 size,
+ 		     int interrupt);
++int hid_safe_input_report(struct hid_device *hid, enum hid_report_type type, u8 *data,
++			  size_t bufsize, u32 size, int interrupt);
+ struct hid_field *hidinput_get_led_field(struct hid_device *hid);
+ unsigned int hidinput_count_leds(struct hid_device *hid);
+ __s32 hidinput_calc_abs_res(const struct hid_field *field, __u16 code);
 -- 
 2.53.0
 
