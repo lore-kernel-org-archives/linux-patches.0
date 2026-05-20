@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E0333B97A;
-	Wed, 20 May 2026 18:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35403C140F;
+	Wed, 20 May 2026 18:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300771; cv=none; b=Ugbj3/Tlcq3Gy02i7OYpFTMBTt31zSEN+7DsTtVwrLQxhsTGj8+YfMeWqDp+At40nXjBA9jd5Cm5kUK1bNkG2ypeMDwkIO93ajeU6qEtmbMO1234wSaRaXRdFMSvj5DDk2wlEntObEcKN2TZUrhjnEjCAny5lf/UBJziITNxTW0=
+	t=1779300773; cv=none; b=EpYK96cK3EasWRfqv0FY+xTddHS2wv0XwNBXHAzSGZlk4IfiKfJXJcevAZf7/zJ+nK8D8awouwAxRjPCNO/TcqzF2kXoNvEQJMWxWpTnLsE46/mjkwgATgtu9QfIA0WEp/zCDB7RgLLCoMYBOHRIPsnuBzI0QJ6xN5yKpYOJ+Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300771; c=relaxed/simple;
-	bh=Hol+oaILyrERrkATxv7kr7ddNMoSaqXbgxgOgKbxKA0=;
+	s=arc-20240116; t=1779300773; c=relaxed/simple;
+	bh=wJ7hU3khEqSC9ZAcInkWzcq7QGA/WJQ4ToErhfAKuZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2iSnI0kTTjcm8NliIYC1N+Fbk6onD3lZY4ssGVbJX5xN7nOMpvrsaAVusb7IFY+EvEA/9TylV+DM/njA4N7un+aIODeOrkPO1M8xp0+n81Tr4s9poz63655uWVDMnMxcbUQ0X8STw9FOwVZFX/tFLGZdLUYOeMC0uO67HYg/yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPTAsQJX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U5u5+Lokn9/wy17zLmYueBLiqE1zwwTJ8Zosx2doJytDDv+kq9pLMY8ZSacKu5TW29ayujLWZLKNKvocxj4uzXyEm4b00/CRw6NNPHqmvXFqOOWdTa9cf05BWObymcoSfRIVR13TUcwKojOXflIN0yug1lDs/aF4KUC7vx0EPWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+FB5fLF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPTAsQJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FA41F000E9;
-	Wed, 20 May 2026 18:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+FB5fLF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22DEA1F000E9;
+	Wed, 20 May 2026 18:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300770;
-	bh=gkUNj//Nb8Did9HFvvM01xbYSg5ga29DLDPizAqQE7g=;
+	s=korg; t=1779300772;
+	bh=1tBVHEZsqVFnUZglCdsLXx3dOjf6SomyBbfXoa5NSuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fPTAsQJXQbdc2QxGNfvxkx3f42CcMLu28gGOvFjFPTl4vuPuNN8i/WBfLm4SIyXOi
-	 AAaPGpfEkmyERKpV2/L1GDi0YOnZU7nBa/GWxhjXccch16/DFBoCM2vtYkx2PZ0qiR
-	 eAvLfnezw607LwfJ4+H9t/MbakaSsfy09YU/XV+s=
+	b=t+FB5fLF87a7UOkJ0RRlrXXnzbPN0ANEJXnhkbB81H034aa3isVmKVM6T9mqsSu1P
+	 pTTumsCNd46eLt+KzcrazSbirmUClkIO53cCSo4IkuskA2IFoHsOjyMdN/ssGWvkx5
+	 d3IsGleJ8PzWFYbHBQ11EgitccKEMyNY5W6qgcck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 259/666] gfs2: add some missing log locking
-Date: Wed, 20 May 2026 18:17:50 +0200
-Message-ID: <20260520162116.830917136@linuxfoundation.org>
+Subject: [PATCH 6.12 260/666] gfs2: prevent NULL pointer dereference during unmount
+Date: Wed, 20 May 2026 18:17:51 +0200
+Message-ID: <20260520162116.853456367@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,105 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit fe2c8d051150b90b3ccb85f89e3b1d636cb88ec8 ]
+[ Upstream commit 74b4dbb946060a3233604d91859a9abd3708141d ]
 
-Function gfs2_logd() calls the log flushing functions gfs2_ail1_start(),
-gfs2_ail1_wait(), and gfs2_ail1_empty() without holding sdp->sd_log_flush_lock,
-but these functions require exclusion against concurrent transactions.
+When flushing out outstanding glock work during an unmount, gfs2_log_flush()
+can be called when sdp->sd_jdesc has already been deallocated and sdp->sd_jdesc
+is NULL.  Commit 35264909e9d1 ("gfs2: Fix NULL pointer dereference in
+gfs2_log_flush") added a check for that to gfs2_log_flush() itself, but it
+missed the sdp->sd_jdesc dereference in gfs2_log_release().  Fix that.
 
-To fix that, add a non-locking __gfs2_log_flush() function.  Then, in
-gfs2_logd(), take sdp->sd_log_flush_lock before calling the above mentioned log
-flushing functions and __gfs2_log_flush().
-
-Fixes: 5e4c7632aae1c ("gfs2: Issue revokes more intelligently")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202604071139.HNJiCaAi-lkp@intel.com/
+Fixes: 35264909e9d1 ("gfs2: Fix NULL pointer dereference in gfs2_log_flush")
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/log.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ fs/gfs2/log.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/fs/gfs2/log.c b/fs/gfs2/log.c
-index 115c4ac457e90..592f69602e5aa 100644
+index 592f69602e5aa..ecc5c59b87008 100644
 --- a/fs/gfs2/log.c
 +++ b/fs/gfs2/log.c
-@@ -1027,14 +1027,15 @@ static void trans_drain(struct gfs2_trans *tr)
- }
- 
- /**
-- * gfs2_log_flush - flush incore transaction(s)
-+ * __gfs2_log_flush - flush incore transaction(s)
-  * @sdp: The filesystem
-  * @gl: The glock structure to flush.  If NULL, flush the whole incore log
-  * @flags: The log header flags: GFS2_LOG_HEAD_FLUSH_* and debug flags
-  *
-  */
- 
--void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
-+static void __gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl,
-+			     u32 flags)
+@@ -471,8 +471,9 @@ void gfs2_log_release(struct gfs2_sbd *sdp, unsigned int blks)
  {
- 	struct gfs2_trans *tr = NULL;
- 	unsigned int reserved_blocks = 0, used_blocks = 0;
-@@ -1042,7 +1043,6 @@ void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
- 	unsigned int first_log_head;
- 	unsigned int reserved_revokes = 0;
- 
--	down_write(&sdp->sd_log_flush_lock);
- 	trace_gfs2_log_flush(sdp, 1, flags);
- 
- repeat:
-@@ -1154,7 +1154,6 @@ void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
- 		gfs2_assert_withdraw_delayed(sdp, used_blocks < reserved_blocks);
- 		gfs2_log_release(sdp, reserved_blocks - used_blocks);
- 	}
--	up_write(&sdp->sd_log_flush_lock);
- 	gfs2_trans_free(sdp, tr);
- 	if (gfs2_withdrawing(sdp))
- 		gfs2_withdraw(sdp);
-@@ -1177,6 +1176,13 @@ void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
- 	goto out_end;
+ 	atomic_add(blks, &sdp->sd_log_blks_free);
+ 	trace_gfs2_log_blocks(sdp, blks);
+-	gfs2_assert_withdraw(sdp, atomic_read(&sdp->sd_log_blks_free) <=
+-				  sdp->sd_jdesc->jd_blocks);
++	gfs2_assert_withdraw(sdp, !sdp->sd_jdesc ||
++			atomic_read(&sdp->sd_log_blks_free) <=
++			sdp->sd_jdesc->jd_blocks);
+ 	if (atomic_read(&sdp->sd_log_blks_needed))
+ 		wake_up(&sdp->sd_log_waitq);
  }
- 
-+void gfs2_log_flush(struct gfs2_sbd *sdp, struct gfs2_glock *gl, u32 flags)
-+{
-+	down_write(&sdp->sd_log_flush_lock);
-+	__gfs2_log_flush(sdp, gl, flags);
-+	up_write(&sdp->sd_log_flush_lock);
-+}
-+
- /**
-  * gfs2_merge_trans - Merge a new transaction into a cached transaction
-  * @sdp: the filesystem
-@@ -1319,19 +1325,25 @@ int gfs2_logd(void *data)
- 		}
- 
- 		if (gfs2_jrnl_flush_reqd(sdp) || t == 0) {
-+			down_write(&sdp->sd_log_flush_lock);
- 			gfs2_ail1_empty(sdp, 0);
--			gfs2_log_flush(sdp, NULL, GFS2_LOG_HEAD_FLUSH_NORMAL |
--						  GFS2_LFC_LOGD_JFLUSH_REQD);
-+			__gfs2_log_flush(sdp, NULL,
-+					 GFS2_LOG_HEAD_FLUSH_NORMAL |
-+					 GFS2_LFC_LOGD_JFLUSH_REQD);
-+			up_write(&sdp->sd_log_flush_lock);
- 		}
- 
- 		if (test_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags) ||
- 		    gfs2_ail_flush_reqd(sdp)) {
- 			clear_bit(SDF_FORCE_AIL_FLUSH, &sdp->sd_flags);
-+			down_write(&sdp->sd_log_flush_lock);
- 			gfs2_ail1_start(sdp);
- 			gfs2_ail1_wait(sdp);
- 			gfs2_ail1_empty(sdp, 0);
--			gfs2_log_flush(sdp, NULL, GFS2_LOG_HEAD_FLUSH_NORMAL |
--						  GFS2_LFC_LOGD_AIL_FLUSH_REQD);
-+			__gfs2_log_flush(sdp, NULL,
-+					 GFS2_LOG_HEAD_FLUSH_NORMAL |
-+					 GFS2_LFC_LOGD_AIL_FLUSH_REQD);
-+			up_write(&sdp->sd_log_flush_lock);
- 		}
- 
- 		t = gfs2_tune_get(sdp, gt_logd_secs) * HZ;
 -- 
 2.53.0
 
