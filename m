@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82D1369D75;
-	Wed, 20 May 2026 16:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB093F65EF;
+	Wed, 20 May 2026 16:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294565; cv=none; b=U7JF5vejmyqro9wF1dESRhC5Ze8gtUWyz7pF5HLxyTlueGXFJDLTviOgUMPZImiRbxst2QHWGTKOWHwLeyAzuC0Jr86/u409n7Nj9jNrn/40BzMdBwpDk+bGhXEIuKYuaxgMgVC//IWEm112YOn9/AYctR8LAJXZ27kM3Qdip+Q=
+	t=1779294568; cv=none; b=lv+DEgUjk+HMRJAHUALtCODnlkqIZOL8nlisZh5TKgxvKvgY/5g5oRN9ZtTK3NjgpJB5Xeuajvyqge9beE0emHrbOxNE2N3uZw9D7fZzLnnA52fNBxlnO2WLJuiTpk6sipYCi2KjnoxFVvlQLfnGmGPYAd2trDqdQxpD00kwhOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294565; c=relaxed/simple;
-	bh=8dv+fPHKEanIGB/jeuekh456UKLoJSlmIllgiwQatVo=;
+	s=arc-20240116; t=1779294568; c=relaxed/simple;
+	bh=okHABLafKoz73Hf7nnW/p2xCcRFlnxdjP7szjMGgzyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLIgrlSS+YWW5Sfbba3Duv3b18jrU9Ly6pXmLAHY0I7g4KaL7L/XqoZjm8MY0kbKxh26yk/M8GTgQ4xdXJULHTilBzJ7JM/9fh+4drzmXSTqfx86NQ2l+d45YF4UwpiRCcAz9LojvQvpc6raMBIeHbiteZe/tCTjt4VH/hYJP9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFeJ1O5y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=r0E0e1c9jlRMav7p7FyI1qe+GofhfW/lyNwbcE28M8yC9vxoqMHkTCVV1dHE57e7lElINaEtGopO+oVFYJzMmqhtZMktqT89EYyhFEa8In+X2GgmAObqBL82QEbOxZD9qcO79F4ft3VbmloqmXttQrLHMR/DGLQqV4XKxCmeb7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9X8RbKZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFeJ1O5y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0A11F00893;
-	Wed, 20 May 2026 16:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9X8RbKZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DB91F000E9;
+	Wed, 20 May 2026 16:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294563;
-	bh=dVZS8q5Se7ZM2klkUdrzc9tGk1pguj+T5Sa/85bSIQE=;
+	s=korg; t=1779294566;
+	bh=1jETIf+BOARPR5STuyVHgaid/jobUe/GnplN4tc6kew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CFeJ1O5yiBCVcjsduN7gmWmgZAidWZ2sTTZGSZIyJyy048q2lMSXIfZu9i890pWqN
-	 lbSd/8Qxs+mg6Q11DhL4YUeunN+9cnEP6rQTw32EOx8kiqzkeUxUsucNQMOLyqCZtx
-	 vi0+Q2kcx/i1Dvdulas1x0c3xyoaNvVokiiuRTNQ=
+	b=L9X8RbKZ/kACi/F6OWFKf0P6TqK/aX19WvhNd1rs6j8ytj5FrEgHTRx+UzsHWgr0r
+	 7Gxpmn8UQTnaQm40DxAJYgtnFZz5C+CEKxXlqvNTBPDEw9DF5DH0fRwaRsE6PFGXV/
+	 SOwEZ1lZSNvY8cF8pRtFEU4yomo6v9vpX+AiQPGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	David Laight <david.laight.linux@gmail.com>,
+	Willy Tarreau <w@1wt.eu>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0080/1146] s390/bpf: Zero-extend bpf prog return values and kfunc arguments
-Date: Wed, 20 May 2026 18:05:30 +0200
-Message-ID: <20260520162150.164723565@linuxfoundation.org>
+Subject: [PATCH 7.0 0089/1146] tools/nolibc/printf: Change variables c to ch and tmpbuf[] to outbuf[]
+Date: Wed, 20 May 2026 18:05:39 +0200
+Message-ID: <20260520162150.368052134@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -47,107 +46,156 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: David Laight <david.laight.linux@gmail.com>
 
-[ Upstream commit 202e42e4aa890172366354b233c42c73107a3f59 ]
+[ Upstream commit f675ae28fcdf7db93a8c1a6964f062725b1e06a0 ]
 
-s390x ABI requires callers to zero-extend unsigned arguments and
-sign-extend signed arguments, and callees to zero-extend unsigned
-return values and sign-extend signed return values.
+Changing 'c' makes the code slightly easier to read because the variable
+stands out from the single character literals (especially 'c').
 
-s390 BPF JIT currently implements only sign extension. Fix this
-omission and implement zero extension too.
+Change tmpbuf[] to outbuf[] because 'out' points into it.
 
-Fixes: 528eb2cb87bc ("s390/bpf: Implement arch_prepare_bpf_trampoline()")
-Reported-by: Hari Bathini <hbathini@linux.ibm.com>
-Closes: https://lore.kernel.org/bpf/20260312080113.843408-1-hbathini@linux.ibm.com/
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Tested-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/r/20260313174807.581826-1-iii@linux.ibm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+The following patches pretty much rewrite the function so the
+churn is limited.
+
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://patch.msgid.link/20260223101735.2922-7-david.laight.linux@gmail.com
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Stable-dep-of: 4045e7b19bbf ("tools/nolibc/printf: Move snprintf length check to callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/net/bpf_jit_comp.c | 39 ++++++++++++++++++++++--------------
- 1 file changed, 24 insertions(+), 15 deletions(-)
+ tools/include/nolibc/stdio.h | 38 ++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
-index bf92964246eb1..10ab247e1994c 100644
---- a/arch/s390/net/bpf_jit_comp.c
-+++ b/arch/s390/net/bpf_jit_comp.c
-@@ -830,25 +830,34 @@ static int bpf_jit_probe_post(struct bpf_jit *jit, struct bpf_prog *fp,
- }
- 
- /*
-- * Sign-extend the register if necessary
-+ * Sign- or zero-extend the register if necessary
-  */
--static int sign_extend(struct bpf_jit *jit, int r, u8 size, u8 flags)
-+static int sign_zero_extend(struct bpf_jit *jit, int r, u8 size, u8 flags)
+diff --git a/tools/include/nolibc/stdio.h b/tools/include/nolibc/stdio.h
+index 233318b0d0f01..77d7669cdb806 100644
+--- a/tools/include/nolibc/stdio.h
++++ b/tools/include/nolibc/stdio.h
+@@ -301,16 +301,16 @@ typedef int (*__nolibc_printf_cb)(intptr_t state, const char *buf, size_t size);
+ static __attribute__((unused, format(printf, 4, 0)))
+ int __nolibc_printf(__nolibc_printf_cb cb, intptr_t state, size_t n, const char *fmt, va_list args)
  {
--	if (!(flags & BTF_FMODEL_SIGNED_ARG))
--		return 0;
--
- 	switch (size) {
- 	case 1:
--		/* lgbr %r,%r */
--		EMIT4(0xb9060000, r, r);
-+		if (flags & BTF_FMODEL_SIGNED_ARG)
-+			/* lgbr %r,%r */
-+			EMIT4(0xb9060000, r, r);
-+		else
-+			/* llgcr %r,%r */
-+			EMIT4(0xb9840000, r, r);
- 		return 0;
- 	case 2:
--		/* lghr %r,%r */
--		EMIT4(0xb9070000, r, r);
-+		if (flags & BTF_FMODEL_SIGNED_ARG)
-+			/* lghr %r,%r */
-+			EMIT4(0xb9070000, r, r);
-+		else
-+			/* llghr %r,%r */
-+			EMIT4(0xb9850000, r, r);
- 		return 0;
- 	case 4:
--		/* lgfr %r,%r */
--		EMIT4(0xb9140000, r, r);
-+		if (flags & BTF_FMODEL_SIGNED_ARG)
-+			/* lgfr %r,%r */
-+			EMIT4(0xb9140000, r, r);
-+		else
-+			/* llgfr %r,%r */
-+			EMIT4(0xb9160000, r, r);
- 		return 0;
- 	case 8:
- 		return 0;
-@@ -1798,9 +1807,9 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
- 				return -1;
+-	char escape, lpref, c;
++	char escape, lpref, ch;
+ 	unsigned long long v;
+ 	unsigned int written, width;
+ 	size_t len, ofs, w;
+-	char tmpbuf[21];
++	char outbuf[21];
+ 	const char *outstr;
  
- 			for (j = 0; j < m->nr_args; j++) {
--				if (sign_extend(jit, BPF_REG_1 + j,
--						m->arg_size[j],
--						m->arg_flags[j]))
-+				if (sign_zero_extend(jit, BPF_REG_1 + j,
-+						     m->arg_size[j],
-+						     m->arg_flags[j]))
- 					return -1;
+ 	written = ofs = escape = lpref = 0;
+ 	while (1) {
+-		c = fmt[ofs++];
++		ch = fmt[ofs++];
+ 		width = 0;
+ 
+ 		if (escape) {
+@@ -318,17 +318,17 @@ int __nolibc_printf(__nolibc_printf_cb cb, intptr_t state, size_t n, const char
+ 			escape = 0;
+ 
+ 			/* width */
+-			while (c >= '0' && c <= '9') {
++			while (ch >= '0' && ch <= '9') {
+ 				width *= 10;
+-				width += c - '0';
++				width += ch - '0';
+ 
+-				c = fmt[ofs++];
++				ch = fmt[ofs++];
  			}
+ 
+-			if (c == 'c' || c == 'd' || c == 'u' || c == 'x' || c == 'p') {
+-				char *out = tmpbuf;
++			if (ch == 'c' || ch == 'd' || ch == 'u' || ch == 'x' || ch == 'p') {
++				char *out = outbuf;
+ 
+-				if (c == 'p')
++				if (ch == 'p')
+ 					v = va_arg(args, unsigned long);
+ 				else if (lpref) {
+ 					if (lpref > 1)
+@@ -338,7 +338,7 @@ int __nolibc_printf(__nolibc_printf_cb cb, intptr_t state, size_t n, const char
+ 				} else
+ 					v = va_arg(args, unsigned int);
+ 
+-				if (c == 'd') {
++				if (ch == 'd') {
+ 					/* sign-extend the value */
+ 					if (lpref == 0)
+ 						v = (long long)(int)v;
+@@ -346,7 +346,7 @@ int __nolibc_printf(__nolibc_printf_cb cb, intptr_t state, size_t n, const char
+ 						v = (long long)(long)v;
+ 				}
+ 
+-				switch (c) {
++				switch (ch) {
+ 				case 'c':
+ 					out[0] = v;
+ 					out[1] = 0;
+@@ -365,30 +365,30 @@ int __nolibc_printf(__nolibc_printf_cb cb, intptr_t state, size_t n, const char
+ 					u64toh_r(v, out);
+ 					break;
+ 				}
+-				outstr = tmpbuf;
++				outstr = outbuf;
+ 			}
+-			else if (c == 's') {
++			else if (ch == 's') {
+ 				outstr = va_arg(args, char *);
+ 				if (!outstr)
+ 					outstr="(null)";
+ 			}
+-			else if (c == 'm') {
++			else if (ch == 'm') {
+ #ifdef NOLIBC_IGNORE_ERRNO
+ 				outstr = "unknown error";
+ #else
+ 				outstr = strerror(errno);
+ #endif /* NOLIBC_IGNORE_ERRNO */
+ 			}
+-			else if (c == '%') {
++			else if (ch == '%') {
+ 				/* queue it verbatim */
+ 				continue;
+ 			}
+ 			else {
+ 				/* modifiers or final 0 */
+-				if (c == 'l') {
++				if (ch == 'l') {
+ 					/* long format prefix, maintain the escape */
+ 					lpref++;
+-				} else if (c == 'j') {
++				} else if (ch == 'j') {
+ 					lpref = 2;
+ 				}
+ 				escape = 1;
+@@ -399,7 +399,7 @@ int __nolibc_printf(__nolibc_printf_cb cb, intptr_t state, size_t n, const char
  		}
-@@ -2555,7 +2564,7 @@ static int invoke_bpf_prog(struct bpf_tramp_jit *tjit,
- 	EMIT6_PCREL_RILB_PTR(0xc0050000, REG_14, p->bpf_func);
- 	/* stg %r2,retval_off(%r15) */
- 	if (save_ret) {
--		if (sign_extend(jit, REG_2, m->ret_size, m->ret_flags))
-+		if (sign_zero_extend(jit, REG_2, m->ret_size, m->ret_flags))
- 			return -1;
- 		EMIT6_DISP_LH(0xe3000000, 0x0024, REG_2, REG_0, REG_15,
- 			      tjit->retval_off);
+ 
+ 		/* not an escape sequence */
+-		if (c == 0 || c == '%') {
++		if (ch == 0 || ch == '%') {
+ 			/* flush pending data on escape or end */
+ 			escape = 1;
+ 			lpref = 0;
+@@ -420,7 +420,7 @@ int __nolibc_printf(__nolibc_printf_cb cb, intptr_t state, size_t n, const char
+ 
+ 			written += len;
+ 		do_escape:
+-			if (c == 0)
++			if (ch == 0)
+ 				break;
+ 			fmt += ofs;
+ 			ofs = 0;
 -- 
 2.53.0
 
