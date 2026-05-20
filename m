@@ -1,65 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6845033E36A;
-	Tue, 19 May 2026 19:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E3D25F7A9;
+	Wed, 20 May 2026 00:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779218719; cv=none; b=q11eBHimmb4okQDZeypApX/oRvtL+JriT7J+caIEmyLxamVn7kY0PBv/5pPUlkq27fj4Phjrdbzk7G109q0I62qLnSlL4nIgj490Q9kTep41aYGpWsJuDkeza6PkccaYtKZ9hvIcjEgBjCuh/suXl4FKPlGTwW/m7WEk7GqjxsI=
+	t=1779238466; cv=none; b=Den9VOBiy3tQbxkbLNmCSWmn2qnnFGSx6DO9wOa7UMbC71LIyMX2p9KMAqnEKwBxaTERTjXCAf2+j4ZYJxIGcasRjhY4AHTuHf2mFozygKXc/enMUgesPhhCkoH+rS14dxb+4DQn4tty0wSwFilJMZr4rtf2B4jfHudx8R0MV58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779218719; c=relaxed/simple;
-	bh=vwPboUPDbV7npqeRkpbl0u7Q2C8xbRBRbLelcPhK/mg=;
+	s=arc-20240116; t=1779238466; c=relaxed/simple;
+	bh=oJ/yexyTc4fld4Ml46TlMVb7vovfTZPFy5qhbWiansg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mkue6V8FnfiDqDcOMwJJM3/ZI7sn3wfhAwCIKKraHLBXhkcpImf9etytCH0gRgIp/k1dvQ2ZsFAU2agHLF1QU0/qjehgfYU/xjIa6VESGk6/jL3cjsXu+bgyiXRn9VImxCu76Pi2JnhKnSm+LjX2VX7HhFyK6EarKqU9gId7GNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ieZJxt8/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K8A/KIRN102GKwEUfGh6V9vfbTJOC19EvukPgspyRydH10H5DN4tTvLCiSv8LuHazelzduAJmeKfUZ0TVxMn8og30wuim+NsIkSy1p0EG3UAgg/bm7OJ9QH2AM+6Z6yn/PDE4c5xpUGqTbpkBEMY322iTneKvC6rO/Nmwv9L8+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OASkzpeR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ieZJxt8/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C341F00893;
-	Tue, 19 May 2026 19:25:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OASkzpeR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2D41F000E9;
+	Wed, 20 May 2026 00:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779218718;
-	bh=oLZ9ayoUaHUGJ9Qpjclc6QvZCC3Kft8sm8ppKHt7aN8=;
+	s=k20260515; t=1779238465;
+	bh=oJ/yexyTc4fld4Ml46TlMVb7vovfTZPFy5qhbWiansg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ieZJxt8/9S4tIm6Eof2I/UxOJE0lUT/amqNz5yAxrQIOewuyU6cZNv8YXGGiG7qN9
-	 BxL9NKgVbSjg06XJ/Sg47DxPI9nZ33CXWcMbaULlULU99eA8QgMwPdW0JYrX+DkCxQ
-	 f5YJFQUmoKN1XkIvEPUKVaKx1kOrTNGM415PaCjwNAvBvMPhDkxW4LgpTIiXKJu0/y
-	 sOqQwKnCEdlMqbdQj4dNePc4VCu2voH0qeqP9s4EVYYDp4RmcUoac7e9nP9ETs3neq
-	 O7Zo434hppxni1EjlTbLiOOOXpikipcuj3lLcRX/m8BNxNGD/IxW7qNCVqF6Wjbld2
-	 Wknz0NwlYUitA==
+	b=OASkzpeRG8Al+okeTA7WKpIvzC/dVjB/uNd9UWTaw3NW1vhHq/Q1MhZwkMif0ZfV9
+	 Tf/vjAJYdvPipT0zms40ut02IRbVzAXpwtkGFY9urwkR8Ho/s1UqOPz0tT1nOjkTtp
+	 JSlBHzmhVWwOmP8Y0jbO389OcjvXKT+MY+vGPhdGm1hUCUEGSMXjIyN62sztrMykqP
+	 4joE+l+SqyI7moT+NkUiAUOVAMemJTZgcJ05aYDv7KGVjFiQgqGvGsvHLXlTZwwL+U
+	 ED844J1g4iZEUkj3/QoXZGvW68IBFVK7vV6SDGuEU++IwqjywGIciyKhBUAaKSAaMe
+	 3do5t9xF4AooA==
 From: Sasha Levin <sashal@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: Sasha Levin <sashal@kernel.org>,
-	achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
+To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	linux-input@vger.kernel.org,
-	Johan Hovold <johan@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: Re: [PATCH 6.18 000/188] 6.18.32-rc1 review
-Date: Tue, 19 May 2026 15:25:12 -0400
-Message-ID: <stable-reply-20260519-0002@kernel.org>
+	pablo@netfilter.org
+Cc: Sasha Levin <sashal@kernel.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	kadlec@netfilter.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	horms@kernel.org,
+	netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org,
+	netdev@vger.kernel.org,
+	y0un9sa@gmail.com,
+	fw@strlen.de,
+	Li hongliang <1468888505@139.com>
+Subject: Re: [PATCH 6.12.y] netfilter: nf_tables: unconditionally bump set->nelems before insertion
+Date: Tue, 19 May 2026 20:54:15 -0400
+Message-ID: <20260519220508.reply-0001@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260516020430.110135-1-ojeda@kernel.org>
-References: <20260516020430.110135-1-ojeda@kernel.org>
+In-Reply-To: <20260519075504.2064229-1-1468888505@139.com>
+References: <20260519075504.2064229-1-1468888505@139.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,20 +59,19 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, May 16, 2026 at 04:04:30AM +0200, Miguel Ojeda wrote:
-> Via arm32 I see:
+On Tue, May 19, 2026 at 03:55:04PM +0800, Li hongliang wrote:
+> From: Pablo Neira Ayuso <pablo@netfilter.org>
 >
->     drivers/hid/hid-core.c:2050:29: error: format specifies type 'long' but the argument has type 'size_t' (aka 'unsigned int') [-Werror,-Wformat]
->      2049 |                 hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %ld)\n",
->           |                                                                                         ~~~
->           |                                                                                         %zu
->      2050 |                                      report->id, csize, bsize);
->           |                                                         ^~~~~
+> [ Upstream commit def602e498a4f951da95c95b1b8ce8ae68aa733a ]
 >
-> It is also reproducible in mainline, though. Cc'ing a few folks...
+> In case that the set is full, a new element gets published then removed
+> without waiting for the RCU grace period, while RCU reader can be
+> walking over it already.
+[...]
+> [ Minor conflict resolved. ]
+> Signed-off-by: Li hongliang <1468888505@139.com>
 
-Nathan's mainline fix (4d3a2a466b8d "HID: core: Fix size_t specifier in
-hid_report_raw_event()") has been queued for 6.18.y and 7.0.y.
+Queued for 6.12, thanks.
 
 --
 Thanks,
