@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D110436B059;
-	Wed, 20 May 2026 16:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CD934216C;
+	Wed, 20 May 2026 16:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295879; cv=none; b=hm4CdSgNv7PeMk76YXYuGJD4Cz0Ip6ly2244OABw81vOYQ6mAkoRVosVJ4NkejtyWI/2lgUj6sXfafF2R3PGXoUKqoQE7V9VYyE7c2iIhC05kU/Zcwnha4U42NEATt/CEGOCwiJ4felvDpiEc5A7jRSWYlheTG9E5Rc129POWrE=
+	t=1779295883; cv=none; b=LEDNn+Vm/DZXZaIWqEGwlzaf/jdivFSlHLabU8ImynVwnh41gMPyNvPQeJ1mldns/6fGavktRK0Q3dboV6ZxaPwJKgl9LEZ8q8ZOn3KxMqF7mvj9UOaGmM3ZQ3c6Io3+Xbu2K2YHeJNxRb+yjACZWHz2gNm6Ym57mGaQegY48us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295879; c=relaxed/simple;
-	bh=7A6eL/buVAUrBev7i0lnfkxSW5aMURaiwU7yMU+QepI=;
+	s=arc-20240116; t=1779295883; c=relaxed/simple;
+	bh=HZ/j/l9/ETF+2tZP03+pnb6bTqATSm29wUC8IsQ06hE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dR1YDUtr+dHLmIgzAetrAJHAmlEGJWrZZXjXJsrgvfSMLyk9b5AvWk7oT7Df4qn/sZj6uHgYg3wMPmIRO4rLBvo1f6ThS+flcLBcf8B8Bf1nl/L9Ylun7FAHshCxwWcMkJR0UrIBfgOWyFK1SVkBxkLMBB92WbY+3h0RtowgOdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNabVAnf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a4k4qdBDIE2M/7AeeWytSvr66Hqna+QwAKdT4gYTtdN/P6wKQVnnZbt3c3iGPIfKdJeaUdn3ARXTfYgSiNlcmv+ops9RFlbxwq/u92pXDNf7zaMOxkDkSnpH9fmTP28UmUSTs+MtaG4NwUV03Sd6OdcpHq1I0eYW/GOseOlfTkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfxvEvC0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNabVAnf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42AD41F000E9;
-	Wed, 20 May 2026 16:51:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfxvEvC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02A81F000E9;
+	Wed, 20 May 2026 16:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295878;
-	bh=+3FNuC4LmVl4c5S2AOEmIzeCuRpRnexLXMi4q6y79jw=;
+	s=korg; t=1779295881;
+	bh=sTO/5NOgC8Rm081w8dD7n5M6VRlPV+5SDVYBL94o4Oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UNabVAnffA0YQVu/SuTEykKRGk1nURhzoQAOGgcnrKhH47HZNPQpjO7idR1Ep1Z/a
-	 H0M/OLWNAckZrm/uWYZgn2iGmfTFtE45nyuT8oFkWP8n9wYJKsxpZAF3RqkSSyXR0r
-	 55hWNtPdKp75/it35kY59gqztt7Y1phcS/wQ8MJU=
+	b=PfxvEvC0rmGViL49MXBNNwq+QVuueobO3DTslmd+A2HD/nzRpaTN5gatYH7/qe4/4
+	 SVHqbfsuBTmMFBlcVogUdkpuJQ5LtJhLS1f/P/POxi9qnEmMIRNmYdPJFK9avFT4yb
+	 GWio0bJqmj5hztO6TJUo1nwRxokTix1zDvBbejZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Benato <denis.benato@linux.dev>,
-	Jiri Kosina <jkosina@suse.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Tejun Heo <tj@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0587/1146] HID: asus: do not abort probe when not necessary
-Date: Wed, 20 May 2026 18:13:57 +0200
-Message-ID: <20260520162201.462892818@linuxfoundation.org>
+Subject: [PATCH 7.0 0588/1146] workqueue: devres: Add device-managed allocate workqueue
+Date: Wed, 20 May 2026 18:13:58 +0200
+Message-ID: <20260520162201.484541412@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,63 +52,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Benato <denis.benato@linux.dev>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 7253091766ded0fd81fe8d8be9b8b835495b06e8 ]
+[ Upstream commit 1dfc9d60a69ec148e1cb709256617d86e5f0e8f8 ]
 
-In order to avoid dereferencing a NULL pointer asus_probe is aborted early
-and control of some asus devices is transferred over hid-generic after
-erroring out even when such NULL dereference cannot happen: only early
-abort when the NULL dereference can happen.
+Add a Resource-managed version of alloc_workqueue() to fix common
+problem of drivers mixing devm() calls with destroy_workqueue.  Such
+naive and discouraged driver approach leads to difficult to debug bugs
+when the driver:
 
-Also make the code shorter and more adherent to coding standards
-removing square brackets enclosing single-line if-else statements.
+1. Allocates workqueue in standard way and destroys it in driver
+   remove() callback,
+2. Sets work struct with devm_work_autocancel(),
+3. Registers interrupt handler with devm_request_threaded_irq().
 
-Fixes: d3af6ca9a8c3 ("HID: asus: fix UAF via HID_CLAIMED_INPUT validation")
-Signed-off-by: Denis Benato <denis.benato@linux.dev>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Which leads to following unbind/removal path:
+
+1. destroy_workqueue() via driver remove(),
+   Any interrupt coming now would still execute the interrupt handler,
+   which queues work on destroyed workqueue.
+2. devm_irq_release(),
+3. devm_work_drop() -> cancel_work_sync() on destroyed workqueue.
+
+devm_alloc_workqueue() has two benefits:
+1. Solves above problem of mix-and-match devres and non-devres code in
+   driver,
+2. Simplify any sane drivers which were correctly using
+   alloc_workqueue() + devm_add_action_or_reset().
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 1e668baadefb ("power: supply: max77705: Free allocated workqueue and fix removal order")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-asus.c | 25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+ .../driver-api/driver-model/devres.rst        |  4 +++
+ include/linux/workqueue.h                     | 22 +++++++++++++++
+ kernel/workqueue.c                            | 28 +++++++++++++++++++
+ 3 files changed, 54 insertions(+)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index d29e002c3af17..b2332efabeb57 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -1312,22 +1312,17 @@ static int asus_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	 * were freed during registration due to no usages being mapped,
- 	 * leaving drvdata->input pointing to freed memory.
- 	 */
--	if (!drvdata->input || !(hdev->claimed & HID_CLAIMED_INPUT)) {
--		hid_err(hdev, "Asus input not registered\n");
--		ret = -ENOMEM;
--		goto err_stop_hw;
--	}
--
--	if (drvdata->tp) {
--		drvdata->input->name = "Asus TouchPad";
--	} else {
--		drvdata->input->name = "Asus Keyboard";
--	}
-+	if (drvdata->input && (hdev->claimed & HID_CLAIMED_INPUT)) {
-+		if (drvdata->tp)
-+			drvdata->input->name = "Asus TouchPad";
-+		else
-+			drvdata->input->name = "Asus Keyboard";
+diff --git a/Documentation/driver-api/driver-model/devres.rst b/Documentation/driver-api/driver-model/devres.rst
+index 7d2b897d66fa9..017fb155a5bc2 100644
+--- a/Documentation/driver-api/driver-model/devres.rst
++++ b/Documentation/driver-api/driver-model/devres.rst
+@@ -464,3 +464,7 @@ SPI
  
--	if (drvdata->tp) {
--		ret = asus_start_multitouch(hdev);
--		if (ret)
--			goto err_stop_hw;
-+		if (drvdata->tp) {
-+			ret = asus_start_multitouch(hdev);
-+			if (ret)
-+				goto err_stop_hw;
-+		}
- 	}
+ WATCHDOG
+   devm_watchdog_register_device()
++
++WORKQUEUE
++  devm_alloc_workqueue()
++  devm_alloc_ordered_workqueue()
+diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
+index a4749f56398fd..f8d235aef10dd 100644
+--- a/include/linux/workqueue.h
++++ b/include/linux/workqueue.h
+@@ -512,6 +512,26 @@ __printf(1, 4) struct workqueue_struct *
+ alloc_workqueue_noprof(const char *fmt, unsigned int flags, int max_active, ...);
+ #define alloc_workqueue(...)	alloc_hooks(alloc_workqueue_noprof(__VA_ARGS__))
  
- 	return 0;
++/**
++ * devm_alloc_workqueue - Resource-managed allocate a workqueue
++ * @dev: Device to allocate workqueue for
++ * @fmt: printf format for the name of the workqueue
++ * @flags: WQ_* flags
++ * @max_active: max in-flight work items, 0 for default
++ * @...: args for @fmt
++ *
++ * Resource managed workqueue, see alloc_workqueue() for details.
++ *
++ * The workqueue will be automatically destroyed on driver detach.  Typically
++ * this should be used in drivers already relying on devm interafaces.
++ *
++ * RETURNS:
++ * Pointer to the allocated workqueue on success, %NULL on failure.
++ */
++__printf(2, 5) struct workqueue_struct *
++devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
++		     int max_active, ...);
++
+ #ifdef CONFIG_LOCKDEP
+ /**
+  * alloc_workqueue_lockdep_map - allocate a workqueue with user-defined lockdep_map
+@@ -568,6 +588,8 @@ alloc_workqueue_lockdep_map(const char *fmt, unsigned int flags, int max_active,
+  */
+ #define alloc_ordered_workqueue(fmt, flags, args...)			\
+ 	alloc_workqueue(fmt, WQ_UNBOUND | __WQ_ORDERED | (flags), 1, ##args)
++#define devm_alloc_ordered_workqueue(dev, fmt, flags, args...)		\
++	devm_alloc_workqueue(dev, fmt, WQ_UNBOUND | __WQ_ORDERED | (flags), 1, ##args)
+ 
+ #define create_workqueue(name)						\
+ 	alloc_workqueue("%s", __WQ_LEGACY | WQ_MEM_RECLAIM | WQ_PERCPU, 1, (name))
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index c6ea96d5b7167..e57040931d8b7 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -41,6 +41,7 @@
+ #include <linux/mempolicy.h>
+ #include <linux/freezer.h>
+ #include <linux/debug_locks.h>
++#include <linux/device/devres.h>
+ #include <linux/lockdep.h>
+ #include <linux/idr.h>
+ #include <linux/jhash.h>
+@@ -5904,6 +5905,33 @@ struct workqueue_struct *alloc_workqueue_noprof(const char *fmt,
+ }
+ EXPORT_SYMBOL_GPL(alloc_workqueue_noprof);
+ 
++static void devm_workqueue_release(void *res)
++{
++	destroy_workqueue(res);
++}
++
++__printf(2, 5) struct workqueue_struct *
++devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
++		     int max_active, ...)
++{
++	struct workqueue_struct *wq;
++	va_list args;
++	int ret;
++
++	va_start(args, max_active);
++	wq = alloc_workqueue(fmt, flags, max_active, args);
++	va_end(args);
++	if (!wq)
++		return NULL;
++
++	ret = devm_add_action_or_reset(dev, devm_workqueue_release, wq);
++	if (ret)
++		return NULL;
++
++	return wq;
++}
++EXPORT_SYMBOL_GPL(devm_alloc_workqueue);
++
+ #ifdef CONFIG_LOCKDEP
+ __printf(1, 5)
+ struct workqueue_struct *
 -- 
 2.53.0
 
