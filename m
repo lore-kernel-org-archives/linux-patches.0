@@ -1,111 +1,151 @@
-Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FF0374E55
-	for <patches@lists.linux.dev>; Wed, 20 May 2026 20:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F413546D0
+	for <patches@lists.linux.dev>; Wed, 20 May 2026 21:12:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779310548; cv=none; b=oa6iCke9Y/0+eD657poaH0VldG/+7Dz5QOf/yhiiUTeci/5Mg3xc6jRsTS3ZrdrIfP//6dNsBDxF811m03SomRszVeRa/SkTDRvKjWZpgb6DlV6JP3/yt3nEMSXsvknn3LWqlgSbaL5pkanPLEVENSitpaTVbWJtrn4CxPOdBTw=
+	t=1779311541; cv=none; b=SWsqwA+/50iWk9PYQ5ddpa1pekJnyKiHWrDjmbLDICxyuOutF7S3HokmT7bNm6/eBQVvNdX/MMctByZZCddz9gMpNJQ4/iw3SY5KnZpNSlPhXiFcCLBcEQUCCz6jzRSrgY7iEWl6mmAt7SfkvQGgjwgXnJen3iAncEJ6LaVhMfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779310548; c=relaxed/simple;
-	bh=RNhi+VrJKeyp8QxPIcStj3ZSn3BJqKFpD9tswgBlpY0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U3GA1pFabEozXTR3pB3MjjeY8eJkqGwtPTKwXgGHKyHl70lZ+D/su4GYuolFmabISrAZGim4SIOuGXB2h6goFDm3mJSmq5eS84auV6QYTC4sodfbOS437KjHKOGDaKoXQaCeEUxnks00emaWxz1rESsPz/iDYMnGY4Wp+eQuJJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=QbdxHFye; arc=none smtp.client-ip=74.125.82.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	s=arc-20240116; t=1779311541; c=relaxed/simple;
+	bh=kEDNMiQgY6MI079QkoJSX6k0r05opPiu8etWh76s5k0=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=pYyzOu+2kGcspX9PV+x7wx0aSqF71dTvTWyOFypKa+5XUjjaaTAbo9hagFmeubxZysZWL913HYlMVPQ6m3LCcnY6NcWSk721C0sXbHxxKFHEzCRzoknavnkLWgRrcy7mtA9Cewdkzz36j0VbGXmhzK0DAIdVZ3guATehnyQn/dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org; spf=pass smtp.mailfrom=shazbot.org; dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b=mpTYUm5E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=da/ngVPt; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shazbot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="QbdxHFye"
-Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-132d1b2519eso12373908c88.0
-        for <patches@lists.linux.dev>; Wed, 20 May 2026 13:55:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1779310545; x=1779915345; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rf4adrALhwhE5Bg7Hir1wi5ddzsEvpjUUPdqrQb8HSg=;
-        b=QbdxHFye4BJHDTs7z4AUQmUW/dsBXbfQLHBvY/U/tNLY7gjQc04cj7Mtc1BTMvI9hk
-         u2lEwfWgKhRM7M7ePrSOQZeoa3SD/rvjpDTaS3cFyiwyH0Fb3vt6A1rAi3ncQ/QBOU36
-         Cquo0YM76ek58F4h3HT6jR6s+ohHdv5tqbcRQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779310545; x=1779915345;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rf4adrALhwhE5Bg7Hir1wi5ddzsEvpjUUPdqrQb8HSg=;
-        b=iKfwr52cDoOCPu7mHAkpKCZrbDAM6ckSf17mSDck4r0m15lt7rDk2YcjZcsMauIjKy
-         yykIg//bKgQSg0nc52lQKAD7Tk8fWBMVh+an3/Mx596fUboYulhB68ByDv49en4wId6n
-         l1nvNBb4RxcqKZoBVA0qNtznvVUsBVKL63QySC6GY3yG9AUC6NUjTtKV8+1VEB0yJjRh
-         eWN/cu3YAhqy5U2TQeLJhxfxtHY5mVQNRxaGN7qrGSWyGHz1fuGliosocFegbezy5I9I
-         ZWNKQK24u0BmyrDcwmpeu0XZR+RcH9y66z6l9VYy32bUI0/tyQ5TyJZ8fHFe2XwCYMjN
-         4Afg==
-X-Forwarded-Encrypted: i=1; AFNElJ/claMYo4AXc+s0XVMyXcxUAost0PoSK2B3PPHiVZgOHv8LtlZgZ3Ztgr3/9p3U+BKJWmrBNDLl@lists.linux.dev
-X-Gm-Message-State: AOJu0YwGB115cAbTfYJUVjQ6BW54HeuLUaW9a1OozHAtSA/a7phhLoF8
-	6ebJ+o2GVgIVCWC8XgeSJ3tq+Obly56BCzmlK2EETwxIXNPlZPBRLeQeCJ1z28CKQQ==
-X-Gm-Gg: Acq92OGoAY7PPXsiFaRK+gRQQ2x1OpAY7hm5UEM5Pu7R7UQq7wMe3otuO5OwxPsgl9T
-	UP/P4C0o07MIgEYpsoTcjrMi7BfGhIhCf1vfYLDvbxLfbMAd7k++GXrjdvtdlN+YNhXrw+ySqqt
-	tmCGONHyaKycw9t6KlFO3fostI31a4e/DYSvQOinjXqK2tDVUgg0YjEpStdo53/yFJ3B6Mck6g0
-	4GMqkNIXZnLPp3NP1sfXWJgWOhjZ3k7G28+0OwFcJ3kl5dNXj8RYQtYTsO0zx5XOTawZmj4weTL
-	z7r8NoOWrSEVdUaMeVu8eETrQzRnwOl2GkI5X7IMH7EbLsrRW8KPhpQEzcbFeMPI48SdOcO/d3d
-	3GWiRkT7Kc0jaQnl5gWKyT/25sdn1VejWbsL4qSWiPQ5V/iUMc7oI8qzdppdFUjtRog4FwjM25l
-	qfX7Gus5fC6EU3qnXdx/+jjh0+5d45gDK8VhP+3QV/gXOJmQcAZ02w
-X-Received: by 2002:a05:7023:b8a:b0:12d:e126:b7c8 with SMTP id a92af1059eb24-13632a0824cmr128746c88.13.1779310544318;
-        Wed, 20 May 2026 13:55:44 -0700 (PDT)
-Received: from fedora64.linuxtx.org ([98.97.105.211])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-134cbcb93f3sm28204367c88.3.2026.05.20.13.55.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2026 13:55:43 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Wed, 20 May 2026 14:55:40 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 7.0 0000/1146] 7.0.10-rc1 review
-Message-ID: <ag4fzH2-dUdDHGtv@fedora64.linuxtx.org>
-References: <20260520162148.390695140@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b="mpTYUm5E";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="da/ngVPt"
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id C008B1D0007F;
+	Wed, 20 May 2026 17:12:17 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Wed, 20 May 2026 17:12:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1779311537;
+	 x=1779397937; bh=+g+lL+U36Qr4BDxd87KODJtgq0o+prLW5jMcZVYy0UQ=; b=
+	mpTYUm5Eeg/hyFwjmm3oKz5Irewvk7UbyTp38/OjgjgWpXt0Gfgzl9m8P5PM0gQa
+	uZTGuVaN7Uf9u0tzh5GlpvChY056FsMXSwA0qcja+dx5sUUgqxDOs9iia4OAC8E4
+	YGrc+C3d/ZisNqwHNQihjRMFJERyJRc3sInDaWCr9S6W5FsYKF5keDlD5yBRhC1x
+	pb0hQ0CdD7cOYQa64J+qv44geiS1G2ogYSsPkNPrkp7qTV56braPLtwP6lsvp0fj
+	C+g6JzPvWiESviU6Ozbaw/22mXulTU2eT+pZfPTBFcaI32VBDmLIFEfGGAIGKGEY
+	zn9rreZ1mC2OgFuZSgqg6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779311537; x=
+	1779397937; bh=+g+lL+U36Qr4BDxd87KODJtgq0o+prLW5jMcZVYy0UQ=; b=d
+	a/ngVPtIQeQf1vFdSoV71FGu0iw8aauD7UV+xlq6vyFUNHz//ol31NyB/kxQyet0
+	5Xi3dJfpql/RsyCaAegDFqrPvGRI/qH5tGYNK52w4MuKV3ff/h3wbqsToWJ1LW2Q
+	ezEEHUP513w2IWGNNQ7a7gjym8WF6JEcX1UruY8iNJpowpTHVNXH3tIO9wc5wC5+
+	a7Pzbu1TF6trAz5mePZeEow1UjHoozQSPAPG4FDhbifPtEJJsyrKUeLfYQc4Fzyc
+	8awnyHPAlutWo5aBUPx40MvZNU87TVuV2tXG4nE+IPuyEYbwyWNXLBy9WnXtLX4F
+	IoLQs/SWAC5wQVf0Qs+hg==
+X-ME-Sender: <xms:sSMOanwpb9A7P2hmYbCvtZavwOW2J__qaYPtDa0rdKO3ccAeKHyxmQ>
+    <xme:sSMOavvHi3ZsP3-Qd6D9TjcwSw6SKNmq56ZBpPl7irQDLk-QV8xxTCyJ0jazgoNy_
+    5npKNIWuL4Mvpv2ECX4Mwji7ZqE_6JAVRzNVD2wO5WPctD6XN6KTg>
+X-ME-Received: <xmr:sSMOaiCkmt2tqT8KsxMYdPpL_u6pxexb9m8kJmxKPxqILVoTFRc6kVC1zNk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeehieekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkjghfofggtgfgsehtjeertdertddvnecuhfhrohhmpeetlhgvgicu
+    hghilhhlihgrmhhsohhnuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtffrrg
+    htthgvrhhnpedvkeefjeekvdduhfduhfetkedugfduieettedvueekvdehtedvkefgudeg
+    veeuueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    grlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhgghesnhhvihguihgrrdgtohhmpdhrtghpthhtoh
+    epkhhvmhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhk
+    shgvlhhfthgvshhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhuh
+    grhheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghlvgigrdifihhllhhirghmshho
+    nhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepughmrghtlhgrtghksehgohhoghhlvg
+    drtghomhdprhgtphhtthhopehprghttghhvghssehlihhsthhsrdhlihhnuhigrdguvghv
+    pdhrtghpthhtohepshhkhhgrnheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprh
+    gtphhtthhopegrlhgvgiesshhhrgiisghothdrohhrgh
+X-ME-Proxy: <xmx:sSMOapGImM9r2qpqsTBXibAhzBicX-7wFHLlwInM7NkDfmwmpLkkgg>
+    <xmx:sSMOaqCk9oWlBAHne7UYyM0J7TfA-bf14DZ1EsZa91UE_RQIJb2nig>
+    <xmx:sSMOannZ4FWpdHOTOzbf_1Is7BcfBBmFf5kZDAxC357xH1W4KnNivA>
+    <xmx:sSMOaoMmyVnicoFPH9Ko7g0YDtX4uVQmYqFLQYTlSLojAbHbRT8u6w>
+    <xmx:sSMOareKvCyOULaL5IYVgOcSJOOzodfJUuaQNT3xmLdJP1sEDzdkmwb9>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 20 May 2026 17:12:16 -0400 (EDT)
+Date: Wed, 20 May 2026 15:11:59 -0600
+From: Alex Williamson <alex@shazbot.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: kvm@vger.kernel.org, linux-kselftest@vger.kernel.org, Shuah Khan
+ <shuah@kernel.org>, Alex Williamson <alex.williamson@redhat.com>, David
+ Matlack <dmatlack@google.com>, patches@lists.linux.dev, Shuah Khan
+ <skhan@linuxfoundation.org>, alex@shazbot.org
+Subject: Re: [PATCH v2] vfio: selftests: Fix out-of-tree build with make O=
+Message-ID: <20260520151159.5bbda153@shazbot.org>
+In-Reply-To: <0-v2-4ccc247e6aff+1d93-vfio_st_make_o_jgg@nvidia.com>
+References: <0-v2-4ccc247e6aff+1d93-vfio_st_make_o_jgg@nvidia.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Wed, May 20, 2026 at 06:04:10PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.0.10 release.
-> There are 1146 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Thu, 14 May 2026 13:04:44 -0300
+Jason Gunthorpe <jgg@nvidia.com> wrote:
+
+> The test programs are compiled via a static pattern rule that requires
+> intermediate .o files:
 > 
-> Responses should be made by Fri, 22 May 2026 16:20:16 +0000.
-> Anything received after that time might be too late.
+>   $(TEST_GEN_PROGS): %: %.o $(LIBVFIO_O)
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.10-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
-> and the diffstat can be found below.
+> After lib.mk prefixes TEST_GEN_PROGS with $(OUTPUT), this creates
+> dependencies on .o files in the output directory (e.g.
+> $(OUTPUT)/vfio_dma_mapping_test.o). However, there is no rule to compile
+> these .o files from the source directory .c files when OUTPUT differs
+> from the source directory.
 > 
-> thanks,
+> Add an explicit chain of pattern rules:
+>   $(OUTPUT)/% -> $(OUTPUT)/%.o -> %.c
 > 
-> greg k-h
+> Following the same pattern already used in libvfio.mk for the library
+> objects.
+> 
+> Fixes: 19faf6fd969c ("vfio: selftests: Add a helper library for VFIO selftests")
+> Reviewed-by: David Matlack <dmatlack@google.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  tools/testing/selftests/vfio/Makefile | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> v2: Fix the typo
+> 
+> diff --git a/tools/testing/selftests/vfio/Makefile b/tools/testing/selftests/vfio/Makefile
+> index 40165d087a0bc4..0a4cfd1a6c7ed6 100644
+> --- a/tools/testing/selftests/vfio/Makefile
+> +++ b/tools/testing/selftests/vfio/Makefile
+> @@ -27,10 +27,13 @@ CFLAGS += $(EXTRA_CFLAGS)
+>  
+>  LDFLAGS += -pthread
+>  
+> -$(TEST_GEN_PROGS): %: %.o $(LIBVFIO_O)
+> +$(TEST_GEN_PROGS): $(OUTPUT)/%: $(OUTPUT)/%.o $(LIBVFIO_O)
+>  	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $< $(LIBVFIO_O) $(LDLIBS) -o $@
+>  
+>  TEST_GEN_PROGS_O = $(patsubst %, %.o, $(TEST_GEN_PROGS))
+> +$(TEST_GEN_PROGS_O): $(OUTPUT)/%.o: %.c
+> +	$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
+> +
+>  TEST_DEP_FILES = $(patsubst %.o, %.d, $(TEST_GEN_PROGS_O) $(LIBVFIO_O))
+>  -include $(TEST_DEP_FILES)
+>  
+> 
+> base-commit: b5953f774781f0b489ae1f34d49eb08fefe176a6
 
-If I revert:
-rtla: Use str_has_prefix() for prefix checks
-rtla/trace: Fix write loop in trace_event_save_hist()
+Applied to vfio next branch for v7.2.  Thanks,
 
-Everything builds fine.
-
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
-
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Alex
