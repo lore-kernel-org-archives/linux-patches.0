@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0FE31A575;
-	Wed, 20 May 2026 16:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA23331A575;
+	Wed, 20 May 2026 16:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295654; cv=none; b=N944P3Jr0znyULSot/pXiD4aFaIQwIC2DxffzOjUzrxut9E/nN1fHAQhFdKJWlycEG2PNlS4etVAHBKN5zrFbd4AyEWeZkv0GzZieambwyI/H5GEY9udZKCaO9amH/XP+l8jzJZGVtb+OmwCTQ/5xYtsskMSUpKHhp8U3ix/9hM=
+	t=1779295656; cv=none; b=t1RdI1rpk7euRCBKOf4zzaGwMsyzeZXg2gGcqFi0eH/+mHcCT6hpIUUYuIdRc6uAcvtOHLAO7NRv7fuOYxoBGEm9Zx6VkTvKc6ulxVlDJklpUBsIK9FZVMorEpG52WDvfNeZ0J30qiBaQXrVkhTOe6n1ihD1lp4+qt3GHzBJqWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295654; c=relaxed/simple;
-	bh=HDX+mdC/aYpll5b8MAsQt4VrbYkmFShaG0I51yu2iqs=;
+	s=arc-20240116; t=1779295656; c=relaxed/simple;
+	bh=YA2cHZeFdXr+2CK2zY+/wmjFqPJ3qCRZBSnh4NDPLgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2GazqUUXbuEACKwMeKlcjgfb1udTYs+IVCqtEBDDka+ZJ7C2nc48Z6e1MDHnzFyVNA2fvTapA7evHinQWwF1hVws6a73sIJ24262qnFSZKm3++781npmlMvtmFXI9uMQw2WZ2As5mxo1BZ2GLIndoeYuB23lmoMmWwLc5el+jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPCf2fC5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XrWtqHA6D2IbNhnu1dBqmE5nAYDwEz36ubb65XB0vmBVIbTc/bpiU5AdG4yEhKU5S8YBgTZVjfVNOS19k/9AHmVUEnloE5YiVCwgvz/ahpko0FDb8K0Q+DbU/3O2VfEV0Ulylah9Rd54v8h+MyTBHYPMB1JrQbAE1RGXGbMf6nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPLniiPF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPCf2fC5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2991F000E9;
-	Wed, 20 May 2026 16:47:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPLniiPF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC7E1F000E9;
+	Wed, 20 May 2026 16:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295653;
-	bh=SoBErP1r4MkgX5Q9JL9e+6k8Pg7biM9guDSZwOADfyc=;
+	s=korg; t=1779295655;
+	bh=Bpred82wrVWRZNe6T34gcliCCDqYsH5g0spnSlR5NCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kPCf2fC5atXJj4lFla231Td5NZdcRujGfKB9/2nymRF5u1TRW9O2JhYaptVQRS0sU
-	 ZYa5ACW1qp3+N2f6SBUpJx/g2gfd0XSZqK3hH/nUUoyb0xqUr/sNtSvFQNS3xvCSqb
-	 yrICvo7oVpAKX5x0v5bFiwIuBVe/Z1KTnL6VYATM=
+	b=DPLniiPF1R0PsZSZYFHcPmBnqtWAaC9ms7QYDyyyjYPP3TLUF2lACBpvzWnmFOeft
+	 K/Lr2bWxLHmoqmh9ZywRpg801ElnmKyoiuOem6RLjEcq/siKIOjZcohBaUnUsbkj2L
+	 qXqL5MrU0dmIUdgBBLLIvAYpvfHKmmItCvyBvnQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Heiko Stuebner <heiko.stuebner@cherry.de>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
+	sydarn <sydarn@proton.me>,
+	Chris Morgan <macromorgan@hotmail.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0474/1146] arm64: dts: rockchip: Make Jaguar PCIe-refclk pin use pull-up config
-Date: Wed, 20 May 2026 18:12:04 +0200
-Message-ID: <20260520162158.921576933@linuxfoundation.org>
+Subject: [PATCH 7.0 0501/1146] arm64: dts: rockchip: Correct Joystick Axes on Gameforce Ace
+Date: Wed, 20 May 2026 18:12:31 +0200
+Message-ID: <20260520162159.528318328@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,40 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko.stuebner@cherry.de>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit f45d4356feeba1c8dac3414b688f59292ddfc9f9 ]
+[ Upstream commit c337c1b561c1c3016d30776d7dc2032ea4979334 ]
 
-The hardware PU/PD config of the pin after reset is to pull-up and on
-Jaguar this will also keep the device in reset until the driver actually
-enables the pin. So restore this boot pull-up config of the pin on Jaguar
-instead of setting it to pull-none.
+The Gameforce Ace's joystick axes were set incorrectly initially,
+getting the X/Y and RX/RY axes backwards. Additionally, correct the
+RY axis so that it is inverted.
 
-Suggested-by: Quentin Schulz <quentin.schulz@cherry.de>
-Fixes: 0ec7e1096332 ("arm64: dts: rockchip: add PCIe3 support on rk3588-jaguar")
-Signed-off-by: Heiko Stuebner <heiko.stuebner@cherry.de>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
-Link: https://patch.msgid.link/20260210080303.680403-5-heiko@sntech.de
+All axes tested with evtest and outputting correct values.
+
+Fixes: 4e946c447a04 ("arm64: dts: rockchip: Add GameForce Ace")
+Reported-by: sydarn <sydarn@proton.me>
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Link: https://patch.msgid.link/20260310134919.550023-1-macroalpha82@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts b/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts
-index 952affaf455cf..500a0bad1ea30 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-jaguar.dts
-@@ -588,7 +588,7 @@ led1_pin: led1-pin {
- 
- 	pcie30x4 {
- 		pcie30x4_clkreqn_m0: pcie30x4-clkreqn-m0 {
--			rockchip,pins = <0 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
-+			rockchip,pins = <0 RK_PC6 RK_FUNC_GPIO &pcfg_pull_up>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
+index 59d2494c45100..89618394c0bfb 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
+@@ -60,8 +60,8 @@ axis@0 {
+ 			reg = <0>;
+ 			abs-flat = <40>;
+ 			abs-fuzz = <30>;
+-			abs-range = <0 4095>;
+-			linux,code = <ABS_RX>;
++			abs-range = <4095 0>;
++			linux,code = <ABS_RY>;
  		};
  
- 		pcie30x4_perstn_m0: pcie30x4-perstn-m0 {
+ 		axis@1 {
+@@ -69,7 +69,7 @@ axis@1 {
+ 			abs-flat = <40>;
+ 			abs-fuzz = <30>;
+ 			abs-range = <0 4095>;
+-			linux,code = <ABS_RY>;
++			linux,code = <ABS_RX>;
+ 		};
+ 
+ 		axis@2 {
+@@ -77,7 +77,7 @@ axis@2 {
+ 			abs-flat = <40>;
+ 			abs-fuzz = <30>;
+ 			abs-range = <0 4095>;
+-			linux,code = <ABS_Y>;
++			linux,code = <ABS_X>;
+ 		};
+ 
+ 		axis@3 {
+@@ -85,7 +85,7 @@ axis@3 {
+ 			abs-flat = <40>;
+ 			abs-fuzz = <30>;
+ 			abs-range = <0 4095>;
+-			linux,code = <ABS_X>;
++			linux,code = <ABS_Y>;
+ 		};
+ 	};
+ 
 -- 
 2.53.0
 
