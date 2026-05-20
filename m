@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1467B34A3BF;
-	Wed, 20 May 2026 17:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADADA372ECB;
+	Wed, 20 May 2026 17:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296776; cv=none; b=BxuMbfD9u2pvY2HJNOwhVgu3LoEJrZ9uiqBqnMQ+fmCiEEFEhuwgD2/aqrwaKwG8CYrPIgH5KWnEi0Epx4TsP1kUVjhHyHtXxokGVFqDA6t+pTZwWL9AFlDja/GgoY+AX3ZMDxP3wkf8M7DZGb7bbaXpl03Ys6O6ViDhp87RJC0=
+	t=1779296778; cv=none; b=fsFzinYaBWGOypJ0IfJnCrKmthqr+U4ub2HIPdJfhu613GQ7ycYKDrjB/atm4MrqCAEbfhMpsvVqJdu0Y6AOy0un3TacAKzQenPmqgD2AR21ohhHB1jjoOXhV69PRLB8xMe5izF3xI9LoG+9dJ9PhmZd4FmtrEHj+jNUn0bAGBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296776; c=relaxed/simple;
-	bh=4Af15NsI/T9PUPFSqXOC61iT8kotuBWD5Xuqdz+2jNM=;
+	s=arc-20240116; t=1779296778; c=relaxed/simple;
+	bh=s3U3YTCWeWfWveWT7BxH2DUjyEDfWibguVdsg7wPq80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u7feKElDq8VYgqkYrtu8v4K5AbqfoN7mWCG1EjDzsbJA4SZBR/b/g+/dwMKzPEwIYvXZTGK1KgSosb3QbiSbwTMDzI4cVOPqdTXBtMKpV3SQ9Gov8nn7X5qfpfEsNTY+w7OPl5CGY1LqrGPx9H9J6FF2+OrS6Svu5FAcPKf1QZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMG6LuFl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hngkL+pJi4h27Dvdtuow/BECM3THIxonPgyLRd3Fzxou+DGJOHZtXhRy4b/EwD3S+d1WB1BfieBU5aH52qMMqB3mOCwuy3wGFqbjA6dZavUmJ559qprl6U8BAyc/JPvoJQFW+RJyy6UxS6Atm+UFxLxrjFwuVD8tBm0IrZlqi0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwZtWW55; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMG6LuFl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768FA1F00896;
-	Wed, 20 May 2026 17:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwZtWW55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F97E1F000E9;
+	Wed, 20 May 2026 17:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296775;
-	bh=l12dWRZ7n/hYZfkuTC4x7MWxrJhpDQt7UeyO4SD0fjw=;
+	s=korg; t=1779296777;
+	bh=in6J0G7P0L9NoyHAlxrRkavdgZ+lxIiiR4PkUwPez/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kMG6LuFlGhTRB35sv5eCkkrZKS+hszQNKQReUGnzDiBGJw+Ld3wKm4L6XGvtsbEkP
-	 F24aCY/bcFTl214RuxdPJMtidzNneY72x62Ol29IUPRBLLZBCmMULF2OqbfMt9kli+
-	 l8k9LjWhBML1S7XLop/biiHyDq7tIAWCotLVBmsU=
+	b=DwZtWW55fOIIQ+HoNQKcKfFrO5MVFPiwj5wDG7AWsjHjkaM0jogC/urSzouBgy8hi
+	 Kt5J9MTrwJjgqGRHgXwFst/PUutfDiq5vQE3H/ImI7tb8I5zr9yNfXMYRbcsT6lajG
+	 S9zL0rrjCoV66sC1iraC1vVjbh+qxgV/0DaMTKZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0928/1146] net/sched: netem: fix probability gaps in 4-state loss model
-Date: Wed, 20 May 2026 18:19:38 +0200
-Message-ID: <20260520162209.238194348@linuxfoundation.org>
+Subject: [PATCH 7.0 0929/1146] net/sched: netem: fix queue limit check to include reordered packets
+Date: Wed, 20 May 2026 18:19:39 +0200
+Message-ID: <20260520162209.260319518@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,63 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit 732b463449fd0ef90acd13cda68eab1c91adb00c ]
+[ Upstream commit 4185701fcce6b426b6c3630b25330dddd9c47b0d ]
 
-The 4-state Markov chain in loss_4state() has gaps at the boundaries
-between transition probability ranges. The comparisons use:
+The queue limit check in netem_enqueue() uses q->t_len which only
+counts packets in the internal tfifo. Packets placed in sch->q by
+the reorder path (__qdisc_enqueue_head) are not counted, allowing
+the total queue occupancy to exceed sch->limit under reordering.
 
-  if (rnd < a4)
-  else if (a4 < rnd && rnd < a1 + a4)
+Include sch->q.qlen in the limit check.
 
-When rnd equals a boundary value exactly, neither branch matches and
-no state transition occurs. The redundant lower-bound check (a4 < rnd)
-is already implied by being in the else branch.
-
-Remove the unnecessary lower-bound comparisons so the ranges are
-contiguous and every random value produces a transition, matching
-the GI (General and Intuitive) loss model specification.
-
-This bug goes back to original implementation of this model.
-
-Fixes: 661b79725fea ("netem: revised correlated loss generator")
+Fixes: f8d4bc455047 ("net/sched: netem: account for backlog updates from child qdisc")
 Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260418032027.900913-2-stephen@networkplumber.org
+Link: https://patch.msgid.link/20260418032027.900913-3-stephen@networkplumber.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/sched/sch_netem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 20df1c08b1e9d..8ee72cac1faf0 100644
+index 8ee72cac1faf0..d400a730eadd1 100644
 --- a/net/sched/sch_netem.c
 +++ b/net/sched/sch_netem.c
-@@ -227,10 +227,10 @@ static bool loss_4state(struct netem_sched_data *q)
- 		if (rnd < clg->a4) {
- 			clg->state = LOST_IN_GAP_PERIOD;
- 			return true;
--		} else if (clg->a4 < rnd && rnd < clg->a1 + clg->a4) {
-+		} else if (rnd < clg->a1 + clg->a4) {
- 			clg->state = LOST_IN_BURST_PERIOD;
- 			return true;
--		} else if (clg->a1 + clg->a4 < rnd) {
-+		} else {
- 			clg->state = TX_IN_GAP_PERIOD;
- 		}
+@@ -524,7 +524,7 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 				1 << get_random_u32_below(8);
+ 	}
  
-@@ -247,9 +247,9 @@ static bool loss_4state(struct netem_sched_data *q)
- 	case LOST_IN_BURST_PERIOD:
- 		if (rnd < clg->a3)
- 			clg->state = TX_IN_BURST_PERIOD;
--		else if (clg->a3 < rnd && rnd < clg->a2 + clg->a3) {
-+		else if (rnd < clg->a2 + clg->a3) {
- 			clg->state = TX_IN_GAP_PERIOD;
--		} else if (clg->a2 + clg->a3 < rnd) {
-+		} else {
- 			clg->state = LOST_IN_BURST_PERIOD;
- 			return true;
- 		}
+-	if (unlikely(q->t_len >= sch->limit)) {
++	if (unlikely(sch->q.qlen >= sch->limit)) {
+ 		/* re-link segs, so that qdisc_drop_all() frees them all */
+ 		skb->next = segs;
+ 		qdisc_drop_all(skb, sch, to_free);
 -- 
 2.53.0
 
