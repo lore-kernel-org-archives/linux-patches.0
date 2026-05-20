@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3555C3EAC82;
-	Wed, 20 May 2026 18:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCC43F789B;
+	Wed, 20 May 2026 18:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300886; cv=none; b=V9lQqhbcHZfjk4SoEkjLLo4uYH8T0QCBKSj7dMApQPsFBsgnLjoHlVzqlhbLF7mh/252luqYSi/ea05+3RcX5qLjpZlzHoLJVZh1J5WMmhzynkeJT7xxgu9oNAoPtV2nS/cqXxlKiHLbzfbKXWSHtjGildndCR9HRQ0pMD6GCJI=
+	t=1779300889; cv=none; b=dWVC3VZFfrFbLs655WSJL7kt21oHZOp+1p9lCSTaBBOkPdBJDQK4GrT4rC7tZdR1kY6TOIP78MKxQ18ecKOtHyG5XmlpXBQyZbTB8sypdZ1aYBz2IHMzZ31i4ec3Pz+tPpiGHrvdwiBtZX/TYCSkqp+AKTXSW1/oGeulo1jqO+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300886; c=relaxed/simple;
-	bh=MX+wPvPsCGDtU3EXYe382poKH47qN6ZqGssU+Q6153Q=;
+	s=arc-20240116; t=1779300889; c=relaxed/simple;
+	bh=n7lhTvnsuJYFF3215jNTsNUdZYHxyuV0DCbtLL5N4F4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H8ETmuSWAsgjeW7BXdOdWyaVWTIKgC2ZnOjE9PCwT9EVv9wbeNLMwbQt4yB2f/z0B9uAu97jeAxtEU2rQlFi2I1IXN4vFXwa8hBbmJ4esuN+q5OVfyzExRo3nTZRXBFQhzBPwWK+lifpSpoWaY+3Ib7SE4+yFTFeoKQN2+cZ0Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdrQmvXA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TaV94TVQ//9h242j2wn0jcnuUve4D7QE2u610HZSQ3BAq1S0FaKRyyW2br5HBcLnPLGkSN8pOQpjIuOrK/ujc9+pjNqi+xS+bxHqcKq1CGEZJlnkilUftn4fyjWfaYuaBaDArTMVTTGTLXOdItFhAw4Em/FYGe0eO0d8TsRj+7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqgbwTSG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdrQmvXA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AFFF1F000E9;
-	Wed, 20 May 2026 18:14:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqgbwTSG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423581F000E9;
+	Wed, 20 May 2026 18:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300885;
-	bh=9kTjeFtNTSi1WMqHGUemzQGQvHB7/UWtdmorWh7XXN4=;
+	s=korg; t=1779300887;
+	bh=6qqnSQ09D+Z663YsV8VLVz63dXXNhDDmwOlOTYFjeb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wdrQmvXAvp8ifgeHi/qAuelwmoAftY83GhdK2DV4OBcI+WyeKGT/a4fueAQ24wXv9
-	 HBLr4EJwJxipfRSgTXoPn6BYVY61Ci4BPCZJBPYX0wHQg+Q/I8j78Af2f1PfFrPuPS
-	 Y5UTh42Sx6/qIkYTVbjpNkNHAU/ulnuL5pu8G1rk=
+	b=XqgbwTSG6/ml3NOaI2hcZRrwYZXzR6noD6FxtV9Nj8CcEdP4MPoXH8f7MBdxiZBh/
+	 EKKOy2n9Ax9lzGX2K4QpN6SRfHCHIVZCoatdk0anYNaK8N50hW+Wsh13Mm7o0gXokm
+	 zt0x948ghSaq0YbSjyTqQaW/ublYkQGfoWAPV5Hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 304/666] arm64: dts: imx8qxp-mek: switch Type-C connector power-role to dual
-Date: Wed, 20 May 2026 18:18:35 +0200
-Message-ID: <20260520162117.808632634@linuxfoundation.org>
+Subject: [PATCH 6.12 305/666] soc/tegra: cbb: Set ERD on resume for err interrupt
+Date: Wed, 20 May 2026 18:18:36 +0200
+Message-ID: <20260520162117.831049701@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,55 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit 825b8c7e1d2918d89eb378b761530d1e51dba82e ]
+[ Upstream commit b6ff71c5d1d4ad858ddf6f39394d169c96689596 ]
 
-When attach to PC Type-A port, the USB device controller does not function
-at all. Because it is configured as source-only and a Type-A port doesn't
-support PD capability, a data role swap is impossible.
+Set the Error Response Disable (ERD) bit to mask SError responses
+and use interrupt-based error reporting. When the ERD bit is set,
+inband error responses to the initiator via SError are suppressed,
+and fabric errors are reported via an interrupt instead.
 
-Actually, PTN5110THQ is configured for Source role only at POR, but after
-POR it can operate as a DRP (Dual-Role Power). By switching the power-role
-to dual, the port can operate as a sink and enter device mode when attach
-to Type-A port.
+The register is set during boot but the info is lost during system
+suspend and needs to be set again on resume.
 
-Since the board design uses EN_SRC to control the 5V VBUS path and EN_SNK
-to control the 12V VBUS output, to avoid outputting a higher VBUS when in
-sink role, we set the operation current limit to 0mA so that SW will not
-control EN_SNK at all.
-
-Fixes: 2faf4ebcee2e5 ("arm64: dts: freescale: imx8qxp-mek: enable cadence usb3")
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: fc2f151d2314 ("soc/tegra: cbb: Add driver for Tegra234 CBB 2.0")
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8qxp-mek.dts | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/soc/tegra/cbb/tegra234-cbb.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts b/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
-index 936ba5ecdcac7..447a6a4c3c7ec 100644
---- a/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
-@@ -176,9 +176,17 @@ ptn5110: tcpc@50 {
- 		usb_con1: connector {
- 			compatible = "usb-c-connector";
- 			label = "USB-C";
--			power-role = "source";
-+			power-role = "dual";
- 			data-role = "dual";
-+			try-power-role = "sink";
- 			source-pdos = <PDO_FIXED(5000, 3000, PDO_FIXED_USB_COMM)>;
-+			/*
-+			 * Set operational current to 0mA as we don't want EN_SNK
-+			 * enable 12V VBUS switch when it work as a sink.
-+			 */
-+			sink-pdos = <PDO_FIXED(5000, 0, PDO_FIXED_USB_COMM)>;
-+			op-sink-microwatt = <0>;
-+			self-powered;
+diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
+index e8cc46874c729..eace89ed16176 100644
+--- a/drivers/soc/tegra/cbb/tegra234-cbb.c
++++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
+@@ -1176,6 +1176,10 @@ static int __maybe_unused tegra234_cbb_resume_noirq(struct device *dev)
+ {
+ 	struct tegra234_cbb *cbb = dev_get_drvdata(dev);
  
- 			ports {
- 				#address-cells = <1>;
++	/* set ERD bit to mask SError and generate interrupt to report error */
++	if (cbb->fabric->off_mask_erd)
++		tegra234_cbb_mask_serror(cbb);
++
+ 	tegra234_cbb_error_enable(&cbb->base);
+ 
+ 	dev_dbg(dev, "%s resumed\n", cbb->fabric->name);
 -- 
 2.53.0
 
