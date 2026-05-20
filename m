@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C3B3FB07E;
-	Wed, 20 May 2026 17:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1FE369D78;
+	Wed, 20 May 2026 17:06:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296786; cv=none; b=oPzqieIbkbAb3dWkDal+QMNtJ9FdI4gQZjXyZo4QQZj7fw3LOCNDicgdn1hsKK44a4xN/gKueXT2d1f2f/T6pU0c8S6FVSkh0T+KpR44gYUwTgamDkzCrnUqNSEBsgc8dgq6QqZQJQQO5eMBgx+YbwAQ5RLML6iYRPi5kx3L4Uk=
+	t=1779296789; cv=none; b=rNr17yLvSLWgXbgVSjZQd2sXpvLIY/qLjNVTBPKwS3Z4iD7wKVGY2TKSYMbQxmaNS4YbnVMkFLpd4Mokwc/3pOEmsw5+R/gWdCC9IWTli1HhqnhOAcnTE8rJX350dW7QlRPA8sBZxiyLtBsPJsz8AOnjiSwlG1EQx/5eZpfvb8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296786; c=relaxed/simple;
-	bh=mGSQlwFsHUgs+IVE4SzHxhzqBi65EDccTTfnc4bMs90=;
+	s=arc-20240116; t=1779296789; c=relaxed/simple;
+	bh=FqU8HVX73zK3xNrUWwDwj8k+hx5rndrHNFeI3rr2lIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b0QGA6bQE1M8200UKoVlx4ZRNUs3QZBiVW3xj/QBEm0OYpvmZAM96JSPi0N4zH7ewsQyYhADQ4FVkcpipOu3RbneTSBuIwM2gj2tbh9HZ+wpcHwvU2zeInsa7HQ8fbiUkXlrUedw1UOF2pFp9jKqJj7U7CGTOb30XVYiADczjEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBTexpl4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ri08/HQPV4Cug2cXy7A0JExvxdulL43MJDzMUQpBmKrUc1gtZ2o8dfwo1M5jMuTTsCczQfbqlSvXRzJwFuKy7py5drh1SbNkQlkJ5CQP91LMD/eMNOLX9tixk4eeQpk4yvVb5e/8AcGwxbpMDncAFpXb3kx1rn/M0n1WKVuTtF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p96k9HGc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBTexpl4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060061F000E9;
-	Wed, 20 May 2026 17:06:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p96k9HGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A228C1F000E9;
+	Wed, 20 May 2026 17:06:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296785;
-	bh=Hk+SrkcxX0MZ8Ke+4NVAXyEWIP6HU8A/KoC9p7K7fwA=;
+	s=korg; t=1779296788;
+	bh=1Arx4XvJgLDq4l01CNxDpcTXEsbNufKD1a/AvK+tWm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mBTexpl41TXjbNdDqN1JjtmNmjmRDUoEyKma1GHOUlGVAcoC5yi+i3ZziOGWrxTCx
-	 Bw50/7o/5iaFg6X8YJS9f/j/Bnqe1PZ4dsTqQMkL60g3+2yl1oElFIfTcmr9Dje8d+
-	 Qv3ekIvLJuaKxi5Jtk0G6Xb+uoqGip5nQntTP8pQ=
+	b=p96k9HGcygroRPPTxdJktYDW3idBkDNE7XE0lql6NJ3YcDFe4NCd9ZvWwSOrTz36u
+	 m5x3l21arbuY9XhXCmWOhMgoujD5WLok29rtBxyKLP2S32xAl9RVzr6Ujxnm8BoAc3
+	 Q7/GAtb6JuCm2M05nkMGy5aeXa8q2mkJOdrwJHdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0931/1146] net/sched: netem: validate slot configuration
-Date: Wed, 20 May 2026 18:19:41 +0200
-Message-ID: <20260520162209.306381786@linuxfoundation.org>
+Subject: [PATCH 7.0 0932/1146] net/sched: netem: fix slot delay calculation overflow
+Date: Wed, 20 May 2026 18:19:42 +0200
+Message-ID: <20260520162209.328412503@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,82 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit 01801c359a74737b9b1aa28568b60374d857241a ]
+[ Upstream commit 51e94e1e2fef351c74d69eb53666df808d26af95 ]
 
-Reject slot configurations that have no defensible meaning:
+get_slot_next() computes a random delay between min_delay and
+max_delay using:
 
-  - negative min_delay or max_delay
-  - min_delay greater than max_delay
-  - negative dist_delay or dist_jitter
-  - negative max_packets or max_bytes
+  get_random_u32() * (max_delay - min_delay) >> 32
 
-Negative or out-of-order delays underflow in get_slot_next(),
-producing garbage intervals. Negative limits trip the per-slot
-accounting (packets_left/bytes_left <= 0) on the first packet of
-every slot, defeating the rate-limiting half of the slot feature.
+This overflows signed 64-bit arithmetic when the delay range exceeds
+approximately 2.1 seconds (2^31 nanoseconds), producing a negative
+result that effectively disables slot-based pacing. This is a
+realistic configuration for WAN emulation (e.g., slot 1s 5s).
 
-Note that dist_jitter has been silently coerced to its absolute
-value by get_slot() since the feature was introduced; rejecting
-negatives here converts that silent coercion into -EINVAL. The
-abs() can be removed in a follow-up.
+Use mul_u64_u32_shr() which handles the widening multiply without
+overflow.
 
-Fixes: 836af83b54e3 ("netem: support delivering packets in delayed time slots")
+Fixes: 0a9fe5c375b5 ("netem: slotting with non-uniform distribution")
 Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260418032027.900913-5-stephen@networkplumber.org
+Link: https://patch.msgid.link/20260418032027.900913-6-stephen@networkplumber.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ net/sched/sch_netem.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 556f9747f0e73..640b51be807aa 100644
+index 640b51be807aa..475c14b3dbdbf 100644
 --- a/net/sched/sch_netem.c
 +++ b/net/sched/sch_netem.c
-@@ -827,6 +827,29 @@ static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
- 	return 0;
- }
+@@ -659,9 +659,8 @@ static void get_slot_next(struct netem_sched_data *q, u64 now)
  
-+static int validate_slot(const struct nlattr *attr, struct netlink_ext_ack *extack)
-+{
-+	const struct tc_netem_slot *c = nla_data(attr);
-+
-+	if (c->min_delay < 0 || c->max_delay < 0) {
-+		NL_SET_ERR_MSG_ATTR(extack, attr, "negative slot delay");
-+		return -EINVAL;
-+	}
-+	if (c->min_delay > c->max_delay) {
-+		NL_SET_ERR_MSG_ATTR(extack, attr, "slot min delay greater than max delay");
-+		return -EINVAL;
-+	}
-+	if (c->dist_delay < 0 || c->dist_jitter < 0) {
-+		NL_SET_ERR_MSG_ATTR(extack, attr, "negative dist delay");
-+		return -EINVAL;
-+	}
-+	if (c->max_packets < 0 || c->max_bytes < 0) {
-+		NL_SET_ERR_MSG_ATTR(extack, attr, "negative slot limit");
-+		return -EINVAL;
-+	}
-+	return 0;
-+}
-+
- static void get_slot(struct netem_sched_data *q, const struct nlattr *attr)
- {
- 	const struct tc_netem_slot *c = nla_data(attr);
-@@ -1040,6 +1063,12 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 			goto table_free;
- 	}
- 
-+	if (tb[TCA_NETEM_SLOT]) {
-+		ret = validate_slot(tb[TCA_NETEM_SLOT], extack);
-+		if (ret)
-+			goto table_free;
-+	}
-+
- 	sch_tree_lock(sch);
- 	/* backup q->clg and q->loss_model */
- 	old_clg = q->clg;
+ 	if (!q->slot_dist)
+ 		next_delay = q->slot_config.min_delay +
+-				(get_random_u32() *
+-				 (q->slot_config.max_delay -
+-				  q->slot_config.min_delay) >> 32);
++			mul_u64_u32_shr(q->slot_config.max_delay - q->slot_config.min_delay,
++					get_random_u32(), 32);
+ 	else
+ 		next_delay = tabledist(q->slot_config.dist_delay,
+ 				       (s32)(q->slot_config.dist_jitter),
 -- 
 2.53.0
 
