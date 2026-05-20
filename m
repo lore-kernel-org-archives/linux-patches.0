@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEE4349AFF;
-	Wed, 20 May 2026 17:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93883546C8;
+	Wed, 20 May 2026 17:46:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299176; cv=none; b=jWiXiVRHq4CjbQMboFU3KeJdkFs9TOYqlS4MTn9bfYz7Ka4jK3dlhDGhAdv8l36pc+pKfjJlF371mgFzY+rGlIi1Z98GR20HeJwLl1cQhOUJg5Wb/tNmukSaAx5ekIan7SSlnL2qlZC01VJElkpICck+zOusHscoZBSNQkvL724=
+	t=1779299178; cv=none; b=tctcgKvj66Cm9Fyfzt4BM9/lnOsLrLo1etjAbPElTylIDiJ8dUoZfCqmDxjattNMmBDR0mUE84zLOfM0XFzz/lFTnpn0sAbEZjRXI3J/GEzBNx/o7rvleZ4VKi4PH6+cV7wdN3iZ83NRv3yiy2me4TmqufzVTO5UtG5361bBByA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299176; c=relaxed/simple;
-	bh=OIK6fYivEkEByqiRwIvzrXGRldLrtY3c0L3qEXnuqmY=;
+	s=arc-20240116; t=1779299178; c=relaxed/simple;
+	bh=zIawil63On3d5YS4qVpuyVnSFEHb2VGH//mjpB62ueU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHdBspvChYXueKbcvI7ZlVT2Av3oTJNGsdE9rDXXS/Fbzns8HdsEs5A0d5V74YfxjEy5EZT/Qz4pHLkRS7FsjcrGNIUcsz42s3ezKQHAr+NqdmpjVrPeZ6jGTI89tQs/Zk2GUOd6DjWfnlgtabL6jgrdZKzz6MTuuWL52g0Muy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRCmctdU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BVoScN9gyCuCtgm37tUrrPk8q2rsndcCl+18EfCbJmtmnMETWCL9wnF9MeU2FshRP0zlzsxsUHMrsJooqXEFWgoFSrWvxca209EoySsXWdWAZu8srwD/gvu+MqgtenHq9dNIu6JstAxYcL88aA2cwGKS7Qhin5k5HxgLCU8oJx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v01C2PXc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRCmctdU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DCC1F000E9;
-	Wed, 20 May 2026 17:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v01C2PXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2FF1F000E9;
+	Wed, 20 May 2026 17:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299175;
-	bh=N3HIKl831OdrmmbP+Z0MoOKwfH0iWPZHXcK8Qh7g+PI=;
+	s=korg; t=1779299177;
+	bh=0pVoIVrNZwfWn91wgMT0RHq2tEJd5ybfk+DKlYQSq7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PRCmctdU2RM4dFz0H5wPBo5iwWDCEn6rJOf0MEmMs/dO16xNseRw4TdStf1ub0NFf
-	 Gx/8p32jhg8+e3LbUr7bBHf54AfXrsih6V50Zxj8XSQR9mr6pEF0U78mIbSRp1Mpa8
-	 Fkbf+jnyLtBXEJqmkjslnBFSsKm9PI2r7of1Zldg=
+	b=v01C2PXc/0fqk2wMGjfkzXiRm2V8IM42jfFCy41WqhYVneIXUR1FQ4V7P90FQ7YZ8
+	 UcK+D6rZvX3I6C3gSPPylFgNxMIk8enlZQTETb6vBKELIb3MgIflfJbSqPc49KtHtu
+	 AaEhvhFAdY0rSZOwVLIamzmiYamhpd907e4sRqLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Simon Horman <horms@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 664/957] netfilter: nat: use kfree_rcu to release ops
-Date: Wed, 20 May 2026 18:19:07 +0200
-Message-ID: <20260520162148.931332635@linuxfoundation.org>
+Subject: [PATCH 6.18 691/957] net: airoha: ppe: Dynamically allocate foe_check_time array in airoha_ppe struct
+Date: Wed, 20 May 2026 18:19:34 +0200
+Message-ID: <20260520162149.524845619@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -50,112 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 6eda0d771f94267f73f57c94630aa47e90957915 ]
+[ Upstream commit 6d5b601d52a27aafff555b480e538507901c672c ]
 
-Florian Westphal says:
+This is a preliminary patch to properly enable PPE support for AN7583
+SoC.
 
-"Historically this is not an issue, even for normal base hooks: the data
-path doesn't use the original nf_hook_ops that are used to register the
-callbacks.
-
-However, in v5.14 I added the ability to dump the active netfilter
-hooks from userspace.
-
-This code will peek back into the nf_hook_ops that are available
-at the tail of the pointer-array blob used by the datapath.
-
-The nat hooks are special, because they are called indirectly from
-the central nat dispatcher hook. They are currently invisible to
-the nfnl hook dump subsystem though.
-
-But once that changes the nat ops structures have to be deferred too."
-
-Update nf_nat_register_fn() to deal with partial exposition of the hooks
-from error path which can be also an issue for nfnetlink_hook.
-
-Fixes: e2cf17d3774c ("netfilter: add new hook nfnl subsystem")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20251017-an7583-eth-support-v3-2-f28319666667@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 3309965fe44c ("net: airoha: Add missing bits in airoha_qdma_cleanup_tx_queue()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/iptable_nat.c  |  4 ++--
- net/ipv6/netfilter/ip6table_nat.c |  4 ++--
- net/netfilter/nf_nat_core.c       | 10 ++++++----
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.h | 2 +-
+ drivers/net/ethernet/airoha/airoha_ppe.c | 5 +++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/netfilter/iptable_nat.c b/net/ipv4/netfilter/iptable_nat.c
-index a5db7c67d61be..625a1ca13b1ba 100644
---- a/net/ipv4/netfilter/iptable_nat.c
-+++ b/net/ipv4/netfilter/iptable_nat.c
-@@ -79,7 +79,7 @@ static int ipt_nat_register_lookups(struct net *net)
- 			while (i)
- 				nf_nat_ipv4_unregister_fn(net, &ops[--i]);
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
+index 054fe86d67bd1..9929c44d84702 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.h
++++ b/drivers/net/ethernet/airoha/airoha_eth.h
+@@ -548,7 +548,7 @@ struct airoha_ppe {
+ 	struct rhashtable l2_flows;
  
--			kfree(ops);
-+			kfree_rcu(ops, rcu);
- 			return ret;
- 		}
+ 	struct hlist_head *foe_flow;
+-	u16 foe_check_time[PPE_NUM_ENTRIES];
++	u16 *foe_check_time;
+ 
+ 	struct airoha_foe_stats *foe_stats;
+ 	dma_addr_t foe_stats_dma;
+diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
+index e9994c794c703..072cc2dd50dda 100644
+--- a/drivers/net/ethernet/airoha/airoha_ppe.c
++++ b/drivers/net/ethernet/airoha/airoha_ppe.c
+@@ -1538,6 +1538,11 @@ int airoha_ppe_init(struct airoha_eth *eth)
+ 			return -ENOMEM;
  	}
-@@ -100,7 +100,7 @@ static void ipt_nat_unregister_lookups(struct net *net)
- 	for (i = 0; i < ARRAY_SIZE(nf_nat_ipv4_ops); i++)
- 		nf_nat_ipv4_unregister_fn(net, &ops[i]);
  
--	kfree(ops);
-+	kfree_rcu(ops, rcu);
- }
- 
- static int iptable_nat_table_init(struct net *net)
-diff --git a/net/ipv6/netfilter/ip6table_nat.c b/net/ipv6/netfilter/ip6table_nat.c
-index e119d4f090cc8..5be723232df8f 100644
---- a/net/ipv6/netfilter/ip6table_nat.c
-+++ b/net/ipv6/netfilter/ip6table_nat.c
-@@ -81,7 +81,7 @@ static int ip6t_nat_register_lookups(struct net *net)
- 			while (i)
- 				nf_nat_ipv6_unregister_fn(net, &ops[--i]);
- 
--			kfree(ops);
-+			kfree_rcu(ops, rcu);
- 			return ret;
- 		}
- 	}
-@@ -102,7 +102,7 @@ static void ip6t_nat_unregister_lookups(struct net *net)
- 	for (i = 0; i < ARRAY_SIZE(nf_nat_ipv6_ops); i++)
- 		nf_nat_ipv6_unregister_fn(net, &ops[i]);
- 
--	kfree(ops);
-+	kfree_rcu(ops, rcu);
- }
- 
- static int ip6table_nat_table_init(struct net *net)
-diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
-index e6b24586d2fed..8e36b4e3e5c47 100644
---- a/net/netfilter/nf_nat_core.c
-+++ b/net/netfilter/nf_nat_core.c
-@@ -1228,9 +1228,11 @@ int nf_nat_register_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
- 		ret = nf_register_net_hooks(net, nat_ops, ops_count);
- 		if (ret < 0) {
- 			mutex_unlock(&nf_nat_proto_mutex);
--			for (i = 0; i < ops_count; i++)
--				kfree(nat_ops[i].priv);
--			kfree(nat_ops);
-+			for (i = 0; i < ops_count; i++) {
-+				priv = nat_ops[i].priv;
-+				kfree_rcu(priv, rcu_head);
-+			}
-+			kfree_rcu(nat_ops, rcu);
- 			return ret;
- 		}
- 
-@@ -1294,7 +1296,7 @@ void nf_nat_unregister_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
- 		}
- 
- 		nat_proto_net->nat_hook_ops = NULL;
--		kfree(nat_ops);
-+		kfree_rcu(nat_ops, rcu);
- 	}
- unlock:
- 	mutex_unlock(&nf_nat_proto_mutex);
++	ppe->foe_check_time = devm_kzalloc(eth->dev, PPE_NUM_ENTRIES,
++					   GFP_KERNEL);
++	if (!ppe->foe_check_time)
++		return -ENOMEM;
++
+ 	err = rhashtable_init(&eth->flow_table, &airoha_flow_table_params);
+ 	if (err)
+ 		return err;
 -- 
 2.53.0
 
