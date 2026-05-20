@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F5B3F65E1;
-	Wed, 20 May 2026 17:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017603F39EE;
+	Wed, 20 May 2026 17:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299604; cv=none; b=el87F3uZHMCcVhiqv09z09G3xNv0ctRb8QAIr8dU6esKeY3QCgG1/kGuxfm+weVuS03LGJTI8mdHR0hLv3hHPU6dPEE5+pSG9N5f5LMNAzhZg2pSz0sV3MsSyCBlUF4hQoHriOgPPjbNEzTVjSP6IXQ/VzLbZAjLoOK1LjDGl/A=
+	t=1779299607; cv=none; b=oayVds5sg7jQOD34qMKGVG9R/9lrGWXsAEcNwRJpefaTedh4f9cbj4yOjf1pfmY+qpWrXfo58or5v1ta+bQ8YySidjgUxMtPGjdBk2V+pQr+IXmsbchPZBOj+kPZ5KktOq7Jm4bbSYyptE+SFK9Nn0w/f0RQi/eXL2LTG0cdiE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299604; c=relaxed/simple;
-	bh=jz5A7+iWDepUnQuPa/cJc0qaLodcm96BDjtJybr8Nng=;
+	s=arc-20240116; t=1779299607; c=relaxed/simple;
+	bh=KHb3G8i5er4wuGKbw7bn6EvSzCAkIJy7BI/CEEqRKJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aU89KOxS/IPGYY/0xL/jmQf4MdXpkAK2OStW/TIv9lE8Jug6Tt6PzR6BAiA+tMjOcoK/5ymHRn+3nBr56FoD+Wb3PyzXDhdtVF+fqk4CIwmMdKC4bQzzubm/7mPmhkv1JrqATxbgy2Soz4YdJ0I9pz6IHQgUPR3PbF0c5d3pIgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2G/mqFo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=kYlC7DPJhsnDW5EtQTY/nrC5iAlNMkvmga2WpIinu6BXLc1G4Jea7fuMVFcO40kHpF1P3XeaPUHdw/HqvOFOC/3YHUder8z8JqfqhnBxcWfTYgPjAluKqG6ZfZ18xOVzxblYvNJbkpNL15/5uvKjAyliN50f2/6xPTPCtVPmgnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxYi3Y6F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2G/mqFo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F051F000E9;
-	Wed, 20 May 2026 17:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxYi3Y6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6011E1F00893;
+	Wed, 20 May 2026 17:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299603;
-	bh=8PKsWLDBPxVllPYvK1DObse/XJ13D821gNnMoBlNTHw=;
+	s=korg; t=1779299605;
+	bh=ls/5aHAA07Lo3cbmqZnXq+yPZPjS1cuFco35fF4JEe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E2G/mqFo8R12bZ3M+f5Md/8YbC8BlFyq9o64M92Xq3mZbC+x60tnPoK4VknPpLzZ3
-	 GfhFkTpka4T6iBQkRuuDVGV30CYLmOjmoXdgnpb4HONaOM6lCITUa0/Tbu5ByIWfq6
-	 OLXDpfYiqaxZmVaea7VI6GSyu0cUvzdS9XT75BSE=
+	b=BxYi3Y6Frs94edX7LKd3jkItraPK6StoT5WGV/tdrUGr36cW3kWHqYTMnFhGqS9WZ
+	 ngK7M371AjDo6PfNEfo19kxwMwcQSvmpk5t3t7L/lg59B404S8IJH/NBh9CuuXD+IJ
+	 D/16n8s3CtNQaX11/xXszYWHGbBrtXm8s426q1Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harish Chegondi <harish.chegondi@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Yinjie Yao <yinjie.yao@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 834/957] drm/xe/eustall: Fix drm_dev_put called before stream disable in close
-Date: Wed, 20 May 2026 18:21:57 +0200
-Message-ID: <20260520162152.651553986@linuxfoundation.org>
+Subject: [PATCH 6.18 799/957] drm/amdgpu/vcn: set no_user_fence for VCN v2.5 enc/dec rings
+Date: Wed, 20 May 2026 18:21:22 +0200
+Message-ID: <20260520162151.892252877@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -47,60 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Yinjie Yao <yinjie.yao@amd.com>
 
-[ Upstream commit dc2d9842c67d883d3200ae33b9c3859dd9492408 ]
+[ Upstream commit 4f317863a3ab212a027d8c8c3cc3af4e3fb95704 ]
 
-In xe_eu_stall_stream_close(), drm_dev_put() is called before the
-stream is disabled and its resources are freed. If this drops the
-last reference, the device structures could be freed while the
-subsequent cleanup code still accesses them, leading to a
-use-after-free.
+VCN encoder and decoder rings do not support 64-bit user fence writes,
+reject CS submissions with user fences.
 
-Fix this by moving drm_dev_put() after all device accesses are
-complete. This matches the ordering in xe_oa_release().
-
-Fixes: 9a0b11d4cf3b ("drm/xe/eustall: Add support to init, enable and disable EU stall sampling")
-Cc: Harish Chegondi <harish.chegondi@intel.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Harish Chegondi <harish.chegondi@intel.com>
-Link: https://patch.msgid.link/20260415225428.3399934-1-shuicheng.lin@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 35aff528f7297e949e5e19c9cd7fd748cf1cf21c)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 28c17d72072b ("drm/amdgpu: add VCN2.5 basic supports")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit efc9dd5590894109bce9a0bfe1fa5592dd6b20b1)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_eu_stall.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_eu_stall.c b/drivers/gpu/drm/xe/xe_eu_stall.c
-index 33a3764e3e71b..d7392250e0b3a 100644
---- a/drivers/gpu/drm/xe/xe_eu_stall.c
-+++ b/drivers/gpu/drm/xe/xe_eu_stall.c
-@@ -845,14 +845,14 @@ static int xe_eu_stall_stream_close(struct inode *inode, struct file *file)
- 	struct xe_eu_stall_data_stream *stream = file->private_data;
- 	struct xe_gt *gt = stream->gt;
- 
--	drm_dev_put(&gt->tile->xe->drm);
--
- 	mutex_lock(&gt->eu_stall->stream_lock);
- 	xe_eu_stall_disable_locked(stream);
- 	xe_eu_stall_data_buf_destroy(stream);
- 	xe_eu_stall_stream_free(stream);
- 	mutex_unlock(&gt->eu_stall->stream_lock);
- 
-+	drm_dev_put(&gt->tile->xe->drm);
-+
- 	return 0;
- }
- 
+diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
+index 006a154511971..8b8184fe6764b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v2_5.c
+@@ -1778,6 +1778,7 @@ static void vcn_v2_5_dec_ring_set_wptr(struct amdgpu_ring *ring)
+ static const struct amdgpu_ring_funcs vcn_v2_5_dec_ring_vm_funcs = {
+ 	.type = AMDGPU_RING_TYPE_VCN_DEC,
+ 	.align_mask = 0xf,
++	.no_user_fence = true,
+ 	.secure_submission_supported = true,
+ 	.get_rptr = vcn_v2_5_dec_ring_get_rptr,
+ 	.get_wptr = vcn_v2_5_dec_ring_get_wptr,
+@@ -1879,6 +1880,7 @@ static const struct amdgpu_ring_funcs vcn_v2_5_enc_ring_vm_funcs = {
+ 	.type = AMDGPU_RING_TYPE_VCN_ENC,
+ 	.align_mask = 0x3f,
+ 	.nop = VCN_ENC_CMD_NO_OP,
++	.no_user_fence = true,
+ 	.get_rptr = vcn_v2_5_enc_ring_get_rptr,
+ 	.get_wptr = vcn_v2_5_enc_ring_get_wptr,
+ 	.set_wptr = vcn_v2_5_enc_ring_set_wptr,
 -- 
 2.53.0
 
