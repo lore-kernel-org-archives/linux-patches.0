@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378513E0C70;
-	Wed, 20 May 2026 17:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D252231842;
+	Wed, 20 May 2026 17:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296718; cv=none; b=soxJHwBlWDJ5r0CmeF42peCGV6RCybfrU0tgfEr9MgsX4t/pQdT0IC/WCCzu7iYvqi+uwLyNNBYNUBpFSt18ylo8NJHYuPb8ZsnNeiY9iICYR/qCVz7G6BvTns6oRrKZYi//QWNYWyOaBbzi8sbFtZHQs3L71LJjEvuxmg+fofY=
+	t=1779296721; cv=none; b=gp4S80lx0OHfJhU7vn0M1D6qlW/d/K7Lx9RGi9X2cYfNK6cmsE06C0WNhk6JYQ90bNxWJWsNK7y5N1KTUsYrllBIJS1ckaW4eljaR1dSSOoAtj2XJdA2HvRp29YHGawCwxti8xERw0z/eCaBT10QyA8PDERojA3z66MV1VVMDSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296718; c=relaxed/simple;
-	bh=s9naC6ZzfGXk38SBt31c246bBCeziSxS4H7bmZ89inc=;
+	s=arc-20240116; t=1779296721; c=relaxed/simple;
+	bh=tXg68tLUy+P+Gvz9YGWYFLqz4QW4hDtVSLWWO8aPP8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YtrRXcghbNwJL6YYLuM/hTbGLimd8PoaHavU8aj1wze5H3Kqi2g7qiUPUfH5gbxL1/OhvCt/UPiYnhzgFnjsUc71nVh81vzfD2rd4GAbSZS7RcUYW/SqYifdBtGeuEDVb5ELkhj1cuUPvin0ATBECO6VS2ziq1t+dgHsvKehs20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yI0jJiok; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=G5tRipMQYsfC0MUGAvE3M+5FWR2wasjEYzT7M2sPhlnECuFHXXLziOaxmbeR4GZb/f2LlOZvFGsDosXTng5xYwUSqZEiAqa5Zyy/tfbE70YiJcQLtyUVzOE/7+1S+WpC3fGRWRCno9vJiBG9/6VX2Jf/2eQYRDhEIVuEiZzKMNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWH4t/Uc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yI0jJiok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9061F00893;
-	Wed, 20 May 2026 17:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWH4t/Uc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447361F000E9;
+	Wed, 20 May 2026 17:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296717;
-	bh=kRgRtE8IibTxQ/KXn9KjZGdoWotvBYf+fHJLD/D9uOQ=;
+	s=korg; t=1779296719;
+	bh=dng/9GdF97AGWyw/wzfwPALU4J8nVme80QkWNBzJ9Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yI0jJiokn636A7x91TeJNLg4q0jSifQmQ1WQntuwGP3U82koL0sJltYo/taN1H8EU
-	 KaWIfmSQGHxJmJ9Y0LyRZvxRpwojlhFCB4arFUENywWxYM/9gEOwN4Yz7JfE+pf767
-	 P/v5ISBKDiyRoJwHf1wV2l5kvl2d7jpE9wzFrhvI=
+	b=iWH4t/UcIvCPo/jA43cc/08QEJsVsKV7MysCYPWfeK9jvLXuAGMhvAtCsq6sab3tR
+	 xcHPYTBDQ7+wjPJ+GS2WymGKHpz9v9lASqJmd7x1nUoYXWzCBvQSF2SbgtGZfFk5Ko
+	 BoNlhYQuKzeU96eOC7vqe3Ll/2DG7+52qSbiPsHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0904/1146] drm/amdgpu: fix AMDGPU_INFO_READ_MMR_REG
-Date: Wed, 20 May 2026 18:19:14 +0200
-Message-ID: <20260520162208.695996590@linuxfoundation.org>
+Subject: [PATCH 7.0 0905/1146] drm/amdgpu/uvd3.1: Dont validate the firmware when already validated
+Date: Wed, 20 May 2026 18:19:15 +0200
+Message-ID: <20260520162208.720248972@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,128 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 0ef196a208385b7d7da79f411c161b04e97283e2 ]
+[ Upstream commit 13e4cf116dbf7a1fb8123a59bea2c098f30d3736 ]
 
-There were multiple issues in that code.
+UVD 3.1 firmware validation seems to always fail after
+attempting it when it had already been validated.
+(This works similarly with the VCE 1.0 as well.)
 
-First of all the order between the reset semaphore and the mm_lock was
-wrong (e.g. copy_to_user) was called while holding the lock.
+Don't attempt repeating the validation when it's already done.
 
-Then we allocated memory while holding the reset semaphore which is also
-a pretty big bug and can deadlock.
+This caused issues in situations when the system isn't able
+to suspend the GPU properly and so the GPU isn't actually
+powered down. Then amdgpu would fail when calling the IP
+block resume function.
 
-Then we used down_read_trylock() instead of waiting for the reset to
-finish.
-
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Fixes: 9e823f307074 ("drm/amdgpu: Block MMR_READ IOCTL in reset")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/2887
+Fixes: bb7978111dd3 ("drm/amdgpu: fix SI UVD firmware validate resume fail")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 361b6e6b303d4b691f6c5974d3eaab67ca6dd90e)
+(cherry picked from commit 889a2cfd889c4a4dd9d0c89ce9a8e60b78be71dd)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 57 +++++++++++--------------
- 1 file changed, 24 insertions(+), 33 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-index 7f19554b9ad11..a50c3058f97f4 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -873,68 +873,59 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 				    ? -EFAULT : 0;
- 	}
- 	case AMDGPU_INFO_READ_MMR_REG: {
--		int ret = 0;
--		unsigned int n, alloc_size;
--		uint32_t *regs;
- 		unsigned int se_num = (info->read_mmr_reg.instance >>
- 				   AMDGPU_INFO_MMR_SE_INDEX_SHIFT) &
- 				  AMDGPU_INFO_MMR_SE_INDEX_MASK;
- 		unsigned int sh_num = (info->read_mmr_reg.instance >>
- 				   AMDGPU_INFO_MMR_SH_INDEX_SHIFT) &
- 				  AMDGPU_INFO_MMR_SH_INDEX_MASK;
--
--		if (!down_read_trylock(&adev->reset_domain->sem))
--			return -ENOENT;
-+		unsigned int alloc_size;
-+		uint32_t *regs;
-+		int ret;
+diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
+index fea576a7f397f..efb3fde919ee3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v3_1.c
+@@ -242,6 +242,10 @@ static void uvd_v3_1_mc_resume(struct amdgpu_device *adev)
+ 	uint64_t addr;
+ 	uint32_t size;
  
- 		/* set full masks if the userspace set all bits
- 		 * in the bitfields
- 		 */
--		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK) {
-+		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK)
- 			se_num = 0xffffffff;
--		} else if (se_num >= AMDGPU_GFX_MAX_SE) {
--			ret = -EINVAL;
--			goto out;
--		}
-+		else if (se_num >= AMDGPU_GFX_MAX_SE)
-+			return -EINVAL;
- 
--		if (sh_num == AMDGPU_INFO_MMR_SH_INDEX_MASK) {
-+		if (sh_num == AMDGPU_INFO_MMR_SH_INDEX_MASK)
- 			sh_num = 0xffffffff;
--		} else if (sh_num >= AMDGPU_GFX_MAX_SH_PER_SE) {
--			ret = -EINVAL;
--			goto out;
--		}
-+		else if (sh_num >= AMDGPU_GFX_MAX_SH_PER_SE)
-+			return -EINVAL;
- 
--		if (info->read_mmr_reg.count > 128) {
--			ret = -EINVAL;
--			goto out;
--		}
-+		if (info->read_mmr_reg.count > 128)
-+			return -EINVAL;
- 
--		regs = kmalloc_array(info->read_mmr_reg.count, sizeof(*regs), GFP_KERNEL);
--		if (!regs) {
--			ret = -ENOMEM;
--			goto out;
--		}
-+		regs = kmalloc_array(info->read_mmr_reg.count, sizeof(*regs),
-+				     GFP_KERNEL);
-+		if (!regs)
-+			return -ENOMEM;
- 
-+		down_read(&adev->reset_domain->sem);
- 		alloc_size = info->read_mmr_reg.count * sizeof(*regs);
--
- 		amdgpu_gfx_off_ctrl(adev, false);
-+		ret = 0;
- 		for (i = 0; i < info->read_mmr_reg.count; i++) {
- 			if (amdgpu_asic_read_register(adev, se_num, sh_num,
- 						      info->read_mmr_reg.dword_offset + i,
- 						      &regs[i])) {
- 				DRM_DEBUG_KMS("unallowed offset %#x\n",
- 					      info->read_mmr_reg.dword_offset + i);
--				kfree(regs);
--				amdgpu_gfx_off_ctrl(adev, true);
- 				ret = -EFAULT;
--				goto out;
-+				break;
- 			}
- 		}
- 		amdgpu_gfx_off_ctrl(adev, true);
--		n = copy_to_user(out, regs, min(size, alloc_size));
--		kfree(regs);
--		ret = (n ? -EFAULT : 0);
--out:
- 		up_read(&adev->reset_domain->sem);
++	/* When the keyselect is already set, don't perturb it. */
++	if (RREG32(mmUVD_FW_START))
++		return;
 +
-+		if (!ret) {
-+			ret = copy_to_user(out, regs, min(size, alloc_size))
-+				? -EFAULT : 0;
-+		}
-+		kfree(regs);
- 		return ret;
- 	}
- 	case AMDGPU_INFO_DEV_INFO: {
+ 	/* program the VCPU memory controller bits 0-27 */
+ 	addr = (adev->uvd.inst->gpu_addr + AMDGPU_UVD_FIRMWARE_OFFSET) >> 3;
+ 	size = AMDGPU_UVD_FIRMWARE_SIZE(adev) >> 3;
+@@ -284,6 +288,12 @@ static int uvd_v3_1_fw_validate(struct amdgpu_device *adev)
+ 	int i;
+ 	uint32_t keysel = adev->uvd.keyselect;
+ 
++	if (RREG32(mmUVD_FW_START) & UVD_FW_STATUS__PASS_MASK) {
++		dev_dbg(adev->dev, "UVD keyselect already set: 0x%x (on CPU: 0x%x)\n",
++			RREG32(mmUVD_FW_START), adev->uvd.keyselect);
++		return 0;
++	}
++
+ 	WREG32(mmUVD_FW_START, keysel);
+ 
+ 	for (i = 0; i < 10; ++i) {
 -- 
 2.53.0
 
