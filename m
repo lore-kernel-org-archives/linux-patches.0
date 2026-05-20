@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEDD3EE1DA;
-	Wed, 20 May 2026 16:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0442A3EA953;
+	Wed, 20 May 2026 16:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296293; cv=none; b=HuxXsHjtBuyQSSFkJt8sc3eQmeEd67jT4XFGcAm/2ywgly+2jrNXNctrYh52HMp04JP6t3ETpD9NKuFUyKCQGDe1gSDXwK8FL6/PIKmitlhvJNBgmDi9QKj4ebalf9Hj+H1V2qaW/+wGY6Ls3p0ldEVOQ0NsKRDcGP8e9hLrs1s=
+	t=1779296296; cv=none; b=E26ulOsgQh1HRQb3HdAIwJ72dlmwR43b3apczN/PlSZO6dS7mth64rX0Rv6i5ei7ZegeNLdrl+K2hIVLIl6Zlb5V1FaFLZtcnvq9IA6xXN2erfiIm5XFOW2wv6ePS73shZEYmmaYCPJHqBQiENhUbdQN+vflQO/Et6hgHm/Breg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296293; c=relaxed/simple;
-	bh=CsT62k9xZczJ+FXQ7FRk5dPOb8znyX9gn7H1Ivg90oY=;
+	s=arc-20240116; t=1779296296; c=relaxed/simple;
+	bh=8LUZ6LYaGzomv9IDstvscQ592V5zobNbNzDjXMzXBT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBasft+9we93j9s3q/Gq0d1PdjnaIsFg6gIg/O/ezCyvWtkTaXuRhJlPFtMDJN1rOzE7MVTBuFIcIWE4GTzeqe5k/r8fI/cuMh3q0NzbQQZEyCzLlJIzyhrnxFLjnIljHqWqpwZTTIHjPE62ggk4CPsmhqZVaRxK6IByeY/+Xx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4nioBH4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VNY7ABXupIrtgIh+46+XP4tENajsyrNIpnRDAoP/P0AoURFQ4+vCRsR4QLay0NEWSJJEFZbRzb9Y/0/AuPeZBsCH2BghA2ORgnfF4zngAqDJnIL/h5hx/JesNdzPwQoh7gGFqz39pwYq42XTdxx9xfnFcocGu4rIyqetp5V3aiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHQvPOsX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4nioBH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96F01F00894;
-	Wed, 20 May 2026 16:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHQvPOsX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693971F00893;
+	Wed, 20 May 2026 16:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296292;
-	bh=PYgD9+ngn1y3m8y9QJoLnE+DdTg/ScDaLJtJEVZkodM=;
+	s=korg; t=1779296294;
+	bh=ROdkS8zPvfbf/o7g4Pbv4t/D4mXBPfxW1runvALDX8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l4nioBH4mvF7o7wgrzBtL1MqTAM4s9OpSnjSIdqqQrYGF3UD5/PXCvwGFElmz3Iz4
-	 MNThZMdw6m4LuuGlS1iyfSK1w6SRmjwGB4ItZ4KZodFMbzcwUM05hpAx/d3b/00Loj
-	 cWiuq3pzzuMZ0tKa+qVpaA9wx2oulDGzGGBfi7VY=
+	b=ZHQvPOsXhEGUEWPhhkdihFMoCg643nx5JK0gim1xvDyN4saYKGhJPh4NsAL2iHkmK
+	 Lb0B9TToPHJIWCFMTHKVKiKMBSPserZ7mZA0TpFdQ817/jO0JwgWm2YfV8XHhk1iO6
+	 0V1CHc2SMbAX/FKi1kJb7ggkoNrdBTXUkhdsecec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	kernel test robot <lkp@intel.com>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Lee Jones <lee@kernel.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	dri-devel@lists.freedesktop.org,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0745/1146] sh: Include <linux/io.h> in dac.h
-Date: Wed, 20 May 2026 18:16:35 +0200
-Message-ID: <20260520162205.067126444@linuxfoundation.org>
+Subject: [PATCH 7.0 0746/1146] erofs: fix offset truncation when shifting pgoff on 32-bit platforms
+Date: Wed, 20 May 2026 18:16:36 +0200
+Message-ID: <20260520162205.089914008@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -57,45 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 57b3ec396dd898aadc073bb16f3d05ee64b2c8af ]
+[ Upstream commit c99493ce409c3b98fec1616dbcf24c102e006deb ]
 
-Include <linux/io.h> to avoid depending on <linux/backlight.h>
-for including it. Declares __raw_readb() and __raw_writeb().
+On 32-bit platforms, pgoff_t is 32 bits wide, so left-shifting
+large arbitrary pgoff_t values by PAGE_SHIFT performs 32-bit arithmetic
+and silently truncates the result for pages beyond the 4 GiB boundary.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202510282206.wI0HrqcK-lkp@intel.com/
-Fixes: 243ce64b2b37 ("backlight: Do not include <linux/fb.h> in header file")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Cc: Lee Jones <lee@kernel.org>
-Cc: Daniel Thompson <danielt@kernel.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>
-Cc: dri-devel@lists.freedesktop.org
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cast the page index to loff_t before shifting to produce a correct
+64-bit byte offset.
+
+Fixes: 386292919c25 ("erofs: introduce readmore decompression strategy")
+Fixes: 307210c262a2 ("erofs: verify metadata accesses for file-backed mounts")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/include/cpu-sh3/cpu/dac.h | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/erofs/data.c  | 2 +-
+ fs/erofs/zdata.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/sh/include/cpu-sh3/cpu/dac.h b/arch/sh/include/cpu-sh3/cpu/dac.h
-index fd02331608a8d..323ec8570bcd1 100644
---- a/arch/sh/include/cpu-sh3/cpu/dac.h
-+++ b/arch/sh/include/cpu-sh3/cpu/dac.h
-@@ -2,6 +2,8 @@
- #ifndef __ASM_CPU_SH3_DAC_H
- #define __ASM_CPU_SH3_DAC_H
+diff --git a/fs/erofs/data.c b/fs/erofs/data.c
+index 132a27deb2f3b..b2c12c5856acc 100644
+--- a/fs/erofs/data.c
++++ b/fs/erofs/data.c
+@@ -39,7 +39,7 @@ void *erofs_bread(struct erofs_buf *buf, erofs_off_t offset, bool need_kmap)
+ 	 * However, the data access range must be verified here in advance.
+ 	 */
+ 	if (buf->file) {
+-		fpos = index << PAGE_SHIFT;
++		fpos = (loff_t)index << PAGE_SHIFT;
+ 		err = rw_verify_area(READ, buf->file, &fpos, PAGE_SIZE);
+ 		if (err < 0)
+ 			return ERR_PTR(err);
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index fe8121df9ef2f..624b83ff4ecb7 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1874,7 +1874,7 @@ static void z_erofs_pcluster_readmore(struct z_erofs_frontend *f,
  
-+#include <linux/io.h>
-+
- /*
-  * Copyright (C) 2003  Andriy Skulysh
-  */
+ 		if (cur < PAGE_SIZE)
+ 			break;
+-		cur = (index << PAGE_SHIFT) - 1;
++		cur = ((loff_t)index << PAGE_SHIFT) - 1;
+ 	}
+ }
+ 
 -- 
 2.53.0
 
