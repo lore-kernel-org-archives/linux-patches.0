@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E46405C4C;
-	Wed, 20 May 2026 18:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAB44048A3;
+	Wed, 20 May 2026 18:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302987; cv=none; b=ImhaixfRBHF+QiJZ9CbxO+BXHw84892O/q9L14UQ2whGOMCl/hxmv164qrtUHlVc8g+u4n1W5edgGyT6ke50/bCJwaTY+JLsqKn+QyIZMGqFrAzmsF4IS8bjuyoe0VkDHWMnNXxpq4wmHbz4FnDiCxR7Vgy0/ebQfjEES3o8BFQ=
+	t=1779302990; cv=none; b=SlEsSEJvwBfuZUEaxbUYkOvmztFSW32IKvyEC457vDux2/CbJxDPjiR2b9wQeeMh0mnCavcdQclVaKC/Khmulw0I9Sh3SXhe+SpFxDGHWumO22byrPuGpjrR2CMsKSyhkiiSHrzc3VuLLF8SYWTyeIkwVrK9ovVmpge0xXnQRc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302987; c=relaxed/simple;
-	bh=yWkA31k0h/4v4MvnvH+vyZnd7eexi6GlxZjdnguOJ+E=;
+	s=arc-20240116; t=1779302990; c=relaxed/simple;
+	bh=5XnvgaOzyWDgG/waiLzmJ6AbYE4rK6gT6YIo4pn4CxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oDYND1Wf2/T0oz7ITMpo+rxnO7RPJRRCPO70wDvu2Cm1SjebtkpTYW6hfDD7zcQugUAT9QfsUhpu3jDNfPQTNkY4Y2JCdfKfw0Os5C2lCufpM7LEn7Lq1ZI1JqeaDZLOeTLBbvwQ7y3pTMuCnH88YHBtnOyfGN6Z9NNdpvl4V4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjqcowSc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=REfRzyj96DVR9m0VLyWTbmCmOSpvzaeteLY5wy9ZkHVkc2NRuPalR0lhCR9KGAT3M06UC2HQ6pweSb9ArsXMAsldLEd9E1y2rDO82fVnKn3JOvmFDCXrHL2XqspLjGyfgop4dhpdE2KoH9ByHk30DCK9RzzFQeIiRHm36YI/PNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3vbnEqJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjqcowSc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD111F00894;
-	Wed, 20 May 2026 18:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3vbnEqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F5C1F000E9;
+	Wed, 20 May 2026 18:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302985;
-	bh=4qgwRPa7Xs2jTLJ3cCwMXeH1c6q6wyQEMxIdpvOVvK4=;
+	s=korg; t=1779302988;
+	bh=ToOIjAzRirD3BA9AQjq9bhVWRWIQB5lqVeQuoHzsqlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OjqcowScGMRtFn6D5chSyA/kk0VetC81+Z3ZIkSfaHLBK8CbGRZ/xtSsBKti7II/f
-	 y1pd7oRbMrMvMOyeCZ9a8clemXOeuxB2RhA31C+NYXnB1egaJr3mV49GsHmvAk+bTu
-	 g4P8EMlkPyCA8UGkmRDSJgUeS4E1MGrEFDvDZqQE=
+	b=M3vbnEqJjhv4Sv0H6rZGhJ81U0K2cGzXEzxMkhVaqez/wrAKRj0d/e7+9FckT5WRu
+	 I3erWe4ogqRXRwhCUMdhapGQmixAqiW2LH/whqvTRB1dxej7kj5kknp1Eah//TGXNa
+	 sF4DHK2m9z8nLmzTfRpAZuHxPRmX8mPh2N8cB5+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoli Feng <xifeng@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	netfs@lists.linux.dev,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.6 473/508] netfs: fix error handling in netfs_extract_user_iter()
-Date: Wed, 20 May 2026 18:24:56 +0200
-Message-ID: <20260520162108.843821337@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.6 474/508] libceph: Fix potential out-of-bounds access in osdmap_decode()
+Date: Wed, 20 May 2026 18:24:57 +0200
+Message-ID: <20260520162108.864797401@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -55,67 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 0aad5704c6b4d14007d4eab15883e8524e4310f4 upstream.
+commit 35d0ed82d03e5ee77ea4f31f20e29562a7721649 upstream.
 
-In netfs_extract_user_iter(), if iov_iter_extract_pages() failed to
-extract user pages, bail out on -ENOMEM, otherwise return the error
-code only if @npages == 0, allowing short DIO reads and writes to be
-issued.
+When decoding osd_state and osd_weight from an incoming osdmap in
+osdmap_decode(), both are decoded for each osd, i.e., map->max_osd
+times. The ceph_decode_need() check only accounts for
+sizeof(*map->osd_weight) once. This can potentially result in an
+out-of-bounds memory access if the incoming message is corrupted such
+that the max_osd value exceeds the actual content of the osdmap message.
 
-This fixes mmapstress02 from LTP tests against CIFS.
+This patch fixes the issue by changing the corresponding part in the
+ceph_decode_need() check to account for
+map->max_osd*sizeof(*map->osd_weight).
 
-Fixes: 85dd2c8ff368 ("netfs: Add a function to extract a UBUF or IOVEC into a BVEC iterator")
-Reported-by: Xiaoli Feng <xifeng@redhat.com>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260512123404.719402-10-dhowells@redhat.com
-Cc: netfs@lists.linux.dev
 Cc: stable@vger.kernel.org
-Cc: linux-cifs@vger.kernel.org
-Cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: dcbc919a5dc8 ("libceph: switch osdmap decoding to use ceph_decode_entity_addr")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/netfs/iterator.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/ceph/osdmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/netfs/iterator.c
-+++ b/fs/netfs/iterator.c
-@@ -22,7 +22,7 @@
-  *
-  * Extract the page fragments from the given amount of the source iterator and
-  * build up a second iterator that refers to all of those bits.  This allows
-- * the original iterator to disposed of.
-+ * the original iterator to be disposed of.
-  *
-  * @extraction_flags can have ITER_ALLOW_P2PDMA set to request peer-to-peer DMA be
-  * allowed on the pages extracted.
-@@ -67,8 +67,8 @@ ssize_t netfs_extract_user_iter(struct i
- 		ret = iov_iter_extract_pages(orig, &pages, count,
- 					     max_pages - npages, extraction_flags,
- 					     &offset);
--		if (ret < 0) {
--			pr_err("Couldn't get user pages (rc=%zd)\n", ret);
-+		if (unlikely(ret <= 0)) {
-+			ret = ret ?: -EIO;
- 			break;
- 		}
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -1703,7 +1703,7 @@ static int osdmap_decode(void **p, void
+ 	ceph_decode_need(p, end, 3*sizeof(u32) +
+ 			 map->max_osd*(struct_v >= 5 ? sizeof(u32) :
+ 						       sizeof(u8)) +
+-				       sizeof(*map->osd_weight), e_inval);
++			 map->max_osd*sizeof(*map->osd_weight), e_inval);
+ 	if (ceph_decode_32(p) != map->max_osd)
+ 		goto e_inval;
  
-@@ -97,6 +97,13 @@ ssize_t netfs_extract_user_iter(struct i
- 		npages += cur_npages;
- 	}
- 
-+	if (ret < 0 && (ret == -ENOMEM || npages == 0)) {
-+		for (i = 0; i < npages; i++)
-+			unpin_user_page(bv[i].bv_page);
-+		kvfree(bv);
-+		return ret;
-+	}
-+
- 	iov_iter_bvec(new, orig->data_source, bv, npages, orig_len - count);
- 	return npages;
- }
 
 
