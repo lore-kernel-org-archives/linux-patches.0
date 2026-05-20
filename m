@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D8B3F7875;
-	Wed, 20 May 2026 17:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85ED53F6C4E;
+	Wed, 20 May 2026 17:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297944; cv=none; b=DF97V6BjBPZaGvXYEhUDjAX/dq+54mRiTUO2b/Ljk0K9mQvyKUpb1V4rWfvjUMyh1EuL3SbKmMsRqbJjNpROZxf1RI/5C5+2EVg8N7jQn1hm7+1jXQ5MdvIcRIttonXs1iDrpOTkd0my5I7Ds/i5Q+/8kmXioIY4JA6moU5A5Bc=
+	t=1779297947; cv=none; b=rB4r7mQ9UIJILcI9YwiC/9BeSrj+VkdP8f1jtN6rUAlpVzNv4+Ol9IjgEqYf6DTviNFmLM+jKmuL5XSYy2jnfRc4Q78T57zyE2U+buHUIftvlEvjqQJEeeljKYBruDq+rn8qdVVzcAsUS27Q/n+pUG2OwQy1UDORPZAcduhkb48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297944; c=relaxed/simple;
-	bh=4QqzNQGg362x7TuWigSO6gpkLRFqGPN2Npr24g6t41o=;
+	s=arc-20240116; t=1779297947; c=relaxed/simple;
+	bh=QAQCnOIEnhKBZGaBFZKRHRusEN2r2uk1OFGN1kDbz+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHboMwORLCjJlsk8DonSKG8ztB/HkEil1fNRDJTEEJ0hMaRl3V1mmHnNw3rFFW0m8Rqm50s86gW7yt1OI0L6ztu32YgdVOE9vCn8/c8mIj37vscsPicvuGmreEn1U7iceCRQxgzCN0vpKMdpIXPQepXxDKGhrrWy8D8lnbIIlLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=te0cfeej; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OrIeTsS7oYq2kvc8L3/nrEZMlquTm7EXm8p6XzHHG33iDr6nPRMWSPJudW1Bi0fGap0uNu0gQb9TnnfRO3mQVDmtE6MVSbGwW5GKSuWfNmV12X58rO66qhw7gXcVhP7XK2jcwDx6zt2kEZcgs3vBn6B2qqJkLhmbx0yWsWmRP/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMWxrWsd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="te0cfeej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D4C1F000E9;
-	Wed, 20 May 2026 17:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMWxrWsd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEBF1F000E9;
+	Wed, 20 May 2026 17:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297943;
-	bh=rLZxndDt5pijnVfJeTB2brDg0QQ96jHaBPJbCZ7wKvw=;
+	s=korg; t=1779297946;
+	bh=XU/bS2/s1+TzdwqGJ0uV83Zs22iICnKEjMRGLdVUUaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=te0cfeej29Cdb0bTG7tjnbEzD/tjJ/pvMJ0HU0HJp2YCnhjNgyFn/yzd2M/nQM3OB
-	 J6gG2DFtdeMP8nPoGkx+2iITNjP9vHXx5Ikjpf0hB/nU1niakWKN86m+IsloRtsHW8
-	 YTV/uIhMDd3fmgiGXF5Cntm04h8tzBnHq3Uvl4s8=
+	b=TMWxrWsdiF34s299v7K2/xJA34iPG22ihh4hTKYmlEP049O3pVJNXZDEs3dKQSk+w
+	 aOgBBAYbyW4lQFNV//hqvy1hHQu7d4n9suvijBPKD7l4B7Ri2+5f4nRG3f4W6NDctW
+	 CMCzzD360NLQtUSsy9dW4lWwiKFp+FPJc2MwJM+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 216/957] spi: fsl-qspi: Use reinit_completion() for repeated operations
-Date: Wed, 20 May 2026 18:11:39 +0200
-Message-ID: <20260520162139.224817531@linuxfoundation.org>
+Subject: [PATCH 6.18 225/957] iommu/riscv: Stop polling when CQCSR reports an error
+Date: Wed, 20 May 2026 18:11:48 +0200
+Message-ID: <20260520162139.420678207@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,53 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
 
-[ Upstream commit 981b080a79724738882b0af1c5bb7ade30d94f24 ]
+[ Upstream commit b2e5684558edf3e9bbe18d0e0043854994eab1be ]
 
-The driver currently calls init_completion() during every spi_mem_op.
-Tchnically it may work, but it's not the recommended pattern.
+The cmdq wait loop busy-polls the consumer index until it advances
+or the software timeout expires. If the IOMMU has already signaled
+a command queue failure in CQCSR, continuing to poll for progress is
+pointless.
 
-According to the kernel documentation: Calling init_completion() on
-the same completion object twice is most likely a bug as it
-re-initializes the queue to an empty queue and enqueued tasks could
-get "lost" - use reinit_completion() in that case, but be aware of
-other races.
+Make riscv_iommu_queue_wait() also terminate the poll when any of these
+CQCSR error bits are observed.
 
-So moves the initial initialization to probe function and uses
-reinit_completion() for subsequent operations.
+This helps the caller return earlier in failure cases and avoids
+spinning until the full timeout interval when the hardware has already
+reported an error. On single-core systems in particular, the current
+busy-wait can delay servicing the command-timeout interrupt until the
+software timeout expires (90s by default).
 
-Fixes: 84d043185dbe ("spi: Add a driver for the Freescale/NXP QuadSPI controller")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
-Link: https://patch.msgid.link/20260304-spi-nxp-v2-3-cd7d7726a27e@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 856c0cfe5c5f ("iommu/riscv: Command and fault queue support")
+Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-qspi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/riscv/iommu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/spi/spi-fsl-qspi.c b/drivers/spi/spi-fsl-qspi.c
-index c887abb028d77..3904d64ed4334 100644
---- a/drivers/spi/spi-fsl-qspi.c
-+++ b/drivers/spi/spi-fsl-qspi.c
-@@ -607,7 +607,7 @@ static int fsl_qspi_do_op(struct fsl_qspi *q, const struct spi_mem_op *op)
- 	void __iomem *base = q->iobase;
- 	int err = 0;
+diff --git a/drivers/iommu/riscv/iommu.c b/drivers/iommu/riscv/iommu.c
+index c183818015813..1e8007a153c32 100644
+--- a/drivers/iommu/riscv/iommu.c
++++ b/drivers/iommu/riscv/iommu.c
+@@ -368,6 +368,8 @@ static int riscv_iommu_queue_wait(struct riscv_iommu_queue *queue,
+ 				  unsigned int timeout_us)
+ {
+ 	unsigned int cons = atomic_read(&queue->head);
++	unsigned int flags = RISCV_IOMMU_CQCSR_CQMF | RISCV_IOMMU_CQCSR_CMD_TO |
++			     RISCV_IOMMU_CQCSR_CMD_ILL;
  
--	init_completion(&q->c);
-+	reinit_completion(&q->c);
+ 	/* Already processed by the consumer */
+ 	if ((int)(cons - index) > 0)
+@@ -375,6 +377,7 @@ static int riscv_iommu_queue_wait(struct riscv_iommu_queue *queue,
  
- 	/*
- 	 * Always start the sequence at the same index since we update
-@@ -928,6 +928,7 @@ static int fsl_qspi_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
+ 	/* Monitor consumer index */
+ 	return readx_poll_timeout(riscv_iommu_queue_cons, queue, cons,
++				 (riscv_iommu_readl(queue->iommu, queue->qcr) & flags) ||
+ 				 (int)(cons - index) > 0, 0, timeout_us);
+ }
  
-+	init_completion(&q->c);
- 	ret = devm_request_irq(dev, ret,
- 			fsl_qspi_irq_handler, 0, pdev->name, q);
- 	if (ret) {
 -- 
 2.53.0
 
