@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169453F660B;
-	Wed, 20 May 2026 18:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7766745106F;
+	Wed, 20 May 2026 18:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302366; cv=none; b=o0jrX/vc7MSqZvuQzm31tkLerJ799tEyrrLvJheIvh8y4S6hg3aMYaa+yrYi0F1G5bRzTrDickauPmuAhoQpvq1XOTNB5O/A96r5oOyycg5gmbl2ppLqbpFvEy5Lapq9OhDOLtIQ4T1rPdbB3dcuzd+GIbyAQnx4hNPe5sVXYTA=
+	t=1779302368; cv=none; b=kcg+IdhXN+5Jtl7uvhmOMaA8IgZIc1cJRkHaZigkdbpUzgf6QcZPkPqL/8eGMd69OwVauQQSYv/J1yHXBm8cVlQ4jQ1HNQb9V8OZFMRz7V64ejtpli6rZZZGTR4gvHtWV9mscJsJ6vsjG6CH6c5vWcB2k4I+rbeqe4HRhYmP0cE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302366; c=relaxed/simple;
-	bh=1eZeWZNIA+gmw8+BrjwZQLUijlHYdDKQGvjjgm7qizE=;
+	s=arc-20240116; t=1779302368; c=relaxed/simple;
+	bh=wS+UOdD8b/s3XlMR3U/vSJk5tyGksMXfbqNLHHCBrzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QXPRPEg8gpyG2+DCmPQ8LtbYB2qlftC4IS+qjYpSXtcIeamxtMBL4acubg4Dyl751Uhvx+PL6FuhfFCoTvNQdeRyvPrV2PuyNRmBOks4oFnDpG5QDLbceG5P3PcJsdG1KLl2CLk9N6gnVspSTKBZpvpfqMDeipTLe5q/AKcH9TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W93mVHu7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eRwoxasIUf6rHAtBIKapgApKvoMGTsNQwsjYXLjFrq3SVJYV3/AT6LuMTc6SbDyUGiiwLGqhVxwUYBTh46eEkXkms/6Ak0YXARXHFZgcjCO7bpZuKq6Leys226by2WjSnXK4Ebd+dpiaIvKJEyZZdHRVp3Mw2j53ipdCKW+TWug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewpJnt/D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W93mVHu7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9F51F0089F;
-	Wed, 20 May 2026 18:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewpJnt/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4291F0089D;
+	Wed, 20 May 2026 18:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302364;
-	bh=O1krnNwC0m0t0kxpv5OPzBgGoXEnqcxuBV68r9jAUPQ=;
+	s=korg; t=1779302367;
+	bh=UOHNKHlWxYsXeoZzL7aWMMZFdX+E0iybeSzElLO5K7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W93mVHu7TzAyBu4rEuHM+qxJEqqym5DHvAMxTggt93FQc/qtgJXlxbCDvmEQY6Reo
-	 XSsh7lFqT3ytuwm3liIZnpqG4yccSV5gqF7B9pQ2M8XVVPJL4NzUWMZEF+Lhqtboiq
-	 JygQj91b17Jdx/yW/cgYwnaDWQWXWIpIk59c5Tyk=
+	b=ewpJnt/DqSp0Lq2ZK7Rkir2zeet2RPy8djChSLoJsofv3sebTvDezId0Oj6/YeAQC
+	 KiCaxSpWBofD7jvMGCAlyCqHvW89I1LzHuhH8ftGksJMrQzHTlcH17OTowcuhP90Ve
+	 vqiuH2wiugcgGA0D4GbaeDdgSne1o/P73w/DwlS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 212/508] ARM: dts: imx27-eukrea: replace interrupts with interrupts-extended
-Date: Wed, 20 May 2026 18:20:35 +0200
-Message-ID: <20260520162103.233494401@linuxfoundation.org>
+Subject: [PATCH 6.6 239/508] bpf, sockmap: Take state lock for af_unix iter
+Date: Wed, 20 May 2026 18:21:02 +0200
+Message-ID: <20260520162103.828581739@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -50,74 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 0477a6b31e2874e554e3bcfac9883684b8f8ca2d ]
+[ Upstream commit 64c2f93fc3254d3bf5de4445fb732ee5c451edb6 ]
 
-The property interrupts use default interrupt controllers. But pass down
-gpio<n> as phandle. Correct it by use interrupts-extended.
+When a BPF iterator program updates a sockmap, there is a race condition in
+unix_stream_bpf_update_proto() where the `peer` pointer can become stale[1]
+during a state transition TCP_ESTABLISHED -> TCP_CLOSE.
 
-Fixes: d8cae888aa2bc ("ARM: dts: Add support for the cpuimx27 board from Eukrea and its baseboard")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+        CPU0 bpf                          CPU1 close
+        --------                          ----------
+// unix_stream_bpf_update_proto()
+sk_pair = unix_peer(sk)
+if (unlikely(!sk_pair))
+   return -EINVAL;
+                                     // unix_release_sock()
+                                     skpair = unix_peer(sk);
+                                     unix_peer(sk) = NULL;
+                                     sock_put(skpair)
+sock_hold(sk_pair) // UaF
+
+More practically, this fix guarantees that the iterator program is
+consistently provided with a unix socket that remains stable during
+iterator execution.
+
+[1]:
+BUG: KASAN: slab-use-after-free in unix_stream_bpf_update_proto+0x155/0x490
+Write of size 4 at addr ffff8881178c9a00 by task test_progs/2231
+Call Trace:
+ dump_stack_lvl+0x5d/0x80
+ print_report+0x170/0x4f3
+ kasan_report+0xe4/0x1c0
+ kasan_check_range+0x125/0x200
+ unix_stream_bpf_update_proto+0x155/0x490
+ sock_map_link+0x71c/0xec0
+ sock_map_update_common+0xbc/0x600
+ sock_map_update_elem+0x19a/0x1f0
+ bpf_prog_bbbf56096cdd4f01_selective_dump_unix+0x20c/0x217
+ bpf_iter_run_prog+0x21e/0xae0
+ bpf_iter_unix_seq_show+0x1e0/0x2a0
+ bpf_seq_read+0x42c/0x10d0
+ vfs_read+0x171/0xb20
+ ksys_read+0xff/0x200
+ do_syscall_64+0xf7/0x5e0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Allocated by task 2236:
+ kasan_save_stack+0x30/0x50
+ kasan_save_track+0x14/0x30
+ __kasan_slab_alloc+0x63/0x80
+ kmem_cache_alloc_noprof+0x1d5/0x680
+ sk_prot_alloc+0x59/0x210
+ sk_alloc+0x34/0x470
+ unix_create1+0x86/0x8a0
+ unix_stream_connect+0x318/0x15b0
+ __sys_connect+0xfd/0x130
+ __x64_sys_connect+0x72/0xd0
+ do_syscall_64+0xf7/0x5e0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Freed by task 2236:
+ kasan_save_stack+0x30/0x50
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x70
+ __kasan_slab_free+0x47/0x70
+ kmem_cache_free+0x11c/0x590
+ __sk_destruct+0x432/0x6e0
+ unix_release_sock+0x9b3/0xf60
+ unix_release+0x8a/0xf0
+ __sock_release+0xb0/0x270
+ sock_close+0x18/0x20
+ __fput+0x36e/0xac0
+ fput_close_sync+0xe5/0x1a0
+ __x64_sys_close+0x7d/0xd0
+ do_syscall_64+0xf7/0x5e0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: 2c860a43dd77 ("bpf: af_unix: Implement BPF iterator for UNIX domain socket.")
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260414-unix-proto-update-null-ptr-deref-v4-5-2af6fe97918e@rbox.co
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi      | 8 ++++----
- .../boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ net/unix/af_unix.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-index c7e9235848782..9f0e65526d5f9 100644
---- a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-@@ -106,7 +106,7 @@ uart8250@3,200000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 23 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 23 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x200000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-@@ -119,7 +119,7 @@ uart8250@3,400000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 22 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 22 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x400000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-@@ -132,7 +132,7 @@ uart8250@3,800000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 27 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 27 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x800000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-@@ -145,7 +145,7 @@ uart8250@3,1000000 {
- 		compatible = "ns8250";
- 		clocks = <&clk14745600>;
- 		fsl,weim-cs-timing = <0x0000d603 0x0d1d0d01 0x00d20000>;
--		interrupts = <&gpio2 30 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio2 30 IRQ_TYPE_LEVEL_LOW>;
- 		reg = <3 0x1000000 0x1000>;
- 		reg-shift = <1>;
- 		reg-io-width = <1>;
-diff --git a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
-index d78793601306c..c71f802983304 100644
---- a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-mbimxsd27-baseboard.dts
-@@ -76,7 +76,7 @@ ads7846@0 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_touch>;
- 		reg = <0>;
--		interrupts = <&gpio4 25 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts-extended = <&gpio4 25 IRQ_TYPE_LEVEL_LOW>;
- 		spi-cpol;
- 		spi-max-frequency = <1500000>;
- 		ti,keep-vref-on;
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 8bf6c2b7215e8..87908ae74efb3 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -3567,6 +3567,7 @@ static int bpf_iter_unix_seq_show(struct seq_file *seq, void *v)
+ 		return 0;
+ 
+ 	lock_sock(sk);
++	unix_state_lock(sk);
+ 
+ 	if (unlikely(sock_flag(sk, SOCK_DEAD))) {
+ 		ret = SEQ_SKIP;
+@@ -3578,6 +3579,7 @@ static int bpf_iter_unix_seq_show(struct seq_file *seq, void *v)
+ 	prog = bpf_iter_get_info(&meta, false);
+ 	ret = unix_prog_seq_show(prog, &meta, v, uid);
+ unlock:
++	unix_state_unlock(sk);
+ 	release_sock(sk);
+ 	return ret;
+ }
 -- 
 2.53.0
 
