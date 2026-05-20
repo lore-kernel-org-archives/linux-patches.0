@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EB0347515;
-	Wed, 20 May 2026 18:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844E43F789B;
+	Wed, 20 May 2026 18:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301176; cv=none; b=tPPKAFpkaslKZ1QsjrBpL+WewHlQuIMvi6ELdzEoZuvgQicgeCxmvXiIDU+pICOozpPDodTB2EhuqhknULVkOm4CrLDuEwDtZcvWibCBjF1TFrHfZM/0wAYbqS26xrLhBibMShWwNZCXQQWxkOXHWXHslnfR/SMvdpkUG7xmuQg=
+	t=1779301179; cv=none; b=HOt0iOMJOoMgYCNwC+BRW7oiGTqv9fI7dO7NR8D1BYTyI6oyl0Zx+TGuk5vuZDSqIerYsNgfL+f/YwV/zPanQ6o6ISFBOcVQ9etAo2zBB2Y1VyGVCJPyUiUH1kGDGGNu/HTxSk/feA+8eeyxKWomsVsCOm8EXSWTK9J82fexdyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301176; c=relaxed/simple;
-	bh=CMBJauG9NVSCC633AgoPKA3/umWaWCDWFSG+B16637M=;
+	s=arc-20240116; t=1779301179; c=relaxed/simple;
+	bh=XXTfy7wMnjiOO5EefT9LiWwkwZnCLpXtTLz1T9sZgpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZgxK1ocwEkjFDIC2zb9MoYfnu9qp8qsYpZE7Er1Lwj9Hx3qY8S2Yo5zPifCYM0ktkB9yOdIg7eircIfC3+Ht3vUcogg5boA6lShnHuePzInxWTxlmgBeds2aovq6ZpMJ7DL/9CDElijvIVjX/3Kbl+a+mkBpR/XL6uE9ug4FeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YrN115O9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kW5syMW1Jb6vi+Kz8l4hdjgPwjTvE4Tpg3u8hSFNLRSOGp2mvRemwxGv9JssYka456Dx0FlV34/q9hWQj33yv4QySII6wgkWZHcHzc6Us2+e+Hc6sywhF9JtmtxHGU/RHXF7ycd4XReb1Qhlc645JnClZQuKqrSms3BjF4CYj7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYTcnNO/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YrN115O9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BCF1F000E9;
-	Wed, 20 May 2026 18:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYTcnNO/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2CDB1F000E9;
+	Wed, 20 May 2026 18:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301175;
-	bh=r3wdiCftqXtLZZdutk/Rl/p1YQNBAhWDpbXdVfhHeao=;
+	s=korg; t=1779301178;
+	bh=+gz97r3PWaBDwwsSJQqItuQQWcBikNMLapGchAKQaEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YrN115O9gtHEwC/CHFdCnLFeozkoxcnzrLmmeRusc2P5chhwvFYfp2OvIpJuqmK/P
-	 PcX+/hy0Y8KsKkS8LxT3FNz3B89y9HRXaKyq+Svgr5IcCzlDXchJP7qtkli7mXVETt
-	 j91QR6SnRKLo1ZBOT7JuKhMe8SD0DD6R8pRWaFK8=
+	b=BYTcnNO/DKxkyERyVZLsArjrnlixeJrf1ToTsSwcJCDwhXldK4MNMDUbzHSbJxDjC
+	 kV/xUsxx4qAsIWv0eRTVdDtLPyou64izCICO6soCgf09dmSOfpoTZzS66HnlzbzPae
+	 WA/p/Oay3ys9NdV6kFgsh51fn2/pDmab6COCmLKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Zoltan Fodor <zoltan.fodor@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 455/666] tcp: annotate data-races around tp->plb_rehash
-Date: Wed, 20 May 2026 18:21:06 +0200
-Message-ID: <20260520162121.133479978@linuxfoundation.org>
+Subject: [PATCH 6.12 456/666] ice: update PCS latency settings for E825 10G/25Gb modes
+Date: Wed, 20 May 2026 18:21:07 +0200
+Message-ID: <20260520162121.153391773@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,50 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit 9e89b9d03a2d2e30dcca166d5af52f9a8eceab25 ]
+[ Upstream commit 05567e4052732d70c7ff9655217b3d14d25f639a ]
 
-tcp_get_timestamping_opt_stats() intentionally runs lockless, we must
-add READ_ONCE() and WRITE_ONCE() annotations to keep KCSAN happy.
+Update MAC Rx/Tx offset registers settings (PHY_MAC_[RX|TX]_OFFSET
+registers) with the data obtained with the latest research. It applies
+to PCS latency settings for the following speeds/modes:
+* 10Gb NO-FEC
+        - TX latency changed from 71.25 ns to 73 ns
+        - RX latency changed from -25.6 ns to -28 ns
+* 25Gb NO-FEC
+	- TX latency changed from 28.17 ns to 33 ns
+        - RX latency changed from -12.45 ns to -12 ns
+* 25Gb RS-FEC
+        - TX latency changed from 64.5 ns to 69 ns
+        - RX latency changed from -3.6 ns to -3 ns
 
-Fixes: 29c1c44646ae ("tcp: add u32 counter in tcp_sock and an SNMP counter for PLB")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260416200319.3608680-15-edumazet@google.com
+The original data came from simulation and pre-production hardware.
+The new data measures the actual delays and as such is more accurate.
+
+Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
+Co-developed-by: Zoltan Fodor <zoltan.fodor@intel.com>
+Signed-off-by: Zoltan Fodor <zoltan.fodor@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260416-iwl-net-submission-2026-04-14-v2-2-686c33c9828d@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c     | 3 ++-
- net/ipv4/tcp_plb.c | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ptp_consts.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 45e093ca22533..8b90665245b2d 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4319,7 +4319,8 @@ struct sk_buff *tcp_get_timestamping_opt_stats(const struct sock *sk,
- 		nla_put_u8(stats, TCP_NLA_TTL,
- 			   tcp_skb_ttl_or_hop_limit(ack_skb));
- 
--	nla_put_u32(stats, TCP_NLA_REHASH, tp->plb_rehash + tp->timeout_rehash);
-+	nla_put_u32(stats, TCP_NLA_REHASH,
-+		    READ_ONCE(tp->plb_rehash) + READ_ONCE(tp->timeout_rehash));
- 	return stats;
- }
- 
-diff --git a/net/ipv4/tcp_plb.c b/net/ipv4/tcp_plb.c
-index 4bcf7eff95e39..b7f9b60d8991f 100644
---- a/net/ipv4/tcp_plb.c
-+++ b/net/ipv4/tcp_plb.c
-@@ -79,7 +79,7 @@ void tcp_plb_check_rehash(struct sock *sk, struct tcp_plb_state *plb)
- 
- 	sk_rethink_txhash(sk);
- 	plb->consec_cong_rounds = 0;
--	tcp_sk(sk)->plb_rehash++;
-+	WRITE_ONCE(tcp_sk(sk)->plb_rehash, tcp_sk(sk)->plb_rehash + 1);
- 	NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPPLBREHASH);
- }
- EXPORT_SYMBOL_GPL(tcp_plb_check_rehash);
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_consts.h b/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
+index bdb1020147d1c..91cc7df5cab5b 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
+@@ -123,14 +123,14 @@ struct ice_eth56g_mac_reg_cfg eth56g_mac_cfg[NUM_ICE_ETH56G_LNK_SPD] = {
+ 		.blktime = 0x666, /* 3.2 */
+ 		.tx_offset = {
+ 			.serdes = 0x234c, /* 17.6484848 */
+-			.no_fec = 0x8e80, /* 71.25 */
++			.no_fec = 0x93d9, /* 73 */
+ 			.fc = 0xb4a4, /* 90.32 */
+ 			.sfd = 0x4a4, /* 2.32 */
+ 			.onestep = 0x4ccd /* 38.4 */
+ 		},
+ 		.rx_offset = {
+ 			.serdes = 0xffffeb27, /* -10.42424 */
+-			.no_fec = 0xffffcccd, /* -25.6 */
++			.no_fec = 0xffffc7b6, /* -28 */
+ 			.fc = 0xfffc557b, /* -469.26 */
+ 			.sfd = 0x4a4, /* 2.32 */
+ 			.bs_ds = 0x32 /* 0.0969697 */
+@@ -163,17 +163,17 @@ struct ice_eth56g_mac_reg_cfg eth56g_mac_cfg[NUM_ICE_ETH56G_LNK_SPD] = {
+ 		.mktime = 0x147b, /* 10.24, only if RS-FEC enabled */
+ 		.tx_offset = {
+ 			.serdes = 0xe1e, /* 7.0593939 */
+-			.no_fec = 0x3857, /* 28.17 */
++			.no_fec = 0x4266, /* 33 */
+ 			.fc = 0x48c3, /* 36.38 */
+-			.rs = 0x8100, /* 64.5 */
++			.rs = 0x8a00, /* 69 */
+ 			.sfd = 0x1dc, /* 0.93 */
+ 			.onestep = 0x1eb8 /* 15.36 */
+ 		},
+ 		.rx_offset = {
+ 			.serdes = 0xfffff7a9, /* -4.1697 */
+-			.no_fec = 0xffffe71a, /* -12.45 */
++			.no_fec = 0xffffe700, /* -12 */
+ 			.fc = 0xfffe894d, /* -187.35 */
+-			.rs = 0xfffff8cd, /* -3.6 */
++			.rs = 0xfffff8cc, /* -3 */
+ 			.sfd = 0x1dc, /* 0.93 */
+ 			.bs_ds = 0x14 /* 0.0387879, RS-FEC 0 */
+ 		}
 -- 
 2.53.0
 
