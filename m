@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF65A29B8D0;
-	Wed, 20 May 2026 17:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9560A3F39EE;
+	Wed, 20 May 2026 17:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299686; cv=none; b=FMFD77xwXvjy4oFVh9Zblm9i9jpt2P0aSY6K+Hcwtzfq1r7+tatyZNEVXeRHH3soTemuzIJzO1y9+s3HryeFlNwN8/d0l2OWtKU/DT37AQpzNd+AHPCA39sWPSCmPgd9idQUJAMkH/c8XD7ow34Ib5UiwiAffDC7GHPla8CqVlA=
+	t=1779299689; cv=none; b=nu52Y8vscB3+S9sN0YqHMUIoLfweEs8wbNlpQjfJiLW5E2zUq3iLcBoDet79eu9bictz+f4CP/s9UUf1XbvJGz/z1HT4Fu1zcsigLK1XdIUftCLY2q8Z9cLyWym7X/RnYHTvvSgIeMxzFtcgNttUnz5xFLoGhXXSAbysh39x9fQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299686; c=relaxed/simple;
-	bh=U6nuTh943wv3rPJdYuIbDH6zcre1rCcvNKTe4jMkv4E=;
+	s=arc-20240116; t=1779299689; c=relaxed/simple;
+	bh=jp5SBvh6gSo+d548Fmn1s2wLN4S2HdNKqQJwZolCn+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLjHR601tUqyT05ihpNjpM5pA89fx0I79w6vpk6+1Z3Y6CzPzFYpeJsF6ZZfAYAPadjVjvXB7PBqSsjI09fDVr+leZ3rG0GpvKB5xg10qPUJTd3HmHXtAhcMF+6fnCNPZ0kfyD3tIA//wyEvOP5mqu0tFffk7YJG1Vo/wH1Xr44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHbHX1rE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SKMjxqOpCjW/sLk8uEJrdqX64nrPtGwM1GpI5gycAgV0yBwzeeeg6i0XgjHXyD9zPs4I7yLpHXt7JwXuPy2I13rbDcbzLFRsl88pRsUFLN+tXp1HqiJZkjghPN4jtsG/b76klptDdY4vJJ+Txi89JS8uK7BO6svw5Tla85RQSwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PiHewQQf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHbHX1rE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9EF1F000E9;
-	Wed, 20 May 2026 17:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PiHewQQf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07EE51F000E9;
+	Wed, 20 May 2026 17:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299684;
-	bh=mJB/089myfVlYur9I1VA2YfQyi1nZB5bRnCamA5Jmqw=;
+	s=korg; t=1779299687;
+	bh=j4XSGZjTK4rBjENL1nMNHkCnty6P5rQvTWkTozd6DWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lHbHX1rEZc5jPlZGfoObVd0DBBBXT427KdmDXAkL5n6Y+xxGsBsHJ84nJYEStmGdb
-	 RZh4gQfN5Vufc5iF4Ef9xjvm0z+LZQlMYyVLNE9NR+6Nmc0ozg0M/G6HTCdz4LO/g8
-	 BCMFUAn/5jvwXcp1Wh7e6yJ4bjIsFbxXteYDWhYc=
+	b=PiHewQQfCqnqubfOF5Da6iuIupMID7HZ+/1ihP62m46/2edVbLD1mHYPqIxr5ILkG
+	 oWB4Fo68Qv8zvhOovJRyHkYaz1U69M+6IpKRDR7XilWrj6mWZQCLtWnCv4wpsqK6fk
+	 96nyqAaD39A6yrIEnvl1Qk6CJ+n2epSh/1aaa+y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 866/957] fuse: fix race when disposing stale dentries
-Date: Wed, 20 May 2026 18:22:29 +0200
-Message-ID: <20260520162153.347426483@linuxfoundation.org>
+Subject: [PATCH 6.18 867/957] fuse: make sure dentry is evicted if stale
+Date: Wed, 20 May 2026 18:22:30 +0200
+Message-ID: <20260520162153.369620886@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,74 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Miklos Szeredi <mszeredi@redhat.com>
 
-[ Upstream commit cb8d2bdcb8241b66ca4ac4868f20e12cd6881ebc ]
+[ Upstream commit 1e2c1af1beb395841743e240a59ab37edc9a7d33 ]
 
-In fuse_dentry_tree_work() just before d_dispose_if_unused() the dentry
-could get evicted, resulting in UAF.
+d_dispose_if_unused() may find the dentry with a positive refcount, in
+which case it won't be put on the dispose list even though it has already
+timed out.
 
-Move unlocking dentry_hash[i].lock to after the dispose.  To do this,
-fuse_dentry_tree_del_node() needs to be moved from fuse_dentry_prune() to
-fuse_dentry_release() to prevent an ABBA deadlock.
+"Reinstall" the d_delete() callback, which was optimized out in
+fuse_dentry_settime().  This will result in the dentry being evicted as
+soon as the refcount hits zero.
 
-The lock ordering becomes:
-
- -> dentry_bucket.lock
-    -> dentry.d_lock
-
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Closes: https://lore.kernel.org/all/20251206014242.GO1712166@ZenIV/
 Fixes: ab84ad597386 ("fuse: new work queue to periodically invalidate expired dentries")
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Link: https://patch.msgid.link/20260114145344.468856-2-mszeredi@redhat.com
+Link: https://patch.msgid.link/20260114145344.468856-3-mszeredi@redhat.com
 Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 1e2c1af1beb3 ("fuse: make sure dentry is evicted if stale")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dir.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ fs/fuse/dir.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/fs/fuse/dir.c b/fs/fuse/dir.c
-index 98b174bd802f0..b7a6a5b6bbc8a 100644
+index b7a6a5b6bbc8a..ac5d0c305b51f 100644
 --- a/fs/fuse/dir.c
 +++ b/fs/fuse/dir.c
-@@ -172,8 +172,8 @@ static void fuse_dentry_tree_work(struct work_struct *work)
+@@ -172,6 +172,10 @@ static void fuse_dentry_tree_work(struct work_struct *work)
  			if (time_after64(get_jiffies_64(), fd->time)) {
  				rb_erase(&fd->node, &dentry_hash[i].tree);
  				RB_CLEAR_NODE(&fd->node);
--				spin_unlock(&dentry_hash[i].lock);
++				spin_lock(&fd->dentry->d_lock);
++				/* If dentry is still referenced, let next dput release it */
++				fd->dentry->d_flags |= DCACHE_OP_DELETE;
++				spin_unlock(&fd->dentry->d_lock);
  				d_dispose_if_unused(fd->dentry, &dispose);
-+				spin_unlock(&dentry_hash[i].lock);
+ 				spin_unlock(&dentry_hash[i].lock);
  				cond_resched();
- 				spin_lock(&dentry_hash[i].lock);
- 			} else
-@@ -464,18 +464,12 @@ static int fuse_dentry_init(struct dentry *dentry)
- 	return 0;
- }
- 
--static void fuse_dentry_prune(struct dentry *dentry)
-+static void fuse_dentry_release(struct dentry *dentry)
- {
- 	struct fuse_dentry *fd = dentry->d_fsdata;
- 
- 	if (!RB_EMPTY_NODE(&fd->node))
- 		fuse_dentry_tree_del_node(dentry);
--}
--
--static void fuse_dentry_release(struct dentry *dentry)
--{
--	struct fuse_dentry *fd = dentry->d_fsdata;
--
- 	kfree_rcu(fd, rcu);
- }
- 
-@@ -512,7 +506,6 @@ const struct dentry_operations fuse_dentry_operations = {
- 	.d_revalidate	= fuse_dentry_revalidate,
- 	.d_delete	= fuse_dentry_delete,
- 	.d_init		= fuse_dentry_init,
--	.d_prune	= fuse_dentry_prune,
- 	.d_release	= fuse_dentry_release,
- 	.d_automount	= fuse_dentry_automount,
- };
 -- 
 2.53.0
 
