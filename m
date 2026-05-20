@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0133517A309;
-	Wed, 20 May 2026 16:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A5C3EAC82;
+	Wed, 20 May 2026 16:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296394; cv=none; b=nL+HhfVZg+JL/PP7k6j4HguZWaaMxXxawwLKNg7cnI3mJggW913DbkLdL0qOevlIaHVCu62YcjjWfI/Gtwp+lhJGo6gz8Mdf8nEaZDDysMQNAaFbwt6bORDLzOes/LJsu3JRGtEWR5wb68SiLhO1CgJ5YsUYNmA6GKs8d6Pi2lo=
+	t=1779296397; cv=none; b=NeYZMT0jR35zsMVw1BEVK81yneJ6GzdtKdPX9wDoQ9AIbN9AaEwIpJxtjsSE+h80IzDM/m35cnfAVQOx1Odblu9JlEIcguySUGim4PEjtUx3467FcA8ELogVgrZIw3ConjUMpNYhZKsnl+sn3ZRDV2qncuxpbpHpjhihwuA2McY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296394; c=relaxed/simple;
-	bh=05Ce+VxtUOJscwka6BwSjU9CGTrGD0o5ntYEHIEyEu0=;
+	s=arc-20240116; t=1779296397; c=relaxed/simple;
+	bh=Ezb8tMlMNJ56k5BzTRraEagxQQeoF8mTczq6vLg4DBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLS8+MJc/qXWUZi1DEucHSri05dYLuHBWawe8+ho3H3KlDOtaFEin+UqcHSBsutEwD4y6JJFHqEv8zjlYoc8GbioD4PIMNW8Ye3ffqXAhqR6QR9FiEmE2BZhiR3vjkABFVW+4x0wG8cEBEFhbO2NKeHkxaLFlgelitRG6YDhM2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GF39Pa+V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WgQwV1LpJW6L0kpc2f/WJ1iGUATb6qdehOl8LD10vKM4mu4hm4sXVgorg003ybTxXaS9xG/lEXMYEwTvIQCNm2CgmA5pmhKxCWrk1ztSLyH3+khi5JYfXUYtFgDE62AE3Lqhp6TocH5mCFQRRO39Qi6c4NFKy69k10axm8dn7v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMl6rNCw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GF39Pa+V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD771F000E9;
-	Wed, 20 May 2026 16:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMl6rNCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00241F000E9;
+	Wed, 20 May 2026 16:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296392;
-	bh=7R9g+03oD7lbx6+RMYmZexFCTacJ+N+aLjJUbgCVMjM=;
+	s=korg; t=1779296395;
+	bh=kmHV+8B6wHHdUEkop9D7bsm/Uc3byqcJnoPdvdRvr3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GF39Pa+VnvR+qfkp0LpABD7dXOfSQLjGlmCTOcKKlfQEIrED6CDPrigi5HYMgcp4p
-	 r64+lFFLMlL4qBvj3WDATmyiXaz4TVbGpN3nsG5IssiPhfJaF2MWwj/DC4ACTOkNYN
-	 jeEVMykTReJThKz+WDk9ZN091YG3Sm6L/seyVOnw=
+	b=VMl6rNCwlWfRy4YZB0qwPA2he4UEIi8iR9E3yXeUEqVa0yE66NaRxFfkClu28pYc4
+	 8kvSnM1E9sheUewg7dmGxWCYmlxkb1uFtzTNy2gSa08JyYBevQGvXMPI/pOifHIznu
+	 8jNwekn64xValdeK6ZgL6NmSP2lW+o7fuHr7mjkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Mujawar <sami.mujawar@arm.com>,
-	Jagdish Gediya <Jagdish.Gediya@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Kenneth Kasilag <kenneth@kasilag.me>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0741/1146] virt: arm-cca-guest: fix error check for RSI_INCOMPLETE
-Date: Wed, 20 May 2026 18:16:31 +0200
-Message-ID: <20260520162204.977029773@linuxfoundation.org>
+Subject: [PATCH 7.0 0742/1146] crypto: eip93 - fix hmac setkey algo selection
+Date: Wed, 20 May 2026 18:16:32 +0200
+Message-ID: <20260520162204.998969323@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -56,49 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sami Mujawar <sami.mujawar@arm.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit e534e9d13d0b7bdbb2cccdace7b96b769a10540e ]
+[ Upstream commit 3ba3b02f897b14e34977e1886d95ffe64d907204 ]
 
-The RSI interface can return RSI_INCOMPLETE when a report spans
-multiple granules. This is an expected condition and should not be
-treated as a fatal error.
+eip93_hmac_setkey() allocates a temporary ahash transform for
+computing HMAC ipad/opad key material. The allocation uses the
+driver-specific cra_driver_name (e.g. "sha256-eip93") but passes
+CRYPTO_ALG_ASYNC as the mask, which excludes async algorithms.
 
-Currently, arm_cca_report_new() checks for `info.result != RSI_SUCCESS`
-and bails out, which incorrectly flags RSI_INCOMPLETE as a failure.
-Fix the check to only break out on results other than RSI_SUCCESS or
-RSI_INCOMPLETE.
+Since the EIP93 hash algorithms are the only ones registered
+under those driver names and they are inherently async, the
+lookup is self-contradictory and always fails with -ENOENT.
 
-This ensures partial reports are handled correctly and avoids spurious
--ENXIO errors when generating attestation reports.
+When called from the AEAD setkey path, this failure leaves the
+SA record partially initialized with zeroed digest fields. A
+subsequent crypto operation then dereferences a NULL pointer in
+the request context, resulting in a kernel panic:
 
-Fixes: 7999edc484ca ("virt: arm-cca-guest: TSM_REPORT support for realms")
-Signed-off-by: Sami Mujawar <sami.mujawar@arm.com>
-Reported-by: Jagdish Gediya <Jagdish.Gediya@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+```
+  pc : eip93_aead_handle_result+0xc8c/0x1240 [crypto_hw_eip93]
+  lr : eip93_aead_handle_result+0xbec/0x1240 [crypto_hw_eip93]
+  sp : ffffffc082feb820
+  x29: ffffffc082feb820 x28: ffffff8011043980 x27: 0000000000000000
+  x26: 0000000000000000 x25: ffffffc078da0bc8 x24: 0000000091043980
+  x23: ffffff8004d59e50 x22: ffffff8004d59410 x21: ffffff8004d593c0
+  x20: ffffff8004d593c0 x19: ffffff8004d4f300 x18: 0000000000000000
+  x17: 0000000000000000 x16: 0000000000000000 x15: 0000007fda7aa498
+  x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+  x11: 0000000000000000 x10: fffffffff8127a80 x9 : 0000000000000000
+  x8 : ffffff8004d4f380 x7 : 0000000000000000 x6 : 000000000000003f
+  x5 : 0000000000000040 x4 : 0000000000000008 x3 : 0000000000000009
+  x2 : 0000000000000008 x1 : 0000000028000003 x0 : ffffff8004d388c0
+  Code: 910142b6 f94012e0 f9002aa0 f90006d3 (f9400740)
+```
+
+The reported symbol eip93_aead_handle_result+0xc8c is a
+resolution artifact from static functions being merged under
+the nearest exported symbol. Decoding the faulting sequence:
+
+```
+  910142b6  ADD  X22, X21, #0x50
+  f94012e0  LDR  X0, [X23, #0x20]
+  f9002aa0  STR  X0, [X21, #0x50]
+  f90006d3  STR  X19, [X22, #0x8]
+  f9400740  LDR  X0, [X26, #0x8]
+```
+
+The faulting LDR at [X26, #0x8] is loading ctx->flags
+(offset 8 in eip93_hash_ctx), where ctx has been resolved
+to NULL from a partially initialized or unreachable
+transform context following the failed setkey.
+
+Fix this by dropping the CRYPTO_ALG_ASYNC mask from the
+crypto_alloc_ahash() call. The code already handles async
+completion correctly via crypto_wait_req(), so there is no
+requirement to restrict the lookup to synchronous algorithms.
+
+Note that hashing a single 64-byte block through the hardware
+is likely slower than doing it in software due to the DMA
+round-trip overhead, but offloading it may still spare CPU
+cycles on the slower embedded cores where this IP is found.
+
+Fixes: 9739f5f93b78 ("crypto: eip93 - Add Inside Secure SafeXcel EIP-93 crypto engine support")
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+[Detailed investigation report of this bug]
+Signed-off-by: Kenneth Kasilag <kenneth@kasilag.me>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/coco/arm-cca-guest/arm-cca-guest.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/inside-secure/eip93/eip93-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/virt/coco/arm-cca-guest/arm-cca-guest.c b/drivers/virt/coco/arm-cca-guest/arm-cca-guest.c
-index 0c9ea24a200c9..66d00b6ceb789 100644
---- a/drivers/virt/coco/arm-cca-guest/arm-cca-guest.c
-+++ b/drivers/virt/coco/arm-cca-guest/arm-cca-guest.c
-@@ -157,7 +157,8 @@ static int arm_cca_report_new(struct tsm_report *report, void *data)
- 		} while (info.result == RSI_INCOMPLETE &&
- 			 info.offset < RSI_GRANULE_SIZE);
+diff --git a/drivers/crypto/inside-secure/eip93/eip93-common.c b/drivers/crypto/inside-secure/eip93/eip93-common.c
+index f4ad6beff15e0..259714a4ee4d3 100644
+--- a/drivers/crypto/inside-secure/eip93/eip93-common.c
++++ b/drivers/crypto/inside-secure/eip93/eip93-common.c
+@@ -731,7 +731,7 @@ int eip93_hmac_setkey(u32 ctx_flags, const u8 *key, unsigned int keylen,
+ 		return -EINVAL;
+ 	}
  
--		if (info.result != RSI_SUCCESS) {
-+		/* Break out in case of failure */
-+		if (info.result != RSI_SUCCESS && info.result != RSI_INCOMPLETE) {
- 			ret = -ENXIO;
- 			token_size = 0;
- 			goto exit_free_granule_page;
+-	ahash_tfm = crypto_alloc_ahash(alg_name, 0, CRYPTO_ALG_ASYNC);
++	ahash_tfm = crypto_alloc_ahash(alg_name, 0, 0);
+ 	if (IS_ERR(ahash_tfm))
+ 		return PTR_ERR(ahash_tfm);
+ 
 -- 
 2.53.0
 
