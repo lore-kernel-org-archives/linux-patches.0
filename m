@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ACAB1C3BFC;
-	Wed, 20 May 2026 17:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E0036D9EA;
+	Wed, 20 May 2026 17:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299026; cv=none; b=Z467camg5aTa93rmFXBJ9p1Nxa07P5PLqbHatgeT1j5H6/je6SnetH9XB5/A2FQeCps3r8HSioW0Nk4Fii3zJnOPq0hBeg5ydoC8I2l3RDTsWS/9Ls3ILSPLf8rL8Fasj67SvKyHKtlx4X65Xmb0C2JSFSxSG35SFFlG3PkYgeE=
+	t=1779299029; cv=none; b=MocO0D1xsfL94gRZXgWQp86z4FUTJqm0anvA0c5wis20WPZKy0WujFR/LCaTU/RHlKz814Y2jGPPpTeEjc8AvOcMXy4Kfrsm5dwwTTF/BDJUYeyg41jAQ3vtmSg76YQjINew0NF9a1UtvECKtU7ZnE2MN66S/i7IBzkuL3rorrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299026; c=relaxed/simple;
-	bh=yRmdL0eMjygzeTSTiR3FcgDmBj3N8LzxQ8I8jY4UkSU=;
+	s=arc-20240116; t=1779299029; c=relaxed/simple;
+	bh=HV9v6UyCNHB4+KIqTVz/K3m8gOg5SiTmImNTxFhSchs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qgnca0DPmsExg1oKjusYl1yrBLz3qrnOr3XtpomnJUU/0RIJe+g9IN581UIZSd9p6eafCfwWQmhvkQGGlIWfa4qG3mBf3Kg7wbQ4VPeiP5aAf2WSlQoWFFWMuojs9K0oAP55SQ8H9VEmdnliq2ynVtuD4rXNvMQyY1YiYpYXBk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7/RvW6x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RXlfbVOrzLxTWxPuI0861BbP0ja/IcA9/TdkbnONNICba4lHFA/b3OdaYjw6d5/gzP+As5Ws6HODIPY6dhmfSvbaTqFrqwUAs+mtw3T3FoacU1bdyO38d6hlfDIth9DXi2kGvtaSWGKv8CkDjkVsV6pPOKY9uDy+2B1fx0BQDPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lq/h4gqM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7/RvW6x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04731F000E9;
-	Wed, 20 May 2026 17:43:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lq/h4gqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481AE1F000E9;
+	Wed, 20 May 2026 17:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299025;
-	bh=owp6v7ehO3kLcjrYwyItFTCq/iEDeRptq9pyh4FQj4s=;
+	s=korg; t=1779299027;
+	bh=74yri5UrAz7uGZagnjKlIC4R0kyjQ9CpW4EThBOfUKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U7/RvW6xePVJJfQtbNVtvYh5xLMdbnk2Qbr/1fa2p37W7qn9FqPS0tXVagonoDybj
-	 pr1uuP5XYZySUyPVkJ4uKvyv0S47Teg0ng88uHuxSY8zLIJbUnAaadRE7fb0myg5id
-	 sNncp+/IbfcqdY9BuJfNTPzINAm+2BJoABnw0X+k=
+	b=Lq/h4gqMziQGQsuYCWSiZpUciKyF63Znd0v/HCtBE+nMiq3dyVdAxwHcja+cnGnEj
+	 TJCTbC78EhbLNFKobUZBHLs4ofLczgrNUqx1edT1L4QOlgVCPw+ClY/WL+MRSM2UNN
+	 lUnmyIZL8qkJRFp29fuU0jbDgKSe40Ep7kquWuWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 635/957] tcp: annotate data-races around tp->delivered and tp->delivered_ce
-Date: Wed, 20 May 2026 18:18:38 +0200
-Message-ID: <20260520162148.300061702@linuxfoundation.org>
+Subject: [PATCH 6.18 618/957] nexthop: fix IPv6 route referencing IPv4 nexthop
+Date: Wed, 20 May 2026 18:18:21 +0200
+Message-ID: <20260520162147.936760269@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,91 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit faa886ad3ce5fc8f5156493491fe189b2b726bc9 ]
+[ Upstream commit 29c95185ba32b621fbc3800fb86e7dc3edf5c2be ]
 
-tcp_get_timestamping_opt_stats() intentionally runs lockless, we must
-add READ_ONCE() and WRITE_ONCE() annotations to keep KCSAN happy.
+syzbot reported a panic [1] [2].
 
-Fixes: feb5f2ec6464 ("tcp: export packets delivery info")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260416200319.3608680-6-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+When an IPv6 nexthop is replaced with an IPv4 nexthop, the has_v4 flag
+of all groups containing this nexthop is not updated. This is because
+nh_group_v4_update is only called when replacing AF_INET to AF_INET6,
+but the reverse direction (AF_INET6 to AF_INET) is missed.
+
+This allows a stale has_v4=false to bypass fib6_check_nexthop, causing
+IPv6 routes to be attached to groups that effectively contain only AF_INET
+members. Subsequent route lookups then call nexthop_fib6_nh() which
+returns NULL for the AF_INET member, leading to a NULL pointer
+dereference.
+
+Fix by calling nh_group_v4_update whenever the family changes, not just
+AF_INET to AF_INET6.
+
+Reproducer:
+	# AF_INET6 blackhole
+	ip -6 nexthop add id 1 blackhole
+	# group with has_v4=false
+	ip nexthop add id 100 group 1
+	# replace with AF_INET (no -6), has_v4 stays false
+	ip nexthop replace id 1 blackhole
+	# pass stale has_v4 check
+	ip -6 route add 2001:db8::/64 nhid 100
+	# panic
+	ping -6 2001:db8::1
+
+[1] https://syzkaller.appspot.com/bug?id=e17283eb2f8dcf3dd9b47fe6f67a95f71faadad0
+[2] https://syzkaller.appspot.com/bug?id=8699b6ae54c9f35837d925686208402949e12ef3
+Fixes: 7bf4796dd099 ("nexthops: add support for replace")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260413114522.147784-1-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp_ecn.h | 2 +-
- net/ipv4/tcp.c        | 4 ++--
- net/ipv4/tcp_input.c  | 8 ++++----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ net/ipv4/nexthop.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/tcp_ecn.h b/include/net/tcp_ecn.h
-index a709fb1756eb7..59d6944f8d103 100644
---- a/include/net/tcp_ecn.h
-+++ b/include/net/tcp_ecn.h
-@@ -189,7 +189,7 @@ static inline void tcp_accecn_third_ack(struct sock *sk,
- 		    tcp_accecn_validate_syn_feedback(sk, ace, sent_ect)) {
- 			if ((tcp_accecn_extract_syn_ect(ace) == INET_ECN_CE) &&
- 			    !tp->delivered_ce)
--				tp->delivered_ce++;
-+				WRITE_ONCE(tp->delivered_ce, 1);
- 		}
- 		break;
- 	}
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 3de09b59663d8..515313ef0c642 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4405,8 +4405,8 @@ struct sk_buff *tcp_get_timestamping_opt_stats(const struct sock *sk,
- 		   READ_ONCE(inet_csk(sk)->icsk_retransmits));
- 	nla_put_u8(stats, TCP_NLA_DELIVERY_RATE_APP_LMT, data_race(!!tp->rate_app_limited));
- 	nla_put_u32(stats, TCP_NLA_SND_SSTHRESH, READ_ONCE(tp->snd_ssthresh));
--	nla_put_u32(stats, TCP_NLA_DELIVERED, tp->delivered);
--	nla_put_u32(stats, TCP_NLA_DELIVERED_CE, tp->delivered_ce);
-+	nla_put_u32(stats, TCP_NLA_DELIVERED, READ_ONCE(tp->delivered));
-+	nla_put_u32(stats, TCP_NLA_DELIVERED_CE, READ_ONCE(tp->delivered_ce));
- 
- 	nla_put_u32(stats, TCP_NLA_SNDQ_SIZE, tp->write_seq - tp->snd_una);
- 	nla_put_u8(stats, TCP_NLA_CA_STATE, inet_csk(sk)->icsk_ca_state);
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 16bb525c04f1d..b5a3c7ca2605d 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -476,14 +476,14 @@ static bool tcp_accecn_process_option(struct tcp_sock *tp,
- 
- static void tcp_count_delivered_ce(struct tcp_sock *tp, u32 ecn_count)
- {
--	tp->delivered_ce += ecn_count;
-+	WRITE_ONCE(tp->delivered_ce, tp->delivered_ce + ecn_count);
- }
- 
- /* Updates the delivered and delivered_ce counts */
- static void tcp_count_delivered(struct tcp_sock *tp, u32 delivered,
- 				bool ece_ack)
- {
--	tp->delivered += delivered;
-+	WRITE_ONCE(tp->delivered, tp->delivered + delivered);
- 	if (tcp_ecn_mode_rfc3168(tp) && ece_ack)
- 		tcp_count_delivered_ce(tp, delivered);
- }
-@@ -6576,7 +6576,7 @@ static bool tcp_rcv_fastopen_synack(struct sock *sk, struct sk_buff *synack,
- 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPFASTOPENACTIVE);
- 		/* SYN-data is counted as two separate packets in tcp_ack() */
- 		if (tp->delivered > 1)
--			--tp->delivered;
-+			WRITE_ONCE(tp->delivered, tp->delivered - 1);
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index c958b8edfe540..5a95b64b61c59 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -2469,10 +2469,10 @@ static int replace_nexthop_single(struct net *net, struct nexthop *old,
+ 			goto err_notify;
  	}
  
- 	tcp_fastopen_add_skb(sk, synack);
-@@ -7007,7 +7007,7 @@ tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
- 	SKB_DR_SET(reason, NOT_SPECIFIED);
- 	switch (sk->sk_state) {
- 	case TCP_SYN_RECV:
--		tp->delivered++; /* SYN-ACK delivery isn't tracked in tcp_ack */
-+		WRITE_ONCE(tp->delivered, tp->delivered + 1); /* SYN-ACK delivery isn't tracked in tcp_ack */
- 		if (!tp->srtt_us)
- 			tcp_synack_rtt_meas(sk, req);
- 
+-	/* When replacing an IPv4 nexthop with an IPv6 nexthop, potentially
++	/* When replacing a nexthop with one of a different family, potentially
+ 	 * update IPv4 indication in all the groups using the nexthop.
+ 	 */
+-	if (oldi->family == AF_INET && newi->family == AF_INET6) {
++	if (oldi->family != newi->family) {
+ 		list_for_each_entry(nhge, &old->grp_list, nh_list) {
+ 			struct nexthop *nhp = nhge->nh_parent;
+ 			struct nh_group *nhg;
 -- 
 2.53.0
 
