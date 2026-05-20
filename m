@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A073F787E;
-	Wed, 20 May 2026 17:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A523D3CE5;
+	Wed, 20 May 2026 17:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296569; cv=none; b=kz/fcI0d7v4NRmq7+euXLJfyAxJZ0uPUlJK/OX7EuIaB6TSpjoD/bojXFO/2ANtKm34w6Rzq2/9mKlO7RTEcTxgAwYj5DiFvnrUQ+heh517OqclcpMQ8pwy272RnTQYuOgjHfOVS4Q1atHJphTuRnQDrJ/DuaC4M4GUNXH2YBTE=
+	t=1779296570; cv=none; b=fgNJCQjMDbaLgVoP29dpSfU4nCUezDwofPkkRQX+LKY8wgxYC+uGbPRFlTsyTCUFjNz9diiuf0EwcOHKyx6pM3JyWHgPUiu2+3ZeBGIW32G+OEPwFAimJds6sjm38ONCMwk90BKzwF+GZQRhGGAJ/Ogas0W9Qu6s6v5s8POyl+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296569; c=relaxed/simple;
-	bh=neGo8+hOmJ4U6u6DRsF1Efkk6zzc9P8ZbJ8inh5DB6o=;
+	s=arc-20240116; t=1779296570; c=relaxed/simple;
+	bh=vekQHNCUdSMqyF2INC6OaW342i8Y92XQYbil/ekOU+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q3v4qF5Mtha9w5ENZQjWeqHtt94+QB2m+xGubx/4Jo5l19c+SWaGoOPe9nq0xU/XuQcTFqPcP5+d114GnaRS4rpuISgKR1PZqQeIXOT8YsK5HIZJzW82N+UR7XQI0KF0O+WsaXbRSmAq6XPrR8hnm75UHTVQLUA17MnM8EXF3+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nf8w6wxx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KHRRnVC0bX/Uj3UNYMQat8E8qyn4R0nWVxUbC+mElm7lsMOOuHa+49oSunU0TFfcp6bi8g85LIjnlaW4eqrcr14XmPP217XeqX92LjISioFDJZe7ayKWHY+qAT8yQHp1Y6UqfuMr9xTjG7jZ22LMDJskDJ8ZaoTnBpns+eHn/SA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1j+LGl6Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nf8w6wxx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D451F00893;
-	Wed, 20 May 2026 17:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1j+LGl6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FC31F000E9;
+	Wed, 20 May 2026 17:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296567;
-	bh=DMo6PVJ10CVz7Q8n5ToDxxweA1AGgKbCLOAsjwvQtgk=;
+	s=korg; t=1779296564;
+	bh=+IAZS+tlArndx3K9JDgqoy+tnPc6xlZZirvUm/3eoD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nf8w6wxx4TysL/7vS2zJa+NemFFPVDXuj8NeVWoHwATHRzo2GeuTIjh4YUW06HNl3
-	 8Yh8vnpafbfekFCWpnCkUaklr/h5a3INSHP+1P9a0YMUlUlXwXXRAGmDAORM11Hu+B
-	 RVtllAMYizg7z+ZSnTbOpeO8m5dAJPg94FZDBZ4I=
+	b=1j+LGl6Zb5PvTU/gMyAo1kRnXrtdRSqfjMkPluBPbJA80du4LJfOdQQn768idgq7r
+	 d15b24iMxmjzuWQltOyQKaLDLJsO9MfGkNa4ribJ7r8ns8BNeSqvJ/24QiMBTSBgeE
+	 olRsj1eVa/foWyxZq8RzA0YTg2bovninGHvE1FvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0848/1146] net: airoha: Rework the code flow in airoha_remove() and in airoha_probe() error path
-Date: Wed, 20 May 2026 18:18:18 +0200
-Message-ID: <20260520162207.427734114@linuxfoundation.org>
+Subject: [PATCH 7.0 0847/1146] net: airoha: Move ndesc initialization at end of airoha_qdma_init_rx_queue()
+Date: Wed, 20 May 2026 18:18:17 +0200
+Message-ID: <20260520162207.404354111@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,171 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit b1c803d5c8167026791abfaed96fd3e6a1fcd750 ]
+[ Upstream commit 379050947a1828826ad7ea50c95245a56929b35a ]
 
-As suggested by Simon in [0], rework the code flow in airoha_remove()
-and in the airoha_probe() error path in order to rely on a more common
-approach un-registering configured net-devices first and destroying the
-hw resources at the end of the code.
-Introduce airoha_qdma_cleanup routine to release QDMA resources.
+If queue entry or DMA descriptor list allocation fails in
+airoha_qdma_init_rx_queue routine, airoha_qdma_cleanup() will trigger a
+NULL pointer dereference running netif_napi_del() for RX queue NAPIs
+since netif_napi_add() has never been executed to this particular RX NAPI.
+The issue is due to the early ndesc initialization in
+airoha_qdma_init_rx_queue() since airoha_qdma_cleanup() relies on ndesc
+value to check if the queue is properly initialized. Fix the issue moving
+ndesc initialization at end of airoha_qdma_init_tx routine.
+Move page_pool allocation after descriptor list allocation in order to
+avoid memory leaks if desc allocation fails.
 
-[0] https://lore.kernel.org/netdev/20251214-airoha-fix-dev-registration-v1-1-860e027ad4c6@kernel.org/
-
-Suggested-by: Simon Horman <horms@kernel.org>
+Fixes: 23020f049327 ("net: airoha: Introduce ethernet support for EN7581 SoC")
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260321-airoha-remove-rework-v2-1-16c7bade5fe5@kernel.org
+Link: https://patch.msgid.link/20260420-airoha_qdma_init_rx_queue-fix-v2-1-d99347e5c18d@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 4b91cb65789b ("net: airoha: Add size check for TX NAPIs in airoha_qdma_cleanup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 76 ++++++++++++++----------
- 1 file changed, 44 insertions(+), 32 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 3f0e795353372..adff897e9bfde 100644
+index be0fece69bc32..3f0e795353372 100644
 --- a/drivers/net/ethernet/airoha/airoha_eth.c
 +++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -1434,6 +1434,33 @@ static int airoha_qdma_init(struct platform_device *pdev,
- 	return airoha_qdma_hw_init(qdma);
- }
+@@ -745,14 +745,18 @@ static int airoha_qdma_init_rx_queue(struct airoha_queue *q,
+ 	dma_addr_t dma_addr;
  
-+static void airoha_qdma_cleanup(struct airoha_qdma *qdma)
-+{
-+	int i;
+ 	q->buf_size = PAGE_SIZE / 2;
+-	q->ndesc = ndesc;
+ 	q->qdma = qdma;
+ 
+-	q->entry = devm_kzalloc(eth->dev, q->ndesc * sizeof(*q->entry),
++	q->entry = devm_kzalloc(eth->dev, ndesc * sizeof(*q->entry),
+ 				GFP_KERNEL);
+ 	if (!q->entry)
+ 		return -ENOMEM;
+ 
++	q->desc = dmam_alloc_coherent(eth->dev, ndesc * sizeof(*q->desc),
++				      &dma_addr, GFP_KERNEL);
++	if (!q->desc)
++		return -ENOMEM;
 +
-+	for (i = 0; i < ARRAY_SIZE(qdma->q_rx); i++) {
-+		if (!qdma->q_rx[i].ndesc)
-+			continue;
-+
-+		netif_napi_del(&qdma->q_rx[i].napi);
-+		airoha_qdma_cleanup_rx_queue(&qdma->q_rx[i]);
-+		if (qdma->q_rx[i].page_pool) {
-+			page_pool_destroy(qdma->q_rx[i].page_pool);
-+			qdma->q_rx[i].page_pool = NULL;
-+		}
-+	}
-+
-+	for (i = 0; i < ARRAY_SIZE(qdma->q_tx_irq); i++)
-+		netif_napi_del(&qdma->q_tx_irq[i].napi);
-+
-+	for (i = 0; i < ARRAY_SIZE(qdma->q_tx); i++) {
-+		if (!qdma->q_tx[i].ndesc)
-+			continue;
-+
-+		airoha_qdma_cleanup_tx_queue(&qdma->q_tx[i]);
-+	}
-+}
-+
- static int airoha_hw_init(struct platform_device *pdev,
- 			  struct airoha_eth *eth)
- {
-@@ -1461,41 +1488,30 @@ static int airoha_hw_init(struct platform_device *pdev,
- 	for (i = 0; i < ARRAY_SIZE(eth->qdma); i++) {
- 		err = airoha_qdma_init(pdev, eth, &eth->qdma[i]);
- 		if (err)
--			return err;
-+			goto error;
+ 	q->page_pool = page_pool_create(&pp_params);
+ 	if (IS_ERR(q->page_pool)) {
+ 		int err = PTR_ERR(q->page_pool);
+@@ -761,11 +765,7 @@ static int airoha_qdma_init_rx_queue(struct airoha_queue *q,
+ 		return err;
  	}
  
- 	err = airoha_ppe_init(eth);
- 	if (err)
--		return err;
-+		goto error;
- 
- 	set_bit(DEV_STATE_INITIALIZED, &eth->state);
- 
- 	return 0;
-+error:
-+	for (i = 0; i < ARRAY_SIZE(eth->qdma); i++)
-+		airoha_qdma_cleanup(&eth->qdma[i]);
-+
-+	return err;
- }
- 
--static void airoha_hw_cleanup(struct airoha_qdma *qdma)
-+static void airoha_hw_cleanup(struct airoha_eth *eth)
- {
- 	int i;
- 
--	for (i = 0; i < ARRAY_SIZE(qdma->q_rx); i++) {
--		if (!qdma->q_rx[i].ndesc)
--			continue;
+-	q->desc = dmam_alloc_coherent(eth->dev, q->ndesc * sizeof(*q->desc),
+-				      &dma_addr, GFP_KERNEL);
+-	if (!q->desc)
+-		return -ENOMEM;
 -
--		netif_napi_del(&qdma->q_rx[i].napi);
--		airoha_qdma_cleanup_rx_queue(&qdma->q_rx[i]);
--		if (qdma->q_rx[i].page_pool)
--			page_pool_destroy(qdma->q_rx[i].page_pool);
--	}
--
--	for (i = 0; i < ARRAY_SIZE(qdma->q_tx_irq); i++)
--		netif_napi_del(&qdma->q_tx_irq[i].napi);
--
--	for (i = 0; i < ARRAY_SIZE(qdma->q_tx); i++) {
--		if (!qdma->q_tx[i].ndesc)
--			continue;
--
--		airoha_qdma_cleanup_tx_queue(&qdma->q_tx[i]);
--	}
-+	for (i = 0; i < ARRAY_SIZE(eth->qdma); i++)
-+		airoha_qdma_cleanup(&eth->qdma[i]);
-+	airoha_ppe_deinit(eth);
- }
++	q->ndesc = ndesc;
+ 	netif_napi_add(eth->napi_dev, &q->napi, airoha_qdma_rx_napi_poll);
  
- static void airoha_qdma_start_napi(struct airoha_qdma *qdma)
-@@ -3088,7 +3104,7 @@ static int airoha_probe(struct platform_device *pdev)
- 
- 	err = airoha_hw_init(pdev, eth);
- 	if (err)
--		goto error_hw_cleanup;
-+		goto error_netdev_free;
- 
- 	for (i = 0; i < ARRAY_SIZE(eth->qdma); i++)
- 		airoha_qdma_start_napi(&eth->qdma[i]);
-@@ -3117,10 +3133,6 @@ static int airoha_probe(struct platform_device *pdev)
- error_napi_stop:
- 	for (i = 0; i < ARRAY_SIZE(eth->qdma); i++)
- 		airoha_qdma_stop_napi(&eth->qdma[i]);
--	airoha_ppe_deinit(eth);
--error_hw_cleanup:
--	for (i = 0; i < ARRAY_SIZE(eth->qdma); i++)
--		airoha_hw_cleanup(&eth->qdma[i]);
- 
- 	for (i = 0; i < ARRAY_SIZE(eth->ports); i++) {
- 		struct airoha_gdm_port *port = eth->ports[i];
-@@ -3132,6 +3144,8 @@ static int airoha_probe(struct platform_device *pdev)
- 			unregister_netdev(port->dev);
- 		airoha_metadata_dst_free(port);
- 	}
-+	airoha_hw_cleanup(eth);
-+error_netdev_free:
- 	free_netdev(eth->napi_dev);
- 	platform_set_drvdata(pdev, NULL);
- 
-@@ -3143,10 +3157,8 @@ static void airoha_remove(struct platform_device *pdev)
- 	struct airoha_eth *eth = platform_get_drvdata(pdev);
- 	int i;
- 
--	for (i = 0; i < ARRAY_SIZE(eth->qdma); i++) {
-+	for (i = 0; i < ARRAY_SIZE(eth->qdma); i++)
- 		airoha_qdma_stop_napi(&eth->qdma[i]);
--		airoha_hw_cleanup(&eth->qdma[i]);
--	}
- 
- 	for (i = 0; i < ARRAY_SIZE(eth->ports); i++) {
- 		struct airoha_gdm_port *port = eth->ports[i];
-@@ -3157,9 +3169,9 @@ static void airoha_remove(struct platform_device *pdev)
- 		unregister_netdev(port->dev);
- 		airoha_metadata_dst_free(port);
- 	}
--	free_netdev(eth->napi_dev);
-+	airoha_hw_cleanup(eth);
- 
--	airoha_ppe_deinit(eth);
-+	free_netdev(eth->napi_dev);
- 	platform_set_drvdata(pdev, NULL);
- }
- 
+ 	airoha_qdma_wr(qdma, REG_RX_RING_BASE(qid), dma_addr);
 -- 
 2.53.0
 
