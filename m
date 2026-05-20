@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F44E400E07;
-	Wed, 20 May 2026 18:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0707C400E07;
+	Wed, 20 May 2026 18:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302397; cv=none; b=fbOwR5wcAbDdtkNWjZdERpcMygH7uIrrWvBd/GDbA5N51TVYSk7NrNJLguBqbuNdUV9Vl3Pt2o9xDishaeSNAauyS7x8dvHIzvhgLS2qTBR6IGW5ClMTNS0Mz75jdZQLKhqBY875xZoQs0pTDiopD4tn5QIkXH33pFN+eJ5LRGQ=
+	t=1779302400; cv=none; b=dvcB0jNfSYt87teUMeHm8jmS4s0iBNZsL5tEwlaBt6/juqjvo1ky68e3hw9h/LGLV77kZxGxajM6Xj7Bgw1ALigCwzRy3RiuwHdMrZp+z1/OhLpTeNGnuftznqGZ4eGKBrby4qwyOeEguX0no9NaHqGCPrl+tiA5P40WBZZ/SCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302397; c=relaxed/simple;
-	bh=KdT8TlWFMzpfFUVSXKWHmPSk2KstfA5P3GtrgT6nDEM=;
+	s=arc-20240116; t=1779302400; c=relaxed/simple;
+	bh=8QGNDv99avdARFlB4goBWufW636Hrff9XEYbW2r1NZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZMlVAinuQ5PNssh3eJxZVlk7InDQUjoHi7BWuGjoAe+M+zv6kNbHxSspSJzqU1Bjm235jECitg5KdQEUxie2sAUDdo5VFTmq9yUEWIQG/hfXxXqUOosW4Zj6UlwoOhMv4X82yroeClVWWVeMSs7I5TYkASJrZtySzMS31XctFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QhDtg8SR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z9DnOMaeEaHF7E7DkB7f8KbLt+imh9r/OPiW4MKM82+i/p1nK/UCjWSyA0Tx13ZRI6WmEPzlgYSAkps8MwLrYJJIvHqTqh4QKfTtnkSwEMHRRQYDACokq4SE1dHOyGt7ob48srrFDfrilDmK7llBR4zX3JrsVzjCI57735B9fM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNhpwIiv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhDtg8SR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42781F000E9;
-	Wed, 20 May 2026 18:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNhpwIiv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5258C1F00897;
+	Wed, 20 May 2026 18:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302396;
-	bh=1ELeJ6F/vc09FZZT/R5H30On9PFqJEdaNdM20Qpd2IU=;
+	s=korg; t=1779302398;
+	bh=K41ttXtU2Qg19BtuTIeVpWTxOmdf7lC7lpiGWGC5pqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QhDtg8SRy8tiE3RHWys3EYhu7kaEv+HXHV8Eg7m4n2RLJt1j2irpYqPX/1qE7UdA0
-	 ETDvNVth6jHbpdNohiZQmY7GrxKA9GioZZ8zwztbo1V9Q2ybOsNssuuNVGzX0Si90y
-	 q6sYR7Q6dYkFnhyJMJTznq+QzZ+hDIkpbuyKI/C8=
+	b=KNhpwIivDHVHdCqjJUh0A/ESUGjg4vyWHvPJ+9rfBFCORuwSzimud3zQ9tsF19Eup
+	 +32QDMXZVF8nRoOjND7Wa4zv+YsHkcMYMqO48XrHkCHQNhJMjyioJ4yd/ST5NoEn3/
+	 jazjA+3+gvIcA6r2II7IHVbk9k9Wg/hfkayES3QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Mike Leach <mike.leach@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Yu-Chun Lin <eleanor15x@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 249/508] perf: tools: cs-etm: Fix print issue for Coresight debug in ETE/TRBE trace
-Date: Wed, 20 May 2026 18:21:12 +0200
-Message-ID: <20260520162104.044558587@linuxfoundation.org>
+Subject: [PATCH 6.6 250/508] pinctrl: abx500: Fix type of argument variable
+Date: Wed, 20 May 2026 18:21:13 +0200
+Message-ID: <20260520162104.066645469@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,112 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Leach <mike.leach@arm.com>
+From: Yu-Chun Lin <eleanor15x@gmail.com>
 
-[ Upstream commit 6c478e7b3eba3f387a2d6c749e3e3ee0f8ad1c53 ]
+[ Upstream commit 34006f77890d050e6d80cbee365b5d703c1140b4 ]
 
-Building perf with CORESIGHT=1 and the optional CSTRACE_RAW=1 enables
-additional debug printing of raw trace data when using command:-
-perf report --dump.
+The argument variable is assigned the return value of
+pinconf_to_config_argument(), which returns a u32. Change its type from
+enum pin_config_param to unsigned int to correctly store the configuration
+argument.
 
-This raw trace prints the CoreSight formatted trace frames, which may be
-used to investigate suspected issues with trace quality / corruption /
-decode.
-
-These frames are not present in ETE + TRBE trace.
-This fix removes the unnecessary call to print these frames.
-
-This fix also rationalises implementation - original code had helper
-function that unnecessarily repeated initialisation calls that had
-already been made.
-
-Due to an addtional fault with the OpenCSD library, this call when ETE/TRBE
-are being decoded will cause a segfault in perf. This fix also prevents
-that problem for perf using older (<= 1.8.0 version) OpenCSD libraries.
-
-Fixes: 68ffe3902898 ("perf tools: Add decoder mechanic to support dumping trace data")
-Reported-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Mike Leach <mike.leach@arm.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 03b054e9696c ("pinctrl: Pass all configs to driver on pin_config_set()")
+Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../perf/util/cs-etm-decoder/cs-etm-decoder.c | 51 +++++--------------
- 1 file changed, 13 insertions(+), 38 deletions(-)
+ drivers/pinctrl/nomadik/pinctrl-abx500.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c b/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
-index e917985bbbe6d..640e383cef441 100644
---- a/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
-+++ b/tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
-@@ -237,46 +237,24 @@ cs_etm_decoder__init_def_logger_printing(struct cs_etm_decoder_params *d_params,
- 					      (void *)decoder,
- 					      cs_etm_decoder__print_str_cb);
- 	if (ret != 0)
--		ret = -1;
--
--	return 0;
--}
-+		return -1;
+diff --git a/drivers/pinctrl/nomadik/pinctrl-abx500.c b/drivers/pinctrl/nomadik/pinctrl-abx500.c
+index 0cfa74365733c..a4940199f2ad0 100644
+--- a/drivers/pinctrl/nomadik/pinctrl-abx500.c
++++ b/drivers/pinctrl/nomadik/pinctrl-abx500.c
+@@ -853,7 +853,7 @@ static int abx500_pin_config_set(struct pinctrl_dev *pctldev,
+ 	int ret = -EINVAL;
+ 	int i;
+ 	enum pin_config_param param;
+-	enum pin_config_param argument;
++	unsigned int argument;
  
- #ifdef CS_LOG_RAW_FRAMES
--static void
--cs_etm_decoder__init_raw_frame_logging(struct cs_etm_decoder_params *d_params,
--				       struct cs_etm_decoder *decoder)
--{
--	/* Only log these during a --dump operation */
--	if (d_params->operation == CS_ETM_OPERATION_PRINT) {
--		/* set up a library default logger to process the
--		 *  raw frame printer we add later
--		 */
--		ocsd_def_errlog_init(OCSD_ERR_SEV_ERROR, 1);
--
--		/* no stdout / err / file output */
--		ocsd_def_errlog_config_output(C_API_MSGLOGOUT_FLG_NONE, NULL);
--
--		/* set the string CB for the default logger,
--		 * passes strings to perf print logger.
--		 */
--		ocsd_def_errlog_set_strprint_cb(decoder->dcd_tree,
--						(void *)decoder,
--						cs_etm_decoder__print_str_cb);
--
-+	/*
-+	 * Only log raw frames if --dump operation and hardware is actually
-+	 * generating formatted CoreSight trace frames
-+	 */
-+	if ((d_params->operation == CS_ETM_OPERATION_PRINT) &&
-+	    (d_params->formatted == true)) {
- 		/* use the built in library printer for the raw frames */
--		ocsd_dt_set_raw_frame_printer(decoder->dcd_tree,
--					      CS_RAW_DEBUG_FLAGS);
-+		ret = ocsd_dt_set_raw_frame_printer(decoder->dcd_tree,
-+						    CS_RAW_DEBUG_FLAGS);
-+		if (ret != 0)
-+			return -1;
- 	}
--}
--#else
--static void
--cs_etm_decoder__init_raw_frame_logging(
--		struct cs_etm_decoder_params *d_params __maybe_unused,
--		struct cs_etm_decoder *decoder __maybe_unused)
--{
--}
- #endif
-+	return 0;
-+}
- 
- static ocsd_datapath_resp_t
- cs_etm_decoder__do_soft_timestamp(struct cs_etm_queue *etmq,
-@@ -755,9 +733,6 @@ cs_etm_decoder__new(int decoders, struct cs_etm_decoder_params *d_params,
- 	if (ret != 0)
- 		goto err_free_decoder;
- 
--	/* init raw frame logging if required */
--	cs_etm_decoder__init_raw_frame_logging(d_params, decoder);
--
- 	for (i = 0; i < decoders; i++) {
- 		ret = cs_etm_decoder__create_etm_decoder(d_params,
- 							 &t_params[i],
+ 	for (i = 0; i < num_configs; i++) {
+ 		param = pinconf_to_config_param(configs[i]);
 -- 
 2.53.0
 
