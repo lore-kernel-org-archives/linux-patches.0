@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848533546D0;
-	Wed, 20 May 2026 16:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F166352016;
+	Wed, 20 May 2026 16:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294617; cv=none; b=BhF3a8JvZSDsc9ulpOyft88r3NEGjRJUbGxl6XYJR4A3vTDMkOtdcRarrJgysyN9IeoE6UuMtg4VJDRa0hLs2uPCpmw2quz0xNCD6jZIWzFTG+zBNJOPaYb9V7X1W42/Dk+24oJ4cD1q9Muws7FFDD0kjpxMxEaPA3nkWZIu9yw=
+	t=1779294620; cv=none; b=fGqEYLD9CkM6zP17qC5k2BpeOFVAPW2yIpQJXhLsGLWPVVKRC2JLb6cgwnovmRjJnB4IQxIBoZ3viSFZ2mvSagelMl77xGiy9pEX5grFqD46hZKRZpX5eIdFQ98KM99HM0lcl5DCuADENqjrDku5Ul6GV3RU/68Y3yp4dc0uwkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294617; c=relaxed/simple;
-	bh=egHmz+xnSxWIwnUh1clLyIghgTkCifM01Jl434CSPf0=;
+	s=arc-20240116; t=1779294620; c=relaxed/simple;
+	bh=m9JNrrfBSufU0pda1MmPs8eOa1zymvANmQG8L8E/3Qc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NKMhXAHrV2nbeiPAZjkzoQFWySgUreGx3zF3TAiLbcQyMIgth5XySwS75xTULblcnhFmhlpeTCn1D/JGecrgY74y4f3Zrzf3bw0TE2rH+6qGWJ4m8I7US34RLT3Xdeb2Be7vibHYrXoU3Ie368RQlBC/TeNBxEtXZzq7e60K1kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0QlQ4KJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eSZ79akY304cwnp6l0kTkHzaJVav8+6nUyEJ33EZ6N8Acbu3j+YzTPbSog6hShvSDnkAJ2Zs6hfGzOAOREhtCC3CM+HS8swzLoBUlZgzHJappL8GJtczzt+sfYe04Sw463Vs5/rrmDuZGz2msdM3NNmogTPK0bl05wMJJfda4uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FuY1lngB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0QlQ4KJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05C61F00893;
-	Wed, 20 May 2026 16:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FuY1lngB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8437A1F000E9;
+	Wed, 20 May 2026 16:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294616;
-	bh=r3nPhq/BC0CJ/An3rBRbrj31pbmE3woufvDyMdYlBOs=;
+	s=korg; t=1779294619;
+	bh=nAI1HMaZ5PMV07Fy0Zf69D1RJJHkKTfkxgP1mqtwHBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e0QlQ4KJF+wQGZV5tQ2E7f+u0hiSxwxNt14fcMStH9G7fc+eenGiaN8KmNibPvFag
-	 F4vXC6+i17pdR4rqZyBd+Yy3a4OIKB64Jth711nKErlQcScDfym/5LHWcyFXFdJmCT
-	 NHItMlU5uxGo6BUS0B30XgR0hScyNog+1mp6N7hA=
+	b=FuY1lngByoX4/9gJO+SNx4lq40LHRZfspKEMoaIYnuf07iG1GwsR8eDMqZPn0hSqR
+	 niXw9FilY6btPBb8kQF2Yjt8bzUu32q3HOUvf0P63LWW/uDSUaY8jTinsZjTG71FkY
+	 Rq4SEdkPIu77Ek7XWu2nPrGqy/02QL/mcUCvKcgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rory Little <rory@candelatech.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0107/1146] wifi: mt76: mt7921: Place upper limit on station AID
-Date: Wed, 20 May 2026 18:05:57 +0200
-Message-ID: <20260520162150.761885587@linuxfoundation.org>
+Subject: [PATCH 7.0 0108/1146] wifi: mt76: Fix memory leak destroying device
+Date: Wed, 20 May 2026 18:05:58 +0200
+Message-ID: <20260520162150.784005779@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,71 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rory Little <rory@candelatech.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 4d0bf21e3e20619d51d06c0c36207aabab8b712c ]
+[ Upstream commit 6b470f36616e3448d44b0ef4b1de2a3e3a31b5be ]
 
-Any station configured with an AID over 20 causes a firmware crash.
-This situation occurred in our testing using an AP interface on 7922
-hardware, with a modified hostapd, sourced from Mediatek's OpenWRT
-feeds.
+All MT76 rx queues have an associated page_pool even if the queue is not
+associated to a NAPI (e.g. WED RRO queues with WED enabled). Destroy the
+page_pool running mt76_dma_cleanup routine during module unload.
+Moreover returns pages to the page pool if WED is not enabled for WED RRO
+queues.
 
-In stock hostapd, station AIDs begin counting at 1, and this
-configuration is prevented with an upper limit on associated stations.
-However, the modified hostapd began allocation at 65, which caused the
-firmware to crash. This fix does not allow these AIDs to work, but will
-prevent the firmware crash.
-
-This crash was only seen on IFTYPE_AP interfaces, and the fix does not
-appear to have an effect on IFTYPE_STATION behavior.
-
-Fixes: 5c14a5f944b9 ("mt76: mt7921: introduce mt7921e support")
-Signed-off-by: Rory Little <rory@candelatech.com>
-Link: https://patch.msgid.link/20250904000711.3033860-1-rory@candelatech.com
+Fixes: 950d0abb5cd94 ("wifi: mt76: mt7996: add wed rx support")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20251208-mt76-fix-memory-leak-v1-1-cba813fc62b8@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/main.c   | 6 ++++++
- drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h | 2 ++
- 2 files changed, 8 insertions(+)
+ drivers/net/wireless/mediatek/mt76/dma.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index 021335805acb3..f42e40f9663d8 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -808,6 +808,9 @@ int mt7921_mac_sta_add(struct mt76_dev *mdev, struct ieee80211_vif *vif,
- 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
- 	int ret, idx;
+diff --git a/drivers/net/wireless/mediatek/mt76/dma.c b/drivers/net/wireless/mediatek/mt76/dma.c
+index f240016ed9f0e..893ac14285cab 100644
+--- a/drivers/net/wireless/mediatek/mt76/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/dma.c
+@@ -874,7 +874,12 @@ mt76_dma_rx_cleanup(struct mt76_dev *dev, struct mt76_queue *q)
+ 		if (!buf)
+ 			break;
  
-+	if (sta->aid > MT7921_MAX_AID)
-+		return -ENOENT;
+-		if (!mt76_queue_is_wed_rro(q))
++		if (mtk_wed_device_active(&dev->mmio.wed) &&
++		    mt76_queue_is_wed_rro(q))
++			continue;
 +
- 	idx = mt76_wcid_alloc(dev->mt76.wcid_mask, MT792x_WTBL_STA - 1);
- 	if (idx < 0)
- 		return -ENOSPC;
-@@ -851,6 +854,9 @@ int mt7921_mac_sta_event(struct mt76_dev *mdev, struct ieee80211_vif *vif,
- 	struct mt792x_sta *msta = (struct mt792x_sta *)sta->drv_priv;
- 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
++		if (!mt76_queue_is_wed_rro_rxdmad_c(q) &&
++		    !mt76_queue_is_wed_rro_ind(q))
+ 			mt76_put_page_pool_buf(buf, false);
+ 	} while (1);
  
-+	if (sta->aid > MT7921_MAX_AID)
-+		return -ENOENT;
-+
- 	if (ev != MT76_STA_EVENT_ASSOC)
- 	    return 0;
+@@ -1168,10 +1173,6 @@ void mt76_dma_cleanup(struct mt76_dev *dev)
+ 	mt76_for_each_q_rx(dev, i) {
+ 		struct mt76_queue *q = &dev->q_rx[i];
  
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
-index 83fc7f49ff848..ad92af98e3145 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
-@@ -7,6 +7,8 @@
- #include "../mt792x.h"
- #include "regs.h"
+-		if (mtk_wed_device_active(&dev->mmio.wed) &&
+-		    mt76_queue_is_wed_rro(q))
+-			continue;
+-
+ 		netif_napi_del(&dev->napi[i]);
+ 		mt76_dma_rx_cleanup(dev, q);
  
-+#define MT7921_MAX_AID                  20
-+
- #define MT7921_TX_RING_SIZE		2048
- #define MT7921_TX_MCU_RING_SIZE		256
- #define MT7921_TX_FWDL_RING_SIZE	128
 -- 
 2.53.0
 
