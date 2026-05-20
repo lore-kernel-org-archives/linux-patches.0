@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B807B2D879E;
-	Wed, 20 May 2026 17:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6347A356773;
+	Wed, 20 May 2026 17:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298263; cv=none; b=ANBgZiY3ipXMaEmlsJV7M41uCDIVBDRGTx4Edw+ZR9Rd+MPYPUln1zkW6azq1wZtd62tV4NryhjxXsnom+29LdM0pD2sS0PhdJz0npsk+hsLW++NhpfaEUUHOjklpGJ6aopmLZxCunsj2SE6qX+1OtddkhTXoiWpUL8+krTdcxg=
+	t=1779298266; cv=none; b=Q1fGtbFh9MvS66cMM4Rij7XBbkiRQzneB/IRFx7+tWl0uB/esO6QI1g0J7pmuTh9ztPq/cXqrjvDk4vTRS94DHpbHPfmTxKIxDx0Ug6Tfe34CFL7/8Vvf5+J/StnjshZ25QOU0YrDu/4luIfRd+l0Px4kvyW55a1z2xZUs2hdLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298263; c=relaxed/simple;
-	bh=qTcdzUpvKy58cbVVlb56VM8vqqxdXgx+zEmXuddj2lk=;
+	s=arc-20240116; t=1779298266; c=relaxed/simple;
+	bh=2HwqxJDCIfoMzqA+TmvTkZc6I5EheL/Ldc8U3xkkctE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AQ8U8jYmMqb5bvGeAwYdPr/a56V5sbzldwp6Z5nSu4gWIZWUld8IP9YtyeeL1VISwB/ArUJBDHLx/iKdtHG55ekJNJCWhlPpFVtcuNV93clJ56dk2o4Eoa4egWmf6rbqMKH9911qrpSAj4pvyBjL2y0vudN6hsSv1GEDsJL0A44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1TfcWce; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bJL9epjjR5IfQBqb1cU5J3M84UItx6jBCFiPqnpRZG3Fuu4YqFGvrWolIHaxGKweb53fHmwAd1rj3HWPCF/6li6wckXkGQ8Q5dXCLi6xyBhVgYzmvIJmhlYJo5eTeaaIGL24HSk3Z5M50wg+8WzgK/7A4qIVqJmxhOTDI9do0X8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zK1pF/D1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1TfcWce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EF51F000E9;
-	Wed, 20 May 2026 17:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zK1pF/D1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80491F000E9;
+	Wed, 20 May 2026 17:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298262;
-	bh=hgQeIrVNruSydDJe0C5JYijtcekYB3S3REEgNNA9KGs=;
+	s=korg; t=1779298265;
+	bh=IRYafTCI5SfqBEbprQ8IpGqxM+GTuQHNqZ+T9NB70QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h1TfcWcekQe2ABu6f25Of64kNr2Dr7xDCQByRL7wT0COTAETVNP99zvunWkwhUgZy
-	 JBL7hLpCeVNBXp2KVUAWJ/6Ddq4ffB/J2MotM7FrjT2ZMnuiG0hMK1HKWpY1cp9mh5
-	 szgkF6jzuzSPh0AGc+Srw+iYkKBVDSJRxauY7WtU=
+	b=zK1pF/D1dWD/oRWc1Pm7oyL9vDHUWf9JDEU0Dn7H/qxhBBtEpAQLiXvbgqMXrBD8E
+	 CHIkbCKiRbVyKA4URLp492QWQwWNP5A4LKpXWp67sS6KrlmUlWIR2j++HPrk+nco8j
+	 nphrglgwUnSD0NHS3er2xr2n9lLML5vAqWZAiCuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Jan Kara <jack@suse.cz>,
+	Horst Birthelmer <hbirthelmer@ddn.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 343/957] fanotify: call fanotify_events_supported() before path_permission() and security_path_notify()
-Date: Wed, 20 May 2026 18:13:46 +0200
-Message-ID: <20260520162141.970617700@linuxfoundation.org>
+Subject: [PATCH 6.18 344/957] fuse: fix premature writetrhough request for large folio
+Date: Wed, 20 May 2026 18:13:47 +0200
+Message-ID: <20260520162141.991580263@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,76 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-[ Upstream commit 66052a768d4726a31e939b5ac902f2b0b452c8d5 ]
+[ Upstream commit 5223e0470e7bb7910038fe3d31171490e00fbbb9 ]
 
-The latter trigger LSM (e.g. SELinux) checks, which will log a denial
-when permission is denied, so it's better to do them after validity
-checks to avoid logging a denial when the operation would fail anyway.
+When large folio is enabled and the initial folio offset exceeds
+PAGE_SIZE, e.g. the position resides in the second page of a large
+folio, after the folio copying the offset (in the page) won't be updated
+to 0 even though the expected range is successfully copied until the end
+of the folio.  In this case fuse_fill_write_pages() exits prematurelly
+before the request has reached the max_write/max_pages limit.
 
-Fixes: 0b3b094ac9a7 ("fanotify: Disallow permission events for proc filesystem")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20260216150625.793013-3-omosnace@redhat.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fix this by eliminating page offset entirely and use folio offset
+instead.
+
+Fixes: d60a6015e1a2 ("fuse: support large folios for writethrough writes")
+Reviewed-by: Horst Birthelmer <hbirthelmer@ddn.com>
+Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+ fs/fuse/file.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 1c05c11e3cb25..5c30f4d8c7c16 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1210,6 +1210,7 @@ static int fanotify_find_path(int dfd, const char __user *filename,
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index 6014d588845cd..00ff6374dc76b 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -1183,7 +1183,6 @@ static ssize_t fuse_fill_write_pages(struct fuse_io_args *ia,
+ {
+ 	struct fuse_args_pages *ap = &ia->ap;
+ 	struct fuse_conn *fc = get_fuse_conn(mapping->host);
+-	unsigned offset = pos & (PAGE_SIZE - 1);
+ 	size_t count = 0;
+ 	unsigned int num;
+ 	int err = 0;
+@@ -1210,7 +1209,7 @@ static ssize_t fuse_fill_write_pages(struct fuse_io_args *ia,
+ 		if (mapping_writably_mapped(mapping))
+ 			flush_dcache_folio(folio);
  
- 		*path = fd_file(f)->f_path;
- 		path_get(path);
-+		ret = 0;
- 	} else {
- 		unsigned int lookup_flags = 0;
+-		folio_offset = ((index - folio->index) << PAGE_SHIFT) + offset;
++		folio_offset = offset_in_folio(folio, pos);
+ 		bytes = min(folio_size(folio) - folio_offset, num);
  
-@@ -1219,22 +1220,7 @@ static int fanotify_find_path(int dfd, const char __user *filename,
- 			lookup_flags |= LOOKUP_DIRECTORY;
+ 		tmp = copy_folio_from_iter_atomic(folio, folio_offset, bytes, ii);
+@@ -1240,9 +1239,6 @@ static ssize_t fuse_fill_write_pages(struct fuse_io_args *ia,
+ 		count += tmp;
+ 		pos += tmp;
+ 		num -= tmp;
+-		offset += tmp;
+-		if (offset == folio_size(folio))
+-			offset = 0;
  
- 		ret = user_path_at(dfd, filename, lookup_flags, path);
--		if (ret)
--			goto out;
+ 		/* If we copied full folio, mark it uptodate */
+ 		if (tmp == folio_size(folio))
+@@ -1254,7 +1250,9 @@ static ssize_t fuse_fill_write_pages(struct fuse_io_args *ia,
+ 			ia->write.folio_locked = true;
+ 			break;
+ 		}
+-		if (!fc->big_writes || offset != 0)
++		if (!fc->big_writes)
++			break;
++		if (folio_offset + tmp != folio_size(folio))
+ 			break;
  	}
--
--	/* you can only watch an inode if you have read permissions on it */
--	ret = path_permission(path, MAY_READ);
--	if (ret) {
--		path_put(path);
--		goto out;
--	}
--
--	ret = security_path_notify(path, mask, obj_type);
--	if (ret)
--		path_put(path);
--
--out:
- 	return ret;
- }
  
-@@ -2074,6 +2060,15 @@ static int do_fanotify_mark(int fanotify_fd, unsigned int flags, __u64 mask,
- 			goto path_put_and_out;
- 	}
- 
-+	/* you can only watch an inode if you have read permissions on it */
-+	ret = path_permission(&path, MAY_READ);
-+	if (ret)
-+		goto path_put_and_out;
-+
-+	ret = security_path_notify(&path, mask, obj_type);
-+	if (ret)
-+		goto path_put_and_out;
-+
- 	if (fid_mode) {
- 		ret = fanotify_test_fsid(path.dentry, flags, &__fsid);
- 		if (ret)
 -- 
 2.53.0
 
