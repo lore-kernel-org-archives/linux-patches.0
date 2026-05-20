@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C85346E5E;
-	Wed, 20 May 2026 17:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833563F0A83;
+	Wed, 20 May 2026 17:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297902; cv=none; b=dxO3hHKNgmOTGIyzWSWea5xV7HRmEKc0iHwEICp8EXSUhcCYdNhWp52Sw0htSPjTWaBxIFu9U8lZwgqf9UkEEE0OeqKucllsn9fXjtmoBVAfRIEbZJ6KfI0Y6p39UHOQVYdVMMLM8yGb3XfSc3oN3uMotYrAt5XuqYuf55+En5E=
+	t=1779297905; cv=none; b=R8wpeNX7rBaY/aOMCSZK/ZJNddYY85Oy6wRlQy2RYTGGNJsTQFzCt3d00Ku2VlXJW0/x2sD8W/OI4Pef20S+a6Y+3vr23/58T/jOQ8K9sJZmwA9dDYtqWdUN4FMD4tkpOrTCcJ4BuJqulpvIs9TtvVW67Yc2Wi7WSKpoeW97noU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297902; c=relaxed/simple;
-	bh=oxoNwqNIwGUFzjs4iBtQ/34nrIHxt2C6FcvCpPDHknY=;
+	s=arc-20240116; t=1779297905; c=relaxed/simple;
+	bh=Svs0dXjv6sIGc+FacP43mXlsFjr3maRoIgN3DSTAFHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5niLg4FStTg55vDD/H/J1YCfdp4ajhYybinULY62REZwCUH0hJqc4i3intw5HPP+G5444FHzQGM13hk3W3oDgirGL6g1INSVqji9lywQ/WihfmgpEYgy3b78+ObRc+GKymWuvUP1+3N5HpUUTb+USWmpGrkOF9wsS6drSiREM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1PB2Mlj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PSmqdQLnHhDu+nK9DQNRUSTrLBFPT4VEBDz4KaUMSvJmKVIF2lb3k+exRJTdREbKDbBhQLFVh2NCUQWvOElVIcW9brnP5AN6eR75M3IN2mrnXcBWrFB0ird1Ci01aSWwFtWw6lKejboE4IN5I/fegsuHj4Bpdk7iOPjDV/1YXQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fk2WcV+B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1PB2Mlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DC11F000E9;
-	Wed, 20 May 2026 17:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fk2WcV+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE401F000E9;
+	Wed, 20 May 2026 17:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297901;
-	bh=TOm2ldGxirDEl9oTdCCLs22idVyYkkceerwPqt73U1s=;
+	s=korg; t=1779297904;
+	bh=u+raDk7ittRg963TiknO/OEeBj0dJfrGcHM5eOXBzlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B1PB2MljA1QRJb6Ld580aA8SdurXjC4SrubTYzUukcXj8uP1XJOmYUqJxf+3su4Rz
-	 arvfVlvFqWn2z9lLCZ5s4tXN6bhh6E3wFQrdK2koZyuXFMedegZqiFJ7vvB9AMrvaC
-	 5ow8u50+bifr/x5qLw66kDDmCDdVpUpE0g8LlqoE=
+	b=fk2WcV+B6MfWmOC79vxQ3kn04RbZA5BXL7OoL1yxTSNSFNBITK5iR5ee8E5IEJ62w
+	 bdn5o4pcE0iwmP8KQ+Y9SWyoy4hfwP6o+0ra0/Vx9T2+dyPEaWcSWnsybzNBs8hk0i
+	 Z/YGqMjM52kJtRYDaXNhqNVbeVuE1dz9J0On/rOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aksh Garg <a-garg7@ti.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 206/957] PCI: dwc: ep: Fix MSI-X Table Size configuration in dw_pcie_ep_set_msix()
-Date: Wed, 20 May 2026 18:11:29 +0200
-Message-ID: <20260520162139.010739392@linuxfoundation.org>
+Subject: [PATCH 6.18 207/957] PCI: dwc: Invoke post_init in dw_pcie_resume_noirq()
+Date: Wed, 20 May 2026 18:11:30 +0200
+Message-ID: <20260520162139.032218311@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,44 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aksh Garg <a-garg7@ti.com>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-[ Upstream commit 271d0b1f058ae9815e75233d04b23e3558c3e4f4 ]
+[ Upstream commit c577ce2881f9c76892de5ffc1a122e3ef427ecee ]
 
-In dw_pcie_ep_set_msix(), while updating the MSI-X Table Size value for
-individual functions, Message Control register is read from the passed
-function number register space using dw_pcie_ep_readw_dbi(), but always
-written back to the Function 0's register space using dw_pcie_writew_dbi().
-This causes incorrect MSI-X configuration for the rest of the functions,
-other than Function 0.
+In some SoCs like i.MX95, CLKREQ# is pulled low by the controller driver
+before link up. After link up, if the 'supports-clkreq' property is
+specified in DT, the driver will release CLKREQ# so that it can go high and
+the endpoint can pull it low whenever required i.e., during exit from L1
+Substates.
 
-Fix this by using dw_pcie_ep_writew_dbi() to write to the correct
-function's register space, matching the read operation.
+Hence, at the end of dw_pcie_resume_noirq(), invoke the '.post_init()'
+callback if exists to perform the above mentioned action.
 
-Fixes: 70fa02ca1446 ("PCI: dwc: Add dw_pcie_ep_{read,write}_dbi[2] helpers")
-Signed-off-by: Aksh Garg <a-garg7@ti.com>
-[mani: commit log]
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+[mani: reworded description]
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260224083817.916782-2-a-garg7@ti.com
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20251015030428.2980427-9-hongxing.zhu@nxp.com
+Stable-dep-of: edb5ca3262e2 ("PCI: dwc: Perform cleanup in the error path of dw_pcie_resume_noirq()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-designware-host.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index e2e18beb2951d..7350a703c4d19 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -538,7 +538,7 @@ static int dw_pcie_ep_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	val = dw_pcie_ep_readw_dbi(ep, func_no, reg);
- 	val &= ~PCI_MSIX_FLAGS_QSIZE;
- 	val |= nr_irqs - 1; /* encoded as N-1 */
--	dw_pcie_writew_dbi(pci, reg, val);
-+	dw_pcie_ep_writew_dbi(ep, func_no, reg, val);
+diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+index 894bf23529df5..3fbece96faaad 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -1236,6 +1236,9 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
+ 	if (ret)
+ 		return ret;
  
- 	reg = ep_func->msix_cap + PCI_MSIX_TABLE;
- 	val = offset | bir;
++	if (pci->pp.ops->post_init)
++		pci->pp.ops->post_init(&pci->pp);
++
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(dw_pcie_resume_noirq);
 -- 
 2.53.0
 
