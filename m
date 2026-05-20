@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B801281AA8;
-	Wed, 20 May 2026 18:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6D934DB46;
+	Wed, 20 May 2026 18:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300949; cv=none; b=oH/F2ViBvJ4HDyUR9qGKDlY6uvJsV1fDGBhUSQiV8ze4yGTCPAQAqXU2Ejbkm1Y3/4kC4UCzMVuD3KmOtKGuxBIXPzVWjBraiZFj6/pD5eBUbMCzdMGbkSfRU2aXyjA77r7b+4BiePJPPYOnHyn5Qk0ItRT7w2Cm8q0wl1pzx64=
+	t=1779300952; cv=none; b=dQwiWIAsivJ8SFfF7u976WMU6MgcU+EZoJHQkV6DkQuA+WvtdqGsmAiVSmK8DNQuXNXOaUyR+axDpZ8maRf7KD3+xKSbV0iRMl9mJWAiCXK/gd+6OySGUDbZA0QObRdMFkdSm+p4E3jvqO+SqoO0jy1IGFCHRW40foQxZ2zirrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300949; c=relaxed/simple;
-	bh=MmK7kR9jvK0KDvsYjVfUgORB+Rm/Rc4GC9qohOmunq4=;
+	s=arc-20240116; t=1779300952; c=relaxed/simple;
+	bh=L7T8mU9U3JlZ4uioISMBAAig2zFR6X/BqXVS4HvomBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RXEnomhSeNpjrNazgIDbLuDYW9KmU3GdehsqDbrxByI7MoeVwOenWV7zf/IvcsloRmG39fQLoxYIlgzs571Mb2um5Hd2x12t+p16DqVSME3W+V4nJRAIG+w0gZC2D4j3exbGX5+BEjYmwvzhwhmzb7i9Fx1gmvJejy6+ed00tJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2JPy6nu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jB5cuDl7lVC/7Ys3Th5nuUD91S9xV+7CUBO0TLtXVdT293lbiT7AdhMeEM+283EkaOcO7mgLwir1ej/FX40ontdUTOrzrqyUZNZR7iiA72NrhIcKbrlzqFKLpuWb218n2ZJRIn7FplBAQevw6M9nwvdCURdjOLmBRzAZve9AATg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6GazvgH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2JPy6nu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B7D1F000E9;
-	Wed, 20 May 2026 18:15:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6GazvgH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D501F000E9;
+	Wed, 20 May 2026 18:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300948;
-	bh=W9ClstsVxDjzSLEl4/qUX5ZIF5u3LCTtVFOFhEbwf+Y=;
+	s=korg; t=1779300951;
+	bh=mopMMH8Iq/51LHEokSY2hhOWbgTo2Acm3de9vcNOOtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e2JPy6nu7dbwu7csaGoaew1MWcPrkCd1misrD7Szva0O1r2GLlMqmZjY/gSph6z7+
-	 lNiW+YBAZURK4TBH9U+TyAbrNGD6JSjpoyqQC7eod52zU8zGYp3ivCgs0so4ZjIanz
-	 y3eDRJK+h9IOB6FYQpNDNaJceri8Twg7MNWQiHuQ=
+	b=J6GazvgHyL5Zshol1SJeI6KOtTpmH4kG0x9hliV2f8DqMcfKS8Jqa+wZBuPDJphhk
+	 305VqOL5H3OmgwNVElk++2osjkWIgaNbxRnpRs1oruGri7VH3kpXtVciNYlC+aIfFz
+	 UXIx3UCuZZDI564WcleYx2+I1ei2kh2d9IU4YgVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Leo Yan <leo.yan@arm.com>,
 	Ian Rogers <irogers@google.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 369/666] perf tools: Fix module symbol resolution for non-zero .text sh_addr
-Date: Wed, 20 May 2026 18:19:40 +0200
-Message-ID: <20260520162119.239952996@linuxfoundation.org>
+Subject: [PATCH 6.12 370/666] perf expr: Return -EINVAL for syntax error in expr__find_ids()
+Date: Wed, 20 May 2026 18:19:41 +0200
+Message-ID: <20260520162119.261939086@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,75 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 9a82bfde4775b7a87cd1a7e791f46f83ae442848 ]
+[ Upstream commit 3a61fd866ef9aaa1d3158b460f852b74a2df07f4 ]
 
-When perf resolves symbols from kernel module ELF files (ET_REL),
-it converts symbol addresses to file offsets so that sample IPs
-can be matched to the correct symbol. The conversion adjusts each
-symbol's st_value:
+expr__find_ids() propagates the parser return value directly.  For syntax
+errors, the parser can return a positive value, but callers treat it as
+success, e.g., for below case on Arm64 platform:
 
-  sym->st_value -= shdr->sh_addr - shdr->sh_offset;
+  metric expr 100 * (STALL_SLOT_BACKEND / (CPU_CYCLES * #slots) - BR_MIS_PRED * 3 / CPU_CYCLES) for backend_bound
+  parsing metric: 100 * (STALL_SLOT_BACKEND / (CPU_CYCLES * #slots) - BR_MIS_PRED * 3 / CPU_CYCLES)
+  Failure to read '#slots' literal: #slots = nan
+  syntax error
 
-For vmlinux (ET_EXEC), st_value is a virtual address and sh_addr
-is the section's virtual base, so subtracting sh_addr and adding
-sh_offset correctly yields a file offset.
+Convert positive parser returns in expr__find_ids() to -EINVAL, as a
+result, the error value will be respected by callers.
 
-For kernel modules (ET_REL), st_value is a section-relative
-offset. The module loader ignores sh_addr entirely and places
-symbols at module_base + st_value. Converting to file offset
-requires only adding sh_offset; subtracting sh_addr introduces an
-error equal to sh_addr bytes.
+Before:
 
-When .text has sh_addr == 0 -- the historical norm for simple
-modules -- both formulas produce the same result and the bug is
-latent. As modules gain more metadata sections before .text (.note,
-.static_call.text, etc.), the linker assigns .text a non-zero
-sh_addr, exposing the defect. For example, nfsd.ko on this kernel
-has sh_addr=0xa80, kvm-intel.ko has sh_addr=0x1e90.
+  perf stat -C 5
+  Failure to read '#slots'Failure to read '#slots'Failure to read '#slots'Failure to read '#slots'Segmentation fault
 
-The effect is that all .text symbols in affected modules
-shift by sh_addr bytes relative to sample IPs, causing perf
-report to attribute samples to incorrect, nearby symbols. This
-was observed as 13% of LLC-load-miss samples misattributed
-to nfsd_file_get_dio_attrs when the actual hot function was
-nfsd_cache_lookup, approximately 0xa80 bytes away in the symbol
-table.
+After:
 
-Use the existing dso__rel() flag (already set for ET_REL modules)
-to select the correct adjustment: add sh_offset for ET_REL,
-subtract (sh_addr - sh_offset) for ET_EXEC/ET_DYN.
+  perf stat -C 5
+  Failure to read '#slots'Cannot find metric or group `Default'
 
-Fixes: 0131c4ec794a ("perf tools: Make it possible to read object code from kernel modules")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: ded80bda8bc9 ("perf expr: Migrate expr ids table to a hashmap")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
 Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Thomas Richter <tmricht@linux.ibm.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/perf/util/expr.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index e398abfd13a09..61f931997f2ec 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -1429,8 +1429,12 @@ static int dso__process_kernel_symbol(struct dso *dso, struct map *map,
- 	char dso_name[PATH_MAX];
+diff --git a/tools/perf/util/expr.c b/tools/perf/util/expr.c
+index 90c6ce2212e4f..7ceefed276b73 100644
+--- a/tools/perf/util/expr.c
++++ b/tools/perf/util/expr.c
+@@ -373,7 +373,8 @@ int expr__find_ids(const char *expr, const char *one,
+ 	if (one)
+ 		expr__del_id(ctx, one);
  
- 	/* Adjust symbol to map to file offset */
--	if (adjust_kernel_syms)
--		sym->st_value -= shdr->sh_addr - shdr->sh_offset;
-+	if (adjust_kernel_syms) {
-+		if (dso__rel(dso))
-+			sym->st_value += shdr->sh_offset;
-+		else
-+			sym->st_value -= shdr->sh_addr - shdr->sh_offset;
-+	}
+-	return ret;
++	/* A positive value means syntax error, convert to -EINVAL */
++	return ret > 0 ? -EINVAL : ret;
+ }
  
- 	if (strcmp(section_name, (dso__short_name(curr_dso) + dso__short_name_len(dso))) == 0)
- 		return 0;
+ double expr_id_data__value(const struct expr_id_data *data)
 -- 
 2.53.0
 
