@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E3B36E460;
-	Wed, 20 May 2026 17:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397151E633C;
+	Wed, 20 May 2026 17:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296467; cv=none; b=W2UBMgMtkFJXlR0mRBbixektAjgd+d+BtIzk4wEhJxXOOGjEv72Oxcd60eSY0/gdt8JsYd0WzMOAC5HE1zU9MY8iHR+8Y0qz0rh4sPNYA7CSkaX0o1zvZ74CYiWUGiNXLj5WNJZWmqtTkYhooikf5j4wpkYgzphcS8e6LELhYBM=
+	t=1779296470; cv=none; b=Jo9FMr8+9nLziFbV5CeoJcjSXPUK6t7hLP9RNG6PJDEFk7X7mjWho9nZtiNnDftydkxHRmbGObb4nEfaBmp9hLrod9Z3jVHw9riRkEvc2rJCsOHxWxrDVJ7UgVu1PJR7ONQYXDNDL3yxo5dij+BIgAiOrHHhm3oDI+BXgFh7Tj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296467; c=relaxed/simple;
-	bh=lO+XgXWELR73h61pJawpHKC5GgIumJ0rUyRT4BcccsY=;
+	s=arc-20240116; t=1779296470; c=relaxed/simple;
+	bh=WMHnUGR75eQ5KGZu006h0xpQ+uXjvnqHpXauGvuBt3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBI3+rz7ra1onqYv7PQgKHfcKifcpUe4hTcdZBKu2L8YI1rly42PcQnKohj3RlV9E30tyxHnsAb673WuMy34dqCiBpPQbDafROTCzrFx5+LF1Ond0dxHqD0A4atECiqkADPjtFxQAecmaJI91nYBGOkM5hYYf27Yjy0zhNqRKWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ty3F8ZkJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bmQ1ZSyKzIJe0KV99DFdDoKIEg7hsYx0EVxSD/4GJJVcNm8xClkzKsrCaYdKkR609Y8CVU+fLOJa0cZzWhm3nvsnwKJO6bATcMBv7LsUiBauxBU0ci/uKQGVkfopjowPsfnSvzqjrPEoM+e9WN8PQivDHb89FZu3yVSTCA+LMLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhHk0B9F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ty3F8ZkJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 041201F000E9;
-	Wed, 20 May 2026 17:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhHk0B9F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0B91F000E9;
+	Wed, 20 May 2026 17:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296466;
-	bh=58/FwI+IjauImaxFXwjr9JDOm/jOyidjEVL95jXpWsU=;
+	s=korg; t=1779296469;
+	bh=UCq5BAi0EtWJMSabD87IGnxg+JJ/4Yde4OaYMi/bIHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ty3F8ZkJB5PRoEvIt8zvtXnNMbF9dLYAnXt7CAVyWSB8xEOa7SWVUxppLI+Ik9Scj
-	 LlumJGKECTXVElJnloBR+KoKp6N38rQ34XCJWoMrFA9uAFpAC48eo4mNdRT2rpKaWW
-	 nu9xyoCYP+xhyC3lGbBUDsr4y8A73aYp+hXYbfRM=
+	b=NhHk0B9FCoeJFCTtizHdco2f8/lRuWAj+ZokdFiDWhVHYa8Uu2wsmojWkI0MkKYKy
+	 u5qyK87QQawCP//Hh4f8mDKKSG42/S43iFFIqz9ZhF/B2qXCLIF8FvibFYZVDFQYEi
+	 OtrTi9tUnhIR7xxUj5lxfQ/WmFi9P8yZ3BdNYOEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0809/1146] openvswitch: cap upcall PID array size and pre-size vport replies
-Date: Wed, 20 May 2026 18:17:39 +0200
-Message-ID: <20260520162206.534740739@linuxfoundation.org>
+Subject: [PATCH 7.0 0810/1146] net: airoha: Fix possible TX queue stall in airoha_qdma_tx_napi_poll()
+Date: Wed, 20 May 2026 18:17:40 +0200
+Message-ID: <20260520162206.558043986@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,130 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 2091c6aa0df6aba47deb5c8ab232b1cb60af3519 ]
+[ Upstream commit b94769eb2f30e61e86cd8551c084c34134290d89 ]
 
-The vport netlink reply helpers allocate a fixed-size skb with
-nlmsg_new(NLMSG_DEFAULT_SIZE, ...) but serialize the full upcall PID
-array via ovs_vport_get_upcall_portids().  Since
-ovs_vport_set_upcall_portids() accepts any non-zero multiple of
-sizeof(u32) with no upper bound, a CAP_NET_ADMIN user can install a PID
-array large enough to overflow the reply buffer, causing nla_put() to
-fail with -EMSGSIZE and hitting BUG_ON(err < 0).  On systems with
-unprivileged user namespaces enabled (e.g., Ubuntu default), this is
-reachable via unshare -Urn since OVS vport mutation operations use
-GENL_UNS_ADMIN_PERM.
+Since multiple net_device TX queues can share the same hw QDMA TX queue,
+there is no guarantee we have inflight packets queued in hw belonging to a
+net_device TX queue stopped in the xmit path because hw QDMA TX queue
+can be full. In this corner case the net_device TX queue will never be
+re-activated. In order to avoid any potential net_device TX queue stall,
+we need to wake all the net_device TX queues feeding the same hw QDMA TX
+queue in airoha_qdma_tx_napi_poll routine.
 
- kernel BUG at net/openvswitch/datapath.c:2414!
- Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
- CPU: 1 UID: 0 PID: 65 Comm: poc Not tainted 7.0.0-rc7-00195-geb216e422044 #1
- RIP: 0010:ovs_vport_cmd_set+0x34c/0x400
- Call Trace:
-  <TASK>
-  genl_family_rcv_msg_doit (net/netlink/genetlink.c:1116)
-  genl_rcv_msg (net/netlink/genetlink.c:1194)
-  netlink_rcv_skb (net/netlink/af_netlink.c:2550)
-  genl_rcv (net/netlink/genetlink.c:1219)
-  netlink_unicast (net/netlink/af_netlink.c:1344)
-  netlink_sendmsg (net/netlink/af_netlink.c:1894)
-  __sys_sendto (net/socket.c:2206)
-  __x64_sys_sendto (net/socket.c:2209)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:63)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-  </TASK>
- Kernel panic - not syncing: Fatal exception
-
-Reject attempts to set more PIDs than nr_cpu_ids in
-ovs_vport_set_upcall_portids(), and pre-compute the worst-case reply
-size in ovs_vport_cmd_msg_size() based on that bound, similar to the
-existing ovs_dp_cmd_msg_size().  nr_cpu_ids matches the cap already
-used by the per-CPU dispatch configuration on the datapath side
-(ovs_dp_cmd_fill_info() serialises at most nr_cpu_ids PIDs), so the
-two sides stay consistent.
-
-Fixes: 5cd667b0a456 ("openvswitch: Allow each vport to have an array of 'port_id's.")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260416024653.153456-2-bestswngs@gmail.com
+Fixes: 23020f0493270 ("net: airoha: Introduce ethernet support for EN7581 SoC")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260416-airoha-txq-potential-stall-v2-1-42c732074540@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 35 +++++++++++++++++++++++++++++++++--
- net/openvswitch/vport.c    |  3 +++
- 2 files changed, 36 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 37 ++++++++++++++++++++----
+ drivers/net/ethernet/airoha/airoha_eth.h |  1 +
+ 2 files changed, 33 insertions(+), 5 deletions(-)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index e209099218b41..bbbde50fc6498 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -2184,9 +2184,40 @@ static int ovs_vport_cmd_fill_info(struct vport *vport, struct sk_buff *skb,
- 	return err;
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index f484835af703c..3deffc499bcb4 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -843,6 +843,21 @@ static int airoha_qdma_init_rx(struct airoha_qdma *qdma)
+ 	return 0;
  }
  
-+static size_t ovs_vport_cmd_msg_size(void)
++static void airoha_qdma_wake_netdev_txqs(struct airoha_queue *q)
 +{
-+	size_t msgsize = NLMSG_ALIGN(sizeof(struct ovs_header));
++	struct airoha_qdma *qdma = q->qdma;
++	struct airoha_eth *eth = qdma->eth;
++	int i;
 +
-+	msgsize += nla_total_size(sizeof(u32)); /* OVS_VPORT_ATTR_PORT_NO */
-+	msgsize += nla_total_size(sizeof(u32)); /* OVS_VPORT_ATTR_TYPE */
-+	msgsize += nla_total_size(IFNAMSIZ);    /* OVS_VPORT_ATTR_NAME */
-+	msgsize += nla_total_size(sizeof(u32)); /* OVS_VPORT_ATTR_IFINDEX */
-+	msgsize += nla_total_size(sizeof(s32)); /* OVS_VPORT_ATTR_NETNSID */
++	for (i = 0; i < ARRAY_SIZE(eth->ports); i++) {
++		struct airoha_gdm_port *port = eth->ports[i];
 +
-+	/* OVS_VPORT_ATTR_STATS */
-+	msgsize += nla_total_size_64bit(sizeof(struct ovs_vport_stats));
-+
-+	/* OVS_VPORT_ATTR_UPCALL_STATS(OVS_VPORT_UPCALL_ATTR_SUCCESS +
-+	 *                             OVS_VPORT_UPCALL_ATTR_FAIL)
-+	 */
-+	msgsize += nla_total_size(nla_total_size_64bit(sizeof(u64)) +
-+				  nla_total_size_64bit(sizeof(u64)));
-+
-+	/* OVS_VPORT_ATTR_UPCALL_PID */
-+	msgsize += nla_total_size(nr_cpu_ids * sizeof(u32));
-+
-+	/* OVS_VPORT_ATTR_OPTIONS(OVS_TUNNEL_ATTR_DST_PORT +
-+	 *                        OVS_TUNNEL_ATTR_EXTENSION(OVS_VXLAN_EXT_GBP))
-+	 */
-+	msgsize += nla_total_size(nla_total_size(sizeof(u16)) +
-+				  nla_total_size(nla_total_size(0)));
-+
-+	return msgsize;
++		if (port && port->qdma == qdma)
++			netif_tx_wake_all_queues(port->dev);
++	}
++	q->txq_stopped = false;
 +}
 +
- static struct sk_buff *ovs_vport_cmd_alloc_info(void)
+ static int airoha_qdma_tx_napi_poll(struct napi_struct *napi, int budget)
  {
--	return nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
-+	return genlmsg_new(ovs_vport_cmd_msg_size(), GFP_KERNEL);
- }
+ 	struct airoha_tx_irq_queue *irq_q;
+@@ -919,12 +934,21 @@ static int airoha_qdma_tx_napi_poll(struct napi_struct *napi, int budget)
  
- /* Called with ovs_mutex, only via ovs_dp_notify_wq(). */
-@@ -2196,7 +2227,7 @@ struct sk_buff *ovs_vport_cmd_build_info(struct vport *vport, struct net *net,
- 	struct sk_buff *skb;
- 	int retval;
- 
--	skb = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
-+	skb = ovs_vport_cmd_alloc_info();
- 	if (!skb)
- 		return ERR_PTR(-ENOMEM);
- 
-diff --git a/net/openvswitch/vport.c b/net/openvswitch/vport.c
-index 23f629e94a36a..56b2e2d1a749f 100644
---- a/net/openvswitch/vport.c
-+++ b/net/openvswitch/vport.c
-@@ -406,6 +406,9 @@ int ovs_vport_set_upcall_portids(struct vport *vport, const struct nlattr *ids)
- 	if (!nla_len(ids) || nla_len(ids) % sizeof(u32))
- 		return -EINVAL;
- 
-+	if (nla_len(ids) / sizeof(u32) > nr_cpu_ids)
-+		return -EINVAL;
+ 			txq = netdev_get_tx_queue(skb->dev, queue);
+ 			netdev_tx_completed_queue(txq, 1, skb->len);
+-			if (netif_tx_queue_stopped(txq) &&
+-			    q->ndesc - q->queued >= q->free_thr)
+-				netif_tx_wake_queue(txq);
+-
+ 			dev_kfree_skb_any(skb);
+ 		}
 +
- 	old = ovsl_dereference(vport->upcall_portids);
++		if (q->txq_stopped && q->ndesc - q->queued >= q->free_thr) {
++			/* Since multiple net_device TX queues can share the
++			 * same hw QDMA TX queue, there is no guarantee we have
++			 * inflight packets queued in hw belonging to a
++			 * net_device TX queue stopped in the xmit path.
++			 * In order to avoid any potential net_device TX queue
++			 * stall, we need to wake all the net_device TX queues
++			 * feeding the same hw QDMA TX queue.
++			 */
++			airoha_qdma_wake_netdev_txqs(q);
++		}
++
+ unlock:
+ 		spin_unlock_bh(&q->lock);
+ 	}
+@@ -1970,6 +1994,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 	if (q->queued + nr_frags >= q->ndesc) {
+ 		/* not enough space in the queue */
+ 		netif_tx_stop_queue(txq);
++		q->txq_stopped = true;
+ 		spin_unlock_bh(&q->lock);
+ 		return NETDEV_TX_BUSY;
+ 	}
+@@ -2025,8 +2050,10 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 				TX_RING_CPU_IDX_MASK,
+ 				FIELD_PREP(TX_RING_CPU_IDX_MASK, index));
  
- 	vport_portids = kmalloc(sizeof(*vport_portids) + nla_len(ids),
+-	if (q->ndesc - q->queued < q->free_thr)
++	if (q->ndesc - q->queued < q->free_thr) {
+ 		netif_tx_stop_queue(txq);
++		q->txq_stopped = true;
++	}
+ 
+ 	spin_unlock_bh(&q->lock);
+ 
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
+index 8bcd809e6f53e..c9d1abda47768 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.h
++++ b/drivers/net/ethernet/airoha/airoha_eth.h
+@@ -193,6 +193,7 @@ struct airoha_queue {
+ 	int ndesc;
+ 	int free_thr;
+ 	int buf_size;
++	bool txq_stopped;
+ 
+ 	struct napi_struct napi;
+ 	struct page_pool *page_pool;
 -- 
 2.53.0
 
