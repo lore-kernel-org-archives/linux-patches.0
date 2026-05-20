@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5715D28DC4;
-	Wed, 20 May 2026 17:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E3D2D879E;
+	Wed, 20 May 2026 17:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298295; cv=none; b=rur8F+dKIPUK5h7uxWY0FZnMSnv0d8+usdeFIHbPTEpMnFt0LTbZnxFMIsTN8oh7KlAb+9klmp9L+aQKs7ZR4W9uRCUNzEfwMpoyE/k9JqHEFOJN1D+AxmBeZb3aloK/GQrLMwob6RCwWCO3HKZDxKnNuY+XjfCMZmdbblDop+Q=
+	t=1779298298; cv=none; b=cpj/yT2mzKlXVWbvoPmgNCHg6jpLprt6qV37Po2NaKLD4oWRJIeEA70QO0Gk7zLO+K5wJQTYu0SOMTQMO54DLObjyOPB/07nx/5718LFmEmfH5D74Hya0Jmh56Kb74t0S3kqPjKNqPrc0rGF6AKgE4iddvhw3gTWhONwxc20ST4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298295; c=relaxed/simple;
-	bh=KB9EfXtjr5MXy0ieWesGoi4fIz9jVB1CEMBMSdZi0bk=;
+	s=arc-20240116; t=1779298298; c=relaxed/simple;
+	bh=AQYf5rR1C7eouNbQtb7SIxkBK5iV0JTpWU2Rml1bvLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pm3+Q/5UFovRuHSWw/rxorJjsizC1SgntAXSAm8I1fwI4mo9F1EyoSnH/FBx3C1XRJyA4wNYIB0HaOXWYt6Z56Zp4c7zhtzVkrxdkDYl8vgtKAUFveLCp240utHB65iog1BsiZ6kUJVZZAZlsKpuKX/fmCmf7cVC8AfIqEb//b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ku4SHrqz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eNRjhFnctN5qXhRHwO0erf437lAAaEAbfx7ZuAR3IPTGo4batuMcuy5MEbRwMv1as0ykFFahzR2YKKB8sNUCVyn3ovPx47RxZ3IohuFcTC0Svz3390ny4V7CxzmGulouyl61Rxvuki/yZcAz3duAiJ/pnsmcjW0VWKJcdI1KPKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPHR55W4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ku4SHrqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0E51F000E9;
-	Wed, 20 May 2026 17:31:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPHR55W4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682AC1F000E9;
+	Wed, 20 May 2026 17:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298294;
-	bh=hkZUrUFiXpM6nmuaiDi+YOREslJGOEUiU9mzf8xCRDk=;
+	s=korg; t=1779298296;
+	bh=AKvy7eJmxTw4TN4hfWjGzXupkCOfK6x2jjPsozymf38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ku4SHrqzWhlCdsMfzpuMAivrZDTIciWlU8e13EJkRcKBv5RCD9m77CnHW49qmAai0
-	 BV5U1/Fcc5p1Bc2FUfdtpKOEheFbqfhqzSgcVJIKyyfRi6R1GmzGHixgWc6ozrobBx
-	 LnZWPHjO/LpUbfeXxV0lSiU0ytx86np70RsiIvnc=
+	b=tPHR55W4PxmkKrJZuuNW8OKn4ckeellh3qr9KlfmuVNQOrX2RCjw+rFMH6HsDEyoH
+	 yfK+/pIoXgoTQvhSAOltHolHe/ELdqs38K+O1c3v5/2N1uWM4O8HB7sb9cgWJ7DSQW
+	 V2O7zXkXrOpfc3ekC9GOjZkRk/VSSk6iDtv6gkrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Schmidt <alexs@linux.ibm.com>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	John Hawley <warthog9@eaglescrag.net>,
+	Andrea Righi <arighi@nvidia.com>,
+	Marcos Paulo de Souza <mpdesouza@suse.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 305/957] PCI: Enable AtomicOps only if Root Port supports them
-Date: Wed, 20 May 2026 18:13:08 +0200
-Message-ID: <20260520162141.145646985@linuxfoundation.org>
+Subject: [PATCH 6.18 350/957] ktest: Run POST_KTEST hooks on failure and cancellation
+Date: Wed, 20 May 2026 18:13:53 +0200
+Message-ID: <20260520162142.120920025@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,114 +51,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gerd Bayer <gbayer@linux.ibm.com>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 1ae8c4ce157037e266184064a182af9ef9af278b ]
+[ Upstream commit bc6e165a452da909cef0efbc286e6695624db372 ]
 
-When inspecting the config space of a Connect-X physical function in an
-s390 system after it was initialized by the mlx5_core device driver, we
-found the function to be enabled to request AtomicOps despite the Root Port
-lacking support for completing them:
+PRE_KTEST can be useful for setting up the environment and POST_KTEST to
+tear it down, however POST_KTEST only runs on the normal end-of-run path.
+It is skipped when ktest exits through dodie() or cancel_test(). Final
+cleanup hooks are skipped.
 
-  00:00.1 Ethernet controller: Mellanox Technologies MT2894 Family [ConnectX-6 Lx]
-          Subsystem: Mellanox Technologies Device 0002
-          DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
-                   AtomicOpsCtl: ReqEn+
+Factor the final hook execution into run_post_ktest(), call it from the
+normal exit path and from the early exit paths, and guard it so the hook
+runs at most once.
 
-On s390 and many virtualized guests, the Endpoint is visible but the Root
-Port is not.  In this case, pci_enable_atomic_ops_to_root() previously
-enabled AtomicOps in the Endpoint even though it can't tell whether the
-Root Port supports them as a completer.
-
-Change pci_enable_atomic_ops_to_root() to fail if there's no Root Port or
-the Root Port doesn't support AtomicOps.
-
-Fixes: 430a23689dea ("PCI: Add pci_enable_atomic_ops_to_root()")
-Reported-by: Alexander Schmidt <alexs@linux.ibm.com>
-Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
-[bhelgaas: commit log, check RP first to simplify flow]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260330-fix_pciatops-v7-2-f601818417e8@linux.ibm.com
+Cc: John Hawley <warthog9@eaglescrag.net>
+Cc: Andrea Righi <arighi@nvidia.com>
+Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
+Cc: Matthieu Baerts <matttbe@kernel.org>
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Link: https://patch.msgid.link/20260307-ktest-fixes-v1-8-565d412f4925@suse.com
+Fixes: 921ed4c7208e ("ktest: Add PRE/POST_KTEST and TEST options")
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 41 ++++++++++++++++++++---------------------
- 1 file changed, 20 insertions(+), 21 deletions(-)
+ tools/testing/ktest/ktest.pl | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index a62ed5560c68f..0b6a23405f167 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3818,8 +3818,7 @@ int pci_rebar_set_size(struct pci_dev *pdev, int bar, int size)
-  */
- int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
- {
--	struct pci_bus *bus = dev->bus;
--	struct pci_dev *bridge;
-+	struct pci_dev *root, *bridge;
- 	u32 cap, ctl2;
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 924e17df56f74..17bdce9cafac2 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -100,6 +100,7 @@ my $test_type;
+ my $build_type;
+ my $build_options;
+ my $final_post_ktest;
++my $post_ktest_done = 0;
+ my $pre_ktest;
+ my $post_ktest;
+ my $pre_test;
+@@ -1575,6 +1576,24 @@ sub get_test_name() {
+     return $name;
+ }
  
- 	/*
-@@ -3849,35 +3848,35 @@ int pci_enable_atomic_ops_to_root(struct pci_dev *dev, u32 cap_mask)
- 		return -EINVAL;
- 	}
- 
--	while (bus->parent) {
--		bridge = bus->self;
-+	root = pcie_find_root_port(dev);
-+	if (!root)
-+		return -EINVAL;
- 
--		pcie_capability_read_dword(bridge, PCI_EXP_DEVCAP2, &cap);
-+	pcie_capability_read_dword(root, PCI_EXP_DEVCAP2, &cap);
-+	if ((cap & cap_mask) != cap_mask)
-+		return -EINVAL;
- 
-+	bridge = pci_upstream_bridge(dev);
-+	while (bridge != root) {
- 		switch (pci_pcie_type(bridge)) {
--		/* Ensure switch ports support AtomicOp routing */
- 		case PCI_EXP_TYPE_UPSTREAM:
--		case PCI_EXP_TYPE_DOWNSTREAM:
--			if (!(cap & PCI_EXP_DEVCAP2_ATOMIC_ROUTE))
--				return -EINVAL;
--			break;
--
--		/* Ensure root port supports all the sizes we care about */
--		case PCI_EXP_TYPE_ROOT_PORT:
--			if ((cap & cap_mask) != cap_mask)
--				return -EINVAL;
--			break;
--		}
--
--		/* Ensure upstream ports don't block AtomicOps on egress */
--		if (pci_pcie_type(bridge) == PCI_EXP_TYPE_UPSTREAM) {
-+			/* Upstream ports must not block AtomicOps on egress */
- 			pcie_capability_read_dword(bridge, PCI_EXP_DEVCTL2,
- 						   &ctl2);
- 			if (ctl2 & PCI_EXP_DEVCTL2_ATOMIC_EGRESS_BLOCK)
- 				return -EINVAL;
-+			fallthrough;
++sub run_post_ktest {
++    my $cmd;
 +
-+		/* All switch ports need to route AtomicOps */
-+		case PCI_EXP_TYPE_DOWNSTREAM:
-+			pcie_capability_read_dword(bridge, PCI_EXP_DEVCAP2,
-+						   &cap);
-+			if (!(cap & PCI_EXP_DEVCAP2_ATOMIC_ROUTE))
-+				return -EINVAL;
-+			break;
- 		}
++    return if ($post_ktest_done);
++
++    if (defined($final_post_ktest)) {
++	$cmd = $final_post_ktest;
++    } elsif (defined($post_ktest)) {
++	$cmd = $post_ktest;
++    } else {
++	return;
++    }
++
++    my $cp_post_ktest = eval_kernel_version($cmd);
++    run_command $cp_post_ktest;
++    $post_ktest_done = 1;
++}
++
+ sub dodie {
+     # avoid recursion
+     return if ($in_die);
+@@ -1634,6 +1653,7 @@ sub dodie {
+     if (defined($post_test)) {
+ 	run_command $post_test;
+     }
++    run_post_ktest;
  
--		bus = bus->parent;
-+		bridge = pci_upstream_bridge(bridge);
- 	}
+     die @_, "\n";
+ }
+@@ -4300,6 +4320,7 @@ sub cancel_test {
+ 	send_email("KTEST: Your [$name] test was cancelled",
+ 	    "Your test started at $script_start_time was cancelled: sig int");
+     }
++    run_post_ktest;
+     die "\nCaught Sig Int, test interrupted: $!\n"
+ }
  
- 	pcie_capability_set_word(dev, PCI_EXP_DEVCTL2,
+@@ -4661,11 +4682,7 @@ for (my $i = 1; $i <= $opt{"NUM_TESTS"}; $i++) {
+     success $i;
+ }
+ 
+-if (defined($final_post_ktest)) {
+-
+-    my $cp_final_post_ktest = eval_kernel_version $final_post_ktest;
+-    run_command $cp_final_post_ktest;
+-}
++run_post_ktest;
+ 
+ if ($opt{"POWEROFF_ON_SUCCESS"}) {
+     halt;
 -- 
 2.53.0
 
