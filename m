@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F47B3F44EA;
-	Wed, 20 May 2026 11:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6173F4DDA;
+	Wed, 20 May 2026 11:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276051; cv=none; b=Uri80My7HE9lW7oI3KWGlDKdsoCOCtX3+txwPF0sHf56MgcknxqqhU0ex78ICLflEE45uTxnwokaLLlWRyfPztNCbUhjOns5MlSKemeb/G6Gw11kP0k7Eg4dg9J+9Imfym2/XTPeb7gx2VYJ/N2eGkNmVyi4k2TwsKG8lDlly0s=
+	t=1779276052; cv=none; b=r7Lm8Q1/s08acCroip7rFshfV3a++czqyKg9ZDUCC9Ni3ZN+5XqIjj9mTMUy7jwVbM7lQMQeBNYMjPdqJ7Qn2kfPD44wDCadv4N7uohzJbPnTUEuMIwbr28vaZeUGZTSqW8wOojDMekcEN2hRGNA0j543QYopf4eZngL7tm1vB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276051; c=relaxed/simple;
-	bh=vr+0ZuihRL24Qjc3VjSI1tB9O5L3mQz2Kfxc90uzM34=;
+	s=arc-20240116; t=1779276052; c=relaxed/simple;
+	bh=+1K3xzKc9yYNe28p++pqbq2IcZ6bVjyp7z8BcBLV8Jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6HA47rN5IdkALwsKhYdwuwrNpo/YIVz2NZoGWvGpmhC49GJp1n+v5LSVfgTL9aNVkfbzwH4Tsfv0fDnqkhumRZ6Ney//Cy51Yl+rnxI2rV1fmOUEG216K0IexMvIqAAfIHpaycV5fQFNVAtT5cb89ml5iuQsmT0sf8gTRENWvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KkRVim+0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=E+ytT/KLYc2beewvWHrECRzfcFBtmEKIPjXabkuYwztqgH5gBvT55/jOnURhdjr1NxK0ViCkv9ykVOsSS+0VmKYNs7t6xFjEbneWpcZ95Iaw7lIPBSGz4D94vSo1kz1jHD615ITz+1ZmoqdgcVQJIgwFVJ7DdvrZYKsRxcdadwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a2JJsoBD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KkRVim+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E38C1F00894;
-	Wed, 20 May 2026 11:20:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a2JJsoBD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C9F1F00896;
+	Wed, 20 May 2026 11:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276049;
-	bh=8T65It1GO1SXGGayulZQ3wUSSNygOruDa19FjF8qO0c=;
+	s=k20260515; t=1779276050;
+	bh=U18dZuuZa3R2JvYSOS7+K27vfZvR7silqEUP8iBbIpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KkRVim+0+OrVyWTQbhEi2+sEilqbCrnoxyGjk/uz5K6bKSEWuo0H6i5G5uol8HA6J
-	 NU6olKMJvO1C8/wtkK0KHycrlKHtu9I78pTcZuAqH+4fhZjDA0TqpPSAOwezVfjh7T
-	 o2UgB/swKxMXFdj8Ivs1LLNQvpqtx+nYMu85zOF1K4xI3WlsATW3GxVzW6aN3bn/S8
-	 iOt31QxxVLM1dwBeOZdkR8geZBIg+4y8IpOAqXJynvxa58q03b9zNxTMrfR2axyUGi
-	 uLSe646jOQojvbeaTT0EE2hpKMt5gnoZgJJuUCsIZ9pGX/qWx82pvJ1gBL+edOw1c7
-	 YBa9zpb/KNL2A==
+	b=a2JJsoBDzIVKu4SAcpaAxi/B+fbFDN4uta0YbAsSMafNbSrkIffk6MRU34IOdYGoG
+	 Pj11unGh9O1efCz79r9prKG7NCUTQH6B21T32EbDjU650KQyDVFa3kpm4RQJOndf6s
+	 YIoFW2uy2Wa7g6PeRbGBULlicz4UHFpEQNi8SpOLOVGBA7Bm9hkQ4t9CkjOlNpnQz+
+	 8pUkcWoBph8e5YoPYhTWQ2qHvF5hjEHVL7tXoQSf5fD+k5MF5ZNbKg6Nugw1o7VlMl
+	 jRxsjYu++6ssa5LecOCZme2EdE0FI1Iwa83XyGaFd0sa5h9rRocqRtn4vZPh6hb8Bk
+	 RgeYZCXcCXTtA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+Cc: Chen Wandun <chenwandun@lixiang.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mpe@ellerman.id.au,
-	linuxppc-dev@lists.ozlabs.org,
+	hannes@cmpxchg.org,
+	cgroups@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.1] powerpc/pasemi: Drop redundant res assignment
-Date: Wed, 20 May 2026 07:19:17 -0400
-Message-ID: <20260520111944.3424570-45-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] cgroup/cpuset: move PF_EXITING check before __GFP_HARDWALL in cpuset_current_node_allowed()
+Date: Wed, 20 May 2026 07:19:18 -0400
+Message-ID: <20260520111944.3424570-46-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -47,245 +49,322 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Chen Wandun <chenwandun@lixiang.com>
 
-[ Upstream commit f583bd5f64d40e083dde5bb22846c4d93e59d471 ]
+[ Upstream commit dde2f938d02f2c740d49bb5113dea941f941026a ]
 
-Return value of pas_add_bridge() is not used, so code can be simplified
-to fix W=1 clang warnings:
+Since prepare_alloc_pages() unconditionally adds __GFP_HARDWALL for the
+fast path when cpusets are enabled, the __GFP_HARDWALL check in
+cpuset_current_node_allowed() causes the PF_EXITING escape path to be
+skipped on the first allocation attempt.  This makes it unreachable in
+the common case, so dying tasks can get stuck in direct reclaim or even
+trigger OOM while trying to exit, despite being allowed to allocate from
+any node.
 
-  arch/powerpc/platforms/pasemi/pci.c:275:6: error: variable 'res' set but not used [-Werror,-Wunused-but-set-variable]
+Move the PF_EXITING check before __GFP_HARDWALL so that dying tasks
+can allocate memory from any node to exit quickly, even when cpusets
+are enabled.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260317130823.240279-4-krzysztof.kozlowski@oss.qualcomm.com
+Also update the function comment to reflect the actual behavior of
+prepare_alloc_pages() and the corrected check ordering.
+
+Signed-off-by: Chen Wandun <chenwandun@lixiang.com>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Acked-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
+## Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem is `cgroup/cpuset`; action verb is “move”;
+claimed intent is to move the `PF_EXITING` allowance before the
+`__GFP_HARDWALL` rejection in `cpuset_current_node_allowed()` so exiting
+tasks can allocate outside their cpuset and finish exiting.
 
-### Phase 1: Commit Message Forensics
-Record 1.1: Subsystem `powerpc/pasemi`; action verb `Drop`; intent is to
-remove an unused local variable assignment in PA Semi PCI init.
+Step 1.2 Record: Tags present in `dde2f938d02f2`:
+- `Signed-off-by: Chen Wandun <chenwandun@lixiang.com>`
+- `Acked-by: Michal Koutný <mkoutny@suse.com>`
+- `Acked-by: Waiman Long <longman@redhat.com>`
+- `Signed-off-by: Tejun Heo <tj@kernel.org>`
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Link:`, or
+`Cc: stable@vger.kernel.org` tags in the committed message.
 
-Record 1.2: Tags found: `Signed-off-by: Krzysztof Kozlowski`, `Signed-
-off-by: Madhavan Srinivasan`, `Link: https://patch.msgid.link/2026031713
-0823.240279-4-krzysztof.kozlowski@oss.qualcomm.com`. No `Fixes:`,
-`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
-stable`.
+Step 1.3 Record: The body describes a real liveness/allocation bug:
+`prepare_alloc_pages()` sets `__GFP_HARDWALL` when cpusets are enabled,
+so the existing hardwall rejection returns `false` before the later
+`PF_EXITING` escape is reached. The described failure mode is dying
+tasks getting stuck in direct reclaim or triggering OOM while trying to
+exit.
 
-Record 1.3: The commit explicitly describes a Clang `W=1` build warning
-promoted to an error: `variable 'res' set but not used
-[-Werror,-Wunused-but-set-variable]`. No runtime symptom, crash, data
-corruption, or user-visible functional failure is described.
+Step 1.4 Record: This is a hidden bug fix despite the subject saying
+“move”: it restores an existing intended exception for `PF_EXITING`
+tasks that was unreachable for hardwall allocations.
 
-Record 1.4: This is not a hidden runtime bug fix. It is a build-warning
-cleanup that can matter when building powerpc with warning-as-error
-settings.
+## Phase 2: Diff Analysis
+Step 2.1 Record: One file changed, `kernel/cgroup/cpuset.c`, 8
+insertions and 6 deletions. The only functional change is inside
+`cpuset_current_node_allowed()`. Scope is single-file, surgical.
 
-### Phase 2: Diff Analysis
-Record 2.1: One file changed: `arch/powerpc/platforms/pasemi/pci.c`, `1
-insertion(+), 2 deletions(-)`. Only `pas_pci_init()` is modified. Scope
-is single-file surgical.
+Step 2.2 Record: Before, for a node outside `current->mems_allowed`, the
+code checked `tsk_is_oom_victim()`, then rejected `__GFP_HARDWALL`, then
+checked `PF_EXITING`. After, `PF_EXITING` is checked before
+`__GFP_HARDWALL`. Comment updates match the behavior change.
 
-Record 2.2: Before: `pas_pci_init()` declared `int res;` and assigned
-`res = pas_add_bridge(np);`, then never read `res`. After: it still
-calls `pas_add_bridge(np);` but does not assign the return value. The
-execution path and side effects are unchanged.
+Step 2.3 Record: Bug category is logic/liveness correctness in memory
+allocation policy. The broken mechanism was an intended “dying task may
+allocate anywhere” path being shadowed by an earlier hardwall return.
 
-Record 2.3: Bug category: build warning/build error under specific
-compiler options. Mechanism: remove unused-but-set variable. No resource
-lifetime, locking, memory safety, reference counting, or logic behavior
-changes.
+Step 2.4 Record: The fix is obviously correct by inspection: it only
+reorders two independent boolean exits, introduces no locking, no data
+structure changes, and no API changes. Regression risk is very low; the
+only behavioral relaxation is for tasks already marked `PF_EXITING`.
 
-Record 2.4: Fix quality is obviously correct by inspection: the function
-call remains, only the unused local storage is removed. Regression risk
-is very low because runtime behavior is unchanged.
+## Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the hardwall rejection is old cpuset
+logic from `9bf2229f881767` in 2005; the `PF_EXITING` allowance was
+added by `5563e77078d8` in 2005; the OOM-victim allowance was added by
+`c596d9f320aa` in 2007. `prepare_alloc_pages()` currently sets
+`*alloc_gfp |= __GFP_HARDWALL`; that structure was introduced by
+`9cd7555875bb` in 2017, and checked tags show equivalent hardwall first-
+attempt behavior exists at least back to `v4.4`.
 
-### Phase 3: Git History Investigation
-Record 3.1: `git blame` on current stable code shows the exact changed
-lines are present in the checked-out stable tree. Deeper history shows
-the unused `res` assignment was introduced by `250a93501d626`
-(`powerpc/pasemi: Search for PCI root bus by compatible property`),
-first described by `git describe` as `v4.19-rc1~110^2~83`.
+Step 3.2 Record: No `Fixes:` tag, so there was no specific target commit
+to follow.
 
-Record 3.2: No `Fixes:` tag is present. Manual history identified
-`250a93501d626` as the introducing commit for the exact unused
-assignment pattern.
+Step 3.3 Record: Recent `kernel/cgroup/cpuset.c` history shows normal
+cpuset churn and a 2025 rename from `cpuset_node_allowed()` to
+`cpuset_current_node_allowed()` in `8adce0857769`. That rename is a
+backport context issue for older trees, not a semantic dependency.
 
-Record 3.3: Recent file history shows only the candidate commit and
-unrelated treewide allocation changes in `next-20260508`; no
-prerequisite pasemi PCI refactor was found.
+Step 3.4 Record: `git log --author='Chen Wandun' -10 linux-next/master
+-- kernel/cgroup/cpuset.c mm/page_alloc.c` found this commit and one
+unrelated page allocator simplification. The author is not shown as the
+subsystem maintainer in the checked history; the patch was acked/applied
+by cgroup maintainers/reviewers.
 
-Record 3.4: The author has other powerpc cleanup commits nearby,
-including the sibling PS3 warning fix. `MAINTAINERS` identifies Madhavan
-Srinivasan and Michael Ellerman as powerpc maintainers; Madhavan
-committed this patch.
+Step 3.5 Record: No functional prerequisite found. Older stable branches
+may need the function-name/context adjusted because the function is
+named `cpuset_node_allowed()` or `__cpuset_node_allowed()` there.
 
-Record 3.5: The sibling commit `8333e4916040e` is part of the same
-cleanup series but is independent. This pasemi patch applies standalone
-to the current 7.0.5 checkout.
+## Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c dde2f938d02f2` found the original
+submission:
+`https://patch.msgid.link/20260507105434.3266234-1-
+chenwandun@lixiang.com`
+`b4 dig -a` found only v1.
 
-### Phase 4: Mailing List And External Research
-Record 4.1: `b4 dig -c f583bd5f64d40` found the original submission by
-patch-id. It found the January submission and the March resend
-corresponding to the commit `Link:`. Direct WebFetch to
-lore/patch.msgid.link was blocked by Anubis.
+Step 4.2 Record: `b4 dig -w` showed the patch was sent to Chen Wandun,
+Waiman Long, Chen Ridong, Tejun Heo, Johannes Weiner, Michal Koutný,
+`cgroups@vger.kernel.org`, and `linux-kernel@vger.kernel.org`.
 
-Record 4.2: `b4 dig -w` showed appropriate powerpc maintainers and
-LLVM/compiler-warning stakeholders were copied: Madhavan Srinivasan,
-Michael Ellerman, Nicholas Piggin, Christophe Leroy, Nathan Chancellor,
-LLVM list, linuxppc-dev, and others.
+Step 4.3 Record: No separate bug-report link or `Reported-by:` tag. The
+thread includes Chen Ridong asking how it was found; the author replied
+it was found while reviewing cpuset node-allowed logic during
+investigation of a memory allocation issue, not as that investigation’s
+root cause.
 
-Record 4.3: No bug report link or reporter tag exists. The thread
-describes a compiler warning/build-cleanliness issue, not a runtime bug
-report.
+Step 4.4 Record: Thread review: Michal Koutný acked and said it “makes
+sense,” while noting OOM could eventually select the task and bypass
+hardwall, so this expedites rather than necessarily being the only
+unblock. Waiman Long acked. Chen Ridong gave `Reviewed-by` in the
+thread. Tejun Heo applied it to `cgroup/for-7.1-fixes`. No NAKs or
+objections found.
 
-Record 4.4: The patch is part of a two-patch series with `powerpc/ps3:
-Drop redundant result assignment`; the other patch is the same class of
-cleanup and is not a dependency.
+Step 4.5 Record: WebFetch for lore/stable was blocked by Anubis;
+WebSearch found no useful stable-specific objection or discussion. This
+is an external-search limitation.
 
-Record 4.5: The downloaded thread contains no `stable` mention. A direct
-lore stable search was attempted but blocked by Anubis, so no stable-
-list archive result could be independently verified.
+## Phase 5: Code Semantic Analysis
+Step 5.1 Record: Modified function: `cpuset_current_node_allowed()`.
 
-### Phase 5: Code Semantic Analysis
-Record 5.1: Modified function: `pas_pci_init()`.
+Step 5.2 Record: Callers verified: `__cpuset_zone_allowed()` wraps it in
+`include/linux/cpuset.h`; `get_page_from_freelist()` and reclaim retry
+logic call `__cpuset_zone_allowed()` when cpusets are enabled and
+`ALLOC_CPUSET` is set.
 
-Record 5.2: Callers: `pas_pci_init()` is assigned to `.discover_phbs` in
-the PA Semi machine descriptor in
-`arch/powerpc/platforms/pasemi/setup.c`. `pas_add_bridge()` is static
-and, in `next-20260508`, is called only from `pas_pci_init()`.
+Step 5.3 Record: Key callees in `cpuset_current_node_allowed()` are
+`in_interrupt()`, `node_isset()`, `tsk_is_oom_victim()`,
+`nearest_hardwall_ancestor()`, `task_cs()`, and `spin_lock_irqsave()`
+around ancestor scanning.
 
-Record 5.3: Relevant callees in the affected path include
-`pci_set_flags()`, `of_find_compatible_node()`, `pas_add_bridge()`, and
-`of_node_put()`. `pas_add_bridge()` allocates/configures the PCI
-controller and scans OF ranges/ISA bridge state.
+Step 5.4 Record: Reachability verified through the allocator:
+`prepare_alloc_pages()` sets `__GFP_HARDWALL`;
+`__alloc_frozen_pages_noprof()` calls `prepare_alloc_pages()` then
+`get_page_from_freelist()`. `PF_EXITING` is set in `exit_signals()`
+during `do_exit()` before later exit cleanup. I did not verify a
+specific later cleanup function that always allocates; the allocator
+path and `PF_EXITING` timing are verified.
 
-Record 5.4: Reachability is boot-time/platform-init only for PA Semi
-systems. It is not syscall-reachable and has no unprivileged runtime
-trigger.
+Step 5.5 Record: Similar pattern found: `c596d9f320aa` allowed OOM-
+killed tasks to allocate anywhere to avoid exit/deadlock problems, and
+current `show_mem()` treats `PF_EXITING` as an exception allowed outside
+node filters.
 
-Record 5.5: Similar pattern found: sibling commit `8333e4916040e`
-removes an unused assignment in PS3 platform code for the same warning
-class.
+## Phase 6: Stable Tree Analysis
+Step 6.1 Record: Checked `v4.4`, `v4.9`, `v4.14`, `v4.19`, `v5.4`,
+`v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, and `v7.0`; all checked trees
+have the old ordering where `__GFP_HARDWALL` returns before
+`PF_EXITING`, and allocator code setting/using `__GFP_HARDWALL`.
 
-### Phase 6: Stable Tree Analysis
-Record 6.1: The exact unused `res = pas_add_bridge(np);` pattern exists
-in verified tags `v4.19`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`,
-`v6.17`, `v6.18`, `v6.19`, and `v7.0`. It was not present in the same
-form in `v4.14` or `v4.9`.
+Step 6.2 Record: `git apply --check` of the upstream patch succeeds on
+the current `v7.0.9` checkout with line offsets. Older branches need at
+most minor context/name adjustment because the function name differs,
+but the relevant body is present.
 
-Record 6.2: Backport difficulty is clean for the current 7.0.5 tree,
-verified by `git format-patch -1 --stdout f583bd5f64d40 | git apply
---check`. Older stable trees may need minor context adjustment because
-surrounding code differs in older releases.
+Step 6.3 Record: No separate alternative technical fix for this bug was
+found by subject/bug-text searches. I did not use any branch-
+selection/pipeline presence as decision evidence.
 
-Record 6.3: No earlier same-subject fix exists in `v7.0`; related same-
-series warning fixes were found only in `next-20260508`.
+## Phase 7: Subsystem Context
+Step 7.1 Record: Subsystem is cgroup/cpuset with page allocator
+interaction. Criticality is important to core: it affects memory
+allocation behavior for systems using cpusets, especially NUMA/cgroup-
+managed systems.
 
-### Phase 7: Subsystem Context
-Record 7.1: Subsystem is `arch/powerpc/platforms/pasemi`, a platform-
-specific powerpc PCI init path. Criticality is peripheral/platform-
-specific, not core kernel.
+Step 7.2 Record: The cpuset file has active recent development, but the
+affected allocation policy logic is mature and present across many
+stable-era tags.
 
-Record 7.2: Recent pasemi file history is low churn. This is mature
-platform code with little recent activity.
+## Phase 8: Impact And Risk
+Step 8.1 Record: Affected users are systems with cpusets enabled where
+exiting tasks allocate while outside their allowed memory nodes or while
+their allowed nodes are depleted. This is config/setup-specific, not
+universal.
 
-### Phase 8: Impact And Risk
-Record 8.1: Affected population: PA Semi powerpc platform builders,
-especially Clang `W=1` builds with powerpc `-Werror` behavior.
+Step 8.2 Record: Trigger requires `PF_EXITING`, cpusets enabled, and an
+allocation path where hardwall cpuset filtering checks a node outside
+`current->mems_allowed`. Exiting is user-triggerable, but cpuset
+placement usually depends on administrator/container-manager
+configuration.
 
-Record 8.2: Trigger condition is build-time only. No runtime trigger and
-no unprivileged-user trigger were verified.
+Step 8.3 Record: Failure mode is high severity: direct reclaim stalls
+and possible OOM while a task is trying to exit. The thread reviewer
+caveat means this may expedite exit in some OOM cases rather than prove
+every instance is permanently stuck, but the liveness benefit is real.
 
-Record 8.3: Failure mode is build failure under specific warning/error
-settings, not crash/corruption/deadlock. Severity is medium for affected
-builders, low for runtime users.
+Step 8.4 Record: Benefit is high for affected systems; risk is very low
+because the change is a two-line ordering fix plus comments and only
+broadens allocation eligibility for dying tasks.
 
-Record 8.4: Benefit is narrow but real under the stable build-fix
-exception. Risk is extremely low because the generated runtime behavior
-should be unchanged: the same function call remains and only an unused
-local assignment is removed.
+## Phase 9: Final Synthesis
+Step 9.1 Record:
+Evidence for backporting: fixes a real allocation/liveness bug; small
+one-function change; no API or feature addition; acknowledged by cgroup
+reviewers; present in many stable-era tags; clean on `v7.0`; older trees
+have the same logic.
+Evidence against: no explicit `Fixes:`/`Cc: stable`/`Reported-
+by`/`Tested-by`; no concrete reproducer in commit or thread; older trees
+may need minor context adjustment.
+Unresolved: I could not use WebFetch on lore/stable due Anubis; I did
+not verify behavior earlier than `v4.4`; I did not run runtime tests.
 
-### Phase 9: Final Synthesis
-Record 9.1: Evidence for backporting: fixes a verified compiler
-warning/error class; code exists across many stable-era releases; patch
-is tiny, standalone, and behavior-preserving; applies cleanly to current
-stable checkout. Evidence against: no runtime bug, no default-build
-failure was verified, no stable nomination, platform-specific impact.
-Unresolved: direct stable lore search was blocked, and I did not run a
-full Clang `W=1` build.
+Step 9.2 Stable rules:
+1. Obviously correct and tested? Obviously correct by inspection; no
+   explicit test tag.
+2. Fixes a real bug? Yes, unreachable `PF_EXITING` allocation escape
+   under hardwall cpuset filtering.
+3. Important issue? Yes, can cause direct reclaim stalls or OOM during
+   task exit.
+4. Small and contained? Yes, one file, one function, 8 insertions/6
+   deletions mostly comments.
+5. No new features/APIs? Yes.
+6. Can apply to stable? Yes for current `v7.0`; older trees likely need
+   minor backport context due function naming.
 
-Record 9.2: Stable rules checklist: obviously correct: yes by
-inspection; tested: no explicit `Tested-by` and no local full build;
-fixes a real issue: yes as a build-warning/error issue under specific
-settings; important: only under build-fix exception, not runtime-
-critical; small/contained: yes, 3-line single-function change; no new
-feature/API: yes; applies to stable: current 7.0.5 yes, older trees
-likely simple but not all tested.
+Step 9.3 Exception category: No special exception category; this is a
+normal bug fix.
 
-Record 9.3: Exception category: build fix. This is the only reason to
-take it; it is not a runtime bug fix.
-
-Record 9.4: Decision: backport as a low-risk build fix for Clang
-`W=1`/powerpc warning-as-error builds. The benefit is narrow, but the
-patch is minimal, standalone, and behavior-preserving.
+Step 9.4 Decision: Backport. The fix restores intended dying-task
+allocation behavior, is narrowly scoped, has strong reviewer confidence,
+and addresses a serious liveness failure with minimal regression risk.
 
 ## Verification
-- [Phase 1] `git show --format=fuller --stat --patch f583bd5f64d40`
-  verified commit message, tags, and exact diff.
-- [Phase 2] Diff verified one file, one function, `1 insertion`, `2
-  deletions`.
-- [Phase 3] `git blame` and `git show 250a93501d626` verified the unused
-  assignment pattern was introduced by `250a93501d626`, described as
-  before `v4.19-rc1`.
-- [Phase 4] `b4 dig -c`, `-a`, `-w`, and `b4 mbox` verified the patch
-  submission, resend, recipients, and lack of candidate-specific stable
-  tags in the downloaded thread.
-- [Phase 5] `rg` and `git grep` verified `pas_pci_init()` call placement
-  and `pas_add_bridge()` call sites.
-- [Phase 6] `git grep` verified the pattern in `v4.19`, `v5.10`,
-  `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.17`, `v6.18`, `v6.19`, and
-  `v7.0`; `git apply --check` verified clean apply to current 7.0.5.
-- [Phase 7] `MAINTAINERS` verified powerpc maintainers and subsystem
-  ownership.
-- [Phase 8] `arch/powerpc/Kconfig.debug` and `arch/powerpc/Kbuild`
-  verified powerpc warning-as-error configuration exists.
-- UNVERIFIED: I did not run a full Clang `W=1` build, and direct lore
-  stable search was blocked by Anubis.
+- Phase 1: Parsed `git show --format=fuller` for `dde2f938d02f2`;
+  confirmed tags and absence of `Fixes:`/`Reported-by:`/`Tested-by:`.
+- Phase 2: Inspected the diff; confirmed only `kernel/cgroup/cpuset.c`
+  changes and functional reorder in `cpuset_current_node_allowed()`.
+- Phase 3: Ran `git blame` on `kernel/cgroup/cpuset.c` and
+  `mm/page_alloc.c`; inspected historical commits `5563e77078d8`,
+  `c596d9f320aa`, `9bf2229f8817`, `9cd7555875bb`, and `8adce0857769`.
+- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, `b4 dig -w`, and saved/read the
+  mbox; confirmed v1 only, maintainer/reviewer acks, and no NAKs.
+- Phase 5: Used repository search and file reads to trace
+  `cpuset_current_node_allowed()` through `__cpuset_zone_allowed()` into
+  `get_page_from_freelist()` and allocator preparation.
+- Phase 6: Used `git grep` on stable tags from `v4.4` through `v7.0`;
+  confirmed the old ordering and allocator hardwall behavior exist. Ran
+  `git apply --check` successfully on current `v7.0.9`.
+- Phase 7: Checked recent cpuset history to assess activity and context.
+- Phase 8: Verified `PF_EXITING` is set in `exit_signals()` during
+  `do_exit()` before later exit cleanup.
+- UNVERIFIED: Lore/stable WebFetch was blocked by Anubis; no runtime
+  reproducer or test result was found; exact pre-`v4.4` introduction was
+  not verified.
 
 **YES**
 
- arch/powerpc/platforms/pasemi/pci.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/cgroup/cpuset.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pasemi/pci.c b/arch/powerpc/platforms/pasemi/pci.c
-index 60f990a336c47..2df9552746529 100644
---- a/arch/powerpc/platforms/pasemi/pci.c
-+++ b/arch/powerpc/platforms/pasemi/pci.c
-@@ -272,13 +272,12 @@ void __init pas_pci_init(void)
- {
- 	struct device_node *root = of_find_node_by_path("/");
- 	struct device_node *np;
--	int res;
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 1335e437098e8..d2d2c7126638a 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -4171,11 +4171,11 @@ static struct cpuset *nearest_hardwall_ancestor(struct cpuset *cs)
+  * current's mems_allowed, yes.  If it's not a __GFP_HARDWALL request and this
+  * node is set in the nearest hardwalled cpuset ancestor to current's cpuset,
+  * yes.  If current has access to memory reserves as an oom victim, yes.
+- * Otherwise, no.
++ * If the current task is PF_EXITING, yes. Otherwise, no.
+  *
+  * GFP_USER allocations are marked with the __GFP_HARDWALL bit,
+  * and do not allow allocations outside the current tasks cpuset
+- * unless the task has been OOM killed.
++ * unless the task has been OOM killed or is exiting.
+  * GFP_KERNEL allocations are not so marked, so can escape to the
+  * nearest enclosing hardwalled ancestor cpuset.
+  *
+@@ -4189,7 +4189,9 @@ static struct cpuset *nearest_hardwall_ancestor(struct cpuset *cs)
+  * The first call here from mm/page_alloc:get_page_from_freelist()
+  * has __GFP_HARDWALL set in gfp_mask, enforcing hardwall cpusets,
+  * so no allocation on a node outside the cpuset is allowed (unless
+- * in interrupt, of course).
++ * in interrupt, of course).  The PF_EXITING check must therefore
++ * come before the __GFP_HARDWALL check, otherwise a dying task
++ * would be blocked on the fast path.
+  *
+  * The second pass through get_page_from_freelist() doesn't even call
+  * here for GFP_ATOMIC calls.  For those calls, the __alloc_pages()
+@@ -4199,6 +4201,7 @@ static struct cpuset *nearest_hardwall_ancestor(struct cpuset *cs)
+  *	in_interrupt - any node ok (current task context irrelevant)
+  *	GFP_ATOMIC   - any node ok
+  *	tsk_is_oom_victim   - any node ok
++ *	PF_EXITING   - any node ok (let dying task exit quickly)
+  *	GFP_KERNEL   - any node in enclosing hardwalled cpuset ok
+  *	GFP_USER     - only nodes in current tasks mems allowed ok.
+  */
+@@ -4218,11 +4221,10 @@ bool cpuset_current_node_allowed(int node, gfp_t gfp_mask)
+ 	 */
+ 	if (unlikely(tsk_is_oom_victim(current)))
+ 		return true;
+-	if (gfp_mask & __GFP_HARDWALL)	/* If hardwall request, stop here */
+-		return false;
+-
+ 	if (current->flags & PF_EXITING) /* Let dying task have memory */
+ 		return true;
++	if (gfp_mask & __GFP_HARDWALL)	/* If hardwall request, stop here */
++		return false;
  
- 	pci_set_flags(PCI_SCAN_ALL_PCIE_DEVS);
- 
- 	np = of_find_compatible_node(root, NULL, "pasemi,rootbus");
- 	if (np) {
--		res = pas_add_bridge(np);
-+		pas_add_bridge(np);
- 		of_node_put(np);
- 	}
- 	of_node_put(root);
+ 	/* Not hardwall and node outside mems_allowed: scan up cpusets */
+ 	spin_lock_irqsave(&callback_lock, flags);
 -- 
 2.53.0
 
