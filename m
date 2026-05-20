@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EBE37DE8A;
-	Wed, 20 May 2026 18:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CB137DE8A;
+	Wed, 20 May 2026 18:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301706; cv=none; b=WhNUz0V3GPUvqcqpFH0zNSTIafpVkFtBAfYVOqSwmJfscqs9mm4HDNxuKYZoBfdNAH3hKLk6WMivZYdYsjA4jAMSVNrh5sPwOW+PnH7y6a5K4Ol8fpzIA0xrYF29UrkZCaZkK6P0PCnooeC5yIZsjD3UI+JOGO8euzPhMOgYQYA=
+	t=1779301709; cv=none; b=RYtYLA7GsB7VXuacLXEbv1SZwHdGCMmP5V1Wusiby4p7kighl0tfn3UBSws1t3t8ahSE8KD7TVLz2aM/MFDUA0DOVjLw1DhO+d4JxCJg8zKVsXVP0FRW5fSBGtwANnq9I3gYjrL9PB4eiCzlml95zrWplu0NYDYCC0M4VoOj7XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301706; c=relaxed/simple;
-	bh=51tfWaPowrlTlzuItnz2jwxMI0bEfOm4JPPRrX04NKQ=;
+	s=arc-20240116; t=1779301709; c=relaxed/simple;
+	bh=9nNv6/j/a0x89JXsl7iNZfl3AoxoZUEuVnayupQJpI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G4MsFRD3hhrE3ihYPc+CQgJTaowtbWQ3xVBxCXvwaqlUZo5ro7mtm/yb+Z9SNwxwcWya6z5R5qbKakNvlFbicxvJaAZvABFFWA3N8/5UTe3mXzO2fc0yw+Gg1AK/5h1Qk3WQESMta9R+8kfyHDXYaevH9a9wc3Dz49J8duMWaKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8TJqX6r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RxII7IcYcCB6h9ukPYZFiqUsJgBqXbgecZyK6/MTlig2rtEJfitaAff8EMBgr5E976lTQJNJ/FyjFmtnnmNBh3YMtt4FGQf+egwJWKUL4KkhvZfeDHtgKrMOO4Dx7V3ZqvUn2PCJYGs/xDvCsfIMZJTR9gQ8VtKse4SlB47FEms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXSFn0oo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8TJqX6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9BB1F000E9;
-	Wed, 20 May 2026 18:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXSFn0oo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F7E1F00894;
+	Wed, 20 May 2026 18:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301704;
-	bh=fFqxO0+DqhKq262CgPb+clJFkzS05l21OLU0jfX48G8=;
+	s=korg; t=1779301707;
+	bh=Y2Fu/Ba2W8XP97Yw9+XdESivVpG3IGAkg6k5r5vd4Rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v8TJqX6r+SQZyRWkTyDifhthRKzsFFY55TN20sXW4JsExvbYe8cqcKSa8mQb1JoSD
-	 7q2nJ2HzRkeBt+ac3bx1eixU32F3V8X/emYwQ0gGGpE0jeKaBGZhagI7Iop3pwhOh+
-	 h00W5hX4TEivB238Vjs7N2qamtIj78QphhwxH698=
+	b=wXSFn0ooP9vJC01hun2v22DIv0tQ6OjBiDe3tD8A4yz0XJij8VPmawNmpXuxsc9GM
+	 FpZY/jvarFz0bmX6sbdhGb0P+klHEVHFzag9a+RW1/ZrboxsOQHJ2aAlPVL0e2bVKI
+	 5ZmEJerlqn5gV7UpCBUfgj5K/gUmF1/8L0p+gEsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Sergio Correia <scorreia@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.12 614/666] audit: fix incorrect inheritable capability in CAPSET records
-Date: Wed, 20 May 2026 18:23:45 +0200
-Message-ID: <20260520162124.579082564@linuxfoundation.org>
+	Kim Phillips <kim.phillips@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 615/666] Revert "ACPI: CPPC: Adjust debug messages in amd_set_max_freq_ratio() to warn"
+Date: Wed, 20 May 2026 18:23:46 +0200
+Message-ID: <20260520162124.601083316@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,44 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Correia <scorreia@redhat.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit e4a640475e43f406fdfd56d370b1f34b0cbbc18d upstream.
+commit db5dadb562cabb6da49959b473ed0d9645b6f2da upstream.
 
-__audit_log_capset() records the effective capability set into the
-inheritable field due to a copy-paste error. Every CAPSET audit
-record therefore reports cap_pi (process inheritable) with the value
-of cap_effective instead of cap_inheritable.
+Some older systems don't support CPPC in the firmware and this just makes
+noise for them when booting.  Drop back to debug.
 
-This silently corrupts audit data used for compliance and forensic
-analysis: an attacker who modifies inheritable capabilities to
-prepare for a privilege-escalating exec would have the change masked
-in the audit trail.
+This reverts commit 21fb59ab4b9767085f4fe1edbdbe3177fbb9ec97.
 
-The bug has been present since the original introduction of CAPSET
-audit records in 2008.
-
-Cc: stable@vger.kernel.org
-Fixes: e68b75a027bb ("When the capset syscall is used it is not possible for audit to record the actual capbilities being added/removed.  This patch adds a new record type which emits the target pid and the eff, inh, and perm cap sets.")
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Assisted-by: Claude:claude-opus-4-6
-Signed-off-by: Sergio Correia <scorreia@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 21fb59ab4b976 ("ACPI: CPPC: Adjust debug messages in amd_set_max_freq_ratio() to warn")
+Suggested-by: Kim Phillips <kim.phillips@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Tested-by: Kim Phillips <kim.phillips@amd.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260504230141.484743-2-mario.limonciello@amd.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/auditsc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/acpi/cppc.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/auditsc.c
-+++ b/kernel/auditsc.c
-@@ -2845,7 +2845,7 @@ void __audit_log_capset(const struct cre
+--- a/arch/x86/kernel/acpi/cppc.c
++++ b/arch/x86/kernel/acpi/cppc.c
+@@ -86,19 +86,19 @@ static void amd_set_max_freq_ratio(void)
  
- 	context->capset.pid = task_tgid_nr(current);
- 	context->capset.cap.effective   = new->cap_effective;
--	context->capset.cap.inheritable = new->cap_effective;
-+	context->capset.cap.inheritable = new->cap_inheritable;
- 	context->capset.cap.permitted   = new->cap_permitted;
- 	context->capset.cap.ambient     = new->cap_ambient;
- 	context->type = AUDIT_CAPSET;
+ 	rc = cppc_get_perf_caps(0, &perf_caps);
+ 	if (rc) {
+-		pr_warn("Could not retrieve perf counters (%d)\n", rc);
++		pr_debug("Could not retrieve perf counters (%d)\n", rc);
+ 		return;
+ 	}
+ 
+ 	rc = amd_get_boost_ratio_numerator(0, &numerator);
+ 	if (rc) {
+-		pr_warn("Could not retrieve highest performance (%d)\n", rc);
++		pr_debug("Could not retrieve highest performance (%d)\n", rc);
+ 		return;
+ 	}
+ 	nominal_perf = perf_caps.nominal_perf;
+ 
+ 	if (!nominal_perf) {
+-		pr_warn("Could not retrieve nominal performance\n");
++		pr_debug("Could not retrieve nominal performance\n");
+ 		return;
+ 	}
+ 
 
 
