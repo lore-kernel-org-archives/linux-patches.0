@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6CE17A309;
-	Wed, 20 May 2026 17:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FFF30675C;
+	Wed, 20 May 2026 17:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299864; cv=none; b=E0nbG1vO9wHzWXk3tg42regUztHRSBkKTxGNW9JPMOMyJ3VK46bOXtlNYz7a5RVbtf8f/yjh7bAmiyd/tOSOdSWvzR7MmlPSBLOQQTHU/Bbuyioa2YauxR9A2L6jlBnOZBlOhW/KIDvCLe+yy+N1yHIuS54Idr2rrl3xkML2aWo=
+	t=1779299866; cv=none; b=I/CzTC9mTj8plX7Xpap2HVDUlhe/mlYLl3zAs4Vlbc53yo+juwe5Qs2Ks9sKqkCs4E4RO7bVFcJgE1MeB442SKo0za3D+wM8ubx5+yqpF3eWxqbvFFVDV1FSeg3/HUclB4jpUT/+gK/n9Nl7YTeDNIxoxaY8zXFDjxc710n+nBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299864; c=relaxed/simple;
-	bh=3Asb0iH+lRccBTLvyAj7LgXd5He0yyTFUnZ3SHj9xxg=;
+	s=arc-20240116; t=1779299866; c=relaxed/simple;
+	bh=O39okzC32fyFq+6miS6LmQgYHDBiqK6lpIjUVEhkgUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UmdQESrLsiRRwd/nDLA300O/kQ1Phbn3AUfqyYFYBG+3PxjQxa7cevIiv4SX0gj5b1wbnZ5SP44vHQ4Saggm8omWie7RYRmm4yv0UJcC06at9+DluFaI9YRxjZopNYUK/7gkjW3hkD0ocb19addH9FVisz+ID1LFF0gU1w+bouQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeqgJect; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lvBwYfRSPHS3EetY4hCvL6cyyhA++e55yHlrZn17XM6OmWx4LZ6AQCPsHgzFW4mpsHrt3PTnzMpgk6R9yZTrUDDRsnNlNx5KJQavRtIlKgQx+3sJ99nsgxu0ci6VbFZD2+U+Q9OIT+wCxV+iLUVNsNmnVC6++JZUGMZeXGVy78M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOSmPUhC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeqgJect"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759761F000E9;
-	Wed, 20 May 2026 17:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOSmPUhC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A9281F000E9;
+	Wed, 20 May 2026 17:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299863;
-	bh=ViONbRu7NcVsolBqlVBuHn9QllHnsBIcQ9+OYCg17yU=;
+	s=korg; t=1779299865;
+	bh=QhFQXw7fRWTlDb0Q2CX23SAF0xxSnDBf5qigTmK0ohk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MeqgJectuEVjooEyWXIsHtu3SYjdmoDx2siKQ094+i52B+PmVp1x+e9QHtl3rJIcv
-	 9WvtEOFINFCZrdv/UnEYcXxsUAxH+km5TXeJcn9L0KX9PeeTnCfb/yQZX74Is0FPIK
-	 JjFHy2CRZVMg7HqP9IX+pfg2Q1WvLErlooku+cFY=
+	b=jOSmPUhCFsWC+GHA/X8fMcx2+fiLVvHdq7k6pyfCAWg9fIWl7SoJ5bipMVwwgNsAB
+	 bOTwymtuSHZ6P0lh9dU8o9bQhDeA6u9gDd+cv2/qHaRfCAPNuHM4iZVlp4IWy/iDbQ
+	 yg8pg42MXjGN5sJ7MwLm7/xX6dK0zJCg9br9Hci4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 914/957] ALSA: usb-audio: Bound MIDI endpoint descriptor scans
-Date: Wed, 20 May 2026 18:23:17 +0200
-Message-ID: <20260520162154.397962894@linuxfoundation.org>
+Subject: [PATCH 6.18 915/957] ALSA: usb-audio: qcom: Check offload mapping failures
+Date: Wed, 20 May 2026 18:23:18 +0200
+Message-ID: <20260520162154.421150237@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,53 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit d6854daa67be623860f4e1873fd3d3c275aba4ed upstream.
+commit 814b2c9b30e56074e11fc0a6e5419b3fee0639bc upstream.
 
-snd_usbmidi_get_ms_info() validates the internal MIDIStreaming endpoint
-descriptor size before using baAssocJackID[], but the descriptor walker can
-still return a class-specific endpoint descriptor whose bLength exceeds the
-remaining bytes in the endpoint-extra scan.
+uaudio_transfer_buffer_setup() calls dma_get_sgtable() and then passes
+the sg_table to uaudio_iommu_map_xfer_buf() without checking whether sg
+table construction succeeded. If dma_get_sgtable() fails, the sg_table
+contents are not valid.
 
-That leaves later flexible-array reads bounded by bLength, but not by the
-remaining bytes in the endpoint-extra scan.
+uaudio_iommu_map_pa() also ignores iommu_map() failures for the event and
+transfer rings and still returns the allocated IOVA to the QMI response.
+That can expose an unmapped IOVA to the audio DSP. For transfer rings,
+the failed mapping also leaves the IOVA allocator state marked in use.
 
-Stop walking when bLength is zero or
-extends past the remaining endpoint-extra scan.
+Check both operations. Free the coherent transfer buffer when sg table
+construction fails, free the sg table when transfer-buffer IOMMU mapping
+fails, and release the transfer-ring IOVA if iommu_map() fails. Also
+return the existing event-ring IOVA when the event ring is already mapped,
+matching the pre-split helper behavior.
 
-Fixes: 5c6cd7021a05 ("ALSA: usb-audio: Fix case when USB MIDI interface has more than one extra endpoint descriptor")
+Fixes: 326bbc348298 ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
+Fixes: 44499ecb4f28 ("ALSA: usb: qcom: Fix false-positive address space check")
 Cc: stable@vger.kernel.org
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260507-usb-midi-endpoint-scan-bounds-v1-1-329d7348160e@gmail.com
+Link: https://patch.msgid.link/20260511-alsa-usb-qcom-offload-map-errors-v1-1-6502695e58bc@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ sound/usb/qcom/qc_audio_offload.c |   31 +++++++++++++++++++++++++------
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -1947,15 +1947,17 @@ static struct usb_ms_endpoint_descriptor
- 	while (extralen > 3) {
- 		struct usb_ms_endpoint_descriptor *ms_ep =
- 				(struct usb_ms_endpoint_descriptor *)extra;
-+		int length = ms_ep->bLength;
+--- a/sound/usb/qcom/qc_audio_offload.c
++++ b/sound/usb/qcom/qc_audio_offload.c
+@@ -565,6 +565,7 @@ static unsigned long uaudio_iommu_map_pa
+ 	unsigned long iova = 0;
+ 	bool map = true;
+ 	int prot = uaudio_iommu_map_prot(dma_coherent);
++	int ret;
  
--		if (ms_ep->bLength > 3 &&
-+		if (!length || length > extralen)
-+			break;
-+
-+		if (length > 3 &&
- 		    ms_ep->bDescriptorType == USB_DT_CS_ENDPOINT &&
- 		    ms_ep->bDescriptorSubtype == UAC_MS_GENERAL)
- 			return ms_ep;
--		if (!extra[0])
--			break;
--		extralen -= extra[0];
--		extra += extra[0];
-+		extralen -= length;
-+		extra += length;
+ 	switch (mtype) {
+ 	case MEM_EVENT_RING:
+@@ -582,10 +583,24 @@ static unsigned long uaudio_iommu_map_pa
+ 		dev_err(uaudio_qdev->data->dev, "unknown mem type %d\n", mtype);
  	}
- 	return NULL;
+ 
+-	if (!iova || !map)
++	if (!iova)
+ 		return 0;
+ 
+-	iommu_map(uaudio_qdev->data->domain, iova, pa, size, prot, GFP_KERNEL);
++	if (!map)
++		return iova;
++
++	ret = iommu_map(uaudio_qdev->data->domain, iova, pa, size, prot,
++			GFP_KERNEL);
++	if (ret) {
++		dev_err(uaudio_qdev->data->dev,
++			"failed to map %zu bytes at iova 0x%08lx: %d\n",
++			size, iova, ret);
++		if (mtype == MEM_XFER_RING)
++			uaudio_put_iova(iova, size,
++					&uaudio_qdev->xfer_ring_list,
++					&uaudio_qdev->xfer_ring_iova_size);
++		return 0;
++	}
+ 
+ 	return iova;
  }
+@@ -1054,15 +1069,17 @@ static int uaudio_transfer_buffer_setup(
+ 	if (!xfer_buf)
+ 		return -ENOMEM;
+ 
+-	dma_get_sgtable(subs->dev->bus->sysdev, &xfer_buf_sgt, xfer_buf,
+-			xfer_buf_dma, len);
++	ret = dma_get_sgtable(subs->dev->bus->sysdev, &xfer_buf_sgt, xfer_buf,
++			      xfer_buf_dma, len);
++	if (ret)
++		goto free_xfer_buf;
+ 
+ 	/* map the physical buffer into sysdev as well */
+ 	xfer_buf_dma_sysdev = uaudio_iommu_map_xfer_buf(dma_coherent,
+ 							len, &xfer_buf_sgt);
+ 	if (!xfer_buf_dma_sysdev) {
+ 		ret = -ENOMEM;
+-		goto unmap_sync;
++		goto free_sgt;
+ 	}
+ 
+ 	mem_info->dma = xfer_buf_dma;
+@@ -1073,7 +1090,9 @@ static int uaudio_transfer_buffer_setup(
+ 
+ 	return 0;
+ 
+-unmap_sync:
++free_sgt:
++	sg_free_table(&xfer_buf_sgt);
++free_xfer_buf:
+ 	usb_free_coherent(subs->dev, len, xfer_buf, xfer_buf_dma);
+ 
+ 	return ret;
 
 
