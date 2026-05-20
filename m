@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5295E1C3BFC;
-	Wed, 20 May 2026 17:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58FB1C3BFC;
+	Wed, 20 May 2026 17:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299081; cv=none; b=hkVBML/lEENXffqvUVuATuIyhenS53I5T+NZbi0REFP/yZIGLZSgGDuKQocs2i5Z7gIH1Zq/cDDwpm08NWz1oBpWlBkREEmwjH0ySRoj+jDQdpgHMNFtmwUfAr9FdCQ/5kyZeeN1Ip9pbGcMzPSML6IhlUzy2le1E15bRxWFT+o=
+	t=1779299084; cv=none; b=JBZyEf+AOxvrNTbu2TbdsGMV7hgDaRu6Z0zQMXCHi1ZeAEhtc1JEso3NDPLA2HYHHIAWUuxM2paAu0itpAQYsCHoe8BDz624GWMlI1v9aaVDPBWyzHYQVeQns4k1swPOPS4MBJQK7fva0s6yXpr7K+Zlfn6lPrD9ynSepsmlokU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299081; c=relaxed/simple;
-	bh=svXUm58btVPlV43wKbHKOJErP2m1GlC5swMXRgpgO+o=;
+	s=arc-20240116; t=1779299084; c=relaxed/simple;
+	bh=VGo7tLB2i2ZBiTHdSJkRy7l49rRo+neqEEFctFtNBtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgmIF38vpwpgM9edVoJiyndmHQEvQsA8n4SfSXxz550qCSn/eKYsD2tSiSNkVaf5vU8HqtxdYd2RbJzGIkE/JBq1Y3bWUt37pLvqkGRSLPLDx+2ABWbKu/Ckf0w1GujoR8JlUqvT2MK4uW3vsOHPSehIlmctpUFSji01UJvFy5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6gDLeZG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o7QYANmaZnBbFpkwyQDMsHwe9KkN3Kq6S4iRaoWDoIJNy+OwhyoUgyEzyDWT67OzQY9BexS/3uNkHjyX7n8+cQTV3zVhcaFiofDgz2gWfuBJwbzl5elMAgcEABWEH9m1WYlWyOATPwKOFvDgrD1XeGyccBaRtSP18H9lw2RGZRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obbgOBV7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6gDLeZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54ED1F000E9;
-	Wed, 20 May 2026 17:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obbgOBV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575F81F000E9;
+	Wed, 20 May 2026 17:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299080;
-	bh=Su3PebBN6O90E34xRgaJA1tomUC1oSSUHJF+cj+Xwow=;
+	s=korg; t=1779299082;
+	bh=c7Cu3OBw4UVC2rQSWiKwOBTYcrLNmKzdf1+EFq1wCv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y6gDLeZGZyEuuYkpgxjg1JHFMRexZHJYEhO+fLd9JXQ2bIV+G0wAtEAlX4J0JdZMT
-	 U6sLMoMApJYLUd1O4v1PTkpI2kiA4Pfb9s2XgbClbvKs2tM3pJBdrpzsoMhaeVJGjW
-	 rQGda4Y5fmr6WVgDIXreigTtrNb4lU68dqnISA58=
+	b=obbgOBV75m0KGSoBHnRDD2P2mzIYZpL6uX4VYrsSKsDmWZJ7WvU4ELGGOs24/JPF+
+	 WUa331oSPmbfZJOh8cbEgy2OKg7JJTCCuJroNZwxK7bg00CtFlWeHQat2/y8uf+0fJ
+	 Ylji80yeHuySkjAHTBOYmPdEHgnWScDTdjdPR/WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Joe Damato <joe@dama.to>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 654/957] ipv6: fix possible UAF in icmpv6_rcv()
-Date: Wed, 20 May 2026 18:18:57 +0200
-Message-ID: <20260520162148.715322567@linuxfoundation.org>
+Subject: [PATCH 6.18 655/957] sctp: fix OOB write to userspace in sctp_getsockopt_peer_auth_chunks
+Date: Wed, 20 May 2026 18:18:58 +0200
+Message-ID: <20260520162148.737436068@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,69 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit f996edd7615e686ada141b7f3395025729ff8ccb ]
+[ Upstream commit 0cf004ffb61cd32d140531c3a84afe975f9fc7ea ]
 
-Caching saddr and daddr before pskb_pull() is problematic
-since skb->head can change.
+sctp_getsockopt_peer_auth_chunks() checks that the caller's optval
+buffer is large enough for the peer AUTH chunk list with
 
-Remove these temporary variables:
+    if (len < num_chunks)
+            return -EINVAL;
 
-- We only access &ipv6_hdr(skb)->saddr and &ipv6_hdr(skb)->daddr
-  when net_dbg_ratelimited() is called in the slow path.
+but then writes num_chunks bytes to p->gauth_chunks, which lives
+at offset offsetof(struct sctp_authchunks, gauth_chunks) == 8
+inside optval.  The check is missing the sizeof(struct
+sctp_authchunks) = 8-byte header.  When the caller supplies
+len == num_chunks (for any num_chunks > 0) the test passes but
+copy_to_user() writes sizeof(struct sctp_authchunks) = 8 bytes
+past the declared buffer.
 
-- Avoid potential future misuse after pskb_pull() call.
+The sibling function sctp_getsockopt_local_auth_chunks() at the
+next line already has the correct check:
 
-Fixes: 4b3418fba0fe ("ipv6: icmp: include addresses in debug messages")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Joe Damato <joe@dama.to>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260416103505.2380753-1-edumazet@google.com
+    if (len < sizeof(struct sctp_authchunks) + num_chunks)
+            return -EINVAL;
+
+Align the peer variant with its sibling.
+
+Reproducer confirms on v7.0-13-generic: an unprivileged userspace
+caller that opens a loopback SCTP association with AUTH enabled,
+queries num_chunks with a short optval, then issues the real
+getsockopt with len == num_chunks and sentinel bytes painted past
+the buffer observes those sentinel bytes overwritten with the
+peer's AUTH chunk type.  The bytes written are under the peer's
+control but land in the caller's own userspace; this is not a
+kernel memory corruption, but it is a kernel-side contract
+violation that can silently corrupt adjacent userspace data.
+
+Fixes: 65b07e5d0d09 ("[SCTP]: API updates to suport SCTP-AUTH extensions.")
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260416031903.1447072-1-michael.bommarito@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/icmp.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/sctp/socket.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
-index aa39aabe4417e..9cf0557d0ed29 100644
---- a/net/ipv6/icmp.c
-+++ b/net/ipv6/icmp.c
-@@ -904,7 +904,6 @@ static int icmpv6_rcv(struct sk_buff *skb)
- 	struct net *net = dev_net_rcu(skb->dev);
- 	struct net_device *dev = icmp6_dev(skb);
- 	struct inet6_dev *idev = __in6_dev_get(dev);
--	const struct in6_addr *saddr, *daddr;
- 	struct icmp6hdr *hdr;
- 	u8 type;
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index c57a53192beef..2c5ad53984906 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -6990,7 +6990,7 @@ static int sctp_getsockopt_peer_auth_chunks(struct sock *sk, int len,
  
-@@ -935,12 +934,10 @@ static int icmpv6_rcv(struct sk_buff *skb)
+ 	/* See if the user provided enough room for all the data */
+ 	num_chunks = ntohs(ch->param_hdr.length) - sizeof(struct sctp_paramhdr);
+-	if (len < num_chunks)
++	if (len < sizeof(struct sctp_authchunks) + num_chunks)
+ 		return -EINVAL;
  
- 	__ICMP6_INC_STATS(dev_net_rcu(dev), idev, ICMP6_MIB_INMSGS);
- 
--	saddr = &ipv6_hdr(skb)->saddr;
--	daddr = &ipv6_hdr(skb)->daddr;
--
- 	if (skb_checksum_validate(skb, IPPROTO_ICMPV6, ip6_compute_pseudo)) {
- 		net_dbg_ratelimited("ICMPv6 checksum failed [%pI6c > %pI6c]\n",
--				    saddr, daddr);
-+				    &ipv6_hdr(skb)->saddr,
-+				    &ipv6_hdr(skb)->daddr);
- 		goto csum_error;
- 	}
- 
-@@ -1020,7 +1017,8 @@ static int icmpv6_rcv(struct sk_buff *skb)
- 			break;
- 
- 		net_dbg_ratelimited("icmpv6: msg of unknown type [%pI6c > %pI6c]\n",
--				    saddr, daddr);
-+				    &ipv6_hdr(skb)->saddr,
-+				    &ipv6_hdr(skb)->daddr);
- 
- 		/*
- 		 * error of unknown type.
+ 	if (copy_to_user(to, ch->chunks, num_chunks))
 -- 
 2.53.0
 
