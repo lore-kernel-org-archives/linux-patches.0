@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A86B36F421;
-	Wed, 20 May 2026 17:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CD01684BE;
+	Wed, 20 May 2026 17:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298340; cv=none; b=np15dy0pUyoX7/CVOUIGiusamLU3LGyerLMlKWk8s6nzT5svg6im1Zb+hD4Z289/ztPyNv4eeBQNScZre0MzACZLo2ScvteIvOj8CRXVjLooQKdoRZLm5U7UmZ1eQFLharX2dHlGRKxQgNgHCi/hYJ2apM2rP5eWnSUjVYtJXOQ=
+	t=1779298342; cv=none; b=e9VB2i8Sif2aiAYlVKZjQJW0i8PCSNH3msGLq3ig7LnB3Fn3tL53CJzB0wenVGir1ljIy+qndMvoEhSn9Bz+2Z/O9WgzLppDsJhfSYiRvrNP6424LivwSGtTj+vfL3IDfbCUL/+8hW21pqp9S+EpWGn8SbtK+HTqVeyf/5cj2E4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298340; c=relaxed/simple;
-	bh=9OkMiJOjc6EsW3AWhBMGc6DA7yqk+Y0aUzWADRQahxw=;
+	s=arc-20240116; t=1779298342; c=relaxed/simple;
+	bh=ORcMg6/k4ASIvBSKxQRxv6fPdryrzUGJZcgt2QduwlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qn7DPOG8hZOhYuiXZrTHt264KXuYrE64mxZMuH7Pvd0kIjAqaZahkjv/m92ThnGRqqN/4LV9Ka5XQm797EPb9mUa99rRrvpR6MobueDPnuv+eesbLgshKuE2pebYiyVCGOki0kZXlgDSTImUJ2N22ADFzLg6kY8IUc9WWibLgvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWXinUMq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TJWObFoOOsXp1rQQrD88SfbpdGdTrimy1lZfrZm4k+oEY4VAuxa/5CNmlMg1/KcHlaFZUSnjqymKE+vohm+1UAtq2IT3joTSH0c62+4ugPwDQd8PfanEf3kwPWm75gUWKUUuNZjMT5exuYrjaHiST8LC0yVLVboYvIKA4fFnLUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2mmSfrL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWXinUMq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B1E1F000E9;
-	Wed, 20 May 2026 17:32:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2mmSfrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387E51F000E9;
+	Wed, 20 May 2026 17:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298339;
-	bh=NXLvWZhYJRJhqtRektTN4pkYVB7JD+TZQ6YyBhZolck=;
+	s=korg; t=1779298341;
+	bh=tcjC6ul946kat5OlEyhYHT899gWaQdabRZ0vNRLyPlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mWXinUMqa1LV1JdQgtImkg1Vh9ukoarS8Ecn73HPfUCT/fjlRTkEnda2DD8OjcuUi
-	 +9+IiiyVD4EPzaaZ4HG8lP5McoTqHUakHENlbsTXw0vt9tgUmudgbacwX9A1OHeC5H
-	 TooaVDxVIL0OTIY/8TOE5MmtemCgVCJM9t1Bv+Jg=
+	b=x2mmSfrLWObMgP9LxleIezy6EjaIN7yh5UzdKc8/A+w+j+W37B/zj+RFrCSvbBJ6M
+	 lVEHPhzZ8HhzaTL7OUAee2h+5lrpZ+l+P86BOcHFeCRtkUQpOZwcaa/hiGjI3Kx0L9
+	 8kTwNePx68wM2AXTayYbGatmO7Yo7GWbX0SgdzXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Biswapriyo Nath <nathbappai@gmail.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 373/957] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove extcon
-Date: Wed, 20 May 2026 18:14:16 +0200
-Message-ID: <20260520162142.617483949@linuxfoundation.org>
+Subject: [PATCH 6.18 374/957] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Fix reserved gpio ranges
+Date: Wed, 20 May 2026 18:14:17 +0200
+Message-ID: <20260520162142.639216197@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -56,47 +56,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-[ Upstream commit 79664600fd3ed3972ad9321e13d1f80267730447 ]
+[ Upstream commit e8669e010991154bedadd1cd67700544e0362e99 ]
 
-GPIO pin 102 is related to DisplayPort what is not supported
-by this device and it is also disabled at downstream,
-remove the unnecessary extcon-usb node.
+The device was crashing on boot because the reserved gpio ranges
+was wrongly defined. Correct the ranges for avoid pinctrl crashing.
 
 Fixes: 9b1a6c925c88 ("arm64: dts: qcom: sm6125: Initial support for xiaomi-ginkgo")
+Tested-by: Biswapriyo Nath <nathbappai@gmail.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-Link: https://lore.kernel.org/r/20260126-xiaomi-willow-v3-4-aad7b106c311@mainlining.org
+Link: https://lore.kernel.org/r/20260126-xiaomi-willow-v3-5-aad7b106c311@mainlining.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 9 ---------
- 1 file changed, 9 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-index d5e5abdb3b2ff..418cfe67a2da8 100644
+index 418cfe67a2da8..c3edeee3af3ef 100644
 --- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
 +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
-@@ -77,11 +77,6 @@ ramoops@61600000 {
- 		};
- 	};
- 
--	extcon_usb: extcon-usb {
--		compatible = "linux,extcon-usb-gpio";
--		id-gpios = <&tlmm 102 GPIO_ACTIVE_HIGH>;
--	};
--
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -304,7 +299,3 @@ &tlmm {
- &usb3 {
- 	status = "okay";
+@@ -293,7 +293,7 @@ &sdhc_2 {
  };
--
--&usb3_dwc3 {
--	extcon = <&extcon_usb>;
--};
+ 
+ &tlmm {
+-	gpio-reserved-ranges = <22 2>, <28 6>;
++	gpio-reserved-ranges = <0 4>, <30 4>;
+ };
+ 
+ &usb3 {
 -- 
 2.53.0
 
