@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19DA3F4DC0;
-	Wed, 20 May 2026 17:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693FA370D54;
+	Wed, 20 May 2026 17:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297268; cv=none; b=bFx2xtVXyUeAxJkoKhoyYkxP7JAgtIxJL6KEJhKMTXJSmosLdbreKke+beEbb095vzq4glYw4Js7HwGL2mkD/Xc/hRqkHiGsHmGkXa6fYFAmnJAAkkDDFdhu0E/rxchdZ2wmTd7pTS5xAax0F/ivuUMdfb28meA08xmEo36olas=
+	t=1779297271; cv=none; b=bs63CciI0gVwWNj2CPUJuPJ1xvNFIgMHUu/ocH5HWDRwMNdZ6BoNgDjlbHKVlDFYkCY6qG1CR0AM/xZq4/ri5BtK5hELtSQ5i6z2qFh4a1TK6fkIYkULFx2nmx5r7zRlVFrqpuyC4YAen2W9bhqoDnDhCg63hGoObkj4TF/Ru+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297268; c=relaxed/simple;
-	bh=7HT3cBloBWIPaM6DuIJyPg2VCxO1hi+NDYTOJ5EalOI=;
+	s=arc-20240116; t=1779297271; c=relaxed/simple;
+	bh=yGD+GEh3JRVEq+gaVLrz8We7eQpRFK5F92NRW+Dlnbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bk3krtr7qy69RRnDO+fT9CHCZl+zVXgM8B8oSMOF4JrrMjo5TiCiQ4Ddmuw7jLQ7fHRwrGpp8MapJMfZtO5U5MnZN7aMyfDYhlHF/ONfBcPPIrtyFt1oJ0V4qGy1W/vO79hpwzW1zPT7BcvHqUOVwLhP8aeq6FSdRGA5ZvApIsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofVJWMaC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JxSFof76glqXOEFTgLchAk43FbSe4CMKWTeeGOsdtaYP0mKpedss3/GoB6H4g/XIOJXI1co4mGztkS0mCfvL6nkyxhOUAh+qtEat/A8p84zB1nKl4XyFsYDoE8fkMNjnlYOFQ56sG0rSnVtvhGhUsGIESffIgJsZLmqwEec/LGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oS0VSl/T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofVJWMaC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305841F000E9;
-	Wed, 20 May 2026 17:14:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oS0VSl/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2081F000E9;
+	Wed, 20 May 2026 17:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297267;
-	bh=TSvgkmrNwBuRQPkgn5gD8eMMmLt5Cy/eXIb5cfJZGBg=;
+	s=korg; t=1779297270;
+	bh=6VRa4SjdMCkfw2uctrHyJgLg5XrOFBwdQUOoiyfrH/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ofVJWMaC6XelnrcTNNpFPQhTPuzYBPsQt/QIyxfRvXWpbOWoGU5yp50pAF+t1UiQY
-	 oPBhnzSJybND4Pf8iamYTI+pS2P8TRQPdnh9h34Qsw5amEixXnySX5Nd0en0A4Qtxg
-	 YUdpGwe+oHgkjKb7eNsGnqITmCCDwWzBZ6buipx8=
+	b=oS0VSl/TMv8DgrD0QDIXRWRdekWJVmur0jvxQIsVMkdvmQ1uyboZdXoJCL0gGRzNh
+	 F3dJW8F1tszTRZw7GhD8WiYadrC2xzgAJx8EY9MuHY5CjZLVaG20g+RmtqjjwFP6k6
+	 KQ+1Z9nLabL6Xkoxt+8cnhDWjC6mf9/wWst8hico=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.0 1114/1146] libceph: Fix potential out-of-bounds access in osdmap_decode()
-Date: Wed, 20 May 2026 18:22:44 +0200
-Message-ID: <20260520162213.456133766@linuxfoundation.org>
+Subject: [PATCH 7.0 1115/1146] libceph: Fix potential null-ptr-deref in decode_choose_args()
+Date: Wed, 20 May 2026 18:22:45 +0200
+Message-ID: <20260520162213.477830862@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,39 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 35d0ed82d03e5ee77ea4f31f20e29562a7721649 upstream.
+commit 28b0a2ab8c82d0bbdeb8013029c67c978ce6e4bf upstream.
 
-When decoding osd_state and osd_weight from an incoming osdmap in
-osdmap_decode(), both are decoded for each osd, i.e., map->max_osd
-times. The ceph_decode_need() check only accounts for
-sizeof(*map->osd_weight) once. This can potentially result in an
-out-of-bounds memory access if the incoming message is corrupted such
-that the max_osd value exceeds the actual content of the osdmap message.
+A message of type CEPH_MSG_OSD_MAP contains an OSD map that itself
+contains a CRUSH map. When decoding this CRUSH map in crush_decode(), an
+array of max_buckets CRUSH buckets is decoded, where some indices may
+not refer to actual buckets and are therefore set to NULL. The received
+CRUSH map may optionally contain choose_args that get decoded in
+decode_choose_args(). When decoding a crush_choose_arg_map, a series of
+choose_args for different buckets is decoded, with the bucket_index
+being read from the incoming message. It is only checked that the bucket
+index does not exceed max_buckets, but not that it doesn't point to an
+index with a NULL bucket. If a (potentially corrupted) message contains
+a crush_choose_arg_map including such a bucket_index, a null pointer
+dereference may occur in the subsequent processing when attempting to
+access the bucket with the given index.
 
-This patch fixes the issue by changing the corresponding part in the
-ceph_decode_need() check to account for
-map->max_osd*sizeof(*map->osd_weight).
+This patch fixes the issue by extending the affected check. Now, it is
+only attempted to access the bucket if it is not NULL.
 
 Cc: stable@vger.kernel.org
-Fixes: dcbc919a5dc8 ("libceph: switch osdmap decoding to use ceph_decode_entity_addr")
 Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ceph/osdmap.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/net/ceph/osdmap.c
 +++ b/net/ceph/osdmap.c
-@@ -1702,7 +1702,7 @@ static int osdmap_decode(void **p, void
- 	ceph_decode_need(p, end, 3*sizeof(u32) +
- 			 map->max_osd*(struct_v >= 5 ? sizeof(u32) :
- 						       sizeof(u8)) +
--				       sizeof(*map->osd_weight), e_inval);
-+			 map->max_osd*sizeof(*map->osd_weight), e_inval);
- 	if (ceph_decode_32(p) != map->max_osd)
- 		goto e_inval;
+@@ -389,7 +389,8 @@ static int decode_choose_args(void **p,
+ 				goto fail;
+ 
+ 			if (arg->ids_size &&
+-			    arg->ids_size != c->buckets[bucket_index]->size)
++			    (!c->buckets[bucket_index] ||
++			     arg->ids_size != c->buckets[bucket_index]->size))
+ 				goto e_inval;
+ 		}
  
 
 
