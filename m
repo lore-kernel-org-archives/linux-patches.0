@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3813E0C70;
-	Wed, 20 May 2026 17:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6C03F44EA;
+	Wed, 20 May 2026 17:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297884; cv=none; b=ee4JLarRhescwg9Qga3F4nYv32b5jMAoKyVbTAW9quv5yvlJoNR4vZZo/gCNvmpaeIRS1nWWxXQ8msqT8jhtdC3NSk9SmgAhOs5T8E4TiFPC1YLVehsXay0eExMZqTCB/3sHJ3Jbe4psiynUsBTMnDtRXAmri+P6EyurKbV7rNc=
+	t=1779297887; cv=none; b=qUzOFdskMk6UkMywBXITsdLQUlZVWqIgKJ05iduYBvrSFr9K8ImuGOAXBUVW5u7CKDbIArJ2assA24MhPFguQacbd2F/qJqIEJt7lG2wYxZcz81PyJkUW0/4KHuHD7VfHaTnxWhybha8PxnBcTUshPlZk85nlbb4fYwKptYBecA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297884; c=relaxed/simple;
-	bh=+Sa9u3zkkN5pe3c28qIYnXhE+3euj18tibjlXzDc1tk=;
+	s=arc-20240116; t=1779297887; c=relaxed/simple;
+	bh=bA5DwWhqmOcGGPCIB4CcA0j21l3gu6bgiOJM3GYwXFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLGPb3ZjBQLj9MFmxgxSDG+4yczE31gp1bLwO6BPkx5bx6HTZyydBA/w0Uu38foT+pVx0phO/2RErFTP8PIA2zx+jGqb4hpCkqGp48J7o9zBxsU5dhzJSa+zkM7rXRuPu1cW3uTP4yLc65JJUR4swfkFvQ+5TOHM+2TYe1dnTDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QZMlHjL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rTS/EvKSRnWOeltVjOFV+uC5WhczM5NOAb+TexUO+JSwtt1EsJ7KjYzy38kwtzEDyxo2dzm2qQMQkDIwbfUaBWkhjZ0NXdKKsr6bbkyXyuyNed2EuTqDPQolslICslWyBE+mvkCprj0Y8xAqz5gGbsHHFbrhXQqiL+RlUjdRVwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kALoV5jQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QZMlHjL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50F11F000E9;
-	Wed, 20 May 2026 17:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kALoV5jQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C42B1F000E9;
+	Wed, 20 May 2026 17:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297883;
-	bh=ENluCIu4ywiW352katcgqczXHVQMPJO638dP0uRaTCM=;
+	s=korg; t=1779297885;
+	bh=/2InMUfeqVQMRpj1VS71YET1+PmDcCtn9mqUJFz4aBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1QZMlHjLPK0MKhVi+BhWo/u0y1gKZ89KGJysvhg+PwZ62y/Wi3pQh9c+5+7FSl3kT
-	 G0s9mL1zIL890rVYM+EW0vH7w79soCVDojFG4hejgbZAn7VzhmSq2dz5fA57RzYdCA
-	 dAwJysy/338UAYbMPMvjflXtLT1f0HW7y7r3ls0M=
+	b=kALoV5jQCEp1efMoUxEqAcqPRuCHqBjmX/hizoxDrqq8cbUJAVgZI9S1Q3eBUc/+x
+	 r5QExa2rQjs3TlZCtI1R43LnhY6Se7Q74SZ9RjPbifjTbSUr5r0DWVnLgjHP6lAeJ+
+	 jR8e4AOmh+xlenN205mprCWjhclhUTCvO4Ffcd2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 200/957] dm cache: fix write hang in passthrough mode
-Date: Wed, 20 May 2026 18:11:23 +0200
-Message-ID: <20260520162138.884139966@linuxfoundation.org>
+Subject: [PATCH 6.18 174/957] Bluetooth: L2CAP: Fix printing wrong information if SDU length exceeds MTU
+Date: Wed, 20 May 2026 18:10:57 +0200
+Message-ID: <20260520162138.327260173@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,86 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming-Hung Tsai <mtsai@redhat.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 4ca8b8bd952df7c3ccdc68af9bd3419d0839a04b ]
+[ Upstream commit 15bf35a660eb82a49f8397fc3d3acada8dae13db ]
 
-The invalidate_remove() function has incomplete logic for handling write
-hit bios after cache invalidation. It sets up the remapping for the
-overwrite_bio but then drops it immediately without submission, causing
-write operations to hang.
+The code was printing skb->len and sdu_len in the places where it should
+be sdu_len and chan->imtu respectively to match the if conditions.
 
-Fix by adding a new invalidate_committed() continuation that submits
-the remapped writes to the cache origin after metadata commit completes,
-while using the overwrite_endio hook to ensure proper completion
-sequencing. This maintains existing coherency. Also improve error
-handling in invalidate_complete() to preserve the original error status
-instead of using bio_io_error() unconditionally.
-
-Fixes: b29d4986d0da ("dm cache: significant rework to leverage dm-bio-prison-v2")
-Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Link: https://lore.kernel.org/linux-bluetooth/20260315132013.75ab40c5@kernel.org/T/#m1418f9c82eeff8510c1beaa21cf53af20db96c06
+Fixes: e1d9a6688986 ("Bluetooth: LE L2CAP: Disconnect if received packet's SDU exceeds IMTU")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-target.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ net/bluetooth/l2cap_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/dm-cache-target.c b/drivers/md/dm-cache-target.c
-index 69fa2f6479318..b191ea1361b40 100644
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1467,8 +1467,14 @@ static void invalidate_complete(struct dm_cache_migration *mg, bool success)
- 			free_prison_cell(cache, mg->cell);
- 	}
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 29e23f20dc438..7664723a34d0a 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6733,7 +6733,7 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
  
--	if (!success && mg->overwrite_bio)
--		bio_io_error(mg->overwrite_bio);
-+	if (mg->overwrite_bio) {
-+		// Set generic error if the bio hasn't been issued yet,
-+		// e.g., invalidation or metadata commit failed before bio
-+		// submission. Otherwise preserve the bio's own error status.
-+		if (!success && !mg->overwrite_bio->bi_status)
-+			mg->overwrite_bio->bi_status = BLK_STS_IOERR;
-+		bio_endio(mg->overwrite_bio);
-+	}
- 
- 	free_migration(mg);
- 	defer_bios(cache, &bios);
-@@ -1508,6 +1514,22 @@ static int invalidate_cblock(struct cache *cache, dm_cblock_t cblock)
- 	return r;
- }
- 
-+static void invalidate_committed(struct work_struct *ws)
-+{
-+	struct dm_cache_migration *mg = ws_to_mg(ws);
-+	struct cache *cache = mg->cache;
-+	struct bio *bio = mg->overwrite_bio;
-+	struct per_bio_data *pb = get_per_bio_data(bio);
-+
-+	if (mg->k.input)
-+		invalidate_complete(mg, false);
-+
-+	init_continuation(&mg->k, invalidate_completed);
-+	remap_to_origin_clear_discard(cache, bio, mg->invalidate_oblock);
-+	dm_hook_bio(&pb->hook_info, bio, overwrite_endio, mg);
-+	dm_submit_bio_remap(bio, NULL);
-+}
-+
- static void invalidate_remove(struct work_struct *ws)
- {
- 	int r;
-@@ -1520,10 +1542,8 @@ static void invalidate_remove(struct work_struct *ws)
- 		return;
- 	}
- 
--	init_continuation(&mg->k, invalidate_completed);
-+	init_continuation(&mg->k, invalidate_committed);
- 	continue_after_commit(&cache->committer, &mg->k);
--	remap_to_origin_clear_discard(cache, mg->overwrite_bio, mg->invalidate_oblock);
--	mg->overwrite_bio = NULL;
- 	schedule_commit(&cache->committer);
- }
- 
+ 		if (sdu_len > chan->imtu) {
+ 			BT_ERR("Too big LE L2CAP SDU length: len %u > %u",
+-			       skb->len, sdu_len);
++			       sdu_len, chan->imtu);
+ 			l2cap_send_disconn_req(chan, ECONNRESET);
+ 			err = -EMSGSIZE;
+ 			goto failed;
 -- 
 2.53.0
 
