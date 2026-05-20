@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0054035DA6C;
-	Wed, 20 May 2026 17:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1C436D9EA;
+	Wed, 20 May 2026 17:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298805; cv=none; b=L7O3CgvOMTaFJU0GOLdLNTNuWGrEpxsV9/k+gCmAafellbxPwMsx7lVvd25Khgb9S9orWi73GQk9AipeDBk/hDlCB46hmOwww3lP6q1OSYGhK+BEr6FMlp5TC2HkOdNXMK25PF8bzryFjYMGYZNujCyN4QBWfgFhSaVjB7yq7mQ=
+	t=1779298807; cv=none; b=CruGAVatj6ZforUZKGu7+LpYJo7sBfOkqjhO/Z59r7rehmWKTpQj+m1D3HFxvt8FrFZ9g+ZQ6kwGn2prgYf0F/2FZbiquDgTeWnHuE773mnzkO/KFr9OKUQEM4OkA7NPO3wxq4nBZijTt8Sh2o7En1zTDc5ITs0ZMEhWstCy6MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298805; c=relaxed/simple;
-	bh=pVelMg8F4YXButwV+6TPCuFQaDJdY+W5zynoCt5OdT0=;
+	s=arc-20240116; t=1779298807; c=relaxed/simple;
+	bh=X15LCvcBBRm3f9hwgww8bj60coE7Hz/ybYz4izLaDDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MwL18mi5uqM0+sGfpR2JDGRVa6O+EntKNHHiCAoO8kLKNTwlxxHsdrl7MAigG/O46iZP6vGC9JVmfAp9ZGo7sDNniOI5khUgtAY7XUKHkEUTTqN3Oh4QWIFsPZUTUHjI3tPmAWlmYSXSWsGhA+k/XxzJixK9j/YPajUyf+dB60E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODxXs+GQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DEAZd0DJrShgaysTQmwQRQa6YzoPpKkrlNsuxSl/HbhvPUSC2uyFv+xFr9rcUailA6t3zu8XhtXTYKCBG5JHj9JZBEOf708AMQacWoBEag/7nY1OEHh6/YBotSRuO6fUf44CfTDgavf89XLF226QfCFUrYWlSn8U3Up+/vrNnIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGBr1XfG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODxXs+GQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3531F000E9;
-	Wed, 20 May 2026 17:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGBr1XfG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDE21F000E9;
+	Wed, 20 May 2026 17:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298803;
-	bh=736M7cqHLOGfElk2rR3K4IefhUiPh151W5vwOcfHISA=;
+	s=korg; t=1779298806;
+	bh=2Ku6LufMI05PHM5z48Vl8pCxasp0ih4kqxpCe+pn0sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ODxXs+GQe4b0m3sjfXG0tMJs23v5ALS9B3FtuDKtA3NfNk1azM8+jslpsDLU9YPzP
-	 +6j8/39qItdSZFddFeAh0h5vBeXDhBpRQVQ8NdyzNtGzxXzh13SVahc14Wf2aIIKg+
-	 SggeIZNgE70oCzCLm2Hg1xuA03FLNI1Opfpm96vY=
+	b=DGBr1XfGU73MPYLeyD5NmANo27T6xQp9vhdsLK63y3SUbDR4uyObI3S6p0c5MhD5G
+	 BTqJDc88h3AwK7ewVBevib9+o0bdvHHOlkrOmyZEQt0zXEgUF8NQjrMbYeBmobzfrn
+	 pFmkP2JiozPyE29pI2Wl70W5TxIUUGlGlXLYJb+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 550/957] clk: qcom: dispcc-sm8450: use RCG2 ops for DPTX1 AUX clock source
-Date: Wed, 20 May 2026 18:17:13 +0200
-Message-ID: <20260520162146.461292754@linuxfoundation.org>
+Subject: [PATCH 6.18 551/957] clk: sunxi-ng: sun55i-a523-r: Add missing r-spi module clock
+Date: Wed, 20 May 2026 18:17:14 +0200
+Message-ID: <20260520162146.482099784@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,39 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Chen-Yu Tsai <wens@kernel.org>
 
-[ Upstream commit 141af1be817c42c7f1e1605348d4b1983d319bea ]
+[ Upstream commit fb20ccf70cf695f178d7c32e2d33b376560df0ff ]
 
-The clk_dp_ops are supposed to be used for DP-related clocks with a
-proper MND divier. Use standard RCG2 ops for dptx1_aux_clk_src, the same
-as all other DPTX AUX clocks in this driver.
+When the PRCM clk driver was added, somehow the r-spi module clock
+was skipped over.
 
-Fixes: 16fb89f92ec4 ("clk: qcom: Add support for Display Clock Controller on SM8450")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260112-dp-aux-clks-v1-2-456b0c11b069@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Add it so that r-spi can actually work.
+
+Fixes: 8cea339cfb81 ("clk: sunxi-ng: add support for the A523/T527 PRCM CCU")
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20260217093004.3239051-1-wens@kernel.org
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm8450.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8450.c b/drivers/clk/qcom/dispcc-sm8450.c
-index 9ce9fd28e55b2..2e91332dd92ab 100644
---- a/drivers/clk/qcom/dispcc-sm8450.c
-+++ b/drivers/clk/qcom/dispcc-sm8450.c
-@@ -409,7 +409,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx1_aux_clk_src = {
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_dp_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
+diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
+index 0339c4af0fe5b..db0e36d8838e7 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
++++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
+@@ -83,9 +83,22 @@ static SUNXI_CCU_MUX_DATA_WITH_GATE(r_pwmctrl_clk, "r-pwmctrl",
+ static SUNXI_CCU_GATE_HW(bus_r_pwmctrl_clk, "bus-r-pwmctrl",
+ 			 &r_apb0_clk.common.hw, 0x13c, BIT(0), 0);
  
+-/* SPI clock is /M/N (same as new MMC?) */
++static const struct clk_parent_data r_spi_parents[] = {
++	{ .fw_name = "hosc" },
++	{ .fw_name = "pll-periph" },
++	{ .name = "pll-periph0-300M" },
++	{ .name = "pll-periph1-300M" },
++	{ .name = "pll-audio" },
++};
++static SUNXI_CCU_DUALDIV_MUX_GATE(r_spi_clk, "r-spi", r_spi_parents, 0x150,
++				  0, 5,		/* M */
++				  8, 5,		/* P */
++				  24, 3,	/* mux */
++				  BIT(31),	/* gate */
++				  0);
+ static SUNXI_CCU_GATE_HW(bus_r_spi_clk, "bus-r-spi",
+ 			 &r_ahb_clk.common.hw, 0x15c, BIT(0), 0);
++
+ static SUNXI_CCU_GATE_HW(bus_r_spinlock_clk, "bus-r-spinlock",
+ 			 &r_ahb_clk.common.hw, 0x16c, BIT(0), 0);
+ static SUNXI_CCU_GATE_HW(bus_r_msgbox_clk, "bus-r-msgbox",
+@@ -138,6 +151,7 @@ static struct ccu_common *sun55i_a523_r_ccu_clks[] = {
+ 	&bus_r_twd_clk.common,
+ 	&r_pwmctrl_clk.common,
+ 	&bus_r_pwmctrl_clk.common,
++	&r_spi_clk.common,
+ 	&bus_r_spi_clk.common,
+ 	&bus_r_spinlock_clk.common,
+ 	&bus_r_msgbox_clk.common,
+@@ -169,6 +183,7 @@ static struct clk_hw_onecell_data sun55i_a523_r_hw_clks = {
+ 		[CLK_BUS_R_TWD]		= &bus_r_twd_clk.common.hw,
+ 		[CLK_R_PWMCTRL]		= &r_pwmctrl_clk.common.hw,
+ 		[CLK_BUS_R_PWMCTRL]	= &bus_r_pwmctrl_clk.common.hw,
++		[CLK_R_SPI]		= &r_spi_clk.common.hw,
+ 		[CLK_BUS_R_SPI]		= &bus_r_spi_clk.common.hw,
+ 		[CLK_BUS_R_SPINLOCK]	= &bus_r_spinlock_clk.common.hw,
+ 		[CLK_BUS_R_MSGBOX]	= &bus_r_msgbox_clk.common.hw,
 -- 
 2.53.0
 
