@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41E62D12EE;
-	Wed, 20 May 2026 16:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D53134041C;
+	Wed, 20 May 2026 16:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295233; cv=none; b=AE0GDtppD7IuzYGJqgCBg1IkPEDyoXcpCjDrw3iGWgpkf/Nt5RFG63ixUtSivjyhyxCeEFYoHArAtORDzrLy66YYCXKJXy1b/c2hYkh9TxdITR3XTz/DOts6KvEW4BqY5p8dzwv6Ju9XjpAKu3hvJTLmuazhi65zMLwV3noNZrk=
+	t=1779295236; cv=none; b=Dlw96F5+2dLVcLKstieuxGaOO4pnGLabK6dbIYynkYE7OSZknd85bSg6CWV3buzwlKy4jC6FpJZiTey2+yXXe/tkZs1KBMWM/cAtaPBc6pmcLBnxswO4dJec+067tNQVKFgcDRnICAcLZiHBOLzAvfA+DpGOPmWYzmNKwMwFwz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295233; c=relaxed/simple;
-	bh=FcnimLIkYC4u6KsRWyrqZV2l0PZpKWE1TPxaUKjgypE=;
+	s=arc-20240116; t=1779295236; c=relaxed/simple;
+	bh=Q3i36q1kgRsG7cJLuy9/nu9RQSWCpO9t7BkX9jixEFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dBf8Os8ri3KxbGz6edPYIs00ueoJprX4vi4b+heAnRdLhHwefMX6Wux4gY7THKHegzHdtWkADCJd5F8YVEh3LkZzJglFRSn+U1vehvDoUskwoXQ+iQDMZ4sh7qn6IPApklgsJ2PXxya65BkeIqaQK1mTiGXHjUBeV1I8omKvUFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiGKyqLz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NSzUSzcPp/dy1EYOzhA253YqPowj5nsTtw0Xe2Yv30QW1sof6QCJUWPTU86yOhEzwEDvOeIeVri1zioE1hbULtmEyrWbJdupCvfM50XYH14lEaRT0RDnVB+/vvalnN6BPKXZnCHz4Sf3mPIZk4jftlJvVMWnvE2Y2CGXQ3FrkXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFsopgd9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiGKyqLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77E11F000E9;
-	Wed, 20 May 2026 16:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFsopgd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813141F000E9;
+	Wed, 20 May 2026 16:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295232;
-	bh=WhW4vFl8bl2MsHYVwzi1WyNIo/dy0hIURkhU/15pKAY=;
+	s=korg; t=1779295235;
+	bh=5nmiPH7L1md3w0OrDWAVa3Z0CAhFvWAVVfvdYxJ9uyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HiGKyqLzmjbTNzKG12trCClJTwkWaotQpoQTPVlHC1BXo1q/WRU/T9X0oe6plmfZA
-	 Evz4PE3rvjE0nVZQ4SyrkF7krxO4Pe7zufyEAzjWuHcGPkQszj6NVCqS2TN3goPLmQ
-	 Z9/K/qM2cYJbnZ32K0ra/Nhr60pfU0XWcm2fdBI8=
+	b=NFsopgd9d+bXJczTR2VwVelg9hYZqsl1c0hPNLbpP5G+CqFRCuA7X1UiJWnzXHfln
+	 0Ek7gaGaB50LDET2zAcgsON+tPXorEApVYSB34mNE2HCkycPgf53/8lvuP6nq4QcIN
+	 ND0f6/5TqQyPhaZgpqWdU/MrkaJVtC8wSso8m0jQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0339/1146] drm/amd/pm/ci: Disable MCLK DPM on problematic CI ASICs
-Date: Wed, 20 May 2026 18:09:49 +0200
-Message-ID: <20260520162155.872039591@linuxfoundation.org>
+Subject: [PATCH 7.0 0302/1146] fbdev: matroxfb: Mark variable with __maybe_unused to avoid W=1 build break
+Date: Wed, 20 May 2026 18:09:12 +0200
+Message-ID: <20260520162155.043530322@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,69 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 9851f29cb06c09f7dad3867d8b0feec3fc71b6c8 ]
+[ Upstream commit caf6144053b4e1c815aa56afb54745a176f999df ]
 
-There are two known cases where MCLK DPM can causes issues:
+Clang is not happy about set but unused variable:
 
-Radeon R9 M380 found in iMac computers from 2015.
-The SMU in this GPU just hangs as soon as we send it the
-PPSMC_MSG_MCLKDPM_Enable command, even when MCLK switching is
-disabled, and even when we only populate one MCLK DPM level.
-Apply workaround to all devices with the same subsystem ID.
+drivers/video/fbdev/matrox/g450_pll.c:412:18: error: variable 'mnp' set but not used
+   412 |         unsigned int mnp;
+       |                      ^
+1 error generated.
 
-Radeon R7 260X due to old memory controller microcode.
-We only flash the MC ucode when it isn't set up by the VBIOS,
-therefore there is no way to make sure that it has the correct
-ucode version.
+Since the commit 7b987887f97b ("video: fbdev: matroxfb: remove dead code
+and set but not used variable") the 'mnp' became unused, but eliminating
+that code might have side-effects. The question here is what should we do
+with 'mnp'? The easiest way out is just mark it with __maybe_unused which
+will shut the compiler up and won't change any possible IO flow. So does
+this change.
 
-I verified that this patch fixes the SMU hang on the R9 M380
-which would previously fail to boot. This also fixes the UVD
-initialization error on that GPU which happened because the
-SMU couldn't ungate the UVD after it hung.
+A dive into the history of the driver:
 
-Fixes: 86457c3b21cb ("drm/amd/powerplay: Add support for CI asics to hwmgr")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The problem was revealed when the #if 0 guarded code along with unused
+pixel_vco variable was removed. That code was introduced in the original
+commit 213d22146d1f ("[PATCH] (1/3) matroxfb for 2.5.3"). And then guarded
+in the commit 705e41f82988 ("matroxfb DVI updates: Handle DVI output on
+G450/G550. Powerdown unused portions of G450/G550 DAC. Split G450/G550 DAC
+from older DAC1064 handling. Modify PLL setting when both CRTCs use same
+pixel clocks.").
+
+NOTE: The two commits mentioned above pre-date Git era and available in
+history.git repository for archaeological purposes.
+
+Even without that guard the modern compilers may see that the pixel_vco
+wasn't ever used and seems a leftover after some debug or review made
+25 years ago.
+
+The g450_mnp2vco() doesn't have any IO and as Jason said doesn't seem
+to have any side effects either than some unneeded CPU processing during
+runtime. I agree that's unlikely that timeout (or heating up the CPU) has
+any effect on the HW (GPU/display) functionality.
+
+Fixes: 7b987887f97b ("video: fbdev: matroxfb: remove dead code and set but not used variable")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/video/fbdev/matrox/g450_pll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-index 2b5ac21fee399..1d6e30269d567 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-@@ -104,6 +104,21 @@ int hwmgr_early_init(struct pp_hwmgr *hwmgr)
- 					 PP_GFXOFF_MASK);
- 		hwmgr->pp_table_version = PP_TABLE_V0;
- 		hwmgr->od_enabled = false;
-+		switch (hwmgr->chip_id) {
-+		case CHIP_BONAIRE:
-+			/* R9 M380 in iMac 2015: SMU hangs when enabling MCLK DPM
-+			 * R7 260X cards with old MC ucode: MCLK DPM is unstable
-+			 */
-+			if (adev->pdev->subsystem_vendor == 0x106B ||
-+			    adev->pdev->device == 0x6658) {
-+				dev_info(adev->dev, "disabling MCLK DPM on quirky ASIC");
-+				adev->pm.pp_feature &= ~PP_MCLK_DPM_MASK;
-+				hwmgr->feature_mask &= ~PP_MCLK_DPM_MASK;
-+			}
-+			break;
-+		default:
-+			break;
-+		}
- 		smu7_init_function_pointers(hwmgr);
- 		break;
- 	case AMDGPU_FAMILY_CZ:
+diff --git a/drivers/video/fbdev/matrox/g450_pll.c b/drivers/video/fbdev/matrox/g450_pll.c
+index e2c1478aa47f9..6a08f78cd1acb 100644
+--- a/drivers/video/fbdev/matrox/g450_pll.c
++++ b/drivers/video/fbdev/matrox/g450_pll.c
+@@ -409,7 +409,7 @@ static int __g450_setclk(struct matrox_fb_info *minfo, unsigned int fout,
+ 		case M_VIDEO_PLL:
+ 			{
+ 				u_int8_t tmp;
+-				unsigned int mnp;
++				unsigned int mnp __maybe_unused;
+ 				unsigned long flags;
+ 
+ 				matroxfb_DAC_lock_irqsave(flags);
 -- 
 2.53.0
 
