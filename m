@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768B833DEE5;
-	Wed, 20 May 2026 18:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230E730DEAC;
+	Wed, 20 May 2026 18:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302131; cv=none; b=Bj47h/2DnEUJdMFFx3sse1190VMmv7akHcW9AATnMIKEo9kjQHnIbx01mURpWmZalQBVACiIlC1orcud/R98lF2TkyafKaSXWffjBbApyGV/w48clU+CNk0E5aB2snRLlxY8gOF4nyYAv8D8DkWaLCEbrASCin/ff1aCfjtHPqs=
+	t=1779302134; cv=none; b=d5rf3hoTHq55ag7286vSTHBJX93IyZ6oeH3sS/Gloyv41EmHqKqVpiy0BPwsrYNUJmFKiYYhRcL//kwaXf7g73Tb+EDNlUoFt+tRveb/pGzUo/lICfuQbyZdacYV9arEngCLo7UAieZrEYZN/TGnKTKCNHHNOB94ncH1rja7Cj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302131; c=relaxed/simple;
-	bh=lETV/XTXNdyAVX4PSj8SwhM2ADhh6TZdPPpYIwfmAh0=;
+	s=arc-20240116; t=1779302134; c=relaxed/simple;
+	bh=RzjFHnXqnSvxXKrCxQXkxSqoDSPU8LZQPiMTxgUSrzk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pStRuF+SwVFZtCEUNuvJVONddoNeA3jsnVIMv9DcuFI9j95yU0fTkoQUhql71ixSSd1k9T8tGe3RlHcrtZ69rHqjxFBvlGYV2NRMWrO2em01y5G9oRDuXLa2Jxjdb6QxTx00e8hD1pYCn5G0E+IdRLIRESpg8l/9wLjgjohsS6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kH9iFtch; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MLZmgkDZ1FwgyVG4RCbJwRlmMGNpbcntlm1vUztUPM1a6tjOmy2E41+ILluu3ZXBKgCs2l97XhcrN0Q94h1xXl9L/HvNObDmiCj1MTW3ZNOKOsLLxfQxpProPnAiXp0s0vOzzxBwBpp/7/qRAboFFhymDbG8ar7ZUOVb9xfhIN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCi+QkI6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kH9iFtch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9841F000E9;
-	Wed, 20 May 2026 18:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCi+QkI6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872651F000E9;
+	Wed, 20 May 2026 18:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302130;
-	bh=4oRQvpwzQcFaOjrgUo7+oXROQfvi7jQFOm8sdyaee6E=;
+	s=korg; t=1779302133;
+	bh=GRK4FyuyTs+imdHuDDdNPYSHasgiSDTPR+Rz4cECW0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kH9iFtchjIvu6g8a1NVb346hlmEYstG2c+98Ga0uJQgrGrcgRqG2AET/ImvrCsIBO
-	 CNWnvMw8na8Sijmrtpm3iYpycPxzwziVv+0oqcoLv1Kh+yY0Qy1iq6YakLWBcO3jsX
-	 S2pCLDiDjV3rxxBqhB5Qm/WyGqlTt1LKcBHx7NyM=
+	b=bCi+QkI6tnbE0tmS9u5j+DnACYPB4t9u/ioKew2f2Wk0hbHoGNSpzcHdp22G4rXjm
+	 hkIGvmr5NgNhtjfYFQZTV1+c9oTtbjOiG0qz4ARbYcsPdM6auy8aR8nbxdK87gNjKA
+	 9jvx6L10U+3AgtxfBbUMT89S8L+qU6EOSLVkCKsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/508] drm/amd/pm/ci: Disable MCLK DPM on problematic CI ASICs
-Date: Wed, 20 May 2026 18:19:06 +0200
-Message-ID: <20260520162101.293974345@linuxfoundation.org>
+Subject: [PATCH 6.6 150/508] PCI: mediatek-gen3: Prevent leaking IRQ domains when IRQ not found
+Date: Wed, 20 May 2026 18:19:33 +0200
+Message-ID: <20260520162101.886991965@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,69 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 9851f29cb06c09f7dad3867d8b0feec3fc71b6c8 ]
+[ Upstream commit 5573c44cb3fd01a9f62d569ae9ac870ef5f0e0ba ]
 
-There are two known cases where MCLK DPM can causes issues:
+In mtk_pcie_setup_irq(), the IRQ domains are allocated before the
+controller's IRQ is fetched. If the latter fails, the function
+directly returns an error, without cleaning up the allocated domains.
 
-Radeon R9 M380 found in iMac computers from 2015.
-The SMU in this GPU just hangs as soon as we send it the
-PPSMC_MSG_MCLKDPM_Enable command, even when MCLK switching is
-disabled, and even when we only populate one MCLK DPM level.
-Apply workaround to all devices with the same subsystem ID.
+Hence, reverse the order so that the IRQ domains are allocated after the
+controller's IRQ is found.
 
-Radeon R7 260X due to old memory controller microcode.
-We only flash the MC ucode when it isn't set up by the VBIOS,
-therefore there is no way to make sure that it has the correct
-ucode version.
+This was flagged by Sashiko during a review of "[PATCH v6 0/7] PCI:
+mediatek-gen3: add power control support".
 
-I verified that this patch fixes the SMU hang on the R9 M380
-which would previously fail to boot. This also fixes the UVD
-initialization error on that GPU which happened because the
-SMU couldn't ungate the UVD after it hung.
-
-Fixes: 86457c3b21cb ("drm/amd/powerplay: Add support for CI asics to hwmgr")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 814cceebba9b ("PCI: mediatek-gen3: Add INTx support")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260324052002.4072430-1-wenst%40chromium.org
+Link: https://patch.msgid.link/20260324093542.18523-1-wenst@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/pci/controller/pcie-mediatek-gen3.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-index 2b5ac21fee399..1d6e30269d567 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-@@ -104,6 +104,21 @@ int hwmgr_early_init(struct pp_hwmgr *hwmgr)
- 					 PP_GFXOFF_MASK);
- 		hwmgr->pp_table_version = PP_TABLE_V0;
- 		hwmgr->od_enabled = false;
-+		switch (hwmgr->chip_id) {
-+		case CHIP_BONAIRE:
-+			/* R9 M380 in iMac 2015: SMU hangs when enabling MCLK DPM
-+			 * R7 260X cards with old MC ucode: MCLK DPM is unstable
-+			 */
-+			if (adev->pdev->subsystem_vendor == 0x106B ||
-+			    adev->pdev->device == 0x6658) {
-+				dev_info(adev->dev, "disabling MCLK DPM on quirky ASIC");
-+				adev->pm.pp_feature &= ~PP_MCLK_DPM_MASK;
-+				hwmgr->feature_mask &= ~PP_MCLK_DPM_MASK;
-+			}
-+			break;
-+		default:
-+			break;
-+		}
- 		smu7_init_function_pointers(hwmgr);
- 		break;
- 	case AMDGPU_FAMILY_CZ:
+diff --git a/drivers/pci/controller/pcie-mediatek-gen3.c b/drivers/pci/controller/pcie-mediatek-gen3.c
+index 975b3024fb08c..822d9b8e09f60 100644
+--- a/drivers/pci/controller/pcie-mediatek-gen3.c
++++ b/drivers/pci/controller/pcie-mediatek-gen3.c
+@@ -760,14 +760,14 @@ static int mtk_pcie_setup_irq(struct mtk_gen3_pcie *pcie)
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	int err;
+ 
+-	err = mtk_pcie_init_irq_domains(pcie);
+-	if (err)
+-		return err;
+-
+ 	pcie->irq = platform_get_irq(pdev, 0);
+ 	if (pcie->irq < 0)
+ 		return pcie->irq;
+ 
++	err = mtk_pcie_init_irq_domains(pcie);
++	if (err)
++		return err;
++
+ 	irq_set_chained_handler_and_data(pcie->irq, mtk_pcie_irq_handler, pcie);
+ 
+ 	return 0;
 -- 
 2.53.0
 
