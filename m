@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4079E28DC4;
-	Wed, 20 May 2026 17:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79163A3E9C;
+	Wed, 20 May 2026 17:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298968; cv=none; b=LzcVRkHMIQRwRD8gCHkZhrIKaAXAoFBN9BiqXy/0tUsviEaiGK+xEkWZDAK2q+bh/cUa4fm+T+Kxx7w0M0sihn7NpJLajnoaMpS6NapLk5hzti2NsOf9Flk9fAnfIFaLtgU4xSwaS8Pk7YUBpAvoSjIloZegSzNcQur3N5ehPWs=
+	t=1779298971; cv=none; b=FFXEmfTnSUImqlLbQdEPKJehcy+EeMJJ2b0U5QtmoXi3LttJrzjGfToFpEL3c+Ww6Rg97HyCRqjhyL1G1yUnt/3XxxmuBD70tHsSd04SMgc0NYfbIpJucma4I84Qda320l7ZV8E0sbfM1yHw7a5nXDNSRJpN8O7k1LbRFWw5Sd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298968; c=relaxed/simple;
-	bh=d+vwgXbZmh+114vMYWlQmvyLC03dcf64f7VgS70tolk=;
+	s=arc-20240116; t=1779298971; c=relaxed/simple;
+	bh=RTZr2Gjq24uOIHQsRGjN7MwAV9am47Odrwnb1wbxqI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=INfT6OQqgIi58pchQoYmiymcsTNhDUMgyjiFuVa4ST1FdKrnJkP3KWt2DnOLGwNFnr84cOrhwgrqXCNPXvBKtg7+7LRADtCuwQoOz5s5fuWrTtKMlAOq9/4eplVVh/I21d2jlDyLh39ehYFD2jaenWb0vT4TeX7Z+H87wt6lR4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dK/yLCJS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YLR8IGiJYcW8b+skiQRPmcpUdo694IO62KRdczJsI7aeqCiP1VpKd116ysghzqmqx4WnJhdg1yBDgd1pYiNFI8h7GnlfBrL7aKc2+LWQ8SsLcAC50ekl/OMu21RZIZjvNaf4GFWrXqUnbT8gDdhzMbHIBXwilYBNa+lNwxFe/oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3woD3y8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dK/yLCJS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43BE1F000E9;
-	Wed, 20 May 2026 17:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3woD3y8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EDB1F000E9;
+	Wed, 20 May 2026 17:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298967;
-	bh=YSVTlxORN6OEkJuEKWyweSSzMZQPwk2h2G13geoGi8c=;
+	s=korg; t=1779298969;
+	bh=rAsjejasuV76yPSZsvMjE0VPKMZ6e9g2/sQpRVRDOfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dK/yLCJSIMyO45ymjF2wR6KJ9CyBcRrhs+nSVpjl6c7rc5DGd3BduS+jnhXf5witA
-	 WGVk0ZfnpgccYdDUFoSLnzij9o8JzRRW2p8NTx/gxf3w7pmJVt8qvt7KDVLNYgP5Rh
-	 NczhJ6eJ0WNwZZ5IdXxIAhBKfxDiJcSDe6B7DjPE=
+	b=h3woD3y8+XcVUjej330rURepdWo5BRalif8XyQpbPKRHFCoeHEl8S6bBptPKleS93
+	 XwCeJB3OvEmqaO3uLdC8FKCZVjoI8cYRma12HNWGS1Xe8PB3tNBVnr33OOGkguVLDC
+	 nlxbZb0Pzvza/ZgfPlnHlRyiBlTgRpZnqJvhyCik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kees Cook <kees@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 611/957] arm64: dts: imx8mn-tqma8mqnl: Correct PAD settings for PMIC_nINT
-Date: Wed, 20 May 2026 18:18:14 +0200
-Message-ID: <20260520162147.785055238@linuxfoundation.org>
+Subject: [PATCH 6.18 576/957] clk: qoriq: avoid format string warning
+Date: Wed, 20 May 2026 18:17:39 +0200
+Message-ID: <20260520162147.022596329@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,35 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 0fb37990774113afd943eaa91323679388584b6d ]
+[ Upstream commit 096abbb6682ee031a0f5ce9f4c71ead9fa63d31e ]
 
-With commit 5d0efaf47ee90 ("regulator: pca9450: Correct interrupt type"),
-there might be interrupt storm for this board. Need to set PAD PUE and PU
-together to make pull up work properly.
+clang-22 warns about the use of non-variadic format arguments passed into
+snprintf():
 
-Fixes: 3e56e354db6d3 ("arm64: dts: freescale: add initial device tree for TQMa8MQNL with i.MX8MN")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+drivers/clk/clk-qoriq.c:925:39: error: diagnostic behavior may be improved by adding the
+      'format(printf, 7, 8)' attribute to the declaration of 'create_mux_common' [-Werror,-Wmissing-format-attribute]
+  910 | static struct clk * __init create_mux_common(struct clockgen *cg,
+      | __attribute__((format(printf, 7, 8)))
+  911 |                                              struct mux_hwclock *hwc,
+  912 |                                              const struct clk_ops *ops,
+  913 |                                              unsigned long min_rate,
+  914 |                                              unsigned long max_rate,
+  915 |                                              unsigned long pct80_rate,
+  916 |                                              const char *fmt, int idx)
+  917 | {
+  918 |         struct clk_init_data init = {};
+  919 |         struct clk *clk;
+  920 |         const struct clockgen_pll_div *div;
+  921 |         const char *parent_names[NUM_MUX_PARENTS];
+  922 |         char name[32];
+  923 |         int i, j;
+  924 |
+  925 |         snprintf(name, sizeof(name), fmt, idx);
+      |                                              ^
+drivers/clk/clk-qoriq.c:910:28: note: 'create_mux_common' declared here
+  910 | static struct clk * __init create_mux_common(struct clockgen *cg,
+
+Rework this to pass the 'int idx' as a varargs argument, allowing the
+format string to be verified at the caller location.
+
+Fixes: 0dfc86b3173f ("clk: qoriq: Move chip-specific knowledge into driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-qoriq.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi b/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi
-index e2ccebf6ee13f..5e2c6d6e94550 100644
---- a/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mn-tqma8mqnl.dtsi
-@@ -298,7 +298,7 @@ pinctrl_i2c1_gpio: i2c1gpiogrp {
- 	};
+diff --git a/drivers/clk/clk-qoriq.c b/drivers/clk/clk-qoriq.c
+index a560edeb4b55a..03f9381e26fb7 100644
+--- a/drivers/clk/clk-qoriq.c
++++ b/drivers/clk/clk-qoriq.c
+@@ -907,13 +907,11 @@ static const struct clockgen_pll_div *get_pll_div(struct clockgen *cg,
+ 	return &cg->pll[pll].div[div];
+ }
  
- 	pinctrl_pmic: pmicgrp {
--		fsl,pins = <MX8MN_IOMUXC_GPIO1_IO08_GPIO1_IO8	0x84>;
-+		fsl,pins = <MX8MN_IOMUXC_GPIO1_IO08_GPIO1_IO8	0x1c4>;
- 	};
+-static struct clk * __init create_mux_common(struct clockgen *cg,
+-					     struct mux_hwclock *hwc,
+-					     const struct clk_ops *ops,
+-					     unsigned long min_rate,
+-					     unsigned long max_rate,
+-					     unsigned long pct80_rate,
+-					     const char *fmt, int idx)
++static struct clk * __init __printf(7, 8)
++create_mux_common(struct clockgen *cg, struct mux_hwclock *hwc,
++		  const struct clk_ops *ops, unsigned long min_rate,
++		  unsigned long max_rate, unsigned long pct80_rate,
++		  const char *fmt, ...)
+ {
+ 	struct clk_init_data init = {};
+ 	struct clk *clk;
+@@ -921,8 +919,11 @@ static struct clk * __init create_mux_common(struct clockgen *cg,
+ 	const char *parent_names[NUM_MUX_PARENTS];
+ 	char name[32];
+ 	int i, j;
++	va_list args;
  
- 	pinctrl_reg_usdhc2_vmmc: regusdhc2vmmcgrp {
+-	snprintf(name, sizeof(name), fmt, idx);
++	va_start(args, fmt);
++	vsnprintf(name, sizeof(name), fmt, args);
++	va_end(args);
+ 
+ 	for (i = 0, j = 0; i < NUM_MUX_PARENTS; i++) {
+ 		unsigned long rate;
 -- 
 2.53.0
 
