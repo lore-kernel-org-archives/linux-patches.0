@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF253E8C74;
-	Wed, 20 May 2026 11:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08CD3E92B1;
+	Wed, 20 May 2026 11:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276026; cv=none; b=BOsYzsAAlrYsWIESb3WKsvTCCtfLD9enDY6/WSs+tVTVNkwtPKs6yOQ/fK+wmwqsVSkYTuxhzjIkJetyxHLkfLJmQ053HaRuT1Mj79/8Cus597KVpsql6JLEo0cKrsmEQJQ2qGpkhIAGAzl8jf0m9US0pqkcAtJ2Qg9s2fc6318=
+	t=1779276027; cv=none; b=ZhLF7QHPGjqFQuHkbvzH6EMxVWvr1qeenv4t8HvA2ABv+nWv9DovNMTX/7ArwfrKhUgN1KuQYyPjZWdV0v+Wp+E4p7tDtTNbW/0awG1fVyF3ojJaB4ucDdu2pIjjQRZwLhgFO+sqPZwd6xDdL2xCHRZPTRzaMWZeSTE0n0Llr5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276026; c=relaxed/simple;
-	bh=HaYXk42WvCSIShW8FZ0bSZslAXirNKtycnqzXYI2XpY=;
+	s=arc-20240116; t=1779276027; c=relaxed/simple;
+	bh=Mbybqoe/DAcr0H/nDiwCoFO0HzCxS6CuRjqNYO8GzHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XTJdM4LihslyhLcyq8mL5L+oDlilLZNnfPcY7MXsycK6auSi01MLAldAR37BDsO/+PsZE2+b+10vuy8cfAYhuakbMc0Xw6ZpA0seD5RCHr46Erfr9M0/qi3vKemeZUa0PefMRo7ixnLJ275Z3F7DCocBIyjVf4cE7Mjg4nBDiOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SlibL9Ne; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=B2H9XxpAsZS1dLMln+ZAmRvMPpNMGH/TJJe8oVTMnsds1Wy1JBO4ZapjVXA1AOzXus5tSrteXWCYxbxyj+Tnbw01hO63AAjzvezS/uDNTjH5F7arhEZUtmyD4QUDBufFnZdDuXR++C4OvVgr58lQR7fUoU45rHuvvjHBUPi26zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DzVb2QT7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SlibL9Ne"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931601F000E9;
-	Wed, 20 May 2026 11:20:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DzVb2QT7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D836A1F00896;
+	Wed, 20 May 2026 11:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276023;
-	bh=0TscnOfn9uADddCIMK8c6D4QFb9H9T+ORf/YkZtdSlY=;
+	s=k20260515; t=1779276024;
+	bh=qOUwqq2SuZrhRFe3GLopBTiqUYjaGIz7bg+xEkeYtAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SlibL9NePG197asJ4MAnkXf7NHKNhlu4sIuWJ0cRx1f3WPLKVtLdPLplAQ5WZ7eWu
-	 8Eaw1b6pfCJLF0rRR7zxQQNowB4bKMG8GtUYCMTn0gokWHXaDyhq2NxowxwT4Yooop
-	 ik/7Z9G2s12tjR/BuH0vPfTaW0er01UYZdoF8vvcIGxivEG0ez4ITzFRxS4yTYU25X
-	 f5mV5Z3mkcfJbMidLP2pcWv2IAAbxxXLk3KecG/A8FI+46I5G6ZiD4iKAlB2ajQvv9
-	 UwQGOam9/u0ml8PlYh3ffQ10MR0H31B8weQ+G+gFVbktBuKU0ZzzJL/d68O1f8femy
-	 ISvavNkD867sQ==
+	b=DzVb2QT7Wh7NvVJvQQOeY8ZqX4o6JSesZUGAadz9fSykuEuJ00ZltcxJVfyVXEu3d
+	 g0OfJpjJfINNnM9zteJ0v1liqvhqdYsiPTHvHftJIKZo1i+A8I8ZZLr/5D4oC0mnsI
+	 dyQVO/Cs7ZdX0/a8KDRZv+hczcqZFOj5+opJ1wBtuEPgZtCrH1Yk6hTKEVMmR6S7n4
+	 V8R9JCCTn7LedPbkpPqtHwe/WNzR5nc1oAJQNoVOZUOjS4ubjYRcUJfJAbM+x5xwIb
+	 H/AyFZWefg1hduzZOAAeYKYsJiAwLSajTpfF5dCakmu5ihePI8ibTlq6sZXn6JzE+8
+	 zSmz0hW+DwARQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Damien Dejean <damiendejean@google.com>,
+	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@google.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] wifi: nl80211: require CAP_NET_ADMIN over the target netns in SET_WIPHY_NETNS
-Date: Wed, 20 May 2026 07:18:59 -0400
-Message-ID: <20260520111944.3424570-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] HID: elan: Add support for ELAN SB974D touchpad
+Date: Wed, 20 May 2026 07:19:00 -0400
+Message-ID: <20260520111944.3424570-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -47,301 +49,264 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+From: Damien Dejean <damiendejean@google.com>
 
-[ Upstream commit 15994bb0cbb8fc4879da7552ddd08c1896261c39 ]
+[ Upstream commit 55ce1858848132ed074fe907f00b5ce1ccab0ce1 ]
 
-NL80211_CMD_SET_WIPHY_NETNS dispatches with GENL_UNS_ADMIN_PERM, which
-verifies that the caller has CAP_NET_ADMIN for the source netns. It
-doesn't verify that the caller has CAP_NET_ADMIN over the target netns
-selected by NL80211_ATTR_NETNS_FD or NL80211_ATTR_PID.
+Elan SB974D touchpad uses ELAN_MT_I2C format to send HID reports. Add an
+entry to match for the device and parse its vendor specific format.
 
-This diverges from the convention enforced in
-net/core/rtnetlink.c::rtnl_get_net_ns_capable():
-
-    /* For now, the caller is required to have CAP_NET_ADMIN in
-     * the user namespace owning the target net ns.
-     */
-    if (!sk_ns_capable(sk, net->user_ns, CAP_NET_ADMIN))
-        return ERR_PTR(-EACCES);
-
-A user with CAP_NET_ADMIN in their own user namespace can therefore
-push a wiphy into an arbitrary netns (including init_net) over which
-they have no privilege.
-
-Mirror the rtnetlink convention by requiring CAP_NET_ADMIN in the
-target netns before calling cfg80211_switch_netns().
-
-Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Link: https://patch.msgid.link/20260506064854.2207105-2-maoyixie.tju@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Damien Dejean <damiendejean@google.com>
+Signed-off-by: Kornel Dulęba <korneld@google.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
+## Phase 1: Commit Message Forensics
 
-### Phase 1: Commit Message Forensics
-Record: `wifi: nl80211` subsystem; action verb `require`; intent is to
-require `CAP_NET_ADMIN` over the target network namespace before
-`NL80211_CMD_SET_WIPHY_NETNS` moves a wiphy.
+Step 1.1 Record: subsystem `HID: elan`; action verb `Add support`;
+intent is to add ELAN SB974D touchpad matching so the existing ELAN HID
+driver parses its vendor-specific I2C multitouch reports.
 
-Record: Tags in the provided commit message:
-`Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>`, `Link: https://patch.
-msgid.link/20260506064854.2207105-2-maoyixie.tju@gmail.com`, `Signed-
-off-by: Johannes Berg <johannes.berg@intel.com>`. No `Fixes:`,
-`Reported-by:`, `Tested-by:`, `Reviewed-by:`, or `Cc: stable` tag was
-present in the provided message.
+Step 1.2 Record: tags are:
+- `Signed-off-by: Damien Dejean <damiendejean@google.com>`
+- `Signed-off-by: Kornel Dulęba <korneld@google.com>`
+- `Signed-off-by: Jiri Kosina <jkosina@suse.com>`
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
+`Cc: stable`, or `Link:` tags are present.
 
-Record: The described bug is an authorization gap. `GENL_UNS_ADMIN_PERM`
-verifies `CAP_NET_ADMIN` for the netlink socket/source netns, but
-`NL80211_ATTR_NETNS_FD` / `NL80211_ATTR_PID` selects a target netns that
-was not separately checked. The b4-fetched cover letter includes a
-concrete reproducer with `mac80211_hwsim`: a caller privileged only in
-its own user namespace can move a delegated wiphy back into `init_net`.
+Step 1.3 Record: the body says SB974D uses `ELAN_MT_I2C` report format
+and needs an ID table entry so `hid-elan` handles and parses that
+format. Symptom is unsupported or generic handling of this touchpad, not
+a crash. No affected-version statement.
 
-Record: This is not a hidden cleanup fix; it is an explicit
-security/permission bug fix.
+Step 1.4 Record: this is not a hidden memory/race/crash fix. It is a
+hardware enablement/device-ID addition to an existing driver, which is a
+stable exception category.
 
-### Phase 2: Diff Analysis
-Record: One file changed, `net/wireless/nl80211.c`, with 13 insertions
-in `nl80211_wiphy_netns()`. Scope is a single-function surgical fix.
+## Phase 2: Diff Analysis
 
-Record: Before: after resolving the target netns and checking
-`IS_ERR(net)`, the function directly called `cfg80211_switch_netns()` if
-the wiphy was not already in that netns. After: it first checks
-`ns_capable(net->user_ns, CAP_NET_ADMIN)`, drops the netns reference
-with `put_net(net)`, and returns `-EPERM` on failure.
+Step 2.1 Record: two files changed, 2 insertions total:
+- `drivers/hid/hid-elan.c`: adds one `HID_I2C_DEVICE()` entry to
+  `elan_devices`.
+- `drivers/hid/hid-ids.h`: adds `USB_DEVICE_ID_SB974D 0x0400`.
+Modified data structure: `elan_devices[]`. Scope: single-driver,
+surgical ID addition.
 
-Record: Bug category is security authorization / logic correctness. The
-missing check allowed a source-netns-capable caller to affect a
-different target netns without privilege there.
+Step 2.2 Record: before, ELAN I2C product `0x0400` did not match `hid-
+elan`; after, BUS_I2C vendor `0x04f3` product `0x0400` matches `hid-
+elan` and uses existing probe/raw-event paths.
 
-Record: Fix quality is high: small, localized, follows the verified
-rtnetlink convention in `rtnl_get_net_ns_capable()`, and preserves
-reference cleanup. Regression risk is low and limited to denying
-previously accepted unauthorized cross-netns moves.
+Step 2.3 Record: bug category is hardware support/device ID addition. No
+new parser, locking, memory management, or API change. The fix works by
+routing this specific I2C HID device to already-existing `ELAN_MT_I2C`
+handling.
 
-### Phase 3: Git History Investigation
-Record: `git blame` on the current stable checkout blamed the function
-body to a repository snapshot-style commit, so it was not useful for
-introduction history. `git log v2.6.29..v2.6.32 -S...` found the
-command/function introduced by `463d018323851` (`cfg80211: make aware of
-net namespaces`), first contained in `v2.6.32-rc1`.
+Step 2.4 Record: fix quality is high: two-line addition, localized,
+mirrors the existing Toshiba I2C ELAN entry, and has very low regression
+risk. Main possible risk is binding product `0x0400` to `hid-elan`, but
+the commit message and external fwupd discussion verify `04f3:0400` is
+an ELAN touchpad PID.
 
-Record: No `Fixes:` tag is present, so there was no tagged commit to
+## Phase 3: Git History Investigation
+
+Step 3.1 Record: `git blame` shows `elan_devices[]` was introduced by
+`9a6a4193d65b` in v4.17-rc1 range; the existing I2C Toshiba entry was
+introduced by `e7ad3dc9f4a2` in v4.19-rc1 range. This means the required
+driver and I2C-format support are old and present in long-term stable
+lines.
+
+Step 3.2 Record: no `Fixes:` tag, so no introducing bug commit to
 follow.
 
-Record: Recent local `net/wireless/nl80211.c` history showed unrelated
-wireless fixes/conversions and no existing equivalent target-netns
-capability fix.
+Step 3.3 Record: recent history shows this commit is standalone; only
+later related file change found was unrelated `HID: i2c-hid: add reset
+quirk for BLTP7853 touchpad`.
 
-Record: No local prior `Maoyi Xie` commits were found under
-`net/wireless`. `MAINTAINERS` verifies Johannes Berg as maintainer for
-`802.11 (including CFG80211/NL80211)`, and the patch was addressed to
-Johannes on linux-wireless.
+Step 3.4 Record: author Damien Dejean has only this HID commit in the
+checked `origin/master` HID history. Jiri Kosina committed/applied it;
+`MAINTAINERS` lists Jiri Kosina and Benjamin Tissoires as HID core
+maintainers.
 
-Record: No code dependency was found for this patch. It is patch 1/2 in
-the submitted series; patch 2 is related namespace hardening, but patch
-1 is standalone for the direct permission bypass.
+Step 3.5 Record: no prerequisite commits found beyond the existing `hid-
+elan` driver and I2C parser, both already present in checked stable
+branches.
 
-### Phase 4: Mailing List And External Research
-Record: No commit hash was provided and the exact subject was not found
-in local `master`, `wireless-next`, `net-next`, or `fixes-next`, so `b4
-dig -c <commit>` was not applicable. I used the provided message-id with
-`b4 am`/`b4 mbox`.
+## Phase 4: Mailing List And External Research
 
-Record: `b4 am` found `[PATCH v3 0/2] wifi: nl80211: tighten netns
-handling in SET_WIPHY_NETNS and dump continuation`, including this patch
-as `v3 1/2`. `b4 am -c` did not report a newer revision. Attempts to
-fetch v1/v2 directly with `b4 -v 1/-v 2` did not find those revisions,
-but the v3 cover records that patch 1 was unchanged since v1.
+Step 4.1 Record: `b4 dig -c 55ce185884813` found the original patch at `
+https://patch.msgid.link/20260414133858.3992799-1-
+damiendejean@google.com`. `b4 dig -a` showed only v1, no later
+revisions.
 
-Record: The full mbox contained three messages: cover, patch 1, patch 2.
-It did not contain reviewer reply messages, but the cover records
-Johannes review feedback about trailers/comment wording and says no code
-changes since v2.
+Step 4.2 Record: `b4 dig -w` showed recipients included Jiri Kosina,
+Benjamin Tissoires, `linux-input@vger.kernel.org`, `linux-
+kernel@vger.kernel.org`, Damien Dejean, and Kornel Dulęba.
 
-Record: Original recipients were Johannes Berg, `linux-
-wireless@vger.kernel.org`, and `linux-kernel@vger.kernel.org`. No stable
-nomination or NAK was found in the fetched mbox. Lore WebFetch searches
-were blocked by Anubis, so stable-list discussion could not be
-independently verified through WebFetch.
+Step 4.3 Record: no `Reported-by` or bug-report `Link:`. The lore thread
+mbox contains Jiri Kosina’s “Applied to hid.git#for-7.1/upstream-fixes,
+thanks.” No NAKs or concerns in the saved thread.
 
-### Phase 5: Code Semantic Analysis
-Record: Modified function: `nl80211_wiphy_netns()`.
+Step 4.4 Record: no multi-patch series; standalone patch.
 
-Record: Caller surface: the only direct reference is the generic-netlink
-op for `NL80211_CMD_SET_WIPHY_NETNS`; `genl_family_rcv_msg()` checks
-`GENL_UNS_ADMIN_PERM` against `net->user_ns`, then
-`genl_family_rcv_msg_doit()` calls `ops->doit()`, reaching
-`nl80211_wiphy_netns()` from userspace netlink.
+Step 4.5 Record: lore WebFetch hit Anubis, but `b4` successfully fetched
+the mbox. Stable branch grep found no existing `SB974D` backport in
+`stable/linux-7.0.y` or `stable/linux-6.19.y`.
 
-Record: Key callees: `get_net_ns_by_pid()`, `get_net_ns_by_fd()`, new
-`ns_capable(net->user_ns, CAP_NET_ADMIN)`, `cfg80211_switch_netns()`,
-and `put_net()`. `cfg80211_switch_netns()` moves associated wireless
-netdevs with `dev_change_net_namespace()` and updates `wiphy_net_set()`.
+## Phase 5: Code Semantic Analysis
 
-Record: Reachability is verified by the op table and by the b4 cover’s
-PoC. A userspace caller can trigger the path by sending
-`NL80211_CMD_SET_WIPHY_NETNS` with target PID or netns fd.
+Step 5.1 Record: modified table is `elan_devices[]`; functional paths
+affected are existing callbacks `elan_probe`, `elan_input_mapping`,
+`elan_input_configured`, and `elan_raw_event`.
 
-Record: Similar convention verified in `rtnl_get_net_ns_capable()`,
-which checks target `net->user_ns` before using another netns.
+Step 5.2 Record: `hid_match_device()` matches `hdrv->id_table`;
+`hid_device_probe()` calls the matched driver’s `.probe`;
+`hid_input_report()` calls `.raw_event`. Thus the new ID makes this
+hardware reach existing `hid-elan` probe and report parsing.
 
-### Phase 6: Stable Tree Analysis
-Record: The vulnerable handler/op shape exists in `v5.4`, `v5.10`,
-`v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and current `7.0.y`, with no
-`ns_capable(net->user_ns, CAP_NET_ADMIN)` check in the handler.
+Step 5.3 Record: relevant callees include `hid_parse`, `hid_hw_start`,
+`elan_start_multitouch`, and for I2C reports `elan_i2c_report_input`.
 
-Record: `v3.18` has `NL80211_CMD_SET_WIPHY_NETNS`, but uses
-`GENL_ADMIN_PERM`, so the unprivileged-user-namespace aspect is not the
-same there. For active modern stable trees, the issue is present.
+Step 5.4 Record: reachability is hardware enumeration and HID input
+report delivery. Users of the SB974D touchpad hit this during device
+probe and normal touch input.
 
-Record: `git apply --check` of the fetched v3 mbox succeeds on the
-current `7.0.y` checkout. Older stable trees have line offsets and minor
-surrounding differences, but the same local hunk context exists at least
-in `v5.4`; expected backport difficulty is clean or minor-context-only.
+Step 5.5 Record: similar pattern exists in the same driver for
+`USB_DEVICE_ID_TOSHIBA_CLICK_L9W`, also using `HID_I2C_DEVICE()` and the
+existing `ELAN_MT_I2C` path.
 
-Record: No related local fix already present was found by subject/grep
-searches.
+## Phase 6: Stable Tree Analysis
 
-### Phase 7: Subsystem Context
-Record: Subsystem is cfg80211/nl80211 wireless configuration.
-Criticality is IMPORTANT: it is not core-mm/VFS, but it is a userspace-
-facing network configuration and permission boundary.
+Step 6.1 Record: checked stable branches `5.10.y`, `5.15.y`, `6.1.y`,
+`6.6.y`, `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y`; all contain
+`CONFIG_HID_ELAN`, `drivers/hid/hid-elan.c`, and the existing
+`TOSHIBA_CLICK_L9W` I2C ELAN entry.
 
-Record: The wireless subsystem is active in local history, with recent
-cfg80211/nl80211-adjacent fixes.
+Step 6.2 Record: `git apply --check` succeeded on current `7.0.y`,
+`6.19.y`, and representative older stable worktrees `5.10.y`, `5.15.y`,
+`6.1.y`, `6.6.y`, `6.12.y`, `6.18.y`.
 
-### Phase 8: Impact And Risk
-Record: Affected users are systems with cfg80211/nl80211, network
-namespaces/user namespaces, and a `WIPHY_FLAG_NETNS_OK` wiphy. Verified
-examples include `mac80211` and drivers setting the flag such as
-`brcmfmac`, `mwifiex`, and `qtnfmac`.
+Step 6.3 Record: no related `SB974D` fix already present in checked
+stable branches.
 
-Record: Trigger requires the caller to hold a movable wiphy in its own
-netns and pass a target netns fd or pid. The b4 cover verifies this is
-reachable from an unprivileged user namespace after legitimate admin
-delegation using `mac80211_hwsim`.
+## Phase 7: Subsystem Context
 
-Record: Failure mode is a security/namespace isolation violation:
-unauthorized movement of a wiphy into a netns, including `init_net`,
-where the caller lacks privilege. Severity is HIGH because it bypasses
-kernel namespace permission boundaries.
+Step 7.1 Record: subsystem is HID input driver support. Criticality is
+driver-specific/peripheral, affecting users of this ELAN SB974D touchpad
+hardware.
 
-Record: Benefit is high for stable users because it closes a concrete
-privilege boundary bug. Risk is low: 13 lines, one function, no new API,
-no data structure change, and only unauthorized operations change
-behavior.
+Step 7.2 Record: HID is actively maintained; this patch was applied
+through `hid.git#for-7.1/upstream-fixes` by HID maintainer Jiri Kosina.
 
-### Phase 9: Final Synthesis
-Record: Evidence for backporting: real security/authorization bug,
-concrete PoC in the submitted cover, reachable userspace netlink
-command, vulnerable code present across modern stable trees, small
-contained fix, and it mirrors an existing rtnetlink convention.
+## Phase 8: Impact And Risk
 
-Record: Evidence against backporting: no `Fixes:`/stable tag, no fetched
-reviewer reply carrying an explicit stable nomination, and the exact
-applied commit hash was not present in local searched branches. These do
-not outweigh the verified technical issue.
+Step 8.1 Record: affected population is hardware-specific: systems with
+ELAN SB974D I2C touchpad and `CONFIG_HID_ELAN`.
 
-Record: Unresolved: I could not verify the final applied commit object
-or run `b4 dig -c` because no commit hash was provided and local branch
-searches did not find the subject. WebFetch to lore/stable was blocked
-by Anubis. I did not run the runtime PoC or a kernel build.
+Step 8.2 Record: trigger is device enumeration and normal touchpad input
+on that hardware. No evidence found that unprivileged users can trigger
+a security issue; this is hardware functionality.
 
-Stable rules checklist:
-1. Obviously correct and tested: yes by inspection; PoC result described
-   in b4 cover, though not locally rerun.
-2. Fixes a real bug affecting users: yes, verified missing target-netns
-   authorization.
-3. Important issue: yes, security/namespace permission bypass.
-4. Small and contained: yes, one function, 13 added lines.
-5. No new features or APIs: yes.
-6. Can apply to stable: yes for current `7.0.y`; older active stable
-   trees likely clean/minor context based on matching code.
+Step 8.3 Record: failure mode without the patch is lack of proper `hid-
+elan` handling for this touchpad’s vendor-specific `ELAN_MT_I2C` report
+format. Severity is medium for affected hardware because touchpad
+functionality is user-visible, but not a crash/corruption/security
+issue.
 
-Exception category: none. This is not a device ID/quirk/build/doc fix;
-it is a security permission fix.
+Step 8.4 Record: benefit is high for affected hardware and low globally.
+Risk is very low: two lines, no behavior change for unrelated device
+IDs, no API change, and clean apply to checked stable branches.
+
+## Phase 9: Final Synthesis
+
+Evidence for backporting: this is exactly the stable exception for
+adding a new device ID to an existing driver; the driver and parser
+already exist in stable; the patch is tiny, cleanly applies, and was
+accepted by the HID maintainer. Evidence against: it is hardware
+enablement rather than a conventional critical bug fix, and there is no
+user bug report or `Tested-by` tag in the commit.
+
+Stable rules:
+1. Obviously correct and tested? Code is obviously correct by
+   inspection; explicit testing tag absent.
+2. Fixes a real user-visible issue? Yes for affected SB974D systems:
+   proper touchpad driver binding/report parsing.
+3. Important issue? Medium hardware functionality issue, not
+   crash/corruption/security.
+4. Small and contained? Yes, 2 insertions in HID.
+5. No new APIs/features? No API; hardware ID addition only.
+6. Can apply to stable? Yes, verified across representative active
+   stable branches.
+
+Exception category: new device ID added to an existing driver. This is
+stable-suitable.
 
 ## Verification
-- [Phase 1] Parsed provided subject/tags and b4-fetched patch/cover;
-  found no `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, or
-  stable tag.
-- [Phase 2] Compared provided diff and b4 mbox patch; confirmed 13 lines
-  added to `nl80211_wiphy_netns()`.
-- [Phase 3] `git blame -L` was not useful due snapshot-style history;
-  `git log v2.6.29..v2.6.32 -S...` found `463d018323851`, first
-  contained in `v2.6.32-rc1`.
-- [Phase 3] `git log --author='Maoyi Xie' -- net/wireless` found no
-  local prior commits.
-- [Phase 3] `MAINTAINERS` confirms Johannes Berg maintains `802.11
-  (including CFG80211/NL80211)`.
-- [Phase 4] `b4 am` found v3 2-patch series and the supplied patch
-  message-id.
-- [Phase 4] `b4 am -c` found no newer revision.
-- [Phase 4] `b4 mbox` saved the full 3-message thread; no stable
-  nomination or NAK was present there.
-- [Phase 5] `rg` confirmed `nl80211_wiphy_netns()` is reached via the
-  `NL80211_CMD_SET_WIPHY_NETNS` generic-netlink op.
-- [Phase 5] Read `genetlink.c`; confirmed `GENL_UNS_ADMIN_PERM` checks
-  `net->user_ns` before calling `ops->doit()`.
-- [Phase 5] Read `cfg80211_switch_netns()`; confirmed it moves wireless
-  netdevs and changes the wiphy netns.
-- [Phase 6] Checked `v5.4`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`,
-  `v6.19`, and current `7.0.y`; all have the handler/op without the
-  target `ns_capable()` check.
-- [Phase 6] `git apply --check` of the b4 mbox succeeded on current
-  `7.0.y`.
-- [Phase 8] `rg WIPHY_FLAG_NETNS_OK` verified affected mac80211 and
-  several wireless drivers expose movable wiphys.
-- UNVERIFIED: exact final commit SHA and final applied-object metadata,
-  because the subject was not found in local searched branches.
-- UNVERIFIED: stable-list discussion via WebFetch, because lore WebFetch
-  returned Anubis anti-bot pages.
-- UNVERIFIED: local runtime PoC/build; not performed.
 
-This should be backported to stable kernel trees that contain the
-`GENL_UNS_ADMIN_PERM` version of `NL80211_CMD_SET_WIPHY_NETNS`,
-especially active v5.4+ stable/LTS trees.
+- Phase 1: `git show --format=fuller 55ce185884813` verified subject,
+  body, author, committer, and tags.
+- Phase 2: `git show --stat` and full diff verified exactly 2 insertions
+  in `hid-elan.c` and `hid-ids.h`.
+- Phase 3: `git blame` verified table history; `git describe --contains`
+  placed original driver support around v4.17-rc1 and I2C support around
+  v4.19-rc1.
+- Phase 3: `git log --oneline` checks found no dependent SB974D series
+  and only this author’s HID commit in the checked range.
+- Phase 4: `b4 dig`, `b4 dig -a`, and `b4 dig -w` verified original lore
+  submission, single v1, recipients, and maintainer application.
+- Phase 4: WebFetch to lore/stable was blocked by Anubis; the saved `b4`
+  mbox was used instead.
+- Phase 5: `ReadFile` and `rg` verified `elan_probe`, `elan_raw_event`,
+  `elan_i2c_report_input`, `hid_match_device`, and `hid_input_report`
+  call paths.
+- Phase 6: `git grep` verified relevant stable branches contain
+  `HID_ELAN` and the existing ELAN I2C entry.
+- Phase 6: `git apply --check` verified clean application to `7.0.y`,
+  `6.19.y`, `6.18.y`, `6.12.y`, `6.6.y`, `6.1.y`, `5.15.y`, and
+  `5.10.y`.
+- Phase 7: `MAINTAINERS` verified Jiri Kosina and Benjamin Tissoires as
+  HID maintainers.
+- Phase 8: no sanitizer report, crash report, or security impact was
+  found; decision is driven by the verified device-ID stable exception.
 
 **YES**
 
- net/wireless/nl80211.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/hid/hid-elan.c | 1 +
+ drivers/hid/hid-ids.h  | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index ce3121b1c3319..13c2943ad3e4b 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -13568,6 +13568,19 @@ static int nl80211_wiphy_netns(struct sk_buff *skb, struct genl_info *info)
- 	if (IS_ERR(net))
- 		return PTR_ERR(net);
+diff --git a/drivers/hid/hid-elan.c b/drivers/hid/hid-elan.c
+index 76d93fc48f6a2..0190ad567ce4d 100644
+--- a/drivers/hid/hid-elan.c
++++ b/drivers/hid/hid-elan.c
+@@ -513,6 +513,7 @@ static const struct hid_device_id elan_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_HP_X2_10_COVER),
+ 	  .driver_data = ELAN_HAS_LED },
+ 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_TOSHIBA_CLICK_L9W) },
++	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_SB974D) },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(hid, elan_devices);
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index c1e4a6ce96317..c371721826dcc 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -455,6 +455,7 @@
+ #define USB_DEVICE_ID_EDIFIER_QR30	0xa101	/* EDIFIER Hal0 2.0 SE */
  
-+	/*
-+	 * The caller already has CAP_NET_ADMIN over the source netns
-+	 * (enforced by GENL_UNS_ADMIN_PERM on the genl op). Mirror the
-+	 * convention used by net/core/rtnetlink.c::rtnl_get_net_ns_capable()
-+	 * and require CAP_NET_ADMIN over the target netns as well, so that
-+	 * a caller that is privileged in their own user namespace cannot
-+	 * push a wiphy into a netns where they have no privilege.
-+	 */
-+	if (!ns_capable(net->user_ns, CAP_NET_ADMIN)) {
-+		put_net(net);
-+		return -EPERM;
-+	}
-+
- 	err = 0;
- 
- 	/* check if anything to do */
+ #define USB_VENDOR_ID_ELAN		0x04f3
++#define USB_DEVICE_ID_SB974D            0x0400
+ #define USB_DEVICE_ID_TOSHIBA_CLICK_L9W	0x0401
+ #define USB_DEVICE_ID_HP_X2		0x074d
+ #define USB_DEVICE_ID_HP_X2_10_COVER	0x0755
 -- 
 2.53.0
 
