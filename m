@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FC53EE1C0;
-	Wed, 20 May 2026 16:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2723E9C3D;
+	Wed, 20 May 2026 16:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294938; cv=none; b=i9Pd0gJtJBGPHqfpyv1oFh9Nh8/nlTM6mqeDU6HintgIXPCQ4BIoTeLNJyfaov6ZzRDG2XrabxsFznmahE2DZFF+xxCh+1tTND8aF+6s5tOzWfK3xNwEdc0pKylG5D5b1/cZRvfVAywnu0PeTUIK2FfeuX+Ifi3u/Yb+ci/h33c=
+	t=1779294941; cv=none; b=QA17SbE3/t5Jh5CD0Dmgu7XFw/RwtZw7FlrfTKPMhRFkXUqs4EwOemipzK2IVYKRRam+J4sRdsgxsQ4OPBCeuYkiF9peBwCechci5svaAE+tbY1mZMYatlIZHr4aDTVyvYKtoMGxUU2kNLiKL2ArZ7k6e8D/mLTLEqh9xgj6OuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294938; c=relaxed/simple;
-	bh=Rjxo6B4ygyGIYvPk1tpKnt5VV//wuuBU5g+esHCCR4I=;
+	s=arc-20240116; t=1779294941; c=relaxed/simple;
+	bh=koW7mrs20CjKSDcVsn4c42pgGityshh+8+ddx4/IxfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hY9yyzvTqc2TeHnKCHTLm4kTXPYd6IFlApVZQ8UfoqqS6emqiOdnbnxdzfS8xmUPpYbUmXNooZMVJY7wTrQA2HJqiEj55JKHDwXDbwcwI1rwqp3Pc9CJT57jZdl56QXuuLSFQDQF3W88zzuSXdLGt+d1W+o/lZQGjJLloeW4i0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoBDSAbl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JVihPQrb+kDzZfpq3DZVuMNNhbnQCENi3R3dTK1Fmuk4Zyk4DZ0IMN3nGPS8u1PADJOWDdvdnwU20ow+7BkhnMQYVE+MKF5EeUUdT/NzCeYW/BQ2C09TmtFs1JTyGMOjz+CwdyRb8PWkuR25MPJhZf+EcZL3XsUnhPnojwLGCGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tV6Wd4YH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoBDSAbl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7F71F000E9;
-	Wed, 20 May 2026 16:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tV6Wd4YH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846381F000E9;
+	Wed, 20 May 2026 16:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294937;
-	bh=HaW+jvcTD7s2BUPi0AY+dD/E1B0JwRR5h+tN69HXWOk=;
+	s=korg; t=1779294940;
+	bh=SP8nseoVCpy7EQiQF4wMaze9pv8zqEN2shs2B6agiv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZoBDSAblXGTXn+GvcuVEqNNkcuLvb9RN6M8DXOFoeKQKnEgT7UY0EJdVP7eiK/iOu
-	 KywLLLnTlD4yeS8g8GPyAxmEUt8o7RbyyH4EyDu7bPJF8JMFgikfBP+Vd/s+NFzcfB
-	 numTZZD/Zp5KjX4ni1AAdMtVaQttOafj4dk/Kxrs=
+	b=tV6Wd4YHStz5ZPZxeN41rmh0XCfpSaKrsj+Gy7JcoEMsDjTSB01/+SulOjznHvYy+
+	 wouAVJui+6OXPFF+QxY63BbCnI4u05udHqoo4DNTxiqdKY1hQtPY1h1vZwRourUMoG
+	 ObBjzhkm/GZOewhuVsZFZssYHWIMq2D82JzeWZDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Patelczyk <maciej.patelczyk@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+	Val Packett <val@invisiblethingslab.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0229/1146] drm/gpusvm: Fix unbalanced unlock in drm_gpusvm_scan_mm()
-Date: Wed, 20 May 2026 18:07:59 +0200
-Message-ID: <20260520162153.434646095@linuxfoundation.org>
+Subject: [PATCH 7.0 0230/1146] drm/virtio: Allow importing prime buffers when 3D is enabled
+Date: Wed, 20 May 2026 18:08:00 +0200
+Message-ID: <20260520162153.457299487@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,66 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Patelczyk <maciej.patelczyk@intel.com>
+From: Val Packett <val@invisiblethingslab.com>
 
-[ Upstream commit d287dee565c3c32e1ed76ec1847af46809c29b90 ]
+[ Upstream commit df4dc947c46bb9f80038f52c6e38cb2d40c10e50 ]
 
-There is a unbalanced lock/unlock to gpusvm notifier lock:
-[  931.045868] =====================================
-[  931.046509] WARNING: bad unlock balance detected!
-[  931.047149] 6.19.0-rc6+xe-**************** #9 Tainted: G     U
-[  931.048150] -------------------------------------
-[  931.048790] kworker/u5:0/51 is trying to release lock (&gpusvm->notifier_lock) at:
-[  931.049801] [<ffffffffa090c0d8>] drm_gpusvm_scan_mm+0x188/0x460 [drm_gpusvm_helper]
-[  931.050802] but there are no more locks to release!
-[  931.051463]
+This functionality was added for using a KMS-only virtgpu with a physical
+(or SR-IOV) headless GPU in passthrough, but it should not be restricted
+to KMS-only mode. It can be used with cross-domain to pass guest memfds
+to the host compositor with zero copies (using udmabuf on both sides).
 
-The drm_gpusvm_notifier_unlock() sits under err_free label and the
-first jump to err_free is just before calling the
-drm_gpusvm_notifier_lock() causing unbalanced unlock.
+Drop the check for the absence of virgl_3d to allow for more use cases.
 
-Fixes: f1d08a586482 ("drm/gpusvm: Introduce a function to scan the current migration state")
-Signed-off-by: Maciej Patelczyk <maciej.patelczyk@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260209123433.1271053-1-maciej.patelczyk@intel.com
+Fixes: ca77f27a2665 ("drm/virtio: Import prime buffers from other devices as guest blobs")
+Signed-off-by: Val Packett <val@invisiblethingslab.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20251210154755.1119861-2-val@invisiblethingslab.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_gpusvm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_prime.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_gpusvm.c b/drivers/gpu/drm/drm_gpusvm.c
-index 04bdc386c3fd8..35dd07297dd08 100644
---- a/drivers/gpu/drm/drm_gpusvm.c
-+++ b/drivers/gpu/drm/drm_gpusvm.c
-@@ -819,7 +819,7 @@ enum drm_gpusvm_scan_result drm_gpusvm_scan_mm(struct drm_gpusvm_range *range,
- 
- 		if (!(pfns[i] & HMM_PFN_VALID)) {
- 			state = DRM_GPUSVM_SCAN_UNPOPULATED;
--			goto err_free;
-+			break;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_prime.c b/drivers/gpu/drm/virtio/virtgpu_prime.c
+index 8adcf5c15d456..05756ed4f1dac 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_prime.c
++++ b/drivers/gpu/drm/virtio/virtgpu_prime.c
+@@ -310,7 +310,7 @@ struct drm_gem_object *virtgpu_gem_prime_import(struct drm_device *dev,
  		}
- 
- 		page = hmm_pfn_to_page(pfns[i]);
-@@ -856,9 +856,9 @@ enum drm_gpusvm_scan_result drm_gpusvm_scan_mm(struct drm_gpusvm_range *range,
- 		i += 1ul << drm_gpusvm_hmm_pfn_to_order(pfns[i], i, npages);
  	}
  
--err_free:
- 	drm_gpusvm_notifier_unlock(range->gpusvm);
+-	if (!vgdev->has_resource_blob || vgdev->has_virgl_3d)
++	if (!vgdev->has_resource_blob)
+ 		return drm_gem_prime_import(dev, buf);
  
-+err_free:
- 	kvfree(pfns);
- 	return state;
- }
+ 	bo = kzalloc_obj(*bo);
 -- 
 2.53.0
 
