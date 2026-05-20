@@ -1,50 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEB42BE7BA;
-	Wed, 20 May 2026 17:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B75C2046BA;
+	Wed, 20 May 2026 17:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298287; cv=none; b=EqJbVpVj6mMENFHtnqGSqKMrZwj7J9IB7hZwY4vekoqpy/edZ/qVCa7xByhh9heiwHeot8F3P+VfwsQ+68w+525IWukbgx1pSA5aC60VrXvwIeyoF9YTwhj9tL1ElDxjSEphmuHD1DyNqWopYkXTuXJY05s7opeKnijVaVjDOHQ=
+	t=1779298290; cv=none; b=CiCU7rMvhfvAM/3kjWcfMhw8MSvLmRWTjTX17mSloqg1Lfwxw5LRGlQKyzWaZe/wlMPUhq6whybHVVwZc5s6qHKx5Q1nc3g8UZ9BtuBvwKsxQEArxLFh4iVAfP4Ze1lTQeFkoEttSRde3M5KXDh98sH2aDBvP5AVZSy795wfcgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298287; c=relaxed/simple;
-	bh=zS5AcYWMLGR6A/WEtC8HIgFTMVOTh66p8gSYc+Jin/c=;
+	s=arc-20240116; t=1779298290; c=relaxed/simple;
+	bh=ysWUiR4BqAamotrWbwioq3oLjG7LLMi2pvRqTcD7BEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJ1QtHbSDlj7DrghPLhLGmb9fm62fJiJLoyDq+uKodr2w2Pp4T72d90cFyG1iYyovXqh+tMBXNhDNONB3wrlu58I2N0ceGZMaoPXGZlJE+fvLke+fWPSmLCQ70l1MZG4f+EtvqYNFMt9VT7h6e/FpfB36FXktTMNVeKOzlQemVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaQIJast; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TRDYTa3W25wSE86oupnGQTLx90uK3SrU2RYbb/SQZ+FxAmF+eWIn0aSK/BQS3QX2A2NXlDl8iPGRVvY0n8/dLGFxX8BeREite1FRNvptlMHQXmoOut9QuOFU9m96nx9oov/fa31q0g72tHh1/oJRF2aC60LAd39CWtnx9yVTfO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEOZRhLC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaQIJast"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5771F00893;
-	Wed, 20 May 2026 17:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEOZRhLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858D91F000E9;
+	Wed, 20 May 2026 17:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298286;
-	bh=tPHYin3srlTHHRTyGoLipUYIz1HfXYk3AJL5ZkFCD9k=;
+	s=korg; t=1779298289;
+	bh=3ZpEhqlhbuvDGfqv4IrhXXY07ViwjDA7uK1RIBzGpoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eaQIJastwLdQiKzLaCk5kwFANFyw+UDMkpLJspLsrAVu2v6C4PMlHz9ALowOtefE1
-	 QNgz7MyKedxPy//GtJRiLwbfRlKyKtzIKgeLoOCZ20X7x0/aJOJv4ZSz4YqatGAxvT
-	 I9FVuay0Z7l9k/aajaUAjp8FPvBEWGNtMxX09h1o=
+	b=DEOZRhLCrDxtBcpm0E2Lr5zop7k/lR8q+dsC9pKk4K7kN6jHDr68R5G/mh6Aco4av
+	 YqyAa++gehDiGtrcHrvQtFyfc2cvfW42UnJtq88NI40UO61tPrNVeZPmaU/axKk30L
+	 t8dfz0PiH/c/k+kntLK3G+8cyQFOhgEMdFkorOvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jane Chu <jane.chu@oracle.com>,
-	David Hildenbrand <david@kernel.org>,
-	Hillf Danton <hillf.zj@alibaba-inc.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
+	Waiman Long <longman@redhat.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
 	Mike Rapoport <rppt@kernel.org>,
 	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shuah Khan <shuah@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 312/957] Documentation: fix a hugetlbfs reservation statement
-Date: Wed, 20 May 2026 18:13:15 +0200
-Message-ID: <20260520162141.298767941@linuxfoundation.org>
+Subject: [PATCH 6.18 313/957] selftest: memcg: skip memcg_sock test if address family not supported
+Date: Wed, 20 May 2026 18:13:16 +0200
+Message-ID: <20260520162141.320279328@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -57,67 +54,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jane Chu <jane.chu@oracle.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 7a197d346a44384a1a858a98ef03766840e561d4 ]
+[ Upstream commit 2d028f3e4bbbfd448928a8d3d2814b0b04c214f4 ]
 
-Documentation/mm/hugetlbfs_reserv.rst has
-	if (resv_needed <= (resv_huge_pages - free_huge_pages))
-		resv_huge_pages += resv_needed;
-which describes this code in gather_surplus_pages()
-	needed = (h->resv_huge_pages + delta) - h->free_huge_pages;
-	if (needed <= 0) {
-		h->resv_huge_pages += delta;
-		return 0;
-	}
-which means if there are enough free hugepages to account for the new
-reservation, simply update the global reservation count without
-further action.
+The test_memcg_sock test in memcontrol.c sets up an IPv6 socket and send
+data over it to consume memory and verify that memory.stat.sock and
+memory.current values are close.
 
-But the description is backwards, it should be
-	if (resv_needed <= (free_huge_pages - resv_huge_pages))
-instead.
+On systems where IPv6 isn't enabled or not configured to support
+SOCK_STREAM, the test_memcg_sock test always fails.  When the socket()
+call fails, there is no way we can test the memory consumption and verify
+the above claim.  I believe it is better to just skip the test in this
+case instead of reporting a test failure hinting that there may be
+something wrong with the memcg code.
 
-Link: https://lkml.kernel.org/r/20260302201015.1824798-1-jane.chu@oracle.com
-Fixes: 70bc0dc578b3 ("Documentation: vm, add hugetlbfs reservation overview")
-Signed-off-by: Jane Chu <jane.chu@oracle.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Hillf Danton <hillf.zj@alibaba-inc.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
+Link: https://lkml.kernel.org/r/20260311200526.885899-1-longman@redhat.com
+Fixes: 5f8f019380b8 ("selftests: cgroup/memcontrol: add basic test for socket accounting")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Michal Koutný <mkoutny@suse.com>
 Cc: Mike Rapoport <rppt@kernel.org>
 Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Tejun Heo <tj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/mm/hugetlbfs_reserv.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/cgroup/test_memcontrol.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/mm/hugetlbfs_reserv.rst b/Documentation/mm/hugetlbfs_reserv.rst
-index 4914fbf07966c..a49115db18c76 100644
---- a/Documentation/mm/hugetlbfs_reserv.rst
-+++ b/Documentation/mm/hugetlbfs_reserv.rst
-@@ -155,7 +155,7 @@ are enough free huge pages to accommodate the reservation.  If there are,
- the global reservation count resv_huge_pages is adjusted something like the
- following::
+diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
+index a680f773f2d54..1f64db1afa212 100644
+--- a/tools/testing/selftests/cgroup/test_memcontrol.c
++++ b/tools/testing/selftests/cgroup/test_memcontrol.c
+@@ -1278,8 +1278,11 @@ static int tcp_server(const char *cgroup, void *arg)
+ 	saddr.sin6_port = htons(srv_args->port);
  
--	if (resv_needed <= (resv_huge_pages - free_huge_pages))
-+	if (resv_needed <= (free_huge_pages - resv_huge_pages)
- 		resv_huge_pages += resv_needed;
+ 	sk = socket(AF_INET6, SOCK_STREAM, 0);
+-	if (sk < 0)
++	if (sk < 0) {
++		/* Pass back errno to the ctl_fd */
++		write(ctl_fd, &errno, sizeof(errno));
+ 		return ret;
++	}
  
- Note that the global lock hugetlb_lock is held when checking and adjusting
+ 	if (setsockopt(sk, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) < 0)
+ 		goto cleanup;
+@@ -1409,6 +1412,12 @@ static int test_memcg_sock(const char *root)
+ 			goto cleanup;
+ 		close(args.ctl[0]);
+ 
++		/* Skip if address family not supported by protocol */
++		if (err == EAFNOSUPPORT) {
++			ret = KSFT_SKIP;
++			goto cleanup;
++		}
++
+ 		if (!err)
+ 			break;
+ 		if (err != EADDRINUSE)
 -- 
 2.53.0
 
