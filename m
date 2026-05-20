@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB253DCD8B;
-	Wed, 20 May 2026 11:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A853D3DCD9C;
+	Wed, 20 May 2026 11:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276011; cv=none; b=s1tPzFAaTcOJUjbL1cX7/LBaDlEbNxymYdbTFACQznEE5MHKh4IXqYo/Z3hS7AZng7XTAoAhQxUviq1PESnlSd+RGczAkfsXYWZM9GYNEHsdbGhcxbgrzx0M1XtcikhkWLeGOE424Rb2ujF3I4+9xvkKL5W81pQD/gj1e+AUFC0=
+	t=1779276012; cv=none; b=I8dNUSvUD8NIwlSOOdOnAZ57K9URAPAMV266zW8SvmvFPI3S9AT/tR3yXO+F7coigMp7OT3cN9nnBGYcGNNHfsgl+NFcSssuHE8WwbwfgMhfN639LT9F5JS6BrjazcH+QTfJNisYG4h9AgzwrTu3COsRCJn9esrkGLQkPJpUaQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276011; c=relaxed/simple;
-	bh=GECVds6PVy5qQArWNQudsG6SbMG1H5Ihikpk5pwJxCE=;
+	s=arc-20240116; t=1779276012; c=relaxed/simple;
+	bh=v4e5a/aMz1v6YR6+cednVDxQr9k3Oa+VodsgFCUyhVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mAAwr+mOMXaQ1D/u3U6MFaWILnwM+C80q6fZMW4hAMOAW6Kb9QZYyhuvFR2tIrZfv2PNDlF+ByUS+Vlmm76hjhVGR7GstBuTSOcLsuOWmKDvv+tJHDatQglJ4Lr4/Lda1v2DqZJ7gW/bUIu/MBO6AX+m6kFpmj1DmnmPw4i0KjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JA5bs6+u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g0stWTCIYrJAqDzIYp7Kid5+/0iLrJOlgJFzIQb9QrBG+lHEbEFJj2CahXKsHZlb2Z35ZSMxPksc9SH9iZbmC1xjuZdZO30u+u0+my/zq771Y3UsWM+/jRH/5kqdpBZ5ah8qxwHAiMWcWCgoOHh13Zv98T7At2MnIqk8KDspgow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k5LPF1J/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JA5bs6+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98F91F000E9;
-	Wed, 20 May 2026 11:20:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k5LPF1J/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638791F00894;
+	Wed, 20 May 2026 11:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276004;
-	bh=cvo1+nCL2Yd6S+uRcIejVau9Fo6tytiTApwPR2MFRFw=;
+	s=k20260515; t=1779276007;
+	bh=wh2vO+k2OhSXHw9Yg21L+HN+Ur8L1oQbLmdePBB+R98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JA5bs6+us1RN0XbPsIdncUCrEeUtvfruN+7z0NJ1bWztVD+s8DDkudiNFS5y71pl3
-	 dDewH6zC9LPsudUHr/3WwAR1kaGfJWBdExPPQLSx5sMykMFbcuF+SG7io2m9aEvIJV
-	 4V16c3vWnjhjd+PG7+N7AFFXeq+Q2FfdHHff3WI/xd9S3gT+e7Sg9bwpiXPlt6DW2W
-	 s6lOtrCmYr4qt2jVkt16WDRJS0mwgCnsnjX3QuYQNuFU9Zyu9XScT0p9rE54Aa3mgP
-	 k/xPYlAEjz1aiAgeVib545RQUNwjnFcQbIu4FVvJL7ixNOCSnmJ3XjTNHyeVxhPVOu
-	 jHilvQZv6HoOg==
+	b=k5LPF1J/4TewEoUQVfXgXu+kBGKHoDoWw8ETg/KWpZh0ZQ83roQKF5Sb2LV/Do4/p
+	 1c5p9Iq6jquG2tUQr/eEbo59BEH1jdbeD73tBpw6X1VzrtJy373WkDQgyr3XRDjuhf
+	 RxS0Xc8QBqtP8SSv2VpJwWvJRPGweJJrvyz3I9mLWOfFynSxqQV0UYc5+O34IWaSkE
+	 aAjzyuPPmAzqFknLqlZGwQM+/HuJ2Ln4zSONAVHFDfVVspwuyG+PIIqTkLZgDVkqg8
+	 3vNh/utmkddK0AzpwJRvslCGdLsHusfojp81Yzx8tRe5BkC5uEmRvD6u1Chxl6Sq2C
+	 96/ncE5/qBGMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Chen-Shi-Hong <eric039eric@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org,
+	corbet@lwn.net,
+	linux-hwmon@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.15] wifi: nl80211: re-check wiphy netns in nl80211_prepare_wdev_dump() continuation
-Date: Wed, 20 May 2026 07:18:46 -0400
-Message-ID: <20260520111944.3424570-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0] docs: hwmon: sy7636a: fix temperature sysfs attribute name
+Date: Wed, 20 May 2026 07:18:48 -0400
+Message-ID: <20260520111944.3424570-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -53,205 +54,214 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+From: Chen-Shi-Hong <eric039eric@gmail.com>
 
-[ Upstream commit 79240f3f6d766b342b57c32397d643e1cfa26b81 ]
+[ Upstream commit 51f57607e30bee282a1d40845f89a311cbb26481 ]
 
-NL80211_CMD_GET_SCAN is implemented as a multi-call dumpit. The first
-invocation of nl80211_prepare_wdev_dump() validates the requested wdev
-against the caller's netns via __cfg80211_wdev_from_attrs(). Subsequent
-invocations look up the same wiphy by its global index and do not check
-that the wiphy is still in the caller's netns.
+The hwmon sysfs naming convention uses
+temp[1-*]_input for temperature channels.
 
-Add the same filter to the continuation path. If the wiphy's netns no
-longer matches the caller's, return -ENODEV and the netlink dump
-machinery terminates the walk cleanly.
+Documentation/hwmon/sy7636a-hwmon.rst currently documents
+temp0_input, while the driver uses the standard hwmon
+temperature channel interface.
 
-Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Link: https://patch.msgid.link/20260506064854.2207105-3-maoyixie.tju@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Update the documentation to use temp1_input.
+
+Signed-off-by: Chen-Shi-Hong <eric039eric@gmail.com>
+Link: https://lore.kernel.org/r/20260514154108.1937-1-eric039eric@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
+## Phase 1: Commit Message Forensics
+Record: Subsystem is `docs: hwmon: sy7636a`. Action verb is `fix`.
+Claimed intent is to correct the documented temperature sysfs attribute
+name from `temp0_input` to `temp1_input`.
 
-**Phase 1: Commit Message Forensics**
-- Step 1.1 Record: Subsystem `wifi: nl80211`; action verb `re-check`;
-  intent is to revalidate the wiphy net namespace during
-  `nl80211_prepare_wdev_dump()` continuation.
-- Step 1.2 Record: Tags are `Signed-off-by: Maoyi Xie`, `Link: https://p
-  atch.msgid.link/20260506064854.2207105-3-maoyixie.tju@gmail.com`,
-  `Signed-off-by: Johannes Berg`. No `Fixes`, `Reported-by`, `Tested-
-  by`, `Reviewed-by`, `Acked-by`, or `Cc: stable`.
-- Step 1.3 Record: The committed message says first dump invocation
-  validates via `__cfg80211_wdev_from_attrs()`, but later invocations
-  recover the wiphy by global index and lacked a netns check. The v3
-  mailing-list patch further states the failure mode: BSS scan data can
-  continue being copied from a wiphy after it moved to another netns.
-- Step 1.4 Record: This is a hidden security/correctness fix, not a
-  cleanup. It fixes a namespace isolation race in a multi-call netlink
-  dump.
+Record: Tags present: `Signed-off-by: Chen-Shi-Hong
+<eric039eric@gmail.com>`, `Link:
+https://lore.kernel.org/r/20260514154108.1937-1-eric039eric@gmail.com`,
+`Signed-off-by: Guenter Roeck <linux@roeck-us.net>`. No `Fixes:`,
+`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
+stable`.
 
-**Phase 2: Diff Analysis**
-- Step 2.1 Record: One file changed, `net/wireless/nl80211.c`; commit
-  stat is 12 insertions. One function changed:
-  `nl80211_prepare_wdev_dump()`. Scope is single-file surgical.
-- Step 2.2 Record: Before, continuation path did
-  `wiphy_idx_to_wiphy(cb->args[0] - 1)`, accepted the wiphy, then
-  searched `wdev_list`. After, it returns `-ENODEV` if
-  `!net_eq(wiphy_net(wiphy), sock_net(cb->skb->sk))`.
-- Step 2.3 Record: Bug category is race / namespace isolation /
-  information disclosure. A wiphy can move netns between dumpit calls
-  via `NL80211_CMD_SET_WIPHY_NETNS`.
-- Step 2.4 Record: Fix quality is high: one predicate and clean error
-  return before taking `wiphy.mtx`. Regression risk is low; it only
-  rejects a continuation whose object no longer belongs to the caller’s
-  netns.
+Record: The commit describes a documentation bug: the sy7636a hwmon
+document names `temp0_input`, while hwmon temperature channels are named
+`temp[1-*]_input`. No crash, data corruption, or runtime bug is claimed.
 
-**Phase 3: Git History**
-- Step 3.1 Record: Current checkout is shallow; `git blame` attributed
-  the region to a shallow boundary, so that blame is not reliable.
-  Pickaxe history found the continuation-by-global-wiphy-index pattern
-  in old history, including `c319d50bfcf67` (`nl80211: fix another
-  nl80211_fam.attrbuf race`), contained by `v3.11-rc6`. Netns support
-  for cfg80211/nl80211 was introduced by `463d018323851`, contained by
-  `v2.6.32-rc1`.
-- Step 3.2 Record: No `Fixes:` tag, so no tagged introducer to follow.
-- Step 3.3 Record: Fetched wireless history shows the candidate
-  immediately follows companion commit `15994bb0cbb8f` (`wifi: nl80211:
-  require CAP_NET_ADMIN over the target netns in SET_WIPHY_NETNS`). No
-  intermediate commit between them.
-- Step 3.4 Record: Author has only these two fetched wireless commits.
-  Committer is Johannes Berg, the nl80211/cfg80211 maintainer.
-- Step 3.5 Record: No compile dependency on the companion commit, but
-  logical/security context is stronger if `15994bb0cbb8f` is backported
-  too.
+Record: This is not a hidden runtime bug fix. It is an explicit
+documentation correctness fix.
 
-**Phase 4: Mailing List / External Research**
-- Step 4.1 Record: `b4 dig -c 79240f3f6d766...` found the v3 patch at
-  the provided `patch.msgid.link` URL. `b4 dig -a` found v1 and v3; `b4
-  am` showed v1, v2, v3. v3 cover says no code changes since v2 and that
-  Johannes review caused comment/trailer cleanup.
-- Step 4.2 Record: `b4 dig -w` shows Johannes Berg, `linux-wireless`,
-  and `linux-kernel` were included.
-- Step 4.3 Record: No syzbot/bugzilla report. The series cover and patch
-  body provide the bug explanation and patch 1 includes a mac80211_hwsim
-  reproducer for the related `SET_WIPHY_NETNS` privilege path.
-- Step 4.4 Record: This is patch 2/2 in a series. Patch 1 hardens
-  target-netns capability checks; patch 2 fixes dump continuation
-  filtering.
-- Step 4.5 Record: Lore WebFetch was blocked by Anubis; WebSearch did
-  not find stable-specific discussion.
+## Phase 2: Diff Analysis
+Record: One file changed: `Documentation/hwmon/sy7636a-hwmon.rst`, 1
+insertion and 1 deletion. No functions modified. Scope is a single-file
+documentation-only surgical fix.
 
-**Phase 5: Code Semantic Analysis**
-- Step 5.1 Record: Modified function is `nl80211_prepare_wdev_dump()`.
-- Step 5.2 Record: Exact callers are `nl80211_dump_station()`,
-  `nl80211_dump_mpath()`, `nl80211_dump_mpp()`, `nl80211_dump_scan()`,
-  and `nl80211_dump_survey()`.
-- Step 5.3 Record: Key callees are `__cfg80211_wdev_from_attrs()`,
-  `wiphy_idx_to_wiphy()`, `wiphy_net()`, `sock_net()`, `net_eq()`,
-  `wiphy_to_rdev()`, and list walk over `wiphy.wdev_list`.
-- Step 5.4 Record: `NL80211_CMD_GET_SCAN` maps to `nl80211_dump_scan()`
-  and has no admin flag in the ops entry; `NL80211_CMD_SET_WIPHY_NETNS`
-  maps to `nl80211_wiphy_netns()` with `GENL_UNS_ADMIN_PERM`.
-- Step 5.5 Record: Similar dump paths `nl80211_dump_wiphy()` and
-  `nl80211_dump_interface()` already filter by `net_eq(wiphy_net(...),
-  sock_net(skb->sk))` each iteration.
+Record: Before, the document told users to read `temp0_input`. After, it
+tells users to read `temp1_input`. No normal/error/init runtime path
+changes.
 
-**Phase 6: Stable Tree Analysis**
-- Step 6.1 Record: The affected continuation code exists in checked tags
-  `v6.19`, `v6.18`, `v6.12`, `v6.6`, `v6.1`, `v5.15`, `v5.10`, `v5.4`,
-  `v4.19`, and `v4.14`.
-- Step 6.2 Record: Modern stable trees have the same helper shape. Older
-  trees such as `v5.4` and `v4.14` have different function
-  signatures/locking, so they may need small backport adjustment.
-- Step 6.3 Record: Searches in checked stable tags did not find this
-  candidate or the companion commit already present.
+Record: Bug category is documentation/API-description correctness.
+Verified against `Documentation/hwmon/sysfs-interface.rst`, which
+documents `temp[1-*]_input`, and `drivers/hwmon/hwmon.c`, where
+temperature attributes use `temp%d_input` with base index `1`.
 
-**Phase 7: Subsystem Context**
-- Step 7.1 Record: Subsystem is wireless cfg80211/nl80211, an important
-  networking control-plane subsystem.
-- Step 7.2 Record: `net/wireless/nl80211.c` is actively maintained;
-  fetched wireless history shows this series was taken through Johannes
-  Berg’s wireless tree.
+Record: Fix quality is obviously correct and minimal. Runtime regression
+risk is zero because no code changes.
 
-**Phase 8: Impact / Risk**
-- Step 8.1 Record: Affected users are systems using wireless devices
-  with nl80211 netns movement support, including delegated/container
-  wireless setups and mac80211_hwsim.
-- Step 8.2 Record: Trigger requires a multi-call dump and a wiphy netns
-  move between invocations. The related series verifies an unprivileged
-  userns path when the caller has a delegated `WIPHY_FLAG_NETNS_OK`
-  wiphy.
-- Step 8.3 Record: Failure mode is namespace isolation breach / cross-
-  netns scan-result exposure, not a crash. Severity: HIGH due
-  security/isolation impact.
-- Step 8.4 Record: Benefit is high for isolation correctness; risk is
-  very low because the patch adds one local validation and returns an
-  existing error code.
+## Phase 3: Git History Investigation
+Record: `git blame` shows `temp0_input` was introduced by
+`de34a40532507` when the sy7636a hwmon driver/doc was added. Ancestry
+checks show that commit is not in `v5.17` but is in `v5.18`, so the
+documentation bug exists from v5.18 onward where the driver exists.
 
-**Phase 9: Final Synthesis**
-- Step 9.1 Record: Evidence for backporting: real namespace isolation
-  bug, old code present across stable trees, small surgical fix,
-  maintainer-applied, aligns with existing dump filtering. Evidence
-  against: companion patch should also be considered, and older trees
-  may require minor backport edits. Unresolved: no independent `Tested-
-  by`; stable-specific lore discussion could not be fetched.
-- Step 9.2 Record: Stable rules: obviously correct yes; fixes real bug
-  yes; important issue yes due namespace isolation/security; small and
-  contained yes; no new API/feature yes; applies cleanly or with minor
-  adjustment depending on tree.
-- Step 9.3 Record: No exception category applies.
-- Step 9.4 Record: Backport is warranted, preferably together with
-  `15994bb0cbb8f` for the complete netns hardening series.
+Record: No `Fixes:` tag is present, so there was no Fixes target to
+follow.
 
-## Verification
-- Phase 1: Parsed `git show 79240f3f6d766...` and b4 v3 patch text;
-  verified tags and commit body.
-- Phase 2: Verified diff is one hunk in `nl80211_prepare_wdev_dump()`
-  with 12 insertions.
-- Phase 3: Ran `git blame`, pickaxe history, `git show` for
-  `c319d50bfcf67`, `463d018323851`, companion `15994bb0cbb8f`, and
-  fetched wireless history.
-- Phase 4: Ran `b4 dig`, `b4 dig -a`, `b4 dig -w`, `b4 am` for v1/v2/v3,
-  saved/read mbox; WebFetch to lore was blocked by Anubis.
-- Phase 5: Verified callers and relevant ops entries in
-  `net/wireless/nl80211.c`.
-- Phase 6: Used `git grep` across stable tags to confirm affected code
-  exists and checked stable logs for absence of the candidate.
-- Phase 8: Severity is based on verified patch text plus code paths; no
-  build or runtime test was run.
+Record: Related file history on `origin/master`: `51f57607e30be` doc
+attribute fix, `2f88425ef590b` regulator-enable leak fix,
+`68c2a8b59d231` sensor description doc fix, `80038a758b7fc` alias
+addition, `5b5d8ae019543` constification, `a96f688b4e446` underline
+warning fix, `de34a40532507` driver addition. This patch is standalone
+for trees with the current doc context.
+
+Record: Author history under hwmon/doc paths shows only this commit from
+Chen-Shi-Hong in the checked history. Guenter Roeck, the hwmon
+maintainer, committed/applied it.
+
+Record: No functional dependencies. For older stable trees that do not
+contain `68c2a8b59d231`, the exact patch context differs and needs a
+trivial manual backport.
+
+## Phase 4: Mailing List And External Research
+Record: `b4 dig -c 51f57607e30be` found the original submission at
+`https://patch.msgid.link/20260514154108.1937-1-eric039eric@gmail.com`.
+
+Record: `b4 dig -a` found only v1 of a single-patch series. No newer
+unapplied revision found.
+
+Record: `b4 dig -w` showed recipients included Chen-Shi-Hong, Guenter
+Roeck, Jonathan Corbet, Shuah Khan, `linux-hwmon`, `linux-doc`, and
+`linux-kernel`.
+
+Record: The b4-fetched thread contains Guenter Roeck replying “Applied.”
+No NAKs, objections, or stable-specific nomination were found in that
+thread. Lore `WebFetch` was blocked by Anubis, but `b4` successfully
+retrieved the thread.
+
+## Phase 5: Code Semantic Analysis
+Record: No code functions are modified.
+
+Record: Manual code tracing verified the documentation claim:
+`drivers/hwmon/sy7636a-hwmon.c` registers `HWMON_CHANNEL_INFO(temp,
+HWMON_T_INPUT)`. `drivers/hwmon/hwmon.c` formats temperature attributes
+with `temp%d_input`, and `hwmon_attr_base()` returns `1` for temperature
+sensors. Therefore the first temperature channel is `temp1_input`.
+
+Record: Callers/callees are not applicable to the patch because it
+changes documentation only. The affected “path” is users reading the
+hwmon documentation.
+
+Record: Similar pattern check found the generic hwmon documentation and
+many hwmon docs use `temp1_input`, supporting the correction.
+
+## Phase 6: Stable Tree Analysis
+Record: `v5.15` does not contain `Documentation/hwmon/sy7636a-hwmon.rst`
+or `drivers/hwmon/sy7636a-hwmon.c`, so the patch is not applicable
+there.
+
+Record: `v6.1`, `v6.6`, and `v6.12` contain the sy7636a driver and the
+wrong `temp0_input` documentation. `v7.0` contains the wrong attribute
+name with the newer “external NTC” text.
+
+Record: The exact patch applies cleanly to the current
+`stable/linux-7.0.y` checkout. It does not apply cleanly to `v6.1` or
+`v6.6` because the surrounding description text differs before the later
+doc description fix; a trivial one-line context-adjusted backport is
+needed there.
+
+Record: No alternate fix for this exact documentation bug was found in
+local stable history.
+
+## Phase 7: Subsystem Context
+Record: Subsystem is hwmon documentation. Criticality is low for
+runtime, but it documents a userspace-visible sysfs ABI path for sy7636a
+hardware users.
+
+Record: The sy7636a hwmon files have low churn and only a handful of
+targeted fixes since introduction.
+
+## Phase 8: Impact And Risk
+Record: Affected population is sy7636a hardware users and anyone writing
+scripts or instructions based on
+`Documentation/hwmon/sy7636a-hwmon.rst`.
+
+Record: Trigger is reading/following the documentation. If followed
+literally, users look for a non-existent `temp0_input` instead of the
+actual `temp1_input`.
+
+Record: Failure severity is LOW: documentation/user guidance bug, not a
+kernel crash or data corruption issue.
+
+Record: Benefit is modest but real: correct stable documentation for a
+userspace-visible hwmon attribute. Risk is effectively zero: one
+documentation line, no code, no ABI change.
+
+## Phase 9: Final Synthesis
+Evidence for backporting: verified documentation is wrong; verified
+driver/core generate `temp1_input`; patch is one-line documentation-
+only; hwmon maintainer applied it; documentation fixes are an allowed
+stable exception with no runtime regression risk.
+
+Evidence against backporting: it is not a serious runtime bug, security
+issue, crash, or data corruption fix. Older stable trees before the
+sensor-description doc change need a trivial context adjustment.
+
+Stable rules checklist: obviously correct, yes; fixes a real
+documentation bug, yes; important runtime issue, no; small and
+contained, yes; no new feature/API, yes; stable applicability, yes for
+v7.0 cleanly and older applicable with minor backport adjustment.
+Exception category: documentation fix.
+
+Verification:
+- [Phase 1] Parsed exact commit `51f57607e30be` from `origin/master` and
+  confirmed tags/message.
+- [Phase 2] Inspected exact diff: one doc line changes `temp0_input` to
+  `temp1_input`.
+- [Phase 3] `git blame` confirmed `temp0_input` came from
+  `de34a40532507`; ancestry checks place it first in v5.18.
+- [Phase 4] `b4 dig` found the original patch; `b4 dig -a` showed v1
+  only; `b4 dig -w` showed appropriate hwmon/doc recipients; b4 mbox
+  showed Guenter replied “Applied.”
+- [Phase 5] Read sy7636a driver and hwmon core; confirmed first
+  temperature channel is named `temp1_input`.
+- [Phase 6] Checked `v5.15`, `v6.1`, `v6.6`, `v6.12`, and `v7.0`
+  content; exact patch applies to current 7.0 stable, not directly to
+  v6.1/v6.6 due context.
+- [Phase 8] Confirmed no runtime code changes, so regression risk is
+  zero.
+
+This should be backported where the sy7636a documentation exists, with
+trivial context adjustment for older trees as needed.
 
 **YES**
 
- net/wireless/nl80211.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ Documentation/hwmon/sy7636a-hwmon.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index b94231c8441c4..ce3121b1c3319 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -1146,6 +1146,18 @@ static int nl80211_prepare_wdev_dump(struct netlink_callback *cb,
- 			rtnl_unlock();
- 			return -ENODEV;
- 		}
-+
-+		/*
-+		 * The first invocation validated the wdev's netns against
-+		 * the caller via __cfg80211_wdev_from_attrs(). The wiphy
-+		 * may have moved netns between dumpit invocations (via
-+		 * NL80211_CMD_SET_WIPHY_NETNS), so re-check here.
-+		 */
-+		if (!net_eq(wiphy_net(wiphy), sock_net(cb->skb->sk))) {
-+			rtnl_unlock();
-+			return -ENODEV;
-+		}
-+
- 		*rdev = wiphy_to_rdev(wiphy);
- 		*wdev = NULL;
+diff --git a/Documentation/hwmon/sy7636a-hwmon.rst b/Documentation/hwmon/sy7636a-hwmon.rst
+index 0143ce0e5db76..03d866aba6e81 100644
+--- a/Documentation/hwmon/sy7636a-hwmon.rst
++++ b/Documentation/hwmon/sy7636a-hwmon.rst
+@@ -22,5 +22,5 @@ The following sensors are supported
+ sysfs-Interface
+ ---------------
  
+-temp0_input
++temp1_input
+ 	- Temperature of external NTC (milli-degree C)
 -- 
 2.53.0
 
