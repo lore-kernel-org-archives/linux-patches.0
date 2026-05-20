@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669183F65EA;
-	Wed, 20 May 2026 17:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BA13F6619;
+	Wed, 20 May 2026 17:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297313; cv=none; b=JzzBTgT3xH+1aLl5nyawRmXjOiGI5NlPxu5WJp1+bO91Q+w1L9PJbrJPIAfJTrdGb2I7wY2Gj/VLOMJH0A9ufG8YEqoxm/Kqy7ILrxyaoWbmncgzmiZoGI3nMRvcQ9pNcciN8zNV+5Gq7zHNBBcHPyYUKNcwCQMRUcnSBsjfiEQ=
+	t=1779297316; cv=none; b=e/PCgP6y81ANrUVBN1uHcoeohAU2m9MaZ3mj5WTO+AFtzb+qatCI8fAPy8Kn+JX+MUtQGESGVXcovodYCliBkfr4V+ZFPDTLqfV85SWMYp7qJEhprvd42yC27AjfDIQoFMQCErhBUvPSiFhocgqK3eoIeYWl2KaITkXeWXtU3wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297313; c=relaxed/simple;
-	bh=jFEg/+p6jQFgH4YOptDwcUcuLrPXKJr2LK3VvGBpmpg=;
+	s=arc-20240116; t=1779297316; c=relaxed/simple;
+	bh=F3Wx2a3e5NVgw7TYVCGtczjq26zoUQOJix7wMlfx72Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BmZldPPTDu0ktZgeSG+4w+rblEirEVYppiJh9xpMveAlHTv6xmSGa6uNYGqKon0TImTJxfmrFRHyQmJmwewttxVWsS9QbExX5jCxeYlqyPyk5RwI99Y2oiBhMZkKYlHHqHkUal9KdlZAcr/X4zQ+W9cZIWT5yENkdFy6t4VJ1AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBndxI2T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FspcNXLuh1LiGGvPDDbKN6Xq2qU0t0nYnuMcfOlDOUObb1DnYI9ogDCMfgokq4texOeiR6Tj5euHmbTX70ebEyTvFNyHETGKEW1pc+SExlbNdjB84SQp9P8xI/DG38l+vnU8RgxidF+8c2WGGw666K+L3URnjcY/GLQMx9OwJTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aCnRP8IN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBndxI2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8231F000E9;
-	Wed, 20 May 2026 17:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aCnRP8IN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C3E1F000E9;
+	Wed, 20 May 2026 17:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297312;
-	bh=KnT/ugN3lNVM1Jf0cRBITPm9NJfsufiuwLXXdfazo/g=;
+	s=korg; t=1779297314;
+	bh=lVRZRT2h0RFtM4tYXlts/WE7q4gaPEuyAipjoiTgiX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cBndxI2TQJrn6kO3uDfO+Pj/WFXKCtEiUY5Mpm2NiY1AcFLSzG7ibbPt1tPRQbZkD
-	 2axn0piiXO4cJn1W6oZvSSjmnqp/2Jf7FQUz1jra465MKpcL/GmhqLGDUuJ+1cwJcP
-	 okPiRRVXkldGFhdFScxJ04pAY444ifPesraaU2Lg=
+	b=aCnRP8INrcvv9KqXG+nDgWqIUBBKUnc7TeW2Aj0Dh8H2dW57nU7phmUylJUFyWI5C
+	 aos/UAUsYkJRHQX7fSYjI6fmsqVWHp+ovuLVZC82Vho7B/5nG0o4dWwHUC52rD7vjq
+	 3J/k/5C8U/PGiB6RrWxbyP8VGENU9Z3dOCuQT/FY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gyeyoung Baek <gye976@gmail.com>,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>
-Subject: [PATCH 7.0 1129/1146] drm/panfrost: Fix wait_bo ioctl leaking positive return from dma_resv_wait_timeout()
-Date: Wed, 20 May 2026 18:22:59 +0200
-Message-ID: <20260520162213.798696692@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 7.0 1130/1146] drm/xe/dma-buf: handle empty bo and UAF races
+Date: Wed, 20 May 2026 18:23:00 +0200
+Message-ID: <20260520162213.821536193@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,40 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gyeyoung Baek <gye976@gmail.com>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit 459d75523b71c0ec254d153d8850d0b7008af396 upstream.
+commit 981bedbbe61364fcc3a3b87ebaf648a66cd07108 upstream.
 
-dma_resv_wait_timeout() returns a positive 'remaining jiffies' value
-on success, 0 on timeout, and -errno on failure.
+There look to be some nasty races here when triggering the
+invalidate_mappings hook:
 
-panfrost_ioctl_wait_bo() returns this 'long' result from an int-typed
-ioctl handler, so positive values reach userspace as bogus errors.
-Explicitly set ret to 0 on the success path.
+1) We do xe_bo_alloc() followed by the attach, before the actual full bo
+   init step in xe_dma_buf_init_obj(). However the bo is visible on the
+   attachments list after the attach.  This is bad since exporter driver,
+   say amdgpu, can at any time call back into our invalidate_mappings hook,
+   with an empty/bogus bo, leading to potential bugs/crashes.
 
-Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
-Reviewed-by: Adrián Larumbe <adrian.larumbe@collabora.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/fe33f82fded7be1c18e2e0eb2db451d5a738cf39.1776581974.git.gye976@gmail.com
-Signed-off-by: Steven Price <steven.price@arm.com>
+2) Similar to 1) but here we get a UAF, when the invalidate_mappings
+   hook is triggered. For example, we get as far as xe_bo_init_locked()
+   but this fails in some way. But here the bo will be freed on error, but
+   we still have it attached from dma-buf pov, so if the
+   invalidate_mappings is now triggered then the bo we access is gone and
+   we trigger UAF and more bugs/crashes.
+
+To fix this, move the attach step until after we actually have a fully
+set up buffer object. Note that the bo is not published to userspace
+until later, so not sure what the comment "Don't publish the bo
+until we have a valid attachment", is referring to.
+
+We have at least two different customers reporting hitting a NULL ptr
+deref in evict_flags when importing something from amdgpu, followed by
+triggering the evict flow. Hit rate is also pretty low, which would
+hint at some kind of race, so something like 1) or 2) might explain
+this.
+
+v2:
+  - Shuffle the order of the ops slightly (no functional change)
+  - Improve the comment to better explain the ordering (Matt B)
+
+Assisted-by: Gemini:gemini-3 #debug
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/7903
+Link: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/4055
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v6.8+
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Acked-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://patch.msgid.link/20260508102635.149172-3-matthew.auld@intel.com
+(cherry picked from commit af1f2ad0c59fe4e2f924c526f66e968289d77971)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_drv.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_dma_buf.c |   31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
---- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-@@ -390,6 +390,8 @@ panfrost_ioctl_wait_bo(struct drm_device
- 				    true, timeout);
- 	if (!ret)
- 		ret = timeout ? -ETIMEDOUT : -EBUSY;
-+	else if (ret > 0)
-+		ret = 0;
+--- a/drivers/gpu/drm/xe/xe_dma_buf.c
++++ b/drivers/gpu/drm/xe/xe_dma_buf.c
+@@ -337,15 +337,25 @@ struct drm_gem_object *xe_gem_prime_impo
+ 		}
+ 	}
  
- 	drm_gem_object_put(gem_obj);
+-	/*
+-	 * Don't publish the bo until we have a valid attachment, and a
+-	 * valid attachment needs the bo address. So pre-create a bo before
+-	 * creating the attachment and publish.
+-	 */
+ 	bo = xe_bo_alloc();
+ 	if (IS_ERR(bo))
+ 		return ERR_CAST(bo);
  
++	/*
++	 * xe_dma_buf_init_obj() takes ownership of the raw bo, so do not touch
++	 * on fail, since it will already take care of cleanup. On success we
++	 * still need to drop the ref, if something later fails.
++	 *
++	 * In addition this needs to happen before the attach, since
++	 * it will create a new attachment for this, and add it to the list of
++	 * attachments, at which point it is globally visible, and at any point
++	 * the export side can call into on invalidate_mappings callback, which
++	 * require a working object.
++	 */
++	obj = xe_dma_buf_init_obj(dev, bo, dma_buf);
++	if (IS_ERR(obj))
++		return obj;
++
+ 	attach_ops = &xe_dma_buf_attach_ops;
+ #if IS_ENABLED(CONFIG_DRM_XE_KUNIT_TEST)
+ 	if (test)
+@@ -358,21 +368,12 @@ struct drm_gem_object *xe_gem_prime_impo
+ 		goto out_err;
+ 	}
+ 
+-	/*
+-	 * xe_dma_buf_init_obj() takes ownership of bo on both success
+-	 * and failure, so we must not touch bo after this call.
+-	 */
+-	obj = xe_dma_buf_init_obj(dev, bo, dma_buf);
+-	if (IS_ERR(obj)) {
+-		dma_buf_detach(dma_buf, attach);
+-		return obj;
+-	}
+ 	get_dma_buf(dma_buf);
+ 	obj->import_attach = attach;
+ 	return obj;
+ 
+ out_err:
+-	xe_bo_free(bo);
++	xe_bo_put(bo);
+ 
+ 	return obj;
+ }
 
 
