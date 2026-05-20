@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9308F3A3E60;
-	Wed, 20 May 2026 17:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333A43F0A83;
+	Wed, 20 May 2026 17:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299638; cv=none; b=SYqhluQezMGB+uosp8KDEX6P/RPVoP8OXe/sDX9eSF0T9hUipN8M2LDkPzf979bcIeMGeRo8Ul/zC51T9axaU7DMBEVvoB+57DKLpOzhEdlCft8xxy0lysUp3cbIWyj+yYcy3HGRu2a+9BFR52RZbjbTiHrdmdfqaBfzwn+xilA=
+	t=1779299641; cv=none; b=Dsm1T/HYHkFyRp2Uj4VHvdOfh1npcpjqaqTwFmqtaHQv2MeqlGNZPBAgwYTgWWbhKgZ8A0sSsRAPDJB4qU/YVNwAlAIXgod7K3Hu69N5GwLSmQQhGLhQTMJ50hyqNc43gfMPnsQrUReXVnigOXZNGDPTC8l9sWtp+Mp4n031qzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299638; c=relaxed/simple;
-	bh=OOvUpdgMVAedbjiGzXcejEuRv+JlyjcGng8uNaPecrM=;
+	s=arc-20240116; t=1779299641; c=relaxed/simple;
+	bh=yP/XEz9ecwlfmrcV49803PMwyAg5osuCv1qLc8sPyZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ww+C+Z5jmq9tvL6vr3UGR+q4q5asSZvytG0QqphgE/6HpSd43FBWZQ7q8ji2VUHfy3IEsQyCJEumPYPfyO0EuDZPnXZDpJhxRQ6yt3fMAU+PeFtmKiBkU/WmmLMIqQv90x1YFIh7BjN3SSU2hVa0lYQVn64mNqbLi2EQI96nBM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EV7Gkl+O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EvuGUFBFKYkrQI40KC2GOzYrGpJgIoxuKw21btn157XN0cAUuInRv98XTot3egU78tvRZgoSM74jwqrfm3v823lwADGVxgp/llgsp2mJb7DKgW1ZcVPOcsrG2tcANp42nU1beSPeZFKEGxSB4uNMdp5hh7FTexnpj3nOeG9I4Xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjLWr3H9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EV7Gkl+O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4911F000E9;
-	Wed, 20 May 2026 17:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjLWr3H9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDE71F000E9;
+	Wed, 20 May 2026 17:53:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299637;
-	bh=7wcCdHJTNywIvH/S9rPf+a41C0gpqNtpG2zyt0ZqwkQ=;
+	s=korg; t=1779299640;
+	bh=WilhthEtvYuyhCY2xznTlv8pjMAibqXl/X3mu8MKkTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EV7Gkl+OXLQXLTtWl7prs+p8bLGxROLeoSUZzq5uvFKPYnR1K5/zwjOhZMIAROpcL
-	 NjZ3Kx0/GNYht8cN4HATn8Y2Zt0p7dxt05IvF/nnfQ0pormUePqEm9OMD9pY7W1CZ6
-	 Nv03Cw+FyUjg7dW4w58SBbLpgcaPLZbmHprWeTJk=
+	b=qjLWr3H9iHx/IdLotq38bAvn/pqwA9K7UGIdVWp8iPNflc2mWxNMGsmgfHh/4SYzf
+	 OmqzLesSkpN8y/Xx2N3Dgs+/P1M4JGwVLDk+FCY+o2scd4P5ncF9g8OUKNyrRIKOjf
+	 rlLwTYQpWK2y5twG+/E41D98r4HSjOeUWEQ9shXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Ivan Vecera <ivecera@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 849/957] ice: fix missing dpll notifications for SW pins
-Date: Wed, 20 May 2026 18:22:12 +0200
-Message-ID: <20260520162152.978389899@linuxfoundation.org>
+Subject: [PATCH 6.18 850/957] dpll: Allow associating dpll pin with a firmware node
+Date: Wed, 20 May 2026 18:22:13 +0200
+Message-ID: <20260520162153.000252364@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -56,155 +54,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 1a41b58fd4dc80dca16c717e6e77c88b9d4e83a7 ]
+[ Upstream commit d0f4771e2befbe8de3a16a564c6bbd1d5502cec3 ]
 
-The SMA/U.FL pin redesign (commit 2dd5d03c77e2 ("ice: redesign dpll
-sma/u.fl pins control")) introduced software-controlled pins that wrap
-backing CGU input/output pins, but never updated the notification and
-data paths to propagate pin events to these SW wrappers.
+Extend the DPLL core to support associating a DPLL pin with a firmware
+node. This association is required to allow other subsystems (such as
+network drivers) to locate and request specific DPLL pins defined in
+the Device Tree or ACPI.
 
-The periodic work sends dpll_pin_change_ntf() only for direct CGU input
-pins.  SW pins that wrap these inputs never receive change or phase
-offset notifications, so userspace consumers such as synce4l monitoring
-SMA pins via dpll netlink never learn about state transitions or phase
-offset updates.  Similarly, ice_dpll_phase_offset_get() reads the SW
-pin's own phase_offset field which is never updated; the PPS monitor
-writes to the backing CGU input's field instead.
+* Add a .fwnode field to the struct dpll_pin
+* Introduce dpll_pin_fwnode_set() helper to allow the provider driver
+  to associate a pin with a fwnode after the pin has been allocated
+* Introduce fwnode_dpll_pin_find() helper to allow consumers to search
+  for a registered DPLL pin using its associated fwnode handle
+* Ensure the fwnode reference is properly released in dpll_pin_put()
 
-Fix by introducing ice_dpll_pin_ntf(), a wrapper around
-dpll_pin_change_ntf() that also notifies any registered SMA/U.FL pin
-whose backing CGU input matches.  Replace all direct
-dpll_pin_change_ntf() calls in the periodic notification paths with
-this wrapper.  Fix ice_dpll_phase_offset_get() to return the backing
-CGU input's phase_offset for input-direction SW pins.
-
-Fixes: 2dd5d03c77e2 ("ice: redesign dpll sma/u.fl pins control")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Ivan Vecera <ivecera@redhat.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-10-cdcb48303fd8@intel.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Link: https://patch.msgid.link/20260203174002.705176-2-ivecera@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 9e5dead140af ("ice: add dpll peer notification for paired SMA and U.FL pins")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_dpll.c | 47 +++++++++++++++++------
- 1 file changed, 36 insertions(+), 11 deletions(-)
+ drivers/dpll/dpll_core.c | 49 ++++++++++++++++++++++++++++++++++++++++
+ drivers/dpll/dpll_core.h |  2 ++
+ include/linux/dpll.h     | 11 +++++++++
+ 3 files changed, 62 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
-index 3254be7b0dca8..baf492f5c4925 100644
---- a/drivers/net/ethernet/intel/ice/ice_dpll.c
-+++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
-@@ -1882,7 +1882,10 @@ ice_dpll_phase_offset_get(const struct dpll_pin *pin, void *pin_priv,
- 				       d->active_input == p->input->pin))
- 		*phase_offset = d->phase_offset * ICE_DPLL_PHASE_OFFSET_FACTOR;
- 	else if (d->phase_offset_monitor_period)
--		*phase_offset = p->phase_offset * ICE_DPLL_PHASE_OFFSET_FACTOR;
-+		*phase_offset = (p->input &&
-+				 p->direction == DPLL_PIN_DIRECTION_INPUT ?
-+				 p->input->phase_offset :
-+				 p->phase_offset) * ICE_DPLL_PHASE_OFFSET_FACTOR;
- 	else
- 		*phase_offset = 0;
- 	mutex_unlock(&pf->dplls.lock);
-@@ -2510,6 +2513,27 @@ static u64 ice_generate_clock_id(struct ice_pf *pf)
- 	return pci_get_dsn(pf->pdev);
+diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
+index 8879a72351561..f04ed7195cadd 100644
+--- a/drivers/dpll/dpll_core.c
++++ b/drivers/dpll/dpll_core.c
+@@ -10,6 +10,7 @@
+ 
+ #include <linux/device.h>
+ #include <linux/err.h>
++#include <linux/property.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ 
+@@ -595,12 +596,60 @@ void dpll_pin_put(struct dpll_pin *pin)
+ 		xa_destroy(&pin->parent_refs);
+ 		xa_destroy(&pin->ref_sync_pins);
+ 		dpll_pin_prop_free(&pin->prop);
++		fwnode_handle_put(pin->fwnode);
+ 		kfree_rcu(pin, rcu);
+ 	}
+ 	mutex_unlock(&dpll_lock);
  }
+ EXPORT_SYMBOL_GPL(dpll_pin_put);
  
 +/**
-+ * ice_dpll_pin_ntf - notify pin change including any SW pin wrappers
-+ * @dplls: pointer to dplls struct
-+ * @pin: the dpll_pin that changed
++ * dpll_pin_fwnode_set - set dpll pin firmware node reference
++ * @pin: pointer to a dpll pin
++ * @fwnode: firmware node handle
 + *
-+ * Send a change notification for @pin and for any registered SMA/U.FL pin
-+ * whose backing CGU input matches @pin.
++ * Set firmware node handle for the given dpll pin.
 + */
-+static void ice_dpll_pin_ntf(struct ice_dplls *dplls, struct dpll_pin *pin)
++void dpll_pin_fwnode_set(struct dpll_pin *pin, struct fwnode_handle *fwnode)
 +{
-+	dpll_pin_change_ntf(pin);
-+	for (int i = 0; i < ICE_DPLL_PIN_SW_NUM; i++) {
-+		if (dplls->sma[i].pin && dplls->sma[i].input &&
-+		    dplls->sma[i].input->pin == pin)
-+			dpll_pin_change_ntf(dplls->sma[i].pin);
-+		if (dplls->ufl[i].pin && dplls->ufl[i].input &&
-+		    dplls->ufl[i].input->pin == pin)
-+			dpll_pin_change_ntf(dplls->ufl[i].pin);
-+	}
++	mutex_lock(&dpll_lock);
++	fwnode_handle_put(pin->fwnode); /* Drop fwnode previously set */
++	pin->fwnode = fwnode_handle_get(fwnode);
++	mutex_unlock(&dpll_lock);
 +}
++EXPORT_SYMBOL_GPL(dpll_pin_fwnode_set);
 +
- /**
-  * ice_dpll_notify_changes - notify dpll subsystem about changes
-  * @d: pointer do dpll
-@@ -2518,6 +2542,7 @@ static u64 ice_generate_clock_id(struct ice_pf *pf)
-  */
- static void ice_dpll_notify_changes(struct ice_dpll *d)
++/**
++ * fwnode_dpll_pin_find - find dpll pin by firmware node reference
++ * @fwnode: reference to firmware node
++ *
++ * Get existing object of a pin that is associated with given firmware node
++ * reference.
++ *
++ * Context: Acquires a lock (dpll_lock)
++ * Return:
++ * * valid dpll_pin pointer on success
++ * * NULL when no such pin exists
++ */
++struct dpll_pin *fwnode_dpll_pin_find(struct fwnode_handle *fwnode)
++{
++	struct dpll_pin *pin, *ret = NULL;
++	unsigned long index;
++
++	mutex_lock(&dpll_lock);
++	xa_for_each(&dpll_pin_xa, index, pin) {
++		if (pin->fwnode == fwnode) {
++			ret = pin;
++			refcount_inc(&ret->refcount);
++			break;
++		}
++	}
++	mutex_unlock(&dpll_lock);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(fwnode_dpll_pin_find);
++
+ static int
+ __dpll_pin_register(struct dpll_device *dpll, struct dpll_pin *pin,
+ 		    const struct dpll_pin_ops *ops, void *priv, void *cookie)
+diff --git a/drivers/dpll/dpll_core.h b/drivers/dpll/dpll_core.h
+index 8ce969bbeb64e..d3e17ff0ecef0 100644
+--- a/drivers/dpll/dpll_core.h
++++ b/drivers/dpll/dpll_core.h
+@@ -42,6 +42,7 @@ struct dpll_device {
+  * @pin_idx:		index of a pin given by dev driver
+  * @clock_id:		clock_id of creator
+  * @module:		module of creator
++ * @fwnode:		optional reference to firmware node
+  * @dpll_refs:		hold referencees to dplls pin was registered with
+  * @parent_refs:	hold references to parent pins pin was registered with
+  * @ref_sync_pins:	hold references to pins for Reference SYNC feature
+@@ -54,6 +55,7 @@ struct dpll_pin {
+ 	u32 pin_idx;
+ 	u64 clock_id;
+ 	struct module *module;
++	struct fwnode_handle *fwnode;
+ 	struct xarray dpll_refs;
+ 	struct xarray parent_refs;
+ 	struct xarray ref_sync_pins;
+diff --git a/include/linux/dpll.h b/include/linux/dpll.h
+index 562f520b23c27..f0c31a111c304 100644
+--- a/include/linux/dpll.h
++++ b/include/linux/dpll.h
+@@ -16,6 +16,7 @@
+ struct dpll_device;
+ struct dpll_pin;
+ struct dpll_pin_esync;
++struct fwnode_handle;
+ 
+ struct dpll_device_ops {
+ 	int (*mode_get)(const struct dpll_device *dpll, void *dpll_priv,
+@@ -173,6 +174,8 @@ void dpll_netdev_pin_clear(struct net_device *dev);
+ size_t dpll_netdev_pin_handle_size(const struct net_device *dev);
+ int dpll_netdev_add_pin_handle(struct sk_buff *msg,
+ 			       const struct net_device *dev);
++
++struct dpll_pin *fwnode_dpll_pin_find(struct fwnode_handle *fwnode);
+ #else
+ static inline void
+ dpll_netdev_pin_set(struct net_device *dev, struct dpll_pin *dpll_pin) { }
+@@ -188,6 +191,12 @@ dpll_netdev_add_pin_handle(struct sk_buff *msg, const struct net_device *dev)
  {
-+	struct ice_dplls *dplls = &d->pf->dplls;
- 	bool pin_notified = false;
- 
- 	if (d->prev_dpll_state != d->dpll_state) {
-@@ -2526,17 +2551,17 @@ static void ice_dpll_notify_changes(struct ice_dpll *d)
- 	}
- 	if (d->prev_input != d->active_input) {
- 		if (d->prev_input)
--			dpll_pin_change_ntf(d->prev_input);
-+			ice_dpll_pin_ntf(dplls, d->prev_input);
- 		d->prev_input = d->active_input;
- 		if (d->active_input) {
--			dpll_pin_change_ntf(d->active_input);
-+			ice_dpll_pin_ntf(dplls, d->active_input);
- 			pin_notified = true;
- 		}
- 	}
- 	if (d->prev_phase_offset != d->phase_offset) {
- 		d->prev_phase_offset = d->phase_offset;
- 		if (!pin_notified && d->active_input)
--			dpll_pin_change_ntf(d->active_input);
-+			ice_dpll_pin_ntf(dplls, d->active_input);
- 	}
+ 	return 0;
  }
++
++static inline struct dpll_pin *
++fwnode_dpll_pin_find(struct fwnode_handle *fwnode)
++{
++	return NULL;
++}
+ #endif
  
-@@ -2565,6 +2590,7 @@ static bool ice_dpll_is_pps_phase_monitor(struct ice_pf *pf)
+ struct dpll_device *
+@@ -213,6 +222,8 @@ void dpll_pin_unregister(struct dpll_device *dpll, struct dpll_pin *pin,
  
- /**
-  * ice_dpll_pins_notify_mask - notify dpll subsystem about bulk pin changes
-+ * @dplls: pointer to dplls struct
-  * @pins: array of ice_dpll_pin pointers registered within dpll subsystem
-  * @pin_num: number of pins
-  * @phase_offset_ntf_mask: bitmask of pin indexes to notify
-@@ -2574,15 +2600,14 @@ static bool ice_dpll_is_pps_phase_monitor(struct ice_pf *pf)
-  *
-  * Context: Must be called while pf->dplls.lock is released.
-  */
--static void ice_dpll_pins_notify_mask(struct ice_dpll_pin *pins,
-+static void ice_dpll_pins_notify_mask(struct ice_dplls *dplls,
-+				      struct ice_dpll_pin *pins,
- 				      u8 pin_num,
- 				      u32 phase_offset_ntf_mask)
- {
--	int i = 0;
--
--	for (i = 0; i < pin_num; i++)
--		if (phase_offset_ntf_mask & (1 << i))
--			dpll_pin_change_ntf(pins[i].pin);
-+	for (int i = 0; i < pin_num; i++)
-+		if (phase_offset_ntf_mask & BIT(i))
-+			ice_dpll_pin_ntf(dplls, pins[i].pin);
- }
+ void dpll_pin_put(struct dpll_pin *pin);
  
- /**
-@@ -2758,7 +2783,7 @@ static void ice_dpll_periodic_work(struct kthread_work *work)
- 	ice_dpll_notify_changes(de);
- 	ice_dpll_notify_changes(dp);
- 	if (phase_offset_ntf)
--		ice_dpll_pins_notify_mask(d->inputs, d->num_inputs,
-+		ice_dpll_pins_notify_mask(d, d->inputs, d->num_inputs,
- 					  phase_offset_ntf);
++void dpll_pin_fwnode_set(struct dpll_pin *pin, struct fwnode_handle *fwnode);
++
+ int dpll_pin_on_pin_register(struct dpll_pin *parent, struct dpll_pin *pin,
+ 			     const struct dpll_pin_ops *ops, void *priv);
  
- resched:
 -- 
 2.53.0
 
