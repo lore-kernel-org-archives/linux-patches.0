@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665E93E832A;
-	Wed, 20 May 2026 18:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1BB403EB2;
+	Wed, 20 May 2026 18:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779303086; cv=none; b=oyXOL8quNowD/sp11zbuZARB8P+Dg6Hsy7WUs9jtWsGgTeukAyvtlBpnh+ZIr9j0PQd2CczsVwryDj5K+f9REsJEBbx6rJcvw8xy5ETTB3GOr7qCw/5VZvvxfaDm3iH90tIo1RfgcQ/Vze6xz82qaLFpKTAI5zoFvUT1Oiiuc5M=
+	t=1779303088; cv=none; b=NeMDbYXXeHL4XLVQCUf4/lfW0GExzNi79jHfVQQcmOlObZ24GCBn9zFL6i9p3gViS4+0Ox3uBsuviOknf1dzkf0v4NQ5l6ljEQ5wqlSaC6jsmTXAg5ZlO0ihaKWPFGXwMdke5/0nTDmPnPj0OTFH1A47zKzFP5Ty+7Js+7vfTts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779303086; c=relaxed/simple;
-	bh=fzEWG5iVfCUfjWIK3+l/1Rpo+K3Wb52Dnc+VzD9QETM=;
+	s=arc-20240116; t=1779303088; c=relaxed/simple;
+	bh=ISpo2iBKbxGblHKprRUpdTHkjMLHsPyOku3BVIluH7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngo6NOqCKS2vMPX+AUGKd353BasJ6eb8xBT/pe0kpr7iHst6fgCn2kvUa71cVmpTbInnKrvnoneM+AC9HrCeeYLqArqR0LMtDC7WWlpQtPs/vyK1dBB3Kl3V4+9N7gc9kDKSjwi5kBikpQGDjTetDqnejuiTTrRWHNI4F/RBY8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0q8DcWP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=miXS0Ci0m5RUzktGMtoIYHlSWRcUa438d4Ssdx8jhQrr8ejMfz1LeQaxkE52sxA8AlWLC5I/RS7Jtfqe3NplKNwHwuyfgiV2zfS22E7PKzrR4yAI7Tj93rxt0F+aLtNXy0ZZFVxqiBpL3P9xzZAYiPo5crOS78gqiWKeJ83s36o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arxdYzmE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0q8DcWP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638C71F000E9;
-	Wed, 20 May 2026 18:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arxdYzmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF1C1F00893;
+	Wed, 20 May 2026 18:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779303082;
-	bh=eY7lvnb76pte6DyxKCbo+E/nwu9YzoHtjy3SPEq6sbg=;
+	s=korg; t=1779303085;
+	bh=G0c18LOqf1WcdJw1X1TUBSc9WeXzwwOn2bxil5dvmqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E0q8DcWP1Vo+Msb3yqNjT1DsqUcGtEt1LIaAv7LixrFhCURZr9fUoEMhEP/t4pbqv
-	 EJ8EimwmErq5VnBE+ib3ZAMSjCxppOfdOo5iVjFm/RV0/cA7kU1eDPxaxQ+WbHDot/
-	 6MaXZ0YQfMVrAHdA5e2i9SQIBtGL7HM50ZoZjeds=
+	b=arxdYzmE44s3kqYI2cKrCx9zyw6D5qK36fbS4X6Rjy7TSm3VoNVQEwPoQXLR6MHeg
+	 hzpd1MCTCJRsYU+vbwRrxlfDnkgTB4MBlhwE7QOTNn3Tm1RSwiTlm0qoXWBs/xC/s1
+	 6lpZARIrUwrOOfijI3P5mUM3u/NVP6OoyC1rvVP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 486/508] btrfs: fix double free in create_space_info_sub_group() error path
-Date: Wed, 20 May 2026 18:25:09 +0200
-Message-ID: <20260520162109.124492088@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.6 477/508] libceph: handle rbtree insertion error in decode_choose_args()
+Date: Wed, 20 May 2026 18:25:00 +0200
+Message-ID: <20260520162108.929061257@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,55 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-[ Upstream commit a7449edf96143f192606ec8647e3167e1ecbd728 ]
+commit d289478cfc0bcf81c7914200d6abdcb78bd04ded upstream.
 
-When kobject_init_and_add() fails, the call chain is:
+A message of type CEPH_MSG_OSD_MAP contains an OSD map that itself
+contains a CRUSH map. The received CRUSH map may optionally contain
+choose_args that get decoded in decode_choose_args(). In this function,
+num_choose_arg_maps is read from the message, and a corresponding number
+of crush_choose_arg_maps gets decoded afterwards. Each
+crush_choose_arg_map has a choose_args_index, which serves as the key
+when inserting it into the choose_args rbtree of the decoded crush_map.
+If a (potentially corrupted) message contains two crush_choose_arg_maps
+with the same index, the assertion in insert_choose_arg_map() triggers a
+kernel BUG when trying to insert the second crush_choose_arg_map.
 
-create_space_info_sub_group()
--> btrfs_sysfs_add_space_info_type()
--> kobject_init_and_add()
--> failure
--> kobject_put(&sub_group->kobj)
--> space_info_release()
--> kfree(sub_group)
+This patch fixes the issue by switching to the non-asserting rbtree
+insertion function and rejecting the message if the insertion fails.
 
-Then control returns to create_space_info_sub_group(), where:
+[ idryomov: changelog ]
 
-btrfs_sysfs_add_space_info_type() returns error
--> kfree(sub_group)
-
-Thus, sub_group is freed twice.
-
-Keep parent->sub_group[index] = NULL for the failure path, but after
-btrfs_sysfs_add_space_info_type() has called kobject_put(), let the
-kobject release callback handle the cleanup.
-
-Fixes: f92ee31e031c ("btrfs: introduce btrfs_space_info sub-group")
-CC: stable@vger.kernel.org # 6.18+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/space-info.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/ceph/osdmap.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -263,10 +263,8 @@ static int create_space_info_sub_group(s
- 	sub_group->subgroup_id = id;
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -395,7 +395,10 @@ static int decode_choose_args(void **p,
+ 				goto e_inval;
+ 		}
  
- 	ret = btrfs_sysfs_add_space_info_type(sub_group);
--	if (ret) {
--		kfree(sub_group);
-+	if (ret)
- 		parent->sub_group[index] = NULL;
--	}
- 	return ret;
- }
+-		insert_choose_arg_map(&c->choose_args, arg_map);
++		if (!__insert_choose_arg_map(&c->choose_args, arg_map)) {
++			ret = -EEXIST;
++			goto fail;
++		}
+ 	}
  
+ 	return 0;
 
 
