@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61C315E8B;
-	Wed, 20 May 2026 17:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D7A3D75C7;
+	Wed, 20 May 2026 17:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298670; cv=none; b=Msm5CTVUtHY2JBvK+rNJvDqhH5PMJNEypL5qzlvwGll9llMyj8Bw+bN5BXv3rXJaQYORK05kOqyX1pETVGJZYRAQ3z0c+FPLyKUHtS/31Pw6x5dGB5zpDN7sshlMrMpEkPsDOSn841xlf6/lWIMnroAhoqPL1VWJXKu7zel2AeM=
+	t=1779298673; cv=none; b=bafSxAkE0M+XsR0fGhRMCLBqNmPKv5po4ABpGYDwq2xxNtRdIjchn8Vi7kAeV8J0Gw5+elU2KV8sYckMpvoueXA14OlpHD21/caxVNeOwaB9amMOf/I+4NTUlZki/Pj9XABzhEsKOOFyvUhIsTDtzCFtDOA8OaJamXzm3itBAwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298670; c=relaxed/simple;
-	bh=Ob7mXN7r4x0LarEKlfQQ2UERfsRcY0lPs/GdrLAyHFU=;
+	s=arc-20240116; t=1779298673; c=relaxed/simple;
+	bh=uTAI5lFnfuCP+cyR8I28+Z0lBj003QHNTYIK2fkmPFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hxV8P2yo/IAtPTCin7i3i1Q1giL33nwgYhevnunBF/fXjfg4SNr/aen6ZxZjvcZabjAyqdSTdHnekhuh2wwkcOQz9ORe2B1ksF9+Ua/zeGecv2IG2WdOSrUA4gm8D076vBCg+isIE8cStvE4EwSLKXNxaADjr/syN1gbAJTV7k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtumFE+D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wb0B1p1Io1qyNLkVjqLPWMZUSyFU2ublozPvWjVOx/sR+3ApgI0o2BwfTl1KoSkva35ZwqBiQhXPX1BZkiUVK37LexK+bxcBsVn155JV+IL3rcPxq+KOddum5pNxHJ+h3zQOq/dv9r6cUW9Jk8sQixn+JcB95hQUtJOWNrchQb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbpIkwAm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtumFE+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179E61F000E9;
-	Wed, 20 May 2026 17:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbpIkwAm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97E11F00898;
+	Wed, 20 May 2026 17:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298669;
-	bh=59RKQ5j9b244G2jMfDGrkRBJjV0ZfUZxNQF2UTDYOp4=;
+	s=korg; t=1779298672;
+	bh=dbn4A2wRMW82GHxtvptwcNqMZ3WaowtwfgOyUOilXHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BtumFE+DGsHx+7UfJIfnt1+mv4CBv1AlW0NqmpPCC+D5bxa/GKRKX8IYj8lIwOK4L
-	 ZNeXbhkT4BTnq5K6AZN2yzopwozMOsbDQ+1kDBMS0noAst8N/zqwQGDVWJha+QT/0F
-	 TwzlZT8fmXccT3yfLKf/FyyKJt2QnOGc0O3Wa/ik=
+	b=tbpIkwAmaGqHHnf/SrhHEZ5xOlMh3ednzeDBfBSOTE8Lh6zT0ely8L3ix9Uu+gTiI
+	 W7ib1pIjVC/4pOodHRqVAAiCIMoQBYWRT9YaKiz+brHl3SkEQK2Q6W8/+VcsJszUdt
+	 v5JscY8HRZsbJTMWMs6sGkWdn40Iofq2NwBgrqE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 500/957] pinctrl: cy8c95x0: remove duplicate error message
-Date: Wed, 20 May 2026 18:16:23 +0200
-Message-ID: <20260520162145.372859805@linuxfoundation.org>
+Subject: [PATCH 6.18 501/957] pinctrl: cy8c95x0: Unify messages with help of dev_err_probe()
+Date: Wed, 20 May 2026 18:16:24 +0200
+Message-ID: <20260520162145.394765174@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,69 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 970dacb3b9f0fedbbbcfd7dbf1f4f22340b3f359 ]
+[ Upstream commit 014884732095b982412d13d3220c3fe8483b9b3e ]
 
-The pin control core is covered to report any error via message.
-The devm_request_threaded_irq() already prints an error message.
-Remove the duplicates.
-
-While at it, drop the info message as the same information about
-an IRQ in use can be retrieved differently.
+Unify error messages that might appear during probe phase by
+switching to use dev_err_probe().
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Stable-dep-of: 5ad32c3607cf ("pinctrl: cy8c95x0: Avoid returning positive values to user space")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-cy8c95x0.c | 21 +++++----------------
- 1 file changed, 5 insertions(+), 16 deletions(-)
+ drivers/pinctrl/pinctrl-cy8c95x0.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/pinctrl/pinctrl-cy8c95x0.c b/drivers/pinctrl/pinctrl-cy8c95x0.c
-index 5c055d344ac9d..c0f1d964f8397 100644
+index c0f1d964f8397..14d927035bc0f 100644
 --- a/drivers/pinctrl/pinctrl-cy8c95x0.c
 +++ b/drivers/pinctrl/pinctrl-cy8c95x0.c
-@@ -1310,6 +1310,7 @@ static int cy8c95x0_irq_setup(struct cy8c95x0_pinctrl *chip, int irq)
- {
- 	struct gpio_irq_chip *girq = &chip->gpio_chip.irq;
- 	DECLARE_BITMAP(pending_irqs, MAX_LINE);
-+	struct device *dev = chip->dev;
- 	int ret;
+@@ -1319,10 +1319,8 @@ static int cy8c95x0_irq_setup(struct cy8c95x0_pinctrl *chip, int irq)
  
- 	mutex_init(&chip->irq_lock);
-@@ -1336,17 +1337,9 @@ static int cy8c95x0_irq_setup(struct cy8c95x0_pinctrl *chip, int irq)
- 	girq->handler = handle_simple_irq;
- 	girq->threaded = true;
- 
--	ret = devm_request_threaded_irq(chip->dev, irq,
--					NULL, cy8c95x0_irq_handler,
--					IRQF_ONESHOT | IRQF_SHARED,
--					dev_name(chip->dev), chip);
+ 	/* Read IRQ status register to clear all pending interrupts */
+ 	ret = cy8c95x0_irq_pending(chip, pending_irqs);
 -	if (ret) {
--		dev_err(chip->dev, "failed to request irq %d\n", irq);
+-		dev_err(chip->dev, "failed to clear irq status register\n");
 -		return ret;
 -	}
--	dev_info(chip->dev, "Registered threaded IRQ\n");
--
--	return 0;
-+	return devm_request_threaded_irq(dev, irq, NULL, cy8c95x0_irq_handler,
-+					 IRQF_ONESHOT | IRQF_SHARED,
-+					 dev_name(chip->dev), chip);
- }
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to clear irq status register\n");
  
- static int cy8c95x0_setup_pinctrl(struct cy8c95x0_pinctrl *chip)
-@@ -1362,11 +1355,7 @@ static int cy8c95x0_setup_pinctrl(struct cy8c95x0_pinctrl *chip)
- 	pd->owner = THIS_MODULE;
- 
- 	chip->pctldev = devm_pinctrl_register(chip->dev, pd, chip);
--	if (IS_ERR(chip->pctldev))
--		return dev_err_probe(chip->dev, PTR_ERR(chip->pctldev),
--			"can't register controller\n");
--
--	return 0;
-+	return PTR_ERR_OR_ZERO(chip->pctldev);
- }
- 
- static int cy8c95x0_detect(struct i2c_client *client,
+ 	/* Mask all interrupts */
+ 	bitmap_fill(chip->irq_mask, MAX_LINE);
 -- 
 2.53.0
 
