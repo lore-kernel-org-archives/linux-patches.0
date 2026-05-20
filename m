@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD7AA36494B;
-	Wed, 20 May 2026 17:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641D63F0AB8;
+	Wed, 20 May 2026 17:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296799; cv=none; b=AskslQwiXc5HKCHf8+G7qJphYqtZcPjWainMTBMJODy3OVZXDeKc/M0DQEr/naipMuytmcb+OuOS+p2NXJ1Pv/epEo37loWDFIEE/y6lg9pFGx2BcTP1JB6sDraTN1WB+Hc0A7L7VBnbRV0FxkD+xMZkXew9uIVgLUzBf0QvKZc=
+	t=1779296802; cv=none; b=Au17SQUbOokJyfANI92orGWt0RHKnv+lTKmxdNlbBULr2vHvmLrL7PR089wf157wrc8kypytUtBmvQC3db2R81R44XvfnFI82mN4m7y1oWgnrdy34A4XM8/DaGk4M6+yyZQG96UNNSJAJpqoPsRUVoNiB10v8n12SP6oMFDfSzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296799; c=relaxed/simple;
-	bh=VZv13RkwTKnuzZgEfIfjNsRbXeqBQh88cri/ja1zC20=;
+	s=arc-20240116; t=1779296802; c=relaxed/simple;
+	bh=6CldsTlAksE0z2Q1nc7Mj+57Bpx//PDc7svjSLvT9FA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNzpmDLx8Atam9uUoaWVUs2PhaOvu+WUCs11AB87glSFNBGrd0IghXNxcoHlhk62QwX0bPonK0DDepqeHRLDcJQogvlEeUbytrwcS0F5sqXXOZUr+AQby56K8w5cMspWnxW+gKWTFo6ckuaw+ryAv2dUV+EYB4G88yRX2eF2Vlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7n2oR5d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gx0++ZIQLxDT4XKxsZmXkrc1J+kGmh2FJv7Ut7ehfgPZYc/8gpK0//zr7yS/bCQDGYwisltNSj7FPHDBtA4lLVLArJMF3n6TEzAbUGgrmPxOwxdQidJp6sWM2LcmatC0qISJSoCHWHCNClFkADWTdKagB12w4UtkzRJ8/qs55HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOWhVeYq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7n2oR5d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC041F000E9;
-	Wed, 20 May 2026 17:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOWhVeYq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5A21F000E9;
+	Wed, 20 May 2026 17:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296798;
-	bh=7isUPM1BGnfr3WQ5+E/KeMyXMZUjWdMe3MXhSYPo38g=;
+	s=korg; t=1779296801;
+	bh=/MP4WCC+wMQqxPcXbajUdkk295uufHg+7xwiFiovdTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w7n2oR5dq1ekuPTov54MyMw6tEHWdqB773R38P24pnE1bsg0HtrWPrz6K6LQ87x2h
-	 AwWVSIQUTRu0LsFti0AbLXUvocuWHEzWHMeRMgvqZLPxRI0vPPX1NxTikOfbxWNMMc
-	 FMNA5HVORHj0QW5isbmXB/NmLvgnrt5aoEOtWKpY=
+	b=OOWhVeYqciCWoD+/E+XfMlHY5lVcagrOXkEwfETWhv5H3+wBpagWY5TeG7demy9tg
+	 S1weJMozmHMSX2TufkBhm0gGKoD+1c2LNZ43OxRrhXqEQy3eKtPQkAsoPXSVMBHrcN
+	 TqRoEXJImfxH+taxxBUvMwWJA5RhkRHGlzYgKzl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengping Zhang <aquapinn@qq.com>,
-	Simon Horman <horms@kernel.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0936/1146] net: airoha: fix typo in function name
-Date: Wed, 20 May 2026 18:19:46 +0200
-Message-ID: <20260520162209.419167503@linuxfoundation.org>
+Subject: [PATCH 7.0 0937/1146] net: airoha: Do not wake all netdev TX queues in airoha_qdma_wake_netdev_txqs()
+Date: Wed, 20 May 2026 18:19:47 +0200
+Message-ID: <20260520162209.441317388@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,66 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengping Zhang <aquapinn@qq.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit aebf15e8eb09b01e99f043e9f5d423798aac9d32 ]
+[ Upstream commit e070aac63b42bf81f4dc565f9f841ff47e6c992f ]
 
-Corrected the typo in the function name from
- `airhoa_is_lan_gdm_port` to `airoha_is_lan_gdm_port`. This change ensures
- consistency in the API naming convention.
+Do not wake every netdev TX queue across all ports sharing the QDMA
+running netif_tx_wake_all_queues routine in airoha_qdma_wake_netdev_txqs()
+but only the ones that are mapped the specific QDMA stopped hw TX queue.
+This patch can potentially avoid waking already stopped netdev TX queues
+that are mapped to a different QDMA hw TX queue.
+Introduce airoha_qdma_get_txq utility routine.
 
-Signed-off-by: Zhengping Zhang <aquapinn@qq.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/tencent_E4FD5D6BC0131E617D848896F5F9FCED6E0A@qq.com
+Fixes: b94769eb2f30 ("net: airoha: Fix possible TX queue stall in airoha_qdma_tx_napi_poll()")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260421-airoha-wake_netdev_txqs-optmization-v1-1-e0be95115d53@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e070aac63b42 ("net: airoha: Do not wake all netdev TX queues in airoha_qdma_wake_netdev_txqs()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 2 +-
- drivers/net/ethernet/airoha/airoha_eth.h | 2 +-
- drivers/net/ethernet/airoha/airoha_ppe.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 19 +++++++++++++++----
+ drivers/net/ethernet/airoha/airoha_eth.h |  5 +++++
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 4b804ca927819..8819e24283abc 100644
+index 8819e24283abc..f9e6406ca55da 100644
 --- a/drivers/net/ethernet/airoha/airoha_eth.c
 +++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -76,7 +76,7 @@ static void airoha_set_macaddr(struct airoha_gdm_port *port, const u8 *addr)
- 	struct airoha_eth *eth = port->qdma->eth;
- 	u32 val, reg;
+@@ -847,13 +847,24 @@ static void airoha_qdma_wake_netdev_txqs(struct airoha_queue *q)
+ {
+ 	struct airoha_qdma *qdma = q->qdma;
+ 	struct airoha_eth *eth = qdma->eth;
+-	int i;
++	int i, qid = q - &qdma->q_tx[0];
  
--	reg = airhoa_is_lan_gdm_port(port) ? REG_FE_LAN_MAC_H
-+	reg = airoha_is_lan_gdm_port(port) ? REG_FE_LAN_MAC_H
- 					   : REG_FE_WAN_MAC_H;
- 	val = (addr[0] << 16) | (addr[1] << 8) | addr[2];
- 	airoha_fe_wr(eth, reg, val);
+ 	for (i = 0; i < ARRAY_SIZE(eth->ports); i++) {
+ 		struct airoha_gdm_port *port = eth->ports[i];
++		int j;
++
++		if (!port)
++			continue;
+ 
+-		if (port && port->qdma == qdma)
+-			netif_tx_wake_all_queues(port->dev);
++		if (port->qdma != qdma)
++			continue;
++
++		for (j = 0; j < port->dev->num_tx_queues; j++) {
++			if (airoha_qdma_get_txq(qdma, j) != qid)
++				continue;
++
++			netif_wake_subqueue(port->dev, j);
++		}
+ 	}
+ 	q->txq_stopped = false;
+ }
+@@ -1999,7 +2010,7 @@ static netdev_tx_t airoha_dev_xmit(struct sk_buff *skb,
+ 	u16 index;
+ 	u8 fport;
+ 
+-	qid = skb_get_queue_mapping(skb) % ARRAY_SIZE(qdma->q_tx);
++	qid = airoha_qdma_get_txq(qdma, skb_get_queue_mapping(skb));
+ 	tag = airoha_get_dsa_tag(skb, dev);
+ 
+ 	msg0 = FIELD_PREP(QDMA_ETH_TXMSG_CHAN_MASK,
 diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
-index c9d1abda47768..46f4197007074 100644
+index 46f4197007074..7098e95f0067a 100644
 --- a/drivers/net/ethernet/airoha/airoha_eth.h
 +++ b/drivers/net/ethernet/airoha/airoha_eth.h
-@@ -630,7 +630,7 @@ u32 airoha_rmw(void __iomem *base, u32 offset, u32 mask, u32 val);
+@@ -630,6 +630,11 @@ u32 airoha_rmw(void __iomem *base, u32 offset, u32 mask, u32 val);
  #define airoha_qdma_clear(qdma, offset, val)			\
  	airoha_rmw((qdma)->regs, (offset), (val), 0)
  
--static inline bool airhoa_is_lan_gdm_port(struct airoha_gdm_port *port)
-+static inline bool airoha_is_lan_gdm_port(struct airoha_gdm_port *port)
++static inline u16 airoha_qdma_get_txq(struct airoha_qdma *qdma, u16 qid)
++{
++	return qid % ARRAY_SIZE(qdma->q_tx);
++}
++
+ static inline bool airoha_is_lan_gdm_port(struct airoha_gdm_port *port)
  {
  	/* GDM1 port on EN7581 SoC is connected to the lan dsa switch.
- 	 * GDM{2,3,4} can be used as wan port connected to an external
-diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
-index 684c8ae9576f1..f2af45f7d66d4 100644
---- a/drivers/net/ethernet/airoha/airoha_ppe.c
-+++ b/drivers/net/ethernet/airoha/airoha_ppe.c
-@@ -331,7 +331,7 @@ static int airoha_ppe_foe_entry_prepare(struct airoha_eth *eth,
- 			/* For downlink traffic consume SRAM memory for hw
- 			 * forwarding descriptors queue.
- 			 */
--			if (airhoa_is_lan_gdm_port(port))
-+			if (airoha_is_lan_gdm_port(port))
- 				val |= AIROHA_FOE_IB2_FAST_PATH;
- 			if (dsa_port >= 0)
- 				val |= FIELD_PREP(AIROHA_FOE_IB2_NBQ,
 -- 
 2.53.0
 
