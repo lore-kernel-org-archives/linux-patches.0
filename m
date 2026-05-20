@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4240369999;
-	Wed, 20 May 2026 17:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F263DA7C6;
+	Wed, 20 May 2026 17:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297750; cv=none; b=mmRGupFsf3KpI1f2JMjc4uL1fRSDbHdz7JhP4zITc72bnRmwCS1vUyw4CqqB30OVq2ULooeWNSfbiWDUdZUdtvgqLMQTnQZFac8OmMQKrrhTxbxxfZ9890XHR1SCoL3CZuVAU5UZG015enP0K++Z8uJ+/7nC+cSxnPhizXeKmg8=
+	t=1779297752; cv=none; b=P/BxGpF5X2ibNHKFSsoils5V6yozPyhjsE+MxjjuN9N2gx6euTn+fIz0F1/FiX1/ZUK2ijwTgnvN1hixKdR6HtC/nCZvEriiSiQ3BwOopktWIKjCy4Zb5yXoGjVluQk1aybDcRGI/2+DVWo8APx9MwKJq0soK1xH2mmZgG4QGlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297750; c=relaxed/simple;
-	bh=xZiaYPjOWOJslRbm/nduc8PZ6k2Zg8fCPHIbukC/ETY=;
+	s=arc-20240116; t=1779297752; c=relaxed/simple;
+	bh=lZiwdDzSdmrhbdsCrW3uQ0i5flBzFA/MJCWKmGe00Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GhbFmRY3Q5Liv9TwNHYGqbQl1xJtO4Ia1AZ7/iRKhKqlCPr2u2wE2r9CsKvoDsrPBik4ocgPY9eq7SBd4sVV56czEYEH7FIzfDM6muJBfDaI3HSlwr0eBOvkAiCfCQzC5N0ODeqAL+j/pubZDPnbyI/hLUB1SU9gkR4DMjSecr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8WUeArl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bQpYSmJa4HWAaRf4+HmhchzgcQqraerGrfueXVDziB89+wPQXcRHdCcpPyis1D/O7KknU8k8sjRzJ6APMUiglyrtritM4t8W+Ux6mLTCKsrXu74e31fOUoqsScXc8W3y0sBNfLO+zc8QnjYMRsU/jNuIEdD8rHv0/nr//WKgKiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cd8npztx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8WUeArl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFEF1F000E9;
-	Wed, 20 May 2026 17:22:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cd8npztx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D4A1F000E9;
+	Wed, 20 May 2026 17:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297748;
-	bh=OiLM4A7K0yqVE6QfMPzfnK8mz5vaZjERfOZQ2nJeRvA=;
+	s=korg; t=1779297751;
+	bh=AAMX0mFd9ffhUJmWr3FfSYnZeo1lnhxNIL9GZyi3nQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M8WUeArlK8hP2cA0Ym3GRPWDZlQ7b5pdc1pm9X8Uqwxt2gb9FEhcY3+MYvPsdpWUF
-	 ezKKVYDcFiZ1VkXjR3V/pxNVlrxjDnjpcFJdW73UhaHI/aP0VAD7QXxX03GDxILzP9
-	 m764vSarGVADeVPUA/+eDWyWB8wJyZqXxk+b+ETw=
+	b=cd8npztxp/+Ws84o7+hhJ41lloWqwwBxWJDcBSC/ztSd2Aqyu05XeoEIFgvLMNUgd
+	 etWrP9XhFC7B50ei+2gL5rDnYoT9OLZcS4FkuxwWVbiSy5UYgx4O/srsBJrhL/59vt
+	 CEYEevplwujpheFBT5bqw1jzR8yMUX6F+X1db/ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
 	Simon Horman <horms@kernel.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 149/957] net: airoha: Add airoha_eth_soc_data struct
-Date: Wed, 20 May 2026 18:10:32 +0200
-Message-ID: <20260520162137.785483056@linuxfoundation.org>
+Subject: [PATCH 6.18 150/957] net: airoha: Generalize airoha_ppe2_is_enabled routine
+Date: Wed, 20 May 2026 18:10:33 +0200
+Message-ID: <20260520162137.807242716@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -55,161 +54,158 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 5863b4e065e2253ef05684f728a04e4972046bcb ]
+[ Upstream commit ef9449f080b61920cdc3d3106f8ffc2d9ba8b861 ]
 
-Introduce airoha_eth_soc_data struct to contain differences between
-various SoC. Move XSI reset names in airoha_eth_soc_data. This is a
-preliminary patch to enable AN7583 ethernet controller support in
-airoha-eth driver.
+Rename airoha_ppe2_is_enabled() in airoha_ppe_is_enabled() and
+generalize it in order to check if each PPE module is enabled.
+Rely on airoha_ppe_is_enabled routine to properly initialize PPE for
+AN7583 SoC since AN7583 does not support PPE2.
 
-Co-developed-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20251017-an7583-eth-support-v3-4-f28319666667@kernel.org
+Link: https://patch.msgid.link/20251017-an7583-eth-support-v3-5-f28319666667@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 02f729643959 ("net: airoha: Fix FE_PSE_BUF_SET configuration if PPE2 is available")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 42 +++++++++++++++++++-----
- drivers/net/ethernet/airoha/airoha_eth.h | 17 ++++++++--
- 2 files changed, 48 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 32 ++++++++++++++++--------
+ drivers/net/ethernet/airoha/airoha_eth.h |  1 +
+ drivers/net/ethernet/airoha/airoha_ppe.c | 17 +++++++------
+ 3 files changed, 32 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 060865b98880e..5162f2a689000 100644
+index 5162f2a689000..677e40001f9f2 100644
 --- a/drivers/net/ethernet/airoha/airoha_eth.c
 +++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -1406,8 +1406,7 @@ static int airoha_hw_init(struct platform_device *pdev,
- 	int err, i;
+@@ -297,8 +297,11 @@ static void airoha_fe_pse_ports_init(struct airoha_eth *eth)
+ 	int q;
  
- 	/* disable xsi */
--	err = reset_control_bulk_assert(ARRAY_SIZE(eth->xsi_rsts),
--					eth->xsi_rsts);
-+	err = reset_control_bulk_assert(eth->soc->num_xsi_rsts, eth->xsi_rsts);
- 	if (err)
- 		return err;
+ 	all_rsv = airoha_fe_get_pse_all_rsv(eth);
+-	/* hw misses PPE2 oq rsv */
+-	all_rsv += PSE_RSV_PAGES * pse_port_num_queues[FE_PSE_PORT_PPE2];
++	if (airoha_ppe_is_enabled(eth, 1)) {
++		/* hw misses PPE2 oq rsv */
++		all_rsv += PSE_RSV_PAGES *
++			   pse_port_num_queues[FE_PSE_PORT_PPE2];
++	}
+ 	airoha_fe_set(eth, REG_FE_PSE_BUF_SET, all_rsv);
  
-@@ -2943,6 +2942,7 @@ static int airoha_register_gdm_devices(struct airoha_eth *eth)
- 
- static int airoha_probe(struct platform_device *pdev)
- {
-+	struct reset_control_bulk_data *xsi_rsts;
- 	struct device_node *np;
- 	struct airoha_eth *eth;
- 	int i, err;
-@@ -2951,6 +2951,10 @@ static int airoha_probe(struct platform_device *pdev)
- 	if (!eth)
- 		return -ENOMEM;
- 
-+	eth->soc = of_device_get_match_data(&pdev->dev);
-+	if (!eth->soc)
-+		return -EINVAL;
-+
- 	eth->dev = &pdev->dev;
- 
- 	err = dma_set_mask_and_coherent(eth->dev, DMA_BIT_MASK(32));
-@@ -2975,13 +2979,18 @@ static int airoha_probe(struct platform_device *pdev)
- 		return err;
+ 	/* CMD1 */
+@@ -335,13 +338,17 @@ static void airoha_fe_pse_ports_init(struct airoha_eth *eth)
+ 	for (q = 4; q < pse_port_num_queues[FE_PSE_PORT_CDM4]; q++)
+ 		airoha_fe_set_pse_oq_rsv(eth, FE_PSE_PORT_CDM4, q,
+ 					 PSE_QUEUE_RSV_PAGES);
+-	/* PPE2 */
+-	for (q = 0; q < pse_port_num_queues[FE_PSE_PORT_PPE2]; q++) {
+-		if (q < pse_port_num_queues[FE_PSE_PORT_PPE2] / 2)
+-			airoha_fe_set_pse_oq_rsv(eth, FE_PSE_PORT_PPE2, q,
+-						 PSE_QUEUE_RSV_PAGES);
+-		else
+-			airoha_fe_set_pse_oq_rsv(eth, FE_PSE_PORT_PPE2, q, 0);
++	if (airoha_ppe_is_enabled(eth, 1)) {
++		/* PPE2 */
++		for (q = 0; q < pse_port_num_queues[FE_PSE_PORT_PPE2]; q++) {
++			if (q < pse_port_num_queues[FE_PSE_PORT_PPE2] / 2)
++				airoha_fe_set_pse_oq_rsv(eth, FE_PSE_PORT_PPE2,
++							 q,
++							 PSE_QUEUE_RSV_PAGES);
++			else
++				airoha_fe_set_pse_oq_rsv(eth, FE_PSE_PORT_PPE2,
++							 q, 0);
++		}
  	}
- 
--	eth->xsi_rsts[0].id = "xsi-mac";
--	eth->xsi_rsts[1].id = "hsi0-mac";
--	eth->xsi_rsts[2].id = "hsi1-mac";
--	eth->xsi_rsts[3].id = "hsi-mac";
--	eth->xsi_rsts[4].id = "xfp-mac";
-+	xsi_rsts = devm_kzalloc(eth->dev,
-+				eth->soc->num_xsi_rsts * sizeof(*xsi_rsts),
-+				GFP_KERNEL);
-+	if (err)
-+		return err;
-+
-+	eth->xsi_rsts = xsi_rsts;
-+	for (i = 0; i < eth->soc->num_xsi_rsts; i++)
-+		eth->xsi_rsts[i].id = eth->soc->xsi_rsts_names[i];
-+
- 	err = devm_reset_control_bulk_get_exclusive(eth->dev,
--						    ARRAY_SIZE(eth->xsi_rsts),
-+						    eth->soc->num_xsi_rsts,
- 						    eth->xsi_rsts);
- 	if (err) {
- 		dev_err(eth->dev, "failed to get bulk xsi reset lines\n");
-@@ -3074,8 +3083,23 @@ static void airoha_remove(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, NULL);
- }
- 
-+static const char * const en7581_xsi_rsts_names[] = {
-+	"xsi-mac",
-+	"hsi0-mac",
-+	"hsi1-mac",
-+	"hsi-mac",
-+	"xfp-mac",
-+};
-+
-+static const struct airoha_eth_soc_data en7581_soc_data = {
-+	.version = 0x7581,
-+	.xsi_rsts_names = en7581_xsi_rsts_names,
-+	.num_xsi_rsts = ARRAY_SIZE(en7581_xsi_rsts_names),
-+	.num_ppe = 2,
-+};
-+
- static const struct of_device_id of_airoha_match[] = {
--	{ .compatible = "airoha,en7581-eth" },
-+	{ .compatible = "airoha,en7581-eth", .data = &en7581_soc_data },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, of_airoha_match);
+ 	/* GMD4 */
+ 	for (q = 0; q < pse_port_num_queues[FE_PSE_PORT_GDM4]; q++)
+@@ -1781,8 +1788,11 @@ static int airoha_dev_init(struct net_device *dev)
+ 			airhoha_set_gdm2_loopback(port);
+ 		fallthrough;
+ 	case 2:
+-		pse_port = FE_PSE_PORT_PPE2;
+-		break;
++		if (airoha_ppe_is_enabled(eth, 1)) {
++			pse_port = FE_PSE_PORT_PPE2;
++			break;
++		}
++		fallthrough;
+ 	default:
+ 		pse_port = FE_PSE_PORT_PPE1;
+ 		break;
 diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
-index 3e43f01e9a652..655bc6acd80f0 100644
+index 655bc6acd80f0..d76f71558f8c2 100644
 --- a/drivers/net/ethernet/airoha/airoha_eth.h
 +++ b/drivers/net/ethernet/airoha/airoha_eth.h
-@@ -21,7 +21,6 @@
- #define AIROHA_MAX_NUM_IRQ_BANKS	4
- #define AIROHA_MAX_DSA_PORTS		7
- #define AIROHA_MAX_NUM_RSTS		3
--#define AIROHA_MAX_NUM_XSI_RSTS		5
- #define AIROHA_MAX_MTU			9216
- #define AIROHA_MAX_PACKET_SIZE		2048
- #define AIROHA_NUM_QOS_CHANNELS		4
-@@ -556,9 +555,18 @@ struct airoha_ppe {
- 	struct dentry *debugfs_dir;
- };
- 
-+struct airoha_eth_soc_data {
-+	u16 version;
-+	const char * const *xsi_rsts_names;
-+	int num_xsi_rsts;
-+	int num_ppe;
-+};
-+
- struct airoha_eth {
- 	struct device *dev;
- 
-+	const struct airoha_eth_soc_data *soc;
-+
- 	unsigned long state;
- 	void __iomem *fe_regs;
- 
-@@ -568,7 +576,7 @@ struct airoha_eth {
- 	struct rhashtable flow_table;
- 
- 	struct reset_control_bulk_data rsts[AIROHA_MAX_NUM_RSTS];
--	struct reset_control_bulk_data xsi_rsts[AIROHA_MAX_NUM_XSI_RSTS];
-+	struct reset_control_bulk_data *xsi_rsts;
- 
- 	struct net_device *napi_dev;
- 
-@@ -611,6 +619,11 @@ static inline bool airhoa_is_lan_gdm_port(struct airoha_gdm_port *port)
- 	return port->id == 1;
- }
- 
-+static inline bool airoha_is_7581(struct airoha_eth *eth)
-+{
-+	return eth->soc->version == 0x7581;
-+}
-+
+@@ -627,6 +627,7 @@ static inline bool airoha_is_7581(struct airoha_eth *eth)
  bool airoha_is_valid_gdm_port(struct airoha_eth *eth,
  			      struct airoha_gdm_port *port);
  
++bool airoha_ppe_is_enabled(struct airoha_eth *eth, int index);
+ void airoha_ppe_check_skb(struct airoha_ppe_dev *dev, struct sk_buff *skb,
+ 			  u16 hash, bool rx_wlan);
+ int airoha_ppe_setup_tc_block_cb(struct airoha_ppe_dev *dev, void *type_data);
+diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
+index 117dfc21d6a81..4ed244557065d 100644
+--- a/drivers/net/ethernet/airoha/airoha_ppe.c
++++ b/drivers/net/ethernet/airoha/airoha_ppe.c
+@@ -50,9 +50,12 @@ static int airoha_ppe_get_total_num_stats_entries(struct airoha_ppe *ppe)
+ 	return num_stats;
+ }
+ 
+-static bool airoha_ppe2_is_enabled(struct airoha_eth *eth)
++bool airoha_ppe_is_enabled(struct airoha_eth *eth, int index)
+ {
+-	return airoha_fe_rr(eth, REG_PPE_GLO_CFG(1)) & PPE_GLO_CFG_EN_MASK;
++	if (index >= eth->soc->num_ppe)
++		return false;
++
++	return airoha_fe_rr(eth, REG_PPE_GLO_CFG(index)) & PPE_GLO_CFG_EN_MASK;
+ }
+ 
+ static u32 airoha_ppe_get_timestamp(struct airoha_ppe *ppe)
+@@ -120,7 +123,7 @@ static void airoha_ppe_hw_init(struct airoha_ppe *ppe)
+ 						 AIROHA_MAX_MTU));
+ 	}
+ 
+-	if (airoha_ppe2_is_enabled(eth)) {
++	if (airoha_ppe_is_enabled(eth, 1)) {
+ 		sram_num_entries = PPE1_SRAM_NUM_ENTRIES;
+ 		sram_num_stats_entries =
+ 			airoha_ppe_get_num_stats_entries(ppe);
+@@ -520,7 +523,7 @@ static int airoha_ppe_foe_get_flow_stats_index(struct airoha_ppe *ppe,
+ 		return ppe_num_stats_entries;
+ 
+ 	*index = hash;
+-	if (airoha_ppe2_is_enabled(ppe->eth) &&
++	if (airoha_ppe_is_enabled(ppe->eth, 1) &&
+ 	    hash >= ppe_num_stats_entries)
+ 		*index = *index - PPE_STATS_NUM_ENTRIES;
+ 
+@@ -615,7 +618,7 @@ airoha_ppe_foe_get_entry_locked(struct airoha_ppe *ppe, u32 hash)
+ 		u32 val;
+ 		int i;
+ 
+-		ppe2 = airoha_ppe2_is_enabled(ppe->eth) &&
++		ppe2 = airoha_ppe_is_enabled(ppe->eth, 1) &&
+ 		       hash >= PPE1_SRAM_NUM_ENTRIES;
+ 		airoha_fe_wr(ppe->eth, REG_PPE_RAM_CTRL(ppe2),
+ 			     FIELD_PREP(PPE_SRAM_CTRL_ENTRY_MASK, hash) |
+@@ -693,7 +696,7 @@ static int airoha_ppe_foe_commit_entry(struct airoha_ppe *ppe,
+ 
+ 	if (hash < PPE_SRAM_NUM_ENTRIES) {
+ 		dma_addr_t addr = ppe->foe_dma + hash * sizeof(*hwe);
+-		bool ppe2 = airoha_ppe2_is_enabled(eth) &&
++		bool ppe2 = airoha_ppe_is_enabled(eth, 1) &&
+ 			    hash >= PPE1_SRAM_NUM_ENTRIES;
+ 
+ 		err = npu->ops.ppe_foe_commit_entry(npu, addr, sizeof(*hwe),
+@@ -1288,7 +1291,7 @@ static int airoha_ppe_flush_sram_entries(struct airoha_ppe *ppe,
+ 	int i, sram_num_entries = PPE_SRAM_NUM_ENTRIES;
+ 	struct airoha_foe_entry *hwe = ppe->foe;
+ 
+-	if (airoha_ppe2_is_enabled(ppe->eth))
++	if (airoha_ppe_is_enabled(ppe->eth, 1))
+ 		sram_num_entries = sram_num_entries / 2;
+ 
+ 	for (i = 0; i < sram_num_entries; i++)
 -- 
 2.53.0
 
