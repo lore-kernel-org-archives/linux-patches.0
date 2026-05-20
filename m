@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6843F6619;
-	Wed, 20 May 2026 18:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F6A3F65E6;
+	Wed, 20 May 2026 18:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300556; cv=none; b=QPA2JgBKJiSq8DUh+WF6gYaO1feEEW1z1fe97+hxX7ejq7jbuElUwZupgP6Ufw+8l++Tc90sqNgQTOx+QZw3sBbVs3sURdg+I8AM+5OlUkcEgbdI7gSWnSNLvV6Z4nCFzS04ou3lv3SgzHdueUONCGx86B91+zSwEsZL3PIkz3g=
+	t=1779300558; cv=none; b=REMKAjNXJFUhPPSjfpSoDjZkLezIV2z1apBsLS++t2gT3cbBeKjxSuhwwObBFmYJfX7NQ2tXIy8Knujr7NKOxZyhoXfsBUK+emum1BWCfgFPb++2kFovmrUJmLm+m8FNfNS8YsrlS3u3ePu4u1eo6qCQNk2dpL306FQGb4fzGWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300556; c=relaxed/simple;
-	bh=+iwJKNwSZXDuh4ETO8HZwLS7YkRb/7J6Io8QJ5pTd3Y=;
+	s=arc-20240116; t=1779300558; c=relaxed/simple;
+	bh=qJGQhPF7NAo0KjTkL3oMNxGumeRflEJxFDR2VNvGVjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HaZl5bgybp9DQRfFGlPmNnxm+wdV6IJgH85By67UqudlHFj8d6IfItnFBD0GwvLT+yAtSnTgyQT9eTEf7M9TzotxoiGc6QEvTOJaiuyIIQW12sk1kzchQGFQy1iRoN5IS+AS99GhLGcxgLkov15eaqvzdY91ilNd4q9wzQEp0KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iP/K/RpB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SnlwQumBgCOMujbJ2ZK3klnKRbbcgPs9TVeMkQfrLCUUUJuMt0E1OcwWx4xruYCjbw+JOoi2xUK9K+6q2qJVPm7We3NKM7BjVR0p1uuGnU6OZbARLtvMlZOd3FNL5GaoP6BbXsVgIwqB+VzPifqTeWLxpAiC9Eg5S2PcadxLkZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vyd5zw6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iP/K/RpB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F521F000E9;
-	Wed, 20 May 2026 18:09:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vyd5zw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B02F1F000E9;
+	Wed, 20 May 2026 18:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300554;
-	bh=TNd6X7BwiwBzrpOyLmO9Tw/zyBr+6abSALEk0ods7KQ=;
+	s=korg; t=1779300557;
+	bh=PJY9aoT0OJ/DGXRM1YefqCslhBOzXBX5b812Be1qUdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iP/K/RpBkrkiwTjNFec3X4xNdvrWqQEO0pG0HrLbsc9Zz0ea9LRk+RCm/osXt2CtS
-	 DEmndM8jho+uNUjW8TKGpK//D33JI0/88WoRevUgCPiZE78CaljGGrrzqCiS/Yj2Q0
-	 w4t7mRJR6RX4H1hnCqi7YjtW6+79liIbAj67XZ4E=
+	b=1vyd5zw6hCUrogOWpeAgUliHtm5EdltU36eOSjuKIezmcDeDFP1QdkRIjQgBKBbh7
+	 /3hA19aanwmnz+rJA4U4boh5ucHVzB8DujxQvTaBSM8Y5fjNjaVStdeF1Xm42xiI0v
+	 5N9OEoSp1rtVSFWmuAwL7h/P7VtqPoCgV/cdKMxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahsan Atta <ahsan.atta@intel.com>,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 220/666] crypto: qat - disable 420xx AE cluster when lead engine is fused off
-Date: Wed, 20 May 2026 18:17:11 +0200
-Message-ID: <20260520162115.978031870@linuxfoundation.org>
+Subject: [PATCH 6.12 221/666] crypto: qat - fix type mismatch in RAS sysfs show functions
+Date: Wed, 20 May 2026 18:17:12 +0200
+Message-ID: <20260520162116.000070829@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,60 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahsan Atta <ahsan.atta@intel.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit f216e0f2d1787e662bb6662c9c522185aa3b855a ]
+[ Upstream commit ec23d75c4b77ae42af0777ea59599b1d4f611371 ]
 
-The get_ae_mask() function only disables individual engines based on
-the fuse register, but engines are organized in clusters of 4. If the
-lead engine of a cluster is fused off, the entire cluster must be
-disabled.
+ADF_RAS_ERR_CTR_READ() expands to atomic_read(), which returns int.
+The local variable 'counter' was declared as 'unsigned long', causing
+a type mismatch on the assignment. The format specifier '%ld' was
+consequently wrong in two ways: wrong length modifier and wrong
+signedness.
 
-Replace the single bitmask inversion with explicit test_bit() checks
-on the lead engine of each group, disabling the full ADF_AE_GROUP
-when the lead bit is set.
+Use int to match the return type of atomic_read() and update the
+format specifier to '%d' accordingly.
 
-Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Fixes: fcf60f4bcf54 ("crypto: qat - add support for 420xx devices")
+Fixes: 532d7f6bc458 ("crypto: qat - add error counters")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/qat/qat_420xx/adf_420xx_hw_data.c   | 20 +++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ .../intel/qat/qat_common/adf_sysfs_ras_counters.c    | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c b/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
-index 0e7d0db475d5d..5d32f2958da87 100644
---- a/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
-+++ b/drivers/crypto/intel/qat/qat_420xx/adf_420xx_hw_data.c
-@@ -98,9 +98,25 @@ static struct adf_hw_device_class adf_420xx_class = {
- 
- static u32 get_ae_mask(struct adf_hw_device_data *self)
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c b/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
+index e97c67c87b3cf..6abb57bfd3285 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
+@@ -13,14 +13,14 @@ static ssize_t errors_correctable_show(struct device *dev,
+ 				       char *buf)
  {
--	u32 me_disable = self->fuses[ADF_FUSECTL4];
-+	unsigned long fuses = self->fuses[ADF_FUSECTL4];
-+	u32 mask = ADF_420XX_ACCELENGINES_MASK;
+ 	struct adf_accel_dev *accel_dev;
+-	unsigned long counter;
++	int counter;
  
--	return ~me_disable & ADF_420XX_ACCELENGINES_MASK;
-+	if (test_bit(0, &fuses))
-+		mask &= ~ADF_AE_GROUP_0;
-+
-+	if (test_bit(4, &fuses))
-+		mask &= ~ADF_AE_GROUP_1;
-+
-+	if (test_bit(8, &fuses))
-+		mask &= ~ADF_AE_GROUP_2;
-+
-+	if (test_bit(12, &fuses))
-+		mask &= ~ADF_AE_GROUP_3;
-+
-+	if (test_bit(16, &fuses))
-+		mask &= ~ADF_AE_GROUP_4;
-+
-+	return mask;
+ 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
+ 	if (!accel_dev)
+ 		return -EINVAL;
+ 
+ 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_CORR);
+-	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
++	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
  }
  
- static u32 uof_get_num_objs(struct adf_accel_dev *accel_dev)
+ static ssize_t errors_nonfatal_show(struct device *dev,
+@@ -28,14 +28,14 @@ static ssize_t errors_nonfatal_show(struct device *dev,
+ 				    char *buf)
+ {
+ 	struct adf_accel_dev *accel_dev;
+-	unsigned long counter;
++	int counter;
+ 
+ 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
+ 	if (!accel_dev)
+ 		return -EINVAL;
+ 
+ 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
++	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
+ }
+ 
+ static ssize_t errors_fatal_show(struct device *dev,
+@@ -43,14 +43,14 @@ static ssize_t errors_fatal_show(struct device *dev,
+ 				 char *buf)
+ {
+ 	struct adf_accel_dev *accel_dev;
+-	unsigned long counter;
++	int counter;
+ 
+ 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
+ 	if (!accel_dev)
+ 		return -EINVAL;
+ 
+ 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_FATAL);
+-	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
++	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
+ }
+ 
+ static ssize_t reset_error_counters_store(struct device *dev,
 -- 
 2.53.0
 
