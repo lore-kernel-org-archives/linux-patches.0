@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D663E5ECF;
-	Wed, 20 May 2026 18:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4B43FA5EB;
+	Wed, 20 May 2026 18:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301305; cv=none; b=HfnHzdd1oQHukCcJbNRAfI3ln+KMO5Vo3pxPK3wKnZqs8hvDChWxYGKugmyddN7kLdljGXpKSgB09J3PgFBzbq5v200uFJnIisDCrxLTSVGiXbzCsZUNNKwOJbW9vEQyfE85UCLwnLNuh6XcwLGshXaLbZlrsPD5HAOEgpixAC0=
+	t=1779301308; cv=none; b=XWxooZx+LYWjDJua0iiKv1rSf6yAAtN00oYp/MiIkbb5WryztwxdKe3+peHvaShc9x1QfqAi5xqkHbq2+pJvq6yo8vRmNPN/6FhnIKPIB7k3oZpfTovnuwdskOGoIuTgle0c+2WY2stZwmDy5rCZBcRPw0TdJvB/a0G2J90ZQ1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301305; c=relaxed/simple;
-	bh=F9+Ml0tK15i+A8EnOYQ6t8CyF5u4sHipY1WHWfAgvIY=;
+	s=arc-20240116; t=1779301308; c=relaxed/simple;
+	bh=XRZ47ZNDmfrAVMwKaG0EYLW+Drs7mTAOK5Y5K6S3bQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OEc0vjk9aHC1Q2qy7ZFyAu29VST040FoGT+LEny5/CldcD1o4sAqAdI5hsAqEvYbXGV6MMhE7VEeXCD2TZIVznECBecFSXlEmFKzeoeOT7KYer+0a0baBXl0lFnMvdr/d43svocDx08aC3MgJJ1I/0GZ2NjT+SdX/uQqjgq5LPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTLPkO4M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dhAFWKwEQdh3+8GTDerSlu+v2KCYalFuN+kF47S2ohQaV/HbrrxMKMcjRqVif1L7h45q3K3zfAr6SfPFQReQqmELOwsn0qsxEzLK823jes/UTphGMc2jajg9hgEedN37UndsVdpj6EL6D4rv7uDTwlW6R99ZclF2kkvjET8AdSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMRYsxAz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTLPkO4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F3F1F000E9;
-	Wed, 20 May 2026 18:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMRYsxAz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 810171F00893;
+	Wed, 20 May 2026 18:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301304;
-	bh=JWpxECjMjhgvmoZ0IjtBxA6Xc8Q21HXFyP1mzEpNZoM=;
+	s=korg; t=1779301307;
+	bh=Tm4C2CgsWH3qoahLoJPJeuDmcitVQdmMkbAbLXre1XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jTLPkO4MPSU/9Le7ZY3lFEh2Cg283OAWn9Vc7nJqsz3F7HN6bnx/luo1yrIS870lz
-	 au+PFjKfvxFlXBltkY1CcIgCnQC76IVW604MP/twRc95mmX/SnP2zTqxx20wcQDAl2
-	 ue8I98wiEx4KfqniH7BzfITGpQBnXxrPngfiLc1s=
+	b=tMRYsxAzXdThUVmVSoJNtigT8jUFMXWAVEnl4+LkK0jdbl1BX3mYaLyOZYvT0dSI+
+	 1rGszyzdE+tHteOn/hm04vLXhYPDWgmhgleHeG8dfN9tgxpVGcppBAk1Vfm/PK7Jg/
+	 uwrHqRCQT799WTnpI0bQSFbsoWnmfp74e1Q+sqew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	DaeMyung Kang <charsyam@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 504/666] mailbox: mailbox-test: free channels on probe error
-Date: Wed, 20 May 2026 18:21:55 +0200
-Message-ID: <20260520162122.185042309@linuxfoundation.org>
+Subject: [PATCH 6.12 478/666] ksmbd: destroy tree_conn_ida in ksmbd_session_destroy()
+Date: Wed, 20 May 2026 18:21:29 +0200
+Message-ID: <20260520162121.627937158@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,58 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: DaeMyung Kang <charsyam@gmail.com>
 
-[ Upstream commit c02053a9055d5fdfd32432287cca8958db1d5bc5 ]
+[ Upstream commit c049ee14eb4343b69b6f7755563f961f5e153423 ]
 
-On probe error, free the previously obtained channels. This not only
-prevents a leak, but also UAF scenarios because the client structure
-will be removed nonetheless because it was allocated with devm.
+When per-session tree_conn_ida was converted from a dynamically
+allocated ksmbd_ida to an embedded struct ida, ksmbd_ida_free() was
+removed from ksmbd_session_destroy() but no matching ida_destroy()
+was added.  The session is therefore freed with the IDA's backing
+xarray still intact.
 
-Link: https://sashiko.dev/#/patchset/20260327151217.5327-2-wsa%2Brenesas%40sang-engineering.com
-Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+The kernel IDA API expects ida_init() and ida_destroy() to be paired
+over an object's lifetime, so add the missing cleanup before the
+enclosing session is freed.
+
+Also move ida_init() to right after the session is allocated so that
+it is always paired with the destroy call even on the early error
+paths of __session_create() (ksmbd_init_file_table() or
+__init_smb2_session() failures), both of which jump to the error
+label and invoke ksmbd_session_destroy() on a partially initialised
+session.
+
+No leak has been observed in testing; this is a pairing fix to match
+the IDA lifetime rules, not a response to a reproduced regression.
+
+Fixes: d40012a83f87 ("cifsd: declare ida statically")
+Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-test.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ fs/smb/server/mgmt/user_session.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index e416ce9e2d674..2e0ce6c590485 100644
---- a/drivers/mailbox/mailbox-test.c
-+++ b/drivers/mailbox/mailbox-test.c
-@@ -404,18 +404,27 @@ static int mbox_test_probe(struct platform_device *pdev)
- 	if (tdev->rx_channel) {
- 		tdev->rx_buffer = devm_kzalloc(&pdev->dev,
- 					       MBOX_MAX_MSG_LEN, GFP_KERNEL);
--		if (!tdev->rx_buffer)
--			return -ENOMEM;
-+		if (!tdev->rx_buffer) {
-+			ret = -ENOMEM;
-+			goto err_free_chans;
-+		}
- 	}
- 
- 	ret = mbox_test_add_debugfs(pdev, tdev);
- 	if (ret)
--		return ret;
-+		goto err_free_chans;
- 
- 	init_waitqueue_head(&tdev->waitq);
- 	dev_info(&pdev->dev, "Successfully registered\n");
- 
- 	return 0;
-+
-+err_free_chans:
-+	if (tdev->tx_channel)
-+		mbox_free_channel(tdev->tx_channel);
-+	if (tdev->rx_channel)
-+		mbox_free_channel(tdev->rx_channel);
-+	return ret;
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 352cf9e47ebeb..faba7a502c0b7 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -171,6 +171,7 @@ void ksmbd_session_destroy(struct ksmbd_session *sess)
+ 	free_channel_list(sess);
+ 	kfree(sess->Preauth_HashValue);
+ 	ksmbd_release_id(&session_ida, sess->id);
++	ida_destroy(&sess->tree_conn_ida);
+ 	kfree(sess);
  }
  
- static void mbox_test_remove(struct platform_device *pdev)
+@@ -445,6 +446,8 @@ static struct ksmbd_session *__session_create(int protocol)
+ 	if (!sess)
+ 		return NULL;
+ 
++	ida_init(&sess->tree_conn_ida);
++
+ 	if (ksmbd_init_file_table(&sess->file_table))
+ 		goto error;
+ 
+@@ -464,8 +467,6 @@ static struct ksmbd_session *__session_create(int protocol)
+ 	if (ret)
+ 		goto error;
+ 
+-	ida_init(&sess->tree_conn_ida);
+-
+ 	down_write(&sessions_table_lock);
+ 	hash_add(sessions_table, &sess->hlist, sess->id);
+ 	up_write(&sessions_table_lock);
 -- 
 2.53.0
 
