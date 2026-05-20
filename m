@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FA3331220;
-	Wed, 20 May 2026 18:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372934F5E0;
+	Wed, 20 May 2026 18:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300581; cv=none; b=lwLq/Qp77cKSfBU4dPSdMfKskVHPZtyX3nBKaail46+MaRtfDDAgVCeV98TcUUNWr6Ajia5oE3jHlRto3cjtQNNT8IcNS3RbIuTX/I9ZAZnphgXoQrTVLC9DF43buEUixVK/O21vF6NJStYnb2oGyyaP8l8mXsyoD+3uNjDJJPs=
+	t=1779300584; cv=none; b=urEnXZAYB2ns/dkOdsoIgVIHK7oUDed0Prx8wELaPNeKx2wGie5brZJzIUwUKA1QWDafFKZQf9JrJe+MIhoKlQPlRMDICfQRjcJglIQJHmCdFvmedgcRYEFLy0ASIPVIZ4uMQZjqBnFyRD5rB4sGWDixi2TaVyWzZbulGXn0eP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300581; c=relaxed/simple;
-	bh=EBoUQ++KW5WADrPFFg1k05z6j91rsFUjL1zYnb7W3Bs=;
+	s=arc-20240116; t=1779300584; c=relaxed/simple;
+	bh=QH21lA2z2KAe4B969Xds+K2z1i43MFGKVzvsLsNj+F0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tqsh110FU0ni3QT3VKIcxevEg9PMEEpH8pvX7Z0MRaawpNbfc206NTYUBkdIOWQz9np9pyYUrJQPkxmo4HN+B62iWZBcdT7rDhZZemzqXqCg/Fmv5NF03YcDfZE2EREu/LkmgvTQwsPkSSRi48M20fIStHb6DWkbAHsrcpKwUNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIk9jlFo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dLofFJ83tuiMQW4R3l36enOQIYkOxeml+WGJLsRClAnB9pTNzgz0gLvxNoXxnZ5frFJ5DUH1up1i3CLxgx0ZnCbsC4dZAV6JIA3kIy0mjSdD12DTrA3CWCYT6ShxP5TN1CRXfLPkYdGfLta7//5swY8M9KFBoU5pjybKroeqMvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yqkg+KkM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIk9jlFo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F091F000E9;
-	Wed, 20 May 2026 18:09:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yqkg+KkM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E12A1F000E9;
+	Wed, 20 May 2026 18:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300580;
-	bh=shXfF4X7qyyNJr2IC7R2TEfTTQnMhMkPexY89cbjPjI=;
+	s=korg; t=1779300583;
+	bh=W3QsQLeqCPbBUhzWzf0R5QDG9e5dihTnzaFocW1v/kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dIk9jlFoAa8lDSFDyzVupqlsbBRSI1kPWsCFFRvrTWLFwD6jUEPOeR3tAnNcgt5UE
-	 unGvlfCmOD/yqYU12zCS4UskjRMYOew9f0PMRaPdsrt4bmeOfl66Y6zg1pJ5JLbtrf
-	 vze7AIjryN/tdLz5F70Fjr4gQgZj+ADcWj58SACU=
+	b=Yqkg+KkMKuuYAY0vI+PnYK6rg6lEwFyfbrITxEMQDrpsweXr4P65MDIPu9c7opAbl
+	 F+eXtm7TLzBfQ4J1F/Kp9WmEV8hQWlpA2Pbbwg1Lx61d0sUVU/6zvhv06XYxw8jK38
+	 fWvbxEFWiY2pqCgf8u5bcBSQeFF/e0ScEvQSeJPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 229/666] ALSA: scarlett2: Add missing sentinel initializer field
-Date: Wed, 20 May 2026 18:17:20 +0200
-Message-ID: <20260520162116.175998198@linuxfoundation.org>
+Subject: [PATCH 6.12 230/666] ASoC: SOF: compress: return the configured codec from get_params
+Date: Wed, 20 May 2026 18:17:21 +0200
+Message-ID: <20260520162116.198358719@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -45,43 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 2428cd6e8b6fa80c36db4652702ca0acd2ce3f08 ]
+[ Upstream commit 2c4fdd055f92a2fc8602dcd88bcea08c374b7e8b ]
 
-A "-Wmissing-field-initializers" warning was emitted when compiling the
-module using the W=2 option. There is a sentinel initializer field
-missing in the end of scarlett2_devices[]. Tested using a
-Scarlett Solo 4th gen.
+The SOF compressed offload path accepts codec parameters in
+sof_compr_set_params() and forwards them to firmware as
+extended data in the SOF IPC stream params message.
 
-Fixes: d98cc489029d ("ALSA: scarlett2: Move USB IDs out from device_info struct")
-Signed-off-by: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
-Link: https://patch.msgid.link/20260405222548.8903-1-npetrakopoulos2003@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+However, sof_compr_get_params() still returns success without
+filling the snd_codec structure. Since the compress core allocates
+that structure zeroed and copies it back to userspace on success,
+SNDRV_COMPRESS_GET_PARAMS returns an all-zero codec description
+even after the stream has been configured successfully.
+
+The stale TODO in this callback conflates get_params() with capability
+discovery. Supported codec enumeration belongs in get_caps() and
+get_codec_caps(). get_params() should report the current codec settings.
+
+Cache the codec accepted by sof_compr_set_params() in the per-stream SOF
+compress state and return it from sof_compr_get_params().
+
+Fixes: 6324cf901e14 ("ASoC: SOF: compr: Add compress ops implementation")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260325-sof-compr-get-params-v1-1-0758815f13c7@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_scarlett2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sof/compress.c | 8 +++++---
+ sound/soc/sof/sof-priv.h | 2 ++
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/mixer_scarlett2.c b/sound/usb/mixer_scarlett2.c
-index fe1d6e512699c..ef5945aa40e4a 100644
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -2221,7 +2221,7 @@ static const struct scarlett2_device_entry scarlett2_devices[] = {
- 	{ USB_ID(0x1235, 0x820c), &clarett_8pre_info, "Clarett+" },
+diff --git a/sound/soc/sof/compress.c b/sound/soc/sof/compress.c
+index c469bb706e4a4..b64a5d99fe608 100644
+--- a/sound/soc/sof/compress.c
++++ b/sound/soc/sof/compress.c
+@@ -247,6 +247,7 @@ static int sof_compr_set_params(struct snd_soc_component *component,
+ 	sstream->sampling_rate = params->codec.sample_rate;
+ 	sstream->channels = params->codec.ch_out;
+ 	sstream->sample_container_bytes = pcm->params.sample_container_bytes;
++	sstream->codec_params = params->codec;
  
- 	/* End of list */
--	{ 0, NULL },
-+	{ 0, NULL, NULL },
+ 	spcm->prepared[cstream->direction] = true;
+ 
+@@ -259,9 +260,10 @@ static int sof_compr_set_params(struct snd_soc_component *component,
+ static int sof_compr_get_params(struct snd_soc_component *component,
+ 				struct snd_compr_stream *cstream, struct snd_codec *params)
+ {
+-	/* TODO: we don't query the supported codecs for now, if the
+-	 * application asks for an unsupported codec the set_params() will fail.
+-	 */
++	struct sof_compr_stream *sstream = cstream->runtime->private_data;
++
++	*params = sstream->codec_params;
++
+ 	return 0;
+ }
+ 
+diff --git a/sound/soc/sof/sof-priv.h b/sound/soc/sof/sof-priv.h
+index 843be3b6415d9..53bcc627ae8b5 100644
+--- a/sound/soc/sof/sof-priv.h
++++ b/sound/soc/sof/sof-priv.h
+@@ -17,6 +17,7 @@
+ #include <sound/sof/info.h>
+ #include <sound/sof/pm.h>
+ #include <sound/sof/trace.h>
++#include <sound/compress_params.h>
+ #include <uapi/sound/sof/fw.h>
+ #include <sound/sof/ext_manifest.h>
+ 
+@@ -119,6 +120,7 @@ struct sof_compr_stream {
+ 	u32 sampling_rate;
+ 	u16 channels;
+ 	u16 sample_container_bytes;
++	struct snd_codec codec_params;
+ 	size_t posn_offset;
  };
  
- /* get the starting port index number for a given port type/direction */
 -- 
 2.53.0
 
