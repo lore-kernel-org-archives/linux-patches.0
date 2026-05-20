@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A413F65E6;
-	Wed, 20 May 2026 17:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6F33F4DDB;
+	Wed, 20 May 2026 18:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299998; cv=none; b=gQC9Vm5UC2qcygpPQZdmuBV+p8sFDHfyBlTpDJEw4jBJ/QYpjszSIx9tbAdpuo7lD1b2lKgv9SbEBOfxE0x2cnoW/yBTWFw3Tu+YV7YM6jbI4sot6oItCXJGdzGhHlwi5RWt/X3WqJYmsgJFOA7m9knjc8neK2xEnWVg3R2gK+8=
+	t=1779300001; cv=none; b=l/HSfcXi6X132jDuuY2IYLlIy6c/cwl+WrwisilWIi4I7S8xB+hmGW56KJY2jAphCAZq9X0klD/7O4Z9vI1GtwkxOHVVH0jygi2EkYh/y/wDmOcCjbA3BkOqV7SEVdrEHQIReyz3x3qLSRBFfJsc7UBAu8jcU9bA5D/PoAk0y4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299998; c=relaxed/simple;
-	bh=Mp1eaa4gIBx323x72iYhDNRoA7ZXvtpEDt+Pu15QVNg=;
+	s=arc-20240116; t=1779300001; c=relaxed/simple;
+	bh=Cs6wglBiuB6ZviHfr7M4jqS3UMVzRoiVFqOdYDiZ9Uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nvUOr+/7i84w7HMWitC4u6ab/Q8f9VNsXMKgc+jwI9ZTiMTjTVxkKnsTTaVHVCOdFGeDSHS//cOKk9GP2CJvubJnei4SiMjm0GXSelmAKMn76/mA6PppVqR6dazT9dw701uhbR78mnv+4d3R9G0bh8Nk1gYv6htOpMNJTvKNMBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXtevr04; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uIpKLKiRTrkts3RXGnS0hWi4txzqDK6hoLoqXc6oqONRhZhBC/23qfe8puNt4SMTN/s88J+Bzgz5aGtvJ0tlqVEqOnfJ7xokykB4cPUyysqIoXgbVpVtnVbVltWBbp6dhqH82LoOEi+QoeVadsupo7BpX755vIXcktQtTjTGSmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lnr5mdHf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXtevr04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BF01F000E9;
-	Wed, 20 May 2026 17:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lnr5mdHf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819161F000E9;
+	Wed, 20 May 2026 17:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299997;
-	bh=fjvDaB5GWEhaYxSuMiWGovGMJCGzYJdZjEMifRSTDdk=;
+	s=korg; t=1779300000;
+	bh=fKbZDcyYHAut6WEupVzw+3m8g7ajtzvIWa9UFebvkGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aXtevr0486HA5XWlvPXxPhpFh8xxFbXKUUSe1QSnUDGsOZGXq45CUTx0Pgllq7z25
-	 nJwvjDrMyymyz88GlopUISXXehZfSQVEQIMQa6/uKv0vBvW9I0ySaHxKDyOfERyehB
-	 Ovq6qUw/H0QlzgttboPp0VK9ZiLyBKX8fYJeE9Ck=
+	b=Lnr5mdHf0faoXy49hxElOW5UxxxKVaxmPDRFgfXiOH0H8wuZziQHxGaGPQm9l6GD9
+	 aCPTd8IAUOR2DvJM8H2WPeVVtDLpyzN4BhzEFN6SCyGZ83FepXRpn9zxJ4/hPqRx0Z
+	 m5VYFwuBGBc7Via3qNkSuiRU6w4CnfmjCF8RdmAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 001/666] io_uring/kbuf: use mem_is_zero()
-Date: Wed, 20 May 2026 18:13:32 +0200
-Message-ID: <20260520162111.260571789@linuxfoundation.org>
+	Cole Leavitt <cole@unwrap.rs>,
+	Kees Cook <kees@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 010/666] pstore/ram: fix resource leak when ioremap() fails
+Date: Wed, 20 May 2026 18:13:41 +0200
+Message-ID: <20260520162111.454417941@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -50,59 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Cole Leavitt <cole@unwrap.rs>
 
-commit 1724849072854a66861d461b298b04612702d685 upstream.
+[ Upstream commit 2ddb69f686ef7a621645e97fc7329c50edf5d0e5 ]
 
-Make use of mem_is_zero() for reserved fields checking.
+In persistent_ram_iomap(), ioremap() or ioremap_wc() may return NULL on
+failure. Currently, if this happens, the function returns NULL without
+releasing the memory region acquired by request_mem_region().
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/11fe27b7a831329bcdb4ea087317ef123ba7c171.1747150490.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This leads to a resource leak where the memory region remains reserved
+but unusable.
+
+Additionally, the caller persistent_ram_buffer_map() handles NULL
+correctly by returning -ENOMEM, but without this check, a NULL return
+combined with request_mem_region() succeeding leaves resources in an
+inconsistent state.
+
+This is the ioremap() counterpart to commit 05363abc7625 ("pstore:
+ram_core: fix incorrect success return when vmap() fails") which fixed
+a similar issue in the vmap() path.
+
+Fixes: 404a6043385d ("staging: android: persistent_ram: handle reserving and mapping memory")
+Signed-off-by: Cole Leavitt <cole@unwrap.rs>
+Link: https://patch.msgid.link/20260225235406.11790-1-cole@unwrap.rs
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/kbuf.c |   14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ fs/pstore/ram_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -705,8 +705,7 @@ int io_register_pbuf_ring(struct io_ring
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index 7b6d6378a3b87..95675d4bab141 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -489,6 +489,10 @@ static void *persistent_ram_iomap(phys_addr_t start, size_t size,
+ 	else
+ 		va = ioremap_wc(start, size);
  
- 	if (copy_from_user(&reg, arg, sizeof(reg)))
- 		return -EFAULT;
--
--	if (reg.resv[0] || reg.resv[1] || reg.resv[2])
-+	if (!mem_is_zero(reg.resv, sizeof(reg.resv)))
- 		return -EINVAL;
- 	if (reg.flags & ~(IOU_PBUF_RING_MMAP | IOU_PBUF_RING_INC))
- 		return -EINVAL;
-@@ -773,9 +772,7 @@ int io_unregister_pbuf_ring(struct io_ri
- 
- 	if (copy_from_user(&reg, arg, sizeof(reg)))
- 		return -EFAULT;
--	if (reg.resv[0] || reg.resv[1] || reg.resv[2])
--		return -EINVAL;
--	if (reg.flags)
-+	if (!mem_is_zero(reg.resv, sizeof(reg.resv)) || reg.flags)
- 		return -EINVAL;
- 
- 	bl = io_buffer_get_list(ctx, reg.bgid);
-@@ -793,14 +790,11 @@ int io_register_pbuf_status(struct io_ri
- {
- 	struct io_uring_buf_status buf_status;
- 	struct io_buffer_list *bl;
--	int i;
- 
- 	if (copy_from_user(&buf_status, arg, sizeof(buf_status)))
- 		return -EFAULT;
--
--	for (i = 0; i < ARRAY_SIZE(buf_status.resv); i++)
--		if (buf_status.resv[i])
--			return -EINVAL;
-+	if (!mem_is_zero(buf_status.resv, sizeof(buf_status.resv)))
-+		return -EINVAL;
- 
- 	bl = io_buffer_get_list(ctx, buf_status.buf_group);
- 	if (!bl)
++	/* We must release the mem region if ioremap fails. */
++	if (!va)
++		release_mem_region(start, size);
++
+ 	/*
+ 	 * Since request_mem_region() and ioremap() are byte-granularity
+ 	 * there is no need handle anything special like we do when the
+-- 
+2.53.0
+
 
 
