@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBC33D75C7;
-	Wed, 20 May 2026 17:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F773F1AB8;
+	Wed, 20 May 2026 17:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296710; cv=none; b=W+s8/knZjQ4a/+uq7AUzLGKnOZod7ELrjYUOOIu0xnlZPfjlQD/7ZwhOh41JSbPl/q9QPyhSX6AEfy5ZLEl76A4m9FR2Qa2hkOGX3tc/dc3rUMn+0cQupvxN8naHUlE12jeX0uYZZL30dGHJftr524aRd4uNG3FNMW1749Jin/k=
+	t=1779296713; cv=none; b=unKofudepxPPG88UFz4Dix27om5jNG7655uBKAtcVmUCD1XL5uLpZG+HrUmgoBsl13OZzgogRrMKuSs/YIkWj8bL634u7buEruRcZVXX90YYp/fIj/tCmD2cx+4vPVZzP8fohD57/XPD+57+49ywbvBSXYT4rKQd4TWmRHa01Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296710; c=relaxed/simple;
-	bh=JveKBoI5TKLq6Bp73h6TJT9uRMv+3zZiSUAUO25ModU=;
+	s=arc-20240116; t=1779296713; c=relaxed/simple;
+	bh=KnkdIfLq969hMacmJOsMJMuabImPbXnS00wC9Zn4zkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VsyNLAm9C1ehsvMqoVdc2s0HX4o0q9KB9eR1ckMxS1zGc8cTgz+bcPRXQnZKZH+JgJXf+UOUIf4AXsq9MysNsKLH+GpqZ027IuiXsgk/atC6uuOXPEneK8Dyuu9mie1iUVXhQGIHkEtzJEZQajfbPfEYqMbHbS9guY3OwhVQc4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+mIfYw/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GYO+hvYx/9nrFq0cnZNWYUgCw6rT4UXT1dTZcLOsfeoxIC4k8Ke2/ISXzoPdonszlE5zZvS1KOlbJsoj4n1dOUjK40ovaoN5sel+cR4meAScnKWR3v603221hl9mo16MhXEnmXsw9LQ3+cLQx6eaSUM2qNSreLLzQrfuhInYzIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWTaOxDj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+mIfYw/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1AA41F000E9;
-	Wed, 20 May 2026 17:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWTaOxDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597291F00893;
+	Wed, 20 May 2026 17:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296709;
-	bh=NeqXPKD/0UUEcBADTI1EgSI6P3ZlCQji436YhQyZHPY=;
+	s=korg; t=1779296711;
+	bh=ik/9sbTYTwwrmXjrnhe+jeUss2v14B+K63xWTiSKHfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q+mIfYw/XeLV+o7IUjZ+iwpZymtHvYUO2ZtuHuUEFvz63AiofbN/r1v7C0QXqevFm
-	 acvtYYuIZJEZx0jBNc3Xh/R/K3DgGYwQIgLFCmUXxh5+zoTR97NYrkQys4sTAMxYpE
-	 9Spy3u2kUpFuXfaTzgOpGuKEUzWTb+Fj5ECYGs+U=
+	b=ZWTaOxDjzQppA29YiFN2bRBtvFR/5t2CIRn1Ex/ewCxlcb6+krpCgSO/VuD1sNYGr
+	 SNVZIWIrMIaOFm6ukveUTE/Btf4Ba9T3HyjPM1YuuaEExx3gj6qug+EAuZGET7Kufv
+	 Mj7SogDiUgnrKsfP1zKodWW7UGrkYs9unCV8kF5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Slavin Liu <220245772@seu.edu.cn>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0901/1146] drm/amdgpu: avoid double drm_exec_fini() in userq validate
-Date: Wed, 20 May 2026 18:19:11 +0200
-Message-ID: <20260520162208.625953587@linuxfoundation.org>
+Subject: [PATCH 7.0 0902/1146] drm/amdgpu/gmc: Fix AMDGPU_GART_PLACEMENT_LOW to not overlap with VRAM
+Date: Wed, 20 May 2026 18:19:12 +0200
+Message-ID: <20260520162208.650194873@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,57 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 508babf310365f1107a2e8831c267c292a286818 ]
+[ Upstream commit 36d65da7570bf72ce28504fa9a81abfc728e6d96 ]
 
-When new_addition is true, amdgpu_userq_vm_validate() calls
-drm_exec_fini(&exec) before iterating over the collected HMM ranges and
-calling amdgpu_ttm_tt_get_user_pages().
+When the GART placement is set to AMDGPU_GART_PLACEMENT_LOW:
+Make sure that GART does not overlap with VRAM when
+VRAM is configured to be in the low address space.
 
-If amdgpu_ttm_tt_get_user_pages() fails in that path, the code jumps to
-unlock_all and calls drm_exec_fini(&exec) a second time on the same
-exec object. drm_exec_fini() is not idempotent: it frees exec->objects
-and may also drop exec->contended and finalize the ww acquire context.
+Solve this according to the following logic:
+- When GART fits before VRAM, use zero address for GART
+- Otherwise, put GART after the end of VRAM, aligned to 4 GiB
 
-Route that error path directly to the range cleanup once exec has
-already been finalized.
+Previously, I had assumed this was not possible
+so it was OK to not handle it, but now we got a report
+from a user who has a board that is configured this way.
 
-Fixes: 42f148788469 ("drm/amdgpu/userqueue: validate userptrs for userqueues")
-Issue found using a prototype static analysis tool
-and confirmed by code review.
-
+Fixes: 917f91d8d8e8 ("drm/amdgpu/gmc: add a way to force a particular placement for GART")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Signed-off-by: Slavin Liu <220245772@seu.edu.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2802952e4a07306da6ebe813ff1acacc5691851a)
+(cherry picked from commit 3d9de5d86a1658cadb311461b001eb1df67263ad)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-index caca0c4aeefe7..0e015741ab24e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-@@ -1231,7 +1231,7 @@ amdgpu_userq_vm_validate(struct amdgpu_userq_mgr *uq_mgr)
- 			bo = range->bo;
- 			ret = amdgpu_ttm_tt_get_user_pages(bo, range);
- 			if (ret)
--				goto unlock_all;
-+				goto free_ranges;
- 		}
- 
- 		invalidated = true;
-@@ -1258,6 +1258,7 @@ amdgpu_userq_vm_validate(struct amdgpu_userq_mgr *uq_mgr)
- 
- unlock_all:
- 	drm_exec_fini(&exec);
-+free_ranges:
- 	xa_for_each(&xa, tmp_key, range) {
- 		if (!range)
- 			continue;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+index 5179fa008626e..19abb09f0e197 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -313,7 +313,10 @@ void amdgpu_gmc_gart_location(struct amdgpu_device *adev, struct amdgpu_gmc *mc,
+ 		mc->gart_start = max_mc_address - mc->gart_size + 1;
+ 		break;
+ 	case AMDGPU_GART_PLACEMENT_LOW:
+-		mc->gart_start = 0;
++		if (size_bf >= mc->gart_size)
++			mc->gart_start = 0;
++		else
++			mc->gart_start = ALIGN(mc->fb_end, four_gb);
+ 		break;
+ 	case AMDGPU_GART_PLACEMENT_BEST_FIT:
+ 	default:
 -- 
 2.53.0
 
