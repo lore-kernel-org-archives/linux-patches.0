@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5694D3C870E;
-	Wed, 20 May 2026 17:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015083EF0D7;
+	Wed, 20 May 2026 17:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296752; cv=none; b=YpkCRv3IP36DoJDXRqRIzchDmKmUhVglXgeoT7wFonR6Mz5NEWj7lR1PztxQWgn7XcSAtIrt2EHE5oERAY80+KLCw6lnyPQPaR+RICOCIuq5FkOXgLok9oT/JqA81wcV5MRHXAOqjx3lF33CBZ8o9I1hkbWRHm5T3G0z3Xxh12c=
+	t=1779296755; cv=none; b=oq30NPHbt73DtgVJn8FiozIn4oFlhCGSCfWQ8G5YOsQYLpLYW1fE7PbAZhVziLpmlQasyc0CniruuPx0u9pmEVm46kc+OyMM2eGDJUmVCYP7/eXEHriTDhbILpgAFs9xCOxyv5s0LxxNbmJYjHMcedNwsxmgYdmp8hPKAnHj/tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296752; c=relaxed/simple;
-	bh=pejbW3azWXEnakdLiUowj9ghKiXOOVliQxmCxUPyqak=;
+	s=arc-20240116; t=1779296755; c=relaxed/simple;
+	bh=OcnQVvU1VO97j1GJrWI4GVw33aB0M/RlKqiMErGyWPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4IIA1fLjwy2bFLEqMRAjPfwqRDHcvCHWJF08in9QKxQbND+Cu/WwYTL7mtsVY451g+8R5pC0WEGQxM7hs/u7FPxkqv3Y37IYubjnxRpKms0kUzTthBiYHtN18O27YRta71c3ENG85GZmvaEvBniBbNrrTvMYaZxN2cNWIB2+CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKz8fXQL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NXetEbmXBmOejCTtISv4X/l4jF9F+oWGOGpLn/SY/gf6KsugUz49kJr+349xYj+wX+AOxKhPm6aw/fXWXXnTQPLp9LvXfzC/gwM6GzPxtkHoMzkviTWN7lmnltSv0y+i2/TuxgpcmIHDZPvrn/b/oxdfGHKz/jXQe5f6v8bZX4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqmJFXMA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKz8fXQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22A61F000E9;
-	Wed, 20 May 2026 17:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqmJFXMA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666651F000E9;
+	Wed, 20 May 2026 17:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296751;
-	bh=7o/3A6DrHn3Do3OoDzDUXFKAIHTtPRkrBZzvjDauHL8=;
+	s=korg; t=1779296753;
+	bh=QTrkxB0d9Mdk3MOyXFHshrDaCE5Y733or0XEidar04Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UKz8fXQLiXW/GdoiPG/mLO10b5X1CJL2XhcHom4f7u/b/2JyyTngXl+FS+fX29u0z
-	 R+m9V80EfPrV1KIG4L7C5BXRgKIxgEa0LF9NoxLseNZv9XOMqEITYWrnfQYzc74nwm
-	 sTOe/YVhOR5UXqsIACFmrZRL8xI24NVWsFqpXNro=
+	b=MqmJFXMA/aod2TNXh9qkoU0x38+O4/lBlko0E7B5LfrCjMKEaQdOphQPabZgtMrk/
+	 dr1eY82YYh1KLCsoiz+UijvYZIN7YRHAJlJpXmWaV+oGrshGEmzD2wxAgnQ7FahtbM
+	 PH7C6JJllxixq6hFv8UymavUNCmnj4qrgFywz/K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Robert Beckett <bob.beckett@collabora.com>,
-	Umang Jain <uajain@igalia.com>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Melissa Wen <mwen@igalia.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0911/1146] ASoC: amd: acp: Add DMI quirk for Valve Steam Deck OLED
-Date: Wed, 20 May 2026 18:19:21 +0200
-Message-ID: <20260520162208.857171509@linuxfoundation.org>
+Subject: [PATCH 7.0 0920/1146] mtd: spinand: Add support for packed read data ODTR commands
+Date: Wed, 20 May 2026 18:19:30 +0200
+Message-ID: <20260520162209.061376483@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -56,175 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit b0f6f4ac7d5d04fe2adcdd63ed1cd1ad505b8958 ]
+[ Upstream commit 5e25407b68f460142539536e31fa20338db6146f ]
 
-Commit 671dd2ffbd8b ("ASoC: amd: acp: Add new cpu dai and dailink creation for I2S BT instance")
-introduced a change that "broke" Steam Deck's audio probe, in the OLED
-model, as observed in the following dmesg snippet:
+Some devices stuff address bits in the double byte opcode (in place of
+the repeated byte) in order to be able to increase the size of the
+devices, without adding extra address bytes.
 
-[...]
-snd_sof_amd_vangogh 0000:04:00.5: Topology: ABI 3:26:0 Kernel ABI 3:23:1
-sof_mach nau8821-max: ASoC: physical link acp-bt-codec (id 2) not exist
-sof_mach nau8821-max: ASoC: topology: could not load header: -22
-snd_sof_amd_vangogh 0000:04:00.5: tplg amd/sof-tplg/sof-vangogh-nau8821-max.tplg component load failed -22
-snd_sof_amd_vangogh 0000:04:00.5: error: failed to load DSP topology -22
-snd_sof_amd_vangogh 0000:04:00.5: ASoC error (-22): at snd_soc_component_probe() on 0000:04:00.5
-sof_mach nau8821-max: ASoC: failed to instantiate card -22
-sof_mach nau8821-max: error -EINVAL: Failed to register card(sof-nau8821-max)
-sof_mach nau8821-max: probe with driver sof_mach failed with error -22
-[...]
+Create a flag to identify those devices. When the flag is set, use the
+"packed" variant for the read data operation.
 
-Notice the quotes in "broke": it's not really a bug in such commit,
-but instead a problem with a topology file from Steam Deck OLED. This
-was discussed to great extent in [1], and Cristian proposed a pretty
-simple and functional change that resolved the issue for the Deck's
-issue. That change, though, would break other devices, so it wasn't
-accepted upstream. And the proper suggested solution (fix the topology)
-was never implemented, so Valve's kernel (and anyone that wants to boot
-the mainline on Steam Deck OLED) is carrying that fix downstream.
-
-So, we propose hereby a different approach: a DMI quirk, as many already
-present in the sound drivers, to address this issue solely on Steam Deck
-OLED, not breaking other devices and as a bonus, allowing simple patch
-up in case eventually the topology file gets fixed (we'd just need to
-check against any DMI info reflecting that or the topology/FW versions).
-
-The motivation of such upstream quirk is related to users that want
-to test latest kernel trees on their devices and get no only non-working
-sound device, but seems some games (like Ori and the Blind Forest)
-can't properly work without a proper functional audio device.
-Example of such report can be seen at [2].
-
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Robert Beckett <bob.beckett@collabora.com>
-Cc: Umang Jain <uajain@igalia.com>
-Fixes: 671dd2ffbd8b ("ASoC: amd: acp: Add new cpu dai and dailink creation for I2S BT instance")
-Link: https://lore.kernel.org/r/20231209205351.880797-11-cristian.ciocaltea@collabora.com/ [1]
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218677 [2]
-Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Tested-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Link: https://patch.msgid.link/20260423183505.116445-1-gpiccoli@igalia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Stable-dep-of: 8d655748aba1 ("mtd: spinand: winbond: Set the packed page read flag to W35N02/04JW")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-legacy-mach.c |  2 +-
- sound/soc/amd/acp/acp-mach-common.c | 22 +++++++++++++++++++---
- sound/soc/amd/acp/acp-mach.h        |  4 ++++
- sound/soc/amd/acp/acp-sof-mach.c    |  2 +-
- 4 files changed, 25 insertions(+), 5 deletions(-)
+ drivers/mtd/nand/spi/core.c | 24 +++++++++++++++++++++---
+ include/linux/mtd/spinand.h |  7 +++++++
+ 2 files changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-legacy-mach.c b/sound/soc/amd/acp/acp-legacy-mach.c
-index a7a551366a409..235d6cc83fa98 100644
---- a/sound/soc/amd/acp/acp-legacy-mach.c
-+++ b/sound/soc/amd/acp/acp-legacy-mach.c
-@@ -174,7 +174,7 @@ static int acp_asoc_probe(struct platform_device *pdev)
- 		acp_card_drvdata->acp_rev = mach->mach_params.subsystem_rev;
+diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
+index 8aa3753aaaa1d..0b076790bd9df 100644
+--- a/drivers/mtd/nand/spi/core.c
++++ b/drivers/mtd/nand/spi/core.c
+@@ -100,6 +100,17 @@ spinand_fill_page_read_op(struct spinand_device *spinand, u64 addr)
+ 	return op;
+ }
  
- 	dmi_id = dmi_first_match(acp_quirk_table);
--	if (dmi_id && dmi_id->driver_data)
-+	if (dmi_id && dmi_id->driver_data == (void *)QUIRK_TDM_MODE_ENABLE)
- 		acp_card_drvdata->tdm_mode = dmi_id->driver_data;
- 
- 	ret = acp_legacy_dai_links_create(card);
-diff --git a/sound/soc/amd/acp/acp-mach-common.c b/sound/soc/amd/acp/acp-mach-common.c
-index 09f6c9a2c0410..ef784cca13f2b 100644
---- a/sound/soc/amd/acp/acp-mach-common.c
-+++ b/sound/soc/amd/acp/acp-mach-common.c
-@@ -20,6 +20,7 @@
- #include <sound/soc.h>
- #include <linux/input.h>
- #include <linux/module.h>
-+#include <linux/dmi.h>
- 
- #include "../../codecs/rt5682.h"
- #include "../../codecs/rt1019.h"
-@@ -37,15 +38,21 @@
- #define NAU8821_FREQ_OUT	12288000
- #define MAX98388_CODEC_DAI	"max98388-aif1"
- 
--#define TDM_MODE_ENABLE 1
--
- const struct dmi_system_id acp_quirk_table[] = {
- 	{
- 		/* Google skyrim proto-0 */
- 		.matches = {
- 			DMI_EXACT_MATCH(DMI_PRODUCT_FAMILY, "Google_Skyrim"),
- 		},
--		.driver_data = (void *)TDM_MODE_ENABLE,
-+		.driver_data = (void *)QUIRK_TDM_MODE_ENABLE,
-+	},
-+	{
-+		/* Valve Steam Deck OLED */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Valve"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Galileo"),
-+		},
-+		.driver_data = (void *)QUIRK_REMAP_DMIC_BT,
- 	},
- 	{}
- };
-@@ -1401,6 +1408,7 @@ int acp_sofdsp_dai_links_create(struct snd_soc_card *card)
- 	struct snd_soc_dai_link *links;
- 	struct device *dev = card->dev;
- 	struct acp_card_drvdata *drv_data = card->drvdata;
-+	const struct dmi_system_id *dmi_id = dmi_first_match(acp_quirk_table);
- 	int i = 0, num_links = 0;
- 
- 	if (drv_data->hs_cpu_id)
-@@ -1572,6 +1580,9 @@ int acp_sofdsp_dai_links_create(struct snd_soc_card *card)
- 			links[i].codecs = &snd_soc_dummy_dlc;
- 			links[i].num_codecs = 1;
- 		}
++static struct spi_mem_op
++spinand_fill_page_read_packed_op(struct spinand_device *spinand, u64 addr)
++{
++	struct spi_mem_op op = spinand->op_templates->page_read;
 +
-+		if (dmi_id && dmi_id->driver_data == (void *)QUIRK_REMAP_DMIC_BT)
-+			links[i].id = DMIC_BE_ID;
- 		i++;
- 	}
- 
-@@ -1587,6 +1598,11 @@ int acp_sofdsp_dai_links_create(struct snd_soc_card *card)
- 		links[i].capture_only = 1;
- 		links[i].nonatomic = true;
- 		links[i].no_pcm = 1;
++	op.cmd.opcode |= addr >> 16;
++	op.addr.val = addr & 0xFFFF;
 +
-+		if (dmi_id && dmi_id->driver_data == (void *)QUIRK_REMAP_DMIC_BT) {
-+			links[i].id = BT_BE_ID;
-+			dev_dbg(dev, "quirk REMAP_DMIC_BT enabled\n");
-+		}
- 	}
- 
- 	card->dai_link = links;
-diff --git a/sound/soc/amd/acp/acp-mach.h b/sound/soc/amd/acp/acp-mach.h
-index f94c30c20f20b..7177d3fd96192 100644
---- a/sound/soc/amd/acp/acp-mach.h
-+++ b/sound/soc/amd/acp/acp-mach.h
-@@ -26,6 +26,10 @@
- 
- #define acp_get_drvdata(card) ((struct acp_card_drvdata *)(card)->drvdata)
- 
-+/* List of DMI quirks - check acp-mach-common.c for usage. */
-+#define QUIRK_TDM_MODE_ENABLE 1
-+#define QUIRK_REMAP_DMIC_BT 2
++	return op;
++}
 +
- enum be_id {
- 	HEADSET_BE_ID = 0,
- 	AMP_BE_ID,
-diff --git a/sound/soc/amd/acp/acp-sof-mach.c b/sound/soc/amd/acp/acp-sof-mach.c
-index 6215e31eceddf..36ecef7013b9c 100644
---- a/sound/soc/amd/acp/acp-sof-mach.c
-+++ b/sound/soc/amd/acp/acp-sof-mach.c
-@@ -110,7 +110,7 @@ static int acp_sof_probe(struct platform_device *pdev)
+ struct spi_mem_op
+ spinand_fill_prog_exec_op(struct spinand_device *spinand, u64 addr)
+ {
+@@ -453,7 +464,10 @@ static int spinand_load_page_op(struct spinand_device *spinand,
+ {
+ 	struct nand_device *nand = spinand_to_nand(spinand);
+ 	unsigned int row = nanddev_pos_to_row(nand, &req->pos);
+-	struct spi_mem_op op = SPINAND_OP(spinand, page_read, row);
++	bool packed = spinand->flags & SPINAND_ODTR_PACKED_PAGE_READ;
++	struct spi_mem_op op = packed ?
++		SPINAND_OP(spinand, page_read_packed, row) :
++		SPINAND_OP(spinand, page_read, row);
  
- 	acp_card_drvdata = card->drvdata;
- 	dmi_id = dmi_first_match(acp_quirk_table);
--	if (dmi_id && dmi_id->driver_data)
-+	if (dmi_id && dmi_id->driver_data == (void *)QUIRK_TDM_MODE_ENABLE)
- 		acp_card_drvdata->tdm_mode = dmi_id->driver_data;
+ 	return spi_mem_exec_op(spinand->spimem, &op);
+ }
+@@ -1489,9 +1503,13 @@ static int spinand_init_odtr_instruction_set(struct spinand_device *spinand)
+ 	if (!spi_mem_supports_op(spinand->spimem, &tmpl->blk_erase))
+ 		return -EOPNOTSUPP;
  
- 	acp_card_drvdata->acp_rev = mach->mach_params.subsystem_rev;
+-	tmpl->page_read = (struct spi_mem_op)SPINAND_PAGE_READ_8D_8D_0_OP(0);
+-	if (!spi_mem_supports_op(spinand->spimem, &tmpl->page_read))
++	if (spinand->flags & SPINAND_ODTR_PACKED_PAGE_READ)
++		tmpl->page_read = (struct spi_mem_op)SPINAND_PAGE_READ_PACKED_8D_8D_0_OP(0);
++	else
++		tmpl->page_read = (struct spi_mem_op)SPINAND_PAGE_READ_8D_8D_0_OP(0);
++	if (!spi_mem_supports_op(spinand->spimem, &tmpl->page_read)) {
+ 		return -EOPNOTSUPP;
++	}
+ 
+ 	tmpl->prog_exec = (struct spi_mem_op)SPINAND_PROG_EXEC_8D_8D_0_OP(0);
+ 	if (!spi_mem_supports_op(spinand->spimem, &tmpl->prog_exec))
+diff --git a/include/linux/mtd/spinand.h b/include/linux/mtd/spinand.h
+index 6a024cf1c53ac..f2f80103649d5 100644
+--- a/include/linux/mtd/spinand.h
++++ b/include/linux/mtd/spinand.h
+@@ -290,6 +290,12 @@
+ 		   SPI_MEM_OP_NO_DUMMY,					\
+ 		   SPI_MEM_OP_NO_DATA)
+ 
++#define SPINAND_PAGE_READ_PACKED_8D_8D_0_OP(addr)			\
++	SPI_MEM_OP(SPI_MEM_DTR_OP_PACKED_CMD(0x13, addr >> 16, 8),	\
++		   SPI_MEM_DTR_OP_ADDR(2, addr & 0xffff, 8),		\
++		   SPI_MEM_OP_NO_DUMMY,					\
++		   SPI_MEM_OP_NO_DATA)
++
+ #define SPINAND_PAGE_READ_FROM_CACHE_8D_8D_8D_OP(addr, ndummy, buf, len, freq) \
+ 	SPI_MEM_OP(SPI_MEM_DTR_OP_RPT_CMD(0x9d, 8),			\
+ 		   SPI_MEM_DTR_OP_ADDR(2, addr, 8),			\
+@@ -482,6 +488,7 @@ struct spinand_ecc_info {
+ #define SPINAND_HAS_PROG_PLANE_SELECT_BIT		BIT(2)
+ #define SPINAND_HAS_READ_PLANE_SELECT_BIT		BIT(3)
+ #define SPINAND_NO_RAW_ACCESS				BIT(4)
++#define SPINAND_ODTR_PACKED_PAGE_READ			BIT(5)
+ 
+ /**
+  * struct spinand_ondie_ecc_conf - private SPI-NAND on-die ECC engine structure
 -- 
 2.53.0
 
