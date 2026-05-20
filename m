@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF3136F901;
-	Wed, 20 May 2026 17:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D979D36A352;
+	Wed, 20 May 2026 17:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297445; cv=none; b=Fcm+S3MvKXzqR03p+iP7d9QxcpUTMaWGdJkZ7N9Q63PQJUi/VrFySnNcKXvVgQ1miCeGxZzVKV4yk5fmcpkW+0iW3gxlp7FRgB35j3ebgOZWeslhqJOs6ZVZ1AP2+CeSCzOGrTxuEa8Bm9Ry6GXSL5wDUtunoq0c5SLn3R3fvkk=
+	t=1779297448; cv=none; b=OPFWngyqxYB4FkikMr9y3yNYf4ojEV0+WASKyuX3B+usxVX2FAQNxrNoCuO8DqbcMT5pmwznYIPciiviFBR2FZIntL81SwJJivo63b4aIBjhEx+3mxurVxskbShFIxr0VkDX8t2jOxs2hv3DtyDvOa586OXX9aBJtdO/9lA7t+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297445; c=relaxed/simple;
-	bh=QNygMw9KdrPqskQ/gEZw4kg4WvtK8a5j0w7ldNjv2U8=;
+	s=arc-20240116; t=1779297448; c=relaxed/simple;
+	bh=H5kCx4am+uzCGk++Yv5pO0AvGwaKCCRs5aVjGP0exvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k00+Ma18FqpOQUOGNKLdqjV3K3F/BrWeQCsydUqJ5kxEXrsaxf7/cu2VNZtzF35qa/4rz9pKoa9JZCT6Gv0+4VnePfDqM0jeoAQtcg9jlHsgEZr+Gxj7gdhrA7RH5EEY2KwdD2xNOIKNRs8jTwYBxOZkuqrHFeO8X/1vyiWrXuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfT38Ryi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sGAoJeDkZJj0qjPfefoxc0XeS7NJXiAgeGcrNpK5gHrPrBLqi5c94LQL4eUeMIu5u53FHnef2KRLD9J0M3NS75dEIlhc2JB1Frrioq+BraIVjzR9OCY8og9eRNQzA5O2z7YAzpjzQqvGkfjMzeZEmjg/qJBzNup9bF+pbvT7vZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbJ7JpsX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfT38Ryi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62971F000E9;
-	Wed, 20 May 2026 17:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbJ7JpsX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8301F000E9;
+	Wed, 20 May 2026 17:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297444;
-	bh=sVSHCuFH4yl4biKLMW+V+XcIPIMlq6Gwefj87/1c8iA=;
+	s=korg; t=1779297446;
+	bh=cpNhUOmzL4dhy/cRd8Cp26iva5qB+GlGq5zD8+jiEVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nfT38Ryi7RXTPq+P1naZ1cdX+GHzP6Wd0mC/BCf2e/AY1qX6qIJ/z3xYfoSHABgrU
-	 uvJHhR5c6+73vcaS5kKFh8ZYCy9/nDjSNgIrS688orZ9qJvYjaITR0cOjJaZfG7nDC
-	 fBsjsu/xucuiSyTCo9g4rLT1UpDyfpktaGITo7rw=
+	b=cbJ7JpsXdYaHq62/JZGLd/5/3EGU314+WQ5Ycm0qClpZvEVBSfU7Fpq4QE28CGBD6
+	 G/0xm1XGd/yfq9ze4NwgHMnisDNEhQEQuPFvJSfeHbpZC5ZhJVnzke5tzZsz/lfS9K
+	 jdqLVDpyHQ+zoZfdD7aGEEAFOZxRYbUpuwlZ2VYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Gui-Dong Han <hanguidong02@gmail.com>,
-	Vineeth Vijayan <vneethv@linux.ibm.com>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 033/957] s390/cio: use generic driver_override infrastructure
-Date: Wed, 20 May 2026 18:08:36 +0200
-Message-ID: <20260520162135.277598855@linuxfoundation.org>
+Subject: [PATCH 6.18 034/957] bus: fsl-mc: use generic driver_override infrastructure
+Date: Wed, 20 May 2026 18:08:37 +0200
+Message-ID: <20260520162135.299414489@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -54,7 +55,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit ac4d8bb6e2e13e8684a76ea48d13ebaaaf5c24c4 ]
+[ Upstream commit 6c8dfb0362732bf1e4829867a2a5239fedc592d0 ]
 
 When a driver is probed through __driver_attach(), the bus' match()
 callback is called without the device lock held, thus accessing the
@@ -66,59 +67,60 @@ care of proper locking internally.
 Note that calling match() from __driver_attach() without the device lock
 held is intentional. [1]
 
+Tested-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Acked-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Acked-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/ [1]
 Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
 Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Fixes: ebc3d1791503 ("s390/cio: introduce driver_override on the css bus")
-Reviewed-by: Vineeth Vijayan <vneethv@linux.ibm.com>
-Link: https://patch.msgid.link/20260324005919.2408620-10-dakr@kernel.org
+Fixes: 1f86a00c1159 ("bus/fsl-mc: add support for 'driver_override' in the mc-bus")
+Link: https://patch.msgid.link/20260324005919.2408620-3-dakr@kernel.org
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/cio/cio.h |  5 -----
- drivers/s390/cio/css.c | 34 ++++------------------------------
- 2 files changed, 4 insertions(+), 35 deletions(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c   | 43 +++++--------------------------
+ drivers/vfio/fsl-mc/vfio_fsl_mc.c |  4 +--
+ include/linux/fsl/mc.h            |  4 ---
+ 3 files changed, 8 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/s390/cio/cio.h b/drivers/s390/cio/cio.h
-index 08a5e9380e75a..bad142c536e1e 100644
---- a/drivers/s390/cio/cio.h
-+++ b/drivers/s390/cio/cio.h
-@@ -103,11 +103,6 @@ struct subchannel {
- 	struct work_struct todo_work;
- 	struct schib_config config;
- 	u64 dma_mask;
--	/*
--	 * Driver name to force a match.  Do not set directly, because core
--	 * frees it.  Use driver_set_override() to set or clear it.
--	 */
--	const char *driver_override;
- } __attribute__ ((aligned(8)));
+diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
+index eb7b6c0ba9e7c..996379ace3764 100644
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -86,12 +86,16 @@ static int fsl_mc_bus_match(struct device *dev, const struct device_driver *drv)
+ 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
+ 	const struct fsl_mc_driver *mc_drv = to_fsl_mc_driver(drv);
+ 	bool found = false;
++	int ret;
  
- DECLARE_PER_CPU_ALIGNED(struct irb, cio_irb);
-diff --git a/drivers/s390/cio/css.c b/drivers/s390/cio/css.c
-index 8a70596a55447..629d3993144e1 100644
---- a/drivers/s390/cio/css.c
-+++ b/drivers/s390/cio/css.c
-@@ -160,7 +160,6 @@ static void css_subchannel_release(struct device *dev)
+ 	/* When driver_override is set, only bind to the matching driver */
+-	if (mc_dev->driver_override) {
+-		found = !strcmp(mc_dev->driver_override, mc_drv->driver.name);
++	ret = device_match_driver_override(dev, drv);
++	if (ret > 0) {
++		found = true;
+ 		goto out;
+ 	}
++	if (ret == 0)
++		goto out;
  
- 	sch->config.intparm = 0;
- 	cio_commit_config(sch);
--	kfree(sch->driver_override);
- 	kfree(sch);
+ 	if (!mc_drv->match_id_table)
+ 		goto out;
+@@ -181,39 +185,8 @@ static ssize_t modalias_show(struct device *dev, struct device_attribute *attr,
  }
- 
-@@ -324,37 +323,9 @@ static ssize_t modalias_show(struct device *dev, struct device_attribute *attr,
- 
  static DEVICE_ATTR_RO(modalias);
  
 -static ssize_t driver_override_store(struct device *dev,
 -				     struct device_attribute *attr,
 -				     const char *buf, size_t count)
 -{
--	struct subchannel *sch = to_subchannel(dev);
+-	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
 -	int ret;
 -
--	ret = driver_set_override(dev, &sch->driver_override, buf, count);
+-	if (WARN_ON(dev->bus != &fsl_mc_bus_type))
+-		return -EINVAL;
+-
+-	ret = driver_set_override(dev, &mc_dev->driver_override, buf, count);
 -	if (ret)
 -		return ret;
 -
@@ -128,44 +130,77 @@ index 8a70596a55447..629d3993144e1 100644
 -static ssize_t driver_override_show(struct device *dev,
 -				    struct device_attribute *attr, char *buf)
 -{
--	struct subchannel *sch = to_subchannel(dev);
+-	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
 -	ssize_t len;
 -
 -	device_lock(dev);
--	len = sysfs_emit(buf, "%s\n", sch->driver_override);
+-	len = sysfs_emit(buf, "%s\n", mc_dev->driver_override);
 -	device_unlock(dev);
 -	return len;
 -}
 -static DEVICE_ATTR_RW(driver_override);
 -
- static struct attribute *subch_attrs[] = {
- 	&dev_attr_type.attr,
+ static struct attribute *fsl_mc_dev_attrs[] = {
  	&dev_attr_modalias.attr,
 -	&dev_attr_driver_override.attr,
  	NULL,
  };
  
-@@ -1358,9 +1329,11 @@ static int css_bus_match(struct device *dev, const struct device_driver *drv)
- 	struct subchannel *sch = to_subchannel(dev);
- 	const struct css_driver *driver = to_cssdriver(drv);
- 	struct css_device_id *id;
-+	int ret;
+@@ -316,6 +289,7 @@ ATTRIBUTE_GROUPS(fsl_mc_bus);
  
- 	/* When driver_override is set, only bind to the matching driver */
--	if (sch->driver_override && strcmp(sch->driver_override, drv->name))
-+	ret = device_match_driver_override(dev, drv);
-+	if (ret == 0)
- 		return 0;
- 
- 	for (id = driver->subchannel_type; id->match_flags; id++) {
-@@ -1417,6 +1390,7 @@ static int css_uevent(const struct device *dev, struct kobj_uevent_env *env)
- 
- static const struct bus_type css_bus_type = {
- 	.name     = "css",
+ const struct bus_type fsl_mc_bus_type = {
+ 	.name = "fsl-mc",
 +	.driver_override = true,
- 	.match    = css_bus_match,
- 	.probe    = css_probe,
- 	.remove   = css_remove,
+ 	.match = fsl_mc_bus_match,
+ 	.uevent = fsl_mc_bus_uevent,
+ 	.dma_configure  = fsl_mc_dma_configure,
+@@ -925,9 +899,6 @@ static struct notifier_block fsl_mc_nb;
+  */
+ void fsl_mc_device_remove(struct fsl_mc_device *mc_dev)
+ {
+-	kfree(mc_dev->driver_override);
+-	mc_dev->driver_override = NULL;
+-
+ 	/*
+ 	 * The device-specific remove callback will get invoked by device_del()
+ 	 */
+diff --git a/drivers/vfio/fsl-mc/vfio_fsl_mc.c b/drivers/vfio/fsl-mc/vfio_fsl_mc.c
+index 76ccbab0e3d64..84cd0eb65c471 100644
+--- a/drivers/vfio/fsl-mc/vfio_fsl_mc.c
++++ b/drivers/vfio/fsl-mc/vfio_fsl_mc.c
+@@ -430,9 +430,7 @@ static int vfio_fsl_mc_bus_notifier(struct notifier_block *nb,
+ 
+ 	if (action == BUS_NOTIFY_ADD_DEVICE &&
+ 	    vdev->mc_dev == mc_cont) {
+-		mc_dev->driver_override = kasprintf(GFP_KERNEL, "%s",
+-						    vfio_fsl_mc_ops.name);
+-		if (!mc_dev->driver_override)
++		if (device_set_driver_override(dev, vfio_fsl_mc_ops.name))
+ 			dev_warn(dev, "VFIO_FSL_MC: Setting driver override for device in dprc %s failed\n",
+ 				 dev_name(&mc_cont->dev));
+ 		else
+diff --git a/include/linux/fsl/mc.h b/include/linux/fsl/mc.h
+index 897d6211c1635..1da63f2d70401 100644
+--- a/include/linux/fsl/mc.h
++++ b/include/linux/fsl/mc.h
+@@ -178,9 +178,6 @@ struct fsl_mc_obj_desc {
+  * @regions: pointer to array of MMIO region entries
+  * @irqs: pointer to array of pointers to interrupts allocated to this device
+  * @resource: generic resource associated with this MC object device, if any.
+- * @driver_override: driver name to force a match; do not set directly,
+- *                   because core frees it; use driver_set_override() to
+- *                   set or clear it.
+  *
+  * Generic device object for MC object devices that are "attached" to a
+  * MC bus.
+@@ -214,7 +211,6 @@ struct fsl_mc_device {
+ 	struct fsl_mc_device_irq **irqs;
+ 	struct fsl_mc_resource *resource;
+ 	struct device_link *consumer_link;
+-	const char *driver_override;
+ };
+ 
+ #define to_fsl_mc_device(_dev) \
 -- 
 2.53.0
 
