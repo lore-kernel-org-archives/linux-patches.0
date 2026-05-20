@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6098F3D8100;
-	Wed, 20 May 2026 16:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D6C3D8129;
+	Wed, 20 May 2026 16:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295791; cv=none; b=ebeMZSaeXGYFRGUgYzEJ3eL4UcFxWddIgYT7yoTk00Ipob10YLZusqxfINJV3E0sWw8HUoYAaon3SIjsMQOsEgvzIzg94lgDs7C3cDnuOSaVa4tDB6vJCP90QIflfIVsj5+uJ2fWelD9bmLke8fkVH7Ni44wwzXEK6rF4RbylTI=
+	t=1779295793; cv=none; b=Gar3KbD8eroBYOH+hZLkPrZ+Qye7EoB/+M0S+ygv558AyVRHdvwOEWmc6AlrkzVNMYBmT7PCHyluwG9F28vyxt9kvBeJZm4XxoNt7wKZIhCdbTK0zcYkStm9DbpZrYTtq6P4LUT6vKndseqyPpHRROxurYugWXeCqt+auedoI1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295791; c=relaxed/simple;
-	bh=bqsnaQiKtR5Jm1hAXsXW0alvdvYmfMLmDzHZfoj3Bao=;
+	s=arc-20240116; t=1779295793; c=relaxed/simple;
+	bh=Aq3ABlbJiOp9hrqGveJQFZu3XTfIA/ep5mwOBoSw5WM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EiOPkd/dYYvE5WymjASTFyNEQaJKGLGsxMKA9WECSXZ/WudkXRZ0FZKgUFw/zxdmRLBbSyjk9x6/yQA+xxhSutiDG4w+O4drjr8CEPndCkqhrFzNmTa27ch9K59QxSZUuL3ke/cExBjbwrsXe1v6yEfoM1rOF8UXK5j+a3RDf2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNyFNyGj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HGFlArEJN3twHD5wvRVKeBnzds1ZuGNk45SAVApEKEfS2QBgCFzP1w14V30Rhw+1dNlN0inRufFs9ty9L5j7EMpOvWm8e5WjoJqdxp96v8wjb2SUkpDuWaVjwmh+3i9moo+hlWR1tmQ8t4CePZGQ9mNS3XgSZHz/9hLK0EFX3bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JJnV7az; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNyFNyGj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DE91F000E9;
-	Wed, 20 May 2026 16:49:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JJnV7az"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22C21F00893;
+	Wed, 20 May 2026 16:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295787;
-	bh=fdYvc0iU91yjyMPQRt/n/tLtrCpSyXi0XzA6Y17bUeA=;
+	s=korg; t=1779295790;
+	bh=SngIPOWVT7jY+2RkHFpkz67aUGlhoLJs+g80suHuW1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lNyFNyGjtnvLL1BFxY8PB+TcYeMasOP5R6kCDQ5m3HxFnmG920f9SYATn/molfjZK
-	 4AvEcBjhUwq0ansZmA9zb1pijMVBrG8OA/Xp/p9qaXoSs0sdwBGY5esysmkKqswso2
-	 6D90p4fjf5iBEkxHTVLH4vndTUlkDRBXm3Oet/iQ=
+	b=1JJnV7azsUfOeJCu/xFPDK+u4KyVZ6l8oTxls/okck26yXmhROd3r7Ct/lOaY4sbM
+	 D/DeIc45RCGPdp5NGrRpONUsGazOJHPrxwdJPCQQp3lyd2uNEaxhYDCC7qGj51a4Te
+	 EohvuhNUaJvt3rjplebYSHzhncL+jKTTlC1J/bDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Gupta <sumitg@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0551/1146] soc/tegra: cbb: Fix cross-fabric target timeout lookup
-Date: Wed, 20 May 2026 18:13:21 +0200
-Message-ID: <20260520162200.648534286@linuxfoundation.org>
+Subject: [PATCH 7.0 0552/1146] arm64: tegra: Fix RTC aliases
+Date: Wed, 20 May 2026 18:13:22 +0200
+Message-ID: <20260520162200.671408259@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,85 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit a5f51b04cbb3ae0f9cb2c4488952b775ebb0ccbf ]
+[ Upstream commit 69ec77b3f1074f3000d28f67f7629303e7999b84 ]
 
-When a fabric receives an error interrupt, the error may have
-occurred on a different fabric. The target timeout lookup was using
-the wrong base address (cbb->regs) with offsets from a different
-fabric's target map, causing a kernel page fault.
+The following warning is observed on the Tegra234 Jetson platforms ...
 
-  Unable to handle kernel paging request at virtual address ffff80000954cc00
-  pc : tegra234_cbb_get_tmo_slv+0xc/0x28
-  Call trace:
-   tegra234_cbb_get_tmo_slv+0xc/0x28
-   print_err_notifier+0x6c0/0x7d0
-   tegra234_cbb_isr+0xe4/0x1b4
+ rtc-nvidia-vrs10 4-003c: /aliases ID 0 not available
 
-Add tegra234_cbb_get_fabric() to look up the correct fabric device
-using fab_id, and use its base address for accessing target timeout
-registers.
+This happens because the 'rtc@c2a0000' device is registered before the
+vrs10 RTC and so is assigned the 'rtc0' alias. We want the vrs10 RTC to
+be the default RTC because this RTC maintains time across power cycles.
+Fix this by adding a 'rtc1' alias for the 'rtc@c2a0000' device.
 
-Fixes: 25de5c8fe0801 ("soc/tegra: cbb: Improve handling for per SoC fabric data")
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Fixes: b1806f2b4e78 ("arm64: tegra: Add device-tree node for NVVRS RTC")
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/cbb/tegra234-cbb.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/nvidia/tegra234-p3701.dtsi | 1 +
+ arch/arm64/boot/dts/nvidia/tegra234-p3767.dtsi | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
-index 626e0e820329b..7e387fc54c6b1 100644
---- a/drivers/soc/tegra/cbb/tegra234-cbb.c
-+++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
-@@ -313,12 +313,37 @@ static void tegra234_cbb_lookup_apbslv(struct seq_file *file, const char *target
- 	}
- }
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3701.dtsi b/arch/arm64/boot/dts/nvidia/tegra234-p3701.dtsi
+index 58bf55c0e414c..c10d041c183be 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234-p3701.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234-p3701.dtsi
+@@ -9,6 +9,7 @@ aliases {
+ 		mmc0 = "/bus@0/mmc@3460000";
+ 		mmc1 = "/bus@0/mmc@3400000";
+ 		rtc0 = "/bpmp/i2c/pmic@3c";
++		rtc1 = "/bus@0/rtc@c2a0000";
+ 	};
  
-+static struct tegra234_cbb *tegra234_cbb_get_fabric(u8 fab_id)
-+{
-+	struct tegra_cbb *entry;
-+
-+	list_for_each_entry(entry, &cbb_list, node) {
-+		struct tegra234_cbb *priv = to_tegra234_cbb(entry);
-+
-+		if (priv->fabric->fab_id == fab_id)
-+			return priv;
-+	}
-+
-+	return NULL;
-+}
-+
- static void tegra234_sw_lookup_target_timeout(struct seq_file *file, struct tegra234_cbb *cbb,
- 					      u8 target_id, u8 fab_id)
- {
- 	const struct tegra234_target_lookup *map = cbb->fabric->fab_list[fab_id].target_map;
-+	struct tegra234_cbb *target_cbb = NULL;
- 	void __iomem *addr;
+ 	bus@0 {
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234-p3767.dtsi b/arch/arm64/boot/dts/nvidia/tegra234-p3767.dtsi
+index ab391a71c3d33..9e9e80d57623c 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234-p3767.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234-p3767.dtsi
+@@ -8,6 +8,7 @@ / {
+ 	aliases {
+ 		mmc0 = "/bus@0/mmc@3400000";
+ 		rtc0 = "/bpmp/i2c/pmic@3c";
++		rtc1 = "/bus@0/rtc@c2a0000";
+ 	};
  
-+	if (fab_id == cbb->fabric->fab_id)
-+		target_cbb = cbb;
-+	else
-+		target_cbb = tegra234_cbb_get_fabric(fab_id);
-+
-+	if (!target_cbb) {
-+		dev_err(cbb->base.dev, "could not find fabric for fab_id:%d\n", fab_id);
-+		return;
-+	}
-+
- 	if (target_id >= cbb->fabric->fab_list[fab_id].max_targets) {
- 		tegra_cbb_print_err(file, "\t  Invalid target_id:%d\n", target_id);
- 		return;
-@@ -341,7 +366,7 @@ static void tegra234_sw_lookup_target_timeout(struct seq_file *file, struct tegr
- 	 *	e) Goto step-a till all bits are set.
- 	 */
- 
--	addr = cbb->regs + map[target_id].offset;
-+	addr = target_cbb->regs + map[target_id].offset;
- 
- 	if (strstr(map[target_id].name, "AXI2APB")) {
- 		addr += APB_BLOCK_TMO_STATUS_0;
+ 	bus@0 {
 -- 
 2.53.0
 
