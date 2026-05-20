@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6281402BBD;
-	Wed, 20 May 2026 18:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486103FC5A1;
+	Wed, 20 May 2026 18:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302507; cv=none; b=FfFWkZlj426I3gHWz8mgrUIMkUjn34bjyxZvc7bgE02GMI0OhlcR0WHSXrn0wtkrbB9mY4sS2feaSrCqIp7dJd5FB5MnVn1Ge+azb5soyc/TmwInr7WEImtdAegkrI6mQNEe8fU87LCRWx1B+4/jVgdmGdvNgamc8YXjps+08Uo=
+	t=1779302510; cv=none; b=d4BYBzvvkXQFELV9ocJ3o83CZMNgYpeZHec9JL+Jdx76EkRz4gx/k1RcUHVp10acfLBKoLIoUpfOXG9+YmCyjKaldKiRJWOepVCcQDCibT+7SVafavJW3RwaBBRh61uiP2lsuvbfsj9bKsncsUZBFPKob4F9n1XOqNpddKWi7Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302507; c=relaxed/simple;
-	bh=FvLoH030qSga7ohX/lENRhJ/n0m154mGvD1wOkgITtA=;
+	s=arc-20240116; t=1779302510; c=relaxed/simple;
+	bh=9gyH/7bEbIB9/xYSh9LCgoOQAXCaO2/m9e+rqJv9yXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dWzq6+bhyX9MstqEqBl8BlTFdUZrnsXkBZNWBB+8mHMu0jpe2NQGUMkehnmgs6a7LbF4ladPb2mNaR3ogvA7LK9oNUfL+VjpWdwRBum9ncgmFxl65X9iZKokgnDnyFvpEuZnM0u/FmXdMUB8CRXToti0pAPM8Ek0NaKJ9CqhcXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrZleveO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aiIdpEOlGlNO3AwOERYKQ40qkhJwnoylwmra6rip4UtQjSZIy5PTxAXxakd+k1AbqocFe/QYkUivLSpcjvVq+oxYLE2Plr+hBxiqIeekAGUirYgVecSC3WfJ53UsA8+jUV7lROjNnAQIMQ3OtP++zrT4kZ5JtWA9ZAI500y58YQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+JPyoV5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrZleveO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102C71F000E9;
-	Wed, 20 May 2026 18:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+JPyoV5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1C51F000E9;
+	Wed, 20 May 2026 18:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302506;
-	bh=6O5A2XGmqBhb+Vux+gV7gQjzl9HvV/RiPlSU0qDmtLg=;
+	s=korg; t=1779302509;
+	bh=Lb62wvqhEiSB9ivRyXjxFZOvpT18gaMcWiaWt5sfZMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lrZleveOOktj2O+iEVkfJLO6Fj5RWwQmoAYw6kUSi1Nasi+oS7UJJdnFHiKFVlmeE
-	 Os0WcCLLLB4FBzNLhofJ244HhkFpyQT/d/5VgPYbmw78vp0OdrL43UzHtEaeeUjiWT
-	 TnxJLj2QYYh1kVdwY2iCe9sMXOEXvePnWN4ZeZnA=
+	b=o+JPyoV54ABLJc/xcXPoMAR6oniCgNvFziBmycngBla28QpCl9d4ww1FIt058ZNg8
+	 EGhw/1hckgVjuA9nuPQ8TU+dWHfQ3asRbMlrJTCvROn8ZYKIR3lFLwWB3RqChS7Tw0
+	 8YalXUREta5+ZLkX31/bEf3QpqrV7KKh3zhTFjRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 292/508] clk: visconti: pll: initialize clk_init_data to zero
-Date: Wed, 20 May 2026 18:21:55 +0200
-Message-ID: <20260520162104.972343249@linuxfoundation.org>
+Subject: [PATCH 6.6 293/508] f2fs: Use sysfs_emit_at() to simplify code
+Date: Wed, 20 May 2026 18:21:56 +0200
+Message-ID: <20260520162104.995193206@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -47,54 +46,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 1603cbb64173a0e9fa7500f2a686f4aa011c58b9 ]
+[ Upstream commit f7a678bbe5a8f22cfcef5369757cc9b95f73e027 ]
 
-Sashiko reported the following:
+This file already uses sysfs_emit(). So be consistent and also use
+sysfs_emit_at().
 
-> The struct clk_init_data init is declared on the stack without being
-> fully zero-initialized. While fields like name, flags, parent_names,
-> num_parents, and ops are explicitly assigned, the parent_data and
-> parent_hws fields are left containing stack garbage.
+This slightly simplifies the code and makes it more readable.
 
-clk_core_populate_parent_map() currently prefers the parent names over
-the parent data and hws, so this isn't a problem at the moment. If that
-ordering ever changed in the future, then this could lead to some
-unexpected crashes. Let's just go ahead and make sure that the struct
-clk_init_data is initialized to zero as a good practice.
-
-Fixes: b4cbe606dc367 ("clk: visconti: Add support common clock driver and reset driver")
-Link: https://sashiko.dev/#/patchset/20260326042317.122536-1-rosenp%40gmail.com
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Benoît Monin <benoit.monin@bootlin.com>
-Reviewed-by: Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 5909bedbed38 ("f2fs: protect extension_list reading with sb_lock in f2fs_sbi_show()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/visconti/pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/sysfs.c | 45 +++++++++++++++++++++------------------------
+ 1 file changed, 21 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/clk/visconti/pll.c b/drivers/clk/visconti/pll.c
-index e9cd80e085dc3..a540936196ca3 100644
---- a/drivers/clk/visconti/pll.c
-+++ b/drivers/clk/visconti/pll.c
-@@ -244,7 +244,7 @@ static struct clk_hw *visconti_register_pll(struct visconti_pll_provider *ctx,
- 					    const struct visconti_pll_rate_table *rate_table,
- 					    spinlock_t *lock)
- {
--	struct clk_init_data init;
-+	struct clk_init_data init = {};
- 	struct visconti_pll *pll;
- 	struct clk_hw *pll_hw_clk;
- 	size_t len;
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index 436bbf23f8e7c..7d377da9c2631 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -162,50 +162,50 @@ static ssize_t features_show(struct f2fs_attr *a,
+ 	int len = 0;
+ 
+ 	if (f2fs_sb_has_encrypt(sbi))
+-		len += scnprintf(buf, PAGE_SIZE - len, "%s",
++		len += sysfs_emit_at(buf, len, "%s",
+ 						"encryption");
+ 	if (f2fs_sb_has_blkzoned(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "blkzoned");
+ 	if (f2fs_sb_has_extra_attr(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "extra_attr");
+ 	if (f2fs_sb_has_project_quota(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "projquota");
+ 	if (f2fs_sb_has_inode_chksum(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "inode_checksum");
+ 	if (f2fs_sb_has_flexible_inline_xattr(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "flexible_inline_xattr");
+ 	if (f2fs_sb_has_quota_ino(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "quota_ino");
+ 	if (f2fs_sb_has_inode_crtime(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "inode_crtime");
+ 	if (f2fs_sb_has_lost_found(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "lost_found");
+ 	if (f2fs_sb_has_verity(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "verity");
+ 	if (f2fs_sb_has_sb_chksum(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "sb_checksum");
+ 	if (f2fs_sb_has_casefold(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "casefold");
+ 	if (f2fs_sb_has_readonly(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "readonly");
+ 	if (f2fs_sb_has_compression(sbi))
+-		len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "compression");
+-	len += scnprintf(buf + len, PAGE_SIZE - len, "%s%s",
++	len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "pin_file");
+-	len += scnprintf(buf + len, PAGE_SIZE - len, "\n");
++	len += sysfs_emit_at(buf, len, "\n");
+ 	return len;
+ }
+ 
+@@ -322,17 +322,14 @@ static ssize_t f2fs_sbi_show(struct f2fs_attr *a,
+ 		int hot_count = sbi->raw_super->hot_ext_count;
+ 		int len = 0, i;
+ 
+-		len += scnprintf(buf + len, PAGE_SIZE - len,
+-						"cold file extension:\n");
++		len += sysfs_emit_at(buf, len, "cold file extension:\n");
+ 		for (i = 0; i < cold_count; i++)
+-			len += scnprintf(buf + len, PAGE_SIZE - len, "%s\n",
+-								extlist[i]);
++			len += sysfs_emit_at(buf, len, "%s\n", extlist[i]);
+ 
+-		len += scnprintf(buf + len, PAGE_SIZE - len,
+-						"hot file extension:\n");
++		len += sysfs_emit_at(buf, len, "hot file extension:\n");
+ 		for (i = cold_count; i < cold_count + hot_count; i++)
+-			len += scnprintf(buf + len, PAGE_SIZE - len, "%s\n",
+-								extlist[i]);
++			len += sysfs_emit_at(buf, len, "%s\n", extlist[i]);
++
+ 		return len;
+ 	}
+ 
 -- 
 2.53.0
 
