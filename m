@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D03C63CB;
-	Wed, 20 May 2026 16:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F79E363097;
+	Wed, 20 May 2026 16:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295054; cv=none; b=egiscXqUPjoQJ03jbijt/heracb/+l+eRsoJZPUmdmdFQ9hJjxrKD2dUMZ0BxnjC2KVUBzghP2uLdVWfn9CDle5cppryYDdApLvgcXb90Qem+yURF8OPk/apEuSmsAv0Qaq55tKLwBMMhS0K2J8cZIg2LfTVnR+qOCJbl3xY7Q8=
+	t=1779295058; cv=none; b=nqp2Lm/Sj0QH/bE8VmIfKw6b8MS0rYYLPTpfVo49wiPrCqvOJ3xYarw6L/wDP3ELEWreUcsFvyMCqMle0gKq9eJWN1mfQCds+Rxj8LLeRnWFkCAdUEAq/toXHSbDclu51t4TmkorF6Ez52YdgprWZqq8YKJ/rqInBOwNGxAoZAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295054; c=relaxed/simple;
-	bh=v6feZs4UDutvyUrSIbo1PEV5mDrsYuLK1dEnFWLjMvU=;
+	s=arc-20240116; t=1779295058; c=relaxed/simple;
+	bh=lujw3PnuDE66nN/ee8/EhL/2T8lgAVV/ez5Hzlq5fIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPMVwp7BxTIUmzrB/R4gdd0Gml8ydAx5jwJSwEiBqk1Cnci9WedhAezdcBNbmSWKL2ipHZlXURcD3dof+LaerZyB4NpnEAzQ3TfhTjhd/4O2oPQz+4sWiJXWqeL9aMvar6GK7of43RlE30aEz1qVLI9wTcm3f8U/ktpIChHBZR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbgwYHiG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F5ns7W24r0JeHTerubqCL6AZNP5LIjo1qjQugzBD9QtUytg9GYsfw7kr/K8w7mrxhzpY1D5LLTxv5RLMRWABtattE8pxbc4nyqqsusw46i+c7Y5a5ywMIrLaViFE9WalGmKpJ4zg0N6I/kuTYZIp47NlphBGJn4CXHLXANOCu5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3qam6PR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbgwYHiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15FA1F00893;
-	Wed, 20 May 2026 16:37:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3qam6PR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF1D1F000E9;
+	Wed, 20 May 2026 16:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295053;
-	bh=E3Of4IfRUwU/bzp4AupbuAB5ziPsYRRNUskLcTYmHuc=;
+	s=korg; t=1779295055;
+	bh=Do5/Jbs8DnJeHu+F5pND/8nqh5cuVotXTEQNy+0pAeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bbgwYHiGqMOKL2No/gmYwEvOkOvrYwvC0GFz5FPCjrYtpdiAIRM3uH3rP7qgJLI3T
-	 MExsy/nFIP5nVFBW2XlhqNX5Lmx3aWWyIJDCnAljf2kg/c/0YxPERC3qUsNz8OtGAN
-	 +FWE7rp06jVZ4y6KoXB+tkMAIrghrOGVBs1Bi4uE=
+	b=i3qam6PR9dCfkHdcq8FCeg+xwL4LsLiOOy/Bd8C3gsBaJqFQWeRyATrR+o4Q9FdLr
+	 ixZf8IgWRMPpq5q2jU6cgXy9Iz76bN1KWSXFPfchOd9KLNsIuleim900+4b3tJd5Rh
+	 IWddtCplJGXGELSpdVJnl6yv8VRC/t37FqxlMJtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harikrishna Shenoy <h-shenoy@ti.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0273/1146] drm/bridge: cadence: cdns-mhdp8546-core: Handle HDCP state in bridge atomic check
-Date: Wed, 20 May 2026 18:08:43 +0200
-Message-ID: <20260520162154.398311547@linuxfoundation.org>
+Subject: [PATCH 7.0 0274/1146] spi: nxp-xspi: Use reinit_completion() for repeated operations
+Date: Wed, 20 May 2026 18:08:44 +0200
+Message-ID: <20260520162154.421647083@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,72 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harikrishna Shenoy <h-shenoy@ti.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 4a8edd658489ec2a3d7e20482fa9e8d366153d8d ]
+[ Upstream commit 40f9bc646db5aa89fb85f2cda1e55a2bf9d6a30c ]
 
-Now that we have DRM_BRIDGE_ATTACH_NO_CONNECTOR framework, handle the
-HDCP state change in bridge atomic check as well to enable correct
-functioning for HDCP in both DRM_BRIDGE_ATTACH_NO_CONNECTOR and
-!DRM_BRIDGE_ATTACH_NO_CONNECTOR case.
+The driver currently calls init_completion() during every spi_mem_op.
+Tchnically it may work, but it's not the recommended pattern.
 
-Without this patch, when using DRM_BRIDGE_ATTACH_NO_CONNECTOR flag, HDCP
-state changes would not be properly handled during atomic commits,
-potentially leading to HDCP authentication failures or incorrect
-protection status for content requiring HDCP encryption.
+According to the kernel documentation: Calling init_completion() on
+the same completion object twice is most likely a bug as it
+re-initializes the queue to an empty queue and enqueued tasks
+could get "lost" - use reinit_completion() in that case, but be
+aware of other races.
 
-Fixes: 6a3608eae6d33 ("drm: bridge: cdns-mhdp8546: Enable HDCP")
-Signed-off-by: Harikrishna Shenoy <h-shenoy@ti.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patch.msgid.link/20251209120332.3559893-4-h-shenoy@ti.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+So moves the initial initialization to probe function and uses
+reinit_completion() for subsequent operations.
+
+Fixes: 29c8c00d9f9d ("spi: add driver for NXP XSPI controller")
+Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260304-spi-nxp-v2-1-cd7d7726a27e@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/bridge/cadence/cdns-mhdp8546-core.c   | 23 +++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/spi/spi-nxp-xspi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-index 3f5cc4e90927d..c7cd0234d1686 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-@@ -2123,6 +2123,10 @@ static int cdns_mhdp_atomic_check(struct drm_bridge *bridge,
- {
- 	struct cdns_mhdp_device *mhdp = bridge_to_mhdp(bridge);
- 	const struct drm_display_mode *mode = &crtc_state->adjusted_mode;
-+	struct drm_connector_state *old_state, *new_state;
-+	struct drm_atomic_state *state = crtc_state->state;
-+	struct drm_connector *conn = mhdp->connector_ptr;
-+	u64 old_cp, new_cp;
+diff --git a/drivers/spi/spi-nxp-xspi.c b/drivers/spi/spi-nxp-xspi.c
+index 06fcdf22990b8..385302a6e62f2 100644
+--- a/drivers/spi/spi-nxp-xspi.c
++++ b/drivers/spi/spi-nxp-xspi.c
+@@ -958,7 +958,7 @@ static int nxp_xspi_do_op(struct nxp_xspi *xspi, const struct spi_mem_op *op)
+ 		writel(reg, base + XSPI_RBCT);
+ 	}
  
- 	mutex_lock(&mhdp->link_mutex);
+-	init_completion(&xspi->c);
++	reinit_completion(&xspi->c);
  
-@@ -2142,6 +2146,25 @@ static int cdns_mhdp_atomic_check(struct drm_bridge *bridge,
- 	if (mhdp->info)
- 		bridge_state->input_bus_cfg.flags = *mhdp->info->input_bus_flags;
+ 	/* Config the data address */
+ 	writel(op->addr.val + xspi->memmap_phy, base + XSPI_SFP_TG_SFAR);
+@@ -1273,6 +1273,7 @@ static int nxp_xspi_probe(struct platform_device *pdev)
  
-+	if (conn && mhdp->hdcp_supported) {
-+		old_state = drm_atomic_get_old_connector_state(state, conn);
-+		new_state = drm_atomic_get_new_connector_state(state, conn);
-+		old_cp = old_state->content_protection;
-+		new_cp = new_state->content_protection;
-+
-+		if (old_state->hdcp_content_type != new_state->hdcp_content_type &&
-+		    new_cp != DRM_MODE_CONTENT_PROTECTION_UNDESIRED) {
-+			new_state->content_protection = DRM_MODE_CONTENT_PROTECTION_DESIRED;
-+			crtc_state = drm_atomic_get_new_crtc_state(state, new_state->crtc);
-+			crtc_state->mode_changed = true;
-+		}
-+
-+		if (!new_state->crtc) {
-+			if (old_cp == DRM_MODE_CONTENT_PROTECTION_ENABLED)
-+				new_state->content_protection = DRM_MODE_CONTENT_PROTECTION_DESIRED;
-+		}
-+	}
-+
- 	mutex_unlock(&mhdp->link_mutex);
- 	return 0;
- }
+ 	nxp_xspi_default_setup(xspi);
+ 
++	init_completion(&xspi->c);
+ 	ret = devm_request_irq(dev, irq,
+ 			nxp_xspi_irq_handler, 0, pdev->name, xspi);
+ 	if (ret)
 -- 
 2.53.0
 
