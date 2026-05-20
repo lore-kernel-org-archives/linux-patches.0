@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008873C8723;
-	Wed, 20 May 2026 16:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D9D34041C;
+	Wed, 20 May 2026 16:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295310; cv=none; b=U8gISuYPZTnIUYNnQteAaNcMMAD9ao1OApKX4tXZiXruRcJax+3fmKTYPvP0oTXrXl9ymmYF6j5gfgHLupkMK0ISdJsceT1nIovRLC8qMhZbNQn4k8LwJOHPhZmjBjFxSpCPRBT60zmOAqBtY3W3Blf6DW8OTikeHSso/Z3GAdA=
+	t=1779295312; cv=none; b=nig8ltdgyusuPeIqLxy5sVZkoltA2Oo8E3ZTrCMJC82Ic8HOWrzU7PWHZDLokZ32oJD4q+pJuLPWp/w11VggrPtV99GzKEp0hUqXgsX/FOwe0XznmuNLsB4wNPmtJH8fQafYb4+BhGWxoiIMj+ak2WT5r7pEqJwjl484EGgl50s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295310; c=relaxed/simple;
-	bh=IjmO4I7XOOJnuZtxXEda7nev727yRH//U5TJh8YfpJg=;
+	s=arc-20240116; t=1779295312; c=relaxed/simple;
+	bh=rsalLay2jJBe4W/cYrdvRcg9zoNgEWNiliVHOxjmf8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m/u5ReXDfaO15InSCHoEuY/3+yxL4O7mgeAk5XEnfYQ+76GSPGooraBynFME1t+LIkg8n0wnEZdstGXPdG7niSi60xpyuw22PaqYg+cwgK0BUlHgiiGsjrnLMnnOqtznyeb8UUk1eatJvm9QtMNUt1nUL0a8pDkeXho6lR2QKyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6j+kb0E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V+e1M8z462EOjoeJ66U1h8jVCsGb35V7itYZa4A89nS+lxFMkUowjqdb1k2t2evaGw5xoIDgFDDvHKeJEqWPcLqbt7djn9cHeeR/ss1PkAYNjbFOe6dx1YUpRgG/Fnv+FGQ3GfrsnJUSIEnubOaQcBYl+yTF10NHqMEgJfJYHng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftFfNKul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6j+kb0E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669331F000E9;
-	Wed, 20 May 2026 16:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftFfNKul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107F31F000E9;
+	Wed, 20 May 2026 16:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295308;
-	bh=1ZqCiDF1VTbsqeOs61YyzmDnMDLrpnyUscZf9C+Fxto=;
+	s=korg; t=1779295311;
+	bh=gP0ABFGO1fq6yHIb+oQczJ5TWGXecmnI5FszyLjULYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f6j+kb0ESwoIpetl0cbUhFS7LEt1ZYOXLCGJ6e8glaELs+tAFU4h5BoDeYPbwY7K+
-	 gAKdm1oXFfTvDBUaCCwNFF7xDl4nphNQKHFHZrhze8KH0fofqpEhvT6iVR2ZPy4Z43
-	 W6hm1d7aZX9uwHKnCj5gBRUls9An4VqmkCAeIg+k=
+	b=ftFfNKul1f8VMSGbgszfErxK/CrY6a/XKwUNe8SUQfmMnTDJ1HyoKWdEc2AkQLolJ
+	 TxitOiR+NUYNw/4m8u7Z/RkcBCmLVuIHpbHa4KO711FIy36eagrdiKjN7RD95DI9Wu
+	 11kGSvPZ1VuOsh9q5huBImBjBkfSUdss4S2+EFTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0343/1146] drm/amd/pm/ci: Fill DW8 fields from SMC
-Date: Wed, 20 May 2026 18:09:53 +0200
-Message-ID: <20260520162155.962628241@linuxfoundation.org>
+Subject: [PATCH 7.0 0370/1146] ASoC: fsl_micfil: Fix event generation in hwvad_put_enable()
+Date: Wed, 20 May 2026 18:10:20 +0200
+Message-ID: <20260520162156.574529162@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,50 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit baf28ec5795c077406d6f52b8ad39e614153bce6 ]
+[ Upstream commit 59b9061824f2179fe133e2636203548eaba3e528 ]
 
-In ci_populate_dw8() we currently just read a value from the SMU
-and then throw it away. Instead of throwing away the value,
-we should use it to fill other fields in DW8 (like radeon).
+ALSA controls should return 1 if the value in the control changed but the
+control put operation hwvad_put_enable() only returns 0 or a negative
+error code, causing ALSA to not generate any change events.
 
-Otherwise the value of the other fiels is just cleared when
-we copy this data to the SMU later.
+Add a suitable check in the function before updating the vad_enabled
+variable.
 
-Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 29dbfeecab85 ("ASoC: fsl_micfil: Add Hardware Voice Activity Detector support")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260401094226.2900532-3-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-index 9898c846c78e2..3650e7beeb671 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-@@ -543,12 +543,11 @@ static int ci_populate_dw8(struct pp_hwmgr *hwmgr, uint32_t fuse_table_offset)
- {
- 	struct ci_smumgr *smu_data = (struct ci_smumgr *)(hwmgr->smu_backend);
- 	const struct ci_pt_defaults *defaults = smu_data->power_tune_defaults;
--	uint32_t temp;
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 79850211742cb..97f24c9bdd68b 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -377,10 +377,15 @@ static int hwvad_put_enable(struct snd_kcontrol *kcontrol,
+ 	unsigned int *item = ucontrol->value.enumerated.item;
+ 	struct fsl_micfil *micfil = snd_soc_component_get_drvdata(comp);
+ 	int val = snd_soc_enum_item_to_val(e, item[0]);
++	bool change = false;
  
- 	if (ci_read_smc_sram_dword(hwmgr,
- 			fuse_table_offset +
- 			offsetof(SMU7_Discrete_PmFuses, TdcWaterfallCtl),
--			(uint32_t *)&temp, SMC_RAM_END))
-+			(uint32_t *)&smu_data->power_tune_table.TdcWaterfallCtl, SMC_RAM_END))
- 		PP_ASSERT_WITH_CODE(false,
- 				"Attempt to read PmFuses.DW6 (SviLoadLineEn) from SMC Failed!",
- 				return -EINVAL);
++	if (val < 0 || val > 1)
++		return -EINVAL;
++
++	change = (micfil->vad_enabled != val);
+ 	micfil->vad_enabled = val;
+ 
+-	return 0;
++	return change;
+ }
+ 
+ static int hwvad_get_enable(struct snd_kcontrol *kcontrol,
 -- 
 2.53.0
 
