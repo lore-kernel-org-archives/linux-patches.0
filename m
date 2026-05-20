@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7712B3D75A0;
-	Wed, 20 May 2026 17:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1870F3D75DA;
+	Wed, 20 May 2026 17:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297068; cv=none; b=b+K1SRI2n5O9bAalyTRMQjVfLriKpgZxAFTQRng6Bi9whAAOnGDfOYfgHe9fbQ8V7kZgCt7M8ltUAQh20ixfu4CGprxH3vYhrc05hI8HBNF0QnjEC+Gm8szEwgxJmH37vDzUr8UAhuf+NHxSJwnspVfRj2LlqDVZnAayCzOieps=
+	t=1779297071; cv=none; b=q0/yjdJ2IMoopIo9Sk/B3HiPSMH9awdFzxkQkB6Nly9X+mv9sngbhPz5v6BH2/7zZHoRsr6kY49R0peT7JUkrZg+z1oDg6ECLF+20sqLL8SoEFrnRNhVZz/JnS8ksZD0IQ/3PWBJuJYecZPjZIu8xUTesI7yBvdMLGtrwS/h4YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297068; c=relaxed/simple;
-	bh=wJz/hQ0HDrin4aAMsmJ96dvEPXhMrIRNTQZDkOlG7Pw=;
+	s=arc-20240116; t=1779297071; c=relaxed/simple;
+	bh=NZR1UrUuayu89T00dFkRIblz1ORXbNUanTXUawG67CQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FRJAii0Ix54DkAy6AXSyX+l+CN39PCPPDr67i5N7nce5a90L5WsNhemLfZpFmJSy8+fNzbVbnmVnjf8vIREK+X9/eOblCNLYP3s5Fu8+9aHsTQU+gQTMXAdBqASQfP8uMfoxYNmxc4M6Of7rBtQ2yhfT2w38+HFkiFU9gR+8TM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=reDizxzn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n2aRimFrYOOqORsE8BvB5qqbCSe/8x30IgH6QDeVpg4gKnKqFgawNcU6XM4ptd/dT7bJLFImOXhVVD25WtIeXsJl4CFq/UJWXpvrqy33/RnKlaNwlwG9cGNiXpSn5gkWZ8E6YpuLoqUbG2tz4w5vh9mm5Qz6RNh7QJuDuT3oWJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRKnXyo1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="reDizxzn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE931F00893;
-	Wed, 20 May 2026 17:11:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRKnXyo1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4441F000E9;
+	Wed, 20 May 2026 17:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297067;
-	bh=2MEPkC5ixNCPOdg3sUb2qBnZp4XKf3swtjisIExehGw=;
+	s=korg; t=1779297070;
+	bh=+vcMpsFcdOM7pndeDck1NvqfqZ/6+asdMP5v78I38ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=reDizxznZTlrCJAq3a8lQMINDIFi2zSazbfPG+kcuD6TPe2y8LUWTXObhkZMKPkKJ
-	 QxhklvUPdb/mW4b1MKQaq6yiT58lujzk89oR71zgpYJtx/bLP2ShvOT0+TdVh51f4v
-	 IHJb1liXOZ1i/H+w1pMdij/znGs6OyEsIGuZy7B0=
+	b=sRKnXyo13NrgPtj83jc4nAPUehQTiWhqMlIzDYwS5oROtzg21G6uhSS35l2+4ilBM
+	 zwiTHHXnucy13FOGnoGfzajfrH13/DcU0d6PnmhxSv6z52pax9CoslJYYQ6iiXZqh8
+	 CL1KMLSIQr73IN0fIEA0bXm2HKAbu9TCvZT0RI0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1037/1146] PCI: Initialize temporary device in new_id_store()
-Date: Wed, 20 May 2026 18:21:27 +0200
-Message-ID: <20260520162211.700677294@linuxfoundation.org>
+Subject: [PATCH 7.0 1038/1146] workqueue: fix devm_alloc_workqueue() va_list misuse
+Date: Wed, 20 May 2026 18:21:28 +0200
+Message-ID: <20260520162211.723011897@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,88 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samiullah Khawaja <skhawaja@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit f45a49a2380a47332817b7248c61a0ebbc6f0d00 ]
+[ Upstream commit 0de4cb473aed57ee4ba7e0551ad27bddc19fc519 ]
 
-When setting new_id of a PCI device driver using sysfs a lockdep splat
-occurs. This is because new_id_store() builds a temporary pci_dev for
-pci_match_device(), which calls device_match_driver_override().  That
-depends on the driver_override.lock added by cb3d1049f4ea ("driver core:
-generalize driver_override in struct device").
+devm_alloc_workqueue() built a va_list and passed it as a single
+positional argument to the variadic alloc_workqueue() macro:
 
-The new driver_override.lock was not initialized in the temporary pci_dev,
-resulting in this lockdep splat.
+	va_start(args, max_active);
+	wq = alloc_workqueue(fmt, flags, max_active, args);
+	va_end(args);
 
-Initialize the temporary pci_dev to fix this.
+C does not allow forwarding a va_list through a ... parameter.
+alloc_workqueue() expands to alloc_workqueue_noprof(), which runs
+its own va_start() over its ... params, so the inner
+vsnprintf(wq->name, sizeof(wq->name), fmt, args) in
+__alloc_workqueue() received the outer va_list object as the first
+variadic slot rather than the caller's actual format arguments.
 
-Repro:
+Add a new static helper alloc_workqueue_va() that wraps
+__alloc_workqueue() and runs wq_init_lockdep() on success, and
+fold both alloc_workqueue_noprof() and devm_alloc_workqueue_noprof()
+onto it as suggested by Tejun.
 
-  Build with CONFIG_LOCKDEP=y, boot with QEMU, and add a new ID:
+The wq_init_lockdep() step is required on the devm path
+too, otherwise __flush_workqueue()'s on-stack
+COMPLETION_INITIALIZER_ONSTACK_MAP would NULL-deref wq->lockdep_map.
 
-  # echo "8086 10f5" > /sys/bus/pci/drivers/e1000e/new_id
+No caller changes are required. devm_alloc_ordered_workqueue() is
+a macro forwarding to devm_alloc_workqueue() and inherits the fix.
+Two in-tree callers actively trigger the broken path on every probe:
 
-  INFO: trying to register non-static key.
-  The code is fine but needs lockdep annotation, or maybe
-  you didn't initialize this object before use?
-  turning off the locking correctness validator.
-  CPU: 2 UID: 0 PID: 177 Comm: liveupdate-iomm Not tainted 7.0.0+ #9 PREEMPT(full)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x5d/0x80
-   register_lock_class+0x77e/0x790
-   lock_acquire+0xbf/0x2e0
-   pci_match_device+0x24/0x180
-   new_id_store+0x189/0x1d0
-   kernfs_fop_write_iter+0x14f/0x210
-   vfs_write+0x263/0x5e0
-   ksys_write+0x79/0xf0
-   do_syscall_64+0x117/0xf80
+  drivers/power/supply/mt6370-charger.c:889
+  drivers/power/supply/max77705_charger.c:649
 
-Fixes: 10a4206a2401 ("PCI: use generic driver_override infrastructure")
-Fixes: 8895d3bcb8ba ("PCI: Fail new_id for vendor/device values already built into driver")
-Signed-off-by: Samiullah Khawaja <skhawaja@google.com>
-[bhelgaas: add commit log details and repro, trim backtrace]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patch.msgid.link/20260505234327.716630-1-skhawaja@google.com
+both of which use devm_alloc_ordered_workqueue(dev, "%s", 0,
+dev_name(dev)).
+
+A standalone reproducer module is available at[1].
+
+Link: https://github.com/leitao/debug/blob/main/workqueue/valist/wq_va_test.c [1]
+Fixes: 1dfc9d60a69e ("workqueue: devres: Add device-managed allocate workqueue")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-driver.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ include/linux/workqueue.h |  6 ++++--
+ kernel/workqueue.c        | 28 +++++++++++++++++++---------
+ 2 files changed, 23 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index d10ece0889f0f..e3f59001785a1 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -179,6 +179,11 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
+index f8d235aef10dd..218557a8f7577 100644
+--- a/include/linux/workqueue.h
++++ b/include/linux/workqueue.h
+@@ -529,8 +529,10 @@ alloc_workqueue_noprof(const char *fmt, unsigned int flags, int max_active, ...)
+  * Pointer to the allocated workqueue on success, %NULL on failure.
+  */
+ __printf(2, 5) struct workqueue_struct *
+-devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
+-		     int max_active, ...);
++devm_alloc_workqueue_noprof(struct device *dev, const char *fmt,
++			    unsigned int flags, int max_active, ...);
++#define devm_alloc_workqueue(...)	\
++	alloc_hooks(devm_alloc_workqueue_noprof(__VA_ARGS__))
+ 
+ #ifdef CONFIG_LOCKDEP
+ /**
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index e57040931d8b7..5d704df76a946 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -5885,6 +5885,20 @@ static struct workqueue_struct *__alloc_workqueue(const char *fmt,
  	return NULL;
  }
  
-+static void _pci_free_device(struct device *dev)
++static struct workqueue_struct *alloc_workqueue_va(const char *fmt,
++						   unsigned int flags,
++						   int max_active,
++						   va_list args)
 +{
-+	kfree(to_pci_dev(dev));
++	struct workqueue_struct *wq;
++
++	wq = __alloc_workqueue(fmt, flags, max_active, args);
++	if (wq)
++		wq_init_lockdep(wq);
++
++	return wq;
 +}
 +
- /**
-  * new_id_store - sysfs frontend to pci_add_dynid()
-  * @driver: target device driver
-@@ -214,11 +219,13 @@ static ssize_t new_id_store(struct device_driver *driver, const char *buf,
- 		pdev->subsystem_vendor = subvendor;
- 		pdev->subsystem_device = subdevice;
- 		pdev->class = class;
-+		pdev->dev.release = _pci_free_device;
+ __printf(1, 4)
+ struct workqueue_struct *alloc_workqueue_noprof(const char *fmt,
+ 						unsigned int flags,
+@@ -5894,12 +5908,8 @@ struct workqueue_struct *alloc_workqueue_noprof(const char *fmt,
+ 	va_list args;
  
-+		device_initialize(&pdev->dev);
- 		if (pci_match_device(pdrv, pdev))
- 			retval = -EEXIST;
+ 	va_start(args, max_active);
+-	wq = __alloc_workqueue(fmt, flags, max_active, args);
++	wq = alloc_workqueue_va(fmt, flags, max_active, args);
+ 	va_end(args);
+-	if (!wq)
+-		return NULL;
+-
+-	wq_init_lockdep(wq);
  
--		kfree(pdev);
-+		put_device(&pdev->dev);
+ 	return wq;
+ }
+@@ -5911,15 +5921,15 @@ static void devm_workqueue_release(void *res)
+ }
  
- 		if (retval)
- 			return retval;
+ __printf(2, 5) struct workqueue_struct *
+-devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
+-		     int max_active, ...)
++devm_alloc_workqueue_noprof(struct device *dev, const char *fmt,
++			    unsigned int flags, int max_active, ...)
+ {
+ 	struct workqueue_struct *wq;
+ 	va_list args;
+ 	int ret;
+ 
+ 	va_start(args, max_active);
+-	wq = alloc_workqueue(fmt, flags, max_active, args);
++	wq = alloc_workqueue_va(fmt, flags, max_active, args);
+ 	va_end(args);
+ 	if (!wq)
+ 		return NULL;
+@@ -5930,7 +5940,7 @@ devm_alloc_workqueue(struct device *dev, const char *fmt, unsigned int flags,
+ 
+ 	return wq;
+ }
+-EXPORT_SYMBOL_GPL(devm_alloc_workqueue);
++EXPORT_SYMBOL_GPL(devm_alloc_workqueue_noprof);
+ 
+ #ifdef CONFIG_LOCKDEP
+ __printf(1, 5)
 -- 
 2.53.0
 
