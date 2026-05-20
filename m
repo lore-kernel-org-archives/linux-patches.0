@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB667347515;
-	Wed, 20 May 2026 18:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839B3348C55;
+	Wed, 20 May 2026 18:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301086; cv=none; b=UJLp0tf2z0bpqq5nojFYvEWLKQqvnh+VZIzu8gq0tJirMacX16bHzwZqZC5Z9Glss+iC4lwlb2u5Ot+kBjBTnV5tDe9yg42OUeIHTfzA7mtsfDxhiAzB8aIhJ2KPDEBgQe4A+uWZaNkCepL0mJa4eKqpk8OEiHsOifKk+aQovUA=
+	t=1779301089; cv=none; b=DO2KfxnHvhyLWRabojE0xp8iGGP0d2zJgT6jIPUiA+q0FgsFGwGMpnj2IW882dq5cmgns21D12PBdXHGPMczZmrtsg7Rk9uwFjkC7W9gpsRz9l/mmMXmfmrOUKrrHEm+xRLb75RHBAaZe/z8ZWxyo/R9RxhpUtueT1o/EXRU3OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301086; c=relaxed/simple;
-	bh=YGPxNxLwqrhZD21PQeknOIsFhBaZxfz+ClrGnS84Gvw=;
+	s=arc-20240116; t=1779301089; c=relaxed/simple;
+	bh=vNgEFxbOKC83OQ1SPWrdW7hHfB4+fGDi8rRlpWcM7F8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fnU5vO9R2zIfbWv7C7TqTRtIS6LFcLwEYYzIDXy50INhnKXiSKrmpYg/iRzYM1KECUolXVIi6pNUq2z9dmONdNxywnB7KQI5KAFHmfe0ZHRDwJ44jKqRnbL9bEMwwjpHx0ZI+0Mwv2qLEnP8kcrkv3VdAbmW6dc192cQ9rmanMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2midWth6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Al1Vcd53NHCyYTAV9klzRH8RbIoAhFxpsSTZnMIDOE6SvOu2Um+Zk10GwDmc4kd7Oeo3R1Dy7Z7LdXMd77Xxy89cWQA01nk6mOZj4z3cJhmdXnM92iPMXkZzegAuXyWnBOlvzx/OoZMMjD8s4vyj/K6fsdH9ZqFWFFXkW8fG7Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1x3lmPAT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2midWth6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518821F000E9;
-	Wed, 20 May 2026 18:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1x3lmPAT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C361F000E9;
+	Wed, 20 May 2026 18:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301085;
-	bh=lP1lYezKVEn6bPfeiV3GMJHO7gP8GgKen/nSr41nDZU=;
+	s=korg; t=1779301088;
+	bh=JcSIuUrMMbb2hF84y9dNBJMDRcCk8K6JcmsJt8oGWj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2midWth6MScB1Oz2vV3iMPV5uPZDp2tbVaX5/tNyMFviF0RdFUBB0EdWLnKg2GugY
-	 QvPZrhlub0Sm8WkZYd5iPitAE8AScG0po3vx2Z02mOi/0eNoWk6cNvli59lwUwJauP
-	 7rXrLzlgUlS3LkrD3diabEx4mJaHDblteNXpRZ40=
+	b=1x3lmPATKN7fywKLgjxNf9Q21UJNPeMZNLhRW3m4tlmDibev2oy0RwCwU+FHXGHs9
+	 sbjjamA0lPw1VB3CnFi0FRmjSs4KfeNPkwJIzf/8unx3LnuQJhizwdIAS50n2a3dXi
+	 CmxAwCUVuEtBDKdoU9AeeRtK1BB9AvE+OP4X527Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Val Packett <val@packett.cool>
-Subject: [PATCH 6.12 420/666] clk: qcom: dispcc-sc7180: Add missing MDSS resets
-Date: Wed, 20 May 2026 18:20:31 +0200
-Message-ID: <20260520162120.370244982@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Petr Mladek <pmladek@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 421/666] lib/hexdump: print_hex_dump_bytes() calls print_hex_dump_debug()
+Date: Wed, 20 May 2026 18:20:32 +0200
+Message-ID: <20260520162120.393486818@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -54,57 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit b0bc6011c5499bdfddd0390262bfa13dce1eff74 ]
+[ Upstream commit 36776b7f8a8955b4e75b5d490a75fee0c7a2a7ef ]
 
-The MDSS resets have so far been left undescribed. Fix that.
+print_hex_dump_bytes() claims to be a simple wrapper around
+print_hex_dump(), but it actally calls print_hex_dump_debug(), which
+means no output is printed if (dynamic) DEBUG is disabled.
 
-Fixes: dd3d06622138 ("clk: qcom: Add display clock controller driver for SC7180")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Tested-by: Val Packett <val@packett.cool> # sc7180-ecs-liva-qc710
-Link: https://lore.kernel.org/r/20260120-topic-7180_dispcc_bcr-v1-2-0b1b442156c3@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Update the documentation to match the implementation.
+
+Fixes: 091cb0994edd20d6 ("lib/hexdump: make print_hex_dump_bytes() a nop on !DEBUG builds")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://patch.msgid.link/3d5c3069fd9102ecaf81d044b750cd613eb72a08.1774970392.git.geert+renesas@glider.be
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sc7180.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/printk.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sc7180.c b/drivers/clk/qcom/dispcc-sc7180.c
-index 4710247be5306..ae98fe4dcfb2b 100644
---- a/drivers/clk/qcom/dispcc-sc7180.c
-+++ b/drivers/clk/qcom/dispcc-sc7180.c
-@@ -16,6 +16,7 @@
- #include "clk-regmap-divider.h"
- #include "common.h"
- #include "gdsc.h"
-+#include "reset.h"
+diff --git a/include/linux/printk.h b/include/linux/printk.h
+index f9498e9cb8ba4..a6c6fd107805b 100644
+--- a/include/linux/printk.h
++++ b/include/linux/printk.h
+@@ -800,7 +800,8 @@ static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
+ #endif
  
- enum {
- 	P_BI_TCXO,
-@@ -635,6 +636,11 @@ static struct gdsc mdss_gdsc = {
- 	.flags = HW_CTRL,
- };
- 
-+static const struct qcom_reset_map disp_cc_sc7180_resets[] = {
-+	[DISP_CC_MDSS_CORE_BCR] = { 0x2000 },
-+	[DISP_CC_MDSS_RSCC_BCR] = { 0x4000 },
-+};
-+
- static struct gdsc *disp_cc_sc7180_gdscs[] = {
- 	[MDSS_GDSC] = &mdss_gdsc,
- };
-@@ -686,6 +692,8 @@ static const struct qcom_cc_desc disp_cc_sc7180_desc = {
- 	.config = &disp_cc_sc7180_regmap_config,
- 	.clks = disp_cc_sc7180_clocks,
- 	.num_clks = ARRAY_SIZE(disp_cc_sc7180_clocks),
-+	.resets = disp_cc_sc7180_resets,
-+	.num_resets = ARRAY_SIZE(disp_cc_sc7180_resets),
- 	.gdscs = disp_cc_sc7180_gdscs,
- 	.num_gdscs = ARRAY_SIZE(disp_cc_sc7180_gdscs),
- };
+ /**
+- * print_hex_dump_bytes - shorthand form of print_hex_dump() with default params
++ * print_hex_dump_bytes - shorthand form of print_hex_dump_debug() with default
++ *                        params
+  * @prefix_str: string to prefix each line with;
+  *  caller supplies trailing spaces for alignment if desired
+  * @prefix_type: controls whether prefix of an offset, address, or none
+@@ -808,7 +809,7 @@ static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
+  * @buf: data blob to dump
+  * @len: number of bytes in the @buf
+  *
+- * Calls print_hex_dump(), with log level of KERN_DEBUG,
++ * Calls print_hex_dump_debug(), with log level of KERN_DEBUG,
+  * rowsize of 16, groupsize of 1, and ASCII output included.
+  */
+ #define print_hex_dump_bytes(prefix_str, prefix_type, buf, len)	\
 -- 
 2.53.0
 
