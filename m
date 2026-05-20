@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1631E7660;
-	Wed, 20 May 2026 16:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE01E372EDE;
+	Wed, 20 May 2026 16:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295538; cv=none; b=C9XqH7p3piN3zR4Kh12WhPzMVs/LclNiddVs+k+aHjHjkj+L35F76C0SrHyWL1eawJykBwHFVwZG0lVX7e0VAXIwtKphxA5W4rTHKDi08Ac8Y4whkNhs+NmN0s7rw0j+z+im3Qh0Qg3VEpdVvHtHCPrrlRbm6HSJU0o77fP2Lc4=
+	t=1779295541; cv=none; b=RBAyr2GbxfK5RTimXjZ59US+/IVwBFlYipfn2XinVPXOCgAlD3ER0OQuKYjaBl6s1apHYioqR/4PqLiVzQ7BCIThoY26ScuriyoBUINQU40bL3bS5O+0GjnJhCszNNgq82U6p1PBOtEhTROL9iga2mJ/RqN49Z/NnVN4Vg4s+7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295538; c=relaxed/simple;
-	bh=WV0M7INqI4upggCFLs90o2LMNEwH/afODk4YqexQFGw=;
+	s=arc-20240116; t=1779295541; c=relaxed/simple;
+	bh=EEpL5uyuexjGKhN9JkX9mEvP3AixClF3OO3ogYuBj2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=njT0LJatJGLFxpNYCxbNMbMSYH9Rtr/CNjON4OcknD3YEijL8hH3BGF/Evgf82DNSx4dowOkCc9rqIiEnxJh3qpNwaw5tiyqkSmoa6GGTOpz6onvrg5cETsyL/cCJcSKDhbUdRA8bhaxMzNigJJmrGvpCWogW5MHSwBa2HjXpZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubp5cLGe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rTWY681Nfuo0TRTB3w7lEARnNDSs+/LWE7XsIjKFZek58EYIVMBG59DPA3Vk+mQLsYmFaX+DZ//QC38iQezWVu7fySjmHEsEqIUgyaX5SUATEPacCruHgMNmjSMqPF638mVF/mXaq0+//dEuBZ+kMC3eEPv+8He2/jsCnLSeA6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8I81elF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubp5cLGe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C401F000E9;
-	Wed, 20 May 2026 16:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8I81elF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EFCB1F000E9;
+	Wed, 20 May 2026 16:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295537;
-	bh=hVdBfl9KSqdXBr3Hehx76pxNTmTFQ0+IQKk/hS+UveA=;
+	s=korg; t=1779295539;
+	bh=190O2ElUI8ZTXI8kGcrSxKcLFiw5MhyNc+YtSTkgeh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ubp5cLGehw6SdIqQcf0GvbThxHLWe9NXP19NNXUsq0YhYLxdFmNhmNVln0ZIz9V3X
-	 7OeFN/+6ayJbL1etaRmHIiMMuvFfJN9ZLvJPaOCg/wYAr3KS7Ynrg9tbEJt4KyjDKx
-	 HH6yEExFJmsoMSti7oCZUgdZkBiXWf6pvodODZLw=
+	b=W8I81elFAx9SKx/iHPIeirvdev6a6vDEux3XbTu6edE0geYD/WHA7bz3pbZXI/hwu
+	 Gxqe1dkqWMVyzxMy5M3vOO9zS0AYwxnU9ZAUVAKcp/HBkmluB1pMEruq8WpigSwqg0
+	 5yW4TDbxGieOS7AWoUIeYa6xMlJo3JjKuUGNXX2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <me@ziyao.cc>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Han Gao <gaohan@iscas.ac.cn>,
-	Chen Wang <unicorn_wang@outlook.com>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0430/1146] PCI: cadence: Add flags for disabling ASPM capability for broken Root Ports
-Date: Wed, 20 May 2026 18:11:20 +0200
-Message-ID: <20260520162157.922002336@linuxfoundation.org>
+Subject: [PATCH 7.0 0457/1146] rtla: Fix segfault on multiple SIGINTs
+Date: Wed, 20 May 2026 18:11:47 +0200
+Message-ID: <20260520162158.540982416@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,91 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <me@ziyao.cc>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit 5ccc76a87f1ec2422811e61be44165bfc9e7cf54 ]
+[ Upstream commit be8058f31b4e237604e4ce7599593ab68dc69ae7 ]
 
-Add flags for disabling the ASPM L0s/L1 capability for broken Root Ports
-by clearing the corresponding bits in Link Capabilities Register through
-the local management bus. This allows ASPM to be disabled on platforms
-which don't support it.
+Detach stop_trace() from SIGINT/SIGALRM on tool clean-up to prevent it
+from crashing RTLA by accessing freed memory.
 
-Signed-off-by: Yao Zi <me@ziyao.cc>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Han Gao <gaohan@iscas.ac.cn>
-Tested-by: Chen Wang <unicorn_wang@outlook.com> # Pioneerbox
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
-Link: https://patch.msgid.link/20260405154154.46829-2-me@ziyao.cc
-Stable-dep-of: 988ef706cdd8 ("PCI: sg2042: Avoid L0s and L1 on Sophgo 2042 PCIe Root Ports")
+This prevents a crash when multiple SIGINTs are received.
+
+Fixes: d6899e560366 ("rtla/timerlat_hist: Abort event processing on second signal")
+Fixes: 80967b354a76 ("rtla/timerlat_top: Abort event processing on second signal")
+Reviewed-by: Wander Lairson Costa <wander@redhat.com>
+Link: https://lore.kernel.org/r/20260310160725.144443-1-tglozar@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../controller/cadence/pcie-cadence-host.c    |  7 +++++++
- drivers/pci/controller/cadence/pcie-cadence.h | 19 +++++++++++++++++++
- 2 files changed, 26 insertions(+)
+ tools/tracing/rtla/src/common.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
-index db3154c1eccbf..0bc9e6e90e0e0 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-host.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
-@@ -147,6 +147,13 @@ static int cdns_pcie_host_init_root_port(struct cdns_pcie_rc *rc)
- 	cdns_pcie_rp_writeb(pcie, PCI_CLASS_PROG, 0);
- 	cdns_pcie_rp_writew(pcie, PCI_CLASS_DEVICE, PCI_CLASS_BRIDGE_PCI);
- 
-+	value = cdns_pcie_rp_readl(pcie, CDNS_PCIE_RP_CAP_OFFSET + PCI_EXP_LNKCAP);
-+	if (rc->quirk_broken_aspm_l0s)
-+		value &= ~PCI_EXP_LNKCAP_ASPM_L0S;
-+	if (rc->quirk_broken_aspm_l1)
-+		value &= ~PCI_EXP_LNKCAP_ASPM_L1;
-+	cdns_pcie_rp_writel(pcie, CDNS_PCIE_RP_CAP_OFFSET + PCI_EXP_LNKCAP, value);
-+
- 	return 0;
+diff --git a/tools/tracing/rtla/src/common.c b/tools/tracing/rtla/src/common.c
+index f310b0d59ad3e..839c78c065e12 100644
+--- a/tools/tracing/rtla/src/common.c
++++ b/tools/tracing/rtla/src/common.c
+@@ -39,6 +39,18 @@ static void set_signals(struct common_params *params)
+ 	}
  }
  
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
-index 277f3706a4f47..574e9cf4d003f 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.h
-+++ b/drivers/pci/controller/cadence/pcie-cadence.h
-@@ -115,6 +115,8 @@ struct cdns_pcie {
-  * @quirk_detect_quiet_flag: LTSSM Detect Quiet min delay set as quirk
-  * @ecam_supported: Whether the ECAM is supported
-  * @no_inbound_map: Whether inbound mapping is supported
-+ * @quirk_broken_aspm_l0s: Disable ASPM L0s support as quirk
-+ * @quirk_broken_aspm_l1: Disable ASPM L1 support as quirk
++/*
++ * unset_signals - unsets the signals to stop the tool
++ */
++static void unset_signals(struct common_params *params)
++{
++	signal(SIGINT, SIG_DFL);
++	if (params->duration) {
++		alarm(0);
++		signal(SIGALRM, SIG_DFL);
++	}
++}
++
+ /*
+  * getopt_auto - auto-generates optstring from long_options
   */
- struct cdns_pcie_rc {
- 	struct cdns_pcie	pcie;
-@@ -127,6 +129,8 @@ struct cdns_pcie_rc {
- 	unsigned int		quirk_detect_quiet_flag:1;
- 	unsigned int            ecam_supported:1;
- 	unsigned int            no_inbound_map:1;
-+	unsigned int            quirk_broken_aspm_l0s:1;
-+	unsigned int            quirk_broken_aspm_l1:1;
- };
+@@ -314,7 +326,7 @@ int run_tool(struct tool_ops *ops, int argc, char *argv[])
  
- /**
-@@ -338,6 +342,21 @@ static inline u16 cdns_pcie_rp_readw(struct cdns_pcie *pcie, u32 reg)
- 	return cdns_pcie_read_sz(addr, 0x2);
- }
+ 	retval = ops->main(tool);
+ 	if (retval)
+-		goto out_trace;
++		goto out_signals;
  
-+static inline void cdns_pcie_rp_writel(struct cdns_pcie *pcie,
-+				       u32 reg, u32 value)
-+{
-+	void __iomem *addr = pcie->reg_base + CDNS_PCIE_RP_BASE + reg;
-+
-+	cdns_pcie_write_sz(addr, 0x4, value);
-+}
-+
-+static inline u32 cdns_pcie_rp_readl(struct cdns_pcie *pcie, u32 reg)
-+{
-+	void __iomem *addr = pcie->reg_base + CDNS_PCIE_RP_BASE + reg;
-+
-+	return cdns_pcie_read_sz(addr, 0x4);
-+}
-+
- static inline void cdns_pcie_hpa_rp_writeb(struct cdns_pcie *pcie,
- 					   u32 reg, u8 value)
- {
+ 	if (params->user_workload && !params->user.stopped_running) {
+ 		params->user.should_run = 0;
+@@ -336,6 +348,8 @@ int run_tool(struct tool_ops *ops, int argc, char *argv[])
+ 	if (ops->analyze)
+ 		ops->analyze(tool, stopped);
+ 
++out_signals:
++	unset_signals(params);
+ out_trace:
+ 	trace_events_destroy(&tool->record->trace, params->events);
+ 	params->events = NULL;
 -- 
 2.53.0
 
