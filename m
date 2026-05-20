@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5149D3D8914;
-	Wed, 20 May 2026 16:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CBE3F5BD0;
+	Wed, 20 May 2026 16:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296077; cv=none; b=XlWEAYtBA0KVYckgXMdSu6P5iLzPr4g94V/qz25tbWAwvblVisTFfg+7u225FBxS7lLk21dla/qOzFLd9dwa2Fqa4UH0/EMDEMzUkery/jTtkvcIj7fpefqB4r6xnBEK/0gq90u1Bfvj7XMOmM0dLKhLAJgYXGe4f4AXslJsmlM=
+	t=1779296080; cv=none; b=QlFoa5speMWTdK4e6lsu01IAdY+6UaYb9bch66eeiSuLAZ6XuBaGMwV7VRTfweisjHqtEVs7bn+L9QFMY098WZgyOd00fNEXgjGDiwMfkFdqkWIfR54q/qD17C7n7aoNZBp7mSi1YkB+ptez14fKWcWzH7E+GS60tHA4uiefkNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296077; c=relaxed/simple;
-	bh=lxSfV2QjgngY0mzVwwrf9Q1VNBFN+ukZ6aHlOr7TNSQ=;
+	s=arc-20240116; t=1779296080; c=relaxed/simple;
+	bh=+nVTMlxgXqU0dhb9PuHLmERirFdIz44wvTn+tiBThoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hsoPV+CYrVOltKduqImmsYmYDkdj/2b196x1QjTJxJGUPZQQzpr84ey+8IxJEi5J9a0gJXmuSjnqSXkaRcRYh/SLsY3XprSGm2eU4FUtuBurtF/k4EUOayRz2ZUTMCjEVgqzb6X3MExwUTj7d2AWa53wRx/ghBzKRPH1VonWRYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkmAQElh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S72JW8jzM30PNLS1CyVEqXBZLAH+JIeM5rcv4BwuTkFfE10An1ZUDYjduHEcHuN9Pp0RJw/fBsW7y5YARiseQ0Y4iGSma5p08+glAszrV5AfCKRnrjqMwBOCYA9hoWOTxLtj8w+UGe7M3/nCqj2rC4qKAaM2jcnOX0QzWsgZpp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWxXMo7/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkmAQElh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C2A1F000E9;
-	Wed, 20 May 2026 16:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWxXMo7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592D71F000E9;
+	Wed, 20 May 2026 16:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296076;
-	bh=CCWfoPBT2K9kh38f4f7nPJPi6hKyHXIDlDwwn9jRePU=;
+	s=korg; t=1779296078;
+	bh=9FCWGi7qvAr/KJcj3gQhRqbWm2LZxb6Ph5Kk3/WyPj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gkmAQElhmfcnQH9VkIbmVs5tjWfh3CZyXx+0m4lgtpFS8lk2TKuAtHCAiP1Ps2kGR
-	 GRPqOtCdn5W9BBDgKYaFWFASc9rMpv2xgJjkGySJ6jAG+lUoZMM+5UhtS24/yYS3H7
-	 jqOc6hvzvcHUb6GutI7sa8Wuy9NCcCLIrH9TThxs=
+	b=yWxXMo7//gYiKjP1Vy1segZubAquGwlkv4fgyrV6bD0Nc/fHLkPBbG582K3j7ilpQ
+	 ZcquvAyLcWc6QNnqjBXyS8glkw7Lvlpv6IvYEjeNtKQ/30hxbRniTKxyM3lVYZZtWe
+	 KsElE8UvXRqzDg7fwA73QMcPKaDTZBdoaQRYIXiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7be88937363ac7ab7bb0@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0663/1146] fs/ntfs3: prevent uninitialized lcn caused by zero len
-Date: Wed, 20 May 2026 18:15:13 +0200
-Message-ID: <20260520162203.188129188@linuxfoundation.org>
+Subject: [PATCH 7.0 0664/1146] backlight: sky81452-backlight: Check return value of devm_gpiod_get_optional() in sky81452_bl_parse_dt()
+Date: Wed, 20 May 2026 18:15:14 +0200
+Message-ID: <20260520162203.212768361@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,68 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit e98266e823a1fa06fe6499df61aeaac2fd6f7a49 ]
+[ Upstream commit 797cc011ae02bda26f93d25a4442d7a1a77d84df ]
 
-syzbot reported a uninit-value in ntfs_iomap_begin [1].
+The devm_gpiod_get_optional() function may return an ERR_PTR in case of
+genuine GPIO acquisition errors, not just NULL which indicates the
+legitimate absence of an optional GPIO.
 
-Since runs was not touched yet, run_lookup_entry() immediately fails
-and returns false, which makes the value of "*len" 0.
-Simultaneously, the new value and err value are also 0, causing the
-logic in attr_data_get_block_locked() to jump directly to ok, ultimately
-resulting in *lcn being triggered before it is set [1].
+Add an IS_ERR() check after the call in sky81452_bl_parse_dt(). On
+error, return the error code to ensure proper failure handling rather
+than proceeding with invalid pointers.
 
-In ntfs_iomap_begin(), the check for a 0 value in clen is moved forward
-to before updating lcn to avoid this [1].
-
-[1]
-BUG: KMSAN: uninit-value in ntfs_iomap_begin+0x8c0/0x1460 fs/ntfs3/inode.c:825
- ntfs_iomap_begin+0x8c0/0x1460 fs/ntfs3/inode.c:825
- iomap_iter+0x9b7/0x1540 fs/iomap/iter.c:110
-
-Local variable lcn created at:
- ntfs_iomap_begin+0x15d/0x1460 fs/ntfs3/inode.c:786
-
-Fixes: 10d7c95af043 ("fs/ntfs3: add delayed-allocation (delalloc) support")
-Reported-by: syzbot+7be88937363ac7ab7bb0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7be88937363ac7ab7bb0
-Tested-by: syzbot+7be88937363ac7ab7bb0@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: e1915eec54a6 ("backlight: sky81452: Convert to GPIO descriptors")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Link: https://patch.msgid.link/20260203021625.578678-1-nichen@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/video/backlight/sky81452-backlight.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 6e65066ebcc1a..eac421cf98a87 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -822,6 +822,11 @@ static int ntfs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
- 		return err;
- 	}
+diff --git a/drivers/video/backlight/sky81452-backlight.c b/drivers/video/backlight/sky81452-backlight.c
+index 2749231f03854..b2679b24de14b 100644
+--- a/drivers/video/backlight/sky81452-backlight.c
++++ b/drivers/video/backlight/sky81452-backlight.c
+@@ -202,6 +202,9 @@ static struct sky81452_bl_platform_data *sky81452_bl_parse_dt(
+ 	pdata->dpwm_mode = of_property_read_bool(np, "skyworks,dpwm-mode");
+ 	pdata->phase_shift = of_property_read_bool(np, "skyworks,phase-shift");
+ 	pdata->gpiod_enable = devm_gpiod_get_optional(dev, NULL, GPIOD_OUT_HIGH);
++	if (IS_ERR(pdata->gpiod_enable))
++		return dev_err_cast_probe(dev, pdata->gpiod_enable,
++					  "failed to get gpio\n");
  
-+	if (!clen) {
-+		/* broken file? */
-+		return -EINVAL;
-+	}
-+
- 	if (lcn == EOF_LCN) {
- 		/* request out of file. */
- 		if (flags & IOMAP_REPORT) {
-@@ -855,11 +860,6 @@ static int ntfs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
- 		return 0;
- 	}
- 
--	if (!clen) {
--		/* broken file? */
--		return -EINVAL;
--	}
--
- 	iomap->bdev = inode->i_sb->s_bdev;
- 	iomap->offset = offset;
- 	iomap->length = ((loff_t)clen << cluster_bits) - off;
+ 	ret = of_property_count_u32_elems(np, "led-sources");
+ 	if (ret < 0) {
 -- 
 2.53.0
 
