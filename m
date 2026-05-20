@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B303E5ECF;
-	Wed, 20 May 2026 17:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFF93F4DF4;
+	Wed, 20 May 2026 17:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299430; cv=none; b=WKASn3PwrtaJdocdaCNaWwnItHAOvTHMT725GqD+xznrWDT5XmGbwKbWozt7/aUyb/YHDfgpn5jwiOBJzoN+nnFZuuoKz29/cglmg7A+/vV8reCoahKdZOzrRYUUUNYjBsbsOBHako2UrbDOOPEdM3tFoY5f6DKMpKulYcYwmWA=
+	t=1779299433; cv=none; b=CkuZ8Vzb24EEsxKM8ntQoHiDaE47hqpYNx4pI1CMJQ7iEcMZNt9EelW7R7qEvX+kEHtiFPc5jLynTsojQJnNnErVb1WDzEz/lU1zfFByNFlQQtrV18PEb4HzVWvuNhJLxEpY1ze/I+kpXOK6hcK0xGw7mVy17+UkTAXSJltY0Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299430; c=relaxed/simple;
-	bh=DWgYu8BebPO9EXER8CoSFP6sYIWoS9PsyYKWiz6vHEE=;
+	s=arc-20240116; t=1779299433; c=relaxed/simple;
+	bh=g+G2Q62K3fre8+ZvT6ANeayCzIHyK60RN7U/hjzFMdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJUnMWwG/cD6UGPMOeK3H+xfniwyoBEC/jY61GXaqh3ezih9bgFeRMa9yj72RbH6iQBd3wR56wvx3aGgss/gAlqVWD3eQNz/pVrrkW28/W/Iio3vAseegaUccV/si19o3guo2NMq7YRgp1j+5v6iQqFAqBzyGMYKqY/0hd2q1h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oip7pu6o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IiuS3Ji13pBRasQMmZrNg/tT+LD6lefm0yzADalcrb4w0SQToDmBOv1EE63oxzectavJwlTsGyfrJE0+rL1m5oXJHTp696PiytkyRzzoGd6QpNpSpeP4VTXPgB7GVRMpcF9n4HhgEaSgnMsqfdOyGZrdLt6fnILePCUav6fnrQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+BAJl5A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oip7pu6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A081F00893;
-	Wed, 20 May 2026 17:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+BAJl5A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939FA1F000E9;
+	Wed, 20 May 2026 17:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299429;
-	bh=bJ3I2ACWAz/Uebfd4JC90ezFLJWiujluFfX2HuqxyhU=;
+	s=korg; t=1779299432;
+	bh=oRRF0aPbxAPkra9Jdk3xzFm9jlBoUMrAWy0n8ViWyQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oip7pu6ohuGW2Ba+WWVr4jJBiZH0o2G+WsElAJckqmzp2zxe2rkl8lyh9DciybxN/
-	 N9S3vGcKW6j8JXx1UKvs7Okj0LjjYI8eD13TME8+3kX/K7bfXNXxWf6kM2evX+HmSF
-	 /tnVrjUg0c8kCdasC7dsupXe18HBuz4CCld3bu7Q=
+	b=b+BAJl5ANPKv/zsBpLqFizoefF5RvUOCTfVAssqj0bstvrcQyc69+By7CIkaTDpTV
+	 10TEq3ngZouHo6ZU4AfbpvmM9wRfD4lRb14YXZq07NXmw9vHyGZOiIfK7JWTQu2KiQ
+	 vaDQNIAcme0ao00UVLKLvbpX8/I4LwBxw6XJdAYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Jiexun Wang <wangjiexun2025@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 752/957] netfilter: xt_policy: fix strict mode inbound policy matching
-Date: Wed, 20 May 2026 18:20:35 +0200
-Message-ID: <20260520162150.872954677@linuxfoundation.org>
+Subject: [PATCH 6.18 770/957] net/sched: netem: check for negative latency and jitter
+Date: Wed, 20 May 2026 18:20:53 +0200
+Message-ID: <20260520162151.262084830@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -57,45 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiexun Wang <wangjiexun2025@gmail.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit 4b2b4d7d4e203c92db8966b163edfacb1f0e1e29 ]
+[ Upstream commit 90be9fedb218ee95a1cf59050d1306fbfb0e8b87 ]
 
-match_policy_in() walks sec_path entries from the last transform to the
-first one, but strict policy matching needs to consume info->pol[] in
-the same forward order as the rule layout.
+Reject requests with negative latency or jitter.
+A negative value added to current timestamp (u64) wraps
+to an enormous time_to_send, disabling dequeue.
+The original UAPI used u32 for these values; the conversion to 64-bit
+time values via TCA_NETEM_LATENCY64 and TCA_NETEM_JITTER64
+allowed signed values to reach the kernel without validation.
 
-Derive the strict-match policy position from the number of transforms
-already consumed so that multi-element inbound rules are matched
-consistently.
+Jitter is already silently clamped by an abs() in netem_change();
+that abs() can be removed in a follow-up once this rejection is in
+place.
 
-Fixes: c4b885139203 ("[NETFILTER]: x_tables: replace IPv4/IPv6 policy match by address family independant version")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 99803171ef04 ("netem: add uapi to express delay and jitter in nanoseconds")
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260418032027.900913-7-stephen@networkplumber.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_policy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_netem.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/net/netfilter/xt_policy.c b/net/netfilter/xt_policy.c
-index cb6e8279010a4..b5fa65558318f 100644
---- a/net/netfilter/xt_policy.c
-+++ b/net/netfilter/xt_policy.c
-@@ -63,7 +63,7 @@ match_policy_in(const struct sk_buff *skb, const struct xt_policy_info *info,
- 		return 0;
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 6e221bdfb3871..47db6da905c58 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -825,6 +825,16 @@ static int get_dist_table(struct disttable **tbl, const struct nlattr *attr)
+ 	return 0;
+ }
  
- 	for (i = sp->len - 1; i >= 0; i--) {
--		pos = strict ? i - sp->len + 1 : 0;
-+		pos = strict ? sp->len - i - 1 : 0;
- 		if (pos >= info->len)
- 			return 0;
- 		e = &info->pol[pos];
++static int validate_time(const struct nlattr *attr, const char *name,
++			 struct netlink_ext_ack *extack)
++{
++	if (nla_get_s64(attr) < 0) {
++		NL_SET_ERR_MSG_ATTR_FMT(extack, attr, "negative %s", name);
++		return -EINVAL;
++	}
++	return 0;
++}
++
+ static int validate_slot(const struct nlattr *attr, struct netlink_ext_ack *extack)
+ {
+ 	const struct tc_netem_slot *c = nla_data(attr);
+@@ -1067,6 +1077,18 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 			goto table_free;
+ 	}
+ 
++	if (tb[TCA_NETEM_LATENCY64]) {
++		ret = validate_time(tb[TCA_NETEM_LATENCY64], "latency", extack);
++		if (ret)
++			goto table_free;
++	}
++
++	if (tb[TCA_NETEM_JITTER64]) {
++		ret = validate_time(tb[TCA_NETEM_JITTER64], "jitter", extack);
++		if (ret)
++			goto table_free;
++	}
++
+ 	sch_tree_lock(sch);
+ 	/* backup q->clg and q->loss_model */
+ 	old_clg = q->clg;
 -- 
 2.53.0
 
