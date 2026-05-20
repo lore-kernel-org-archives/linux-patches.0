@@ -1,50 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444D53EAC82;
-	Wed, 20 May 2026 18:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C483E5ECF;
+	Wed, 20 May 2026 18:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300571; cv=none; b=g5hRPcCWPax3tDJy5iErJU7kSJF+tuT9SEDtBIGHnt4NbqjjWYyaiuLiXMS71BfVSrLAETvv3eDwJjfQPxCARljuaipTB0G2uwvzmIWoTJRAgl+tfrFm4+1QF4n/vbjdb6pyrjk7xhpAyMshxe6G4eS1V5LS+vns5Hlx5OEWmjs=
+	t=1779300574; cv=none; b=iDHNiOeidkHZe/FzvKtAiBTEihD9oOJ7kCOogRqQwfTNCDg87JeyGg6nvtRdaMeT3/dESyfmcoy3rq/0k0KtuCZUmTXqFyzRECSzPpKnvrh8cChFnY+X0PVhs0px1+hdstgXFM6VVyaIHy3BYa5eS/LIKYAfotXXCPwERQjAkxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300571; c=relaxed/simple;
-	bh=ZxRW1U6qMlayZm1PG8Vs+RTvm7p06b71McRxO0vxTVU=;
+	s=arc-20240116; t=1779300574; c=relaxed/simple;
+	bh=/ig2/o8vT14V2F4Hd0maL7mFCzaGRdC2Odv7ilYRjWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CXaBRFI+IxuPul/++9gycAGktAkSyxKPoiN3fYuf8g0TIFrqCY7rpwnUOTtP31UR4pRovLz/+P8swyVdZf4wJ1sr2x6q9qHvHRJ0jQOY+g1y6wK5djjIXtfsrDPC5T/rFxe1/ZGmJmN4WQIQ/MlV9Hiqt2ThJ/IGSyXSXlmrXIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUX966Cm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HuW9Ulm/9r54Ik6anqRPt7P82+UxZcNcGooNdD3x2me/tXm8WA++hUVRAdjHUHknTwmqdyct2zp1KtsPvL3aMN2aw5/eV5Cc586r0yCz1U73dmirSUMwxL8luGdA6hVsudkCvnup+4pKSo0kgZtzmQu60c/ZFXavr2nWatO0+LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4ghXHnj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUX966Cm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E60A1F000E9;
-	Wed, 20 May 2026 18:09:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4ghXHnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E1F1F000E9;
+	Wed, 20 May 2026 18:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300570;
-	bh=EcpNBoaUV0eczAsR0bof8uWimFQzszAMkFdtyfEG1n8=;
+	s=korg; t=1779300572;
+	bh=mvX0938GO02oDPHXQFl/N8sJq+KnV0YU/Gxv3joojog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gUX966Cm8K7SJ+nYEcKGV+IfiqsEvfCVOKDR90T4FSj1tJjZXBRKF9zVfvykPThAc
-	 9gt1uG0jyvd74sUlNavcJ3TuKNMhZQZtIaRKkBZlAqlmd2Ni+LHUmddfcpwoqpZB94
-	 XKB4ySvqcBUBrKIILrCSMNHbm/8dNRqDZSLgPYXo=
+	b=s4ghXHnjjPdzD+PoFEr5OKTVmKEqmNRLNyiCN2zHcHKaJZAAar1oBMui34x5WK2vs
+	 L0HilGmrxZiV+QJofjWcQ9wwr1UeZhg8FhSpRQBJ0s2nFiGmfhE0dv2b9mQd8QooCT
+	 vwb99pyekevU6fqmjUSUGujdeUjupgFyt4bjM09s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AnishMulay <anishm7030@gmail.com>,
-	SeongJae Park <sj@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Sayali Patil <sayalip@linux.ibm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Jane Chu <jane.chu@oracle.com>,
+	David Hildenbrand <david@kernel.org>,
+	Hillf Danton <hillf.zj@alibaba-inc.com>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Liam Howlett <liam.howlett@oracle.com>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	Michal Hocko <mhocko@suse.com>,
 	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 226/666] selftests/mm: skip migration tests if NUMA is unavailable
-Date: Wed, 20 May 2026 18:17:17 +0200
-Message-ID: <20260520162116.111571236@linuxfoundation.org>
+Subject: [PATCH 6.12 227/666] Documentation: fix a hugetlbfs reservation statement
+Date: Wed, 20 May 2026 18:17:18 +0200
+Message-ID: <20260520162116.133501282@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -63,56 +63,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AnishMulay <anishm7030@gmail.com>
+From: Jane Chu <jane.chu@oracle.com>
 
-[ Upstream commit 54218f10dfbe88c8e41c744fd45a756cde60b8c4 ]
+[ Upstream commit 7a197d346a44384a1a858a98ef03766840e561d4 ]
 
-Currently, the migration test asserts that numa_available() returns 0.  On
-systems where NUMA is not available (returning -1), such as certain ARM64
-configurations or single-node systems, this assertion fails and crashes
-the test.
+Documentation/mm/hugetlbfs_reserv.rst has
+	if (resv_needed <= (resv_huge_pages - free_huge_pages))
+		resv_huge_pages += resv_needed;
+which describes this code in gather_surplus_pages()
+	needed = (h->resv_huge_pages + delta) - h->free_huge_pages;
+	if (needed <= 0) {
+		h->resv_huge_pages += delta;
+		return 0;
+	}
+which means if there are enough free hugepages to account for the new
+reservation, simply update the global reservation count without
+further action.
 
-Update the test to check the return value of numa_available().  If it is
-less than 0, skip the test gracefully instead of failing.
+But the description is backwards, it should be
+	if (resv_needed <= (free_huge_pages - resv_huge_pages))
+instead.
 
-This aligns the behavior with other MM selftests (like rmap) that skip
-when NUMA support is missing.
-
-Link: https://lkml.kernel.org/r/20260218163941.13499-1-anishm7030@gmail.com
-Fixes: 0c2d08728470 ("mm: add selftests for migration entries")
-Signed-off-by: AnishMulay <anishm7030@gmail.com>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Tested-by: Sayali Patil <sayalip@linux.ibm.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://lkml.kernel.org/r/20260302201015.1824798-1-jane.chu@oracle.com
+Fixes: 70bc0dc578b3 ("Documentation: vm, add hugetlbfs reservation overview")
+Signed-off-by: Jane Chu <jane.chu@oracle.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Hillf Danton <hillf.zj@alibaba-inc.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
 Cc: Liam Howlett <liam.howlett@oracle.com>
 Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Cc: Michal Hocko <mhocko@suse.com>
 Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Shuah Khan <skhan@linuxfoundation.org>
 Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/migration.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/mm/hugetlbfs_reserv.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/mm/migration.c b/tools/testing/selftests/mm/migration.c
-index 64bcbb7151cff..c883ef420d3ba 100644
---- a/tools/testing/selftests/mm/migration.c
-+++ b/tools/testing/selftests/mm/migration.c
-@@ -33,7 +33,8 @@ FIXTURE_SETUP(migration)
- {
- 	int n;
+diff --git a/Documentation/mm/hugetlbfs_reserv.rst b/Documentation/mm/hugetlbfs_reserv.rst
+index 4914fbf07966c..a49115db18c76 100644
+--- a/Documentation/mm/hugetlbfs_reserv.rst
++++ b/Documentation/mm/hugetlbfs_reserv.rst
+@@ -155,7 +155,7 @@ are enough free huge pages to accommodate the reservation.  If there are,
+ the global reservation count resv_huge_pages is adjusted something like the
+ following::
  
--	ASSERT_EQ(numa_available(), 0);
-+	if (numa_available() < 0)
-+		SKIP(return, "NUMA not available");
- 	self->nthreads = numa_num_task_cpus() - 1;
- 	self->n1 = -1;
- 	self->n2 = -1;
+-	if (resv_needed <= (resv_huge_pages - free_huge_pages))
++	if (resv_needed <= (free_huge_pages - resv_huge_pages)
+ 		resv_huge_pages += resv_needed;
+ 
+ Note that the global lock hugetlb_lock is held when checking and adjusting
 -- 
 2.53.0
 
