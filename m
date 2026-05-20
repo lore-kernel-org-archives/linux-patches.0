@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02623546D0;
-	Wed, 20 May 2026 16:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487F83D8138;
+	Wed, 20 May 2026 16:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295354; cv=none; b=EkM+VMZ8pOSPrO/NeYY13BfdszmoikjJEDegpEU01WjRdvbj2Hpy1ANknlCW/lLTxNESmNEjS+s+lQ0/F16zdz2wTqb+aqvXQQW76CuMqtg01899rFvu+mZlEsmw0lvdLhhqX4tUnL92Cq2CwznCO4JWk+zG8ocxFBLcTNeZWFM=
+	t=1779295357; cv=none; b=J3v0alWMPnGrcefAy83xNs3FMnZSfH+M9EnHNu2pGT9GnUy0GPxKBgxb0fdoTdNnSd0fwBdD+38NSgDMKs4FUEquI6py0+AbMvzy4m0KuDz5oQtH35ct9r5CaGzp5NFD83mV/xjzAMQCK35B2L0/TwklyOb8tb810Z/QDeKEmmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295354; c=relaxed/simple;
-	bh=2yv5u78NliBh9CUfUVDRThfYvWl4LRY7UJuS2cFxhts=;
+	s=arc-20240116; t=1779295357; c=relaxed/simple;
+	bh=HUu1BniarOmVnoquqi0k0tvuq0weD/KdKtKZcFD4Ung=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J24OMDGS1oI5MGvwfEjkpZzEkS3OftI8SvnoWERiDny6WLG0Om7eabHwxaLeOcxmrCm+n0MhqHDwB+B+PJWdJWovjRjQO4pSgVWFHhUjpLelBXm1ly9tZMwsIUBxkffnnMDq/rvyWtl/b6XcqASNYXczhBZMAqivGQrbZwtfg2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFoLp9II; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xxv3BbQjXB6yTzJe49mTP25RlRHDi0/te+DipgTfMf+VtJpoosP/KolTA/obs/Dn/1G66wSVdvjn9YsqWJuGgGdkVbGvm9O7GYicIWXwbdQaywBZHH5xPlpMNCHpdIjtXteTnJ5cRHA/1QQTlL1pvQY68fCV0crrd+Sk693OB1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjOT+KTN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFoLp9II"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BCB1F000E9;
-	Wed, 20 May 2026 16:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjOT+KTN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD5F1F000E9;
+	Wed, 20 May 2026 16:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295353;
-	bh=3CR+VHW/xyWsIG5nBK1pUoqyXl4cjUGanRcG0pufPbw=;
+	s=korg; t=1779295356;
+	bh=SvBoTLinesxSRd3b2z6ONPalBwM55IAjQaUdykyABTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jFoLp9II9thkS6PT4BTZ4XnwkcnoVk85W/N2nt5l4LlYXo6KmoYJTP1UHOt/mfcKo
-	 CR4W4egZOimFuMyyKeT+tr14yiVhiy8M9+EBhaVLF+Kvr0SIQbVxh2ru0VX0v+0Q5J
-	 kdp8e8sh2wu7FTQuCoOhRWtR3QHKRA+MP/LxTLxE=
+	b=sjOT+KTNlf+tUrnQ22VFy0Jpn0dgehotiJO6qUfR6pfYRBboTn4M/PmK0pXdgdL3a
+	 6TXJxPwqDqT/+M3j9bGom0dEXmTvZvOndU4Kg+DgFu2YYyVelrCliFiTUb4AGyXqlA
+	 18Fkqs3OxxLYETpBiPP1eW4e5+DRa+25HlIKUGUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Goudar Manjunath Ramanagouda <manjunath.ramanagouda.goudar@intel.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0346/1146] PCI/DPC: Log AER error info for DPC/EDR uncorrectable errors
-Date: Wed, 20 May 2026 18:09:56 +0200
-Message-ID: <20260520162156.030804571@linuxfoundation.org>
+Subject: [PATCH 7.0 0347/1146] hwmon: (aspeed-g6-pwm-tach): remove redundant driver remove callback
+Date: Wed, 20 May 2026 18:09:57 +0200
+Message-ID: <20260520162156.053625675@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,49 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 97970e7c694356e3386a10e3b936d61eafd06bce ]
+[ Upstream commit 46fef8583daa1bf78fda7eaa523c64d4440322ac ]
 
-aer_print_error() skips printing if ratelimit_print[i] is not set.  In the
-native AER path, ratelimit_print is initialized by add_error_device()
-during source device discovery, and is set to 1 for fatal errors to bypass
-rate limiting since fatal errors should always be logged.
+Drops the remove callback as it only asserts reset and the probe already
+registers a devres action (devm_add_action_or_reset()) to call
+aspeed_pwm_tach_reset_assert().
 
-The DPC/EDR path uses the DPC-capable port as the error source and reads
-its AER uncorrectable error status registers directly in
-dpc_get_aer_uncorrect_severity(). Since it does not go through
-add_error_device(), ratelimit_print[0] is left uninitialized and zero.  As
-a result, aer_print_error() silently drops all AER error messages for
-DPC/EDR triggered events.
-
-Set ratelimit_print[0] to 1 to bypass rate limiting and always print AER
-logs for uncorrectable errors detected by the DPC port.
-
-Fixes: a57f2bfb4a58 ("PCI/AER: Ratelimit correctable and non-fatal error logging")
-Co-developed-by: Goudar Manjunath Ramanagouda <manjunath.ramanagouda.goudar@intel.com>
-Signed-off-by: Goudar Manjunath Ramanagouda <manjunath.ramanagouda.goudar@intel.com>
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260318170449.2733581-1-sathyanarayanan.kuppuswamy@linux.intel.com
+Fixes: 7e1449cd15d1 ("hwmon: (aspeed-g6-pwm-tacho): Support for ASPEED g6 PWM/Fan tach")
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Link: https://lore.kernel.org/r/20260309-pwm_fixes-v2-1-ca9768e70470@aspeedtech.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/dpc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/aspeed-g6-pwm-tach.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/pci/pcie/dpc.c b/drivers/pci/pcie/dpc.c
-index fc18349614d7c..7605ddd9f0ba8 100644
---- a/drivers/pci/pcie/dpc.c
-+++ b/drivers/pci/pcie/dpc.c
-@@ -256,6 +256,7 @@ static int dpc_get_aer_uncorrect_severity(struct pci_dev *dev,
- 
- 	info->dev[0] = dev;
- 	info->error_dev_num = 1;
-+	info->ratelimit_print[0] = 1;
- 
- 	return 1;
+diff --git a/drivers/hwmon/aspeed-g6-pwm-tach.c b/drivers/hwmon/aspeed-g6-pwm-tach.c
+index 44e1ecba205d7..4f6e6d440dd40 100644
+--- a/drivers/hwmon/aspeed-g6-pwm-tach.c
++++ b/drivers/hwmon/aspeed-g6-pwm-tach.c
+@@ -517,13 +517,6 @@ static int aspeed_pwm_tach_probe(struct platform_device *pdev)
+ 	return 0;
  }
+ 
+-static void aspeed_pwm_tach_remove(struct platform_device *pdev)
+-{
+-	struct aspeed_pwm_tach_data *priv = platform_get_drvdata(pdev);
+-
+-	reset_control_assert(priv->reset);
+-}
+-
+ static const struct of_device_id aspeed_pwm_tach_match[] = {
+ 	{
+ 		.compatible = "aspeed,ast2600-pwm-tach",
+@@ -537,7 +530,6 @@ MODULE_DEVICE_TABLE(of, aspeed_pwm_tach_match);
+ 
+ static struct platform_driver aspeed_pwm_tach_driver = {
+ 	.probe = aspeed_pwm_tach_probe,
+-	.remove = aspeed_pwm_tach_remove,
+ 	.driver	= {
+ 		.name = "aspeed-g6-pwm-tach",
+ 		.of_match_table = aspeed_pwm_tach_match,
 -- 
 2.53.0
 
