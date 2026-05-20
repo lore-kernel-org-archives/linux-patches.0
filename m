@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31E1403EBF;
-	Wed, 20 May 2026 18:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918F0406269;
+	Wed, 20 May 2026 18:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302982; cv=none; b=pB0xSY2rmJtBdFOezLHlN8un37mH8Vkw6MD4WZEFVOn5grhlJqUCeXDsbW0twv1AdCFezwr99tYG2NBHpZ3OlcTYR3yXdgH6BglzKmyyqPUSeo2sz5J1adYTQ89M9fcngA7JAI0yiZOLhATzHHfMu3yuHHh9TGe6rP/Q3B+bsEM=
+	t=1779302985; cv=none; b=KgQrjlAUvLPpbG9zvPDf8Qet+qrnj4nJW+yYjc3cyRCo0jVip8IrZCJO7PO5QvRO+pGqqmeFMSci5gSIh3Ye6GtZ9QFf10p9dYY0v9TzT/n6fyNc+RAXhg5ITQHvl/7mOE1LTS+3S8JvcV5aO5mcVOmzi8bIkOGoxHz0Va7Ghiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302982; c=relaxed/simple;
-	bh=vu19sV0rwKrvCD+l82Dji2Ddo2vDHqsp1x196vovl9U=;
+	s=arc-20240116; t=1779302985; c=relaxed/simple;
+	bh=HArxH/rgybhClQC5qGsiuUMoJJBPI098k07/PfiJsjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BvCjQHxEB6TsS/PgmMVYEInVt1+EscGTxPYMdDwlTTtlG6FGIb86g1n3J1bVc+JnCvA4ltm1XbVuXEII96bLFhuEk52KQtAUstdSkd9ZDqHd4nv9yVqDc20kwIHzZ1iT5d10aMt4K4ddXPloguT+UZzkkXNT/5SqKeFO77QXy6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=odPb3G/7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ebOIRwTF3aZoHkQwFXGlbI3nPaN6RUcYb6tNFZLJkwHPk3AfLZBlfAMGX4CQ8F3Fihl4FLRb+c4Ey78B9AWBE/txT0RSGGV71smw6YeA5Fueihz52vJETXdNfSwqfe8axRvc/OvNMEk2EA6fMjFNZryXG/T1nXwUKZqzoq+aA3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aInmct1U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="odPb3G/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F48F1F00894;
-	Wed, 20 May 2026 18:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aInmct1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423691F000E9;
+	Wed, 20 May 2026 18:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302980;
-	bh=+OVyUgWoIKhCp3tTSAu8K5EF+aoD8MtDAQHQlTBCVNU=;
+	s=korg; t=1779302982;
+	bh=z+D6rLMaUl3d5g+Bun7IiW2AJCzsgqch9aRyGj3XwO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=odPb3G/7PPYN2VE1RsmxrTA6Cje+uj23hkgucv2QG8ss9qPPX7KMOjxNXiF4yVWUg
-	 Q09r2EgfqX3XeMtcV6YWh2TpMyTMckh4MgS8G8/SG/LnhjYtTvqZ4cFcvYrhVJ89ob
-	 3ugDI77OdIj1338U0QX9wOIB9XlAaOXIXQFfyg3I=
+	b=aInmct1UotsA9Vbj8FV9A8Xnwz2Fvaz2wm0HNU54SG7kv9N1XHV9L8XLdrODB7uPs
+	 8d7WII0htuH+pnR6h3YaOXrlPqQkj3GPr01ymE65Gx/O7xLrziU7qeHSV8WdrcSHhq
+	 eePAm6HOS1ZBSLzamFgRHETJhq5UOhIHAanNoymU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 436/508] sfc: fix error code in efx_devlink_info_running_versions()
-Date: Wed, 20 May 2026 18:24:19 +0200
-Message-ID: <20260520162108.046914837@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.6 472/508] powerpc/warp: Fix error handling in pika_dtm_thread
+Date: Wed, 20 May 2026 18:24:55 +0200
+Message-ID: <20260520162108.823146165@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,37 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 051ffb001b8a232cfa6e72f38bb5f51c4270a60b ]
+commit 108d7f951271cbd36ca36efc5e5d106966f5180c upstream.
 
-Return -EIO if efx_mcdi_rpc() doesn't return enough space.
+pika_dtm_thread() acquires client through of_find_i2c_device_by_node()
+but fails to release it in error handling path. This could result in a
+reference count leak, preventing proper cleanup and potentially
+leading to resource exhaustion. Add put_device() to release the
+reference in the error handling path.
 
-Fixes: 14743ddd2495 ("sfc: add devlink info support for ef100")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Edward Cree <ecree.xilinx@gmail.com>
-Link: https://patch.msgid.link/afGpsbLRHL4_H0KS@stanley.mountain
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by code review.
+
+Cc: stable@vger.kernel.org
+Fixes: 3984114f0562 ("powerpc/warp: Platform fix for i2c change")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20251116024411.21968-1-make24@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/sfc/efx_devlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/44x/warp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/sfc/efx_devlink.c b/drivers/net/ethernet/sfc/efx_devlink.c
-index 3cd750820fdde..d5a4b3cf94544 100644
---- a/drivers/net/ethernet/sfc/efx_devlink.c
-+++ b/drivers/net/ethernet/sfc/efx_devlink.c
-@@ -530,7 +530,7 @@ static int efx_devlink_info_running_versions(struct efx_nic *efx,
- 	if (rc || outlength < MC_CMD_GET_VERSION_OUT_LEN) {
- 		netif_err(efx, drv, efx->net_dev,
- 			  "mcdi MC_CMD_GET_VERSION failed\n");
--		return rc;
-+		return rc ?: -EIO;
+--- a/arch/powerpc/platforms/44x/warp.c
++++ b/arch/powerpc/platforms/44x/warp.c
+@@ -292,6 +292,8 @@ static int pika_dtm_thread(void __iomem
+ 		schedule_timeout(HZ);
  	}
  
- 	/* Handle previous output */
--- 
-2.53.0
-
++	put_device(&client->dev);
++
+ 	return 0;
+ }
+ 
 
 
