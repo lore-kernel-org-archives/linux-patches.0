@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2390C3F23A4;
-	Wed, 20 May 2026 17:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4173D75D3;
+	Wed, 20 May 2026 17:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298793; cv=none; b=kn4IBkeVxQ0M8xZuN2kDB4omvfGHs1sjs/LT0Z7TA+jYD39fiyag6dkYxkMMycRRPzWuydkI2xLCaQHcBYjiupl69gVH70xVow3TPifm1Iu8kveQOad1eJE7pMeJvHhof6Ay/8neYKIrFMXysgo+ebro3nzvQVpnrACl3p7QrUA=
+	t=1779298796; cv=none; b=o29fcXC74IxzqOF9rGKJ+sLjrfbCUVMXV5i66Twnr59U3xyBwif6u/f6ecm5NSXeUUUdeY3fubVFNiAI6geMdEZAy8GJRvbdzEjzXgOrelYCmIuWWA3mUFdM3nn6o+IKSKkxjVhRvn8Y2Oj94p56lBe8tE815CZcODTAo8xBOc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298793; c=relaxed/simple;
-	bh=1ZfYt5RkjVXzxVHGxEihnIlBoD31ygtyrTZH9QWFrZs=;
+	s=arc-20240116; t=1779298796; c=relaxed/simple;
+	bh=mfQVKMLjaOLEaIWe7xtvEEkXmsMZ3oZPxMuk+x4nSVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AuKriaxp+/dpIhHIDlvUYHpFjZRc7hjasEktM4Dh86DG0UkkwfjlCLZK81LfUHiGBZkllg++p2A22gC0ophWuP/pXZ/h/x1Y70L8wHzDBzlPR/Y9Exu24In0Pkk0/C+zgV5o6SVAUx/SSmEqk9FflUgNxa4aROT8wP+4xvJcnbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqWw54dI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X79ILM0BV7zFmAGzey6egEyLHcAq1gZnnRVNIo3WRmOayMuOop3OiFIa/H2EnBG93/nVZD7SmAXi0ZB7FtqnZvg5T4j2zkv9qTTJUFwGP0c7DvlI4r6kDHn73wkFBBClK/hkyDZfxi9erlwkPQNYoilNn2f0NNNDLfB5McJKIac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBKt/SBN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqWw54dI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374941F00893;
-	Wed, 20 May 2026 17:39:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBKt/SBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13161F000E9;
+	Wed, 20 May 2026 17:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298790;
-	bh=HFs2Se2Q0r4Rf+ZEuKSv0rZosOQmnlDWxTn8ina2jhA=;
+	s=korg; t=1779298793;
+	bh=XE3j8vGt+PA3kuVOU/xJh1K7yu2Ump0WLLY/6LDoyKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xqWw54dIsPHDZL9gFPrAmfytB/K4DjE2DcL3ZeOlOviFu0mfwI7raC1TdgdX0RenS
-	 Oej6yJTU0/aaXbnVNnwhfvNyqQfa4/e7jM6UHBX1ulQdoFFxS5sWJOWUtjxkPpGlmE
-	 wL35zeJFLcMZSING15ZsAt6DkIpMFjU/1ux+AjiU=
+	b=mBKt/SBNYaKWWVGUdoI84GiF6+cxpHoKmhEL3fgGqekcCEPfQXDFCd28XuykYf2GK
+	 RjtHdIVeyBn0k6NHtTOHHkETrBtByJRUz/QkvHi+bw5i4kiKSKQM41u41PXW5jNR54
+	 H+t2OduLv2QrM952+Cqu23FNo77WIcWazosnwOcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 546/957] RDMA/core: Prefer NLA_NUL_STRING
-Date: Wed, 20 May 2026 18:17:09 +0200
-Message-ID: <20260520162146.373621294@linuxfoundation.org>
+Subject: [PATCH 6.18 529/957] backlight: sky81452-backlight: Check return value of devm_gpiod_get_optional() in sky81452_bl_parse_dt()
+Date: Wed, 20 May 2026 18:16:52 +0200
+Message-ID: <20260520162146.005294015@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,54 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 6ed3d14fc45d3da6025e7fe4a6a09066856698e2 ]
+[ Upstream commit 797cc011ae02bda26f93d25a4442d7a1a77d84df ]
 
-These attributes are evaluated as c-string (passed to strcmp), but
-NLA_STRING doesn't check for the presence of a \0 terminator.
+The devm_gpiod_get_optional() function may return an ERR_PTR in case of
+genuine GPIO acquisition errors, not just NULL which indicates the
+legitimate absence of an optional GPIO.
 
-Either this needs to switch to nla_strcmp() and needs to adjust printf fmt
-specifier to not use plain %s, or this needs to use NLA_NUL_STRING.
+Add an IS_ERR() check after the call in sky81452_bl_parse_dt(). On
+error, return the error code to ensure proper failure handling rather
+than proceeding with invalid pointers.
 
-As the code has been this way for long time, it seems to me that userspace
-does include the terminating nul, even tough its not enforced so far, and
-thus NLA_NUL_STRING use is the simpler solution.
-
-Fixes: 30dc5e63d6a5 ("RDMA/core: Add support for iWARP Port Mapper user space service")
-Link: https://patch.msgid.link/r/20260330122742.13315-1-fw@strlen.de
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: e1915eec54a6 ("backlight: sky81452: Convert to GPIO descriptors")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Link: https://patch.msgid.link/20260203021625.578678-1-nichen@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/iwpm_msg.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/video/backlight/sky81452-backlight.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/core/iwpm_msg.c b/drivers/infiniband/core/iwpm_msg.c
-index 3c9a9869212bb..feb09008eb9ca 100644
---- a/drivers/infiniband/core/iwpm_msg.c
-+++ b/drivers/infiniband/core/iwpm_msg.c
-@@ -365,9 +365,9 @@ int iwpm_remove_mapping(struct sockaddr_storage *local_addr, u8 nl_client)
- /* netlink attribute policy for the received response to register pid request */
- static const struct nla_policy resp_reg_policy[IWPM_NLA_RREG_PID_MAX] = {
- 	[IWPM_NLA_RREG_PID_SEQ]     = { .type = NLA_U32 },
--	[IWPM_NLA_RREG_IBDEV_NAME]  = { .type = NLA_STRING,
-+	[IWPM_NLA_RREG_IBDEV_NAME]  = { .type = NLA_NUL_STRING,
- 					.len = IWPM_DEVNAME_SIZE - 1 },
--	[IWPM_NLA_RREG_ULIB_NAME]   = { .type = NLA_STRING,
-+	[IWPM_NLA_RREG_ULIB_NAME]   = { .type = NLA_NUL_STRING,
- 					.len = IWPM_ULIBNAME_SIZE - 1 },
- 	[IWPM_NLA_RREG_ULIB_VER]    = { .type = NLA_U16 },
- 	[IWPM_NLA_RREG_PID_ERR]     = { .type = NLA_U16 }
-@@ -677,7 +677,7 @@ int iwpm_remote_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
+diff --git a/drivers/video/backlight/sky81452-backlight.c b/drivers/video/backlight/sky81452-backlight.c
+index 2749231f03854..b2679b24de14b 100644
+--- a/drivers/video/backlight/sky81452-backlight.c
++++ b/drivers/video/backlight/sky81452-backlight.c
+@@ -202,6 +202,9 @@ static struct sky81452_bl_platform_data *sky81452_bl_parse_dt(
+ 	pdata->dpwm_mode = of_property_read_bool(np, "skyworks,dpwm-mode");
+ 	pdata->phase_shift = of_property_read_bool(np, "skyworks,phase-shift");
+ 	pdata->gpiod_enable = devm_gpiod_get_optional(dev, NULL, GPIOD_OUT_HIGH);
++	if (IS_ERR(pdata->gpiod_enable))
++		return dev_err_cast_probe(dev, pdata->gpiod_enable,
++					  "failed to get gpio\n");
  
- /* netlink attribute policy for the received request for mapping info */
- static const struct nla_policy resp_mapinfo_policy[IWPM_NLA_MAPINFO_REQ_MAX] = {
--	[IWPM_NLA_MAPINFO_ULIB_NAME] = { .type = NLA_STRING,
-+	[IWPM_NLA_MAPINFO_ULIB_NAME] = { .type = NLA_NUL_STRING,
- 					.len = IWPM_ULIBNAME_SIZE - 1 },
- 	[IWPM_NLA_MAPINFO_ULIB_VER]  = { .type = NLA_U16 }
- };
+ 	ret = of_property_count_u32_elems(np, "led-sources");
+ 	if (ret < 0) {
 -- 
 2.53.0
 
