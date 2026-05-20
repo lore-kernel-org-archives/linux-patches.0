@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7391C3BFC;
-	Wed, 20 May 2026 17:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A831C3BFC;
+	Wed, 20 May 2026 17:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298826; cv=none; b=okkrS9o+97v8dqgIPgIB3Mb1lZrnwu7O3ZivzJSAuVNWAohHYRDBSiG5082BcAX1c1+cqg09GMf9LFQ4PlAiXcVOCXzJ+72JajZyfTCp6jj2ZiYdu8DRkH36AyCnCpjbgb+Aqe6qXkIWzkT0T/OU0QQqhMXhe/RNAbp9eBgjeTw=
+	t=1779298829; cv=none; b=Uow0mZuQR6ZT5KfNSxA4nloutG99o5YbD8S3FVz0H+BMhfQG/vFvJaylH+YInzxnepugOCJ55QDzCvL6NRF11QCaE52GCx/CvM0IFaC/BSUOyQLbBtNyTUoxcX2f3gEPQQ6w7u8XMLIvnjeysGUz5SD4KA21fi/oNyXZdYK/D+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298826; c=relaxed/simple;
-	bh=kwjvtZGlXiTesXB3vA4xedCMg20vlcIK2XFZLXOtKDs=;
+	s=arc-20240116; t=1779298829; c=relaxed/simple;
+	bh=fUWAokZ6icpE2Ts59BewdhzTJGYI3ZLYqEUX9cULMNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fre7UEnLKnl97yW/0rzJO8AruWxszCUlz0Dx3Mycjp4fnDVOvfYz77Rh8NPUlUbvqkpAd/x6cCGzVFBjwh25ldshhKGYfaNVeoBdtblhgQmYGP9ZGoujhnbiYUPhISur/CTT8nbTVvuu+lArQLcT101G3/9aJFy02kB1tupSS6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QnT46x//; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=og/dNrrjAPL605EhLkIzoY6eeQQdUKPEs64EdcGY9HbXHDBDdHl90Dv4wcw2LpFVnoYHhYWQVdT7wQFvn06f39c0eMD2ZZWMOOoXMEdBvC6R1z+siivA3eJ8bmw7zyBKx3EnGBpJ37Eywxvk2lX0n5+kk3cVxMOOrW+pxRrbarU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj3hYDKG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QnT46x//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EBF1F000E9;
-	Wed, 20 May 2026 17:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj3hYDKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C211F000E9;
+	Wed, 20 May 2026 17:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298824;
-	bh=mpvkJZMgTFU5+SsvSaQ5cOXuZY9EonfF+Zch+PVhxg8=;
+	s=korg; t=1779298827;
+	bh=ClIRSmpi8EhmqXlL8eHiY+74H/hj/3iWmbY12XSlp70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QnT46x//Xn428lZD+UOQb6mEN2H1ZwFwsLaJ5aK+OlTZZ1AVB7q3UPcnLlE39mSIR
-	 hM4Cif94cansv8celJtwOxcy0AClAoorN3nojd1RTGfP8cJ5vXxwuMG0sA7q/p+sI6
-	 vPJng4LUNHuzOSFeh1XbUhOxUgbMc282j/l0jXn0=
+	b=Tj3hYDKG1HNG09FUBk5TNWuaDtR/fUtC9nxjubAXAHenXRZ+GaovE+0czk/uV6Tix
+	 jWbuoxLTsZQJsjtMPP/m2VxJ9LZgdMd0ECDspnkPQM5a7IkD6MHwDz7dO5WV9KyQY3
+	 7DarM0BnKMeKtUe4HPeQ2/3Nq34pzXkqMwAPVMFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 557/957] clk: qcom: dispcc-sm4450: Fix DSI byte clock rate setting
-Date: Wed, 20 May 2026 18:17:20 +0200
-Message-ID: <20260520162146.611550552@linuxfoundation.org>
+Subject: [PATCH 6.18 558/957] clk: qcom: dispcc[01]-sa8775p: Fix DSI byte clock rate setting
+Date: Wed, 20 May 2026 18:17:21 +0200
+Message-ID: <20260520162146.633475350@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -55,7 +55,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 7bc48fcdf9e77bf68ef04af015d50df2a9acac00 ]
+[ Upstream commit 2851b6c6a42e22c243aa4cd606a49e2b9acfb6d6 ]
 
 The clock tree for byte_clk_src is as follows:
 
@@ -72,22 +72,51 @@ some adjustments based on PHY mode).
 
 Remove CLK_SET_RATE_PARENT from byte0_div_clk_src to avoid this issue.
 
-Fixes: 76f05f1ec766 ("clk: qcom: Add DISPCC driver support for SM4450")
+Fixes: e700bfd2f976 ("clk: qcom: Add support for Display clock Controllers on SA8775P")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260304-topic-dsi_byte_fixup-v1-4-b79b29f83176@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260304-topic-dsi_byte_fixup-v1-5-b79b29f83176@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm4450.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/clk/qcom/dispcc0-sa8775p.c | 2 --
+ drivers/clk/qcom/dispcc1-sa8775p.c | 2 --
+ 2 files changed, 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm4450.c b/drivers/clk/qcom/dispcc-sm4450.c
-index e8752d01c8e62..2fdacc26df698 100644
---- a/drivers/clk/qcom/dispcc-sm4450.c
-+++ b/drivers/clk/qcom/dispcc-sm4450.c
-@@ -335,7 +335,6 @@ static struct clk_regmap_div disp_cc_mdss_byte0_div_clk_src = {
- 			&disp_cc_mdss_byte0_clk_src.clkr.hw,
+diff --git a/drivers/clk/qcom/dispcc0-sa8775p.c b/drivers/clk/qcom/dispcc0-sa8775p.c
+index aeda9cf4bfee8..b248fa9705873 100644
+--- a/drivers/clk/qcom/dispcc0-sa8775p.c
++++ b/drivers/clk/qcom/dispcc0-sa8775p.c
+@@ -591,7 +591,6 @@ static struct clk_regmap_div mdss_0_disp_cc_mdss_byte0_div_clk_src = {
+ 			&mdss_0_disp_cc_mdss_byte0_clk_src.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_regmap_div_ops,
+ 	},
+ };
+@@ -606,7 +605,6 @@ static struct clk_regmap_div mdss_0_disp_cc_mdss_byte1_div_clk_src = {
+ 			&mdss_0_disp_cc_mdss_byte1_clk_src.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_regmap_div_ops,
+ 	},
+ };
+diff --git a/drivers/clk/qcom/dispcc1-sa8775p.c b/drivers/clk/qcom/dispcc1-sa8775p.c
+index cd55d1c119024..9882edbb79f9e 100644
+--- a/drivers/clk/qcom/dispcc1-sa8775p.c
++++ b/drivers/clk/qcom/dispcc1-sa8775p.c
+@@ -591,7 +591,6 @@ static struct clk_regmap_div mdss_1_disp_cc_mdss_byte0_div_clk_src = {
+ 			&mdss_1_disp_cc_mdss_byte0_clk_src.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_regmap_div_ops,
+ 	},
+ };
+@@ -606,7 +605,6 @@ static struct clk_regmap_div mdss_1_disp_cc_mdss_byte1_div_clk_src = {
+ 			&mdss_1_disp_cc_mdss_byte1_clk_src.clkr.hw,
  		},
  		.num_parents = 1,
 -		.flags = CLK_SET_RATE_PARENT,
