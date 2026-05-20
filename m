@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6536F356748;
-	Wed, 20 May 2026 17:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091B4347512;
+	Wed, 20 May 2026 17:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297342; cv=none; b=FkqdoR4tPRTr3ncUWrF66UiM3ncLdEibrWBLf6dXOjzI4AeZv3dBcYdqwWHIE2+DbSZyrRYjWVjlWLJRiu4N+mo8PnhxQBzDh4A847N0iIpLmgLcwfZRjG37bvOK6L+JF6+abEsIQ8VJpL9he/ZXaY+rhNqc/+PRLU6CNQ81VDE=
+	t=1779297345; cv=none; b=TI3qNh1pZ4oR51GwILuWvXDDsh8Ys2YacJTCs1TSqrByrts3xuooi+HbmOLQq8XLVUE+8frMfyXMnc0kPh1/euq+Tuq53K9qWR4EgbqrGfAOJso5WFyffXjC0yMkU2PJhTkCLCuyV3IebyRwmWMLMFITz5Hvv+p6obpLe3WZQ9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297342; c=relaxed/simple;
-	bh=Mg7/3aTOYNhZrfoaf0ym7OYsDQaqLVmeBlbvmk94WGo=;
+	s=arc-20240116; t=1779297345; c=relaxed/simple;
+	bh=9nHmLMp5hnIxWopUXzv9ZHSgTvdmoSGimJoHFdSKmRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RiKEdarjhE+9H9LUg3z7Ln2Gp7lA33HwJqomivOWDQ0ALKmUrnr9tDQSLJyHuOYQ4r+ZI/c1GYD3K/izMY2KcQyNRbyAvdARYxwbZsp0u7Vue84hH+xx1mUVZceqnI1vY7pPUUdq0aWX5yaahmoaM1vCW+F0kJZ1ZCagK3mDVJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkCd2Yv2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UQ8um+4Bn24ZaELRlD4HjEMU5Ezd/LAEHktuNBPjDEfnJOUMcRaPlRe4RwyTSwWExa7hgf1YnO1uBlkDUrrP8WHspNHLRAa3iygXFU7/9i8DrHGT8baQklLT62rKU0l+JkBCuhXLMEEYDmARC4sXmq+4XusEnsc+kUZg8XjXXdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YrtCXxX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkCd2Yv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24221F000E9;
-	Wed, 20 May 2026 17:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YrtCXxX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2F31F000E9;
+	Wed, 20 May 2026 17:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297341;
-	bh=pOwTtFnfmZZRGI/TZg1bykkBq1bUxa7Ux9tQ3cd/oG4=;
+	s=korg; t=1779297343;
+	bh=VcjdsJs3UJ7FQoGLzJoAtVbzm8fRP/UUT/Y3KuBLkk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OkCd2Yv2b9mgejN7nXvkFvSPtHw9lwTu5Tja8BJP+f61Uysi3Ed1UPOgB6RujFzee
-	 QguDr9+0o7GjpM+NtD8OrlB0NPUD6xctyK1YrzFVI5+au2UrdOBbDIcocDuJ1Hfj+S
-	 AR4A+7rqHIOC4V4wqME35fVHJylReRrFY+GASOHc=
+	b=2YrtCXxXw1mqDHp31gMeyOcWlFdQhjixkPIzDsZv+ahj6iH+G8utpQITtfmJj4BYG
+	 X0VEB6gRQDBUShNKzA+M09pZ+4r/xWWgwTdEC9BJI7gUh3vkWPp92W+6zrwvmQfdH4
+	 shlfTPIJC7BbBrcTyO0hKAbvXTRYb7Zi8fHFpDI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Piyush Sachdeva <psachdeva@microsoft.com>,
+	Piyush Sachdeva <s.piyush1024@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1143/1146] eventfs: Use list_add_tail_rcu() for SRCU-protected children list
-Date: Wed, 20 May 2026 18:23:13 +0200
-Message-ID: <20260520162214.122340362@linuxfoundation.org>
+Subject: [PATCH 7.0 1144/1146] smb: client: Use FullSessionKey for AES-256 encryption key derivation
+Date: Wed, 20 May 2026 18:23:14 +0200
+Message-ID: <20260520162214.145248957@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,41 +53,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Piyush Sachdeva <s.piyush1024@gmail.com>
 
-[ Upstream commit f67950b2887fa10df50c4317a1fe98a65bc6875b ]
+[ Upstream commit 5be7a0cef3229fb3b63a07c0d289daf752545424 ]
 
-Commit d2603279c7d6 ("eventfs: Use list_del_rcu() for SRCU protected
-list variable") converted the removal side to pair with the
-list_for_each_entry_srcu() walker in eventfs_iterate(). The insertion
-in eventfs_create_dir() was left as a plain list_add_tail(), which on
-weakly-ordered architectures can expose a new entry to the SRCU reader
-before its list pointers and fields are observable.
+When Kerberos authentication is used with AES-256 encryption (AES-256-CCM
+or AES-256-GCM), the SMB3 encryption and decryption keys must be derived
+using the full session key (Session.FullSessionKey) rather than just the
+first 16 bytes (Session.SessionKey).
 
-Use list_add_tail_rcu() so the publication pairs with the existing
-list_del_rcu() and list_for_each_entry_srcu().
+Per MS-SMB2 section 3.2.5.3.1, when Connection.Dialect is "3.1.1" and
+Connection.CipherId is AES-256-CCM or AES-256-GCM, Session.FullSessionKey
+must be set to the full cryptographic key from the GSS authentication
+context. The encryption and decryption key derivation (SMBC2SCipherKey,
+SMBS2CCipherKey) must use this FullSessionKey as the KDF input. The
+signing key derivation continues to use Session.SessionKey (first 16
+bytes) in all cases.
 
-Fixes: 43aa6f97c2d0 ("eventfs: Get rid of dentry pointers without refcounts")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260418152251.199343-1-devnexen@gmail.com
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Previously, generate_key() hardcoded SMB2_NTLMV2_SESSKEY_SIZE (16) as the
+HMAC-SHA256 key input length for all derivations. When Kerberos with
+AES-256 provides a 32-byte session key, the KDF for encryption/decryption
+was using only the first 16 bytes, producing keys that did not match the
+server's, causing mount failures with sec=krb5 and require_gcm_256=1.
+
+Add a full_key_size parameter to generate_key() and pass the appropriate
+size from generate_smb3signingkey():
+ - Signing: always SMB2_NTLMV2_SESSKEY_SIZE (16 bytes)
+ - Encryption/Decryption: ses->auth_key.len when AES-256, otherwise 16
+
+Also fix cifs_dump_full_key() to report the actual session key length for
+AES-256 instead of hardcoded CIFS_SESS_KEY_SIZE, so that userspace tools
+like Wireshark receive the correct key for decryption.
+
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Piyush Sachdeva <psachdeva@microsoft.com>
+Signed-off-by: Piyush Sachdeva <s.piyush1024@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/ioctl.c         |    2 +-
+ fs/smb/client/smb2transport.c |   32 +++++++++++++++++++++++++-------
+ 2 files changed, 26 insertions(+), 8 deletions(-)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -710,7 +710,7 @@ struct eventfs_inode *eventfs_create_dir
+--- a/fs/smb/client/ioctl.c
++++ b/fs/smb/client/ioctl.c
+@@ -296,7 +296,7 @@ search_end:
+ 		break;
+ 	case SMB2_ENCRYPTION_AES256_CCM:
+ 	case SMB2_ENCRYPTION_AES256_GCM:
+-		out.session_key_length = CIFS_SESS_KEY_SIZE;
++		out.session_key_length = ses->auth_key.len;
+ 		out.server_in_key_length = out.server_out_key_length = SMB3_GCM256_CRYPTKEY_SIZE;
+ 		break;
+ 	default:
+--- a/fs/smb/client/smb2transport.c
++++ b/fs/smb/client/smb2transport.c
+@@ -259,7 +259,8 @@ smb2_calc_signature(struct smb_rqst *rqs
+ }
  
- 	scoped_guard(mutex, &eventfs_mutex) {
- 		if (!parent->is_freed)
--			list_add_tail(&ei->list, &parent->children);
-+			list_add_tail_rcu(&ei->list, &parent->children);
+ static int generate_key(struct cifs_ses *ses, struct kvec label,
+-			struct kvec context, __u8 *key, unsigned int key_size)
++			struct kvec context, __u8 *key, unsigned int key_size,
++			unsigned int full_key_size)
+ {
+ 	unsigned char zero = 0x0;
+ 	__u8 i[4] = {0, 0, 0, 1};
+@@ -280,7 +281,7 @@ static int generate_key(struct cifs_ses
  	}
- 	/* Was the parent freed? */
- 	if (list_empty(&ei->list)) {
+ 
+ 	hmac_sha256_init_usingrawkey(&hmac_ctx, ses->auth_key.response,
+-				     SMB2_NTLMV2_SESSKEY_SIZE);
++				     full_key_size);
+ 	hmac_sha256_update(&hmac_ctx, i, 4);
+ 	hmac_sha256_update(&hmac_ctx, label.iov_base, label.iov_len);
+ 	hmac_sha256_update(&hmac_ctx, &zero, 1);
+@@ -314,6 +315,7 @@ generate_smb3signingkey(struct cifs_ses
+ 			struct TCP_Server_Info *server,
+ 			const struct derivation_triplet *ptriplet)
+ {
++	unsigned int full_key_size = SMB2_NTLMV2_SESSKEY_SIZE;
+ 	int rc;
+ 	bool is_binding = false;
+ 	int chan_index = 0;
+@@ -348,17 +350,31 @@ generate_smb3signingkey(struct cifs_ses
+ 		rc = generate_key(ses, ptriplet->signing.label,
+ 				  ptriplet->signing.context,
+ 				  ses->chans[chan_index].signkey,
+-				  SMB3_SIGN_KEY_SIZE);
++				  SMB3_SIGN_KEY_SIZE,
++				  SMB2_NTLMV2_SESSKEY_SIZE);
+ 		if (rc)
+ 			return rc;
+ 	} else {
+ 		rc = generate_key(ses, ptriplet->signing.label,
+ 				  ptriplet->signing.context,
+ 				  ses->smb3signingkey,
+-				  SMB3_SIGN_KEY_SIZE);
++				  SMB3_SIGN_KEY_SIZE,
++				  SMB2_NTLMV2_SESSKEY_SIZE);
+ 		if (rc)
+ 			return rc;
+ 
++		/*
++		 * Per MS-SMB2 3.2.5.3.1, signing key always uses Session.SessionKey
++		 * (first 16 bytes). Encryption/decryption keys use
++		 * Session.FullSessionKey when dialect is 3.1.1 and cipher is
++		 * AES-256-CCM or AES-256-GCM, otherwise Session.SessionKey.
++		 */
++
++		if (server->dialect == SMB311_PROT_ID &&
++		    (server->cipher_type == SMB2_ENCRYPTION_AES256_CCM ||
++		     server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
++			full_key_size = ses->auth_key.len;
++
+ 		/* safe to access primary channel, since it will never go away */
+ 		spin_lock(&ses->chan_lock);
+ 		memcpy(ses->chans[chan_index].signkey, ses->smb3signingkey,
+@@ -368,13 +384,15 @@ generate_smb3signingkey(struct cifs_ses
+ 		rc = generate_key(ses, ptriplet->encryption.label,
+ 				  ptriplet->encryption.context,
+ 				  ses->smb3encryptionkey,
+-				  SMB3_ENC_DEC_KEY_SIZE);
++				  SMB3_ENC_DEC_KEY_SIZE,
++				  full_key_size);
+ 		if (rc)
+ 			return rc;
+ 		rc = generate_key(ses, ptriplet->decryption.label,
+ 				  ptriplet->decryption.context,
+ 				  ses->smb3decryptionkey,
+-				  SMB3_ENC_DEC_KEY_SIZE);
++				  SMB3_ENC_DEC_KEY_SIZE,
++				  full_key_size);
+ 		if (rc)
+ 			return rc;
+ 	}
+@@ -389,7 +407,7 @@ generate_smb3signingkey(struct cifs_ses
+ 			&ses->Suid);
+ 	cifs_dbg(VFS, "Cipher type   %d\n", server->cipher_type);
+ 	cifs_dbg(VFS, "Session Key   %*ph\n",
+-		 SMB2_NTLMV2_SESSKEY_SIZE, ses->auth_key.response);
++		 (int)ses->auth_key.len, ses->auth_key.response);
+ 	cifs_dbg(VFS, "Signing Key   %*ph\n",
+ 		 SMB3_SIGN_KEY_SIZE, ses->smb3signingkey);
+ 	if ((server->cipher_type == SMB2_ENCRYPTION_AES256_CCM) ||
 
 
