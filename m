@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0F22609FD;
-	Wed, 20 May 2026 17:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3CB629D26E;
+	Wed, 20 May 2026 17:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298532; cv=none; b=Z5uFH6/RDGLL4ezky2yv7A2iZYqgmOMgVwv2u8rVcLpjvZgmY8+1UoQumvuqwaIw+wwokQ8acOERdI8/+HI48o+Lf/kg/n+wHn2cpFSR2UabsLJvsKeBPUOHY7XS1W0eACUuaAPFTfd9Q4tmpjmHtTt2t5JtAXsUH7c78wihamE=
+	t=1779298534; cv=none; b=HEv0Md7IJVyg1pW8o6yr3sYNOJeUZRnEi1yrLB1dCZ3CQNEMM8fFvlCCmq4slIGskL/OqxMTwbAWFCrMTOn+CS0sqVhlMjeTf/QAMCmomnDGgaUHFia1zmKml+8WSpzLEh8E4UezeIUGwZktyeX1CsDm/38QqOET9AqB8bCZbJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298532; c=relaxed/simple;
-	bh=9wghZ+C8Z+R80eMPwVGcbMolE3/rYPSU3WqjRW49JAo=;
+	s=arc-20240116; t=1779298534; c=relaxed/simple;
+	bh=QkxAvE987d1ni3Nu/AJZy7R8dgag1BhPEdlD5XZoxL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F79eWuM7C7Yc1PikUlLpf9CE/GTnvokC76S8+2RQWxSTxQE8ZzHFW3XOhnAOCD6+C2zajedLUrMYmurfoXcyrzMoqd4LPPHBOFyiTpiPMzZ5QZsmSb62GuEg9R4nDxeWzYHv8H3rfE83SNd5Y0pHSrRjKKetym/AcPAHDpEH7kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cB9gAzvM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h6mDXHhimLxray0fDjRfPmwrn4r2u/2nEejYgMQmbUrYEvvTqYCzHo/ZqLsMZbG3Ki/s/WfYWfpi1UmOpM2iT+8GIdeqfx+Dj5z1tCfp17GIw7LML6hd8rSmKfkOC3HXVu5+rIUiuTWtorQg0xw7jffijTxT/ZUaCQ17g5GNXq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqcYQPal; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cB9gAzvM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F4B1F000E9;
-	Wed, 20 May 2026 17:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqcYQPal"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF331F000E9;
+	Wed, 20 May 2026 17:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298531;
-	bh=gebNyAdEEye7AvWTpZJhZ2NNa9Lsr2jxHv7M2aihF6o=;
+	s=korg; t=1779298533;
+	bh=bHAfVkKGBlNZ631T4CnJz5QP2AL+UAIlD9BmVPYIgBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cB9gAzvMwOAclsVtzq7qI/IKnGQu3F5I5zjehtjWQgvdGUEp5mEDbz7COg8Vmo2Dv
-	 SJf1BpYg7DqI6088uUSAgOLiqd9sOYyQdrpvTWseIOR/bsNwfb09NnsnCH4H7tB5TF
-	 wm8Czq2TUfH6QhxQzR+B8BuNidX9qOiWYNJXBrQA=
+	b=OqcYQPalzcnetFG6zowqEHUVnb2yNaqhtLWBBahLDRYZXY05Doln8u5sFJwaZm7kU
+	 1oW8drDXjr9L7bc2cIcP+xJxvVpMUWpX18Zp2slScINGerCIDiQyvCIHWnDTE4O5xv
+	 gQj20Gp4NL0VskcCIJTzUI1YV9YFXXDx+AGQGhlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	David Howells <dhowells@redhat.com>,
-	David Gow <davidgow@google.com>,
-	Kees Cook <kees@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 439/957] lib: kunit_iov_iter: fix memory leaks
-Date: Wed, 20 May 2026 18:15:22 +0200
-Message-ID: <20260520162144.042073535@linuxfoundation.org>
+Subject: [PATCH 6.18 448/957] soundwire: Intel: test bus.bpt_stream before assigning it
+Date: Wed, 20 May 2026 18:15:31 +0200
+Message-ID: <20260520162144.234997983@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -55,83 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit 0b49c7d0ae697fcecd7377cb7dda220f7cd096ff ]
+[ Upstream commit b2c9f1d5a7eb50bcdda607afef1378e552bbb490 ]
 
-Use vfree() instead of vunmap() to free the buffer allocated by
-iov_kunit_create_buffer() because vunmap() does not honour
-VM_MAP_PUT_PAGES.  In order for this to work the page array itself must
-not be managed by kunit.
+We only allow up to 1 bpt stream running on a SoundWire bus.
+bus.bpt_stream will be assigned when it is opened and will be set to
+NULL when it is closed. We do check bus->bpt_stream_refcount if the
+stream type is SDW_STREAM_BPT in sdw_master_rt_alloc(), but at that
+moment the bpt stream is allocated and set to bus.bpt_stream. It will
+lead to the original bus.bpt_stream be changed to the new and not used
+bpt stream. And it will be released and set to NULL when
+sdw_slave_bpt_stream_add() return error as it supposed to. Then the
+original stream will try to use the NULL bus.bpt_stream.
 
-Remove the folio_put() when destroying a folioq.  This is handled by
-vfree(), now.
-
-Pointed out by sashiko.dev on a previous iteration of this series.
-
-Tested by running the kunit test 10000 times in a loop.
-
-Link: https://lkml.kernel.org/r/20260326214905.818170-4-lk@c--e.de
-Fixes: 2d71340ff1d4 ("iov_iter: Kunit tests for copying to/from an iterator")
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Cc: David Howells <dhowells@redhat.com>
-Cc: David Gow <davidgow@google.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4c1ce9f37d8a ("soundwire: intel_ace2x: add BPT send_async/wait callbacks")
+Reported-by: Simon Trimmer <simont@opensource.cirrus.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://patch.msgid.link/20260126054045.2504103-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/tests/kunit_iov_iter.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/soundwire/intel_ace2x.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/lib/tests/kunit_iov_iter.c b/lib/tests/kunit_iov_iter.c
-index 48342736d0164..43e63bf4c0956 100644
---- a/lib/tests/kunit_iov_iter.c
-+++ b/lib/tests/kunit_iov_iter.c
-@@ -42,7 +42,7 @@ static inline u8 pattern(unsigned long x)
+diff --git a/drivers/soundwire/intel_ace2x.c b/drivers/soundwire/intel_ace2x.c
+index 5d08364ad6d14..5b73bbb73be6e 100644
+--- a/drivers/soundwire/intel_ace2x.c
++++ b/drivers/soundwire/intel_ace2x.c
+@@ -68,6 +68,11 @@ static int intel_ace2x_bpt_open_stream(struct sdw_intel *sdw, struct sdw_slave *
+ 	int dir;
+ 	int i;
  
- static void iov_kunit_unmap(void *data)
- {
--	vunmap(data);
-+	vfree(data);
- }
- 
- static void *__init iov_kunit_create_buffer(struct kunit *test,
-@@ -53,17 +53,22 @@ static void *__init iov_kunit_create_buffer(struct kunit *test,
- 	unsigned long got;
- 	void *buffer;
- 
--	pages = kunit_kcalloc(test, npages, sizeof(struct page *), GFP_KERNEL);
--        KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pages);
-+	pages = kzalloc_objs(struct page *, npages, GFP_KERNEL);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, pages);
- 	*ppages = pages;
- 
- 	got = alloc_pages_bulk(GFP_KERNEL, npages, pages);
- 	if (got != npages) {
- 		release_pages(pages, got);
-+		kvfree(pages);
- 		KUNIT_ASSERT_EQ(test, got, npages);
- 	}
- 
- 	buffer = vmap(pages, npages, VM_MAP | VM_MAP_PUT_PAGES, PAGE_KERNEL);
-+	if (buffer == NULL) {
-+		release_pages(pages, got);
-+		kvfree(pages);
++	if (cdns->bus.bpt_stream) {
++		dev_err(cdns->dev, "%s: BPT stream already exists\n", __func__);
++		return -EAGAIN;
 +	}
-         KUNIT_ASSERT_NOT_ERR_OR_NULL(test, buffer);
- 
- 	kunit_add_action_or_reset(test, iov_kunit_unmap, buffer);
-@@ -369,9 +374,6 @@ static void iov_kunit_destroy_folioq(void *data)
- 
- 	for (folioq = data; folioq; folioq = next) {
- 		next = folioq->next;
--		for (int i = 0; i < folioq_nr_slots(folioq); i++)
--			if (folioq_folio(folioq, i))
--				folio_put(folioq_folio(folioq, i));
- 		kfree(folioq);
- 	}
- }
++
+ 	stream = sdw_alloc_stream("BPT", SDW_STREAM_BPT);
+ 	if (!stream)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
