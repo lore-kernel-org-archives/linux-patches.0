@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230E730DEAC;
-	Wed, 20 May 2026 18:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0021F369D7A;
+	Wed, 20 May 2026 18:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302134; cv=none; b=d5rf3hoTHq55ag7286vSTHBJX93IyZ6oeH3sS/Gloyv41EmHqKqVpiy0BPwsrYNUJmFKiYYhRcL//kwaXf7g73Tb+EDNlUoFt+tRveb/pGzUo/lICfuQbyZdacYV9arEngCLo7UAieZrEYZN/TGnKTKCNHHNOB94ncH1rja7Cj8=
+	t=1779302137; cv=none; b=YRtH6H/1LCevRwf5hureSIG1JjVVqP5fDJ/wNMSH2nbK6A6QsuOxZ25+D4OtEfksKh0ZbQVFzo4TVC3pioh+6jediRWdLWyQGK6WMdSUSwNNfg/3aku4kzLRB5QbSiPydMKzmKKQhfd7pxE/rx31TDOIMJZeXXOMcJLHH+4e4Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302134; c=relaxed/simple;
-	bh=RzjFHnXqnSvxXKrCxQXkxSqoDSPU8LZQPiMTxgUSrzk=;
+	s=arc-20240116; t=1779302137; c=relaxed/simple;
+	bh=+r0LMdrFoXAHXD1lDrmWn4Tfr9V3lvOlEHO7D71pzlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLZmgkDZ1FwgyVG4RCbJwRlmMGNpbcntlm1vUztUPM1a6tjOmy2E41+ILluu3ZXBKgCs2l97XhcrN0Q94h1xXl9L/HvNObDmiCj1MTW3ZNOKOsLLxfQxpProPnAiXp0s0vOzzxBwBpp/7/qRAboFFhymDbG8ar7ZUOVb9xfhIN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCi+QkI6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FOh74xX8Otx8vKYp0yyH9xaPWzdV9ia3KAQMh2QhJm/U4R9AuIBFyZlcUIYqUO+wAo5zixbcjh8b8HFsffP+DpjE4jmveZ8cGTWKH8a6wj9/uEm+j68GKocYtTW9RFVQLT+G7PVh1DZhJcPPXtn/rshlaNL/3j37M9dLtctaVQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T28sN17t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCi+QkI6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872651F000E9;
-	Wed, 20 May 2026 18:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T28sN17t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064E91F000E9;
+	Wed, 20 May 2026 18:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302133;
-	bh=GRK4FyuyTs+imdHuDDdNPYSHasgiSDTPR+Rz4cECW0g=;
+	s=korg; t=1779302135;
+	bh=dXz+XFeo9CtiZjTqjyrK/VtIQc94qPcU7ApjT4oPG8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bCi+QkI6tnbE0tmS9u5j+DnACYPB4t9u/ioKew2f2Wk0hbHoGNSpzcHdp22G4rXjm
-	 hkIGvmr5NgNhtjfYFQZTV1+c9oTtbjOiG0qz4ARbYcsPdM6auy8aR8nbxdK87gNjKA
-	 9jvx6L10U+3AgtxfBbUMT89S8L+qU6EOSLVkCKsY=
+	b=T28sN17t8neUv2fY6UyXr1ukXd7AmTJlrUPazF0vkBlBn64QXTTDlmDYwFYgUF+11
+	 jIZ/rJWsncPNsUrXXU50pH4Ei7K7TdhaAQPItB+ogjqwePhds27PpK89Mfc6awjFui
+	 m0uXDzPsmyoAlEpxlXR1WDVlwVP7TSWQIaTPJXJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	AnishMulay <anishm7030@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Sayali Patil <sayalip@linux.ibm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/508] PCI: mediatek-gen3: Prevent leaking IRQ domains when IRQ not found
-Date: Wed, 20 May 2026 18:19:33 +0200
-Message-ID: <20260520162101.886991965@linuxfoundation.org>
+Subject: [PATCH 6.6 151/508] selftests/mm: skip migration tests if NUMA is unavailable
+Date: Wed, 20 May 2026 18:19:34 +0200
+Message-ID: <20260520162101.907711173@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,53 +63,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: AnishMulay <anishm7030@gmail.com>
 
-[ Upstream commit 5573c44cb3fd01a9f62d569ae9ac870ef5f0e0ba ]
+[ Upstream commit 54218f10dfbe88c8e41c744fd45a756cde60b8c4 ]
 
-In mtk_pcie_setup_irq(), the IRQ domains are allocated before the
-controller's IRQ is fetched. If the latter fails, the function
-directly returns an error, without cleaning up the allocated domains.
+Currently, the migration test asserts that numa_available() returns 0.  On
+systems where NUMA is not available (returning -1), such as certain ARM64
+configurations or single-node systems, this assertion fails and crashes
+the test.
 
-Hence, reverse the order so that the IRQ domains are allocated after the
-controller's IRQ is found.
+Update the test to check the return value of numa_available().  If it is
+less than 0, skip the test gracefully instead of failing.
 
-This was flagged by Sashiko during a review of "[PATCH v6 0/7] PCI:
-mediatek-gen3: add power control support".
+This aligns the behavior with other MM selftests (like rmap) that skip
+when NUMA support is missing.
 
-Fixes: 814cceebba9b ("PCI: mediatek-gen3: Add INTx support")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260324052002.4072430-1-wenst%40chromium.org
-Link: https://patch.msgid.link/20260324093542.18523-1-wenst@chromium.org
+Link: https://lkml.kernel.org/r/20260218163941.13499-1-anishm7030@gmail.com
+Fixes: 0c2d08728470 ("mm: add selftests for migration entries")
+Signed-off-by: AnishMulay <anishm7030@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Tested-by: Sayali Patil <sayalip@linux.ibm.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-mediatek-gen3.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/testing/selftests/mm/migration.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pcie-mediatek-gen3.c b/drivers/pci/controller/pcie-mediatek-gen3.c
-index 975b3024fb08c..822d9b8e09f60 100644
---- a/drivers/pci/controller/pcie-mediatek-gen3.c
-+++ b/drivers/pci/controller/pcie-mediatek-gen3.c
-@@ -760,14 +760,14 @@ static int mtk_pcie_setup_irq(struct mtk_gen3_pcie *pcie)
- 	struct platform_device *pdev = to_platform_device(dev);
- 	int err;
+diff --git a/tools/testing/selftests/mm/migration.c b/tools/testing/selftests/mm/migration.c
+index 6908569ef4065..877ee32d04c82 100644
+--- a/tools/testing/selftests/mm/migration.c
++++ b/tools/testing/selftests/mm/migration.c
+@@ -33,7 +33,8 @@ FIXTURE_SETUP(migration)
+ {
+ 	int n;
  
--	err = mtk_pcie_init_irq_domains(pcie);
--	if (err)
--		return err;
--
- 	pcie->irq = platform_get_irq(pdev, 0);
- 	if (pcie->irq < 0)
- 		return pcie->irq;
- 
-+	err = mtk_pcie_init_irq_domains(pcie);
-+	if (err)
-+		return err;
-+
- 	irq_set_chained_handler_and_data(pcie->irq, mtk_pcie_irq_handler, pcie);
- 
- 	return 0;
+-	ASSERT_EQ(numa_available(), 0);
++	if (numa_available() < 0)
++		SKIP(return, "NUMA not available");
+ 	self->nthreads = numa_num_task_cpus() - 1;
+ 	self->n1 = -1;
+ 	self->n2 = -1;
 -- 
 2.53.0
 
