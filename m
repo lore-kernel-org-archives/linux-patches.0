@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DFB3F44D9;
-	Wed, 20 May 2026 18:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08413F4DDB;
+	Wed, 20 May 2026 18:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300067; cv=none; b=RiePEKUaOlqmTEKmi/z35LbraYHl86t6JQdIRxIad0qGI2T6sz4ePqr+oVl8dw27XemSCfh/+GOTIGc18i+vH38tzxBcBu4tGqXL+McsiCrcQM6914PmTmY7lL+lr8OTz4+Mp+VBw2Pged3sbUt+9vpQwXBkQ+/c3sv/DgT2ZqQ=
+	t=1779300069; cv=none; b=AGL2BkBGmz3FHTh+o4kWdwoqzyCm/GfsgYyH/DokzK6AaSc738iXz1gw2fw8Tybsbcvmfqqn+akatVYygcW7E1k+Xkc2Ipu6iyBvJM6m85h64kT9c2NZZtj4u6ovVdmwsPytAS35BEF7PtpIxneoJwwLumUmC5CRPHgBn1rlSG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300067; c=relaxed/simple;
-	bh=bGjTyzBxSpuWwxImEefA8tr5X2kyVIdKuS1WDiv328s=;
+	s=arc-20240116; t=1779300069; c=relaxed/simple;
+	bh=xHbWFv8EUsgmbxQTnIBNoJ3y8Npc5BwaqoLPOIoW4RQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olLcpgJwkktSb0NNAl5lQTQXfuJuRrWfHUVHw/ed5t1OCy+DPGyHeNLAr9cKxz9EeZfadyA08R50Bs7C7ONusNASYs1XtliD8Fbo8J0G3Ep+IAujq678GIHydPCPlMmWfjp08hWG4AKb5z0rZThH6uYMNuhjtRCdAFbhuG/bf2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qazUUJxQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SvqrLQICW+YuHbPZUB16wK7ZuoQxZyflkf42S3vnUlmqrDFTUNOhrVWjyfDvSezMAQgsCExp4enfOfiR7DO0hxfduVS5Y/OsWEpJSoDfG7oY/TB025TI6JcmIADoJKhNzDoqf98Xi4Kt3E1jJvfQSLhwiazjlboPKJZZpIu24iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/P1VM01; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qazUUJxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3AE1F000E9;
-	Wed, 20 May 2026 18:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/P1VM01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EDA1F000E9;
+	Wed, 20 May 2026 18:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300066;
-	bh=/bxNeQ8xx4bWO7oFcgJmz9o0PSVPzdX7aGWojL6NFmc=;
+	s=korg; t=1779300068;
+	bh=x3xJkkK9BUWZZNcfUIzMKvLmOu4isYhrzL+yP2EOR28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qazUUJxQiK5U6OGloRZoAdLs3s6DvVma2lfw/aY4tehBbHwQv2iOqVRW1DH1pUX2b
-	 p3CwmdeF2X0/IR/3H+SiAUN8AHZUNp2o2wldtBMerOrY4FuBUR8/mTjconexkB4xc0
-	 sS9SFNH/8d/JFrpuDc+eDBRVU9dZqNMVEwsBY5ZM=
+	b=q/P1VM01s9iXO3j8WEwywMja3Xe2r0MNKdGxkzMhm6geuGQGH43T3flZA4sv8xrv6
+	 WR96i4MqlpSRiQ+Gxt2cJcaX/xv7HE+U1HAe7By/BdNAh02gD2AnlI4BMLgeBnypiC
+	 ZQ8GoRbakspX9L7mM8B+jS/IXGWiUmIGRVdXSiDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+98a040252119df0506f8@syzkaller.appspotmail.com,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Deepanshu Kartikey <Kartikey406@gmail.com>,
-	syzbot+466a45fcfb0562f5b9a0@syzkaller.appspotmail.com,
-	Junjie Cao <junjie.cao@linux.dev>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Jackie Liu <liuyun01@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/666] nilfs2: reject zero bd_oblocknr in nilfs_ioctl_mark_blocks_dirty()
-Date: Wed, 20 May 2026 18:13:39 +0200
-Message-ID: <20260520162111.412715629@linuxfoundation.org>
+Subject: [PATCH 6.12 009/666] blk-cgroup: fix disk reference leak in blkcg_maybe_throttle_current()
+Date: Wed, 20 May 2026 18:13:40 +0200
+Message-ID: <20260520162111.433555719@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,59 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Jackie Liu <liuyun01@kylinos.cn>
 
-[ Upstream commit be3e5d10643d3be1cbac9d9939f220a99253f980 ]
+[ Upstream commit 23308af722fefed00af5f238024c11710938fba3 ]
 
-nilfs_ioctl_mark_blocks_dirty() uses bd_oblocknr to detect dead blocks
-by comparing it with the current block number bd_blocknr. If they differ,
-the block is considered dead and skipped.
+Add the missing put_disk() on the error path in
+blkcg_maybe_throttle_current(). When blkcg lookup, blkg lookup, or
+blkg_tryget() fails, the function jumps to the out label which only
+calls rcu_read_unlock() but does not release the disk reference acquired
+by blkcg_schedule_throttle() via get_device(). Since current->throttle_disk
+is already set to NULL before the lookup, blkcg_exit() cannot release
+this reference either, causing the disk to never be freed.
 
-However, bd_oblocknr should never be 0 since block 0 typically stores the
-primary superblock and is never a valid GC target block. A corrupted ioctl
-request with bd_oblocknr set to 0 causes the comparison to incorrectly
-match when the lookup returns -ENOENT and sets bd_blocknr to 0, bypassing
-the dead block check and calling nilfs_bmap_mark() on a non-existent
-block. This causes nilfs_btree_do_lookup() to return -ENOENT, triggering
-the WARN_ON(ret == -ENOENT).
+Restore the reference release that was present as blk_put_queue() in the
+original code but was inadvertently dropped during the conversion from
+request_queue to gendisk.
 
-Fix this by rejecting ioctl requests with bd_oblocknr set to 0 at the
-beginning of each iteration.
-
-[ryusuke: slightly modified the commit message and comments for accuracy]
-
-Fixes: 7942b919f732 ("nilfs2: ioctl operations")
-Reported-by: syzbot+98a040252119df0506f8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=98a040252119df0506f8
-Suggested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
-Reported-by: syzbot+466a45fcfb0562f5b9a0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=466a45fcfb0562f5b9a0
-Cc: Junjie Cao <junjie.cao@linux.dev>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: f05837ed73d0 ("blk-cgroup: store a gendisk to throttle in struct task_struct")
+Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260331085054.46857-1-liu.yun@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/ioctl.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ block/blk-cgroup.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nilfs2/ioctl.c b/fs/nilfs2/ioctl.c
-index fa77f78df6817..4c66f6f99b2b2 100644
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -765,6 +765,12 @@ static int nilfs_ioctl_mark_blocks_dirty(struct the_nilfs *nilfs,
- 	int ret, i;
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 9a198001cfa56..a0fbb427a7a62 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1985,6 +1985,7 @@ void blkcg_maybe_throttle_current(void)
+ 	return;
+ out:
+ 	rcu_read_unlock();
++	put_disk(disk);
+ }
  
- 	for (i = 0; i < nmembs; i++) {
-+		/*
-+		 * bd_oblocknr must never be 0 as block 0
-+		 * is never a valid GC target block
-+		 */
-+		if (unlikely(!bdescs[i].bd_oblocknr))
-+			return -EINVAL;
- 		/* XXX: use macro or inline func to check liveness */
- 		ret = nilfs_bmap_lookup_at_level(bmap,
- 						 bdescs[i].bd_offset,
+ /**
 -- 
 2.53.0
 
