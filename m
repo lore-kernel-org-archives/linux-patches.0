@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7763FBB7D;
-	Wed, 20 May 2026 18:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6213FE352;
+	Wed, 20 May 2026 18:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302892; cv=none; b=Aj5RN70dWbOZC13qeX37HGuKF0Ygbx94soNMBTNPaJnbRL+OsUCUNSFYA23AgC2JwUXMjfJ8WexiUH0bwVXd3h968MaiQVhw5QH9A6LzdQbku/qa5jYqlTbBHfsbj/VS55DK9HwOh1H8GPW89Q4Dv1e3zShSrwJMuBi9SHc4Ho4=
+	t=1779302895; cv=none; b=kF0wSCzzQ9bajPUqaktB8xpJXAcIxMXvZtvDIuzSxyxgdH8eCjjlV8vy0zSH73jxX2f8DE2Tt0YMIa0bG80KvgGXgtNvmyaosGuBlJbK4vd6G3fGndLknJiACvhhCfegryOiDzDKT56YnZfC9UM5MoT1rDsj4CgsuQz7vfXfplM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302892; c=relaxed/simple;
-	bh=40vTKno4oj4kg1bWnjNJKtUyjYmWlDDrkof2AOeU+O8=;
+	s=arc-20240116; t=1779302895; c=relaxed/simple;
+	bh=bnYxVA56Nc6oi/pAhftZ8Mo9TI9GF6biUYvDcfajwoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KGeT4LSXiXyk3nqUweUoL6yFLjX1uXDzgo56wLeQAUjZY2tIrQ53MsWl6z6vcwzVplXU9tM9HiRz3Lu2/DmwdEbiLNJui3e5DSN1cDDie8qagrhtLGotLM13UV7HDH5AmE6HRYBLAlfhTncsPsOidBzkJRaZ+3/IHZOHyXGTByY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqBsPL7K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pmlBmbNwJt69c0+QBlw+7ms5jT8XZly5EZ8hO6FfDjJbAIo5OEZ3zJb7E6pcvxb5eL/2QmFGYkgTRvTD2wmPPwmUms5MXjCgNmMfMiaC429XPGtphdalDMfF5EGXcZzqDdp+e1YlQFjXSi3WC9F7Yl8PIeTTh7pYFCUjM5u/FP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUx9aTqd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqBsPL7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600701F000E9;
-	Wed, 20 May 2026 18:48:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUx9aTqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037821F000E9;
+	Wed, 20 May 2026 18:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302890;
-	bh=OJnIUW/NyVKa9XfoWzvU0l2Spr0Ghf9KEntrXecYFfk=;
+	s=korg; t=1779302893;
+	bh=Jc36fPCvDJa+rbKu7772CDwCWM/YHdhHhvZIQIAJ4bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SqBsPL7KpUyxo3BqTGWx+cFAQuovVVUWiAv/hZfUuQmrWdQIpHmBezLEkQmq/LKSd
-	 EKv0VRMSSpI2GTX4Wc8wWYkiY4+iSZBUe+L67wJoi9LnHuKzmCs+tZDYKMaw+g31fZ
-	 OSiCTcaMbW76q2bMeefKH6rj7DR4osi2GiU2vjk0=
+	b=uUx9aTqd4/8ixfM6o1NYBm6BhhbDM77O+/oNznkdk1c32BUCsD+QnF2egEEuBwNAy
+	 oiYWal+aNZ9nVh6XzZd0l893ymxbkzXKpGXo1bjQzA6Cw5CTb6pNTUtiFVtK0dmrwd
+	 SD/VNq2KHCzC80Wh4Z0K+qFakHCVy11/jVS9a3F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Petr Oros <poros@redhat.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 387/508] net/sched: sch_choke: annotate data-races in choke_dump_stats()
-Date: Wed, 20 May 2026 18:23:30 +0200
-Message-ID: <20260520162107.003574000@linuxfoundation.org>
+Subject: [PATCH 6.6 433/508] iavf: add VIRTCHNL_OP_ADD_VLAN to success completion handler
+Date: Wed, 20 May 2026 18:24:16 +0200
+Message-ID: <20260520162107.982311391@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,95 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit d3aeb889dcbd78e95f500d383799a23d949796e0 ]
+[ Upstream commit 34d33313b52eeac3a97ad2e3176d523ec70d9283 ]
 
-choke_dump_stats() only runs with RTNL held.
-It reads fields that can be changed in qdisc fast path.
-Add READ_ONCE()/WRITE_ONCE() annotations.
+The V1 ADD_VLAN opcode had no success handler; filters sent via V1
+stayed in ADDING state permanently.  Add a fallthrough case so V1
+filters also transition ADDING -> ACTIVE on PF confirmation.
 
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260423062839.2524324-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Critically, add an `if (v_retval) break` guard: the error switch in
+iavf_virtchnl_completion() does NOT return after handling errors,
+it falls through to the success switch.  Without this guard, a
+PF-rejected ADD would incorrectly mark ADDING filters as ACTIVE,
+creating a driver/HW mismatch where the driver believes the filter
+is installed but the PF never accepted it.
+
+For V2, this is harmless: iavf_vlan_add_reject() in the error
+block already kfree'd all ADDING filters, so the success handler
+finds nothing to transition.
+
+Fixes: 968996c070ef ("iavf: Fix VLAN_V2 addition/rejection")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260427-jk-iwl-net-petr-oros-fixes-v1-4-cdcb48303fd8@intel.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_choke.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_virtchnl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/sched/sch_choke.c b/net/sched/sch_choke.c
-index a919591422085..b27da148ca744 100644
---- a/net/sched/sch_choke.c
-+++ b/net/sched/sch_choke.c
-@@ -229,7 +229,7 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 		/* Draw a packet at random from queue and compare flow */
- 		if (choke_match_random(q, skb, &idx)) {
--			q->stats.matched++;
-+			WRITE_ONCE(q->stats.matched, q->stats.matched + 1);
- 			choke_drop_by_idx(sch, idx, to_free);
- 			goto congestion_drop;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+index 4a197bc4b86a7..b6bc5609e118c 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+@@ -2486,9 +2486,13 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
+ 		spin_unlock_bh(&adapter->adv_rss_lock);
  		}
-@@ -241,11 +241,13 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			qdisc_qstats_overlimit(sch);
- 			if (use_harddrop(q) || !use_ecn(q) ||
- 			    !INET_ECN_set_ce(skb)) {
--				q->stats.forced_drop++;
-+				WRITE_ONCE(q->stats.forced_drop,
-+					   q->stats.forced_drop + 1);
- 				goto congestion_drop;
- 			}
+ 		break;
++	case VIRTCHNL_OP_ADD_VLAN:
+ 	case VIRTCHNL_OP_ADD_VLAN_V2: {
+ 		struct iavf_vlan_filter *f;
  
--			q->stats.forced_mark++;
-+			WRITE_ONCE(q->stats.forced_mark,
-+				   q->stats.forced_mark + 1);
- 		} else if (++q->vars.qcount) {
- 			if (red_mark_probability(p, &q->vars, q->vars.qavg)) {
- 				q->vars.qcount = 0;
-@@ -253,11 +255,13 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 
- 				qdisc_qstats_overlimit(sch);
- 				if (!use_ecn(q) || !INET_ECN_set_ce(skb)) {
--					q->stats.prob_drop++;
-+					WRITE_ONCE(q->stats.prob_drop,
-+					           q->stats.prob_drop + 1);
- 					goto congestion_drop;
- 				}
- 
--				q->stats.prob_mark++;
-+				WRITE_ONCE(q->stats.prob_mark,
-+					   q->stats.prob_mark + 1);
- 			}
- 		} else
- 			q->vars.qR = red_random(p);
-@@ -272,7 +276,7 @@ static int choke_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		return NET_XMIT_SUCCESS;
- 	}
- 
--	q->stats.pdrop++;
-+	WRITE_ONCE(q->stats.pdrop, q->stats.pdrop + 1);
- 	return qdisc_drop(skb, sch, to_free);
- 
- congestion_drop:
-@@ -460,10 +464,12 @@ static int choke_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- {
- 	struct choke_sched_data *q = qdisc_priv(sch);
- 	struct tc_choke_xstats st = {
--		.early	= q->stats.prob_drop + q->stats.forced_drop,
--		.marked	= q->stats.prob_mark + q->stats.forced_mark,
--		.pdrop	= q->stats.pdrop,
--		.matched = q->stats.matched,
-+		.early	= READ_ONCE(q->stats.prob_drop) +
-+			  READ_ONCE(q->stats.forced_drop),
-+		.marked	= READ_ONCE(q->stats.prob_mark) +
-+			  READ_ONCE(q->stats.forced_mark),
-+		.pdrop	= READ_ONCE(q->stats.pdrop),
-+		.matched = READ_ONCE(q->stats.matched),
- 	};
- 
- 	return gnet_stats_copy_app(d, &st, sizeof(st));
++		if (v_retval)
++			break;
++
+ 		spin_lock_bh(&adapter->mac_vlan_list_lock);
+ 		list_for_each_entry(f, &adapter->vlan_filter_list, list) {
+ 			if (f->state == IAVF_VLAN_ADDING)
 -- 
 2.53.0
 
