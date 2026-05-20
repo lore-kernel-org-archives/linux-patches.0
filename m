@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A30B33F5BA;
-	Wed, 20 May 2026 16:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14952C15AB;
+	Wed, 20 May 2026 16:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295228; cv=none; b=heG0iWpj2kHXn6lqMSN5MkQORq6XXHSWCnwHnCV6Nd4tIsfUTej8wNfFIu/AwhlpBdgx4RJ73azBnHW5rX0ngtw0q0rcTPiA3BO+kcdXgBAKxgyd5abNJ2mzNfolpOaKnCh2Ct/oF1rDqBYYjabQYy0byM+oSAmN0HyJtRZ0Vng=
+	t=1779295230; cv=none; b=SxqVWi1VQhIXC0SJfJ3jPxanBiWxnCKt/K5xekGLz4MDgIhK0j/dAiQZdtnnD1fIobQtVTbJ/EuMoIsa9EyzsDnh1QOefLsAvnd3I/AgmPwscHNBbaHQpYe3CQ1pTJagP8K9+VKOgo2F9V33cTXBwXK9GhUwucA4RbzWhGuBUXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295228; c=relaxed/simple;
-	bh=vh6sSxOCadek0UFcca7yAHm+rUAF2KmcFRv3cBiQ7ys=;
+	s=arc-20240116; t=1779295230; c=relaxed/simple;
+	bh=lxfWCSEYdjlLl6MtfHDMkOYofGOkfPvCtvcqb4iup/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YkS0kZJHB1kE2iqe0DuNvY1IPAaujP2x0jG5l1cUQDiBOMD4Xe02OHGk1zdiVm66OfIYAIh61cFxwigYKJrjiszZyPnQuIDo/MjEX15OxHFmNbXjFXfeOkz44usJlwrnLaeAak9E/fureYi2gbHb9+38kLVZSbC0GE4WLZ9/neQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNQrmWYh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=l18hWwGAVSwTRX4VL4oMrImgj582bdSgdxIqOUQsbC8O32kbXNs+IjgdcJ+4vVlHq15Z6o5ICv9Smd3K4TQ3TDFZqG/fnjISRtNZjkcCcWjPHO39Xina2La7ouDDX5lnikGMTWJJDH0Qnr+t3F0NQjhtGDUNA87DFECxTPRl6ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPOjo4gd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNQrmWYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E35D1F000E9;
-	Wed, 20 May 2026 16:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPOjo4gd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432D21F000E9;
+	Wed, 20 May 2026 16:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295227;
-	bh=Pwb4dWj5+GVA94kbo/qAmv/ghdTb/+Um+SY4JMbdyiY=;
+	s=korg; t=1779295229;
+	bh=Kjbs68B1YvrBP4hNyd/dAR+HZE0vvDsVai3XzwNmeyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mNQrmWYhDfgz2LGAq/m3k/d3G7a9a1sopVliq1f8b3unDieAik5sHT540N+pHe8uc
-	 jSR+Ozvqg4+CuTIST0GHIS0x+gTIsDpIcdxZerKzS17m8+b8Cm8hXoAp3VOxjju18b
-	 NGxFX5RgR/LxCqpYcMXQAFmbd9Kv72mzCVRZohl8=
+	b=yPOjo4gdA7m1Lkw/zt/4lZJvxjdFAXXUsqOOcqiEkXzk9SnTpP83FPOOHqHQhxEPe
+	 S3EpwFG0c6b98ktICG0v9lPTUK0e3zjmIGrSZN6R6oB/YduPEMKk84+LP5H/w7Gobh
+	 /q+xEt0LRFksPb8/pLI8uKm8oeJYCLpir+es77Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0337/1146] ASoC: amd: acp: update dmic_num logic for acp pdm dmic
-Date: Wed, 20 May 2026 18:09:47 +0200
-Message-ID: <20260520162155.827502632@linuxfoundation.org>
+Subject: [PATCH 7.0 0338/1146] drm/amd/pm/ci: Use highest MCLK on CI when MCLK DPM is disabled
+Date: Wed, 20 May 2026 18:09:48 +0200
+Message-ID: <20260520162155.849307290@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,50 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 5902e1f3c501375797dcd7ca21b58e2c9abbe317 ]
+[ Upstream commit 894f0d34d66cb47fe718fe2ae5c18729d22c5218 ]
 
-Currently there is no mechanism to read dmic_num in mach_params
-structure. In this scenario mach_params->dmic_num check always
-returns 0 which fails to add component string for dmic.
-Update the condition check with acp pdm dmic quirk check and
-pass the dmic_num as 1.
+When MCLK DPM is disabled for any reason, populate the MCLK
+table with the highest MCLK DPM level, so that the ASIC can
+use the highest possible memory clock to get good performance
+even when MCLK DPM is disabled.
 
-Fixes: 2981d9b0789c ("ASoC: amd: acp: add soundwire machine driver for legacy stack")
-
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20260330072431.3512358-2-Vijendar.Mukunda@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-sdw-legacy-mach.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/soc/amd/acp/acp-sdw-legacy-mach.c b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-index cd7b1acc7216d..a9c8d9545281e 100644
---- a/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-+++ b/sound/soc/amd/acp/acp-sdw-legacy-mach.c
-@@ -551,11 +551,11 @@ static int mc_probe(struct platform_device *pdev)
- 					  " cfg-amp:%d", amp_num);
- 	if (!card->components)
- 		return -ENOMEM;
--	if (mach->mach_params.dmic_num) {
-+	if (soc_sdw_quirk & ASOC_SDW_ACP_DMIC) {
- 		card->components = devm_kasprintf(card->dev, GFP_KERNEL,
- 						  "%s mic:dmic cfg-mics:%d",
- 						  card->components,
--						  mach->mach_params.dmic_num);
-+						  1);
- 		if (!card->components)
- 			return -ENOMEM;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
+index 7d5df18db8d26..c0a04fab3ceca 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
+@@ -1322,6 +1322,14 @@ static int ci_populate_all_memory_levels(struct pp_hwmgr *hwmgr)
+ 			return result;
  	}
+ 
++	if (data->mclk_dpm_key_disabled && dpm_table->mclk_table.count) {
++		/* Populate the table with the highest MCLK level when MCLK DPM is disabled */
++		for (i = 0; i < dpm_table->mclk_table.count - 1; i++) {
++			levels[i] = levels[dpm_table->mclk_table.count - 1];
++			levels[i].DisplayWatermark = PPSMC_DISPLAY_WATERMARK_HIGH;
++		}
++	}
++
+ 	smu_data->smc_state_table.MemoryLevel[0].EnabledForActivity = 1;
+ 
+ 	dev_id = adev->pdev->device;
 -- 
 2.53.0
 
