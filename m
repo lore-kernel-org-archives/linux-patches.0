@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97563F54C9;
-	Wed, 20 May 2026 17:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378513E0C70;
+	Wed, 20 May 2026 17:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296715; cv=none; b=kFJWc28RHC1JS1pDgT8NdRkeNj8Melqf5uQdZplDPBJVn8BdNhu3OSdvgwjzWjBYEL6umqmtaGc282xyRc6RY53JVuxHVhazxAg9BK/qRrOuIhFEatw2S9hykxpY7zoWMlg35ms5Oj1wfHEupuejYcm4F/54pQdzho5NWP+JTew=
+	t=1779296718; cv=none; b=soxJHwBlWDJ5r0CmeF42peCGV6RCybfrU0tgfEr9MgsX4t/pQdT0IC/WCCzu7iYvqi+uwLyNNBYNUBpFSt18ylo8NJHYuPb8ZsnNeiY9iICYR/qCVz7G6BvTns6oRrKZYi//QWNYWyOaBbzi8sbFtZHQs3L71LJjEvuxmg+fofY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296715; c=relaxed/simple;
-	bh=n9rUwghuiVQbL7/BInnZ3lRqrmyOshzdF/YWf3ddepA=;
+	s=arc-20240116; t=1779296718; c=relaxed/simple;
+	bh=s9naC6ZzfGXk38SBt31c246bBCeziSxS4H7bmZ89inc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HkMiNA/szfcQqh88rOsHXokCHiqPH7DKLqn8WGHUVvvrwXMAsFGR+3hxEKSP9b4Tbm6AyYAOVi//4XoJ7uhGuleXPy5dSTN5KH9iPZmTYYM0DCqCcATQ8pStup3YIQI/6PBH/mikxrrjOqkWLYOq7RleAg5k/G/RyNQ7IIVorHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iduPcOA1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YtrRXcghbNwJL6YYLuM/hTbGLimd8PoaHavU8aj1wze5H3Kqi2g7qiUPUfH5gbxL1/OhvCt/UPiYnhzgFnjsUc71nVh81vzfD2rd4GAbSZS7RcUYW/SqYifdBtGeuEDVb5ELkhj1cuUPvin0ATBECO6VS2ziq1t+dgHsvKehs20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yI0jJiok; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iduPcOA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054AE1F000E9;
-	Wed, 20 May 2026 17:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yI0jJiok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9061F00893;
+	Wed, 20 May 2026 17:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296714;
-	bh=Sbc1H3MQJVO0HWRah+wkI6Yq6J5SrKBdH3ruvYUZd7Q=;
+	s=korg; t=1779296717;
+	bh=kRgRtE8IibTxQ/KXn9KjZGdoWotvBYf+fHJLD/D9uOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iduPcOA1sbCwOB2jq/nUjT2eHHJQHp78ul+UoOj0GopMDuTuE1INjWdSQ30yekxVB
-	 VsGLKDl1CWi5pcqm9N+Se9IlAuNHYKhn485O9BW+86OTfIwoIGvHEA5E+Rq+q2Ez49
-	 rEjkSzeeg8bCSmpH5oYGAA/enePFxbdg1CKBWKfU=
+	b=yI0jJiokn636A7x91TeJNLg4q0jSifQmQ1WQntuwGP3U82koL0sJltYo/taN1H8EU
+	 KaWIfmSQGHxJmJ9Y0LyRZvxRpwojlhFCB4arFUENywWxYM/9gEOwN4Yz7JfE+pf767
+	 P/v5ISBKDiyRoJwHf1wV2l5kvl2d7jpE9wzFrhvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0903/1146] drm/amd/pm: fix missing fine-grained dpm table flag on aldebaran
-Date: Wed, 20 May 2026 18:19:13 +0200
-Message-ID: <20260520162208.672373011@linuxfoundation.org>
+Subject: [PATCH 7.0 0904/1146] drm/amdgpu: fix AMDGPU_INFO_READ_MMR_REG
+Date: Wed, 20 May 2026 18:19:14 +0200
+Message-ID: <20260520162208.695996590@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,41 +45,135 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit ccf8932ed8cf4fbfdcd4df2c6b524913691ee700 ]
+[ Upstream commit 0ef196a208385b7d7da79f411c161b04e97283e2 ]
 
-Add the missing SMU_DPM_TABLE_FINE_GRAINED flag to aldebaran DPM table.
-This fixes the pp_dpm_sclk node issue caused by missing flag configuration.
+There were multiple issues in that code.
 
-Fixes: 7ea1c722fe1d ("drm/amd/pm: Use common helper for aldebaran dpm table")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+First of all the order between the reset semaphore and the mm_lock was
+wrong (e.g. copy_to_user) was called while holding the lock.
+
+Then we allocated memory while holding the reset semaphore which is also
+a pretty big bug and can deadlock.
+
+Then we used down_read_trylock() instead of waiting for the reset to
+finish.
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: 9e823f307074 ("drm/amdgpu: Block MMR_READ IOCTL in reset")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3427dea3a48ebddb491a26093f3627384b3cb2c2)
+(cherry picked from commit 361b6e6b303d4b691f6c5974d3eaab67ca6dd90e)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 57 +++++++++++--------------
+ 1 file changed, 24 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-index 2b4faab376930..23c9f14bb2086 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-@@ -425,6 +425,7 @@ static int aldebaran_set_default_dpm_table(struct smu_context *smu)
- 		dpm_table->dpm_levels[0].enabled = true;
- 		dpm_table->dpm_levels[1].value = pptable->GfxclkFmax;
- 		dpm_table->dpm_levels[1].enabled = true;
-+		dpm_table->flags |= SMU_DPM_TABLE_FINE_GRAINED;
- 	} else {
- 		dpm_table->count = 1;
- 		dpm_table->dpm_levels[0].value = smu->smu_table.boot_values.gfxclk / 100;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+index 7f19554b9ad11..a50c3058f97f4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+@@ -873,68 +873,59 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+ 				    ? -EFAULT : 0;
+ 	}
+ 	case AMDGPU_INFO_READ_MMR_REG: {
+-		int ret = 0;
+-		unsigned int n, alloc_size;
+-		uint32_t *regs;
+ 		unsigned int se_num = (info->read_mmr_reg.instance >>
+ 				   AMDGPU_INFO_MMR_SE_INDEX_SHIFT) &
+ 				  AMDGPU_INFO_MMR_SE_INDEX_MASK;
+ 		unsigned int sh_num = (info->read_mmr_reg.instance >>
+ 				   AMDGPU_INFO_MMR_SH_INDEX_SHIFT) &
+ 				  AMDGPU_INFO_MMR_SH_INDEX_MASK;
+-
+-		if (!down_read_trylock(&adev->reset_domain->sem))
+-			return -ENOENT;
++		unsigned int alloc_size;
++		uint32_t *regs;
++		int ret;
+ 
+ 		/* set full masks if the userspace set all bits
+ 		 * in the bitfields
+ 		 */
+-		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK) {
++		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK)
+ 			se_num = 0xffffffff;
+-		} else if (se_num >= AMDGPU_GFX_MAX_SE) {
+-			ret = -EINVAL;
+-			goto out;
+-		}
++		else if (se_num >= AMDGPU_GFX_MAX_SE)
++			return -EINVAL;
+ 
+-		if (sh_num == AMDGPU_INFO_MMR_SH_INDEX_MASK) {
++		if (sh_num == AMDGPU_INFO_MMR_SH_INDEX_MASK)
+ 			sh_num = 0xffffffff;
+-		} else if (sh_num >= AMDGPU_GFX_MAX_SH_PER_SE) {
+-			ret = -EINVAL;
+-			goto out;
+-		}
++		else if (sh_num >= AMDGPU_GFX_MAX_SH_PER_SE)
++			return -EINVAL;
+ 
+-		if (info->read_mmr_reg.count > 128) {
+-			ret = -EINVAL;
+-			goto out;
+-		}
++		if (info->read_mmr_reg.count > 128)
++			return -EINVAL;
+ 
+-		regs = kmalloc_array(info->read_mmr_reg.count, sizeof(*regs), GFP_KERNEL);
+-		if (!regs) {
+-			ret = -ENOMEM;
+-			goto out;
+-		}
++		regs = kmalloc_array(info->read_mmr_reg.count, sizeof(*regs),
++				     GFP_KERNEL);
++		if (!regs)
++			return -ENOMEM;
+ 
++		down_read(&adev->reset_domain->sem);
+ 		alloc_size = info->read_mmr_reg.count * sizeof(*regs);
+-
+ 		amdgpu_gfx_off_ctrl(adev, false);
++		ret = 0;
+ 		for (i = 0; i < info->read_mmr_reg.count; i++) {
+ 			if (amdgpu_asic_read_register(adev, se_num, sh_num,
+ 						      info->read_mmr_reg.dword_offset + i,
+ 						      &regs[i])) {
+ 				DRM_DEBUG_KMS("unallowed offset %#x\n",
+ 					      info->read_mmr_reg.dword_offset + i);
+-				kfree(regs);
+-				amdgpu_gfx_off_ctrl(adev, true);
+ 				ret = -EFAULT;
+-				goto out;
++				break;
+ 			}
+ 		}
+ 		amdgpu_gfx_off_ctrl(adev, true);
+-		n = copy_to_user(out, regs, min(size, alloc_size));
+-		kfree(regs);
+-		ret = (n ? -EFAULT : 0);
+-out:
+ 		up_read(&adev->reset_domain->sem);
++
++		if (!ret) {
++			ret = copy_to_user(out, regs, min(size, alloc_size))
++				? -EFAULT : 0;
++		}
++		kfree(regs);
+ 		return ret;
+ 	}
+ 	case AMDGPU_INFO_DEV_INFO: {
 -- 
 2.53.0
 
