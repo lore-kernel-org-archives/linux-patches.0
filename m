@@ -1,38 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BDC36405A;
-	Wed, 20 May 2026 17:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319D236C9D2;
+	Wed, 20 May 2026 17:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298490; cv=none; b=qkvVpzsfEluzlTPWdrpdTrLjGujKgKuHaE07FWoKcRlBa9VJv+BbFtuayXdyQehspQ2ueTCjDc9lrJ4NClxHvcrs1lwlwsgFxKzlZcJZ0unw8XiCwwOqseEXKxVY3MykT/YtMLl/O7S7UjNX1ZXnrPCoqzIsitX/goxEsTELN5s=
+	t=1779298493; cv=none; b=UzAIp5+s2+v6STHkt6m/k6gQ+T7JHv5qhi61wkKD+JtRLcLIjT49aSzVtmbzShLFvXpp9H+LIC01OwQMrg6wPqzLRscmwoPUOe08w8ZkuLunrz/JwfwB4i286pxWRATk2f5BnjXHhi14aZFx52Be8yiiKu696uwfQ6AMSFtWEes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298490; c=relaxed/simple;
-	bh=p7ZRQDqGoqlaUrL74Rr78iDt0v7ou4cK6w8/UndsCVM=;
+	s=arc-20240116; t=1779298493; c=relaxed/simple;
+	bh=4OBbmKJeyezJcjQlOQPItSW2X3Z0Z8yu+xe+O0gAGEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nj/1kZTUkjgOqgOtIE2Z0G/3MmvSjXIrWfX6QBt4JsPpbZm2l68r1R5kBXloN/ge4ddgKGvQZhlKuEReqEbv7/xfiXVXBGLQqpfQNC8YCnlxOHwDdxUxdwqPLcbZuXDgzr9TqerzrTk3q0bpdEP8EYSx5kHa6eqtC80Q+LK2U4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFlVZPin; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h+J5ZwZs7hBP8qQ/0u70J/CKQFRAVIkqWQ5X63YagRuAIIfa1NM8eOmTJdbSMIyoLtURNvmPqoTuZf4IYD4TTVWsHROBUq+iJhZHe0y4X9cSVO+Bzxndldk2+JrP0qevQ+9EVlSdFtAg0wweoGm6mq8t8sSmUVwlmUscCBo5RlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxfMA6a1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFlVZPin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FB91F000E9;
-	Wed, 20 May 2026 17:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxfMA6a1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C261F000E9;
+	Wed, 20 May 2026 17:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298489;
-	bh=0ReyQSHrGjPxBOZSZhNwYT1+0gYJDAjrN8Grp/dHTow=;
+	s=korg; t=1779298492;
+	bh=lVZI365Q37ErscjvOZt+AufUtHHPtmZcx4YK4iPvNks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eFlVZPinTO4EkOVABgzhcaOqid4N6RwT7HA1BR/DMV3/NL+6iK8aJQQdBfCY1ACd/
-	 ckj4WkcSZRFxjEcbQcvb/lNTggGENzQ2Kjwfk1+ElH0/Jkrp0H5nxdSLf/Q+Z8uTSB
-	 HD7Pi50Oia9fbkx5qtpU4suCN6vo6ziT7vJqupOI=
+	b=hxfMA6a1tCaTqegD+JZUotiEaQ6jETV09kk/3UXh8qn/QffwDIvIDnP5wbiQVVhfK
+	 qKAWdVUqZFePRzmuygH0baxm1q8FTNDDLZR4aT5UPAWP3PrAU9I3wKRrgExlANRIDe
+	 bELXVYSlEeFtg5qtxtMfXYFUiqSpUvPO5KFV8RoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Michal Grzedzicki <mge@meta.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Alexey Gladkov (Intel)" <legion@kernel.org>,
+	Ben Segall <bsegall@google.com>,
+	David Hildenbrand <david@kernel.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Kees Cook <kees@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Mel Gorman <mgorman@suse.de>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 429/957] soc/tegra: cbb: Fix cross-fabric target timeout lookup
-Date: Wed, 20 May 2026 18:15:12 +0200
-Message-ID: <20260520162143.825230195@linuxfoundation.org>
+Subject: [PATCH 6.18 430/957] unshare: fix nsproxy leak in ksys_unshare() on set_cred_ucounts() failure
+Date: Wed, 20 May 2026 18:15:13 +0200
+Message-ID: <20260520162143.846844737@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,85 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Michal Grzedzicki <mge@meta.com>
 
-[ Upstream commit a5f51b04cbb3ae0f9cb2c4488952b775ebb0ccbf ]
+[ Upstream commit a98621a0f187a934c115dcfe79a49520ae892111 ]
 
-When a fabric receives an error interrupt, the error may have
-occurred on a different fabric. The target timeout lookup was using
-the wrong base address (cbb->regs) with offsets from a different
-fabric's target map, causing a kernel page fault.
+When set_cred_ucounts() fails in ksys_unshare() new_nsproxy is leaked.
 
-  Unable to handle kernel paging request at virtual address ffff80000954cc00
-  pc : tegra234_cbb_get_tmo_slv+0xc/0x28
-  Call trace:
-   tegra234_cbb_get_tmo_slv+0xc/0x28
-   print_err_notifier+0x6c0/0x7d0
-   tegra234_cbb_isr+0xe4/0x1b4
+Let's call put_nsproxy() if that happens.
 
-Add tegra234_cbb_get_fabric() to look up the correct fabric device
-using fab_id, and use its base address for accessing target timeout
-registers.
-
-Fixes: 25de5c8fe0801 ("soc/tegra: cbb: Improve handling for per SoC fabric data")
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://lkml.kernel.org/r/20260213193959.2556730-1-mge@meta.com
+Fixes: 905ae01c4ae2 ("Add a reference to ucounts for each cred")
+Signed-off-by: Michal Grzedzicki <mge@meta.com>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Alexey Gladkov (Intel) <legion@kernel.org>
+Cc: Ben Segall <bsegall@google.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Juri Lelli <juri.lelli@redhat.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Valentin Schneider <vschneid@redhat.com>
+Cc: Vincent Guittot <vincent.guittot@linaro.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/cbb/tegra234-cbb.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ kernel/fork.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
-index 626e0e820329b..7e387fc54c6b1 100644
---- a/drivers/soc/tegra/cbb/tegra234-cbb.c
-+++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
-@@ -313,12 +313,37 @@ static void tegra234_cbb_lookup_apbslv(struct seq_file *file, const char *target
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 34e6b94c22129..3ad76c2cf5af5 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -3132,11 +3132,10 @@ int ksys_unshare(unsigned long unshare_flags)
+ 					 new_cred, new_fs);
+ 	if (err)
+ 		goto bad_unshare_cleanup_cred;
+-
+ 	if (new_cred) {
+ 		err = set_cred_ucounts(new_cred);
+ 		if (err)
+-			goto bad_unshare_cleanup_cred;
++			goto bad_unshare_cleanup_nsproxy;
  	}
- }
  
-+static struct tegra234_cbb *tegra234_cbb_get_fabric(u8 fab_id)
-+{
-+	struct tegra_cbb *entry;
-+
-+	list_for_each_entry(entry, &cbb_list, node) {
-+		struct tegra234_cbb *priv = to_tegra234_cbb(entry);
-+
-+		if (priv->fabric->fab_id == fab_id)
-+			return priv;
-+	}
-+
-+	return NULL;
-+}
-+
- static void tegra234_sw_lookup_target_timeout(struct seq_file *file, struct tegra234_cbb *cbb,
- 					      u8 target_id, u8 fab_id)
- {
- 	const struct tegra234_target_lookup *map = cbb->fabric->fab_list[fab_id].target_map;
-+	struct tegra234_cbb *target_cbb = NULL;
- 	void __iomem *addr;
+ 	if (new_fs || new_fd || do_sysvsem || new_cred || new_nsproxy) {
+@@ -3152,8 +3151,10 @@ int ksys_unshare(unsigned long unshare_flags)
+ 			shm_init_task(current);
+ 		}
  
-+	if (fab_id == cbb->fabric->fab_id)
-+		target_cbb = cbb;
-+	else
-+		target_cbb = tegra234_cbb_get_fabric(fab_id);
-+
-+	if (!target_cbb) {
-+		dev_err(cbb->base.dev, "could not find fabric for fab_id:%d\n", fab_id);
-+		return;
-+	}
-+
- 	if (target_id >= cbb->fabric->fab_list[fab_id].max_targets) {
- 		tegra_cbb_print_err(file, "\t  Invalid target_id:%d\n", target_id);
- 		return;
-@@ -341,7 +366,7 @@ static void tegra234_sw_lookup_target_timeout(struct seq_file *file, struct tegr
- 	 *	e) Goto step-a till all bits are set.
- 	 */
+-		if (new_nsproxy)
++		if (new_nsproxy) {
+ 			switch_task_namespaces(current, new_nsproxy);
++			new_nsproxy = NULL;
++		}
  
--	addr = cbb->regs + map[target_id].offset;
-+	addr = target_cbb->regs + map[target_id].offset;
+ 		task_lock(current);
  
- 	if (strstr(map[target_id].name, "AXI2APB")) {
- 		addr += APB_BLOCK_TMO_STATUS_0;
+@@ -3182,13 +3183,15 @@ int ksys_unshare(unsigned long unshare_flags)
+ 
+ 	perf_event_namespaces(current);
+ 
++bad_unshare_cleanup_nsproxy:
++	if (new_nsproxy)
++		put_nsproxy(new_nsproxy);
+ bad_unshare_cleanup_cred:
+ 	if (new_cred)
+ 		put_cred(new_cred);
+ bad_unshare_cleanup_fd:
+ 	if (new_fd)
+ 		put_files_struct(new_fd);
+-
+ bad_unshare_cleanup_fs:
+ 	if (new_fs)
+ 		free_fs_struct(new_fs);
 -- 
 2.53.0
 
