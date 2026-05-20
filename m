@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D61400DEB;
-	Wed, 20 May 2026 18:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBF83FB7FC;
+	Wed, 20 May 2026 18:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302808; cv=none; b=B8+GO7HlCtLb/vp/PyskM/gmOo1jVkcwMt65B4tFzwMRYNUi/EjWWgNuiOAvki4j98OPrxq/DP2zmg+m90MN1NzxoDOK3Jz78ypjWuwMCu9X1XctREPiL2AHb4vRzh1pl8vTuCD+B/9D0P/PORnSkfYNJdnHxOuF4d/L9cur7co=
+	t=1779302810; cv=none; b=keAvOpIKiRJIjDAhs2785M5BOYUXt0eNKaIHE+k+kquZN8o+AdAJSqOUc7h/O99wsjP/QhvUF5BzEHdwZvxWpct/ZS9CCwUuP22SalFP9oeCuRSmYA4IXCWVvMpKgdXDQV568HRDlowf5jpVVRQKKyMYkJRTYITfwgs7ysNpd7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302808; c=relaxed/simple;
-	bh=0PiJMW7kCEdtkCfPYZrjoprJjo+nGkUVZhtfHGaGLV8=;
+	s=arc-20240116; t=1779302810; c=relaxed/simple;
+	bh=mWR1stull2nCENVrdaEfvP/Q1tGPHhBBX82Yr026+Ec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RyqJ15S51qqZkttHu+TqIBti49Oj0U/qR0uAuGdTIRJm5mfaREippqB81Pbul+1OhAMu5vttDp7c3/t7R5JsN6UX32o85DB1sQJ3KBOXYOiQujap60Koz28QQ6wzWQQrjZqgVHXanl6/AtMhjC7P/CDLjS8Zj6HiLD+4K+Xo7fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtdznMBG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=J0RY8+a0iRrfg0nSm7oEpdPZAXzVq+97HpYcl84kaU49nNPPMUEzgwbo5SZtUjeMUlGsRKiIUNPLKb/ZZWomLlk9EH11du9w4/Ybs89p3xevOR7vAwgcCJmwAx2TruJXGPkp27gpcoW7d2SEbqMORSZAcOYpccE/eaFr1DUNh/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Sz+hk5A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtdznMBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C491F000E9;
-	Wed, 20 May 2026 18:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Sz+hk5A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27BC1F000E9;
+	Wed, 20 May 2026 18:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302806;
-	bh=XaWt4YyohoojfMbH3Cx6Y+wLEP32tsuNwx120v8mp1I=;
+	s=korg; t=1779302809;
+	bh=DEgrp1iSPaLTN68vzat4QHBYIjWXsoy3X9uzI4qUZeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qtdznMBG4tIf/G9riNhcV5xfw9DFqJ21fNwImW9ruwsWf3DrFKseDZ04hbnwFRr5R
-	 xDj8qLSSNb2IW0wjNBmVeZjjpyxSAYgPYhsiS6MNjmQ462stY23KLYfys7i0B2H+ac
-	 opF1AT0AaJ/AFE2+sCbmnj1WlD5DE6qxlm3ULlb0=
+	b=1Sz+hk5ADlGMBwKMGPP3hl7Avl6O0erpfU92fdusJjs2Q1O7xerF0uDpTwCDlRQbF
+	 6h2OgRWdC+fZk5oNKc9lcXevlCRXkvbC6Hx7b1Wa/Zr1MTQZFtux4HSducNQTyP+pj
+	 XQaOBPTt3x9K1VV6MT2xy+7j039/OYcdeJtCGwRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Yinjie Yao <yinjie.yao@amd.com>,
+	"Christian A. Ehrhardt" <christian.ehrhardt@codasip.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 407/508] drm/amdgpu/jpeg: set no_user_fence for JPEG v4.0.3 ring
-Date: Wed, 20 May 2026 18:23:50 +0200
-Message-ID: <20260520162107.429498014@linuxfoundation.org>
+Subject: [PATCH 6.6 408/508] ASoC: codecs: ab8500: Fix casting of private data
+Date: Wed, 20 May 2026 18:23:51 +0200
+Message-ID: <20260520162107.450920959@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -53,36 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yinjie Yao <yinjie.yao@amd.com>
+From: Christian A. Ehrhardt <christian.ehrhardt@codasip.com>
 
-[ Upstream commit 83e37c0987ca92f9e87789b46dd311dcf5a4a6c8 ]
+[ Upstream commit a201aef1a88b675e9eb8487e27d14e2eef3cef80 ]
 
-JPEG rings do not support 64-bit user fence writes, reject CS
-submissions with user fences.
+ab8500_filter_controls[i].private_value is initialized using
 
-Fixes: e684e654eba9 ("drm/amdgpu/jpeg: add jpeg support for VCN4_0_3")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2f6afc97d259d530f4f86c7743efbc573a8da927)
+	.private_value = (unsigned long)&(struct filter_control)
+		{.count = xcount, .min = xmin, .max = xmax}
+
+thus it's a pointer to a struct filter_control casted to unsigned long.
+
+So to get back that pointer .private_data must be cast back, not its
+address.
+
+Fixes: 679d7abdc754 ("ASoC: codecs: Add AB8500 codec-driver")
+Signed-off-by: Christian A. Ehrhardt <christian.ehrhardt@codasip.com>
+Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20260428192255.2294705-2-u.kleine-koenig@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/ab8500-codec.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-index 78aaaee492e11..210177c738554 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-@@ -1054,6 +1054,7 @@ static const struct amd_ip_funcs jpeg_v4_0_3_ip_funcs = {
- static const struct amdgpu_ring_funcs jpeg_v4_0_3_dec_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCN_JPEG,
- 	.align_mask = 0xf,
-+	.no_user_fence = true,
- 	.get_rptr = jpeg_v4_0_3_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v4_0_3_dec_ring_get_wptr,
- 	.set_wptr = jpeg_v4_0_3_dec_ring_set_wptr,
+diff --git a/sound/soc/codecs/ab8500-codec.c b/sound/soc/codecs/ab8500-codec.c
+index 68342917419e4..42e448978c4a0 100644
+--- a/sound/soc/codecs/ab8500-codec.c
++++ b/sound/soc/codecs/ab8500-codec.c
+@@ -2496,13 +2496,13 @@ static int ab8500_codec_probe(struct snd_soc_component *component)
+ 		return status;
+ 	}
+ 	fc = (struct filter_control *)
+-		&ab8500_filter_controls[AB8500_FILTER_ANC_FIR].private_value;
++		ab8500_filter_controls[AB8500_FILTER_ANC_FIR].private_value;
+ 	drvdata->anc_fir_values = (long *)fc->value;
+ 	fc = (struct filter_control *)
+-		&ab8500_filter_controls[AB8500_FILTER_ANC_IIR].private_value;
++		ab8500_filter_controls[AB8500_FILTER_ANC_IIR].private_value;
+ 	drvdata->anc_iir_values = (long *)fc->value;
+ 	fc = (struct filter_control *)
+-		&ab8500_filter_controls[AB8500_FILTER_SID_FIR].private_value;
++		ab8500_filter_controls[AB8500_FILTER_SID_FIR].private_value;
+ 	drvdata->sid_fir_values = (long *)fc->value;
+ 
+ 	snd_soc_dapm_disable_pin(dapm, "ANC Configure Input");
 -- 
 2.53.0
 
