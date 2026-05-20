@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0BE4F5E0;
-	Wed, 20 May 2026 18:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1874F5E0;
+	Wed, 20 May 2026 18:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300025; cv=none; b=X/gFdElxLfF/YBtRpv8Gm+N0m87bavaqSE8cI6Lnn0RzQDG/JgtWCOGF8+uWAnG7gL4Jguhn0OANvZHIWy3dnK5PrzPswR1wxybxuZUaG8Lvt1Jsnxlk4ggqMR9giDkrYvEtI4MF5r/8A4Ce6kQPYI9lLU1H4g/aYDjQmoPJWJE=
+	t=1779300027; cv=none; b=KpgXVs0HTR3SnH+xiRX1CJKNZm4FxHnRpvEd3cb8bAIYD/tfisa8OrZad+wNzCSJsZkucpeVgGKou35f643p/3BJn4vMQSwPZ+mCae0GGz8Pr8HG3blIuJNq7JLjwBqwALcaG+voC6Jpl+T2/vZCtVey2lEqELnMHMObhC/+GJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300025; c=relaxed/simple;
-	bh=FnIVcMrRwV/T7iYnyggMw6y32QxSfo5OllZVpqXR3Es=;
+	s=arc-20240116; t=1779300027; c=relaxed/simple;
+	bh=csyydmjjtfSMnTn3p1W0qdCvBI2G7RB3Lv1MPlmr5F8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0SCQncL5XEcFhBjDRNUvNijInvI7gHV9+aw24xgdENXfUbPh46NngTjMszGCY37Ki6u4/JWTsq7FyJJJ/myBmJDC0QxCtztVNhBy3rhBsxrc2YD/+aoZj0urAkX/Vp3r2Jz+qDk3p96rb+p1FmAB9gT5O6511FqxAVnwDu5Ob4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZqeDl5X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bZUb16S7pj9mumzRdWSnWiQa75hvbGAzchudYIril/AbdT3j0HjRZ/ZMeziFZwNnCxezb6HhNM92K7+E1vIUyFoeWK8i6DStMVQBNIouTNme+c6MZm5cGqB6rysP1u9MruHEHbUhJZLD6DKU2sWXvRZpaDSA7iQzIhn34U9u9ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sau6Zfw7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZqeDl5X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2171F000E9;
-	Wed, 20 May 2026 18:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sau6Zfw7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9A11F000E9;
+	Wed, 20 May 2026 18:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300023;
-	bh=dGsfmboJt/1zFFAeOBRilNY6U7JLUafvEmYnkrK6uAQ=;
+	s=korg; t=1779300026;
+	bh=7Pbga9wODyUFuCVR4+s8UQBZU32Egy+IlUK7gXmz7UU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vZqeDl5XnLiXvJ0Os+LgjA0L0M624eLCrdbD1UjPWRGgtjhM9TEs7QFrCsSStaFMP
-	 XTYFrmI34xwocTD68d52gxmKRGhdNyefLnWAV54XGn4uyiNUd/1i+jKGl5Y+WoHtlq
-	 MF4oRLTIqUvuerL/wNXY3CXbydQ8SuXas/g75MaM=
+	b=sau6Zfw7u7NoLCdUy55CA/wUc/aqGZrd37FngiA8P0eH/NAyRMtYAJrMo7W3zWH+h
+	 zoqZ89pW7/2w1c/5rLFIhvxRUwhaje09lKW5x5HD5rg5oWmU5AYgq0ODOhi0A1KuH1
+	 EQc4IFeFaXL70VEIs2NvfA5cjwCyhiy2nxSYs6fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangshiguang <yangshiguang@xiaomi.com>,
-	Gui-Dong Han <hanguidong02@gmail.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 019/666] debugfs: check for NULL pointer in debugfs_create_str()
-Date: Wed, 20 May 2026 18:13:50 +0200
-Message-ID: <20260520162111.645118920@linuxfoundation.org>
+Subject: [PATCH 6.12 002/666] blk-cgroup: wait for blkcg cleanup before initializing new disk
+Date: Wed, 20 May 2026 18:13:33 +0200
+Message-ID: <20260520162111.282367574@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,50 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 31de83980d3764d784f79ff1bc93c42b324f4013 ]
+[ Upstream commit 3dbaacf6ab68f81e3375fe769a2ecdbd3ce386fd ]
 
-Passing a NULL pointer to debugfs_create_str() leads to a NULL pointer
-dereference when the debugfs file is read. Following upstream
-discussions, forbid the creation of debugfs string files with NULL
-pointers. Add a WARN_ON() to expose offending callers and return early.
+When a queue is shared across disk rebind (e.g., SCSI unbind/bind), the
+previous disk's blkcg state is cleaned up asynchronously via
+disk_release() -> blkcg_exit_disk(). If the new disk's blkcg_init_disk()
+runs before that cleanup finishes, we may overwrite q->root_blkg while
+the old one is still alive, and radix_tree_insert() in blkg_create()
+fails with -EEXIST because the old blkg entries still occupy the same
+queue id slot in blkcg->blkg_tree. This causes the sd probe to fail
+with -ENOMEM.
 
-Fixes: 9af0440ec86e ("debugfs: Implement debugfs_create_str()")
-Reported-by: yangshiguang <yangshiguang@xiaomi.com>
-Closes: https://lore.kernel.org/lkml/2025122221-gag-malt-75ba@gregkh/
-Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260323085930.88894-2-hanguidong02@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix it by waiting in blkcg_init_disk() for root_blkg to become NULL,
+which indicates the previous disk's blkcg cleanup has completed.
+
+Fixes: 1059699f87eb ("block: move blkcg initialization/destroy into disk allocation/release handler")
+Cc: Yi Zhang <yi.zhang@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260311032837.2368714-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/debugfs/file.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ block/blk-cgroup.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index 67299e8b734ed..d3ffd954d6f94 100644
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -1071,7 +1071,7 @@ static const struct file_operations fops_str_wo = {
-  *          directory dentry if set.  If this parameter is %NULL, then the
-  *          file will be created in the root of the debugfs filesystem.
-  * @value: a pointer to the variable that the file should read to and write
-- *         from.
-+ *         from. This pointer and the string it points to must not be %NULL.
-  *
-  * This function creates a file in debugfs with the given name that
-  * contains the value of the variable @value.  If the @mode variable is so
-@@ -1080,6 +1080,9 @@ static const struct file_operations fops_str_wo = {
- void debugfs_create_str(const char *name, umode_t mode,
- 			struct dentry *parent, char **value)
- {
-+	if (WARN_ON(!value || !*value))
-+		return;
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 3f7cb9d891aa3..9a198001cfa56 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -24,6 +24,7 @@
+ #include <linux/backing-dev.h>
+ #include <linux/slab.h>
+ #include <linux/delay.h>
++#include <linux/wait_bit.h>
+ #include <linux/atomic.h>
+ #include <linux/ctype.h>
+ #include <linux/resume_user_mode.h>
+@@ -611,6 +612,8 @@ static void blkg_destroy_all(struct gendisk *disk)
+ 
+ 	q->root_blkg = NULL;
+ 	spin_unlock_irq(&q->queue_lock);
 +
- 	debugfs_create_mode_unsafe(name, mode, parent, value, &fops_str,
- 				   &fops_str_ro, &fops_str_wo);
++	wake_up_var(&q->root_blkg);
  }
+ 
+ static void blkg_iostat_set(struct blkg_iostat *dst, struct blkg_iostat *src)
+@@ -1451,6 +1454,18 @@ int blkcg_init_disk(struct gendisk *disk)
+ 	struct blkcg_gq *new_blkg, *blkg;
+ 	bool preloaded;
+ 
++	/*
++	 * If the queue is shared across disk rebind (e.g., SCSI), the
++	 * previous disk's blkcg state is cleaned up asynchronously via
++	 * disk_release() -> blkcg_exit_disk(). Wait for that cleanup to
++	 * finish (indicated by root_blkg becoming NULL) before setting up
++	 * new blkcg state. Otherwise, we may overwrite q->root_blkg while
++	 * the old one is still alive, and radix_tree_insert() in
++	 * blkg_create() will fail with -EEXIST because the old entries
++	 * still occupy the same queue id slot in blkcg->blkg_tree.
++	 */
++	wait_var_event(&q->root_blkg, !READ_ONCE(q->root_blkg));
++
+ 	new_blkg = blkg_alloc(&blkcg_root, disk, GFP_KERNEL);
+ 	if (!new_blkg)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
