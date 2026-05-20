@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E6336B059;
-	Wed, 20 May 2026 16:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29A5371D13;
+	Wed, 20 May 2026 16:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294667; cv=none; b=M7P9us3MnA4wLRGFWwLnr6uQsT9582ziEqK5jFtF6vUU7oRzssPZJMvZrDbOjhvM2xu/HCaUXG5qc9zDL9boSKKP6/hMSPuluslkye/t4oNzAElJmNfEunJj/3mYEuaA39jdDX109NX3UvSOp6JNcc51UvLsNUfpe3jWcxS2xqY=
+	t=1779294670; cv=none; b=qfSDf3XexzYdae2j6mzpjjzlWNOW71nNIWAWEgb/L6uU7ZtURxBx7COCTW7xRSlROOc+p6mYvPb1ZKV5icCgZiYrk+5+lnoNCOVyEGWcKiumlBzQnHdpFlCFIkx56BsZFjVk+FqxaKDCib3JjnGlm3bsz9UIDWYMCBK0gEW2mPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294667; c=relaxed/simple;
-	bh=7ArY9DvI2NqGMSp7YI5Y9XR+pDlMG42KciiJVdUMxGA=;
+	s=arc-20240116; t=1779294670; c=relaxed/simple;
+	bh=2XADbOG0u6AixjVkgsT0ii1YR9wpAR2I1w6ptVOwjpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l851uk4UaPlEgTXodB1l0WLNbxRdwhoch0ijSokSDZOU1vWCXvK0UYZbu2m8eVQuzbr8vUpam7v+6WBdSgIloNg83mEg9K6o3Yn04ndjtWDS14E4QjfAOK0bWcopIJJz3TBKfCElOpzs1yzmhQJs8qt9YL3X4yhVYbo+R7z9Ddw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqUlVWZd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=O92tid1JVduEDfOQBcUoHpRqAQn/AZgu1ef+kZxSzAk7K7osYu7LiFjRxMxvSPyoARkAIWTtS7szDoBzqRZRHuQlEShemk1DTEttlAsiODUzIue59o9sj9FhqkqBeV2XS7/EbS/nnrEqDUg+N05jIl6DKsVrLlH2D5XrtliauUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnU64FGf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqUlVWZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE70B1F00894;
-	Wed, 20 May 2026 16:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnU64FGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C161F000E9;
+	Wed, 20 May 2026 16:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294666;
-	bh=08RQYYK0LVsBNxObKCQA9uLecFdUI5ul0cZe7LP4iU0=;
+	s=korg; t=1779294668;
+	bh=+ZmyFt+XdLAFo7e8QjUoZbNfkWfL/ddAItXBcrqhYV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EqUlVWZdknUZCS9NGQDz1FQKx/B5WsW9Dey2MosYQl5dtQtJvYNrC0dBSNSAJJcZ5
-	 qpbxGklDzuCM5ZhJs015WLcvhPC71oMvrfFojvq+fN3YqR1k//GfnWNQLoeopmOqKj
-	 fAtjpZNkgJ0hsTr8zk8NQUaPw+Tarl1yVxK1IwTE=
+	b=bnU64FGfbz4A/Mvjsc4yW9gqb+lTFfUb/CYoucT7ZHxI7//vZwklaRN4i9UAlzesN
+	 EcvGu90m0WvopqYbeO24k4joRV5k7zfSeR3fXkcSTDUPyBbBIMskf7PMW5lJwH1HYT
+	 Od6xvuf3YynDtmFzYXBA8IOl5u1S0yRh20PhGTgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amery Hung <ameryhung@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0086/1146] bpf: Do not allow deleting local storage in NMI
-Date: Wed, 20 May 2026 18:05:36 +0200
-Message-ID: <20260520162150.297889922@linuxfoundation.org>
+Subject: [PATCH 7.0 0087/1146] selftests/nolibc: fix test_file_stream() on musl libc
+Date: Wed, 20 May 2026 18:05:37 +0200
+Message-ID: <20260520162150.320365417@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -46,59 +44,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amery Hung <ameryhung@gmail.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 350de5b8a9befaa2a68861c51f671d4f5f751ca5 ]
+[ Upstream commit 8ba600aa577f73cc551747fdf121afc7d04afcea ]
 
-Currently, local storage may deadlock when deferring freeing selem or
-local storage through kfree_rcu(), call_rcu() or call_rcu_tasks_trace()
-in NMI or reentrant. Since deleting selem in NMI is an unlikely use
-case, partially mitigate it by returning error when calling from
-bpf_xxx_storage_delete() helpers in NMI. Note that, it is still possible
-to deadlock through reentrant. A full mitigation requires returning
-error when irqs_disabled() is true, which, however is too heavy-handed
-for bpf_xxx_storage_delete().
+fwrite() modifying errno is non-standard.
 
-The long-term solution requires _nolock versions of call_rcu. Another
-possible solution is to defer the free through irq_work [0], but it
-would grow the size of selem, which is non-ideal.
+Only validate this behavior on those libc implementations which
+implement it.
 
-The check is only needed in bpf_selem_unlink(), which is used by helpers
-and syscalls. bpf_selem_unlink_nofail() is fine as it is called during
-map and owner tear down that never run in NMI or reentrant.
-
-[0] https://lore.kernel.org/bpf/20260205190233.912-1-alexei.starovoitov@gmail.com/
-
-Fixes: a10787e6d58c ("bpf: Enable task local storage for tracing programs")
-Signed-off-by: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://patch.msgid.link/20260319025716.2361065-1-ameryhung@gmail.com
+Fixes: a5f00be9b3b0 ("tools/nolibc: Add a simple test for writing to a FILE and reading it back")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_local_storage.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/nolibc/nolibc-test.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
-index 9c96a4477f81a..4c6079d2cf28d 100644
---- a/kernel/bpf/bpf_local_storage.c
-+++ b/kernel/bpf/bpf_local_storage.c
-@@ -393,6 +393,9 @@ int bpf_selem_unlink(struct bpf_local_storage_elem *selem)
- 	unsigned long flags;
- 	int err;
+diff --git a/tools/testing/selftests/nolibc/nolibc-test.c b/tools/testing/selftests/nolibc/nolibc-test.c
+index 1b9d3b2e2491c..1aca8468eac4b 100644
+--- a/tools/testing/selftests/nolibc/nolibc-test.c
++++ b/tools/testing/selftests/nolibc/nolibc-test.c
+@@ -74,6 +74,14 @@ static const int is_nolibc =
+ #endif
+ ;
  
-+	if (in_nmi())
-+		return -EOPNOTSUPP;
++static const int is_glibc =
++#ifdef __GLIBC__
++	1
++#else
++	0
++#endif
++;
 +
- 	if (unlikely(!selem_linked_to_storage_lockless(selem)))
- 		/* selem has already been unlinked from sk */
- 		return 0;
+ /* definition of a series of tests */
+ struct test {
+ 	const char *name;              /* test name */
+@@ -866,7 +874,7 @@ int test_file_stream(void)
+ 
+ 	errno = 0;
+ 	r = fwrite("foo", 1, 3, f);
+-	if (r != 0 || errno != EBADF) {
++	if (r != 0 || ((is_nolibc || is_glibc) && errno != EBADF)) {
+ 		fclose(f);
+ 		return -1;
+ 	}
 -- 
 2.53.0
 
