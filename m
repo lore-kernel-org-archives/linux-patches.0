@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D913A4526;
-	Wed, 20 May 2026 17:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7C836A376;
+	Wed, 20 May 2026 17:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298050; cv=none; b=SvM/9Zvvx77Q2oLryV9ANZX98wmXI94x449nagsnFwQGaEqSGeg9DT+z6ow5+bjxT2Abt00sGNVCAGIQqEzJdqqEhbzWAtr1r8Bif5ucDN/ARtEIjsFvrQYJMj1xeXR/KNpLQfpKPp1FaxzK+1qBZ4E2CgizJ/oTQ/gY6dl/gWA=
+	t=1779298053; cv=none; b=Vcg+2s36EdiHSZzIAR53PjIfXHWCYDuBwISThoqi5RXJ6Epoh/urhm9znHacsdraStuyCxgFoEpq2ll1iO0KEBB7G3t3bTEDN70U1PFIzLhD4ttwTW0k4+/UwYTyK7r017S8CdJkH30P7e561tNvYVzhFePv51XX9qyiYiptt+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298050; c=relaxed/simple;
-	bh=pSIl2qbnbbA0O460QI0lSmIOwsQntT6chpjkxLFZHYc=;
+	s=arc-20240116; t=1779298053; c=relaxed/simple;
+	bh=9xyVdKrmb2JDH+JN/x7mA68a3knPt0h3vPsGw+Hv8bA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLmkviODzj4it6Ovhk10syojKvvT9i6aiwsURL0gRtykVBYlQxlL+NK1oNhMlr4Y0VyqJEDub51v4bf6sdotccNT0t6bmK5FckLBiK64fK2FsBwUG3XdNpc3DwmShu2b3rdu2ZTOf+3K5n3Xa6LxevLZul9zvHNXi69wZPS8HYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNmqEjCl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q5tSkSB40I4gFQmZODWCz/9B6B4lVD8+Y+1ytVXtKZcSg2/cJT+0v6N6mG8iC1T/30biG576AXxipoGDRZqrm8TnZHVlILfD14GyHTCOaZLHkmEEzfAsHUwSclLfiLxxLgRQYXF81RMjnAqrq1OcMBpYBS5ppGmyAlJHRUet6Ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fi3g/P00; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNmqEjCl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26651F000E9;
-	Wed, 20 May 2026 17:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fi3g/P00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D20E1F00896;
+	Wed, 20 May 2026 17:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298049;
-	bh=IMmvzjt8kObSCINE5Sy9zuPoczn9xFZttX9ex78LtsE=;
+	s=korg; t=1779298051;
+	bh=YAp+HwmXg4yTSmpGzY+UgbZxDqZOkA6BUVp3Fv7M99w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZNmqEjCl3sak6cdXjner1W/lFw3m2tw4zuTu7sCP0pVMHgyHetBN5SnhEmyGzFPWE
-	 aH4VUwyindLSmw5zW9d+GXwJxNL7V02cj92kQ8/+AwXJAOxipNCKrptytrB9J3ckGt
-	 bIZWjWg7N83XwQZhWEJ1UU8E7Q33nNUM/+1FPUjQ=
+	b=fi3g/P00vAfrvW+c5e/GSTXh/rIHRYlV6QFMlfx96TjlvfGlyxO3FUAvQnHJSma++
+	 0M8akcVzvG1UWIODp3pzDochUr+zUTgG3ZHo6gRVf0rmO+9uz7grAA0LROmRww/Hxd
+	 MtEMLI0a8W0kozHEDwULaE2L6SNK9BSDQ5bhhUtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 221/957] drm/sun4i: Fix resource leaks
-Date: Wed, 20 May 2026 18:11:44 +0200
-Message-ID: <20260520162139.335774242@linuxfoundation.org>
+Subject: [PATCH 6.18 222/957] crypto: inside-secure/eip93 - register hash before authenc algorithms
+Date: Wed, 20 May 2026 18:11:45 +0200
+Message-ID: <20260520162139.357224307@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,39 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 127367ad2e0f4870de60c6d719ae82ecf68d674c ]
+[ Upstream commit 5377032914b29b4643adece0ff1dfc67e36700f4 ]
 
-Three clocks are not being released in devm_regmap_init_mmio() error
-path.
+Register hash before hmac and authenc algorithms. This will ensure
+selftests pass at startup. Previously, selftests failed on the
+crypto_alloc_ahash() function since the associated algorithm was
+not yet registered.
 
-Add proper goto and set ret to the error code.
+Fixes following error:
+...
+[   18.375811] alg: self-tests for authenc(hmac(sha1),cbc(aes)) using authenc(hmac(sha1-eip93),cbc(aes-eip93)) failed (rc=-2)
+[   18.382140] alg: self-tests for authenc(hmac(sha224),rfc3686(ctr(aes))) using authenc(hmac(sha224-eip93),rfc3686(ctr(aes-eip93))) failed (rc=-2)
+[   18.395029] alg: aead: authenc(hmac(sha256-eip93),cbc(des-eip93)) setkey failed on test vector 0; expected_error=0, actual_error=-2, flags=0x1
+[   18.409734] alg: aead: authenc(hmac(md5-eip93),cbc(des3_ede-eip93)) setkey failed on test vector 0; expected_error=0, actual_error=-2, flags=0x1
+...
 
-Fixes: 8270249fbeaf0 ("drm/sun4i: backend: Create regmap after access is possible")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260226163836.10335-1-ethantidmore06@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: 9739f5f93b78 ("crypto: eip93 - Add Inside Secure SafeXcel EIP-93 crypto engine support")
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_backend.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/crypto/inside-secure/eip93/eip93-main.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/sun4i/sun4i_backend.c b/drivers/gpu/drm/sun4i/sun4i_backend.c
-index 0484cc27c97ae..1518126e9fe32 100644
---- a/drivers/gpu/drm/sun4i/sun4i_backend.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_backend.c
-@@ -880,7 +880,8 @@ static int sun4i_backend_bind(struct device *dev, struct device *master,
- 						     &sun4i_backend_regmap_config);
- 	if (IS_ERR(backend->engine.regs)) {
- 		dev_err(dev, "Couldn't create the backend regmap\n");
--		return PTR_ERR(backend->engine.regs);
-+		ret = PTR_ERR(backend->engine.regs);
-+		goto err_disable_ram_clk;
- 	}
+diff --git a/drivers/crypto/inside-secure/eip93/eip93-main.c b/drivers/crypto/inside-secure/eip93/eip93-main.c
+index b7fd9795062d4..76858bb4fcc22 100644
+--- a/drivers/crypto/inside-secure/eip93/eip93-main.c
++++ b/drivers/crypto/inside-secure/eip93/eip93-main.c
+@@ -36,6 +36,14 @@ static struct eip93_alg_template *eip93_algs[] = {
+ 	&eip93_alg_cbc_aes,
+ 	&eip93_alg_ctr_aes,
+ 	&eip93_alg_rfc3686_aes,
++	&eip93_alg_md5,
++	&eip93_alg_sha1,
++	&eip93_alg_sha224,
++	&eip93_alg_sha256,
++	&eip93_alg_hmac_md5,
++	&eip93_alg_hmac_sha1,
++	&eip93_alg_hmac_sha224,
++	&eip93_alg_hmac_sha256,
+ 	&eip93_alg_authenc_hmac_md5_cbc_des,
+ 	&eip93_alg_authenc_hmac_sha1_cbc_des,
+ 	&eip93_alg_authenc_hmac_sha224_cbc_des,
+@@ -52,14 +60,6 @@ static struct eip93_alg_template *eip93_algs[] = {
+ 	&eip93_alg_authenc_hmac_sha1_rfc3686_aes,
+ 	&eip93_alg_authenc_hmac_sha224_rfc3686_aes,
+ 	&eip93_alg_authenc_hmac_sha256_rfc3686_aes,
+-	&eip93_alg_md5,
+-	&eip93_alg_sha1,
+-	&eip93_alg_sha224,
+-	&eip93_alg_sha256,
+-	&eip93_alg_hmac_md5,
+-	&eip93_alg_hmac_sha1,
+-	&eip93_alg_hmac_sha224,
+-	&eip93_alg_hmac_sha256,
+ };
  
- 	list_add_tail(&backend->engine.list, &drv->engine_list);
+ inline void eip93_irq_disable(struct eip93_device *eip93, u32 mask)
 -- 
 2.53.0
 
