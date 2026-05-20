@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C689369D78;
-	Wed, 20 May 2026 16:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED154339844;
+	Wed, 20 May 2026 16:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296014; cv=none; b=s0F2g1zlQUNt40+u4HqvNr1Qr6wBMTSUbor5U/blZ3VM2kkpqnvYVrVPwSvoECp/LoZn8Rd2f6vuhS/imynkgEGjn+a9AONiYJ6aymYI0Lh9tfsf54ZqKZt24naDvDuWR3EZSSYVnN0wI+smeNvmstiG8Vf5HvTieonQsbDVSNE=
+	t=1779296017; cv=none; b=PgHKa67KYW9glX3bQgB95zML+QErAjMymY/TpsLQmV/pblAVWri1LNMSbRPdNOcK0FdTSwbAHTDZNsdyeqBgMDP8PQoTfcpcCwAIKwMd7voC1VUC8jb6RT6fqq5+JRbMAX8Z6FlhuQihrUjaovPfGPz5uBPogzmhjc/zivdkBmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296014; c=relaxed/simple;
-	bh=2jWRhAqVQsO/7jqko0NmOVrUx9Yf181vyBWw29DiUk4=;
+	s=arc-20240116; t=1779296017; c=relaxed/simple;
+	bh=VcSOv5JZbGgmOd1F1FpR+RH/Q2jU/qspwBjcOQ686ZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HgsuB9NpA+ggdHHs4AeVMO7oaUJoarpqgXGSa7nBOcbmi6Q3GNJ95hdNbJucOvjaCL7vnBVILAwqSvHPEWgtckiiqGhWoiJWRYOO2E9dRbJEAL4zU7iFunLPAzbxOTHFMMk4HcTRSIZifyY42ooG3QDp0fzVnwgriKJHoiPJaVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hvr1vZd5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YCqXWFRhkvuI5por1EDGytXl+5PRl5j5V5lB0ZDBaPeiF8aCv+/HEhFyhoWyhdvDJ9yS6Rtbpm2MtbJg+DdPpm1So/RpEecEioVUyGJGj9IzDAdfBMaxniyAHKRHw31DRQi4B43Gzd6qvEquHLhLRr7BZom3T2szkaEox67ZI+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tctmUBUA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hvr1vZd5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817B21F000E9;
-	Wed, 20 May 2026 16:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tctmUBUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275A11F000E9;
+	Wed, 20 May 2026 16:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296013;
-	bh=6Y96eFEnwi8rw/qPCdh2PmMq6iSngafWUAoNaBJDav4=;
+	s=korg; t=1779296015;
+	bh=5+4kt4StYy8kfO3KSAP55j1ULhGbsja7+UGqI8KlRc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hvr1vZd5silpUyIv6CKWcCRCp/UCKrZCiRstztJcNJTtjJvU/qDHKxY/81tKI/u6/
-	 Qt4TG+9UHcuSPQLNXacdxkIrgh3bJSVKCsERQbLqTcVBlHg8LXkxbN2yQz48CeRRDu
-	 Ui0HBoxEawtOLQKo6Rt6zqXpOs+Sc8Kx4wR9WVko=
+	b=tctmUBUA2anjWtDw41fXYRfImu8DWEUHxNqBZc2HW/r+wU9QgPHMIq0XBiz4QfYOv
+	 GW4ZW98iroIi5EbLhTEGC5uqJuT01ZGqsJzGU7PVTnC9fnbwXdOk6f22ANriximj6O
+	 s1YvpkA4XI37iWUJ0OZCpZLSyQ8YfUfOcBUiEks0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
+	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0637/1146] tools build: Correct link flags for libopenssl
-Date: Wed, 20 May 2026 18:14:47 +0200
-Message-ID: <20260520162202.599287427@linuxfoundation.org>
+Subject: [PATCH 7.0 0638/1146] perf lock: Fix option value type in parse_max_stack
+Date: Wed, 20 May 2026 18:14:48 +0200
+Message-ID: <20260520162202.620854198@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,57 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 5c980ab238c8a9e2b24221603f11eadc98a7f45e ]
+[ Upstream commit cfaade34b52aa1ec553044255702c4b31b57c005 ]
 
-The perf static build reports that the BPF skeleton is disabled due to
-the missing libopenssl feature.
+The value is a void* and the address of an int, max_stack_depth, is
+set up in the perf lock options. The parse_max_stack function treats
+the int* as a long*, make this more correct by declaring the value to
+be an int*.
 
-Use PKG_CONFIG to determine the link flags for libopenssl.  Add
-"--static" to the PKG_CONFIG command for static linking.
-
-Fixes: 7678523109d1 ("tools/build: Add a feature test for libopenssl")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
+Fixes: 0a277b622670 ("perf lock contention: Check --max-stack option")
+Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/feature/Makefile | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/perf/builtin-lock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
-index 1fbcb3ce74d21..f163a245837a6 100644
---- a/tools/build/feature/Makefile
-+++ b/tools/build/feature/Makefile
-@@ -103,12 +103,18 @@ else
-   endif
- endif
+diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
+index e8962c985d34a..5585aeb97684d 100644
+--- a/tools/perf/builtin-lock.c
++++ b/tools/perf/builtin-lock.c
+@@ -2250,7 +2250,7 @@ static int parse_map_entry(const struct option *opt, const char *str,
+ static int parse_max_stack(const struct option *opt, const char *str,
+ 			   int unset __maybe_unused)
+ {
+-	unsigned long *len = (unsigned long *)opt->value;
++	int *len = opt->value;
+ 	long val;
+ 	char *endptr;
  
-+ifeq ($(findstring -static,${LDFLAGS}),-static)
-+  PKG_CONFIG += --static
-+endif
-+
- all: $(FILES)
- 
- __BUILD = $(CC) $(CFLAGS) -MD -Wall -Werror -o $@ $(patsubst %.bin,%.c,$(@F)) $(LDFLAGS)
-   BUILD = $(__BUILD) > $(@:.bin=.make.output) 2>&1
-   BUILD_BFD = $(BUILD) -DPACKAGE='"perf"' -lbfd -ldl
--  BUILD_ALL = $(BUILD) -fstack-protector-all -O2 -D_FORTIFY_SOURCE=2 -ldw -lelf -lnuma -lelf -lslang $(FLAGS_PERL_EMBED) $(FLAGS_PYTHON_EMBED) -ldl -lz -llzma -lzstd -lssl
-+  BUILD_ALL = $(BUILD) -fstack-protector-all -O2 -D_FORTIFY_SOURCE=2 -ldw -lelf -lnuma -lelf -lslang \
-+	      $(FLAGS_PERL_EMBED) $(FLAGS_PYTHON_EMBED) -ldl -lz -llzma -lzstd \
-+	      $(shell $(PKG_CONFIG) --libs --cflags openssl 2>/dev/null)
- 
- __BUILDXX = $(CXX) $(CXXFLAGS) -MD -Wall -Werror -o $@ $(patsubst %.bin,%.cpp,$(@F)) $(LDFLAGS)
-   BUILDXX = $(__BUILDXX) > $(@:.bin=.make.output) 2>&1
-@@ -384,7 +390,7 @@ $(OUTPUT)test-libpfm4.bin:
- 	$(BUILD) -lpfm
- 
- $(OUTPUT)test-libopenssl.bin:
--	$(BUILD) -lssl
-+	$(BUILD) $(shell $(PKG_CONFIG) --libs --cflags openssl 2>/dev/null)
- 
- $(OUTPUT)test-bpftool-skeletons.bin:
- 	$(SYSTEM_BPFTOOL) version | grep '^features:.*skeletons' \
 -- 
 2.53.0
 
