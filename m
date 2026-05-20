@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D66A36F42D;
-	Wed, 20 May 2026 16:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A48369D4C;
+	Wed, 20 May 2026 16:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294427; cv=none; b=Ic1TZwn44IkPofNGSFxIIEr7YLvTlgKj2XL0r4eorREQn+wA7fq988o5RbRoNnMmgiiB8uYTQgcouhqJpP2E1K9JtVwkx0qIuhNfwjylJRThKxTSnY+WtqOVOFof0A3ChHOnvLb/t6J0JdqTolg22KDkouVqX0hdPWddzLJ5hAw=
+	t=1779294430; cv=none; b=jKibM+hLo1vO9yx9yTSkypffg8KQ8qIt97Ahm+zQR8c2q6GofirzEvz9BQCJjbVhSqGYVCT5Gtl/Ks3/9TZnjKLsuA15Wxr4WDwNP12i/VESpX2fP1WomdIb+tImwYahoWX+LLlIYEkQofXnMLnsj1URqT5lZFG76CF3Aa5BQi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294427; c=relaxed/simple;
-	bh=epyVxgOGikGZCjpojHBgwUIymgTzsbqQYmrqOOjaqiM=;
+	s=arc-20240116; t=1779294430; c=relaxed/simple;
+	bh=Shqu5VMggLBhWDDAtx9pvwGE14QZC6K96gz8/dGuJ5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEQSo4WO5Z6RzDnOsb1tKLDccSPX388GlhOkUSjwEpjMC6T6/zLexKk3dIlOtIsiIMU4EEGGTYufd9T6uDh/lmT9e9GwNFmBiwwIYxBYedEXK6h2lL4cuZKGGMnZYr3FU9WmoiVBeh/pvybG2jTxfnMTAgieWa/LoduLvY01lcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3LCJGQ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sdr+cHi6LP7SDTE2fI7+Qr5Vyn6xYz9VKTzLOauT8NG60GfniP3tMMr5CAZVTQ9l6tGjjPWXAZijFM4gHgbehK+n4bD4zKYZzuU79aQ9GL6tqcPFEFTE8ZkfXtej9rGnlDLTOexMFXpSxsLq7YCKIypETTxJV0UKHtXFksRQp94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmsHTPzb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3LCJGQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F42031F000E9;
-	Wed, 20 May 2026 16:27:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmsHTPzb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966011F000E9;
+	Wed, 20 May 2026 16:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294426;
-	bh=VDd2tnemK66DT6qIBFxXnQ4nfIkWZz96yWaDrAvSR+Y=;
+	s=korg; t=1779294429;
+	bh=qIDtpWfT6hIWzn/7+hbS12ME9rNCvHCVj6APUpT1GR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J3LCJGQ1/m5qPeFSUHVhF0ceDrlwHA0uz80e7FM5I9Cw8tgd3ftieTb0l18omX26N
-	 cAoV/qz7Ez/r6cqCANYDrpBXXBFPYqEKHg3KxnXoj/2NinruEB8awwhL4mVhos3p4+
-	 1EGr4LkVHBrRUniCr6goSE+hB6OTDkjmAAFs8BS0=
+	b=KmsHTPzbI7PuYUawqOMiINYAu6/jMuR4blHgiAlYav/gRLAZKbm2gaYH95udRfg/8
+	 bt+e+ZsgozyF8GSFhsHs6K/Mz8sNXBoZ5ksdj5jLwpK8x79lSdMfArwjb4QgUdrWXo
+	 Au5MdCIk/cT1oDhL6yPPwVE9al1K9knBLOmg5N/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Hyungjung Joo <jhj140711@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0034/1146] amd-pstate: Fix memory leak in amd_pstate_epp_cpu_init()
-Date: Wed, 20 May 2026 18:04:44 +0200
-Message-ID: <20260520162149.154221151@linuxfoundation.org>
+Subject: [PATCH 7.0 0004/1146] fs/mbcache: cancel shrink work before destroying the cache
+Date: Wed, 20 May 2026 18:04:14 +0200
+Message-ID: <20260520162148.494689437@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,44 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: HyungJung Joo <jhj140711@gmail.com>
 
-[ Upstream commit beda3b363546a423e4e29a7395e04c0ac4ff677e ]
+[ Upstream commit d227786ab1119669df4dc333a61510c52047cce4 ]
 
-On failure to set the epp, the function amd_pstate_epp_cpu_init()
-returns with an error code without freeing the cpudata object that was
-allocated at the beginning of the function.
+mb_cache_destroy() calls shrinker_free() and then frees all cache
+entries and the cache itself, but it does not cancel the pending
+c_shrink_work work item first.
 
-Ensure that the cpudata object is freed before returning from the
-function.
+If mb_cache_entry_create() schedules c_shrink_work via schedule_work()
+and the work item is still pending or running when mb_cache_destroy()
+runs, mb_cache_shrink_worker() will access the cache after its memory
+has been freed, causing a use-after-free.
 
-This memory leak was discovered by Claude Opus 4.6 with the aid of
-Chris Mason's AI review-prompts
-(https://github.com/masoncl/review-prompts/tree/main/kernel).
+This is only reachable by a privileged user (root or CAP_SYS_ADMIN)
+who can trigger the last put of a mounted ext2/ext4/ocfs2 filesystem.
 
-Assisted-by: Claude:claude-opus-4.6 review-prompts/linux
-Fixes: f9a378ff6443 ("cpufreq/amd-pstate: Set different default EPP policy for Epyc and Ryzen")
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Cancel the work item with cancel_work_sync() before calling
+shrinker_free(), ensuring the worker has finished and will not be
+rescheduled before the cache is torn down.
+
+Fixes: c2f3140fe2ec ("mbcache2: limit cache size")
+Signed-off-by: Hyungjung Joo <jhj140711@gmail.com>
+Link: https://patch.msgid.link/20260317054556.1821600-1-jhj140711@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/mbcache.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 5aa9fcd80cf51..d57969c72c9dc 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -1533,7 +1533,7 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
+diff --git a/fs/mbcache.c b/fs/mbcache.c
+index 480d02d6ebf03..2a6319b4072cc 100644
+--- a/fs/mbcache.c
++++ b/fs/mbcache.c
+@@ -406,6 +406,7 @@ void mb_cache_destroy(struct mb_cache *cache)
+ {
+ 	struct mb_cache_entry *entry, *next;
  
- 	ret = amd_pstate_set_epp(policy, cpudata->epp_default);
- 	if (ret)
--		return ret;
-+		goto free_cpudata1;
++	cancel_work_sync(&cache->c_shrink_work);
+ 	shrinker_free(cache->c_shrink);
  
- 	current_pstate_driver->adjust_perf = NULL;
- 
+ 	/*
 -- 
 2.53.0
 
