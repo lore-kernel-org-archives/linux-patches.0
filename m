@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650282D7386;
-	Wed, 20 May 2026 18:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C47272E56;
+	Wed, 20 May 2026 18:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302015; cv=none; b=rh12fHXnrYeA+CFRxg0EsDYSBz5ZC93eQCzNHqsNcV7vWe6Id2FEBFrPEJ5oEkfRsPKm+1YPKoETMA768tq/kvh86+kyLCuq0zmtWvWsYp88CYr1NaBLUwn5Q7riwvCXgk1z3lzw1maL7NM8Qkftzlg0mnea4xx7uPMbXDWgjFk=
+	t=1779302018; cv=none; b=SYoDp+Szdlas91FWjAsOmd1BsiB7MHlyKZMlkm37zkEQWX9VIDDEJWuP2523uyhaDWbrlXuDFsMVD/bhfd86NqEo8KOpIcAzkYf8W7519xTWkh40ljMk8j7l1vqxB4e5bLWlJqSobqVbsEi4EkdGFDhOUiNZbj2Ns+PTotbXsYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302015; c=relaxed/simple;
-	bh=d4a5HJaFH/QzcC/paUthaEfG8RoP7nmRi7DKAdOyNq4=;
+	s=arc-20240116; t=1779302018; c=relaxed/simple;
+	bh=tt7It5SbOWMhnwUnjbGdZlxjKTVP77R0gXsorAVR7SQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7ekRo0kuRw/AMNiyb9kVVSs2yh/+Rd1FG+pNgKGRnH5sxWj3wpVuBHKp8SfSDW2VKkAdIreupSW5RSlgKMmTtdKXxbtHB2YtB1dP9vKDxyFLG580UkDJGXrLxOCgEB7imeX1OpMPGybrihkSi2jYuDaaIdACuY0E0+mhSa2+qI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTtIneu1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=db2XbxLTR0UHxIPuHQE+xBq4tznabMKGJMBPwJyv9J7wTQb2xdm68RDjpMWt9R4pDya7QfQolYi29TNQrmWaA9YcAzqruDnXjfUF6x+VQmoQTc5eTArjjUudke0yVwA7YMU8gDwZjYms+yP7Kr+QPX5yVU/f4CnrmxdAGCCQkdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vb2lZD+B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTtIneu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B611F00893;
-	Wed, 20 May 2026 18:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vb2lZD+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B981F000E9;
+	Wed, 20 May 2026 18:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302014;
-	bh=a8kb+vxupfa2C2RN0miTx5xS1Dz9+ev59qIwhIKYY34=;
+	s=korg; t=1779302016;
+	bh=tS0LIyWn8PutpdqTYAAKco9V0a+SUsabiIGZzTX8264=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fTtIneu19H3rKmXXFhMZbFdH1/m1RZDrfsrvM664uwJcb63fJYBZ2tqo9AhqVsOAx
-	 H+PkTMqetDCIBCRS/WD+3/4htqpCGd3tnun/mZzT1Q6QQnbpwtvIYCxlgO4iSMsDu3
-	 WVYQ1ldBYI/9zp5S1Z2WvWkwrzyYPyTdLdUn8HYk=
+	b=Vb2lZD+BUvaYn2Wz5KKAYueR6TVHnVHrmRuMjSouwZGEYVs6J5/AecDmGESQXCLjX
+	 zXvFfVLzBxBylgwnhAMh8mKRcUS+VaODgPK0fyJyOAjwhtVQvf5tFP+Dy4LHgyw24l
+	 FLQBG9sRCdDtZSvrWUKtrgCPFLdKYk0VgfbjExZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/508] Bluetooth: fix locking in hci_conn_request_evt() with HCI_PROTO_DEFER
-Date: Wed, 20 May 2026 18:18:22 +0200
-Message-ID: <20260520162100.321828831@linuxfoundation.org>
+Subject: [PATCH 6.6 106/508] drm/amdgpu: Add default case in DVI mode validation
+Date: Wed, 20 May 2026 18:18:49 +0200
+Message-ID: <20260520162100.918273015@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,56 +48,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 5c7209a341ff2ac338b2b0375c34a307b37c9ac2 ]
+[ Upstream commit e6020a55b8e364d15eac27f9c788e13114eec6b7 ]
 
-When protocol sets HCI_PROTO_DEFER, hci_conn_request_evt() calls
-hci_connect_cfm(conn) without hdev->lock. Generally hci_connect_cfm()
-assumes it is held, and if conn is deleted concurrently -> UAF.
+amdgpu_connector_dvi_mode_valid() assigns max_digital_pixel_clock_khz
+based on connector_object_id using a switch statement that lacks a
+default case.
 
-Only SCO and ISO set HCI_PROTO_DEFER and only for defer setup listen,
-and HCI_EV_CONN_REQUEST is not generated for ISO.  In the non-deferred
-listening socket code paths, hci_connect_cfm(conn) is called with
-hdev->lock held.
+In practice this code path should never be hit because the existing
+cases already cover all digital connector types that this function is
+used for. This is also legacy display code which is not used for new
+hardware.
 
-Fix by holding the lock.
+Add a default case returning MODE_BAD to make the switch exhaustive and
+silence the static analyzer smatch error. The new branch is effectively
+defensive and should never be reached during normal operation.
 
-Fixes: 70c464256310 ("Bluetooth: Refactor connection request handling")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 585b2f685c56 ("drm/amdgpu: Respect max pixel clock for HDMI and DVI-D (v2)")
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Timur Kristóf <timur.kristof@gmail.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_event.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index f6285c4325d63..4607db3037bd9 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3282,8 +3282,6 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
+index 52c093e42531b..5f4fef27177b4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
+@@ -1257,6 +1257,8 @@ static enum drm_mode_status amdgpu_connector_dvi_mode_valid(struct drm_connector
+ 		case CONNECTOR_OBJECT_ID_HDMI_TYPE_B:
+ 			max_digital_pixel_clock_khz = max_dvi_single_link_pixel_clock * 2;
+ 			break;
++		default:
++			return MODE_BAD;
+ 		}
  
- 	memcpy(conn->dev_class, ev->dev_class, 3);
- 
--	hci_dev_unlock(hdev);
--
- 	if (ev->link_type == ACL_LINK ||
- 	    (!(flags & HCI_PROTO_DEFER) && !lmp_esco_capable(hdev))) {
- 		struct hci_cp_accept_conn_req cp;
-@@ -3317,7 +3315,6 @@ static void hci_conn_request_evt(struct hci_dev *hdev, void *data,
- 		hci_connect_cfm(conn, 0);
- 	}
- 
--	return;
- unlock:
- 	hci_dev_unlock(hdev);
- }
+ 		/* When the display EDID claims that it's an HDMI display,
 -- 
 2.53.0
 
