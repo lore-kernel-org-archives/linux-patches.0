@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE6E3FD147;
-	Wed, 20 May 2026 18:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17127409615;
+	Wed, 20 May 2026 18:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302673; cv=none; b=P/B99RLWTjhph3Euo36DeHP3TfFF0qNXapjohxGuAFGwEcGaaYhjOREfTiFdS8+GEIwptox5UXA5yGs7qmpnMv+RvvUVpIF8v75vj6A2VyCZU9JbSv8NWe9z14CJVzLTvNqt4IPqiSo3Utwn+G+5HDpZHxvpnVQKZX4d9Rpx0Pw=
+	t=1779302676; cv=none; b=ekjcGJRhuPYNFvHas5wsbxzkbUMgkk7Y5mnBc+CJySUDojJIsbMqlkw6pLuI/50iFwrBA8RxqFIhOJjAnACiltHGz+VRTuchGjkBd4aiOkEKT0aiOl1xE9iJ0/fC2c1GnydEAp4XkkHUNFtobMcFUv9oqK6nqq77avfVwl3u2tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302673; c=relaxed/simple;
-	bh=2j8sE05NPC3V6DgOFk1yq/1DpmIF9rYLoUVI6mJo7wM=;
+	s=arc-20240116; t=1779302676; c=relaxed/simple;
+	bh=+sMqd2+KQJ+OTbRem5CqET66Lt39K6iVQ+LbKrcHeFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YcBQ2FgVE+HPs7nu+HnvM8oyNMAJUki5EjxKKGXKRFYyHtGK7SUVw3nzyPHEekQwXmuG+5SNjxqVT0n5Zir3AvvNz7ui5WZEsKFLVSOMung1PqFSScBiQlGfsb/8hnPr2t3yn2zfe+GzdRSZErO1a/krxbBmgWSdhNDkAmD/3v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vR9BtaNv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qvTbkQHbITIjKS6rzgQYBs0iVQzIBeyt1Q836VU78BLcTNsysxSZBa4xSZEtoR9jjO8j4CQ1WNDAIBWaqr8buQeC2H9Uu+RfEgw9nF8cdqaa9om0YnZdoVxoEXRk5mHQjhlWPT+OeL+T7/y6dfvYHJ5nXo4Kplm7XRWtRrPf5mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yN9EtNwY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vR9BtaNv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8ADC1F000E9;
-	Wed, 20 May 2026 18:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yN9EtNwY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7A21F000E9;
+	Wed, 20 May 2026 18:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302672;
-	bh=sKTScCBgWsMdJ8tumms2yoeNTlz/LKQ5Nwj11mWcpOs=;
+	s=korg; t=1779302675;
+	bh=Utk43Uy3+35Hd3ugbSkWlvYfutEGPt0gVzXNX+srVJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vR9BtaNv1WN0CDt3k43Ps6LM2g0Yso6SBuY3mnbqcQ+hA46QOC34mGPchxgXgBBot
-	 GLHl+NP7k1eo8KZOfbhWwb1aJ+KcEhCx+5Zl0rVDLDQNhzqwmrR80q3y/Ev+ktOLbK
-	 vR32caFnl/ubyM9S2Dw6rS2euE0cCDpHX51kYN5E=
+	b=yN9EtNwYdChzMnwHZWxf4CjkfRi25uCwsrVdd3qNWun2xJJGZS3MufieDzpZ8p6Gg
+	 swjdk6/burPeulhzCRyGsRKwleSIBVoBT/ePZuAyHNDLBHr9LeBPWZ+TCvxnM7XzIP
+	 oWHKEXe1jnZZyU4oWjqx5AjFhdDwdE6GzAxxD0u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Ijae Kim <ae878000@gmail.com>,
-	Taegyu Kim <tmk5904@psu.edu>,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Helge Deller <deller@gmx.de>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 357/508] fbdev: offb: fix PCI device reference leak on probe failure
-Date: Wed, 20 May 2026 18:23:00 +0200
-Message-ID: <20260520162106.367669869@linuxfoundation.org>
+Subject: [PATCH 6.6 358/508] mailbox: mailbox-test: free channels on probe error
+Date: Wed, 20 May 2026 18:23:01 +0200
+Message-ID: <20260520162106.389590792@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -54,50 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 869b93ba04088713596e68453c1146f52f713290 ]
+[ Upstream commit c02053a9055d5fdfd32432287cca8958db1d5bc5 ]
 
-offb_init_nodriver() gets a referenced PCI device with pci_get_device().
-If pci_enable_device() fails, the function returns without dropping that
-reference.
+On probe error, free the previously obtained channels. This not only
+prevents a leak, but also UAF scenarios because the client structure
+will be removed nonetheless because it was allocated with devm.
 
-Release the PCI device reference before returning from the
-pci_enable_device() failure path.
-
-Fixes: 5bda8f7b5468 ("video: fbdev: offb: Call pci_enable_device() before using the PCI VGA device")
-Co-developed-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Co-developed-by: Taegyu Kim <tmk5904@psu.edu>
-Signed-off-by: Taegyu Kim <tmk5904@psu.edu>
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://sashiko.dev/#/patchset/20260327151217.5327-2-wsa%2Brenesas%40sang-engineering.com
+Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/offb.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/mailbox/mailbox-test.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/offb.c b/drivers/video/fbdev/offb.c
-index dcb1b81d35db5..0e81d68378935 100644
---- a/drivers/video/fbdev/offb.c
-+++ b/drivers/video/fbdev/offb.c
-@@ -643,8 +643,13 @@ static void offb_init_nodriver(struct platform_device *parent, struct device_nod
- 			vid = be32_to_cpup(vidp);
- 			did = be32_to_cpup(didp);
- 			pdev = pci_get_device(vid, did, NULL);
--			if (!pdev || pci_enable_device(pdev))
-+			if (!pdev)
- 				return;
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index 6bdee87f30836..6d431a8b275c7 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -404,18 +404,27 @@ static int mbox_test_probe(struct platform_device *pdev)
+ 	if (tdev->rx_channel) {
+ 		tdev->rx_buffer = devm_kzalloc(&pdev->dev,
+ 					       MBOX_MAX_MSG_LEN, GFP_KERNEL);
+-		if (!tdev->rx_buffer)
+-			return -ENOMEM;
++		if (!tdev->rx_buffer) {
++			ret = -ENOMEM;
++			goto err_free_chans;
++		}
+ 	}
+ 
+ 	ret = mbox_test_add_debugfs(pdev, tdev);
+ 	if (ret)
+-		return ret;
++		goto err_free_chans;
+ 
+ 	init_waitqueue_head(&tdev->waitq);
+ 	dev_info(&pdev->dev, "Successfully registered\n");
+ 
+ 	return 0;
 +
-+			if (pci_enable_device(pdev)) {
-+				pci_dev_put(pdev);
-+				return;
-+			}
- 		}
- #endif
- 		/* kludge for valkyrie */
++err_free_chans:
++	if (tdev->tx_channel)
++		mbox_free_channel(tdev->tx_channel);
++	if (tdev->rx_channel)
++		mbox_free_channel(tdev->rx_channel);
++	return ret;
+ }
+ 
+ static int mbox_test_remove(struct platform_device *pdev)
 -- 
 2.53.0
 
