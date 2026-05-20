@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225153148BB;
-	Wed, 20 May 2026 18:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ACA3148BB;
+	Wed, 20 May 2026 18:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302834; cv=none; b=eKFZW4ro3CZPtSZhhjJcoGSt3MjMEHBlRLuNVlsFHsnWr3Zaoo1NeIGZpKUI7XHRcTjVm6/sUXIFdOwnK1wwvq9NJE7nbvPJwVlOwhBdqBRfIc5Kn7WsmMpvlogL86noTp/ioYVud3/k95lC4eZVq84ysoofyu5LzES6bp1S6ts=
+	t=1779302836; cv=none; b=E7iLOWQ4CvG0Wy41/WQurSnV5QcBEgEO61SR+nwtshxuwTZ1+6Q0O9QBXaM+84hts5fh0GDroqpvBgOpksldB4Ne9JFurlauIBy5MGRabmK2RwuxvXOtggxr5akxM4ylhW7rBQgsEg+OonxdAJaH3cQ/ApafjFgERxOKbYYrKxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302834; c=relaxed/simple;
-	bh=s9yODbOXksXWk096PKvKrybEnsF2yyKpk5OEr8g+F6M=;
+	s=arc-20240116; t=1779302836; c=relaxed/simple;
+	bh=wDeVkJuLlRBikpresgs2Qcwe+57jxnoyaYIV68NpUJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L8is7Nv/PcSH9kdHXiTWXhrMWbS55c2RiAybuo7VXiwkF38ZX5GZuHx8Ynkc6WSPVKDQ4EwvNZ5x5Vjq1w/8zmaP9GvotldguC8pE9Cm9SIvIPNlJgUkvfzhHRSxzlQev1h+I4vv10i1scC0VODZOfBapWGLCBFZKfiClyG0Jfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRkzA9lb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LtMCY8v1kvWxDQl9dY0Eg5eqYEpCWHE1W81zoT1wdz/9Z/5gzzs53gWflEn4vDXxcWqtYsC/zl8lohC3wfV7nTg+Fo8mtxamvOAlfMuIeKUvQ40KhSc5uqRPNUbehRcc/iG8GOVUFw55b3PwCgP6cj1miLo4fHYJw749ZA+GfTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDMZglPi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRkzA9lb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880EA1F000E9;
-	Wed, 20 May 2026 18:47:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDMZglPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328911F000E9;
+	Wed, 20 May 2026 18:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302833;
-	bh=nAtwtMYVBRJu3eFpSttFMbydUaoILjYCfuMjN1BiexY=;
+	s=korg; t=1779302835;
+	bh=1g3DA7xA93FwbubqwHp9E3Jn35rIa+dpikdsZ5llJYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eRkzA9lb+zXNHjnOMi5J4s75uYx994GSMNdK2Y0aha5rQ0OmKH4cpAECA3Rz/k8lt
-	 mbtNg5qU0yY3AXzqDS15JAvWtFwF/l0TGMPDvKZpXA9QMK+7RbApfYQbpsgmOnG1nI
-	 +Q6LIUGj6ddmWuRuZ/aRy6LD9nQTxBfT4NCZlREc=
+	b=wDMZglPi8P0OIJzHAqfaMogglKDtyFy7tbmSEM0spFpO2uoW/PZgMpLiMSXQa8k4l
+	 YYtJYms4G1kQIOr4tnI+z6ccwP4vCKcV5u5ST9wZGgC62utInSj53Z1HCPoFwoUunm
+	 qmNliXWIBH4z2No484Zm2fUPH3+JlrtSwlrzqwr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3f46c095ac0ca048cb71@syzkaller.appspotmail.com,
-	Andrew Lunn <andrew@lunn.ch>,
-	Zhan Jun <zhanjun@uniontech.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matthew Wood <thepacketgeek@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 390/508] net: usb: rtl8150: fix use-after-free in rtl8150_start_xmit()
-Date: Wed, 20 May 2026 18:23:33 +0200
-Message-ID: <20260520162107.067053508@linuxfoundation.org>
+Subject: [PATCH 6.6 417/508] net: netconsole: move newline trimming to function
+Date: Wed, 20 May 2026 18:24:00 +0200
+Message-ID: <20260520162107.642354068@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -53,87 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Jun <zhanjun@uniontech.com>
+From: Matthew Wood <thepacketgeek@gmail.com>
 
-[ Upstream commit 23f0e34c64acba15cad4d23e50f41f533da195fa ]
+[ Upstream commit ae001dc67907618423fd15bbab2014308c00ad0b ]
 
-syzbot reported a KASAN slab-use-after-free read in rtl8150_start_xmit()
-when accessing skb->len for tx statistics after usb_submit_urb() has
-been called:
+Move newline trimming logic from `dev_name_store()` to a new function
+(trim_newline()) for shared use in netconsole.c
 
-  BUG: KASAN: slab-use-after-free in rtl8150_start_xmit+0x71f/0x760
-    drivers/net/usb/rtl8150.c:712
-  Read of size 4 at addr ffff88810eb7a930 by task kworker/0:4/5226
-
-The URB completion handler write_bulk_callback() frees the skb via
-dev_kfree_skb_irq(dev->tx_skb). The URB may complete on another CPU
-in softirq context before usb_submit_urb() returns in the submitter,
-so by the time the submitter reads skb->len the skb has already been
-queued to the per-CPU completion_queue and freed by net_tx_action():
-
-  CPU A (xmit)                      CPU B (USB completion softirq)
-  ------------                      ------------------------------
-  dev->tx_skb = skb;
-  usb_submit_urb()      --+
-                          |-------> write_bulk_callback()
-                          |           dev_kfree_skb_irq(dev->tx_skb)
-                          |         net_tx_action()
-                          |           napi_skb_cache_put()   <-- free
-  netdev->stats.tx_bytes  |
-    += skb->len;          <-- UAF read
-
-Fix it by caching skb->len before submitting the URB and using the
-cached value when updating the tx_bytes counter.
-
-The pre-existing tx_bytes semantics are preserved: the counter tracks
-the original frame length (skb->len), not the ETH_ZLEN/USB-alignment
-padded "count" value that is handed to the device.  Changing that
-would be a user-visible accounting change and is out of scope for
-this UAF fix.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+3f46c095ac0ca048cb71@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69e69ee7.050a0220.24bfd3.002b.GAE@google.com/
-Closes: https://syzkaller.appspot.com/bug?extid=3f46c095ac0ca048cb71
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Zhan Jun <zhanjun@uniontech.com>
-Link: https://patch.msgid.link/809895186B866C10+20260423004913.136655-1-zhangdandan@uniontech.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthew Wood <thepacketgeek@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 92ceb7bff62c ("netconsole: propagate device name truncation in dev_name_store()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/netconsole.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index e40b0669d9f4b..8700ae392b10a 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -685,6 +685,7 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
- 					    struct net_device *netdev)
- {
- 	rtl8150_t *dev = netdev_priv(netdev);
-+	unsigned int skb_len;
- 	int count, res;
+diff --git a/drivers/net/netconsole.c b/drivers/net/netconsole.c
+index 9c2e71b9c0324..2045872de5328 100644
+--- a/drivers/net/netconsole.c
++++ b/drivers/net/netconsole.c
+@@ -272,6 +272,16 @@ static struct netconsole_target *to_target(struct config_item *item)
+ 		NULL;
+ }
  
- 	/* pad the frame and ensure terminating USB packet, datasheet 9.2.3 */
-@@ -696,6 +697,8 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
- 		return NETDEV_TX_OK;
- 	}
- 
-+	skb_len = skb->len;
++/* Get rid of possible trailing newline, returning the new length */
++static void trim_newline(char *s, size_t maxlen)
++{
++	size_t len;
 +
- 	netif_stop_queue(netdev);
- 	dev->tx_skb = skb;
- 	usb_fill_bulk_urb(dev->tx_urb, dev->udev, usb_sndbulkpipe(dev->udev, 2),
-@@ -711,7 +714,7 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
- 		}
- 	} else {
- 		netdev->stats.tx_packets++;
--		netdev->stats.tx_bytes += skb->len;
-+		netdev->stats.tx_bytes += skb_len;
- 		netif_trans_update(netdev);
++	len = strnlen(s, maxlen);
++	if (s[len - 1] == '\n')
++		s[len - 1] = '\0';
++}
++
+ /*
+  * Attribute operations for netconsole_target.
+  */
+@@ -466,7 +476,6 @@ static ssize_t dev_name_store(struct config_item *item, const char *buf,
+ 		size_t count)
+ {
+ 	struct netconsole_target *nt = to_target(item);
+-	size_t len;
+ 
+ 	mutex_lock(&dynamic_netconsole_mutex);
+ 	if (nt->enabled) {
+@@ -477,11 +486,7 @@ static ssize_t dev_name_store(struct config_item *item, const char *buf,
  	}
  
+ 	strscpy(nt->np.dev_name, buf, IFNAMSIZ);
+-
+-	/* Get rid of possible trailing newline from echo(1) */
+-	len = strnlen(nt->np.dev_name, IFNAMSIZ);
+-	if (nt->np.dev_name[len - 1] == '\n')
+-		nt->np.dev_name[len - 1] = '\0';
++	trim_newline(nt->np.dev_name, IFNAMSIZ);
+ 
+ 	mutex_unlock(&dynamic_netconsole_mutex);
+ 	return strnlen(buf, count);
 -- 
 2.53.0
 
