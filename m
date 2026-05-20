@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2DF33AD9D;
-	Wed, 20 May 2026 16:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ACC33AD9D;
+	Wed, 20 May 2026 16:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294959; cv=none; b=WKoAqoW6woJYKOiPGHMZ8S7yWSCLY6di6QtA4DVIJcBzO5QYrp/Yu20jgr+UgJDUK8ueknAM1/TrC4We6XjnxCZeRUOSrMiYQ6d1anCbT5TLsXknUwHOCUk+oHakA7e5d4VNUbyQzgxiCc4FEN7Re0JI/ZNq5Z1tiLthhkBcZDQ=
+	t=1779294964; cv=none; b=cQCt8NIlEbU1d8eVoMwLLo8/Xp3FFg4WEA0sWiuZzFwt985A9Fg9v/9Swc45kGwoQNsmym/9f9eh5KIjad4QLAY4kZ1kCffCnLfbCIRuKpqSZYPutzKdqpwqRv8xVKU35Wb9mro69Qi1GhICyai30hgSTvOOev08gYWKjU8PviE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294959; c=relaxed/simple;
-	bh=8kH0VraLF1Z85q5l0fCW/xr3AM5JzO5ZRNH9N+oB3+0=;
+	s=arc-20240116; t=1779294964; c=relaxed/simple;
+	bh=6X2ABM5Q+qSPOD+Q0/MqRm8lkScj7k5cOA9uLh+gs+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ouqIw0Wo6XZEhows5M0/EI2h36Etl95+kj43sDQs8dpVXchavy19uzRSkadaMXk6on2yBQz/2Ab20l2vnSd+2epB70A7oHMgmFce2mBgPEjJdjQI8nwJW8iM1WDPnAzDtwGj00bRRN3IjnSVg/cjDrefIcTXWf7tNj9eevjdVh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnQd/cRn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iMdTrZ9cmbfglezxBZOq+hsc0EsyFtMiSVaUmTsqY5xi6T69tt6nqN4sgcnN8crzCVPnpH7cnfZhWPbuwp7JFeBweCOHu9d4Jh6Y1y21BJXN+gPpRSeVSr+ZOlHusDOQDM3tjcPRugquctgWA005AjGvNqDPbVHBE+k+mwApGRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GczXxHko; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnQd/cRn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E934E1F00893;
-	Wed, 20 May 2026 16:35:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GczXxHko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7DC1F000E9;
+	Wed, 20 May 2026 16:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294958;
-	bh=4LiDQrExSLHulBSqBgFX3JyQHsFkXQEtYmpgAmC0Xho=;
+	s=korg; t=1779294961;
+	bh=uiZR4/BedAhcSLDmmxoP7HXNqttNf5chEHMMmQkMF+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pnQd/cRnItXv56cpKugAiC0woGYVWzq7gHNDXkh80//d3scxg7nYIK9bnCGj09Jyw
-	 A7PxtAjhxc1nCd73ka6D9npS5shgE3WFKeust9Wlh0AsNdfNpeqQ73KS9yanKX9CWf
-	 8ei3ndf+YcwoJBp82KbITmO4PbRqbmHg9trl1EX8=
+	b=GczXxHkocRi7FoCO00s9vgKM6mepKw8TQvjpj9sCNd1+LTYkRAsGyRNR3EaWX2nSE
+	 Zlb6ygz7XzHJVk4dzrDdbLRxsrEAtx7KH4o4HrT11lbl4ATjRJdHv9AqlgD7ZYQdBK
+	 +AksueROOy/vmhaixBzyB2UGNMbZr3HuOv+si/24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0237/1146] drm/sun4i: backend: fix error pointer dereference
-Date: Wed, 20 May 2026 18:08:07 +0200
-Message-ID: <20260520162153.609179911@linuxfoundation.org>
+Subject: [PATCH 7.0 0238/1146] drm/xe: Consolidate workaround entries for Wa_14019877138
+Date: Wed, 20 May 2026 18:08:08 +0200
+Message-ID: <20260520162153.630754853@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,41 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit 06277983eca4a31d3c2114fa33d99a6e82484b11 ]
+[ Upstream commit 55b19abb6c44db40fe1ebd01e9c16aa02c4cf663 ]
 
-The function drm_atomic_get_plane_state() can return an error pointer
-and is not checked for it. Add error pointer check.
+Wa_14019877138 applies to all graphics versions from 12.55 through 20.04
+(inclusive) that have a render engine.  Consolidate the RTP entries into
+a single range-based entry.
 
-Detected by Smatch:
-drivers/gpu/drm/sun4i/sun4i_backend.c:496 sun4i_backend_atomic_check() error:
-'plane_state' dereferencing possible ERR_PTR()
+Note that the DG2 entry for this workaround was missing an
+ENGINE_CLASS(RENDER) rule; that mistake is fixed by this consolidation.
 
-Fixes: 96180dde23b79 ("drm/sun4i: backend: Add a custom atomic_check for the frontend")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/20260217014801.60760-1-ethantidmore06@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Link: https://patch.msgid.link/20260220-forupstream-wa_cleanup-v2-16-b12005a05af6@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Stable-dep-of: 1046bc7b4168 ("drm/xe/xe2_hpg: Drop invalid workaround Wa_15010599737")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_backend.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_wa.c | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/sun4i/sun4i_backend.c b/drivers/gpu/drm/sun4i/sun4i_backend.c
-index 40405a52a073a..6391bdc94a5c2 100644
---- a/drivers/gpu/drm/sun4i/sun4i_backend.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_backend.c
-@@ -491,6 +491,9 @@ static int sun4i_backend_atomic_check(struct sunxi_engine *engine,
- 	drm_for_each_plane_mask(plane, drm, crtc_state->plane_mask) {
- 		struct drm_plane_state *plane_state =
- 			drm_atomic_get_plane_state(state, plane);
-+		if (IS_ERR(plane_state))
-+			return PTR_ERR(plane_state);
-+
- 		struct sun4i_layer_state *layer_state =
- 			state_to_sun4i_layer_state(plane_state);
- 		struct drm_framebuffer *fb = plane_state->fb;
+diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
+index d7e309ad9abaf..6f92c0d0d8943 100644
+--- a/drivers/gpu/drm/xe/xe_wa.c
++++ b/drivers/gpu/drm/xe/xe_wa.c
+@@ -708,6 +708,10 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
+ 	  XE_RTP_RULES(GRAPHICS_VERSION(1200)),
+ 	  XE_RTP_ACTIONS(SET(COMMON_SLICE_CHICKEN4, DISABLE_TDC_LOAD_BALANCING_CALC))
+ 	},
++	{ XE_RTP_NAME("14019877138"),
++	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1255, 2004), ENGINE_CLASS(RENDER)),
++	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FD_END_COLLECT))
++	},
+ 
+ 	/* DG1 */
+ 
+@@ -744,10 +748,6 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
+ 	  XE_RTP_RULES(PLATFORM(DG2)),
+ 	  XE_RTP_ACTIONS(SET(CACHE_MODE_1, MSAA_OPTIMIZATION_REDUC_DISABLE))
+ 	},
+-	{ XE_RTP_NAME("14019877138"),
+-	  XE_RTP_RULES(PLATFORM(DG2)),
+-	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FD_END_COLLECT))
+-	},
+ 
+ 	/* PVC */
+ 
+@@ -765,10 +765,6 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1270, 1274)),
+ 	  XE_RTP_ACTIONS(SET(CACHE_MODE_1, MSAA_OPTIMIZATION_REDUC_DISABLE))
+ 	},
+-	{ XE_RTP_NAME("14019877138"),
+-	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1270, 1274), ENGINE_CLASS(RENDER)),
+-	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FD_END_COLLECT))
+-	},
+ 
+ 	/* Xe2_LPG */
+ 
+@@ -776,10 +772,6 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
+ 	  XE_RTP_RULES(GRAPHICS_VERSION(2004), ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(SET(VF_SCRATCHPAD, XE2_VFG_TED_CREDIT_INTERFACE_DISABLE))
+ 	},
+-	{ XE_RTP_NAME("14019877138"),
+-	  XE_RTP_RULES(GRAPHICS_VERSION(2004), ENGINE_CLASS(RENDER)),
+-	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FD_END_COLLECT))
+-	},
+ 	{ XE_RTP_NAME("14019988906"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION(2004), ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
+@@ -829,10 +821,6 @@ static const struct xe_rtp_entry_sr lrc_was[] = {
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002), ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FLSH_IGNORES_PSD))
+ 	},
+-	{ XE_RTP_NAME("14019877138"),
+-	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, 2002), ENGINE_CLASS(RENDER)),
+-	  XE_RTP_ACTIONS(SET(XEHP_PSS_CHICKEN, FD_END_COLLECT))
+-	},
+ 	{ XE_RTP_NAME("14021490052"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(SET(FF_MODE,
 -- 
 2.53.0
 
