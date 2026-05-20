@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30081331220;
-	Wed, 20 May 2026 18:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9A0331220;
+	Wed, 20 May 2026 18:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300894; cv=none; b=KQCl9TYBcbdC872oFT72CBwnkha1sy4wAGU+v1p5KIuWcVW/I5QIpfnKiPdsU2aStzUUlPYARii/+0jh6FXY3hvkTNZJ9XMu9ymb2DKWktF6n67ma2Ki5wyXay/4b7BtOOByiLzoLxBn/qmWO+gFiSOYxPXqDjgB6B/rUhT/py0=
+	t=1779300897; cv=none; b=PMlj+46l7MMJMqPrr++0h1nliaXv9AK+3hOE68E9zC6ipFVm72OIUfOOibuPOfplKHbyjgjXkLJ9Hc+3JdMEb6/qguD06j5ZWtat4TPOYPqGUxnA8YGE8E8tLiEPBssSnuPtRCYjDA3XojlT1EHk1NHDgb+Xlr3gNpaFKmiSZUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300894; c=relaxed/simple;
-	bh=j3eTz9o7G+cbpsDigSRSnImtF0dXnvioZUEq8hbHkbc=;
+	s=arc-20240116; t=1779300897; c=relaxed/simple;
+	bh=kDy6nyMtC+5JzrJ725qhMXNDLNv2QVyM2PPJdMgof08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ukTqtdponP1hzNbDK+I/dQoMI5KExyaCY9j1uoiCrj7aNy47oKLiTJnXFqjE0DTbTm7YvUoggTTJFEiVo4Iytz6wIcz6I+rkjdGbxHk4hZyjbx1I9Ettfgo8iubsDcizgCaF84SQjRh1cIhIusDHWEPhQq7VK+uUelCWXeSyx50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5Bv3ZkJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WORAmklRHQjYD/41Fd/+qqTPtCQ4fKwF54QPzy0vmk2e/URhtpFeErgjQzLfExHyi6Nc2umevaf4GkGYTZFxCB94rnnq6d9UCHhdhaDmJRAiwXOJnW1od8Qv07t7k3ZzIPI1U3sz/10fYYRSTMC5pV7n4EhdeLL8iG1e+Q3/52Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGjL9Nu/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5Bv3ZkJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835B81F000E9;
-	Wed, 20 May 2026 18:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGjL9Nu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA1E1F000E9;
+	Wed, 20 May 2026 18:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300893;
-	bh=ZETdfsikSd9IChhCksthAvntS5QazxfP/3PBHPotfVI=;
+	s=korg; t=1779300895;
+	bh=0KviNMcfaAd+ZHzQzEHMoX47biJsDPMpxtHPd1Uzjvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I5Bv3ZkJUVmsFKO7KKaj+kHo1MK0Qgq+ewrRI75nTEJoG7gYmds6hWeCte6gvUZuG
-	 EdV1wiBJ3/dAzkOTjaVRiQmVAwB9/FNp9D9nU956YlSr5a1rvj9DtMC9wkTYjBBSAw
-	 GTQIOEgz+2e8WVeMJZ2txyL3xoVouUg8grfvT9dQ=
+	b=UGjL9Nu/N99CgKeA0IyZnS8c73wnQg5XLdHNwhDDISq0ABTPIhYcBszwjKtFT4n/7
+	 pmolyMBJ4RPacmdyyV9Pl3mFf01/cbPEpnHFXpzdjb1XrbHbxl2Am0QxefC2rctjQC
+	 7qMgGtQ7SkEQimrysm8qPrLd5YaTZ6E1CermN88U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Richard Genoud <richard.genoud@bootlin.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 297/666] arm64: dts: lx2160a: change i2c0 (iic1) pinmux mask to one bit
-Date: Wed, 20 May 2026 18:18:28 +0200
-Message-ID: <20260520162117.652957402@linuxfoundation.org>
+Subject: [PATCH 6.12 342/666] mtd: rawnand: sunxi: fix sunxi_nfc_hw_ecc_read_extra_oob
+Date: Wed, 20 May 2026 18:19:13 +0200
+Message-ID: <20260520162118.645972030@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,53 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Richard Genoud <richard.genoud@bootlin.com>
 
-[ Upstream commit 7a3cc49ad1fc8d063abb7f5de8f1b981b99d2978 ]
+[ Upstream commit 848c13996c55fe4ea6bf5acc3ce6c8c5c944b5f6 ]
 
-LX2160A pinmux is done in groups by various length bitfields within
-configuration registers.
+When dumping the OOB, the bytes at the end where actually copied from
+the beginning of the OOB instead of current_offset.
 
-The first i2c bus (called IIC1 in reference manual) is configured through
-field IIC1_PMUX in register RCWSR14 bit 10 which is described in the
-reference manual as a single bit, unlike the other i2c buses.
+That leads to something like:
+OOB: ff ff ff ff ff ff ff ff ea 19 00 3a 83 db aa 8d
+OOB: 99 09 c8 9a 90 36 35 7d aa 15 13 07 3d 97 b2 a4
+OOB: a8 bb 19 b3 07 e9 f6 25 52 d7 1a 23 e2 7e 0a e4
+OOB: 52 8a 09 d2 1a 86 3d cf b4 99 43 13 d3 90 33 0b
+OOB: ff ff ff ff ff ff ff ff ea 19 00 3a 83 db aa 8d
+OOB: 99 09 c8 9a 90 36 35 7d aa 15 13 07 3d 97 b2 a4
+OOB: a8 bb 19 b3 07 e9 f6 25 52 d7 1a 23 e2 7e 0a e4
+OOB: 52 8a 09 d2 1a 86 3d cf b4 99 43 13 d3 90 33 0b
+instead of:
+OOB: ff ff ff ff ff ff ff ff ea 19 00 3a 83 db aa 8d
+OOB: 99 09 c8 9a 90 36 35 7d aa 15 13 07 3d 97 b2 a4
+OOB: a8 bb 19 b3 07 e9 f6 25 52 d7 1a 23 e2 7e 0a e4
+OOB: 52 8a 09 d2 1a 86 3d cf b4 99 43 13 d3 90 33 0b
+OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+OOB: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+(example with BCH16, user data [8,0], no scrambling)
 
-Change the bitmask for the pinmux nodes from 0x7 to 0x1 to ensure only
-single bit is modified.
+*cur_off (offset from the beginning of the page) was compared to offset
+(offset from the beginning of the OOB), and then, the
+nand_change_read_column_op() sets the current position to the beginning
+of the OOB instead of OOB+offset
 
-Further change the zero in the same line to hexadecimal format for
-consistency.
-
-Align with documentation by avoiding writes to reserved bits. No functional
-change, as writing the extra two reserved bits is not known to cause
-issues.
-
-Fixes: 8a1365c7bbc1 ("arm64: dts: lx2160a: add pinmux and i2c gpio to support bus recovery")
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 15d6f118285f ("mtd: rawnand: sunxi: Stop supporting ECC_HW_SYNDROME mode")
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Richard Genoud <richard.genoud@bootlin.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/sunxi_nand.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-index 97f2ed267d698..e2c32f5b6a521 100644
---- a/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-+++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a.dtsi
-@@ -1790,11 +1790,11 @@ i2c7_scl_gpio: i2c7-scl-gpio-pins {
- 			};
+diff --git a/drivers/mtd/nand/raw/sunxi_nand.c b/drivers/mtd/nand/raw/sunxi_nand.c
+index ac887754b98e2..136d67af97178 100644
+--- a/drivers/mtd/nand/raw/sunxi_nand.c
++++ b/drivers/mtd/nand/raw/sunxi_nand.c
+@@ -886,9 +886,9 @@ static void sunxi_nfc_hw_ecc_read_extra_oob(struct nand_chip *nand,
+ 	if (len <= 0)
+ 		return;
  
- 			i2c0_scl: i2c0-scl-pins {
--				pinctrl-single,bits = <0x8 0 (0x7 << 10)>;
-+				pinctrl-single,bits = <0x8 0x0 (0x1 << 10)>;
- 			};
+-	if (!cur_off || *cur_off != offset)
+-		nand_change_read_column_op(nand, mtd->writesize, NULL, 0,
+-					   false);
++	if (!cur_off || *cur_off != (offset + mtd->writesize))
++		nand_change_read_column_op(nand, mtd->writesize + offset,
++					   NULL, 0, false);
  
- 			i2c0_scl_gpio: i2c0-scl-gpio-pins {
--				pinctrl-single,bits = <0x8 (0x1 << 10) (0x7 << 10)>;
-+				pinctrl-single,bits = <0x8 (0x1 << 10) (0x1 << 10)>;
- 			};
- 		};
- 
+ 	if (!randomize)
+ 		sunxi_nfc_read_buf(nand, oob + offset, len);
 -- 
 2.53.0
 
