@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5DB372EDE;
-	Wed, 20 May 2026 17:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB133EE1C0;
+	Wed, 20 May 2026 17:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296921; cv=none; b=GPfGshbKnQrr853LSasggijMebPWr5IT54hRXLCaoNUZMFRSaK1Ev3EKaj+UW8SQ9XQ6l6htJKUwDOJsD2qoc9CIEBFx78h75tE6F9RQsTAalo0rdl7LzMVJJOymVxs+H0zXznxH44SBh195xg9WK2nhCxhanHhL/6JcPqucsPY=
+	t=1779296923; cv=none; b=h9EcoBVq6u9rBl0aMoecqWtBUy+L9qGSWRQYRdkLXC/KBevJRdoRjYR5YVkabIvhW71IIwlcCrm1djVZGAdr3/KKCtl2WfwmjXtNJWmPr5EQxd8+YXO/AIf9MAvbHX2TT3Hcavh/KDJln5yCZgeDkmC0zcGz8MD0MCM8n3r3Z9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296921; c=relaxed/simple;
-	bh=mRR8o8S9ajFHXUBF+CPDoe9mMVSnp/WYf7P7d4CxMPQ=;
+	s=arc-20240116; t=1779296923; c=relaxed/simple;
+	bh=L7EJMqgJYoiCn3av+LJXTFfkJe9GT0Dt1fkxhroRpek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VgEcEZV06mneMpTtdw//iYCQg8+GsPNMjqqWqKjUc1hA50El3YA94/L6NhMUWUkTKrj6km/J2JWVNHi4exKft3Wn5/l9q8+C6i3aAYg/2SDjy0VeFYC9EtxPbym5PrE9wnVH8+Iuos7sEJnzH21cNSoRV2UmPmGJJe2cc1GXryE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2fB6PgF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uF4ZOjtCazhCCuTo47MPrT+H0Yk5lVoxM+OAEfMoFjjpWhPIktdkgxekrKGfkU6Sylt2Ze/LIuQpwxONzvMFu348y/qHQDv1z69eHjvKpQuROmzktwO3iwJFR14Ccu9Pqd9ltuJVOQfGX9dO29t2zrH1hHn4i1mfA0mSe9rPdo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NF58qjlH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2fB6PgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF0C1F00894;
-	Wed, 20 May 2026 17:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NF58qjlH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37121F000E9;
+	Wed, 20 May 2026 17:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296919;
-	bh=pcGOw+FYt26YkCg1jmsw2HEyA1wkoA3xAOM203fBMgo=;
+	s=korg; t=1779296922;
+	bh=13dEf3ks5FwS6qpnT+bl3w8wEa/yNQiIb2cQAOWsmjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W2fB6PgFUkBdI6QLIByromyUuAHkLKzTilIzXELx20txsCXucr5uj57Rin+/ghh2g
-	 Bz+QGmFukRhu9iTMhQyTSApy4CBpE1ya1SDEtfsLEEau7zcckrTan5puZ0cWgwzRv0
-	 Vk+nCb0LkT5ot93gIc1aQ3cN/FSSWjDwrN4Pmzks=
+	b=NF58qjlHxpBRWxRAN+gbQxNzOrIS4GK3lnS1xhI3bExQ822tjMt00UBghGHBRmlAg
+	 EBw6IoNroc0vpJBGoid0pEtvgBRzMgGLzaPnj6envyUIvk4w4GV1g1J/70PzavF9QK
+	 IvVj4Gt8HUdhfvQO5e9zxLbPe1Od1A7QBnSqAYcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0982/1146] ASoC: cs35l56: Fix illegal writes to OTP_MEM registers
-Date: Wed, 20 May 2026 18:20:32 +0200
-Message-ID: <20260520162210.455087659@linuxfoundation.org>
+Subject: [PATCH 7.0 0983/1146] net: psp: check for device unregister when creating assoc
+Date: Wed, 20 May 2026 18:20:33 +0200
+Message-ID: <20260520162210.476014008@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,62 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit be102efb832ef7e30e4cd4c2edf22bbf64ddf35a ]
+[ Upstream commit b89769f936a8fa9e66de72ddc1b71a9745a488e6 ]
 
-Mark the OTP_MEM registers as volatile so that regcache_sync() will not
-attempt to write to them.
+psp_assoc_device_get_locked() obtains a psp_dev reference via
+psp_dev_get_for_sock() (which uses psp_dev_tryget() under RCU);
+it then acquires psd->lock and drops the reference. Before
+the lock is taken, psp_dev_unregister() can run to completion:
+take psd->lock, clear out state, unlock, drop the registration
+reference.
 
-These registers hold a constant, and originally they were marked as
-readable non-volatile so that this value would be read into the regmap
-cache. The problem with this is regcache_sync() issues a write for any
-cached register that does not have a reg_default.
+The expectation is that the lock prevents device unregistration,
+but much like with netdevs special care has to be taken when
+"upgrading" a reference to a locked device. Add the missing
+check if device is still alive. psp_dev_is_registered() exists
+already but had no callers, which makes me wonder if I either
+forgot to add this or lost the check during refactoring...
 
-Though these registers are constants and writing them in normal use
-cannot change OTP, it is illegal for the host to write to them.
-
-Fixes: e1830f66f6c6 ("ASoC: cs35l56: Add helper functions for amp calibration")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260428115228.158252-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Fixes: 6b46ca260e22 ("net: psp: add socket security association code")
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260427190606.366101-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56-shared.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/psp/psp_nl.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
-index af87ebae98cb0..0ddf9a8d39a07 100644
---- a/sound/soc/codecs/cs35l56-shared.c
-+++ b/sound/soc/codecs/cs35l56-shared.c
-@@ -108,8 +108,6 @@ int cs35l56_set_patch(struct cs35l56_base *cs35l56_base)
- EXPORT_SYMBOL_NS_GPL(cs35l56_set_patch, "SND_SOC_CS35L56_SHARED");
+diff --git a/net/psp/psp_nl.c b/net/psp/psp_nl.c
+index 6afd7707ec12e..0cc744a6e1c9b 100644
+--- a/net/psp/psp_nl.c
++++ b/net/psp/psp_nl.c
+@@ -305,8 +305,13 @@ int psp_assoc_device_get_locked(const struct genl_split_ops *ops,
  
- static const struct reg_default cs35l56_reg_defaults[] = {
--	/* no defaults for OTP_MEM - first read populates cache */
--
- 	{ CS35L56_ASP1_ENABLES1,		0x00000000 },
- 	{ CS35L56_ASP1_CONTROL1,		0x00000028 },
- 	{ CS35L56_ASP1_CONTROL2,		0x18180200 },
-@@ -138,8 +136,6 @@ static const struct reg_default cs35l56_reg_defaults[] = {
- };
+ 	psd = psp_dev_get_for_sock(socket->sk);
+ 	if (psd) {
+-		err = psp_dev_check_access(psd, genl_info_net(info));
+-		if (err) {
++		/* Extra care needed here, psp_dev_get_for_sock() only gives
++		 * us access to struct psp_dev's memory, which is quite weak.
++		 */
++		mutex_lock(&psd->lock);
++		if (!psp_dev_is_registered(psd) ||
++		    psp_dev_check_access(psd, genl_info_net(info))) {
++			mutex_unlock(&psd->lock);
+ 			psp_dev_put(psd);
+ 			psd = NULL;
+ 		}
+@@ -319,7 +324,6 @@ int psp_assoc_device_get_locked(const struct genl_split_ops *ops,
  
- static const struct reg_default cs35l63_reg_defaults[] = {
--	/* no defaults for OTP_MEM - first read populates cache */
--
- 	{ CS35L56_ASP1_ENABLES1,		0x00000000 },
- 	{ CS35L56_ASP1_CONTROL1,		0x00000028 },
- 	{ CS35L56_ASP1_CONTROL2,		0x18180200 },
-@@ -282,6 +278,9 @@ static bool cs35l56_common_volatile_reg(unsigned int reg)
- 	case CS35L56_GLOBAL_ENABLES:		   /* owned by firmware */
- 	case CS35L56_BLOCK_ENABLES:		   /* owned by firmware */
- 	case CS35L56_BLOCK_ENABLES2:		   /* owned by firmware */
-+	case CS35L56_OTP_MEM_53:
-+	case CS35L56_OTP_MEM_54:
-+	case CS35L56_OTP_MEM_55:
- 	case CS35L56_SYNC_GPIO1_CFG ... CS35L56_ASP2_DIO_GPIO13_CFG:
- 	case CS35L56_UPDATE_REGS:
- 	case CS35L56_REFCLK_INPUT:		   /* owned by firmware */
+ 	id = info->attrs[PSP_A_ASSOC_DEV_ID];
+ 	if (psd) {
+-		mutex_lock(&psd->lock);
+ 		if (id && psd->id != nla_get_u32(id)) {
+ 			mutex_unlock(&psd->lock);
+ 			NL_SET_ERR_MSG_ATTR(info->extack, id,
 -- 
 2.53.0
 
