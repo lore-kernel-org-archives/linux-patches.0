@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E1D3EA953;
-	Wed, 20 May 2026 17:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855B73EA953;
+	Wed, 20 May 2026 17:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299824; cv=none; b=T2QxD903lhuZi5bPOR11dGArpgbADkvD3OqoXIgGYPftk9US4YQzqOi+nFUDsXYqk/9WCv5kDHnA+jQH4TdHTKq6C5gQ0xx+Wjp/PHVDDZ30OxIRes8QqGOOTwqE3jwWDRs3FMAgB+e+tE3hh6a1V3Cl536CSOKL4bUuWHZe9Gs=
+	t=1779299827; cv=none; b=TMkbc0UPBWJNJqROcP/MgZLeNmHX+3Cyhk9cppFg3KZdML0tJtekUydtYQ0f5bVx/nmbyi/EIM4rGAzQYYXt1PXBWsus5r+e53V451H46ztgWXYJ+J8jBecQrD5e25pd2EHKuLIMdy/to23ZLY9p8QpfD7B+t/2nZrKUZ/M/JxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299824; c=relaxed/simple;
-	bh=oob4HVZ2Y5TYGYx14pYiE5aBR8+Z2bcIUuJMkzxXSQQ=;
+	s=arc-20240116; t=1779299827; c=relaxed/simple;
+	bh=2FD0up+NOTfFU933Knh+IMt/9B9GeB3FJINEBtzR180=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYuWgumdg7yooOutk4QZwbuW3IEPYiC7lVyAB/uS9rkZRo77XorRkfOn0JICpu5dxYVCx/SPlhNvdIb1yeaycLBEPttDBcIJQIs+WEk+c3Gp9GWr/DMJvsqSxhIA7C/JlxaLcrp9cD2xtC+OCJVyWRRD9uw8q7DgBWF/mFjKioI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkgiEtc5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nkq4KKGUHNrPa53igj+ZRYKb9xYG35LwfKd5o95IMeSPDUICxkqZLs7VUDMHA251CrP9qwO7XfjylGhajGbAWoxpHlj9ApPKdisGH7HODYbD9VzWsbJ5zdauweJgvzI7GmFN9sMxyK8OkSv62i3GsxY1OmuiH3rKCIcRTEVI9Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjwBdpga; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkgiEtc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91B71F000E9;
-	Wed, 20 May 2026 17:57:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjwBdpga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813E81F000E9;
+	Wed, 20 May 2026 17:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299823;
-	bh=h3dFz6EUjyanQtyDFXyU36XGrAo5MM+EP5DhdbBqhag=;
+	s=korg; t=1779299826;
+	bh=THxiQvugvMrfYQJOMMu81HmOjCqZT5/3rufF02yEhJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WkgiEtc5QSeCjUz1bvcuynPpfUmT6j5N8PyeFg4pZMtIJ6nXNEUPzJqGUd1F3DXUG
-	 4cE+wUWyWcps8VMNyJoGg61QnF2yot81xwoHzAMVmuV1OGLW96NS8crZRxV0n7ybeX
-	 d47v2FhafCJRGVdGsCErZ36XJXv6V04r9Yr3s1dw=
+	b=yjwBdpgaZdShbeZct8jIHQE6kb6UcUNQSYZ95HadC+QpNwk/B9TIAJ0dunezTLbpJ
+	 DWEzU6L1t51/w+SWo+NVsDP9y+q0C6iHCArcdhkyz9L/0S1Szc1H28ZgZNRyKq4k+V
+	 /iP7h8sgEX9sNeOkytb0AX/A+pKf3vlPLVXlF34A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Subject: [PATCH 6.18 901/957] Bluetooth: btmtk: accept too short WMT FUNC_CTRL events
-Date: Wed, 20 May 2026 18:23:04 +0200
-Message-ID: <20260520162154.113878408@linuxfoundation.org>
+	Yuriy Havrylyuk <yhavry@gmail.com>,
+	Sven Peter <sven@kernel.org>,
+	Nick Chan <towinchenmi@gmail.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.18 902/957] nvme-apple: Reset q->sq_tail during queue init
+Date: Wed, 20 May 2026 18:23:05 +0200
+Message-ID: <20260520162154.136453462@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,45 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Nick Chan <towinchenmi@gmail.com>
 
-commit e3ac0d9f1a205f33a43fba3b79ef74d2f604c78b upstream.
+commit a6ab75639e23169a741b0b2e12191fd8acb32c73 upstream.
 
-MT7925 (USB ID 0e8d:e025) on fw version 20260106153314 sends WMT
-FUNC_CTRL events that are missing the status field.
+Fixes a "duplicate tag error for tag 0" firmware crash during controller
+reset while setting up a  queue on Apple A11 / T8015 caused by stale
+entries in the submission queue due to an invalid sq_tail offset after
+reset.
 
-Prior to commit 006b9943b982 ("Bluetooth: btmtk: validate WMT event SKB
-length before struct access") the status was read from out-of-bounds of
-SKB data, which usually would result to success with
-BTMTK_WMT_ON_UNDONE, although I don't know the intent here.  The bounds
-check added in that commit returns with error instead, producing
-"Bluetooth: hci0: Failed to send wmt func ctrl (-22)" and makes the
-device unusable.
-
-Fix the regression by interpreting too short packet as status
-BTMTK_WMT_ON_UNDONE, which makes the device work normally again.
-
-Fixes: 634a4408c061 ("Bluetooth: btmtk: validate WMT event SKB length before struct access")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com> # MT7922 (0489:e0e2)
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 04d8ecf37b5e ("nvme: apple: Add Apple A11 support")
+Cc: stable@vger.kernel.org
+Suggested-by: Yuriy Havrylyuk <yhavry@gmail.com>
+Reviewed-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Nick Chan <towinchenmi@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btmtk.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/host/apple.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -678,8 +678,8 @@ static int btmtk_usb_hci_wmt_sync(struct
- 	case BTMTK_WMT_FUNC_CTRL:
- 		if (!skb_pull_data(data->evt_skb,
- 				   sizeof(wmt_evt_funcc->status))) {
--			err = -EINVAL;
--			goto err_free_skb;
-+			status = BTMTK_WMT_ON_UNDONE;
-+			break;
- 		}
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -1009,6 +1009,7 @@ static void apple_nvme_init_queue(struct
+ 	unsigned int depth = apple_nvme_queue_depth(q);
+ 	struct apple_nvme *anv = queue_to_apple_nvme(q);
  
- 		wmt_evt_funcc = (struct btmtk_hci_wmt_evt_funcc *)wmt_evt;
++	q->sq_tail = 0;
+ 	q->cq_head = 0;
+ 	q->cq_phase = 1;
+ 	if (anv->hw->has_lsq_nvmmu)
 
 
