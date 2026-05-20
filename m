@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BB7346E5E;
-	Wed, 20 May 2026 17:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A903C6A5C;
+	Wed, 20 May 2026 17:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298155; cv=none; b=FSicJayv6Nn3D25pNDX7CcyW0SU5jA6GctY06t240R2Yeh5t7y1PofA6Ap+KskegbUz57zEX9AXSkSG/8BZws8scNR6qqL+jHNFO+Z0tH5BLKTuyeL3g2ub4S+79+0FtSgYScd/fWxBEzvY845cOa0FTXdilYHhp3vTt3wM5Qx0=
+	t=1779298158; cv=none; b=Fy3d+mUfIherDcBRJIITy7DWBXhscEvpk70KywQslKWCqFnUF+tJ2PSis2JVWSlyfDOipBiSeIRJS29AvNAZNAn7H5URegYMFXqsDvcWoGA4LZBYhburJEMT2Xh1RhMYO5ukw3JD6oMBip0UrctmXFIeIHSmCsl06kq+jzgS7nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298155; c=relaxed/simple;
-	bh=Y6j/u1ZTe86WsOoFOVBjZJBj0WRL6bfx9V0jmV5kAwc=;
+	s=arc-20240116; t=1779298158; c=relaxed/simple;
+	bh=J6WJzHHa/D5KPPqNMXAOmLR4eJsyrs3DE0q6Hq1DLWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E8jU9DijbC/sgAl8KEMG8KNhM9XBUA+XuPcE18J69Uo64XVprOJRTO2nrcuMFQcpU8/RkqhQgjVOKLHMTWJ06uG7KH1c86dRhIPIi65fB35AGX0kuVDWEhWAnjxgymwymfItriLzkBgNBbGymA2SHmgLSBnWOtqHPOQoyCG+fa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eL5d0/pd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jQnj1xFyZfHnfs12ZpU7hlI5f1yYafNLUChOj5wYrX3xeyfz7hKW0nqut2KmmkK4VTk0fceG0nDMaLSaHqPFJARheDygqITBGXfa9T7CJwWOvtEMIdGS7iY61PO/5bayp2qfFhLTtRtAIm22Bn16nMHm3xi22H6XumhBIT/66Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTKdAtVq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eL5d0/pd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0CF1F000E9;
-	Wed, 20 May 2026 17:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTKdAtVq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C575F1F000E9;
+	Wed, 20 May 2026 17:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298154;
-	bh=68EkbYuGXE/6Alm0pszvdjcmAhEVFmdohEmVTqsMaYc=;
+	s=korg; t=1779298157;
+	bh=6Nbne8JMU3asMS6B4UOrE7HM+W+LQJl1r/37IeKEt1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eL5d0/pd4nagGpEYW4v2hMGdAPK+SP1z+oj6sAZd27GCFpjiOsoTiGlHL5FbKLHA8
-	 kloY01rDYptlu5qaWkbFikwfftDXvfuF50qVZKLaUMMe9n/IS+GIyUBGxTmQnRrSnm
-	 bUge04LiE6m3cPhVaQLcMqI22P9OikhAqIrTXOUA=
+	b=wTKdAtVq1hYLurL6fgUe7To/qAvPEEmhdf/nW0QmaTcmQyV1YK50D5fTxWiuEFWT0
+	 H2Z0dl7PpBUIouEUX9zAeLZpc9yw80UZTRk65WGrfJ/R67GGh9K0ipZ5mveNmofCxY
+	 KPfUBuFPt22I2oxgT0pU2S9anIvK0KWJbrJYY8l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 301/957] crypto: qat - fix type mismatch in RAS sysfs show functions
-Date: Wed, 20 May 2026 18:13:04 +0200
-Message-ID: <20260520162141.060328276@linuxfoundation.org>
+Subject: [PATCH 6.18 302/957] crypto: iaa - fix per-node CPU counter reset in rebalance_wq_table()
+Date: Wed, 20 May 2026 18:13:05 +0200
+Message-ID: <20260520162141.082323651@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -55,82 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit ec23d75c4b77ae42af0777ea59599b1d4f611371 ]
+[ Upstream commit 590fa5d69c27cfaecd2e8287aec78f902417c877 ]
 
-ADF_RAS_ERR_CTR_READ() expands to atomic_read(), which returns int.
-The local variable 'counter' was declared as 'unsigned long', causing
-a type mismatch on the assignment. The format specifier '%ld' was
-consequently wrong in two ways: wrong length modifier and wrong
-signedness.
+The cpu counter used to compute the IAA device index is reset to zero
+at the start of each NUMA node iteration. This causes CPUs on every
+node to map starting from IAA index 0 instead of continuing from the
+previous node's last index. On multi-node systems, this results in all
+nodes mapping their CPUs to the same initial set of IAA devices,
+leaving higher-indexed devices unused.
 
-Use int to match the return type of atomic_read() and update the
-format specifier to '%d' accordingly.
+Move the cpu counter initialization before the for_each_node_with_cpus()
+loop so that the IAA index computation accumulates correctly across all
+nodes.
 
-Fixes: 532d7f6bc458 ("crypto: qat - add error counters")
+Fixes: 714ca27e9bf4 ("crypto: iaa - Optimize rebalance_wq_table()")
 Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/qat/qat_common/adf_sysfs_ras_counters.c    | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/crypto/intel/iaa/iaa_crypto_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c b/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
-index e97c67c87b3cf..6abb57bfd3285 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
-@@ -13,14 +13,14 @@ static ssize_t errors_correctable_show(struct device *dev,
- 				       char *buf)
- {
- 	struct adf_accel_dev *accel_dev;
--	unsigned long counter;
-+	int counter;
+diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+index da9b2bc515194..78218f3a3cd06 100644
+--- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
++++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
+@@ -911,8 +911,8 @@ static void rebalance_wq_table(void)
+ 		return;
+ 	}
  
- 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
- 	if (!accel_dev)
- 		return -EINVAL;
++	cpu = 0;
+ 	for_each_node_with_cpus(node) {
+-		cpu = 0;
+ 		node_cpus = cpumask_of_node(node);
  
- 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_CORR);
--	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
-+	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
- }
- 
- static ssize_t errors_nonfatal_show(struct device *dev,
-@@ -28,14 +28,14 @@ static ssize_t errors_nonfatal_show(struct device *dev,
- 				    char *buf)
- {
- 	struct adf_accel_dev *accel_dev;
--	unsigned long counter;
-+	int counter;
- 
- 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
- 	if (!accel_dev)
- 		return -EINVAL;
- 
- 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_UNCORR);
--	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
-+	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
- }
- 
- static ssize_t errors_fatal_show(struct device *dev,
-@@ -43,14 +43,14 @@ static ssize_t errors_fatal_show(struct device *dev,
- 				 char *buf)
- {
- 	struct adf_accel_dev *accel_dev;
--	unsigned long counter;
-+	int counter;
- 
- 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
- 	if (!accel_dev)
- 		return -EINVAL;
- 
- 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_FATAL);
--	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
-+	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
- }
- 
- static ssize_t reset_error_counters_store(struct device *dev,
+ 		for_each_cpu(node_cpu, node_cpus) {
 -- 
 2.53.0
 
