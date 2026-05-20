@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685D235C1A0;
-	Wed, 20 May 2026 17:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27EC366075;
+	Wed, 20 May 2026 17:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297466; cv=none; b=dF0uyxWSwyDKTGcg68Y4aQvkiseemlFa4e9nXT4hjzcxuY82HQW3hjcl1AQ3teVO1x4PAhVSOquwi4bKwVkFnJZV+j8IUIUTJwxFX5JlnIscKrMSWvPkzgnpreHMb4E9UKY4UzCYnDIdWS+38gH+MWszxuWmYQ2rtW0SQlAbdJE=
+	t=1779297469; cv=none; b=oTmlhxkOZMldGvz8mNRU+5kNCHOwRL6WuftuFfDz3fuhwq9ijdSJTf5GvFAh9b3EzmdfEaUbib+NN2dCVidkGLAmZR7cxb78jUSxKuOe99AbTMapG4TauG5lGhuaPk3XHfzkh9bGInQXWk/EklcTUq9ezw+HBi3GJvUW/PxoqFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297466; c=relaxed/simple;
-	bh=jl9dyrxqp5PehHyV/uS5Bs+k2vtbIg6xIuLFiPvbDFQ=;
+	s=arc-20240116; t=1779297469; c=relaxed/simple;
+	bh=TZf5bVz9MBsFyfhoQewSOk8zs6Nxgoz0rUYzczHkGig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQQJjX2o14HKiojFtX859RZIEO7HQYf2g9OcR12GgmUjCa+7JeG0dhoW9RgluvYAR9rEwzNCUIMOc3u/JvRsSC37knrf2QxOgrQq9gUCyLSV4CjpOiy8rmdrvpJikSqRzP6yu7GtMgvdZx3u/hwIoWBqTWO4Ko7N2J81VRz0748=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHfDGXN0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TN+dPa7rwOYdN9mFMmp9wlsORJb9xp/FfGMzvcjmqEJqYdSJlSuXKn4r0o2Z9oIAlM7S3XwNan3KeuTX/TU5IT0aVuapLgsAzxMVKVkqH+gxxMoeZcpA6wGbjULssy3z5gdItk2TgMKUSVS1aZxIhOoQZQWMVtNFm0WwwPg+C08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQlK6SL1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHfDGXN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4201F00893;
-	Wed, 20 May 2026 17:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQlK6SL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DCB1F000E9;
+	Wed, 20 May 2026 17:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297465;
-	bh=+w20QF/NvZiPFsBLz7IUwYEpudDneapEJrYj60Cqr1c=;
+	s=korg; t=1779297467;
+	bh=Xg9sSSWa+3enJq6O+W5IilsZ8SU04pFja3AVLpRHr0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VHfDGXN05Z3Bmg5/0DNLcnL69x5hC36HxVcjXOiLiSEpQW+J49xtR3siRWr89a4Kh
-	 D1AO8nkdb4L/HER/CgA/EqYTNVX7LpZn8gjFEDJCddUyq9FMx6bEqsa7ldjm+pdzu9
-	 vRSTtRvPYc35Plb4jzhbKFd4E1be542eSvb/zyKM=
+	b=dQlK6SL1aXKdiKZVVTbBdZOewRmXUQRT5WVv7tTZE3jWrnyJs15YXe8BaSaMtfDFQ
+	 t1mu2tShFOlu1OreU+C1a4biPUKzlwRdaxLw3jQK4WL1kReoNQpxMoNj7ke8Oz2wXA
+	 aqOUJGKzHDZwe/KxZ0zvS9yvir2mK8Vsg61gEDA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jackie Liu <liuyun01@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Cole Leavitt <cole@unwrap.rs>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/957] blk-cgroup: fix disk reference leak in blkcg_maybe_throttle_current()
-Date: Wed, 20 May 2026 18:08:11 +0200
-Message-ID: <20260520162134.743185634@linuxfoundation.org>
+Subject: [PATCH 6.18 009/957] pstore/ram: fix resource leak when ioremap() fails
+Date: Wed, 20 May 2026 18:08:12 +0200
+Message-ID: <20260520162134.764327286@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -53,45 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackie Liu <liuyun01@kylinos.cn>
+From: Cole Leavitt <cole@unwrap.rs>
 
-[ Upstream commit 23308af722fefed00af5f238024c11710938fba3 ]
+[ Upstream commit 2ddb69f686ef7a621645e97fc7329c50edf5d0e5 ]
 
-Add the missing put_disk() on the error path in
-blkcg_maybe_throttle_current(). When blkcg lookup, blkg lookup, or
-blkg_tryget() fails, the function jumps to the out label which only
-calls rcu_read_unlock() but does not release the disk reference acquired
-by blkcg_schedule_throttle() via get_device(). Since current->throttle_disk
-is already set to NULL before the lookup, blkcg_exit() cannot release
-this reference either, causing the disk to never be freed.
+In persistent_ram_iomap(), ioremap() or ioremap_wc() may return NULL on
+failure. Currently, if this happens, the function returns NULL without
+releasing the memory region acquired by request_mem_region().
 
-Restore the reference release that was present as blk_put_queue() in the
-original code but was inadvertently dropped during the conversion from
-request_queue to gendisk.
+This leads to a resource leak where the memory region remains reserved
+but unusable.
 
-Fixes: f05837ed73d0 ("blk-cgroup: store a gendisk to throttle in struct task_struct")
-Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260331085054.46857-1-liu.yun@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Additionally, the caller persistent_ram_buffer_map() handles NULL
+correctly by returning -ENOMEM, but without this check, a NULL return
+combined with request_mem_region() succeeding leaves resources in an
+inconsistent state.
+
+This is the ioremap() counterpart to commit 05363abc7625 ("pstore:
+ram_core: fix incorrect success return when vmap() fails") which fixed
+a similar issue in the vmap() path.
+
+Fixes: 404a6043385d ("staging: android: persistent_ram: handle reserving and mapping memory")
+Signed-off-by: Cole Leavitt <cole@unwrap.rs>
+Link: https://patch.msgid.link/20260225235406.11790-1-cole@unwrap.rs
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/pstore/ram_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 890c161bee25e..9a8d047be580b 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -2037,6 +2037,7 @@ void blkcg_maybe_throttle_current(void)
- 	return;
- out:
- 	rcu_read_unlock();
-+	put_disk(disk);
- }
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index 7b6d6378a3b87..95675d4bab141 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -489,6 +489,10 @@ static void *persistent_ram_iomap(phys_addr_t start, size_t size,
+ 	else
+ 		va = ioremap_wc(start, size);
  
- /**
++	/* We must release the mem region if ioremap fails. */
++	if (!va)
++		release_mem_region(start, size);
++
+ 	/*
+ 	 * Since request_mem_region() and ioremap() are byte-granularity
+ 	 * there is no need handle anything special like we do when the
 -- 
 2.53.0
 
