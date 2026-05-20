@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD79368941;
-	Wed, 20 May 2026 16:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972613033E7;
+	Wed, 20 May 2026 16:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294717; cv=none; b=eUTdKrkEKotCsC+je5yV4OzbtS+99FgVIId887Cxf04SCecX4jZhwMe73qoDsyUj65UIF5vG3y1IJRf5V7kTLfz/Go6V1su3CaBEPE3SCfR+hBE+WRbm+Z0z/B8WsNcaVRS/Woco38GEULVRihgc+itlqjYC7TVrxqpmF7JtQm4=
+	t=1779294718; cv=none; b=a2hKEop5UebabxMKxAridrOYEi4sTkOWhkCZETIFDjsgosJGgVARamIkeUzYdGJbfp71j1+abQ4Pl7m5aQbd9yLfYZtHencx+vNrX0IMiFq6E6axNNTtSt/rIz3vsHKae6mnwXTlYpNrIBy53FWfE8E5YBZpZNjXSI2/IApiG/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294717; c=relaxed/simple;
-	bh=xFkjVMC3I4XlJup9mWlwoRsyA/BCK/ziF+0YrEfI23g=;
+	s=arc-20240116; t=1779294718; c=relaxed/simple;
+	bh=EQ9OF0R/ftZCMD03X0cN0u4AbIC3ODZvEoFHVc+IDwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tgYofj5ADlFKjsQBAFWNWA2Tr8+liuwKhkwXFJEl539Hu0namguuU2OdN5n4aleqi3qdmYl4m+m0SYKo5LdfhQUeqJojWeH3dUSWip7gryhOQpyezyugBzhTvRcIo1j8sGyP9642P5Odd1sP5MUBk9FXhbTna89iOiEp6C0TAks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3UBlL/M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QpJyvpGNuRJ3sfYc1dUjJMGs3Nud5P6Y8L3Dgqciwcgsrj/u8E9KuT1oamzHJ5SvMtlTxhdKWMKKhXVecNLe7Foj1RVMiK5p/LHXJVBwpMjTfj+/OyBG6x+t2Urqe38hr9lW8CTwNYhNRE1QSElj93WHeylr9t+9Q2wRoq+Dqdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f91Co+hv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3UBlL/M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919F71F000E9;
-	Wed, 20 May 2026 16:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f91Co+hv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D200A1F00894;
+	Wed, 20 May 2026 16:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294711;
-	bh=F7Xe4YDp3BrHx+N5ydsxURLaUIMhF9nME1grksalKrI=;
+	s=korg; t=1779294716;
+	bh=j2qk4OByQJduUt1n2R2E1m9/pWBWQIz440MZ4DY9F5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D3UBlL/MXoqk4kjpmYdKO7C9rWj2ANoBR6W1R96k43lPqA5srxgn75Y/ecWhF+PSO
-	 f514LXvwpvYXrd/McJOLbWEDPwJsIXxAOiGTGuvAOfrAdm5Bo8kLMPtiswHEmDE2Qn
-	 zr3qI3arq48R+Y62Vpom58rn82bAadH/y6IsCEbc=
+	b=f91Co+hv+zEdhNBTg7AZYIn9L3ky7qSZIxQak22uOd07opCZ85EC5mbcP1jQi58Dw
+	 HptigzWMCpXBcGme0oYEC4cGYES/Ga/GLX8GolqOzN6wOIP63NHxRxohMcQbmAzu2L
+	 ZQ03kcZ5R4G4lkVPjVr2Zjo5LK8yCz7ifC6pkAkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Gupta <adityag@linux.ibm.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
+	Vaibhav Jain <vaibhav@linux.ibm.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0143/1146] powerpc/crash: fix backup region offset update to elfcorehdr
-Date: Wed, 20 May 2026 18:06:33 +0200
-Message-ID: <20260520162151.546223857@linuxfoundation.org>
+Subject: [PATCH 7.0 0145/1146] selftests/powerpc: Suppress -Wmaybe-uninitialized with GCC 15
+Date: Wed, 20 May 2026 18:06:35 +0200
+Message-ID: <20260520162151.589606442@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,58 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-[ Upstream commit 789335cacdf37da93bb7c70322dff8c7e82881df ]
+[ Upstream commit 6e65886fceb23605eff952d6b1975737b4c4b154 ]
 
-update_backup_region_phdr() in file_load_64.c iterates over all the
-program headers in the kdump kernel’s elfcorehdr and updates the
-p_offset of the program header whose physical address starts at 0.
+GCC 15 reports the below false positive '-Wmaybe-uninitialized' warning
+in vphn_unpack_associativity() when building the powerpc selftests.
 
-However, the loop logic is incorrect because the program header pointer
-is not updated during iteration. Since elfcorehdr typically contains
-PT_NOTE entries first, the PT_LOAD program header with physical address
-0 is never reached. As a result, its p_offset is not updated to point to
-the backup region.
+  # make -C tools/testing/selftests TARGETS="powerpc"
+  [...]
+    CC       test-vphn
+  In file included from test-vphn.c:3:
+  In function ‘vphn_unpack_associativity’,
+      inlined from ‘test_one’ at test-vphn.c:371:2,
+      inlined from ‘test_vphn’ at test-vphn.c:399:9:
+  test-vphn.c:10:33: error: ‘be_packed’ may be used uninitialized [-Werror=maybe-uninitialized]
+     10 | #define be16_to_cpup(x)         bswap_16(*x)
+        |                                 ^~~~~~~~
+  vphn.c:42:27: note: in expansion of macro ‘be16_to_cpup’
+     42 |                 u16 new = be16_to_cpup(field++);
+        |                           ^~~~~~~~~~~~
+  In file included from test-vphn.c:19:
+  vphn.c: In function ‘test_vphn’:
+  vphn.c:27:16: note: ‘be_packed’ declared here
+     27 |         __be64 be_packed[VPHN_REGISTER_COUNT];
+        |                ^~~~~~~~~
+  cc1: all warnings being treated as errors
 
-Because of this behavior, the capture kernel exports the first 64 KB of
-the crashed kernel’s memory at offset 0, even though that memory
-actually lives in the backup region. When a crash happens, purgatory
-copies the first 64 KB of the crashed kernel’s memory into the backup
-region so the capture kernel can safely use it.
+When vphn_unpack_associativity() is called from hcall_vphn() in kernel
+the error is not seen while building vphn.c during kernel compilation.
+This is because the top level Makefile includes '-fno-strict-aliasing'
+flag always.
 
-This has not caused problems so far because the first 64 KB is usually
-identical in both the crashed and capture kernels. However, this is
-just an assumption and is not guaranteed to always hold true.
+The issue here is that GCC 15 emits '-Wmaybe-uninitialized' due to type
+punning between __be64[] and __b16* when accessing the buffer via
+be16_to_cpup(). The underlying object is fully initialized but GCC 15
+fails to track the aliasing due to the strict aliasing violation here.
+Please refer [1] and [2]. This results in a false positive warning which
+is promoted to an error under '-Werror'. This problem is not seen when
+the compilation is performed with GCC 13 and 14. An issue [1] has also
+been created on GCC bugzilla.
 
-Fix update_backup_region_phdr() to correctly update the p_offset of the
-program header with a starting physical address of 0 by correcting the
-logic used to iterate over the program headers.
+The selftest compiles fine with '-fno-strict-aliasing'. Since this GCC
+flag is used to compile vphn.c in kernel too, the same flag should be
+used to build vphn tests when compiling vphn.c in the selftest as well.
 
-Fixes: cb350c1f1f86 ("powerpc/kexec_file: Prepare elfcore header for crashing kernel")
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+Fix this by including '-fno-strict-aliasing' during vphn.c compilation
+in the selftest. This keeps the build working while limiting the scope
+of the suppression to building vphn tests.
+
+[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=124427
+[2] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99768
+
+Fixes: 58dae82843f5 ("selftests/powerpc: Add test for VPHN")
+Reviewed-by: Vaibhav Jain <vaibhav@linux.ibm.com>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260312083051.1935737-2-sourabhjain@linux.ibm.com
+Link: https://patch.msgid.link/20260313165426.43259-1-amachhiw@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/file_load_64.c | 2 +-
+ tools/testing/selftests/powerpc/vphn/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
-index 5f6d50e4c3d45..a7db7eca0481b 100644
---- a/arch/powerpc/kexec/file_load_64.c
-+++ b/arch/powerpc/kexec/file_load_64.c
-@@ -391,7 +391,7 @@ static void update_backup_region_phdr(struct kimage *image, Elf64_Ehdr *ehdr)
- 	unsigned int i;
+diff --git a/tools/testing/selftests/powerpc/vphn/Makefile b/tools/testing/selftests/powerpc/vphn/Makefile
+index 61d519a076c6f..778fc396340db 100644
+--- a/tools/testing/selftests/powerpc/vphn/Makefile
++++ b/tools/testing/selftests/powerpc/vphn/Makefile
+@@ -5,7 +5,7 @@ top_srcdir = ../../../../..
+ include ../../lib.mk
+ include ../flags.mk
  
- 	phdr = (Elf64_Phdr *)(ehdr + 1);
--	for (i = 0; i < ehdr->e_phnum; i++) {
-+	for (i = 0; i < ehdr->e_phnum; i++, phdr++) {
- 		if (phdr->p_paddr == BACKUP_SRC_START) {
- 			phdr->p_offset = image->arch.backup_start;
- 			kexec_dprintk("Backup region offset updated to 0x%lx\n",
+-CFLAGS += -m64 -I$(CURDIR)
++CFLAGS += -m64 -I$(CURDIR) -fno-strict-aliasing
+ 
+ $(TEST_GEN_PROGS): ../harness.c
+ 
 -- 
 2.53.0
 
