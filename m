@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B853DD538;
-	Wed, 20 May 2026 11:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E9A3E0254;
+	Wed, 20 May 2026 11:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276016; cv=none; b=ZO5I8/Bpmd5SriwwEhVMG30wCTOX3+Tc45Uxp7GNWUqC5xWVqwJURXLQe19G1EfQmcgs9icRYsThtAEjJRMSe8vbgn3IsYZV1iGDFnaHyGGOUmJTi3xDiTMoglSIgDpsLD9O1v/Tf2q3WZtU9NYxkEC1QSnG3bIe8fvveT4h9oI=
+	t=1779276019; cv=none; b=DI8S8x7UrU1ixZFvnFuY4nvL34584NwOUQhTVbo9GAdC2DOIEmfRExiMq8CroRIbadacnRZKqs1m+aogehQgLr9MZRmfTivdbE2/tZaAg/ZeooFiKoyyL6mpqPrIgHDXlyIREL7E6NCVaYXqmrbtqZFBxDsgCsT4jwGhsRtb5sE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276016; c=relaxed/simple;
-	bh=FWsT6Yc/EVkU3tMWDeSo15/ZB5regyWNgHN7XRZLyl8=;
+	s=arc-20240116; t=1779276019; c=relaxed/simple;
+	bh=kQiQktG49jtjh0yrsuVGLJX+d30nIFRsfE8tZ53RrL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+sDC8iGj1yaMDTvF839uiyJZYNR1ZfGbQ6vF0oDkwQ4p2JkYILRZZNYXa4NqduxgL1ULYZ+31CLgHpyBuES+bdwMjA54q2cZEv3dJOXBAVgQBeMkTv1sMDhemY4zqiAlQrpbmDMT52Cn0xsctGvdXLX1iFnVAOGFtLREF2BGmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xd/VeaBx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MeaXwF6vAu45K9SLfFEdqLtSyTv17zwmgQEeHasjAM7UpVu7yZorpZVok7NE/SVs8f2t5pzRft/r5YecQR00bD3oAOnQfap5AR1WPUbaprXPs8lDM2Cfwf5OjdM/hT5yt7y6f4QusnGRHwmhlOiK0euC+wK54iZeCmXwpiMriug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mxX6TLZ5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xd/VeaBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2BE1F00897;
-	Wed, 20 May 2026 11:20:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mxX6TLZ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC001F000E9;
+	Wed, 20 May 2026 11:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276010;
-	bh=xMgtOFONSiE9sCxTbzj5oq9sEYekYwDjn2mOoCFmkls=;
+	s=k20260515; t=1779276015;
+	bh=kggCWnZpAHNNZQeOzSoSS4pC4UvCIi90dNDXgNeGc/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xd/VeaBxubOtpEkPPxWDeTg9Ir9zvTe4pLosUoSqCGbL66oZlkoYeiqFDSsmhwgyY
-	 20sTGK5PF2m5hsi71k+q8Kn8FntjaNiyxD46a21tyUX3STmAeDAfE3NuwUBYF7cj44
-	 Vns72r4LC1S9XMKllYL/xkErF6kaD+O6tjN/KG79MLxnXBMl3EKnT0fiAiScsfsz/9
-	 ee2XmwJ3ZA9b+Ad7BwSggS/YJwYQ9+8jC8YcVpEjHCCNileKu88KUzbqXUTUFATzlQ
-	 A3dEKEm1u7953084LDMhDj8nUtNl7Psmfg6z1mhTFLSaN+fPWa+AsynvpylUWb8l+3
-	 4NRH41ETyWYRQ==
+	b=mxX6TLZ5CPYc+j7YiAfFOOw98QO+x4qOjNxT44PmLhbwhGyM4ycC5t0alIkafz2Ba
+	 QBO8fgMZK5Byb+qHDgCa6qMKZk3aJLv31+HncoqDr5LDuxUGMOHU5FW3eBwK0ph/Eh
+	 jQWDC2QihMQSLbYnpofFa2vv81ptCgGuIiW1hHWiSX1tTA0eKAlAoU1UcVi4evUx7W
+	 2WrTMYaRZLsFl7jR3CUxm2lTSxajsOAWRnBeVatOk/MrsWlV2nO0Ps+o5QC7SlwoDN
+	 0GT6Cpz8upEMMwnHtdURQaCE8wGRLx0ECpY/RCAO0YSs0eqaH/HV6GpZcMmVb2Pj93
+	 C+390pLtihELA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Borkmann <daniel@iogearbox.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	pabeni@redhat.com,
-	dsahern@kernel.org,
-	netdev@vger.kernel.org,
+	linux-i2c@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] ipv6: Implement limits on extension header parsing
-Date: Wed, 20 May 2026 07:18:50 -0400
-Message-ID: <20260520111944.3424570-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] i2c: dev: prevent integer overflow in I2C_TIMEOUT ioctl
+Date: Wed, 20 May 2026 07:18:53 -0400
+Message-ID: <20260520111944.3424570-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -57,423 +51,254 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-[ Upstream commit 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac ]
+[ Upstream commit 617eb7c0961a8dfcfc811844a6396e406b2923ea ]
 
-ipv6_{skip_exthdr,find_hdr}() and ip6_{tnl_parse_tlv_enc_lim,
-protocol_deliver_rcu}() iterate over IPv6 extension headers until they
-find a non-extension-header protocol or run out of packet data. The
-loops have no iteration counter, relying solely on the packet length
-to bound them. For a crafted packet with 8-byte extension headers
-filling a 64KB jumbogram, this means a worst case of up to ~8k
-iterations with a skb_header_pointer call each. ipv6_skip_exthdr(),
-for example, is used where it parses the inner quoted packet inside
-an incoming ICMPv6 error:
+While fuzzing with Syzkaller, a persistent `schedule_timeout: wrong
+timeout value` warning was observed, accompanied by SMBus controller
+state machine corruption.
 
-  - icmpv6_rcv
-    - checksum validation
-    - case ICMPV6_DEST_UNREACH
-      - icmpv6_notify
-        - pskb_may_pull()       <- pull inner IPv6 header
-        - ipv6_skip_exthdr()    <- iterates here
-        - pskb_may_pull()
-        - ipprot->err_handler() <- sk lookup
+The I2C_TIMEOUT ioctl accepts a user-provided timeout in multiples of
+10 ms. The user argument is checked against INT_MAX, but it is
+subsequently multiplied by 10 before being passed to msecs_to_jiffies().
 
-The per-iteration cost of ipv6_skip_exthdr itself is generally
-light, but skb_header_pointer becomes more costly on reassembled
-packets: the first ~1232 bytes of the inner packet are in the skb's
-linear area, but the remaining ~63KB are in the frag_list where
-skb_copy_bits is needed to read data.
+A malicious user can pass a large value (e.g., 429496729) that passes
+the `arg > INT_MAX` check but overflows when multiplied by 10. This
+results in a truncated 32-bit unsigned value that bypasses the
+internal `(int)m < 0` check in `msecs_to_jiffies()`.
 
-Initially, the idea was to add a configurable limit via a new
-sysctl knob with default 8, in line with knobs from commit
-47d3d7ac656a ("ipv6: Implement limits on Hop-by-Hop and Destination
-options"), but two reasons eventually argued against it:
+The truncated value is then assigned to `client->adapter->timeout`
+(a signed 32-bit int), which is reinterpreted as a negative number.
+When passed to wait_for_completion_timeout(), this negative value
+undergoes sign extension to a 64-bit unsigned long, triggering the
+`schedule_timeout` warning and causing premature returns. This leaves
+the SMBus state machine in an unrecoverable state, constituting a
+local Denial of Service (DoS).
 
-- It adds to UAPI that needs to be maintained forever, and
-  upcoming work is restricting extension header ordering anyway,
-  leaving little reason for another sysctl knob
-- exthdrs_core.c is always built-in even when CONFIG_IPV6=n,
-  where struct net has no .ipv6 member, so the read site would
-  need an ifdef'd fallback to a constant anyway
+Fix this by bounding the user argument to `INT_MAX / 10`.
 
-Therefore, just use a constant (IP6_MAX_EXT_HDRS_CNT). All four
-extension header walking functions are now bound by this limit.
-
-Note that the check in ip6_protocol_deliver_rcu() happens right
-before the goto resubmit, such that we don't have to have a test
-for ipv6_ext_hdr() in the fast-path.
-
-There's an ongoing IETF draft-iurman-6man-eh-occurrences to enforce
-IPv6 extension headers ordering and occurrence. The latter also
-discusses security implications. As per RFC8200 section 4.1, the
-occurrence rules for extension headers provide a practical upper
-bound which is 8. In order to be conservative, let's define
-IP6_MAX_EXT_HDRS_CNT as 12 to leave enough room for quirky setups.
-In the unlikely event that this is still not enough, then we might
-need to reconsider a sysctl.
-
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Link: https://patch.msgid.link/20260429154648.809751-1-daniel@iogearbox.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+[wsa: move the comment as well]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Decision Summary
-This should be backported. It is a small IPv6 networking hardening/fix
-for a reachable CPU-exhaustion path: several IPv6 extension-header
-walkers were bounded only by packet length, allowing crafted packets
-with many minimal 8-byte extension headers to force thousands of
-iterations. The patch caps traversal at 12 headers, avoids new UAPI, and
-was reviewed by IPv6/networking reviewers. Risk is mainly dropping
-extremely exotic packets with more than 12 extension headers; the review
-discussion explicitly considered that and settled on 12 as a
-conservative compromise.
-
 ## Phase Walkthrough
-Phase 1: Commit Message Forensics
 
-Record 1.1: Subsystem `ipv6`; action verb `Implement limits`; claimed
-intent is to bound IPv6 extension-header parsing loops.
+### Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem `i2c: dev`; action verb `prevent`; intent is
+to prevent integer overflow in the userspace `I2C_TIMEOUT` ioctl.
 
-Record 1.2: Tags found: `Signed-off-by: Daniel Borkmann`, `Reviewed-by:
-Ido Schimmel`, `Reviewed-by: Eric Dumazet`, `Reviewed-by: Justin
-Iurman`, `Link:
-https://patch.msgid.link/20260429154648.809751-1-daniel@iogearbox.net`,
-`Signed-off-by: Jakub Kicinski`. No `Fixes:`, no `Reported-by:`, no `Cc:
-stable`.
+Step 1.2 Record: Tags are `Signed-off-by: Mingyu Wang
+<25181214217@stu.xidian.edu.cn>` and `Signed-off-by: Wolfram Sang
+<wsa+renesas@sang-engineering.com>` with maintainer edit note `[wsa:
+move the comment as well]`. No `Fixes:`, `Reported-by:`, `Tested-by:`,
+`Reviewed-by:`, `Link:`, or `Cc: stable` tags were present.
 
-Record 1.3: The body describes crafted 64KB packets with 8-byte
-extension headers causing up to about 8k iterations, with costly
-`skb_header_pointer()`/`skb_copy_bits()` on reassembled packets. Symptom
-is CPU work amplification/DoS potential, not memory corruption or crash.
-It identifies `icmpv6_rcv -> icmpv6_notify -> ipv6_skip_exthdr()` as a
-concrete path.
+Step 1.3 Record: The body describes a Syzkaller-found `schedule_timeout:
+wrong timeout value` warning and SMBus state machine corruption after a
+large userspace timeout causes overflow/truncation before storing into
+signed `adapter->timeout`. Symptom is local DoS through bad timeout
+behavior; root cause is validating `arg` before multiplying by 10.
 
-Record 1.4: This is not disguised cleanup. It is a direct
-correctness/security hardening fix: add a bound to previously unbounded
-loops.
+Step 1.4 Record: This is not hidden cleanup; it is an explicit integer
+overflow and local DoS fix.
 
-Phase 2: Diff Analysis
+### Phase 2: Diff Analysis
+Step 2.1 Record: One file changed, `drivers/i2c/i2c-dev.c`; committed
+diff is 5 insertions and 4 deletions due comment movement. Modified
+function: `i2cdev_ioctl()`. Scope: single-file surgical fix.
 
-Record 2.1: Five files changed, 25 insertions: `include/net/dropreason-
-core.h` +6, `include/net/ipv6.h` +3, `net/ipv6/exthdrs_core.c` +7,
-`net/ipv6/ip6_input.c` +5, `net/ipv6/ip6_tunnel.c` +4. Modified
-functions: `ipv6_skip_exthdr()`, `ipv6_find_hdr()`,
-`ip6_protocol_deliver_rcu()`, `ip6_tnl_parse_tlv_enc_lim()`.
+Step 2.2 Record: Before, `I2C_TIMEOUT` accepted any `arg <= INT_MAX`,
+then used `msecs_to_jiffies(arg * 10)`. After, it accepts only `arg <=
+INT_MAX / 10`, so the 10 ms unit conversion cannot exceed signed 32-bit
+range before assignment to `adapter->timeout`.
 
-Record 2.2: Before, these loops stopped only at non-extension-header,
-`NEXTHDR_NONE`, malformed/truncated packet data, fragment handling, or
-protocol handler completion. After, each loop also stops/drops once
-`IP6_MAX_EXT_HDRS_CNT` is exceeded.
+Step 2.3 Record: Bug category is integer overflow/truncation and type-
+range validation. Broken mechanism: userspace-controlled timeout is
+range-checked before scaling, but stored in `struct
+i2c_adapter.timeout`, which is `int`.
 
-Record 2.3: Bug category is logic/performance DoS hardening: missing
-iteration bound in packet parser. It does not fix UAF/leak/race, but it
-prevents attacker-controlled excessive parsing work.
+Step 2.4 Record: Fix quality is high: one validation bound change, no
+new API, no refactor. Regression risk is low; it rejects only extreme
+timeout values that cannot be represented safely after the documented 10
+ms scaling.
 
-Record 2.4: Fix quality is good: small, local counters, no locking or
-lifetime changes, no new sysctl/API. Regression risk is limited to
-rejecting packets with more than 12 traversed extension headers.
+### Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the existing `arg > INT_MAX` guard
+came from `6ebec961d59b` and the `arg * 10` timeout assignment/comment
+came from `cd97f39b7cdf`. `git describe` places them at
+`v5.0-rc2~14^2~1` and `v2.6.29-rc7~62^2~2`, respectively.
 
-Phase 3: Git History Investigation
+Step 3.2 Record: No `Fixes:` tag, so no tagged introducing commit to
+follow. I still inspected `6ebec961d59b`, which originally fixed
+negative retry/timeout values and was itself stable-tagged.
 
-Record 3.1: `git blame` shows the relevant loops are old:
-`ipv6_skip_exthdr()` loop traces to initial/early history with later
-signature changes; `ipv6_find_hdr()` to v3.8-era code;
-`ip6_protocol_deliver_rcu()` resubmit logic to v4.x/v5.0-era changes;
-`ip6_tnl_parse_tlv_enc_lim()` exists from initial/older tunnel code with
-later cleanups.
+Step 3.3 Record: Recent upstream `drivers/i2c/i2c-dev.c` history shows
+this candidate plus unrelated cleanup/fix commits; no prerequisite
+series was identified.
 
-Record 3.2: No `Fixes:` tag, so no introducing commit to follow. I did
-inspect referenced commit `47d3d7ac656a`, which added limits for Hop-by-
-Hop/Destination TLV parsing and described similar DoS behavior.
+Step 3.4 Record: `Mingyu Wang` has this one upstream `drivers/i2c`
+commit in the checked history. Wolfram Sang committed it and is the I2C
+maintainer in the patch flow.
 
-Record 3.3: Recent file history shows related commit `076b8cad77aa9`
-capped TLV scanning in `ip6_tnl_parse_tlv_enc_lim()`. This commit is
-related but not a hard dependency for the outer extension-header-count
-limit.
+Step 3.5 Record: No dependent commit found. The patch assumes the long-
+existing `I2C_TIMEOUT` case and applies cleanly to the current `v7.0.5`
+checkout.
 
-Record 3.4: Daniel Borkmann has recent related IPv6 limit work in the
-same area. Commit was applied by Jakub Kicinski, and reviewed by Eric
-Dumazet, Ido Schimmel, and Justin Iurman.
+### Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c 617eb7c0961a8` found the original submission
+at `https://patch.msgid.link/20260427025745.1100768-1-
+25181214217@stu.xidian.edu.cn`. `b4 dig -a` found only v1. The submitted
+patch was a one-line bound change; the committed version is the
+maintainer-adjusted version with comment movement.
 
-Record 3.5: No functional prerequisite was found for the core idea.
-Older stable trees before `dropreason-core.h` will need a small backport
-adjustment for the new drop reason, or can use an existing generic
-reason.
+Step 4.2 Record: `b4 dig -w` shows recipients: Mingyu Wang, Wolfram
+Sang, `linux-i2c@vger.kernel.org`, and `linux-kernel@vger.kernel.org`.
 
-Phase 4: Mailing List And External Research
+Step 4.3 Record: No `Link:` or `Reported-by:` tag exists. Public web
+searches did not find a syzkaller bug page for this exact issue; the
+Syzkaller finding is verified only from the commit/patch text.
 
-Record 4.1: `b4 dig -c 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac` found
-`[PATCH net v5]` at the provided lore/patch.msgid link.
+Step 4.4 Record: No multi-patch series found; standalone patch.
 
-Record 4.2: `b4 dig -a` found v1 through v5. v1 added a sysctl and was
-NAKed by Justin Iurman; v4 switched to a hard-coded limit; v5 reduced
-the limit from 32 to 12.
+Step 4.5 Record: Stable-list WebFetch was blocked by lore Anubis, and
+web search did not find stable-specific discussion. No evidence of
+objections or NAKs was found in the b4-fetched mbox.
 
-Record 4.3: No `Reported-by` or bug-report link exists. Web/lore stable
-search did not find a stable-specific request or objection.
+### Phase 5: Code Semantic Analysis
+Step 5.1 Record: Modified function: `i2cdev_ioctl()`.
 
-Record 4.4: Related series context: review discussion referenced IETF
-extension-header occurrence work; v5 was the latest and accepted
-version.
+Step 5.2 Record: Call path is userspace ioctl on `/dev/i2c-*` through
+`i2cdev_fops.unlocked_ioctl = i2cdev_ioctl`; compat ioctls fall back to
+`i2cdev_ioctl()` for commands not handled specially, including
+`I2C_TIMEOUT`.
 
-Record 4.5: No stable mailing-list-specific discussion found. WebFetch
-to lore was blocked/timed out, but `b4` successfully retrieved the
-thread.
+Step 5.3 Record: Key callee is `msecs_to_jiffies()`, whose runtime
+helper treats negative `unsigned int` values as infinite timeout. The
+result is assigned to `struct i2c_adapter.timeout`, verified as `int`.
 
-Phase 5: Code Semantic Analysis
+Step 5.4 Record: Buggy path is reachable from userspace with access to
+an i2c-dev node. The corrupted timeout is then used by core retry loops
+and many bus drivers, including paths using
+`wait_for_completion_timeout()`.
 
-Record 5.1: Key functions are `ipv6_skip_exthdr()`, `ipv6_find_hdr()`,
-`ip6_protocol_deliver_rcu()`, `ip6_tnl_parse_tlv_enc_lim()`.
+Step 5.5 Record: Similar timeout use is widespread in `drivers/i2c`, but
+this specific unchecked userspace scaling pattern was found in
+`i2c-dev`.
 
-Record 5.2: `git grep` found many callers of `ipv6_skip_exthdr()` across
-netfilter, XFRM/ESP, drivers, audit/security hooks, ICMPv6, and tunnel
-code. `ipv6_find_hdr()` is used by netfilter/nftables, BPF, OVS, IPVS,
-SRv6, drivers, and TC. `ip6_protocol_deliver_rcu()` is called from IPv6
-input and UDP encapsulation resubmission. `ip6_tnl_parse_tlv_enc_lim()`
-is called from GRE/tunnel paths.
+### Phase 6: Stable Tree Analysis
+Step 6.1 Record: Checked `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and
+`v7.0`; all contain the vulnerable `arg > INT_MAX` plus
+`msecs_to_jiffies(arg * 10)` pattern.
 
-Record 5.3: Key callees are `skb_header_pointer()`, `pskb_pull()`,
-`pskb_may_pull()`, `raw6_local_deliver()`, `inet6_protos[]` dispatch,
-and protocol handlers.
+Step 6.2 Record: Expected backport difficulty is clean or trivial. `git
+apply --check` succeeded on current `v7.0.5`; checked stable snippets
+have matching context.
 
-Record 5.4: Reachability is verified from IPv6 receive paths:
-`ip6_input_finish()` calls `ip6_protocol_deliver_rcu()`, and
-`icmpv6_notify()` calls `ipv6_skip_exthdr()` on quoted inner packets.
-These are network packet processing paths.
+Step 6.3 Record: No alternate stable fix found by subject/phrase
+searches in local git history.
 
-Record 5.5: Similar prior pattern exists in `47d3d7ac656a` for TLV
-count/length limits and in `076b8cad77aa9` for tunnel TLV scanning.
+### Phase 7: Subsystem Context
+Step 7.1 Record: Subsystem is I2C userspace character-device interface,
+`drivers/i2c/i2c-dev.c`. Criticality: important, because it exposes bus
+control to userspace and affects any system using `i2c-dev`.
 
-Phase 6: Stable Tree Analysis
+Step 7.2 Record: Subsystem is mature but actively maintained. The
+affected ioctl path is long-standing.
 
-Record 6.1: The four key functions exist in checked tags `v5.10`,
-`v5.15`, `v6.1`, `v6.6`, `v6.12`, and `v6.19`. Thus the affected code
-shape exists across active LTS/stable ranges.
+### Phase 8: Impact And Risk
+Step 8.1 Record: Affected users are systems exposing `/dev/i2c-*` to
+userspace, including embedded, hardware-management, and sensor-control
+systems.
 
-Record 6.2: Expected backport difficulty: clean or minor for newer
-trees; minor rework for pre-`dropreason-core.h` trees because
-`include/net/dropreason-core.h` is absent in `v5.10`, `v5.15`, and
-`v6.1`.
+Step 8.2 Record: Trigger is setting `I2C_TIMEOUT` to a large value
+through ioctl, then using affected I2C/SMBus transfer paths. It requires
+access to the device node; no capability check is present in the ioctl
+path itself.
 
-Record 6.3: No alternate stable-specific fix for this exact extension-
-header traversal count was found. Related TLV-limiting commits address
-adjacent, not identical, loops.
+Step 8.3 Record: Failure mode is at least a kernel `schedule_timeout:
+wrong timeout value` warning and broken timeout behavior; commit text
+reports SMBus controller state machine corruption and local DoS.
+Severity: HIGH.
 
-Phase 7: Subsystem Context
+Step 8.4 Record: Benefit is high because it blocks a fuzzed, userspace-
+reachable DoS class bug in maintained stable trees. Risk is very low
+because the patch is one range check in one ioctl case.
 
-Record 7.1: Subsystem is IPv6 networking, criticality IMPORTANT to CORE
-for IPv6-enabled systems because packet receive, ICMPv6, netfilter,
-tunnel, and driver offload paths call these helpers.
+### Phase 9: Final Synthesis
+Step 9.1 Record: Evidence for backporting: real integer overflow,
+Syzkaller-reported in commit text, userspace-reachable with i2c-dev
+access, high-severity timeout corruption/DoS, tiny fix, maintainer-
+applied, vulnerable code present in checked stable trees, clean apply to
+`v7.0.5`. Evidence against: no public syzkaller link, no `Reported-
+by`/`Tested-by`, and exact SMBus unrecoverable-state details were not
+independently reproduced.
 
-Record 7.2: Subsystem is active; recent history shows multiple
-IPv6/tunnel/drop-reason changes, but the unbounded parsing loops
-themselves are longstanding.
+Step 9.2 Record: Stable rules: obviously correct yes; fixes real bug
+yes; important issue yes, local DoS/bad kernel timeout path; small and
+contained yes; no new features/APIs yes; stable applicability yes for
+checked trees.
 
-Phase 8: Impact And Risk
+Step 9.3 Record: No exception category needed; this is a normal bug fix,
+not device ID/quirk/DT/build/doc.
 
-Record 8.1: Affected users are IPv6-enabled systems, especially systems
-exposed to crafted IPv6 traffic or using IPv6 tunnels/netfilter paths.
-
-Record 8.2: Trigger is a crafted IPv6 packet chain with many small
-extension headers, especially costly when parsed from
-fragmented/reassembled skb data. Network reachability depends on
-filtering and IPv6 deployment.
-
-Record 8.3: Failure mode is CPU work amplification/DoS risk, not crash
-or corruption. Severity: HIGH for exposed IPv6 hosts because it is
-remote packet-triggered parser amplification; not CRITICAL because no
-verified panic, data loss, or privilege escalation was found.
-
-Record 8.4: Benefit is high: caps an attacker-controlled loop in common
-networking code. Risk is low-to-medium: packets with more than 12
-traversed extension headers may now be rejected, but reviewers
-explicitly judged 12 conservative relative to RFC/IETF occurrence
-expectations.
-
-Phase 9: Final Synthesis
-
-Record 9.1: Evidence for backporting: small 25-line fix; real attacker-
-controlled parser amplification; network receive reachability verified;
-reviewed by networking experts; v1 concerns were resolved; no new UAPI.
-Evidence against: behavior change for extreme extension-header chains;
-older trees need minor drop-reason backport adjustment; no syzbot/user
-report/CVE. Unresolved: no benchmark for this exact v5 patch was found,
-and no stable-specific discussion was found.
-
-Record 9.2: Stable rules: obviously correct and reviewed, yes; fixes a
-real bug, yes; important issue, yes as network DoS/performance
-amplification; small and contained, yes; no new feature/API, yes; stable
-apply, likely clean for newer trees and minor adjustment for older
-trees.
-
-Record 9.3: No automatic exception category applies. This is not a
-device ID, quirk, DT, build, or documentation fix.
-
-Record 9.4: The risk-benefit balance favors backporting.
+Step 9.4 Record: The technical merits strongly support stable
+backporting.
 
 ## Verification
-- [Phase 1] Parsed `git show 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac`:
-  verified subject, tags, message, and 25-line diff.
-- [Phase 2] Read local code in `net/ipv6/exthdrs_core.c`,
-  `net/ipv6/ip6_input.c`, `net/ipv6/ip6_tunnel.c`, and
-  `include/net/ipv6.h`: verified loops were unbounded before the patch.
-- [Phase 3] Ran `git blame` on changed regions: verified long-lived code
-  and relevant commit ancestry.
-- [Phase 3] Inspected `47d3d7ac656a` and `076b8cad77aa9`: verified
-  similar prior DoS-limit work.
-- [Phase 4] Ran `b4 dig -c`, `b4 dig -a`, `b4 dig -w`, and `b4 mbox`:
-  verified v1-v5 history, reviewers, NAK of sysctl approach, and v5
-  acceptance.
-- [Phase 5] Ran caller searches for all four functions: verified broad
-  IPv6/netfilter/tunnel/driver call surface.
-- [Phase 6] Checked `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`:
-  verified the affected functions exist; verified `dropreason-core.h` is
-  absent before v6.6.
-- [Phase 8] Verified reachable call paths in `icmpv6_notify()`,
-  `ip6_input_finish()`, `udpv6_queue_rcv_skb()`, and `ip6_gre` tunnel
-  code.
-- UNVERIFIED: exact exploitability impact across real networks and exact
-  CPU-cost benchmark for this specific v5 patch.
-- UNVERIFIED: clean application to every currently maintained stable
-  branch; older trees likely need minor drop-reason context adjustment.
+- Phase 1: Parsed `git show 617eb7c0961a8`; confirmed tags and absence
+  of `Fixes:`, `Reported-by:`, `Link:`, and stable tag.
+- Phase 2: Inspected committed diff; confirmed one-file change in
+  `i2cdev_ioctl()`.
+- Phase 3: `git blame` identified `6ebec961d59b` and `cd97f39b7cdf`;
+  `git describe` placed them before all checked maintained stable trees.
+- Phase 3: `git show 6ebec961d59b` confirmed prior timeout/retry
+  negative-value fix and stable nomination.
+- Phase 4: `b4 dig`, `b4 dig -a`, `b4 dig -w`, and mbox read found one
+  v1 patch, proper I2C recipients, and no visible objections.
+- Phase 4: WebFetch of lore was blocked by Anubis; stable-list
+  discussion and public syzkaller report remain unverified.
+- Phase 5: `rg` and file reads confirmed ioctl file operations, compat
+  fallback, `msecs_to_jiffies()`, `adapter->timeout` as `int`, and
+  downstream timeout uses.
+- Phase 6: Checked `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`, and `v7.0`
+  snippets; all contain the vulnerable pattern.
+- Phase 6: `git apply --check` confirmed the upstream diff applies to
+  current `v7.0.5`.
+- Phase 8: `schedule_timeout()` source confirms negative timeout emits
+  `wrong timeout value` and returns 0.
 
 **YES**
 
- include/net/dropreason-core.h | 6 ++++++
- include/net/ipv6.h            | 3 +++
- net/ipv6/exthdrs_core.c       | 7 +++++++
- net/ipv6/ip6_input.c          | 5 +++++
- net/ipv6/ip6_tunnel.c         | 4 ++++
- 5 files changed, 25 insertions(+)
+ drivers/i2c/i2c-dev.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
-index a7b7abd66e215..0b674a02665ab 100644
---- a/include/net/dropreason-core.h
-+++ b/include/net/dropreason-core.h
-@@ -102,6 +102,7 @@
- 	FN(FRAG_TOO_FAR)		\
- 	FN(TCP_MINTTL)			\
- 	FN(IPV6_BAD_EXTHDR)		\
-+	FN(IPV6_TOO_MANY_EXTHDRS)	\
- 	FN(IPV6_NDISC_FRAG)		\
- 	FN(IPV6_NDISC_HOP_LIMIT)	\
- 	FN(IPV6_NDISC_BAD_CODE)		\
-@@ -513,6 +514,11 @@ enum skb_drop_reason {
- 	SKB_DROP_REASON_TCP_MINTTL,
- 	/** @SKB_DROP_REASON_IPV6_BAD_EXTHDR: Bad IPv6 extension header. */
- 	SKB_DROP_REASON_IPV6_BAD_EXTHDR,
-+	/**
-+	 * @SKB_DROP_REASON_IPV6_TOO_MANY_EXTHDRS: Number of IPv6 extension
-+	 * headers in the packet exceeds IP6_MAX_EXT_HDRS_CNT.
-+	 */
-+	SKB_DROP_REASON_IPV6_TOO_MANY_EXTHDRS,
- 	/** @SKB_DROP_REASON_IPV6_NDISC_FRAG: invalid frag (suppress_frag_ndisc). */
- 	SKB_DROP_REASON_IPV6_NDISC_FRAG,
- 	/** @SKB_DROP_REASON_IPV6_NDISC_HOP_LIMIT: invalid hop limit. */
-diff --git a/include/net/ipv6.h b/include/net/ipv6.h
-index 53c5056508be5..ec95c11b8e434 100644
---- a/include/net/ipv6.h
-+++ b/include/net/ipv6.h
-@@ -90,6 +90,9 @@ struct ip_tunnel_info;
- #define IP6_DEFAULT_MAX_DST_OPTS_LEN	 INT_MAX /* No limit */
- #define IP6_DEFAULT_MAX_HBH_OPTS_LEN	 INT_MAX /* No limit */
+diff --git a/drivers/i2c/i2c-dev.c b/drivers/i2c/i2c-dev.c
+index 7bbe0263411eb..ccaac5e29f906 100644
+--- a/drivers/i2c/i2c-dev.c
++++ b/drivers/i2c/i2c-dev.c
+@@ -487,12 +487,13 @@ static long i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		client->adapter->retries = arg;
+ 		break;
+ 	case I2C_TIMEOUT:
+-		if (arg > INT_MAX)
++		/*
++		 * For historical reasons, user-space sets the timeout value in
++		 * units of 10 ms.
++		 */
++		if (arg > INT_MAX / 10)
+ 			return -EINVAL;
  
-+/* Hard limit on traversed IPv6 extension headers */
-+#define IP6_MAX_EXT_HDRS_CNT		 12
-+
- /*
-  *	Addr type
-  *	
-diff --git a/net/ipv6/exthdrs_core.c b/net/ipv6/exthdrs_core.c
-index 49e31e4ae7b7f..9d06d487e8b10 100644
---- a/net/ipv6/exthdrs_core.c
-+++ b/net/ipv6/exthdrs_core.c
-@@ -73,6 +73,7 @@ int ipv6_skip_exthdr(const struct sk_buff *skb, int start, u8 *nexthdrp,
- 		     __be16 *frag_offp)
- {
- 	u8 nexthdr = *nexthdrp;
-+	int exthdr_cnt = 0;
- 
- 	*frag_offp = 0;
- 
-@@ -82,6 +83,8 @@ int ipv6_skip_exthdr(const struct sk_buff *skb, int start, u8 *nexthdrp,
- 
- 		if (nexthdr == NEXTHDR_NONE)
- 			return -1;
-+		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
-+			return -1;
- 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
- 		if (!hp)
- 			return -1;
-@@ -190,6 +193,7 @@ int ipv6_find_hdr(const struct sk_buff *skb, unsigned int *offset,
- {
- 	unsigned int start = skb_network_offset(skb) + sizeof(struct ipv6hdr);
- 	u8 nexthdr = ipv6_hdr(skb)->nexthdr;
-+	int exthdr_cnt = 0;
- 	bool found;
- 
- 	if (fragoff)
-@@ -216,6 +220,9 @@ int ipv6_find_hdr(const struct sk_buff *skb, unsigned int *offset,
- 			return -ENOENT;
- 		}
- 
-+		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
-+			return -EBADMSG;
-+
- 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
- 		if (!hp)
- 			return -EBADMSG;
-diff --git a/net/ipv6/ip6_input.c b/net/ipv6/ip6_input.c
-index 2bcb981c91aa8..bbad1d4e6b854 100644
---- a/net/ipv6/ip6_input.c
-+++ b/net/ipv6/ip6_input.c
-@@ -363,6 +363,7 @@ INDIRECT_CALLABLE_DECLARE(int tcp_v6_rcv(struct sk_buff *));
- void ip6_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int nexthdr,
- 			      bool have_final)
- {
-+	int exthdr_cnt = IP6CB(skb)->flags & IP6SKB_HOPBYHOP ? 1 : 0;
- 	const struct inet6_protocol *ipprot;
- 	struct inet6_dev *idev;
- 	unsigned int nhoff;
-@@ -447,6 +448,10 @@ void ip6_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int nexthdr,
- 				nexthdr = ret;
- 				goto resubmit_final;
- 			} else {
-+				if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT)) {
-+					SKB_DR_SET(reason, IPV6_TOO_MANY_EXTHDRS);
-+					goto discard;
-+				}
- 				goto resubmit;
- 			}
- 		} else if (ret == 0) {
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index 0b53488a92290..c1ca9b2806359 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -400,11 +400,15 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
- 	unsigned int nhoff = raw - skb->data;
- 	unsigned int off = nhoff + sizeof(*ipv6h);
- 	u8 nexthdr = ipv6h->nexthdr;
-+	int exthdr_cnt = 0;
- 
- 	while (ipv6_ext_hdr(nexthdr) && nexthdr != NEXTHDR_NONE) {
- 		struct ipv6_opt_hdr *hdr;
- 		u16 optlen;
- 
-+		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
-+			break;
-+
- 		if (!pskb_may_pull(skb, off + sizeof(*hdr)))
- 			break;
- 
+-		/* For historical reasons, user-space sets the timeout
+-		 * value in units of 10 ms.
+-		 */
+ 		client->adapter->timeout = msecs_to_jiffies(arg * 10);
+ 		break;
+ 	default:
 -- 
 2.53.0
 
