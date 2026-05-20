@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD82B3EA953;
-	Wed, 20 May 2026 16:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEDD3EE1DA;
+	Wed, 20 May 2026 16:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296290; cv=none; b=ohNWDFfkkYV1H6Sx9i19Y61uAOBRGUThZjW0GhMBpvshD5Wi5mf8Q6Dpictuki+YktSzGSLT13z5xQbnfVG7sD+0k/OjxEprF6UvorhSsouVjqtMgPvSKJaPLWGWzYBWi5k698Ps17SNjLYgSmT4gykeZ/W84AQQR9Brwem+Ov4=
+	t=1779296293; cv=none; b=HuxXsHjtBuyQSSFkJt8sc3eQmeEd67jT4XFGcAm/2ywgly+2jrNXNctrYh52HMp04JP6t3ETpD9NKuFUyKCQGDe1gSDXwK8FL6/PIKmitlhvJNBgmDi9QKj4ebalf9Hj+H1V2qaW/+wGY6Ls3p0ldEVOQ0NsKRDcGP8e9hLrs1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296290; c=relaxed/simple;
-	bh=jW4DFsA/O/XWL5Qxu4VnZ+m6xGMzeyGcaEpuJYswEYY=;
+	s=arc-20240116; t=1779296293; c=relaxed/simple;
+	bh=CsT62k9xZczJ+FXQ7FRk5dPOb8znyX9gn7H1Ivg90oY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EV5PsCLl+Rgb1DEHjqDaHQIPLIgfGNHzfOLBZAz0Fi+TchU+cjdUbF53WMwaYAPm3kMaEjJhVjbjnnWc4bcQ6zJU75ICOvspLoPYYkDd77NZr9ZNlop51pdSpEr7iuPq0Hisjb6mlJKlnCE9vZd5DBuBZykwXC8Ecrh9BTeGlhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAR6sma8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FBasft+9we93j9s3q/Gq0d1PdjnaIsFg6gIg/O/ezCyvWtkTaXuRhJlPFtMDJN1rOzE7MVTBuFIcIWE4GTzeqe5k/r8fI/cuMh3q0NzbQQZEyCzLlJIzyhrnxFLjnIljHqWqpwZTTIHjPE62ggk4CPsmhqZVaRxK6IByeY/+Xx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4nioBH4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAR6sma8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3066F1F000E9;
-	Wed, 20 May 2026 16:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4nioBH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96F01F00894;
+	Wed, 20 May 2026 16:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296289;
-	bh=ry4NofiHywn/LA0Rdprg0edzkuPDkiHab1kGyTz71vA=;
+	s=korg; t=1779296292;
+	bh=PYgD9+ngn1y3m8y9QJoLnE+DdTg/ScDaLJtJEVZkodM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cAR6sma86PJDeJLd3x4QDEGWoeVKqnnGGcbq5pQ+HgThSI9ffT+qAoevj4if1Fdcm
-	 LzVqKY11VrZu5Pi0vQDEGla4IAn2/+w9/DjqsaFK2PhYQCa7YE271K8EWGgxZrJLm+
-	 8BCvjOA8y9tM19Y96QFbYa0SsGPlXx+mF3yx7vcU=
+	b=l4nioBH4mvF7o7wgrzBtL1MqTAM4s9OpSnjSIdqqQrYGF3UD5/PXCvwGFElmz3Iz4
+	 MNThZMdw6m4LuuGlS1iyfSK1w6SRmjwGB4ItZ4KZodFMbzcwUM05hpAx/d3b/00Loj
+	 cWiuq3pzzuMZ0tKa+qVpaA9wx2oulDGzGGBfi7VY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moses <p@1g4.org>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	kernel test robot <lkp@intel.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Lee Jones <lee@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0744/1146] crypto: ccp - copy IV using skcipher ivsize
-Date: Wed, 20 May 2026 18:16:34 +0200
-Message-ID: <20260520162205.044551510@linuxfoundation.org>
+Subject: [PATCH 7.0 0745/1146] sh: Include <linux/io.h> in dac.h
+Date: Wed, 20 May 2026 18:16:35 +0200
+Message-ID: <20260520162205.067126444@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,45 +57,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moses <p@1g4.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit a7a1f3cdd64d8a165d9b8c9e9ad7fb46ac19dfc4 ]
+[ Upstream commit 57b3ec396dd898aadc073bb16f3d05ee64b2c8af ]
 
-AF_ALG rfc3686-ctr-aes-ccp requests pass an 8-byte IV to the driver.
+Include <linux/io.h> to avoid depending on <linux/backlight.h>
+for including it. Declares __raw_readb() and __raw_writeb().
 
-ccp_aes_complete() restores AES_BLOCK_SIZE bytes into the caller's IV
-buffer while RFC3686 skciphers expose an 8-byte IV, so the restore
-overruns the provided buffer.
-
-Use crypto_skcipher_ivsize() to copy only the algorithm's IV length.
-
-Fixes: 2b789435d7f3 ("crypto: ccp - CCP AES crypto API support")
-Signed-off-by: Paul Moses <p@1g4.org>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202510282206.wI0HrqcK-lkp@intel.com/
+Fixes: 243ce64b2b37 ("backlight: Do not include <linux/fb.h> in header file")
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Cc: Simona Vetter <simona.vetter@ffwll.ch>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Daniel Thompson <danielt@kernel.org>
+Cc: Jingoo Han <jingoohan1@gmail.com>
+Cc: dri-devel@lists.freedesktop.org
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/ccp-crypto-aes.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/sh/include/cpu-sh3/cpu/dac.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/crypto/ccp/ccp-crypto-aes.c b/drivers/crypto/ccp/ccp-crypto-aes.c
-index 01d298350b925..3ad6bb7666f62 100644
---- a/drivers/crypto/ccp/ccp-crypto-aes.c
-+++ b/drivers/crypto/ccp/ccp-crypto-aes.c
-@@ -30,8 +30,11 @@ static int ccp_aes_complete(struct crypto_async_request *async_req, int ret)
- 	if (ret)
- 		return ret;
+diff --git a/arch/sh/include/cpu-sh3/cpu/dac.h b/arch/sh/include/cpu-sh3/cpu/dac.h
+index fd02331608a8d..323ec8570bcd1 100644
+--- a/arch/sh/include/cpu-sh3/cpu/dac.h
++++ b/arch/sh/include/cpu-sh3/cpu/dac.h
+@@ -2,6 +2,8 @@
+ #ifndef __ASM_CPU_SH3_DAC_H
+ #define __ASM_CPU_SH3_DAC_H
  
--	if (ctx->u.aes.mode != CCP_AES_MODE_ECB)
--		memcpy(req->iv, rctx->iv, AES_BLOCK_SIZE);
-+	if (ctx->u.aes.mode != CCP_AES_MODE_ECB) {
-+		size_t ivsize = crypto_skcipher_ivsize(crypto_skcipher_reqtfm(req));
++#include <linux/io.h>
 +
-+		memcpy(req->iv, rctx->iv, ivsize);
-+	}
- 
- 	return 0;
- }
+ /*
+  * Copyright (C) 2003  Andriy Skulysh
+  */
 -- 
 2.53.0
 
