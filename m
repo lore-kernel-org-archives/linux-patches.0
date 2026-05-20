@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D876318EC7;
-	Wed, 20 May 2026 16:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1237B36D9EA;
+	Wed, 20 May 2026 16:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295932; cv=none; b=utOpcvdHOOwa9tSyvwXMCQ4SJ1tx9MdrVkq6gxVNzha/AQ9ZORXyPkdqcMrWkqA78ZvTr8i5P5Ntym4q4jonKZvXgRtsTEaOo6iPYn9tRgzOEH4FuXAvstaZNMNx1ayOYr72ScIA5Kofg2iQxPNfydnLASBY76Qjxm40fCnu2bo=
+	t=1779295935; cv=none; b=HRZ2hqJn5YX2PbePn22E6njmqczFqCkGf3JyKx3BvksBP4O1Znz5aPQQ1yaArk5HW+sAczRn8hKK6XNG7w2sgRoycacwVequRL9Nv5Lw5C/Cga9RNgaU9bRVAssKo4aK7/i3cLaUqHiACagiRkXyw57/DGfcTyq6DxyvoAHB7GM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295932; c=relaxed/simple;
-	bh=E57E7eQjq6p5A/mBhsfBm+eVgAMXU/ugSleSArpCEr0=;
+	s=arc-20240116; t=1779295935; c=relaxed/simple;
+	bh=D6aQgEtLC+dGoYRLW7Ycx3nLWOBqYp5W5EajzqgCXeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcjbuTJ9g1VSEHbTCv2xrlIQnzThRz+lFyE1QRKr0ZbNwggr/3MoTS9buxfWOgX1u1DnkjrNPl5I3heyXj+hkKhRnv1AuSFKraGs2c++PgpPmzAwhbyF609IHqgbO/klGtroRs8Rnbn0xRIYBYigG8cZliQ/Q3rI8asCphPTNGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UqFLwFc3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rEOYUY7a/U1a9IXcbt/kjsaAOwsUCd13HepmYW6vqh9XWfqgd7R7Au8e9k4rcpSrpnUCI1rlI9Plhwc6rbctXnTPZXDXisdtqwJY/t2tnwc2vX80c4cjuV9nDD6040WejznhGfNRvsSrANtyN1nmffhvgmCqkhHvwqe2L69ykNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+DAupIS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqFLwFc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D429D1F000E9;
-	Wed, 20 May 2026 16:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+DAupIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780E41F000E9;
+	Wed, 20 May 2026 16:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295931;
-	bh=xaqbLAqkphwN4cFEsvBQrxX+IKo0oasSVEiGQBW2lLs=;
+	s=korg; t=1779295934;
+	bh=KLZ2UisTsf7I0oSbRIWZF+EiY2l9eP48GWBak9GiuwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UqFLwFc3qv2bj5jcKewmOakzZ/xGLmIRRaFxneHSQn2hZiwddG2A2wMONAgF1rtzy
-	 4srLL3y5qVtWHskhC+Sc17WW8DxG4yjnHQUQkiifRjc2EES6f93qB6ItLLsgSGL9gc
-	 rJRs7OnVVyyxCoCQ9BesOewZaxVpO1PfjpJ2xKI8=
+	b=x+DAupISmwphNj9Jy/xlzhEXBTlYsbxogOHdEJvyNPQz76pYtxIXEw5/GjJep8vNx
+	 a6CriAuGuxt493zoFGNe+Ewx5sDuMkoJJQ6ocq+aZeHuQsbxjI3uKK3GEcaUiEnPB6
+	 ex8E98yX6TdxOu6ALVpMJCQaCXMUIJx/Py0utgYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Ene <sebastianene@google.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Richard Cheng <icheng@nvidia.com>,
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0567/1146] firmware: arm_ffa: Use the correct buffer size during RXTX_MAP
-Date: Wed, 20 May 2026 18:13:37 +0200
-Message-ID: <20260520162201.017227674@linuxfoundation.org>
+Subject: [PATCH 7.0 0568/1146] fwctl: Fix class init ordering to avoid NULL pointer dereference on device removal
+Date: Wed, 20 May 2026 18:13:38 +0200
+Message-ID: <20260520162201.039686504@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -51,37 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Ene <sebastianene@google.com>
+From: Richard Cheng <icheng@nvidia.com>
 
-[ Upstream commit 83210251fd70d5f96bcdc8911e15f7411a6b2463 ]
+[ Upstream commit a55f80233f384dc89ef3425b2e1dd0e6d44bcf29 ]
 
-Don't use the discovered buffer size from an FFA_FEATURES call directly
-since we can run on a system that has the PAGE_SIZE larger than the
-returned size which makes the alloc_pages_exact for the buffer to be
-rounded up.
+CXL is linked before fwctl in drivers/Makefile. Both use `module_init, so
+`cxl_pci_driver_init()` runs first. When `cxl_pci_probe()` calls
+`fwctl_register()` and then `device_add()`, fwctl_class is not yet
+registered because fwctl_init() hasn't run, causing `class_to_subsys()` to
+return NULL and skip knode_class initialization.
 
-Fixes: 61824feae5c0 ("firmware: arm_ffa: Fetch the Rx/Tx buffer size using ffa_features()")
-Signed-off-by: Sebastian Ene <sebastianene@google.com>
-Link: https://patch.msgid.link/20260402113939.930221-1-sebastianene@google.com
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+On device removal, `class_to_subsys()` returns non-NULL, and
+`device_del()` calls `klist_del()` on the uninitialized knode, triggering
+a NULL pointer dereference.
+
+Fixes: 858ce2f56b52 ("cxl: Add FWCTL support to CXL")
+Link: https://patch.msgid.link/r/20260409051902.40218-1-icheng@nvidia.com
+Signed-off-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Kai-Heng Feng <kaihengf@nvidia.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 2 +-
+ drivers/fwctl/main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index f2f94d4d533e8..eb27828482837 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -2078,7 +2078,7 @@ static int __init ffa_init(void)
+diff --git a/drivers/fwctl/main.c b/drivers/fwctl/main.c
+index bc6378506296c..098c3824ad751 100644
+--- a/drivers/fwctl/main.c
++++ b/drivers/fwctl/main.c
+@@ -415,7 +415,7 @@ static void __exit fwctl_exit(void)
+ 	unregister_chrdev_region(fwctl_dev, FWCTL_MAX_DEVICES);
+ }
  
- 	ret = ffa_rxtx_map(virt_to_phys(drv_info->tx_buffer),
- 			   virt_to_phys(drv_info->rx_buffer),
--			   rxtx_bufsz / FFA_PAGE_SIZE);
-+			   PAGE_ALIGN(rxtx_bufsz) / FFA_PAGE_SIZE);
- 	if (ret) {
- 		pr_err("failed to register FFA RxTx buffers\n");
- 		goto free_pages;
+-module_init(fwctl_init);
++subsys_initcall(fwctl_init);
+ module_exit(fwctl_exit);
+ MODULE_DESCRIPTION("fwctl device firmware access framework");
+ MODULE_LICENSE("GPL");
 -- 
 2.53.0
 
