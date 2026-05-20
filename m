@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D4C3D75C7;
-	Wed, 20 May 2026 17:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD483C870E;
+	Wed, 20 May 2026 17:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298592; cv=none; b=t6p+TJqHQMxOIfGDsFIr5wnztqEpQBZiQ9KvuE7JKvHqgN40frAxJnh9Sko9Sy7JXogBjG3acMK97cwN0T9Q5YlagZJmvHolBFVRBiKtcttk/Ao8tiIYVFzhYC/6m6UGAcffTTaubzl541Mh0rTN/WuqbJenMqxxYHS88+kjqbE=
+	t=1779298594; cv=none; b=LLxQbXB6p7TH0c3HMrbgY3apdu9ArxTG+lbIsC7CR/73LpqVMh5lf6jeXlW28Gd4gmtFsGxhNKOG5uid7kHXVdodSY77lsxA91MjWSVKsGV6s+mbHRal1hS8zCybvEz0zyrZqEisFVOlhDHBcrH8rR17WcJDn3E0cvKvh+tPr2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298592; c=relaxed/simple;
-	bh=6DR5yD27V7q1GQdU20U74zf/tcQbaZ94X+gM3yIhK4g=;
+	s=arc-20240116; t=1779298594; c=relaxed/simple;
+	bh=hQ4eXy84f6jI1hoyr9viyu6ufQ5j9dGmSpw7u7M0BKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FRGAPAILxsJbvrpZNjHko8Nmnp4gPI/E3ELkclPaAML/1Jp3dB+Yq0FmoqEdPFIoApLZKhftO4vjYkSHNsLHdpf/zi42oZa2Vj+002UWQm8E17NLjomKLPd0g0/Ti3dvta4tXrlTudgxwbd/ON6cAM7skl5EXK+BLETiSuAkQJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1kYngEZ8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mcFlJph7dNsFj41GsBI679z/3iJXuZLsQ/sVA2Kx025yvgrZuSyspTHi3h+ANmOajCKMe8+2X4FAx2HOORo1eYM4IGlH87z6MuAmUa+3dBhfU8HgYeM0N49OVl5hjN5nB7WVQu/88O7RbidwNhO3nU62/pr6vVkRE+JMY9lXLXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCKxlgEE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1kYngEZ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66321F000E9;
-	Wed, 20 May 2026 17:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCKxlgEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E38F1F000E9;
+	Wed, 20 May 2026 17:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298591;
-	bh=Wb2h8iLfJ40gup5Mwns0wgu8M7HYB3aJTQMCqnhhDxk=;
+	s=korg; t=1779298593;
+	bh=rfWhgWToEHhnvJ9AU9GiGKN4nKHfXIthBGlcBZ/g+1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1kYngEZ8P6BosCrg/zXP7v3RnFbtpJbuWaRZCcADnOcX4MjSt4gZPPvcmJiZz8fbI
-	 xsmqzmix0kfBLZBdXK3z9mu0lYJqTg8NF7d6qg7uK9PXMF2HLPcxQZj2t7OnBDcr3z
-	 xzTLmfGmVWrzuBkfRh3RPYLA04HdYZ5WgihkTLD8=
+	b=WCKxlgEEOEUPgicVzAFccw3qm2gb0fR5S1o4zCMi8vCM1tSBaZGnw9zCR2m0Jj1jm
+	 mVk6TSH80SNhA/qS6suwTBcKQPXZAooPWYM19ttFSDbcu/igfUYCt/RUQ5QMZWaGMh
+	 r9nQR5+90cxDJfKU2zzVzpdhB0n+0vc0dLDzX6gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Pratyush Yadav <pratyush@kernel.org>,
+	Shiji Yang <yangshiji66@outlook.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 468/957] mtd: spi-nor: update spi_nor_fixups::post_sfdp() documentation
-Date: Wed, 20 May 2026 18:15:51 +0200
-Message-ID: <20260520162144.673989357@linuxfoundation.org>
+Subject: [PATCH 6.18 469/957] mtd: spi-nor: swp: check SR_TB flag when getting tb_mask
+Date: Wed, 20 May 2026 18:15:52 +0200
+Message-ID: <20260520162144.696096719@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,38 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Shiji Yang <yangshiji66@outlook.com>
 
-[ Upstream commit 3620d67b48493c6252bbc873dc88dde81641d56b ]
+[ Upstream commit 94645aa41bf9ecb87c2ce78b1c3405bfb6074a37 ]
 
-After commit 5273cc6df984 ("mtd: spi-nor: core: Call
-spi_nor_post_sfdp_fixups() only when SFDP is defined")
-spi_nor_post_sfdp_fixups() isn't called anymore if no SFDP is detected.
+When the chip does not support top/bottom block protect, the tb_mask
+must be set to 0, otherwise SR1 bit5 will be unexpectedly modified.
 
-Update the documentation accordingly.
-
-Fixes: 5273cc6df984 ("mtd: spi-nor: core: Call spi_nor_post_sfdp_fixups() only when SFDP is defined")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
+Fixes: 3dd8012a8eeb ("mtd: spi-nor: add TB (Top/Bottom) protect support")
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/core.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/spi-nor/swp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
-index 16b382d4f04f2..e838c40a25897 100644
---- a/drivers/mtd/spi-nor/core.h
-+++ b/drivers/mtd/spi-nor/core.h
-@@ -413,7 +413,7 @@ struct spi_nor_flash_parameter {
-  *                   number of dummy cycles in read register ops.
-  * @smpt_map_id: called after map ID in SMPT table has been determined for the
-  *               case the map ID is wrong and needs to be fixed.
-- * @post_sfdp: called after SFDP has been parsed (is also called for SPI NORs
-+ * @post_sfdp: called after SFDP has been parsed (is not called for SPI NORs
-  *             that do not support RDSFDP). Typically used to tweak various
-  *             parameters that could not be extracted by other means (i.e.
-  *             when information provided by the SFDP/flash_info tables are
+diff --git a/drivers/mtd/spi-nor/swp.c b/drivers/mtd/spi-nor/swp.c
+index 9b07f83aeac76..e67a81dbb6bf6 100644
+--- a/drivers/mtd/spi-nor/swp.c
++++ b/drivers/mtd/spi-nor/swp.c
+@@ -28,8 +28,10 @@ static u8 spi_nor_get_sr_tb_mask(struct spi_nor *nor)
+ {
+ 	if (nor->flags & SNOR_F_HAS_SR_TB_BIT6)
+ 		return SR_TB_BIT6;
+-	else
++	else if (nor->flags & SNOR_F_HAS_SR_TB)
+ 		return SR_TB_BIT5;
++	else
++		return 0;
+ }
+ 
+ static u64 spi_nor_get_min_prot_length_sr(struct spi_nor *nor)
 -- 
 2.53.0
 
