@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBECD401490;
-	Wed, 20 May 2026 18:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912BA3FFAAD;
+	Wed, 20 May 2026 18:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302850; cv=none; b=FYlD2W3HJVOeMo2ONfLe9I34QZ8BRuVkgiQFP9ofSGh5B6azNf2ExNxW9cBYlBOVd85z1H+sr4oo7NR2DGoMSN2+iCN62Rb5RfVTNDftWA9ANbPXV3jBVycMyvx2ff2O+LCa4dppJ1z1Zztcfs4DCLGceZ6ibx7NZp4v5CBX9ag=
+	t=1779302852; cv=none; b=uYcaKznqy8fUOH116IX6/MuPsk2GONfqmVjDytF5JsDnAxbEqv1TyRNdxWPhsOA6UfEpqLxhctvmP6cENttvTs2B6WnvwlbEGbj74h96hsKUHWuvOhRCk8UoBZZZq86ACZF8IG50loBBI62LIz2LFt29idmR1f5oUBPc/8xPdEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302850; c=relaxed/simple;
-	bh=/h7XzYpi3FHxpJQYUrVoaD4MUUaOe98talq+ud7nUZU=;
+	s=arc-20240116; t=1779302852; c=relaxed/simple;
+	bh=cWqj9qmomywCZxLkRQ+n/yAQU0IgHapJmA4eS+bocAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RK1o2rQlZLQWtqb3J1Gfbx8UFZPh4iuteWebg6UhCwr3Us/utj48ArKKh8q52nhI1FIw+Z6akgx6lEXNgq5GdcdtdKy2iM3vq8L70682LmfOHH4FECJJoCKIyhdxcQjA3dbf0OQAHD/ZOVEoC4L4ni2Zrbxnt2UUJprRXU7LRro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pimbME0o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rSWI6bQB0n1VeZCjqo3G+Juegd78FJAxIb2ePhQaKKwaXiMJt4sTOgrffnpP3xsCf+/ri0uX4R4prwJ18lwRlOUHX8iS+LN+AIjrmqrfM6desL4BHwwdB0ELnsZbuOzW+5e+Kefo2IBhx6I8vuvWv2YSLmI24h/D78K4ScC6cCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWvCk6Yx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pimbME0o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F08F1F000E9;
-	Wed, 20 May 2026 18:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWvCk6Yx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034251F000E9;
+	Wed, 20 May 2026 18:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302848;
-	bh=ODrAxk1Q1Aqaa6wBCgX8E9j3LKAR7JzZ+8RZvJpd4us=;
+	s=korg; t=1779302851;
+	bh=Z3KcbkRaS+CHV1FzUqUPrVcxJP2+fAna2bYTCm+6kaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pimbME0opVjClnkWfVs7y3MSO3nu95Q+EzmOHqWlHmHbFAv5fHNHp9dNEw8qcGaTQ
-	 mZGtFD3CTESf3aj1bX5oyo859RSi+kZO18Z9JERzqc4je1FWqBp0N7+6H/Y+kF34dn
-	 4LcfSUvNVtNrDIqlKEXTynVMVthCS6rGTqWJAC8o=
+	b=cWvCk6YxZQ9hI78fL5mFboz/4E88GzOv7m7Sk3FoWVR9c67rlkdnnSjHKaboqqxgk
+	 N+DPePdcVnVQZUqrShFGbInaReEpXMH0BSV0VZCvOtOtHoMyK61Xf+GRly59UdBFdP
+	 K8KTlJ9K7/IpzZ7nk5gvzn/X8diC6d9igel4QXw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moritz Klammler <Moritz.Klammler@ferchau.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 422/508] futex: Prevent lockup in requeue-PI during signal/ timeout wakeup
-Date: Wed, 20 May 2026 18:24:05 +0200
-Message-ID: <20260520162107.747079713@linuxfoundation.org>
+Subject: [PATCH 6.6 423/508] drm/amd/display: Allow DCE link encoder without AUX registers
+Date: Wed, 20 May 2026 18:24:06 +0200
+Message-ID: <20260520162107.768280424@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -46,104 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit bc7304f3ae20972d11db6e0b1b541c63feda5f05 ]
+[ Upstream commit ac27e3f99035f132f23bc0409d0e57f11f054c70 ]
 
-During wait-requeue-pi (task A) and requeue-PI (task B) the following
-race can happen:
+Allow constructing the DCE link encoder without DDC,
+which means the AUX registers array will be NULL.
 
-     Task A                             Task B
-  futex_wait_requeue_pi()
-    futex_setup_timer()
-    futex_do_wait()
-                                   futex_requeue()
-                                        CLASS(hb, hb1)(&key1);
-                                        CLASS(hb, hb2)(&key2);
-        *timeout*
-    futex_requeue_pi_wakeup_sync()
-        requeue_state = Q_REQUEUE_PI_IGNORE
+This is necessary to support embedded connectors without DDC.
 
-    *blocks on hb->lock*
-
-                                        futex_proxy_trylock_atomic()
-                                          futex_requeue_pi_prepare()
-                                            Q_REQUEUE_PI_IGNORE => -EAGAIN
-                                        double_unlock_hb(hb1, hb2)
-                                         *retry*
-
-Task B acquires both hb locks and attempts to acquire the PI-lock of the
-top most waiter (task B). Task A is leaving early due to a signal/
-timeout and started removing itself from the queue. It updates its
-requeue_state but can not remove it from the list because this requires
-the hb lock which is owned by task B.
-
-Usually task A is able to swoop the lock after task B unlocked it.
-However if task B is of higher priority then task A may not be able to
-wake up in time and acquire the lock before task B gets it again.
-Especially on a UP system where A is never scheduled.
-
-As a result task A blocks on the lock and task B busy loops, trying to
-make progress but live locks the system instead. Tragic.
-
-This can be fixed by removing the top most waiter from the list in this
-case. This allows task B to grab the next top waiter (if any) in the
-next iteration and make progress.
-
-Remove the top most waiter if futex_requeue_pi_prepare() fails.
-Let the waiter conditionally remove itself from the list in
-handle_early_requeue_pi_wakeup().
-
-Fixes: 07d91ef510fb1 ("futex: Prevent requeue_pi() lock nesting issue on RT")
-Reported-by: Moritz Klammler <Moritz.Klammler@ferchau.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260428103425.dywXyPd3@linutronix.de
-Closes: https://lore.kernel.org/all/VE1PR06MB6894BE61C173D802365BE19DFF4CA@VE1PR06MB6894.eurprd06.prod.outlook.com
+Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
+Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/5192
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 87f30b101af62590faf6020d106da07efdda199b)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/requeue.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/futex/requeue.c b/kernel/futex/requeue.c
-index 7e43839ca7b05..60b08247b07dd 100644
---- a/kernel/futex/requeue.c
-+++ b/kernel/futex/requeue.c
-@@ -307,8 +307,11 @@ futex_proxy_trylock_atomic(u32 __user *pifutex, struct futex_hash_bucket *hb1,
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
+index 0a33f8f117e92..623abdf7065e7 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_link_encoder.c
+@@ -989,7 +989,9 @@ void dce110_link_encoder_hw_init(
+ 		ASSERT(result == BP_RESULT_OK);
  
- 	/* Ensure that this does not race against an early wakeup */
--	if (!futex_requeue_pi_prepare(top_waiter, NULL))
-+	if (!futex_requeue_pi_prepare(top_waiter, NULL)) {
-+		plist_del(&top_waiter->list, &hb1->chain);
-+		futex_hb_waiters_dec(hb1);
- 		return -EAGAIN;
-+	}
+ 	}
+-	aux_initialize(enc110);
++
++	if (enc110->aux_regs)
++		aux_initialize(enc110);
  
- 	/*
- 	 * Try to take the lock for top_waiter and set the FUTEX_WAITERS bit
-@@ -707,10 +710,12 @@ int handle_early_requeue_pi_wakeup(struct futex_hash_bucket *hb,
- 
- 	/*
- 	 * We were woken prior to requeue by a timeout or a signal.
--	 * Unqueue the futex_q and determine which it was.
-+	 * Conditionally unqueue the futex_q and determine which it was.
- 	 */
--	plist_del(&q->list, &hb->chain);
--	futex_hb_waiters_dec(hb);
-+	if (!plist_node_empty(&q->list)) {
-+		plist_del(&q->list, &hb->chain);
-+		futex_hb_waiters_dec(hb);
-+	}
- 
- 	/* Handle spurious wakeups gracefully */
- 	ret = -EWOULDBLOCK;
+ 	/* reinitialize HPD.
+ 	 * hpd_initialize() will pass DIG_FE id to HW context.
 -- 
 2.53.0
 
