@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EBC36405A;
-	Wed, 20 May 2026 17:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505DE28DC4;
+	Wed, 20 May 2026 17:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298374; cv=none; b=kESAeSeeit0xlMa2IdMbni3AOoi6mIfUXYqDz8u5eNVdMyOPU/HLbLdJtihyyklAES0vbcpikSvQjdx0+xm+vcGwGmKDE0BOIe+OV+Fvg4LOZfRbyJJEuda59y0T1Sb8ASPx5XvjfXmdxqfcNNs/Mur7V+zoQ3UwO9sllsJv5Js=
+	t=1779298377; cv=none; b=VNf6G7dOkG9Q2KJtxhP3prEwrOUFopmm61aRoLkcS2ZUkmj4IctHiSpyp5JOEI0OlMY+4SVzNs09STejZ5H7H2ZdgT8EkxT4TPwpyJw3C1CvJZtnNEXKCOFnjRuPfhSmLtzS2CaPiwoxAJxH3AmCHaN0Isxh4g/23uaiAi0UrzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298374; c=relaxed/simple;
-	bh=veewOMVk1K0n7KMssSdmWpF2O2nxfcpZjqtPdtfLdkQ=;
+	s=arc-20240116; t=1779298377; c=relaxed/simple;
+	bh=DPKWLGH3JOvyuD3DWE1mmhpZ0dLyq5WwGxFxMCIwJF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfP7GyQr232rrDICPVUh0CstT4XK6TVkooGXdam7uCmCbSw+yF+sRhNxzO7ksRGF3+ouqGt+5a/KxfdWrlXuKCiZo4VOSBakuxFZIUwf65mGx8j0JVwl5HCbPelLfG4TTW0NWMD+xmmJxFz1JO6wKrE9spK2tVws20RBqb4h6ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXxXMd9D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=elD8TRUlwsvV7ikTn5CPMRYQAs5g9nh2BvFrmli/tW2BFwqPP1XcwPpqxNg4hyRd22aOEll6sjjR5rQYFT+NPDXsfwJRDXOL9m8skfnfwo2W20SeTB9e4M3OIzQCJdIejFxS6EkUhAv8Xm1mEFfRWUhSpsYm5NJB/M0lbM72Xqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CCllBTX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXxXMd9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5DB1F000E9;
-	Wed, 20 May 2026 17:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CCllBTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A891F000E9;
+	Wed, 20 May 2026 17:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298373;
-	bh=VZEXUFePQ7f2HqhY5k8eErpED6jGW5miCa6e63z9yp8=;
+	s=korg; t=1779298376;
+	bh=0iz60ej8HJ/QAulIv2z15ljJeSl6CczIrYCOV4cYCzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mXxXMd9D2njpVNOMNGl79zOWldzgEQVuQvAUUOTwCSBv9LiyXWF0keqBZiiFdAi1S
-	 W830sN2OpypqcJQMC0WPXK9P3amf7wvCVr8SFdzwdXKie+mbDLbYFlnzdkNtV/EH8E
-	 WXIPGrt2JoNQUvmvBdNKW1HhDwrhEgK0vOVKKrFY=
+	b=1CCllBTX+1eyIxECN+6YLH8f3497sFN8Fgjm4Uvd7jUe+k/P4R5P5Z0EwSc2QlVoY
+	 i9TuSz0AgwNC/BhnTgIxWZmeh7v4pTTOIQgIxWt7MUzGQGMvGSXp4Z2oXnGtPOhZ5A
+	 vQpnVHmu6lF1VEuAUBvDRrLAoGRp97s2/T4XvTbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Wang <wangming5719@gmail.com>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Alex Bee <knaerzche@gmail.com>,
+	Robin Murphy <robin.murphy@arm.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 385/957] arm64: dts: rockchip: Fix Bluetooth stability on LCKFB TaiShan Pi
-Date: Wed, 20 May 2026 18:14:28 +0200
-Message-ID: <20260520162142.877628311@linuxfoundation.org>
+Subject: [PATCH 6.18 386/957] Revert "arm64: dts: rockchip: add SPDIF audio to Beelink A1"
+Date: Wed, 20 May 2026 18:14:29 +0200
+Message-ID: <20260520162142.899096934@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,47 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Wang <wangming5719@gmail.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit 861a9593e10bb6ab2a492b315c8a2a3aad70ac00 ]
+[ Upstream commit 03978cb18059ecd27e3d955508b18cf2a1196142 ]
 
-The AP6212 WiFi/BT module on the LCKFB TaiShan Pi (RK3566) is prone to
-communication timeouts and reset failures (error -110) when operating at
-3 Mbps.
+This reverts commit bdc4d388c6452498ab62ef2564589f40e0c8c262.
 
-This patch stabilizes the Bluetooth interface by:
-1. Updating the compatible string to 'brcm,bcm43430a1-bt' to better reflect
-   the actual chip revision used in the AP6212 module.
-2. Lowering the maximum UART baud rate from 3,000,000 to 1,500,000 bps.
-   Tests show that 1.5 Mbps is the reliable upper limit for this board's
-   UART configuration, eliminating the initialization timeouts.
+While Beelink A1 mostly follows the high-end RK3328 reference design,
+it does not in fact have the S/PDIF connector, only HDMI and a 3.5mm
+jack for the analog audio/TV codecs - the tiny form factor literally
+doesn't have room to fit more!
 
-Fixes: 251e5ade9ba4 ("arm64: dts: rockchip: add dts for LCKFB Taishan Pi RK3566")
-Signed-off-by: Ming Wang <wangming5719@gmail.com>
-Link: https://patch.msgid.link/20260206090453.1041919-1-wming126@126.com
+Cc: Christian Hewitt <christianshewitt@gmail.com>
+Cc: Alex Bee <knaerzche@gmail.com>
+Fixes: bdc4d388c645 ("arm64: dts: rockchip: add SPDIF audio to Beelink A1")
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://patch.msgid.link/0af77a02c2b0806d4ca72066392a5453fcc89a8f.1767111968.git.robin.murphy@arm.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3328-a1.dts | 23 ----------------------
+ 1 file changed, 23 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts b/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts
-index ed65d31204446..18a560a6e2a4a 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts
-@@ -635,10 +635,10 @@ &uart1 {
- 	status = "okay";
+diff --git a/arch/arm64/boot/dts/rockchip/rk3328-a1.dts b/arch/arm64/boot/dts/rockchip/rk3328-a1.dts
+index 30bdb38f0727a..e810ed146451c 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3328-a1.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3328-a1.dts
+@@ -58,24 +58,6 @@ ir-receiver {
+ 		gpios = <&gpio2 RK_PA2 GPIO_ACTIVE_LOW>;
+ 		linux,rc-map-name = "rc-beelink-gs1";
+ 	};
+-
+-	spdif_dit: spdif-dit {
+-		compatible = "linux,spdif-dit";
+-		#sound-dai-cells = <0>;
+-	};
+-
+-	spdif_sound: spdif-sound {
+-		compatible = "simple-audio-card";
+-		simple-audio-card,name = "SPDIF";
+-
+-		simple-audio-card,cpu {
+-			sound-dai = <&spdif>;
+-		};
+-
+-		simple-audio-card,codec {
+-			sound-dai = <&spdif_dit>;
+-		};
+-	};
+ };
  
- 	bluetooth: bluetooth {
--		compatible = "brcm,bcm43438-bt";
-+		compatible = "brcm,bcm43430a1-bt";
- 		clocks = <&rk809 1>;
- 		clock-names = "lpo";
--		max-speed = <3000000>;
-+		max-speed = <1500000>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&bt_host_wake_l &bt_wake_l &bt_enable_h>;
- 		shutdown-gpios = <&gpio2 RK_PB7 GPIO_ACTIVE_HIGH>;
+ &analog_sound {
+@@ -343,11 +325,6 @@ &sdmmc {
+ 	status = "okay";
+ };
+ 
+-&spdif {
+-	pinctrl-0 = <&spdifm0_tx>;
+-	status = "okay";
+-};
+-
+ &tsadc {
+ 	rockchip,hw-tshut-mode = <0>;
+ 	rockchip,hw-tshut-polarity = <0>;
 -- 
 2.53.0
 
