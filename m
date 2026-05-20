@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C78735F619;
-	Wed, 20 May 2026 17:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E013364E89;
+	Wed, 20 May 2026 17:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296995; cv=none; b=mhN75F1VBU1V4r5MXY4pus2XjRYvWJ73MvpwQBin9CtCfj8NUSREmvWKpv/UtMzCWAEHIOFzlSmHqtP9ynsS2FwXxbBjkgsv112qJXnbBNmmChP0vLWFa0I7ccTTnRS+W6e8tdezGN/zTn6tYfKopl8zfjYcH4JQC6m+xxjluGM=
+	t=1779296997; cv=none; b=Rop7U2jJcXTZioeNJ3SnnvDt6ztBs0MboF5ewgEnp75zYvnjb9tzjeoYyIKntKwxuI7l6Jy2dwU8Kl2K6W5tSx60DS/R0BmbAkcfcj/vVj8B8Uu8XJpaNzwSYx4bxY9CNLoTDzKC/8zBH+Qw+OcyYShnzYyGM73L/+ZNbMYP5ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296995; c=relaxed/simple;
-	bh=OTUw56Tsn84dixGxlXTHr4zarcgaXQCoaG1wgBXrEjw=;
+	s=arc-20240116; t=1779296997; c=relaxed/simple;
+	bh=0xFwP3VAckaxQwfQHM/VRkLW3UkKFo1AKTsoRgtHwls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XZ1aN5xCrvWXAsp1FwRaA5jxVc3C+N/Pp8mJ9yBJtOpHdpte4tRISC8b6QUWiXDJg5YB72NQJdPAIG6GhD00M8b90vzevb20MxtOxq7BYJD9FCBLzymAxMT1LVFhvpA7zR1r7Yh4iQA8awtu5+lwbHCJkmKSuEDBtoyURMNVD00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJwVCUD3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KFuJoTQJqIxFCA9GC5Zyz0z2xf1QjCoAKCIxPL1J+fgXlRp3T4OXvPD+p1h/w6JHHP0WRWfMGFPBK18Yp70z/pYyfQK7dyuegfnsNNwyVHtgnWfG875CZu+bALvlImqbEMrUB8/AsW+Vq/nRyxuARUHjUZ4xARpttYFt+TcOvdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ww7UK/1N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJwVCUD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DE91F000E9;
-	Wed, 20 May 2026 17:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ww7UK/1N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83DB1F000E9;
+	Wed, 20 May 2026 17:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296993;
-	bh=jJgVeuC9LkdSzWtiVkPzlOf1Aq7iaLlw8tvFZxVmxgQ=;
+	s=korg; t=1779296996;
+	bh=oaYro74TKXUFR6x+v/GO9TgJBCQk4vHcD2bFSHwkAdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gJwVCUD3786B2jGzugGqaa/3yHXzTzIZBHSHToGi9gqJWuyJ2+LknoVzfeFUHrsmK
-	 jt3fivMVfg7i/yC+yprFL8Mm6XsFXr6z8h2qjz8OVS+WTX1EL9CMQVm57gqMrTgaI7
-	 r7HH1GFAZeXV4q5V87wZVVUSjhNwjtmnSEcLow5E=
+	b=ww7UK/1NYI3Q+uHa90yowk4zEqYEvujPro6C9NVOlxg9kSZ+tke8mR5IKBG2lSdFZ
+	 Cs+IWH9YhEcAL9S5AtdOD0wTHdQ74IMDX5gXBFujki1oK99Ui5fMu3fZmTWfPZ2/2d
+	 WQrfCM6hZhDyZTQIkqA+CjGupNBgC0x8ciSdEBpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Francois Dugast <francois.dugast@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
 	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1011/1146] drm/xe: Fix potential NULL deref in xe_exec_queue_tlb_inval_last_fence_put_unlocked
-Date: Wed, 20 May 2026 18:21:01 +0200
-Message-ID: <20260520162211.114572172@linuxfoundation.org>
+Subject: [PATCH 7.0 1012/1146] drm/xe: Fix error cleanup in xe_exec_queue_create_ioctl()
+Date: Wed, 20 May 2026 18:21:02 +0200
+Message-ID: <20260520162211.137128649@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,49 +56,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit f8c4151d50b12923b67819ebf03c1c6782c984c1 ]
+[ Upstream commit f3cc22d4df3ed58439ea7e21daa54c3608e03b78 ]
 
-xe_exec_queue_tlb_inval_last_fence_put_unlocked() uses q->vm->xe as the
-first argument to xe_assert(). This function is called unconditionally
-from xe_exec_queue_destroy() for all queues, including kernel queues
-that have q->vm == NULL (e.g., queues created during GT init in
-xe_gt_record_default_lrcs() with vm=NULL).
+Two error handling issues exist in xe_exec_queue_create_ioctl():
 
-While current compilers optimize away the q->vm->xe dereference (even
-in CONFIG_DRM_XE_DEBUG=y builds, the compiler pushes the dereference
-into the WARN branch that is only taken when the assert condition is
-false), the code is semantically incorrect and constitutes undefined
-behavior in the C abstract machine for the NULL pointer case.
+1. When xe_hw_engine_group_add_exec_queue() fails, the error path jumps
+   to put_exec_queue which skips xe_exec_queue_kill(). If the VM is in
+   preempt fence mode, xe_vm_add_compute_exec_queue() has already added
+   the queue to the VM's compute exec queue list. Skipping the kill
+   leaves the queue on that list, leading to a dangling pointer after
+   the queue is freed.
 
-Use gt_to_xe(q->gt) instead, which is always valid for any exec queue.
-This is consistent with how xe_exec_queue_destroy() itself obtains the
-xe_device pointer in its own xe_assert at the top of the function.
+2. When xa_alloc() fails after xe_hw_engine_group_add_exec_queue() has
+   succeeded, the error path does not call
+   xe_hw_engine_group_del_exec_queue() to remove the queue from the hw
+   engine group list. The queue is then freed while still linked into
+   the hw engine group, causing a use-after-free.
 
-Fixes: b2d7ec41f2a3 ("drm/xe: Attach last fence to TLB invalidation job queues")
+Fix both by:
+- Changing the xe_hw_engine_group_add_exec_queue() failure path to jump
+  to kill_exec_queue so that xe_exec_queue_kill() properly removes the
+  queue from the VM's compute list.
+- Adding a del_hw_engine_group label before kill_exec_queue for the
+  xa_alloc() failure path, which removes the queue from the hw engine
+  group before proceeding with the rest of the cleanup.
+
+Fixes: 7970cb36966c ("'drm/xe/hw_engine_group: Register hw engine group's exec queues")
+Cc: Francois Dugast <francois.dugast@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
 Assisted-by: Claude:claude-opus-4.6
 Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260409003449.3405767-1-shuicheng.lin@intel.com
+Link: https://patch.msgid.link/20260408020647.3397933-1-shuicheng.lin@intel.com
 Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit 96078a1c68bf97f17fd1d08c3f58f5c5cc9ccd65)
+(cherry picked from commit 37c831f401746a45d510b312b0ed7a77b1e06ec8)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_exec_queue.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_exec_queue.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
-index 8ecdf949f9e4c..3a60a2fb9cf96 100644
+index 3a60a2fb9cf96..a49919da0eee6 100644
 --- a/drivers/gpu/drm/xe/xe_exec_queue.c
 +++ b/drivers/gpu/drm/xe/xe_exec_queue.c
-@@ -1574,7 +1574,7 @@ void xe_exec_queue_tlb_inval_last_fence_put(struct xe_exec_queue *q,
- void xe_exec_queue_tlb_inval_last_fence_put_unlocked(struct xe_exec_queue *q,
- 						     unsigned int type)
- {
--	xe_assert(q->vm->xe, type == XE_EXEC_QUEUE_TLB_INVAL_MEDIA_GT ||
-+	xe_assert(gt_to_xe(q->gt), type == XE_EXEC_QUEUE_TLB_INVAL_MEDIA_GT ||
- 		  type == XE_EXEC_QUEUE_TLB_INVAL_PRIMARY_GT);
+@@ -1227,7 +1227,7 @@ int xe_exec_queue_create_ioctl(struct drm_device *dev, void *data,
+ 		if (q->vm && q->hwe->hw_engine_group) {
+ 			err = xe_hw_engine_group_add_exec_queue(q->hwe->hw_engine_group, q);
+ 			if (err)
+-				goto put_exec_queue;
++				goto kill_exec_queue;
+ 		}
+ 	}
  
- 	dma_fence_put(q->tlb_inval[type].last_fence);
+@@ -1236,12 +1236,15 @@ int xe_exec_queue_create_ioctl(struct drm_device *dev, void *data,
+ 	/* user id alloc must always be last in ioctl to prevent UAF */
+ 	err = xa_alloc(&xef->exec_queue.xa, &id, q, xa_limit_32b, GFP_KERNEL);
+ 	if (err)
+-		goto kill_exec_queue;
++		goto del_hw_engine_group;
+ 
+ 	args->exec_queue_id = id;
+ 
+ 	return 0;
+ 
++del_hw_engine_group:
++	if (q->vm && q->hwe && q->hwe->hw_engine_group)
++		xe_hw_engine_group_del_exec_queue(q->hwe->hw_engine_group, q);
+ kill_exec_queue:
+ 	xe_exec_queue_kill(q);
+ delete_queue_group:
 -- 
 2.53.0
 
