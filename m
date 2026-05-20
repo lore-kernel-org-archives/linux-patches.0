@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEAC332EBD;
-	Wed, 20 May 2026 18:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3913FB05A;
+	Wed, 20 May 2026 18:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301482; cv=none; b=ZBhNsK72tgoNQkHYSoP5L1G9GRqFTPdOpnfN4kvCSbspfN6F6iUH2vjkUwbQZh5TGTNVfys5hmQD1Du3R1FVesQxxftzkqYlS9lrOJ0lz4roaHX6jfP2ixr1nW9fB5vtCHYsYb/Olx0ZSZrjm6WS11blfx5wM/H+tUYYxUkUgmg=
+	t=1779301484; cv=none; b=JZSO6Hlk+zIciUWz0V9oeBPT9Use1yjbLszdwr1WQpRLV67nTgWrUNKDjIH/dNEQU/7AJbdmxIhdrNbdhP15E218aMpyvKJKOz9s/KI8y6T3r5NFcimVJcLu0wAEWhvPxudQsHWUSQ3JNzlOaisroQ7raPl8d+9lbvscATy/CkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301482; c=relaxed/simple;
-	bh=o9MZlLx5Vrw3vczWMvRGEXvYBq4i7XJaiN+J/lK8WYE=;
+	s=arc-20240116; t=1779301484; c=relaxed/simple;
+	bh=ikXV4+oKAwRz1hfmtzV8KyBoXCXU3+mXrqGlyITQwRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O3E5ulO4gTkP86UBJn/3NNeWOhnrcF8mnBxianxdw5fbRzHRGmDB/xYOvJgYc8XwQuBbS2P1UG2zo9lRWPD1uoUKm3e4YwITRMMHAki6xIQIbvfe+7qZmjzqdPPdY7szRBKtlHtRZF2yOdtimcSj0XZhGpANlpOrr1SInba20Ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tmh871KB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=anm1pPZvF6Vv0BD12jEBw6luJyU5FCVAy3gzPWh+u4xQ9DAvFNsmXC7JVbvDqCq56wiC2FyGTE38P/aaEX+QsK/YFtIrtdKgsDnHzxfFyohZVsDPtz5BoTCYbwf5NtssXOe6HeIFox6Cr1RcrV6LMMgy+OLEr59uIfGEr1BvuAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kyrpt6z0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tmh871KB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5186A1F000E9;
-	Wed, 20 May 2026 18:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kyrpt6z0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9691F000E9;
+	Wed, 20 May 2026 18:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301480;
-	bh=nj3EXp0COAyq4GBnZWNuBlc0lQCp8V/NeRf5zwIRTC4=;
+	s=korg; t=1779301483;
+	bh=Q+HEZqZYvZDZ/PLYu20+LC2jX55Aj9ANho42YMJlsug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tmh871KBKKihxZbQB7sylg+MZ9MshNGAhCn9rhoudEER0PyIgvFNOUQGoPggzjjti
-	 /H+zxM84XlAGzzXYxK/MeGBUPJETrUIvPeKh1AWRDGCw/33CYWRtOtzcvr4NABf1Ck
-	 GMr/AFMAqwYTxSY0sgkospQ88eAvKw67TO8qwRYM=
+	b=Kyrpt6z00+/R2hQwExnVoQDkahrEXl9N1AfylHvFBnffLFWGDCi5kv4Nt7GOUVxh8
+	 IUkCjQgVxlQIsdz46bNAWzPt3hbTxEf/42qh1lyAEqNQgIceqmqBwjNAesjaomQSgM
+	 zSzUV8wg/lQuNjWIYGxnOcD7jIHBvWJ3BFwC4gDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Yinjie Yao <yinjie.yao@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 519/666] drm/amdgpu: fix AMDGPU_INFO_READ_MMR_REG
-Date: Wed, 20 May 2026 18:22:10 +0200
-Message-ID: <20260520162122.512581308@linuxfoundation.org>
+Subject: [PATCH 6.12 565/666] drm/amdgpu/jpeg: set no_user_fence for JPEG v4.0.3 ring
+Date: Wed, 20 May 2026 18:22:56 +0200
+Message-ID: <20260520162123.514013794@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,128 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Yinjie Yao <yinjie.yao@amd.com>
 
-[ Upstream commit 0ef196a208385b7d7da79f411c161b04e97283e2 ]
+[ Upstream commit 83e37c0987ca92f9e87789b46dd311dcf5a4a6c8 ]
 
-There were multiple issues in that code.
+JPEG rings do not support 64-bit user fence writes, reject CS
+submissions with user fences.
 
-First of all the order between the reset semaphore and the mm_lock was
-wrong (e.g. copy_to_user) was called while holding the lock.
-
-Then we allocated memory while holding the reset semaphore which is also
-a pretty big bug and can deadlock.
-
-Then we used down_read_trylock() instead of waiting for the reset to
-finish.
-
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Fixes: 9e823f307074 ("drm/amdgpu: Block MMR_READ IOCTL in reset")
+Fixes: e684e654eba9 ("drm/amdgpu/jpeg: add jpeg support for VCN4_0_3")
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 361b6e6b303d4b691f6c5974d3eaab67ca6dd90e)
+(cherry picked from commit 2f6afc97d259d530f4f86c7743efbc573a8da927)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 57 +++++++++++--------------
- 1 file changed, 24 insertions(+), 33 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-index c626f66ded189..6788265157dbf 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -786,68 +786,59 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 				    ? -EFAULT : 0;
- 	}
- 	case AMDGPU_INFO_READ_MMR_REG: {
--		int ret = 0;
--		unsigned int n, alloc_size;
--		uint32_t *regs;
- 		unsigned int se_num = (info->read_mmr_reg.instance >>
- 				   AMDGPU_INFO_MMR_SE_INDEX_SHIFT) &
- 				  AMDGPU_INFO_MMR_SE_INDEX_MASK;
- 		unsigned int sh_num = (info->read_mmr_reg.instance >>
- 				   AMDGPU_INFO_MMR_SH_INDEX_SHIFT) &
- 				  AMDGPU_INFO_MMR_SH_INDEX_MASK;
--
--		if (!down_read_trylock(&adev->reset_domain->sem))
--			return -ENOENT;
-+		unsigned int alloc_size;
-+		uint32_t *regs;
-+		int ret;
- 
- 		/* set full masks if the userspace set all bits
- 		 * in the bitfields
- 		 */
--		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK) {
-+		if (se_num == AMDGPU_INFO_MMR_SE_INDEX_MASK)
- 			se_num = 0xffffffff;
--		} else if (se_num >= AMDGPU_GFX_MAX_SE) {
--			ret = -EINVAL;
--			goto out;
--		}
-+		else if (se_num >= AMDGPU_GFX_MAX_SE)
-+			return -EINVAL;
- 
--		if (sh_num == AMDGPU_INFO_MMR_SH_INDEX_MASK) {
-+		if (sh_num == AMDGPU_INFO_MMR_SH_INDEX_MASK)
- 			sh_num = 0xffffffff;
--		} else if (sh_num >= AMDGPU_GFX_MAX_SH_PER_SE) {
--			ret = -EINVAL;
--			goto out;
--		}
-+		else if (sh_num >= AMDGPU_GFX_MAX_SH_PER_SE)
-+			return -EINVAL;
- 
--		if (info->read_mmr_reg.count > 128) {
--			ret = -EINVAL;
--			goto out;
--		}
-+		if (info->read_mmr_reg.count > 128)
-+			return -EINVAL;
- 
--		regs = kmalloc_array(info->read_mmr_reg.count, sizeof(*regs), GFP_KERNEL);
--		if (!regs) {
--			ret = -ENOMEM;
--			goto out;
--		}
-+		regs = kmalloc_array(info->read_mmr_reg.count, sizeof(*regs),
-+				     GFP_KERNEL);
-+		if (!regs)
-+			return -ENOMEM;
- 
-+		down_read(&adev->reset_domain->sem);
- 		alloc_size = info->read_mmr_reg.count * sizeof(*regs);
--
- 		amdgpu_gfx_off_ctrl(adev, false);
-+		ret = 0;
- 		for (i = 0; i < info->read_mmr_reg.count; i++) {
- 			if (amdgpu_asic_read_register(adev, se_num, sh_num,
- 						      info->read_mmr_reg.dword_offset + i,
- 						      &regs[i])) {
- 				DRM_DEBUG_KMS("unallowed offset %#x\n",
- 					      info->read_mmr_reg.dword_offset + i);
--				kfree(regs);
--				amdgpu_gfx_off_ctrl(adev, true);
- 				ret = -EFAULT;
--				goto out;
-+				break;
- 			}
- 		}
- 		amdgpu_gfx_off_ctrl(adev, true);
--		n = copy_to_user(out, regs, min(size, alloc_size));
--		kfree(regs);
--		ret = (n ? -EFAULT : 0);
--out:
- 		up_read(&adev->reset_domain->sem);
-+
-+		if (!ret) {
-+			ret = copy_to_user(out, regs, min(size, alloc_size))
-+				? -EFAULT : 0;
-+		}
-+		kfree(regs);
- 		return ret;
- 	}
- 	case AMDGPU_INFO_DEV_INFO: {
+diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
+index fd0ba04a66045..c4f812939a85f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
+@@ -1122,6 +1122,7 @@ static const struct amd_ip_funcs jpeg_v4_0_3_ip_funcs = {
+ static const struct amdgpu_ring_funcs jpeg_v4_0_3_dec_ring_vm_funcs = {
+ 	.type = AMDGPU_RING_TYPE_VCN_JPEG,
+ 	.align_mask = 0xf,
++	.no_user_fence = true,
+ 	.get_rptr = jpeg_v4_0_3_dec_ring_get_rptr,
+ 	.get_wptr = jpeg_v4_0_3_dec_ring_get_wptr,
+ 	.set_wptr = jpeg_v4_0_3_dec_ring_set_wptr,
 -- 
 2.53.0
 
