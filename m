@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60E83DC4CF;
-	Wed, 20 May 2026 11:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B853DD538;
+	Wed, 20 May 2026 11:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276014; cv=none; b=BCiHq1sHoJ1ob1PkGD9OqbbEpQt5E0x7u7HTnrqGZt34v4IBwRAWcSIHLOHDJbryl6gwBL4YlOljXDEhrdOkPdSLkW4jj3G0kQn59dwC8d8pMqRA0LdDrU6KefbbzsoDf6r8S625w4yIvbGxl18JFJsfqoC04PoMYC8XsDVQbz8=
+	t=1779276016; cv=none; b=ZO5I8/Bpmd5SriwwEhVMG30wCTOX3+Tc45Uxp7GNWUqC5xWVqwJURXLQe19G1EfQmcgs9icRYsThtAEjJRMSe8vbgn3IsYZV1iGDFnaHyGGOUmJTi3xDiTMoglSIgDpsLD9O1v/Tf2q3WZtU9NYxkEC1QSnG3bIe8fvveT4h9oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276014; c=relaxed/simple;
-	bh=bYEAJZLZvjaQGGWWgBivvYd49X8IbAv/9B2lQ9MS10E=;
+	s=arc-20240116; t=1779276016; c=relaxed/simple;
+	bh=FWsT6Yc/EVkU3tMWDeSo15/ZB5regyWNgHN7XRZLyl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pc2bSxk0ynrPzlGT7qVi06Hc1JRpVck9xVAcVh3kP3VtxLuRjHkxBun1VVNzVDFatVhqn6O+PpPX+xGHh/aDQKaf6py9GryQOY7upje4Yd16IitLeqOzyIy8321YzXJ5vtWrWH3lfpKH9DTd62dBY84MxcKjr/tvYSRgcqP5xJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PyP/9Fdz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u+sDC8iGj1yaMDTvF839uiyJZYNR1ZfGbQ6vF0oDkwQ4p2JkYILRZZNYXa4NqduxgL1ULYZ+31CLgHpyBuES+bdwMjA54q2cZEv3dJOXBAVgQBeMkTv1sMDhemY4zqiAlQrpbmDMT52Cn0xsctGvdXLX1iFnVAOGFtLREF2BGmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xd/VeaBx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PyP/9Fdz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC04D1F00898;
-	Wed, 20 May 2026 11:20:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xd/VeaBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2BE1F00897;
+	Wed, 20 May 2026 11:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276008;
-	bh=WwcJ4MhtGZGnFzVpPs2B/62wLXslgGAVo58iwceQ0YM=;
+	s=k20260515; t=1779276010;
+	bh=xMgtOFONSiE9sCxTbzj5oq9sEYekYwDjn2mOoCFmkls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PyP/9FdzwEsIuYy/mBhttkZh/b8oNhDS36L4EbxnhS+V6ngY8rX2VB9HKga0sad1+
-	 SagshktGzeWuPrOSzum2l0TYRFhENwsn2ajMJtaBkX+ZnB/ksVX0NzXYlYcxX9YvxM
-	 tE01j78oL3QjfrRQnfru+9xJruoUgVuw9v6t3bQFuFVzjV2aYdlBzAsVCIijQDYyIq
-	 sQskYeNvwed2vfYCquoiesk35bNla9ABRzyL9ednq/P5vmEWD+28TnbWsiQqXSnnTb
-	 vw83uetvJftG0LzfjAzJuDpYO5igGLfcEKjYTjVocPorRj2UVnPq5yGkOGD4QyrNgL
-	 41Qi6mzOjZnWg==
+	b=Xd/VeaBxubOtpEkPPxWDeTg9Ir9zvTe4pLosUoSqCGbL66oZlkoYeiqFDSsmhwgyY
+	 20sTGK5PF2m5hsi71k+q8Kn8FntjaNiyxD46a21tyUX3STmAeDAfE3NuwUBYF7cj44
+	 Vns72r4LC1S9XMKllYL/xkErF6kaD+O6tjN/KG79MLxnXBMl3EKnT0fiAiScsfsz/9
+	 ee2XmwJ3ZA9b+Ad7BwSggS/YJwYQ9+8jC8YcVpEjHCCNileKu88KUzbqXUTUFATzlQ
+	 A3dEKEm1u7953084LDMhDj8nUtNl7Psmfg6z1mhTFLSaN+fPWa+AsynvpylUWb8l+3
+	 4NRH41ETyWYRQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jackie Dong <xy-jackie@139.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Daniel Borkmann <daniel@iogearbox.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	davem@davemloft.net,
+	pabeni@redhat.com,
+	dsahern@kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] ALSA: hda/realtek: ALC269 fixup for Lenovo Yoga Pro 7 15ASH111 audio
-Date: Wed, 20 May 2026 07:18:49 -0400
-Message-ID: <20260520111944.3424570-17-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] ipv6: Implement limits on extension header parsing
+Date: Wed, 20 May 2026 07:18:50 -0400
+Message-ID: <20260520111944.3424570-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -51,187 +55,425 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jackie Dong <xy-jackie@139.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 83dca2530fb3ba63f47bad339d890bc30aa06ab5 ]
+[ Upstream commit 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac ]
 
-Volume control for the speakers on the Lenovo Yoga Pro 7 15ASH11 laptop
-doesn't work.
-The DAC routing is the same as on the ThinkPad X1 Gen7 function, so reuse
-the alc285_fixup_thinkpad_x1_gen7 to get it working.
+ipv6_{skip_exthdr,find_hdr}() and ip6_{tnl_parse_tlv_enc_lim,
+protocol_deliver_rcu}() iterate over IPv6 extension headers until they
+find a non-extension-header protocol or run out of packet data. The
+loops have no iteration counter, relying solely on the packet length
+to bound them. For a crafted packet with 8-byte extension headers
+filling a 64KB jumbogram, this means a worst case of up to ~8k
+iterations with a skb_header_pointer call each. ipv6_skip_exthdr(),
+for example, is used where it parses the inner quoted packet inside
+an incoming ICMPv6 error:
 
-Signed-off-by: Jackie Dong <xy-jackie@139.com>
-Link: https://patch.msgid.link/20260514153940.7320-1-xy-jackie@139.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  - icmpv6_rcv
+    - checksum validation
+    - case ICMPV6_DEST_UNREACH
+      - icmpv6_notify
+        - pskb_may_pull()       <- pull inner IPv6 header
+        - ipv6_skip_exthdr()    <- iterates here
+        - pskb_may_pull()
+        - ipprot->err_handler() <- sk lookup
+
+The per-iteration cost of ipv6_skip_exthdr itself is generally
+light, but skb_header_pointer becomes more costly on reassembled
+packets: the first ~1232 bytes of the inner packet are in the skb's
+linear area, but the remaining ~63KB are in the frag_list where
+skb_copy_bits is needed to read data.
+
+Initially, the idea was to add a configurable limit via a new
+sysctl knob with default 8, in line with knobs from commit
+47d3d7ac656a ("ipv6: Implement limits on Hop-by-Hop and Destination
+options"), but two reasons eventually argued against it:
+
+- It adds to UAPI that needs to be maintained forever, and
+  upcoming work is restricting extension header ordering anyway,
+  leaving little reason for another sysctl knob
+- exthdrs_core.c is always built-in even when CONFIG_IPV6=n,
+  where struct net has no .ipv6 member, so the read site would
+  need an ifdef'd fallback to a constant anyway
+
+Therefore, just use a constant (IP6_MAX_EXT_HDRS_CNT). All four
+extension header walking functions are now bound by this limit.
+
+Note that the check in ip6_protocol_deliver_rcu() happens right
+before the goto resubmit, such that we don't have to have a test
+for ipv6_ext_hdr() in the fast-path.
+
+There's an ongoing IETF draft-iurman-6man-eh-occurrences to enforce
+IPv6 extension headers ordering and occurrence. The latter also
+discusses security implications. As per RFC8200 section 4.1, the
+occurrence rules for extension headers provide a practical upper
+bound which is 8. In order to be conservative, let's define
+IP6_MAX_EXT_HDRS_CNT as 12 to leave enough room for quirky setups.
+In the unlikely event that this is still not enough, then we might
+need to reconsider a sysctl.
+
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Link: https://patch.msgid.link/20260429154648.809751-1-daniel@iogearbox.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+## Decision Summary
+This should be backported. It is a small IPv6 networking hardening/fix
+for a reachable CPU-exhaustion path: several IPv6 extension-header
+walkers were bounded only by packet length, allowing crafted packets
+with many minimal 8-byte extension headers to force thousands of
+iterations. The patch caps traversal at 12 headers, avoids new UAPI, and
+was reviewed by IPv6/networking reviewers. Risk is mainly dropping
+extremely exotic packets with more than 12 extension headers; the review
+discussion explicitly considered that and settled on 12 as a
+conservative compromise.
+
 ## Phase Walkthrough
-Phase 1 Record:
-1. Subject: subsystem `ALSA: hda/realtek`; action `fixup`; intent is to
-   fix Lenovo Yoga Pro 7 15ASH11 speaker volume control.
-2. Tags: `Signed-off-by: Jackie Dong`, `Link:
-   https://patch.msgid.link/20260514153940.7320-1-xy-jackie@139.com`,
-   `Signed-off-by: Takashi Iwai`. No `Fixes`, `Reported-by`, `Tested-
-   by`, `Reviewed-by`, or stable Cc tag.
-3. Body: the reported bug is that speaker volume control does not work
-   on Lenovo Yoga Pro 7 15ASH11. Root cause explanation given: DAC
-   routing matches the ThinkPad X1 Gen7 routing case, so the existing
-   routing fixup is reused.
-4. Hidden bug fix: yes. Although phrased as a “fixup”, this is a
-   hardware-specific quirk correcting broken speaker mixer/routing
-   behavior.
+Phase 1: Commit Message Forensics
 
-Phase 2 Record:
-1. Inventory: one file, `sound/hda/codecs/realtek/alc269.c`; one line
-   added to `alc269_fixup_tbl`; single-file surgical hardware quirk.
-2. Hunk behavior: before, PCI SSID `17aa:38fc` had no matching Realtek
-   fixup entry. After, it maps to `ALC245_FIXUP_BASS_HP_DAC`.
-3. Bug mechanism: hardware workaround / audio codec quirk. Verified
-   `ALC245_FIXUP_BASS_HP_DAC` calls `alc285_fixup_thinkpad_x1_gen7`,
-   which overrides DAC routing for NID `0x17`, sets preferred DAC pairs,
-   and renames confusing volume controls.
-4. Fix quality: obviously small and contained. Regression risk is very
-   low because matching is limited to Lenovo PCI SSID `17aa:38fc`.
+Record 1.1: Subsystem `ipv6`; action verb `Implement limits`; claimed
+intent is to bound IPv6 extension-header parsing loops.
 
-Phase 3 Record:
-1. Blame: the added line is from candidate commit `83dca2530fb3b`;
-   adjacent Lenovo quirk-table entries mostly come from earlier Realtek
-   table history. Candidate is contained in `v7.1-rc4`.
-2. Fixes tag: none, so no introducing commit to follow.
-3. Related file history: recent `alc269.c` history is dominated by
-   similar Realtek laptop quirk fixes. Related Lenovo Yoga Pro 7 quirks
-   exist for 14IMH9 and 14IAH10.
-4. Author history: Jackie Dong has this one Realtek commit in the
-   checked history. Takashi Iwai committed it; `MAINTAINERS` lists
-   Takashi Iwai as SOUND maintainer.
-5. Dependencies: `ALC245_FIXUP_BASS_HP_DAC` was introduced by
-   `e347430182492` in mainline and exists in `stable/linux-7.0.y`;
-   `stable/linux-6.19.y` has an equivalent backport `3c756e813f212`.
-   Older checked stable branches lack that symbol and need a
-   dependency/backport adjustment.
+Record 1.2: Tags found: `Signed-off-by: Daniel Borkmann`, `Reviewed-by:
+Ido Schimmel`, `Reviewed-by: Eric Dumazet`, `Reviewed-by: Justin
+Iurman`, `Link:
+https://patch.msgid.link/20260429154648.809751-1-daniel@iogearbox.net`,
+`Signed-off-by: Jakub Kicinski`. No `Fixes:`, no `Reported-by:`, no `Cc:
+stable`.
 
-Phase 4 Record:
-1. `b4 dig -c 83dca2530fb3b` found the original thread at the supplied
-   patch URL.
-2. `b4 dig -a` found v1 and v2; v2 is the committed version. The v2
-   change was “Use `ALC245_FIXUP_BASS_HP_DAC` instead of creating a new
-   quirk.”
-3. `b4 dig -w` showed ALSA maintainers/lists and Lenovo contact were
-   included.
-4. Saved thread shows Takashi Iwai replied “Applied now”, with only a
-   minor subject-line modification. No NAKs or risk objections were
-   present in the matched thread.
-5. Lore WebFetch searches were blocked by Anubis; WebSearch found
-   related Yoga Pro audio issues but no additional specific 15ASH11
-   report. Stable-list WebFetch was also blocked.
+Record 1.3: The body describes crafted 64KB packets with 8-byte
+extension headers causing up to about 8k iterations, with costly
+`skb_header_pointer()`/`skb_copy_bits()` on reassembled packets. Symptom
+is CPU work amplification/DoS potential, not memory corruption or crash.
+It identifies `icmpv6_rcv -> icmpv6_notify -> ipv6_skip_exthdr()` as a
+concrete path.
 
-Phase 5 Record:
-1. Modified object: `alc269_fixup_tbl` static quirk table.
-2. Callers: `alc269_probe()` calls `snd_hda_pick_fixup()` with
-   `alc269_fixup_tbl`; `alc269_probe()` is installed via
-   `alc269_codec_ops`; ALC245 is listed in `snd_hda_id_alc269`.
-3. Callees/effects: `snd_hda_pick_fixup()` matches PCI SSID first, then
-   selects the fixup ID. `snd_hda_apply_fixup(...PRE_PROBE)` applies it
-   before auto-parse.
-4. Reachability: reachable during HDA codec probe on systems with
-   Realtek ALC245/compatible hardware and PCI SSID `17aa:38fc`; normal
-   boot/device initialization path.
-5. Similar patterns: the table contains many Lenovo and other laptop
-   Realtek quirks; `ALC245_FIXUP_BASS_HP_DAC` is already used for
-   Minisforum V3 SE.
+Record 1.4: This is not disguised cleanup. It is a direct
+correctness/security hardening fix: add a bound to previously unbounded
+loops.
 
-Phase 6 Record:
-1. Stable presence: `stable/linux-7.0.y` and `stable/linux-6.19.y`
-   contain the generic fixup but lack the new `17aa:38fc` entry.
-   `stable/linux-6.18.y` and older checked branches lack
-   `ALC245_FIXUP_BASS_HP_DAC`, though they do have ALC245 support and
-   the underlying ThinkPad routing helper.
-2. Backport difficulty: clean/simple for 7.0.y and 6.19.y. Older
-   branches need either the generic fixup dependency or a small
-   equivalent backport, and 6.12.y/older use
-   `sound/pci/hda/patch_realtek.c` rather than the split path.
-3. Related stable fixes: searches of 7.0.y and 6.19.y found no existing
-   15ASH11 quirk.
+Phase 2: Diff Analysis
 
-Phase 7 Record:
-1. Subsystem: ALSA HDA Realtek codec driver, driver-specific but common
-   laptop audio path; criticality is important for affected hardware,
-   not core-wide.
-2. Activity: recent history shows many similar Realtek laptop quirk
-   fixes, so this fits active subsystem practice.
+Record 2.1: Five files changed, 25 insertions: `include/net/dropreason-
+core.h` +6, `include/net/ipv6.h` +3, `net/ipv6/exthdrs_core.c` +7,
+`net/ipv6/ip6_input.c` +5, `net/ipv6/ip6_tunnel.c` +4. Modified
+functions: `ipv6_skip_exthdr()`, `ipv6_find_hdr()`,
+`ip6_protocol_deliver_rcu()`, `ip6_tnl_parse_tlv_enc_lim()`.
 
-Phase 8 Record:
-1. Affected users: owners of Lenovo Yoga Pro 7 15ASH11 with PCI SSID
-   `17aa:38fc`.
-2. Trigger: normal audio use after codec probe; users see speaker volume
-   control not working. No verified security or crash trigger.
-3. Severity: medium functional regression/hardware enablement issue; not
-   a panic/corruption bug.
-4. Risk-benefit: benefit is high for the affected laptop; risk is very
-   low because the change is a single SSID-scoped quirk using an
-   existing fixup.
+Record 2.2: Before, these loops stopped only at non-extension-header,
+`NEXTHDR_NONE`, malformed/truncated packet data, fragment handling, or
+protocol handler completion. After, each loop also stops/drops once
+`IP6_MAX_EXT_HDRS_CNT` is exceeded.
 
-Phase 9 Record:
-1. Evidence for: real user-visible audio control failure, hardware-
-   specific quirk exception, one-line scoped change, existing fixup
-   reused, ALSA maintainer applied, v2 incorporated review feedback.
-2. Evidence against: not a crash/security/data-corruption fix; older
-   stable branches may need prerequisite/backport adjustment.
-3. Stable rules: obviously correct yes; fixes real user-visible bug yes;
-   important issue yes under hardware quirk/workaround policy; small and
-   contained yes; no new API yes; applies cleanly to trees with existing
-   `ALC245_FIXUP_BASS_HP_DAC`, otherwise needs minor dependency
-   handling.
-4. Exception category: hardware-specific audio codec quirk. Decision:
-   backport.
+Record 2.3: Bug category is logic/performance DoS hardening: missing
+iteration bound in packet parser. It does not fix UAF/leak/race, but it
+prevents attacker-controlled excessive parsing work.
+
+Record 2.4: Fix quality is good: small, local counters, no locking or
+lifetime changes, no new sysctl/API. Regression risk is limited to
+rejecting packets with more than 12 traversed extension headers.
+
+Phase 3: Git History Investigation
+
+Record 3.1: `git blame` shows the relevant loops are old:
+`ipv6_skip_exthdr()` loop traces to initial/early history with later
+signature changes; `ipv6_find_hdr()` to v3.8-era code;
+`ip6_protocol_deliver_rcu()` resubmit logic to v4.x/v5.0-era changes;
+`ip6_tnl_parse_tlv_enc_lim()` exists from initial/older tunnel code with
+later cleanups.
+
+Record 3.2: No `Fixes:` tag, so no introducing commit to follow. I did
+inspect referenced commit `47d3d7ac656a`, which added limits for Hop-by-
+Hop/Destination TLV parsing and described similar DoS behavior.
+
+Record 3.3: Recent file history shows related commit `076b8cad77aa9`
+capped TLV scanning in `ip6_tnl_parse_tlv_enc_lim()`. This commit is
+related but not a hard dependency for the outer extension-header-count
+limit.
+
+Record 3.4: Daniel Borkmann has recent related IPv6 limit work in the
+same area. Commit was applied by Jakub Kicinski, and reviewed by Eric
+Dumazet, Ido Schimmel, and Justin Iurman.
+
+Record 3.5: No functional prerequisite was found for the core idea.
+Older stable trees before `dropreason-core.h` will need a small backport
+adjustment for the new drop reason, or can use an existing generic
+reason.
+
+Phase 4: Mailing List And External Research
+
+Record 4.1: `b4 dig -c 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac` found
+`[PATCH net v5]` at the provided lore/patch.msgid link.
+
+Record 4.2: `b4 dig -a` found v1 through v5. v1 added a sysctl and was
+NAKed by Justin Iurman; v4 switched to a hard-coded limit; v5 reduced
+the limit from 32 to 12.
+
+Record 4.3: No `Reported-by` or bug-report link exists. Web/lore stable
+search did not find a stable-specific request or objection.
+
+Record 4.4: Related series context: review discussion referenced IETF
+extension-header occurrence work; v5 was the latest and accepted
+version.
+
+Record 4.5: No stable mailing-list-specific discussion found. WebFetch
+to lore was blocked/timed out, but `b4` successfully retrieved the
+thread.
+
+Phase 5: Code Semantic Analysis
+
+Record 5.1: Key functions are `ipv6_skip_exthdr()`, `ipv6_find_hdr()`,
+`ip6_protocol_deliver_rcu()`, `ip6_tnl_parse_tlv_enc_lim()`.
+
+Record 5.2: `git grep` found many callers of `ipv6_skip_exthdr()` across
+netfilter, XFRM/ESP, drivers, audit/security hooks, ICMPv6, and tunnel
+code. `ipv6_find_hdr()` is used by netfilter/nftables, BPF, OVS, IPVS,
+SRv6, drivers, and TC. `ip6_protocol_deliver_rcu()` is called from IPv6
+input and UDP encapsulation resubmission. `ip6_tnl_parse_tlv_enc_lim()`
+is called from GRE/tunnel paths.
+
+Record 5.3: Key callees are `skb_header_pointer()`, `pskb_pull()`,
+`pskb_may_pull()`, `raw6_local_deliver()`, `inet6_protos[]` dispatch,
+and protocol handlers.
+
+Record 5.4: Reachability is verified from IPv6 receive paths:
+`ip6_input_finish()` calls `ip6_protocol_deliver_rcu()`, and
+`icmpv6_notify()` calls `ipv6_skip_exthdr()` on quoted inner packets.
+These are network packet processing paths.
+
+Record 5.5: Similar prior pattern exists in `47d3d7ac656a` for TLV
+count/length limits and in `076b8cad77aa9` for tunnel TLV scanning.
+
+Phase 6: Stable Tree Analysis
+
+Record 6.1: The four key functions exist in checked tags `v5.10`,
+`v5.15`, `v6.1`, `v6.6`, `v6.12`, and `v6.19`. Thus the affected code
+shape exists across active LTS/stable ranges.
+
+Record 6.2: Expected backport difficulty: clean or minor for newer
+trees; minor rework for pre-`dropreason-core.h` trees because
+`include/net/dropreason-core.h` is absent in `v5.10`, `v5.15`, and
+`v6.1`.
+
+Record 6.3: No alternate stable-specific fix for this exact extension-
+header traversal count was found. Related TLV-limiting commits address
+adjacent, not identical, loops.
+
+Phase 7: Subsystem Context
+
+Record 7.1: Subsystem is IPv6 networking, criticality IMPORTANT to CORE
+for IPv6-enabled systems because packet receive, ICMPv6, netfilter,
+tunnel, and driver offload paths call these helpers.
+
+Record 7.2: Subsystem is active; recent history shows multiple
+IPv6/tunnel/drop-reason changes, but the unbounded parsing loops
+themselves are longstanding.
+
+Phase 8: Impact And Risk
+
+Record 8.1: Affected users are IPv6-enabled systems, especially systems
+exposed to crafted IPv6 traffic or using IPv6 tunnels/netfilter paths.
+
+Record 8.2: Trigger is a crafted IPv6 packet chain with many small
+extension headers, especially costly when parsed from
+fragmented/reassembled skb data. Network reachability depends on
+filtering and IPv6 deployment.
+
+Record 8.3: Failure mode is CPU work amplification/DoS risk, not crash
+or corruption. Severity: HIGH for exposed IPv6 hosts because it is
+remote packet-triggered parser amplification; not CRITICAL because no
+verified panic, data loss, or privilege escalation was found.
+
+Record 8.4: Benefit is high: caps an attacker-controlled loop in common
+networking code. Risk is low-to-medium: packets with more than 12
+traversed extension headers may now be rejected, but reviewers
+explicitly judged 12 conservative relative to RFC/IETF occurrence
+expectations.
+
+Phase 9: Final Synthesis
+
+Record 9.1: Evidence for backporting: small 25-line fix; real attacker-
+controlled parser amplification; network receive reachability verified;
+reviewed by networking experts; v1 concerns were resolved; no new UAPI.
+Evidence against: behavior change for extreme extension-header chains;
+older trees need minor drop-reason backport adjustment; no syzbot/user
+report/CVE. Unresolved: no benchmark for this exact v5 patch was found,
+and no stable-specific discussion was found.
+
+Record 9.2: Stable rules: obviously correct and reviewed, yes; fixes a
+real bug, yes; important issue, yes as network DoS/performance
+amplification; small and contained, yes; no new feature/API, yes; stable
+apply, likely clean for newer trees and minor adjustment for older
+trees.
+
+Record 9.3: No automatic exception category applies. This is not a
+device ID, quirk, DT, build, or documentation fix.
+
+Record 9.4: The risk-benefit balance favors backporting.
 
 ## Verification
-- [Phase 1] `git show --format=fuller 83dca2530fb3b` verified subject,
-  body, tags, author, committer, and one-line diff.
-- [Phase 2] Diff verified one insertion in `alc269_fixup_tbl`:
-  `SND_PCI_QUIRK(0x17aa, 0x38fc, ..., ALC245_FIXUP_BASS_HP_DAC)`.
-- [Phase 3] `git blame origin/master -L 7762,7768` verified the
-  candidate line attribution.
-- [Phase 3] `git describe --contains 83dca2530fb3b` verified inclusion
-  in `v7.1-rc4`.
-- [Phase 3] `git log -S"ALC245_FIXUP_BASS_HP_DAC"` verified the generic
-  fixup came from `e347430182492`.
-- [Phase 4] `b4 dig -c`, `-a`, `-w`, and saved mbox verified the v1/v2
-  thread, recipients, and Takashi’s “Applied now” reply.
-- [Phase 5] Reads of `alc269.c` and `auto_parser.c` verified probe-time
-  PCI SSID matching and fixup application.
-- [Phase 6] Stable branch checks verified 7.0.y and 6.19.y have the
-  generic fixup and lack `17aa:38fc`; older checked branches lack the
-  generic fixup symbol.
-- [Phase 8] Failure mode is verified from the commit body: speaker
-  volume control does not work. No crash/security impact was verified.
-
-This should be backported, with dependency/backport adjustment for trees
-that do not yet have `ALC245_FIXUP_BASS_HP_DAC`.
+- [Phase 1] Parsed `git show 3744b0964d5267c0b651bcd8f8c25db6bf4ccbac`:
+  verified subject, tags, message, and 25-line diff.
+- [Phase 2] Read local code in `net/ipv6/exthdrs_core.c`,
+  `net/ipv6/ip6_input.c`, `net/ipv6/ip6_tunnel.c`, and
+  `include/net/ipv6.h`: verified loops were unbounded before the patch.
+- [Phase 3] Ran `git blame` on changed regions: verified long-lived code
+  and relevant commit ancestry.
+- [Phase 3] Inspected `47d3d7ac656a` and `076b8cad77aa9`: verified
+  similar prior DoS-limit work.
+- [Phase 4] Ran `b4 dig -c`, `b4 dig -a`, `b4 dig -w`, and `b4 mbox`:
+  verified v1-v5 history, reviewers, NAK of sysctl approach, and v5
+  acceptance.
+- [Phase 5] Ran caller searches for all four functions: verified broad
+  IPv6/netfilter/tunnel/driver call surface.
+- [Phase 6] Checked `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.19`:
+  verified the affected functions exist; verified `dropreason-core.h` is
+  absent before v6.6.
+- [Phase 8] Verified reachable call paths in `icmpv6_notify()`,
+  `ip6_input_finish()`, `udpv6_queue_rcv_skb()`, and `ip6_gre` tunnel
+  code.
+- UNVERIFIED: exact exploitability impact across real networks and exact
+  CPU-cost benchmark for this specific v5 patch.
+- UNVERIFIED: clean application to every currently maintained stable
+  branch; older trees likely need minor drop-reason context adjustment.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/dropreason-core.h | 6 ++++++
+ include/net/ipv6.h            | 3 +++
+ net/ipv6/exthdrs_core.c       | 7 +++++++
+ net/ipv6/ip6_input.c          | 5 +++++
+ net/ipv6/ip6_tunnel.c         | 4 ++++
+ 5 files changed, 25 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 7e0289a1a1ca7..4e0885c1fc496 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7722,6 +7722,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x38df, "Y990 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x38f9, "Thinkbook 16P Gen5", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
-+	SND_PCI_QUIRK(0x17aa, 0x38fc, "Lenovo Yoga Pro 7 15ASH11", ALC245_FIXUP_BASS_HP_DAC),
- 	SND_PCI_QUIRK(0x17aa, 0x38fd, "ThinkBook plus Gen5 Hybrid", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+diff --git a/include/net/dropreason-core.h b/include/net/dropreason-core.h
+index a7b7abd66e215..0b674a02665ab 100644
+--- a/include/net/dropreason-core.h
++++ b/include/net/dropreason-core.h
+@@ -102,6 +102,7 @@
+ 	FN(FRAG_TOO_FAR)		\
+ 	FN(TCP_MINTTL)			\
+ 	FN(IPV6_BAD_EXTHDR)		\
++	FN(IPV6_TOO_MANY_EXTHDRS)	\
+ 	FN(IPV6_NDISC_FRAG)		\
+ 	FN(IPV6_NDISC_HOP_LIMIT)	\
+ 	FN(IPV6_NDISC_BAD_CODE)		\
+@@ -513,6 +514,11 @@ enum skb_drop_reason {
+ 	SKB_DROP_REASON_TCP_MINTTL,
+ 	/** @SKB_DROP_REASON_IPV6_BAD_EXTHDR: Bad IPv6 extension header. */
+ 	SKB_DROP_REASON_IPV6_BAD_EXTHDR,
++	/**
++	 * @SKB_DROP_REASON_IPV6_TOO_MANY_EXTHDRS: Number of IPv6 extension
++	 * headers in the packet exceeds IP6_MAX_EXT_HDRS_CNT.
++	 */
++	SKB_DROP_REASON_IPV6_TOO_MANY_EXTHDRS,
+ 	/** @SKB_DROP_REASON_IPV6_NDISC_FRAG: invalid frag (suppress_frag_ndisc). */
+ 	SKB_DROP_REASON_IPV6_NDISC_FRAG,
+ 	/** @SKB_DROP_REASON_IPV6_NDISC_HOP_LIMIT: invalid hop limit. */
+diff --git a/include/net/ipv6.h b/include/net/ipv6.h
+index 53c5056508be5..ec95c11b8e434 100644
+--- a/include/net/ipv6.h
++++ b/include/net/ipv6.h
+@@ -90,6 +90,9 @@ struct ip_tunnel_info;
+ #define IP6_DEFAULT_MAX_DST_OPTS_LEN	 INT_MAX /* No limit */
+ #define IP6_DEFAULT_MAX_HBH_OPTS_LEN	 INT_MAX /* No limit */
+ 
++/* Hard limit on traversed IPv6 extension headers */
++#define IP6_MAX_EXT_HDRS_CNT		 12
++
+ /*
+  *	Addr type
+  *	
+diff --git a/net/ipv6/exthdrs_core.c b/net/ipv6/exthdrs_core.c
+index 49e31e4ae7b7f..9d06d487e8b10 100644
+--- a/net/ipv6/exthdrs_core.c
++++ b/net/ipv6/exthdrs_core.c
+@@ -73,6 +73,7 @@ int ipv6_skip_exthdr(const struct sk_buff *skb, int start, u8 *nexthdrp,
+ 		     __be16 *frag_offp)
+ {
+ 	u8 nexthdr = *nexthdrp;
++	int exthdr_cnt = 0;
+ 
+ 	*frag_offp = 0;
+ 
+@@ -82,6 +83,8 @@ int ipv6_skip_exthdr(const struct sk_buff *skb, int start, u8 *nexthdrp,
+ 
+ 		if (nexthdr == NEXTHDR_NONE)
+ 			return -1;
++		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
++			return -1;
+ 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
+ 		if (!hp)
+ 			return -1;
+@@ -190,6 +193,7 @@ int ipv6_find_hdr(const struct sk_buff *skb, unsigned int *offset,
+ {
+ 	unsigned int start = skb_network_offset(skb) + sizeof(struct ipv6hdr);
+ 	u8 nexthdr = ipv6_hdr(skb)->nexthdr;
++	int exthdr_cnt = 0;
+ 	bool found;
+ 
+ 	if (fragoff)
+@@ -216,6 +220,9 @@ int ipv6_find_hdr(const struct sk_buff *skb, unsigned int *offset,
+ 			return -ENOENT;
+ 		}
+ 
++		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
++			return -EBADMSG;
++
+ 		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
+ 		if (!hp)
+ 			return -EBADMSG;
+diff --git a/net/ipv6/ip6_input.c b/net/ipv6/ip6_input.c
+index 2bcb981c91aa8..bbad1d4e6b854 100644
+--- a/net/ipv6/ip6_input.c
++++ b/net/ipv6/ip6_input.c
+@@ -363,6 +363,7 @@ INDIRECT_CALLABLE_DECLARE(int tcp_v6_rcv(struct sk_buff *));
+ void ip6_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int nexthdr,
+ 			      bool have_final)
+ {
++	int exthdr_cnt = IP6CB(skb)->flags & IP6SKB_HOPBYHOP ? 1 : 0;
+ 	const struct inet6_protocol *ipprot;
+ 	struct inet6_dev *idev;
+ 	unsigned int nhoff;
+@@ -447,6 +448,10 @@ void ip6_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int nexthdr,
+ 				nexthdr = ret;
+ 				goto resubmit_final;
+ 			} else {
++				if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT)) {
++					SKB_DR_SET(reason, IPV6_TOO_MANY_EXTHDRS);
++					goto discard;
++				}
+ 				goto resubmit;
+ 			}
+ 		} else if (ret == 0) {
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 0b53488a92290..c1ca9b2806359 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -400,11 +400,15 @@ __u16 ip6_tnl_parse_tlv_enc_lim(struct sk_buff *skb, __u8 *raw)
+ 	unsigned int nhoff = raw - skb->data;
+ 	unsigned int off = nhoff + sizeof(*ipv6h);
+ 	u8 nexthdr = ipv6h->nexthdr;
++	int exthdr_cnt = 0;
+ 
+ 	while (ipv6_ext_hdr(nexthdr) && nexthdr != NEXTHDR_NONE) {
+ 		struct ipv6_opt_hdr *hdr;
+ 		u16 optlen;
+ 
++		if (unlikely(exthdr_cnt++ >= IP6_MAX_EXT_HDRS_CNT))
++			break;
++
+ 		if (!pskb_may_pull(skb, off + sizeof(*hdr)))
+ 			break;
+ 
 -- 
 2.53.0
 
