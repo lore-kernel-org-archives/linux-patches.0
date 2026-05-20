@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A2F363C59;
-	Wed, 20 May 2026 16:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BE5367B8D;
+	Wed, 20 May 2026 16:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295349; cv=none; b=Es4jxW5sf+tZj4Kho8mGvTOtHA9ZWBFXNUhRTR0PnOfrvV6788tbKjbWDiWwI9N26LpzEIuWK6Ek5V4tSPnBbaH4Z5K3glsdodgDxkpl5yMdYDiNPh+ZTs5o88/w+oL5GKF2+kQHDt/z49rkaYZxuex006sDoguaC94K9I2TNQQ=
+	t=1779295352; cv=none; b=Zdbsn9AINnlg6kPtFqbXWe9ubvVZnZnRfzbvHnNFf1FBuGwXFKvf9lLwWNJeqHECMeEdITnx4fx05S/BDDd5Y7CEYI+prb46Pb/lhAcJTVuPbZ4HdbText54OrZcdR1x1vnYhrWdZPJljfYiK8pc6K25BVobq3IEPrLTGoOs/q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295349; c=relaxed/simple;
-	bh=a4dQUMgSfwTd5Plt37VlXmgp7N6kMw1csmGLVq2A6VU=;
+	s=arc-20240116; t=1779295352; c=relaxed/simple;
+	bh=WsdjYOPaECQDkSS9U+QCdvtdsCivPo08ZwxDn/h0YQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SIv8eCPh7DJZUxV5Una9sPkwFVTHkDKGUFDkRzUcyzoVz8Fp3+XQstgCWFqonSWAbTopiRJ8GdkzsGS6U6LSG41lQzyzuJ7aB/y4ZXRlyIKKhBvWbPdBJlFBMYEHe3OhRAOwfiQMpiW2UiilEjRjAMHCOYh673YGyVWW5IjEzuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPkpxo7n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=V7eJKi6oDZBVI42DUOPYANL+YVnRntAl5UnV9R1o1Yv4UV7vVLKC25bF2iYpHvu8+GjPwtCM1/FAxhjK+NJHSWq+BpX+URkyELZp/xDr5NS4XZGsI4zWfgd3CLbOI7MO6lhBzY1RVdwuzB3ff3zAIcO2ticLP+rDLHVRykyX+RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cnTuJbMP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPkpxo7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9E31F00893;
-	Wed, 20 May 2026 16:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cnTuJbMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D55D1F000E9;
+	Wed, 20 May 2026 16:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295348;
-	bh=ujiSMbvzDJD+HNNIy3n40p7VaVNAnqU50nSsxv+8ZeQ=;
+	s=korg; t=1779295350;
+	bh=eL887zRX4baw/UiaLNG0vCHFmkqhHdbQ6l0ovVjgQHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bPkpxo7nwIW+4zhjgpmk/Hv7SwowtXO+Gn8alqy7vUmjd1GDhqs6538JsqVc2xtus
-	 XPhcTCfYzVMToSd3zF2jZpIw6KMQEofl5dWq7zlJzBQaDJSgWEoWHZ49WYQmpW9u5v
-	 C+DS6TNGOCXq23UerQgPYysGdstUZBl0KVBUJ4VY=
+	b=cnTuJbMPDU3CdY7rz1/avoeRpZ6yv9YNiF9HTM65KTQcnrem/XpHK+edsmfFgMeNm
+	 p1S74lSpQqRr/sWS869mwuKJe0YaGoXmRJ1HZ6N3GWQsB26uaZMpmHD3VOzd88vyDL
+	 B7IPunXs4M6fja0yj3wUZ8Y9cgo2pW1wmy7NDJ1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Zhang <18255117159@163.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0383/1146] PCI: dwc: Fix type mismatch for kstrtou32_from_user() return value
-Date: Wed, 20 May 2026 18:10:33 +0200
-Message-ID: <20260520162156.867526931@linuxfoundation.org>
+Subject: [PATCH 7.0 0345/1146] drm/amdgpu/uvd4.2: Dont initialize UVD 4.2 when DPM is disabled
+Date: Wed, 20 May 2026 18:09:55 +0200
+Message-ID: <20260520162156.008921826@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,78 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans Zhang <18255117159@163.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 445588a3b18bb0702d746cb61f7a443639027651 ]
+[ Upstream commit 8b3e8fa6d7bdab292447a43f70532db437d5d4f5 ]
 
-kstrtou32_from_user() returns int, but the return value was stored in
-a u32 variable 'val', risking sign loss. Use a dedicated int variable
-to correctly handle the return code.
+UVD 4.2 doesn't work at all when DPM is disabled because
+the SMU is responsible for ungating it. So, Linux fails
+to boot with CIK GPUs when using the amdgpu.dpm=0 parameter.
 
-Fixes: 4fbfa17f9a07 ("PCI: dwc: Add debugfs based Silicon Debug support for DWC")
-Signed-off-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260401023048.4182452-1-18255117159@163.com
+Fix this by returning -ENOENT from uvd_v4_2_early_init()
+when amdgpu_dpm isn't enabled.
+
+Note: amdgpu.dpm=0 is often suggested as a workaround
+for issues and is useful for debugging.
+
+Fixes: a2e73f56fa62 ("drm/amdgpu: Add support for CIK parts")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../controller/dwc/pcie-designware-debugfs.c  | 21 +++++++++++--------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-debugfs.c b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-index 0d1340c9b3642..9461be0744907 100644
---- a/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-debugfs.c
-@@ -208,10 +208,11 @@ static ssize_t lane_detect_write(struct file *file, const char __user *buf,
- 	struct dw_pcie *pci = file->private_data;
- 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
- 	u32 lane, val;
-+	int ret;
+diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
+index 73ce3d211ed64..8a9ba2276275c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v4_2.c
+@@ -93,6 +93,11 @@ static void uvd_v4_2_ring_set_wptr(struct amdgpu_ring *ring)
+ static int uvd_v4_2_early_init(struct amdgpu_ip_block *ip_block)
+ {
+ 	struct amdgpu_device *adev = ip_block->adev;
++
++	/* UVD doesn't work without DPM, it needs DPM to ungate it. */
++	if (!amdgpu_dpm)
++		return -ENOENT;
++
+ 	adev->uvd.num_uvd_inst = 1;
  
--	val = kstrtou32_from_user(buf, count, 0, &lane);
--	if (val)
--		return val;
-+	ret = kstrtou32_from_user(buf, count, 0, &lane);
-+	if (ret)
-+		return ret;
- 
- 	val = dw_pcie_readl_dbi(pci, rinfo->ras_cap_offset + SD_STATUS_L1LANE_REG);
- 	val &= ~(LANE_SELECT);
-@@ -347,10 +348,11 @@ static ssize_t counter_enable_write(struct file *file, const char __user *buf,
- 	struct dw_pcie *pci = pdata->pci;
- 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
- 	u32 val, enable;
-+	int ret;
- 
--	val = kstrtou32_from_user(buf, count, 0, &enable);
--	if (val)
--		return val;
-+	ret = kstrtou32_from_user(buf, count, 0, &enable);
-+	if (ret)
-+		return ret;
- 
- 	mutex_lock(&rinfo->reg_event_lock);
- 	set_event_number(pdata, pci, rinfo);
-@@ -408,10 +410,11 @@ static ssize_t counter_lane_write(struct file *file, const char __user *buf,
- 	struct dw_pcie *pci = pdata->pci;
- 	struct dwc_pcie_rasdes_info *rinfo = pci->debugfs->rasdes_info;
- 	u32 val, lane;
-+	int ret;
- 
--	val = kstrtou32_from_user(buf, count, 0, &lane);
--	if (val)
--		return val;
-+	ret = kstrtou32_from_user(buf, count, 0, &lane);
-+	if (ret)
-+		return ret;
- 
- 	mutex_lock(&rinfo->reg_event_lock);
- 	set_event_number(pdata, pci, rinfo);
+ 	uvd_v4_2_set_ring_funcs(adev);
 -- 
 2.53.0
 
