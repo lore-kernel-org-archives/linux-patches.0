@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BC034B40F;
-	Wed, 20 May 2026 17:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3323336F421;
+	Wed, 20 May 2026 17:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296636; cv=none; b=VewKEAPx6dLEIfL52HJ0f7kHYZ5KMVBzk3G6gwG2u9XrGdrEYAOBUUvg7Hhq0LD9ZnW9RDI6T2uImQS4QLs35UKZPdc71HvSsrTDcUIDEpmjMFBA7YY6ziU9QNXvqNn4pvlGPf7X7oRg9eWDEyAKcVOhQTo+8/KfqjZ+H8Eazvw=
+	t=1779296639; cv=none; b=CNxKJnndQhvo9sLkZjee5fDPiHOIeDKz18kUuptYTHAP3IBzp/VBsQxf61DF/Ny/sXRrV1cwCVS6bM+kXkrdMfZNxpN5JI8vNjHt3oDn1PBDKoxhwvRnRsCaV8XLkHsrSPE14iIRx4Sh85AnYtqK0L+t8dMJjlK609WW5qIp920=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296636; c=relaxed/simple;
-	bh=ZXpfTtNtsh/PX4jDDMUQP/535Uh+97LQsJKx51JwhDg=;
+	s=arc-20240116; t=1779296639; c=relaxed/simple;
+	bh=nmzDsmxYIJJXwYx5gT40JYGHdDZFKKC77zwRgafTHLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XbiNWpy/XxCs2+DZUmyxKc1HG904X3CmgMhsrzmO9AGPB36XqkEkvvqvf6C5gpiXSR7NIw89G2Yx0YFQCKaF0qz6iJCHSpZzoc5ZpCRVqBpT6YLxIXw+ZRefdu7KclSNJfCOoRBwP5WliipbuYTMldSusC6GGuGl0OG/13Sh9kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzR+AvCS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=o6aqoRpJRIhOfNm/W56t5uUM032CqwD2dqHh3rc2tjt3PAxlRKtpFSVxFeUNIgdNh1ZXo2VATYdgwVcHKBQV5mRjum06NwN9c7qs3Xnc6qfIrrI6ngvcpLHs+pbwa6iOTAwYkizXslicI3W/glCPKO6ZiEQ0Xw0i9CJj5NBd90o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKSZMyC9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzR+AvCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7811F000E9;
-	Wed, 20 May 2026 17:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKSZMyC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A761F000E9;
+	Wed, 20 May 2026 17:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296635;
-	bh=4/Gyxp9fGQ+pkWYEpPqMFVhdwzqpDf8tjjt3iLUclns=;
+	s=korg; t=1779296638;
+	bh=Tzq67Pg2QS47hBsFsi9eHm1xv7JESxeog5VIiVabWwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SzR+AvCSgmBkqhQXIwWXUDIJNjez/9hkBp4xG6Ow5TBE4po5UBOsdcRWdllPjt+5t
-	 a8ipPKfelED4kjP6+I0jG/8GPJGL7MPR9yrJELLZNs/DCCE8gnLlBqsyLnYfa/2tCo
-	 TAQPW4xQbGLbNuOM0AbgVLGBLs+JTlioJY1OZg0c=
+	b=JKSZMyC9TwDrtWCbRUEUhF27aagbXHGrF6ZjWQ759XqVdqcFIHYiegK86XZFWZGsc
+	 0oYAd30C7KXasUsO+yIcHe6/W+FkXm/avOL2Y/PYbwwxJJR5+dOo2CjlSr2EFQ3KDe
+	 KTYgu2psTl+PRqJ09bu3DU0qkr5VK4KVP8b3/W9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0867/1146] eventpoll: fix ep_remove struct eventpoll / struct file UAF
-Date: Wed, 20 May 2026 18:18:37 +0200
-Message-ID: <20260520162207.859517355@linuxfoundation.org>
+Subject: [PATCH 7.0 0876/1146] kbuild: Never respect CONFIG_WERROR / W=e to fixdep
+Date: Wed, 20 May 2026 18:18:46 +0200
+Message-ID: <20260520162208.063862751@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -45,103 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit a6dc643c69311677c574a0f17a3f4d66a5f3744b ]
+[ Upstream commit 75f7c47ccd78c947cf1b6ddb18ea453ff0555716 ]
 
-ep_remove() (via ep_remove_file()) cleared file->f_ep under
-file->f_lock but then kept using @file inside the critical section
-(is_file_epoll(), hlist_del_rcu() through the head, spin_unlock).
-A concurrent __fput() taking the eventpoll_release() fastpath in
-that window observed the transient NULL, skipped
-eventpoll_release_file() and ran to f_op->release / file_free().
+The fixdep hostprog may be built multiple times during a single build.
+Once during the configuration phase and later during the regular phase.
+As only the regular build phase respects CONFIG_WERROR / W=e, the
+compiler flags might change between the phases, leading to rebuilds.
 
-For the epoll-watches-epoll case, f_op->release is
-ep_eventpoll_release() -> ep_clear_and_put() -> ep_free(), which
-kfree()s the watched struct eventpoll. Its embedded ->refs
-hlist_head is exactly where epi->fllink.pprev points, so the
-subsequent hlist_del_rcu()'s "*pprev = next" scribbles into freed
-kmalloc-192 memory.
+Example, the rebuilds will happen twice on each invocation of the build:
 
-In addition, struct file is SLAB_TYPESAFE_BY_RCU, so the slot
-backing @file could be recycled by alloc_empty_file() --
-reinitializing f_lock and f_ep -- while ep_remove() is still
-nominally inside that lock. The upshot is an attacker-controllable
-kmem_cache_free() against the wrong slab cache.
+  $ make allyesconfig prepare
+  make[1]: Entering directory '/tmp/deleteme'
+    HOSTCC  scripts/basic/fixdep
+  #
+  # No change to .config
+  #
+    HOSTCC  scripts/basic/fixdep
+    DESCEND objtool
+    INSTALL libsubcmd_headers
+  make[1]: Leaving directory '/tmp/deleteme'
 
-Pin @file via epi_fget() at the top of ep_remove() and gate the
-critical section on the pin succeeding. With the pin held @file
-cannot reach refcount zero, which holds __fput() off and
-transitively keeps the watched struct eventpoll alive across the
-hlist_del_rcu() and the f_lock use, closing both UAFs.
+Fix the compilation flags used for scripts/basic/ before
+scripts/Makefile.warn is evaluated to stop CONFIG_WERROR / W=e
+influencing the fixdep build to avoid the spurious rebuilds.
 
-If the pin fails @file has already reached refcount zero and its
-__fput() is in flight. Because we bailed before clearing f_ep,
-that path takes the eventpoll_release() slow path into
-eventpoll_release_file() and blocks on ep->mtx until the waiter
-side's ep_clear_and_put() drops it. The bailed epi's share of
-ep->refcount stays intact, so the trailing ep_refcount_dec_and_test()
-in ep_clear_and_put() cannot free the eventpoll out from under
-eventpoll_release_file(); the orphaned epi is then cleaned up
-there.
-
-A successful pin also proves we are not racing
-eventpoll_release_file() on this epi, so drop the now-redundant
-re-check of epi->dying under f_lock. The cheap lockless
-READ_ONCE(epi->dying) fast-path bailout stays.
-
-Fixes: 58c9b016e128 ("epoll: use refcount to reduce ep_mutex contention")
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://patch.msgid.link/20260423-work-epoll-uaf-v1-6-2470f9eec0f5@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 7ded7d37e5f5 ("scripts/Makefile.extrawarn: Respect CONFIG_WERROR / W=e for hostprogs")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260422-kbuild-scripts-basic-werror-v1-1-8c6912ff22e0@weissschuh.net
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index 4971074ab476a..8c03de028c482 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -912,22 +912,26 @@ static bool ep_remove_epi(struct eventpoll *ep, struct epitem *epi)
-  */
- static void ep_remove_safe(struct eventpoll *ep, struct epitem *epi)
- {
--	struct file *file = epi->ffd.file;
-+	struct file *file __free(fput) = NULL;
+diff --git a/Makefile b/Makefile
+index 9da9c1f3b2382..1e646735a8cc2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -658,6 +658,8 @@ export RCS_FIND_IGNORE := \( -name SCCS -o -name BitKeeper -o -name .svn -o    \
  
- 	lockdep_assert_irqs_enabled();
- 	lockdep_assert_held(&ep->mtx);
+ # Basic helpers built in scripts/basic/
+ PHONY += scripts_basic
++scripts_basic: KBUILD_HOSTCFLAGS := $(KBUILD_HOSTCFLAGS)
++scripts_basic: KBUILD_HOSTLDFLAGS := $(KBUILD_HOSTLDFLAGS)
+ scripts_basic:
+ 	$(Q)$(MAKE) $(build)=scripts/basic
  
- 	ep_unregister_pollwait(ep, epi);
- 
--	/* sync with eventpoll_release_file() */
-+	/* cheap sync with eventpoll_release_file() */
- 	if (unlikely(READ_ONCE(epi->dying)))
- 		return;
- 
--	spin_lock(&file->f_lock);
--	if (epi->dying) {
--		spin_unlock(&file->f_lock);
-+	/*
-+	 * If we manage to grab a reference it means we're not in
-+	 * eventpoll_release_file() and aren't going to be.
-+	 */
-+	file = epi_fget(epi);
-+	if (!file)
- 		return;
--	}
-+
-+	spin_lock(&file->f_lock);
- 	ep_remove_file(ep, epi, file);
- 
- 	if (ep_remove_epi(ep, epi))
 -- 
 2.53.0
 
