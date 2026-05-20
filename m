@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C542D3F8704;
-	Wed, 20 May 2026 18:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1CE36CE19;
+	Wed, 20 May 2026 18:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300473; cv=none; b=iXGrLoxsda68fsSW/vAwnn2Igp0FuDNjOEn0Q22vXHCIDggSB82UfSOxVSF4vY2jJbjzCsS0njiJuX3KCuj1QTSiI7iBf5B6OIzscyA902rEWV3vU4YM2OiwUWRxlgr4zI3/Cm8oIdbuH0vX1fYgyIW7mNxd3RujsxN+CJY2PmI=
+	t=1779300476; cv=none; b=qvlcLOCE0AWNeKQ8ZWwWbvSgGyy64xAglsKtl9A1cdvVDGxq8oTkUK/T4SJKCAcbXK0axbBWuc0rXM1k3kkAvEoJO/o7NosIkiPmmtp9G1ZK9XnA9vZMovioeLk96nsvwROBlWcJLpxoefm0/YOiQa1Er4WRBo+KmoLmrebNWZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300473; c=relaxed/simple;
-	bh=qj1NCBANSyYgJxWXTQjo2+Vc7VWdTWOoReH6PdnV00g=;
+	s=arc-20240116; t=1779300476; c=relaxed/simple;
+	bh=HjQy2g2RVzw8PT4gu6Hky8yUTpDOC/gxSCPBqpivqk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asIYpKT17v12MXUlUBMLaD8GRP91adnpotitYtFEhNo/1rOOHX8FF87k1XZQ7AYZwPS+C0cCcZbKIG+FLZpIfzbxhXSFy/WcM5K5Bko3OmNzdr5uR6CC61qtcoKIwMlEh+q1hDFTYXFDiXNN3yjXrqgWiigV9klQ8HlGX5FjcWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyZJc8qw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cu8tCSZpM+QlszffnQEhoW6VqFwu6zEqE3Z5c00+zyrEnkPRtq6AwsP3izt6NrZViv7Hm4baY5RUx+2Y5HiDrfxGg8NwQKwOCFskvfKz+Vj0igpSmtuuNQMSuDIiHJLff0SVJayZ86eoQDEjp7qKBt00w0WzloMCQL5QSDjxvpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1dmFNne; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyZJc8qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 386581F000E9;
-	Wed, 20 May 2026 18:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1dmFNne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BC61F000E9;
+	Wed, 20 May 2026 18:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300472;
-	bh=BFMCsERZbPbdoaHR5UCMpMtuAIYMxqcAtEzHRUiUwNY=;
+	s=korg; t=1779300475;
+	bh=jJ5j8WLKTdoOzh7UJbZAOwFaQO29eZSWaVT3XMYqsCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qyZJc8qwe1QEhF2VB6l2W3P0vnAqLxRFaS2uqxYMjaQcxwHpDmaCJBoKJOW2brn9T
-	 Gr28Vys179+H0UvqHMhPrBL2XxX/DDIeQMp1ojA1EGRM0+1VhyJrCPXWHpty2ECjDt
-	 fHY/nbl2keaMDciwRtXffLmrHzyiEVKHq3Oj7/pY=
+	b=n1dmFNne1OYk8oC4/E+GWKhAc2XsoV1afsE5JuIlPHTzJ5ep9kavzU6kD1ytAhhxu
+	 cFot2t0v4uy6EwRcEu+m0w1loCBxgm/N4GEg/C55ieQIg0bYwlqJ8Oifku3/Gl+28M
+	 u4Lv5I0LJ2wcvfstuNi7Lt32M+tsupq0/HCQ/YYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Lei Huang <huanglei@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 188/666] hwmon: (aspeed-g6-pwm-tach): remove redundant driver remove callback
-Date: Wed, 20 May 2026 18:16:39 +0200
-Message-ID: <20260520162115.276778344@linuxfoundation.org>
+Subject: [PATCH 6.12 189/666] ALSA: hda/realtek: fix code style (ERROR: else should follow close brace })
+Date: Wed, 20 May 2026 18:16:40 +0200
+Message-ID: <20260520162115.298186126@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,49 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Lei Huang <huanglei@kylinos.cn>
 
-[ Upstream commit 46fef8583daa1bf78fda7eaa523c64d4440322ac ]
+[ Upstream commit d1888bf848ade6a9e71c7ba516fd215aa1bd8d65 ]
 
-Drops the remove callback as it only asserts reset and the probe already
-registers a devres action (devm_add_action_or_reset()) to call
-aspeed_pwm_tach_reset_assert().
+Fix checkpatch code style errors:
 
-Fixes: 7e1449cd15d1 ("hwmon: (aspeed-g6-pwm-tacho): Support for ASPEED g6 PWM/Fan tach")
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Link: https://lore.kernel.org/r/20260309-pwm_fixes-v2-1-ca9768e70470@aspeedtech.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  ERROR: else should follow close brace '}'
+  #2300: FILE: sound/hda/codecs/realtek/alc269.c:2300:
+  +       }
+  +       else
+
+Fixes: 31278997add6 ("ALSA: hda/realtek - Add headset quirk for Dell DT")
+Signed-off-by: Lei Huang <huanglei@kylinos.cn>
+Link: https://patch.msgid.link/20260331075405.78148-1-huanglei814@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aspeed-g6-pwm-tach.c | 8 --------
- 1 file changed, 8 deletions(-)
+ sound/pci/hda/patch_realtek.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/aspeed-g6-pwm-tach.c b/drivers/hwmon/aspeed-g6-pwm-tach.c
-index 4174b129d1fce..d1f7f43974824 100644
---- a/drivers/hwmon/aspeed-g6-pwm-tach.c
-+++ b/drivers/hwmon/aspeed-g6-pwm-tach.c
-@@ -517,13 +517,6 @@ static int aspeed_pwm_tach_probe(struct platform_device *pdev)
- 	return 0;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 4cab9696fdab0..c420cf5d87e99 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6428,9 +6428,9 @@ static void alc_fixup_headset_mode_alc255_no_hp_mic(struct hda_codec *codec,
+ 		struct alc_spec *spec = codec->spec;
+ 		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
+ 		alc255_set_default_jack_type(codec);
+-	}
+-	else
++	} else {
+ 		alc_fixup_headset_mode(codec, fix, action);
++	}
  }
  
--static void aspeed_pwm_tach_remove(struct platform_device *pdev)
--{
--	struct aspeed_pwm_tach_data *priv = platform_get_drvdata(pdev);
--
--	reset_control_assert(priv->reset);
--}
--
- static const struct of_device_id aspeed_pwm_tach_match[] = {
- 	{
- 		.compatible = "aspeed,ast2600-pwm-tach",
-@@ -534,7 +527,6 @@ MODULE_DEVICE_TABLE(of, aspeed_pwm_tach_match);
- 
- static struct platform_driver aspeed_pwm_tach_driver = {
- 	.probe = aspeed_pwm_tach_probe,
--	.remove = aspeed_pwm_tach_remove,
- 	.driver	= {
- 		.name = "aspeed-g6-pwm-tach",
- 		.of_match_table = aspeed_pwm_tach_match,
+ static void alc288_update_headset_jack_cb(struct hda_codec *codec,
 -- 
 2.53.0
 
