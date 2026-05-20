@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD8134DB46;
-	Wed, 20 May 2026 18:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19C83BE64B;
+	Wed, 20 May 2026 18:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300979; cv=none; b=g534lRZHT563NrnzEom/QIpwlE41bo56vwGtWx2wHqmGSEdHcFwBUQjPp0sHLleL+NtS9SbuKnnDf/d3hTUsza2/UR6Ac6DhJJqSU5vpjPtDlORBPA56B4G98xMjEx5k7iz3AUwFqBq59QipCbWI5wTQ6lUk53pumQLJEqzwzsg=
+	t=1779300982; cv=none; b=mHcvjeafojUSJOwIqo0bzXS2RlpbfFfylhNNGVBV1v98htn84rceOsrh3cZZ2KwJ7DtgNR74oDN/sNGOVOKOno0v7ddl/uBbX9oqEFtK2ZT1bHziwjRFWu69yx2lwqspte8P1Su0UTpKQN1G7fUQgoMuwTnUkiobmIxDMcR7L5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300979; c=relaxed/simple;
-	bh=Yzi2jtPze8XxRnhhxBnW0eT8kdF8hJCFn5flar6/l+4=;
+	s=arc-20240116; t=1779300982; c=relaxed/simple;
+	bh=JjiCv1hYdeytC/goh2XotcNwM8u2LK01PSLMt9jYueM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XpI65zqx33VAmBf9B2UIozbuLEM2jumm4bb4pp86AX1d1To1pDz6gNj0zvsJZ4v/bW/t0SBu3/WtkhTzmhX9+QAIhOAI6W3g+QMKLyfqS5K8hpba0pcmRflx/JOgO2cnGZxhC1QEfWSgtZCECEcQj66DByy34uCdMmHPBQRX1ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GptmOz70; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UEBg0Fzjk1f7eymRynYbJaM+W1vUzjZ7Bev8dobA2VnMRl27TIsqHXCypVN6tDILwHPwfIyfube6CgkV+M2qLkCld8E7p30+vL3Kz/rmzMFEmT+3TKcO74jArR/Z2TnTKWI/hC1WvJjV9JtA6NPpcmGLu6Afq8XnlZVSYbbocP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2ncL5R3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GptmOz70"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2871F00893;
-	Wed, 20 May 2026 18:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2ncL5R3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE711F000E9;
+	Wed, 20 May 2026 18:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300977;
-	bh=VhGIPw19TBKVAMNBwI8v6c9WpGlYIUE0o/B6YBV0p6U=;
+	s=korg; t=1779300980;
+	bh=4QN332iznPxUD9cwraLBedKNdbOFIs8iHfDGS0G2tpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GptmOz70w0JmOHwJEgraifUbqpJGvP1pa47DmamzLe0z5Ey0h7pG3P8Kam1/1tnzk
-	 /oGEzGBZNy9j9ElvLlg9/KuwH5CafyIR2zm2knEQRUicFXZOE+TYmB8bRyWMgkm8wt
-	 4OAGYCb9g9JtP85BoLojM3ITLwYNdTcs4on2ZtXE=
+	b=w2ncL5R3LKxQZKQdqFSxry+0PlLTPT2SI1vzViv4GLq8xwJbG0si+D6TWVfOfPYMu
+	 4RTqQPaz0EDsBAe+90sB4IXGktJOmOnRNfRHuO5KRJ+xP9+Y5T9QLlFNSrExRNgIOH
+	 QEaR4efbBOxweaOwDIp/6qjJhzD82BXN5DFRybBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 379/666] perf util: Kill die() prototype, dead for a long time
-Date: Wed, 20 May 2026 18:19:50 +0200
-Message-ID: <20260520162119.465893855@linuxfoundation.org>
+Subject: [PATCH 6.12 380/666] reset: replace boolean parameters with flags parameter
+Date: Wed, 20 May 2026 18:19:51 +0200
+Message-ID: <20260520162119.487672613@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,43 +45,753 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Philipp Zabel <p.zabel@pengutronix.de>
 
-[ Upstream commit e5cce1b9c82fbd48e2f1f7a25a9fad8ee228176f ]
+[ Upstream commit dad35f7d2fc14e446669d4cab100597a6798eae5 ]
 
-In fef2a735167a827a ("perf tools: Kill die()") the die() function was
-removed, but not the prototype in util.h, now when building with
-LIBPERL=1, during a 'make -C tools/perf build-test' routine test, it is
-failing as perl likes die() calls and then this clashes with this
-remnant, remove it.
+Introduce enum reset_control_flags and replace the list of boolean
+parameters to the internal reset_control_get functions with a single
+flags parameter, before adding more boolean options.
 
-Fixes: fef2a735167a827a ("perf tools: Kill die()")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+The separate boolean parameters have been shown to be error prone in
+the past. See for example commit a57f68ddc886 ("reset: Fix devm bulk
+optional exclusive control getter").
+
+Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://lore.kernel.org/r/20240925-reset-get-deasserted-v2-1-b3601bbd0458@pengutronix.de
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Stable-dep-of: bef1eef66718 ("i3c: master: dw-i3c: Fix missing reset assertion in remove() callback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/util.h | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/reset/core.c  |  71 +++++++++++--------
+ include/linux/reset.h | 161 ++++++++++++++++++++++++++----------------
+ 2 files changed, 139 insertions(+), 93 deletions(-)
 
-diff --git a/tools/perf/util/util.h b/tools/perf/util/util.h
-index 9966c21aaf048..bc30d038817db 100644
---- a/tools/perf/util/util.h
-+++ b/tools/perf/util/util.h
-@@ -26,7 +26,6 @@ extern bool perf_guest;
+diff --git a/drivers/reset/core.c b/drivers/reset/core.c
+index 4d509d41456ad..682d61812852b 100644
+--- a/drivers/reset/core.c
++++ b/drivers/reset/core.c
+@@ -773,12 +773,19 @@ EXPORT_SYMBOL_GPL(reset_control_bulk_release);
  
- /* General helper functions */
- void usage(const char *err) __noreturn;
--void die(const char *err, ...) __noreturn __printf(1, 2);
+ static struct reset_control *
+ __reset_control_get_internal(struct reset_controller_dev *rcdev,
+-			     unsigned int index, bool shared, bool acquired)
++			     unsigned int index, enum reset_control_flags flags)
+ {
++	bool shared = flags & RESET_CONTROL_FLAGS_BIT_SHARED;
++	bool acquired = flags & RESET_CONTROL_FLAGS_BIT_ACQUIRED;
+ 	struct reset_control *rstc;
  
- struct dirent;
- struct strlist;
+ 	lockdep_assert_held(&reset_list_mutex);
+ 
++	/* Expect callers to filter out OPTIONAL and DEASSERTED bits */
++	if (WARN_ON(flags & ~(RESET_CONTROL_FLAGS_BIT_SHARED |
++			      RESET_CONTROL_FLAGS_BIT_ACQUIRED)))
++		return ERR_PTR(-EINVAL);
++
+ 	list_for_each_entry(rstc, &rcdev->reset_control_head, list) {
+ 		if (rstc->id == index) {
+ 			/*
+@@ -994,8 +1001,9 @@ static struct reset_controller_dev *__reset_find_rcdev(const struct of_phandle_a
+ 
+ struct reset_control *
+ __of_reset_control_get(struct device_node *node, const char *id, int index,
+-		       bool shared, bool optional, bool acquired)
++		       enum reset_control_flags flags)
+ {
++	bool optional = flags & RESET_CONTROL_FLAGS_BIT_OPTIONAL;
+ 	bool gpio_fallback = false;
+ 	struct reset_control *rstc;
+ 	struct reset_controller_dev *rcdev;
+@@ -1059,8 +1067,10 @@ __of_reset_control_get(struct device_node *node, const char *id, int index,
+ 		goto out_unlock;
+ 	}
+ 
++	flags &= ~RESET_CONTROL_FLAGS_BIT_OPTIONAL;
++
+ 	/* reset_list_mutex also protects the rcdev's reset_control list */
+-	rstc = __reset_control_get_internal(rcdev, rstc_id, shared, acquired);
++	rstc = __reset_control_get_internal(rcdev, rstc_id, flags);
+ 
+ out_unlock:
+ 	mutex_unlock(&reset_list_mutex);
+@@ -1091,8 +1101,9 @@ __reset_controller_by_name(const char *name)
+ 
+ static struct reset_control *
+ __reset_control_get_from_lookup(struct device *dev, const char *con_id,
+-				bool shared, bool optional, bool acquired)
++				enum reset_control_flags flags)
+ {
++	bool optional = flags & RESET_CONTROL_FLAGS_BIT_OPTIONAL;
+ 	const struct reset_control_lookup *lookup;
+ 	struct reset_controller_dev *rcdev;
+ 	const char *dev_id = dev_name(dev);
+@@ -1116,9 +1127,11 @@ __reset_control_get_from_lookup(struct device *dev, const char *con_id,
+ 				return ERR_PTR(-EPROBE_DEFER);
+ 			}
+ 
++			flags &= ~RESET_CONTROL_FLAGS_BIT_OPTIONAL;
++
+ 			rstc = __reset_control_get_internal(rcdev,
+ 							    lookup->index,
+-							    shared, acquired);
++							    flags);
+ 			mutex_unlock(&reset_list_mutex);
+ 			break;
+ 		}
+@@ -1133,30 +1146,29 @@ __reset_control_get_from_lookup(struct device *dev, const char *con_id,
+ }
+ 
+ struct reset_control *__reset_control_get(struct device *dev, const char *id,
+-					  int index, bool shared, bool optional,
+-					  bool acquired)
++					  int index, enum reset_control_flags flags)
+ {
++	bool shared = flags & RESET_CONTROL_FLAGS_BIT_SHARED;
++	bool acquired = flags & RESET_CONTROL_FLAGS_BIT_ACQUIRED;
++
+ 	if (WARN_ON(shared && acquired))
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	if (dev->of_node)
+-		return __of_reset_control_get(dev->of_node, id, index, shared,
+-					      optional, acquired);
++		return __of_reset_control_get(dev->of_node, id, index, flags);
+ 
+-	return __reset_control_get_from_lookup(dev, id, shared, optional,
+-					       acquired);
++	return __reset_control_get_from_lookup(dev, id, flags);
+ }
+ EXPORT_SYMBOL_GPL(__reset_control_get);
+ 
+ int __reset_control_bulk_get(struct device *dev, int num_rstcs,
+ 			     struct reset_control_bulk_data *rstcs,
+-			     bool shared, bool optional, bool acquired)
++			     enum reset_control_flags flags)
+ {
+ 	int ret, i;
+ 
+ 	for (i = 0; i < num_rstcs; i++) {
+-		rstcs[i].rstc = __reset_control_get(dev, rstcs[i].id, 0,
+-						    shared, optional, acquired);
++		rstcs[i].rstc = __reset_control_get(dev, rstcs[i].id, 0, flags);
+ 		if (IS_ERR(rstcs[i].rstc)) {
+ 			ret = PTR_ERR(rstcs[i].rstc);
+ 			goto err;
+@@ -1226,7 +1238,7 @@ static void devm_reset_control_release(struct device *dev, void *res)
+ 
+ struct reset_control *
+ __devm_reset_control_get(struct device *dev, const char *id, int index,
+-			 bool shared, bool optional, bool acquired)
++			 enum reset_control_flags flags)
+ {
+ 	struct reset_control **ptr, *rstc;
+ 
+@@ -1235,7 +1247,7 @@ __devm_reset_control_get(struct device *dev, const char *id, int index,
+ 	if (!ptr)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	rstc = __reset_control_get(dev, id, index, shared, optional, acquired);
++	rstc = __reset_control_get(dev, id, index, flags);
+ 	if (IS_ERR_OR_NULL(rstc)) {
+ 		devres_free(ptr);
+ 		return rstc;
+@@ -1262,7 +1274,7 @@ static void devm_reset_control_bulk_release(struct device *dev, void *res)
+ 
+ int __devm_reset_control_bulk_get(struct device *dev, int num_rstcs,
+ 				  struct reset_control_bulk_data *rstcs,
+-				  bool shared, bool optional, bool acquired)
++				  enum reset_control_flags flags)
+ {
+ 	struct reset_control_bulk_devres *ptr;
+ 	int ret;
+@@ -1272,7 +1284,7 @@ int __devm_reset_control_bulk_get(struct device *dev, int num_rstcs,
+ 	if (!ptr)
+ 		return -ENOMEM;
+ 
+-	ret = __reset_control_bulk_get(dev, num_rstcs, rstcs, shared, optional, acquired);
++	ret = __reset_control_bulk_get(dev, num_rstcs, rstcs, flags);
+ 	if (ret < 0) {
+ 		devres_free(ptr);
+ 		return ret;
+@@ -1298,6 +1310,7 @@ EXPORT_SYMBOL_GPL(__devm_reset_control_bulk_get);
+  */
+ int __device_reset(struct device *dev, bool optional)
+ {
++	enum reset_control_flags flags;
+ 	struct reset_control *rstc;
+ 	int ret;
+ 
+@@ -1313,7 +1326,8 @@ int __device_reset(struct device *dev, bool optional)
+ 	}
+ #endif
+ 
+-	rstc = __reset_control_get(dev, NULL, 0, 0, optional, true);
++	flags = optional ? RESET_CONTROL_OPTIONAL_EXCLUSIVE : RESET_CONTROL_EXCLUSIVE;
++	rstc = __reset_control_get(dev, NULL, 0, flags);
+ 	if (IS_ERR(rstc))
+ 		return PTR_ERR(rstc);
+ 
+@@ -1356,17 +1370,14 @@ static int of_reset_control_get_count(struct device_node *node)
+  *				device node.
+  *
+  * @np: device node for the device that requests the reset controls array
+- * @shared: whether reset controls are shared or not
+- * @optional: whether it is optional to get the reset controls
+- * @acquired: only one reset control may be acquired for a given controller
+- *            and ID
++ * @flags: whether reset controls are shared, optional, acquired
+  *
+  * Returns pointer to allocated reset_control on success or error on failure
+  */
+ struct reset_control *
+-of_reset_control_array_get(struct device_node *np, bool shared, bool optional,
+-			   bool acquired)
++of_reset_control_array_get(struct device_node *np, enum reset_control_flags flags)
+ {
++	bool optional = flags & RESET_CONTROL_FLAGS_BIT_OPTIONAL;
+ 	struct reset_control_array *resets;
+ 	struct reset_control *rstc;
+ 	int num, i;
+@@ -1381,8 +1392,7 @@ of_reset_control_array_get(struct device_node *np, bool shared, bool optional,
+ 	resets->num_rstcs = num;
+ 
+ 	for (i = 0; i < num; i++) {
+-		rstc = __of_reset_control_get(np, NULL, i, shared, optional,
+-					      acquired);
++		rstc = __of_reset_control_get(np, NULL, i, flags);
+ 		if (IS_ERR(rstc))
+ 			goto err_rst;
+ 		resets->rstc[i] = rstc;
+@@ -1407,8 +1417,7 @@ EXPORT_SYMBOL_GPL(of_reset_control_array_get);
+  * devm_reset_control_array_get - Resource managed reset control array get
+  *
+  * @dev: device that requests the list of reset controls
+- * @shared: whether reset controls are shared or not
+- * @optional: whether it is optional to get the reset controls
++ * @flags: whether reset controls are shared, optional, acquired
+  *
+  * The reset control array APIs are intended for a list of resets
+  * that just have to be asserted or deasserted, without any
+@@ -1417,7 +1426,7 @@ EXPORT_SYMBOL_GPL(of_reset_control_array_get);
+  * Returns pointer to allocated reset_control on success or error on failure
+  */
+ struct reset_control *
+-devm_reset_control_array_get(struct device *dev, bool shared, bool optional)
++devm_reset_control_array_get(struct device *dev, enum reset_control_flags flags)
+ {
+ 	struct reset_control **ptr, *rstc;
+ 
+@@ -1426,7 +1435,7 @@ devm_reset_control_array_get(struct device *dev, bool shared, bool optional)
+ 	if (!ptr)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	rstc = of_reset_control_array_get(dev->of_node, shared, optional, true);
++	rstc = of_reset_control_array_get(dev->of_node, flags);
+ 	if (IS_ERR_OR_NULL(rstc)) {
+ 		devres_free(ptr);
+ 		return rstc;
+diff --git a/include/linux/reset.h b/include/linux/reset.h
+index 4b31d683776eb..30edaea2c8fb8 100644
+--- a/include/linux/reset.h
++++ b/include/linux/reset.h
+@@ -26,6 +26,33 @@ struct reset_control_bulk_data {
+ 	struct reset_control		*rstc;
+ };
+ 
++#define RESET_CONTROL_FLAGS_BIT_SHARED		BIT(0)	/* not exclusive */
++#define RESET_CONTROL_FLAGS_BIT_OPTIONAL	BIT(1)
++#define RESET_CONTROL_FLAGS_BIT_ACQUIRED	BIT(2)	/* iff exclusive, not released */
++
++/**
++ * enum reset_control_flags - Flags that can be passed to the reset_control_get functions
++ *                    to determine the type of reset control.
++ *                    These values cannot be OR'd.
++ *
++ * @RESET_CONTROL_EXCLUSIVE:				exclusive, acquired,
++ * @RESET_CONTROL_EXCLUSIVE_RELEASED:			exclusive, released,
++ * @RESET_CONTROL_SHARED:				shared
++ * @RESET_CONTROL_OPTIONAL_EXCLUSIVE:			optional, exclusive, acquired
++ * @RESET_CONTROL_OPTIONAL_EXCLUSIVE_RELEASED:		optional, exclusive, released
++ * @RESET_CONTROL_OPTIONAL_SHARED:			optional, shared
++ */
++enum reset_control_flags {
++	RESET_CONTROL_EXCLUSIVE				= RESET_CONTROL_FLAGS_BIT_ACQUIRED,
++	RESET_CONTROL_EXCLUSIVE_RELEASED		= 0,
++	RESET_CONTROL_SHARED				= RESET_CONTROL_FLAGS_BIT_SHARED,
++	RESET_CONTROL_OPTIONAL_EXCLUSIVE		= RESET_CONTROL_FLAGS_BIT_OPTIONAL |
++							  RESET_CONTROL_FLAGS_BIT_ACQUIRED,
++	RESET_CONTROL_OPTIONAL_EXCLUSIVE_RELEASED	= RESET_CONTROL_FLAGS_BIT_OPTIONAL,
++	RESET_CONTROL_OPTIONAL_SHARED			= RESET_CONTROL_FLAGS_BIT_OPTIONAL |
++							  RESET_CONTROL_FLAGS_BIT_SHARED,
++};
++
+ #ifdef CONFIG_RESET_CONTROLLER
+ 
+ int reset_control_reset(struct reset_control *rstc);
+@@ -43,30 +70,25 @@ int reset_control_bulk_acquire(int num_rstcs, struct reset_control_bulk_data *rs
+ void reset_control_bulk_release(int num_rstcs, struct reset_control_bulk_data *rstcs);
+ 
+ struct reset_control *__of_reset_control_get(struct device_node *node,
+-				     const char *id, int index, bool shared,
+-				     bool optional, bool acquired);
++				     const char *id, int index, enum reset_control_flags flags);
+ struct reset_control *__reset_control_get(struct device *dev, const char *id,
+-					  int index, bool shared,
+-					  bool optional, bool acquired);
++					  int index, enum reset_control_flags flags);
+ void reset_control_put(struct reset_control *rstc);
+ int __reset_control_bulk_get(struct device *dev, int num_rstcs,
+ 			     struct reset_control_bulk_data *rstcs,
+-			     bool shared, bool optional, bool acquired);
++			     enum reset_control_flags flags);
+ void reset_control_bulk_put(int num_rstcs, struct reset_control_bulk_data *rstcs);
+ 
+ int __device_reset(struct device *dev, bool optional);
+ struct reset_control *__devm_reset_control_get(struct device *dev,
+-				     const char *id, int index, bool shared,
+-				     bool optional, bool acquired);
++				     const char *id, int index, enum reset_control_flags flags);
+ int __devm_reset_control_bulk_get(struct device *dev, int num_rstcs,
+ 				  struct reset_control_bulk_data *rstcs,
+-				  bool shared, bool optional, bool acquired);
++				  enum reset_control_flags flags);
+ 
+ struct reset_control *devm_reset_control_array_get(struct device *dev,
+-						   bool shared, bool optional);
+-struct reset_control *of_reset_control_array_get(struct device_node *np,
+-						 bool shared, bool optional,
+-						 bool acquired);
++						   enum reset_control_flags flags);
++struct reset_control *of_reset_control_array_get(struct device_node *np, enum reset_control_flags);
+ 
+ int reset_control_get_count(struct device *dev);
+ 
+@@ -117,17 +139,19 @@ static inline int __device_reset(struct device *dev, bool optional)
+ 
+ static inline struct reset_control *__of_reset_control_get(
+ 					struct device_node *node,
+-					const char *id, int index, bool shared,
+-					bool optional, bool acquired)
++					const char *id, int index, enum reset_control_flags flags)
+ {
++	bool optional = flags & RESET_CONTROL_FLAGS_BIT_OPTIONAL;
++
+ 	return optional ? NULL : ERR_PTR(-ENOTSUPP);
+ }
+ 
+ static inline struct reset_control *__reset_control_get(
+ 					struct device *dev, const char *id,
+-					int index, bool shared, bool optional,
+-					bool acquired)
++					int index, enum reset_control_flags flags)
+ {
++	bool optional = flags & RESET_CONTROL_FLAGS_BIT_OPTIONAL;
++
+ 	return optional ? NULL : ERR_PTR(-ENOTSUPP);
+ }
+ 
+@@ -163,8 +187,10 @@ reset_control_bulk_release(int num_rstcs, struct reset_control_bulk_data *rstcs)
+ static inline int
+ __reset_control_bulk_get(struct device *dev, int num_rstcs,
+ 			 struct reset_control_bulk_data *rstcs,
+-			 bool shared, bool optional, bool acquired)
++			 enum reset_control_flags flags)
+ {
++	bool optional = flags & RESET_CONTROL_FLAGS_BIT_OPTIONAL;
++
+ 	return optional ? 0 : -EOPNOTSUPP;
+ }
+ 
+@@ -175,30 +201,36 @@ reset_control_bulk_put(int num_rstcs, struct reset_control_bulk_data *rstcs)
+ 
+ static inline struct reset_control *__devm_reset_control_get(
+ 					struct device *dev, const char *id,
+-					int index, bool shared, bool optional,
+-					bool acquired)
++					int index, enum reset_control_flags flags)
+ {
++	bool optional = flags & RESET_CONTROL_FLAGS_BIT_OPTIONAL;
++
+ 	return optional ? NULL : ERR_PTR(-ENOTSUPP);
+ }
+ 
+ static inline int
+ __devm_reset_control_bulk_get(struct device *dev, int num_rstcs,
+ 			      struct reset_control_bulk_data *rstcs,
+-			      bool shared, bool optional, bool acquired)
++			      enum reset_control_flags flags)
+ {
++	bool optional = flags & RESET_CONTROL_FLAGS_BIT_OPTIONAL;
++
+ 	return optional ? 0 : -EOPNOTSUPP;
+ }
+ 
+ static inline struct reset_control *
+-devm_reset_control_array_get(struct device *dev, bool shared, bool optional)
++devm_reset_control_array_get(struct device *dev, enum reset_control_flags flags)
+ {
++	bool optional = flags & RESET_CONTROL_FLAGS_BIT_OPTIONAL;
++
+ 	return optional ? NULL : ERR_PTR(-ENOTSUPP);
+ }
+ 
+ static inline struct reset_control *
+-of_reset_control_array_get(struct device_node *np, bool shared, bool optional,
+-			   bool acquired)
++of_reset_control_array_get(struct device_node *np, enum reset_control_flags flags)
+ {
++	bool optional = flags & RESET_CONTROL_FLAGS_BIT_OPTIONAL;
++
+ 	return optional ? NULL : ERR_PTR(-ENOTSUPP);
+ }
+ 
+@@ -237,7 +269,7 @@ static inline int device_reset_optional(struct device *dev)
+ static inline struct reset_control *
+ __must_check reset_control_get_exclusive(struct device *dev, const char *id)
+ {
+-	return __reset_control_get(dev, id, 0, false, false, true);
++	return __reset_control_get(dev, id, 0, RESET_CONTROL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -254,7 +286,7 @@ static inline int __must_check
+ reset_control_bulk_get_exclusive(struct device *dev, int num_rstcs,
+ 				 struct reset_control_bulk_data *rstcs)
+ {
+-	return __reset_control_bulk_get(dev, num_rstcs, rstcs, false, false, true);
++	return __reset_control_bulk_get(dev, num_rstcs, rstcs, RESET_CONTROL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -275,7 +307,7 @@ static inline struct reset_control *
+ __must_check reset_control_get_exclusive_released(struct device *dev,
+ 						  const char *id)
+ {
+-	return __reset_control_get(dev, id, 0, false, false, false);
++	return __reset_control_get(dev, id, 0, RESET_CONTROL_EXCLUSIVE_RELEASED);
+ }
+ 
+ /**
+@@ -296,7 +328,7 @@ static inline int __must_check
+ reset_control_bulk_get_exclusive_released(struct device *dev, int num_rstcs,
+ 					  struct reset_control_bulk_data *rstcs)
+ {
+-	return __reset_control_bulk_get(dev, num_rstcs, rstcs, false, false, false);
++	return __reset_control_bulk_get(dev, num_rstcs, rstcs, RESET_CONTROL_EXCLUSIVE_RELEASED);
+ }
+ 
+ /**
+@@ -317,7 +349,8 @@ static inline int __must_check
+ reset_control_bulk_get_optional_exclusive_released(struct device *dev, int num_rstcs,
+ 						   struct reset_control_bulk_data *rstcs)
+ {
+-	return __reset_control_bulk_get(dev, num_rstcs, rstcs, false, true, false);
++	return __reset_control_bulk_get(dev, num_rstcs, rstcs,
++					RESET_CONTROL_OPTIONAL_EXCLUSIVE_RELEASED);
+ }
+ 
+ /**
+@@ -345,7 +378,7 @@ reset_control_bulk_get_optional_exclusive_released(struct device *dev, int num_r
+ static inline struct reset_control *reset_control_get_shared(
+ 					struct device *dev, const char *id)
+ {
+-	return __reset_control_get(dev, id, 0, true, false, false);
++	return __reset_control_get(dev, id, 0, RESET_CONTROL_SHARED);
+ }
+ 
+ /**
+@@ -362,7 +395,7 @@ static inline int __must_check
+ reset_control_bulk_get_shared(struct device *dev, int num_rstcs,
+ 			      struct reset_control_bulk_data *rstcs)
+ {
+-	return __reset_control_bulk_get(dev, num_rstcs, rstcs, true, false, false);
++	return __reset_control_bulk_get(dev, num_rstcs, rstcs, RESET_CONTROL_SHARED);
+ }
+ 
+ /**
+@@ -379,7 +412,7 @@ reset_control_bulk_get_shared(struct device *dev, int num_rstcs,
+ static inline struct reset_control *reset_control_get_optional_exclusive(
+ 					struct device *dev, const char *id)
+ {
+-	return __reset_control_get(dev, id, 0, false, true, true);
++	return __reset_control_get(dev, id, 0, RESET_CONTROL_OPTIONAL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -399,7 +432,7 @@ static inline int __must_check
+ reset_control_bulk_get_optional_exclusive(struct device *dev, int num_rstcs,
+ 					  struct reset_control_bulk_data *rstcs)
+ {
+-	return __reset_control_bulk_get(dev, num_rstcs, rstcs, false, true, true);
++	return __reset_control_bulk_get(dev, num_rstcs, rstcs, RESET_CONTROL_OPTIONAL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -416,7 +449,7 @@ reset_control_bulk_get_optional_exclusive(struct device *dev, int num_rstcs,
+ static inline struct reset_control *reset_control_get_optional_shared(
+ 					struct device *dev, const char *id)
+ {
+-	return __reset_control_get(dev, id, 0, true, true, false);
++	return __reset_control_get(dev, id, 0, RESET_CONTROL_OPTIONAL_SHARED);
+ }
+ 
+ /**
+@@ -436,7 +469,7 @@ static inline int __must_check
+ reset_control_bulk_get_optional_shared(struct device *dev, int num_rstcs,
+ 				       struct reset_control_bulk_data *rstcs)
+ {
+-	return __reset_control_bulk_get(dev, num_rstcs, rstcs, true, true, false);
++	return __reset_control_bulk_get(dev, num_rstcs, rstcs, RESET_CONTROL_OPTIONAL_SHARED);
+ }
+ 
+ /**
+@@ -452,7 +485,7 @@ reset_control_bulk_get_optional_shared(struct device *dev, int num_rstcs,
+ static inline struct reset_control *of_reset_control_get_exclusive(
+ 				struct device_node *node, const char *id)
+ {
+-	return __of_reset_control_get(node, id, 0, false, false, true);
++	return __of_reset_control_get(node, id, 0, RESET_CONTROL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -472,7 +505,7 @@ static inline struct reset_control *of_reset_control_get_exclusive(
+ static inline struct reset_control *of_reset_control_get_optional_exclusive(
+ 				struct device_node *node, const char *id)
+ {
+-	return __of_reset_control_get(node, id, 0, false, true, true);
++	return __of_reset_control_get(node, id, 0, RESET_CONTROL_OPTIONAL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -497,7 +530,7 @@ static inline struct reset_control *of_reset_control_get_optional_exclusive(
+ static inline struct reset_control *of_reset_control_get_shared(
+ 				struct device_node *node, const char *id)
+ {
+-	return __of_reset_control_get(node, id, 0, true, false, false);
++	return __of_reset_control_get(node, id, 0, RESET_CONTROL_SHARED);
+ }
+ 
+ /**
+@@ -514,7 +547,7 @@ static inline struct reset_control *of_reset_control_get_shared(
+ static inline struct reset_control *of_reset_control_get_exclusive_by_index(
+ 					struct device_node *node, int index)
+ {
+-	return __of_reset_control_get(node, NULL, index, false, false, true);
++	return __of_reset_control_get(node, NULL, index, RESET_CONTROL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -542,7 +575,7 @@ static inline struct reset_control *of_reset_control_get_exclusive_by_index(
+ static inline struct reset_control *of_reset_control_get_shared_by_index(
+ 					struct device_node *node, int index)
+ {
+-	return __of_reset_control_get(node, NULL, index, true, false, false);
++	return __of_reset_control_get(node, NULL, index, RESET_CONTROL_SHARED);
+ }
+ 
+ /**
+@@ -561,7 +594,7 @@ static inline struct reset_control *
+ __must_check devm_reset_control_get_exclusive(struct device *dev,
+ 					      const char *id)
+ {
+-	return __devm_reset_control_get(dev, id, 0, false, false, true);
++	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -581,7 +614,8 @@ static inline int __must_check
+ devm_reset_control_bulk_get_exclusive(struct device *dev, int num_rstcs,
+ 				      struct reset_control_bulk_data *rstcs)
+ {
+-	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs, false, false, true);
++	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs,
++					     RESET_CONTROL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -600,7 +634,7 @@ static inline struct reset_control *
+ __must_check devm_reset_control_get_exclusive_released(struct device *dev,
+ 						       const char *id)
+ {
+-	return __devm_reset_control_get(dev, id, 0, false, false, false);
++	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_EXCLUSIVE_RELEASED);
+ }
+ 
+ /**
+@@ -620,7 +654,8 @@ static inline int __must_check
+ devm_reset_control_bulk_get_exclusive_released(struct device *dev, int num_rstcs,
+ 					       struct reset_control_bulk_data *rstcs)
+ {
+-	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs, false, false, false);
++	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs,
++					     RESET_CONTROL_EXCLUSIVE_RELEASED);
+ }
+ 
+ /**
+@@ -639,7 +674,7 @@ static inline struct reset_control *
+ __must_check devm_reset_control_get_optional_exclusive_released(struct device *dev,
+ 								const char *id)
+ {
+-	return __devm_reset_control_get(dev, id, 0, false, true, false);
++	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_OPTIONAL_EXCLUSIVE_RELEASED);
+ }
+ 
+ /**
+@@ -659,7 +694,8 @@ static inline int __must_check
+ devm_reset_control_bulk_get_optional_exclusive_released(struct device *dev, int num_rstcs,
+ 							struct reset_control_bulk_data *rstcs)
+ {
+-	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs, false, true, false);
++	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs,
++					     RESET_CONTROL_OPTIONAL_EXCLUSIVE_RELEASED);
+ }
+ 
+ /**
+@@ -674,7 +710,7 @@ devm_reset_control_bulk_get_optional_exclusive_released(struct device *dev, int
+ static inline struct reset_control *devm_reset_control_get_shared(
+ 					struct device *dev, const char *id)
+ {
+-	return __devm_reset_control_get(dev, id, 0, true, false, false);
++	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_SHARED);
+ }
+ 
+ /**
+@@ -694,7 +730,7 @@ static inline int __must_check
+ devm_reset_control_bulk_get_shared(struct device *dev, int num_rstcs,
+ 				   struct reset_control_bulk_data *rstcs)
+ {
+-	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs, true, false, false);
++	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs, RESET_CONTROL_SHARED);
+ }
+ 
+ /**
+@@ -712,7 +748,7 @@ devm_reset_control_bulk_get_shared(struct device *dev, int num_rstcs,
+ static inline struct reset_control *devm_reset_control_get_optional_exclusive(
+ 					struct device *dev, const char *id)
+ {
+-	return __devm_reset_control_get(dev, id, 0, false, true, true);
++	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_OPTIONAL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -732,7 +768,8 @@ static inline int __must_check
+ devm_reset_control_bulk_get_optional_exclusive(struct device *dev, int num_rstcs,
+ 					       struct reset_control_bulk_data *rstcs)
+ {
+-	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs, false, true, true);
++	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs,
++					     RESET_CONTROL_OPTIONAL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -750,7 +787,7 @@ devm_reset_control_bulk_get_optional_exclusive(struct device *dev, int num_rstcs
+ static inline struct reset_control *devm_reset_control_get_optional_shared(
+ 					struct device *dev, const char *id)
+ {
+-	return __devm_reset_control_get(dev, id, 0, true, true, false);
++	return __devm_reset_control_get(dev, id, 0, RESET_CONTROL_OPTIONAL_SHARED);
+ }
+ 
+ /**
+@@ -770,7 +807,7 @@ static inline int __must_check
+ devm_reset_control_bulk_get_optional_shared(struct device *dev, int num_rstcs,
+ 					    struct reset_control_bulk_data *rstcs)
+ {
+-	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs, true, true, false);
++	return __devm_reset_control_bulk_get(dev, num_rstcs, rstcs, RESET_CONTROL_OPTIONAL_SHARED);
+ }
+ 
+ /**
+@@ -788,7 +825,7 @@ devm_reset_control_bulk_get_optional_shared(struct device *dev, int num_rstcs,
+ static inline struct reset_control *
+ devm_reset_control_get_exclusive_by_index(struct device *dev, int index)
+ {
+-	return __devm_reset_control_get(dev, NULL, index, false, false, true);
++	return __devm_reset_control_get(dev, NULL, index, RESET_CONTROL_EXCLUSIVE);
+ }
+ 
+ /**
+@@ -804,7 +841,7 @@ devm_reset_control_get_exclusive_by_index(struct device *dev, int index)
+ static inline struct reset_control *
+ devm_reset_control_get_shared_by_index(struct device *dev, int index)
+ {
+-	return __devm_reset_control_get(dev, NULL, index, true, false, false);
++	return __devm_reset_control_get(dev, NULL, index, RESET_CONTROL_SHARED);
+ }
+ 
+ /*
+@@ -852,54 +889,54 @@ static inline struct reset_control *devm_reset_control_get_by_index(
+ static inline struct reset_control *
+ devm_reset_control_array_get_exclusive(struct device *dev)
+ {
+-	return devm_reset_control_array_get(dev, false, false);
++	return devm_reset_control_array_get(dev, RESET_CONTROL_EXCLUSIVE);
+ }
+ 
+ static inline struct reset_control *
+ devm_reset_control_array_get_shared(struct device *dev)
+ {
+-	return devm_reset_control_array_get(dev, true, false);
++	return devm_reset_control_array_get(dev, RESET_CONTROL_SHARED);
+ }
+ 
+ static inline struct reset_control *
+ devm_reset_control_array_get_optional_exclusive(struct device *dev)
+ {
+-	return devm_reset_control_array_get(dev, false, true);
++	return devm_reset_control_array_get(dev, RESET_CONTROL_OPTIONAL_EXCLUSIVE);
+ }
+ 
+ static inline struct reset_control *
+ devm_reset_control_array_get_optional_shared(struct device *dev)
+ {
+-	return devm_reset_control_array_get(dev, true, true);
++	return devm_reset_control_array_get(dev, RESET_CONTROL_OPTIONAL_SHARED);
+ }
+ 
+ static inline struct reset_control *
+ of_reset_control_array_get_exclusive(struct device_node *node)
+ {
+-	return of_reset_control_array_get(node, false, false, true);
++	return of_reset_control_array_get(node, RESET_CONTROL_EXCLUSIVE);
+ }
+ 
+ static inline struct reset_control *
+ of_reset_control_array_get_exclusive_released(struct device_node *node)
+ {
+-	return of_reset_control_array_get(node, false, false, false);
++	return of_reset_control_array_get(node, RESET_CONTROL_EXCLUSIVE_RELEASED);
+ }
+ 
+ static inline struct reset_control *
+ of_reset_control_array_get_shared(struct device_node *node)
+ {
+-	return of_reset_control_array_get(node, true, false, true);
++	return of_reset_control_array_get(node, RESET_CONTROL_SHARED);
+ }
+ 
+ static inline struct reset_control *
+ of_reset_control_array_get_optional_exclusive(struct device_node *node)
+ {
+-	return of_reset_control_array_get(node, false, true, true);
++	return of_reset_control_array_get(node, RESET_CONTROL_OPTIONAL_EXCLUSIVE);
+ }
+ 
+ static inline struct reset_control *
+ of_reset_control_array_get_optional_shared(struct device_node *node)
+ {
+-	return of_reset_control_array_get(node, true, true, true);
++	return of_reset_control_array_get(node, RESET_CONTROL_OPTIONAL_SHARED);
+ }
+ #endif
 -- 
 2.53.0
 
