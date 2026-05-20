@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C6E3FB060;
-	Wed, 20 May 2026 18:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCC83FC5DE;
+	Wed, 20 May 2026 18:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301426; cv=none; b=Tf+2a42+igXSs0SlatfP3eCo6FZWB90B5gE+IJCIhDUPXNHQRVFxEjnQINBXVPenLPZkg/9kPhkpE1ba2WOuGoFkI3bRTPYq3x/fpmcKK2QYr+To3KNE4mjTU6+JQJMeiavZAfj7XvpQUFEx9rIHpdFlcY77Y68LPD1lFzC8xuE=
+	t=1779301429; cv=none; b=RUdmT9O9f6EZAPuT/iM2l01g+ywa8gz8EIUPm9c3eoc9rIV3oLRy8nm0aOmYiM+de5n7dKec8qI8mvR68rSHMnYOLWX/MRsGkraYirvNaQKNGY1y/EFTBhzEf4aPbfVjk8aUBpuZuM8JtETb0IjqhW24UMnEJ9KhMZrgqYkzwf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301426; c=relaxed/simple;
-	bh=bsO7srdbtsFFI2b3eAWj08jpDSJGtUQojmsGzsFN1Hc=;
+	s=arc-20240116; t=1779301429; c=relaxed/simple;
+	bh=iHA762wzn1TZvchoo8C4M1ISc5uQvfZuVWRFZEPbmMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNkxu0MbjSxu1TSwfkAXlO10/lXdhZ5I4KfQMdX49FOZFOKC1im/P54xR9nLTce8FaOxiA2zDXbepaaTjXLEDP+0BiEaQGyiCTu2fccoTLpCpD4EyezGZOeS0vPz0/bBcfzJUuSrQzOznlfEUjnGnR0Afw0NHMSMMsepo3XZ1o8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VyH9Zjem; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BYOBQTQ5zDaqFqxYbwmRxZXQR1xjtC2YgET8aSGalO9wJ4eRfS04WUhfkvJkFmtiyyXNV8gGDKE8OipkE8HKUfxGNtcmdzyM06ZA4xQk0GU2WUTzdxzKmCo27MosZwYPJ5l1+ljTI8SBs2DoUQmNlHoIMYyMUwvkS+wXj8YdjJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyP0DqDF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VyH9Zjem"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7B71F00898;
-	Wed, 20 May 2026 18:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyP0DqDF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2011F000E9;
+	Wed, 20 May 2026 18:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301425;
-	bh=JLmuabpAWU5/0/LT8oBXQIcP9iuphJ1ryNTGrX78EQk=;
+	s=korg; t=1779301428;
+	bh=4iDeeN8pebZkSWxDxj1qZqYwesE7T121zxY0z34Mk+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VyH9ZjemEQkQ7FNxiGAhJglZGcLMe6Vp8sY2c+65Z6N1fUXlz3az9OC9W+aRfaQ0u
-	 jDKDo2j9zVxjbtiilPB7OlR+W5BGuoPkWoofDBs6zmBtZeMrp6wishrmXzb7kxYoTH
-	 ZTVM5J+/vqqlf6zNkZRtMoQIfYMxSsIK3FOaXmw0=
+	b=jyP0DqDFs648MZt4rYDT/GAdfaF+Bb+ozz/5/iXeQm2OYwK+kbtddGS/XXOTq7iCB
+	 MC9PIuurtBee4lbmPz+M34SSSjk/Etjr5+HXjAEYASRGROOtbdOWdTC1OUCF1mE2H0
+	 tHfJ6xZ4FFAFL5RdDIfVKw18x6qq+uMxcdZcRi6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Breno Leitao <leitao@debian.org>,
-	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 549/666] netpoll: extract IPv4 address retrieval into helper function
-Date: Wed, 20 May 2026 18:22:40 +0200
-Message-ID: <20260520162123.168615541@linuxfoundation.org>
+Subject: [PATCH 6.12 550/666] netpoll: fix IPv6 local-address corruption
+Date: Wed, 20 May 2026 18:22:41 +0200
+Message-ID: <20260520162123.189696282@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -46,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -54,100 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 3699f992e8c22d3ce54d2c1a5774e2c49028f99c ]
+[ Upstream commit 3bc179bc7146c26c9dff75d2943d10528274e301 ]
 
-Move the IPv4 address retrieval logic from netpoll_setup() into a
-separate netpoll_take_ipv4() function to improve code organization
-and readability. This change consolidates the IPv4-specific logic
-and error handling into a dedicated function while maintaining
-the same functionality.
+netpoll_setup() decides whether to auto-populate the local source
+address by testing np->local_ip.ip, which only inspects the first 4
+bytes of the union inet_addr storage.
 
-No functional changes.
+For an IPv6 netpoll whose caller-supplied local address has a zero
+high-32 bits (::1, ::<suffix>, IPv4-mapped ::ffff:a.b.c.d, etc.), this
+misdetects the address as unset (which they are not, but the first
+4 bytes are empty), calls netpoll_take_ipv6() and overwrites it with
+whatever matching link-local/global address the device happens to expose
+first.
 
+Introduce a helper netpoll_local_ip_unset() that picks the correct
+family-aware test (ipv6_addr_any() for IPv6, !.ip for IPv4) and use it
+from netpoll_setup().
+
+Reproducer is something like:
+
+  echo "::2" > local_ip
+  echo 1     > enabled
+  cat local_ip
+  # before this fix: 2001:db8::1   (caller-supplied ::2 was clobbered)
+  # after  this fix: ::2
+
+Fixes: b7394d2429c1 ("netpoll: prepare for ipv6")
 Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250618-netpoll_ip_ref-v1-2-c2ac00fe558f@debian.org
+Link: https://patch.msgid.link/20260424-netpoll_fix-v1-1-3a55348c625f@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 3bc179bc7146 ("netpoll: fix IPv6 local-address corruption")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 48 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 31 insertions(+), 17 deletions(-)
+ net/core/netpoll.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index a9c38f75b00ec..b5305ff217a8b 100644
+index b5305ff217a8b..b754341db50fe 100644
 --- a/net/core/netpoll.c
 +++ b/net/core/netpoll.c
-@@ -721,13 +721,41 @@ static void netpoll_wait_carrier(struct netpoll *np, struct net_device *ndev,
- 	}
+@@ -750,6 +750,23 @@ static int netpoll_take_ipv4(struct netpoll *np, struct net_device *ndev)
+ 	return 0;
  }
  
 +/*
-+ * Take the IPv4 from ndev and populate local_ip structure in netpoll
++ * Test whether the caller left np->local_ip unset, so that
++ * netpoll_setup() should auto-populate it from the egress device.
++ *
++ * np->local_ip is a union of __be32 (IPv4) and struct in6_addr (IPv6),
++ * so an IPv6 address whose first 4 bytes are zero (e.g. ::1, ::2,
++ * IPv4-mapped ::ffff:a.b.c.d) must not be tested via the IPv4 arm —
++ * doing so would misclassify a caller-supplied address as unset and
++ * silently overwrite it with whatever address the device exposes.
 + */
-+static int netpoll_take_ipv4(struct netpoll *np, struct net_device *ndev)
++static bool netpoll_local_ip_unset(const struct netpoll *np)
 +{
-+	char buf[MAC_ADDR_STR_LEN + 1];
-+	const struct in_ifaddr *ifa;
-+	struct in_device *in_dev;
-+
-+	in_dev = __in_dev_get_rtnl(ndev);
-+	if (!in_dev) {
-+		np_err(np, "no IP address for %s, aborting\n",
-+		       egress_dev(np, buf));
-+		return -EDESTADDRREQ;
-+	}
-+
-+	ifa = rtnl_dereference(in_dev->ifa_list);
-+	if (!ifa) {
-+		np_err(np, "no IP address for %s, aborting\n",
-+		       egress_dev(np, buf));
-+		return -EDESTADDRREQ;
-+	}
-+
-+	np->local_ip.ip = ifa->ifa_local;
-+	np_info(np, "local IP %pI4\n", &np->local_ip.ip);
-+
-+	return 0;
++	if (np->ipv6)
++		return ipv6_addr_any(&np->local_ip.in6);
++	return !np->local_ip.ip;
 +}
 +
  int netpoll_setup(struct netpoll *np)
  {
  	struct net *net = current->nsproxy->net_ns;
- 	char buf[MAC_ADDR_STR_LEN + 1];
- 	struct net_device *ndev = NULL;
- 	bool ip_overwritten = false;
--	struct in_device *in_dev;
- 	int err;
+@@ -793,7 +810,7 @@ int netpoll_setup(struct netpoll *np)
+ 		rtnl_lock();
+ 	}
  
- 	rtnl_lock();
-@@ -767,24 +795,10 @@ int netpoll_setup(struct netpoll *np)
- 
- 	if (!np->local_ip.ip) {
+-	if (!np->local_ip.ip) {
++	if (netpoll_local_ip_unset(np)) {
  		if (!np->ipv6) {
--			const struct in_ifaddr *ifa;
--
--			in_dev = __in_dev_get_rtnl(ndev);
--			if (!in_dev)
--				goto put_noaddr;
--
--			ifa = rtnl_dereference(in_dev->ifa_list);
--			if (!ifa) {
--put_noaddr:
--				np_err(np, "no IP address for %s, aborting\n",
--				       egress_dev(np, buf));
--				err = -EDESTADDRREQ;
-+			err = netpoll_take_ipv4(np, ndev);
-+			if (err)
- 				goto put;
--			}
--
--			np->local_ip.ip = ifa->ifa_local;
- 			ip_overwritten = true;
--			np_info(np, "local IP %pI4\n", &np->local_ip.ip);
- 		} else {
- #if IS_ENABLED(CONFIG_IPV6)
- 			struct inet6_dev *idev;
+ 			err = netpoll_take_ipv4(np, ndev);
+ 			if (err)
 -- 
 2.53.0
 
