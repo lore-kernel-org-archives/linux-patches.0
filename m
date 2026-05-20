@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7854C3F44CD;
-	Wed, 20 May 2026 11:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F47B3F44EA;
+	Wed, 20 May 2026 11:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276050; cv=none; b=nn1gl/WxNArQB7XjiH2+JtaAV/KpnQ0vgtPr1OUfL4zjfVEBVKUfieGyDQo/HHcx0FzAylOPwymS1oYMSph2jifKNWuSsBsm7qqQ/XH8ct2trIzV1gWjbecgiV2QLiltHByvlE5YeQD6JFS6GdHkm8O0jcSIkHkEs8P9dKBoc9I=
+	t=1779276051; cv=none; b=Uri80My7HE9lW7oI3KWGlDKdsoCOCtX3+txwPF0sHf56MgcknxqqhU0ex78ICLflEE45uTxnwokaLLlWRyfPztNCbUhjOns5MlSKemeb/G6Gw11kP0k7Eg4dg9J+9Imfym2/XTPeb7gx2VYJ/N2eGkNmVyi4k2TwsKG8lDlly0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276050; c=relaxed/simple;
-	bh=DotTfYlnWGlDGzuOXR8CxwwZH5o6jTDJhvilNPWgClU=;
+	s=arc-20240116; t=1779276051; c=relaxed/simple;
+	bh=vr+0ZuihRL24Qjc3VjSI1tB9O5L3mQz2Kfxc90uzM34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rpW/JC1sQZc4s/d1nrVvsN5S1ChGV2xZgImp+8e7TCJyJn51gIpPbhfnQhsWiOI0WchVoNF7tz2xRPjausVUqqEkQXJ/UkDnERpIUpgKnod0JtH4o++qtR4EAmYyrpK5iGPKAVGyHNZ4K2goaPLhmlvw7o9HGw6DG2YG8R01G84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TMHgRdmg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c6HA47rN5IdkALwsKhYdwuwrNpo/YIVz2NZoGWvGpmhC49GJp1n+v5LSVfgTL9aNVkfbzwH4Tsfv0fDnqkhumRZ6Ney//Cy51Yl+rnxI2rV1fmOUEG216K0IexMvIqAAfIHpaycV5fQFNVAtT5cb89ml5iuQsmT0sf8gTRENWvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KkRVim+0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TMHgRdmg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69C81F00893;
-	Wed, 20 May 2026 11:20:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KkRVim+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E38C1F00894;
+	Wed, 20 May 2026 11:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276048;
-	bh=YPTzNFpjlVe5kcQOHv0NqMcIrPZdQr29o1Wc7/jrtEM=;
+	s=k20260515; t=1779276049;
+	bh=8T65It1GO1SXGGayulZQ3wUSSNygOruDa19FjF8qO0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TMHgRdmgP2VkCRi8QX+BayshQ9UnTEOiW1fZTvpjOeSCv56dOYf0e2XIBiitQ2X2J
-	 pWnH1ZHFz7sZh3PcBrvGQEHu8cLMm9y+P6erzSgTjHB7NK3mk6JRoLgBf1UpnDnT6O
-	 KyYX/NsC5p/JRROcJYEDfBqIPaiuxSNbQN3Q6vyUUVImMDjSegQdXbLiakYOn1JVGO
-	 iwPPkmh2WQQU2eCWgvfMzVgwtYEKBo1Q1b4nU/kUInF9LTsvcUAl90IFrsztKtC+/C
-	 LJ6c9B1LBk/i9uSw2hBupSfBKmjQEjH1Ab2FPsQz/kjvIgQvE1UlEObWUwsmaEYtG4
-	 XZWRgZq73AzjA==
+	b=KkRVim+0+OrVyWTQbhEi2+sEilqbCrnoxyGjk/uz5K6bKSEWuo0H6i5G5uol8HA6J
+	 NU6olKMJvO1C8/wtkK0KHycrlKHtu9I78pTcZuAqH+4fhZjDA0TqpPSAOwezVfjh7T
+	 o2UgB/swKxMXFdj8Ivs1LLNQvpqtx+nYMu85zOF1K4xI3WlsATW3GxVzW6aN3bn/S8
+	 iOt31QxxVLM1dwBeOZdkR8geZBIg+4y8IpOAqXJynvxa58q03b9zNxTMrfR2axyUGi
+	 uLSe646jOQojvbeaTT0EE2hpKMt5gnoZgJJuUCsIZ9pGX/qWx82pvJ1gBL+edOw1c7
+	 YBa9zpb/KNL2A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bob Song <songxiebing@kylinos.cn>,
-	gannovera <gannovera@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Vijendar.Mukunda@amd.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	mpe@ellerman.id.au,
+	linuxppc-dev@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] ASoC: amd: yc: Add DMI quirk for MSI Bravo 15 C7VE
-Date: Wed, 20 May 2026 07:19:16 -0400
-Message-ID: <20260520111944.3424570-44-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.1] powerpc/pasemi: Drop redundant res assignment
+Date: Wed, 20 May 2026 07:19:17 -0400
+Message-ID: <20260520111944.3424570-45-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -54,243 +50,242 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Song <songxiebing@kylinos.cn>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 0e60d96616640ffcf51b81a87c71e30d92385a93 ]
+[ Upstream commit f583bd5f64d40e083dde5bb22846c4d93e59d471 ]
 
-The laptop requires a quirk ID to enable its internal microphone. Add
-it to the DMI quirk table.
+Return value of pas_add_bridge() is not used, so code can be simplified
+to fix W=1 clang warnings:
 
-Reported-by: gannovera <gannovera@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218402
-Signed-off-by: Bob Song <songxiebing@kylinos.cn>
-Link: https://patch.msgid.link/20260430014920.141276-1-songxiebing@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  arch/powerpc/platforms/pasemi/pci.c:275:6: error: variable 'res' set but not used [-Werror,-Wunused-but-set-variable]
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260317130823.240279-4-krzysztof.kozlowski@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Stable Backport Review
+## Phase Walkthrough
 
 ### Phase 1: Commit Message Forensics
-Record 1.1: Subsystem is `ASoC: amd: yc`; action verb is `Add`; claimed
-intent is adding a DMI quirk for MSI Bravo 15 C7VE internal microphone
-enablement.
+Record 1.1: Subsystem `powerpc/pasemi`; action verb `Drop`; intent is to
+remove an unused local variable assignment in PA Semi PCI init.
 
-Record 1.2: Tags found: `Reported-by: gannovera <gannovera@gmail.com>`,
-`Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218402`, `Signed-
-off-by: Bob Song <songxiebing@kylinos.cn>`, `Link: https://patch.msgid.l
-ink/20260430014920.141276-1-songxiebing@kylinos.cn`, `Signed-off-by:
-Mark Brown <broonie@kernel.org>`. No `Fixes:` tag and no explicit `Cc:
+Record 1.2: Tags found: `Signed-off-by: Krzysztof Kozlowski`, `Signed-
+off-by: Madhavan Srinivasan`, `Link: https://patch.msgid.link/2026031713
+0823.240279-4-krzysztof.kozlowski@oss.qualcomm.com`. No `Fixes:`,
+`Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`, or `Cc:
 stable`.
 
-Record 1.3: The message states the laptop requires a quirk ID to enable
-its internal microphone. Symptom is missing internal microphone support
-on MSI Bravo 15 C7VE. Version info is not stated. Root cause described
-is absence from `yc_acp_quirk_table`.
+Record 1.3: The commit explicitly describes a Clang `W=1` build warning
+promoted to an error: `variable 'res' set but not used
+[-Werror,-Wunused-but-set-variable]`. No runtime symptom, crash, data
+corruption, or user-visible functional failure is described.
 
-Record 1.4: This is a hardware quirk fix, not a hidden cleanup bug. It
-fits the stable exception category for DMI quirks/workarounds.
+Record 1.4: This is not a hidden runtime bug fix. It is a build-warning
+cleanup that can matter when building powerpc with warning-as-error
+settings.
 
 ### Phase 2: Diff Analysis
-Record 2.1: One file changed: `sound/soc/amd/yc/acp6x-mach.c`, 7
-insertions, 0 deletions. Modified object is the static
-`yc_acp_quirk_table[]`. Scope is a single-file surgical quirk addition.
+Record 2.1: One file changed: `arch/powerpc/platforms/pasemi/pci.c`, `1
+insertion(+), 2 deletions(-)`. Only `pas_pci_init()` is modified. Scope
+is single-file surgical.
 
-Record 2.2: Before: the DMI table matched nearby MSI models such as
-`Bravo 15 B7ED` and `Bravo 15 C7VF`, but not `Bravo 15 C7VE`. After:
-exact vendor/product match for `Micro-Star International Co., Ltd.` and
-`Bravo 15 C7VE` maps to `&acp6x_card`. Affected path is platform probe
-hardware matching.
+Record 2.2: Before: `pas_pci_init()` declared `int res;` and assigned
+`res = pas_add_bridge(np);`, then never read `res`. After: it still
+calls `pas_add_bridge(np);` but does not assign the return value. The
+execution path and side effects are unchanged.
 
-Record 2.3: Bug category is hardware workaround / DMI quirk. Mechanism:
-`acp6x_probe()` calls `dmi_first_match(yc_acp_quirk_table)` and, on
-match, sets platform driver data to `acp6x_card`; without a match, the
-driver can return `-ENODEV` if ACPI did not already enable the card.
+Record 2.3: Bug category: build warning/build error under specific
+compiler options. Mechanism: remove unused-but-set variable. No resource
+lifetime, locking, memory safety, reference counting, or logic behavior
+changes.
 
-Record 2.4: Fix quality is high: it adds only one exact DMI table entry
-using an existing pattern and no new logic. Regression risk is very low
-and limited to machines reporting that exact DMI product/vendor pair.
+Record 2.4: Fix quality is obviously correct by inspection: the function
+call remains, only the unused local storage is removed. Regression risk
+is very low because runtime behavior is unchanged.
 
 ### Phase 3: Git History Investigation
-Record 3.1: `git blame` around adjacent MSI entries in the checked-out
-7.0 tree traced those lines to the local merge base, not a useful
-original introducer. The “bug” is absence of this model entry, not a bad
-line introduced by a known commit. Verified file absent in `v5.15` and
-present in `v5.16`, `v6.1`, `v6.6`, and `v6.12`.
+Record 3.1: `git blame` on current stable code shows the exact changed
+lines are present in the checked-out stable tree. Deeper history shows
+the unused `res` assignment was introduced by `250a93501d626`
+(`powerpc/pasemi: Search for PCI root bus by compatible property`),
+first described by `git describe` as `v4.19-rc1~110^2~83`.
 
-Record 3.2: No `Fixes:` tag, so no introducing commit to follow.
+Record 3.2: No `Fixes:` tag is present. Manual history identified
+`250a93501d626` as the introducing commit for the exact unused
+assignment pattern.
 
-Record 3.3: Recent history of `sound/soc/amd/yc/acp6x-mach.c` contains
-many similar DMI quirk additions, including HP, ASUS, MSI Thin/Vector
-entries. No prerequisite refactor was identified for this specific
-7-line addition.
+Record 3.3: Recent file history shows only the candidate commit and
+unrelated treewide allocation changes in `next-20260508`; no
+prerequisite pasemi PCI refactor was found.
 
-Record 3.4: Author history in the fetched maintainer branch showed Bob
-Song’s related commits for this path consist of this patch. The patch
-was committed by Mark Brown, the ASoC maintainer.
+Record 3.4: The author has other powerpc cleanup commits nearby,
+including the sibling PS3 warning fix. `MAINTAINERS` identifies Madhavan
+Srinivasan and Michael Ellerman as powerpc maintainers; Madhavan
+committed this patch.
 
-Record 3.5: Dependency check found the needed symbols and structure
-already exist in stable-relevant trees: `yc_acp_quirk_table`,
-`acp6x_card`, and `dmi_first_match()` are present in `v6.1`;
-`SND_SOC_AMD_YC_MACH` exists in `v6.1` and `v6.6`. The exact submitted
-hunk applies cleanly to the current 7.0 tree; older trees such as `v6.1`
-lack the nearby MSI `Bravo 15 B7ED` anchor and would need a simple
-context adjustment.
+Record 3.5: The sibling commit `8333e4916040e` is part of the same
+cleanup series but is independent. This pasemi patch applies standalone
+to the current 7.0.5 checkout.
 
 ### Phase 4: Mailing List And External Research
-Record 4.1: `b4 dig -c 0e60d96616640ffcf51b81a87c71e30d92385a93` found
-the lore thread at `https://patch.msgid.link/20260430014920.141276-1-
-songxiebing@kylinos.cn`. `b4 dig -a` found two same-subject submissions
-dated 2026-04-22 and 2026-04-30; the April 30 version is the applied
-one.
+Record 4.1: `b4 dig -c f583bd5f64d40` found the original submission by
+patch-id. It found the January submission and the March resend
+corresponding to the commit `Link:`. Direct WebFetch to
+lore/patch.msgid.link was blocked by Anubis.
 
-Record 4.2: `b4 dig -w` showed the April 30 submission included Takashi
-Iwai, Jaroslav Kysela, Liam Girdwood, Mark Brown, Vijendar Mukunda,
-`linux-sound`, `linux-kernel`, and the reporter.
+Record 4.2: `b4 dig -w` showed appropriate powerpc maintainers and
+LLVM/compiler-warning stakeholders were copied: Madhavan Srinivasan,
+Michael Ellerman, Nicholas Piggin, Christophe Leroy, Nathan Chancellor,
+LLVM list, linuxppc-dev, and others.
 
-Record 4.3: Direct `WebFetch` of Bugzilla was blocked by Anubis. Search
-results and the lore thread corroborate that Bugzilla #218402 is tied to
-this MSI Bravo 15 C7VE microphone issue.
+Record 4.3: No bug report link or reporter tag exists. The thread
+describes a compiler warning/build-cleanliness issue, not a runtime bug
+report.
 
-Record 4.4: Related pattern found: a similar MSI Bravo 17 C7VE quirk
-thread describes the same ACP6x DMIC not-enabled problem on a related
-MSI model. No dependency between that patch and this one was found.
+Record 4.4: The patch is part of a two-patch series with `powerpc/ps3:
+Drop redundant result assignment`; the other patch is the same class of
+cleanup and is not a dependency.
 
-Record 4.5: Stable-list search found no stable-specific discussion for
-`Bravo 15 C7VE`.
+Record 4.5: The downloaded thread contains no `stable` mention. A direct
+lore stable search was attempted but blocked by Anubis, so no stable-
+list archive result could be independently verified.
 
 ### Phase 5: Code Semantic Analysis
-Record 5.1: Modified object is `yc_acp_quirk_table[]`; key consuming
-function is `acp6x_probe()`.
+Record 5.1: Modified function: `pas_pci_init()`.
 
-Record 5.2: `acp6x_probe()` is the `.probe` callback of platform driver
-`acp6x_mach_driver`. The platform device named `acp_yc_mach` is
-registered by `snd_acp6x_probe()` in `pci-acp6x.c` when ACP6x PDM mode
-is set.
+Record 5.2: Callers: `pas_pci_init()` is assigned to `.discover_phbs` in
+the PA Semi machine descriptor in
+`arch/powerpc/platforms/pasemi/setup.c`. `pas_add_bridge()` is static
+and, in `next-20260508`, is called only from `pas_pci_init()`.
 
-Record 5.3: Key callees in `acp6x_probe()` are ACPI property checks,
-`_WOV` evaluation, `dmi_first_match()`, `platform_set_drvdata()`,
-`platform_get_drvdata()`, and `devm_snd_soc_register_card()`.
+Record 5.3: Relevant callees in the affected path include
+`pci_set_flags()`, `of_find_compatible_node()`, `pas_add_bridge()`, and
+`of_node_put()`. `pas_add_bridge()` allocates/configures the PCI
+controller and scans OF ranges/ISA bridge state.
 
-Record 5.4: Reachability is hardware enumeration/probe on AMD Yellow
-Carp ACP systems, not a syscall-triggered path. For the affected laptop,
-the issue is encountered at boot/device probe when the internal DMIC
-card is not registered.
+Record 5.4: Reachability is boot-time/platform-init only for PA Semi
+systems. It is not syscall-reachable and has no unprivileged runtime
+trigger.
 
-Record 5.5: Similar pattern is widespread in the same table: many
-laptop-specific entries all set `.driver_data = &acp6x_card`.
+Record 5.5: Similar pattern found: sibling commit `8333e4916040e`
+removes an unused assignment in PS3 platform code for the same warning
+class.
 
 ### Phase 6: Stable Tree Analysis
-Record 6.1: `v5.15` lacks `sound/soc/amd/yc/acp6x-mach.c`; `v5.16`,
-`v6.1`, `v6.6`, and `v6.12` contain it. This is relevant to stable trees
-with the AMD YC machine driver, especially `v6.1+`.
+Record 6.1: The exact unused `res = pas_add_bridge(np);` pattern exists
+in verified tags `v4.19`, `v5.10`, `v5.15`, `v6.1`, `v6.6`, `v6.12`,
+`v6.17`, `v6.18`, `v6.19`, and `v7.0`. It was not present in the same
+form in `v4.14` or `v4.9`.
 
-Record 6.2: Current 7.0 tree accepts the patch cleanly via `git apply
---check`. `v6.6`, `v6.12`, `v6.18`, `v6.19`, and HEAD have nearby MSI
-entries; `v6.1` has the quirk machinery but not the same adjacent MSI
-context, so it needs minor manual placement.
+Record 6.2: Backport difficulty is clean for the current 7.0.5 tree,
+verified by `git format-patch -1 --stdout f583bd5f64d40 | git apply
+--check`. Older stable trees may need minor context adjustment because
+surrounding code differs in older releases.
 
-Record 6.3: Searches found no existing `Bravo 15 C7VE` entry in current
-HEAD, `v6.6`, `v6.12`, `v6.18`, or `v6.19`.
+Record 6.3: No earlier same-subject fix exists in `v7.0`; related same-
+series warning fixes were found only in `next-20260508`.
 
 ### Phase 7: Subsystem Context
-Record 7.1: Subsystem is ALSA SoC / AMD YC machine driver under
-`sound/`. Criticality is peripheral but user-visible: it affects audio
-capture on a specific laptop model.
+Record 7.1: Subsystem is `arch/powerpc/platforms/pasemi`, a platform-
+specific powerpc PCI init path. Criticality is peripheral/platform-
+specific, not core kernel.
 
-Record 7.2: The subsystem/file is actively receiving DMI quirk
-additions, verified by recent history listing multiple ASoC AMD YC quirk
-commits.
+Record 7.2: Recent pasemi file history is low churn. This is mature
+platform code with little recent activity.
 
 ### Phase 8: Impact And Risk
-Record 8.1: Affected users are MSI Bravo 15 C7VE owners using kernels
-with `CONFIG_SND_SOC_AMD_YC_MACH`.
+Record 8.1: Affected population: PA Semi powerpc platform builders,
+especially Clang `W=1` builds with powerpc `-Werror` behavior.
 
-Record 8.2: Trigger condition is device probing on that hardware when
-firmware/ACPI does not otherwise enable the DMIC path. It is not an
-unprivileged-user-triggered security issue.
+Record 8.2: Trigger condition is build-time only. No runtime trigger and
+no unprivileged-user trigger were verified.
 
-Record 8.3: Failure mode is loss of internal microphone functionality,
-not crash, data corruption, or security impact. Severity is medium for
-affected users.
+Record 8.3: Failure mode is build failure under specific warning/error
+settings, not crash/corruption/deadlock. Severity is medium for affected
+builders, low for runtime users.
 
-Record 8.4: Benefit is high for affected hardware because it restores
-the internal microphone. Risk is very low because the patch is seven
-lines, exact-DMI-scoped, and uses existing driver data.
+Record 8.4: Benefit is narrow but real under the stable build-fix
+exception. Risk is extremely low because the generated runtime behavior
+should be unchanged: the same function call remains and only an unused
+local assignment is removed.
 
 ### Phase 9: Final Synthesis
-Record 9.1: Evidence for backporting: real user report, Bugzilla closure
-tag, accepted by ASoC maintainer, exact hardware quirk, tiny scope, no
-API/behavior change outside the matching laptop, and stable rules
-explicitly allow hardware quirks. Evidence against: no explicit `Cc:
-stable`, no `Tested-by`, Bugzilla direct fetch blocked, and `v6.1` needs
-trivial context adjustment. None of these outweigh the quirk benefit.
+Record 9.1: Evidence for backporting: fixes a verified compiler
+warning/error class; code exists across many stable-era releases; patch
+is tiny, standalone, and behavior-preserving; applies cleanly to current
+stable checkout. Evidence against: no runtime bug, no default-build
+failure was verified, no stable nomination, platform-specific impact.
+Unresolved: direct stable lore search was blocked, and I did not run a
+full Clang `W=1` build.
 
-Record 9.2: Stable rules: obviously correct yes; fixes a real user-
-visible hardware bug yes; important enough for affected users yes,
-though not crash-level; small and contained yes; no new APIs/features
-yes; applies cleanly to current 7.0 and should be straightforward for
-stable trees containing the driver.
+Record 9.2: Stable rules checklist: obviously correct: yes by
+inspection; tested: no explicit `Tested-by` and no local full build;
+fixes a real issue: yes as a build-warning/error issue under specific
+settings; important: only under build-fix exception, not runtime-
+critical; small/contained: yes, 3-line single-function change; no new
+feature/API: yes; applies to stable: current 7.0.5 yes, older trees
+likely simple but not all tested.
 
-Record 9.3: Exception category applies: hardware-specific DMI
-quirk/workaround in an existing driver.
+Record 9.3: Exception category: build fix. This is the only reason to
+take it; it is not a runtime bug fix.
 
-Record 9.4: Decision is to backport to stable trees that contain the AMD
-YC machine driver, with minor context adjustment where needed.
+Record 9.4: Decision: backport as a low-risk build fix for Clang
+`W=1`/powerpc warning-as-error builds. The benefit is narrow, but the
+patch is minimal, standalone, and behavior-preserving.
 
 ## Verification
-- [Phase 1] Parsed fetched commit
-  `0e60d96616640ffcf51b81a87c71e30d92385a93`: confirmed subject, tags,
-  author, committer, and 7-line stat.
-- [Phase 2] Read `sound/soc/amd/yc/acp6x-mach.c`: confirmed
-  `yc_acp_quirk_table[]` and `acp6x_probe()` DMI behavior.
-- [Phase 3] Ran local history/blame checks: nearby blame was not useful
-  for original introduction; verified file absent in `v5.15` and present
-  in `v5.16+`.
-- [Phase 4] Ran `b4 dig -c`, `-a`, `-w`, and saved/read mbox: confirmed
-  lore thread, two submissions, maintainer recipients, and Mark Brown
-  application to `for-7.1`.
-- [Phase 5] Read `pci-acp6x.c`: confirmed PCI probe registers
-  `acp_yc_mach`, which invokes the machine driver probe.
-- [Phase 6] Checked stable tags and entries: no `Bravo 15 C7VE` in
-  checked stable/current trees; patch applies cleanly to current 7.0
-  tree.
-- [Phase 7] Checked Kconfig/Makefile: confirmed `SND_SOC_AMD_YC_MACH` is
-  the relevant config and exists in `v6.1`/`v6.6`.
-- [Phase 8] Impact assessment is based on verified probe flow plus the
-  commit’s reported Bugzilla/user report.
-- UNVERIFIED: Direct Bugzilla contents could not be fetched due Anubis.
-  Exact original file introduction commit was not determined from local
-  history, but tag presence verifies stable relevance.
+- [Phase 1] `git show --format=fuller --stat --patch f583bd5f64d40`
+  verified commit message, tags, and exact diff.
+- [Phase 2] Diff verified one file, one function, `1 insertion`, `2
+  deletions`.
+- [Phase 3] `git blame` and `git show 250a93501d626` verified the unused
+  assignment pattern was introduced by `250a93501d626`, described as
+  before `v4.19-rc1`.
+- [Phase 4] `b4 dig -c`, `-a`, `-w`, and `b4 mbox` verified the patch
+  submission, resend, recipients, and lack of candidate-specific stable
+  tags in the downloaded thread.
+- [Phase 5] `rg` and `git grep` verified `pas_pci_init()` call placement
+  and `pas_add_bridge()` call sites.
+- [Phase 6] `git grep` verified the pattern in `v4.19`, `v5.10`,
+  `v5.15`, `v6.1`, `v6.6`, `v6.12`, `v6.17`, `v6.18`, `v6.19`, and
+  `v7.0`; `git apply --check` verified clean apply to current 7.0.5.
+- [Phase 7] `MAINTAINERS` verified powerpc maintainers and subsystem
+  ownership.
+- [Phase 8] `arch/powerpc/Kconfig.debug` and `arch/powerpc/Kbuild`
+  verified powerpc warning-as-error configuration exists.
+- UNVERIFIED: I did not run a full Clang `W=1` build, and direct lore
+  stable search was blocked by Anubis.
 
 **YES**
 
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/powerpc/platforms/pasemi/pci.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 2f7a51d7eb115..daa6b9a526565 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -479,6 +479,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 15 B7ED"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 15 C7VE"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/arch/powerpc/platforms/pasemi/pci.c b/arch/powerpc/platforms/pasemi/pci.c
+index 60f990a336c47..2df9552746529 100644
+--- a/arch/powerpc/platforms/pasemi/pci.c
++++ b/arch/powerpc/platforms/pasemi/pci.c
+@@ -272,13 +272,12 @@ void __init pas_pci_init(void)
+ {
+ 	struct device_node *root = of_find_node_by_path("/");
+ 	struct device_node *np;
+-	int res;
+ 
+ 	pci_set_flags(PCI_SCAN_ALL_PCIE_DEVS);
+ 
+ 	np = of_find_compatible_node(root, NULL, "pasemi,rootbus");
+ 	if (np) {
+-		res = pas_add_bridge(np);
++		pas_add_bridge(np);
+ 		of_node_put(np);
+ 	}
+ 	of_node_put(root);
 -- 
 2.53.0
 
