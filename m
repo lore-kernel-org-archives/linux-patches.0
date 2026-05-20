@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE775231842;
-	Wed, 20 May 2026 17:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9387432E128;
+	Wed, 20 May 2026 17:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297016; cv=none; b=rFMlS+lPPonq9BMITjZoygmDIT1uxK6HyGRR1DyO0YtRGPO7ghbqL2+SuQpwNs8zrllbohWwD/2apt2TMzAn8tNact9iCyjd0ZGb8o98AwG9z5NWJiX3RMxJfWz3RPClz8nCiw/68Zl/7/8o8ftGb+SNL1+KWjOodrsya3/tEB4=
+	t=1779297018; cv=none; b=J4SFlnvdNfaQlPWOfCB6eNJTbxKn4HRDIe6QZ8rXECHsyRqE29ueFTSzL2C49o+05Vox8nbdq5RvYW0tFreFgFKGHk/kdMg38bHZhznDBcYEdEyMN8vjXqQ2PjCRQ8LAht5p/yGwb3NgjjTeV3hSpY+lFe2Ne/XRklN8KiT71zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297016; c=relaxed/simple;
-	bh=B6/YJxuXHrs4Cpr/MeW21gxj6QN22aiDjVo028KzYU0=;
+	s=arc-20240116; t=1779297018; c=relaxed/simple;
+	bh=fwRQIYIRid+Nk3JF5tkjxKiEglq0DpftlAI2xr20/bY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZgiAsWL5YVA4mz9DTVSjxqGxDz6+tpLUZ22++s62VVqjYkf2qfe5owJ8vUuliy7tlS8VnFsgcWKPLvmJwPMySstHRy3jf5guHbRdAqveZ25nocDoXNM63Yv0ZREVJM5vm5f19OoVsDoo7og5eAAgY5Id043BslLkWM7Rr9uIIk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Fkm9U9o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=paDgUFSwQ62YNRy9VduTvdyXofsF+BLzQxU2hhMFx6mLXMQNZVVBJ06io6XZtMcX4pQFGG9GZM+abD94W03w0dHO7ghpVrt5PRQOi1cKk8C1Igkrltyt0KLwKqek3VF+4Qimp9McNiw+/nOZIH5httfE+vUh0X+nJozoSNw5IfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcxccukF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Fkm9U9o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFD51F00893;
-	Wed, 20 May 2026 17:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcxccukF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BCC1F000E9;
+	Wed, 20 May 2026 17:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297014;
-	bh=h7RW88bCE9DR4E5HLOd2nrU7HQQ1RyutvVD8nMY+tus=;
+	s=korg; t=1779297017;
+	bh=RLgIOOfuscX9Syx2K8KM1nF+6B4VUgHzd+DRBu/O6jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Fkm9U9o1J3FsnrDSgn3fkOT7EbE41c2OiEzH7a+IN5vBEFjTXH4pFa7YqwuDDNgu
-	 cP5Xfoc7Slvgk+8gRfDxPVdwTO0lFXYRWZOFrwZkFc+ZZ4UFeNGQc61ZVAC/8bpKRw
-	 tDya00VorttRkO7vYTTc69+0jjrwyDYGT2Lwze3s=
+	b=jcxccukF+v77V3h61RyluaFHsj7apH+CGQMaJhBTB+n4fueBoOrgGN6mMrUNtU3dL
+	 zb53rSW5r7rJ4wDHbDSFk0vKmD60u1ZoTpDDPOgBV5dn94WXHIf7O7Ut8xQWAamFiu
+	 rIYfRuMaloi8AuU0g/QD8c39u/koIfRRavOv8HMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moritz Klammler <Moritz.Klammler@ferchau.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Hasan Basbunar <basbunarhasan@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1001/1146] futex: Prevent lockup in requeue-PI during signal/ timeout wakeup
-Date: Wed, 20 May 2026 18:20:51 +0200
-Message-ID: <20260520162210.887550220@linuxfoundation.org>
+Subject: [PATCH 7.0 1019/1146] page_pool: fix memory-provider leak in page_pool_create_percpu() error path
+Date: Wed, 20 May 2026 18:21:09 +0200
+Message-ID: <20260520162211.291179932@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,98 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Hasan Basbunar <basbunarhasan@gmail.com>
 
-[ Upstream commit bc7304f3ae20972d11db6e0b1b541c63feda5f05 ]
+[ Upstream commit 5ef343614db766acdc01c56d66e780a1b43c6ac6 ]
 
-During wait-requeue-pi (task A) and requeue-PI (task B) the following
-race can happen:
+When page_pool_create_percpu() fails on page_pool_list(), it falls
+through to its err_uninit: label, which calls page_pool_uninit().
+At that point page_pool_init() has already taken two references
+when the user requested PP_FLAG_ALLOW_UNREADABLE_NETMEM:
 
-     Task A                             Task B
-  futex_wait_requeue_pi()
-    futex_setup_timer()
-    futex_do_wait()
-                                   futex_requeue()
-                                        CLASS(hb, hb1)(&key1);
-                                        CLASS(hb, hb2)(&key2);
-        *timeout*
-    futex_requeue_pi_wakeup_sync()
-        requeue_state = Q_REQUEUE_PI_IGNORE
+	pool->mp_ops->init(pool)
+	static_branch_inc(&page_pool_mem_providers);
 
-    *blocks on hb->lock*
+Neither is undone by page_pool_uninit(); both are only undone by
+__page_pool_destroy() (success-side teardown). The error path
+therefore leaks the per-provider reference taken by mp_ops->init
+(io_zcrx_ifq->refs in the io_uring zcrx provider, the dmabuf
+binding refcount in the devmem provider) plus one increment of
+the page_pool_mem_providers static branch on every failure of
+xa_alloc_cyclic() inside page_pool_list().
 
-                                        futex_proxy_trylock_atomic()
-                                          futex_requeue_pi_prepare()
-                                            Q_REQUEUE_PI_IGNORE => -EAGAIN
-                                        double_unlock_hb(hb1, hb2)
-                                         *retry*
+The leaked io_zcrx_ifq->refs in turn pins everything
+io_zcrx_ifq_free() would release on cleanup: ifq->user (uid),
+ifq->mm_account (mmdrop), ifq->dev (device refcount),
+ifq->netdev_tracker (netdev refcount), and the rbuf region.
+The leaked static branch increment forces all subsequent
+page_pool_alloc_netmems() and page_pool_return_page() callers to
+take the slow mp_ops branch for the lifetime of the kernel.
 
-Task B acquires both hb locks and attempts to acquire the PI-lock of the
-top most waiter (task B). Task A is leaving early due to a signal/
-timeout and started removing itself from the queue. It updates its
-requeue_state but can not remove it from the list because this requires
-the hb lock which is owned by task B.
+Reachable via the io_uring zcrx path:
 
-Usually task A is able to swoop the lock after task B unlocked it.
-However if task B is of higher priority then task A may not be able to
-wake up in time and acquire the lock before task B gets it again.
-Especially on a UP system where A is never scheduled.
+	io_uring_register(IORING_REGISTER_ZCRX_IFQ)  /* CAP_NET_ADMIN */
+	  -> __io_uring_register
+	  -> io_register_zcrx
+	  -> zcrx_register_netdev
+	  -> netif_mp_open_rxq
+	  -> driver ndo_queue_mem_alloc
+	  -> page_pool_create_percpu
+	    -> page_pool_init succeeds (mp_ops->init runs, branch++)
+	    -> page_pool_list fails (xa_alloc_cyclic -ENOMEM)
+	    -> goto err_uninit         <-- leak
 
-As a result task A blocks on the lock and task B busy loops, trying to
-make progress but live locks the system instead. Tragic.
+The same shape applies to the devmem dmabuf provider via
+mp_dmabuf_devmem_init()/mp_dmabuf_devmem_destroy().
 
-This can be fixed by removing the top most waiter from the list in this
-case. This allows task B to grab the next top waiter (if any) in the
-next iteration and make progress.
+Restore the cleanup symmetry by moving the mp_ops->destroy() and
+static_branch_dec() calls out of __page_pool_destroy() and into
+page_pool_uninit(), so page_pool_uninit() is again the strict
+inverse of page_pool_init(). page_pool_uninit() has only two
+callers (the err_uninit: path and __page_pool_destroy()), so this
+preserves the single-call invariant on the success path while
+fixing the err path. The error path of page_pool_init() itself
+still skips the mp_ops cleanup correctly: mp_ops->init is the
+last action that takes a reference before page_pool_init() returns
+0, so when it returns an error neither the refcount nor the static
+branch has been touched.
 
-Remove the top most waiter if futex_requeue_pi_prepare() fails.
-Let the waiter conditionally remove itself from the list in
-handle_early_requeue_pi_wakeup().
+Triggering the bug requires xa_alloc_cyclic() to fail with -ENOMEM,
+which under normal GFP_KERNEL retry behaviour is rare. It is
+deterministic under CONFIG_FAULT_INJECTION with fail_page_alloc /
+xa fault injection, or under sustained memory pressure. The leak
+is silent: there is no warning, and the released kernel build
+continues running with a permanently-incremented static branch.
 
-Fixes: 07d91ef510fb1 ("futex: Prevent requeue_pi() lock nesting issue on RT")
-Reported-by: Moritz Klammler <Moritz.Klammler@ferchau.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260428103425.dywXyPd3@linutronix.de
-Closes: https://lore.kernel.org/all/VE1PR06MB6894BE61C173D802365BE19DFF4CA@VE1PR06MB6894.eurprd06.prod.outlook.com
+Fixes: 0f9214046893 ("memory-provider: dmabuf devmem memory provider")
+Signed-off-by: Hasan Basbunar <basbunarhasan@gmail.com>
+Link: https://patch.msgid.link/20260428170739.34881-1-basbunarhasan@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/requeue.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/core/page_pool.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/futex/requeue.c b/kernel/futex/requeue.c
-index d818b4d47f1ba..b597cb3d17fc1 100644
---- a/kernel/futex/requeue.c
-+++ b/kernel/futex/requeue.c
-@@ -319,8 +319,11 @@ futex_proxy_trylock_atomic(u32 __user *pifutex, struct futex_hash_bucket *hb1,
- 		return -EINVAL;
- 
- 	/* Ensure that this does not race against an early wakeup */
--	if (!futex_requeue_pi_prepare(top_waiter, NULL))
-+	if (!futex_requeue_pi_prepare(top_waiter, NULL)) {
-+		plist_del(&top_waiter->list, &hb1->chain);
-+		futex_hb_waiters_dec(hb1);
- 		return -EAGAIN;
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 265a729431bb7..8171d1173221b 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -327,6 +327,11 @@ static void page_pool_uninit(struct page_pool *pool)
+ 	if (!pool->system)
+ 		free_percpu(pool->recycle_stats);
+ #endif
++
++	if (pool->mp_ops) {
++		pool->mp_ops->destroy(pool);
++		static_branch_dec(&page_pool_mem_providers);
 +	}
+ }
  
- 	/*
- 	 * Try to take the lock for top_waiter and set the FUTEX_WAITERS bit
-@@ -722,10 +725,12 @@ int handle_early_requeue_pi_wakeup(struct futex_hash_bucket *hb,
+ /**
+@@ -1126,11 +1131,6 @@ static void __page_pool_destroy(struct page_pool *pool)
+ 	page_pool_unlist(pool);
+ 	page_pool_uninit(pool);
  
- 	/*
- 	 * We were woken prior to requeue by a timeout or a signal.
--	 * Unqueue the futex_q and determine which it was.
-+	 * Conditionally unqueue the futex_q and determine which it was.
- 	 */
--	plist_del(&q->list, &hb->chain);
--	futex_hb_waiters_dec(hb);
-+	if (!plist_node_empty(&q->list)) {
-+		plist_del(&q->list, &hb->chain);
-+		futex_hb_waiters_dec(hb);
-+	}
+-	if (pool->mp_ops) {
+-		pool->mp_ops->destroy(pool);
+-		static_branch_dec(&page_pool_mem_providers);
+-	}
+-
+ 	kfree(pool);
+ }
  
- 	/* Handle spurious wakeups gracefully */
- 	ret = -EWOULDBLOCK;
 -- 
 2.53.0
 
