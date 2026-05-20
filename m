@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CD93DC4B1;
-	Wed, 20 May 2026 11:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB2639D6E2;
+	Wed, 20 May 2026 11:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276009; cv=none; b=sVWGBmfgww3yRNAvU8Rrbn6sM+aQOZmibwYm5Gi71loIPmuJaPcldadNUpsVlvAKWI7rvyOJXHLS1YYHYCiethCziXT7WitGckLeamiAqLMxfoPpkqYrUGItBNFgY+XeL4+tpQNNu2voeRSKmuChTrqFf8BXyq6s4VWyhA/PezE=
+	t=1779276010; cv=none; b=BgBUR72DIbFzWwsnvjWmlMKcK77+yoUHYM3C741JDoyIySKxUMhtkh91IimE5cB7W3cJl8R7IFp24AJ3pecDxoXtxiAZ3/556hlnP7jEwpZdTCNSUZiCl1pcVhnFOzQDik12b2CAxC2r9acrpEfK1uA2f+UrlmOVOiaVxcGqeFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276009; c=relaxed/simple;
-	bh=YBxiAIRhLLuhZloB1Bm/OKO7SGTkSns5aVZuj2FDPYk=;
+	s=arc-20240116; t=1779276010; c=relaxed/simple;
+	bh=Zd2WHuYZJnyeT3/51++FAMWev0972+xpygvJJ/YvUIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZGrQqdA2RwI7xNhwSz20PoH+XFGHaYvg2eJ3QGscDPJJbVAyHnH4ubgcNViQx0ky5TO1tYGcRdOomOu2z8c91cofEQ0cXy39/cCq9b1I/lWr2lRikLBEDeivV2efMg44KB5F8Az6tG6clUnuP0+UanHUVENx23xLWDJUNDV3Wvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bSDlUDOC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gbgoI6wg6cmlS2XxOknG9e2C99L48a0bkoFK0OdUp6cD9aLEvyAV4ND9PWWLWo5k/WP579WM+NMU+3vjz9LeGqFCd0xLbpOYOyEFkgeVaT2wgKi3sYRiXKiXU87rYC7+z0Ogz9Hih5AgrqLZlL8pu34J+fXZ1hjsj1hKpg/KCsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=grJ+58ky; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bSDlUDOC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBAE1F00896;
-	Wed, 20 May 2026 11:20:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="grJ+58ky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF3831F00893;
+	Wed, 20 May 2026 11:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276003;
-	bh=NuW4Ocbcj6Nn7fwFtaRlCC1fPw05KhvfeqQ4pb/u2yo=;
+	s=k20260515; t=1779276006;
+	bh=Jd91yp639XQ14bFokkoWB7YDnxNd0wxZV9sOx0Y2+4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bSDlUDOCgMK9gQhkcNUg8G/iqJu8Luq4AWWmku1+goTUjV+3T/0o8dyic7BXZVzBX
-	 I1aEtYJ07ob4v7hVLTUu4i9a7WZTCc4AEPB2F3naO58jrqsPBzw20SmAJBksYiEO2z
-	 lQy2AXo2Lq0B1Hd4NmSqPmu6/cKl1t/Y7KGke21cd3z7OvreDlk4P8hWEpU4cW/woo
-	 jIVaODN+2WqP5uA9FtteiZ+lMVDPmOY+o5W7N/SBxLTmENmS1xHkjKAwxMUnQFKq9T
-	 orf4gBog0X7QXnFpK9ZGqOJMrRQRlKZSecRHcaXyWyMgLfRuhj7A47DIpU/Y6dIKj3
-	 5/6LN9vkTPeGA==
+	b=grJ+58kyRnbATQD3AWMWh87yn3b/R+nEKPPQAHMnln4Bju85dikTVJRu4N5srF/pt
+	 QVyrezaGYAEujcQ2+FWJyjnnf32qnzc/lgiiotLVpTX10rpXRnZvheV2ccvK+0/vy9
+	 4Ujx7yAjO0pEa3Ru+b/47FjxYIZfJPo9AMV9wgRVi0YUriyb93SncXbcZH2dWo8LHb
+	 lmgxx2QJKKRD2iAGovIV3h4vXA7+xBozz2WQ+xolSpDWdDiyWaTxE5hkJgZxCPsGgc
+	 sb4gSkTYLyaNpZUP9ylkTyw5NnmLlJC57HN+sCPxMQZpbwrweH0yqsvAnV9OhtK4Av
+	 Y26/uBRFYZQnw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jens Axboe <axboe@kernel.dk>,
+Cc: Wei-Lin Chang <weilin.chang@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	io-uring@vger.kernel.org,
+	oupton@kernel.org,
+	catalin.marinas@arm.com,
+	will@kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	kvmarm@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] io_uring: hold uring_lock when walking link chain in io_wq_free_work()
-Date: Wed, 20 May 2026 07:18:45 -0400
-Message-ID: <20260520111944.3424570-13-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] KVM: arm64: nv: Consider the DS bit when translating TCR_EL2
+Date: Wed, 20 May 2026 07:18:47 -0400
+Message-ID: <20260520111944.3424570-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -51,299 +56,288 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Wei-Lin Chang <weilin.chang@arm.com>
 
-[ Upstream commit 20c39819a27646573dfa0ac0d01c38895298a6f6 ]
+[ Upstream commit 8d9b9d985ad3a81c751a6b97edaf1d3c0780af7c ]
 
-io_wq_free_work() calls io_req_find_next() from io-wq worker context,
-which reads and clears req->link without holding any lock. This can
-potentially race with other paths that mutate the same chain under
-ctx->uring_lock.
+When running an nVHE L1, TCR_EL2 is mapped to TCR_EL1. Writes to the
+register are trapped and written to TCR_EL1 after a translation.
+Booting an nVHE L1 with 52-bit VA isn't working because the translation
+was ignoring the DS bit set by the guest, hence causing repeating level
+0 faults. Add it in the translation function.
 
-Take ctx->uring_lock around the io_req_find_next() call. Only requests
-with IO_REQ_LINK_FLAGS reach this path, which is not the hot path.
-
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Wei-Lin Chang <weilin.chang@arm.com>
+Link: https://patch.msgid.link/20260505144735.1496530-1-weilin.chang@arm.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem `io_uring`; action verb `hold`; intent:
-serialize linked-request chain walking in `io_wq_free_work()` with
-`ctx->uring_lock`.
+## Stable Backport Analysis
 
-Step 1.2 Record: Tags present in commit
-`20c39819a27646573dfa0ac0d01c38895298a6f6`:
-- `Signed-off-by: Jens Axboe <axboe@kernel.dk>`
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
-  by:`, `Link:`, or `Cc: stable@vger.kernel.org` tags in the committed
-  message.
+### Phase 1: Commit Message Forensics
 
-Step 1.3 Record: The commit states that `io_wq_free_work()` calls
-`io_req_find_next()` from io-wq worker context, and `io_req_find_next()`
-reads and clears `req->link` without a lock. The stated failure mode is
-a potential race with other paths mutating the same chain under
-`ctx->uring_lock`. No stack trace, reproducer, affected-version
-statement, or user report is in the commit message.
+Step 1.1 Record: Subsystem is `KVM: arm64: nv`; action verb is
+“Consider”; intent is to preserve the `DS` bit when translating
+`TCR_EL2` into `TCR_EL1` for nested virtualization.
 
-Step 1.4 Record: This is a hidden bug fix despite the subject not saying
-“fix”: it adds missing synchronization around shared linked-request
-state. The diff confirms it is not a cleanup or feature.
+Step 1.2 Record: Tags present are:
+- `Signed-off-by: Wei-Lin Chang <weilin.chang@arm.com>`
+- `Link: https://patch.msgid.link/20260505144735.1496530-1-
+  weilin.chang@arm.com`
+- `Signed-off-by: Marc Zyngier <maz@kernel.org>`
 
-## Phase 2: Diff Analysis
-Step 2.1 Record: One file changed: `io_uring/io_uring.c`, 6 insertions
-and 1 deletion. Only `io_wq_free_work()` is modified. Scope: single-file
-surgical locking fix.
+No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by:`,
+or `Cc: stable@vger.kernel.org` tags are present.
 
-Step 2.2 Record: Before, `io_wq_free_work()` called
-`io_req_find_next(req)` directly when `IO_REQ_LINK_FLAGS` was set.
-After, it stores `req->ctx`, takes `ctx->uring_lock`, calls
-`io_req_find_next(req)`, and unlocks. The affected path is io-wq worker
-completion/freeing of linked requests, not the normal unlinked hot path.
+Step 1.3 Record: The bug is that an nVHE L1 guest using 52-bit VA cannot
+boot because trapped writes to `TCR_EL2` are translated to `TCR_EL1`
+without carrying over the guest’s `DS` bit. The recorded failure mode is
+repeated level 0 faults. No affected kernel version is stated in the
+message. Root cause is an incomplete EL2-to-EL1 TCR translation.
 
-Step 2.3 Record: Bug category is synchronization/race condition.
-`io_req_find_next()` reads `req->link` and clears it; `git grep`
-verified other link-chain assignment/mutation sites in
-submission/timeout paths. The fix serializes this worker-side chain walk
-with the mutex used by normal chain mutation paths.
+Step 1.4 Record: This is not hidden as cleanup; it is a direct
+correctness fix for guest boot failure.
 
-Step 2.4 Record: The fix is obviously small and locally correct: it
-protects exactly the shared `req->link` read/clear. Regression risk is
-low but not zero, because it adds a mutex acquisition in worker cleanup.
-The commit message and code both verify the path is limited to requests
-with `IO_REQ_LINK_FLAGS`.
+### Phase 2: Diff Analysis
 
-## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` on the pre-fix parent showed the current
-direct `io_wq_free_work()` call to `io_req_find_next()` came from
-`247f97a5f19b64`, described by `git describe` as `v6.5-rc1~235^2~10`.
-Older helper-based worker cleanup existed before that;
-`io_wq_free_work()`/io-wq callback code is present from at least
-`v5.15-rc1~185^2~41`, and stable branch checks show equivalent
-vulnerable helper paths in `5.10.y`, `5.15.y`, and `6.1.y`.
+Step 2.1 Record: One file changed:
+`arch/arm64/include/asm/kvm_nested.h`, 1 insertion, 0 deletions.
+Function modified: `translate_tcr_el2_to_tcr_el1()`. Scope is a single-
+file surgical fix.
 
-Step 3.2 Record: No `Fixes:` tag is present, so there was no tagged
-introducing commit to follow.
+Step 2.2 Record: Before, `translate_tcr_el2_to_tcr_el1()` preserved
+`TBI`, physical size, granule, cacheability, shareability, and `T0SZ`,
+but ignored `TCR_EL2_DS`. After, it adds `TCR_DS` to the EL1 value when
+`TCR_EL2_DS` is set. This affects the normal path where KVM programs the
+physical EL1 `TCR` while running an nVHE L1.
 
-Step 3.3 Record: Recent `io_uring/io_uring.c` history includes related
-io-wq/refcount work, notably `390513642ee676` / stable variants,
-“io_uring: always do atomic put from iowq,” which changed the same
-function and was KCSAN/syzbot-motivated. Mainline related commits
-immediately after this candidate are `49ae66eb8c273` and
-`a65855ec34aed`, the other two patches in the linked-request locking
-series.
+Step 2.3 Record: Bug category is logic/correctness. The specific
+mechanism is a missing architectural bit translation: `TCR_EL2_DS` is
+bit 32, while `TCR_EL1.DS` is bit 59, so it cannot be preserved by the
+existing mask-copy operations and must be explicitly mapped.
 
-Step 3.4 Record: `MAINTAINERS` verifies Jens Axboe is the `IO_URING`
-maintainer. `git log --author='Jens Axboe' -- io_uring` shows multiple
-recent io_uring commits by him.
+Step 2.4 Record: The fix is obviously correct and minimal. Regression
+risk is very low: it only sets `TCR_EL1.DS` when the guest already set
+the corresponding `TCR_EL2.DS` bit.
 
-Step 3.5 Record: Build-wise this patch is standalone for trees with the
-current direct `io_wq_free_work()` shape. For older stable trees using
-`io_put_req_find_next()`, it needs a manual backport into the helper or
-equivalent worker path. Semantically, it is patch 1/3 of a related
-locking series; patches `49ae66eb8c273` and `a65855ec34aed` should be
-considered with it to complete the linked-chain locking invariant.
+### Phase 3: Git History Investigation
 
-## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 20c39819a2764` found the original submission
-at `https://patch.msgid.link/20260511182217.226763-2-axboe@kernel.dk`.
-`b4 dig -a` found only v1. The saved mbox shows this was `[PATCH 1/3]`.
+Step 3.1 Record: `git blame` shows `translate_tcr_el2_to_tcr_el1()` was
+introduced by `3606e0b2e46216` (“KVM: arm64: nv: Add non-VHE-EL2->EL1
+translation helpers”), first contained in `v6.8-rc1`. The buggy omission
+is long-lived relative to current stable trees.
 
-Step 4.2 Record: `b4 dig -w` showed the patch was sent by Jens Axboe to
-`io-uring@vger.kernel.org`, with Jens on Cc. No separate
-reviewer/maintainer tags or replies were found in the saved matched
-thread.
+Step 3.2 Record: No `Fixes:` tag is present, so there is no tagged
+introducer to follow. The blame commit above is the practical introducer
+of the incomplete translation.
 
-Step 4.3 Record: No bug-report link or `Reported-by:` tag exists. Web
-search for the exact subject did not find a direct bug report.
+Step 3.3 Record: Recent history of `arch/arm64/include/asm/kvm_nested.h`
+shows active nested-virt development, including 52-bit PA/LPA2 related
+work. No prerequisite patch for this one-line change was identified
+beyond the existing definitions already present in stable tags checked.
 
-Step 4.4 Record: The mbox cover letter says the series is “Linked
-request fix” and “closing some gaps on linked requests, where iterating
-a chain must hold either ->uring_lock OR ->timeout_lock, and modifying
-any existing [chain] must hold both.” Patch 2 defers linked-timeout
-splicing out of hrtimer context; patch 3 keeps `uring_lock` held across
-`io_kill_timeouts()`.
+Step 3.4 Record: Wei-Lin Chang has multiple recent `KVM: arm64`/nested-
+virt commits. Marc Zyngier, listed in `MAINTAINERS` as a KVM/arm64
+maintainer, committed the patch.
 
-Step 4.5 Record: WebFetch of lore was blocked by Anubis, but `b4`
-successfully retrieved the thread. Web search did not find stable-
-specific discussion for this exact patch. No direct stable nomination
-was verified.
+Step 3.5 Record: `git log --grep=translate_tcr_el2_to_tcr_el1` found no
+other commits mentioning the helper. The patch applies cleanly to the
+current checked-out stable tree with `git apply --check`.
 
-## Phase 5: Code Semantic Analysis
-Step 5.1 Record: Modified function: `io_wq_free_work()`.
+### Phase 4: Mailing List And External Research
 
-Step 5.2 Record: Callers verified by `git grep`: `io_wq_free_work()` is
-called from `io_uring/io-wq.c` after `io_wq_submit_work()` in the worker
-loop and from the cancel path helper `io_run_cancel()`. This is io-wq
-worker context.
+Step 4.1 Record: `b4 dig -c 8d9b9d985ad3a81c751a6b97edaf1d3c0780af7c`
+found the original submission at the provided patch link. `b4 dig -a`
+found only v1. The thread includes Marc Zyngier’s “Applied to fixes”
+reply and no objections.
 
-Step 5.3 Record: Key callee is `io_req_find_next()`, verified to read
-`req->link`, set `req->link = NULL`, and return the next linked request.
-`io_wq_free_work()` then frees the current request via `io_free_req()`.
+Step 4.2 Record: `b4 dig -w` shows the patch was sent to `linux-arm-
+kernel`, `kvmarm`, `linux-kernel`, and KVM/arm64 maintainers/reviewers
+including Marc Zyngier, Oliver Upton, Joey Gouly, Suzuki K Poulose,
+Zenghui Yu, Catalin Marinas, and Will Deacon.
 
-Step 5.4 Record: Reachability is verified from userspace:
-`io_uring_enter()` locks `ctx->uring_lock` and calls `io_submit_sqes()`,
-user SQE flags include `IOSQE_IO_LINK`, `IOSQE_IO_HARDLINK`, and
-`IOSQE_ASYNC`, and async paths queue work into io-wq. This makes the
-affected path reachable by user-submitted linked async io_uring
-requests.
+Step 4.3 Record: No separate bug report or syzbot report was found in
+the commit tags or b4 thread. The commit message itself gives the
+observed boot failure.
 
-Step 5.5 Record: Similar patterns found: the normal completion/free
-batching path calls `io_queue_next()`/`io_req_find_next()` while
-`__io_submit_flush_completions()` and `io_free_batch_list()` require
-`ctx->uring_lock`. Timeout code also mutates `req->link`, and the same
-series addresses that.
+Step 4.4 Record: The patch is standalone, single-patch v1; no multi-
+patch series dependency was found.
 
-## Phase 6: Cross-Referencing And Stable Tree Analysis
-Step 6.1 Record: Stable branch checks verified equivalent vulnerable
-code in `stable/linux-5.10.y`, `stable/linux-5.15.y`,
-`stable/linux-6.1.y`, `stable/linux-6.6.y`, `stable/linux-6.12.y`,
-`stable/linux-6.19.y`, and `stable/linux-7.0.y`. The exact direct hunk
-exists in newer trees; older trees use `io_put_req_find_next()`.
+Step 4.5 Record: No stable-specific discussion was found. WebFetch to
+lore was blocked by Anubis, but b4 successfully retrieved the thread.
 
-Step 6.2 Record: `git apply --check` of the candidate patch succeeded on
-the current checked-out `stable/linux-7.0.y` tree. Backport difficulty:
-clean or near-clean for newer trees with the direct function body;
-manual but simple for older helper-based trees.
+### Phase 5: Code Semantic Analysis
 
-Step 6.3 Record: Exact-subject `git log` over listed stable branches
-found no existing stable copy of this fix. Related stable history
-contains earlier io_uring link/refcount fixes, but not this locking fix.
+Step 5.1 Record: Modified function: `translate_tcr_el2_to_tcr_el1()`.
 
-## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: Subsystem is `io_uring`, a core async I/O subsystem
-reachable through the `io_uring_enter` syscall. Criticality:
-important/core-adjacent because it is syscall-reachable and handles
-request lifetime, completion, and linked request ordering.
+Step 5.2 Record: Callers found:
+- `locate_register()` maps `TCR_EL2` to `TCR_EL1` with this translation
+  for loaded nVHE hyp context.
+- `__sysreg_restore_vel2_state()` restores nVHE virtual EL2 state by
+  translating guest `TCR_EL2` before writing physical `SYS_TCR`.
 
-Step 7.2 Record: The subsystem is active: recent mainline history around
-the candidate contains multiple io_uring fixes and refactors, and the
-candidate came through the io_uring maintainer tree.
+Step 5.3 Record: Key callees are `tcr_el2_ps_to_tcr_el1_ips()` and the
+bit definitions/macros for `TCR_EL2_*` and `TCR_*`. The function has no
+allocation, locking, or complex side effects; it returns a composed
+register value.
 
-## Phase 8: Impact And Risk Assessment
-Step 8.1 Record: Affected users are systems using io_uring linked
-requests that can complete through io-wq, especially linked async
-operations. This is feature/config/user-workload specific, not
-universal.
+Step 5.4 Record: Reachability is verified through guest sysreg traps:
+`ESR_ELx_EC_SYS64` goes to `kvm_handle_sys_reg()`, then
+`perform_access()`, then the `TCR_EL2` descriptor with `access_rw()`,
+then `vcpu_write_sys_reg()`, which applies `loc.xlate()` when the mapped
+register is loaded. This is reachable by an L1 guest using EL2.
 
-Step 8.2 Record: Trigger requires linked request chains and worker
-completion/cancellation interleaving with other chain mutation/walk
-paths. Unprivileged reachability depends on system policy, but the code
-path is syscall-reachable through io_uring submission. No public
-reproducer was verified.
+Step 5.5 Record: Similar translation helpers exist for `SCTLR_EL2`,
+`CPTR_EL2`, and `TTBR0_EL2`; this patch fixes the missing special-case
+bit in the TCR helper. `TCR_EL1.DS` and `TCR_EL2.DS` are at different
+bit positions, so the existing mask copying cannot handle it.
 
-Step 8.3 Record: Verified failure mode is an unsynchronized data race on
-`req->link`. The precise observed symptom is unverified, but the raced
-state controls request-chain lifetime/progression; plausible
-consequences include lost/misordered linked request handling or memory-
-safety/lifetime bugs. Severity: medium-high to high because it is a
-syscall-reachable race in request lifetime code, though no crash report
-was verified.
+### Phase 6: Stable Tree Analysis
 
-Step 8.4 Record: Benefit is high enough for stable because it removes a
-real locking hole in io_uring linked-request handling. Risk is low:
-6-line contained mutex protection, not on the unlinked hot path, no new
-API, no behavior change except serialization.
+Step 6.1 Record: The helper commit is present in checked tags `v6.12`,
+`v6.18`, `v6.19`, and `v7.0`. The LPA2 DS field definitions are also
+present in those tags. The 52-bit PA helper commit checked is present in
+`v6.18`, `v6.19`, and `v7.0`, but not `v6.12`.
 
-## Phase 9: Final Synthesis
-Step 9.1 Evidence for backporting:
-- Verified real unsynchronized access: `io_wq_free_work()` called
-  `io_req_find_next()` without `ctx->uring_lock`, while
-  `io_req_find_next()` reads and clears `req->link`.
-- Verified reachability from user-submitted io_uring linked async
-  requests.
-- Verified equivalent code exists across active stable trees from
-  `5.10.y` through `7.0.y`.
-- Verified fix is tiny, contained, maintainer-authored, and applies
-  cleanly to `7.0.y`.
-- Verified this is part of an explicit “Linked request fix” series
-  closing locking gaps.
+Step 6.2 Record: Expected backport difficulty is low for trees with this
+helper. `b4 am` reported “Base: applies clean to current tree”, and `git
+apply --check` succeeded on the current `v7.0.9` checkout.
 
-Evidence against or concerns:
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, stable Cc,
-  stack trace, or reproducer was verified.
-- It is patch 1/3 of a related series; for best stable correctness,
-  patches `49ae66eb8c273` and `a65855ec34aed` should be
-  evaluated/backported together.
-- Older stable trees need manual adaptation to `io_put_req_find_next()`.
+Step 6.3 Record: No related fix for “Consider the DS bit” is in `v7.0`
+or `v7.0.9`; `git merge-base --is-ancestor` returned absent for the
+candidate in those tags.
 
-Step 9.2 Stable rules checklist:
-1. Obviously correct and tested? Correct by inspection; external testing
-   not verified.
-2. Fixes a real bug? Yes, verified race on `req->link`.
-3. Important issue? Yes enough for stable: syscall-reachable request-
-   chain/lifetime race, though exact crash symptom is unverified.
-4. Small and contained? Yes, one function, one file, 6 insertions.
+### Phase 7: Subsystem And Maintainer Context
+
+Step 7.1 Record: Subsystem is KVM/arm64 nested virtualization.
+Criticality is IMPORTANT: it affects ARM64 KVM users running nested
+virtualization with nVHE L1 guests and 52-bit VA.
+
+Step 7.2 Record: Subsystem is actively maintained; recent
+`arch/arm64/kvm` history contains multiple KVM/arm64 fixes, and
+`MAINTAINERS` marks KVM/arm64 as maintained by Marc Zyngier and Oliver
+Upton.
+
+### Phase 8: Impact And Risk Assessment
+
+Step 8.1 Record: Affected population is platform/config-specific: ARM64
+KVM users with nested virtualization and an nVHE L1 using 52-bit VA.
+
+Step 8.2 Record: Trigger is booting or running such an nVHE L1 with
+`TCR_EL2.DS` set. The path is guest-triggerable through EL2 sysreg
+writes, but only for VMs configured with nested virtualization support.
+
+Step 8.3 Record: Failure mode is repeated level 0 faults and failed L1
+boot. Severity is HIGH for affected users because the guest hypervisor
+cannot boot correctly.
+
+Step 8.4 Record: Benefit is high for affected nested virtualization
+users. Risk is very low: one line, no API change, no locking, no data
+structure change, and only changes behavior when the guest sets
+`TCR_EL2_DS`.
+
+### Phase 9: Final Synthesis
+
+Step 9.1 Record:
+Evidence for backporting:
+- Fixes a real boot failure for nVHE L1 guests with 52-bit VA.
+- One-line, contained architectural bit translation.
+- Existing definitions verify this is a required bit-position mapping,
+  not a feature addition.
+- Maintainer applied it to the KVM/arm64 fixes branch.
+- Applies cleanly to the current stable checkout.
+- Buggy helper exists in active stable-era tags checked.
+
+Evidence against backporting:
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, or explicit stable tag.
+- Affected population is narrower than core KVM users.
+- Exact user-visible 52-bit VA nested scenario was not fully proven for
+  every older stable branch, especially `v6.12`.
+
+Unresolved:
+- I did not build-test or boot-test.
+- I did not verify clean application to every stable branch
+  individually.
+- WebFetch could not read lore directly due Anubis, though b4 retrieved
+  the thread.
+
+Step 9.2 Stable rules:
+1. Obviously correct and tested? Obviously correct by code inspection;
+   no explicit Tested-by found.
+2. Fixes a real bug? Yes, commit message and code path verify a missing
+   required register bit translation causing L1 boot failure.
+3. Important issue? Yes, boot failure/repeated translation faults for
+   affected nested virtualization guests.
+4. Small and contained? Yes, 1 line in one helper.
 5. No new features/APIs? Yes.
-6. Can apply to stable? Yes for newer trees; older trees need
-   straightforward backport.
+6. Can apply to stable trees? Yes for current checked stable tree;
+   likely straightforward for trees containing this helper.
 
 Step 9.3 Exception category: None. This is not a device ID, quirk, DT,
-build, or documentation-only patch.
+build, or documentation exception; it is a direct bug fix.
 
-Step 9.4 Decision: Backport. The technical merit is a small, maintainer-
-authored synchronization fix for a verified io_uring linked-request race
-in code present across stable trees. Treat the rest of the 3-patch
-linked-request locking series as related follow-up material rather than
-ignoring it.
+Step 9.4 Decision: Backport. The fix is small, technically clear, and
+corrects an architectural register translation bug that prevents a
+supported nested-virtualization configuration from booting.
 
 ## Verification
-- [Phase 1] `git show --format=fuller --stat --patch 20c39819a2764`:
-  confirmed subject, body, tags, one-file diff, and absence of
-  `Fixes:`/`Reported-by:`/stable tags.
-- [Phase 2] Diff inspection: confirmed
-  `mutex_lock(&ctx->uring_lock)`/unlock added around
-  `io_req_find_next()` only in `io_wq_free_work()`.
-- [Phase 3] `git blame` on the parent: confirmed `io_wq_free_work()`
-  direct call history and `req->link` read/clear history.
-- [Phase 3] `git describe --contains`: confirmed relevant code history
-  reaches released kernels including `v6.5-rc1`, `v5.15-rc1`, and
-  earlier helper behavior.
-- [Phase 3] Stable branch `git grep`: confirmed vulnerable worker/helper
-  paths in `5.10.y`, `5.15.y`, `6.1.y`, `6.6.y`, `6.12.y`, `6.19.y`, and
-  `7.0.y`.
-- [Phase 4] `b4 dig -c`, `-a`, `-w`, and saved mbox: confirmed original
-  submission URL, v1-only series, recipients, cover-letter context, and
-  3-patch series.
-- [Phase 4] WebFetch: lore direct fetch was blocked by Anubis; b4 mbox
-  provided the thread content.
-- [Phase 5] `git grep` call tracing: confirmed `io_wq_free_work()`
-  callers in io-wq worker/cancel paths, `io_uring_enter()` to
-  `io_submit_sqes()` submission path, and user-visible link flags.
-- [Phase 6] `git apply --check`: confirmed the patch applies cleanly to
-  the current `stable/linux-7.0.y` worktree.
-- [Phase 7] `MAINTAINERS` search: confirmed Jens Axboe is the `IO_URING`
-  maintainer.
-- [Phase 8] Verified no public reproducer or exact crash symptom in the
-  commit/thread; severity assessment is based on verified race location
-  and syscall reachability, not on an observed report.
+
+- Phase 1: Parsed `git show` for candidate
+  `8d9b9d985ad3a81c751a6b97edaf1d3c0780af7c`; confirmed subject, body,
+  and tags.
+- Phase 2: Inspected exact diff; confirmed 1 insertion in
+  `translate_tcr_el2_to_tcr_el1()`.
+- Phase 2: Verified `TCR_EL2_DS` is bit 32 in
+  `arch/arm64/include/asm/kvm_arm.h`.
+- Phase 2: Verified `TCR_EL1.DS` is bit 59 in `arch/arm64/tools/sysreg`
+  and `TCR_DS` aliases it in `arch/arm64/include/asm/pgtable-hwdef.h`.
+- Phase 3: `git blame` identified `3606e0b2e46216` as introducer of the
+  helper.
+- Phase 3: `git describe --contains 3606e0b2e46216` reported first
+  containment at `v6.8-rc1`.
+- Phase 3: `git log` on affected files found related nested-virt/LPA2
+  activity and no required adjacent patch.
+- Phase 4: `b4 dig -c` found the original patch by patch-id.
+- Phase 4: `b4 dig -a` found only v1.
+- Phase 4: `b4 dig -w` confirmed KVM/arm64 maintainers and lists were
+  included.
+- Phase 4: `b4 mbox -c -o -` retrieved Marc Zyngier’s applied-to-fixes
+  reply.
+- Phase 5: `rg` found callers in `sys_regs.c` and `hyp/vhe/sysreg-sr.c`.
+- Phase 5: Read trap path from `handle_exit.c`, `sys_regs.c`, and
+  `arm.c`; verified guest sysreg traps can reach the translation.
+- Phase 6: `git merge-base --is-ancestor` confirmed the helper and DS
+  definitions are present in `v6.12`, `v6.18`, `v6.19`, and `v7.0`.
+- Phase 6: `git apply --check` succeeded on the current stable checkout.
+- Phase 7: Read `MAINTAINERS`; confirmed Marc Zyngier and Oliver Upton
+  maintain KVM/arm64.
+- Phase 8: Failure mode verified from commit message and code path;
+  exact boot reproduction was not run.
+- UNVERIFIED: No build or boot test was performed.
+- UNVERIFIED: Clean application to every individual stable branch was
+  not tested.
+- UNVERIFIED: Exact impact on older stable trees lacking later 52-bit PA
+  helper work was not fully established.
 
 **YES**
 
- io_uring/io_uring.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/kvm_nested.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 97260bca67e7b..a72efb3a62bac 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1450,8 +1450,13 @@ struct io_wq_work *io_wq_free_work(struct io_wq_work *work)
- 	struct io_kiocb *nxt = NULL;
- 
- 	if (req_ref_put_and_test_atomic(req)) {
--		if (req->flags & IO_REQ_LINK_FLAGS)
-+		if (req->flags & IO_REQ_LINK_FLAGS) {
-+			struct io_ring_ctx *ctx = req->ctx;
-+
-+			mutex_lock(&ctx->uring_lock);
- 			nxt = io_req_find_next(req);
-+			mutex_unlock(&ctx->uring_lock);
-+		}
- 		io_free_req(req);
- 	}
- 	return nxt ? &nxt->work : NULL;
+diff --git a/arch/arm64/include/asm/kvm_nested.h b/arch/arm64/include/asm/kvm_nested.h
+index 091544e6af442..dc2957662ff20 100644
+--- a/arch/arm64/include/asm/kvm_nested.h
++++ b/arch/arm64/include/asm/kvm_nested.h
+@@ -23,6 +23,7 @@ static inline u64 tcr_el2_ps_to_tcr_el1_ips(u64 tcr_el2)
+ static inline u64 translate_tcr_el2_to_tcr_el1(u64 tcr)
+ {
+ 	return TCR_EPD1_MASK |				/* disable TTBR1_EL1 */
++	       ((tcr & TCR_EL2_DS) ? TCR_DS : 0) |
+ 	       ((tcr & TCR_EL2_TBI) ? TCR_TBI0 : 0) |
+ 	       tcr_el2_ps_to_tcr_el1_ips(tcr) |
+ 	       (tcr & TCR_EL2_TG0_MASK) |
 -- 
 2.53.0
 
