@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C0D36CE19;
-	Wed, 20 May 2026 18:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB8636CE19;
+	Wed, 20 May 2026 18:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300260; cv=none; b=fyTm81LZ50I24wEx4LR69F0e9QwwOMP0gcDHutuPxLWcLC3umkEure2ku6f3VtFiH+NvPYzuYNg0GaDggMzCjxSIfTliYBBJsfX7nbdFwjXj7f9GygQgW/z4zJiaJ0SZajlwMebokPmlkyJ3YWjvABcnbli0CnPre485Hn33TXM=
+	t=1779300262; cv=none; b=IkFs8Od3gGo0arJYXeKMOchr10tmpPWbn7lZXBxkiyM4AxfgZgbIxORAF4lVkXd1fOJAj9p6hIgV5Syx/0ldlilTUzdzGnipex/YTxP7pK5p0JsRFWnGQ88IWItF7kVsIM12zqbfK9cZ7Jz3E713nUwNkzrBNK/GhY9sXb4iR5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300260; c=relaxed/simple;
-	bh=K19uBbxqFnC/ENN8AwKg/2wUulXVLb7Eagiz6lGxJ5Y=;
+	s=arc-20240116; t=1779300262; c=relaxed/simple;
+	bh=dMZGoeSRBbMDChr1LK97/5ftlyFVXWHafTA5nvKG61k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UjZ2trmc5azwvWrvbaNnP5xzB9OL2v8VBTNV8U9fgOOKhNXCSqfpn3E3E7f4Oq2bGnVr3oimg2KDsp3ZX1tSMMnhsBv0PsdpPelU8YnAhN19HQ+1QGrDcavWp9z5VpFk1kbofB1yzmWcnXR3opa+eSTiEKKz8CZm5LkCor6x9eE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2y5rec1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MoDwmXQGu1VewtqtR2rYny/IQd+5+uPpsjfQIknCc5qaL47cprhzXJW9jjZCrRDYffy8uBW84KenME+cxrEwBsD0YKId7nAz7Du1/9ElMHZfTtKnspsIE96eJlqh11REILKNOPtWkudklTgO78ijQQQdvAO9v7/uZXCdEXgHSfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmP4QpeN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2y5rec1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B851F000E9;
-	Wed, 20 May 2026 18:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmP4QpeN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1ABA1F000E9;
+	Wed, 20 May 2026 18:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300258;
-	bh=YbxPHWP09iZ04Rp2PMVHRT8v/y1dqvMUSQD/m3bXYV8=;
+	s=korg; t=1779300261;
+	bh=onvH6+CiPa2IoEBA7A14j3JWjRJ/Pvj11gzBtN1ge3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B2y5rec1kzPAup8wmB6IGh6GsSk7qK0wOLuRR9Uuy0cKY6x88nrvhv4arV+XwwLE/
-	 pI8A3C34/wEapku/Rc9MshFhfOfN2P10tZol5or4jkgdlem8BFQigsaLBaDAqymfL1
-	 wDzRc5kmHqrnRSvfJM9y+e+SrN8gZ/S6jk9BVIuQ=
+	b=qmP4QpeNU9GHnGtrYl3KmgWEahyHUZLnkE0itJmaaXxKVraKF9y5gDlNjm44+8Ayf
+	 UAKZ5xnaATPvz3R9iKY58P8vdUYGVUMQIVunFvSZQA0GXB7hTJI9e1GWhncWE3gyiy
+	 SAQtzhXuWgPzKLHIKrrLVGGM4m++nuXHwui1WzTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jonathan Rissanen <jonathan.rissanen@axis.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/666] Bluetooth: L2CAP: Fix printing wrong information if SDU length exceeds MTU
-Date: Wed, 20 May 2026 18:15:17 +0200
-Message-ID: <20260520162113.518650711@linuxfoundation.org>
+Subject: [PATCH 6.12 107/666] Bluetooth: hci_ldisc: Clear HCI_UART_PROTO_INIT on error
+Date: Wed, 20 May 2026 18:15:18 +0200
+Message-ID: <20260520162113.540865845@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,35 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Jonathan Rissanen <jonathan.rissanen@axis.com>
 
-[ Upstream commit 15bf35a660eb82a49f8397fc3d3acada8dae13db ]
+[ Upstream commit 68d39ea5e0adc9ecaea1ce8abd842ec972eb8718 ]
 
-The code was printing skb->len and sdu_len in the places where it should
-be sdu_len and chan->imtu respectively to match the if conditions.
+When hci_register_dev() fails in hci_uart_register_dev()
+HCI_UART_PROTO_INIT is not cleared before calling hu->proto->close(hu)
+and setting hu->hdev to NULL. This means incoming UART data will reach
+the protocol-specific recv handler in hci_uart_tty_receive() after
+resources are freed.
 
-Link: https://lore.kernel.org/linux-bluetooth/20260315132013.75ab40c5@kernel.org/T/#m1418f9c82eeff8510c1beaa21cf53af20db96c06
-Fixes: e1d9a6688986 ("Bluetooth: LE L2CAP: Disconnect if received packet's SDU exceeds IMTU")
+Clear HCI_UART_PROTO_INIT with a write lock before calling
+hu->proto->close() and setting hu->hdev to NULL. The write lock ensures
+all active readers have completed and no new reader can enter the
+protocol recv path before resources are freed.
+
+This allows the protocol-specific recv functions to remove the
+"HCI_UART_REGISTERED" guard without risking a null pointer dereference
+if hci_register_dev() fails.
+
+Fixes: 5df5dafc171b ("Bluetooth: hci_uart: Fix another race during initialization")
+Signed-off-by: Jonathan Rissanen <jonathan.rissanen@axis.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/hci_ldisc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 307f7fe975b59..bb927603c2d15 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6657,7 +6657,7 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
+diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
+index 436ee77d4bf2f..0d06b83816d1c 100644
+--- a/drivers/bluetooth/hci_ldisc.c
++++ b/drivers/bluetooth/hci_ldisc.c
+@@ -692,6 +692,9 @@ static int hci_uart_register_dev(struct hci_uart *hu)
  
- 		if (sdu_len > chan->imtu) {
- 			BT_ERR("Too big LE L2CAP SDU length: len %u > %u",
--			       skb->len, sdu_len);
-+			       sdu_len, chan->imtu);
- 			l2cap_send_disconn_req(chan, ECONNRESET);
- 			err = -EMSGSIZE;
- 			goto failed;
+ 	if (hci_register_dev(hdev) < 0) {
+ 		BT_ERR("Can't register HCI device");
++		percpu_down_write(&hu->proto_lock);
++		clear_bit(HCI_UART_PROTO_INIT, &hu->flags);
++		percpu_up_write(&hu->proto_lock);
+ 		hu->proto->close(hu);
+ 		hu->hdev = NULL;
+ 		hci_free_dev(hdev);
 -- 
 2.53.0
 
