@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE04403E9A;
-	Wed, 20 May 2026 18:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA3C403E9A;
+	Wed, 20 May 2026 18:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302539; cv=none; b=sAiFgm6jsi0rb6HSz41tcSX/47U2Fam0yLJeFMRDGWzSLOjKVjjvS7dthLYPftt0z7ymA0Lc5h5Y0FATwUn729zKlF9+BQyM8MG9shf21twwZvve6iFkra6DUISGMr3R3HBAVaxAg18TCsWq/33dRQj8EdrW3iiBkiVMrlpbz80=
+	t=1779302542; cv=none; b=TX9KLwcKiBJdTSxDZ5NYxJCRsEI+Hs6dAEY7QYtYkIeUGwh1r6z/mo7yo0q00cbjF2+CtuDbLu/UdwPZRAcDDLTy0vXM8gH/GONeADPcUNewTcDTLv39UlBhDmddiZM3VyoPKOBJAM4yOCWYC7fZSQ+g4D6HFM2YTQVCHf2VNAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302539; c=relaxed/simple;
-	bh=Y5jjhHQBVyU3ln0jY7ZMxgBwePHLibxVxjRTpumW0sU=;
+	s=arc-20240116; t=1779302542; c=relaxed/simple;
+	bh=aX5k7NgNtouCarVxlZ421LZySKE9qW3Micln4CfxtKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IaKt+Gf77RX4aObD4Rxh8c/dAeMJsrvfZeFTl2gprESR7/ZOLQqWm2mxPW5MBNdox6pL5IRfvgwKerbx5H53mGlLa8+qYBTOGMBXYDG4r7Un4tgA1FozlpxALY2Ty/ELb/X9iLVaaKnaEgS0jUDqkGZZP5Qm0X5x34yF9IOxGC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSn5XAvj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wgqe332sB0CCy3KYcVwcuyuCWCnGtepkBbEKXHrnnV+qzVvCcaTFkBgmB64m13FIFGF5NBZyKnQoXtEM40dimKjGVZYz8eRSnYSQPUtp5DZrbHhGKCzn+QtBXXyn0ENGQAtxy0uf2bLBO0+TegRozWO0EpPHgkiTFwSx+rfDNek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysS//uL/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSn5XAvj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55E61F000E9;
-	Wed, 20 May 2026 18:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysS//uL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAEA1F000E9;
+	Wed, 20 May 2026 18:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302538;
-	bh=3QOVZ4NyW5PiIKEAhrSbxi6xk7DAhaNm0UzzGt8MWAY=;
+	s=korg; t=1779302540;
+	bh=m/F5AJ0GzktEWKHf9fGtBeOytbylWv6GkWwsLREdGxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fSn5XAvjKvwHPdKNWuP907MZWXnyJdYKVSUXh1j/st44bwug2BCvv2huVE3Jn60Wz
-	 mFv1t29T1Ccv+i5XafnLhqI1NKWslg8B0xI0FJWGerwR3GLt+7AUAr0UP2weIctszt
-	 a4e3nzW8uwMD0+BisS5q49T0DdoFxFYn7AlbS36g=
+	b=ysS//uL/0GveeEspxsuyvu4FwUzGuPcEpdH4mOCzZb4h/zqmZoMTG5gcDMOEVWYg5
+	 k1GtE2tMS4TJamI18/te8TlsUoFuONU+NUoY32Vz1uGHB0EhrB/CzOb+n2kDp8fQ2q
+	 NWR3Jl2c7717sVMFXPvf/e8PjZ6/36ECbLczywlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Lee Jones <lee@kernel.org>,
+	Jian Zhang <zhangjian.3032@bytedance.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 263/508] leds: lgm-sso: Remove duplicate assignments for priv->mmap
-Date: Wed, 20 May 2026 18:21:26 +0200
-Message-ID: <20260520162104.343872900@linuxfoundation.org>
+Subject: [PATCH 6.6 254/508] ipmi: ssif_bmc: fix missing check for copy_to_user() partial failure
+Date: Wed, 20 May 2026 18:21:17 +0200
+Message-ID: <20260520162104.151952479@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,34 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Jian Zhang <zhangjian.3032@bytedance.com>
 
-[ Upstream commit 7186d0330c3f3e86de577687a82f4ebd96dcb5ac ]
+[ Upstream commit ea641be7a4faee4351f9c5ed6b188e1bbf5586a6 ]
 
-Remove duplicate assignment of priv->mmap in intel_sso_led_probe().
+copy_to_user() returns the number of bytes that could not be copied,
+with a non-zero value indicating a partial or complete failure. The
+current code only checks for negative return values and treats all
+non-negative results as success.
 
-Fixes: fba8a6f2263b ("leds: lgm-sso: Fix clock handling")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://patch.msgid.link/20260226033048.3715915-1-nichen@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Treating any positive return value from copy_to_user() as
+an error and returning -EFAULT.
+
+Fixes: dd2bc5cc9e25 ("ipmi: ssif_bmc: Add SSIF BMC driver")
+Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
+Message-ID: <20260403090603.3988423-2-zhangjian.3032@bytedance.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/blink/leds-lgm-sso.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/char/ipmi/ssif_bmc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/leds/blink/leds-lgm-sso.c b/drivers/leds/blink/leds-lgm-sso.c
-index 35c61311e7fd8..e104010345b18 100644
---- a/drivers/leds/blink/leds-lgm-sso.c
-+++ b/drivers/leds/blink/leds-lgm-sso.c
-@@ -806,8 +806,6 @@ static int intel_sso_led_probe(struct platform_device *pdev)
+diff --git a/drivers/char/ipmi/ssif_bmc.c b/drivers/char/ipmi/ssif_bmc.c
+index e8460e966b83e..6928adb5df5ab 100644
+--- a/drivers/char/ipmi/ssif_bmc.c
++++ b/drivers/char/ipmi/ssif_bmc.c
+@@ -163,6 +163,8 @@ static ssize_t ssif_bmc_read(struct file *file, char __user *buf, size_t count,
+ 		spin_unlock_irqrestore(&ssif_bmc->lock, flags);
  
- 	priv->fpid_clkrate = clk_get_rate(priv->clocks[1].clk);
+ 		ret = copy_to_user(buf, &msg, count);
++		if (ret > 0)
++			ret = -EFAULT;
+ 	}
  
--	priv->mmap = syscon_node_to_regmap(dev->of_node);
--
- 	priv->mmap = syscon_node_to_regmap(dev->of_node);
- 	if (IS_ERR(priv->mmap)) {
- 		dev_err(dev, "Failed to map iomem!\n");
+ 	return (ret < 0) ? ret : count;
 -- 
 2.53.0
 
