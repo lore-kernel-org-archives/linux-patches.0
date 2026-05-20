@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666CB332EBD;
-	Wed, 20 May 2026 18:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8B03FC5B7;
+	Wed, 20 May 2026 18:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301500; cv=none; b=pd+ijKhYBhtVLhX6VDqx/MveB/7XYjG1V96OdKd+IIjvm+VXjLFrEKLAMUAhL74HKMPelCFAS5h4oU6DXE3gA3pQrKz9nZH6WF4bq5OohE6AXOuHSTYlaALgqy25o9phJ0zqbif6CUsUU0znUypRJAt/AEfeGOqjg6zOam9tnXM=
+	t=1779301503; cv=none; b=DPEo6HaqO/BtjAI0mr2+MmpMqx1nRB8gvQOJBU93uX5fH4SkDYUqbuEB4w/1s7w0W6N8zBEP9WfZqeWOI+QF67zLcxo8S1Olm+HxQGD0D2y2LbFQnTjDvhnok56UtnNedxARL9VMwCGOF82yHSKnsj0Xtt4bmjbY2YRq16GUTYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301500; c=relaxed/simple;
-	bh=rWbL0qxiOrkdquEeAEwcr/QcbLjfuLVa4DUx1JvdMPA=;
+	s=arc-20240116; t=1779301503; c=relaxed/simple;
+	bh=9amsdpHr+P1B2iSdu1ywJIHaOyOLtbhcrDMC+xpvohw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aUwjDDnuisGXkkOmk+F8Ha/34O8R4eezDC4NIsFmS5lJ8mQw+Rf1HA+TJSybVHUZs2htJVSTir5D+G9G3TqFkoaR4eBS4+Vjb2JDT78bw91sr5OR0H843ftLk7BYgbQGSvs73qMUUk5liOcTUMPaHG+UrWQkQmNhDtNdQPCMv5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dw0PlVse; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JK4BA6k5w8VgYCz/myCKpYD4IWiyyO+Ab4yMO4slGFb/x4AQ3kY8MIVfWkvtn1QIDBJ6Z9AUKHbxlR+N6u2d0/e43PwMoWOjm9uM4hjseqnXMHw8Nnlq5RbhvG1eke8D2YxrxmdcAmOtU6cBfqpEHRv2zgAXSIFqOiDocrvFjOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXb29ZtD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dw0PlVse"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2EE1F000E9;
-	Wed, 20 May 2026 18:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXb29ZtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781731F000E9;
+	Wed, 20 May 2026 18:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301499;
-	bh=YjvST5FoyeA4yGEE8dhTEUc1ngWllgMmabSS3phnZWE=;
+	s=korg; t=1779301502;
+	bh=tiBkif7hUeOD6DLLpmdHjo33NA/ywX9/V85s5zZuATU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dw0PlVseIzMBIVaVEqRA9Un69jOGY59eM5CY1KSvKRH7qmjRzkK5vtJRJfhp/3nfo
-	 sYMGwdUK4TVsQxjKKtofhNU0GVPxuW9osLH7LXG96GRLaN583xHhDvuEbh9m1J8o2C
-	 XAXkMHZq742QBQcNW6pkjYwHR2xejkFKVWixTwmw=
+	b=XXb29ZtD1AdjDodRGKBOY39BDN+CWyHGwpu2usah/91fvMdO+1dTUxJXlBESds1wL
+	 OZSxpR/CDbMSkTqIwUbifSeNqkLgIYL6OFsChffTrYoXoe51/kE1Dl+uCwU0Tvk7vd
+	 7BoZfUO5vW1Zu/0jV4sEpZCousift0Pc5OswUeY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 579/666] drm/amd/display: Read EDID from VBIOS embedded panel info
-Date: Wed, 20 May 2026 18:23:10 +0200
-Message-ID: <20260520162123.818202925@linuxfoundation.org>
+Subject: [PATCH 6.12 580/666] drm/xe/debugfs: Correct printing of register whitelist ranges
+Date: Wed, 20 May 2026 18:23:11 +0200
+Message-ID: <20260520162123.839779200@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -45,139 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit 9ea16f64189bf7b6ba50fc7f0325b3c1f836d105 ]
+[ Upstream commit 03f2499c51dffce611b065b2894406beb9f2ebe0 ]
 
-Some board manufacturers hardcode the EDID for the embedded
-panel in the VBIOS. This EDID should be used when the panel
-doesn't have a DDC.
+The register-save-restore debugfs prints whitelist entries as offset
+ranges.  E.g.,
 
-For reference, see the legacy non-DC display code:
-amdgpu_atombios_encoder_get_lcd_info()
+        REG[0x39319c-0x39319f]: allow read access
 
-This is necessary to support embedded connectors without DDC.
+for a single dword-sized register.  However the GENMASK value used to
+set the lower bits to '1' for the upper bound of the whitelist range
+incorrectly included one more bit than it should have, causing the
+whitelist ranges to sometimes appear twice as large as they really were.
+For example,
 
-Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
-Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/5192
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit eb105e63b474c11ef6a84a1c6b18100d851ff364)
+        REG[0x6210-0x6217]: allow rw access
+
+was also intended to be a single dword-sized register whitelist (with a
+range 0x6210-0x6213) but was printed incorrectly as a qword-sized range
+because one too many bits was flipped on.  Similar 'off by one' logic
+was applied when printing 4-dword register ranges and 64-dword register
+ranges as well.
+
+Correct the GENMASK logic to print these ranges in debugfs correctly.
+No impact outside of correcting the misleading debugfs output.
+
+Fixes: d855d2246ea6 ("drm/xe: Print whitelist while applying")
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Link: https://patch.msgid.link/20260408-regsr_wl_range-v1-1-e9a28c8b4264@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 1a2a722ff96749734a5585dfe7f0bea7719caa8b)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/bios/bios_parser.c | 62 +++++++++++++++++++
- .../display/include/grph_object_ctrl_defs.h   |  4 ++
- 2 files changed, 66 insertions(+)
+ drivers/gpu/drm/xe/xe_reg_whitelist.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-index a523c5cfcd248..fad0129bf8b12 100644
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser.c
-@@ -1215,6 +1215,60 @@ static enum bp_result bios_parser_get_embedded_panel_info(
- 	return BP_RESULT_FAILURE;
- }
+diff --git a/drivers/gpu/drm/xe/xe_reg_whitelist.c b/drivers/gpu/drm/xe/xe_reg_whitelist.c
+index 3996934974fa0..3de0a867149da 100644
+--- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
++++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
+@@ -137,7 +137,7 @@ void xe_reg_whitelist_print_entry(struct drm_printer *p, unsigned int indent,
+ 	}
  
-+static enum bp_result get_embedded_panel_extra_info(
-+	struct bios_parser *bp,
-+	struct embedded_panel_info *info,
-+	const uint32_t table_offset)
-+{
-+	uint8_t *record = bios_get_image(&bp->base, table_offset, 1);
-+	ATOM_PANEL_RESOLUTION_PATCH_RECORD *panel_res_record;
-+	ATOM_FAKE_EDID_PATCH_RECORD *fake_edid_record;
-+
-+	while (*record != ATOM_RECORD_END_TYPE) {
-+		switch (*record) {
-+		case LCD_MODE_PATCH_RECORD_MODE_TYPE:
-+			record += sizeof(ATOM_PATCH_RECORD_MODE);
-+			break;
-+		case LCD_RTS_RECORD_TYPE:
-+			record += sizeof(ATOM_LCD_RTS_RECORD);
-+			break;
-+		case LCD_CAP_RECORD_TYPE:
-+			record += sizeof(ATOM_LCD_MODE_CONTROL_CAP);
-+			break;
-+		case LCD_FAKE_EDID_PATCH_RECORD_TYPE:
-+			fake_edid_record = (ATOM_FAKE_EDID_PATCH_RECORD *)record;
-+			if (fake_edid_record->ucFakeEDIDLength) {
-+				if (fake_edid_record->ucFakeEDIDLength == 128)
-+					info->fake_edid_size =
-+						fake_edid_record->ucFakeEDIDLength;
-+				else
-+					info->fake_edid_size =
-+						fake_edid_record->ucFakeEDIDLength * 128;
-+
-+				info->fake_edid = fake_edid_record->ucFakeEDIDString;
-+
-+				record += struct_size(fake_edid_record,
-+						      ucFakeEDIDString,
-+						      info->fake_edid_size);
-+			} else {
-+				/* empty fake edid record must be 3 bytes long */
-+				record += sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
-+			}
-+			break;
-+		case LCD_PANEL_RESOLUTION_RECORD_TYPE:
-+			panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
-+			info->panel_width_mm = panel_res_record->usHSize;
-+			info->panel_height_mm = panel_res_record->usVSize;
-+			record += sizeof(ATOM_PANEL_RESOLUTION_PATCH_RECORD);
-+			break;
-+		default:
-+			return BP_RESULT_BADBIOSTABLE;
-+		}
-+	}
-+
-+	return BP_RESULT_OK;
-+}
-+
- static enum bp_result get_embedded_panel_info_v1_2(
- 	struct bios_parser *bp,
- 	struct embedded_panel_info *info)
-@@ -1331,6 +1385,10 @@ static enum bp_result get_embedded_panel_info_v1_2(
- 	if (ATOM_PANEL_MISC_API_ENABLED & lvds->ucLVDS_Misc)
- 		info->lcd_timing.misc_info.API_ENABLED = true;
+ 	range_start = reg & REG_GENMASK(25, range_bit);
+-	range_end = range_start | REG_GENMASK(range_bit, 0);
++	range_end = range_start | REG_GENMASK(range_bit - 1, 0);
  
-+	if (lvds->usExtInfoTableOffset)
-+		return get_embedded_panel_extra_info(bp, info,
-+			le16_to_cpu(lvds->usExtInfoTableOffset) + DATA_TABLES(LCD_Info));
-+
- 	return BP_RESULT_OK;
- }
- 
-@@ -1456,6 +1514,10 @@ static enum bp_result get_embedded_panel_info_v1_3(
- 			(uint32_t) (ATOM_PANEL_MISC_V13_GREY_LEVEL &
- 				lvds->ucLCD_Misc) >> ATOM_PANEL_MISC_V13_GREY_LEVEL_SHIFT;
- 
-+	if (lvds->usExtInfoTableOffset)
-+		return get_embedded_panel_extra_info(bp, info,
-+			le16_to_cpu(lvds->usExtInfoTableOffset) + DATA_TABLES(LCD_Info));
-+
- 	return BP_RESULT_OK;
- }
- 
-diff --git a/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h b/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
-index 813463ffe15c5..8e776c90d21bf 100644
---- a/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
-+++ b/drivers/gpu/drm/amd/display/include/grph_object_ctrl_defs.h
-@@ -153,6 +153,10 @@ struct embedded_panel_info {
- 	uint32_t drr_enabled;
- 	uint32_t min_drr_refresh_rate;
- 	bool realtek_eDPToLVDS;
-+	uint16_t panel_width_mm;
-+	uint16_t panel_height_mm;
-+	uint16_t fake_edid_size;
-+	const uint8_t *fake_edid;
- };
- 
- struct dc_firmware_info {
+ 	switch (val & RING_FORCE_TO_NONPRIV_ACCESS_MASK) {
+ 	case RING_FORCE_TO_NONPRIV_ACCESS_RW:
 -- 
 2.53.0
 
