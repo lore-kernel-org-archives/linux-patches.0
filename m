@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1146633B97A;
-	Wed, 20 May 2026 16:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B10C3F54DD;
+	Wed, 20 May 2026 16:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294503; cv=none; b=WW2YHp/9lpZXfQ2NT8eT3KdCkMZ/KzDcqMFioXICocVI0EQoAOP9amGvQ6TrMWXZt6J70GNoXVboN8uXCiyaK9U7gTLBcYlh4xzKWX5q/VQniZZIXt5RY5VumIT66tjKCzn+cIBY+xN5teDgb1Qj90dBmQt6LHDySJnBu6PkCqU=
+	t=1779294503; cv=none; b=p9FWkILA8eqHSucbzJFFtqRfc0HYrnfcEZB70AIC/2o03aKpr0uku9c7fufYPVSeGzWiv1WH+yUVANHSxhry9NhXfl7+zgMjYFLjLZPGavqfU7BZpcXiSks4e/bZlcvW1xttMOgweh2WEQp1BxHu3MIFVgajOzv9k+4ed1alGG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779294503; c=relaxed/simple;
-	bh=5NvwIpqhPqq0CSlDH2O789GLeYGwKvCKzX/qPW2eZDI=;
+	bh=aOut4IAAQfYo0o4XgAvqzQ7d82AUnGjFrGJ49BQAit8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eILW/Yfl0JtpNr3BuK8f9hnetbHJa7SP0NFVM6y+e4pFDCR5wsxp4aUCVldZzWUw6ykc49UPl5RChYTm+S11+lkhkLr9qU9DWCFPp9lL+fkUeYJTuOznRAfStEtYhkXxSeRTrM0clvlpBUxSyz5//iHbJbHWJo3KSwmjYOssaMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uw8L91lh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UUr6MzX06U+GtzhWiIToOc25+t5gvF+twPEV7gf63T32+86z5ZYPYtvQ65k60/QwG+ftQaFm9oAF7JeNufwxvodh088ICJqz/YzwvSGduQZTnqlYDIOi4Da/X/GXxaoEiNfOGYWZTYFY53Eh0q1zVkKiHmyLmiK8XAd+vHqy4so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3diIZmO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uw8L91lh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FE21F00893;
-	Wed, 20 May 2026 16:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3diIZmO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1251F000E9;
+	Wed, 20 May 2026 16:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294495;
-	bh=gDBAdVM5IuKNh0LAc25TjftXikvqC03btjjAKE6WDHA=;
+	s=korg; t=1779294500;
+	bh=clYL/opHpczheOvY8sqfJzZiFeCVsXJ2uH1m7ZWkkH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uw8L91lhwNfrd94Cs1oVV5Y6bnQK81ZZ5TvcjAzr0RGkdMirJl6A47gWzMJsOfHt5
-	 TlUk21TH7RjFXrEt2G1gZMCTPEp+2cNQsmFDw95A6HJ69QQ0J8rKoMC06IQvuANEa3
-	 BZNEcTqKfCgSsW0jjoMQ/3UdLidaDPrsMzHJEEkk=
+	b=L3diIZmOW2NUcZx9fV4ItrFtFacUmenMRMCzOVWkDMO8nTjARt3af985XF0NlV14w
+	 k7obVx031+yZ4ckmVr7wD3NW97c/wV9Ld4IDZlrDGl56jT4oKg5MhLqoaxbz2LwrcO
+	 d255dOZ9rZK6/yyfXWitGI5HJ9/2LWg7NiIdqM3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0061/1146] sched/topology: Fix sched_domain_span()
-Date: Wed, 20 May 2026 18:05:11 +0200
-Message-ID: <20260520162149.749283551@linuxfoundation.org>
+Subject: [PATCH 7.0 0063/1146] ASoC: Intel: avs: Check maximum valid CPUID leaf
+Date: Wed, 20 May 2026 18:05:13 +0200
+Message-ID: <20260520162149.791315328@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,90 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-[ Upstream commit e379dce8af11d8d6040b4348316a499bfd174bfb ]
+[ Upstream commit 93a1f0e61329f538cfc7122d7fa0e7a1803e326d ]
 
-Commit 8e8e23dea43e ("sched/topology: Compute sd_weight considering
-cpuset partitions") ends up relying on the fact that structure
-initialization should not touch the flexible array.
+The Intel AVS driver queries CPUID(0x15) before checking if the CPUID leaf
+is available.  Check the maximum-valid CPU standard leaf beforehand.
 
-However, the official GCC specification for "Arrays of Length Zero"
-[*] says:
+Use the CPUID_LEAF_TSC macro instead of the custom local one for the
+CPUID(0x15) leaf number.
 
-  Although the size of a zero-length array is zero, an array member of
-  this kind may increase the size of the enclosing type as a result of
-  tail padding.
-
-Additionally, structure initialization will zero tail padding. With
-the end result that since offsetof(*type, member) < sizeof(*type),
-array initialization will clobber the flex array.
-
-Luckily, the way flexible array sizes are calculated is:
-
-  sizeof(*type) + count * sizeof(*type->member)
-
-This means we have the complete size of the flex array *outside* of
-sizeof(*type), so use that instead of relying on the broken flex array
-definition.
-
-[*] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-
-Fixes: 8e8e23dea43e ("sched/topology: Compute sd_weight considering cpuset partitions")
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Debugged-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Chen Yu <yu.c.chen@intel.com>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260323093627.GY3738010@noisy.programming.kicks-ass.net
+Fixes: cbe37a4d2b3c ("ASoC: Intel: avs: Configure basefw on TGL-based platforms")
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260327021645.555257-2-darwi@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/topology.h | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ sound/soc/intel/avs/tgl.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/sched/topology.h b/include/linux/sched/topology.h
-index 45c0022b91ced..6f8a4ae860da8 100644
---- a/include/linux/sched/topology.h
-+++ b/include/linux/sched/topology.h
-@@ -141,18 +141,30 @@ struct sched_domain {
+diff --git a/sound/soc/intel/avs/tgl.c b/sound/soc/intel/avs/tgl.c
+index afb0665161010..4649d749b41e0 100644
+--- a/sound/soc/intel/avs/tgl.c
++++ b/sound/soc/intel/avs/tgl.c
+@@ -11,8 +11,6 @@
+ #include "debug.h"
+ #include "messages.h"
  
- 	unsigned int span_weight;
- 	/*
--	 * Span of all CPUs in this domain.
-+	 * See sched_domain_span(), on why flex arrays are broken.
- 	 *
--	 * NOTE: this field is variable length. (Allocated dynamically
--	 * by attaching extra space to the end of the structure,
--	 * depending on how many CPUs the kernel has booted up with)
--	 */
- 	unsigned long span[];
-+	 */
- };
- 
- static inline struct cpumask *sched_domain_span(struct sched_domain *sd)
+-#define CPUID_TSC_LEAF 0x15
+-
+ static int avs_tgl_dsp_core_power(struct avs_dev *adev, u32 core_mask, bool power)
  {
--	return to_cpumask(sd->span);
-+	/*
-+	 * Turns out that C flexible arrays are fundamentally broken since it
-+	 * is allowed for offsetof(*sd, span) < sizeof(*sd), this means that
-+	 * structure initialzation *sd = { ... }; which writes every byte
-+	 * inside sizeof(*type), will over-write the start of the flexible
-+	 * array.
-+	 *
-+	 * Luckily, the way we allocate sched_domain is by:
-+	 *
-+	 *   sizeof(*sd) + cpumask_size()
-+	 *
-+	 * this means that we have sufficient space for the whole flex array
-+	 * *outside* of sizeof(*sd). So use that, and avoid using sd->span.
-+	 */
-+	unsigned long *bitmap = (void *)sd + sizeof(*sd);
-+	return to_cpumask(bitmap);
- }
+ 	core_mask &= AVS_MAIN_CORE_MASK;
+@@ -49,7 +47,11 @@ static int avs_tgl_config_basefw(struct avs_dev *adev)
+ 	unsigned int ecx;
  
- extern void partition_sched_domains(int ndoms_new, cpumask_var_t doms_new[],
+ #include <asm/cpuid/api.h>
+-	ecx = cpuid_ecx(CPUID_TSC_LEAF);
++
++	if (boot_cpu_data.cpuid_level < CPUID_LEAF_TSC)
++		goto no_cpuid;
++
++	ecx = cpuid_ecx(CPUID_LEAF_TSC);
+ 	if (ecx) {
+ 		ret = avs_ipc_set_fw_config(adev, 1, AVS_FW_CFG_XTAL_FREQ_HZ, sizeof(ecx), &ecx);
+ 		if (ret)
+@@ -57,6 +59,7 @@ static int avs_tgl_config_basefw(struct avs_dev *adev)
+ 	}
+ #endif
+ 
++no_cpuid:
+ 	hwid.device = pci->device;
+ 	hwid.subsystem = pci->subsystem_vendor | (pci->subsystem_device << 16);
+ 	hwid.revision = pci->revision;
 -- 
 2.53.0
 
