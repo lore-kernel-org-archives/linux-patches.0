@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB763F23BF;
-	Wed, 20 May 2026 17:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDE23F4DC0;
+	Wed, 20 May 2026 17:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299378; cv=none; b=C7vRJ2yj1ZikV91WfOt1Wa42WYRfisayGK7qS/ypoPmayr3nEs6O1KXOhJ+TPZ64DmXpbSsrkPY0wEQoc5YmaQ07EhNQKYFGP8w7eH2Q68MGDoDWWrZLDoR7lk+2mz2cfDJX68hEW14/WatxnnLS238bgY8gwONPIEfzgdu6oBE=
+	t=1779299380; cv=none; b=g5YDKDDDfWrhC/Kus9lbbCzDAAOB+xCIg9/3udgwqaElDAt0/zmv1LXkMYIYN/UCUXgUPqYFRa/ABkDTKdRG3lMmzKuUv23StaElOFh3arUhYHqWjjCQdSC55e4bNaKYi7Pgl1I1BdQ8w+e0G9FEeG9cY4Zt2VkkvKetJQ1i7IU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299378; c=relaxed/simple;
-	bh=y3fO4MaX/J861YGfNODgG5Bifw8qwvRVSmphWrViiRw=;
+	s=arc-20240116; t=1779299380; c=relaxed/simple;
+	bh=iC9tk9C5Ci2AxM+yCTNGogPy/Y98MWygkfscVzdGIFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2XdYoBzhFYh2pQnAM/1oDVJls+l5qF6uxPmlabn2VGEgI2NOJXw0hWONxTv7mLSk0liFEqTlXiCZTP9yGwUEfTqR40A84oCoscZhdXXavVJTWLII3P/QVtJ+BuJvdGigMnvN6//tVNTJW4qoLOGiK3kZFk4pLKNDo1PD20GZyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtfabWoM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BFeSPGsFGoW8D3nmwIbB0ivjc2lBDuCTWPTUve9HezJPigaailgMczukwYfP+YeSjaaZ9ZpY9Up5dQpEB1PmMNlyfMXP4vFm8SKKM9PkLRl3dNlMQG0U5Mk5XGDTpJQSSjobxlegnzCfRNxcL0Tkpqa889jqVuXD0xAZKbsbZB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HaO7dEC/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtfabWoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4791F000E9;
-	Wed, 20 May 2026 17:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaO7dEC/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AD91F000E9;
+	Wed, 20 May 2026 17:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299376;
-	bh=XDO4RfWNeqmp29jzfEeaY6fzRxchiFL+D1saMMB36j4=;
+	s=korg; t=1779299379;
+	bh=G+63KSzre2EeznpKBcwDW1fEDXLmF8d2MtktH9oYVyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KtfabWoMdt1TYeh/DQHAp7rtQz2HyPgBFt7CkiEhxSGOhqOxgo04gs21SsadgiEjj
-	 p4B5IzOjLO5yu6BcJD6XjzFhbQrmmTdpbx+4SHLhM6fqL93Uiu1SZvR6SOpeILH66j
-	 4nN8MYDwPkrPR63yl3/xsMOvTe36L9D/P0UcB2zE=
+	b=HaO7dEC/0oT/YfN+4tgmTeA6W+lyIv4m+d3XvqHXhxXT/NXsyWQck+NyMcSQKl85v
+	 l1g9u2SG2GaH+ZuiFSQPMkioTXq2ilY0uBzRczPlZExrv2XVRqi8EdwXaxRK0efsKF
+	 ZekUvWmCS+JMRudyblmRXb1Zwz7DJk+pGfL3PEOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Keith Busch <kbusch@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 747/957] nvme-pci: fix missed admin queue sq doorbell write
-Date: Wed, 20 May 2026 18:20:30 +0200
-Message-ID: <20260520162150.762068202@linuxfoundation.org>
+Subject: [PATCH 6.18 748/957] drm/amdgpu/gmc: Fix AMDGPU_GART_PLACEMENT_LOW to not overlap with VRAM
+Date: Wed, 20 May 2026 18:20:31 +0200
+Message-ID: <20260520162150.784147362@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,43 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 1cc4cdae2a3b7730d462d69e30f213fd2efe7807 ]
+[ Upstream commit 36d65da7570bf72ce28504fa9a81abfc728e6d96 ]
 
-We can batch admin commands submitted through io_uring_cmd passthrough,
-which means bd->last may be false and skips the doorbell write to
-aggregate multiple commands per write. If a subsequent command can't be
-dispatched for whatever reason, we have to provide the blk-mq ops'
-commit_rqs callback in order to ensure we properly update the doorbell.
+When the GART placement is set to AMDGPU_GART_PLACEMENT_LOW:
+Make sure that GART does not overlap with VRAM when
+VRAM is configured to be in the low address space.
 
-Fixes: 58e5bdeb9c2b ("nvme: enable uring-passthrough for admin commands")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Solve this according to the following logic:
+- When GART fits before VRAM, use zero address for GART
+- Otherwise, put GART after the end of VRAM, aligned to 4 GiB
+
+Previously, I had assumed this was not possible
+so it was OK to not handle it, but now we got a report
+from a user who has a board that is configured this way.
+
+Fixes: 917f91d8d8e8 ("drm/amdgpu/gmc: add a way to force a particular placement for GART")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 3d9de5d86a1658cadb311461b001eb1df67263ad)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 8875855e45352..2e32242bed67c 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -2028,6 +2028,7 @@ static int nvme_create_queue(struct nvme_queue *nvmeq, int qid, bool polled)
- static const struct blk_mq_ops nvme_mq_admin_ops = {
- 	.queue_rq	= nvme_queue_rq,
- 	.complete	= nvme_pci_complete_rq,
-+	.commit_rqs	= nvme_commit_rqs,
- 	.init_hctx	= nvme_admin_init_hctx,
- 	.init_request	= nvme_pci_init_request,
- 	.timeout	= nvme_timeout,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+index b8613888c5c33..6d5f90512a74e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -313,7 +313,10 @@ void amdgpu_gmc_gart_location(struct amdgpu_device *adev, struct amdgpu_gmc *mc,
+ 		mc->gart_start = max_mc_address - mc->gart_size + 1;
+ 		break;
+ 	case AMDGPU_GART_PLACEMENT_LOW:
+-		mc->gart_start = 0;
++		if (size_bf >= mc->gart_size)
++			mc->gart_start = 0;
++		else
++			mc->gart_start = ALIGN(mc->fb_end, four_gb);
+ 		break;
+ 	case AMDGPU_GART_PLACEMENT_BEST_FIT:
+ 	default:
 -- 
 2.53.0
 
