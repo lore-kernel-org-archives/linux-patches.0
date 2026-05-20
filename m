@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C37C3F0A83;
-	Wed, 20 May 2026 17:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D273E5ECF;
+	Wed, 20 May 2026 17:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299312; cv=none; b=Yz91R89QILc8EA7ZVb0mTMeVum11HkydfRmQdftdiOvT78AU7abX7kZfKLvADWAshuhAOcWZaEa2E3DSS8uxgOJ77c/dd49jgDpaUa8A/Dag6s8jeNMF741hq7xQHfHzHjJL2QcQ0OiBYCG1GUudfURuvEQNA8HuOT+kOf32wB8=
+	t=1779299315; cv=none; b=OIAjr2N4IpuraXNTbSKzetuwbo8jDMW9mVPWP3tmdTiGUsCG9nCy4yqTcyp4T5L4EKL0K2OK+jOwhK+Sa/XHkyUxqST3nhTiLvcYmVG/XNGb3VPMOPB8DjsZs0WeaYSPEDGOIxF9n5jzAAvMwdEPDLKMGg592c7kJkq4TqPH0bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299312; c=relaxed/simple;
-	bh=Iq1esObahX68pkzS7ptiDWxsO5lOkurFV8lbaUYd35c=;
+	s=arc-20240116; t=1779299315; c=relaxed/simple;
+	bh=hghlJTZ5y2K1qDtjideBb1iSDWa39GR6AZyHDTihzPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y0DExsPw4qgzPqIumcuE6e217UVEAXqtVKIo9dWLq0bVXFBvM7+7DWBYyYNdakcRdHCAiAb0PEC5tHGU88PcA95VKcZsvoCgqfJtDEy3r2B49X02xjU7c9/rQUmPVZ9YWcmgBRRjZZSmpsP3cHuO7iH7porNfGyNngXIsWiWtSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxyMc1s9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a9ihw5yp+lQyegCdxQuLiW3QuxtKC/hj9BwoA0x9Xkg7BIPuI1bPe7k5e6z1YWaWjtNZHzA/LJvuX2RdSLmM+hm78jljDdfeK4bV+/X5qADT9niqyVh/JQbuB7X8lvZTDRvCBC0+bwPA2w1Xbe0AbBwjcRlinL4HZaVs0Xo1szc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Li+mbqQq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxyMc1s9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22041F000E9;
-	Wed, 20 May 2026 17:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Li+mbqQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44EEA1F000E9;
+	Wed, 20 May 2026 17:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299311;
-	bh=jeXgxamblshd3V1gV2QME0KT7MOykWdlpvZP+dHypGc=;
+	s=korg; t=1779299313;
+	bh=/XNB7H1jw9clHUA25BSACTUJF0tQTLJWTGuZAQO5Xt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PxyMc1s9iHvq2R00qgdxMoxRncgT3ZQw86zSXkE2nSM2G3IeDbK5yXOLtEoJp6o95
-	 zlGxKkt+Hr4v21gYnmyta8099UihatREzhNHTEt2nf9qyMwU2ykd0ywviDPLrqlQA8
-	 Xr+yxgWHmy0eL9RLNsxBORyibJvvvKgjP+5GwzMM=
+	b=Li+mbqQq7L7V/Da1zWe7ZCPbF3KflH/D+fT14lIHkvC43hJltwMg1R5au+IGfqYsu
+	 rLuS/xUg3Yqv5rg33R2hnnHmfJh86vj4+omDiaIrOdnojuL5XRAwgcQrcIYn7y5avk
+	 ays9SX+uz4q5iHTYiyUFcfxQo3HVnCahTo4lqp94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mathias Krause <minipli@grsecurity.net>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 707/957] net: mana: Handle hardware recovery events when probing the device
-Date: Wed, 20 May 2026 18:19:50 +0200
-Message-ID: <20260520162149.873682625@linuxfoundation.org>
+Subject: [PATCH 6.18 725/957] kbuild: builddeb - avoid recompiles for non-cross-compiles
+Date: Wed, 20 May 2026 18:20:08 +0200
+Message-ID: <20260520162150.276541469@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,336 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Mathias Krause <minipli@grsecurity.net>
 
-[ Upstream commit 9bf66036d686b9a67000ba22bd94be13a4ea79ac ]
+[ Upstream commit 2452dcf4d740effff5aa71b7f6529ee8c04fd8f6 ]
 
-When MANA is being probed, it's possible that hardware is in recovery
-mode and the device may get GDMA_EQE_HWC_RESET_REQUEST over HWC in the
-middle of the probe. Detect such condition and go through the recovery
-service procedure.
+Commit e2c318225ac1 ("kbuild: deb-pkg: add
+pkg.linux-upstream.nokernelheaders build profile") changed how
+install-extmod-build gets called, making it always rebuild the host
+programs below scripts/ if HOSTCC wasn't specified with its full triplet
+on the make command line. That is, apparently, needed to fix up commit
+f1d87664b82a ("kbuild: cross-compile linux-headers package when
+possible") for cross-compiles. However, in the much more common case of
+non-cross-compile builds this will lead to unnecessary rebuilding of
+host tools including gcc plugins. This, in turn, will lead to a full
+kernel rebuild on the next 'make bindeb-pkg' which is unfortunate.
 
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Link: https://patch.msgid.link/1764193552-9712-1-git-send-email-longli@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 65267c9c4f28 ("net: mana: Fix EQ leak in mana_remove on NULL port")
+Avoid that by only triggering the rebuild of host tools for actual
+cross-compile builds.
+
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Fixes: e2c318225ac1 ("kbuild: deb-pkg: add pkg.linux-upstream.nokernelheaders build profile")
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20260402145116.1010901-1-minipli@grsecurity.net
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microsoft/mana/gdma_main.c   | 176 ++++++++++++++++--
- include/net/mana/gdma.h                       |  12 +-
- 2 files changed, 170 insertions(+), 18 deletions(-)
+ scripts/package/builddeb | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-index d93cfb7f4e788..0ad082b566f5e 100644
---- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
-+++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-@@ -15,6 +15,20 @@
+diff --git a/scripts/package/builddeb b/scripts/package/builddeb
+index 3627ca227e5a5..ba1defc616524 100755
+--- a/scripts/package/builddeb
++++ b/scripts/package/builddeb
+@@ -139,7 +139,13 @@ install_kernel_headers () {
+ 	pdir=debian/$1
+ 	version=${1#linux-headers-}
  
- struct dentry *mana_debugfs_root;
- 
-+struct mana_dev_recovery {
-+	struct list_head list;
-+	struct pci_dev *pdev;
-+	enum gdma_eqe_type type;
-+};
-+
-+static struct mana_dev_recovery_work {
-+	struct list_head dev_list;
-+	struct delayed_work work;
-+
-+	/* Lock for dev_list above */
-+	spinlock_t lock;
-+} mana_dev_recovery_work;
-+
- static u32 mana_gd_r32(struct gdma_context *g, u64 offset)
- {
- 	return readl(g->bar0_va + offset);
-@@ -387,6 +401,25 @@ EXPORT_SYMBOL_NS(mana_gd_ring_cq, "NET_MANA");
- 
- #define MANA_SERVICE_PERIOD 10
- 
-+static void mana_serv_rescan(struct pci_dev *pdev)
-+{
-+	struct pci_bus *parent;
-+
-+	pci_lock_rescan_remove();
-+
-+	parent = pdev->bus;
-+	if (!parent) {
-+		dev_err(&pdev->dev, "MANA service: no parent bus\n");
-+		goto out;
-+	}
-+
-+	pci_stop_and_remove_bus_device(pdev);
-+	pci_rescan_bus(parent);
-+
-+out:
-+	pci_unlock_rescan_remove();
-+}
-+
- static void mana_serv_fpga(struct pci_dev *pdev)
- {
- 	struct pci_bus *bus, *parent;
-@@ -419,9 +452,12 @@ static void mana_serv_reset(struct pci_dev *pdev)
- {
- 	struct gdma_context *gc = pci_get_drvdata(pdev);
- 	struct hw_channel_context *hwc;
-+	int ret;
- 
- 	if (!gc) {
--		dev_err(&pdev->dev, "MANA service: no GC\n");
-+		/* Perform PCI rescan on device if GC is not set up */
-+		dev_err(&pdev->dev, "MANA service: GC not setup, rescanning\n");
-+		mana_serv_rescan(pdev);
- 		return;
- 	}
- 
-@@ -440,9 +476,18 @@ static void mana_serv_reset(struct pci_dev *pdev)
- 
- 	msleep(MANA_SERVICE_PERIOD * 1000);
- 
--	mana_gd_resume(pdev);
-+	ret = mana_gd_resume(pdev);
-+	if (ret == -ETIMEDOUT || ret == -EPROTO) {
-+		/* Perform PCI rescan on device if we failed on HWC */
-+		dev_err(&pdev->dev, "MANA service: resume failed, rescanning\n");
-+		mana_serv_rescan(pdev);
-+		goto out;
-+	}
- 
--	dev_info(&pdev->dev, "MANA reset cycle completed\n");
-+	if (ret)
-+		dev_info(&pdev->dev, "MANA reset cycle failed err %d\n", ret);
+-	CC="${DEB_HOST_GNU_TYPE}-gcc" "${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
++	# Override $CC only for cross-compiles, to not unnecessarily rebuild
++	# scripts/ including plugins, which may lead to a full kernel rebuild.
++	if [ -n "${CROSS_COMPILE}" ]; then
++		CC="${DEB_HOST_GNU_TYPE}-gcc" "${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
 +	else
-+		dev_info(&pdev->dev, "MANA reset cycle completed\n");
++		"${srctree}/scripts/package/install-extmod-build" "${pdir}/usr/src/linux-headers-${version}"
++	fi
  
- out:
- 	gc->in_service = false;
-@@ -454,18 +499,9 @@ struct mana_serv_work {
- 	enum gdma_eqe_type type;
- };
- 
--static void mana_serv_func(struct work_struct *w)
-+static void mana_do_service(enum gdma_eqe_type type, struct pci_dev *pdev)
- {
--	struct mana_serv_work *mns_wk;
--	struct pci_dev *pdev;
--
--	mns_wk = container_of(w, struct mana_serv_work, serv_work);
--	pdev = mns_wk->pdev;
--
--	if (!pdev)
--		goto out;
--
--	switch (mns_wk->type) {
-+	switch (type) {
- 	case GDMA_EQE_HWC_FPGA_RECONFIG:
- 		mana_serv_fpga(pdev);
- 		break;
-@@ -475,12 +511,48 @@ static void mana_serv_func(struct work_struct *w)
- 		break;
- 
- 	default:
--		dev_err(&pdev->dev, "MANA service: unknown type %d\n",
--			mns_wk->type);
-+		dev_err(&pdev->dev, "MANA service: unknown type %d\n", type);
- 		break;
- 	}
-+}
-+
-+static void mana_recovery_delayed_func(struct work_struct *w)
-+{
-+	struct mana_dev_recovery_work *work;
-+	struct mana_dev_recovery *dev;
-+	unsigned long flags;
-+
-+	work = container_of(w, struct mana_dev_recovery_work, work.work);
-+
-+	spin_lock_irqsave(&work->lock, flags);
-+
-+	while (!list_empty(&work->dev_list)) {
-+		dev = list_first_entry(&work->dev_list,
-+				       struct mana_dev_recovery, list);
-+		list_del(&dev->list);
-+		spin_unlock_irqrestore(&work->lock, flags);
-+
-+		mana_do_service(dev->type, dev->pdev);
-+		pci_dev_put(dev->pdev);
-+		kfree(dev);
-+
-+		spin_lock_irqsave(&work->lock, flags);
-+	}
-+
-+	spin_unlock_irqrestore(&work->lock, flags);
-+}
-+
-+static void mana_serv_func(struct work_struct *w)
-+{
-+	struct mana_serv_work *mns_wk;
-+	struct pci_dev *pdev;
-+
-+	mns_wk = container_of(w, struct mana_serv_work, serv_work);
-+	pdev = mns_wk->pdev;
-+
-+	if (pdev)
-+		mana_do_service(mns_wk->type, pdev);
- 
--out:
- 	pci_dev_put(pdev);
- 	kfree(mns_wk);
- 	module_put(THIS_MODULE);
-@@ -541,6 +613,17 @@ static void mana_gd_process_eqe(struct gdma_queue *eq)
- 	case GDMA_EQE_HWC_RESET_REQUEST:
- 		dev_info(gc->dev, "Recv MANA service type:%d\n", type);
- 
-+		if (!test_and_set_bit(GC_PROBE_SUCCEEDED, &gc->flags)) {
-+			/*
-+			 * Device is in probe and we received a hardware reset
-+			 * event, the probe function will detect that the flag
-+			 * has changed and perform service procedure.
-+			 */
-+			dev_info(gc->dev,
-+				 "Service is to be processed in probe\n");
-+			break;
-+		}
-+
- 		if (gc->in_service) {
- 			dev_info(gc->dev, "Already in service\n");
- 			break;
-@@ -1943,8 +2026,19 @@ static int mana_gd_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	if (err)
- 		goto cleanup_mana;
- 
-+	/*
-+	 * If a hardware reset event has occurred over HWC during probe,
-+	 * rollback and perform hardware reset procedure.
-+	 */
-+	if (test_and_set_bit(GC_PROBE_SUCCEEDED, &gc->flags)) {
-+		err = -EPROTO;
-+		goto cleanup_mana_rdma;
-+	}
-+
- 	return 0;
- 
-+cleanup_mana_rdma:
-+	mana_rdma_remove(&gc->mana_ib);
- cleanup_mana:
- 	mana_remove(&gc->mana, false);
- cleanup_gd:
-@@ -1968,6 +2062,35 @@ static int mana_gd_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- disable_dev:
- 	pci_disable_device(pdev);
- 	dev_err(&pdev->dev, "gdma probe failed: err = %d\n", err);
-+
-+	/*
-+	 * Hardware could be in recovery mode and the HWC returns TIMEDOUT or
-+	 * EPROTO from mana_gd_setup(), mana_probe() or mana_rdma_probe(), or
-+	 * we received a hardware reset event over HWC interrupt. In this case,
-+	 * perform the device recovery procedure after MANA_SERVICE_PERIOD
-+	 * seconds.
-+	 */
-+	if (err == -ETIMEDOUT || err == -EPROTO) {
-+		struct mana_dev_recovery *dev;
-+		unsigned long flags;
-+
-+		dev_info(&pdev->dev, "Start MANA recovery mode\n");
-+
-+		dev = kzalloc(sizeof(*dev), GFP_KERNEL);
-+		if (!dev)
-+			return err;
-+
-+		dev->pdev = pci_dev_get(pdev);
-+		dev->type = GDMA_EQE_HWC_RESET_REQUEST;
-+
-+		spin_lock_irqsave(&mana_dev_recovery_work.lock, flags);
-+		list_add_tail(&dev->list, &mana_dev_recovery_work.dev_list);
-+		spin_unlock_irqrestore(&mana_dev_recovery_work.lock, flags);
-+
-+		schedule_delayed_work(&mana_dev_recovery_work.work,
-+				      secs_to_jiffies(MANA_SERVICE_PERIOD));
-+	}
-+
- 	return err;
- }
- 
-@@ -2072,6 +2195,10 @@ static int __init mana_driver_init(void)
- {
- 	int err;
- 
-+	INIT_LIST_HEAD(&mana_dev_recovery_work.dev_list);
-+	spin_lock_init(&mana_dev_recovery_work.lock);
-+	INIT_DELAYED_WORK(&mana_dev_recovery_work.work, mana_recovery_delayed_func);
-+
- 	mana_debugfs_root = debugfs_create_dir("mana", NULL);
- 
- 	err = pci_register_driver(&mana_driver);
-@@ -2085,6 +2212,21 @@ static int __init mana_driver_init(void)
- 
- static void __exit mana_driver_exit(void)
- {
-+	struct mana_dev_recovery *dev;
-+	unsigned long flags;
-+
-+	disable_delayed_work_sync(&mana_dev_recovery_work.work);
-+
-+	spin_lock_irqsave(&mana_dev_recovery_work.lock, flags);
-+	while (!list_empty(&mana_dev_recovery_work.dev_list)) {
-+		dev = list_first_entry(&mana_dev_recovery_work.dev_list,
-+				       struct mana_dev_recovery, list);
-+		list_del(&dev->list);
-+		pci_dev_put(dev->pdev);
-+		kfree(dev);
-+	}
-+	spin_unlock_irqrestore(&mana_dev_recovery_work.lock, flags);
-+
- 	pci_unregister_driver(&mana_driver);
- 
- 	debugfs_remove(mana_debugfs_root);
-diff --git a/include/net/mana/gdma.h b/include/net/mana/gdma.h
-index a4cf307859f85..eaa27483f99b2 100644
---- a/include/net/mana/gdma.h
-+++ b/include/net/mana/gdma.h
-@@ -382,6 +382,10 @@ struct gdma_irq_context {
- 	char name[MANA_IRQ_NAME_SZ];
- };
- 
-+enum gdma_context_flags {
-+	GC_PROBE_SUCCEEDED	= 0,
-+};
-+
- struct gdma_context {
- 	struct device		*dev;
- 	struct dentry		*mana_pci_debugfs;
-@@ -430,6 +434,8 @@ struct gdma_context {
- 	u64 pf_cap_flags1;
- 
- 	struct workqueue_struct *service_wq;
-+
-+	unsigned long		flags;
- };
- 
- static inline bool mana_gd_is_mana(struct gdma_dev *gd)
-@@ -600,6 +606,9 @@ enum {
- /* Driver can send HWC periodically to query stats */
- #define GDMA_DRV_CAP_FLAG_1_PERIODIC_STATS_QUERY BIT(21)
- 
-+/* Driver can handle hardware recovery events during probe */
-+#define GDMA_DRV_CAP_FLAG_1_PROBE_RECOVERY BIT(22)
-+
- #define GDMA_DRV_CAP_FLAGS1 \
- 	(GDMA_DRV_CAP_FLAG_1_EQ_SHARING_MULTI_VPORT | \
- 	 GDMA_DRV_CAP_FLAG_1_NAPI_WKDONE_FIX | \
-@@ -611,7 +620,8 @@ enum {
- 	 GDMA_DRV_CAP_FLAG_1_HANDLE_RECONFIG_EQE | \
- 	 GDMA_DRV_CAP_FLAG_1_HW_VPORT_LINK_AWARE | \
- 	 GDMA_DRV_CAP_FLAG_1_PERIODIC_STATS_QUERY | \
--	 GDMA_DRV_CAP_FLAG_1_SKB_LINEARIZE)
-+	 GDMA_DRV_CAP_FLAG_1_SKB_LINEARIZE | \
-+	 GDMA_DRV_CAP_FLAG_1_PROBE_RECOVERY)
- 
- #define GDMA_DRV_CAP_FLAGS2 0
- 
+ 	mkdir -p $pdir/lib/modules/$version/
+ 	ln -s /usr/src/linux-headers-$version $pdir/lib/modules/$version/build
 -- 
 2.53.0
 
