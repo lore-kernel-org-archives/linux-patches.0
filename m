@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0113F1AD9;
-	Wed, 20 May 2026 17:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148A9349AFF;
+	Wed, 20 May 2026 17:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299223; cv=none; b=kK0jVfVs4G0a89rV+fhFJnwYliwwp2tBErMaGxt8CiIz/DyhySvj8mHX4btPYEZJMlfVKw9X0lY6t7pUdRoUPUajglEf6QkRR56rnqUaTFYnWNUKCGXqA81hPU/EoqA+lqfhW3Fkd3fKq6++lkXzxv/j1So6vNXjb8aEuwYA3zg=
+	t=1779299226; cv=none; b=UWBIx1oeBJb72tLg4OPP7NjP9S7/UqLhmVxGp8Aay+W8zhTIvQcgUnoCQMIp64Tln3FiFO53t1NJgQgh8+OjrfbKpYwjSXHFL7OoDHt5cx1uaxMT3GlRhGgUOikcR0ehiGKf6aOkysZP1zevEDCTeQO/TfgcZCik+LOOgR3bDJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299223; c=relaxed/simple;
-	bh=07UIlzeca6P0L85wkC6rLOL4heIbHjh6U5jBy8UvTno=;
+	s=arc-20240116; t=1779299226; c=relaxed/simple;
+	bh=SAVwSXkZ0BOYD5hLkjAvHpCNz253ECNHs942hThI8TM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D33KILzrQOR/zFLLiId244vpKZN1gUxXsO7CAKhMmCqH+KcmmXfIEo9lrzRmrxuqVz9uO3F+qfxjZvVNVeBJZis79KwH5U7p5DODYXjFIwBNVuYhxOFL6uPTNpFagGO3+USHkWP1d+AiLbhYMTm1naX00k7u/5nGcNLbytNeBS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6W+vxD4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rQ+RfgLNN8acs59Z5MPWG2aQnjPqqwmq/dm2lmsN7ZA2JH1zYv0HQBDlhMuPFYJQfWmJ+mYaPULGDnj2PvFeboKABpo795YKo8oQCOi98friUBnh52Ptc+RJ/NvaRoO9zl4mddK30WWQj0LvQEJ3GVvVomwpp6+WKkgse8o9lKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJ3/CayD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6W+vxD4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73381F00893;
-	Wed, 20 May 2026 17:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJ3/CayD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1601F000E9;
+	Wed, 20 May 2026 17:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299222;
-	bh=gn3oZMW5cT9vtgexx2d9Oyl6yv0a45sDOOmpVH3Z02w=;
+	s=korg; t=1779299225;
+	bh=I0sP2bPYFg76MlS5k9Ueb+lQa3pgWI4mnz0LLpAsRQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X6W+vxD4tPi3pw/R02ympcRCr8zNJXFImTpYwAOVvf7xWpcVGxDs7ejLLMddyfAsD
-	 0tBDCiEEZtBv+6Cb8o5kCdnqwqrrCjsnecyPcC/VAALW6ooRrNekFg5zy4hJVYsVvX
-	 mfAhJHDC1BXHgnzl3DfcpfTfT9HzRCzYsuDDkqYY=
+	b=gJ3/CayDOjg6Yc+mEa3FCHORpiRXPogpeM3gvmIRR62A64jb1VHIre6HWyJKklzuu
+	 LsCbHzOUa2rr3mCjY+3kReexLCpUTxdStPexJOwv9h8AUWkYbGaWdyoNvnWnRSuXjj
+	 NDnRV4eVyoYatnjOarBRw6E6UAFs9KvnL7Xyp/Eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
 	Simon Horman <horms@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 668/957] slip: reject VJ receive packets on instances with no rstate array
-Date: Wed, 20 May 2026 18:19:11 +0200
-Message-ID: <20260520162149.020244107@linuxfoundation.org>
+Subject: [PATCH 6.18 669/957] slip: bound decode() reads against the compressed packet length
+Date: Wed, 20 May 2026 18:19:12 +0200
+Message-ID: <20260520162149.043022938@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -55,94 +54,154 @@ Content-Transfer-Encoding: 8bit
 
 From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit e76607442d5b73e1ba6768f501ef815bb58c2c0e ]
+[ Upstream commit 4c1367a2d7aad643a6f87c6931b13cc1a25e8ca7 ]
 
-slhc_init() accepts rslots == 0 as a valid configuration, with the
-documented meaning of 'no receive compression'. In that case the
-allocation loop in slhc_init() is skipped, so comp->rstate stays
-NULL and comp->rslot_limit stays 0 (from the kzalloc of struct
-slcompress).
+slhc_uncompress() parses a VJ-compressed TCP header by advancing a
+pointer through the packet via decode() and pull16(). Neither helper
+bounds-checks against isize, and decode() masks its return with
+& 0xffff so it can never return the -1 that callers test for -- those
+error paths are dead code.
 
-The receive helpers do not defend against that configuration.
-slhc_uncompress() dereferences comp->rstate[x] when the VJ header
-carries an explicit connection ID, and slhc_remember() later assigns
-cs = &comp->rstate[...] after only comparing the packet's slot number
-to comp->rslot_limit. Because rslot_limit is 0, slot 0 passes the
-range check, and the code dereferences a NULL rstate.
+A short compressed frame whose change byte requests optional fields
+lets decode() read past the end of the packet. The over-read bytes
+are folded into the cached cstate and reflected into subsequent
+reconstructed packets.
 
-The configuration is reachable in-tree through PPP. PPPIOCSMAXCID
-stores its argument in a signed int, and (val >> 16) uses arithmetic
-shift. Passing 0xffff0000 therefore sign-extends to -1, so val2 + 1
-is 0 and ppp_generic.c ends up calling slhc_init(0, 1). Because
-/dev/ppp open is gated by ns_capable(CAP_NET_ADMIN), the whole path
-is reachable from an unprivileged user namespace. Once the malformed
-VJ state is installed, any inbound VJ-compressed or VJ-uncompressed
-frame that selects slot 0 crashes the kernel in softirq context:
+Make decode() and pull16() take the packet end pointer and return -1
+when exhausted. Add a bounds check before the TCP-checksum read.
+The existing == -1 tests now do what they were always meant to.
 
- Oops: general protection fault, probably for non-canonical
-       address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
- KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:slhc_uncompress (drivers/net/slip/slhc.c:519)
- Call Trace:
-  <TASK>
-  ppp_receive_nonmp_frame (drivers/net/ppp/ppp_generic.c:2466)
-  ppp_input (drivers/net/ppp/ppp_generic.c:2359)
-  ppp_async_process (drivers/net/ppp/ppp_async.c:492)
-  tasklet_action_common (kernel/softirq.c:926)
-  handle_softirqs (kernel/softirq.c:623)
-  run_ksoftirqd (kernel/softirq.c:1055)
-  smpboot_thread_fn (kernel/smpboot.c:160)
-  kthread (kernel/kthread.c:436)
-  ret_from_fork (arch/x86/kernel/process.c:164)
-  </TASK>
-
-Reject the receive side on such instances instead of touching rstate.
-slhc_uncompress() falls through to its existing 'bad' label, which
-bumps sls_i_error and enters the toss state. slhc_remember() mirrors
-that with an explicit sls_i_error increment followed by slhc_toss();
-the sls_i_runt counter is not used here because a missing rstate is
-an internal configuration state, not a runt packet.
-
-The transmit path is unaffected: the only in-tree caller that picks
-rslots from userspace (ppp_generic.c) still supplies tslots >= 1, and
-slip.c always calls slhc_init(16, 16), so comp->tstate remains valid
-and slhc_compress() continues to work.
-
-Fixes: 4ab42d78e37a ("ppp, slip: Validate VJ compression slot parameters completely")
-Reported-by: Xiang Mei <xmei5@asu.edu>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Simon Horman <horms@kernel.org>
+Closes: https://lore.kernel.org/netdev/20260414134126.758795-2-horms@kernel.org/
 Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260415204130.258866-2-bestswngs@gmail.com
+Link: https://patch.msgid.link/20260416100147.531855-5-bestswngs@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/slip/slhc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/slip/slhc.c | 43 ++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/net/slip/slhc.c b/drivers/net/slip/slhc.c
-index ee9fd3a94b96f..fcb3eebe7311c 100644
+index fcb3eebe7311c..daf086c283423 100644
 --- a/drivers/net/slip/slhc.c
 +++ b/drivers/net/slip/slhc.c
-@@ -506,6 +506,8 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- 		comp->sls_i_error++;
- 		return 0;
- 	}
-+	if (!comp->rstate)
-+		goto bad;
- 	changes = *cp++;
- 	if(changes & NEW_C){
- 		/* Make sure the state index is in range, then grab the state.
-@@ -649,6 +651,10 @@ slhc_remember(struct slcompress *comp, unsigned char *icp, int isize)
- 	struct cstate *cs;
- 	unsigned int ihl;
+@@ -80,9 +80,9 @@
+ #include <linux/unaligned.h>
  
-+	if (!comp->rstate) {
-+		comp->sls_i_error++;
-+		return slhc_toss(comp);
-+	}
- 	/* The packet is shorter than a legal IP header.
- 	 * Also make sure isize is positive.
- 	 */
+ static unsigned char *encode(unsigned char *cp, unsigned short n);
+-static long decode(unsigned char **cpp);
++static long decode(unsigned char **cpp, const unsigned char *end);
+ static unsigned char * put16(unsigned char *cp, unsigned short x);
+-static unsigned short pull16(unsigned char **cpp);
++static long pull16(unsigned char **cpp, const unsigned char *end);
+ 
+ /* Allocate compression data structure
+  *	slots must be in range 0 to 255 (zero meaning no compression)
+@@ -190,30 +190,34 @@ encode(unsigned char *cp, unsigned short n)
+ 	return cp;
+ }
+ 
+-/* Pull a 16-bit integer in host order from buffer in network byte order */
+-static unsigned short
+-pull16(unsigned char **cpp)
++/* Pull a 16-bit integer in host order from buffer in network byte order.
++ * Returns -1 if the buffer is exhausted, otherwise the 16-bit value.
++ */
++static long
++pull16(unsigned char **cpp, const unsigned char *end)
+ {
+-	short rval;
++	long rval;
+ 
++	if (*cpp + 2 > end)
++		return -1;
+ 	rval = *(*cpp)++;
+ 	rval <<= 8;
+ 	rval |= *(*cpp)++;
+ 	return rval;
+ }
+ 
+-/* Decode a number */
++/* Decode a number. Returns -1 if the buffer is exhausted. */
+ static long
+-decode(unsigned char **cpp)
++decode(unsigned char **cpp, const unsigned char *end)
+ {
+ 	int x;
+ 
++	if (*cpp >= end)
++		return -1;
+ 	x = *(*cpp)++;
+-	if(x == 0){
+-		return pull16(cpp) & 0xffff;	/* pull16 returns -1 on error */
+-	} else {
+-		return x & 0xff;		/* -1 if PULLCHAR returned error */
+-	}
++	if (x == 0)
++		return pull16(cpp, end);
++	return x & 0xff;
+ }
+ 
+ /*
+@@ -499,6 +503,7 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
+ 	struct cstate *cs;
+ 	int len, hdrlen;
+ 	unsigned char *cp = icp;
++	const unsigned char *end = icp + isize;
+ 
+ 	/* We've got a compressed packet; read the change byte */
+ 	comp->sls_i_compressed++;
+@@ -536,6 +541,8 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
+ 	thp = &cs->cs_tcp;
+ 	ip = &cs->cs_ip;
+ 
++	if (cp + 2 > end)
++		goto bad;
+ 	thp->check = *(__sum16 *)cp;
+ 	cp += 2;
+ 
+@@ -566,26 +573,26 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
+ 	default:
+ 		if(changes & NEW_U){
+ 			thp->urg = 1;
+-			if((x = decode(&cp)) == -1) {
++			if((x = decode(&cp, end)) == -1) {
+ 				goto bad;
+ 			}
+ 			thp->urg_ptr = htons(x);
+ 		} else
+ 			thp->urg = 0;
+ 		if(changes & NEW_W){
+-			if((x = decode(&cp)) == -1) {
++			if((x = decode(&cp, end)) == -1) {
+ 				goto bad;
+ 			}
+ 			thp->window = htons( ntohs(thp->window) + x);
+ 		}
+ 		if(changes & NEW_A){
+-			if((x = decode(&cp)) == -1) {
++			if((x = decode(&cp, end)) == -1) {
+ 				goto bad;
+ 			}
+ 			thp->ack_seq = htonl( ntohl(thp->ack_seq) + x);
+ 		}
+ 		if(changes & NEW_S){
+-			if((x = decode(&cp)) == -1) {
++			if((x = decode(&cp, end)) == -1) {
+ 				goto bad;
+ 			}
+ 			thp->seq = htonl( ntohl(thp->seq) + x);
+@@ -593,7 +600,7 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
+ 		break;
+ 	}
+ 	if(changes & NEW_I){
+-		if((x = decode(&cp)) == -1) {
++		if((x = decode(&cp, end)) == -1) {
+ 			goto bad;
+ 		}
+ 		ip->id = htons (ntohs (ip->id) + x);
 -- 
 2.53.0
 
