@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEA5372EDE;
-	Wed, 20 May 2026 17:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF4628DC4;
+	Wed, 20 May 2026 17:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297137; cv=none; b=NUV7bhhKMEgw1m72M0VyAfEqFHY7WTTtMAXZrr5KxKrE9Y+qtBC9sKK0RaZk+1GPsOHRUPv9+X+nSU8uk7pI4y4x17w8jwU5nflqITq3lUXLfGpeerTAkPxOr9lAbnY+n3+h3mQRVnfpFtQHVv/NW2yTjXKeSz+u2P1g+Tp5Upk=
+	t=1779297140; cv=none; b=QvxHmQ6KkvuyONVK4Rx6C8oqJ8Bji9nsBWOSoFNW5dQaJ7jNYJ5Pkoay5ZSeg+oOVKSb5lsVDEaKXlJqtQkWuoOQeD+zUKIqb7QdGrFpgx46Og7GqVAKMlfw4mBDu18a2q/fz2Kk1WlilEn0gWXtZ+qTJnp81GNIX4E29vZJtv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297137; c=relaxed/simple;
-	bh=xXpeEEfpm06CrisPCMqCeLDJHJlEwFXuWhku1BNVEH8=;
+	s=arc-20240116; t=1779297140; c=relaxed/simple;
+	bh=TC0CqG1r3mOPGvxGGMmjLhbujvVW591EYaM/p10Els8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhVZ7FlvtbKvvwvLXiXV2SqAfbtlm0K/hoMo9d7ROeQYGdum/H9qgLdw9tPG4LAsNgSSI6oWvFS7Qr/W0g3TsL6UqIdeg6co//BpN22qGshJZNV3uXPq75J2ggJDa6mKYUB+gPNhUIyGXlq5+uHMbV4XhdbvIaJjWd/7IynbQPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Spj2KsO5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OYVecfH01ZA0RzhvpTGrOoS3BwHaF1DvJLHydb5iIBptQHpqIFiPdoEi+nYNk60b5xkSwqcYWePoZzTtKvRVGh2h3hmRn5Bee68yEsyEPKxL00TaW4PbAEYhJFo2gjfbaa6ZCq/BhkQU2cCmiGRVpNXNlRYALW0CQzpQtLpvDIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1Ica/FN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Spj2KsO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E101F000E9;
-	Wed, 20 May 2026 17:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1Ica/FN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCEE1F000E9;
+	Wed, 20 May 2026 17:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297136;
-	bh=zsMDX0mgen/Q80YzZkbSBSmn1RS+pl2ugOlsDHj/SwM=;
+	s=korg; t=1779297138;
+	bh=GJfnt63I8hFptZYpiZAlZu6f2jbT561VLzXgNBOULKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Spj2KsO5fz+RGLccLvfckKd11ssQAjCb8PaHrnTAi4RxPjylmQChwtzW4NQkOvVrK
-	 tVYuoHHl33EPIw3toEweM2wj0wSWxWvTY40BC0L0LAh89Q5Zz/XlJqXt2mWq3YO/HY
-	 MdliqJy0WZ3+1cuUGrepzV2EINfoj/HD6ubjv+Lw=
+	b=L1Ica/FNrKt98kZOXQ6/SMYArgxQWZ+t9Tbaez/DdFsmRK5nonB0mDR4H4j1jJHcj
+	 vLFJxHZz4TG7Rw7Uix0kanE0eY/emQjezQfmgBuBM/xUJVyk5XcJbTYY9wTm1zKHQL
+	 LCOujuH3jYSyIfs4j2gaB1gBez9D2OEOjieA/Z1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Dmitry Vyukov <dvyukov@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1064/1146] rseq: Implement read only ABI enforcement for optimized RSEQ V2 mode
-Date: Wed, 20 May 2026 18:21:54 +0200
-Message-ID: <20260520162212.311769581@linuxfoundation.org>
+Subject: [PATCH 7.0 1065/1146] rseq: Reenable performance optimizations conditionally
+Date: Wed, 20 May 2026 18:21:55 +0200
+Message-ID: <20260520162212.334179528@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,20 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@kernel.org>
 
-commit 82f572449cfe75f12ea985986da60e11f308f77d upstream.
+commit 99428157dcf32fdac97355aa1cc1364dbc9e073c upstream.
 
-The optimized RSEQ V2 mode requires that user space adheres to the ABI
-specification and does not modify the read-only fields cpu_id_start,
-cpu_id, node_id and mm_cid behind the kernel's back.
+Due to the incompatibility with TCMalloc the RSEQ optimizations and
+extended features (time slice extensions) have been disabled and made
+run-time conditional.
 
-While the kernel does not rely on these fields, the adherence to this is a
-fundamental prerequisite to allow multiple entities, e.g. libraries, in an
-application to utilize the full potential of RSEQ without stepping on each
-other toes.
+The original RSEQ implementation, which TCMalloc depends on, registers a 32
+byte region (ORIG_RSEG_SIZE). This region has a 32 byte alignment
+requirement.
 
-Validate this adherence on every update of these fields. If the kernel
-detects that user space modified the fields, the application is force
-terminated.
+The extension safe newer variant exposes the kernel RSEQ feature size via
+getauxval(AT_RSEQ_FEATURE_SIZE) and the alignment requirement via
+getauxval(AT_RSEQ_ALIGN). The alignment requirement is that the registered
+RSEQ region is aligned to the next power of two of the feature size. The
+kernel currently has a feature size of 33 bytes, which means the alignment
+requirement is 64 bytes.
+
+The TCMalloc RSEQ region is embedded into a cache line aligned data
+structure starting at offset 32 bytes so that bytes 28-31 and the
+cpu_id_start field at bytes 32-35 form a 64-bit little endian pointer with
+the top-most bit (63 set) to check whether the kernel has overwritten
+cpu_id_start with an actual CPU id value, which is guaranteed to not have
+the top most bit set.
+
+As this is part of their performance tuned magic, it's a pretty safe
+assumption, that TCMalloc won't use a larger RSEQ size.
+
+This allows the kernel to declare that registrations with a size greater
+than the original size of 32 bytes, which is the cases since time slice
+extensions got introduced, as RSEQ ABI v2 with the following differences to
+the original behaviour:
+
+  1) Unconditional updates of the user read only fields (CPU, node, MMCID)
+     are removed. Those fields are only updated on registration, task
+     migration and MMCID changes.
+
+  2) Unconditional evaluation of the criticial section pointer is
+     removed. It's only evaluated when user space was interrupted and was
+     scheduled out or before delivering a signal in the interrupted
+     context.
+
+  3) The read/only requirement of the ID fields is enforced. When the
+     kernel detects that userspace manipulated the fields, the process is
+     terminated. This ensures that multiple entities (libraries) can
+     utilize RSEQ without interfering.
+
+  4) Todays extended RSEQ feature (time slice extensions) and future
+     extensions are only enabled in the v2 enabled mode.
+
+Registrations with the original size of 32 bytes operate in backwards
+compatible legacy mode without performance improvements and extended
+features.
+
+Unfortunately that also affects users of older GLIBC versions which
+register the original size of 32 bytes and do not evaluate the kernel
+required size in the auxiliary vector AT_RSEQ_FEATURE_SIZE.
+
+That's the result of the lack of enforcement in the original implementation
+and the unwillingness of a single entity to cooperate with the larger
+ecosystem for many years.
+
+Implement the required registration changes by restructuring the spaghetti
+code and adding the size/version check. Also add documentation about the
+differences of legacy and optimized RSEQ V2 mode.
+
+Thanks to Mathieu for pointing out the ORIG_RSEQ_SIZE constraints!
 
 Fixes: d6200245c75e ("rseq: Allow registering RSEQ with slice extension")
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
@@ -75,205 +127,305 @@ Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
 Tested-by: Dmitry Vyukov <dvyukov@google.com>
-Link: https://patch.msgid.link/20260428224427.845230956%40kernel.org
+Link: https://patch.msgid.link/20260428224427.927160119%40kernel.org
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rseq_entry.h | 83 ++++++++++++++------------------------
- include/linux/rseq_types.h |  4 +-
- kernel/rseq.c              |  5 +--
- 3 files changed, 35 insertions(+), 57 deletions(-)
+ Documentation/userspace-api/rseq.rst |  94 ++++++++++++++++-
+ kernel/rseq.c                        | 144 ++++++++++++++++-----------
+ 2 files changed, 178 insertions(+), 60 deletions(-)
 
-diff --git a/include/linux/rseq_entry.h b/include/linux/rseq_entry.h
-index c67a3476e9dd6..413a3543fbe8e 100644
---- a/include/linux/rseq_entry.h
-+++ b/include/linux/rseq_entry.h
-@@ -238,7 +238,6 @@ static __always_inline bool rseq_grant_slice_extension(bool work_pending) { retu
- #endif /* !CONFIG_RSEQ_SLICE_EXTENSION */
+diff --git a/Documentation/userspace-api/rseq.rst b/Documentation/userspace-api/rseq.rst
+index 3cd27a3c7c7e5..8549a6c61531c 100644
+--- a/Documentation/userspace-api/rseq.rst
++++ b/Documentation/userspace-api/rseq.rst
+@@ -24,6 +24,97 @@ Quick access to CPU number, node ID
+ Allows to implement per CPU data efficiently. Documentation is in code and
+ selftests. :(
  
- bool rseq_debug_update_user_cs(struct task_struct *t, struct pt_regs *regs, unsigned long csaddr);
--bool rseq_debug_validate_ids(struct task_struct *t);
- 
- static __always_inline void rseq_note_user_irq_entry(void)
- {
-@@ -358,43 +357,6 @@ bool rseq_debug_update_user_cs(struct task_struct *t, struct pt_regs *regs,
- 	return false;
- }
- 
--/*
-- * On debug kernels validate that user space did not mess with it if the
-- * debug branch is enabled.
-- */
--bool rseq_debug_validate_ids(struct task_struct *t)
--{
--	struct rseq __user *rseq = t->rseq.usrptr;
--	u32 cpu_id, uval, node_id;
--
--	/*
--	 * On the first exit after registering the rseq region CPU ID is
--	 * RSEQ_CPU_ID_UNINITIALIZED and node_id in user space is 0!
--	 */
--	node_id = t->rseq.ids.cpu_id != RSEQ_CPU_ID_UNINITIALIZED ?
--		  cpu_to_node(t->rseq.ids.cpu_id) : 0;
--
--	scoped_user_read_access(rseq, efault) {
--		unsafe_get_user(cpu_id, &rseq->cpu_id_start, efault);
--		if (cpu_id != t->rseq.ids.cpu_id)
--			goto die;
--		unsafe_get_user(uval, &rseq->cpu_id, efault);
--		if (uval != cpu_id)
--			goto die;
--		unsafe_get_user(uval, &rseq->node_id, efault);
--		if (uval != node_id)
--			goto die;
--		unsafe_get_user(uval, &rseq->mm_cid, efault);
--		if (uval != t->rseq.ids.mm_cid)
--			goto die;
--	}
--	return true;
--die:
--	t->rseq.event.fatal = true;
--efault:
--	return false;
--}
--
- #endif /* RSEQ_BUILD_SLOW_PATH */
- 
- /*
-@@ -504,20 +466,32 @@ rseq_update_user_cs(struct task_struct *t, struct pt_regs *regs, unsigned long c
-  * faults in task context are fatal too.
-  */
- static rseq_inline
--bool rseq_set_ids_get_csaddr(struct task_struct *t, struct rseq_ids *ids,
--			     u32 node_id, u64 *csaddr)
-+bool rseq_set_ids_get_csaddr(struct task_struct *t, struct rseq_ids *ids, u64 *csaddr)
- {
- 	struct rseq __user *rseq = t->rseq.usrptr;
- 
--	if (static_branch_unlikely(&rseq_debug_enabled)) {
--		if (!rseq_debug_validate_ids(t))
--			return false;
--	}
--
- 	scoped_user_rw_access(rseq, efault) {
-+		/* Validate the R/O fields for debug and optimized mode */
-+		if (static_branch_unlikely(&rseq_debug_enabled) || rseq_v2(t)) {
-+			u32 cpu_id, uval;
++Optimized RSEQ V2
++-----------------
 +
-+			unsafe_get_user(cpu_id, &rseq->cpu_id_start, efault);
-+			if (cpu_id != t->rseq.ids.cpu_id)
-+				goto die;
-+			unsafe_get_user(uval, &rseq->cpu_id, efault);
-+			if (uval != cpu_id)
-+				goto die;
-+			unsafe_get_user(uval, &rseq->node_id, efault);
-+			if (uval != t->rseq.ids.node_id)
-+				goto die;
-+			unsafe_get_user(uval, &rseq->mm_cid, efault);
-+			if (uval != t->rseq.ids.mm_cid)
-+				goto die;
-+		}
++On architectures which utilize the generic entry code and generic TIF bits
++the kernel supports runtime optimizations for RSEQ, which also enable
++enhanced features like scheduler time slice extensions.
 +
- 		unsafe_put_user(ids->cpu_id, &rseq->cpu_id_start, efault);
- 		unsafe_put_user(ids->cpu_id, &rseq->cpu_id, efault);
--		unsafe_put_user(node_id, &rseq->node_id, efault);
-+		unsafe_put_user(ids->node_id, &rseq->node_id, efault);
- 		unsafe_put_user(ids->mm_cid, &rseq->mm_cid, efault);
- 		if (csaddr)
- 			unsafe_get_user(*csaddr, &rseq->rseq_cs, efault);
-@@ -529,10 +503,13 @@ bool rseq_set_ids_get_csaddr(struct task_struct *t, struct rseq_ids *ids,
- 
- 	rseq_slice_clear_grant(t);
- 	/* Cache the new values */
--	t->rseq.ids.cpu_cid = ids->cpu_cid;
-+	t->rseq.ids = *ids;
- 	rseq_stat_inc(rseq_stats.ids);
- 	rseq_trace_update(t, ids);
- 	return true;
++To enable them a task has to register the RSEQ region with at least the
++length advertised by getauxval(AT_RSEQ_FEATURE_SIZE).
 +
-+die:
-+	t->rseq.event.fatal = true;
- efault:
- 	return false;
- }
-@@ -542,11 +519,11 @@ bool rseq_set_ids_get_csaddr(struct task_struct *t, struct rseq_ids *ids,
-  * is in a critical section.
-  */
- static rseq_inline bool rseq_update_usr(struct task_struct *t, struct pt_regs *regs,
--					struct rseq_ids *ids, u32 node_id)
-+					struct rseq_ids *ids)
- {
- 	u64 csaddr;
++If existing binaries register with RSEQ_ORIG_SIZE (32 bytes), the kernel
++keeps the legacy low performance mode enabled to fulfil the expectations
++of existing users regarding the original RSEQ implementation behaviour.
++
++The following table documents the ABI and behavioral guarantees of the
++legacy and the optimized V2 mode.
++
++.. list-table:: RSEQ modes
++   :header-rows: 1
++
++   * - Nr
++     - What
++
++     - Legacy
++     - Optimized V2
++
++   * - 1
++     - The cpu_id_start, cpu_id, node_id and mm_cid fields (User mode read
++       only)
++       .. Legacy
++     - Updated by the kernel unconditionally after each context switch and
++       before signal delivery
++       .. Optimized V2
++     - Updated by the kernel if and only if they change, i.e. if the task
++       is migrated or mm_cid changes
++
++   * - 2
++     - The rseq_cs critical section field
++       .. Legacy
++     - Evaluated and handled unconditionally after each context switch and
++       before signal delivery
++       .. Optimized V2
++     - Evaluated and handled conditionally only when user space was
++       interrupted and was scheduled out or before delivering a signal in
++       the interrupted context.
++
++   * - 3
++     - Read only fields
++       .. Legacy
++     - No strict enforcement except in debug mode
++       .. Optimized V2
++     - Strict enforcement
++
++   * - 4
++     - membarrier(...RSEQ)
++       .. Legacy
++     - All running threads of the process are interrupted and the ID fields
++       are rewritten and eventually active critical sections are aborted
++       before they return to user space.  All threads which are scheduled
++       out whether voluntary or not are covered by #1/#2 above.
++       .. Optimized V2
++     - All running threads of the process are interrupted and eventually
++       active critical sections are aborted before these threads return to
++       user space. The ID fields are only updated if changed as a
++       consequence of the interrupt. All threads which are scheduled out
++       whether voluntary or not are covered by #1/#2 above.
++
++   * - 5
++     - Time slice extensions
++       .. Legacy
++     - Not supported
++       .. Optimized V2
++     - Supported
++
++The legacy mode is obviously less performant as it does unconditional
++updates and critical section checks even if not strictly required by the
++ABI contract. That can't be changed anymore as some users depend on that
++observed behavior, which in turn enables them to violate the ABI and
++overwrite the cpu_id_start field for their own purposes. This is obviously
++discouraged as it renders RSEQ incompatible with the intended usage and
++breaks the expectation of other libraries in the same application.
++
++The ABI compliant optimized v2 mode, which respects the read only fields,
++does not require unconditional updates and therefore is way more
++performant. The kernel validates the read only fields for compliance. If
++user space modifies them, the process is killed. Compliant usage allows
++multiple libraries in the same application to benefit from the RSEQ
++functionality without disturbing each other. The ABI compliant optimized v2
++mode also enables extended RSEQ features like time slice extensions.
++
++
+ Scheduler time slice extensions
+ -------------------------------
  
--	if (!rseq_set_ids_get_csaddr(t, ids, node_id, &csaddr))
-+	if (!rseq_set_ids_get_csaddr(t, ids, &csaddr))
- 		return false;
+@@ -37,7 +128,8 @@ The prerequisites for this functionality are:
  
- 	/*
-@@ -649,12 +626,12 @@ static __always_inline bool rseq_exit_user_update(struct pt_regs *regs, struct t
- 	}
+     * Enabled at boot time (default is enabled)
  
- 	struct rseq_ids ids = {
--		.cpu_id = task_cpu(t),
--		.mm_cid = task_mm_cid(t),
-+		.cpu_id	 = task_cpu(t),
-+		.mm_cid	 = task_mm_cid(t),
-+		.node_id = cpu_to_node(ids.cpu_id),
- 	};
--	u32 node_id = cpu_to_node(ids.cpu_id);
+-    * A rseq userspace pointer has been registered for the thread
++    * A rseq userspace pointer has been registered for the thread in
++      optimized V2 mode
  
--	return rseq_update_usr(t, regs, &ids, node_id);
-+	return rseq_update_usr(t, regs, &ids);
- efault:
- 	return false;
- }
-diff --git a/include/linux/rseq_types.h b/include/linux/rseq_types.h
-index a469c1870849c..85739a63e85e6 100644
---- a/include/linux/rseq_types.h
-+++ b/include/linux/rseq_types.h
-@@ -66,8 +66,9 @@ struct rseq_event {
-  *		compiler emit a single compare on 64-bit
-  * @cpu_id:	The CPU ID which was written last to user space
-  * @mm_cid:	The MM CID which was written last to user space
-+ * @node_id:	The node ID which was written last to user space
-  *
-- * @cpu_id and @mm_cid are updated when the data is written to user space.
-+ * @cpu_id, @mm_cid and @node_id are updated when the data is written to user space.
-  */
- struct rseq_ids {
- 	union {
-@@ -77,6 +78,7 @@ struct rseq_ids {
- 			u32	mm_cid;
- 		};
- 	};
-+	u32			node_id;
- };
+ The thread has to enable the functionality via prctl(2)::
  
- /**
 diff --git a/kernel/rseq.c b/kernel/rseq.c
-index aa25753ea1350..101612027f6a3 100644
+index 101612027f6a3..e75e3a5e312c8 100644
 --- a/kernel/rseq.c
 +++ b/kernel/rseq.c
-@@ -263,7 +263,6 @@ static void rseq_slowpath_update_usr(struct pt_regs *regs)
- 	};
- 	struct task_struct *t = current;
- 	struct rseq_ids ids;
--	u32 node_id;
- 	bool event;
+@@ -412,70 +412,23 @@ static bool rseq_reset_ids(void)
+ /* The original rseq structure size (including padding) is 32 bytes. */
+ #define ORIG_RSEQ_SIZE		32
  
- 	if (unlikely(t->flags & PF_EXITING))
-@@ -299,9 +298,9 @@ static void rseq_slowpath_update_usr(struct pt_regs *regs)
- 	if (!event)
- 		return;
+-/*
+- * sys_rseq - setup restartable sequences for caller thread.
+- */
+-SYSCALL_DEFINE4(rseq, struct rseq __user *, rseq, u32, rseq_len, int, flags, u32, sig)
++static long rseq_register(struct rseq __user * rseq, u32 rseq_len, int flags, u32 sig)
+ {
+ 	u32 rseqfl = 0;
+ 	u8 version = 1;
  
--	node_id = cpu_to_node(ids.cpu_id);
-+	ids.node_id = cpu_to_node(ids.cpu_id);
+-	if (flags & RSEQ_FLAG_UNREGISTER) {
+-		if (flags & ~RSEQ_FLAG_UNREGISTER)
+-			return -EINVAL;
+-		/* Unregister rseq for current thread. */
+-		if (current->rseq.usrptr != rseq || !current->rseq.usrptr)
+-			return -EINVAL;
+-		if (rseq_len != current->rseq.len)
+-			return -EINVAL;
+-		if (current->rseq.sig != sig)
+-			return -EPERM;
+-		if (!rseq_reset_ids())
+-			return -EFAULT;
+-		rseq_reset(current);
+-		return 0;
+-	}
+-
+-	if (unlikely(flags & ~(RSEQ_FLAG_SLICE_EXT_DEFAULT_ON)))
+-		return -EINVAL;
+-
+-	if (current->rseq.usrptr) {
+-		/*
+-		 * If rseq is already registered, check whether
+-		 * the provided address differs from the prior
+-		 * one.
+-		 */
+-		if (current->rseq.usrptr != rseq || rseq_len != current->rseq.len)
+-			return -EINVAL;
+-		if (current->rseq.sig != sig)
+-			return -EPERM;
+-		/* Already registered. */
+-		return -EBUSY;
+-	}
+-
+-	/*
+-	 * If there was no rseq previously registered, ensure the provided rseq
+-	 * is properly aligned, as communcated to user-space through the ELF
+-	 * auxiliary vector AT_RSEQ_ALIGN. If rseq_len is the original rseq
+-	 * size, the required alignment is the original struct rseq alignment.
+-	 *
+-	 * The rseq_len is required to be greater or equal to the original rseq
+-	 * size. In order to be valid, rseq_len is either the original rseq size,
+-	 * or large enough to contain all supported fields, as communicated to
+-	 * user-space through the ELF auxiliary vector AT_RSEQ_FEATURE_SIZE.
+-	 */
+-	if (rseq_len < ORIG_RSEQ_SIZE ||
+-	    (rseq_len == ORIG_RSEQ_SIZE && !IS_ALIGNED((unsigned long)rseq, ORIG_RSEQ_SIZE)) ||
+-	    (rseq_len != ORIG_RSEQ_SIZE && (!IS_ALIGNED((unsigned long)rseq, rseq_alloc_align()) ||
+-					    rseq_len < offsetof(struct rseq, end))))
+-		return -EINVAL;
+ 	if (!access_ok(rseq, rseq_len))
+ 		return -EFAULT;
  
--	if (unlikely(!rseq_update_usr(t, regs, &ids, node_id))) {
-+	if (unlikely(!rseq_update_usr(t, regs, &ids))) {
- 		/*
- 		 * Clear the errors just in case this might survive magically, but
- 		 * leave the rest intact.
+ 	/*
+-	 * The version check effectivly disables time slice extensions until the
+-	 * RSEQ ABI V2 registration are implemented.
++	 * Architectures, which use the generic IRQ entry code (at least) enable
++	 * registrations with a size greater than the original v1 fixed sized
++	 * @rseq_len, which has been validated already to utilize the optimized
++	 * v2 ABI mode which also enables extended RSEQ features beyond MMCID.
+ 	 */
++	if (IS_ENABLED(CONFIG_GENERIC_IRQ_ENTRY) && rseq_len > ORIG_RSEQ_SIZE)
++		version = 2;
++
+ 	if (IS_ENABLED(CONFIG_RSEQ_SLICE_EXTENSION) && version > 1) {
+ 		if (rseq_slice_extension_enabled()) {
+ 			rseqfl |= RSEQ_CS_FLAG_SLICE_EXT_AVAILABLE;
+@@ -523,11 +476,10 @@ SYSCALL_DEFINE4(rseq, struct rseq __user *, rseq, u32, rseq_len, int, flags, u32
+ #endif
+ 
+ 	/*
+-	 * If rseq was previously inactive, and has just been
+-	 * registered, ensure the cpu_id_start and cpu_id fields
+-	 * are updated before returning to user-space.
++	 * Ensure the cpu_id_start and cpu_id fields are updated before
++	 * returning to user-space.
+ 	 */
+-	current->rseq.event.has_rseq = true;
++	current->rseq.event.has_rseq = version;
+ 	rseq_force_update();
+ 	return 0;
+ 
+@@ -535,6 +487,80 @@ SYSCALL_DEFINE4(rseq, struct rseq __user *, rseq, u32, rseq_len, int, flags, u32
+ 	return -EFAULT;
+ }
+ 
++static long rseq_unregister(struct rseq __user * rseq, u32 rseq_len, int flags, u32 sig)
++{
++	if (flags & ~RSEQ_FLAG_UNREGISTER)
++		return -EINVAL;
++	if (current->rseq.usrptr != rseq || !current->rseq.usrptr)
++		return -EINVAL;
++	if (rseq_len != current->rseq.len)
++		return -EINVAL;
++	if (current->rseq.sig != sig)
++		return -EPERM;
++	if (!rseq_reset_ids())
++		return -EFAULT;
++	rseq_reset(current);
++	return 0;
++}
++
++static long rseq_reregister(struct rseq __user * rseq, u32 rseq_len, u32 sig)
++{
++	/*
++	 * If rseq is already registered, check whether the provided address
++	 * differs from the prior one.
++	 */
++	if (current->rseq.usrptr != rseq || rseq_len != current->rseq.len)
++		return -EINVAL;
++	if (current->rseq.sig != sig)
++		return -EPERM;
++	/* Already registered. */
++	return -EBUSY;
++}
++
++static bool rseq_length_valid(struct rseq __user *rseq, unsigned int rseq_len)
++{
++	/*
++	 * Ensure the provided rseq is properly aligned, as communicated to
++	 * user-space through the ELF auxiliary vector AT_RSEQ_ALIGN. If
++	 * rseq_len is the original rseq size, the required alignment is the
++	 * original struct rseq alignment.
++	 *
++	 * In order to be valid, rseq_len is either the original rseq size, or
++	 * large enough to contain all supported fields, as communicated to
++	 * user-space through the ELF auxiliary vector AT_RSEQ_FEATURE_SIZE.
++	 */
++	if (rseq_len < ORIG_RSEQ_SIZE)
++		return false;
++
++	if (rseq_len == ORIG_RSEQ_SIZE)
++		return IS_ALIGNED((unsigned long)rseq, ORIG_RSEQ_SIZE);
++
++	return IS_ALIGNED((unsigned long)rseq, rseq_alloc_align()) &&
++		rseq_len >= offsetof(struct rseq, end);
++}
++
++#define RSEQ_FLAGS_SUPPORTED	(RSEQ_FLAG_SLICE_EXT_DEFAULT_ON)
++
++/*
++ * sys_rseq - Register or unregister restartable sequences for the caller thread.
++ */
++SYSCALL_DEFINE4(rseq, struct rseq __user *, rseq, u32, rseq_len, int, flags, u32, sig)
++{
++	if (flags & RSEQ_FLAG_UNREGISTER)
++		return rseq_unregister(rseq, rseq_len, flags, sig);
++
++	if (unlikely(flags & ~RSEQ_FLAGS_SUPPORTED))
++		return -EINVAL;
++
++	if (current->rseq.usrptr)
++		return rseq_reregister(rseq, rseq_len, sig);
++
++	if (!rseq_length_valid(rseq, rseq_len))
++		return -EINVAL;
++
++	return rseq_register(rseq, rseq_len, flags, sig);
++}
++
+ #ifdef CONFIG_RSEQ_SLICE_EXTENSION
+ struct slice_timer {
+ 	struct hrtimer	timer;
 -- 
 2.53.0
 
