@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE3BDF59;
-	Wed, 20 May 2026 18:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB44136EA8B;
+	Wed, 20 May 2026 18:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302304; cv=none; b=kdyEH+yYERfb2YHEYOBIRZ5RcPmROL0L6DmS6h6ckKTjKj5hqfh53VFbEzFRbcIayrvJf1oRHWKgNcvHOyP0tg8RZBuF91R57n5GGV64rTMjEmz5/8y7dP8EVdmr81L5BjLjv5JBQvtmZKc0n6OfRKyyJHZAS1Rii/4+Wk8uP/c=
+	t=1779302307; cv=none; b=LukyINJ4B2Bl3HjNrDQ4v5t6TxEce4J8T5L8cXmYRtWtq5dLivsBC1rU2NUvaWmTF98X5/q/vAi8t6k1xboUNozbdnTrdsf9bWl/RW4UvsYxITYjH9Yspgf6YcrfAj+cGs0ES/jORTIi0uVDRTk29Y5N42FxvDK71SnfBBpssD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302304; c=relaxed/simple;
-	bh=Py8V/sHP02jsT4b+zqEbFfRlmkLId4QmP0W+CTLK5Pg=;
+	s=arc-20240116; t=1779302307; c=relaxed/simple;
+	bh=1ucYbZj8gkgtdeRYcPFdDnZ60NQRzwSANo+TNW4xI0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RashIKC5sa0HZ/GxguoTyFnIEqeeIMufiRNnBg6ByV0zuGtcZWcV79JN7oKzyS4nMgNYZU++PNtdQFV6mjCnti84wd0dhz+67JHNJTNbVBTkXSpSc9jnP36Le7AMgSoLbLuxv6o84L5A1W4QzFIoP04m6SQkFLBlUn8I6+3nniE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNLHt5ti; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eDngiEWSIWY8PfAtNZVTgm2VMRFA+l0dTexECWcbuj/Ia+1qDqN8pQ5X/wx1dawM1NxzcC09jtqFY9WfhDjVAjs+GHKWaraGjrCjivsftZV+LrsW4eP1ECN1faTZ+55phcR72K7TmYq2UPVM1ASFoRuBUXaXpZKonRk6buaLCfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQmRbTer; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNLHt5ti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268961F000E9;
-	Wed, 20 May 2026 18:38:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQmRbTer"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB7F1F000E9;
+	Wed, 20 May 2026 18:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302303;
-	bh=7ODuuQriPOAUpHKJQaqoEj/kv8Ra52DHmQP9u9ACXoI=;
+	s=korg; t=1779302306;
+	bh=nvodCYMIKpGqlGXQF90NiNgyqXfctDp0360oASqJoaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yNLHt5tiv9VxgHGCNwVw6dHfvWa8Qs0VXDUCjxwWZVKixtfUyeygu3GmqhhbgKz82
-	 C1N7AufBnjgZGACG6yFUKJIsns9D0JwmjuMSErORbpL2Fon71VDYGnfp9vbjfBHPit
-	 LqUPy8F3ysOBKVqVK+EPnE3/2KtogHmMzS1quoLM=
+	b=SQmRbTeroPc75wz3KGWRG+cnawfWxAbZ3xClwVJ9ntEnCPg75yokP4c8N6ZpohOnJ
+	 25cq6z3Rw5RlT1BOoP/BbOjfyNauhNDRng3fxWffSSKmeOweinEyVthuObsyM/t73Q
+	 os652XIGNnO9F4hkxxOzgL4jyzzp1e7OCkfm95Jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 165/508] PCI: tegra194: Use DWC IP core version
-Date: Wed, 20 May 2026 18:19:48 +0200
-Message-ID: <20260520162102.214443813@linuxfoundation.org>
+Subject: [PATCH 6.6 210/508] ARM: OMAP1: Fix DEBUG_LL and earlyprintk on OMAP16XX
+Date: Wed, 20 May 2026 18:20:33 +0200
+Message-ID: <20260520162103.187986135@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -54,63 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
 
-[ Upstream commit ea60ca067f0f098043610c96a915d162113c1aac ]
+[ Upstream commit 7e74b606dd39c46d4378d6f6563f560a00ab8694 ]
 
-Tegra194 PCIe driver used custom version numbers to detect Tegra194 and
-Tegra234 IPs. With version detect logic added, version check results in
-mismatch warnings:
+On OMAP16XX, the UART enable bit shifts are written instead of the actual
+bits. This breaks the boot when DEBUG_LL and earlyprintk is enabled;
+the UART gets disabled and some random bits get enabled. Fix that.
 
-  tegra194-pcie 14100000.pcie: Versions don't match (0000562a != 3536322a)
-
-Use HW version numbers which match to PORT_LOGIC.PCIE_VERSION_OFF in
-Tegra194 driver to avoid these kernel warnings.
-
-Fixes: a54e19073718 ("PCI: tegra194: Add Tegra234 PCIe support")
-Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
-Link: https://patch.msgid.link/20260324190755.1094879-12-mmaddireddy@nvidia.com
+Fixes: 34c86239b184 ("ARM: OMAP1: clock: Fix early UART rate issues")
+Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
+Link: https://patch.msgid.link/aca7HnXZ-aCSJPW7@darkstar.musicnaut.iki.fi
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.h | 2 ++
- drivers/pci/controller/dwc/pcie-tegra194.c   | 4 ++--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ arch/arm/mach-omap1/clock_data.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index fec9473869bce..1ffa31797a17c 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -31,8 +31,10 @@
- #define DW_PCIE_VER_470A		0x3437302a
- #define DW_PCIE_VER_480A		0x3438302a
- #define DW_PCIE_VER_490A		0x3439302a
-+#define DW_PCIE_VER_500A		0x3530302a
- #define DW_PCIE_VER_520A		0x3532302a
- #define DW_PCIE_VER_540A		0x3534302a
-+#define DW_PCIE_VER_562A		0x3536322a
+diff --git a/arch/arm/mach-omap1/clock_data.c b/arch/arm/mach-omap1/clock_data.c
+index c58d200e4816b..5203b047deac8 100644
+--- a/arch/arm/mach-omap1/clock_data.c
++++ b/arch/arm/mach-omap1/clock_data.c
+@@ -700,8 +700,8 @@ int __init omap1_clk_init(void)
+ 	/* Make sure UART clocks are enabled early */
+ 	if (cpu_is_omap16xx())
+ 		omap_writel(omap_readl(MOD_CONF_CTRL_0) |
+-			    CONF_MOD_UART1_CLK_MODE_R |
+-			    CONF_MOD_UART3_CLK_MODE_R, MOD_CONF_CTRL_0);
++			    (1 << CONF_MOD_UART1_CLK_MODE_R) |
++			    (1 << CONF_MOD_UART3_CLK_MODE_R), MOD_CONF_CTRL_0);
+ #endif
  
- #define __dw_pcie_ver_cmp(_pci, _ver, _op) \
- 	((_pci)->version _op DW_PCIE_VER_ ## _ver)
-diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index cab6cd5b8f3cd..89109e380635c 100644
---- a/drivers/pci/controller/dwc/pcie-tegra194.c
-+++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -37,8 +37,8 @@
- #include <soc/tegra/bpmp-abi.h>
- #include "../../pci.h"
- 
--#define TEGRA194_DWC_IP_VER			0x490A
--#define TEGRA234_DWC_IP_VER			0x562A
-+#define TEGRA194_DWC_IP_VER			DW_PCIE_VER_500A
-+#define TEGRA234_DWC_IP_VER			DW_PCIE_VER_562A
- 
- #define APPL_PINMUX				0x0
- #define APPL_PINMUX_PEX_RST			BIT(0)
+ 	/* USB_REQ_EN will be disabled later if necessary (usb_dc_ck) */
 -- 
 2.53.0
 
