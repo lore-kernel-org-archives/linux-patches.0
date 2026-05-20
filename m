@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E44363C6F;
-	Wed, 20 May 2026 17:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04095363C6F;
+	Wed, 20 May 2026 17:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298773; cv=none; b=E7NZrA9lfUI+Mdhvb0rV/qch3SZwpOBkh7qJuXbE1TiCsWUXey/Wo1OixBlHRdMHeVkTc150t3yf5zcsWwspEWocilRDLEPrHiwpR9kxrP317QYJtCYBLKRwPQrntJTY7LmxiTBqFXDZY2y+hYmIO4mgzKJTmBlEekyyo//lDU4=
+	t=1779298776; cv=none; b=ckdaPvL5qKzNJKpZd3cImOTF28WilzEeIpEiBol7im7KRJq+1QyBtIcC/IeQuPCzKFmoIohjRjydP/EzmReXnR2W/USqH5HIUt7sEalg+y1NNOhrxE07gygZ/5MEHAbGblWJRd1Qi1luSRf7TNvGsJvO4aYHjP7f+bGprhKcgYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298773; c=relaxed/simple;
-	bh=7/EU3byhlzldlWv/O5/XNIYKWYwkYDFk8YHPAAQ/PDc=;
+	s=arc-20240116; t=1779298776; c=relaxed/simple;
+	bh=uXIArvkE/ZLW4+cOeQP6mDbH/f2bWqxovowTe/N0D+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d8qY0NOAQOqqV/XRT8RSbwUEmkV0A13HHKTr0v7aQxN/qwzkWDlr9zFx81fl5DH/PmVB4p1lJ9T2v7oAszas4vZlnCsnMoRvddRGIggeCnagSeljEBVyUShDk6sV5xERqFKSJjO1PJP0PvfHESr727w52T1RDf/iQM+aT4BSgvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zqlPgA74; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bkWtNXw3I0w5eLc1BdcbdqHqxEvZTY+kHRR5Qv1aoxg59wr2oZdtGGVcgItD98i6ySGf4zRo/Id4jd9CWgV93iNuDA6rznK10ztUi8X7gA6VcVjyNRgajf+8poZMWp+kBBVMI54i2uhG92Id4R6NzJJNvTFoccoM+RrQ2ss5F00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3y1RTvQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zqlPgA74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6AC41F000E9;
-	Wed, 20 May 2026 17:39:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3y1RTvQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A16D1F000E9;
+	Wed, 20 May 2026 17:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298772;
-	bh=7nrsZrWkin5ZNt1mcExS5k9qS/9Dn4i8hOz/2XFvAkk=;
+	s=korg; t=1779298774;
+	bh=AxivU0wFHk9LcRdYZzO3i3cG/mh+H61dOhIQm+ZGVFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zqlPgA74WvLat+t5QfiPnbCoO3hrbOc0kBrSGZMyTVBO94szsKZGN4HeI2C8pulzp
-	 Q9lZAaw4rKGzQI9bvxmOu9Ze6Mx+27HYEa54awK/bG4DYMv3BfeJutBsWexQGYVJs+
-	 8DhzPXbZQRsUbEKXx8i7L7Cy1PHMmcm5eSpct/bQ=
+	b=m3y1RTvQpRZk0CwNuqO/e64M1A26s2AIMlviQ56HpfypsxyWLSPkpS7nTxVRW207B
+	 uTBwXkbdS4Q2L3+NB8TA0klKWE8Bj3TPqNqs9kXoONbPE1Qz2BVYIgIREnBkYqkWO8
+	 YQwNKED8o8i8O5/kcsXuH64ZcsOv3zGBia6sR9+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Denis Benato <denis.benato@linux.dev>,
+	Luke Jones <luke@ljones.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 539/957] NFSD: fix nfs4_file access extra count in nfsd4_add_rdaccess_to_wrdeleg
-Date: Wed, 20 May 2026 18:17:02 +0200
-Message-ID: <20260520162146.223438999@linuxfoundation.org>
+Subject: [PATCH 6.18 540/957] platform/x86: asus-wmi: adjust screenpad power/brightness handling
+Date: Wed, 20 May 2026 18:17:03 +0200
+Message-ID: <20260520162146.244633320@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -46,58 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Denis Benato <denis.benato@linux.dev>
 
-[ Upstream commit b48f44f36e6607b2f818560f19deb86b4a9c717b ]
+[ Upstream commit 130d29c5627cd50e786e926ad7ef66322c5a0c09 ]
 
-In nfsd4_add_rdaccess_to_wrdeleg, if fp->fi_fds[O_RDONLY] is already
-set by another thread, __nfs4_file_get_access should not be called
-to increment the nfs4_file access count since that was already done
-by the thread that added READ access to the file. The extra fi_access
-count in nfs4_file can prevent the corresponding nfsd_file from being
-freed.
+Fix illogical screen off control by hardcoding 0 and 1 depending on the
+requested brightness and also do not rely on the last screenpad power
+state to issue screen brightness commands.
 
-When stopping nfs-server service, these extra access counts trigger a
-BUG in kmem_cache_destroy() that shows nfsd_file object remaining on
-__kmem_cache_shutdown.
-
-This problem can be reproduced by running the Git project's test
-suite over NFS.
-
-Fixes: 8072e34e1387 ("nfsd: fix nfsd_file reference leak in nfsd4_add_rdaccess_to_wrdeleg()")
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 2c97d3e55b70 ("platform/x86: asus-wmi: add support for ASUS screenpad")
+Signed-off-by: Denis Benato <denis.benato@linux.dev>
+Signed-off-by: Luke Jones <luke@ljones.dev>
+Link: https://patch.msgid.link/20260302174431.349816-2-denis.benato@linux.dev
+Link: https://patch.msgid.link/20260326231154.856729-2-ethantidmore06@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 34 +++++++++++++--------------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index c5dba49c90356..adc33830438bb 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6255,12 +6255,12 @@ nfsd4_add_rdaccess_to_wrdeleg(struct svc_rqst *rqstp, struct nfsd4_open *open,
- 			return (false);
- 		fp = stp->st_stid.sc_file;
- 		spin_lock(&fp->fi_lock);
--		__nfs4_file_get_access(fp, NFS4_SHARE_ACCESS_READ);
- 		if (!fp->fi_fds[O_RDONLY]) {
-+			__nfs4_file_get_access(fp, NFS4_SHARE_ACCESS_READ);
- 			fp->fi_fds[O_RDONLY] = nf;
-+			fp->fi_rdeleg_file = nfsd_file_get(fp->fi_fds[O_RDONLY]);
- 			nf = NULL;
- 		}
--		fp->fi_rdeleg_file = nfsd_file_get(fp->fi_fds[O_RDONLY]);
- 		spin_unlock(&fp->fi_lock);
- 		if (nf)
- 			nfsd_file_put(nf);
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index 8e3300f5c2943..e6fe6ed6a63da 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -4154,32 +4154,24 @@ static int read_screenpad_brightness(struct backlight_device *bd)
+ 
+ static int update_screenpad_bl_status(struct backlight_device *bd)
+ {
+-	struct asus_wmi *asus = bl_get_data(bd);
+-	int power, err = 0;
+-	u32 ctrl_param;
++	u32 ctrl_param = bd->props.brightness;
++	int err = 0;
+ 
+-	power = read_screenpad_backlight_power(asus);
+-	if (power < 0)
+-		return power;
++	if (bd->props.power) {
++		err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_POWER, 1, NULL);
++		if (err < 0)
++			return err;
+ 
+-	if (bd->props.power != power) {
+-		if (power != BACKLIGHT_POWER_ON) {
+-			/* Only brightness > 0 can power it back on */
+-			ctrl_param = asus->driver->screenpad_brightness - ASUS_SCREENPAD_BRIGHT_MIN;
+-			err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_LIGHT,
+-						    ctrl_param, NULL);
+-		} else {
+-			err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_POWER, 0, NULL);
+-		}
+-	} else if (power == BACKLIGHT_POWER_ON) {
+-		/* Only set brightness if powered on or we get invalid/unsync state */
+-		ctrl_param = bd->props.brightness + ASUS_SCREENPAD_BRIGHT_MIN;
+ 		err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_LIGHT, ctrl_param, NULL);
++		if (err < 0)
++			return err;
+ 	}
+ 
+-	/* Ensure brightness is stored to turn back on with */
+-	if (err == 0)
+-		asus->driver->screenpad_brightness = bd->props.brightness + ASUS_SCREENPAD_BRIGHT_MIN;
++	if (!bd->props.power) {
++		err = asus_wmi_set_devstate(ASUS_WMI_DEVID_SCREENPAD_POWER, 0, NULL);
++		if (err < 0)
++			return err;
++	}
+ 
+ 	return err;
+ }
 -- 
 2.53.0
 
