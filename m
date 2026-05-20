@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DCB3EDAC6;
-	Wed, 20 May 2026 18:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600683F8706;
+	Wed, 20 May 2026 18:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301658; cv=none; b=K4IU+tHzkpZqIx6kUbKl9fB28oGCMVD67ASsOif6ultdMEM3eKq7L4zoYPJ1HFCTsLfQ0mDm9/BoUvTvRy5QTzEHxrazSgBX1esYP2dAXRiRs8pPu6L6Rp1atGWrlnh4GlIPemuAniQuYttwyMzW6erJVDXosi9KmWj3T0q7fv8=
+	t=1779301661; cv=none; b=ri/taKz0BHhnxmK8b2v7GOAGHOMXAiPM+SKqxFRj/sui8hvczrX5HjTWIgr/gO8yGpwIIf52HA4iyyD3vNSDZRWM6hdcU9/eL+yLQF50sjxD+xUdrZm8FMfo48wFMqzJB6KvrB7lWH5ThFCuza9t2QB65U+0f0rqUQZiJur6MHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301658; c=relaxed/simple;
-	bh=aCI5zWD73LaKtLj8+vqpxPUM2cMJesWfHjNy5V+2Z5Y=;
+	s=arc-20240116; t=1779301661; c=relaxed/simple;
+	bh=j5WMzmscTHDfVqTaMJKGnNMyA/fgOeGEkCU19M3Cpj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lj9mkHnR8Ap2IKk9YES5JPGhKTnYnkS2Tby3/UqQnSh5aunCG6k6xQ9t7F2c1ZvXw/swQAN4z9CcMNwQ+3bbY1/+kVAdTCthnORtjOx2UtPCzxrXepLnNZTMQ462mzsEkeq+SAPFQBRgsW2Qsjc9GRStNa1tuTQCHIvhFjenGm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sj1+a0Er; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AoWG/BQGt6W0uLTSFAw6uspKgiHdOnY5HB6IiKv0GcJQRV15Grvmd84VgkGONnNTtVnpiZvbRup/QCBb4MeMLaLLkROPbrdsxbhpHPoqxcpZkNMix23YGf4mdm9Asvs59L1AxeqZRjBxUxWWm5sSfyxUAoDiJAeeJA2QRKur/yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soZuZARC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sj1+a0Er"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5A61F00894;
-	Wed, 20 May 2026 18:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soZuZARC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821711F000E9;
+	Wed, 20 May 2026 18:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301657;
-	bh=dFL0yo5BQ02dPnV2YYxU/hgL+9SBu67mYLXlscDLP78=;
+	s=korg; t=1779301660;
+	bh=JQMySFDA3z6+uZAIiAbqb/ZfNO02P/iEAQhaGE5sDek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sj1+a0ErIXBqKtnRYsARZThZoMJwDUMmKowyjBF+GZbNFrh9zmkgBFOK9kI0pmUg+
-	 oCxmjuz8je5UsDDb2UIi0wAtU3NGPb79PVZXcB3Gf4em9Fbv5z4KIK2+gnbGGvrUHc
-	 8WqkgrTq5JbHCZiSlaXGdvP2QWf232+vzuAAitdU=
+	b=soZuZARCgpYk0aHS10r4ysc+igC9DuwjdRiPX24DyqTyKAyhfvdC6fon6lKNYt7Nz
+	 SgYECSBO0B3rx20eb8YXXUuARs5tqcxp4iLPoxa0H01klZasFgsNSF6XczLzPB8ft8
+	 l8iJnBp1Zxhq249gJ3OEB+22kvFBJh63OSuDLd5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Matt Vollrath <tactii@gmail.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Sunitha Mekala <sunithax.d.mekala@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 611/666] i40e: Cleanup PTP pins on probe failure
-Date: Wed, 20 May 2026 18:23:42 +0200
-Message-ID: <20260520162124.514908913@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.12 638/666] libceph: Fix potential out-of-bounds access in crush_decode()
+Date: Wed, 20 May 2026 18:24:09 +0200
+Message-ID: <20260520162125.104652558@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -55,73 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Vollrath <tactii@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 678b713ece1e853f11e670a84cb887c35e1381b7 upstream.
+commit 4c79fc2d598694bda845b46229c9d48b65042970 upstream.
 
-PTP pin structs are allocated early in probe, but never cleaned up.
+A message of type CEPH_MSG_OSD_MAP containing a crush map with at least
+one bucket has two fields holding the bucket algorithm. If the values
+in these two fields differ, an out-of-bounds access can occur. This is
+the case because the first algorithm field (alg) is used to allocate
+the correct amount of memory for a bucket of this type, while the second
+algorithm field inside the bucket (b->alg) is used in the subsequent
+processing.
 
-Fix this by calling i40e_ptp_free_pins in the error path.
+This patch fixes the issue by adding a check that compares alg and
+b->alg and aborts the processing in case they differ. Furthermore,
+b->alg is set to 0 in this case, because the destruction of the crush
+map also uses this field to determine the bucket type, which can again
+result in an out-of-bounds access when trying to free the memory pointed
+to by the fields of the bucket. To correctly free the memory allocated
+for the bucket in such a case, the corresponding call to kfree is moved
+from the algorithm-specific crush_destroy_bucket functions to the
+generic crush_destroy_bucket().
 
-To support this, i40e_ptp_free_pins is added to the header and
-pin_config is correctly nullified after being freed.
-
-This has been an issue since i40e_ptp_alloc_pins was introduced.
-
-Fixes: 1050713026a08 ("i40e: add support for PTP external synchronization clock")
-Reported-by: Kohei Enju <kohei@enjuk.jp>
 Cc: stable@vger.kernel.org
-Signed-off-by: Matt Vollrath <tactii@gmail.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Kohei Enju <kohei@enjuk.jp>
-Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260506-jk-iwl-net-2026-05-04-v2-2-a5ea4dc837a9@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e.h      |    1 +
- drivers/net/ethernet/intel/i40e/i40e_main.c |    1 +
- drivers/net/ethernet/intel/i40e/i40e_ptp.c  |    3 ++-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ net/ceph/crush/crush.c |    6 +-----
+ net/ceph/osdmap.c      |    4 ++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -1310,6 +1310,7 @@ void i40e_ptp_restore_hw_time(struct i40
- void i40e_ptp_init(struct i40e_pf *pf);
- void i40e_ptp_stop(struct i40e_pf *pf);
- int i40e_ptp_alloc_pins(struct i40e_pf *pf);
-+void i40e_ptp_free_pins(struct i40e_pf *pf);
- int i40e_update_adq_vsi_queues(struct i40e_vsi *vsi, int vsi_offset);
- int i40e_is_vsi_uplink_mode_veb(struct i40e_vsi *vsi);
- int i40e_get_partition_bw_setting(struct i40e_pf *pf);
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -16226,6 +16226,7 @@ err_vsis:
- 	i40e_clear_interrupt_scheme(pf);
- 	kfree(pf->vsi);
- err_switch_setup:
-+	i40e_ptp_free_pins(pf);
- 	i40e_reset_interrupt_capability(pf);
- 	timer_shutdown_sync(&pf->service_timer);
- err_mac_addr:
---- a/drivers/net/ethernet/intel/i40e/i40e_ptp.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_ptp.c
-@@ -937,12 +937,13 @@ int i40e_ptp_get_ts_config(struct i40e_p
-  *
-  * Release memory allocated for PTP pins.
-  **/
--static void i40e_ptp_free_pins(struct i40e_pf *pf)
-+void i40e_ptp_free_pins(struct i40e_pf *pf)
+--- a/net/ceph/crush/crush.c
++++ b/net/ceph/crush/crush.c
+@@ -47,7 +47,6 @@ int crush_get_bucket_item_weight(const s
+ void crush_destroy_bucket_uniform(struct crush_bucket_uniform *b)
  {
- 	if (i40e_is_ptp_pin_dev(&pf->hw)) {
- 		kfree(pf->ptp_pins);
- 		kfree(pf->ptp_caps.pin_config);
- 		pf->ptp_pins = NULL;
-+		pf->ptp_caps.pin_config = NULL;
- 	}
+ 	kfree(b->h.items);
+-	kfree(b);
  }
  
+ void crush_destroy_bucket_list(struct crush_bucket_list *b)
+@@ -55,14 +54,12 @@ void crush_destroy_bucket_list(struct cr
+ 	kfree(b->item_weights);
+ 	kfree(b->sum_weights);
+ 	kfree(b->h.items);
+-	kfree(b);
+ }
+ 
+ void crush_destroy_bucket_tree(struct crush_bucket_tree *b)
+ {
+ 	kfree(b->h.items);
+ 	kfree(b->node_weights);
+-	kfree(b);
+ }
+ 
+ void crush_destroy_bucket_straw(struct crush_bucket_straw *b)
+@@ -70,14 +67,12 @@ void crush_destroy_bucket_straw(struct c
+ 	kfree(b->straws);
+ 	kfree(b->item_weights);
+ 	kfree(b->h.items);
+-	kfree(b);
+ }
+ 
+ void crush_destroy_bucket_straw2(struct crush_bucket_straw2 *b)
+ {
+ 	kfree(b->item_weights);
+ 	kfree(b->h.items);
+-	kfree(b);
+ }
+ 
+ void crush_destroy_bucket(struct crush_bucket *b)
+@@ -99,6 +94,7 @@ void crush_destroy_bucket(struct crush_b
+ 		crush_destroy_bucket_straw2((struct crush_bucket_straw2 *)b);
+ 		break;
+ 	}
++	kfree(b);
+ }
+ 
+ /**
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -518,6 +518,10 @@ static struct crush_map *crush_decode(vo
+ 		b->id = ceph_decode_32(p);
+ 		b->type = ceph_decode_16(p);
+ 		b->alg = ceph_decode_8(p);
++		if (b->alg != alg) {
++			b->alg = 0;
++			goto bad;
++		}
+ 		b->hash = ceph_decode_8(p);
+ 		b->weight = ceph_decode_32(p);
+ 		b->size = ceph_decode_32(p);
 
 
