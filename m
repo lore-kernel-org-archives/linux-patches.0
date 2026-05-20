@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A984E35DA78;
-	Wed, 20 May 2026 17:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B225331220;
+	Wed, 20 May 2026 17:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298179; cv=none; b=D4h7Eb6oahKypj3+apb2Rb4V59UIGfBJ9wbtar9FgfqodRwTxGapBix5bwU96lzByQBdfWQlD6NryqR3C4363V3sGlr29OqaOr+Fd5+mMUibCZMsBGUatjS3DYp3WLvx6wqqQDyXioyDwoThZ4PXJb3W23cO4mnejlOB5/TZ7qA=
+	t=1779298182; cv=none; b=tHcUcU8cW0Uu7OjABXuR53rKRlH73pYElCjSBUopFPKx0FZ+rHGIsFoFaVLopf3d6nMxWJk2DiPSiCqzf0dcub1I+bCkdF8pLRhGZNPsZwsj5JILLATxWzC3UxY2r8aI1w8F4OG8lVENsdiBE/DK9513GfIt1R9AHAwDNausDVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298179; c=relaxed/simple;
-	bh=UMh4O8ErTUR2G9UA1VC8zTEhk1n13tLiGou+0TnIx1g=;
+	s=arc-20240116; t=1779298182; c=relaxed/simple;
+	bh=h8cjxhjkZvU1BSBs/UL4hAQ874T1GucsdepRAoMuPuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U+2aGFOgCeuZozCr2+lEIYbMPZSBTcDkrJuHEdRdx/NdYEVgevnZuknCaK7YXWNTY4i6nV3bVuxwrYfETegfUb6sTr2W1KhyX3FMBurth2017eTWazAQY5ce+uFkIv5010TcvVVBJoJYi2RXqa5RnTqBR5oQ83edPNAevc91Pzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5Sahxfa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b1dsCEBUeQiLYltN7zpV6+7QIx7AAUQUCnU8+08Uh9J2Cvo76Y9/7Nt91MRXQPwUEl9Tx0Geh3/JQolaJn01MbPTf2freAbPk2a78Of5H6p2XGkRO+hcUTbTsJdoLf9G7jXG/vilDtGfXiZl4yt2Ea8X4mpzBvSKBHRrxvk5/i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvEIBkMg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5Sahxfa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92AB1F000E9;
-	Wed, 20 May 2026 17:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvEIBkMg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4CF1F000E9;
+	Wed, 20 May 2026 17:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298178;
-	bh=kxQ4gGsC1qpRu8XnCo2J+eQ5yXn6oFkYV4/zHwx8MMk=;
+	s=korg; t=1779298181;
+	bh=13mF9auGYGilW/s0h2Pq1vlEkww82tw97TnRNw1KEHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y5SahxfalY2g2ZNAgkTi1GTAnsKJZVOnUziBOODtS7ecZ5ibUUUhBQSOJ9wavxSGY
-	 O5U9YNk6heB8GkPtjSY0KYNT5/iyGPhGPpaVIVL3sjp1bBw1TvAxCHHURYUfTncu+L
-	 pqUHHCbVYC9ujuq8DxMNOFTYtY4/qP7jf3naz36A=
+	b=UvEIBkMgZliEHvMEWtEMf3oZ7o0DqJDEFGotmaaz0pLCgDN7LErGSsG4Pl/z4gb0/
+	 GX9TWyeHuR4T5EEwRDscZhTTb05Og++Ei82wz0ZUd2UFJhEwSVD8zALFcxIhjCUZni
+	 DN5eeXrEKWlU2mvca+brLHD/gqquAmcfLaQLv9Yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 260/957] drm/amd/pm/ci: Use highest MCLK on CI when MCLK DPM is disabled
-Date: Wed, 20 May 2026 18:12:23 +0200
-Message-ID: <20260520162140.183593262@linuxfoundation.org>
+Subject: [PATCH 6.18 306/957] PCI: mediatek-gen3: Prevent leaking IRQ domains when IRQ not found
+Date: Wed, 20 May 2026 18:13:09 +0200
+Message-ID: <20260520162141.167543470@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -45,49 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 894f0d34d66cb47fe718fe2ae5c18729d22c5218 ]
+[ Upstream commit 5573c44cb3fd01a9f62d569ae9ac870ef5f0e0ba ]
 
-When MCLK DPM is disabled for any reason, populate the MCLK
-table with the highest MCLK DPM level, so that the ASIC can
-use the highest possible memory clock to get good performance
-even when MCLK DPM is disabled.
+In mtk_pcie_setup_irq(), the IRQ domains are allocated before the
+controller's IRQ is fetched. If the latter fails, the function
+directly returns an error, without cleaning up the allocated domains.
 
-Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Hence, reverse the order so that the IRQ domains are allocated after the
+controller's IRQ is found.
+
+This was flagged by Sashiko during a review of "[PATCH v6 0/7] PCI:
+mediatek-gen3: add power control support".
+
+Fixes: 814cceebba9b ("PCI: mediatek-gen3: Add INTx support")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260324052002.4072430-1-wenst%40chromium.org
+Link: https://patch.msgid.link/20260324093542.18523-1-wenst@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/pci/controller/pcie-mediatek-gen3.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-index 0cb7eaaba3844..71b1dad34926e 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/ci_smumgr.c
-@@ -1322,6 +1322,14 @@ static int ci_populate_all_memory_levels(struct pp_hwmgr *hwmgr)
- 			return result;
- 	}
+diff --git a/drivers/pci/controller/pcie-mediatek-gen3.c b/drivers/pci/controller/pcie-mediatek-gen3.c
+index 75ddb8bee168f..e45c43ccc84c2 100644
+--- a/drivers/pci/controller/pcie-mediatek-gen3.c
++++ b/drivers/pci/controller/pcie-mediatek-gen3.c
+@@ -851,14 +851,14 @@ static int mtk_pcie_setup_irq(struct mtk_gen3_pcie *pcie)
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	int err;
  
-+	if (data->mclk_dpm_key_disabled && dpm_table->mclk_table.count) {
-+		/* Populate the table with the highest MCLK level when MCLK DPM is disabled */
-+		for (i = 0; i < dpm_table->mclk_table.count - 1; i++) {
-+			levels[i] = levels[dpm_table->mclk_table.count - 1];
-+			levels[i].DisplayWatermark = PPSMC_DISPLAY_WATERMARK_HIGH;
-+		}
-+	}
+-	err = mtk_pcie_init_irq_domains(pcie);
+-	if (err)
+-		return err;
+-
+ 	pcie->irq = platform_get_irq(pdev, 0);
+ 	if (pcie->irq < 0)
+ 		return pcie->irq;
+ 
++	err = mtk_pcie_init_irq_domains(pcie);
++	if (err)
++		return err;
 +
- 	smu_data->smc_state_table.MemoryLevel[0].EnabledForActivity = 1;
+ 	irq_set_chained_handler_and_data(pcie->irq, mtk_pcie_irq_handler, pcie);
  
- 	dev_id = adev->pdev->device;
+ 	return 0;
 -- 
 2.53.0
 
