@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5803FC5D7;
-	Wed, 20 May 2026 18:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980E53FE35F;
+	Wed, 20 May 2026 18:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301403; cv=none; b=ByCMwcyj7z9VgpwUEK+vpY3UhqY+OVlN3RVyyUBt0YNXvbZjcv2WB/kvH2oG74ZtVPmgnPTOkvDP+EiD3P510YwlQhSW27CREFBeuKITWbVYWux5o2HfbIxVE92T8MP/IYSAJH1IiYeEFoxrLAFeefKEM8eEH1jDA3bLxw+a/GA=
+	t=1779301406; cv=none; b=YV1CGEXx3o0uaU0NDrPPkiTbtVSbVm6x2HvjZglnCAoWnFmOTVk4E/A74Hz7GRErixn9t7jZpemK0AmEs8+Vji3V7w67d+KO4WdyGis7bqYZofEfe0EPioQQlnd89qSiq7riXEegcTR8lPDoTnx9ltBED6/E/0twvX089aTirbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301403; c=relaxed/simple;
-	bh=qhwztNuY5HBjdP3vVuSl/aZ5MNvuCIPAhzEefmDGLyc=;
+	s=arc-20240116; t=1779301406; c=relaxed/simple;
+	bh=thgKPePakzIY5l7K8QF0UJQ7qB8IBs+Qm11LTN6vbbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaRz9st74BK8R7QGdtfktPcam6ivwSTO2sDaV8KIt84kwhiYBo1RjRmxJSHibv/a7DoMsVJsdl7FZwK5aoAZ3KwpimmNWOmacGYo//9CPXoAnwbzbq+1qUr9ziB5hyxJJFjc+K/iK6uqN5t7l12mW2sN05gIU/WexfLrqePt1nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RC2I+YVK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PfareasSoad50xcQfxm2DSlxshIlel/DiYBHpr4GKkpvK3AiTbXajihuuDFzgMk+GrNcFfSuVmfL/D7O2wU+kp19SJbCwt+c/MxiOLtXletnIccV+cYFu/dQlYJm/ql5G06pYAibPZaLKFL2O2MPFsejH2qJbby2osWL4BKpdDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1C0I+10q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RC2I+YVK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509391F000E9;
-	Wed, 20 May 2026 18:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1C0I+10q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6811F00894;
+	Wed, 20 May 2026 18:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301401;
-	bh=X+qgHlZiIbSES2KC6ga6psb1T5OFUsoU/YdppB8OZ/k=;
+	s=korg; t=1779301404;
+	bh=lMm4jqabV16UWf4wYCpjWNfL2fzqRxL5tUiEDYcRNgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RC2I+YVKUmfDMi4GgA0t3LRgfbHj/+kGvVfxpHeBbfKrepcs9N5POxaZXT/hgryc8
-	 JZWhJOmNqfGPkMyeq5SZ7E2/Xmq18ML9hnrsNjRz1KNEUf3Phx2gKuix4xl0jtbzlG
-	 iATkz8PtpLOCnEmaL4iHEDDzhlaiKbWUyT9/HXWo=
+	b=1C0I+10qPF3ozNU0kfRH995d5ArNa7XcQ1jAJ/OO6RoV3Z4c12MKyGQmc+ku1vdwN
+	 d4NuNVVa0lw9m5HFNDoantbB2qk+VViL7PkKFhftO6xYuxIetffYKaSe2H++59dH1e
+	 bBdBaSOmGJlQnJNBt6AXspH7YGY4wSFbjvVRBEvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Morduan Zang <zhangdandan@uniontech.com>,
+	Paul Geurts <paul.geurts@prodrive-technologies.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Mark Greer <mgreer@animalcreek.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 541/666] net: usb: rtl8150: free skb on usb_submit_urb() failure in xmit
-Date: Wed, 20 May 2026 18:22:32 +0200
-Message-ID: <20260520162122.996667558@linuxfoundation.org>
+Subject: [PATCH 6.12 542/666] NFC: trf7970a: Ignore antenna noise when checking for RF field
+Date: Wed, 20 May 2026 18:22:33 +0200
+Message-ID: <20260520162123.018904855@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,59 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Morduan Zang <zhangdandan@uniontech.com>
+From: Paul Geurts <paul.geurts@prodrive-technologies.com>
 
-[ Upstream commit adbe2cdf75461891e50dbe11896ac78e9af1f874 ]
+[ Upstream commit a9bc28aa4e64320668131349436a650bf42591a5 ]
 
-When rtl8150_start_xmit() fails to submit the tx URB, the URB is never
-handed to the USB core and write_bulk_callback() will not run.  The
-driver returns NETDEV_TX_OK, which tells the networking stack that the
-skb has been consumed, but nothing actually frees the skb on this
-error path:
+The main channel Received Signal Strength Indicator (RSSI) measurement
+is used to determine whether an RF field is present or not. RSSI != 0
+is interpreted as an RF Field is present. This does not take RF noise
+and measurement inaccuracy into account, and results in false positives
+in the field.
 
-  dev->tx_skb = skb;
-  ...
-  if ((res = usb_submit_urb(dev->tx_urb, GFP_ATOMIC))) {
-          ...
-          /* no kfree_skb here */
-  }
-  return NETDEV_TX_OK;
+Define a noise level and make sure the RF field is only interpreted as
+present when the RSSI is above the noise level.
 
-This leaks the skb on every submit failure and also leaves dev->tx_skb
-pointing at memory that the driver itself may later free, which is
-fragile.
-
-Free the skb with dev_kfree_skb_any() in the error path and clear
-dev->tx_skb so no stale pointer is left behind.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Morduan Zang <zhangdandan@uniontech.com>
-Link: https://patch.msgid.link/E7D3E1C013C5A859+20260424015517.9574-1-zhangdandan@uniontech.com
+Fixes: 851ee3cbf850 ("NFC: trf7970a: Don't turn on RF if there is already an RF field")
+Signed-off-by: Paul Geurts <paul.geurts@prodrive-technologies.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Mark Greer <mgreer@animalcreek.com>
+Link: https://patch.msgid.link/20260422100930.581237-1-paul.geurts@prodrive-technologies.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/nfc/trf7970a.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/rtl8150.c b/drivers/net/usb/rtl8150.c
-index 8700ae392b10a..647f28b367b99 100644
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -712,6 +712,13 @@ static netdev_tx_t rtl8150_start_xmit(struct sk_buff *skb,
- 			netdev->stats.tx_errors++;
- 			netif_start_queue(netdev);
- 		}
-+		/*
-+		 * The URB was not submitted, so write_bulk_callback() will
-+		 * never run to free dev->tx_skb.  Drop the skb here and
-+		 * clear tx_skb to avoid leaving a stale pointer.
-+		 */
-+		dev->tx_skb = NULL;
-+		dev_kfree_skb_any(skb);
- 	} else {
- 		netdev->stats.tx_packets++;
- 		netdev->stats.tx_bytes += skb_len;
+diff --git a/drivers/nfc/trf7970a.c b/drivers/nfc/trf7970a.c
+index 9e1a34e23af26..6b8311f526a5e 100644
+--- a/drivers/nfc/trf7970a.c
++++ b/drivers/nfc/trf7970a.c
+@@ -311,6 +311,7 @@
+ #define TRF7970A_RSSI_OSC_STATUS_RSSI_MASK	(BIT(2) | BIT(1) | BIT(0))
+ #define TRF7970A_RSSI_OSC_STATUS_RSSI_X_MASK	(BIT(5) | BIT(4) | BIT(3))
+ #define TRF7970A_RSSI_OSC_STATUS_RSSI_OSC_OK	BIT(6)
++#define TRF7970A_RSSI_OSC_STATUS_RSSI_NOISE_LEVEL	1
+ 
+ #define TRF7970A_SPECIAL_FCN_REG1_COL_7_6		BIT(0)
+ #define TRF7970A_SPECIAL_FCN_REG1_14_ANTICOLL		BIT(1)
+@@ -1253,7 +1254,7 @@ static int trf7970a_is_rf_field(struct trf7970a *trf, bool *is_rf_field)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (rssi & TRF7970A_RSSI_OSC_STATUS_RSSI_MASK)
++	if ((rssi & TRF7970A_RSSI_OSC_STATUS_RSSI_MASK) > TRF7970A_RSSI_OSC_STATUS_RSSI_NOISE_LEVEL)
+ 		*is_rf_field = true;
+ 	else
+ 		*is_rf_field = false;
 -- 
 2.53.0
 
