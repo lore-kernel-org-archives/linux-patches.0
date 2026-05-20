@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B2C39B975;
-	Wed, 20 May 2026 17:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21D436F421;
+	Wed, 20 May 2026 17:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298082; cv=none; b=LQcAP8pVG4PHg/L99Zj5XWBu5kxmZr3qA+Jik5Sa33QCcczoiYcbqa9zEFXWlKbH2g19za+MojAx3zkwuVp4tIzR2MrVOiqa4iBd7XDbIUITiy6jFOQvYanx/uMRNOAn6OfiJS+/na5FYtB0ZIpvWNGklZwmBfX10XNDDojfIZQ=
+	t=1779298084; cv=none; b=JvOfy0kbDZ+brjs7ykPKmf3s8ymnWQPCH0Hz7m6x1Q3OogI1xQv1HAHlVcYHFHhCHWhPaGpmvcKjvKR8ZhCwlXC3rlTCaWwosZRRoswZtTF7ouN5RypvyC2lzej/0LcM4MjWpDHxC8yKLk5LaKBEsMcu4OC/1NSflGvRYdBo3N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298082; c=relaxed/simple;
-	bh=7Hem0lp9bGdk82r2MoqPU9HPfgmGa7XQoTR0xHFgFpo=;
+	s=arc-20240116; t=1779298084; c=relaxed/simple;
+	bh=iprGWmikaskYaMb8TuyOpPsjWQ6DAN9Y2jLMIj9L3zY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWKQOwwmh3rvnTPoFAVco7H0+kdVmCgJbEZSUXZltWm6daG0TnzwixR1aqiDxhL8jNK6TyfaD4R1O0vCMJivBv523E2yYxGu52U/N8+lDUt3vLJzllWv6DBE/DccJRJgwRnQJJ8QbvtO9NagvDSNPz7Fb1FZeAXWWDHOxUyYyvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwL6JgTj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Un/ExnwtvQkueOGH7P5AgAvKaihBOXQ0Yg4bYPbl2RsCgL3sGQ08vxxf7UJC/hW2rrjjRjk6YdZDJHSkliql9SzPrORDNzBfqiAXb3vvbkkHhEIUftdmMszemdi7jGa9TbetqU7aMvrPvds50lTNu5xPdGxAzQV1FxM58L6G2fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmKWWRlA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwL6JgTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F6E1F00893;
-	Wed, 20 May 2026 17:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmKWWRlA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237B31F000E9;
+	Wed, 20 May 2026 17:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298081;
-	bh=7Uo5I+itP9A68KcHtDULO5MBCa3oEn6O6YfxSH6vDm8=;
+	s=korg; t=1779298083;
+	bh=Fn5eEvRDpwybXxBcVMLN05AxApCQXy96EgrbzQ5M1Y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BwL6JgTjrqxi4IEGJG9gLXdixDsZ6dtJzZwqDyKhflmQ+JgJRv5/pXiCP0Eah6x3P
-	 hLd7ryDxQ46QGPsVdmfxJksWqDOpOCJv4lTZbGIJ22KXaF/NgxvvxUK0YMcTv5b6uS
-	 yF/7+muA5aOr5e3OJO6G8jFb/TI0eBWRSZ2uleo8=
+	b=UmKWWRlASmnkdzMp56bW4AcQWdqDZtKDnshYs6DyytlyGMrE5f4INJc1UUcCqpPZ7
+	 VdfwKQrhsFWHMJQlfREsbIob8TJGTuXuCiB2fGK+4lsfwqlqTWEMWxjC9p8Vtj5huh
+	 AqA0egcb5ItLTj1ExZNwMAtOXlfU7qjNgXCcyYYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
+	Connor Abbott <cwabbott0@gmail.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 276/957] drm/msm/shrinker: Fix can_block() logic
-Date: Wed, 20 May 2026 18:12:39 +0200
-Message-ID: <20260520162140.527573125@linuxfoundation.org>
+Subject: [PATCH 6.18 277/957] drm/msm/a6xx: Fix dumping A650+ debugbus blocks
+Date: Wed, 20 May 2026 18:12:40 +0200
+Message-ID: <20260520162140.548647486@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,42 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robin.clark@oss.qualcomm.com>
+From: Connor Abbott <cwabbott0@gmail.com>
 
-[ Upstream commit df0f439e3926817cf577ca6272aad68468ff7624 ]
+[ Upstream commit cc83f71c9be0715fe93b963ffa9767d5d84354ed ]
 
-The intention here was to allow blocking if DIRECT_RECLAIM or if called
-from kswapd and KSWAPD_RECLAIM is set.
+These should be appended after the existing debugbus blocks, instead of
+replacing them.
 
-Reported by Claude code review: https://lore.gitlab.freedesktop.org/drm-ai-reviews/review-patch9-20260309151119.290217-10-boris.brezillon@collabora.com/ on a panthor patch which had copied similar logic.
-
-Reported-by: Boris Brezillon <boris.brezillon@collabora.com>
-Fixes: 7860d720a84c ("drm/msm: Fix build break with recent mm tree")
+Fixes: 1e05bba5e2b8 ("drm/msm/a6xx: Update a6xx gpu coredump")
+Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/714270/
+Message-ID: <20260325-drm-msm-a650-debugbus-v1-1-dfbf358890a7@gmail.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Patchwork: https://patchwork.freedesktop.org/patch/714238/
-Message-ID: <20260325184106.1259528-1-robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 1039e3c0a47bf..31fa51a44f86e 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -26,9 +26,8 @@ static bool can_swap(void)
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index def021ba19299..918d2e504adec 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -361,7 +361,7 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
+ 			sizeof(*a6xx_state->debugbus));
  
- static bool can_block(struct shrink_control *sc)
- {
--	if (!(sc->gfp_mask & __GFP_DIRECT_RECLAIM))
--		return false;
--	return current_is_kswapd() || (sc->gfp_mask & __GFP_RECLAIM);
-+	return (sc->gfp_mask & __GFP_DIRECT_RECLAIM) ||
-+	       (current_is_kswapd() && (sc->gfp_mask & __GFP_KSWAPD_RECLAIM));
+ 	if (a6xx_state->debugbus) {
+-		int i;
++		int i, j;
+ 
+ 		for (i = 0; i < ARRAY_SIZE(a6xx_debugbus_blocks); i++)
+ 			a6xx_get_debugbus_block(gpu,
+@@ -369,8 +369,6 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
+ 				&a6xx_debugbus_blocks[i],
+ 				&a6xx_state->debugbus[i]);
+ 
+-		a6xx_state->nr_debugbus = ARRAY_SIZE(a6xx_debugbus_blocks);
+-
+ 		/*
+ 		 * GBIF has same debugbus as of other GPU blocks, fall back to
+ 		 * default path if GPU uses GBIF, also GBIF uses exactly same
+@@ -381,17 +379,19 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
+ 				&a6xx_gbif_debugbus_block,
+ 				&a6xx_state->debugbus[i]);
+ 
+-			a6xx_state->nr_debugbus += 1;
++			i++;
+ 		}
+ 
+ 
+ 		if (adreno_is_a650_family(to_adreno_gpu(gpu))) {
+-			for (i = 0; i < ARRAY_SIZE(a650_debugbus_blocks); i++)
++			for (j = 0; j < ARRAY_SIZE(a650_debugbus_blocks); i++, j++)
+ 				a6xx_get_debugbus_block(gpu,
+ 					a6xx_state,
+-					&a650_debugbus_blocks[i],
++					&a650_debugbus_blocks[j],
+ 					&a6xx_state->debugbus[i]);
+ 		}
++
++		a6xx_state->nr_debugbus = i;
+ 	}
  }
  
- static unsigned long
 -- 
 2.53.0
 
