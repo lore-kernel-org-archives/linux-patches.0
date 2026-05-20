@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C272346E55;
-	Wed, 20 May 2026 18:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D0D3F660B;
+	Wed, 20 May 2026 18:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302748; cv=none; b=ltH2i94zIsEO/quIHYXgDAQs1CLGbu1rCyhnIM+52BtRpmonLwNBSHAXs7JqFQdaaOJCqpD0zmClMeHfog6YlAdPZXp/BmrB8YuO3bvGQc2RXUYW3I9GTfafyzyLgavBvGOZ4SJQaG9/F0bbUMP7T9HcHfCOa0R0HYJqCOCbO4U=
+	t=1779302750; cv=none; b=fQpNrqegsKd4EATGgd8DhowXTGGES7vj+iWNListthRcVplA7ohiTvPM6mCG9tc1+FYlr4adClK5aaf3ZYmIJxQylT5K8Zo7wEmS5CKtqzNHXYLtiyQgjvST+6lki/3Gzn7ur8XSybG/fcs8/nTjzMFYInUvxsBP5HZOWcDGTiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302748; c=relaxed/simple;
-	bh=pFk4/gpOZ2m28JWUDbl84QgpRUH/O0FFacnTIZ2dedg=;
+	s=arc-20240116; t=1779302750; c=relaxed/simple;
+	bh=iCV1Pwba3lLQq2qS4f7Ispyn99KFMrL0rxg3LjFFVTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAqq2bq+FopwglL6NPSMqH9kImBmhyuG3xEC7uQRrrli/qR//RcazZ8Ns+Yx44s8tLt9ywBgvg2vHCCrUt3GKqpvsbtl379xA43Pfj2XxvGbU9tDKj6iav7to967kl1t2aimxk3GxR/IWra4feGtBJo4bW3JSQpG9lHGrEET7yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVHU+LXW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O5d3dOCYmi1gH4/tDfRRj4iA7ZCy0qcuyIyVe3a5IjLsEpTquk11K9ZfMa3cp7RXjHUhcdoAECSdNvKOsedKDlgyBSqN6y11m0ePzFTBTgwKcyCOdy1g86uAGXmlGdc/IiVrw0HHmSxCgEl5jnt7G1pMUZ4TAZJ82PnkZRwgn/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPJ+xlNh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVHU+LXW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA611F00894;
-	Wed, 20 May 2026 18:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPJ+xlNh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435541F000E9;
+	Wed, 20 May 2026 18:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302746;
-	bh=UYbZWaqnmASuPk6OZwPGMbET9wI2bPX5njziW9SNvVY=;
+	s=korg; t=1779302748;
+	bh=KQ2NX+2/Ty7mRUOTyuIpitjjagJ21E45Rvcu5ihrfnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nVHU+LXWaIHu+maRNJP1Hsav8Z/QQvzMT9VdKSk7PEI675Nao4hqAmbE8Hx4PNTVu
-	 mhceiU3TTv1+vzhk2dL06aHXJLESBa93smnTOXmmayNq+ytmkwxUHaeWYP2D2ELo5w
-	 wHWyDiOCkK/cTIHwUzDY8oHcD1ck4HohkUrxiG/g=
+	b=KPJ+xlNheKU/LV6XARVO8edAKwgbztKVA4Q4p4NbVImYHcGKAZfGkl3vQKYzNZa2i
+	 ebrWB3l9dCxXTIAv6VI410NuJUtqURasNaN6KoJzlPKJMpYCIgHAKtL4bgYtl5BGnQ
+	 n08IWocdyDEdEapGKd99egxK0NgQCxqxdzusVHfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 347/508] net/sched: sch_pie: annotate data-races in pie_dump_stats()
-Date: Wed, 20 May 2026 18:22:50 +0200
-Message-ID: <20260520162106.151765229@linuxfoundation.org>
+Subject: [PATCH 6.6 383/508] net/sched: netem: only reseed PRNG when seed is explicitly provided
+Date: Wed, 20 May 2026 18:23:26 +0200
+Message-ID: <20260520162106.920006301@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,158 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit 5154561d9b119f781249f8e845fecf059b38b483 ]
+[ Upstream commit 986afaf809940577224a99c3a08d97a15eb37e93 ]
 
-pie_dump_stats() only runs with RTNL held,
-reading fields that can be changed in qdisc fast path.
+netem_change() unconditionally reseeds the PRNG on every tc change
+command. If TCA_NETEM_PRNG_SEED is not specified, a new random seed
+is generated, destroying reproducibility for users who set a
+deterministic seed on a previous change.
 
-Add READ_ONCE()/WRITE_ONCE() annotations.
+Move the initial random seed generation to netem_init() and only
+reseed in netem_change() when TCA_NETEM_PRNG_SEED is explicitly
+provided by the user.
 
-Alternative would be to acquire the qdisc spinlock, but our long-term
-goal is to make qdisc dump operations lockless as much as we can.
-
-tc_pie_xstats fields don't need to be latched atomically,
-otherwise this bug would have been caught earlier.
-
-Fixes: edb09eb17ed8 ("net: sched: do not acquire qdisc spinlock in qdisc/class stats dump")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260421142944.4009941-1-edumazet@google.com
+Fixes: 4072d97ddc44 ("netem: add prng attribute to netem_sched_data")
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260418032027.900913-4-stephen@networkplumber.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pie.h   |  2 +-
- net/sched/sch_pie.c | 38 +++++++++++++++++++-------------------
- 2 files changed, 20 insertions(+), 20 deletions(-)
+ net/sched/sch_netem.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/pie.h b/include/net/pie.h
-index 01cbc66825a40..1f3db0c355149 100644
---- a/include/net/pie.h
-+++ b/include/net/pie.h
-@@ -104,7 +104,7 @@ static inline void pie_vars_init(struct pie_vars *vars)
- 	vars->dq_tstamp = DTIME_INVALID;
- 	vars->accu_prob = 0;
- 	vars->dq_count = DQCOUNT_INVALID;
--	vars->avg_dq_rate = 0;
-+	WRITE_ONCE(vars->avg_dq_rate, 0);
- }
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index b3af6a50b43be..e778eb1d1a510 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -1110,11 +1110,10 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	/* capping jitter to the range acceptable by tabledist() */
+ 	q->jitter = min_t(s64, abs(q->jitter), INT_MAX);
  
- static inline struct pie_skb_cb *get_pie_cb(const struct sk_buff *skb)
-diff --git a/net/sched/sch_pie.c b/net/sched/sch_pie.c
-index 48c5ab8ec143c..4c69b44fc3aa8 100644
---- a/net/sched/sch_pie.c
-+++ b/net/sched/sch_pie.c
-@@ -89,7 +89,7 @@ static int pie_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	bool enqueue = false;
+-	if (tb[TCA_NETEM_PRNG_SEED])
++	if (tb[TCA_NETEM_PRNG_SEED]) {
+ 		q->prng.seed = nla_get_u64(tb[TCA_NETEM_PRNG_SEED]);
+-	else
+-		q->prng.seed = get_random_u64();
+-	prandom_seed_state(&q->prng.prng_state, q->prng.seed);
++		prandom_seed_state(&q->prng.prng_state, q->prng.seed);
++	}
  
- 	if (unlikely(qdisc_qlen(sch) >= sch->limit)) {
--		q->stats.overlimit++;
-+		WRITE_ONCE(q->stats.overlimit, q->stats.overlimit + 1);
- 		goto out;
- 	}
+ unlock:
+ 	sch_tree_unlock(sch);
+@@ -1137,6 +1136,9 @@ static int netem_init(struct Qdisc *sch, struct nlattr *opt,
+ 		return -EINVAL;
  
-@@ -101,7 +101,7 @@ static int pie_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		/* If packet is ecn capable, mark it if drop probability
- 		 * is lower than 10%, else drop it.
- 		 */
--		q->stats.ecn_mark++;
-+		WRITE_ONCE(q->stats.ecn_mark, q->stats.ecn_mark + 1);
- 		enqueue = true;
- 	}
- 
-@@ -111,15 +111,15 @@ static int pie_qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		if (!q->params.dq_rate_estimator)
- 			pie_set_enqueue_time(skb);
- 
--		q->stats.packets_in++;
-+		WRITE_ONCE(q->stats.packets_in, q->stats.packets_in + 1);
- 		if (qdisc_qlen(sch) > q->stats.maxq)
--			q->stats.maxq = qdisc_qlen(sch);
-+			WRITE_ONCE(q->stats.maxq, qdisc_qlen(sch));
- 
- 		return qdisc_enqueue_tail(skb, sch);
- 	}
- 
- out:
--	q->stats.dropped++;
-+	WRITE_ONCE(q->stats.dropped, q->stats.dropped + 1);
- 	q->vars.accu_prob = 0;
- 	return qdisc_drop(skb, sch, to_free);
- }
-@@ -260,11 +260,11 @@ void pie_process_dequeue(struct sk_buff *skb, struct pie_params *params,
- 			count = count / dtime;
- 
- 			if (vars->avg_dq_rate == 0)
--				vars->avg_dq_rate = count;
-+				WRITE_ONCE(vars->avg_dq_rate, count);
- 			else
--				vars->avg_dq_rate =
-+				WRITE_ONCE(vars->avg_dq_rate,
- 				    (vars->avg_dq_rate -
--				     (vars->avg_dq_rate >> 3)) + (count >> 3);
-+				     (vars->avg_dq_rate >> 3)) + (count >> 3));
- 
- 			/* If the queue has receded below the threshold, we hold
- 			 * on to the last drain rate calculated, else we reset
-@@ -374,7 +374,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 	if (delta > 0) {
- 		/* prevent overflow */
- 		if (vars->prob < oldprob) {
--			vars->prob = MAX_PROB;
-+			WRITE_ONCE(vars->prob, MAX_PROB);
- 			/* Prevent normalization error. If probability is at
- 			 * maximum value already, we normalize it here, and
- 			 * skip the check to do a non-linear drop in the next
-@@ -385,7 +385,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 	} else {
- 		/* prevent underflow */
- 		if (vars->prob > oldprob)
--			vars->prob = 0;
-+			WRITE_ONCE(vars->prob, 0);
- 	}
- 
- 	/* Non-linear drop in probability: Reduce drop probability quickly if
-@@ -396,7 +396,7 @@ void pie_calculate_probability(struct pie_params *params, struct pie_vars *vars,
- 		/* Reduce drop probability to 98.4% */
- 		vars->prob -= vars->prob / 64;
- 
--	vars->qdelay = qdelay;
-+	WRITE_ONCE(vars->qdelay, qdelay);
- 	vars->backlog_old = backlog;
- 
- 	/* We restart the measurement cycle if the following conditions are met
-@@ -494,21 +494,21 @@ static int pie_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 	struct pie_sched_data *q = qdisc_priv(sch);
- 	struct tc_pie_xstats st = {
- 		.prob		= q->vars.prob << BITS_PER_BYTE,
--		.delay		= ((u32)PSCHED_TICKS2NS(q->vars.qdelay)) /
-+		.delay		= ((u32)PSCHED_TICKS2NS(READ_ONCE(q->vars.qdelay))) /
- 				   NSEC_PER_USEC,
--		.packets_in	= q->stats.packets_in,
--		.overlimit	= q->stats.overlimit,
--		.maxq		= q->stats.maxq,
--		.dropped	= q->stats.dropped,
--		.ecn_mark	= q->stats.ecn_mark,
-+		.packets_in	= READ_ONCE(q->stats.packets_in),
-+		.overlimit	= READ_ONCE(q->stats.overlimit),
-+		.maxq		= READ_ONCE(q->stats.maxq),
-+		.dropped	= READ_ONCE(q->stats.dropped),
-+		.ecn_mark	= READ_ONCE(q->stats.ecn_mark),
- 	};
- 
- 	/* avg_dq_rate is only valid if dq_rate_estimator is enabled */
- 	st.dq_rate_estimating = q->params.dq_rate_estimator;
- 
- 	/* unscale and return dq_rate in bytes per sec */
--	if (q->params.dq_rate_estimator)
--		st.avg_dq_rate = q->vars.avg_dq_rate *
-+	if (st.dq_rate_estimating)
-+		st.avg_dq_rate = READ_ONCE(q->vars.avg_dq_rate) *
- 				 (PSCHED_TICKS_PER_SEC) >> PIE_SCALE;
- 
- 	return gnet_stats_copy_app(d, &st, sizeof(st));
+ 	q->loss_model = CLG_RANDOM;
++	q->prng.seed = get_random_u64();
++	prandom_seed_state(&q->prng.prng_state, q->prng.seed);
++
+ 	ret = netem_change(sch, opt, extack);
+ 	if (ret)
+ 		pr_info("netem: change failed\n");
 -- 
 2.53.0
 
