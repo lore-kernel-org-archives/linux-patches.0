@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7693F9296;
-	Wed, 20 May 2026 18:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBA13FBEAB;
+	Wed, 20 May 2026 18:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301537; cv=none; b=eciic6lO99jZuiJ4C7+MAaK2SYlb0WQFRh/i/+HdmQvmtYKe8T9NFnfoshj+WkNdfZRR2AcDxfnDX79f+ORJqKfPVdzapkvzHJKG1a3AyqdJmjUlfuuvI6xQoVyLCNZJicb+x4lPalvJ1W0KKsUb8SmOAmK3wIkNPlxl/bAW5vs=
+	t=1779301539; cv=none; b=rJUkirKSNeeAmLYm3XYwepoVwv9q7iH4YIUJ59HHjxvUmBe04S5lI/1kj1zbDXuN6c+AQDHl7+XcK7+8t5Kzt7CvkoedIZ1OEaUzA2lYNJ9KotrN7VFfrY9wMEdLIQ4rKEJhuN8Rs8YssZnASw+D7qVKfqEOcvgP9j7Utv31vys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301537; c=relaxed/simple;
-	bh=63FcdFOVROcleBa1qLeA9cDlkOBIUjYIfnPIjIlAJ4w=;
+	s=arc-20240116; t=1779301539; c=relaxed/simple;
+	bh=kYBC+P1CupP3GutbHnKY/ll2AzFDXGFzGQTzb50sOiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZUPn2w76gWnxluXdkfZjI4wJt4MlRmYZmApqGA7ZbHSEc3Nvsb4M69tCYyptgxTBaRxG8aZS4GuQWFvPZtwMiKLxkHstzuV61+wF4g/L3PQLBgjFz3pnOSO8dTIiOMvkm8JGQOxAK/2RrH84H9Cr71f9HAihGMWPAIDz3Z+wE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6zxX6BL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o1eqpk+Oe1mQ2bmspQyCXOVUVlRBS9I7QEVK2X8tM5kKN+FRMK43FV6BKyXpGPjjjazEnKmkBDD/Jy3/Ka7UO2yrIEPA6UJ+qIwCfpfBJrotU3GwrBiAmUOFlQwwo5UDVrTDy4J15XCWvDwd2wsn+/GX2NRA2rhvjb4m+pHlZe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k15Uh5Aj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6zxX6BL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A7C1F000E9;
-	Wed, 20 May 2026 18:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k15Uh5Aj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6D61F000E9;
+	Wed, 20 May 2026 18:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301536;
-	bh=8AINpeB7+D4fUTMjg4XXPo+3A3eCTrPBHxKjrSQ1efE=;
+	s=korg; t=1779301538;
+	bh=ILgk1bCFP5g0A+Jxvn3SgXGT8eeHWyXQ7b0W3XEAPvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R6zxX6BLVBRjTjvgdcUPm0SuY/z6qf/z2TIgV7PgaLlmXwjgylE6O1lJSoBVzivw6
-	 Zqj690AXyRXhoMwP/YXoQ6i2HZSo+SHJx5XQmpm7zCVPoWJ/EBc5t9PzwFpzbTTF0T
-	 TiIst/GWsh7MzUbVt0YyFoB2D3zSEMCV4aNEO+L0=
+	b=k15Uh5Aj042uFfX58CBIL81sZUIE55ukzH76NyF10+KozS6etJMZaUJPQpHJp3KFD
+	 H6VViygPor+dztMdmeUl2UM2v4GDD9loZ7mk5uffla1MoH4l896Sy9Ied2/q3NZuZJ
+	 FLd+SEasggoDxvAmzvJOMi3uUnupN4PCTHf4paig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Edward Cree <ecree.xilinx@gmail.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 592/666] sfc: fix error code in efx_devlink_info_running_versions()
-Date: Wed, 20 May 2026 18:23:23 +0200
-Message-ID: <20260520162124.095771047@linuxfoundation.org>
+Subject: [PATCH 6.12 593/666] net/sched: cls_flower: revert unintended changes
+Date: Wed, 20 May 2026 18:23:24 +0200
+Message-ID: <20260520162124.117127973@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -52,35 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 051ffb001b8a232cfa6e72f38bb5f51c4270a60b ]
+[ Upstream commit 1e01abec856593e02cd69fd95b784c10dd46880c ]
 
-Return -EIO if efx_mcdi_rpc() doesn't return enough space.
+While applying the blamed commit 4ca07b9239bd ("net: mctp i2c: check
+length before marking flow active"), I unintentionally included
+unrelated and unacceptable changes.
 
-Fixes: 14743ddd2495 ("sfc: add devlink info support for ef100")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Edward Cree <ecree.xilinx@gmail.com>
-Link: https://patch.msgid.link/afGpsbLRHL4_H0KS@stanley.mountain
+Revert them.
+
+Fixes: 4ca07b9239bd ("net: mctp i2c: check length before marking flow active")
+Reported-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Closes: https://lore.kernel.org/netdev/bd8704fe0bd53e278add5cde4873256656623e2e.camel@codeconstruct.com.au/
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/043026a53ff84da88b17648c4b0d17f0331749cb.1777447863.git.pabeni@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/efx_devlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_flower.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/efx_devlink.c b/drivers/net/ethernet/sfc/efx_devlink.c
-index 3cd750820fdde..d5a4b3cf94544 100644
---- a/drivers/net/ethernet/sfc/efx_devlink.c
-+++ b/drivers/net/ethernet/sfc/efx_devlink.c
-@@ -530,7 +530,7 @@ static int efx_devlink_info_running_versions(struct efx_nic *efx,
- 	if (rc || outlength < MC_CMD_GET_VERSION_OUT_LEN) {
- 		netif_err(efx, drv, efx->net_dev,
- 			  "mcdi MC_CMD_GET_VERSION failed\n");
--		return rc;
-+		return rc ?: -EIO;
- 	}
+diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
+index f3af0ac892a86..099ff6a3e1f51 100644
+--- a/net/sched/cls_flower.c
++++ b/net/sched/cls_flower.c
+@@ -560,7 +560,6 @@ static int __fl_delete(struct tcf_proto *tp, struct cls_fl_filter *f,
+ 		       struct netlink_ext_ack *extack)
+ {
+ 	struct cls_fl_head *head = fl_head_dereference(tp);
+-	struct fl_flow_mask *mask;
  
- 	/* Handle previous output */
+ 	*last = false;
+ 
+@@ -577,12 +576,11 @@ static int __fl_delete(struct tcf_proto *tp, struct cls_fl_filter *f,
+ 	list_del_rcu(&f->list);
+ 	spin_unlock(&tp->lock);
+ 
+-	mask = f->mask;
++	*last = fl_mask_put(head, f->mask);
+ 	if (!tc_skip_hw(f->flags))
+ 		fl_hw_destroy_filter(tp, f, rtnl_held, extack);
+ 	tcf_unbind_filter(tp, &f->res);
+ 	__fl_put(f);
+-	*last = fl_mask_put(head, mask);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
