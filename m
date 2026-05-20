@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFA9401483;
-	Wed, 20 May 2026 18:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9993401483;
+	Wed, 20 May 2026 18:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302880; cv=none; b=c+JKZLyJ0AGDXHeGskluYTgw+S29GvxWro9LzrJBCcoTWgxEOQRlhuzbk9YzRKfQ+bzCSPvsJ5WpPvsWF7r/TddqkFb2qWPe+aawzLloMOPN92mMiIoO/cc7DTK7vDBc6GzUnohof5YX5naKxBLpP7TBmhjUn2gZKzJC8QbjdYM=
+	t=1779302883; cv=none; b=krmpUzDo4Hp7fGPUSfCBoWE0kLXSlTH0ygx3h52oBbqLDCugCUvNfKPg7iu6RHSlXJnCEQfiLt+MdAZucjAQkWCED+FbhEYOcrCwwdp+rZc529X3Vw5QhGHjEaaN8yYRQxO+X18e4oIQ4nB43HWmLy33k0duIbB/QEzae76c22c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302880; c=relaxed/simple;
-	bh=NAKLJXaclNikJUxWwSQJ6MmTIT2xLhw4PX2H22Y2uus=;
+	s=arc-20240116; t=1779302883; c=relaxed/simple;
+	bh=FAIXU3Mnuw9VhU6jnCaMmct0e2S0VxqNg3OhVvN6csY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JxF19QuLrRZQkM38bTNK4Np8Ja5TriNA3CDjFtVcYTn7FWsjJfE/kdzq7KxAg9G23HBJ7pbWyOaEWX8oENTgvHU2YEh+mu37JEVK4QJa+2iAgMzqBXWDXOAXQQlM0tbm1+OLP9N+MR8qsYV6cKXULs0ZaLONQ57opVByuBqX+78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZPh6g78; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SX3CgOiJyKyVDPOTFflKamavk07Cs/08nAg8+1YUFtA6UYJaL593k1kqECLdUlXvAmyMW2nOLCeemJavjxbIq+kcjBcl30rFTrhrq4Mn48Pmdakf0L7eWQ8gc/94Qmqymizs0RuGcFNnpo/eIbpW5P0DjHI9ef2LGeAWLB/SoAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uohkppqJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZPh6g78"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D0611F000E9;
-	Wed, 20 May 2026 18:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uohkppqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C892B1F00893;
+	Wed, 20 May 2026 18:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302877;
-	bh=AMe+69X8Zqe9jnVvz/nZ/lYr5+zwaRYyajbMlyemT/0=;
+	s=korg; t=1779302880;
+	bh=TLP6TA6PI/WzDtqSWrDdbrH+FeobmhsZ9qh6Prp55fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cZPh6g78+ou0AqwTtEZsDl7VON17BOKAJMJ7HA9z/FpTrfnEY0b9n9Uel+UDLIjaK
-	 QiStZWJ/ruTt0xyMHeMO9Jy5ViZiQT7I5OVEMn1OeMECdUmgVCyJiikcKPoB9I0I5S
-	 56uR8PhYUVi6ihJBnJqKOSXi8B4JfXELXaTXPRf0=
+	b=uohkppqJ+7FakM4Gb1O13dpT5QOXMhXjea+ifuHoUtx+kK3W2oIm1Cc2wFWD5Hrzf
+	 0gnj5noL7xKMwtdZTfoBGp9JPbnvkBbmCq3Ck+yTb8t4PDjN0YH8PHJs7YnyXTdy3G
+	 rAK29KklUSlwQ2LpvKt5IIVw0FYLRZuIGktJAUt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Geurts <paul.geurts@prodrive-technologies.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Mark Greer <mgreer@animalcreek.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 392/508] NFC: trf7970a: Ignore antenna noise when checking for RF field
-Date: Wed, 20 May 2026 18:23:35 +0200
-Message-ID: <20260520162107.108119595@linuxfoundation.org>
+Subject: [PATCH 6.6 393/508] net/sched: taprio: fix NULL pointer dereference in class dump
+Date: Wed, 20 May 2026 18:23:36 +0200
+Message-ID: <20260520162107.130102951@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -53,51 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Geurts <paul.geurts@prodrive-technologies.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit a9bc28aa4e64320668131349436a650bf42591a5 ]
+[ Upstream commit 3d07ca5c0fae311226f737963984bd94bb159a87 ]
 
-The main channel Received Signal Strength Indicator (RSSI) measurement
-is used to determine whether an RF field is present or not. RSSI != 0
-is interpreted as an RF Field is present. This does not take RF noise
-and measurement inaccuracy into account, and results in false positives
-in the field.
+When a TAPRIO child qdisc is deleted via RTM_DELQDISC, taprio_graft()
+is called with new == NULL and stores NULL into q->qdiscs[cl - 1].
+Subsequent RTM_GETTCLASS dump operations walk all classes via
+taprio_walk() and call taprio_dump_class(), which calls taprio_leaf()
+returning the NULL pointer, then dereferences it to read child->handle,
+causing a kernel NULL pointer dereference.
 
-Define a noise level and make sure the RF field is only interpreted as
-present when the RSSI is above the noise level.
+The bug is reachable with namespace-scoped CAP_NET_ADMIN on any kernel
+with CONFIG_NET_SCH_TAPRIO enabled. On systems with unprivileged user
+namespaces enabled, an unprivileged local user can trigger a kernel
+panic by creating a taprio qdisc inside a new network namespace,
+grafting an explicit child qdisc, deleting it, and requesting a class
+dump. The RTM_GETTCLASS dump itself requires no capability.
 
-Fixes: 851ee3cbf850 ("NFC: trf7970a: Don't turn on RF if there is already an RF field")
-Signed-off-by: Paul Geurts <paul.geurts@prodrive-technologies.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Mark Greer <mgreer@animalcreek.com>
-Link: https://patch.msgid.link/20260422100930.581237-1-paul.geurts@prodrive-technologies.com
+ Oops: general protection fault, probably for non-canonical address 0xdffffc0000000007: 0000 [#1] SMP KASAN NOPTI
+ KASAN: null-ptr-deref in range [0x0000000000000038-0x000000000000003f]
+ RIP: 0010:taprio_dump_class (net/sched/sch_taprio.c:2478)
+ Call Trace:
+  <TASK>
+  tc_fill_tclass (net/sched/sch_api.c:1966)
+  qdisc_class_dump (net/sched/sch_api.c:2326)
+  taprio_walk (net/sched/sch_taprio.c:2514)
+  tc_dump_tclass_qdisc (net/sched/sch_api.c:2352)
+  tc_dump_tclass_root (net/sched/sch_api.c:2370)
+  tc_dump_tclass (net/sched/sch_api.c:2431)
+  rtnl_dumpit (net/core/rtnetlink.c:6864)
+  netlink_dump (net/netlink/af_netlink.c:2325)
+  rtnetlink_rcv_msg (net/core/rtnetlink.c:6959)
+  netlink_rcv_skb (net/netlink/af_netlink.c:2550)
+  </TASK>
+
+Fix this by substituting &noop_qdisc when new is NULL in
+taprio_graft(), a common pattern used by other qdiscs (e.g.,
+multiq_graft()) to ensure the q->qdiscs[] slots are never NULL.
+This makes control-plane dump paths safe without requiring individual
+NULL checks.
+
+Since the data-plane paths (taprio_enqueue and taprio_dequeue_from_txq)
+previously had explicit NULL guards that would drop/skip the packet
+cleanly, update those checks to test for &noop_qdisc instead. Without
+this, packets would reach taprio_enqueue_one() which increments the root
+qdisc's qlen and backlog before calling the child's enqueue; noop_qdisc
+drops the packet but those counters are never rolled back, permanently
+inflating the root qdisc's statistics.
+
+After this change *old can be a valid qdisc, NULL, or &noop_qdisc.
+Only call qdisc_put(*old) in the first case to avoid decreasing
+noop_qdisc's refcount, which was never increased.
+
+Fixes: 665338b2a7a0 ("net/sched: taprio: dump class stats for the actual q->qdiscs[]")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260422161958.2517539-3-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/trf7970a.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_taprio.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nfc/trf7970a.c b/drivers/nfc/trf7970a.c
-index 9e1a34e23af26..6b8311f526a5e 100644
---- a/drivers/nfc/trf7970a.c
-+++ b/drivers/nfc/trf7970a.c
-@@ -311,6 +311,7 @@
- #define TRF7970A_RSSI_OSC_STATUS_RSSI_MASK	(BIT(2) | BIT(1) | BIT(0))
- #define TRF7970A_RSSI_OSC_STATUS_RSSI_X_MASK	(BIT(5) | BIT(4) | BIT(3))
- #define TRF7970A_RSSI_OSC_STATUS_RSSI_OSC_OK	BIT(6)
-+#define TRF7970A_RSSI_OSC_STATUS_RSSI_NOISE_LEVEL	1
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index 6df93d5c2e9d9..c14f9e2d8dc51 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -644,7 +644,7 @@ static int taprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	queue = skb_get_queue_mapping(skb);
  
- #define TRF7970A_SPECIAL_FCN_REG1_COL_7_6		BIT(0)
- #define TRF7970A_SPECIAL_FCN_REG1_14_ANTICOLL		BIT(1)
-@@ -1253,7 +1254,7 @@ static int trf7970a_is_rf_field(struct trf7970a *trf, bool *is_rf_field)
- 	if (ret)
- 		return ret;
+ 	child = q->qdiscs[queue];
+-	if (unlikely(!child))
++	if (unlikely(child == &noop_qdisc))
+ 		return qdisc_drop(skb, sch, to_free);
  
--	if (rssi & TRF7970A_RSSI_OSC_STATUS_RSSI_MASK)
-+	if ((rssi & TRF7970A_RSSI_OSC_STATUS_RSSI_MASK) > TRF7970A_RSSI_OSC_STATUS_RSSI_NOISE_LEVEL)
- 		*is_rf_field = true;
- 	else
- 		*is_rf_field = false;
+ 	if (taprio_skb_exceeds_queue_max_sdu(sch, skb)) {
+@@ -727,7 +727,7 @@ static struct sk_buff *taprio_dequeue_from_txq(struct Qdisc *sch, int txq,
+ 	int len;
+ 	u8 tc;
+ 
+-	if (unlikely(!child))
++	if (unlikely(child == &noop_qdisc))
+ 		return NULL;
+ 
+ 	if (TXTIME_ASSIST_IS_ENABLED(q->flags))
+@@ -2214,6 +2214,9 @@ static int taprio_graft(struct Qdisc *sch, unsigned long cl,
+ 	if (!dev_queue)
+ 		return -EINVAL;
+ 
++	if (!new)
++		new = &noop_qdisc;
++
+ 	if (dev->flags & IFF_UP)
+ 		dev_deactivate(dev);
+ 
+@@ -2227,14 +2230,14 @@ static int taprio_graft(struct Qdisc *sch, unsigned long cl,
+ 	*old = q->qdiscs[cl - 1];
+ 	if (FULL_OFFLOAD_IS_ENABLED(q->flags)) {
+ 		WARN_ON_ONCE(dev_graft_qdisc(dev_queue, new) != *old);
+-		if (new)
++		if (new != &noop_qdisc)
+ 			qdisc_refcount_inc(new);
+-		if (*old)
++		if (*old && *old != &noop_qdisc)
+ 			qdisc_put(*old);
+ 	}
+ 
+ 	q->qdiscs[cl - 1] = new;
+-	if (new)
++	if (new != &noop_qdisc)
+ 		new->flags |= TCQ_F_ONETXQUEUE | TCQ_F_NOPARENT;
+ 
+ 	if (dev->flags & IFF_UP)
 -- 
 2.53.0
 
