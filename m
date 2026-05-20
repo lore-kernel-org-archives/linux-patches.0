@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52B736CDE9;
-	Wed, 20 May 2026 16:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA0039C00B;
+	Wed, 20 May 2026 16:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296274; cv=none; b=A22oqoYo5WHTCp4yi37F9PZm8Yk6/r+EnqtyRfHcmRw4IE68GuIsP4ueUajGWLwCKqA0JiJAJnvPGsxtOFj0mMAelIr6lpwtHUozpSFO/rsHFlmz+BFiCXGczVuAb467su3O07aMoM2w/LkzrcvjSCovc+Pgdx192L9DOIZpSdo=
+	t=1779296277; cv=none; b=QPKE8EvrOoD/W0pn24udKbwXYfAOVwjajMz+s3KIz6+2G9Q8vPVFi7w9L/lr2mxsQZs4n5BSyX9t1hfMX5QIO323AnfLcxYKQLbrEk3JCMBy0GhupRpDZmx3BL+q7Dpv7y1MOOBkvItx0PBErN+gVaAKTEeLlzjDu1tVlf7EWHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296274; c=relaxed/simple;
-	bh=5VohfhU5Lp3YarOINyjHBrjUcubN5U16g6iLoAlT1Po=;
+	s=arc-20240116; t=1779296277; c=relaxed/simple;
+	bh=vREqp6ovQxr9ixYdC0HjiQGV4Xhtx9iJ7g12ajEGncI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sRFZl1IkjtaMuy3wh8fIKX8E0ysaHMP63sq0r7nYZXBU1mG7CKwy3u7BBFp8Ne3uLDtXk8rEjxSVs0b/XuoMOoUacMep8qp50faXNwd6MCxpT2gvjdYcjXBy/oDth6+ya5b3+dzEnnuv10BUYQiowGCE86WOoeP0EleqqizFiQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1XfoE1S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o5Crvdw/eCr/cU9sJ3IbYGJQTezFnkIw/Ao0t4IpiABnNtC9v2Vi/9UYKiCOqL6aNh8YGExQHFUpa8F/bfRd24BPaG0+48dH42FNlfXVriFNqDTi0U9miTcHiAOnWQNeHnvF25XhP+1kmknLSkcUrcdTzdKXEmo8FVN7EZmjc/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHdLpWs2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1XfoE1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278681F00893;
-	Wed, 20 May 2026 16:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHdLpWs2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCD11F000E9;
+	Wed, 20 May 2026 16:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296273;
-	bh=7QHyu31np3zBraOPGj2wDdTbBkkpWP6YEbc1OLPl0cY=;
+	s=korg; t=1779296276;
+	bh=3kBdsDTg7rNiIYHtZzxI1PQyolnz5ZtMJg0Y1lXU4tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D1XfoE1S7mFgKL+Yi2SQvUcsAro9B0xmfvjGd92/maoVcxoqwlqpxXvpC6+2nyk2K
-	 nRPsCJSzTUM5z/g0mJj3rtfFlA1HHmgnTmliNwTZbdv9VDV7NmVmctwy01qvLgCRT9
-	 1n7h5jZqSHs3gDxYS7SZVIoDO6XS4d8GLVbEHxwo=
+	b=zHdLpWs2EUvH4F/fBejrdWATsUwYqF6pUG8L3RwzH6jLzNwQwA297N7GHDiFzDe1Z
+	 gYaXssBbjb64qMoGGDqNX5IvtuxIq/vM7KD6/WxBknXc9/grOSyNqtcDtdOX9Oh8Nz
+	 Opsi5SRpdr5n7foEsMd3j1BLmrdeEH/gNvpImKfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0696/1146] clk: qcom: gcc-glymur: Add video axi clock resets for glymur
-Date: Wed, 20 May 2026 18:15:46 +0200
-Message-ID: <20260520162203.940283436@linuxfoundation.org>
+Subject: [PATCH 7.0 0697/1146] clk: qcom: dispcc-glymur: use RCG2 ops for DPTX1 AUX clock source
+Date: Wed, 20 May 2026 18:15:47 +0200
+Message-ID: <20260520162203.964599725@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,37 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <taniya.das@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 1c8ce43e1e07ecc531fb517f95620ed85e998608 ]
+[ Upstream commit e7c8eb1646db5d967d77ee67793dd95a2c5ff451 ]
 
-The global clock controller video axi reset clocks are required by
-the video SW driver to assert and deassert the clock resets during
-their power down sequence. Hence add these clock resets.
+The clk_dp_ops are supposed to be used for DP-related clocks with a
+proper MND divier. Use shared RCG2 ops for dptx1_aux_clk_src, the same
+as all other DPTX AUX clocks in this driver.
 
-Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: b4d15211c408 ("clk: qcom: dispcc-glymur: Add support for Display Clock Controller")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260202-glymur_videocc-v2-3-8f7d8b4d8edd@oss.qualcomm.com
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260112-dp-aux-clks-v1-1-456b0c11b069@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-glymur.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/dispcc-glymur.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
-index 238e205735ed5..cd11470a75f3f 100644
---- a/drivers/clk/qcom/gcc-glymur.c
-+++ b/drivers/clk/qcom/gcc-glymur.c
-@@ -8507,6 +8507,7 @@ static const struct qcom_reset_map gcc_glymur_resets[] = {
- 	[GCC_VIDEO_AXI0_CLK_ARES] = { 0x3201c, 2 },
- 	[GCC_VIDEO_AXI1_CLK_ARES] = { 0x32044, 2 },
- 	[GCC_VIDEO_BCR] = { 0x32000 },
-+	[GCC_VIDEO_AXI0C_CLK_ARES] = { 0x32030, 2 },
+diff --git a/drivers/clk/qcom/dispcc-glymur.c b/drivers/clk/qcom/dispcc-glymur.c
+index 5203fa6383f6a..f352165bf56fc 100644
+--- a/drivers/clk/qcom/dispcc-glymur.c
++++ b/drivers/clk/qcom/dispcc-glymur.c
+@@ -417,7 +417,7 @@ static struct clk_rcg2 disp_cc_mdss_dptx1_aux_clk_src = {
+ 		.parent_data = disp_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_dp_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
  };
  
- static const struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
 -- 
 2.53.0
 
