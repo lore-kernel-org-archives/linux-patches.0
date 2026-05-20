@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE97D4028EC;
-	Wed, 20 May 2026 18:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D10A402B80;
+	Wed, 20 May 2026 18:41:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302478; cv=none; b=L84qTkTkmgE2otmsng9IhBWwYQi9qQuTbWrug0SSnsevhCrU54Ho5qlG6iogc1dfeAOhxurqM8gLkKB7Le63GlrQNWcoD9k+OnyMIP/8aG2f0vBQrbjAlE2X8DTI/V8n69+GycdE14zI95nFF1IWXwILBEUpb237T+SnArsIFcA=
+	t=1779302481; cv=none; b=bLiWp8LHZUqh9fnHpt5JyazPT+elIpgUJkPpUyHChiA/GBJtuVOkDujr+l/KCO4lFfLzdRMsDF4SixPltteuea+wM+SEA82XoeYnA9x/YbeYKsLeNe8fgRlLJgPN0p7y34o2tNNopy9bAzn52BMlX5Tjw4ExT2f/Lp8I9hTygcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302478; c=relaxed/simple;
-	bh=vL8yOdhlzmRRBagoUfYWgrykjbsJ0C70G3bwdtQs60E=;
+	s=arc-20240116; t=1779302481; c=relaxed/simple;
+	bh=mbSoBsCu/luRbdCWZRHBu8bu0FlM5XVFdpzM+drvxYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1A9dCMmWqR7WDx6nnSopAcoj+RLVKn9z3hah95R1a2V97jPEFfvGIwoEtFdLgLC3hSbG6enguiCwxYzdxDUJAXufz/FuOlWt52b9Txbc3zSxH3BEM9anFw2IdFhbhXjapSr+jZcTSQ4S2LeIn0T0g9gU307e1x29zCqVmioAfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dwOw/Nl+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LmeqoLGji0AmIC+FzBy99vHayxNecg/xBixGJCbM4csP5z+tb/jjfWaqigbNX1/+WR1a8cKKFQ7TjQ+epDdQKVXAs5RHBKr9McaDcGGU9KKJnxY3Vr84UahILxu6ag4RZLc8/GjppEyqyRuFfNk89DUnsyXzUQ9zKhi5Bf2bMqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZROB00E/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwOw/Nl+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179581F00898;
-	Wed, 20 May 2026 18:41:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZROB00E/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66411F00893;
+	Wed, 20 May 2026 18:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302477;
-	bh=TDpcKUNQy3/0nKN6UIDsDvuBfaTyKqbdNJyvYOBjpb8=;
+	s=korg; t=1779302480;
+	bh=+upanwZqFMl40aPOxqjBOANVvDumPUZxKpsWIJSpVXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dwOw/Nl+eA4/Y2ZsbXFPfMhNNqRTMjg6dxPe4LHsKTotyi4pxbwqNqOlxBerkLqg0
-	 6NqiYTqRYW0LtjYXg8I85AqwCTBR2ROZ+dqswZEEw8NeN8JkjjWP164axgtvBmZGAA
-	 rC8pHSrfPfPJwviBL/ZmUb82rDTRGypwVUhcpj0c=
+	b=ZROB00E/U5yhln1kzJUP6n5zz/gVbjPhVFL0BzK3GHqNbLTXfzvO/dcAQJNJJyD4q
+	 AlsqnT46ogTbw5vprIOAQv7e2/ORdE7gr05A487GEzAxboJ178fTzONmE4aHwspZVl
+	 0I+b77VaNES+WJjiLYasZ1G3rklePgVtSUl1xBTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 282/508] clk: qcom: dispcc-sm8250: Use shared ops on the mdss vsync clk
-Date: Wed, 20 May 2026 18:21:45 +0200
-Message-ID: <20260520162104.754762101@linuxfoundation.org>
+Subject: [PATCH 6.6 283/508] clk: qcom: dispcc-sm8250: Enable parents for pixel clocks
+Date: Wed, 20 May 2026 18:21:46 +0200
+Message-ID: <20260520162104.775529101@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -54,41 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Val Packett <val@packett.cool>
 
-[ Upstream commit 8c522da70f0c2e5148c4c13ccb1c64cca57a6fdb ]
+[ Upstream commit acf7a91d0b0e9e3ef374944021de62062125b7e4 ]
 
-mdss_gdsc can get stuck on boot due to RCGs being left on from last boot.
-As a fix, commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
-registration") introduced a callback to ensure the RCG is off upon init.
-However, the fix depends on all shared RCGs being marked as such in code.
-
-For SM8150/SC8180X/SM8250 the MDSS vsync clock was using regular ops,
-unlike the same clock in the SC7180 code. This was causing display to
-frequently fail to initialize after rebooting on the Surface Pro X.
-Fix by using shared ops for this clock.
+Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
+clocks are enabled during clock operations, preventing potential
+stability issues during display configuration.
 
 Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
 Signed-off-by: Val Packett <val@packett.cool>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260312112321.370983-8-val@packett.cool
+Link: https://lore.kernel.org/r/20260312112321.370983-9-val@packett.cool
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm8250.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/dispcc-sm8250.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-index 317a7e2b50bfb..cd6df240953fd 100644
+index cd6df240953fd..7aa84c341f598 100644
 --- a/drivers/clk/qcom/dispcc-sm8250.c
 +++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -632,7 +632,7 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src = {
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
+@@ -578,7 +578,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
+ 		.name = "disp_cc_mdss_pclk0_clk_src",
+ 		.parent_data = disp_cc_parent_data_6,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_pixel_ops,
  	},
  };
- 
+@@ -592,7 +592,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk1_clk_src = {
+ 		.name = "disp_cc_mdss_pclk1_clk_src",
+ 		.parent_data = disp_cc_parent_data_6,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_pixel_ops,
+ 	},
+ };
 -- 
 2.53.0
 
