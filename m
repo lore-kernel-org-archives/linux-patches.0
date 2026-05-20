@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD5D3D5642;
-	Wed, 20 May 2026 16:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E593A382F;
+	Wed, 20 May 2026 16:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295808; cv=none; b=pqzpNes/EF3Wz+A0xS4v+GcxjMze4Z38Gq0B18BHGIKQ0Picx2j5z+gYgCeHvMTLW4ZkRum+kTMQDNSxr4jv9muwRkPdQm0C9aiID6k/getTj2uyPdwfmeC9xK+ZMvzYa9Ts35le/pbuKjKTuYnJhutpeTN86IGtMqLrGm3Rf5g=
+	t=1779295810; cv=none; b=RFd0Eldo1kILGr97ykpzHWLV7PD+jbuQaUZmZBLHKdmMH1tFhFN9VIAzF1iFeUjxaaGpqaElh0DTChAlLH8gBYbexwjpFkPeCiLT856hNxJfM1/AKi0lO0ayLeG2w/xTG7OFaEhaqOdmpY9xpOiwdWQ/qNU5zPMqrjOaQXSxV+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295808; c=relaxed/simple;
-	bh=HAjXrClvYaP17IgeEftf9rKYe/2q4zbhNWN8ytQes7U=;
+	s=arc-20240116; t=1779295810; c=relaxed/simple;
+	bh=kjkaXvLRtNewUzUD8lBQucfzlWRhbLyPD/CLfLF0XVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZCm+Y+7w1sYr7kyBR2ybw+zf8lCGIROH6KetFzzKmNzp8OGoU3t2P/ByAY3Uasr4IWmYLFLsHtcK6Z9IHLTZaDRZ5A6MmLYD1LgK8OXgGnK7szWB0zV0Z6+uzF2HXYM5UrBzMOWk5WwGnlfCYW3cnL83KSbpyRtMkxDz1ttzM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m309Smoc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=somFcAkSF12TdwVywqd2M2D0nBjerqQ4tOvgYPWURMt869HgaUPiaALKbjG8kA/azQwHCExNCV+5y1+3yKjbxfvhvYheVmx2Zme2c4qInOvySU0oDuSjkz43CR71lhw8dgC9cK6rmAGyaXWRNmMiLQ02UeMksiTVYroNLjIf/38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYm/SN1i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m309Smoc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8664A1F000E9;
-	Wed, 20 May 2026 16:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYm/SN1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F157A1F00893;
+	Wed, 20 May 2026 16:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295806;
-	bh=okZ1DKvm5uBV+fEkj53oUgGVeVWJYg3v8NWCay+wmFA=;
+	s=korg; t=1779295808;
+	bh=P20f4gzwZHeIex4UFYHnUzFtrN6MeogRPyN/avFctNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m309SmocpOq1Rjzwg1VOtn+StciUht2A+4nnMlz6K5AwH61Kz96NmHIuEJdIGJnVY
-	 bixq6XQ1x5TO6mJFq1QjfwPQZJA1vJhoCz/92FNlsBu/+XkwMey5UrshQnoy+HAqYY
-	 WV+WPlUcCKYkSRWG4qfkMtuK8j3lfde69/UYdW60=
+	b=mYm/SN1igKoxVgJIpj540ZcQwxOQxqNYKbgNBosVxl+qCNocTD+ndSHWgu/ONL/O8
+	 mb3LgY/2wKl3PD7Bkod3FvkzO0Asj3FfomH6nJQXcsocrRuryyodhQyI+q+d1nJ532
+	 KEuDlv6WlDLGn0dMd1NKr+ZcHGw5bj9kwgIWN0d8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -38,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Heming Zhao <heming.zhao@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0557/1146] ocfs2/dlm: validate qr_numregions in dlm_match_regions()
-Date: Wed, 20 May 2026 18:13:27 +0200
-Message-ID: <20260520162200.787519139@linuxfoundation.org>
+Subject: [PATCH 7.0 0558/1146] ocfs2/dlm: fix off-by-one in dlm_match_regions() region comparison
+Date: Wed, 20 May 2026 18:13:28 +0200
+Message-ID: <20260520162200.809631558@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -61,36 +61,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 7ab3fbb01bc6d79091bc375e5235d360cd9b78be ]
+[ Upstream commit 01b61e8dda9b0fdb0d4cda43de25f4e390554d7b ]
 
-Patch series "ocfs2/dlm: fix two bugs in dlm_match_regions()".
+The local-vs-remote region comparison loop uses '<=' instead of '<',
+causing it to read one entry past the valid range of qr_regions.  The
+other loops in the same function correctly use '<'.
 
-In dlm_match_regions(), the qr_numregions field from a DLM_QUERY_REGION
-network message is used to drive loops over the qr_regions buffer without
-sufficient validation.  This series fixes two issues:
+Fix the loop condition to use '<' for consistency and correctness.
 
-- Patch 1 adds a bounds check to reject messages where qr_numregions
-  exceeds O2NM_MAX_REGIONS. The o2net layer only validates message
-  byte length; it does not constrain field values, so a crafted message
-  can set qr_numregions up to 255 and trigger out-of-bounds reads past
-  the 1024-byte qr_regions buffer.
-
-- Patch 2 fixes an off-by-one in the local-vs-remote comparison loop,
-  which uses '<=' instead of '<', reading one entry past the valid range
-  even when qr_numregions is within bounds.
-
-This patch (of 2):
-
-The qr_numregions field from a DLM_QUERY_REGION network message is used
-directly as loop bounds in dlm_match_regions() without checking against
-O2NM_MAX_REGIONS.  Since qr_regions is sized for at most O2NM_MAX_REGIONS
-(32) entries, a crafted message with qr_numregions > 32 causes
-out-of-bounds reads past the qr_regions buffer.
-
-Add a bounds check for qr_numregions before entering the loops.
-
-Link: https://lkml.kernel.org/r/SYBPR01MB7881A334D02ACEE5E0645801AF7BA@SYBPR01MB7881.ausprd01.prod.outlook.com
-Link: https://lkml.kernel.org/r/SYBPR01MB788166F524AD04E262E174BEAF7BA@SYBPR01MB7881.ausprd01.prod.outlook.com
+Link: https://lkml.kernel.org/r/SYBPR01MB78813DA26B50EC5E01F00566AF7BA@SYBPR01MB7881.ausprd01.prod.outlook.com
 Fixes: ea2034416b54 ("ocfs2/dlm: Add message DLM_QUERY_REGION")
 Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Reported-by: Yuhao Jiang <danisjiang@gmail.com>
@@ -104,28 +83,22 @@ Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dlm/dlmdomain.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/ocfs2/dlm/dlmdomain.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/ocfs2/dlm/dlmdomain.c b/fs/ocfs2/dlm/dlmdomain.c
-index 70ca79e4bdc3f..0a28cb5ded2ab 100644
+index 0a28cb5ded2ab..dc9da9133c8ee 100644
 --- a/fs/ocfs2/dlm/dlmdomain.c
 +++ b/fs/ocfs2/dlm/dlmdomain.c
-@@ -980,6 +980,14 @@ static int dlm_match_regions(struct dlm_ctxt *dlm,
- 		goto bail;
- 	}
- 
-+	if (qr->qr_numregions > O2NM_MAX_REGIONS) {
-+		mlog(ML_ERROR, "Domain %s: Joining node %d has invalid "
-+		     "number of heartbeat regions %u\n",
-+		     qr->qr_domain, qr->qr_node, qr->qr_numregions);
-+		status = -EINVAL;
-+		goto bail;
-+	}
-+
- 	r = remote;
- 	for (i = 0; i < qr->qr_numregions; ++i) {
- 		mlog(0, "Region %.*s\n", O2HB_MAX_REGION_NAME_LEN, r);
+@@ -1002,7 +1002,7 @@ static int dlm_match_regions(struct dlm_ctxt *dlm,
+ 	for (i = 0; i < localnr; ++i) {
+ 		foundit = 0;
+ 		r = remote;
+-		for (j = 0; j <= qr->qr_numregions; ++j) {
++		for (j = 0; j < qr->qr_numregions; ++j) {
+ 			if (!memcmp(l, r, O2HB_MAX_REGION_NAME_LEN)) {
+ 				foundit = 1;
+ 				break;
 -- 
 2.53.0
 
