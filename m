@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199AC331220;
-	Wed, 20 May 2026 17:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BB7346E5E;
+	Wed, 20 May 2026 17:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298153; cv=none; b=iyDJeXVQZZ3mYtOd3UKO4lqpnx/bjm8/5XQZua+oUyRk3Ef0DjSRuOzslKy/H7V2BP/BYm4wVM6zanq7wWx0ximItzkNz31MEbWlGdeSw5PBi6+N7ObEcDpOuyKiQv1g5dPfffhObnHHSmUkpuqdozQUNBUnS13KXruBzU0ufEs=
+	t=1779298155; cv=none; b=FSicJayv6Nn3D25pNDX7CcyW0SU5jA6GctY06t240R2Yeh5t7y1PofA6Ap+KskegbUz57zEX9AXSkSG/8BZws8scNR6qqL+jHNFO+Z0tH5BLKTuyeL3g2ub4S+79+0FtSgYScd/fWxBEzvY845cOa0FTXdilYHhp3vTt3wM5Qx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298153; c=relaxed/simple;
-	bh=XvCHcCGXS7WOZxVvwCoZz2LSIMIO0ZKO0QqPsdAFgUY=;
+	s=arc-20240116; t=1779298155; c=relaxed/simple;
+	bh=Y6j/u1ZTe86WsOoFOVBjZJBj0WRL6bfx9V0jmV5kAwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+uIEQhvCVUz3DK3VyLfLfYRfzMcQdYsMoz8wAQ1Eku73T4GlK++ixKKv5uRFzsRfK0FdAo6qicmnrM+bu84brD6TK4HfkbannJcTiSni1EUAhFEEs0aeIK0hTX7cZnqVrR4nbIdDL9oZ4N1sXlp+OnV2/6eFZkTDWZ476qsa+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOxog8vL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E8jU9DijbC/sgAl8KEMG8KNhM9XBUA+XuPcE18J69Uo64XVprOJRTO2nrcuMFQcpU8/RkqhQgjVOKLHMTWJ06uG7KH1c86dRhIPIi65fB35AGX0kuVDWEhWAnjxgymwymfItriLzkBgNBbGymA2SHmgLSBnWOtqHPOQoyCG+fa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eL5d0/pd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOxog8vL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B6C1F000E9;
-	Wed, 20 May 2026 17:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eL5d0/pd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0CF1F000E9;
+	Wed, 20 May 2026 17:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298152;
-	bh=SquYIIW8zxlc/R070UXhIMlb8sFwfHfe9qdAptxkXfQ=;
+	s=korg; t=1779298154;
+	bh=68EkbYuGXE/6Alm0pszvdjcmAhEVFmdohEmVTqsMaYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sOxog8vLZvbwIYPS/FWGNnGeiFFH3mEFH3ugI9N58HoVyAoUIYjPcDWIuf6rtOqBl
-	 4F8FjsldLZYUniGFU6aG5nd0GFjej7YiaIus4hjwEedqtTBqBrj1O3wrwB206Di0LA
-	 bhE08yZ0bVB9jWqFHs5sAb97Xh4wWWJf62xG7a6c=
+	b=eL5d0/pd4nagGpEYW4v2hMGdAPK+SP1z+oj6sAZd27GCFpjiOsoTiGlHL5FbKLHA8
+	 kloY01rDYptlu5qaWkbFikwfftDXvfuF50qVZKLaUMMe9n/IS+GIyUBGxTmQnRrSnm
+	 bUge04LiE6m3cPhVaQLcMqI22P9OikhAqIrTXOUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Laurent M Coquerel <laurent.m.coquerel@intel.com>,
 	Ahsan Atta <ahsan.atta@intel.com>,
-	Wojciech Drewek <wojciech.drewek@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 300/957] crypto: qat - fix compression instance leak
-Date: Wed, 20 May 2026 18:13:03 +0200
-Message-ID: <20260520162141.038689838@linuxfoundation.org>
+Subject: [PATCH 6.18 301/957] crypto: qat - fix type mismatch in RAS sysfs show functions
+Date: Wed, 20 May 2026 18:13:04 +0200
+Message-ID: <20260520162141.060328276@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -56,61 +55,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 795c24c677c7a1c12f5768daf22a874a2890662f ]
+[ Upstream commit ec23d75c4b77ae42af0777ea59599b1d4f611371 ]
 
-qat_comp_alg_init_tfm() acquires a compression instance via
-qat_compression_get_instance_node() before calling qat_comp_build_ctx()
-to initialize the compression context. If qat_comp_build_ctx() fails, the
-function returns an error without releasing the compression instance,
-causing a resource leak.
+ADF_RAS_ERR_CTR_READ() expands to atomic_read(), which returns int.
+The local variable 'counter' was declared as 'unsigned long', causing
+a type mismatch on the assignment. The format specifier '%ld' was
+consequently wrong in two ways: wrong length modifier and wrong
+signedness.
 
-When qat_comp_build_ctx() fails, release the compression instance with
-qat_compression_put_instance() and clear the context to avoid leaving a
-stale reference to the released instance.
+Use int to match the return type of atomic_read() and update the
+format specifier to '%d' accordingly.
 
-The issue was introduced when build_deflate_ctx() (which always returned
-void) was replaced by qat_comp_build_ctx() (which can return an error)
-without adding error handling for the failure path.
-
-Fixes: cd0e7160f80f ("crypto: qat - refactor compression template logic")
+Fixes: 532d7f6bc458 ("crypto: qat - add error counters")
 Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Laurent M Coquerel <laurent.m.coquerel@intel.com>
 Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/qat_comp_algs.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ .../intel/qat/qat_common/adf_sysfs_ras_counters.c    | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/qat_comp_algs.c b/drivers/crypto/intel/qat/qat_common/qat_comp_algs.c
-index 8b123472b71cc..4273a0ecb6c80 100644
---- a/drivers/crypto/intel/qat/qat_common/qat_comp_algs.c
-+++ b/drivers/crypto/intel/qat/qat_common/qat_comp_algs.c
-@@ -133,7 +133,7 @@ static int qat_comp_alg_init_tfm(struct crypto_acomp *acomp_tfm)
- 	struct crypto_tfm *tfm = crypto_acomp_tfm(acomp_tfm);
- 	struct qat_compression_ctx *ctx = crypto_tfm_ctx(tfm);
- 	struct qat_compression_instance *inst;
--	int node;
-+	int node, ret;
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c b/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
+index e97c67c87b3cf..6abb57bfd3285 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_sysfs_ras_counters.c
+@@ -13,14 +13,14 @@ static ssize_t errors_correctable_show(struct device *dev,
+ 				       char *buf)
+ {
+ 	struct adf_accel_dev *accel_dev;
+-	unsigned long counter;
++	int counter;
  
- 	if (tfm->node == NUMA_NO_NODE)
- 		node = numa_node_id();
-@@ -146,7 +146,13 @@ static int qat_comp_alg_init_tfm(struct crypto_acomp *acomp_tfm)
+ 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
+ 	if (!accel_dev)
  		return -EINVAL;
- 	ctx->inst = inst;
  
--	return qat_comp_build_ctx(inst->accel_dev, ctx->comp_ctx, QAT_DEFLATE);
-+	ret = qat_comp_build_ctx(inst->accel_dev, ctx->comp_ctx, QAT_DEFLATE);
-+	if (ret) {
-+		qat_compression_put_instance(inst);
-+		memset(ctx, 0, sizeof(*ctx));
-+	}
-+
-+	return ret;
+ 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_CORR);
+-	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
++	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
  }
  
- static void qat_comp_alg_exit_tfm(struct crypto_acomp *acomp_tfm)
+ static ssize_t errors_nonfatal_show(struct device *dev,
+@@ -28,14 +28,14 @@ static ssize_t errors_nonfatal_show(struct device *dev,
+ 				    char *buf)
+ {
+ 	struct adf_accel_dev *accel_dev;
+-	unsigned long counter;
++	int counter;
+ 
+ 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
+ 	if (!accel_dev)
+ 		return -EINVAL;
+ 
+ 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_UNCORR);
+-	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
++	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
+ }
+ 
+ static ssize_t errors_fatal_show(struct device *dev,
+@@ -43,14 +43,14 @@ static ssize_t errors_fatal_show(struct device *dev,
+ 				 char *buf)
+ {
+ 	struct adf_accel_dev *accel_dev;
+-	unsigned long counter;
++	int counter;
+ 
+ 	accel_dev = adf_devmgr_pci_to_accel_dev(to_pci_dev(dev));
+ 	if (!accel_dev)
+ 		return -EINVAL;
+ 
+ 	counter = ADF_RAS_ERR_CTR_READ(accel_dev->ras_errors, ADF_RAS_FATAL);
+-	return scnprintf(buf, PAGE_SIZE, "%ld\n", counter);
++	return scnprintf(buf, PAGE_SIZE, "%d\n", counter);
+ }
+ 
+ static ssize_t reset_error_counters_store(struct device *dev,
 -- 
 2.53.0
 
