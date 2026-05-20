@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522C53FB06C;
-	Wed, 20 May 2026 11:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7405E3FC5AD;
+	Wed, 20 May 2026 11:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276066; cv=none; b=SVhBmm14Cjcielq65D+eheFs+KZdPMCf5gh9unZwA6r534eCtWS1LOoOCs21CSo0iSRliSjy5kSdedH1WTYBZ2lRdxaV78wmlZsS9CjqDvNHCxKjdn3u5K+vpWnMQUfZuq4XKq9pCnfNXQ0XtOqt1bPT+TfaQcOSFjT8ZO3jeWM=
+	t=1779276067; cv=none; b=nR64sgj4kNSdHUMjkw40m2Optl5/YwGAZQ3xzKreaN+fo6jToiNLVp47zeaTDRRx75IHEGnT3rd2Kz56p3No9aXLTchQjKG1l9pMDb0RVQS3rXxWnYdcKxj6bLiz1x8fHwKkxKXEPJa/gdAhwiaNj9uYbJJBLVbz8B27mCdP8Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276066; c=relaxed/simple;
-	bh=aBw/JHFYhHY3TKJTHkxIi2GJB2S8Gem6EkJEPylpgYM=;
+	s=arc-20240116; t=1779276067; c=relaxed/simple;
+	bh=pP8iVAxF1FoMXalCFIkZlnb3QWBe+RsA4kTO38lVTnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bgr/2p/pr5MluwHYtoJwFwr5RqXSqm1pkRVgRt0C4GP83m+HRn771OMgOeeYgujUYNgUe/iXklokp+8JDYkG9G7asegrv/LbGCsVmwHD6A0oIxkqxft8pWvPQwxG3syYEAMrs2bk5a6uhB8mLkNDaXNuZURT9Mdi/3v57aFi5sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kroGMQ/5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=l9eP3Ec+QMEZS7ZbDDT5gIJyJMaHmhywbEfbNk3JbVhjYdhrsT6HytCQ9EhOpdXkz6ItytciZ+TgyfaHTkqNXxHdD7aAQi9yv+S3TNosy87HTZWrZJ2SbTz43x2n/qjb2B0ZphMD0jYL6HMryXThKWL1U133ZYlhRTs75kouMFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EIpc+L2M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kroGMQ/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6491F00896;
-	Wed, 20 May 2026 11:21:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EIpc+L2M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558D51F00894;
+	Wed, 20 May 2026 11:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276064;
-	bh=GwHoWjI1bbJdJ2rnXbFba5rnxllSqbduAn8eFQS1hQ8=;
+	s=k20260515; t=1779276065;
+	bh=+CoWtz8ztGvbc8ecX5s+vUNsyKplJmYowMl+atQh6mE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kroGMQ/5N3QyVhlB8lxkRDc0UtSq4ht6CaL3pu8NZGAFGPiRVArJ2+loQu/9L4I9c
-	 pyWbeU7ianoLzlC9lkT8hZ13GaZIHe0Qao4PC2rbK0d3/3qGjvDr940Axcx7Fvj4cH
-	 D/mhpQPeqPPtorX9kDk9SKB7nQN7nAH3aDwWbgiWnwbKLOgp2Yo04sEBFW4+mqdWdM
-	 t0eDbOx5vOcfbAYHvfGXOPkfNTLaP2Vrpm0PIRuqdHL2kEAW4Qq7YKCBcMtllrjTA3
-	 4SBdqzuPDsfSm2KtYMO0eeCahikrc/v8gOe+OKs7nC1HRqm+tIDggPJ6eUNrWz8Gj7
-	 eX8jta7vy+cjQ==
+	b=EIpc+L2Mo5UWc/qZaYG5siVu8u36TaK9E05H1cwITHSAwdqnx42DdILtyzhcIUa5E
+	 VTSKOZGCjVbwWjHcC+AqIkCSMC+/bueJXp2y1vO369Du6PXyrhcJp4yeUWyMe4p674
+	 +uWAAvegdesuRQQofcOARVs21Drax4kzhdcRVdV7fvQ0C7k3BcVAV92Zae5OmalT+N
+	 NK5RM0ViUs9nV5GIszFZtpjQ6CR/Moet7dfmgmu/L2BiO3qEj1qzS0NDr0/UFofmu+
+	 IXh3X7NScUUBOrpERFxJ7tOQpuKdze2+053RB5t2m3Vf1eGHlLwFG3qB90bSCT51CA
+	 yIPE0qSCRkF7Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Haichen Feng <2806891994@qq.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Niels Franke <nielsfranke@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	westeri@kernel.org,
+	linux-i2c@vger.kernel.org,
+	linux-acpi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0] platform/x86: hp-wmi: Add support for Victus 16-r0xxx (8BC2)
-Date: Wed, 20 May 2026 07:19:28 -0400
-Message-ID: <20260520111944.3424570-56-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] i2c: acpi: Add ELAN0678 to i2c_acpi_force_100khz_device_ids
+Date: Wed, 20 May 2026 07:19:29 -0400
+Message-ID: <20260520111944.3424570-57-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -47,234 +49,285 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haichen Feng <2806891994@qq.com>
+From: Niels Franke <nielsfranke@gmail.com>
 
-[ Upstream commit a59e45221df82e8a6246c617615c1ccc12e3545d ]
+[ Upstream commit 9998e388be9930c106eb5904c23ecf2162407527 ]
 
-The HP Victus 16-r0xxx (board ID: 8BC2) has the same WMI as other Victus
-S boards, but requires quirks for correctly switching thermal profile.
+The ELAN0678 touchpad (04F3:3195) found in the Lenovo ThinkPad X13
+exhibits excessive smoothing when the I2C bus runs at 400KHz, making
+the touchpad feel sluggish when plugged into AC power. This is the
+same issue previously fixed for ELAN06FA.
 
-Add the DMI board name to victus_s_thermal_profile_boards[] table and
-map it to omen_v1_thermal_params.
+The device's ACPI table (Lenovo TP-R22) specifies 0x00061A80 (400KHz)
+for the I2cSerialBusV2 descriptor. Forcing the bus to 100KHz eliminates
+the sluggish behavior.
 
-Testing on board 8BC2 confirmed that platform profile is registered
-successfully and fan RPMs are readable and controllable.
-
-Signed-off-by: Haichen Feng <2806891994@qq.com>
-Link: https://patch.msgid.link/tencent_8E29805D8DC7B6005244C3433C62DD9DF606@qq.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Niels Franke <nielsfranke@gmail.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+[wsa: kept the sorting]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase Walkthrough
-### Phase 1: Commit Message Forensics
-Record: Subsystem is `platform/x86: hp-wmi`; action verb is `Add
-support`; intent is a DMI hardware quirk for HP Victus 16-r0xxx board
-`8BC2`.
+## Phase 1: Commit Message Forensics
 
-Record: Tags found: `Signed-off-by: Haichen Feng`, `Link: https://patch.
-msgid.link/tencent_8E29805D8DC7B6005244C3433C62DD9DF606@qq.com`,
-`Reviewed-by: Ilpo Järvinen`, `Signed-off-by: Ilpo Järvinen`. No
-`Fixes:`, `Reported-by:`, `Tested-by:`, or `Cc: stable`.
+Step 1.1 - Subject:
+Record: Subsystem `i2c: acpi`; action verb `Add`; intent is to add ACPI
+HID `ELAN0678` to the existing 100 kHz forced-speed quirk table.
 
-Record: Body says board `8BC2` has the same WMI behavior as other Victus
-S boards but needs quirks for correct thermal profile switching. The
-author reports testing on board `8BC2`: platform profile registered, fan
-RPMs readable and controllable.
+Step 1.2 - Tags:
+Record: `Signed-off-by: Niels Franke <nielsfranke@gmail.com>`; `Acked-
+by: Mika Westerberg <mika.westerberg@linux.intel.com>`; maintainer note
+`[wsa: kept the sorting]`; `Signed-off-by: Wolfram Sang
+<wsa+renesas@sang-engineering.com>`. No `Fixes:`, `Reported-by:`,
+`Tested-by:`, `Link:`, or `Cc: stable@vger.kernel.org` tags.
 
-Record: This is a hardware quirk / DMI board enablement, not a hidden
-memory-safety bug.
+Step 1.3 - Body:
+Record: The bug is real hardware misbehavior: ELAN0678 touchpad
+`04F3:3195` on Lenovo ThinkPad X13 becomes sluggish/excessively smoothed
+when ACPI-described I2C speed is 400 kHz. The commit says forcing 100
+kHz eliminates it. Root cause is a bad/not-working speed choice for this
+device, matching the earlier ELAN06FA workaround.
 
-### Phase 2: Diff Analysis
-Record: One file changed: `drivers/platform/x86/hp/hp-wmi.c`, 4
-insertions. Modified object: `victus_s_thermal_profile_boards[]`. Scope:
-single-file surgical DMI table addition.
+Step 1.4 - Hidden bug fix:
+Record: Yes. Although phrased as “Add”, this is a hardware
+workaround/quirk for a user-visible input-device malfunction, not new
+feature work.
 
-Record: Before: `8BC2` did not match
-`victus_s_thermal_profile_boards[]`. After: `8BC2` matches and gets
-`.driver_data = &omen_v1_thermal_params`.
+## Phase 2: Diff Analysis
 
-Record: Bug category is hardware workaround / DMI quirk. Mechanism:
-`setup_active_thermal_profile_params()` uses `dmi_first_match()` on this
-table, sets `is_victus_s_board = true`, and selects board-specific
-thermal parameters. Without the entry, the Victus S-specific platform
-profile and hwmon fan paths are not selected for this board.
+Step 2.1 - Inventory:
+Record: One file changed: `drivers/i2c/i2c-core-acpi.c`, `+1/-0`. It
+adds `{ "ELAN0678", 0 }` to `i2c_acpi_force_100khz_device_ids`. Scope is
+a single-file, one-line hardware quirk.
 
-Record: Fix quality is high: 4-line table entry, no API change, no
-locking/memory lifetime change. Regression risk is very low and limited
-to machines whose DMI board name is exactly `8BC2`.
+Step 2.2 - Code flow:
+Record: Before, ELAN0678 used the normal ACPI/min-speed path and could
+run at the 400 kHz speed from firmware. After, when
+`i2c_acpi_lookup_speed()` sees an ACPI device matching `ELAN0678`, it
+sets `lookup->force_speed = I2C_MAX_STANDARD_MODE_FREQ`, causing
+`i2c_acpi_find_bus_speed()` to return 100 kHz.
 
-### Phase 3: Git History Investigation
-Record: `git blame` around the table shows the DMI table/refactor came
-from `8ca7515d3c76` and nearby board entries came from prior hp-wmi
-board-support commits. `git grep` against the candidate parent found no
-existing `8BC2` entry.
+Step 2.3 - Bug mechanism:
+Record: Hardware workaround. The broken condition is a known-not-working
+I2C bus speed for a specific ACPI HID. The fix reuses the existing
+forced-100-kHz mechanism.
 
-Record: No `Fixes:` tag, so no introducing commit to follow.
+Step 2.4 - Fix quality:
+Record: Obviously correct and minimal. It only affects machines exposing
+ACPI HID `ELAN0678`. Regression risk is very low: affected devices will
+run slower I2C, intentionally matching the verified workaround; all
+other devices are unchanged.
 
-Record: Recent file history shows many similar hp-wmi board additions
-and fixes, including `8BCA`, `8C76`, `8A4D`, and Victus S support
-commits. The candidate is standalone relative to its parent.
+## Phase 3: Git History
 
-Record: `git log --author='Haichen Feng'` found no prior local hp-wmi
-commits. The patch was reviewed and committed by Ilpo Järvinen, who also
-appears in hp-wmi history.
+Step 3.1 - Blame:
+Record: `git blame` on `origin/master` shows the new line is commit
+`9998e388be993`; the 100 kHz table and `ELAN06FA` handling came from
+`bfd74cd1fbc026`, first contained around `v6.14-rc1`; `DLL0945` came
+from `0b7c9528facdb5`, first contained around `v6.17-rc1`.
 
-Record: Dependency: the exact patch expects the `dmi_system_id` table
-with `driver_data` and `omen_v1_thermal_params`. That exists in
-`v7.0`/`v7.0.9`; older `v6.18`/`v6.19` have an older string table, and
-`v6.12` and older checked tags did not show this Victus S table.
+Step 3.2 - Fixes tag:
+Record: Not applicable; no `Fixes:` tag is present.
 
-### Phase 4: Mailing List And External Research
-Record: `b4 dig -c a59e45221df82e8a6246c617615c1ccc12e3545d` found the
-original patch at the provided message-id URL.
+Step 3.3 - File history:
+Record: Recent file history shows related quirks `ELAN06FA` and
+`DLL0945`, plus unrelated treewide allocation conversions. No
+prerequisite structural change is needed where the 100 kHz table already
+exists.
 
-Record: `b4 dig -C -a` found revisions v1, v2, and v4. Review history
-shows v1 was asked to place `8BC2` in sorted order, v3/v4 discussion
-asked for a proper commit message and a new thread for b4 tooling. The
-standalone v4 was accepted by Ilpo, with applied commit
-`a59e45221df82e8a6246c617615c1ccc12e3545d`.
+Step 3.4 - Author context:
+Record: Local history shows Niels Franke has this one I2C commit on
+`origin/master`. The patch was acked by Mika Westerberg, listed in
+`MAINTAINERS` as I2C ACPI maintainer, and committed by Wolfram Sang.
 
-Record: `b4 dig -w` showed the patch went to Haichen Feng, Ilpo
-Järvinen, Hans de Goede, `linux-kernel`, and `platform-driver-x86`.
+Step 3.5 - Dependencies:
+Record: Standalone for stable branches that already have
+`i2c_acpi_force_100khz_device_ids`. For branches lacking the table, it
+depends on the earlier ELAN06FA forced-100-kHz infrastructure.
 
-Record: No stable-specific request or rejection was found. `WebFetch`
-for lore search pages was blocked by Anubis, so stable-list search via
-web is unverified.
+## Phase 4: Mailing List And External Research
 
-### Phase 5: Code Semantic Analysis
-Record: Key functions affected indirectly:
-`setup_active_thermal_profile_params()`,
-`is_victus_s_thermal_profile()`, `thermal_profile_setup()`,
-`platform_profile_victus_s_set_ec()`, and hwmon fan handlers.
+Step 4.1 - Original discussion:
+Record: `b4 dig -c 9998e388be993` found the original submission at
+`https://patch.msgid.link/20260418053719.15766-1-nielsfranke@gmail.com`.
+The mirror thread shows v1 only, Mika Westerberg acked it, and Wolfram
+Sang applied it to `for-current` while keeping sort order. No objections
+or NAKs found.
 
-Record: Callers: `hp_wmi_init()` calls
-`setup_active_thermal_profile_params()` before probing; platform profile
-and hwmon callbacks use `is_victus_s_thermal_profile()` to choose Victus
-S behavior.
+Step 4.2 - Reviewers/recipients:
+Record: `b4 dig -w` shows recipients included Niels Franke,
+`westeri@kernel.org`, Wolfram Sang, `linux-i2c`, `linux-acpi`, and
+`linux-kernel`. This reached the relevant I2C ACPI maintainer and lists.
 
-Record: Callees include `dmi_first_match()`, `ec_read()`,
-`hp_wmi_perform_query()`, and `devm_platform_profile_register()`.
+Step 4.3 - Bug report:
+Record: No separate `Reported-by` or bug tracker link in the commit. The
+commit message itself documents affected hardware, ACPI table speed, and
+the tested workaround. Web search also found unrelated ELAN0678 user
+reports, but I did not rely on those for the final decision.
 
-Record: Reachability: the path is reached during hp-wmi module
-init/probe and through user-visible platform profile and hwmon
-operations after registration. Impact is board-specific, not universal.
+Step 4.4 - Series context:
+Record: `b4 dig -a` shows a single v1 patch, not a multi-patch series.
 
-Record: Similar patterns exist in the same table: `8BCA`, `8BCD`,
-`8C76`, and `8C78` map to `omen_v1_thermal_params`.
+Step 4.5 - Stable discussion:
+Record: Direct lore stable fetch was blocked by Anubis; web search found
+no specific stable-list discussion for ELAN0678. Stable branch git logs
+sampled do not yet contain ELAN0678.
 
-### Phase 6: Cross-Referencing And Stable Tree Analysis
-Record: Checked tags: `v7.0` and `v7.0.9` contain the required struct
-DMI table and lack `8BC2`; `v6.18`/`v6.19` contain an older string-table
-Victus S implementation; `v6.12`, `v6.6`, `v6.1`, `v5.15`, and `v5.10`
-did not show the same target code.
+## Phase 5: Code Semantic Analysis
 
-Record: `git apply --check` of the candidate diff succeeded on current
-`v7.0.9`, so expected backport difficulty for `7.0.y` is clean. Older
-trees would need either prerequisites or a different backport, and the
-exact tested `omen_v1_thermal_params` mapping is not directly applicable
-to the older string table.
+Step 5.1 - Key functions:
+Record: The diff changes only the ACPI ID table, but behavior flows
+through `i2c_acpi_lookup_speed()` and `i2c_acpi_find_bus_speed()`.
 
-Record: No related stable alternative fix for `8BC2` was found in
-checked local history.
+Step 5.2 - Callers:
+Record: `i2c_acpi_find_bus_speed()` is called by multiple I2C bus
+drivers, including DesignWare, USBIO, SynQuacer, LS2X, Zhaoxin, and AMD
+MP2. For DesignWare, `dw_i2c_plat_probe()` and PCI probe paths call
+`i2c_dw_fw_parse_and_configure()`, which calls the ACPI speed lookup
+during controller setup.
 
-### Phase 7: Subsystem And Maintainer Context
-Record: Subsystem is `drivers/platform/x86/hp`, a platform/laptop driver
-subsystem. Criticality is peripheral but user-visible for affected HP
-hardware.
+Step 5.3 - Callees:
+Record: The relevant code calls `acpi_walk_namespace()`,
+`i2c_acpi_do_lookup()`, and `acpi_match_device_ids()`; if matched, it
+returns the forced speed to bus-driver timing configuration.
 
-Record: File history is active, with multiple recent hp-wmi board quirks
-and fixes. The review/commit path involved Ilpo Järvinen from the
-platform-drivers-x86 maintainership path.
+Step 5.4 - Reachability:
+Record: Reachable during I2C adapter/controller initialization on ACPI
+systems. On affected Lenovo hardware, this path controls the bus speed
+used for the touchpad.
 
-### Phase 8: Impact And Risk Assessment
-Record: Affected population is users of HP Victus 16-r0xxx board `8BC2`
-with hp-wmi enabled.
+Step 5.5 - Similar patterns:
+Record: Verified sibling quirks `ELAN06FA` and `DLL0945` in the same
+table, both addressing touchpad sluggishness at higher I2C speed.
 
-Record: Trigger condition is boot/probe and subsequent platform profile
-or hwmon fan use on that exact DMI board. Unprivileged triggerability
-beyond ordinary sysfs exposure was not established and is not needed for
-this decision.
+## Phase 6: Stable Tree Analysis
 
-Record: Failure mode is missing/incorrect platform profile and fan
-control support on affected hardware, not a crash/corruption bug.
-Severity is medium for affected users.
+Step 6.1 - Buggy code in stable:
+Record: Sampled stable branches `5.10.y`, `5.15.y`, `6.6.y`, `6.12.y`,
+`6.15.y` through `7.0.y` already contain the 100 kHz quirk table with
+`ELAN06FA`/`DLL0945`, but not `ELAN0678`. `5.4.y` has ACPI speed lookup
+but not the forced-100-kHz table in the sampled state.
 
-Record: Benefit is high for affected hardware because it enables tested
-thermal profile/fan behavior. Risk is very low because the change is a
-single exact DMI match.
+Step 6.2 - Backport difficulty:
+Record: Clean or trivial for branches with both `DLL0945` and `ELAN06FA`
+adjacent. Branches lacking `DLL0945` or the table may need a trivial
+context adjustment or dependency backport.
 
-### Phase 9: Final Synthesis
-Record: Evidence for backporting: it is a hardware-specific DMI quirk,
-explicitly tested on the target board by the submitter, reviewed/applied
-by the subsystem maintainer path, and only affects board `8BC2`.
+Step 6.3 - Related fixes already stable:
+Record: Stable branches sampled already carry related ELAN06FA/DLL0945
+quirks, but no ELAN0678 equivalent.
 
-Record: Evidence against: it is hardware enablement rather than a
-crash/security/data-corruption fix, and older stable trees may not have
-the exact prerequisite table structure.
+## Phase 7: Subsystem Context
 
-Record: Stable rules: obviously correct yes; fixes a real board support
-problem yes; important enough under the hardware quirk exception yes;
-small and contained yes; no new API yes; clean apply verified for
-`v7.0.9`, older applicability requires tree-specific handling.
+Step 7.1 - Subsystem:
+Record: `drivers/i2c/i2c-core-acpi.c`, I2C ACPI support. Criticality is
+important for affected ACPI laptop hardware, but not universal/core.
 
-Record: Exception category applies: hardware quirk / DMI board entry to
-an existing driver.
+Step 7.2 - Activity:
+Record: File history shows active maintenance and recent hardware quirk
+additions. The patch was accepted through the I2C maintainer path.
+
+## Phase 8: Impact And Risk
+
+Step 8.1 - Affected users:
+Record: Users of systems exposing the ELAN0678 ACPI touchpad,
+specifically verified by commit message for Lenovo ThinkPad X13.
+
+Step 8.2 - Trigger:
+Record: Triggered when the I2C bus is configured at 400 kHz for this
+device, including via the Lenovo TP-R22 ACPI `I2cSerialBusV2`
+descriptor. This is normal boot/device setup, not an obscure manual
+path.
+
+Step 8.3 - Severity:
+Record: Medium severity user-visible hardware malfunction: sluggish
+touchpad/input behavior. Not a crash, security issue, or data
+corruption.
+
+Step 8.4 - Risk-benefit:
+Record: Benefit is high for affected laptops because it restores usable
+touchpad behavior. Risk is very low because it is a one-line ACPI HID-
+specific quirk using existing logic.
+
+## Phase 9: Final Synthesis
+
+Step 9.1 - Evidence:
+Record: For backporting: real hardware bug, existing quirk mechanism,
+one-line scoped change, maintainer ack, accepted by I2C maintainer,
+stable branches already carry analogous quirks. Against backporting: no
+explicit stable tag, no separate bug report link, not a critical
+crash/security fix. Unresolved: exact applicability to every older
+stable branch; `5.4.y` would need more than this one-line context.
+
+Step 9.2 - Stable rules:
+Record: Obviously correct: yes. Tested: commit states forcing 100 kHz
+eliminates the issue, though no `Tested-by` tag. Real bug: yes, touchpad
+sluggishness. Important enough: yes under hardware quirk/workaround
+practice. Small/contained: yes, one line. No new APIs/features: yes.
+Applies to stable: yes for branches with the existing table; trivial
+adjustment/dependency for older divergent branches.
+
+Step 9.3 - Exception:
+Record: This falls squarely under the stable hardware quirk/workaround
+exception.
+
+Step 9.4 - Decision:
+Record: Backport. The risk is tiny and the fix is exactly the sort of
+targeted hardware workaround stable trees routinely carry.
 
 ## Verification
-- [Phase 1] `git show a59e45221df82...` confirmed subject, tags, 4-line
-  diff, and commit body.
-- [Phase 2] Diff confirmed only `victus_s_thermal_profile_boards[]` is
-  changed.
-- [Phase 3] `git blame` and `git log` verified table history and related
-  hp-wmi board entries.
-- [Phase 4] `b4 dig`, `b4 mbox`, and local mbox reads verified review
-  history, v1/v2/v4 revisions, maintainer feedback, and final
-  acceptance.
-- [Phase 5] `rg`/file reads verified the DMI table drives Victus S
-  platform profile and hwmon fan code paths.
-- [Phase 6] tag checks verified exact applicability to `v7.0.y` and
-  structural mismatch in older checked trees.
-- [Phase 8] Impact/risk is based on exact DMI matching and code-path
-  inspection.
-- UNVERIFIED: lore stable search pages via `WebFetch` were blocked by
-  Anubis; no independent hardware test was performed here beyond the
-  author’s commit-message report.
 
-This should be backported to stable trees that contain the matching hp-
-wmi DMI table infrastructure, especially `7.0.y`. It is the classic
-stable-acceptable hardware quirk: tiny, reviewed, board-specific, and
-low risk.
+- Phase 1: Parsed `git show --format=fuller --stat --patch
+  9998e388be993`; confirmed subject, body, tags, and one-line diff.
+- Phase 2: Read `drivers/i2c/i2c-core-acpi.c`; confirmed
+  `i2c_acpi_force_100khz_device_ids` is checked by
+  `i2c_acpi_lookup_speed()` and returns 100 kHz through
+  `i2c_acpi_find_bus_speed()`.
+- Phase 3: Ran `git blame` on the relevant lines; confirmed commits for
+  `ELAN06FA`, `DLL0945`, and `ELAN0678`.
+- Phase 3: Ran `git describe --contains`; confirmed first-containing
+  release positions for related mainline commits.
+- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, and `b4 dig -w`; found original
+  v1 submission, no later revisions, and relevant recipients.
+- Phase 4: Fetched the public mirror thread; confirmed Mika Westerberg’s
+  ack and Wolfram Sang’s application note.
+- Phase 5: Used semantic search, `rg`, and file reads; confirmed
+  DesignWare and other I2C bus drivers call `i2c_acpi_find_bus_speed()`.
+- Phase 6: Used `git grep` and stable branch logs; confirmed sampled
+  stable branches contain related forced-speed quirks but not ELAN0678.
+- Phase 8: Failure mode is verified from the commit message and lore
+  thread: sluggish/excessively smoothed touchpad at 400 kHz, fixed by
+  100 kHz.
+- UNVERIFIED: Direct `lore.kernel.org/stable` content was blocked by
+  Anubis, so I could not independently inspect stable-list discussion
+  there.
 
 **YES**
 
- drivers/platform/x86/hp/hp-wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i2c/i2c-core-acpi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index 62fd2fe0d8d0e..71e0100455d9a 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -194,6 +194,10 @@ static const struct dmi_system_id victus_s_thermal_profile_boards[] __initconst
- 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BBE") },
- 		.driver_data = (void *)&victus_s_thermal_params,
- 	},
-+	{
-+		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BC2") },
-+		.driver_data = (void *)&omen_v1_thermal_params,
-+	},
- 	{
- 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BCA") },
- 		.driver_data = (void *)&omen_v1_thermal_params,
+diff --git a/drivers/i2c/i2c-core-acpi.c b/drivers/i2c/i2c-core-acpi.c
+index 2cbd31f77667a..28c0e4884a7f2 100644
+--- a/drivers/i2c/i2c-core-acpi.c
++++ b/drivers/i2c/i2c-core-acpi.c
+@@ -371,6 +371,7 @@ static const struct acpi_device_id i2c_acpi_force_100khz_device_ids[] = {
+ 	 * a 400KHz frequency. The root cause of the issue is not known.
+ 	 */
+ 	{ "DLL0945", 0 },
++	{ "ELAN0678", 0 },
+ 	{ "ELAN06FA", 0 },
+ 	{}
+ };
 -- 
 2.53.0
 
