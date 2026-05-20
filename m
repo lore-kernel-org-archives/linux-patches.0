@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0707C400E07;
-	Wed, 20 May 2026 18:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE52847B434;
+	Wed, 20 May 2026 18:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302400; cv=none; b=dvcB0jNfSYt87teUMeHm8jmS4s0iBNZsL5tEwlaBt6/juqjvo1ky68e3hw9h/LGLV77kZxGxajM6Xj7Bgw1ALigCwzRy3RiuwHdMrZp+z1/OhLpTeNGnuftznqGZ4eGKBrby4qwyOeEguX0no9NaHqGCPrl+tiA5P40WBZZ/SCI=
+	t=1779302402; cv=none; b=KG7WozheBux+uE1UjfeIwNdeAv8Tjg0DtNQILlB0krilzzshOptyL6xOi90imeq+qd2POWgkwSH1q7zWQtx9BORIOxau+hgmlfjFhtYYujH2uKNEpuaxtp0i7Sb8myfZzP1X1PxB8XZIBqIVcK057Jy7hGISdg6dpMQHb/CAiDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302400; c=relaxed/simple;
-	bh=8QGNDv99avdARFlB4goBWufW636Hrff9XEYbW2r1NZs=;
+	s=arc-20240116; t=1779302402; c=relaxed/simple;
+	bh=2AyjC7xyH6gKg8nDK/Gu2hNZ0X7BmaPyKP+qaPtWCeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z9DnOMaeEaHF7E7DkB7f8KbLt+imh9r/OPiW4MKM82+i/p1nK/UCjWSyA0Tx13ZRI6WmEPzlgYSAkps8MwLrYJJIvHqTqh4QKfTtnkSwEMHRRQYDACokq4SE1dHOyGt7ob48srrFDfrilDmK7llBR4zX3JrsVzjCI57735B9fM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNhpwIiv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bJIUP2rOVQgMADQI8aPnPfPb8H1Xp+gf6bDm+APbcRQt63Azk79UfvxfKmX9wUdi8O/vahMLm5kg20dEJLJcTCKZLOR2BRno7VkUvMj+H44DJOJVnI+axpWpNuN0j8h5Hl2+sux1D169SgFLl0r2CKQl6pt4IMytKY6je4DeXVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdGtUrlT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNhpwIiv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5258C1F00897;
-	Wed, 20 May 2026 18:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdGtUrlT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DD51F000E9;
+	Wed, 20 May 2026 18:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302398;
-	bh=K41ttXtU2Qg19BtuTIeVpWTxOmdf7lC7lpiGWGC5pqw=;
+	s=korg; t=1779302401;
+	bh=2KH1mipiqbvlMsrU6/PEkUJFKjQnos03fITxO+fyysc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KNhpwIivDHVHdCqjJUh0A/ESUGjg4vyWHvPJ+9rfBFCORuwSzimud3zQ9tsF19Eup
-	 +32QDMXZVF8nRoOjND7Wa4zv+YsHkcMYMqO48XrHkCHQNhJMjyioJ4yd/ST5NoEn3/
-	 jazjA+3+gvIcA6r2II7IHVbk9k9Wg/hfkayES3QQ=
+	b=YdGtUrlTIBOI+eCqG0+20p6ru2jL34gLzZc3MIdb9d2dXGhn03k2Z/jp8vefvibs7
+	 0alRpNoJVVGDMKyy05NgVYiLi2Wzgx4hkaElqTdkEgwR/ZHOYpz923zXn1CohOkOrc
+	 g6D+aHtqGiTj0JlvQBNArZrWrZnbf2UT8IOgnrHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu-Chun Lin <eleanor15x@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 250/508] pinctrl: abx500: Fix type of argument variable
-Date: Wed, 20 May 2026 18:21:13 +0200
-Message-ID: <20260520162104.066645469@linuxfoundation.org>
+Subject: [PATCH 6.6 251/508] perf lock: Fix option value type in parse_max_stack
+Date: Wed, 20 May 2026 18:21:14 +0200
+Message-ID: <20260520162104.087389584@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -51,36 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu-Chun Lin <eleanor15x@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 34006f77890d050e6d80cbee365b5d703c1140b4 ]
+[ Upstream commit cfaade34b52aa1ec553044255702c4b31b57c005 ]
 
-The argument variable is assigned the return value of
-pinconf_to_config_argument(), which returns a u32. Change its type from
-enum pin_config_param to unsigned int to correctly store the configuration
-argument.
+The value is a void* and the address of an int, max_stack_depth, is
+set up in the perf lock options. The parse_max_stack function treats
+the int* as a long*, make this more correct by declaring the value to
+be an int*.
 
-Fixes: 03b054e9696c ("pinctrl: Pass all configs to driver on pin_config_set()")
-Signed-off-by: Yu-Chun Lin <eleanor15x@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 0a277b622670 ("perf lock contention: Check --max-stack option")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/nomadik/pinctrl-abx500.c | 2 +-
+ tools/perf/builtin-lock.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/nomadik/pinctrl-abx500.c b/drivers/pinctrl/nomadik/pinctrl-abx500.c
-index 0cfa74365733c..a4940199f2ad0 100644
---- a/drivers/pinctrl/nomadik/pinctrl-abx500.c
-+++ b/drivers/pinctrl/nomadik/pinctrl-abx500.c
-@@ -853,7 +853,7 @@ static int abx500_pin_config_set(struct pinctrl_dev *pctldev,
- 	int ret = -EINVAL;
- 	int i;
- 	enum pin_config_param param;
--	enum pin_config_param argument;
-+	unsigned int argument;
+diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
+index bd24ed0af208a..bd294fd574972 100644
+--- a/tools/perf/builtin-lock.c
++++ b/tools/perf/builtin-lock.c
+@@ -2271,7 +2271,7 @@ static int parse_map_entry(const struct option *opt, const char *str,
+ static int parse_max_stack(const struct option *opt, const char *str,
+ 			   int unset __maybe_unused)
+ {
+-	unsigned long *len = (unsigned long *)opt->value;
++	int *len = opt->value;
+ 	long val;
+ 	char *endptr;
  
- 	for (i = 0; i < num_configs; i++) {
- 		param = pinconf_to_config_param(configs[i]);
 -- 
 2.53.0
 
