@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047E53F7AA9;
-	Wed, 20 May 2026 18:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9709636A02E;
+	Wed, 20 May 2026 18:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300487; cv=none; b=CUgn6e8qYET3iOdtBK5QQx9U1u61vhrd/mBmaqh6ryfsE34Hi4P1g6s+TBq93HsEuBqStzcSmJ1OxwWTsngslUAgAes5NvM6ckK66KsRckpOkb36DWu9Tu3jCymxGEENWvBB5qZ+sFydJJxLChWgzq8+a35eDRXshX+PcwHXc0k=
+	t=1779300489; cv=none; b=anURCcVERM8wBWosQTthdFd7HsSnjL04o4OVA7Y7vFWLLf/R7NQrXINu480KbM+8Mrsxvz1zDTTemUL3o5r3W/dCGcQtoz3Npo7S8GygHH/Ug+Xa558dmX8YugPTCYtALUbOM9Etc7+pJgyBOySAELYw6W3vCD/EuGH17wZ9InM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300487; c=relaxed/simple;
-	bh=3kDfXUS5jSEjp6ynX6U2HeqXVnwvmEMYYeRJgyYd1+Q=;
+	s=arc-20240116; t=1779300489; c=relaxed/simple;
+	bh=1oL98J7Ts+bls1wCKx3UX5rhIPc5N0MPcCR+3o1hDZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qUN0v/RQpxoPcQbU7miIfjeN6eV4fLKuxu7uxcbyFGcZjwIIuHdr6Z4volP6eLpfUHEVH6DD4QuCAVG0gi+RtJQYug859Hx1PJVRZgzyMpmvqUTU+UIe4VntyGdV1N+xnwZBnFdxmRbGg1FGCbZd1L/Gi2M0Wt3HKu+EiqXns8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKNcxAC3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SObDstuEIwDTjM6W1WikwUncurVQnZ23HMGiY2cIVQS8aPVusHC/EgqqZY7+rqBvYd53CsrSd4qtX0eHV4JVj7VeIQfgpxPct6SdcIOcsSaJqIzb/LbHCzjJVCjFXBPGi+AvGdoYAL/cCH5INcFf3Qb5LPUkpZome0iQeld2UsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrYPgCGR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKNcxAC3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6039B1F000E9;
-	Wed, 20 May 2026 18:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrYPgCGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092241F000E9;
+	Wed, 20 May 2026 18:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300485;
-	bh=08YXNBNTkF9aVIMy/g2SPVKCtXDrJDPgvHtr3RSX4Vk=;
+	s=korg; t=1779300488;
+	bh=PG54tiLZlXIfpPtCoNGIVfcZUpxSLXrq60KaJlIiRdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IKNcxAC3T2DZrPurS6Iea+NGQ8X5rTYvDZKGdNJM/mWaUCFKYRcjcniIEsTwJUHD4
-	 t2z7hMRDDxlv6cEM/W+NyagW1lE8quPPQGkNlnwtj0qjUUqfxit/g+cQodOj3IQlIR
-	 SRJ+MNfNcGE+ckDK0LRF9x3FIknPQe9C2q5T2OAk=
+	b=zrYPgCGRHWfoFFiz3XAJLQ5zrpotwGnS8O5NrrPRu34WfS6Jhh7fP8n43RhwPqm3X
+	 FlhjTCKklGnte3QCu8wWLbabY68kE8H/i0u34EvlhjrXBbWZWGO5oU671DLnnZzmz+
+	 ovdQSoo9inEdzn436UGvw8RsbuOD1F2SGMQhFRLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eric.auger@redhat.com>,
-	Shameer Kolothum <skolothumtho@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>,
+	Connor Abbott <cwabbott0@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 166/666] iommu/tegra241-cmdqv: Set supports_cmd op in tegra241_vcmdq_hw_init()
-Date: Wed, 20 May 2026 18:16:17 +0200
-Message-ID: <20260520162114.803891869@linuxfoundation.org>
+Subject: [PATCH 6.12 193/666] drm/msm/a6xx: Fix dumping A650+ debugbus blocks
+Date: Wed, 20 May 2026 18:16:44 +0200
+Message-ID: <20260520162115.384116131@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -53,61 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Connor Abbott <cwabbott0@gmail.com>
 
-[ Upstream commit 803e41f36d227022ab9bbe780c82283fd4713b2e ]
+[ Upstream commit cc83f71c9be0715fe93b963ffa9767d5d84354ed ]
 
-vintf->hyp_own is finalized in tegra241_vintf_hw_init(). On the other hand,
-tegra241_vcmdq_alloc_smmu_cmdq() is called via an init_structures callback,
-which is earlier than tegra241_vintf_hw_init().
+These should be appended after the existing debugbus blocks, instead of
+replacing them.
 
-This results in the supports_cmd op always being set to the guest function,
-although this doesn't break any functionality nor have some noticeable perf
-impact since non-invalidation commands are not issued in the perf sensitive
-context.
-
-Fix this by moving supports_cmd to tegra241_vcmdq_hw_init().
-
-After this change,
- - For a guest kernel, this will be a status quo
- - For a host kernel, non-invalidation commands will be issued to VCMDQ(s)
-
-Fixes: a9d40285bdef ("iommu/tegra241-cmdqv: Limit CMDs for VCMDQs of a guest owned VINTF")
-Reported-by: Eric Auger <eric.auger@redhat.com>
-Reported-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Closes: https://lore.kernel.org/qemu-devel/CH3PR12MB754836BEE54E39B30C7210C0AB44A@CH3PR12MB7548.namprd12.prod.outlook.com/
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 1e05bba5e2b8 ("drm/msm/a6xx: Update a6xx gpu coredump")
+Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/714270/
+Message-ID: <20260325-drm-msm-a650-debugbus-v1-1-dfbf358890a7@gmail.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index dd7d030d2e890..a76839cf571d2 100644
---- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -387,6 +387,10 @@ static int tegra241_vcmdq_hw_init(struct tegra241_vcmdq *vcmdq)
- 	/* Reset VCMDQ */
- 	tegra241_vcmdq_hw_deinit(vcmdq);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index 8f104f7fcaa29..dac88af9b3d09 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -346,7 +346,7 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
+ 			sizeof(*a6xx_state->debugbus));
  
-+	/* vintf->hyp_own is a HW state finalized in tegra241_vintf_hw_init() */
-+	if (!vcmdq->vintf->hyp_own)
-+		vcmdq->cmdq.supports_cmd = tegra241_guest_vcmdq_supports_cmd;
-+
- 	/* Configure and enable VCMDQ */
- 	writeq_relaxed(vcmdq->cmdq.q.q_base, REG_VCMDQ_PAGE1(vcmdq, BASE));
+ 	if (a6xx_state->debugbus) {
+-		int i;
++		int i, j;
  
-@@ -514,9 +518,6 @@ static int tegra241_vcmdq_alloc_smmu_cmdq(struct tegra241_vcmdq *vcmdq)
- 	q->q_base = q->base_dma & VCMDQ_ADDR;
- 	q->q_base |= FIELD_PREP(VCMDQ_LOG2SIZE, q->llq.max_n_shift);
+ 		for (i = 0; i < ARRAY_SIZE(a6xx_debugbus_blocks); i++)
+ 			a6xx_get_debugbus_block(gpu,
+@@ -354,8 +354,6 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
+ 				&a6xx_debugbus_blocks[i],
+ 				&a6xx_state->debugbus[i]);
  
--	if (!vcmdq->vintf->hyp_own)
--		cmdq->supports_cmd = tegra241_guest_vcmdq_supports_cmd;
+-		a6xx_state->nr_debugbus = ARRAY_SIZE(a6xx_debugbus_blocks);
 -
- 	return arm_smmu_cmdq_init(smmu, cmdq);
+ 		/*
+ 		 * GBIF has same debugbus as of other GPU blocks, fall back to
+ 		 * default path if GPU uses GBIF, also GBIF uses exactly same
+@@ -366,17 +364,19 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
+ 				&a6xx_gbif_debugbus_block,
+ 				&a6xx_state->debugbus[i]);
+ 
+-			a6xx_state->nr_debugbus += 1;
++			i++;
+ 		}
+ 
+ 
+ 		if (adreno_is_a650_family(to_adreno_gpu(gpu))) {
+-			for (i = 0; i < ARRAY_SIZE(a650_debugbus_blocks); i++)
++			for (j = 0; j < ARRAY_SIZE(a650_debugbus_blocks); i++, j++)
+ 				a6xx_get_debugbus_block(gpu,
+ 					a6xx_state,
+-					&a650_debugbus_blocks[i],
++					&a650_debugbus_blocks[j],
+ 					&a6xx_state->debugbus[i]);
+ 		}
++
++		a6xx_state->nr_debugbus = i;
+ 	}
  }
  
 -- 
