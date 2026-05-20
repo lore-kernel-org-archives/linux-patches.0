@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE05D32B10B;
-	Wed, 20 May 2026 16:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B6632B10B;
+	Wed, 20 May 2026 16:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294943; cv=none; b=N9YsdY4zoXJUVN/M8LLx235KiYPuP3CYfs7OVorCmOA1uMjcioruzoZhTxIVDY1W5iW0aNwir55IjBwjfzVrzktvfIczT7/epa9JoZMv16xyXQ8fjWD7OR1iMen/i5dMDVWQYO0Tmaa7sT1MiKZzU+sNc1dhKQbBt//SQKjx95I=
+	t=1779294946; cv=none; b=DMTJRYqpUC7MpqF8tz1Svsscf/JoJaXrScRl/U7BKI1OE76KmMK6yylJf+g5wDR42uFVJMIjz7YrwBoJXFHUSqpqDznRHzuKN46HF50mvPs7QZPuWxP2uPantTirUS3laadmO9XY6U3cioIxNFZ2ceLOBB3ZYOLLMlYuRrrce20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294943; c=relaxed/simple;
-	bh=OtOeY6wisukgC/MAyo+QBUtoZfQgbfjUnsnfRwLs9nw=;
+	s=arc-20240116; t=1779294946; c=relaxed/simple;
+	bh=o/baK70J6DpFdTillA3oyO4BYyXFph8VEkkqacXL/go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LswthA9jhiziWChWz4TMaVwrn0zKmiNJw/48RIh4w5lm9DAmuj/cr8nWE5wZmMdFHiP74Gr/hu0brSKiigtEAD3DlEzAqx0y2OZ0EsB4zPuucoQUi6oqx1t3wBkT0NL4yfkoQWfh+G9cQraJiRuFQ/JsKFIhTqefwjwJ0KHiB2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10EbIzN8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xfg18vy5oVccfyifsajGK6YpENstTqFOeT1fmwjE/m+aHFeox6xAuNaYQcj8fry2Bmq/8wwGKwrPVo1wsn/xUNZSg52rZSXG36ObFpeSfcSC+I67wwkeKlRGoDHuZ0ir4AGcXww4MJyix3U3a60NZHsKGpXPzm21VhjDBNurHG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uceFmoG2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10EbIzN8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0261F000E9;
-	Wed, 20 May 2026 16:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uceFmoG2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9501F000E9;
+	Wed, 20 May 2026 16:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779294942;
-	bh=BWLghqFjo+IiTlSw7fkE/C2OdLB76cyyMEw61sLPfuI=;
+	s=korg; t=1779294945;
+	bh=cpk/NkdeQiglzII2cA+JucEfUvPPLK3xvAxH6vs08ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=10EbIzN8RhiibXva6CO/n3l71CrhZuIKXXEQIPk7n7Mej1hByWPU4BPuKL081eFXm
-	 oUU4UZuuIYHbpRquzEjGibeA0Eey4I4BWhMCWKwQcVZxf29uNHGjswtVM7O8OQ6qUA
-	 igTL1tMPx6ppfKg5QlQraC4CULrZzije5F0156/4=
+	b=uceFmoG2mogB2Z3IsqUzz7XXg7fm11Yang0jLkOhX2n9vK6H90b47b50LRdqkzzLP
+	 FC53CB6SolVTsXqNqpdJSS5Jssgfh9rw8rHzaEHnpaqkn2+QF3cvhbhzzACh3UAMEJ
+	 GPMGtXGw58qLVt3aAkT3p7l9h5csFfPv5k0ARFwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolin Chen <b42378@freescale.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	George Abraham P <george.abraham.p@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0231/1146] ASoC: soc-compress: use function to clear symmetric params
-Date: Wed, 20 May 2026 18:08:01 +0200
-Message-ID: <20260520162153.479934131@linuxfoundation.org>
+Subject: [PATCH 7.0 0232/1146] PCI/TPH: Allow TPH enable for RCiEPs
+Date: Wed, 20 May 2026 18:08:02 +0200
+Message-ID: <20260520162153.500601921@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,95 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: George Abraham P <george.abraham.p@intel.com>
 
-[ Upstream commit 07c774dd64ba0c605dbf844132122e3edbdbea93 ]
+[ Upstream commit d3e996a596967a62c8a13a279221513461f6ab97 ]
 
-Current soc-compress.c clears symmetric_rate, but it clears rate only,
-not clear other symmetric_channels/sample_bits.
+Previously, pcie_enable_tph() only enabled TLP Processing Hints (TPH) if
+both the Endpoint and its Root Port advertised TPH support.
 
-	static int soc_compr_clean(...)
-	{
-		...
-		if (!snd_soc_dai_active(cpu_dai))
-=>			cpu_dai->symmetric_rate = 0;
+Root Complex Integrated Endpoints (RCiEPs) are directly integrated into a
+Root Complex and do not have an associated Root Port, so pcie_enable_tph()
+never enabled TPH for RCiEPs.
 
-		if (!snd_soc_dai_active(codec_dai))
-=>			codec_dai->symmetric_rate = 0;
-		...
-	};
+PCIe r7.0 doesn't seem to include a way to learn whether a Root Complex
+supports TPH, but sec 2.2.7.1.1 says Functions that lack TPH support should
+ignore TPH, and maybe the same is true for Root Complexes:
 
-This feature was added when v3.7 kernel [1], and there was only
-symmetric_rate, no symmetric_channels/sample_bits in that timing.
+  A Function that does not support the TPH Completer or Routing capability
+  and receives a transaction with the TH bit [which indicates the presence
+  of TPH in the TLP header] Set is required to ignore the TH bit and handle
+  the Request in the same way as Requests of the same transaction type
+  without the TH bit Set.
 
-symmetric_channels/sample_bits were added in v3.14 [2],
-but I guess it didn't notice that soc-compress.c is updating symmetric_xxx.
+Allow drivers to enable TPH for any RCiEP with a TPH Requester Capability.
 
-We are clearing symmetry_xxx by soc_pcm_set_dai_params(), but is soc-pcm.c
-local function. Makes it global function and clear symmetry_xxx by it.
-
-[1] commit 1245b7005de02 ("ASoC: add compress stream support")
-[2] commit 3635bf09a89cf ("ASoC: soc-pcm: add symmetry for channels and
-			   sample bits")
-
-Fixes: 3635bf09a89c ("ASoC: soc-pcm: add symmetry for channels and sample bits")
-Cc: Nicolin Chen <b42378@freescale.com>
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/87ms15e3kv.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f69767a1ada3 ("PCI: Add TLP Processing Hints (TPH) support")
+Signed-off-by: George Abraham P <george.abraham.p@intel.com>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260109052923.1170070-1-george.abraham.p@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc.h      | 3 +++
- sound/soc/soc-compress.c | 4 ++--
- sound/soc/soc-pcm.c      | 4 ++--
- 3 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/pci/tph.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/sound/soc.h b/include/sound/soc.h
-index 7d8376c8e1bed..1e0b7cd8d956e 100644
---- a/include/sound/soc.h
-+++ b/include/sound/soc.h
-@@ -1412,6 +1412,9 @@ struct snd_soc_dai *snd_soc_find_dai(
- struct snd_soc_dai *snd_soc_find_dai_with_mutex(
- 	const struct snd_soc_dai_link_component *dlc);
+diff --git a/drivers/pci/tph.c b/drivers/pci/tph.c
+index ca4f97be75389..e896b39582818 100644
+--- a/drivers/pci/tph.c
++++ b/drivers/pci/tph.c
+@@ -407,10 +407,13 @@ int pcie_enable_tph(struct pci_dev *pdev, int mode)
+ 	else
+ 		pdev->tph_req_type = PCI_TPH_REQ_TPH_ONLY;
  
-+void soc_pcm_set_dai_params(struct snd_soc_dai *dai,
-+			    struct snd_pcm_hw_params *params);
-+
- #include <sound/soc-dai.h>
+-	rp_req_type = get_rp_completer_type(pdev);
++	/* Check if the device is behind a Root Port */
++	if (pci_pcie_type(pdev) != PCI_EXP_TYPE_RC_END) {
++		rp_req_type = get_rp_completer_type(pdev);
  
- static inline
-diff --git a/sound/soc/soc-compress.c b/sound/soc/soc-compress.c
-index 7b81dffc6a935..b8402802ae784 100644
---- a/sound/soc/soc-compress.c
-+++ b/sound/soc/soc-compress.c
-@@ -69,10 +69,10 @@ static int soc_compr_clean(struct snd_compr_stream *cstream, int rollback)
- 	snd_soc_dai_digital_mute(codec_dai, 1, stream);
+-	/* Final req_type is the smallest value of two */
+-	pdev->tph_req_type = min(pdev->tph_req_type, rp_req_type);
++		/* Final req_type is the smallest value of two */
++		pdev->tph_req_type = min(pdev->tph_req_type, rp_req_type);
++	}
  
- 	if (!snd_soc_dai_active(cpu_dai))
--		cpu_dai->symmetric_rate = 0;
-+		soc_pcm_set_dai_params(cpu_dai, NULL);
- 
- 	if (!snd_soc_dai_active(codec_dai))
--		codec_dai->symmetric_rate = 0;
-+		soc_pcm_set_dai_params(codec_dai, NULL);
- 
- 	snd_soc_link_compr_shutdown(cstream, rollback);
- 
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index afa9fad4457f2..9b12eedb77c33 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -423,8 +423,8 @@ void dpcm_dapm_stream_event(struct snd_soc_pcm_runtime *fe, int dir, int event)
- 	snd_soc_dapm_stream_event(fe, dir, event);
- }
- 
--static void soc_pcm_set_dai_params(struct snd_soc_dai *dai,
--				   struct snd_pcm_hw_params *params)
-+void soc_pcm_set_dai_params(struct snd_soc_dai *dai,
-+			    struct snd_pcm_hw_params *params)
- {
- 	if (params) {
- 		dai->symmetric_rate	   = params_rate(params);
+ 	if (pdev->tph_req_type == PCI_TPH_REQ_DISABLE)
+ 		return -EINVAL;
 -- 
 2.53.0
 
