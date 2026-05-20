@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E961E7660;
-	Wed, 20 May 2026 16:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF243D5642;
+	Wed, 20 May 2026 16:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295331; cv=none; b=HtLuRoRWvFcozD8UnMZ3p2nMWuF9Ovo156vbzWeaWhwlSvAm0qY7ZTzvCuAY9VckvMYxhdukAS8bLd6InPOrd9W4nEqFr1Of4+RW+8I10ua5MvMgVv8PkE1LErnrS24qkEkrytajgQDXcTqkvimigkqk3/yjtRWblvGb81IrEUY=
+	t=1779295333; cv=none; b=MQuv7f/xBv5j1Tw8So/sQ6dxsGoK/FRxVus57D/tl0L3F2Ht0DI2SvQmnMxm7qxC/yCT8kmeIe8o917GIm7pbEusg3iBErF/WLNPhh9bBUKautm5hBCif0pClGLOaJs2b867rsb43Ip768xdqIH/ekDKDVl6iRCWrypXINbR4ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295331; c=relaxed/simple;
-	bh=7RoB5AfLDxFuK9QmPoG25Chf+tJePcW9gf/DNEoVqkY=;
+	s=arc-20240116; t=1779295333; c=relaxed/simple;
+	bh=JROfA1W7rjHXmyiKPRcPdB0wIlW3eewMZGc9Hht6m3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RW5oMqcivPcKIb7ktZODUKdosdpZqBPgoke4cLmMMKNZGFk1j+lo1pLG8RhWcTznEWHdDYVs3K83WpAlWVuRVxPaaizmxy9O0mhQvWMBGFl7S8Ej6Cnwo2xWOoavYwmmz5bSbIVqlDUP1rxGIiNRoL87BGPGtX61AaghajyY3Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqKd3kMT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ArSTlg/uGRRQa1HVmeIdwq232trbPme0NB1Z2pMxuZgERAHn20WzxICrk9IV5EuzLDznVwuDV7SFYcpydCkpBryAGskcWf1RIA64npghZt9xf2P0ky2JeLActZeYx+eWDcnkGv4UH/Awpp/b/dqURAoWSyMc64eE6OzHMzHYY9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOrpSnZs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqKd3kMT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2731F000E9;
-	Wed, 20 May 2026 16:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOrpSnZs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207191F000E9;
+	Wed, 20 May 2026 16:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295330;
-	bh=Fqr3DEAvadUDrhn8uC8gahmj8SQe9aqX/83tGszydcs=;
+	s=korg; t=1779295332;
+	bh=V7svvq1T2ddm8I37rhOZvyvRQOM0s8oUZ0Qlus/rkcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yqKd3kMTyBIvcgSnTscRpmnbTIHzcz9F62frVtSApji7tGJhNUxp/QrO3jm1U1QQG
-	 lIjNY3SalWl0EJpy9hvNTY2XClQ225x8hyzlM31+GZmHRDrq3u/fmIsEHTeFTYzZPL
-	 1PRUlHGRNh7tTCIkxy8CxnsCergmsW+K/wJ+dOiw=
+	b=JOrpSnZsSNYonmhJf0m/g0izVEZVXMHG0KWFUIDHYwmLP5cd8tiQy1HCkcGQBtKjr
+	 GxboFOFwarlhKrJOQ5DTSvy43bvTYNu4PwO0SnPU/VCZ/a9qH6Wbpl3S6gnBJlq1ka
+	 AjK9cWh912M5RqGJTJpiVnOTvgUz7VMZYyN1urh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0377/1146] ASoC: fsl_easrc: Check the variable range in fsl_easrc_iec958_put_bits()
-Date: Wed, 20 May 2026 18:10:27 +0200
-Message-ID: <20260520162156.732465338@linuxfoundation.org>
+Subject: [PATCH 7.0 0378/1146] ASoC: fsl_easrc: Fix value type in fsl_easrc_iec958_get_bits()
+Date: Wed, 20 May 2026 18:10:28 +0200
+Message-ID: <20260520162156.755396297@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,34 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 00541b86fb578d4949cfdd6aff1f82d43fcf07af ]
+[ Upstream commit aa21fe4a81458cf469c2615b08cbde5997dde25a ]
 
-Add check of input value's range in fsl_easrc_iec958_put_bits(),
-otherwise the wrong value may be written from user space.
+The value type of controls "Context 0 IEC958 Bits Per Sample" should be
+integer, not enumerated, the issue is found by the mixer-test.
 
 Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
 Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260401094226.2900532-10-shengjiu.wang@nxp.com
+Link: https://patch.msgid.link/20260401094226.2900532-11-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_easrc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/fsl/fsl_easrc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index 599e439b359a9..f48e43a0edcfc 100644
+index f48e43a0edcfc..3086cb758beb6 100644
 --- a/sound/soc/fsl/fsl_easrc.c
 +++ b/sound/soc/fsl/fsl_easrc.c
-@@ -54,6 +54,9 @@ static int fsl_easrc_iec958_put_bits(struct snd_kcontrol *kcontrol,
- 	unsigned int regval = ucontrol->value.integer.value[0];
- 	int ret;
+@@ -73,7 +73,7 @@ static int fsl_easrc_iec958_get_bits(struct snd_kcontrol *kcontrol,
+ 	struct soc_mreg_control *mc =
+ 		(struct soc_mreg_control *)kcontrol->private_value;
  
-+	if (regval < EASRC_WIDTH_16_BIT || regval > EASRC_WIDTH_24_BIT)
-+		return -EINVAL;
-+
- 	ret = (easrc_priv->bps_iec958[mc->regbase] != regval);
+-	ucontrol->value.enumerated.item[0] = easrc_priv->bps_iec958[mc->regbase];
++	ucontrol->value.integer.value[0] = easrc_priv->bps_iec958[mc->regbase];
  
- 	easrc_priv->bps_iec958[mc->regbase] = regval;
+ 	return 0;
+ }
 -- 
 2.53.0
 
