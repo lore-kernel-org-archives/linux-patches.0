@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9AB3E277C;
-	Wed, 20 May 2026 18:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EE8408030;
+	Wed, 20 May 2026 18:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302642; cv=none; b=EkdLAW1gC6P3ixnIxEmHTnUb3DKyqM1MUAfdDY9HGQGmtSY2rZjKlD+PX1WUHHqeCetosFW2xRMUy2i2b46Qombi48mb4MZHA27P/MO/e3J6fEYxDqayglMlZZpWNiRER/kSyUUMEIzc323QhInW8U+aD0uTTMua7npHaKX3S4g=
+	t=1779302644; cv=none; b=kT/sOmsgQIHxqRd1Z819CfRDfW8Trq/+XdTfOntWG7jJjjGbiYlLOYlIvARsYSgTwm9OfRzlezeXON4jdnRJzgP2NI9y0TqYrWbRGklan7fgvzc/TiEwLoGwH0x9WIgNNMzPmNJtJr03eWJz8M3fz4I8ZVOY+C3brZn1E06iR/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302642; c=relaxed/simple;
-	bh=vw9FTM+4TRYS302n5sLM9NQjKsaejC/FyXsweXoWrfA=;
+	s=arc-20240116; t=1779302644; c=relaxed/simple;
+	bh=XbM8T+SKJdbaaNntI+CRiVv5Mb3EaYexS6TBsA1h924=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHMx7c19mu5Wxierlpm/2vd5QMTGbxEB+L58D3fpcVX42V+qjV9NG0My0zDY3D3mb/gvY3Mr7kcwjUiaNx1/xaC6899WQe3rhy6vaHFZMAslc1P5j5dGOhW57t0ClnNkSGbnesbtka2JqXKAj4FjrMv8iiZGOJo+yy7blTtdLkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjoAaK36; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a4rtIhA3KdSkm/VtEwEb+F+KX1oZU+5lXoztaAAFEFfKt++w00dkMCozdg7xOfWB96hQfpDSWIIbT3Qr3UtZLp2itct3WVvznYMW73ORlcgIKpI6ZYq8xdFsJzRXxmGJeJRakKf3a1sb+Un0zRJVGeaAIdUr0WFTQP9+a8Mh/pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fo9aFShi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjoAaK36"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FBF1F000E9;
-	Wed, 20 May 2026 18:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fo9aFShi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1661F000E9;
+	Wed, 20 May 2026 18:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302640;
-	bh=0awndeEYSxFqf3q0IPn6tGpkEWKemesNF45NhnePZug=;
+	s=korg; t=1779302643;
+	bh=+JNmnnUHEYXFdaN7hNascC5fVT4wDmiSERkTlb9yDHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjoAaK360kspR946haLjRlOQzPo4JvKE6VM2raJzq8Xea6rVosm3QokTGQFI0z7iJ
-	 CBAoQPxIM2zkYux+ytw1FVmE/ihneJ3o65OeEvhZtpQBF+UC3LAoj7JD5hyOUSuLda
-	 bigt6YD5T2siUAqK1JyLmdGAsQGhd3RoanzKuCYY=
+	b=fo9aFShiAuW/yEYIzLaGeqbEloN9gGlGEhSJp+gf9fvvMTMzRercWHMoy3luqroy+
+	 JisQpzbc8C9p9939xROtoCLKDu3GbuTAMQSIiJ1vX141SUXRBcJYt/21mhOhrMg/mA
+	 7QmWLcecuuqFI6SzXLKtFgx78xFh6NXnGWFKFky0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 342/508] ksmbd: destroy async_ida in ksmbd_conn_free()
-Date: Wed, 20 May 2026 18:22:45 +0200
-Message-ID: <20260520162106.044249284@linuxfoundation.org>
+Subject: [PATCH 6.6 304/508] arm64: dts: imx8mp-icore-mx8mp: Correct PAD settings for PMIC_nINT
+Date: Wed, 20 May 2026 18:22:07 +0200
+Message-ID: <20260520162105.228302417@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,52 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit b32c8db48212a34998c36d0bbc05b29d5c407ef5 ]
+[ Upstream commit ea8c90f5c7ceeb6657a8fe564aa7b190dce298a6 ]
 
-When per-connection async_ida was converted from a dynamically
-allocated ksmbd_ida to an embedded struct ida, ksmbd_ida_free() was
-removed from the connection teardown path but no matching
-ida_destroy() was added.  The connection is therefore freed with the
-IDA's backing xarray still intact.
+With commit 5d0efaf47ee90 ("regulator: pca9450: Correct interrupt type"),
+there might be interrupt storm for this board. Need to set PAD PUE and PU
+together to make pull up work properly.
 
-The kernel IDA API expects ida_init() and ida_destroy() to be paired
-over an object's lifetime, so add the missing cleanup before the
-connection is freed.
-
-No leak has been observed in testing; this is a pairing fix to match
-the IDA lifetime rules, not a response to a reproduced regression.
-
-Fixes: d40012a83f87 ("cifsd: declare ida statically")
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: eefe06b295087 ("arm64: dts: imx8mp: Add Engicam i.Core MX8M Plus SoM")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8mp-icore-mx8mp.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index a5209abb004a4..bbb0be5524dbe 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -41,6 +41,15 @@ void ksmbd_conn_free(struct ksmbd_conn *conn)
- 	kfree(conn->preauth_info);
- 	kfree(conn->mechToken);
- 	if (atomic_dec_and_test(&conn->refcnt)) {
-+		/*
-+		 * async_ida is embedded in struct ksmbd_conn, so pair
-+		 * ida_destroy() with the final kfree() rather than with
-+		 * the unconditional field teardown above.  This keeps
-+		 * the IDA valid for the entire lifetime of the struct,
-+		 * even while other refcount holders (oplock / vfs
-+		 * durable handles) still reference the connection.
-+		 */
-+		ida_destroy(&conn->async_ida);
- 		conn->transport->ops->free_transport(conn->transport);
- 		kfree(conn);
- 	}
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-icore-mx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-icore-mx8mp.dtsi
+index a6319824ea2eb..69558ffefa9a6 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-icore-mx8mp.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-icore-mx8mp.dtsi
+@@ -132,7 +132,7 @@ MX8MP_IOMUXC_I2C1_SDA__I2C1_SDA		0x400001c3
+ 
+ 	pinctrl_pmic: pmicgrp {
+ 		fsl,pins = <
+-			MX8MP_IOMUXC_NAND_CE0_B__GPIO3_IO01	  0x41
++			MX8MP_IOMUXC_NAND_CE0_B__GPIO3_IO01	0x1c0
+ 		>;
+ 	};
+ 
 -- 
 2.53.0
 
