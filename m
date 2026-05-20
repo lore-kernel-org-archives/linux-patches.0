@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C73318ED6;
-	Wed, 20 May 2026 18:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A613368968;
+	Wed, 20 May 2026 18:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779302185; cv=none; b=TE9KFk8Bc18La/3R5vL2mFdrnQ1XBKe+BdLpA2gvr+OCFfdXlGJDjLarig1Km0HMbbRI3JGSGhGabWmj/jGrB66puQ0rJSSqz39mDz/KN4ZHCoYl8jps+UafXsDLT6uEUR/ziaYpZVQXoVcgtyTsePdIAb+TtBAwOI8Zn5ZntKY=
+	t=1779302186; cv=none; b=gaEPEo685lufXRaWNexhsZC3/+4fVAmEHV55CzFmqiQDFpdl/ClW/4E9kTtWzNvVPAumozaioO5sGlkyLC3AqdDzjd4dVWlEYAFCvtU8mrwsXYP203P7Rn4eo86TUKjEPloEqjEsZatD7XHAzQhWV6N8xpsUlCCGCVe/lrSoC3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779302185; c=relaxed/simple;
-	bh=L2Igj5PVqhG1PpXDnF0KawmPQueMAUu5xBZsg1jWBAk=;
+	s=arc-20240116; t=1779302186; c=relaxed/simple;
+	bh=YUwHsz8ZgdY6QNAxwtobzmW9g6POU2FwElgXFc2t4eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DXq9Ij8Nhn70rOQQzN3wYakiGDS5/C60h+yUl8hcO04z+XKwtzueG7DDwFjJuyIfW9gly7n/5IRvtGtM5JyuxAZ3HG34rYXv3ckzEBxEhx9a2tpo8aYdszqaYZpnu0PdWV7FuR93K8hVpEeQJqTcYrgVKEtEi2YOrQ6cVTzu8Cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omIrEhYU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nvkKUOSEr+IN0D0qJQe04CZNJf654TquksPoBR22upYK72WVTm8b7fays4ANX7FGkMTIcFIPRbzJzZq5URONJMSmR1REIGehHohoArlEM0zixefCrJ0NaVn1C3WQIjTKu8FOuci+eF4xi606d7NYe/E5t6U8E8dF1HDH2sUKyzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdWPk7me; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omIrEhYU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E271F000E9;
-	Wed, 20 May 2026 18:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdWPk7me"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF98D1F00893;
+	Wed, 20 May 2026 18:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779302182;
-	bh=b876Ss5MicYGKH9NOmS/Pqfwl4zZpeI+vqqlHkFJarw=;
+	s=korg; t=1779302185;
+	bh=WvQkDc4dwD1eP2isKF2qX0TkfDASQ8VKCrtm5t4eSs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=omIrEhYUeLwBlRbeJzI9QPi4BPf9kkIhKP1rLDkAvOP0Pw9OrEmCig2tb45+ErYSP
-	 i5nuH/kVihYDYgmPiMKmeSMOaKTiXGwoMjZvRE0ZN3rsnF88UaV8zSCFlpMXe8qmm2
-	 KrMArdrZ0D5g6vcvwqrCFUBgyaNl8bL7BDFv7w8U=
+	b=OdWPk7meE6nSkEZVFMHtQlpKOoZUe70Rs2NTSAE1tRyh8VeI9CwW06n5LZms3FJ1D
+	 RhmvhtLvioHP66mPPiCxTLMetwhHkcM8VVAvRA0zKTwM3wKULh7N6iTYE5+q2M1RDw
+	 guz75KdGjzNx3Uber+ywkIYp4tE+4Hf9oF1oe7I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Lei Huang <huanglei@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 128/508] drm/amd/pm/smu7: Add SCLK cap for quirky Hawaii board
-Date: Wed, 20 May 2026 18:19:11 +0200
-Message-ID: <20260520162101.401189098@linuxfoundation.org>
+Subject: [PATCH 6.6 129/508] ALSA: hda/realtek: fix code style (ERROR: else should follow close brace })
+Date: Wed, 20 May 2026 18:19:12 +0200
+Message-ID: <20260520162101.423264713@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -45,131 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Lei Huang <huanglei@kylinos.cn>
 
-[ Upstream commit 4724bc5b8d78c34b993594f9406135408ccb312a ]
+[ Upstream commit d1888bf848ade6a9e71c7ba516fd215aa1bd8d65 ]
 
-On a specific Radeon R9 390X board, the GPU can "randomly" hang
-while gaming. Initially I thought this was a RADV bug and tried
-to work around this in Mesa:
-commit 8ea08747b86b ("radv: Mitigate GPU hang on Hawaii in Dota 2 and RotTR")
+Fix checkpatch code style errors:
 
-However, I got some feedback from other users who are reporting
-that the above mitigation causes a significant performance
-regression for them, and they didn't experience the hang on their
-GPU in the first place.
+  ERROR: else should follow close brace '}'
+  #2300: FILE: sound/hda/codecs/realtek/alc269.c:2300:
+  +       }
+  +       else
 
-After some further investigation, it turns out that the problem
-is that the highest SCLK DPM level on this board isn't stable.
-Lowering SCLK to 1040 MHz (from 1070 MHz) works around the issue,
-and has a negligible impact on performance compared to the Mesa
-patch. (Note that increasing the voltage can also work around it,
-but we felt that lowering the SCLK is the safer option.)
-
-To solve the above issue, add an "sclk_cap" field to smu7_hwmgr
-and set this field for the affected board. The capped SCLK value
-correctly appears on the sysfs interface and shows up in GUI
-tools such as LACT.
-
-Fixes: 9f4b35411cfe ("drm/amd/powerplay: add CI asics support to smumgr (v3)")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 31278997add6 ("ALSA: hda/realtek - Add headset quirk for Dell DT")
+Signed-off-by: Lei Huang <huanglei@kylinos.cn>
+Link: https://patch.msgid.link/20260331075405.78148-1-huanglei814@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c   | 30 ++++++++++++++++---
- .../drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.h   |  1 +
- 2 files changed, 27 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-index 9c2a2c46dea02..9dc01de3e7207 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -787,7 +787,7 @@ static int smu7_setup_dpm_tables_v0(struct pp_hwmgr *hwmgr)
- 		hwmgr->dyn_state.vddc_dependency_on_mclk;
- 	struct phm_cac_leakage_table *std_voltage_table =
- 		hwmgr->dyn_state.cac_leakage_table;
--	uint32_t i;
-+	uint32_t i, clk;
- 
- 	PP_ASSERT_WITH_CODE(allowed_vdd_sclk_table != NULL,
- 		"SCLK dependency table is missing. This table is mandatory", return -EINVAL);
-@@ -804,10 +804,12 @@ static int smu7_setup_dpm_tables_v0(struct pp_hwmgr *hwmgr)
- 	data->dpm_table.sclk_table.count = 0;
- 
- 	for (i = 0; i < allowed_vdd_sclk_table->count; i++) {
-+		clk = min(allowed_vdd_sclk_table->entries[i].clk, data->sclk_cap);
-+
- 		if (i == 0 || data->dpm_table.sclk_table.dpm_levels[data->dpm_table.sclk_table.count-1].value !=
--				allowed_vdd_sclk_table->entries[i].clk) {
-+				clk) {
- 			data->dpm_table.sclk_table.dpm_levels[data->dpm_table.sclk_table.count].value =
--				allowed_vdd_sclk_table->entries[i].clk;
-+				clk;
- 			data->dpm_table.sclk_table.dpm_levels[data->dpm_table.sclk_table.count].enabled = (i == 0) ? 1 : 0;
- 			data->dpm_table.sclk_table.count++;
- 		}
-@@ -3006,6 +3008,25 @@ static int smu7_init_voltage_dependency_on_display_clock_table(struct pp_hwmgr *
- 	return 0;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 6ef859f59f8d1..937f3fdbab252 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6043,9 +6043,9 @@ static void alc_fixup_headset_mode_alc255_no_hp_mic(struct hda_codec *codec,
+ 		struct alc_spec *spec = codec->spec;
+ 		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
+ 		alc255_set_default_jack_type(codec);
+-	}
+-	else
++	} else {
+ 		alc_fixup_headset_mode(codec, fix, action);
++	}
  }
  
-+static void smu7_set_sclk_cap(struct pp_hwmgr *hwmgr)
-+{
-+	struct amdgpu_device *adev = hwmgr->adev;
-+	struct smu7_hwmgr *data = (struct smu7_hwmgr *)(hwmgr->backend);
-+
-+	data->sclk_cap = 0xffffffff;
-+
-+	if (hwmgr->od_enabled)
-+		return;
-+
-+	/* R9 390X board: last sclk dpm level is unstable, use lower sclk */
-+	if (adev->pdev->device == 0x67B0 &&
-+	    adev->pdev->subsystem_vendor == 0x1043)
-+		data->sclk_cap = 104000; /* 1040 MHz */
-+
-+	if (data->sclk_cap != 0xffffffff)
-+		dev_info(adev->dev, "sclk cap: %u kHz on quirky ASIC\n", data->sclk_cap * 10);
-+}
-+
- static int smu7_hwmgr_backend_init(struct pp_hwmgr *hwmgr)
- {
- 	struct amdgpu_device *adev = hwmgr->adev;
-@@ -3017,6 +3038,7 @@ static int smu7_hwmgr_backend_init(struct pp_hwmgr *hwmgr)
- 		return -ENOMEM;
- 
- 	hwmgr->backend = data;
-+	smu7_set_sclk_cap(hwmgr);
- 	smu7_patch_voltage_workaround(hwmgr);
- 	smu7_init_dpm_defaults(hwmgr);
- 
-@@ -3903,7 +3925,7 @@ static int smu7_get_pp_table_entry_callback_func_v0(struct pp_hwmgr *hwmgr,
- 
- 	/* Performance levels are arranged from low to high. */
- 	performance_level->memory_clock = memory_clock;
--	performance_level->engine_clock = engine_clock;
-+	performance_level->engine_clock = min(engine_clock, data->sclk_cap);
- 
- 	pcie_gen_from_bios = visland_clk_info->ucPCIEGen;
- 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.h b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.h
-index d9e8b386bd4d3..66adabeab6a3a 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.h
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.h
-@@ -234,6 +234,7 @@ struct smu7_hwmgr {
- 	uint32_t                       pcie_gen_cap;
- 	uint32_t                       pcie_lane_cap;
- 	uint32_t                       pcie_spc_cap;
-+	uint32_t                       sclk_cap;
- 	struct smu7_leakage_voltage          vddc_leakage;
- 	struct smu7_leakage_voltage          vddci_leakage;
- 	struct smu7_leakage_voltage          vddcgfx_leakage;
+ static void alc288_update_headset_jack_cb(struct hda_codec *codec,
 -- 
 2.53.0
 
