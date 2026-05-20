@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E013364E89;
-	Wed, 20 May 2026 17:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266D2231842;
+	Wed, 20 May 2026 17:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296997; cv=none; b=Rop7U2jJcXTZioeNJ3SnnvDt6ztBs0MboF5ewgEnp75zYvnjb9tzjeoYyIKntKwxuI7l6Jy2dwU8Kl2K6W5tSx60DS/R0BmbAkcfcj/vVj8B8Uu8XJpaNzwSYx4bxY9CNLoTDzKC/8zBH+Qw+OcyYShnzYyGM73L/+ZNbMYP5ok=
+	t=1779297000; cv=none; b=SlSKlQkwGgXy+hNjAA0Fm+34meMsImzeefZxLmREUXLWOL/lAivoXIdn2Dxnxskza4HmhT/6OFYcducI0DnWmhdf6Dxmd8p/xsFmGi0oKQQrU7GN1cUPtMZJ7YCG12bdSjdOgnMKPLVrO5sisayVD1iZlipQSmJK8SxtSWYfSU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296997; c=relaxed/simple;
-	bh=0xFwP3VAckaxQwfQHM/VRkLW3UkKFo1AKTsoRgtHwls=;
+	s=arc-20240116; t=1779297000; c=relaxed/simple;
+	bh=pvWVyCgITwPfq79Df5C4+uAORuaaYOVZGtQeHR1UjTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KFuJoTQJqIxFCA9GC5Zyz0z2xf1QjCoAKCIxPL1J+fgXlRp3T4OXvPD+p1h/w6JHHP0WRWfMGFPBK18Yp70z/pYyfQK7dyuegfnsNNwyVHtgnWfG875CZu+bALvlImqbEMrUB8/AsW+Vq/nRyxuARUHjUZ4xARpttYFt+TcOvdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ww7UK/1N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MXETsyK7TBxLjzGWeJtis2xv4+Cso8pTq+xsDSPwitVT1eWAEoxGzbdSPSDZZ+Rne6xGmkv0A3aP1Q2CfKLJgfonG7S715jHckkjTFqvKcK/k0T1p8Y1OdX+S8tu3JIHk2DyAHMTtUSliZQ7LImZXoQdkYxvql51UKPvdgCjlkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RctTBsZs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ww7UK/1N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83DB1F000E9;
-	Wed, 20 May 2026 17:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RctTBsZs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4121F000E9;
+	Wed, 20 May 2026 17:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296996;
-	bh=oaYro74TKXUFR6x+v/GO9TgJBCQk4vHcD2bFSHwkAdY=;
+	s=korg; t=1779296999;
+	bh=59wJONalGrw5Cgdka3fLGznEnf4u6MFnNd2f6VXckYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ww7UK/1NYI3Q+uHa90yowk4zEqYEvujPro6C9NVOlxg9kSZ+tke8mR5IKBG2lSdFZ
-	 Cs+IWH9YhEcAL9S5AtdOD0wTHdQ74IMDX5gXBFujki1oK99Ui5fMu3fZmTWfPZ2/2d
-	 WQrfCM6hZhDyZTQIkqA+CjGupNBgC0x8ciSdEBpM=
+	b=RctTBsZs/tSYZ921cro5RaIoFBn7zsMPEpk3tXGCtK2cx0l+k6oaE0fLAWh1L9v2H
+	 kM5i8JWqXy6dUb3AYok/4Xu5aA3MFSuHwVDEy/ioz0UiUph/UpEb9sJutBEAYsYYWm
+	 mmgglA11NrD6VXMQDKIw9zWRmtPPg00j3imo2L2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francois Dugast <francois.dugast@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Harish Chegondi <harish.chegondi@intel.com>,
 	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 1012/1146] drm/xe: Fix error cleanup in xe_exec_queue_create_ioctl()
-Date: Wed, 20 May 2026 18:21:02 +0200
-Message-ID: <20260520162211.137128649@linuxfoundation.org>
+Subject: [PATCH 7.0 1013/1146] drm/xe/eustall: Fix drm_dev_put called before stream disable in close
+Date: Wed, 20 May 2026 18:21:03 +0200
+Message-ID: <20260520162211.158048658@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -56,76 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit f3cc22d4df3ed58439ea7e21daa54c3608e03b78 ]
+[ Upstream commit dc2d9842c67d883d3200ae33b9c3859dd9492408 ]
 
-Two error handling issues exist in xe_exec_queue_create_ioctl():
+In xe_eu_stall_stream_close(), drm_dev_put() is called before the
+stream is disabled and its resources are freed. If this drops the
+last reference, the device structures could be freed while the
+subsequent cleanup code still accesses them, leading to a
+use-after-free.
 
-1. When xe_hw_engine_group_add_exec_queue() fails, the error path jumps
-   to put_exec_queue which skips xe_exec_queue_kill(). If the VM is in
-   preempt fence mode, xe_vm_add_compute_exec_queue() has already added
-   the queue to the VM's compute exec queue list. Skipping the kill
-   leaves the queue on that list, leading to a dangling pointer after
-   the queue is freed.
+Fix this by moving drm_dev_put() after all device accesses are
+complete. This matches the ordering in xe_oa_release().
 
-2. When xa_alloc() fails after xe_hw_engine_group_add_exec_queue() has
-   succeeded, the error path does not call
-   xe_hw_engine_group_del_exec_queue() to remove the queue from the hw
-   engine group list. The queue is then freed while still linked into
-   the hw engine group, causing a use-after-free.
-
-Fix both by:
-- Changing the xe_hw_engine_group_add_exec_queue() failure path to jump
-  to kill_exec_queue so that xe_exec_queue_kill() properly removes the
-  queue from the VM's compute list.
-- Adding a del_hw_engine_group label before kill_exec_queue for the
-  xa_alloc() failure path, which removes the queue from the hw engine
-  group before proceeding with the rest of the cleanup.
-
-Fixes: 7970cb36966c ("'drm/xe/hw_engine_group: Register hw engine group's exec queues")
-Cc: Francois Dugast <francois.dugast@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Fixes: 9a0b11d4cf3b ("drm/xe/eustall: Add support to init, enable and disable EU stall sampling")
+Cc: Harish Chegondi <harish.chegondi@intel.com>
 Assisted-by: Claude:claude-opus-4.6
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260408020647.3397933-1-shuicheng.lin@intel.com
 Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit 37c831f401746a45d510b312b0ed7a77b1e06ec8)
+Reviewed-by: Harish Chegondi <harish.chegondi@intel.com>
+Link: https://patch.msgid.link/20260415225428.3399934-1-shuicheng.lin@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 35aff528f7297e949e5e19c9cd7fd748cf1cf21c)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_exec_queue.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_eu_stall.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
-index 3a60a2fb9cf96..a49919da0eee6 100644
---- a/drivers/gpu/drm/xe/xe_exec_queue.c
-+++ b/drivers/gpu/drm/xe/xe_exec_queue.c
-@@ -1227,7 +1227,7 @@ int xe_exec_queue_create_ioctl(struct drm_device *dev, void *data,
- 		if (q->vm && q->hwe->hw_engine_group) {
- 			err = xe_hw_engine_group_add_exec_queue(q->hwe->hw_engine_group, q);
- 			if (err)
--				goto put_exec_queue;
-+				goto kill_exec_queue;
- 		}
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_eu_stall.c b/drivers/gpu/drm/xe/xe_eu_stall.c
+index 39723928a0199..7da14854f688e 100644
+--- a/drivers/gpu/drm/xe/xe_eu_stall.c
++++ b/drivers/gpu/drm/xe/xe_eu_stall.c
+@@ -869,14 +869,14 @@ static int xe_eu_stall_stream_close(struct inode *inode, struct file *file)
+ 	struct xe_eu_stall_data_stream *stream = file->private_data;
+ 	struct xe_gt *gt = stream->gt;
  
-@@ -1236,12 +1236,15 @@ int xe_exec_queue_create_ioctl(struct drm_device *dev, void *data,
- 	/* user id alloc must always be last in ioctl to prevent UAF */
- 	err = xa_alloc(&xef->exec_queue.xa, &id, q, xa_limit_32b, GFP_KERNEL);
- 	if (err)
--		goto kill_exec_queue;
-+		goto del_hw_engine_group;
+-	drm_dev_put(&gt->tile->xe->drm);
+-
+ 	mutex_lock(&gt->eu_stall->stream_lock);
+ 	xe_eu_stall_disable_locked(stream);
+ 	xe_eu_stall_data_buf_destroy(stream);
+ 	xe_eu_stall_stream_free(stream);
+ 	mutex_unlock(&gt->eu_stall->stream_lock);
  
- 	args->exec_queue_id = id;
- 
++	drm_dev_put(&gt->tile->xe->drm);
++
  	return 0;
+ }
  
-+del_hw_engine_group:
-+	if (q->vm && q->hwe && q->hwe->hw_engine_group)
-+		xe_hw_engine_group_del_exec_queue(q->hwe->hw_engine_group, q);
- kill_exec_queue:
- 	xe_exec_queue_kill(q);
- delete_queue_group:
 -- 
 2.53.0
 
