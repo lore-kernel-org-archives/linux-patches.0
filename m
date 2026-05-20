@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF322343880;
-	Wed, 20 May 2026 18:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634BC272E56;
+	Wed, 20 May 2026 18:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301880; cv=none; b=Ow3KS0uXmP7FPBIpOzRiDJSs03mR1VtyNy7ZxGnFGASTpkqNrLxr6RCrZxy6ZahEBl7zMAHD+w3GfXP+5RrEUCNEE9QUvqSNStpBmXi1pgP2IwBBTS4OU5qtHcJpj0QdouYz1hwaZYxkP/KKAIMZ9yajzPNOQ5x4Fr4wuaUF9cA=
+	t=1779301883; cv=none; b=WXN6xTj17tG+jNcfjD8Kox30ZFEV2fZkTop8ng7yt7Z15aAHLtevHk85N3Y7R6PLgIOsPylf/4gKSPM7oAM1zPIluwIAZR3yJNWvO4f/US9P8H3jeB6NQpnUNHJCyF6g+iRXx9YqnnUW2ZkSTuZxJuDqC+qWxfbuGxOF//6Tx5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301880; c=relaxed/simple;
-	bh=XKTws6MsbJQyToNPtl1D64MpJ/iaV3WdCShtHPaoEFg=;
+	s=arc-20240116; t=1779301883; c=relaxed/simple;
+	bh=BfGPpOiDYXU8ReVHbJFipQsUwmvPMKIgicxMBHJOBow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EeRH0WQ2rn+anDiisvdGodOlmihSIc6lSlAWCJWnO3kmoDKm/EsXY7dQVwrhVrkeL1hh72se5dDc9VAyx/vsAHfFeIp9YgsquyLCPz//457oaRz8M665STtkzQNVtzLAMsVESSOVa+NWtlEFWWVv0MpSy4ZOWMBdTuTd6Kq6CDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5Redpdu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZBFVy55trPXj/5m28hz7U5xW8AszWAdBtD2KzzuLbxyVpPTZt3iwnThChvhcMKBrKv3M5FYYGZ1OcXrFc606NdnS1Vh+7cVhm2SfYbI08nMwjt7rCN3ZZjpqSrwCyz9e5p8DFRRi2U8j5UzafJ15WjIyCBj1EwS8gSs8hYcqIhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtvvEelM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5Redpdu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB4C1F000E9;
-	Wed, 20 May 2026 18:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtvvEelM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90321F00897;
+	Wed, 20 May 2026 18:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301879;
-	bh=Fk+K3+Jbm4yCd1aY/vNv0cf51/dMeg5BzG5MmAwdLn0=;
+	s=korg; t=1779301882;
+	bh=mGe63gEIOOivSKpWRhyGLFnEFmJ4e3pyVhuk0sbzoho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b5RedpduNFnbeojlE6cpFITu7343Q5E43h3RkthAIlYkoGSXJTgy1DzQzSrAXRhty
-	 OE3P+OknsXYYIqyDUTxV/2OvCs/xX/0aA4qVnf3GwfZQUMq/YSGNMjuH0ybpRNJpwc
-	 BVUBcBviAFiFBrStALxx0hfiJSOTfS9vnRTXJzO4=
+	b=UtvvEelMkfnZM0cIg/2ucsz00fc1zYySkjvRKxbcYE4QuQfjnFCvHlsWrX1Gm94Eu
+	 AR3rrTJ6jAnOXTBCPuOZFHj9raNu8lAxkD/gnWqAFYh+QO5AZSLv5k/S/09SuR6JL8
+	 jw/V3jgTUE6WYJrp33AfbAetBPbwCQF53X1zsKTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Doug Berger <opendmb@gmail.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/508] net: bcmgenet: Remove custom ndo_poll_controller()
-Date: Wed, 20 May 2026 18:17:58 +0200
-Message-ID: <20260520162059.792345231@linuxfoundation.org>
+Subject: [PATCH 6.6 056/508] net: bcmgenet: add bcmgenet_has_* helpers
+Date: Wed, 20 May 2026 18:17:59 +0200
+Message-ID: <20260520162059.814054706@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162058.573354582@linuxfoundation.org>
 References: <20260520162058.573354582@linuxfoundation.org>
@@ -52,62 +52,190 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Doug Berger <opendmb@gmail.com>
 
-[ Upstream commit 19537e125cc7cf2da43a606f5bcebbe0c9aea4cc ]
+[ Upstream commit 07c1a756a50b1180a085ab61819a388bbb906a95 ]
 
-The driver gained a .ndo_poll_controller() at a time where the TX
-cleaning process was always done from NAPI which makes this unnecessary.
-See commit ac3d9dd034e5 ("netpoll: make ndo_poll_controller() optional")
-for more background.
+Introduce helper functions to indicate whether the driver should
+make use of a particular feature that it supports. These helpers
+abstract the implementation of how the feature availability is
+encoded.
 
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Doug Berger <opendmb@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20250306192643.2383632-3-opendmb@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 5393b2b5bee2 ("net: bcmgenet: fix racing timeout handler")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 20 -------------------
- 1 file changed, 20 deletions(-)
+ .../net/ethernet/broadcom/genet/bcmgenet.c    | 20 +++++++-------
+ .../net/ethernet/broadcom/genet/bcmgenet.h    | 27 ++++++++++++++++++-
+ drivers/net/ethernet/broadcom/genet/bcmmii.c  |  6 ++---
+ 3 files changed, 39 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index cdbe47c7ba280..6ba26feed4588 100644
+index 6ba26feed4588..1046b4f8544c9 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3255,23 +3255,6 @@ static irqreturn_t bcmgenet_wol_isr(int irq, void *dev_id)
- 	return IRQ_HANDLED;
+@@ -104,7 +104,7 @@ static inline void dmadesc_set_addr(struct bcmgenet_priv *priv,
+ 	 * the platform is explicitly configured for 64-bits/LPAE.
+ 	 */
+ #ifdef CONFIG_PHYS_ADDR_T_64BIT
+-	if (priv->hw_params->flags & GENET_HAS_40BITS)
++	if (bcmgenet_has_40bits(priv))
+ 		bcmgenet_writel(upper_32_bits(addr), d + DMA_DESC_ADDRESS_HI);
+ #endif
  }
+@@ -1653,9 +1653,9 @@ static int bcmgenet_power_down(struct bcmgenet_priv *priv,
  
--#ifdef CONFIG_NET_POLL_CONTROLLER
--static void bcmgenet_poll_controller(struct net_device *dev)
--{
--	struct bcmgenet_priv *priv = netdev_priv(dev);
--
--	/* Invoke the main RX/TX interrupt handler */
--	disable_irq(priv->irq0);
--	bcmgenet_isr0(priv->irq0, priv);
--	enable_irq(priv->irq0);
--
--	/* And the interrupt handler for RX/TX priority queues */
--	disable_irq(priv->irq1);
--	bcmgenet_isr1(priv->irq1, priv);
--	enable_irq(priv->irq1);
--}
--#endif
--
- static void bcmgenet_umac_reset(struct bcmgenet_priv *priv)
+ 	case GENET_POWER_PASSIVE:
+ 		/* Power down LED */
+-		if (priv->hw_params->flags & GENET_HAS_EXT) {
++		if (bcmgenet_has_ext(priv)) {
+ 			reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
+-			if (GENET_IS_V5(priv) && !priv->ephy_16nm)
++			if (GENET_IS_V5(priv) && !bcmgenet_has_ephy_16nm(priv))
+ 				reg |= EXT_PWR_DOWN_PHY_EN |
+ 				       EXT_PWR_DOWN_PHY_RD |
+ 				       EXT_PWR_DOWN_PHY_SD |
+@@ -1683,7 +1683,7 @@ static void bcmgenet_power_up(struct bcmgenet_priv *priv,
  {
  	u32 reg;
-@@ -3741,9 +3724,6 @@ static const struct net_device_ops bcmgenet_netdev_ops = {
- 	.ndo_set_mac_address	= bcmgenet_set_mac_addr,
- 	.ndo_eth_ioctl		= phy_do_ioctl_running,
- 	.ndo_set_features	= bcmgenet_set_features,
--#ifdef CONFIG_NET_POLL_CONTROLLER
--	.ndo_poll_controller	= bcmgenet_poll_controller,
--#endif
- 	.ndo_get_stats		= bcmgenet_get_stats,
- 	.ndo_change_carrier	= bcmgenet_change_carrier,
+ 
+-	if (!(priv->hw_params->flags & GENET_HAS_EXT))
++	if (!bcmgenet_has_ext(priv))
+ 		return;
+ 
+ 	reg = bcmgenet_ext_readl(priv, EXT_EXT_PWR_MGMT);
+@@ -1692,7 +1692,7 @@ static void bcmgenet_power_up(struct bcmgenet_priv *priv,
+ 	case GENET_POWER_PASSIVE:
+ 		reg &= ~(EXT_PWR_DOWN_DLL | EXT_PWR_DOWN_BIAS |
+ 			 EXT_ENERGY_DET_MASK);
+-		if (GENET_IS_V5(priv) && !priv->ephy_16nm) {
++		if (GENET_IS_V5(priv) && !bcmgenet_has_ephy_16nm(priv)) {
+ 			reg &= ~(EXT_PWR_DOWN_PHY_EN |
+ 				 EXT_PWR_DOWN_PHY_RD |
+ 				 EXT_PWR_DOWN_PHY_SD |
+@@ -2525,7 +2525,7 @@ static void bcmgenet_link_intr_enable(struct bcmgenet_priv *priv)
+ 	} else if (priv->ext_phy) {
+ 		int0_enable |= UMAC_IRQ_LINK_EVENT;
+ 	} else if (priv->phy_interface == PHY_INTERFACE_MODE_MOCA) {
+-		if (priv->hw_params->flags & GENET_HAS_MOCA_LINK_DET)
++		if (bcmgenet_has_moca_link_det(priv))
+ 			int0_enable |= UMAC_IRQ_LINK_EVENT;
+ 	}
+ 	bcmgenet_intrl2_0_writel(priv, int0_enable, INTRL2_CPU_MASK_CLEAR);
+@@ -2590,7 +2590,7 @@ static void init_umac(struct bcmgenet_priv *priv)
+ 	}
+ 
+ 	/* Enable MDIO interrupts on GENET v3+ */
+-	if (priv->hw_params->flags & GENET_HAS_MDIO_INTR)
++	if (bcmgenet_has_mdio_intr(priv))
+ 		int0_enable |= (UMAC_IRQ_MDIO_DONE | UMAC_IRQ_MDIO_ERROR);
+ 
+ 	bcmgenet_intrl2_0_writel(priv, int0_enable, INTRL2_CPU_MASK_CLEAR);
+@@ -3230,7 +3230,7 @@ static irqreturn_t bcmgenet_isr0(int irq, void *dev_id)
+ 		}
+ 	}
+ 
+-	if ((priv->hw_params->flags & GENET_HAS_MDIO_INTR) &&
++	if (bcmgenet_has_mdio_intr(priv) &&
+ 		status & (UMAC_IRQ_MDIO_DONE | UMAC_IRQ_MDIO_ERROR)) {
+ 		wake_up(&priv->wq);
+ 	}
+@@ -3900,7 +3900,7 @@ static void bcmgenet_set_hw_params(struct bcmgenet_priv *priv)
+ 	}
+ 
+ #ifdef CONFIG_PHYS_ADDR_T_64BIT
+-	if (!(params->flags & GENET_HAS_40BITS))
++	if (!bcmgenet_has_40bits(priv))
+ 		pr_warn("GENET does not support 40-bits PA\n");
+ #endif
+ 
+@@ -4079,7 +4079,7 @@ static int bcmgenet_probe(struct platform_device *pdev)
+ 	bcmgenet_set_hw_params(priv);
+ 
+ 	err = -EIO;
+-	if (priv->hw_params->flags & GENET_HAS_40BITS)
++	if (bcmgenet_has_40bits(priv))
+ 		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(40));
+ 	if (err)
+ 		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.h b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
+index 28e2c94ef835c..ba83819210aa8 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ /*
+- * Copyright (c) 2014-2024 Broadcom
++ * Copyright (c) 2014-2025 Broadcom
+  */
+ 
+ #ifndef __BCMGENET_H__
+@@ -650,6 +650,31 @@ struct bcmgenet_priv {
+ 	struct ethtool_eee eee;
  };
+ 
++static inline bool bcmgenet_has_40bits(struct bcmgenet_priv *priv)
++{
++	return !!(priv->hw_params->flags & GENET_HAS_40BITS);
++}
++
++static inline bool bcmgenet_has_ext(struct bcmgenet_priv *priv)
++{
++	return !!(priv->hw_params->flags & GENET_HAS_EXT);
++}
++
++static inline bool bcmgenet_has_mdio_intr(struct bcmgenet_priv *priv)
++{
++	return !!(priv->hw_params->flags & GENET_HAS_MDIO_INTR);
++}
++
++static inline bool bcmgenet_has_moca_link_det(struct bcmgenet_priv *priv)
++{
++	return !!(priv->hw_params->flags & GENET_HAS_MOCA_LINK_DET);
++}
++
++static inline bool bcmgenet_has_ephy_16nm(struct bcmgenet_priv *priv)
++{
++	return priv->ephy_16nm;
++}
++
+ #define GENET_IO_MACRO(name, offset)					\
+ static inline u32 bcmgenet_##name##_readl(struct bcmgenet_priv *priv,	\
+ 					u32 off)			\
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmmii.c b/drivers/net/ethernet/broadcom/genet/bcmmii.c
+index e7c659cd39746..e4b498d6bd914 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
+@@ -2,7 +2,7 @@
+ /*
+  * Broadcom GENET MDIO routines
+  *
+- * Copyright (c) 2014-2024 Broadcom
++ * Copyright (c) 2014-2025 Broadcom
+  */
+ 
+ #include <linux/acpi.h>
+@@ -153,7 +153,7 @@ void bcmgenet_phy_power_set(struct net_device *dev, bool enable)
+ 	u32 reg = 0;
+ 
+ 	/* EXT_GPHY_CTRL is only valid for GENETv4 and onward */
+-	if (GENET_IS_V4(priv) || priv->ephy_16nm) {
++	if (GENET_IS_V4(priv) || bcmgenet_has_ephy_16nm(priv)) {
+ 		reg = bcmgenet_ext_readl(priv, EXT_GPHY_CTRL);
+ 		if (enable) {
+ 			reg &= ~EXT_CK25_DIS;
+@@ -183,7 +183,7 @@ void bcmgenet_phy_power_set(struct net_device *dev, bool enable)
+ 
+ static void bcmgenet_moca_phy_setup(struct bcmgenet_priv *priv)
+ {
+-	if (priv->hw_params->flags & GENET_HAS_MOCA_LINK_DET)
++	if (bcmgenet_has_moca_link_det(priv))
+ 		fixed_phy_set_link_update(priv->dev->phydev,
+ 					  bcmgenet_fixed_phy_link_update);
+ }
 -- 
 2.53.0
 
