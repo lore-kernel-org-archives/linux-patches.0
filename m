@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6223368B6;
-	Wed, 20 May 2026 17:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B2B3EC2DB;
+	Wed, 20 May 2026 17:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297221; cv=none; b=ox6+8U+QMwptNX8OwRm8BfzGj/4oj3Zvg67hOFovmAfy/WecF2aVQ4k9x6S6BB68iyGvvwtYTdw7WpykdZKHA4BE+tBGiw58psiKlyjxeFMMYXebEZ90Tb0W5hGVxmQnWxQgmI7CMO843jVWZzVOmdMCYizawwURT60wVWE7dLg=
+	t=1779297224; cv=none; b=HiTw6Op0QX4kaltLUhJ4mdIIPaa0JHlC/ax99r5LXD9jsCmLKfo6qdsMXPl4+Y4V/gLiT1IDvyl4kBH6bZMILY68WNo4MmlEBVGFNWT8KqgpmbgACS/Y4VbHAOmBaSAPA8e5sEPZUYaNycigr/6t0uyFLCTfCwXybeIu95RC6to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297221; c=relaxed/simple;
-	bh=D3JSrIKCd6/vrS2Q8SO20GrxgzTnQ5EPgtQ3tok7DsU=;
+	s=arc-20240116; t=1779297224; c=relaxed/simple;
+	bh=xA24qydCFX86B1+XyJRtOBfXVj7HbGgbLmTqYAsXw4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s5hVk8wNdml1WWNhwXUX1kwXTv2lHHjvODwZrg2FWJucxEymkAz+O2juGjV1hWhEx7gIZcxHsmfZgT+UUXaF346YDZ0euLbcKDUuvtDz5FcdktGDzu/lulT79Qu7KAHYp+bU9/+I4r18tMnawUUiahWnx+9GWV7adD9yQI2O3rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EAqTVUxe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gZn//7TMfmsVT4F1XIB/xJhrGFnkFYhtBStILd6K8PWa26tGBoD71RTp+hcwbEnoIl8D4O9bo+Bp+5PgmZg+/+c8wbNYrSFBaoO8lMir8JFx4I1Tk9XlCaP+VwiSxxOpH6wxwnj5dWDCuAtsXJkIl3a0xPuP+EovIcCiEmTkz3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oO4tYCPZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EAqTVUxe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15E31F000E9;
-	Wed, 20 May 2026 17:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oO4tYCPZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65AA81F000E9;
+	Wed, 20 May 2026 17:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297220;
-	bh=Vokc+4OrEfvfQuul6xJipMyzp3iiHby8QQF4it1rY3I=;
+	s=korg; t=1779297222;
+	bh=YCx79QTX5vMefxbBRgBaaqfL/22z3k3ZxcgMEK0Nc0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EAqTVUxeSM92aRZA6FC7tO2HQeQOs99B7lydWTYcCU9KO+dh0HJT5v7ebKV9HMnqI
-	 rsttN8J3XDVUzJ2Co8XsQQX1krZvKZDyDAFtlG3s4c8HILvqO3oo4NdgHFRduWyNdk
-	 d87xZRreRhmEp/em6+gIuEcuUoNNQHH68mGXxscA=
+	b=oO4tYCPZqIn7Lb4NnZlIxF2V+mejh7+OGQ4zml08OhBIj2EvGEeZxCgX/a1sYhj++
+	 qYlqzdDvxnKbRrDeorqln0fMxfcV+6WWazB26BR+55kWd560B6SjkVIrgcfmjxvDrb
+	 tQLaKy/9xBVH+EtPCLeLJa/swSK2jqCsWIIXa7Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Kramer <linux@markus-kramer.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 1089/1146] ALSA: hda/realtek: Add quirk for Samsung Galaxy Book5 360 headphone
-Date: Wed, 20 May 2026 18:22:19 +0200
-Message-ID: <20260520162212.882240229@linuxfoundation.org>
+	Ziyuan Chen <zc@anthropic.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 7.0 1098/1146] iommu/amd: Bounds-check devid in __rlookup_amd_iommu()
+Date: Wed, 20 May 2026 18:22:28 +0200
+Message-ID: <20260520162213.091351119@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -50,35 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Kramer <linux@markus-kramer.de>
+From: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
 
-commit fd87b510f5f543125ecf51e7c706a9f4bc3352be upstream.
+commit 07d0f496fe7ec5abe3bee7e38be709521567bb33 upstream.
 
-The Samsung Galaxy Book5 360 (NP750QHA, PCI subsystem ID 0x144d:0xc902)
-has severe audio distortion on the 3.5mm headphone jack. Applying
-ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET corrects the output path
-configuration, consistent with fixes already applied to other Samsung
-Galaxy Book models using the same ALC256 codec.
+iommu_device_register() walks every device on the PCI bus via
+bus_for_each_dev() and calls amd_iommu_probe_device() for each. The
+inlined check_device() path computes the device's sbdf, calls
+rlookup_amd_iommu() to find the owning IOMMU, and only afterwards
+verifies devid <= pci_seg->last_bdf. __rlookup_amd_iommu() indexes
+rlookup_table[devid] with no bounds check of its own, so for a PCI
+device whose BDF is not described by the IVRS, the lookup reads past
+the end of the allocation before the caller's bounds check can run.
 
+This was harmless before commit e874c666b15b ("iommu/amd: Change
+rlookup, irq_lookup, and alias to use kvalloc()"): the table was a
+zeroed page-order allocation, so the over-read returned NULL and the
+caller's NULL check skipped the device. After that commit the table is
+a tight kvcalloc() and the over-read returns adjacent slab contents,
+which check_device() then dereferences as a struct amd_iommu *,
+causing a boot-time GPF.
+
+Seen on Google Compute Engine ct6e VMs, where the virtualized IVRS
+describes only the four TPU endpoints 00:04.0-07.0; the gVNIC at
+00:08.0 (devid 0x40) indexes 56 bytes past the 456-byte allocation,
+into the adjacent kmalloc-512 slab object:
+
+  pci 0000:00:04.0: Adding to iommu group 0
+  pci 0000:00:05.0: Adding to iommu group 1
+  pci 0000:00:06.0: Adding to iommu group 2
+  pci 0000:00:07.0: Adding to iommu group 3
+  Oops: general protection fault, probably for non-canonical address 0x3a64695f78746382: 0000 [#1] SMP NOPTI
+  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.18.22 #1
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 12/06/2025
+  RIP: 0010:amd_iommu_probe_device+0x54/0x3a0
+  Call Trace:
+   __iommu_probe_device+0x107/0x520
+   probe_iommu_group+0x29/0x50
+   bus_for_each_dev+0x7e/0xe0
+   iommu_device_register+0xc9/0x240
+   iommu_go_to_state+0x9c0/0x1c60
+   amd_iommu_init+0x14/0x40
+   pci_iommu_init+0x16/0x60
+   do_one_initcall+0x47/0x2f0
+
+Guard the array access in __rlookup_amd_iommu(). With the fix applied
+on 6.18.22, the gVNIC at 00:08.0 is skipped cleanly and the VM boots.
+
+Fixes: e874c666b15b ("iommu/amd: Change rlookup, irq_lookup, and alias to use kvalloc()")
 Cc: stable@vger.kernel.org
-Link: https://github.com/thesofproject/linux/issues/5648
-Signed-off-by: Markus Kramer <linux@markus-kramer.de>
-Link: https://patch.msgid.link/20260513222818.14351-1-linux@markus-kramer.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Ziyuan Chen <zc@anthropic.com>
+Tested-by: Ziyuan Chen <zc@anthropic.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Assisted-by: Claude:unspecified
+Signed-off-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/amd/iommu.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7448,6 +7448,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x144d, 0xc870, "Samsung Galaxy Book2 Pro (NP950XED)", ALC298_FIXUP_SAMSUNG_AMP_V2_2_AMPS),
- 	SND_PCI_QUIRK(0x144d, 0xc872, "Samsung Galaxy Book2 Pro (NP950XEE)", ALC298_FIXUP_SAMSUNG_AMP_V2_2_AMPS),
- 	SND_PCI_QUIRK(0x144d, 0xc886, "Samsung Galaxy Book3 Pro (NP964XFG)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
-+	SND_PCI_QUIRK(0x144d, 0xc902, "Samsung Galaxy Book5 360 (NP750QHA)", ALC256_FIXUP_SAMSUNG_HEADPHONE_VERY_QUIET),
- 	SND_PCI_QUIRK(0x144d, 0xc1ca, "Samsung Galaxy Book3 Pro 360 (NP960QFG)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
- 	SND_PCI_QUIRK(0x144d, 0xc1cb, "Samsung Galaxy Book3 Pro 360 (NP965QFG)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
- 	SND_PCI_QUIRK(0x144d, 0xc1cc, "Samsung Galaxy Book3 Ultra (NT960XFH)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -351,8 +351,12 @@ static struct amd_iommu *__rlookup_amd_i
+ 	struct amd_iommu_pci_seg *pci_seg;
+ 
+ 	for_each_pci_segment(pci_seg) {
+-		if (pci_seg->id == seg)
+-			return pci_seg->rlookup_table[devid];
++		if (pci_seg->id != seg)
++			continue;
++		/* IVRS may not describe every device on the bus */
++		if (devid > pci_seg->last_bdf)
++			return NULL;
++		return pci_seg->rlookup_table[devid];
+ 	}
+ 	return NULL;
+ }
 
 
