@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEAAC3B0AD6;
-	Wed, 20 May 2026 17:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CA6349AFF;
+	Wed, 20 May 2026 17:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299228; cv=none; b=fVTuqlwH7EEjcoyQBuIcIZhT5n/VFO29FaK3iqUDDiUFubhjhGLplgB6kSw+20w2SoKQ+9chEPyHeilduLGVgJoN/yGzv6y+kbmJxnsqshM5+PD4++uRF0mIDqCkoyycUIhfez87h49PMrBCkHkubHuaiI5gQUcGdLMIFJP5WVQ=
+	t=1779299231; cv=none; b=mStbDLPoIcI2VAtKmYB5y023FhXgjxOmAnVjhH2FlZ9RBmBAZYmmu2ozhVXo7sef2pPnHnpBYTY+jqBe8leMJ38Cd59//vT45xX4BSXnpqs7i09FBsW92lvXA7J0cVVzG6WOcfml8ME0jQJDHIuk6Q0O2pdeTYeQO9swTk+dIyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299228; c=relaxed/simple;
-	bh=11TwPq0JSmy+6W/eIHOGnkICgMZ8yY2k9GfMbuWUi9w=;
+	s=arc-20240116; t=1779299231; c=relaxed/simple;
+	bh=pV7go090PH0k+cUC4UfXSDFNVcUG8TfI5VonCB5w1/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KzAlb2831+I4cj5PXavdZDIKntzndKwpKTCDAKLRi/5nU46xqSBjfUGfurw0UO6Ckr49vOfKo22r69lzq9kI1Tx2o1odmLCVJ+DuROwf/Z4S/iATdrZ3nuXdPzcXm3BpcY3GxVOaLZYOC09C6YL+VSx0udMOTjvfGZJrYt/aPvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rT3cFQCj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AxEYLRGXOjEyIiCRWvDEszW1Aye+iQoAGpbaKbi8vKVTtX8oAT9FUbOOALPGJci5/pcWJaQIhsbWaWeaRsAt6p6oM/N0fa8xywpXiSsL03dg0G8tIBDy9/qeMRDtDSCml+qtHAAOSsbcoNJ13g+eC2DWzQNAtBPxF1gWzLoaxGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LelmQjZ+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rT3cFQCj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FCF01F000E9;
-	Wed, 20 May 2026 17:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LelmQjZ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60451F000E9;
+	Wed, 20 May 2026 17:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299227;
-	bh=WO1r7LvNEu5Fz/2/+KmuwR/7cyYILqPy8qXjsVTpbac=;
+	s=korg; t=1779299230;
+	bh=mdViNADGup4CqCToRn4WCYed2ozDx2+Wek/Ki7rj4ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rT3cFQCjHmVkjZ74KdrLkVaqaZkLZLYy0qEyz4QO6a6wjsb8IpFyWXfJ9G4o+4QG6
-	 KLyU/G/HMSbcENmGHEW5tUudC5URd3Sdicncy47y7bZ5DjsEkORppzQUtXbV8+Ga6n
-	 gOX1ggaPafXw36z7lfXdi3OTOnXtzGf7Nwe/0XBg=
+	b=LelmQjZ+0gEBLKq9W2eQIrbFFZS9Qbm0w9H/snwNn5c4SRhFwW58kfMRqovIZYJWr
+	 YfwVZJjJvVJ/1PJ3Hr2bHWkkUYmFXCvA6y2eHkRjKrdSCfBsYglEUsUTmSsAr+wmom
+	 fG4rBNhYlxm1LPdO5uR0/CEc99Usb//AlftOaPq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kito Xu (veritas501)" <hxzene@gmail.com>,
-	Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 670/957] net/sched: sch_dualpi2: drain both C-queue and L-queue in dualpi2_change()
-Date: Wed, 20 May 2026 18:19:13 +0200
-Message-ID: <20260520162149.066051904@linuxfoundation.org>
+Subject: [PATCH 6.18 661/957] netfilter: nfnetlink_osf: fix divide-by-zero in OSF_WSS_MODULO
+Date: Wed, 20 May 2026 18:19:04 +0200
+Message-ID: <20260520162148.867023812@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,82 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 478ed6b7d2577439c610f91fa8759a4c878a4264 ]
+[ Upstream commit 2195574dc6d9017d32ac346987e12659f931d932 ]
 
-Fix dualpi2_change() to correctly enforce updated limit and memlimit
-values after a configuration change of the dualpi2 qdisc.
+nf_osf_match_one() computes ctx->window % f->wss.val in the
+OSF_WSS_MODULO branch with no guard for f->wss.val == 0. A
+CAP_NET_ADMIN user can add such a fingerprint via nfnetlink; a
+subsequent matching TCP SYN divides by zero and panics the kernel.
 
-Before this patch, dualpi2_change() always attempted to dequeue packets
-via the root qdisc (C-queue) when reducing backlog or memory usage, and
-unconditionally assumed that a valid skb will be returned. When traffic
-classification results in packets being queued in the L-queue while the
-C-queue is empty, this leads to a NULL skb dereference during limit or
-memlimit enforcement.
+Reject the bogus fingerprint in nfnl_osf_add_callback() above the
+per-option for-loop. f->wss is per-fingerprint, not per-option, so
+the check must run regardless of f->opt_num (including 0). Also
+reject wss.wc >= OSF_WSS_MAX; nf_osf_match_one() already treats that
+as "should not happen".
 
-This is fixed by first dequeuing from the C-queue path if it is
-non-empty. Once the C-queue is empty, packets are dequeued directly from
-the L-queue. Return values from qdisc_dequeue_internal() are checked for
-both queues. When dequeuing from the L-queue, the parent qdisc qlen and
-backlog counters are updated explicitly to keep overall qdisc statistics
-consistent.
+Crash:
+ Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+ RIP: 0010:nf_osf_match_one (net/netfilter/nfnetlink_osf.c:98)
+ Call Trace:
+ <IRQ>
+  nf_osf_match (net/netfilter/nfnetlink_osf.c:220)
+  xt_osf_match_packet (net/netfilter/xt_osf.c:32)
+  ipt_do_table (net/ipv4/netfilter/ip_tables.c:348)
+  nf_hook_slow (net/netfilter/core.c:622)
+  ip_local_deliver (net/ipv4/ip_input.c:265)
+  ip_rcv (include/linux/skbuff.h:1162)
+  __netif_receive_skb_one_core (net/core/dev.c:6181)
+  process_backlog (net/core/dev.c:6642)
+  __napi_poll (net/core/dev.c:7710)
+  net_rx_action (net/core/dev.c:7945)
+  handle_softirqs (kernel/softirq.c:622)
 
-Fixes: 320d031ad6e4 ("sched: Struct definition and parsing of dualpi2 qdisc")
-Reported-by: "Kito Xu (veritas501)" <hxzene@gmail.com>
-Closes: https://lore.kernel.org/netdev/20260413075740.2234828-1-hxzene@gmail.com/
-Signed-off-by: Chia-Yu Chang <chia-yu.chang@nokia-bell-labs.com>
-Link: https://patch.msgid.link/20260417152551.71648-1-chia-yu.chang@nokia-bell-labs.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Suggested-by: Florian Westphal <fw@strlen.de>
+Suggested-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_dualpi2.c | 32 ++++++++++++++++++++++++++++----
- 1 file changed, 28 insertions(+), 4 deletions(-)
+ net/netfilter/nfnetlink_osf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/sched/sch_dualpi2.c b/net/sched/sch_dualpi2.c
-index 4b975feb52b1f..efa32240c5a95 100644
---- a/net/sched/sch_dualpi2.c
-+++ b/net/sched/sch_dualpi2.c
-@@ -871,11 +871,35 @@ static int dualpi2_change(struct Qdisc *sch, struct nlattr *opt,
- 	old_backlog = sch->qstats.backlog;
- 	while (qdisc_qlen(sch) > sch->limit ||
- 	       q->memory_used > q->memory_limit) {
--		struct sk_buff *skb = qdisc_dequeue_internal(sch, true);
-+		struct sk_buff *skb = NULL;
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index 9fc9544d4bc53..2305c7d9761eb 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -320,6 +320,10 @@ static int nfnl_osf_add_callback(struct sk_buff *skb,
+ 	if (f->opt_num > ARRAY_SIZE(f->opt))
+ 		return -EINVAL;
  
--		q->memory_used -= skb->truesize;
--		qdisc_qstats_backlog_dec(sch, skb);
--		rtnl_qdisc_drop(skb, sch);
-+		if (qdisc_qlen(sch) > qdisc_qlen(q->l_queue)) {
-+			skb = qdisc_dequeue_internal(sch, true);
-+			if (unlikely(!skb)) {
-+				WARN_ON_ONCE(1);
-+				break;
-+			}
-+			q->memory_used -= skb->truesize;
-+			rtnl_qdisc_drop(skb, sch);
-+		} else if (qdisc_qlen(q->l_queue)) {
-+			skb = qdisc_dequeue_internal(q->l_queue, true);
-+			if (unlikely(!skb)) {
-+				WARN_ON_ONCE(1);
-+				break;
-+			}
-+			/* L-queue packets are counted in both sch and
-+			 * l_queue on enqueue; qdisc_dequeue_internal()
-+			 * handled l_queue, so we further account for sch.
-+			 */
-+			--sch->q.qlen;
-+			qdisc_qstats_backlog_dec(sch, skb);
-+			q->memory_used -= skb->truesize;
-+			rtnl_qdisc_drop(skb, q->l_queue);
-+			qdisc_qstats_drop(sch);
-+		} else {
-+			WARN_ON_ONCE(1);
-+			break;
-+		}
- 	}
- 	qdisc_tree_reduce_backlog(sch, old_qlen - qdisc_qlen(sch),
- 				  old_backlog - sch->qstats.backlog);
++	if (f->wss.wc >= OSF_WSS_MAX ||
++	    (f->wss.wc == OSF_WSS_MODULO && f->wss.val == 0))
++		return -EINVAL;
++
+ 	for (i = 0; i < f->opt_num; i++) {
+ 		if (!f->opt[i].length || f->opt[i].length > MAX_IPOPTLEN)
+ 			return -EINVAL;
 -- 
 2.53.0
 
