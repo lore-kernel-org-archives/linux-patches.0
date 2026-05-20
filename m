@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB0C3DB63D;
-	Wed, 20 May 2026 11:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CD93DC4B1;
+	Wed, 20 May 2026 11:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276005; cv=none; b=oSjyJSXYoDj5PpdS7J2kM5D12PNNM5DHjmNSHIa3sdYeq6nVRlVSFQU17UlYSORMLwRt0o6IX5SGjFHp3EElkQdaEINQ4bRLH3Wk0yLWNI720uYJ3xxzVJ4S3CtVXowgbSs7kUrtKRhhb64RQFBT0xxMayB50VzS1GTwtdv1nnw=
+	t=1779276009; cv=none; b=sVWGBmfgww3yRNAvU8Rrbn6sM+aQOZmibwYm5Gi71loIPmuJaPcldadNUpsVlvAKWI7rvyOJXHLS1YYHYCiethCziXT7WitGckLeamiAqLMxfoPpkqYrUGItBNFgY+XeL4+tpQNNu2voeRSKmuChTrqFf8BXyq6s4VWyhA/PezE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276005; c=relaxed/simple;
-	bh=shPqrFD2Rl2M8pTyuPm+Sbf6QmwCQHDLfL0hKgrOAmM=;
+	s=arc-20240116; t=1779276009; c=relaxed/simple;
+	bh=YBxiAIRhLLuhZloB1Bm/OKO7SGTkSns5aVZuj2FDPYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qYvMZe4nP8wdKG8sDwxtTCMivNWigdvI4UNpb1QBbeJtBZBw9cDnr/hlZ6RzWa69LZ4ST2rVxsIu4Nf2bwplxmSsy03eQK6ymNlcuboTRDMWSoMB/7RgGK665ZISPbJNjIlQ1qxqR9rxG3FsCAXGHrn61odd2IfejA8jHajApkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=STbGcf+8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZGrQqdA2RwI7xNhwSz20PoH+XFGHaYvg2eJ3QGscDPJJbVAyHnH4ubgcNViQx0ky5TO1tYGcRdOomOu2z8c91cofEQ0cXy39/cCq9b1I/lWr2lRikLBEDeivV2efMg44KB5F8Az6tG6clUnuP0+UanHUVENx23xLWDJUNDV3Wvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bSDlUDOC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="STbGcf+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B89E1F00894;
-	Wed, 20 May 2026 11:20:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bSDlUDOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBAE1F00896;
+	Wed, 20 May 2026 11:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276002;
-	bh=COtCp1RJxojVDhpO6z2k+0d61AGdyhLRc3KUZcoQBA4=;
+	s=k20260515; t=1779276003;
+	bh=NuW4Ocbcj6Nn7fwFtaRlCC1fPw05KhvfeqQ4pb/u2yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=STbGcf+85YfPN8y5yggFHl4Qc4IaHZaq6RgpbwCfHQFI0SbX8mG8mT2SdMhJGu2YV
-	 woyywu63Nj4+Z54dV6laIChTOOu86tPC6OL9suovJawz4VKxhO/5HZADBlX+3A3f7R
-	 t98a69bXtwNacZFL67g0fUILslJBMrx68cyyXRDuMDneViWRh+kFdKvqGu7kycgj7A
-	 NcC5H31tP9sZu+/jR1nOa2fKaqyXpLYyJABKTdkjgQgT0AFKlZVWBbMz0od8fctP59
-	 UxbdH9gDMd/ryJRsfUveZdoyGctTQ72Chd2yyai5ONA2JcnkWOhVhZk8TdkCHNB164
-	 GXuYX9vZbK3qQ==
+	b=bSDlUDOCgMK9gQhkcNUg8G/iqJu8Luq4AWWmku1+goTUjV+3T/0o8dyic7BXZVzBX
+	 I1aEtYJ07ob4v7hVLTUu4i9a7WZTCc4AEPB2F3naO58jrqsPBzw20SmAJBksYiEO2z
+	 lQy2AXo2Lq0B1Hd4NmSqPmu6/cKl1t/Y7KGke21cd3z7OvreDlk4P8hWEpU4cW/woo
+	 jIVaODN+2WqP5uA9FtteiZ+lMVDPmOY+o5W7N/SBxLTmENmS1xHkjKAwxMUnQFKq9T
+	 orf4gBog0X7QXnFpK9ZGqOJMrRQRlKZSecRHcaXyWyMgLfRuhj7A47DIpU/Y6dIKj3
+	 5/6LN9vkTPeGA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Schaefer <dhs@frame.work>,
-	"Dustin L. Howett" <dustin@howett.net>,
-	linux@frame.work,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	io-uring@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] ALSA: hda/realtek: fix mic boost on Framework PTL
-Date: Wed, 20 May 2026 07:18:44 -0400
-Message-ID: <20260520111944.3424570-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.6] io_uring: hold uring_lock when walking link chain in io_wq_free_work()
+Date: Wed, 20 May 2026 07:18:45 -0400
+Message-ID: <20260520111944.3424570-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -56,306 +51,299 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Schaefer <dhs@frame.work>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 67c73815220784074ff13ec07df955911caf1b73 ]
+[ Upstream commit 20c39819a27646573dfa0ac0d01c38895298a6f6 ]
 
-In addition to the mic jack fix, also need to avoid boosting the
-internal mic too much, otherwise >50% input volume clips a lot.
+io_wq_free_work() calls io_req_find_next() from io-wq worker context,
+which reads and clears req->link without holding any lock. This can
+potentially race with other paths that mutate the same chain under
+ctx->uring_lock.
 
-Also add a second SSID. We have one for the classic chassis/speaker and
-one for the new Pro chassis/speaker.
+Take ctx->uring_lock around the io_req_find_next() call. Only requests
+with IO_REQ_LINK_FLAGS reach this path, which is not the hot path.
 
-To: Jaroslav Kysela <perex@perex.cz>
-To: Takashi Iwai <tiwai@suse.com>
-To: linux-sound@vger.kernel.org
-Cc: Dustin L. Howett <dustin@howett.net>
-Cc: linux@frame.work
-Signed-off-by: Daniel Schaefer <dhs@frame.work>
-Link: https://patch.msgid.link/20260513155513.11683-1-dhs@frame.work
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
 ## Phase 1: Commit Message Forensics
-Step 1.1 Record: Subsystem is `ALSA: hda/realtek`. Action verb is `fix`.
-Claimed intent is to fix excessive internal microphone boost on
-Framework PTL systems and add a second Framework PTL SSID.
+Step 1.1 Record: Subsystem `io_uring`; action verb `hold`; intent:
+serialize linked-request chain walking in `io_wq_free_work()` with
+`ctx->uring_lock`.
 
-Step 1.2 Record: Tags present:
-- `To`: Jaroslav Kysela, Takashi Iwai, `linux-sound@vger.kernel.org`
-- `Cc`: Dustin L. Howett, `linux@frame.work`
-- `Signed-off-by`: Daniel Schaefer
-- `Link`:
-  `https://patch.msgid.link/20260513155513.11683-1-dhs@frame.work`
-- `Signed-off-by`: Takashi Iwai
-- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-by`,
-  or `Cc: stable@vger.kernel.org` tag was present.
+Step 1.2 Record: Tags present in commit
+`20c39819a27646573dfa0ac0d01c38895298a6f6`:
+- `Signed-off-by: Jens Axboe <axboe@kernel.dk>`
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, `Link:`, or `Cc: stable@vger.kernel.org` tags in the committed
+  message.
 
-Step 1.3 Record: The commit describes a real user-visible audio defect:
-the internal microphone clips heavily when input volume is above 50%. It
-also states there are two SSIDs for the Framework PTL generation, one
-classic chassis/speaker and one Pro chassis/speaker. No crash, stack
-trace, or kernel-version range is described.
+Step 1.3 Record: The commit states that `io_wq_free_work()` calls
+`io_req_find_next()` from io-wq worker context, and `io_req_find_next()`
+reads and clears `req->link` without a lock. The stated failure mode is
+a potential race with other paths mutating the same chain under
+`ctx->uring_lock`. No stack trace, reproducer, affected-version
+statement, or user report is in the commit message.
 
-Step 1.4 Record: This is not a hidden memory-safety bug. It is an
-explicit hardware quirk/audio correctness fix: it corrects the quirk
-selected for one Framework PTL SSID and adds another SSID.
+Step 1.4 Record: This is a hidden bug fix despite the subject not saying
+“fix”: it adds missing synchronization around shared linked-request
+state. The diff confirms it is not a cleanup or feature.
 
 ## Phase 2: Diff Analysis
-Step 2.1 Record: One file changed: `sound/hda/codecs/realtek/alc269.c`,
-9 insertions and 1 deletion. Modified areas are the Realtek fixup enum,
-`alc269_fixups[]`, and `alc269_fixup_tbl[]`. Scope is a single-file,
-surgical driver quirk change.
+Step 2.1 Record: One file changed: `io_uring/io_uring.c`, 6 insertions
+and 1 deletion. Only `io_wq_free_work()` is modified. Scope: single-file
+surgical locking fix.
 
-Step 2.2 Record:
-- Enum hunk: before, only
-  `ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE` existed; after, a
-  Framework-specific chained mic-boost limiter fixup ID is added.
-- Fixup table hunk: before, Framework systems only got the mic-
-  presence/headset-mode chain; after, the new Framework PTL fixup first
-  invokes `alc269_fixup_limit_int_mic_boost` and then chains to the
-  existing Framework mic-presence fixup.
-- Quirk table hunk: before, `0xf111:0x000f` used only the Framework mic-
-  presence fixup; after, `0xf111:0x000f` uses the mic-boost-limiting
-  chain, and `0xf111:0x010f` is added with the same chain.
+Step 2.2 Record: Before, `io_wq_free_work()` called
+`io_req_find_next(req)` directly when `IO_REQ_LINK_FLAGS` was set.
+After, it stores `req->ctx`, takes `ctx->uring_lock`, calls
+`io_req_find_next(req)`, and unlocks. The affected path is io-wq worker
+completion/freeing of linked requests, not the normal unlinked hot path.
 
-Step 2.3 Record: Bug category is hardware quirk/workaround plus device
-ID addition. The fix reuses existing `alc269_fixup_limit_int_mic_boost`,
-which, on `HDA_FIXUP_ACT_PROBE`, finds internal analog mic pins and
-overrides input amp caps to limit boost levels. No race, memory-safety,
-refcount, or error-path bug is involved.
+Step 2.3 Record: Bug category is synchronization/race condition.
+`io_req_find_next()` reads `req->link` and clears it; `git grep`
+verified other link-chain assignment/mutation sites in
+submission/timeout paths. The fix serializes this worker-side chain walk
+with the mutex used by normal chain mutation paths.
 
-Step 2.4 Record: Fix quality is high: minimal, contained, uses existing
-Realtek HDA fixup infrastructure, and only affects two explicit
-Framework subsystem IDs. Regression risk is very low and limited to
-those two machines; the only plausible risk is reducing available mic
-gain too much on those exact SSIDs.
+Step 2.4 Record: The fix is obviously small and locally correct: it
+protects exactly the shared `req->link` read/clear. Regression risk is
+low but not zero, because it adds a mutex acquisition in worker cleanup.
+The commit message and code both verify the path is limited to requests
+with `IO_REQ_LINK_FLAGS`.
 
 ## Phase 3: Git History Investigation
-Step 3.1 Record: `git blame` on the parent of commit
-`67c73815220784074ff13ec07df955911caf1b73` shows the existing Framework
-fixup/table structure came through the Realtek driver split/import
-commit `c08e42c9a40ab`, while the `0xf111:0x000f` quirk line itself was
-introduced by `bac1e57adf08c9` in the v7.0 cycle. Historical `git show`
-verified the original Framework fixup was introduced by `309d7363ca3d9`,
-first described by `git describe` as `v5.18~27^2~3`. The boost-limiting
-helper pattern was present since `8903376dc6994`, described as
-`v5.14-rc7~16^2~1`.
+Step 3.1 Record: `git blame` on the pre-fix parent showed the current
+direct `io_wq_free_work()` call to `io_req_find_next()` came from
+`247f97a5f19b64`, described by `git describe` as `v6.5-rc1~235^2~10`.
+Older helper-based worker cleanup existed before that;
+`io_wq_free_work()`/io-wq callback code is present from at least
+`v5.15-rc1~185^2~41`, and stable branch checks show equivalent
+vulnerable helper paths in `5.10.y`, `5.15.y`, and `6.1.y`.
 
-Step 3.2 Record: No `Fixes:` tag is present, so there was no Fixes
-target to follow.
+Step 3.2 Record: No `Fixes:` tag is present, so there was no tagged
+introducing commit to follow.
 
-Step 3.3 Record: Recent file history shows many Realtek laptop quirk
-commits, including `bac1e57adf08c` for Framework `0xf111:000f`. No
-required multi-patch series was found for this candidate.
+Step 3.3 Record: Recent `io_uring/io_uring.c` history includes related
+io-wq/refcount work, notably `390513642ee676` / stable variants,
+“io_uring: always do atomic put from iowq,” which changed the same
+function and was KCSAN/syzbot-motivated. Mainline related commits
+immediately after this candidate are `49ae66eb8c273` and
+`a65855ec34aed`, the other two patches in the linked-request locking
+series.
 
-Step 3.4 Record: Author Daniel Schaefer previously authored Framework
-`0xf111:000c` Realtek quirk work. Dustin Howett, CC’d here, authored
-several Framework Realtek quirk commits. Takashi Iwai applied this patch
-and is the ALSA HDA maintainer path for these commits.
+Step 3.4 Record: `MAINTAINERS` verifies Jens Axboe is the `IO_URING`
+maintainer. `git log --author='Jens Axboe' -- io_uring` shows multiple
+recent io_uring commits by him.
 
-Step 3.5 Record: Dependencies are the existing Framework mic-presence
-fixup and existing mic-boost limiter helper. They exist in the local
-current tree; older stable trees before the
-`sound/hda/codecs/realtek/alc269.c` split would need a path/context
-backport to `sound/pci/hda/patch_realtek.c`.
+Step 3.5 Record: Build-wise this patch is standalone for trees with the
+current direct `io_wq_free_work()` shape. For older stable trees using
+`io_put_req_find_next()`, it needs a manual backport into the helper or
+equivalent worker path. Semantically, it is patch 1/3 of a related
+locking series; patches `49ae66eb8c273` and `a65855ec34aed` should be
+considered with it to complete the linked-chain locking invariant.
 
 ## Phase 4: Mailing List And External Research
-Step 4.1 Record: `b4 dig -c 67c73815220784074ff13ec07df955911caf1b73`
-matched the patch by patch-id and found
-`https://patch.msgid.link/20260513155513.11683-1-dhs@frame.work`. `b4
-dig -a` found only v1. The saved thread contains Takashi Iwai’s reply:
-“Applied now. Thanks.” No NAKs or requested revisions were found.
+Step 4.1 Record: `b4 dig -c 20c39819a2764` found the original submission
+at `https://patch.msgid.link/20260511182217.226763-2-axboe@kernel.dk`.
+`b4 dig -a` found only v1. The saved mbox shows this was `[PATCH 1/3]`.
 
-Step 4.2 Record: `b4 dig -w` lists Daniel Schaefer, Jaroslav Kysela,
-Takashi Iwai, `linux-sound@vger.kernel.org`, Dustin L. Howett, and
-`linux@frame.work` as original participants. Appropriate ALSA
-maintainers/list were included.
+Step 4.2 Record: `b4 dig -w` showed the patch was sent by Jens Axboe to
+`io-uring@vger.kernel.org`, with Jens on Cc. No separate
+reviewer/maintainer tags or replies were found in the saved matched
+thread.
 
-Step 4.3 Record: No separate `Reported-by` bug report was linked.
-Phoronix independently reports the same applied commit and repeats the
-stated impact: Framework PTL internal mic clips above 50% input volume;
-it identifies the hardware as Framework Laptop 13 Pro / Panther Lake.
+Step 4.3 Record: No bug-report link or `Reported-by:` tag exists. Web
+search for the exact subject did not find a direct bug report.
 
-Step 4.4 Record: Related patches include earlier Framework Realtek quirk
-additions for `0xf111:0001`, `0009`, `000c`, and `000f`, plus several
-prior “Limit mic boost” Realtek quirks. This candidate is standalone.
+Step 4.4 Record: The mbox cover letter says the series is “Linked
+request fix” and “closing some gaps on linked requests, where iterating
+a chain must hold either ->uring_lock OR ->timeout_lock, and modifying
+any existing [chain] must hold both.” Patch 2 defers linked-timeout
+splicing out of hrtimer context; patch 3 keeps `uring_lock` held across
+`io_kill_timeouts()`.
 
-Step 4.5 Record: Web search did not find stable-list discussion for this
-exact candidate. No stable-specific objection was found.
+Step 4.5 Record: WebFetch of lore was blocked by Anubis, but `b4`
+successfully retrieved the thread. Web search did not find stable-
+specific discussion for this exact patch. No direct stable nomination
+was verified.
 
 ## Phase 5: Code Semantic Analysis
-Step 5.1 Record: No ordinary function body is newly changed. The
-affected code is the Realtek HDA fixup selection tables plus the
-existing helper `alc269_fixup_limit_int_mic_boost`.
+Step 5.1 Record: Modified function: `io_wq_free_work()`.
 
-Step 5.2 Record: Caller path is `alc269_probe`, which calls
-`snd_hda_pick_fixup` using `alc269_fixup_tbl`, then applies fixups at
-`HDA_FIXUP_ACT_PRE_PROBE` and `HDA_FIXUP_ACT_PROBE`. The impact surface
-is limited to probe/init of matching Realtek HDA codecs with Framework
-SSIDs `0xf111:000f` or `0xf111:010f`.
+Step 5.2 Record: Callers verified by `git grep`: `io_wq_free_work()` is
+called from `io_uring/io-wq.c` after `io_wq_submit_work()` in the worker
+loop and from the cancel path helper `io_run_cancel()`. This is io-wq
+worker context.
 
-Step 5.3 Record: The key helper calls `snd_hda_codec_get_pincfg`,
-`snd_hda_get_input_pin_attr`, and `snd_hda_override_amp_caps`.
-`snd_hda_override_amp_caps` is documented in code as overriding cached
-amp caps, useful to adjust amp ranges such as limiting to 0 dB.
+Step 5.3 Record: Key callee is `io_req_find_next()`, verified to read
+`req->link`, set `req->link = NULL`, and return the next linked request.
+`io_wq_free_work()` then frees the current request via `io_free_req()`.
 
-Step 5.4 Record: The buggy path is reachable automatically during codec
-probe on the affected hardware. The user-visible failure is then
-triggered by normal microphone capture with input volume above 50%. This
-is not an unprivileged security trigger; it is normal hardware use.
+Step 5.4 Record: Reachability is verified from userspace:
+`io_uring_enter()` locks `ctx->uring_lock` and calls `io_submit_sqes()`,
+user SQE flags include `IOSQE_IO_LINK`, `IOSQE_IO_HARDLINK`, and
+`IOSQE_ASYNC`, and async paths queue work into io-wq. This makes the
+affected path reachable by user-submitted linked async io_uring
+requests.
 
-Step 5.5 Record: Similar Realtek mic-boost limiter quirks exist,
-including `8903376dc6994`, `86a433862912f`, `6db03b1929e20`, and
-`76b0a22d4cf7d`. Some prior similar mic-boost quirk commits carried `Cc:
-stable@vger.kernel.org`.
+Step 5.5 Record: Similar patterns found: the normal completion/free
+batching path calls `io_queue_next()`/`io_req_find_next()` while
+`__io_submit_flush_completions()` and `io_free_batch_list()` require
+`ctx->uring_lock`. Timeout code also mutates `req->link`, and the same
+series addresses that.
 
 ## Phase 6: Cross-Referencing And Stable Tree Analysis
-Step 6.1 Record: `v7.0` contains the `0xf111:000f` Framework line, so
-the wrong/insufficient fixup exists in v7.0.y candidates. `v6.18` and
-`v6.17` tags checked locally did not contain `0xf111:000f`. `v6.12` and
-`v6.6` contain the base Framework fixup and boost helper, but not the
-newer `000f`/`010f` IDs.
+Step 6.1 Record: Stable branch checks verified equivalent vulnerable
+code in `stable/linux-5.10.y`, `stable/linux-5.15.y`,
+`stable/linux-6.1.y`, `stable/linux-6.6.y`, `stable/linux-6.12.y`,
+`stable/linux-6.19.y`, and `stable/linux-7.0.y`. The exact direct hunk
+exists in newer trees; older trees use `io_put_req_find_next()`.
 
-Step 6.2 Record: The patch applies cleanly to the current local tree
-with `git apply --check`. It should be straightforward for v7.0.y. Older
-stable trees may need mechanical backporting because the Realtek code
-lived in `sound/pci/hda/patch_realtek.c` before the driver split.
+Step 6.2 Record: `git apply --check` of the candidate patch succeeded on
+the current checked-out `stable/linux-7.0.y` tree. Backport difficulty:
+clean or near-clean for newer trees with the direct function body;
+manual but simple for older helper-based trees.
 
-Step 6.3 Record: No alternate fix for this exact Framework PTL mic boost
-issue was found in local history or stable-search results.
+Step 6.3 Record: Exact-subject `git log` over listed stable branches
+found no existing stable copy of this fix. Related stable history
+contains earlier io_uring link/refcount fixes, but not this locking fix.
 
 ## Phase 7: Subsystem And Maintainer Context
-Step 7.1 Record: Subsystem is ALSA HDA Realtek codec driver. Criticality
-is driver-specific/important for affected laptop users, not core-kernel
-universal.
+Step 7.1 Record: Subsystem is `io_uring`, a core async I/O subsystem
+reachable through the `io_uring_enter` syscall. Criticality:
+important/core-adjacent because it is syscall-reachable and handles
+request lifetime, completion, and linked request ordering.
 
-Step 7.2 Record: The Realtek HDA quirk area is very active; recent
-history shows many laptop quirk additions/fixes in the same file.
+Step 7.2 Record: The subsystem is active: recent mainline history around
+the candidate contains multiple io_uring fixes and refactors, and the
+candidate came through the io_uring maintainer tree.
 
 ## Phase 8: Impact And Risk Assessment
-Step 8.1 Record: Affected population is Framework Laptop 13 Pro PTL and
-Framework Laptop 13 PTL users with Realtek HDA audio matching
-`0xf111:000f` or `0xf111:010f`.
+Step 8.1 Record: Affected users are systems using io_uring linked
+requests that can complete through io-wq, especially linked async
+operations. This is feature/config/user-workload specific, not
+universal.
 
-Step 8.2 Record: Trigger is common on affected hardware: normal internal
-microphone use with input volume above 50%. It is not security-sensitive
-and does not require unusual kernel configuration beyond the Realtek HDA
-driver.
+Step 8.2 Record: Trigger requires linked request chains and worker
+completion/cancellation interleaving with other chain mutation/walk
+paths. Unprivileged reachability depends on system policy, but the code
+path is syscall-reachable through io_uring submission. No public
+reproducer was verified.
 
-Step 8.3 Record: Failure mode is bad/clipped microphone capture,
-severity MEDIUM. It is not a crash, data corruption, deadlock, or
-memory-safety issue, but it materially breaks expected laptop audio
-behavior.
+Step 8.3 Record: Verified failure mode is an unsynchronized data race on
+`req->link`. The precise observed symptom is unverified, but the raced
+state controls request-chain lifetime/progression; plausible
+consequences include lost/misordered linked request handling or memory-
+safety/lifetime bugs. Severity: medium-high to high because it is a
+syscall-reachable race in request lifetime code, though no crash report
+was verified.
 
-Step 8.4 Record: Benefit is high for the affected hardware because it
-makes microphone capture usable and adds the second SSID. Risk is very
-low: 10-line single-driver quirk, no API changes, no broad behavior
-change.
+Step 8.4 Record: Benefit is high enough for stable because it removes a
+real locking hole in io_uring linked-request handling. Risk is low:
+6-line contained mutex protection, not on the unlinked hot path, no new
+API, no behavior change except serialization.
 
 ## Phase 9: Final Synthesis
-Step 9.1 Record:
-- Evidence for backporting: real hardware-specific bug, explicit user-
-  visible clipping, new SSID addition, standard stable-acceptable quirk
-  pattern, tiny patch, existing helper reused, maintainer applied, clean
-  current-tree apply.
-- Evidence against backporting: not a crash/security/data-corruption
-  fix; affected population is specific new hardware; older trees may
-  need path/context adjustments.
-- Unresolved: no local runtime test on Framework PTL hardware; exact
-  older stable applicability depends on whether those trees have or
-  should receive the newer Framework PTL SSIDs.
+Step 9.1 Evidence for backporting:
+- Verified real unsynchronized access: `io_wq_free_work()` called
+  `io_req_find_next()` without `ctx->uring_lock`, while
+  `io_req_find_next()` reads and clears `req->link`.
+- Verified reachability from user-submitted io_uring linked async
+  requests.
+- Verified equivalent code exists across active stable trees from
+  `5.10.y` through `7.0.y`.
+- Verified fix is tiny, contained, maintainer-authored, and applies
+  cleanly to `7.0.y`.
+- Verified this is part of an explicit “Linked request fix” series
+  closing locking gaps.
 
-Step 9.2 Record:
-1. Obviously correct and tested? Mostly yes by inspection and maintainer
-   acceptance; no `Tested-by` and no local hardware test.
-2. Fixes a real bug affecting users? Yes, verified from commit body and
-   external report: internal mic clips above 50% volume.
-3. Important issue? Medium severity, but stable rules commonly accept
-   hardware quirks/device IDs.
-4. Small and contained? Yes, one file, 9 insertions/1 deletion.
-5. No new features/APIs? Yes, no API or userspace ABI change.
-6. Can apply to stable trees? Clean on current/v7.0-style tree; older
-   trees need mechanical backport.
+Evidence against or concerns:
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, stable Cc,
+  stack trace, or reproducer was verified.
+- It is patch 1/3 of a related series; for best stable correctness,
+  patches `49ae66eb8c273` and `a65855ec34aed` should be
+  evaluated/backported together.
+- Older stable trees need manual adaptation to `io_put_req_find_next()`.
 
-Step 9.3 Record: This falls squarely into stable exception categories:
-hardware quirk/workaround and device ID/SSID addition for an existing
-driver.
+Step 9.2 Stable rules checklist:
+1. Obviously correct and tested? Correct by inspection; external testing
+   not verified.
+2. Fixes a real bug? Yes, verified race on `req->link`.
+3. Important issue? Yes enough for stable: syscall-reachable request-
+   chain/lifetime race, though exact crash symptom is unverified.
+4. Small and contained? Yes, one function, one file, 6 insertions.
+5. No new features/APIs? Yes.
+6. Can apply to stable? Yes for newer trees; older trees need
+   straightforward backport.
 
-Step 9.4 Decision: Backport. Although not a severe kernel stability bug,
-stable policy routinely accepts small hardware quirks like this, and the
-risk is confined to two Framework SSIDs while the benefit is fixing
-broken microphone behavior on affected systems.
+Step 9.3 Exception category: None. This is not a device ID, quirk, DT,
+build, or documentation-only patch.
+
+Step 9.4 Decision: Backport. The technical merit is a small, maintainer-
+authored synchronization fix for a verified io_uring linked-request race
+in code present across stable trees. Treat the rest of the 3-patch
+linked-request locking series as related follow-up material rather than
+ignoring it.
 
 ## Verification
-- Phase 1: Parsed commit `67c73815220784074ff13ec07df955911caf1b73` with
-  `git show`; verified tags and absence of `Fixes`, `Reported-by`,
-  `Tested-by`, `Reviewed-by`, and stable CC.
-- Phase 2: Verified diffstat: `sound/hda/codecs/realtek/alc269.c`, 10
-  changed lines, 9 insertions/1 deletion.
-- Phase 3: Ran `git blame` on parent commit around enum, fixup table,
-  and quirk table; verified `0xf111:000f` came from `bac1e57adf08c9`.
-- Phase 3: Ran `git show` on `309d7363ca3d9`, `8903376dc6994`,
-  `bac1e57adf08c9`, `7b509910b3ad6`, and related boost quirk commits.
-- Phase 4: Ran `b4 dig -c`, `b4 dig -a`, `b4 dig -w`, and `b4 dig -m`;
-  verified v1-only patch, original recipients, lore URL, and maintainer
-  “Applied now” reply.
-- Phase 4: WebFetch of lore/git.kernel direct pages was blocked by
-  Anubis, but `b4` successfully fetched the lore thread and Phoronix
-  verified the applied commit ID and issue summary.
-- Phase 5: Used `rg`/code reads to verify `alc269_probe` selects and
-  applies fixups, and that `snd_hda_override_amp_caps` adjusts cached
-  amp capabilities.
-- Phase 6: Ran `git grep` against `v7.0`, `v6.18`, `v6.17`, `v6.12`, and
-  `v6.6` for Framework IDs/helper presence.
-- Phase 6: Ran `git apply --check` on the mbox; it applies cleanly to
-  the current tree.
-- Unverified: no physical Framework PTL hardware test was performed
-  locally.
+- [Phase 1] `git show --format=fuller --stat --patch 20c39819a2764`:
+  confirmed subject, body, tags, one-file diff, and absence of
+  `Fixes:`/`Reported-by:`/stable tags.
+- [Phase 2] Diff inspection: confirmed
+  `mutex_lock(&ctx->uring_lock)`/unlock added around
+  `io_req_find_next()` only in `io_wq_free_work()`.
+- [Phase 3] `git blame` on the parent: confirmed `io_wq_free_work()`
+  direct call history and `req->link` read/clear history.
+- [Phase 3] `git describe --contains`: confirmed relevant code history
+  reaches released kernels including `v6.5-rc1`, `v5.15-rc1`, and
+  earlier helper behavior.
+- [Phase 3] Stable branch `git grep`: confirmed vulnerable worker/helper
+  paths in `5.10.y`, `5.15.y`, `6.1.y`, `6.6.y`, `6.12.y`, `6.19.y`, and
+  `7.0.y`.
+- [Phase 4] `b4 dig -c`, `-a`, `-w`, and saved mbox: confirmed original
+  submission URL, v1-only series, recipients, cover-letter context, and
+  3-patch series.
+- [Phase 4] WebFetch: lore direct fetch was blocked by Anubis; b4 mbox
+  provided the thread content.
+- [Phase 5] `git grep` call tracing: confirmed `io_wq_free_work()`
+  callers in io-wq worker/cancel paths, `io_uring_enter()` to
+  `io_submit_sqes()` submission path, and user-visible link flags.
+- [Phase 6] `git apply --check`: confirmed the patch applies cleanly to
+  the current `stable/linux-7.0.y` worktree.
+- [Phase 7] `MAINTAINERS` search: confirmed Jens Axboe is the `IO_URING`
+  maintainer.
+- [Phase 8] Verified no public reproducer or exact crash symptom in the
+  commit/thread; severity assessment is based on verified race location
+  and syscall reachability, not on an observed report.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index b1fb5e1cf0078..3a36ae494c39b 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -4097,6 +4097,7 @@ enum {
- 	ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED,
- 	ALC285_FIXUP_HP_SPEAKERS_MICMUTE_LED,
- 	ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE,
-+	ALC295_FIXUP_FRAMEWORK_LAPTOP_LIMIT_INT_MIC_BOOST,
- 	ALC287_FIXUP_LEGION_16ITHG6,
- 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK,
- 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN,
-@@ -6346,6 +6347,12 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC269_FIXUP_HEADSET_MODE_NO_HP_MIC
- 	},
-+	[ALC295_FIXUP_FRAMEWORK_LAPTOP_LIMIT_INT_MIC_BOOST] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc269_fixup_limit_int_mic_boost,
-+		.chained = true,
-+		.chain_id = ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE,
-+	},
- 	[ALC287_FIXUP_LEGION_16ITHG6] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc287_fixup_legion_16ithg6_speakers,
-@@ -7824,7 +7831,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0xf111, 0x000b, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0xf111, 0x000c, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
--	SND_PCI_QUIRK(0xf111, 0x000f, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0xf111, 0x000f, "Framework Laptop 13 Pro PTL", ALC295_FIXUP_FRAMEWORK_LAPTOP_LIMIT_INT_MIC_BOOST),
-+	SND_PCI_QUIRK(0xf111, 0x010f, "Framework Laptop 13 PTL", ALC295_FIXUP_FRAMEWORK_LAPTOP_LIMIT_INT_MIC_BOOST),
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 97260bca67e7b..a72efb3a62bac 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1450,8 +1450,13 @@ struct io_wq_work *io_wq_free_work(struct io_wq_work *work)
+ 	struct io_kiocb *nxt = NULL;
  
- #if 0
- 	/* Below is a quirk table taken from the old code.
+ 	if (req_ref_put_and_test_atomic(req)) {
+-		if (req->flags & IO_REQ_LINK_FLAGS)
++		if (req->flags & IO_REQ_LINK_FLAGS) {
++			struct io_ring_ctx *ctx = req->ctx;
++
++			mutex_lock(&ctx->uring_lock);
+ 			nxt = io_req_find_next(req);
++			mutex_unlock(&ctx->uring_lock);
++		}
+ 		io_free_req(req);
+ 	}
+ 	return nxt ? &nxt->work : NULL;
 -- 
 2.53.0
 
