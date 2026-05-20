@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E854330BF68;
-	Wed, 20 May 2026 17:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963423A3833;
+	Wed, 20 May 2026 17:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297660; cv=none; b=TeqXS/bpZ3i3ZMpDYrbfjMNDFWIdTtb0p3G/KwG09UeSxbl6LPOSw6lk4QfjExy/qF2DnyLHq2mOD6Ow6vXLcNJFXNjwjViN0HTqHRwGPA0WclrpjjNN8GfGk49bjSARrh+mXwhIsJuJQimBjQ9F9bBA3ldZVbw6u2/lILaxxLQ=
+	t=1779297662; cv=none; b=Vs/z1D9Nn0k2mT8gO5pmwkeurTUojPOVI1+GU1hHw72BzcLzP3i6TqnVJJzAj//7tgJO8gqdY8pSSlmaZqUqQJFFJA+cAd+6D3KK72cTc/if3EhUNFlhWHdXDtLilQ0E1nHvh6hFimbJLz2lCo9ZGNf/PqVWwnYZ3jF+//6eawc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297660; c=relaxed/simple;
-	bh=FfT13X6vl+Okr1N8Y+OpKlHoKZ67fnTzW3tBGLUfUxM=;
+	s=arc-20240116; t=1779297662; c=relaxed/simple;
+	bh=0cXroyIsqXPmrLAvMrjIg2Ng8cjW/P74j3jOhP8vTy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KOTreYU4UQzbR1GB3yRr5laa6+T7o8f5GXQuVNZq9WRgMAH9dghhjn/z7XzE07S3yK91rKfC9FCbZcZCRviLIaqmcxwUQ/6zXUb9CiRGGah35xwFwsKM5+WAYmDn6XrxB+JzsgafzMNk6gBRbLe4z2TZRvxUsDhIAJ6Vdc0oE3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmPQCYzf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MAeZSVszlG5F8WF1MKwMz9wJqN0Hzgxks8sDuJEyGqRjAJGeV+X3/8I3m1uMRjmA2/H1Yvklj/mE+nMjEB1iGg4WD2bKSY+N4hl9KnwtRwnB9BVG4afTKC+gAKsjCC55umiQ1nY2LNzHj3Jc1IzVXFN3/LJcPP5q/+9Qx5+nUnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAj7l3V4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmPQCYzf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6E01F000E9;
-	Wed, 20 May 2026 17:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAj7l3V4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047D21F00896;
+	Wed, 20 May 2026 17:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297658;
-	bh=n7cuOknYAquYaKLUeXcQZTUVHtL7FdLET9hsMcoNHIQ=;
+	s=korg; t=1779297661;
+	bh=M8ojpxKSqfcL5BpaA2lhjb1g5In+OtGUOIaozHEOPJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HmPQCYzf3RpqPV8hcsFWZ33GohvBAeiiAONgmnTS+irZXnXlHejbLebropQXOPfUC
-	 uKc7byoO5Q0vwkJwl/rd5O5SETaEdYqXt4m2XxjfycZu60YgHCNBEn/o6SMPf7Xhiu
-	 2AdIIQdZIUqhlaDfcihMUwfRCb4+zdX1UVHrWlS0=
+	b=wAj7l3V41A1ou4En5xWX6grHl27cZ2sYggeyTu01PjN3Tc6QIVcRrzZqqRXG9Ubt9
+	 AI7rOKtymkMcsr7r5AuF/2hS7g5xbjvS8U3tFxNKDv6SeTNrL0mRWmM4mBjwKFtoH+
+	 ZWrbmdEV6mR8czSlKTT3e0RgfMNc/CcPRVIA7b5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Alex Williamson <alex@shazbot.org>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Chih Kai Hsu <hsu.chih.kai@realtek.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 114/957] drivers/vfio_pci_core: Change PXD_ORDER check from switch case to if/else block
-Date: Wed, 20 May 2026 18:09:57 +0200
-Message-ID: <20260520162137.031673993@linuxfoundation.org>
+Subject: [PATCH 6.18 115/957] r8152: fix incorrect register write to USB_UPHY_XTAL
+Date: Wed, 20 May 2026 18:09:58 +0200
+Message-ID: <20260520162137.052855004@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -48,94 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+From: Chih Kai Hsu <hsu.chih.kai@realtek.com>
 
-[ Upstream commit 948b71aa81cd89b222942db6055e8d9c51c54e78 ]
+[ Upstream commit 48afd5124fd6129c46fd12cb06155384b1c4a0c4 ]
 
-Architectures like PowerPC uses runtime defined values for
-PMD_ORDER/PUD_ORDER. This is because it can use either RADIX or HASH MMU
-at runtime using kernel cmdline. So the pXd_index_size is not known at
-compile time. Without this fix, when we add huge pfn support on powerpc
-in the next patch, vfio_pci_core driver compilation can fail with the
-following errors.
+The old code used ocp_write_byte() to clear the OOBS_POLLING bit
+(BIT(8)) in the USB_UPHY_XTAL register, but this doesn't correctly
+clear a bit in the upper byte of the 16-bit register.
 
-  CC [M]  drivers/vfio/vfio_main.o
-  CC [M]  drivers/vfio/group.o
-  CC [M]  drivers/vfio/container.o
-  CC [M]  drivers/vfio/virqfd.o
-  CC [M]  drivers/vfio/vfio_iommu_spapr_tce.o
-  CC [M]  drivers/vfio/pci/vfio_pci_core.o
-  CC [M]  drivers/vfio/pci/vfio_pci_intrs.o
-  CC [M]  drivers/vfio/pci/vfio_pci_rdwr.o
-  CC [M]  drivers/vfio/pci/vfio_pci_config.o
-  CC [M]  drivers/vfio/pci/vfio_pci.o
-  AR      kernel/built-in.a
-../drivers/vfio/pci/vfio_pci_core.c: In function ‘vfio_pci_vmf_insert_pfn’:
-../drivers/vfio/pci/vfio_pci_core.c:1678:9: error: case label does not reduce to an integer constant
- 1678 |         case PMD_ORDER:
-      |         ^~~~
-../drivers/vfio/pci/vfio_pci_core.c:1682:9: error: case label does not reduce to an integer constant
- 1682 |         case PUD_ORDER:
-      |         ^~~~
-make[6]: *** [../scripts/Makefile.build:289: drivers/vfio/pci/vfio_pci_core.o] Error 1
-make[6]: *** Waiting for unfinished jobs....
-make[5]: *** [../scripts/Makefile.build:546: drivers/vfio/pci] Error 2
-make[5]: *** Waiting for unfinished jobs....
-make[4]: *** [../scripts/Makefile.build:546: drivers/vfio] Error 2
-make[3]: *** [../scripts/Makefile.build:546: drivers] Error 2
+Fix this by using ocp_write_word() instead.
 
-Fixes: f9e54c3a2f5b7 ("vfio/pci: implement huge_fault support")
-Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Reviewed-by: Alex Williamson <alex@shazbot.org>
-Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/b155e19993ee1f5584c72050192eb468b31c5029.1773058761.git.ritesh.list@gmail.com
+Fixes: 195aae321c82 ("r8152: support new chips")
+Signed-off-by: Chih Kai Hsu <hsu.chih.kai@realtek.com>
+Reviewed-by: Hayes Wang <hayeswang@realtek.com>
+Link: https://patch.msgid.link/20260326073925.32976-454-nic_swsd@realtek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/vfio_pci_core.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ drivers/net/usb/r8152.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index d07f0ede5d731..53a846d3e6758 100644
---- a/drivers/vfio/pci/vfio_pci_core.c
-+++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -1687,21 +1687,16 @@ vm_fault_t vfio_pci_vmf_insert_pfn(struct vfio_pci_core_device *vdev,
- 	if (vdev->pm_runtime_engaged || !__vfio_pci_memory_enabled(vdev))
- 		return VM_FAULT_SIGBUS;
- 
--	switch (order) {
--	case 0:
-+	if (!order)
- 		return vmf_insert_pfn(vmf->vma, vmf->address, pfn);
--#ifdef CONFIG_ARCH_SUPPORTS_PMD_PFNMAP
--	case PMD_ORDER:
-+
-+	if (IS_ENABLED(CONFIG_ARCH_SUPPORTS_PMD_PFNMAP) && order == PMD_ORDER)
- 		return vmf_insert_pfn_pmd(vmf, pfn, false);
--#endif
--#ifdef CONFIG_ARCH_SUPPORTS_PUD_PFNMAP
--	case PUD_ORDER:
-+
-+	if (IS_ENABLED(CONFIG_ARCH_SUPPORTS_PUD_PFNMAP) && order == PUD_ORDER)
- 		return vmf_insert_pfn_pud(vmf, pfn, false);
--		break;
--#endif
--	default:
--		return VM_FAULT_FALLBACK;
--	}
-+
-+	return VM_FAULT_FALLBACK;
- }
- EXPORT_SYMBOL_GPL(vfio_pci_vmf_insert_pfn);
- 
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 357f5c733d0b5..d610741782794 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -3896,7 +3896,7 @@ static void r8156_ups_en(struct r8152 *tp, bool enable)
+ 		case RTL_VER_15:
+ 			ocp_data = ocp_read_word(tp, MCU_TYPE_USB, USB_UPHY_XTAL);
+ 			ocp_data &= ~OOBS_POLLING;
+-			ocp_write_byte(tp, MCU_TYPE_USB, USB_UPHY_XTAL, ocp_data);
++			ocp_write_word(tp, MCU_TYPE_USB, USB_UPHY_XTAL, ocp_data);
+ 			break;
+ 		default:
+ 			break;
 -- 
 2.53.0
 
