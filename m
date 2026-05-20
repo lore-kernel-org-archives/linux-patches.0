@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB1037D101;
-	Wed, 20 May 2026 16:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B6037D101;
+	Wed, 20 May 2026 16:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296219; cv=none; b=ngUn/pF+1YRFGBY7UIdQZ9HVe+MIcS1qxI3Or7OUL6qqmYGI7kvkRNRBayLg4l5nralet5fe7RAHNk6rxA7lS0ZlE/Mg5QxlDDYVXuHMlz3+jy08m3rUGiCwzdPJOHW3dtmIgoAV5K9+r2gHg2lqHr4QrVXqU0MtCMerwkb870Q=
+	t=1779296222; cv=none; b=uOhXt6x3g+hngvfTsvwphVFM/RYWIYTmpx6wWOwbgDWRpowj2pUUjAkR+RoGU2Q669k2joJ9jWQr8I8Xszwgdw+W+fEF7Dnw8CgOxdZ/1Tzu3d/Yd/XtKkzTKW8ux1SUXQJWwn5XNt+ild07XI/nOBaUdeFL1TxljM5OUGiyB/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296219; c=relaxed/simple;
-	bh=gkfvhC2t51mhgL80+5pkWSduSvSNR7OfIGlPPpde+kw=;
+	s=arc-20240116; t=1779296222; c=relaxed/simple;
+	bh=oPJMExxDHNKPmg7KyWln/YnLRnc+zfauwkzKMsRqj/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGpA7yf3y3ixw9jJcPsPtrtROq8bServaUVVPa+MJGmEyroQ6BKdDUiuoVuvIK+3C4nRwW4GNinSU3t+8aqXIZQS83ui6W47T35T7nItg3BeV59t9JvOuwGI3fLtkM68EQ+a9aICabEu8EeGq/ij5W9gY1nim82MMJpSu9281C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LkP9VCXD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RhGWEOnQK6ItIBTYqGmOKU2dFTQsX40t3QtbSxPjmnxgtarR6YhxkSC9XnMs3Tglel4eZ46Go0lfQ0YXIVu+tYK5cIfgvyCqNML1V/r6GpNyK++Pwu6kkFgyAXzd2krK39RCt6mxLe1fN6yUfF4+Li59qBe8vx5LQmHxx3vKYhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGOIIIP/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkP9VCXD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F04CA1F000E9;
-	Wed, 20 May 2026 16:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGOIIIP/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953D71F000E9;
+	Wed, 20 May 2026 16:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296218;
-	bh=4HQG+/MS1w05WEEnfV0MpWA4fOCGjRfiy210tD8XqUI=;
+	s=korg; t=1779296221;
+	bh=eRo6931aVvZqxe6OYuVkNuwqRodB3VLw1nAUT5CTgbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LkP9VCXDsgOY0jfPXFNrCHfdgfhoIUaXFZH+/QFhbtmsEM8duLJPkgU7+/CHb+Fe4
-	 7hostivRvHmnRVy3NewXvYv/mJqb5BMDLyyMrMfrZTeyLtzNzWkVxK7qjRG1M6pSsY
-	 kJkcgPn0co5X2yO6Xy8Z8zE/VEDswWukYv7l0PAY=
+	b=nGOIIIP/8Qba6Ctd7Ocna78YAZbyj2ez+9mYoGmmMVVWVF5n/e25VSDQ6vrPevLy6
+	 uS9KyuaUOkqvBuykmqY5cbzrzvNykMBKzSvY3FsIbTTA0PJI/shU6vJLecbtjgG3x2
+	 yeUo9Dkprox1jq+4avpY4w4iQbikV2L9Uvhki9ZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Val Packett <val@packett.cool>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0716/1146] clk: qcom: gcc-sc8180x: Use retention for USB power domains
-Date: Wed, 20 May 2026 18:16:06 +0200
-Message-ID: <20260520162204.390734726@linuxfoundation.org>
+Subject: [PATCH 7.0 0717/1146] clk: qcom: gcc-sc8180x: Use retention for PCIe power domains
+Date: Wed, 20 May 2026 18:16:07 +0200
+Message-ID: <20260520162204.415065336@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -55,55 +56,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Val Packett <val@packett.cool>
 
-[ Upstream commit 25bc96f26cd6c19dde13a0b9859183e531d6fbfc ]
+[ Upstream commit ccb92c78b42edd26225b4d5920847dfee3e1b093 ]
 
-The USB subsystem does not expect to lose its state on suspend:
+As the PCIe host controller driver does not yet support dealing with the
+loss of state during suspend, use retention for relevant GDSCs.
 
-    xhci-hcd xhci-hcd.0.auto: xHC error in resume, USBSTS 0x401, Reinit
-    usb usb1: root hub lost power or was reset
+This fixes the link not surviving upon resume:
 
-(The reinitialization usually succeeds, but it does slow down resume.)
-
-To maintain state during suspend, the relevant GDSCs need to stay in
-retention mode, like they do on other similar SoCs. Change the mode to
-PWRSTS_RET_ON to fix.
+    nvme 0002:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
+    nvme nvme0: controller is down; will reset: CSTS=0xffffffff, PCI_STATUS read failed (134)
+    nvme 0002:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
+    nvme nvme0: Disabling device after reset failure: -19
 
 Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Val Packett <val@packett.cool>
-Link: https://lore.kernel.org/r/20260312112321.370983-4-val@packett.cool
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/20260312112321.370983-5-val@packett.cool
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sc8180x.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/gcc-sc8180x.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/clk/qcom/gcc-sc8180x.c b/drivers/clk/qcom/gcc-sc8180x.c
-index 55dabf6259b29..b116a9c0b2d94 100644
+index b116a9c0b2d94..4095a1f54a099 100644
 --- a/drivers/clk/qcom/gcc-sc8180x.c
 +++ b/drivers/clk/qcom/gcc-sc8180x.c
-@@ -4172,7 +4172,7 @@ static struct gdsc usb30_sec_gdsc = {
+@@ -4199,7 +4199,7 @@ static struct gdsc pcie_0_gdsc = {
  	.pd = {
- 		.name = "usb30_sec_gdsc",
+ 		.name = "pcie_0_gdsc",
  	},
 -	.pwrsts = PWRSTS_OFF_ON,
 +	.pwrsts = PWRSTS_RET_ON,
  	.flags = POLL_CFG_GDSCR,
  };
  
-@@ -4190,7 +4190,7 @@ static struct gdsc usb30_prim_gdsc = {
+@@ -4226,7 +4226,7 @@ static struct gdsc pcie_1_gdsc = {
  	.pd = {
- 		.name = "usb30_prim_gdsc",
+ 		.name = "pcie_1_gdsc",
  	},
 -	.pwrsts = PWRSTS_OFF_ON,
 +	.pwrsts = PWRSTS_RET_ON,
  	.flags = POLL_CFG_GDSCR,
  };
  
-@@ -4262,7 +4262,7 @@ static struct gdsc usb30_mp_gdsc = {
+@@ -4235,7 +4235,7 @@ static struct gdsc pcie_2_gdsc = {
  	.pd = {
- 		.name = "usb30_mp_gdsc",
+ 		.name = "pcie_2_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = POLL_CFG_GDSCR,
+ };
+ 
+@@ -4253,7 +4253,7 @@ static struct gdsc pcie_3_gdsc = {
+ 	.pd = {
+ 		.name = "pcie_3_gdsc",
  	},
 -	.pwrsts = PWRSTS_OFF_ON,
 +	.pwrsts = PWRSTS_RET_ON,
