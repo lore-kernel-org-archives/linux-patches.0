@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457823DC4DD;
-	Wed, 20 May 2026 11:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689283FE35E;
+	Wed, 20 May 2026 11:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276069; cv=none; b=oaBhciMosZBwbXYXsg9d8ApwCOVasUjtm4x9/NX+lbfhoPUBxu5F2yVEVhcYHChmo774ZGVAWw5tpWqsBwBrwCe1sm0TFHd+7Uc0FeoyoTH1w+O+MzDkOsFklx8dUdemXX1z12hZnZJXABcQA5dkAcFx3p3VyiESazR452StFMo=
+	t=1779276071; cv=none; b=porDfvUiIxb2O3Be8Mq+S/Hjdyo2MU9nxhvMzmu9rJNYVNGrwVSooP2sn9IRd7n7U0aSMzXQquckq/oPa1p7h726NhQN3pWPcJ1m4NJIR9JtonSuOfjbd6jdJYCok4g+iajr0qd99cQscWILlUBW2mNlpeXfFjrz5SI4RaUiCbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276069; c=relaxed/simple;
-	bh=r1YWvLWyYV0WAPXAPOMWkutG4FXf8I57i6Uy9t1sMjc=;
+	s=arc-20240116; t=1779276071; c=relaxed/simple;
+	bh=L86pyKWsxPvaB5adhMiA/7xl+or1ihECJG1ePo8bnEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gTO1Av+m99LVjYcAx5Tv56aVeB+MeD5svjRhgaYg/v/pUtq2GrHRaBMfjbjMyiEBbJSu5m8elgDnwbm03H2OrP+lz6P8HfjG3rGnrICT5axvZctLN9ck8GzG7x3Kh8OqjqCTfwc7f4xWLRF0PWCfe3uZRS48oHwlgqTy7KjqRmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lsK7gs8c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=btFXi1+nqWnnwEI0ZdwKZV+V4K5U3EmvmZb1IPn1bmsMAYMis2SDfrt0R2tM1xDfImpEx+t/O/v3HQHru/LibglSNMpTkUdnJQPwpdGfR+wrWWnkkvK6VXtrDkeMFuzi/v5TSRonyB1usqWpsfgO6gd6pHDep0ozm2HIDnQLrHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XJCiEoYT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lsK7gs8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C458C1F00897;
-	Wed, 20 May 2026 11:21:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XJCiEoYT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBD11F000E9;
+	Wed, 20 May 2026 11:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276067;
-	bh=MvxNdjhxqINUsa1WAFZXIETlsupbkmyZrXhhzNx4Cn0=;
+	s=k20260515; t=1779276069;
+	bh=0OlgCqTDYfKCTHRGdQ795Tb4OpvFd+O6nb1DALrEwxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lsK7gs8coSBeRupJ5QKk2KOiO4Tja3vfRKO5aXvraIAeRbF69mYbzkb/qmfRDfuaG
-	 Wta7qs4UX1sQRKGgwITTpXw0tWHDIn1xO2D0IGQm0YVXhCZWpAKfloCnA008ouyIpO
-	 F5px3XByoICNL89XbbcsyVzg9WvN1eEjPDM0B3TW4db7Z6LylxY08llPdx86irJTAn
-	 iRQdsYSwFIfoNSwB7DNxOKOvCH9NyDPBgk8ptaIllt+4Kvl3p8qD6cRrChTF2tapWy
-	 jrxRgCTPsqAAKt1NfC5yiD6NQ9Uo0zm0kDwpz8adphePgnkdxaWdbZ7RSG437eBYzy
-	 +I3HYAlcwD1Hg==
+	b=XJCiEoYTYAUnWeJXTQ5ueaIUV82nWtO2msoZH0MrFjnz3MLMw1Ff4BKo73GYjFtlb
+	 l0wMRRIAuEPhyEb8S6JlzMz+ovFHT489HW4OaBjfkOn7jRLh9tRAIpWxpQYQmUTXP+
+	 sShJl9u+nPM+s/IJjpvJjALEniTkQ24yuXkaYjv2jaZ/VL6ddqxyRnmhjif7A6TIGJ
+	 v5RlSYnBomAAj+hEQfQOBG/xjM3gEQA6QY3eSKVSzIu3R89CpLrobyZ0cYkhlFKSep
+	 c6n7HeOwq25EDcesShSt3lcnXvB8nI6mtRrxrL/m652gdRH71vaWe+e961+ty6OTVg
+	 faY91O3wl864g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	David Riley <d.riley@proxmox.com>,
+Cc: Vasant Hegde <vasant.hegde@amd.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	seanjc@google.com,
-	tglx@kernel.org,
-	mingo@redhat.com,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	kvm@vger.kernel.org,
+	joro@8bytes.org,
+	will@kernel.org,
+	iommu@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] KVM: VMX: introduce module parameter to disable CET
-Date: Wed, 20 May 2026 07:19:30 -0400
-Message-ID: <20260520111944.3424570-58-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.18] iommu/amd: Use maximum Event log buffer size when SNP is enabled on Family 0x19
+Date: Wed, 20 May 2026 07:19:31 -0400
+Message-ID: <20260520111944.3424570-59-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
 References: <20260520111944.3424570-1-sashal@kernel.org>
@@ -58,363 +57,469 @@ X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 2d5d3fc593c9b7e41bee86175d7b9e11f470072e ]
+[ Upstream commit 58c0ac6125d89bf6ec65a521eaeb52a0e8e20a9f ]
 
-There have been reports of host hangs caused by CET virtualization.
-Until these are analyzed further, introduce a module parameter that
-makes it possible to easily disable it.
+Due to CVE-2023-20585, the Event log buffer must use the maximum supported
+size (512K) on Milan/Genoa (Family 0x19) systems when SNP is enabled,
+to mitigate a potential security vulnerability. All other systems continue to
+use the default Event log buffer size (8K).
 
-Link: https://lore.kernel.org/all/85548beb-1486-40f9-beb4-632c78e3360b@proxmox.com/
-Cc: David Riley <d.riley@proxmox.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Apply the errata fix by making the following changes:
+
+* Introduce new global variable (amd_iommu_evtlog_size) to have event log
+  buffer size. Adjust variable size for family 0x19.
+
+* Since 'iommu_snp_enable()' must be called after the core IOMMU subsystem
+  is initialized, it cannot be moved to the early init stage. The SNP errata
+  must also be applied after the 'iommu_snp_enable()' check. Therefore,
+  'alloc_event_buffer()' and 'iommu_enable_event_buffer()' are now called
+  in the IOMMU_ENABLED state, after the errata is applied.
+
+* Adjust alloc_event_buffer() and iommu_enable_event_buffer() to handle
+  all IOMMU instances.
+
+* Also rename EVT_* macros to make it more readable.
+
+Link: https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3016.html
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Cc: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Phase 1: Commit Message Forensics
+## Conclusion
+This commit should be backported to stable trees that carry AMD IOMMU
+SNP host support. It is a security mitigation for `CVE-2023-20585`,
+scoped to AMD Family `0x19` systems with SNP enabled, and it keeps all
+other systems on the existing 8K event log size.
 
-Step 1.1 Record: subsystem `KVM: VMX`; action verb `introduce`; summary:
-add a VMX module parameter to disable CET virtualization.
+The patch is not feature enablement in the stable sense; it is a
+hardware erratum/security workaround. The main concern is backport
+mechanics: it applies cleanly to `stable/linux-7.0.y`, but failed a
+direct apply check on `6.12.y`, `6.18.y`, and `6.19.y`, so those need
+backport adjustment. For Genoa, the companion PPR-log patch should also
+be considered for the full series mitigation.
 
-Step 1.2 Record: tags present:
-- `Link:` `https://lore.kernel.org/all/85548beb-1486-40f9-beb4-
-  632c78e3360b@proxmox.com/`
-- `Cc:` `David Riley <d.riley@proxmox.com>`
-- `Signed-off-by:` `Paolo Bonzini <pbonzini@redhat.com>`
-- No `Fixes:` tag.
-- No `Reported-by:` or `Tested-by:` tag in the commit itself.
+## Phase Walkthrough
+Phase 1 Record:
+- Subject subsystem/action: `iommu/amd`, action is “Use maximum”, intent
+  is to use a 512K AMD IOMMU event log buffer for SNP on Family `0x19`.
+- Tags: `Link` to AMD-SB-3016, `Cc` to AMD/IOMMU maintainers, `Signed-
+  off-by` Vasant Hegde, `Tested-by` Dheeraj Kumar Srivastava, `Signed-
+  off-by` Joerg Roedel. No `Fixes:` tag.
+- Body: describes `CVE-2023-20585`, requiring max supported event log
+  buffer size on Milan/Genoa with SNP enabled; all other systems remain
+  at 8K.
+- Hidden bug fix: yes. This is phrased partly as buffer
+  sizing/refactoring, but the purpose is a CVE security mitigation.
 
-Step 1.3 Record: the commit says CET virtualization has caused host
-hangs, and the parameter is a mitigation while the reports are analyzed.
-The linked report describes Windows Server 2026 with VBS/HVCI on an
-Intel Xeon Gold 6426Y hanging in early boot with watchdog hard/soft
-lockups on the host. The root cause is not identified in the commit or
-linked report.
+Phase 2 Record:
+- Files changed: `drivers/iommu/amd/amd_iommu.h`, `amd_iommu_types.h`,
+  `init.c`, `iommu.c`; fetched commit stat is 86 insertions, 38
+  deletions.
+- Functions modified/added: `alloc_event_buffer`,
+  `iommu_enable_event_buffer`, `remap_event_buffer`,
+  `early_enable_iommu`, `early_enable_iommus`, `amd_iommu_resume`, new
+  `amd_iommu_apply_erratum_snp`, `state_next`, `amd_iommu_snp_disable`,
+  `iommu_poll_events`.
+- Code flow: event buffer allocation/enable moves from early per-IOMMU
+  setup to after `iommu_snp_enable()`, allowing the erratum decision to
+  set 512K before allocation/programming. Polling and SNP shutdown now
+  use the variable size.
+- Bug category: hardware security erratum/workaround.
+- Fix quality: contained to AMD IOMMU event-log handling. Regression
+  risk is medium-low because init ordering changes, but it is subsystem-
+  contained, tested, and keeps non-SNP/non-Family-0x19 behavior at 8K.
 
-Step 1.4 Record: this is a real bug workaround, not a hidden
-resource/lifetime fix. It does not fix the underlying CET bug by
-default; it gives affected administrators a supported way to disable the
-problematic VMX CET virtualization path.
+Phase 3 Record:
+- Blame/history: fixed 8K event buffer logic is long-standing; SNP
+  integration relevant to the erratum is present from the v6.9 era and
+  later. `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y` contain the
+  integrated SNP enable commit checked locally; `5.15.y`, `6.1.y`, and
+  `6.6.y` do not.
+- `Fixes:` tag: none, so no direct original-bug commit to follow.
+- Related file history: companion commit `1f44aab79bac3` does the same
+  for the PPR log. Patch 2 depends conceptually/codewise on patch 1;
+  patch 1 stands on its own for the event log.
+- Author context: Vasant Hegde has multiple recent AMD IOMMU fixes in
+  the fetched IOMMU fixes branch; Joerg Roedel committed the patch.
+- Dependencies: no semantic dependency on the NUMA log-buffer allocation
+  commit, but older stable branches have context differences requiring
+  backport edits.
 
-## Phase 2: Diff Analysis
+Phase 4 Record:
+- `b4 dig -c 58c0ac6125d89`: found the original lore submission at `http
+  s://patch.msgid.link/20260420084204.12263-2-vasant.hegde@amd.com`.
+- `b4 dig -a`: only v1 found.
+- `b4 dig -w`: original recipients included `iommu@lists.linux.dev`,
+  Joerg Roedel, Will Deacon, Robin Murphy, Suravee Suthikulpanit, and
+  Borislav Petkov.
+- Lore thread: Dheeraj Kumar Srivastava replied `Tested-by`; Joerg
+  Roedel replied “Applied to fixes”.
+- AMD bulletin: AMD-SB-3016 confirms potential SNP guest integrity loss
+  from an IOMMU host buffer out-of-bounds condition and says OS updates
+  are required along with firmware.
 
-Step 2.1 Record: files changed:
-- `arch/x86/kvm/vmx/capabilities.h`: +1 extern declaration.
-- `arch/x86/kvm/vmx/vmx.c`: +15/-2.
-- Total: 2 files, 16 insertions, 2 deletions.
-- Functions modified: `vmx_set_constant_host_state()`,
-  `vmx_get_initial_vmentry_ctrl()`, `vmx_get_initial_vmexit_ctrl()`,
-  `vmx_set_cpu_caps()`, `vmx_hardware_setup()`.
-- Scope: small, VMX-only, surgical change.
+Phase 5 Record:
+- Callers: event interrupt path uses `amd_iommu_int_thread_evtlog()` ->
+  `amd_iommu_handle_irq()` -> `iommu_poll_events()`. Interrupt setup is
+  via AMD IOMMU MSI/INTCAPXT setup in `init.c`.
+- Callees: allocation uses `iommu_alloc_4k_pages()`, which handles SNP
+  4K page setup; enable writes `MMIO_EVT_BUF_OFFSET`, head/tail
+  registers, and `CONTROL_EVT_LOG_EN`.
+- Reachability: reachable on AMD IOMMU systems through hardware event
+  interrupts and SNP init/shutdown paths, not through a direct userspace
+  syscall.
+- Similar pattern: companion PPR log patch in the same series mirrors
+  the variable-size/max-buffer handling.
 
-Step 2.2 Record:
-- New global `enable_cet` defaults to true and is exposed via
-  `module_param_named(cet, enable_cet, bool, 0444)`.
-- `vmx_set_constant_host_state()` used raw hardware support via
-  `cpu_has_load_cet_ctrl()`; after the patch it uses `enable_cet`, so
-  disabling CET also avoids programming host CET VMCS fields.
-- `vmx_get_initial_vmentry_ctrl()` and `vmx_get_initial_vmexit_ctrl()`
-  now clear CET load controls when disabled.
-- `vmx_set_cpu_caps()` now hides guest `SHSTK`/`IBT` when `enable_cet`
-  is false.
-- `vmx_hardware_setup()` clears `enable_cet` if hardware lacks CET VM-
-  entry support, preserving the old hardware-gating behavior.
+Phase 6 Record:
+- Stable code existence: `6.12.y`, `6.18.y`, `6.19.y`, and `7.0.y` have
+  the relevant AMD IOMMU SNP/event-log code. `5.15.y`, `6.1.y`, and
+  `6.6.y` lack the integrated SNP enable commit I checked; `6.6.y` has
+  an exported old SNP enable function but no in-tree caller was found.
+- Backport difficulty: clean on `7.0.y`; direct apply failed on
+  `6.12.y`, `6.18.y`, and `6.19.y`, so those need manual backporting.
+- Related stable discussion: no stable-list-specific discussion for this
+  CVE/patch was found by `lei`.
 
-Step 2.3 Record: bug category is operational workaround for severe KVM
-host hang. Mechanism: disable advertising and using VMX CET
-virtualization state through one read-mostly knob; no locking,
-refcounting, memory safety, or endian change.
+Phase 7 Record:
+- Subsystem: AMD IOMMU driver under `drivers/iommu/amd`.
+- Criticality: important platform/virtualization security code,
+  affecting AMD EPYC SNP hosts rather than all systems.
+- Activity: actively maintained; recent AMD IOMMU fixes and the
+  maintainer-applied fixes branch confirm ongoing subsystem work.
 
-Step 2.4 Record: fix quality is good for a mitigation. It is small and
-internally consistent. Regression risk is low because default behavior
-remains enabled, and disabled behavior only applies when the
-administrator opts out. Main concern: it adds a new module parameter,
-which is normally disfavored for stable, but here it is an opt-out for a
-verified host lockup regression.
+Phase 8 Record:
+- Affected users: AMD Family `0x19` Milan/Genoa systems with SNP
+  enabled.
+- Trigger/security conditions: AMD bulletin describes a privileged
+  attacker with a compromised hypervisor triggering an out-of-bounds
+  condition without RMP checks.
+- Failure severity: security integrity impact for confidential SNP
+  guests; AMD rates it Medium, but stable rules treat CVE/security
+  mitigations as strong candidates.
+- Benefit/risk: high benefit for affected SNP hosts; medium-low
+  regression risk due to contained but non-trivial init-order and
+  buffer-size changes.
 
-## Phase 3: Git History Investigation
-
-Step 3.1 Record: blame shows the CET-specific host VMCS state came from
-`584ba3ffb984` (`KVM: VMX: Set host constant supervisor states to VMCS
-fields`), and guest CET advertising came from `e140467bbdaf` (`KVM: x86:
-Enable CET virtualization for VMX and advertise to userspace`). `git
-describe --contains` places both in the v6.18 development window.
-
-Step 3.2 Record: no `Fixes:` tag is present, so there was no tagged
-introducing commit to follow. The relevant introducing commits were
-identified by blame and subject search instead.
-
-Step 3.3 Record: recent file history shows CET virtualization and later
-KVM VMX changes in the same area, but this candidate is standalone. No
-prerequisite beyond existing VMX CET virtualization support was found.
-
-Step 3.4 Record: Paolo Bonzini authored and committed this patch.
-`MAINTAINERS` lists Paolo as maintainer for both `KERNEL VIRTUAL MACHINE
-(KVM)` and `KERNEL VIRTUAL MACHINE FOR X86 (KVM/x86)`.
-
-Step 3.5 Record: dependencies are the CET virtualization infrastructure,
-especially `VM_ENTRY_LOAD_CET_STATE`, `VM_EXIT_LOAD_CET_STATE`, and
-`cpu_has_load_cet_ctrl()`. Those exist in local `pending-6.18`,
-`pending-6.19`, and `pending-7.0`. The patch applies cleanly to all
-three tested branches.
-
-## Phase 4: Mailing List And External Research
-
-Step 4.1 Record: `b4 dig -c 2d5d3fc593c9...` found the submission at
-`https://patch.msgid.link/20260512150016.2979228-1-pbonzini@redhat.com`.
-`b4 dig -a` showed a standalone v1 patch and also associated it with the
-MBEC/GMET series thread referenced by the bug report. No formal v2 was
-found.
-
-Step 4.2 Record: `b4 dig -w` showed the original recipients: Paolo
-Bonzini, `linux-kernel@vger.kernel.org`, `kvm@vger.kernel.org`, and
-David Riley. Sean Christopherson replied in review; `MAINTAINERS`
-confirms Sean is a KVM/x86 maintainer.
-
-Step 4.3 Record: the linked report from David Riley documents Intel host
-hard/soft lockups and guest boot hangs with Windows Server 2026,
-VBS/HVCI, and `-cpu host,level=30,+vmx-mbec`. The same report says
-disabling `cet-ss` and `cet-ibt` in QEMU let the Intel guest boot.
-
-Step 4.4 Record: review feedback from Sean objected to an initial
-`vmcs12.c` hunk because `cpu_has_vmcs12_field()` checks raw CPU support,
-not enabled KVM policy. Paolo agreed to remove that hunk, and the
-committed diff no longer modifies `vmcs12.c`.
-
-Step 4.5 Record: web search did not find stable-list discussion for this
-specific patch or bug. Lore WebFetch was blocked by Anubis, but `b4`
-successfully retrieved the relevant patch and bug-report messages.
-
-## Phase 5: Code Semantic Analysis
-
-Step 5.1 Record: modified functions: `vmx_set_constant_host_state()`,
-`vmx_get_initial_vmentry_ctrl()`, `vmx_get_initial_vmexit_ctrl()`,
-`vmx_set_cpu_caps()`, `vmx_hardware_setup()`.
-
-Step 5.2 Record: callers:
-- `vmx_set_constant_host_state()` is called from VMCS initialization in
-  `vmx.c` and from nested VMCS02 constant-state setup in `nested.c`.
-- `vmx_get_initial_vmentry_ctrl()` and `vmx_get_initial_vmexit_ctrl()`
-  are used during VMCS initialization.
-- `vmx_set_cpu_caps()` is called from `vmx_hardware_setup()`.
-- `vmx_hardware_setup()` is called from `vt_hardware_setup()` in
-  `arch/x86/kvm/vmx/main.c`.
-
-Step 5.3 Record: key callees include `vmcs_writel()`,
-`vm_exit_controls_set()`, `vm_entry_controls_set()`,
-`kvm_cpu_cap_clear()`, and `cpu_has_load_cet_ctrl()`. These show the
-patch affects VMCS setup and guest CPUID exposure.
-
-Step 5.4 Record: the affected path is reachable through KVM module setup
-and VM/vCPU creation, then guest execution. The linked report confirms
-practical reachability via QEMU launching a Windows guest.
-
-Step 5.5 Record: similar patterns exist for other VMX feature toggles
-such as `enable_ept`, `enable_vpid`, `enable_pml`, and
-`enable_unrestricted_guest`, so the implementation follows existing VMX
-module-parameter style.
-
-## Phase 6: Stable Tree Analysis
-
-Step 6.1 Record: CET virtualization support was introduced for v6.18-era
-kernels. Local `pending-6.18`, `pending-6.19`, and `pending-7.0` all
-contain the relevant CET code and lack `enable_cet`.
-
-Step 6.2 Record: exact upstream diff applies cleanly to temporary
-worktrees for `pending-6.18`, `pending-6.19`, and `pending-7.0`.
-Backport difficulty is clean apply for those tested trees.
-
-Step 6.3 Record: local history search found no separate fix for “host
-hangs caused by CET virtualization” or the Windows Server 2026 report.
-No replacement fix was identified.
-
-## Phase 7: Subsystem And Maintainer Context
-
-Step 7.1 Record: subsystem is KVM/x86 VMX, criticality IMPORTANT to CORE
-for hosts running Intel KVM virtualization. Failure affects host
-stability, not only guest functionality.
-
-Step 7.2 Record: KVM/x86 VMX is highly active in this tree. CET
-virtualization was a recent large feature, introduced around v6.18, so
-this is a mitigation for a recent virtualization regression surface.
-
-## Phase 8: Impact And Risk Assessment
-
-Step 8.1 Record: affected users are Intel KVM hosts exposing CET
-virtualization to guests. The verified report involves Windows Server
-2026 with VBS/HVCI and QEMU CPU settings exposing CET/MBEC.
-
-Step 8.2 Record: trigger conditions verified from the report: booting
-the Windows guest with CET and MBEC exposed. Unprivileged local
-triggerability was not verified; this appears to require VM
-launch/configuration control.
-
-Step 8.3 Record: failure mode is severe: guest hang plus host watchdog
-hard lockup and soft lockup. Severity: CRITICAL.
-
-Step 8.4 Record: benefit is high for affected stable users because it
-gives a practical mitigation for host lockups. Risk is low-medium: small
-VMX-only patch and default behavior unchanged, but it does add a new
-module parameter.
-
-## Phase 9: Final Synthesis
-
-Step 9.1 Record:
-- Evidence for backporting: verified host hard/soft lockups; small
-  contained VMX-only patch; authored by KVM maintainer; reviewed on KVM
-  list with maintainer feedback incorporated; applies cleanly to
-  affected local stable branches; default behavior unchanged.
-- Evidence against backporting: it is a workaround, not a root-cause
-  fix; it adds a new module parameter, which stable normally treats
-  cautiously; users must opt in to the mitigation by disabling CET.
-- Unresolved: exact root cause of the CET hang is not identified; no
-  stable-list discussion was found.
-
-Step 9.2 Stable rules:
-1. Obviously correct and tested? Mostly yes: simple gating of existing
-   CET controls; mailing-list review fixed an inconsistency. No explicit
-   `Tested-by` on this patch.
-2. Fixes a real bug affecting users? Yes: linked report shows host
-   lockups and guest hangs.
-3. Important issue? Yes: host hard/soft lockups are critical.
-4. Small and contained? Yes: 2 files, 16 insertions, 2 deletions.
-5. No new features or APIs? Concern: it adds a module parameter.
-   Mitigating factor: default behavior is unchanged and the parameter is
-   an opt-out for a serious regression.
-6. Can apply to stable trees? Yes for tested `pending-6.18`,
-   `pending-6.19`, and `pending-7.0`.
-
-Step 9.3 Record: no automatic exception category like device ID or
-hardware quirk. The closest category is a conservative operational
-workaround for broken hardware/feature behavior.
-
-Step 9.4 Decision: backport to stable trees that already contain VMX CET
-virtualization, especially v6.18 and newer. Despite the module parameter
-concern, the benefit of giving stable users a low-risk escape hatch from
-verified host lockups outweighs the risk, and the default behavior is
-unchanged.
+Phase 9 Record:
+- Evidence for: CVE/security mitigation, AMD bulletin requires OS
+  update, tested-by, maintainer applied to fixes, scoped to AMD IOMMU,
+  default behavior preserved for unaffected systems.
+- Evidence against/concerns: patch is larger than a trivial one-liner,
+  moves event buffer allocation/enable timing, and needs backport
+  adjustments for several stable branches. Genoa full mitigation also
+  needs the PPR companion patch.
+- Stable rules: fixes a real security issue; important; no new userspace
+  API; contained to one driver; tested; applies cleanly to `7.0.y` and
+  can be backported with adjustments elsewhere.
+- Exception category: hardware erratum/security workaround.
 
 ## Verification
-
-- [Phase 1] Parsed `git show --format=fuller --stat --patch
-  2d5d3fc593c9...`: confirmed subject, body, tags, author, and exact
-  diff.
-- [Phase 2] Diff analysis: confirmed 2 files, 16 insertions, 2
-  deletions, VMX-only gating of CET controls and CPUID exposure.
-- [Phase 3] `git blame` around changed areas: identified CET code from
-  `584ba3ffb984` and `e140467bbdaf`.
-- [Phase 3] `git describe --contains`: confirmed CET support is
-  v6.18-era and candidate is v7.1-rc4-era.
-- [Phase 3] `MAINTAINERS` search: confirmed Paolo Bonzini and Sean
-  Christopherson are KVM/x86 maintainers.
-- [Phase 4] `b4 dig -c`: found patch submission at
-  `20260512150016.2979228-1-pbonzini@redhat.com`.
-- [Phase 4] `b4 dig -a`: found standalone v1 and related MBEC/GMET
-  series context.
-- [Phase 4] `b4 dig -w`: confirmed KVM and LKML recipients plus David
-  Riley.
-- [Phase 4] `b4 mbox`: confirmed Sean’s review concern and Paolo’s
-  agreement to remove the `vmcs12.c` hunk; committed patch matches that
-  resolution.
-- [Phase 4] `b4 mbox --single-message`: retrieved David Riley’s bug
-  report with Intel host lockups and guest hangs.
-- [Phase 5] `rg` caller search: traced modified functions to VMX
-  hardware setup, VMCS initialization, and nested VMCS02 setup.
-- [Phase 6] `git grep` on `pending-6.18`, `pending-6.19`, and
-  `pending-7.0`: confirmed CET code exists and `enable_cet` does not.
-- [Phase 6] Temporary worktree `git apply --check`: exact patch applies
-  cleanly to `pending-6.18`, `pending-6.19`, and `pending-7.0`.
-- [Phase 8] Failure mode verified from bug report: watchdog hard lockup
-  and soft lockup on host, plus guest early boot hang.
-- UNVERIFIED: underlying root cause of the CET virtualization hang
-  remains unknown.
-- UNVERIFIED: no exhaustive stable-list archive proof beyond web search;
-  no stable-specific discussion was found.
+- [Phase 1] Parsed fetched commit `58c0ac6125d89`: confirmed subject,
+  tags, `Tested-by`, no `Fixes:`, and AMD-SB-3016 link.
+- [Phase 2] Inspected diff/stat from fetched commit: 4 AMD IOMMU files,
+  86 insertions, 38 deletions.
+- [Phase 3] Ran `git blame` on event allocation, enable, SNP init, and
+  polling paths; confirmed relevant code history.
+- [Phase 3] Checked stable branch ancestry: `6.12.y+` contain integrated
+  SNP enable; `5.15.y`, `6.1.y`, `6.6.y` do not.
+- [Phase 4] Ran `b4 dig -c 58c0ac6125d89`, `-a`, and `-w`; found one v1
+  submission, maintainers/recipients, and lore URL.
+- [Phase 4] Fetched lore thread; confirmed `Tested-by` reply and
+  maintainer “Applied to fixes”.
+- [Phase 4] Fetched AMD bulletin; confirmed CVE impact and OS update
+  requirement.
+- [Phase 5] Traced event interrupt call path with source search/read:
+  `amd_iommu_int_thread_evtlog()` to `iommu_poll_events()`.
+- [Phase 6] Ran apply checks: clean on `stable/linux-7.0.y`; failed
+  direct apply on `6.12.y`, `6.18.y`, and `6.19.y`.
+- UNVERIFIED: I did not build-test the backport or test on AMD Family
+  `0x19` SNP hardware.
 
 **YES**
 
- arch/x86/kvm/vmx/capabilities.h |  1 +
- arch/x86/kvm/vmx/vmx.c          | 17 +++++++++++++++--
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/amd_iommu.h       |   2 +
+ drivers/iommu/amd/amd_iommu_types.h |  10 ++-
+ drivers/iommu/amd/init.c            | 110 +++++++++++++++++++---------
+ drivers/iommu/amd/iommu.c           |   2 +-
+ 4 files changed, 86 insertions(+), 38 deletions(-)
 
-diff --git a/arch/x86/kvm/vmx/capabilities.h b/arch/x86/kvm/vmx/capabilities.h
-index 4e371c93ae168..46fb4d2e81c42 100644
---- a/arch/x86/kvm/vmx/capabilities.h
-+++ b/arch/x86/kvm/vmx/capabilities.h
-@@ -14,6 +14,7 @@ extern bool __read_mostly flexpriority_enabled;
- extern bool __read_mostly enable_ept;
- extern bool __read_mostly enable_unrestricted_guest;
- extern bool __read_mostly enable_ept_ad_bits;
-+extern bool __read_mostly enable_cet;
- extern bool __read_mostly enable_pml;
- extern int __read_mostly pt_mode;
+diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
+index 1342e764a5486..f1c486dcf0f38 100644
+--- a/drivers/iommu/amd/amd_iommu.h
++++ b/drivers/iommu/amd/amd_iommu.h
+@@ -11,6 +11,8 @@
  
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 8b24e682535bf..084c30cf689b9 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -107,6 +107,9 @@ module_param_named(unrestricted_guest,
- bool __read_mostly enable_ept_ad_bits = 1;
- module_param_named(eptad, enable_ept_ad_bits, bool, 0444);
+ #include "amd_iommu_types.h"
  
-+bool __read_mostly enable_cet = 1;
-+module_param_named(cet, enable_cet, bool, 0444);
++extern int amd_iommu_evtlog_size;
 +
- static bool __read_mostly emulate_invalid_guest_state = true;
- module_param(emulate_invalid_guest_state, bool, 0444);
+ irqreturn_t amd_iommu_int_thread(int irq, void *data);
+ irqreturn_t amd_iommu_int_thread_evtlog(int irq, void *data);
+ irqreturn_t amd_iommu_int_thread_pprlog(int irq, void *data);
+diff --git a/drivers/iommu/amd/amd_iommu_types.h b/drivers/iommu/amd/amd_iommu_types.h
+index c685d3771436a..c3430c09bc5c9 100644
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -15,6 +15,7 @@
+ #include <linux/mutex.h>
+ #include <linux/msi.h>
+ #include <linux/list.h>
++#include <linux/sizes.h>
+ #include <linux/spinlock.h>
+ #include <linux/pci.h>
+ #include <linux/iommufd.h>
+@@ -141,7 +142,6 @@
+ #define MMIO_STATUS_GALOG_INT_MASK		BIT(10)
  
-@@ -4585,7 +4588,7 @@ void vmx_set_constant_host_state(struct vcpu_vmx *vmx)
- 	 * SSP is reloaded from IA32_PL3_SSP. Check SDM Vol.2A/B Chapter
- 	 * 3 and 4 for details.
- 	 */
--	if (cpu_has_load_cet_ctrl()) {
-+	if (enable_cet) {
- 		vmcs_writel(HOST_S_CET, kvm_host.s_cet);
- 		vmcs_writel(HOST_SSP, 0);
- 		vmcs_writel(HOST_INTR_SSP_TABLE, 0);
-@@ -4641,6 +4644,10 @@ static u32 vmx_get_initial_vmentry_ctrl(void)
- 	if (vmx_pt_mode_is_system())
- 		vmentry_ctrl &= ~(VM_ENTRY_PT_CONCEAL_PIP |
- 				  VM_ENTRY_LOAD_IA32_RTIT_CTL);
+ /* event logging constants */
+-#define EVENT_ENTRY_SIZE	0x10
+ #define EVENT_TYPE_SHIFT	28
+ #define EVENT_TYPE_MASK		0xf
+ #define EVENT_TYPE_ILL_DEV	0x1
+@@ -259,8 +259,12 @@
+ #define MMIO_CMD_BUFFER_TAIL(x) FIELD_GET(MMIO_CMD_TAIL_MASK, (x))
+ 
+ /* constants for event buffer handling */
+-#define EVT_BUFFER_SIZE		8192 /* 512 entries */
+-#define EVT_LEN_MASK		(0x9ULL << 56)
++#define EVTLOG_ENTRY_SIZE	0x10
++#define EVTLOG_SIZE_SHIFT	56
++#define EVTLOG_SIZE_DEF		SZ_8K /* 512 entries */
++#define EVTLOG_LEN_MASK_DEF	(0x9ULL << EVTLOG_SIZE_SHIFT)
++#define EVTLOG_SIZE_MAX		SZ_512K /* 32K entries */
++#define EVTLOG_LEN_MASK_MAX	(0xFULL << EVTLOG_SIZE_SHIFT)
+ 
+ /* Constants for PPR Log handling */
+ #define PPR_LOG_ENTRIES		512
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index f3fd7f39efb48..74effb847f488 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -132,6 +132,8 @@ struct ivhd_entry {
+ 	u8 uid;
+ } __attribute__((packed));
+ 
++int amd_iommu_evtlog_size = EVTLOG_SIZE_DEF;
 +
-+	if (!enable_cet)
-+		vmentry_ctrl &= ~VM_ENTRY_LOAD_CET_STATE;
-+
- 	/*
- 	 * IA32e mode, and loading of EFER and PERF_GLOBAL_CTRL are toggled dynamically.
- 	 */
-@@ -4655,6 +4662,9 @@ static u32 vmx_get_initial_vmexit_ctrl(void)
+ /*
+  * An AMD IOMMU memory definition structure. It defines things like exclusion
+  * ranges for devices and regions that should be unity mapped.
+@@ -864,35 +866,47 @@ void *__init iommu_alloc_4k_pages(struct amd_iommu *iommu, gfp_t gfp,
+ }
+ 
+ /* allocates the memory where the IOMMU will log its events to */
+-static int __init alloc_event_buffer(struct amd_iommu *iommu)
++static int __init alloc_event_buffer(void)
  {
- 	u32 vmexit_ctrl = vmcs_config.vmexit_ctrl;
+-	iommu->evt_buf = iommu_alloc_4k_pages(iommu, GFP_KERNEL,
+-					      EVT_BUFFER_SIZE);
++	struct amd_iommu *iommu;
  
-+	if (!enable_cet)
-+		vmexit_ctrl &= ~VM_EXIT_LOAD_CET_STATE;
+-	return iommu->evt_buf ? 0 : -ENOMEM;
++	for_each_iommu(iommu) {
++		iommu->evt_buf = iommu_alloc_4k_pages(iommu, GFP_KERNEL,
++						      amd_iommu_evtlog_size);
++		if (!iommu->evt_buf)
++			return -ENOMEM;
++	}
 +
- 	/*
- 	 * Not used by KVM and never set in vmcs01 or vmcs02, but emulated for
- 	 * nested virtualization and thus allowed to be set in vmcs12.
-@@ -8240,7 +8250,7 @@ static __init void vmx_set_cpu_caps(void)
- 	 * VMX_BASIC[bit56] == 0, inject #CP at VMX entry with error code
- 	 * fails, so disable CET in this case too.
- 	 */
--	if (!cpu_has_load_cet_ctrl() || !enable_unrestricted_guest ||
-+	if (!enable_cet || !enable_unrestricted_guest ||
- 	    !cpu_has_vmx_basic_no_hw_errcode_cc()) {
- 		kvm_cpu_cap_clear(X86_FEATURE_SHSTK);
- 		kvm_cpu_cap_clear(X86_FEATURE_IBT);
-@@ -8721,6 +8731,9 @@ __init int vmx_hardware_setup(void)
- 	    !cpu_has_vmx_invept_global())
- 		enable_ept = 0;
++	return 0;
+ }
  
-+	if (!cpu_has_load_cet_ctrl())
-+		enable_cet = 0;
+-static void iommu_enable_event_buffer(struct amd_iommu *iommu)
++static void iommu_enable_event_buffer(void)
+ {
++	struct amd_iommu *iommu;
+ 	u64 entry;
+ 
+-	BUG_ON(iommu->evt_buf == NULL);
++	for_each_iommu(iommu) {
++		BUG_ON(iommu->evt_buf == NULL);
+ 
+-	if (!is_kdump_kernel()) {
+-		/*
+-		 * Event buffer is re-used for kdump kernel and setting
+-		 * of MMIO register is not required.
+-		 */
+-		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
+-		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
+-			    &entry, sizeof(entry));
+-	}
++		if (!is_kdump_kernel()) {
++			/*
++			 * Event buffer is re-used for kdump kernel and setting
++			 * of MMIO register is not required.
++			 */
++			entry = iommu_virt_to_phys(iommu->evt_buf);
++			entry |= (amd_iommu_evtlog_size == EVTLOG_SIZE_DEF) ?
++				EVTLOG_LEN_MASK_DEF : EVTLOG_LEN_MASK_MAX;
 +
- 	/* NX support is required for shadow paging. */
- 	if (!enable_ept && !boot_cpu_has(X86_FEATURE_NX)) {
- 		pr_err_ratelimited("NX (Execute Disable) not supported\n");
++			memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
++				    &entry, sizeof(entry));
++		}
+ 
+-	/* set head and tail to zero manually */
+-	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
+-	writel(0x00, iommu->mmio_base + MMIO_EVT_TAIL_OFFSET);
++		/* set head and tail to zero manually */
++		writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
++		writel(0x00, iommu->mmio_base + MMIO_EVT_TAIL_OFFSET);
+ 
+-	iommu_feature_enable(iommu, CONTROL_EVT_LOG_EN);
++		iommu_feature_enable(iommu, CONTROL_EVT_LOG_EN);
++	}
+ }
+ 
+ /*
+@@ -981,15 +995,20 @@ static int __init alloc_cwwb_sem(struct amd_iommu *iommu)
+ 	return 0;
+ }
+ 
+-static int __init remap_event_buffer(struct amd_iommu *iommu)
++static int __init remap_event_buffer(void)
+ {
++	struct amd_iommu *iommu;
+ 	u64 paddr;
+ 
+ 	pr_info_once("Re-using event buffer from the previous kernel\n");
+-	paddr = readq(iommu->mmio_base + MMIO_EVT_BUF_OFFSET) & PM_ADDR_MASK;
+-	iommu->evt_buf = iommu_memremap(paddr, EVT_BUFFER_SIZE);
++	for_each_iommu(iommu) {
++		paddr = readq(iommu->mmio_base + MMIO_EVT_BUF_OFFSET) & PM_ADDR_MASK;
++		iommu->evt_buf = iommu_memremap(paddr, amd_iommu_evtlog_size);
++		if (!iommu->evt_buf)
++			return -ENOMEM;
++	}
+ 
+-	return iommu->evt_buf ? 0 : -ENOMEM;
++	return 0;
+ }
+ 
+ static int __init remap_command_buffer(struct amd_iommu *iommu)
+@@ -1041,10 +1060,6 @@ static int __init alloc_iommu_buffers(struct amd_iommu *iommu)
+ 		ret = remap_command_buffer(iommu);
+ 		if (ret)
+ 			return ret;
+-
+-		ret = remap_event_buffer(iommu);
+-		if (ret)
+-			return ret;
+ 	} else {
+ 		ret = alloc_cwwb_sem(iommu);
+ 		if (ret)
+@@ -1053,10 +1068,6 @@ static int __init alloc_iommu_buffers(struct amd_iommu *iommu)
+ 		ret = alloc_command_buffer(iommu);
+ 		if (ret)
+ 			return ret;
+-
+-		ret = alloc_event_buffer(iommu);
+-		if (ret)
+-			return ret;
+ 	}
+ 
+ 	return 0;
+@@ -2890,7 +2901,6 @@ static void early_enable_iommu(struct amd_iommu *iommu)
+ 	iommu_init_flags(iommu);
+ 	iommu_set_device_table(iommu);
+ 	iommu_enable_command_buffer(iommu);
+-	iommu_enable_event_buffer(iommu);
+ 	iommu_set_exclusion_range(iommu);
+ 	iommu_enable_gt(iommu);
+ 	iommu_enable_ga(iommu);
+@@ -2954,7 +2964,6 @@ static void early_enable_iommus(void)
+ 			iommu_disable_event_buffer(iommu);
+ 			iommu_disable_irtcachedis(iommu);
+ 			iommu_enable_command_buffer(iommu);
+-			iommu_enable_event_buffer(iommu);
+ 			iommu_enable_ga(iommu);
+ 			iommu_enable_xt(iommu);
+ 			iommu_enable_irtcachedis(iommu);
+@@ -3067,6 +3076,7 @@ static void amd_iommu_resume(void *data)
+ 	for_each_iommu(iommu)
+ 		early_enable_iommu(iommu);
+ 
++	iommu_enable_event_buffer();
+ 	amd_iommu_enable_interrupts();
+ }
+ 
+@@ -3396,6 +3406,23 @@ static __init void iommu_snp_enable(void)
+ #endif
+ }
+ 
++static void amd_iommu_apply_erratum_snp(void)
++{
++#ifdef CONFIG_KVM_AMD_SEV
++	if (!amd_iommu_snp_en)
++		return;
++
++	/* Errata fix for Family 0x19 */
++	if (boot_cpu_data.x86 != 0x19)
++		return;
++
++	/* Set event log buffer size to max */
++	amd_iommu_evtlog_size = EVTLOG_SIZE_MAX;
++	pr_info("Applying erratum: Increase Event log size to 0x%x\n",
++		amd_iommu_evtlog_size);
++#endif
++}
++
+ /****************************************************************************
+  *
+  * AMD IOMMU Initialization State Machine
+@@ -3432,6 +3459,21 @@ static int __init state_next(void)
+ 	case IOMMU_ENABLED:
+ 		register_syscore(&amd_iommu_syscore);
+ 		iommu_snp_enable();
++
++		amd_iommu_apply_erratum_snp();
++
++		/* Allocate/enable event log buffer */
++		if (is_kdump_kernel())
++			ret = remap_event_buffer();
++		else
++			ret = alloc_event_buffer();
++
++		if (ret) {
++			init_state = IOMMU_INIT_ERROR;
++			break;
++		}
++		iommu_enable_event_buffer();
++
+ 		ret = amd_iommu_init_pci();
+ 		init_state = ret ? IOMMU_INIT_ERROR : IOMMU_PCI_INIT;
+ 		break;
+@@ -4034,7 +4076,7 @@ int amd_iommu_snp_disable(void)
+ 		return 0;
+ 
+ 	for_each_iommu(iommu) {
+-		ret = iommu_make_shared(iommu->evt_buf, EVT_BUFFER_SIZE);
++		ret = iommu_make_shared(iommu->evt_buf, amd_iommu_evtlog_size);
+ 		if (ret)
+ 			return ret;
+ 
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 760d5f4623b55..02b5eaae6843d 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -1009,7 +1009,7 @@ static void iommu_poll_events(struct amd_iommu *iommu)
+ 		iommu_print_event(iommu, iommu->evt_buf + head);
+ 
+ 		/* Update head pointer of hardware ring-buffer */
+-		head = (head + EVENT_ENTRY_SIZE) % EVT_BUFFER_SIZE;
++		head = (head + EVTLOG_ENTRY_SIZE) % amd_iommu_evtlog_size;
+ 		writel(head, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
+ 	}
+ 
 -- 
 2.53.0
 
