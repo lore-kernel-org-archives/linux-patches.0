@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6220F331220;
-	Wed, 20 May 2026 18:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CA53A6B6D;
+	Wed, 20 May 2026 18:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779300623; cv=none; b=Wce4XI/8gCJZDx0t0es5GuEeaVzsfVMmbcmOTmYDG08JtlWagZhzCSEf69pZ2iAEjFRWSy0Z1z62E2HrN4YlxHW+90NRz2zR/PFPpKTWsRLiFgyYgVVqMRyXHHyWzz6y2w5w9O0MKYO8LcaSpmWsF/nn7vrCyI4EHtMbUUTAu2c=
+	t=1779300626; cv=none; b=S1hSQzjD1ytOceDzbTzbV5s2sNpGFf2pachOEredoOHqOzqe+x2Fo53Hll/6NHvwP3uLpRVCecc9ygLeXIsRoevs7VduGpBanNJU4f87Ul8LY5mD8YuS1jOJxGpAVoYv+eVy0AnajsInAGkHXMhn6IuPMlET0OPubkgyTPUw6JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779300623; c=relaxed/simple;
-	bh=SPTR86Iyulx6C02cZtSeYiDqmWAplfnnjNP/MnmSdAA=;
+	s=arc-20240116; t=1779300626; c=relaxed/simple;
+	bh=L365VY2fo9Q4MdjzqQ6CDu6hRYdfYnxiDLDgZQeb8J4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llI4RRNyzaCRznJIWGPFkOvyid5NHYCCEJxOKI1uq16JVff7+G9qeoZmk1bWuMlbdajsgicxlESfyKnlhMKCaT/ByikkVt5Z9TSQr7onuk1H5Twq2Ofl5zS6aCmjT4oPIdZMRnHuGY+9CFpWlN4ApUsAHYtfoA6dnuMWKaeiHrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3SgpHDY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f5jnC2dTUTG2r5e9OxmP39r2qEMGn2VBiBy9M3dCSTnBwNgstyUizOoCJBF1qdeau1ooEdzttDIY7ukGGHIQN3QclE2Nxg8/ykLTJof+uqdwyN1GKErgkRQN2HoRbHiS6WPbgHY0Wl7Z9YbVGlVuc/jntXXA4KmPzH+VDIYmRoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPCwXLli; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3SgpHDY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA701F000E9;
-	Wed, 20 May 2026 18:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPCwXLli"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD9E1F000E9;
+	Wed, 20 May 2026 18:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779300622;
-	bh=ohuwp6kKHVnqWk+nGQofgi4wRctPdjeuyG/ONkHYlB8=;
+	s=korg; t=1779300624;
+	bh=WNWBp3otr6NDrRFf7BgpWnNc+MFDqgSYIj9WZXxGCZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p3SgpHDYZvYxbvMciqmtWukPZX128rV9RFmn9r6vpzAbdsmJfBffyBfJOIkJ6LCRw
-	 t8uogSJOcg6sAl9z08DxdMRi+07AUh9VYqiiDjQAJriZHWlc6GCWH0QnFJZxsyi31p
-	 p5EQoWaZIg0sycNeB9TKqc1eVhO1ohFFxiSSyXhM=
+	b=CPCwXLliDp6NaHYO5Yg8niKPO1h0L+kS0TPk9KutDG5l3NOy4gmJAZvJ6/rH0OI8V
+	 69QlJODxqw2lHxBPLwb1t2lyKAxRuqb1Ajl6skqBNSbaS6ktPRveQP2xpqp761/Y0h
+	 sJSqzG7ggOCPkzGIBKCuzA5JRLl8B8ox+kMgk3Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jon Hunter <jonathanh@nvidia.com>,
 	Vidya Sagar <vidyas@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 244/666] PCI: dwc: Apply ECRC workaround to DesignWare 5.00a as well
-Date: Wed, 20 May 2026 18:17:35 +0200
-Message-ID: <20260520162116.507652625@linuxfoundation.org>
+Subject: [PATCH 6.12 245/666] PCI: tegra194: Fix CBB timeout caused by DBI access before core power-on
+Date: Wed, 20 May 2026 18:17:36 +0200
+Message-ID: <20260520162116.529745575@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -56,59 +56,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 
-[ Upstream commit 40805f32dceadebb7381d911003100bec7b8cd51 ]
+[ Upstream commit 34b3eef48d980cd37b876e128bbf314f69fb5d70 ]
 
-The ECRC (TLP digest) workaround was originally added for DesignWare
-version 4.90a. Tegra234 SoC has 5.00a DWC HW version, which has the same
-ATU TD override behaviour, so apply the workaround for 5.00a too.
+When PERST# is deasserted twice (assert -> deassert -> assert -> deassert),
+a CBB (Control Backbone) timeout occurs at DBI register offset 0x8bc
+(PCIE_MISC_CONTROL_1_OFF). This happens because pci_epc_deinit_notify()
+and dw_pcie_ep_cleanup() are called before reset_control_deassert() powers
+on the controller core.
 
-Fixes: a54e19073718 ("PCI: tegra194: Add Tegra234 PCIe support")
+The call chain that causes the timeout:
+
+  pex_ep_event_pex_rst_deassert()
+    pci_epc_deinit_notify()
+      pci_epf_test_epc_deinit()
+        pci_epf_test_clear_bar()
+          pci_epc_clear_bar()
+            dw_pcie_ep_clear_bar()
+              __dw_pcie_ep_reset_bar()
+                dw_pcie_dbi_ro_wr_en()      <- Accesses 0x8bc DBI register
+    reset_control_deassert(pcie->core_rst)  <- Core powered on HERE
+
+The DBI registers, including PCIE_MISC_CONTROL_1_OFF (0x8bc), are only
+accessible after the controller core is powered on via
+reset_control_deassert(pcie->core_rst). Accessing them before this point
+results in a CBB timeout because the hardware is not yet operational.
+
+Fix this by moving pci_epc_deinit_notify() and dw_pcie_ep_cleanup() to
+after reset_control_deassert(pcie->core_rst), ensuring the controller is
+fully powered on before any DBI register accesses occur.
+
+Fixes: 40e2125381dc ("PCI: tegra194: Move controller cleanups to pex_ep_event_pex_rst_deassert()")
 Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
-Link: https://patch.msgid.link/20260324190755.1094879-13-mmaddireddy@nvidia.com
+Link: https://patch.msgid.link/20260324190755.1094879-15-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index f7d10cb788e0e..bc3d6269f33bc 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -429,13 +429,13 @@ static inline void dw_pcie_writel_atu_ob(struct dw_pcie *pci, u32 index, u32 reg
- static inline u32 dw_pcie_enable_ecrc(u32 val)
- {
- 	/*
--	 * DesignWare core version 4.90A has a design issue where the 'TD'
--	 * bit in the Control register-1 of the ATU outbound region acts
--	 * like an override for the ECRC setting, i.e., the presence of TLP
--	 * Digest (ECRC) in the outgoing TLPs is solely determined by this
--	 * bit. This is contrary to the PCIe spec which says that the
--	 * enablement of the ECRC is solely determined by the AER
--	 * registers.
-+	 * DWC versions 0x3530302a and 0x3536322a have a design issue where
-+	 * the 'TD' bit in the Control register-1 of the ATU outbound
-+	 * region acts like an override for the ECRC setting, i.e., the
-+	 * presence of TLP Digest (ECRC) in the outgoing TLPs is solely
-+	 * determined by this bit. This is contrary to the PCIe spec which
-+	 * says that the enablement of the ECRC is solely determined by the
-+	 * AER registers.
- 	 *
- 	 * Because of this, even when the ECRC is enabled through AER
- 	 * registers, the transactions going through ATU won't have TLP
-@@ -505,7 +505,7 @@ int dw_pcie_prog_outbound_atu(struct dw_pcie *pci,
- 	if (upper_32_bits(limit_addr) > upper_32_bits(cpu_addr) &&
- 	    dw_pcie_ver_is_ge(pci, 460A))
- 		val |= PCIE_ATU_INCREASE_REGION_SIZE;
--	if (dw_pcie_ver_is(pci, 490A))
-+	if (dw_pcie_ver_is(pci, 490A) || dw_pcie_ver_is(pci, 500A))
- 		val = dw_pcie_enable_ecrc(val);
- 	dw_pcie_writel_atu_ob(pci, atu->index, PCIE_ATU_REGION_CTRL1, val);
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 5faac8b7190ca..368c50abd4fc4 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -1757,10 +1757,6 @@ static void pex_ep_event_pex_rst_deassert(struct tegra_pcie_dw *pcie)
+ 		goto fail_phy;
+ 	}
  
+-	/* Perform cleanup that requires refclk */
+-	pci_epc_deinit_notify(pcie->pci.ep.epc);
+-	dw_pcie_ep_cleanup(&pcie->pci.ep);
+-
+ 	/* Clear any stale interrupt statuses */
+ 	appl_writel(pcie, 0xFFFFFFFF, APPL_INTR_STATUS_L0);
+ 	appl_writel(pcie, 0xFFFFFFFF, APPL_INTR_STATUS_L1_0_0);
+@@ -1830,6 +1826,10 @@ static void pex_ep_event_pex_rst_deassert(struct tegra_pcie_dw *pcie)
+ 
+ 	reset_control_deassert(pcie->core_rst);
+ 
++	/* Perform cleanup that requires refclk and core reset deasserted */
++	pci_epc_deinit_notify(pcie->pci.ep.epc);
++	dw_pcie_ep_cleanup(&pcie->pci.ep);
++
+ 	val = dw_pcie_readl_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL);
+ 	val &= ~PORT_LOGIC_SPEED_CHANGE;
+ 	dw_pcie_writel_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL, val);
 -- 
 2.53.0
 
