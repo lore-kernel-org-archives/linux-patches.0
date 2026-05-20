@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D3633A9CF;
-	Wed, 20 May 2026 16:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C2136D9EA;
+	Wed, 20 May 2026 16:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295527; cv=none; b=oTOn2pEasWpekAgYvGrhA4Tt7uU9ORwvdstMc9Jy4rRsIjvO/YQl+Pg6gaNugy6xp66474oMZfaULRzcNBry7Iy5x8BEWAAYhv2y3ySSDczgblBZ0S4UHVjb9KEgGtekCrOtYZ2u8PXGuwAbkWMyPFgrvxK2mGw0iea5vK4PFFA=
+	t=1779295530; cv=none; b=SfBYeV1G8YXQEONIO/OT2p6UF7xJizjne5xO3EpT8HVU94SZLUO99i3tD0lHQ0seGJTqSertJskHCWALuVxaZRp+xKJQfg8R8sH5W++cTCFr2BB1w8rxLyKAt5dwjj7wJF+ckybv0EGKCnhvRhJDx/Z2QMpBK3n+spB4GZ2oJIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779295527; c=relaxed/simple;
-	bh=rTyT9Vb5zQ/AGAaKbAMYaV7pLx+OOrdes+4AW4du4wk=;
+	s=arc-20240116; t=1779295530; c=relaxed/simple;
+	bh=6P+Sd01rlHhEJ0hiTnEjbSgA/AFSwKpzw/va8QPiN9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6FNq7FK8l+0vX0/rCCGc3Cf7wp1oG5Qw5oPX7sZna8SDmvvD5ZezlKd1wMwBhsPA8529CO9QhRraCsaS1B1jj2Uspi8ZswpVEz3z3JmpvhKzw7GtTQGUX8C0TWPFL4UiUhAacuseq0ZUvT0KfQ5X+ZJkwWvtwyEu1AuClB4BD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3ykFLo/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lbrqmw8/m1QVqjwgkUL7U/1aFqiuS+Teq6f0DBo2CWq2B19d9oN/o4W6C1XBbzI/q5WybwxMXccg39V32AHsMPGm8Sqs/PDDxII9e36M6wSdl+InSso4mSaAHhx2CQcn+Z/T1wagR+3kJ1ZcehWCHwhuhZIbARfCfEcUK0PCOQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZc7AH+U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3ykFLo/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348701F000E9;
-	Wed, 20 May 2026 16:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZc7AH+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04CD1F000E9;
+	Wed, 20 May 2026 16:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779295526;
-	bh=MAVa9Gj9eaN4D9TLIu6YXFCJwUK1L/uNFqdS8+cSHx8=;
+	s=korg; t=1779295529;
+	bh=aPxs/2y5iHskL5rXd5tJrXlOSP9NLXnLL945dpgKWrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S3ykFLo/7r4RHCr6v+EiTQIiHSfjaKfxhOH2N3DscyUsaJE8clfVwyCcfnn2AKvwh
-	 koGes6jwDC5Seos1mDzTDThgidh1jw+RQzcCXbW0sjLfgF4ehoJMs6dTu2wx7DLcIQ
-	 XCGZW2Ci7qco8BBFiXEMwbPTufNw09cpsTxukxko=
+	b=cZc7AH+UUhBLuStiYJmvU5KrmQC+wRSZ7zMmbKnHG94cxKBBzAWFRRbPOKVB/xMjF
+	 WaODQDzl88q01gOKKum6orekgPD1nR6Oea0WgCD1XwwXnhiMuzR7vDGyvD5Ui9X6dm
+	 6WVrVOcSBrM1P+05rdfGvC51bsXAqbUIQ71tGJeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wander Lairson Costa <wander@redhat.com>,
 	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0453/1146] rtla: Use str_has_prefix() for prefix checks
-Date: Wed, 20 May 2026 18:11:43 +0200
-Message-ID: <20260520162158.452078806@linuxfoundation.org>
+Subject: [PATCH 7.0 0454/1146] rtla/trace: Fix write loop in trace_event_save_hist()
+Date: Wed, 20 May 2026 18:11:44 +0200
+Message-ID: <20260520162158.475108813@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -53,67 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit 265905df83a4c1e78c1a912e1699d7c81d9540e6 ]
+[ Upstream commit 4bf4ef5292b9253d8607c61a875d9f6b14129976 ]
 
-The code currently uses strncmp() combined with strlen() to check if a
-string starts with a specific prefix. This pattern is verbose and prone
-to errors if the length does not match the prefix string.
+The write loop in trace_event_save_hist() does not correctly handle
+errors from the write() system call. If write() returns -1, this value
+is added to the loop index, leading to an incorrect memory access on
+the next iteration and potentially an infinite loop. The loop also
+fails to handle EINTR.
 
-Replace this pattern with the str_has_prefix() helper function in both
-trace.c and utils.c. This improves code readability and safety by
-handling the prefix length calculation automatically.
+Fix the write loop by introducing proper error handling. The return
+value of write() is now stored in a ssize_t variable and checked for
+errors. The loop retries the call if interrupted by a signal and breaks
+on any other error after logging it with strerror().
 
-In addition, remove the unused retval variable from
-trace_event_save_hist() in trace.c to clean up the function and
-silence potential compiler warnings.
+Additionally, change the index variable type from int to size_t to
+match the type used for buffer sizes and by strlen(), improving type
+safety.
 
+Fixes: 761916fd02c2 ("rtla/trace: Save event histogram output to a file")
 Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Link: https://lore.kernel.org/r/20260309195040.1019085-12-wander@redhat.com
+Link: https://lore.kernel.org/r/20260309195040.1019085-16-wander@redhat.com
 Signed-off-by: Tomas Glozar <tglozar@redhat.com>
-Stable-dep-of: 4bf4ef5292b9 ("rtla/trace: Fix write loop in trace_event_save_hist()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/trace.c | 5 ++---
- tools/tracing/rtla/src/utils.c | 3 +--
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ tools/tracing/rtla/src/trace.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/tools/tracing/rtla/src/trace.c b/tools/tracing/rtla/src/trace.c
-index 073ec1b567798..d5a6a7351d40f 100644
+index d5a6a7351d40f..a4912aaa10eb9 100644
 --- a/tools/tracing/rtla/src/trace.c
 +++ b/tools/tracing/rtla/src/trace.c
-@@ -358,7 +358,7 @@ static void trace_event_disable_filter(struct trace_instance *instance,
+@@ -358,11 +358,11 @@ static void trace_event_disable_filter(struct trace_instance *instance,
  static void trace_event_save_hist(struct trace_instance *instance,
  				  struct trace_events *tevent)
  {
--	int retval, index, out_fd;
-+	int index, out_fd;
+-	int index, out_fd;
++	size_t index, hist_len;
  	mode_t mode = 0644;
  	char path[1024];
  	char *hist;
-@@ -372,8 +372,7 @@ static void trace_event_save_hist(struct trace_instance *instance,
+-	size_t hist_len;
++	int out_fd;
+ 
+ 	if (!tevent)
  		return;
+@@ -394,7 +394,15 @@ static void trace_event_save_hist(struct trace_instance *instance,
+ 	index = 0;
+ 	hist_len = strlen(hist);
+ 	do {
+-		index += write(out_fd, &hist[index], hist_len - index);
++		const ssize_t written = write(out_fd, &hist[index], hist_len - index);
++
++		if (written < 0) {
++			if (errno == EINTR)
++				continue;
++			err_msg("  Error writing hist file: %s\n", strerror(errno));
++			break;
++		}
++		index += written;
+ 	} while (index < hist_len);
  
- 	/* is this a hist: trigger? */
--	retval = strncmp(tevent->trigger, "hist:", strlen("hist:"));
--	if (retval)
-+	if (!str_has_prefix(tevent->trigger, "hist:"))
- 		return;
- 
- 	snprintf(path, 1024, "%s_%s_hist.txt", tevent->system, tevent->event);
-diff --git a/tools/tracing/rtla/src/utils.c b/tools/tracing/rtla/src/utils.c
-index fb067220566a4..22d2182c729e5 100644
---- a/tools/tracing/rtla/src/utils.c
-+++ b/tools/tracing/rtla/src/utils.c
-@@ -316,8 +316,7 @@ static int procfs_is_workload_pid(const char *comm_prefix, struct dirent *proc_e
- 		return 0;
- 
- 	buffer[MAX_PATH-1] = '\0';
--	retval = strncmp(comm_prefix, buffer, strlen(comm_prefix));
--	if (retval)
-+	if (!str_has_prefix(buffer, comm_prefix))
- 		return 0;
- 
- 	/* comm already have \n */
+ 	free(hist);
 -- 
 2.53.0
 
