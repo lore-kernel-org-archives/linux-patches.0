@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584193FADE9;
-	Wed, 20 May 2026 17:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3ED3E2AAD;
+	Wed, 20 May 2026 17:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296781; cv=none; b=KNV0CfqgQcCXdZN3CoL9MknpzkkuEA3WgBSwozlwKAV1T3FFO/JfwW9j6akry3jqkmV+BS6otke9dE5aUCkQYtcEfXqZDiaHcOwcgNQvZb1CDPp0pdAYSEtoRqrNEKV5YIDy6RjfFBiVcNay21bpPoKYfDdaaYNB0+/w/sTz6XQ=
+	t=1779296784; cv=none; b=o6uSoY3bleTj+ScOEAaK3s8kWQhqkIGq6uKlHUiIsWeGsB2oI/OxSz1OsBmQDlEkGCGVF6VpJu3+GVt39GhVPHJS1SBytZhz0fyNTSRszfjjHt2LUxatPiACi0jR7qzkeIN0CnhYyNeRQ/fdNxGzmxt1r/5mKhsFY93EgI2NGEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296781; c=relaxed/simple;
-	bh=8FVKax+QEIXRoHwIGqL4mY6R1C0ivva4E3v8S/MMrHE=;
+	s=arc-20240116; t=1779296784; c=relaxed/simple;
+	bh=gC5SwnqJ2YydT9SSmgMdkGrLO44pYBTWMtVEoGMLQtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfYz9hmRTJENYqeCRkkYV38XwEhfNlMXyJvnXnY8HxJWd/e8cBVIzYCpVCjsUbmK12N42D53zzDQPibUkUJObQCDwahou/dmLJsBS1MGCdJY1wop4e2964jop2PNt8ClfSsekuvxITiUc1eFOEngYbrGoIYjUI9e0Gu+lvYLh2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtRUS28N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jmW2nHYZWNt4/4w7b/g1fPXtTDoTV1BeashK6fw2igYURpQ/SdyrRhrZ+MwvXM7twV6GtOIFh1hqYtp081PNsd34NPRj7rLqoWOcyRF2w1e2DYw9f2mdI83V7D+CgcV0TixVbnakjHp6fA0ag6KnlWURXcpWSC8s6h7Jmsa4Kt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KAWov+Im; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtRUS28N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCD71F000E9;
-	Wed, 20 May 2026 17:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KAWov+Im"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 600DC1F000E9;
+	Wed, 20 May 2026 17:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296780;
-	bh=x8PfNTQK9AGceS+gFUy86Ue2Lk8y0jw2+PPlB69yYIE=;
+	s=korg; t=1779296782;
+	bh=u3IO+PD8QT9XzG8cTu3gdMgRlS2Qr7pLKBcxVbOnd/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AtRUS28N3Y4jIygrkAXuPYPXS4pPG7zdlBn41DoBzBjb0r3z0YM2SlCpTjTLSyCiq
-	 1Ig9Nedpmj/Ql5IzH7806OL04j8tSlQjPSl0OI6r4ve8WImZ/+m6C36yREoI8EiUwY
-	 ymfNm/1N9f2CkVgXq48gRQAt13RuyBQLsOGi/O4k=
+	b=KAWov+ImwqJC6aSnt1n9T0VfPP00jDngbTxZqZPMKHrbbyG9/wtZTNuDImeMeSjik
+	 IVtPTXjonnZyjpWERkwjLMDr2BrnDNiA511bgQSxIdNAz42Ocdi9sLVuR//k5PbE+o
+	 HnVm3lGwr3AVzBRRMmD/8uyvIyt6xoEDSlwACSTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0912/1146] ASoC: SOF: Intel: add an empty adr_link
-Date: Wed, 20 May 2026 18:19:22 +0200
-Message-ID: <20260520162208.880751522@linuxfoundation.org>
+Subject: [PATCH 7.0 0930/1146] net/sched: netem: only reseed PRNG when seed is explicitly provided
+Date: Wed, 20 May 2026 18:19:40 +0200
+Message-ID: <20260520162209.283906621@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,38 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bard Liao <yung-chuan.liao@linux.intel.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit 3c6f06a200796ae7b2b1065e8a6499b138e27a50 ]
+[ Upstream commit 986afaf809940577224a99c3a08d97a15eb37e93 ]
 
-An empty adr_link is expected to terminate the
-for (adr_link = mach_params->links; adr_link->num_adr; adr_link++) loop.
-Allocate link_num + 1 links to add an empty adr_link.
+netem_change() unconditionally reseeds the PRNG on every tc change
+command. If TCA_NETEM_PRNG_SEED is not specified, a new random seed
+is generated, destroying reproducibility for users who set a
+deterministic seed on a previous change.
 
-Fixes: 5226d19d4cae5 ("ASoC: SOF: Intel: use sof_sdw as default SDW machine driver")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260424105031.114053-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Move the initial random seed generation to netem_init() and only
+reseed in netem_change() when TCA_NETEM_PRNG_SEED is explicitly
+provided by the user.
+
+Fixes: 4072d97ddc44 ("netem: add prng attribute to netem_sched_data")
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260418032027.900913-4-stephen@networkplumber.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/intel/hda.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_netem.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda.c b/sound/soc/sof/intel/hda.c
-index 8a240dcb7fcb3..5fa773bb26788 100644
---- a/sound/soc/sof/intel/hda.c
-+++ b/sound/soc/sof/intel/hda.c
-@@ -1399,7 +1399,8 @@ static struct snd_soc_acpi_mach *hda_sdw_machine_select(struct snd_sof_dev *sdev
- 		link_mask |= BIT(peripherals->array[i]->bus->link_id);
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index d400a730eadd1..556f9747f0e73 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -1112,11 +1112,10 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	/* capping jitter to the range acceptable by tabledist() */
+ 	q->jitter = min_t(s64, abs(q->jitter), INT_MAX);
  
- 	link_num = hweight32(link_mask);
--	links = devm_kcalloc(sdev->dev, link_num, sizeof(*links), GFP_KERNEL);
-+	/* An empty adr_link is needed to terminate the adr_link loop */
-+	links = devm_kcalloc(sdev->dev, link_num + 1, sizeof(*links), GFP_KERNEL);
- 	if (!links)
- 		return NULL;
+-	if (tb[TCA_NETEM_PRNG_SEED])
++	if (tb[TCA_NETEM_PRNG_SEED]) {
+ 		q->prng.seed = nla_get_u64(tb[TCA_NETEM_PRNG_SEED]);
+-	else
+-		q->prng.seed = get_random_u64();
+-	prandom_seed_state(&q->prng.prng_state, q->prng.seed);
++		prandom_seed_state(&q->prng.prng_state, q->prng.seed);
++	}
  
+ unlock:
+ 	sch_tree_unlock(sch);
+@@ -1139,6 +1138,9 @@ static int netem_init(struct Qdisc *sch, struct nlattr *opt,
+ 		return -EINVAL;
+ 
+ 	q->loss_model = CLG_RANDOM;
++	q->prng.seed = get_random_u64();
++	prandom_seed_state(&q->prng.prng_state, q->prng.seed);
++
+ 	ret = netem_change(sch, opt, extack);
+ 	if (ret)
+ 		pr_info("netem: change failed\n");
 -- 
 2.53.0
 
