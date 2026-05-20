@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8EF36405A;
-	Wed, 20 May 2026 17:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015AA36405A;
+	Wed, 20 May 2026 17:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298902; cv=none; b=KrxUQQuBy4Bir4Rg/VdArnvjg9IlfBxpjbkMVMSxZCuopvcAlAaUyzH8SUj75VLlokt7G140RmH6P3atL+Ehb9xrE8c/a8RO7t6fYClxIk9Z5t5YhgHRM+Ugt/kZDTFZHMbP2bu2C2viPcYM2SyIKCKoYZgixkEj3qEuDDWcWpw=
+	t=1779298905; cv=none; b=UfEMxdR98e90+ORUd6nGlD1eVv85w3XQoTzTFEn64mulS8/atbYnB9qxpB1BUtiSzjRB/jplo+ujzDwSpjBMr+jWR8ZpEayRHGuDW7dbXZMNUO7xoX7vkEg4Z08BOFba+b08mSOD+Vu4eFX8gLzckf7iebS+owl3n/+2uvFPAT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298902; c=relaxed/simple;
-	bh=UqGo7yNkGUzYRK3/co9AtGGtkhtxHv9UZBKow1yd1SY=;
+	s=arc-20240116; t=1779298905; c=relaxed/simple;
+	bh=InKMPdLkJlBEJgI00isYzF2DXBUdP8mwbUngQrR61j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C/rg6a9+h2HH2FD4BYu/0lBZaO7t5kcrE5z7DR3HgAJbavmcf8II64xDuTSu1XyiX6KA3fauRNo9Q5jJJ1jjmqfrxcSR/UYyxOUakWlxY5IGFlCQ6zO4ZQLOo2xc/l9rG+e9VpvTygShZkNBRnMlg7xyqj3j7b5z11MSjOmOQec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wANrNoVk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VXel5nUOxnEonZ5daK9yqM5sCWMS9CN4iyLJrLGwQnU4V5SJFjG6vGaW8TwIuSbSAa68RSOh6i/SgpxzKIdNSbkk5hYIiu0+fO7xgLkq+BfXlltNB47+LL0vq0OMp1j1u8w+MQffzTudJ0nYSS1APb+jXeSgSeNMMSlKJPvWwws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbNn1eX4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wANrNoVk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10911F00893;
-	Wed, 20 May 2026 17:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbNn1eX4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670041F000E9;
+	Wed, 20 May 2026 17:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298901;
-	bh=/WYV/aX0R9yfkdZ47hwCn7UaJKIsFHoMo5fgVjpK2mw=;
+	s=korg; t=1779298903;
+	bh=686+Gt4yF+LsEGGmNuvWXtUWIYFgQKaXXgMbIqdHlFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wANrNoVkmzNWcY9U6UNGb5i9HpuUbQAbzREmcl+ExcTJIX8GEhNMZfmz/BaAgCNgK
-	 ZG605qPjgwJc0c/aYoRrSFDiNdk4lpm0Lbz3UXH9MdDXt0OE3UelR7FeewR8ed6h/d
-	 pjTHeg7DPV1BchMca6BLAy5XuEqwQvzbZNVpkc/g=
+	b=UbNn1eX4+fDgQhL2UM+i7F9JxCcAbMISq+G1RQCRHVm/nvTVdev2uePj7Cs2sf8B6
+	 OQHcTdJZ64QPPkvELWTgk09jWz+1cSK7eQ4mbUe2YDKEP3usYIuaA8gNZT+HY45SrI
+	 jo9w2V77ZSIRTP04knmpGGc6aFwIwkULHn4Qh4oY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 588/957] clk: visconti: pll: initialize clk_init_data to zero
-Date: Wed, 20 May 2026 18:17:51 +0200
-Message-ID: <20260520162147.283633020@linuxfoundation.org>
+Subject: [PATCH 6.18 589/957] f2fs: allow empty mount string for Opt_usr|grp|projjquota
+Date: Wed, 20 May 2026 18:17:52 +0200
+Message-ID: <20260520162147.305468614@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -47,54 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit 1603cbb64173a0e9fa7500f2a686f4aa011c58b9 ]
+[ Upstream commit 2a3db1e02ce08c14af04da70bb99e8a0a31eb9e8 ]
 
-Sashiko reported the following:
+The fsparam_string_empty() gives an error when mounting without string, since
+its type is set to fsparam_flag in VFS. So, let's allow the flag as well.
 
-> The struct clk_init_data init is declared on the stack without being
-> fully zero-initialized. While fields like name, flags, parent_names,
-> num_parents, and ops are explicitly assigned, the parent_data and
-> parent_hws fields are left containing stack garbage.
+This addresses xfstests/f2fs/015 and f2fs/021.
 
-clk_core_populate_parent_map() currently prefers the parent names over
-the parent data and hws, so this isn't a problem at the moment. If that
-ordering ever changed in the future, then this could lead to some
-unexpected crashes. Let's just go ahead and make sure that the struct
-clk_init_data is initialized to zero as a good practice.
-
-Fixes: b4cbe606dc367 ("clk: visconti: Add support common clock driver and reset driver")
-Link: https://sashiko.dev/#/patchset/20260326042317.122536-1-rosenp%40gmail.com
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Benoît Monin <benoit.monin@bootlin.com>
-Reviewed-by: Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: d18535132523 ("f2fs: separate the options parsing and options checking")
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/visconti/pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/super.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/clk/visconti/pll.c b/drivers/clk/visconti/pll.c
-index 681721d850320..9d088239a1b2c 100644
---- a/drivers/clk/visconti/pll.c
-+++ b/drivers/clk/visconti/pll.c
-@@ -249,7 +249,7 @@ static struct clk_hw *visconti_register_pll(struct visconti_pll_provider *ctx,
- 					    const struct visconti_pll_rate_table *rate_table,
- 					    spinlock_t *lock)
- {
--	struct clk_init_data init;
-+	struct clk_init_data init = {};
- 	struct visconti_pll *pll;
- 	struct clk_hw *pll_hw_clk;
- 	size_t len;
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 7e04ae8f32f0e..cb8e8a587ba9e 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -285,9 +285,12 @@ static const struct fs_parameter_spec f2fs_param_specs[] = {
+ 	fsparam_flag("usrquota", Opt_usrquota),
+ 	fsparam_flag("grpquota", Opt_grpquota),
+ 	fsparam_flag("prjquota", Opt_prjquota),
+-	fsparam_string_empty("usrjquota", Opt_usrjquota),
+-	fsparam_string_empty("grpjquota", Opt_grpjquota),
+-	fsparam_string_empty("prjjquota", Opt_prjjquota),
++	fsparam_string("usrjquota", Opt_usrjquota),
++	fsparam_flag("usrjquota", Opt_usrjquota),
++	fsparam_string("grpjquota", Opt_grpjquota),
++	fsparam_flag("grpjquota", Opt_grpjquota),
++	fsparam_string("prjjquota", Opt_prjjquota),
++	fsparam_flag("prjjquota", Opt_prjjquota),
+ 	fsparam_flag("nat_bits", Opt_nat_bits),
+ 	fsparam_enum("jqfmt", Opt_jqfmt, f2fs_param_jqfmt),
+ 	fsparam_enum("alloc_mode", Opt_alloc, f2fs_param_alloc_mode),
+@@ -931,26 +934,26 @@ static int f2fs_parse_param(struct fs_context *fc, struct fs_parameter *param)
+ 		ctx_set_opt(ctx, F2FS_MOUNT_PRJQUOTA);
+ 		break;
+ 	case Opt_usrjquota:
+-		if (!*param->string)
+-			ret = f2fs_unnote_qf_name(fc, USRQUOTA);
+-		else
++		if (param->type == fs_value_is_string && *param->string)
+ 			ret = f2fs_note_qf_name(fc, USRQUOTA, param);
++		else
++			ret = f2fs_unnote_qf_name(fc, USRQUOTA);
+ 		if (ret)
+ 			return ret;
+ 		break;
+ 	case Opt_grpjquota:
+-		if (!*param->string)
+-			ret = f2fs_unnote_qf_name(fc, GRPQUOTA);
+-		else
++		if (param->type == fs_value_is_string && *param->string)
+ 			ret = f2fs_note_qf_name(fc, GRPQUOTA, param);
++		else
++			ret = f2fs_unnote_qf_name(fc, GRPQUOTA);
+ 		if (ret)
+ 			return ret;
+ 		break;
+ 	case Opt_prjjquota:
+-		if (!*param->string)
+-			ret = f2fs_unnote_qf_name(fc, PRJQUOTA);
+-		else
++		if (param->type == fs_value_is_string && *param->string)
+ 			ret = f2fs_note_qf_name(fc, PRJQUOTA, param);
++		else
++			ret = f2fs_unnote_qf_name(fc, PRJQUOTA);
+ 		if (ret)
+ 			return ret;
+ 		break;
 -- 
 2.53.0
 
