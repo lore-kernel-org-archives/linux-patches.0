@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA71233933;
-	Wed, 20 May 2026 17:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3784B3F1AB8;
+	Wed, 20 May 2026 17:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779299360; cv=none; b=qt2kWAbHuG+8M9fKLklR73dZgZmsiP1p8I9G6JkvJksw9RKmXeFiefIIMb1kRFphbUB5OOm3WkRTx75Lob9vZzRF04X+4orzWrbaSawM0/uCHnmZYFS8CqUjTKOiu6wXk2RdinIKxHfxi+IAZkHLvdLICkyc3AkLQwGRxWPzjn0=
+	t=1779299362; cv=none; b=tvu7s0R8/oJ89/+AKMOTOuq0MY1iMuiQB8W20Lwn765Ja1Gwlk7xDz2TqRu95jfK9lgJdRqQk4yFdROFmpXFAR2yYCNSKnyMxLKrCeGjE8RZWIcnrLs3ygv6krihy/SgxnWr0mNjITDijhubVv7GhCViFbJ0yYOrzWf7bNhEC/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779299360; c=relaxed/simple;
-	bh=7prH0XWVD+7ymvTmENj1FrgzCi56dT5RoCM/PwqvfaI=;
+	s=arc-20240116; t=1779299362; c=relaxed/simple;
+	bh=QFQibX+VW2DskrmCHnIILuT8eOuEQ81rifW+k4dZV/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JSvlrBNzubbuo7C1ktDB7FqGu5j1anDMDwEEWye3ZcJHTeMG35RzadZlniIRrorkmnVIL+7mrzAPtHF26+2sSfIL58f4uZ165LQVIKqyF/uW0Zzyqa42fbPe1QidH9Z+qEJZjinvseJ7+UPnxPvEh2v7u46YjQr2bqaKvytIpnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5sZSd2Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Afr81jIEUSwpatLb2Acz0j56ABkPyikBmgZLAyVcP5Df0F2SVJtXNdGn32BaOVzOrXvRiPn+V4bFymq7E7LiMIteGl3a8ab6MDUOdnU2KZ8uUy7gVyUrSDVGfstBLPHd+9AEyY1XfV0s8O2qFf5vYm+Y0wTK55QnNSwoLz1PVWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vg2WH32Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5sZSd2Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B111F00893;
-	Wed, 20 May 2026 17:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vg2WH32Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA1B1F000E9;
+	Wed, 20 May 2026 17:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779299358;
-	bh=tUK3N5hLChq5rx6utF84pwBciP7y/ojzhmOV2TWUyuY=;
+	s=korg; t=1779299361;
+	bh=OFUXq6YMdiQWR1QDwUyMiXRAe/9RvuSSnS8UZUNHr8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c5sZSd2Qqoe9HI3HlVaW+SgJdzMhbKDxdUXD44Cw+++sCp1c31G5FX9Zozb0BR0zM
-	 alYUimUngbi8WiY5OANC6wyXgdFoOadlcht+cpTyzCKXs28wvfSq6X1P+ktoq+WDFo
-	 iPUHfd8h0kQ7EMn+pYNCeGd/U+Wwkd/4t9ZAcaTg=
+	b=Vg2WH32QUF18uR/7zlRNnv0h9MaEUXu7voyO72JsosTukIziTfjbhHn0kWXiV720I
+	 5OzqudxAFSsq8tZo3sc8I+aTR4kn7coF15d21k3N9GIaH9jT9ndo+DltMhNbzbRXZU
+	 1dEPgbgITck15NRBCQa72jT9PMVw+Whg4QbbMjBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <mark@harmstone.com>,
-	David Sterba <dsterba@suse.com>,
+	Petr Malat <oss@malat.biz>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 741/957] btrfs: fix double-decrement of bytes_may_use in submit_one_async_extent()
-Date: Wed, 20 May 2026 18:20:24 +0200
-Message-ID: <20260520162150.629855567@linuxfoundation.org>
+Subject: [PATCH 6.18 742/957] cgroup: Increment nr_dying_subsys_* from rmdir context
+Date: Wed, 20 May 2026 18:20:25 +0200
+Message-ID: <20260520162150.651796650@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -52,45 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <mark@harmstone.com>
+From: Petr Malat <oss@malat.biz>
 
-[ Upstream commit 82323b1a7088b7a5c3e528a5d634bff447fa286f ]
+[ Upstream commit 13e786b64bd3fd81c7eb22aa32bf8305c32f2ccf ]
 
-submit_one_async_extent() calls btrfs_reserve_extent(), which decrements
-bytes_may_use. If the call btrfs_create_io_em() fails, we jump to
-out_free_reserve, which calls extent_clear_unlock_delalloc().
+Incrementing nr_dying_subsys_* in offline_css(), which is executed by
+cgroup_offline_wq worker, leads to a race where user can see the value
+to be 0 if he reads cgroup.stat after calling rmdir and before the worker
+executes. This makes the user wrongly expect resources released by the
+removed cgroup to be available for a new assignment.
 
-Because we're specifying EXTENT_DO_ACCOUNTING, i.e.
-EXTENT_CLEAR_META_RESV | EXTENT_CLEAR_DATA_RESV, this decreases
-bytes_may_use again. This can lead to problems later on, as an initial
-write can fail only for the writeback to silently ENOSPC.
+Increment nr_dying_subsys_* from kill_css(), which is called from the
+cgroup_rmdir() context.
 
-Fix this by replacing EXTENT_DO_ACCOUNTING with EXTENT_CLEAR_META_RESV.
-This parallels a4fe134fc1d8eb ("btrfs: fix a double release on reserved
-extents in cow_one_range()"), which is the same fix in cow_one_range().
-
-Fixes: 151a41bc46df ("Btrfs: fix what bits we clear when erroring out from delalloc")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: ab0312526867 ("cgroup: Show # of subsystem CSSes in cgroup.stat")
+Signed-off-by: Petr Malat <oss@malat.biz>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cgroup/cgroup.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index feaa6de8a90f2..5b99f2941f577 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -1208,7 +1208,7 @@ static void submit_one_async_extent(struct async_chunk *async_chunk,
- 				     NULL, &cached,
- 				     EXTENT_LOCKED | EXTENT_DELALLOC |
- 				     EXTENT_DELALLOC_NEW |
--				     EXTENT_DEFRAG | EXTENT_DO_ACCOUNTING,
-+				     EXTENT_DEFRAG | EXTENT_CLEAR_META_RESV,
- 				     PAGE_UNLOCK | PAGE_START_WRITEBACK |
- 				     PAGE_END_WRITEBACK);
- 	free_async_extent_pages(async_extent);
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index b60fc0b2c6036..1239bff9a994c 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -5773,16 +5773,6 @@ static void offline_css(struct cgroup_subsys_state *css)
+ 	RCU_INIT_POINTER(css->cgroup->subsys[ss->id], NULL);
+ 
+ 	wake_up_all(&css->cgroup->offline_waitq);
+-
+-	css->cgroup->nr_dying_subsys[ss->id]++;
+-	/*
+-	 * Parent css and cgroup cannot be freed until after the freeing
+-	 * of child css, see css_free_rwork_fn().
+-	 */
+-	while ((css = css->parent)) {
+-		css->nr_descendants--;
+-		css->cgroup->nr_dying_subsys[ss->id]++;
+-	}
+ }
+ 
+ /**
+@@ -6094,6 +6084,8 @@ static void css_killed_ref_fn(struct percpu_ref *ref)
+  */
+ static void kill_css(struct cgroup_subsys_state *css)
+ {
++	struct cgroup_subsys *ss = css->ss;
++
+ 	lockdep_assert_held(&cgroup_mutex);
+ 
+ 	if (css->flags & CSS_DYING)
+@@ -6130,6 +6122,16 @@ static void kill_css(struct cgroup_subsys_state *css)
+ 	 * css is confirmed to be seen as killed on all CPUs.
+ 	 */
+ 	percpu_ref_kill_and_confirm(&css->refcnt, css_killed_ref_fn);
++
++	css->cgroup->nr_dying_subsys[ss->id]++;
++	/*
++	 * Parent css and cgroup cannot be freed until after the freeing
++	 * of child css, see css_free_rwork_fn().
++	 */
++	while ((css = css->parent)) {
++		css->nr_descendants--;
++		css->cgroup->nr_dying_subsys[ss->id]++;
++	}
+ }
+ 
+ /**
 -- 
 2.53.0
 
