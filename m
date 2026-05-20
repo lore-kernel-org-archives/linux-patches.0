@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA58B3F7ABB;
-	Wed, 20 May 2026 17:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E2F3A3833;
+	Wed, 20 May 2026 17:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779297176; cv=none; b=aB9C6iIAJuxY9li8mjFFmWfXcU3c05TOT1aLroojaDvrX3+qINs6E1L5VvxNkjQyEPDoMb/VE4mzCZzjqpShwRihKbYzOh3rZkc5sY3/kUvCc6qh1Zl+dc0HMRP/HPQYWIaI7NqEqeuo6Cj+Fd1tAe0m/fuBzb61rWwtTupAovY=
+	t=1779297179; cv=none; b=mbgHbLd2h6eXimcElo4cfcTs4Ior5oKMzOMrjErkllzzmxAhEln/zxNCYrsiefgkdtl62qN0EX+9FZ4vPiwiz9J+z/YWIawpSnEi6QBR9LqDQGZTAyfEZPcuCD9yXlpSoefTd/GcI4uyqldhZXjxsRYdhk1+v8UrH/a8xTBXA/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779297176; c=relaxed/simple;
-	bh=TRKD74sZvSJyahU+zZ2Pw7bVADN34P8wVYQ3EpbVENY=;
+	s=arc-20240116; t=1779297179; c=relaxed/simple;
+	bh=gZIKCQqQgzt7E4yE2sXnKVSYRt6KU0C+Rwki9vhGbhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MLDA1XpX3hHqipzI5aaQfLCaL+bXtfgZqnvG1UWQNnafna+R7iNCHWgn+AHWoCnmuDrY5JSrW5HhV/Er6HhjuNo8qqioRqcvKT+wqFp3jCO2xzuURKAXDrtFgAdu/8mrYIZyofZMiRQBN5lpnsbRploB4GGqQkFX/df7fPhr5b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2MAfrN2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TcLdERWxPQABT8wT+doU3lvqN4BTxqvvQDyjMGQXH/k7uouuJWwiIN8456sRCc/VsqbuaZf22//NA7OpHauSX/tAHWnuu48byfCTcGbd+2ailH8q/hSO95eifAnLwEpdFY9yxxkLiBpgvtgtHdVcswdQ9aK9LSd9UglMkNgiMjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1gYVA0c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2MAfrN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF321F000E9;
-	Wed, 20 May 2026 17:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1gYVA0c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96ADE1F00893;
+	Wed, 20 May 2026 17:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779297175;
-	bh=clnC9/cbzYVY85JCkkYt1RO+nMsaIA1E+z9NSzWi07A=;
+	s=korg; t=1779297178;
+	bh=kjdT9FCRu4N70/GBmBuRsBmCD5fYFEN4EZe8Y7zzFoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y2MAfrN2whpDu3+6YHV6PrhySkIpNCn8NebRRGwSkUQBWJZ+NUu1izx4b8PfbdiFf
-	 tTODiwzDTnbg+5jdRIFYmxGBnJC2cLxz0uI2VkEziMTekqYGwIsjyz5xLPECd3hw8W
-	 UslsWyGYQUw6zrRhcyjFzGYsDkk+qSQiyg64Sjtg=
+	b=S1gYVA0cN5nLFf23BcsArm37Z6bLtANTPo6gy5gdp7a1rfkfjPDBmhQs2PvkHJpdE
+	 XMnunsQkGJfpwVspUM/PhdAvYGohaYZWHDWxzdosJTIwA6QOb+zhW07MrJ5F1uHZHV
+	 3Bi9EjEgNEDqmhaFkSxg4lh6R2Xk8rQdx5oNU08w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Stable@vger.kernel.org,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Rong Zhang <i@rong.moe>,
+	"Derek J. Clark" <derekjohn.clark@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.0 1078/1146] platform/x86: intel: Move debugfs register before creating devices
-Date: Wed, 20 May 2026 18:22:08 +0200
-Message-ID: <20260520162212.632373878@linuxfoundation.org>
+Subject: [PATCH 7.0 1079/1146] platform/x86: lenovo-wmi-helpers: Move gamezone enums to wmi-helpers
+Date: Wed, 20 May 2026 18:22:09 +0200
+Message-ID: <20260520162212.657271239@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -52,52 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Derek J. Clark <derekjohn.clark@gmail.com>
 
-commit ad3bff944c0f4f2e913298a9664391af32f87491 upstream.
+commit 7e27896e16a1c450085c3fe020eeb1b223880f37 upstream.
 
-It is possible that the driver handling device is enumerated before
-registering debugfs. If the driver wants to access debugfs by calling
-tpmi_get_debugfs_dir(), this will return error in this case.
+In a later patch in the series the thermal mode enum will be accessed
+across three separate drivers (wmi-capdata, wmi-gamezonem and wmi-other).
+An additional patch in the series will also add a function prototype that
+needs to reference this enum in wmi-helpers.h. To avoid having all these
+drivers begin to import each others headers, and to avoid declaring an
+opaque enum to hande the second case, move the thermal mode enum to
+helpers where it can be safely accessed by everything that needs it from
+a single import.
 
-Hence register debugfs before creating devices.
+While at it, since the gamezone_events_type enum is the only remaining
+item in the header, move that as well and remove the gamezone header
+entirely.
 
-Fixes: 811f67c51636 ("platform/x86/intel/tpmi: Add new auxiliary driver for performance limits")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: Stable@vger.kernel.org
-Link: https://patch.msgid.link/20260430151103.1549733-2-srinivas.pandruvada@linux.intel.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Reviewed-by: Rong Zhang <i@rong.moe>
+Tested-by: Rong Zhang <i@rong.moe>
+Signed-off-by: Derek J. Clark <derekjohn.clark@gmail.com>
+Link: https://patch.msgid.link/20260510042546.436874-8-derekjohn.clark@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/vsec_tpmi.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/platform/x86/lenovo/wmi-events.c   |    2 +-
+ drivers/platform/x86/lenovo/wmi-gamezone.c |    1 -
+ drivers/platform/x86/lenovo/wmi-gamezone.h |   20 --------------------
+ drivers/platform/x86/lenovo/wmi-helpers.h  |   13 +++++++++++++
+ drivers/platform/x86/lenovo/wmi-other.c    |    1 -
+ 5 files changed, 14 insertions(+), 23 deletions(-)
+ delete mode 100644 drivers/platform/x86/lenovo/wmi-gamezone.h
 
---- a/drivers/platform/x86/intel/vsec_tpmi.c
-+++ b/drivers/platform/x86/intel/vsec_tpmi.c
-@@ -813,10 +813,6 @@ static int intel_vsec_tpmi_init(struct a
+--- a/drivers/platform/x86/lenovo/wmi-events.c
++++ b/drivers/platform/x86/lenovo/wmi-events.c
+@@ -17,7 +17,7 @@
+ #include <linux/wmi.h>
  
- 	auxiliary_set_drvdata(auxdev, tpmi_info);
+ #include "wmi-events.h"
+-#include "wmi-gamezone.h"
++#include "wmi-helpers.h"
  
--	ret = tpmi_create_devices(tpmi_info);
--	if (ret)
--		return ret;
+ #define THERMAL_MODE_EVENT_GUID "D320289E-8FEA-41E0-86F9-911D83151B5F"
+ 
+--- a/drivers/platform/x86/lenovo/wmi-gamezone.c
++++ b/drivers/platform/x86/lenovo/wmi-gamezone.c
+@@ -21,7 +21,6 @@
+ #include <linux/wmi.h>
+ 
+ #include "wmi-events.h"
+-#include "wmi-gamezone.h"
+ #include "wmi-helpers.h"
+ #include "wmi-other.h"
+ 
+--- a/drivers/platform/x86/lenovo/wmi-gamezone.h
++++ /dev/null
+@@ -1,20 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-or-later */
 -
- 	/*
- 	 * Allow debugfs when security policy allows. Everything this debugfs
- 	 * interface provides, can also be done via /dev/mem access. If
-@@ -826,6 +822,12 @@ static int intel_vsec_tpmi_init(struct a
- 	if (!security_locked_down(LOCKDOWN_DEV_MEM) && capable(CAP_SYS_RAWIO))
- 		tpmi_dbgfs_register(tpmi_info);
+-/* Copyright (C) 2025 Derek J. Clark <derekjohn.clark@gmail.com> */
+-
+-#ifndef _LENOVO_WMI_GAMEZONE_H_
+-#define _LENOVO_WMI_GAMEZONE_H_
+-
+-enum gamezone_events_type {
+-	LWMI_GZ_GET_THERMAL_MODE = 1,
+-};
+-
+-enum thermal_mode {
+-	LWMI_GZ_THERMAL_MODE_QUIET =	   0x01,
+-	LWMI_GZ_THERMAL_MODE_BALANCED =	   0x02,
+-	LWMI_GZ_THERMAL_MODE_PERFORMANCE = 0x03,
+-	LWMI_GZ_THERMAL_MODE_EXTREME =	   0xE0, /* Ver 6+ */
+-	LWMI_GZ_THERMAL_MODE_CUSTOM =	   0xFF,
+-};
+-
+-#endif /* !_LENOVO_WMI_GAMEZONE_H_ */
+--- a/drivers/platform/x86/lenovo/wmi-helpers.h
++++ b/drivers/platform/x86/lenovo/wmi-helpers.h
+@@ -14,6 +14,19 @@ struct wmi_method_args_32 {
+ 	u32 arg1;
+ };
  
-+	ret = tpmi_create_devices(tpmi_info);
-+	if (ret) {
-+		debugfs_remove_recursive(tpmi_info->dbgfs_dir);
-+		return ret;
-+	}
++enum lwmi_event_type {
++	LWMI_GZ_GET_THERMAL_MODE = 0x01,
++};
 +
- 	return 0;
- }
++enum thermal_mode {
++	LWMI_GZ_THERMAL_MODE_NONE =	   0x00,
++	LWMI_GZ_THERMAL_MODE_QUIET =	   0x01,
++	LWMI_GZ_THERMAL_MODE_BALANCED =	   0x02,
++	LWMI_GZ_THERMAL_MODE_PERFORMANCE = 0x03,
++	LWMI_GZ_THERMAL_MODE_EXTREME =	   0xE0, /* Ver 6+ */
++	LWMI_GZ_THERMAL_MODE_CUSTOM =	   0xFF,
++};
++
+ int lwmi_dev_evaluate_int(struct wmi_device *wdev, u8 instance, u32 method_id,
+ 			  unsigned char *buf, size_t size, u32 *retval);
  
+--- a/drivers/platform/x86/lenovo/wmi-other.c
++++ b/drivers/platform/x86/lenovo/wmi-other.c
+@@ -47,7 +47,6 @@
+ 
+ #include "wmi-capdata.h"
+ #include "wmi-events.h"
+-#include "wmi-gamezone.h"
+ #include "wmi-helpers.h"
+ #include "wmi-other.h"
+ #include "../firmware_attributes_class.h"
 
 
