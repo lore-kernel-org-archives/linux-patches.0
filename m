@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B5E3FA5D5;
-	Wed, 20 May 2026 18:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474533CCFB0;
+	Wed, 20 May 2026 18:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779301555; cv=none; b=UWT14+qRNDl0i4JQTPbPz9YmqQK4YcheSqU3wrnQGNYrEwxnMWClXZDK7F+93rQSk5OMRy/DLOhhbK5VRlUXEynhLjrO0vf9dd0YUvvWI/IZlktYq2VKG4Y38pux+ww4AqKJv0cVMb8XZ3CPi1ripZcbaV5oFBFn6G8VVZAlg1A=
+	t=1779301558; cv=none; b=lsfyO0nMbGmKGdFpTHiM0GlRFjm0i3npRWbGdU9jKchevjFGnZxr8rzgtx8bPquorJH4Gzk1f3VHSrEJABtXgn1XKSOFzY4dsGyXMJnOo4i3sUumNLGVV0+SpvCGLakJuFM+zO1S87JYnUeYTIdCBBAm6Ks6Mvn3iUgou498sEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779301555; c=relaxed/simple;
-	bh=xd8euNb/V6ba7MqdZ9/GwzOR2nhNd8zDcLW98ncGK3M=;
+	s=arc-20240116; t=1779301558; c=relaxed/simple;
+	bh=g8eIklV/5JUTVCUF/HdKqi+DXHih8avnU50lzgGNE/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVD36PQZPvHJ9aYEu26IXQu96ygoXi4RbucVG078oqjynBa9seH8/pvgALr9nLchh7BE6+/yhO5yIxVO4S8y+3xDqxdq6OFWQX5Af4JJyG7a54/00n5e4UxnwikmA/JwrgOSshGkK58xouyVDNNJBe7D/ZByw574r3FvR/blnJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLbipEmJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j0lweLOuZRSByyoQQkj1TSKx7FS3CiWw3yQf6dKEfccqGyrWo3H6OKc+bC01p55Q3G2TArE9eT6iNwVsFj9NY4K5frZYd/Tf4RQSR5xeVy0l/JAPsZ0eRSLuekwHmxcyrJJeOzEtmR8451e5saYJJmih/3tUrmNhy2AlQDb2muM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqO2oDjk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLbipEmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073561F000E9;
-	Wed, 20 May 2026 18:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqO2oDjk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B141F000E9;
+	Wed, 20 May 2026 18:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779301554;
-	bh=Fiz9+7Z59Igv3fbsrZ/438rpccF6zUd8mlrVjJJ1Zgk=;
+	s=korg; t=1779301557;
+	bh=A71B8ffHnKOkDnGYKex79H6RdK5lsQfVgPoS+Ujao10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WLbipEmJfaf6yALANTE6B3I78QzYwQg3R1GAqOkv02E1riLRgTiAKk+UrZI5BL1zE
-	 za24yY8OX6XQ9SNKpZ7GMHPxEQM/lFyGhR5BBN9SX/JBKJOIdZHjFoeH6GaOsL17Nq
-	 U6cJBzr5SBBaEc8+MEGuc6beLRTwn3rckGjYQNPw=
+	b=aqO2oDjkaZiSOxexdvoF5TRn+KGOdoNvu0Z9NkbVYlX67GgIJLNNcGIb0fm9IEhvk
+	 waq0sjJ2D1XXunVbynQK3XtosM8F0iZTCQeRVU4DT0IrIKFZ6Ufqj+bzAsubIW3lOK
+	 ZwyG0LwNDYY5Ga/L+9fSTjqMp/SECGv2nEbbAFBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Li hongliang <1468888505@139.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 598/666] ntfs: ->d_compare() must not block
-Date: Wed, 20 May 2026 18:23:29 +0200
-Message-ID: <20260520162124.228427208@linuxfoundation.org>
+Subject: [PATCH 6.12 599/666] PCI: Initialize temporary device in new_id_store()
+Date: Wed, 20 May 2026 18:23:30 +0200
+Message-ID: <20260520162124.250030633@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162111.222830634@linuxfoundation.org>
 References: <20260520162111.222830634@linuxfoundation.org>
@@ -51,235 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Samiullah Khawaja <skhawaja@google.com>
 
-[ Upstream commit ca2a04e84af79596e5cd9cfe697d5122ec39c8ce ]
+[ Upstream commit f45a49a2380a47332817b7248c61a0ebbc6f0d00 ]
 
-... so don't use __getname() there.  Switch it (and ntfs_d_hash(), while
-we are at it) to kmalloc(PATH_MAX, GFP_NOWAIT).  Yes, ntfs_d_hash()
-almost certainly can do with smaller allocations, but let ntfs folks
-deal with that - keep the allocation size as-is for now.
+When setting new_id of a PCI device driver using sysfs a lockdep splat
+occurs. This is because new_id_store() builds a temporary pci_dev for
+pci_match_device(), which calls device_match_driver_override().  That
+depends on the driver_override.lock added by cb3d1049f4ea ("driver core:
+generalize driver_override in struct device").
 
-Stop abusing names_cachep in ntfs, period - various uses of that thing
-in there have nothing to do with pathnames; just use k[mz]alloc() and
-be done with that.  For now let's keep sizes as-in, but AFAICS none of
-the users actually want PATH_MAX.
+The new driver_override.lock was not initialized in the temporary pci_dev,
+resulting in this lockdep splat.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Li hongliang <1468888505@139.com>
+Initialize the temporary pci_dev to fix this.
+
+Repro:
+
+  Build with CONFIG_LOCKDEP=y, boot with QEMU, and add a new ID:
+
+  # echo "8086 10f5" > /sys/bus/pci/drivers/e1000e/new_id
+
+  INFO: trying to register non-static key.
+  The code is fine but needs lockdep annotation, or maybe
+  you didn't initialize this object before use?
+  turning off the locking correctness validator.
+  CPU: 2 UID: 0 PID: 177 Comm: liveupdate-iomm Not tainted 7.0.0+ #9 PREEMPT(full)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5d/0x80
+   register_lock_class+0x77e/0x790
+   lock_acquire+0xbf/0x2e0
+   pci_match_device+0x24/0x180
+   new_id_store+0x189/0x1d0
+   kernfs_fop_write_iter+0x14f/0x210
+   vfs_write+0x263/0x5e0
+   ksys_write+0x79/0xf0
+   do_syscall_64+0x117/0xf80
+
+Fixes: 10a4206a2401 ("PCI: use generic driver_override infrastructure")
+Fixes: 8895d3bcb8ba ("PCI: Fail new_id for vendor/device values already built into driver")
+Signed-off-by: Samiullah Khawaja <skhawaja@google.com>
+[bhelgaas: add commit log details and repro, trim backtrace]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/20260505234327.716630-1-skhawaja@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/dir.c    |  5 ++---
- fs/ntfs3/fsntfs.c |  4 ++--
- fs/ntfs3/inode.c  | 13 ++++++-------
- fs/ntfs3/namei.c  | 17 ++++++++---------
- fs/ntfs3/xattr.c  |  5 ++---
- 5 files changed, 20 insertions(+), 24 deletions(-)
+ drivers/pci/pci-driver.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index 600e66035c1b7..522ebc14b1fbd 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -425,8 +425,7 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
- 	if (!dir_emit_dots(file, ctx))
- 		return 0;
- 
--	/* Allocate PATH_MAX bytes. */
--	name = __getname();
-+	name = kmalloc(PATH_MAX, GFP_KERNEL);
- 	if (!name)
- 		return -ENOMEM;
- 
-@@ -504,7 +503,7 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
- 
- out:
- 
--	__putname(name);
-+	kfree(name);
- 	put_indx_node(node);
- 
- 	if (err == 1) {
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index 37c5d9a1f77b7..5972f160e566e 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -2670,7 +2670,7 @@ int ntfs_set_label(struct ntfs_sb_info *sbi, u8 *label, int len)
- 	u32 uni_bytes;
- 	struct ntfs_inode *ni = sbi->volume.ni;
- 	/* Allocate PATH_MAX bytes. */
--	struct cpu_str *uni = __getname();
-+	struct cpu_str *uni = kmalloc(PATH_MAX, GFP_KERNEL);
- 
- 	if (!uni)
- 		return -ENOMEM;
-@@ -2714,6 +2714,6 @@ int ntfs_set_label(struct ntfs_sb_info *sbi, u8 *label, int len)
- 		err = _ni_write_inode(&ni->vfs_inode, 0);
- 
- out:
--	__putname(uni);
-+	kfree(uni);
- 	return err;
- }
-\ No newline at end of file
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 8113d47b0ceb9..b50c9dff327d2 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1301,7 +1301,7 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
- 		fa |= FILE_ATTRIBUTE_READONLY;
- 
- 	/* Allocate PATH_MAX bytes. */
--	new_de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
-+	new_de = kzalloc(PATH_MAX, GFP_KERNEL);
- 	if (!new_de) {
- 		err = -ENOMEM;
- 		goto out1;
-@@ -1713,7 +1713,7 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
- 	ntfs_mark_rec_free(sbi, ino, false);
- 
- out2:
--	__putname(new_de);
-+	kfree(new_de);
- 	kfree(rp);
- 
- out1:
-@@ -1734,7 +1734,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
- 	struct NTFS_DE *de;
- 
- 	/* Allocate PATH_MAX bytes. */
--	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
-+	de = kzalloc(PATH_MAX, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
- 
-@@ -1748,7 +1748,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
- 
- 	err = ni_add_name(ntfs_i(d_inode(dentry->d_parent)), ni, de);
- out:
--	__putname(de);
-+	kfree(de);
- 	return err;
+diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
+index 860d80787d9b1..f0fbe45bfb9a1 100644
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -179,6 +179,11 @@ static const struct pci_device_id *pci_match_device(struct pci_driver *drv,
+ 	return NULL;
  }
  
-@@ -1771,8 +1771,7 @@ int ntfs_unlink_inode(struct inode *dir, const struct dentry *dentry)
- 	if (ntfs_is_meta_file(sbi, ni->mi.rno))
- 		return -EINVAL;
++static void _pci_free_device(struct device *dev)
++{
++	kfree(to_pci_dev(dev));
++}
++
+ /**
+  * new_id_store - sysfs frontend to pci_add_dynid()
+  * @driver: target device driver
+@@ -214,11 +219,13 @@ static ssize_t new_id_store(struct device_driver *driver, const char *buf,
+ 		pdev->subsystem_vendor = subvendor;
+ 		pdev->subsystem_device = subdevice;
+ 		pdev->class = class;
++		pdev->dev.release = _pci_free_device;
  
--	/* Allocate PATH_MAX bytes. */
--	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
-+	de = kzalloc(PATH_MAX, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
++		device_initialize(&pdev->dev);
+ 		if (pci_match_device(pdrv, pdev))
+ 			retval = -EEXIST;
  
-@@ -1808,7 +1807,7 @@ int ntfs_unlink_inode(struct inode *dir, const struct dentry *dentry)
+-		kfree(pdev);
++		put_device(&pdev->dev);
  
- out:
- 	ni_unlock(ni);
--	__putname(de);
-+	kfree(de);
- 	return err;
- }
- 
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index 71a5a959a48cb..fa4f7d9f38454 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -68,7 +68,7 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
- 				  u32 flags)
- {
- 	struct ntfs_inode *ni = ntfs_i(dir);
--	struct cpu_str *uni = __getname();
-+	struct cpu_str *uni = kmalloc(PATH_MAX, GFP_KERNEL);
- 	struct inode *inode;
- 	int err;
- 
-@@ -85,7 +85,7 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
- 			inode = dir_search_u(dir, uni, NULL);
- 			ni_unlock(ni);
- 		}
--		__putname(uni);
-+		kfree(uni);
- 	}
- 
- 	/*
-@@ -287,8 +287,7 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
- 			return err;
- 	}
- 
--	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmalloc(PATH_MAX, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
- 
-@@ -333,7 +332,7 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
- 	ni_unlock(ni);
- 	ni_unlock(dir_ni);
- out:
--	__putname(de);
-+	kfree(de);
- 	return err;
- }
- 
-@@ -391,7 +390,7 @@ static int ntfs_d_hash(const struct dentry *dentry, struct qstr *name)
- 	/*
- 	 * Try slow way with current upcase table
- 	 */
--	uni = kmem_cache_alloc(names_cachep, GFP_NOWAIT);
-+	uni = kmalloc(PATH_MAX, GFP_NOWAIT);
- 	if (!uni)
- 		return -ENOMEM;
- 
-@@ -413,7 +412,7 @@ static int ntfs_d_hash(const struct dentry *dentry, struct qstr *name)
- 	err = 0;
- 
- out:
--	kmem_cache_free(names_cachep, uni);
-+	kfree(uni);
- 	return err;
- }
- 
-@@ -452,7 +451,7 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
- 	 * Try slow way with current upcase table
- 	 */
- 	sbi = dentry->d_sb->s_fs_info;
--	uni1 = __getname();
-+	uni1 = kmalloc(PATH_MAX, GFP_NOWAIT);
- 	if (!uni1)
- 		return -ENOMEM;
- 
-@@ -482,7 +481,7 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
- 	ret = !ntfs_cmp_names_cpu(uni1, uni2, sbi->upcase, false) ? 0 : 1;
- 
- out:
--	__putname(uni1);
-+	kfree(uni1);
- 	return ret;
- }
- 
-diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index e0055dcf8fe38..6861c09d66d77 100644
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -552,8 +552,7 @@ struct posix_acl *ntfs_get_acl(struct mnt_idmap *idmap, struct dentry *dentry,
- 	int err;
- 	void *buf;
- 
--	/* Allocate PATH_MAX bytes. */
--	buf = __getname();
-+	buf = kmalloc(PATH_MAX, GFP_KERNEL);
- 	if (!buf)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -584,7 +583,7 @@ struct posix_acl *ntfs_get_acl(struct mnt_idmap *idmap, struct dentry *dentry,
- 	if (!IS_ERR(acl))
- 		set_cached_acl(inode, type, acl);
- 
--	__putname(buf);
-+	kfree(buf);
- 
- 	return acl;
- }
+ 		if (retval)
+ 			return retval;
 -- 
 2.53.0
 
