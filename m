@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9CA3D75C7;
-	Wed, 20 May 2026 17:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3613D75C7;
+	Wed, 20 May 2026 17:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779298760; cv=none; b=Fz2F9vcWuKsbJ1LJAJCyw/m5IPmVhgMSrqvMiJPq0Ru6oJWpXYpzp+nfdNixzvyrB/AtHjiVNAUSIMNoH+h9jJKYyGZ8bmYNK4oZHGJcFLG+C+mlV0Dp0dS+5oN5xtcc2R8hUOi/NHjTgp4zhy2xyK8/z2I42ucZH1/8uKJ8QN0=
+	t=1779298763; cv=none; b=nQYbNsW5i7e+/sfgMPbe9O8XcjJPu9EfGgXKVuR+FlMvoShKhOUIUPoasYf/vYIM0Z+c06lzK7B6cju/d1YEV1DCHM7IK+BlgQtfm4/9KInpi+x8Q1UccCev9knjSiyFMYH96xdCQOPO7ntL2uiKY1BGUC/FeN2m7npalCU6ch8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779298760; c=relaxed/simple;
-	bh=qXJ2DMtLVvRnhaiCQmZMbsVLg6Y8z2FyFk1cIC6dHlc=;
+	s=arc-20240116; t=1779298763; c=relaxed/simple;
+	bh=aK0AXmtmfeMCF/CsfqMCshwc6qa4A1rBnr8JSaMkyes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QCSGGC0dk5kyCNw93h/f4Ol1FjQN5Zvv+NvUNskWUgg6ss8r9HejKU/coEelckFe9+iLOZaAqmYzisNZ3wq9+6UoXladyg4cdyf6FVn6k9UNd2StMpe56l2DoZYmkHZulbgj0/BV0u202t660ymoQfCXqPMhl/z125wt/cd1ses=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DD+pbkAD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WEPj3ldzncwf3+duSdO/OaDfl7bmFnFfhlzwOnTpmbfuhd4LUhVTGfyAByA1GulSzPAstjOoRilOEzBx7dT2Yo7ATErcgzF6CWqBOi5UX3ngg0Y/cH8G09eSbXt2UAbeVvkBJ2EbQ7wEisBmrP374Dd55jkxNbr1qz2u6oo/RLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycbjMcoz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DD+pbkAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94AC11F000E9;
-	Wed, 20 May 2026 17:39:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycbjMcoz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0501F000E9;
+	Wed, 20 May 2026 17:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779298759;
-	bh=x2zGGaTRoYAXYMO4q9XJ7Er0Ay1PaGrUops47JeC/GQ=;
+	s=korg; t=1779298761;
+	bh=h/iw333POFaarcsG2zrI1KalE81zt/pPvvLrX725/+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DD+pbkAD5JNhXLs7d7hn0lDyXN7iaPbuHzsaU8SbgeVnS2h0MlFZyMp9bHX4Ob50d
-	 zcZftYzSNHEzdblabBpKzNWILBMIp1+PJwPbS4dsnjQPcNnVIOHxOGq6MpifK5g7H6
-	 /4Y/J6DjdCFZfAvlCdnM5nmKVQFEVwFHyAdRmdZA=
+	b=ycbjMcozqIBRyrzH05QrKAzL5NVo5qFnXnZFCUWkAtte5Vn3aKcn5NbhsgakcYGF+
+	 Z4wWClqGvGo5PLn290QtI/30nC+ESSeFW13T9YJbapln5wT1JepsYFH7HYHXtI/8PV
+	 KRXppGTwYmw1SqyCp0sLHE/cPgCbbmEAJ2m4VhKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 491/957] bpf: Fix precedence bug in convert_bpf_ld_abs alignment check
-Date: Wed, 20 May 2026 18:16:14 +0200
-Message-ID: <20260520162145.174475329@linuxfoundation.org>
+Subject: [PATCH 6.18 482/957] mtd: spinand: winbond: Clarify when to enable the HS bit
+Date: Wed, 20 May 2026 18:16:05 +0200
+Message-ID: <20260520162144.977827682@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162134.554764788@linuxfoundation.org>
 References: <20260520162134.554764788@linuxfoundation.org>
@@ -51,44 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit e5f635edd393aeaa7cad9e42831d397e6e2e1eed ]
+[ Upstream commit 25a915fad503c2678902075565d47ddc2aa45db9 ]
 
-Fix an operator precedence issue in convert_bpf_ld_abs() where the
-expression offset + ip_align % size evaluates as offset + (ip_align % size)
-due to % having higher precedence than +. That latter evaluation does
-not make any sense. The intended check is (offset + ip_align) % size == 0
-to verify that the packet load offset is properly aligned for direct
-access.
+Above 104MHz when in fast dual or quad I/O reads, the delay between
+address and data cycles is too short. It is possible to reach higher
+frequencies, up to 166MHz, by adding a few more dummy cycles through the
+setting of the HS bit. Improve the condition for enabling this bit, and
+also make sure we set it at soon as we go over 104MHz.
 
-With NET_IP_ALIGN == 2, the bug causes the inline fast-path for direct
-packet loads to almost never be taken on !CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
-platforms. This forces nearly all cBPF BPF_LD_ABS packet loads through
-the bpf_skb_load_helper slow path on the affected archs.
-
-Fixes: e0cea7ce988c ("bpf: implement ld_abs/ld_ind in native bpf")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260416122719.661033-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: f1a91175faaa ("mtd: spinand: winbond: Enable high-speed modes on w25n0xjw")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/spi/winbond.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 7fc01474c3781..ae6d0453cf123 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -508,7 +508,7 @@ static bool convert_bpf_ld_abs(struct sock_filter *fp, struct bpf_insn **insnp)
- 	    ((unaligned_ok && offset >= 0) ||
- 	     (!unaligned_ok && offset >= 0 &&
- 	      offset + ip_align >= 0 &&
--	      offset + ip_align % size == 0))) {
-+	      (offset + ip_align) % size == 0))) {
- 		bool ldx_off_ok = offset <= S16_MAX;
+diff --git a/drivers/mtd/nand/spi/winbond.c b/drivers/mtd/nand/spi/winbond.c
+index 0ea5b1c97d33d..578924c98b90a 100644
+--- a/drivers/mtd/nand/spi/winbond.c
++++ b/drivers/mtd/nand/spi/winbond.c
+@@ -295,16 +295,19 @@ static int w25n0xjw_hs_cfg(struct spinand_device *spinand,
+ 	if (iface != SSDR)
+ 		return -EOPNOTSUPP;
  
- 		*insn++ = BPF_MOV64_REG(BPF_REG_TMP, BPF_REG_H);
++	/*
++	 * SDR dual and quad I/O operations over 104MHz require the HS bit to
++	 * enable a few more dummy cycles.
++	 */
+ 	op = spinand->op_templates->read_cache;
+ 	if (op->cmd.dtr || op->addr.dtr || op->dummy.dtr || op->data.dtr)
+ 		hs = false;
+-	else if (op->cmd.buswidth == 1 && op->addr.buswidth == 1 &&
+-		 op->dummy.buswidth == 1 && op->data.buswidth == 1)
++	else if (op->cmd.buswidth != 1 || op->addr.buswidth == 1)
+ 		hs = false;
+-	else if (!op->max_freq)
+-		hs = true;
+-	else
++	else if (op->max_freq && op->max_freq <= 104 * HZ_PER_MHZ)
+ 		hs = false;
++	else
++		hs = true;
+ 
+ 	ret = spinand_read_reg_op(spinand, W25N0XJW_SR4, &sr4);
+ 	if (ret)
 -- 
 2.53.0
 
