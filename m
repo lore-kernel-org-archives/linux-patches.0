@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB7828DC4;
-	Wed, 20 May 2026 17:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B1F2609FD;
+	Wed, 20 May 2026 17:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779296692; cv=none; b=KnwFmxmkR0tMwXyOg75/LkS/ol+pX+QzihRAsSnFmTZDgb1s+jR9DWamtMivbv4jJ1ouNMvZAHK6BzIxZs7x4eeDuooruJuDCUm2wq2TuZmbjVp9HiKbTR4UKGGOuc+mIiUYhQA0tGoNs7MhaUP9lTCVzbFptzaTFT3lIVkLbMc=
+	t=1779296695; cv=none; b=XU5plfsF7x73u1herGQOeoXYiNeNFNDz6j6yz6sL1wz2TTKyKorFTh1K8uxcGcr0GxbFGXHSawTqfXJ4HZ4bLK++kFGS3r4BMYpiftYyVdOqI345WGkR87XPAAY8jYQsysxgk+zCix6Oa1XFzD9d1TzvrzubdXSRKrC52bXBMaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779296692; c=relaxed/simple;
-	bh=KRvhk81l1RhaXXOCN2OBjMEOcMfDa8i0QgYe8xBNWzE=;
+	s=arc-20240116; t=1779296695; c=relaxed/simple;
+	bh=LaYyPsYR7Jwvw6OpN6pyDOfPJKTph74jcB2Qh0J1ju0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YaEUnhcDg3NlYCQnx+qA4MT8QpegQH3chDwCj5nRpfHYA9g0A0DU0BHUHKzknbXKav7QI8VMJor9jzhNIpPl8KiyxPq4BSh7xkGUHSEhQFLdkZ/EoS+rSSGOS8gWA9GXvLBKDieHKA8WE5yD1RQ9Kqee/8m3zDK1GIvrA3GYVKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=We8RtHI5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XmoiBjbj0jzjfhdeuscBUK85SgFI5Fgyvtnvtz2AhD6d0M9U7ZbAot4Y01sN+ptj9MGpLRj7WUp8Fs8v2CU9TQifFrHGT5kPRkwLAVXm89c2sOue9iXWyvlvO3emwkic/dpccmahf0DRV5ITXPvp+74xdcildtZeUhHE8dyvakc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y59XmVa4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="We8RtHI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD511F000E9;
-	Wed, 20 May 2026 17:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y59XmVa4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69E71F000E9;
+	Wed, 20 May 2026 17:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1779296688;
-	bh=+53VKXuqinZ0Eg1KXy9GPCQEGIPiTrfJj2rG+W9SqME=;
+	s=korg; t=1779296693;
+	bh=ZDalqIcT3ZFUuL2d1i+D+9f/Ks4dXp/zNoG/2kuo3NA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=We8RtHI5aVdam4yD6/NefrpCHX5Da6R7n4sTyqW2zLvErzgzw5aCtoBRFg5qWHK5S
-	 ujerQHwzp7ni5vGqdOar6kBgoOWQWRv/I2R2TfRGfXxL2EahjR9nB2bqW3Q1W4QBhE
-	 jgaNK0/87BJ2gAmSiL0RCzv5nTkz4BAE3r5ciWcQ=
+	b=Y59XmVa41mkERbOOTr/pMv8BC861ICV3AWjmJNiluZE7A/yiluEf0AjX6PFdc83WY
+	 uwlS0hE3pJ6tyBnmzjwGB2ofUFUx8P/WoQnib4hiJc2g0EdsmA48Dq+/oFog9adhBk
+	 hjzVdVncT1bWFjyHusMV7YS9S6KAyo1Z5n02cctw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Yunje Shin <ioerts@kookmin.ac.kr>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Anthony Pighin <anthony.pighin@nokia.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 0894/1146] nvmet-tcp: propagate nvmet_tcp_build_pdu_iovec() errors to its callers
-Date: Wed, 20 May 2026 18:19:04 +0200
-Message-ID: <20260520162208.468953416@linuxfoundation.org>
+Subject: [PATCH 7.0 0869/1146] rtc: abx80x: Disable alarm feature if no interrupt attached
+Date: Wed, 20 May 2026 18:18:39 +0200
+Message-ID: <20260520162207.904722356@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162148.390695140@linuxfoundation.org>
 References: <20260520162148.390695140@linuxfoundation.org>
@@ -54,159 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Anthony Pighin (Nokia) <anthony.pighin@nokia.com>
 
-[ Upstream commit ea8e356acb165cb1fd75537a52e1f66e5e76c538 ]
+[ Upstream commit 0fedce7244e4b85c049ce579c87e298a1b0b811d ]
 
-Currently, when nvmet_tcp_build_pdu_iovec() detects an out-of-bounds
-PDU length or offset, it triggers nvmet_tcp_fatal_error(cmd->queue)
-and returns early. However, because the function returns void, the
-callers are entirely unaware that a fatal error has occurred and
-that the cmd->recv_msg.msg_iter was left uninitialized.
+Commit 795cda8338ea ("rtc: interface: Fix long-standing race when setting
+alarm") exposed an issue where the rtc-abx80x driver does not clear the
+alarm feature bit, but instead relies on the set_alarm operation to return
+invalid.
 
-Callers such as nvmet_tcp_handle_h2c_data_pdu() proceed to blindly
-overwrite the queue state with queue->rcv_state = NVMET_TCP_RECV_DATA
-Consequently, the socket receiving loop may attempt to read incoming
-network data into the uninitialized iterator.
+For example, when a RTC_UIE_ON ioctl is handled, it should abort at the
+feature validation. Instead, it proceeds to the rtc_timer_enqueue(),
+which used to return an error from the set_alarm call. However,
+following the race condition handling, which likely should not be
+discarding predecing errors, a success condition is returned to the
+ioctl() caller. This results in (for example):
+    hwclock: select() to /dev/rtc0 to wait for clock tick timed out
 
-Fix this by shifting the error handling responsibility to the callers.
+Notwithstanding the validity of the race condition handling, if an interrupt
+wasn't specified, or could not be attached, the driver should clear the
+alarm feature bit.
 
-Fixes: 52a0a9854934 ("nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec")
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Yunje Shin <ioerts@kookmin.ac.kr>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
+Signed-off-by: Anthony Pighin <anthony.pighin@nokia.com>
+Link: https://patch.msgid.link/BN0PR08MB69510928028C933749F4139383D1A@BN0PR08MB6951.namprd08.prod.outlook.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 51 ++++++++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 22 deletions(-)
+ drivers/rtc/rtc-abx80x.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 255ebd948dfe1..dc65894696ad9 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -351,7 +351,7 @@ static void nvmet_tcp_free_cmd_buffers(struct nvmet_tcp_cmd *cmd)
- 
- static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue);
- 
--static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
-+static int nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- {
- 	struct bio_vec *iov = cmd->iov;
- 	struct scatterlist *sg;
-@@ -364,22 +364,19 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- 	offset = cmd->rbytes_done;
- 	cmd->sg_idx = offset / PAGE_SIZE;
- 	sg_offset = offset % PAGE_SIZE;
--	if (!cmd->req.sg_cnt || cmd->sg_idx >= cmd->req.sg_cnt) {
--		nvmet_tcp_fatal_error(cmd->queue);
--		return;
--	}
-+	if (!cmd->req.sg_cnt || cmd->sg_idx >= cmd->req.sg_cnt)
-+		return -EPROTO;
-+
- 	sg = &cmd->req.sg[cmd->sg_idx];
- 	sg_remaining = cmd->req.sg_cnt - cmd->sg_idx;
- 
- 	while (length) {
--		if (!sg_remaining) {
--			nvmet_tcp_fatal_error(cmd->queue);
--			return;
--		}
--		if (!sg->length || sg->length <= sg_offset) {
--			nvmet_tcp_fatal_error(cmd->queue);
--			return;
--		}
-+		if (!sg_remaining)
-+			return -EPROTO;
-+
-+		if (!sg->length || sg->length <= sg_offset)
-+			return -EPROTO;
-+
- 		u32 iov_len = min_t(u32, length, sg->length - sg_offset);
- 
- 		bvec_set_page(iov, sg_page(sg), iov_len,
-@@ -394,6 +391,7 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- 
- 	iov_iter_bvec(&cmd->recv_msg.msg_iter, ITER_DEST, cmd->iov,
- 		      nr_pages, cmd->pdu_len);
-+	return 0;
- }
- 
- static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue)
-@@ -957,7 +955,7 @@ static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
- 	return 0;
- }
- 
--static void nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
-+static int nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
- 		struct nvmet_tcp_cmd *cmd, struct nvmet_req *req)
- {
- 	size_t data_len = le32_to_cpu(req->cmd->common.dptr.sgl.length);
-@@ -973,19 +971,23 @@ static void nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
- 	if (!nvme_is_write(cmd->req.cmd) || !data_len ||
- 	    data_len > cmd->req.port->inline_data_size) {
- 		nvmet_prepare_receive_pdu(queue);
--		return;
-+		return 0;
- 	}
- 
- 	ret = nvmet_tcp_map_data(cmd);
- 	if (unlikely(ret)) {
- 		pr_err("queue %d: failed to map data\n", queue->idx);
- 		nvmet_tcp_fatal_error(queue);
--		return;
-+		return -EPROTO;
- 	}
- 
- 	queue->rcv_state = NVMET_TCP_RECV_DATA;
--	nvmet_tcp_build_pdu_iovec(cmd);
- 	cmd->flags |= NVMET_TCP_F_INIT_FAILED;
-+	ret = nvmet_tcp_build_pdu_iovec(cmd);
-+	if (unlikely(ret))
-+		pr_err("queue %d: failed to build PDU iovec\n", queue->idx);
-+
-+	return ret;
- }
- 
- static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
-@@ -1037,7 +1039,10 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		goto err_proto;
- 	}
- 	cmd->pdu_recv = 0;
--	nvmet_tcp_build_pdu_iovec(cmd);
-+	if (unlikely(nvmet_tcp_build_pdu_iovec(cmd))) {
-+		pr_err("queue %d: failed to build PDU iovec\n", queue->idx);
-+		goto err_proto;
-+	}
- 	queue->cmd = cmd;
- 	queue->rcv_state = NVMET_TCP_RECV_DATA;
- 
-@@ -1100,8 +1105,7 @@ static int nvmet_tcp_done_recv_pdu(struct nvmet_tcp_queue *queue)
- 			le32_to_cpu(req->cmd->common.dptr.sgl.length),
- 			le16_to_cpu(req->cqe->status));
- 
--		nvmet_tcp_handle_req_failure(queue, queue->cmd, req);
--		return 0;
-+		return nvmet_tcp_handle_req_failure(queue, queue->cmd, req);
- 	}
- 
- 	ret = nvmet_tcp_map_data(queue->cmd);
-@@ -1118,8 +1122,11 @@ static int nvmet_tcp_done_recv_pdu(struct nvmet_tcp_queue *queue)
- 	if (nvmet_tcp_need_data_in(queue->cmd)) {
- 		if (nvmet_tcp_has_inline_data(queue->cmd)) {
- 			queue->rcv_state = NVMET_TCP_RECV_DATA;
--			nvmet_tcp_build_pdu_iovec(queue->cmd);
--			return 0;
-+			ret = nvmet_tcp_build_pdu_iovec(queue->cmd);
-+			if (unlikely(ret))
-+				pr_err("queue %d: failed to build PDU iovec\n",
-+					queue->idx);
-+			return ret;
+diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
+index 3fee27914ba80..5f3a3e60a19d0 100644
+--- a/drivers/rtc/rtc-abx80x.c
++++ b/drivers/rtc/rtc-abx80x.c
+@@ -933,6 +933,8 @@ static int abx80x_probe(struct i2c_client *client)
+ 			client->irq = 0;
  		}
- 		/* send back R2T */
- 		nvmet_tcp_queue_response(&queue->cmd->req);
+ 	}
++	if (client->irq <= 0)
++		clear_bit(RTC_FEATURE_ALARM, priv->rtc->features);
+ 
+ 	err = rtc_add_group(priv->rtc, &rtc_calib_attr_group);
+ 	if (err) {
 -- 
 2.53.0
 
